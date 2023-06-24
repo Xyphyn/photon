@@ -6,7 +6,7 @@
 
 <nav
     class="flex top-0 z-20 flex-row gap-4 items-center mt-2 w-full h-16
-    max-w-7xl mx-auto px-6"
+    max-w-5xl mx-auto px-6"
 >
     <div class="flex flex-row gap-2 items-center mr-auto">
         <a href="/">
