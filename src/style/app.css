@@ -3,13 +3,25 @@
 @tailwind utilities;
 
 :root {
-    @apply bg-slate-50 dark:bg-zinc-950 text-zinc-900 dark:text-slate-100;
+  @apply bg-slate-50 dark:bg-zinc-950 text-zinc-900
+    dark:text-slate-100;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+  }
 }
 
 #nprogress .bar {
-    @apply bg-black dark:bg-white !important;
+  @apply bg-black dark:bg-white !important;
 }
 
 #nprogress .peg {
-    display: none !important;
+  display: none !important;
+}
+
+pre {
+  @apply bg-slate-100 p-2 rounded-md m-2 max-w-full whitespace-pre-wrap
+  border-slate-200 border dark:bg-zinc-900 dark:border-zinc-800 text-sm;
 }
