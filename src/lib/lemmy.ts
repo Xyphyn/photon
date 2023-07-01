@@ -1,3 +1,5 @@
-import { LemmyHttp } from 'lemmy-js-client'
+import { LemmyHttp, type LoginResponse } from 'lemmy-js-client'
+import { writable } from 'svelte/store'
 
-export const lemmy = new LemmyHttp('https://programming.dev')
+export let lemmy = new LemmyHttp(`https://lemmy.world`)
+export const token = writable<LoginResponse>()
