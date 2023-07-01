@@ -4,7 +4,7 @@
     numeric: 'auto',
     style: 'short',
   }).format(
-    Math.floor((Date.now() - date.getTime()) / 1000 / 60 / 60 / 24),
+    Math.floor((date.getTime() - Date.now()) / 1000 / 60 / 60 / 24),
     'days'
   )
 </script>

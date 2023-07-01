@@ -1,5 +1,12 @@
 import { lemmy } from '$lib/lemmy.js'
 
-export function load() {
-  return lemmy.getPosts({ limit: 20, page: 1 })
+export function load(req) {
+  const page = Number(req.url.searchParams.get('page') || 1) || 1
+  console.log(page)
+  return lemmy.getPosts({
+    limit: 40,
+    page: page,
+    sort: 'Active',
+    type_: 'Local',
+  })
 }

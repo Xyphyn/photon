@@ -1,4 +1,8 @@
 <script lang="ts">
+  import { goto } from '$app/navigation'
+  import { page } from '$app/stores'
+  import Button from '$lib/components/Button.svelte'
+  import Link from '$lib/components/Link.svelte'
   import MultiSelect from '$lib/components/MultiSelect.svelte'
   import Post from './post/[id]/Post.svelte'
 
@@ -14,6 +18,13 @@
         <Post {post} />
       {/each}
     </div>
+
+    <Button
+      on:click={() =>
+        goto(`/?page=${(Number($page.url.searchParams.get('page')) || 1) + 1}`)}
+    >
+      Next
+    </Button>
   </div>
   <div
     class="bg-white dark:bg-zinc-900 border dark:border-zinc-800 border-slate-200
