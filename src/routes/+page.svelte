@@ -24,8 +24,8 @@
       }}
     />
     <MultiSelect
-      options={['Active', 'TopDay', 'New']}
-      optionNames={['Active', 'Top (Day)', 'New']}
+      options={['Active', 'TopWeek', 'TopAll', 'New']}
+      optionNames={['Active', 'Top (Week)', 'Top (All)', 'New']}
       selected={$page.url.searchParams.get('sort') ?? 'Active'}
       on:select={(e) => {
         const url = $page.url
