@@ -26,10 +26,4 @@
       Next
     </Button>
   </div>
-  <div
-    class="bg-white dark:bg-zinc-900 border dark:border-zinc-800 border-slate-200
-    rounded-md flex flex-col overflow-hidden max-w-sm ml-auto w-full p-8 h-max"
-  >
-    <h1 class="font-bold text-xl">Lemmy</h1>
-  </div>
 </div>
