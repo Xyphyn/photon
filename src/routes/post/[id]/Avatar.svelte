@@ -5,4 +5,4 @@
   export let width: number
 </script>
 
-<img src={url} {alt} {width} class="rounded-full" />
+<img src={url} {alt} {width} class="rounded-full aspect-square object-cover" />

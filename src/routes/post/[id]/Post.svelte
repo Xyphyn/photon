@@ -18,8 +18,6 @@
 
   let postRes: PostView
   export { postRes as post }
-
-  const post = postRes.post
 </script>
 
 <div
@@ -34,19 +32,19 @@
         <RelativeDate date={new Date(postRes.post.published)} />
       </span>
     </span>
-    <h1 class="font-bold text-lg">{post.name}</h1>
-    {#if post.url}
+    <h1 class="font-bold text-lg">{postRes.post.name}</h1>
+    {#if postRes.post.url}
       <a
-        href={post.url}
+        href={postRes.post.url}
         class="text-sky-400 max-w-[24ch] overflow-hidden
                 whitespace-nowrap text-ellipsis text-xs hover:underline"
       >
-        {post.url}
+        {postRes.post.url}
       </a>
     {/if}
-    {#if post.body}
+    {#if postRes.post.body}
       <p class="text-sm max-h-24 line-clamp-3">
-        {post.body}
+        {postRes.post.body}
       </p>
     {/if}
   </div>
@@ -67,7 +65,7 @@
     <a
       class="flex flex-row items-center gap-2.5 p-1 px-2 rounded-md
             bg-slate-100 dark:bg-zinc-800"
-      href="/post/{post.id}"
+      href="/post/{postRes.post.id}"
     >
       <Icon src={ChatBubbleLeft} width={16} height={16} />
       <span class="text-sm">{postRes.counts.comments}</span>

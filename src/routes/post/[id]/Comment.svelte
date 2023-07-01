@@ -6,10 +6,11 @@
   import RelativeDate from '$lib/components/RelativeDate.svelte'
 
   export let node: CommentNodeI
+  export let open = true
 </script>
 
 <li class="py-2">
-  <details open class="flex flex-col gap-1">
+  <details {open} class="flex flex-col gap-1">
     <summary class="flex flex-row cursor-pointer arrow gap-2 items-center">
       <Avatar
         url={node.comment_view.creator.avatar ??

@@ -8,6 +8,7 @@
   } from 'lemmy-js-client'
   import type { CommentNodeI } from './comments.js'
   import Comments from './Comments.svelte'
+  import SvelteMarkdown from 'svelte-markdown'
 
   export let data: { post: GetPostResponse; comments: GetCommentsResponse }
 
@@ -81,12 +82,9 @@
 
     return tree
   }
-
-  let newComment = ''
-
-  async function comment() {}
 </script>
 
+<title>{data.post.post_view.post.name}</title>
 <div class="flex flex-col gap-2">
   <span class="flex flex-row gap-2 text-sm opacity-70">
     <a href="/">c/{postData.community.name}</a>
@@ -94,13 +92,18 @@
   </span>
   <h1 class="font-bold text-lg">{post.name}</h1>
   {#if post.thumbnail_url}
-    <img src={post.thumbnail_url} alt={post.name} />
+    <img
+      src={post.thumbnail_url}
+      alt={post.name}
+      class="rounded-md max-w-xl mx-auto"
+    />
   {/if}
   {#if post.body}
     <p
-      class="bg-slate-100 border border-slate-200 dark:border-zinc-800 dark:bg-zinc-900 p-2 text-sm rounded-md"
+      class="bg-slate-100 border border-slate-200 dark:border-zinc-800
+    dark:bg-zinc-900 p-2 text-sm rounded-md"
     >
-      {post.body}
+      <SvelteMarkdown source={post.body} />
     </p>
   {/if}
 </div>
