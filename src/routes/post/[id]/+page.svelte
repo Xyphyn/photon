@@ -96,7 +96,7 @@
     <img
       src={post.thumbnail_url}
       alt={post.name}
-      class="rounded-md max-w-xl mx-auto"
+      class="rounded-md max-w-screen max-h-[80vh] mx-auto"
     />
   {/if}
   {#if post.body}

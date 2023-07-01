@@ -29,7 +29,10 @@
       </span>
     </summary>
     <div class="mt-1">
-      <div class="flex flex-col gap-1">
+      <div
+        class="flex flex-col gap-1 whitespace-pre-wrap
+      max-w-full"
+      >
         <SvelteMarkdown source={node.comment_view.comment.content} />
         <div class="flex flex-row gap-2">
           <button>
