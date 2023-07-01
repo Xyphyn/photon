@@ -24,7 +24,7 @@
 
 <div
   class="bg-white dark:bg-zinc-900 border dark:border-zinc-800 border-slate-200
-    rounded-md flex flex-col overflow-hidden max-w-xl"
+    rounded-md flex flex-col overflow-hidden max-w-xl w-full"
 >
   <div class="flex flex-col gap-2 bg-white dark:bg-zinc-900 p-4 rounded-md">
     <span class="flex flex-row gap-2 text-sm opacity-70">

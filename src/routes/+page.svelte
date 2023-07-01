@@ -9,7 +9,7 @@
   export let data
 </script>
 
-<div class="flex flex-row">
+<div class="flex flex-row max-w-full">
   <div class="flex flex-col gap-2">
     <MultiSelect options={['Subscribed', 'Local', 'All']} selected="Local" />
 
@@ -19,11 +19,15 @@
       {/each}
     </div>
 
-    <Button
-      on:click={() =>
-        goto(`/?page=${(Number($page.url.searchParams.get('page')) || 1) + 1}`)}
-    >
-      Next
-    </Button>
+    <div>
+      <Button
+        on:click={() =>
+          goto(
+            `/?page=${(Number($page.url.searchParams.get('page')) || 1) + 1}`
+          )}
+      >
+        Next
+      </Button>
+    </div>
   </div>
 </div>
