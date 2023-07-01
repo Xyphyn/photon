@@ -15,6 +15,7 @@
   } from 'svelte-hero-icons'
   import type { CommentNodeI } from './comments.js'
   import RelativeDate from '$lib/components/RelativeDate.svelte'
+  import CommunityLink from '$lib/components/CommunityLink.svelte'
 
   let postRes: PostView
   export { postRes as post }
@@ -26,13 +27,15 @@
 >
   <div class="flex flex-col gap-2 bg-white dark:bg-zinc-900 p-4 rounded-md">
     <span class="flex flex-row gap-2 text-sm opacity-70">
-      <a href="/c/{postRes.community.name}">c/{postRes.community.name}</a>
+      <CommunityLink community={postRes.community} />
       <span class="opacity-50">{postRes.creator.name}</span>
       <span class="opacity-50">
         <RelativeDate date={new Date(postRes.post.published)} />
       </span>
     </span>
-    <h1 class="font-bold text-lg">{postRes.post.name}</h1>
+    <a href="/post/{postRes.post.id}" class="font-bold text-lg">
+      {postRes.post.name}
+    </a>
     {#if postRes.post.url}
       <a
         href={postRes.post.url}
@@ -40,6 +43,15 @@
                 whitespace-nowrap text-ellipsis text-xs hover:underline"
       >
         {postRes.post.url}
+      </a>
+    {/if}
+    {#if postRes.post.thumbnail_url}
+      <a href="/post/{postRes.post.id}" class="inline self-start">
+        <img
+          src={postRes.post.thumbnail_url}
+          alt={postRes.post.name}
+          class="rounded-md max-h-64 max-w-max"
+        />
       </a>
     {/if}
     {#if postRes.post.body}

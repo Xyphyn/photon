@@ -9,6 +9,7 @@
   import type { CommentNodeI } from './comments.js'
   import Comments from './Comments.svelte'
   import SvelteMarkdown from 'svelte-markdown'
+  import CommunityLink from '$lib/components/CommunityLink.svelte'
 
   export let data: { post: GetPostResponse; comments: GetCommentsResponse }
 
@@ -87,7 +88,7 @@
 <title>{data.post.post_view.post.name}</title>
 <div class="flex flex-col gap-2">
   <span class="flex flex-row gap-2 text-sm opacity-70">
-    <a href="/">c/{postData.community.name}</a>
+    <CommunityLink community={postData.community} />
     <span class="opacity-50">{postData.creator.name}</span>
   </span>
   <h1 class="font-bold text-lg">{post.name}</h1>
@@ -108,7 +109,11 @@
   {/if}
 </div>
 <div class="mt-4 flex flex-col gap-2">
-  <div class="font-bold text-lg">Comments</div>
+  <div class="font-bold text-lg">
+    Comments <span class="text-sm font-normal ml-2 opacity-80">
+      {postData.counts.comments}
+    </span>
+  </div>
   <MultiSelect
     options={['hot', 'new', 'top']}
     optionNames={['Hot', 'New', 'Top']}
