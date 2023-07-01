@@ -26,7 +26,7 @@
 >
   <div class="flex flex-col gap-2 bg-white dark:bg-zinc-900 p-4 rounded-md">
     <span class="flex flex-row gap-2 text-sm opacity-70">
-      <a href="/">c/{postRes.community.name}</a>
+      <a href="/c/{postRes.community.name}">c/{postRes.community.name}</a>
       <span class="opacity-50">{postRes.creator.name}</span>
       <span class="opacity-50">
         <RelativeDate date={new Date(postRes.post.published)} />
