@@ -1,7 +1,7 @@
 import { lemmy } from '$lib/lemmy.js'
 import type { ListingType, SortType } from 'lemmy-js-client'
 
-export function load(req) {
+export function load(req: any) {
   const page = Number(req.url.searchParams.get('page') || 1) || 1
 
   const sort: SortType =
