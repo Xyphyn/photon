@@ -119,5 +119,5 @@
     optionNames={['Hot', 'New', 'Top']}
     selected="hot"
   />
+  <Comments nodes={buildCommentsTree(comments, false)} isParent={true} />
 </div>
-<Comments nodes={buildCommentsTree(comments, false)} isParent={true} />

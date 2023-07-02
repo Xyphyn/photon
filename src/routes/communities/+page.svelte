@@ -10,23 +10,44 @@
     UserGroup,
   } from 'svelte-hero-icons'
   import CommunityLink from '$lib/components/CommunityLink.svelte'
+  import Link from '$lib/components/Link.svelte'
+  import { Color } from '$lib/ui/colors.js'
 
   export let data
+
+  let search = ''
 </script>
 
-<MultiSelect
-  options={['Subscribed', 'Local', 'All']}
-  selected={$page.url.searchParams.get('type') ?? 'Local'}
-  on:select={(e) => {
-    const url = $page.url
-    url.searchParams.set('type', e.detail)
-    url.searchParams.delete('page')
-    goto(url, {
-      invalidateAll: true,
-    })
-  }}
-/>
-
+<div class="flex flex-col sm:flex-row gap-4">
+  <MultiSelect
+    options={['Subscribed', 'Local', 'All']}
+    selected={$page.url.searchParams.get('type') ?? 'Local'}
+    on:select={(e) => {
+      const url = $page.url
+      url.searchParams.set('type', e.detail)
+      url.searchParams.delete('page')
+      goto(url, {
+        invalidateAll: true,
+      })
+    }}
+  />
+  <div class="flex flex-col sm:flex-row gap-2 sm:ml-auto">
+    <input
+      class="bg-slate-100 border border-slate-200 dark:border-zinc-800
+  dark:bg-zinc-900 rounded-md"
+      bind:value={search}
+    />
+    <Link
+      href={(function () {
+        $page.url.searchParams.set('q', search)
+        return $page.url.toString()
+      })()}
+      color={Color.ghost}
+    >
+      Search
+    </Link>
+  </div>
+</div>
 <ul class="flex flex-col">
   {#each data.communities as community}
     <li>

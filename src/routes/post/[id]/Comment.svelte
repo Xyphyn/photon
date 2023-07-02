@@ -9,7 +9,7 @@
   export let open = true
 </script>
 
-<li class="py-2">
+<li class="py-3">
   <details {open} class="flex flex-col gap-1">
     <summary class="flex flex-row cursor-pointer arrow gap-2 items-center">
       <Avatar
