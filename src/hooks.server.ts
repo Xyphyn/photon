@@ -1,4 +1,5 @@
 import { instance_url } from '$lib/lemmy.js'
+import { error } from '@sveltejs/kit'
 
 export async function handle({ event, resolve }) {
   // annoying hack to fix lemmy's CORS
@@ -12,13 +13,18 @@ export async function handle({ event, resolve }) {
     event.request.headers.delete('origin')
     event.request.headers.delete('host')
 
-    const data = await fetch(`https://${instance}/${url.toString()}`, {
-      method: event.request.method,
-      body: event.request.body,
-      headers: event.request.headers,
-    })
+    try {
+      const data = await fetch(`https://${instance}/${url.toString()}`, {
+        method: event.request.method,
+        body: event.request.body,
+        headers: event.request.headers,
+      })
 
-    return new Response(JSON.stringify(await data.json()))
+      return new Response(JSON.stringify(await data.json()))
+    } catch (err) {
+      console.error(err)
+      throw error(500, `The proxy failed to fetch from ${instance}.`)
+    }
   }
 
   const response = await resolve(event)

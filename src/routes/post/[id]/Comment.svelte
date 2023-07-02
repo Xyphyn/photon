@@ -13,7 +13,9 @@
 
 <li class="py-3">
   <details bind:open class="flex flex-col gap-1">
-    <summary class="flex flex-row cursor-pointer arrow gap-2 items-center">
+    <summary
+      class="flex flex-row cursor-pointer arrow gap-2 items-center group"
+    >
       <Avatar
         url={node.comment_view.creator.avatar ??
           `https://api.dicebear.com/6.x/initials/svg?seed=${node.comment_view.creator.name}`}
@@ -28,6 +30,25 @@
       </span>
       <span class="text-sm opacity-60">
         <RelativeDate date={new Date(node.comment_view.comment.published)} />
+      </span>
+      <span
+        class="ml-auto translate-x-1 opacity-0
+        group-hover:translate-x-0 group-hover:opacity-100 text-xs transition-all
+        flex flex-row items-center gap-1 hover:dark:bg-white/10 p-1 rounded-md
+        hover:bg-black/10 px-2"
+      >
+        {#if open}
+          <div class="inline">
+            <Icon src={Minus} width={16} height={16} mini />
+          </div>
+          Collapse
+        {:else}
+          <Icon src={Plus} width={16} height={16} mini />
+          Expand
+          {#if node.children.length > 0}
+            <span class="text-xs opacity-50">+{node.children.length}</span>
+          {/if}
+        {/if}
       </span>
     </summary>
     <div class="mt-1">

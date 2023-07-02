@@ -8,10 +8,13 @@ export function load({ url, cookies }) {
   const listingType: ListingType =
     (url.searchParams.get('type') as ListingType) || 'Local'
 
-  return getClient(cookies.get('instance_url')).getPosts({
-    limit: 40,
-    page: page,
-    sort: sort,
-    type_: listingType,
-  })
+  return {
+    posts: getClient(cookies.get('instance_url')).getPosts({
+      limit: 40,
+      page: page,
+      sort: sort,
+      type_: listingType,
+    }),
+    site: getClient(cookies.get('instance_url')).getSite({}),
+  }
 }

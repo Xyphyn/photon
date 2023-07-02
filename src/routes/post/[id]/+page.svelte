@@ -10,6 +10,7 @@
   import Comments from './Comments.svelte'
   import SvelteMarkdown from 'svelte-markdown'
   import CommunityLink from '$lib/components/CommunityLink.svelte'
+  import { isImage } from '$lib/ui/image.js'
 
   export let data: { post: GetPostResponse; comments: GetCommentsResponse }
 
@@ -101,9 +102,9 @@
       {post.url}
     </a>
   {/if}
-  {#if post.thumbnail_url}
+  {#if isImage(post.url)}
     <img
-      src={post.thumbnail_url}
+      src={post.url}
       alt={post.name}
       class="rounded-md max-w-screen max-h-[80vh] mx-auto"
     />
