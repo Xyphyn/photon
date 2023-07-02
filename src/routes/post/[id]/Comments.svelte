@@ -2,7 +2,7 @@
   import Comment from './Comment.svelte'
   import type { CommentNodeI } from './comments.js'
 
-  const maxComments = 10
+  const maxComments = 250
 
   export let nodes: CommentNodeI[]
   export let isParent: boolean
