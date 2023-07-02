@@ -1,6 +1,8 @@
 <script lang="ts">
   import Link from '$lib/components/Link.svelte'
   import Logo from '$lib/components/Logo.svelte'
+
+  export let instance_url: string | undefined
 </script>
 
 <nav
@@ -10,7 +12,18 @@
   <div class="flex flex-row gap-2 items-center mr-auto">
     <a href="/" class="flex flex-row items-center gap-2">
       <Logo width={40} />
-      <span class="font-bold">Xylemmy</span>
+      <div class="flex flex-col">
+        <span class="font-bold">Xylemmy</span>
+        {#if instance_url}
+          <a
+            class="text-xs opacity-50 hover:opacity-100 hover:underline
+            transition-opacity"
+            href="/instance"
+          >
+            {new URL(`https://${instance_url}`).hostname}
+          </a>
+        {/if}
+      </div>
     </a>
   </div>
   <Link href="/communities">Communities</Link>

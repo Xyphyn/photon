@@ -1,4 +1,4 @@
-import { lemmy } from '$lib/lemmy.js'
+import { getClient } from '$lib/lemmy.js'
 import type { ListingType, SortType } from 'lemmy-js-client'
 
 export function load(req: any) {
@@ -7,7 +7,7 @@ export function load(req: any) {
   const sort: SortType =
     (req.url.searchParams.get('sort') as SortType) || 'Active'
 
-  return lemmy.getPosts({
+  return getClient(req.cookies.get('instance_url')).getPosts({
     limit: 40,
     community_name: req.params.name,
     page: page,

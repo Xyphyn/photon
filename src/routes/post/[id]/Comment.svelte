@@ -14,9 +14,6 @@
 <li class="py-3">
   <details bind:open class="flex flex-col gap-1">
     <summary class="flex flex-row cursor-pointer arrow gap-2 items-center">
-      <!-- <button class="-z-10">
-        <Icon src={open ? Minus : Plus} width={12} mini />
-      </button> -->
       <Avatar
         url={node.comment_view.creator.avatar ??
           `https://api.dicebear.com/6.x/initials/svg?seed=${node.comment_view.creator.name}`}
@@ -38,7 +35,9 @@
         class="flex flex-col gap-1 whitespace-pre-wrap
       max-w-full"
       >
-        <SvelteMarkdown source={node.comment_view.comment.content} />
+        <div class="max-w-full break-words">
+          <SvelteMarkdown source={node.comment_view.comment.content} />
+        </div>
         <div class="flex flex-row gap-2">
           <button>
             <Icon src={ArrowUp} width={16} mini />

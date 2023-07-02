@@ -16,6 +16,7 @@
   import type { CommentNodeI } from './comments.js'
   import RelativeDate from '$lib/components/RelativeDate.svelte'
   import CommunityLink from '$lib/components/CommunityLink.svelte'
+  import { isImage } from '$lib/ui/image.js'
 
   let postRes: PostView
   export { postRes as post }
@@ -45,12 +46,13 @@
         {postRes.post.url}
       </a>
     {/if}
-    {#if postRes.post.thumbnail_url}
+    {#if isImage(postRes.post.url)}
       <a href="/post/{postRes.post.id}" class="inline self-start">
         <img
-          src={postRes.post.thumbnail_url}
+          src={postRes.post.url}
           alt={postRes.post.name}
-          class="rounded-md max-h-64 max-w-max"
+          class="rounded-md max-h-64 max-w-full"
+          loading="lazy"
         />
       </a>
     {/if}

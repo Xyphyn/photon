@@ -1,9 +1,11 @@
-import { lemmy } from '$lib/lemmy.js'
+import { getClient } from '$lib/lemmy.js'
 
-export async function load({ params }) {
+export async function load({ params, cookies }) {
   return {
-    post: await lemmy.getPost({ id: Number(params.id) }),
-    comments: await lemmy.getComments({
+    post: await getClient(cookies.get('instance_url')).getPost({
+      id: Number(params.id),
+    }),
+    comments: await getClient(cookies.get('instance_url')).getComments({
       post_id: Number(params.id),
       type_: 'All',
       limit: 250,
