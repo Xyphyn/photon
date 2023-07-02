@@ -92,6 +92,13 @@
     <span class="opacity-50">{postData.creator.name}</span>
   </span>
   <h1 class="font-bold text-lg">{post.name}</h1>
+  <a
+    href={post.url}
+    class="text-sky-400 max-w-[48ch] overflow-hidden
+                whitespace-nowrap text-ellipsis text-xs hover:underline"
+  >
+    {post.url}
+  </a>
   {#if post.thumbnail_url}
     <img
       src={post.thumbnail_url}

@@ -1,17 +1,22 @@
 <script lang="ts">
-  import { ArrowDown, ArrowUp, Icon } from 'svelte-hero-icons'
+  import { ArrowDown, ArrowUp, Icon, Minus, Plus } from 'svelte-hero-icons'
   import Avatar from './Avatar.svelte'
   import type { CommentNodeI } from './comments.js'
   import SvelteMarkdown from 'svelte-markdown'
   import RelativeDate from '$lib/components/RelativeDate.svelte'
+  import Button from '$lib/components/Button.svelte'
+  import { Color } from '$lib/ui/colors.js'
 
   export let node: CommentNodeI
   export let open = true
 </script>
 
 <li class="py-3">
-  <details {open} class="flex flex-col gap-1">
+  <details bind:open class="flex flex-col gap-1">
     <summary class="flex flex-row cursor-pointer arrow gap-2 items-center">
+      <!-- <button class="-z-10">
+        <Icon src={open ? Minus : Plus} width={12} mini />
+      </button> -->
       <Avatar
         url={node.comment_view.creator.avatar ??
           `https://api.dicebear.com/6.x/initials/svg?seed=${node.comment_view.creator.name}`}
@@ -47,5 +52,6 @@
         </div>
       </div>
     </div>
+    <slot />
   </details>
 </li>
