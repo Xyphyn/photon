@@ -68,7 +68,11 @@
       <button aria-label="Upvote" class="p-1 px-1.5">
         <Icon src={ChevronUp} mini width={20} height={20} />
       </button>
-      <span class="text-sm">{postRes.counts.score}</span>
+      <span class="text-sm">
+        {Intl.NumberFormat('en', { notation: 'compact' }).format(
+          postRes.counts.score
+        )}
+      </span>
       <button aria-label="Downvote" class="p-1 px-1.5">
         <Icon src={ChevronDown} mini width={20} height="20}" />
       </button>
@@ -80,7 +84,11 @@
       href="/post/{postRes.post.id}"
     >
       <Icon src={ChatBubbleLeft} width={16} height={16} />
-      <span class="text-sm">{postRes.counts.comments}</span>
+      <span class="text-sm">
+        {Intl.NumberFormat('en', { notation: 'compact' }).format(
+          postRes.counts.comments
+        )}
+      </span>
     </a>
   </div>
 </div>
