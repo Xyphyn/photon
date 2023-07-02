@@ -21,7 +21,7 @@
   }
 </script>
 
-<Navbar routes={$page.url.pathname.split('/').slice(1)} />
+<Navbar />
 <div class="mx-auto max-w-5xl p-4">
   <slot />
 </div>

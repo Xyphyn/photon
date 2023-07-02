@@ -1,8 +1,6 @@
 <script lang="ts">
   import Link from '$lib/components/Link.svelte'
   import Logo from '$lib/components/Logo.svelte'
-
-  export let routes: string[] = []
 </script>
 
 <nav
@@ -10,23 +8,10 @@
     max-w-5xl mx-auto px-6"
 >
   <div class="flex flex-row gap-2 items-center mr-auto">
-    <a href="/">
+    <a href="/" class="flex flex-row items-center gap-2">
       <Logo width={40} />
+      <span class="font-bold">Xylemmy</span>
     </a>
-    {#if routes.length != 0}
-      {#each routes as route}
-        <svg
-          fill="none"
-          height="32"
-          viewBox="0 0 24 24"
-          width="32"
-          class="stroke-1 opacity-20 stroke-black dark:stroke-white"
-        >
-          <path d="M16.88 3.549L7.12 20.451" />
-        </svg>
-        <span>{route}</span>
-      {/each}
-    {/if}
   </div>
   <Link href="/communities">Communities</Link>
   <div
