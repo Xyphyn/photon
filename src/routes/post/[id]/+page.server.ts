@@ -6,7 +6,7 @@ export async function load({ params }) {
     comments: await lemmy.getComments({
       post_id: Number(params.id),
       type_: 'All',
-      limit: 20,
+      limit: 250,
       page: 1,
       max_depth: 6,
       saved_only: false,
