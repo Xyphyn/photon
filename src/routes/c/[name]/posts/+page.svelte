@@ -46,8 +46,8 @@
     </div>
   </div>
   <div
-    class="bg-white border border-slate-200 dark:border-zinc-800
-  dark:bg-zinc-900 hidden lg:flex flex-col gap-4 p-8 max-w-sm rounded-md h-max"
+    class="sticky top-4 bg-white border border-slate-200 dark:border-zinc-800
+  dark:bg-zinc-900 break-words hidden lg:flex flex-col gap-4 p-8 max-w-sm rounded-md h-max"
   >
     <Avatar
       width={48}
