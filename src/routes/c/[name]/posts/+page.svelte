@@ -6,6 +6,16 @@
   import Avatar from '../../../post/[id]/Avatar.svelte'
   import Post from '../../../post/[id]/Post.svelte'
   import { goto } from '$app/navigation'
+  import RelativeDate from '$lib/components/RelativeDate.svelte'
+  import {
+    Calendar,
+    ChatBubbleOvalLeftEllipsis,
+    Icon,
+    Newspaper,
+    PencilSquare,
+    UserGroup,
+  } from 'svelte-hero-icons'
+  import FormattedNumber from '$lib/components/FormattedNumber.svelte'
 
   export let data
 </script>
@@ -56,6 +66,24 @@
         `https://api.dicebear.com/6.x/initials/svg?seed=${data.community_view.community.name}`}
       alt={data.community_view.community.name}
     />
+    <span class="flex flex-row items-center gap-1 text-sm">
+      <Icon src={Calendar} width={16} height={16} mini />
+      <RelativeDate date={new Date(data.community_view.community.published)} />
+    </span>
+    <div class="text-sm flex flex-row flex-wrap gap-3">
+      <span class="flex flex-row items-center gap-1">
+        <Icon src={UserGroup} width={16} height={16} mini />
+        <FormattedNumber number={data.community_view.counts.subscribers} />
+      </span>
+      <span class="flex flex-row items-center gap-1">
+        <Icon src={PencilSquare} width={16} height={16} mini />
+        <FormattedNumber number={data.community_view.counts.posts} />
+      </span>
+      <span class="flex flex-row items-center gap-1">
+        <Icon src={ChatBubbleOvalLeftEllipsis} width={16} height={16} mini />
+        <FormattedNumber number={data.community_view.counts.comments} />
+      </span>
+    </div>
     <h1 class="font-bold text-lg">{data.community_view.community.name}</h1>
     <SvelteMarkdown source={data.community_view.community.description} />
   </div>

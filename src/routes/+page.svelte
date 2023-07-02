@@ -24,8 +24,8 @@
 </script>
 
 <div class="flex flex-row gap-4">
-  <div class="flex flex-col gap-4">
-    <div class="flex flex-col sm:flex-row gap-4">
+  <div class="flex flex-col gap-4 max-w-full">
+    <div class="flex flex-col sm:flex-row gap-4 max-w-full">
       <MultiSelect
         options={['Subscribed', 'Local', 'All']}
         selected={$page.url.searchParams.get('type') ?? 'Local'}
