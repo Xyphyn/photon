@@ -9,7 +9,7 @@
   import type { CommentNodeI } from './comments.js'
   import Comments from './Comments.svelte'
   import SvelteMarkdown from 'svelte-markdown'
-  import CommunityLink from '$lib/components/CommunityLink.svelte'
+  import CommunityLink from '$lib/components/community/CommunityLink.svelte'
   import { isImage } from '$lib/ui/image.js'
 
   export let data: { post: GetPostResponse; comments: GetCommentsResponse }
@@ -88,8 +88,8 @@
 
 <title>{data.post.post_view.post.name}</title>
 <div class="flex flex-col gap-2">
-  <span class="flex flex-row gap-2 text-sm opacity-70">
-    <CommunityLink community={postData.community} />
+  <span class="flex flex-row gap-2 text-sm opacity-80 items-center">
+    <CommunityLink avatar community={postData.community} />
     <span class="opacity-50">{postData.creator.name}</span>
   </span>
   <h1 class="font-bold text-lg">{post.name}</h1>
@@ -112,7 +112,7 @@
   {#if post.body}
     <p
       class="bg-slate-100 border border-slate-200 dark:border-zinc-800
-    dark:bg-zinc-900 p-2 text-sm rounded-md"
+    dark:bg-zinc-900 p-2 text-sm rounded-md leading-5"
     >
       <SvelteMarkdown source={post.body} />
     </p>

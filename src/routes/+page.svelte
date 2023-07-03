@@ -75,36 +75,74 @@
     </div>
   </div>
   <div class="ml-auto hidden lg:block max-w-sm w-full">
-    <Card>
-      <Avatar
-        width={64}
-        url={data.site.site_view.site.icon ?? ''}
-        alt={data.site.site_view.site.name}
-      />
-      <span class="flex flex-row items-center gap-1 text-sm">
-        <Icon src={Calendar} width={16} height={16} mini />
-        <RelativeDate date={new Date(data.site.site_view.site.published)} />
-      </span>
-      <div class="text-sm flex flex-row flex-wrap gap-3">
-        <span class="flex flex-row items-center gap-1">
-          <Icon src={UserGroup} width={16} height={16} mini />
-          <FormattedNumber number={data.site.site_view.counts.users} />
+    {#await data.streamed.site}
+      <Card>
+        <div
+          class="w-[64px] h-[64px] rounded-full bg-slate-200
+        dark:bg-zinc-700 animate-pulse"
+        />
+        <div
+          class="w-32 h-3 bg-slate-200 dark:bg-zinc-700 animate-pulse
+        rounded-md"
+        />
+        <div
+          class="w-64 h-3 bg-slate-200 dark:bg-zinc-700 animate-pulse
+        rounded-md"
+        />
+        <div
+          class="w-36 h-4 bg-slate-200 dark:bg-zinc-700 animate-pulse
+        rounded-md"
+        />
+        <div
+          class="w-full h-4 bg-slate-200 dark:bg-zinc-700 animate-pulse
+        rounded-md"
+        />
+        <div
+          class="w-24 h-4 bg-slate-200 dark:bg-zinc-700 animate-pulse
+        rounded-md"
+        />
+      </Card>
+    {:then site}
+      <Card>
+        <Avatar
+          width={64}
+          url={site.site_view.site.icon ?? ''}
+          alt={site.site_view.site.name}
+        />
+        <span class="flex flex-row items-center gap-1 text-sm">
+          <Icon src={Calendar} width={16} height={16} mini />
+          <RelativeDate date={new Date(site.site_view.site.published)} />
         </span>
-        <span class="flex flex-row items-center gap-1">
-          <Icon src={PencilSquare} width={16} height={16} mini />
-          <FormattedNumber number={data.site.site_view.counts.posts} />
-        </span>
-        <span class="flex flex-row items-center gap-1">
-          <Icon src={ChatBubbleOvalLeftEllipsis} width={16} height={16} mini />
-          <FormattedNumber number={data.site.site_view.counts.comments} />
-        </span>
-        <span class="flex flex-row items-center gap-1">
-          <Icon src={Newspaper} width={16} height={16} mini />
-          <FormattedNumber number={data.site.site_view.counts.communities} />
-        </span>
-      </div>
-      <h1 class="font-bold text-lg">{data.site.site_view.site.name}</h1>
-      <Markdown source={data.site.site_view.site.description ?? ''} />
-    </Card>
+        <div class="text-sm flex flex-row flex-wrap gap-3">
+          <span class="flex flex-row items-center gap-1">
+            <Icon src={UserGroup} width={16} height={16} mini />
+            <FormattedNumber number={site.site_view.counts.users} />
+          </span>
+          <span class="flex flex-row items-center gap-1">
+            <Icon src={PencilSquare} width={16} height={16} mini />
+            <FormattedNumber number={site.site_view.counts.posts} />
+          </span>
+          <span class="flex flex-row items-center gap-1">
+            <Icon
+              src={ChatBubbleOvalLeftEllipsis}
+              width={16}
+              height={16}
+              mini
+            />
+            <FormattedNumber number={site.site_view.counts.comments} />
+          </span>
+          <span class="flex flex-row items-center gap-1">
+            <Icon src={Newspaper} width={16} height={16} mini />
+            <FormattedNumber number={site.site_view.counts.communities} />
+          </span>
+        </div>
+        <h1 class="font-bold text-lg">{site.site_view.site.name}</h1>
+        <Markdown source={site.site_view.site.description ?? ''} />
+      </Card>
+    {:catch}
+      <Card>
+        <h1 class="font-bold text-lg">Failed to load</h1>
+      </Card>
+    {/await}
   </div>
 </div>

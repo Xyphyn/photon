@@ -1,13 +1,13 @@
 import { getClient } from '$lib/lemmy.js'
 import type { ListingType } from 'lemmy-js-client'
 
-export function load({ url, cookies }) {
+export function load({ url }) {
   const type = url.searchParams.get('listingType') as ListingType
   const page = Number(url.searchParams.get('page')) || 1
   const query = url.searchParams.get('q')
 
   if (query) {
-    return getClient(cookies.get('instance_url')).search({
+    return getClient().search({
       limit: 40,
       page: page,
       sort: 'Active',
@@ -16,7 +16,7 @@ export function load({ url, cookies }) {
       q: query,
     })
   } else {
-    return getClient(cookies.get('instance_url')).listCommunities({
+    return getClient().listCommunities({
       limit: 40,
       page: page,
       sort: 'Active',

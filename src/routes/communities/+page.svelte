@@ -9,7 +9,7 @@
     PencilSquare,
     UserGroup,
   } from 'svelte-hero-icons'
-  import CommunityLink from '$lib/components/CommunityLink.svelte'
+  import CommunityLink from '$lib/components/community/CommunityLink.svelte'
   import Link from '$lib/components/Link.svelte'
   import { Color } from '$lib/ui/colors.js'
 

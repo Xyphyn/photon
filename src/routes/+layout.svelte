@@ -19,11 +19,9 @@
       nProgress.done()
     }
   }
-
-  export let data
 </script>
 
-<Navbar instance_url={data.instance_url} />
+<Navbar />
 <div class="mx-auto max-w-5xl p-4">
   <slot />
 </div>

@@ -1,8 +1,7 @@
 <script lang="ts">
   import Link from '$lib/components/Link.svelte'
   import Logo from '$lib/components/Logo.svelte'
-
-  export let instance_url: string | undefined
+  import { instance_url } from '$lib/lemmy.js'
 </script>
 
 <nav
@@ -14,13 +13,13 @@
       <Logo width={40} />
       <div class="flex flex-col">
         <span class="font-bold">Xylemmy</span>
-        {#if instance_url}
+        {#if $instance_url}
           <a
             class="text-xs opacity-50 hover:opacity-100 hover:underline
             transition-opacity"
             href="/instance"
           >
-            {new URL(`https://${instance_url}`).hostname}
+            {new URL(`https://${$instance_url}`).hostname}
           </a>
         {/if}
       </div>

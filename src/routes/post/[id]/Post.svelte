@@ -17,7 +17,7 @@
   } from 'svelte-hero-icons'
   import type { CommentNodeI } from './comments.js'
   import RelativeDate from '$lib/components/RelativeDate.svelte'
-  import CommunityLink from '$lib/components/CommunityLink.svelte'
+  import CommunityLink from '$lib/components/community/CommunityLink.svelte'
   import { isImage } from '$lib/ui/image.js'
 
   let postRes: PostView
@@ -29,8 +29,9 @@
     rounded-md flex flex-col overflow-hidden max-w-xl w-full"
 >
   <div class="flex flex-col gap-2 bg-white dark:bg-zinc-900 p-4 rounded-md">
-    <span class="flex flex-row gap-2 text-sm opacity-70">
-      <CommunityLink community={postRes.community} />
+    <span class="flex flex-row gap-2 text-sm opacity-80 items-center">
+      <CommunityLink avatar community={postRes.community} />
+      <div class="ml-auto" />
       <span class="opacity-50">{postRes.creator.name}</span>
       <span class="opacity-50">
         <RelativeDate date={new Date(postRes.post.published)} />
