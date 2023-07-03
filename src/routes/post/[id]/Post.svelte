@@ -15,13 +15,43 @@
     ChevronUp,
     Icon,
   } from 'svelte-hero-icons'
-  import type { CommentNodeI } from './comments.js'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import CommunityLink from '$lib/components/community/CommunityLink.svelte'
   import { isImage } from '$lib/ui/image.js'
+  import { authData, getClient } from '$lib/lemmy.js'
 
   let postRes: PostView
   export { postRes as post }
+
+  let vote = postRes.my_vote
+
+  async function upvote() {
+    if (!$authData) return
+
+    const upvoted = postRes.my_vote == 1
+
+    await getClient()
+      .likePost({
+        score: upvoted ? 0 : 1,
+        auth: $authData.token,
+        post_id: postRes.post.id,
+      })
+      .catch((_) => undefined)
+  }
+
+  async function downvote() {
+    if (!$authData) return
+
+    const upvoted = postRes.my_vote == -1
+
+    await getClient()
+      .likePost({
+        score: upvoted ? 0 : -1,
+        auth: $authData.token,
+        post_id: postRes.post.id,
+      })
+      .catch((_) => undefined)
+  }
 </script>
 
 <div
@@ -65,13 +95,26 @@
       </p>
     {/if}
   </div>
-  <div class="flex flex-row gap-2 p-2">
+  <div class="flex flex-row gap-2 pb-4 px-4">
     <div
-      class="flex flex-row items-center gap-1 rounded-md
-            bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200
-            dark:hover:bg-zinc-700 transition-colors cursor-pointer"
+      class="flex flex-row items-center gap-1 rounded-md transition-colors cursor-pointer
+            {// upvote
+      vote == 1
+        ? 'bg-orange-600/20 text-orange-500'
+        : // downvote
+        vote == -1
+        ? 'bg-blue-600/40 text-blue-400'
+        : // no vote
+          'bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700'}"
     >
-      <button aria-label="Upvote" class="p-1 px-1.5">
+      <button
+        aria-label="Upvote"
+        class="p-1 px-1.5"
+        on:click={() => {
+          vote = vote == 1 ? 0 : 1
+          upvote()
+        }}
+      >
         <Icon src={ChevronUp} mini width={20} height={20} />
       </button>
       <span class="text-sm">
@@ -79,7 +122,14 @@
           postRes.counts.score
         )}
       </span>
-      <button aria-label="Downvote" class="p-1 px-1.5">
+      <button
+        aria-label="Downvote"
+        class="p-1 px-1.5"
+        on:click={() => {
+          vote = vote == -1 ? 0 : -1
+          downvote()
+        }}
+      >
         <Icon src={ChevronDown} mini width={20} height={20} />
       </button>
     </div>

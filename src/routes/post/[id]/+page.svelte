@@ -7,17 +7,17 @@
     CommentView,
   } from 'lemmy-js-client'
   import type { CommentNodeI } from './comments.js'
-  import Comments from './Comments.svelte'
+  import Comments from './comment/Comments.svelte'
   import SvelteMarkdown from 'svelte-markdown'
   import CommunityLink from '$lib/components/community/CommunityLink.svelte'
   import { isImage } from '$lib/ui/image.js'
+  import { user } from '$lib/lemmy.js'
+  import CommentForm from './comment/CommentForm.svelte'
 
-  export let data: { post: GetPostResponse; comments: GetCommentsResponse }
+  export let data
 
   const postData = data.post.post_view
   const post = postData.post
-
-  const comments = data.comments.comments
 
   function getCommentParentId(comment?: Comment): number | undefined {
     const split = comment?.path.split('.')
@@ -124,10 +124,39 @@
       {postData.counts.comments}
     </span>
   </div>
-  <MultiSelect
-    options={['hot', 'new', 'top']}
-    optionNames={['Hot', 'New', 'Top']}
-    selected="hot"
-  />
-  <Comments nodes={buildCommentsTree(comments, false)} isParent={true} />
+  {#await data.streamed.comments}
+    <div class="flex flex-col gap-8">
+      {#each new Array(10) as comment}
+        <div class="flex flex-col gap-2">
+          <div
+            class="dark:bg-zinc-700 bg-slate-200 animate-pulse w-64 h-3 rounded-md"
+          />
+          <div
+            class="dark:bg-zinc-700 bg-slate-200 animate-pulse w-128 h-4 rounded-md"
+          />
+        </div>
+      {/each}
+    </div>
+  {:then comments}
+    {#if $user}
+      <CommentForm
+        postId={post.id}
+        on:comment={(comment) => comments.comments.unshift(comment.detail)}
+      />
+    {/if}
+    <MultiSelect
+      options={['hot', 'new', 'top']}
+      optionNames={['Hot', 'New', 'Top']}
+      selected="hot"
+    />
+    <Comments
+      {post}
+      nodes={buildCommentsTree(comments.comments, false)}
+      isParent={true}
+    />
+  {:catch}
+    <div class="bg-red-500/10 border border-red-500 rounded-md p-4">
+      Failed to load posts
+    </div>
+  {/await}
 </div>

@@ -1,7 +1,12 @@
+<script lang="ts">
+  let clazz = ''
+  export { clazz as class }
+</script>
+
 <div
-  class="sticky top-4 bg-white border border-slate-200
-    dark:border-zinc-800 dark:bg-zinc-900 break-words hidden lg:flex
-    flex-col gap-4 p-8 max-w-sm rounded-md h-max max-h-[calc(100vh-2rem)] overflow-auto"
+  class="bg-white border border-slate-200
+    dark:border-zinc-800 dark:bg-zinc-900 break-words
+    flex-col gap-4 p-4 max-w-lg rounded-md {clazz}"
 >
   <slot />
 </div>

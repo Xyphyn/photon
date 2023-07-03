@@ -1,7 +1,8 @@
-import { getClient } from '$lib/lemmy.js'
+import { authData, getClient } from '$lib/lemmy.js'
 import type { ListingType, SortType } from 'lemmy-js-client'
+import { get } from 'svelte/store'
 
-export function load({ url }) {
+export async function load({ url }) {
   const page = Number(url.searchParams.get('page') || 1) || 1
 
   const sort: SortType = (url.searchParams.get('sort') as SortType) || 'Active'
@@ -14,6 +15,7 @@ export function load({ url }) {
       page: page,
       sort: sort,
       type_: listingType,
+      auth: get(authData)?.token,
     }),
     streamed: {
       site: getClient().getSite({}),

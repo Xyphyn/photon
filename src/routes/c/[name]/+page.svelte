@@ -16,7 +16,7 @@
     UserGroup,
   } from 'svelte-hero-icons'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
-  import Card from '$lib/components/ui/Card.svelte'
+  import Card from '$lib/components/ui/StickyCard.svelte'
 
   export let data
 </script>

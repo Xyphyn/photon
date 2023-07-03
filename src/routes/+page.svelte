@@ -2,7 +2,7 @@
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
   import Button from '$lib/components/input/Button.svelte'
-  import Card from '$lib/components/ui/Card.svelte'
+  import Card from '$lib/components/ui/StickyCard.svelte'
   import Link from '$lib/components/input/Link.svelte'
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
   import {
@@ -90,7 +90,7 @@
         rounded-md"
         />
         <div
-          class="w-36 h-4 bg-slate-200 dark:bg-zinc-700 animate-pulse
+          class="w-36 mt-4 h-4 bg-slate-200 dark:bg-zinc-700 animate-pulse
         rounded-md"
         />
         <div

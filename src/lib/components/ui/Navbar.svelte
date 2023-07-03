@@ -1,7 +1,15 @@
 <script lang="ts">
   import Link from '$lib/components/input/Link.svelte'
   import Logo from '$lib/components/ui/Logo.svelte'
-  import { instance_url } from '$lib/lemmy.js'
+  import Menu from '$lib/components/ui/menu/Menu.svelte'
+  import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
+  import { instance_url, user } from '$lib/lemmy.js'
+  import {
+    ArrowLeftOnRectangle,
+    ArrowRightOnRectangle,
+    Cog6Tooth,
+    Icon,
+  } from 'svelte-hero-icons'
 </script>
 
 <nav
@@ -14,19 +22,37 @@
       <div class="flex flex-col">
         <span class="font-bold">Xylemmy</span>
         {#if $instance_url}
-          <a
-            class="text-xs opacity-50 hover:opacity-100 hover:underline
+          <span
+            class="text-xs opacity-50
             transition-opacity"
-            href="/instance"
           >
             {new URL(`https://${$instance_url}`).hostname}
-          </a>
+          </span>
         {/if}
       </div>
     </a>
   </div>
   <Link href="/communities">Communities</Link>
-  <div
-    class="w-8 h-8 rounded-full ring-1 ring-slate-300 bg-slate-100 dark:bg-zinc-800"
-  />
+  <Menu>
+    <button
+      class="w-8 h-8 rounded-full ring-1 ring-slate-300 bg-slate-100 dark:bg-zinc-800"
+      aria-label="Profile"
+      slot="button"
+    >
+      {#if $user}
+        <img
+          src={$user.person_view.person.avatar ??
+            'https://xylo.xylight.dev/img/logo-background.svg'}
+          alt=""
+          width={32}
+          height={32}
+        />
+      {/if}
+    </button>
+    <span class="text-xs opacity-80 text-left mx-4 my-2">Profile</span>
+    <MenuButton link href="/login">
+      <Icon src={ArrowLeftOnRectangle} mini width={16} /> Log in
+    </MenuButton>
+    <MenuButton><Icon src={Cog6Tooth} mini width={16} /> Settings</MenuButton>
+  </Menu>
 </nav>
