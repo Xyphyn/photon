@@ -16,7 +16,7 @@
     Icon,
   } from 'svelte-hero-icons'
   import type { CommentNodeI } from './comments.js'
-  import RelativeDate from '$lib/components/RelativeDate.svelte'
+  import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import CommunityLink from '$lib/components/community/CommunityLink.svelte'
   import { isImage } from '$lib/ui/image.js'
 

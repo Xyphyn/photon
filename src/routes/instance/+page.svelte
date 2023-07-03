@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Button from '$lib/components/Button.svelte'
+  import Button from '$lib/components/input/Button.svelte'
 
   let url = ''
 

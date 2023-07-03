@@ -1,6 +1,6 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
-  import MultiSelect from '$lib/components/MultiSelect.svelte'
+  import MultiSelect from '$lib/components/input/MultiSelect.svelte'
   import { page } from '$app/stores'
   import {
     ChatBubbleLeftEllipsis,
@@ -10,7 +10,7 @@
     UserGroup,
   } from 'svelte-hero-icons'
   import CommunityLink from '$lib/components/community/CommunityLink.svelte'
-  import Link from '$lib/components/Link.svelte'
+  import Link from '$lib/components/input/Link.svelte'
   import { Color } from '$lib/ui/colors.js'
 
   export let data

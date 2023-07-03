@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Link from '$lib/components/Link.svelte'
-  import Logo from '$lib/components/Logo.svelte'
+  import Link from '$lib/components/input/Link.svelte'
+  import Logo from '$lib/components/ui/Logo.svelte'
   import { instance_url } from '$lib/lemmy.js'
 </script>
 

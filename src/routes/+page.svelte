@@ -1,10 +1,10 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
-  import Button from '$lib/components/Button.svelte'
-  import Card from '$lib/components/Card.svelte'
-  import Link from '$lib/components/Link.svelte'
-  import MultiSelect from '$lib/components/MultiSelect.svelte'
+  import Button from '$lib/components/input/Button.svelte'
+  import Card from '$lib/components/ui/Card.svelte'
+  import Link from '$lib/components/input/Link.svelte'
+  import MultiSelect from '$lib/components/input/MultiSelect.svelte'
   import {
     Calendar,
     ChatBubbleLeftEllipsis,
@@ -16,9 +16,9 @@
   } from 'svelte-hero-icons'
   import Avatar from './post/[id]/Avatar.svelte'
   import Post from './post/[id]/Post.svelte'
-  import FormattedNumber from '$lib/components/FormattedNumber.svelte'
+  import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
-  import RelativeDate from '$lib/components/RelativeDate.svelte'
+  import RelativeDate from '$lib/components/util/RelativeDate.svelte'
 
   export let data
 </script>

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Navbar from '$lib/components/Navbar.svelte'
+  import Navbar from '$lib/components/ui/Navbar.svelte'
   import '../style/app.css'
   import { navigating, page } from '$app/stores'
   import nProgress from 'nprogress'

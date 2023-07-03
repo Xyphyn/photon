@@ -3,8 +3,8 @@
   import Avatar from './Avatar.svelte'
   import type { CommentNodeI } from './comments.js'
   import SvelteMarkdown from 'svelte-markdown'
-  import RelativeDate from '$lib/components/RelativeDate.svelte'
-  import Button from '$lib/components/Button.svelte'
+  import RelativeDate from '$lib/components/util/RelativeDate.svelte'
+  import Button from '$lib/components/input/Button.svelte'
   import { Color } from '$lib/ui/colors.js'
 
   export let node: CommentNodeI

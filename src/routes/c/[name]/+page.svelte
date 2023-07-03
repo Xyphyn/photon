@@ -1,12 +1,12 @@
 <script lang="ts">
   import { page } from '$app/stores'
-  import Link from '$lib/components/Link.svelte'
-  import MultiSelect from '$lib/components/MultiSelect.svelte'
+  import Link from '$lib/components/input/Link.svelte'
+  import MultiSelect from '$lib/components/input/MultiSelect.svelte'
   import SvelteMarkdown from 'svelte-markdown'
   import Avatar from '../../post/[id]/Avatar.svelte'
   import Post from '../../post/[id]/Post.svelte'
   import { goto } from '$app/navigation'
-  import RelativeDate from '$lib/components/RelativeDate.svelte'
+  import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import {
     Calendar,
     ChatBubbleOvalLeftEllipsis,
@@ -15,8 +15,8 @@
     PencilSquare,
     UserGroup,
   } from 'svelte-hero-icons'
-  import FormattedNumber from '$lib/components/FormattedNumber.svelte'
-  import Card from '$lib/components/Card.svelte'
+  import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
+  import Card from '$lib/components/ui/Card.svelte'
 
   export let data
 </script>
@@ -115,6 +115,8 @@
         {community.community_view.community.name}
       </h1>
       <SvelteMarkdown source={community.community_view.community.description} />
+    {:catch}
+      <p>Failed to load community. This is likely an issue on Lemmy's end.</p>
     {/await}
   </Card>
 </div>
