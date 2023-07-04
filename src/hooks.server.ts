@@ -30,6 +30,7 @@ export async function handle({ event, resolve }) {
       })
 
       if (!data.ok) {
+        console.log(`${data.status}: ${data.statusText}`)
         return new Response(
           JSON.stringify({
             message: await data.text(),
