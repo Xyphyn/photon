@@ -30,7 +30,7 @@ export async function handle({ event, resolve }) {
       })
 
       if (!data.ok) {
-        console.log(`${data.status}: ${data.statusText}`)
+        await resolve(event)
         return new Response(
           JSON.stringify({
             message: await data.text(),
@@ -44,10 +44,17 @@ export async function handle({ event, resolve }) {
       try {
         const json = await data.json()
 
-        return new Response(JSON.stringify(json), {
-          status: data.status,
-        })
+        await resolve(event)
+        return new Response(
+          JSON.stringify({
+            message: 'Failed to fetch',
+          }),
+          {
+            status: data.status,
+          }
+        )
       } catch (err) {
+        await resolve(event)
         return new Response(
           JSON.stringify({
             message: 'Failed to fetch',
@@ -58,6 +65,7 @@ export async function handle({ event, resolve }) {
         )
       }
     } catch (error) {
+      await resolve(event)
       return new Response(
         JSON.stringify({
           message: 'the proxy failed to fetch from server',

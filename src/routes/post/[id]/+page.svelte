@@ -156,7 +156,7 @@
     />
   {:catch}
     <div class="bg-red-500/10 border border-red-500 rounded-md p-4">
-      Failed to load posts
+      Failed to load comments.
     </div>
   {/await}
 </div>
