@@ -4,6 +4,7 @@
   import { navigating, page } from '$app/stores'
   import nProgress from 'nprogress'
   import 'nprogress/nprogress.css'
+  import ToastContainer from '$lib/components/ui/toasts/ToastContainer.svelte'
 
   nProgress.configure({
     minimum: 0.4,
@@ -22,6 +23,7 @@
 </script>
 
 <Navbar />
+<ToastContainer />
 <div class="mx-auto max-w-5xl p-4">
   <slot />
 </div>

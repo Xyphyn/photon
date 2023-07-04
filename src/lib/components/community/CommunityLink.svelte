@@ -7,13 +7,13 @@
   function linkFromCommunity(community: Community) {
     const local = community.local
 
-    if (local) {
-      return `/c/${community.name}`
-    } else {
-      const domain = new URL(community.actor_id).hostname
+    // if (local) {
+    //   return `/c/${community.name}`
+    // } else {
+    const domain = new URL(community.actor_id).hostname
 
-      return `/c/${community.name}@${domain}`
-    }
+    return `/c/${community.name}@${domain}`
+    // }
   }
 </script>
 
@@ -26,6 +26,7 @@
       width={24}
       height={24}
       class="rounded-full aspect-square object-cover"
+      loading="lazy"
     />
   {/if}
   {community.title}

@@ -1,9 +1,16 @@
 <script lang="ts">
+  import { goto } from '$app/navigation'
   import Link from '$lib/components/input/Link.svelte'
   import Logo from '$lib/components/ui/Logo.svelte'
   import Menu from '$lib/components/ui/menu/Menu.svelte'
   import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
-  import { instance_url, user } from '$lib/lemmy.js'
+  import {
+    DEFAULT_INSTANCE_URL,
+    authData,
+    instance_url,
+    user,
+  } from '$lib/lemmy.js'
+  import { Color } from '$lib/ui/colors.js'
   import {
     ArrowLeftOnRectangle,
     ArrowRightOnRectangle,
@@ -21,14 +28,16 @@
       <Logo width={40} />
       <div class="flex flex-col">
         <span class="font-bold">Xylemmy</span>
-        {#if $instance_url}
-          <span
-            class="text-xs opacity-50
-            transition-opacity"
-          >
-            {new URL(`https://${$instance_url}`).hostname}
-          </span>
-        {/if}
+        <span
+          class="text-xs opacity-50
+        transition-opacity"
+        >
+          {#if $authData?.instance}
+            {$authData.instance}
+          {:else}
+            {DEFAULT_INSTANCE_URL}
+          {/if}
+        </span>
       </div>
     </a>
   </div>
@@ -50,9 +59,22 @@
       {/if}
     </button>
     <span class="text-xs opacity-80 text-left mx-4 my-2">Profile</span>
-    <MenuButton link href="/login">
-      <Icon src={ArrowLeftOnRectangle} mini width={16} /> Log in
-    </MenuButton>
-    <MenuButton><Icon src={Cog6Tooth} mini width={16} /> Settings</MenuButton>
+    {#if !$user}
+      <MenuButton link href="/login">
+        <Icon src={ArrowLeftOnRectangle} mini width={16} /> Log in
+      </MenuButton>
+    {:else}
+      <MenuButton
+        on:click={() => {
+          localStorage.removeItem('user')
+          goto('/', {
+            invalidateAll: true,
+          })
+        }}
+        color={Color.dangerSecondary}
+      >
+        <Icon src={ArrowRightOnRectangle} mini width={16} />Log out
+      </MenuButton>
+    {/if}
   </Menu>
 </nav>

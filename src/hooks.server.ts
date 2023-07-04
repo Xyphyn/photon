@@ -1,19 +1,27 @@
 import { error } from '@sveltejs/kit'
 
+function buildUrl(inputUrl: URL): URL {
+  let withoutCors = inputUrl.pathname.replace('/cors/', '')
+
+  if (!withoutCors.startsWith('https://')) {
+    withoutCors = 'https://' + withoutCors
+  }
+
+  return new URL(`${withoutCors}?${inputUrl.searchParams.toString()}`)
+}
+
 export async function handle({ event, resolve }) {
   // annoying hack to fix lemmy's CORS
   if (event.url.pathname.startsWith('/cors')) {
-    const instance = `${event.url.pathname.split('/')[2]}`
-    const url = `${event.url.pathname
-      .split('/')
-      .slice(3)
-      .join('/')}?${event.url.searchParams.toString()}`
+    // cut off the 1st slash (empty), and remove the /cors
 
     event.request.headers.delete('origin')
     event.request.headers.delete('host')
 
     try {
-      const data = await fetch(`https://${instance}/${url.toString()}`, {
+      const url = buildUrl(event.url)
+
+      const data = await fetch(url, {
         method: event.request.method,
         body: event.request.body,
         headers: event.request.headers,
@@ -22,9 +30,33 @@ export async function handle({ event, resolve }) {
         signal: AbortSignal.timeout(20 * 1000),
       })
 
-      const json = await data.json()
+      if (!data.ok) {
+        return new Response(
+          JSON.stringify({
+            message: await data.text(),
+          }),
+          {
+            status: data.status,
+          }
+        )
+      }
 
-      return new Response(JSON.stringify(json))
+      try {
+        const json = await data.json()
+
+        return new Response(JSON.stringify(json), {
+          status: data.status,
+        })
+      } catch (err) {
+        return new Response(
+          JSON.stringify({
+            message: 'Failed to fetch',
+          }),
+          {
+            status: data.status,
+          }
+        )
+      }
     } catch (error) {
       console.error(error)
       return new Response(

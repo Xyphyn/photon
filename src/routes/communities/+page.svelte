@@ -12,6 +12,7 @@
   import CommunityLink from '$lib/components/community/CommunityLink.svelte'
   import Link from '$lib/components/input/Link.svelte'
   import { Color } from '$lib/ui/colors.js'
+  import TextInput from '$lib/components/input/TextInput.svelte'
 
   export let data
 
@@ -32,7 +33,7 @@
     }}
   />
   <div class="flex flex-col sm:flex-row gap-2 sm:ml-auto">
-    <input
+    <TextInput
       class="bg-slate-100 border border-slate-200 dark:border-zinc-800
   dark:bg-zinc-900 rounded-md"
       bind:value={search}

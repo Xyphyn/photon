@@ -7,7 +7,7 @@
     Minus,
     Plus,
   } from 'svelte-hero-icons'
-  import Avatar from '../Avatar.svelte'
+  import Avatar from '../../../../lib/components/ui/Avatar.svelte'
   import type { CommentNodeI } from '../comments.js'
   import SvelteMarkdown from 'svelte-markdown'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
@@ -27,6 +27,8 @@
 
     const upvoted = node.comment_view.my_vote == 1
 
+    node.comment_view.my_vote = Number(!upvoted)
+
     await getClient()
       .likeComment({
         score: upvoted ? 0 : 1,
@@ -34,14 +36,14 @@
         comment_id: node.comment_view.comment.id,
       })
       .catch((_) => undefined)
-
-    node.comment_view.my_vote = Number(!upvoted)
   }
 
   async function downvote() {
     if (!$authData) return
 
     const upvoted = node.comment_view.my_vote == -1
+
+    node.comment_view.my_vote = -Number(!upvoted)
 
     await getClient()
       .likeComment({
@@ -50,8 +52,6 @@
         comment_id: node.comment_view.comment.id,
       })
       .catch((_) => undefined)
-
-    node.comment_view.my_vote = -Number(!upvoted)
   }
 </script>
 

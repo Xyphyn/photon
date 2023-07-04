@@ -4,6 +4,7 @@
   import type { Comment, Post } from 'lemmy-js-client'
   import { authData, getClient, user } from '$lib/lemmy.js'
   import { createEventDispatcher } from 'svelte'
+  import { ToastType, addToast } from '$lib/components/ui/toasts/toasts.js'
 
   export let postId: number
   export let parentId: number | undefined = undefined
@@ -28,8 +29,13 @@
       dispatch('comment', response)
 
       newComment = ''
+      addToast(
+        'Success',
+        'Your comment was added. You may need to refresh to see it.',
+        ToastType.success
+      )
     } catch (err) {
-      alert('Failed to comment')
+      addToast('Error', 'Failed to comment.', ToastType.error)
     }
 
     loading = false
