@@ -23,20 +23,18 @@ export interface AuthData {
   instance: string
 }
 
-export const authData = writable<AuthData | undefined>(
-  await (() => {
-    if (typeof localStorage != 'undefined') {
-      if (localStorage.getItem('user')) {
-        try {
-          return JSON.parse(localStorage.getItem('user') ?? '')
-        } catch (error) {
-          localStorage.removeItem('user')
-        }
-      }
-    }
-  })()
-)
+export const authData = writable<AuthData | undefined>()
 export const user = writable<GetPersonDetailsResponse>()
+
+if (typeof localStorage != 'undefined') {
+  if (localStorage.getItem('user')) {
+    try {
+      authData.set(JSON.parse(localStorage.getItem('user') ?? ''))
+    } catch (error) {
+      localStorage.removeItem('user')
+    }
+  }
+}
 
 authData.subscribe(async (data) => {
   if (!data) return
