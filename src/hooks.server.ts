@@ -14,7 +14,6 @@ export async function handle({ event, resolve }) {
   // annoying hack to fix lemmy's CORS
   if (event.url.pathname.startsWith('/cors')) {
     // cut off the 1st slash (empty), and remove the /cors
-
     event.request.headers.delete('origin')
     event.request.headers.delete('host')
 
@@ -58,7 +57,6 @@ export async function handle({ event, resolve }) {
         )
       }
     } catch (error) {
-      console.error(error)
       return new Response(
         JSON.stringify({
           message: 'the proxy failed to fetch from server',
