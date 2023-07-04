@@ -17,14 +17,8 @@
   async function validateURL(instance: string): Promise<boolean> {
     if (instance == '') return false
 
-    if (!instance.startsWith('https://')) {
-      instance = 'https://' + instance
-    }
-
-    const url = new URL(instance)
-
     try {
-      await getClient(url.toString()).getSite({})
+      await getClient(instance).getSite({})
     } catch (err) {
       throw new Error('Invalid instance URL')
     }
