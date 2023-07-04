@@ -45,14 +45,9 @@ export async function handle({ event, resolve }) {
         const json = await data.json()
 
         await resolve(event)
-        return new Response(
-          JSON.stringify({
-            message: 'Failed to fetch',
-          }),
-          {
-            status: data.status,
-          }
-        )
+        return new Response(JSON.stringify(json), {
+          status: data.status,
+        })
       } catch (err) {
         await resolve(event)
         return new Response(
