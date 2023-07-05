@@ -29,24 +29,30 @@
   }
 
   async function uploadImage(
-    image: FileList | null | undefined
+    image: File | null | undefined
   ): Promise<string | undefined> {
     if (!image || !$authData) return
 
-    try {
-      const res = await getClient().uploadImage({
-        image: image[0],
+    const formData = new FormData()
+    formData.append('images[]', image)
+
+    const response = await fetch(
+      `${buildBaseUrl($authData.instance)}/pictrs/image?${new URLSearchParams({
         auth: $authData.token,
-      })
-
-      if (!res.url) {
-        throw new Error('Failed to upload image')
+      })}`,
+      {
+        method: 'POST',
+        body: formData,
       }
+    )
 
-      return res.url
-    } catch (err) {
-      throw new Error('Failed to upload image.')
+    const json = await response.json()
+
+    if (json.msg == 'ok') {
+      return `https://${$authData.instance}/pictrs/image/${json.files?.[0]?.file}`
     }
+
+    throw new Error(`error uploading image: ${response.status}`)
   }
 
   async function submit() {
@@ -55,7 +61,7 @@
     data.loading = true
 
     try {
-      let image = data.image ? await uploadImage(data.image) : undefined
+      let image = data.image ? await uploadImage(data.image[0]) : undefined
 
       const post = await getClient().createPost({
         auth: $authData.token,
@@ -82,6 +88,10 @@
     'A cool photo I took before the destruction of mankind!',
     'AITA for ending all contention and causing world peace?',
     'BREAKING NEWS: Police break into gun shop, find weapons',
+    'How do I make sure my pet rock stays alive?',
+    'My cat just invented a time machine, what do I do?',
+    'Unpopular opinion: world peace and global happiness would be beneficial to humanity',
+    'LPT: The smaller weights are easier to lift than the bigger weights in a gym',
   ]
 
   const placeholder =

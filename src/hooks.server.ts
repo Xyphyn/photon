@@ -23,10 +23,23 @@ export async function handle({ event, resolve }) {
     try {
       const url = buildUrl(event.url)
 
+      let headers: Headers = event.request.headers
+
+      headers.delete('origin')
+      headers.delete('host')
+
+      if (
+        event.request.method == 'POST' &&
+        url.pathname == '/pictrs/image' &&
+        url.searchParams.get('auth')
+      ) {
+        headers.set('cookie', `jwt=${url.searchParams.get('auth')}`)
+      }
+
       const data = await fetch(url, {
         method: event.request.method,
+        headers: headers,
         body: event.request.body,
-        headers: event.request.headers,
         // @ts-ignore this works, idk why typescript complains
         duplex: 'half',
         signal: AbortSignal.timeout(20 * 1000),
@@ -60,12 +73,13 @@ export async function handle({ event, resolve }) {
         status: data.status,
       })
     } catch (error) {
+      console.log(error)
       return new Response(
         JSON.stringify({
           message: 'the proxy failed to fetch from server',
         }),
         {
-          status: 200,
+          status: 500,
         }
       )
     }
