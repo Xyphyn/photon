@@ -17,7 +17,7 @@
   } from 'svelte-hero-icons'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import CommunityLink from '$lib/components/community/CommunityLink.svelte'
-  import { isImage } from '$lib/ui/image.js'
+  import { isImage, isVideo } from '$lib/ui/image.js'
   import { authData, getClient } from '$lib/lemmy.js'
   import PostVote from '$lib/components/lemmy/PostVote.svelte'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
@@ -90,6 +90,13 @@
           class="rounded-md max-h-64 max-w-full"
           loading="lazy"
         />
+      </a>
+    {:else if isVideo(postRes.post.url)}
+      <!-- svelte-ignore a11y-media-has-caption -->
+      <a href="/post/{postRes.post.id}" class="inline self-start">
+        <video class="rounded-md max-h-64 max-w-full" preload="metadata">
+          <source src={postRes.post.url} />
+        </video>
       </a>
     {/if}
     {#if postRes.post.body}

@@ -5,7 +5,7 @@
   import Comments from '$lib/components/lemmy/comment/Comments.svelte'
   import SvelteMarkdown from 'svelte-markdown'
   import CommunityLink from '$lib/components/community/CommunityLink.svelte'
-  import { isImage } from '$lib/ui/image.js'
+  import { isImage, isVideo } from '$lib/ui/image.js'
   import { user } from '$lib/lemmy.js'
   import CommentForm from '$lib/components/lemmy/comment/CommentForm.svelte'
   import PostVote from '$lib/components/lemmy/PostVote.svelte'
@@ -107,6 +107,11 @@
       alt={post.name}
       class="rounded-md max-w-screen max-h-[80vh] mx-auto"
     />
+  {:else if isVideo(post.url)}
+    <!-- svelte-ignore a11y-media-has-caption -->
+    <video class="rounded-md max-w-screen max-h-[80vh] mx-auto">
+      <source src={post.url} />
+    </video>
   {/if}
   {#if post.body}
     <p
