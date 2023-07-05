@@ -1,5 +1,3 @@
-import { error } from '@sveltejs/kit'
-
 function buildUrl(inputUrl: URL): URL {
   let withoutCors = inputUrl.pathname.replace('/cors/', '')
 
@@ -10,9 +8,9 @@ function buildUrl(inputUrl: URL): URL {
   return new URL(`${withoutCors}?${inputUrl.searchParams.toString()}`)
 }
 
-export async function handleError() {
+export function handleError({ error, event }) {
   return {
-    message: 'The proxy failed to fetch from that URL',
+    message: 'There was an error during rendering',
   }
 }
 
@@ -71,13 +69,12 @@ export async function handle({ event, resolve }) {
         })
       }
     } catch (error) {
-      console.log('caught it')
       return new Response(
         JSON.stringify({
           message: 'the proxy failed to fetch from server',
         }),
         {
-          status: 500,
+          status: 200,
         }
       )
     }

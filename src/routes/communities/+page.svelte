@@ -13,6 +13,8 @@
   import Link from '$lib/components/input/Link.svelte'
   import { Color } from '$lib/ui/colors.js'
   import TextInput from '$lib/components/input/TextInput.svelte'
+  import Subscribe from './Subscribe.svelte'
+  import Button from '$lib/components/input/Button.svelte'
 
   export let data
 
@@ -56,11 +58,39 @@
         class="py-4 border-b border-black/20 dark:border-white/20
   flex flex-col gap-1 text-sm"
       >
-        <span
-          class="break-words max-w-full w-max text-base font-bold text-sky-400 hover:underline"
-        >
-          <CommunityLink community={community.community} />
-        </span>
+        <div class="flex flex-row justify-between items-center">
+          <span
+            class="break-words max-w-full w-max text-base font-bold text-sky-400 hover:underline"
+          >
+            <CommunityLink community={community.community} />
+          </span>
+          <div class="w-24">
+            <Subscribe {community} let:subscribe let:subscribing>
+              <Button
+                disabled={subscribing}
+                loading={subscribing}
+                large
+                on:click={async () => {
+                  const res = await subscribe()
+
+                  if (res) {
+                    community.subscribed =
+                      res.community_view.subscribed != 'NotSubscribed'
+                        ? 'Subscribed'
+                        : 'NotSubscribed'
+                  }
+                }}
+                color={community.subscribed == 'Subscribed'
+                  ? Color.accent
+                  : Color.secondary}
+              >
+                {community.subscribed == 'Subscribed'
+                  ? 'Subscribed'
+                  : 'Subscribe'}
+              </Button>
+            </Subscribe>
+          </div>
+        </div>
         {#if !community.community.local}
           <span class="opacity-80">
             {new URL(community.community.actor_id).hostname}

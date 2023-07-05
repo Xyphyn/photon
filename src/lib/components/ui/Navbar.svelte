@@ -17,6 +17,7 @@
     Cog6Tooth,
     Icon,
     Inbox,
+    UserCircle,
   } from 'svelte-hero-icons'
 </script>
 
@@ -65,6 +66,9 @@
         <Icon src={ArrowLeftOnRectangle} mini width={16} /> Log in
       </MenuButton>
     {:else}
+      <MenuButton link href="/u/{$user.person_view.person.name}">
+        <Icon src={UserCircle} mini width={16} /> Profile
+      </MenuButton>
       <MenuButton link href="/inbox">
         <Icon src={Inbox} mini width={16} /> Inbox
       </MenuButton>

@@ -15,6 +15,7 @@
   import { Color } from '$lib/ui/colors.js'
   import CommentForm from './CommentForm.svelte'
   import { page } from '$app/stores'
+  import UserLink from '$lib/components/user/UserLink.svelte'
 
   export let node: CommentNodeI
 
@@ -66,12 +67,9 @@
     <summary
       class="flex flex-row cursor-pointer arrow gap-2 items-center group"
     >
-      <Avatar
-        url={node.comment_view.creator.avatar ??
-          `https://api.dicebear.com/6.x/initials/svg?seed=${node.comment_view.creator.name}`}
-        width={24}
-      />
-      <span class="text-sm">{node.comment_view.creator.name}</span>
+      <span class="text-sm">
+        <UserLink avatar user={node.comment_view.creator} />
+      </span>
       <span class="text-sm opacity-60 md:inline hidden">
         {node.comment_view.counts.score} point{node.comment_view.counts.score ==
         1

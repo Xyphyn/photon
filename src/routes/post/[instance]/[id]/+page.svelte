@@ -11,6 +11,7 @@
   import PostVote from '$lib/components/lemmy/PostVote.svelte'
   import { page } from '$app/stores'
   import { onMount } from 'svelte'
+  import UserLink from '$lib/components/user/UserLink.svelte'
 
   export let data
 
@@ -88,7 +89,7 @@
 <div class="flex flex-col gap-2">
   <span class="flex flex-row gap-2 text-sm opacity-80 items-center">
     <CommunityLink avatar community={postData.community} />
-    <span class="opacity-50">{postData.creator.name}</span>
+    <span class="opacity-50"><UserLink user={postData.creator} /></span>
   </span>
   <h1 class="font-bold text-lg">{post.name}</h1>
   {#if post.url}

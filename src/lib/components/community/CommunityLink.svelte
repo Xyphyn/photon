@@ -5,19 +5,15 @@
   export let avatar: boolean = false
 
   function linkFromCommunity(community: Community) {
-    const local = community.local
-
-    // if (local) {
-    //   return `/c/${community.name}`
-    // } else {
     const domain = new URL(community.actor_id).hostname
-
     return `/c/${community.name}@${domain}`
-    // }
   }
 </script>
 
-<a class="items-center flex flex-row gap-2" href={linkFromCommunity(community)}>
+<a
+  class="items-center flex flex-row gap-2 hover:underline"
+  href={linkFromCommunity(community)}
+>
   {#if avatar}
     <img
       src={community.icon ??

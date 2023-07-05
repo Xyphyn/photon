@@ -21,6 +21,7 @@
   import { authData, getClient } from '$lib/lemmy.js'
   import PostVote from '$lib/components/lemmy/PostVote.svelte'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
+  import UserLink from '$lib/components/user/UserLink.svelte'
 
   let postRes: PostView
   export { postRes as post }
@@ -64,7 +65,7 @@
     <span class="flex flex-row gap-2 text-sm opacity-80 items-center">
       <CommunityLink avatar community={postRes.community} />
       <div class="ml-auto" />
-      <span class="opacity-50">{postRes.creator.name}</span>
+      <UserLink user={postRes.creator} />
       <span class="opacity-50">
         <RelativeDate date={new Date(postRes.post.published)} />
       </span>
