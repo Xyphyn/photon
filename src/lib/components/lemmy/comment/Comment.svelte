@@ -25,10 +25,20 @@
   export let open = true
   export let replying = false
 
+  let score = node.comment_view.counts.score
+
   async function upvote() {
     if (!$authData) return
 
     const upvoted = node.comment_view.my_vote == 1
+
+    if (node.comment_view.my_vote == -1) {
+      score += 2
+    } else if (node.comment_view.my_vote == 1) {
+      score -= 1
+    } else if (node.comment_view.my_vote == 0) {
+      score += 1
+    }
 
     node.comment_view.my_vote = Number(!upvoted)
 
@@ -45,6 +55,14 @@
     if (!$authData) return
 
     const upvoted = node.comment_view.my_vote == -1
+
+    if (node.comment_view.my_vote == -1) {
+      score += 1
+    } else if (node.comment_view.my_vote == 1) {
+      score -= 2
+    } else if (node.comment_view.my_vote == 0) {
+      score -= 1
+    }
 
     node.comment_view.my_vote = -Number(!upvoted)
 
@@ -70,12 +88,6 @@
     >
       <span class="text-sm">
         <UserLink avatar user={node.comment_view.creator} />
-      </span>
-      <span class="text-sm opacity-60 md:inline hidden">
-        {node.comment_view.counts.score} point{node.comment_view.counts.score ==
-        1
-          ? ''
-          : 's'}
       </span>
       <span class="text-sm opacity-60">
         <RelativeDate date={new Date(node.comment_view.comment.published)} />
@@ -117,7 +129,7 @@
               <Icon src={ArrowUp} width={16} mini />
             </button>
             <span class="text-sm font-medium">
-              {node.comment_view.counts.score}
+              {score}
             </span>
             <button
               on:click={downvote}

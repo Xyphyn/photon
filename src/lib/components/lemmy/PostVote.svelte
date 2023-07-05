@@ -13,6 +13,16 @@
 
     const upvoted = vote == 1
 
+    if (vote == -1) {
+      score += 2
+    } else if (vote == 1) {
+      score -= 1
+    } else if (vote == 0) {
+      score += 1
+    }
+
+    vote = Number(!upvoted)
+
     await getClient()
       .likePost({
         score: upvoted ? 0 : 1,
@@ -26,6 +36,16 @@
     if (!$authData) return
 
     const upvoted = vote == -1
+
+    if (vote == -1) {
+      score += 1
+    } else if (vote == 1) {
+      score -= 2
+    } else if (vote == 0) {
+      score -= 1
+    }
+
+    vote = -Number(!upvoted)
 
     await getClient()
       .likePost({
@@ -50,27 +70,13 @@
       : // no vote
         'bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700'}"
   >
-    <button
-      aria-label="Upvote"
-      class="p-0.5 px-1"
-      on:click={() => {
-        vote = vote == 1 ? 0 : 1
-        upvote()
-      }}
-    >
+    <button aria-label="Upvote" class="p-0.5 px-1" on:click={upvote}>
       <Icon src={ChevronUp} mini width={20} height={20} />
     </button>
     <span class="text-sm">
       <FormattedNumber number={score} />
     </span>
-    <button
-      aria-label="Downvote"
-      class="p-0.5 px-1"
-      on:click={() => {
-        vote = vote == -1 ? 0 : -1
-        downvote()
-      }}
-    >
+    <button aria-label="Downvote" class="p-0.5 px-1" on:click={downvote}>
       <Icon src={ChevronDown} mini width={20} height={20} />
     </button>
   </div>
