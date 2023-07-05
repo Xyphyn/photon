@@ -157,7 +157,10 @@
       <CommentForm
         postId={post.id}
         on:comment={(comment) =>
-          (comments.comments = [...comment.detail, comments.comments])}
+          (comments.comments = [
+            comment.detail.comment_view,
+            ...comments.comments,
+          ])}
       />
     {/if}
     <MultiSelect

@@ -1,7 +1,7 @@
 <script lang="ts">
   import Button from '$lib/components/input/Button.svelte'
   import { Color } from '$lib/ui/colors.js'
-  import type { Comment, Post } from 'lemmy-js-client'
+  import type { CommentResponse } from 'lemmy-js-client'
   import { authData, getClient, user } from '$lib/lemmy.js'
   import { createEventDispatcher } from 'svelte'
   import { ToastType, addToast } from '$lib/components/ui/toasts/toasts.js'
@@ -9,7 +9,7 @@
   export let postId: number
   export let parentId: number | undefined = undefined
 
-  const dispatch = createEventDispatcher()
+  const dispatch = createEventDispatcher<{ comment: CommentResponse }>()
 
   let newComment = ''
   let loading = false
@@ -35,6 +35,7 @@
         ToastType.success
       )
     } catch (err) {
+      console.error(err)
       addToast(
         'Error',
         'Failed to comment. (Sometimes this error appears even when successful.)',

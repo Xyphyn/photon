@@ -59,7 +59,7 @@
 
 <svelte:head>Login</svelte:head>
 
-<Card class="mx-auto p-6">
+<Card class="mx-auto p-6 max-w-lg">
   <form on:submit|preventDefault={logIn} class="flex flex-col gap-4">
     <h1 class="font-bold text-lg">Log in</h1>
     <TextInput

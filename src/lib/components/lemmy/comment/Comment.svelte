@@ -159,7 +159,14 @@
           {postId}
           parentId={node.comment_view.comment.id}
           on:comment={(e) => {
-            node.children = [e.detail, ...node.children]
+            node.children = [
+              {
+                children: [],
+                depth: node.depth,
+                comment_view: e.detail.comment_view,
+              },
+              ...node.children,
+            ]
             replying = false
           }}
         />

@@ -15,7 +15,6 @@
     Icon,
     PencilSquare,
   } from 'svelte-hero-icons'
-  import SvelteMarkdown from 'svelte-markdown'
 
   export let data: {
     user: GetPersonDetailsResponse
