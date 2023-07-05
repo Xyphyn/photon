@@ -17,6 +17,7 @@
   } from 'svelte-hero-icons'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import Card from '$lib/components/ui/StickyCard.svelte'
+  import CommunityCard from '$lib/components/community/CommunityCard.svelte'
 
   export let data
 </script>
@@ -56,8 +57,8 @@
       </Link>
     </div>
   </div>
-  <Card>
-    {#await data.streamed.community}
+  {#await data.streamed.community}
+    <Card>
       <div
         class="w-[64px] h-[64px] rounded-full bg-slate-200
   dark:bg-zinc-700 animate-pulse"
@@ -82,41 +83,12 @@
         class="w-24 h-4 bg-slate-200 dark:bg-zinc-700 animate-pulse
   rounded-md"
       />
-    {:then community}
-      <Avatar
-        width={48}
-        url={community.community_view.community.icon ??
-          `https://api.dicebear.com/6.x/initials/svg?seed=${community.community_view.community.name}`}
-        alt={community.community_view.community.name}
-      />
-      <span class="flex flex-row items-center gap-1 text-sm">
-        <Icon src={Calendar} width={16} height={16} mini />
-        <RelativeDate
-          date={new Date(community.community_view.community.published)}
-        />
-      </span>
-      <div class="text-sm flex flex-row flex-wrap gap-3">
-        <span class="flex flex-row items-center gap-1">
-          <Icon src={UserGroup} width={16} height={16} mini />
-          <FormattedNumber
-            number={community.community_view.counts.subscribers}
-          />
-        </span>
-        <span class="flex flex-row items-center gap-1">
-          <Icon src={PencilSquare} width={16} height={16} mini />
-          <FormattedNumber number={community.community_view.counts.posts} />
-        </span>
-        <span class="flex flex-row items-center gap-1">
-          <Icon src={ChatBubbleOvalLeftEllipsis} width={16} height={16} mini />
-          <FormattedNumber number={community.community_view.counts.comments} />
-        </span>
-      </div>
-      <h1 class="font-bold text-lg">
-        {community.community_view.community.name}
-      </h1>
-      <SvelteMarkdown source={community.community_view.community.description} />
-    {:catch}
+    </Card>
+  {:then community}
+    <CommunityCard community_view={community.community_view} />
+  {:catch}
+    <Card>
       <p>Failed to load community. This is likely an issue on Lemmy's end.</p>
-    {/await}
-  </Card>
+    </Card>
+  {/await}
 </div>

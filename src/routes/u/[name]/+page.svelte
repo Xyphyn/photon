@@ -2,6 +2,7 @@
   import CommunityLink from '$lib/components/community/CommunityLink.svelte'
   import Link from '$lib/components/input/Link.svelte'
   import Comment from '$lib/components/lemmy/comment/Comment.svelte'
+  import Markdown from '$lib/components/markdown/Markdown.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import Card from '$lib/components/ui/Card.svelte'
   import StickyCard from '$lib/components/ui/StickyCard.svelte'
@@ -20,6 +21,10 @@
     user: GetPersonDetailsResponse
   }
 </script>
+
+<svelte:head>
+  {data.user.person_view.person.name}
+</svelte:head>
 
 <div class="flex flex-row gap-4 max-w-full">
   <div class="flex flex-col gap-4 max-w-full">
@@ -79,7 +84,7 @@
         {data.user.person_view.person.name}
       </h1>
       {#if data.user.person_view.person.bio}
-        <SvelteMarkdown source={data.user.person_view.person.bio} />
+        <Markdown source={data.user.person_view.person.bio} />
       {/if}
     </StickyCard>
   </div>

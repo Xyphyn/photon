@@ -4,6 +4,10 @@
   export let data
 </script>
 
+<svelte:head>
+  <title>Inbox</title>
+</svelte:head>
+
 <h1 class="font-bold text-3xl">Inbox</h1>
 <div class="flex flex-col gap-4 list-none my-4">
   {#if !data.data || (data.data?.length ?? 0) == 0}

@@ -35,7 +35,11 @@
         ToastType.success
       )
     } catch (err) {
-      addToast('Error', 'Failed to comment.', ToastType.error)
+      addToast(
+        'Error',
+        'Failed to comment. (Sometimes this error appears even when successful.)',
+        ToastType.error
+      )
     }
 
     loading = false

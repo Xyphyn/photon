@@ -9,6 +9,14 @@ import { PUBLIC_PROXY_URL } from '$env/static/public'
 export const DEFAULT_INSTANCE_URL = 'lemm.ee'
 export let instance_url = writable(DEFAULT_INSTANCE_URL)
 
+export function buildBaseUrl(instance?: string) {
+  if (!instance) {
+    instance = get(authData)?.instance ?? DEFAULT_INSTANCE_URL
+  }
+
+  return `${PUBLIC_PROXY_URL}/cors/${instance}`
+}
+
 export function getClient(instance?: string): LemmyHttp {
   if (!instance) {
     instance = get(authData)?.instance ?? DEFAULT_INSTANCE_URL
@@ -31,7 +39,7 @@ if (typeof localStorage != 'undefined') {
     try {
       authData.set(JSON.parse(localStorage.getItem('user') ?? ''))
     } catch (error) {
-      localStorage.removeItem('user')
+      // keep authdata until we can verify that the user is infact invalid
     }
   }
 }

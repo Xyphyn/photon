@@ -12,6 +12,7 @@
   import { page } from '$app/stores'
   import { onMount } from 'svelte'
   import UserLink from '$lib/components/user/UserLink.svelte'
+  import Markdown from '$lib/components/markdown/Markdown.svelte'
 
   export let data
 
@@ -85,7 +86,10 @@
   }
 </script>
 
-<title>{data.post.post_view.post.name}</title>
+<svelte:head>
+  <title>{data.post.post_view.post.name}</title>
+</svelte:head>
+
 <div class="flex flex-col gap-2">
   <span class="flex flex-row gap-2 text-sm opacity-80 items-center">
     <CommunityLink avatar community={postData.community} />
@@ -118,7 +122,7 @@
       class="bg-slate-100 border border-slate-200 dark:border-zinc-800
     dark:bg-zinc-900 p-2 text-sm rounded-md leading-5"
     >
-      <SvelteMarkdown source={post.body} />
+      <Markdown source={post.body} />
     </p>
   {/if}
   <div class="w-max">

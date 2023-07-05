@@ -23,6 +23,10 @@
   export let data
 </script>
 
+<svelte:head>
+  <title>Xylemmy</title>
+</svelte:head>
+
 <div class="flex flex-row gap-4">
   <div class="flex flex-col gap-4 max-w-full">
     <div class="flex flex-col sm:flex-row gap-4 max-w-full">
@@ -60,18 +64,20 @@
     </div>
 
     <div>
-      <Link
-        href={(function () {
+      <Button
+        on:click={() => {
           $page.url.searchParams.set(
             'page',
             ((Number($page.url.searchParams.get('page')) || 1) + 1).toString()
           )
 
-          return $page.url.toString()
-        })()}
+          goto($page.url.toString(), {
+            invalidateAll: true,
+          })
+        }}
       >
         Next
-      </Link>
+      </Button>
     </div>
   </div>
   <div class="ml-auto hidden lg:block max-w-sm w-full">
@@ -104,12 +110,14 @@
       </Card>
     {:then site}
       <Card>
-        <Avatar
-          width={64}
-          url={site.site_view.site.icon ?? ''}
-          alt={site.site_view.site.name}
-        />
-        <span class="flex flex-row items-center gap-1 text-sm">
+        {#if site.site_view.site.icon}
+          <Avatar
+            width={64}
+            url={site.site_view.site.icon}
+            alt={site.site_view.site.name}
+          />
+        {/if}
+        <span class="flex flex-row items-center gap-1 text-sm capitalize">
           <Icon src={Calendar} width={16} height={16} mini />
           <RelativeDate date={new Date(site.site_view.site.published)} />
         </span>

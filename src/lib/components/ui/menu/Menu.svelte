@@ -14,6 +14,8 @@
   export let top = false
 
   let element: any
+
+  export let preventDefault = false
 </script>
 
 <svelte:body
@@ -31,7 +33,11 @@
   class="overflow-visible z-30 {absolute
     ? 'absolute'
     : 'relative'} cursor-auto {clazz}"
-  on:click={() => (open = !open)}
+  on:click={(e) => {
+    if (preventDefault) e.preventDefault()
+
+    open = !open
+  }}
   bind:this={element}
 >
   <slot name="button" />
@@ -42,7 +48,7 @@
         start: 0.95,
         easing: expoOut,
       }}
-      class="absolute {rtl
+      class="absolute max-h-64 overflow-auto {rtl
         ? 'origin-top-right right-0'
         : 'origin-top-left left-0'}
               {top ? 'bottom-[100%] origin-bottom-left' : 'top-[100%]'}

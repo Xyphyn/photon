@@ -2,16 +2,10 @@
   import { createEventDispatcher } from 'svelte'
 
   export let label: string = ''
-  export let type: 'text' | 'password' | 'email' | null | undefined = 'text'
   export let placeholder: string = ''
   export let value: string = ''
   export let maxlength: number = -1
-  export let required = false
-
-  function typeAction(node: Node) {
-    // @ts-ignore
-    node.type = type
-  }
+  export let rows: number = 3
 
   let clazz = ''
   export { clazz as class }
@@ -25,17 +19,14 @@
       class="font-bold text-sm text-left mb-1 cursor-pointer w-max self-start"
     >
       {label}
-      {#if required}
-        <span class="text-red-500">*</span>
-      {/if}
     </span>
   {/if}
-  <input
-    use:typeAction
+  <textarea
     bind:value
     on:input={(e) => dispatcher('input', e)}
     {placeholder}
     {maxlength}
+    {rows}
     class="w-full px-3 text-sm py-2.5 bg-transparent border border-black/20
     dark:border-white/20 dark:focus:border-white focus:outline-none
     focus:border-black transition-colors rounded-md {clazz}"

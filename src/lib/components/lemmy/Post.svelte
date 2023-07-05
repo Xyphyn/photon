@@ -1,76 +1,64 @@
 <script lang="ts">
-  import type {
-    CommentView,
-    GetPostResponse,
-    PostView,
-    Comment,
-  } from 'lemmy-js-client'
+  import type { PostView } from 'lemmy-js-client'
   import {
-    ArrowDown,
-    ArrowUp,
-    ChatBubbleLeft,
     ChatBubbleOvalLeft,
-    ChatBubbleOvalLeftEllipsis,
-    ChevronDown,
-    ChevronUp,
+    EllipsisHorizontal,
     Icon,
+    Square2Stack,
+    Trash,
   } from 'svelte-hero-icons'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import CommunityLink from '$lib/components/community/CommunityLink.svelte'
   import { isImage, isVideo } from '$lib/ui/image.js'
-  import { authData, getClient } from '$lib/lemmy.js'
   import PostVote from '$lib/components/lemmy/PostVote.svelte'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import UserLink from '$lib/components/user/UserLink.svelte'
+  import Card from '$lib/components/ui/Card.svelte'
+  import {
+    DEFAULT_INSTANCE_URL,
+    authData,
+    getClient,
+    user,
+  } from '$lib/lemmy.js'
+  import Menu from '$lib/components/ui/menu/Menu.svelte'
+  import Button from '$lib/components/input/Button.svelte'
+  import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
+  import { Color } from '$lib/ui/colors.js'
+  import { page } from '$app/stores'
 
   let postRes: PostView
   export { postRes as post }
 
-  let vote = postRes.my_vote
+  let deleting = false
 
-  async function upvote() {
+  async function deletePost() {
     if (!$authData) return
 
-    const upvoted = postRes.my_vote == 1
+    deleting = true
 
-    await getClient()
-      .likePost({
-        score: upvoted ? 0 : 1,
-        auth: $authData.token,
-        post_id: postRes.post.id,
-      })
-      .catch((_) => undefined)
-  }
+    await getClient().deletePost({
+      auth: $authData.token,
+      deleted: true,
+      post_id: postRes.post.id,
+    })
 
-  async function downvote() {
-    if (!$authData) return
-
-    const upvoted = postRes.my_vote == -1
-
-    await getClient()
-      .likePost({
-        score: upvoted ? 0 : -1,
-        auth: $authData.token,
-        post_id: postRes.post.id,
-      })
-      .catch((_) => undefined)
+    deleting = false
   }
 </script>
 
-<div
-  class="bg-white dark:bg-zinc-900 border dark:border-zinc-800 border-slate-200
-    rounded-md flex flex-col overflow-hidden max-w-xl w-full"
->
+<Card class="bg-white flex flex-col overflow-hidden max-w-xl w-full relative">
   <div class="flex flex-col gap-2 bg-white dark:bg-zinc-900 p-4 rounded-md">
-    <span class="flex flex-row gap-2 text-sm opacity-80 items-center">
-      <CommunityLink avatar community={postRes.community} />
+    <span class="flex flex-row gap-2 text-xs items-center">
+      <CommunityLink avatarSize={20} avatar community={postRes.community} />
+      <span class="opacity-60">
+        <UserLink user={postRes.creator} />
+      </span>
       <div class="ml-auto" />
-      <UserLink user={postRes.creator} />
-      <span class="opacity-50">
+      <span class="opacity-50 capitalize">
         <RelativeDate date={new Date(postRes.post.published)} />
       </span>
     </span>
-    <a href="/post/{postRes.post.id}" class="font-bold text-lg">
+    <a href="/post/{postRes.post.id}" class="font-bold">
       {postRes.post.name}
     </a>
     {#if postRes.post.url}
@@ -100,7 +88,10 @@
       </a>
     {/if}
     {#if postRes.post.body}
-      <p class="text-sm max-h-24 line-clamp-3">
+      <p
+        class="text-sm max-h-[74px] line-clamp-3 bg-slate-100 dark:bg-zinc-800 border
+      border-slate200 dark:border-zinc-700 rounded-md p-2 mt-2"
+      >
         {postRes.post.body}
       </p>
     {/if}
@@ -113,10 +104,10 @@
     />
 
     <a
-      class="flex flex-row items-center gap-1 p-1.5 px-3 rounded-md
-            bg-slate-100 dark:bg-zinc-900 hover:bg-slate-200
+      class="flex flex-row items-center gap-1 p-1 px-3 rounded-md
+            bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200
             dark:hover:bg-zinc-700 transition-colors border border-slate-200
-            dark:border-zinc-800"
+            dark:border-zinc-700"
       href="/post/{postRes.post.id}"
     >
       <Icon src={ChatBubbleOvalLeft} mini width={16} height={16} />
@@ -124,5 +115,29 @@
         <FormattedNumber number={postRes.counts.comments} />
       </span>
     </a>
+    <Menu top absolute class="bottom-0 right-0 m-5 z-40">
+      <Button slot="button">
+        <Icon src={EllipsisHorizontal} width={16} mini />
+      </Button>
+      <span class="mx-4 text-xs opacity-80 text-left my-2">Post Actions</span>
+      <MenuButton
+        on:click={() => {
+          navigator.clipboard.writeText(
+            `${$page.url.origin}/post/${
+              $authData?.instance ?? DEFAULT_INSTANCE_URL
+            }/${postRes.post.id}`
+          )
+        }}
+      >
+        <Icon src={Square2Stack} width={16} mini />
+        Copy Link
+      </MenuButton>
+      {#if $user?.person_view.person.id == postRes.post.creator_id}
+        <MenuButton on:click={deletePost} color={Color.dangerSecondary}>
+          <Icon src={Trash} width={16} mini />
+          Delete
+        </MenuButton>
+      {/if}
+    </Menu>
   </div>
-</div>
+</Card>

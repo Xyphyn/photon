@@ -1,5 +1,6 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
+  import Button from '$lib/components/input/Button.svelte'
   import Link from '$lib/components/input/Link.svelte'
   import Logo from '$lib/components/ui/Logo.svelte'
   import Menu from '$lib/components/ui/menu/Menu.svelte'
@@ -15,8 +16,11 @@
     ArrowLeftOnRectangle,
     ArrowRightOnRectangle,
     Cog6Tooth,
+    GlobeAlt,
     Icon,
     Inbox,
+    PencilSquare,
+    Plus,
     UserCircle,
   } from 'svelte-hero-icons'
 </script>
@@ -28,7 +32,7 @@
   <div class="flex flex-row gap-2 items-center mr-auto">
     <a href="/" class="flex flex-row items-center gap-2">
       <Logo width={40} />
-      <div class="flex flex-col">
+      <div class="sm:flex flex-col hidden">
         <span class="font-bold">Xylemmy</span>
         <span
           class="text-xs opacity-50
@@ -43,10 +47,27 @@
       </div>
     </a>
   </div>
-  <Link href="/communities">Communities</Link>
+  <div class="flex flex-row gap-2">
+    <Link href="/communities">
+      <Icon src={GlobeAlt} width={16} />
+      <span class="hidden sm:inline ml-1">Communities</span>
+    </Link>
+    <Menu>
+      <Button color={Color.accent} slot="button">
+        <Icon src={Plus} width={16} />
+        <span class="hidden sm:inline">Create</span>
+      </Button>
+      <span class="text-xs opacity-80 text-left mx-4 my-2">Create</span>
+      <MenuButton link href="/create/post">
+        <Icon src={PencilSquare} mini width={16} />
+        Post
+      </MenuButton>
+    </Menu>
+  </div>
   <Menu>
     <button
-      class="w-8 h-8 rounded-full ring-1 ring-slate-300 bg-slate-100 dark:bg-zinc-800"
+      class="w-8 h-8 rounded-full ring-1 ring-slate-300 bg-slate-100
+      dark:bg-zinc-800"
       aria-label="Profile"
       slot="button"
     >

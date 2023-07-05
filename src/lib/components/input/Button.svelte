@@ -7,6 +7,7 @@
   export let loading = false
   export let large = false
   export let disabled = false
+  export let submit = false
 
   const dispatch = createEventDispatcher()
 </script>
@@ -19,6 +20,7 @@
     : 'px-3 py-1.5'} rounded-md {color} text-sm transition-all {disabled
     ? 'opacity-50 pointer-events-none'
     : ''}"
+  type={submit ? 'submit' : 'button'}
 >
   <div
     class="flex flex-row items-center justify-center gap-2"

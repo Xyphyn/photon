@@ -16,6 +16,7 @@
   import CommentForm from './CommentForm.svelte'
   import { page } from '$app/stores'
   import UserLink from '$lib/components/user/UserLink.svelte'
+  import Markdown from '$lib/components/markdown/Markdown.svelte'
 
   export let node: CommentNodeI
 
@@ -59,7 +60,7 @@
 
 <li
   class="py-3 {$page.url.hash == `#${node.comment_view.comment.id}`
-    ? 'bg-slate-300 dark:bg-zinc-800'
+    ? 'bg-slate-200 dark:bg-zinc-800'
     : ''}"
   id="#{node.comment_view.comment.id.toString()}"
 >
@@ -105,7 +106,7 @@
       max-w-full"
       >
         <div class="max-w-full break-words">
-          <SvelteMarkdown source={node.comment_view.comment.content} />
+          <Markdown source={node.comment_view.comment.content} />
         </div>
         <div class="flex flex-row gap-2 items-center">
           <div class="flex flex-row gap-2 items-center">

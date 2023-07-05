@@ -17,7 +17,6 @@ export function handleError({ error, event }) {
 export async function handle({ event, resolve }) {
   // annoying hack to fix lemmy's CORS
   if (event.url.pathname.startsWith('/cors')) {
-    // cut off the 1st slash (empty), and remove the /cors
     event.request.headers.delete('origin')
     event.request.headers.delete('host')
 
@@ -55,19 +54,11 @@ export async function handle({ event, resolve }) {
         )
       }
 
-      try {
-        const json = await data.json()
+      const json = await data.json()
 
-        return new Response(JSON.stringify(json), {
-          status: data.status,
-        })
-      } catch (error) {
-        console.log('Caught the thing')
-
-        return new Response(JSON.stringify({ message: 'i hate everything' }), {
-          status: 500,
-        })
-      }
+      return new Response(JSON.stringify(json), {
+        status: data.status,
+      })
     } catch (error) {
       return new Response(
         JSON.stringify({

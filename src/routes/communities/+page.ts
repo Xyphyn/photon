@@ -1,5 +1,6 @@
-import { getClient } from '$lib/lemmy.js'
+import { authData, getClient } from '$lib/lemmy.js'
 import type { ListingType } from 'lemmy-js-client'
+import { get } from 'svelte/store'
 
 export function load({ url }) {
   const type = url.searchParams.get('listingType') as ListingType
@@ -10,17 +11,19 @@ export function load({ url }) {
     return getClient().search({
       limit: 40,
       page: page,
-      sort: 'Active',
+      sort: 'TopAll',
       type_: 'Communities',
       listing_type: type,
       q: query,
+      auth: get(authData)?.token,
     })
   } else {
     return getClient().listCommunities({
       limit: 40,
       page: page,
-      sort: 'Active',
+      sort: 'TopAll',
       type_: type,
+      auth: get(authData)?.token,
     })
   }
 }

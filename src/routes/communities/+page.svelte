@@ -35,20 +35,18 @@
     }}
   />
   <div class="flex flex-col sm:flex-row gap-2 sm:ml-auto">
-    <TextInput
-      class="bg-slate-100 border border-slate-200 dark:border-zinc-800
-  dark:bg-zinc-900 rounded-md"
-      bind:value={search}
-    />
-    <Link
-      href={(function () {
+    <TextInput class="rounded-md" bind:value={search} />
+    <Button
+      on:click={() => {
         $page.url.searchParams.set('q', search)
-        return $page.url.toString()
-      })()}
+        goto($page.url.toString(), {
+          invalidateAll: true,
+        })
+      }}
       color={Color.ghost}
     >
       Search
-    </Link>
+    </Button>
   </div>
 </div>
 <ul class="flex flex-col">
@@ -92,11 +90,11 @@
           </div>
         </div>
         {#if !community.community.local}
-          <span class="opacity-80">
+          <span class="opacity-80 mb-2">
             {new URL(community.community.actor_id).hostname}
           </span>
         {/if}
-        <div class="flex flex-row gap-3 items-center mt-2">
+        <div class="flex flex-row gap-3 items-center">
           <div class="flex flex-row gap-1 items-center">
             <Icon src={UserGroup} width={16} mini />
             <span>
