@@ -5,7 +5,7 @@
   import { ChevronDown, ChevronUp, Icon } from 'svelte-hero-icons'
 
   export let post: Post
-  export let vote: number | undefined
+  export let vote: number = 0
   export let score: number
 
   async function upvote() {

@@ -26,20 +26,22 @@
   export let replying = false
 
   let score = node.comment_view.counts.score
+  let vote = node.comment_view.my_vote ?? 0
 
   async function upvote() {
     if (!$authData) return
 
     const upvoted = node.comment_view.my_vote == 1
 
-    if (node.comment_view.my_vote == -1) {
+    if (vote == -1) {
       score += 2
-    } else if (node.comment_view.my_vote == 1) {
+    } else if (vote == 1) {
       score -= 1
-    } else if (node.comment_view.my_vote == 0) {
+    } else if (vote == 0) {
       score += 1
     }
 
+    vote = Number(!upvoted)
     node.comment_view.my_vote = Number(!upvoted)
 
     await getClient()
@@ -56,14 +58,15 @@
 
     const upvoted = node.comment_view.my_vote == -1
 
-    if (node.comment_view.my_vote == -1) {
+    if (vote == -1) {
       score += 1
-    } else if (node.comment_view.my_vote == 1) {
+    } else if (vote == 1) {
       score -= 2
-    } else if (node.comment_view.my_vote == 0) {
+    } else if (vote == 0) {
       score -= 1
     }
 
+    vote = -Number(!upvoted)
     node.comment_view.my_vote = -Number(!upvoted)
 
     await getClient()
