@@ -23,7 +23,7 @@
 </script>
 
 <svelte:head>
-  {data.user.person_view.person.name}
+  <title>{data.user.person_view.person.name}</title>
 </svelte:head>
 
 <div class="flex flex-row gap-4 max-w-full">
