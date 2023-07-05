@@ -25,8 +25,8 @@
   <div class="flex flex-col gap-4 max-w-full">
     <div class="flex flex-col sm:flex-row gap-4 max-w-full">
       <MultiSelect
-        options={['Active', 'TopWeek', 'TopAll', 'New']}
-        optionNames={['Active', 'Top (Week)', 'Top (All)', 'New']}
+        options={['Active', 'Hot', 'TopAll', 'New']}
+        optionNames={['Active', 'Hot', 'Top', 'New']}
         selected={$page.url.searchParams.get('sort') ?? 'Active'}
         on:select={(e) => {
           const url = $page.url
