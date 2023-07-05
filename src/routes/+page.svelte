@@ -14,8 +14,8 @@
     PencilSquare,
     UserGroup,
   } from 'svelte-hero-icons'
-  import Avatar from '../lib/components/ui/Avatar.svelte'
-  import Post from './post/[id]/Post.svelte'
+  import Avatar from '$lib/components/ui/Avatar.svelte'
+  import Post from '$lib/components/lemmy/Post.svelte'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'

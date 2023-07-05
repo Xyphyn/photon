@@ -19,6 +19,8 @@
   import CommunityLink from '$lib/components/community/CommunityLink.svelte'
   import { isImage } from '$lib/ui/image.js'
   import { authData, getClient } from '$lib/lemmy.js'
+  import PostVote from '$lib/components/lemmy/PostVote.svelte'
+  import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
 
   let postRes: PostView
   export { postRes as post }
@@ -96,55 +98,22 @@
     {/if}
   </div>
   <div class="flex flex-row gap-2 pb-4 px-4">
-    <div
-      class="flex flex-row items-center gap-1 rounded-md transition-colors cursor-pointer
-            {// upvote
-      vote == 1
-        ? 'bg-orange-600/20 text-orange-500'
-        : // downvote
-        vote == -1
-        ? 'bg-blue-600/40 text-blue-400'
-        : // no vote
-          'bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700'}"
-    >
-      <button
-        aria-label="Upvote"
-        class="p-1 px-1.5"
-        on:click={() => {
-          vote = vote == 1 ? 0 : 1
-          upvote()
-        }}
-      >
-        <Icon src={ChevronUp} mini width={20} height={20} />
-      </button>
-      <span class="text-sm">
-        {Intl.NumberFormat('en', { notation: 'compact' }).format(
-          postRes.counts.score
-        )}
-      </span>
-      <button
-        aria-label="Downvote"
-        class="p-1 px-1.5"
-        on:click={() => {
-          vote = vote == -1 ? 0 : -1
-          downvote()
-        }}
-      >
-        <Icon src={ChevronDown} mini width={20} height={20} />
-      </button>
-    </div>
+    <PostVote
+      post={postRes.post}
+      vote={postRes.my_vote}
+      score={postRes.counts.score}
+    />
 
     <a
       class="flex flex-row items-center gap-1 p-1.5 px-3 rounded-md
-            bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200
-            dark:hover:bg-zinc-700 transition-colors"
+            bg-slate-100 dark:bg-zinc-900 hover:bg-slate-200
+            dark:hover:bg-zinc-700 transition-colors border border-slate-200
+            dark:border-zinc-800"
       href="/post/{postRes.post.id}"
     >
       <Icon src={ChatBubbleOvalLeft} mini width={16} height={16} />
       <span class="text-sm">
-        {Intl.NumberFormat('en', { notation: 'compact' }).format(
-          postRes.counts.comments
-        )}
+        <FormattedNumber number={postRes.counts.comments} />
       </span>
     </a>
   </div>

@@ -10,6 +10,12 @@ function buildUrl(inputUrl: URL): URL {
   return new URL(`${withoutCors}?${inputUrl.searchParams.toString()}`)
 }
 
+export async function handleError() {
+  return {
+    message: 'The proxy failed to fetch from that URL',
+  }
+}
+
 export async function handle({ event, resolve }) {
   // annoying hack to fix lemmy's CORS
   if (event.url.pathname.startsWith('/cors')) {
@@ -27,10 +33,20 @@ export async function handle({ event, resolve }) {
         // @ts-ignore this works, idk why typescript complains
         duplex: 'half',
         signal: AbortSignal.timeout(20 * 1000),
-      })
+      }).catch((_) => undefined)
+
+      if (!data) {
+        return new Response(
+          JSON.stringify({
+            message: 'proxy failed to fetch',
+          }),
+          {
+            status: 500,
+          }
+        )
+      }
 
       if (!data.ok) {
-        await resolve(event)
         return new Response(
           JSON.stringify({
             message: await data.text(),
@@ -44,23 +60,18 @@ export async function handle({ event, resolve }) {
       try {
         const json = await data.json()
 
-        await resolve(event)
         return new Response(JSON.stringify(json), {
           status: data.status,
         })
-      } catch (err) {
-        await resolve(event)
-        return new Response(
-          JSON.stringify({
-            message: 'Failed to fetch',
-          }),
-          {
-            status: data.status,
-          }
-        )
+      } catch (error) {
+        console.log('Caught the thing')
+
+        return new Response(JSON.stringify({ message: 'i hate everything' }), {
+          status: 500,
+        })
       }
     } catch (error) {
-      await resolve(event)
+      console.log('caught it')
       return new Response(
         JSON.stringify({
           message: 'the proxy failed to fetch from server',
@@ -71,6 +82,7 @@ export async function handle({ event, resolve }) {
       )
     }
   }
+
   const response = await resolve(event)
   return response
 }

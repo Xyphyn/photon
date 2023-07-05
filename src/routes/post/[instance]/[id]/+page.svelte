@@ -1,18 +1,16 @@
 <script lang="ts">
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
-  import type {
-    GetCommentsResponse,
-    GetPostResponse,
-    Comment,
-    CommentView,
-  } from 'lemmy-js-client'
-  import type { CommentNodeI } from './comments.js'
-  import Comments from './comment/Comments.svelte'
+  import type { Comment, CommentView } from 'lemmy-js-client'
+  import type { CommentNodeI } from '$lib/components/lemmy/comment/comments.js'
+  import Comments from '$lib/components/lemmy/comment/Comments.svelte'
   import SvelteMarkdown from 'svelte-markdown'
   import CommunityLink from '$lib/components/community/CommunityLink.svelte'
   import { isImage } from '$lib/ui/image.js'
   import { user } from '$lib/lemmy.js'
-  import CommentForm from './comment/CommentForm.svelte'
+  import CommentForm from '$lib/components/lemmy/comment/CommentForm.svelte'
+  import PostVote from '$lib/components/lemmy/PostVote.svelte'
+  import { page } from '$app/stores'
+  import { onMount } from 'svelte'
 
   export let data
 
@@ -117,6 +115,13 @@
       <SvelteMarkdown source={post.body} />
     </p>
   {/if}
+  <div class="w-max">
+    <PostVote
+      post={data.post.post_view.post}
+      score={data.post.post_view.counts.score}
+      vote={data.post.post_view.my_vote}
+    />
+  </div>
 </div>
 <div class="mt-4 flex flex-col gap-2">
   <div class="font-bold text-lg">
@@ -141,7 +146,8 @@
     {#if $user}
       <CommentForm
         postId={post.id}
-        on:comment={(comment) => comments.comments.unshift(comment.detail)}
+        on:comment={(comment) =>
+          (comments.comments = [...comment.detail, comments.comments])}
       />
     {/if}
     <MultiSelect

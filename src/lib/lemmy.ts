@@ -6,7 +6,7 @@ import {
 import { get, writable } from 'svelte/store'
 import { PUBLIC_PROXY_URL } from '$env/static/public'
 
-export const DEFAULT_INSTANCE_URL = 'lemmy.world'
+export const DEFAULT_INSTANCE_URL = 'lemm.ee'
 export let instance_url = writable(DEFAULT_INSTANCE_URL)
 
 export function getClient(instance?: string): LemmyHttp {

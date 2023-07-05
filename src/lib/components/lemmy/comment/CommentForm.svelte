@@ -50,7 +50,7 @@
   focus:dark:border-white transition-colors rounded-md"
     bind:value={newComment}
   />
-  <div class="w-24 ml-auto">
+  <div class="w-24 ml-auto flex flex-row gap-2">
     <Button
       large
       on:click={submit}

@@ -1,13 +1,23 @@
 <script lang="ts">
   import Comment from './Comment.svelte'
-  import type { CommentNodeI } from '../comments.js'
+  import type { CommentNodeI } from './comments'
   import type { Post } from 'lemmy-js-client'
+  import { page } from '$app/stores'
+  import { onMount } from 'svelte'
 
   const maxComments = 250
 
   export let nodes: CommentNodeI[]
   export let isParent: boolean
   export let post: Post
+
+  onMount(() => {
+    if (isParent && $page.url.hash) {
+      document.getElementById($page.url.hash)?.scrollIntoView({
+        behavior: 'smooth',
+      })
+    }
+  })
 </script>
 
 <ul

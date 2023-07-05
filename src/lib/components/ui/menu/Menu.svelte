@@ -48,7 +48,7 @@
               {top ? 'bottom-[100%] origin-bottom-left' : 'top-[100%]'}
           rounded-md py-2 min-w-[16rem] my-2 flex flex-col shadow-lg {itemsClass
         ? itemsClass
-        : 'bg-white dark:bg-zinc-900'}"
+        : 'bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800'}"
     >
       {#if open}
         <slot />

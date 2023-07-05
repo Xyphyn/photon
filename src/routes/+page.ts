@@ -2,7 +2,7 @@ import { authData, getClient } from '$lib/lemmy.js'
 import type { ListingType, SortType } from 'lemmy-js-client'
 import { get } from 'svelte/store'
 
-export async function load({ url }) {
+export async function load({ url, params }) {
   const page = Number(url.searchParams.get('page') || 1) || 1
 
   const sort: SortType = (url.searchParams.get('sort') as SortType) || 'Active'

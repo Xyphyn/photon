@@ -7,13 +7,14 @@
     Minus,
     Plus,
   } from 'svelte-hero-icons'
-  import Avatar from '../../../../lib/components/ui/Avatar.svelte'
-  import type { CommentNodeI } from '../comments.js'
+  import Avatar from '$lib/components/ui/Avatar.svelte'
+  import type { CommentNodeI } from './comments'
   import SvelteMarkdown from 'svelte-markdown'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import { getClient, authData } from '$lib/lemmy.js'
   import { Color } from '$lib/ui/colors.js'
   import CommentForm from './CommentForm.svelte'
+  import { page } from '$app/stores'
 
   export let node: CommentNodeI
 
@@ -55,7 +56,12 @@
   }
 </script>
 
-<li class="py-3">
+<li
+  class="py-3 {$page.url.hash == `#${node.comment_view.comment.id}`
+    ? 'bg-slate-300 dark:bg-zinc-800'
+    : ''}"
+  id="#{node.comment_view.comment.id.toString()}"
+>
   <details bind:open class="flex flex-col gap-1">
     <summary
       class="flex flex-row cursor-pointer arrow gap-2 items-center group"
@@ -66,7 +72,7 @@
         width={24}
       />
       <span class="text-sm">{node.comment_view.creator.name}</span>
-      <span class="text-sm opacity-60">
+      <span class="text-sm opacity-60 md:inline hidden">
         {node.comment_view.counts.score} point{node.comment_view.counts.score ==
         1
           ? ''
@@ -139,12 +145,14 @@
           {postId}
           parentId={node.comment_view.comment.id}
           on:comment={(e) => {
-            node.children.unshift(e.detail)
+            node.children = [e.detail, ...node.children]
             replying = false
           }}
         />
       </div>
     {/if}
-    <slot />
+    <div class="bg-transparent dark:bg-transparent">
+      <slot />
+    </div>
   </details>
 </li>

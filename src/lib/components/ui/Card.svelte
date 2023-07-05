@@ -6,7 +6,7 @@
 <div
   class="bg-white border border-slate-200
     dark:border-zinc-800 dark:bg-zinc-900 break-words
-    flex-col gap-4 p-4 max-w-lg rounded-md {clazz}"
+    flex-col gap-4 p-4 rounded-md {clazz}"
 >
   <slot />
 </div>

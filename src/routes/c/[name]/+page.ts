@@ -9,7 +9,7 @@ export function load(req: any) {
     (req.url.searchParams.get('sort') as SortType) || 'Active'
 
   return {
-    posts: getClient().getPosts({
+    posts: getClient(req.params).getPosts({
       limit: 40,
       community_name: req.params.name,
       page: page,

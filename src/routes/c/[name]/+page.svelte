@@ -4,7 +4,7 @@
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
   import SvelteMarkdown from 'svelte-markdown'
   import Avatar from '../../../lib/components/ui/Avatar.svelte'
-  import Post from '../../post/[id]/Post.svelte'
+  import Post from '../../../lib/components/lemmy/Post.svelte'
   import { goto } from '$app/navigation'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import {

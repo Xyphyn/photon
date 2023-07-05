@@ -16,6 +16,7 @@
     ArrowRightOnRectangle,
     Cog6Tooth,
     Icon,
+    Inbox,
   } from 'svelte-hero-icons'
 </script>
 
@@ -64,6 +65,9 @@
         <Icon src={ArrowLeftOnRectangle} mini width={16} /> Log in
       </MenuButton>
     {:else}
+      <MenuButton link href="/inbox">
+        <Icon src={Inbox} mini width={16} /> Inbox
+      </MenuButton>
       <MenuButton
         on:click={() => {
           localStorage.removeItem('user')

@@ -3,12 +3,12 @@ import { get } from 'svelte/store'
 
 export async function load({ params }) {
   return {
-    post: getClient().getPost({
+    post: getClient(params.instance).getPost({
       id: Number(params.id),
       auth: get(authData)?.token,
     }),
     streamed: {
-      comments: getClient().getComments({
+      comments: getClient(params.instance).getComments({
         post_id: Number(params.id),
         type_: 'All',
         limit: 250,
