@@ -26,7 +26,11 @@ export async function load() {
     client.getPrivateMessages(params),
   ])
 
-  const data = [...replies.replies, ...mentions.mentions].sort(
+  const data = [
+    ...replies.replies,
+    ...mentions.mentions,
+    ...privateMessages.private_messages,
+  ].sort(
     (a, b) =>
       Date.parse(getInboxItemPublished(b)) -
       Date.parse(getInboxItemPublished(a))

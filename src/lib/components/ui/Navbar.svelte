@@ -89,13 +89,18 @@
           {/if}
         {/if}
       </button>
-      <span class="text-xs opacity-80 text-left mx-4 my-2">Profile</span>
-      {#if !$user}
+      <span class="text-xs opacity-80 text-left mx-4 my-2">
+        {$user ? $user.person_view.person.name : 'Profile'}
+      </span>
+      {#if !$user || !$authData}
         <MenuButton link href="/login">
           <Icon src={ArrowLeftOnRectangle} mini width={16} /> Log in
         </MenuButton>
       {:else}
-        <MenuButton link href="/u/{$user.person_view.person.name}">
+        <MenuButton
+          link
+          href="/u/{$user.person_view.person.name}@{$authData.instance}"
+        >
           <Icon src={UserCircle} mini width={16} /> Profile
         </MenuButton>
         <MenuButton link href="/inbox">

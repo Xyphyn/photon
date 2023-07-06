@@ -60,8 +60,8 @@
   <title>{data.user.person_view.person.name}</title>
 </svelte:head>
 
-<div class="flex flex-row gap-4 max-w-full">
-  <div class="flex flex-col gap-4 max-w-full">
+<div class="flex flex-row gap-4 max-w-full w-full">
+  <div class="flex flex-col gap-4 max-w-full w-full">
     {#each items as item}
       {#if item.post}
         <Post post={item.item} />
@@ -92,7 +92,7 @@
     {/each}
   </div>
 
-  <div class="max-w-sm w-full hidden xl:block">
+  <div class="max-w-sm w-full hidden lg:block">
     <StickyCard>
       <Avatar
         width={64}

@@ -1,24 +1,33 @@
 <script lang="ts">
-  import type { CommentReplyView, PersonMentionView } from 'lemmy-js-client'
+  import type {
+    CommentReplyView,
+    PersonMentionView,
+    PrivateMessageView,
+  } from 'lemmy-js-client'
   import InboxItem from './InboxItem.svelte'
   import Button from '$lib/components/input/Button.svelte'
   import { Check, Icon } from 'svelte-hero-icons'
-  import { authData, getClient } from '$lib/lemmy.js'
+  import { authData, getClient, user } from '$lib/lemmy.js'
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
 
   export let data: {
-    data: PersonMentionView[] | CommentReplyView[]
+    data: PersonMentionView[] | CommentReplyView[] | PrivateMessageView[]
   }
 
-  function isRead(item: PersonMentionView | CommentReplyView) {
-    console.log('running...')
+  function isRead(
+    item: PersonMentionView | CommentReplyView | PrivateMessageView
+  ) {
     if ('person_mention' in item) {
       return (item as PersonMentionView).person_mention.read
     }
 
     if ('comment_reply' in item) {
       return (item as CommentReplyView).comment_reply.read
+    }
+
+    if ('private_message' in item) {
+      return (item as PrivateMessageView).private_message.read
     }
 
     return false
@@ -28,6 +37,8 @@
     const response = await getClient().markAllAsRead({
       auth: $authData!.token,
     })
+
+    $user.unreads = 0
 
     goto($page.url, {
       invalidateAll: true,

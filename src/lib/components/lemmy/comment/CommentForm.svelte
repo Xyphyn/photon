@@ -5,6 +5,7 @@
   import { authData, getClient, user } from '$lib/lemmy.js'
   import { createEventDispatcher } from 'svelte'
   import { ToastType, addToast } from '$lib/components/ui/toasts/toasts.js'
+  import TextArea from '$lib/components/input/TextArea.svelte'
 
   export let postId: number
   export let parentId: number | undefined = undefined
@@ -48,11 +49,10 @@
 </script>
 
 <div class="max-w-lg flex flex-col gap-2">
-  <textarea
-    rows="3"
-    class="w-full bg-slate-100 dark:bg-zinc-900 border border-slate-200
-  dark:border-zinc-800 p-4 outline-none focus:border-black
-  focus:dark:border-white transition-colors rounded-md"
+  <TextArea
+    rows={3}
+    placeholder="What are you thinking?"
+    class="bg-slate-100 dark:bg-zinc-900"
     bind:value={newComment}
   />
   <div class="w-24 ml-auto flex flex-row gap-2">
