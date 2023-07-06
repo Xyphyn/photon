@@ -46,7 +46,7 @@
   }
 </script>
 
-<Card class="bg-white flex flex-col overflow-hidden max-w-xl w-full relative">
+<Card class="bg-white flex flex-col overflow-hidden w-full relative">
   <div class="flex flex-col gap-2 bg-white dark:bg-zinc-900 p-4 rounded-md">
     <span class="flex flex-row gap-2 text-xs items-center">
       <CommunityLink avatarSize={20} avatar community={postRes.community} />

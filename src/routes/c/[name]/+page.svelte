@@ -23,8 +23,8 @@
 </script>
 
 <div class="flex flex-row gap-4 justify-between">
-  <div class="flex flex-col gap-4 max-w-full">
-    <div class="flex flex-col sm:flex-row gap-4 max-w-full">
+  <div class="flex flex-col gap-4 max-w-full w-full">
+    <div class="flex flex-col sm:flex-row gap-4 max-w-full w-full">
       <MultiSelect
         options={['Active', 'Hot', 'TopAll', 'New']}
         optionNames={['Active', 'Hot', 'Top', 'New']}

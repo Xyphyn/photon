@@ -27,8 +27,8 @@
   <title>Xylemmy</title>
 </svelte:head>
 
-<div class="flex flex-row gap-4">
-  <div class="flex flex-col gap-4 max-w-full">
+<div class="flex flex-row gap-4 justify-between">
+  <div class="flex flex-col gap-4 max-w-full w-full">
     <div class="flex flex-col sm:flex-row gap-4 max-w-full">
       <MultiSelect
         options={['Subscribed', 'Local', 'All']}
@@ -80,7 +80,7 @@
       </Button>
     </div>
   </div>
-  <div class="ml-auto hidden lg:block max-w-sm w-full">
+  <div class="hidden lg:block max-w-sm w-full">
     {#await data.streamed.site}
       <Card>
         <div
