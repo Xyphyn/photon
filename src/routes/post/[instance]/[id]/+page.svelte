@@ -11,6 +11,8 @@
   import { onMount } from 'svelte'
   import UserLink from '$lib/components/user/UserLink.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
+  import Avatar from '$lib/components/ui/Avatar.svelte'
+  import RelativeDate from '$lib/components/util/RelativeDate.svelte'
 
   export let data
 
@@ -100,8 +102,19 @@
 
 <div class="flex flex-col gap-2">
   <span class="flex flex-row gap-2 text-sm opacity-80 items-center">
-    <CommunityLink avatar community={postData.community} />
-    <span class="opacity-50"><UserLink user={postData.creator} /></span>
+    <Avatar
+      url={postData.community.icon}
+      width={24}
+      alt={postData.community.name}
+    />
+    <div class="flex flex-col">
+      <CommunityLink community={postData.community} />
+      <span class="opacity-50 flex flex-row gap-1 text-sm">
+        <UserLink user={postData.creator} />
+        <span>•</span>
+        <RelativeDate date={new Date(postData.post.published)} />
+      </span>
+    </div>
   </span>
   <h1 class="font-bold text-lg">{post.name}</h1>
   {#if post.url}

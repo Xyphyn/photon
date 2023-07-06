@@ -50,7 +50,11 @@
 <Card class="bg-white flex flex-col overflow-hidden w-full relative">
   <div class="flex flex-col gap-2 bg-white dark:bg-zinc-900 p-4 rounded-md">
     <span class="flex flex-row gap-2 text-xs items-center">
-      <Avatar url={postRes.community.icon ?? ''} alt="" width={24} />
+      <Avatar
+        url={postRes.community.icon}
+        alt={postRes.community.title}
+        width={24}
+      />
       <div class="flex flex-col">
         <CommunityLink community={postRes.community} />
         <span class="opacity-60 flex flex-row gap-1">
@@ -82,7 +86,7 @@
         <img
           src={postRes.post.url}
           alt={postRes.post.name}
-          class="rounded-md max-h-64 max-w-full"
+          class="rounded-md max-h-[32rem] w-full max-w-full"
           loading="lazy"
         />
       </a>
