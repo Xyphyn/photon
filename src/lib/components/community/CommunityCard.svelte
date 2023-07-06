@@ -25,7 +25,7 @@
       `https://api.dicebear.com/6.x/initials/svg?seed=${community_view.community.name}`}
     alt={community_view.community.name}
   />
-  <span class="flex flex-row items-center gap-1 text-sm capitalize">
+  <span class="flex flex-row items-center gap-1 text-sm">
     <Icon src={Calendar} width={16} height={16} mini />
     <RelativeDate date={new Date(community_view.community.published)} />
   </span>

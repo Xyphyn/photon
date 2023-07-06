@@ -3,6 +3,7 @@
 
   export let user: Person
   export let avatar: boolean = false
+  export let avatarSize = 24
 
   function linkFromCommunity(user: Person) {
     const domain = new URL(user.actor_id).hostname
@@ -19,8 +20,8 @@
       src={user.avatar ??
         `https://api.dicebear.com/6.x/initials/svg?seed=${user.name}`}
       alt=""
-      width={24}
-      height={24}
+      width={avatarSize}
+      height={avatarSize}
       class="rounded-full aspect-square object-cover"
       loading="lazy"
     />

@@ -26,7 +26,8 @@
 
         // Create a RelativeTimeFormat instance with user's locale and options
         const rtf = new Intl.RelativeTimeFormat(navigator.language, {
-          numeric: 'auto',
+          numeric: 'always',
+          style: 'long',
         })
 
         return rtf.format(-value, thresholds[i].unit as any)

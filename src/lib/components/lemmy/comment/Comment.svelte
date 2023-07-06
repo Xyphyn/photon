@@ -87,12 +87,10 @@
 >
   <details bind:open class="flex flex-col gap-1">
     <summary
-      class="flex flex-row cursor-pointer arrow gap-2 items-center group"
+      class="flex flex-row cursor-pointer arrow gap-2 items-center group text-xs"
     >
-      <span class="text-sm">
-        <UserLink avatar user={node.comment_view.creator} />
-      </span>
-      <span class="text-sm opacity-60">
+      <UserLink avatarSize={20} avatar user={node.comment_view.creator} />
+      <span class="opacity-60">
         <RelativeDate date={new Date(node.comment_view.comment.published)} />
       </span>
       <span

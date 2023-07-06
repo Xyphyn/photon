@@ -13,6 +13,7 @@
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
+  import CommunityCard from '$lib/components/community/CommunityCard.svelte'
 
   export let data
 
@@ -107,9 +108,9 @@
       width={24}
       alt={postData.community.name}
     />
-    <div class="flex flex-col">
+    <div class="flex flex-col text-xs">
       <CommunityLink community={postData.community} />
-      <span class="opacity-50 flex flex-row gap-1 text-sm">
+      <span class="opacity-50 flex flex-row gap-1">
         <UserLink user={postData.creator} />
         <span>•</span>
         <RelativeDate date={new Date(postData.post.published)} />
