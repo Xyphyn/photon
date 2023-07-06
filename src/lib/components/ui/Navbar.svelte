@@ -27,7 +27,7 @@
 
 <nav
   class="sticky bg-slate-50/70 dark:bg-zinc-950/70 backdrop-blur-3xl top-0
-  z-20 mt-2"
+  z-50 mt-2"
 >
   <div
     class="flex z-20 flex-row gap-4 items-center w-full h-16 max-w-5xl mx-auto px-6"
