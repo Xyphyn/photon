@@ -120,14 +120,16 @@
         class="flex flex-col gap-1 whitespace-pre-wrap
       max-w-full"
       >
-        <div class="max-w-full break-words">
+        <div class="max-w-full break-words text-sm leading-6">
           <Markdown source={node.comment_view.comment.content} />
         </div>
         <div class="flex flex-row gap-2 items-center">
-          <div class="flex flex-row gap-2 items-center">
+          <div class="flex flex-row items-center">
             <button
               on:click={upvote}
-              class={node.comment_view.my_vote == 1 ? 'text-orange-500' : ''}
+              class="pr-1.5 {node.comment_view.my_vote == 1
+                ? 'text-orange-500'
+                : ''}"
             >
               <Icon src={ArrowUp} width={16} mini />
             </button>
@@ -136,7 +138,9 @@
             </span>
             <button
               on:click={downvote}
-              class={node.comment_view.my_vote == -1 ? 'text-blue-500' : ''}
+              class="pl-1.5 {node.comment_view.my_vote == -1
+                ? 'text-blue-500'
+                : ''}"
             >
               <Icon src={ArrowDown} width={16} mini />
             </button>

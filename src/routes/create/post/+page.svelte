@@ -92,6 +92,8 @@
     'My cat just invented a time machine, what do I do?',
     'Unpopular opinion: world peace and global happiness would be beneficial to humanity',
     'LPT: The smaller weights are easier to lift than the bigger weights in a gym',
+    'javascript bad',
+    'ELI5: What is 4 + 8?',
   ]
 
   const placeholder =
@@ -123,7 +125,7 @@
   <title>Create post</title>
 </svelte:head>
 
-<Card class="p-6 max-w-xl mx-auto">
+<Card class="p-6 max-w-2xl mx-auto">
   <form on:submit|preventDefault={submit} class="flex flex-col gap-4">
     <h1 class="font-bold text-xl">Create Post</h1>
     <div>

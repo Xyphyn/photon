@@ -3,13 +3,11 @@
   import type { Comment, CommentView } from 'lemmy-js-client'
   import type { CommentNodeI } from '$lib/components/lemmy/comment/comments.js'
   import Comments from '$lib/components/lemmy/comment/Comments.svelte'
-  import SvelteMarkdown from 'svelte-markdown'
   import CommunityLink from '$lib/components/community/CommunityLink.svelte'
   import { isImage, isVideo } from '$lib/ui/image.js'
-  import { user } from '$lib/lemmy.js'
+  import { authData, getClient, user } from '$lib/lemmy.js'
   import CommentForm from '$lib/components/lemmy/comment/CommentForm.svelte'
   import PostVote from '$lib/components/lemmy/PostVote.svelte'
-  import { page } from '$app/stores'
   import { onMount } from 'svelte'
   import UserLink from '$lib/components/user/UserLink.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
@@ -18,6 +16,16 @@
 
   const postData = data.post.post_view
   const post = postData.post
+
+  onMount(async () => {
+    if (!postData.read && $authData) {
+      getClient().markPostAsRead({
+        auth: $authData.token,
+        read: true,
+        post_id: post.id,
+      })
+    }
+  })
 
   function getCommentParentId(comment?: Comment): number | undefined {
     const split = comment?.path.split('.')

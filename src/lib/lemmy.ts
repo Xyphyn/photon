@@ -31,8 +31,26 @@ export interface AuthData {
   instance: string
 }
 
+export interface UserData {
+  unreads: number
+}
+
 export const authData = writable<AuthData | undefined>()
-export const user = writable<GetPersonDetailsResponse>()
+export const user = writable<GetPersonDetailsResponse & UserData>()
+
+setInterval(async () => {
+  // check for unread messages
+  if (!get(authData)) return
+
+  const response = await getClient().getUnreadCount({
+    auth: get(authData)!.token,
+  })
+
+  const u = get(user)
+  u.unreads = response.mentions + response.private_messages + response.replies
+
+  user.set(u)
+}, 60 * 1000)
 
 if (typeof localStorage != 'undefined') {
   if (localStorage.getItem('user')) {
@@ -52,7 +70,7 @@ authData.subscribe(async (data) => {
       username: `${data?.username}@${data?.instance}`,
     })
 
-    user.set(person)
+    user.set({ ...person, unreads: 0 })
 
     if (typeof localStorage != 'undefined') {
       localStorage.setItem('user', JSON.stringify(data))

@@ -43,8 +43,15 @@
       <FormattedNumber number={community_view.counts.comments} />
     </span>
   </div>
-  <h1 class="font-bold text-lg">
-    {community_view.community.name}
-  </h1>
+  <div>
+    <h1 class="font-bold text-lg">
+      {community_view.community.title}
+    </h1>
+    <span class="opacity-80 text-sm">
+      !{community_view.community.name}@{new URL(
+        community_view.community.actor_id
+      ).hostname}
+    </span>
+  </div>
   <Markdown source={community_view.community.description} />
 </StickyCard>

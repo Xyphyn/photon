@@ -25,6 +25,7 @@
   import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
   import { Color } from '$lib/ui/colors.js'
   import { page } from '$app/stores'
+  import Avatar from '$lib/components/ui/Avatar.svelte'
 
   let postRes: PostView
   export { postRes as post }
@@ -49,16 +50,22 @@
 <Card class="bg-white flex flex-col overflow-hidden w-full relative">
   <div class="flex flex-col gap-2 bg-white dark:bg-zinc-900 p-4 rounded-md">
     <span class="flex flex-row gap-2 text-xs items-center">
-      <CommunityLink avatarSize={20} avatar community={postRes.community} />
-      <span class="opacity-60">
-        <UserLink user={postRes.creator} />
-      </span>
+      <Avatar url={postRes.community.icon ?? ''} alt="" width={24} />
+      <div class="flex flex-col">
+        <CommunityLink community={postRes.community} />
+        <span class="opacity-60 flex flex-row gap-1">
+          <UserLink user={postRes.creator} />
+          <span>•</span>
+          <RelativeDate date={new Date(postRes.post.published)} />
+        </span>
+      </div>
       <div class="ml-auto" />
-      <span class="opacity-50 capitalize">
-        <RelativeDate date={new Date(postRes.post.published)} />
-      </span>
+      <span class="opacity-50 capitalize" />
     </span>
-    <a href="/post/{postRes.post.id}" class="font-bold">
+    <a
+      href="/post/{postRes.post.id}"
+      class="font-bold {postRes.read ? 'opacity-50' : ''}"
+    >
       {postRes.post.name}
     </a>
     {#if postRes.post.url}
@@ -115,7 +122,7 @@
         <FormattedNumber number={postRes.counts.comments} />
       </span>
     </a>
-    <Menu top absolute class="bottom-0 right-0 m-5 z-40">
+    <Menu top absolute class="bottom-0 right-0 m-5 z-10">
       <Button slot="button">
         <Icon src={EllipsisHorizontal} width={16} mini />
       </Button>
