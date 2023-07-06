@@ -36,7 +36,7 @@
       <a href="/" class="flex flex-row items-center gap-2">
         <Logo width={40} />
         <div class="sm:flex flex-col hidden">
-          <span class="font-bold">Xylemmy</span>
+          <span class="font-bold">Photon</span>
           <span
             class="text-xs opacity-50
         transition-opacity"
