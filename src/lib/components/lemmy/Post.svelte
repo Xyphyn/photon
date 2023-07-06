@@ -61,6 +61,14 @@
           <UserLink user={postRes.creator} />
           <span>•</span>
           <RelativeDate date={new Date(postRes.post.published)} />
+          <span>•</span>
+          <span>
+            {Math.floor(
+              (postRes.counts.upvotes /
+                (postRes.counts.upvotes + postRes.counts.downvotes || 1)) *
+                100
+            )}%
+          </span>
         </span>
       </div>
       <div class="ml-auto" />
