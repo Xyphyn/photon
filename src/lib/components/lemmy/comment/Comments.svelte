@@ -53,7 +53,7 @@
 <ul
   class={isParent
     ? ''
-    : 'ml-2.5 mt-2 px-2.5 border-l-2 border-black/10 dark:border-white/10'}
+    : 'ml-2.5 mt-2 pl-2.5 border-l-2 border-black/10 dark:border-white/10'}
 >
   {#each nodes.slice(0, maxComments) as node}
     <Comment postId={post.id} {node} open={true}>
