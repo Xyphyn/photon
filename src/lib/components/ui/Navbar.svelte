@@ -51,12 +51,12 @@
       </a>
     </div>
     <div class="flex flex-row gap-2">
-      <Link href="/communities">
+      <Link href="/communities" label="Communities">
         <Icon src={GlobeAlt} width={16} />
         <span class="hidden sm:inline ml-1">Communities</span>
       </Link>
       <Menu>
-        <Button color={Color.accent} slot="button">
+        <Button color={Color.accent} slot="button" label="Create">
           <Icon src={Plus} width={16} />
           <span class="hidden sm:inline">Create</span>
         </Button>

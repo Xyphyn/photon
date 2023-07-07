@@ -142,7 +142,7 @@
       </span>
     </a>
     <Menu top absolute class="bottom-0 right-0 m-5 z-10">
-      <Button slot="button">
+      <Button slot="button" label="Post actions">
         <Icon src={EllipsisHorizontal} width={16} mini />
       </Button>
       <span class="mx-4 text-xs opacity-80 text-left my-2">Post Actions</span>

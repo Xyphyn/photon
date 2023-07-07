@@ -5,6 +5,7 @@
   import MarkdownQuote from '$lib/components/markdown/MarkdownQuote.svelte'
   import SvelteMarkdown from 'svelte-markdown'
   import MarkdownList from '$lib/components/markdown/MarkdownList.svelte'
+  import MarkdownImage from '$lib/components/markdown/MarkdownImage.svelte'
 
   export let source: string | undefined
 </script>
@@ -18,6 +19,7 @@
       hr: MarkdownHr,
       blockquote: MarkdownQuote,
       list: MarkdownList,
+      image: MarkdownImage,
     }}
   />
 </div>

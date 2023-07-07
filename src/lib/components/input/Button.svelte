@@ -8,6 +8,7 @@
   export let large = false
   export let disabled = false
   export let submit = false
+  export let label: string = ''
 
   const dispatch = createEventDispatcher()
 </script>
@@ -21,6 +22,7 @@
     ? 'opacity-50 pointer-events-none'
     : ''}"
   type={submit ? 'submit' : 'button'}
+  aria-label={label}
 >
   <div
     class="flex flex-row items-center justify-center gap-2"
