@@ -9,6 +9,7 @@ function buildUrl(inputUrl: URL): URL {
 }
 
 export function handleError({ error, event }) {
+  console.error(error)
   return {
     message: 'There was an error during rendering',
   }
