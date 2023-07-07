@@ -38,19 +38,13 @@
     const newComments = await getClient().getComments({
       auth: $authData?.token,
       max_depth: 3,
+      limit: 10,
       parent_id: parent.comment_view.comment.id,
     })
 
-    parent.children = buildCommentsTree(
-      newComments.comments.filter(
-        (comment) => comment.comment.id != parent.comment_view.comment.id
-      ),
-      true
-    ).map((node) => ({
-      children: node.children,
-      comment_view: node.comment_view,
-      depth: node.depth + parent.depth,
-    }))
+    parent.children = buildCommentsTree(newComments.comments, true).find(
+      (c) => c.comment_view.comment.id == parent.comment_view.comment.id
+    )!.children
 
     loadingChildren = false
   }

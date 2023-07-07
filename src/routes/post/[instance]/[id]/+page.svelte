@@ -162,10 +162,12 @@
             post_id: data.post.post_view.post.id,
           })
 
-          if (loadedComments.comments.length > 0) {
+          if (comments.comments == loadedComments.comments) {
             comments.comments = [
               ...comments.comments,
-              ...loadedComments.comments,
+              ...loadedComments.comments.filter(
+                (comment) => !comments.comments.includes(comment)
+              ),
             ]
           } else {
             moreComments = false
