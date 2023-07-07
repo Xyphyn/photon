@@ -98,62 +98,56 @@
       <span
         class="ml-auto translate-x-1 opacity-0
         group-hover:translate-x-0 group-hover:opacity-100 text-xs transition-all
-        flex flex-row items-center gap-1 hover:dark:bg-white/10 p-1 rounded-md
-        hover:bg-black/10 px-2"
+        flex flex-row items-center gap-1 dark:bg-white/5 p-1 rounded-md
+        bg-black/5 px-2"
       >
         {#if open}
-          <div class="inline">
-            <Icon src={Minus} width={16} height={16} mini />
-          </div>
-          Collapse
+          <Icon src={Minus} width={16} height={16} mini />
         {:else}
           <Icon src={Plus} width={16} height={16} mini />
-          Expand
           {#if node.children.length > 0}
             <span class="text-xs opacity-50">+{node.children.length}</span>
           {/if}
         {/if}
       </span>
     </summary>
-    <div class="mt-1">
-      <div
-        class="flex flex-col gap-1 whitespace-pre-wrap
+    <div
+      class="flex flex-col gap-1 whitespace-pre-wrap
       max-w-full"
-      >
-        <div class="max-w-full break-words text-sm leading-6">
-          <Markdown source={node.comment_view.comment.content} />
-        </div>
-        <div class="flex flex-row gap-2 items-center">
-          <div class="flex flex-row items-center">
-            <button
-              on:click={upvote}
-              class="pr-1.5 {node.comment_view.my_vote == 1
-                ? 'text-orange-500'
-                : ''}"
-            >
-              <Icon src={ArrowUp} width={16} mini />
-            </button>
-            <span class="text-sm font-medium">
-              {score}
-            </span>
-            <button
-              on:click={downvote}
-              class="pl-1.5 {node.comment_view.my_vote == -1
-                ? 'text-blue-500'
-                : ''}"
-            >
-              <Icon src={ArrowDown} width={16} mini />
-            </button>
-          </div>
+    >
+      <div class="max-w-full break-words text-sm leading-6">
+        <Markdown source={node.comment_view.comment.content} />
+      </div>
+      <div class="flex flex-row gap-2 items-center">
+        <div class="flex flex-row items-center">
           <button
-            class="flex flex-row gap-1 items-center transition-colors px-2 py-1
-            rounded-md {Color.secondary}"
-            on:click={() => (replying = !replying)}
+            on:click={upvote}
+            class="pr-1.5 {node.comment_view.my_vote == 1
+              ? 'text-orange-500'
+              : ''}"
           >
-            <Icon src={ChatBubbleOvalLeft} width={16} height={16} mini />
-            <span class="text-xs">Reply</span>
+            <Icon src={ArrowUp} width={16} mini />
+          </button>
+          <span class="text-sm font-medium">
+            {score}
+          </span>
+          <button
+            on:click={downvote}
+            class="pl-1.5 {node.comment_view.my_vote == -1
+              ? 'text-blue-500'
+              : ''}"
+          >
+            <Icon src={ArrowDown} width={16} mini />
           </button>
         </div>
+        <button
+          class="flex flex-row gap-1 items-center transition-colors px-2 py-1
+            rounded-md {Color.secondary}"
+          on:click={() => (replying = !replying)}
+        >
+          <Icon src={ChatBubbleOvalLeft} width={16} height={16} mini />
+          <span class="text-xs">Reply</span>
+        </button>
       </div>
     </div>
     {#if replying}

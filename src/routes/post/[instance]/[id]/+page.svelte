@@ -1,7 +1,10 @@
 <script lang="ts">
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
   import type { Comment, CommentView } from 'lemmy-js-client'
-  import type { CommentNodeI } from '$lib/components/lemmy/comment/comments.js'
+  import {
+    buildCommentsTree,
+    type CommentNodeI,
+  } from '$lib/components/lemmy/comment/comments.js'
   import Comments from '$lib/components/lemmy/comment/Comments.svelte'
   import CommunityLink from '$lib/components/community/CommunityLink.svelte'
   import { isImage, isVideo } from '$lib/ui/image.js'
@@ -14,6 +17,7 @@
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import CommunityCard from '$lib/components/community/CommunityCard.svelte'
+  import Button from '$lib/components/input/Button.svelte'
 
   export let data
 
@@ -30,71 +34,9 @@
     }
   })
 
-  function getCommentParentId(comment?: Comment): number | undefined {
-    const split = comment?.path.split('.')
-    // remove the 0
-    split?.shift()
-
-    return split && split.length > 1
-      ? Number(split.at(split.length - 2))
-      : undefined
-  }
-
-  function getDepthFromComment(comment?: Comment): number | undefined {
-    const len = comment?.path.split('.').length
-    return len ? len - 2 : undefined
-  }
-
-  export function buildCommentsTree(
-    comments: CommentView[],
-    parentComment: boolean
-  ): CommentNodeI[] {
-    const map = new Map<number, CommentNodeI>()
-    const depthOffset = !parentComment
-      ? 0
-      : getDepthFromComment(comments[0].comment) ?? 0
-
-    for (const comment_view of comments) {
-      const depthI = getDepthFromComment(comment_view.comment) ?? 0
-      const depth = depthI ? depthI - depthOffset : 0
-      const node: CommentNodeI = {
-        comment_view,
-        children: [],
-        depth,
-      }
-      map.set(comment_view.comment.id, { ...node })
-    }
-
-    const tree: CommentNodeI[] = []
-
-    // if its a parent comment fetch, then push the first comment to the top node.
-    if (parentComment) {
-      const cNode = map.get(comments[0].comment.id)
-      if (cNode) {
-        tree.push(cNode)
-      }
-    }
-
-    for (const comment_view of comments) {
-      const child = map.get(comment_view.comment.id)
-      if (child) {
-        const parent_id = getCommentParentId(comment_view.comment)
-        if (parent_id) {
-          const parent = map.get(parent_id)
-          // Necessary because blocked comment might not exist
-          if (parent) {
-            parent.children.push(child)
-          }
-        } else {
-          if (!parentComment) {
-            tree.push(child)
-          }
-        }
-      }
-    }
-
-    return tree
-  }
+  let commentsPage = 1
+  let loading = false
+  let moreComments = true
 </script>
 
 <svelte:head>
@@ -204,6 +146,37 @@
       nodes={buildCommentsTree(comments.comments, false)}
       isParent={true}
     />
+    {#if moreComments}
+      <Button
+        {loading}
+        disabled={loading}
+        on:click={async () => {
+          if (!moreComments) return
+          loading = true
+
+          const loadedComments = await getClient().getComments({
+            auth: $authData?.token,
+            max_depth: 3,
+            page: ++commentsPage,
+            limit: 25,
+            post_id: data.post.post_view.post.id,
+          })
+
+          if (loadedComments.comments.length > 0) {
+            comments.comments = [
+              ...comments.comments,
+              ...loadedComments.comments,
+            ]
+          } else {
+            moreComments = false
+          }
+
+          loading = false
+        }}
+      >
+        Load more
+      </Button>
+    {/if}
   {:catch}
     <div class="bg-red-500/10 border border-red-500 rounded-md p-4">
       Failed to load comments.

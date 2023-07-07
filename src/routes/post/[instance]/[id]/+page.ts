@@ -11,9 +11,9 @@ export async function load({ params }) {
       comments: getClient(params.instance).getComments({
         post_id: Number(params.id),
         type_: 'All',
-        limit: 250,
+        limit: 25,
         page: 1,
-        max_depth: 6,
+        max_depth: 3,
         saved_only: false,
         sort: 'Hot',
         auth: get(authData)?.token,
