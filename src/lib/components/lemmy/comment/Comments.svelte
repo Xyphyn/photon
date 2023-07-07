@@ -6,6 +6,7 @@
   import Button from '$lib/components/input/Button.svelte'
   import { ChevronDown, Icon } from 'svelte-hero-icons'
   import { authData, getClient } from '$lib/lemmy.js'
+  import type { Post } from 'lemmy-js-client'
 
   const maxComments = 250
 
