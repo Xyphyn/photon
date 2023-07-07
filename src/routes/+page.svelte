@@ -30,7 +30,7 @@
         }}
       />
       <MultiSelect
-        options={['Active', 'Hot', 'TopAll', 'New']}
+        options={['Active', 'Hot', 'TopDay', 'New']}
         optionNames={['Active', 'Hot', 'Top', 'New']}
         selected={$page.url.searchParams.get('sort') ?? 'Active'}
         on:select={(e) => {
