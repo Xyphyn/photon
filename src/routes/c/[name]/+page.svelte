@@ -6,21 +6,15 @@
   import Avatar from '../../../lib/components/ui/Avatar.svelte'
   import Post from '../../../lib/components/lemmy/Post.svelte'
   import { goto } from '$app/navigation'
-  import RelativeDate from '$lib/components/util/RelativeDate.svelte'
-  import {
-    Calendar,
-    ChatBubbleOvalLeftEllipsis,
-    Icon,
-    Newspaper,
-    PencilSquare,
-    UserGroup,
-  } from 'svelte-hero-icons'
-  import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import Card from '$lib/components/ui/StickyCard.svelte'
   import CommunityCard from '$lib/components/community/CommunityCard.svelte'
 
   export let data
 </script>
+
+<svelte:head>
+  <title>{data.posts.posts[0]?.community.name}</title>
+</svelte:head>
 
 <div class="flex flex-row gap-4 w-full">
   <div class="flex flex-col gap-4 max-w-full w-full">

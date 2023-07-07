@@ -141,13 +141,11 @@
       <span class="mx-4 text-xs opacity-80 text-left my-2">Post Actions</span>
       <MenuButton
         on:click={() => {
-          if (typeof navigator != 'undefined') {
-            navigator.clipboard.writeText(
-              `${$page.url.origin}/post/${
-                $authData?.instance ?? DEFAULT_INSTANCE_URL
-              }/${postRes.post.id}`
-            )
-          }
+          navigator.clipboard.writeText(
+            `${$page.url.origin}/post/${
+              $authData?.instance ?? DEFAULT_INSTANCE_URL
+            }/${postRes.post.id}`
+          )
         }}
       >
         <Icon src={Square2Stack} width={16} mini />

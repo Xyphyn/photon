@@ -7,11 +7,13 @@
   export let source: string | undefined
 </script>
 
-<SvelteMarkdown
-  {source}
-  renderers={{
-    link: MarkdownLink,
-    heading: MarkdownHeader,
-    hr: MarkdownHr,
-  }}
-/>
+<div class="break-words">
+  <SvelteMarkdown
+    {source}
+    renderers={{
+      link: MarkdownLink,
+      heading: MarkdownHeader,
+      hr: MarkdownHr,
+    }}
+  />
+</div>

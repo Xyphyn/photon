@@ -80,8 +80,10 @@
 </script>
 
 <li
-  class="py-3 {$page.url.hash == `#${node.comment_view.comment.id}`
+  class="py-2 {$page.url.hash == `#${node.comment_view.comment.id}`
     ? 'bg-slate-200 dark:bg-zinc-800'
+    : ''} {node.depth == 0
+    ? 'border-b border-black/10 dark:border-white/10'
     : ''}"
   id="#{node.comment_view.comment.id.toString()}"
 >

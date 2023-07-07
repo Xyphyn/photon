@@ -35,7 +35,7 @@
     <div class="flex flex-row gap-2 items-center mr-auto">
       <a href="/" class="flex flex-row items-center gap-2">
         <Logo width={40} />
-        <div class="sm:flex flex-col hidden">
+        <div class="flex flex-col">
           <span class="font-bold">Photon</span>
           <span
             class="text-xs opacity-50
