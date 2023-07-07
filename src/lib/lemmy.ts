@@ -6,7 +6,7 @@ import {
 import { get, writable } from 'svelte/store'
 import { PUBLIC_PROXY_URL } from '$env/static/public'
 
-export const DEFAULT_INSTANCE_URL = 'lemm.ee'
+export const DEFAULT_INSTANCE_URL = 'lemmy.world'
 export let instance_url = writable(DEFAULT_INSTANCE_URL)
 
 export function buildBaseUrl(instance?: string) {
@@ -24,6 +24,8 @@ export function getClient(instance?: string): LemmyHttp {
 
   return new LemmyHttp(`${PUBLIC_PROXY_URL}/cors/${instance}`)
 }
+
+export const getInstance = () => get(authData)?.instance ?? DEFAULT_INSTANCE_URL
 
 export interface AuthData {
   token: string

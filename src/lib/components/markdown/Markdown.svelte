@@ -4,11 +4,12 @@
   import MarkdownLink from '$lib/components/markdown/MarkdownLink.svelte'
   import MarkdownQuote from '$lib/components/markdown/MarkdownQuote.svelte'
   import SvelteMarkdown from 'svelte-markdown'
+  import MarkdownList from '$lib/components/markdown/MarkdownList.svelte'
 
   export let source: string | undefined
 </script>
 
-<div class="break-words">
+<div class="break-words flex flex-col gap-1">
   <SvelteMarkdown
     {source}
     renderers={{
@@ -16,6 +17,7 @@
       heading: MarkdownHeader,
       hr: MarkdownHr,
       blockquote: MarkdownQuote,
+      list: MarkdownList,
     }}
   />
 </div>

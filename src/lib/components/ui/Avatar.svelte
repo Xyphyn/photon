@@ -6,7 +6,8 @@
 </script>
 
 <img
-  src={url ?? `https://api.dicebear.com/6.x/initials/svg?seed=${alt}`}
+  src={`${url}?format=webp&thumbnail=${width * 2}` ??
+    `https://api.dicebear.com/6.x/initials/svg?seed=${alt}`}
   {alt}
   {width}
   loading="lazy"

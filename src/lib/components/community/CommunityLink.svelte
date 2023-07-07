@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Avatar from '$lib/components/ui/Avatar.svelte'
   import type { Community } from 'lemmy-js-client'
 
   export let community: Community
@@ -16,14 +17,11 @@
   href={linkFromCommunity(community)}
 >
   {#if avatar}
-    <img
-      src={community.icon ??
+    <Avatar
+      url={community.icon ??
         `https://api.dicebear.com/6.x/initials/svg?seed=${community.name}`}
-      alt=""
+      alt={community.name}
       width={avatarSize}
-      height={avatarSize}
-      class="rounded-full aspect-square object-cover"
-      loading="lazy"
     />
   {/if}
   {community.title}

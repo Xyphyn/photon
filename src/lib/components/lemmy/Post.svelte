@@ -18,6 +18,7 @@
     DEFAULT_INSTANCE_URL,
     authData,
     getClient,
+    getInstance,
     user,
   } from '$lib/lemmy.js'
   import Menu from '$lib/components/ui/menu/Menu.svelte'
@@ -75,7 +76,7 @@
       <span class="opacity-50 capitalize" />
     </span>
     <a
-      href="/post/{postRes.post.id}"
+      href="/post/{getInstance()}/{postRes.post.id}"
       class="font-bold {postRes.read ? 'opacity-50' : ''}"
     >
       {postRes.post.name}
@@ -90,7 +91,10 @@
       </a>
     {/if}
     {#if isImage(postRes.post.url)}
-      <a href="/post/{postRes.post.id}" class="inline self-start">
+      <a
+        href="/post/{getInstance()}/{postRes.post.id}"
+        class="inline self-start"
+      >
         <img
           src={postRes.post.url}
           alt={postRes.post.name}
@@ -100,7 +104,10 @@
       </a>
     {:else if isVideo(postRes.post.url)}
       <!-- svelte-ignore a11y-media-has-caption -->
-      <a href="/post/{postRes.post.id}" class="inline self-start">
+      <a
+        href="/post/{getInstance()}/{postRes.post.id}"
+        class="inline self-start"
+      >
         <video class="rounded-md max-h-64 max-w-full" preload="metadata">
           <source src={postRes.post.url} />
         </video>
@@ -127,7 +134,7 @@
             bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200
             dark:hover:bg-zinc-700 transition-colors border border-slate-200
             dark:border-zinc-700"
-      href="/post/{postRes.post.id}"
+      href="/post/{getInstance()}/{postRes.post.id}"
     >
       <Icon src={ChatBubbleOvalLeft} mini width={16} height={16} />
       <span class="text-sm">
@@ -142,9 +149,7 @@
       <MenuButton
         on:click={() => {
           navigator.clipboard.writeText(
-            `${$page.url.origin}/post/${
-              $authData?.instance ?? DEFAULT_INSTANCE_URL
-            }/${postRes.post.id}`
+            `${$page.url.origin}/post/${getInstance()}/${postRes.post.id}`
           )
         }}
       >
