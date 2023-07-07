@@ -27,6 +27,7 @@
   import { Color } from '$lib/ui/colors.js'
   import { page } from '$app/stores'
   import Avatar from '$lib/components/ui/Avatar.svelte'
+  import Link from '$lib/components/input/Link.svelte'
 
   let postRes: PostView
   export { postRes as post }
@@ -48,99 +49,73 @@
   }
 </script>
 
-<Card class="bg-white flex flex-col overflow-hidden w-full relative">
-  <div class="flex flex-col gap-2 bg-white dark:bg-zinc-900 p-4 rounded-md">
-    <span class="flex flex-row gap-2 text-xs items-center">
-      <Avatar
-        url={postRes.community.icon}
-        alt={postRes.community.title}
-        width={24}
-      />
-      <div class="flex flex-col">
-        <CommunityLink community={postRes.community} />
-        <span class="opacity-60 flex flex-row gap-1">
-          <UserLink user={postRes.creator} />
-          <span>•</span>
-          <RelativeDate date={new Date(postRes.post.published)} />
-          <span>•</span>
-          <span>
-            {Math.floor(
-              (postRes.counts.upvotes /
-                (postRes.counts.upvotes + postRes.counts.downvotes || 1)) *
-                100
-            )}%
-          </span>
+<Card class="bg-white flex flex-col overflow-hidden w-full relative p-5 gap-2">
+  <span class="flex flex-row gap-2 text-xs items-center">
+    <Avatar
+      url={postRes.community.icon}
+      alt={postRes.community.title}
+      width={24}
+    />
+    <div class="flex flex-col">
+      <CommunityLink community={postRes.community} />
+      <span class="opacity-60 flex flex-row gap-1">
+        <UserLink user={postRes.creator} />
+        <span>•</span>
+        <RelativeDate date={new Date(postRes.post.published)} />
+        <span>•</span>
+        <span>
+          {Math.floor(
+            (postRes.counts.upvotes /
+              (postRes.counts.upvotes + postRes.counts.downvotes || 1)) *
+              100
+          )}%
         </span>
-      </div>
-      <div class="ml-auto" />
-      <span class="opacity-50 capitalize" />
-    </span>
+      </span>
+    </div>
+  </span>
+  <a
+    href="/post/{getInstance()}/{postRes.post.id}"
+    class="font-bold {postRes.read ? 'opacity-50' : ''}"
+  >
+    {postRes.post.name}
+  </a>
+  {#if postRes.post.url}
     <a
-      href="/post/{getInstance()}/{postRes.post.id}"
-      class="font-bold {postRes.read ? 'opacity-50' : ''}"
-    >
-      {postRes.post.name}
-    </a>
-    {#if postRes.post.url}
-      <a
-        href={postRes.post.url}
-        class="text-sky-400 max-w-[24ch] overflow-hidden
+      href={postRes.post.url}
+      class="text-sky-400 max-w-[24ch] overflow-hidden
                 whitespace-nowrap text-ellipsis text-xs hover:underline"
-      >
-        {postRes.post.url}
-      </a>
-    {/if}
-    {#if isImage(postRes.post.url)}
-      <a
-        href="/post/{getInstance()}/{postRes.post.id}"
-        class="inline self-start"
-      >
-        <img
-          src={postRes.post.url}
-          alt={postRes.post.name}
-          class="rounded-md max-h-[32rem] w-full max-w-full"
-          loading="lazy"
-        />
-      </a>
-    {:else if isVideo(postRes.post.url)}
-      <!-- svelte-ignore a11y-media-has-caption -->
-      <a
-        href="/post/{getInstance()}/{postRes.post.id}"
-        class="inline self-start"
-      >
-        <video class="rounded-md max-h-64 max-w-full" preload="metadata">
-          <source src={postRes.post.url} />
-        </video>
-      </a>
-    {/if}
-    {#if postRes.post.body}
-      <p
-        class="text-sm max-h-[74px] line-clamp-3 bg-slate-100 dark:bg-zinc-800 border
-      border-slate200 dark:border-zinc-700 rounded-md p-2 mt-2"
-      >
-        {postRes.post.body}
-      </p>
-    {/if}
-  </div>
-  <div class="flex flex-row gap-2 pb-4 px-4">
+    >
+      {postRes.post.url}
+    </a>
+  {/if}
+  {#if isImage(postRes.post.url)}
+    <div class="self-start">
+      <img
+        src="{postRes.post.url}?thumbnail=1024&format=webp"
+        alt={postRes.post.name}
+        class="rounded-md max-h-[32rem] w-full max-w-full"
+      />
+    </div>
+  {/if}
+  {#if postRes.post.body}
+    <p
+      class="text-sm max-h-[74px] line-clamp-3 bg-slate-100 dark:bg-zinc-800
+        border border-slate200 dark:border-zinc-700 rounded-md p-2 mt-2"
+    >
+      {postRes.post.body}
+    </p>
+  {/if}
+  <div class="flex flex-row gap-2 items-center pt-1">
     <PostVote
       post={postRes.post}
       vote={postRes.my_vote}
       score={postRes.counts.score}
     />
 
-    <a
-      class="flex flex-row items-center gap-1 p-1 px-3 rounded-md
-            bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200
-            dark:hover:bg-zinc-700 transition-colors border border-slate-200
-            dark:border-zinc-700"
-      href="/post/{getInstance()}/{postRes.post.id}"
-    >
-      <Icon src={ChatBubbleOvalLeft} mini width={16} height={16} />
-      <span class="text-sm">
-        <FormattedNumber number={postRes.counts.comments} />
-      </span>
-    </a>
+    <Link color={Color.border} href="/post/{getInstance()}/{postRes.post.id}">
+      <Icon slot="icon" src={ChatBubbleOvalLeft} mini width={16} height={16} />
+      <FormattedNumber number={postRes.counts.comments} />
+    </Link>
     <Menu top absolute class="bottom-0 right-0 m-5 z-10">
       <Button slot="button" label="Post actions">
         <Icon src={EllipsisHorizontal} width={16} mini />

@@ -1,6 +1,7 @@
 <script lang="ts">
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import { authData, getClient } from '$lib/lemmy'
+  import { Color } from '$lib/ui/colors.js'
   import type { Post } from 'lemmy-js-client'
   import { ChevronDown, ChevronUp, Icon } from 'svelte-hero-icons'
 
@@ -59,8 +60,9 @@
 
 <slot {upvote} {downvote} {vote} {score}>
   <div
-    class="flex flex-row items-center gap-1 rounded-md transition-colors
-  cursor-pointer border border-slate-200 dark:border-zinc-700 px-1 py-[2px]
+    class="{Color.border} text-sm rounded-md flex flex-row items-center px-1.5
+    py-0.5
+    transition-colors cursor-pointer
             {// upvote
     vote == 1
       ? 'bg-orange-600/20 text-orange-500'
@@ -73,9 +75,7 @@
     <button aria-label="Upvote" class="p-0.5 px-1" on:click={upvote}>
       <Icon src={ChevronUp} mini width={20} height={20} />
     </button>
-    <span class="text-sm">
-      <FormattedNumber number={score} />
-    </span>
+    <FormattedNumber number={score} />
     <button aria-label="Downvote" class="p-0.5 px-1" on:click={downvote}>
       <Icon src={ChevronDown} mini width={20} height={20} />
     </button>
