@@ -1,8 +1,9 @@
 <script lang="ts">
   export let date: Date
+  export let relativeTo: Date | undefined
 
   function formatRelativeDate(date: Date) {
-    const now = Date.now()
+    const now = relativeTo?.getTime() ?? Date.now()
 
     const diffInMillis = now - date.getTime()
 
