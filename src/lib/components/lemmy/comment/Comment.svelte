@@ -3,6 +3,8 @@
     ArrowDown,
     ArrowUp,
     ChatBubbleOvalLeft,
+    ChevronDown,
+    ChevronUp,
     Icon,
     Minus,
     Plus,
@@ -17,6 +19,8 @@
   import { page } from '$app/stores'
   import UserLink from '$lib/components/user/UserLink.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
+  import CommentVote from '$lib/components/lemmy/comment/CommentVote.svelte'
+  import Button from '$lib/components/input/Button.svelte'
 
   export let node: CommentNodeI
   export let postId: number
@@ -24,59 +28,6 @@
 
   export let open = true
   export let replying = false
-
-  let score = node.comment_view.counts.score
-  let vote = node.comment_view.my_vote ?? 0
-
-  async function upvote() {
-    if (!$authData) return
-
-    const upvoted = node.comment_view.my_vote == 1
-
-    if (vote == -1) {
-      score += 2
-    } else if (vote == 1) {
-      score -= 1
-    } else if (vote == 0) {
-      score += 1
-    }
-
-    vote = Number(!upvoted)
-    node.comment_view.my_vote = Number(!upvoted)
-
-    await getClient()
-      .likeComment({
-        score: upvoted ? 0 : 1,
-        auth: $authData.token,
-        comment_id: node.comment_view.comment.id,
-      })
-      .catch((_) => undefined)
-  }
-
-  async function downvote() {
-    if (!$authData) return
-
-    const upvoted = node.comment_view.my_vote == -1
-
-    if (vote == -1) {
-      score += 1
-    } else if (vote == 1) {
-      score -= 2
-    } else if (vote == 0) {
-      score -= 1
-    }
-
-    vote = -Number(!upvoted)
-    node.comment_view.my_vote = -Number(!upvoted)
-
-    await getClient()
-      .likeComment({
-        score: upvoted ? 0 : -1,
-        auth: $authData.token,
-        comment_id: node.comment_view.comment.id,
-      })
-      .catch((_) => undefined)
-  }
 </script>
 
 <li
@@ -123,31 +74,15 @@
       <div class="max-w-full break-words text-sm leading-6">
         <Markdown source={node.comment_view.comment.content} />
       </div>
-      <div class="flex flex-row gap-2 items-center">
-        <div class="flex flex-row items-center">
-          <button
-            on:click={upvote}
-            class="pr-1.5 {node.comment_view.my_vote == 1
-              ? 'text-orange-500'
-              : ''}"
-          >
-            <Icon src={ArrowUp} width={16} mini />
-          </button>
-          <span class="text-sm font-medium">
-            {score}
-          </span>
-          <button
-            on:click={downvote}
-            class="pl-1.5 {node.comment_view.my_vote == -1
-              ? 'text-blue-500'
-              : ''}"
-          >
-            <Icon src={ArrowDown} width={16} mini />
-          </button>
-        </div>
+      <div class="flex flex-row gap-2 items-center mt-1">
+        <CommentVote
+          bind:score={node.comment_view.counts.score}
+          bind:vote={node.comment_view.my_vote}
+          commentId={node.comment_view.comment.id}
+        />
         <button
-          class="flex flex-row gap-1 items-center transition-colors px-2 py-1
-            rounded-md {Color.secondary}"
+          class="{Color.borderDark} px-2 py-1 flex flex-row items-center gap-1
+          rounded-md transition-colors"
           on:click={() => (replying = !replying)}
         >
           <Icon src={ChatBubbleOvalLeft} width={16} height={16} mini />

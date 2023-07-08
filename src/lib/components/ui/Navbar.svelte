@@ -15,6 +15,7 @@
   import {
     ArrowLeftOnRectangle,
     ArrowRightOnRectangle,
+    Beaker,
     Cog6Tooth,
     GlobeAlt,
     Icon,
@@ -92,6 +93,10 @@
       <span class="text-xs opacity-80 text-left mx-4 my-2">
         {$user ? $user.person_view.person.name : 'Profile'}
       </span>
+      <MenuButton link href="/experiments">
+        <Icon src={Beaker} mini width={16} />
+        Experiments
+      </MenuButton>
       {#if !$user || !$authData}
         <MenuButton link href="/login">
           <Icon src={ArrowLeftOnRectangle} mini width={16} /> Log in

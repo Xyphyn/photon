@@ -67,11 +67,12 @@
         <svelte:self {post} nodes={node.children} isParent={false} />
       {/if}
       {#if node.comment_view.counts.child_count > 0 && node.children.length == 0}
-        <div class="m-1">
+        <div class="m-1 w-full max-w-[9rem]">
           <Button
             loading={loadingChildren}
             disabled={loadingChildren}
             on:click={() => fetchChildren(node)}
+            large
           >
             <Icon src={ChevronDown} width={16} mini />
             Load {node.comment_view.counts.child_count} more

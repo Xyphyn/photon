@@ -1,13 +1,11 @@
 <script lang="ts">
-  import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
-  import { authData, getClient } from '$lib/lemmy'
   import { Color } from '$lib/ui/colors.js'
-  import type { Post } from 'lemmy-js-client'
   import { ChevronDown, ChevronUp, Icon } from 'svelte-hero-icons'
+  import { authData, getClient } from '$lib/lemmy.js'
 
-  export let post: Post
   export let vote: number = 0
   export let score: number
+  export let commentId: number
 
   async function upvote() {
     if (!$authData) return
@@ -25,10 +23,10 @@
     vote = Number(!upvoted)
 
     await getClient()
-      .likePost({
+      .likeComment({
         score: upvoted ? 0 : 1,
         auth: $authData.token,
-        post_id: post.id,
+        comment_id: commentId,
       })
       .catch((_) => undefined)
   }
@@ -49,28 +47,34 @@
     vote = -Number(!upvoted)
 
     await getClient()
-      .likePost({
+      .likeComment({
         score: upvoted ? 0 : -1,
         auth: $authData.token,
-        post_id: post.id,
+        comment_id: commentId,
       })
       .catch((_) => undefined)
   }
 </script>
 
-<slot {upvote} {downvote} {vote} {score}>
-  <div
-    class="{Color.border} text-sm gap-0.5 rounded-md flex flex-row items-center px-1
-    py-0.5
-    transition-colors cursor-pointer bg-slate-100 dark:bg-zinc-800
-    hover:bg-slate-200 dark:hover:bg-zinc-700"
+<div
+  class="flex flex-row items-center rounded-md px-2 py-0.5 transition-colors
+  cursor-pointer {Color.borderDark}"
+>
+  <button
+    on:click={upvote}
+    class="pr-1.5 {vote == 1 ? 'text-orange-500' : ''}"
+    aria-label="Upvote"
   >
-    <button aria-label="Upvote" class="p-0.5 px-1" on:click={upvote}>
-      <Icon src={ChevronUp} mini width={20} height={20} />
-    </button>
-    <FormattedNumber number={score} />
-    <button aria-label="Downvote" class="p-0.5 px-1" on:click={downvote}>
-      <Icon src={ChevronDown} mini width={20} height={20} />
-    </button>
-  </div>
-</slot>
+    <Icon src={ChevronUp} width={19} mini />
+  </button>
+  <span class="text-sm">
+    {score}
+  </span>
+  <button
+    on:click={downvote}
+    class="pl-1.5 {vote == -1 ? 'text-blue-500' : ''}"
+    aria-label="Downvote"
+  >
+    <Icon src={ChevronDown} width={19} mini />
+  </button>
+</div>

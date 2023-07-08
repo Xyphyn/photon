@@ -10,4 +10,5 @@ export enum Color {
   'danger' = 'border border-red-500 bg-red-500 text-white hover:text-red-500 hover:bg-transparent',
   'dangerSecondary' = 'hover:bg-red-500 text-red-500 hover:text-white',
   'border' = 'border border-slate-200 dark:border-zinc-700 bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 hover:dark:bg-zinc-700',
+  'borderDark' = 'border border-slate-200 dark:border-zinc-800 bg-slate-100 dark:bg-zinc-900 hover:bg-slate-200 hover:dark:bg-zinc-800',
 }
