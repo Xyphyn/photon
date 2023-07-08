@@ -93,7 +93,7 @@
       {postRes.post.body}
     </p>
   {/if}
-  <div class="flex flex-row gap-2 items-center pt-1">
+  <div class="flex flex-row gap-2 items-center pt-2">
     <PostVote
       post={postRes.post}
       vote={postRes.my_vote}
