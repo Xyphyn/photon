@@ -11,7 +11,7 @@
 </script>
 
 <svelte:head>
-  <title>Xylemmy</title>
+  <title>Photon</title>
 </svelte:head>
 
 <div class="flex flex-row gap-4 w-full">

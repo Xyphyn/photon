@@ -42,6 +42,8 @@
       parent_id: parent.comment_view.comment.id,
     })
 
+    // this code sucks, but for some reason it works
+    // lemmy api is quite goofy
     parent.children = buildCommentsTree(newComments.comments, true).find(
       (c) => c.comment_view.comment.id == parent.comment_view.comment.id
     )!.children
