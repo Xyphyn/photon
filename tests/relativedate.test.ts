@@ -6,6 +6,9 @@ describe('RelativeDate.svelte', () => {
   host.setAttribute('id', 'host')
   document.body.appendChild(host)
 
+  const testDate = new Date('2023-01-01 00:00:00')
+  const testRelativeTo = new Date('2023-01-01 01:00:00')
+
   it('mounts', () => {
     let host = document.createElement('div')
     const instance = new RelativeDate({
@@ -18,12 +21,9 @@ describe('RelativeDate.svelte', () => {
     expect(instance).toBeTruthy()
   })
   it('shows the correct date', () => {
-    const date = new Date('2023-01-01 00:00:00')
-    const relativeTo = new Date('2023-01-01 01:00:00')
-
     const instance = new RelativeDate({
       target: host,
-      props: { date: date, relativeTo: relativeTo },
+      props: { date: testDate, relativeTo: testRelativeTo },
     })
 
     expect(instance).toBeTruthy()
