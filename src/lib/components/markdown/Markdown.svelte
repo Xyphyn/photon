@@ -10,7 +10,7 @@
   export let source: string | undefined
 </script>
 
-<div class="break-words flex flex-col gap-1">
+<div class="break-words flex flex-col gap-2">
   <SvelteMarkdown
     {source}
     renderers={{

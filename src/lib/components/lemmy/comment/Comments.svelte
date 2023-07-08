@@ -58,7 +58,12 @@
     : 'ml-2.5 mt-2 pl-2.5 border-l-2 border-black/10 dark:border-white/10'}
 >
   {#each nodes.slice(0, maxComments) as node}
-    <Comment postId={post.id} {node} open={true}>
+    <Comment
+      postId={post.id}
+      {node}
+      open={true}
+      op={post.creator_id == node.comment_view.creator.id}
+    >
       {#if node.children?.length > 0}
         <svelte:self {post} nodes={node.children} isParent={false} />
       {/if}

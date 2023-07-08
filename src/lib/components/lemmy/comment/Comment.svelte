@@ -19,8 +19,8 @@
   import Markdown from '$lib/components/markdown/Markdown.svelte'
 
   export let node: CommentNodeI
-
   export let postId: number
+  export let op: boolean = false
 
   export let open = true
   export let replying = false
@@ -83,7 +83,7 @@
   class="py-2 {$page.url.hash == `#${node.comment_view.comment.id}`
     ? 'bg-slate-200 dark:bg-zinc-800'
     : ''} {node.depth == 0
-    ? 'border-b border-black/10 dark:border-white/10'
+    ? 'border-b border-slate-200 dark:border-white/10'
     : ''}"
   id="#{node.comment_view.comment.id.toString()}"
 >
@@ -91,7 +91,12 @@
     <summary
       class="flex flex-row cursor-pointer arrow gap-2 items-center group text-xs"
     >
-      <UserLink avatarSize={20} avatar user={node.comment_view.creator} />
+      <span class:font-bold={op} class="flex flex-row gap-1 items-center">
+        <UserLink avatarSize={20} avatar user={node.comment_view.creator} />
+        {#if op}
+          <span class="text-sky-500">OP</span>
+        {/if}
+      </span>
       <span class="opacity-60">
         <RelativeDate date={new Date(node.comment_view.comment.published)} />
       </span>
