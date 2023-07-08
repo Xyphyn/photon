@@ -20,10 +20,10 @@
 
 <svelte:body
   on:click={(event) => {
-    let path = event.composedPath()
+    if (open) {
+      let path = event.composedPath()
 
-    if (!path.includes(element)) {
-      if (open) {
+      if (!path.includes(element)) {
         open = false
       }
     }

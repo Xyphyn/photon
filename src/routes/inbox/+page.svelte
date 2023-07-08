@@ -34,11 +34,16 @@
   }
 
   async function markAllAsRead() {
+    if (!$user) {
+      goto('/login')
+      return
+    }
+
     const response = await getClient().markAllAsRead({
       auth: $authData!.token,
     })
 
-    $user.unreads = 0
+    $user!.unreads = 0
 
     goto($page.url, {
       invalidateAll: true,

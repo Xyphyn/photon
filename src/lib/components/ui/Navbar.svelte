@@ -116,9 +116,8 @@
         <MenuButton
           on:click={() => {
             localStorage.removeItem('user')
-            goto('/', {
-              invalidateAll: true,
-            })
+            user.set(undefined)
+            authData.set(undefined)
           }}
           color={Color.dangerSecondary}
         >

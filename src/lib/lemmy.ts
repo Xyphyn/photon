@@ -38,18 +38,20 @@ export interface UserData {
 }
 
 export const authData = writable<AuthData | undefined>()
-export const user = writable<GetPersonDetailsResponse & UserData>()
+export const user = writable<
+  (GetPersonDetailsResponse & UserData) | undefined
+>()
 
 setInterval(async () => {
   // check for unread messages
-  if (!get(authData)) return
+  if (!get(authData) || !get(user)) return
 
   const response = await getClient().getUnreadCount({
     auth: get(authData)!.token,
   })
 
   const u = get(user)
-  u.unreads = response.mentions + response.private_messages + response.replies
+  u!.unreads = response.mentions + response.private_messages + response.replies
 
   user.set(u)
 }, 60 * 1000)

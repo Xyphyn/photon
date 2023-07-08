@@ -83,7 +83,7 @@
   class="py-2 {$page.url.hash == `#${node.comment_view.comment.id}`
     ? 'bg-slate-200 dark:bg-zinc-800'
     : ''} {node.depth == 0
-    ? 'border-b border-slate-200 dark:border-white/10'
+    ? 'border-b border-slate-200 dark:border-zinc-800'
     : ''}"
   id="#{node.comment_view.comment.id.toString()}"
 >
@@ -103,8 +103,8 @@
       <span
         class="ml-auto translate-x-1 opacity-0
         group-hover:translate-x-0 group-hover:opacity-100 text-xs transition-all
-        flex flex-row items-center gap-1 dark:bg-white/5 p-1 rounded-md
-        bg-black/5 px-2"
+        flex flex-row items-center gap-1 dark:bg-zinc-900 p-1 rounded-md
+        bg-slate-200 hover:brightness-125 px-2"
       >
         {#if open}
           <Icon src={Minus} width={16} height={16} mini />

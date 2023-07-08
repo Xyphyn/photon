@@ -37,8 +37,7 @@
 
     const newComments = await getClient().getComments({
       auth: $authData?.token,
-      max_depth: 3,
-      limit: 10,
+      max_depth: 5,
       parent_id: parent.comment_view.comment.id,
     })
 

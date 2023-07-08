@@ -11,5 +11,5 @@
   {alt}
   {width}
   loading="lazy"
-  class="rounded-full aspect-square object-cover"
+  class="rounded-full aspect-square object-cover overflow-hidden"
 />

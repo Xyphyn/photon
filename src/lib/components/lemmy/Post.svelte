@@ -9,18 +9,12 @@
   } from 'svelte-hero-icons'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import CommunityLink from '$lib/components/community/CommunityLink.svelte'
-  import { isImage, isVideo } from '$lib/ui/image.js'
+  import { isImage } from '$lib/ui/image.js'
   import PostVote from '$lib/components/lemmy/PostVote.svelte'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import UserLink from '$lib/components/user/UserLink.svelte'
   import Card from '$lib/components/ui/Card.svelte'
-  import {
-    DEFAULT_INSTANCE_URL,
-    authData,
-    getClient,
-    getInstance,
-    user,
-  } from '$lib/lemmy.js'
+  import { authData, getClient, getInstance, user } from '$lib/lemmy.js'
   import Menu from '$lib/components/ui/menu/Menu.svelte'
   import Button from '$lib/components/input/Button.svelte'
   import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
@@ -32,20 +26,14 @@
   let postRes: PostView
   export { postRes as post }
 
-  let deleting = false
-
   async function deletePost() {
     if (!$authData) return
-
-    deleting = true
 
     await getClient().deletePost({
       auth: $authData.token,
       deleted: true,
       post_id: postRes.post.id,
     })
-
-    deleting = false
   }
 </script>
 
@@ -58,7 +46,7 @@
     />
     <div class="flex flex-col">
       <CommunityLink community={postRes.community} />
-      <span class="opacity-60 flex flex-row gap-1">
+      <span class="text-slate-500 dark:text-zinc-400 flex flex-row gap-1">
         <UserLink user={postRes.creator} />
         <span>•</span>
         <RelativeDate date={new Date(postRes.post.published)} />
@@ -100,7 +88,7 @@
   {#if postRes.post.body}
     <p
       class="text-sm max-h-[74px] line-clamp-3 bg-slate-100 dark:bg-zinc-800
-        border border-slate200 dark:border-zinc-700 rounded-md p-2 mt-2"
+        border border-slate-200 dark:border-zinc-700 rounded-md p-2 mt-2"
     >
       {postRes.post.body}
     </p>
