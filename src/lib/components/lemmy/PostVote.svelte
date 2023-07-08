@@ -65,11 +65,21 @@
     transition-colors cursor-pointer bg-slate-100 dark:bg-zinc-800
     hover:bg-slate-200 dark:hover:bg-zinc-700"
   >
-    <button aria-label="Upvote" class="p-0.5 px-1" on:click={upvote}>
+    <button
+      aria-label="Upvote"
+      class:text-orange-500={vote == 1}
+      class="p-0.5 px-1"
+      on:click={upvote}
+    >
       <Icon src={ChevronUp} mini width={20} height={20} />
     </button>
     <FormattedNumber number={score} />
-    <button aria-label="Downvote" class="p-0.5 px-1" on:click={downvote}>
+    <button
+      aria-label="Downvote"
+      class:text-blue-500={vote == -1}
+      class="p-0.5 px-1"
+      on:click={downvote}
+    >
       <Icon src={ChevronDown} mini width={20} height={20} />
     </button>
   </div>
