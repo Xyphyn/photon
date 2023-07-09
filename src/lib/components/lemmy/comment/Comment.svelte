@@ -9,18 +9,14 @@
     Minus,
     Plus,
   } from 'svelte-hero-icons'
-  import Avatar from '$lib/components/ui/Avatar.svelte'
   import type { CommentNodeI } from './comments'
-  import SvelteMarkdown from 'svelte-markdown'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
-  import { getClient, authData } from '$lib/lemmy.js'
   import { Color } from '$lib/ui/colors.js'
   import CommentForm from './CommentForm.svelte'
   import { page } from '$app/stores'
   import UserLink from '$lib/components/user/UserLink.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import CommentVote from '$lib/components/lemmy/comment/CommentVote.svelte'
-  import Button from '$lib/components/input/Button.svelte'
 
   export let node: CommentNodeI
   export let postId: number
@@ -40,7 +36,7 @@
 >
   <details bind:open class="flex flex-col gap-1">
     <summary
-      class="flex flex-row cursor-pointer arrow gap-2 items-center group text-xs"
+      class="flex flex-row cursor-pointer gap-2 items-center group text-xs"
     >
       <span class:font-bold={op} class="flex flex-row gap-1 items-center">
         <UserLink avatarSize={20} avatar user={node.comment_view.creator} />
@@ -48,8 +44,17 @@
           <span class="text-sky-500">OP</span>
         {/if}
       </span>
-      <span class="opacity-60">
+      <span class="opacity-60 flex flex-row gap-1">
         <RelativeDate date={new Date(node.comment_view.comment.published)} />
+        <span>•</span>
+        <span>
+          {Math.floor(
+            (node.comment_view.counts.upvotes /
+              (node.comment_view.counts.upvotes +
+                node.comment_view.counts.downvotes)) *
+              100
+          )}%
+        </span>
       </span>
       <span
         class="ml-auto translate-x-1 opacity-0
@@ -68,10 +73,10 @@
       </span>
     </summary>
     <div
-      class="flex flex-col gap-1 whitespace-pre-wrap
-      max-w-full"
+      class="flex flex-col whitespace-pre-wrap
+      max-w-full gap-1"
     >
-      <div class="max-w-full break-words text-sm leading-6">
+      <div class="max-w-full mt-0.5 break-words text-sm leading-[22px]">
         <Markdown source={node.comment_view.comment.content} />
       </div>
       <div class="flex flex-row gap-2 items-center mt-1 h-[26px]">
