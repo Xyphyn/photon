@@ -17,12 +17,7 @@
   href={linkFromCommunity(user)}
 >
   {#if avatar}
-    <Avatar
-      url={user.avatar ??
-        `https://api.dicebear.com/6.x/initials/svg?seed=${user.name}`}
-      alt={user.name}
-      width={avatarSize}
-    />
+    <Avatar url={user.avatar} alt={user.name} width={avatarSize} />
   {/if}
   {user.name}
 </a>

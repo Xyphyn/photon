@@ -6,8 +6,9 @@ import {
 import { get, writable } from 'svelte/store'
 import { PUBLIC_PROXY_URL } from '$env/static/public'
 
-export const DEFAULT_INSTANCE_URL = 'lemmy.world'
+export const DEFAULT_INSTANCE_URL = 'lemmy.ml'
 export let instance_url = writable(DEFAULT_INSTANCE_URL)
+export let corsSupported = writable(true)
 
 export function buildBaseUrl(instance?: string) {
   if (!instance) {
@@ -22,7 +23,11 @@ export function getClient(instance?: string): LemmyHttp {
     instance = get(authData)?.instance ?? DEFAULT_INSTANCE_URL
   }
 
-  return new LemmyHttp(`${PUBLIC_PROXY_URL}/cors/${instance}`)
+  return new LemmyHttp(
+    get(corsSupported)
+      ? `https://${instance}`
+      : `${PUBLIC_PROXY_URL}/cors/${instance}`
+  )
 }
 
 export const getInstance = () => get(authData)?.instance ?? DEFAULT_INSTANCE_URL

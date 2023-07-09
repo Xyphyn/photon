@@ -57,12 +57,12 @@
 </script>
 
 <div
-  class="flex flex-row items-center rounded-md px-2 py-0.5 transition-colors
-  cursor-pointer {Color.borderDark}"
+  class="flex flex-row items-center rounded-md transition-colors
+  cursor-pointer h-full {Color.borderDark}"
 >
   <button
     on:click={upvote}
-    class="pr-1.5 {vote == 1 ? 'text-orange-500' : ''}"
+    class="px-1.5 {vote == 1 ? 'text-orange-500' : ''}"
     aria-label="Upvote"
   >
     <Icon src={ChevronUp} width={19} mini />
@@ -72,7 +72,7 @@
   </span>
   <button
     on:click={downvote}
-    class="pl-1.5 {vote == -1 ? 'text-blue-500' : ''}"
+    class="px-1.5 {vote == -1 ? 'text-blue-500' : ''}"
     aria-label="Downvote"
   >
     <Icon src={ChevronDown} width={19} mini />

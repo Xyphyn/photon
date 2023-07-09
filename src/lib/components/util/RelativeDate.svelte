@@ -1,6 +1,6 @@
 <script lang="ts">
   export let date: Date
-  export let relativeTo: Date | undefined
+  export let relativeTo: Date | undefined = undefined
 
   function formatRelativeDate(date: Date) {
     const now = relativeTo?.getTime() ?? Date.now()

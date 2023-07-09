@@ -74,14 +74,14 @@
       <div class="max-w-full break-words text-sm leading-6">
         <Markdown source={node.comment_view.comment.content} />
       </div>
-      <div class="flex flex-row gap-2 items-center mt-1">
+      <div class="flex flex-row gap-2 items-center mt-1 h-[26px]">
         <CommentVote
           bind:score={node.comment_view.counts.score}
           bind:vote={node.comment_view.my_vote}
           commentId={node.comment_view.comment.id}
         />
         <button
-          class="{Color.borderDark} px-2 py-1 flex flex-row items-center gap-1
+          class="{Color.borderDark} h-full px-2 flex flex-row items-center gap-1
           rounded-md transition-colors"
           on:click={() => (replying = !replying)}
         >
