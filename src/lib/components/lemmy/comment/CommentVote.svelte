@@ -1,7 +1,8 @@
 <script lang="ts">
-  import { Color } from '$lib/ui/colors.js'
+  import { Color } from '$lib/ui/colors'
   import { ChevronDown, ChevronUp, Icon } from 'svelte-hero-icons'
-  import { authData, getClient } from '$lib/lemmy.js'
+  import { authData, getClient } from '$lib/lemmy'
+  import { userSettings } from '$lib/settings'
 
   export let vote: number = 0
   export let score: number
@@ -58,7 +59,9 @@
 
 <div
   class="flex flex-row items-center rounded-md transition-colors
-  cursor-pointer h-full {Color.borderDark}"
+  cursor-pointer h-full {$userSettings.newComments
+    ? Color.borderDark
+    : 'hover:bg-slate-200 hover:dark:bg-zinc-800'}"
 >
   <button
     on:click={upvote}

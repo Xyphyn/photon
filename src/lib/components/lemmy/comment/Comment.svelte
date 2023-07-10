@@ -17,6 +17,7 @@
   import UserLink from '$lib/components/user/UserLink.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import CommentVote from '$lib/components/lemmy/comment/CommentVote.svelte'
+  import { userSettings } from '$lib/settings.js'
 
   export let node: CommentNodeI
   export let postId: number
@@ -86,7 +87,9 @@
           commentId={node.comment_view.comment.id}
         />
         <button
-          class="{Color.borderDark} h-full px-2 flex flex-row items-center gap-1
+          class="{$userSettings.newComments
+            ? Color.borderDark
+            : 'hover:bg-slate-200 hover:dark:bg-zinc-800'} h-full px-2 flex flex-row items-center gap-1
           rounded-md transition-colors"
           on:click={() => (replying = !replying)}
         >
