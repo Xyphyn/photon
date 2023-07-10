@@ -60,6 +60,11 @@
         </span>
       </span>
     </div>
+    {#if postRes.post.nsfw}
+      <span class="bg-red-600 px-1 py-0.5 rounded-md text-xs ml-auto font-bold">
+        NSFW
+      </span>
+    {/if}
   </span>
   <a
     href="/post/{getInstance()}/{postRes.post.id}"
@@ -77,7 +82,7 @@
     </a>
   {/if}
   {#if isImage(postRes.post.url)}
-    <div class="self-start">
+    <div class="self-start" class:blur-3xl={postRes.post.nsfw}>
       <img
         src="{postRes.post.url}?thumbnail=1024&format=webp"
         alt={postRes.post.name}
@@ -85,7 +90,7 @@
       />
     </div>
   {/if}
-  {#if postRes.post.body}
+  {#if postRes.post.body && !postRes.post.nsfw}
     <p
       class="text-sm max-h-[74px] line-clamp-3 bg-slate-100 dark:bg-zinc-800
         border border-slate-200 dark:border-zinc-700 rounded-md p-2 mt-2"

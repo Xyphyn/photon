@@ -6,6 +6,7 @@
   import { goto } from '$app/navigation'
   import Card from '$lib/components/ui/StickyCard.svelte'
   import CommunityCard from '$lib/components/community/CommunityCard.svelte'
+  import Button from '$lib/components/input/Button.svelte'
 
   export let data
 </script>
@@ -35,18 +36,20 @@
       <Post {post} />
     {/each}
     <div>
-      <Link
-        href={(function () {
+      <Button
+        on:click={() => {
           $page.url.searchParams.set(
             'page',
             ((Number($page.url.searchParams.get('page')) || 1) + 1).toString()
           )
 
-          return $page.url.toString()
-        })()}
+          goto($page.url.toString(), {
+            invalidateAll: true,
+          })
+        }}
       >
         Next
-      </Link>
+      </Button>
     </div>
   </div>
   {#await data.streamed.community}

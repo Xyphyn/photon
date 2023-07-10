@@ -7,9 +7,9 @@
   export let source: string = ''
 </script>
 
-<article class="break-words flex flex-col gap-2 markdown">
+<div class="break-words flex flex-col gap-2 leading-[22px] markdown">
   {@html md.render(source)}
-</article>
+</div>
 
 <style lang="postcss">
   .markdown :global(h1) {
@@ -35,11 +35,11 @@
   }
 
   .markdown :global(ul) {
-    @apply list-disc pl-3;
+    @apply list-disc pl-3 leading-3;
   }
 
   .markdown :global(ol) {
-    @apply list-decimal pl-3;
+    @apply list-decimal pl-3 leading-3;
   }
 
   .markdown :global(blockquote) {

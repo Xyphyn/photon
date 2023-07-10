@@ -26,7 +26,7 @@ pre {
   border-slate-200 border dark:bg-zinc-900 dark:border-zinc-800 text-sm;
 }
 
-code {
+:not(pre) > code {
   @apply bg-slate-200 border border-slate-300 dark:bg-zinc-800
   dark:border-zinc-700 rounded-md px-1 py-0.5;
 }
