@@ -35,11 +35,11 @@
   }
 
   .markdown :global(ul) {
-    @apply list-disc pl-3 leading-3;
+    @apply list-disc pl-3;
   }
 
   .markdown :global(ol) {
-    @apply list-decimal pl-3 leading-3;
+    @apply list-decimal pl-3;
   }
 
   .markdown :global(blockquote) {
