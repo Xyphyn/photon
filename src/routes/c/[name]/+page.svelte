@@ -2,8 +2,6 @@
   import { page } from '$app/stores'
   import Link from '$lib/components/input/Link.svelte'
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
-  import SvelteMarkdown from 'svelte-markdown'
-  import Avatar from '../../../lib/components/ui/Avatar.svelte'
   import Post from '../../../lib/components/lemmy/Post.svelte'
   import { goto } from '$app/navigation'
   import Card from '$lib/components/ui/StickyCard.svelte'

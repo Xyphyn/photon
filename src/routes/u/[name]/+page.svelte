@@ -9,7 +9,6 @@
   import StickyCard from '$lib/components/ui/StickyCard.svelte'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
-  import { getClient } from '$lib/lemmy.js'
   import type {
     CommentView,
     GetPersonDetailsResponse,
