@@ -14,7 +14,9 @@ const config = {
 		adapter: adapter(),
 		csp: {
 			directives: {
-				'script-src': ['self']
+				'script-src': ['self'],
+				'object-src': ['none'],
+				'base-uri': ['none']
 			},
 			mode: 'nonce'
 		}
