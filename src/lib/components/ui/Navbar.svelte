@@ -82,6 +82,7 @@
             alt=""
             width={32}
             height={32}
+            class="rounded-full"
           />
           {#if $user.unreads > 0}
             <div
