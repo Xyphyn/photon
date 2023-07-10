@@ -30,7 +30,3 @@ code {
   @apply bg-slate-200 border border-slate-300 dark:bg-zinc-800
   dark:border-zinc-700 rounded-md px-1 py-0.5;
 }
-
-ol {
-  @apply list-decimal;
-}

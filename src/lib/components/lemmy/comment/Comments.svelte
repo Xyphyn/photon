@@ -67,14 +67,16 @@
         <svelte:self {post} nodes={node.children} isParent={false} />
       {/if}
       {#if node.comment_view.counts.child_count > 0 && node.children.length == 0}
-        <Button
-          loading={loadingChildren}
-          disabled={loadingChildren}
-          on:click={() => fetchChildren(node)}
-        >
-          <Icon src={ChevronDown} width={16} mini />
-          Load {node.comment_view.counts.child_count} more
-        </Button>
+        <div class="m-1">
+          <Button
+            loading={loadingChildren}
+            disabled={loadingChildren}
+            on:click={() => fetchChildren(node)}
+          >
+            <Icon src={ChevronDown} width={16} mini />
+            Load {node.comment_view.counts.child_count} more
+          </Button>
+        </div>
       {/if}
     </Comment>
   {/each}
