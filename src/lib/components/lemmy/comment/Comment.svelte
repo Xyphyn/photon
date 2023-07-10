@@ -54,7 +54,7 @@
               (node.comment_view.counts.upvotes +
                 node.comment_view.counts.downvotes)) *
               100
-          )}%
+          ) || 0}%
         </span>
       </span>
       <span
