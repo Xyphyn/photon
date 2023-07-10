@@ -22,7 +22,7 @@
 }
 
 pre {
-  @apply bg-slate-100 p-2 rounded-md m-2 max-w-full whitespace-pre-wrap
+  @apply bg-slate-100 p-2 rounded-md my-2 max-w-full whitespace-pre-wrap
   border-slate-200 border dark:bg-zinc-900 dark:border-zinc-800 text-sm;
 }
 
