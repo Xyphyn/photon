@@ -65,38 +65,40 @@
       </Button>
     </div>
   </div>
-  {#await data.streamed.site}
-    <StickyCard>
-      <div
-        class="w-[64px] h-[64px] rounded-full bg-slate-200
+  <div class="hidden md:block">
+    {#await data.streamed.site}
+      <StickyCard>
+        <div
+          class="w-[64px] h-[64px] rounded-full bg-slate-200
         dark:bg-zinc-700 animate-pulse"
-      />
-      <div
-        class="w-32 h-3 bg-slate-200 dark:bg-zinc-700 animate-pulse
+        />
+        <div
+          class="w-32 h-3 bg-slate-200 dark:bg-zinc-700 animate-pulse
         rounded-md"
-      />
-      <div
-        class="w-64 h-3 bg-slate-200 dark:bg-zinc-700 animate-pulse
+        />
+        <div
+          class="w-64 h-3 bg-slate-200 dark:bg-zinc-700 animate-pulse
         rounded-md"
-      />
-      <div
-        class="w-36 mt-4 h-4 bg-slate-200 dark:bg-zinc-700 animate-pulse
+        />
+        <div
+          class="w-36 mt-4 h-4 bg-slate-200 dark:bg-zinc-700 animate-pulse
         rounded-md"
-      />
-      <div
-        class="w-full h-4 bg-slate-200 dark:bg-zinc-700 animate-pulse
+        />
+        <div
+          class="w-full h-4 bg-slate-200 dark:bg-zinc-700 animate-pulse
         rounded-md"
-      />
-      <div
-        class="w-24 h-4 bg-slate-200 dark:bg-zinc-700 animate-pulse
+        />
+        <div
+          class="w-24 h-4 bg-slate-200 dark:bg-zinc-700 animate-pulse
         rounded-md"
-      />
-    </StickyCard>
-  {:then site}
-    <SiteCard site={site.site_view} />
-  {:catch}
-    <StickyCard>
-      <h1 class="font-bold text-lg">Failed to load</h1>
-    </StickyCard>
-  {/await}
+        />
+      </StickyCard>
+    {:then site}
+      <SiteCard site={site.site_view} />
+    {:catch}
+      <StickyCard>
+        <h1 class="font-bold text-lg">Failed to load</h1>
+      </StickyCard>
+    {/await}
+  </div>
 </div>
