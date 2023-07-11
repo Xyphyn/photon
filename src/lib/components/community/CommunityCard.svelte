@@ -1,10 +1,14 @@
 <script lang="ts">
+  import Button from '$lib/components/input/Button.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import Card from '$lib/components/ui/Card.svelte'
   import StickyCard from '$lib/components/ui/StickyCard.svelte'
+  import { ToastType, addToast } from '$lib/components/ui/toasts/toasts.js'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
+  import { authData, getClient } from '$lib/lemmy.js'
+  import { Color } from '$lib/ui/colors.js'
   import type { CommunityView } from 'lemmy-js-client'
   import {
     Calendar,
@@ -15,6 +19,51 @@
   } from 'svelte-hero-icons'
 
   export let community_view: CommunityView
+
+  let loading = {
+    blocking: false,
+    subscribing: false,
+  }
+
+  async function subscribe() {
+    if (!$authData) return
+    loading.subscribing = true
+    const subscribed =
+      community_view.subscribed == 'Subscribed' ||
+      community_view.subscribed == 'Pending'
+
+    try {
+      await getClient().followCommunity({
+        auth: $authData.token,
+        community_id: community_view.community.id,
+        follow: !subscribed,
+      })
+    } catch (error) {
+      addToast('Error', error as any, ToastType.error)
+    }
+
+    community_view.subscribed = subscribed ? 'NotSubscribed' : 'Subscribed'
+
+    loading.subscribing = false
+  }
+  async function block() {
+    if (!$authData) return
+    loading.blocking = true
+    const blocked = community_view.blocked
+
+    try {
+      await getClient().blockCommunity({
+        auth: $authData.token,
+        community_id: community_view.community.id,
+        block: !blocked,
+      })
+    } catch (error) {
+      addToast('Error', error as any, ToastType.error)
+    }
+
+    community_view.blocked = !blocked
+    loading.blocking = false
+  }
 </script>
 
 <StickyCard>
@@ -51,6 +100,31 @@
         community_view.community.actor_id
       ).hostname}
     </span>
+    <div class="w-full mt-2 flex flex-col gap-2">
+      {#if $authData}
+        <Button
+          disabled={loading.subscribing}
+          loading={loading.subscribing}
+          large
+          color={Color.ghost}
+          on:click={subscribe}
+        >
+          {community_view.subscribed == 'Subscribed' ||
+          community_view.subscribed == 'Pending'
+            ? 'Unsubscribe'
+            : 'Subscribe'}
+        </Button>
+        <Button
+          disabled={loading.blocking}
+          loading={loading.blocking}
+          large
+          color={Color.danger}
+          on:click={block}
+        >
+          {community_view.blocked ? 'Unblock' : 'Block'}
+        </Button>
+      {/if}
+    </div>
   </div>
   <Markdown source={community_view.community.description} />
 </StickyCard>
