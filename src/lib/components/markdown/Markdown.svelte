@@ -2,6 +2,7 @@
   import MarkdownIt from 'markdown-it'
   const md = new MarkdownIt({
     html: false,
+    linkify: true,
   })
 
   export let source: string = ''
