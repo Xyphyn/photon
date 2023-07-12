@@ -37,10 +37,12 @@
 
   .markdown :global(ul) {
     @apply list-disc pl-3;
+    line-height: initial;
   }
 
   .markdown :global(ol) {
     @apply list-decimal pl-3;
+    line-height: initial;
   }
 
   .markdown :global(blockquote) {
