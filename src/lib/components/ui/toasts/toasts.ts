@@ -9,14 +9,51 @@ export enum ToastType {
 
 export interface Toast {
   id: number
-  title: string
+  title: string | undefined
   content: string
   type: ToastType
 }
 
 export const toasts = writable<Toast[]>([])
 
-export function addToast(title: string, content: string, type: ToastType) {
+export function toast({
+  title,
+  content,
+  type = ToastType.info,
+}: {
+  title?: string
+  content: string
+  type: ToastType
+}) {
+  let id = 0
+
+  toasts.update((toasts) => {
+    id = Math.floor(Math.random() * 10000)
+
+    return [
+      {
+        id: id,
+        content: content,
+        title: title,
+        type: type,
+      },
+      ...toasts,
+    ]
+  })
+
+  setTimeout(() => {
+    toasts.update((toasts) => toasts.filter((toast) => toast.id != id))
+  }, 5000)
+}
+
+/**
+ * @deprecated use @function toast
+ */
+export function addToast(
+  title: string | undefined,
+  content: string,
+  type: ToastType
+) {
   let id = 0
 
   toasts.update((toasts) => {

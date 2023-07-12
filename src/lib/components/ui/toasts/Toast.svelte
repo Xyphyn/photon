@@ -43,7 +43,9 @@
       : ExclamationCircle}
   />
   <div class="flex flex-col p-4 pl-0">
-    <h1 class="text-base font-bold">{toast.title}</h1>
+    {#if toast.title}
+      <h1 class="text-base font-bold">{toast.title}</h1>
+    {/if}
     <p class="text-sm">{toast.content}</p>
   </div>
   <button
