@@ -101,7 +101,7 @@
       <img
         src={postRes.post.thumbnail_url}
         alt={postRes.post.name}
-        class="rounded-md max-h-[32rem] w-full max-w-full"
+        class="rounded-md max-h-[16rem] w-full max-w-full"
       />
     </div>
   {/if}

@@ -84,10 +84,10 @@
       alt={post.name}
       class="rounded-md max-w-screen max-h-[80vh] mx-auto"
     />
-  {:else if isVideo(post.url)}
+  {:else if post.embed_video_url}
     <!-- svelte-ignore a11y-media-has-caption -->
     <video class="rounded-md max-w-screen max-h-[80vh] mx-auto">
-      <source src={post.url} />
+      <source src={post.embed_video_url} />
     </video>
   {/if}
   {#if post.body}

@@ -51,22 +51,20 @@
     {#each data.posts.posts as post}
       <Post {post} />
     {/each}
-    <div>
-      <Button
-        on:click={() => {
-          $page.url.searchParams.set(
-            'page',
-            ((Number($page.url.searchParams.get('page')) || 1) + 1).toString()
-          )
+    <Button
+      on:click={() => {
+        $page.url.searchParams.set(
+          'page',
+          ((Number($page.url.searchParams.get('page')) || 1) + 1).toString()
+        )
 
-          goto($page.url.toString(), {
-            invalidateAll: true,
-          })
-        }}
-      >
-        Next
-      </Button>
-    </div>
+        goto($page.url.toString(), {
+          invalidateAll: true,
+        })
+      }}
+    >
+      Next
+    </Button>
   </div>
   <div class="hidden md:block">
     {#await data.streamed.community}
