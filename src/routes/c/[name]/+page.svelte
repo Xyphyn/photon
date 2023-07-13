@@ -14,23 +14,32 @@
 
 <svelte:head>
   <title>{data.posts.posts[0]?.community.name}</title>
+  <meta
+    name="og:title"
+    content={data.community.community_view.community.name}
+  />
+  {#if data.community.community_view.community.description}
+    <meta
+      name="og:description"
+      content={data.community.community_view.community.description}
+    />
+  {/if}
+  <meta name="og:url" content={$page.url.toString()} />
 </svelte:head>
 
 <div class="flex flex-col md:flex-row gap-4 w-full">
   <div class="md:hidden">
-    {#await data.streamed.community then community}
-      <details>
-        <summary class="flex flex-row">
-          <div
-            class="{Color.secondary} px-3 py-1 transition-colors text-sm
+    <details>
+      <summary class="flex flex-row">
+        <div
+          class="{Color.secondary} px-3 py-1 transition-colors text-sm
             rounded-md cursor-pointer mb-1"
-          >
-            Sidebar
-          </div>
-        </summary>
-        <CommunityCard community_view={community.community_view} />
-      </details>
-    {/await}
+        >
+          Sidebar
+        </div>
+      </summary>
+      <CommunityCard community_view={data.community.community_view} />
+    </details>
   </div>
   <div class="flex flex-col gap-4 max-w-full w-full">
     <div class="flex flex-col sm:flex-row gap-4 max-w-full w-full">
@@ -67,39 +76,6 @@
     </Button>
   </div>
   <div class="hidden md:block">
-    {#await data.streamed.community}
-      <Card>
-        <div
-          class="w-[64px] h-[64px] rounded-full bg-slate-200
-  dark:bg-zinc-700 animate-pulse"
-        />
-        <div
-          class="w-32 h-3 bg-slate-200 dark:bg-zinc-700 animate-pulse
-  rounded-md"
-        />
-        <div
-          class="w-64 h-3 bg-slate-200 dark:bg-zinc-700 animate-pulse
-  rounded-md"
-        />
-        <div
-          class="w-36 h-4 bg-slate-200 dark:bg-zinc-700 animate-pulse
-  rounded-md"
-        />
-        <div
-          class="w-full h-4 bg-slate-200 dark:bg-zinc-700 animate-pulse
-  rounded-md"
-        />
-        <div
-          class="w-24 h-4 bg-slate-200 dark:bg-zinc-700 animate-pulse
-  rounded-md"
-        />
-      </Card>
-    {:then community}
-      <CommunityCard community_view={community.community_view} />
-    {:catch}
-      <Card>
-        <p>Failed to load community. This is likely an issue on Lemmy's end.</p>
-      </Card>
-    {/await}
+    <CommunityCard community_view={data.community.community_view} />
   </div>
 </div>

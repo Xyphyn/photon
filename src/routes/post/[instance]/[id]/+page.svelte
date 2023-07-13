@@ -18,6 +18,7 @@
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import CommunityCard from '$lib/components/community/CommunityCard.svelte'
   import Button from '$lib/components/input/Button.svelte'
+  import { page } from '$app/stores'
 
   export let data
 
@@ -41,6 +42,14 @@
 
 <svelte:head>
   <title>{data.post.post_view.post.name}</title>
+  <meta property="og:title" content={data.post.post_view.post.name} />
+  <meta property="og:url" content={$page.url.toString()} />
+  {#if isImage(post.url)}
+    <meta property="og:image" content={post.url} />
+  {/if}
+  {#if post.body}
+    <meta property="og:description" content={post.body} />
+  {/if}
 </svelte:head>
 
 <div class="flex flex-col gap-2">

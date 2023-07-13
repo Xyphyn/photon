@@ -86,6 +86,7 @@ authData.subscribe(async (data) => {
       localStorage.setItem('user', JSON.stringify(data))
     }
   } catch (error) {
+    console.error(error)
     authData.set(undefined)
   }
 })

@@ -66,7 +66,7 @@
   }
 </script>
 
-<svelte:head>Login</svelte:head>
+<svelte:head><title>Login</title></svelte:head>
 
 <!-- <div
   class="p-4 absolute top-[50%] left-[50%] translate-x-[-50%]

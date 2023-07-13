@@ -16,10 +16,8 @@ export async function load(req: any) {
       sort: sort,
       auth: get(authData)?.token,
     }),
-    streamed: {
-      community: getClient().getCommunity({
-        name: req.params.name,
-      }),
-    },
+    community: getClient().getCommunity({
+      name: req.params.name,
+    }),
   }
 }
