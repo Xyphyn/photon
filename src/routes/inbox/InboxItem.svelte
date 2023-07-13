@@ -107,7 +107,7 @@
     overflow-hidden flex flex-row items-center gap-1 {read ? 'opacity-80' : ''}"
       >
         <span class="font-bold">
-          {#if messageItem.creator.id == $user?.person_view.person.id}
+          {#if messageItem.creator.id == $user?.person.id}
             You
           {:else}
             <UserLink avatar user={messageItem.creator} />
@@ -115,7 +115,7 @@
         </span>
         <span>messaged</span>
         <span class="font-bold">
-          {#if messageItem.recipient.id == $user?.person_view.person.id}
+          {#if messageItem.recipient.id == $user?.person.id}
             You
           {:else}
             <UserLink avatar user={messageItem.recipient} />
@@ -126,7 +126,7 @@
     <p class="text-sm py-2">
       <Markdown source={messageItem.private_message.content} />
     </p>
-    {#if messageItem.recipient.id == $user?.person_view.person.id}
+    {#if messageItem.recipient.id == $user?.person.id}
       <div class="flex flex-row gap-2">
         <Button color={Color.ghost} on:click={() => (replying = !replying)}>
           <Icon mini src={ChatBubbleOvalLeft} width={16} />

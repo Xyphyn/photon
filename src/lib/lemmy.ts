@@ -78,7 +78,7 @@ authData.subscribe(async (data) => {
       auth: data.token,
     })
 
-    if (!site.my_user) throw Error('Missing user')
+    if (!site?.my_user) throw Error('Missing user')
 
     user.set({ ...site.my_user.local_user_view, unreads: 0 })
 
