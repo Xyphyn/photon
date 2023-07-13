@@ -77,7 +77,7 @@
       >
         {#if $user}
           <img
-            src={$user.person_view.person.avatar ??
+            src={$user.person.avatar ??
               'https://xylo.xylight.dev/img/logo-background.svg'}
             alt=""
             width={32}
@@ -92,7 +92,7 @@
         {/if}
       </button>
       <span class="text-xs opacity-80 text-left mx-4 my-2">
-        {$user ? $user.person_view.person.name : 'Profile'}
+        {$user ? $user.person.name : 'Profile'}
       </span>
       <MenuButton link href="/experiments">
         <Icon src={Beaker} mini width={16} />
@@ -103,10 +103,7 @@
           <Icon src={ArrowLeftOnRectangle} mini width={16} /> Log in
         </MenuButton>
       {:else}
-        <MenuButton
-          link
-          href="/u/{$user.person_view.person.name}@{$authData.instance}"
-        >
+        <MenuButton link href="/u/{$user.person.name}@{$authData.instance}">
           <Icon src={UserCircle} mini width={16} /> Profile
         </MenuButton>
         <MenuButton link href="/inbox">

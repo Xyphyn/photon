@@ -2,11 +2,13 @@ import {
   type GetPersonDetailsResponse,
   LemmyHttp,
   type LoginResponse,
+  type Person,
+  type PersonView,
 } from 'lemmy-js-client'
 import { get, writable } from 'svelte/store'
 import { PUBLIC_PROXY_URL } from '$env/static/public'
 
-export const DEFAULT_INSTANCE_URL = 'lemmy.ml'
+export const DEFAULT_INSTANCE_URL = 'lemmy.world'
 export let instance_url = writable(DEFAULT_INSTANCE_URL)
 export let corsSupported = writable(true)
 
@@ -43,9 +45,7 @@ export interface UserData {
 }
 
 export const authData = writable<AuthData | undefined>()
-export const user = writable<
-  (GetPersonDetailsResponse & UserData) | undefined
->()
+export const user = writable<(PersonView & UserData) | undefined>()
 
 setInterval(async () => {
   // check for unread messages
@@ -72,14 +72,15 @@ if (typeof localStorage != 'undefined') {
 }
 
 authData.subscribe(async (data) => {
-  if (!data) return
+  if (!data?.token) return
   try {
-    const person = await getClient().getPersonDetails({
-      auth: data?.token,
-      username: `${data?.username}@${data?.instance}`,
+    const site = await getClient().getSite({
+      auth: data.token,
     })
 
-    user.set({ ...person, unreads: 0 })
+    if (!site.my_user) throw Error('Missing user')
+
+    user.set({ ...site.my_user.local_user_view, unreads: 0 })
 
     if (typeof localStorage != 'undefined') {
       localStorage.setItem('user', JSON.stringify(data))

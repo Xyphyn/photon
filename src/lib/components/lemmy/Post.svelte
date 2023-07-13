@@ -89,6 +89,21 @@
         class="rounded-md max-h-[32rem] w-full max-w-full"
       />
     </div>
+  {:else if postRes.post.embed_video_url}
+    <div class="self-start" class:blur-3xl={postRes.post.nsfw}>
+      <!-- svelte-ignore a11y-media-has-caption -->
+      <video class="rounded-md max-h-[32rem] w-full max-w-full" controls>
+        <source src={postRes.post.embed_video_url} />
+      </video>
+    </div>
+  {:else if postRes.post.thumbnail_url}
+    <div class="self-start" class:blur-3xl={postRes.post.nsfw}>
+      <img
+        src={postRes.post.thumbnail_url}
+        alt={postRes.post.name}
+        class="rounded-md max-h-[32rem] w-full max-w-full"
+      />
+    </div>
   {/if}
   {#if postRes.post.body && !postRes.post.nsfw}
     <p
@@ -124,7 +139,7 @@
         <Icon src={Square2Stack} width={16} mini />
         Copy Link
       </MenuButton>
-      {#if $user?.person_view.person.id == postRes.post.creator_id}
+      {#if $user?.person.id == postRes.post.creator_id}
         <MenuButton on:click={deletePost} color={Color.dangerSecondary}>
           <Icon src={Trash} width={16} mini />
           Delete

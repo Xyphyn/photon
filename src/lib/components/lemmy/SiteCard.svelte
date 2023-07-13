@@ -18,9 +18,9 @@
 </script>
 
 <StickyCard>
-  <!-- {#if site.site.icon} -->
-  <!-- <Avatar width={64} url={site.site.icon} alt={site.site.name} /> -->
-  <!-- {/if} -->
+  {#if site.site.icon}
+    <Avatar width={64} url={site.site.icon} alt={site.site.name} />
+  {/if}
   <span class="flex flex-row items-center gap-1 text-sm">
     <Icon src={Calendar} width={16} height={16} mini />
     <RelativeDate date={new Date(site.site.published)} />
