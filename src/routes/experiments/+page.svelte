@@ -4,6 +4,10 @@
   import { userSettings } from '$lib/settings'
 </script>
 
+<svelte:head>
+  <title>Experiments</title>
+</svelte:head>
+
 <div class="flex flex-col gap-4">
   <h1 class="text-3xl font-bold">Experiments</h1>
   <Card class="flex flex-col gap-2 p-4 text-sm">

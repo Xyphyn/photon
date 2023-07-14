@@ -19,6 +19,10 @@
   let search = ''
 </script>
 
+<svelte:head>
+  <title>Communities</title>
+</svelte:head>
+
 <div class="flex flex-col sm:flex-row gap-4">
   <MultiSelect
     options={['Subscribed', 'Local', 'All']}
