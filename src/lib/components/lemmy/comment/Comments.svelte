@@ -41,6 +41,11 @@
       parent_id: parent.comment_view.comment.id,
     })
 
+    if (newComments.comments.length == 0) {
+      loadingChildren = false
+      return
+    }
+
     // this code sucks, but for some reason it works
     // lemmy api is quite goofy
     parent.children = buildCommentsTree(newComments.comments, true).find(

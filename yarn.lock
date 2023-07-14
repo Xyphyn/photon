@@ -7,6 +7,27 @@
   resolved "https://registry.yarnpkg.com/@alloc/quick-lru/-/quick-lru-5.2.0.tgz#7bf68b20c0a350f936915fcae06f58e32007ce30"
   integrity sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==
 
+"@dicebear/converter@6.0.4":
+  version "6.0.4"
+  resolved "https://registry.yarnpkg.com/@dicebear/converter/-/converter-6.0.4.tgz#4340387e2926771a4e51d0800b03381a2974f8d8"
+  integrity sha512-Zmf2f3Hk+LPclV7+zYb2FZ+U59irS+mzPK9/cHzkKKMxrmzEKBSWNrume1iRcuVb3X/oSEJa70sA8Cu/9PE12A==
+  dependencies:
+    "@types/json-schema" "^7.0.11"
+    tmp-promise "^3.0.3"
+
+"@dicebear/core@^6.0.4":
+  version "6.0.4"
+  resolved "https://registry.yarnpkg.com/@dicebear/core/-/core-6.0.4.tgz#a204887d91c79fe072b9159060ee270ca1cea951"
+  integrity sha512-N+zP0g8r4CegXnqtJ5c8YH1NUZCH2C9ojEmtuo+9wqHvm0jAfsOfw777ydN7tV4GKw/xAGUvM6XagthX0EhDIQ==
+  dependencies:
+    "@dicebear/converter" "6.0.4"
+    "@types/json-schema" "^7.0.11"
+
+"@dicebear/initials@^6.0.4":
+  version "6.0.4"
+  resolved "https://registry.yarnpkg.com/@dicebear/initials/-/initials-6.0.4.tgz#824d20d5310d3ba7157e174ee74b7b621625990c"
+  integrity sha512-TJfGkhKCLkDrUAifXMCn/rhTu95lKQcYoJbCZuQd15oF+Re8fGKjFDXOY/oUjmrWHaGSMU2sW0VoHGnTAWHpUg==
+
 "@esbuild/android-arm64@0.17.19":
   version "0.17.19"
   resolved "https://registry.yarnpkg.com/@esbuild/android-arm64/-/android-arm64-0.17.19.tgz#bafb75234a5d3d1b690e7c2956a599345e84a2fd"
@@ -373,6 +394,11 @@
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/@types/cookie/-/cookie-0.5.1.tgz#b29aa1f91a59f35e29ff8f7cb24faf1a3a750554"
   integrity sha512-COUnqfB2+ckwXXSFInsFdOAWQzCCx+a5hq2ruyj+Vjund94RJQd4LG2u9hnvJrTgunKAaax7ancBYlDrNYxA0g==
+
+"@types/json-schema@^7.0.11":
+  version "7.0.12"
+  resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.12.tgz#d70faba7039d5fca54c83c7dbab41051d2b6f6cb"
+  integrity sha512-Hr5Jfhc9eYOQNPYO5WLDq/n4jqijdHNlDXjuAQkkt+mWdQR+XJToOHrsD4cPaMXpn6KO7y2+wM8AZEs8VpBLVA==
 
 "@types/linkify-it@*":
   version "3.0.2"
@@ -1483,6 +1509,13 @@ rimraf@^2.5.2:
   dependencies:
     glob "^7.1.3"
 
+rimraf@^3.0.0:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-3.0.2.tgz#f1a5402ba6220ad52cc1282bac1ae3aa49fd061a"
+  integrity sha512-JZkJMZkAGFFPP2YqXZXPbMlMBgsxzE8ILs4lMIX/2o0L9UBw9O/Y3o6wFw/i9YLapcUJWwqbi3kdxIPdC62TIA==
+  dependencies:
+    glob "^7.1.3"
+
 rollup@^3.21.0:
   version "3.25.1"
   resolved "https://registry.yarnpkg.com/rollup/-/rollup-3.25.1.tgz#9fff79d22ff1a904b2b595a2fb9bc3793cb987d8"
@@ -1723,6 +1756,20 @@ tinyspy@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/tinyspy/-/tinyspy-2.1.1.tgz#9e6371b00c259e5c5b301917ca18c01d40ae558c"
   integrity sha512-XPJL2uSzcOyBMky6OFrusqWlzfFrXtE0hPuMgW8A2HmaqrPo4ZQHRN/V0QXN3FSjKxpsbRrFc5LI7KOwBsT1/w==
+
+tmp-promise@^3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/tmp-promise/-/tmp-promise-3.0.3.tgz#60a1a1cc98c988674fcbfd23b6e3367bdeac4ce7"
+  integrity sha512-RwM7MoPojPxsOBYnyd2hy0bxtIlVrihNs9pj5SUvY8Zz1sQcQG2tG1hSr8PDxfgEB8RNKDhqbIlroIarSNDNsQ==
+  dependencies:
+    tmp "^0.2.0"
+
+tmp@^0.2.0:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/tmp/-/tmp-0.2.1.tgz#8457fc3037dcf4719c251367a1af6500ee1ccf14"
+  integrity sha512-76SUhtfqR2Ijn+xllcI5P1oyannHNHByD80W1q447gU3mp9G9PSpGdWmjUOHRDPiHYacIk66W7ubDTuPF3BEtQ==
+  dependencies:
+    rimraf "^3.0.0"
 
 to-regex-range@^5.0.1:
   version "5.0.1"
