@@ -46,7 +46,7 @@
   }
 </script>
 
-<div class="flex flex-row gap-2 items-center pt-2 z-50">
+<div class="flex flex-row gap-2 items-center pt-2">
   <PostVote post={post.post} vote={post.my_vote} score={post.counts.score} />
 
   <Link color={Color.border} href="/post/{getInstance()}/{post.post.id}">
@@ -73,7 +73,7 @@
       <Icon src={Newspaper} width={16} mini />
       <span>{post.community.title}</span>
     </MenuButton>
-    <hr class="w-[90%] mx-auto opacity-10 my-2" />
+    <hr class="w-[90%] mx-auto opacity-100 dark:opacity-10 my-2" />
     <span class="mx-4 text-xs opacity-80 text-left my-2">Actions</span>
     <MenuButton
       on:click={() => {

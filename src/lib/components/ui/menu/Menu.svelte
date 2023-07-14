@@ -45,7 +45,7 @@
         ? 'origin-top-right right-0'
         : 'origin-top-left left-0'}
               {top ? 'bottom-[100%] origin-bottom-left' : 'top-[100%]'}
-          rounded-md py-2 min-w-[16rem] my-2 flex flex-col shadow-lg {itemsClass
+          rounded-md py-2 min-w-[16rem] my-2 flex flex-col shadow-md {itemsClass
         ? itemsClass
         : 'bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800'}"
     >
