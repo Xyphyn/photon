@@ -16,13 +16,13 @@
     if ($navigating) {
       nProgress.start()
       if (typeof document != 'undefined') {
-        document.body.classList.toggle('wait', true)
+        document.documentElement.classList.toggle('wait', true)
       }
     }
     if (!$navigating) {
       nProgress.done()
       if (typeof document != 'undefined') {
-        document.body.classList.toggle('wait', false)
+        document.documentElement.classList.toggle('wait', false)
       }
     }
   }
@@ -33,3 +33,6 @@
 <div class="mx-auto max-w-5xl p-4 h-full">
   <slot />
 </div>
+<footer>
+  <p>{__VERSION__}</p>
+</footer>

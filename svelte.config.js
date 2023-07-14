@@ -20,7 +20,7 @@ const config = {
 			},
 			mode: 'nonce'
 		}
-	}
+	},
 };
 
 export default config;

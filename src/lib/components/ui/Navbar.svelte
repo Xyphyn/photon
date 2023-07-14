@@ -16,7 +16,6 @@
     ArrowLeftOnRectangle,
     ArrowRightOnRectangle,
     Beaker,
-    Cog6Tooth,
     GlobeAlt,
     Icon,
     Inbox,
@@ -28,10 +27,10 @@
 
 <nav
   class="sticky top-0 bg-slate-50/80 dark:bg-zinc-950/80 backdrop-blur-3xl flex
-  flex-row gap-4 items-center w-full py-1 z-20 px-4"
+  flex-row gap-4 items-center w-full py-1 z-50 px-4"
 >
   <div
-    class="flex flex-row gap-4 items-center max-w-5xl w-full mx-auto px-4 my-1"
+    class="flex flex-row gap-4 items-center max-w-5xl w-full mx-auto px-4 my-1 z-50"
   >
     <div class="flex flex-row gap-2 items-center mr-auto">
       <a href="/" class="flex flex-row items-center gap-2">
