@@ -3,14 +3,12 @@
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
   import { page } from '$app/stores'
   import {
-    ChatBubbleLeftEllipsis,
     ChatBubbleOvalLeftEllipsis,
     Icon,
     PencilSquare,
     UserGroup,
   } from 'svelte-hero-icons'
   import CommunityLink from '$lib/components/community/CommunityLink.svelte'
-  import Link from '$lib/components/input/Link.svelte'
   import { Color } from '$lib/ui/colors.js'
   import TextInput from '$lib/components/input/TextInput.svelte'
   import Subscribe from './Subscribe.svelte'
