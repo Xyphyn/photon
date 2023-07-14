@@ -60,7 +60,7 @@
           <span
             class="break-words max-w-full w-max text-base font-bold text-sky-400 hover:underline"
           >
-            <CommunityLink community={community.community} />
+            <CommunityLink avatar community={community.community} />
           </span>
           <div class="w-24">
             <Subscribe {community} let:subscribe let:subscribing>
@@ -80,7 +80,7 @@
                 }}
                 color={community.subscribed == 'Subscribed'
                   ? Color.accent
-                  : Color.secondary}
+                  : Color.ghost}
               >
                 {community.subscribed == 'Subscribed'
                   ? 'Subscribed'
@@ -89,11 +89,9 @@
             </Subscribe>
           </div>
         </div>
-        {#if !community.community.local}
-          <span class="opacity-80 mb-2">
-            {new URL(community.community.actor_id).hostname}
-          </span>
-        {/if}
+        <span class="opacity-80 mb-2">
+          {new URL(community.community.actor_id).hostname}
+        </span>
         <div class="flex flex-row gap-3 items-center">
           <div class="flex flex-row gap-1 items-center">
             <Icon src={UserGroup} width={16} mini />

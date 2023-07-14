@@ -103,16 +103,6 @@
         loading="lazy"
       />
     </div>
-  {:else if postRes.post.embed_video_url}
-    <div class="self-start" class:blur-3xl={postRes.post.nsfw}>
-      <!-- svelte-ignore a11y-media-has-caption -->
-      {#if postRes.post.embed_video_url}
-        <embed
-          class="rounded-md max-h-[32rem] w-full max-w-full"
-          src={youtubeToPiped(postRes.post.embed_video_url)}
-        />
-      {/if}
-    </div>
   {:else if postRes.post.thumbnail_url}
     <div class="self-start" class:blur-3xl={postRes.post.nsfw}>
       <img
