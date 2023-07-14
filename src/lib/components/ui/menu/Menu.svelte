@@ -35,13 +35,13 @@
 >
   <slot name="button" {toggleOpen} />
   {#if open}
-    <div
+    <ul
       transition:scale|local={{
         duration: 200,
         start: 0.95,
         easing: expoOut,
       }}
-      class="absolute max-h-64 z-30 overflow-auto {rtl
+      class="list-none absolute max-h-64 z-30 overflow-auto {rtl
         ? 'origin-top-right right-0'
         : 'origin-top-left left-0'}
               {top ? 'bottom-[100%] origin-bottom-left' : 'top-[100%]'}
@@ -50,8 +50,10 @@
         : 'bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800'}"
     >
       {#if open}
-        <slot {toggleOpen} />
+        <div on:click={toggleOpen}>
+          <slot {toggleOpen} />
+        </div>
       {/if}
-    </div>
+    </ul>
   {/if}
 </div>

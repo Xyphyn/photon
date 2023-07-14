@@ -25,7 +25,7 @@
     try {
       await getClient(instance).getSite({})
     } catch (err) {
-      throw new Error('Invalid instance URL')
+      throw new Error('Failed to contact that instance. Is it down?')
     }
 
     return true
@@ -35,7 +35,7 @@
     data.loading = true
     try {
       if (!(await validateURL(data.instance))) {
-        throw new Error('Invalid instance URL')
+        throw new Error('Failed to contact that instance. Is it down?')
       }
 
       const response = await getClient(data.instance).login({

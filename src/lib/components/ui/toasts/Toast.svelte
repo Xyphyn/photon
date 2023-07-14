@@ -42,7 +42,7 @@
       ? ExclamationCircle
       : ExclamationCircle}
   />
-  <div class="flex flex-col p-4 pl-0">
+  <div class="flex flex-col p-4 pl-0 max-w-[90%]">
     {#if toast.title}
       <h1 class="text-base font-bold">{toast.title}</h1>
     {/if}

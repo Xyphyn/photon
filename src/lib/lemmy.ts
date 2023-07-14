@@ -7,6 +7,7 @@ import {
 } from 'lemmy-js-client'
 import { get, writable } from 'svelte/store'
 import { PUBLIC_PROXY_URL } from '$env/static/public'
+import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
 
 export const DEFAULT_INSTANCE_URL = 'lemmy.world'
 export let instance_url = writable(DEFAULT_INSTANCE_URL)
@@ -83,6 +84,10 @@ authData.subscribe(async (data) => {
       localStorage.setItem('user', JSON.stringify(data))
     }
   } catch (error) {
+    toast({
+      content: 'Failed to fetch your user. Is your instance down?',
+      type: ToastType.error,
+    })
     console.error(error)
     authData.set(undefined)
   }
