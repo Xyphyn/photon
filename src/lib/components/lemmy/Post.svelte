@@ -35,6 +35,19 @@
       post_id: postRes.post.id,
     })
   }
+
+  function youtubeToPiped(url: string): string {
+    const youtubeDomainsRegex =
+      /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\//i
+
+    if (youtubeDomainsRegex.test(url)) {
+      return url
+        .replace(youtubeDomainsRegex, '$1$2invidious.io.lol/')
+        .replace('www.', '')
+    }
+
+    return url
+  }
 </script>
 
 <Card class="bg-white flex flex-col overflow-hidden w-full relative p-5 gap-2">
@@ -87,14 +100,18 @@
         src="{postRes.post.url}?thumbnail=1024&format=webp"
         alt={postRes.post.name}
         class="rounded-md max-h-[32rem] w-full max-w-full"
+        loading="lazy"
       />
     </div>
   {:else if postRes.post.embed_video_url}
     <div class="self-start" class:blur-3xl={postRes.post.nsfw}>
       <!-- svelte-ignore a11y-media-has-caption -->
-      <video class="rounded-md max-h-[32rem] w-full max-w-full" controls>
-        <source src={postRes.post.embed_video_url} />
-      </video>
+      {#if postRes.post.embed_video_url}
+        <embed
+          class="rounded-md max-h-[32rem] w-full max-w-full"
+          src={youtubeToPiped(postRes.post.embed_video_url)}
+        />
+      {/if}
     </div>
   {:else if postRes.post.thumbnail_url}
     <div class="self-start" class:blur-3xl={postRes.post.nsfw}>

@@ -77,11 +77,8 @@ authData.subscribe(async (data) => {
     const site = await getClient().getSite({
       auth: data.token,
     })
-
     if (!site?.my_user) throw Error('Missing user')
-
     user.set({ ...site.my_user.local_user_view, unreads: 0 })
-
     if (typeof localStorage != 'undefined') {
       localStorage.setItem('user', JSON.stringify(data))
     }

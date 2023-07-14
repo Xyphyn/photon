@@ -12,6 +12,8 @@
   async function upvote() {
     if (!$authData) return
 
+    if (vote == undefined) vote = 0
+
     const upvoted = vote == 1
 
     if (vote == -1) {
@@ -35,6 +37,8 @@
 
   async function downvote() {
     if (!$authData) return
+
+    if (vote == undefined) vote = 0
 
     const upvoted = vote == -1
 
