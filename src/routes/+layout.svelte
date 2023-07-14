@@ -33,6 +33,3 @@
 <div class="mx-auto max-w-5xl p-4 h-full">
   <slot />
 </div>
-<footer>
-  <p>{__VERSION__}</p>
-</footer>
