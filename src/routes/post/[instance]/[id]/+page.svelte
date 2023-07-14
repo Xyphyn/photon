@@ -19,6 +19,7 @@
   import CommunityCard from '$lib/components/community/CommunityCard.svelte'
   import Button from '$lib/components/input/Button.svelte'
   import { page } from '$app/stores'
+  import PostActions from '$lib/components/lemmy/PostActions.svelte'
 
   export let data
 
@@ -107,12 +108,8 @@
       <Markdown source={post.body} />
     </p>
   {/if}
-  <div class="w-max">
-    <PostVote
-      post={data.post.post_view.post}
-      score={data.post.post_view.counts.score}
-      vote={data.post.post_view.my_vote}
-    />
+  <div class="w-ful relative">
+    <PostActions post={data.post.post_view} />
   </div>
 </div>
 <div class="mt-4 flex flex-col gap-2">

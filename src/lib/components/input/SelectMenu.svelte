@@ -14,14 +14,14 @@
   optionNames.set(null, 'None')
 </script>
 
-<Menu rtl={false} preventDefault>
+<Menu rtl={false} let:toggleOpen>
   <button
     class="flex flex-row gap-2 items-center px-3 py-1.5 w-full text-sm
       transition-all max-w-64 rounded-md bg-slate-100 border border-slate-200
       dark:bg-zinc-800 dark:border-zinc-700"
     slot="button"
     type="button"
-    on:click|preventDefault
+    on:click|preventDefault={toggleOpen}
   >
     {optionNames.get(selected) || selected}
   </button>

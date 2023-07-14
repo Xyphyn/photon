@@ -45,7 +45,11 @@
     line-height: initial;
   }
 
+  .markdown :global(il) {
+    @apply my-1;
+  }
+
   .markdown :global(blockquote) {
-    @apply border-l-2 border-black/20 dark:border-white/20 pl-2 my-1;
+    @apply border-l-2 border-black/20 dark:border-white/20 pl-2 my-1 h-max;
   }
 </style>

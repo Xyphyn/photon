@@ -28,10 +28,10 @@
 
 <nav
   class="sticky bg-slate-50/70 dark:bg-zinc-950/70 backdrop-blur-3xl top-0
-  z-50 mt-2"
+  z-50"
 >
   <div
-    class="flex z-20 flex-row gap-4 items-center w-full h-16 max-w-5xl mx-auto px-6"
+    class="flex z-20 flex-row gap-4 items-center w-full h-16 max-w-5xl mx-auto px-6 my-1"
   >
     <div class="flex flex-row gap-2 items-center mr-auto">
       <a href="/" class="flex flex-row items-center gap-2">
@@ -56,8 +56,13 @@
         <Icon src={GlobeAlt} width={16} />
         <span class="hidden sm:inline ml-1">Communities</span>
       </Link>
-      <Menu>
-        <Button color={Color.accent} slot="button" label="Create">
+      <Menu let:toggleOpen>
+        <Button
+          color={Color.accent}
+          slot="button"
+          label="Create"
+          on:click={toggleOpen}
+        >
           <Icon src={Plus} width={16} />
           <span class="hidden sm:inline">Create</span>
         </Button>
@@ -68,12 +73,13 @@
         </MenuButton>
       </Menu>
     </div>
-    <Menu>
+    <Menu let:toggleOpen>
       <button
         class="w-8 h-8 rounded-full ring-1 ring-slate-300 bg-slate-100
       dark:bg-zinc-800 relative"
         aria-label="Profile"
         slot="button"
+        on:click={toggleOpen}
       >
         {#if $user}
           <img

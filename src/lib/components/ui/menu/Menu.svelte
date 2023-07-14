@@ -15,32 +15,25 @@
 
   let element: any
 
-  export let preventDefault = false
+  export const toggleOpen = () => (open = !open)
 </script>
 
 <svelte:body
-  on:click={(event) => {
-    if (open) {
-      let path = event.composedPath()
-
-      if (!path.includes(element)) {
-        open = false
-      }
+  on:click={(e) => {
+    if (!element.contains(e.target)) {
+      open = false
     }
   }}
 />
-<button
+
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<div
   class="overflow-visible z-30 {absolute
     ? 'absolute'
     : 'relative'} cursor-auto {clazz}"
-  on:click={(e) => {
-    if (preventDefault) e.preventDefault()
-
-    open = !open
-  }}
   bind:this={element}
 >
-  <slot name="button" />
+  <slot name="button" {toggleOpen} />
   {#if open}
     <div
       transition:scale|local={{
@@ -48,7 +41,7 @@
         start: 0.95,
         easing: expoOut,
       }}
-      class="absolute max-h-64 overflow-auto {rtl
+      class="absolute max-h-64 z-30 overflow-auto {rtl
         ? 'origin-top-right right-0'
         : 'origin-top-left left-0'}
               {top ? 'bottom-[100%] origin-bottom-left' : 'top-[100%]'}
@@ -57,8 +50,8 @@
         : 'bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800'}"
     >
       {#if open}
-        <slot />
+        <slot {toggleOpen} />
       {/if}
     </div>
   {/if}
-</button>
+</div>

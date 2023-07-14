@@ -9,19 +9,21 @@
   const click = createEventDispatcher()
 </script>
 
-{#if link}
-  <a
-    {href}
-    class="flex flex-row gap-2 items-center px-4 py-2 w-full text-sm transition-colors {color}"
-  >
-    <slot />
-  </a>
-{:else}
-  <button
-    on:click={(e) => click('click', e)}
-    type="button"
-    class="flex flex-row gap-2 items-center px-4 py-2 w-full text-sm transition-colors {color}"
-  >
-    <slot />
-  </button>
-{/if}
+<li>
+  {#if link}
+    <a
+      {href}
+      class="flex flex-row gap-2 items-center px-4 py-2 w-full text-sm transition-colors {color}"
+    >
+      <slot />
+    </a>
+  {:else}
+    <button
+      on:click={(e) => click('click', e)}
+      type="button"
+      class="flex flex-row gap-2 items-center px-4 py-2 w-full text-sm transition-colors {color}"
+    >
+      <slot />
+    </button>
+  {/if}
+</li>

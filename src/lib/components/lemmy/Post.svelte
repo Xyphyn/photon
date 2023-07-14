@@ -22,35 +22,13 @@
   import { page } from '$app/stores'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import Link from '$lib/components/input/Link.svelte'
+  import PostActions from '$lib/components/lemmy/PostActions.svelte'
 
   let postRes: PostView
   export { postRes as post }
-
-  async function deletePost() {
-    if (!$authData) return
-
-    await getClient().deletePost({
-      auth: $authData.token,
-      deleted: true,
-      post_id: postRes.post.id,
-    })
-  }
-
-  function youtubeToPiped(url: string): string {
-    const youtubeDomainsRegex =
-      /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\//i
-
-    if (youtubeDomainsRegex.test(url)) {
-      return url
-        .replace(youtubeDomainsRegex, '$1$2invidious.io.lol/')
-        .replace('www.', '')
-    }
-
-    return url
-  }
 </script>
 
-<Card class="bg-white flex flex-col overflow-hidden w-full relative p-5 gap-2">
+<Card class="bg-white flex flex-col w-full p-5 gap-2">
   <span class="flex flex-row gap-2 text-xs items-center">
     <Avatar
       url={postRes.community.icon}
@@ -120,38 +98,5 @@
       {postRes.post.body}
     </p>
   {/if}
-  <div class="flex flex-row gap-2 items-center pt-2">
-    <PostVote
-      post={postRes.post}
-      vote={postRes.my_vote}
-      score={postRes.counts.score}
-    />
-
-    <Link color={Color.border} href="/post/{getInstance()}/{postRes.post.id}">
-      <Icon slot="icon" src={ChatBubbleOvalLeft} mini width={16} height={16} />
-      <FormattedNumber number={postRes.counts.comments} />
-    </Link>
-    <Menu top absolute class="bottom-0 right-0 m-5 z-10">
-      <Button slot="button" label="Post actions">
-        <Icon src={EllipsisHorizontal} width={16} mini />
-      </Button>
-      <span class="mx-4 text-xs opacity-80 text-left my-2">Post Actions</span>
-      <MenuButton
-        on:click={() => {
-          navigator.clipboard.writeText(
-            `${$page.url.origin}/post/${getInstance()}/${postRes.post.id}`
-          )
-        }}
-      >
-        <Icon src={Square2Stack} width={16} mini />
-        Copy Link
-      </MenuButton>
-      {#if $user?.person.id == postRes.post.creator_id}
-        <MenuButton on:click={deletePost} color={Color.dangerSecondary}>
-          <Icon src={Trash} width={16} mini />
-          Delete
-        </MenuButton>
-      {/if}
-    </Menu>
-  </div>
+  <PostActions post={postRes} />
 </Card>
