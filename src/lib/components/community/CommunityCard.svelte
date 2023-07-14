@@ -67,12 +67,24 @@
 </script>
 
 <StickyCard>
-  <Avatar
-    width={48}
-    url={community_view.community.icon ??
-      `https://api.dicebear.com/6.x/initials/svg?seed=${community_view.community.name}`}
-    alt={community_view.community.name}
-  />
+  <div class="flex flex-row gap-3 items-center">
+    <Avatar
+      width={42}
+      url={community_view.community.icon ??
+        `https://api.dicebear.com/6.x/initials/svg?seed=${community_view.community.name}`}
+      alt={community_view.community.name}
+    />
+    <div class="flex flex-col">
+      <h1 class="font-bold text-base">
+        {community_view.community.title}
+      </h1>
+      <span class="opacity-60 text-sm">
+        !{community_view.community.name}@{new URL(
+          community_view.community.actor_id
+        ).hostname}
+      </span>
+    </div>
+  </div>
   <span class="flex flex-row items-center gap-1 text-sm">
     <Icon src={Calendar} width={16} height={16} mini />
     <RelativeDate date={new Date(community_view.community.published)} />
@@ -91,40 +103,30 @@
       <FormattedNumber number={community_view.counts.comments} />
     </span>
   </div>
-  <div>
-    <h1 class="font-bold text-lg">
-      {community_view.community.title}
-    </h1>
-    <span class="opacity-80 text-sm">
-      !{community_view.community.name}@{new URL(
-        community_view.community.actor_id
-      ).hostname}
-    </span>
+  {#if $authData}
     <div class="w-full mt-2 flex flex-col gap-2">
-      {#if $authData}
-        <Button
-          disabled={loading.subscribing}
-          loading={loading.subscribing}
-          large
-          color={Color.ghost}
-          on:click={subscribe}
-        >
-          {community_view.subscribed == 'Subscribed' ||
-          community_view.subscribed == 'Pending'
-            ? 'Unsubscribe'
-            : 'Subscribe'}
-        </Button>
-        <Button
-          disabled={loading.blocking}
-          loading={loading.blocking}
-          large
-          color={Color.danger}
-          on:click={block}
-        >
-          {community_view.blocked ? 'Unblock' : 'Block'}
-        </Button>
-      {/if}
+      <Button
+        disabled={loading.subscribing}
+        loading={loading.subscribing}
+        large
+        color={Color.ghost}
+        on:click={subscribe}
+      >
+        {community_view.subscribed == 'Subscribed' ||
+        community_view.subscribed == 'Pending'
+          ? 'Unsubscribe'
+          : 'Subscribe'}
+      </Button>
+      <Button
+        disabled={loading.blocking}
+        loading={loading.blocking}
+        large
+        color={Color.danger}
+        on:click={block}
+      >
+        {community_view.blocked ? 'Unblock' : 'Block'}
+      </Button>
     </div>
-  </div>
+  {/if}
   <Markdown source={community_view.community.description} />
 </StickyCard>

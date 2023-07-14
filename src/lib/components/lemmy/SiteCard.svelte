@@ -18,9 +18,17 @@
 </script>
 
 <StickyCard>
-  {#if site.site.icon}
-    <Avatar width={64} url={site.site.icon} alt={site.site.name} />
-  {/if}
+  <div class="flex flex-row gap-3 items-center">
+    {#if site.site.icon}
+      <Avatar width={42} url={site.site.icon} alt={site.site.name} />
+    {/if}
+    <div class="flex flex-col">
+      <h1 class="font-bold text-base">{site.site.name}</h1>
+      <span class="text-sm opacity-60">
+        {new URL(site.site.actor_id).hostname}
+      </span>
+    </div>
+  </div>
   <span class="flex flex-row items-center gap-1 text-sm">
     <Icon src={Calendar} width={16} height={16} mini />
     <RelativeDate date={new Date(site.site.published)} />
@@ -42,9 +50,6 @@
       <Icon src={Newspaper} width={16} height={16} mini />
       <FormattedNumber number={site.counts.communities} />
     </span>
-  </div>
-  <div>
-    <h1 class="font-bold text-lg">{site.site.name}</h1>
   </div>
   <Markdown source={site.site.description} />
 </StickyCard>

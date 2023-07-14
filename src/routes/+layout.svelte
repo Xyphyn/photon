@@ -15,15 +15,21 @@
   $: {
     if ($navigating) {
       nProgress.start()
+      if (typeof document != 'undefined') {
+        document.body.classList.toggle('wait', true)
+      }
     }
     if (!$navigating) {
       nProgress.done()
+      if (typeof document != 'undefined') {
+        document.body.classList.toggle('wait', false)
+      }
     }
   }
 </script>
 
 <Navbar />
 <ToastContainer />
-<div class="mx-auto max-w-5xl p-4">
+<div class="mx-auto max-w-5xl p-4 h-full">
   <slot />
 </div>

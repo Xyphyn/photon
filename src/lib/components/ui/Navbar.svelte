@@ -27,11 +27,11 @@
 </script>
 
 <nav
-  class="sticky bg-slate-50/70 dark:bg-zinc-950/70 backdrop-blur-3xl top-0
-  z-50"
+  class="sticky top-0 bg-slate-50/80 dark:bg-zinc-950/80 backdrop-blur-3xl flex
+  flex-row gap-4 items-center w-full py-1 z-20 px-4"
 >
   <div
-    class="flex z-20 flex-row gap-4 items-center w-full h-16 max-w-5xl mx-auto px-6 my-1"
+    class="flex flex-row gap-4 items-center max-w-5xl w-full mx-auto px-4 my-1"
   >
     <div class="flex flex-row gap-2 items-center mr-auto">
       <a href="/" class="flex flex-row items-center gap-2">
@@ -51,10 +51,10 @@
         </div>
       </a>
     </div>
-    <div class="flex flex-row gap-2">
+    <div class="flex flex-row gap-2 py-2 px-3">
       <Link href="/communities" label="Communities">
         <Icon src={GlobeAlt} width={16} />
-        <span class="hidden sm:inline ml-1">Communities</span>
+        <span class="hidden sm:inline ml-1">Explore</span>
       </Link>
       <Menu let:toggleOpen>
         <Button
@@ -63,7 +63,7 @@
           label="Create"
           on:click={toggleOpen}
         >
-          <Icon src={Plus} width={16} />
+          <Icon src={Plus} width={18} mini />
           <span class="hidden sm:inline">Create</span>
         </Button>
         <span class="text-xs opacity-80 text-left mx-4 my-2">Create</span>
