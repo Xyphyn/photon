@@ -108,8 +108,8 @@
       <Markdown source={post.body} />
     </p>
   {/if}
-  <div class="w-ful relative">
-    <PostActions post={data.post.post_view} />
+  <div class="w-full relative">
+    <PostActions bottomMenu post={data.post.post_view} />
   </div>
 </div>
 <div class="mt-4 flex flex-col gap-2">
