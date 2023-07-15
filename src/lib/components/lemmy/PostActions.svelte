@@ -57,7 +57,7 @@
     <Button slot="button" label="Post actions" on:click={toggleOpen}>
       <Icon src={EllipsisHorizontal} width={16} mini />
     </Button>
-    <span class="mx-4 text-xs opacity-80 text-left my-2">Creator</span>
+    <li class="mx-4 text-xs opacity-80 text-left my-1 py-1">Creator</li>
     <MenuButton
       link
       href="/u/{post.creator.name}@{new URL(post.creator.actor_id).hostname}"
@@ -74,7 +74,7 @@
       <span>{post.community.title}</span>
     </MenuButton>
     <hr class="w-[90%] mx-auto opacity-100 dark:opacity-10 my-2" />
-    <span class="mx-4 text-xs opacity-80 text-left my-2">Actions</span>
+    <li class="mx-4 text-xs opacity-80 text-left my-1 py-1">Actions</li>
     <MenuButton
       on:click={() => {
         navigator.clipboard.writeText(

@@ -14,15 +14,15 @@
 
   $: {
     if ($navigating) {
-      nProgress.start()
       if (typeof document != 'undefined') {
-        document.documentElement.classList.toggle('wait', true)
+        nProgress.start()
+        document?.documentElement?.classList?.toggle('wait', true)
       }
     }
     if (!$navigating) {
-      nProgress.done()
       if (typeof document != 'undefined') {
-        document.documentElement.classList.toggle('wait', false)
+        nProgress.done()
+        document?.documentElement?.classList?.toggle('wait', false)
       }
     }
   }

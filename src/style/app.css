@@ -17,12 +17,19 @@
   cursor: wait !important;
 }
 
+#nprogress {
+  z-index: 999 !important;
+  position: fixed !important;
+}
+
 #nprogress .bar {
   @apply bg-black dark:bg-white !important;
+  z-index: 999 !important;
 }
 
 #nprogress .peg {
   display: none !important;
+  z-index: 999 !important;
 }
 
 pre {

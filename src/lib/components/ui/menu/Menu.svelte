@@ -35,7 +35,7 @@
 >
   <slot name="button" {toggleOpen} />
   {#if open}
-    <ul
+    <menu
       transition:scale|local={{
         duration: 200,
         start: 0.95,
@@ -54,6 +54,6 @@
           <slot {toggleOpen} />
         </div>
       {/if}
-    </ul>
+    </menu>
   {/if}
 </div>

@@ -94,9 +94,9 @@
         {/if}
       {/if}
     </button>
-    <span class="text-xs opacity-80 text-left mx-4 my-2">
+    <li class="text-xs opacity-80 text-left mx-4 my-1 py-1">
       {$user ? $user.person.name : 'Profile'}
-    </span>
+    </li>
     {#if !$user || !$authData}
       <MenuButton link href="/login">
         <Icon src={ArrowLeftOnRectangle} mini width={16} /> Log in
@@ -126,7 +126,7 @@
         <Icon src={ArrowRightOnRectangle} mini width={16} />Log out
       </MenuButton>
       <hr class="opacity-10 w-[90%] my-2 mx-auto" />
-      <span class="text-xs px-4 my-1">v{__VERSION__}</span>
+      <li class="text-xs px-4 py-1 my-1 opacity-80">v{__VERSION__}</li>
       <MenuButton link href="/experiments">
         <Icon src={Beaker} mini width={16} />
         Experiments
