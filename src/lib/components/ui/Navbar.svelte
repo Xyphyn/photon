@@ -65,7 +65,7 @@
         <Icon src={Plus} width={18} mini />
         <span class="hidden sm:inline">Create</span>
       </Button>
-      <span class="text-xs opacity-80 text-left mx-4 my-2">Create</span>
+      <span class="text-xs opacity-80 text-left mx-4 my-1 py-1">Create</span>
       <MenuButton link href="/create/post">
         <Icon src={PencilSquare} mini width={16} />
         Post
