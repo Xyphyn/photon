@@ -5,6 +5,8 @@
   import { Color } from '$lib/ui/colors.js'
   import Link from '$lib/components/input/Link.svelte'
   import {
+    Bookmark,
+    BookmarkSlash,
     ChatBubbleOvalLeft,
     EllipsisHorizontal,
     Icon,
@@ -19,6 +21,7 @@
   import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
   import { page } from '$app/stores'
   import { user, authData } from '$lib/lemmy.js'
+  import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
 
   export let post: PostView
 
@@ -32,17 +35,27 @@
     })
   }
 
-  function youtubeToPiped(url: string): string {
-    const youtubeDomainsRegex =
-      /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\//i
+  async function save(post: PostView) {
+    if (!$authData) return
 
-    if (youtubeDomainsRegex.test(url)) {
-      return url
-        .replace(youtubeDomainsRegex, '$1$2invidious.io.lol/')
-        .replace('www.', '')
+    const saved = post.saved
+
+    post.saved = !saved
+
+    try {
+      await getClient().savePost({
+        auth: $authData.token,
+        post_id: post.post.id,
+        save: !saved,
+      })
+    } catch (error) {
+      post.saved = saved
+
+      toast({
+        content: error as any,
+        type: ToastType.error,
+      })
     }
-
-    return url
   }
 </script>
 
@@ -85,6 +98,12 @@
       <Icon src={Square2Stack} width={16} mini />
       Copy Link
     </MenuButton>
+    {#if $authData?.token}
+      <MenuButton on:click={() => save(post)}>
+        <Icon src={post.saved ? BookmarkSlash : Bookmark} width={16} mini />
+        {post.saved ? 'Unsave' : 'Save'}
+      </MenuButton>
+    {/if}
     {#if $user?.person.id == post.post.creator_id}
       <MenuButton on:click={deletePost} color={Color.dangerSecondary}>
         <Icon src={Trash} width={16} mini />
