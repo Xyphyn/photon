@@ -28,7 +28,7 @@
   function getOriginClass(origin: Origin) {
     switch (origin) {
       case 'top-right':
-        return 'bottom-[100%] right-0 origin-bottom'
+        return 'bottom-[100%] right-0 origin-bottom-right'
       case 'bottom-left':
         return 'top-[100%] origin-top-left'
       case 'top-left':

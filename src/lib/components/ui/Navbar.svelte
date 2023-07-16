@@ -5,12 +5,7 @@
   import Logo from '$lib/components/ui/Logo.svelte'
   import Menu from '$lib/components/ui/menu/Menu.svelte'
   import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
-  import {
-    DEFAULT_INSTANCE_URL,
-    authData,
-    instance_url,
-    user,
-  } from '$lib/lemmy.js'
+  import { DEFAULT_INSTANCE_URL, authData, user } from '$lib/lemmy.js'
   import { Color } from '$lib/ui/colors.js'
   import {
     ArrowLeftOnRectangle,
