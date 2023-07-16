@@ -21,6 +21,9 @@
   import { page } from '$app/stores'
   import PostActions from '$lib/components/lemmy/PostActions.svelte'
   import Loading from '$lib/components/ui/loader/Loading.svelte'
+  import Badge from '$lib/components/ui/Badge.svelte'
+  import { Bookmark, Icon, InformationCircle, Trash } from 'svelte-hero-icons'
+  import Link from '$lib/components/input/Link.svelte'
 
   export let data
 
@@ -78,23 +81,53 @@
         </span>
       </span>
     </div>
+
+    {#if data.post.post_view.post.nsfw}
+      <Badge class="bg-red-600 text-white">NSFW</Badge>
+    {/if}
+    {#if data.post.post_view.saved}
+      <Badge class="bg-yellow-500 text-white py-1" label="Saved">
+        <Icon src={Bookmark} mini width={16} />
+      </Badge>
+    {/if}
+    {#if data.post.post_view.post.deleted || data.post.post_view.post.removed}
+      <Badge class="bg-red-600 text-white py-1" label="Deleted">
+        <Icon src={Trash} mini width={16} />
+      </Badge>
+    {/if}
+    {#if data.post.post_view.post.featured_community || data.post.post_view.post.featured_local}
+      <Badge class="bg-green-500 text-white py-1" label="Pinned">
+        <Icon src={InformationCircle} mini width={16} />
+      </Badge>
+    {/if}
   </span>
   <h1 class="font-bold text-lg">{post.name}</h1>
-  {#if post.url}
-    <a
-      href={post.url}
-      class="text-sky-400 max-w-[48ch] overflow-hidden
-                whitespace-nowrap text-ellipsis text-xs hover:underline"
-    >
-      {post.url}
-    </a>
-  {/if}
   {#if isImage(post.url)}
     <img
       src={post.url}
       alt={post.name}
       class="rounded-md max-w-screen max-h-[80vh] mx-auto"
     />
+  {:else if post.thumbnail_url && post.url}
+    <a
+      href={post.url}
+      class="self-start relative group"
+      class:blur-3xl={post.nsfw}
+    >
+      <img
+        src={post.thumbnail_url}
+        alt={post.name}
+        class="rounded-md max-h-[16rem] w-full max-w-full"
+      />
+      <span
+        class="w-full px-4 py-2 overflow-hidden
+        whitespace-nowrap text-ellipsis text-sm group-hover:underline bg-slate-100 border
+        absolute bottom-0 rounded-b-md flex flex-row gap-1 items-center h-10"
+      >
+        <Icon src={Link} width={16} mini />
+        {new URL(post.url).hostname}
+      </span>
+    </a>
   {:else if post.embed_video_url}
     <!-- svelte-ignore a11y-media-has-caption -->
     <video class="rounded-md max-w-screen max-h-[80vh] mx-auto">
