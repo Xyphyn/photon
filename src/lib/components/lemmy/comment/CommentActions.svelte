@@ -68,7 +68,6 @@
       >
         <Icon src={EllipsisHorizontal} width={16} height={16} mini />
       </button>
-      <span class="opacity-80 my-1 py-1 text-xs mx-4">Comment actions</span>
       {#if $authData?.token}
         <MenuButton on:click={save}>
           <Icon src={comment.saved ? BookmarkSlash : Bookmark} mini size="16" />

@@ -8,6 +8,14 @@
   import { getInstance } from '$lib/lemmy.js'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import PostActions from '$lib/components/lemmy/PostActions.svelte'
+  import Badge from '$lib/components/ui/Badge.svelte'
+  import {
+    Bookmark,
+    Icon,
+    InformationCircle,
+    Link,
+    Trash,
+  } from 'svelte-hero-icons'
 
   let postRes: PostView
   export { postRes as post }
@@ -37,9 +45,22 @@
       </span>
     </div>
     {#if postRes.post.nsfw}
-      <span class="bg-red-600 px-1 py-0.5 rounded-md text-xs ml-auto font-bold">
-        NSFW
-      </span>
+      <Badge class="bg-red-600 text-white">NSFW</Badge>
+    {/if}
+    {#if postRes.saved}
+      <Badge class="bg-yellow-500 text-white py-1" label="Saved">
+        <Icon src={Bookmark} mini width={16} />
+      </Badge>
+    {/if}
+    {#if postRes.post.deleted || postRes.post.removed}
+      <Badge class="bg-red-600 text-white py-1" label="Deleted">
+        <Icon src={Trash} mini width={16} />
+      </Badge>
+    {/if}
+    {#if postRes.post.featured_community || postRes.post.featured_local}
+      <Badge class="bg-green-500 text-white py-1" label="Pinned">
+        <Icon src={InformationCircle} mini width={16} />
+      </Badge>
     {/if}
   </span>
   <a
@@ -48,32 +69,53 @@
   >
     {postRes.post.name}
   </a>
-  {#if postRes.post.url}
-    <a
-      href={postRes.post.url}
-      class="text-sky-400 max-w-[24ch] overflow-hidden
-                whitespace-nowrap text-ellipsis text-xs hover:underline"
-    >
-      {postRes.post.url}
-    </a>
-  {/if}
   {#if isImage(postRes.post.url)}
     <div class="self-start" class:blur-3xl={postRes.post.nsfw}>
-      <img
-        src="{postRes.post.url}?thumbnail=1024&format=webp"
-        alt={postRes.post.name}
-        class="rounded-md max-h-[32rem] w-full max-w-full"
-        loading="lazy"
-      />
+      <picture
+        class="rounded-md overflow-hidden max-h-[min(50vh,500px)] w-full max-w-full"
+      >
+        <source
+          srcset="{postRes.post.url}?thumbnail=256&format=webp"
+          media="(max-width: 256px)"
+        />
+        <source
+          srcset="{postRes.post.url}?thumbnail=512&format=webp"
+          media="(max-width: 512px)"
+        />
+        <source
+          srcset="{postRes.post.url}?thumbnail=720&format=webp"
+          media="(max-width: 720px)"
+        />
+        <!-- svelte-ignore a11y-missing-attribute -->
+        <img
+          src="{postRes.post.url}?thumbnail=1024&format=webp"
+          loading="lazy"
+          class="object-cover bg-slate-100 rounded-md max-h-[50vh] w-full"
+          width={512}
+          height={300}
+        />
+      </picture>
     </div>
-  {:else if postRes.post.thumbnail_url}
-    <div class="self-start" class:blur-3xl={postRes.post.nsfw}>
+  {:else if postRes.post.thumbnail_url && postRes.post.url}
+    <a
+      href={postRes.post.url}
+      class="self-start relative group"
+      class:blur-3xl={postRes.post.nsfw}
+    >
       <img
         src={postRes.post.thumbnail_url}
         alt={postRes.post.name}
         class="rounded-md max-h-[16rem] w-full max-w-full"
       />
-    </div>
+      <span
+        class="w-full px-4 py-2 overflow-hidden
+        whitespace-nowrap text-ellipsis text-sm group-hover:underline bg-slate-100 border
+        absolute bottom-0 rounded-b-md flex flex-row gap-1 items-center"
+      >
+        <Icon src={Link} width={16} mini />
+        {new URL(postRes.post.url).hostname}
+      </span>
+    </a>
   {/if}
   {#if postRes.post.body && !postRes.post.nsfw}
     <p

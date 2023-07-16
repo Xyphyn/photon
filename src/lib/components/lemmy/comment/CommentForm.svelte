@@ -48,14 +48,16 @@
   }
 </script>
 
-<div class="max-w-lg flex flex-col gap-2">
+<div class="flex flex-col gap-2 relative">
   <TextArea
-    rows={3}
+    rows={4}
     placeholder="What are you thinking?"
     class="bg-slate-100 dark:bg-zinc-900"
     bind:value={newComment}
   />
-  <div class="w-24 ml-auto flex flex-row gap-2">
+  <div
+    class="w-full ml-auto flex flex-row gap-2 md:w-24 md:absolute md:bottom-0 md:right-0 md:m-2"
+  >
     <Button
       large
       on:click={submit}

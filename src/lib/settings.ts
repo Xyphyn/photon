@@ -2,10 +2,12 @@ import { writable } from 'svelte/store'
 
 interface Settings {
   newComments: boolean
+  expandableImages: boolean
 }
 
 const defaultSettings: Settings = {
   newComments: true,
+  expandableImages: true,
 }
 
 export const userSettings = writable(defaultSettings)

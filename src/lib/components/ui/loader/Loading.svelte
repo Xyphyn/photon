@@ -1,4 +1,4 @@
-<div class="loading">
+<div class="loading" role="progressbar">
   <div class="dot dot1" />
   <div class="dot dot2" />
   <div class="dot dot3" />
@@ -16,6 +16,7 @@
     height: 5px;
     border-radius: 50%;
     background-color: #555;
+    opacity: 0.3;
     margin: 0px 1px;
     animation: blink 750ms infinite;
   }
@@ -34,13 +35,13 @@
 
   @keyframes blink {
     0% {
-      opacity: 0.6;
+      opacity: 0.3;
     }
     20% {
       opacity: 1;
     }
     100% {
-      opacity: 0.6;
+      opacity: 0.3;
     }
   }
 </style>

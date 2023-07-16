@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { fly } from 'svelte/transition'
+
   let clazz = ''
   export { clazz as class }
 </script>

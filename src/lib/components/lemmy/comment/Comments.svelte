@@ -7,6 +7,8 @@
   import { ChevronDown, Icon } from 'svelte-hero-icons'
   import { authData, getClient } from '$lib/lemmy.js'
   import type { Post } from 'lemmy-js-client'
+  import { Color } from '$lib/ui/colors.js'
+  import { fly } from 'svelte/transition'
 
   const maxComments = 250
 
@@ -57,11 +59,12 @@
 </script>
 
 <ul
+  in:fly={{ opacity: 0, y: -4 }}
   class={isParent
     ? ''
     : 'ml-2.5 mt-2 pl-2.5 border-l-2 border-black/10 dark:border-white/10'}
 >
-  {#each nodes.slice(0, maxComments) as node}
+  {#each nodes.slice(0, maxComments) as node (node.comment_view.comment.id)}
     <Comment
       postId={post.id}
       {node}
@@ -72,10 +75,11 @@
         <svelte:self {post} nodes={node.children} isParent={false} />
       {/if}
       {#if node.comment_view.counts.child_count > 0 && node.children.length == 0}
-        <div class="m-1">
+        <div class="my-2 w-36 h-8">
           <Button
             loading={loadingChildren}
             disabled={loadingChildren}
+            large
             on:click={() => fetchChildren(node)}
           >
             <Icon src={ChevronDown} width={16} mini />

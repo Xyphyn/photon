@@ -14,7 +14,7 @@
   optionNames.set(null, 'None')
 </script>
 
-<Menu rtl={false} let:toggleOpen>
+<Menu let:toggleOpen>
   <button
     class="flex flex-row gap-2 items-center px-3 py-1.5 w-full text-sm
       transition-all max-w-64 rounded-md bg-slate-100 border border-slate-200
@@ -25,6 +25,7 @@
   >
     {optionNames.get(selected) || selected}
   </button>
+  <li class="text-xs opacity-80 my-1 py-1 mx-4">Communities</li>
   {#each options as option}
     <MenuButton on:click={() => (selected = option)}>
       {optionNames.get(option) || option}

@@ -6,6 +6,7 @@
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
   import Post from '$lib/components/lemmy/Post.svelte'
   import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
+  import { fly, scale } from 'svelte/transition'
 
   export let data
 </script>
@@ -44,8 +45,10 @@
       />
     </div>
     <div class="flex flex-col gap-4">
-      {#each data.posts.posts as post}
-        <Post {post} />
+      {#each data.posts.posts as post, index (post.post.id)}
+        <div in:fly={{ y: -8, opacity: 0, delay: index < 4 ? index * 100 : 0 }}>
+          <Post {post} />
+        </div>
       {/each}
     </div>
     <Button

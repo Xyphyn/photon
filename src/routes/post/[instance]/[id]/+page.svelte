@@ -20,6 +20,7 @@
   import Button from '$lib/components/input/Button.svelte'
   import { page } from '$app/stores'
   import PostActions from '$lib/components/lemmy/PostActions.svelte'
+  import Loading from '$lib/components/ui/loader/Loading.svelte'
 
   export let data
 
@@ -119,18 +120,7 @@
     </span>
   </div>
   {#await data.streamed.comments}
-    <div class="flex flex-col gap-8">
-      {#each new Array(10) as comment}
-        <div class="flex flex-col gap-2">
-          <div
-            class="dark:bg-zinc-700 bg-slate-200 animate-pulse w-64 h-3 rounded-md"
-          />
-          <div
-            class="dark:bg-zinc-700 bg-slate-200 animate-pulse w-128 h-4 rounded-md"
-          />
-        </div>
-      {/each}
-    </div>
+    <Loading />
   {:then comments}
     {#if $user}
       <CommentForm
@@ -142,11 +132,6 @@
           ])}
       />
     {/if}
-    <MultiSelect
-      options={['hot', 'new', 'top']}
-      optionNames={['Hot', 'New', 'Top']}
-      selected="hot"
-    />
     <Comments
       {post}
       nodes={buildCommentsTree(comments.comments, false)}

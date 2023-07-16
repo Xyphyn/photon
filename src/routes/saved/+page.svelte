@@ -6,6 +6,7 @@
   import CommunityLink from '$lib/components/community/CommunityLink.svelte'
   import Link from '$lib/components/input/Link.svelte'
   import Comment from '$lib/components/lemmy/comment/Comment.svelte'
+  import { fly } from 'svelte/transition'
 
   export let data
 
@@ -27,33 +28,35 @@
       Wow, it's quite empty in here.
     </p>
   {:else}
-    {#each data.data as item}
-      {#if isComment(item)}
-        <Card class="flex flex-col bg-white rounded-md p-4 flex-1">
-          <div class="flex flex-row justify-between items-center">
-            <div class="flex flex-col gap-1">
-              <span class="text-xs dark:text-slate-400 text-zinc-600">
-                <CommunityLink avatar community={item.community} />
-              </span>
-              <span class="flex flex-row items-center text-sm font-bold">
-                {item.post.name}
-              </span>
+    {#each data.data as item, index}
+      <div in:fly={{ opacity: 0, y: -4, delay: index * 50 }}>
+        {#if isComment(item)}
+          <Card class="flex flex-col bg-white rounded-md p-4 flex-1">
+            <div class="flex flex-row justify-between items-center">
+              <div class="flex flex-col gap-1">
+                <span class="text-xs dark:text-slate-400 text-zinc-600">
+                  <CommunityLink avatar community={item.community} />
+                </span>
+                <span class="flex flex-row items-center text-sm font-bold">
+                  {item.post.name}
+                </span>
+              </div>
+              <Link href="/post/{item.post.id}#{asComment(item).comment.id}">
+                Jump
+              </Link>
             </div>
-            <Link href="/post/{item.post.id}#{asComment(item).comment.id}">
-              Jump
-            </Link>
-          </div>
-          <div class="list-none">
-            <Comment
-              postId={item.post.id}
-              node={{ children: [], comment_view: asComment(item), depth: 1 }}
-              replying={false}
-            />
-          </div>
-        </Card>
-      {:else}
-        <Post post={asPost(item)} />
-      {/if}
+            <div class="list-none">
+              <Comment
+                postId={item.post.id}
+                node={{ children: [], comment_view: asComment(item), depth: 1 }}
+                replying={false}
+              />
+            </div>
+          </Card>
+        {:else}
+          <Post post={asPost(item)} />
+        {/if}
+      </div>
     {/each}
   {/if}
 </div>

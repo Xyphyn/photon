@@ -6,7 +6,7 @@
   import TextArea from '$lib/components/input/TextArea.svelte'
   import TextInput from '$lib/components/input/TextInput.svelte'
   import Card from '$lib/components/ui/Card.svelte'
-  import Loading from '$lib/components/ui/Loading.svelte'
+  import Loading from '$lib/components/ui/loader/Loading.svelte'
   import { ToastType, addToast } from '$lib/components/ui/toasts/toasts.js'
   import { authData, buildBaseUrl, getClient } from '$lib/lemmy.js'
   import { Color } from '$lib/ui/colors.js'

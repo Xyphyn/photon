@@ -8,6 +8,7 @@
   import CommunityCard from '$lib/components/community/CommunityCard.svelte'
   import Button from '$lib/components/input/Button.svelte'
   import { Color } from '$lib/ui/colors'
+  import { fly } from 'svelte/transition'
 
   export let data
 </script>
@@ -57,8 +58,10 @@
         }}
       />
     </div>
-    {#each data.posts.posts as post}
-      <Post {post} />
+    {#each data.posts.posts as post, index (post.post.id)}
+      <div in:fly={{ y: -8, opacity: 0, delay: index < 4 ? index * 100 : 0 }}>
+        <Post {post} />
+      </div>
     {/each}
     <Button
       on:click={() => {

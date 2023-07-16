@@ -60,6 +60,7 @@
     : 'relative'} cursor-auto {clazz}"
   bind:this={element}
   tabindex="-1"
+  role="menu"
 >
   <slot name="button" {toggleOpen} />
   {#if open}

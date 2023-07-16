@@ -1,7 +1,7 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
   import { Color } from '$lib/ui/colors.js'
-  import Loading from '$lib/components/ui/Loading.svelte'
+  import Loading from '$lib/components/ui/loader/Loading.svelte'
 
   export let color: Color = Color.secondary
   export let loading = false
