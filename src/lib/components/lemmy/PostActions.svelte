@@ -66,7 +66,7 @@
     <Icon slot="icon" src={ChatBubbleOvalLeft} mini width={16} height={16} />
     <FormattedNumber number={post.counts.comments} />
   </Link>
-  <Menu origin="top-right" class="ml-auto overflow-auto" let:toggleOpen>
+  <Menu alignment="bottom-right" class="ml-auto overflow-auto" let:toggleOpen>
     <Button slot="button" label="Post actions" on:click={toggleOpen}>
       <Icon src={EllipsisHorizontal} width={16} mini />
     </Button>

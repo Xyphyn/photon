@@ -51,7 +51,7 @@
       <Icon src={GlobeAlt} width={16} />
       <span class="hidden sm:inline ml-1">Explore</span>
     </Link>
-    <Menu let:toggleOpen origin="bottom-right">
+    <Menu let:toggleOpen alignment="bottom-right">
       <Button
         color={Color.accent}
         slot="button"
@@ -68,7 +68,7 @@
       </MenuButton>
     </Menu>
   </div>
-  <Menu let:toggleOpen origin="bottom-right">
+  <Menu let:toggleOpen alignment="bottom-right">
     <button
       class="w-8 h-8 rounded-full ring-1 ring-slate-300 bg-slate-100
       dark:bg-zinc-800 relative"

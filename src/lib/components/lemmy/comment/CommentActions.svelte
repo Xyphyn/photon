@@ -59,7 +59,12 @@
     <span class="text-xs">Reply</span>
   </button>
   <div class="h-full relative">
-    <Menu let:toggleOpen class="h-[26px] top-0" absolute origin="bottom-center">
+    <Menu
+      let:toggleOpen
+      class="h-[26px] top-0"
+      absolute
+      alignment="bottom-center"
+    >
       <button
         slot="button"
         class="{Color.borderDark} h-full px-1 flex flex-row items-center gap-1

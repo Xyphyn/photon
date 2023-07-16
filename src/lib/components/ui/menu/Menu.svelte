@@ -11,7 +11,7 @@
 
   export let absolute = false
 
-  type Origin =
+  type Alignment =
     | 'top-right'
     | 'top-left'
     | 'bottom-right'
@@ -19,13 +19,13 @@
     | 'bottom-center'
     | 'top-center'
 
-  export let origin: Origin = 'bottom-left'
+  export let alignment: Alignment = 'bottom-left'
 
   let element: any
 
   export const toggleOpen = () => (open = !open)
 
-  function getOriginClass(origin: Origin) {
+  function getOriginClass(origin: Alignment) {
     switch (origin) {
       case 'top-right':
         return 'bottom-[100%] right-0 origin-bottom-right'
@@ -71,7 +71,7 @@
         easing: expoOut,
       }}
       class="list-none absolute max-h-72 z-30 overflow-auto {getOriginClass(
-        origin
+        alignment
       )}
           rounded-md py-2 min-w-[16rem] my-2 flex flex-col shadow-md
           bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800
