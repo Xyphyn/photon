@@ -10,12 +10,47 @@
   export let itemsClass = ''
 
   export let absolute = false
+  /**
+   * @deprecated use @var origin instead
+   */
   export let rtl = true
+  /**
+   * @deprecated use @var origin instead
+   */
   export let top = false
+
+  type Origin =
+    | 'top-right'
+    | 'top-left'
+    | 'bottom-right'
+    | 'bottom-left'
+    | 'bottom-center'
+    | 'top-center'
+
+  export let origin: Origin = 'bottom-left'
 
   let element: any
 
   export const toggleOpen = () => (open = !open)
+
+  function getOriginClass(origin: Origin) {
+    switch (origin) {
+      case 'top-right':
+        return 'bottom-[100%] right-0 origin-bottom'
+      case 'bottom-left':
+        return 'top-[100%] origin-top-left'
+      case 'top-left':
+        return 'top-[100%] left-0 origin-top-left'
+      case 'bottom-right':
+        return 'top-[100%] right-0 origin-top-right'
+      case 'top-center':
+        return 'bottom-[100%] -left-[450%] origin-bottom'
+      case 'bottom-center':
+        return 'top-[100%] -left-[450%] origin-top'
+      default:
+        return 'bottom-[100%] origin-top-left'
+    }
+  }
 </script>
 
 <svelte:body
@@ -28,10 +63,11 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div
-  class="overflow-visible z-30 {absolute
+  class="overflow-visible {absolute
     ? 'absolute'
     : 'relative'} cursor-auto {clazz}"
   bind:this={element}
+  tabindex="-1"
 >
   <slot name="button" {toggleOpen} />
   {#if open}
@@ -41,13 +77,12 @@
         start: 0.95,
         easing: expoOut,
       }}
-      class="list-none absolute max-h-64 z-30 overflow-auto {rtl
-        ? 'origin-top-right right-0'
-        : 'origin-top-left left-0'}
-              {top ? 'bottom-[100%] origin-bottom-left' : 'top-[100%]'}
-          rounded-md py-2 min-w-[16rem] my-2 flex flex-col shadow-md {itemsClass
-        ? itemsClass
-        : 'bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800'}"
+      class="list-none absolute max-h-72 z-30 overflow-auto {getOriginClass(
+        origin
+      )}
+          rounded-md py-2 min-w-[16rem] my-2 flex flex-col shadow-md
+          bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800
+          {itemsClass}"
     >
       {#if open}
         <div on:click={toggleOpen}>

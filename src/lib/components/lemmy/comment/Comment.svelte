@@ -18,6 +18,7 @@
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import CommentVote from '$lib/components/lemmy/comment/CommentVote.svelte'
   import { userSettings } from '$lib/settings.js'
+  import CommentActions from '$lib/components/lemmy/comment/CommentActions.svelte'
 
   export let node: CommentNodeI
   export let postId: number
@@ -81,21 +82,7 @@
         <Markdown source={node.comment_view.comment.content} />
       </div>
       <div class="flex flex-row gap-2 items-center mt-1 h-[26px]">
-        <CommentVote
-          bind:score={node.comment_view.counts.score}
-          bind:vote={node.comment_view.my_vote}
-          commentId={node.comment_view.comment.id}
-        />
-        <button
-          class="{$userSettings.newComments
-            ? Color.borderDark
-            : 'hover:bg-slate-200 hover:dark:bg-zinc-800'} h-full px-2 flex flex-row items-center gap-1
-          rounded-md transition-colors"
-          on:click={() => (replying = !replying)}
-        >
-          <Icon src={ChatBubbleOvalLeft} width={16} height={16} mini />
-          <span class="text-xs">Reply</span>
-        </button>
+        <CommentActions comment={node.comment_view} bind:replying />
       </div>
     </div>
     {#if replying}

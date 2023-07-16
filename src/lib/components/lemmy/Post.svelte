@@ -1,27 +1,12 @@
 <script lang="ts">
   import type { PostView } from 'lemmy-js-client'
-  import {
-    ChatBubbleOvalLeft,
-    EllipsisHorizontal,
-    Icon,
-    Square2Stack,
-    Trash,
-  } from 'svelte-hero-icons'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import CommunityLink from '$lib/components/community/CommunityLink.svelte'
   import { isImage } from '$lib/ui/image.js'
-  import PostVote from '$lib/components/lemmy/PostVote.svelte'
-  import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import UserLink from '$lib/components/user/UserLink.svelte'
   import Card from '$lib/components/ui/Card.svelte'
-  import { authData, getClient, getInstance, user } from '$lib/lemmy.js'
-  import Menu from '$lib/components/ui/menu/Menu.svelte'
-  import Button from '$lib/components/input/Button.svelte'
-  import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
-  import { Color } from '$lib/ui/colors.js'
-  import { page } from '$app/stores'
+  import { getInstance } from '$lib/lemmy.js'
   import Avatar from '$lib/components/ui/Avatar.svelte'
-  import Link from '$lib/components/input/Link.svelte'
   import PostActions from '$lib/components/lemmy/PostActions.svelte'
 
   let postRes: PostView

@@ -16,6 +16,7 @@
     ArrowLeftOnRectangle,
     ArrowRightOnRectangle,
     Beaker,
+    Bookmark,
     GlobeAlt,
     Icon,
     Inbox,
@@ -55,7 +56,7 @@
       <Icon src={GlobeAlt} width={16} />
       <span class="hidden sm:inline ml-1">Explore</span>
     </Link>
-    <Menu let:toggleOpen>
+    <Menu let:toggleOpen origin="bottom-right">
       <Button
         color={Color.accent}
         slot="button"
@@ -65,14 +66,14 @@
         <Icon src={Plus} width={18} mini />
         <span class="hidden sm:inline">Create</span>
       </Button>
-      <span class="text-xs opacity-80 text-left mx-4 my-1 py-1">Create</span>
+      <li class="text-xs opacity-80 text-left mx-4 my-1 py-1">Create</li>
       <MenuButton link href="/create/post">
         <Icon src={PencilSquare} mini width={16} />
         Post
       </MenuButton>
     </Menu>
   </div>
-  <Menu let:toggleOpen>
+  <Menu let:toggleOpen origin="bottom-right">
     <button
       class="w-8 h-8 rounded-full ring-1 ring-slate-300 bg-slate-100
       dark:bg-zinc-800 relative"
@@ -115,6 +116,9 @@
         </div>
         Inbox
       </MenuButton>
+      <MenuButton link href="/saved">
+        <Icon src={Bookmark} mini width={16} /> Saved
+      </MenuButton>
       <MenuButton
         on:click={() => {
           localStorage.removeItem('user')
@@ -125,7 +129,7 @@
       >
         <Icon src={ArrowRightOnRectangle} mini width={16} />Log out
       </MenuButton>
-      <hr class="opacity-10 w-[90%] my-2 mx-auto" />
+      <hr class="dark:opacity-10 w-[90%] my-2 mx-auto" />
       <li class="text-xs px-4 py-1 my-1 opacity-80">v{__VERSION__}</li>
       <MenuButton link href="/experiments">
         <Icon src={Beaker} mini width={16} />
