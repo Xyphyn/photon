@@ -130,12 +130,12 @@
         <Icon src={ArrowRightOnRectangle} mini width={16} />Log out
       </MenuButton>
       <hr class="dark:opacity-10 w-[90%] my-2 mx-auto" />
+      <!-- svelte-ignore missing-declaration -->
       <li class="text-xs px-4 py-1 my-1 opacity-80">v{__VERSION__}</li>
       <MenuButton link href="/experiments">
         <Icon src={Beaker} mini width={16} />
         Experiments
       </MenuButton>
-      <!-- svelte-ignore missing-declaration -->
     {/if}
   </Menu>
 </nav>

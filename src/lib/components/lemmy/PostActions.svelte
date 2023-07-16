@@ -44,8 +44,6 @@
 
     return url
   }
-
-  export let bottomMenu = false
 </script>
 
 <div class="flex flex-row gap-2 items-center pt-2">

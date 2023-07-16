@@ -10,14 +10,6 @@
   export let itemsClass = ''
 
   export let absolute = false
-  /**
-   * @deprecated use @var origin instead
-   */
-  export let rtl = true
-  /**
-   * @deprecated use @var origin instead
-   */
-  export let top = false
 
   type Origin =
     | 'top-right'
