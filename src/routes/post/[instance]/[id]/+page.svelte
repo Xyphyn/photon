@@ -121,7 +121,7 @@
       />
       <span
         class="w-full px-4 py-2 overflow-hidden
-        whitespace-nowrap text-ellipsis text-sm group-hover:underline bg-slate-100 border
+        whitespace-nowrap text-ellipsis text-sm group-hover:underline bg-slate-100 dark:bg-zinc-800 border
         absolute bottom-0 rounded-b-md flex flex-row gap-1 items-center h-10"
       >
         <Icon src={Link} width={16} mini />
