@@ -81,7 +81,7 @@
       <div class="max-w-full mt-0.5 break-words text-sm leading-[22px]">
         <Markdown source={node.comment_view.comment.content} />
       </div>
-      <div class="flex flex-row gap-2 items-center mt-1 h-[26px]">
+      <div class="flex flex-row gap-2 items-center h-[26px]">
         <CommentActions comment={node.comment_view} bind:replying />
       </div>
     </div>
