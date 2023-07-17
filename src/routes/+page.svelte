@@ -21,7 +21,7 @@
   <div class="flex flex-col gap-4 max-w-full w-full min-w-0">
     <header><h1 class="text-3xl font-bold">Frontpage</h1></header>
     <div
-      class="flex flex-col sm:flex-row gap-4 max-w-full w-full justify-between"
+      class="flex flex-col sm:flex-row gap-4 max-w-full w-full justify-between flex-wrap"
       role="radiogroup"
     >
       <MultiSelect
