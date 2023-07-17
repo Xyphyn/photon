@@ -10,8 +10,6 @@
   import { Color } from '$lib/ui/colors.js'
   import { fly } from 'svelte/transition'
 
-  const maxComments = 250
-
   export let nodes: CommentNodeI[]
   export let isParent: boolean
   export let post: Post
@@ -64,7 +62,7 @@
     ? ''
     : 'ml-2.5 mt-2 pl-2.5 border-l-2 border-black/10 dark:border-white/10'}
 >
-  {#each nodes.slice(0, maxComments) as node (node.comment_view.comment.id)}
+  {#each nodes as node (node.comment_view.comment.id)}
     <Comment
       postId={post.id}
       {node}

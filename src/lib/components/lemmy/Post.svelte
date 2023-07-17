@@ -11,6 +11,7 @@
   import Badge from '$lib/components/ui/Badge.svelte'
   import {
     Bookmark,
+    HandThumbDown,
     Icon,
     InformationCircle,
     Link,
@@ -44,24 +45,32 @@
         </span>
       </span>
     </div>
-    {#if postRes.post.nsfw}
-      <Badge class="bg-red-600 text-white">NSFW</Badge>
-    {/if}
-    {#if postRes.saved}
-      <Badge class="bg-yellow-500 text-white py-1" label="Saved">
-        <Icon src={Bookmark} mini width={16} />
-      </Badge>
-    {/if}
-    {#if postRes.post.deleted || postRes.post.removed}
-      <Badge class="bg-red-600 text-white py-1" label="Deleted">
-        <Icon src={Trash} mini width={16} />
-      </Badge>
-    {/if}
-    {#if postRes.post.featured_community || postRes.post.featured_local}
-      <Badge class="bg-green-500 text-white py-1" label="Pinned">
-        <Icon src={InformationCircle} mini width={16} />
-      </Badge>
-    {/if}
+    <!-- Badges -->
+    <div class="flex flex-row ml-auto gap-2">
+      {#if postRes.post.nsfw}
+        <Badge class="bg-red-600 text-white">NSFW</Badge>
+      {/if}
+      {#if postRes.counts.score < 0 && postRes.counts.upvotes > 3 && postRes.counts.downvotes > 3}
+        <Badge class="bg-purple-400 text-white py-1" label="Controversial">
+          <Icon src={HandThumbDown} mini width={16} />
+        </Badge>
+      {/if}
+      {#if postRes.saved}
+        <Badge class="bg-yellow-500 text-white py-1" label="Saved">
+          <Icon src={Bookmark} mini width={16} />
+        </Badge>
+      {/if}
+      {#if postRes.post.deleted || postRes.post.removed}
+        <Badge class="bg-red-600 text-white py-1" label="Deleted">
+          <Icon src={Trash} mini width={16} />
+        </Badge>
+      {/if}
+      {#if postRes.post.featured_community || postRes.post.featured_local}
+        <Badge class="bg-green-500 text-white py-1" label="Pinned">
+          <Icon src={InformationCircle} mini width={16} />
+        </Badge>
+      {/if}
+    </div>
   </span>
   <a
     href="/post/{getInstance()}/{postRes.post.id}"
@@ -118,7 +127,8 @@
       <span
         class="w-full px-4 py-2 overflow-hidden
         whitespace-nowrap text-ellipsis text-sm group-hover:underline bg-slate-100 border
-        absolute bottom-0 rounded-b-md flex flex-row gap-1 items-center"
+        dark:border-zinc-700
+        dark:bg-zinc-800 absolute bottom-0 rounded-b-md flex flex-row gap-1 items-center"
       >
         <Icon src={Link} width={16} mini />
         {new URL(postRes.post.url).hostname}
