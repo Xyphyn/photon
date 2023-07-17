@@ -1,4 +1,3 @@
-import { DEFAULT_INSTANCE_URL } from '$lib/lemmy.js'
 import { writable } from 'svelte/store'
 
 interface Settings {
@@ -6,12 +5,14 @@ interface Settings {
   expandableImages: boolean
   markReadPosts: boolean
   instance?: string
+  revertColors: boolean
 }
 
 const defaultSettings: Settings = {
   newComments: true,
   expandableImages: true,
   markReadPosts: true,
+  revertColors: false,
 }
 
 export const userSettings = writable(defaultSettings)

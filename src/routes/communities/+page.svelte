@@ -124,3 +124,20 @@
     </li>
   {/each}
 </ul>
+
+<div class="mt-2 w-full">
+  <Button
+    on:click={() => {
+      $page.url.searchParams.set(
+        'page',
+        ((Number($page.url.searchParams.get('page')) || 1) + 1).toString()
+      )
+
+      goto($page.url.toString(), {
+        invalidateAll: true,
+      })
+    }}
+  >
+    Next
+  </Button>
+</div>

@@ -43,9 +43,10 @@
   <title>Settings</title>
 </svelte:head>
 
-<div class="flex flex-col gap-4">
+<div class="flex flex-col">
   <h1 class="text-3xl font-bold">Settings</h1>
-  <Card class="flex flex-col gap-3 p-6 text-sm">
+  <h2 class="uppercase font-bold opacity-80 text-sm mt-4">General</h2>
+  <Card class="flex flex-col gap-3 p-6 text-sm my-2">
     <h1 class="font-bold">Instance</h1>
     <p>Changing this will log you out.</p>
     <div class="flex gap-2">
@@ -67,9 +68,19 @@
       </div>
     </div>
   </Card>
-  <Card class="flex flex-col gap-3 p-6 text-sm">
+  <h2 class="uppercase font-bold opacity-80 text-sm mt-4">UI</h2>
+  <Card class="flex flex-col gap-3 p-6 text-sm my-2">
     <h1 class="font-bold">Mark read posts</h1>
     <p>Fade the title of posts you've already read.</p>
     <Switch bind:enabled={$userSettings.markReadPosts} />
+  </Card>
+  <Card class="flex flex-col gap-3 p-6 text-sm my-2">
+    <h1 class="font-bold">Revert vote colors</h1>
+    <p>Make upvotes orange and downvotes blue, like Reddit used to do.</p>
+    <Switch bind:enabled={$userSettings.revertColors} />
+  </Card>
+  <Card class="flex flex-col gap-3 p-6 text-sm my-2">
+    <h1 class="font-bold">New comment design</h1>
+    <Switch bind:enabled={$userSettings.newComments} />
   </Card>
 </div>

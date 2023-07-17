@@ -65,7 +65,11 @@
 >
   <button
     on:click={upvote}
-    class="px-1.5 {vote == 1 ? 'text-orange-500' : ''}"
+    class="px-1.5 {vote == 1
+      ? $userSettings.revertColors
+        ? 'text-orange-500'
+        : 'dark:text-blue-500 text-blue-600'
+      : ''}"
     aria-label="Upvote"
   >
     <Icon src={ChevronUp} width={19} mini />
@@ -75,7 +79,11 @@
   </span>
   <button
     on:click={downvote}
-    class="px-1.5 {vote == -1 ? 'text-blue-500' : ''}"
+    class="px-1.5 {vote == -1
+      ? $userSettings.revertColors
+        ? 'dark:text-blue-500 text-blue-600'
+        : 'text-red-400'
+      : ''}"
     aria-label="Downvote"
   >
     <Icon src={ChevronDown} width={19} mini />

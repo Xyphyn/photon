@@ -1,6 +1,7 @@
 <script lang="ts">
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import { authData, getClient } from '$lib/lemmy'
+  import { userSettings } from '$lib/settings.js'
   import { Color } from '$lib/ui/colors.js'
   import type { Post } from 'lemmy-js-client'
   import { ChevronDown, ChevronUp, Icon } from 'svelte-hero-icons'
@@ -71,7 +72,8 @@
   >
     <button
       aria-label="Upvote"
-      class:text-orange-500={vote == 1}
+      class:text-orange-500={vote == 1 && $userSettings.revertColors}
+      class:text-blue-500={vote == 1 && !$userSettings.revertColors}
       class="p-0.5 px-1"
       on:click={upvote}
     >
@@ -80,7 +82,8 @@
     <FormattedNumber number={score} />
     <button
       aria-label="Downvote"
-      class:text-blue-500={vote == -1}
+      class:text-blue-500={vote == -1 && $userSettings.revertColors}
+      class:text-red-500={vote == -1 && !$userSettings.revertColors}
       class="p-0.5 px-1"
       on:click={downvote}
     >
