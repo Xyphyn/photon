@@ -25,34 +25,20 @@
     user: GetPersonDetailsResponse
   }
 
-  interface Item {
-    post: boolean
-    comment: boolean
-    item: CommentView & PostView
-  }
+  const isComment = (item: CommentView | PostView): item is CommentView =>
+    'comment' in item
 
-  function getDateOfItem(item: Item): number {
-    if (item.post) {
-      return Date.parse(item.item.post.published)
-    } else if (item.comment) {
-      return Date.parse(item.item.comment.published)
+  function getDateOfItem(item: CommentView | PostView): number {
+    if (isComment(item)) {
+      return Date.parse(item.comment.published)
     } else {
-      return Date.now()
+      return Date.parse(item.post.published)
     }
   }
 
-  const items: Item[] = [...data.user.comments, ...data.user.posts]
-    .map((i) => {
-      const post = 'read' in i
-      const comment = !post
-
-      return {
-        post: post,
-        comment: comment,
-        item: i as CommentView & PostView,
-      }
-    })
-    .sort((a, b) => getDateOfItem(b) - getDateOfItem(a))
+  const items = [...data.user.comments, ...data.user.posts].sort(
+    (a, b) => getDateOfItem(b) - getDateOfItem(a)
+  )
 </script>
 
 <svelte:head>
@@ -62,31 +48,30 @@
 <div class="flex flex-row gap-4 max-w-full w-full">
   <div class="flex flex-col gap-4 max-w-full w-full">
     {#each items as item}
-      {#if item.post}
-        <Post post={item.item} />
-      {:else}
-        <Card class="flex flex-col bg-white rounded-md p-4 flex-1">
+      {#if isComment(item)}<Card
+          class="flex flex-col bg-white rounded-md p-4 flex-1"
+        >
           <div class="flex flex-row justify-between items-center">
             <div class="flex flex-col gap-1">
               <span class="text-xs dark:text-slate-400 text-zinc-600">
-                <CommunityLink avatar community={item.item.community} />
+                <CommunityLink avatar community={item.community} />
               </span>
               <span class="flex flex-row items-center text-sm font-bold">
-                {item.item.post.name}
+                {item.post.name}
               </span>
             </div>
-            <Link href="/post/{item.item.post.id}#{item.item.comment.id}">
-              Jump
-            </Link>
+            <Link href="/post/{item.post.id}#{item.comment.id}">Jump</Link>
           </div>
           <div class="list-none">
             <Comment
-              postId={item.item.post.id}
-              node={{ children: [], comment_view: item.item, depth: 1 }}
+              postId={item.post.id}
+              node={{ children: [], comment_view: item, depth: 1 }}
               replying={false}
             />
           </div>
         </Card>
+      {:else}
+        <Post post={item} />
       {/if}
     {/each}
   </div>

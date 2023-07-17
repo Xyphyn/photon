@@ -23,19 +23,17 @@
 
   function isPrivateMessage(
     item: CommentReplyView | PersonMentionView | PrivateMessageView
-  ) {
+  ): item is PrivateMessageView {
     return 'private_message' in item
   }
-
-  // I hate how you can't type cast in Svelte easily
-  const replyItem = item as CommentReplyView | PersonMentionView
-  const messageItem = item as PrivateMessageView
 
   let replying = false
   let reply = ''
   let loading = false
 
-  async function replyToMessage() {
+  async function replyToMessage(
+    message: PrivateMessageView | CommentReplyView | PersonMentionView
+  ) {
     if (!$authData) return
 
     loading = true
@@ -44,7 +42,7 @@
       await getClient().createPrivateMessage({
         auth: $authData.token,
         content: reply,
-        recipient_id: messageItem.creator.id,
+        recipient_id: message.creator.id,
       })
 
       addToast(
@@ -75,28 +73,26 @@
       overflow-hidden {read ? 'opacity-50' : ''}"
       >
         <span class="font-bold">
-          {replyItem.creator.display_name ?? replyItem.creator.name}
+          {item.creator.display_name ?? item.creator.name}
         </span>
         replied to you in
         <a
-          href="/post/{replyItem.post.id}"
+          href="/post/{item.post.id}"
           class="font-bold max-w-[48ch] overflow-hidden text-ellipsis
       whitespace-nowrap inline hover:underline"
         >
-          {replyItem.post.name}
+          {item.post.name}
         </a>
       </div>
 
       <div class="w-max ml-auto">
-        <Link href="/post/{replyItem.post.id}#{replyItem.comment.id}">
-          Jump
-        </Link>
+        <Link href="/post/{item.post.id}#{item.comment.id}">Jump</Link>
       </div>
     </div>
     <div>
       <Comment
-        postId={replyItem.post.id}
-        node={{ children: [], comment_view: replyItem, depth: 1 }}
+        postId={item.post.id}
+        node={{ children: [], comment_view: item, depth: 1 }}
         replying={false}
       />
     </div>
@@ -107,26 +103,26 @@
     overflow-hidden flex flex-row items-center gap-1 {read ? 'opacity-80' : ''}"
       >
         <span class="font-bold">
-          {#if messageItem.creator.id == $user?.person.id}
+          {#if item.creator.id == $user?.person.id}
             You
           {:else}
-            <UserLink avatar user={messageItem.creator} />
+            <UserLink avatar user={item.creator} />
           {/if}
         </span>
         <span>messaged</span>
         <span class="font-bold">
-          {#if messageItem.recipient.id == $user?.person.id}
+          {#if item.recipient.id == $user?.person.id}
             You
           {:else}
-            <UserLink avatar user={messageItem.recipient} />
+            <UserLink avatar user={item.recipient} />
           {/if}
         </span>
       </div>
     </div>
     <p class="text-sm py-2">
-      <Markdown source={messageItem.private_message.content} />
+      <Markdown source={item.private_message.content} />
     </p>
-    {#if messageItem.recipient.id == $user?.person.id}
+    {#if item.recipient.id == $user?.person.id}
       <div class="flex flex-row gap-2">
         <Button color={Color.ghost} on:click={() => (replying = !replying)}>
           <Icon mini src={ChatBubbleOvalLeft} width={16} />
@@ -134,7 +130,7 @@
         </Button>
       </div>
     {/if}
-    {#if replying}
+    {#if isPrivateMessage(item)}
       <div class="mt-2 flex flex-col gap-2">
         <TextArea placeholder="Message" bind:value={reply} rows={3} />
         <div class="ml-auto w-24">
@@ -142,7 +138,7 @@
             disabled={loading}
             {loading}
             large
-            on:click={replyToMessage}
+            on:click={() => replyToMessage(item)}
             color={Color.accent}
           >
             Submit

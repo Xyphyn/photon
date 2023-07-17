@@ -10,11 +10,8 @@
 
   export let data
 
-  const isComment = (item: CommentView | PostView) => 'comment' in item
-
-  // can't do type conversions in the template, so i have to do this
-  const asPost = (item: any) => item as PostView
-  const asComment = (item: any) => item as CommentView
+  const isComment = (item: CommentView | PostView): item is CommentView =>
+    'comment' in item
 </script>
 
 <svelte:head>
@@ -41,20 +38,18 @@
                   {item.post.name}
                 </span>
               </div>
-              <Link href="/post/{item.post.id}#{asComment(item).comment.id}">
-                Jump
-              </Link>
+              <Link href="/post/{item.post.id}#{item.comment.id}">Jump</Link>
             </div>
             <div class="list-none">
               <Comment
                 postId={item.post.id}
-                node={{ children: [], comment_view: asComment(item), depth: 1 }}
+                node={{ children: [], comment_view: item, depth: 1 }}
                 replying={false}
               />
             </div>
           </Card>
         {:else}
-          <Post post={asPost(item)} />
+          <Post post={item} />
         {/if}
       </div>
     {/each}
