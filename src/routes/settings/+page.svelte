@@ -67,4 +67,9 @@
       </div>
     </div>
   </Card>
+  <Card class="flex flex-col gap-3 p-6 text-sm">
+    <h1 class="font-bold">Mark read posts</h1>
+    <p>Fade the title of posts you've already read.</p>
+    <Switch bind:enabled={$userSettings.markReadPosts} />
+  </Card>
 </div>

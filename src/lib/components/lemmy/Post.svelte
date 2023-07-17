@@ -17,6 +17,7 @@
     Link,
     Trash,
   } from 'svelte-hero-icons'
+  import { userSettings } from '$lib/settings.js'
 
   let postRes: PostView
   export { postRes as post }
@@ -74,7 +75,8 @@
   </span>
   <a
     href="/post/{getInstance()}/{postRes.post.id}"
-    class="font-bold {postRes.read ? 'opacity-50' : ''}"
+    class="font-bold"
+    class:opacity-50={postRes.read && $userSettings.markReadPosts}
   >
     {postRes.post.name}
   </a>

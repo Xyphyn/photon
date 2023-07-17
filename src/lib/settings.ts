@@ -4,12 +4,14 @@ import { writable } from 'svelte/store'
 interface Settings {
   newComments: boolean
   expandableImages: boolean
+  markReadPosts: boolean
   instance?: string
 }
 
 const defaultSettings: Settings = {
   newComments: true,
   expandableImages: true,
+  markReadPosts: true,
 }
 
 export const userSettings = writable(defaultSettings)
