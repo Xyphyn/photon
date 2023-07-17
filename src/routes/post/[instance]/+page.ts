@@ -1,4 +1,4 @@
-import { DEFAULT_INSTANCE_URL, authData } from '$lib/lemmy.js'
+import { instance } from '$lib/lemmy.js'
 import { error, redirect } from '@sveltejs/kit'
 import { get } from 'svelte/store'
 
@@ -6,7 +6,7 @@ export function load({ params, url }) {
   if (Number(params.instance)) {
     const split = url.pathname.split('/')
 
-    split.splice(2, 0, `${get(authData)?.instance ?? DEFAULT_INSTANCE_URL}`)
+    split.splice(2, 0, `${get(instance)}`)
 
     const newUrl = new URL(url)
     newUrl.pathname = split.join('/')

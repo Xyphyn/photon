@@ -1,8 +1,10 @@
+import { DEFAULT_INSTANCE_URL } from '$lib/lemmy.js'
 import { writable } from 'svelte/store'
 
 interface Settings {
   newComments: boolean
   expandableImages: boolean
+  instance?: string
 }
 
 const defaultSettings: Settings = {

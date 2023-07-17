@@ -59,7 +59,7 @@
   }
 </script>
 
-<div class="flex flex-row gap-2 items-center pt-2">
+<div class="flex flex-row gap-2 items-center">
   <PostVote post={post.post} vote={post.my_vote} score={post.counts.score} />
 
   <Link color={Color.border} href="/post/{getInstance()}/{post.post.id}">

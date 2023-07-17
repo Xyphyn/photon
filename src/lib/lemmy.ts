@@ -8,32 +8,33 @@ import {
 import { get, writable } from 'svelte/store'
 import { PUBLIC_PROXY_URL } from '$env/static/public'
 import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
+import { userSettings } from '$lib/settings.js'
 
 export const DEFAULT_INSTANCE_URL = 'lemmy.world'
-export let instance_url = writable(DEFAULT_INSTANCE_URL)
+export let instance = writable(DEFAULT_INSTANCE_URL)
 export let corsSupported = writable(true)
 
-export function buildBaseUrl(instance?: string) {
-  if (!instance) {
-    instance = get(authData)?.instance ?? DEFAULT_INSTANCE_URL
+export function buildBaseUrl(instanceURL?: string) {
+  if (!instanceURL) {
+    instanceURL = get(instance)!
   }
 
-  return `${PUBLIC_PROXY_URL}/cors/${instance}`
+  return `${PUBLIC_PROXY_URL}/cors/${instanceURL}`
 }
 
-export function getClient(instance?: string): LemmyHttp {
-  if (!instance) {
-    instance = get(authData)?.instance ?? DEFAULT_INSTANCE_URL
+export function getClient(instanceURL?: string): LemmyHttp {
+  if (!instanceURL) {
+    instanceURL = get(instance)
   }
 
   return new LemmyHttp(
     get(corsSupported)
-      ? `https://${instance}`
-      : `${PUBLIC_PROXY_URL}/cors/${instance}`
+      ? `https://${instanceURL}`
+      : `${PUBLIC_PROXY_URL}/cors/${instanceURL}`
   )
 }
 
-export const getInstance = () => get(authData)?.instance ?? DEFAULT_INSTANCE_URL
+export const getInstance = () => get(instance)
 
 export interface AuthData {
   token: string
@@ -73,7 +74,11 @@ if (typeof localStorage != 'undefined') {
 }
 
 authData.subscribe(async (data) => {
+  instance.set(
+    data?.instance ?? get(userSettings).instance ?? DEFAULT_INSTANCE_URL
+  )
   if (!data?.token) return
+
   try {
     const site = await getClient().getSite({
       auth: data.token,
@@ -92,3 +97,15 @@ authData.subscribe(async (data) => {
     authData.set(undefined)
   }
 })
+
+export async function validateInstance(instance: string): Promise<boolean> {
+  if (instance == '') return false
+
+  try {
+    await getClient(instance).getSite({})
+
+    return true
+  } catch (err) {
+    return false
+  }
+}

@@ -5,13 +5,13 @@
   import Logo from '$lib/components/ui/Logo.svelte'
   import Menu from '$lib/components/ui/menu/Menu.svelte'
   import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
-  import { DEFAULT_INSTANCE_URL, authData, user } from '$lib/lemmy.js'
+  import { authData, getInstance, instance, user } from '$lib/lemmy.js'
   import { Color } from '$lib/ui/colors.js'
   import {
     ArrowLeftOnRectangle,
     ArrowRightOnRectangle,
-    Beaker,
     Bookmark,
+    Cog6Tooth,
     GlobeAlt,
     Icon,
     Inbox,
@@ -37,11 +37,7 @@
           class="text-xs opacity-50
         transition-opacity"
         >
-          {#if $authData?.instance}
-            {$authData.instance}
-          {:else}
-            {DEFAULT_INSTANCE_URL}
-          {/if}
+          {$instance}
         </span>
       </div>
     </a>
@@ -124,13 +120,13 @@
       >
         <Icon src={ArrowRightOnRectangle} mini width={16} />Log out
       </MenuButton>
-      <hr class="dark:opacity-10 w-[90%] my-2 mx-auto" />
-      <!-- svelte-ignore missing-declaration -->
-      <li class="text-xs px-4 py-1 my-1 opacity-80">v{__VERSION__}</li>
-      <MenuButton link href="/experiments">
-        <Icon src={Beaker} mini width={16} />
-        Experiments
-      </MenuButton>
     {/if}
+    <hr class="dark:opacity-10 w-[90%] my-2 mx-auto" />
+    <!-- svelte-ignore missing-declaration -->
+    <li class="text-xs px-4 py-1 my-1 opacity-80">v{__VERSION__}</li>
+    <MenuButton link href="/settings">
+      <Icon src={Cog6Tooth} mini width={16} />
+      Settings
+    </MenuButton>
   </Menu>
 </nav>

@@ -8,7 +8,12 @@
     addToast,
     toast,
   } from '$lib/components/ui/toasts/toasts.js'
-  import { DEFAULT_INSTANCE_URL, authData, getClient } from '$lib/lemmy.js'
+  import {
+    DEFAULT_INSTANCE_URL,
+    authData,
+    getClient,
+    validateInstance,
+  } from '$lib/lemmy.js'
   import { Color } from '$lib/ui/colors.js'
 
   let data = {
@@ -19,22 +24,10 @@
     loading: false,
   }
 
-  async function validateURL(instance: string): Promise<boolean> {
-    if (instance == '') return false
-
-    try {
-      await getClient(instance).getSite({})
-    } catch (err) {
-      throw new Error('Failed to contact that instance. Is it down?')
-    }
-
-    return true
-  }
-
   async function logIn() {
     data.loading = true
     try {
-      if (!(await validateURL(data.instance))) {
+      if (!(await validateInstance(data.instance))) {
         throw new Error('Failed to contact that instance. Is it down?')
       }
 

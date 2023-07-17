@@ -8,7 +8,7 @@
   import Card from '$lib/components/ui/Card.svelte'
   import Loading from '$lib/components/ui/loader/Loading.svelte'
   import { ToastType, addToast } from '$lib/components/ui/toasts/toasts.js'
-  import { authData, buildBaseUrl, getClient } from '$lib/lemmy.js'
+  import { authData, buildBaseUrl, getClient, getInstance } from '$lib/lemmy.js'
   import { Color } from '$lib/ui/colors.js'
   import type { Community } from 'lemmy-js-client'
   import { list } from 'postcss'
@@ -37,7 +37,7 @@
     formData.append('images[]', image)
 
     const response = await fetch(
-      `${buildBaseUrl($authData.instance)}/pictrs/image?${new URLSearchParams({
+      `${buildBaseUrl(getInstance())}/pictrs/image?${new URLSearchParams({
         auth: $authData.token,
       })}`,
       {
