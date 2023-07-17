@@ -7,6 +7,7 @@
   import Post from '$lib/components/lemmy/Post.svelte'
   import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
   import { fly, scale } from 'svelte/transition'
+  import Spinner from '$lib/components/ui/loader/Spinner.svelte'
 
   export let data
 </script>
@@ -69,30 +70,9 @@
   <div class="hidden md:block">
     {#await data.streamed.site}
       <StickyCard>
-        <div
-          class="w-[64px] h-[64px] rounded-full bg-slate-200
-        dark:bg-zinc-700 animate-pulse"
-        />
-        <div
-          class="w-32 h-3 bg-slate-200 dark:bg-zinc-700 animate-pulse
-        rounded-md"
-        />
-        <div
-          class="w-64 h-3 bg-slate-200 dark:bg-zinc-700 animate-pulse
-        rounded-md"
-        />
-        <div
-          class="w-36 mt-4 h-4 bg-slate-200 dark:bg-zinc-700 animate-pulse
-        rounded-md"
-        />
-        <div
-          class="w-full h-4 bg-slate-200 dark:bg-zinc-700 animate-pulse
-        rounded-md"
-        />
-        <div
-          class="w-24 h-4 bg-slate-200 dark:bg-zinc-700 animate-pulse
-        rounded-md"
-        />
+        <div class="h-64 grid place-items-center">
+          <Spinner />
+        </div>
       </StickyCard>
     {:then site}
       <SiteCard site={site.site_view} />

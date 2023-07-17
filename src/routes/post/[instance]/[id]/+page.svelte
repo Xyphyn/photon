@@ -24,6 +24,7 @@
   import Badge from '$lib/components/ui/Badge.svelte'
   import { Bookmark, Icon, InformationCircle, Trash } from 'svelte-hero-icons'
   import Link from '$lib/components/input/Link.svelte'
+  import Spinner from '$lib/components/ui/loader/Spinner.svelte'
 
   export let data
 
@@ -153,7 +154,9 @@
     </span>
   </div>
   {#await data.streamed.comments}
-    <Loading />
+    <div class="h-16">
+      <Spinner width={36} />
+    </div>
   {:then comments}
     {#if $user}
       <CommentForm

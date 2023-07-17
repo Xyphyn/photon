@@ -83,7 +83,7 @@
   {#if postRes.post.url && !postRes.post.thumbnail_url}
     <a
       href={postRes.post.url}
-      class="max-w-[40ch] overflow-ellipsis whitespace-nowrap text-sky-400 hover:underline text-xs"
+      class="max-w-full overflow-hidden overflow-ellipsis whitespace-nowrap text-sky-400 hover:underline text-xs"
     >
       {postRes.post.url}
     </a>
