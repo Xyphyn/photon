@@ -21,7 +21,7 @@
   export { postRes as post }
 </script>
 
-<Card class="bg-white flex flex-col w-full p-5 gap-2">
+<Card class="bg-white flex flex-col w-full p-5 gap-2.5">
   <span class="flex flex-row gap-2 text-xs items-center">
     <Avatar
       url={postRes.community.icon}
