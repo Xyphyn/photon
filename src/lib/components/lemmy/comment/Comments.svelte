@@ -61,7 +61,7 @@
   in:fly={{ opacity: 0, y: -4 }}
   class={isParent
     ? ''
-    : 'ml-2.5 mt-2 pl-2.5 border-l-2 border-black/10 dark:border-white/10'}
+    : 'ml-2.5 mt-2 pl-2.5 border-l-2 border-slate-200 dark:border-zinc-900'}
 >
   {#each nodes as node (node.comment_view.comment.id)}
     <Comment
@@ -74,11 +74,12 @@
         <svelte:self {post} nodes={node.children} isParent={false} />
       {/if}
       {#if node.comment_view.counts.child_count > 0 && node.children.length == 0}
-        <div class="my-2 min-w-[7rem] w-max h-8 border-l border-black/10 pl-2">
+        <div
+          class="my-2 min-w-[7rem] w-max h-8 border-l-2 border-slate-200 dark:border-zinc-900 ml-2.5 pl-0.5"
+        >
           <Button
             loading={loadingChildren}
             disabled={loadingChildren}
-            large
             on:click={() => fetchChildren(node)}
           >
             <Icon src={ChevronDown} width={16} mini />
