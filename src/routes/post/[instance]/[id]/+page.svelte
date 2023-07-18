@@ -67,7 +67,7 @@
     />
     <div class="flex flex-col text-xs">
       <CommunityLink community={postData.community} />
-      <span class="opacity-50 flex flex-row gap-1">
+      <span class="text-slate-600 dark:text-zinc-400 flex flex-row gap-1">
         <UserLink user={postData.creator} />
         <span>•</span>
         <RelativeDate date={new Date(postData.post.published)} />

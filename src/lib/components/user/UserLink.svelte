@@ -23,7 +23,9 @@
   <span class="flex gap-0">
     {#if !user.local && $userSettings.showInstance}
       {user.name}
-      <span class="opacity-50">@{new URL(user.actor_id).hostname}</span>
+      <span class="opacity-60 font-normal">
+        @{new URL(user.actor_id).hostname}
+      </span>
     {:else}
       {user.name}
     {/if}
