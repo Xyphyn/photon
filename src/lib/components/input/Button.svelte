@@ -2,6 +2,7 @@
   import { createEventDispatcher } from 'svelte'
   import { Color } from '$lib/ui/colors.js'
   import Loading from '$lib/components/ui/loader/Loading.svelte'
+  import Spinner from '$lib/components/ui/loader/Spinner.svelte'
 
   export let color: Color = Color.secondary
   export let loading = false
@@ -9,6 +10,7 @@
   export let disabled = false
   export let submit = false
   export let label: string = ''
+  export let spinner = false
 
   const dispatch = createEventDispatcher()
 </script>
@@ -29,5 +31,13 @@
     <slot name="icon" />
     <slot />
   </div>
-  <div class="mx-auto py-2" class:hidden={!loading}><Loading /></div>
+  <div class="mx-auto" class:hidden={!loading}>
+    {#if spinner}
+      <Spinner />
+    {:else}
+      <div class="py-2">
+        <Loading />
+      </div>
+    {/if}
+  </div>
 </button>

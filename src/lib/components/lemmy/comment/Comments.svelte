@@ -9,6 +9,7 @@
   import type { Post } from 'lemmy-js-client'
   import { Color } from '$lib/ui/colors.js'
   import { fly } from 'svelte/transition'
+  import Spinner from '$lib/components/ui/loader/Spinner.svelte'
 
   export let nodes: CommentNodeI[]
   export let isParent: boolean
@@ -73,7 +74,7 @@
         <svelte:self {post} nodes={node.children} isParent={false} />
       {/if}
       {#if node.comment_view.counts.child_count > 0 && node.children.length == 0}
-        <div class="my-2 min-w-[9rem] w-max h-8 border-l border-black/10 pl-2">
+        <div class="my-2 min-w-[7rem] w-max h-8 border-l border-black/10 pl-2">
           <Button
             loading={loadingChildren}
             disabled={loadingChildren}
@@ -81,7 +82,7 @@
             on:click={() => fetchChildren(node)}
           >
             <Icon src={ChevronDown} width={16} mini />
-            Load {node.comment_view.counts.child_count} more
+            {node.comment_view.counts.child_count} more
           </Button>
         </div>
       {/if}

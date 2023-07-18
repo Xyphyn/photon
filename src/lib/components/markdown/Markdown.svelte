@@ -32,25 +32,34 @@
   }
 
   .markdown :global(a) {
-    @apply text-sky-400 hover:underline;
+    @apply text-sky-500 hover:underline;
   }
 
   .markdown :global(ul) {
     @apply list-disc pl-4;
-    line-height: 0.75rem;
+    line-height: 1rem;
   }
 
   .markdown :global(ol) {
     @apply list-decimal pl-4;
-    line-height: 0.75rem;
+    line-height: 1rem;
   }
 
   .markdown :global(li) {
+    @apply m-0 !important;
+  }
+
+  .markdown :global(li > *) {
     @apply m-0 !important;
     line-height: 22px;
   }
 
   .markdown :global(blockquote) {
     @apply border-l-2 border-black/20 dark:border-white/20 pl-2 my-1 h-max;
+    line-height: 0.5rem;
+  }
+
+  .markdown :global(blockquote > *) {
+    line-height: 22px;
   }
 </style>

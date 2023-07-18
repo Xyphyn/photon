@@ -1,5 +1,5 @@
 <script lang="ts">
-  export let width: number = 40
+  export let width: number = 28
 </script>
 
 <div class="spinner" style="width: {width}px; height: {width}px;">
@@ -21,9 +21,6 @@
   div.spinner {
     position: relative;
     display: inline-block;
-    margin-left: 50%;
-    margin-right: 50%;
-    padding: 10px;
     border-radius: 10px;
   }
 
