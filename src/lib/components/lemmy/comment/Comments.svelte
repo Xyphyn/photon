@@ -73,7 +73,7 @@
         <svelte:self {post} nodes={node.children} isParent={false} />
       {/if}
       {#if node.comment_view.counts.child_count > 0 && node.children.length == 0}
-        <div class="my-2 w-36 h-8">
+        <div class="my-2 min-w-[9rem] w-max h-8 border-l border-black/10 pl-2">
           <Button
             loading={loadingChildren}
             disabled={loadingChildren}

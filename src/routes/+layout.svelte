@@ -1,7 +1,7 @@
 <script lang="ts">
   import Navbar from '$lib/components/ui/Navbar.svelte'
   import '../style/app.css'
-  import { navigating, page } from '$app/stores'
+  import { navigating } from '$app/stores'
   import nProgress from 'nprogress'
   import 'nprogress/nprogress.css'
   import ToastContainer from '$lib/components/ui/toasts/ToastContainer.svelte'

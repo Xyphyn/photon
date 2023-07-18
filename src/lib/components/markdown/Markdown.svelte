@@ -37,14 +37,17 @@
 
   .markdown :global(ul) {
     @apply list-disc pl-4;
+    line-height: 0.75rem;
   }
 
   .markdown :global(ol) {
     @apply list-decimal pl-4;
+    line-height: 0.75rem;
   }
 
   .markdown :global(li) {
-    @apply my-2;
+    @apply m-0 !important;
+    line-height: 22px;
   }
 
   .markdown :global(blockquote) {

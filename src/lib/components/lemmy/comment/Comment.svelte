@@ -38,7 +38,7 @@
 >
   <details bind:open class="flex flex-col gap-1">
     <summary
-      class="flex flex-row cursor-pointer gap-2 items-center group text-xs"
+      class="flex flex-row cursor-pointer gap-2 items-center group text-xs flex-wrap"
     >
       <span class:font-bold={op} class="flex flex-row gap-1 items-center">
         <UserLink avatarSize={20} avatar user={node.comment_view.creator} />
