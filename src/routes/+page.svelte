@@ -4,10 +4,11 @@
   import Button from '$lib/components/input/Button.svelte'
   import StickyCard from '$lib/components/ui/StickyCard.svelte'
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
-  import Post from '$lib/components/lemmy/Post.svelte'
+  import Post from '$lib/components/lemmy/post/Post.svelte'
   import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
   import { fly, scale } from 'svelte/transition'
   import Spinner from '$lib/components/ui/loader/Spinner.svelte'
+  import { authData } from '$lib/lemmy.js'
 
   export let data
 </script>
@@ -18,9 +19,11 @@
 
 <div class="flex flex-row gap-4 w-full">
   <div class="flex flex-col gap-4 max-w-full w-full min-w-0">
+    <h1 class="text-3xl font-bold">Frontpage</h1>
     <div class="flex flex-col sm:flex-row gap-4 max-w-full w-full">
       <MultiSelect
         options={['Subscribed', 'Local', 'All']}
+        disabled={[$authData?.token == undefined]}
         selected={$page.url.searchParams.get('type') ?? 'Local'}
         on:select={(e) => {
           const url = $page.url

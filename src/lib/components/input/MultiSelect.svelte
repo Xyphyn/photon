@@ -2,6 +2,7 @@
   import { createEventDispatcher } from 'svelte'
   type T = $$Generic
   export let options: T[]
+  export let disabled: boolean[] = []
   export let optionNames: string[] = []
   export let selected: T
   export let separate = false
@@ -25,9 +26,11 @@
             {selected == option
         ? 'bg-black text-white dark:bg-white dark:text-black\
                 hover:bg-zinc-900 hover:dark:bg-zinc-300'
-        : 'bg-slate-100 dark:bg-zinc-900 hover:bg-slate-200 hover:dark:bg-zinc-800'} {clazz}
-            "
+        : 'bg-slate-100 dark:bg-zinc-900 hover:bg-slate-200 hover:dark:bg-zinc-800'}
+        {clazz}
+        disabled:opacity-60 disabled:pointer-events-none"
       on:click={() => (selected = option)}
+      disabled={disabled[index] ?? false}
     >
       {optionNames[index] || option}
     </button>

@@ -30,6 +30,6 @@
 
 <Navbar />
 <ToastContainer />
-<div class="mx-auto max-w-5xl p-4 h-full">
+<div class="mx-auto max-w-5xl p-2 md:p-4 h-full">
   <slot />
 </div>

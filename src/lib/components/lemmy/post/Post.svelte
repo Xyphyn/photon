@@ -7,7 +7,7 @@
   import Card from '$lib/components/ui/Card.svelte'
   import { getInstance } from '$lib/lemmy.js'
   import Avatar from '$lib/components/ui/Avatar.svelte'
-  import PostActions from '$lib/components/lemmy/PostActions.svelte'
+  import PostActions from '$lib/components/lemmy/post/PostActions.svelte'
   import Badge from '$lib/components/ui/Badge.svelte'
   import {
     Bookmark,

@@ -2,7 +2,7 @@
   import { page } from '$app/stores'
   import Link from '$lib/components/input/Link.svelte'
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
-  import Post from '../../../lib/components/lemmy/Post.svelte'
+  import Post from '../../../lib/components/lemmy/post/Post.svelte'
   import { goto } from '$app/navigation'
   import Card from '$lib/components/ui/StickyCard.svelte'
   import CommunityCard from '$lib/components/community/CommunityCard.svelte'
@@ -43,6 +43,9 @@
     </details>
   </div>
   <div class="flex flex-col gap-4 max-w-full w-full">
+    <h1 class="text-2xl font-bold">
+      {data.community.community_view.community.title}
+    </h1>
     <div class="flex flex-col sm:flex-row gap-4 max-w-full w-full">
       <MultiSelect
         options={['Active', 'Hot', 'TopAll', 'New']}

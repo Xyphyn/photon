@@ -18,9 +18,7 @@
   on:click={(e) => dispatch('click', e)}
   class="{large
     ? 'w-full px-4 py-2'
-    : 'px-3 py-1.5'} rounded-md {color} text-sm transition-all {disabled
-    ? 'opacity-50 pointer-events-none'
-    : ''}"
+    : 'px-3 py-1.5'} rounded-md {color} text-sm transition-all disabled:opacity-50 disabled:pointer-events-none"
   type={submit ? 'submit' : 'button'}
   aria-label={label}
 >

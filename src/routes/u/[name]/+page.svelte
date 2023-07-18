@@ -1,7 +1,7 @@
 <script lang="ts">
   import CommunityLink from '$lib/components/community/CommunityLink.svelte'
   import Link from '$lib/components/input/Link.svelte'
-  import Post from '$lib/components/lemmy/Post.svelte'
+  import Post from '$lib/components/lemmy/post/Post.svelte'
   import Comment from '$lib/components/lemmy/comment/Comment.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
@@ -108,7 +108,7 @@
           {data.user.person_view.person.display_name ??
             data.user.person_view.person.name}
         </h1>
-        <span class="text-sm opacity-80">
+        <span class="text-sm opacity-80 flex flex-row gap-0">
           {#if data.user.person_view.person.display_name}
             {data.user.person_view.person.name}@
           {/if}

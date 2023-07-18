@@ -8,7 +8,7 @@
 <div
   class="bg-white border border-slate-200
     dark:border-zinc-800 dark:bg-zinc-900 break-words
-    p-1 rounded-lg {clazz}"
+    p-1 rounded-xl {clazz}"
 >
   <slot />
 </div>
