@@ -146,7 +146,7 @@
     </span>
   </div>
   {#await data.streamed.comments}
-    <div class="h-16 mx-auto">
+    <div class="h-16 mx-auto grid place-items-center">
       <Spinner width={36} />
     </div>
   {:then comments}
