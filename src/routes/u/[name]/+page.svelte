@@ -49,7 +49,7 @@
   <div class="flex flex-col gap-4 max-w-full w-full">
     {#each items as item}
       {#if isComment(item)}<Card
-          class="flex flex-col bg-white rounded-md p-4 flex-1"
+          class="flex flex-col bg-white rounded-md p-5 flex-1"
         >
           <div class="flex flex-row justify-between items-center">
             <div class="flex flex-col gap-1">

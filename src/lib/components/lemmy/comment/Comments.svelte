@@ -7,9 +7,7 @@
   import { ChevronDown, Icon } from 'svelte-hero-icons'
   import { authData, getClient } from '$lib/lemmy.js'
   import type { Post } from 'lemmy-js-client'
-  import { Color } from '$lib/ui/colors.js'
   import { fly } from 'svelte/transition'
-  import Spinner from '$lib/components/ui/loader/Spinner.svelte'
 
   export let nodes: CommentNodeI[]
   export let isParent: boolean

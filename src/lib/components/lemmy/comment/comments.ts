@@ -71,3 +71,12 @@ export function buildCommentsTree(
 
   return tree
 }
+
+export async function buildCommentsTreeAsync(
+  comments: CommentView[],
+  parentComment: boolean
+) {
+  const result = buildCommentsTree(comments, parentComment)
+
+  return result
+}

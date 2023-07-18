@@ -1,23 +1,11 @@
 <script lang="ts">
-  import {
-    ArrowDown,
-    ArrowUp,
-    ChatBubbleOvalLeft,
-    ChevronDown,
-    ChevronUp,
-    Icon,
-    Minus,
-    Plus,
-  } from 'svelte-hero-icons'
+  import { Icon, Minus, Plus } from 'svelte-hero-icons'
   import type { CommentNodeI } from './comments'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
-  import { Color } from '$lib/ui/colors.js'
   import CommentForm from './CommentForm.svelte'
   import { page } from '$app/stores'
   import UserLink from '$lib/components/user/UserLink.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
-  import CommentVote from '$lib/components/lemmy/comment/CommentVote.svelte'
-  import { userSettings } from '$lib/settings.js'
   import CommentActions from '$lib/components/lemmy/comment/CommentActions.svelte'
 
   export let node: CommentNodeI
