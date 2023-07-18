@@ -17,7 +17,7 @@
   <div class="bar12" />
 </div>
 
-<style>
+<style lang="postcss">
   div.spinner {
     position: relative;
     display: inline-block;
@@ -30,13 +30,13 @@
   div.spinner div {
     width: 6%;
     height: 16%;
-    background: #000;
     position: absolute;
     left: 49%;
     top: 43%;
     opacity: 0;
     border-radius: 50px;
     animation: fade 1s linear infinite;
+    @apply bg-black dark:bg-white;
   }
 
   @keyframes fade {

@@ -83,4 +83,13 @@
     <h1 class="font-bold">New comment design</h1>
     <Switch bind:enabled={$userSettings.newComments} />
   </Card>
+  <Card class="flex flex-col gap-3 p-6 text-sm my-2">
+    <h1 class="font-bold">Show user instances</h1>
+    <p>Show user's instances.</p>
+    <span class="flex gap-0 px-3 py-2 bg-slate-100 dark:bg-zinc-800 rounded-md">
+      Xylight
+      <span class="opacity-50">@example.com</span>
+    </span>
+    <Switch bind:enabled={$userSettings.showInstance} />
+  </Card>
 </div>

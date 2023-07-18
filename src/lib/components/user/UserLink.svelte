@@ -1,5 +1,6 @@
 <script lang="ts">
   import Avatar from '$lib/components/ui/Avatar.svelte'
+  import { userSettings } from '$lib/settings.js'
   import type { Person } from 'lemmy-js-client'
 
   export let user: Person
@@ -19,5 +20,12 @@
   {#if avatar}
     <Avatar url={user.avatar} alt={user.name} width={avatarSize} />
   {/if}
-  {user.name}
+  <span class="flex gap-0">
+    {#if !user.local && $userSettings.showInstance}
+      {user.name}
+      <span class="opacity-50">@{new URL(user.actor_id).hostname}</span>
+    {:else}
+      {user.name}
+    {/if}
+  </span>
 </a>

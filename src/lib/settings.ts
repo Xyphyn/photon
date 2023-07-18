@@ -6,6 +6,7 @@ interface Settings {
   markReadPosts: boolean
   instance?: string
   revertColors: boolean
+  showInstance: boolean
 }
 
 const defaultSettings: Settings = {
@@ -13,6 +14,7 @@ const defaultSettings: Settings = {
   expandableImages: true,
   markReadPosts: true,
   revertColors: false,
+  showInstance: false,
 }
 
 export const userSettings = writable(defaultSettings)

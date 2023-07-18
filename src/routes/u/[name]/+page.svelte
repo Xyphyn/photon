@@ -103,9 +103,18 @@
           />
         </span>
       </div>
-      <h1 class="font-bold text-lg">
-        {data.user.person_view.person.name}
-      </h1>
+      <div>
+        <h1 class="font-bold text-lg">
+          {data.user.person_view.person.display_name ??
+            data.user.person_view.person.name}
+        </h1>
+        <span class="text-sm opacity-80">
+          {#if data.user.person_view.person.display_name}
+            {data.user.person_view.person.name}@
+          {/if}
+          {new URL(data.user.person_view.person.actor_id).hostname}
+        </span>
+      </div>
       {#if data.user.person_view.person.bio}
         <Markdown source={data.user.person_view.person.bio} />
       {/if}

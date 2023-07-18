@@ -32,7 +32,7 @@
     />
     <div class="flex flex-col">
       <CommunityLink community={postRes.community} />
-      <span class="text-slate-500 dark:text-zinc-400 flex flex-row gap-1">
+      <span class="text-slate-600 dark:text-zinc-400 flex flex-row gap-1">
         <UserLink user={postRes.creator} />
         <span>•</span>
         <RelativeDate date={new Date(postRes.post.published)} />
