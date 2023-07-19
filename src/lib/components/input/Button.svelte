@@ -24,11 +24,15 @@
      dark:border-zinc-700 hover:bg-slate-200 hover:dark:bg-zinc-700 hover:border-slate-300
      hover:dark:border-zinc-600`,
 
+    elevatedLow: `bg-slate-100 dark:bg-zinc-900 border border-slate-200
+    dark:border-zinc-800 hover:bg-slate-200 hover:dark:bg-zinc-800 hover:border-slate-300
+    hover:dark:border-zinc-700`,
+
     none: '',
   }
 
   const buttonSize = {
-    sm: 'px-3 py-1',
+    sm: 'px-2 py-1',
     md: 'px-3 py-1.5',
     lg: 'px-4 py-2',
   }

@@ -14,6 +14,7 @@
   import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
   import Menu from '$lib/components/ui/menu/Menu.svelte'
   import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
+  import Button from '$lib/components/input/Button.svelte'
 
   export let comment: CommentView
   export let replying: boolean = false
@@ -48,16 +49,10 @@
     bind:vote={comment.my_vote}
     commentId={comment.comment.id}
   />
-  <button
-    class="{$userSettings.newComments
-      ? Color.borderDark
-      : 'hover:bg-slate-200 hover:dark:bg-zinc-800'} h-full px-2 flex flex-row items-center gap-1
-    rounded-md transition-colors"
-    on:click={() => (replying = !replying)}
-  >
+  <Button color="elevatedLow" size="sm" on:click={() => (replying = !replying)}>
     <Icon src={ChatBubbleOvalLeft} width={16} height={16} mini />
     <span class="text-xs">Reply</span>
-  </button>
+  </Button>
   <div class="h-full relative">
     <Menu
       let:toggleOpen
@@ -65,14 +60,21 @@
       absolute
       alignment="bottom-center"
     >
-      <button
+      <Button
         slot="button"
-        class="{Color.borderDark} h-full px-1 flex flex-row items-center gap-1
-      rounded-md transition-colors"
+        color="elevatedLow"
         on:click={toggleOpen}
+        size="sm"
+        class="!p-1"
       >
-        <Icon src={EllipsisHorizontal} width={16} height={16} mini />
-      </button>
+        <Icon
+          src={EllipsisHorizontal}
+          width={16}
+          height={16}
+          mini
+          slot="icon"
+        />
+      </Button>
       {#if $authData?.token}
         <MenuButton on:click={save}>
           <Icon src={comment.saved ? BookmarkSlash : Bookmark} mini size="16" />
