@@ -6,6 +6,7 @@
   import Spinner from '$lib/components/ui/loader/Spinner.svelte'
   import Menu from '$lib/components/ui/menu/Menu.svelte'
   import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
+  import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
   import { authData, getInstance, instance, user } from '$lib/lemmy.js'
   import { Color } from '$lib/ui/colors.js'
   import {
@@ -39,6 +40,16 @@
     </a>
   </div>
   <div class="flex flex-row gap-2 py-2 px-3">
+    <Button
+      on:click={() =>
+        toast({
+          content: 'this is a test toast',
+          type: ToastType.error,
+          duration: 5000 * 5000,
+        })}
+    >
+      show toast
+    </Button>
     <Button href="/communities" label="Communities">
       <Icon src={GlobeAlt} width={16} slot="icon" />
       <span class="hidden sm:inline">Explore</span>

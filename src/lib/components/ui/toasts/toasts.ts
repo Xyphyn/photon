@@ -1,10 +1,10 @@
 import { writable } from 'svelte/store'
 
 export enum ToastType {
-  'error' = 'from-red-400 to-red-400 text-red-400',
-  'warning' = 'from-yellow-300 to-yellow-300 text-yellow-300',
-  'success' = 'from-green-400 to-green-400 text-green-400',
-  'info' = '',
+  'error' = 'bg-red-500 text-black border border-red-600',
+  'warning' = 'bg-yellow-400 text-black border border-yellow-500',
+  'success' = 'bg-green-400 text-black border border-green-500',
+  'info' = 'dark:bg-zinc-900 bg-white border border-slate-200 dark:border-zinc-800 shadow-lg',
 }
 
 export interface Toast {
@@ -20,10 +20,12 @@ export function toast({
   title,
   content,
   type = ToastType.info,
+  duration = 5000,
 }: {
   title?: string
   content: string
-  type: ToastType
+  type?: ToastType
+  duration?: number
 }) {
   let id = 0
 
@@ -31,19 +33,19 @@ export function toast({
     id = Math.floor(Math.random() * 10000)
 
     return [
+      ...toasts,
       {
         id: id,
         content: content,
         title: title,
         type: type,
       },
-      ...toasts,
     ]
   })
 
   setTimeout(() => {
     toasts.update((toasts) => toasts.filter((toast) => toast.id != id))
-  }, 5000)
+  }, duration)
 }
 
 /**

@@ -1,6 +1,7 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
   import Spinner from '$lib/components/ui/loader/Spinner.svelte'
+  import { twMerge } from 'tailwind-merge'
 
   type ButtonColor = keyof typeof buttonColor
   type ButtonSize = keyof typeof buttonSize
@@ -48,16 +49,14 @@
   const dispatch = createEventDispatcher()
   export let href: string | undefined = undefined
 
-  let buttonClass = `
-    ${buttonColor[color]}
-    ${buttonSize[size]}
-    ${buttonRoundness[rounded]}
-    ${
-      loading ? (color == 'primary' ? '!bg-transparent !text-inherit' : '') : ''
-    }
-    text-sm transition-all disabled:opacity-70 disabled:pointer-events-none
-    ${$$props.class}
-  `
+  let buttonClass = twMerge(
+    buttonColor[color],
+    buttonSize[size],
+    buttonRoundness[rounded],
+    loading ? (color == 'primary' ? '!bg-transparent !text-inherit' : '') : '',
+    'text-sm transition-all disabled:opacity-70 disabled:pointer-events-none',
+    $$props.class
+  )
 </script>
 
 {#if href}

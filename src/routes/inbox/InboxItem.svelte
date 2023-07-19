@@ -67,7 +67,7 @@
 
 <Card class="flex flex-col bg-white rounded-md p-4 max-w-full">
   {#if !isPrivateMessage(item)}
-    <div class="flex flex-row items-center">
+    <div class="flex flex-row items-center justify-between">
       <div
         class="text-sm max-w-[80ch] whitespace-nowrap text-ellipsis
       overflow-hidden {read ? 'opacity-50' : ''}"
@@ -85,9 +85,7 @@
         </a>
       </div>
 
-      <div class="w-max ml-auto">
-        <Button href="/post/{item.post.id}#{item.comment.id}">Jump</Button>
-      </div>
+      <Button href="/post/{item.post.id}#{item.comment.id}">Jump</Button>
     </div>
     <div>
       <Comment
@@ -137,9 +135,9 @@
           <Button
             disabled={loading}
             {loading}
-            large
             on:click={() => replyToMessage(item)}
             color="primary"
+            size="sm"
           >
             Submit
           </Button>
