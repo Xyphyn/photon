@@ -8,7 +8,7 @@
 
 <div class="flex flex-col mx-auto gap-4 justify-center items-center">
   <h1 class="font-black text-5xl">{$page.status}</h1>
-  <Link href={$page.url.toString()}>Retry</Link>
+  <Button href={$page.url.toString()}>Retry</Button>
   <Button
     on:click={() => {
       corsSupported.set(false)

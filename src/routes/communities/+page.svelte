@@ -26,7 +26,7 @@
 <div class="flex flex-col sm:flex-row gap-4">
   <MultiSelect
     options={['Subscribed', 'Local', 'All']}
-    selected={$page.url.searchParams.get('type') ?? 'Local'}
+    selected={$page.url.searchParams.get('type') ?? 'All'}
     on:select={(e) => {
       const url = $page.url
       url.searchParams.set('type', e.detail)
@@ -36,8 +36,8 @@
       })
     }}
   />
-  <div class="flex flex-col sm:flex-row gap-2 sm:ml-auto">
-    <TextInput class="rounded-md" bind:value={search} />
+  <div class="flex flex-col sm:flex-row gap-2 sm:ml-auto items-center">
+    <TextInput bind:value={search} />
     <Button
       on:click={() => {
         $page.url.searchParams.set('q', search)
@@ -45,7 +45,8 @@
           invalidateAll: true,
         })
       }}
-      color={Color.ghost}
+      color="ghost"
+      class="h-max"
     >
       Search
     </Button>
@@ -56,20 +57,19 @@
     <li>
       <div
         class="py-4 border-b border-black/20 dark:border-white/20
-  flex flex-col gap-1 text-sm"
+  flex flex-col gap-1 text-sm max-w-full"
       >
-        <div class="flex flex-row justify-between items-center">
+        <div class="flex flex-row items-center">
           <span
             class="break-words max-w-full w-max text-base font-bold text-sky-400 hover:underline"
           >
             <CommunityLink avatar community={community.community} />
           </span>
-          <div class="w-24">
+          <div class="ml-auto">
             <Subscribe {community} let:subscribe let:subscribing>
               <Button
                 disabled={subscribing}
                 loading={subscribing}
-                large
                 on:click={async () => {
                   const res = await subscribe()
 
@@ -81,8 +81,8 @@
                   }
                 }}
                 color={community.subscribed == 'Subscribed'
-                  ? Color.accent
-                  : Color.ghost}
+                  ? 'primary'
+                  : 'ghost'}
               >
                 {community.subscribed == 'Subscribed'
                   ? 'Subscribed'

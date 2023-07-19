@@ -86,7 +86,7 @@
       </div>
 
       <div class="w-max ml-auto">
-        <Link href="/post/{item.post.id}#{item.comment.id}">Jump</Link>
+        <Button href="/post/{item.post.id}#{item.comment.id}">Jump</Button>
       </div>
     </div>
     <div>
@@ -124,7 +124,7 @@
     </p>
     {#if item.recipient.id == $user?.person.id}
       <div class="flex flex-row gap-2">
-        <Button color={Color.ghost} on:click={() => (replying = !replying)}>
+        <Button color="ghost" on:click={() => (replying = !replying)}>
           <Icon mini src={ChatBubbleOvalLeft} width={16} />
           Reply
         </Button>
@@ -139,7 +139,7 @@
             {loading}
             large
             on:click={() => replyToMessage(item)}
-            color={Color.accent}
+            color="primary"
           >
             Submit
           </Button>

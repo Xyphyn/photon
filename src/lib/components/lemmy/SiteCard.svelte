@@ -51,6 +51,7 @@
       <FormattedNumber number={site.counts.communities} />
     </span>
   </div>
-  <p class="text-sm">{site.site.description}</p>
+  <p>{site.site.description}</p>
+  <hr class="border-slate-300 dark:border-zinc-700" />
   <Markdown source={site.site.sidebar} />
 </StickyCard>

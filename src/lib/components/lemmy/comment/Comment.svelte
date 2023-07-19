@@ -17,9 +17,7 @@
 </script>
 
 <li
-  class="py-2 {$page.url.hash == `#${node.comment_view.comment.id}`
-    ? 'bg-slate-200 dark:bg-zinc-800'
-    : ''} {node.depth == 0
+  class="py-2 {node.depth == 0
     ? 'border-b border-slate-200 dark:border-zinc-800'
     : ''}"
   id="#{node.comment_view.comment.id.toString()}"
@@ -83,7 +81,7 @@
             node.children = [
               {
                 children: [],
-                depth: node.depth,
+                depth: node.depth + 1,
                 comment_view: e.detail.comment_view,
               },
               ...node.children,

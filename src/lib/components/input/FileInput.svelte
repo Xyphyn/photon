@@ -15,9 +15,12 @@
 </script>
 
 <label
-  class="flex flex-col items-center px-8 py-4 mx-auto w-full rounded-lg border border-black border-dashed cursor-pointer min-h-36 transition-colors dark:border-white {dragover
+  class="flex flex-col items-center px-8 py-4 mx-auto w-full rounded-lg
+  border border-slate-300 dark:border-zinc-700 bg-white dark:bg-black
+  cursor-pointer min-h-36 transition-colors {dragover
     ? 'border-sky-500 text-sky-500'
-    : ''}"
+    : ''}
+  "
   on:drop|preventDefault={(event) => (files = event.dataTransfer?.files)}
   on:dragover|preventDefault={(event) => {
     if (event.dataTransfer) {

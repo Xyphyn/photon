@@ -20,6 +20,7 @@
     Icon,
     PencilSquare,
   } from 'svelte-hero-icons'
+  import Button from '$lib/components/input/Button.svelte'
 
   export let data: {
     user: GetPersonDetailsResponse
@@ -60,7 +61,14 @@
                 {item.post.name}
               </span>
             </div>
-            <Link href="/post/{item.post.id}#{item.comment.id}">Jump</Link>
+            <Button
+              color="secondary"
+              href="/post/{item.post.id}#{item.comment.id}"
+              size="sm"
+              class="self-start"
+            >
+              Jump
+            </Button>
           </div>
           <div class="list-none">
             <Comment

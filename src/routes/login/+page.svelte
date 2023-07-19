@@ -92,7 +92,7 @@
         pattern={'(?!-)[A-Za-z0-9-]+([-.]{1}[a-z0-9]+)*.[A-Za-z]{2,6}'}
       />
     </div>
-    <div class="flex flex-row gap-2 w-full">
+    <div class="flex flex-row gap-2">
       <TextInput
         id="password"
         bind:value={data.password}
@@ -121,8 +121,8 @@
     <Button
       loading={data.loading}
       disabled={data.loading}
-      large
-      color={Color.accent}
+      color="primary"
+      size="lg"
       submit
     >
       Log in

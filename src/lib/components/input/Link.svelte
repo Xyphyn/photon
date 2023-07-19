@@ -1,16 +1,13 @@
 <script lang="ts">
-  import { Color } from '$lib/ui/colors.js'
+  export let href: string
 
-  export let color: Color = Color.secondary
-  export let href = ''
-  export let label: string = ''
+  export let highlight: boolean
 </script>
 
 <a
   {href}
-  class="px-3 py-1 rounded-md {color} flex flex-row items-center
-    justify-center text-sm transition-all gap-1"
-  aria-label={label}
+  class="flex flex-row gap-2 {highlight ? 'text-sky-500' : ''} hover:underline"
+  {...$$restProps}
 >
   <slot name="icon" />
   <slot />

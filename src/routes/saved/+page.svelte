@@ -7,6 +7,7 @@
   import Link from '$lib/components/input/Link.svelte'
   import Comment from '$lib/components/lemmy/comment/Comment.svelte'
   import { fly } from 'svelte/transition'
+  import Button from '$lib/components/input/Button.svelte'
 
   export let data
 
@@ -38,7 +39,9 @@
                   {item.post.name}
                 </span>
               </div>
-              <Link href="/post/{item.post.id}#{item.comment.id}">Jump</Link>
+              <Button href="/post/{item.post.id}#{item.comment.id}">
+                Jump
+              </Button>
             </div>
             <div class="list-none">
               <Comment

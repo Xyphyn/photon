@@ -6,7 +6,7 @@
   import TextArea from '$lib/components/input/TextArea.svelte'
   import TextInput from '$lib/components/input/TextInput.svelte'
   import Card from '$lib/components/ui/Card.svelte'
-  import Loading from '$lib/components/ui/loader/Loading.svelte'
+  import Loading from '$lib/components/ui/loader/Dots.svelte'
   import { ToastType, addToast } from '$lib/components/ui/toasts/toasts.js'
   import { authData, buildBaseUrl, getClient, getInstance } from '$lib/lemmy.js'
   import { Color } from '$lib/ui/colors.js'
@@ -152,13 +152,7 @@
         bind:files={data.image}
       />
     </div>
-    <Button
-      submit
-      color={Color.accent}
-      large
-      loading={data.loading}
-      disabled={data.loading}
-    >
+    <Button submit color="primary" loading={data.loading} size="lg">
       Submit
     </Button>
   </form>

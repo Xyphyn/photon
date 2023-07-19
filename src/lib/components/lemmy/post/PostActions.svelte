@@ -62,13 +62,23 @@
 <div class="flex flex-row gap-2 items-center">
   <PostVote post={post.post} vote={post.my_vote} score={post.counts.score} />
 
-  <Link color={Color.border} href="/post/{getInstance()}/{post.post.id}">
+  <Button
+    color="elevated"
+    size="sm"
+    href="/post/{getInstance()}/{post.post.id}"
+  >
     <Icon slot="icon" src={ChatBubbleOvalLeft} mini width={16} height={16} />
     <FormattedNumber number={post.counts.comments} />
-  </Link>
+  </Button>
   <Menu alignment="bottom-right" class="ml-auto overflow-auto" let:toggleOpen>
-    <Button slot="button" label="Post actions" on:click={toggleOpen}>
-      <Icon src={EllipsisHorizontal} width={16} mini />
+    <Button
+      slot="button"
+      label="Post actions"
+      on:click={toggleOpen}
+      class="!p-1.5"
+      color="secondary"
+    >
+      <Icon slot="icon" src={EllipsisHorizontal} width={16} mini />
     </Button>
     <li class="mx-4 text-xs opacity-80 text-left my-1 py-1">Creator</li>
     <MenuButton

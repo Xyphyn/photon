@@ -55,15 +55,14 @@
     class="bg-slate-100 dark:bg-zinc-900"
     bind:value={newComment}
   />
-  <div
-    class="w-full ml-auto flex flex-row gap-2 md:w-24 md:absolute md:bottom-0 md:right-0 md:m-2"
-  >
+  <div class="sm:ml-auto sm:w-28">
     <Button
       large
       on:click={submit}
-      color={Color.accent}
+      color="primary"
+      size="lg"
+      class="w-full"
       {loading}
-      disabled={loading}
     >
       Submit
     </Button>

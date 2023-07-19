@@ -1,8 +1,12 @@
 <script lang="ts">
-  export let width: number = 28
+  export let width: number = 32
 </script>
 
-<div class="spinner" style="width: {width}px; height: {width}px;">
+<div
+  class="spinner"
+  style="width: {width}px; height: {width}px;"
+  role="progressbar"
+>
   <div class="bar1" />
   <div class="bar2" />
   <div class="bar3" />
@@ -25,8 +29,8 @@
   }
 
   div.spinner div {
-    width: 6%;
-    height: 16%;
+    width: 7.5%;
+    height: 22%;
     position: absolute;
     left: 49%;
     top: 43%;

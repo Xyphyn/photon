@@ -17,6 +17,7 @@
     if (isParent && $page.url.hash) {
       document.getElementById($page.url.hash)?.scrollIntoView({
         behavior: 'smooth',
+        block: 'center',
       })
     }
   })
@@ -80,7 +81,7 @@
             disabled={loadingChildren}
             on:click={() => fetchChildren(node)}
           >
-            <Icon src={ChevronDown} width={16} mini />
+            <Icon src={ChevronDown} width={16} mini slot="icon" />
             {node.comment_view.counts.child_count} more
           </Button>
         </div>

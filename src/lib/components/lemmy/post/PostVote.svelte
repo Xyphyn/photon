@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Button from '$lib/components/input/Button.svelte'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import { authData, getClient } from '$lib/lemmy'
   import { userSettings } from '$lib/settings.js'
@@ -65,8 +66,7 @@
 
 <slot {upvote} {downvote} {vote} {score}>
   <div
-    class="{Color.border} text-sm gap-0.5 rounded-md flex flex-row items-center px-1
-    py-0.5
+    class="{Color.border} text-sm gap-0.5 rounded-md flex flex-row items-center
     transition-colors cursor-pointer bg-slate-100 dark:bg-zinc-800
     hover:bg-slate-200 dark:hover:bg-zinc-700"
   >
@@ -74,7 +74,7 @@
       aria-label="Upvote"
       class:text-orange-500={vote == 1 && $userSettings.revertColors}
       class:text-blue-500={vote == 1 && !$userSettings.revertColors}
-      class="p-0.5 px-1"
+      class="py-1 pr-0.5 pl-2"
       on:click={upvote}
     >
       <Icon src={ChevronUp} mini width={20} height={20} />
@@ -84,7 +84,7 @@
       aria-label="Downvote"
       class:text-blue-500={vote == -1 && $userSettings.revertColors}
       class:text-red-500={vote == -1 && !$userSettings.revertColors}
-      class="p-0.5 px-1"
+      class="py-1 pl-0.5 pr-2"
       on:click={downvote}
     >
       <Icon src={ChevronDown} mini width={20} height={20} />

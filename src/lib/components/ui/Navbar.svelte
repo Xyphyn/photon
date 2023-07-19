@@ -3,6 +3,7 @@
   import Button from '$lib/components/input/Button.svelte'
   import Link from '$lib/components/input/Link.svelte'
   import Logo from '$lib/components/ui/Logo.svelte'
+  import Spinner from '$lib/components/ui/loader/Spinner.svelte'
   import Menu from '$lib/components/ui/menu/Menu.svelte'
   import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
   import { authData, getInstance, instance, user } from '$lib/lemmy.js'
@@ -23,7 +24,7 @@
 
 <nav
   class="flex flex-row gap-2 items-center sticky top-0 bg-slate-50/80
-  lg:bg-white/80 lg:rounded-b-xl
+  lg:bg-white/80 lg:rounded-b-md
   dark:bg-zinc-950/80 lg:dark:bg-zinc-900/80 backdrop-blur-3xl max-w-5xl
   w-full mx-auto px-4 py-2 z-50 lg:border-x lg:border-b transition-all
   border-slate-200 dark:border-zinc-800 box-border"
@@ -31,30 +32,25 @@
   <div class="flex flex-row gap-2 items-center mr-auto">
     <a href="/" class="flex flex-row items-center gap-2">
       <Logo width={40} />
-      <div class="flex flex-col">
-        <span class="font-bold">Photon</span>
-        <span
-          class="text-xs opacity-50
-        transition-opacity"
-        >
-          {$instance}
-        </span>
-      </div>
+      <span class="opacity-30 text-lg">/</span>
+      <span class="text-sm font-bold">
+        {$instance}
+      </span>
     </a>
   </div>
   <div class="flex flex-row gap-2 py-2 px-3">
-    <Link href="/communities" label="Communities">
-      <Icon src={GlobeAlt} width={16} />
-      <span class="hidden sm:inline ml-1">Explore</span>
-    </Link>
+    <Button href="/communities" label="Communities">
+      <Icon src={GlobeAlt} width={16} slot="icon" />
+      <span class="hidden sm:inline">Explore</span>
+    </Button>
     <Menu let:toggleOpen alignment="bottom-right">
       <Button
-        color={Color.accent}
+        color="primary"
         slot="button"
         label="Create"
         on:click={toggleOpen}
       >
-        <Icon src={Plus} width={18} mini />
+        <Icon src={Plus} width={18} mini slot="icon" />
         <span class="hidden sm:inline">Create</span>
       </Button>
       <li class="text-xs opacity-80 text-left mx-4 my-1 py-1">Create</li>

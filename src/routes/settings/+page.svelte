@@ -57,7 +57,7 @@
       />
       <div class="w-24">
         <Button
-          color={Color.accent}
+          color="primary"
           large
           loading={data.loading}
           disabled={data.loading}

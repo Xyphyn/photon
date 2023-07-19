@@ -108,8 +108,8 @@
       <Button
         disabled={loading.subscribing}
         loading={loading.subscribing}
-        large
-        color={Color.ghost}
+        color="ghost"
+        size="lg"
         on:click={subscribe}
       >
         {community_view.subscribed == 'Subscribed' ||
@@ -120,8 +120,8 @@
       <Button
         disabled={loading.blocking}
         loading={loading.blocking}
-        large
-        color={Color.danger}
+        color="danger"
+        size="lg"
         on:click={block}
       >
         {community_view.blocked ? 'Unblock' : 'Block'}
