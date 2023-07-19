@@ -57,14 +57,21 @@
     buttonColor[color],
     buttonSize[size],
     buttonRoundness[rounded],
-    loading ? (color == 'primary' ? '!bg-transparent !text-inherit' : '') : '',
     'text-sm transition-all disabled:opacity-70 disabled:pointer-events-none',
     $$props.class
   )
 </script>
 
 {#if href}
-  <a {href} {...$$restProps} class={buttonClass}>
+  <a
+    {href}
+    {...$$restProps}
+    class="{buttonClass}  {loading
+      ? color == 'primary'
+        ? '!bg-transparent !text-inherit'
+        : ''
+      : ''}"
+  >
     <div class="flex flex-row items-center justify-center gap-1.5">
       {#if loading}
         <Spinner />
@@ -79,7 +86,11 @@
     disabled={loading}
     {...$$restProps}
     on:click={(e) => dispatch('click', e)}
-    class={buttonClass}
+    class="{buttonClass}  {loading
+      ? color == 'primary'
+        ? '!bg-transparent !text-inherit'
+        : ''
+      : ''}"
     type={submit ? 'submit' : 'button'}
   >
     <div class="flex flex-row items-center justify-center gap-1.5">

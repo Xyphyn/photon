@@ -10,7 +10,7 @@
   <!-- svelte-ignore a11y-missing-attribute -->
   <img
     src={thumbnail_url}
-    class="rounded-md max-h-[16rem] w-full aspect-[16/9] object-cover bg-slate-200 dark:bg-zinc-800"
+    class="rounded-md w-[500px] aspect-video object-cover bg-slate-200 dark:bg-zinc-800"
     width={600}
     height={400}
   />

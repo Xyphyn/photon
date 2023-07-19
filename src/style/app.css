@@ -13,6 +13,11 @@
   }
 }
 
+html,
+body {
+  text-rendering: optimizeLegibility;
+}
+
 .wait * {
   cursor: wait !important;
 }

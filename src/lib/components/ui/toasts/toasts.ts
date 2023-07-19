@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store'
 
 export enum ToastType {
-  'error' = 'bg-red-500 text-black border border-red-600',
+  'error' = 'bg-red-500 text-white border border-red-600',
   'warning' = 'bg-yellow-400 text-black border border-yellow-500',
   'success' = 'bg-green-400 text-black border border-green-500',
   'info' = 'dark:bg-zinc-900 bg-white border border-slate-200 dark:border-zinc-800 shadow-lg',

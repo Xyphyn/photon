@@ -21,19 +21,25 @@
     Plus,
     UserCircle,
   } from 'svelte-hero-icons'
+  import { get } from 'svelte/store'
+
+  let scrollY = 0
 </script>
 
+<svelte:window bind:scrollY />
+
 <nav
-  class="flex flex-row gap-2 items-center sticky top-0 bg-slate-50/80
-  lg:bg-white/80 lg:rounded-b-md
-  dark:bg-zinc-950/80 lg:dark:bg-zinc-900/80 backdrop-blur-3xl max-w-5xl
-  w-full mx-auto px-4 py-2 z-50 lg:border-x lg:border-b transition-all
-  border-slate-200 dark:border-zinc-800 box-border"
+  class="flex flex-row gap-2 items-center sticky top-0 bg-slate-100
+  dark:bg-black {scrollY > 0
+    ? 'bg-slate-100/80 dark:bg-black/80'
+    : ''} backdrop-blur-3xl
+  w-full mx-auto px-4 py-2 z-50 border-b transition-all
+  border-slate-200 dark:border-zinc-900 box-border"
 >
   <div class="flex flex-row gap-2 items-center mr-auto">
     <a href="/" class="flex flex-row items-center gap-2">
       <Logo width={40} />
-      <span class="opacity-30 text-lg">/</span>
+      <span class="opacity-30 text-xl">/</span>
       <span class="text-sm font-bold">
         {$instance}
       </span>
@@ -69,6 +75,11 @@
       slot="button"
       on:click={toggleOpen}
     >
+      {#if $user === undefined}
+        <div class="w-full h-full grid place-items-center">
+          <Spinner width={20} />
+        </div>
+      {/if}
       {#if $user}
         <img
           src={$user.person.avatar ??
@@ -86,11 +97,7 @@
     <li class="text-xs opacity-80 text-left mx-4 my-1 py-1">
       {$user ? $user.person.name : 'Profile'}
     </li>
-    {#if !$user || !$authData}
-      <MenuButton link href="/login">
-        <Icon src={ArrowLeftOnRectangle} mini width={16} /> Log in
-      </MenuButton>
-    {:else}
+    {#if $user && $authData}
       <MenuButton link href="/u/{$user.person.name}@{$authData.instance}">
         <Icon src={UserCircle} mini width={16} /> Profile
       </MenuButton>
@@ -116,6 +123,12 @@
         color={Color.dangerSecondary}
       >
         <Icon src={ArrowRightOnRectangle} mini width={16} />Log out
+      </MenuButton>
+    {/if}
+    {#if !$user || !$authData}
+      <MenuButton link href="/login">
+        <Icon src={ArrowLeftOnRectangle} mini width={16} />
+        Log in
       </MenuButton>
     {/if}
     <hr class="dark:opacity-10 w-[90%] my-2 mx-auto" />

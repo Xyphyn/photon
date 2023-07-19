@@ -66,6 +66,7 @@
     color="elevated"
     size="sm"
     href="/post/{getInstance()}/{post.post.id}"
+    class="px-3"
   >
     <Icon slot="icon" src={ChatBubbleOvalLeft} mini width={16} height={16} />
     <FormattedNumber number={post.counts.comments} />

@@ -47,7 +47,9 @@ export interface UserData {
 }
 
 export const authData = writable<AuthData | undefined>()
-export const user = writable<(PersonView & UserData) | undefined>()
+export const user = writable<(PersonView & UserData) | undefined | null>(
+  undefined
+)
 
 setInterval(async () => {
   // check for unread messages
@@ -77,13 +79,18 @@ authData.subscribe(async (data) => {
   instance.set(
     data?.instance ?? get(userSettings).instance ?? DEFAULT_INSTANCE_URL
   )
-  if (!data?.token) return
-
+  if (!data?.token) {
+    user.set(null)
+    return
+  }
   try {
     const site = await getClient().getSite({
       auth: data.token,
     })
-    if (!site?.my_user) throw Error('Missing user')
+    if (!site?.my_user) {
+      user.set(null)
+      throw Error('Missing user')
+    }
     user.set({ ...site.my_user.local_user_view, unreads: 0 })
     if (typeof localStorage != 'undefined') {
       localStorage.setItem('user', JSON.stringify(data))
@@ -95,6 +102,7 @@ authData.subscribe(async (data) => {
     })
     console.error(error)
     authData.set(undefined)
+    user.set(null)
   }
 })
 

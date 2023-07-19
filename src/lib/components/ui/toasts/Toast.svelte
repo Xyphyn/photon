@@ -39,7 +39,7 @@
       ? ExclamationCircle
       : ExclamationCircle}
   />
-  <div class="flex flex-col p-4 pl-0 mr-auto">
+  <div class="flex flex-col p-4 pl-0 break-words max-w-full">
     {#if toast.title}
       <h1 class="text-base font-bold">{toast.title}</h1>
     {/if}
@@ -49,7 +49,7 @@
     on:click={() => {
       toasts.update((toasts) => toasts.filter((t) => t.id != toast.id))
     }}
-    class="rounded-lg transition-colors hover:bg-slate-200 hover:dark:bg-zinc-800 p-2 m-2"
+    class="rounded-lg ml-auto w-max transition-colors hover:bg-slate-200 hover:dark:bg-zinc-800 p-2 m-2"
   >
     <Icon src={XMark} size="16" mini />
   </button>

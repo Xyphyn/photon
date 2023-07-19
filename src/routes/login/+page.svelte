@@ -12,6 +12,7 @@
     DEFAULT_INSTANCE_URL,
     authData,
     getClient,
+    user,
     validateInstance,
   } from '$lib/lemmy.js'
   import { Color } from '$lib/ui/colors.js'
@@ -38,6 +39,7 @@
       })
 
       if (response?.jwt) {
+        user.set(undefined)
         authData.set({
           instance: data.instance,
           token: response.jwt,
@@ -54,6 +56,7 @@
         content: error as any,
         type: ToastType.error,
       })
+      user.set(null)
     }
     data.loading = false
   }
