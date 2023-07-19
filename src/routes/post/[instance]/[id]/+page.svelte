@@ -28,6 +28,7 @@
   import Spinner from '$lib/components/ui/loader/Spinner.svelte'
   import Card from '$lib/components/ui/Card.svelte'
   import PostLink from '$lib/components/lemmy/post/PostLink.svelte'
+  import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
 
   export let data
 
@@ -78,6 +79,17 @@
     </Card>
   {/if}
 
+  <PostMeta
+    community={postData.community}
+    user={postData.creator}
+    upvotes={postData.counts.upvotes}
+    downvotes={postData.counts.downvotes}
+    deleted={postData.post.deleted}
+    featured={postData.post.featured_community || postData.post.featured_local}
+    nsfw={postData.post.nsfw}
+    published={new Date(postData.post.published)}
+    saved={postData.saved}
+  />
   <h1 class="font-bold text-lg">{post.name}</h1>
   {#if isImage(post.url)}
     <img

@@ -122,11 +122,22 @@
       </MenuButton>
     {/if}
     <hr class="dark:opacity-10 w-[90%] my-2 mx-auto" />
-    <!-- svelte-ignore missing-declaration -->
-    <li class="text-xs px-4 py-1 my-1 opacity-80">v{__VERSION__}</li>
+    <li class="text-xs px-4 py-1 my-1 opacity-80">App</li>
     <MenuButton link href="/settings">
       <Icon src={Cog6Tooth} mini width={16} />
       Settings
     </MenuButton>
+    <hr class="dark:opacity-10 w-[90%] my-2 mx-auto" />
+    <li
+      class="flex flex-row justify-center gap-2 text-xs px-4 py-1 mx-auto my-1"
+    >
+      <!-- svelte-ignore missing-declaration -->
+      <span class="mr-auto">v{__VERSION__}</span>
+      <a href="https://github.com/Xyphyn/photon" class="hover:underline">
+        Code
+      </a>
+      <a href="https://xylight.dev" class="hover:underline">Xylo</a>
+      <a href="https://join-lemmy.org" class="hover:underline">Lemmy</a>
+    </li>
   </Menu>
 </nav>

@@ -19,8 +19,11 @@
 
 <div class="flex flex-row gap-4 w-full">
   <div class="flex flex-col gap-4 max-w-full w-full min-w-0">
-    <h1 class="text-3xl font-bold">Frontpage</h1>
-    <div class="flex flex-col sm:flex-row gap-4 max-w-full w-full">
+    <header><h1 class="text-3xl font-bold">Frontpage</h1></header>
+    <div
+      class="flex flex-col sm:flex-row gap-4 max-w-full w-full"
+      role="radiogroup"
+    >
       <MultiSelect
         options={['Subscribed', 'Local', 'All']}
         disabled={[$authData?.token == undefined]}
@@ -48,13 +51,13 @@
         }}
       />
     </div>
-    <div class="flex flex-col gap-4">
+    <section class="flex flex-col gap-4">
       {#each data.posts.posts as post, index (post.post.id)}
         <div in:fly={{ y: -8, opacity: 0, delay: index < 4 ? index * 100 : 0 }}>
           <Post {post} />
         </div>
       {/each}
-    </div>
+    </section>
     <Button
       on:click={() => {
         $page.url.searchParams.set(
@@ -70,7 +73,7 @@
       Next
     </Button>
   </div>
-  <div class="hidden md:block">
+  <aside class="hidden md:block">
     {#await data.streamed.site}
       <StickyCard>
         <div class="h-64 grid place-items-center">
@@ -84,5 +87,5 @@
         <h1 class="font-bold text-lg">Failed to load</h1>
       </StickyCard>
     {/await}
-  </div>
+  </aside>
 </div>

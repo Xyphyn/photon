@@ -63,10 +63,6 @@
   <title>Login</title>
 </svelte:head>
 
-<!-- <div
-  class="p-4 absolute top-[50%] left-[50%] translate-x-[-50%]
-translate-y-[-50%] w-full flex flex-col items-center justify-center"
-> -->
 <Card class="p-6 max-w-lg w-full mx-auto">
   <form on:submit|preventDefault={logIn} class="flex flex-col gap-4">
     <h1 class="font-bold text-2xl">Log in</h1>
@@ -96,22 +92,32 @@ translate-y-[-50%] w-full flex flex-col items-center justify-center"
         pattern={'(?!-)[A-Za-z0-9-]+([-.]{1}[a-z0-9]+)*.[A-Za-z]{2,6}'}
       />
     </div>
-    <TextInput
-      id="password"
-      bind:value={data.password}
-      label="Password"
-      type="password"
-      required
-    />
-    <TextInput
-      id="totp"
-      bind:value={data.totp}
-      label="2FA Code"
-      placeholder="123456"
-      pattern={'\\d{6}'}
-      minlength={6}
-      maxlength={6}
-    />
+    <div class="flex flex-row gap-2 w-full">
+      <TextInput
+        id="password"
+        bind:value={data.password}
+        label="Password"
+        type="password"
+        required
+        class="w-full"
+      />
+      <TextInput
+        id="totp"
+        bind:value={data.totp}
+        label="2FA Code"
+        placeholder="123456"
+        pattern={'\\d{6}'}
+        minlength={6}
+        maxlength={6}
+        class="w-20"
+        on:input={(e) => {
+          if (!Number(e.detail.data)) {
+            e.preventDefault()
+            data.totp = data.totp.replace(e.detail.data, '')
+          }
+        }}
+      />
+    </div>
     <Button
       loading={data.loading}
       disabled={data.loading}
@@ -119,8 +125,7 @@ translate-y-[-50%] w-full flex flex-col items-center justify-center"
       color={Color.accent}
       submit
     >
-      Submit
+      Log in
     </Button>
   </form>
 </Card>
-<!-- </div> -->
