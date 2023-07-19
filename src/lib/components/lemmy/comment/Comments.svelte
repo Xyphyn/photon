@@ -8,6 +8,7 @@
   import { authData, getClient } from '$lib/lemmy.js'
   import type { Post } from 'lemmy-js-client'
   import { fly } from 'svelte/transition'
+  import { toast, ToastType } from '$lib/components/ui/toasts/toasts.js'
 
   export let nodes: CommentNodeI[]
   export let isParent: boolean
@@ -33,26 +34,31 @@
     )
       return
 
-    loadingChildren = true
+    try {
+      parent.loading = true
 
-    const newComments = await getClient().getComments({
-      auth: $authData?.token,
-      max_depth: 5,
-      parent_id: parent.comment_view.comment.id,
-    })
+      const newComments = await getClient().getComments({
+        auth: $authData?.token,
+        max_depth: 5,
+        parent_id: parent.comment_view.comment.id,
+      })
 
-    if (newComments.comments.length == 0) {
-      loadingChildren = false
-      return
+      if (newComments.comments.length == 0) {
+        loadingChildren = false
+        return
+      }
+
+      // this code sucks, but for some reason it works
+      // lemmy api is quite goofy
+      parent.children = buildCommentsTree(newComments.comments, true).find(
+        (c) => c.comment_view.comment.id == parent.comment_view.comment.id
+      )!.children
+    } catch (error) {
+      toast({
+        content: 'Failed to fetch comments',
+        type: ToastType.error,
+      })
     }
-
-    // this code sucks, but for some reason it works
-    // lemmy api is quite goofy
-    parent.children = buildCommentsTree(newComments.comments, true).find(
-      (c) => c.comment_view.comment.id == parent.comment_view.comment.id
-    )!.children
-
-    loadingChildren = false
   }
 </script>
 
@@ -77,9 +83,12 @@
           class="my-2 min-w-[7rem] w-max h-8 border-l-2 border-slate-200 dark:border-zinc-900 ml-2.5 pl-0.5"
         >
           <Button
-            loading={loadingChildren}
-            disabled={loadingChildren}
-            on:click={() => fetchChildren(node)}
+            loading={node.loading}
+            disabled={node.loading}
+            on:click={() => {
+              node.loading = true
+              fetchChildren(node).then(() => (node.loading = false))
+            }}
           >
             <Icon src={ChevronDown} width={16} mini slot="icon" />
             {node.comment_view.counts.child_count} more

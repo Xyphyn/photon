@@ -129,7 +129,7 @@
   </div>
   {#await data.streamed.comments}
     <div class="h-16 mx-auto grid place-items-center">
-      <Spinner width={36} />
+      <Spinner width={24} />
     </div>
   {:then comments}
     {#if $user}

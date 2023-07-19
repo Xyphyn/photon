@@ -4,6 +4,7 @@ export interface CommentNodeI {
   comment_view: CommentView
   children: Array<CommentNodeI>
   depth: number
+  loading?: boolean
 }
 
 function getCommentParentId(comment?: Comment): number | undefined {

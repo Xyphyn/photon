@@ -10,7 +10,7 @@ import { PUBLIC_PROXY_URL } from '$env/static/public'
 import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
 import { userSettings } from '$lib/settings.js'
 
-export const DEFAULT_INSTANCE_URL = 'lemmy.world'
+export const DEFAULT_INSTANCE_URL = 'lemmy.ml'
 export let instance = writable(DEFAULT_INSTANCE_URL)
 export let corsSupported = writable(true)
 
