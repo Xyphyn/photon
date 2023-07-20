@@ -18,6 +18,7 @@ export async function load(req: any) {
     }),
     community: getClient().getCommunity({
       name: req.params.name,
+      auth: get(authData)?.token
     }),
   }
 }
