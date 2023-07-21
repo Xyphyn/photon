@@ -12,7 +12,10 @@
     dark:border-white dark:text-black hover:text-inherit hover:bg-transparent
     active:bg-black/10 active:dark:bg-white/10`,
 
-    secondary: 'bg-transparent hover:bg-slate-100 hover:dark:bg-zinc-800',
+    secondary:
+      'border border-slate-200 dark:border-zinc-700 bg-transparent hover:bg-slate-100 hover:dark:bg-zinc-800',
+
+    tertiary: 'bg-transparent hover:bg-slate-100 hover:dark:bg-zinc-800',
 
     danger:
       'border border-red-500 bg-red-500 hover:text-red-500 hover:bg-transparent text-white',
@@ -66,11 +69,13 @@
   <a
     {href}
     {...$$restProps}
-    class="{buttonClass}  {loading
+    class="{buttonClass} {loading
       ? color == 'primary'
         ? '!bg-transparent !text-inherit'
         : ''
-      : ''}"
+      : ''} {loading
+      ? ' !border border-slate-300 bg-slate-200 dark:border-zinc-700 dark:bg-zinc-800'
+      : ''} {$$props.disabled ? 'opacity-70 pointer-events-none' : ''}"
   >
     <div class="flex flex-row items-center justify-center gap-1.5">
       {#if loading}
@@ -90,6 +95,8 @@
       ? color == 'primary'
         ? '!bg-transparent !text-inherit'
         : ''
+      : ''}  {loading
+      ? ' !border border-slate-300 bg-slate-200 dark:border-zinc-700 dark:bg-zinc-800'
       : ''}"
     type={submit ? 'submit' : 'button'}
   >
