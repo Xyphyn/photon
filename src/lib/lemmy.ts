@@ -1,16 +1,10 @@
-import {
-  type GetPersonDetailsResponse,
-  LemmyHttp,
-  type LoginResponse,
-  type Person,
-  type PersonView,
-} from 'lemmy-js-client'
+import { LemmyHttp, type PersonView } from 'lemmy-js-client'
 import { get, writable } from 'svelte/store'
-import { PUBLIC_PROXY_URL } from '$env/static/public'
 import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
 import { userSettings } from '$lib/settings.js'
+import { env } from '$env/dynamic/public'
 
-export const DEFAULT_INSTANCE_URL = 'lemmy.ml'
+export const DEFAULT_INSTANCE_URL = env.PUBLIC_INSTANCE_URL || 'lemm.ee'
 export let instance = writable(DEFAULT_INSTANCE_URL)
 export let corsSupported = writable(true)
 
@@ -19,7 +13,7 @@ export function buildBaseUrl(instanceURL?: string) {
     instanceURL = get(instance)!
   }
 
-  return `${PUBLIC_PROXY_URL}/cors/${instanceURL}`
+  return `https://${instanceURL}`
 }
 
 export function getClient(instanceURL?: string): LemmyHttp {
@@ -30,7 +24,7 @@ export function getClient(instanceURL?: string): LemmyHttp {
   return new LemmyHttp(
     get(corsSupported)
       ? `https://${instanceURL}`
-      : `${PUBLIC_PROXY_URL}/cors/${instanceURL}`
+      : `${env.PUBLIC_PROXY_URL}/cors/${instanceURL}`
   )
 }
 

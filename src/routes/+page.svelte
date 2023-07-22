@@ -77,7 +77,7 @@
     {#await data.streamed.site}
       <StickyCard>
         <div class="h-64 grid place-items-center">
-          <Spinner />
+          <Spinner width={32} />
         </div>
       </StickyCard>
     {:then site}
