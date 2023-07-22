@@ -129,20 +129,22 @@
       </div>
     {/if}
     {#if isPrivateMessage(item)}
-      <div class="mt-2 flex flex-col gap-2">
-        <TextArea placeholder="Message" bind:value={reply} rows={3} />
-        <div class="ml-auto w-24">
-          <Button
-            disabled={loading}
-            {loading}
-            on:click={() => replyToMessage(item)}
-            color="primary"
-            size="sm"
-          >
-            Submit
-          </Button>
+      {#if replying}
+        <div class="mt-2 flex flex-col gap-2">
+          <TextArea placeholder="Message" bind:value={reply} rows={3} />
+          <div class="ml-auto w-24">
+            <Button
+              disabled={loading}
+              {loading}
+              on:click={() => replyToMessage(item)}
+              color="primary"
+              size="sm"
+            >
+              Submit
+            </Button>
+          </div>
         </div>
-      </div>
+      {/if}
     {/if}
   {/if}
 </Card>
