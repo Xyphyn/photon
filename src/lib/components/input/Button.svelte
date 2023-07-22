@@ -96,7 +96,7 @@
         ? '!bg-transparent !text-inherit'
         : ''
       : ''}  {loading
-      ? ' !border border-slate-300 bg-slate-200 dark:border-zinc-700 dark:bg-zinc-800'
+      ? ' !border !border-slate-300 !bg-slate-200 dark:!border-zinc-700 dark:!bg-zinc-800'
       : ''}"
     type={submit ? 'submit' : 'button'}
   >
