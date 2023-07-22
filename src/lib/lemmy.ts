@@ -9,8 +9,9 @@ import { get, writable } from 'svelte/store'
 import { PUBLIC_PROXY_URL } from '$env/static/public'
 import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
 import { userSettings } from '$lib/settings.js'
+import { env } from '$env/dynamic/public'
 
-export const DEFAULT_INSTANCE_URL = 'lemmy.ml'
+export const DEFAULT_INSTANCE_URL = env.PUBLIC_INSTANCE_URL || 'lemm.ee'
 export let instance = writable(DEFAULT_INSTANCE_URL)
 export let corsSupported = writable(true)
 
