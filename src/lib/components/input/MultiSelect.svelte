@@ -15,18 +15,17 @@
 </script>
 
 <div
-  class="flex overflow-hidden flex-row items-center w-max rounded-md {separate
-    ? 'gap-2'
-    : ''}"
+  class="flex overflow-hidden flex-row items-center w-max bg-slate-100
+         rounded-md dark:bg-zinc-900 gap-1 p-1 border border-slate-200"
 >
   {#each options as option, index}
     <button
-      class="px-3 py-2 text-sm
-             transition-colors {separate ? 'rounded-full' : ''}
+      class="px-3 py-2 text-sm rounded-md
+             transition-colors
             {selected == option
         ? 'bg-black text-white dark:bg-white dark:text-black\
                 hover:bg-zinc-900 hover:dark:bg-zinc-300'
-        : 'bg-slate-100 dark:bg-zinc-900 hover:bg-slate-200 hover:dark:bg-zinc-800'}
+        : '  hover:bg-slate-200 hover:dark:bg-zinc-800'}
         {clazz}
         disabled:opacity-60 disabled:pointer-events-none"
       on:click={() => (selected = option)}
