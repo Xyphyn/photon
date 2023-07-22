@@ -4,7 +4,7 @@ import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
 import { userSettings } from '$lib/settings.js'
 import { env } from '$env/dynamic/public'
 
-export const DEFAULT_INSTANCE_URL = env.PUBLIC_INSTANCE_URL || 'lemm.ee'
+export const DEFAULT_INSTANCE_URL = env.PUBLIC_INSTANCE_URL || 'lemmy.world'
 export let instance = writable(DEFAULT_INSTANCE_URL)
 export let corsSupported = writable(true)
 
