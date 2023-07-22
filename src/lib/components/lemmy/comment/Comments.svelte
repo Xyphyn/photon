@@ -80,11 +80,13 @@
       {/if}
       {#if node.comment_view.counts.child_count > 0 && node.children.length == 0}
         <div
-          class="my-2 min-w-[7rem] w-max h-8 border-l-2 border-slate-200 dark:border-zinc-900 ml-2.5 pl-0.5"
+          class="my-2 min-w-[7rem] w-max h-8 border-l-2 border-slate-200 dark:border-zinc-900 ml-2.5 pl-1"
         >
           <Button
             loading={node.loading}
             disabled={node.loading}
+            size="sm"
+            color="tertiary"
             on:click={() => {
               node.loading = true
               fetchChildren(node).then(() => (node.loading = false))

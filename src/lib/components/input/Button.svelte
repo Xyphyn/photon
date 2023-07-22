@@ -15,7 +15,8 @@
     secondary:
       'border border-slate-200 dark:border-zinc-700 bg-transparent hover:bg-slate-100 hover:dark:bg-zinc-800',
 
-    tertiary: 'bg-transparent hover:bg-slate-100 hover:dark:bg-zinc-800',
+    tertiary:
+      'border border-transparent bg-transparent hover:bg-slate-100 hover:dark:bg-zinc-800',
 
     danger:
       'border border-red-500 bg-red-500 hover:text-red-500 hover:bg-transparent text-white',
@@ -60,7 +61,7 @@
     buttonColor[color],
     buttonSize[size],
     buttonRoundness[rounded],
-    'text-sm transition-all disabled:opacity-70 disabled:pointer-events-none',
+    'text-sm transition-all disabled:!opacity-70 disabled:!pointer-events-none',
     $$props.class
   )
 </script>
@@ -102,7 +103,9 @@
   >
     <div class="flex flex-row items-center justify-center gap-1.5">
       {#if loading}
-        <Spinner width={20} />
+        <Spinner
+          width={size == 'lg' ? 20 : size == 'md' ? 18 : size == 'sm' ? 16 : 16}
+        />
       {:else}
         <slot name="icon" />
       {/if}
