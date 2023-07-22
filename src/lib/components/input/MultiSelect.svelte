@@ -16,7 +16,7 @@
 
 <div
   class="flex overflow-hidden flex-row items-center w-max bg-slate-100
-         rounded-md dark:bg-zinc-900 gap-1 p-1 border border-slate-200"
+         rounded-md dark:bg-zinc-900 gap-1 p-1 border border-slate-200 dark:border-zinc-800"
 >
   {#each options as option, index}
     <button
