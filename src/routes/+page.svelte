@@ -9,6 +9,7 @@
   import { fly, scale } from 'svelte/transition'
   import Spinner from '$lib/components/ui/loader/Spinner.svelte'
   import { authData } from '$lib/lemmy.js'
+  import { userSettings } from '$lib/settings.js'
 
   export let data
 </script>
@@ -27,7 +28,8 @@
       <MultiSelect
         options={['Subscribed', 'Local', 'All']}
         disabled={[$authData?.token == undefined]}
-        selected={$page.url.searchParams.get('type') ?? 'Local'}
+        selected={$page.url.searchParams.get('type') ??
+          $userSettings.defaultSort.feed}
         on:select={(e) => {
           const url = $page.url
           url.searchParams.set('type', e.detail)
@@ -38,9 +40,10 @@
         }}
       />
       <MultiSelect
-        options={['Active', 'Hot', 'TopDay', 'New']}
+        options={['Active', 'Hot', 'TopAll', 'New']}
         optionNames={['Active', 'Hot', 'Top', 'New']}
-        selected={$page.url.searchParams.get('sort') ?? 'Active'}
+        selected={$page.url.searchParams.get('sort') ??
+          $userSettings.defaultSort.sort}
         on:select={(e) => {
           const url = $page.url
           url.searchParams.set('sort', e.detail)

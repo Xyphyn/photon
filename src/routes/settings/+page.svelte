@@ -8,6 +8,7 @@
   import Button from '$lib/components/input/Button.svelte'
   import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
   import Setting from './Setting.svelte'
+  import MultiSelect from '$lib/components/input/MultiSelect.svelte'
 
   let data = {
     newInstance: $instance,
@@ -67,6 +68,27 @@
         >
           Change
         </Button>
+      </div>
+    </div>
+  </Setting>
+  <Setting>
+    <span slot="title">Default sort</span>
+    <span slot="description">The default sort to use for feeds.</span>
+    <div class="flex flex-wrap flex-row gap-4">
+      <div>
+        <span class="block my-1 font-bold">Feed</span>
+        <MultiSelect
+          options={['Subscribed', 'Local', 'All']}
+          bind:selected={$userSettings.defaultSort.feed}
+        />
+      </div>
+      <div>
+        <span class="block my-1 font-bold">Sort</span>
+        <MultiSelect
+          options={['Active', 'Hot', 'TopAll', 'New']}
+          optionNames={['Active', 'Hot', 'Top', 'New']}
+          bind:selected={$userSettings.defaultSort.sort}
+        />
       </div>
     </div>
   </Setting>

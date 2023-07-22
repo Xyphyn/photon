@@ -9,6 +9,7 @@
   import Button from '$lib/components/input/Button.svelte'
   import { Color } from '$lib/ui/colors'
   import { fly } from 'svelte/transition'
+  import { userSettings } from '$lib/settings.js'
 
   export let data
 </script>
@@ -50,7 +51,8 @@
       <MultiSelect
         options={['Active', 'Hot', 'TopAll', 'New']}
         optionNames={['Active', 'Hot', 'Top', 'New']}
-        selected={$page.url.searchParams.get('sort') ?? 'Active'}
+        selected={$page.url.searchParams.get('sort') ??
+          $userSettings.defaultSort.sort}
         on:select={(e) => {
           const url = $page.url
           url.searchParams.set('sort', e.detail)

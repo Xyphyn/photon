@@ -7,6 +7,10 @@ interface Settings {
   instance?: string
   revertColors: boolean
   showInstance: boolean
+  defaultSort: {
+    sort: 'Hot' | 'TopAll' | 'Active' | 'New'
+    feed: 'All' | 'Subscribed' | 'Local'
+  }
 }
 
 const defaultSettings: Settings = {
@@ -15,6 +19,10 @@ const defaultSettings: Settings = {
   markReadPosts: true,
   revertColors: false,
   showInstance: false,
+  defaultSort: {
+    sort: 'Active',
+    feed: 'Local',
+  },
 }
 
 export const userSettings = writable(defaultSettings)
