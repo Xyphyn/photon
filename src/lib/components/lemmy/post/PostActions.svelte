@@ -59,7 +59,7 @@
   }
 </script>
 
-<div class="flex flex-row gap-2 items-center">
+<div class="flex flex-row gap-2 items-center text-slate-700 dark:text-zinc-300">
   <PostVote post={post.post} vote={post.my_vote} score={post.counts.score} />
 
   <Button

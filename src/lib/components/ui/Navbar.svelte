@@ -46,7 +46,11 @@
     </a>
   </div>
   <div class="flex flex-row gap-2 py-2 px-3">
-    <Button href="/communities" label="Communities">
+    <Button
+      href="/communities"
+      label="Communities"
+      class="text-slate-700 dark:text-zinc-300 hover:text-inherit hover:bg-slate-200 max-sm:!p-2 h-max"
+    >
       <Icon src={GlobeAlt} width={16} slot="icon" />
       <span class="hidden sm:inline">Explore</span>
     </Button>
@@ -56,6 +60,7 @@
         slot="button"
         label="Create"
         on:click={toggleOpen}
+        class="max-sm:!p-2 h-max"
       >
         <Icon src={Plus} width={18} mini slot="icon" />
         <span class="hidden sm:inline">Create</span>
