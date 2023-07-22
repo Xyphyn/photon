@@ -5,7 +5,6 @@
   export let disabled: boolean[] = []
   export let optionNames: string[] = []
   export let selected: T
-  export let separate = false
   let clazz = ''
   export { clazz as class }
   const dispatcher = createEventDispatcher<{ select: T }>()
