@@ -14,13 +14,13 @@
 
 <style lang="postcss">
   .markdown :global(h1) {
-    @apply text-3xl font-bold my-2;
+    @apply text-3xl font-bold mb-1 mt-3;
   }
   .markdown :global(h2) {
-    @apply text-2xl font-bold my-2;
+    @apply text-2xl font-bold mb-1 mt-3;
   }
   .markdown :global(h3) {
-    @apply text-xl font-bold my-2;
+    @apply text-xl font-bold mb-1 mt-3;
   }
 
   .markdown :global(hr) {

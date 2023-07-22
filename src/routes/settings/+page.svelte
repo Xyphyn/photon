@@ -7,6 +7,7 @@
   import { Color } from '$lib/ui/colors.js'
   import Button from '$lib/components/input/Button.svelte'
   import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
+  import Setting from './Setting.svelte'
 
   let data = {
     newInstance: $instance,
@@ -46,9 +47,9 @@
 <div class="flex flex-col">
   <h1 class="text-3xl font-bold">Settings</h1>
   <h2 class="uppercase font-bold opacity-80 text-sm mt-4">General</h2>
-  <Card class="flex flex-col gap-3 p-6 text-sm my-2">
-    <h1 class="font-bold">Instance</h1>
-    <p>Changing this will log you out.</p>
+  <Setting>
+    <span slot="title">Instance</span>
+    <span slot="description">Changing this will log you out.</span>
     <div class="flex gap-2">
       <TextInput
         bind:value={data.newInstance}
@@ -58,38 +59,37 @@
       <div class="w-24">
         <Button
           color="primary"
-          large
           loading={data.loading}
           disabled={data.loading}
           on:click={changeInstance}
+          size="lg"
+          class="h-full"
         >
           Change
         </Button>
       </div>
     </div>
-  </Card>
+  </Setting>
   <h2 class="uppercase font-bold opacity-80 text-sm mt-4">UI</h2>
-  <Card class="flex flex-col gap-3 p-6 text-sm my-2">
-    <h1 class="font-bold">Mark read posts</h1>
-    <p>Fade the title of posts you've already read.</p>
+  <Setting>
+    <span slot="title">Mark read posts</span>
+    <span slot="description">Fade the title of posts you've already read.</span>
     <Switch bind:enabled={$userSettings.markReadPosts} />
-  </Card>
-  <Card class="flex flex-col gap-3 p-6 text-sm my-2">
-    <h1 class="font-bold">Revert vote colors</h1>
-    <p>Make upvotes orange and downvotes blue, like Reddit used to do.</p>
+  </Setting>
+  <Setting>
+    <span slot="title">Revert vote colors</span>
+    <span slot="description">
+      Make upvotes orange and downvotes blue, like Reddit used to do.
+    </span>
     <Switch bind:enabled={$userSettings.revertColors} />
-  </Card>
-  <Card class="flex flex-col gap-3 p-6 text-sm my-2">
-    <h1 class="font-bold">New comment design</h1>
-    <Switch bind:enabled={$userSettings.newComments} />
-  </Card>
-  <Card class="flex flex-col gap-3 p-6 text-sm my-2">
-    <h1 class="font-bold">Show user instances</h1>
-    <p>Show user's instances.</p>
+  </Setting>
+  <Setting>
+    <span slot="title">Show user instances</span>
+    <span slot="description">Show user's instances.</span>
     <span class="flex gap-0 px-3 py-2 bg-slate-100 dark:bg-zinc-800 rounded-md">
       Xylight
       <span class="opacity-50">@example.com</span>
     </span>
     <Switch bind:enabled={$userSettings.showInstance} />
-  </Card>
+  </Setting>
 </div>
