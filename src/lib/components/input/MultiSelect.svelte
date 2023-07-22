@@ -19,7 +19,7 @@
 >
   {#each options as option, index}
     <button
-      class="px-3 py-2 text-sm rounded-md
+      class="px-3 py-1.5 text-sm rounded-md
              transition-colors
             {selected == option
         ? 'bg-black text-white dark:bg-white dark:text-black\
