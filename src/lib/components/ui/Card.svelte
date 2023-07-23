@@ -17,7 +17,7 @@
 
 <div
   class="bg-white break-words
-    p-1 {getColor(cardColor)} rounded-md {clazz}"
+    {getColor(cardColor)} rounded-md {clazz}"
 >
   <slot />
 </div>

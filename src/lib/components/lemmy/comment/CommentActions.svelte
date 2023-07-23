@@ -73,16 +73,16 @@
     </Button>
     <span class="text-xs opacity-80 py-1 my-1 px-4">Comment actions</span>
     {#if $authData?.token}
-      <MenuButton on:click={save}>
-        <Icon src={comment.saved ? BookmarkSlash : Bookmark} mini size="16" />
-        <span>{comment.saved ? 'Unsave' : 'Save'}</span>
-      </MenuButton>
       {#if comment.creator.id == $user?.person.id}
         <MenuButton on:click={() => dispatcher('edit', comment)}>
           <Icon src={PencilSquare} mini size="16" />
           <span>Edit</span>
         </MenuButton>
       {/if}
+      <MenuButton on:click={save}>
+        <Icon src={comment.saved ? BookmarkSlash : Bookmark} mini size="16" />
+        <span>{comment.saved ? 'Unsave' : 'Save'}</span>
+      </MenuButton>
     {/if}
   </Menu>
 </div>

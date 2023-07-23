@@ -1,5 +1,13 @@
 <script lang="ts">
-  import { Icon, Minus, Plus } from 'svelte-hero-icons'
+  import {
+    ArrowUp,
+    Bookmark,
+    Icon,
+    Minus,
+    Pencil,
+    Plus,
+    Trash,
+  } from 'svelte-hero-icons'
   import type { CommentNodeI } from './comments'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import CommentForm from './CommentForm.svelte'
@@ -36,7 +44,15 @@
           <span class="text-sky-500">OP</span>
         {/if}
       </span>
-      <span class="opacity-60 flex flex-row gap-1">
+      <span class="text-slate-600 dark:text-zinc-400 flex flex-row gap-1">
+        {#if !open}
+          <div
+            class="flex items-center gap-0.5 mr-1 text-slate-800 dark:text-zinc-200"
+          >
+            <Icon src={ArrowUp} mini size="14" />
+            {node.comment_view.counts.score}
+          </div>
+        {/if}
         <RelativeDate date={new Date(node.comment_view.comment.published)} />
         <span>•</span>
         <span>
@@ -47,6 +63,17 @@
               100
           ) || 0}%
         </span>
+      </span>
+      <span class="text-slate-600 dark:text-zinc-400 flex flex-row gap-2 ml-1">
+        {#if node.comment_view.comment.updated}
+          <Icon src={Pencil} solid size="12" />
+        {/if}
+        {#if node.comment_view.comment.deleted || node.comment_view.comment.removed}
+          <Icon src={Trash} solid size="12" />
+        {/if}
+        {#if node.comment_view.saved}
+          <Icon src={Bookmark} solid size="12" />
+        {/if}
       </span>
       <span
         class="ml-auto translate-x-1 opacity-0
