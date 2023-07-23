@@ -138,16 +138,15 @@
       Settings
     </MenuButton>
     <hr class="dark:opacity-10 w-[90%] my-2 mx-auto" />
-    <li
-      class="flex flex-row justify-center gap-2 text-xs px-4 py-1 mx-auto my-1"
-    >
-      <!-- svelte-ignore missing-declaration -->
-      <span class="mr-auto">v{__VERSION__}</span>
-      <a href="https://github.com/Xyphyn/photon" class="hover:underline">
-        Code
-      </a>
-      <a href="https://xylight.dev" class="hover:underline">Xylo</a>
-      <a href="https://join-lemmy.org" class="hover:underline">Lemmy</a>
+    <li class="flex flex-col px-4 py-1 mx-auto my-1 text-xs">
+      <div class="flex flex-row justify-center gap-2">
+        <!-- svelte-ignore missing-declaration -->
+        <span class="mr-auto">v{__VERSION__}</span>
+        <a href="https://github.com/Xyphyn/photon" class="hover:underline">
+          GitHub
+        </a>
+      </div>
+      <span class="opacity-70 ml-auto w-max">Made with ❤️ by Xylight</span>
     </li>
   </Menu>
 </nav>
