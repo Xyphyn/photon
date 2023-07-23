@@ -7,6 +7,8 @@
   import UserLink from '$lib/components/user/UserLink.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import CommentActions from '$lib/components/lemmy/comment/CommentActions.svelte'
+  import { createEventDispatcher } from 'svelte'
+  import type { CommentView } from 'lemmy-js-client'
 
   export let node: CommentNodeI
   export let postId: number
@@ -14,6 +16,8 @@
 
   export let open = true
   export let replying = false
+
+  const dispatcher = createEventDispatcher<{ edit: CommentView }>()
 </script>
 
 <li
@@ -68,7 +72,13 @@
         <Markdown source={node.comment_view.comment.content} />
       </div>
       <div class="flex flex-row gap-2 items-center h-[26px]">
-        <CommentActions comment={node.comment_view} bind:replying />
+        <CommentActions
+          comment={node.comment_view}
+          bind:replying
+          on:edit={(e) => {
+            dispatcher('edit', e.detail)
+          }}
+        />
       </div>
     </div>
     {#if replying}
@@ -88,6 +98,7 @@
             ]
             replying = false
           }}
+          on:edit={(e) => dispatcher('edit', e.detail)}
         />
       </div>
     {/if}

@@ -6,9 +6,11 @@
   import Button from '$lib/components/input/Button.svelte'
   import { ChevronDown, Icon } from 'svelte-hero-icons'
   import { authData, getClient } from '$lib/lemmy.js'
-  import type { Post } from 'lemmy-js-client'
+  import type { CommentView, Post } from 'lemmy-js-client'
   import { fly } from 'svelte/transition'
   import { toast, ToastType } from '$lib/components/ui/toasts/toasts.js'
+  import Modal from '$lib/components/ui/modal/Modal.svelte'
+  import TextArea from '$lib/components/input/TextArea.svelte'
 
   export let nodes: CommentNodeI[]
   export let isParent: boolean
@@ -60,7 +62,49 @@
       })
     }
   }
+
+  let editModal = false
+  let comment: CommentView | undefined
+
+  let newComment = ''
 </script>
+
+{#if editModal}
+  <Modal
+    bind:open={editModal}
+    action="Save"
+    on:action={async () => {
+      if (!$authData || newComment.length <= 0 || !comment) return
+
+      try {
+        await getClient().editComment({
+          auth: $authData.token,
+          comment_id: comment.comment.id,
+          content: newComment,
+        })
+
+        comment.comment.content = newComment
+
+        editModal = false
+
+        toast({
+          content:
+            'Successfully edited comment. You may need to refresh to see changes.',
+          type: ToastType.success,
+        })
+      } catch (err) {
+        toast({
+          // @ts-ignore i hate this
+          content: err,
+          type: ToastType.error,
+        })
+      }
+    }}
+  >
+    <span slot="title">Edit comment</span>
+    <TextArea bind:value={newComment} />
+  </Modal>
+{/if}
 
 <ul
   in:fly={{ opacity: 0, y: -4 }}
@@ -74,6 +118,11 @@
       {node}
       open={true}
       op={post.creator_id == node.comment_view.creator.id}
+      on:edit={(e) => {
+        editModal = true
+        comment = e.detail
+        newComment = comment.comment.content
+      }}
     >
       {#if node.children?.length > 0}
         <svelte:self {post} nodes={node.children} isParent={false} />

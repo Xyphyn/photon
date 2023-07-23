@@ -16,7 +16,7 @@
   <div
     class="overflow-hidden fixed top-0 left-0 w-screen h-screen z-[100]
 flex flex-col items-center justify-center bg-black/50 backdrop-blur-sm"
-    transition:fade|local={{ duration: 200 }}
+    transition:fade={{ duration: 200 }}
     on:click={() => (open = false)}
   >
     <!-- svelte-ignore a11y-click-events-have-key-events -->
