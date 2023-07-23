@@ -13,7 +13,7 @@ export function buildBaseUrl(instanceURL?: string) {
     instanceURL = get(instance)!
   }
 
-  return `https://${instanceURL}`
+  return `${env.PUBLIC_PROXY_URL!}/cors/${instanceURL}`
 }
 
 export function getClient(instanceURL?: string): LemmyHttp {
