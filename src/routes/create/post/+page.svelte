@@ -37,7 +37,7 @@
     formData.append('images[]', image)
 
     const response = await fetch(
-      `${buildBaseUrl(getInstance())}/pictrs/image?${new URLSearchParams({
+      `${window.location.origin}/cors/${getInstance()}/pictrs/image?${new URLSearchParams({
         auth: $authData.token,
       })}`,
       {
