@@ -110,7 +110,7 @@
   in:fly={{ opacity: 0, y: -4 }}
   class={isParent
     ? ''
-    : 'ml-2.5 mt-2 pl-2.5 border-l-2 border-slate-200 dark:border-zinc-900'}
+    : 'mt-2 pl-3.5 border-l-2 border-slate-200 dark:border-zinc-900'}
 >
   {#each nodes as node (node.comment_view.comment.id)}
     <Comment
