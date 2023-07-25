@@ -11,6 +11,7 @@
     EllipsisHorizontal,
     Icon,
     Newspaper,
+    PencilSquare,
     Square2Stack,
     Trash,
     UserCircle,
@@ -22,6 +23,10 @@
   import { page } from '$app/stores'
   import { user, authData } from '$lib/lemmy.js'
   import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
+  import { isMutable } from '$lib/components/lemmy/post/helpers.js'
+  import { createEventDispatcher } from 'svelte'
+  import Modal from '$lib/components/ui/modal/Modal.svelte'
+  import PostForm from '$lib/components/lemmy/post/PostForm.svelte'
 
   export let post: PostView
 
@@ -57,7 +62,24 @@
       })
     }
   }
+
+  const dispatcher = createEventDispatcher<{ edit: PostView }>()
+
+  let editing = false
 </script>
+
+{#if editing}
+  <Modal bind:open={editing}>
+    <PostForm
+      edit
+      editingPost={post.post}
+      on:submit={(e) => {
+        editing = false
+        dispatcher('edit', e.detail)
+      }}
+    />
+  </Modal>
+{/if}
 
 <div class="flex flex-row gap-2 items-center">
   <PostVote post={post.post} vote={post.my_vote} score={post.counts.score} />
@@ -99,6 +121,12 @@
     </MenuButton>
     <hr class="w-[90%] mx-auto opacity-100 dark:opacity-10 my-2" />
     <li class="mx-4 text-xs opacity-80 text-left my-1 py-1">Actions</li>
+    {#if $user && $user.person.id == post.creator.id}
+      <MenuButton on:click={() => (editing = true)}>
+        <Icon src={PencilSquare} width={16} mini />
+        Edit
+      </MenuButton>
+    {/if}
     <MenuButton
       on:click={() => {
         navigator.clipboard.writeText(
@@ -115,7 +143,7 @@
         {post.saved ? 'Unsave' : 'Save'}
       </MenuButton>
     {/if}
-    {#if $user?.person.id == post.post.creator_id}
+    {#if $user && isMutable(post, $user)}
       <MenuButton on:click={deletePost} color={Color.dangerSecondary}>
         <Icon src={Trash} width={16} mini />
         Delete

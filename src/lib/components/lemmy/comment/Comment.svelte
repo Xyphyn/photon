@@ -1,5 +1,13 @@
 <script lang="ts">
-  import { Icon, Minus, Plus } from 'svelte-hero-icons'
+  import {
+    ArrowUp,
+    Bookmark,
+    Icon,
+    Minus,
+    Pencil,
+    Plus,
+    Trash,
+  } from 'svelte-hero-icons'
   import type { CommentNodeI } from './comments'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import CommentForm from './CommentForm.svelte'
@@ -7,6 +15,12 @@
   import UserLink from '$lib/components/user/UserLink.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import CommentActions from '$lib/components/lemmy/comment/CommentActions.svelte'
+  import { createEventDispatcher } from 'svelte'
+  import type { CommentView } from 'lemmy-js-client'
+  import Modal from '$lib/components/ui/modal/Modal.svelte'
+  import { authData, getClient } from '$lib/lemmy.js'
+  import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
+  import TextArea from '$lib/components/input/TextArea.svelte'
 
   export let node: CommentNodeI
   export let postId: number
@@ -14,7 +28,47 @@
 
   export let open = true
   export let replying = false
+
+  let editing = false
+  let newComment = node.comment_view.comment.content
 </script>
+
+{#if editing}
+  <Modal
+    bind:open={editing}
+    action="Save"
+    on:action={async () => {
+      if (!$authData || newComment.length <= 0) return
+
+      try {
+        await getClient().editComment({
+          auth: $authData.token,
+          comment_id: node.comment_view.comment.id,
+          content: newComment,
+        })
+
+        node.comment_view.comment.content = newComment
+
+        editing = false
+
+        toast({
+          content:
+            'Successfully edited comment. You may need to refresh to see changes.',
+          type: ToastType.success,
+        })
+      } catch (err) {
+        toast({
+          // @ts-ignore i hate this
+          content: err,
+          type: ToastType.error,
+        })
+      }
+    }}
+  >
+    <span slot="title">Edit comment</span>
+    <TextArea bind:value={newComment} />
+  </Modal>
+{/if}
 
 <li
   class="py-2 {node.depth == 0
@@ -32,7 +86,15 @@
           <span class="text-sky-500">OP</span>
         {/if}
       </span>
-      <span class="opacity-60 flex flex-row gap-1">
+      <span class="text-slate-600 dark:text-zinc-400 flex flex-row gap-1">
+        {#if !open}
+          <div
+            class="flex items-center gap-0.5 mr-1 text-slate-800 dark:text-zinc-200"
+          >
+            <Icon src={ArrowUp} mini size="14" />
+            {node.comment_view.counts.score}
+          </div>
+        {/if}
         <RelativeDate date={new Date(node.comment_view.comment.published)} />
         <span>•</span>
         <span>
@@ -43,6 +105,17 @@
               100
           ) || 0}%
         </span>
+      </span>
+      <span class="text-slate-600 dark:text-zinc-400 flex flex-row gap-2 ml-1">
+        {#if node.comment_view.comment.updated}
+          <Icon src={Pencil} solid size="12" title="Edited" />
+        {/if}
+        {#if node.comment_view.comment.deleted || node.comment_view.comment.removed}
+          <Icon src={Trash} solid size="12" title="Deleted" />
+        {/if}
+        {#if node.comment_view.saved}
+          <Icon src={Bookmark} solid size="12" title="Saved" />
+        {/if}
       </span>
       <span
         class="ml-auto translate-x-1 opacity-0
@@ -68,7 +141,11 @@
         <Markdown source={node.comment_view.comment.content} />
       </div>
       <div class="flex flex-row gap-2 items-center h-[26px]">
-        <CommentActions comment={node.comment_view} bind:replying />
+        <CommentActions
+          comment={node.comment_view}
+          bind:replying
+          on:edit={() => (editing = true)}
+        />
       </div>
     </div>
     {#if replying}

@@ -6,9 +6,11 @@
   import Button from '$lib/components/input/Button.svelte'
   import { ChevronDown, Icon } from 'svelte-hero-icons'
   import { authData, getClient } from '$lib/lemmy.js'
-  import type { Post } from 'lemmy-js-client'
+  import type { CommentView, Post } from 'lemmy-js-client'
   import { fly } from 'svelte/transition'
   import { toast, ToastType } from '$lib/components/ui/toasts/toasts.js'
+  import Modal from '$lib/components/ui/modal/Modal.svelte'
+  import TextArea from '$lib/components/input/TextArea.svelte'
 
   export let nodes: CommentNodeI[]
   export let isParent: boolean
@@ -80,7 +82,7 @@
       {/if}
       {#if node.comment_view.counts.child_count > 0 && node.children.length == 0}
         <div
-          class="my-2 min-w-[7rem] w-max h-8 border-l-2 border-slate-200 dark:border-zinc-900 ml-2.5 pl-1"
+          class="my-2 min-w-[7rem] w-max h-8 border-l-2 border-slate-200 dark:border-zinc-900 pl-2"
         >
           <Button
             loading={node.loading}

@@ -78,7 +78,7 @@
           {itemsClass}"
     >
       {#if open}
-        <div on:click={toggleOpen}>
+        <div on:click={toggleOpen} class="flex flex-col gap-0">
           <slot {toggleOpen} />
         </div>
       {/if}

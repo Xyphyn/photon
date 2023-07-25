@@ -4,7 +4,7 @@ import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
 import { userSettings } from '$lib/settings.js'
 import { env } from '$env/dynamic/public'
 
-export const DEFAULT_INSTANCE_URL = env.PUBLIC_INSTANCE_URL || 'lemmy.world'
+export const DEFAULT_INSTANCE_URL = env.PUBLIC_INSTANCE_URL || 'lemmy.ml'
 export let instance = writable(DEFAULT_INSTANCE_URL)
 export let corsSupported = writable(true)
 
@@ -110,4 +110,35 @@ export async function validateInstance(instance: string): Promise<boolean> {
   } catch (err) {
     return false
   }
+}
+
+export async function uploadImage(
+  image: File | null | undefined
+): Promise<string | undefined> {
+  if (!image || !get(authData)) return
+
+  const formData = new FormData()
+  formData.append('images[]', image)
+
+  const response = await fetch(
+    `${
+      window.location.origin
+    }/cors/${getInstance()}/pictrs/image?${new URLSearchParams({
+      auth: get(authData)!.token,
+    })}`,
+    {
+      method: 'POST',
+      body: formData,
+    }
+  )
+
+  const json = await response.json()
+
+  if (json.msg == 'ok') {
+    return `https://${get(authData)?.instance}/pictrs/image/${
+      json.files?.[0]?.file
+    }`
+  }
+
+  throw new Error(`error uploading image: ${response.status}`)
 }

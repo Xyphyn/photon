@@ -29,6 +29,7 @@
   import Card from '$lib/components/ui/Card.svelte'
   import PostLink from '$lib/components/lemmy/post/PostLink.svelte'
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
+  import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
 
   export let data
 
@@ -118,7 +119,19 @@
     </p>
   {/if}
   <div class="w-full relative">
-    <PostActions post={data.post.post_view} />
+    <PostActions
+      post={data.post.post_view}
+      on:edit={(e) => {
+        post.name = e.detail.post.name
+        post.body = e.detail.post.body
+        post.url = e.detail.post.url
+
+        toast({
+          content: 'The post was edited successfully.',
+          type: ToastType.success,
+        })
+      }}
+    />
   </div>
 </div>
 <div class="mt-4 flex flex-col gap-2">
