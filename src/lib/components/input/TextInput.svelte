@@ -38,6 +38,7 @@
     bind:value
     on:keydown={(e) => dispatcher('keydown', e)}
     on:input={(e) => dispatcher('input', e)}
+    on:change={(e) => dispatcher('change', e)}
     {...$$restProps}
     class={className}
     {required}

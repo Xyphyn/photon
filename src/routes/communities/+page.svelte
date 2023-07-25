@@ -37,7 +37,14 @@
     }}
   />
   <div class="flex flex-col sm:flex-row gap-2 sm:ml-auto items-center">
-    <TextInput bind:value={search} />
+    <TextInput bind:value={search}
+      on:change={() => {
+        $page.url.searchParams.set('q', search)
+        goto($page.url.toString(), {
+          invalidateAll: true,
+        })
+      }}
+    />
     <Button
       on:click={() => {
         $page.url.searchParams.set('q', search)
