@@ -7,7 +7,7 @@
       case 'default':
         return 'border border-slate-200 dark:border-zinc-800 dark:bg-zinc-900'
       case 'warning':
-        return 'border border-yellow-300 bg-yellow-50'
+        return 'border border-yellow-300 dark:bg-yellow-800 dark:border-yellow-600 bg-yellow-50'
     }
   }
 
