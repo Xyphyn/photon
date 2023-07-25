@@ -111,3 +111,34 @@ export async function validateInstance(instance: string): Promise<boolean> {
     return false
   }
 }
+
+export async function uploadImage(
+  image: File | null | undefined
+): Promise<string | undefined> {
+  if (!image || !get(authData)) return
+
+  const formData = new FormData()
+  formData.append('images[]', image)
+
+  const response = await fetch(
+    `${
+      window.location.origin
+    }/cors/${getInstance()}/pictrs/image?${new URLSearchParams({
+      auth: get(authData)!.token,
+    })}`,
+    {
+      method: 'POST',
+      body: formData,
+    }
+  )
+
+  const json = await response.json()
+
+  if (json.msg == 'ok') {
+    return `https://${get(authData)?.instance}/pictrs/image/${
+      json.files?.[0]?.file
+    }`
+  }
+
+  throw new Error(`error uploading image: ${response.status}`)
+}

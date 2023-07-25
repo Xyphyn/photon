@@ -118,7 +118,14 @@
     </p>
   {/if}
   <div class="w-full relative">
-    <PostActions post={data.post.post_view} />
+    <PostActions
+      post={data.post.post_view}
+      on:edit={(e) => {
+        post.name = e.detail.post.name
+        post.body = e.detail.post.body
+        post.url = e.detail.post.url
+      }}
+    />
   </div>
 </div>
 <div class="mt-4 flex flex-col gap-2">

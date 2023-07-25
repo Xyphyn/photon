@@ -7,6 +7,8 @@
   import { userSettings } from '$lib/settings.js'
   import PostLink from '$lib/components/lemmy/post/PostLink.svelte'
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
+  import Modal from '$lib/components/ui/modal/Modal.svelte'
+  import PostForm from '$lib/components/lemmy/post/PostForm.svelte'
 
   export let post: PostView
 </script>
@@ -80,5 +82,12 @@
       {post.post.body}
     </p>
   {/if}
-  <PostActions {post} />
+  <PostActions
+    {post}
+    on:edit={(e) => {
+      post.post.name = e.detail.post.name
+      post.post.body = e.detail.post.body
+      post.post.url = e.detail.post.url
+    }}
+  />
 </Card>
