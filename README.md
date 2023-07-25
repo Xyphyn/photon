@@ -8,7 +8,7 @@ An alternative web client for Lemmy with the UI of Xylo
 
 ```sh
 # Use the env var PUBLIC_INSTANCE_URL to set the default instance URL.
-docker run -p 8080:3000 -e PUBLIC_INSTANCE_URL=example.com ghcr.io/xyphyn/photon:v0.2.1-hotfix
+docker run -p 8080:3000 -e PUBLIC_INSTANCE_URL=example.com ghcr.io/xyphyn/photon:latest
 ```
 
 ### Running from repo
