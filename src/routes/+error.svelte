@@ -8,6 +8,10 @@
 
 <div class="flex flex-col mx-auto gap-4 justify-center items-center">
   <h1 class="font-black text-5xl">{$page.status}</h1>
+  <p>
+    The <strong>server</strong>
+     failed to fetch the data. Click "retry" to have the client load it.
+  </p>
   <Button href={$page.url.toString()}>Retry</Button>
   <Button
     on:click={() => {

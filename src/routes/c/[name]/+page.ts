@@ -11,14 +11,14 @@ export async function load(req: any) {
     get(userSettings).defaultSort.sort
 
   return {
-    posts: getClient().getPosts({
+    posts: await getClient().getPosts({
       limit: 40,
       community_name: req.params.name,
       page: page,
       sort: sort,
       auth: get(authData)?.token,
     }),
-    community: getClient().getCommunity({
+    community: await getClient().getCommunity({
       name: req.params.name,
       auth: get(authData)?.token,
     }),
