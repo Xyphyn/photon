@@ -75,7 +75,7 @@
   })
 
   async function submit() {
-    if (!(!data.community && edit) || !data.title || !$authData) return
+    if ((!data.community && !edit) || !data.title || !$authData) return
 
     data.loading = true
 
