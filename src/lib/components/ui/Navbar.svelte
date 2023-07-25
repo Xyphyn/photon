@@ -46,7 +46,11 @@
     </a>
   </div>
   <div class="flex flex-row gap-2 py-2 px-3">
-    <Button href="/communities" label="Communities">
+    <Button
+      href="/communities"
+      label="Communities"
+      class="max-sm:w-9 max-sm:h-8 max-sm:!p-0 items-center justify-center text-zinc-400"
+    >
       <Icon src={GlobeAlt} width={16} slot="icon" />
       <span class="hidden sm:inline">Explore</span>
     </Button>
@@ -56,6 +60,7 @@
         slot="button"
         label="Create"
         on:click={toggleOpen}
+        class="max-sm:w-9 max-sm:h-8 max-sm:!p-0"
       >
         <Icon src={Plus} width={18} mini slot="icon" />
         <span class="hidden sm:inline">Create</span>
@@ -67,7 +72,7 @@
       </MenuButton>
     </Menu>
   </div>
-  <Menu let:toggleOpen alignment="bottom-right">
+  <Menu let:toggleOpen alignment="bottom-right" itemsClass="!h-8">
     <button
       class="w-8 h-8 rounded-full ring-1 ring-slate-300 bg-slate-100
       dark:bg-zinc-800 relative"

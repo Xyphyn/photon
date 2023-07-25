@@ -75,12 +75,14 @@
         ? '!bg-transparent !text-inherit'
         : ''
       : ''} {loading
-      ? ' !border border-slate-300 bg-slate-200 dark:border-zinc-700 dark:bg-zinc-800'
+      ? ' !border !border-slate-300 !bg-slate-200 dark:!border-zinc-700 dark:!bg-zinc-800'
       : ''} {$$props.disabled ? 'opacity-70 pointer-events-none' : ''}"
   >
-    <div class="flex flex-row items-center justify-center gap-1.5">
+    <div class="flex flex-row items-center justify-center gap-1.5 h-full">
       {#if loading}
-        <Spinner />
+        <Spinner
+          width={size == 'lg' ? 20 : size == 'md' ? 18 : size == 'sm' ? 16 : 16}
+        />
       {:else}
         <slot name="icon" />
       {/if}
@@ -92,7 +94,7 @@
     disabled={loading}
     {...$$restProps}
     on:click={(e) => dispatch('click', e)}
-    class="{buttonClass}  {loading
+    class="{buttonClass} {loading
       ? color == 'primary'
         ? '!bg-transparent !text-inherit'
         : ''
