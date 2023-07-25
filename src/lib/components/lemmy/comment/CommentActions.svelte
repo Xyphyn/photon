@@ -10,6 +10,7 @@
     EllipsisHorizontal,
     Icon,
     PencilSquare,
+    Trash,
   } from 'svelte-hero-icons'
   import { authData, getClient, user } from '$lib/lemmy.js'
   import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
@@ -17,6 +18,7 @@
   import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
   import Button from '$lib/components/input/Button.svelte'
   import { createEventDispatcher } from 'svelte'
+  import { isCommentMutable } from '$lib/components/lemmy/post/helpers.js'
 
   export let comment: CommentView
   export let replying: boolean = false
@@ -83,6 +85,33 @@
         <Icon src={comment.saved ? BookmarkSlash : Bookmark} mini size="16" />
         <span>{comment.saved ? 'Unsave' : 'Save'}</span>
       </MenuButton>
+      {#if $user && $authData && isCommentMutable(comment, $user)}
+        <MenuButton
+          color={Color.dangerSecondary}
+          on:click={async () => {
+            if (!$authData) return
+            try {
+              await getClient().deleteComment({
+                auth: $authData.token,
+                comment_id: comment.comment.id,
+                deleted: true,
+              })
+              toast({
+                content: 'The comment was deleted.',
+                type: ToastType.success,
+              })
+            } catch (error) {
+              toast({
+                content: 'Failed to delete comment',
+                type: ToastType.error,
+              })
+            }
+          }}
+        >
+          <Icon src={Trash} mini size="16" />
+          <span>Delete</span>
+        </MenuButton>
+      {/if}
     {/if}
   </Menu>
 </div>

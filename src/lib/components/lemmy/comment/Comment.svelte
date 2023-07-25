@@ -108,13 +108,13 @@
       </span>
       <span class="text-slate-600 dark:text-zinc-400 flex flex-row gap-2 ml-1">
         {#if node.comment_view.comment.updated}
-          <Icon src={Pencil} solid size="12" />
+          <Icon src={Pencil} solid size="12" title="Edited" />
         {/if}
         {#if node.comment_view.comment.deleted || node.comment_view.comment.removed}
-          <Icon src={Trash} solid size="12" />
+          <Icon src={Trash} solid size="12" title="Deleted" />
         {/if}
         {#if node.comment_view.saved}
-          <Icon src={Bookmark} solid size="12" />
+          <Icon src={Bookmark} solid size="12" title="Saved" />
         {/if}
       </span>
       <span

@@ -9,6 +9,7 @@
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
   import Modal from '$lib/components/ui/modal/Modal.svelte'
   import PostForm from '$lib/components/lemmy/post/PostForm.svelte'
+  import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
 
   export let post: PostView
 </script>
@@ -88,6 +89,10 @@
       post.post.name = e.detail.post.name
       post.post.body = e.detail.post.body
       post.post.url = e.detail.post.url
+      toast({
+        content: 'The post was edited successfully.',
+        type: ToastType.success,
+      })
     }}
   />
 </Card>
