@@ -15,7 +15,7 @@
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <div
     class="overflow-hidden fixed top-0 left-0 w-screen h-screen z-[100]
-flex flex-col items-center justify-center bg-black/50 backdrop-blur-sm"
+flex flex-col items-center justify-center bg-black/50 backdrop-blur-sm rounded-xl"
     transition:fade={{ duration: 200 }}
     on:click={() => (open = false)}
   >
@@ -35,7 +35,7 @@ flex flex-col items-center justify-center bg-black/50 backdrop-blur-sm"
         </div>
         {#if action}
           <div
-            class="border-t bg-slate-100 dark:bg-zinc-900 dark:border-zinc-800 p-3 flex justify-end"
+            class="border-t bg-slate-100 dark:bg-zinc-900 dark:border-zinc-800 p-3 py-2 flex justify-end rounded-b-xl"
           >
             <slot name="action">
               <Button

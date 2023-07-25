@@ -17,6 +17,10 @@
   import CommentActions from '$lib/components/lemmy/comment/CommentActions.svelte'
   import { createEventDispatcher } from 'svelte'
   import type { CommentView } from 'lemmy-js-client'
+  import Modal from '$lib/components/ui/modal/Modal.svelte'
+  import { authData, getClient } from '$lib/lemmy.js'
+  import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
+  import TextArea from '$lib/components/input/TextArea.svelte'
 
   export let node: CommentNodeI
   export let postId: number
@@ -25,8 +29,46 @@
   export let open = true
   export let replying = false
 
-  const dispatcher = createEventDispatcher<{ edit: CommentView }>()
+  let editing = false
+  let newComment = node.comment_view.comment.content
 </script>
+
+{#if editing}
+  <Modal
+    bind:open={editing}
+    action="Save"
+    on:action={async () => {
+      if (!$authData || newComment.length <= 0) return
+
+      try {
+        await getClient().editComment({
+          auth: $authData.token,
+          comment_id: node.comment_view.comment.id,
+          content: newComment,
+        })
+
+        node.comment_view.comment.content = newComment
+
+        editing = false
+
+        toast({
+          content:
+            'Successfully edited comment. You may need to refresh to see changes.',
+          type: ToastType.success,
+        })
+      } catch (err) {
+        toast({
+          // @ts-ignore i hate this
+          content: err,
+          type: ToastType.error,
+        })
+      }
+    }}
+  >
+    <span slot="title">Edit comment</span>
+    <TextArea bind:value={newComment} />
+  </Modal>
+{/if}
 
 <li
   class="py-2 {node.depth == 0
@@ -102,9 +144,7 @@
         <CommentActions
           comment={node.comment_view}
           bind:replying
-          on:edit={(e) => {
-            dispatcher('edit', e.detail)
-          }}
+          on:edit={() => (editing = true)}
         />
       </div>
     </div>
@@ -125,7 +165,6 @@
             ]
             replying = false
           }}
-          on:edit={(e) => dispatcher('edit', e.detail)}
         />
       </div>
     {/if}
