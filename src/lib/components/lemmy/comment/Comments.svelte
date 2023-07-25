@@ -43,6 +43,7 @@
         auth: $authData?.token,
         max_depth: 5,
         parent_id: parent.comment_view.comment.id,
+        type_: 'All',
       })
 
       if (newComments.comments.length == 0) {
