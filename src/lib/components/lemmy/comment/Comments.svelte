@@ -39,7 +39,7 @@
     try {
       parent.loading = true
 
-      const newComments = await getClient().getComments({
+      const newComments = await getClient($page.params.instance).getComments({
         auth: $authData?.token,
         max_depth: 5,
         parent_id: parent.comment_view.comment.id,
