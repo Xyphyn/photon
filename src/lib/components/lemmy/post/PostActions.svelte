@@ -69,7 +69,7 @@
 </script>
 
 {#if editing}
-  <Modal bind:open={editing}>
+  <Modal bind:open={editing} class="max-w-[90vw] w-[34rem]">
     <PostForm
       edit
       editingPost={post.post}

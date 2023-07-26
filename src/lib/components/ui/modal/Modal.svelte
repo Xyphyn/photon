@@ -23,8 +23,9 @@ flex flex-col items-center justify-center bg-black/50 backdrop-blur-sm"
     <div
       on:click|stopPropagation={() => {}}
       transition:scale={{ start: 0.9, easing: expoOut }}
+      class={$$props.class}
     >
-      <Card class="min-w-[24rem] dark:!bg-zinc-950 rounded-xl max-w-xl">
+      <Card class="w-full dark:!bg-zinc-950 rounded-xl max-w-xl">
         <div class="p-6 flex flex-col gap-4">
           {#if $$slots.title}
             <h1 class="font-bold text-2xl">
