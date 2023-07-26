@@ -43,7 +43,7 @@
       <CommunityCard community_view={data.community.community_view} />
     </details>
   </div>
-  <div class="flex flex-col gap-4 max-w-full w-full">
+  <div class="flex flex-col gap-4 max-w-full w-full min-w-0">
     <h1 class="text-2xl font-bold">
       {data.community.community_view.community.title}
     </h1>
