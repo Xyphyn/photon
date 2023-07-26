@@ -11,7 +11,6 @@
   type T = $$Generic
 
   export let options: T[]
-  export let selected: T | null = null
   export let extractSelected: (item: T | null) => any
   export let extractName: (item: T) => string
 

@@ -98,7 +98,7 @@
       slot="button"
       label="Post actions"
       on:click={toggleOpen}
-      class="!p-1.5"
+      class="!p-1.5 text-zinc-400 hover:text-inherit"
       color="secondary"
     >
       <Icon slot="icon" src={EllipsisHorizontal} width={16} mini />

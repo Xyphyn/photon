@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 :root {
-  @apply bg-slate-50 dark:bg-zinc-950 text-zinc-900
-    dark:text-slate-100;
+  @apply bg-slate-50 dark:bg-zinc-950 text-slate-900
+    dark:text-zinc-100;
 }
 
 @media (prefers-color-scheme: dark) {

@@ -4,6 +4,8 @@
   import { userSettings } from '$lib/settings.js'
   import { Color } from '$lib/ui/colors.js'
   import {
+    ArrowLeftCircle,
+    ArrowUturnLeft,
     Bookmark,
     BookmarkSlash,
     ChatBubbleOvalLeft,
@@ -56,7 +58,7 @@
     commentId={comment.comment.id}
   />
   <Button color="elevatedLow" size="sm" on:click={() => (replying = !replying)}>
-    <Icon src={ChatBubbleOvalLeft} width={16} height={16} mini />
+    <Icon src={ArrowUturnLeft} width={14} height={14} mini />
     <span class="text-xs">Reply</span>
   </Button>
   <Menu
