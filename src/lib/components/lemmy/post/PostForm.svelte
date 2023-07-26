@@ -68,7 +68,7 @@
 
     const list = await getClient().listCommunities({
       auth: $authData?.token,
-      type_: 'All',
+      type_: 'Subscribed',
       sort: 'Active',
       limit: 40,
     })
@@ -157,6 +157,7 @@
             auth: $authData?.token,
             type_: 'Communities',
             limit: 20,
+            listing_type: 'Subscribed',
             sort: 'Active',
           })
 
