@@ -2,7 +2,7 @@
   export let date: Date
   export let relativeTo: Date | undefined = undefined
   export let options: Intl.RelativeTimeFormatOptions = {
-    numeric: 'auto',
+    numeric: 'always',
     style: 'narrow',
   }
 

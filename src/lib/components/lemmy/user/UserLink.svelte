@@ -6,7 +6,6 @@
   export let user: Person
   export let avatar: boolean = false
   export let avatarSize = 24
-  export let badges = true
 
   function linkFromCommunity(user: Person) {
     const domain = new URL(user.actor_id).hostname
