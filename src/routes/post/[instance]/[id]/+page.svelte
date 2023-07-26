@@ -92,7 +92,14 @@
     saved={postData.saved}
   />
   <h1 class="font-bold text-lg">{post.name}</h1>
-  {#if isImage(post.url)}
+  {#if post.url && !post.thumbnail_url}
+    <a
+      href={post.url}
+      class="max-w-full overflow-hidden overflow-ellipsis whitespace-nowrap text-sky-400 hover:underline text-xs"
+    >
+      {post.url}
+    </a>
+  {:else if isImage(post.url)}
     <img
       src={post.url}
       alt={post.name}
