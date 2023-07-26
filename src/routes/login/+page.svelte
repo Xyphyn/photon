@@ -114,7 +114,7 @@
         maxlength={6}
         class="w-20"
         on:input={(e) => {
-          if (!Number(e.detail.data)) {
+          if (!Number.isInteger(Number(e.detail.data))) {
             e.preventDefault()
             data.totp = data.totp.replace(e.detail.data, '')
           }
