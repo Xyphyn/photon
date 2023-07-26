@@ -6,8 +6,6 @@
     validate: function (text, pos, self) {
       var tail = text.slice(pos)
 
-      console.log(tail)
-
       if (!self.re.community) {
         self.re.community = new RegExp(
           /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z]{2,6})/
