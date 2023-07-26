@@ -108,19 +108,19 @@
     saved={postData.saved}
   />
   <h1 class="font-bold text-lg">{post.name}</h1>
-  {#if post.url && !post.thumbnail_url}
+  {#if isImage(post.url)}
+    <img
+      src={post.url}
+      alt={post.name}
+      class="rounded-md max-w-screen max-h-[80vh] mx-auto"
+    />
+  {:else if post.url && !post.thumbnail_url}
     <a
       href={post.url}
       class="max-w-full overflow-hidden overflow-ellipsis whitespace-nowrap text-sky-400 hover:underline text-xs"
     >
       {post.url}
     </a>
-  {:else if isImage(post.url)}
-    <img
-      src={post.url}
-      alt={post.name}
-      class="rounded-md max-w-screen max-h-[80vh] mx-auto"
-    />
   {:else if post.thumbnail_url && post.url}
     <PostLink
       thumbnail_url={post.thumbnail_url}
