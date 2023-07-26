@@ -54,12 +54,12 @@
     </span>
   </div>
   {#if taglines && taglines.length > 0}
-    <p>
-      {taglines[Math.floor(Math.random() * taglines.length)].content}
-    </p>
+    <Markdown
+      source={taglines[Math.floor(Math.random() * taglines.length)].content}
+    />
     <hr class="border-slate-300 dark:border-zinc-700" />
   {/if}
-  <p>{site.site.description}</p>
+  <Markdown source={site.site.description} />
   <hr class="border-slate-300 dark:border-zinc-700" />
   <Markdown source={site.site.sidebar} />
 </StickyCard>
