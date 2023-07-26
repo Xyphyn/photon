@@ -1,6 +1,10 @@
 <script lang="ts">
   export let date: Date
   export let relativeTo: Date | undefined = undefined
+  export let options: Intl.RelativeTimeFormatOptions = {
+    numeric: 'auto',
+    style: 'narrow',
+  }
 
   function formatRelativeDate(date: Date) {
     const now = relativeTo?.getTime() ?? Date.now()
@@ -21,10 +25,7 @@
       if (diffInMillis >= thresholds[i].threshold) {
         const value = Math.round(diffInMillis / thresholds[i].threshold)
 
-        const rtf = new Intl.RelativeTimeFormat('en', {
-          numeric: 'always',
-          style: 'long',
-        })
+        const rtf = new Intl.RelativeTimeFormat('en', options)
 
         return rtf.format(-value, thresholds[i].unit as any)
       }
