@@ -1,6 +1,7 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
+  import Button from '$lib/components/input/Button.svelte'
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
   import TextInput from '$lib/components/input/TextInput.svelte'
   import Comment from '$lib/components/lemmy/comment/Comment.svelte'
@@ -53,16 +54,30 @@
       })
     }}
   />
-  <TextInput
-    bind:value={query}
-    placeholder="Search for something..."
-    on:change={() => {
-      $page.url.searchParams.set('q', query)
-      goto($page.url.toString(), {
-        invalidateAll: true,
-      })
-    }}
-  />
+  <div class="flex flex-row gap-2 items-center">
+    <TextInput
+      bind:value={query}
+      placeholder="Search for something..."
+      on:change={() => {
+        $page.url.searchParams.set('q', query)
+        goto($page.url.toString(), {
+          invalidateAll: true,
+        })
+      }}
+    />
+    <Button
+      on:click={() => {
+        $page.url.searchParams.set('q', query)
+        goto($page.url.toString(), {
+          invalidateAll: true,
+        })
+      }}
+      size="lg"
+      class="h-full"
+    >
+      Search
+    </Button>
+  </div>
 </div>
 {#if !data.results}
   <div
