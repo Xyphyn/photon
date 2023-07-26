@@ -52,7 +52,7 @@
   <TextArea
     rows={4}
     placeholder="What are you thinking?"
-    class="bg-slate-100 dark:bg-zinc-900"
+    class="!bg-slate-100 dark:!bg-zinc-900"
     bind:value={newComment}
   />
   <div class="sm:ml-auto sm:w-28">
