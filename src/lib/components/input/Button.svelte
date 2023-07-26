@@ -56,21 +56,19 @@
 
   const dispatch = createEventDispatcher()
   export let href: string | undefined = undefined
-
-  let buttonClass = twMerge(
-    buttonColor[color],
-    buttonSize[size],
-    buttonRoundness[rounded],
-    'text-sm transition-all disabled:!opacity-70 disabled:!pointer-events-none',
-    $$props.class
-  )
 </script>
 
 {#if href}
   <a
     {href}
     {...$$restProps}
-    class="{buttonClass} {loading
+    class="{`
+      ${buttonColor[color]}
+      ${buttonSize[size]}
+      ${buttonRoundness[rounded]}
+      text-sm transition-all disabled:!opacity-70 disabled:!pointer-events-none
+      ${$$props.class}
+    `} {loading
       ? color == 'primary'
         ? '!bg-transparent !text-inherit'
         : ''
@@ -94,7 +92,13 @@
     disabled={loading}
     {...$$restProps}
     on:click={(e) => dispatch('click', e)}
-    class="{buttonClass} {loading
+    class="{`
+      ${buttonColor[color]}
+      ${buttonSize[size]}
+      ${buttonRoundness[rounded]}
+      text-sm transition-all disabled:!opacity-70 disabled:!pointer-events-none
+      ${$$props.class}
+    `} {loading
       ? color == 'primary'
         ? '!bg-transparent !text-inherit'
         : ''
