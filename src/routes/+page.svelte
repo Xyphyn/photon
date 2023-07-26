@@ -11,6 +11,7 @@
   import { authData } from '$lib/lemmy.js'
   import { userSettings } from '$lib/settings.js'
   import { ArchiveBox, Icon, Plus } from 'svelte-hero-icons'
+  import Markdown from '$lib/components/markdown/Markdown.svelte'
 
   export let data
 </script>
@@ -21,7 +22,9 @@
 
 <div class="flex flex-row gap-4 w-full">
   <div class="flex flex-col gap-4 max-w-full w-full min-w-0">
-    <header><h1 class="text-3xl font-bold">Frontpage</h1></header>
+    <header>
+      <h1 class="text-3xl font-bold">Frontpage</h1>
+    </header>
     <div
       class="flex flex-col sm:flex-row gap-4 max-w-full w-full justify-between flex-wrap"
       role="radiogroup"
@@ -99,7 +102,7 @@
         </div>
       </StickyCard>
     {:then site}
-      <SiteCard site={site.site_view} />
+      <SiteCard site={site.site_view} taglines={site.taglines} />
     {:catch}
       <StickyCard>
         <h1 class="font-bold text-lg">Failed to load</h1>

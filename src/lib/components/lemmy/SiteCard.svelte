@@ -4,7 +4,8 @@
   import StickyCard from '$lib/components/ui/StickyCard.svelte'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
-  import type { SiteView } from 'lemmy-js-client'
+  import { getClient } from '$lib/lemmy.js'
+  import type { SiteView, Tagline } from 'lemmy-js-client'
   import {
     Calendar,
     ChatBubbleOvalLeftEllipsis,
@@ -15,6 +16,7 @@
   } from 'svelte-hero-icons'
 
   export let site: SiteView
+  export let taglines: Tagline[] | undefined = undefined
 </script>
 
 <StickyCard>
@@ -51,6 +53,12 @@
       <FormattedNumber number={site.counts.communities} />
     </span>
   </div>
+  {#if taglines && taglines.length > 0}
+    <p>
+      {taglines[Math.floor(Math.random() * taglines.length)].content}
+    </p>
+    <hr class="border-slate-300 dark:border-zinc-700" />
+  {/if}
   <p>{site.site.description}</p>
   <hr class="border-slate-300 dark:border-zinc-700" />
   <Markdown source={site.site.sidebar} />
