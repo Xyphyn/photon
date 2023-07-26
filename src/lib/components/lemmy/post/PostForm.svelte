@@ -172,7 +172,7 @@
           }
 
           data.community = c.id
-          communitySearch = c.name
+          communitySearch = `${c.name}@${new URL(c.actor_id).hostname}`
         }}
       />
     </div>
