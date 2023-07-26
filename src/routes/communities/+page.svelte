@@ -6,6 +6,7 @@
     ChatBubbleOvalLeftEllipsis,
     Icon,
     PencilSquare,
+    QuestionMarkCircle,
     UserGroup,
   } from 'svelte-hero-icons'
   import CommunityLink from '$lib/components/community/CommunityLink.svelte'
@@ -60,6 +61,17 @@
   </div>
 </div>
 <ul class="flex flex-col">
+  {#if data.communities.length == 0}
+    <div
+      class="text-slate-600 dark:text-zinc-400 flex flex-col justify-center items-center py-8"
+    >
+      <Icon src={QuestionMarkCircle} size="32" solid />
+      <h1 class="font-bold text-2xl">No communities</h1>
+      <p class="mt-2 text-center">
+        There are no communities with that name. Try refining your search.
+      </p>
+    </div>
+  {/if}
   {#each data.communities as community}
     <li>
       <div
@@ -131,20 +143,21 @@
     </li>
   {/each}
 </ul>
+{#if data.communities.length > 0}
+  <div class="mt-2 w-full">
+    <Button
+      on:click={() => {
+        $page.url.searchParams.set(
+          'page',
+          ((Number($page.url.searchParams.get('page')) || 1) + 1).toString()
+        )
 
-<div class="mt-2 w-full">
-  <Button
-    on:click={() => {
-      $page.url.searchParams.set(
-        'page',
-        ((Number($page.url.searchParams.get('page')) || 1) + 1).toString()
-      )
-
-      goto($page.url.toString(), {
-        invalidateAll: true,
-      })
-    }}
-  >
-    Next
-  </Button>
-</div>
+        goto($page.url.toString(), {
+          invalidateAll: true,
+        })
+      }}
+    >
+      Next
+    </Button>
+  </div>
+{/if}
