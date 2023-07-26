@@ -7,6 +7,7 @@ interface Settings {
   instance?: string
   revertColors: boolean
   showInstance: boolean
+  showCompactPosts: boolean
   defaultSort: {
     sort: 'Hot' | 'TopAll' | 'Active' | 'New'
     feed: 'All' | 'Subscribed' | 'Local'
@@ -19,6 +20,7 @@ const defaultSettings: Settings = {
   markReadPosts: true,
   revertColors: false,
   showInstance: false,
+  showCompactPosts: false,
   defaultSort: {
     sort: 'Active',
     feed: 'Local',
