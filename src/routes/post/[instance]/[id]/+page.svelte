@@ -30,6 +30,8 @@
   import PostLink from '$lib/components/lemmy/post/PostLink.svelte'
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
   import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
+  import type { CommentSortType } from 'lemmy-js-client'
+  import MultiSelect from '$lib/components/input/MultiSelect.svelte'
 
   export let data
 
@@ -47,8 +49,22 @@
   })
 
   let commentsPage = 1
+  let commentSort: CommentSortType = 'Hot'
   let loading = false
   let moreComments = true
+
+  async function reloadComments() {
+    commentsPage = 1
+
+    data.streamed.comments = getClient().getComments({
+      auth: $authData?.token,
+      max_depth: 3,
+      page: commentsPage,
+      limit: 25,
+      post_id: data.post.post_view.post.id,
+      sort: commentSort,
+    })
+  }
 </script>
 
 <svelte:head>
@@ -147,6 +163,11 @@
       {postData.counts.comments}
     </span>
   </div>
+  <MultiSelect
+    options={['Hot', 'Top', 'New']}
+    bind:selected={commentSort}
+    on:select={reloadComments}
+  />
   {#await data.streamed.comments}
     <div class="h-16 mx-auto grid place-items-center">
       <Spinner width={24} />
