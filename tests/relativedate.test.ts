@@ -27,6 +27,6 @@ describe('RelativeDate.svelte', () => {
     })
 
     expect(instance).toBeTruthy()
-    expect(host.innerHTML).toContain('1 hour ago')
+    expect(host.innerHTML).toContain('1h ago')
   })
 })
