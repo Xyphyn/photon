@@ -10,6 +10,8 @@
   import Button from '$lib/components/input/Button.svelte'
   import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
   import { goto } from '$app/navigation'
+  import SearchInput from '$lib/components/input/SearchInput.svelte'
+  import { Check, Icon } from 'svelte-hero-icons'
 
   export let edit = false
 
@@ -53,7 +55,7 @@
   const placeholder2 =
     placeholders[Math.floor(Math.random() * placeholders.length)]
 
-  let communities: Community[] | undefined
+  let communities: Community[] = []
 
   const dispatcher = createEventDispatcher<{ submit: PostView }>()
 
@@ -66,8 +68,8 @@
 
     const list = await getClient().listCommunities({
       auth: $authData?.token,
-      type_: 'Subscribed',
-      sort: 'New',
+      type_: 'All',
+      sort: 'Active',
       limit: 40,
     })
 
@@ -75,7 +77,14 @@
   })
 
   async function submit() {
-    if ((!data.community && !edit) || !data.title || !$authData) return
+    if (!data.community && !edit) {
+      toast({
+        type: ToastType.warning,
+        content: 'You need to set a community.',
+      })
+      return
+    }
+    if (!data.title || !$authData) return
 
     data.loading = true
 
@@ -119,24 +128,53 @@
       toast({ content: err as any, type: ToastType.error })
     }
   }
+
+  let communitySearch = ''
 </script>
 
 <form on:submit|preventDefault={submit} class="flex flex-col gap-4">
   <h1 class="font-bold text-xl">{edit ? 'Edit' : 'Create'} Post</h1>
   {#if !edit}
     <div>
-      <span class="block my-1 font-bold text-sm">
-        Community <span class="text-red-500">*</span>
-      </span>
-      {#if communities}
-        <SelectMenu
-          bind:selected={data.community}
-          options={communities.map((c) => c.id)}
-          optionNames={new Map(communities.map((c) => [c.id, c.title]))}
-        />
-      {:else}
-        <Dots />
-      {/if}
+      <div class="flex flex-row">
+        <span class="block my-1 font-bold text-sm">
+          Community <span class="text-red-500">*</span>
+        </span>
+        {#if data.community}
+          <Icon
+            src={Check}
+            mini
+            size="20"
+            class="text-green-400 ml-auto inline"
+          />
+        {/if}
+      </div>
+      <SearchInput
+        options={communities}
+        on:search={async () => {
+          const results = await getClient().search({
+            q: communitySearch,
+            auth: $authData?.token,
+            type_: 'Communities',
+            limit: 20,
+            sort: 'Active',
+          })
+
+          communities = results.communities.map((c) => c.community)
+        }}
+        debounceTime={600}
+        extractName={(c) => c.title}
+        bind:query={communitySearch}
+        extractSelected={(c) => {
+          if (!c) {
+            data.community = null
+            return
+          }
+
+          data.community = c.id
+          communitySearch = c.name
+        }}
+      />
     </div>
   {/if}
   <TextInput required label="Title" bind:value={data.title} {placeholder} />
