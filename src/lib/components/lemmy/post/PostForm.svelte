@@ -109,7 +109,7 @@
         dispatcher('submit', post.post_view)
       } else {
         let image = data.image ? await uploadImage(data.image[0]) : undefined
-        data.url = image
+        data.url = image || data.url
         const post = await getClient().createPost({
           auth: $authData.token,
           community_id: data.community!,
