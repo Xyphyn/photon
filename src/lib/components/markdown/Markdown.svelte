@@ -8,19 +8,19 @@
   export let source: string = ''
 </script>
 
-<div class="break-words flex flex-col gap-3 leading-[22px] markdown">
+<div class="break-words flex flex-col markdown gap-2">
   {@html md.render(source)}
 </div>
 
 <style lang="postcss">
   .markdown :global(h1) {
-    @apply text-3xl font-bold mb-1 mt-3;
+    @apply text-3xl font-bold;
   }
   .markdown :global(h2) {
-    @apply text-2xl font-bold mb-1 mt-3;
+    @apply text-2xl font-bold;
   }
   .markdown :global(h3) {
-    @apply text-xl font-bold mb-1 mt-3;
+    @apply text-xl font-bold;
   }
 
   .markdown :global(hr) {
@@ -37,12 +37,10 @@
 
   .markdown :global(ul) {
     @apply list-disc pl-4;
-    line-height: 1rem;
   }
 
   .markdown :global(ol) {
     @apply list-decimal pl-4;
-    line-height: 1rem;
   }
 
   .markdown :global(li) {
@@ -51,15 +49,9 @@
 
   .markdown :global(li > *) {
     @apply m-0 !important;
-    line-height: 22px;
   }
 
   .markdown :global(blockquote) {
     @apply border-l-2 border-black/20 dark:border-white/20 pl-2 my-1 h-max;
-    line-height: 0.5rem;
-  }
-
-  .markdown :global(blockquote > *) {
-    line-height: 22px;
   }
 </style>
