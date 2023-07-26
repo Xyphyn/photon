@@ -3,7 +3,7 @@
   import InboxItem from '../inbox/InboxItem.svelte'
   import Card from '$lib/components/ui/Card.svelte'
   import Post from '$lib/components/lemmy/post/Post.svelte'
-  import CommunityLink from '$lib/components/community/CommunityLink.svelte'
+  import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
   import Link from '$lib/components/input/Link.svelte'
   import Comment from '$lib/components/lemmy/comment/Comment.svelte'
   import { fly } from 'svelte/transition'

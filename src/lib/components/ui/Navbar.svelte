@@ -50,10 +50,19 @@
   </div>
   <div class="flex flex-row gap-2 py-2 px-2">
     <Button
+      href="/search"
+      label="Search"
+      class="max-sm:w-9 max-sm:h-8 max-sm:!p-0 items-center justify-center
+      dark:text-zinc-300 text-slate-700 hover:text-inherit hover:bg-slate-200 hover:dark:bg-zinc-900"
+    >
+      <Icon src={MagnifyingGlass} width={16} slot="icon" />
+      <span class="hidden sm:inline">Search</span>
+    </Button>
+    <Button
       href="/communities"
       label="Communities"
       class="max-sm:w-9 max-sm:h-8 max-sm:!p-0 items-center justify-center
-      dark:text-zinc-300 text-slate-700 hover:text-inherit"
+      dark:text-zinc-300 text-slate-700 hover:text-inherit hover:bg-slate-200 hover:dark:bg-zinc-900"
     >
       <Icon src={GlobeAlt} width={16} slot="icon" />
       <span class="hidden sm:inline">Explore</span>

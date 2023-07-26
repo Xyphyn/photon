@@ -4,7 +4,7 @@
     buildCommentsTreeAsync,
   } from '$lib/components/lemmy/comment/comments.js'
   import Comments from '$lib/components/lemmy/comment/Comments.svelte'
-  import CommunityLink from '$lib/components/community/CommunityLink.svelte'
+  import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
   import { isImage } from '$lib/ui/image.js'
   import { authData, getClient, user } from '$lib/lemmy.js'
   import CommentForm from '$lib/components/lemmy/comment/CommentForm.svelte'

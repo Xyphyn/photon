@@ -66,15 +66,14 @@
       ${buttonColor[color]}
       ${buttonSize[size]}
       ${buttonRoundness[rounded]}
-      text-sm transition-all disabled:!opacity-70 disabled:!pointer-events-none
+      text-sm transition-colors disabled:!opacity-70 disabled:!pointer-events-none
+      disabled:!border disabled:!border-slate-300 disabled:!bg-slate-200 disabled:dark:!border-zinc-700 disabled:dark:!bg-zinc-800
       ${$$props.class}
     `} {loading
       ? color == 'primary'
         ? '!bg-transparent !text-inherit'
         : ''
-      : ''} {loading
-      ? ' !border !border-slate-300 !bg-slate-200 dark:!border-zinc-700 dark:!bg-zinc-800'
-      : ''} {$$props.disabled ? 'opacity-70 pointer-events-none' : ''}"
+      : ''}"
   >
     <div class="flex flex-row items-center justify-center gap-1.5 h-full">
       {#if loading}
@@ -96,14 +95,13 @@
       ${buttonColor[color]}
       ${buttonSize[size]}
       ${buttonRoundness[rounded]}
-      text-sm transition-all disabled:!opacity-70 disabled:!pointer-events-none
+      text-sm transition-colors disabled:!opacity-70 disabled:!pointer-events-none
+      disabled:!border disabled:!border-slate-300 disabled:!bg-slate-200 disabled:dark:!border-zinc-700 disabled:dark:!bg-zinc-800
       ${$$props.class}
     `} {loading
       ? color == 'primary'
         ? '!bg-transparent !text-inherit'
         : ''
-      : ''}  {loading
-      ? ' !border !border-slate-300 !bg-slate-200 dark:!border-zinc-700 dark:!bg-zinc-800'
       : ''}"
     type={submit ? 'submit' : 'button'}
   >

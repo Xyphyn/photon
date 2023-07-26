@@ -16,7 +16,7 @@
 
 <Card class="bg-white flex flex-col w-full p-5 gap-2.5">
   <div class="flex flex-row w-full gap-2.5">
-    <div class="flex flex-col gap-2.5 grow">
+    <div class="flex flex-col gap-1 grow">
       <PostMeta
         community={post.community}
         user={post.creator}
@@ -38,23 +38,21 @@
     </div>
     {#if $userSettings.showCompactPosts && (post.post.thumbnail_url || isImage(post.post.url))}
       <div class="flex-none w-24 h-24">
-        <a
-          href="/post/{getInstance()}/{post.post.id}"
-        >
+        <a href="/post/{getInstance()}/{post.post.id}">
           {#if post.post.thumbnail_url}
-          <!-- svelte-ignore a11y-missing-attribute -->
-          <img
-            src="{post.post.thumbnail_url}?thumbnail=256&format=webp"
-            loading="lazy"
-            class="object-cover bg-slate-100 rounded-md h-24 w-24 border border-slate-200 dark:border-zinc-700"
-          />
+            <!-- svelte-ignore a11y-missing-attribute -->
+            <img
+              src="{post.post.thumbnail_url}?thumbnail=256&format=webp"
+              loading="lazy"
+              class="object-cover bg-slate-100 rounded-md h-24 w-24 border border-slate-200 dark:border-zinc-700"
+            />
           {:else}
-          <!-- svelte-ignore a11y-missing-attribute -->
-          <img
-            src="{post.post.url}?thumbnail=256&format=webp"
-            loading="lazy"
-            class="object-cover bg-slate-100 rounded-md h-24 w-24 border border-slate-200 dark:border-zinc-700"
-          />
+            <!-- svelte-ignore a11y-missing-attribute -->
+            <img
+              src="{post.post.url}?thumbnail=256&format=webp"
+              loading="lazy"
+              class="object-cover bg-slate-100 rounded-md h-24 w-24 border border-slate-200 dark:border-zinc-700"
+            />
           {/if}
         </a>
       </div>
@@ -71,30 +69,30 @@
     {/if}
     {#if isImage(post.post.url)}
       <div class="self-start" class:blur-3xl={post.post.nsfw}>
-      <picture
-        class="rounded-md overflow-hidden max-h-[min(50vh,500px)] w-full max-w-full"
-      >
-        <source
-          srcset="{post.post.url}?thumbnail=256&format=webp"
-          media="(max-width: 256px)"
-        />
-        <source
-          srcset="{post.post.url}?thumbnail=512&format=webp"
-          media="(max-width: 512px)"
-        />
-        <source
-          srcset="{post.post.url}?thumbnail=720&format=webp"
-          media="(max-width: 720px)"
-        />
-        <!-- svelte-ignore a11y-missing-attribute -->
-        <img
-          src="{post.post.url}?thumbnail=1024&format=webp"
-          loading="lazy"
-          class="object-cover bg-slate-100 rounded-md max-h-[50vh] w-full"
-          width={512}
-          height={300}
-        />
-      </picture>
+        <picture
+          class="rounded-md overflow-hidden max-h-[min(50vh,500px)] w-full max-w-full"
+        >
+          <source
+            srcset="{post.post.url}?thumbnail=256&format=webp"
+            media="(max-width: 256px)"
+          />
+          <source
+            srcset="{post.post.url}?thumbnail=512&format=webp"
+            media="(max-width: 512px)"
+          />
+          <source
+            srcset="{post.post.url}?thumbnail=720&format=webp"
+            media="(max-width: 720px)"
+          />
+          <!-- svelte-ignore a11y-missing-attribute -->
+          <img
+            src="{post.post.url}?thumbnail=1024&format=webp"
+            loading="lazy"
+            class="object-cover bg-slate-100 rounded-md max-h-[50vh] w-full"
+            width={512}
+            height={300}
+          />
+        </picture>
       </div>
     {:else if post.post.thumbnail_url && post.post.url}
       <PostLink

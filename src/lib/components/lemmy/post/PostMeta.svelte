@@ -1,5 +1,5 @@
 <script lang="ts">
-  import CommunityLink from '$lib/components/community/CommunityLink.svelte'
+  import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import Badge from '$lib/components/ui/Badge.svelte'
   import UserLink from '$lib/components/user/UserLink.svelte'
@@ -8,12 +8,12 @@
   import { Bookmark, Icon, InformationCircle, Trash } from 'svelte-hero-icons'
 
   export let community: Community
-  export let user: Person
+  export let user: Person | undefined = undefined
   export let published: Date
 
   // Score
-  export let upvotes: number
-  export let downvotes: number
+  export let upvotes: number | undefined = undefined
+  export let downvotes: number | undefined = undefined
 
   // Badges
   export let nsfw: boolean
@@ -27,13 +27,17 @@
   <div class="flex flex-col text-xs">
     <CommunityLink {community} />
     <span class="text-slate-600 dark:text-zinc-400 flex flex-row gap-1">
-      <UserLink {user} />
-      <span>•</span>
+      {#if user}
+        <UserLink {user} />
+        <span>•</span>
+      {/if}
       <RelativeDate date={published} />
-      <span>•</span>
-      <span>
-        {Math.floor((upvotes / (upvotes + downvotes || 1)) * 100)}%
-      </span>
+      {#if upvotes && downvotes}
+        <span>•</span>
+        <span>
+          {Math.floor((upvotes / (upvotes + downvotes || 1)) * 100)}%
+        </span>
+      {/if}
     </span>
   </div>
 

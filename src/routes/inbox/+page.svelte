@@ -33,11 +33,15 @@
     return false
   }
 
+  let markingAsRead = false
+
   async function markAllAsRead() {
     if (!$user) {
       goto('/login')
       return
     }
+
+    markingAsRead = true
 
     const response = await getClient().markAllAsRead({
       auth: $authData!.token,
@@ -47,6 +51,8 @@
 
     goto($page.url, {
       invalidateAll: true,
+    }).then(() => {
+      markingAsRead = false
     })
 
     return response.replies
@@ -59,8 +65,13 @@
 
 <div class="flex flex-row justify-between">
   <h1 class="font-bold text-3xl">Inbox</h1>
-  <Button on:click={markAllAsRead}>
-    <Icon src={Check} width={16} mini />
+  <Button
+    on:click={markAllAsRead}
+    loading={markingAsRead}
+    disabled={markingAsRead}
+    size="md"
+  >
+    <Icon src={Check} width={16} mini slot="icon" />
     Mark all as read
   </Button>
 </div>

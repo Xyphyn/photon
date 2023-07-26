@@ -14,8 +14,8 @@
 </script>
 
 <div
-  class="flex overflow-hidden flex-row items-center w-max bg-slate-100
-         rounded-lg dark:bg-zinc-900 gap-1 p-1 border border-slate-200 dark:border-zinc-800"
+  class="flex overflow-hidden flex-row items-center max-w-full w-max bg-slate-100
+         rounded-lg dark:bg-zinc-900 gap-1 p-1 border border-slate-200 dark:border-zinc-800 flex-wrap"
 >
   {#each options as option, index}
     <button

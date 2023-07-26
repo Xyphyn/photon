@@ -5,7 +5,7 @@
   import Post from '../../../lib/components/lemmy/post/Post.svelte'
   import { goto } from '$app/navigation'
   import Card from '$lib/components/ui/StickyCard.svelte'
-  import CommunityCard from '$lib/components/community/CommunityCard.svelte'
+  import CommunityCard from '$lib/components/lemmy/community/CommunityCard.svelte'
   import Button from '$lib/components/input/Button.svelte'
   import { Color } from '$lib/ui/colors'
   import { fly } from 'svelte/transition'

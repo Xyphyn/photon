@@ -9,8 +9,7 @@
     QuestionMarkCircle,
     UserGroup,
   } from 'svelte-hero-icons'
-  import CommunityLink from '$lib/components/community/CommunityLink.svelte'
-  import { Color } from '$lib/ui/colors.js'
+  import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
   import TextInput from '$lib/components/input/TextInput.svelte'
   import Subscribe from './Subscribe.svelte'
   import Button from '$lib/components/input/Button.svelte'
@@ -38,7 +37,8 @@
     }}
   />
   <div class="flex flex-col sm:flex-row gap-2 sm:ml-auto items-center">
-    <TextInput bind:value={search}
+    <TextInput
+      bind:value={search}
       on:change={() => {
         $page.url.searchParams.set('q', search)
         goto($page.url.toString(), {
