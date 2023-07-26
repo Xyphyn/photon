@@ -16,7 +16,7 @@
 
 <Card class="bg-white flex flex-col w-full p-5 gap-2.5">
   <div class="flex flex-row w-full gap-2.5">
-    <div class="flex flex-col gap-1 grow">
+    <div class="flex flex-col gap-1.5 grow">
       <PostMeta
         community={post.community}
         user={post.creator}

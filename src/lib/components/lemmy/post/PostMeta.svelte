@@ -32,7 +32,7 @@
         <span>•</span>
       {/if}
       <RelativeDate date={published} />
-      {#if upvotes && downvotes}
+      {#if upvotes != undefined && downvotes != undefined}
         <span>•</span>
         <span>
           {Math.floor((upvotes / (upvotes + downvotes || 1)) * 100)}%
