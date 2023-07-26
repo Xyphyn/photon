@@ -2,7 +2,7 @@
   import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import Badge from '$lib/components/ui/Badge.svelte'
-  import UserLink from '$lib/components/user/UserLink.svelte'
+  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import type { Community, Person } from 'lemmy-js-client'
   import { Bookmark, Icon, InformationCircle, Trash } from 'svelte-hero-icons'

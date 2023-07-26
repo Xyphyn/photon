@@ -12,7 +12,7 @@
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import CommentForm from './CommentForm.svelte'
   import { page } from '$app/stores'
-  import UserLink from '$lib/components/user/UserLink.svelte'
+  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import CommentActions from '$lib/components/lemmy/comment/CommentActions.svelte'
   import { createEventDispatcher } from 'svelte'

@@ -7,7 +7,7 @@
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import Card from '$lib/components/ui/Card.svelte'
   import { ToastType, addToast } from '$lib/components/ui/toasts/toasts.js'
-  import UserLink from '$lib/components/user/UserLink.svelte'
+  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import { authData, getClient, user } from '$lib/lemmy.js'
   import { Color } from '$lib/ui/colors.js'
   import type {

@@ -6,7 +6,7 @@
     PencilSquare,
   } from 'svelte-hero-icons'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
-  import UserLink from '$lib/components/user/UserLink.svelte'
+  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
 
   export let user: PersonView
 </script>

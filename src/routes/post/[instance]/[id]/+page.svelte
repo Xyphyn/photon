@@ -9,7 +9,7 @@
   import { authData, getClient, user } from '$lib/lemmy.js'
   import CommentForm from '$lib/components/lemmy/comment/CommentForm.svelte'
   import { onMount } from 'svelte'
-  import UserLink from '$lib/components/user/UserLink.svelte'
+  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'

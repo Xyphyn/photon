@@ -6,6 +6,7 @@
   export let user: Person
   export let avatar: boolean = false
   export let avatarSize = 24
+  export let badges = true
 
   function linkFromCommunity(user: Person) {
     const domain = new URL(user.actor_id).hostname
@@ -23,7 +24,7 @@
   <span class="flex gap-0">
     {#if !user.local && $userSettings.showInstance}
       {user.name}
-      <span class="opacity-60 font-normal">
+      <span class="text-slate-500 dark:text-zinc-400 font-normal">
         @{new URL(user.actor_id).hostname}
       </span>
     {:else}
