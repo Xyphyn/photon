@@ -10,6 +10,7 @@
   import Spinner from '$lib/components/ui/loader/Spinner.svelte'
   import { authData } from '$lib/lemmy.js'
   import { userSettings } from '$lib/settings.js'
+  import { ArchiveBox, Icon, Plus } from 'svelte-hero-icons'
 
   export let data
 </script>
@@ -55,6 +56,20 @@
       />
     </div>
     <section class="flex flex-col gap-4">
+      {#if data.posts.posts.length == 0}
+        {#if data.listingType == 'Subscribed'}
+          <div
+            class="text-slate-600 dark:text-zinc-400 flex flex-col justify-center items-center"
+          >
+            <Icon src={ArchiveBox} size="32" solid />
+            <h1 class="font-bold text-2xl">No posts</h1>
+            <Button href="/communities" class="mt-4">
+              <Icon src={Plus} size="16" mini slot="icon" />
+              <span>Follow some communities</span>
+            </Button>
+          </div>
+        {/if}
+      {/if}
       {#each data.posts.posts as post, index (post.post.id)}
         <div in:fly={{ y: -8, opacity: 0, delay: index < 4 ? index * 100 : 0 }}>
           <Post {post} />

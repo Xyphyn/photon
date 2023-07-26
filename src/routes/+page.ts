@@ -16,6 +16,8 @@ export async function load({ url }) {
 
   try {
     return {
+      sort: sort,
+      listingType: listingType,
       posts: await getClient().getPosts({
         limit: 20,
         page: page,

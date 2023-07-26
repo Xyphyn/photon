@@ -17,6 +17,7 @@
     GlobeAlt,
     Icon,
     Inbox,
+    MagnifyingGlass,
     PencilSquare,
     Plus,
     UserCircle,
@@ -39,13 +40,24 @@
   <div class="flex flex-row gap-2 items-center mr-auto">
     <a href="/" class="flex flex-row items-center gap-2">
       <Logo width={40} />
-      <span class="opacity-30 text-xl">/</span>
-      <span class="text-sm font-bold">
-        {$instance}
-      </span>
+      <div class="flex flex-row items-center gap-2 max-[400px]:hidden">
+        <span class="opacity-30 text-xl">/</span>
+        <span class="text-sm font-bold">
+          {$instance}
+        </span>
+      </div>
     </a>
   </div>
-  <div class="flex flex-row gap-2 py-2 px-3">
+  <div class="flex flex-row gap-2 py-2 px-2">
+    <Button
+      href="/search"
+      label="Search"
+      class="max-sm:w-9 max-sm:h-8 max-sm:!p-0 items-center justify-center
+      dark:text-zinc-300 text-slate-700 hover:text-inherit"
+    >
+      <Icon src={MagnifyingGlass} mini width={16} slot="icon" />
+      <span class="hidden sm:inline">Search</span>
+    </Button>
     <Button
       href="/communities"
       label="Communities"
