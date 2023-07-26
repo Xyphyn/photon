@@ -114,4 +114,9 @@
     </span>
     <Switch bind:enabled={$userSettings.showInstance} />
   </Setting>
+  <Setting>
+    <span slot="title">Show compact posts</span>
+    <span slot="description">Show posts with smaller thumbnails and without text bodies.</span>
+    <Switch bind:enabled={$userSettings.showCompactPosts} />
+  </Setting>
 </div>
