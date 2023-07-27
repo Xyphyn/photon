@@ -5,6 +5,7 @@
   import nProgress from 'nprogress'
   import 'nprogress/nprogress.css'
   import ToastContainer from '$lib/components/ui/toasts/ToastContainer.svelte'
+  import Moderation from '$lib/components/lemmy/moderation/Moderation.svelte'
 
   nProgress.configure({
     minimum: 0.4,
@@ -30,6 +31,7 @@
 
 <Navbar />
 <ToastContainer />
+<Moderation />
 <main class="mx-auto max-w-5xl p-4 flex-1 w-full">
   <slot />
 </main>

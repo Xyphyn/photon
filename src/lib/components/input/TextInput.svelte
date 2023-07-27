@@ -17,7 +17,7 @@
     ${value.length != 0 ? 'invalid:border-red-400' : ''}
     w-full px-3 text-sm py-2.5 bg-white dark:bg-zinc-950
     border border-slate-300 dark:border-zinc-700 dark:focus:border-white
-    focus:outline-none focus:border-black transition-colors rounded-md
+    focus:outline-none focus:border-black transition-colors rounded-md disabled:bg-slate-200 disabled:bg-zinc-800 disabled:opacity-70
     ${$$props.class}
   `
 </script>

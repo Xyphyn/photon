@@ -12,6 +12,8 @@
   import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
 
   export let post: PostView
+
+  export let actions: boolean = true
 </script>
 
 <Card class="bg-white flex flex-col w-full p-5 gap-2.5">
@@ -111,16 +113,18 @@
       </p>
     {/if}
   {/if}
-  <PostActions
-    {post}
-    on:edit={(e) => {
-      post.post.name = e.detail.post.name
-      post.post.body = e.detail.post.body
-      post.post.url = e.detail.post.url
-      toast({
-        content: 'The post was edited successfully.',
-        type: ToastType.success,
-      })
-    }}
-  />
+  {#if actions}
+    <PostActions
+      {post}
+      on:edit={(e) => {
+        post.post.name = e.detail.post.name
+        post.post.body = e.detail.post.body
+        post.post.url = e.detail.post.url
+        toast({
+          content: 'The post was edited successfully.',
+          type: ToastType.success,
+        })
+      }}
+    />
+  {/if}
 </Card>

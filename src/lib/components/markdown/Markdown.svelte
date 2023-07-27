@@ -64,6 +64,14 @@
     @apply list-decimal pl-4 leading-3;
   }
 
+  .markdown :global(ul > *) {
+    @apply leading-[22px];
+  }
+
+  .markdown :global(ol > *) {
+    @apply leading-[22px];
+  }
+
   .markdown :global(li) {
     @apply m-0 leading-[22px] !important;
   }
@@ -74,5 +82,9 @@
 
   .markdown :global(blockquote) {
     @apply border-l-2 border-black/20 dark:border-white/20 pl-2 my-1 h-max;
+  }
+
+  .markdown :global(p) {
+    @apply leading-[22px];
   }
 </style>

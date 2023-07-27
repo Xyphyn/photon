@@ -25,6 +25,7 @@
   export let node: CommentNodeI
   export let postId: number
   export let op: boolean = false
+  export let actions: boolean = true
 
   export let open = true
   export let replying = false
@@ -71,7 +72,7 @@
 {/if}
 
 <li
-  class="py-2 {node.depth == 0
+  class="py-2 pb-3 {node.depth == 0
     ? 'border-b border-slate-200 dark:border-zinc-800'
     : ''}"
   id="#{node.comment_view.comment.id.toString()}"
@@ -140,13 +141,15 @@
       <div class="max-w-full mt-0.5 break-words text-sm leading-[22px]">
         <Markdown source={node.comment_view.comment.content} />
       </div>
-      <div class="flex flex-row gap-2 items-center h-[26px]">
-        <CommentActions
-          comment={node.comment_view}
-          bind:replying
-          on:edit={() => (editing = true)}
-        />
-      </div>
+      {#if actions}
+        <div class="flex flex-row gap-2 items-center h-[26px]">
+          <CommentActions
+            comment={node.comment_view}
+            bind:replying
+            on:edit={() => (editing = true)}
+          />
+        </div>
+      {/if}
     </div>
     {#if replying}
       <div class="max-w-sm my-2">
