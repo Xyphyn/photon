@@ -133,7 +133,11 @@
 </script>
 
 <form on:submit|preventDefault={submit} class="flex flex-col gap-4">
-  <h1 class="font-bold text-xl">{edit ? 'Edit' : 'Create'} Post</h1>
+  <slot name="formtitle">
+    <h1 class="font-bold text-xl">
+      {edit ? 'Edit' : 'Create'} Post
+    </h1>
+  </slot>
   {#if !edit}
     <div>
       <div class="flex flex-row">

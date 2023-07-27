@@ -71,7 +71,8 @@
 </script>
 
 {#if editing}
-  <Modal bind:open={editing} class="max-w-[90vw] w-[34rem]">
+  <Modal bind:open={editing}>
+    <h1 slot="title" class="text-2xl font-bold">Editing post</h1>
     <PostForm
       edit
       editingPost={post.post}
@@ -79,7 +80,9 @@
         editing = false
         dispatcher('edit', e.detail)
       }}
-    />
+    >
+      <span slot="formtitle" />
+    </PostForm>
   </Modal>
 {/if}
 
