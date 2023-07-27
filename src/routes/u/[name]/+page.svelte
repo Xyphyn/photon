@@ -26,11 +26,49 @@
   import { page } from '$app/stores'
   import { goto } from '$app/navigation'
   import { isComment } from '$lib/components/lemmy/post/helpers.js'
-  import { authData, user } from '$lib/lemmy.js'
+  import { authData, getClient, user } from '$lib/lemmy.js'
   import { isBlocked } from '$lib/lemmy/user.js'
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
+  import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
 
   export let data
+
+  let blocking = false
+
+  async function blockUser(block: number) {
+    if (!$user || !$authData) throw new Error('Unauthenticated')
+
+    blocking = true
+    try {
+      const blocked = isBlocked($user, block)
+
+      await getClient().blockPerson({
+        auth: $authData.token,
+        block: !blocked,
+        person_id: block,
+      })
+
+      if (blocked) {
+        const index = $user.person_blocks.map((p) => p.target.id).indexOf(block)
+        $user.person_blocks.splice(index, 1)
+      }
+
+      toast({
+        content: `Successfully ${blocked ? 'unblocked' : 'blocked'} that user.`,
+        type: ToastType.success,
+      })
+
+      goto($page.url, {
+        invalidateAll: true,
+      })
+    } catch (err) {
+      toast({
+        content: err as any,
+        type: ToastType.error,
+      })
+    }
+    blocking = false
+  }
 </script>
 
 <svelte:head>
@@ -93,7 +131,13 @@
       </div>
       {#if $user && $authData && data.person_view.person.id != $user.local_user_view.person.id}
         <div class="flex flex-col gap-2">
-          <Button size="lg" color="danger">
+          <Button
+            size="lg"
+            color="danger"
+            loading={blocking}
+            disabled={blocking}
+            on:click={() => blockUser(data.person_view.person.id)}
+          >
             <Icon slot="icon" mini size="16" src={NoSymbol} />
             {isBlocked($user, data.person_view.person.id) ? 'Unblock' : 'Block'}
           </Button>
