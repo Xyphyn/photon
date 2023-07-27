@@ -10,7 +10,7 @@ interface Modals {
 
 export let modals = writable<Modals>({
   reporting: {
-    open: true,
+    open: false,
     item: undefined,
   },
 })
