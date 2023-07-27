@@ -69,6 +69,9 @@
         featured: pinned,
         post_id: item.post.id,
       })
+
+      item.post.featured_community = pinned
+
       toast({
         content: `Successfully ${
           pinned ? 'pinned' : 'unpinned'
