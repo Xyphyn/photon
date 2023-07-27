@@ -141,7 +141,7 @@
           user.set(undefined)
           authData.set(undefined)
         }}
-        color={Color.dangerSecondary}
+        color="dangerSecondary"
       >
         <Icon src={ArrowRightOnRectangle} mini width={16} />Log out
       </MenuButton>

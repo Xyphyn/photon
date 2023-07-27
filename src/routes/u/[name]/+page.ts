@@ -1,7 +1,6 @@
-import { isComment } from '$lib/components/lemmy/post/helpers.js'
 import { authData, getClient } from '$lib/lemmy.js'
 import { getItemPublished } from '$lib/lemmy/item.js'
-import type { CommentView, PostView, SortType } from 'lemmy-js-client'
+import type { SortType } from 'lemmy-js-client'
 import { get } from 'svelte/store'
 
 export async function load({ params, url }) {

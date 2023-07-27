@@ -1,18 +1,10 @@
 <script lang="ts">
-  import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
   import Post from '$lib/components/lemmy/post/Post.svelte'
-  import Comment from '$lib/components/lemmy/comment/Comment.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
-  import Card from '$lib/components/ui/Card.svelte'
   import StickyCard from '$lib/components/ui/StickyCard.svelte'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
-  import type {
-    CommentView,
-    GetPersonDetailsResponse,
-    PostView,
-  } from 'lemmy-js-client'
   import {
     Calendar,
     ChatBubbleOvalLeftEllipsis,
@@ -25,7 +17,7 @@
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import { page } from '$app/stores'
   import { goto } from '$app/navigation'
-  import { isComment } from '$lib/components/lemmy/post/helpers.js'
+  import { isComment } from '$lib/lemmy/item.js'
   import { authData, getClient, user } from '$lib/lemmy.js'
   import { isBlocked } from '$lib/lemmy/user.js'
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'

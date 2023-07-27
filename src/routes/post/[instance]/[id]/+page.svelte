@@ -103,6 +103,7 @@
     upvotes={postData.counts.upvotes}
     downvotes={postData.counts.downvotes}
     deleted={postData.post.deleted}
+    removed={postData.post.removed}
     featured={postData.post.featured_community || postData.post.featured_local}
     nsfw={postData.post.nsfw}
     published={new Date(postData.post.published)}

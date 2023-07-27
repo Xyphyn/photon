@@ -20,13 +20,16 @@
   export let saved: boolean
   export let featured: boolean
   export let deleted: boolean
+  export let removed: boolean = false
 </script>
 
 <span class="flex flex-row gap-2 text-sm items-center">
   <Avatar url={community.icon} width={24} alt={community.name} />
   <div class="flex flex-col text-xs">
     <CommunityLink {community} />
-    <span class="text-slate-600 dark:text-zinc-400 flex flex-row gap-1 flex-wrap">
+    <span
+      class="text-slate-600 dark:text-zinc-400 flex flex-row gap-1 flex-wrap"
+    >
       {#if user}
         <UserLink {user} />
         <span>•</span>
@@ -48,6 +51,11 @@
     {#if saved}
       <Badge class="bg-yellow-500 text-white py-1" label="Saved">
         <Icon src={Bookmark} mini width={16} />
+      </Badge>
+    {/if}
+    {#if removed}
+      <Badge class="bg-green-600 text-white py-1" label="Removed">
+        <Icon src={Trash} mini width={16} />
       </Badge>
     {/if}
     {#if deleted}
