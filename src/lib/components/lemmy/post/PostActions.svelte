@@ -126,7 +126,7 @@
     </MenuButton>
     <hr class="w-[90%] mx-auto opacity-100 dark:opacity-10 my-2" />
     <li class="mx-4 text-xs opacity-80 text-left my-1 py-1">Actions</li>
-    {#if $user && $user.person.id == post.creator.id}
+    {#if $user && $user.local_user_view.person.id == post.creator.id}
       <MenuButton on:click={() => (editing = true)}>
         <Icon src={PencilSquare} width={16} mini />
         Edit
@@ -147,13 +147,13 @@
         <Icon src={post.saved ? BookmarkSlash : Bookmark} width={16} mini />
         {post.saved ? 'Unsave' : 'Save'}
       </MenuButton>
-      {#if $user && isMutable(post, $user)}
+      {#if $user && isMutable(post, $user.local_user_view)}
         <MenuButton on:click={deletePost} color={Color.dangerSecondary}>
           <Icon src={Trash} width={16} mini />
           Delete
         </MenuButton>
       {/if}
-      {#if $user?.person.id != post.creator.id}
+      {#if $user?.local_user_view.person.id != post.creator.id}
         <MenuButton on:click={() => report(post)} color={Color.dangerSecondary}>
           <Icon src={Flag} width={16} mini />
           Report

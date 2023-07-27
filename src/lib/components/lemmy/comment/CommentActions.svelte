@@ -79,7 +79,7 @@
     </Button>
     <span class="text-xs opacity-80 py-1 my-1 px-4">Comment actions</span>
     {#if $authData?.token}
-      {#if comment.creator.id == $user?.person.id}
+      {#if comment.creator.id == $user?.local_user_view.person.id}
         <MenuButton on:click={() => dispatcher('edit', comment)}>
           <Icon src={PencilSquare} mini size="16" />
           <span>Edit</span>
@@ -89,7 +89,7 @@
         <Icon src={comment.saved ? BookmarkSlash : Bookmark} mini size="16" />
         <span>{comment.saved ? 'Unsave' : 'Save'}</span>
       </MenuButton>
-      {#if $user && $authData && isCommentMutable(comment, $user)}
+      {#if $user && $authData && isCommentMutable(comment, $user.local_user_view)}
         <MenuButton
           color={Color.dangerSecondary}
           on:click={async () => {
@@ -116,7 +116,7 @@
           <span>Delete</span>
         </MenuButton>
       {/if}
-      {#if $authData && $user?.person.id != comment.creator.id}
+      {#if $authData && $user?.local_user_view.person.id != comment.creator.id}
         <MenuButton
           on:click={() => report(comment)}
           color={Color.dangerSecondary}

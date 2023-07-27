@@ -1,4 +1,4 @@
-import { LemmyHttp, type PersonView } from 'lemmy-js-client'
+import { LemmyHttp, type MyUserInfo, type PersonView } from 'lemmy-js-client'
 import { get, writable } from 'svelte/store'
 import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
 import { userSettings } from '$lib/settings.js'
@@ -42,7 +42,7 @@ export interface UserData {
 }
 
 export const authData = writable<AuthData | undefined>()
-export const user = writable<(PersonView & UserData) | undefined | null>(
+export const user = writable<(MyUserInfo & UserData) | undefined | null>(
   undefined
 )
 
@@ -86,7 +86,7 @@ authData.subscribe(async (data) => {
       user.set(null)
       throw Error('Missing user')
     }
-    user.set({ ...site.my_user.local_user_view, unreads: 0 })
+    user.set({ ...site.my_user, unreads: 0 })
     if (typeof localStorage != 'undefined') {
       localStorage.setItem('user', JSON.stringify(data))
     }

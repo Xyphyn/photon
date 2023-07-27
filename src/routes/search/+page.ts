@@ -1,4 +1,5 @@
 import { authData, getClient } from '$lib/lemmy.js'
+import { getItemPublished } from '$lib/lemmy/item.js'
 import type {
   CommentView,
   CommunityView,
@@ -9,26 +10,6 @@ import type {
   SortType,
 } from 'lemmy-js-client'
 import { get } from 'svelte/store'
-
-function getSearchItemPublished(
-  item: PostView | CommentView | PersonView | CommunityView
-) {
-  if ('comment' in item) {
-    return item.comment.published
-  } else if ('post' in item) {
-    return item.post.published
-  }
-
-  if ('person' in item) {
-    return item.person.published
-  }
-
-  if ('community' in item) {
-    return item.community.published
-  }
-
-  return ''
-}
 
 export async function load({ url }) {
   const query = url.searchParams.get('q')
@@ -58,8 +39,7 @@ export async function load({ url }) {
 
     const everything = [...posts, ...comments, ...users, ...communities].sort(
       (a, b) =>
-        Date.parse(getSearchItemPublished(b)) -
-        Date.parse(getSearchItemPublished(a))
+        Date.parse(getItemPublished(b)) - Date.parse(getItemPublished(a))
     )
 
     return {

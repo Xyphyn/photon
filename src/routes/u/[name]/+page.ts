@@ -1,35 +1,44 @@
 import { isComment } from '$lib/components/lemmy/post/helpers.js'
 import { authData, getClient } from '$lib/lemmy.js'
-import type { CommentView, PostView } from 'lemmy-js-client'
+import { getItemPublished } from '$lib/lemmy/item.js'
+import type { CommentView, PostView, SortType } from 'lemmy-js-client'
 import { get } from 'svelte/store'
-
-function getDateOfItem(item: CommentView | PostView): number {
-  if (isComment(item)) {
-    return Date.parse(item.comment.published)
-  } else {
-    return Date.parse(item.post.published)
-  }
-}
 
 export async function load({ params, url }) {
   const page = Number(url.searchParams.get('page')) || 1
   const type: 'comments' | 'posts' | 'all' =
     (url.searchParams.get('type') as 'comments' | 'posts' | 'all') || 'all'
+  const sort: SortType = (url.searchParams.get('sort') as SortType) || 'New'
 
   const user = await getClient().getPersonDetails({
     limit: 20,
     page: page,
     username: params.name,
-    sort: 'New',
+    sort: sort,
     auth: get(authData)?.token,
   })
+
+  const items = [...user.posts, ...user.comments]
+
+  if (sort == 'TopAll') {
+    items.sort(
+      (a, b) =>
+        b.counts.upvotes -
+        b.counts.downvotes -
+        (a.counts.upvotes - a.counts.downvotes)
+    )
+  } else if (sort == 'New') {
+    items.sort(
+      (a, b) =>
+        Date.parse(getItemPublished(b)) - Date.parse(getItemPublished(a))
+    )
+  }
 
   return {
     type: type,
     page: page,
+    sort: sort,
     person_view: user.person_view,
-    items: [...user.posts, ...user.comments].sort(
-      (a, b) => getDateOfItem(b) - getDateOfItem(a)
-    ),
+    items,
   }
 }

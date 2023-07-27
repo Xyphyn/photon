@@ -100,7 +100,7 @@
       {/if}
       {#if $user}
         <img
-          src={$user.person.avatar ??
+          src={$user.local_user_view.person.avatar ??
             'https://xylo.xylight.dev/img/logo-background.svg'}
           alt=""
           width={32}
@@ -113,10 +113,13 @@
       {/if}
     </button>
     <li class="text-xs opacity-80 text-left mx-4 my-1 py-1">
-      {$user ? $user.person.name : 'Profile'}
+      {$user ? $user.local_user_view.person.name : 'Profile'}
     </li>
     {#if $user && $authData}
-      <MenuButton link href="/u/{$user.person.name}@{$authData.instance}">
+      <MenuButton
+        link
+        href="/u/{$user.local_user_view.person.name}@{$authData.instance}"
+      >
         <Icon src={UserCircle} mini width={16} /> Profile
       </MenuButton>
       <MenuButton link href="/inbox">

@@ -17,6 +17,7 @@
     Calendar,
     ChatBubbleOvalLeftEllipsis,
     Icon,
+    NoSymbol,
     PencilSquare,
   } from 'svelte-hero-icons'
   import Button from '$lib/components/input/Button.svelte'
@@ -25,6 +26,9 @@
   import { page } from '$app/stores'
   import { goto } from '$app/navigation'
   import { isComment } from '$lib/components/lemmy/post/helpers.js'
+  import { authData, user } from '$lib/lemmy.js'
+  import { isBlocked } from '$lib/lemmy/user.js'
+  import MultiSelect from '$lib/components/input/MultiSelect.svelte'
 
   export let data
 </script>
@@ -35,7 +39,18 @@
 
 <div class="flex flex-col-reverse lg:flex-row gap-4 max-w-full w-full">
   <div class="flex flex-col gap-4 max-w-full w-full">
-    {#each data.items as item}
+    <MultiSelect
+      options={['New', 'TopAll']}
+      optionNames={['New', 'Top']}
+      selected={data.sort}
+      on:select={(e) => {
+        $page.url.searchParams.set('sort', e.detail)
+        goto($page.url.toString(), {
+          invalidateAll: true,
+        })
+      }}
+    />
+    {#each data.items as item (item.counts.id)}
       {#if isComment(item) && (data.type == 'all' || data.type == 'comments')}
         <CommentItem comment={item} />
       {:else if !isComment(item) && (data.type == 'all' || data.type == 'posts')}
@@ -76,6 +91,14 @@
           <FormattedNumber number={data.person_view.counts.comment_count} />
         </span>
       </div>
+      {#if $user && $authData && data.person_view.person.id != $user.local_user_view.person.id}
+        <div class="flex flex-col gap-2">
+          <Button size="lg" color="danger">
+            <Icon slot="icon" mini size="16" src={NoSymbol} />
+            {isBlocked($user, data.person_view.person.id) ? 'Unblock' : 'Block'}
+          </Button>
+        </div>
+      {/if}
       <div>
         <h1 class="font-bold text-lg">
           {data.person_view.person.display_name ?? data.person_view.person.name}
