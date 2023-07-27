@@ -3,6 +3,7 @@ import { get, writable } from 'svelte/store'
 import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
 import { userSettings } from '$lib/settings.js'
 import { env } from '$env/dynamic/public'
+import { isModOfAny } from '$lib/components/lemmy/moderation/moderation.js'
 
 export const LINKED_INSTANCE_URL = env.PUBLIC_INSTANCE_URL
 export const DEFAULT_INSTANCE_URL = env.PUBLIC_INSTANCE_URL || 'lemm.ee'
@@ -39,6 +40,7 @@ export interface AuthData {
 
 export interface UserData {
   unreads: number
+  reports?: number
 }
 
 export const authData = writable<AuthData | undefined>()
@@ -55,10 +57,22 @@ setInterval(async () => {
   })
 
   const u = get(user)
-  u!.unreads = response.mentions + response.private_messages + response.replies
+  if (!u) return
+  u.unreads = response.mentions + response.private_messages + response.replies
+
+  if (isModOfAny(u)) {
+    const reports = await getClient().getReportCount({
+      auth: get(authData)!.token,
+    })
+
+    u.reports =
+      reports.comment_reports +
+      reports.post_reports +
+      (reports.private_message_reports ?? 0)
+  }
 
   user.set(u)
-}, 60 * 1000)
+}, 30 * 1000)
 
 if (typeof localStorage != 'undefined') {
   if (localStorage.getItem('user')) {

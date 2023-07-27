@@ -72,7 +72,14 @@
         </div>
       {/if}
       {#each data.posts.posts as post, index (post.post.id)}
-        <div in:fly={{ y: -8, opacity: 0, delay: index < 4 ? index * 100 : 0 }}>
+        <div
+          in:fly={{
+            y: -8,
+            duration: 500,
+            opacity: 0,
+            delay: index < 4 ? index * 100 : 0,
+          }}
+        >
           <Post {post} />
         </div>
       {/each}
