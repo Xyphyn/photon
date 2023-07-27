@@ -46,7 +46,7 @@
   <title>{data.user.person_view.person.name}</title>
 </svelte:head>
 
-<div class="flex flex-row gap-4 max-w-full w-full">
+<div class="flex flex-col-reverse lg:flex-row gap-4 max-w-full w-full">
   <div class="flex flex-col gap-4 max-w-full w-full">
     {#each items as item}
       {#if isComment(item)}<Card
@@ -84,8 +84,8 @@
     {/each}
   </div>
 
-  <div class="max-w-sm w-full hidden lg:block">
-    <StickyCard>
+  <div class="max-w-sm w-full mx-auto">
+    <StickyCard class="w-full">
       <Avatar
         width={64}
         url={data.user.person_view.person.avatar}
