@@ -61,6 +61,7 @@
       max_depth: 3,
       page: commentsPage,
       limit: 25,
+      type_: 'All',
       post_id: data.post.post_view.post.id,
       sort: commentSort,
     })
@@ -203,6 +204,7 @@
             max_depth: 3,
             page: ++commentsPage,
             limit: 25,
+            type_: 'All',
             post_id: data.post.post_view.post.id,
           })
 
