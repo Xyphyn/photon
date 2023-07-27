@@ -9,6 +9,7 @@
     BookmarkSlash,
     ChatBubbleOvalLeft,
     EllipsisHorizontal,
+    Flag,
     Icon,
     Newspaper,
     PencilSquare,
@@ -27,6 +28,7 @@
   import { createEventDispatcher } from 'svelte'
   import Modal from '$lib/components/ui/modal/Modal.svelte'
   import PostForm from '$lib/components/lemmy/post/PostForm.svelte'
+  import { report } from '$lib/components/lemmy/moderation/moderation.js'
 
   export let post: PostView
 
@@ -142,12 +144,18 @@
         <Icon src={post.saved ? BookmarkSlash : Bookmark} width={16} mini />
         {post.saved ? 'Unsave' : 'Save'}
       </MenuButton>
-    {/if}
-    {#if $user && isMutable(post, $user)}
-      <MenuButton on:click={deletePost} color={Color.dangerSecondary}>
-        <Icon src={Trash} width={16} mini />
-        Delete
-      </MenuButton>
+      {#if $user && isMutable(post, $user)}
+        <MenuButton on:click={deletePost} color={Color.dangerSecondary}>
+          <Icon src={Trash} width={16} mini />
+          Delete
+        </MenuButton>
+      {/if}
+      {#if $user?.person.id != post.creator.id}
+        <MenuButton on:click={() => report(post)} color={Color.dangerSecondary}>
+          <Icon src={Flag} width={16} mini />
+          Report
+        </MenuButton>
+      {/if}
     {/if}
   </Menu>
 </div>

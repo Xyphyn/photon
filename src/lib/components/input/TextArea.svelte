@@ -30,5 +30,6 @@
     class="w-full px-3 text-sm py-2.5 bg-white dark:bg-black
     border border-slate-300 dark:border-zinc-700 dark:focus:border-white
     focus:outline-none focus:border-black transition-colors rounded-md {clazz}"
+    {...$$restProps}
   />
 </label>

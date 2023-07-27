@@ -2,6 +2,7 @@
   import Button from '$lib/components/input/Button.svelte'
   import Card from '$lib/components/ui/Card.svelte'
   import { createEventDispatcher } from 'svelte'
+  import { Icon, XMark } from 'svelte-hero-icons'
   import { expoOut } from 'svelte/easing'
   import { fade, scale } from 'svelte/transition'
 
@@ -23,15 +24,18 @@ flex flex-col items-center justify-center bg-black/50 backdrop-blur-sm"
     <div
       on:click|stopPropagation={() => {}}
       transition:scale={{ start: 0.9, easing: expoOut }}
-      class={$$props.class}
+      class="overflow-y-auto {$$props.class} my-4 rounded-xl"
     >
       <Card class="w-[calc(100vw-1rem)] dark:!bg-zinc-950 rounded-xl max-w-xl">
         <div class="p-6 flex flex-col gap-4">
-          {#if $$slots.title}
-            <h1 class="font-bold text-2xl">
+          <div class="flex flex-row">
+            <h1 class="font-bold text-2xl w-max">
               <slot name="title" />
             </h1>
-          {/if}
+            <Button class="!p-2 ml-auto" on:click={() => (open = false)}>
+              <Icon src={XMark} mini size="16" />
+            </Button>
+          </div>
           <slot />
         </div>
         {#if action}

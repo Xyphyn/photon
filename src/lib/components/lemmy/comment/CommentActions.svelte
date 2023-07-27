@@ -10,6 +10,7 @@
     BookmarkSlash,
     ChatBubbleOvalLeft,
     EllipsisHorizontal,
+    Flag,
     Icon,
     PencilSquare,
     Trash,
@@ -21,6 +22,7 @@
   import Button from '$lib/components/input/Button.svelte'
   import { createEventDispatcher } from 'svelte'
   import { isCommentMutable } from '$lib/components/lemmy/post/helpers.js'
+  import { report } from '$lib/components/lemmy/moderation/moderation.js'
 
   export let comment: CommentView
   export let replying: boolean = false
@@ -112,6 +114,15 @@
         >
           <Icon src={Trash} mini size="16" />
           <span>Delete</span>
+        </MenuButton>
+      {/if}
+      {#if $authData && $user?.person.id != comment.creator.id}
+        <MenuButton
+          on:click={() => report(comment)}
+          color={Color.dangerSecondary}
+        >
+          <Icon src={Flag} mini size="16" />
+          <span>Report</span>
         </MenuButton>
       {/if}
     {/if}

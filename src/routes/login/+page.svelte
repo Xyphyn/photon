@@ -10,15 +10,15 @@
   } from '$lib/components/ui/toasts/toasts.js'
   import {
     DEFAULT_INSTANCE_URL,
+    LINKED_INSTANCE_URL,
     authData,
     getClient,
     user,
     validateInstance,
   } from '$lib/lemmy.js'
-  import { Color } from '$lib/ui/colors.js'
 
   let data = {
-    instance: '',
+    instance: DEFAULT_INSTANCE_URL,
     username: '',
     password: '',
     totp: '',
@@ -89,6 +89,7 @@
         id="instance_url"
         label="Instance URL"
         placeholder={DEFAULT_INSTANCE_URL}
+        disabled={LINKED_INSTANCE_URL != undefined}
         bind:value={data.instance}
         class="flex-1"
         required
