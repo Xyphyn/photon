@@ -1,5 +1,7 @@
 <script lang="ts">
   import { md } from '$lib/components/markdown/markdown'
+  import { page } from '$app/stores'
+
   export let source: string = ''
 
   md.linkify.add('!', {
@@ -22,7 +24,7 @@
       return 0
     },
     normalize: function (match) {
-      match.url = `${location.origin}/c/${match.url.slice(1)}`
+      match.url = `${$page.url.origin}/c/${match.url.slice(1)}`
     },
   })
 </script>

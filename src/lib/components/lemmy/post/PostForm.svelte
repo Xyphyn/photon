@@ -184,7 +184,12 @@
     bind:value={data.url}
     placeholder="https://notascam.com"
   />
-  <TextArea label="Body" bind:value={data.body} placeholder={placeholder2} />
+  <TextArea
+    rows={6}
+    label="Body"
+    bind:value={data.body}
+    placeholder={placeholder2}
+  />
   <div>
     <span class="block my-1 font-bold text-sm">Image</span>
     <FileInput

@@ -25,7 +25,7 @@ flex flex-col items-center justify-center bg-black/50 backdrop-blur-sm"
       transition:scale={{ start: 0.9, easing: expoOut }}
       class={$$props.class}
     >
-      <Card class="w-full dark:!bg-zinc-950 rounded-xl max-w-xl">
+      <Card class="w-[calc(100vw-1rem)] dark:!bg-zinc-950 rounded-xl max-w-xl">
         <div class="p-6 flex flex-col gap-4">
           {#if $$slots.title}
             <h1 class="font-bold text-2xl">
