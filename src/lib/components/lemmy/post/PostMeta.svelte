@@ -5,7 +5,13 @@
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import type { Community, Person } from 'lemmy-js-client'
-  import { Bookmark, Icon, InformationCircle, Trash } from 'svelte-hero-icons'
+  import {
+    Bookmark,
+    Icon,
+    InformationCircle,
+    LockClosed,
+    Trash,
+  } from 'svelte-hero-icons'
 
   export let community: Community
   export let user: Person | undefined = undefined
@@ -21,6 +27,7 @@
   export let featured: boolean
   export let deleted: boolean
   export let removed: boolean = false
+  export let locked: boolean = false
 </script>
 
 <span class="flex flex-row gap-2 text-sm items-center">
@@ -51,6 +58,11 @@
     {#if saved}
       <Badge class="bg-yellow-500 text-white py-1" label="Saved">
         <Icon src={Bookmark} mini width={16} />
+      </Badge>
+    {/if}
+    {#if locked}
+      <Badge class="bg-yellow-400 text-black py-1" label="Locked">
+        <Icon src={LockClosed} mini width={16} />
       </Badge>
     {/if}
     {#if removed}

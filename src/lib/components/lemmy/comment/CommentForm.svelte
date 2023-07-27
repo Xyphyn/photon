@@ -9,6 +9,7 @@
 
   export let postId: number
   export let parentId: number | undefined = undefined
+  export let locked: boolean = false
 
   const dispatch = createEventDispatcher<{ comment: CommentResponse }>()
 
@@ -51,9 +52,10 @@
 <div class="flex flex-col gap-2 relative">
   <TextArea
     rows={4}
-    placeholder="What are you thinking?"
+    placeholder={locked ? 'This post is locked.' : 'What are you thinking?'}
     class="!bg-slate-100 dark:!bg-zinc-900"
     bind:value={newComment}
+    disabled={locked}
   />
   <div class="sm:ml-auto sm:w-28">
     <Button
@@ -63,6 +65,7 @@
       size="lg"
       class="w-full"
       {loading}
+      disabled={locked}
     >
       Submit
     </Button>

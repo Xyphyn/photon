@@ -61,7 +61,12 @@
     bind:vote={comment.my_vote}
     commentId={comment.comment.id}
   />
-  <Button color="elevatedLow" size="sm" on:click={() => (replying = !replying)}>
+  <Button
+    color="elevatedLow"
+    size="sm"
+    on:click={() => (replying = !replying)}
+    disabled={comment.post.locked}
+  >
     <Icon src={ArrowUturnLeft} width={14} height={14} mini />
     <span class="text-xs">Reply</span>
   </Button>
