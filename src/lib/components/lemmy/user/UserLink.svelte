@@ -14,7 +14,7 @@
 </script>
 
 <a
-  class="items-center flex flex-row gap-1 hover:underline"
+  class="items-center inline-flex flex-row gap-1 hover:underline"
   href={linkFromCommunity(user)}
 >
   {#if avatar}
