@@ -77,17 +77,30 @@
 
 <div class="flex flex-col-reverse lg:flex-row gap-4 max-w-full w-full">
   <div class="flex flex-col gap-4 max-w-full w-full">
-    <MultiSelect
-      options={['New', 'TopAll']}
-      optionNames={['New', 'Top']}
-      selected={data.sort}
-      on:select={(e) => {
-        $page.url.searchParams.set('sort', e.detail)
-        goto($page.url.toString(), {
-          invalidateAll: true,
-        })
-      }}
-    />
+    <div class="flex flex-row gap-4 flex-wrap">
+      <MultiSelect
+        options={['New', 'TopAll']}
+        optionNames={['New', 'Top']}
+        selected={data.sort}
+        on:select={(e) => {
+          $page.url.searchParams.set('sort', e.detail)
+          goto($page.url.toString(), {
+            invalidateAll: true,
+          })
+        }}
+      />
+      <MultiSelect
+        options={['all', 'posts', 'comments']}
+        optionNames={['All', 'Posts', 'Comments']}
+        selected={data.type}
+        on:select={(e) => {
+          $page.url.searchParams.set('type', e.detail)
+          goto($page.url.toString(), {
+            invalidateAll: true,
+          })
+        }}
+      />
+    </div>
     {#each data.items as item (item.counts.id)}
       {#if isComment(item) && (data.type == 'all' || data.type == 'comments')}
         <CommentItem comment={item} />
