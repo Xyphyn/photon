@@ -11,6 +11,8 @@ export async function load(req: any) {
     get(userSettings).defaultSort.sort
 
   return {
+    sort: sort,
+    page: page,
     posts: await getClient().getPosts({
       limit: 40,
       community_name: req.params.name,

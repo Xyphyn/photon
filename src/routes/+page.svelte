@@ -12,6 +12,7 @@
   import { userSettings } from '$lib/settings.js'
   import { ArchiveBox, Icon, Plus } from 'svelte-hero-icons'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
+  import Pageination from '$lib/components/ui/Pageination.svelte'
 
   export let data
 </script>
@@ -32,13 +33,11 @@
       <MultiSelect
         options={['Subscribed', 'Local', 'All']}
         disabled={[$authData?.token == undefined]}
-        selected={$page.url.searchParams.get('type') ??
-          $userSettings.defaultSort.feed}
+        selected={data.listingType}
         on:select={(e) => {
-          const url = $page.url
-          url.searchParams.set('type', e.detail)
-          url.searchParams.delete('page')
-          goto(url, {
+          $page.url.searchParams.set('type', e.detail)
+          $page.url.searchParams.delete('page')
+          goto($page.url.toString(), {
             invalidateAll: true,
           })
         }}
@@ -46,8 +45,7 @@
       <MultiSelect
         options={['Active', 'Hot', 'TopAll', 'New']}
         optionNames={['Active', 'Hot', 'Top', 'New']}
-        selected={$page.url.searchParams.get('sort') ??
-          $userSettings.defaultSort.sort}
+        selected={data.sort}
         on:select={(e) => {
           const url = $page.url
           url.searchParams.set('sort', e.detail)
@@ -60,18 +58,18 @@
     </div>
     <section class="flex flex-col gap-4">
       {#if data.posts.posts.length == 0}
-        {#if data.listingType == 'Subscribed'}
-          <div
-            class="text-slate-600 dark:text-zinc-400 flex flex-col justify-center items-center"
-          >
-            <Icon src={ArchiveBox} size="32" solid />
-            <h1 class="font-bold text-2xl">No posts</h1>
+        <div
+          class="text-slate-600 dark:text-zinc-400 flex flex-col justify-center items-center"
+        >
+          <Icon src={ArchiveBox} size="32" solid />
+          <h1 class="font-bold text-2xl">No posts</h1>
+          {#if data.listingType == 'Subscribed'}
             <Button href="/communities" class="mt-4">
               <Icon src={Plus} size="16" mini slot="icon" />
               <span>Follow some communities</span>
             </Button>
-          </div>
-        {/if}
+          {/if}
+        </div>
       {/if}
       {#each data.posts.posts as post, index (post.post.id)}
         <div in:fly={{ y: -8, opacity: 0, delay: index < 4 ? index * 100 : 0 }}>
@@ -79,20 +77,15 @@
         </div>
       {/each}
     </section>
-    <Button
-      on:click={() => {
-        $page.url.searchParams.set(
-          'page',
-          ((Number($page.url.searchParams.get('page')) || 1) + 1).toString()
-        )
-
+    <Pageination
+      page={data.page}
+      on:change={(p) => {
+        $page.url.searchParams.set('page', p.detail.toString())
         goto($page.url.toString(), {
           invalidateAll: true,
         })
       }}
-    >
-      Next
-    </Button>
+    />
   </div>
   <aside class="hidden md:block">
     {#await data.streamed.site}

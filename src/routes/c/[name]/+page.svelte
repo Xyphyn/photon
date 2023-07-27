@@ -11,6 +11,7 @@
   import { fly } from 'svelte/transition'
   import { userSettings } from '$lib/settings.js'
   import Modal from '$lib/components/ui/modal/Modal.svelte'
+  import Pageination from '$lib/components/ui/Pageination.svelte'
 
   export let data
 
@@ -70,20 +71,15 @@
         <Post {post} />
       </div>
     {/each}
-    <Button
-      on:click={() => {
-        $page.url.searchParams.set(
-          'page',
-          ((Number($page.url.searchParams.get('page')) || 1) + 1).toString()
-        )
-
+    <Pageination
+      page={data.page}
+      on:change={(p) => {
+        $page.url.searchParams.set('page', p.detail.toString())
         goto($page.url.toString(), {
           invalidateAll: true,
         })
       }}
-    >
-      Next
-    </Button>
+    />
   </div>
   <div class="hidden md:block">
     <CommunityCard community_view={data.community.community_view} />

@@ -13,6 +13,7 @@
   import TextInput from '$lib/components/input/TextInput.svelte'
   import Subscribe from './Subscribe.svelte'
   import Button from '$lib/components/input/Button.svelte'
+  import Pageination from '$lib/components/ui/Pageination.svelte'
 
   export let data
 
@@ -145,19 +146,15 @@
 </ul>
 {#if data.communities.length > 0}
   <div class="mt-2 w-full">
-    <Button
-      on:click={() => {
-        $page.url.searchParams.set(
-          'page',
-          ((Number($page.url.searchParams.get('page')) || 1) + 1).toString()
-        )
+    <Pageination
+      page={Number($page.url.searchParams.get('page')) || 1}
+      on:change={(p) => {
+        $page.url.searchParams.set('page', p.detail.toString())
 
         goto($page.url.toString(), {
           invalidateAll: true,
         })
       }}
-    >
-      Next
-    </Button>
+    />
   </div>
 {/if}
