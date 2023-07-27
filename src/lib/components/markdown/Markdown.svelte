@@ -57,19 +57,19 @@
   }
 
   .markdown :global(ul) {
-    @apply list-disc pl-4;
+    @apply list-disc pl-4 leading-3;
   }
 
   .markdown :global(ol) {
-    @apply list-decimal pl-4;
+    @apply list-decimal pl-4 leading-3;
   }
 
   .markdown :global(li) {
-    @apply m-0 !important;
+    @apply m-0 leading-[22px] !important;
   }
 
   .markdown :global(li > *) {
-    @apply m-0 !important;
+    @apply m-0 leading-[22px] !important;
   }
 
   .markdown :global(blockquote) {
