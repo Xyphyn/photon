@@ -10,7 +10,13 @@
   import Menu from '$lib/components/ui/menu/Menu.svelte'
   import Button from '$lib/components/input/Button.svelte'
   import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
-  import { Icon, LockClosed, LockOpen, Trash } from 'svelte-hero-icons'
+  import {
+    Icon,
+    InformationCircle,
+    LockClosed,
+    LockOpen,
+    Trash,
+  } from 'svelte-hero-icons'
   import { Color } from '$lib/ui/colors.js'
   import { isComment, isPost } from '$lib/lemmy/item.js'
   import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
@@ -18,7 +24,10 @@
   export let item: PostView | CommentView
 
   let locking = false
-  $: acting = locking
+  let pinning = false
+
+  $: acting = locking || pinning
+
   async function lock(lock: boolean) {
     if (!$authData || !isPost(item)) return
     locking = true
@@ -46,6 +55,34 @@
     }
 
     locking = false
+  }
+
+  async function pin(pinned: boolean) {
+    if (!$authData || !isPost(item)) return
+
+    pinning = true
+
+    try {
+      await getClient().featurePost({
+        feature_type: 'Community',
+        auth: $authData.token,
+        featured: pinned,
+        post_id: item.post.id,
+      })
+      toast({
+        content: `Successfully ${
+          pinned ? 'pinned' : 'unpinned'
+        } that post. You must refresh to see changes.`,
+        type: ToastType.success,
+      })
+    } catch (err) {
+      toast({
+        content: err as any,
+        type: ToastType.error,
+      })
+    }
+
+    pinning = false
   }
 </script>
 
@@ -77,14 +114,6 @@
   <span class="px-4 py-1 my-1 text-xs text-slate-600 dark:text-zinc-400">
     Moderation
   </span>
-  <MenuButton color="success" on:click={() => remove(item)}>
-    <Icon src={Trash} size="16" mini />
-    {#if isComment(item)}
-      {item.comment.removed ? 'Restore' : 'Remove'}
-    {:else}
-      {item.post.removed ? 'Restore' : 'Remove'}
-    {/if}
-  </MenuButton>
   <MenuButton
     color="warning"
     on:click={() => lock(!item.post.locked)}
@@ -98,5 +127,22 @@
       slot="icon"
     />
     {item.post.locked ? 'Unlock' : 'Lock'}
+  </MenuButton>
+  <MenuButton
+    color="success"
+    on:click={() => pin(isPost(item) ? !item.post.featured_community : false)}
+    loading={pinning}
+    disabled={pinning}
+  >
+    <Icon src={InformationCircle} size="16" mini />
+    {item.post.featured_community ? 'Unpin' : 'Pin'}
+  </MenuButton>
+  <MenuButton color="dangerSecondary" on:click={() => remove(item)}>
+    <Icon src={Trash} size="16" mini />
+    {#if isComment(item)}
+      {item.comment.removed ? 'Restore' : 'Remove'}
+    {:else}
+      {item.post.removed ? 'Restore' : 'Remove'}
+    {/if}
   </MenuButton>
 </Menu>
