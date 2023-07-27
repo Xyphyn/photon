@@ -10,7 +10,8 @@
       'hover:bg-black/10 hover:dark:bg-white/10 text-black dark:text-white fill-black dark:fill-white',
     dangerSecondary: 'hover:bg-red-500 text-red-500 hover:text-white',
     success: 'hover:bg-green-600 text-green-500 hover:text-white',
-    warning: 'hover:bg-yellow-600 text-yellow-300 hover:text-black',
+    warning:
+      'hover:bg-yellow-500 dark:text-yellow-300 text-yellow-500 hover:text-black',
   }
 
   export let color: ButtonColor = 'secondary'
