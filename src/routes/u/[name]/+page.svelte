@@ -20,6 +20,7 @@
     PencilSquare,
   } from 'svelte-hero-icons'
   import Button from '$lib/components/input/Button.svelte'
+  import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
 
   export let data: {
     user: GetPersonDetailsResponse
@@ -48,35 +49,8 @@
 <div class="flex flex-col-reverse lg:flex-row gap-4 max-w-full w-full">
   <div class="flex flex-col gap-4 max-w-full w-full">
     {#each items as item}
-      {#if isComment(item)}<Card
-          class="flex flex-col bg-white rounded-md p-5 flex-1"
-        >
-          <div class="flex flex-row justify-between items-center">
-            <div class="flex flex-col gap-1">
-              <span class="text-xs dark:text-slate-400 text-zinc-600">
-                <CommunityLink avatar community={item.community} />
-              </span>
-              <span class="flex flex-row items-center text-sm font-bold">
-                {item.post.name}
-              </span>
-            </div>
-            <Button
-              color="secondary"
-              href="/post/{item.post.id}#{item.comment.id}"
-              size="sm"
-              class="self-start"
-            >
-              Jump
-            </Button>
-          </div>
-          <div class="list-none">
-            <Comment
-              postId={item.post.id}
-              node={{ children: [], comment_view: item, depth: 1 }}
-              replying={false}
-            />
-          </div>
-        </Card>
+      {#if isComment(item)}
+        <CommentItem comment={item} />
       {:else}
         <Post post={item} />
       {/if}
