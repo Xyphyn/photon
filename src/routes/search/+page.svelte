@@ -10,6 +10,7 @@
   import Post from '$lib/components/lemmy/post/Post.svelte'
   import UserItem from '$lib/components/lemmy/user/UserItem.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
+  import { isComment, isCommunity, isPost, isUser } from '$lib/lemmy/item.js'
   import type {
     CommentView,
     CommunityView,
@@ -23,16 +24,6 @@
   export let data
 
   let query = ''
-
-  const isPost = (item: Result): item is PostView =>
-    'post' in item && !('comment' in item)
-
-  const isComment = (item: Result): item is CommentView => 'comment' in item
-
-  const isCommunity = (item: Result): item is CommunityView =>
-    'community' in item
-
-  const isUser = (item: Result): item is PersonView => 'person' in item
 
   let pageNum = data.page
 </script>

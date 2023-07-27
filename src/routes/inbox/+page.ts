@@ -2,15 +2,17 @@ import { authData, getClient } from '$lib/lemmy.js'
 import { getInboxItemPublished } from '$lib/lemmy/inbox.js'
 import { get } from 'svelte/store'
 
-export async function load() {
+export async function load({ url }) {
   const auth = get(authData)
   if (!auth) return
 
   const client = getClient()
 
+  const page = Number(url.searchParams.get('page')) || 1
+
   const params = {
     limit: 50,
-    page: 1,
+    page: page,
     auth: auth.token,
   }
 
@@ -36,5 +38,5 @@ export async function load() {
       Date.parse(getInboxItemPublished(a))
   )
 
-  return { data: data }
+  return { page: page, data: data }
 }

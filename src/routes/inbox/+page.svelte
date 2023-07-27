@@ -1,9 +1,4 @@
 <script lang="ts">
-  import type {
-    CommentReplyView,
-    PersonMentionView,
-    PrivateMessageView,
-  } from 'lemmy-js-client'
   import InboxItem from './InboxItem.svelte'
   import Button from '$lib/components/input/Button.svelte'
   import { Check, Icon } from 'svelte-hero-icons'
@@ -11,10 +6,9 @@
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
   import { isRead } from '$lib/lemmy/inbox.js'
+  import Pageination from '$lib/components/ui/Pageination.svelte'
 
-  export let data: {
-    data: PersonMentionView[] | CommentReplyView[] | PrivateMessageView[]
-  }
+  export let data
 
   let markingAsRead = false
 
@@ -67,5 +61,14 @@
     {#each data.data as item}
       <InboxItem {item} read={isRead(item)} />
     {/each}
+    <Pageination
+      page={data.page}
+      on:change={(p) => {
+        $page.url.searchParams.set('page', p.detail.toString())
+        goto($page.url.toString(), {
+          invalidateAll: true,
+        })
+      }}
+    />
   {/if}
 </div>
