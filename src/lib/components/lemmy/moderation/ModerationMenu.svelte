@@ -10,11 +10,43 @@
   import Menu from '$lib/components/ui/menu/Menu.svelte'
   import Button from '$lib/components/input/Button.svelte'
   import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
-  import { Icon, Trash } from 'svelte-hero-icons'
+  import { Icon, LockClosed, LockOpen, Trash } from 'svelte-hero-icons'
   import { Color } from '$lib/ui/colors.js'
-  import { isComment } from '$lib/lemmy/item.js'
+  import { isComment, isPost } from '$lib/lemmy/item.js'
+  import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
 
   export let item: PostView | CommentView
+
+  let locking = false
+  $: acting = locking
+  async function lock(lock: boolean) {
+    if (!$authData || !isPost(item)) return
+    locking = true
+
+    try {
+      await getClient().lockPost({
+        auth: $authData.token,
+        locked: lock,
+        post_id: item.post.id,
+      })
+
+      item.post.locked = lock
+
+      toast({
+        content: `Successfully ${
+          lock ? 'locked' : 'unlocked'
+        } that post. You must refresh to see changes.`,
+        type: ToastType.success,
+      })
+    } catch (err) {
+      toast({
+        content: err as any,
+        type: ToastType.error,
+      })
+    }
+
+    locking = false
+  }
 </script>
 
 <Menu let:toggleOpen alignment="bottom-right">
@@ -22,6 +54,8 @@
     class="!p-1.5 hover:text-green-500 text-zinc-400"
     on:click={toggleOpen}
     slot="button"
+    size="sm"
+    loading={acting}
     {...$$restProps}
   >
     <svg
@@ -50,5 +84,19 @@
     {:else}
       {item.post.removed ? 'Restore' : 'Remove'}
     {/if}
+  </MenuButton>
+  <MenuButton
+    color="warning"
+    on:click={() => lock(!item.post.locked)}
+    loading={locking}
+    disabled={locking}
+  >
+    <Icon
+      src={item.post.locked ? LockOpen : LockClosed}
+      size="16"
+      mini
+      slot="icon"
+    />
+    {item.post.locked ? 'Unlock' : 'Lock'}
   </MenuButton>
 </Menu>

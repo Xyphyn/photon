@@ -65,7 +65,7 @@
       size="lg"
       class="w-full"
       {loading}
-      disabled={locked}
+      disabled={locked || loading}
     >
       Submit
     </Button>

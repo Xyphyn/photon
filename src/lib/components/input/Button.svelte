@@ -88,7 +88,6 @@
   </a>
 {:else}
   <button
-    disabled={loading}
     {...$$restProps}
     on:click
     class="{`
