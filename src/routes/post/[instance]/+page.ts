@@ -6,7 +6,7 @@ export function load({ params, url }) {
   if (Number(params.instance)) {
     const split = url.pathname.split('/')
 
-    split.splice(2, 0, `${get(instance)}`)
+    split.splice(2, 0, `${get(instance)?.toLowerCase()}`)
 
     const newUrl = new URL(url)
     newUrl.pathname = split.join('/')

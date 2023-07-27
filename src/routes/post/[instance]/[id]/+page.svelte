@@ -81,7 +81,7 @@
 </svelte:head>
 
 <div class="flex flex-col gap-2">
-  {#if $authData && $page.params.instance != $authData.instance}
+  {#if $authData && $page.params.instance.toLowerCase() != $authData.instance.toLowerCase()}
     <Card cardColor="warning" class="p-4 flex flex-col gap-1">
       <Icon
         src={ExclamationTriangle}
