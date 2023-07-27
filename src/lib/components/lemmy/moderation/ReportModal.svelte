@@ -21,7 +21,7 @@
   let reason = ''
 
   async function report() {
-    if (!item || !$authData) return
+    if (!item || !$authData || reason == '') return
     loading = true
 
     try {
