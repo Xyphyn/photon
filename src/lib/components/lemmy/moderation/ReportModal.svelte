@@ -21,7 +21,7 @@
   let reason = ''
 
   async function report() {
-    if (!item || !$authData) return
+    if (!item || !$authData || reason == '') return
     loading = true
 
     try {
@@ -38,6 +38,7 @@
           reason: reason,
         })
       }
+      open = false
       toast({
         content: 'That submission has been reported.',
         type: ToastType.success,

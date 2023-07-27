@@ -202,7 +202,13 @@
       bind:files={data.image}
     />
   </div>
-  <Button submit color="primary" loading={data.loading} size="lg">
+  <Button
+    submit
+    color="primary"
+    loading={data.loading}
+    size="lg"
+    disabled={data.loading}
+  >
     Submit
   </Button>
 </form>

@@ -22,7 +22,9 @@
   import Button from '$lib/components/input/Button.svelte'
   import { createEventDispatcher } from 'svelte'
   import { isCommentMutable } from '$lib/components/lemmy/post/helpers.js'
-  import { report } from '$lib/components/lemmy/moderation/moderation.js'
+  import { isMod, report } from '$lib/components/lemmy/moderation/moderation.js'
+  import ModerationMenu from '$lib/components/lemmy/moderation/ModerationMenu.svelte'
+  import CommentModerationMenu from '$lib/components/lemmy/moderation/CommentModerationMenu.svelte'
 
   export let comment: CommentView
   export let replying: boolean = false
@@ -59,10 +61,18 @@
     bind:vote={comment.my_vote}
     commentId={comment.comment.id}
   />
-  <Button color="elevatedLow" size="sm" on:click={() => (replying = !replying)}>
+  <Button
+    color="elevatedLow"
+    size="sm"
+    on:click={() => (replying = !replying)}
+    disabled={comment.post.locked}
+  >
     <Icon src={ArrowUturnLeft} width={14} height={14} mini />
     <span class="text-xs">Reply</span>
   </Button>
+  {#if $user && isMod($user, comment.community.id)}
+    <CommentModerationMenu item={comment} />
+  {/if}
   <Menu
     let:toggleOpen
     class="h-[26px] top-0 leading-3"
@@ -91,7 +101,7 @@
       </MenuButton>
       {#if $user && $authData && isCommentMutable(comment, $user.local_user_view)}
         <MenuButton
-          color={Color.dangerSecondary}
+          color="dangerSecondary"
           on:click={async () => {
             if (!$authData) return
             try {
@@ -117,10 +127,7 @@
         </MenuButton>
       {/if}
       {#if $authData && $user?.local_user_view.person.id != comment.creator.id}
-        <MenuButton
-          on:click={() => report(comment)}
-          color={Color.dangerSecondary}
-        >
+        <MenuButton on:click={() => report(comment)} color="dangerSecondary">
           <Icon src={Flag} mini size="16" />
           <span>Report</span>
         </MenuButton>

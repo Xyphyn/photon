@@ -88,7 +88,6 @@
   </a>
 {:else}
   <button
-    disabled={loading}
     {...$$restProps}
     on:click
     class="{`
@@ -96,7 +95,8 @@
       ${buttonSize[size]}
       ${buttonRoundness[rounded]}
       text-sm transition-colors disabled:!opacity-70 disabled:!pointer-events-none
-      disabled:!border disabled:!border-slate-300 disabled:!bg-slate-200 disabled:dark:!border-zinc-700 disabled:dark:!bg-zinc-800
+      disabled:!border disabled:!border-slate-300 disabled:!bg-slate-200
+      disabled:dark:!border-zinc-700 disabled:dark:!bg-zinc-800 disabled:text-inherit
       ${$$props.class}
     `} {loading
       ? color == 'primary'

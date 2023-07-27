@@ -1,21 +1,14 @@
 <script lang="ts">
-  import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
   import Post from '$lib/components/lemmy/post/Post.svelte'
-  import Comment from '$lib/components/lemmy/comment/Comment.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
-  import Card from '$lib/components/ui/Card.svelte'
   import StickyCard from '$lib/components/ui/StickyCard.svelte'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
-  import type {
-    CommentView,
-    GetPersonDetailsResponse,
-    PostView,
-  } from 'lemmy-js-client'
   import {
     Calendar,
     ChatBubbleOvalLeftEllipsis,
+    Envelope,
     Icon,
     NoSymbol,
     PencilSquare,
@@ -25,11 +18,14 @@
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import { page } from '$app/stores'
   import { goto } from '$app/navigation'
-  import { isComment } from '$lib/components/lemmy/post/helpers.js'
+  import { isComment } from '$lib/lemmy/item.js'
   import { authData, getClient, user } from '$lib/lemmy.js'
   import { isBlocked } from '$lib/lemmy/user.js'
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
   import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
+  import Modal from '$lib/components/ui/modal/Modal.svelte'
+  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
+  import TextArea from '$lib/components/input/TextArea.svelte'
 
   export let data
 
@@ -69,11 +65,69 @@
     }
     blocking = false
   }
+
+  let loadingMessage = false
+  let messaging = false
+  let message = ''
+
+  async function sendMessage() {
+    if (!$authData || message == '') return
+
+    loadingMessage = true
+
+    try {
+      await getClient().createPrivateMessage({
+        auth: $authData.token,
+        content: message,
+        recipient_id: data.person_view.person.id,
+      })
+
+      toast({
+        content: 'Successfully sent that person a message.',
+        type: ToastType.success,
+      })
+
+      messaging = false
+    } catch (err) {
+      toast({
+        content: err as any,
+        type: ToastType.error,
+      })
+    }
+
+    loadingMessage = false
+  }
 </script>
 
 <svelte:head>
   <title>{data.person_view.person.name}</title>
 </svelte:head>
+
+{#if $authData}
+  <Modal bind:open={messaging}>
+    <h1 class="text-2xl font-bold" slot="title">Message</h1>
+    <form on:submit|preventDefault={sendMessage} class="flex flex-col gap-4">
+      <p class="inline-flex flex-row gap-2 items-center">
+        Sending <UserLink avatar user={data.person_view.person} /> a message
+      </p>
+      <TextArea
+        bind:value={message}
+        label="Message"
+        placeholder="your hair looks nice today"
+        rows={3}
+      />
+      <Button
+        color="primary"
+        size="lg"
+        submit
+        loading={loadingMessage}
+        disabled={loadingMessage}
+      >
+        Send
+      </Button>
+    </form>
+  </Modal>
+{/if}
 
 <div class="flex flex-col-reverse lg:flex-row gap-4 max-w-full w-full">
   <div class="flex flex-col gap-4 max-w-full w-full">
@@ -144,6 +198,14 @@
       </div>
       {#if $user && $authData && data.person_view.person.id != $user.local_user_view.person.id}
         <div class="flex flex-col gap-2">
+          <Button
+            size="lg"
+            color="secondary"
+            on:click={() => (messaging = true)}
+          >
+            <Icon slot="icon" solid size="16" src={Envelope} />
+            Message
+          </Button>
           <Button
             size="lg"
             color="danger"

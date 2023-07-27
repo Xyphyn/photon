@@ -2,6 +2,8 @@
   import { goto } from '$app/navigation'
   import Button from '$lib/components/input/Button.svelte'
   import Link from '$lib/components/input/Link.svelte'
+  import ShieldIcon from '$lib/components/lemmy/moderation/ShieldIcon.svelte'
+  import { isModOfAny } from '$lib/components/lemmy/moderation/moderation.js'
   import Logo from '$lib/components/ui/Logo.svelte'
   import Spinner from '$lib/components/ui/loader/Spinner.svelte'
   import Menu from '$lib/components/ui/menu/Menu.svelte'
@@ -40,7 +42,7 @@
   <div class="flex flex-row gap-2 items-center mr-auto">
     <a href="/" class="flex flex-row items-center gap-2">
       <Logo width={40} />
-      <div class="flex flex-row items-center gap-2 max-[400px]:hidden">
+      <div class="flex flex-row items-center gap-2 max-[500px]:hidden">
         <span class="opacity-30 text-xl">/</span>
         <span class="text-sm font-bold">
           {$instance}
@@ -49,23 +51,40 @@
     </a>
   </div>
   <div class="flex flex-row gap-2 py-2 px-2">
+    {#if $user && isModOfAny($user)}
+      <Button
+        href="/moderation"
+        label="Search"
+        class="max-md:w-9 max-md:h-8 max-md:!p-0 items-center justify-center
+      dark:text-zinc-300 text-slate-700 hover:text-inherit
+      hover:bg-slate-200 hover:dark:bg-zinc-900 relative"
+      >
+        {#if $user.reports ?? 0 > 0}
+          <div
+            class="rounded-full w-2 h-2 bg-red-500 absolute -top-1 -left-1"
+          />
+        {/if}
+        <ShieldIcon width={15} />
+        <span class="hidden md:inline">Reports</span>
+      </Button>
+    {/if}
     <Button
       href="/search"
       label="Search"
-      class="max-sm:w-9 max-sm:h-8 max-sm:!p-0 items-center justify-center
+      class="max-md:w-9 max-md:h-8 max-md:!p-0 items-center justify-center
       dark:text-zinc-300 text-slate-700 hover:text-inherit hover:bg-slate-200 hover:dark:bg-zinc-900"
     >
       <Icon src={MagnifyingGlass} width={16} slot="icon" />
-      <span class="hidden sm:inline">Search</span>
+      <span class="hidden md:inline">Search</span>
     </Button>
     <Button
       href="/communities"
       label="Communities"
-      class="max-sm:w-9 max-sm:h-8 max-sm:!p-0 items-center justify-center
+      class="max-md:w-9 max-md:h-8 max-md:!p-0 items-center justify-center
       dark:text-zinc-300 text-slate-700 hover:text-inherit hover:bg-slate-200 hover:dark:bg-zinc-900"
     >
       <Icon src={GlobeAlt} width={16} slot="icon" />
-      <span class="hidden sm:inline">Explore</span>
+      <span class="hidden md:inline">Explore</span>
     </Button>
     <Menu let:toggleOpen alignment="bottom-right">
       <Button
@@ -73,10 +92,10 @@
         slot="button"
         label="Create"
         on:click={toggleOpen}
-        class="max-sm:w-9 max-sm:h-8 max-sm:!p-0"
+        class="max-md:w-9 max-md:h-8 max-md:!p-0"
       >
         <Icon src={Plus} width={18} mini slot="icon" />
-        <span class="hidden sm:inline">Create</span>
+        <span class="hidden md:inline">Create</span>
       </Button>
       <li class="text-xs opacity-80 text-left mx-4 my-1 py-1">Create</li>
       <MenuButton link href="/create/post">
@@ -141,7 +160,7 @@
           user.set(undefined)
           authData.set(undefined)
         }}
-        color={Color.dangerSecondary}
+        color="dangerSecondary"
       >
         <Icon src={ArrowRightOnRectangle} mini width={16} />Log out
       </MenuButton>

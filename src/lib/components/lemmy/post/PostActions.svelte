@@ -28,7 +28,8 @@
   import { createEventDispatcher } from 'svelte'
   import Modal from '$lib/components/ui/modal/Modal.svelte'
   import PostForm from '$lib/components/lemmy/post/PostForm.svelte'
-  import { report } from '$lib/components/lemmy/moderation/moderation.js'
+  import { isMod, report } from '$lib/components/lemmy/moderation/moderation.js'
+  import ModerationMenu from '$lib/components/lemmy/moderation/ModerationMenu.svelte'
 
   export let post: PostView
 
@@ -98,7 +99,11 @@
     <Icon slot="icon" src={ChatBubbleOvalLeft} mini width={16} height={16} />
     <FormattedNumber number={post.counts.comments} />
   </Button>
-  <Menu alignment="bottom-right" class="ml-auto overflow-auto" let:toggleOpen>
+  <div class="ml-auto" />
+  {#if $user && isMod($user, post.community.id)}
+    <ModerationMenu item={post} community={post.community} />
+  {/if}
+  <Menu alignment="bottom-right" class="overflow-auto" let:toggleOpen>
     <Button
       slot="button"
       label="Post actions"
@@ -148,13 +153,13 @@
         {post.saved ? 'Unsave' : 'Save'}
       </MenuButton>
       {#if $user && isMutable(post, $user.local_user_view)}
-        <MenuButton on:click={deletePost} color={Color.dangerSecondary}>
+        <MenuButton on:click={deletePost} color="dangerSecondary">
           <Icon src={Trash} width={16} mini />
           Delete
         </MenuButton>
       {/if}
       {#if $user?.local_user_view.person.id != post.creator.id}
-        <MenuButton on:click={() => report(post)} color={Color.dangerSecondary}>
+        <MenuButton on:click={() => report(post)} color="dangerSecondary">
           <Icon src={Flag} width={16} mini />
           Report
         </MenuButton>

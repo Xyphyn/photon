@@ -26,6 +26,8 @@
         upvotes={post.counts.upvotes}
         downvotes={post.counts.downvotes}
         deleted={post.post.deleted}
+        removed={post.post.removed}
+        locked={post.post.locked}
         featured={post.post.featured_local || post.post.featured_community}
         nsfw={post.post.nsfw}
         saved={post.saved}
