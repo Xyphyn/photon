@@ -26,7 +26,7 @@
   <Avatar url={community.icon} width={24} alt={community.name} />
   <div class="flex flex-col text-xs">
     <CommunityLink {community} />
-    <span class="text-slate-600 dark:text-zinc-400 flex flex-row gap-1">
+    <span class="text-slate-600 dark:text-zinc-400 flex flex-row gap-1 flex-wrap">
       {#if user}
         <UserLink {user} />
         <span>•</span>
@@ -41,7 +41,7 @@
     </span>
   </div>
 
-  <div class="flex flex-row ml-auto gap-2">
+  <div class="flex flex-row ml-auto gap-2 flex-wrap">
     {#if nsfw}
       <Badge class="bg-red-600 text-white">NSFW</Badge>
     {/if}
