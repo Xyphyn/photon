@@ -47,6 +47,8 @@
         item.post.removed = !removed
       }
 
+      open = false
+
       toast({
         content: `Successfully ${
           removed ? 'restored' : 'removed'
@@ -62,12 +64,23 @@
 
     loading = false
   }
+
+  const resetText = () => (reason = '')
+
+  $: {
+    if (item) {
+      resetText()
+    }
+  }
 </script>
 
 <Modal bind:open>
   <span slot="title">{removed ? 'Restoring' : 'Removing'} submission</span>
   {#if item}
-    <form on:submit|preventDefault={remove} class="flex flex-col gap-4">
+    <form
+      on:submit|preventDefault={remove}
+      class="flex flex-col gap-4 list-none"
+    >
       {#if isComment(item)}
         <Comment
           node={{

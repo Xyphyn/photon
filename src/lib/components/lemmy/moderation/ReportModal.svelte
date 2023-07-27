@@ -38,6 +38,7 @@
           reason: reason,
         })
       }
+      open = false
       toast({
         content: 'That submission has been reported.',
         type: ToastType.success,

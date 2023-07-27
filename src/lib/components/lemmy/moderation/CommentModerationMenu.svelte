@@ -17,11 +17,13 @@
   export let item: PostView | CommentView
 </script>
 
-<Menu let:toggleOpen alignment="bottom-right">
+<Menu let:toggleOpen alignment="bottom-center" class="top-0 h-[26px] w-[26px]">
   <Button
-    class="!p-1.5 hover:text-green-500 text-zinc-400"
+    class="!p-1 hover:text-green-500 text-zinc-400"
+    size="sm"
     on:click={toggleOpen}
     slot="button"
+    color="elevatedLow"
     {...$$restProps}
   >
     <svg

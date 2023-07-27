@@ -22,7 +22,9 @@
   import Button from '$lib/components/input/Button.svelte'
   import { createEventDispatcher } from 'svelte'
   import { isCommentMutable } from '$lib/components/lemmy/post/helpers.js'
-  import { report } from '$lib/components/lemmy/moderation/moderation.js'
+  import { isMod, report } from '$lib/components/lemmy/moderation/moderation.js'
+  import ModerationMenu from '$lib/components/lemmy/moderation/ModerationMenu.svelte'
+  import CommentModerationMenu from '$lib/components/lemmy/moderation/CommentModerationMenu.svelte'
 
   export let comment: CommentView
   export let replying: boolean = false
@@ -63,6 +65,9 @@
     <Icon src={ArrowUturnLeft} width={14} height={14} mini />
     <span class="text-xs">Reply</span>
   </Button>
+  {#if $user && isMod($user, comment.community.id)}
+    <CommentModerationMenu item={comment} />
+  {/if}
   <Menu
     let:toggleOpen
     class="h-[26px] top-0 leading-3"
