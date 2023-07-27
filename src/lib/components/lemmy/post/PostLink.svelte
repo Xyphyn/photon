@@ -16,9 +16,9 @@
   />
   <span
     class="w-full px-4 py-1.5 overflow-hidden whitespace-nowrap text-ellipsis
-        text-sm group-hover:underline bg-slate-100 border dark:border-zinc-800
-        dark:bg-zinc-900 absolute bottom-0 rounded-b-md flex flex-row gap-1
-        items-center h-9 text-slate-700 dark:text-zinc-400"
+        text-sm group-hover:underline bg-slate-100 border dark:border-zinc-700
+        dark:bg-zinc-800 absolute bottom-0 rounded-b-md flex flex-row gap-1
+        items-center h-9"
   >
     <Icon src={Link} width={16} mini class="" />
     {new URL(url).hostname}
