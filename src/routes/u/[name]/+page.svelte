@@ -21,83 +21,74 @@
   } from 'svelte-hero-icons'
   import Button from '$lib/components/input/Button.svelte'
   import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
+  import Pageination from '$lib/components/ui/Pageination.svelte'
+  import { page } from '$app/stores'
+  import { goto } from '$app/navigation'
+  import { isComment } from '$lib/components/lemmy/post/helpers.js'
 
-  export let data: {
-    user: GetPersonDetailsResponse
-  }
-
-  const isComment = (item: CommentView | PostView): item is CommentView =>
-    'comment' in item
-
-  function getDateOfItem(item: CommentView | PostView): number {
-    if (isComment(item)) {
-      return Date.parse(item.comment.published)
-    } else {
-      return Date.parse(item.post.published)
-    }
-  }
-
-  const items = [...data.user.comments, ...data.user.posts].sort(
-    (a, b) => getDateOfItem(b) - getDateOfItem(a)
-  )
+  export let data
 </script>
 
 <svelte:head>
-  <title>{data.user.person_view.person.name}</title>
+  <title>{data.person_view.person.name}</title>
 </svelte:head>
 
 <div class="flex flex-col-reverse lg:flex-row gap-4 max-w-full w-full">
   <div class="flex flex-col gap-4 max-w-full w-full">
-    {#each items as item}
-      {#if isComment(item)}
+    {#each data.items as item}
+      {#if isComment(item) && (data.type == 'all' || data.type == 'comments')}
         <CommentItem comment={item} />
-      {:else}
+      {:else if !isComment(item) && (data.type == 'all' || data.type == 'posts')}
         <Post post={item} />
       {/if}
     {/each}
+    <Pageination
+      page={data.page}
+      on:change={(p) => {
+        $page.url.searchParams.set('page', p.detail.toString())
+        goto($page.url.toString(), {
+          invalidateAll: true,
+        })
+      }}
+    />
   </div>
 
   <div class="max-w-sm w-full mx-auto">
     <StickyCard class="w-full">
       <Avatar
         width={64}
-        url={data.user.person_view.person.avatar}
-        alt={data.user.person_view.person.name}
+        url={data.person_view.person.avatar}
+        alt={data.person_view.person.name}
       />
       <span class="flex flex-row items-center gap-1 text-sm">
         <Icon src={Calendar} width={16} height={16} mini />
         <span class="capitalize">
-          <RelativeDate
-            date={new Date(data.user.person_view.person.published)}
-          />
+          <RelativeDate date={new Date(data.person_view.person.published)} />
         </span>
       </span>
       <div class="text-sm flex flex-row flex-wrap gap-3">
         <span class="flex flex-row items-center gap-1">
           <Icon src={PencilSquare} width={16} height={16} mini />
-          <FormattedNumber number={data.user.person_view.counts.post_count} />
+          <FormattedNumber number={data.person_view.counts.post_count} />
         </span>
         <span class="flex flex-row items-center gap-1">
           <Icon src={ChatBubbleOvalLeftEllipsis} width={16} height={16} mini />
-          <FormattedNumber
-            number={data.user.person_view.counts.comment_count}
-          />
+          <FormattedNumber number={data.person_view.counts.comment_count} />
         </span>
       </div>
       <div>
         <h1 class="font-bold text-lg">
-          {data.user.person_view.person.display_name ??
-            data.user.person_view.person.name}
+          {data.person_view.person.display_name ?? data.person_view.person.name}
         </h1>
         <span class="text-sm opacity-80 flex flex-row gap-0">
-          {#if data.user.person_view.person.display_name}
-            {data.user.person_view.person.name}@
+          {#if data.person_view.person.display_name}
+            {data.person_view.person.name}@
           {/if}
-          {new URL(data.user.person_view.person.actor_id).hostname}
+          {new URL(data.person_view.person.actor_id).hostname}
         </span>
       </div>
-      {#if data.user.person_view.person.bio}
-        <Markdown source={data.user.person_view.person.bio} />
+      {#if data.person_view.person.bio}
+        <Markdown source={data.person_view.person.bio} />
       {/if}
     </StickyCard>
   </div>
