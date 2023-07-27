@@ -3,7 +3,7 @@
   import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
   import Post from '$lib/components/lemmy/post/Post.svelte'
   import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
-  import { authData, getClient } from '$lib/lemmy.js'
+  import { authData, getClient, user } from '$lib/lemmy.js'
   import { isCommentReport, isPostReport } from '$lib/lemmy/item.js'
   import type {
     CommentReportView,
@@ -11,6 +11,7 @@
     PrivateMessageReportView,
   } from 'lemmy-js-client'
   import { Check, Icon } from 'svelte-hero-icons'
+  import { get } from 'svelte/store'
 
   export let item: PostReportView | CommentReportView | PrivateMessageReportView
 
@@ -22,7 +23,7 @@
 
   let resolving = false
   async function resolve() {
-    if (!$authData) return
+    if (!$authData || !$user) return
     resolving = true
 
     try {
@@ -36,7 +37,7 @@
         resolved = !resolved
 
         toast({
-          content: `${resolved ? 'Unresolved' : 'Resolved'} that report.`,
+          content: `${resolved ? 'Resolved' : 'Unresolved'} that report.`,
           type: ToastType.success,
         })
       } else if (isPostReport(item)) {
@@ -48,10 +49,19 @@
 
         resolved = !resolved
         toast({
-          content: `${resolved ? 'Rresolved' : 'Runsolved'} that report.`,
+          content: `${resolved ? 'Resolved' : 'Unresolved'} that report.`,
           type: ToastType.success,
         })
       }
+
+      const reports = await getClient().getReportCount({
+        auth: get(authData)!.token,
+      })
+
+      $user.reports =
+        reports.comment_reports +
+        reports.post_reports +
+        (reports.private_message_reports ?? 0)
     } catch (err) {
       toast({
         content: err as any,
