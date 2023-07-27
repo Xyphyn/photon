@@ -20,7 +20,7 @@
   {#if avatar}
     <Avatar url={user.avatar} alt={user.name} width={avatarSize} />
   {/if}
-  <span class="flex gap-0">
+  <span class="flex flex-wrap gap-0">
     {#if !user.local && $userSettings.showInstance}
       {user.name}
       <span class="text-slate-500 dark:text-zinc-400 font-normal">
