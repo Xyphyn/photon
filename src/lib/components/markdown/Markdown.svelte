@@ -29,7 +29,7 @@
   })
 </script>
 
-<div class="break-words flex flex-col markdown gap-2">
+<div class="break-words flex flex-col markdown gap-2 leading-[22px]">
   {@html md.render(source)}
 </div>
 

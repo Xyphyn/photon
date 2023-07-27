@@ -54,7 +54,7 @@
   export let size: ButtonSize = 'md'
   export let rounded: ButtonRoundness = 'md'
 
-  const dispatch = createEventDispatcher()
+  // const dispatch = createEventDispatcher()
   export let href: string | undefined = undefined
 </script>
 
@@ -90,7 +90,7 @@
   <button
     disabled={loading}
     {...$$restProps}
-    on:click={(e) => dispatch('click', e)}
+    on:click
     class="{`
       ${buttonColor[color]}
       ${buttonSize[size]}

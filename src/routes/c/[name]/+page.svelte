@@ -10,8 +10,11 @@
   import { Color } from '$lib/ui/colors'
   import { fly } from 'svelte/transition'
   import { userSettings } from '$lib/settings.js'
+  import Modal from '$lib/components/ui/modal/Modal.svelte'
 
   export let data
+
+  let sidebar: boolean = false
 </script>
 
 <svelte:head>
@@ -29,24 +32,23 @@
   <meta name="og:url" content={$page.url.toString()} />
 </svelte:head>
 
-<div class="flex flex-col md:flex-row gap-4 w-full">
-  <div class="md:hidden">
-    <details>
-      <summary class="flex flex-row">
-        <div
-          class="{Color.secondary} px-3 py-1 transition-colors text-sm
-            rounded-md cursor-pointer mb-1"
-        >
-          Sidebar
-        </div>
-      </summary>
-      <CommunityCard community_view={data.community.community_view} />
-    </details>
+<Modal bind:open={sidebar}>
+  <span slot="title">Sidebar</span>
+  <div class="mx-auto">
+    <CommunityCard community_view={data.community.community_view} />
   </div>
+</Modal>
+
+<div class="flex flex-col md:flex-row gap-4 w-full">
   <div class="flex flex-col gap-4 max-w-full w-full min-w-0">
     <h1 class="text-2xl font-bold">
       {data.community.community_view.community.title}
     </h1>
+    <div class="md:hidden">
+      <Button color="secondary" on:click={() => (sidebar = true)}>
+        Sidebar
+      </Button>
+    </div>
     <div class="flex flex-col sm:flex-row gap-4 max-w-full w-full">
       <MultiSelect
         options={['Active', 'Hot', 'TopAll', 'New']}
