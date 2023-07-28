@@ -22,7 +22,7 @@
       <PostMeta
         community={post.community}
         user={post.creator}
-        published={new Date(post.post.published)}
+        published={new Date(post.post.published + 'Z')}
         upvotes={post.counts.upvotes}
         downvotes={post.counts.downvotes}
         deleted={post.post.deleted}
