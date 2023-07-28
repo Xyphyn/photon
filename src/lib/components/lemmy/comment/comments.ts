@@ -24,8 +24,7 @@ function getDepthFromComment(comment?: Comment): number | undefined {
 
 export function buildCommentsTree(
   comments: CommentView[],
-  parentComment: boolean,
-  baseDepth: number = 0
+  parentComment: boolean
 ): CommentNodeI[] {
   const map = new Map<number, CommentNodeI>()
   const depthOffset = !parentComment
@@ -38,7 +37,7 @@ export function buildCommentsTree(
     const node: CommentNodeI = {
       comment_view,
       children: [],
-      depth: depth + baseDepth,
+      depth,
     }
     map.set(comment_view.comment.id, { ...node })
   }
@@ -72,50 +71,6 @@ export function buildCommentsTree(
   }
 
   return tree
-}
-
-export function searchCommentTree(
-  tree: CommentNodeI[],
-  id: number
-): CommentNodeI | undefined {
-  for (const node of tree) {
-    if (node.comment_view.comment.id === id) {
-      return node
-    }
-
-    for (const child of node.children) {
-      const res = searchCommentTree([child], id)
-
-      if (res) {
-        return res
-      }
-    }
-  }
-  return undefined
-}
-
-export function insertCommentIntoTree(
-  tree: CommentNodeI[],
-  cv: CommentView,
-  parentComment: boolean
-) {
-  // Building a fake node to be used for later
-  const node: CommentNodeI = {
-    comment_view: cv,
-    children: [],
-    depth: 0,
-  }
-
-  const parentId = getCommentParentId(cv.comment)
-  if (parentId) {
-    const parent_comment = searchCommentTree(tree, parentId)
-    if (parent_comment) {
-      node.depth = parent_comment.depth + 1
-      parent_comment.children.unshift(node)
-    }
-  } else if (!parentComment) {
-    tree.unshift(node)
-  }
 }
 
 export async function buildCommentsTreeAsync(
