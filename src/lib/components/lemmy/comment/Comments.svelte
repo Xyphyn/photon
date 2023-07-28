@@ -2,7 +2,7 @@
   import Comment from './Comment.svelte'
   import { buildCommentsTree, type CommentNodeI } from './comments'
   import { page } from '$app/stores'
-  import { onMount } from 'svelte'
+  import { onMount, setContext } from 'svelte'
   import Button from '$lib/components/input/Button.svelte'
   import { ChevronDown, Icon } from 'svelte-hero-icons'
   import { authData, getClient } from '$lib/lemmy.js'
@@ -13,6 +13,10 @@
   export let nodes: CommentNodeI[]
   export let isParent: boolean
   export let post: Post
+
+  if (isParent) {
+    setContext('comments:tree', nodes)
+  }
 
   onMount(() => {
     if (isParent && $page.url.hash) {

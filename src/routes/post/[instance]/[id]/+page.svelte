@@ -139,7 +139,7 @@
   {#if post.body}
     <p
       class="bg-slate-100 border border-slate-200 dark:border-zinc-800
-    dark:bg-zinc-900 p-2 text-sm rounded-md leading-[22px]"
+    dark:bg-zinc-900 p-2 md:p-4 text-sm rounded-md leading-[22px]"
     >
       <Markdown source={post.body} />
     </p>

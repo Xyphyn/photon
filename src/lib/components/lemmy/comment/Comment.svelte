@@ -8,14 +8,14 @@
     Plus,
     Trash,
   } from 'svelte-hero-icons'
-  import type { CommentNodeI } from './comments'
+  import { insertCommentIntoTree, type CommentNodeI } from './comments'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import CommentForm from './CommentForm.svelte'
   import { page } from '$app/stores'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import CommentActions from '$lib/components/lemmy/comment/CommentActions.svelte'
-  import { createEventDispatcher } from 'svelte'
+  import { createEventDispatcher, getContext } from 'svelte'
   import type { CommentView } from 'lemmy-js-client'
   import Modal from '$lib/components/ui/modal/Modal.svelte'
   import { authData, getClient } from '$lib/lemmy.js'
@@ -163,14 +163,11 @@
           {postId}
           parentId={node.comment_view.comment.id}
           on:comment={(e) => {
-            node.children = [
-              {
-                children: [],
-                depth: node.depth + 1,
-                comment_view: e.detail.comment_view,
-              },
-              ...node.children,
-            ]
+            insertCommentIntoTree(
+              getContext('comments:tree'),
+              e.detail.comment_view,
+              false
+            )
             replying = false
           }}
         />
