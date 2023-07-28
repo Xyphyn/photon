@@ -48,17 +48,32 @@
 
       if (newComments.comments.length == 0) {
         loadingChildren = false
+        toast({
+          content: 'The API returned no comments.',
+          type: ToastType.error,
+        })
         return
       }
 
-      // this code sucks, but for some reason it works
-      // lemmy api is quite goofy
-      parent.children = buildCommentsTree(newComments.comments, true).find(
+      const tree = buildCommentsTree(newComments.comments, false)
+
+      // 0.18.2 -> 0.18.3 broke this
+      // so i'm adding this check
+      const treeParent = tree.find(
         (c) => c.comment_view.comment.id == parent.comment_view.comment.id
-      )!.children
+      )
+
+      if (treeParent) {
+        // < 0.18.3
+        parent.children = treeParent.children
+      } else {
+        // 0.18.3+
+        parent.children = tree
+      }
     } catch (error) {
+      console.error(error)
       toast({
-        content: 'Failed to fetch comments',
+        content: `Failed to fetch comments. ${error as any}`,
         type: ToastType.error,
       })
     }
