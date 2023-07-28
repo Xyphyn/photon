@@ -9,8 +9,6 @@
   import type { CommentView, Post } from 'lemmy-js-client'
   import { fly } from 'svelte/transition'
   import { toast, ToastType } from '$lib/components/ui/toasts/toasts.js'
-  import Modal from '$lib/components/ui/modal/Modal.svelte'
-  import TextArea from '$lib/components/input/TextArea.svelte'
 
   export let nodes: CommentNodeI[]
   export let isParent: boolean
@@ -55,7 +53,7 @@
         return
       }
 
-      const tree = buildCommentsTree(newComments.comments, false)
+      const tree = buildCommentsTree(newComments.comments, true, 1)
 
       // 0.18.2 -> 0.18.3 broke this
       // so i'm adding this check
