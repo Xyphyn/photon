@@ -1,32 +1,7 @@
 <script lang="ts">
   import { md } from '$lib/components/markdown/markdown'
-  import { page } from '$app/stores'
 
   export let source: string = ''
-
-  md.linkify.add('!', {
-    validate: function (text, pos, self) {
-      var tail = text.slice(pos)
-
-      if (!self.re.community) {
-        self.re.community = new RegExp(
-          /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z]{2,6})/
-        )
-      }
-      if (self.re.community.test(tail)) {
-        // Linkifier allows punctuation chars before prefix,
-        // but we additionally disable `@` ("@@mention" is invalid)
-        if (pos >= 2 && tail[pos - 2] === '!') {
-          return false
-        }
-        return tail.match(self.re.community)![0].length
-      }
-      return 0
-    },
-    normalize: function (match) {
-      match.url = `${$page.url.origin}/c/${match.url.slice(1)}`
-    },
-  })
 </script>
 
 <div class="break-words flex flex-col markdown gap-2 leading-[22px]">
@@ -42,6 +17,10 @@
   }
   .markdown :global(h3) {
     @apply text-xl font-bold;
+  }
+
+  .markdown :global(details) {
+    @apply cursor-pointer;
   }
 
   .markdown :global(hr) {

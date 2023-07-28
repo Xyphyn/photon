@@ -6,7 +6,7 @@ import { env } from '$env/dynamic/public'
 import { isModOfAny } from '$lib/components/lemmy/moderation/moderation.js'
 
 export const LINKED_INSTANCE_URL = env.PUBLIC_INSTANCE_URL
-export const DEFAULT_INSTANCE_URL = env.PUBLIC_INSTANCE_URL || 'lemm.ee'
+export const DEFAULT_INSTANCE_URL = env.PUBLIC_INSTANCE_URL || 'lemme'
 export let instance = writable(DEFAULT_INSTANCE_URL)
 export let corsSupported = writable(true)
 
