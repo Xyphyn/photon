@@ -70,7 +70,7 @@
     <Icon src={ArrowUturnLeft} width={14} height={14} mini />
     <span class="text-xs">Reply</span>
   </Button>
-  {#if $user && isMod($user, comment.community.id)}
+  {#if $user && isMod($user, comment.community)}
     <CommentModerationMenu item={comment} />
   {/if}
   <Menu

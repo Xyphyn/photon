@@ -100,7 +100,7 @@
     <FormattedNumber number={post.counts.comments} />
   </Button>
   <div class="ml-auto" />
-  {#if $user && isMod($user, post.community.id)}
+  {#if $user && isMod($user, post.community)}
     <ModerationMenu item={post} community={post.community} />
   {/if}
   <Menu alignment="bottom-right" class="overflow-auto" let:toggleOpen>

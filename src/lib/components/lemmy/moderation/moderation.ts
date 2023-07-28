@@ -1,4 +1,10 @@
-import type { CommentView, MyUserInfo, PostView } from 'lemmy-js-client'
+import type {
+  CommentView,
+  Community,
+  CommunityView,
+  MyUserInfo,
+  PostView,
+} from 'lemmy-js-client'
 import { writable } from 'svelte/store'
 
 interface Modals {
@@ -43,9 +49,11 @@ export function remove(item: PostView | CommentView) {
   }))
 }
 
-export const isMod = (me: MyUserInfo, community: number) =>
-  me.moderates.map((c) => c.community.id).includes(community)
+export const isMod = (me: MyUserInfo, community: Community) =>
+  me.moderates.map((c) => c.community.id).includes(community.id) ||
+  (community.local && isAdmin(me))
 
-export const isModOfAny = (me?: MyUserInfo) => me && me.moderates.length > 0
+export const isModOfAny = (me?: MyUserInfo) =>
+  me && (me.moderates.length > 0 || isAdmin(me))
 
 export const isAdmin = (me: MyUserInfo) => me.local_user_view.person.admin
