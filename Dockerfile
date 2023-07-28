@@ -12,4 +12,8 @@ COPY . .
 
 RUN ADAPTER=node npm run build
 
+RUN chown -R node /app
+
+USER node
+
 CMD ["npm", "run", "start"]
