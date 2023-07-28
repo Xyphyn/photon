@@ -71,6 +71,7 @@
       postId={node.comment_view.comment.id}
       bind:value={newComment}
       actions={false}
+      preview={true}
     />
   </Modal>
 {/if}
@@ -142,7 +143,7 @@
       class="flex flex-col whitespace-pre-wrap
       max-w-full gap-1"
     >
-      <div class="max-w-full mt-0.5 break-words text-sm leading-[22px]">
+      <div class="max-w-full mt-0.5 break-words text-sm">
         <Markdown source={node.comment_view.comment.content} />
       </div>
       {#if actions}

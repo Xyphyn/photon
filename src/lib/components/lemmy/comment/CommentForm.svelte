@@ -6,6 +6,8 @@
   import { createEventDispatcher } from 'svelte'
   import { ToastType, addToast } from '$lib/components/ui/toasts/toasts.js'
   import TextArea from '$lib/components/input/TextArea.svelte'
+  import MultiSelect from '$lib/components/input/MultiSelect.svelte'
+  import Markdown from '$lib/components/markdown/Markdown.svelte'
 
   export let postId: number
   export let parentId: number | undefined = undefined
@@ -16,7 +18,11 @@
   export let value = ''
   export let actions = true
 
+  let previewAction = true
+  export { previewAction as preview }
+
   let loading = false
+  let preview = false
 
   async function submit() {
     if (!$user || !$authData || value == '') return
@@ -52,26 +58,44 @@
 </script>
 
 <div class="flex flex-col gap-2 relative">
-  <TextArea
-    rows={4}
-    placeholder={locked ? 'This post is locked.' : 'What are you thinking?'}
-    class="!bg-slate-100 dark:!bg-zinc-900"
-    bind:value
-    disabled={locked}
-  />
-  {#if actions}
-    <div class="sm:ml-auto sm:w-28">
-      <Button
-        large
-        on:click={submit}
-        color="primary"
-        size="lg"
-        class="w-full"
-        {loading}
-        disabled={locked || loading}
-      >
-        Submit
-      </Button>
+  {#if preview}
+    <div
+      class="bg-slate-100 dark:bg-zinc-900 px-3 py-2.5 h-[102px] border
+      border-slate-300 dark:border-zinc-700 rounded-md overflow-auto text-sm"
+    >
+      <Markdown source={value} />
+    </div>
+  {:else}
+    <TextArea
+      rows={4}
+      placeholder={locked ? 'This post is locked.' : 'What are you thinking?'}
+      class="!bg-slate-100 dark:!bg-zinc-900"
+      bind:value
+      disabled={locked}
+    />
+  {/if}
+  {#if actions || previewAction}
+    <div class="flex flex-row items-center justify-between">
+      {#if previewAction}
+        <MultiSelect
+          options={[false, true]}
+          optionNames={['Edit', 'Preview']}
+          bind:selected={preview}
+        />
+      {/if}
+      {#if actions}
+        <Button
+          large
+          on:click={submit}
+          color="primary"
+          size="lg"
+          class="sm:ml-auto w-28"
+          {loading}
+          disabled={locked || loading}
+        >
+          Submit
+        </Button>
+      {/if}
     </div>
   {/if}
 </div>
