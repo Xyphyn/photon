@@ -91,7 +91,7 @@
 
 <Menu let:toggleOpen alignment="bottom-right">
   <Button
-    class="!p-1.5 hover:text-green-500 text-zinc-400"
+    class="!p-1.5 hover:text-green-500 dark:text-zinc-400 text-slate-500"
     on:click={toggleOpen}
     slot="button"
     size="sm"
