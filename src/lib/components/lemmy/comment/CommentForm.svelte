@@ -13,24 +13,26 @@
 
   const dispatch = createEventDispatcher<{ comment: CommentResponse }>()
 
-  let newComment = ''
+  export let value = ''
+  export let actions = true
+
   let loading = false
 
   async function submit() {
-    if (!$user || !$authData || newComment == '') return
+    if (!$user || !$authData || value == '') return
 
     loading = true
 
     try {
       const response = await getClient().createComment({
         auth: $authData.token,
-        content: newComment,
+        content: value,
         post_id: postId,
         parent_id: parentId,
       })
       dispatch('comment', response)
 
-      newComment = ''
+      value = ''
       addToast(
         'Success',
         'Your comment was added. You may need to refresh to see it.',
@@ -54,20 +56,22 @@
     rows={4}
     placeholder={locked ? 'This post is locked.' : 'What are you thinking?'}
     class="!bg-slate-100 dark:!bg-zinc-900"
-    bind:value={newComment}
+    bind:value
     disabled={locked}
   />
-  <div class="sm:ml-auto sm:w-28">
-    <Button
-      large
-      on:click={submit}
-      color="primary"
-      size="lg"
-      class="w-full"
-      {loading}
-      disabled={locked || loading}
-    >
-      Submit
-    </Button>
-  </div>
+  {#if actions}
+    <div class="sm:ml-auto sm:w-28">
+      <Button
+        large
+        on:click={submit}
+        color="primary"
+        size="lg"
+        class="w-full"
+        {loading}
+        disabled={locked || loading}
+      >
+        Submit
+      </Button>
+    </div>
+  {/if}
 </div>

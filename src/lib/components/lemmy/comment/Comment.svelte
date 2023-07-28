@@ -67,7 +67,10 @@
     }}
   >
     <span slot="title">Edit comment</span>
-    <TextArea bind:value={newComment} />
+    <CommentForm
+      postId={node.comment_view.comment.id}
+      bind:value={newComment}
+    />
   </Modal>
 {/if}
 
