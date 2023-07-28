@@ -12,4 +12,6 @@ COPY . .
 
 RUN ADAPTER=node npm run build
 
+USER node
+
 CMD ["npm", "run", "start"]
