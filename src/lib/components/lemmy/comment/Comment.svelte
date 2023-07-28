@@ -70,6 +70,7 @@
     <CommentForm
       postId={node.comment_view.comment.id}
       bind:value={newComment}
+      actions={false}
     />
   </Modal>
 {/if}
