@@ -6,7 +6,9 @@
 
 <a
   {href}
-  class="flex flex-row gap-2 {highlight ? 'text-sky-500' : ''} hover:underline"
+  class="inline-flex flex-row gap-2 {highlight
+    ? 'text-sky-500'
+    : ''} hover:underline"
   {...$$restProps}
 >
   <slot name="icon" />

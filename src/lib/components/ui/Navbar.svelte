@@ -98,10 +98,15 @@
         <span class="hidden md:inline">Create</span>
       </Button>
       <li class="text-xs opacity-80 text-left mx-4 my-1 py-1">Create</li>
-      <MenuButton link href="/create/post">
+      <MenuButton link href="/create/post" disabled={$authData == undefined}>
         <Icon src={PencilSquare} mini width={16} />
         Post
       </MenuButton>
+      {#if !$authData}
+        <span class="text-sm mx-4 my-1 py-1">
+          <Link highlight href="/login">Log in</Link> to create content.
+        </span>
+      {/if}
     </Menu>
   </div>
   <Menu let:toggleOpen alignment="bottom-right" itemsClass="!h-8">

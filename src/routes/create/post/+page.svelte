@@ -2,6 +2,14 @@
   import { goto } from '$app/navigation'
   import PostForm from '$lib/components/lemmy/post/PostForm.svelte'
   import Card from '$lib/components/ui/Card.svelte'
+  import { authData } from '$lib/lemmy.js'
+  import { onMount } from 'svelte'
+
+  onMount(() => {
+    if (!$authData) {
+      goto('/login')
+    }
+  })
 </script>
 
 <svelte:head>

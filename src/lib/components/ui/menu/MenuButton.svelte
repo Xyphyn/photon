@@ -29,7 +29,7 @@
       {href}
       class="flex flex-row gap-2 items-center px-4 py-2 w-full text-sm transition-colors {buttonColors[
         color
-      ]}"
+      ]} {disabled ? 'opacity-50 pointer-events-none' : ''}"
     >
       <slot />
     </a>
