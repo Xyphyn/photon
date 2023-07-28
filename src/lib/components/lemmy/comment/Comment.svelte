@@ -8,7 +8,7 @@
     Plus,
     Trash,
   } from 'svelte-hero-icons'
-  import { insertCommentIntoTree, type CommentNodeI } from './comments'
+  import type { CommentNodeI } from './comments'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import CommentForm from './CommentForm.svelte'
   import { page } from '$app/stores'
@@ -163,11 +163,11 @@
           {postId}
           parentId={node.comment_view.comment.id}
           on:comment={(e) => {
-            insertCommentIntoTree(
-              getContext('comments:tree'),
-              e.detail.comment_view,
-              false
-            )
+            node.children.push({
+              children: [],
+              comment_view: e.detail.comment_view,
+              depth: node.depth + 1,
+            })
             replying = false
           }}
         />
