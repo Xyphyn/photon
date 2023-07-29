@@ -59,7 +59,7 @@
         return
       }
 
-      const tree = buildCommentsTree(newComments.comments, false)
+      const tree = buildCommentsTree(newComments.comments, parent.depth)
 
       // 0.18.2 -> 0.18.3 broke this
       // so i'm adding this check
