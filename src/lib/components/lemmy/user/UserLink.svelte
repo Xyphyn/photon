@@ -1,4 +1,5 @@
 <script lang="ts">
+  import ShieldIcon from '$lib/components/lemmy/moderation/ShieldIcon.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import { userSettings } from '$lib/settings.js'
   import type { Person } from 'lemmy-js-client'
@@ -30,4 +31,11 @@
       {user.name}
     {/if}
   </span>
+  {#if user.admin}
+    <span>
+      <div class="text-red-500" title="Admin">
+        <ShieldIcon width={12} filled />
+      </div>
+    </span>
+  {/if}
 </a>
