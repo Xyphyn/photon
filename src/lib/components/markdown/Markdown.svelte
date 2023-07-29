@@ -4,7 +4,7 @@
   export let source: string = ''
 </script>
 
-<div class="break-words flex flex-col markdown gap-2 leading-[1.4]">
+<div class="break-words flex flex-col markdown gap-2 leading-[1.5]">
   {@html md.render(source)}
 </div>
 
@@ -52,11 +52,11 @@
   }
 
   .markdown :global(li) {
-    @apply m-0 leading-[1.4] !important;
+    @apply m-0 leading-[1.5] !important;
   }
 
   .markdown :global(li > *) {
-    @apply m-0 leading-[1.4] !important;
+    @apply m-0 leading-[1.5] !important;
   }
 
   .markdown :global(blockquote) {
@@ -64,6 +64,6 @@
   }
 
   .markdown :global(p) {
-    @apply leading-[1.4];
+    @apply leading-[1.5];
   }
 </style>

@@ -92,6 +92,7 @@
       {/if}
     {/each}
   </div>
+  <div class="mt-4" />
   <Pageination
     bind:page={pageNum}
     on:change={(p) => {

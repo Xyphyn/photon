@@ -1,7 +1,7 @@
 import { authData, getClient } from '$lib/lemmy.js'
 import { get } from 'svelte/store'
 
-export async function load({ params }) {
+export async function load({ params, url }) {
   const post = await getClient(params.instance.toLowerCase()).getPost({
     id: Number(params.id),
     auth: get(authData)?.token,
