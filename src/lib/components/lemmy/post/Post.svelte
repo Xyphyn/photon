@@ -16,7 +16,7 @@
   export let actions: boolean = true
 </script>
 
-<Card class="bg-white flex flex-col w-full p-5 gap-2.5">
+<Card class="flex flex-col w-full px-5 py-5 gap-2.5">
   <div class="flex flex-row w-full gap-2.5">
     <div class="flex flex-col gap-1.5 grow">
       <PostMeta

@@ -56,7 +56,9 @@
         }}
       />
     </div>
-    <section class="flex flex-col gap-4">
+    <section
+      class="flex flex-col divide-y dark:divide-zinc-800 divide-slate-200"
+    >
       {#if data.posts.posts.length == 0}
         <div
           class="text-slate-600 dark:text-zinc-400 flex flex-col justify-center items-center"
