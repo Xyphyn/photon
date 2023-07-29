@@ -21,8 +21,8 @@
   {#if avatar}
     <Avatar url={user.avatar} alt={user.name} width={avatarSize} />
   {/if}
-  <span class="flex flex-wrap gap-0">
-    {#if !user.local && $userSettings.showInstance}
+  <span class="flex flex-wrap gap-0" class:text-red-500={user.admin}>
+    {#if $userSettings.showInstance}
       {user.name}
       <span class="text-slate-500 dark:text-zinc-400 font-normal">
         @{new URL(user.actor_id).hostname}

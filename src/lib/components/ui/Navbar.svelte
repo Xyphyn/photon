@@ -3,7 +3,7 @@
   import Button from '$lib/components/input/Button.svelte'
   import Link from '$lib/components/input/Link.svelte'
   import ShieldIcon from '$lib/components/lemmy/moderation/ShieldIcon.svelte'
-  import { isModOfAny } from '$lib/components/lemmy/moderation/moderation.js'
+  import { amModOfAny } from '$lib/components/lemmy/moderation/moderation.js'
   import Logo from '$lib/components/ui/Logo.svelte'
   import Spinner from '$lib/components/ui/loader/Spinner.svelte'
   import Menu from '$lib/components/ui/menu/Menu.svelte'
@@ -51,7 +51,7 @@
     </a>
   </div>
   <div class="flex flex-row gap-2 py-2 px-2">
-    {#if $user && isModOfAny($user)}
+    {#if $user && amModOfAny($user)}
       <Button
         href="/moderation"
         label="Search"

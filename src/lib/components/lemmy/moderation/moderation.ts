@@ -49,11 +49,11 @@ export function remove(item: PostView | CommentView) {
   }))
 }
 
-export const isMod = (me: MyUserInfo, community: Community) =>
+export const amMod = (me: MyUserInfo, community: Community) =>
   me.moderates.map((c) => c.community.id).includes(community.id) ||
   (community.local && isAdmin(me))
 
-export const isModOfAny = (me?: MyUserInfo) =>
+export const amModOfAny = (me?: MyUserInfo) =>
   me && (me.moderates.length > 0 || isAdmin(me))
 
 export const isAdmin = (me: MyUserInfo) => me.local_user_view.person.admin

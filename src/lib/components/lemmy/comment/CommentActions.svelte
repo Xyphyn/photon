@@ -22,7 +22,7 @@
   import Button from '$lib/components/input/Button.svelte'
   import { createEventDispatcher } from 'svelte'
   import { isCommentMutable } from '$lib/components/lemmy/post/helpers.js'
-  import { isMod, report } from '$lib/components/lemmy/moderation/moderation.js'
+  import { amMod, report } from '$lib/components/lemmy/moderation/moderation.js'
   import ModerationMenu from '$lib/components/lemmy/moderation/ModerationMenu.svelte'
   import CommentModerationMenu from '$lib/components/lemmy/moderation/CommentModerationMenu.svelte'
 
@@ -70,7 +70,7 @@
     <Icon src={ArrowUturnLeft} width={14} height={14} mini />
     <span class="text-xs">Reply</span>
   </Button>
-  {#if $user && isMod($user, comment.community)}
+  {#if $user && amMod($user, comment.community)}
     <CommentModerationMenu item={comment} />
   {/if}
   <Menu

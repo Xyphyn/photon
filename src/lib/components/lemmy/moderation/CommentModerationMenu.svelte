@@ -6,7 +6,7 @@
     CommunityView,
     PostView,
   } from 'lemmy-js-client'
-  import { isMod, remove } from './moderation'
+  import { amMod, remove } from './moderation'
   import Menu from '$lib/components/ui/menu/Menu.svelte'
   import Button from '$lib/components/input/Button.svelte'
   import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
