@@ -24,31 +24,29 @@ function getDepthFromComment(comment?: Comment): number | undefined {
 
 export function buildCommentsTree(
   comments: CommentView[],
-  parentComment: boolean,
   baseDepth: number = 0
 ): CommentNodeI[] {
   const map = new Map<number, CommentNodeI>()
-  const depthOffset = !parentComment
-    ? 0
-    : getDepthFromComment(comments[0].comment) ?? 0
 
+  let min_depth = Number.MAX_VALUE
   for (const comment_view of comments) {
     const depthI = getDepthFromComment(comment_view.comment) ?? 0
-    const depth = depthI ? depthI - depthOffset : 0
+    const depth = depthI + baseDepth
     const node: CommentNodeI = {
       comment_view,
       children: [],
-      depth: depth + baseDepth,
+      depth: depth,
     }
+    min_depth = Math.min(min_depth, depth)
     map.set(comment_view.comment.id, { ...node })
   }
 
   const tree: CommentNodeI[] = []
 
-  // if its a parent comment fetch, then push the first comment to the top node.
-  if (parentComment) {
-    const cNode = map.get(comments[0].comment.id)
-    if (cNode) {
+  // push all nodes at the minimum depth to the top of the tree
+  for (const comment_view of comments) {
+    const cNode = map.get(comment_view.comment.id)
+    if (cNode && cNode.depth == min_depth) {
       tree.push(cNode)
     }
   }
@@ -62,10 +60,6 @@ export function buildCommentsTree(
         // Necessary because blocked comment might not exist
         if (parent) {
           parent.children.push(child)
-        }
-      } else {
-        if (!parentComment) {
-          tree.push(child)
         }
       }
     }
@@ -120,9 +114,8 @@ export function insertCommentIntoTree(
 
 export async function buildCommentsTreeAsync(
   comments: CommentView[],
-  parentComment: boolean
 ) {
-  const result = buildCommentsTree(comments, parentComment)
+  const result = buildCommentsTree(comments)
 
   return result
 }
