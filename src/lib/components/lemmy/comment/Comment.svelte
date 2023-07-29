@@ -159,7 +159,7 @@
       {/if}
     </div>
     {#if replying}
-      <div class="max-w-sm my-2">
+      <div class="max-w-full my-2">
         <h1 class="font-bold text-sm mb-2">Reply</h1>
         <CommentForm
           {postId}
