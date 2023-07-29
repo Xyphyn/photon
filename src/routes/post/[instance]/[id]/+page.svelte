@@ -137,12 +137,12 @@
     </video>
   {/if}
   {#if post.body}
-    <p
+    <div
       class="bg-slate-100 border border-slate-200 dark:border-zinc-800
     dark:bg-zinc-900 p-2 md:p-4 text-sm rounded-md leading-[22px]"
     >
       <Markdown source={post.body} />
-    </p>
+    </div>
   {/if}
   <div class="w-full relative">
     <PostActions

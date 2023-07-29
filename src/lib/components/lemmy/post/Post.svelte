@@ -108,7 +108,7 @@
       />
     {/if}
     {#if post.post.body && !post.post.nsfw}
-      <p
+      <div
         class="text-sm line-clamp-3 bg-slate-100 dark:bg-zinc-800
             border border-slate-200 dark:border-zinc-700 rounded-md p-2"
       >
@@ -118,7 +118,7 @@
             ? `${post.post.body.slice(0, 350)}...`
             : post.post.body}
         />
-      </p>
+      </div>
     {/if}
   {/if}
   {#if actions}
