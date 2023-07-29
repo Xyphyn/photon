@@ -34,7 +34,7 @@
       />
       <a
         href="/post/{getInstance()}/{post.post.id}"
-        class="font-bold"
+        class="font-medium"
         class:text-slate-500={post.read && $userSettings.markReadPosts}
         class:dark:text-zinc-400={post.read && $userSettings.markReadPosts}
       >

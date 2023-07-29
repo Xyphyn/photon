@@ -77,7 +77,7 @@
 {/if}
 
 <li
-  class="py-2 pb-3 {node.depth == 0
+  class="py-2 {node.depth == 0
     ? 'border-b border-slate-200 dark:border-zinc-800'
     : ''}"
   id="#{node.comment_view.comment.id.toString()}"
@@ -101,7 +101,9 @@
             {node.comment_view.counts.score}
           </div>
         {/if}
-        <RelativeDate date={new Date(node.comment_view.comment.published + 'Z')} />
+        <RelativeDate
+          date={new Date(node.comment_view.comment.published + 'Z')}
+        />
         <span>•</span>
         <span>
           {Math.floor(
@@ -147,7 +149,7 @@
         <Markdown source={node.comment_view.comment.content} />
       </div>
       {#if actions}
-        <div class="flex flex-row gap-2 items-center h-[26px]">
+        <div class="flex flex-row gap-2 items-center">
           <CommentActions
             comment={node.comment_view}
             bind:replying

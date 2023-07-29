@@ -187,7 +187,7 @@
         locked={postData.post.locked}
       />
     {/if}
-    {#await buildCommentsTreeAsync(comments.comments, false)}
+    {#await buildCommentsTreeAsync(comments.comments)}
       <div class="h-16 mx-auto grid place-items-center">
         <Spinner width={36} />
       </div>

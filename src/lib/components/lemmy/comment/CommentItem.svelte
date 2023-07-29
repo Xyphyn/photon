@@ -28,7 +28,10 @@
       Jump
     </Button>
   </div>
-  <a href="/post/{getInstance()}/{comment.post.id}" class="font-bold text-base">
+  <a
+    href="/post/{getInstance()}/{comment.post.id}"
+    class="font-medium text-base"
+  >
     {comment.post.name}
   </a>
   <div class="list-none">

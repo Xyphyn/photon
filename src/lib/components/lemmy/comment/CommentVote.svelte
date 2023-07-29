@@ -59,9 +59,7 @@
 
 <div
   class="flex flex-row items-center rounded-md transition-colors
-  cursor-pointer h-full {$userSettings.newComments
-    ? Color.borderDark
-    : 'hover:bg-slate-200 hover:dark:bg-zinc-800'}"
+  cursor-pointer h-full {Color.borderDark}"
 >
   <button
     on:click={upvote}
