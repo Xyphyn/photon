@@ -1,0 +1,25 @@
+{
+  "short_name": "Photon",
+  "name": "Photon for Lemmy",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "logo_512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "background_color": "#000000",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#000000",
+  "shortcuts": [
+    {
+      "name": "Inbox",
+      "short_name": "Inbox",
+      "description": "View what's in your inbox.",
+      "url": "/inbox"
+    }
+  ],
+  "description": "A sleek client for Lemmy."
+}
