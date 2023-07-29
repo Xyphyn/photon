@@ -7,7 +7,7 @@
 
   const buttonColors = {
     secondary:
-      'hover:bg-black/10 hover:dark:bg-white/10 text-black dark:text-white fill-black dark:fill-white',
+      'hover:bg-neutral-100 hover:dark:bg-zinc-800 text-slate-800 fill-slate-800 dark:text-zinc-200 dark:fill-zinc-200',
     dangerSecondary: 'hover:bg-red-500 text-red-500 hover:text-white',
     success: 'hover:bg-green-600 text-green-500 hover:text-white',
     warning:
