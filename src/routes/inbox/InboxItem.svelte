@@ -70,7 +70,7 @@
     <div class="flex flex-row items-center justify-between">
       <div
         class="text-sm max-w-[80ch] whitespace-nowrap text-ellipsis
-      overflow-hidden {read ? 'opacity-50' : ''}"
+      overflow-hidden {read ? 'text-slate-600 dark:text-zinc-400' : ''}"
       >
         <span class="font-bold">
           {item.creator.display_name ?? item.creator.name}

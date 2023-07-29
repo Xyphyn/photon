@@ -7,6 +7,7 @@
   import { page } from '$app/stores'
   import { isRead } from '$lib/lemmy/inbox.js'
   import Pageination from '$lib/components/ui/Pageination.svelte'
+  import MultiSelect from '$lib/components/input/MultiSelect.svelte'
 
   export let data
 
@@ -52,6 +53,19 @@
     Mark all as read
   </Button>
 </div>
+<div class="mt-4" />
+<MultiSelect
+  selected={data.type}
+  options={['all', 'mentions', 'replies', 'messages']}
+  optionNames={['All', 'Mentions', 'Replies', 'Messages']}
+  on:select={(e) => {
+    $page.url.searchParams.delete('page')
+    $page.url.searchParams.set('type', e.detail ?? 'all')
+    goto($page.url.toString(), {
+      invalidateAll: true,
+    })
+  }}
+/>
 <div class="flex flex-col gap-4 list-none my-4">
   {#if !data.data || (data.data?.length ?? 0) == 0}
     <p class="text-center opacity-60 text-lg mx-4">
