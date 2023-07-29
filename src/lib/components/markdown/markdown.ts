@@ -10,7 +10,6 @@ export const md = new MarkdownIt({
   },
 
   render: (tokens: any, idx: any) => {
-    console.log('test')
     var m = tokens[idx].info.trim().match(/^spoiler+(.*)/)
 
     if (tokens[idx].nesting === 1) {
@@ -23,7 +22,7 @@ export const md = new MarkdownIt({
   },
 })
 
-export const mdLimited: MarkdownIt = new MarkdownIt('zero').enable([
+export const mdInline: MarkdownIt = new MarkdownIt('zero').enable([
   'emphasis',
   'backticks',
   'strikethrough',

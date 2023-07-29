@@ -2,6 +2,9 @@
 export default {
   content: ['src/**/*.{js,ts,svelte,html}'],
   theme: {
+    fontFamily: {
+      'sans': ['Cantarell', 'system-ui']
+    },
     extend: {
       animation: {
         'pop-in': 'pop-in 0.25s ease-out forwards'

@@ -1,11 +1,16 @@
 <script lang="ts">
-  import { md } from '$lib/components/markdown/markdown'
+  import { md, mdInline } from '$lib/components/markdown/markdown'
 
   export let source: string = ''
+  export let inline: boolean = false
 </script>
 
 <div class="break-words flex flex-col markdown gap-2 leading-[1.5]">
-  {@html md.render(source)}
+  {#if inline}
+    {@html mdInline.render(source)}
+  {:else}
+    {@html md.render(source)}
+  {/if}
 </div>
 
 <style lang="postcss">
