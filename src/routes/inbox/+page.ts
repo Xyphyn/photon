@@ -12,11 +12,14 @@ export async function load({ url }) {
     (url.searchParams.get('type') as InboxFeedType) || 'all'
   const client = getClient()
   const page = Number(url.searchParams.get('page')) || 1
+  const unreadOnly: boolean =
+    (url.searchParams.get('unreadOnly') || 'true') == 'true'
 
   const params = {
     limit: 50,
     page: page,
     auth: auth.token,
+    unread_only: unreadOnly,
   }
 
   const [replies, mentions, privateMessages] = await Promise.all([
@@ -51,5 +54,5 @@ export async function load({ url }) {
       Date.parse(getInboxItemPublished(a))
   )
 
-  return { type: type, page: page, data: data }
+  return { unreadOnly: unreadOnly, type: type, page: page, data: data }
 }
