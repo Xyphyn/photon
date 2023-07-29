@@ -35,4 +35,6 @@
   }
 </script>
 
-{formatRelativeDate(date)}
+<time datetime={date.toISOString()} title={date}>
+  {formatRelativeDate(date)}
+</time>
