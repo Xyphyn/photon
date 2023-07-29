@@ -16,7 +16,7 @@
       deleted={false}
       featured={false}
       nsfw={comment.post.nsfw}
-      published={new Date(comment.post.published)}
+      published={new Date(comment.post.published + 'Z')}
       saved={false}
     />
     <Button

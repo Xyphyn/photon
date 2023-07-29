@@ -107,7 +107,7 @@
     locked={postData.post.locked}
     featured={postData.post.featured_community || postData.post.featured_local}
     nsfw={postData.post.nsfw}
-    published={new Date(postData.post.published)}
+    published={new Date(postData.post.published + 'Z')}
     saved={postData.saved}
   />
   <h1 class="font-bold text-lg">{post.name}</h1>

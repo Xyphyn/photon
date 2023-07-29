@@ -33,7 +33,7 @@
   </div>
   <span class="flex flex-row items-center gap-1 text-sm">
     <Icon src={Calendar} width={16} height={16} mini />
-    <RelativeDate date={new Date(site.site.published)} />
+    <RelativeDate date={new Date(site.site.published + 'Z')} />
   </span>
   <div class="text-sm flex flex-row flex-wrap gap-3">
     <span class="flex flex-row items-center gap-1">

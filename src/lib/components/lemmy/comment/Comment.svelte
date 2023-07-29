@@ -101,7 +101,7 @@
             {node.comment_view.counts.score}
           </div>
         {/if}
-        <RelativeDate date={new Date(node.comment_view.comment.published)} />
+        <RelativeDate date={new Date(node.comment_view.comment.published + 'Z')} />
         <span>•</span>
         <span>
           {Math.floor(
