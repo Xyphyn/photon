@@ -31,7 +31,7 @@
   >
     {#if $userSettings.showInstance}
       {user.name}
-      <span class="text-slate-500 dark:text-zinc-400 font-normal">
+      <span class="text-slate-600 dark:text-zinc-400 font-normal">
         @{new URL(user.actor_id).hostname}
       </span>
     {:else}

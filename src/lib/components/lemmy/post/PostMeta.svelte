@@ -42,7 +42,11 @@
       class="text-slate-600 dark:text-zinc-400 flex flex-row gap-1 flex-wrap items-center"
     >
       {#if user}
-        <div class="mr-0.5 text-zinc-100">
+        <div
+          class="mr-0.5"
+          class:text-slate-900={!community}
+          class:dark:text-zinc-100={!community}
+        >
           <UserLink avatarSize={20} {user} avatar={!community} />
         </div>
       {/if}
