@@ -86,13 +86,9 @@
             srcset="{post.post.url}?thumbnail=512&format=webp"
             media="(max-width: 512px)"
           />
-          <source
-            srcset="{post.post.url}?thumbnail=720&format=webp"
-            media="(max-width: 720px)"
-          />
           <!-- svelte-ignore a11y-missing-attribute -->
           <img
-            src="{post.post.url}?thumbnail=1024&format=webp"
+            src="{post.post.url}?thumbnail=512&format=webp"
             loading="lazy"
             class="object-cover bg-slate-100 rounded-md max-h-[50vh] w-full"
             width={512}
