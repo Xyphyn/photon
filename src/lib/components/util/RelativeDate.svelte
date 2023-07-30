@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { browser } from '$app/environment'
-
   export let date: Date
   export let relativeTo: Date | undefined = undefined
   export let options: Intl.RelativeTimeFormatOptions = {
@@ -28,7 +26,7 @@
         const value = Math.round(diffInMillis / thresholds[i].threshold)
 
         let language = 'en'
-        if (browser) {
+        if (typeof navigator != 'undefined') {
           language = navigator.language
         }
 
