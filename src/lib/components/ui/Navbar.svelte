@@ -4,6 +4,7 @@
   import Link from '$lib/components/input/Link.svelte'
   import ShieldIcon from '$lib/components/lemmy/moderation/ShieldIcon.svelte'
   import { amModOfAny } from '$lib/components/lemmy/moderation/moderation.js'
+  import Avatar from '$lib/components/ui/Avatar.svelte'
   import Logo from '$lib/components/ui/Logo.svelte'
   import Spinner from '$lib/components/ui/loader/Spinner.svelte'
   import Menu from '$lib/components/ui/menu/Menu.svelte'
@@ -123,16 +124,17 @@
         </div>
       {/if}
       {#if $user}
-        <img
-          src={$user.local_user_view.person.avatar ??
-            'https://xylo.xylight.dev/img/logo-background.svg'}
-          alt=""
-          width={32}
-          height={32}
-          class="rounded-full aspect-square"
-        />
+        <div class="w-8 h-8 aspect-square object-cover rounded-full">
+          <Avatar
+            url={$user.local_user_view.person.avatar}
+            width={32}
+            alt={$user.local_user_view.person.name}
+          />
+        </div>
         {#if $user.unreads > 0}
-          <div class="rounded-full w-2 h-2 bg-red-500 absolute top-0 left-0" />
+          <div
+            class="rounded-full w-2 h-2 bg-red-500 absolute top-0 left-0 z-10"
+          />
         {/if}
       {/if}
     </button>
