@@ -46,12 +46,7 @@
         </div>
       {/if}
       {#if user.bot_account}
-        <div
-          class="bg-blue-500 text-white text-[10px] px-1 py-[1px] rounded-md font-bold"
-          title="Bot"
-        >
-          BOT
-        </div>
+        <div class="text-blue-500 font-bold" title="Bot">BOT</div>
       {/if}
     </span>
   {/if}
