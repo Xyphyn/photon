@@ -28,7 +28,6 @@
     </header>
     <div
       class="flex flex-col sm:flex-row gap-4 max-w-full w-full justify-between flex-wrap"
-      role="radiogroup"
     >
       <MultiSelect
         options={['Subscribed', 'Local', 'All']}

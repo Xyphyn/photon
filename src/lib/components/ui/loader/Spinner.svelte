@@ -2,11 +2,7 @@
   export let width: number = 18
 </script>
 
-<div
-  class="spinner"
-  style="width: {width}px; height: {width}px;"
-  role="progressbar"
->
+<div class="spinner" style="width: {width}px; height: {width}px;">
   <div class="bar1" />
   <div class="bar2" />
   <div class="bar3" />
