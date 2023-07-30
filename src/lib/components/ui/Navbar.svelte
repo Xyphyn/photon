@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { goto } from '$app/navigation'
   import Button from '$lib/components/input/Button.svelte'
   import Link from '$lib/components/input/Link.svelte'
   import ShieldIcon from '$lib/components/lemmy/moderation/ShieldIcon.svelte'
@@ -9,9 +8,7 @@
   import Spinner from '$lib/components/ui/loader/Spinner.svelte'
   import Menu from '$lib/components/ui/menu/Menu.svelte'
   import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
-  import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
-  import { authData, getInstance, instance, user } from '$lib/lemmy.js'
-  import { Color } from '$lib/ui/colors.js'
+  import { authData, instance, user } from '$lib/lemmy.js'
   import {
     ArrowLeftOnRectangle,
     ArrowRightOnRectangle,
@@ -25,7 +22,6 @@
     Plus,
     UserCircle,
   } from 'svelte-hero-icons'
-  import { get } from 'svelte/store'
 
   let scrollY = 0
 </script>

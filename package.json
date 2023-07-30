@@ -36,7 +36,6 @@
   "dependencies": {
     "@dicebear/core": "^6.0.4",
     "@dicebear/initials": "^6.0.4",
-    "@tailwindcss/container-queries": "^0.1.1",
     "lemmy-js-client": "^0.18.0-rc.2",
     "markdown-it": "^13.0.1"
   },
