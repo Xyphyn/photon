@@ -7,12 +7,12 @@
 </script>
 
 <a href={url} class="self-start relative group" class:blur-3xl={nsfw}>
-  <!-- svelte-ignore a11y-missing-attribute -->
   <img
     src={thumbnail_url}
     class="rounded-md w-[500px] aspect-video object-cover bg-slate-200 dark:bg-zinc-800"
     width={600}
     height={400}
+    alt=""
   />
   <span
     class="w-full px-4 py-1.5 overflow-hidden whitespace-nowrap text-ellipsis

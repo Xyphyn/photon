@@ -106,7 +106,7 @@
   <Menu alignment="bottom-right" class="overflow-auto" let:toggleOpen>
     <Button
       slot="button"
-      label="Post actions"
+      aria-label="Post actions"
       on:click={toggleOpen}
       class="!p-1.5 dark:text-zinc-400 text-slate-500 hover:text-inherit"
       color="secondary"

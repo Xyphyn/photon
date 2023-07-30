@@ -97,13 +97,14 @@
             class="object-cover bg-slate-100 rounded-md max-h-[50vh] w-full"
             width={512}
             height={300}
+            alt=""
           />
         </picture>
       </div>
     {:else if post.post.thumbnail_url && post.post.url}
       <PostLink
         url={post.post.url}
-        thumbnail_url={post.post.thumbnail_url}
+        thumbnail_url="{post.post.thumbnail_url}?format=webp&thumbnail=512"
         nsfw={post.post.nsfw}
       />
     {/if}
