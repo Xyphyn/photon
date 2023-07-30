@@ -85,7 +85,11 @@
         </a>
       </div>
 
-      <Button href="/post/{item.post.id}#{item.comment.id}">Jump</Button>
+      <Button
+        href="/post/{item.post.id}?thread={item.comment.path}#{item.comment.id}"
+      >
+        Jump
+      </Button>
     </div>
     <div>
       <Comment

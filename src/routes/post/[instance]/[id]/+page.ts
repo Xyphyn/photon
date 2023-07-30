@@ -7,7 +7,25 @@ export async function load({ params, url }) {
     auth: get(authData)?.token,
   })
 
+  let max_depth = post.post_view.counts.comments > 100 ? 1 : 3
+
+  const thread = url.searchParams.get('thread')
+  let parentId: number | undefined
+
+  if (thread) {
+    parentId = Number(thread.split('.')[1])
+
+    if (!Number.isInteger(parentId)) {
+      parentId = undefined
+    }
+  }
+
+  if (parentId) {
+    max_depth = 10
+  }
+
   return {
+    singleThread: parentId != undefined,
     post: post,
     streamed: {
       comments: getClient(params.instance.toLowerCase()).getComments({
@@ -15,10 +33,11 @@ export async function load({ params, url }) {
         type_: 'All',
         limit: 25,
         page: 1,
-        max_depth: post.post_view.counts.comments > 100 ? 1 : 3,
+        max_depth: max_depth,
         saved_only: false,
         sort: 'Hot',
         auth: get(authData)?.token,
+        parent_id: parentId,
       }),
     },
   }

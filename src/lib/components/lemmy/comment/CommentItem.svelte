@@ -21,7 +21,8 @@
     />
     <Button
       color="secondary"
-      href="/post/{comment.post.id}#{comment.comment.id}"
+      href="/post/{comment.post.id}?thread={comment.comment.path}#{comment
+        .comment.id}"
       size="sm"
       class="self-start"
     >

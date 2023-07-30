@@ -54,6 +54,7 @@
   let moreComments = true
 
   async function reloadComments() {
+    data.singleThread = false
     commentsPage = 1
 
     data.streamed.comments = getClient().getComments({
@@ -171,6 +172,12 @@
     bind:selected={commentSort}
     on:select={reloadComments}
   />
+  {#if data.singleThread}
+    <Card class="py-2 px-4 text-sm flex flex-row items-center flex-wrap gap-4">
+      <p>You're viewing a single thread.</p>
+      <Button on:click={reloadComments}>View full thread</Button>
+    </Card>
+  {/if}
   {#await data.streamed.comments}
     <div class="h-16 mx-auto grid place-items-center">
       <Spinner width={24} />
@@ -198,6 +205,7 @@
       <Button
         {loading}
         disabled={loading}
+        color="tertiary"
         on:click={async () => {
           if (!moreComments) return
           loading = true
