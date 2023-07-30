@@ -33,7 +33,7 @@
 <ToastContainer />
 <Moderation />
 <div class="flex flex-row w-full mx-auto max-w-6xl">
-  <main class="p-4 flex-[3]">
+  <main class="p-4 flex-[3] max-w-full">
     <slot />
   </main>
 </div>
