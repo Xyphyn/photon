@@ -3,10 +3,12 @@
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import { userSettings } from '$lib/settings.js'
   import type { Person } from 'lemmy-js-client'
+  import { Icon, NoSymbol } from 'svelte-hero-icons'
 
   export let user: Person
   export let avatar: boolean = false
-  export let avatarSize = 24
+  export let avatarSize: number = 24
+  export let badges: boolean = true
 
   function linkFromCommunity(user: Person) {
     const domain = new URL(user.actor_id).hostname
@@ -31,11 +33,26 @@
       {user.name}
     {/if}
   </span>
-  {#if user.admin}
+  {#if badges && (user.admin || user.banned || user.bot_account)}
     <span>
-      <div class="text-red-500" title="Admin">
-        <ShieldIcon width={12} filled />
-      </div>
+      {#if user.admin}
+        <div class="text-red-500" title="Admin">
+          <ShieldIcon width={12} filled />
+        </div>
+      {/if}
+      {#if user.banned}
+        <div class="text-red-500" title="Banned">
+          <Icon src={NoSymbol} mini size="12" />
+        </div>
+      {/if}
+      {#if user.bot_account}
+        <div
+          class="bg-blue-500 text-white text-[10px] px-1 py-[1px] rounded-md font-bold"
+          title="Bot"
+        >
+          BOT
+        </div>
+      {/if}
     </span>
   {/if}
 </a>
