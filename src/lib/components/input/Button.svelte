@@ -1,7 +1,5 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte'
   import Spinner from '$lib/components/ui/loader/Spinner.svelte'
-  import { twMerge } from 'tailwind-merge'
 
   type ButtonColor = keyof typeof buttonColor
   type ButtonSize = keyof typeof buttonSize
