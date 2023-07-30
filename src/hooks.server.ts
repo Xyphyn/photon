@@ -35,6 +35,15 @@ export async function handle({ event, resolve }) {
         url.searchParams.get('auth')
       ) {
         headers.set('cookie', `jwt=${url.searchParams.get('auth')}`)
+      } else {
+        return new Response(
+          JSON.stringify({
+            message: 'Only CORS allowed is through /pictrs/image',
+          }),
+          {
+            status: 500,
+          }
+        )
       }
 
       const data = await fetch(url, {

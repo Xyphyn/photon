@@ -3,22 +3,13 @@
   import { page } from '$app/stores'
   import Button from '$lib/components/input/Button.svelte'
   import Link from '$lib/components/input/Link.svelte'
-  import { corsSupported } from '$lib/lemmy.js'
 </script>
 
 <div class="flex flex-col mx-auto gap-4 justify-center items-center">
   <h1 class="font-black text-5xl">{$page.status}</h1>
   <p>
     The <strong>server</strong>
-     failed to fetch the data. Click "retry" to have the client load it.
+    failed to fetch the data. Click "retry" to have the client load it.
   </p>
   <Button href={$page.url.toString()}>Retry</Button>
-  <Button
-    on:click={() => {
-      corsSupported.set(false)
-      goto($page.url.toString())
-    }}
-  >
-    Retry through proxy
-  </Button>
 </div>

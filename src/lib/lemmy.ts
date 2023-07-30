@@ -8,26 +8,13 @@ import { amModOfAny } from '$lib/components/lemmy/moderation/moderation.js'
 export const LINKED_INSTANCE_URL = env.PUBLIC_INSTANCE_URL
 export const DEFAULT_INSTANCE_URL = env.PUBLIC_INSTANCE_URL || 'lemmy.ml'
 export let instance = writable(DEFAULT_INSTANCE_URL)
-export let corsSupported = writable(true)
-
-export function buildBaseUrl(instanceURL?: string) {
-  if (!instanceURL) {
-    instanceURL = get(instance)!
-  }
-
-  return `${env.PUBLIC_PROXY_URL!}/cors/${instanceURL}`
-}
 
 export function getClient(instanceURL?: string): LemmyHttp {
   if (!instanceURL) {
     instanceURL = get(instance)
   }
 
-  return new LemmyHttp(
-    get(corsSupported)
-      ? `https://${instanceURL}`
-      : `${env.PUBLIC_PROXY_URL}/cors/${instanceURL}`
-  )
+  return new LemmyHttp(`https://${instanceURL}`)
 }
 
 export const getInstance = () => get(instance)
