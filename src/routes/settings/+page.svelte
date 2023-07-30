@@ -3,7 +3,13 @@
   import TextInput from '$lib/components/input/TextInput.svelte'
   import Card from '$lib/components/ui/Card.svelte'
   import { userSettings } from '$lib/settings'
-  import { authData, instance, user, validateInstance } from '$lib/lemmy.js'
+  import {
+    LINKED_INSTANCE_URL,
+    authData,
+    instance,
+    user,
+    validateInstance,
+  } from '$lib/lemmy.js'
   import { Color } from '$lib/ui/colors.js'
   import Button from '$lib/components/input/Button.svelte'
   import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
@@ -48,29 +54,31 @@
 <div class="flex flex-col">
   <h1 class="text-3xl font-bold">Settings</h1>
   <h2 class="uppercase font-bold opacity-80 text-sm mt-4">General</h2>
-  <Setting>
-    <span slot="title">Instance</span>
-    <span slot="description">Changing this will log you out.</span>
-    <div class="flex gap-2">
-      <TextInput
-        bind:value={data.newInstance}
-        pattern={'(?!-)[A-Za-z0-9-]+([-.]{1}[a-z0-9]+)*.[A-Za-z]{2,6}'}
-        class="flex-1"
-      />
-      <div class="w-24">
-        <Button
-          color="primary"
-          loading={data.loading}
-          disabled={data.loading}
-          on:click={changeInstance}
-          size="lg"
-          class="h-full"
-        >
-          Change
-        </Button>
+  {#if !LINKED_INSTANCE_URL}
+    <Setting>
+      <span slot="title">Instance</span>
+      <span slot="description">Changing this will log you out.</span>
+      <div class="flex gap-2">
+        <TextInput
+          bind:value={data.newInstance}
+          pattern={'(?!-)[A-Za-z0-9-]+([-.]{1}[a-z0-9]+)*.[A-Za-z]{2,6}'}
+          class="flex-1"
+        />
+        <div class="w-24">
+          <Button
+            color="primary"
+            loading={data.loading}
+            disabled={data.loading}
+            on:click={changeInstance}
+            size="lg"
+            class="h-full"
+          >
+            Change
+          </Button>
+        </div>
       </div>
-    </div>
-  </Setting>
+    </Setting>
+  {/if}
   <Setting>
     <span slot="title">Default sort</span>
     <span slot="description">The default sort to use for feeds.</span>
@@ -116,7 +124,9 @@
   </Setting>
   <Setting>
     <span slot="title">Show compact posts</span>
-    <span slot="description">Show posts with smaller thumbnails and without text bodies.</span>
+    <span slot="description">
+      Show posts with smaller thumbnails and without text bodies.
+    </span>
     <Switch bind:enabled={$userSettings.showCompactPosts} />
   </Setting>
 </div>
