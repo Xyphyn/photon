@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { browser } from '$app/environment'
+
   export let date: Date
   export let relativeTo: Date | undefined = undefined
   export let options: Intl.RelativeTimeFormatOptions = {
@@ -25,7 +27,12 @@
       if (diffInMillis >= thresholds[i].threshold) {
         const value = Math.round(diffInMillis / thresholds[i].threshold)
 
-        const rtf = new Intl.RelativeTimeFormat('en', options)
+        let language = 'en'
+        if (browser) {
+          language = navigator.language
+        }
+
+        const rtf = new Intl.RelativeTimeFormat(language, options)
 
         return rtf.format(-value, thresholds[i].unit as any)
       }
@@ -35,6 +42,6 @@
   }
 </script>
 
-<time datetime={date.toISOString()} title={date}>
+<time datetime={date.toISOString()} title={date.toLocaleDateString()}>
   {formatRelativeDate(date)}
 </time>
