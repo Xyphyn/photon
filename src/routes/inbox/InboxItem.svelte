@@ -104,7 +104,7 @@
         class="text-sm max-w-[80ch] whitespace-nowrap text-ellipsis
     overflow-hidden flex flex-row items-center gap-1 {read ? 'opacity-80' : ''}"
       >
-        <span class="font-bold">
+        <span class="font-bold flex items-center">
           {#if item.creator.id == $user?.local_user_view.person.id}
             You
           {:else}

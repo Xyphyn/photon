@@ -43,7 +43,7 @@
     >
       {#if user}
         <div
-          class="mr-0.5"
+          class="mr-0.5 flex items-center"
           class:text-slate-900={!community}
           class:dark:text-zinc-100={!community}
         >
