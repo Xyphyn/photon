@@ -129,7 +129,7 @@
           alt=""
           width={32}
           height={32}
-          class="rounded-full"
+          class="rounded-full aspect-square"
         />
         {#if $user.unreads > 0}
           <div class="rounded-full w-2 h-2 bg-red-500 absolute top-0 left-0" />
