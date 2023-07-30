@@ -12,6 +12,7 @@ interface Settings {
     sort: 'Hot' | 'TopAll' | 'Active' | 'New'
     feed: 'All' | 'Subscribed' | 'Local'
   }
+  fullWidthLayout: boolean
 }
 
 const defaultSettings: Settings = {
@@ -25,6 +26,7 @@ const defaultSettings: Settings = {
     sort: 'Active',
     feed: 'Local',
   },
+  fullWidthLayout: false,
 }
 
 export const userSettings = writable(defaultSettings)
@@ -34,7 +36,7 @@ if (typeof window != 'undefined') {
     localStorage.getItem('settings') ?? JSON.stringify(defaultSettings)
   )
 
-  userSettings.set({...defaultSettings, ...oldUserSettings})
+  userSettings.set({ ...defaultSettings, ...oldUserSettings })
 }
 
 userSettings.subscribe((settings) => {

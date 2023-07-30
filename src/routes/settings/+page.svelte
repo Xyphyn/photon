@@ -100,6 +100,13 @@
       </div>
     </div>
   </Setting>
+  <Setting>
+    <span slot="title">Full-width layout</span>
+    <span slot="description">
+      (Not recommended) make the layout span the whole screen.
+    </span>
+    <Switch bind:enabled={$userSettings.fullWidthLayout} />
+  </Setting>
   <h2 class="uppercase font-bold opacity-80 text-sm mt-4">UI</h2>
   <Setting>
     <span slot="title">Mark read posts</span>

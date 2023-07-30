@@ -6,6 +6,7 @@
   import 'nprogress/nprogress.css'
   import ToastContainer from '$lib/components/ui/toasts/ToastContainer.svelte'
   import Moderation from '$lib/components/lemmy/moderation/Moderation.svelte'
+  import { userSettings } from '$lib/settings.js'
 
   nProgress.configure({
     minimum: 0.4,
@@ -32,7 +33,11 @@
 <Navbar />
 <ToastContainer />
 <Moderation />
-<div class="flex flex-row w-full mx-auto max-w-6xl">
+<div
+  class="flex flex-row w-full mx-auto"
+  class:max-w-full={$userSettings.fullWidthLayout}
+  class:max-w-5xl={!$userSettings.fullWidthLayout}
+>
   <main class="p-4 flex-[3] max-w-full">
     <slot />
   </main>
