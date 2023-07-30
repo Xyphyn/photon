@@ -20,9 +20,11 @@ export async function load(req: any) {
       sort: sort,
       auth: get(authData)?.token,
     }),
-    community: await getClient().getCommunity({
-      name: req.params.name,
-      auth: get(authData)?.token,
-    }),
+    community: (
+      await getClient().getCommunity({
+        name: req.params.name,
+        auth: get(authData)?.token,
+      })
+    ).community_view,
   }
 }

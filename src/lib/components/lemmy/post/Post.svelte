@@ -10,15 +10,15 @@
   import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
 
   export let post: PostView
-
   export let actions: boolean = true
+  export let hideCommunity = false
 </script>
 
 <Card class="bg-white flex flex-col w-full p-5 gap-2.5">
   <div class="flex flex-row w-full gap-2.5">
     <div class="flex flex-col gap-1.5 grow">
       <PostMeta
-        community={post.community}
+        community={hideCommunity ? undefined : post.community}
         user={post.creator}
         published={new Date(post.post.published + 'Z')}
         upvotes={post.counts.upvotes}

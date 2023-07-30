@@ -32,6 +32,8 @@
 <Navbar />
 <ToastContainer />
 <Moderation />
-<main class="mx-auto max-w-5xl p-4 flex-1 w-full">
-  <slot />
-</main>
+<div class="flex flex-row w-full mx-auto max-w-6xl">
+  <main class="p-4 flex-[3]">
+    <slot />
+  </main>
+</div>

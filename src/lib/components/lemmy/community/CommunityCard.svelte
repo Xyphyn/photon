@@ -69,16 +69,13 @@
 <StickyCard>
   <div class="flex flex-row gap-3 items-center">
     <Avatar
-      width={42}
-      url={community_view.community.icon ??
-        `https://api.dicebear.com/6.x/initials/svg?seed=${community_view.community.name}`}
+      width={48}
+      url={community_view.community.icon}
       alt={community_view.community.name}
     />
-    <div class="flex flex-col">
-      <h1 class="font-bold text-base">
-        {community_view.community.title}
-      </h1>
-      <span class="opacity-60 text-sm">
+    <div class="flex flex-col gap-0">
+      <h1 class="font-bold text-xl">{community_view.community.title}</h1>
+      <span class="dark:text-zinc-400 text-slate-600 text-sm">
         !{community_view.community.name}@{new URL(
           community_view.community.actor_id
         ).hostname}

@@ -13,7 +13,7 @@
     Trash,
   } from 'svelte-hero-icons'
 
-  export let community: Community
+  export let community: Community | undefined = undefined
   export let user: Person | undefined = undefined
   export let published: Date
 
@@ -31,15 +31,20 @@
 </script>
 
 <span class="flex flex-row gap-2 text-sm items-center">
-  <Avatar url={community.icon} width={24} alt={community.name} />
+  {#if community}
+    <Avatar url={community.icon} width={24} alt={community.name} />
+  {/if}
   <div class="flex flex-col text-xs">
-    <CommunityLink {community} />
+    {#if community}
+      <CommunityLink {community} />
+    {/if}
     <span
-      class="text-slate-600 dark:text-zinc-400 flex flex-row gap-1 flex-wrap"
+      class="text-slate-600 dark:text-zinc-400 flex flex-row gap-1 flex-wrap items-center"
     >
       {#if user}
-        <UserLink {user} />
-        <span>•</span>
+        <div class="mr-0.5 text-zinc-100">
+          <UserLink avatarSize={20} {user} avatar={!community} />
+        </div>
       {/if}
       <RelativeDate date={published} />
       {#if upvotes != undefined && downvotes != undefined}

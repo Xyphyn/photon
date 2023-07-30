@@ -23,7 +23,12 @@
   {#if avatar}
     <Avatar url={user.avatar} alt={user.name} width={avatarSize} />
   {/if}
-  <span class="flex flex-wrap gap-0" class:text-red-500={user.admin}>
+  <span
+    class="flex flex-wrap gap-0"
+    class:ml-0.5={avatar}
+    class:text-red-500={user.admin}
+    class:font-bold={user.admin}
+  >
     {#if $userSettings.showInstance}
       {user.name}
       <span class="text-slate-500 dark:text-zinc-400 font-normal">
