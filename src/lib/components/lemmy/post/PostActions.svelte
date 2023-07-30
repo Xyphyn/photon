@@ -36,11 +36,22 @@
   async function deletePost() {
     if (!$authData) return
 
-    await getClient().deletePost({
-      auth: $authData.token,
-      deleted: true,
-      post_id: post.post.id,
-    })
+    try {
+      await getClient().deletePost({
+        auth: $authData.token,
+        deleted: true,
+        post_id: post.post.id,
+      })
+      toast({
+        content: 'That post was deleted.',
+        type: ToastType.success,
+      })
+    } catch (err) {
+      toast({
+        content: err as any,
+        type: ToastType.error,
+      })
+    }
   }
 
   async function save(post: PostView) {
