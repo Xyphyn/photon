@@ -112,7 +112,7 @@
           {/if}
         </span>
         <span>messaged</span>
-        <span class="font-bold">
+        <span class="font-bold flex items-center">
           {#if item.recipient.id == $user?.local_user_view.person.id}
             You
           {:else}

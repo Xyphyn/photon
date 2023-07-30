@@ -103,7 +103,7 @@
     {/if}
     {#if post.post.body && !post.post.nsfw}
       <p
-        class="text-sm line-clamp-3 bg-slate-100 dark:bg-zinc-800
+        class="text-sm bg-slate-100 dark:bg-zinc-800
             border border-slate-200 dark:border-zinc-700 rounded-md p-2"
       >
         {post.post.body.length > 350
