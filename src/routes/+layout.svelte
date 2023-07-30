@@ -33,12 +33,10 @@
 <Navbar />
 <ToastContainer />
 <Moderation />
-<div
-  class="flex flex-row w-full mx-auto"
+<main
+  class="flex-1 p-4 w-full mx-auto"
   class:max-w-full={$userSettings.fullWidthLayout}
   class:max-w-5xl={!$userSettings.fullWidthLayout}
 >
-  <main class="p-4 flex-[3] max-w-full">
-    <slot />
-  </main>
-</div>
+  <slot />
+</main>
