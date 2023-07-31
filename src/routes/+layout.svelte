@@ -65,13 +65,11 @@
         {/each}
       {/if}
     </Sidebar>
-    <div
-      class="flex-[3] xl:rounded-tl-lg
-    border-slate-200 dark:border-zinc-900 border-t overflow-auto"
+    <main
+      class="p-4 min-w-0 w-full flex-[3] xl:rounded-tl-lg
+      border-slate-200 dark:border-zinc-900 border-t"
     >
-      <main class="p-4 min-w-0 w-full">
-        <slot />
-      </main>
-    </div>
+      <slot />
+    </main>
   </div>
 </div>
