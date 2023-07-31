@@ -39,7 +39,7 @@
   <ToastContainer />
   <Moderation />
   <div
-    class="flex flex-row w-full max-w-full divide-x dark:divide-zinc-800
+    class="flex flex-row w-full max-w-full lg:divide-x dark:divide-zinc-800
     divide-slate-200"
   >
     <Sidebar>
