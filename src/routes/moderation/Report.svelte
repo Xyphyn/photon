@@ -80,6 +80,7 @@
       subscribed: 'NotSubscribed',
       creator_blocked: false,
       saved: false,
+      creator: item.comment_creator,
     }}
   />
   <div class="flex flex-row gap-4 items-center">
@@ -111,6 +112,7 @@
       unread_comments: 0,
       read: false,
       creator_blocked: false,
+      creator: item.post_creator,
     }}
   />
   <div class="flex flex-row gap-4 items-center">
