@@ -17,6 +17,7 @@
     GlobeAlt,
     Icon,
     Inbox,
+    InformationCircle,
     MagnifyingGlass,
     PencilSquare,
     Plus,
@@ -180,9 +181,13 @@
       <Icon src={Cog6Tooth} mini width={16} />
       Settings
     </MenuButton>
+    <MenuButton link href="/about">
+      <Icon src={InformationCircle} mini width={16} />
+      About
+    </MenuButton>
     <hr class="dark:opacity-10 w-[90%] my-2 mx-auto" />
-    <li class="flex flex-col px-4 py-1 mx-auto my-1 text-xs">
-      <div class="flex flex-row justify-center gap-2">
+    <li class="flex flex-col px-4 py-1 mx-auto my-1 text-xs w-full">
+      <div class="flex flex-row justify-center gap-2 w-full">
         <!-- svelte-ignore missing-declaration -->
         <span class="mr-auto">v{__VERSION__}</span>
         <a href="https://github.com/Xyphyn/photon" class="hover:underline">
