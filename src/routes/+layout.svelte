@@ -72,7 +72,7 @@
       {/if}
     </Sidebar>
     <main
-      class="p-4 min-w-0 w-full flex-[3] xl:rounded-tl-lg
+      class="p-6 min-w-0 w-full flex-[3] xl:rounded-tl-lg
       border-slate-200 dark:border-zinc-900 border-t"
     >
       <slot />
