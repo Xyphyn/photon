@@ -93,7 +93,7 @@
       }}
     />
   </div>
-  <aside class="hidden md:block">
+  <aside class="hidden 2xl:block">
     {#await data.streamed.site}
       <StickyCard>
         <div class="h-64 grid place-items-center">

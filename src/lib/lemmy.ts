@@ -1,4 +1,9 @@
-import { LemmyHttp, type MyUserInfo, type PersonView } from 'lemmy-js-client'
+import {
+  type GetSiteResponse,
+  LemmyHttp,
+  type MyUserInfo,
+  type PersonView,
+} from 'lemmy-js-client'
 import { get, writable } from 'svelte/store'
 import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
 import { userSettings } from '$lib/settings.js'

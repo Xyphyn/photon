@@ -7,7 +7,7 @@
   import { ToastType, addToast } from '$lib/components/ui/toasts/toasts.js'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
-  import { authData, getClient } from '$lib/lemmy.js'
+  import { authData, getClient, user } from '$lib/lemmy.js'
   import { Color } from '$lib/ui/colors.js'
   import type { CommunityView } from 'lemmy-js-client'
   import {
