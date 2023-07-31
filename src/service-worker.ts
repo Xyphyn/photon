@@ -3,7 +3,7 @@
 // @ts-ignore
 import { build, files } from '$service-worker'
 
-const version = '0.4.15'
+const version = '0.4.16'
 const timestamp = new Date().toLocaleString('en')
 const worker = self as unknown as ServiceWorkerGlobalScope
 const FILES = `cache${timestamp}`

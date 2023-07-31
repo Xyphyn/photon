@@ -1,14 +1,12 @@
 <script lang="ts">
   export let href: string
 
-  export let highlight: boolean
+  export let highlight: boolean = false
 </script>
 
 <a
   {href}
-  class="inline-flex flex-row gap-2 {highlight
-    ? 'text-sky-500'
-    : ''} hover:underline"
+  class="{highlight ? 'text-sky-500' : ''} hover:underline"
   {...$$restProps}
 >
   <slot name="icon" />

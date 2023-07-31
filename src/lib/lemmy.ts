@@ -39,6 +39,13 @@ export const authData = writable<AuthData | undefined>()
 export const user = writable<(MyUserInfo & UserData) | undefined | null>(
   undefined
 )
+export const site = writable<GetSiteResponse | undefined>(undefined)
+
+if (LINKED_INSTANCE_URL) {
+  getClient(LINKED_INSTANCE_URL)
+    .getSite({})
+    .then((s) => site.set(s))
+}
 
 setInterval(async () => {
   // check for unread messages

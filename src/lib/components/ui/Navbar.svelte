@@ -8,7 +8,13 @@
   import Spinner from '$lib/components/ui/loader/Spinner.svelte'
   import Menu from '$lib/components/ui/menu/Menu.svelte'
   import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
-  import { authData, instance, user } from '$lib/lemmy.js'
+  import {
+    LINKED_INSTANCE_URL,
+    authData,
+    instance,
+    site,
+    user,
+  } from '$lib/lemmy.js'
   import {
     ArrowLeftOnRectangle,
     ArrowRightOnRectangle,
@@ -39,13 +45,42 @@
 >
   <div class="flex flex-row gap-2 items-center mr-auto">
     <a href="/" class="flex flex-row items-center gap-2">
-      <Logo width={40} />
-      <div class="flex flex-row items-center gap-2 max-[500px]:hidden">
-        <span class="opacity-30 text-xl">/</span>
-        <span class="text-sm font-bold">
-          {$instance}
-        </span>
-      </div>
+      {#if LINKED_INSTANCE_URL}
+        {#if $site}
+          <Avatar
+            url={$site.site_view.site.icon}
+            alt={$site.site_view.site.name}
+            width={32}
+          />
+          <div class="flex flex-row items-center gap-2 max-[500px]:hidden">
+            <span class="opacity-30 text-xl">/</span>
+            <div class="text-sm font-bold inline-flex flex-col">
+              <span>{$site.site_view.site.name}</span>
+              <span
+                class="font-normal text-xs flex items-center gap-1 text-slate-600 dark:text-zinc-400"
+              >
+                Powered by <Link
+                  href="https://photon.xylight.dev"
+                  highlight={false}
+                  class="font-bold flex items-center gap-0.5 hover:underline"
+                >
+                  <Logo width={12} /> Photon
+                </Link>
+              </span>
+            </div>
+          </div>
+        {:else}
+          <Spinner width={32} />
+        {/if}
+      {:else}
+        <Logo width={40} />
+        <div class="flex flex-row items-center gap-2 max-[500px]:hidden">
+          <span class="opacity-30 text-xl">/</span>
+          <span class="text-sm font-bold">
+            {$instance}
+          </span>
+        </div>
+      {/if}
     </a>
   </div>
   <div class="flex flex-row gap-2 py-2 px-2">
