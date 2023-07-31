@@ -42,20 +42,20 @@
     class="flex flex-row w-full max-w-full lg:divide-x dark:divide-zinc-800
     divide-slate-200"
   >
-    <Sidebar>
+    <Sidebar let:expanded>
       <Button
-        class="hover:bg-slate-200"
+        class="hover:bg-slate-200 {expanded ? '' : '!p-1.5'}"
         href="/"
         color="tertiary"
         alignment="left"
       >
         <Icon src={Home} solid size="20" />
-        Frontpage
+        <span class:hidden={!expanded}>Frontpage</span>
       </Button>
       {#if $user}
         {#each $user.follows.map((f) => f.community) as follow}
           <Button
-            class="hover:bg-slate-200"
+            class="hover:bg-slate-200 {expanded ? '' : '!p-1.5'}"
             color="tertiary"
             alignment="left"
             href="/c/{follow.name}@{new URL(follow.actor_id).hostname}"
@@ -66,7 +66,7 @@
               width={20}
               slot="icon"
             />
-            {follow.title}
+            <span class:hidden={!expanded}>{follow.title}</span>
           </Button>
         {/each}
       {/if}
