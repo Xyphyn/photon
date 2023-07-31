@@ -4,6 +4,13 @@
   type ButtonColor = keyof typeof buttonColor
   type ButtonSize = keyof typeof buttonSize
   type ButtonRoundness = keyof typeof buttonRoundness
+  type ButtonAlignment = keyof typeof buttonAlignment
+
+  const buttonAlignment = {
+    left: 'justify-start text-left',
+    center: 'justify-center text-center',
+    right: 'justify-end text-right',
+  }
 
   const buttonColor = {
     primary: `border border-slate-900 bg-slate-900 dark:bg-zinc-100
@@ -51,6 +58,7 @@
   export let color: ButtonColor = 'secondary'
   export let size: ButtonSize = 'md'
   export let rounded: ButtonRoundness = 'md'
+  export let alignment: ButtonAlignment = 'center'
 
   // const dispatch = createEventDispatcher()
   export let href: string | undefined = undefined
@@ -60,20 +68,24 @@
   <a
     {href}
     {...$$restProps}
-    class="{`
-      ${buttonColor[color]}
-      ${buttonSize[size]}
-      ${buttonRoundness[rounded]}
+    class="
+      {buttonColor[color]}
+      {buttonSize[size]}
+      {buttonRoundness[rounded]}
       text-sm transition-colors disabled:!opacity-70 disabled:!pointer-events-none
       disabled:!border disabled:!border-slate-300 disabled:!bg-slate-200 disabled:dark:!border-zinc-700 disabled:dark:!bg-zinc-800
-      ${$$props.class}
-    `} {loading
+      {$$props.class}
+     {loading
       ? color == 'primary'
         ? '!bg-transparent !text-inherit'
         : ''
       : ''}"
   >
-    <div class="flex flex-row items-center justify-center gap-1.5 h-full">
+    <div
+      class="flex flex-row items-center gap-1.5 h-full {buttonAlignment[
+        alignment
+      ]}"
+    >
       {#if loading}
         <Spinner
           width={size == 'lg' ? 20 : size == 'md' ? 18 : size == 'sm' ? 16 : 16}
@@ -88,22 +100,24 @@
   <button
     {...$$restProps}
     on:click
-    class="{`
-      ${buttonColor[color]}
-      ${buttonSize[size]}
-      ${buttonRoundness[rounded]}
+    class="
+      {buttonColor[color]}
+      {buttonSize[size]}
+      {buttonRoundness[rounded]}
       text-sm transition-colors disabled:!opacity-70 disabled:!pointer-events-none
       disabled:!border disabled:!border-slate-300 disabled:!bg-slate-200
       disabled:dark:!border-zinc-700 disabled:dark:!bg-zinc-800 disabled:text-inherit
-      ${$$props.class}
-    `} {loading
+      {$$props.class}
+     {loading
       ? color == 'primary'
         ? '!bg-transparent !text-inherit'
         : ''
       : ''}"
     type={submit ? 'submit' : 'button'}
   >
-    <div class="flex flex-row items-center justify-center gap-1.5">
+    <div
+      class="flex flex-row items-center gap-1.5 {buttonAlignment[alignment]}"
+    >
       {#if loading}
         <Spinner
           width={size == 'lg' ? 20 : size == 'md' ? 18 : size == 'sm' ? 16 : 16}
