@@ -129,8 +129,8 @@
   </Modal>
 {/if}
 
-<div class="flex flex-col-reverse lg:flex-row gap-4 max-w-full w-full">
-  <div class="flex flex-col gap-4 max-w-full w-full">
+<div class="flex flex-col-reverse xl:flex-row gap-4 max-w-full w-full">
+  <div class="flex flex-col gap-4 max-w-full w-full min-w-0">
     <div class="flex flex-row gap-4 flex-wrap">
       <MultiSelect
         options={['New', 'TopAll']}
@@ -173,7 +173,7 @@
     />
   </div>
 
-  <div class="max-w-sm w-full mx-auto">
+  <div class="mx-auto">
     <StickyCard class="w-full">
       <Avatar
         width={64}
@@ -183,7 +183,9 @@
       <span class="flex flex-row items-center gap-1 text-sm">
         <Icon src={Calendar} width={16} height={16} mini />
         <span class="capitalize">
-          <RelativeDate date={new Date(data.person_view.person.published + 'Z')} />
+          <RelativeDate
+            date={new Date(data.person_view.person.published + 'Z')}
+          />
         </span>
       </span>
       <div class="text-sm flex flex-row flex-wrap gap-3">
