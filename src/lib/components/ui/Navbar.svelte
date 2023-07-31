@@ -34,8 +34,8 @@
   dark:bg-black {scrollY > 0
     ? 'bg-slate-100/80 dark:bg-black/80'
     : ''} backdrop-blur-3xl
-  w-full mx-auto px-4 py-2 z-50 border-b transition-all
-  border-slate-200 dark:border-zinc-900 box-border h-16"
+  w-full mx-auto px-4 py-2 z-50 transition-all
+   box-border h-16"
 >
   <div class="flex flex-row gap-2 items-center mr-auto">
     <a href="/" class="flex flex-row items-center gap-2">

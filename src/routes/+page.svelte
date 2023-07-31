@@ -27,7 +27,7 @@
       <h1 class="text-3xl font-bold">Frontpage</h1>
     </header>
     <div
-      class="flex flex-col sm:flex-row gap-4 max-w-full w-full justify-between flex-wrap"
+      class="flex flex-row gap-4 max-w-full w-full justify-between flex-wrap"
     >
       <MultiSelect
         options={['Subscribed', 'Local', 'All']}

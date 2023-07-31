@@ -6,11 +6,11 @@
   import 'nprogress/nprogress.css'
   import ToastContainer from '$lib/components/ui/toasts/ToastContainer.svelte'
   import Moderation from '$lib/components/lemmy/moderation/Moderation.svelte'
-  import { userSettings } from '$lib/settings.js'
   import { user } from '$lib/lemmy.js'
   import Button from '$lib/components/input/Button.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import { Home, Icon } from 'svelte-hero-icons'
+  import Sidebar from '$lib/components/ui/Sidebar.svelte'
 
   nProgress.configure({
     minimum: 0.4,
@@ -39,11 +39,10 @@
   <ToastContainer />
   <Moderation />
   <div
-    class="flex flex-row w-full max-w-full gap-4 divide-x dark:divide-zinc-800 divide-slate-200"
+    class="flex flex-row w-full max-w-full divide-x dark:divide-zinc-800
+    divide-slate-200"
   >
-    <nav
-      class="hidden lg:flex flex-col p-4 overflow-auto sticky top-16 bottom-0 flex-1 gap-1 max-h-[calc(100vh-4rem)] w-full"
-    >
+    <Sidebar>
       <Button href="/" color="tertiary" alignment="left">
         <Icon src={Home} solid size="20" />
         Frontpage
@@ -65,9 +64,14 @@
           </Button>
         {/each}
       {/if}
-    </nav>
-    <main class="p-4 mx-auto flex-[4] min-w-0 w-full">
-      <slot />
-    </main>
+    </Sidebar>
+    <div
+      class="flex-[3] xl:rounded-tl-lg
+    border-slate-200 dark:border-zinc-900 border-t overflow-auto"
+    >
+      <main class="p-4 min-w-0 w-full">
+        <slot />
+      </main>
+    </div>
   </div>
 </div>
