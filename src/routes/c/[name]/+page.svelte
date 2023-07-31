@@ -55,7 +55,7 @@
         </span>
       </div>
     </div>
-    <div class="md:hidden">
+    <div class="xl:hidden">
       <Button color="secondary" on:click={() => (sidebar = true)}>
         Sidebar
       </Button>
@@ -91,7 +91,7 @@
       }}
     />
   </div>
-  <div class="hidden md:block">
+  <div class="hidden xl:block">
     <CommunityCard community_view={data.community} />
   </div>
 </div>

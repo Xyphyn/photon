@@ -35,7 +35,7 @@
   <ToastContainer />
   <Moderation />
   <div
-    class="flex flex-row h-full w-full max-w-full lg:divide-x dark:divide-zinc-800
+    class="flex flex-row h-full w-full max-w-full lg:divide-x dark:divide-zinc-900
     divide-slate-200 flex-1"
   >
     <Sidebar />
