@@ -36,14 +36,17 @@
   async function deletePost() {
     if (!$authData) return
 
+    const deleted = post.post.deleted
+
     try {
       await getClient().deletePost({
         auth: $authData.token,
-        deleted: true,
+        deleted: !deleted,
         post_id: post.post.id,
       })
+      post.post.deleted = !deleted
       toast({
-        content: 'That post was deleted.',
+        content: `That post was ${deleted ? 'restored' : 'deleted'}.`,
         type: ToastType.success,
       })
     } catch (err) {
@@ -166,7 +169,7 @@
       {#if $user && isMutable(post, $user.local_user_view)}
         <MenuButton on:click={deletePost} color="dangerSecondary">
           <Icon src={Trash} width={16} mini />
-          Delete
+          {post.post.deleted ? 'Restore' : 'Delete'}
         </MenuButton>
       {/if}
       {#if $user?.local_user_view.person.id != post.creator.id}

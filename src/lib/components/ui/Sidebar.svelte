@@ -2,6 +2,7 @@
   import {
     ArrowLeftOnRectangle,
     ChevronDoubleLeft,
+    Cog6Tooth,
     Home,
     Icon,
     Plus,
@@ -39,6 +40,16 @@
     <Icon src={Home} solid size="20" />
     <span class:hidden={!expanded}>Frontpage</span>
   </Button>
+  <Button
+    class="hover:bg-slate-200 {expanded ? '' : '!p-1.5'}"
+    href="/settings"
+    color="tertiary"
+    alignment="left"
+  >
+    <Icon src={Cog6Tooth} solid size="20" />
+    <span class:hidden={!expanded}>Settings</span>
+  </Button>
+  <hr class="border-slate-300 dark:border-zinc-800 my-1" />
   {#if $user}
     {#each $user.follows
       .map((f) => f.community)
