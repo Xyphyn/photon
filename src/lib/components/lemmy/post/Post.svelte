@@ -8,6 +8,7 @@
   import PostLink from '$lib/components/lemmy/post/PostLink.svelte'
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
   import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
+  import Markdown from '$lib/components/markdown/Markdown.svelte'
 
   export let post: PostView
   export let actions: boolean = true
@@ -102,14 +103,17 @@
       />
     {/if}
     {#if post.post.body && !post.post.nsfw}
-      <p
+      <div
         class="text-sm bg-slate-100 dark:bg-zinc-800
             border border-slate-200 dark:border-zinc-700 rounded-md p-2"
       >
-        {post.post.body.length > 350
-          ? `${post.post.body.slice(0, 350)}...`
-          : post.post.body}
-      </p>
+        <Markdown
+          inline
+          source={post.post.body.length > 350
+            ? `${post.post.body.slice(0, 350)}...`
+            : post.post.body}
+        />
+      </div>
     {/if}
   {/if}
   {#if actions}

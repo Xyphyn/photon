@@ -22,12 +22,25 @@ export const md = new MarkdownIt({
   },
 })
 
-export const mdInline: MarkdownIt = new MarkdownIt('zero').enable([
-  'emphasis',
-  'backticks',
-  'strikethrough',
-  'link',
-])
+export const mdInline: MarkdownIt = new MarkdownIt('zero')
+  .enable(['emphasis', 'backticks', 'strikethrough', 'link'])
+  .use(markdown_it_container, 'spoiler', {
+    validate: (params: string) => {
+      return params.trim().match(/^spoiler+(.*)/)
+    },
+
+    render: (tokens: any, idx: any) => {
+      var m = tokens[idx].info.trim().match(/^spoiler+(.*)/)
+
+      if (tokens[idx].nesting === 1) {
+        // opening tag
+        return `<details><summary> ${md.utils.escapeHtml(m[1])} </summary>\n`
+      } else {
+        // closing tag
+        return '</details>\n'
+      }
+    },
+  })
 
 md.linkify.add('!', {
   validate: function (text, pos, self) {

@@ -53,7 +53,9 @@
         <span class:hidden={!expanded}>Frontpage</span>
       </Button>
       {#if $user}
-        {#each $user.follows.map((f) => f.community) as follow}
+        {#each $user.follows
+          .map((f) => f.community)
+          .sort((a, b) => a.title.localeCompare(b.title)) as follow}
           <Button
             class="hover:bg-slate-200 {expanded ? '' : '!p-1.5'}"
             color="tertiary"
