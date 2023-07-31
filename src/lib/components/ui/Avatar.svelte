@@ -1,6 +1,9 @@
 <script lang="ts">
+  import { findClosestNumber } from '$lib/util.js'
   import { createAvatar } from '@dicebear/core'
   import * as initials from '@dicebear/initials'
+
+  const sizes = [48, 64, 128, 256, 512]
 
   export let url: string | undefined
   export let alt: string = ''
@@ -10,7 +13,7 @@
 
 {#if url}
   <img
-    src="{url}?format=webp&thumbnail={width * 2}"
+    src="{url}?format=webp&thumbnail={findClosestNumber(sizes, width)}"
     {alt}
     {width}
     loading="lazy"
