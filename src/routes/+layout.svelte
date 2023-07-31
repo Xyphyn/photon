@@ -43,13 +43,19 @@
     divide-slate-200"
   >
     <Sidebar>
-      <Button href="/" color="tertiary" alignment="left">
+      <Button
+        class="hover:bg-slate-200"
+        href="/"
+        color="tertiary"
+        alignment="left"
+      >
         <Icon src={Home} solid size="20" />
         Frontpage
       </Button>
       {#if $user}
         {#each $user.follows.map((f) => f.community) as follow}
           <Button
+            class="hover:bg-slate-200"
             color="tertiary"
             alignment="left"
             href="/c/{follow.name}@{new URL(follow.actor_id).hostname}"
