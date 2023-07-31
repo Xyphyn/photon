@@ -6,26 +6,39 @@
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
   import Post from '$lib/components/lemmy/post/Post.svelte'
   import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
-  import { fly, scale } from 'svelte/transition'
+  import { fly } from 'svelte/transition'
   import Spinner from '$lib/components/ui/loader/Spinner.svelte'
   import { authData } from '$lib/lemmy.js'
-  import { userSettings } from '$lib/settings.js'
   import { ArchiveBox, Icon, Plus } from 'svelte-hero-icons'
-  import Markdown from '$lib/components/markdown/Markdown.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
+  import Modal from '$lib/components/ui/modal/Modal.svelte'
 
   export let data
+
+  let sidebar = false
 </script>
 
 <svelte:head>
   <title>Photon</title>
 </svelte:head>
 
+<Modal bind:open={sidebar}>
+  <span slot="title">Sidebar</span>
+  <div class="mx-auto">
+    {#await data.streamed.site then site}
+      <SiteCard site={site.site_view} taglines={site.taglines} />
+    {/await}
+  </div>
+</Modal>
+
 <div class="flex flex-row gap-4 w-full">
   <div class="flex flex-col gap-4 max-w-full w-full min-w-0">
     <header>
       <h1 class="text-3xl font-bold">Frontpage</h1>
     </header>
+    <div class="xl:hidden">
+      <Button on:click={() => (sidebar = !sidebar)}>Sidebar</Button>
+    </div>
     <div
       class="flex flex-row gap-4 max-w-full w-full justify-between flex-wrap"
     >
@@ -93,7 +106,7 @@
       }}
     />
   </div>
-  <aside class="hidden 2xl:block">
+  <aside class="hidden xl:block">
     {#await data.streamed.site}
       <StickyCard>
         <div class="h-64 grid place-items-center">
