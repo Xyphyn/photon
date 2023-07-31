@@ -32,7 +32,7 @@
 </svelte:head>
 
 <Modal bind:open={sidebar}>
-  <span slot="title">Sidebar</span>
+  <span slot="title">About</span>
   <div class="mx-auto">
     <CommunityCard community_view={data.community} />
   </div>
@@ -56,8 +56,8 @@
       </div>
     </div>
     <div class="xl:hidden">
-      <Button color="secondary" on:click={() => (sidebar = true)}>
-        Sidebar
+      <Button color="secondary" on:click={() => (sidebar = !sidebar)}>
+        About
       </Button>
     </div>
     <div class="flex flex-col sm:flex-row gap-4 max-w-full w-full">

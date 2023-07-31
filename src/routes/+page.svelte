@@ -23,7 +23,7 @@
 </svelte:head>
 
 <Modal bind:open={sidebar}>
-  <span slot="title">Sidebar</span>
+  <span slot="title">About</span>
   <div class="mx-auto">
     {#await data.streamed.site then site}
       <SiteCard site={site.site_view} taglines={site.taglines} />
@@ -37,7 +37,7 @@
       <h1 class="text-3xl font-bold">Frontpage</h1>
     </header>
     <div class="xl:hidden">
-      <Button on:click={() => (sidebar = !sidebar)}>Sidebar</Button>
+      <Button on:click={() => (sidebar = !sidebar)}>About</Button>
     </div>
     <div
       class="flex flex-row gap-4 max-w-full w-full justify-between flex-wrap"
