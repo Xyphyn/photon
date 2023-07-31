@@ -39,10 +39,10 @@
   <ToastContainer />
   <Moderation />
   <div
-    class="flex flex-row w-full max-w-full gap-4 divide-x dark:divide-zinc-800 divide-slate-200 flex-1"
+    class="flex flex-row w-full max-w-full gap-4 divide-x dark:divide-zinc-800 divide-slate-200"
   >
     <nav
-      class="hidden lg:flex flex-col p-4 overflow-auto sticky top-16 bottom-0 flex-1 gap-1 max-h-[calc(100vh-4rem)]"
+      class="hidden lg:flex flex-col p-4 overflow-auto sticky top-16 bottom-0 flex-1 gap-1 max-h-[calc(100vh-4rem)] w-full"
     >
       <Button href="/" color="tertiary" alignment="left">
         <Icon src={Home} solid size="20" />
@@ -66,7 +66,7 @@
         {/each}
       {/if}
     </nav>
-    <main class="p-4 mx-auto flex-[4]">
+    <main class="p-4 mx-auto flex-[4] min-w-0 w-full">
       <slot />
     </main>
   </div>
