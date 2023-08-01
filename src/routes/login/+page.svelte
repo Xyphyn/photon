@@ -28,12 +28,13 @@
     data.loading = true
 
     try {
+      data.instance = data.instance.trim()
       if (!(await validateInstance(data.instance))) {
         throw new Error('Failed to contact that instance. Is it down?')
       }
 
       const response = await getClient(data.instance).login({
-        username_or_email: data.username,
+        username_or_email: data.username.trim(),
         password: data.password,
         totp_2fa_token: data.totp,
       })
