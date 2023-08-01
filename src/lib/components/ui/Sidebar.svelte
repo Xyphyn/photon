@@ -80,7 +80,12 @@
           class="text-blue-500"
           style="filter: hue-rotate({index * 50}deg)"
         />
-        <span class:hidden={!expanded}>{prof.username}</span>
+        <span class:hidden={!expanded} class="flex gap-0">
+          {prof.username}
+          <span class="text-slate-500 dark:text-zinc-500">
+            @{prof.instance}
+          </span>
+        </span>
       </Button>
     {/each}
   {/if}

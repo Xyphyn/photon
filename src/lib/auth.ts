@@ -42,10 +42,13 @@ export const profileData = writable<ProfileData>(
   getFromStorage<ProfileData>('profileData') ?? { profiles: [], profile: -1 }
 )
 
-profileData.subscribe((pd) => {
+let initialInstance = get(profileData).defaultInstance
+
+profileData.subscribe(async (pd) => {
   setFromStorage('profileData', pd)
 
-  if (pd.profile == -1) {
+  if (pd.profile == -1 && pd.defaultInstance != initialInstance) {
+    initialInstance = get(profileData).defaultInstance ?? DEFAULT_INSTANCE_URL
     instance.set(get(profileData).defaultInstance ?? DEFAULT_INSTANCE_URL)
   }
 })
