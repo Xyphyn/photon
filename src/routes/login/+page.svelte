@@ -1,5 +1,6 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
+  import { profileData, setUser } from '$lib/auth.js'
   import Button from '$lib/components/input/Button.svelte'
   import TextInput from '$lib/components/input/TextInput.svelte'
   import Card from '$lib/components/ui/Card.svelte'
@@ -27,6 +28,7 @@
 
   async function logIn() {
     data.loading = true
+
     try {
       if (!(await validateInstance(data.instance))) {
         throw new Error('Failed to contact that instance. Is it down?')
@@ -39,12 +41,7 @@
       })
 
       if (response?.jwt) {
-        user.set(undefined)
-        authData.set({
-          instance: data.instance,
-          token: response.jwt,
-          username: data.username,
-        })
+        setUser(response.jwt, data.instance)
 
         toast({ content: 'Successfully logged in.', type: ToastType.success })
         goto('/')
