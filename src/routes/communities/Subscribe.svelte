@@ -1,25 +1,21 @@
 <script lang="ts">
   import { getClient } from '$lib/lemmy.js'
-  import type {
-    Community,
-    CommunityView,
-    SubscribedType,
-  } from 'lemmy-js-client'
-  import { authData } from '$lib/lemmy.js'
+  import type { CommunityView } from 'lemmy-js-client'
   import { ToastType, addToast } from '$lib/components/ui/toasts/toasts.js'
+  import { profile } from '$lib/auth.js'
 
   export let community: CommunityView
 
   let subscribing = false
 
   async function subscribe() {
-    if (!$authData?.token) return
+    if (!$profile?.jwt) return
 
     subscribing = true
 
     try {
       const res = await getClient().followCommunity({
-        auth: $authData.token,
+        auth: $profile.jwt,
         community_id: community.community.id,
         follow: community.subscribed == 'NotSubscribed',
       })

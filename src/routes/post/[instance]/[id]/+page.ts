@@ -1,10 +1,11 @@
-import { authData, getClient } from '$lib/lemmy.js'
+import { profile } from '$lib/auth.js'
+import { getClient } from '$lib/lemmy.js'
 import { get } from 'svelte/store'
 
 export async function load({ params, url }) {
   const post = await getClient(params.instance.toLowerCase()).getPost({
     id: Number(params.id),
-    auth: get(authData)?.token,
+    auth: get(profile)?.jwt,
   })
 
   let max_depth = post.post_view.counts.comments > 100 ? 1 : 3
@@ -36,7 +37,7 @@ export async function load({ params, url }) {
         max_depth: max_depth,
         saved_only: false,
         sort: 'Hot',
-        auth: get(authData)?.token,
+        auth: get(profile)?.jwt,
         parent_id: parentId,
       }),
     },

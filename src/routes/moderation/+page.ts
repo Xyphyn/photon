@@ -1,4 +1,5 @@
-import { authData, getClient } from '$lib/lemmy.js'
+import { profile } from '$lib/auth.js'
+import { getClient } from '$lib/lemmy.js'
 import { getItemPublished } from '$lib/lemmy/item.js'
 import { get } from 'svelte/store'
 
@@ -12,11 +13,11 @@ export async function load({ url }) {
   const filter: ReportFilter =
     (url.searchParams.get('filter') as ReportFilter) || 'all'
 
-  const jwt = get(authData)?.token
+  const jwt = get(profile)?.jwt
 
   if (!jwt) return { type: type, page: page }
 
-  // can they like
+  // can they please
   // make a sane, consistent, and simple API for once
   // 3 separate requests? really?
   // and this time instead of get() it's list(). Why?!

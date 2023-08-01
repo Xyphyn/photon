@@ -15,7 +15,7 @@
     PencilSquare,
     Trash,
   } from 'svelte-hero-icons'
-  import { authData, getClient, user } from '$lib/lemmy.js'
+  import { getClient } from '$lib/lemmy.js'
   import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
   import Menu from '$lib/components/ui/menu/Menu.svelte'
   import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
@@ -25,12 +25,13 @@
   import { amMod, report } from '$lib/components/lemmy/moderation/moderation.js'
   import ModerationMenu from '$lib/components/lemmy/moderation/ModerationMenu.svelte'
   import CommentModerationMenu from '$lib/components/lemmy/moderation/CommentModerationMenu.svelte'
+  import { profile } from '$lib/auth.js'
 
   export let comment: CommentView
   export let replying: boolean = false
 
   async function save() {
-    if (!$authData) return
+    if (!$profile?.jwt) return
 
     const saved = comment.saved
 
@@ -38,7 +39,7 @@
 
     try {
       await getClient().saveComment({
-        auth: $authData.token,
+        auth: $profile.jwt,
         comment_id: comment.comment.id,
         save: !saved,
       })
@@ -70,7 +71,7 @@
     <Icon src={ArrowUturnLeft} width={14} height={14} mini />
     <span class="text-xs">Reply</span>
   </Button>
-  {#if $user && amMod($user, comment.community)}
+  {#if $profile?.user && amMod($profile?.user, comment.community)}
     <CommentModerationMenu item={comment} />
   {/if}
   <Menu
@@ -89,8 +90,8 @@
       <Icon src={EllipsisHorizontal} width={16} height={16} mini slot="icon" />
     </Button>
     <span class="text-xs opacity-80 py-1 my-1 px-4">Comment actions</span>
-    {#if $authData?.token}
-      {#if comment.creator.id == $user?.local_user_view.person.id}
+    {#if $profile?.jwt}
+      {#if comment.creator.id == $profile.user?.local_user_view.person.id}
         <MenuButton on:click={() => dispatcher('edit', comment)}>
           <Icon src={PencilSquare} mini size="16" />
           <span>Edit</span>
@@ -100,14 +101,14 @@
         <Icon src={comment.saved ? BookmarkSlash : Bookmark} mini size="16" />
         <span>{comment.saved ? 'Unsave' : 'Save'}</span>
       </MenuButton>
-      {#if $user && $authData && isCommentMutable(comment, $user.local_user_view)}
+      {#if $profile?.user && $profile.jwt && isCommentMutable(comment, $profile.user.local_user_view)}
         <MenuButton
           color="dangerSecondary"
           on:click={async () => {
-            if (!$authData) return
+            if (!$profile?.jwt) return
             try {
               await getClient().deleteComment({
-                auth: $authData.token,
+                auth: $profile.jwt,
                 comment_id: comment.comment.id,
                 deleted: true,
               })
@@ -127,7 +128,7 @@
           <span>Delete</span>
         </MenuButton>
       {/if}
-      {#if $authData && $user?.local_user_view.person.id != comment.creator.id}
+      {#if $profile.jwt && $profile.user?.local_user_view.person.id != comment.creator.id}
         <MenuButton on:click={() => report(comment)} color="dangerSecondary">
           <Icon src={Flag} mini size="16" />
           <span>Report</span>

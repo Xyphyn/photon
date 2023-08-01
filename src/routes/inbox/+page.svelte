@@ -2,19 +2,20 @@
   import InboxItem from './InboxItem.svelte'
   import Button from '$lib/components/input/Button.svelte'
   import { Check, EnvelopeOpen, Icon } from 'svelte-hero-icons'
-  import { authData, getClient, user } from '$lib/lemmy.js'
+  import { getClient } from '$lib/lemmy.js'
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
   import { isRead } from '$lib/lemmy/inbox.js'
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
+  import { profile } from '$lib/auth.js'
 
   export let data
 
   let markingAsRead = false
 
   async function markAllAsRead() {
-    if (!$user) {
+    if (!$profile?.user) {
       goto('/login')
       return
     }
@@ -22,10 +23,10 @@
     markingAsRead = true
 
     const response = await getClient().markAllAsRead({
-      auth: $authData!.token,
+      auth: $profile.jwt!,
     })
 
-    $user!.unreads = 0
+    $profile.user.unreads = 0
 
     goto($page.url, {
       invalidateAll: true,

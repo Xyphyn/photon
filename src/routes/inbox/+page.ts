@@ -1,12 +1,13 @@
-import { authData, getClient } from '$lib/lemmy.js'
+import { profile } from '$lib/auth.js'
+import { getClient } from '$lib/lemmy.js'
 import { getInboxItemPublished } from '$lib/lemmy/inbox.js'
 import { get } from 'svelte/store'
 
 type InboxFeedType = 'replies' | 'mentions' | 'messages' | 'all'
 
 export async function load({ url }) {
-  const auth = get(authData)
-  if (!auth) return
+  const auth = get(profile)
+  if (!auth?.jwt) return
 
   const type: InboxFeedType =
     (url.searchParams.get('type') as InboxFeedType) || 'all'
@@ -18,7 +19,7 @@ export async function load({ url }) {
   const params = {
     limit: 50,
     page: page,
-    auth: auth.token,
+    auth: auth.jwt,
     unread_only: unreadOnly,
   }
 

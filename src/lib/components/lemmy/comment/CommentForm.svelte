@@ -2,12 +2,13 @@
   import Button from '$lib/components/input/Button.svelte'
   import { Color } from '$lib/ui/colors.js'
   import type { CommentResponse } from 'lemmy-js-client'
-  import { authData, getClient, user } from '$lib/lemmy.js'
+  import { getClient } from '$lib/lemmy.js'
   import { createEventDispatcher } from 'svelte'
   import { ToastType, addToast } from '$lib/components/ui/toasts/toasts.js'
   import TextArea from '$lib/components/input/TextArea.svelte'
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
+  import { profile } from '$lib/auth.js'
 
   export let postId: number
   export let parentId: number | undefined = undefined
@@ -25,13 +26,13 @@
   let preview = false
 
   async function submit() {
-    if (!$user || !$authData || value == '') return
+    if (!$profile?.user || !$profile?.jwt || value == '') return
 
     loading = true
 
     try {
       const response = await getClient().createComment({
-        auth: $authData.token,
+        auth: $profile.jwt,
         content: value,
         post_id: postId,
         parent_id: parentId,

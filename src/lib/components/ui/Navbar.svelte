@@ -9,13 +9,7 @@
   import Spinner from '$lib/components/ui/loader/Spinner.svelte'
   import Menu from '$lib/components/ui/menu/Menu.svelte'
   import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
-  import {
-    LINKED_INSTANCE_URL,
-    authData,
-    instance,
-    site,
-    user,
-  } from '$lib/lemmy.js'
+  import { LINKED_INSTANCE_URL, instance, site } from '$lib/lemmy.js'
   import {
     ArrowLeftOnRectangle,
     ArrowRightOnRectangle,
@@ -87,7 +81,7 @@
     </a>
   </div>
   <div class="flex flex-row gap-2 py-2 px-2">
-    {#if $user && amModOfAny($user)}
+    {#if amModOfAny($profile?.user)}
       <Button
         href="/moderation"
         label="Search"
@@ -95,7 +89,7 @@
       dark:text-zinc-300 text-slate-700 hover:text-inherit
       hover:bg-slate-200 hover:dark:bg-zinc-900 relative"
       >
-        {#if $user.reports ?? 0 > 0}
+        {#if $profile?.user?.reports ?? 0 > 0}
           <div
             class="rounded-full w-2 h-2 bg-red-500 absolute -top-1 -left-1"
           />
@@ -134,11 +128,15 @@
         <span class="hidden md:inline">Create</span>
       </Button>
       <li class="text-xs opacity-80 text-left mx-4 my-1 py-1">Create</li>
-      <MenuButton link href="/create/post" disabled={$authData == undefined}>
+      <MenuButton
+        link
+        href="/create/post"
+        disabled={$profile?.jwt == undefined}
+      >
         <Icon src={PencilSquare} mini width={16} />
         Post
       </MenuButton>
-      {#if !$authData}
+      {#if !$profile?.jwt}
         <span class="text-sm mx-4 my-1 py-1">
           <Link highlight href="/login">Log in</Link> to create content.
         </span>
@@ -193,22 +191,15 @@
         <Icon src={Bookmark} mini width={16} /> Saved
       </MenuButton>
     {/if}
-    {#if !$profile?.user && $profileData.profiles.length == 0}
-      <MenuButton link href="/login">
-        <Icon src={ArrowLeftOnRectangle} mini width={16} />
-        Log in
-      </MenuButton>
-    {:else}
-      <MenuButton link href="/accounts">
-        <Icon src={ArrowLeftOnRectangle} mini width={16} />
-        Switch account
-        <span
-          class="text-xs font-bold bg-slate-100 dark:bg-zinc-700 px-2 py-0.5 rounded-md ml-auto"
-        >
-          {$profileData.profiles.length}
-        </span>
-      </MenuButton>
-    {/if}
+    <MenuButton link href="/accounts">
+      <Icon src={ArrowLeftOnRectangle} mini width={16} />
+      {$profileData.profiles.length == 0 ? 'Log in' : 'Switch accounts'}
+      <span
+        class="text-xs font-bold bg-slate-100 dark:bg-zinc-700 px-2 py-0.5 rounded-md ml-auto"
+      >
+        {$profileData.profiles.length}
+      </span>
+    </MenuButton>
     <hr class="dark:opacity-10 w-[90%] my-2 mx-auto" />
     <li class="text-xs px-4 py-1 my-1 opacity-80">App</li>
     <MenuButton link href="/settings">

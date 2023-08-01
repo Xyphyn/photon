@@ -1,9 +1,15 @@
+import { env } from '$env/dynamic/public'
 import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
-import { DEFAULT_INSTANCE_URL, getClient, instance } from '$lib/lemmy.js'
+import { getClient, instance } from '$lib/lemmy.js'
+import { userSettings } from '$lib/settings.js'
 import type { MyUserInfo } from 'lemmy-js-client'
 import { get, writable } from 'svelte/store'
 
+const LINKED_INSTANCE_URL = env.PUBLIC_INSTANCE_URL
+const DEFAULT_INSTANCE_URL = env.PUBLIC_INSTANCE_URL || 'lemmy.ml'
+
 function getFromStorage<T>(key: string): T | undefined {
+  if (typeof localStorage == 'undefined') return undefined
   const lc = localStorage.getItem(key)
   if (!lc) return undefined
 
@@ -11,6 +17,7 @@ function getFromStorage<T>(key: string): T | undefined {
 }
 
 function setFromStorage(key: string, item: any) {
+  if (typeof localStorage == 'undefined') return
   return localStorage.setItem(key, JSON.stringify(item))
 }
 
@@ -46,15 +53,13 @@ profileData.subscribe((pd) => {
 export const profile = writable<Profile | undefined>(getProfile())
 
 profile.subscribe(async (p) => {
-  if (p?.instance) {
-    instance.set(p.instance)
-  }
   if (!p || !p.jwt) {
     profileData.update((pd) => ({ ...pd, profile: -1 }))
     return
   }
   if (p.user) return
 
+  instance.set(p.instance)
   // fetch the user because p.user is undefined
   const user = await userFromJwt(p.jwt, p.instance)
 
@@ -134,11 +139,13 @@ function getProfile() {
   return pd.profiles.find((p) => p.id == id)
 }
 
+const getDefaultProfile = () => ({
+  id: -1,
+  instance: get(instance),
+})
+
 export function resetProfile() {
-  profile.set({
-    id: -1,
-    instance: DEFAULT_INSTANCE_URL,
-  })
+  profile.set(getDefaultProfile())
   profileData.update((p) => ({ ...p, profile: -1 }))
 }
 
@@ -168,7 +175,7 @@ export function setUserID(id: number) {
   }
   const prof = pd.profiles.find((p) => p.id == id)
 
-  profile.set(prof)
+  profile.set(prof ?? getDefaultProfile())
   profileData.update((p) => ({ ...p, profile: id }))
 
   return prof

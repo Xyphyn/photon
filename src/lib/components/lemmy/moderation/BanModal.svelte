@@ -5,9 +5,10 @@
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import Modal from '$lib/components/ui/modal/Modal.svelte'
   import type { Community, Person, PersonView } from 'lemmy-js-client'
-  import { authData, getClient, user } from '$lib/lemmy.js'
+  import { getClient } from '$lib/lemmy.js'
   import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
   import TextInput from '$lib/components/input/TextInput.svelte'
+  import { profile } from '$lib/auth.js'
 
   export let open = false
   let item: Person | undefined
@@ -27,7 +28,7 @@
   $: if (item) resetReason()
 
   async function submit() {
-    if (!item || !$user || !community || !$authData) return
+    if (!item || !$profile?.user || !community || !$profile?.jwt) return
 
     loading = true
 
@@ -59,7 +60,7 @@
       }
 
       await getClient().banFromCommunity({
-        auth: $authData.token,
+        auth: $profile.jwt,
         ban: !banned,
         community_id: community.id,
         person_id: item.id,

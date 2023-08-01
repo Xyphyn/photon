@@ -2,8 +2,6 @@
   import type { PostView } from 'lemmy-js-client'
   import PostVote from './PostVote.svelte'
   import { getClient, getInstance } from '$lib/lemmy.js'
-  import { Color } from '$lib/ui/colors.js'
-  import Link from '$lib/components/input/Link.svelte'
   import {
     Bookmark,
     BookmarkSlash,
@@ -22,25 +20,24 @@
   import Button from '$lib/components/input/Button.svelte'
   import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
   import { page } from '$app/stores'
-  import { user, authData } from '$lib/lemmy.js'
   import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
-  import { isMutable } from '$lib/components/lemmy/post/helpers.js'
   import { createEventDispatcher } from 'svelte'
   import Modal from '$lib/components/ui/modal/Modal.svelte'
   import PostForm from '$lib/components/lemmy/post/PostForm.svelte'
   import { amMod, report } from '$lib/components/lemmy/moderation/moderation.js'
   import ModerationMenu from '$lib/components/lemmy/moderation/ModerationMenu.svelte'
+  import { profile } from '$lib/auth.js'
 
   export let post: PostView
 
   async function deletePost() {
-    if (!$authData) return
+    if (!$profile?.jwt) return
 
     const deleted = post.post.deleted
 
     try {
       await getClient().deletePost({
-        auth: $authData.token,
+        auth: $profile.jwt,
         deleted: !deleted,
         post_id: post.post.id,
       })
@@ -58,7 +55,7 @@
   }
 
   async function save(post: PostView) {
-    if (!$authData) return
+    if (!$profile?.jwt) return
 
     const saved = post.saved
 
@@ -66,7 +63,7 @@
 
     try {
       await getClient().savePost({
-        auth: $authData.token,
+        auth: $profile.jwt,
         post_id: post.post.id,
         save: !saved,
       })
@@ -117,7 +114,7 @@
     <FormattedNumber number={post.counts.comments} />
   </Button>
   <div class="ml-auto" />
-  {#if $user && amMod($user, post.community)}
+  {#if $profile?.user && amMod($profile.user, post.community)}
     <ModerationMenu item={post} community={post.community} />
   {/if}
   <Menu alignment="bottom-right" class="overflow-auto" let:toggleOpen>
@@ -148,7 +145,7 @@
     </MenuButton>
     <hr class="w-[90%] mx-auto opacity-100 dark:opacity-10 my-2" />
     <li class="mx-4 text-xs opacity-80 text-left my-1 py-1">Actions</li>
-    {#if $user && $user.local_user_view.person.id == post.creator.id}
+    {#if $profile?.user && $profile.user.local_user_view.person.id == post.creator.id}
       <MenuButton on:click={() => (editing = true)}>
         <Icon src={PencilSquare} width={16} mini />
         Edit
@@ -164,18 +161,18 @@
       <Icon src={Square2Stack} width={16} mini />
       Copy Link
     </MenuButton>
-    {#if $authData?.token}
+    {#if $profile?.jwt}
       <MenuButton on:click={() => save(post)}>
         <Icon src={post.saved ? BookmarkSlash : Bookmark} width={16} mini />
         {post.saved ? 'Unsave' : 'Save'}
       </MenuButton>
-      {#if $user && post.creator.id == $user.local_user_view.person.id}
+      {#if $profile.user && post.creator.id == $profile.user.local_user_view.person.id}
         <MenuButton on:click={deletePost} color="dangerSecondary">
           <Icon src={Trash} width={16} mini />
           {post.post.deleted ? 'Restore' : 'Delete'}
         </MenuButton>
       {/if}
-      {#if $user?.local_user_view.person.id != post.creator.id}
+      {#if $profile.user?.local_user_view.person.id != post.creator.id}
         <MenuButton on:click={() => report(post)} color="dangerSecondary">
           <Icon src={Flag} width={16} mini />
           Report

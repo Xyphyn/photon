@@ -4,26 +4,15 @@
     buildCommentsTreeAsync,
   } from '$lib/components/lemmy/comment/comments.js'
   import Comments from '$lib/components/lemmy/comment/Comments.svelte'
-  import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
   import { isImage } from '$lib/ui/image.js'
-  import { authData, getClient, user } from '$lib/lemmy.js'
+  import { getClient } from '$lib/lemmy.js'
   import CommentForm from '$lib/components/lemmy/comment/CommentForm.svelte'
   import { onMount } from 'svelte'
-  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
-  import Avatar from '$lib/components/ui/Avatar.svelte'
-  import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import Button from '$lib/components/input/Button.svelte'
   import { page } from '$app/stores'
   import PostActions from '$lib/components/lemmy/post/PostActions.svelte'
-  import Badge from '$lib/components/ui/Badge.svelte'
-  import {
-    Bookmark,
-    ExclamationTriangle,
-    Icon,
-    InformationCircle,
-    Trash,
-  } from 'svelte-hero-icons'
+  import { ExclamationTriangle, Icon } from 'svelte-hero-icons'
   import Link from '$lib/components/input/Link.svelte'
   import Spinner from '$lib/components/ui/loader/Spinner.svelte'
   import Card from '$lib/components/ui/Card.svelte'
@@ -32,6 +21,7 @@
   import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
   import type { CommentSortType } from 'lemmy-js-client'
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
+  import { profile } from '$lib/auth.js'
 
   export let data
 
@@ -39,9 +29,9 @@
   const post = postData.post
 
   onMount(async () => {
-    if (!postData.read && $authData) {
+    if (!postData.read && $profile?.jwt) {
       getClient().markPostAsRead({
-        auth: $authData.token,
+        auth: $profile.jwt,
         read: true,
         post_id: post.id,
       })
@@ -58,7 +48,7 @@
     commentsPage = 1
 
     data.streamed.comments = getClient().getComments({
-      auth: $authData?.token,
+      auth: $profile?.jwt,
       max_depth: 3,
       page: commentsPage,
       limit: 25,
@@ -82,7 +72,7 @@
 </svelte:head>
 
 <div class="flex flex-col gap-2">
-  {#if $authData && $page.params.instance.toLowerCase() != $authData.instance.toLowerCase()}
+  {#if $profile && $page.params.instance.toLowerCase() != $profile.instance.toLowerCase()}
     <Card cardColor="warning" class="p-4 flex flex-col gap-1">
       <Icon
         src={ExclamationTriangle}
@@ -183,7 +173,7 @@
       <Spinner width={24} />
     </div>
   {:then comments}
-    {#if $user}
+    {#if $profile?.user}
       <CommentForm
         postId={post.id}
         on:comment={(comment) =>
@@ -211,7 +201,7 @@
           loading = true
 
           const loadedComments = await getClient().getComments({
-            auth: $authData?.token,
+            auth: $profile?.jwt,
             max_depth: 3,
             page: ++commentsPage,
             limit: 25,

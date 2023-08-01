@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { authData, getClient, user } from '$lib/lemmy'
+  import { getClient } from '$lib/lemmy'
   import type {
     CommentView,
     Community,
@@ -13,6 +13,7 @@
   import { Icon, ShieldExclamation, Trash } from 'svelte-hero-icons'
   import { Color } from '$lib/ui/colors.js'
   import { isComment } from '$lib/lemmy/item.js'
+  import { profile } from '$lib/auth.js'
 
   export let item: PostView | CommentView
 </script>
@@ -53,7 +54,7 @@
       {item.post.removed ? 'Restore' : 'Remove'}
     {/if}
   </MenuButton>
-  {#if $user && $user.local_user_view.person.id != item.creator.id}
+  {#if $profile.user && $profile.user?.local_user_view.person.id != item.creator.id}
     <span class="px-4 py-1 my-1 text-xs text-slate-600 dark:text-zinc-400">
       User
     </span>

@@ -1,17 +1,15 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte'
-  import { getClient, authData, uploadImage } from '$lib/lemmy.js'
+  import { getClient, uploadImage } from '$lib/lemmy.js'
   import type { Community, Post, PostView } from 'lemmy-js-client'
   import TextInput from '$lib/components/input/TextInput.svelte'
   import TextArea from '$lib/components/input/TextArea.svelte'
-  import SelectMenu from '$lib/components/input/SelectMenu.svelte'
-  import Dots from '$lib/components/ui/loader/Dots.svelte'
   import FileInput from '$lib/components/input/FileInput.svelte'
   import Button from '$lib/components/input/Button.svelte'
   import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
-  import { goto } from '$app/navigation'
   import SearchInput from '$lib/components/input/SearchInput.svelte'
   import { Check, Icon } from 'svelte-hero-icons'
+  import { profile } from '$lib/auth.js'
 
   export let edit = false
 
@@ -67,7 +65,7 @@
     }
 
     const list = await getClient().listCommunities({
-      auth: $authData?.token,
+      auth: $profile?.jwt,
       type_: 'Subscribed',
       sort: 'Active',
       limit: 40,
@@ -84,7 +82,7 @@
       })
       return
     }
-    if (!data.title || !$authData) return
+    if (!data.title || !$profile?.jwt) return
 
     data.loading = true
 
@@ -95,7 +93,7 @@
         }
 
         const post = await getClient().editPost({
-          auth: $authData.token,
+          auth: $profile.jwt,
           name: data.title,
           body: data.body,
           url: data.url || undefined,
@@ -111,7 +109,7 @@
         let image = data.image ? await uploadImage(data.image[0]) : undefined
         data.url = image || data.url || undefined
         const post = await getClient().createPost({
-          auth: $authData.token,
+          auth: $profile.jwt,
           community_id: data.community!,
           name: data.title,
           body: data.body,
@@ -158,7 +156,7 @@
         on:search={async () => {
           const results = await getClient().search({
             q: communitySearch,
-            auth: $authData?.token,
+            auth: $profile?.jwt,
             type_: 'Communities',
             limit: 20,
             listing_type: 'Subscribed',

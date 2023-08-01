@@ -1,4 +1,5 @@
-import { authData, getClient } from '$lib/lemmy.js'
+import { profile } from '$lib/auth.js'
+import { getClient } from '$lib/lemmy.js'
 import { getItemPublished } from '$lib/lemmy/item.js'
 import type {
   CommentView,
@@ -21,7 +22,7 @@ export async function load({ url }) {
   if (query) {
     const results = await getClient().search({
       q: query,
-      auth: get(authData)?.token,
+      auth: get(profile)?.jwt,
       community_name: community ?? undefined,
       limit: 40,
       page: page,

@@ -1,9 +1,10 @@
-import { authData, getClient } from '$lib/lemmy.js'
+import { profile } from '$lib/auth.js'
+import { getClient } from '$lib/lemmy.js'
 import type { MyUserInfo, PersonView } from 'lemmy-js-client'
 import { get } from 'svelte/store'
 
 export const blockUser = async (block: boolean, id: number) => {
-  const auth = get(authData)?.token
+  const auth = get(profile)?.jwt
 
   if (!auth) throw new Error('Unauthorized')
 

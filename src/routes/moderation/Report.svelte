@@ -3,7 +3,7 @@
   import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
   import Post from '$lib/components/lemmy/post/Post.svelte'
   import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
-  import { authData, getClient, user } from '$lib/lemmy.js'
+  import { getClient } from '$lib/lemmy.js'
   import { isCommentReport, isPostReport } from '$lib/lemmy/item.js'
   import type {
     CommentReportView,
@@ -11,7 +11,7 @@
     PrivateMessageReportView,
   } from 'lemmy-js-client'
   import { Check, Icon } from 'svelte-hero-icons'
-  import { get } from 'svelte/store'
+  import { profile } from '$lib/auth.js'
 
   export let item: PostReportView | CommentReportView | PrivateMessageReportView
 
@@ -23,13 +23,13 @@
 
   let resolving = false
   async function resolve() {
-    if (!$authData || !$user) return
+    if (!$profile?.jwt || !$profile.user) return
     resolving = true
 
     try {
       if (isCommentReport(item)) {
         await getClient().resolveCommentReport({
-          auth: $authData.token,
+          auth: $profile.jwt,
           report_id: item.comment_report.id,
           resolved: !resolved,
         })
@@ -42,7 +42,7 @@
         })
       } else if (isPostReport(item)) {
         await getClient().resolvePostReport({
-          auth: $authData.token,
+          auth: $profile.jwt,
           report_id: item.post_report.id,
           resolved: !resolved,
         })
@@ -55,10 +55,10 @@
       }
 
       const reports = await getClient().getReportCount({
-        auth: get(authData)!.token,
+        auth: $profile?.jwt,
       })
 
-      $user.reports =
+      $profile.user.reports =
         reports.comment_reports +
         reports.post_reports +
         (reports.private_message_reports ?? 0)

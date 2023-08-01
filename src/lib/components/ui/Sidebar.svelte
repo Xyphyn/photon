@@ -9,7 +9,7 @@
   } from 'svelte-hero-icons'
   import Button from '../input/Button.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
-  import { user } from '$lib/lemmy.js'
+  import { profile } from '$lib/auth.js'
 
   let expanded = true
 </script>
@@ -50,8 +50,8 @@
     <span class:hidden={!expanded}>Settings</span>
   </Button>
   <hr class="border-slate-300 dark:border-zinc-800 my-1" />
-  {#if $user}
-    {#each $user.follows
+  {#if $profile?.user}
+    {#each $profile.user.follows
       .map((f) => f.community)
       .sort((a, b) => a.title.localeCompare(b.title)) as follow}
       <Button
@@ -60,11 +60,17 @@
         alignment="left"
         href="/c/{follow.name}@{new URL(follow.actor_id).hostname}"
       >
-        <Avatar url={follow.icon} alt={follow.name} title={follow.title} width={20} slot="icon" />
+        <Avatar
+          url={follow.icon}
+          alt={follow.name}
+          title={follow.title}
+          width={20}
+          slot="icon"
+        />
         <span class:hidden={!expanded}>{follow.title}</span>
       </Button>
     {/each}
-    {#if $user.follows.length == 0}
+    {#if $profile.user.follows.length == 0}
       <Button
         class="hover:bg-slate-200 {expanded ? '' : '!p-1.5'}"
         href="/communities"

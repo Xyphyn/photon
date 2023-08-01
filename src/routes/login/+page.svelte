@@ -12,9 +12,7 @@
   import {
     DEFAULT_INSTANCE_URL,
     LINKED_INSTANCE_URL,
-    authData,
     getClient,
-    user,
     validateInstance,
   } from '$lib/lemmy.js'
 
@@ -53,7 +51,6 @@
         content: error as any,
         type: ToastType.error,
       })
-      user.set(null)
     }
     data.loading = false
   }

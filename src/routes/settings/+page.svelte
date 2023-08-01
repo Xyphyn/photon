@@ -5,9 +5,7 @@
   import { userSettings } from '$lib/settings'
   import {
     LINKED_INSTANCE_URL,
-    authData,
     instance,
-    user,
     validateInstance,
   } from '$lib/lemmy.js'
   import { Color } from '$lib/ui/colors.js'
@@ -17,33 +15,7 @@
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
 
   let data = {
-    newInstance: $instance,
     loading: false,
-  }
-
-  async function changeInstance() {
-    data.loading = true
-    try {
-      authData.set(undefined)
-      user.set(undefined)
-      if (typeof localStorage != 'undefined') {
-        localStorage.removeItem('user')
-      }
-
-      if (!(await validateInstance(data.newInstance))) {
-        throw new Error('Failed to contact that instance URL')
-      }
-
-      instance.set(data.newInstance)
-
-      $userSettings.instance = data.newInstance
-    } catch (error) {
-      toast({
-        content: error as any,
-        type: ToastType.error,
-      })
-    }
-    data.loading = false
   }
 </script>
 
@@ -54,31 +26,6 @@
 <div class="flex flex-col">
   <h1 class="text-3xl font-bold">Settings</h1>
   <h2 class="uppercase font-bold opacity-80 text-sm mt-4">General</h2>
-  {#if !LINKED_INSTANCE_URL}
-    <Setting>
-      <span slot="title">Instance</span>
-      <span slot="description">Changing this will log you out.</span>
-      <div class="flex gap-2">
-        <TextInput
-          bind:value={data.newInstance}
-          pattern={'(?!-)[A-Za-z0-9-]+([-.]{1}[a-z0-9]+)*.[A-Za-z]{2,6}'}
-          class="flex-1"
-        />
-        <div class="w-24">
-          <Button
-            color="primary"
-            loading={data.loading}
-            disabled={data.loading}
-            on:click={changeInstance}
-            size="lg"
-            class="h-full"
-          >
-            Change
-          </Button>
-        </div>
-      </div>
-    </Setting>
-  {/if}
   <Setting>
     <span slot="title">Default sort</span>
     <span slot="description">The default sort to use for feeds.</span>
