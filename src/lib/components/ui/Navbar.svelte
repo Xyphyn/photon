@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { profile, profileData, setUserID } from '$lib/auth.js'
   import Button from '$lib/components/input/Button.svelte'
   import Link from '$lib/components/input/Link.svelte'
   import ShieldIcon from '$lib/components/lemmy/moderation/ShieldIcon.svelte'
@@ -18,6 +19,7 @@
   import {
     ArrowLeftOnRectangle,
     ArrowRightOnRectangle,
+    Beaker,
     Bookmark,
     Cog6Tooth,
     GlobeAlt,
@@ -174,8 +176,8 @@
     <li class="text-xs opacity-80 text-left mx-4 my-1 py-1">
       {$user ? $user.local_user_view.person.name : 'Profile'}
     </li>
-    {#if $user && $authData}
-      <MenuButton
+    {#if $profile}
+      <!-- <MenuButton
         link
         href="/u/{$user.local_user_view.person.name}@{$authData.instance}"
       >
@@ -203,12 +205,30 @@
         color="dangerSecondary"
       >
         <Icon src={ArrowRightOnRectangle} mini width={16} />Log out
-      </MenuButton>
+      </MenuButton> -->
     {/if}
-    {#if !$user || !$authData}
-      <MenuButton link href="/login">
-        <Icon src={ArrowLeftOnRectangle} mini width={16} />
-        Log in
+    {#if !$profile?.user}
+      {#if $profileData.profiles.length == 0}
+        <MenuButton link href="/login">
+          <Icon src={ArrowLeftOnRectangle} mini width={16} />
+          Log in
+        </MenuButton>
+      {:else}
+        <MenuButton
+          on:click={() => {
+            const acc = Number(prompt('user id'))
+
+            setUserID(acc)
+          }}
+        >
+          <Icon src={ArrowLeftOnRectangle} mini width={16} />
+          change account
+        </MenuButton>
+      {/if}
+    {:else}
+      <MenuButton on:click={() => console.log($profile)}>
+        <Icon src={Beaker} mini width={16} />
+        Log user
       </MenuButton>
     {/if}
     <hr class="dark:opacity-10 w-[90%] my-2 mx-auto" />

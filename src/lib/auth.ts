@@ -34,15 +34,15 @@ interface PersonData extends MyUserInfo {
   reports: number
 }
 
-export const profileData = writable<ProfileData>({ profiles: [], profile: -1 })
-export const profile = writable<Profile | undefined>({
-  id: -1,
-  instance: DEFAULT_INSTANCE_URL,
-})
+export const profileData = writable<ProfileData>(
+  getFromStorage<ProfileData>('profileData') ?? { profiles: [], profile: -1 }
+)
 
 profileData.subscribe((pd) => {
   setFromStorage('profileData', pd)
 })
+
+export const profile = writable<Profile | undefined>(getProfile())
 
 profile.subscribe(async (p) => {
   if (!p || !p.jwt) {
@@ -117,12 +117,35 @@ const userToPersonData = (user: MyUserInfo): PersonData => ({
   reports: 0,
 })
 
-function getProfileData() {
-  const pd = getFromStorage<ProfileData>('profileData')!
+function getProfile() {
+  const id = get(profileData).profile
 
-  profileData.set(pd)
+  console.log('id is', id)
+  // returns something that isn't -1
 
-  console.log(get(profileData))
+  if (id == -1) {
+    console.log('returning, since ID is', id)
+    // still logs :/
+    return
+  }
+
+  console.log('fetching user of id', id)
+
+  const pd = get(profileData)
+
+  console.log('pd', pd)
+
+  return pd.profiles.find((p) => p.id == id)
 }
 
-getProfileData()
+export function setUserID(id: number) {
+  const pd = get(profileData)
+  console.log('pd', pd)
+  const prof = pd.profiles.find((p) => p.id == id)
+
+  profile.set(prof)
+  profileData.update((p) => ({ ...p, profile: id }))
+  console.log('new', pd)
+
+  return prof
+}
