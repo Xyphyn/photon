@@ -8,6 +8,7 @@
   export let url: string | undefined
   export let alt: string = ''
   export let title: string = ''
+  export let circle: boolean = true
 
   export let width: number
 </script>
@@ -19,12 +20,14 @@
     {width}
     {title}
     loading="lazy"
-    class="rounded-full aspect-square object-cover overflow-hidden"
+    class="aspect-square object-cover overflow-hidden"
+    class:rounded-full={circle}
   />
 {:else}
   <div
     style="width: {width}px; height: {width}px;"
-    class="rounded-full aspect-square object-cover overflow-hidden"
+    class="aspect-square object-cover overflow-hidden"
+    class:rounded-full={circle}
   >
     {@html createAvatar(initials, {
       seed: alt,
