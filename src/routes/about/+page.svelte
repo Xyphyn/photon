@@ -37,7 +37,7 @@
         Buy me a coffee
       </Link>
       <ul class="list-disc pl-4">
-        <li>I'd much prefer you support me by sharing this website.</li>
+        <li>I'd much prefer you support me by sharing the Photon app.</li>
       </ul>
     </li>
     <li>
