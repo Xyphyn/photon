@@ -6,11 +6,11 @@
     CommunityView,
     PostView,
   } from 'lemmy-js-client'
-  import { amMod, remove } from './moderation'
+  import { amMod, ban, remove } from './moderation'
   import Menu from '$lib/components/ui/menu/Menu.svelte'
   import Button from '$lib/components/input/Button.svelte'
   import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
-  import { Icon, Trash } from 'svelte-hero-icons'
+  import { Icon, ShieldExclamation, Trash } from 'svelte-hero-icons'
   import { Color } from '$lib/ui/colors.js'
   import { isComment } from '$lib/lemmy/item.js'
 
@@ -53,4 +53,19 @@
       {item.post.removed ? 'Restore' : 'Remove'}
     {/if}
   </MenuButton>
+  {#if $user && $user.local_user_view.person.id != item.creator.id}
+    <span class="px-4 py-1 my-1 text-xs text-slate-600 dark:text-zinc-400">
+      User
+    </span>
+    <MenuButton
+      color="dangerSecondary"
+      on:click={() =>
+        ban(item.creator_banned_from_community, item.creator, item.community)}
+    >
+      <Icon src={ShieldExclamation} size="16" mini />
+      {item.creator_banned_from_community
+        ? 'Unban from community'
+        : 'Ban from community'}
+    </MenuButton>
+  {/if}
 </Menu>

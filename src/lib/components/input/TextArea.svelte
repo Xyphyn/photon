@@ -6,6 +6,7 @@
   export let value: string = ''
   export let maxlength: number = -1
   export let rows: number = 3
+  export let required: boolean = false
 
   let clazz = ''
   export { clazz as class }
@@ -19,6 +20,9 @@
       class="font-bold text-sm text-left mb-1 cursor-pointer w-max self-start"
     >
       {label}
+      {#if required}
+        <span class="font-bold text-red-500">*</span>
+      {/if}
     </span>
   {/if}
   <textarea

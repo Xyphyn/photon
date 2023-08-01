@@ -3,6 +3,8 @@ import type {
   Community,
   CommunityView,
   MyUserInfo,
+  Person,
+  PersonView,
   PostView,
 } from 'lemmy-js-client'
 import { writable } from 'svelte/store'
@@ -16,6 +18,12 @@ interface Modals {
     open: boolean
     item: PostView | CommentView | undefined
   }
+  banning: {
+    open: boolean
+    banned: boolean
+    user: Person | undefined
+    community: Community | undefined
+  }
 }
 
 export let modals = writable<Modals>({
@@ -26,6 +34,12 @@ export let modals = writable<Modals>({
   removing: {
     open: false,
     item: undefined,
+  },
+  banning: {
+    open: false,
+    banned: false,
+    user: undefined,
+    community: undefined,
   },
 })
 
@@ -45,6 +59,18 @@ export function remove(item: PostView | CommentView) {
     removing: {
       open: true,
       item: item,
+    },
+  }))
+}
+
+export function ban(banned: boolean, item: Person, community: Community) {
+  modals.update((m) => ({
+    ...m,
+    banning: {
+      open: true,
+      user: item,
+      banned: banned,
+      community,
     },
   }))
 }
