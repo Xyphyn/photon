@@ -19,34 +19,37 @@
   import { page } from '$app/stores'
   import { goto } from '$app/navigation'
   import { isComment } from '$lib/lemmy/item.js'
-  import { authData, getClient, user } from '$lib/lemmy.js'
+  import { getClient } from '$lib/lemmy.js'
   import { isBlocked } from '$lib/lemmy/user.js'
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
   import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
   import Modal from '$lib/components/ui/modal/Modal.svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import TextArea from '$lib/components/input/TextArea.svelte'
+  import { profile } from '$lib/auth.js'
 
   export let data
 
   let blocking = false
 
   async function blockUser(block: number) {
-    if (!$user || !$authData) throw new Error('Unauthenticated')
+    if (!$profile?.user || !$profile?.jwt) throw new Error('Unauthenticated')
 
     blocking = true
     try {
-      const blocked = isBlocked($user, block)
+      const blocked = isBlocked($profile.user, block)
 
       await getClient().blockPerson({
-        auth: $authData.token,
+        auth: $profile.jwt,
         block: !blocked,
         person_id: block,
       })
 
       if (blocked) {
-        const index = $user.person_blocks.map((p) => p.target.id).indexOf(block)
-        $user.person_blocks.splice(index, 1)
+        const index = $profile.user.person_blocks
+          .map((p) => p.target.id)
+          .indexOf(block)
+        $profile.user.person_blocks.splice(index, 1)
       }
 
       toast({
@@ -71,13 +74,13 @@
   let message = ''
 
   async function sendMessage() {
-    if (!$authData || message == '') return
+    if (!$profile?.jwt || message == '') return
 
     loadingMessage = true
 
     try {
       await getClient().createPrivateMessage({
-        auth: $authData.token,
+        auth: $profile.jwt,
         content: message,
         recipient_id: data.person_view.person.id,
       })
@@ -103,7 +106,7 @@
   <title>{data.person_view.person.name}</title>
 </svelte:head>
 
-{#if $authData}
+{#if $profile?.user}
   <Modal bind:open={messaging}>
     <h1 class="text-2xl font-bold" slot="title">Message</h1>
     <form on:submit|preventDefault={sendMessage} class="flex flex-col gap-4">
@@ -198,7 +201,7 @@
           <FormattedNumber number={data.person_view.counts.comment_count} />
         </span>
       </div>
-      {#if $user && $authData && data.person_view.person.id != $user.local_user_view.person.id}
+      {#if $profile?.user && $profile.jwt && data.person_view.person.id != $profile.user.local_user_view.person.id}
         <div class="flex flex-col gap-2">
           <Button
             size="lg"
@@ -216,7 +219,9 @@
             on:click={() => blockUser(data.person_view.person.id)}
           >
             <Icon slot="icon" mini size="16" src={NoSymbol} />
-            {isBlocked($user, data.person_view.person.id) ? 'Unblock' : 'Block'}
+            {isBlocked($profile.user, data.person_view.person.id)
+              ? 'Unblock'
+              : 'Block'}
           </Button>
         </div>
       {/if}

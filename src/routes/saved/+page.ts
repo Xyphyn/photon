@@ -1,4 +1,5 @@
-import { authData, getClient } from '$lib/lemmy.js'
+import { profile } from '$lib/auth.js'
+import { getClient } from '$lib/lemmy.js'
 import type { CommentView, PostView } from 'lemmy-js-client'
 import { get } from 'svelte/store'
 
@@ -11,7 +12,7 @@ function getSavedItemPublished(item: PostView | CommentView) {
 }
 
 export async function load({ url }) {
-  if (!get(authData)) return { posts: [] }
+  if (!get(profile)) return { posts: [] }
   const page = Number(url.searchParams.get('page')) || 1
 
   const client = getClient()
@@ -19,7 +20,7 @@ export async function load({ url }) {
   const [posts, comments] = await Promise.all([
     client.getPosts({
       saved_only: true,
-      auth: get(authData)!.token,
+      auth: get(profile)!.jwt,
       limit: 20,
       page: page,
       sort: 'New',
@@ -27,7 +28,7 @@ export async function load({ url }) {
 
     client.getComments({
       saved_only: true,
-      auth: get(authData)!.token,
+      auth: get(profile)!.jwt,
       limit: 20,
       page: page,
       sort: 'New',

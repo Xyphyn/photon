@@ -1,4 +1,5 @@
-import { authData, getClient } from '$lib/lemmy.js'
+import { profile } from '$lib/auth.js'
+import { getClient } from '$lib/lemmy.js'
 import type { ListingType } from 'lemmy-js-client'
 import { get } from 'svelte/store'
 
@@ -15,7 +16,7 @@ export async function load({ url }) {
       type_: 'Communities',
       listing_type: type,
       q: query,
-      auth: get(authData)?.token,
+      auth: get(profile)?.jwt,
     })
   } else {
     return await getClient().listCommunities({
@@ -23,7 +24,7 @@ export async function load({ url }) {
       page: page,
       sort: 'TopAll',
       type_: type,
-      auth: get(authData)?.token,
+      auth: get(profile)?.jwt,
     })
   }
 }

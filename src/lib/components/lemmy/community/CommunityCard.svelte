@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { profile } from '$lib/auth.js'
   import Button from '$lib/components/input/Button.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
@@ -7,8 +8,7 @@
   import { ToastType, addToast } from '$lib/components/ui/toasts/toasts.js'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
-  import { authData, getClient, user } from '$lib/lemmy.js'
-  import { Color } from '$lib/ui/colors.js'
+  import { getClient } from '$lib/lemmy.js'
   import type { CommunityView } from 'lemmy-js-client'
   import {
     Calendar,
@@ -26,7 +26,7 @@
   }
 
   async function subscribe() {
-    if (!$authData) return
+    if (!$profile?.jwt) return
     loading.subscribing = true
     const subscribed =
       community_view.subscribed == 'Subscribed' ||
@@ -34,7 +34,7 @@
 
     try {
       await getClient().followCommunity({
-        auth: $authData.token,
+        auth: $profile.jwt,
         community_id: community_view.community.id,
         follow: !subscribed,
       })
@@ -47,13 +47,13 @@
     loading.subscribing = false
   }
   async function block() {
-    if (!$authData) return
+    if (!$profile?.jwt) return
     loading.blocking = true
     const blocked = community_view.blocked
 
     try {
       await getClient().blockCommunity({
-        auth: $authData.token,
+        auth: $profile.jwt,
         community_id: community_view.community.id,
         block: !blocked,
       })
@@ -100,7 +100,7 @@
       <FormattedNumber number={community_view.counts.comments} />
     </span>
   </div>
-  {#if $authData}
+  {#if $profile?.jwt}
     <div class="w-full mt-2 flex flex-col gap-2">
       <Button
         disabled={loading.subscribing}

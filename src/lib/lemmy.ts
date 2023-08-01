@@ -5,10 +5,8 @@ import {
   type PersonView,
 } from 'lemmy-js-client'
 import { get, writable } from 'svelte/store'
-import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
-import { userSettings } from '$lib/settings.js'
 import { env } from '$env/dynamic/public'
-import { amModOfAny } from '$lib/components/lemmy/moderation/moderation.js'
+import { profile } from '$lib/auth.js'
 
 export const LINKED_INSTANCE_URL = env.PUBLIC_INSTANCE_URL
 export const DEFAULT_INSTANCE_URL = env.PUBLIC_INSTANCE_URL || 'lemmy.ml'
@@ -24,21 +22,6 @@ export function getClient(instanceURL?: string): LemmyHttp {
 
 export const getInstance = () => get(instance)
 
-export interface AuthData {
-  token: string
-  username: string
-  instance: string
-}
-
-export interface UserData {
-  unreads: number
-  reports?: number
-}
-
-export const authData = writable<AuthData | undefined>()
-export const user = writable<(MyUserInfo & UserData) | undefined | null>(
-  undefined
-)
 export const site = writable<GetSiteResponse | undefined>(undefined)
 
 if (LINKED_INSTANCE_URL) {
@@ -46,73 +29,6 @@ if (LINKED_INSTANCE_URL) {
     .getSite({})
     .then((s) => site.set(s))
 }
-
-setInterval(async () => {
-  // check for unread messages
-  if (!get(authData) || !get(user)) return
-
-  const response = await getClient().getUnreadCount({
-    auth: get(authData)!.token,
-  })
-
-  const u = get(user)
-  if (!u) return
-  u.unreads = response.mentions + response.private_messages + response.replies
-
-  if (amModOfAny(u)) {
-    const reports = await getClient().getReportCount({
-      auth: get(authData)!.token,
-    })
-
-    u.reports =
-      reports.comment_reports +
-      reports.post_reports +
-      (reports.private_message_reports ?? 0)
-  }
-
-  user.set(u)
-}, 30 * 1000)
-
-if (typeof localStorage != 'undefined') {
-  if (localStorage.getItem('user')) {
-    try {
-      authData.set(JSON.parse(localStorage.getItem('user') ?? ''))
-    } catch (error) {
-      // keep authdata until we can verify that the user is infact invalid
-    }
-  }
-}
-
-authData.subscribe(async (data) => {
-  instance.set(
-    data?.instance ?? get(userSettings).instance ?? DEFAULT_INSTANCE_URL
-  )
-  if (!data?.token) {
-    user.set(null)
-    return
-  }
-  try {
-    const site = await getClient().getSite({
-      auth: data.token,
-    })
-    if (!site?.my_user) {
-      user.set(null)
-      throw Error('Missing user')
-    }
-    user.set({ ...site.my_user, unreads: 0 })
-    if (typeof localStorage != 'undefined') {
-      localStorage.setItem('user', JSON.stringify(data))
-    }
-  } catch (error) {
-    toast({
-      content: 'Failed to fetch your user. Is your instance down?',
-      type: ToastType.error,
-    })
-    console.error(error)
-    authData.set(undefined)
-    user.set(null)
-  }
-})
 
 export async function validateInstance(instance: string): Promise<boolean> {
   if (instance == '') return false
@@ -129,7 +45,7 @@ export async function validateInstance(instance: string): Promise<boolean> {
 export async function uploadImage(
   image: File | null | undefined
 ): Promise<string | undefined> {
-  if (!image || !get(authData)) return
+  if (!image || !get(profile)?.jwt) return
 
   const formData = new FormData()
   formData.append('images[]', image)
@@ -138,7 +54,7 @@ export async function uploadImage(
     `${
       window.location.origin
     }/cors/${getInstance()}/pictrs/image?${new URLSearchParams({
-      auth: get(authData)!.token,
+      auth: get(profile)!.jwt!,
     })}`,
     {
       method: 'POST',
@@ -149,7 +65,7 @@ export async function uploadImage(
   const json = await response.json()
 
   if (json.msg == 'ok') {
-    return `https://${get(authData)?.instance}/pictrs/image/${
+    return `https://${get(profile)?.instance}/pictrs/image/${
       json.files?.[0]?.file
     }`
   }

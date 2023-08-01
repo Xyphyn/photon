@@ -8,10 +8,10 @@
   import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
   import { fly } from 'svelte/transition'
   import Spinner from '$lib/components/ui/loader/Spinner.svelte'
-  import { authData } from '$lib/lemmy.js'
   import { ArchiveBox, Icon, Plus } from 'svelte-hero-icons'
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import Modal from '$lib/components/ui/modal/Modal.svelte'
+  import { profile } from '$lib/auth.js'
 
   export let data
 
@@ -44,7 +44,7 @@
     >
       <MultiSelect
         options={['Subscribed', 'Local', 'All']}
-        disabled={[$authData?.token == undefined]}
+        disabled={[$profile?.jwt == undefined]}
         selected={data.listingType}
         on:select={(e) => {
           $page.url.searchParams.set('type', e.detail)

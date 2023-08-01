@@ -5,12 +5,11 @@
   import { onMount, setContext } from 'svelte'
   import Button from '$lib/components/input/Button.svelte'
   import { ChevronDown, Icon } from 'svelte-hero-icons'
-  import { authData, getClient } from '$lib/lemmy.js'
+  import { getClient } from '$lib/lemmy.js'
   import type { CommentView, Post } from 'lemmy-js-client'
   import { fly } from 'svelte/transition'
   import { toast, ToastType } from '$lib/components/ui/toasts/toasts.js'
-  import Modal from '$lib/components/ui/modal/Modal.svelte'
-  import TextArea from '$lib/components/input/TextArea.svelte'
+  import { profile } from '$lib/auth.js'
 
   export let nodes: CommentNodeI[]
   export let isParent: boolean
@@ -44,7 +43,7 @@
       parent.loading = true
 
       const newComments = await getClient($page.params.instance).getComments({
-        auth: $authData?.token,
+        auth: $profile?.jwt,
         max_depth: 5,
         parent_id: parent.comment_view.comment.id,
         type_: 'All',

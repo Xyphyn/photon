@@ -1,18 +1,19 @@
 <script lang="ts">
   import Button from '$lib/components/input/Button.svelte'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
-  import { authData, getClient } from '$lib/lemmy'
+  import { getClient } from '$lib/lemmy'
   import { userSettings } from '$lib/settings.js'
   import { Color } from '$lib/ui/colors.js'
   import type { Post } from 'lemmy-js-client'
   import { ChevronDown, ChevronUp, Icon } from 'svelte-hero-icons'
+  import { profile } from '$lib/auth.js'
 
   export let post: Post
   export let vote: number = 0
   export let score: number
 
   async function upvote() {
-    if (!$authData) return
+    if (!$profile?.jwt) return
 
     if (vote == undefined) vote = 0
 
@@ -31,14 +32,14 @@
     await getClient()
       .likePost({
         score: upvoted ? 0 : 1,
-        auth: $authData.token,
+        auth: $profile.jwt,
         post_id: post.id,
       })
       .catch((_) => undefined)
   }
 
   async function downvote() {
-    if (!$authData) return
+    if (!$profile?.jwt) return
 
     if (vote == undefined) vote = 0
 
@@ -57,7 +58,7 @@
     await getClient()
       .likePost({
         score: upvoted ? 0 : -1,
-        auth: $authData.token,
+        auth: $profile.jwt,
         post_id: post.id,
       })
       .catch((_) => undefined)

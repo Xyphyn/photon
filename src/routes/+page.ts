@@ -1,8 +1,9 @@
-import { authData, getClient } from '$lib/lemmy.js'
+import { getClient } from '$lib/lemmy.js'
 import { userSettings } from '$lib/settings.js'
 import type { ListingType, SortType } from 'lemmy-js-client'
 import { get } from 'svelte/store'
 import { error } from '@sveltejs/kit'
+import { profile } from '$lib/auth.js'
 
 export async function load({ url }) {
   const page = Number(url.searchParams.get('page') || 1) || 1
@@ -24,7 +25,7 @@ export async function load({ url }) {
         page: page,
         sort: sort,
         type_: listingType,
-        auth: get(authData)?.token,
+        auth: get(profile)?.jwt,
       }),
       streamed: {
         site: getClient().getSite({}),

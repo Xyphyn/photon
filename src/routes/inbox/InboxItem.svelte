@@ -1,15 +1,14 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import Button from '$lib/components/input/Button.svelte'
-  import Link from '$lib/components/input/Link.svelte'
   import TextArea from '$lib/components/input/TextArea.svelte'
   import Comment from '$lib/components/lemmy/comment/Comment.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import Card from '$lib/components/ui/Card.svelte'
   import { ToastType, addToast } from '$lib/components/ui/toasts/toasts.js'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
-  import { authData, getClient, user } from '$lib/lemmy.js'
-  import { Color } from '$lib/ui/colors.js'
+  import { getClient } from '$lib/lemmy.js'
+  import { profile } from '$lib/auth.js'
   import type {
     CommentReplyView,
     PersonMentionView,
@@ -34,13 +33,13 @@
   async function replyToMessage(
     message: PrivateMessageView | CommentReplyView | PersonMentionView
   ) {
-    if (!$authData) return
+    if (!$profile?.jwt) return
 
     loading = true
 
     try {
       await getClient().createPrivateMessage({
-        auth: $authData.token,
+        auth: $profile.jwt,
         content: reply,
         recipient_id: message.creator.id,
       })
@@ -105,7 +104,7 @@
     overflow-hidden flex flex-row items-center gap-1 {read ? 'opacity-80' : ''}"
       >
         <span class="font-bold flex items-center">
-          {#if item.creator.id == $user?.local_user_view.person.id}
+          {#if item.creator.id == $profile?.user?.local_user_view.person.id}
             You
           {:else}
             <UserLink avatar user={item.creator} />
@@ -113,7 +112,7 @@
         </span>
         <span>messaged</span>
         <span class="font-bold flex items-center">
-          {#if item.recipient.id == $user?.local_user_view.person.id}
+          {#if item.recipient.id == $profile?.user?.local_user_view.person.id}
             You
           {:else}
             <UserLink avatar user={item.recipient} />
@@ -124,7 +123,7 @@
     <p class="text-sm py-2">
       <Markdown source={item.private_message.content} />
     </p>
-    {#if item.recipient.id == $user?.local_user_view.person.id}
+    {#if item.recipient.id == $profile?.user?.local_user_view.person.id}
       <div class="flex flex-row gap-2">
         <Button color="ghost" on:click={() => (replying = !replying)}>
           <Icon mini src={ChatBubbleOvalLeft} width={16} />

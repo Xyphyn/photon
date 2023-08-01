@@ -11,16 +11,13 @@
   import type { CommentNodeI } from './comments'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import CommentForm from './CommentForm.svelte'
-  import { page } from '$app/stores'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import CommentActions from '$lib/components/lemmy/comment/CommentActions.svelte'
-  import { createEventDispatcher, getContext } from 'svelte'
-  import type { CommentView } from 'lemmy-js-client'
   import Modal from '$lib/components/ui/modal/Modal.svelte'
-  import { authData, getClient } from '$lib/lemmy.js'
+  import { getClient } from '$lib/lemmy.js'
   import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
-  import TextArea from '$lib/components/input/TextArea.svelte'
+  import { profile } from '$lib/auth.js'
 
   export let node: CommentNodeI
   export let postId: number
@@ -39,11 +36,11 @@
     bind:open={editing}
     action="Save"
     on:action={async () => {
-      if (!$authData || newComment.length <= 0) return
+      if (!$profile?.jwt || newComment.length <= 0) return
 
       try {
         await getClient().editComment({
-          auth: $authData.token,
+          auth: $profile.jwt,
           comment_id: node.comment_view.comment.id,
           content: newComment,
         })

@@ -1,15 +1,16 @@
 <script lang="ts">
   import { Color } from '$lib/ui/colors'
   import { ChevronDown, ChevronUp, Icon } from 'svelte-hero-icons'
-  import { authData, getClient } from '$lib/lemmy'
+  import { getClient } from '$lib/lemmy'
   import { userSettings } from '$lib/settings'
+  import { profile } from '$lib/auth.js'
 
   export let vote: number = 0
   export let score: number
   export let commentId: number
 
   async function upvote() {
-    if (!$authData) return
+    if (!$profile?.jwt) return
 
     const upvoted = vote == 1
 
@@ -26,14 +27,14 @@
     await getClient()
       .likeComment({
         score: upvoted ? 0 : 1,
-        auth: $authData.token,
+        auth: $profile.jwt,
         comment_id: commentId,
       })
       .catch((_) => undefined)
   }
 
   async function downvote() {
-    if (!$authData) return
+    if (!$profile?.jwt) return
 
     const upvoted = vote == -1
 
@@ -50,7 +51,7 @@
     await getClient()
       .likeComment({
         score: upvoted ? 0 : -1,
-        auth: $authData.token,
+        auth: $profile.jwt,
         comment_id: commentId,
       })
       .catch((_) => undefined)

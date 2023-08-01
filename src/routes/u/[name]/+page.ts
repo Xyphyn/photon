@@ -1,4 +1,5 @@
-import { authData, getClient } from '$lib/lemmy.js'
+import { profile } from '$lib/auth.js'
+import { getClient } from '$lib/lemmy.js'
 import { getItemPublished } from '$lib/lemmy/item.js'
 import type { SortType } from 'lemmy-js-client'
 import { get } from 'svelte/store'
@@ -14,7 +15,7 @@ export async function load({ params, url }) {
     page: page,
     username: params.name,
     sort: sort,
-    auth: get(authData)?.token,
+    auth: get(profile)?.jwt,
   })
 
   const items = [...user.posts, ...user.comments]

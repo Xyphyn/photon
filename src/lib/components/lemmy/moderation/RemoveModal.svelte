@@ -5,9 +5,10 @@
   import Post from '$lib/components/lemmy/post/Post.svelte'
   import Modal from '$lib/components/ui/modal/Modal.svelte'
   import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
-  import { authData, getClient } from '$lib/lemmy.js'
+  import { getClient } from '$lib/lemmy.js'
   import { isComment, isPost } from '$lib/lemmy/item.js'
   import type { CommentView, PostView } from 'lemmy-js-client'
+  import { profile } from '$lib/auth.js'
 
   export let open: boolean
   export let item: PostView | CommentView | undefined = undefined
@@ -23,14 +24,14 @@
 
   async function remove() {
     if (!item) return
-    if (!$authData) throw new Error('Unauthenticated')
+    if (!$profile?.jwt) throw new Error('Unauthenticated')
 
     loading = true
 
     try {
       if (isComment(item)) {
         await getClient().removeComment({
-          auth: $authData.token,
+          auth: $profile.jwt,
           comment_id: item.comment.id,
           removed: !removed,
           reason: reason || undefined,
@@ -38,7 +39,7 @@
         item.comment.removed = !removed
       } else if (isPost(item)) {
         await getClient().removePost({
-          auth: $authData.token,
+          auth: $profile.jwt,
           post_id: item.post.id,
           removed: !removed,
           reason: reason || undefined,

@@ -1,11 +1,6 @@
 <script lang="ts">
-  import { authData, getClient, user } from '$lib/lemmy'
-  import type {
-    CommentView,
-    Community,
-    CommunityView,
-    PostView,
-  } from 'lemmy-js-client'
+  import { getClient } from '$lib/lemmy'
+  import type { CommentView, Community, PostView } from 'lemmy-js-client'
   import { amMod, ban, remove } from './moderation'
   import Menu from '$lib/components/ui/menu/Menu.svelte'
   import Button from '$lib/components/input/Button.svelte'
@@ -21,6 +16,7 @@
   import { Color } from '$lib/ui/colors.js'
   import { isComment, isPost } from '$lib/lemmy/item.js'
   import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
+  import { profile } from '$lib/auth.js'
 
   export let item: PostView | CommentView
 
@@ -30,12 +26,12 @@
   $: acting = locking || pinning
 
   async function lock(lock: boolean) {
-    if (!$authData || !isPost(item)) return
+    if (!$profile?.jwt || !isPost(item)) return
     locking = true
 
     try {
       await getClient().lockPost({
-        auth: $authData.token,
+        auth: $profile.jwt,
         locked: lock,
         post_id: item.post.id,
       })
@@ -59,14 +55,14 @@
   }
 
   async function pin(pinned: boolean) {
-    if (!$authData || !isPost(item)) return
+    if (!$profile?.jwt || !isPost(item)) return
 
     pinning = true
 
     try {
       await getClient().featurePost({
         feature_type: 'Community',
-        auth: $authData.token,
+        auth: $profile.jwt,
         featured: pinned,
         post_id: item.post.id,
       })
@@ -149,7 +145,7 @@
       {item.post.removed ? 'Restore' : 'Remove'}
     {/if}
   </MenuButton>
-  {#if $user && $user.local_user_view.person.id != item.creator.id}
+  {#if $profile?.user && $profile.user.local_user_view.person.id != item.creator.id}
     <span class="px-4 py-1 my-1 text-xs text-slate-600 dark:text-zinc-400">
       User
     </span>
