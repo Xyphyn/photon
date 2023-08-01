@@ -82,7 +82,7 @@
         />
         <span class:hidden={!expanded} class="flex gap-0">
           {prof.username}
-          <span class="text-slate-500 dark:text-zinc-500">
+          <span class="text-slate-500 dark:text-zinc-500 font-normal">
             @{prof.instance}
           </span>
         </span>
