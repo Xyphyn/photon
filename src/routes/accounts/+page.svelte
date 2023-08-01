@@ -10,7 +10,11 @@
   import TextInput from '$lib/components/input/TextInput.svelte'
   import EditableList from '$lib/components/ui/list/EditableList.svelte'
   import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
-  import { instance, validateInstance } from '$lib/lemmy.js'
+  import {
+    LINKED_INSTANCE_URL,
+    instance,
+    validateInstance,
+  } from '$lib/lemmy.js'
   import { ArrowLeftOnRectangle, Icon, Plus, Trash } from 'svelte-hero-icons'
   import { flip } from 'svelte/animate'
 
@@ -70,13 +74,14 @@
           }}
           placeholder="Instance URL"
           bind:value={newInstance}
+          disabled={LINKED_INSTANCE_URL != undefined}
         />
         <Button
           color="primary"
           class="h-max self-end"
           size="lg"
           {loading}
-          disabled={loading}
+          disabled={loading || LINKED_INSTANCE_URL != undefined}
         >
           Change
         </Button>
@@ -168,8 +173,15 @@
               }}
               placeholder="Instance URL"
               bind:value={newInstance}
+              disabled={LINKED_INSTANCE_URL != undefined}
             />
-            <Button color="primary" {loading} disabled={loading}>Change</Button>
+            <Button
+              color="primary"
+              {loading}
+              disabled={loading || LINKED_INSTANCE_URL != undefined}
+            >
+              Change
+            </Button>
           </div>
         </span>
         <div class="ml-auto" />
