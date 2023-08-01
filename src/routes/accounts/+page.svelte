@@ -7,10 +7,20 @@
     deleteProfile,
   } from '$lib/auth.js'
   import Button from '$lib/components/input/Button.svelte'
+  import TextInput from '$lib/components/input/TextInput.svelte'
   import EditableList from '$lib/components/ui/list/EditableList.svelte'
+  import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
+  import { instance, validateInstance } from '$lib/lemmy.js'
   import { ArrowLeftOnRectangle, Icon, Plus, Trash } from 'svelte-hero-icons'
   import { flip } from 'svelte/animate'
+
+  let newInstance: string = $instance
+  let loading = false
 </script>
+
+<svelte:head>
+  <title>Accounts</title>
+</svelte:head>
 
 {#if $profileData.profiles.length == 0}
   <div class="h-full flex items-center justify-center">
@@ -25,6 +35,52 @@
         <Icon slot="icon" src={ArrowLeftOnRectangle} size="16" mini />
         Log in
       </Button>
+      <div class="flex flex-row font-normal gap-2">
+        <TextInput
+          label="Guest instance"
+          on:change={async () => {
+            loading = true
+            try {
+              const valid = await validateInstance(newInstance.trim())
+
+              if (!valid) {
+                throw new Error('invalid instance')
+              }
+
+              toast({
+                content: 'Changed guest instance.',
+                type: ToastType.success,
+              })
+            } catch (err) {
+              toast({
+                content: 'Failed to contact that instance URL. Is it down?',
+                type: ToastType.error,
+              })
+
+              loading = false
+
+              return
+            }
+
+            $profileData.defaultInstance = newInstance
+            if ($currentProfile && $currentProfile.id == -1) {
+              $instance = newInstance
+            }
+            loading = false
+          }}
+          placeholder="Instance URL"
+          bind:value={newInstance}
+        />
+        <Button
+          color="primary"
+          class="h-max self-end"
+          size="lg"
+          {loading}
+          disabled={loading}
+        >
+          Change
+        </Button>
+      </div>
     </div>
   </div>
 {:else}
@@ -79,6 +135,54 @@
           </Button>
         </div>
       {/each}
+      <div class="flex flex-row gap-4 items-center py-4">
+        <span class="font-bold flex flex-col">
+          Guest
+          <div class="flex flex-row font-normal gap-2">
+            <TextInput
+              on:change={async () => {
+                loading = true
+                try {
+                  const valid = await validateInstance(newInstance.trim())
+
+                  if (!valid) {
+                    throw new Error('invalid instance')
+                  }
+
+                  toast({
+                    content: 'Changed guest instance.',
+                    type: ToastType.success,
+                  })
+                } catch (err) {
+                  toast({
+                    content: 'Failed to contact that instance URL. Is it down?',
+                    type: ToastType.error,
+                  })
+                }
+
+                $profileData.defaultInstance = newInstance
+                if ($currentProfile && $currentProfile.id == -1) {
+                  $instance = newInstance
+                }
+                loading = false
+              }}
+              placeholder="Instance URL"
+              bind:value={newInstance}
+            />
+            <Button color="primary" {loading} disabled={loading}>Change</Button>
+          </div>
+        </span>
+        <div class="ml-auto" />
+
+        <Button
+          on:click={() => {
+            setUserID(-1)
+          }}
+          color={$currentProfile?.id == -1 ? 'primary' : 'secondary'}
+        >
+          {$currentProfile?.id == -1 ? 'Current' : 'Switch to'}
+        </Button>
+      </div>
     </EditableList>
     <Button href="/login" size="lg" class="mt-auto">
       <Icon slot="icon" src={Plus} size="16" mini />

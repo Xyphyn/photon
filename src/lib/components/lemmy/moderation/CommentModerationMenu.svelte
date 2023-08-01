@@ -54,7 +54,7 @@
       {item.post.removed ? 'Restore' : 'Remove'}
     {/if}
   </MenuButton>
-  {#if $profile.user && $profile.user?.local_user_view.person.id != item.creator.id}
+  {#if $profile?.user && $profile.user?.local_user_view.person.id != item.creator.id}
     <span class="px-4 py-1 my-1 text-xs text-slate-600 dark:text-zinc-400">
       User
     </span>

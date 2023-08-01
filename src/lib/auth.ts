@@ -1,12 +1,7 @@
-import { env } from '$env/dynamic/public'
 import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
-import { getClient, instance } from '$lib/lemmy.js'
-import { userSettings } from '$lib/settings.js'
+import { DEFAULT_INSTANCE_URL, getClient, instance } from '$lib/lemmy.js'
 import type { MyUserInfo } from 'lemmy-js-client'
 import { get, writable } from 'svelte/store'
-
-const LINKED_INSTANCE_URL = env.PUBLIC_INSTANCE_URL
-const DEFAULT_INSTANCE_URL = env.PUBLIC_INSTANCE_URL || 'lemmy.ml'
 
 function getFromStorage<T>(key: string): T | undefined {
   if (typeof localStorage == 'undefined') return undefined
@@ -35,6 +30,7 @@ interface Profile {
 interface ProfileData {
   profiles: Profile[]
   profile: number
+  defaultInstance?: string
 }
 
 interface PersonData extends MyUserInfo {
@@ -48,11 +44,18 @@ export const profileData = writable<ProfileData>(
 
 profileData.subscribe((pd) => {
   setFromStorage('profileData', pd)
+
+  if (pd.profile == -1) {
+    instance.set(get(profileData).defaultInstance ?? DEFAULT_INSTANCE_URL)
+  }
 })
 
 export const profile = writable<Profile | undefined>(getProfile())
 
 profile.subscribe(async (p) => {
+  if (p?.id == -1) {
+    instance.set(get(profileData).defaultInstance ?? DEFAULT_INSTANCE_URL)
+  }
   if (!p || !p.jwt) {
     profileData.update((pd) => ({ ...pd, profile: -1 }))
     return
