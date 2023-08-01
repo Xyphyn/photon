@@ -20,6 +20,37 @@
 
   let newInstance: string = $instance
   let loading = false
+
+  async function changeGuestInstance() {
+    loading = true
+    try {
+      const valid = await validateInstance(newInstance.trim())
+
+      if (!valid) {
+        throw new Error('invalid instance')
+      }
+
+      toast({
+        content: 'Changed guest instance.',
+        type: ToastType.success,
+      })
+    } catch (err) {
+      toast({
+        content: 'Failed to contact that instance URL. Is it down?',
+        type: ToastType.error,
+      })
+
+      loading = false
+
+      return
+    }
+
+    $profileData.defaultInstance = newInstance
+    if ($currentProfile && $currentProfile.id == -1) {
+      $instance = newInstance
+    }
+    loading = false
+  }
 </script>
 
 <svelte:head>
@@ -42,36 +73,7 @@
       <div class="flex flex-row font-normal gap-2">
         <TextInput
           label="Guest instance"
-          on:change={async () => {
-            loading = true
-            try {
-              const valid = await validateInstance(newInstance.trim())
-
-              if (!valid) {
-                throw new Error('invalid instance')
-              }
-
-              toast({
-                content: 'Changed guest instance.',
-                type: ToastType.success,
-              })
-            } catch (err) {
-              toast({
-                content: 'Failed to contact that instance URL. Is it down?',
-                type: ToastType.error,
-              })
-
-              loading = false
-
-              return
-            }
-
-            $profileData.defaultInstance = newInstance
-            if ($currentProfile && $currentProfile.id == -1) {
-              $instance = newInstance
-            }
-            loading = false
-          }}
+          on:change={changeGuestInstance}
           placeholder="Instance URL"
           bind:value={newInstance}
           disabled={LINKED_INSTANCE_URL != undefined}
@@ -141,49 +143,7 @@
         </div>
       {/each}
       <div class="flex flex-row gap-4 items-center py-4">
-        <span class="font-bold flex flex-col">
-          Guest
-          <div class="flex flex-row font-normal gap-2">
-            <TextInput
-              on:change={async () => {
-                loading = true
-                try {
-                  const valid = await validateInstance(newInstance.trim())
-
-                  if (!valid) {
-                    throw new Error('invalid instance')
-                  }
-
-                  toast({
-                    content: 'Changed guest instance.',
-                    type: ToastType.success,
-                  })
-                } catch (err) {
-                  toast({
-                    content: 'Failed to contact that instance URL. Is it down?',
-                    type: ToastType.error,
-                  })
-                }
-
-                $profileData.defaultInstance = newInstance
-                if ($currentProfile && $currentProfile.id == -1) {
-                  $instance = newInstance
-                }
-                loading = false
-              }}
-              placeholder="Instance URL"
-              bind:value={newInstance}
-              disabled={LINKED_INSTANCE_URL != undefined}
-            />
-            <Button
-              color="primary"
-              {loading}
-              disabled={loading || LINKED_INSTANCE_URL != undefined}
-            >
-              Change
-            </Button>
-          </div>
-        </span>
+        <span class="font-bold flex flex-col">Guest</span>
         <div class="ml-auto" />
 
         <Button
@@ -196,7 +156,25 @@
         </Button>
       </div>
     </EditableList>
-    <Button href="/login" size="lg" class="mt-auto">
+    <div class="mt-auto" />
+    <div class="flex flex-row font-normal gap-2">
+      <TextInput
+        on:change={changeGuestInstance}
+        placeholder="Instance URL"
+        label="Guest instance"
+        bind:value={newInstance}
+        disabled={LINKED_INSTANCE_URL != undefined}
+      />
+      <Button
+        color="primary"
+        {loading}
+        disabled={loading || LINKED_INSTANCE_URL != undefined}
+        class="h-[42px] self-end"
+      >
+        Change
+      </Button>
+    </div>
+    <Button href="/login" size="lg">
       <Icon slot="icon" src={Plus} size="16" mini />
       Add more
     </Button>
