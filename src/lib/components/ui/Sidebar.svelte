@@ -80,10 +80,10 @@
           class="text-blue-500"
           style="filter: hue-rotate({index * 50}deg)"
         />
-        <span class:hidden={!expanded} class="flex gap-0">
+        <span class:hidden={!expanded} class="flex flex-col gap-0">
           {prof.username}
-          <span class="text-slate-500 dark:text-zinc-500 font-normal">
-            @{prof.instance}
+          <span class="text-slate-500 dark:text-zinc-500 font-normal text-xs">
+            {prof.instance}
           </span>
         </span>
       </Button>
