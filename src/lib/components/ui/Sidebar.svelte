@@ -6,10 +6,13 @@
     Home,
     Icon,
     Plus,
+    UserCircle,
   } from 'svelte-hero-icons'
   import Button from '../input/Button.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
-  import { profile } from '$lib/auth.js'
+  import { profile, profileData, setUserID } from '$lib/auth.js'
+  import { goto } from '$app/navigation'
+  import { page } from '$app/stores'
 
   let expanded = true
 </script>
@@ -29,6 +32,7 @@
       mini
       size="16"
       class="transition-transform {expanded ? '' : 'rotate-180'}"
+      title="Toggle expanded"
     />
   </Button>
   <Button
@@ -37,7 +41,7 @@
     color="tertiary"
     alignment="left"
   >
-    <Icon src={Home} solid size="20" />
+    <Icon src={Home} solid size="20" title="Frontpage" />
     <span class:hidden={!expanded}>Frontpage</span>
   </Button>
   <Button
@@ -46,9 +50,40 @@
     color="tertiary"
     alignment="left"
   >
-    <Icon src={Cog6Tooth} solid size="20" />
+    <Icon src={Cog6Tooth} solid size="20" title="Settings" />
     <span class:hidden={!expanded}>Settings</span>
   </Button>
+  {#if $profileData.profiles.length >= 1}
+    <hr class="border-slate-300 dark:border-zinc-800 my-1" />
+    {#each $profileData.profiles as prof, index}
+      <Button
+        class="hover:bg-slate-200 {expanded ? '' : '!p-1.5'} {$profile?.id ==
+        prof.id
+          ? expanded
+            ? 'font-bold'
+            : 'text-sky-500'
+          : ''}"
+        color="tertiary"
+        alignment="left"
+        on:click={() => {
+          setUserID(prof.id)
+          goto($page.url, {
+            invalidateAll: true,
+          })
+        }}
+      >
+        <Icon
+          src={UserCircle}
+          mini={$profile?.id == prof.id}
+          size="20"
+          title={prof.username}
+          class="text-blue-500"
+          style="filter: hue-rotate({index * 50}deg)"
+        />
+        <span class:hidden={!expanded}>{prof.username}</span>
+      </Button>
+    {/each}
+  {/if}
   <hr class="border-slate-300 dark:border-zinc-800 my-1" />
   {#if $profile?.user}
     {#each $profile.user.follows
@@ -84,7 +119,7 @@
   {:else}
     <Button
       class="hover:bg-slate-200 {expanded ? '' : '!p-1.5'}"
-      href="/login"
+      href="/accounts"
       color="tertiary"
       alignment="left"
     >
