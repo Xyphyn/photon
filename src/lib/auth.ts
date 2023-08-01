@@ -1,5 +1,5 @@
 import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
-import { DEFAULT_INSTANCE_URL, getClient } from '$lib/lemmy.js'
+import { DEFAULT_INSTANCE_URL, getClient, instance } from '$lib/lemmy.js'
 import type { MyUserInfo } from 'lemmy-js-client'
 import { get, writable } from 'svelte/store'
 
@@ -19,6 +19,7 @@ interface Profile {
   instance: string
   jwt?: string
   user?: PersonData
+  username?: string
 }
 
 /**
@@ -45,6 +46,9 @@ profileData.subscribe((pd) => {
 export const profile = writable<Profile | undefined>(getProfile())
 
 profile.subscribe(async (p) => {
+  if (p?.instance) {
+    instance.set(p.instance)
+  }
   if (!p || !p.jwt) {
     profileData.update((pd) => ({ ...pd, profile: -1 }))
     return
@@ -54,13 +58,13 @@ profile.subscribe(async (p) => {
   // fetch the user because p.user is undefined
   const user = await userFromJwt(p.jwt, p.instance)
 
-  p = {
+  profile.update(() => ({
     ...p,
     user: user,
-  }
+  }))
 })
 
-export async function setUser(jwt: string, instance: string) {
+export async function setUser(jwt: string, instance: string, username: string) {
   try {
     new URL(`https://${instance}`)
   } catch (err) {
@@ -83,6 +87,7 @@ export async function setUser(jwt: string, instance: string) {
       id: id,
       instance: instance,
       jwt: jwt,
+      username: username,
     }
 
     profile.set({
@@ -120,32 +125,51 @@ const userToPersonData = (user: MyUserInfo): PersonData => ({
 function getProfile() {
   const id = get(profileData).profile
 
-  console.log('id is', id)
-  // returns something that isn't -1
-
   if (id == -1) {
-    console.log('returning, since ID is', id)
-    // still logs :/
     return
   }
 
-  console.log('fetching user of id', id)
-
   const pd = get(profileData)
-
-  console.log('pd', pd)
 
   return pd.profiles.find((p) => p.id == id)
 }
 
+export function resetProfile() {
+  profile.set({
+    id: -1,
+    instance: DEFAULT_INSTANCE_URL,
+  })
+  profileData.update((p) => ({ ...p, profile: -1 }))
+}
+
+export function deleteProfile(id: number) {
+  const pd = get(profileData)
+
+  const index = pd.profiles.findIndex((p) => p.id == id)
+  if (index <= -1) return
+
+  pd.profiles.splice(index, 1)
+
+  profileData.update((p) => ({
+    ...p,
+    profiles: pd.profiles,
+  }))
+
+  if (id == get(profile)?.id) {
+    resetProfile()
+  }
+}
+
 export function setUserID(id: number) {
   const pd = get(profileData)
-  console.log('pd', pd)
+  if (id == -1) {
+    resetProfile()
+    return
+  }
   const prof = pd.profiles.find((p) => p.id == id)
 
   profile.set(prof)
   profileData.update((p) => ({ ...p, profile: id }))
-  console.log('new', pd)
 
   return prof
 }

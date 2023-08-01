@@ -153,20 +153,15 @@
       slot="button"
       on:click={toggleOpen}
     >
-      {#if $user === undefined}
-        <div class="w-full h-full grid place-items-center">
-          <Spinner width={20} />
-        </div>
-      {/if}
-      {#if $user}
+      {#if $profile?.user}
         <div class="w-8 h-8 aspect-square object-cover rounded-full">
           <Avatar
-            url={$user.local_user_view.person.avatar}
+            url={$profile.user.local_user_view.person.avatar}
             width={32}
-            alt={$user.local_user_view.person.name}
+            alt={$profile.user.local_user_view.person.name}
           />
         </div>
-        {#if $user.unreads > 0}
+        {#if $profile.user.unreads > 0}
           <div
             class="rounded-full w-2 h-2 bg-red-500 absolute top-0 left-0 z-10"
           />
@@ -174,18 +169,19 @@
       {/if}
     </button>
     <li class="text-xs opacity-80 text-left mx-4 my-1 py-1">
-      {$user ? $user.local_user_view.person.name : 'Profile'}
+      {$profile?.user ? $profile.user.local_user_view.person.name : 'Profile'}
     </li>
-    {#if $profile}
-      <!-- <MenuButton
+    {#if $profile?.user}
+      <MenuButton
         link
-        href="/u/{$user.local_user_view.person.name}@{$authData.instance}"
+        href="/u/{$profile.user.local_user_view.person
+          .name}@{$profile.instance}"
       >
         <Icon src={UserCircle} mini width={16} /> Profile
       </MenuButton>
       <MenuButton link href="/inbox">
         <div class="relative">
-          {#if $user.unreads > 0}
+          {#if $profile.user.unreads > 0}
             <div
               class="rounded-full w-2 h-2 bg-red-500 absolute -top-1 -left-1"
             />
@@ -196,39 +192,21 @@
       <MenuButton link href="/saved">
         <Icon src={Bookmark} mini width={16} /> Saved
       </MenuButton>
-      <MenuButton
-        on:click={() => {
-          localStorage.removeItem('user')
-          user.set(undefined)
-          authData.set(undefined)
-        }}
-        color="dangerSecondary"
-      >
-        <Icon src={ArrowRightOnRectangle} mini width={16} />Log out
-      </MenuButton> -->
     {/if}
-    {#if !$profile?.user}
-      {#if $profileData.profiles.length == 0}
-        <MenuButton link href="/login">
-          <Icon src={ArrowLeftOnRectangle} mini width={16} />
-          Log in
-        </MenuButton>
-      {:else}
-        <MenuButton
-          on:click={() => {
-            const acc = Number(prompt('user id'))
-
-            setUserID(acc)
-          }}
-        >
-          <Icon src={ArrowLeftOnRectangle} mini width={16} />
-          change account
-        </MenuButton>
-      {/if}
+    {#if !$profile?.user && $profileData.profiles.length == 0}
+      <MenuButton link href="/login">
+        <Icon src={ArrowLeftOnRectangle} mini width={16} />
+        Log in
+      </MenuButton>
     {:else}
-      <MenuButton on:click={() => console.log($profile)}>
-        <Icon src={Beaker} mini width={16} />
-        Log user
+      <MenuButton link href="/accounts">
+        <Icon src={ArrowLeftOnRectangle} mini width={16} />
+        Switch account
+        <span
+          class="text-xs font-bold bg-slate-100 dark:bg-zinc-700 px-2 py-0.5 rounded-md ml-auto"
+        >
+          {$profileData.profiles.length}
+        </span>
       </MenuButton>
     {/if}
     <hr class="dark:opacity-10 w-[90%] my-2 mx-auto" />
