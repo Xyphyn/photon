@@ -96,7 +96,10 @@
         dispatcher('edit', e.detail)
       }}
     >
-      <span slot="formtitle" />
+      <svelte:fragment slot="formtitle">
+        <!-- Have the title not exist at all -->
+        {''}
+      </svelte:fragment>
     </PostForm>
   </Modal>
 {/if}
@@ -166,7 +169,7 @@
         <Icon src={post.saved ? BookmarkSlash : Bookmark} width={16} mini />
         {post.saved ? 'Unsave' : 'Save'}
       </MenuButton>
-      {#if $user && isMutable(post, $user.local_user_view)}
+      {#if $user && post.creator.id == $user.local_user_view.person.id}
         <MenuButton on:click={deletePost} color="dangerSecondary">
           <Icon src={Trash} width={16} mini />
           {post.post.deleted ? 'Restore' : 'Delete'}
