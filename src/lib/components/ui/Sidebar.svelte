@@ -60,7 +60,7 @@
         alignment="left"
         href="/c/{follow.name}@{new URL(follow.actor_id).hostname}"
       >
-        <Avatar url={follow.icon} alt={follow.name} width={20} slot="icon" />
+        <Avatar url={follow.icon} alt={follow.name} title={follow.title} width={20} slot="icon" />
         <span class:hidden={!expanded}>{follow.title}</span>
       </Button>
     {/each}

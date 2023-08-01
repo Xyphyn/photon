@@ -7,6 +7,7 @@
 
   export let url: string | undefined
   export let alt: string = ''
+  export let title: string = ''
 
   export let width: number
 </script>
@@ -16,6 +17,7 @@
     src="{url}?format=webp&thumbnail={findClosestNumber(sizes, width)}"
     {alt}
     {width}
+    {title}
     loading="lazy"
     class="rounded-full aspect-square object-cover overflow-hidden"
   />
