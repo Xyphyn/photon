@@ -46,6 +46,14 @@ export async function load({ url }) {
     return {
       page: page,
       results: everything,
+      streamed: {
+        object: get(profile)?.jwt
+          ? getClient().resolveObject({
+              auth: get(profile)!.jwt!,
+              q: query,
+            })
+          : undefined,
+      },
     }
   }
 

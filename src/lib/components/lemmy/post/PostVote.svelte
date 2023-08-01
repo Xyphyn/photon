@@ -7,6 +7,7 @@
   import type { Post } from 'lemmy-js-client'
   import { ChevronDown, ChevronUp, Icon } from 'svelte-hero-icons'
   import { profile } from '$lib/auth.js'
+  import { slide } from 'svelte/transition'
 
   export let post: Post
   export let vote: number = 0

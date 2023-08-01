@@ -10,6 +10,7 @@
   import Post from '$lib/components/lemmy/post/Post.svelte'
   import UserItem from '$lib/components/lemmy/user/UserItem.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
+  import Spinner from '$lib/components/ui/loader/Spinner.svelte'
   import { isComment, isCommunity, isPost, isUser } from '$lib/lemmy/item.js'
   import type {
     CommentView,
@@ -18,6 +19,8 @@
     PostView,
   } from 'lemmy-js-client'
   import { Icon, MagnifyingGlass } from 'svelte-hero-icons'
+  import { expoInOut, expoOut } from 'svelte/easing'
+  import { fly, slide } from 'svelte/transition'
 
   type Result = PostView | CommentView | PersonView | CommunityView
 
@@ -79,6 +82,32 @@
     <p class="mt-2 text-center">Search for something!</p>
   </div>
 {:else}
+  {#await data.streamed.object}
+    <div
+      class="flex gap-4 items-center mt-4"
+      out:slide={{ axis: 'y', easing: expoOut }}
+    >
+      <Spinner width={24} />
+      <span>Federating...</span>
+    </div>
+  {:then object}
+    {#if object}
+      <div transition:slide={{ axis: 'y', easing: expoOut }}>
+        {#if object.community}
+          <CommunityItem community={object.community} />
+        {/if}
+        {#if object.post}
+          <Post post={object.post} />
+        {/if}
+        {#if object.comment}
+          <CommentItem comment={object.comment} />
+        {/if}
+        {#if object.person}
+          <UserItem user={object.person} />
+        {/if}
+      </div>
+    {/if}
+  {/await}
   <div class="flex flex-col gap-4 mt-4">
     {#each data.results as result}
       {#if isPost(result)}
@@ -93,13 +122,15 @@
     {/each}
   </div>
   <div class="mt-4" />
-  <Pageination
-    bind:page={pageNum}
-    on:change={(p) => {
-      $page.url.searchParams.set('page', p.detail.toString())
-      goto($page.url, {
-        invalidateAll: true,
-      })
-    }}
-  />
+  {#if data.results.length > 0}
+    <Pageination
+      bind:page={pageNum}
+      on:change={(p) => {
+        $page.url.searchParams.set('page', p.detail.toString())
+        goto($page.url, {
+          invalidateAll: true,
+        })
+      }}
+    />
+  {/if}
 {/if}
