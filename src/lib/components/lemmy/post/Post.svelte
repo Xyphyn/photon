@@ -72,7 +72,7 @@
       </a>
     {/if}
     {#if isImage(post.post.url)}
-      <div class="self-start" class:blur-3xl={post.post.nsfw}>
+      <div class="self-start overflow-hidden">
         <picture
           class="rounded-md overflow-hidden max-h-[min(50vh,500px)] w-full max-w-full"
         >
@@ -91,7 +91,7 @@
             class="object-cover bg-slate-100 rounded-md max-h-[50vh] w-full"
             width={512}
             height={300}
-            alt=""
+            class:blur-3xl={post.post.nsfw}
           />
         </picture>
       </div>
