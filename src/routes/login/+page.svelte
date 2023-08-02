@@ -1,14 +1,10 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
-  import { profileData, setUser } from '$lib/auth.js'
+  import { setUser } from '$lib/auth.js'
   import Button from '$lib/components/input/Button.svelte'
   import TextInput from '$lib/components/input/TextInput.svelte'
   import Card from '$lib/components/ui/Card.svelte'
-  import {
-    ToastType,
-    addToast,
-    toast,
-  } from '$lib/components/ui/toasts/toasts.js'
+  import { toast } from '$lib/components/ui/toasts/toasts.js'
   import {
     DEFAULT_INSTANCE_URL,
     LINKED_INSTANCE_URL,
@@ -42,7 +38,7 @@
       if (response?.jwt) {
         await setUser(response.jwt, data.instance, data.username)
 
-        toast({ content: 'Successfully logged in.', type: ToastType.success })
+        toast({ content: 'Successfully logged in.', type: 'success' })
         goto('/')
       } else {
         throw new Error('Invalid credentials')
@@ -50,7 +46,7 @@
     } catch (error) {
       toast({
         content: error as any,
-        type: ToastType.error,
+        type: 'error',
       })
     }
     data.loading = false

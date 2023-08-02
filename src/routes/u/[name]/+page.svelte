@@ -22,7 +22,7 @@
   import { getClient } from '$lib/lemmy.js'
   import { isBlocked } from '$lib/lemmy/user.js'
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
-  import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
+  import { toast } from '$lib/components/ui/toasts/toasts.js'
   import Modal from '$lib/components/ui/modal/Modal.svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import TextArea from '$lib/components/input/TextArea.svelte'
@@ -54,7 +54,7 @@
 
       toast({
         content: `Successfully ${blocked ? 'unblocked' : 'blocked'} that user.`,
-        type: ToastType.success,
+        type: 'success',
       })
 
       goto($page.url, {
@@ -63,7 +63,7 @@
     } catch (err) {
       toast({
         content: err as any,
-        type: ToastType.error,
+        type: 'error',
       })
     }
     blocking = false
@@ -87,14 +87,14 @@
 
       toast({
         content: 'Successfully sent that person a message.',
-        type: ToastType.success,
+        type: 'success',
       })
 
       messaging = false
     } catch (err) {
       toast({
         content: err as any,
-        type: ToastType.error,
+        type: 'error',
       })
     }
 

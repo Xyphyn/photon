@@ -2,7 +2,7 @@
   import Button from '$lib/components/input/Button.svelte'
   import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
   import Post from '$lib/components/lemmy/post/Post.svelte'
-  import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
+  import { toast } from '$lib/components/ui/toasts/toasts.js'
   import { getClient } from '$lib/lemmy.js'
   import { isCommentReport, isPostReport } from '$lib/lemmy/item.js'
   import type {
@@ -38,7 +38,7 @@
 
         toast({
           content: `${resolved ? 'Resolved' : 'Unresolved'} that report.`,
-          type: ToastType.success,
+          type: 'success',
         })
       } else if (isPostReport(item)) {
         await getClient().resolvePostReport({
@@ -50,7 +50,7 @@
         resolved = !resolved
         toast({
           content: `${resolved ? 'Resolved' : 'Unresolved'} that report.`,
-          type: ToastType.success,
+          type: 'success',
         })
       }
 
@@ -65,7 +65,7 @@
     } catch (err) {
       toast({
         content: err as any,
-        type: ToastType.error,
+        type: 'error',
       })
     }
 

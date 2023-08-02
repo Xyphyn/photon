@@ -1,8 +1,8 @@
 <script lang="ts">
   import { getClient } from '$lib/lemmy.js'
   import type { CommunityView } from 'lemmy-js-client'
-  import { ToastType, addToast } from '$lib/components/ui/toasts/toasts.js'
   import { profile } from '$lib/auth.js'
+  import { toast } from '$lib/components/ui/toasts/toasts.js'
 
   export let community: CommunityView
 
@@ -23,7 +23,7 @@
       subscribing = false
       return res
     } catch (error) {
-      addToast('Error', 'Failed to subscribe to community', ToastType.error)
+      toast({ content: 'Failed to subscribe to community', type: 'error' })
     }
 
     subscribing = false

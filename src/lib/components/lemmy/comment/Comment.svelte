@@ -16,7 +16,7 @@
   import CommentActions from '$lib/components/lemmy/comment/CommentActions.svelte'
   import Modal from '$lib/components/ui/modal/Modal.svelte'
   import { getClient } from '$lib/lemmy.js'
-  import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
+  import { toast } from '$lib/components/ui/toasts/toasts.js'
   import { profile } from '$lib/auth.js'
 
   export let node: CommentNodeI
@@ -52,13 +52,13 @@
         toast({
           content:
             'Successfully edited comment. You may need to refresh to see changes.',
-          type: ToastType.success,
+          type: 'success',
         })
       } catch (err) {
         toast({
           // @ts-ignore i hate this
           content: err,
-          type: ToastType.error,
+          type: 'error',
         })
       }
     }}

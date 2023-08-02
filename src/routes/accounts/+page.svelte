@@ -9,7 +9,7 @@
   import Button from '$lib/components/input/Button.svelte'
   import TextInput from '$lib/components/input/TextInput.svelte'
   import EditableList from '$lib/components/ui/list/EditableList.svelte'
-  import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
+  import { toast } from '$lib/components/ui/toasts/toasts.js'
   import {
     LINKED_INSTANCE_URL,
     instance,
@@ -32,12 +32,12 @@
 
       toast({
         content: 'Changed guest instance.',
-        type: ToastType.success,
+        type: 'success',
       })
     } catch (err) {
       toast({
         content: 'Failed to contact that instance URL. Is it down?',
-        type: ToastType.error,
+        type: 'error',
       })
 
       loading = false

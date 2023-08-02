@@ -6,7 +6,7 @@
   import Modal from '$lib/components/ui/modal/Modal.svelte'
   import type { Community, Person, PersonView } from 'lemmy-js-client'
   import { getClient } from '$lib/lemmy.js'
-  import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
+  import { toast } from '$lib/components/ui/toasts/toasts.js'
   import TextInput from '$lib/components/input/TextInput.svelte'
   import { profile } from '$lib/auth.js'
 
@@ -40,7 +40,7 @@
         if (date.toLocaleString('en') == 'Invalid Date') {
           toast({
             content: 'Invalid date. It must be an absolute date.',
-            type: ToastType.error,
+            type: 'error',
           })
 
           loading = false
@@ -51,7 +51,7 @@
         if (date.getTime() < Date.now()) {
           toast({
             content: 'Invalid date. It is before the current time.',
-            type: ToastType.error,
+            type: 'error',
           })
 
           loading = false
@@ -75,14 +75,14 @@
         content: `Successfully ${
           banned ? 'unbanned' : 'banned'
         } that user. You may need to refresh to see changes.`,
-        type: ToastType.success,
+        type: 'success',
       })
 
       item.banned = !banned
     } catch (err) {
       toast({
         content: err as any,
-        type: ToastType.error,
+        type: 'error',
       })
     }
 

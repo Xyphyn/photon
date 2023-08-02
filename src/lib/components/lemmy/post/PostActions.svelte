@@ -20,7 +20,7 @@
   import Button from '$lib/components/input/Button.svelte'
   import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
   import { page } from '$app/stores'
-  import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
+  import { toast } from '$lib/components/ui/toasts/toasts.js'
   import { createEventDispatcher } from 'svelte'
   import Modal from '$lib/components/ui/modal/Modal.svelte'
   import PostForm from '$lib/components/lemmy/post/PostForm.svelte'
@@ -44,12 +44,12 @@
       post.post.deleted = !deleted
       toast({
         content: `That post was ${deleted ? 'restored' : 'deleted'}.`,
-        type: ToastType.success,
+        type: 'success',
       })
     } catch (err) {
       toast({
         content: err as any,
-        type: ToastType.error,
+        type: 'error',
       })
     }
   }
@@ -72,7 +72,7 @@
 
       toast({
         content: error as any,
-        type: ToastType.error,
+        type: 'error',
       })
     }
   }

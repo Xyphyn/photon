@@ -15,7 +15,7 @@
   } from 'svelte-hero-icons'
   import { Color } from '$lib/ui/colors.js'
   import { isComment, isPost } from '$lib/lemmy/item.js'
-  import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
+  import { toast } from '$lib/components/ui/toasts/toasts.js'
   import { profile } from '$lib/auth.js'
 
   export let item: PostView | CommentView
@@ -42,12 +42,12 @@
         content: `Successfully ${
           lock ? 'locked' : 'unlocked'
         } that post. You must refresh to see changes.`,
-        type: ToastType.success,
+        type: 'success',
       })
     } catch (err) {
       toast({
         content: err as any,
-        type: ToastType.error,
+        type: 'error',
       })
     }
 
@@ -73,12 +73,12 @@
         content: `Successfully ${
           pinned ? 'pinned' : 'unpinned'
         } that post. You must refresh to see changes.`,
-        type: ToastType.success,
+        type: 'success',
       })
     } catch (err) {
       toast({
         content: err as any,
-        type: ToastType.error,
+        type: 'error',
       })
     }
 

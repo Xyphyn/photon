@@ -18,7 +18,7 @@
   import Card from '$lib/components/ui/Card.svelte'
   import PostLink from '$lib/components/lemmy/post/PostLink.svelte'
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
-  import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
+  import { toast } from '$lib/components/ui/toasts/toasts.js'
   import type { CommentSortType } from 'lemmy-js-client'
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
   import { profile } from '$lib/auth.js'
@@ -145,7 +145,7 @@
 
         toast({
           content: 'The post was edited successfully.',
-          type: ToastType.success,
+          type: 'success',
         })
       }}
     />

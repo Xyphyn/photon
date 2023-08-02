@@ -18,7 +18,7 @@
     Trash,
   } from 'svelte-hero-icons'
   import { getClient, getInstance } from '$lib/lemmy.js'
-  import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
+  import { toast } from '$lib/components/ui/toasts/toasts.js'
   import Menu from '$lib/components/ui/menu/Menu.svelte'
   import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
   import Button from '$lib/components/input/Button.svelte'
@@ -50,7 +50,7 @@
 
       toast({
         content: error as any,
-        type: ToastType.error,
+        type: 'error',
       })
     }
   }
@@ -95,7 +95,9 @@
     <MenuButton
       on:click={() => {
         navigator.clipboard.writeText(
-          `${$page.url.origin}/post/${getInstance()}/${comment.post.id}?thread=${comment.comment.path}#${comment.comment.id}`
+          `${$page.url.origin}/post/${getInstance()}/${
+            comment.post.id
+          }?thread=${comment.comment.path}#${comment.comment.id}`
         )
       }}
     >
@@ -126,12 +128,12 @@
               })
               toast({
                 content: 'The comment was deleted.',
-                type: ToastType.success,
+                type: 'success',
               })
             } catch (error) {
               toast({
                 content: 'Failed to delete comment',
-                type: ToastType.error,
+                type: 'error',
               })
             }
           }}

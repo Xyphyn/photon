@@ -6,7 +6,7 @@
   import TextArea from '$lib/components/input/TextArea.svelte'
   import FileInput from '$lib/components/input/FileInput.svelte'
   import Button from '$lib/components/input/Button.svelte'
-  import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
+  import { toast } from '$lib/components/ui/toasts/toasts.js'
   import SearchInput from '$lib/components/input/SearchInput.svelte'
   import { Check, Icon } from 'svelte-hero-icons'
   import { profile } from '$lib/auth.js'
@@ -77,7 +77,7 @@
   async function submit() {
     if (!data.community && !edit) {
       toast({
-        type: ToastType.warning,
+        type: 'warning',
         content: 'You need to set a community.',
       })
       return
@@ -123,7 +123,7 @@
         dispatcher('submit', post.post_view)
       }
     } catch (err) {
-      toast({ content: err as any, type: ToastType.error })
+      toast({ content: err as any, type: 'error' })
     }
   }
 

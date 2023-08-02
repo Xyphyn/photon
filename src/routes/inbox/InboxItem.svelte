@@ -5,7 +5,6 @@
   import Comment from '$lib/components/lemmy/comment/Comment.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import Card from '$lib/components/ui/Card.svelte'
-  import { ToastType, addToast } from '$lib/components/ui/toasts/toasts.js'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import { getClient } from '$lib/lemmy.js'
   import { profile } from '$lib/auth.js'
@@ -16,6 +15,7 @@
   } from 'lemmy-js-client'
   import { ChatBubbleOvalLeft, Icon } from 'svelte-hero-icons'
   import { page } from '$app/stores'
+  import { toast } from '$lib/components/ui/toasts/toasts.js'
 
   export let item: CommentReplyView | PersonMentionView | PrivateMessageView
   export let read: boolean
@@ -44,11 +44,10 @@
         recipient_id: message.creator.id,
       })
 
-      addToast(
-        'Success',
-        'Successfully replied to that message.',
-        ToastType.success
-      )
+      toast({
+        content: 'Successfully replied to that message.',
+        type: 'success',
+      })
 
       replying = false
 
@@ -57,7 +56,7 @@
         replaceState: true,
       })
     } catch (error) {
-      addToast('Error', error as any, ToastType.error)
+      toast({ content: error as any, type: 'error' })
     }
 
     loading = false

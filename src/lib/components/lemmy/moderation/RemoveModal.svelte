@@ -4,7 +4,7 @@
   import Comment from '$lib/components/lemmy/comment/Comment.svelte'
   import Post from '$lib/components/lemmy/post/Post.svelte'
   import Modal from '$lib/components/ui/modal/Modal.svelte'
-  import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
+  import { toast } from '$lib/components/ui/toasts/toasts.js'
   import { getClient } from '$lib/lemmy.js'
   import { isComment, isPost } from '$lib/lemmy/item.js'
   import type { CommentView, PostView } from 'lemmy-js-client'
@@ -54,12 +54,12 @@
         content: `Successfully ${
           removed ? 'restored' : 'removed'
         } that submission.`,
-        type: ToastType.success,
+        type: 'success',
       })
     } catch (err) {
       toast({
         content: err as any,
-        type: ToastType.error,
+        type: 'error',
       })
     }
 

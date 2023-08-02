@@ -7,7 +7,7 @@
   import { userSettings } from '$lib/settings.js'
   import PostLink from '$lib/components/lemmy/post/PostLink.svelte'
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
-  import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
+  import { toast } from '$lib/components/ui/toasts/toasts.js'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
 
   export let post: PostView
@@ -125,7 +125,7 @@
         post.post.url = e.detail.post.url
         toast({
           content: 'The post was edited successfully.',
-          type: ToastType.success,
+          type: 'success',
         })
       }}
     />

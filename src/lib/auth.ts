@@ -1,5 +1,5 @@
 import { amModOfAny } from '$lib/components/lemmy/moderation/moderation.js'
-import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
+import { toast } from '$lib/components/ui/toasts/toasts.js'
 import { DEFAULT_INSTANCE_URL, getClient, instance } from '$lib/lemmy.js'
 import type { MyUserInfo } from 'lemmy-js-client'
 import { get, writable } from 'svelte/store'
@@ -87,7 +87,7 @@ export async function setUser(jwt: string, inst: string, username: string) {
   if (!user) {
     toast({
       content: 'Failed to fetch your user. Is your instance down?',
-      type: ToastType.error,
+      type: 'error',
     })
   }
 

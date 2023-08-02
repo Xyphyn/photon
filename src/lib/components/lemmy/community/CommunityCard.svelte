@@ -5,7 +5,7 @@
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import Card from '$lib/components/ui/Card.svelte'
   import StickyCard from '$lib/components/ui/StickyCard.svelte'
-  import { ToastType, addToast } from '$lib/components/ui/toasts/toasts.js'
+  import { toast } from '$lib/components/ui/toasts/toasts.js'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import { getClient } from '$lib/lemmy.js'
@@ -39,7 +39,7 @@
         follow: !subscribed,
       })
     } catch (error) {
-      addToast('Error', error as any, ToastType.error)
+      toast({ content: error as any, type: 'error' })
     }
 
     community_view.subscribed = subscribed ? 'NotSubscribed' : 'Subscribed'
@@ -58,7 +58,7 @@
         block: !blocked,
       })
     } catch (error) {
-      addToast('Error', error as any, ToastType.error)
+      toast({ content: error as any, type: 'error' })
     }
 
     community_view.blocked = !blocked

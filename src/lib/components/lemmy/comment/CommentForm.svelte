@@ -4,11 +4,11 @@
   import type { CommentResponse } from 'lemmy-js-client'
   import { getClient } from '$lib/lemmy.js'
   import { createEventDispatcher } from 'svelte'
-  import { ToastType, addToast } from '$lib/components/ui/toasts/toasts.js'
   import TextArea from '$lib/components/input/TextArea.svelte'
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import { profile } from '$lib/auth.js'
+  import { toast } from '$lib/components/ui/toasts/toasts.js'
 
   export let postId: number
   export let parentId: number | undefined = undefined
@@ -40,18 +40,16 @@
       dispatch('comment', response)
 
       value = ''
-      addToast(
-        'Success',
-        'Your comment was added. You may need to refresh to see it.',
-        ToastType.success
-      )
+      toast({
+        content: 'Your comment was added. You may need to refresh to see it.',
+        type: 'success',
+      })
     } catch (err) {
       console.error(err)
-      addToast(
-        'Error',
-        'Failed to comment. (Sometimes this error appears even when successful.)',
-        ToastType.error
-      )
+      toast({
+        content: err as any,
+        type: 'error',
+      })
     }
 
     loading = false

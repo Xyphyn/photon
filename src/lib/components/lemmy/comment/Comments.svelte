@@ -8,7 +8,7 @@
   import { getClient } from '$lib/lemmy.js'
   import type { CommentView, Post } from 'lemmy-js-client'
   import { fly } from 'svelte/transition'
-  import { toast, ToastType } from '$lib/components/ui/toasts/toasts.js'
+  import { toast } from '$lib/components/ui/toasts/toasts.js'
   import { profile } from '$lib/auth.js'
 
   export let nodes: CommentNodeI[]
@@ -53,7 +53,7 @@
         loadingChildren = false
         toast({
           content: 'The API returned no comments.',
-          type: ToastType.error,
+          type: 'error',
         })
         return
       }
@@ -77,7 +77,7 @@
       console.error(error)
       toast({
         content: `Failed to fetch comments. ${error as any}`,
-        type: ToastType.error,
+        type: 'error',
       })
     }
   }

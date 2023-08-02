@@ -1,9 +1,5 @@
 <script lang="ts">
-  import {
-    ToastType,
-    type Toast,
-    toasts,
-  } from '$lib/components/ui/toasts/toasts'
+  import { type Toast, toasts } from '$lib/components/ui/toasts/toasts'
   import {
     InformationCircle,
     ExclamationTriangle,
@@ -29,13 +25,13 @@
     size="20"
     solid
     class="relative m-2 ml-4 flex-shrink-0"
-    src={toast.type == ToastType.info
+    src={toast.type == 'info'
       ? InformationCircle
-      : toast.type == ToastType.success
+      : toast.type == 'success'
       ? CheckCircle
-      : toast.type == ToastType.warning
+      : toast.type == 'warning'
       ? ExclamationTriangle
-      : toast.type == ToastType.error
+      : toast.type == 'error'
       ? ExclamationCircle
       : ExclamationCircle}
   />

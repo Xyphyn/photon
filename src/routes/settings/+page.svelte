@@ -10,7 +10,7 @@
   } from '$lib/lemmy.js'
   import { Color } from '$lib/ui/colors.js'
   import Button from '$lib/components/input/Button.svelte'
-  import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
+  import { toast } from '$lib/components/ui/toasts/toasts.js'
   import Setting from './Setting.svelte'
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
 
