@@ -1,3 +1,4 @@
+import { amModOfAny } from '$lib/components/lemmy/moderation/moderation.js'
 import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
 import { DEFAULT_INSTANCE_URL, getClient, instance } from '$lib/lemmy.js'
 import type { MyUserInfo } from 'lemmy-js-client'
@@ -190,3 +191,33 @@ export function setUserID(id: number) {
 
   return prof
 }
+
+setInterval(async () => {
+  if (!get(profile)) return
+
+  const { user, jwt } = get(profile)!
+  if (!jwt || !user) return
+
+  const response = await getClient().getUnreadCount({
+    auth: jwt,
+  })
+
+  user.unreads =
+    response.mentions + response.private_messages + response.replies
+
+  if (amModOfAny(user)) {
+    const reports = await getClient().getReportCount({
+      auth: jwt,
+    })
+
+    user.reports =
+      reports.comment_reports +
+      reports.post_reports +
+      (reports.private_message_reports ?? 0)
+  }
+
+  profile.update((p) => ({
+    ...p!,
+    user: user,
+  }))
+}, 30 * 1000)
