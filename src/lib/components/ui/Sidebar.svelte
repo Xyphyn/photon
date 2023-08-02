@@ -13,6 +13,7 @@
   import { profile, profileData, setUserID } from '$lib/auth.js'
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
+  import { slide } from 'svelte/transition'
 
   let expanded = true
 </script>

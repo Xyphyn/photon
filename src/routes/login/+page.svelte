@@ -40,7 +40,7 @@
       })
 
       if (response?.jwt) {
-        setUser(response.jwt, data.instance, data.username)
+        await setUser(response.jwt, data.instance, data.username)
 
         toast({ content: 'Successfully logged in.', type: ToastType.success })
         goto('/')

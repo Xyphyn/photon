@@ -75,14 +75,14 @@ profile.subscribe(async (p) => {
   }))
 })
 
-export async function setUser(jwt: string, instance: string, username: string) {
+export async function setUser(jwt: string, inst: string, username: string) {
   try {
-    new URL(`https://${instance}`)
+    new URL(`https://${inst}`)
   } catch (err) {
     return
   }
 
-  const user = await userFromJwt(jwt, instance)
+  const user = await userFromJwt(jwt, inst)
   if (!user) {
     toast({
       content: 'Failed to fetch your user. Is your instance down?',
@@ -90,13 +90,15 @@ export async function setUser(jwt: string, instance: string, username: string) {
     })
   }
 
+  instance.set(inst)
+
   profileData.update((pd) => {
     // too lazy to make a decent system
     const id = Math.floor(Math.random() * 100000)
 
     const newProfile: Profile = {
       id: id,
-      instance: instance,
+      instance: inst,
       jwt: jwt,
       username: username,
     }
@@ -111,6 +113,8 @@ export async function setUser(jwt: string, instance: string, username: string) {
       profiles: [...pd.profiles, newProfile],
     }
   })
+
+  return user
 }
 
 async function userFromJwt(
