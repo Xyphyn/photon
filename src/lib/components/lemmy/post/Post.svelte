@@ -16,31 +16,32 @@
 </script>
 
 <Card class="bg-white flex flex-col w-full p-5 gap-2.5">
-  <PostMeta
-    community={hideCommunity ? undefined : post.community}
-    user={post.creator}
-    published={new Date(post.post.published + 'Z')}
-    upvotes={post.counts.upvotes}
-    downvotes={post.counts.downvotes}
-    deleted={post.post.deleted}
-    removed={post.post.removed}
-    locked={post.post.locked}
-    featured={post.post.featured_local || post.post.featured_community}
-    nsfw={post.post.nsfw}
-    saved={post.saved}
-  />
-  <div class="flex flex-row w-full gap-2.5">
-    <div class="flex flex-col gap-1.5 grow">
-      <a
-        href="/post/{getInstance()}/{post.post.id}"
-        class="font-medium"
-        class:text-slate-500={post.read && $userSettings.markReadPosts}
-        class:dark:text-zinc-400={post.read && $userSettings.markReadPosts}
-      >
-        {post.post.name}
-      </a>
-    </div>
-    {#if $userSettings.showCompactPosts && (post.post.thumbnail_url || isImage(post.post.url))}
+  <div class="flex flex-col gap-1">
+    <PostMeta
+      community={hideCommunity ? undefined : post.community}
+      user={post.creator}
+      published={new Date(post.post.published + 'Z')}
+      upvotes={post.counts.upvotes}
+      downvotes={post.counts.downvotes}
+      deleted={post.post.deleted}
+      removed={post.post.removed}
+      locked={post.post.locked}
+      featured={post.post.featured_local || post.post.featured_community}
+      nsfw={post.post.nsfw}
+      saved={post.saved}
+    />
+
+    <a
+      href="/post/{getInstance()}/{post.post.id}"
+      class="font-medium"
+      class:text-slate-500={post.read && $userSettings.markReadPosts}
+      class:dark:text-zinc-400={post.read && $userSettings.markReadPosts}
+    >
+      {post.post.name}
+    </a>
+  </div>
+  {#if $userSettings.showCompactPosts && (post.post.thumbnail_url || isImage(post.post.url))}
+    <div class="flex flex-row w-full gap-2.5">
       <div class="flex-none w-24 h-24">
         <a href="/post/{getInstance()}/{post.post.id}">
           {#if post.post.thumbnail_url}
@@ -60,8 +61,8 @@
           {/if}
         </a>
       </div>
-    {/if}
-  </div>
+    </div>
+  {/if}
   {#if !$userSettings.showCompactPosts}
     {#if post.post.url && !post.post.thumbnail_url}
       <a
