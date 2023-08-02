@@ -35,12 +35,12 @@
   <ToastContainer />
   <Moderation />
   <div
-    class="flex flex-row h-full w-full max-w-full lg:divide-x dark:divide-zinc-900
+    class="flex flex-row h-full w-full max-w-full sm:divide-x dark:divide-zinc-900
     divide-slate-200 flex-1"
   >
     <Sidebar />
     <main
-      class="p-3 lg:p-6 min-w-0 w-full flex-[3] lg:rounded-tl-lg
+      class="p-3 lg:p-6 min-w-0 w-full flex-[3] sm:rounded-tl-lg
       border-slate-200 dark:border-zinc-900 border-t"
     >
       <slot />
