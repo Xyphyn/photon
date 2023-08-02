@@ -16,21 +16,21 @@
 </script>
 
 <Card class="bg-white flex flex-col w-full p-5 gap-2.5">
+  <PostMeta
+    community={hideCommunity ? undefined : post.community}
+    user={post.creator}
+    published={new Date(post.post.published + 'Z')}
+    upvotes={post.counts.upvotes}
+    downvotes={post.counts.downvotes}
+    deleted={post.post.deleted}
+    removed={post.post.removed}
+    locked={post.post.locked}
+    featured={post.post.featured_local || post.post.featured_community}
+    nsfw={post.post.nsfw}
+    saved={post.saved}
+  />
   <div class="flex flex-row w-full gap-2.5">
     <div class="flex flex-col gap-1.5 grow">
-      <PostMeta
-        community={hideCommunity ? undefined : post.community}
-        user={post.creator}
-        published={new Date(post.post.published + 'Z')}
-        upvotes={post.counts.upvotes}
-        downvotes={post.counts.downvotes}
-        deleted={post.post.deleted}
-        removed={post.post.removed}
-        locked={post.post.locked}
-        featured={post.post.featured_local || post.post.featured_community}
-        nsfw={post.post.nsfw}
-        saved={post.saved}
-      />
       <a
         href="/post/{getInstance()}/{post.post.id}"
         class="font-medium"
