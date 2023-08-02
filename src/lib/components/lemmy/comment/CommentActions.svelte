@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { CommentView } from 'lemmy-js-client'
   import CommentVote from '$lib/components/lemmy/comment/CommentVote.svelte'
+  import { page } from '$app/stores'
   import { userSettings } from '$lib/settings.js'
   import { Color } from '$lib/ui/colors.js'
   import {
@@ -13,9 +14,10 @@
     Flag,
     Icon,
     PencilSquare,
+    Square2Stack,
     Trash,
   } from 'svelte-hero-icons'
-  import { getClient } from '$lib/lemmy.js'
+  import { getClient, getInstance } from '$lib/lemmy.js'
   import { ToastType, toast } from '$lib/components/ui/toasts/toasts.js'
   import Menu from '$lib/components/ui/menu/Menu.svelte'
   import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
@@ -90,6 +92,16 @@
       <Icon src={EllipsisHorizontal} width={16} height={16} mini slot="icon" />
     </Button>
     <span class="text-xs opacity-80 py-1 my-1 px-4">Comment actions</span>
+    <MenuButton
+      on:click={() => {
+        navigator.clipboard.writeText(
+          `${$page.url.origin}/post/${getInstance()}/${comment.post.id}?thread=${comment.comment.path}#${comment.comment.id}`
+        )
+      }}
+    >
+      <Icon src={Square2Stack} mini size="16" />
+      <span>Copy Link</span>
+    </MenuButton>
     {#if $profile?.jwt}
       {#if comment.creator.id == $profile.user?.local_user_view.person.id}
         <MenuButton on:click={() => dispatcher('edit', comment)}>
