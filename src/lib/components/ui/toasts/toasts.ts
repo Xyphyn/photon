@@ -2,7 +2,7 @@ import { writable } from 'svelte/store'
 
 type ToastType = keyof typeof toastColors
 
-const toastColors = {
+export const toastColors = {
   error: 'bg-red-500 text-white border border-red-600',
   warning: 'bg-yellow-400 text-black border border-yellow-500',
   success: 'bg-green-400 text-black border border-green-500',

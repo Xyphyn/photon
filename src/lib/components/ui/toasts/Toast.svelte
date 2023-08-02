@@ -1,5 +1,9 @@
 <script lang="ts">
-  import { type Toast, toasts } from '$lib/components/ui/toasts/toasts'
+  import {
+    type Toast,
+    toasts,
+    toastColors,
+  } from '$lib/components/ui/toasts/toasts'
   import {
     InformationCircle,
     ExclamationTriangle,
@@ -14,7 +18,9 @@
 </script>
 
 <div
-  class="{toast.type} relative w-80 rounded-md overflow-hidden flex flex-row items-center"
+  class="{toastColors[
+    toast.type
+  ]} relative w-80 rounded-md overflow-hidden flex flex-row items-center"
   transition:fly={{
     duration: 300,
     y: 8,
