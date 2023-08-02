@@ -57,7 +57,7 @@
                 class="font-normal text-xs flex items-center gap-1 text-slate-600 dark:text-zinc-400"
               >
                 Powered by <Link
-                  href="https://photon.xylight.dev"
+                  href="https://phtn.app"
                   highlight={false}
                   class="font-bold flex items-center gap-0.5 hover:underline"
                 >
