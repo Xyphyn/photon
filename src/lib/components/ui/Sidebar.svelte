@@ -21,7 +21,7 @@
 <nav
   class="hidden sm:flex flex-col pl-4 pr-4 py-4 overflow-auto sticky top-16 bottom-0
   gap-1 max-h-[calc(100vh-4rem)] w-full bg-slate-100 dark:bg-black
-  {expanded ? 'w-1/4 resize-x min-w-[12rem] max-w-2xl' : 'w-max max-w-max'}"
+  {expanded ? 'w-1/4 resize-x min-w-[12rem] max-w-xl' : 'w-max max-w-max'}"
 >
   <Button
     on:click={() => (expanded = !expanded)}
