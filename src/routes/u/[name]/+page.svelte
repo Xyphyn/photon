@@ -136,8 +136,8 @@
   <div class="flex flex-col gap-4 max-w-full w-full min-w-0">
     <div class="flex flex-row gap-4 flex-wrap">
       <MultiSelect
-        options={['New', 'TopAll']}
-        optionNames={['New', 'Top']}
+        options={['New', 'TopAll', 'Old']}
+        optionNames={['New', 'Top', 'Old']}
         selected={data.sort}
         on:select={(e) => {
           $page.url.searchParams.set('sort', e.detail)

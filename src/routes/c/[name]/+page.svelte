@@ -62,8 +62,8 @@
     </div>
     <div class="flex flex-col sm:flex-row gap-4 max-w-full w-full">
       <MultiSelect
-        options={['Active', 'Hot', 'TopAll', 'New']}
-        optionNames={['Active', 'Hot', 'Top', 'New']}
+        options={['Active', 'Hot', 'TopAll', 'New', 'Old']}
+        optionNames={['Active', 'Hot', 'Top', 'New', 'Old']}
         selected={$page.url.searchParams.get('sort') ??
           $userSettings.defaultSort.sort}
         on:select={(e) => {

@@ -55,8 +55,8 @@
         }}
       />
       <MultiSelect
-        options={['Active', 'Hot', 'TopAll', 'New']}
-        optionNames={['Active', 'Hot', 'Top', 'New']}
+        options={['Active', 'Hot', 'TopAll', 'New', 'Old']}
+        optionNames={['Active', 'Hot', 'Top', 'New', 'Old']}
         selected={data.sort}
         on:select={(e) => {
           const url = $page.url
@@ -66,6 +66,7 @@
             invalidateAll: true,
           })
         }}
+        class="w-full md:max-w-[20rem]"
       />
     </div>
     <section class="flex flex-col gap-4">
