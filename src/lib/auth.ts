@@ -23,6 +23,7 @@ interface Profile {
   jwt?: string
   user?: PersonData
   username?: string
+  favorites?: number[]
 }
 
 /**
@@ -43,13 +44,10 @@ export const profileData = writable<ProfileData>(
   getFromStorage<ProfileData>('profileData') ?? { profiles: [], profile: -1 }
 )
 
-let initialInstance = get(profileData).defaultInstance
-
 profileData.subscribe(async (pd) => {
   setFromStorage('profileData', pd)
 
-  if (pd.profile == -1 && pd.defaultInstance != initialInstance) {
-    initialInstance = get(profileData).defaultInstance ?? DEFAULT_INSTANCE_URL
+  if (pd.profile == -1) {
     instance.set(get(profileData).defaultInstance ?? DEFAULT_INSTANCE_URL)
   }
 })
@@ -132,17 +130,11 @@ async function userFromJwt(
   }
 }
 
-const userToPersonData = (user: MyUserInfo): PersonData => ({
-  ...user,
-  unreads: 0,
-  reports: 0,
-})
-
 function getProfile() {
   const id = get(profileData).profile
 
   if (id == -1) {
-    return
+    return getDefaultProfile()
   }
 
   const pd = get(profileData)
@@ -150,10 +142,12 @@ function getProfile() {
   return pd.profiles.find((p) => p.id == id)
 }
 
-const getDefaultProfile = () => ({
-  id: -1,
-  instance: get(instance),
-})
+function getDefaultProfile() {
+  return {
+    id: -1,
+    instance: get(profileData)?.defaultInstance ?? get(instance),
+  }
+}
 
 export function resetProfile() {
   profile.set(getDefaultProfile())

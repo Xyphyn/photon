@@ -6,7 +6,7 @@
   import 'nprogress/nprogress.css'
   import ToastContainer from '$lib/components/ui/toasts/ToastContainer.svelte'
   import Moderation from '$lib/components/lemmy/moderation/Moderation.svelte'
-  import Sidebar from '$lib/components/ui/Sidebar.svelte'
+  import Sidebar from '$lib/components/ui/sidebar/Sidebar.svelte'
   import { onMount } from 'svelte'
   // @ts-ignore
   import { pwaInfo } from 'virtual:pwa-info'

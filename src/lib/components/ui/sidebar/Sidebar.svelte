@@ -8,12 +8,14 @@
     Plus,
     UserCircle,
   } from 'svelte-hero-icons'
-  import Button from '../input/Button.svelte'
+  import Button from '../../input/Button.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import { profile, profileData, setUserID } from '$lib/auth.js'
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
   import { slide } from 'svelte/transition'
+  import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
+  import CommunityList from '$lib/components/ui/sidebar/CommunityList.svelte'
 
   let expanded = true
 </script>
@@ -37,36 +39,24 @@
       title="Toggle expanded"
     />
   </Button>
-  <Button
-    class="hover:bg-slate-200 {expanded ? '' : '!p-1.5'}"
-    href="/"
-    color="tertiary"
-    alignment="left"
-  >
+  <SidebarButton href="/" {expanded}>
     <Icon src={Home} solid size="20" title="Frontpage" />
     <span class:hidden={!expanded}>Frontpage</span>
-  </Button>
-  <Button
-    class="hover:bg-slate-200 {expanded ? '' : '!p-1.5'}"
-    href="/settings"
-    color="tertiary"
-    alignment="left"
-  >
+  </SidebarButton>
+  <SidebarButton href="/settings" {expanded}>
     <Icon src={Cog6Tooth} solid size="20" title="Settings" />
     <span class:hidden={!expanded}>Settings</span>
-  </Button>
+  </SidebarButton>
   {#if $profileData.profiles.length >= 1}
     <hr class="border-slate-300 dark:border-zinc-800 my-1" />
     {#each $profileData.profiles as prof, index}
-      <Button
-        class="hover:bg-slate-200 {expanded ? '' : '!p-1.5'} {$profile?.id ==
-        prof.id
+      <SidebarButton
+        class={$profile?.id == prof.id
           ? expanded
             ? 'font-bold'
             : 'text-sky-500'
-          : ''}"
-        color="tertiary"
-        alignment="left"
+          : ''}
+        {expanded}
         on:click={() => {
           setUserID(prof.id)
           goto($page.url, {
@@ -88,30 +78,23 @@
             {prof.instance}
           </span>
         </span>
-      </Button>
+      </SidebarButton>
     {/each}
   {/if}
   <hr class="border-slate-300 dark:border-zinc-800 my-1" />
   {#if $profile?.user}
-    {#each $profile.user.follows
-      .map((f) => f.community)
-      .sort((a, b) => a.title.localeCompare(b.title)) as follow}
-      <Button
-        class="hover:bg-slate-200 {expanded ? '' : '!p-1.5'}"
-        color="tertiary"
-        alignment="left"
-        href="/c/{follow.name}@{new URL(follow.actor_id).hostname}"
-      >
-        <Avatar
-          url={follow.icon}
-          alt={follow.name}
-          title={follow.title}
-          width={20}
-          slot="icon"
-        />
-        <span class:hidden={!expanded}>{follow.title}</span>
-      </Button>
-    {/each}
+    {#if $profile?.user.moderates.length > 0}
+      <CommunityList
+        {expanded}
+        items={$profile.user.moderates.map((i) => i.community)}
+      />
+      <hr class="border-slate-300 dark:border-zinc-800 my-1" />
+    {/if}
+
+    <CommunityList
+      {expanded}
+      items={$profile.user.follows.map((i) => i.community)}
+    />
     {#if $profile.user.follows.length == 0}
       <Button
         class="hover:bg-slate-200 {expanded ? '' : '!p-1.5'}"
