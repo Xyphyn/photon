@@ -4,7 +4,7 @@
     buildCommentsTreeAsync,
   } from '$lib/components/lemmy/comment/comments.js'
   import Comments from '$lib/components/lemmy/comment/Comments.svelte'
-  import { isImage } from '$lib/ui/image.js'
+  import { isImage, isVideo } from '$lib/ui/image.js'
   import { getClient } from '$lib/lemmy.js'
   import CommentForm from '$lib/components/lemmy/comment/CommentForm.svelte'
   import { onMount } from 'svelte'
@@ -108,6 +108,11 @@
       alt={post.name}
       class="rounded-md max-w-screen max-h-[80vh] mx-auto"
     />
+  {:else if isVideo(post.url)}
+    <!-- svelte-ignore a11y-media-has-caption -->
+    <video class="rounded-md max-w-screen max-h-[80vh] mx-auto" controls>
+      <source src={post.url} />
+    </video>
   {:else if post.url && !post.thumbnail_url}
     <a
       href={post.url}
@@ -121,11 +126,6 @@
       url={post.url}
       nsfw={post.nsfw}
     />
-  {:else if post.embed_video_url}
-    <!-- svelte-ignore a11y-media-has-caption -->
-    <video class="rounded-md max-w-screen max-h-[80vh] mx-auto">
-      <source src={post.embed_video_url} />
-    </video>
   {/if}
   {#if post.body}
     <div

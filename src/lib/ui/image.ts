@@ -4,8 +4,10 @@ export const isImage = (url: string | undefined) => {
   return /\.(jpeg|jpg|gif|png|svg|bmp|webp)$/i.test(new URL(url).pathname)
 }
 
-export const isVideo = (url: string | undefined) => {
-  if (!url) return false
+export const isVideo = (inputUrl: string | undefined) => {
+  if (!inputUrl) return false
 
-  return new URL(url).pathname.toLowerCase().endsWith('.mp4')
+  const url = new URL(inputUrl).pathname.toLowerCase()
+
+  return url.endsWith('mp4') || url.endsWith('webm') || url.endsWith('mov')
 }
