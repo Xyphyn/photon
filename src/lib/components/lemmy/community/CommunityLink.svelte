@@ -33,7 +33,7 @@
         @{new URL(community.actor_id).hostname}
       </span>
     {:else}
-      {community.name}
+      {community.title}
     {/if}
   </span>
 </a>
