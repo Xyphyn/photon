@@ -33,14 +33,11 @@ export async function load({ url }) {
     unresolved_only: type == 'unread',
   }
 
-  const [posts, comments, messages] = await Promise.all([
+  const [posts, comments] = await Promise.all([
     client.listPostReports({
       ...params,
     }),
     client.listCommentReports({
-      ...params,
-    }),
-    client.listPrivateMessageReports({
       ...params,
     }),
   ])
@@ -48,7 +45,6 @@ export async function load({ url }) {
   const everything = [
     ...posts.post_reports,
     ...comments.comment_reports,
-    ...messages.private_message_reports,
   ].sort(
     (a, b) => Date.parse(getItemPublished(b)) - Date.parse(getItemPublished(a))
   )
