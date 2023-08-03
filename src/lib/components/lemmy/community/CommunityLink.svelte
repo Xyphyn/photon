@@ -29,7 +29,7 @@
   <span class="flex gap-0">
     {#if $userSettings.showInstances.community}
       {community.title}
-      <span class="text-slate-600 dark:text-zinc-400 font-normal">
+      <span class="text-slate-500 dark:text-zinc-500 font-normal">
         @{new URL(community.actor_id).hostname}
       </span>
     {:else}
