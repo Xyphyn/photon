@@ -10,6 +10,7 @@
   import { onMount } from 'svelte'
   // @ts-ignore
   import { pwaInfo } from 'virtual:pwa-info'
+  import PwaReload from '$lib/PwaReload.svelte'
 
   nProgress.configure({
     minimum: 0.4,
@@ -32,24 +33,12 @@
     }
   }
 
-  onMount(async () => {
-    if (pwaInfo) {
-      const { registerSW } = await import('virtual:pwa-register')
-      registerSW({
-        immediate: true,
-        onRegistered(r) {
-          console.log(`SW Registered: ${r}`)
-          r?.update()
-        },
-        onRegisterError(error) {
-          console.log('SW registration error', error)
-        },
-      })
-    }
-  })
-
   $: webManifest = pwaInfo ? pwaInfo.webManifest.linkTag : ''
 </script>
+
+<svelte:head>
+  {@html webManifest}
+</svelte:head>
 
 <div class="flex flex-col min-h-screen">
   <Navbar />
@@ -68,3 +57,7 @@
     </main>
   </div>
 </div>
+
+{#await import('$lib/PwaReload.svelte') then { default: PwaReload }}
+  <PwaReload />
+{/await}
