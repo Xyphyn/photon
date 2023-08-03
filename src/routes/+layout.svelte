@@ -7,6 +7,9 @@
   import ToastContainer from '$lib/components/ui/toasts/ToastContainer.svelte'
   import Moderation from '$lib/components/lemmy/moderation/Moderation.svelte'
   import Sidebar from '$lib/components/ui/Sidebar.svelte'
+  import { onMount } from 'svelte'
+  // @ts-ignore
+  import { pwaInfo } from 'virtual:pwa-info'
 
   nProgress.configure({
     minimum: 0.4,
@@ -28,6 +31,24 @@
       }
     }
   }
+
+  onMount(async () => {
+    if (pwaInfo) {
+      const { registerSW } = await import('virtual:pwa-register')
+      registerSW({
+        immediate: true,
+        onRegistered(r) {
+          console.log(`SW Registered: ${r}`)
+          r?.update()
+        },
+        onRegisterError(error) {
+          console.log('SW registration error', error)
+        },
+      })
+    }
+  })
+
+  $: webManifest = pwaInfo ? pwaInfo.webManifest.linkTag : ''
 </script>
 
 <div class="flex flex-col min-h-screen">

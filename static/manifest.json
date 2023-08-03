@@ -8,19 +8,17 @@
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "maskable"
+    },
+    {
+      "src": "logo_512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any"
     }
   ],
   "background_color": "#000000",
   "display": "standalone",
   "scope": "/",
   "theme_color": "#000000",
-  "shortcuts": [
-    {
-      "name": "Inbox",
-      "short_name": "Inbox",
-      "description": "View what's in your inbox.",
-      "url": "/inbox"
-    }
-  ],
   "description": "A sleek client for Lemmy."
 }
