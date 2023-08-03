@@ -49,24 +49,25 @@
     {/if}
     <p class="text-sm">{toast.content}</p>
   </div>
-  <div class="ml-auto" />
-  {#if toast.action}
+  <div class="ml-auto flex items-center gap-2 m-2">
+    {#if toast.action}
+      <button
+        on:click={() => {
+          toast.action?.()
+          toasts.update((toasts) => toasts.filter((t) => t.id != toast.id))
+        }}
+        class="rounded-lg w-max transition-colors hover:bg-black/20 hover:dark:bg-white/20 p-2"
+      >
+        <Icon src={Check} size="16" mini />
+      </button>
+    {/if}
     <button
       on:click={() => {
-        toast.action?.()
         toasts.update((toasts) => toasts.filter((t) => t.id != toast.id))
       }}
-      class="rounded-lg w-max transition-colors hover:bg-black/20 hover:dark:bg-white/20 p-2 m-2"
+      class="rounded-lg w-max transition-colors hover:bg-black/20 hover:dark:bg-white/20 p-2"
     >
-      <Icon src={Check} size="16" mini />
+      <Icon src={XMark} size="16" mini />
     </button>
-  {/if}
-  <button
-    on:click={() => {
-      toasts.update((toasts) => toasts.filter((t) => t.id != toast.id))
-    }}
-    class="rounded-lg w-max transition-colors hover:bg-black/20 hover:dark:bg-white/20 p-2 m-2"
-  >
-    <Icon src={XMark} size="16" mini />
-  </button>
+  </div>
 </div>

@@ -7,17 +7,29 @@ import {
 import { get, writable } from 'svelte/store'
 import { env } from '$env/dynamic/public'
 import { profile } from '$lib/auth.js'
+import { error } from '@sveltejs/kit'
 
 export const LINKED_INSTANCE_URL = env.PUBLIC_INSTANCE_URL
 export const DEFAULT_INSTANCE_URL = env.PUBLIC_INSTANCE_URL || 'lemmy.ml'
 export let instance = writable(DEFAULT_INSTANCE_URL)
+
+async function customFetch(
+  input: RequestInfo | URL,
+  init?: RequestInit | undefined
+): Promise<Response> {
+  const res = await fetch(input, init)
+  if (!res.ok) throw error(res.status, res.statusText)
+  return res
+}
 
 export function getClient(instanceURL?: string): LemmyHttp {
   if (!instanceURL) {
     instanceURL = get(instance)
   }
 
-  return new LemmyHttp(`https://${instanceURL}`)
+  return new LemmyHttp(`https://${instanceURL}`, {
+    fetchFunction: customFetch,
+  })
 }
 
 export const getInstance = () => get(instance)

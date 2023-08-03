@@ -1,5 +1,6 @@
 import { profile } from '$lib/auth.js'
 import { getClient } from '$lib/lemmy.js'
+import { error } from '@sveltejs/kit'
 import { get } from 'svelte/store'
 
 export async function load({ params, url }) {
