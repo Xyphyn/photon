@@ -44,11 +44,17 @@ export const profileData = writable<ProfileData>(
   getFromStorage<ProfileData>('profileData') ?? { profiles: [], profile: -1 }
 )
 
+// stupid hack to get dev server working
+// why does this always happen to me
+
+let initialInstance = get(profileData).defaultInstance
+
 profileData.subscribe(async (pd) => {
   setFromStorage('profileData', pd)
 
-  if (pd.profile == -1) {
-    instance.set(get(profileData).defaultInstance ?? DEFAULT_INSTANCE_URL)
+  if (pd.profile == -1 && initialInstance != pd.defaultInstance) {
+    initialInstance = get(profileData).defaultInstance ?? DEFAULT_INSTANCE_URL
+    instance?.set(get(profileData).defaultInstance ?? DEFAULT_INSTANCE_URL)
   }
 })
 
@@ -56,7 +62,7 @@ export const profile = writable<Profile | undefined>(getProfile())
 
 profile.subscribe(async (p) => {
   if (p?.id == -1) {
-    instance.set(get(profileData).defaultInstance ?? DEFAULT_INSTANCE_URL)
+    instance?.set(get(profileData).defaultInstance ?? DEFAULT_INSTANCE_URL)
   }
   if (!p || !p.jwt) {
     profileData.update((pd) => ({ ...pd, profile: -1 }))

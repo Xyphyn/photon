@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Button from '$lib/components/input/Button.svelte'
   import {
     type Toast,
     toasts,
@@ -11,6 +12,7 @@
     CheckCircle,
     Icon,
     XMark,
+    Check,
   } from 'svelte-hero-icons'
   import { fly } from 'svelte/transition'
 
@@ -47,11 +49,23 @@
     {/if}
     <p class="text-sm">{toast.content}</p>
   </div>
+  <div class="ml-auto" />
+  {#if toast.action}
+    <button
+      on:click={() => {
+        toast.action?.()
+        toasts.update((toasts) => toasts.filter((t) => t.id != toast.id))
+      }}
+      class="rounded-lg w-max transition-colors hover:bg-black/20 hover:dark:bg-white/20 p-2 m-2"
+    >
+      <Icon src={Check} size="16" mini />
+    </button>
+  {/if}
   <button
     on:click={() => {
       toasts.update((toasts) => toasts.filter((t) => t.id != toast.id))
     }}
-    class="rounded-lg ml-auto w-max transition-colors hover:bg-slate-200 hover:dark:bg-zinc-800 p-2 m-2"
+    class="rounded-lg w-max transition-colors hover:bg-black/20 hover:dark:bg-white/20 p-2 m-2"
   >
     <Icon src={XMark} size="16" mini />
   </button>

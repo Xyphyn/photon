@@ -11,9 +11,10 @@ export const toastColors = {
 
 export interface Toast {
   id: number
-  title: string | undefined
+  title?: string
   content: string
   type: ToastType
+  action?: () => any
 }
 
 export const toasts = writable<Toast[]>([])
@@ -23,11 +24,13 @@ export function toast({
   content,
   type = 'info',
   duration = 5000,
+  action,
 }: {
   title?: string
   content: string
   type?: ToastType
   duration?: number
+  action?: () => any
 }) {
   let id = 0
 
@@ -41,6 +44,7 @@ export function toast({
         content: content,
         title: title,
         type: type,
+        action: action,
       },
     ]
   })
