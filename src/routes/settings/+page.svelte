@@ -61,19 +61,33 @@
     <Switch bind:enabled={$userSettings.revertColors} />
   </Setting>
   <Setting>
-    <span slot="title">Show user instances</span>
-    <span slot="description">Show user's instances.</span>
-    <span class="flex gap-0 px-3 py-2 bg-slate-100 dark:bg-zinc-800 rounded-md">
-      Xylight
-      <span class="opacity-50">@example.com</span>
-    </span>
-    <Switch bind:enabled={$userSettings.showInstance} />
-  </Setting>
-  <Setting>
     <span slot="title">Show compact posts</span>
     <span slot="description">
       Show posts with smaller thumbnails and without text bodies.
     </span>
     <Switch bind:enabled={$userSettings.showCompactPosts} />
+  </Setting>
+  <h2 class="uppercase font-bold opacity-80 text-sm mt-4">Instances</h2>
+  <Setting>
+    <span slot="title">Show instances</span>
+    <span slot="description">Show items' instances.</span>
+    <span class="flex gap-0 px-3 py-2 bg-slate-100 dark:bg-zinc-800 rounded-md">
+      Xylight
+      <span class="opacity-50">@example.com</span>
+    </span>
+    <div class="flex flex-row items-center gap-4">
+      <div class="flex items-center gap-1 font-bold">
+        Users
+        <Switch bind:enabled={$userSettings.showInstances.user} />
+      </div>
+      <div class="flex items-center gap-1 font-bold">
+        Comments
+        <Switch bind:enabled={$userSettings.showInstances.comments} />
+      </div>
+      <div class="flex items-center gap-1 font-bold">
+        Communities
+        <Switch bind:enabled={$userSettings.showInstances.community} />
+      </div>
+    </div>
   </Setting>
 </div>

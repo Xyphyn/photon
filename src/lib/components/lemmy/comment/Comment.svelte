@@ -84,7 +84,12 @@
       class="flex flex-row cursor-pointer gap-2 items-center group text-xs flex-wrap"
     >
       <span class:font-bold={op} class="flex flex-row gap-1 items-center">
-        <UserLink avatarSize={20} avatar user={node.comment_view.creator} />
+        <UserLink
+          inComment
+          avatarSize={20}
+          avatar
+          user={node.comment_view.creator}
+        />
         {#if op}
           <span class="text-sky-500">OP</span>
         {/if}

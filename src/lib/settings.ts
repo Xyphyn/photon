@@ -6,7 +6,11 @@ interface Settings {
   markReadPosts: boolean
   instance?: string
   revertColors: boolean
-  showInstance: boolean
+  showInstances: {
+    user: boolean
+    community: boolean
+    comments: boolean
+  }
   showCompactPosts: boolean
   defaultSort: {
     sort: 'Hot' | 'TopAll' | 'Active' | 'New'
@@ -20,7 +24,11 @@ const defaultSettings: Settings = {
   expandableImages: true,
   markReadPosts: true,
   revertColors: false,
-  showInstance: false,
+  showInstances: {
+    user: false,
+    community: false,
+    comments: false,
+  },
   showCompactPosts: false,
   defaultSort: {
     sort: 'Active',

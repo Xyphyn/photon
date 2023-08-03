@@ -5,7 +5,7 @@
 <label>
   <div
     class="relative w-10 border-2 h-6 transition-colors cursor-pointer
-      rounded-full flex flex-row items-center shadow-lg {enabled
+      rounded-full flex flex-row items-center {enabled
       ? 'bg-blue-500 border-blue-500'
       : 'bg-slate-200 dark:bg-zinc-800 border-slate-200 dark:border-zinc-800'}"
   >

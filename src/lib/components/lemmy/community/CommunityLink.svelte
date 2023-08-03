@@ -1,5 +1,6 @@
 <script lang="ts">
   import Avatar from '$lib/components/ui/Avatar.svelte'
+  import { userSettings } from '$lib/settings.js'
   import type { Community } from 'lemmy-js-client'
 
   export let community: Community
@@ -24,5 +25,15 @@
       width={avatarSize}
     />
   {/if}
-  {community.title}
+
+  <span class="flex gap-0">
+    {#if $userSettings.showInstances.community}
+      {community.title}
+      <span class="text-slate-600 dark:text-zinc-400 font-normal">
+        @{new URL(community.actor_id).hostname}
+      </span>
+    {:else}
+      {community.name}
+    {/if}
+  </span>
 </a>
