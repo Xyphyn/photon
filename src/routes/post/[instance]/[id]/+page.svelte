@@ -72,7 +72,7 @@
 </svelte:head>
 
 <div class="flex flex-col gap-2">
-  {#if $profile && $page.params.instance.toLowerCase() != $profile.instance.toLowerCase()}
+  {#if $profile?.user && $page.params.instance.toLowerCase() != $profile.instance.toLowerCase()}
     <Card cardColor="warning" class="p-4 flex flex-col gap-1">
       <Icon
         src={ExclamationTriangle}
