@@ -50,19 +50,16 @@
   {#if $profileData.profiles.length >= 1}
     <hr class="border-slate-300 dark:border-zinc-800 my-1" />
     {#each $profileData.profiles as prof, index}
-      <SidebarButton
-        class={$profile?.id == prof.id
-          ? expanded
-            ? 'font-bold'
-            : 'text-sky-500'
-          : ''}
-        {expanded}
+      <Button
+        color="tertiary"
+        alignment="left"
         on:click={() => {
           setUserID(prof.id)
           goto($page.url, {
             invalidateAll: true,
           })
         }}
+        class="hover:bg-slate-200 {expanded ? '' : '!p-1.5'}"
       >
         <Icon
           src={UserCircle}
@@ -78,7 +75,7 @@
             {prof.instance}
           </span>
         </span>
-      </SidebarButton>
+      </Button>
     {/each}
   {/if}
   <hr class="border-slate-300 dark:border-zinc-800 my-1" />

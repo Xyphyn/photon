@@ -57,7 +57,3 @@
     </main>
   </div>
 </div>
-
-{#await import('$lib/PwaReload.svelte') then { default: PwaReload }}
-  <PwaReload />
-{/await}
