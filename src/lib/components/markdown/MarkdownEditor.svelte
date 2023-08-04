@@ -17,6 +17,7 @@
 
   export let images: boolean = true
   export let value: string = ''
+  export let label: string | undefined = undefined
 
   let textArea: HTMLTextAreaElement
 
@@ -90,110 +91,115 @@
   </Modal>
 {/if}
 
-<div
-  class="flex flex-col border border-slate-200 dark:border-zinc-800 rounded-md
+<div>
+  {#if label}
+    <div class="block my-1 font-bold text-sm">{label}</div>
+  {/if}
+  <div
+    class="flex flex-col border border-slate-200 dark:border-zinc-800 rounded-md
 overflow-hidden"
->
-  <!--Toolbar-->
-  <div class="flex flex-row overflow-auto p-1.5 gap-1.5">
-    <Button
-      on:click={() => wrapSelection('**', '**')}
-      title="Bold"
-      size="square-md"
-    >
-      <span class="font-bold">B</span>
-    </Button>
-    <Button
-      on:click={() => wrapSelection('*', '*')}
-      title="Italic"
-      size="square-md"
-    >
-      <span class="italic font-bold">I</span>
-    </Button>
-    <Button
-      on:click={() => wrapSelection('[label](url)', '')}
-      title="Link"
-      size="square-md"
-    >
-      <Icon src={Link} mini size="16" />
-    </Button>
-    <Button
-      on:click={() => wrapSelection('\n# ', '')}
-      title="Header"
-      size="square-md"
-    >
-      <span class="italic font-bold font-serif">H</span>
-    </Button>
-    <Button
-      on:click={() => wrapSelection('~~', '~~')}
-      title="Strikethrough"
-      size="square-md"
-    >
-      <span class="line-through font-bold">S</span>
-    </Button>
-    <Button
-      on:click={() => wrapSelection('\n> ', '')}
-      title="Quote"
-      size="square-md"
-    >
-      <span class="font-bold font-serif">"</span>
-    </Button>
-    <Button
-      on:click={() => wrapSelection('\n- ', '')}
-      title="List"
-      size="square-md"
-    >
-      <Icon src={ListBullet} mini size="16" />
-    </Button>
-    <Button
-      on:click={() => wrapSelection('`', '`')}
-      title="Code"
-      size="square-md"
-    >
-      <Icon src={CodeBracket} mini size="16" />
-    </Button>
-    <Button
-      on:click={() => wrapSelection('::: spoiler <spoiler title>\n', '\n:::')}
-      title="Spoiler"
-      size="square-md"
-    >
-      <Icon src={ExclamationTriangle} mini size="16" />
-    </Button>
-    <Button
-      on:click={() => wrapSelection('~', '~')}
-      title="Subscript"
-      size="square-md"
-    >
-      <span class="font-bold">
-        X
-        <sub>1</sub>
-      </span>
-    </Button>
-    <Button
-      on:click={() => wrapSelection('^', '^')}
-      title="Superscript"
-      size="square-md"
-    >
-      <span class="font-bold">
-        X
-        <sup>1</sup>
-      </span>
-    </Button>
-    {#if images}
+  >
+    <!--Toolbar-->
+    <div class="flex flex-row overflow-auto p-1.5 gap-1.5">
       <Button
-        on:click={() => (uploadingImage = !uploadingImage)}
-        title="Image"
+        on:click={() => wrapSelection('**', '**')}
+        title="Bold"
         size="square-md"
       >
-        <Icon src={Photo} size="16" mini />
+        <span class="font-bold">B</span>
       </Button>
-    {/if}
+      <Button
+        on:click={() => wrapSelection('*', '*')}
+        title="Italic"
+        size="square-md"
+      >
+        <span class="italic font-bold">I</span>
+      </Button>
+      <Button
+        on:click={() => wrapSelection('[label](url)', '')}
+        title="Link"
+        size="square-md"
+      >
+        <Icon src={Link} mini size="16" />
+      </Button>
+      <Button
+        on:click={() => wrapSelection('\n# ', '')}
+        title="Header"
+        size="square-md"
+      >
+        <span class="italic font-bold font-serif">H</span>
+      </Button>
+      <Button
+        on:click={() => wrapSelection('~~', '~~')}
+        title="Strikethrough"
+        size="square-md"
+      >
+        <span class="line-through font-bold">S</span>
+      </Button>
+      <Button
+        on:click={() => wrapSelection('\n> ', '')}
+        title="Quote"
+        size="square-md"
+      >
+        <span class="font-bold font-serif">"</span>
+      </Button>
+      <Button
+        on:click={() => wrapSelection('\n- ', '')}
+        title="List"
+        size="square-md"
+      >
+        <Icon src={ListBullet} mini size="16" />
+      </Button>
+      <Button
+        on:click={() => wrapSelection('`', '`')}
+        title="Code"
+        size="square-md"
+      >
+        <Icon src={CodeBracket} mini size="16" />
+      </Button>
+      <Button
+        on:click={() => wrapSelection('::: spoiler <spoiler title>\n', '\n:::')}
+        title="Spoiler"
+        size="square-md"
+      >
+        <Icon src={ExclamationTriangle} mini size="16" />
+      </Button>
+      <Button
+        on:click={() => wrapSelection('~', '~')}
+        title="Subscript"
+        size="square-md"
+      >
+        <span class="font-bold">
+          X
+          <sub>1</sub>
+        </span>
+      </Button>
+      <Button
+        on:click={() => wrapSelection('^', '^')}
+        title="Superscript"
+        size="square-md"
+      >
+        <span class="font-bold">
+          X
+          <sup>1</sup>
+        </span>
+      </Button>
+      {#if images}
+        <Button
+          on:click={() => (uploadingImage = !uploadingImage)}
+          title="Image"
+          size="square-md"
+        >
+          <Icon src={Photo} size="16" mini />
+        </Button>
+      {/if}
+    </div>
+    <!--Actual text area-->
+    <TextArea
+      class="bg-inherit border-0 rounded-none"
+      bind:value
+      bind:item={textArea}
+      {...$$restProps}
+    />
   </div>
-  <!--Actual text area-->
-  <TextArea
-    class="bg-inherit border-0 rounded-none"
-    bind:value
-    bind:item={textArea}
-    {...$$restProps}
-  />
 </div>

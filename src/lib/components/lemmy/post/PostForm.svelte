@@ -10,6 +10,7 @@
   import SearchInput from '$lib/components/input/SearchInput.svelte'
   import { Check, Icon } from 'svelte-hero-icons'
   import { profile } from '$lib/auth.js'
+  import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
 
   export let edit = false
 
@@ -186,7 +187,7 @@
     bind:value={data.url}
     placeholder="https://notascam.com"
   />
-  <TextArea
+  <MarkdownEditor
     rows={6}
     label="Body"
     bind:value={data.body}
