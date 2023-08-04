@@ -29,7 +29,7 @@
   }
 
   .markdown :global(hr) {
-    @apply w-[90%] mx-auto my-4 opacity-50;
+    @apply w-full mx-auto my-2 border-slate-300 dark:border-zinc-800;
   }
 
   .markdown :global(img) {
@@ -65,7 +65,7 @@
   }
 
   .markdown :global(blockquote) {
-    @apply border-l-2 border-black/20 dark:border-white/20 pl-2 my-1 h-max;
+    @apply leading-[1px] border-l-2 border-black/20 dark:border-white/20 pl-2 my-1 h-max;
   }
 
   .markdown :global(p) {
