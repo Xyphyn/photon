@@ -59,7 +59,10 @@
             invalidateAll: true,
           })
         }}
-        class="hover:bg-slate-200 {expanded ? '' : '!p-1.5'}"
+        class="hover:bg-slate-200 {expanded ? '' : '!p-1.5'} {$profile?.id ==
+        prof.id
+          ? 'font-bold'
+          : ''}"
       >
         <Icon
           src={UserCircle}
