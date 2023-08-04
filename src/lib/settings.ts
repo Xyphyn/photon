@@ -1,3 +1,4 @@
+import type { SortType } from 'lemmy-js-client'
 import { writable } from 'svelte/store'
 
 interface Settings {
@@ -13,7 +14,7 @@ interface Settings {
   }
   showCompactPosts: boolean
   defaultSort: {
-    sort: 'Hot' | 'TopAll' | 'Active' | 'New'
+    sort: SortType
     feed: 'All' | 'Subscribed' | 'Local'
   }
   fullWidthLayout: boolean

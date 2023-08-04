@@ -13,6 +13,7 @@
   import { toast } from '$lib/components/ui/toasts/toasts.js'
   import Setting from './Setting.svelte'
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
+  import Sort from '$lib/components/lemmy/Sort.svelte'
 
   let data = {
     loading: false,
@@ -39,11 +40,7 @@
       </div>
       <div>
         <span class="block my-1 font-bold">Sort</span>
-        <MultiSelect
-          options={['Active', 'Hot', 'TopAll', 'New']}
-          optionNames={['Active', 'Hot', 'Top', 'New']}
-          bind:selected={$userSettings.defaultSort.sort}
-        />
+        <Sort bind:selected={$userSettings.defaultSort.sort} navigate={false} />
       </div>
     </div>
   </Setting>

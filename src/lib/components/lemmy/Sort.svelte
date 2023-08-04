@@ -4,6 +4,7 @@
   import MultiSelect from '../input/MultiSelect.svelte'
 
   export let selected: string
+  export let navigate: boolean = true
 </script>
 
 <MultiSelect
@@ -31,7 +32,9 @@
     'Most Comments',
     'New Comments',
   ]}
-  {selected}
-  on:select={(e) => searchParam($page.url, 'sort', e.detail, 'page')}
+  bind:selected
+  on:select={(e) => {
+    if (navigate) searchParam($page.url, 'sort', e.detail, 'page')
+  }}
   class="w-full md:max-w-[20rem]"
 />
