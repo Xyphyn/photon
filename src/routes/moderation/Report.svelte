@@ -94,7 +94,7 @@
     </div>
     <Button
       on:click={resolve}
-      class="w-8 h-8 !p-1 ml-auto {resolved ? 'text-green-500' : ''}"
+      class="w-8 h-8 !p-1 ml-auto {resolved ? '!text-green-500' : ''}"
       aria-label="Resolve"
       title="Resolve"
       loading={resolving}
@@ -126,7 +126,7 @@
     </div>
     <Button
       on:click={resolve}
-      class="w-8 h-8 !p-1 ml-auto {resolved ? 'text-green-500' : ''}"
+      class="w-8 h-8 !p-1 ml-auto {resolved ? '!text-green-500' : ''}"
       aria-label="Resolve"
       title="Resolve"
       loading={resolving}
