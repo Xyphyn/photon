@@ -2,7 +2,7 @@
   import Button from '$lib/components/input/Button.svelte'
   import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
   import type { CommunityView } from 'lemmy-js-client'
-  import Subscribe from '../../../../routes/communities/Subscribe.svelte'
+  import Subscribe from '../../../../routes/(app)/communities/Subscribe.svelte'
   import {
     ChatBubbleOvalLeftEllipsis,
     Icon,
