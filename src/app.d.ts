@@ -14,3 +14,6 @@ declare global {
 
 export {}
 declare const __VERSION__: string
+
+declare module 'markdown-it-sub'
+declare module 'markdown-it-sup'

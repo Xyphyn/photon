@@ -1,26 +1,33 @@
 import MarkdownIt from 'markdown-it'
 import markdown_it_container from 'markdown-it-container'
+// @ts-ignore
+import markdown_it_sub from 'markdown-it-sub'
+// @ts-ignore
+import markdown_it_sup from 'markdown-it-sup'
 
 export const md = new MarkdownIt({
   html: false,
   linkify: true,
-}).use(markdown_it_container, 'spoiler', {
-  validate: (params: string) => {
-    return params.trim().match(/^spoiler+(.*)/)
-  },
-
-  render: (tokens: any, idx: any) => {
-    var m = tokens[idx].info.trim().match(/^spoiler+(.*)/)
-
-    if (tokens[idx].nesting === 1) {
-      // opening tag
-      return `<details><summary> ${md.utils.escapeHtml(m[1])} </summary>\n`
-    } else {
-      // closing tag
-      return '</details>\n'
-    }
-  },
 })
+  .use(markdown_it_container, 'spoiler', {
+    validate: (params: string) => {
+      return params.trim().match(/^spoiler+(.*)/)
+    },
+
+    render: (tokens: any, idx: any) => {
+      var m = tokens[idx].info.trim().match(/^spoiler+(.*)/)
+
+      if (tokens[idx].nesting === 1) {
+        // opening tag
+        return `<details><summary> ${md.utils.escapeHtml(m[1])} </summary>\n`
+      } else {
+        // closing tag
+        return '</details>\n'
+      }
+    },
+  })
+  .use(markdown_it_sub)
+  .use(markdown_it_sup)
 
 export const mdInline: MarkdownIt = new MarkdownIt('zero')
   .enable(['emphasis', 'backticks', 'strikethrough', 'link'])
@@ -41,6 +48,8 @@ export const mdInline: MarkdownIt = new MarkdownIt('zero')
       }
     },
   })
+  .use(markdown_it_sub)
+  .use(markdown_it_sup)
 
 md.linkify.add('!', {
   validate: function (text, pos, self) {

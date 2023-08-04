@@ -7,6 +7,7 @@
   export let maxlength: number = -1
   export let rows: number = 3
   export let required: boolean = false
+  export let item: any = undefined
 
   let clazz = ''
   export { clazz as class }
@@ -27,6 +28,7 @@
   {/if}
   <textarea
     bind:value
+    bind:this={item}
     on:input={(e) => dispatcher('input', e)}
     {placeholder}
     {maxlength}

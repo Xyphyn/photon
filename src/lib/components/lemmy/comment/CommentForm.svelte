@@ -9,6 +9,7 @@
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import { profile } from '$lib/auth.js'
   import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
 
   export let postId: number
   export let parentId: number | undefined = undefined
@@ -65,10 +66,9 @@
       <Markdown source={value} />
     </div>
   {:else}
-    <TextArea
+    <MarkdownEditor
       rows={4}
       placeholder={locked ? 'This post is locked.' : 'What are you thinking?'}
-      class="!bg-slate-100 dark:!bg-zinc-900"
       bind:value
       disabled={locked}
     />

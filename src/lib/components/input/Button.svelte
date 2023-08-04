@@ -44,6 +44,9 @@
     sm: 'px-2 py-1',
     md: 'px-3 py-1.5',
     lg: 'px-4 py-2',
+    'square-sm': 'w-6 h-6',
+    'square-md': 'w-8 h-8',
+    'square-lg': 'w-10 h-10',
   }
 
   const buttonRoundness = {

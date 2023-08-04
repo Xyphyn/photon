@@ -3,7 +3,8 @@ export default {
   content: ['src/**/*.{js,ts,svelte,html}'],
   theme: {
     fontFamily: {
-      'sans': ['Cantarell', 'system-ui']
+      'sans': ['Cantarell', 'system-ui'],
+      'serif': ['serif']
     },
     extend: {
       animation: {
