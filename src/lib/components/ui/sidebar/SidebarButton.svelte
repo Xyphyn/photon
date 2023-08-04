@@ -5,11 +5,11 @@
 </script>
 
 <Button
-  class="hover:bg-slate-200 {expanded ? '' : '!p-1.5'}"
+  {...$$restProps}
   color="tertiary"
   alignment="left"
   on:click
-  {...$$restProps}
+  class="hover:bg-slate-200 {expanded ? '' : '!p-1.5'} {$$props.class}"
 >
   <slot />
 </Button>
