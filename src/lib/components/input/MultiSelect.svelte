@@ -13,7 +13,6 @@
 
   const dispatcher = createEventDispatcher<{ select: T }>()
 
-  let extraSelected: T | null = null
   $: dispatcher('select', selected)
 </script>
 

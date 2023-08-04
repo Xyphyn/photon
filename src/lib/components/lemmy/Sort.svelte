@@ -38,5 +38,5 @@
   on:select={(e) => {
     if (navigate) searchParam($page.url, 'sort', e.detail, 'page')
   }}
-  class="w-full md:max-w-[20rem]"
+  class="w-full md:max-w-[24rem]"
 />

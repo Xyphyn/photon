@@ -100,7 +100,7 @@
 overflow-hidden"
   >
     <!--Toolbar-->
-    <div class="flex flex-row overflow-auto p-1.5 gap-1.5">
+    <div class="[&>*]:flex-shrink-0 flex flex-row overflow-auto p-1.5 gap-1.5">
       <Button
         on:click={() => wrapSelection('**', '**')}
         title="Bold"
