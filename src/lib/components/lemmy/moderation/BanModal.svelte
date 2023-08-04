@@ -23,7 +23,11 @@
   let loading = false
 
   // hack due to svelte's reactive declarations
-  const resetReason = () => (reason = '')
+  const resetReason = () => {
+    reason = ''
+    deleteData = false
+    expires = ''
+  }
 
   $: if (item) resetReason()
 
@@ -33,11 +37,11 @@
     loading = true
 
     try {
-      let date: Date = new Date()
+      let date: number | undefined
 
       if (expires != '') {
-        date = new Date(expires)
-        if (date.toLocaleString('en') == 'Invalid Date') {
+        date = Date.parse(expires)
+        if (Number.isNaN(date)) {
           toast({
             content: 'Invalid date. It must be an absolute date.',
             type: 'error',
@@ -48,7 +52,7 @@
           return
         }
 
-        if (date.getTime() < Date.now()) {
+        if (date < Date.now()) {
           toast({
             content: 'Invalid date. It is before the current time.',
             type: 'error',
@@ -66,7 +70,7 @@
         person_id: item.id,
         reason: reason || undefined,
         remove_data: deleteData,
-        expires: date.getTime(),
+        expires: date ? Math.floor(date / 1000) : undefined,
       })
 
       open = false
@@ -112,7 +116,7 @@
       </div>
       <TextInput
         bind:value={expires}
-        label="Expires"
+        label="Expires (UTC)"
         placeholder="2024 August 5"
       />
       <Button submit color="primary" {loading} disabled={loading} size="lg">
