@@ -2,7 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Cantarell';
+  src: url('/cantarell.woff2') format('woff2');
+  font-display: swap;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: 'Cantarell';
+  src: url('/cantarell-bold.woff2') format('woff2');
+  font-display: swap;
+  font-weight: bold;
+}
+
 :root {
+  font-family: 'Cantarell', sans-serif;
   @apply bg-slate-50 dark:bg-zinc-950 text-slate-900
     dark:text-zinc-100 !important;
 }
