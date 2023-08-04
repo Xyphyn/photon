@@ -5,13 +5,13 @@ import { get } from 'svelte/store'
 
 type InboxFeedType = 'replies' | 'mentions' | 'messages' | 'all'
 
-export async function load({ url }) {
+export async function load({ url, fetch }) {
   const auth = get(profile)
   if (!auth?.jwt) return
 
   const type: InboxFeedType =
     (url.searchParams.get('type') as InboxFeedType) || 'all'
-  const client = getClient()
+  const client = getClient(undefined, fetch)
   const page = Number(url.searchParams.get('page')) || 1
   const unreadOnly: boolean =
     (url.searchParams.get('unreadOnly') || 'true') == 'true'

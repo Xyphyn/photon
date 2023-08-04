@@ -14,7 +14,7 @@ export async function load(req: any) {
   return {
     sort: sort,
     page: page,
-    posts: await getClient().getPosts({
+    posts: await getClient(undefined, req.fetch).getPosts({
       limit: 40,
       community_name: req.params.name,
       page: page,
@@ -22,7 +22,7 @@ export async function load(req: any) {
       auth: get(profile)?.jwt,
     }),
     community: (
-      await getClient().getCommunity({
+      await getClient(undefined, req.fetch).getCommunity({
         name: req.params.name,
         auth: get(profile)?.jwt,
       })

@@ -12,7 +12,7 @@ import type {
 } from 'lemmy-js-client'
 import { get } from 'svelte/store'
 
-export async function load({ url }) {
+export async function load({ url, fetch }) {
   const query = url.searchParams.get('q')
   const page = Number(url.searchParams.get('page')) || 1
   const community = url.searchParams.get('community_name')
@@ -20,7 +20,7 @@ export async function load({ url }) {
   const type = url.searchParams.get('type')
 
   if (query) {
-    const results = await getClient().search({
+    const results = await getClient(undefined, fetch).search({
       q: query,
       auth: get(profile)?.jwt,
       community_name: community ?? undefined,
@@ -48,7 +48,7 @@ export async function load({ url }) {
       results: everything,
       streamed: {
         object: get(profile)?.jwt
-          ? getClient().resolveObject({
+          ? getClient(undefined, fetch).resolveObject({
               auth: get(profile)!.jwt!,
               q: query,
             })

@@ -11,11 +11,11 @@ function getSavedItemPublished(item: PostView | CommentView) {
   }
 }
 
-export async function load({ url }) {
+export async function load({ url, fetch }) {
   if (!get(profile)) return { posts: [] }
   const page = Number(url.searchParams.get('page')) || 1
 
-  const client = getClient()
+  const client = getClient(undefined, fetch)
 
   const [posts, comments] = await Promise.all([
     client.getPosts({

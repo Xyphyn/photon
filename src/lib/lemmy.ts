@@ -14,21 +14,33 @@ export const DEFAULT_INSTANCE_URL = env.PUBLIC_INSTANCE_URL || 'lemmy.ml'
 export let instance = writable(DEFAULT_INSTANCE_URL)
 
 async function customFetch(
+  func: (
+    input: RequestInfo | URL,
+    init?: RequestInit | undefined
+  ) => Promise<Response>,
   input: RequestInfo | URL,
   init?: RequestInit | undefined
 ): Promise<Response> {
-  const res = await fetch(input, init)
+  const res = await func(input, init)
   if (!res.ok) throw error(res.status, res.statusText)
   return res
 }
 
-export function getClient(instanceURL?: string): LemmyHttp {
+export function getClient(
+  instanceURL?: string,
+  func?: (
+    input: RequestInfo | URL,
+    init?: RequestInit | undefined
+  ) => Promise<Response>
+): LemmyHttp {
   if (!instanceURL) {
     instanceURL = get(instance)
   }
 
   return new LemmyHttp(`https://${instanceURL}`, {
-    fetchFunction: customFetch,
+    fetchFunction: func
+      ? (input, init) => customFetch(func, input, init)
+      : undefined,
   })
 }
 

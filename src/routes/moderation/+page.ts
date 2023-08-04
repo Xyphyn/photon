@@ -6,7 +6,7 @@ import { get } from 'svelte/store'
 type ReportListType = 'unread' | 'all'
 type ReportFilter = 'all' | 'posts' | 'comments' | 'messages'
 
-export async function load({ url }) {
+export async function load({ url, fetch }) {
   const page = Number(url.searchParams.get('page')) || 1
   const type: ReportListType =
     (url.searchParams.get('type') as ReportListType) || 'unread'
@@ -24,7 +24,7 @@ export async function load({ url }) {
   // the interfaces don't even extend each other
   // meaning I have to make a separate function to get dates
   // for EACH FREAKING ITEM KAJSHDAWLD auwdi awiody
-  const client = getClient()
+  const client = getClient(undefined, fetch)
 
   const params = {
     auth: jwt,
@@ -42,10 +42,7 @@ export async function load({ url }) {
     }),
   ])
 
-  const everything = [
-    ...posts.post_reports,
-    ...comments.comment_reports,
-  ].sort(
+  const everything = [...posts.post_reports, ...comments.comment_reports].sort(
     (a, b) => Date.parse(getItemPublished(b)) - Date.parse(getItemPublished(a))
   )
 

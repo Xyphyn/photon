@@ -3,8 +3,8 @@ import { getClient } from '$lib/lemmy.js'
 import { error } from '@sveltejs/kit'
 import { get } from 'svelte/store'
 
-export async function load({ params, url }) {
-  const post = await getClient(params.instance.toLowerCase()).getPost({
+export async function load({ params, url, fetch }) {
+  const post = await getClient(params.instance.toLowerCase(), fetch).getPost({
     id: Number(params.id),
     auth: get(profile)?.jwt,
   })
@@ -30,7 +30,7 @@ export async function load({ params, url }) {
     singleThread: parentId != undefined,
     post: post,
     streamed: {
-      comments: getClient(params.instance.toLowerCase()).getComments({
+      comments: getClient(params.instance.toLowerCase(), fetch).getComments({
         post_id: Number(params.id),
         type_: 'All',
         limit: 25,

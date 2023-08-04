@@ -5,7 +5,7 @@ import { get } from 'svelte/store'
 import { error } from '@sveltejs/kit'
 import { profile } from '$lib/auth.js'
 
-export async function load({ url }) {
+export async function load({ url, fetch }) {
   const page = Number(url.searchParams.get('page') || 1) || 1
 
   const sort: SortType =
@@ -20,7 +20,7 @@ export async function load({ url }) {
       sort: sort,
       listingType: listingType,
       page: page,
-      posts: await getClient().getPosts({
+      posts: await getClient(undefined, fetch).getPosts({
         limit: 20,
         page: page,
         sort: sort,
@@ -28,7 +28,7 @@ export async function load({ url }) {
         auth: get(profile)?.jwt,
       }),
       streamed: {
-        site: getClient().getSite({}),
+        site: getClient(undefined, fetch).getSite({}),
       },
     }
   } catch (err) {
