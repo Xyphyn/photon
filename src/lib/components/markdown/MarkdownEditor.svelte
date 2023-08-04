@@ -1,12 +1,18 @@
 <script lang="ts">
+  import { profile } from '$lib/auth.js'
   import Button from '$lib/components/input/Button.svelte'
+  import FileInput from '$lib/components/input/FileInput.svelte'
   import TextArea from '$lib/components/input/TextArea.svelte'
+  import Modal from '$lib/components/ui/modal/Modal.svelte'
+  import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import { uploadImage } from '$lib/lemmy.js'
   import {
     CodeBracket,
     ExclamationTriangle,
     Icon,
     Link,
     ListBullet,
+    Photo,
   } from 'svelte-hero-icons'
 
   export let images: boolean = true
@@ -40,8 +46,49 @@
     textArea.focus()
     textArea.selectionStart = startPos + start.length
     textArea.selectionEnd = endPos + start.length
+
+    value = textArea.value
+  }
+
+  let uploadingImage = false
+  let loading = false
+  let image: FileList | null = null
+
+  async function upload() {
+    if (!$profile?.jwt || image == null) return
+
+    loading = true
+
+    try {
+      const uploaded = await uploadImage(image[0])
+
+      if (!uploaded) throw new Error('Image upload returned undefined')
+
+      wrapSelection(`![](${uploaded})`, '')
+
+      uploadingImage = false
+    } catch (err) {
+      toast({
+        content: err as any,
+        type: 'error',
+      })
+    }
+
+    loading = false
   }
 </script>
+
+{#if uploadingImage && images}
+  <Modal bind:open={uploadingImage}>
+    <span slot="title">Upload image</span>
+    <form class="flex flex-col gap-4" on:submit|preventDefault={upload}>
+      <FileInput image bind:files={image} />
+      <Button {loading} disabled={loading} submit color="primary" size="lg">
+        Upload
+      </Button>
+    </form>
+  </Modal>
+{/if}
 
 <div
   class="flex flex-col border border-slate-200 dark:border-zinc-800 rounded-md
@@ -132,6 +179,15 @@ overflow-hidden"
         <sup>1</sup>
       </span>
     </Button>
+    {#if images}
+      <Button
+        on:click={() => (uploadingImage = !uploadingImage)}
+        title="Image"
+        size="square-md"
+      >
+        <Icon src={Photo} size="16" mini />
+      </Button>
+    {/if}
   </div>
   <!--Actual text area-->
   <TextArea
