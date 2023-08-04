@@ -104,7 +104,7 @@
       class="max-md:w-9 max-md:h-8 max-md:!p-0 items-center justify-center
       dark:text-zinc-300 text-slate-700 hover:text-inherit hover:bg-slate-200 hover:dark:bg-zinc-900"
     >
-      <Icon src={MagnifyingGlass} width={16} slot="icon" />
+      <Icon mini src={MagnifyingGlass} width={16} slot="icon" />
       <span class="hidden md:inline">Search</span>
     </Button>
     <Button
@@ -113,7 +113,7 @@
       class="max-md:w-9 max-md:h-8 max-md:!p-0 items-center justify-center
       dark:text-zinc-300 text-slate-700 hover:text-inherit hover:bg-slate-200 hover:dark:bg-zinc-900"
     >
-      <Icon src={GlobeAlt} width={16} slot="icon" />
+      <Icon mini src={GlobeAlt} size="16" slot="icon" />
       <span class="hidden md:inline">Explore</span>
     </Button>
     <Menu let:toggleOpen alignment="bottom-right">
