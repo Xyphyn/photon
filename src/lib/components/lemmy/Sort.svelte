@@ -17,6 +17,7 @@
     'TopMonth',
     'TopWeek',
     'TopDay',
+    'TopHour',
     'MostComments',
     'NewComments',
   ]}
@@ -29,6 +30,7 @@
     'Top Month',
     'Top Week',
     'Top Day',
+    'Top Hour',
     'Most Comments',
     'New Comments',
   ]}
