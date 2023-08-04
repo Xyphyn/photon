@@ -192,6 +192,7 @@
     label="Body"
     bind:value={data.body}
     placeholder={placeholder2}
+    previewButton
   />
   <div>
     <span class="block my-1 font-bold text-sm">Image</span>

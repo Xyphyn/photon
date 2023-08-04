@@ -32,6 +32,7 @@
         disabled:opacity-60 disabled:pointer-events-none whitespace-nowrap"
       on:click={() => (selected = option)}
       disabled={disabled[index] ?? false}
+      type="button"
     >
       {optionNames[index] || option}
     </button>
