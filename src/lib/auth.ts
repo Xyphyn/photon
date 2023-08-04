@@ -77,6 +77,7 @@ profile.subscribe(async (p) => {
   profile.update(() => ({
     ...p,
     user: user,
+    username: user?.local_user_view.person.name,
   }))
 })
 
