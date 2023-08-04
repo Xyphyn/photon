@@ -1,5 +1,4 @@
 <script lang="ts">
-  import SelectMenu from '$lib/components/input/SelectMenu.svelte'
   import TextInput from '$lib/components/input/TextInput.svelte'
   import Menu from '$lib/components/ui/menu/Menu.svelte'
   import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'

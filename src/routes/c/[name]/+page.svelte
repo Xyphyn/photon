@@ -13,6 +13,8 @@
   import Modal from '$lib/components/ui/modal/Modal.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
+  import Sort from '$lib/components/lemmy/Sort.svelte'
+  import { searchParam } from '$lib/util.js'
 
   export let data
 
@@ -61,20 +63,7 @@
       </Button>
     </div>
     <div class="flex flex-col sm:flex-row gap-4 max-w-full w-full">
-      <MultiSelect
-        options={['Active', 'Hot', 'TopAll', 'New', 'Old']}
-        optionNames={['Active', 'Hot', 'Top', 'New', 'Old']}
-        selected={$page.url.searchParams.get('sort') ??
-          $userSettings.defaultSort.sort}
-        on:select={(e) => {
-          const url = $page.url
-          url.searchParams.set('sort', e.detail)
-          url.searchParams.delete('page')
-          goto(url, {
-            invalidateAll: true,
-          })
-        }}
-      />
+      <Sort selected={data.sort} />
     </div>
     {#each data.posts.posts as post, index (post.post.id)}
       <div in:fly={{ y: -8, opacity: 0, delay: index < 4 ? index * 100 : 0 }}>
@@ -83,12 +72,7 @@
     {/each}
     <Pageination
       page={data.page}
-      on:change={(p) => {
-        $page.url.searchParams.set('page', p.detail.toString())
-        goto($page.url.toString(), {
-          invalidateAll: true,
-        })
-      }}
+      on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
     />
   </div>
   <div class="hidden xl:block">

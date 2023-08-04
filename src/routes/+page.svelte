@@ -12,6 +12,8 @@
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import Modal from '$lib/components/ui/modal/Modal.svelte'
   import { profile } from '$lib/auth.js'
+  import Sort from '$lib/components/lemmy/Sort.svelte'
+  import { searchParam } from '$lib/util.js'
 
   export let data
 
@@ -54,20 +56,7 @@
           })
         }}
       />
-      <MultiSelect
-        options={['Active', 'Hot', 'TopAll', 'New', 'Old']}
-        optionNames={['Active', 'Hot', 'Top', 'New', 'Old']}
-        selected={data.sort}
-        on:select={(e) => {
-          const url = $page.url
-          url.searchParams.set('sort', e.detail)
-          url.searchParams.delete('page')
-          goto(url, {
-            invalidateAll: true,
-          })
-        }}
-        class="w-full md:max-w-[20rem]"
-      />
+      <Sort selected={data.sort} />
     </div>
     <section class="flex flex-col gap-4">
       {#if data.posts.posts.length == 0}
@@ -99,12 +88,7 @@
     </section>
     <Pageination
       page={data.page}
-      on:change={(p) => {
-        $page.url.searchParams.set('page', p.detail.toString())
-        goto($page.url.toString(), {
-          invalidateAll: true,
-        })
-      }}
+      on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
     />
   </div>
   <aside class="hidden xl:block">
