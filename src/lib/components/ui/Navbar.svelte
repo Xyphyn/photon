@@ -219,7 +219,9 @@
           GitHub
         </a>
       </div>
-      <span class="opacity-70 ml-auto w-max">Made with ❤️ by Xylight</span>
+      <span class="opacity-70 ml-auto w-max">
+        Made by <Link href="https://xylight.dev">Xylight</Link>
+      </span>
     </li>
   </Menu>
 </nav>
