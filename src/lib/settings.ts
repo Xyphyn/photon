@@ -17,6 +17,10 @@ interface Settings {
     sort: SortType
     feed: 'All' | 'Subscribed' | 'Local'
   }
+  hidePosts: {
+    deleted: boolean,
+    removed: boolean,
+  },
   fullWidthLayout: boolean
   expandSidebar: boolean
 }
@@ -35,6 +39,10 @@ const defaultSettings: Settings = {
   defaultSort: {
     sort: 'Active',
     feed: 'Local',
+  },
+  hidePosts: {
+    deleted: true,
+    removed: false,
   },
   fullWidthLayout: false,
   expandSidebar: true,

@@ -64,6 +64,20 @@
     </span>
     <Switch bind:enabled={$userSettings.showCompactPosts} />
   </Setting>
+  <Setting>
+    <span slot="title">Hide Posts</span>
+    <span slot="description">Hide certain types of posts.</span>
+    <div class="flex flex-row items-center gap-4">
+      <div class="flex items-center gap-1 font-bold">
+        Deleted Posts
+        <Switch bind:enabled={$userSettings.hidePosts.deleted} />
+      </div>
+      <div class="flex items-center gap-1 font-bold">
+        Removed Posts
+        <Switch bind:enabled={$userSettings.hidePosts.removed} />
+      </div>
+    </div>
+  </Setting>
   <h2 class="uppercase font-bold opacity-80 text-sm mt-4">Instances</h2>
   <Setting>
     <span slot="title">Show instances</span>
