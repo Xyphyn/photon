@@ -14,6 +14,7 @@
   import { profile } from '$lib/auth.js'
   import Sort from '$lib/components/lemmy/Sort.svelte'
   import { searchParam } from '$lib/util.js'
+  import { userSettings } from '$lib/settings.js'
 
   export let data
 
@@ -74,6 +75,10 @@
         </div>
       {/if}
       {#each data.posts.posts as post, index (post.post.id)}
+        {#if
+          !($userSettings.hidePosts.deleted && post.post.deleted) &&
+          !($userSettings.hidePosts.removed && post.post.removed)
+        }
         <div
           in:fly={{
             y: -8,
@@ -84,6 +89,7 @@
         >
           <Post {post} />
         </div>
+        {/if}
       {/each}
     </section>
     <Pageination

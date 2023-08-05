@@ -66,9 +66,14 @@
       <Sort selected={data.sort} />
     </div>
     {#each data.posts.posts as post, index (post.post.id)}
+      {#if
+        !($userSettings.hidePosts.deleted && post.post.deleted) &&
+        !($userSettings.hidePosts.removed && post.post.removed)
+      }
       <div in:fly={{ y: -8, opacity: 0, delay: index < 4 ? index * 100 : 0 }}>
         <Post hideCommunity={true} {post} />
       </div>
+      {/if}
     {/each}
     <Pageination
       page={data.page}
