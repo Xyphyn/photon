@@ -1,4 +1,4 @@
-import { instance } from '$lib/lemmy.js'
+import { instance } from '$lib/instance.js'
 import { error, redirect } from '@sveltejs/kit'
 import { get } from 'svelte/store'
 

@@ -18,6 +18,7 @@
 <div
   class="bg-white break-words
     {getColor(cardColor)} rounded-md {clazz}"
+  {...$$restProps}
 >
   <slot />
 </div>

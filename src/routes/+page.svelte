@@ -15,6 +15,8 @@
   import Sort from '$lib/components/lemmy/Sort.svelte'
   import { searchParam } from '$lib/util.js'
   import { userSettings } from '$lib/settings.js'
+  import PostFeed from '$lib/components/lemmy/post/PostFeed.svelte'
+  import Placeholder from '$lib/components/ui/Placeholder.svelte'
 
   export let data
 
@@ -49,48 +51,22 @@
         options={['Subscribed', 'Local', 'All']}
         disabled={[$profile?.jwt == undefined]}
         selected={data.listingType}
-        on:select={(e) => {
-          $page.url.searchParams.set('type', e.detail)
-          $page.url.searchParams.delete('page')
-          goto($page.url.toString(), {
-            invalidateAll: true,
-          })
-        }}
+        on:select={(e) => searchParam($page.url, 'type', e.detail, 'page')}
       />
       <Sort selected={data.sort} />
     </div>
     <section class="flex flex-col gap-4">
       {#if data.posts.posts.length == 0}
-        <div
-          class="text-slate-600 dark:text-zinc-400 flex flex-col justify-center items-center"
-        >
-          <Icon src={ArchiveBox} size="32" solid />
-          <h1 class="font-bold text-2xl">No posts</h1>
-          {#if data.listingType == 'Subscribed'}
-            <Button href="/communities" class="mt-4">
-              <Icon src={Plus} size="16" mini slot="icon" />
-              <span>Follow some communities</span>
-            </Button>
-          {/if}
-        </div>
+        <Placeholder>
+          <Icon src={ArchiveBox} size="32" solid slot="icon" />
+          <span slot="title">No posts</span>
+          <Button href="/communities" class="mt-4" slot="action">
+            <Icon src={Plus} size="16" mini slot="icon" />
+            <span>Follow some communities</span>
+          </Button>
+        </Placeholder>
       {/if}
-      {#each data.posts.posts as post, index (post.post.id)}
-        {#if
-          !($userSettings.hidePosts.deleted && post.post.deleted) &&
-          !($userSettings.hidePosts.removed && post.post.removed)
-        }
-        <div
-          in:fly={{
-            y: -8,
-            duration: 500,
-            opacity: 0,
-            delay: index < 4 ? index * 100 : 0,
-          }}
-        >
-          <Post {post} />
-        </div>
-        {/if}
-      {/each}
+      <PostFeed posts={data.posts.posts} />
     </section>
     <Pageination
       page={data.page}

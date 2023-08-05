@@ -1,11 +1,5 @@
-import {
-  type GetSiteResponse,
-  LemmyHttp,
-  type MyUserInfo,
-  type PersonView,
-} from 'lemmy-js-client'
+import { type GetSiteResponse, LemmyHttp } from 'lemmy-js-client'
 import { get, writable } from 'svelte/store'
-import { env } from '$env/dynamic/public'
 import { profile } from '$lib/auth.js'
 import { error } from '@sveltejs/kit'
 import { LINKED_INSTANCE_URL, instance } from '$lib/instance.js'

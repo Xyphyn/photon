@@ -1,8 +1,5 @@
 <script lang="ts">
-  import {
-    buildCommentsTree,
-    buildCommentsTreeAsync,
-  } from '$lib/components/lemmy/comment/comments.js'
+  import { buildCommentsTreeAsync } from '$lib/components/lemmy/comment/comments.js'
   import Comments from '$lib/components/lemmy/comment/Comments.svelte'
   import { isImage, isVideo } from '$lib/ui/image.js'
   import { getClient } from '$lib/lemmy.js'
@@ -13,7 +10,6 @@
   import { page } from '$app/stores'
   import PostActions from '$lib/components/lemmy/post/PostActions.svelte'
   import { ExclamationTriangle, Icon } from 'svelte-hero-icons'
-  import Link from '$lib/components/input/Link.svelte'
   import Spinner from '$lib/components/ui/loader/Spinner.svelte'
   import Card from '$lib/components/ui/Card.svelte'
   import PostLink from '$lib/components/lemmy/post/PostLink.svelte'
