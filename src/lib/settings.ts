@@ -18,6 +18,7 @@ interface Settings {
     feed: 'All' | 'Subscribed' | 'Local'
   }
   fullWidthLayout: boolean
+  expandSidebar: boolean
 }
 
 const defaultSettings: Settings = {
@@ -36,6 +37,7 @@ const defaultSettings: Settings = {
     feed: 'Local',
   },
   fullWidthLayout: false,
+  expandSidebar: true,
 }
 
 export const userSettings = writable(defaultSettings)
