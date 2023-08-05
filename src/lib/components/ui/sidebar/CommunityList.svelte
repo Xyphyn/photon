@@ -14,13 +14,15 @@
     alignment="left"
     href="/c/{follow.name}@{new URL(follow.actor_id).hostname}"
   >
-    <Avatar
-      url={follow.icon}
-      alt={follow.name}
-      title={follow.title}
-      width={20}
-      slot="icon"
-    />
+    <div class="flex-none">
+      <Avatar
+        url={follow.icon}
+        alt={follow.name}
+        title={follow.title}
+        width={20}
+        slot="icon"
+      />
+    </div>
     <span class:hidden={!expanded}>
       {follow.title}
     </span>
