@@ -21,6 +21,7 @@ const config = {
 		// 	},
 		// 	mode: 'nonce'
 		// }
+		
 	},
 };
 

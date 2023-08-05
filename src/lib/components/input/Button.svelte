@@ -70,6 +70,7 @@
 {#if href}
   <a
     {href}
+    on:click
     {...$$restProps}
     class="
       {buttonColor[color]}

@@ -102,11 +102,11 @@
     <img
       src={post.url}
       alt={post.name}
-      class="rounded-md max-w-screen max-h-[80vh] mx-auto"
+      class="rounded-md max-w-screen max-h-[80svh] mx-auto"
     />
   {:else if isVideo(post.url)}
     <!-- svelte-ignore a11y-media-has-caption -->
-    <video class="rounded-md max-w-screen max-h-[80vh] mx-auto" controls>
+    <video class="rounded-md max-w-screen max-h-[80svh] mx-auto" controls>
       <source src={post.url} />
     </video>
   {:else if post.url && !post.thumbnail_url}

@@ -21,20 +21,23 @@
 
 <nav
   class="hidden sm:flex flex-col pl-4 pr-4 py-4 overflow-auto sticky top-16 bottom-0
-  gap-1 max-h-[calc(100vh-4rem)] w-full bg-slate-100 dark:bg-black
+  gap-1 max-h-[calc(100svh-4rem)] w-full bg-slate-100 dark:bg-black
   {$userSettings.expandSidebar
     ? 'max-w-[25%] resize-x min-w-[12rem]'
     : 'w-max max-w-max min-w-max'}"
 >
   <Button
-    on:click={() => ($userSettings.expandSidebar = !$userSettings.expandSidebar)}
+    on:click={() =>
+      ($userSettings.expandSidebar = !$userSettings.expandSidebar)}
     class="w-max !p-2 hover:bg-slate-200"
   >
     <Icon
       src={ChevronDoubleLeft}
       mini
       size="16"
-      class="transition-transform {$userSettings.expandSidebar ? '' : 'rotate-180'}"
+      class="transition-transform {$userSettings.expandSidebar
+        ? ''
+        : 'rotate-180'}"
       title="Toggle Sidebar"
     />
   </Button>
@@ -58,10 +61,9 @@
             invalidateAll: true,
           })
         }}
-        class="hover:bg-slate-200 {$userSettings.expandSidebar ? '' : '!p-1.5'} {$profile?.id ==
-        prof.id
-          ? 'font-bold'
-          : ''}"
+        class="hover:bg-slate-200 {$userSettings.expandSidebar
+          ? ''
+          : '!p-1.5'} {$profile?.id == prof.id ? 'font-bold' : ''}"
       >
         <Icon
           src={UserCircle}
@@ -71,7 +73,10 @@
           class="text-blue-500"
           style="filter: hue-rotate({index * 50}deg)"
         />
-        <span class:hidden={!$userSettings.expandSidebar} class="flex flex-col gap-0">
+        <span
+          class:hidden={!$userSettings.expandSidebar}
+          class="flex flex-col gap-0"
+        >
           {prof.username}
           <span class="text-slate-500 dark:text-zinc-400 font-normal text-xs">
             {prof.instance}

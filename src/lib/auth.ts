@@ -5,7 +5,7 @@ import { getClient } from '$lib/lemmy.js'
 import type { MyUserInfo } from 'lemmy-js-client'
 import { get, writable } from 'svelte/store'
 
-const getDefaultProfile = () => ({
+const getDefaultProfile = (): Profile => ({
   id: -1,
   instance: get(profileData)?.defaultInstance ?? get(instance),
 })
