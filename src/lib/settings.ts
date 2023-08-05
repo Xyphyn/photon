@@ -42,7 +42,7 @@ const defaultSettings: Settings = {
   },
   hidePosts: {
     deleted: true,
-    removed: true,
+    removed: false,
   },
   fullWidthLayout: false,
   expandSidebar: true,
