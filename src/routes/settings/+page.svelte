@@ -1,16 +1,6 @@
 <script lang="ts">
   import Switch from '$lib/components/input/Switch.svelte'
-  import TextInput from '$lib/components/input/TextInput.svelte'
-  import Card from '$lib/components/ui/Card.svelte'
   import { userSettings } from '$lib/settings'
-  import {
-    LINKED_INSTANCE_URL,
-    instance,
-    validateInstance,
-  } from '$lib/lemmy.js'
-  import { Color } from '$lib/ui/colors.js'
-  import Button from '$lib/components/input/Button.svelte'
-  import { toast } from '$lib/components/ui/toasts/toasts.js'
   import Setting from './Setting.svelte'
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
   import Sort from '$lib/components/lemmy/Sort.svelte'

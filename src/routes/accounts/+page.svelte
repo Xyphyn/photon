@@ -10,9 +10,8 @@
   import TextInput from '$lib/components/input/TextInput.svelte'
   import EditableList from '$lib/components/ui/list/EditableList.svelte'
   import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import { LINKED_INSTANCE_URL, instance } from '$lib/instance.js'
   import {
-    LINKED_INSTANCE_URL,
-    instance,
     validateInstance,
   } from '$lib/lemmy.js'
   import { ArrowLeftOnRectangle, Icon, Plus, Trash } from 'svelte-hero-icons'

@@ -8,10 +8,7 @@ import { get, writable } from 'svelte/store'
 import { env } from '$env/dynamic/public'
 import { profile } from '$lib/auth.js'
 import { error } from '@sveltejs/kit'
-
-export const LINKED_INSTANCE_URL = env.PUBLIC_INSTANCE_URL
-export const DEFAULT_INSTANCE_URL = env.PUBLIC_INSTANCE_URL || 'lemmy.ml'
-export let instance = writable(DEFAULT_INSTANCE_URL)
+import { LINKED_INSTANCE_URL, instance } from '$lib/instance.js'
 
 async function customFetch(
   func: (

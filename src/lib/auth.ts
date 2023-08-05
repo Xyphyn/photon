@@ -1,8 +1,14 @@
 import { amModOfAny } from '$lib/components/lemmy/moderation/moderation.js'
 import { toast } from '$lib/components/ui/toasts/toasts.js'
-import { DEFAULT_INSTANCE_URL, getClient, instance } from '$lib/lemmy.js'
+import { DEFAULT_INSTANCE_URL, instance } from '$lib/instance.js'
+import { getClient } from '$lib/lemmy.js'
 import type { MyUserInfo } from 'lemmy-js-client'
 import { get, writable } from 'svelte/store'
+
+const getDefaultProfile = () => ({
+  id: -1,
+  instance: get(profileData)?.defaultInstance ?? get(instance),
+})
 
 function getFromStorage<T>(key: string): T | undefined {
   if (typeof localStorage == 'undefined') return undefined
@@ -40,7 +46,7 @@ interface PersonData extends MyUserInfo {
   reports: number
 }
 
-export const profileData = writable<ProfileData>(
+export let profileData = writable<ProfileData>(
   getFromStorage<ProfileData>('profileData') ?? { profiles: [], profile: -1 }
 )
 
@@ -58,7 +64,7 @@ profileData.subscribe(async (pd) => {
   }
 })
 
-export const profile = writable<Profile | undefined>(getProfile())
+export let profile = writable<Profile | undefined>(getProfile())
 
 profile.subscribe(async (p) => {
   if (p?.id == -1) {
@@ -147,13 +153,6 @@ function getProfile() {
   const pd = get(profileData)
 
   return pd.profiles.find((p) => p.id == id)
-}
-
-function getDefaultProfile() {
-  return {
-    id: -1,
-    instance: get(profileData)?.defaultInstance ?? get(instance),
-  }
 }
 
 export function resetProfile() {

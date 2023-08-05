@@ -5,12 +5,8 @@
   import TextInput from '$lib/components/input/TextInput.svelte'
   import Card from '$lib/components/ui/Card.svelte'
   import { toast } from '$lib/components/ui/toasts/toasts.js'
-  import {
-    DEFAULT_INSTANCE_URL,
-    LINKED_INSTANCE_URL,
-    getClient,
-    validateInstance,
-  } from '$lib/lemmy.js'
+  import { DEFAULT_INSTANCE_URL, LINKED_INSTANCE_URL } from '$lib/instance.js'
+  import { getClient, validateInstance } from '$lib/lemmy.js'
 
   let data = {
     instance: DEFAULT_INSTANCE_URL,
