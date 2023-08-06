@@ -23,15 +23,15 @@
   <Setting>
     <span slot="title">Default sort</span>
     <span slot="description">The default sort to use for feeds.</span>
-    <div class="flex flex-wrap flex-row gap-4">
-      <div>
+    <div class="flex flex-wrap flex-row gap-4 w-full">
+      <div class="w-full">
         <span class="block my-1 font-bold">Feed</span>
         <MultiSelect
           options={['Subscribed', 'Local', 'All']}
           bind:selected={$userSettings.defaultSort.feed}
         />
       </div>
-      <div>
+      <div class="w-full">
         <span class="block my-1 font-bold">Sort</span>
         <Sort bind:selected={$userSettings.defaultSort.sort} navigate={false} />
       </div>
