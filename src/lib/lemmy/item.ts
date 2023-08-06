@@ -10,7 +10,7 @@ import type {
   PrivateMessageView,
 } from 'lemmy-js-client'
 
-type Result =
+export type Result =
   | PostView
   | CommentView
   | PersonView

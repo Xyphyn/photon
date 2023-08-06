@@ -18,11 +18,17 @@ interface Settings {
     feed: 'All' | 'Subscribed' | 'Local'
   }
   hidePosts: {
-    deleted: boolean,
-    removed: boolean,
-  },
+    deleted: boolean
+    removed: boolean
+  }
   fullWidthLayout: boolean
   expandSidebar: boolean
+  notifications: {
+    enabled: boolean
+    pollRate: number
+    // how often to check in the background
+    notifRate: number
+  }
 }
 
 const defaultSettings: Settings = {
@@ -46,6 +52,11 @@ const defaultSettings: Settings = {
   },
   fullWidthLayout: false,
   expandSidebar: true,
+  notifications: {
+    enabled: false,
+    pollRate: 60 * 1000,
+    notifRate: 10 * 60 * 1000,
+  },
 }
 
 export const userSettings = writable(defaultSettings)

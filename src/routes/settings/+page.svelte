@@ -4,6 +4,9 @@
   import Setting from './Setting.svelte'
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
   import Sort from '$lib/components/lemmy/Sort.svelte'
+  import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import Button from '$lib/components/input/Button.svelte'
+  import { getInboxNotifications } from '$lib/auth.js'
 
   let data = {
     loading: false,
@@ -90,5 +93,25 @@
         <Switch bind:enabled={$userSettings.showInstances.community} />
       </div>
     </div>
+  </Setting>
+  <h2 class="uppercase font-bold opacity-80 text-sm mt-4">Notifications</h2>
+  <Setting>
+    <span slot="title">Push notifications</span>
+    <span slot="description">Get notified for new items in your inbox.</span>
+    <Switch
+      bind:enabled={$userSettings.notifications.enabled}
+      on:change={async (e) => {
+        if (e.detail == false) return
+        const res = await Notification.requestPermission()
+        if (res != 'granted') {
+          $userSettings.notifications.enabled = false
+          toast({
+            content: 'Notification permission denied',
+            type: 'error',
+          })
+          return
+        }
+      }}
+    />
   </Setting>
 </div>
