@@ -37,7 +37,7 @@
 
 <div class="flex flex-row flex-wrap sm:justify-between items-center gap-4">
   <MultiSelect
-    options={['All', 'Posts', 'Comments', 'Users', 'Communities']}
+    options={['All', 'Posts', 'Comments', 'Communities', 'Users']}
     selected={$page.url.searchParams.get('type') ?? 'All'}
     on:select={(e) => {
       const url = $page.url
