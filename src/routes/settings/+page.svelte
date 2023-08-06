@@ -114,8 +114,4 @@
       }}
     />
   </Setting>
-  <Setting>
-    <span slot="title">[Debug] Force notification</span>
-    <Button on:click={getInboxNotifications}>do</Button>
-  </Setting>
 </div>

@@ -20,9 +20,9 @@ function getFromStorage<T>(key: string): T | undefined {
   return JSON.parse(lc)
 }
 
-function setFromStorage(key: string, item: any) {
+function setFromStorage(key: string, item: any, stringify: boolean = true) {
   if (typeof localStorage == 'undefined') return
-  return localStorage.setItem(key, JSON.stringify(item))
+  return localStorage.setItem(key, stringify ? JSON.stringify(item) : item)
 }
 
 interface Profile {
@@ -236,7 +236,9 @@ setInterval(async () => {
   }))
 }, get(userSettings).notifications.pollRate ?? 30 * 1000)
 
-export async function getInboxNotifications() {
+setFromStorage('seenUntil', Date.now().toString(), false)
+
+export async function getInboxNotifications(dontUpdate: boolean = false) {
   if (!get(profile) || !get(userSettings).notifications.enabled) return
 
   const { jwt } = get(profile)!
@@ -266,6 +268,8 @@ export async function getInboxNotifications() {
       window.open('/inbox')
     }
   })
+
+  if (dontUpdate) return
 
   localStorage.setItem('seenUntil', Date.now().toString())
 }
