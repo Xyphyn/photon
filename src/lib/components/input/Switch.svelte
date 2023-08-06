@@ -1,5 +1,8 @@
 <script lang="ts">
+  import { createEventDispatcher } from 'svelte'
+
   export let enabled = false
+  const dispatcher = createEventDispatcher<{ change: boolean }>()
 </script>
 
 <label>
@@ -14,5 +17,12 @@
       bg-white dark:bg-zinc-700 {enabled ? 'translate-x-4' : 'translate-x-0'}"
     />
   </div>
-  <input type="checkbox" bind:checked={enabled} class="hidden" />
+  <input
+    type="checkbox"
+    bind:checked={enabled}
+    class="hidden"
+    on:input={(e) => {
+      dispatcher('change', !enabled)
+    }}
+  />
 </label>

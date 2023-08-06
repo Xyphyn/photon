@@ -2,6 +2,8 @@ import { amModOfAny } from '$lib/components/lemmy/moderation/moderation.js'
 import { toast } from '$lib/components/ui/toasts/toasts.js'
 import { DEFAULT_INSTANCE_URL, instance } from '$lib/instance.js'
 import { getClient } from '$lib/lemmy.js'
+import { getInbox, getInboxItemPublished } from '$lib/lemmy/inbox.js'
+import { userSettings } from '$lib/settings.js'
 import type { MyUserInfo } from 'lemmy-js-client'
 import { get, writable } from 'svelte/store'
 
@@ -192,32 +194,80 @@ export function setUserID(id: number) {
   return prof
 }
 
+const getNotificationCount = async (jwt: string, mod: boolean) => {
+  const unreads = await getClient().getUnreadCount({
+    auth: jwt,
+  })
+
+  let reports: number = 0
+
+  if (mod) {
+    const reportRes = await getClient().getReportCount({
+      auth: jwt,
+    })
+
+    reports =
+      reportRes.comment_reports +
+      reportRes.post_reports +
+      (reportRes.private_message_reports ?? 0)
+  }
+
+  return {
+    unreads: unreads.mentions + unreads.private_messages + unreads.replies,
+    reports: reports,
+  }
+}
+
+// show unread dot
 setInterval(async () => {
   if (!get(profile)) return
 
   const { user, jwt } = get(profile)!
   if (!jwt || !user) return
 
-  const response = await getClient().getUnreadCount({
-    auth: jwt,
-  })
+  const notifs = await getNotificationCount(jwt, amModOfAny(user) ?? false)
 
-  user.unreads =
-    response.mentions + response.private_messages + response.replies
-
-  if (amModOfAny(user)) {
-    const reports = await getClient().getReportCount({
-      auth: jwt,
-    })
-
-    user.reports =
-      reports.comment_reports +
-      reports.post_reports +
-      (reports.private_message_reports ?? 0)
-  }
+  user.unreads = notifs.unreads
+  user.reports = notifs.reports
 
   profile.update((p) => ({
     ...p!,
     user: user,
   }))
-}, 30 * 1000)
+}, get(userSettings).notifications.pollRate ?? 30 * 1000)
+
+export async function getInboxNotifications() {
+  if (!get(profile) || !get(userSettings).notifications.enabled) return
+
+  const { jwt } = get(profile)!
+  if (!jwt) return
+
+  let until = Number(localStorage.getItem('seenUntil'))
+
+  if (Number.isNaN(until) || until == 0) {
+    const now = Date.now()
+    localStorage.setItem('seenUntil', now.toString())
+    until = now
+  }
+
+  const inbox = await getInbox(jwt, until)
+
+  inbox.forEach((item) => {
+    const notif = new Notification(
+      item.person.display_name ?? item.person.name,
+      {
+        body: item.body,
+        timestamp: item.created,
+        icon: item.person.avatar,
+      }
+    )
+
+    notif.onclick = (e) => {
+      window.open('/inbox')
+    }
+  })
+
+  localStorage.setItem('seenUntil', Date.now().toString())
+}
+
+setInterval(async () => getInboxNotifications(), 30 * 1000)
