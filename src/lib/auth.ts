@@ -274,4 +274,7 @@ export async function getInboxNotifications(dontUpdate: boolean = false) {
   localStorage.setItem('seenUntil', Date.now().toString())
 }
 
-setInterval(async () => getInboxNotifications(), 30 * 1000)
+setInterval(
+  async () => getInboxNotifications(),
+  get(userSettings).notifications.notifRate || 30 * 1000
+)
