@@ -50,7 +50,7 @@
   >
     <Sidebar />
     <main
-      class="p-3 lg:p-6 min-w-0 w-full flex-[3] sm:rounded-tl-lg
+      class="p-3 sm:p-6 min-w-0 w-full flex-[3] sm:rounded-tl-lg
       border-slate-200 dark:border-zinc-900 border-t"
     >
       <slot />
