@@ -32,7 +32,7 @@
   $: if (item) resetReason()
 
   async function submit() {
-    if (!item || !$profile?.user || !community || !$profile?.jwt) return
+    if (!item || !$profile?.user || !$profile?.jwt) return
 
     loading = true
 
@@ -63,15 +63,26 @@
         }
       }
 
-      await getClient().banFromCommunity({
-        auth: $profile.jwt,
-        ban: !banned,
-        community_id: community.id,
-        person_id: item.id,
-        reason: reason || undefined,
-        remove_data: deleteData,
-        expires: date ? Math.floor(date / 1000) : undefined,
-      })
+      if (community) {
+        await getClient().banFromCommunity({
+          auth: $profile.jwt,
+          ban: !banned,
+          community_id: community.id,
+          person_id: item.id,
+          reason: reason || undefined,
+          remove_data: deleteData,
+          expires: date ? Math.floor(date / 1000) : undefined,
+        })
+      } else {
+        await getClient().banPerson({
+          auth: $profile.jwt,
+          ban: !banned,
+          person_id: item.id,
+          reason: reason || undefined,
+          remove_data: deleteData,
+          expires: date ? Math.floor(date / 1000) : undefined,
+        })
+      }
 
       open = false
 
@@ -94,7 +105,7 @@
   }
 </script>
 
-<Modal bind:open>
+<Modal bind:open class="max-w-xl w-full">
   <h1 slot="title">{banned ? 'Unbanning' : 'Banning'} user</h1>
   {#if item}
     <form class="flex flex-col gap-4" on:submit|preventDefault={submit}>
@@ -102,6 +113,11 @@
         <Avatar url={item.avatar} alt={item.name} width={24} />
         <span class="font-bold">{item.name}</span>
       </div>
+      <p>
+        {banned ? 'Unbanning' : 'Banning'} from {community
+          ? community.name
+          : 'site'}
+      </p>
       <TextArea
         required
         bind:value={reason}

@@ -63,7 +63,7 @@ export function remove(item: PostView | CommentView) {
   }))
 }
 
-export function ban(banned: boolean, item: Person, community: Community) {
+export function ban(banned: boolean, item: Person, community?: Community) {
   modals.update((m) => ({
     ...m,
     banning: {
