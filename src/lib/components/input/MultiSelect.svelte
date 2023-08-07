@@ -23,7 +23,7 @@
         ? 'pb-1'
         : 'bg-slate-100 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-lg p-1'
     }
-    gap-2
+    gap-1
     ${$$props.class}
   `
 
