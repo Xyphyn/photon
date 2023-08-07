@@ -55,7 +55,7 @@
       />
       <Sort selected={data.sort} />
     </div>
-    <section class="flex flex-col gap-4">
+    <section class="flex flex-col gap-3 sm:gap-4">
       {#if data.posts.posts.length == 0}
         <Placeholder>
           <Icon src={ArchiveBox} size="32" solid slot="icon" />
