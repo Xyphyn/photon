@@ -12,6 +12,7 @@
     Icon,
     NoSymbol,
     PencilSquare,
+    ShieldExclamation,
   } from 'svelte-hero-icons'
   import Button from '$lib/components/input/Button.svelte'
   import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
@@ -27,10 +28,12 @@
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import TextArea from '$lib/components/input/TextArea.svelte'
   import { profile } from '$lib/auth.js'
+  import { ban, isAdmin } from '$lib/components/lemmy/moderation/moderation.js'
 
   export let data
 
   let blocking = false
+  let banning = false
 
   async function blockUser(block: number) {
     if (!$profile?.user || !$profile?.jwt) throw new Error('Unauthenticated')
@@ -177,7 +180,7 @@
   </div>
 
   <div class="mx-auto">
-    <StickyCard class="w-full">
+    <StickyCard>
       <Avatar
         width={64}
         url={data.person_view.person.avatar}
@@ -211,6 +214,19 @@
             <Icon slot="icon" solid size="16" src={Envelope} />
             Message
           </Button>
+          {#if isAdmin($profile?.user)}
+            <Button
+              size="lg"
+              color="danger"
+              loading={banning}
+              disabled={banning}
+              on:click={() =>
+                ban(data.person_view.person.banned, data.person_view.person)}
+            >
+              <Icon slot="icon" mini size="16" src={ShieldExclamation} />
+              {data.person_view.person.banned ? 'Unban' : 'Ban'}
+            </Button>
+          {/if}
           <Button
             size="lg"
             color="danger"

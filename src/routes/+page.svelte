@@ -68,10 +68,12 @@
       {/if}
       <PostFeed posts={data.posts.posts} />
     </section>
-    <Pageination
-      page={data.page}
-      on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
-    />
+    <div class="mt-auto">
+      <Pageination
+        page={data.page}
+        on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
+      />
+    </div>
   </div>
   <aside class="hidden xl:block">
     {#await data.streamed.site}

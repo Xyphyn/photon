@@ -9,6 +9,7 @@
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
   import { profile } from '$lib/auth.js'
+  import Placeholder from '$lib/components/ui/Placeholder.svelte'
 
   export let data
 
@@ -81,16 +82,14 @@
     }}
   />
 </div>
-<div class="flex flex-col gap-4 list-none my-4">
+<div class="flex flex-col gap-4 list-none my-4 h-full">
   {#if !data.data || (data.data?.length ?? 0) == 0}
-    <div
-      class="text-slate-600 dark:text-zinc-400 flex flex-col justify-center items-center py-8 gap-2"
-    >
-      <Icon src={EnvelopeOpen} size="48" />
-      <div>
-        <h1 class="font-bold text-3xl">Inbox empty</h1>
-        <p class="mt-2 text-center">You're all caught up!</p>
-      </div>
+    <div>
+      <Placeholder>
+        <Icon src={EnvelopeOpen} size="48" slot="icon" />
+        <span slot="title">Inbox empty</span>
+        <span slot="description">You're all caught up!</span>
+      </Placeholder>
     </div>
   {:else}
     {#each data.data as item}

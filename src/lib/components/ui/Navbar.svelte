@@ -3,7 +3,10 @@
   import Button from '$lib/components/input/Button.svelte'
   import Link from '$lib/components/input/Link.svelte'
   import ShieldIcon from '$lib/components/lemmy/moderation/ShieldIcon.svelte'
-  import { amModOfAny } from '$lib/components/lemmy/moderation/moderation.js'
+  import {
+    amModOfAny,
+    isAdmin,
+  } from '$lib/components/lemmy/moderation/moderation.js'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import Logo from '$lib/components/ui/Logo.svelte'
   import Spinner from '$lib/components/ui/loader/Spinner.svelte'
@@ -17,6 +20,7 @@
     Beaker,
     Bookmark,
     Cog6Tooth,
+    CommandLine,
     GlobeAlt,
     Icon,
     Inbox,
@@ -82,10 +86,22 @@
     </a>
   </div>
   <div class="flex flex-row gap-2 py-2 px-2">
+    {#if $profile?.user && isAdmin($profile.user)}
+      <Button
+        href="/admin"
+        aria-label="Admin"
+        class="max-md:w-9 max-md:h-8 max-md:!p-0
+        dark:text-zinc-300 text-slate-700 hover:text-inherit
+      hover:bg-slate-200 hover:dark:bg-zinc-900 relative"
+      >
+        <Icon src={CommandLine} mini size="16" slot="icon" />
+        <span class="hidden md:inline">Admin</span>
+      </Button>
+    {/if}
     {#if amModOfAny($profile?.user)}
       <Button
         href="/moderation"
-        label="Search"
+        aria-label="Moderation"
         class="max-md:w-9 max-md:h-8 max-md:!p-0 items-center justify-center
       dark:text-zinc-300 text-slate-700 hover:text-inherit
       hover:bg-slate-200 hover:dark:bg-zinc-900 relative"
@@ -95,13 +111,13 @@
             class="rounded-full w-2 h-2 bg-red-500 absolute -top-1 -left-1"
           />
         {/if}
-        <ShieldIcon width={15} />
+        <ShieldIcon filled width={15} />
         <span class="hidden md:inline">Reports</span>
       </Button>
     {/if}
     <Button
       href="/search"
-      label="Search"
+      aria-label="Search"
       class="max-md:w-9 max-md:h-8 max-md:!p-0 items-center justify-center
       dark:text-zinc-300 text-slate-700 hover:text-inherit hover:bg-slate-200 hover:dark:bg-zinc-900"
     >
@@ -110,7 +126,7 @@
     </Button>
     <Button
       href="/communities"
-      label="Communities"
+      aria-label="Communities"
       class="max-md:w-9 max-md:h-8 max-md:!p-0 items-center justify-center
       dark:text-zinc-300 text-slate-700 hover:text-inherit hover:bg-slate-200 hover:dark:bg-zinc-900"
     >
@@ -121,7 +137,7 @@
       <Button
         color="primary"
         slot="button"
-        label="Create"
+        aria-label="Create"
         on:click={toggleOpen}
         class="max-md:w-9 max-md:h-8 max-md:!p-0"
       >

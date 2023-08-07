@@ -1,4 +1,5 @@
 <script lang="ts">
+  import type { Alignment } from '$lib/components/ui/menu/menu.js'
   import { expoOut } from 'svelte/easing'
   import { scale } from 'svelte/transition'
 
@@ -10,14 +11,6 @@
   export let itemsClass = ''
 
   export let absolute = false
-
-  type Alignment =
-    | 'top-right'
-    | 'top-left'
-    | 'bottom-right'
-    | 'bottom-left'
-    | 'bottom-center'
-    | 'top-center'
 
   export let alignment: Alignment = 'bottom-left'
 
@@ -32,7 +25,7 @@
       case 'bottom-left':
         return 'top-[100%] origin-top-left'
       case 'top-left':
-        return 'top-[100%] left-0 origin-top-left'
+        return 'bottom-[100%] left-0 origin-bottom-left'
       case 'bottom-right':
         return 'top-[100%] right-0 origin-top-right'
       case 'top-center':
