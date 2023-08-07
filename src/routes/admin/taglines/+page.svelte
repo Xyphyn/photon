@@ -106,7 +106,7 @@
     <Placeholder>
       <Icon src={QuestionMarkCircle} solid size="32" slot="icon" />
       <span slot="title">No taglines</span>
-      <div slot="action" class=" mt-4 w-full flex flex-col gap-2">
+      <div slot="action" class="mt-4 max-w-xl w-full flex flex-col gap-2">
         <form
           class="flex flex-col gap-2 w-full"
           on:submit|preventDefault={() => {

@@ -39,7 +39,7 @@
   {/if}
 {:else}
   <Placeholder>
-    <Icon src={ClipboardDocumentCheck} size="32" slot="icon" />
+    <Icon src={ClipboardDocumentCheck} size="48" slot="icon" />
     <span slot="title">No applications</span>
     <span slot="description">You're all caught up for now.</span>
   </Placeholder>

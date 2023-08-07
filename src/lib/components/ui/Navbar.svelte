@@ -91,7 +91,7 @@
         href="/admin"
         aria-label="Admin"
         class="max-md:w-9 max-md:h-8 max-md:!p-0
-      hover:text-inherit
+        dark:text-zinc-300 text-slate-700 hover:text-inherit
       hover:bg-slate-200 hover:dark:bg-zinc-900 relative"
       >
         <Icon src={CommandLine} mini size="16" slot="icon" />
