@@ -5,11 +5,13 @@
 :root {
   @apply bg-slate-50 dark:bg-zinc-950 text-slate-900
     dark:text-zinc-100 !important;
+  accent-color: #000;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     color-scheme: dark;
+    accent-color: #fff;
   }
 }
 
