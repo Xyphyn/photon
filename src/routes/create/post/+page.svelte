@@ -4,7 +4,7 @@
   import Card from '$lib/components/ui/Card.svelte'
   import { profile } from '$lib/auth.js'
   import { onMount } from 'svelte'
-  import { getSessionStorage } from '$lib/session.js'
+  import { getSessionStorage, setSessionStorage } from '$lib/session.js'
 
   onMount(() => {
     if (!$profile?.jwt) {
@@ -15,6 +15,8 @@
   let community = getSessionStorage('lastSeenCommunity') as
     | { id: number; name: string }
     | undefined
+
+  setSessionStorage('lastSeenCommunity', undefined)
 </script>
 
 <svelte:head>
