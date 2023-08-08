@@ -47,8 +47,9 @@
   {#each options.slice(0, 4) as option, index}
     <button
       class={buttonClass(selected == option)}
-      on:click={() => (selected = option)}
+      on:click|preventDefault={() => (selected = option)}
       disabled={disabled[index] ?? false}
+      type="button"
     >
       {optionNames[index] || option}
       {#if headless && option == selected}
