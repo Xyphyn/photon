@@ -31,7 +31,7 @@
 >
   <Icon
     size="20"
-    solid
+    mini
     class="relative m-2 ml-4 flex-shrink-0"
     src={toast.type == 'info'
       ? InformationCircle
