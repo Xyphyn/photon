@@ -10,14 +10,16 @@
   import TextInput from '$lib/components/input/TextInput.svelte'
   import EditableList from '$lib/components/ui/list/EditableList.svelte'
   import { toast } from '$lib/components/ui/toasts/toasts.js'
-  import { LINKED_INSTANCE_URL, instance } from '$lib/instance.js'
   import {
-    validateInstance,
-  } from '$lib/lemmy.js'
+    DEFAULT_INSTANCE_URL,
+    LINKED_INSTANCE_URL,
+    instance,
+  } from '$lib/instance.js'
+  import { validateInstance } from '$lib/lemmy.js'
   import { ArrowLeftOnRectangle, Icon, Plus, Trash } from 'svelte-hero-icons'
   import { flip } from 'svelte/animate'
 
-  let newInstance: string = $instance
+  let newInstance: string = $profileData.defaultInstance ?? DEFAULT_INSTANCE_URL
   let loading = false
 
   async function changeGuestInstance() {
