@@ -69,9 +69,21 @@
       if (treeParent) {
         // < 0.18.3
         parent.children = treeParent.children
+        if (treeParent.children.length == 0) {
+          toast({
+            content: 'The API returned no comments.',
+            type: 'warning',
+          })
+        }
       } else {
         // 0.18.3+
         parent.children = tree
+        if (tree.length == 0) {
+          toast({
+            content: 'The API returned no comments.',
+            type: 'warning',
+          })
+        }
       }
     } catch (error) {
       console.error(error)
