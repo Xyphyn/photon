@@ -17,3 +17,6 @@ export const searchParam = (
     invalidateAll: true,
   })
 }
+
+export const fullCommunityName = (name: string, actorId: string) =>
+  `${name}@${new URL(actorId).hostname}`

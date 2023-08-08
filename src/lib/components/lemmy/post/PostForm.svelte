@@ -19,6 +19,13 @@
    */
   export let editingPost: Post | undefined = undefined
 
+  export let passedCommunity:
+    | {
+        id: number
+        name: string
+      }
+    | undefined = undefined
+
   let data: {
     community: number | null
     title: string
@@ -65,14 +72,19 @@
       data.title = editingPost.name
     }
 
-    const list = await getClient().listCommunities({
-      auth: $profile?.jwt,
-      type_: 'Subscribed',
-      sort: 'Active',
-      limit: 40,
-    })
+    if (passedCommunity) {
+      data.community = passedCommunity.id
+      communitySearch = passedCommunity.name
+    } else {
+      const list = await getClient().listCommunities({
+        auth: $profile?.jwt,
+        type_: 'Subscribed',
+        sort: 'Active',
+        limit: 40,
+      })
 
-    communities = list.communities.map((c) => c.community)
+      communities = list.communities.map((c) => c.community)
+    }
   })
 
   async function submit() {

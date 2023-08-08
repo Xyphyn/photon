@@ -14,11 +14,23 @@
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import Sort from '$lib/components/lemmy/Sort.svelte'
-  import { searchParam } from '$lib/util.js'
+  import { fullCommunityName, searchParam } from '$lib/util.js'
+  import { onDestroy, onMount } from 'svelte'
+  import { setSessionStorage } from '$lib/session.js'
 
   export let data
 
   let sidebar: boolean = false
+
+  onMount(() => {
+    setSessionStorage('lastSeenCommunity', {
+      id: data.community.community.id,
+      name: fullCommunityName(
+        data.community.community.name,
+        data.community.community.actor_id
+      ),
+    })
+  })
 </script>
 
 <svelte:head>
