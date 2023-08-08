@@ -18,6 +18,7 @@
   import type { CommentSortType } from 'lemmy-js-client'
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
   import { profile } from '$lib/auth.js'
+  import { instance } from '$lib/instance.js'
 
   export let data
 
@@ -68,7 +69,7 @@
 </svelte:head>
 
 <div class="flex flex-col gap-2">
-  {#if $profile?.user && $page.params.instance.toLowerCase() != $profile.instance.toLowerCase()}
+  {#if $page.params.instance.toLowerCase() != $instance.toLowerCase()}
     <Card cardColor="warning" class="p-4 flex flex-col gap-1">
       <Icon
         src={ExclamationTriangle}
