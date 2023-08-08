@@ -11,6 +11,7 @@
   import { Check, Icon } from 'svelte-hero-icons'
   import { profile } from '$lib/auth.js'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
+  import { placeholders } from '$lib/util.js'
 
   export let edit = false
 
@@ -41,25 +42,6 @@
     url: undefined,
     loading: false,
   }
-
-  const placeholders = [
-    'Is starting nuclear warfare illegal?',
-    'A cool photo I took before the destruction of mankind!',
-    'AITA for ending all contention and causing world peace?',
-    'BREAKING NEWS: Police break into gun shop, find weapons',
-    'How do I make sure my pet rock stays alive?',
-    'My cat just invented a time machine, what do I do?',
-    'Unpopular opinion: world peace and global happiness would be beneficial to humanity',
-    'LPT: The smaller weights are easier to lift than the bigger weights in a gym',
-    'javascript bad',
-    'ELI5: What is 4 + 8?',
-  ]
-
-  const placeholder =
-    placeholders[Math.floor(Math.random() * placeholders.length)]
-
-  const placeholder2 =
-    placeholders[Math.floor(Math.random() * placeholders.length)]
 
   let communities: Community[] = []
 
@@ -96,6 +78,17 @@
       return
     }
     if (!data.title || !$profile?.jwt) return
+    if (data.url && data.url != '') {
+      try {
+        new URL(data.url)
+      } catch (err) {
+        toast({
+          content: 'Invalid URL',
+          type: 'warning',
+        })
+        return
+      }
+    }
 
     data.loading = true
 
@@ -193,17 +186,22 @@
       />
     </div>
   {/if}
-  <TextInput required label="Title" bind:value={data.title} {placeholder} />
+  <TextInput
+    required
+    label="Title"
+    bind:value={data.title}
+    placeholder={placeholders.get('post')}
+  />
   <TextInput
     label="URL"
     bind:value={data.url}
-    placeholder="https://notascam.com"
+    placeholder={placeholders.get('url')}
   />
   <MarkdownEditor
     rows={6}
     label="Body"
     bind:value={data.body}
-    placeholder={placeholder2}
+    placeholder={placeholders.get('post')}
     previewButton
   />
   <div>

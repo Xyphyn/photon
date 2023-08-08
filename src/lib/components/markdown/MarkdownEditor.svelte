@@ -111,7 +111,9 @@ overflow-hidden"
     {:else}
       <!--Toolbar-->
       <div
-        class="[&>*]:flex-shrink-0 flex flex-row overflow-auto p-1.5 gap-1.5"
+        class="[&>*]:flex-shrink-0 flex flex-row overflow-auto p-1.5 gap-1.5 {$$props.disabled
+          ? 'opacity-60 pointer-events-none'
+          : ''}"
       >
         <Button
           on:click={() => wrapSelection('**', '**')}
