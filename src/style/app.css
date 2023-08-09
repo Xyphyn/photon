@@ -5,6 +5,9 @@
 body {
   @apply bg-slate-50 dark:bg-zinc-950 text-slate-900
     dark:text-zinc-100 !important;
+}
+
+html {
   accent-color: #000;
 }
 
