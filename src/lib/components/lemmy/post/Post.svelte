@@ -72,7 +72,12 @@
       </a>
     {/if}
     {#if isImage(post.post.url)}
-      <div class="self-start overflow-hidden">
+      <!--disabled preloads here since most people will hover over every image while scrolling-->
+      <a
+        href="/post/{getInstance()}/{post.post.id}"
+        class="self-start overflow-hidden"
+        data-sveltekit-preload-data="off"
+      >
         <picture
           class="rounded-md overflow-hidden max-h-[min(50vh,500px)] w-full max-w-full"
         >
@@ -94,7 +99,7 @@
             class:blur-3xl={post.post.nsfw}
           />
         </picture>
-      </div>
+      </a>
     {:else if post.post.thumbnail_url && post.post.url}
       <PostLink
         url={post.post.url}
