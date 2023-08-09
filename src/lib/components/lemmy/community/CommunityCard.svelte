@@ -68,11 +68,13 @@
 
 <StickyCard>
   <div class="flex flex-row gap-3 items-center">
-    <Avatar
-      width={48}
-      url={community_view.community.icon}
-      alt={community_view.community.name}
-    />
+    <div class="flex-shrink-0">
+      <Avatar
+        width={48}
+        url={community_view.community.icon}
+        alt={community_view.community.name}
+      />
+    </div>
     <div class="flex flex-col gap-0">
       <h1 class="font-bold text-xl">{community_view.community.title}</h1>
       <span class="dark:text-zinc-400 text-slate-600 text-sm">
