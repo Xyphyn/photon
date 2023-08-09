@@ -9,6 +9,7 @@
   import { toast } from '$lib/components/ui/toasts/toasts.js'
   import TextInput from '$lib/components/input/TextInput.svelte'
   import { profile } from '$lib/auth.js'
+  import Checkbox from '$lib/components/input/Checkbox.svelte'
 
   export let open = false
   let item: Person | undefined
@@ -114,27 +115,25 @@
         <span class="font-bold">{item.name}</span>
       </div>
       <p>
-        {banned ? 'Unbanning' : 'Banning'} from {community
-          ? community.name
-          : 'site'}
+        {banned ? 'Unbanning' : 'Banning'} from
+        <span class="font-bold">{community ? community.name : 'site'}</span>
       </p>
       <TextArea
         required
         bind:value={reason}
         label="Reason"
-        placeholder="Why are you banning {item.name}?"
+        placeholder="Why are you {banned
+          ? 'unbanning'
+          : 'banning'} {item.name}?"
       />
-      <div>
-        <label for="delete-data" class="block my-1 font-bold text-sm">
-          <input id="delete-data" type="checkbox" bind:value={deleteData} />
-          Delete data
-        </label>
-      </div>
-      <TextInput
-        bind:value={expires}
-        label="Expires (UTC)"
-        placeholder="2024 August 5"
-      />
+      {#if !banned}
+        <Checkbox bind:checked={deleteData}>Delete data</Checkbox>
+        <TextInput
+          bind:value={expires}
+          label="Expires (UTC)"
+          placeholder="2024 August 5"
+        />
+      {/if}
       <Button submit color="primary" {loading} disabled={loading} size="lg">
         Submit
       </Button>
