@@ -81,12 +81,6 @@
         class="self-start overflow-hidden z-10 relative bg-slate-200 rounded-md"
         data-sveltekit-preload-data="off"
       >
-        <div
-          class="absolute left-[50%] top-[50%] -translate-x-[50%] -translate-y-[50%]"
-          class:hidden={loaded}
-        >
-          <Spinner width={32} />
-        </div>
         <picture
           class="rounded-md overflow-hidden max-h-[min(50vh,500px)] w-full max-w-full"
         >
