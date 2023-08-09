@@ -36,7 +36,7 @@
   </div>
 </Modal>
 
-<div class="flex flex-row gap-4 w-full">
+<div class="flex flex-row gap-4 w-full h-full">
   <div class="flex flex-col gap-4 max-w-full w-full min-w-0">
     <header>
       <h1 class="text-3xl font-bold">Frontpage</h1>
@@ -55,17 +55,7 @@
       />
       <Sort selected={data.sort} />
     </div>
-    <section class="flex flex-col gap-3 sm:gap-4">
-      {#if data.posts.posts.length == 0}
-        <Placeholder>
-          <Icon src={ArchiveBox} size="32" solid slot="icon" />
-          <span slot="title">No posts</span>
-          <Button href="/communities" class="mt-4" slot="action">
-            <Icon src={Plus} size="16" mini slot="icon" />
-            <span>Follow some communities</span>
-          </Button>
-        </Placeholder>
-      {/if}
+    <section class="flex flex-col gap-3 sm:gap-4 h-full">
       <PostFeed posts={data.posts.posts} />
     </section>
     <div class="mt-auto">

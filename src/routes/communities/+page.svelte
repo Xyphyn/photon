@@ -14,6 +14,7 @@
   import Subscribe from './Subscribe.svelte'
   import Button from '$lib/components/input/Button.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
+  import { searchParam } from '$lib/util.js'
 
   export let data
 
@@ -28,14 +29,7 @@
   <MultiSelect
     options={['Subscribed', 'Local', 'All']}
     selected={$page.url.searchParams.get('type') ?? 'All'}
-    on:select={(e) => {
-      const url = $page.url
-      url.searchParams.set('type', e.detail)
-      url.searchParams.delete('page')
-      goto(url, {
-        invalidateAll: true,
-      })
-    }}
+    on:select={(e) => searchParam($page.url, 'type', e.detail, 'page')}
   />
   <div class="flex flex-col sm:flex-row gap-2 sm:ml-auto items-center">
     <TextInput

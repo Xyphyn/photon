@@ -17,6 +17,7 @@
   import { fullCommunityName, searchParam } from '$lib/util.js'
   import { onDestroy, onMount } from 'svelte'
   import { setSessionStorage } from '$lib/session.js'
+  import PostFeed from '$lib/components/lemmy/post/PostFeed.svelte'
 
   export let data
 
@@ -77,13 +78,7 @@
     <div class="flex flex-col sm:flex-row gap-4 max-w-full w-full">
       <Sort selected={data.sort} />
     </div>
-    {#each data.posts.posts as post, index (post.post.id)}
-      {#if !($userSettings.hidePosts.deleted && post.post.deleted) && !($userSettings.hidePosts.removed && post.post.removed)}
-        <div in:fly={{ y: -8, opacity: 0, delay: index < 4 ? index * 100 : 0 }}>
-          <Post hideCommunity={true} {post} />
-        </div>
-      {/if}
-    {/each}
+    <PostFeed posts={data.posts.posts} />
     <Pageination
       page={data.page}
       on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
