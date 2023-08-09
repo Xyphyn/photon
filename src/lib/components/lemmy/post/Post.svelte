@@ -9,10 +9,13 @@
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
   import { toast } from '$lib/components/ui/toasts/toasts.js'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
+  import Spinner from '$lib/components/ui/loader/Spinner.svelte'
 
   export let post: PostView
   export let actions: boolean = true
   export let hideCommunity = false
+
+  let loaded = false
 </script>
 
 <Card class="bg-white flex flex-col w-full p-5 gap-2.5" id={post.post.id}>
@@ -75,9 +78,15 @@
       <!--disabled preloads here since most people will hover over every image while scrolling-->
       <a
         href="/post/{getInstance()}/{post.post.id}"
-        class="self-start overflow-hidden"
+        class="self-start overflow-hidden z-10 relative bg-slate-200 rounded-md"
         data-sveltekit-preload-data="off"
       >
+        <div
+          class="absolute left-[50%] top-[50%] -translate-x-[50%] -translate-y-[50%]"
+          class:hidden={loaded}
+        >
+          <Spinner width={32} />
+        </div>
         <picture
           class="rounded-md overflow-hidden max-h-[min(50vh,500px)] w-full max-w-full"
         >
@@ -93,10 +102,12 @@
           <img
             src="{post.post.url}?thumbnail=512&format=webp"
             loading="lazy"
-            class="object-cover bg-slate-100 rounded-md max-h-[50vh] w-full"
+            class="object-cover rounded-md max-h-[50vh] h-auto z-30 opacity-0 transition-opacity duration-300"
+            class:opacity-100={loaded}
             width={512}
             height={300}
             class:blur-3xl={post.post.nsfw}
+            on:load={() => (loaded = true)}
           />
         </picture>
       </a>
