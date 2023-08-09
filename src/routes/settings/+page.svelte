@@ -51,6 +51,14 @@
       <Checkbox bind:checked={$userSettings.hidePosts.read}>Read</Checkbox>
     </div>
   </Setting>
+  <Setting>
+    <Checkbox slot="title" bind:checked={$userSettings.displayNames}>
+      Use display name
+    </Checkbox>
+    <span slot="description">
+      Show a user's display name instead of their account username.
+    </span>
+  </Setting>
   <h2 class="uppercase font-bold opacity-80 text-sm mt-4">UI</h2>
   <Setting>
     <Checkbox bind:checked={$userSettings.markReadPosts} slot="title">

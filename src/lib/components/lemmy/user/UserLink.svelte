@@ -30,13 +30,11 @@
     class:text-red-500={user.admin}
     class:font-bold={user.admin}
   >
+    {$userSettings.displayNames ? user.display_name ?? user.name : user.name}
     {#if $userSettings.showInstances.user || ($userSettings.showInstances.comments && inComment)}
-      {user.name}
       <span class="text-slate-500 dark:text-zinc-500 font-normal">
         @{new URL(user.actor_id).hostname}
       </span>
-    {:else}
-      {user.name}
     {/if}
   </span>
   {#if badges && (user.admin || user.banned || user.bot_account)}

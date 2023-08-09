@@ -30,6 +30,7 @@ interface Settings {
     // how often to check in the background
     notifRate: number
   }
+  displayNames: boolean
 }
 
 const defaultSettings: Settings = {
@@ -59,6 +60,7 @@ const defaultSettings: Settings = {
     pollRate: 60 * 1000,
     notifRate: 10 * 60 * 1000,
   },
+  displayNames: true,
 }
 
 export const userSettings = writable(defaultSettings)
