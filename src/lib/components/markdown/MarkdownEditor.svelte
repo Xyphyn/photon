@@ -102,7 +102,7 @@
   {/if}
   <div
     class="flex flex-col border border-slate-200 dark:border-zinc-800 rounded-md
-overflow-hidden"
+overflow-hidden focus-within:border-black focus-within:dark:border-white transition-colors"
   >
     {#if previewing}
       <div class="px-3 py-2.5 h-32 overflow-auto text-sm">

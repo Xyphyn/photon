@@ -198,7 +198,7 @@
     placeholder={placeholders.get('url')}
   />
   <MarkdownEditor
-    rows={6}
+    rows={9}
     label="Body"
     bind:value={data.body}
     placeholder={placeholders.get('post')}
