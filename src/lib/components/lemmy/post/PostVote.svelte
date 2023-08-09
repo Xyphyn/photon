@@ -70,7 +70,7 @@
   <div
     class="{Color.border} text-sm gap-0.5 rounded-md flex flex-row items-center
     transition-colors cursor-pointer bg-slate-100 dark:bg-zinc-800
-    hover:bg-slate-200 dark:hover:bg-zinc-700"
+    hover:bg-slate-200 dark:hover:bg-zinc-700 h-full"
   >
     <button
       aria-label="Upvote"

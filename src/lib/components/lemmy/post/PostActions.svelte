@@ -101,16 +101,16 @@
   </Modal>
 {/if}
 
-<div class="flex flex-row gap-2 items-center">
+<div class="flex flex-row gap-2 items-center h-[30px]">
   <PostVote post={post.post} vote={post.my_vote} score={post.counts.score} />
 
   <Button
     color="elevated"
     size="sm"
     href="/post/{getInstance()}/{post.post.id}"
-    class="px-3"
+    class="px-3 h-full"
   >
-    <Icon slot="icon" src={ChatBubbleOvalLeft} mini width={16} height={16} />
+    <Icon slot="icon" src={ChatBubbleOvalLeft} width={16} height={16} />
     <FormattedNumber number={post.counts.comments} />
   </Button>
   <div class="ml-auto" />
@@ -122,7 +122,7 @@
       slot="button"
       aria-label="Post actions"
       on:click={toggleOpen}
-      class="!p-1.5 dark:text-zinc-400 text-slate-500 hover:text-inherit"
+      class="!p-1.5 dark:text-zinc-400 text-slate-500 hover:text-inherit h-full"
       color="secondary"
     >
       <Icon slot="icon" src={EllipsisHorizontal} width={16} mini />
