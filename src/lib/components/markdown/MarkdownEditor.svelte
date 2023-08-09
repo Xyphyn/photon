@@ -104,19 +104,6 @@
   </Modal>
 {/if}
 
-<svelte:body
-  on:keydown={(e) => {
-    if (e.ctrlKey) {
-      // @ts-ignore
-      let shortcut = shortcuts[e.code]
-      if (shortcut) {
-        e.preventDefault()
-        shortcut?.()
-      }
-    }
-  }}
-/>
-
 <div>
   {#if label}
     <div class="block my-1 font-bold text-sm">{label}</div>
@@ -235,6 +222,16 @@ overflow-hidden focus-within:border-black focus-within:dark:border-white transit
         class="bg-inherit border-0 rounded-none"
         bind:value
         bind:item={textArea}
+        on:keydown={(e) => {
+          if (e.ctrlKey) {
+            // @ts-ignore
+            let shortcut = shortcuts[e.code]
+            if (shortcut) {
+              e.preventDefault()
+              shortcut?.()
+            }
+          }
+        }}
         {...$$restProps}
       />
     {/if}
