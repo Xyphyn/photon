@@ -10,16 +10,25 @@
       content="Photon: An alternative lemmy client with a sleek design."
     />
     <meta name="keywords" content="lemmy, client" />
+    <script defer type="">
+      const dark = () =>
+        localStorage.theme == 'dark' ||
+        ((!localStorage.theme || localStorage.theme == 'system') &&
+          window.matchMedia('(prefers-color-scheme: dark)').matches)
+
+      if (dark()) document.documentElement.classList.add('dark')
+      else document.documentElement.classList.remove('dark')
+
+      window
+        .matchMedia('(prefers-color-scheme: dark)')
+        .addEventListener('change', (event) => {
+          if (dark()) document.documentElement.classList.add('dark')
+          else document.documentElement.classList.remove('dark')
+        })
+    </script>
     %sveltekit.head%
   </head>
   <body data-sveltekit-preload-data="hover">
     <div style="display: contents">%sveltekit.body%</div>
   </body>
-  <style>
-    @media (prefers-color-scheme: dark) {
-      :root {
-        background-color: black;
-      }
-    }
-  </style>
 </html>

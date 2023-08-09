@@ -14,6 +14,7 @@
   import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
   import { LINKED_INSTANCE_URL, instance } from '$lib/instance.js'
   import { site } from '$lib/lemmy.js'
+  import { theme } from '$lib/ui/image.js'
   import {
     ArrowLeftOnRectangle,
     ArrowRightOnRectangle,
@@ -21,13 +22,16 @@
     Bookmark,
     Cog6Tooth,
     CommandLine,
+    ComputerDesktop,
     GlobeAlt,
     Icon,
     Inbox,
     InformationCircle,
     MagnifyingGlass,
+    Moon,
     PencilSquare,
     Plus,
+    Sun,
     UserCircle,
   } from 'svelte-hero-icons'
 
@@ -226,6 +230,31 @@
     <MenuButton link href="/about">
       <Icon src={InformationCircle} mini width={16} />
       About
+    </MenuButton>
+    <MenuButton>
+      <Icon
+        src={$theme == 'system'
+          ? ComputerDesktop
+          : $theme == 'light'
+          ? Sun
+          : $theme == 'dark'
+          ? Moon
+          : Moon}
+        mini
+        size="16"
+      />
+      <div class="flex flex-row flex-wrap justify-between w-full">
+        <span>Theme</span>
+        <select
+          bind:value={$theme}
+          class="ml-auto w-max"
+          on:click|stopPropagation={() => {}}
+        >
+          <option value="system">System</option>
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+        </select>
+      </div>
     </MenuButton>
     <hr class="dark:opacity-10 w-[90%] my-2 mx-auto" />
     <li class="flex flex-col px-4 py-1 mx-auto my-1 text-xs w-full">

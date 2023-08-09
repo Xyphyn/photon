@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['src/**/*.{js,ts,svelte,html}'],
+  darkMode: 'class',
   theme: {
     fontFamily: {
       'sans': ['Cantarell', 'system-ui'],
