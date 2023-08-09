@@ -67,7 +67,7 @@
       )}
           rounded-md py-2 min-w-[16rem] my-2 flex flex-col shadow-md
           bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800
-          "
+          {$$props.containerClass}"
     >
       {#if open}
         <div on:click={toggleOpen} class="flex flex-col gap-0">

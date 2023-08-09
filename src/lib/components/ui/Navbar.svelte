@@ -164,7 +164,12 @@
       {/if}
     </Menu>
   </div>
-  <Menu let:toggleOpen alignment="bottom-right" itemsClass="!h-8">
+  <Menu
+    let:toggleOpen
+    alignment="bottom-right"
+    itemsClass="!h-8"
+    containerClass="!max-h-[28rem]"
+  >
     <button
       class="w-8 h-8 rounded-full ring-1 ring-slate-300 bg-slate-100
       dark:bg-zinc-800 relative"
@@ -247,7 +252,7 @@
         <span>Theme</span>
         <select
           bind:value={$theme}
-          class="ml-auto w-max"
+          class="ml-auto w-max px-1 rounded-sm"
           on:click|stopPropagation={() => {}}
         >
           <option value="system">System</option>
