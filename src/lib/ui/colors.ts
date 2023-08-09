@@ -12,3 +12,44 @@ export enum Color {
   'border' = 'border border-slate-200 dark:border-zinc-700 bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 hover:dark:bg-zinc-700',
   'borderDark' = 'border border-slate-200 dark:border-zinc-800 bg-slate-100 dark:bg-zinc-900 hover:bg-slate-200 hover:dark:bg-zinc-800',
 }
+
+import { writable } from 'svelte/store'
+
+export const theme = writable<'system' | 'light' | 'dark'>('system')
+
+export const toggleTheme = () => {
+  theme.update((theme) => {
+    if (theme == 'light') {
+      return 'dark'
+    } else if (theme == 'dark') {
+      return 'system'
+    } else {
+      return 'light'
+    }
+  })
+}
+
+if (typeof localStorage != 'undefined') {
+  const localTheme: 'system' | 'light' | 'dark' =
+    (localStorage.getItem('theme') as 'system' | 'light' | 'dark') || 'system'
+
+  theme.update((theme) => localTheme)
+
+  theme.subscribe((theme) => {
+    if (typeof document != 'undefined') {
+      const prefersDark = window.matchMedia(
+        '(prefers-color-scheme: dark)'
+      ).matches
+
+      const html = document.querySelector('html')
+
+      if (theme == 'system') {
+        html?.classList.toggle('dark', prefersDark)
+      } else {
+        html?.classList.toggle('dark', theme === 'dark')
+      }
+
+      localStorage.setItem('theme', theme)
+    }
+  })
+}

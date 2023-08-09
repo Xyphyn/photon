@@ -14,7 +14,7 @@
   import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
   import { LINKED_INSTANCE_URL, instance } from '$lib/instance.js'
   import { site } from '$lib/lemmy.js'
-  import { theme } from '$lib/ui/image.js'
+  import { theme } from '$lib/ui/colors.js'
   import {
     ArrowLeftOnRectangle,
     ArrowRightOnRectangle,
