@@ -82,6 +82,13 @@
   }
 
   let previewing = false
+
+  const shortcuts = {
+    KeyB: () => wrapSelection('**', '**'),
+    KeyI: () => wrapSelection('*', '*'),
+    KeyS: () => wrapSelection('~~', '~~'),
+    KeyH: () => wrapSelection('\n# ', ''),
+  }
 </script>
 
 {#if uploadingImage && images}
@@ -95,6 +102,19 @@
     </form>
   </Modal>
 {/if}
+
+<svelte:body
+  on:keydown={(e) => {
+    if (e.ctrlKey) {
+      // @ts-ignore
+      let shortcut = shortcuts[e.code]
+      if (shortcut) {
+        e.preventDefault()
+        shortcut?.()
+      }
+    }
+  }}
+/>
 
 <div>
   {#if label}
