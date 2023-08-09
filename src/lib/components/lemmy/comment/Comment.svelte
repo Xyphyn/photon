@@ -76,7 +76,7 @@
 <li
   class="py-2 {node.depth == 0
     ? 'border-b border-slate-200 dark:border-zinc-800'
-    : ''}"
+    : ''} {$$props.class}"
   id="#{node.comment_view.comment.id.toString()}"
 >
   <details bind:open class="flex flex-col gap-1">

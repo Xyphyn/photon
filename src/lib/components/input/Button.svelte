@@ -18,8 +18,9 @@
     hover:bg-transparent hover:dark:bg-transparent
     active:bg-black/10 active:dark:bg-white/10`,
 
-    secondary:
-      'border border-slate-200 dark:border-zinc-700 bg-transparent hover:bg-slate-100 hover:dark:bg-zinc-800 dark:text-zinc-400',
+    secondary: `border border-slate-200 dark:border-zinc-700 bg-transparent
+      hover:bg-slate-100 hover:dark:bg-zinc-800 dark:text-zinc-400 hover:text-inherit
+      hover:dark:text-inherit`,
 
     tertiary:
       'border border-transparent bg-transparent hover:bg-slate-100 hover:dark:bg-zinc-800 dark:text-zinc-200',

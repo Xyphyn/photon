@@ -13,9 +13,11 @@
     PersonMentionView,
     PrivateMessageView,
   } from 'lemmy-js-client'
-  import { ChatBubbleOvalLeft, Icon } from 'svelte-hero-icons'
+  import { ChatBubbleOvalLeft, Check, Icon } from 'svelte-hero-icons'
   import { page } from '$app/stores'
   import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
+  import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
 
   export let item: CommentReplyView | PersonMentionView | PrivateMessageView
   export let read: boolean
@@ -61,40 +63,84 @@
 
     loading = false
   }
+
+  async function markAsRead(isRead: boolean) {
+    if (!$profile?.jwt) return
+
+    loading = true
+
+    if ('person_mention' in item) {
+      await getClient().markPersonMentionAsRead({
+        auth: $profile?.jwt,
+        person_mention_id: item.person_mention.id,
+        read: isRead,
+      })
+    } else if ('comment_reply' in item) {
+      await getClient().markCommentReplyAsRead({
+        auth: $profile?.jwt,
+        comment_reply_id: item.comment_reply.id,
+        read: isRead,
+      })
+    }
+
+    read = isRead
+
+    loading = false
+  }
 </script>
 
-<Card class="flex flex-col bg-white rounded-md p-4 max-w-full">
+<Card elevation={0} class="flex flex-col rounded-md p-4 max-w-full gap-2">
   {#if !isPrivateMessage(item)}
-    <div class="flex flex-row items-center justify-between">
-      <div
-        class="text-sm max-w-[80ch] whitespace-nowrap text-ellipsis
-      overflow-hidden {read ? 'text-slate-600 dark:text-zinc-400' : ''}"
-      >
-        <span class="font-bold">
-          {item.creator.display_name ?? item.creator.name}
-        </span>
-        replied to you in
-        <a
-          href="/post/{item.post.id}"
-          class="font-bold max-w-[48ch] overflow-hidden text-ellipsis
-      whitespace-nowrap inline hover:underline"
-        >
-          {item.post.name}
-        </a>
-      </div>
-
-      <Button
-        href="/post/{item.post.id}?thread={item.comment.path}#{item.comment.id}"
-      >
-        Jump
-      </Button>
-    </div>
-    <div>
+    <PostMeta
+      published={new Date(item.post.published)}
+      title={item.post.name}
+      id={item.post.id}
+    />
+    <div
+      class="flex flex-col"
+      class:mt-2={$profile?.user &&
+        item.post.creator_id != $profile.user.local_user_view.person.id}
+    >
+      <SectionTitle class="mb-2 text-xs">Reply</SectionTitle>
+      {#if $profile?.user && item.post.creator_id != $profile.user.local_user_view.person.id}
+        <div class="flex flex-row text-xs items-center gap-2">
+          <div
+            class="border-t w-8 rounded-tl h-2 border-l ml-2 border-zinc-700"
+          />
+          <div>
+            <UserLink
+              avatar
+              avatarSize={16}
+              user={$profile.user.local_user_view.person}
+            />
+          </div>
+        </div>
+      {/if}
       <Comment
         postId={item.post.id}
         node={{ children: [], comment_view: item, depth: 1 }}
         replying={false}
+        class="!p-0"
       />
+    </div>
+    <div class="flex flex-row ml-auto gap-2">
+      <Button
+        class={read ? '!text-green-500' : ''}
+        size="square-md"
+        {loading}
+        disabled={loading}
+        on:click={() => markAsRead(!read)}
+      >
+        <Icon slot="icon" src={Check} mini size="16" />
+      </Button>
+
+      <Button
+        href="/post/{item.post.id}?thread={item.comment.path}#{item.comment.id}"
+        size="md"
+        class="h-8"
+      >
+        Jump
+      </Button>
     </div>
   {:else}
     <div class="flex flex-row items-center">
