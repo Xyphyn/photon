@@ -9,11 +9,14 @@
   import { isComment, isPost } from '$lib/lemmy/item.js'
   import type { CommentView, PostView } from 'lemmy-js-client'
   import { profile } from '$lib/auth.js'
+  import Checkbox from '$lib/components/input/Checkbox.svelte'
+  import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
 
   export let open: boolean
   export let item: PostView | CommentView | undefined = undefined
 
   let reason = ''
+  let commentReason: boolean = false
   let loading = false
 
   $: removed = item
@@ -22,6 +25,8 @@
       : item.post.removed
     : false
 
+  $: replyReason = `Your submission was removed for:\n${reason}`
+
   async function remove() {
     if (!item) return
     if (!$profile?.jwt) throw new Error('Unauthenticated')
@@ -29,6 +34,29 @@
     loading = true
 
     try {
+      if (commentReason) {
+        if (replyReason == '') {
+          toast({
+            content: 'Your reply cannot be empty if "Reply reason" is enabled.',
+          })
+          return
+        }
+
+        await getClient()
+          .createComment({
+            auth: $profile.jwt,
+            content: replyReason,
+            post_id: item.post.id,
+            parent_id: isComment(item) ? item.comment.id : undefined,
+          })
+          .catch(() => {
+            toast({
+              content: 'Failed to post reply. Removing anyway...',
+              type: 'warning',
+            })
+          })
+      }
+
       if (isComment(item)) {
         await getClient().removeComment({
           auth: $profile.jwt,
@@ -66,7 +94,11 @@
     loading = false
   }
 
-  const resetText = () => (reason = '')
+  const resetText = () => {
+    reason = ''
+    replyReason = ''
+    commentReason = false
+  }
 
   $: {
     if (item) {
@@ -102,6 +134,19 @@
         placeholder="Optional"
         bind:value={reason}
       />
+
+      {#if !removed}
+        <Checkbox bind:checked={commentReason}>Reply with reason</Checkbox>
+
+        {#if commentReason}
+          <MarkdownEditor
+            bind:value={replyReason}
+            placeholder={replyReason}
+            rows={3}
+            label="Reply"
+          />
+        {/if}
+      {/if}
 
       <Button color="primary" size="lg" {loading} disabled={loading} submit>
         {removed ? 'Restore' : 'Remove'}
