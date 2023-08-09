@@ -88,6 +88,7 @@
     KeyI: () => wrapSelection('*', '*'),
     KeyS: () => wrapSelection('~~', '~~'),
     KeyH: () => wrapSelection('\n# ', ''),
+    KeyK: () => wrapSelection('[](', ')'),
   }
 </script>
 
