@@ -7,6 +7,7 @@
   import { toast } from '$lib/components/ui/toasts/toasts.js'
   import Button from '$lib/components/input/Button.svelte'
   import { getInboxNotifications } from '$lib/auth.js'
+  import Checkbox from '$lib/components/input/Checkbox.svelte'
 
   let data = {
     loading: false,
@@ -37,81 +38,60 @@
       </div>
     </div>
   </Setting>
-  <h2 class="uppercase font-bold opacity-80 text-sm mt-4">UI</h2>
-  <Setting>
-    <span slot="title">Mark read posts</span>
-    <span slot="description">Fade the title of posts you've already read.</span>
-    <Switch bind:enabled={$userSettings.markReadPosts} />
-  </Setting>
-  <Setting>
-    <span slot="title">Revert vote colors</span>
-    <span slot="description">
-      Make upvotes orange and downvotes blue, like Reddit used to do.
-    </span>
-    <Switch bind:enabled={$userSettings.revertColors} />
-  </Setting>
-  <Setting>
-    <span slot="title">Show compact posts</span>
-    <span slot="description">
-      Show posts with smaller thumbnails and without text bodies.
-    </span>
-    <Switch bind:enabled={$userSettings.showCompactPosts} />
-  </Setting>
   <Setting>
     <span slot="title">Hide Posts</span>
     <span slot="description">Hide certain types of posts.</span>
-    <div class="flex flex-row items-center gap-4">
-      <div class="flex items-center gap-1 font-bold">
-        Deleted Posts
-        <Switch bind:enabled={$userSettings.hidePosts.deleted} />
-      </div>
-      <div class="flex items-center gap-1 font-bold">
-        Removed Posts
-        <Switch bind:enabled={$userSettings.hidePosts.removed} />
-      </div>
+    <div class="flex flex-row items-center gap-4 flex-wrap">
+      <Checkbox bind:checked={$userSettings.hidePosts.deleted}>
+        Deleted
+      </Checkbox>
+      <Checkbox bind:checked={$userSettings.hidePosts.removed}>
+        Removed
+      </Checkbox>
+      <Checkbox bind:checked={$userSettings.hidePosts.read}>Read</Checkbox>
     </div>
+  </Setting>
+  <h2 class="uppercase font-bold opacity-80 text-sm mt-4">UI</h2>
+  <Setting>
+    <Checkbox bind:checked={$userSettings.markReadPosts} slot="title">
+      Mark read posts
+    </Checkbox>
+    <span slot="description">Fade the title of posts you've already read.</span>
+  </Setting>
+  <Setting>
+    <Checkbox bind:checked={$userSettings.revertColors} slot="title">
+      Revert vote colors
+    </Checkbox>
+    <span slot="description">
+      Make upvotes orange and downvotes blue, like Reddit used to do.
+    </span>
+  </Setting>
+  <Setting>
+    <span slot="title">Post style</span>
+    <MultiSelect
+      options={[false, true]}
+      optionNames={['Cards', 'Compact']}
+      bind:selected={$userSettings.showCompactPosts}
+    />
   </Setting>
   <h2 class="uppercase font-bold opacity-80 text-sm mt-4">Instances</h2>
   <Setting>
     <span slot="title">Show instances</span>
     <span slot="description">Show items' instances.</span>
-    <span class="flex gap-0 px-3 py-2 bg-slate-100 dark:bg-zinc-800 rounded-md">
+    <span
+      class="flex gap-0 px-3 py-2 bg-slate-100 dark:bg-zinc-800 rounded-md w-max"
+    >
       Xylight
       <span class="opacity-50">@example.com</span>
     </span>
-    <div class="flex flex-row items-center gap-4">
-      <div class="flex items-center gap-1 font-bold">
-        Users
-        <Switch bind:enabled={$userSettings.showInstances.user} />
-      </div>
-      <div class="flex items-center gap-1 font-bold">
+    <div class="flex flex-row flex-wrap items-center gap-4">
+      <Checkbox bind:checked={$userSettings.showInstances.user}>Users</Checkbox>
+      <Checkbox bind:checked={$userSettings.showInstances.comments}>
         Comments
-        <Switch bind:enabled={$userSettings.showInstances.comments} />
-      </div>
-      <div class="flex items-center gap-1 font-bold">
+      </Checkbox>
+      <Checkbox bind:checked={$userSettings.showInstances.community}>
         Communities
-        <Switch bind:enabled={$userSettings.showInstances.community} />
-      </div>
+      </Checkbox>
     </div>
-  </Setting>
-  <h2 class="uppercase font-bold opacity-80 text-sm mt-4">Notifications</h2>
-  <Setting>
-    <span slot="title">Push notifications</span>
-    <span slot="description">Get notified for new items in your inbox.</span>
-    <Switch
-      bind:enabled={$userSettings.notifications.enabled}
-      on:change={async (e) => {
-        if (e.detail == false) return
-        const res = await Notification.requestPermission()
-        if (res != 'granted') {
-          $userSettings.notifications.enabled = false
-          toast({
-            content: 'Notification permission denied',
-            type: 'error',
-          })
-          return
-        }
-      }}
-    />
   </Setting>
 </div>
