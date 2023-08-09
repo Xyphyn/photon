@@ -50,6 +50,7 @@
             url={$site.site_view.site.icon}
             alt={$site.site_view.site.name}
             width={32}
+            res={64}
             circle={false}
           />
           <div class="flex flex-row items-center gap-2 max-[500px]:hidden">
