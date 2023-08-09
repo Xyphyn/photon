@@ -23,14 +23,6 @@ A clear and concise description of what you expected to happen.
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
 
-**Network tab** (optional)
-(This makes it much easier to debug.)
-
-- Press F12 to open DevTools
-- Go to the "network" tab
-- View the request that occurs when the error occurs.
-- Put a screenshot of what "Response" says (make sure no URLs are on screen that have the parameter `auth`).
-
 **Versions**
 - Browser: Firefox
 - Photon version: 0.5.1
