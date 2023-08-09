@@ -1,8 +1,9 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
 
-  export let label: string = ''
-  export let type: 'text' | 'password' | 'email' | null | undefined = 'text'
+  export let label: string | number | undefined = ''
+  export let type: 'text' | 'password' | 'email' | 'number' | null | undefined =
+    'text'
   export let value: string = ''
   export let required = false
 

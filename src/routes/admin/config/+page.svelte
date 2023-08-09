@@ -10,6 +10,7 @@
   import { getClient } from '$lib/lemmy.js'
   import type { EditSite } from 'lemmy-js-client'
   import type { PageData } from './$types.js'
+  import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
 
   export let data: PageData
 
@@ -121,6 +122,52 @@
       }}
     >
       Require email verification
+    </Checkbox>
+    <Checkbox
+      checked={local_site.application_email_admins ?? true}
+      on:change={(e) => {
+        local_site.application_email_admins =
+          !local_site.application_email_admins
+      }}
+    >
+      Email admins on receiving new applications
+    </Checkbox>
+    <Checkbox
+      checked={local_site.reports_email_admins ?? true}
+      on:change={(e) => {
+        local_site.reports_email_admins = !local_site.reports_email_admins
+      }}
+    >
+      Email admins on receiving new reports
+    </Checkbox>
+    <Checkbox
+      checked={local_site.private_instance ?? true}
+      on:change={(e) => {
+        local_site.private_instance = !local_site.private_instance
+      }}
+    >
+      Private instance
+    </Checkbox>
+    <Checkbox
+      checked={local_site.hide_modlog_mod_names ?? true}
+      on:change={(e) => {
+        local_site.hide_modlog_mod_names = !local_site.hide_modlog_mod_names
+      }}
+    >
+      Hide modlog mod names
+    </Checkbox>
+    <TextInput
+      bind:value={local_site.slur_filter_regex}
+      label="Slur filter regex"
+      placeholder="(word1|word2)"
+    />
+    <Checkbox
+      checked={local_site.federation_enabled ?? true}
+      on:change={(e) => {
+        local_site.federation_enabled = !local_site.federation_enabled
+      }}
+    >
+      Federation enabled
     </Checkbox>
   {/if}
   <Button color="primary" size="lg" loading={saving} disabled={saving} submit>
