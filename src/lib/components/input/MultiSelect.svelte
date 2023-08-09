@@ -17,7 +17,7 @@
   }
 
   let containerClass = `
-    flex flex-row items-center w-max max-w-full
+    flex flex-row items-center w-max max-w-full overflow-auto
     ${
       headless
         ? 'pb-1'
