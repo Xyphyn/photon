@@ -3,16 +3,10 @@
 @tailwind utilities;
 
 body {
-  @apply bg-slate-50 dark:bg-zinc-950 text-slate-900
-    dark:text-zinc-100 !important;
+  @apply bg-slate-50 text-slate-900 dark:bg-zinc-950 dark:text-zinc-100 accent-slate-950 dark:accent-zinc-50;
 }
 
-html {
-  accent-color: #000;
-}
-
-.dark {
-  accent-color: #fff;
+.dark > body {
   color-scheme: dark;
 }
 

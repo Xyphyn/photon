@@ -14,7 +14,8 @@
 
   const buttonColor = {
     primary: `border border-slate-900 bg-slate-900 dark:bg-zinc-100
-    dark:border-zinc-100 dark:text-black hover:text-inherit text-slate-100 hover:bg-transparent
+    dark:border-zinc-100 dark:text-black hover:text-inherit hover:dark:text-inherit text-slate-100
+    hover:bg-transparent hover:dark:bg-transparent
     active:bg-black/10 active:dark:bg-white/10`,
 
     secondary:

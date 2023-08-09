@@ -17,8 +17,6 @@
   import { theme } from '$lib/ui/colors.js'
   import {
     ArrowLeftOnRectangle,
-    ArrowRightOnRectangle,
-    Beaker,
     Bookmark,
     Cog6Tooth,
     CommandLine,
@@ -95,8 +93,8 @@
         href="/admin"
         aria-label="Admin"
         class="max-md:w-9 max-md:h-8 max-md:!p-0
-        dark:text-zinc-300 text-slate-700 hover:text-inherit
-      hover:bg-slate-200 hover:dark:bg-zinc-900 relative"
+        dark:text-zinc-300 text-slate-700 hover:text-inherit hover:dark:text-inherit
+      hover:bg-slate-200 relative"
       >
         <Icon src={CommandLine} mini size="16" slot="icon" />
         <span class="hidden md:inline">Admin</span>
@@ -106,9 +104,8 @@
       <Button
         href="/moderation"
         aria-label="Moderation"
-        class="max-md:w-9 max-md:h-8 max-md:!p-0 items-center justify-center
-      dark:text-zinc-300 text-slate-700 hover:text-inherit
-      hover:bg-slate-200 hover:dark:bg-zinc-900 relative"
+        class="max-md:w-9 h-8 max-md:!p-0 dark:text-zinc-300 text-slate-700
+        hover:text-inherit hover:bg-slate-200 hover:dark:text-inherit relative"
       >
         {#if $profile?.user?.reports ?? 0 > 0}
           <div
@@ -122,8 +119,8 @@
     <Button
       href="/search"
       aria-label="Search"
-      class="max-md:w-9 max-md:h-8 max-md:!p-0 items-center justify-center
-      dark:text-zinc-300 text-slate-700 hover:text-inherit hover:bg-slate-200 hover:dark:bg-zinc-900"
+      class="max-md:w-9 max-md:h-8 max-md:!p-0
+      dark:text-zinc-300 text-slate-700 hover:text-inherit hover:dark:text-inherit hover:bg-slate-200"
     >
       <Icon mini src={MagnifyingGlass} width={16} slot="icon" />
       <span class="hidden md:inline">Search</span>
@@ -131,8 +128,8 @@
     <Button
       href="/communities"
       aria-label="Communities"
-      class="max-md:w-9 max-md:h-8 max-md:!p-0 items-center justify-center
-      dark:text-zinc-300 text-slate-700 hover:text-inherit hover:bg-slate-200 hover:dark:bg-zinc-900"
+      class="max-md:w-9 max-md:h-8 max-md:!p-0
+      dark:text-zinc-300 text-slate-700 hover:text-inherit hover:dark:text-inherit hover:bg-slate-200"
     >
       <Icon mini src={GlobeAlt} size="16" slot="icon" />
       <span class="hidden md:inline">Explore</span>
@@ -167,7 +164,7 @@
   <Menu
     let:toggleOpen
     alignment="bottom-right"
-    itemsClass="!h-8"
+    itemsClass="h-8 md:h-9"
     containerClass="!max-h-[28rem]"
   >
     <button
