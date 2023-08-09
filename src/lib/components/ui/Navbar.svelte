@@ -17,6 +17,7 @@
   import { theme } from '$lib/ui/colors.js'
   import {
     ArrowLeftOnRectangle,
+    Bars3,
     Bookmark,
     Cog6Tooth,
     CommandLine,
@@ -31,6 +32,7 @@
     Plus,
     Sun,
     UserCircle,
+    UserGroup,
   } from 'svelte-hero-icons'
 
   let scrollY = 0
@@ -63,7 +65,7 @@
                 Powered by <Link
                   href="https://github.com/Xyphyn/photon"
                   highlight={false}
-                  class="font-bold flex items-center gap-0.5 hover:underline"
+                  class="font-bold flex items-center gap-0.5 hover:underline text-black dark:text-white"
                 >
                   <Logo width={12} /> Photon
                 </Link>
@@ -184,6 +186,10 @@
             class="rounded-full w-2 h-2 bg-red-500 absolute top-0 left-0 z-10"
           />
         {/if}
+      {:else}
+        <div class="w-full h-full grid place-items-center">
+          <Icon src={Bars3} mini size="18" />
+        </div>
       {/if}
     </button>
     <li class="text-xs opacity-80 text-left mx-4 my-1 py-1">
@@ -211,15 +217,22 @@
         <Icon src={Bookmark} mini width={16} /> Saved
       </MenuButton>
     {/if}
-    <MenuButton link href="/accounts">
-      <Icon src={ArrowLeftOnRectangle} mini width={16} />
-      {$profileData.profiles.length == 0 ? 'Log in' : 'Switch accounts'}
-      <span
-        class="text-xs font-bold bg-slate-100 dark:bg-zinc-700 px-2 py-0.5 rounded-md ml-auto"
-      >
-        {$profileData.profiles.length}
-      </span>
-    </MenuButton>
+    {#if $profileData.profiles.length == 0}
+      <MenuButton link href="/login">
+        <Icon src={ArrowLeftOnRectangle} mini width={16} />
+        Log in
+      </MenuButton>
+    {:else}
+      <MenuButton link href="/accounts">
+        <Icon src={UserGroup} mini width={16} />
+        Manage accounts
+        <span
+          class="text-xs font-bold bg-slate-100 dark:bg-zinc-700 px-2 py-0.5 rounded-md ml-auto"
+        >
+          {$profileData.profiles.length}
+        </span>
+      </MenuButton>
+    {/if}
     <hr class="dark:opacity-10 w-[90%] my-2 mx-auto" />
     <li class="text-xs px-4 py-1 my-1 opacity-80">App</li>
     <MenuButton link href="/settings">
