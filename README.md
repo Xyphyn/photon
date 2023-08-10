@@ -1,13 +1,12 @@
 # Photon
 
-*Jump to [Self-hosting](#self-hosting)*
+_Jump to [Self-hosting](#self-hosting)_
 
 An alternative web client for Lemmy with the UI of Xylo
 
 ## Screenshots
 
 ![Screenshot from 2023-08-03 13-23-07](https://github.com/Xyphyn/photon/assets/80978739/16469b73-42f3-4fe3-9e60-5757a750d61e)
-
 
 ## Self-hosting
 
@@ -40,3 +39,9 @@ docker run -p 8080:3000 -it photon:latest
 ```
 
 There you go, you now have an instance of Photon running.
+
+### Donate
+
+You can donate at [Buy me a Coffee](https://buymeacoffee.com/xylight)
+
+<a href="https://www.buymeacoffee.com/xylight"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=xylight&button_colour=FFDD00&font_colour=000000&font_family=Poppins&outline_colour=000000&coffee_colour=ffffff" /></a>
