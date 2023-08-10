@@ -1,15 +1,32 @@
 <script lang="ts">
-  import BanModal from '$lib/components/lemmy/moderation/BanModal.svelte'
-  import RemoveModal from '$lib/components/lemmy/moderation/RemoveModal.svelte'
   import { modals } from '$lib/components/lemmy/moderation/moderation.js'
-  import ReportModal from './ReportModal.svelte'
 </script>
 
-<ReportModal bind:open={$modals.reporting.open} item={$modals.reporting.item} />
-<RemoveModal bind:open={$modals.removing.open} item={$modals.removing.item} />
-<BanModal
-  bind:open={$modals.banning.open}
-  banned={$modals.banning.banned}
-  user={$modals.banning.user}
-  community={$modals.banning.community}
-/>
+<!--These weird await hacks are for lazy loading, better network performance-->
+
+{#if $modals.reporting.open}
+  {#await import('$lib/components/lemmy/moderation/ReportModal.svelte') then { default: ReportModal }}
+    <ReportModal
+      bind:open={$modals.reporting.open}
+      item={$modals.reporting.item}
+    />
+  {/await}
+{/if}
+{#if $modals.removing.open}
+  {#await import('$lib/components/lemmy/moderation/RemoveModal.svelte') then { default: RemoveModal }}
+    <RemoveModal
+      bind:open={$modals.removing.open}
+      item={$modals.removing.item}
+    />
+  {/await}
+{/if}
+{#if $modals.banning.open}
+  {#await import('$lib/components/lemmy/moderation/BanModal.svelte') then { default: BanModal }}
+    <BanModal
+      bind:open={$modals.banning.open}
+      banned={$modals.banning.banned}
+      user={$modals.banning.user}
+      community={$modals.banning.community}
+    />
+  {/await}
+{/if}
