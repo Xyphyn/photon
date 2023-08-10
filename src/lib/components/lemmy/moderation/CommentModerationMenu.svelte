@@ -6,11 +6,11 @@
     CommunityView,
     PostView,
   } from 'lemmy-js-client'
-  import { amMod, ban, remove } from './moderation'
+  import { amMod, ban, isAdmin, remove } from './moderation'
   import Menu from '$lib/components/ui/menu/Menu.svelte'
   import Button from '$lib/components/input/Button.svelte'
   import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
-  import { Icon, ShieldExclamation, Trash } from 'svelte-hero-icons'
+  import { Fire, Icon, ShieldExclamation, Trash } from 'svelte-hero-icons'
   import { Color } from '$lib/ui/colors.js'
   import { isComment } from '$lib/lemmy/item.js'
   import { profile } from '$lib/auth.js'
@@ -18,9 +18,9 @@
   export let item: PostView | CommentView
 </script>
 
-<Menu let:toggleOpen alignment="bottom-center" class="top-0 h-[26px] w-[26px]">
+<Menu let:toggleOpen alignment="bottom-center" class="top-0 h-[26px] w-[26px] ">
   <Button
-    class="!p-1 hover:text-green-500 dark:text-zinc-400 text-slate-600"
+    class="!p-1 hover:!text-green-500 dark:text-zinc-400 text-slate-600"
     size="sm"
     on:click={toggleOpen}
     slot="button"
@@ -43,30 +43,42 @@
       />
     </svg>
   </Button>
-  <span class="px-4 py-1 my-1 text-xs text-slate-600 dark:text-zinc-400">
-    Moderation
-  </span>
-  <MenuButton color="success" on:click={() => remove(item)}>
-    <Icon src={Trash} size="16" mini />
-    {#if isComment(item)}
-      {item.comment.removed ? 'Restore' : 'Remove'}
-    {:else}
-      {item.post.removed ? 'Restore' : 'Remove'}
+  {#if ($profile?.user && amMod($profile.user, item.community)) || ($profile?.user && isAdmin($profile.user) && item.community.local)}
+    <li class="px-4 py-1 my-1 text-xs text-slate-600 dark:text-zinc-400">
+      Moderation
+    </li>
+    <MenuButton color="success" on:click={() => remove(item)}>
+      <Icon src={Trash} size="16" mini />
+      {#if isComment(item)}
+        {item.comment.removed ? 'Restore' : 'Remove'}
+      {:else}
+        {item.post.removed ? 'Restore' : 'Remove'}
+      {/if}
+    </MenuButton>
+    {#if $profile?.user && $profile.user?.local_user_view.person.id != item.creator.id}
+      <span class="px-4 py-1 my-1 text-xs text-slate-600 dark:text-zinc-400">
+        User
+      </span>
+      <MenuButton
+        color="dangerSecondary"
+        on:click={() =>
+          ban(item.creator_banned_from_community, item.creator, item.community)}
+      >
+        <Icon src={ShieldExclamation} size="16" mini />
+        {item.creator_banned_from_community
+          ? 'Unban from community'
+          : 'Ban from community'}
+      </MenuButton>
     {/if}
-  </MenuButton>
-  {#if $profile?.user && $profile.user?.local_user_view.person.id != item.creator.id}
-    <span class="px-4 py-1 my-1 text-xs text-slate-600 dark:text-zinc-400">
-      User
-    </span>
-    <MenuButton
-      color="dangerSecondary"
-      on:click={() =>
-        ban(item.creator_banned_from_community, item.creator, item.community)}
-    >
-      <Icon src={ShieldExclamation} size="16" mini />
-      {item.creator_banned_from_community
-        ? 'Unban from community'
-        : 'Ban from community'}
+  {/if}
+
+  {#if $profile?.user && isAdmin($profile.user)}
+    <li class="px-4 py-1 my-1 text-xs text-slate-600 dark:text-zinc-400">
+      Admin
+    </li>
+    <MenuButton color="dangerSecondary" on:click={() => remove(item, true)}>
+      <Icon src={Fire} size="16" mini slot="icon" />
+      Purge
     </MenuButton>
   {/if}
 </Menu>

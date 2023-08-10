@@ -24,7 +24,11 @@
   import { createEventDispatcher } from 'svelte'
   import Modal from '$lib/components/ui/modal/Modal.svelte'
   import PostForm from '$lib/components/lemmy/post/PostForm.svelte'
-  import { amMod, report } from '$lib/components/lemmy/moderation/moderation.js'
+  import {
+    amMod,
+    isAdmin,
+    report,
+  } from '$lib/components/lemmy/moderation/moderation.js'
   import ModerationMenu from '$lib/components/lemmy/moderation/ModerationMenu.svelte'
   import { profile } from '$lib/auth.js'
 
@@ -114,7 +118,7 @@
     <FormattedNumber number={post.counts.comments} />
   </Button>
   <div class="ml-auto" />
-  {#if $profile?.user && amMod($profile.user, post.community)}
+  {#if $profile?.user && (amMod($profile.user, post.community) || isAdmin($profile.user))}
     <ModerationMenu item={post} community={post.community} />
   {/if}
   <Menu alignment="bottom-right" class="overflow-auto" let:toggleOpen>

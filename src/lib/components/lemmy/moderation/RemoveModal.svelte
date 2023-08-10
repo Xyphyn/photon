@@ -11,12 +11,16 @@
   import { profile } from '$lib/auth.js'
   import Checkbox from '$lib/components/input/Checkbox.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
+  import { Fire, Icon, Trash } from 'svelte-hero-icons'
+  import MultiSelect from '$lib/components/input/MultiSelect.svelte'
 
   export let open: boolean
   export let item: PostView | CommentView | undefined = undefined
+  export let purge: boolean = false
 
   let reason = ''
   let commentReason: boolean = false
+  let privateMessage: boolean = false
   let loading = false
 
   $: removed = item
@@ -25,7 +29,9 @@
       : item.post.removed
     : false
 
-  $: replyReason = `Your submission was removed for:\n${reason}`
+  $: replyReason = `Your submission${
+    privateMessage ? `in ${item?.post.name}` : ' '
+  }was removed for:\n${reason}`
 
   async function remove() {
     if (!item) return
@@ -34,6 +40,32 @@
     loading = true
 
     try {
+      if (purge) {
+        if (isComment(item)) {
+          await getClient(undefined, fetch).purgeComment({
+            auth: $profile.jwt,
+            comment_id: item.comment.id,
+            reason: reason,
+          })
+        } else {
+          await getClient(undefined, fetch).purgePost({
+            auth: $profile.jwt,
+            post_id: item.post.id,
+            reason: reason,
+          })
+        }
+
+        toast({
+          content: 'Successfully purged that submission.',
+          type: 'success',
+        })
+
+        loading = false
+        open = false
+
+        return
+      }
+
       if (commentReason) {
         if (replyReason == '') {
           toast({
@@ -42,19 +74,36 @@
           return
         }
 
-        await getClient()
-          .createComment({
-            auth: $profile.jwt,
-            content: replyReason,
-            post_id: item.post.id,
-            parent_id: isComment(item) ? item.comment.id : undefined,
-          })
-          .catch(() => {
-            toast({
-              content: 'Failed to post reply. Removing anyway...',
-              type: 'warning',
+        if (privateMessage) {
+          await getClient()
+            .createPrivateMessage({
+              auth: $profile.jwt,
+              content: replyReason,
+              recipient_id: isComment(item)
+                ? item.comment.creator_id
+                : item.post.creator_id,
             })
-          })
+            .catch(() => {
+              toast({
+                content: 'Failed to message user. Removing anyway...',
+                type: 'warning',
+              })
+            })
+        } else {
+          await getClient()
+            .createComment({
+              auth: $profile.jwt,
+              content: replyReason,
+              post_id: item.post.id,
+              parent_id: isComment(item) ? item.comment.id : undefined,
+            })
+            .catch(() => {
+              toast({
+                content: 'Failed to post reply. Removing anyway...',
+                type: 'warning',
+              })
+            })
+        }
       }
 
       if (isComment(item)) {
@@ -108,7 +157,9 @@
 </script>
 
 <Modal bind:open>
-  <span slot="title">{removed ? 'Restoring' : 'Removing'} submission</span>
+  <span slot="title">
+    {purge ? 'Purging' : removed ? 'Restoring' : 'Removing'} submission
+  </span>
   {#if item}
     <form
       on:submit|preventDefault={remove}
@@ -135,10 +186,15 @@
         bind:value={reason}
       />
 
-      {#if !removed}
+      {#if !removed && !purge}
         <Checkbox bind:checked={commentReason}>Reply with reason</Checkbox>
 
         {#if commentReason}
+          <MultiSelect
+            options={[false, true]}
+            optionNames={['Comment', 'Message']}
+            bind:selected={privateMessage}
+          />
           <MarkdownEditor
             bind:value={replyReason}
             placeholder={replyReason}
@@ -148,8 +204,19 @@
         {/if}
       {/if}
 
-      <Button color="primary" size="lg" {loading} disabled={loading} submit>
-        {removed ? 'Restore' : 'Remove'}
+      <Button
+        color={purge ? 'danger' : 'primary'}
+        size="lg"
+        {loading}
+        disabled={loading}
+        submit
+      >
+        <Icon src={purge ? Fire : Trash} mini size="16" slot="icon" />
+        {#if purge}
+          Purge
+        {:else}
+          {removed ? 'Restore' : 'Remove'}
+        {/if}
       </Button>
     </form>
   {/if}

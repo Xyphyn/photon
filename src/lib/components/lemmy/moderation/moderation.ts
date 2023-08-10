@@ -17,6 +17,7 @@ interface Modals {
   removing: {
     open: boolean
     item: PostView | CommentView | undefined
+    purge: boolean
   }
   banning: {
     open: boolean
@@ -34,6 +35,7 @@ export let modals = writable<Modals>({
   removing: {
     open: false,
     item: undefined,
+    purge: false,
   },
   banning: {
     open: false,
@@ -53,12 +55,13 @@ export function report(item: PostView | CommentView) {
   }))
 }
 
-export function remove(item: PostView | CommentView) {
+export function remove(item: PostView | CommentView, purge: boolean = false) {
   modals.update((m) => ({
     ...m,
     removing: {
       open: true,
       item: item,
+      purge: purge
     },
   }))
 }

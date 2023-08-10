@@ -17,6 +17,7 @@
     <RemoveModal
       bind:open={$modals.removing.open}
       item={$modals.removing.item}
+      purge={$modals.removing.purge}
     />
   {/await}
 {/if}
