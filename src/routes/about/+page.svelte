@@ -35,5 +35,8 @@
     <li>
       <Link href="https://xylight.dev" highlight>Xylight's portfolio</Link>
     </li>
+    <li>
+      <Link href="https://buymeacoffee.com/xylight" highlight>Donate</Link>
+    </li>
   </ul>
 </div>

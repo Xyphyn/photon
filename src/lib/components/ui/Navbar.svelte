@@ -270,9 +270,13 @@
     </MenuButton>
     <hr class="dark:opacity-10 w-[90%] my-2 mx-auto" />
     <li class="flex flex-col px-4 py-1 mx-auto my-1 text-xs w-full">
-      <div class="flex flex-row justify-center gap-2 w-full">
+      <div class="flex flex-row gap-2 w-full">
         <!-- svelte-ignore missing-declaration -->
         <span class="mr-auto">v{__VERSION__}</span>
+        <div class="ml-auto" />
+        <a href="https://buymeacoffee.com/xylight" class="hover:underline">
+          Donate
+        </a>
         <a href="https://github.com/Xyphyn/photon" class="hover:underline">
           GitHub
         </a>
