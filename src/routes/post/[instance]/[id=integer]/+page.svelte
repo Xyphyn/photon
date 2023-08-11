@@ -36,7 +36,7 @@
   })
 
   let commentsPage = 1
-  let commentSort: CommentSortType = 'Hot'
+  let commentSort: CommentSortType = data.commentSort
   let loading = false
   let moreComments = true
 
@@ -46,7 +46,6 @@
 
     data.streamed.comments = getClient().getComments({
       auth: $profile?.jwt,
-      max_depth: 3,
       page: commentsPage,
       limit: 25,
       type_: 'All',

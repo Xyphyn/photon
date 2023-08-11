@@ -8,6 +8,7 @@
   import Button from '$lib/components/input/Button.svelte'
   import { getInboxNotifications } from '$lib/auth.js'
   import Checkbox from '$lib/components/input/Checkbox.svelte'
+  import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
 
   let data = {
     loading: false,
@@ -20,21 +21,28 @@
 
 <div class="flex flex-col">
   <h1 class="text-3xl font-bold">Settings</h1>
-  <h2 class="uppercase font-bold opacity-80 text-sm mt-4">General</h2>
+  <SectionTitle class="mt-4">General</SectionTitle>
   <Setting>
     <span slot="title">Default sort</span>
     <span slot="description">The default sort to use for feeds.</span>
     <div class="flex flex-wrap flex-row gap-4 w-full">
-      <div class="w-full">
+      <div class="max-w-full">
         <span class="block my-1 font-bold">Feed</span>
         <MultiSelect
           options={['Subscribed', 'Local', 'All']}
           bind:selected={$userSettings.defaultSort.feed}
         />
       </div>
-      <div class="w-full">
+      <div class="max-w-full">
         <span class="block my-1 font-bold">Sort</span>
         <Sort bind:selected={$userSettings.defaultSort.sort} navigate={false} />
+      </div>
+      <div class="max-w-full">
+        <span class="block my-1 font-bold">Comments</span>
+        <MultiSelect
+          options={['Hot', 'Top', 'New']}
+          bind:selected={$userSettings.defaultSort.comments}
+        />
       </div>
     </div>
   </Setting>
@@ -59,7 +67,8 @@
       Show a user's display name instead of their account username.
     </span>
   </Setting>
-  <h2 class="uppercase font-bold opacity-80 text-sm mt-4">UI</h2>
+  <SectionTitle class="mt-4">UI</SectionTitle>
+
   <Setting>
     <Checkbox bind:checked={$userSettings.markReadPosts} slot="title">
       Mark read posts
@@ -82,7 +91,7 @@
       bind:selected={$userSettings.showCompactPosts}
     />
   </Setting>
-  <h2 class="uppercase font-bold opacity-80 text-sm mt-4">Instances</h2>
+  <SectionTitle class="mt-4">Instances</SectionTitle>
   <Setting>
     <span slot="title">Show instances</span>
     <span slot="description">Show items' instances.</span>

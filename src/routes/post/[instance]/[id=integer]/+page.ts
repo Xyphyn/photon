@@ -1,5 +1,6 @@
 import { profile } from '$lib/auth.js'
 import { getClient } from '$lib/lemmy.js'
+import { userSettings } from '$lib/settings.js'
 import { error } from '@sveltejs/kit'
 import { get } from 'svelte/store'
 
@@ -26,9 +27,12 @@ export async function load({ params, url, fetch }) {
     max_depth = 10
   }
 
+  const sort = get(userSettings)?.defaultSort?.comments ?? 'Hot'
+
   return {
     singleThread: parentId != undefined,
     post: post,
+    commentSort: sort,
     streamed: {
       comments: getClient(params.instance.toLowerCase(), fetch).getComments({
         post_id: Number(params.id),
@@ -37,7 +41,7 @@ export async function load({ params, url, fetch }) {
         page: 1,
         max_depth: max_depth,
         saved_only: false,
-        sort: 'Hot',
+        sort: sort,
         auth: get(profile)?.jwt,
         parent_id: parentId,
       }),

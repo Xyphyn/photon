@@ -1,4 +1,4 @@
-import type { SortType } from 'lemmy-js-client'
+import type { CommentSortType, SortType } from 'lemmy-js-client'
 import { writable } from 'svelte/store'
 
 interface Settings {
@@ -16,6 +16,7 @@ interface Settings {
   defaultSort: {
     sort: SortType
     feed: 'All' | 'Subscribed' | 'Local'
+    comments: CommentSortType
   }
   hidePosts: {
     deleted: boolean
@@ -40,13 +41,14 @@ const defaultSettings: Settings = {
   revertColors: false,
   showInstances: {
     user: false,
-    community: false,
+    community: true,
     comments: false,
   },
   showCompactPosts: false,
   defaultSort: {
     sort: 'Active',
     feed: 'Local',
+    comments: 'Hot',
   },
   hidePosts: {
     deleted: true,
