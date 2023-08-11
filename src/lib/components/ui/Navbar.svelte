@@ -196,11 +196,7 @@
       {$profile?.user ? $profile.user.local_user_view.person.name : 'Profile'}
     </li>
     {#if $profile?.user}
-      <MenuButton
-        link
-        href="/u/{$profile.user.local_user_view.person
-          .name}@{$profile.instance}"
-      >
+      <MenuButton link href="/profile">
         <Icon src={UserCircle} mini width={16} /> Profile
       </MenuButton>
       <MenuButton link href="/inbox">
