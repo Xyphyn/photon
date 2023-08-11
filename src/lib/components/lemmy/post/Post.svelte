@@ -80,6 +80,7 @@
         href="/post/{getInstance()}/{post.post.id}"
         class="self-start overflow-hidden z-10 relative bg-slate-200 dark:bg-zinc-800 rounded-md"
         data-sveltekit-preload-data="off"
+        aria-label={post.post.name}
       >
         <picture
           class="rounded-md overflow-hidden max-h-[min(50vh,500px)] w-full max-w-full"

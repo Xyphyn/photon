@@ -30,6 +30,7 @@
     on:click={() =>
       ($userSettings.expandSidebar = !$userSettings.expandSidebar)}
     class="w-max !p-2 hover:bg-slate-200"
+    aria-label="Collapse sidebar"
   >
     <Icon
       src={ChevronDoubleLeft}
