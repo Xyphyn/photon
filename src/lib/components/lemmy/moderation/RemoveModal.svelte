@@ -29,9 +29,11 @@
       : item.post.removed
     : false
 
-  $: replyReason = `Your submission${
-    privateMessage ? `in ${item?.post.name}` : ' '
-  }was removed for:\n${reason}`
+  const getReplyReason = (reason: string) => {
+    return `Your submission in *"${item?.post.name}"* was removed for:\n${reason}`
+  }
+
+  $: replyReason = getReplyReason(reason)
 
   async function remove() {
     if (!item) return
@@ -186,7 +188,7 @@
         bind:value={reason}
       />
 
-      {#if !removed && !purge}
+      {#if !removed}
         <Checkbox bind:checked={commentReason}>Reply with reason</Checkbox>
 
         {#if commentReason}
