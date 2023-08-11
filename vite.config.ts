@@ -8,9 +8,6 @@ export default defineConfig({
     SvelteKitPWA({
       registerType: 'autoUpdate',
       strategies: 'generateSW',
-      workbox: {
-        globPatterns: ['client/**/*.{js,css,html,ico,png,svg}'],
-      },
       devOptions: {
         enabled: true,
         type: 'module',

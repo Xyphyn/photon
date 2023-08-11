@@ -37,7 +37,7 @@ export async function load({ params, url, fetch }) {
       comments: getClient(params.instance.toLowerCase(), fetch).getComments({
         post_id: Number(params.id),
         type_: 'All',
-        limit: 25,
+        limit: 50,
         page: 1,
         max_depth: max_depth,
         saved_only: false,

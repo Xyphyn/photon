@@ -46,11 +46,12 @@
 
     data.streamed.comments = getClient().getComments({
       auth: $profile?.jwt,
-      page: commentsPage,
+      page: 1,
       limit: 25,
       type_: 'All',
       post_id: data.post.post_view.post.id,
       sort: commentSort,
+      max_depth: 3,
     })
   }
 </script>
@@ -187,41 +188,6 @@
     {:then comments}
       <Comments {post} nodes={comments} isParent={true} />
     {/await}
-    {#if moreComments}
-      <Button
-        {loading}
-        disabled={loading}
-        color="tertiary"
-        on:click={async () => {
-          if (!moreComments) return
-          loading = true
-
-          const loadedComments = await getClient().getComments({
-            auth: $profile?.jwt,
-            max_depth: 3,
-            page: ++commentsPage,
-            limit: 25,
-            type_: 'All',
-            post_id: data.post.post_view.post.id,
-          })
-
-          if (comments.comments == loadedComments.comments) {
-            comments.comments = [
-              ...comments.comments,
-              ...loadedComments.comments.filter(
-                (comment) => !comments.comments.includes(comment)
-              ),
-            ]
-          } else {
-            moreComments = false
-          }
-
-          loading = false
-        }}
-      >
-        Load more
-      </Button>
-    {/if}
   {:catch}
     <div class="bg-red-500/10 border border-red-500 rounded-md p-4">
       Failed to load comments.
