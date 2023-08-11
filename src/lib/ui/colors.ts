@@ -13,7 +13,7 @@ export enum Color {
   'borderDark' = 'border border-slate-200 dark:border-zinc-800 bg-slate-100 dark:bg-zinc-900 hover:bg-slate-200 hover:dark:bg-zinc-800',
 }
 
-import { writable } from 'svelte/store'
+import { get, writable } from 'svelte/store'
 
 export const theme = writable<'system' | 'light' | 'dark'>('system')
 
@@ -27,6 +27,15 @@ export const toggleTheme = () => {
       return 'light'
     }
   })
+}
+
+export const inDarkTheme = (): boolean => {
+  if (typeof window != 'undefined') {
+    return get(theme) == 'system'
+      ? window.matchMedia('(prefers-color-scheme: dark)').matches
+      : get(theme) == 'dark'
+  }
+  return false
 }
 
 if (typeof localStorage != 'undefined') {

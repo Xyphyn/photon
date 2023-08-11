@@ -11,6 +11,7 @@
   // @ts-ignore
   import { pwaInfo } from 'virtual:pwa-info'
   import PwaReload from '$lib/PwaReload.svelte'
+  import { inDarkTheme } from '$lib/ui/colors.js'
 
   nProgress.configure({
     minimum: 0.4,
@@ -37,6 +38,7 @@
 </script>
 
 <svelte:head>
+  <meta name="theme-color" content={inDarkTheme() ? '#020202' : '#f1f6f9'} />
   {@html webManifest}
 </svelte:head>
 
