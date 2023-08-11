@@ -21,7 +21,6 @@ interface Settings {
   hidePosts: {
     deleted: boolean
     removed: boolean
-    read: boolean
   }
   fullWidthLayout: boolean
   expandSidebar: boolean
@@ -53,7 +52,6 @@ const defaultSettings: Settings = {
   hidePosts: {
     deleted: true,
     removed: false,
-    read: false,
   },
   fullWidthLayout: false,
   expandSidebar: true,

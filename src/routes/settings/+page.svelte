@@ -9,6 +9,7 @@
   import { getInboxNotifications } from '$lib/auth.js'
   import Checkbox from '$lib/components/input/Checkbox.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
+  import Link from '$lib/components/input/Link.svelte'
 
   let data = {
     loading: false,
@@ -48,7 +49,17 @@
   </Setting>
   <Setting>
     <span slot="title">Hide Posts</span>
-    <span slot="description">Hide certain types of posts.</span>
+    <span slot="description">
+      <p>Hide certain types of posts.</p>
+      <p>
+        Looking to hide read posts? That was moved to your <Link
+          href="/profile/settings"
+          highlight
+        >
+          profile settings.
+        </Link>
+      </p>
+    </span>
     <div class="flex flex-row items-center gap-4 flex-wrap">
       <Checkbox bind:checked={$userSettings.hidePosts.deleted}>
         Deleted
@@ -56,7 +67,6 @@
       <Checkbox bind:checked={$userSettings.hidePosts.removed}>
         Removed
       </Checkbox>
-      <Checkbox bind:checked={$userSettings.hidePosts.read}>Read</Checkbox>
     </div>
   </Setting>
   <Setting>

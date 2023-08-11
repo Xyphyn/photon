@@ -23,7 +23,7 @@
   </div>
 {:else}
   {#each posts as post, index (post.post.id)}
-    {#if !($userSettings.hidePosts.deleted && post.post.deleted) && !($userSettings.hidePosts.removed && post.post.removed) && !($userSettings.hidePosts.read && post.read)}
+    {#if !($userSettings.hidePosts.deleted && post.post.deleted) && !($userSettings.hidePosts.removed && post.post.removed)}
       <div
         in:fly={{
           y: -8,
