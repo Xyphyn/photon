@@ -78,7 +78,7 @@
       <!--disabled preloads here since most people will hover over every image while scrolling-->
       <a
         href="/post/{getInstance()}/{post.post.id}"
-        class="self-start overflow-hidden z-10 relative bg-slate-200 rounded-md"
+        class="self-start overflow-hidden z-10 relative bg-slate-200 dark:bg-zinc-800 rounded-md"
         data-sveltekit-preload-data="off"
       >
         <picture
