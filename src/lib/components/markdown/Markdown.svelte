@@ -65,7 +65,7 @@
   }
 
   .markdown :global(blockquote) {
-    @apply leading-[1px] border-l-2 border-black/20 dark:border-white/20 pl-2 my-1 h-max;
+    @apply leading-[1px] border-l-2 border-slate-400 dark:border-zinc-600 pl-2 my-1 h-max;
   }
 
   .markdown :global(p) {
