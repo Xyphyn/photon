@@ -73,7 +73,8 @@
         ? 'This post is locked.'
         : placeholders.get('comment')}
       bind:value
-      disabled={locked}
+      disabled={locked || loading}
+      on:confirm={submit}
     />
   {/if}
   {#if actions || previewAction}

@@ -8,6 +8,7 @@
   import Modal from '$lib/components/ui/modal/Modal.svelte'
   import { toast } from '$lib/components/ui/toasts/toasts.js'
   import { uploadImage } from '$lib/lemmy.js'
+  import { createEventDispatcher } from 'svelte'
   import {
     CodeBracket,
     ExclamationTriangle,
@@ -21,6 +22,9 @@
   export let value: string = ''
   export let label: string | undefined = undefined
   export let previewButton: boolean = false
+  export let disabled: boolean = false
+
+  const dispatcher = createEventDispatcher<{ confirm: string }>()
 
   let textArea: HTMLTextAreaElement
 
@@ -89,6 +93,7 @@
     KeyS: () => wrapSelection('~~', '~~'),
     KeyH: () => wrapSelection('\n# ', ''),
     KeyK: () => wrapSelection('[](', ')'),
+    Enter: () => dispatcher('confirm', value),
   }
 </script>
 
@@ -223,6 +228,7 @@ overflow-hidden focus-within:border-black focus-within:dark:border-white transit
         bind:value
         bind:item={textArea}
         on:keydown={(e) => {
+          if (disabled) return
           if (e.ctrlKey) {
             // @ts-ignore
             let shortcut = shortcuts[e.code]
