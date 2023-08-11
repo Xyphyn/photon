@@ -96,7 +96,7 @@
           <img
             src="{post.post.url}?thumbnail=512&format=webp"
             loading="lazy"
-            class="object-cover rounded-md max-h-[50vh] h-auto z-30 opacity-0 transition-opacity duration-300"
+            class="object-cover rounded-md max-h-[80vh] h-auto z-30 opacity-0 transition-opacity duration-300"
             class:opacity-100={loaded}
             width={512}
             height={300}
