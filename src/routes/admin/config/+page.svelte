@@ -43,6 +43,12 @@
         registration_mode: local_site.registration_mode,
         community_creation_admin_only: local_site.community_creation_admin_only,
         require_email_verification: local_site.require_email_verification,
+        application_email_admins: local_site.application_email_admins,
+        reports_email_admins: local_site.reports_email_admins,
+        private_instance: local_site.private_instance,
+        hide_modlog_mod_names: local_site.hide_modlog_mod_names,
+        slur_filter_regex: local_site.slur_filter_regex,
+        federation_enabled: local_site.federation_enabled,
       })
       toast({
         content: 'Updated your site.',
