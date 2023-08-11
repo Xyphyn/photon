@@ -8,7 +8,6 @@
   import { toast } from '$lib/components/ui/toasts/toasts.js'
   import { getClient } from '$lib/lemmy.js'
   import type { SaveUserSettings } from 'lemmy-js-client'
-  import { onMount } from 'svelte'
 
   export let data
 
