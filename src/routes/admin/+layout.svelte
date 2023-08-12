@@ -7,8 +7,13 @@
 <div class="flex flex-col gap-4 h-full">
   <MultiSelect
     headless
-    options={['/admin/config', '/admin/applications', '/admin/taglines']}
-    optionNames={['Configuration', 'Applications', 'Taglines']}
+    options={[
+      '/admin/config',
+      '/admin/applications',
+      '/admin/taglines',
+      '/admin/team',
+    ]}
+    optionNames={['Configuration', 'Applications', 'Taglines', 'Team']}
     selected={$page.url.pathname}
     on:select={(e) => {
       goto(e.detail)
