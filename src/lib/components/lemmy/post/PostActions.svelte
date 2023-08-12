@@ -97,6 +97,7 @@
       editingPost={post.post}
       on:submit={(e) => {
         editing = false
+        post = e.detail
         dispatcher('edit', e.detail)
       }}
     >
