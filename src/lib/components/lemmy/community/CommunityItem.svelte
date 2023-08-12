@@ -22,7 +22,11 @@
     <span
       class="break-words max-w-full w-max text-base font-bold text-sky-400 hover:underline"
     >
-      <CommunityLink avatar community={community.community} />
+      <CommunityLink
+        showInstance={false}
+        avatar
+        community={community.community}
+      />
     </span>
     <div class="ml-auto">
       <Subscribe {community} let:subscribe let:subscribing>

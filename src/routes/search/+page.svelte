@@ -12,6 +12,7 @@
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import Spinner from '$lib/components/ui/loader/Spinner.svelte'
   import { isComment, isCommunity, isPost, isUser } from '$lib/lemmy/item.js'
+  import { searchParam } from '$lib/util.js'
   import type {
     CommentView,
     CommunityView,
@@ -84,7 +85,7 @@
 {:else}
   {#await data.streamed.object}
     <div
-      class="flex gap-4 items-center mt-4"
+      class="flex gap-2 items-center mt-4"
       out:slide={{ axis: 'y', easing: expoOut }}
     >
       <Spinner width={24} />
@@ -125,12 +126,7 @@
   {#if data.results.length > 0}
     <Pageination
       bind:page={pageNum}
-      on:change={(p) => {
-        $page.url.searchParams.set('page', p.detail.toString())
-        goto($page.url, {
-          invalidateAll: true,
-        })
-      }}
+      on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
     />
   {/if}
 {/if}
