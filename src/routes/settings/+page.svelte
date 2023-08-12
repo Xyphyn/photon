@@ -1,6 +1,6 @@
 <script lang="ts">
   import Switch from '$lib/components/input/Switch.svelte'
-  import { userSettings } from '$lib/settings'
+  import { defaultSettings, userSettings } from '$lib/settings'
   import Setting from './Setting.svelte'
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
   import Sort from '$lib/components/lemmy/Sort.svelte'
@@ -10,6 +10,7 @@
   import Checkbox from '$lib/components/input/Checkbox.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import Link from '$lib/components/input/Link.svelte'
+  import { ArrowLeftCircle, ArrowPath, Icon } from 'svelte-hero-icons'
 
   let data = {
     loading: false,
@@ -21,7 +22,21 @@
 </svelte:head>
 
 <div class="flex flex-col">
-  <h1 class="text-3xl font-bold">Settings</h1>
+  <h1 class="text-3xl font-bold flex justify-between">
+    Settings <Button
+      on:click={() => {
+        toast({
+          content:
+            'Are you sure you want to reset your settings to the default?',
+          action: () => ($userSettings = defaultSettings),
+        })
+      }}
+      class="font-normal"
+    >
+      <Icon src={ArrowPath} mini size="16" slot="icon" />
+      Reset to default
+    </Button>
+  </h1>
   <SectionTitle class="mt-4">General</SectionTitle>
   <Setting>
     <span slot="title">Default sort</span>

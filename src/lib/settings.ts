@@ -34,7 +34,7 @@ interface Settings {
   nsfwBlur: boolean
 }
 
-const defaultSettings: Settings = {
+export const defaultSettings: Settings = {
   newComments: true,
   expandableImages: true,
   markReadPosts: true,
