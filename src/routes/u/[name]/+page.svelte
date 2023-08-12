@@ -13,6 +13,7 @@
     NoSymbol,
     PencilSquare,
     ShieldExclamation,
+    UserPlus,
   } from 'svelte-hero-icons'
   import Button from '$lib/components/input/Button.svelte'
   import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
@@ -29,11 +30,13 @@
   import TextArea from '$lib/components/input/TextArea.svelte'
   import { profile } from '$lib/auth.js'
   import { ban, isAdmin } from '$lib/components/lemmy/moderation/moderation.js'
+  import Menu from '$lib/components/ui/menu/Menu.svelte'
+  import ShieldIcon from '$lib/components/lemmy/moderation/ShieldIcon.svelte'
+  import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
 
   export let data
 
   let blocking = false
-  let banning = false
 
   async function blockUser(block: number) {
     if (!$profile?.user || !$profile?.jwt) throw new Error('Unauthenticated')
@@ -214,19 +217,6 @@
             <Icon slot="icon" solid size="16" src={Envelope} />
             Message
           </Button>
-          {#if isAdmin($profile?.user)}
-            <Button
-              size="lg"
-              color="danger"
-              loading={banning}
-              disabled={banning}
-              on:click={() =>
-                ban(data.person_view.person.banned, data.person_view.person)}
-            >
-              <Icon slot="icon" mini size="16" src={ShieldExclamation} />
-              {data.person_view.person.banned ? 'Unban' : 'Ban'}
-            </Button>
-          {/if}
           <Button
             size="lg"
             color="danger"
@@ -240,17 +230,64 @@
               : 'Block'}
           </Button>
         </div>
+        {#if isAdmin($profile?.user)}
+          <Menu let:toggleOpen class="ml-auto" alignment="bottom-right">
+            <Button size="square-md" on:click={toggleOpen} slot="button">
+              <ShieldIcon width={16} filled />
+            </Button>
+            {#if data.person_view.person.local}
+              <MenuButton
+                on:click={() => {
+                  toast({
+                    content: `Are you sure you want to ${
+                      data.person_view.person.admin ? 'remove' : 'appoint'
+                    } ${data.person_view.person.name} as an admin?`,
+                    duration: 99999 * 1000,
+                    type: 'info',
+                    action: async () => {
+                      if (!$profile?.jwt) return
+                      await getClient()
+                        .addAdmin({
+                          auth: $profile.jwt,
+                          added: !data.person_view.person.admin,
+                          person_id: data.person_view.person.id,
+                        })
+                        .then(() => {
+                          data.person_view.person.admin =
+                            !data.person_view.person.admin
+                        })
+                        .catch(() => {
+                          toast({
+                            content: 'Failed to modify that user.',
+                            type: 'error',
+                          })
+                        })
+                    },
+                  })
+                }}
+              >
+                <Icon slot="icon" mini size="16" src={UserPlus} />
+                {data.person_view.person.admin
+                  ? 'Remove admin'
+                  : 'Appoint as admin'}
+              </MenuButton>
+            {/if}
+            <MenuButton
+              color="dangerSecondary"
+              on:click={() =>
+                ban(data.person_view.person.banned, data.person_view.person)}
+            >
+              <Icon slot="icon" mini size="16" src={ShieldExclamation} />
+              {data.person_view.person.banned ? 'Unban' : 'Ban'}
+            </MenuButton>
+          </Menu>
+        {/if}
       {/if}
       <div>
         <h1 class="font-bold text-lg">
-          {data.person_view.person.display_name ?? data.person_view.person.name}
+          <UserLink badges user={data.person_view.person} />
         </h1>
-        <span class="text-sm opacity-80 flex flex-row gap-0">
-          {#if data.person_view.person.display_name}
-            {data.person_view.person.name}@
-          {/if}
-          {new URL(data.person_view.person.actor_id).hostname}
-        </span>
+        <span>{new URL(data.person_view.person.actor_id).hostname}</span>
       </div>
       {#if data.person_view.person.bio}
         <Markdown source={data.person_view.person.bio} />

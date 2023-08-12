@@ -10,6 +10,7 @@
   export let avatarSize: number = 24
   export let badges: boolean = true
   export let inComment: boolean = false
+  export let showInstance: boolean = false
 
   function linkFromCommunity(user: Person) {
     const domain = new URL(user.actor_id).hostname
@@ -31,7 +32,7 @@
     class:font-bold={user.admin}
   >
     {$userSettings.displayNames ? user.display_name ?? user.name : user.name}
-    {#if $userSettings.showInstances.user || ($userSettings.showInstances.comments && inComment)}
+    {#if $userSettings.showInstances.user || ($userSettings.showInstances.comments && inComment) || showInstance}
       <span class="text-slate-500 dark:text-zinc-500 font-normal">
         @{new URL(user.actor_id).hostname}
       </span>
