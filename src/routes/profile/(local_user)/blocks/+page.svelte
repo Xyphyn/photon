@@ -66,7 +66,7 @@
           <div
             class="flex flex-row gap-4 items-center py-4 justify-between"
             animate:flip={{ duration: 250 }}
-            out:slide={{ axis: 'y' }}
+            out:slide|local={{ axis: 'y' }}
           >
             <UserLink user={block.target} avatar badges />
             <Button size="square-md" on:click={() => action(block)}>
@@ -95,7 +95,7 @@
           <div
             class="flex flex-row gap-4 items-center py-4 justify-between"
             animate:flip={{ duration: 250 }}
-            out:slide={{ axis: 'y' }}
+            out:slide|local={{ axis: 'y' }}
           >
             <CommunityLink community={block.community} avatar />
             <Button size="square-md" on:click={() => action(block)}>
