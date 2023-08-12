@@ -8,10 +8,11 @@
   import Button from '$lib/components/input/Button.svelte'
   import { toast } from '$lib/components/ui/toasts/toasts.js'
   import SearchInput from '$lib/components/input/SearchInput.svelte'
-  import { Check, Icon } from 'svelte-hero-icons'
+  import { Check, Icon, Photo } from 'svelte-hero-icons'
   import { profile } from '$lib/auth.js'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { placeholders } from '$lib/util.js'
+  import Checkbox from '$lib/components/input/Checkbox.svelte'
 
   export let edit = false
 
@@ -33,6 +34,7 @@
     body: string
     image: FileList | null
     url: string | undefined
+    nsfw: boolean
     loading: boolean
   } = {
     community: null,
@@ -40,6 +42,7 @@
     body: '',
     image: null,
     url: undefined,
+    nsfw: false,
     loading: false,
   }
 
@@ -104,6 +107,7 @@
           body: data.body,
           url: data.url || undefined,
           post_id: editingPost.id,
+          nsfw: data.nsfw,
         })
 
         if (!post) throw new Error('Failed to edit post')
@@ -120,6 +124,7 @@
           name: data.title,
           body: data.body,
           url: data.url,
+          nsfw: data.nsfw,
         })
 
         if (!post) throw new Error('Failed to upload post')
@@ -134,7 +139,21 @@
   }
 
   let communitySearch = ''
+
+  let uploadingImage = false
 </script>
+
+{#if uploadingImage}
+  {#await import('$lib/components/lemmy/modal/ImageUploadModal.svelte') then { default: UploadModal }}
+    <UploadModal
+      bind:open={uploadingImage}
+      on:upload={(e) => {
+        if (e.detail) data.url = e.detail
+        uploadingImage = false
+      }}
+    />
+  {/await}
+{/if}
 
 <form on:submit|preventDefault={submit} class="flex flex-col gap-4">
   <slot name="formtitle">
@@ -192,26 +211,29 @@
     bind:value={data.title}
     placeholder={placeholders.get('post')}
   />
-  <TextInput
-    label="URL"
-    bind:value={data.url}
-    placeholder={placeholders.get('url')}
-  />
+  <div class="flex gap-2 w-full items-end">
+    <TextInput
+      label="URL"
+      bind:value={data.url}
+      placeholder={placeholders.get('url')}
+      class="w-full"
+    />
+    <Button
+      size="square-md"
+      on:click={() => (uploadingImage = !uploadingImage)}
+      style="width: 46px !important; height: 42px; padding: 0;"
+    >
+      <Icon src={Photo} size="18" mini slot="icon" />
+    </Button>
+  </div>
   <MarkdownEditor
-    rows={9}
+    rows={8}
     label="Body"
     bind:value={data.body}
     placeholder={placeholders.get('post')}
     previewButton
   />
-  <div>
-    <span class="block my-1 font-bold text-sm">Image</span>
-    <FileInput
-      accept="image/jpeg,image/png,image/webp"
-      image
-      bind:files={data.image}
-    />
-  </div>
+  <Checkbox bind:checked={data.nsfw}>NSFW</Checkbox>
   <Button
     submit
     color="primary"

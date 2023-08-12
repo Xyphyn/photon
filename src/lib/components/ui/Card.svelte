@@ -23,6 +23,7 @@
   class="break-words
     {getColor(cardColor)} rounded-md {clazz}"
   {...$$restProps}
+  on:click|stopPropagation
 >
   <slot />
 </div>

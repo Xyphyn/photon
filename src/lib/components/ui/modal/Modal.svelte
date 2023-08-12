@@ -22,11 +22,13 @@ flex flex-col items-center justify-center bg-black/50 backdrop-blur-sm box-borde
   >
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div
-      on:click|stopPropagation={() => {}}
       transition:scale={{ start: 0.9, easing: expoOut }}
-      class="overflow-y-auto {$$props.class} rounded-xl max-w-full box-border"
+      class="overflow-y-auto {$$props.class} rounded-xl max-w-full box-border w-full"
     >
-      <Card class="w-full dark:!bg-zinc-950 rounded-xl max-w-xl box-border">
+      <Card
+        class="w-full dark:!bg-zinc-950 rounded-xl max-w-xl box-border mx-auto"
+        on:click={() => {}}
+      >
         <div class="p-6 flex flex-col gap-4 w-full">
           <div class="flex flex-row max-w-full">
             <h1 class="font-bold text-2xl w-max max-w-full">
