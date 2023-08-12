@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { createEventDispatcher, onMount } from 'svelte'
+  import { createEventDispatcher, onDestroy, onMount } from 'svelte'
   import { getClient, uploadImage } from '$lib/lemmy.js'
   import type { Community, Post, PostView } from 'lemmy-js-client'
   import TextInput from '$lib/components/input/TextInput.svelte'
@@ -13,6 +13,7 @@
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { placeholders } from '$lib/util.js'
   import Checkbox from '$lib/components/input/Checkbox.svelte'
+  import { getSessionStorage, setSessionStorage } from '$lib/session.js'
 
   export let edit = false
 
@@ -46,6 +47,8 @@
     loading: false,
   }
 
+  let saveDraft = edit ? false : true
+
   let communities: Community[] = []
 
   const dispatcher = createEventDispatcher<{ submit: PostView }>()
@@ -70,10 +73,22 @@
 
       communities = list.communities.map((c) => c.community)
     }
+
+    const draft = getSessionStorage('postDraft')
+    if (draft && !edit) {
+      // @ts-ignore
+      draft.loading = false
+      // @ts-ignore
+      data = draft
+    }
+  })
+
+  onDestroy(() => {
+    if (saveDraft) setSessionStorage('postDraft', data)
   })
 
   async function submit() {
-    if (!data.community && !edit) {
+    if ((!data.community || communitySearch == '') && !edit) {
       toast({
         type: 'warning',
         content: 'You need to set a community.',
@@ -131,6 +146,7 @@
 
         console.log(`Uploaded post ${post?.post_view.post.id}`)
 
+        saveDraft = false
         dispatcher('submit', post.post_view)
       }
     } catch (err) {

@@ -4,7 +4,17 @@ interface SessionStorage {
     id: number
     name: string
   } | undefined
-  postData: {}
+  postDraft:
+    | {
+        community: number | null
+        title: string
+        body: string
+        image: FileList | null
+        url: string | undefined
+        nsfw: boolean
+        loading: boolean
+      }
+    | undefined
 }
 
 export const setSessionStorage = (
