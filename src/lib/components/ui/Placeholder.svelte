@@ -6,7 +6,7 @@
     <h1 class="font-bold text-3xl"><slot name="title" /></h1>
   {/if}
   {#if $$slots.description}
-    <p class="text-lg"><slot name="description" /></p>
+    <p class="text-lg text-center"><slot name="description" /></p>
   {/if}
   <slot name="action" />
 </div>
