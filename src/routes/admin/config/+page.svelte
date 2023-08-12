@@ -14,16 +14,12 @@
 
   export let data: PageData
 
-  const site = {
-    ...data.site?.site_view.site,
-  }
-
-  const local_site = {
-    ...data.site?.site_view.local_site,
-  }
-  const h = {
-    fart: 'hey',
-  }
+  const formData: Omit<EditSite, 'auth'> | undefined = data.site
+    ? {
+        ...data.site.site_view.local_site,
+        ...data.site.site_view.site,
+      }
+    : undefined
 
   async function save() {
     if (!$profile?.jwt) return
@@ -34,21 +30,7 @@
     try {
       await getClient().editSite({
         auth: jwt,
-        name: site.name,
-        description: site.description,
-        sidebar: site.sidebar,
-        legal_information: local_site.legal_information,
-        enable_downvotes: local_site.enable_downvotes,
-        enable_nsfw: local_site.enable_nsfw,
-        registration_mode: local_site.registration_mode,
-        community_creation_admin_only: local_site.community_creation_admin_only,
-        require_email_verification: local_site.require_email_verification,
-        application_email_admins: local_site.application_email_admins,
-        reports_email_admins: local_site.reports_email_admins,
-        private_instance: local_site.private_instance,
-        hide_modlog_mod_names: local_site.hide_modlog_mod_names,
-        slur_filter_regex: local_site.slur_filter_regex,
-        federation_enabled: local_site.federation_enabled,
+        ...formData,
       })
       toast({
         content: 'Updated your site.',
@@ -73,31 +55,23 @@
 
 <form class="flex flex-col gap-4" on:submit|preventDefault={save}>
   <h1 class="font-bold text-2xl">Site configuration</h1>
-  {#if site}
-    <TextInput bind:value={site.name} label="Name" />
-    <TextInput bind:value={site.description} label="Description" />
-    <MarkdownEditor previewButton bind:value={site.sidebar} label="Sidebar" />
-  {/if}
-  {#if local_site}
+  {#if formData}
+    <TextInput bind:value={formData.name} label="Name" />
+    <TextInput bind:value={formData.description} label="Description" />
     <MarkdownEditor
       previewButton
-      bind:value={local_site.legal_information}
+      bind:value={formData.sidebar}
+      label="Sidebar"
+    />
+    <MarkdownEditor
+      previewButton
+      bind:value={formData.legal_information}
       label="Legal"
     />
-    <Checkbox
-      checked={local_site.enable_downvotes ?? true}
-      on:change={(e) => {
-        local_site.enable_downvotes = !local_site.enable_downvotes
-      }}
-    >
+    <Checkbox bind:checked={formData.enable_downvotes} defaultValue={true}>
       Enable downvotes
     </Checkbox>
-    <Checkbox
-      checked={local_site.enable_nsfw ?? true}
-      on:change={(e) => {
-        local_site.enable_nsfw = !local_site.enable_nsfw
-      }}
-    >
+    <Checkbox checked={formData.enable_nsfw} defaultValue={true}>
       Enable NSFW
     </Checkbox>
     <SelectMenu
@@ -105,74 +79,45 @@
       alignment="top-left"
       options={['Closed', 'RequireApplication', 'Open']}
       optionNames={['Closed', 'Require Application', 'Open Registration']}
-      selected={local_site.registration_mode ?? 'Open'}
+      selected={formData.registration_mode ?? 'Open'}
       on:select={(e) => {
         // @ts-ignore
-        local_site.registration_mode = e.detail
+        formData.registration_mode = e.detail
       }}
     />
     <Checkbox
-      checked={local_site.community_creation_admin_only ?? true}
-      on:change={(e) => {
-        local_site.community_creation_admin_only =
-          !local_site.community_creation_admin_only
-      }}
+      bind:checked={formData.community_creation_admin_only}
+      defaultValue={true}
     >
       Only admins can create communities
     </Checkbox>
     <Checkbox
-      checked={local_site.require_email_verification ?? true}
-      on:change={(e) => {
-        local_site.require_email_verification =
-          !local_site.require_email_verification
-      }}
+      bind:checked={formData.require_email_verification}
+      defaultValue={true}
     >
       Require email verification
     </Checkbox>
     <Checkbox
-      checked={local_site.application_email_admins ?? true}
-      on:change={(e) => {
-        local_site.application_email_admins =
-          !local_site.application_email_admins
-      }}
+      bind:checked={formData.application_email_admins}
+      defaultValue={true}
     >
       Email admins on receiving new applications
     </Checkbox>
-    <Checkbox
-      checked={local_site.reports_email_admins ?? true}
-      on:change={(e) => {
-        local_site.reports_email_admins = !local_site.reports_email_admins
-      }}
-    >
+    <Checkbox bind:checked={formData.reports_email_admins} defaultValue={true}>
       Email admins on receiving new reports
     </Checkbox>
-    <Checkbox
-      checked={local_site.private_instance ?? true}
-      on:change={(e) => {
-        local_site.private_instance = !local_site.private_instance
-      }}
-    >
+    <Checkbox bind:checked={formData.private_instance} defaultValue={true}>
       Private instance
     </Checkbox>
-    <Checkbox
-      checked={local_site.hide_modlog_mod_names ?? true}
-      on:change={(e) => {
-        local_site.hide_modlog_mod_names = !local_site.hide_modlog_mod_names
-      }}
-    >
+    <Checkbox bind:checked={formData.hide_modlog_mod_names} defaultValue={true}>
       Hide modlog mod names
     </Checkbox>
     <TextInput
-      bind:value={local_site.slur_filter_regex}
+      bind:value={formData.slur_filter_regex}
       label="Slur filter regex"
       placeholder="(word1|word2)"
     />
-    <Checkbox
-      checked={local_site.federation_enabled ?? true}
-      on:change={(e) => {
-        local_site.federation_enabled = !local_site.federation_enabled
-      }}
-    >
+    <Checkbox bind:checked={formData.federation_enabled} defaultValue={true}>
       Federation enabled
     </Checkbox>
   {/if}

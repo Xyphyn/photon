@@ -1,7 +1,8 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
 
-  export let checked: boolean | undefined = false
+  export let defaultValue: boolean = false
+  export let checked: boolean | undefined = defaultValue
   const dispatcher = createEventDispatcher<{ change: boolean }>()
 </script>
 
