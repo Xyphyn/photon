@@ -11,6 +11,7 @@
     Icon,
     Newspaper,
     PencilSquare,
+    Share,
     Square2Stack,
     Trash,
     UserCircle,
@@ -158,13 +159,12 @@
       </MenuButton>
     {/if}
     <MenuButton
-      on:click={() => {
+      on:click={() =>
         navigator.clipboard.writeText(
-          `${$page.url.origin}/post/${getInstance()}/${post.post.id}`
-        )
-      }}
+          `https://${getInstance()}/post/${post.post.id}`
+        )}
     >
-      <Icon src={Square2Stack} width={16} mini />
+      <Icon src={Share} width={16} mini />
       Copy Link
     </MenuButton>
     {#if $profile?.jwt}
