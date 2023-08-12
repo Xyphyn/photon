@@ -31,6 +31,7 @@ interface Settings {
     notifRate: number
   }
   displayNames: boolean
+  nsfwBlur: boolean
 }
 
 const defaultSettings: Settings = {
@@ -61,6 +62,7 @@ const defaultSettings: Settings = {
     notifRate: 10 * 60 * 1000,
   },
   displayNames: true,
+  nsfwBlur: true,
 }
 
 export const userSettings = writable(defaultSettings)

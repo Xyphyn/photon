@@ -153,7 +153,7 @@
       {#if actions}
         <div class="flex flex-row gap-2 items-center">
           <CommentActions
-            comment={node.comment_view}
+            bind:comment={node.comment_view}
             bind:replying
             on:edit={() => (editing = true)}
           />

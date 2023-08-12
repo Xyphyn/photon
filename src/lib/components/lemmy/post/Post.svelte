@@ -101,7 +101,7 @@
             class:opacity-100={loaded}
             width={512}
             height={300}
-            class:blur-3xl={post.post.nsfw}
+            class:blur-3xl={post.post.nsfw && $userSettings.nsfwBlur}
             on:load={() => (loaded = true)}
           />
         </picture>
@@ -129,11 +129,8 @@
   {/if}
   {#if actions}
     <PostActions
-      {post}
+      bind:post
       on:edit={(e) => {
-        post.post.name = e.detail.post.name
-        post.post.body = e.detail.post.body
-        post.post.url = e.detail.post.url
         toast({
           content: 'The post was edited successfully.',
           type: 'success',

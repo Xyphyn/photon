@@ -109,7 +109,7 @@
       op={post.creator_id == node.comment_view.creator.id}
     >
       {#if node.children?.length > 0}
-        <svelte:self {post} nodes={node.children} isParent={false} />
+        <svelte:self {post} bind:nodes={node.children} isParent={false} />
       {/if}
       {#if node.comment_view.counts.child_count > 0 && node.children.length == 0}
         <div

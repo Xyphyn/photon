@@ -22,15 +22,12 @@
 
   export let data
 
-  const postData = data.post.post_view
-  const post = postData.post
-
   onMount(async () => {
-    if (!postData.read && $profile?.jwt) {
+    if (!data.post.post_view.read && $profile?.jwt) {
       getClient().markPostAsRead({
         auth: $profile.jwt,
         read: true,
-        post_id: post.id,
+        post_id: data.post.post_view.post.id,
       })
     }
   })
@@ -60,11 +57,11 @@
   <title>{data.post.post_view.post.name}</title>
   <meta property="og:title" content={data.post.post_view.post.name} />
   <meta property="og:url" content={$page.url.toString()} />
-  {#if isImage(post.url)}
-    <meta property="og:image" content={post.url} />
+  {#if isImage(data.post.post_view.post.url)}
+    <meta property="og:image" content={data.post.post_view.post.url} />
   {/if}
-  {#if post.body}
-    <meta property="og:description" content={post.body} />
+  {#if data.post.post_view.post.body}
+    <meta property="og:description" content={data.post.post_view.post.body} />
   {/if}
 </svelte:head>
 
@@ -86,72 +83,68 @@
   {/if}
 
   <PostMeta
-    community={postData.community}
-    user={postData.creator}
-    upvotes={postData.counts.upvotes}
-    downvotes={postData.counts.downvotes}
-    deleted={postData.post.deleted}
-    removed={postData.post.removed}
-    locked={postData.post.locked}
-    featured={postData.post.featured_community || postData.post.featured_local}
-    nsfw={postData.post.nsfw}
-    published={new Date(postData.post.published + 'Z')}
-    saved={postData.saved}
+    community={data.post.post_view.community}
+    user={data.post.post_view.creator}
+    upvotes={data.post.post_view.counts.upvotes}
+    downvotes={data.post.post_view.counts.downvotes}
+    deleted={data.post.post_view.post.deleted}
+    removed={data.post.post_view.post.removed}
+    locked={data.post.post_view.post.locked}
+    featured={data.post.post_view.post.featured_community ||
+      data.post.post_view.post.featured_local}
+    nsfw={data.post.post_view.post.nsfw}
+    published={new Date(data.post.post_view.post.published + 'Z')}
+    saved={data.post.post_view.saved}
   />
-  <h1 class="font-bold text-lg">{post.name}</h1>
-  {#if isImage(post.url)}
+  <h1 class="font-bold text-lg">{data.post.post_view.post.name}</h1>
+  {#if isImage(data.post.post_view.post.url)}
     <img
-      src={post.url}
-      alt={post.name}
+      src={data.post.post_view.post.url}
+      alt={data.post.post_view.post.name}
       class="rounded-md max-w-screen max-h-[80svh] mx-auto"
     />
-  {:else if isVideo(post.url)}
+  {:else if isVideo(data.post.post_view.post.url)}
     <!-- svelte-ignore a11y-media-has-caption -->
     <video class="rounded-md max-w-screen max-h-[80svh] mx-auto" controls>
-      <source src={post.url} />
+      <source src={data.post.post_view.post.url} />
     </video>
-  {:else if post.url && !post.thumbnail_url}
+  {:else if data.post.post_view.post.url && !data.post.post_view.post.thumbnail_url}
     <a
-      href={post.url}
+      href={data.post.post_view.post.url}
       class="max-w-full overflow-hidden overflow-ellipsis whitespace-nowrap text-sky-400 hover:underline text-xs"
     >
-      {post.url}
+      {data.post.post_view.post.url}
     </a>
-  {:else if post.thumbnail_url && post.url}
+  {:else if data.post.post_view.post.thumbnail_url && data.post.post_view.post.url}
     <PostLink
-      thumbnail_url={post.thumbnail_url}
-      url={post.url}
-      nsfw={post.nsfw}
+      thumbnail_url={data.post.post_view.post.thumbnail_url}
+      url={data.post.post_view.post.url}
+      nsfw={data.post.post_view.post.nsfw}
     />
   {/if}
-  {#if post.body}
+  {#if data.post.post_view.post.body}
     <div
       class="bg-slate-100 border border-slate-200 dark:border-zinc-800
     dark:bg-zinc-900 p-2 text-sm rounded-md leading-[22px]"
     >
-      <Markdown source={post.body} />
+      <Markdown source={data.post.post_view.post.body} />
     </div>
   {/if}
   <div class="w-full relative">
     <PostActions
-      post={data.post.post_view}
-      on:edit={(e) => {
-        post.name = e.detail.post.name
-        post.body = e.detail.post.body
-        post.url = e.detail.post.url
-
+      bind:post={data.post.post_view}
+      on:edit={() =>
         toast({
           content: 'The post was edited successfully.',
           type: 'success',
-        })
-      }}
+        })}
     />
   </div>
 </div>
 <div class="mt-4 flex flex-col gap-2">
   <div class="font-bold text-lg">
     Comments <span class="text-sm font-normal ml-2 opacity-80">
-      {postData.counts.comments}
+      {data.post.post_view.counts.comments}
     </span>
   </div>
   <MultiSelect
@@ -172,13 +165,13 @@
   {:then comments}
     {#if $profile?.user}
       <CommentForm
-        postId={post.id}
+        postId={data.post.post_view.post.id}
         on:comment={(comment) =>
           (comments.comments = [
             comment.detail.comment_view,
             ...comments.comments,
           ])}
-        locked={postData.post.locked}
+        locked={data.post.post_view.post.locked}
       />
     {/if}
     {#await buildCommentsTreeAsync(comments.comments)}
@@ -186,7 +179,11 @@
         <Spinner width={36} />
       </div>
     {:then comments}
-      <Comments {post} nodes={comments} isParent={true} />
+      <Comments
+        post={data.post.post_view.post}
+        nodes={comments}
+        isParent={true}
+      />
     {/await}
   {:catch}
     <div class="bg-red-500/10 border border-red-500 rounded-md p-4">

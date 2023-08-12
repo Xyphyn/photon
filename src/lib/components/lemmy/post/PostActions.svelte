@@ -59,7 +59,7 @@
   }
 
   async function save(post: PostView) {
-    if (!$profile?.jwt) return
+    if (!$profile?.jwt) return false
 
     const saved = post.saved
 
@@ -79,6 +79,8 @@
         type: 'error',
       })
     }
+
+    return post.saved
   }
 
   const dispatcher = createEventDispatcher<{ edit: PostView }>()
@@ -119,7 +121,7 @@
   </Button>
   <div class="ml-auto" />
   {#if $profile?.user && (amMod($profile.user, post.community) || isAdmin($profile.user))}
-    <ModerationMenu item={post} community={post.community} />
+    <ModerationMenu bind:item={post} community={post.community} />
   {/if}
   <Menu alignment="bottom-right" class="overflow-auto" let:toggleOpen>
     <Button
@@ -166,7 +168,7 @@
       Copy Link
     </MenuButton>
     {#if $profile?.jwt}
-      <MenuButton on:click={() => save(post)}>
+      <MenuButton on:click={async () => (post.saved = await save(post))}>
         <Icon src={post.saved ? BookmarkSlash : Bookmark} width={16} mini />
         {post.saved ? 'Unsave' : 'Save'}
       </MenuButton>

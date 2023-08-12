@@ -78,7 +78,7 @@
     <span class="text-xs">Reply</span>
   </Button>
   {#if $profile?.user && (amMod($profile?.user, comment.community) || isAdmin($profile.user))}
-    <CommentModerationMenu item={comment} />
+    <CommentModerationMenu bind:item={comment} />
   {/if}
   <Menu
     let:toggleOpen

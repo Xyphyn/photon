@@ -101,6 +101,13 @@
       bind:selected={$userSettings.showCompactPosts}
     />
   </Setting>
+  <Setting>
+    <Checkbox bind:checked={$userSettings.nsfwBlur} slot="title">
+      NSFW blur
+    </Checkbox>
+    <span slot="description">Blur images of NSFW content.</span>
+  </Setting>
+
   <SectionTitle class="mt-4">Instances</SectionTitle>
   <Setting>
     <span slot="title">Show instances</span>
