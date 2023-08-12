@@ -56,19 +56,11 @@
   <div class="flex flex-row gap-3 items-center">
     <div class="flex flex-row gap-1 items-center">
       <Icon src={UserGroup} width={16} mini />
-      <span>
-        {Intl.NumberFormat('en', { notation: 'compact' }).format(
-          community.counts.subscribers
-        )}
-      </span>
+      <FormattedNumber number={community.counts.subscribers} />
     </div>
     <div class="flex flex-row gap-1 items-center">
       <Icon src={PencilSquare} mini width={16} />
-      <span>
-        {Intl.NumberFormat('en', { notation: 'compact' }).format(
-          community.counts.posts
-        )}
-      </span>
+      <FormattedNumber number={community.counts.posts} />
     </div>
     <div class="flex flex-row gap-1 items-center">
       <Icon src={ChatBubbleOvalLeftEllipsis} mini width={16} />
