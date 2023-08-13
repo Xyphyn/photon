@@ -116,7 +116,7 @@
     <div class="block my-1 font-bold text-sm">{label}</div>
   {/if}
   <div
-    class="flex flex-col border border-slate-200 dark:border-zinc-800 rounded-md
+    class="flex flex-col border border-slate-300 dark:border-zinc-800 rounded-md
 overflow-hidden focus-within:border-black focus-within:dark:border-white transition-colors"
   >
     {#if previewing}

@@ -15,6 +15,7 @@
   import Button from '$lib/components/input/Button.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import { searchParam } from '$lib/util.js'
+  import { addSubscription } from '$lib/lemmy/user.js'
 
   export let data
 
@@ -96,6 +97,11 @@
                       res.community_view.subscribed != 'NotSubscribed'
                         ? 'Subscribed'
                         : 'NotSubscribed'
+
+                    addSubscription(
+                      community.community,
+                      res.community_view.subscribed == 'Subscribed'
+                    )
                   }
                 }}
                 color={community.subscribed == 'Subscribed'

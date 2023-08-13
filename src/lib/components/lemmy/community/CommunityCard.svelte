@@ -9,6 +9,7 @@
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import { getClient } from '$lib/lemmy.js'
+  import { addSubscription } from '$lib/lemmy/user.js'
   import type { CommunityView } from 'lemmy-js-client'
   import {
     Calendar,
@@ -43,6 +44,7 @@
     }
 
     community_view.subscribed = subscribed ? 'NotSubscribed' : 'Subscribed'
+    addSubscription(community_view.community, !subscribed)
 
     loading.subscribing = false
   }
