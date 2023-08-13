@@ -61,7 +61,7 @@
     }
 
     if (passedCommunity) {
-      data.community.community_view = passedCommunity.id
+      data.community = passedCommunity.id
       communitySearch = passedCommunity.name
     } else {
       const list = await getClient().listCommunities({
@@ -88,7 +88,7 @@
   })
 
   async function submit() {
-    if ((!data.community.community_view || communitySearch == '') && !edit) {
+    if ((!data.community || communitySearch == '') && !edit) {
       toast({
         type: 'warning',
         content: 'You need to set a community.',
@@ -135,7 +135,7 @@
         data.url = image || data.url || undefined
         const post = await getClient().createPost({
           auth: $profile.jwt,
-          community_id: data.community.community_view!,
+          community_id: data.community!,
           name: data.title,
           body: data.body,
           url: data.url,
@@ -183,7 +183,7 @@
         <span class="block my-1 font-bold text-sm">
           Community <span class="text-red-500">*</span>
         </span>
-        {#if data.community.community_view}
+        {#if data.community}
           <Icon
             src={Check}
             mini
@@ -211,11 +211,11 @@
         bind:query={communitySearch}
         extractSelected={(c) => {
           if (!c) {
-            data.community.community_view = null
+            data.community = null
             return
           }
 
-          data.community.community_view = c.id
+          data.community = c.id
           communitySearch = `${c.name}@${new URL(c.actor_id).hostname}`
         }}
       />
