@@ -13,7 +13,7 @@ async function customFetch(
   init?: RequestInit | undefined
 ): Promise<Response> {
   const res = await func(input, init)
-  if (!res.ok) throw error(res.status, res.statusText)
+  if (!res.ok) throw error(res.status, await res.text())
   return res
 }
 

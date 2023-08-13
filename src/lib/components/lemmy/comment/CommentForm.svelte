@@ -61,14 +61,14 @@
 <div class="flex flex-col gap-2 relative">
   {#if preview}
     <div
-      class="bg-slate-100 dark:bg-zinc-900 px-3 py-2.5 h-[102px] border
+      class="bg-slate-100 dark:bg-zinc-900 px-3 py-2.5 h-64 border
       border-slate-300 dark:border-zinc-700 rounded-md overflow-auto text-sm"
     >
       <Markdown source={value} />
     </div>
   {:else}
     <MarkdownEditor
-      rows={4}
+      rows={7}
       placeholder={locked
         ? 'This post is locked.'
         : placeholders.get('comment')}
