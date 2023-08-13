@@ -21,11 +21,9 @@ export async function load(req: any) {
       sort: sort,
       auth: get(profile)?.jwt,
     }),
-    community: (
-      await getClient(undefined, req.fetch).getCommunity({
-        name: req.params.name,
-        auth: get(profile)?.jwt,
-      })
-    ).community_view,
+    community: await getClient(undefined, req.fetch).getCommunity({
+      name: req.params.name,
+      auth: get(profile)?.jwt,
+    }),
   }
 }
