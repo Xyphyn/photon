@@ -29,7 +29,7 @@ flex flex-col items-center justify-center bg-black/50 backdrop-blur-sm box-borde
         class="w-full dark:!bg-zinc-950 rounded-xl max-w-xl box-border mx-auto"
         on:click={() => {}}
       >
-        <div class="p-6 flex flex-col gap-4 w-full dark:bg-zinc-950 bg-white border border-slate-200 dark:border-zinc-800">
+        <div on:click|stopPropagation={() => {}} class="p-6 flex flex-col gap-4 w-full dark:bg-zinc-950 bg-white border border-slate-200 dark:border-zinc-800">
           <div class="flex flex-row max-w-full">
             <h1 class="font-bold text-2xl w-max max-w-full">
               <slot name="title" />
