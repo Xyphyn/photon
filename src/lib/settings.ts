@@ -67,7 +67,7 @@ export const defaultSettings: Settings = {
   displayNames: true,
   nsfwBlur: true,
   moderation: {
-    removalReasonPreset: `Your submission in *"{{post.title}}"* was removed for {{reason}}.`,
+    removalReasonPreset: `Your submission in *"{{post}}"* was removed for {{reason}}.`,
   },
 }
 
