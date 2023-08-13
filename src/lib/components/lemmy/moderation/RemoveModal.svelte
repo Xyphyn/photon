@@ -13,6 +13,9 @@
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { Fire, Icon, Trash } from 'svelte-hero-icons'
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
+  import { removalTemplate } from '$lib/components/lemmy/moderation/moderation.js'
+  import { userSettings } from '$lib/settings.js'
+  import { fullCommunityName } from '$lib/util.js'
 
   export let open: boolean
   export let item: PostView | CommentView | undefined = undefined
@@ -30,10 +33,20 @@
     : false
 
   const getReplyReason = (reason: string) => {
-    return `Your submission in *"${item?.post.name}"* was removed for:\n${reason}`
+    if (!item) return `no template`
+
+    return removalTemplate($userSettings.moderation.removalReasonPreset, {
+      communityLink: `!${fullCommunityName(
+        item!.community.name,
+        item!.community.actor_id
+      )}`,
+      postTitle: item.post.name,
+      reason: reason,
+      username: item.creator.name,
+    })
   }
 
-  $: replyReason = getReplyReason(reason)
+  $: replyReason = commentReason ? getReplyReason(reason) : ''
 
   async function remove() {
     if (!item) return

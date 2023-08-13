@@ -32,6 +32,9 @@ interface Settings {
   }
   displayNames: boolean
   nsfwBlur: boolean
+  moderation: {
+    removalReasonPreset: string
+  }
 }
 
 export const defaultSettings: Settings = {
@@ -63,6 +66,9 @@ export const defaultSettings: Settings = {
   },
   displayNames: true,
   nsfwBlur: true,
+  moderation: {
+    removalReasonPreset: `Your submission in *"{{post.title}}"* was removed for {{reason}}.`,
+  },
 }
 
 export const userSettings = writable(defaultSettings)

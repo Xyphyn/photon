@@ -1,3 +1,4 @@
+import type Post from '$lib/components/lemmy/post/Post.svelte'
 import type {
   CommentView,
   Community,
@@ -61,7 +62,7 @@ export function remove(item: PostView | CommentView, purge: boolean = false) {
     removing: {
       open: true,
       item: item,
-      purge: purge
+      purge: purge,
     },
   }))
 }
@@ -86,3 +87,21 @@ export const amModOfAny = (me?: MyUserInfo) =>
   me && (me.moderates.length > 0 || isAdmin(me))
 
 export const isAdmin = (me: MyUserInfo) => me.local_user_view.person.admin
+
+export const removalTemplate = (
+  input: string,
+  content: {
+    postTitle?: string
+    communityLink?: string
+    username?: string
+    reason?: string
+  }
+) => {
+  if (content.postTitle) input = input.replaceAll('{{post}}', content.postTitle)
+  if (content.communityLink)
+    input = input.replaceAll('{{community}}', content.communityLink)
+  if (content.username)
+    input = input.replaceAll('{{username}}', content.username)
+  if (content.reason) input = input.replaceAll('{{reason}}', content.reason)
+  return input
+}

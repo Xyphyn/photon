@@ -40,6 +40,11 @@ pre {
 }
 
 :not(pre) > code {
-  @apply bg-slate-200 border border-slate-300 dark:bg-zinc-800
-  dark:border-zinc-700 rounded-md px-1 py-0.5;
+  @apply bg-slate-100 border border-slate-300 dark:bg-zinc-800
+  dark:border-zinc-700;
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+  padding-top: 0.125rem;
+  padding-bottom: 0.125rem;
+  border-radius: 3px;
 }

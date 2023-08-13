@@ -163,7 +163,7 @@
   <Menu
     let:toggleOpen
     alignment="bottom-right"
-    itemsClass="h-8 md:h-9"
+    itemsClass="h-8 md:h-8"
     containerClass="!max-h-[28rem]"
   >
     <button

@@ -65,7 +65,7 @@
       />
     </div>
   </div>
-  <aside class="hidden xl:block">
+  <div class="hidden xl:block">
     {#await data.streamed.site}
       <StickyCard>
         <div class="h-64 grid place-items-center">
@@ -79,5 +79,5 @@
         <h1 class="font-bold text-lg">Failed to load</h1>
       </StickyCard>
     {/await}
-  </aside>
+  </div>
 </div>

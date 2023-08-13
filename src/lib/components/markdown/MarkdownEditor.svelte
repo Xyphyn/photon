@@ -24,6 +24,8 @@
   export let previewButton: boolean = false
   export let disabled: boolean = false
 
+  export let beforePreview: (input: string) => string = (input) => input
+
   const dispatcher = createEventDispatcher<{ confirm: string }>()
 
   let textArea: HTMLTextAreaElement
@@ -119,7 +121,7 @@ overflow-hidden focus-within:border-black focus-within:dark:border-white transit
   >
     {#if previewing}
       <div class="px-3 py-2.5 h-32 overflow-auto text-sm">
-        <Markdown source={value} />
+        <Markdown source={beforePreview(value)} />
       </div>
     {:else}
       <!--Toolbar-->

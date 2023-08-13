@@ -11,6 +11,9 @@
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import Link from '$lib/components/input/Link.svelte'
   import { ArrowLeftCircle, ArrowPath, Icon } from 'svelte-hero-icons'
+  import TextArea from '$lib/components/input/TextArea.svelte'
+  import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
+  import { removalTemplate } from '$lib/components/lemmy/moderation/moderation.js'
 
   let data = {
     loading: false,
@@ -142,5 +145,44 @@
         Communities
       </Checkbox>
     </div>
+  </Setting>
+
+  <SectionTitle class="mt-4">Moderation</SectionTitle>
+  <Setting>
+    <span slot="title">Removal reply preset</span>
+    <span slot="description">
+      <p>The preset to use for "Reply reason" in a submission removal.</p>
+      <ul class="leading-6">
+        <li>Syntax:</li>
+        <li>
+          <code>{'{{reason}}'}</code>
+          : The provided reason
+        </li>
+        <li>
+          <code>{'{{post}}'}</code>
+          : The title of the post
+        </li>
+        <li>
+          <code>{'{{community}}'}</code>
+          : The community the submission was removed in.
+        </li>
+        <li>
+          <code>{'{{username}}'}</code>
+          : The username of the creator of the submission.
+        </li>
+      </ul>
+    </span>
+    <MarkdownEditor
+      bind:value={$userSettings.moderation.removalReasonPreset}
+      images={false}
+      previewButton
+      beforePreview={(input) =>
+        removalTemplate(input, {
+          postTitle: '<Example post>',
+          communityLink: '[!community@example.com]()',
+          reason: '<Being a meanie>',
+          username: '@Bob',
+        })}
+    />
   </Setting>
 </div>
