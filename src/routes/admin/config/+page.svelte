@@ -86,7 +86,7 @@
       }}
     />
     <Checkbox
-      bind:checked={formdata.community.community_view_creation_admin_only}
+      bind:checked={formData.community_creation_admin_only}
       defaultValue={true}
     >
       Only admins can create communities
