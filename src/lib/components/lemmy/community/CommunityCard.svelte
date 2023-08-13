@@ -1,6 +1,7 @@
 <script lang="ts">
   import { profile } from '$lib/auth.js'
   import Button from '$lib/components/input/Button.svelte'
+  import { amMod } from '$lib/components/lemmy/moderation/moderation.js'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import Card from '$lib/components/ui/Card.svelte'
@@ -9,10 +10,13 @@
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import { getClient } from '$lib/lemmy.js'
+  import { addSubscription } from '$lib/lemmy/user.js'
+  import { fullCommunityName } from '$lib/util.js'
   import type { CommunityView } from 'lemmy-js-client'
   import {
     Calendar,
     ChatBubbleOvalLeftEllipsis,
+    Cog6Tooth,
     Icon,
     PencilSquare,
     UserGroup,
@@ -43,6 +47,7 @@
     }
 
     community_view.subscribed = subscribed ? 'NotSubscribed' : 'Subscribed'
+    addSubscription(community_view.community, !subscribed)
 
     loading.subscribing = false
   }
@@ -125,6 +130,19 @@
       >
         {community_view.blocked ? 'Unblock' : 'Block'}
       </Button>
+      {#if $profile.user && amMod($profile.user, community_view.community)}
+        <div class="flex flex-row gap-2 ml-auto">
+          <Button
+            href="/c/{fullCommunityName(
+              community_view.community.name,
+              community_view.community.actor_id
+            )}/settings"
+            size="square-md"
+          >
+            <Icon src={Cog6Tooth} mini size="16" slot="icon" />
+          </Button>
+        </div>
+      {/if}
     </div>
   {/if}
   <Markdown source={community_view.community.description} />

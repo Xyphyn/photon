@@ -25,10 +25,10 @@
 
   onMount(() => {
     setSessionStorage('lastSeenCommunity', {
-      id: data.community.community.id,
+      id: data.community.community_view.community.id,
       name: fullCommunityName(
-        data.community.community.name,
-        data.community.community.actor_id
+        data.community.community_view.community.name,
+        data.community.community_view.community.actor_id
       ),
     })
   })
@@ -36,11 +36,14 @@
 
 <svelte:head>
   <title>{data.posts.posts[0]?.community.name}</title>
-  <meta name="og:title" content={data.community.community.name} />
-  {#if data.community.community.description}
+  <meta
+    name="og:title"
+    content={data.community.community_view.community.name}
+  />
+  {#if data.community.community_view.community.description}
     <meta
       name="og:description"
-      content={data.community.community.description}
+      content={data.community.community_view.community.description}
     />
   {/if}
   <meta name="og:url" content={$page.url.toString()} />
@@ -49,7 +52,7 @@
 <Modal bind:open={sidebar}>
   <span slot="title">About</span>
   <div class="mx-auto">
-    <CommunityCard community_view={data.community} />
+    <CommunityCard community_view={data.community.community_view} />
   </div>
 </Modal>
 
@@ -58,14 +61,16 @@
     <div class="flex flex-row gap-3 items-center">
       <Avatar
         width={48}
-        url={data.community.community.icon}
-        alt={data.community.community.name}
+        url={data.community.community_view.community.icon}
+        alt={data.community.community_view.community.name}
       />
       <div class="flex flex-col gap-0">
-        <h1 class="font-bold text-xl">{data.community.community.title}</h1>
+        <h1 class="font-bold text-xl">
+          {data.community.community_view.community.title}
+        </h1>
         <span class="dark:text-zinc-400 text-slate-600 text-sm">
-          !{data.community.community.name}@{new URL(
-            data.community.community.actor_id
+          !{data.community.community_view.community.name}@{new URL(
+            data.community.community_view.community.actor_id
           ).hostname}
         </span>
       </div>
@@ -85,6 +90,6 @@
     />
   </div>
   <div class="hidden xl:block">
-    <CommunityCard community_view={data.community} />
+    <CommunityCard community_view={data.community.community_view} />
   </div>
 </div>

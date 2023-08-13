@@ -28,6 +28,7 @@
     InformationCircle,
     MagnifyingGlass,
     Moon,
+    Newspaper,
     PencilSquare,
     Plus,
     Sun,
@@ -152,6 +153,14 @@
       >
         <Icon src={PencilSquare} mini width={16} />
         Post
+      </MenuButton>
+      <MenuButton
+        link
+        href="/create/community"
+        disabled={$profile?.jwt == undefined}
+      >
+        <Icon src={Newspaper} mini width={16} />
+        Community
       </MenuButton>
       {#if !$profile?.jwt}
         <span class="text-sm mx-4 my-1 py-1">
