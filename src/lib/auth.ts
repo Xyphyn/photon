@@ -1,10 +1,10 @@
 import { amModOfAny } from '$lib/components/lemmy/moderation/moderation.js'
 import { toast } from '$lib/components/ui/toasts/toasts.js'
 import { DEFAULT_INSTANCE_URL, instance } from '$lib/instance.js'
-import { getClient } from '$lib/lemmy.js'
+import { getClient, site } from '$lib/lemmy.js'
 import { getInbox, getInboxItemPublished } from '$lib/lemmy/inbox.js'
 import { userSettings } from '$lib/settings.js'
-import type { MyUserInfo } from 'lemmy-js-client'
+import type { GetSiteResponse, MyUserInfo } from 'lemmy-js-client'
 import { get, writable } from 'svelte/store'
 
 const getDefaultProfile = (): Profile => ({
@@ -81,11 +81,12 @@ profile.subscribe(async (p) => {
   instance.set(p.instance)
   // fetch the user because p.user is undefined
   const user = await userFromJwt(p.jwt, p.instance)
+  site.set(user?.site)
 
   profile.update(() => ({
     ...p,
-    user: user,
-    username: user?.local_user_view.person.name,
+    user: user!.user,
+    username: user?.user.local_user_view.person.name,
   }))
 })
 
@@ -119,7 +120,7 @@ export async function setUser(jwt: string, inst: string, username: string) {
 
     profile.set({
       ...newProfile,
-      user: user,
+      user: user!.user,
     })
 
     return {
@@ -134,14 +135,18 @@ export async function setUser(jwt: string, inst: string, username: string) {
 async function userFromJwt(
   jwt: string,
   instance: string
-): Promise<PersonData | undefined> {
-  const myUser = (await getClient(instance).getSite({ auth: jwt })).my_user
+): Promise<{ user: PersonData; site: GetSiteResponse } | undefined> {
+  const site = await getClient(instance).getSite({ auth: jwt })
+  const myUser = site.my_user
   if (!myUser) return undefined
 
   return {
-    unreads: 0,
-    reports: 0,
-    ...myUser,
+    user: {
+      unreads: 0,
+      reports: 0,
+      ...myUser,
+    },
+    site: site,
   }
 }
 

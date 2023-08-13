@@ -157,7 +157,8 @@
       <MenuButton
         link
         href="/create/community"
-        disabled={$profile?.jwt == undefined}
+        disabled={$profile?.jwt == undefined ||
+          $site?.site_view.local_site.community_creation_admin_only}
       >
         <Icon src={Newspaper} mini width={16} />
         Community
