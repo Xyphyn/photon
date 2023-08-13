@@ -55,6 +55,7 @@
             width={32}
             res={64}
             circle={false}
+            class="rounded-md"
           />
           <div class="flex flex-row items-center gap-2 max-[500px]:hidden">
             <span class="opacity-30 text-xl">/</span>

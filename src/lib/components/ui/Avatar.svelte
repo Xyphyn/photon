@@ -21,13 +21,13 @@
     {width}
     {title}
     loading="lazy"
-    class="aspect-square object-cover overflow-hidden"
+    class="aspect-square object-cover overflow-hidden {$$props.class}"
     class:rounded-full={circle}
   />
 {:else}
   <div
     style="width: {width}px; height: {width}px;"
-    class="aspect-square object-cover overflow-hidden"
+    class="aspect-square object-cover overflow-hidden {$$props.class}"
     class:rounded-full={circle}
   >
     {@html createAvatar(initials, {
