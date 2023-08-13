@@ -16,6 +16,7 @@
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import { searchParam } from '$lib/util.js'
   import { addSubscription } from '$lib/lemmy/user.js'
+  import Link from '$lib/components/input/Link.svelte'
 
   export let data
 
@@ -26,7 +27,17 @@
   <title>Communities</title>
 </svelte:head>
 
-<div class="flex flex-col sm:flex-row gap-4">
+<h1 class="text-2xl font-bold">Communities</h1>
+<p class="text-slate-600 dark:text-zinc-400 mt-2">
+  Can't find a community on your home instance? Go to the <Link
+    href="/search"
+    highlight
+  >
+    search
+  </Link> page, and search with this syntax:
+  <code>!community@instance.com</code>
+</p>
+<div class="flex flex-col sm:flex-row gap-4 mt-4">
   <MultiSelect
     options={['Subscribed', 'Local', 'All']}
     selected={$page.url.searchParams.get('type') ?? 'All'}

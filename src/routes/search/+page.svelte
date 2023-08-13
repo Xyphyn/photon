@@ -36,7 +36,8 @@
   <title>Search</title>
 </svelte:head>
 
-<div class="flex flex-row flex-wrap sm:justify-between items-center gap-4">
+<h1 class="font-bold text-2xl">Search</h1>
+<div class="flex flex-row flex-wrap sm:justify-between items-center gap-4 mt-4">
   <MultiSelect
     options={['All', 'Posts', 'Comments', 'Communities', 'Users']}
     selected={$page.url.searchParams.get('type') ?? 'All'}
