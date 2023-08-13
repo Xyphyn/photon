@@ -158,8 +158,10 @@
       <MenuButton
         link
         href="/create/community"
-        disabled={$profile?.jwt == undefined ||
-          $site?.site_view.local_site.community_creation_admin_only}
+        disabled={!$profile?.jwt ||
+          !$profile?.user ||
+          ($site?.site_view.local_site.community_creation_admin_only &&
+            !isAdmin($profile.user))}
       >
         <Icon src={Newspaper} mini width={16} />
         Community
