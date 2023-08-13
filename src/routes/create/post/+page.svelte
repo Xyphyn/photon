@@ -23,9 +23,12 @@
   <title>Create post</title>
 </svelte:head>
 
-<Card class="p-6 max-w-2xl mx-auto">
+<div class="w-full max-w-5xl mx-auto h-full">
   <PostForm
     passedCommunity={community}
     on:submit={(e) => goto(`/post/${e.detail.post.id}`)}
-  />
-</Card>
+    class="mt-auto"
+  >
+    <h1 class="text-2xl font-bold" slot="formtitle">Create Post</h1>
+  </PostForm>
+</div>

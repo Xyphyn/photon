@@ -171,7 +171,7 @@
   {/await}
 {/if}
 
-<form on:submit|preventDefault={submit} class="flex flex-col gap-4">
+<form on:submit|preventDefault={submit} class="flex flex-col gap-4 h-full">
   <slot name="formtitle">
     <h1 class="font-bold text-xl">
       {edit ? 'Edit' : 'Create'} Post
@@ -256,6 +256,7 @@
     loading={data.loading}
     size="lg"
     disabled={data.loading}
+    class={$$props.class}
   >
     Submit
   </Button>
