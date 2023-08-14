@@ -78,7 +78,7 @@
       <!--disabled preloads here since most people will hover over every image while scrolling-->
       <a
         href="/post/{getInstance()}/{post.post.id}"
-        class="self-start overflow-hidden z-10 relative bg-slate-200 dark:bg-zinc-800 rounded-md"
+        class="self-start overflow-hidden z-10 relative bg-slate-200 dark:bg-zinc-800 rounded-md max-w-full"
         data-sveltekit-preload-data="off"
         aria-label={post.post.name}
       >
@@ -97,7 +97,7 @@
           <img
             src="{post.post.url}?thumbnail=512&format=webp"
             loading="lazy"
-            class="object-cover rounded-md max-h-[80vh] h-auto z-30 opacity-0 transition-opacity duration-300"
+            class="max-w-full object-cover rounded-md max-h-[80vh] h-auto z-30 opacity-0 transition-opacity duration-300"
             class:opacity-100={loaded}
             width={512}
             height={300}
