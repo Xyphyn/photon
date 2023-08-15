@@ -35,6 +35,7 @@ interface Settings {
   moderation: {
     removalReasonPreset: string
   }
+  newVote: boolean
 }
 
 export const defaultSettings: Settings = {
@@ -69,6 +70,7 @@ export const defaultSettings: Settings = {
   moderation: {
     removalReasonPreset: `Your submission in *"{{post}}"* was removed for {{reason}}.`,
   },
+  newVote: false,
 }
 
 export const userSettings = writable(defaultSettings)

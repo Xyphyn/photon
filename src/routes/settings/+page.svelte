@@ -95,8 +95,8 @@
       Show a user's display name instead of their account username.
     </span>
   </Setting>
-  <SectionTitle class="mt-4">UI</SectionTitle>
 
+  <SectionTitle class="mt-4">UI</SectionTitle>
   <Setting>
     <Checkbox bind:checked={$userSettings.markReadPosts} slot="title">
       Mark read posts
@@ -124,6 +124,12 @@
       NSFW blur
     </Checkbox>
     <span slot="description">Blur images of NSFW content.</span>
+  </Setting>
+  <Setting>
+    <Checkbox bind:checked={$userSettings.newVote} slot="title">
+      New vote design
+    </Checkbox>
+    <span slot="description">Alternate vote design</span>
   </Setting>
 
   <SectionTitle class="mt-4">Instances</SectionTitle>

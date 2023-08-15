@@ -84,31 +84,60 @@
 </script>
 
 <slot {upvote} {downvote} {vote} {score}>
-  <div
-    class="flex items-center text-sm gap-1 rounded-md border border-slate-200
+  {#if $userSettings.newVote}
+    <div class="flex items-center text-sm gap-1 rounded-md border-zinc-700">
+      <Button
+        aria-label="Upvote"
+        class={vote == 1 ? voteColor(vote) : ''}
+        on:click={upvote}
+        size="square-md"
+        color="tertiary"
+        alignment="center"
+      >
+        <Icon src={ArrowUpCircle} mini={vote == 1} size="20" />
+      </Button>
+      <span class="font-medium {voteColor(vote)}">
+        <FormattedNumber number={score} />
+      </span>
+      <Button
+        aria-label="Downvote"
+        class={vote == -1 ? voteColor(vote) : ''}
+        on:click={downvote}
+        size="square-md"
+        color="tertiary"
+      >
+        <Icon src={ArrowDownCircle} mini={vote == -1} size="20" />
+      </Button>
+    </div>
+  {:else}
+    <div
+      class="flex items-center text-sm gap-1 rounded-md border border-slate-200
     dark:border-zinc-700 px-1 h-full duration-200"
-  >
-    <Button
-      aria-label="Upvote"
-      class={vote == 1 ? voteColor(vote) : ''}
-      on:click={upvote}
-      size="square-sm"
-      color="tertiary"
-      alignment="center"
     >
-      <Icon src={ChevronUp} mini size="18" />
-    </Button>
-    <span class="font-medium transition-colors duration-200 {voteColor(vote)}">
-      <FormattedNumber number={score} />
-    </span>
-    <Button
-      aria-label="Downvote"
-      class={vote == -1 ? voteColor(vote) : ''}
-      on:click={downvote}
-      size="square-sm"
-      color="tertiary"
-    >
-      <Icon src={ChevronDown} mini size="18" />
-    </Button>
-  </div>
+      <Button
+        aria-label="Upvote"
+        class={vote == 1 ? voteColor(vote) : ''}
+        on:click={upvote}
+        size="square-sm"
+        color="tertiary"
+        alignment="center"
+      >
+        <Icon src={ChevronUp} mini size="18" />
+      </Button>
+      <span
+        class="font-medium transition-colors duration-200 {voteColor(vote)}"
+      >
+        <FormattedNumber number={score} />
+      </span>
+      <Button
+        aria-label="Downvote"
+        class={vote == -1 ? voteColor(vote) : ''}
+        on:click={downvote}
+        size="square-sm"
+        color="tertiary"
+      >
+        <Icon src={ChevronDown} mini size="18" />
+      </Button>
+    </div>
+  {/if}
 </slot>
