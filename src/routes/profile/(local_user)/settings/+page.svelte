@@ -2,11 +2,12 @@
   import { profile } from '$lib/auth.js'
   import Button from '$lib/components/input/Button.svelte'
   import Checkbox from '$lib/components/input/Checkbox.svelte'
+  import FileInput from '$lib/components/input/FileInput.svelte'
   import TextInput from '$lib/components/input/TextInput.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import Card from '$lib/components/ui/Card.svelte'
   import { toast } from '$lib/components/ui/toasts/toasts.js'
-  import { getClient } from '$lib/lemmy.js'
+  import { getClient, uploadImage } from '$lib/lemmy.js'
   import type { SaveUserSettings } from 'lemmy-js-client'
 
   export let data
@@ -16,15 +17,19 @@
     ...data.local_user_view?.person,
   }
 
+  let profileImage: FileList | undefined
+
   async function save() {
     if (!formData || !$profile?.jwt) return
 
     loading = true
 
     try {
+      let pfp = profileImage ? await uploadImage(profileImage[0]) : undefined
       const res = await getClient().saveUserSettings({
         auth: $profile.jwt,
         ...formData,
+        avatar: pfp,
       })
       toast({
         content: 'Saved your user settings.',
@@ -62,6 +67,7 @@
       label="Bio"
       previewButton
     />
+    <FileInput label="Profile image" image bind:files={profileImage} />
     <TextInput label="Email" bind:value={formData.email} />
     <TextInput
       label="Matrix User"
