@@ -31,7 +31,10 @@ flex flex-col items-center justify-center bg-black/50 backdrop-blur-sm box-borde
       >
         <div
           on:click|stopPropagation={() => {}}
-          class="p-6 rounded-xl flex flex-col gap-4 w-full dark:bg-zinc-950 bg-white border border-slate-200 dark:border-zinc-800"
+          class="p-6 rounded-xl flex flex-col gap-4 w-full dark:bg-zinc-950
+          bg-white border border-slate-200 dark:border-zinc-800"
+          class:rounded-b-none={action}
+          class:border-b-0={action}
         >
           <div class="flex flex-row max-w-full">
             <h1 class="font-bold text-2xl w-max max-w-full">
@@ -45,7 +48,7 @@ flex flex-col items-center justify-center bg-black/50 backdrop-blur-sm box-borde
         </div>
         {#if action}
           <div
-            class="border-t bg-slate-100 dark:bg-zinc-900 dark:border-zinc-800 p-3 py-2 flex justify-end rounded-b-xl"
+            class="border-x border-b bg-slate-100 dark:bg-zinc-900 dark:border-zinc-800 p-3 py-2 flex justify-end rounded-b-xl"
           >
             <slot name="action">
               <Button
