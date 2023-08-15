@@ -62,7 +62,7 @@
   const dispatcher = createEventDispatcher<{ edit: CommentView }>()
 </script>
 
-<div class="flex flex-row gap-2 items-center mt-1 h-[26px] relative">
+<div class="flex flex-row gap-2 items-center mt-1 h-7 relative">
   <CommentVote
     bind:score={comment.counts.score}
     bind:vote={comment.my_vote}
@@ -80,16 +80,11 @@
   {#if $profile?.user && (amMod($profile?.user, comment.community) || isAdmin($profile.user))}
     <CommentModerationMenu bind:item={comment} />
   {/if}
-  <Menu
-    let:toggleOpen
-    class="h-[26px] top-0 leading-3"
-    alignment="bottom-center"
-  >
+  <Menu let:toggleOpen class="h-7 top-0 leading-3" alignment="bottom-center">
     <Button
       slot="button"
       color="elevatedLow"
       on:click={toggleOpen}
-      size="sm"
       class="!p-1"
       aria-label="Comment actions"
     >

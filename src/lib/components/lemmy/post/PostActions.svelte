@@ -113,10 +113,10 @@
   <PostVote post={post.post} vote={post.my_vote} score={post.counts.score} />
 
   <Button
-    color="elevated"
+    color="secondary"
     size="sm"
     href="/post/{getInstance()}/{post.post.id}"
-    class="px-3 h-full"
+    class="px-3 h-full !text-inherit"
   >
     <Icon slot="icon" src={ChatBubbleOvalLeft} width={16} height={16} />
     <FormattedNumber number={post.counts.comments} />

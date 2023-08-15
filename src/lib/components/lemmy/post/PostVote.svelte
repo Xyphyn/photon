@@ -5,7 +5,13 @@
   import { userSettings } from '$lib/settings.js'
   import { Color } from '$lib/ui/colors.js'
   import type { Post } from 'lemmy-js-client'
-  import { ChevronDown, ChevronUp, Icon } from 'svelte-hero-icons'
+  import {
+    ArrowDownCircle,
+    ArrowUpCircle,
+    ChevronDown,
+    ChevronUp,
+    Icon,
+  } from 'svelte-hero-icons'
   import { profile } from '$lib/auth.js'
   import { slide } from 'svelte/transition'
 
@@ -64,32 +70,42 @@
       })
       .catch((_) => undefined)
   }
+
+  const voteColor = (vote: number) =>
+    vote == 1
+      ? $userSettings.revertColors
+        ? '!text-orange-500'
+        : '!text-blue-400'
+      : vote == -1
+      ? $userSettings.revertColors
+        ? '!text-blue-500'
+        : '!text-red-500'
+      : ''
 </script>
 
 <slot {upvote} {downvote} {vote} {score}>
-  <div
-    class="{Color.border} text-sm gap-0.5 rounded-md flex flex-row items-center
-    transition-colors cursor-pointer bg-slate-100 dark:bg-zinc-800
-    hover:bg-slate-200 dark:hover:bg-zinc-700 h-full"
-  >
-    <button
+  <div class="flex items-center text-sm gap-1 rounded-md border-zinc-700">
+    <Button
       aria-label="Upvote"
-      class:text-orange-500={vote == 1 && $userSettings.revertColors}
-      class:text-blue-500={vote == 1 && !$userSettings.revertColors}
-      class="py-1 pr-0.5 pl-2"
+      class={vote == 1 ? voteColor(vote) : ''}
       on:click={upvote}
+      size="square-md"
+      color="tertiary"
+      alignment="center"
     >
-      <Icon src={ChevronUp} mini width={20} height={20} />
-    </button>
-    <FormattedNumber number={score} />
-    <button
+      <Icon src={ArrowUpCircle} mini={vote == 1} width={20} height={20} />
+    </Button>
+    <span class="font-medium {voteColor(vote)}">
+      <FormattedNumber number={score} />
+    </span>
+    <Button
       aria-label="Downvote"
-      class:text-blue-500={vote == -1 && $userSettings.revertColors}
-      class:text-red-500={vote == -1 && !$userSettings.revertColors}
-      class="py-1 pl-0.5 pr-2"
+      class={vote == -1 ? voteColor(vote) : ''}
       on:click={downvote}
+      size="square-md"
+      color="tertiary"
     >
-      <Icon src={ChevronDown} mini width={20} height={20} />
-    </button>
+      <Icon src={ArrowDownCircle} solid={vote == -1} width={20} height={20} />
+    </Button>
   </div>
 </slot>

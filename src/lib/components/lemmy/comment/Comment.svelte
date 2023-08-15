@@ -18,6 +18,7 @@
   import { getClient } from '$lib/lemmy.js'
   import { toast } from '$lib/components/ui/toasts/toasts.js'
   import { profile } from '$lib/auth.js'
+  import { slide } from 'svelte/transition'
 
   export let node: CommentNodeI
   export let postId: number
