@@ -1,9 +1,17 @@
 <script lang="ts">
   import { Color } from '$lib/ui/colors'
-  import { ChevronDown, ChevronUp, Icon } from 'svelte-hero-icons'
+  import {
+    ArrowDownCircle,
+    ArrowUpCircle,
+    ChevronDown,
+    ChevronUp,
+    Icon,
+  } from 'svelte-hero-icons'
   import { getClient } from '$lib/lemmy'
   import { userSettings } from '$lib/settings'
   import { profile } from '$lib/auth.js'
+  import Button from '$lib/components/input/Button.svelte'
+  import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
 
   export let vote: number = 0
   export let score: number
@@ -56,35 +64,82 @@
       })
       .catch((_) => undefined)
   }
+
+  const voteColor = (vote: number) => `
+  ${
+    vote == 1
+      ? $userSettings.revertColors
+        ? '!text-orange-500'
+        : '!text-blue-500'
+      : vote == -1
+      ? $userSettings.revertColors
+        ? '!text-blue-500'
+        : '!text-red-500'
+      : ''
+  }
+  `
 </script>
 
-<div
-  class="flex flex-row items-center rounded-md transition-colors
-  cursor-pointer h-full {Color.borderDark}"
->
-  <button
-    on:click={upvote}
-    class="px-1.5 {vote == 1
-      ? $userSettings.revertColors
-        ? 'text-orange-500'
-        : 'dark:text-blue-500 text-blue-600'
-      : ''}"
-    aria-label="Upvote"
+{#if $userSettings.newVote}
+  <div
+    class="flex flex-row items-center rounded-md transition-colors
+  cursor-pointer h-[26px] gap-0.5 !text-slate-600 dark:!text-zinc-300"
   >
-    <Icon src={ChevronUp} width={19} mini />
-  </button>
-  <span class="text-sm">
-    {score}
-  </span>
-  <button
-    on:click={downvote}
-    class="px-1.5 {vote == -1
-      ? $userSettings.revertColors
-        ? 'dark:text-blue-500 text-blue-600'
-        : 'text-red-400'
-      : ''}"
-    aria-label="Downvote"
+    <Button
+      on:click={upvote}
+      class={vote == 1
+        ? voteColor(vote)
+        : '!text-slate-600 dark:!text-zinc-300'}
+      aria-label="Upvote"
+      size="square-sm"
+      color="tertiary"
+    >
+      <Icon src={ArrowUpCircle} width={19} mini={vote == 1} />
+    </Button>
+    <span class="text-sm font-medium {voteColor(vote)}">
+      <FormattedNumber number={score} />
+    </span>
+    <Button
+      on:click={downvote}
+      class={vote == -1
+        ? voteColor(vote)
+        : '!text-slate-600 dark:!text-zinc-300'}
+      aria-label="Downvote"
+      size="square-sm"
+      color="tertiary"
+    >
+      <Icon src={ArrowDownCircle} width={19} mini={vote == -1} />
+    </Button>
+  </div>
+{:else}<div
+    class="flex flex-row items-center rounded-md transition-colors
+cursor-pointer h-[26px] border border-slate-200
+dark:border-zinc-700"
   >
-    <Icon src={ChevronDown} width={19} mini />
-  </button>
-</div>
+    <button
+      on:click={upvote}
+      class="px-1.5 {vote == 1
+        ? $userSettings.revertColors
+          ? 'text-orange-500'
+          : 'dark:text-blue-500 text-blue-600'
+        : ''}"
+      aria-label="Upvote"
+    >
+      <Icon src={ChevronUp} width={19} mini />
+    </button>
+    <span class="text-sm font-medium {voteColor(vote)}">
+      <FormattedNumber number={score} />
+    </span>
+    <button
+      on:click={downvote}
+      class="px-1.5 {vote == -1
+        ? $userSettings.revertColors
+          ? 'dark:text-blue-500 text-blue-600'
+          : 'text-red-400'
+        : ''}"
+      aria-label="Downvote"
+    >
+      <Icon src={ChevronDown} width={19} mini />
+    </button>
+  </div>
+{/if}

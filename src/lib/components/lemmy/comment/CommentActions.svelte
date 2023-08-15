@@ -69,8 +69,8 @@
     commentId={comment.comment.id}
   />
   <Button
-    color="elevatedLow"
     size="sm"
+    color="ghost"
     on:click={() => (replying = !replying)}
     disabled={comment.post.locked}
   >
@@ -80,13 +80,13 @@
   {#if $profile?.user && (amMod($profile?.user, comment.community) || isAdmin($profile.user))}
     <CommentModerationMenu bind:item={comment} />
   {/if}
-  <Menu let:toggleOpen class="h-7 top-0 leading-3" alignment="bottom-center">
+  <Menu let:toggleOpen class="top-0 leading-3" alignment="bottom-center">
     <Button
       slot="button"
-      color="elevatedLow"
       on:click={toggleOpen}
       class="!p-1"
       aria-label="Comment actions"
+      color="ghost"
     >
       <Icon src={EllipsisHorizontal} width={16} height={16} mini slot="icon" />
     </Button>

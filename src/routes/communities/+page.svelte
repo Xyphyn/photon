@@ -17,6 +17,7 @@
   import { searchParam } from '$lib/util.js'
   import { addSubscription } from '$lib/lemmy/user.js'
   import Link from '$lib/components/input/Link.svelte'
+  import { LINKED_INSTANCE_URL } from '$lib/instance.js'
 
   export let data
 
@@ -40,7 +41,9 @@
 <div class="flex flex-col sm:flex-row gap-4 mt-4">
   <MultiSelect
     options={['Subscribed', 'Local', 'All']}
-    selected={$page.url.searchParams.get('type') ?? 'All'}
+    selected={$page.url.searchParams.get('type') ?? LINKED_INSTANCE_URL
+      ? 'Local'
+      : 'All'}
     on:select={(e) => searchParam($page.url, 'type', e.detail, 'page')}
   />
   <div class="flex flex-col sm:flex-row gap-2 sm:ml-auto items-center">

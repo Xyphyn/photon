@@ -85,7 +85,7 @@
 
 <slot {upvote} {downvote} {vote} {score}>
   {#if $userSettings.newVote}
-    <div class="flex items-center text-sm gap-1 rounded-md border-zinc-700">
+    <div class="flex items-center text-sm rounded-md border-zinc-700">
       <Button
         aria-label="Upvote"
         class={vote == 1 ? voteColor(vote) : ''}
