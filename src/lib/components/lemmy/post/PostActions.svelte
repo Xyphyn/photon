@@ -5,14 +5,13 @@
   import {
     Bookmark,
     BookmarkSlash,
-    ChatBubbleOvalLeft,
+    ChatBubbleOvalLeftEllipsis,
     EllipsisHorizontal,
     Flag,
     Icon,
     Newspaper,
     PencilSquare,
     Share,
-    Square2Stack,
     Trash,
     UserCircle,
   } from 'svelte-hero-icons'
@@ -118,7 +117,13 @@
     href="/post/{getInstance()}/{post.post.id}"
     class="px-3 h-full !text-inherit"
   >
-    <Icon slot="icon" src={ChatBubbleOvalLeft} width={16} height={16} />
+    <Icon
+      slot="icon"
+      src={ChatBubbleOvalLeftEllipsis}
+      mini
+      width={16}
+      height={16}
+    />
     <FormattedNumber number={post.counts.comments} />
   </Button>
   <div class="ml-auto" />
