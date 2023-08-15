@@ -105,7 +105,7 @@
       size="square-md"
       color="tertiary"
     >
-      <Icon src={ArrowDownCircle} solid={vote == -1} width={20} height={20} />
+      <Icon src={ArrowDownCircle} mini={vote == -1} width={20} height={20} />
     </Button>
   </div>
 </slot>
