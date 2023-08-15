@@ -14,6 +14,7 @@ export interface Toast {
   title?: string
   content: string
   type: ToastType
+  loading?: boolean
   action?: () => any
 }
 
@@ -24,12 +25,14 @@ export function toast({
   content,
   type = 'info',
   duration = 5000,
+  loading = false,
   action,
 }: {
   title?: string
   content: string
   type?: ToastType
   duration?: number
+  loading?: boolean
   action?: () => any
 }) {
   let id = 0
@@ -44,6 +47,7 @@ export function toast({
         content: content,
         title: title,
         type: type,
+        loading: loading,
         action: action,
       },
     ]
@@ -52,4 +56,9 @@ export function toast({
   setTimeout(() => {
     toasts.update((toasts) => toasts.filter((toast) => toast.id != id))
   }, duration)
+
+  return id
 }
+
+export const removeToast = (id: number) =>
+  toasts.update((toasts) => toasts.filter((toast) => toast.id != id))

@@ -75,7 +75,7 @@
     vote == 1
       ? $userSettings.revertColors
         ? '!text-orange-500'
-        : '!text-blue-500'
+        : '!text-blue-500 dark:!text-blue-400'
       : vote == -1
       ? $userSettings.revertColors
         ? '!text-blue-500'
@@ -84,28 +84,31 @@
 </script>
 
 <slot {upvote} {downvote} {vote} {score}>
-  <div class="flex items-center text-sm gap-0.5 rounded-md border-zinc-700">
+  <div
+    class="flex items-center text-sm gap-1 rounded-md border border-slate-200
+    dark:border-zinc-700 px-1 h-full duration-200"
+  >
     <Button
       aria-label="Upvote"
       class={vote == 1 ? voteColor(vote) : ''}
       on:click={upvote}
-      size="square-md"
+      size="square-sm"
       color="tertiary"
       alignment="center"
     >
-      <Icon src={ArrowUpCircle} mini={vote == 1} size="20" />
+      <Icon src={ChevronUp} mini size="18" />
     </Button>
-    <span class="font-medium {voteColor(vote)}">
+    <span class="font-medium transition-colors duration-200 {voteColor(vote)}">
       <FormattedNumber number={score} />
     </span>
     <Button
       aria-label="Downvote"
       class={vote == -1 ? voteColor(vote) : ''}
       on:click={downvote}
-      size="square-md"
+      size="square-sm"
       color="tertiary"
     >
-      <Icon src={ArrowDownCircle} mini={vote == -1} size="20" />
+      <Icon src={ChevronDown} mini size="18" />
     </Button>
   </div>
 </slot>

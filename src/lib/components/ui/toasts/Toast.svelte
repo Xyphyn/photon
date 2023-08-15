@@ -1,5 +1,6 @@
 <script lang="ts">
   import Button from '$lib/components/input/Button.svelte'
+  import Spinner from '$lib/components/ui/loader/Spinner.svelte'
   import {
     type Toast,
     toasts,
@@ -29,20 +30,26 @@
     opacity: 0,
   }}
 >
-  <Icon
-    size="20"
-    mini
-    class="relative m-2 ml-4 flex-shrink-0"
-    src={toast.type == 'info'
-      ? InformationCircle
-      : toast.type == 'success'
-      ? CheckCircle
-      : toast.type == 'warning'
-      ? ExclamationTriangle
-      : toast.type == 'error'
-      ? ExclamationCircle
-      : ExclamationCircle}
-  />
+  {#if toast.loading}
+    <div class="relative m-2 ml-4 flex-shrink-0">
+      <Spinner width={20} />
+    </div>
+  {:else}
+    <Icon
+      size="20"
+      mini
+      class="relative m-2 ml-4 flex-shrink-0"
+      src={toast.type == 'info'
+        ? InformationCircle
+        : toast.type == 'success'
+        ? CheckCircle
+        : toast.type == 'warning'
+        ? ExclamationTriangle
+        : toast.type == 'error'
+        ? ExclamationCircle
+        : ExclamationCircle}
+    />
+  {/if}
   <div class="flex flex-col p-4 pl-0 break-words max-w-full">
     {#if toast.title}
       <h1 class="text-base font-bold">{toast.title}</h1>

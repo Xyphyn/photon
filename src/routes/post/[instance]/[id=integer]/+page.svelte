@@ -14,11 +14,12 @@
   import Card from '$lib/components/ui/Card.svelte'
   import PostLink from '$lib/components/lemmy/post/PostLink.svelte'
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
-  import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import { removeToast, toast } from '$lib/components/ui/toasts/toasts.js'
   import type { CommentSortType } from 'lemmy-js-client'
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
   import { profile } from '$lib/auth.js'
   import { instance } from '$lib/instance.js'
+  import { goto } from '$app/navigation'
 
   export let data
 
@@ -29,6 +30,30 @@
         read: true,
         post_id: data.post.post_view.post.id,
       })
+    }
+
+    if (
+      $page.params.instance.toLowerCase() != $instance.toLowerCase() &&
+      $profile?.jwt
+    ) {
+      const id = toast({
+        content: 'Attempting to fetch this post on your home instance...',
+        loading: true,
+      })
+
+      try {
+        const res = await getClient().resolveObject({
+          auth: $profile.jwt,
+          q: `https://${$page.params.instance}/post/${data.post.post_view.post.id}`,
+        })
+
+        if (res.post) {
+          removeToast(id)
+          goto(`/post/${$instance}/${res.post.post.id}`)
+        }
+      } catch (err) {
+        removeToast(id)
+      }
     }
   })
 
@@ -171,7 +196,8 @@
             comment.detail.comment_view,
             ...comments.comments,
           ])}
-        locked={data.post.post_view.post.locked}
+        locked={data.post.post_view.post.locked ||
+          $page.params.instance.toLowerCase() != $instance.toLowerCase()}
       />
     {/if}
     {#await buildCommentsTreeAsync(comments.comments)}
