@@ -75,7 +75,7 @@
     vote == 1
       ? $userSettings.revertColors
         ? '!text-orange-500'
-        : '!text-blue-400'
+        : '!text-blue-500'
       : vote == -1
       ? $userSettings.revertColors
         ? '!text-blue-500'
@@ -93,7 +93,7 @@
       color="tertiary"
       alignment="center"
     >
-      <Icon src={ArrowUpCircle} mini={vote == 1} width={20} height={20} />
+      <Icon src={ArrowUpCircle} mini={vote == 1} size="20" />
     </Button>
     <span class="font-medium {voteColor(vote)}">
       <FormattedNumber number={score} />
@@ -105,7 +105,7 @@
       size="square-md"
       color="tertiary"
     >
-      <Icon src={ArrowDownCircle} mini={vote == -1} width={20} height={20} />
+      <Icon src={ArrowDownCircle} mini={vote == -1} size="20" />
     </Button>
   </div>
 </slot>
