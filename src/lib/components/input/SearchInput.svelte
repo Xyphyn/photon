@@ -39,9 +39,11 @@
   />
   <Menu open={options.length != 0} alignment="bottom-left">
     {#each options as option}
-      <MenuButton on:click={() => extractSelected(option)}>
-        {extractName(option)}
-      </MenuButton>
+      <slot {extractName} {extractSelected} {option}>
+        <MenuButton on:click={() => extractSelected(option)}>
+          {extractName(option)}
+        </MenuButton>
+      </slot>
     {/each}
   </Menu>
 </div>

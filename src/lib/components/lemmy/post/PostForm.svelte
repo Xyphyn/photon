@@ -14,6 +14,8 @@
   import { placeholders } from '$lib/util.js'
   import Checkbox from '$lib/components/input/Checkbox.svelte'
   import { getSessionStorage, setSessionStorage } from '$lib/session.js'
+  import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
+  import ObjectAutocomplete from '$lib/components/lemmy/ObjectAutocomplete.svelte'
 
   export let edit = false
 
@@ -184,24 +186,12 @@
           />
         {/if}
       </div>
-      <SearchInput
-        options={communities}
-        on:search={async () => {
-          const results = await getClient().search({
-            q: communitySearch,
-            auth: $profile?.jwt,
-            type_: 'Communities',
-            limit: 20,
-            listing_type: 'Subscribed',
-            sort: 'Active',
-          })
-
-          communities = results.communities.map((c) => c.community)
-        }}
-        debounceTime={600}
-        extractName={(c) => c.title}
-        bind:query={communitySearch}
-        extractSelected={(c) => {
+      <ObjectAutocomplete
+        bind:q={communitySearch}
+        bind:items={communities}
+        jwt={$profile?.jwt}
+        on:select={(e) => {
+          const c = e.detail
           if (!c) {
             data.community = null
             return
