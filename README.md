@@ -46,7 +46,9 @@ The following environment variables can be set to override the default settings:
 
 Variable | Values | Default Value
 ---|---|---
+
 PUBLIC_INSTANCE_URL               | URL | `lemmy.ml`
+PUBLIC_THEME			  | system\|dark\|light | system
 PUBLIC_EXPANDABLE_IMAGES          | `bool` | true
 PUBLIC_MARK_READ_POSTS            | `bool` | true
 PUBLIC_REVERT_VOTE_COLORS         | `bool` | false
