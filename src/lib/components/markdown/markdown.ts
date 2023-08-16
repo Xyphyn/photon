@@ -74,3 +74,25 @@ md.linkify.add('!', {
     match.url = `/c/${match.url.slice(1)}`
   },
 })
+
+md.linkify.add('@', {
+  validate: function (text, pos, self) {
+    var tail = text.slice(pos)
+
+    if (!self.re.user) {
+      self.re.user = new RegExp(/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z]{2,6})/)
+    }
+    if (self.re.user.test(tail)) {
+      // Linkifier allows punctuation chars before prefix,
+      // but we additionally disable `@` ("@@mention" is invalid)
+      if (pos >= 2 && tail[pos - 2] === '@') {
+        return false
+      }
+      return tail.match(self.re.user)![0].length
+    }
+    return 0
+  },
+  normalize: function (match) {
+    match.url = `/u/${match.url.slice(1)}`
+  },
+})
