@@ -80,6 +80,8 @@ https://github.com/LemmyNet/lemmy-js-client/blob/main/src/types/ListingType.ts
 
 #### Sort Type
 
+(case sensitive)
+
 https://github.com/LemmyNet/lemmy-js-client/blob/main/src/types/SortType.ts
 
 - Active
@@ -99,7 +101,6 @@ https://github.com/LemmyNet/lemmy-js-client/blob/main/src/types/SortType.ts
 - TopSixMonths (Not implemented in Photon)
 - TopNineMonths (Not implemented in Photon)
 - TopYear (Not implemented in Photon)
-- Controversial (Not implemented in Photon)
 
 #### Comment Sort Type
 
