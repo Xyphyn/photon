@@ -23,7 +23,6 @@
   import { toast } from '$lib/components/ui/toasts/toasts.js'
   import { createEventDispatcher } from 'svelte'
   import Modal from '$lib/components/ui/modal/Modal.svelte'
-  import PostForm from '$lib/components/lemmy/post/PostForm.svelte'
   import {
     amMod,
     isAdmin,
@@ -31,6 +30,7 @@
   } from '$lib/components/lemmy/moderation/moderation.js'
   import ModerationMenu from '$lib/components/lemmy/moderation/ModerationMenu.svelte'
   import { profile } from '$lib/auth.js'
+  import Spinner from '$lib/components/ui/loader/Spinner.svelte'
 
   export let post: PostView
 
@@ -91,20 +91,26 @@
 {#if editing}
   <Modal bind:open={editing}>
     <h1 slot="title" class="text-2xl font-bold">Editing post</h1>
-    <PostForm
-      edit
-      editingPost={post.post}
-      on:submit={(e) => {
-        editing = false
-        post = e.detail
-        dispatcher('edit', e.detail)
-      }}
-    >
-      <svelte:fragment slot="formtitle">
-        <!-- Have the title not exist at all -->
-        {''}
-      </svelte:fragment>
-    </PostForm>
+    {#await import('./PostForm.svelte')}
+      <div class="mx-auto h-96 flex justify-center items-center">
+        <Spinner width={32} />
+      </div>
+    {:then { default: PostForm }}
+      <PostForm
+        edit
+        editingPost={post.post}
+        on:submit={(e) => {
+          editing = false
+          post = e.detail
+          dispatcher('edit', e.detail)
+        }}
+      >
+        <svelte:fragment slot="formtitle">
+          <!-- Have the title not exist at all -->
+          {''}
+        </svelte:fragment>
+      </PostForm>
+    {/await}
   </Modal>
 {/if}
 
