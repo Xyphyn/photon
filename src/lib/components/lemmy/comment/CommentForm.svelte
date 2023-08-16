@@ -59,12 +59,46 @@
 </script>
 
 <div class="flex flex-col gap-2 relative">
-  <MarkdownEditor
-    rows={7}
-    placeholder={locked ? 'This post is locked.' : placeholders.get('comment')}
-    bind:value
-    disabled={locked || loading}
-    on:confirm={submit}
-    previewButton
-  />
+  {#if preview}
+    <div
+      class="bg-slate-100 dark:bg-zinc-900 px-3 py-2.5 h-64 border
+      border-slate-300 dark:border-zinc-700 rounded-md overflow-auto text-sm resize-y"
+    >
+      <Markdown source={value} />
+    </div>
+  {:else}
+    <MarkdownEditor
+      rows={7}
+      placeholder={locked
+        ? 'This post is locked.'
+        : placeholders.get('comment')}
+      bind:value
+      disabled={locked || loading}
+      on:confirm={submit}
+    />
+  {/if}
+  {#if actions || previewAction}
+    <div class="flex flex-row items-center justify-between">
+      {#if previewAction}
+        <MultiSelect
+          options={[false, true]}
+          optionNames={['Edit', 'Preview']}
+          bind:selected={preview}
+        />
+      {/if}
+      {#if actions}
+        <Button
+          large
+          on:click={submit}
+          color="primary"
+          size="lg"
+          class="sm:ml-auto w-28"
+          {loading}
+          disabled={locked || loading}
+        >
+          Submit
+        </Button>
+      {/if}
+    </div>
+  {/if}
 </div>
