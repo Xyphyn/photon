@@ -120,7 +120,7 @@
 overflow-hidden focus-within:border-black focus-within:dark:border-white transition-colors"
   >
     {#if previewing}
-      <div class="px-3 py-2.5 h-32 overflow-auto text-sm">
+      <div class="px-3 py-2.5 h-32 overflow-auto text-sm resize-y">
         <Markdown source={beforePreview(value)} />
       </div>
     {:else}
