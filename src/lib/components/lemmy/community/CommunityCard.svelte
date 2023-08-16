@@ -18,7 +18,9 @@
     ChatBubbleOvalLeftEllipsis,
     Cog6Tooth,
     Icon,
+    Minus,
     PencilSquare,
+    Plus,
     UserGroup,
   } from 'svelte-hero-icons'
 
@@ -110,12 +112,27 @@
   {#if $profile?.jwt}
     <div class="w-full mt-2 flex flex-col gap-2">
       <Button
+        href="/create/post"
+        color="ghost"
+        size="lg"
+        disabled={community_view.community.posting_restricted_to_mods}
+      >
+        <Icon src={PencilSquare} mini size="16" slot="icon" />
+        Create Post
+      </Button>
+      <Button
         disabled={loading.subscribing}
         loading={loading.subscribing}
         color="ghost"
         size="lg"
         on:click={subscribe}
       >
+        <Icon
+          src={community_view.subscribed == 'Subscribed' ? Minus : Plus}
+          mini
+          size="16"
+          slot="icon"
+        />
         {community_view.subscribed == 'Subscribed' ||
         community_view.subscribed == 'Pending'
           ? 'Unsubscribe'
