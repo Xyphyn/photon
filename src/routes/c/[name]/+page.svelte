@@ -34,21 +34,6 @@
   })
 </script>
 
-<svelte:head>
-  <title>{data.posts.posts[0]?.community.name}</title>
-  <meta
-    name="og:title"
-    content={data.community.community_view.community.name}
-  />
-  {#if data.community.community_view.community.description}
-    <meta
-      name="og:description"
-      content={data.community.community_view.community.description}
-    />
-  {/if}
-  <meta name="og:url" content={$page.url.toString()} />
-</svelte:head>
-
 <Modal bind:open={sidebar}>
   <span slot="title">About</span>
   <div class="mx-auto">
