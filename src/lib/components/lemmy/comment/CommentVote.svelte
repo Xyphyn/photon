@@ -114,7 +114,7 @@
 {:else}<div
     class="flex flex-row items-center rounded-md transition-colors
 cursor-pointer h-[26px] border border-slate-200
-dark:border-zinc-700"
+dark:border-zinc-800"
   >
     <button
       on:click={upvote}
