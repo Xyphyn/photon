@@ -1,5 +1,15 @@
 import type { CommentSortType, SortType } from 'lemmy-js-client'
 import { writable } from 'svelte/store'
+import { env } from '$env/dynamic/public'
+
+console.log("Using the following default settings from the environment:");
+console.log(env);
+
+// Returns a proper boolean or null.  Used to set boolean values from env var strings while allowing nullish coalescing to set default values.
+const toBool = (str) => {
+  if (typeof str === "undefined") { return null; }
+  return str === "true";
+}
 
 interface Settings {
   newComments: boolean
@@ -39,38 +49,39 @@ interface Settings {
 }
 
 export const defaultSettings: Settings = {
+
   newComments: true,
-  expandableImages: true,
-  markReadPosts: true,
-  revertColors: false,
+  expandableImages: toBool(env.PUBLIC_EXPANDABLE_IMAGES)	?? true,
+  markReadPosts: toBool(env.PUBLIC_MARK_READ_POSTS)		?? true,
+  revertColors: toBool(env.PUBLIC_REVERT_VOTE_COLORS)		?? false,
   showInstances: {
-    user: false,
-    community: true,
-    comments: false,
+    user: 	toBool(env.PUBLIC_SHOW_INSTANCES_USER) 		?? false,
+    community: 	toBool(env.PUBLIC_SHOW_INSTANCES_COMMUNITY) 	?? true,
+    comments: 	toBool(env.PUBLIC_SHOW_INSTANCES_COMMENTS)	?? false,
   },
-  showCompactPosts: false,
+  showCompactPosts: toBool(env.PUBLIC_SHOW_COMPACT_POSTS) 	?? false,
   defaultSort: {
-    sort: 'Active',
-    feed: 'Local',
-    comments: 'Hot',
+    sort: 	env.PUBLIC_DEFAULT_FEED_SORT 			?? 'Active',
+    feed: 	env.PUBLIC_DEFAULT_FEED 			?? 'Local',
+    comments: 	env.PUBLIC_DEFAULT_COMMENT_SORT			?? 'Hot',
   },
   hidePosts: {
-    deleted: true,
-    removed: false,
+    deleted: 	toBool(env.PUBLIC_HIDE_DELETED) 		?? true,
+    removed: 	toBool(env.PUBLIC_HIDE_REMOVED) 		?? false,
   },
-  fullWidthLayout: false,
-  expandSidebar: true,
+  fullWidthLayout: toBool(env.PUBLIC_FULL_WIDTH_LAYOUT) 	?? false,
+  expandSidebar: toBool(env.PUBLIC_EXPAND_SIDEBAR) 		?? true,
   notifications: {
     enabled: false,
     pollRate: 60 * 1000,
     notifRate: 10 * 60 * 1000,
   },
-  displayNames: true,
-  nsfwBlur: true,
+  displayNames: toBool(env.PUBLIC_DISPLAY_NAMES) 		?? true,
+  nsfwBlur: toBool(env.PUBLIC_NSFW_BLUR)			?? true,
   moderation: {
     removalReasonPreset: `Your submission in *"{{post}}"* was removed for {{reason}}.`,
   },
-  newVote: false,
+  newVote: toBool(env.PUBLIC_NEW_VOTE_BUTTONS)			?? false,
 }
 
 export const userSettings = writable(defaultSettings)
