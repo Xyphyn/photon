@@ -73,14 +73,6 @@
 
       communities = list.communities.map((c) => c.community)
     }
-
-    const draft = getSessionStorage('postDraft')
-    if (draft && !edit) {
-      // @ts-ignore
-      draft.loading = false
-      // @ts-ignore
-      data = draft
-    }
   })
 
   onDestroy(() => {
@@ -250,13 +242,30 @@
     previewButton
   />
   <Checkbox bind:checked={data.nsfw}>NSFW</Checkbox>
+  <div class="mt-auto" />
+  {#if !edit}
+    <Button
+      on:click={() => {
+        const draft = getSessionStorage('postDraft')
+        if (draft && !edit) {
+          // @ts-ignore
+          draft.loading = false
+          // @ts-ignore
+          data = draft
+        }
+      }}
+      size="lg"
+      disabled={!getSessionStorage('postDraft')}
+    >
+      Restore from draft
+    </Button>
+  {/if}
   <Button
     submit
     color="primary"
     loading={data.loading}
     size="lg"
     disabled={data.loading}
-    class={$$props.class}
   >
     Submit
   </Button>
