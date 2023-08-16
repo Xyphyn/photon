@@ -41,9 +41,8 @@
 <div class="flex flex-col sm:flex-row gap-4 mt-4">
   <MultiSelect
     options={['Subscribed', 'Local', 'All']}
-    selected={$page.url.searchParams.get('type') ?? LINKED_INSTANCE_URL
-      ? 'Local'
-      : 'All'}
+    selected={$page.url.searchParams.get('type') ??
+      (LINKED_INSTANCE_URL ? 'Local' : 'All')}
     on:select={(e) => searchParam($page.url, 'type', e.detail, 'page')}
   />
   <div class="flex flex-col sm:flex-row gap-2 sm:ml-auto items-center">
