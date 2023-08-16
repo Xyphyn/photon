@@ -95,6 +95,14 @@
       Show a user's display name instead of their account username.
     </span>
   </Setting>
+  <Setting>
+    <Checkbox slot="title" bind:checked={$userSettings.randomPlaceholders}>
+      Random placeholders
+    </Checkbox>
+    <span slot="description">
+      Show a random placeholder for forms for comments, posts, etc.
+    </span>
+  </Setting>
 
   <SectionTitle class="mt-4">UI</SectionTitle>
   <Setting>

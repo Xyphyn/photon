@@ -48,6 +48,7 @@ interface Settings {
     removalReasonPreset: string
   }
   newVote: boolean
+  randomPlaceholders: boolean
 }
 
 export const defaultSettings: Settings = {
@@ -83,6 +84,7 @@ export const defaultSettings: Settings = {
     removalReasonPreset: `Your submission in *"{{post}}"* was removed for {{reason}}.`,
   },
   newVote: toBool(env.PUBLIC_NEW_VOTE_BUTTONS) ?? false,
+  randomPlaceholders: toBool(env.PUBLIC_RANDOM_PLACEHOLDERS) ?? true,
 }
 
 export const userSettings = writable(defaultSettings)

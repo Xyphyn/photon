@@ -1,4 +1,6 @@
 import { goto } from '$app/navigation'
+import { userSettings } from '$lib/settings.js'
+import { get } from 'svelte/store'
 
 export const findClosestNumber = (numbers: number[], target: number): number =>
   numbers.reduce((prev, curr) =>
@@ -47,8 +49,10 @@ export const placeholders = {
     'existential crisis in progress',
   ],
   get: (type: 'url' | 'post' | 'comment') => {
-    return placeholders[type][
-      Math.floor(Math.random() * placeholders[type].length)
-    ]
+    return get(userSettings)?.randomPlaceholders
+      ? placeholders[type][
+          Math.floor(Math.random() * placeholders[type].length)
+        ]
+      : ''
   },
 }
