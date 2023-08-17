@@ -67,31 +67,36 @@
 
     <div class="flex flex-row ml-auto gap-2 flex-wrap">
       {#if nsfw}
-        <Badge class="bg-red-600 text-white">NSFW</Badge>
+        <Badge color="red">NSFW</Badge>
       {/if}
       {#if saved}
-        <Badge class="bg-yellow-500 text-white py-1" label="Saved">
-          <Icon src={Bookmark} mini width={16} />
+        <Badge label="Saved" color="yellow">
+          <Icon src={Bookmark} mini size="12" />
+          Saved
         </Badge>
       {/if}
       {#if locked}
-        <Badge class="bg-yellow-400 text-black py-1" label="Locked">
-          <Icon src={LockClosed} mini width={16} />
+        <Badge label="Locked" color="yellow">
+          <Icon src={LockClosed} mini size="14" />
+          Locked
         </Badge>
       {/if}
       {#if removed}
-        <Badge class="bg-green-600 text-white py-1" label="Removed">
-          <Icon src={Trash} mini width={16} />
+        <Badge label="Removed" color="red">
+          <Icon src={Trash} mini size="14" />
+          Removed
         </Badge>
       {/if}
       {#if deleted}
-        <Badge class="bg-red-600 text-white py-1" label="Deleted">
-          <Icon src={Trash} mini width={16} />
+        <Badge label="Deleted" color="red">
+          <Icon src={Trash} mini size="14" />
+          Deleted
         </Badge>
       {/if}
       {#if featured}
-        <Badge class="bg-green-500 text-white py-1" label="Pinned">
-          <Icon src={InformationCircle} mini width={16} />
+        <Badge label="Pinned" color="green">
+          <Icon src={InformationCircle} mini size="14" />
+          Pinned
         </Badge>
       {/if}
     </div>
