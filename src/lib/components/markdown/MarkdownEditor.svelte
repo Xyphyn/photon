@@ -8,6 +8,7 @@
   import Modal from '$lib/components/ui/modal/Modal.svelte'
   import { toast } from '$lib/components/ui/toasts/toasts.js'
   import { uploadImage } from '$lib/lemmy.js'
+  import type { Community, Person } from 'lemmy-js-client'
   import { createEventDispatcher } from 'svelte'
   import {
     CodeBracket,
