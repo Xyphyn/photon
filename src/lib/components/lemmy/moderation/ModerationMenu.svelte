@@ -55,14 +55,14 @@
     locking = false
   }
 
-  async function pin(pinned: boolean) {
+  async function pin(pinned: boolean, toInstance: boolean = false) {
     if (!$profile?.jwt || !isPost(item)) return
 
     pinning = true
 
     try {
       await getClient().featurePost({
-        feature_type: 'Community',
+        feature_type: toInstance ? 'Local' : 'Community',
         auth: $profile.jwt,
         featured: pinned,
         post_id: item.post.id,
@@ -130,6 +130,7 @@
       />
       {item.post.locked ? 'Unlock' : 'Lock'}
     </MenuButton>
+
     <MenuButton
       color="success"
       on:click={() => pin(isPost(item) ? !item.post.featured_community : false)}
@@ -137,7 +138,12 @@
       disabled={pinning}
     >
       <Icon src={InformationCircle} size="16" mini />
-      {item.post.featured_community ? 'Unpin' : 'Pin'}
+      <div class="flex flex-col text-left">
+        <span>{item.post.featured_community ? 'Unpin' : 'Pin'}</span>
+        {#if isAdmin($profile.user)}
+          <span class="opacity-80 text-xs">Community</span>
+        {/if}
+      </div>
     </MenuButton>
     <MenuButton color="dangerSecondary" on:click={() => remove(item)}>
       <Icon src={Trash} size="16" mini />
@@ -167,6 +173,18 @@
     <span class="px-4 py-1 my-1 text-xs text-slate-600 dark:text-zinc-400">
       Admin
     </span>
+    <MenuButton
+      color="success"
+      on:click={() =>
+        pin(isPost(item) ? !item.post.featured_local : false, true)}
+    >
+      <Icon src={InformationCircle} size="16" mini />
+      <div class="flex flex-col text-left">
+        <span>{item.post.featured_local ? 'Unpin' : 'Pin'}</span>
+
+        <span class="text-xs opacity-80">Instance</span>
+      </div>
+    </MenuButton>
     <MenuButton color="dangerSecondary" on:click={() => remove(item, true)}>
       <Icon src={Fire} size="16" mini />
       Purge
