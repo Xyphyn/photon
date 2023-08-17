@@ -53,7 +53,7 @@ The following environment variables can be set to override the default settings:
 | PUBLIC_REVERT_VOTE_COLORS       | `bool`              | false         |
 | PUBLIC_SHOW_INSTANCES_USER      | `bool`              | false         |
 | PUBLIC_SHOW_INSTANCES_COMMUNITY | `bool`              | true          |
-| PUBLIC_SHOW_INSTANCES_COMMENT   | `bool`              | false         |
+| PUBLIC_SHOW_INSTANCES_COMMENTS  | `bool`              | false         |
 | PUBLIC_SHOW_COMPACT_POSTS       | `bool`              | false         |
 | PUBLIC_DEFAULT_FEED_SORT        | `SortType`          | Active        |
 | PUBLIC_DEFAULT_FEED             | `ListingType`       | Local         |
