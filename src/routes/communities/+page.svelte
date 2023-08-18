@@ -30,12 +30,12 @@
 
 <h1 class="text-2xl font-bold">Communities</h1>
 <p class="text-slate-600 dark:text-zinc-400 mt-2">
-  Can't find a community on your home instance? Go to the <Link
+  Can't find a community on your home instance? Go to the <a
     href="/search"
-    highlight
+    class="text-blue-500 hover:underline"
   >
     search
-  </Link> page, and search with this syntax:
+  </a> page, and search with this syntax:
   <code>!community@instance.com</code>
 </p>
 <div class="flex flex-col sm:flex-row gap-4 mt-4">
