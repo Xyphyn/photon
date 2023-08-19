@@ -84,6 +84,7 @@
     }
 
     read = isRead
+    if ($profile.user) $profile.user.unreads += isRead ? -1 : 1
 
     loading = false
   }
