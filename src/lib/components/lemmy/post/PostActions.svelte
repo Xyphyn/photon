@@ -91,7 +91,11 @@
 {/if}
 
 <div class="flex flex-row gap-2 items-center h-[30px]">
-  <PostVote post={post.post} vote={post.my_vote} score={post.counts.score} />
+  <PostVote
+    post={post.post}
+    bind:vote={post.my_vote}
+    bind:score={post.counts.score}
+  />
 
   <Button
     color="secondary"
