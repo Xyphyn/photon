@@ -2,7 +2,7 @@
   import { buildCommentsTreeAsync } from '$lib/components/lemmy/comment/comments.js'
   import Comments from '$lib/components/lemmy/comment/Comments.svelte'
   import { isImage, isVideo } from '$lib/ui/image.js'
-  import { getClient } from '$lib/lemmy.js'
+  import { getClient, getInstance } from '$lib/lemmy.js'
   import CommentForm from '$lib/components/lemmy/comment/CommentForm.svelte'
   import { onMount } from 'svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
@@ -20,6 +20,9 @@
   import { profile } from '$lib/auth.js'
   import { instance } from '$lib/instance.js'
   import { goto } from '$app/navigation'
+  import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
+  import Link from '$lib/components/input/Link.svelte'
+  import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
 
   export let data
 
@@ -165,6 +168,34 @@
         })}
     />
   </div>
+  {#if data.post.cross_posts?.length > 0}
+    <div class="text-sm font-bold mt-2">
+      <SectionTitle class="text-inherit dark:text-inherit">
+        Crossposts <span class="text-slate-600 dark:text-zinc-400 text-xs ml-1">
+          {data.post.cross_posts.length}
+        </span>
+      </SectionTitle>
+      <div class="divide-y divide-slate-200 dark:divide-zinc-800 flex flex-col">
+        {#each data.post.cross_posts as crosspost}
+          <div class="py-2.5 flex flex-col gap-1">
+            <span class="text-xs flex flex-col pointer-events-none">
+              <CommunityLink
+                community={crosspost.community}
+                avatarSize={22}
+                avatar={true}
+              />
+            </span>
+            <Link
+              class="text-sm"
+              href="/post/{$page.params.instance}/{crosspost.post.id}"
+            >
+              {crosspost.post.name}
+            </Link>
+          </div>
+        {/each}
+      </div>
+    </div>
+  {/if}
 </div>
 <div class="mt-4 flex flex-col gap-2">
   <div class="font-bold text-lg">
