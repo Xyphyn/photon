@@ -82,7 +82,7 @@
     }}
   />
 </div>
-<div class="flex flex-col gap-4 list-none my-4 h-full">
+<div class="flex flex-col gap-4 list-none my-4">
   {#if !data.data || (data.data?.length ?? 0) == 0}
     <div>
       <Placeholder>
