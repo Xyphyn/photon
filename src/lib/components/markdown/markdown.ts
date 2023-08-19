@@ -96,3 +96,19 @@ md.linkify.add('@', {
     match.url = `/u/${match.url.slice(1)}`
   },
 })
+
+md.linkify.add('https:', {
+  validate: function (text, pos, self) {
+    const tail = text.slice(pos)
+
+    return tail.length
+  },
+  normalize: function (match) {
+    const matched = match.url.match(/\/\/([\w-]+.[\w.]+)\/post\/(\d+)/)
+    if (!matched?.[1] || !matched?.[2]) {
+      return match
+    }
+    match.url = `/post/${matched?.[1]}/${matched?.[2]}`
+    console.log(match)
+  },
+})

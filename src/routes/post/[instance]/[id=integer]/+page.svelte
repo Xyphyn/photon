@@ -19,7 +19,7 @@
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
   import { profile } from '$lib/auth.js'
   import { instance } from '$lib/instance.js'
-  import { goto } from '$app/navigation'
+  import { afterNavigate, goto } from '$app/navigation'
   import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
   import Link from '$lib/components/input/Link.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
@@ -34,7 +34,9 @@
         post_id: data.post.post_view.post.id,
       })
     }
+  })
 
+  afterNavigate(async () => {
     if (
       $page.params.instance.toLowerCase() != $instance.toLowerCase() &&
       $profile?.jwt
