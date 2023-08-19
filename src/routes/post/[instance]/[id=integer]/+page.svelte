@@ -44,7 +44,7 @@
       try {
         const res = await getClient().resolveObject({
           auth: $profile.jwt,
-          q: `https://${$page.params.instance}/post/${data.post.post_view.post.id}`,
+          q: data.post.post_view.post.ap_id,
         })
 
         if (res.post) {
