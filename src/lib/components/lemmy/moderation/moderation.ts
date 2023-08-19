@@ -1,23 +1,15 @@
-import type Post from '$lib/components/lemmy/post/Post.svelte'
-import type {
-  CommentView,
-  Community,
-  CommunityView,
-  MyUserInfo,
-  Person,
-  PersonView,
-  PostView,
-} from 'lemmy-js-client'
+import type { Submission } from '$lib/lemmy/contentview.js'
+import type { Community, MyUserInfo, Person } from 'lemmy-js-client'
 import { writable } from 'svelte/store'
 
 interface Modals {
   reporting: {
     open: boolean
-    item: PostView | CommentView | undefined
+    item: Submission | undefined
   }
   removing: {
     open: boolean
-    item: PostView | CommentView | undefined
+    item: Submission | undefined
     purge: boolean
   }
   banning: {
@@ -46,7 +38,7 @@ export let modals = writable<Modals>({
   },
 })
 
-export function report(item: PostView | CommentView) {
+export function report(item: Submission) {
   modals.update((m) => ({
     ...m,
     reporting: {
@@ -56,7 +48,7 @@ export function report(item: PostView | CommentView) {
   }))
 }
 
-export function remove(item: PostView | CommentView, purge: boolean = false) {
+export function remove(item: Submission, purge: boolean = false) {
   modals.update((m) => ({
     ...m,
     removing: {

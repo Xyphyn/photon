@@ -2,7 +2,7 @@ import { getClient } from '$lib/lemmy.js'
 import { isComment, isPost } from '$lib/lemmy/item.js'
 import type { CommentView, Person, PostView } from 'lemmy-js-client'
 
-type Submission = PostView | CommentView
+export type Submission = PostView | CommentView
 
 export interface ContentView {
   type: 'post' | 'comment'
