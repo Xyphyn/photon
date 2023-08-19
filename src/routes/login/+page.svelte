@@ -54,7 +54,7 @@
   <title>Login</title>
 </svelte:head>
 
-<Card class="p-6 max-w-lg w-full mx-auto">
+<div class="max-w-lg w-full mx-auto">
   <form on:submit|preventDefault={logIn} class="flex flex-col gap-6">
     <h1 class="font-bold text-2xl">Log in</h1>
     <div class="flex flex-row w-full items-center gap-2">
@@ -124,4 +124,4 @@
       Don't have an account? <Link href="/signup" highlight>Sign up</Link>
     </p>
   </form>
-</Card>
+</div>
