@@ -22,6 +22,8 @@
 
   export let data
 
+  const instance = $page.params.instance
+
   let captchaRequired = data.site_view.local_site.captcha_enabled
 
   let email: string | undefined = ''
@@ -37,7 +39,8 @@
     submitting: boolean = false,
     honeypot: string | undefined = undefined
 
-  const getCaptcha = async () => (captcha = await getClient().getCaptcha())
+  const getCaptcha = async () =>
+    (captcha = await getClient(instance, fetch).getCaptcha())
 
   $: captchaAudio = captcha?.ok?.wav
     ? `data:audio/wav;base64,${captcha.ok.wav}`
@@ -47,7 +50,7 @@
     submitting = true
 
     try {
-      const res = await getClient().register({
+      const res = await getClient(instance, fetch).register({
         username: username,
         email: email,
         password: password,
