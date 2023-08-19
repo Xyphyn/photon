@@ -109,6 +109,5 @@ md.linkify.add('https:', {
       return match
     }
     match.url = `/post/${matched?.[1]}/${matched?.[2]}`
-    console.log(match)
   },
 })
