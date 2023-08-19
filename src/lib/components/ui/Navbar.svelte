@@ -235,7 +235,7 @@
     {:else}
       <MenuButton link href="/accounts">
         <Icon src={UserGroup} mini width={16} />
-        Manage accounts
+        Accounts
         <span
           class="text-xs font-bold bg-slate-100 dark:bg-zinc-700 px-2 py-0.5 rounded-md ml-auto"
         >
@@ -270,7 +270,7 @@
         <select
           bind:value={$theme}
           on:click|stopPropagation
-          class="ml-auto w-max px-1 rounded-sm"
+          class="ml-auto w-max px-1 rounded-sm cursor-pointer bg-transparent border dark:border-zinc-700"
         >
           <option value="system">System</option>
           <option value="light">Light</option>
