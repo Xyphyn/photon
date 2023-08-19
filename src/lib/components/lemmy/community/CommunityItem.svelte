@@ -14,10 +14,7 @@
   export let community: CommunityView
 </script>
 
-<div
-  class="py-4 border-b border-black/20 dark:border-white/20
-  flex flex-col gap-1 text-sm max-w-full"
->
+<div class="py-4 flex flex-col gap-1 text-sm max-w-full">
   <div class="flex flex-row items-center">
     <span
       class="break-words max-w-full w-max text-base font-bold text-sky-400 hover:underline"

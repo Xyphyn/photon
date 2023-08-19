@@ -35,7 +35,8 @@
     class="text-blue-500 hover:underline"
   >
     search
-  </a> page, and search with this syntax:
+  </a>
+  page, and search with this syntax:
   <code>!community@instance.com</code>
 </p>
 <div class="flex flex-col sm:flex-row gap-4 mt-4">
@@ -69,7 +70,7 @@
     </Button>
   </div>
 </div>
-<ul class="flex flex-col">
+<ul class="flex flex-col divide-y dark:divide-zinc-800">
   {#if data.communities.length == 0}
     <div
       class="text-slate-600 dark:text-zinc-400 flex flex-col justify-center items-center py-8"
@@ -82,9 +83,9 @@
     </div>
   {/if}
   {#each data.communities as community}
-    <li>
+    <li class="py-3">
       <div
-        class="py-4 border-b border-black/20 dark:border-white/20
+        class="
   flex flex-col gap-1 text-sm max-w-full"
       >
         <div class="flex flex-row items-center">
