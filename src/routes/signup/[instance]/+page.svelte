@@ -97,7 +97,7 @@
 >
   <span class="flex gap-4 items-center font-bold text-xl text-center mx-auto">
     {#if data.site_view.site.icon}
-      <Avatar width={48} url={data.site_view.site.icon} />
+      <Avatar circle={false} width={48} url={data.site_view.site.icon} />
     {/if}
     {data.site_view.site.name}
   </span>
