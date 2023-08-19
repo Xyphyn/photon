@@ -26,17 +26,21 @@
 
   export let data
 
+  let post = data.post
+
   onMount(async () => {
-    if (!data.post.post_view.read && $profile?.jwt) {
+    if (!post.post_view.read && $profile?.jwt) {
       getClient().markPostAsRead({
         auth: $profile.jwt,
         read: true,
-        post_id: data.post.post_view.post.id,
+        post_id: post.post_view.post.id,
       })
     }
   })
 
   afterNavigate(async () => {
+    // reactivity hack
+    post = data.post
     if (
       $page.params.instance.toLowerCase() != $instance.toLowerCase() &&
       $profile?.jwt
@@ -49,7 +53,7 @@
       try {
         const res = await getClient().resolveObject({
           auth: $profile.jwt,
-          q: data.post.post_view.post.ap_id,
+          q: post.post_view.post.ap_id,
         })
 
         if (res.post) {
@@ -76,7 +80,7 @@
       page: 1,
       limit: 25,
       type_: 'All',
-      post_id: data.post.post_view.post.id,
+      post_id: post.post_view.post.id,
       sort: commentSort,
       max_depth: 3,
     })
@@ -84,14 +88,14 @@
 </script>
 
 <svelte:head>
-  <title>{data.post.post_view.post.name}</title>
-  <meta property="og:title" content={data.post.post_view.post.name} />
+  <title>{post.post_view.post.name}</title>
+  <meta property="og:title" content={post.post_view.post.name} />
   <meta property="og:url" content={$page.url.toString()} />
-  {#if isImage(data.post.post_view.post.url)}
-    <meta property="og:image" content={data.post.post_view.post.url} />
+  {#if isImage(post.post_view.post.url)}
+    <meta property="og:image" content={post.post_view.post.url} />
   {/if}
-  {#if data.post.post_view.post.body}
-    <meta property="og:description" content={data.post.post_view.post.body} />
+  {#if post.post_view.post.body}
+    <meta property="og:description" content={post.post_view.post.body} />
   {/if}
 </svelte:head>
 
@@ -113,56 +117,56 @@
   {/if}
 
   <PostMeta
-    community={data.post.post_view.community}
-    user={data.post.post_view.creator}
-    upvotes={data.post.post_view.counts.upvotes}
-    downvotes={data.post.post_view.counts.downvotes}
-    deleted={data.post.post_view.post.deleted}
-    removed={data.post.post_view.post.removed}
-    locked={data.post.post_view.post.locked}
-    featured={data.post.post_view.post.featured_community ||
-      data.post.post_view.post.featured_local}
-    nsfw={data.post.post_view.post.nsfw}
-    published={new Date(data.post.post_view.post.published + 'Z')}
-    saved={data.post.post_view.saved}
+    community={post.post_view.community}
+    user={post.post_view.creator}
+    upvotes={post.post_view.counts.upvotes}
+    downvotes={post.post_view.counts.downvotes}
+    deleted={post.post_view.post.deleted}
+    removed={post.post_view.post.removed}
+    locked={post.post_view.post.locked}
+    featured={post.post_view.post.featured_community ||
+      post.post_view.post.featured_local}
+    nsfw={post.post_view.post.nsfw}
+    published={new Date(post.post_view.post.published + 'Z')}
+    saved={post.post_view.saved}
   />
-  <h1 class="font-bold text-lg">{data.post.post_view.post.name}</h1>
-  {#if isImage(data.post.post_view.post.url)}
+  <h1 class="font-bold text-lg">{post.post_view.post.name}</h1>
+  {#if isImage(post.post_view.post.url)}
     <img
-      src={data.post.post_view.post.url}
-      alt={data.post.post_view.post.name}
+      src={post.post_view.post.url}
+      alt={post.post_view.post.name}
       class="rounded-md max-w-screen max-h-[80svh] mx-auto"
     />
-  {:else if isVideo(data.post.post_view.post.url)}
+  {:else if isVideo(post.post_view.post.url)}
     <!-- svelte-ignore a11y-media-has-caption -->
     <video class="rounded-md max-w-screen max-h-[80svh] mx-auto" controls>
-      <source src={data.post.post_view.post.url} />
+      <source src={post.post_view.post.url} />
     </video>
-  {:else if data.post.post_view.post.url && !data.post.post_view.post.thumbnail_url}
+  {:else if post.post_view.post.url && !post.post_view.post.thumbnail_url}
     <a
-      href={data.post.post_view.post.url}
+      href={post.post_view.post.url}
       class="max-w-full overflow-hidden overflow-ellipsis whitespace-nowrap text-sky-400 hover:underline text-xs"
     >
-      {data.post.post_view.post.url}
+      {post.post_view.post.url}
     </a>
-  {:else if data.post.post_view.post.thumbnail_url && data.post.post_view.post.url}
+  {:else if post.post_view.post.thumbnail_url && post.post_view.post.url}
     <PostLink
-      thumbnail_url={data.post.post_view.post.thumbnail_url}
-      url={data.post.post_view.post.url}
-      nsfw={data.post.post_view.post.nsfw}
+      thumbnail_url={post.post_view.post.thumbnail_url}
+      url={post.post_view.post.url}
+      nsfw={post.post_view.post.nsfw}
     />
   {/if}
-  {#if data.post.post_view.post.body}
+  {#if post.post_view.post.body}
     <div
       class="bg-slate-100 border border-slate-200 dark:border-zinc-800
     dark:bg-zinc-900 p-2 text-sm rounded-md leading-[22px]"
     >
-      <Markdown source={data.post.post_view.post.body} />
+      <Markdown source={post.post_view.post.body} />
     </div>
   {/if}
   <div class="w-full relative">
     <PostActions
-      bind:post={data.post.post_view}
+      bind:post={post.post_view}
       on:edit={() =>
         toast({
           content: 'The post was edited successfully.',
@@ -170,15 +174,15 @@
         })}
     />
   </div>
-  {#if data.post.cross_posts?.length > 0}
+  {#if post.cross_posts?.length > 0}
     <div class="text-sm font-bold mt-2">
       <SectionTitle class="text-inherit dark:text-inherit">
         Crossposts <span class="text-slate-600 dark:text-zinc-400 text-xs ml-1">
-          {data.post.cross_posts.length}
+          {post.cross_posts.length}
         </span>
       </SectionTitle>
       <div class="divide-y divide-slate-200 dark:divide-zinc-800 flex flex-col">
-        {#each data.post.cross_posts as crosspost}
+        {#each post.cross_posts as crosspost}
           <div class="py-2.5 flex flex-col gap-1">
             <span class="text-xs flex flex-col pointer-events-none">
               <CommunityLink
@@ -202,7 +206,7 @@
 <div class="mt-4 flex flex-col gap-2">
   <div class="font-bold text-lg">
     Comments <span class="text-sm font-normal ml-2 opacity-80">
-      {data.post.post_view.counts.comments}
+      {post.post_view.counts.comments}
     </span>
   </div>
   <MultiSelect
@@ -223,13 +227,13 @@
   {:then comments}
     {#if $profile?.user}
       <CommentForm
-        postId={data.post.post_view.post.id}
+        postId={post.post_view.post.id}
         on:comment={(comment) =>
           (comments.comments = [
             comment.detail.comment_view,
             ...comments.comments,
           ])}
-        locked={data.post.post_view.post.locked ||
+        locked={post.post_view.post.locked ||
           $page.params.instance.toLowerCase() != $instance.toLowerCase()}
       />
     {/if}
@@ -238,11 +242,7 @@
         <Spinner width={36} />
       </div>
     {:then comments}
-      <Comments
-        post={data.post.post_view.post}
-        nodes={comments}
-        isParent={true}
-      />
+      <Comments post={post.post_view.post} nodes={comments} isParent={true} />
     {/await}
   {:catch}
     <div class="bg-red-500/10 border border-red-500 rounded-md p-4">
