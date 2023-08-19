@@ -31,6 +31,7 @@
   import ModerationMenu from '$lib/components/lemmy/moderation/ModerationMenu.svelte'
   import { profile } from '$lib/auth.js'
   import Spinner from '$lib/components/ui/loader/Spinner.svelte'
+  import { save } from '$lib/lemmy/contentview.js'
 
   export let post: PostView
 
@@ -56,31 +57,6 @@
         type: 'error',
       })
     }
-  }
-
-  async function save(post: PostView) {
-    if (!$profile?.jwt) return false
-
-    const saved = post.saved
-
-    post.saved = !saved
-
-    try {
-      await getClient().savePost({
-        auth: $profile.jwt,
-        post_id: post.post.id,
-        save: !saved,
-      })
-    } catch (error) {
-      post.saved = saved
-
-      toast({
-        content: error as any,
-        type: 'error',
-      })
-    }
-
-    return post.saved
   }
 
   const dispatcher = createEventDispatcher<{ edit: PostView }>()
@@ -180,7 +156,12 @@
       Copy Link
     </MenuButton>
     {#if $profile?.jwt}
-      <MenuButton on:click={async () => (post.saved = await save(post))}>
+      <MenuButton
+        on:click={async () => {
+          if ($profile?.jwt)
+            post.saved = await save(post, !post.saved, $profile.jwt)
+        }}
+      >
         <Icon src={post.saved ? BookmarkSlash : Bookmark} width={16} mini />
         {post.saved ? 'Unsave' : 'Save'}
       </MenuButton>

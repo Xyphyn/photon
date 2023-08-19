@@ -32,32 +32,10 @@
   import ModerationMenu from '$lib/components/lemmy/moderation/ModerationMenu.svelte'
   import CommentModerationMenu from '$lib/components/lemmy/moderation/CommentModerationMenu.svelte'
   import { profile } from '$lib/auth.js'
+  import { save } from '$lib/lemmy/contentview.js'
 
   export let comment: CommentView
   export let replying: boolean = false
-
-  async function save() {
-    if (!$profile?.jwt) return
-
-    const saved = comment.saved
-
-    comment.saved = !saved
-
-    try {
-      await getClient().saveComment({
-        auth: $profile.jwt,
-        comment_id: comment.comment.id,
-        save: !saved,
-      })
-    } catch (error) {
-      comment.saved = saved
-
-      toast({
-        content: error as any,
-        type: 'error',
-      })
-    }
-  }
 
   const dispatcher = createEventDispatcher<{ edit: CommentView }>()
 </script>
@@ -110,7 +88,12 @@
           <span>Edit</span>
         </MenuButton>
       {/if}
-      <MenuButton on:click={save}>
+      <MenuButton
+        on:click={async () => {
+          if ($profile?.jwt)
+            comment.saved = await save(comment, !comment.saved, $profile.jwt)
+        }}
+      >
         <Icon src={comment.saved ? BookmarkSlash : Bookmark} mini size="16" />
         <span>{comment.saved ? 'Unsave' : 'Save'}</span>
       </MenuButton>
