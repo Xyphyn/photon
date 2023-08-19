@@ -13,6 +13,8 @@
   import { getClient } from '$lib/lemmy.js'
   import type { GetCaptchaResponse } from 'lemmy-js-client'
   import {
+    ArrowPath,
+    ExclamationCircle,
     ExclamationTriangle,
     Icon,
     QuestionMarkCircle,
@@ -148,30 +150,38 @@
     {#if captchaRequired}
       <div>
         <div class="block my-1 font-bold text-sm">Captcha</div>
-        {#await getCaptcha()}
-          <Spinner width={32} />
-        {:then}
-          {#if captcha?.ok}
-            <div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-4">
+          {#await getCaptcha()}
+            <Spinner width={32} />
+          {:then}
+            {#if captcha?.ok}
               <img
                 src="data:image/png;base64,{captcha.ok.png}"
                 alt="Captcha"
                 class="w-max"
               />
               <audio controls src={captchaAudio} />
-              <TextInput
-                required
-                bind:value={verifyCaptcha}
-                placeholder="i guess i'm a robot"
-              />
-            </div>
-          {:else}
-            <div class="flex gap-2">
-              <Icon src={QuestionMarkCircle} mini size="24" />
-              No captcha was returned :(
-            </div>
-          {/if}
-        {/await}
+            {:else}
+              <Card cardColor="warning" class="p-3 flex gap-2">
+                <Icon src={QuestionMarkCircle} mini size="24" />
+                No captcha was returned
+              </Card>
+            {/if}
+          {:catch err}
+            <Card cardColor="error" class="p-3 flex gap-2">
+              <Icon src={ExclamationCircle} mini size="24" />
+              {err}
+            </Card>
+          {/await}
+          <Button on:click={() => getCaptcha()} size="square-md">
+            <Icon src={ArrowPath} size="16" mini />
+          </Button>
+          <TextInput
+            required
+            bind:value={verifyCaptcha}
+            placeholder="i guess i'm a robot"
+          />
+        </div>
       </div>
     {/if}
     <input type="dn" name="honeypot" bind:value={honeypot} class="hidden" />
