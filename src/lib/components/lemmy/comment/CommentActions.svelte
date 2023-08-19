@@ -32,7 +32,7 @@
   import ModerationMenu from '$lib/components/lemmy/moderation/ModerationMenu.svelte'
   import CommentModerationMenu from '$lib/components/lemmy/moderation/CommentModerationMenu.svelte'
   import { profile } from '$lib/auth.js'
-  import { save } from '$lib/lemmy/contentview.js'
+  import { deleteItem, save } from '$lib/lemmy/contentview.js'
 
   export let comment: CommentView
   export let replying: boolean = false
@@ -101,27 +101,16 @@
         <MenuButton
           color="dangerSecondary"
           on:click={async () => {
-            if (!$profile?.jwt) return
-            try {
-              await getClient().deleteComment({
-                auth: $profile.jwt,
-                comment_id: comment.comment.id,
-                deleted: true,
-              })
-              toast({
-                content: 'The comment was deleted.',
-                type: 'success',
-              })
-            } catch (error) {
-              toast({
-                content: 'Failed to delete comment',
-                type: 'error',
-              })
-            }
+            if ($profile?.jwt)
+              comment.comment.deleted = await deleteItem(
+                comment,
+                !comment.comment.deleted,
+                $profile.jwt
+              )
           }}
         >
           <Icon src={Trash} mini size="16" />
-          <span>Delete</span>
+          <span>{comment.comment.deleted ? 'Restore' : 'Delete'}</span>
         </MenuButton>
       {/if}
       {#if $profile.jwt && $profile.user?.local_user_view.person.id != comment.creator.id}

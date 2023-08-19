@@ -59,3 +59,30 @@ export async function save(
   }
   return save
 }
+
+export async function deleteItem(
+  item: ContentView | Submission,
+  deleted: boolean,
+  jwt: string
+): Promise<boolean> {
+  if (isSubmission(item)) item = contentView(item)
+
+  if (item.type == 'post') {
+    return (
+      await getClient().deletePost({
+        auth: jwt,
+        post_id: item.id,
+        deleted: deleted,
+      })
+    ).post_view.post.deleted
+  } else if (item.type == 'comment') {
+    return (
+      await getClient().deleteComment({
+        auth: jwt,
+        comment_id: item.id,
+        deleted: deleted,
+      })
+    ).comment_view.post.deleted
+  }
+  return deleted
+}

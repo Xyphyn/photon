@@ -31,7 +31,7 @@
   import ModerationMenu from '$lib/components/lemmy/moderation/ModerationMenu.svelte'
   import { profile } from '$lib/auth.js'
   import Spinner from '$lib/components/ui/loader/Spinner.svelte'
-  import { save } from '$lib/lemmy/contentview.js'
+  import { deleteItem, save } from '$lib/lemmy/contentview.js'
 
   export let post: PostView
 
@@ -166,7 +166,17 @@
         {post.saved ? 'Unsave' : 'Save'}
       </MenuButton>
       {#if $profile.user && post.creator.id == $profile.user.local_user_view.person.id}
-        <MenuButton on:click={deletePost} color="dangerSecondary">
+        <MenuButton
+          on:click={async () => {
+            if ($profile?.jwt)
+              post.post.deleted = await deleteItem(
+                post,
+                !post.post.deleted,
+                $profile.jwt
+              )
+          }}
+          color="dangerSecondary"
+        >
           <Icon src={Trash} width={16} mini />
           {post.post.deleted ? 'Restore' : 'Delete'}
         </MenuButton>
