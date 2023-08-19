@@ -1,12 +1,14 @@
 <script lang="ts">
-  import { profile } from '$lib/auth.js'
+  import { goto } from '$app/navigation'
+  import { profile, profileData, setUserID } from '$lib/auth.js'
   import Button from '$lib/components/input/Button.svelte'
   import Checkbox from '$lib/components/input/Checkbox.svelte'
   import FileInput from '$lib/components/input/FileInput.svelte'
   import TextInput from '$lib/components/input/TextInput.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import Card from '$lib/components/ui/Card.svelte'
-  import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import Modal from '$lib/components/ui/modal/Modal.svelte'
+  import { removeToast, toast } from '$lib/components/ui/toasts/toasts.js'
   import { getClient, uploadImage } from '$lib/lemmy.js'
   import type { SaveUserSettings } from 'lemmy-js-client'
 
@@ -50,8 +52,103 @@
     loading = false
   }
 
+  let deletion = {
+    modal: false,
+    password: '',
+  }
+
+  async function deleteAccount(level: number) {
+    if (!$profile?.jwt) return
+    switch (level) {
+      case 0: {
+        toast({
+          content: 'Are you sure you want to delete your account?',
+          action: () => deleteAccount(1),
+        })
+        return
+      }
+      case 1: {
+        toast({
+          content: 'Are you really sure?',
+          action: () => deleteAccount(2),
+        })
+        return
+      }
+      case 2: {
+        toast({
+          content: 'Final warning. Are you reeeeeeally sure?',
+          action: () => deleteAccount(3),
+        })
+        return
+      }
+      case 3: {
+        deletion.modal = true
+        deletion.password = ''
+        return
+      }
+    }
+
+    if (!(deletion.password || null)) {
+      toast({
+        content: 'You must provide your password.',
+        type: 'warning',
+      })
+    }
+
+    const id = toast({
+      content: 'You did this. Deleting account...',
+      loading: true,
+    })
+
+    try {
+      const { jwt } = $profile
+
+      await getClient().deleteAccount({
+        auth: jwt,
+        password: deletion.password,
+      })
+
+      profileData.update((pd) => {
+        pd.profiles.splice(
+          pd.profiles.findIndex((p) => pd.profile == p.id),
+          1
+        )
+
+        return pd
+      })
+
+      setUserID(-1)
+      toast({
+        content: 'Your account was deleted.',
+      })
+      goto('/')
+    } catch (err) {
+      toast({
+        content: err as any,
+        type: 'error',
+      })
+    } finally {
+      removeToast(id)
+    }
+  }
+
   let loading = false
 </script>
+
+{#if deletion.modal}
+  <Modal
+    bind:open={deletion.modal}
+    action="Submit"
+    on:action={() => deleteAccount(4)}
+  >
+    <span slot="title">Delete account</span>
+    <TextInput
+      label="Password"
+      type="password"
+      bind:value={deletion.password}
+    />
+  </Modal>
+{/if}
 
 <form class="flex flex-col gap-4 h-full" on:submit|preventDefault={save}>
   <h1 class="font-bold text-2xl">User settings</h1>
@@ -97,4 +194,12 @@
       The API didn't return your user settings.
     </Card>
   {/if}
+  <Button
+    on:click={() => deleteAccount(0)}
+    color="danger"
+    size="lg"
+    class="ml-auto"
+  >
+    Delete account
+  </Button>
 </form>
