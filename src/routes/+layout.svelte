@@ -46,14 +46,11 @@
   <Navbar />
   <ToastContainer />
   <Moderation />
-  <div
-    class="flex flex-row h-full w-full max-w-full sm:divide-x dark:divide-zinc-900
-    divide-slate-200 flex-1"
-  >
+  <div class="flex flex-row h-full w-full max-w-full flex-1">
     <Sidebar />
     <main
       class="p-3 sm:p-6 min-w-0 w-full flex-[3] sm:rounded-tl-lg
-      border-slate-200 dark:border-zinc-900 border-t"
+      border-slate-200 dark:border-zinc-900 sm:border-l border-t"
     >
       <slot />
     </main>
