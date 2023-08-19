@@ -269,8 +269,8 @@
         <span>Theme</span>
         <select
           bind:value={$theme}
+          on:click|stopPropagation
           class="ml-auto w-max px-1 rounded-sm"
-          on:click|stopPropagation={() => {}}
         >
           <option value="system">System</option>
           <option value="light">Light</option>
