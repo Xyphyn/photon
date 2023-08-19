@@ -65,7 +65,7 @@
       class="list-none absolute max-h-96 z-30 overflow-auto {getOriginClass(
         alignment
       )}
-          rounded-md py-2 min-w-[16rem] my-2 flex flex-col shadow-md
+          rounded-lg py-2 min-w-[16rem] my-2 flex flex-col shadow-sm
           bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800
           {$$props.containerClass}"
     >

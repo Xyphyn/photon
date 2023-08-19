@@ -95,7 +95,7 @@
         aria-label="Admin"
         class="max-md:w-9 max-md:h-8 max-md:!p-0
         dark:text-zinc-300 text-slate-700 hover:text-inherit hover:dark:text-inherit
-      hover:bg-slate-200 relative"
+      hover:bg-slate-200 relative hover:border-slate-300"
       >
         <Icon src={CommandLine} mini size="16" slot="icon" />
         <span class="hidden md:inline">Admin</span>
@@ -106,7 +106,7 @@
         href="/moderation"
         aria-label="Moderation"
         class="max-md:w-9 h-8 max-md:!p-0 dark:text-zinc-300 text-slate-700
-        hover:text-inherit hover:bg-slate-200 hover:dark:text-inherit relative"
+        hover:text-inherit hover:bg-slate-200 hover:dark:text-inherit relative hover:border-slate-300"
       >
         {#if $profile?.user?.reports ?? 0 > 0}
           <div
@@ -121,7 +121,7 @@
       href="/search"
       aria-label="Search"
       class="max-md:w-9 max-md:h-8 max-md:!p-0
-      dark:text-zinc-300 text-slate-700 hover:text-inherit hover:dark:text-inherit hover:bg-slate-200"
+      dark:text-zinc-300 text-slate-700 hover:text-inherit hover:dark:text-inherit hover:bg-slate-200 hover:border-slate-300"
     >
       <Icon mini src={MagnifyingGlass} width={16} slot="icon" />
       <span class="hidden md:inline">Search</span>
@@ -130,7 +130,8 @@
       href="/communities"
       aria-label="Communities"
       class="max-md:w-9 max-md:h-8 max-md:!p-0
-      dark:text-zinc-300 text-slate-700 hover:text-inherit hover:dark:text-inherit hover:bg-slate-200"
+      dark:text-zinc-300 text-slate-700 hover:text-inherit
+      hover:dark:text-inherit hover:bg-slate-200 hover:border-slate-300"
     >
       <Icon mini src={GlobeAlt} size="16" slot="icon" />
       <span class="hidden md:inline">Explore</span>
