@@ -7,6 +7,8 @@
     BookmarkSlash,
     ChatBubbleOvalLeftEllipsis,
     EllipsisHorizontal,
+    Eye,
+    EyeSlash,
     Flag,
     Icon,
     Newspaper,
@@ -31,7 +33,7 @@
   import ModerationMenu from '$lib/components/lemmy/moderation/ModerationMenu.svelte'
   import { profile } from '$lib/auth.js'
   import Spinner from '$lib/components/ui/loader/Spinner.svelte'
-  import { deleteItem, save } from '$lib/lemmy/contentview.js'
+  import { deleteItem, markAsRead, save } from '$lib/lemmy/contentview.js'
 
   export let post: PostView
 
@@ -149,7 +151,15 @@
         <Icon src={PencilSquare} width={16} mini />
         Edit
       </MenuButton>
-    {/if}
+    {/if}<MenuButton
+      on:click={async () => {
+        if ($profile?.jwt)
+          post.read = await markAsRead(post.post, !post.read, $profile.jwt)
+      }}
+    >
+      <Icon src={post.read ? EyeSlash : Eye} width={16} mini />
+      Mark as {post.read ? 'Unread' : 'Read'}
+    </MenuButton>
     <MenuButton
       on:click={() =>
         navigator.clipboard.writeText(

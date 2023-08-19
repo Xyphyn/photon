@@ -140,3 +140,22 @@ export async function vote(
   }
   return 0
 }
+
+export async function markAsRead(
+  item: ContentView | Submission,
+  read: boolean,
+  jwt: string
+): Promise<boolean> {
+  if (isSubmission(item)) item = contentItem(item)
+
+  if (item.type == 'post') {
+    return (
+      await getClient().markPostAsRead({
+        auth: jwt,
+        post_id: item.id,
+        read: read,
+      })
+    ).post_view.read
+  }
+  return false
+}
