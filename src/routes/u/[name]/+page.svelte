@@ -20,7 +20,7 @@
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import { page } from '$app/stores'
   import { goto } from '$app/navigation'
-  import { isComment } from '$lib/lemmy/item.js'
+  import { isCommentView } from '$lib/lemmy/item.js'
   import { getClient } from '$lib/lemmy.js'
   import { isBlocked } from '$lib/lemmy/user.js'
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
@@ -165,9 +165,9 @@
       />
     </div>
     {#each data.items as item (item.counts.id)}
-      {#if isComment(item) && (data.type == 'all' || data.type == 'comments')}
+      {#if isCommentView(item) && (data.type == 'all' || data.type == 'comments')}
         <CommentItem comment={item} />
-      {:else if !isComment(item) && (data.type == 'all' || data.type == 'posts')}
+      {:else if !isCommentView(item) && (data.type == 'all' || data.type == 'posts')}
         <Post post={item} />
       {/if}
     {/each}

@@ -2,17 +2,20 @@ import type {
   CommentReportView,
   CommentView,
   CommunityView,
+  Comment,
   PersonView,
   PostReportView,
   PostView,
-  PrivateMessage,
+  Post,
   PrivateMessageReportView,
   PrivateMessageView,
 } from 'lemmy-js-client'
 
 export type Result =
   | PostView
+  | Post
   | CommentView
+  | Comment
   | PersonView
   | CommunityView
   | PrivateMessageView
@@ -38,13 +41,18 @@ export function getItemPublished(item: Result) {
   return ''
 }
 
-export const isPost = (item: Result): item is PostView =>
+export const isPostView = (item: Result): item is PostView =>
   'post' in item && !('comment' in item)
 
-export const isComment = (item: Result): item is CommentView =>
+export const isPost = (item: Result): item is Post =>
+  'name' in item && !('content' in item)
+
+export const isCommentView = (item: Result): item is CommentView =>
   'comment' in item
 
-export const isCommunity = (item: Result): item is CommunityView =>
+export const isComment = (item: Result): item is Comment => 'content' in item
+
+export const isCommunityView = (item: Result): item is CommunityView =>
   'community' in item
 
 export const isUser = (item: Result): item is PersonView => 'person' in item

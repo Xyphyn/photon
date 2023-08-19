@@ -15,7 +15,7 @@
     Trash,
   } from 'svelte-hero-icons'
   import { Color } from '$lib/ui/colors.js'
-  import { isComment, isPost } from '$lib/lemmy/item.js'
+  import { isCommentView, isPostView } from '$lib/lemmy/item.js'
   import { toast } from '$lib/components/ui/toasts/toasts.js'
   import { profile } from '$lib/auth.js'
 
@@ -27,7 +27,7 @@
   $: acting = locking || pinning
 
   async function lock(lock: boolean) {
-    if (!$profile?.jwt || !isPost(item)) return
+    if (!$profile?.jwt || !isPostView(item)) return
     locking = true
 
     try {
@@ -56,7 +56,7 @@
   }
 
   async function pin(pinned: boolean, toInstance: boolean = false) {
-    if (!$profile?.jwt || !isPost(item)) return
+    if (!$profile?.jwt || !isPostView(item)) return
 
     pinning = true
 
@@ -133,7 +133,8 @@
 
     <MenuButton
       color="success"
-      on:click={() => pin(isPost(item) ? !item.post.featured_community : false)}
+      on:click={() =>
+        pin(isPostView(item) ? !item.post.featured_community : false)}
       loading={pinning}
       disabled={pinning}
     >
@@ -147,7 +148,7 @@
     </MenuButton>
     <MenuButton color="dangerSecondary" on:click={() => remove(item)}>
       <Icon src={Trash} size="16" mini />
-      {#if isComment(item)}
+      {#if isCommentView(item)}
         {item.comment.removed ? 'Restore' : 'Remove'}
       {:else}
         {item.post.removed ? 'Restore' : 'Remove'}
@@ -176,7 +177,7 @@
     <MenuButton
       color="success"
       on:click={() =>
-        pin(isPost(item) ? !item.post.featured_local : false, true)}
+        pin(isPostView(item) ? !item.post.featured_local : false, true)}
     >
       <Icon src={InformationCircle} size="16" mini />
       <div class="flex flex-col text-left">

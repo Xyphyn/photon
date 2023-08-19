@@ -11,7 +11,12 @@
   import UserItem from '$lib/components/lemmy/user/UserItem.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import Spinner from '$lib/components/ui/loader/Spinner.svelte'
-  import { isComment, isCommunity, isPost, isUser } from '$lib/lemmy/item.js'
+  import {
+    isCommentView,
+    isCommunityView,
+    isPostView,
+    isUser,
+  } from '$lib/lemmy/item.js'
   import { searchParam } from '$lib/util.js'
   import type {
     CommentView,
@@ -112,11 +117,11 @@
   {/await}
   <div class="flex flex-col gap-4 mt-4">
     {#each data.results as result}
-      {#if isPost(result)}
+      {#if isPostView(result)}
         <Post post={result} />
-      {:else if isComment(result)}
+      {:else if isCommentView(result)}
         <CommentItem comment={result} />
-      {:else if isCommunity(result)}
+      {:else if isCommunityView(result)}
         <CommunityItem community={result} />
       {:else if isUser(result)}
         <UserItem user={result} />

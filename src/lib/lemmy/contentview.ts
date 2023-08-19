@@ -1,22 +1,33 @@
 import { getClient } from '$lib/lemmy.js'
-import { isComment, isPost } from '$lib/lemmy/item.js'
-import type { CommentView, Person, PostView } from 'lemmy-js-client'
+import { isComment, isCommentView, isPostView } from '$lib/lemmy/item.js'
+import type {
+  CommentView,
+  Person,
+  PostView,
+  Comment,
+  Post,
+} from 'lemmy-js-client'
 
-export type Submission = PostView | CommentView
+export type SubmissionView = PostView | CommentView
+export type Submission = Post | Comment
 
 export interface ContentView {
   type: 'post' | 'comment'
   title?: string
   body: string
-  creator: Person
+  creator?: Person
   id: number
 }
+
+const isSubmissionView = (
+  item: SubmissionView | ContentView
+): item is SubmissionView => !('type' in item)
 
 const isSubmission = (item: Submission | ContentView): item is Submission =>
   !('type' in item)
 
-export const contentView = (item: Submission): ContentView => {
-  if (isComment(item))
+export const contentView = (item: SubmissionView): ContentView => {
+  if (isCommentView(item))
     return {
       type: 'comment',
       body: item.comment.content,
@@ -33,12 +44,28 @@ export const contentView = (item: Submission): ContentView => {
     }
 }
 
+export const contentItem = (item: Submission): ContentView => {
+  if (isComment(item))
+    return {
+      type: 'comment',
+      body: item.content,
+      id: item.id,
+    }
+  else
+    return {
+      type: 'post',
+      body: item.body ?? item.name,
+      title: item.name,
+      id: item.id,
+    }
+}
+
 export async function save(
-  item: ContentView | Submission,
+  item: ContentView | SubmissionView,
   save: boolean,
   jwt: string
 ): Promise<boolean> {
-  if (isSubmission(item)) item = contentView(item)
+  if (isSubmissionView(item)) item = contentView(item)
 
   if (item.type == 'post') {
     return (
@@ -61,11 +88,11 @@ export async function save(
 }
 
 export async function deleteItem(
-  item: ContentView | Submission,
+  item: ContentView | SubmissionView,
   deleted: boolean,
   jwt: string
 ): Promise<boolean> {
-  if (isSubmission(item)) item = contentView(item)
+  if (isSubmissionView(item)) item = contentView(item)
 
   if (item.type == 'post') {
     return (
@@ -82,7 +109,34 @@ export async function deleteItem(
         comment_id: item.id,
         deleted: deleted,
       })
-    ).comment_view.post.deleted
+    ).comment_view.comment.deleted
   }
   return deleted
+}
+
+export async function vote(
+  item: ContentView | Submission,
+  vote: number,
+  jwt: string
+): Promise<number> {
+  if (isSubmission(item)) item = contentItem(item)
+
+  if (item.type == 'post') {
+    return (
+      await getClient().likePost({
+        auth: jwt,
+        post_id: item.id,
+        score: vote,
+      })
+    ).post_view.counts.score
+  } else if (item.type == 'comment') {
+    return (
+      await getClient().likeComment({
+        auth: jwt,
+        comment_id: item.id,
+        score: vote,
+      })
+    ).comment_view.counts.score
+  }
+  return 0
 }

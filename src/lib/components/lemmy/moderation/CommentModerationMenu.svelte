@@ -12,7 +12,7 @@
   import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
   import { Fire, Icon, ShieldExclamation, Trash } from 'svelte-hero-icons'
   import { Color } from '$lib/ui/colors.js'
-  import { isComment } from '$lib/lemmy/item.js'
+  import { isCommentView } from '$lib/lemmy/item.js'
   import { profile } from '$lib/auth.js'
   import ShieldIcon from '$lib/components/lemmy/moderation/ShieldIcon.svelte'
 
@@ -36,7 +36,7 @@
     </li>
     <MenuButton color="success" on:click={() => remove(item)}>
       <Icon src={Trash} size="16" mini />
-      {#if isComment(item)}
+      {#if isCommentView(item)}
         {item.comment.removed ? 'Restore' : 'Remove'}
       {:else}
         {item.post.removed ? 'Restore' : 'Remove'}

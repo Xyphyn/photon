@@ -6,7 +6,7 @@
   import Modal from '$lib/components/ui/modal/Modal.svelte'
   import { toast } from '$lib/components/ui/toasts/toasts.js'
   import { getClient } from '$lib/lemmy.js'
-  import { isComment, isPost } from '$lib/lemmy/item.js'
+  import { isCommentView, isPostView } from '$lib/lemmy/item.js'
   import type { CommentView, PostView } from 'lemmy-js-client'
   import { profile } from '$lib/auth.js'
   import Checkbox from '$lib/components/input/Checkbox.svelte'
@@ -27,7 +27,7 @@
   let loading = false
 
   $: removed = item
-    ? isComment(item)
+    ? isCommentView(item)
       ? item.comment.removed
       : item.post.removed
     : false
@@ -56,7 +56,7 @@
 
     try {
       if (purge) {
-        if (isComment(item)) {
+        if (isCommentView(item)) {
           await getClient(undefined, fetch).purgeComment({
             auth: $profile.jwt,
             comment_id: item.comment.id,
@@ -94,7 +94,7 @@
             .createPrivateMessage({
               auth: $profile.jwt,
               content: replyReason,
-              recipient_id: isComment(item)
+              recipient_id: isCommentView(item)
                 ? item.comment.creator_id
                 : item.post.creator_id,
             })
@@ -110,7 +110,7 @@
               auth: $profile.jwt,
               content: replyReason,
               post_id: item.post.id,
-              parent_id: isComment(item) ? item.comment.id : undefined,
+              parent_id: isCommentView(item) ? item.comment.id : undefined,
             })
             .catch(() => {
               toast({
@@ -121,7 +121,7 @@
         }
       }
 
-      if (isComment(item)) {
+      if (isCommentView(item)) {
         await getClient().removeComment({
           auth: $profile.jwt,
           comment_id: item.comment.id,
@@ -129,7 +129,7 @@
           reason: reason || undefined,
         })
         item.comment.removed = !removed
-      } else if (isPost(item)) {
+      } else if (isPostView(item)) {
         await getClient().removePost({
           auth: $profile.jwt,
           post_id: item.post.id,
@@ -180,7 +180,7 @@
       on:submit|preventDefault={remove}
       class="flex flex-col gap-4 list-none"
     >
-      {#if isComment(item)}
+      {#if isCommentView(item)}
         <Comment
           node={{
             children: [],
@@ -190,7 +190,7 @@
           postId={item.post.id}
           actions={false}
         />
-      {:else if isPost(item)}
+      {:else if isPostView(item)}
         <Post actions={false} post={item} />
       {/if}
 

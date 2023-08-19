@@ -13,63 +13,11 @@
     Icon,
   } from 'svelte-hero-icons'
   import { profile } from '$lib/auth.js'
-  import { slide } from 'svelte/transition'
+  import { vote as voteItem } from '$lib/lemmy/contentview.js'
 
   export let post: Post
   export let vote: number = 0
   export let score: number
-
-  async function upvote() {
-    if (!$profile?.jwt) return
-
-    if (vote == undefined) vote = 0
-
-    const upvoted = vote == 1
-
-    if (vote == -1) {
-      score += 2
-    } else if (vote == 1) {
-      score -= 1
-    } else if (vote == 0) {
-      score += 1
-    }
-
-    vote = Number(!upvoted)
-
-    await getClient()
-      .likePost({
-        score: upvoted ? 0 : 1,
-        auth: $profile.jwt,
-        post_id: post.id,
-      })
-      .catch((_) => undefined)
-  }
-
-  async function downvote() {
-    if (!$profile?.jwt) return
-
-    if (vote == undefined) vote = 0
-
-    const upvoted = vote == -1
-
-    if (vote == -1) {
-      score += 1
-    } else if (vote == 1) {
-      score -= 2
-    } else if (vote == 0) {
-      score -= 1
-    }
-
-    vote = -Number(!upvoted)
-
-    await getClient()
-      .likePost({
-        score: upvoted ? 0 : -1,
-        auth: $profile.jwt,
-        post_id: post.id,
-      })
-      .catch((_) => undefined)
-  }
 
   const voteColor = (vote: number) =>
     vote == 1
@@ -83,13 +31,17 @@
       : ''
 </script>
 
-<slot {upvote} {downvote} {vote} {score}>
+<slot {vote} {score}>
   {#if $userSettings.newVote}
     <div class="flex items-center text-sm rounded-md border-zinc-700">
       <Button
         aria-label="Upvote"
         class={vote == 1 ? voteColor(vote) : ''}
-        on:click={upvote}
+        on:click={async () => {
+          if (!$profile?.jwt) return
+          score = await voteItem(post, vote == 1 ? 0 : 1, $profile.jwt)
+          vote = vote == 1 ? 0 : 1
+        }}
         size="square-md"
         color="tertiary"
         alignment="center"
@@ -102,7 +54,11 @@
       <Button
         aria-label="Downvote"
         class={vote == -1 ? voteColor(vote) : ''}
-        on:click={downvote}
+        on:click={async () => {
+          if (!$profile?.jwt) return
+          score = await voteItem(post, vote == -1 ? 0 : -1, $profile.jwt)
+          vote = vote == -1 ? 0 : -1
+        }}
         size="square-md"
         color="tertiary"
       >
@@ -117,7 +73,11 @@
       <Button
         aria-label="Upvote"
         class={vote == 1 ? voteColor(vote) : ''}
-        on:click={upvote}
+        on:click={async () => {
+          if (!$profile?.jwt) return
+          score = await voteItem(post, vote == 1 ? 0 : 1, $profile.jwt)
+          vote = vote == 1 ? 0 : 1
+        }}
         size="square-sm"
         color="tertiary"
         alignment="center"
@@ -132,7 +92,11 @@
       <Button
         aria-label="Downvote"
         class={vote == -1 ? voteColor(vote) : ''}
-        on:click={downvote}
+        on:click={async () => {
+          if (!$profile?.jwt) return
+          score = await voteItem(post, vote == -1 ? 0 : -1, $profile.jwt)
+          vote = vote == -1 ? 0 : -1
+        }}
         size="square-sm"
         color="tertiary"
       >
