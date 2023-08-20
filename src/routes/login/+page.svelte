@@ -64,12 +64,6 @@
         label="Username"
         placeholder="Example"
         class="flex-1"
-        on:input={(e) => {
-          if (e.detail.data == '@') {
-            document.getElementById('instance_url')?.focus()
-            data.username = data.username.replace('@', '')
-          }
-        }}
         required
       />
       {#if !LINKED_INSTANCE_URL}

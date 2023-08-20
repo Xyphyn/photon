@@ -105,6 +105,8 @@ export async function setUser(jwt: string, inst: string, username: string) {
       content: 'Failed to fetch your user. Is your instance down?',
       type: 'error',
     })
+
+    return
   }
 
   instance.set(inst)
@@ -117,7 +119,7 @@ export async function setUser(jwt: string, inst: string, username: string) {
       id: id,
       instance: inst,
       jwt: jwt,
-      username: username,
+      username: user.user.local_user_view.person.name,
     }
 
     profile.set({

@@ -78,7 +78,7 @@
           class:hidden={!$userSettings.expandSidebar}
           class="flex flex-col gap-0"
         >
-          {prof.username}
+          {prof.username ?? prof.user?.local_user_view.person.name}
           <span class="text-slate-500 dark:text-zinc-400 font-normal text-xs">
             {prof.instance}
           </span>
