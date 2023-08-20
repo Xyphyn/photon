@@ -17,6 +17,7 @@
   import { slide } from 'svelte/transition'
   import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
   import CommunityList from '$lib/components/ui/sidebar/CommunityList.svelte'
+  import ProfileAvatar from '$lib/lemmy/ProfileAvatar.svelte'
 </script>
 
 <nav
@@ -68,13 +69,10 @@
           ? ''
           : '!p-1.5'} {$profile?.id == prof.id ? 'font-bold' : ''}"
       >
-        <Icon
-          src={UserCircle}
-          mini={$profile?.id == prof.id}
-          size="20"
-          title={prof.username}
-          class="text-blue-500"
-          style="filter: hue-rotate({index * 50}deg)"
+        <ProfileAvatar
+          profile={prof}
+          {index}
+          selected={$profile?.id == prof.id}
         />
         <span
           class:hidden={!$userSettings.expandSidebar}

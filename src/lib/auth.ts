@@ -25,13 +25,14 @@ function setFromStorage(key: string, item: any, stringify: boolean = true) {
   return localStorage.setItem(key, stringify ? JSON.stringify(item) : item)
 }
 
-interface Profile {
+export interface Profile {
   id: number
   instance: string
   jwt?: string
   user?: PersonData
   username?: string
   favorites?: number[]
+  color?: string
 }
 
 /**
