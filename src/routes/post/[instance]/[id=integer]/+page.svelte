@@ -146,6 +146,7 @@
     <a
       href={post.post_view.post.url}
       class="max-w-full overflow-hidden overflow-ellipsis whitespace-nowrap text-sky-400 hover:underline text-xs"
+      style="word-break: break-word;"
     >
       {post.post_view.post.url}
     </a>
