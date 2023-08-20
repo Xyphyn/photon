@@ -15,6 +15,11 @@ export default {
         'pop-in': {
           '0%, 100%': { transform: 'translateX(8px)', opacity: 0 }
         }
+      },
+      colors: {
+        'zinc': {
+          900: '#121215'
+        }
       }
     },
   },
