@@ -19,7 +19,7 @@
     active:bg-black/10 active:dark:bg-white/10`,
 
     secondary: `border border-slate-200 dark:border-zinc-700 bg-transparent
-      hover:bg-slate-100 hover:dark:bg-zinc-800 dark:text-zinc-400 hover:text-inherit
+      hover:bg-slate-100 hover:dark:bg-zinc-800 hover:dark:border-zinc-700 dark:text-zinc-400 hover:text-inherit
       hover:dark:text-inherit`,
 
     tertiary:
@@ -28,8 +28,9 @@
     danger:
       'border border-red-500 bg-red-500 hover:text-red-500 hover:bg-transparent text-white',
 
-    ghost: `border border-slate-200 dark:border-zinc-800 hover:bg-slate-100 hover:dark:bg-zinc-800
-      hover:border-slate-200 hover:dark:border-zinc-700`,
+    ghost: `border border-slate-200 dark:border-zinc-800 bg-transparent
+      hover:bg-slate-100 hover:dark:bg-zinc-800 hover:dark:border-zinc-700 dark:text-zinc-400 hover:text-inherit
+      hover:dark:text-inherit`,
 
     elevated: `bg-slate-100 dark:bg-zinc-800 border border-slate-200
      dark:border-zinc-700 hover:bg-slate-200 hover:dark:bg-zinc-700 hover:border-slate-300

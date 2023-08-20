@@ -18,6 +18,7 @@ export default {
       },
       colors: {
         'zinc': {
+          800: '#1f1f25',
           900: '#121215'
         }
       }
