@@ -18,6 +18,7 @@
   import { addSubscription } from '$lib/lemmy/user.js'
   import Link from '$lib/components/input/Link.svelte'
   import { LINKED_INSTANCE_URL } from '$lib/instance.js'
+  import { profile } from '$lib/auth.js'
 
   export let data
 
@@ -101,7 +102,7 @@
           <div class="ml-auto">
             <Subscribe {community} let:subscribe let:subscribing>
               <Button
-                disabled={subscribing}
+                disabled={subscribing || !$profile?.jwt}
                 loading={subscribing}
                 on:click={async () => {
                   const res = await subscribe()
