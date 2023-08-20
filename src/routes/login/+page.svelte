@@ -72,17 +72,19 @@
         }}
         required
       />
-      <span class="mt-5 font-bold">@</span>
-      <TextInput
-        id="instance_url"
-        label="Instance URL"
-        placeholder={DEFAULT_INSTANCE_URL}
-        disabled={LINKED_INSTANCE_URL != undefined}
-        bind:value={data.instance}
-        class="flex-1"
-        required
-        pattern={'(?!-)[A-Za-z0-9-]+([-.]{1}[a-z0-9]+)*.[A-Za-z]{2,6}'}
-      />
+      {#if !LINKED_INSTANCE_URL}
+        <span class="mt-5 font-bold">@</span>
+        <TextInput
+          id="instance_url"
+          label="Instance URL"
+          placeholder={DEFAULT_INSTANCE_URL}
+          disabled={LINKED_INSTANCE_URL != undefined}
+          bind:value={data.instance}
+          class="flex-1"
+          required
+          pattern={'(?!-)[A-Za-z0-9-]+([-.]{1}[a-z0-9]+)*.[A-Za-z]{2,6}'}
+        />
+      {/if}
     </div>
     <div class="flex flex-row gap-2">
       <TextInput
@@ -101,7 +103,7 @@
         pattern={'\\d{6}'}
         minlength={6}
         maxlength={6}
-        class="w-20"
+        class="w-24"
         on:input={(e) => {
           if (!Number.isInteger(Number(e.detail.data))) {
             e.preventDefault()
