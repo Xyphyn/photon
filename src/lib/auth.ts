@@ -4,6 +4,7 @@ import { DEFAULT_INSTANCE_URL, instance } from '$lib/instance.js'
 import { getClient, site } from '$lib/lemmy.js'
 import { getInbox, getInboxItemPublished } from '$lib/lemmy/inbox.js'
 import { userSettings } from '$lib/settings.js'
+import { moveItem } from '$lib/util.js'
 import type { GetSiteResponse, MyUserInfo } from 'lemmy-js-client'
 import { get, writable } from 'svelte/store'
 
@@ -200,6 +201,20 @@ export function setUserID(id: number) {
   return prof
 }
 
+export function moveProfile(id: number, up: boolean) {
+  const pd = get(profileData)
+  try {
+    const index = pd.profiles.findIndex((i) => i.id == id)
+
+    profileData.set({
+      ...pd,
+      profiles: moveItem(pd.profiles, index, index + (up ? -1 : 1)),
+    })
+  } catch (err) {
+    // we dont care
+  }
+}
+
 const getNotificationCount = async (jwt: string, mod: boolean) => {
   const unreads = await getClient().getUnreadCount({
     auth: jwt,
@@ -279,8 +294,3 @@ export async function getInboxNotifications(dontUpdate: boolean = false) {
 
   localStorage.setItem('seenUntil', Date.now().toString())
 }
-
-setInterval(
-  async () => getInboxNotifications(),
-  get(userSettings).notifications.notifRate || 30 * 1000
-)

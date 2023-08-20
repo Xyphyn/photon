@@ -5,6 +5,7 @@
     profile as currentProfile,
     resetProfile,
     deleteProfile,
+    moveProfile,
   } from '$lib/auth.js'
   import Button from '$lib/components/input/Button.svelte'
   import TextInput from '$lib/components/input/TextInput.svelte'
@@ -22,6 +23,8 @@
   import {
     ArrowLeftOnRectangle,
     ArrowUturnLeft,
+    ChevronDown,
+    ChevronUp,
     EllipsisHorizontal,
     Icon,
     PaintBrush,
@@ -29,6 +32,7 @@
     Trash,
   } from 'svelte-hero-icons'
   import { flip } from 'svelte/animate'
+  import { expoInOut, expoOut } from 'svelte/easing'
 
   let newInstance: string = $profileData.defaultInstance ?? DEFAULT_INSTANCE_URL
   let loading = false
@@ -124,7 +128,7 @@
       {#each $profileData.profiles as profile, index (profile.id)}
         <div
           class="flex flex-row gap-2 items-center py-4"
-          animate:flip={{ duration: 250 }}
+          animate:flip={{ duration: 250, easing: expoOut }}
         >
           <div class="flex items-center gap-2">
             <div class="relative group flex-col items-center">
@@ -160,12 +164,20 @@
             <Button on:click={toggleOpen} size="square-md" slot="button">
               <Icon src={EllipsisHorizontal} mini size="16" slot="icon" />
             </Button>
+            <MenuButton on:click={() => moveProfile(profile.id, true)}>
+              <Icon src={ChevronUp} size="16" mini slot="icon" />
+              Move Up
+            </MenuButton>
+            <MenuButton on:click={() => moveProfile(profile.id, false)}>
+              <Icon src={ChevronDown} size="16" mini slot="icon" />
+              Move Down
+            </MenuButton>
             <MenuButton
               disabled={!profile.color}
               on:click={() => (profile.color = undefined)}
             >
               <Icon src={ArrowUturnLeft} size="16" mini slot="icon" />
-              Reset color
+              Reset Color
             </MenuButton>
           </Menu>
           <Button

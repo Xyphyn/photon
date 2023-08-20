@@ -56,3 +56,28 @@ export const placeholders = {
       : ''
   },
 }
+
+export function moveItem<T>(
+  array: T[],
+  currentIndex: number,
+  newIndex: number
+): T[] {
+  if (
+    currentIndex < 0 ||
+    currentIndex >= array.length ||
+    newIndex < 0 ||
+    newIndex >= array.length
+  ) {
+    throw new Error('Invalid index')
+  }
+
+  const newArray = [...array]
+
+  // Remove the item from the current index
+  const [item] = newArray.splice(currentIndex, 1)
+
+  // Insert the item at the new index
+  newArray.splice(newIndex, 0, item)
+
+  return newArray
+}
