@@ -6,13 +6,14 @@
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
   import { page } from '$app/stores'
   import { goto } from '$app/navigation'
-  import { EnvelopeOpen, Icon } from 'svelte-hero-icons'
+  import { EnvelopeOpen, Icon, Inbox } from 'svelte-hero-icons'
+  import Placeholder from '$lib/components/ui/Placeholder.svelte'
 
   export let data
 </script>
 
 <div class="mb-4 flex flex-col gap-4">
-  <h1 class="font-black text-3xl">Reports</h1>
+  <h1 class="font-bold text-3xl">Reports</h1>
   <MultiSelect
     selected={data.type}
     options={['all', 'unread']}
@@ -48,13 +49,8 @@
     {/each}
   </div>
 {:else}
-  <div
-    class="text-slate-600 dark:text-zinc-400 flex flex-col justify-center items-center py-8 gap-2"
-  >
-    <Icon src={EnvelopeOpen} size="48" />
-    <div>
-      <h1 class="font-bold text-3xl">No reports</h1>
-      <p class="mt-2 text-center">You're all caught up!</p>
-    </div>
-  </div>
+  <Placeholder>
+    <Icon src={Inbox} size="28" slot="icon" />
+    <span slot="title">No new reports</span>
+  </Placeholder>
 {/if}

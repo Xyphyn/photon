@@ -98,13 +98,13 @@
 
     <Button size="lg" submit>
       <Icon src={Plus} size="16" mini slot="icon" />
-      Add one
+      Add
     </Button>
   </form>
 {:else}
   <div class="my-auto">
     <Placeholder>
-      <Icon src={QuestionMarkCircle} solid size="32" slot="icon" />
+      <Icon src={Plus} solid size="28" slot="icon" />
       <span slot="title">No taglines</span>
       <div slot="action" class="mt-4 max-w-xl w-full flex flex-col gap-2">
         <form
@@ -125,7 +125,7 @@
 
           <Button size="lg" submit>
             <Icon src={Plus} size="16" mini slot="icon" />
-            Add one
+            Add
           </Button>
         </form>
 

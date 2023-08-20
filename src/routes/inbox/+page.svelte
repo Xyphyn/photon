@@ -1,7 +1,13 @@
 <script lang="ts">
   import InboxItem from './InboxItem.svelte'
   import Button from '$lib/components/input/Button.svelte'
-  import { Check, EnvelopeOpen, Icon } from 'svelte-hero-icons'
+  import {
+    ArchiveBox,
+    Check,
+    EnvelopeOpen,
+    Icon,
+    Inbox,
+  } from 'svelte-hero-icons'
   import { getClient } from '$lib/lemmy.js'
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
@@ -10,6 +16,7 @@
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
   import { profile } from '$lib/auth.js'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
+  import { fly } from 'svelte/transition'
 
   export let data
 
@@ -82,18 +89,19 @@
     }}
   />
 </div>
-<div class="flex flex-col gap-4 list-none my-4">
+<div class="flex flex-col gap-4 list-none my-4 flex-1">
   {#if !data.data || (data.data?.length ?? 0) == 0}
-    <div>
+    <div class="mt-auto">
       <Placeholder>
-        <Icon src={EnvelopeOpen} size="48" slot="icon" />
-        <span slot="title">Inbox empty</span>
-        <span slot="description">You're all caught up!</span>
+        <Icon src={Inbox} size="28" slot="icon" />
+        <span slot="title">No new notifications</span>
       </Placeholder>
     </div>
   {:else}
     {#each data.data as item}
-      <InboxItem {item} read={isRead(item)} />
+      <div in:fly={{ duration: 500, y: -6, opacity: 0 }}>
+        <InboxItem {item} read={isRead(item)} />
+      </div>
     {/each}
     <Pageination
       page={data.page}

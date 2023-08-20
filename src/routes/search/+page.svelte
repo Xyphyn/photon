@@ -10,6 +10,7 @@
   import Post from '$lib/components/lemmy/post/Post.svelte'
   import UserItem from '$lib/components/lemmy/user/UserItem.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
+  import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import Spinner from '$lib/components/ui/loader/Spinner.svelte'
   import {
     isCommentView,
@@ -46,33 +47,16 @@
   <MultiSelect
     options={['All', 'Posts', 'Comments', 'Communities', 'Users']}
     selected={$page.url.searchParams.get('type') ?? 'All'}
-    on:select={(e) => {
-      const url = $page.url
-      url.searchParams.set('type', e.detail)
-      url.searchParams.delete('page')
-      goto(url, {
-        invalidateAll: true,
-      })
-    }}
+    on:select={(e) => searchParam($page.url, 'type', e.detail, 'page')}
   />
   <div class="flex flex-row gap-2 items-center">
     <TextInput
       bind:value={query}
-      placeholder="Search for something..."
-      on:change={() => {
-        $page.url.searchParams.set('q', query)
-        goto($page.url.toString(), {
-          invalidateAll: true,
-        })
-      }}
+      placeholder="!community@instance.com"
+      on:change={() => searchParam($page.url, 'q', query, 'page')}
     />
     <Button
-      on:click={() => {
-        $page.url.searchParams.set('q', query)
-        goto($page.url.toString(), {
-          invalidateAll: true,
-        })
-      }}
+      on:click={() => searchParam($page.url, 'q', query, 'page')}
       size="lg"
       class="h-full"
     >
@@ -81,13 +65,10 @@
   </div>
 </div>
 {#if !data.results}
-  <div
-    class="text-slate-600 dark:text-zinc-400 flex flex-col justify-center items-center py-8"
-  >
-    <Icon src={MagnifyingGlass} size="48" solid />
-    <h1 class="font-bold text-3xl">No results</h1>
-    <p class="mt-2 text-center">Search for something!</p>
-  </div>
+  <Placeholder>
+    <Icon src={MagnifyingGlass} size="28" solid slot="icon" />
+    <span slot="title">No results</span>
+  </Placeholder>
 {:else}
   {#await data.streamed.object}
     <div
