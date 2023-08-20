@@ -85,5 +85,10 @@ export async function uploadImage(
     }`
   }
 
-  throw new Error(`error uploading image: ${response.status}`)
+  throw new Error(
+    `${
+      (await response.text().catch((_) => undefined)) ??
+      'Failed to upload image'
+    }: ${response.status}: ${response.statusText}`
+  )
 }
