@@ -12,6 +12,6 @@ COPY . .
 
 RUN ADAPTER=node npm run build
 
-USER node
+USER photon
 
 CMD ["npm", "run", "start"]
