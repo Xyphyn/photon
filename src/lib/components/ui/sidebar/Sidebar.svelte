@@ -57,7 +57,9 @@
         color="tertiary"
         alignment="left"
         on:click={() => {
-          setUserID(prof.id)
+          if ($profile?.id == prof.id) setUserID(-1)
+          else setUserID(prof.id)
+
           goto($page.url, {
             invalidateAll: true,
           })

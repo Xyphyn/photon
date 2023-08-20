@@ -13,7 +13,7 @@
 </script>
 
 <div class="mb-4 flex flex-col gap-4">
-  <h1 class="font-bold text-3xl">Reports</h1>
+  <h1 class="font-bold text-2xl">Reports</h1>
   <MultiSelect
     selected={data.type}
     options={['all', 'unread']}
