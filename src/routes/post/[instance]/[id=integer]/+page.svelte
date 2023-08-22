@@ -19,7 +19,7 @@
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
   import { profile } from '$lib/auth.js'
   import { instance } from '$lib/instance.js'
-  import { afterNavigate, goto } from '$app/navigation'
+  import { afterNavigate, beforeNavigate, goto } from '$app/navigation'
   import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
   import Link from '$lib/components/input/Link.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
@@ -40,7 +40,11 @@
 
   afterNavigate(async () => {
     // reactivity hack
+
     post = data.post
+  })
+
+  beforeNavigate(async () => {
     if (
       $page.params.instance.toLowerCase() != $instance.toLowerCase() &&
       $profile?.jwt
@@ -58,7 +62,9 @@
 
         if (res.post) {
           removeToast(id)
-          goto(`/post/${$instance}/${res.post.post.id}`)
+          goto(`/post/${$instance}/${res.post.post.id}`, {}).then(() =>
+            removeToast(id)
+          )
         }
       } catch (err) {
         removeToast(id)
