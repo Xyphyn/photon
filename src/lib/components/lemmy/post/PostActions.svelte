@@ -37,30 +37,6 @@
 
   export let post: PostView
 
-  async function deletePost() {
-    if (!$profile?.jwt) return
-
-    const deleted = post.post.deleted
-
-    try {
-      await getClient().deletePost({
-        auth: $profile.jwt,
-        deleted: !deleted,
-        post_id: post.post.id,
-      })
-      post.post.deleted = !deleted
-      toast({
-        content: `That post was ${deleted ? 'restored' : 'deleted'}.`,
-        type: 'success',
-      })
-    } catch (err) {
-      toast({
-        content: err as any,
-        type: 'error',
-      })
-    }
-  }
-
   const dispatcher = createEventDispatcher<{ edit: PostView }>()
 
   let editing = false
