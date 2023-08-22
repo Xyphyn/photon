@@ -31,7 +31,7 @@
       }
     | undefined = undefined
 
-  let data: {
+  export let data: {
     community: number | null
     title: string
     body: string

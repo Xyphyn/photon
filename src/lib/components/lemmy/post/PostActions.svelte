@@ -3,6 +3,7 @@
   import PostVote from './PostVote.svelte'
   import { getClient, getInstance } from '$lib/lemmy.js'
   import {
+    ArrowTopRightOnSquare,
     Bookmark,
     BookmarkSlash,
     ChatBubbleOvalLeftEllipsis,
@@ -34,6 +35,8 @@
   import { profile } from '$lib/auth.js'
   import Spinner from '$lib/components/ui/loader/Spinner.svelte'
   import { deleteItem, markAsRead, save } from '$lib/lemmy/contentview.js'
+  import { setSessionStorage } from '$lib/session.js'
+  import { goto } from '$app/navigation'
 
   export let post: PostView
 
@@ -94,7 +97,11 @@
   {#if $profile?.user && (amMod($profile.user, post.community) || isAdmin($profile.user))}
     <ModerationMenu bind:item={post} community={post.community} />
   {/if}
-  <Menu alignment="bottom-right" class="overflow-auto" let:toggleOpen>
+  <Menu
+    alignment="bottom-right"
+    containerClass="overflow-auto max-h-[400px]"
+    let:toggleOpen
+  >
     <Button
       slot="button"
       aria-label="Post actions"
@@ -122,20 +129,23 @@
     </MenuButton>
     <hr class="w-[90%] mx-auto opacity-100 dark:opacity-10 my-2" />
     <li class="mx-4 text-xs opacity-80 text-left my-1 py-1">Actions</li>
-    {#if $profile?.user && $profile.user.local_user_view.person.id == post.creator.id}
+    {#if $profile?.user && $profile?.jwt && $profile.user.local_user_view.person.id == post.creator.id}
       <MenuButton on:click={() => (editing = true)}>
         <Icon src={PencilSquare} width={16} mini />
         Edit
       </MenuButton>
-    {/if}<MenuButton
-      on:click={async () => {
-        if ($profile?.jwt)
-          post.read = await markAsRead(post.post, !post.read, $profile.jwt)
-      }}
-    >
-      <Icon src={post.read ? EyeSlash : Eye} width={16} mini />
-      Mark as {post.read ? 'Unread' : 'Read'}
-    </MenuButton>
+    {/if}
+    {#if $profile?.jwt}
+      <MenuButton
+        on:click={async () => {
+          if ($profile?.jwt)
+            post.read = await markAsRead(post.post, !post.read, $profile.jwt)
+        }}
+      >
+        <Icon src={post.read ? EyeSlash : Eye} width={16} mini />
+        Mark as {post.read ? 'Unread' : 'Read'}
+      </MenuButton>
+    {/if}
     <MenuButton
       on:click={() =>
         navigator.clipboard.writeText(
@@ -154,6 +164,28 @@
       >
         <Icon src={post.saved ? BookmarkSlash : Bookmark} width={16} mini />
         {post.saved ? 'Unsave' : 'Save'}
+      </MenuButton>
+      <MenuButton
+        on:click={() => {
+          setSessionStorage('postDraft', {
+            body: `cross-posted from: ${post.post.ap_id}\n${
+              post.post.body
+                ? '>' + post.post.body.split('\n').join('\n> ')
+                : ''
+            }`,
+            url: post.post.url,
+            title: post.post.name,
+            loading: false,
+            nsfw: post.post.nsfw,
+            community: null,
+            image: null,
+          })
+
+          goto('/create/post?crosspost=true')
+        }}
+      >
+        <Icon src={ArrowTopRightOnSquare} width={16} mini />
+        Crosspost
       </MenuButton>
       {#if $profile.user && post.creator.id == $profile.user.local_user_view.person.id}
         <MenuButton

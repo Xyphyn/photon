@@ -6,6 +6,8 @@
   import { onMount } from 'svelte'
   import { getSessionStorage, setSessionStorage } from '$lib/session.js'
 
+  export let data
+
   onMount(() => {
     if (!$profile?.jwt) {
       goto('/login')
@@ -17,6 +19,8 @@
     | undefined
 
   setSessionStorage('lastSeenCommunity', undefined)
+
+  let draft = getSessionStorage('postDraft') as any
 </script>
 
 <svelte:head>
@@ -25,6 +29,7 @@
 
 <div class="w-full max-w-5xl mx-auto h-full">
   <PostForm
+    data={data.crosspost ? draft : undefined}
     passedCommunity={community}
     on:submit={(e) => goto(`/post/${e.detail.post.id}`)}
   >
