@@ -5,8 +5,6 @@ import type { SortType } from 'lemmy-js-client'
 import { get } from 'svelte/store'
 
 export async function load({ params, url, fetch }) {
-  if (!get(profile)?.user) return {}
-
   const page = Number(url.searchParams.get('page')) || 1
   const type: 'comments' | 'posts' | 'all' =
     (url.searchParams.get('type') as 'comments' | 'posts' | 'all') || 'all'

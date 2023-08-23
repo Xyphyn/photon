@@ -189,16 +189,33 @@ export function deleteProfile(id: number) {
   }
 }
 
-export function setUserID(id: number) {
+const serializeUser = (user: Profile): Profile => ({
+  ...user,
+  user: undefined,
+})
+
+export async function setUserID(id: number) {
   const pd = get(profileData)
   if (id == -1) {
     resetProfile()
     return
   }
-  const prof = pd.profiles.find((p) => p.id == id)
 
-  profile.set(prof ?? getDefaultProfile())
+  let prof = pd.profiles.find((p) => p.id == id)
+
+  if (!prof) return profile.update(() => getDefaultProfile())
+  prof = serializeUser(prof)
+
   profileData.update((p) => ({ ...p, profile: id }))
+
+  if (prof?.jwt) {
+    const user = await userFromJwt(prof.jwt, prof.instance)
+    instance.set(prof.instance)
+    prof.user = user?.user
+    site.set(user?.site)
+  }
+
+  profile.update(() => prof ?? getDefaultProfile())
 
   return prof
 }

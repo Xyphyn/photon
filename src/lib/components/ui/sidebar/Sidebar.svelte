@@ -7,6 +7,7 @@
     Icon,
     Plus,
     UserCircle,
+    UserGroup,
   } from 'svelte-hero-icons'
   import Button from '../../input/Button.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
@@ -85,6 +86,10 @@
         </span>
       </Button>
     {/each}
+    <SidebarButton href="/accounts" expanded={$userSettings.expandSidebar}>
+      <Icon src={UserGroup} mini size="16" />
+      Accounts
+    </SidebarButton>
   {/if}
   <hr class="border-slate-300 dark:border-zinc-800 my-1" />
   {#if $profile?.user}

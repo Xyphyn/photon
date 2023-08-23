@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Button from '$lib/components/input/Button.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import StickyCard from '$lib/components/ui/StickyCard.svelte'

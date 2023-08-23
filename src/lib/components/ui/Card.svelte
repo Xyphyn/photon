@@ -21,7 +21,7 @@
 
 <div
   class="break-words
-    {getColor(cardColor)} rounded-md {clazz}"
+    {getColor(cardColor)} rounded-lg {clazz}"
   {...$$restProps}
 >
   <slot />

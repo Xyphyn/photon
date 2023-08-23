@@ -105,7 +105,7 @@
       <Button
         href="/moderation"
         aria-label="Moderation"
-        class="max-md:w-9 h-8 max-md:!p-0 dark:text-zinc-300 text-slate-700
+        class="max-md:w-9 max-md:h-8 max-md:!p-0 dark:text-zinc-300 text-slate-700
         hover:text-inherit hover:bg-slate-200 hover:dark:text-inherit relative hover:border-slate-300"
       >
         {#if $profile?.user?.reports ?? 0 > 0}

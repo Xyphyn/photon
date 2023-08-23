@@ -54,6 +54,7 @@
 
   const buttonRoundness = {
     pill: 'rounded-full',
+    lg: 'rounded-lg',
     md: 'rounded-md',
     none: '',
   }
