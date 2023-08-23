@@ -54,6 +54,12 @@
       <FormattedNumber number={site.counts.communities} />
     </span>
   </div>
+  <div class="flex flex-row gap-2 items-center">
+    <Button href="/modlog">
+      <Icon src={Newspaper} size="16" mini />
+      Modlog
+    </Button>
+  </div>
   {#if taglines && taglines.length > 0}
     <Markdown
       source={taglines[Math.floor(Math.random() * taglines.length)].content}
