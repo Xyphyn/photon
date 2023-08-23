@@ -34,13 +34,13 @@ export const _toModLog = (item: ModAction): ModLog => {
       moderator: item.moderator,
       moderatee: item.banned_person,
       community: item.community,
-      actionName: 'Ban',
+      actionName: 'ban',
       reason: item.mod_ban_from_community.reason,
       timestamp: Date.parse(`${item.mod_ban_from_community.when_}Z`),
     }
   } else if ('mod_remove_comment' in item) {
     return {
-      actionName: 'Comment Removal',
+      actionName: 'commentRemoval',
       community: item.community,
       content: item.comment.content,
       timestamp: Date.parse(`${item.mod_remove_comment.when_}Z`),
@@ -51,7 +51,7 @@ export const _toModLog = (item: ModAction): ModLog => {
     }
   } else if ('mod_remove_post' in item) {
     return {
-      actionName: 'Post Removal',
+      actionName: 'postRemoval',
       community: item.community,
       content: item.post.name,
       timestamp: Date.parse(`${item.mod_remove_post.when_}Z`),
@@ -68,9 +68,9 @@ export const _toModLog = (item: ModAction): ModLog => {
 }
 
 export async function load({ url }) {
-  if (!get(profile)) return
+  if (!get(profile)) return { page: 1 }
   const { jwt } = get(profile)!
-  if (!jwt) return
+  if (!jwt) return { page: 1 }
 
   let community = Number(url.searchParams.get('community')) || undefined
   let modId = Number(url.searchParams.get('mod_id')) || undefined
@@ -96,6 +96,7 @@ export async function load({ url }) {
     .sort((b, a) => b.timestamp - a.timestamp)
 
   return {
+    page: page,
     modlog: moderationActions,
   }
 }
