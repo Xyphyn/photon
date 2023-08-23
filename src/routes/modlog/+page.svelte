@@ -16,10 +16,10 @@
 <div class="flex flex-col gap-4">
   <h1 class="font-bold text-2xl">Modlog</h1>
   {#if data.modlog}
-    <div class="">
+    <div style="width:100%; overflow-x: auto;">
       <table
         class="table overflow-x-auto table-fixed relative"
-        style="width: 100%;"
+        style="min-width: 800px;"
       >
         <colgroup class="table-fixed">
           <col width="20%" />
@@ -31,8 +31,8 @@
           <col width="50%" />
           <col width="30%" />
         </colgroup>
-        <thead class="text-left sticky top-16">
-          <tr class="sticky top-16 rounded-t-lg overflow-hidden">
+        <thead class="text-left sticky top-0">
+          <tr class="rounded-t-lg overflow-hidden">
             <th>Time</th>
             <th>Moderator</th>
             <th>Action</th>

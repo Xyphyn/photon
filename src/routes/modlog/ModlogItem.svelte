@@ -31,11 +31,11 @@
     <span class="font-bold">
       {#if item.actionName == 'ban'}
         <span class="flex items-center gap-1 text-red-600 dark:text-red-400">
-          <Icon src={XCircle} size="16" mini class="inline" /> Ban
+          <Icon src={XCircle} size="16" mini class="inline flex-shrink-0" /> Ban
         </span>
       {:else if item.actionName == 'postRemoval' || item.actionName == 'commentRemoval'}
         <span class="flex items-center gap-1 text-red-600 dark:text-red-400">
-          <Icon src={Trash} size="16" mini class="inline" /> Removal
+          <Icon src={Trash} size="16" mini class="inline flex-shrink-0" /> Removal
         </span>
       {:else}
         {item.actionName}
