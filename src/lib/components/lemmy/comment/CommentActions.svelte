@@ -72,9 +72,7 @@
     <MenuButton
       on:click={() => {
         navigator.clipboard.writeText(
-          `${$page.url.origin}/post/${getInstance()}/${
-            comment.post.id
-          }?thread=${comment.comment.path}#${comment.comment.id}`
+          `/comment/${getInstance()}/${comment.comment.id}`
         )
       }}
     >

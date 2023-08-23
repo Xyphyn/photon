@@ -9,23 +9,28 @@
   export let item: ModLog
 </script>
 
-<Card elevation={0} class="p-5 flex flex-col gap-1 text-sm">
-  <SectionTitle>Action</SectionTitle>
-  <span class="font-bold text-base">{item.actionName}</span>
-  {#if item.moderator}
-    <SectionTitle class="mt-3">Moderator</SectionTitle>
-    <UserLink avatar user={item.moderator} />
-  {/if}
-  {#if item.moderatee}
-    <SectionTitle class="mt-3">Moderatee</SectionTitle>
-    <UserLink avatar user={item.moderatee} />
-  {/if}
-  {#if item.community}
-    <SectionTitle class="mt-3">Community</SectionTitle>
-    <CommunityLink avatar community={item.community} />
-  {/if}
-  {#if item.link}
-    <SectionTitle class="mt-3">Link</SectionTitle>
-    <Link highlight href={item.link} />
-  {/if}
-</Card>
+<tr class="text-sm">
+  <td>
+    <span class="font-bold">{item.actionName}</span>
+  </td>
+  <td>
+    {#if item.moderator}
+      <UserLink showInstance={false} avatar user={item.moderator} />
+    {/if}
+  </td>
+  <td>
+    {#if item.moderatee}
+      <UserLink showInstance={false} avatar user={item.moderatee} />
+    {/if}
+  </td>
+  <td>
+    {#if item.community}
+      <CommunityLink showInstance={false} avatar community={item.community} />
+    {/if}
+  </td>
+  <td>
+    {#if item.link}
+      <Link highlight href={item.link} />
+    {/if}
+  </td>
+</tr>

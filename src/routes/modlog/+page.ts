@@ -57,6 +57,7 @@ export const _toModLog = (item: ModAction): ModLog => {
       timestamp: Date.parse(`${item.mod_remove_post.when_}Z`),
       moderator: item.moderator,
       reason: item.mod_remove_post.reason,
+      link: `/post/${item.post.id}`,
     }
   }
 
@@ -90,7 +91,9 @@ export async function load({ url }) {
     ...results.removed_posts,
   ]
 
-  const moderationActions = moderation.map(_toModLog)
+  const moderationActions = moderation
+    .map(_toModLog)
+    .sort((b, a) => b.timestamp - a.timestamp)
 
   return {
     modlog: moderationActions,
