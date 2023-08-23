@@ -93,7 +93,7 @@ export async function load({ url }) {
 
   const moderationActions = moderation
     .map(_toModLog)
-    .sort((b, a) => b.timestamp - a.timestamp)
+    .sort((a, b) => b.timestamp - a.timestamp)
 
   return {
     page: page,
