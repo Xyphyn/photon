@@ -68,16 +68,12 @@ export const _toModLog = (item: ModAction): ModLog => {
 }
 
 export async function load({ url }) {
-  if (!get(profile)) return { page: 1 }
-  const { jwt } = get(profile)!
-  if (!jwt) return { page: 1 }
-
   let community = Number(url.searchParams.get('community')) || undefined
   let modId = Number(url.searchParams.get('mod_id')) || undefined
   const page = Number(url.searchParams.get('page')) || 1
 
   const results = await getClient().getModlog({
-    auth: jwt,
+    auth: get(profile)?.jwt,
     community_id: community,
     limit: 40,
     type_: 'All',
