@@ -88,7 +88,7 @@
     {/each}
     <SidebarButton href="/accounts" expanded={$userSettings.expandSidebar}>
       <Icon src={UserGroup} mini size="16" />
-      Accounts
+      <span class:hidden={!$userSettings.expandSidebar}>Accounts</span>
     </SidebarButton>
   {/if}
   <hr class="border-slate-300 dark:border-zinc-800 my-1" />
