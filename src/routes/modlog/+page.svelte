@@ -22,14 +22,14 @@
         style="min-width: 800px;"
       >
         <colgroup class="table-fixed">
+          <col width="8%" />
+          <col width="18%" />
+          <col width="8%" class="overflow-x-auto" />
+          <col width="8%" />
+          <col width="10%" />
+          <col width="18%" />
           <col width="20%" />
-          <col width="30%" />
-          <col width="25%" class="overflow-x-auto" />
-          <col width="30%" />
-          <col width="30%" />
-          <col width="40%" />
-          <col width="50%" />
-          <col width="30%" />
+          <col width="20%" />
         </colgroup>
         <thead class="text-left sticky top-0">
           <tr class="rounded-t-lg overflow-hidden">
@@ -43,7 +43,7 @@
             <th>Link</th>
           </tr>
         </thead>
-        <tbody class="text-xs">
+        <tbody class="text-sm">
           {#each data.modlog as modlog}
             <ModlogItem item={modlog} />
           {/each}
