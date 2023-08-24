@@ -6,26 +6,28 @@
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
   import { page } from '$app/stores'
   import { goto } from '$app/navigation'
-  import { EnvelopeOpen, Icon, Inbox } from 'svelte-hero-icons'
+  import { EnvelopeOpen, Icon, Inbox, Newspaper } from 'svelte-hero-icons'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
+  import Button from '$lib/components/input/Button.svelte'
+  import { searchParam } from '$lib/util.js'
 
   export let data
 </script>
 
 <div class="mb-4 flex flex-col gap-4">
   <h1 class="font-bold text-2xl">Reports</h1>
-  <MultiSelect
-    selected={data.type}
-    options={['all', 'unread']}
-    optionNames={['All', 'Unread']}
-    on:select={(e) => {
-      $page.url.searchParams.delete('page')
-      $page.url.searchParams.set('type', e.detail)
-      goto($page.url.toString(), {
-        invalidateAll: true,
-      })
-    }}
-  />
+  <div class="flex flex-row gap-2 flex-wrap items-center">
+    <MultiSelect
+      selected={data.type}
+      options={['all', 'unread']}
+      optionNames={['All', 'Unread']}
+      on:select={(e) => searchParam($page.url, 'type', e.detail, 'page')}
+    />
+    <Button href="/modlog" class="h-max ml-auto">
+      <Icon src={Newspaper} size="16" mini />
+      Modlog
+    </Button>
+  </div>
 </div>
 {#if data.items && data.items.length > 0}
   <div class="flex flex-col gap-4">
