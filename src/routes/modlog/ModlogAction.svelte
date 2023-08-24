@@ -2,6 +2,9 @@
   import type { IconSource } from 'svelte-hero-icons'
   import {
     Icon,
+    InformationCircle,
+    LockClosed,
+    LockOpen,
     QuestionMarkCircle,
     Trash,
     UserMinus,
@@ -51,6 +54,34 @@
           icon: UserMinus,
           class: 'text-red-600 dark:text-red-400',
           text: 'Removed Mod',
+        }
+      }
+      case 'postFeature': {
+        return {
+          icon: InformationCircle,
+          class: 'text-green-600 dark:text-green-400',
+          text: 'Featured Post',
+        }
+      }
+      case 'postUnfeature': {
+        return {
+          icon: InformationCircle,
+          class: 'text-red-600 dark:text-red-400',
+          text: 'Unfeatured Post',
+        }
+      }
+      case 'postLock': {
+        return {
+          icon: LockClosed,
+          class: 'text-yellow-600 dark:text-yellow-400',
+          text: 'Locked Post',
+        }
+      }
+      case 'postUnlock': {
+        return {
+          icon: LockOpen,
+          class: 'text-yellow-600 dark:text-yellow-400',
+          text: 'Unlocked Post',
         }
       }
     }

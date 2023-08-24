@@ -40,6 +40,7 @@
     on:keydown={(e) => dispatcher('keydown', e)}
     on:input={(e) => dispatcher('input', e)}
     on:change={(e) => dispatcher('change', e)}
+    on:focus
     {...$$restProps}
     class={className}
     {required}

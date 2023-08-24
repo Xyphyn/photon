@@ -4,8 +4,11 @@ import type {
   Community,
   ModAddCommunityView,
   ModBanFromCommunityView,
+  ModFeaturePostView,
+  ModLockPostView,
   ModRemoveCommentView,
   ModRemovePostView,
+  ModTransferCommunityView,
   ModlogActionType,
   ModlogListParams,
   Person,
@@ -17,6 +20,8 @@ export type ActionName =
   | 'postRemoval'
   | 'commentRemoval'
   | 'postLock'
+  | 'postUnlock'
+  | 'postUnfeature'
   | 'postFeature'
   | 'modAdd'
   | 'modRemove'
@@ -27,6 +32,9 @@ type ModAction =
   | ModRemoveCommentView
   | ModRemovePostView
   | ModAddCommunityView
+  | ModLockPostView
+  | ModFeaturePostView
+  | ModTransferCommunityView
 
 export interface ModLog {
   reason?: string
@@ -81,8 +89,27 @@ export const _toModLog = (item: ModAction): ModLog => {
       moderator: item.moderator,
       moderatee: item.modded_person,
     }
+  } else if ('mod_feature_post' in item) {
+    return {
+      actionName: item.mod_feature_post.featured
+        ? 'postFeature'
+        : 'postUnfeature',
+      timestamp: Date.parse(`${item.mod_feature_post.when_}Z`),
+      community: item.community,
+      link: `/post/${item.post.id}`,
+      moderator: item.moderator,
+      content: item.post.name,
+    }
+  } else if ('mod_lock_post' in item) {
+    return {
+      actionName: item.mod_lock_post.locked ? 'postLock' : 'postUnlock',
+      timestamp: Date.parse(`${item.mod_lock_post.when_}Z`),
+      community: item.community,
+      link: `/post/${item.post.id}`,
+      moderator: item.moderator,
+      content: item.post.name,
+    }
   }
-
   return {
     actionName: 'Unknown',
     timestamp: 0,
@@ -109,7 +136,12 @@ export async function load({ url }) {
     ...results.banned_from_community,
     ...results.removed_comments,
     ...results.removed_posts,
+
     ...results.added_to_community,
+    ...results.transferred_to_community,
+
+    ...results.featured_posts,
+    ...results.locked_posts,
   ]
 
   const moderationActions = moderation

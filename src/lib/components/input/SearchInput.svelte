@@ -13,6 +13,8 @@
   export let extractSelected: (item: T | null) => any
   export let extractName: (item: T) => string
   export let showWhenEmpty: boolean = false
+  let canSearch: boolean = false
+  export { canSearch as searchOnMount }
 
   const debounce = (fn: Function, ms = 300) => {
     let timeoutId: ReturnType<typeof setTimeout>
@@ -25,6 +27,7 @@
   const dispatcher = createEventDispatcher<{ search: string }>()
 
   const debounceFunc = debounce(() => {
+    canSearch = true
     dispatcher('search', query)
   }, debounceTime)
 </script>
@@ -38,8 +41,11 @@
     }}
     {...$$restProps}
   />
-  <Menu open={options.length != 0 || showWhenEmpty} alignment="bottom-left">
-    {#if query == ''}
+  <Menu
+    open={(options.length != 0 || showWhenEmpty) && canSearch}
+    alignment="bottom-left"
+  >
+    {#if query == '' && showWhenEmpty}
       <slot {extractName} {extractSelected} {query} />
     {:else}
       {#each options as option}

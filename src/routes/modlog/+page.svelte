@@ -38,6 +38,24 @@
         'AdminPurgePost',
         'AdminPurgeComment',
       ]}
+      optionNames={[
+        'All',
+        'Remove Post',
+        'Lock Post',
+        'Feature Post',
+        'Remove Comment',
+        'Remove Community',
+        'Ban From Community',
+        'Add Community',
+        'Transfer Community',
+        'Add',
+        'Ban',
+        'Hide Community',
+        'Purge Person',
+        'Purge Community',
+        'Purge Post',
+        'Purge Comment',
+      ]}
       selected={data.type}
       on:select={(e) => searchParam($page.url, 'type', e.detail, 'page')}
     />
@@ -47,6 +65,7 @@
         placeholder="Filter by community"
         jwt={$profile?.jwt}
         listing_type="All"
+        showWhenEmpty={true}
         on:select={(e) =>
           searchParam($page.url, 'community', e.detail?.id.toString(), 'page')}
       />
@@ -61,7 +80,7 @@
         <colgroup class="table-fixed">
           <col width="8%" />
           <col width="18%" />
-          <col width="8%" class="overflow-x-auto" />
+          <col width="12%" class="overflow-x-auto" />
           <col width="8%" />
           <col width="10%" />
           <col width="18%" />

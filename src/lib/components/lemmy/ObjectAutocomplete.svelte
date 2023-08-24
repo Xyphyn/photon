@@ -13,6 +13,7 @@
   export let jwt: string | undefined = undefined
   export let listing_type: ListingType = 'Subscribed'
   export let items: Community[] | undefined = undefined
+  export let showWhenEmpty: boolean = false
   let showNone: boolean = false
 
   const dispatcher = createEventDispatcher<{ select: Community }>()
@@ -45,11 +46,11 @@
     let:extractName
     let:extractSelected
     let:option
-    showWhenEmpty
+    {showWhenEmpty}
     {...$$restProps}
     let:query
   >
-    {#if query == ''}
+    {#if query == '' && showWhenEmpty}
       <MenuButton on:click={() => dispatcher('select', undefined)}>
         <Icon src={XCircle} size="16" mini />
         <div class="flex flex-col text-left">
