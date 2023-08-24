@@ -1,6 +1,8 @@
 <script lang="ts">
   import type { IconSource } from 'svelte-hero-icons'
   import {
+    CheckCircle,
+    Fire,
     Icon,
     InformationCircle,
     LockClosed,
@@ -25,7 +27,28 @@
         return {
           icon: XCircle,
           class: 'text-red-600 dark:text-red-400',
-          text: 'Ban',
+          text: 'Ban (instance)',
+        }
+      }
+      case 'banCommunity': {
+        return {
+          icon: XCircle,
+          class: 'text-red-600 dark:text-red-400',
+          text: 'Ban (Community)',
+        }
+      }
+      case 'unban': {
+        return {
+          icon: CheckCircle,
+          class: 'text-green-600 dark:text-green-400',
+          text: 'Unban (instance)',
+        }
+      }
+      case 'unbanCommunity': {
+        return {
+          icon: CheckCircle,
+          class: 'text-green-600 dark:text-green-400',
+          text: 'Unban (Community)',
         }
       }
       case 'commentRemoval': {
@@ -82,6 +105,13 @@
           icon: LockOpen,
           class: 'text-yellow-600 dark:text-yellow-400',
           text: 'Unlocked Post',
+        }
+      }
+      case 'purge': {
+        return {
+          icon: Fire,
+          class: 'text-red-600 dark:text-red-400',
+          text: 'Purge',
         }
       }
     }

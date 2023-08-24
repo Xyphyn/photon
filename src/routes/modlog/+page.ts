@@ -1,10 +1,17 @@
 import { profile } from '$lib/auth.js'
 import { getClient } from '$lib/lemmy.js'
 import type {
+  AdminPurgeCommentView,
+  AdminPurgeCommunityView,
+  AdminPurgePersonView,
+  AdminPurgePostView,
   Community,
   ModAddCommunityView,
+  ModAddView,
   ModBanFromCommunityView,
+  ModBanView,
   ModFeaturePostView,
+  ModHideCommunityView,
   ModLockPostView,
   ModRemoveCommentView,
   ModRemovePostView,
@@ -17,6 +24,9 @@ import { get } from 'svelte/store'
 
 export type ActionName =
   | 'ban'
+  | 'banCommunity'
+  | 'unban'
+  | 'unbanCommunity'
   | 'postRemoval'
   | 'commentRemoval'
   | 'postLock'
@@ -25,6 +35,7 @@ export type ActionName =
   | 'postFeature'
   | 'modAdd'
   | 'modRemove'
+  | 'purge'
   | 'Unknown'
 
 type ModAction =
@@ -35,6 +46,13 @@ type ModAction =
   | ModLockPostView
   | ModFeaturePostView
   | ModTransferCommunityView
+  | AdminPurgeCommentView
+  | AdminPurgeCommunityView
+  | AdminPurgePostView
+  | AdminPurgePersonView
+  | ModHideCommunityView
+  | ModBanView
+  | ModAddView
 
 export interface ModLog {
   reason?: string
@@ -57,7 +75,9 @@ export const _toModLog = (item: ModAction): ModLog => {
       moderator: item.moderator,
       moderatee: item.banned_person,
       community: item.community,
-      actionName: 'ban',
+      actionName: item.mod_ban_from_community.banned
+        ? 'banCommunity'
+        : 'unbanCommunity',
       reason: item.mod_ban_from_community.reason,
       timestamp: timestamp(item.mod_ban_from_community.when_),
     }
@@ -118,7 +138,57 @@ export const _toModLog = (item: ModAction): ModLog => {
       moderatee: item.modded_person,
       community: item.community,
     }
+  } else if ('admin_purge_post' in item) {
+    return {
+      actionName: 'purge',
+      timestamp: timestamp(item.admin_purge_post.when_),
+      moderator: item.admin,
+      community: item.community,
+      content: 'Purged a post',
+      reason: item.admin_purge_post.reason,
+    }
+  } else if ('admin_purge_comment' in item) {
+    return {
+      actionName: 'purge',
+      timestamp: timestamp(item.admin_purge_comment.when_),
+      moderator: item.admin,
+      content: 'Purged a comment',
+      reason: item.admin_purge_comment.reason,
+    }
+  } else if ('admin_purge_community' in item) {
+    return {
+      actionName: 'purge',
+      timestamp: timestamp(item.admin_purge_community.when_),
+      moderator: item.admin,
+      content: 'Purged a community',
+      reason: item.admin_purge_community.reason,
+    }
+  } else if ('admin_purge_person' in item) {
+    return {
+      actionName: 'purge',
+      timestamp: timestamp(item.admin_purge_person.when_),
+      moderator: item.admin,
+      content: 'Purged a user',
+      reason: item.admin_purge_person.reason,
+    }
+  } else if ('mod_ban' in item) {
+    return {
+      actionName: item.mod_ban.banned ? 'ban' : 'unban',
+      timestamp: timestamp(item.mod_ban.when_),
+      moderator: item.moderator,
+      moderatee: item.banned_person,
+      reason: item.mod_ban.reason,
+      link: `/u/${fullUserName(item.banned_person)}`,
+    }
+  } else if ('mod_add' in item) {
+    return {
+      actionName: item.mod_add.removed ? 'modRemove' : 'modAdd',
+      timestamp: timestamp(item.mod_add.when_),
+      moderator: item.moderator,
+      moderatee: item.modded_person,
+    }
   }
+
   return {
     actionName: 'Unknown',
     timestamp: 0,
@@ -151,6 +221,15 @@ export async function load({ url }) {
 
     ...results.featured_posts,
     ...results.locked_posts,
+
+    ...results.admin_purged_comments,
+    ...results.admin_purged_communities,
+    ...results.admin_purged_posts,
+    ...results.admin_purged_persons,
+
+    ...results.hidden_communities,
+    ...results.banned,
+    ...results.added,
   ]
 
   const moderationActions = moderation
