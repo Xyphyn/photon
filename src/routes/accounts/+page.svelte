@@ -110,14 +110,6 @@
   <div class="flex flex-col h-full gap-4">
     <div class="flex flex-row justify-between">
       <h1 class="text-2xl font-bold">Accounts</h1>
-      <Button
-        on:click={() => {
-          $profileData.profiles = []
-          resetProfile()
-        }}
-      >
-        Delete all
-      </Button>
     </div>
     <EditableList
       on:action={(id) => {
