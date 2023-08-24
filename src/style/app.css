@@ -13,6 +13,7 @@ body {
 html,
 body {
   text-rendering: optimizeLegibility;
+  font-family: system-ui, sans-serif;
 }
 
 .wait * {

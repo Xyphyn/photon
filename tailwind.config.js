@@ -4,7 +4,6 @@ export default {
   darkMode: 'class',
   theme: {
     fontFamily: {
-      'sans': ['Cantarell', 'system-ui'],
       'serif': ['serif']
     },
     extend: {
