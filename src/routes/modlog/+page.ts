@@ -49,6 +49,7 @@ export interface ModLog {
 
 const fullUserName = (user: Person) =>
   `${user.name}@${new URL(user.actor_id).hostname}`
+const timestamp = (when: string) => Date.parse(`${when}Z`)
 
 export const _toModLog = (item: ModAction): ModLog => {
   if ('mod_ban_from_community' in item) {
@@ -58,14 +59,14 @@ export const _toModLog = (item: ModAction): ModLog => {
       community: item.community,
       actionName: 'ban',
       reason: item.mod_ban_from_community.reason,
-      timestamp: Date.parse(`${item.mod_ban_from_community.when_}Z`),
+      timestamp: timestamp(item.mod_ban_from_community.when_),
     }
   } else if ('mod_remove_comment' in item) {
     return {
       actionName: 'commentRemoval',
       community: item.community,
       content: item.comment.content,
-      timestamp: Date.parse(`${item.mod_remove_comment.when_}Z`),
+      timestamp: timestamp(item.mod_remove_comment.when_),
       moderatee: item.commenter,
       moderator: item.moderator,
       reason: item.mod_remove_comment.reason,
@@ -76,7 +77,7 @@ export const _toModLog = (item: ModAction): ModLog => {
       actionName: 'postRemoval',
       community: item.community,
       content: item.post.name,
-      timestamp: Date.parse(`${item.mod_remove_post.when_}Z`),
+      timestamp: timestamp(item.mod_remove_post.when_),
       moderator: item.moderator,
       reason: item.mod_remove_post.reason,
       link: `/post/${item.post.id}`,
@@ -85,7 +86,7 @@ export const _toModLog = (item: ModAction): ModLog => {
     return {
       actionName: item.mod_add_community.removed ? 'modRemove' : 'modAdd',
       community: item.community,
-      timestamp: Date.parse(`${item.mod_add_community.when_}Z`),
+      timestamp: timestamp(item.mod_add_community.when_),
       moderator: item.moderator,
       moderatee: item.modded_person,
     }
@@ -94,7 +95,7 @@ export const _toModLog = (item: ModAction): ModLog => {
       actionName: item.mod_feature_post.featured
         ? 'postFeature'
         : 'postUnfeature',
-      timestamp: Date.parse(`${item.mod_feature_post.when_}Z`),
+      timestamp: timestamp(item.mod_feature_post.when_),
       community: item.community,
       link: `/post/${item.post.id}`,
       moderator: item.moderator,
@@ -103,11 +104,19 @@ export const _toModLog = (item: ModAction): ModLog => {
   } else if ('mod_lock_post' in item) {
     return {
       actionName: item.mod_lock_post.locked ? 'postLock' : 'postUnlock',
-      timestamp: Date.parse(`${item.mod_lock_post.when_}Z`),
+      timestamp: timestamp(item.mod_lock_post.when_),
       community: item.community,
       link: `/post/${item.post.id}`,
       moderator: item.moderator,
       content: item.post.name,
+    }
+  } else if ('mod_transfer_community' in item) {
+    return {
+      actionName: 'Unknown',
+      timestamp: timestamp(item.mod_transfer_community.when_),
+      moderator: item.moderator,
+      moderatee: item.modded_person,
+      community: item.community,
     }
   }
   return {
