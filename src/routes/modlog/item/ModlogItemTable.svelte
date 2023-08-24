@@ -2,12 +2,9 @@
   import Link from '$lib/components/input/Link.svelte'
   import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
-  import Card from '$lib/components/ui/Card.svelte'
-  import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
-  import { Icon, Trash, XCircle } from 'svelte-hero-icons'
-  import type { ModLog } from './+page.js'
-  import ModlogAction from './ModlogAction.svelte'
+  import type { ModLog } from '../+page.js'
+  import ModlogAction from '../ModlogAction.svelte'
 
   export let item: ModLog
 </script>

@@ -1,13 +1,13 @@
 <script lang="ts">
-  import Card from '$lib/components/ui/Card.svelte'
-  import { ExclamationTriangle, Icon } from 'svelte-hero-icons'
-  import ModlogItem from './ModlogItem.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import { searchParam } from '$lib/util.js'
   import { page } from '$app/stores'
   import ObjectAutocomplete from '$lib/components/lemmy/ObjectAutocomplete.svelte'
   import { profile } from '$lib/auth.js'
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
+  import { userSettings } from '$lib/settings.js'
+  import ModlogItemCard from './item/ModlogItemCard.svelte'
+  import ModlogItemTable from './item/ModlogItemTable.svelte'
 
   export let data
 </script>
@@ -70,42 +70,57 @@
           searchParam($page.url, 'community', e.detail?.id.toString(), 'page')}
       />
     </div>
+    <MultiSelect
+      options={[false, true, undefined]}
+      optionNames={['Table', 'Cards', 'Default']}
+      selected={$userSettings.modlogCardView ??
+        !window.matchMedia('(min-width: 1600px)').matches}
+      on:select={(e) => ($userSettings.modlogCardView = e.detail)}
+    />
   </div>
   {#if data.modlog}
-    <div style="width:100%; overflow-x: auto;">
-      <table
-        class="table overflow-x-auto table-fixed relative"
-        style="min-width: 800px;"
-      >
-        <colgroup class="table-fixed">
-          <col width="8%" />
-          <col width="18%" />
-          <col width="12%" class="overflow-x-auto" />
-          <col width="8%" />
-          <col width="10%" />
-          <col width="18%" />
-          <col width="20%" />
-          <col width="20%" />
-        </colgroup>
-        <thead class="text-left sticky top-0">
-          <tr class="rounded-t-lg overflow-hidden">
-            <th>Time</th>
-            <th>Moderator</th>
-            <th>Action</th>
-            <th>User</th>
-            <th>Community</th>
-            <th>Content</th>
-            <th>Reason</th>
-            <th>Link</th>
-          </tr>
-        </thead>
-        <tbody class="text-sm">
-          {#each data.modlog as modlog}
-            <ModlogItem item={modlog} />
-          {/each}
-        </tbody>
-      </table>
-    </div>
+    {#if $userSettings.modlogCardView ?? !window.matchMedia('(min-width: 1600px)').matches}
+      <div class="flex flex-col gap-4">
+        {#each data.modlog as modlog}
+          <ModlogItemCard item={modlog} />
+        {/each}
+      </div>
+    {:else}
+      <div style="width:100%; overflow-x: auto;">
+        <table
+          class="table overflow-x-auto table-fixed relative"
+          style="min-width: 800px;"
+        >
+          <colgroup class="table-fixed">
+            <col width="8%" />
+            <col width="18%" />
+            <col width="12%" class="overflow-x-auto" />
+            <col width="8%" />
+            <col width="10%" />
+            <col width="18%" />
+            <col width="20%" />
+            <col width="20%" />
+          </colgroup>
+          <thead class="text-left sticky top-0">
+            <tr class="rounded-t-lg overflow-hidden">
+              <th>Time</th>
+              <th>Moderator</th>
+              <th>Action</th>
+              <th>User</th>
+              <th>Community</th>
+              <th>Content</th>
+              <th>Reason</th>
+              <th>Link</th>
+            </tr>
+          </thead>
+          <tbody class="text-sm">
+            {#each data.modlog as modlog}
+              <ModlogItemTable item={modlog} />
+            {/each}
+          </tbody>
+        </table>
+      </div>
+    {/if}
   {/if}
   <Pageination
     page={data.page}

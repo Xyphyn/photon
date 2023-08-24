@@ -49,6 +49,7 @@ interface Settings {
   }
   newVote: boolean
   randomPlaceholders: boolean
+  modlogCardView: boolean | undefined
 }
 
 export const defaultSettings: Settings = {
@@ -85,6 +86,7 @@ export const defaultSettings: Settings = {
   },
   newVote: toBool(env.PUBLIC_NEW_VOTE_BUTTONS) ?? false,
   randomPlaceholders: toBool(env.PUBLIC_RANDOM_PLACEHOLDERS) ?? true,
+  modlogCardView: toBool(env.PUBLIC_MODLOG_CARD_VIEW) ?? undefined,
 }
 
 export const userSettings = writable(defaultSettings)
