@@ -227,22 +227,15 @@
         <Icon src={Bookmark} mini width={16} /> Saved
       </MenuButton>
     {/if}
-    {#if $profileData.profiles.length == 0}
-      <MenuButton link href="/login">
-        <Icon src={ArrowLeftOnRectangle} mini width={16} />
-        Log in
-      </MenuButton>
-    {:else}
-      <MenuButton link href="/accounts">
-        <Icon src={UserGroup} mini width={16} />
-        Accounts
-        <span
-          class="text-xs font-bold bg-slate-100 dark:bg-zinc-700 px-2 py-0.5 rounded-md ml-auto"
-        >
-          {$profileData.profiles.length}
-        </span>
-      </MenuButton>
-    {/if}
+    <MenuButton link href="/accounts">
+      <Icon src={UserGroup} mini width={16} />
+      Accounts
+      <span
+        class="text-xs font-bold bg-slate-100 dark:bg-zinc-700 px-2 py-0.5 rounded-md ml-auto"
+      >
+        {$profileData.profiles.length}
+      </span>
+    </MenuButton>
     <hr class="dark:opacity-10 w-[90%] my-2 mx-auto" />
     <li class="text-xs px-4 py-1 my-1 opacity-80">App</li>
     <MenuButton link href="/settings">
