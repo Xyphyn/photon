@@ -32,7 +32,7 @@
   </Button>
   {#if ($profile?.user && amMod($profile.user, item.community)) || ($profile?.user && isAdmin($profile.user))}
     <li class="px-4 py-1 my-1 text-xs text-slate-600 dark:text-zinc-400">
-      Moderation
+      Moderation {#if (!item.community.local) } (Instance Only) {/if}
     </li>
     <MenuButton color="success" on:click={() => remove(item)}>
       <Icon src={Trash} size="16" mini />
@@ -44,7 +44,7 @@
     </MenuButton>
     {#if $profile?.user && $profile.user?.local_user_view.person.id != item.creator.id}
       <span class="px-4 py-1 my-1 text-xs text-slate-600 dark:text-zinc-400">
-        User
+        User {#if (!item.community.local) } (Instance Only) {/if}
       </span>
       <MenuButton
         color="dangerSecondary"
