@@ -30,7 +30,7 @@
   >
     <ShieldIcon filled width={14} />
   </Button>
-  {#if ($profile?.user && amMod($profile.user, item.community)) || ($profile?.user && isAdmin($profile.user) && item.community.local)}
+  {#if ($profile?.user && amMod($profile.user, item.community)) || ($profile?.user && isAdmin($profile.user))}
     <li class="px-4 py-1 my-1 text-xs text-slate-600 dark:text-zinc-400">
       Moderation
     </li>
