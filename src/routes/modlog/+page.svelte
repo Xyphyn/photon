@@ -5,6 +5,9 @@
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import { searchParam } from '$lib/util.js'
   import { page } from '$app/stores'
+  import ObjectAutocomplete from '$lib/components/lemmy/ObjectAutocomplete.svelte'
+  import { profile } from '$lib/auth.js'
+  import MultiSelect from '$lib/components/input/MultiSelect.svelte'
 
   export let data
 </script>
@@ -15,6 +18,40 @@
 
 <div class="flex flex-col gap-4">
   <h1 class="font-bold text-2xl">Modlog</h1>
+  <div class="flex flex-col gap-2">
+    <MultiSelect
+      options={[
+        'All',
+        'ModRemovePost',
+        'ModLockPost',
+        'ModFeaturePost',
+        'ModRemoveComment',
+        'ModRemoveCommunity',
+        'ModBanFromCommunity',
+        'ModAddCommunity',
+        'ModTransferCommunity',
+        'ModAdd',
+        'ModBan',
+        'ModHideCommunity',
+        'AdminPurgePerson',
+        'AdminPurgeCommunity',
+        'AdminPurgePost',
+        'AdminPurgeComment',
+      ]}
+      selected={data.type}
+      on:select={(e) => searchParam($page.url, 'type', e.detail, 'page')}
+    />
+    <div class="max-w-sm">
+      <div class="block my-1 font-bold text-sm">Community</div>
+      <ObjectAutocomplete
+        placeholder="Filter by community"
+        jwt={$profile?.jwt}
+        listing_type="All"
+        on:select={(e) =>
+          searchParam($page.url, 'community', e.detail?.id.toString(), 'page')}
+      />
+    </div>
+  </div>
   {#if data.modlog}
     <div style="width:100%; overflow-x: auto;">
       <table

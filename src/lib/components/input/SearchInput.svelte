@@ -12,6 +12,7 @@
   export let options: T[]
   export let extractSelected: (item: T | null) => any
   export let extractName: (item: T) => string
+  export let showWhenEmpty: boolean = false
 
   const debounce = (fn: Function, ms = 300) => {
     let timeoutId: ReturnType<typeof setTimeout>
@@ -37,13 +38,17 @@
     }}
     {...$$restProps}
   />
-  <Menu open={options.length != 0} alignment="bottom-left">
-    {#each options as option}
-      <slot {extractName} {extractSelected} {option}>
-        <MenuButton on:click={() => extractSelected(option)}>
-          {extractName(option)}
-        </MenuButton>
-      </slot>
-    {/each}
+  <Menu open={options.length != 0 || showWhenEmpty} alignment="bottom-left">
+    {#if query == ''}
+      <slot {extractName} {extractSelected} {query} />
+    {:else}
+      {#each options as option}
+        <slot {extractName} {extractSelected} {option} {query}>
+          <MenuButton on:click={() => extractSelected(option)}>
+            {extractName(option)}
+          </MenuButton>
+        </slot>
+      {/each}
+    {/if}
   </Menu>
 </div>

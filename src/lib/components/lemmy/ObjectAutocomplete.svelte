@@ -5,6 +5,7 @@
   import { getClient } from '$lib/lemmy.js'
   import type { Community, ListingType } from 'lemmy-js-client'
   import { createEventDispatcher } from 'svelte'
+  import { Icon, XCircle } from 'svelte-hero-icons'
 
   let type: 'community' = 'community'
   export let q: string = ''
@@ -12,6 +13,7 @@
   export let jwt: string | undefined = undefined
   export let listing_type: ListingType = 'Subscribed'
   export let items: Community[] | undefined = undefined
+  let showNone: boolean = false
 
   const dispatcher = createEventDispatcher<{ select: Community }>()
 </script>
@@ -20,8 +22,11 @@
   <SearchInput
     options={items || []}
     on:search={async () => {
+      if (q == '') showNone = true
+      else showNone = false
+
       const results = await getClient().search({
-        q: q,
+        q: q || ' ',
         auth: jwt,
         type_: 'Communities',
         limit: 20,
@@ -40,15 +45,27 @@
     let:extractName
     let:extractSelected
     let:option
+    showWhenEmpty
+    {...$$restProps}
+    let:query
   >
-    <MenuButton on:click={() => extractSelected(option)}>
-      <Avatar url={option.icon} alt={option.title} width={24} />
-      <div class="flex flex-col text-left">
-        <span>{option.title}</span>
-        <span class="text-xs opacity-80">
-          {new URL(option.actor_id).hostname}
-        </span>
-      </div>
-    </MenuButton>
+    {#if query == ''}
+      <MenuButton on:click={() => dispatcher('select', undefined)}>
+        <Icon src={XCircle} size="16" mini />
+        <div class="flex flex-col text-left">
+          <span>None</span>
+        </div>
+      </MenuButton>
+    {:else if option}
+      <MenuButton on:click={() => extractSelected(option)}>
+        <Avatar url={option.icon} alt={option.title} width={24} />
+        <div class="flex flex-col text-left">
+          <span>{option.title}</span>
+          <span class="text-xs opacity-80">
+            {new URL(option.actor_id).hostname}
+          </span>
+        </div>
+      </MenuButton>
+    {/if}
   </SearchInput>
 {/if}
