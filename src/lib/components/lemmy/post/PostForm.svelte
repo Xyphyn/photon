@@ -68,7 +68,7 @@
     } else {
       const list = await getClient().listCommunities({
         auth: $profile?.jwt,
-        type_: 'Subscribed',
+        type_: 'All',
         sort: 'Active',
         limit: 40,
       })
@@ -190,6 +190,7 @@
         bind:q={communitySearch}
         bind:items={communities}
         jwt={$profile?.jwt}
+	listing_type="All"
         on:select={(e) => {
           const c = e.detail
           if (!c) {
