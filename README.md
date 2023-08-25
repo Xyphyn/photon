@@ -10,7 +10,7 @@ An alternative web client for Lemmy with the UI of Xylo
 
 ## Self-hosting
 
-Put Xylo on your own domain for easier onboarding.
+Put Photon on your own domain for easier onboarding.
 
 ### Running from image
 
