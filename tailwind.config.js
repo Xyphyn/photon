@@ -4,6 +4,8 @@ export default {
   darkMode: 'class',
   theme: {
     fontFamily: {
+      'sans': ['sans-serif'],
+      'system': ['system-ui'], 
       'serif': ['serif']
     },
     extend: {
@@ -17,7 +19,8 @@ export default {
       },
       colors: {
         'zinc': {
-          800: '#1f1f25',
+          700: '#313139',
+          800: '#1f1f24',
           900: '#121215'
         }
       }

@@ -12,6 +12,7 @@
   import { pwaInfo } from 'virtual:pwa-info'
   import PwaReload from '$lib/PwaReload.svelte'
   import { inDarkTheme } from '$lib/ui/colors.js'
+  import { userSettings } from '$lib/settings.js'
 
   nProgress.configure({
     minimum: 0.4,
@@ -42,11 +43,19 @@
   {@html webManifest}
 </svelte:head>
 
-<div class="flex flex-col min-h-screen">
-  <Navbar />
+<div
+  class="grid grid-cols-12 grid-rows-6 min-h-screen {$userSettings.systemUI
+    ? 'font-system'
+    : 'font-sans'}"
+>
+  <div class="w-full col-span-12 row-span-full">
+    <Navbar />
+  </div>
   <ToastContainer />
   <Moderation />
-  <div class="flex flex-row h-full w-full max-w-full flex-1">
+  <div
+    class="flex flex-row h-full w-full max-w-full flex-1 row-span-5 col-span-full"
+  >
     <Sidebar />
     <main
       class="p-3 sm:p-6 min-w-0 w-full flex-[3] sm:rounded-tl-lg

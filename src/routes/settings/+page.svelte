@@ -202,6 +202,15 @@
 
   <SectionTitle class="mt-4">Other</SectionTitle>
   <Setting>
+    <span slot="title">Font</span>
+    <span slot="description">What font Photon should use.</span>
+    <MultiSelect
+      options={[true, false]}
+      optionNames={['System UI', 'Browser Font']}
+      bind:selected={$userSettings.systemUI}
+    />
+  </Setting>
+  <Setting>
     <Checkbox bind:checked={$userSettings.debugInfo} slot="title">
       Debug Info
     </Checkbox>
