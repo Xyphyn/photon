@@ -28,7 +28,9 @@ export type ActionName =
   | 'unban'
   | 'unbanCommunity'
   | 'postRemoval'
+  | 'postRestore'
   | 'commentRemoval'
+  | 'commentRestore'
   | 'postLock'
   | 'postUnlock'
   | 'postUnfeature'
@@ -83,7 +85,9 @@ export const _toModLog = (item: ModAction): ModLog => {
     }
   } else if ('mod_remove_comment' in item) {
     return {
-      actionName: 'commentRemoval',
+      actionName: item.mod_remove_comment.removed
+        ? 'commentRemoval'
+        : 'commentRestore',
       community: item.community,
       content: item.comment.content,
       timestamp: timestamp(item.mod_remove_comment.when_),
@@ -94,7 +98,7 @@ export const _toModLog = (item: ModAction): ModLog => {
     }
   } else if ('mod_remove_post' in item) {
     return {
-      actionName: 'postRemoval',
+      actionName: item.mod_remove_post.removed ? 'postRemoval' : 'postRestore',
       community: item.community,
       content: item.post.name,
       timestamp: timestamp(item.mod_remove_post.when_),

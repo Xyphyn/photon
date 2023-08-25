@@ -58,11 +58,25 @@
           text: 'Removal',
         }
       }
+      case 'commentRestore': {
+        return {
+          icon: Trash,
+          class: 'text-green-600 dark:text-green-400',
+          text: 'Restoration',
+        }
+      }
       case 'postRemoval': {
         return {
           icon: Trash,
           class: 'text-red-600 dark:text-red-400',
           text: 'Removal',
+        }
+      }
+      case 'postRestore': {
+        return {
+          icon: Trash,
+          class: 'text-green-600 dark:text-green-400',
+          text: 'Restoration',
         }
       }
       case 'modAdd': {
