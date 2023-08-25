@@ -1,6 +1,9 @@
 # Photon
 
-_Jump to [Self-hosting](#self-hosting)_
+Jump to:
+
+- [Self-hosting](#self-hosting)
+- [Public Instances](#public-instances)
 
 An alternative web client for Lemmy with the UI of Xylo
 
@@ -113,7 +116,16 @@ values:
 - Old (not implemented in Photon)
 - Controversial (not implemented in Photon)
 
-### Donate
+## Public Instances
+
+Want your instance added here? Make a GitHub issue or make a PR! (this is for general purpose Photon instances.)
+
+| Instance                                | Location     | Contact                                       |
+| --------------------------------------- | ------------ | --------------------------------------------- |
+| [phtn.app](https://phtn.app)            | 🇺🇸 US West   | [photon@phtn.app](photon@phtn.app)            |
+| [ph.openxng.com](https://ph.opnxng.com) | 🇸🇬 Singapore | [about.openxng.com](https://about.opnxng.com) |
+
+## Donate
 
 You can donate at [Buy me a Coffee](https://buymeacoffee.com/xylight)
 
