@@ -51,8 +51,8 @@ export const mdInline: MarkdownIt = new MarkdownIt('zero')
   .use(markdown_it_sub)
   .use(markdown_it_sup)
 
-md.linkify.add('!', {
-  validate: function (text, pos, self) {
+const communityLinks = {
+  validate: function (text: any, pos: any, self: any) {
     var tail = text.slice(pos)
 
     if (!self.re.community) {
@@ -70,9 +70,22 @@ md.linkify.add('!', {
     }
     return 0
   },
-  normalize: function (match) {
-    match.url = `/c/${match.url.slice(1)}`
+  normalize: function (match: any) {
+    let prefix = `${match.url}`
+    prefix = prefix.startsWith('c/') ? prefix.slice(2) : prefix.slice(1)
+
+    match.url = `/c/${prefix}`
   },
+}
+
+md.linkify.add('!', {
+  validate: communityLinks.validate,
+  normalize: communityLinks.normalize,
+})
+
+md.linkify.add('c/', {
+  validate: communityLinks.validate,
+  normalize: communityLinks.normalize,
 })
 
 md.linkify.add('@', {
@@ -96,4 +109,3 @@ md.linkify.add('@', {
     match.url = `/u/${match.url.slice(1)}`
   },
 })
-

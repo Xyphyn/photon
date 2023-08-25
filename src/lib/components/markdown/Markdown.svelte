@@ -3,9 +3,27 @@
 
   export let source: string = ''
   export let inline: boolean = false
+
+  function replaceURLs(node: HTMLElement) {
+    const postRegex = /^https:\/\/([a-zA-Z0-9.-]+)\/post\/(\d+)$/
+
+    const links = node.querySelectorAll('a')
+
+    links.forEach((l) => {
+      if (!postRegex.test(l.href)) return
+
+      const match = l.href.match(postRegex)
+      if (!match) return
+
+      l.href = `/post/${match?.[1]}/${match?.[2]}`
+    })
+  }
 </script>
 
-<div class="break-words flex flex-col markdown gap-2 leading-[1.5]">
+<div
+  use:replaceURLs
+  class="break-words flex flex-col markdown gap-2 leading-[1.5]"
+>
   {#if inline}
     {@html mdInline.render(source)}
   {:else}
