@@ -67,6 +67,8 @@
   export let rounded: ButtonRoundness = 'md'
   export let alignment: ButtonAlignment = 'center'
 
+  export let loaderWidth: number | undefined = undefined
+
   // const dispatch = createEventDispatcher()
   export let href: string | undefined = undefined
 </script>
@@ -96,7 +98,15 @@
     >
       {#if loading}
         <Spinner
-          width={size == 'lg' ? 20 : size == 'md' ? 18 : size == 'sm' ? 16 : 16}
+          width={loaderWidth
+            ? loaderWidth
+            : size == 'lg'
+            ? 20
+            : size == 'md'
+            ? 18
+            : size == 'sm'
+            ? 16
+            : 16}
         />
       {:else}
         <slot name="icon" />
@@ -128,7 +138,15 @@
     >
       {#if loading}
         <Spinner
-          width={size == 'lg' ? 20 : size == 'md' ? 18 : size == 'sm' ? 16 : 16}
+          width={loaderWidth
+            ? loaderWidth
+            : size == 'lg'
+            ? 20
+            : size == 'md'
+            ? 18
+            : size == 'sm'
+            ? 16
+            : 16}
         />
       {:else}
         <slot name="icon" />

@@ -19,6 +19,9 @@
   import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
   import CommunityList from '$lib/components/ui/sidebar/CommunityList.svelte'
   import ProfileAvatar from '$lib/lemmy/ProfileAvatar.svelte'
+  import ProfileButton from '$lib/components/ui/sidebar/ProfileButton.svelte'
+  import { flip } from 'svelte/animate'
+  import { expoOut } from 'svelte/easing'
 </script>
 
 <nav
@@ -54,37 +57,10 @@
   </SidebarButton>
   {#if $profileData.profiles.length >= 1}
     <hr class="border-slate-300 dark:border-zinc-800 my-1" />
-    {#each $profileData.profiles as prof, index}
-      <Button
-        color="tertiary"
-        alignment="left"
-        on:click={() => {
-          if ($profile?.id == prof.id) setUserID(-1)
-          else setUserID(prof.id)
-
-          goto($page.url, {
-            invalidateAll: true,
-          })
-        }}
-        class="hover:bg-slate-200 {$userSettings.expandSidebar
-          ? ''
-          : '!p-1.5'} {$profile?.id == prof.id ? 'font-bold' : ''}"
-      >
-        <ProfileAvatar
-          profile={prof}
-          {index}
-          selected={$profile?.id == prof.id}
-        />
-        <span
-          class:hidden={!$userSettings.expandSidebar}
-          class="flex flex-col gap-0"
-        >
-          {prof.username ?? prof.user?.local_user_view.person.name}
-          <span class="text-slate-500 dark:text-zinc-400 font-normal text-xs">
-            {prof.instance}
-          </span>
-        </span>
-      </Button>
+    {#each $profileData.profiles as prof, index (prof.id)}
+      <div animate:flip={{ duration: 300, easing: expoOut }} class="w-full">
+        <ProfileButton {index} {prof} expanded={$userSettings.expandSidebar} />
+      </div>
     {/each}
     <SidebarButton href="/accounts" expanded={$userSettings.expandSidebar}>
       <Icon src={UserGroup} mini size="20" />
