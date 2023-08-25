@@ -44,18 +44,14 @@
 </svelte:head>
 
 <div
-  class="grid grid-cols-12 grid-rows-6 min-h-screen {$userSettings.systemUI
+  class="flex flex-col min-h-screen {$userSettings.systemUI
     ? 'font-system'
     : 'font-sans'}"
 >
-  <div class="w-full col-span-12 row-span-full">
-    <Navbar />
-  </div>
+  <Navbar />
   <ToastContainer />
   <Moderation />
-  <div
-    class="flex flex-row h-full w-full max-w-full flex-1 row-span-5 col-span-full"
-  >
+  <div class="flex flex-row h-full w-full max-w-full flex-1">
     <Sidebar />
     <main
       class="p-3 sm:p-6 min-w-0 w-full flex-[3] sm:rounded-tl-lg
