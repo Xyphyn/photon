@@ -71,10 +71,35 @@ const communityLinks = {
     return 0
   },
   normalize: function (match: any) {
-    let prefix = `${match.url}`
+    let prefix = match.url
     prefix = prefix.startsWith('c/') ? prefix.slice(2) : prefix.slice(1)
 
     match.url = `/c/${prefix}`
+  },
+}
+
+const userLinks = {
+  validate: function (text: any, pos: any, self: any) {
+    var tail = text.slice(pos)
+
+    if (!self.re.user) {
+      self.re.user = new RegExp(/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z]{2,6})/)
+    }
+    if (self.re.user.test(tail)) {
+      // Linkifier allows punctuation chars before prefix,
+      // but we additionally disable `@` ("@@mention" is invalid)
+      if (pos >= 2 && tail[pos - 2] === '!') {
+        return false
+      }
+      return tail.match(self.re.user)![0].length
+    }
+    return 0
+  },
+  normalize: function (match: any) {
+    let prefix = match.url
+    prefix = prefix.startsWith('u/') ? prefix.slice(2) : prefix.slice(1)
+
+    match.url = `/u/${prefix}`
   },
 }
 
@@ -89,23 +114,10 @@ md.linkify.add('c/', {
 })
 
 md.linkify.add('@', {
-  validate: function (text, pos, self) {
-    var tail = text.slice(pos)
-
-    if (!self.re.user) {
-      self.re.user = new RegExp(/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z]{2,6})/)
-    }
-    if (self.re.user.test(tail)) {
-      // Linkifier allows punctuation chars before prefix,
-      // but we additionally disable `@` ("@@mention" is invalid)
-      if (pos >= 2 && tail[pos - 2] === '@') {
-        return false
-      }
-      return tail.match(self.re.user)![0].length
-    }
-    return 0
-  },
-  normalize: function (match) {
-    match.url = `/u/${match.url.slice(1)}`
-  },
+  validate: userLinks.validate,
+  normalize: userLinks.normalize,
+})
+md.linkify.add('u/', {
+  validate: userLinks.validate,
+  normalize: userLinks.normalize,
 })

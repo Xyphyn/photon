@@ -18,10 +18,16 @@
       l.href = `/post/${match?.[1]}/${match?.[2]}`
     })
   }
+
+  let div: HTMLElement
+
+  $: if (source && div) {
+    replaceURLs(div)
+  }
 </script>
 
 <div
-  use:replaceURLs
+  bind:this={div}
   class="break-words flex flex-col markdown gap-2 leading-[1.5]"
 >
   {#if inline}
