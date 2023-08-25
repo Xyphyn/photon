@@ -47,28 +47,29 @@ There you go, you now have an instance of Photon running.
 
 The following environment variables can be set to override the default settings:
 
-| Variable                        | Values              | Default Value |
-| ------------------------------- | ------------------- | ------------- |
-| PUBLIC_INSTANCE_URL             | URL                 | `lemmy.ml`    |
-| PUBLIC_THEME                    | system\|dark\|light | system        |
-| PUBLIC_EXPANDABLE_IMAGES        | `bool`              | true          |
-| PUBLIC_MARK_READ_POSTS          | `bool`              | true          |
-| PUBLIC_REVERT_VOTE_COLORS       | `bool`              | false         |
-| PUBLIC_SHOW_INSTANCES_USER      | `bool`              | false         |
-| PUBLIC_SHOW_INSTANCES_COMMUNITY | `bool`              | true          |
-| PUBLIC_SHOW_INSTANCES_COMMENTS  | `bool`              | false         |
-| PUBLIC_SHOW_COMPACT_POSTS       | `bool`              | false         |
-| PUBLIC_DEFAULT_FEED_SORT        | `SortType`          | Active        |
-| PUBLIC_DEFAULT_FEED             | `ListingType`       | Local         |
-| PUBLIC_DEFAULT_COMMENT_SORT     | `CommentSortType`   | Hot           |
-| PUBLIC_HIDE_DELETED             | `bool`              | true          |
-| PUBLIC_HIDE_REMOVED             | `bool`              | false         |
-| PUBLIC_FULL_WIDTH_LAYOUT        | `bool`              | false         |
-| PUBLIC_EXPAND_SIDEBAR           | `bool`              | true          |
-| PUBLIC_DISPLAY_NAMES            | `bool`              | true          |
-| PUBLIC_NSFW_BLUR                | `bool`              | true          |
-| PUBLIC_NEW_VOTE_BUTTONS         | `bool`              | false         |
-| PUBLIC_RANDOM_PLACEHOLDERS      | `bool`              | true          |
+| Variable                        | Values              | Default Value                          |
+| ------------------------------- | ------------------- | -------------------------------------- |
+| PUBLIC_INSTANCE_URL             | URL                 | `lemmy.ml`                             |
+| PUBLIC_LOCK_TO_INSTANCE         | `bool`              | `true` if `PUBLIC_INSTANCE_URL` is set |
+| PUBLIC_THEME                    | system\|dark\|light | system                                 |
+| PUBLIC_EXPANDABLE_IMAGES        | `bool`              | true                                   |
+| PUBLIC_MARK_READ_POSTS          | `bool`              | true                                   |
+| PUBLIC_REVERT_VOTE_COLORS       | `bool`              | false                                  |
+| PUBLIC_SHOW_INSTANCES_USER      | `bool`              | false                                  |
+| PUBLIC_SHOW_INSTANCES_COMMUNITY | `bool`              | true                                   |
+| PUBLIC_SHOW_INSTANCES_COMMENTS  | `bool`              | false                                  |
+| PUBLIC_SHOW_COMPACT_POSTS       | `bool`              | false                                  |
+| PUBLIC_DEFAULT_FEED_SORT        | `SortType`          | Active                                 |
+| PUBLIC_DEFAULT_FEED             | `ListingType`       | Local                                  |
+| PUBLIC_DEFAULT_COMMENT_SORT     | `CommentSortType`   | Hot                                    |
+| PUBLIC_HIDE_DELETED             | `bool`              | true                                   |
+| PUBLIC_HIDE_REMOVED             | `bool`              | false                                  |
+| PUBLIC_FULL_WIDTH_LAYOUT        | `bool`              | false                                  |
+| PUBLIC_EXPAND_SIDEBAR           | `bool`              | true                                   |
+| PUBLIC_DISPLAY_NAMES            | `bool`              | true                                   |
+| PUBLIC_NSFW_BLUR                | `bool`              | true                                   |
+| PUBLIC_NEW_VOTE_BUTTONS         | `bool`              | false                                  |
+| PUBLIC_RANDOM_PLACEHOLDERS      | `bool`              | true                                   |
 
 The values for `SortType`, `ListingType`, and `CommentSortType` are defined by the lemmy-js-client library.
 
