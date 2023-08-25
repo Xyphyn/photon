@@ -188,12 +188,19 @@
     />
   </div>
   {#if post.cross_posts?.length > 0}
-    <div class="text-sm font-bold mt-2">
-      <SectionTitle class="text-inherit dark:text-inherit">
-        Crossposts <span class="text-slate-600 dark:text-zinc-400 text-xs ml-1">
-          {post.cross_posts.length}
-        </span>
-      </SectionTitle>
+    <details
+      class="text-sm font-bold mt-2 w-full cursor-pointer"
+      open={post.cross_posts?.length <= 3}
+    >
+      <summary class="inline-block w-full">
+        <SectionTitle class="text-inherit dark:text-inherit">
+          Crossposts <span
+            class="text-slate-600 dark:text-zinc-400 text-xs ml-1"
+          >
+            {post.cross_posts.length}
+          </span>
+        </SectionTitle>
+      </summary>
       <div class="divide-y divide-slate-200 dark:divide-zinc-800 flex flex-col">
         {#each post.cross_posts as crosspost}
           <div class="py-2.5 flex flex-col gap-1">
@@ -213,7 +220,7 @@
           </div>
         {/each}
       </div>
-    </div>
+    </details>
   {/if}
 </div>
 <div class="mt-4 flex flex-col gap-2">
