@@ -19,6 +19,7 @@
   import { toast } from '$lib/components/ui/toasts/toasts.js'
   import { profile } from '$lib/auth.js'
   import { slide } from 'svelte/transition'
+  import Button from '$lib/components/input/Button.svelte'
 
   export let node: CommentNodeI
   export let postId: number
@@ -75,9 +76,7 @@
 {/if}
 
 <li
-  class="py-2 {node.depth == 0
-    ? 'border-b border-slate-200 dark:border-zinc-800'
-    : ''} {$$props.class}"
+  class="py-2 {$$props.class}"
   id="#{node.comment_view.comment.id.toString()}"
 >
   <details bind:open class="flex flex-col gap-1">
@@ -128,11 +127,11 @@
           <Icon src={Bookmark} solid size="12" title="Saved" />
         {/if}
       </span>
-      <span
-        class="ml-auto translate-x-1 opacity-0
-        group-hover:translate-x-0 group-hover:opacity-100 text-xs transition-all
-        flex flex-row items-center gap-1 dark:bg-zinc-900 p-1 rounded-md
-        bg-slate-200 hover:brightness-125 px-2"
+      <Button
+        class="ml-auto translate-x-1 opacity-0 group-hover:translate-x-0
+        group-hover:opacity-100 text-xs !transition-all
+        pointer-events-none"
+        size="sm"
       >
         {#if open}
           <Icon src={Minus} width={16} height={16} mini />
@@ -142,7 +141,7 @@
             <span class="text-xs opacity-50">+{node.children.length}</span>
           {/if}
         {/if}
-      </span>
+      </Button>
     </summary>
     <div
       class="flex flex-col whitespace-pre-wrap

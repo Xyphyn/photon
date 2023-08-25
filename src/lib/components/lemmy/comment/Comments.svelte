@@ -98,8 +98,8 @@
 <ul
   in:fly={{ opacity: 0, y: -4 }}
   class={isParent
-    ? ''
-    : 'mt-2 pl-3.5 border-l-2 border-slate-200 dark:border-zinc-900'}
+    ? 'divide-y dark:divide-zinc-800 divide-slate-200'
+    : 'pl-3.5 border-l-2 border-slate-200 dark:border-zinc-800 my-1'}
 >
   {#each nodes as node (node.comment_view.comment.id)}
     <Comment
@@ -113,7 +113,7 @@
       {/if}
       {#if node.comment_view.counts.child_count > 0 && node.children.length == 0}
         <div
-          class="my-2 min-w-[7rem] w-max h-8 border-l-2 border-slate-200 dark:border-zinc-900 pl-2"
+          class="my-2 w-max h-8 border-l-2 border-slate-200 dark:border-zinc-900 pl-2"
         >
           <Button
             loading={node.loading}
