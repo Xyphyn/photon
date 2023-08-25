@@ -89,10 +89,10 @@
 
 <Menu let:toggleOpen alignment="bottom-right">
   <Button
-    class="!p-1.5 hover:text-green-500 dark:text-zinc-400 text-slate-500"
+    class="hover:text-green-500 dark:text-zinc-400 text-slate-500"
     on:click={toggleOpen}
     slot="button"
-    size="sm"
+    size="square-md"
     loading={acting}
     {...$$restProps}
   >
@@ -114,7 +114,7 @@
   </Button>
   {#if ($profile?.user && amMod($profile.user, item.community)) || ($profile?.user && isAdmin($profile.user))}
     <span class="px-4 py-1 my-1 text-xs text-slate-600 dark:text-zinc-400">
-        Moderation {#if (!item.community.local) } (Instance Only) {/if}
+      Moderation {#if !item.community.local} (Instance Only) {/if}
     </span>
     <MenuButton
       color="warning"
@@ -156,7 +156,7 @@
     </MenuButton>
     {#if $profile?.user && $profile.user.local_user_view.person.id != item.creator.id}
       <span class="px-4 py-1 my-1 text-xs text-slate-600 dark:text-zinc-400">
-        User {#if (!item.community.local) } (Instance Only) {/if}
+        User {#if !item.community.local} (Instance Only) {/if}
       </span>
       <MenuButton
         color="dangerSecondary"

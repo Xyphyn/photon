@@ -199,4 +199,14 @@
         })}
     />
   </Setting>
+
+  <SectionTitle class="mt-4">Other</SectionTitle>
+  <Setting>
+    <Checkbox bind:checked={$userSettings.debugInfo} slot="title">
+      Debug Info
+    </Checkbox>
+    <span slot="description">
+      Show an option to show debug information. (in posts and such)
+    </span>
+  </Setting>
 </div>

@@ -1,11 +1,12 @@
 <script lang="ts">
   import type { PostView } from 'lemmy-js-client'
   import PostVote from './PostVote.svelte'
-  import { getClient, getInstance } from '$lib/lemmy.js'
+  import { getInstance } from '$lib/lemmy.js'
   import {
     ArrowTopRightOnSquare,
     Bookmark,
     BookmarkSlash,
+    BugAnt,
     ChatBubbleOvalLeftEllipsis,
     EllipsisHorizontal,
     Eye,
@@ -22,8 +23,6 @@
   import Menu from '$lib/components/ui/menu/Menu.svelte'
   import Button from '$lib/components/input/Button.svelte'
   import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
-  import { page } from '$app/stores'
-  import { toast } from '$lib/components/ui/toasts/toasts.js'
   import { createEventDispatcher } from 'svelte'
   import Modal from '$lib/components/ui/modal/Modal.svelte'
   import {
@@ -37,12 +36,14 @@
   import { deleteItem, markAsRead, save } from '$lib/lemmy/contentview.js'
   import { setSessionStorage } from '$lib/session.js'
   import { goto } from '$app/navigation'
+  import { userSettings } from '$lib/settings.js'
 
   export let post: PostView
 
   const dispatcher = createEventDispatcher<{ edit: PostView }>()
 
   let editing = false
+  export let debug: boolean = false
 </script>
 
 {#if editing}
@@ -71,7 +72,7 @@
   </Modal>
 {/if}
 
-<div class="flex flex-row gap-2 items-center h-[30px]">
+<div class="flex flex-row gap-2 items-center h-8">
   <PostVote
     post={post.post}
     bind:vote={post.my_vote}
@@ -79,10 +80,9 @@
   />
 
   <Button
-    color="secondary"
     size="sm"
     href="/post/{getInstance()}/{post.post.id}"
-    class="px-3 h-full !text-inherit"
+    class="!text-inherit h-8 px-3"
   >
     <Icon
       slot="icon"
@@ -94,6 +94,17 @@
     <FormattedNumber number={post.counts.comments} />
   </Button>
   <div class="ml-auto" />
+
+  {#if $userSettings.debugInfo}
+    {#if debug}
+      {#await import('$lib/components/util/debug/DebugObject.svelte') then { default: DebugObject }}
+        <DebugObject object={post} bind:open={debug} />
+      {/await}
+    {/if}
+    <Button on:click={() => (debug = true)} size="square-md">
+      <Icon src={BugAnt} mini size="16" slot="icon" />
+    </Button>
+  {/if}
   {#if $profile?.user && (amMod($profile.user, post.community) || isAdmin($profile.user))}
     <ModerationMenu bind:item={post} community={post.community} />
   {/if}
@@ -106,8 +117,8 @@
       slot="button"
       aria-label="Post actions"
       on:click={toggleOpen}
-      class="!p-1.5 dark:text-zinc-400 text-slate-500 hover:text-inherit h-full"
-      color="secondary"
+      class="hover:text-inherit"
+      size="square-md"
     >
       <Icon slot="icon" src={EllipsisHorizontal} width={16} mini />
     </Button>

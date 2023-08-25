@@ -23,6 +23,7 @@
   import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
   import Link from '$lib/components/input/Link.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
+  import { userSettings } from '$lib/settings.js'
 
   export let data
 
