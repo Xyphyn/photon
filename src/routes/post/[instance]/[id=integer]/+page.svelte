@@ -40,37 +40,42 @@
 
   afterNavigate(async () => {
     // reactivity hack
-
     post = data.post
-  })
 
-  beforeNavigate(async () => {
-    if (
-      $page.params.instance.toLowerCase() != $instance.toLowerCase() &&
-      $profile?.jwt
-    ) {
-      const id = toast({
-        content: 'Attempting to fetch this post on your home instance...',
-        loading: true,
+    if ($page.params.instance.toLowerCase() != $instance.toLowerCase()) {
+      if (!$profile?.jwt) return
+      toast({
+        content: 'Do you want to open this post on your home instance?',
+        action: () => {
+          if ($profile?.jwt) fetchOnHome($profile.jwt)
+        },
+        duration: 9999 * 1000,
       })
-
-      try {
-        const res = await getClient().resolveObject({
-          auth: $profile.jwt,
-          q: post.post_view.post.ap_id,
-        })
-
-        if (res.post) {
-          removeToast(id)
-          goto(`/post/${$instance}/${res.post.post.id}`, {}).then(() =>
-            removeToast(id)
-          )
-        }
-      } catch (err) {
-        removeToast(id)
-      }
     }
   })
+
+  const fetchOnHome = async (jwt: string) => {
+    const id = toast({
+      content: 'Attempting to fetch this post on your home instance...',
+      loading: true,
+    })
+
+    try {
+      const res = await getClient().resolveObject({
+        auth: jwt,
+        q: post.post_view.post.ap_id,
+      })
+
+      if (res.post) {
+        removeToast(id)
+        goto(`/post/${$instance}/${res.post.post.id}`, {}).then(() =>
+          removeToast(id)
+        )
+      }
+    } catch (err) {
+      removeToast(id)
+    }
+  }
 
   let commentsPage = 1
   let commentSort: CommentSortType = data.commentSort
