@@ -8,6 +8,7 @@
   import Comment from '$lib/components/lemmy/comment/Comment.svelte'
   import { fly } from 'svelte/transition'
   import Button from '$lib/components/input/Button.svelte'
+  import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
 
   export let data
 
@@ -29,19 +30,13 @@
     {#each data.data as item, index}
       <div in:fly={{ opacity: 0, y: -4, delay: index * 50 }}>
         {#if isComment(item)}
-          <Card class="flex flex-col bg-white rounded-md p-4 flex-1">
-            <div class="flex flex-row justify-between items-center">
-              <div class="flex flex-col gap-1">
-                <span class="text-xs dark:text-slate-400 text-zinc-600">
-                  <CommunityLink avatar community={item.community} />
-                </span>
-                <span class="flex flex-row items-center text-sm font-bold">
-                  {item.post.name}
-                </span>
-              </div>
-              <Button href="/post/{item.post.id}#{item.comment.id}">
-                Jump
-              </Button>
+          <Card class="flex flex-col bg-white rounded-md p-5 flex-1">
+            <div class="flex flex-row items-center">
+              <PostMeta
+                title={item.post.name}
+                id={item.post.id}
+                published={new Date(item.post.published)}
+              />
             </div>
             <div class="list-none">
               <Comment
@@ -50,6 +45,9 @@
                 replying={false}
               />
             </div>
+            <Button class="ml-auto" href="/comment/{item.comment.id}">
+              Jump
+            </Button>
           </Card>
         {:else}
           <Post post={item} />
