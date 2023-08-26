@@ -8,6 +8,7 @@
   import { toast } from '$lib/components/ui/toasts/toasts.js'
   import { DEFAULT_INSTANCE_URL, LINKED_INSTANCE_URL } from '$lib/instance.js'
   import { getClient, validateInstance } from '$lib/lemmy.js'
+  import { AtSymbol, Icon } from 'svelte-hero-icons'
 
   let data = {
     instance: DEFAULT_INSTANCE_URL,
@@ -67,7 +68,9 @@
         required
       />
       {#if !LINKED_INSTANCE_URL}
-        <span class="mt-5 font-bold">@</span>
+        <span class="flex items-center font-bold mt-6">
+          <Icon src={AtSymbol} mini size="20" class="mt-auto" />
+        </span>
         <TextInput
           id="instance_url"
           label="Instance URL"

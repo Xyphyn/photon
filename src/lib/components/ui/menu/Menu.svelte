@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Alignment } from '$lib/components/ui/menu/menu.js'
-  import { expoOut } from 'svelte/easing'
+  import { backOut, bounceOut, circOut, expoOut, sineOut } from 'svelte/easing'
   import { scale } from 'svelte/transition'
 
   export let open = false
@@ -66,7 +66,7 @@
         alignment
       )}
           rounded-lg py-2 min-w-[16rem] my-2 flex flex-col shadow-sm
-          bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800
+          bg-white/50 dark:bg-zinc-900/50 backdrop-blur-xl border border-slate-200 dark:border-zinc-800
           {$$props.containerClass}"
     >
       {#if open}
