@@ -63,7 +63,7 @@
   </div>
   <div class="flex flex-col md:flex-row gap-2 md:items-center">
     {#if application.admin}
-      <div class="flex items-center gap-1">
+      <div class="flex items-center gap-1 text-sm">
         <SectionTitle>
           {application.creator_local_user.accepted_application
             ? 'Approved'
