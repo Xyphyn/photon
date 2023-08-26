@@ -135,11 +135,7 @@
         <Icon slot="icon" src={Check} mini size="16" />
       </Button>
 
-      <Button
-        href="/post/{item.post.id}?thread={item.comment.path}#{item.comment.id}"
-        size="md"
-        class="h-8"
-      >
+      <Button href="/comment/{item.comment.id}" size="md" class="h-8">
         Jump
       </Button>
     </div>
