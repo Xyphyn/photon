@@ -51,8 +51,9 @@
     {/each}
   </div>
 {:else}
-  <Placeholder>
-    <Icon src={Inbox} size="28" slot="icon" />
-    <span slot="title">No new reports</span>
-  </Placeholder>
+  <Placeholder
+    icon={Inbox}
+    title="No new reports"
+    description="When submissions are reported, you can act on them here."
+  />
 {/if}

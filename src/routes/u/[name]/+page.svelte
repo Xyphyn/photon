@@ -33,6 +33,8 @@
   import Menu from '$lib/components/ui/menu/Menu.svelte'
   import ShieldIcon from '$lib/components/lemmy/moderation/ShieldIcon.svelte'
   import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
+  import { searchParam } from '$lib/util.js'
+  import Placeholder from '$lib/components/ui/Placeholder.svelte'
 
   export let data
 
@@ -123,7 +125,7 @@
         bind:value={message}
         label="Message"
         placeholder="your hair looks nice today"
-        rows={3}
+        rows={4}
       />
       <Button
         color="primary"
@@ -145,40 +147,33 @@
         options={['New', 'TopAll', 'Old']}
         optionNames={['New', 'Top', 'Old']}
         selected={data.sort}
-        on:select={(e) => {
-          $page.url.searchParams.set('sort', e.detail)
-          goto($page.url.toString(), {
-            invalidateAll: true,
-          })
-        }}
+        on:select={(e) => searchParam($page.url, 'sort', e.detail, 'page')}
       />
       <MultiSelect
         options={['all', 'posts', 'comments']}
         optionNames={['All', 'Posts', 'Comments']}
         selected={data.type}
-        on:select={(e) => {
-          $page.url.searchParams.set('type', e.detail)
-          goto($page.url.toString(), {
-            invalidateAll: true,
-          })
-        }}
+        on:select={(e) => searchParam($page.url, 'type', e.detail, 'page')}
       />
     </div>
-    {#each data.items as item (item.counts.id)}
-      {#if isCommentView(item) && (data.type == 'all' || data.type == 'comments')}
-        <CommentItem comment={item} />
-      {:else if !isCommentView(item) && (data.type == 'all' || data.type == 'posts')}
-        <Post post={item} />
-      {/if}
-    {/each}
+    {#if data.items.length == 0}
+      <Placeholder
+        icon={PencilSquare}
+        title="No submissions"
+        description="This user has no descriptions that match this filter."
+      />
+    {:else}
+      {#each data.items as item (item.counts.id)}
+        {#if isCommentView(item) && (data.type == 'all' || data.type == 'comments')}
+          <CommentItem comment={item} />
+        {:else if !isCommentView(item) && (data.type == 'all' || data.type == 'posts')}
+          <Post post={item} />
+        {/if}
+      {/each}
+    {/if}
     <Pageination
       page={data.page}
-      on:change={(p) => {
-        $page.url.searchParams.set('page', p.detail.toString())
-        goto($page.url.toString(), {
-          invalidateAll: true,
-        })
-      }}
+      on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
     />
   </div>
 

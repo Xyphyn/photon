@@ -24,6 +24,7 @@
   export let label: string | undefined = undefined
   export let previewButton: boolean = false
   export let disabled: boolean = false
+  export let rows: number = 4
 
   export let beforePreview: (input: string) => string = (input) => input
 
@@ -241,6 +242,7 @@ overflow-hidden focus-within:border-black focus-within:dark:border-white transit
             }
           }
         }}
+        {rows}
         {...$$restProps}
       />
     {/if}

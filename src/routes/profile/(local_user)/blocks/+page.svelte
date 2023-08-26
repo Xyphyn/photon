@@ -77,14 +77,12 @@
       </EditableList>
     </div>
   {:else}
-    <Placeholder>
-      <Icon src={Check} size="48" slot="icon" />
-      <span slot="title">No user blocks</span>
-      <p slot="description">
-        Go to a user's profile and click "block" to stop seeing posts and
-        comments from them.
-      </p>
-    </Placeholder>
+    <Placeholder
+      description="Go to a user's profile and click 'block' to stop seeing posts and
+    comments from them."
+      title="No user blocks"
+      icon={Check}
+    />
   {/if}
 
   {#if data.community_blocks.length > 0}
@@ -106,23 +104,19 @@
       </EditableList>
     </div>
   {:else}
-    <Placeholder>
-      <Icon src={Check} size="48" slot="icon" />
-      <span slot="title">No community blocks</span>
-      <p slot="description">
-        Go to a community's page and click "block" to stop seeing submissions
-        from it.
-      </p>
-    </Placeholder>
+    <Placeholder
+      description="Go to a community's page and click 'block' to stop seeing posts and
+comments from it."
+      title="No community blocks"
+      icon={Check}
+    />
   {/if}
 {:else}
   <div class="my-auto">
-    <Placeholder>
-      <Icon src={Check} size="48" slot="icon" />
-      <span slot="title">No blocks</span>
-      <p slot="description">
-        Go to a community or user's page to stop seeing submissions from it.
-      </p>
-    </Placeholder>
+    <Placeholder
+      description="Go to a community or user's page to stop seeing submissions from it."
+      title="No blocks"
+      icon={Check}
+    />
   </div>
 {/if}

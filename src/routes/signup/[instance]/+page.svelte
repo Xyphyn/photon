@@ -8,6 +8,7 @@
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import Card from '$lib/components/ui/Card.svelte'
+  import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import Spinner from '$lib/components/ui/loader/Spinner.svelte'
   import { toast } from '$lib/components/ui/toasts/toasts.js'
   import { getClient } from '$lib/lemmy.js'
@@ -17,7 +18,9 @@
     ExclamationCircle,
     ExclamationTriangle,
     Icon,
+    Plus,
     QuestionMarkCircle,
+    XCircle,
   } from 'svelte-hero-icons'
 
   export let data
@@ -102,10 +105,8 @@
     {data.site_view.site.name}
   </span>
 
-  <h1 class="font-bold text-3xl">Create account</h1>
-  {#if data.site_view.local_site.registration_mode == 'Closed'}
-    <p class="mx-auto text-left">Registrations are closed for this instance.</p>
-  {:else}
+  {#if data.site_view.local_site.registration_mode != 'Closed'}
+    <h1 class="font-bold text-3xl">Create account</h1>
     <TextInput
       bind:value={email}
       label="Email"
@@ -198,5 +199,17 @@
     >
       Submit
     </Button>
+  {:else}
+    <div class="my-auto">
+      <Placeholder
+        icon={XCircle}
+        title="Registrations closed"
+        description="New account creation has been disabled on this instance."
+      >
+        <Button icon={Plus} href="https://join-lemmy.org">
+          Find another instance
+        </Button>
+      </Placeholder>
+    </div>
   {/if}
 </form>

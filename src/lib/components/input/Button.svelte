@@ -1,5 +1,6 @@
 <script lang="ts">
   import Spinner from '$lib/components/ui/loader/Spinner.svelte'
+  import { Icon, type IconSource } from 'svelte-hero-icons'
 
   type ButtonColor = keyof typeof buttonColor
   type ButtonSize = keyof typeof buttonSize
@@ -66,6 +67,7 @@
   export let size: ButtonSize = 'md'
   export let rounded: ButtonRoundness = 'md'
   export let alignment: ButtonAlignment = 'center'
+  export let icon: IconSource | undefined = undefined
 
   export let loaderWidth: number | undefined = undefined
 
@@ -108,8 +110,10 @@
             ? 16
             : 16}
         />
-      {:else}
+      {:else if $$slots.icon}
         <slot name="icon" />
+      {:else if icon}
+        <Icon src={icon} size="16" mini />
       {/if}
       <slot />
     </div>
@@ -148,8 +152,10 @@
             ? 16
             : 16}
         />
-      {:else}
+      {:else if $$slots.icon}
         <slot name="icon" />
+      {:else if icon}
+        <Icon src={icon} size="16" mini />
       {/if}
       <slot />
     </div>

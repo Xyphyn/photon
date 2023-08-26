@@ -17,6 +17,7 @@
   import { profile } from '$lib/auth.js'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { fly } from 'svelte/transition'
+  import { searchParam } from '$lib/util.js'
 
   export let data
 
@@ -92,10 +93,11 @@
 <div class="flex flex-col gap-4 list-none my-4 flex-1">
   {#if !data.data || (data.data?.length ?? 0) == 0}
     <div class="mt-auto">
-      <Placeholder>
-        <Icon src={Inbox} size="28" slot="icon" />
-        <span slot="title">No new notifications</span>
-      </Placeholder>
+      <Placeholder
+        icon={Inbox}
+        title="No new notifications"
+        description="Messages, replies, and mentions will appear here."
+      />
     </div>
   {:else}
     {#each data.data as item}
@@ -105,12 +107,7 @@
     {/each}
     <Pageination
       page={data.page}
-      on:change={(p) => {
-        $page.url.searchParams.set('page', p.detail.toString())
-        goto($page.url.toString(), {
-          invalidateAll: true,
-        })
-      }}
+      on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
     />
   {/if}
 </div>

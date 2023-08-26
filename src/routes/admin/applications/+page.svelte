@@ -38,8 +38,9 @@
     </div>
   {/if}
 {:else}
-  <Placeholder>
-    <Icon src={ClipboardDocumentCheck} size="28" slot="icon" />
-    <span slot="title">No new applications</span>
-  </Placeholder>
+  <Placeholder
+    icon={ClipboardDocumentCheck}
+    title="No new applications"
+    description="Applications to join your instance will appear here."
+  />
 {/if}

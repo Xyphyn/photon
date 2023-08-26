@@ -65,10 +65,11 @@
   </div>
 </div>
 {#if !data.results}
-  <Placeholder>
-    <Icon src={MagnifyingGlass} size="28" solid slot="icon" />
-    <span slot="title">No results</span>
-  </Placeholder>
+  <Placeholder
+    icon={MagnifyingGlass}
+    title="No results"
+    description="Search across the fediverse"
+  />
 {:else}
   {#await data.streamed.object}
     <div

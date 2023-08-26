@@ -12,10 +12,12 @@
 
 {#if posts.length == 0}
   <div class="h-full grid place-items-center">
-    <Placeholder>
-      <Icon src={ArchiveBox} size="32" solid slot="icon" />
-      <span slot="title">No posts</span>
-      <Button href="/communities" class="mt-4" slot="action">
+    <Placeholder
+      icon={ArchiveBox}
+      title="No posts"
+      description="There are no posts that match this filter."
+    >
+      <Button href="/communities">
         <Icon src={Plus} size="16" mini slot="icon" />
         <span>Follow some communities</span>
       </Button>

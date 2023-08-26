@@ -103,10 +103,12 @@
   </form>
 {:else}
   <div class="my-auto">
-    <Placeholder>
-      <Icon src={Plus} solid size="28" slot="icon" />
-      <span slot="title">No taglines</span>
-      <div slot="action" class="mt-4 max-w-xl w-full flex flex-col gap-2">
+    <Placeholder
+      icon={Plus}
+      title="No taglines"
+      description="A random tagline will appear when users visit your instance."
+    >
+      <div class="mt-4 max-w-xl w-full flex flex-col gap-2">
         <form
           class="flex flex-col gap-2 w-full"
           on:submit|preventDefault={() => {
