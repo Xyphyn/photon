@@ -40,7 +40,11 @@ flex flex-col items-center justify-center bg-black/50 backdrop-blur-sm box-borde
             <h1 class="font-bold text-2xl w-max max-w-full">
               <slot name="title" />
             </h1>
-            <Button class="!p-2 ml-auto" on:click={() => (open = false)}>
+            <Button
+              size="square-md"
+              class="ml-auto"
+              on:click={() => (open = false)}
+            >
               <Icon src={XMark} mini size="16" />
             </Button>
           </div>

@@ -7,6 +7,6 @@
 </script>
 
 <Modal bind:open>
-  <span slot="title">Debug</span>
+  <span slot="title"><slot name="title">Debug</slot></span>
   <DebugTree {object} isParent={true} />
 </Modal>

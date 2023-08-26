@@ -12,13 +12,8 @@
       {#if typeof object[key] === 'object'}
         <svelte:self object={object[key]} isParent={false} />
       {:else}
-        <pre>{object[key]}</pre>
+        <pre class="break-words">{object[key]}</pre>
       {/if}
     </details>
   {/each}
 </ul>
-
-<style>
-  details {
-  }
-</style>

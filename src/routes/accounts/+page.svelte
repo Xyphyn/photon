@@ -6,6 +6,8 @@
     resetProfile,
     deleteProfile,
     moveProfile,
+    type Profile,
+    profile,
   } from '$lib/auth.js'
   import Button from '$lib/components/input/Button.svelte'
   import TextInput from '$lib/components/input/TextInput.svelte'
@@ -13,6 +15,7 @@
   import Menu from '$lib/components/ui/menu/Menu.svelte'
   import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
   import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import DebugObject from '$lib/components/util/debug/DebugObject.svelte'
   import {
     DEFAULT_INSTANCE_URL,
     LINKED_INSTANCE_URL,
@@ -20,9 +23,11 @@
   } from '$lib/instance.js'
   import { validateInstance } from '$lib/lemmy.js'
   import ProfileAvatar from '$lib/lemmy/ProfileAvatar.svelte'
+  import { userSettings } from '$lib/settings.js'
   import {
     ArrowLeftOnRectangle,
     ArrowUturnLeft,
+    BugAnt,
     ChevronDown,
     ChevronUp,
     EllipsisHorizontal,
@@ -67,11 +72,28 @@
     }
     loading = false
   }
+
+  let debugging = false
+  let debugProfile: Profile | undefined = undefined
 </script>
 
 <svelte:head>
   <title>Accounts</title>
 </svelte:head>
+
+{#if debugging}
+  <DebugObject
+    object={debugProfile?.id == $profile?.id ? $profile : debugProfile}
+    bind:open={debugging}
+  >
+    <span slot="title" class="flex flex-col">
+      <h1 class="font-bold text-2xl">Debug</h1>
+      <span class="text-slate-600 dark:text-zinc-400 text-base font-normal">
+        Do NOT share anything from this menu.
+      </span>
+    </span>
+  </DebugObject>
+{/if}
 
 {#if $profileData.profiles.length == 0}
   <div class="h-full flex items-center justify-center">
@@ -171,6 +193,17 @@
               <Icon src={ArrowUturnLeft} size="16" mini slot="icon" />
               Reset Color
             </MenuButton>
+            {#if $userSettings.debugInfo}
+              <MenuButton
+                on:click={() => {
+                  debugProfile = profile
+                  debugging = !debugging
+                }}
+              >
+                <Icon src={BugAnt} size="16" mini slot="icon" />
+                Debug Info
+              </MenuButton>
+            {/if}
           </Menu>
           <Button
             on:click={() => {
