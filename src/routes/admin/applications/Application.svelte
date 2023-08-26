@@ -78,7 +78,7 @@
         size="square-md"
         class="hover:bg-slate-200 {!application.creator_local_user
           .accepted_application
-          ? 'text-red-500'
+          ? '!text-red-500'
           : ''}"
         aria-label="Deny"
         on:click={() => review(false)}
@@ -91,7 +91,7 @@
         size="square-md"
         class="hover:bg-slate-200 {application.creator_local_user
           .accepted_application
-          ? 'text-green-500'
+          ? '!text-green-500'
           : ''}"
         aria-label="Approve"
         on:click={() => review(true)}

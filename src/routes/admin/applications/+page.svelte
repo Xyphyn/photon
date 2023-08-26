@@ -24,7 +24,7 @@
     searchParam($page.url, 'unreadOnly', e.detail.toString(), 'page')}
 />
 {#if data.applications && data.applications.length > 0}
-  <div class="flex flex-col divide-y divide-slate-200 dark:divide-zinc-900">
+  <div class="flex flex-col gap-4">
     {#each data.applications as application (application.registration_application.id)}
       <Application {application} />
     {/each}
