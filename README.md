@@ -51,6 +51,7 @@ The following environment variables can be set to override the default settings:
 | ------------------------------- | ------------------- | -------------------------------------- |
 | PUBLIC_INSTANCE_URL             | URL                 | `lemmy.ml`                             |
 | PUBLIC_LOCK_TO_INSTANCE         | `bool`              | `true` if `PUBLIC_INSTANCE_URL` is set |
+| PUBLIC_SSR_ENABLED              | `bool`              | `false`                                |
 | PUBLIC_THEME                    | system\|dark\|light | system                                 |
 | PUBLIC_EXPANDABLE_IMAGES        | `bool`              | true                                   |
 | PUBLIC_MARK_READ_POSTS          | `bool`              | true                                   |
