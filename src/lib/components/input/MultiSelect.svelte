@@ -21,7 +21,7 @@
     ${
       headless
         ? 'pb-1'
-        : 'bg-slate-100 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-lg p-1'
+        : 'bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-lg p-1'
     }
     gap-1
     ${$$props.class}
@@ -29,7 +29,7 @@
 
   const buttonClass = (selected: boolean) => `
     px-3 py-1.5 text-sm
-    ${!selected ? 'hover:bg-slate-200 hover:dark:bg-zinc-800' : ''}
+    ${!selected ? 'hover:bg-slate-100 hover:dark:bg-zinc-800' : ''}
      transition-colors rounded-md
     ${
       selected
