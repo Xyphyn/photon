@@ -85,6 +85,13 @@
         formData.registration_mode = e.detail
       }}
     />
+    {#if formData.registration_mode == 'RequireApplication'}
+      <MarkdownEditor
+        previewButton
+        label="Application question"
+        bind:value={formData.application_question}
+      />
+    {/if}
     <Checkbox
       bind:checked={formData.community_creation_admin_only}
       defaultValue={true}
