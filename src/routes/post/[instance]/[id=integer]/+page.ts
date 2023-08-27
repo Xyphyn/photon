@@ -1,6 +1,7 @@
+import { env } from '$env/dynamic/public'
 import { profile } from '$lib/auth.js'
 import { getClient } from '$lib/lemmy.js'
-import { userSettings } from '$lib/settings.js'
+import { SSR_ENABLED, userSettings } from '$lib/settings.js'
 import { error } from '@sveltejs/kit'
 import { get } from 'svelte/store'
 
@@ -29,22 +30,26 @@ export async function load({ params, url, fetch }) {
 
   const sort = get(userSettings)?.defaultSort?.comments ?? 'Hot'
 
+  const commentParams: any = {
+    post_id: Number(params.id),
+    type_: 'All',
+    limit: 50,
+    page: 1,
+    max_depth: max_depth,
+    saved_only: false,
+    sort: sort,
+    auth: get(profile)?.jwt,
+    parent_id: parentId,
+  }
+
   return {
     singleThread: parentId != undefined,
     post: post,
     commentSort: sort,
     streamed: {
-      comments: getClient(params.instance.toLowerCase(), fetch).getComments({
-        post_id: Number(params.id),
-        type_: 'All',
-        limit: 50,
-        page: 1,
-        max_depth: max_depth,
-        saved_only: false,
-        sort: sort,
-        auth: get(profile)?.jwt,
-        parent_id: parentId,
-      }),
+      comments: SSR_ENABLED
+        ? await getClient(params.instance, fetch).getComments(commentParams)
+        : getClient(params.instance, fetch).getComments(commentParams),
     },
   }
 }
