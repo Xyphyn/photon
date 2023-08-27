@@ -12,6 +12,7 @@
     Icon,
     NoSymbol,
     PencilSquare,
+    ShieldCheck,
     ShieldExclamation,
     UserPlus,
   } from 'svelte-hero-icons'
@@ -204,14 +205,29 @@
       </div>
       {#if $profile?.user && $profile.jwt && data.person_view.person.id != $profile.user.local_user_view.person.id}
         <div class="flex flex-col gap-2">
-          <Button
-            size="lg"
-            color="secondary"
-            on:click={() => (messaging = true)}
-          >
-            <Icon slot="icon" solid size="16" src={Envelope} />
-            Message
-          </Button>
+          <div class="flex items-center gap-2 w-full">
+            <Button
+              size="lg"
+              color="secondary"
+              on:click={() => (messaging = true)}
+              class="flex-1"
+            >
+              <Icon slot="icon" solid size="16" src={Envelope} />
+              Message
+            </Button>
+            {#if data.person_view.person.matrix_user_id}
+              <Button
+                size="lg"
+                color="secondary"
+                href="https://matrix.to/#/{data.person_view.person
+                  .matrix_user_id}"
+                class="flex-1"
+              >
+                <Icon slot="icon" solid size="16" src={ShieldCheck} />
+                Matrix User
+              </Button>
+            {/if}
+          </div>
           <Button
             size="lg"
             color="danger"
