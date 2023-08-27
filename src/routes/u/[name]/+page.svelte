@@ -161,7 +161,7 @@
       <Placeholder
         icon={PencilSquare}
         title="No submissions"
-        description="This user has no descriptions that match this filter."
+        description="This user has no submissions that match this filter."
       />
     {:else}
       {#each data.items as item (item.counts.id)}
