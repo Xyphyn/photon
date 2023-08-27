@@ -158,13 +158,14 @@
       </MenuButton>
     {/if}
     <MenuButton
-      on:click={() =>
-        navigator.clipboard.writeText(
-          `https://${getInstance()}/post/${post.post.id}`
-        )}
+      on:click={() => {
+        navigator.share?.({
+          url: post.post.ap_id,
+        }) ?? navigator.clipboard.writeText(post.post.ap_id)
+      }}
     >
       <Icon src={Share} width={16} mini />
-      Copy Link
+      Share
     </MenuButton>
     {#if $profile?.jwt}
       <MenuButton
