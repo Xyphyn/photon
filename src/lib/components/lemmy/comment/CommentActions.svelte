@@ -71,9 +71,9 @@
     <span class="text-xs opacity-80 py-1 my-1 px-4">Comment actions</span>
     <MenuButton
       on:click={() => {
-        navigator.clipboard.writeText(
-          `/comment/${getInstance()}/${comment.comment.id}`
-        )
+        navigator.share?.({
+          url: comment.comment.ap_id,
+        }) ?? navigator.clipboard.writeText(comment.comment.ap_id)
       }}
     >
       <Icon src={Square2Stack} mini size="16" />
