@@ -43,7 +43,7 @@
 
       value = ''
       toast({
-        content: 'Your comment was added. You may need to refresh to see it.',
+        content: 'Your comment was submitted.',
         type: 'success',
       })
     } catch (err) {

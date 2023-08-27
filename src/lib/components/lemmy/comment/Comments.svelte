@@ -104,7 +104,7 @@
   {#each nodes as node (node.comment_view.comment.id)}
     <Comment
       postId={post.id}
-      {node}
+      bind:node
       open={true}
       op={post.creator_id == node.comment_view.creator.id}
     >
