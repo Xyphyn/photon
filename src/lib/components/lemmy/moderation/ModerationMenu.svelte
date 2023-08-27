@@ -11,6 +11,7 @@
     InformationCircle,
     LockClosed,
     LockOpen,
+    Megaphone,
     ShieldExclamation,
     Trash,
   } from 'svelte-hero-icons'
@@ -138,11 +139,13 @@
       loading={pinning}
       disabled={pinning}
     >
-      <Icon src={InformationCircle} size="16" mini />
-      <div class="flex flex-col text-left">
-        <span>{item.post.featured_community ? 'Unpin' : 'Pin'}</span>
+      <Icon src={Megaphone} size="16" mini />
+      <div
+        class="flex flex-row gap-2 text-left items-center justify-between w-full"
+      >
+        <span>{item.post.featured_community ? 'Unfeature' : 'Feature'}</span>
         {#if isAdmin($profile.user)}
-          <span class="opacity-80 text-xs">Community</span>
+          <span class="text-xs opacity-80">Community</span>
         {/if}
       </div>
     </MenuButton>
@@ -179,10 +182,11 @@
       on:click={() =>
         pin(isPostView(item) ? !item.post.featured_local : false, true)}
     >
-      <Icon src={InformationCircle} size="16" mini />
-      <div class="flex flex-col text-left">
-        <span>{item.post.featured_local ? 'Unpin' : 'Pin'}</span>
-
+      <Icon src={Megaphone} size="16" mini />
+      <div
+        class="flex flex-row gap-2 text-left items-center justify-between w-full"
+      >
+        <span>{item.post.featured_local ? 'Unfeature' : 'Feature'}</span>
         <span class="text-xs opacity-80">Instance</span>
       </div>
     </MenuButton>

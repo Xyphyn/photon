@@ -10,6 +10,7 @@
     Icon,
     InformationCircle,
     LockClosed,
+    Megaphone,
     Trash,
   } from 'svelte-hero-icons'
   import { getInstance } from '$lib/lemmy.js'
@@ -94,9 +95,9 @@
         </Badge>
       {/if}
       {#if featured}
-        <Badge label="Pinned" color="green">
-          <Icon src={InformationCircle} mini size="14" />
-          Pinned
+        <Badge label="Featured" color="green">
+          <Icon src={Megaphone} mini size="14" />
+          Featured
         </Badge>
       {/if}
     </div>

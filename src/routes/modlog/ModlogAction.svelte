@@ -7,6 +7,7 @@
     InformationCircle,
     LockClosed,
     LockOpen,
+    Megaphone,
     QuestionMarkCircle,
     Trash,
     UserMinus,
@@ -95,14 +96,14 @@
       }
       case 'postFeature': {
         return {
-          icon: InformationCircle,
+          icon: Megaphone,
           class: 'text-green-600 dark:text-green-400',
           text: 'Featured Post',
         }
       }
       case 'postUnfeature': {
         return {
-          icon: InformationCircle,
+          icon: Megaphone,
           class: 'text-red-600 dark:text-red-400',
           text: 'Unfeatured Post',
         }
