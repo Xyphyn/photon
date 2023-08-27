@@ -5,7 +5,7 @@ import { env } from '$env/dynamic/public'
 console.log('Using the following default settings from the environment:')
 console.log(env)
 
-export const SSR_ENABLED = env.PUBLIC_SSR_ENABLED.toLowerCase() == 'true'
+export const SSR_ENABLED = env.PUBLIC_SSR_ENABLED?.toLowerCase() == 'true'
 
 // Returns a proper boolean or null.  Used to set boolean values from env var strings while allowing nullish coalescing to set default values.
 const toBool = (str: string | undefined) => {
