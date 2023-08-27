@@ -121,10 +121,22 @@
           <Icon src={Pencil} solid size="12" title="Edited" />
         {/if}
         {#if node.comment_view.comment.deleted || node.comment_view.comment.removed}
-          <Icon src={Trash} solid size="12" title="Deleted" />
+          <Icon
+            src={Trash}
+            solid
+            size="12"
+            title="Deleted"
+            class="text-red-600 dark:text-red-500"
+          />
         {/if}
         {#if node.comment_view.saved}
-          <Icon src={Bookmark} solid size="12" title="Saved" />
+          <Icon
+            src={Bookmark}
+            solid
+            size="12"
+            title="Saved"
+            class="text-yellow-600 dark:text-yellow-500"
+          />
         {/if}
       </span>
       <Button
