@@ -1,21 +1,15 @@
 <script lang="ts">
-  import { md, mdInline } from '$lib/components/markdown/markdown'
+  import { md, mdInline, photonify } from '$lib/components/markdown/markdown'
 
   export let source: string = ''
   export let inline: boolean = false
 
   function replaceURLs(node: HTMLElement) {
-    const postRegex = /^https:\/\/([a-zA-Z0-9.-]+)\/post\/(\d+)$/
-
     const links = node.querySelectorAll('a')
 
     links.forEach((l) => {
-      if (!postRegex.test(l.href)) return
-
-      const match = l.href.match(postRegex)
-      if (!match) return
-
-      l.href = `/post/${match?.[1]}/${match?.[2]}`
+      const photonified = photonify(l.href)
+      if (photonified) l.href = photonified
     })
   }
 

@@ -117,7 +117,35 @@ md.linkify.add('@', {
   validate: userLinks.validate,
   normalize: userLinks.normalize,
 })
+
 md.linkify.add('u/', {
   validate: userLinks.validate,
   normalize: userLinks.normalize,
 })
+
+const regexes = {
+  post: /^https:\/\/([a-zA-Z0-9.-]+)\/post\/(\d+)$/,
+  comment: /^https:\/\/([a-zA-Z0-9.-]+)\/comment\/(\d+)$/,
+  user: /^https:\/\/([a-zA-Z0-9.-]+)\/user\/(\d+)$/,
+}
+
+/**
+ * Convert links to photon links
+ */
+export const photonify = (link: string) => {
+  if (regexes.post.test(link)) {
+    const match = link.match(regexes.post)
+    if (!match) return
+    return `/post/${match?.[1]}/${match?.[2]}`
+  }
+  if (regexes.comment.test(link)) {
+    const match = link.match(regexes.comment)
+    if (!match) return
+    return `/comment/${match?.[1]}/${match?.[2]}`
+  }
+  if (regexes.user.test(link)) {
+    const match = link.match(regexes.user)
+    if (!match) return
+    return `/u/${match?.[2]}@${match?.[1]}`
+  }
+}
