@@ -87,6 +87,10 @@
   }
 </script>
 
+<svelte:head>
+  <title>Moderator Team</title>
+</svelte:head>
+
 <h1 class="text-2xl font-bold">Moderators</h1>
 <EditableList
   let:action
@@ -115,11 +119,11 @@
           </span>
         </div>
       </div>
-      {#if moderator.moderator.id != $profile?.user?.local_user_view.person.id}
-        <Button size="square-md" on:click={() => action(moderator.moderator)}>
-          <Icon src={Trash} size="16" mini slot="icon" />
-        </Button>
-      {/if}
+      <Button
+        size="square-md"
+        on:click={() => action(moderator.moderator)}
+        icon={Trash}
+      />
     </div>
   {/each}
 </EditableList>

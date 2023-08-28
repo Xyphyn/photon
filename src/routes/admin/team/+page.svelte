@@ -45,6 +45,10 @@
   }
 </script>
 
+<svelte:head>
+  <title>Admin Team</title>
+</svelte:head>
+
 <h1 class="font-bold text-2xl">Admins</h1>
 {#if data.site}
   <EditableList let:action on:action={(e) => removeAdmin(e.detail, false)}>
