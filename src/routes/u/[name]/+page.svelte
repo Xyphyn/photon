@@ -246,43 +246,6 @@
             <Button size="square-md" on:click={toggleOpen} slot="button">
               <ShieldIcon width={16} filled />
             </Button>
-            {#if data.person_view.person.local}
-              <MenuButton
-                on:click={() => {
-                  toast({
-                    content: `Are you sure you want to ${
-                      data.person_view.person.admin ? 'remove' : 'appoint'
-                    } ${data.person_view.person.name} as an admin?`,
-                    duration: 99999 * 1000,
-                    type: 'info',
-                    action: async () => {
-                      if (!$profile?.jwt) return
-                      await getClient()
-                        .addAdmin({
-                          auth: $profile.jwt,
-                          added: !data.person_view.person.admin,
-                          person_id: data.person_view.person.id,
-                        })
-                        .then(() => {
-                          data.person_view.person.admin =
-                            !data.person_view.person.admin
-                        })
-                        .catch(() => {
-                          toast({
-                            content: 'Failed to modify that user.',
-                            type: 'error',
-                          })
-                        })
-                    },
-                  })
-                }}
-              >
-                <Icon slot="icon" mini size="16" src={UserPlus} />
-                {data.person_view.person.admin
-                  ? 'Remove admin'
-                  : 'Appoint as admin'}
-              </MenuButton>
-            {/if}
             <MenuButton
               color="dangerSecondary"
               on:click={() =>

@@ -6,63 +6,47 @@
   import EditableList from '$lib/components/ui/list/EditableList.svelte'
   import { toast } from '$lib/components/ui/toasts/toasts.js'
   import { getClient } from '$lib/lemmy.js'
+  import { trycatch } from '$lib/util.js'
+  import { Trash } from 'svelte-hero-icons'
 
   export let data
 
-  let leaving = false
-
-  async function leaveTeam() {
-    if (!$profile?.jwt || !$profile?.user) return
-
-    leaving = true
-    $profile.user.local_user_view.person.admin = false
-
-    try {
-      await getClient().leaveAdmin({
-        auth: $profile.jwt,
+  async function removeAdmin(id: number, confirm: boolean): Promise<any> {
+    if (!confirm)
+      return toast({
+        content: 'Are you sure you want to remove that admin?',
+        action: () => removeAdmin(id, true),
       })
 
+    if (!$profile?.jwt) return
+
+    const result = await trycatch(() =>
+      getClient().addAdmin({
+        added: false,
+        auth: $profile!.jwt!,
+        person_id: id,
+      })
+    )
+
+    if (result) {
       toast({
-        content: 'You have left the admin team.',
+        content: 'Removed that admin.',
         type: 'success',
       })
-
-      goto('/')
-    } catch (err) {
-      toast({
-        content: err as any,
-        type: 'error',
-      })
-    } finally {
-      leaving = false
     }
   }
 </script>
 
 <h1 class="font-bold text-2xl">Admins</h1>
-<p class="text-slate-600 dark:text-zinc-400">
-  Remove admins on their user page.
-</p>
-<EditableList>
+<EditableList let:action on:action={(e) => removeAdmin(e.detail, false)}>
   {#each data.site?.admins ?? [] as admin}
-    <div class="py-4 flex items-center">
+    <div class="py-3 flex items-center justify-between">
       <UserLink avatar showInstance={false} user={admin.person} />
+      <Button
+        on:click={() => action(admin.person.id)}
+        icon={Trash}
+        size="square-md"
+      />
     </div>
   {/each}
 </EditableList>
-<Button
-  color="danger"
-  class="mt-auto ml-auto"
-  size="lg"
-  loading={leaving}
-  disabled={leaving}
-  on:click={() => {
-    toast({
-      content: 'Are you sure you want to leave the admin team?',
-      action: leaveTeam,
-      duration: 60 * 1000,
-    })
-  }}
->
-  Leave the admin team
-</Button>

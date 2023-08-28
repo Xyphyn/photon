@@ -1,4 +1,5 @@
 import { goto } from '$app/navigation'
+import { toast } from '$lib/components/ui/toasts/toasts.js'
 import { userSettings } from '$lib/settings.js'
 import { get } from 'svelte/store'
 
@@ -80,4 +81,16 @@ export function moveItem<T>(
   newArray.splice(newIndex, 0, item)
 
   return newArray
+}
+
+type Maybe<T> = T | undefined | void | null
+export const trycatch = <T>(func: () => T): Maybe<T> => {
+  try {
+    return func()
+  } catch (err) {
+    toast({
+      content: err as any,
+      type: 'error',
+    })
+  }
 }
