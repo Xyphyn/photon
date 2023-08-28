@@ -1,5 +1,6 @@
 import { profile } from '$lib/auth.js'
 import { getClient } from '$lib/lemmy.js'
+import { trycatch } from '$lib/util.js'
 import type { Community, MyUserInfo, PersonView } from 'lemmy-js-client'
 import { get } from 'svelte/store'
 
@@ -48,3 +49,19 @@ export const addSubscription = (
     profile.set(p)
   }
 }
+
+export const addAdmin = async (handle: string, added: boolean, jwt: string) =>
+  trycatch(async () => {
+    const user = await getClient().resolveObject({
+      auth: jwt,
+      q: handle,
+    })
+
+    if (!user.person) throw new Error('No user found')
+
+    return await getClient().addAdmin({
+      auth: jwt,
+      added: true,
+      person_id: user.person.person.id,
+    })
+  })

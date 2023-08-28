@@ -94,3 +94,7 @@ export const trycatch = <T>(func: () => T): Maybe<T> => {
     })
   }
 }
+
+export const removeItem = <T>(array: T[], predicate: (item: T) => boolean) => {
+  array.splice(array.findIndex(predicate), 1)
+}
