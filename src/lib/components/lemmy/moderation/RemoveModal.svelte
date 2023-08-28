@@ -16,6 +16,7 @@
   import { removalTemplate } from '$lib/components/lemmy/moderation/moderation.js'
   import { userSettings } from '$lib/settings.js'
   import { fullCommunityName } from '$lib/util.js'
+  import { amMod, isAdmin } from './moderation'
 
   export let open: boolean
   export let item: PostView | CommentView | undefined = undefined
@@ -201,7 +202,7 @@
         bind:value={reason}
       />
 
-      {#if !removed}
+      {#if !removed && ( amMod($profile.user, item.community) || (isAdmin($profile.user) && item.community.local))}
         <Checkbox bind:checked={commentReason}>Reply with reason</Checkbox>
 
         {#if commentReason}
