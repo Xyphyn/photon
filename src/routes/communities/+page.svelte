@@ -115,7 +115,8 @@
 
                     addSubscription(
                       community.community,
-                      res.community_view.subscribed == 'Subscribed'
+                      res.community_view.subscribed == 'Subscribed' ||
+                        res.community_view.subscribed == 'Pending'
                     )
                   }
                 }}
