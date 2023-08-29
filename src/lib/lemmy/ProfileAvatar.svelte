@@ -14,7 +14,7 @@
     mini={selected}
     size={`${size}`}
     title={profile.username}
-    class="text-blue-500"
+    class="text-blue-500 flex-shrink-0"
     style={profile.color
       ? `color: ${profile.color}`
       : `filter: hue-rotate(${index * 50}deg)`}
