@@ -214,14 +214,15 @@
         <Icon src={UserCircle} mini width={16} /> Profile
       </MenuButton>
       <MenuButton link href="/inbox">
-        <div class="relative">
-          {#if $profile.user.unreads > 0}
-            <div
-              class="rounded-full w-2 h-2 bg-red-500 absolute -top-1 -left-1"
-            />
-          {/if}<Icon src={Inbox} mini width={16} />
-        </div>
+        <Icon src={Inbox} mini width={16} />
         Inbox
+        {#if $profile.user.unreads > 0}
+          <div
+            class="rounded-full w-auto flex items-center px-2 h-5 justify-center font-bold bg-red-500 ml-auto"
+          >
+            {$profile.user.unreads}
+          </div>
+        {/if}
       </MenuButton>
       <MenuButton link href="/saved">
         <Icon src={Bookmark} mini width={16} /> Saved

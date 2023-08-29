@@ -6,20 +6,13 @@
     GlobeAlt,
     Home,
     Icon,
-    Plus,
-    UserCircle,
     UserGroup,
   } from 'svelte-hero-icons'
   import Button from '../../input/Button.svelte'
-  import Avatar from '$lib/components/ui/Avatar.svelte'
-  import { profile, profileData, setUserID } from '$lib/auth.js'
+  import { profile, profileData } from '$lib/auth.js'
   import { userSettings } from '$lib/settings.js'
-  import { goto } from '$app/navigation'
-  import { page } from '$app/stores'
-  import { slide } from 'svelte/transition'
   import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
   import CommunityList from '$lib/components/ui/sidebar/CommunityList.svelte'
-  import ProfileAvatar from '$lib/lemmy/ProfileAvatar.svelte'
   import ProfileButton from '$lib/components/ui/sidebar/ProfileButton.svelte'
   import { flip } from 'svelte/animate'
   import { expoOut } from 'svelte/easing'
@@ -49,11 +42,11 @@
     />
   </Button>
   <SidebarButton href="/" expanded={$userSettings.expandSidebar}>
-    <Icon src={Home} solid size="20" title="Frontpage" />
+    <Icon src={Home} mini size="18" title="Frontpage" />
     <span class:hidden={!$userSettings.expandSidebar}>Frontpage</span>
   </SidebarButton>
   <SidebarButton href="/settings" expanded={$userSettings.expandSidebar}>
-    <Icon src={Cog6Tooth} solid size="20" title="Settings" />
+    <Icon src={Cog6Tooth} mini size="18" title="Settings" />
     <span class:hidden={!$userSettings.expandSidebar}>Settings</span>
   </SidebarButton>
   {#if $profileData.profiles.length >= 1}
@@ -64,7 +57,7 @@
       </div>
     {/each}
     <SidebarButton href="/accounts" expanded={$userSettings.expandSidebar}>
-      <Icon src={UserGroup} mini size="20" />
+      <Icon src={UserGroup} mini size="18" />
       <span class:hidden={!$userSettings.expandSidebar}>Accounts</span>
     </SidebarButton>
   {/if}
@@ -82,17 +75,15 @@
       expanded={$userSettings.expandSidebar}
       items={$profile.user.follows.map((i) => i.community)}
     />
-    {#if $profile.user.follows.length == 0}
-      <Button
-        class="hover:bg-slate-200 {$userSettings.expandSidebar ? '' : '!p-1.5'}"
-        href="/communities"
-        color="tertiary"
-        alignment="left"
-      >
-        <Icon src={GlobeAlt} size="20" />
-        <span class:hidden={!$userSettings.expandSidebar}>Communities</span>
-      </Button>
-    {/if}
+    <Button
+      class="hover:bg-slate-200 {$userSettings.expandSidebar ? '' : '!p-1.5'}"
+      href="/communities"
+      color="tertiary"
+      alignment="left"
+    >
+      <Icon mini src={GlobeAlt} size="18" />
+      <span class:hidden={!$userSettings.expandSidebar}>Communities</span>
+    </Button>
   {:else}
     <Button
       class="hover:bg-slate-200 {$userSettings.expandSidebar ? '' : '!p-1.5'}"
@@ -100,7 +91,7 @@
       color="tertiary"
       alignment="left"
     >
-      <Icon src={ArrowLeftOnRectangle} solid size="20" />
+      <Icon mini src={ArrowLeftOnRectangle} size="18" />
       <span class:hidden={!$userSettings.expandSidebar}>Log in</span>
     </Button>
   {/if}
