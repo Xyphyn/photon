@@ -9,5 +9,5 @@ export const isVideo = (inputUrl: string | undefined) => {
 
   const url = new URL(inputUrl).pathname.toLowerCase()
 
-  return url.endsWith('mp4') || url.endsWith('webm') || url.endsWith('mov')
+  return url.endsWith('mp4') || url.endsWith('webm') || url.endsWith('mov') || url.endsWith('m4v')
 }
