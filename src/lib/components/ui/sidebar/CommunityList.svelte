@@ -23,7 +23,7 @@
         slot="icon"
       />
     </div>
-    <span class:hidden={!expanded}>
+    <span class="max-w-full break-words" class:hidden={!expanded}>
       {follow.title}
     </span>
   </Button>

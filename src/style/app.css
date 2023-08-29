@@ -65,3 +65,24 @@ pre {
   padding-bottom: 0.125rem;
   border-radius: 3px;
 }
+
+::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+  padding: 1px;
+}
+
+::-webkit-scrollbar-track {
+  width: 2px;
+  margin: 1px;
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 9999px;
+  @apply bg-slate-200;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  @apply bg-zinc-800;
+}

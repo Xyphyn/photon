@@ -3,6 +3,7 @@
     ArrowLeftOnRectangle,
     ChevronDoubleLeft,
     Cog6Tooth,
+    GlobeAlt,
     Home,
     Icon,
     Plus,
@@ -88,8 +89,8 @@
         color="tertiary"
         alignment="left"
       >
-        <Icon src={Plus} solid size="20" />
-        <span class:hidden={!$userSettings.expandSidebar}>Add communities</span>
+        <Icon src={GlobeAlt} size="20" />
+        <span class:hidden={!$userSettings.expandSidebar}>Communities</span>
       </Button>
     {/if}
   {:else}

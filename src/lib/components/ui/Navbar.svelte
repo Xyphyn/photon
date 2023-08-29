@@ -79,7 +79,7 @@
         {/if}
       {:else}
         <Logo width={40} />
-        <div class="flex flex-row items-center gap-2 max-[500px]:hidden">
+        <div class="flex flex-row items-center gap-2 max-[1000px]:hidden">
           <span class="opacity-30 text-xl">/</span>
           <span class="text-sm font-bold">
             {$instance}

@@ -62,7 +62,7 @@
   {#if options.length > 4}
     <select
       bind:value={selected}
-      class="bg-inherit text-sm mr-2 p-1.5 rounded-md {options
+      class="bg-inherit text-sm mr-2 p-1.5 rounded-md cursor-pointer {options
         .slice(4)
         .includes(selected)
         ? 'bg-slate-900 text-slate-50 dark:bg-zinc-100 dark:text-black w-max'
