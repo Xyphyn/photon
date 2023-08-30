@@ -43,7 +43,7 @@
 {#if videoID}
 
 <div class="overflow-hidden z-10 relative bg-slate-200 dark:bg-zinc-800 rounded-md max-w-full">
-    <div class="ml-auto mr-auto max-w-2xl">
+    <div class="ml-auto mr-auto max-w-3xl">
         <div class="iframe-container rounded-md max-w-screen max-h-[480px] mx-auto">
             <iframe 
                 class="flexiframe"

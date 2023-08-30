@@ -24,7 +24,7 @@
     <img
         src="{thumbnail_url}"
         loading="lazy"
-        class="max-w-2xl ml-auto mr-auto object-cover rounded-md  z-30 opacity-0 transition-opacity duration-300"
+        class="max-w-3xl ml-auto mr-auto object-cover rounded-md  z-30 opacity-0 transition-opacity duration-300"
         
         class:opacity-100={loaded}
         on:load={() => (loaded = true)}

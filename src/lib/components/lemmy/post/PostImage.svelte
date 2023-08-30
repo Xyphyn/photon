@@ -28,7 +28,7 @@
     data-sveltekit-preload-data="off"
     aria-label={name}
 >
-    <picture class="rounded-md overflow-hidden max-h-[min(50vh,500px)] w-full max-w-2xl">
+    <picture class="rounded-md overflow-hidden max-h-[min(50vh,500px)] w-full max-w-3xl">
         <source
             srcset="{url}?thumbnail=256&format=webp"
             media="(max-width: 256px)"
@@ -66,7 +66,7 @@
     data-sveltekit-preload-data="off"
     aria-label={name}
 >
-    <picture class="rounded-md overflow-hidden max-h-[min(50vh,500px)] max-w-2xl">
+    <picture class="rounded-md overflow-hidden max-h-[min(50vh,500px)] max-w-3xl">
         <source
             srcset="{url}?thumbnail=256&format=webp"
             media="(max-width: 256px)"
