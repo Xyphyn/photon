@@ -144,6 +144,7 @@
     published={new Date(post.post_view.post.published + 'Z')}
     saved={post.post_view.saved}
   />
+  
   <h1 class="font-bold text-lg">{post.post_view.post.name}</h1>
   {#if isImage(post.post_view.post.url)}
     
@@ -163,13 +164,6 @@
             />
         </picture>
     </div>
-    <!---
-    <img
-      src={post.post_view.post.url}
-      alt={post.post_view.post.name}
-      class="rounded-md max-w-screen max-h-[80svh] mx-auto"
-    />
-    --->
 
   {:else if isVideo(post.post_view.post.url)}
     <!-- svelte-ignore a11y-media-has-caption -->
