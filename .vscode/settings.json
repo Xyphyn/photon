@@ -1,4 +1,12 @@
 {
-  "i18n-ally.localesPaths": ["src/lib/i18n"],
-  "i18n-ally.keystyle": "nested"
+  "i18n-ally.localesPaths": ["src/lib/i18n/locale"],
+  "i18n-ally.keystyle": "nested",
+  "i18n-ally.extract.ignored": [
+    "\n    {#if $profile?.user ",
+    "\n    {#if $profile?.user ",
+    "&",
+    "&",
+    "& isAdmin($profile.user)}\n      ",
+    "& isAdmin($profile.user)}\n      "
+  ]
 }

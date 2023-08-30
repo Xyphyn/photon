@@ -1,3 +1,5 @@
+import { locale } from 'svelte-i18n'
+
 function buildUrl(inputUrl: URL): URL {
   let withoutCors = inputUrl.pathname.replace('/cors/', '')
 
@@ -16,6 +18,10 @@ export function handleError({ error, event }) {
 }
 
 export async function handle({ event, resolve }) {
+  const lang = event.request.headers.get('accept-language')?.split(',')[0]
+  if (lang) {
+    locale.set(lang)
+  }
   // annoying hack to fix lemmy's CORS
   if (event.url.pathname.startsWith('/cors')) {
     event.request.headers.delete('origin')
@@ -95,6 +101,5 @@ export async function handle({ event, resolve }) {
     }
   }
 
-  const response = await resolve(event)
-  return response
+  return resolve(event)
 }

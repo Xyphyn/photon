@@ -35,6 +35,7 @@
     UserCircle,
     UserGroup,
   } from 'svelte-hero-icons'
+  import { _ } from 'svelte-i18n'
 
   let scrollY = 0
 </script>
@@ -92,19 +93,19 @@
     {#if $profile?.user && isAdmin($profile.user)}
       <Button
         href="/admin"
-        aria-label="Admin"
+        aria-label={$_('common.admin')}
         class="max-md:w-9 max-md:h-8 max-md:!p-0
         dark:text-zinc-300 text-slate-700 hover:text-inherit hover:dark:text-inherit
       hover:bg-slate-200 relative hover:border-slate-300"
       >
         <Icon src={CommandLine} mini size="16" slot="icon" />
-        <span class="hidden md:inline">Admin</span>
+        <span class="hidden md:inline">{$_('common.admin')}</span>
       </Button>
     {/if}
     {#if amModOfAny($profile?.user)}
       <Button
         href="/moderation"
-        aria-label="Moderation"
+        aria-label={$_('common.moderation.moderation')}
         class="max-md:w-9 max-md:h-8 max-md:!p-0 dark:text-zinc-300 text-slate-700
         hover:text-inherit hover:bg-slate-200 hover:dark:text-inherit relative hover:border-slate-300"
       >
@@ -114,38 +115,42 @@
           />
         {/if}
         <ShieldIcon filled width={15} />
-        <span class="hidden md:inline">Reports</span>
+        <span class="hidden md:inline">
+          {$_('common.moderation.moderation')}
+        </span>
       </Button>
     {/if}
     <Button
       href="/search"
-      aria-label="Search"
+      aria-label={$_('common.search')}
       class="max-md:w-9 max-md:h-8 max-md:!p-0
       dark:text-zinc-300 text-slate-700 hover:text-inherit hover:dark:text-inherit hover:bg-slate-200 hover:border-slate-300"
     >
       <Icon mini src={MagnifyingGlass} width={16} slot="icon" />
-      <span class="hidden md:inline">Search</span>
+      <span class="hidden md:inline">{$_('common.search')}</span>
     </Button>
     <Button
       href="/communities"
-      aria-label="Communities"
+      aria-label={$_('common.explore')}
       class="max-md:w-9 max-md:h-8 max-md:!p-0
       dark:text-zinc-300 text-slate-700 hover:text-inherit
       hover:dark:text-inherit hover:bg-slate-200 hover:border-slate-300"
     >
       <Icon mini src={GlobeAlt} size="16" slot="icon" />
-      <span class="hidden md:inline">Explore</span>
+      <span class="hidden md:inline">{$_('common.explore')}</span>
     </Button>
     <Menu let:toggleOpen alignment="bottom-right">
       <Button
         color="primary"
         slot="button"
-        aria-label="Create"
+        aria-label={$_('common.create')}
         on:click={toggleOpen}
         class="max-md:w-9 max-md:h-8 max-md:!p-0"
       >
         <Icon src={Plus} width={18} mini slot="icon" />
-        <span class="hidden md:inline">Create</span>
+        <span class="hidden md:inline">
+          {$_('common.create')}
+        </span>
       </Button>
       <li class="text-xs opacity-80 text-left mx-4 my-1 py-1">Create</li>
       <MenuButton

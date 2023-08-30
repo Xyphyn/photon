@@ -14,10 +14,22 @@
   import TextArea from '$lib/components/input/TextArea.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { removalTemplate } from '$lib/components/lemmy/moderation/moderation.js'
+  import { locale, locales } from 'svelte-i18n'
 
-  let data = {
-    loading: false,
+  const localeNames = {
+    en: {
+      name: '🇬🇧 English',
+      translated: '5%',
+    },
+    es: {
+      name: '🇪🇸 Spanish',
+      translated: '1%',
+    },
   }
+
+  const getLocaleName = (name: string) =>
+    // @ts-ignore
+    localeNames[name] ?? { name: 'Browser Default', translated: '0%' }
 </script>
 
 <svelte:head>
@@ -102,6 +114,17 @@
     <span slot="description">
       Show a random placeholder for forms for comments, posts, etc.
     </span>
+  </Setting>
+  <Setting>
+    <span slot="title">Language</span>
+    <span slot="description">What language to set the UI to. (Beta)</span>
+    <select bind:value={$locale}>
+      {#each $locales as locale}
+        <option value={locale}>
+          {getLocaleName(locale)?.name}
+        </option>
+      {/each}
+    </select>
   </Setting>
 
   <SectionTitle class="mt-4">UI</SectionTitle>

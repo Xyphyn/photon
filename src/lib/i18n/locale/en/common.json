@@ -1,0 +1,23 @@
+{
+  "common": {
+    "community": "Community",
+    "communities": "Communities",
+    "explore": "Explore",
+    "search": "Search",
+    "settings": "Settings",
+    "moderation": {
+      "moderation": "Moderation",
+      "modlog": "Modlog",
+      "moderator": "Moderator"
+    },
+    "admin": "Admin",
+    "create": "Create en",
+    "post": "Post en",
+    "inbox": "Inbox",
+    "profile": "Profile",
+    "saved": "Saved",
+    "accounts": "Accounts",
+    "about": "About",
+    "theme": "Theme"
+  }
+}

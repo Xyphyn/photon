@@ -1,0 +1,17 @@
+{
+  "common": {
+    "admin": "Admin es",
+    "communities": "Communities es",
+    "community": "Community es",
+    "create": "Create es",
+    "explore": "Explore es",
+    "moderation": {
+      "moderation": "Moderation es",
+      "moderator": "Moderator es",
+      "modlog": "Modlog es"
+    },
+    "post": "Post es",
+    "search": "Search es",
+    "settings": "Settings es"
+  }
+}
