@@ -265,8 +265,8 @@
 
     {#if data.singleThread}
         <Card class="py-2 px-4 text-sm flex flex-row items-center flex-wrap gap-4">
-        <p>You're viewing a single thread.</p>
-        <Button on:click={reloadComments}>View full thread</Button>
+            <p>You're viewing a single thread.</p>
+            <Button on:click={reloadComments}>View full thread</Button>
         </Card>
     {/if}
 
