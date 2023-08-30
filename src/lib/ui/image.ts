@@ -14,7 +14,12 @@ export const isVideo = (inputUrl: string | undefined) => {
 
 export const isYouTube = (url: string | undefined) => {
     if (!url) return false
-    return url.includes('youtube.com') || url.includes('youtu.be')
+    return (
+        url.includes('youtube.com') || 
+        url.includes('youtu.be') ||
+        url.includes('vid.puffyan.us') ||
+        url.includes('open.spotify.com')
+    )
 }
 
 // Returns a string representing the detected post type

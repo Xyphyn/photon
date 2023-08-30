@@ -21,7 +21,7 @@
     class="overflow-hidden z-10 relative bg-slate-200 dark:bg-zinc-800 rounded-md max-w-full"
     data-sveltekit-preload-data="off"
 >
-    <div class="ml-auto mr-auto max-w-3xl">
+    <div class="ml-auto mr-auto mt-1 mb-1 max-w-4xl">
         <img
             src="{thumbnail_url}"
             loading="lazy"

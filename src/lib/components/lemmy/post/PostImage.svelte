@@ -68,7 +68,7 @@
     data-sveltekit-preload-data="off"
     aria-label={name}
 >
-    <div class="ml-auto mr-auto max-w-3xl">
+    <div class="ml-auto mr-auto mt-1 mb-1 max-w-4xl">
         <picture class="rounded-md overflow-hidden max-h-[min(50vh,500px)] max-w-full">
             <source
                 srcset="{url}?thumbnail=256&format=webp"
