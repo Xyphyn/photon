@@ -233,7 +233,7 @@ overflow-hidden focus-within:border-black focus-within:dark:border-white transit
         bind:item={textArea}
         on:keydown={(e) => {
           if (disabled) return
-          if (e.ctrlKey) {
+          if (e.ctrlKey || e.metaKey) {
             // @ts-ignore
             let shortcut = shortcuts[e.code]
             if (shortcut) {
