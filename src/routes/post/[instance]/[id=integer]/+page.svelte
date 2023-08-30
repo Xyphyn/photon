@@ -14,6 +14,7 @@
   import Card from '$lib/components/ui/Card.svelte'
   import PostLink from '$lib/components/lemmy/post/PostLink.svelte'
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
+  import PostImage from '$lib/components/lemmy/post/PostImage.svelte'
   import { removeToast, toast } from '$lib/components/ui/toasts/toasts.js'
   import type { CommentSortType } from 'lemmy-js-client'
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
@@ -82,6 +83,7 @@
   let commentSort: CommentSortType = data.commentSort
   let loading = false
   let moreComments = true
+  let loaded = false
 
   async function reloadComments() {
     data.singleThread = false
@@ -144,11 +146,31 @@
   />
   <h1 class="font-bold text-lg">{post.post_view.post.name}</h1>
   {#if isImage(post.post_view.post.url)}
+    
+  <div class="overflow-hidden z-10 relative bg-slate-200 dark:bg-zinc-800 rounded-md max-w-full">
+        <picture class="rounded-md overflow-hidden max-h-[min(50vh,500px)] w-full max-w-full">
+            <source
+                srcset="{post.post_view.post.url}?format=webp"
+                media="(max-width: 1024px)"
+            />
+            <!-- svelte-ignore a11y-missing-attribute -->
+            <img
+                src="{post.post_view.post.url}"
+                class="ml-auto mr-auto object-cover rounded-md h-auto z-30 opacity-0 transition-opacity duration-300"
+                class:opacity-100={loaded}
+                alt={post.post_view.post.name}
+                on:load={() => (loaded = true)}
+            />
+        </picture>
+    </div>
+    <!---
     <img
       src={post.post_view.post.url}
       alt={post.post_view.post.name}
       class="rounded-md max-w-screen max-h-[80svh] mx-auto"
     />
+    --->
+
   {:else if isVideo(post.post_view.post.url)}
     <!-- svelte-ignore a11y-media-has-caption -->
     <video class="rounded-md max-w-screen max-h-[80svh] mx-auto" controls>
