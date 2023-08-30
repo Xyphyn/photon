@@ -33,7 +33,7 @@
         />
         <!-- svelte-ignore a11y-missing-attribute -->
         <img
-            src="{post.post.url}?format=webp"
+            src="{post.post.url}?thumbnail=768&format=webp"
             loading="lazy"
             class="ml-auto mr-auto object-cover rounded-md h-auto z-30 opacity-0 transition-opacity duration-300"
             class:opacity-100={loaded}
