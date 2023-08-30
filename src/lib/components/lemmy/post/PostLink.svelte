@@ -21,15 +21,17 @@
     class="overflow-hidden z-10 relative bg-slate-200 dark:bg-zinc-800 rounded-md max-w-full"
     data-sveltekit-preload-data="off"
 >
-    <img
-        src="{thumbnail_url}"
-        loading="lazy"
-        class="max-w-3xl ml-auto mr-auto object-cover rounded-md  z-30 opacity-0 transition-opacity duration-300"
-        
-        class:opacity-100={loaded}
-        on:load={() => (loaded = true)}
-        class:blur-3xl={nsfw}
-    />
+    <div class="ml-auto mr-auto max-w-3xl">
+        <img
+            src="{thumbnail_url}"
+            loading="lazy"
+            class="max-w-full ml-auto mr-auto object-cover rounded-md  z-30 opacity-0 transition-opacity duration-300"
+            
+            class:opacity-100={loaded}
+            on:load={() => (loaded = true)}
+            class:blur-3xl={nsfw}
+        />
+    </div>
 
     
 </a>

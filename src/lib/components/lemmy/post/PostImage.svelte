@@ -28,35 +28,37 @@
     data-sveltekit-preload-data="off"
     aria-label={name}
 >
-    <picture class="rounded-md overflow-hidden max-h-[min(50vh,500px)] w-full max-w-3xl">
-        <source
-            srcset="{url}?thumbnail=256&format=webp"
-            media="(max-width: 256px)"
-        />
-        <source
-            srcset="{url}?thumbnail=512&format=webp"
-            media="(max-width: 512px)"
-        />
+    <div class="ml-auto mr-auto max-w-3xl">
+        <picture class="rounded-md overflow-hidden max-h-[min(50vh,500px)] w-full max-w-full">
+            <source
+                srcset="{url}?thumbnail=256&format=webp"
+                media="(max-width: 256px)"
+            />
+            <source
+                srcset="{url}?thumbnail=512&format=webp"
+                media="(max-width: 512px)"
+            />
 
-        <source
-            srcset="{url}?thumbnail=768&format=webp"
-            media="(max-width: 768px)"
-        />
+            <source
+                srcset="{url}?thumbnail=768&format=webp"
+                media="(max-width: 768px)"
+            />
 
-        <source
-            srcset="{url}?format=webp"
-            media="(max-width: 1024px)"
-        />
-        <!-- svelte-ignore a11y-missing-attribute -->
-        <img
-            src="{src}"
-            loading="lazy"
-            class="ml-auto mr-auto object-cover rounded-md h-auto z-30 opacity-0 transition-opacity duration-300"
-            class:opacity-100={loaded}
-            class:blur-3xl={nsfw && nsfwBlur}
-            on:load={() => (loaded = true)}
-        />
-    </picture>
+            <source
+                srcset="{url}?format=webp"
+                media="(max-width: 1024px)"
+            />
+            <!-- svelte-ignore a11y-missing-attribute -->
+            <img
+                src="{src}"
+                loading="lazy"
+                class="ml-auto mr-auto object-cover rounded-md h-auto z-30 opacity-0 transition-opacity duration-300"
+                class:opacity-100={loaded}
+                class:blur-3xl={nsfw && nsfwBlur}
+                on:load={() => (loaded = true)}
+            />
+        </picture>
+    </div>
 </a>
 
 {:else}
@@ -66,35 +68,37 @@
     data-sveltekit-preload-data="off"
     aria-label={name}
 >
-    <picture class="rounded-md overflow-hidden max-h-[min(50vh,500px)] max-w-3xl">
-        <source
-            srcset="{url}?thumbnail=256&format=webp"
-            media="(max-width: 256px)"
-        />
-        <source
-            srcset="{url}?thumbnail=512&format=webp"
-            media="(max-width: 512px)"
-        />
+    <div class="ml-auto mr-auto max-w-3xl">
+        <picture class="rounded-md overflow-hidden max-h-[min(50vh,500px)] max-w-full">
+            <source
+                srcset="{url}?thumbnail=256&format=webp"
+                media="(max-width: 256px)"
+            />
+            <source
+                srcset="{url}?thumbnail=512&format=webp"
+                media="(max-width: 512px)"
+            />
 
-        <source
-            srcset="{url}?thumbnail=768&format=webp"
-            media="(max-width: 768px)"
-        />
+            <source
+                srcset="{url}?thumbnail=768&format=webp"
+                media="(max-width: 768px)"
+            />
 
-        <source
-            srcset="{url}?format=webp"
-            media="(max-width: 1024px)"
-        />
-        <!-- svelte-ignore a11y-missing-attribute -->
-        <img
-            src="{src}"
-            loading="lazy"
-            class="ml-auto mr-auto object-cover rounded-md h-auto z-30 opacity-0 transition-opacity duration-300"
-            class:opacity-100={loaded}
-            class:blur-3xl={nsfw && nsfwBlur}
-            on:load={() => (loaded = true)}
-        />
-    </picture>
+            <source
+                srcset="{url}?format=webp"
+                media="(max-width: 1024px)"
+            />
+            <!-- svelte-ignore a11y-missing-attribute -->
+            <img
+                src="{src}"
+                loading="lazy"
+                class="ml-auto mr-auto object-cover rounded-md h-auto z-30 opacity-0 transition-opacity duration-300"
+                class:opacity-100={loaded}
+                class:blur-3xl={nsfw && nsfwBlur}
+                on:load={() => (loaded = true)}
+            />
+        </picture>
+    </div>
 </div>
 
 {/if}
