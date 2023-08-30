@@ -16,6 +16,7 @@
   import ProfileButton from '$lib/components/ui/sidebar/ProfileButton.svelte'
   import { flip } from 'svelte/animate'
   import { expoOut } from 'svelte/easing'
+  import { _ } from 'svelte-i18n'
 </script>
 
 <nav
@@ -43,11 +44,15 @@
   </Button>
   <SidebarButton href="/" expanded={$userSettings.expandSidebar}>
     <Icon src={Home} mini size="18" title="Frontpage" />
-    <span class:hidden={!$userSettings.expandSidebar}>Frontpage</span>
+    <span class:hidden={!$userSettings.expandSidebar}>
+      {$_('common.frontpage')}
+    </span>
   </SidebarButton>
   <SidebarButton href="/settings" expanded={$userSettings.expandSidebar}>
     <Icon src={Cog6Tooth} mini size="18" title="Settings" />
-    <span class:hidden={!$userSettings.expandSidebar}>Settings</span>
+    <span class:hidden={!$userSettings.expandSidebar}>
+      {$_('common.settings')}
+    </span>
   </SidebarButton>
   {#if $profileData.profiles.length >= 1}
     <hr class="border-slate-300 dark:border-zinc-800 my-1" />
@@ -58,7 +63,9 @@
     {/each}
     <SidebarButton href="/accounts" expanded={$userSettings.expandSidebar}>
       <Icon src={UserGroup} mini size="18" />
-      <span class:hidden={!$userSettings.expandSidebar}>Accounts</span>
+      <span class:hidden={!$userSettings.expandSidebar}>
+        {$_('common.accounts.accounts')}
+      </span>
     </SidebarButton>
   {/if}
   <hr class="border-slate-300 dark:border-zinc-800 my-1" />
@@ -82,7 +89,9 @@
       alignment="left"
     >
       <Icon mini src={GlobeAlt} size="18" />
-      <span class:hidden={!$userSettings.expandSidebar}>Communities</span>
+      <span class:hidden={!$userSettings.expandSidebar}>
+        {$_('common.communities')}
+      </span>
     </Button>
   {:else}
     <Button
@@ -92,7 +101,9 @@
       alignment="left"
     >
       <Icon mini src={ArrowLeftOnRectangle} size="18" />
-      <span class:hidden={!$userSettings.expandSidebar}>Log in</span>
+      <span class:hidden={!$userSettings.expandSidebar}>
+        {$_('common.login')}
+      </span>
     </Button>
   {/if}
 </nav>

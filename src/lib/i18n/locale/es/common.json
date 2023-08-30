@@ -1,17 +1,38 @@
 {
   "common": {
-    "admin": "Admin es",
-    "communities": "Communities es",
-    "community": "Community es",
-    "create": "Create es",
-    "explore": "Explore es",
-    "moderation": {
-      "moderation": "Moderation es",
-      "moderator": "Moderator es",
-      "modlog": "Modlog es"
+    "about": "Acerca",
+    "accounts": {
+      "accounts": "Cuentas",
+      "current": "Actual",
+      "switch": "Cambiar"
     },
-    "post": "Post es",
-    "search": "Search es",
-    "settings": "Settings es"
+    "add": "Añadir",
+    "admin": "Administración",
+    "app": "Aplicación",
+    "change": "Cambia",
+    "communities": "Comunidades",
+    "community": "Comunidad",
+    "create": "Crear",
+    "explore": "Explorar",
+    "frontpage": "Portada",
+    "inbox": "Bandeja de entrada",
+    "instance": "Instancia",
+    "login": "Conectarse",
+    "moderation": {
+      "moderation": "Moderación",
+      "moderator": "Moderador",
+      "modlog": "Registro de moderación"
+    },
+    "post": "Entrada",
+    "profile": "Perfil",
+    "saved": "Guardado",
+    "search": "Buscar",
+    "settings": "Ajustes",
+    "theme": {
+      "dark": "Dark",
+      "light": "Light",
+      "system": "System",
+      "theme": "Tema"
+    }
   }
 }

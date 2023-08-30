@@ -18,11 +18,11 @@
 
   const localeNames = {
     en: {
-      name: '🇬🇧 English',
+      name: '🇬🇧 English (1%)',
       translated: '5%',
     },
     es: {
-      name: '🇪🇸 Spanish',
+      name: '🇪🇸 Espanol (1%)',
       translated: '1%',
     },
   }
@@ -118,7 +118,7 @@
   <Setting>
     <span slot="title">Language</span>
     <span slot="description">What language to set the UI to. (Beta)</span>
-    <select bind:value={$locale}>
+    <select bind:value={$userSettings.language}>
       {#each $locales as locale}
         <option value={locale}>
           {getLocaleName(locale)?.name}

@@ -35,7 +35,7 @@
     UserCircle,
     UserGroup,
   } from 'svelte-hero-icons'
-  import { _ } from 'svelte-i18n'
+  import { _, format, number } from 'svelte-i18n'
 
   let scrollY = 0
 </script>
@@ -152,14 +152,16 @@
           {$_('common.create')}
         </span>
       </Button>
-      <li class="text-xs opacity-80 text-left mx-4 my-1 py-1">Create</li>
+      <li class="text-xs opacity-80 text-left mx-4 my-1 py-1">
+        {$_('common.create')}
+      </li>
       <MenuButton
         link
         href="/create/post"
         disabled={$profile?.jwt == undefined}
       >
         <Icon src={PencilSquare} mini width={16} />
-        Post
+        {$_('common.post')}
       </MenuButton>
       <MenuButton
         link
@@ -170,11 +172,11 @@
             !isAdmin($profile.user))}
       >
         <Icon src={Newspaper} mini width={16} />
-        Community
+        {$_('common.community')}
       </MenuButton>
       {#if !$profile?.jwt}
         <span class="text-sm mx-4 my-1 py-1">
-          <Link highlight href="/login">Log in</Link> to create content.
+          <Link highlight href="/login">{$_('common.login')}</Link> to create content.
         </span>
       {/if}
     </Menu>
@@ -212,7 +214,9 @@
       {/if}
     </button>
     <li class="text-xs opacity-80 text-left mx-4 my-1 py-1">
-      {$profile?.user ? $profile.user.local_user_view.person.name : 'Profile'}
+      {$profile?.user
+        ? $profile.user.local_user_view.person.name
+        : $_('common.profile')}
     </li>
     {#if $profile?.user}
       <MenuButton link href="/profile">
@@ -220,22 +224,23 @@
       </MenuButton>
       <MenuButton link href="/inbox">
         <Icon src={Inbox} mini width={16} />
-        Inbox
+        {$_('common.inbox')}
         {#if $profile.user.unreads > 0}
           <div
             class="rounded-full w-auto flex items-center px-2 h-5 justify-center font-bold bg-red-500 ml-auto"
           >
-            {$profile.user.unreads}
+            {$number($profile.user.unreads)}
           </div>
         {/if}
       </MenuButton>
       <MenuButton link href="/saved">
-        <Icon src={Bookmark} mini width={16} /> Saved
+        <Icon src={Bookmark} mini width={16} />
+        {$_('common.saved')}
       </MenuButton>
     {/if}
     <MenuButton link href="/accounts">
       <Icon src={UserGroup} mini width={16} />
-      Accounts
+      {$_('common.accounts.accounts')}
       <span
         class="text-xs font-bold bg-slate-100 dark:bg-zinc-700 px-2 py-0.5 rounded-md ml-auto"
       >
@@ -243,14 +248,14 @@
       </span>
     </MenuButton>
     <hr class="dark:opacity-10 w-[90%] my-2 mx-auto" />
-    <li class="text-xs px-4 py-1 my-1 opacity-80">App</li>
+    <li class="text-xs px-4 py-1 my-1 opacity-80">{$_('common.app')}</li>
     <MenuButton link href="/settings">
       <Icon src={Cog6Tooth} mini width={16} />
-      Settings
+      {$_('common.settings')}
     </MenuButton>
     <MenuButton link href="/about">
       <Icon src={InformationCircle} mini width={16} />
-      About
+      {$_('common.about')}
     </MenuButton>
     <MenuButton>
       <Icon
@@ -265,15 +270,15 @@
         size="16"
       />
       <div class="flex flex-row flex-wrap justify-between w-full">
-        <span>Theme</span>
+        <span>{$_('common.theme.theme')}</span>
         <select
           bind:value={$theme}
           on:click|stopPropagation
           class="ml-auto w-max px-1 rounded-sm cursor-pointer bg-transparent border dark:border-zinc-700"
         >
-          <option value="system">System</option>
-          <option value="light">Light</option>
-          <option value="dark">Dark</option>
+          <option value="system">{$_('common.theme.system')}</option>
+          <option value="light">{$_('common.theme.light')}</option>
+          <option value="dark">{$_('common.theme.dark')}</option>
         </select>
       </div>
     </MenuButton>

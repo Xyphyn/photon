@@ -54,7 +54,7 @@ interface Settings {
   modlogCardView: boolean | undefined
   debugInfo: boolean
   systemUI: boolean
-  language: 'en' | 'es' | undefined
+  language: string | undefined | null
 }
 
 export const defaultSettings: Settings = {

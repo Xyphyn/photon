@@ -11,13 +11,28 @@
       "moderator": "Moderator"
     },
     "admin": "Admin",
-    "create": "Create en",
-    "post": "Post en",
+    "create": "Create",
+    "post": "Post",
     "inbox": "Inbox",
     "profile": "Profile",
     "saved": "Saved",
-    "accounts": "Accounts",
+    "accounts": {
+      "accounts": "Accounts",
+      "switch": "Switch",
+      "current": "Current"
+    },
+    "app": "App",
     "about": "About",
-    "theme": "Theme"
+    "theme": {
+      "theme": "Theme",
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
+    },
+    "login": "Log in",
+    "change": "Change",
+    "instance": "Instance",
+    "add": "Add",
+    "frontpage": "Frontpage"
   }
 }
