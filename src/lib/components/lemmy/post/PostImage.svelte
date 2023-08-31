@@ -24,7 +24,7 @@
   >
     <div class="ml-auto mr-auto max-w-3xl">
       <picture
-        class="rounded-md overflow-hidden max-h-[min(50vh,500px)] w-full max-w-full"
+        class="rounded-md overflow-hidden max-h-[min(50vh,200px)] w-full max-w-full"
       >
         <source
           srcset="{url}?thumbnail=256&format=webp"
@@ -45,9 +45,11 @@
         <img
           {src}
           loading="lazy"
-          class="ml-auto mr-auto object-cover rounded-md h-auto z-30 opacity-0 transition-opacity duration-300"
+          class="ml-auto mr-auto object-cover rounded-md h-auto z-30 max-h-[50vh] opacity-0 transition-opacity duration-300"
           class:opacity-100={loaded}
           class:blur-3xl={nsfw && nsfwBlur}
+          width={700}
+          height={500}
           on:load={() => (loaded = true)}
         />
       </picture>
@@ -59,7 +61,7 @@
     data-sveltekit-preload-data="off"
     aria-label={name}
   >
-    <div class="ml-auto mr-auto mt-1 mb-1 max-w-4xl">
+    <div class="ml-auto mr-auto mt-1 mb-1 max-w-4xl w-auto">
       <picture
         class="rounded-md overflow-hidden max-h-[min(50vh,500px)] max-w-full"
       >
@@ -82,9 +84,11 @@
         <img
           {src}
           loading="lazy"
-          class="ml-auto mr-auto object-cover rounded-md h-auto z-30 opacity-0 transition-opacity duration-300"
+          class="ml-auto mr-auto object-cover rounded-md z-30 opacity-0 transition-opacity duration-300 h-auto w-full"
           class:opacity-100={loaded}
           class:blur-3xl={nsfw && nsfwBlur}
+          width={600}
+          height={500}
           on:load={() => (loaded = true)}
         />
       </picture>
