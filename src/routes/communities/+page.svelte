@@ -19,6 +19,7 @@
   import Link from '$lib/components/input/Link.svelte'
   import { LINKED_INSTANCE_URL } from '$lib/instance.js'
   import { profile } from '$lib/auth.js'
+  import { _ } from 'svelte-i18n'
 
   export let data
 
@@ -26,10 +27,10 @@
 </script>
 
 <svelte:head>
-  <title>Communities</title>
+  <title>{$_('page.communities.communities')}</title>
 </svelte:head>
 
-<h1 class="text-2xl font-bold">Communities</h1>
+<h1 class="text-2xl font-bold">{$_('page.communities.communities')}</h1>
 <p class="text-slate-600 dark:text-zinc-400 mt-2">
   Can't find a community on your home instance? Go to the <a
     href="/search"

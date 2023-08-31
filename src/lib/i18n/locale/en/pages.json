@@ -1,0 +1,42 @@
+{
+  "page": {
+    "accounts": "Accounts",
+    "config": "Configuration",
+    "admin": {
+      "admin": "Administration",
+      "applications": "Applications",
+      "taglines": "Taglines",
+      "team": "Admins"
+    },
+    "communities": {
+      "communities": "Communities",
+      "subscribe": {
+        "subscribe": "Subscribe",
+        "unsubscribe": "Unsubscribe",
+        "subscribed": "Subscribed"
+      },
+      "team": "Moderators"
+    },
+    "create": {
+      "post": {
+        "create": "Create Post",
+        "edit": "Edit Post"
+      },
+      "community": {
+        "create": "Create Community"
+      }
+    },
+    "login": "Log In",
+    "moderation": "Moderation",
+    "modlog": "Modlog",
+    "profile": {
+      "profile": "Profile",
+      "settings": "Settings",
+      "blocks": "Blocks"
+    },
+    "saved": "Saved",
+    "search": "Search",
+    "settings": "Settings",
+    "signup": "Sign Up"
+  }
+}

@@ -9,6 +9,7 @@
   import { DEFAULT_INSTANCE_URL, LINKED_INSTANCE_URL } from '$lib/instance.js'
   import { getClient, validateInstance } from '$lib/lemmy.js'
   import { AtSymbol, Icon } from 'svelte-hero-icons'
+  import { _ } from 'svelte-i18n'
 
   let data = {
     instance: DEFAULT_INSTANCE_URL,
@@ -57,7 +58,7 @@
 
 <div class="max-w-lg w-full mx-auto">
   <form on:submit|preventDefault={logIn} class="flex flex-col gap-6">
-    <h1 class="font-bold text-2xl">Log in</h1>
+    <h1 class="font-bold text-2xl">{$_('page.login')}</h1>
     <div class="flex flex-row w-full items-center gap-2">
       <TextInput
         id="username"

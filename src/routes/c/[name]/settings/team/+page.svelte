@@ -10,6 +10,7 @@
   import { toast } from '$lib/components/ui/toasts/toasts.js'
   import { getClient } from '$lib/lemmy.js'
   import { flip } from 'svelte/animate'
+  import { _ } from 'svelte-i18n'
 
   export let data: PageData
 
@@ -88,10 +89,10 @@
 </script>
 
 <svelte:head>
-  <title>Moderator Team</title>
+  <title>{$_('page.communities.team')}</title>
 </svelte:head>
 
-<h1 class="text-2xl font-bold">Moderators</h1>
+<h1 class="text-2xl font-bold">{$_('page.communities.team')}</h1>
 <EditableList
   let:action
   on:action={(e) => {

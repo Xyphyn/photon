@@ -14,7 +14,7 @@
   import TextArea from '$lib/components/input/TextArea.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { removalTemplate } from '$lib/components/lemmy/moderation/moderation.js'
-  import { locale, locales } from 'svelte-i18n'
+  import { _, locale, locales } from 'svelte-i18n'
 
   const localeNames = {
     en: {
@@ -33,12 +33,13 @@
 </script>
 
 <svelte:head>
-  <title>Settings</title>
+  <title>{$_('page.settings')}</title>
 </svelte:head>
 
 <div class="flex flex-col">
   <h1 class="text-3xl font-bold flex justify-between">
-    Settings <Button
+    {$_('page.settings')}
+    <Button
       on:click={() => {
         toast({
           content:

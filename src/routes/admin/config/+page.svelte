@@ -11,6 +11,7 @@
   import type { EditSite } from 'lemmy-js-client'
   import type { PageData } from './$types.js'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
+  import { _ } from 'svelte-i18n'
 
   export let data: PageData
 
@@ -50,11 +51,11 @@
 </script>
 
 <svelte:head>
-  <title>Administration</title>
+  <title>{$_('page.config')}</title>
 </svelte:head>
 
 <form class="flex flex-col gap-4" on:submit|preventDefault={save}>
-  <h1 class="font-bold text-2xl">Site configuration</h1>
+  <h1 class="font-bold text-2xl">{$_('page.config')}</h1>
   {#if formData}
     <TextInput bind:value={formData.name} label="Name" />
     <TextInput bind:value={formData.description} label="Description" />

@@ -11,11 +11,16 @@
   import { ClipboardDocumentCheck, Icon } from 'svelte-hero-icons'
   import Application from './Application.svelte'
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
+  import { _ } from 'svelte-i18n'
 
   export let data
 </script>
 
-<h1 class="font-bold text-2xl">Applications</h1>
+<svelte:head>
+  <title>{$_('page.admin.applications')}</title>
+</svelte:head>
+
+<h1 class="font-bold text-2xl">{$_('page.admin.applications')}</h1>
 <MultiSelect
   options={[false, true]}
   selected={data.unreadOnly ?? true}

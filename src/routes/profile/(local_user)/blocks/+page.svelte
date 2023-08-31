@@ -12,6 +12,7 @@
   import { flip } from 'svelte/animate'
   import { slide } from 'svelte/transition'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
+  import { _ } from 'svelte-i18n'
 
   // sveltekit doesn't feel like making types work right now
   export let data: PageData & {
@@ -56,6 +57,10 @@
     })
   }
 </script>
+
+<svelte:head>
+  <title>{$_('page.profile.blocks')}</title>
+</svelte:head>
 
 {#if data.community_blocks.length > 0 || data.person_blocks.length > 0}
   {#if data.person_blocks.length > 0}

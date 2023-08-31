@@ -26,6 +26,7 @@
     PostView,
   } from 'lemmy-js-client'
   import { Icon, MagnifyingGlass } from 'svelte-hero-icons'
+  import { _ } from 'svelte-i18n'
   import { expoInOut, expoOut } from 'svelte/easing'
   import { fly, slide } from 'svelte/transition'
 
@@ -39,10 +40,10 @@
 </script>
 
 <svelte:head>
-  <title>Search</title>
+  <title>{$_('page.search')}</title>
 </svelte:head>
 
-<h1 class="font-bold text-2xl">Search</h1>
+<h1 class="font-bold text-2xl">{$_('page.search')}</h1>
 <div class="flex flex-row flex-wrap sm:justify-between items-center gap-4 mt-4">
   <MultiSelect
     options={['All', 'Posts', 'Comments', 'Communities', 'Users']}

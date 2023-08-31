@@ -9,6 +9,7 @@
   import { toast } from '$lib/components/ui/toasts/toasts.js'
   import { getClient } from '$lib/lemmy.js'
   import { Icon, Plus, QuestionMarkCircle, Trash } from 'svelte-hero-icons'
+  import { _ } from 'svelte-i18n'
 
   export let data
 
@@ -41,6 +42,10 @@
     saving = false
   }
 </script>
+
+<svelte:head>
+  <title>{$_('page.admin.taglines')}</title>
+</svelte:head>
 
 {#if taglines.length > 0}
   <div class="flex flex-row justify-between items-center">

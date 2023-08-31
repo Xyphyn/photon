@@ -18,6 +18,7 @@
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { fly } from 'svelte/transition'
   import { searchParam } from '$lib/util.js'
+  import { _ } from 'svelte-i18n'
 
   export let data
 
@@ -48,11 +49,11 @@
 </script>
 
 <svelte:head>
-  <title>Inbox</title>
+  <title>{$_('common.inbox')}</title>
 </svelte:head>
 
 <div class="flex flex-row justify-between">
-  <h1 class="font-bold text-3xl">Inbox</h1>
+  <h1 class="font-bold text-3xl">{$_('common.inbox')}</h1>
   <Button
     on:click={markAllAsRead}
     loading={markingAsRead}

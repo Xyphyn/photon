@@ -12,6 +12,7 @@
   import { addAdmin } from '$lib/lemmy/user.js'
   import { removeItem, trycatch } from '$lib/util.js'
   import { Plus, QuestionMarkCircle, Trash } from 'svelte-hero-icons'
+  import { _ } from 'svelte-i18n'
 
   export let data
 
@@ -46,10 +47,10 @@
 </script>
 
 <svelte:head>
-  <title>Admin Team</title>
+  <title>{$_('page.admin.team')}</title>
 </svelte:head>
 
-<h1 class="font-bold text-2xl">Admins</h1>
+<h1 class="font-bold text-2xl">{$_('page.admin.team')}</h1>
 {#if data.site}
   <EditableList let:action on:action={(e) => removeAdmin(e.detail, false)}>
     {#if data.site.admins.length <= 0}

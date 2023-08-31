@@ -8,16 +8,17 @@
   import { userSettings } from '$lib/settings.js'
   import ModlogItemCard from './item/ModlogItemCard.svelte'
   import ModlogItemTable from './item/ModlogItemTable.svelte'
+  import { _ } from 'svelte-i18n'
 
   export let data
 </script>
 
 <svelte:head>
-  <title>Modlog</title>
+  <title>{$_('page.modlog')}</title>
 </svelte:head>
 
 <div class="flex flex-col gap-4">
-  <h1 class="font-bold text-2xl">Modlog</h1>
+  <h1 class="font-bold text-2xl">{$_('page.modlog')}</h1>
   <div class="flex flex-col gap-2">
     <MultiSelect
       options={[

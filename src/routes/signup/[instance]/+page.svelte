@@ -22,6 +22,7 @@
     QuestionMarkCircle,
     XCircle,
   } from 'svelte-hero-icons'
+  import { _ } from 'svelte-i18n'
 
   export let data
 
@@ -91,7 +92,7 @@
 </script>
 
 <svelte:head>
-  <title>Sign up</title>
+  <title>{$_('page.signup')}</title>
 </svelte:head>
 
 <form
@@ -106,7 +107,7 @@
   </span>
 
   {#if data.site_view.local_site.registration_mode != 'Closed'}
-    <h1 class="font-bold text-3xl">Create account</h1>
+    <h1 class="font-bold text-3xl">{$_('page.signup')}</h1>
     <TextInput
       bind:value={email}
       label="Email"

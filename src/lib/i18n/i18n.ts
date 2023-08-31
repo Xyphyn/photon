@@ -4,10 +4,10 @@ import { getLocaleFromNavigator, init, locale, register } from 'svelte-i18n'
 const defaultLocale = 'en'
 
 register('en', () => import('./locale/en/common.json'))
-
-register('en-US', () => import('./locale/en/common.json'))
+register('en', () => import('./locale/en/pages.json'))
 
 register('es', () => import('./locale/es/common.json'))
+register('es', () => import('./locale/es/pages.json'))
 
 function getLocale() {
   if (browser) {

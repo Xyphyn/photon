@@ -3,10 +3,11 @@
   import { page } from '$app/stores'
 
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
+  import { _ } from 'svelte-i18n'
 </script>
 
 <svelte:head>
-  <title>Profile</title>
+  <title>{$_('page.profile.profile')}</title>
 </svelte:head>
 
 <div class="flex flex-col gap-4 h-full">

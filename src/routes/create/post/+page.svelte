@@ -5,6 +5,7 @@
   import { profile } from '$lib/auth.js'
   import { onMount } from 'svelte'
   import { getSessionStorage, setSessionStorage } from '$lib/session.js'
+  import { _ } from 'svelte-i18n'
 
   export let data
 
@@ -33,6 +34,8 @@
     passedCommunity={community}
     on:submit={(e) => goto(`/post/${e.detail.post.id}`)}
   >
-    <h1 class="text-2xl font-bold" slot="formtitle">Create Post</h1>
+    <h1 class="text-2xl font-bold" slot="formtitle">
+      {$_('page.create.post')}
+    </h1>
   </PostForm>
 </div>

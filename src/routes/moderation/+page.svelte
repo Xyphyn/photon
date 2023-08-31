@@ -10,12 +10,13 @@
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import Button from '$lib/components/input/Button.svelte'
   import { searchParam } from '$lib/util.js'
+  import { _ } from 'svelte-i18n'
 
   export let data
 </script>
 
 <div class="mb-4 flex flex-col gap-4">
-  <h1 class="font-bold text-2xl">Reports</h1>
+  <h1 class="font-bold text-2xl">{$_('page.moderation')}</h1>
   <div class="flex flex-row gap-2 flex-wrap items-center">
     <MultiSelect
       selected={data.type}

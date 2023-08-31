@@ -1,13 +1,14 @@
 <script lang="ts">
   import CommunityForm from '$lib/components/lemmy/community/CommunityForm.svelte'
   import CommunityTitle from '$lib/components/lemmy/community/CommunityTitle.svelte'
+  import { _ } from 'svelte-i18n'
 
   export let data
 </script>
 
 <div class="flex flex-col gap-4">
   <CommunityTitle community={data.community.community_view.community} />
-  <h1 class="font-bold text-2xl">Settings</h1>
+  <h1 class="font-bold text-2xl">{$_('page.config')}</h1>
   <CommunityForm
     edit={data.community.community_view.community.id}
     formData={{

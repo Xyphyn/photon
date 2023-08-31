@@ -17,6 +17,7 @@
   import { userSettings } from '$lib/settings.js'
   import PostFeed from '$lib/components/lemmy/post/PostFeed.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
+  import { _ } from 'svelte-i18n'
 
   export let data
 
@@ -39,7 +40,7 @@
 <div class="flex flex-row gap-4 w-full h-full">
   <div class="flex flex-col gap-4 max-w-full w-full min-w-0">
     <header>
-      <h1 class="text-3xl font-bold">Frontpage</h1>
+      <h1 class="text-3xl font-bold">{$_('common.frontpage')}</h1>
     </header>
     <div class="xl:hidden">
       <Button on:click={() => (sidebar = !sidebar)}>About</Button>

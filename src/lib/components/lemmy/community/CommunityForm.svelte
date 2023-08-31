@@ -10,6 +10,7 @@
   import { toast } from '$lib/components/ui/toasts/toasts.js'
   import { getClient, uploadImage } from '$lib/lemmy.js'
   import { addSubscription } from '$lib/lemmy/user.js'
+  import { _ } from 'svelte-i18n'
 
   /**
    * The community ID to edit.
@@ -109,7 +110,7 @@
 
 <form on:submit|preventDefault={submit} class="flex flex-col gap-4 h-full">
   <slot name="formtitle">
-    <h1 class="text-2xl font-bold">Create Community</h1>
+    <h1 class="text-2xl font-bold">{$_('page.create.community')}</h1>
   </slot>
   <TextInput
     required

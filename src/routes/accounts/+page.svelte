@@ -79,7 +79,7 @@
 </script>
 
 <svelte:head>
-  <title>Accounts</title>
+  <title>{$_('page.accounts')}</title>
 </svelte:head>
 
 {#if debugging}
@@ -132,7 +132,7 @@
 {:else}
   <div class="flex flex-col h-full gap-4">
     <div class="flex flex-row justify-between">
-      <h1 class="text-2xl font-bold">{$_('common.accounts.accounts')}</h1>
+      <h1 class="text-2xl font-bold">{$_('page.accounts')}</h1>
     </div>
     <EditableList
       on:action={(id) => {

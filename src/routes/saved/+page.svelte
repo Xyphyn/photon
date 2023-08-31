@@ -9,6 +9,7 @@
   import { fly } from 'svelte/transition'
   import Button from '$lib/components/input/Button.svelte'
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
+  import { _ } from 'svelte-i18n'
 
   export let data
 
@@ -17,10 +18,10 @@
 </script>
 
 <svelte:head>
-  <title>Saved</title>
+  <title>{$_('page.saved')}</title>
 </svelte:head>
 
-<h1 class="text-2xl font-bold">Saved</h1>
+<h1 class="text-2xl font-bold">{$_('page.saved')}</h1>
 <div class="flex flex-col gap-4 list-none my-4">
   {#if !data.data || (data.data?.length ?? 0) == 0}
     <p class="text-center opacity-60 text-lg mx-4">
