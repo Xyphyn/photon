@@ -235,7 +235,7 @@
       </MenuButton>
       <MenuButton link href="/saved">
         <Icon src={Bookmark} mini width={16} />
-        {$_('common.saved')}
+        {$_('common.save.saved')}
       </MenuButton>
     {/if}
     <MenuButton link href="/accounts">

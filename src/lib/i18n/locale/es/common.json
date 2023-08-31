@@ -5,8 +5,8 @@
       "accounts": "Cuentas",
       "current": "Actual",
       "guest": "Invitado",
-      "moveUp": "Ascender",
       "moveDown": "Bajar",
+      "moveUp": "Ascender",
       "resetColor": "Restablecer Color",
       "switch": "Cambiar"
     },
@@ -29,7 +29,11 @@
     },
     "post": "Entrada",
     "profile": "Perfil",
-    "saved": "Guardado",
+    "save": {
+      "save": "Guardar",
+      "saved": "Guardado",
+      "unsave": "No Guarde"
+    },
     "search": "Buscar",
     "settings": "Ajustes",
     "theme": {

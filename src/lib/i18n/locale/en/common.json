@@ -15,7 +15,11 @@
     "post": "Post",
     "inbox": "Inbox",
     "profile": "Profile",
-    "saved": "Saved",
+    "save": {
+      "save": "Save",
+      "unsave": "Unsave",
+      "saved": "Saved"
+    },
     "accounts": {
       "accounts": "Accounts",
       "switch": "Switch",
