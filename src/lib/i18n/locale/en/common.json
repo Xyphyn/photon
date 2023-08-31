@@ -19,7 +19,11 @@
     "accounts": {
       "accounts": "Accounts",
       "switch": "Switch",
-      "current": "Current"
+      "current": "Current",
+      "resetColor": "Reset Color",
+      "guest": "Guest",
+      "moveUp": "Move Up",
+      "moveDown": "Move Down"
     },
     "app": "App",
     "about": "About",

@@ -36,6 +36,7 @@
     Plus,
     Trash,
   } from 'svelte-hero-icons'
+  import { _ } from 'svelte-i18n'
   import { flip } from 'svelte/animate'
   import { expoInOut, expoOut } from 'svelte/easing'
 
@@ -131,7 +132,7 @@
 {:else}
   <div class="flex flex-col h-full gap-4">
     <div class="flex flex-row justify-between">
-      <h1 class="text-2xl font-bold">Accounts</h1>
+      <h1 class="text-2xl font-bold">{$_('common.accounts.accounts')}</h1>
     </div>
     <EditableList
       on:action={(id) => {
@@ -180,18 +181,18 @@
             </Button>
             <MenuButton on:click={() => moveProfile(profile.id, true)}>
               <Icon src={ChevronUp} size="16" mini slot="icon" />
-              Move Up
+              {$_('common.accounts.moveUp')}
             </MenuButton>
             <MenuButton on:click={() => moveProfile(profile.id, false)}>
               <Icon src={ChevronDown} size="16" mini slot="icon" />
-              Move Down
+              {$_('common.accounts.moveDown')}
             </MenuButton>
             <MenuButton
               disabled={!profile.color}
               on:click={() => (profile.color = undefined)}
             >
               <Icon src={ArrowUturnLeft} size="16" mini slot="icon" />
-              Reset Color
+              {$_('common.accounts.resetColor')}
             </MenuButton>
             {#if $userSettings.debugInfo}
               <MenuButton
@@ -215,7 +216,9 @@
             }}
             color={profile.id == $currentProfile?.id ? 'primary' : 'secondary'}
           >
-            {profile.id == $currentProfile?.id ? 'Current' : 'Switch to'}
+            {profile.id == $currentProfile?.id
+              ? $_('common.accounts.current')
+              : $_('common.accounts.switch')}
           </Button>
           <Button
             on:click={() => action(profile.id)}
@@ -227,7 +230,9 @@
         </div>
       {/each}
       <div class="flex flex-row gap-4 items-center py-4">
-        <span class="font-bold flex flex-col">Guest</span>
+        <span class="font-bold flex flex-col">
+          {$_('common.accounts.guest')}
+        </span>
         <div class="ml-auto" />
 
         <Button
@@ -236,7 +241,9 @@
           }}
           color={$currentProfile?.id == -1 ? 'primary' : 'secondary'}
         >
-          {$currentProfile?.id == -1 ? 'Current' : 'Switch to'}
+          {$currentProfile?.id == -1
+            ? $_('common.accounts.current')
+            : $_('common.accounts.switch')}
         </Button>
       </div>
     </EditableList>
@@ -255,12 +262,12 @@
         disabled={loading || LINKED_INSTANCE_URL != undefined}
         class="h-[42px] self-end"
       >
-        Change
+        {$_('common.change')}
       </Button>
     </div>
     <Button href="/login" size="lg">
       <Icon slot="icon" src={Plus} size="16" mini />
-      Add more
+      {$_('common.add')}
     </Button>
   </div>
 {/if}

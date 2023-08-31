@@ -4,6 +4,10 @@
     "accounts": {
       "accounts": "Cuentas",
       "current": "Actual",
+      "guest": "Invitado",
+      "moveUp": "Ascender",
+      "moveDown": "Bajar",
+      "resetColor": "Restablecer Color",
       "switch": "Cambiar"
     },
     "add": "Añadir",
@@ -29,9 +33,9 @@
     "search": "Buscar",
     "settings": "Ajustes",
     "theme": {
-      "dark": "Dark",
-      "light": "Light",
-      "system": "System",
+      "dark": "Oscuro",
+      "light": "Luminoso",
+      "system": "Sistema",
       "theme": "Tema"
     }
   }
