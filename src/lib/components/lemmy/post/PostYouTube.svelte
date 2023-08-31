@@ -6,37 +6,39 @@
 
   $: embedURL = parseVideoURL(url)
 
-  const parseVideoURL = (url: string): string | undefined => {
+  const parseVideoURL = (uri: string): string | undefined => {
     try {
+      const url = new URL(uri)
       // Parse URLs to pick out video IDs to create embed URLs
       // YouTube
       if (
-        url.startsWith('https://youtu.be') ||
-        url.startsWith('https://youtube.com')
+        url.hostname == 'youtu.be' ||
+        url.hostname == 'youtube.com' ||
+        url.hostname == 'www.youtube.com'
       ) {
-        const pathname = new URL(url).pathname.replace('/', '')
-        embedURL = 'https://www.youtube-nocookie.com/embed'
+        embedURL = 'https://vid.puffyan.us/embed'
 
-        if (pathname == 'watch') {
-          return `${embedURL}/${new URL(url).searchParams.get('v')}`
+        if (url.pathname == '/watch') {
+          return `${embedURL}/${url.searchParams.get('v')}`
         }
       }
 
       // Spotify
       // https://open.spotify.com/embed/track/2RUs0cO0KpvuZJ0J4hqFFC
-      if (url.startsWith('https://open.spotify.com/embed')) return url
+      if (url.href.startsWith('https://open.spotify.com/embed'))
+        return url.toString()
 
-      if (url.startsWith('https://open.spotify.com/track')) {
+      if (url.href.startsWith('https://open.spotify.com/track')) {
         const trackID = new URL(url).pathname.replace('/track/', '')
         return `https://open.spotify.com/embed/track/${trackID}?theme=0`
       }
 
-      if (url.startsWith('https://open.spotify.com/playlist')) {
+      if (url.href.startsWith('https://open.spotify.com/playlist')) {
         const trackID = new URL(url).pathname.replace('/playlist/', '')
         return `https://open.spotify.com/embed/playlist/${trackID}?theme=0`
       }
 
-      if (url.startsWith('https://open.spotify.com/album')) {
+      if (url.href.startsWith('https://open.spotify.com/album')) {
         let trackID = new URL(url).pathname.replace('/album/', '')
         return `https://open.spotify.com/embed/album/${trackID}?theme=0`
       }
