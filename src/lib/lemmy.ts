@@ -7,10 +7,10 @@ import { LINKED_INSTANCE_URL, instance } from '$lib/instance.js'
 async function customFetch(
   func: (
     input: RequestInfo | URL,
-    init?: RequestInit | undefined
+    init?: RequestInit | undefined,
   ) => Promise<Response>,
   input: RequestInfo | URL,
-  init?: RequestInit | undefined
+  init?: RequestInit | undefined,
 ): Promise<Response> {
   const res = await func(input, init)
   if (!res.ok) throw error(res.status, await res.text())
@@ -21,8 +21,8 @@ export function getClient(
   instanceURL?: string,
   func?: (
     input: RequestInfo | URL,
-    init?: RequestInit | undefined
-  ) => Promise<Response>
+    init?: RequestInit | undefined,
+  ) => Promise<Response>,
 ): LemmyHttp {
   if (!instanceURL) {
     instanceURL = get(instance)
@@ -58,7 +58,7 @@ export async function validateInstance(instance: string): Promise<boolean> {
 }
 
 export async function uploadImage(
-  image: File | null | undefined
+  image: File | null | undefined,
 ): Promise<string | undefined> {
   if (!image || !get(profile)?.jwt) return
 
@@ -74,21 +74,20 @@ export async function uploadImage(
     {
       method: 'POST',
       body: formData,
-    }
+    },
   )
 
   const json = await response.json()
 
   if (json.msg == 'ok') {
-    return `https://${get(profile)?.instance}/pictrs/image/${
-      json.files?.[0]?.file
-    }`
+    return `https://${get(profile)?.instance}/pictrs/image/${json.files?.[0]
+      ?.file}`
   }
 
   throw new Error(
     `${
       (await response.text().catch((_) => undefined)) ??
       'Failed to upload image'
-    }: ${response.status}: ${response.statusText}`
+    }: ${response.status}: ${response.statusText}`,
   )
 }

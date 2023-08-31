@@ -40,7 +40,7 @@ export async function load({ url, fetch }) {
 
     const everything = [...posts, ...comments, ...users, ...communities].sort(
       (a, b) =>
-        Date.parse(getItemPublished(b)) - Date.parse(getItemPublished(a))
+        Date.parse(getItemPublished(b)) - Date.parse(getItemPublished(a)),
     )
 
     return {

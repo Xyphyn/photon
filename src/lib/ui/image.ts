@@ -1,3 +1,5 @@
+import type { PostView } from 'lemmy-js-client'
+
 export const isImage = (url: string | undefined) => {
   if (!url) return false
 
@@ -9,5 +11,58 @@ export const isVideo = (inputUrl: string | undefined) => {
 
   const url = new URL(inputUrl).pathname.toLowerCase()
 
-  return url.endsWith('mp4') || url.endsWith('webm') || url.endsWith('mov') || url.endsWith('m4v')
+  return (
+    url.endsWith('mp4') ||
+    url.endsWith('webm') ||
+    url.endsWith('mov') ||
+    url.endsWith('m4v')
+  )
+}
+
+export const isYouTube = (url: string | undefined) => {
+  if (!url) return false
+  return (
+    url.includes('youtube.com') ||
+    url.includes('youtu.be') ||
+    url.includes('vid.puffyan.us') ||
+    url.includes('open.spotify.com')
+  )
+}
+
+export type PostType =
+  | 'image'
+  | 'video'
+  | 'youtube'
+  | 'link'
+  | 'thumbLink'
+  | 'text'
+  | undefined
+
+// Returns a string representing the detected post type
+// image | video | youtube | link | thumbLink | text
+export const postType = (post: PostView | undefined): PostType => {
+  if (!post) return undefined
+
+  if (isImage(post.post.url)) {
+    return 'image'
+  }
+
+  if (isVideo(post.post.url)) {
+    return 'video'
+  }
+
+  if (isYouTube(post.post.url)) {
+    return 'youtube'
+  }
+
+  if (post.post.url && !post.post.thumbnail_url) {
+    return 'link'
+  }
+
+  if (post.post.thumbnail_url && post.post.url) {
+    return 'thumbLink'
+  }
+
+  // If no other type matches, render as a plain text
+  return 'text'
 }

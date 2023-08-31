@@ -52,7 +52,7 @@ export async function load({ url, fetch }) {
   ].sort(
     (a, b) =>
       Date.parse(getInboxItemPublished(b)) -
-      Date.parse(getInboxItemPublished(a))
+      Date.parse(getInboxItemPublished(a)),
   )
 
   return { unreadOnly: unreadOnly, type: type, page: page, data: data }

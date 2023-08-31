@@ -1,7 +1,7 @@
 <script lang="ts">
   import { buildCommentsTreeAsync } from '$lib/components/lemmy/comment/comments.js'
   import Comments from '$lib/components/lemmy/comment/Comments.svelte'
-  import { isImage, isVideo } from '$lib/ui/image.js'
+  import { isImage, isVideo, isYouTube, postType } from '$lib/ui/image.js'
   import { getClient, getInstance } from '$lib/lemmy.js'
   import CommentForm from '$lib/components/lemmy/comment/CommentForm.svelte'
   import { onMount } from 'svelte'
@@ -12,8 +12,13 @@
   import { ExclamationTriangle, Icon } from 'svelte-hero-icons'
   import Spinner from '$lib/components/ui/loader/Spinner.svelte'
   import Card from '$lib/components/ui/Card.svelte'
+
   import PostLink from '$lib/components/lemmy/post/PostLink.svelte'
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
+  import PostImage from '$lib/components/lemmy/post/PostImage.svelte'
+  import PostVideo from '$lib/components/lemmy/post/PostVideo.svelte'
+  import PostYouTube from '$lib/components/lemmy/post/PostYouTube.svelte'
+
   import { removeToast, toast } from '$lib/components/ui/toasts/toasts.js'
   import type { CommentSortType } from 'lemmy-js-client'
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
@@ -28,6 +33,7 @@
   export let data
 
   let post = data.post
+  let pType = postType(post.post_view)
 
   onMount(async () => {
     if (!post.post_view.read && $profile?.jwt) {
@@ -70,7 +76,7 @@
       if (res.post) {
         removeToast(id)
         goto(`/post/${$instance}/${res.post.post.id}`, {}).then(() =>
-          removeToast(id)
+          removeToast(id),
         )
       }
     } catch (err) {
@@ -82,6 +88,7 @@
   let commentSort: CommentSortType = data.commentSort
   let loading = false
   let moreComments = true
+  let loaded = false
 
   async function reloadComments() {
     data.singleThread = false
@@ -142,41 +149,59 @@
     published={new Date(post.post_view.post.published + 'Z')}
     saved={post.post_view.saved}
   />
+
   <h1 class="font-bold text-lg">{post.post_view.post.name}</h1>
-  {#if isImage(post.post_view.post.url)}
-    <img
-      src={post.post_view.post.url}
-      alt={post.post_view.post.name}
-      class="rounded-md max-w-screen max-h-[80svh] mx-auto"
-    />
-  {:else if isVideo(post.post_view.post.url)}
-    <!-- svelte-ignore a11y-media-has-caption -->
-    <video class="rounded-md max-w-screen max-h-[80svh] mx-auto" controls>
-      <source src={post.post_view.post.url} />
-    </video>
-  {:else if post.post_view.post.url && !post.post_view.post.thumbnail_url}
-    <a
-      href={post.post_view.post.url}
-      class="max-w-full overflow-hidden overflow-ellipsis whitespace-nowrap text-sky-400 hover:underline text-xs"
-      style="word-break: break-word;"
-    >
-      {post.post_view.post.url}
-    </a>
-  {:else if post.post_view.post.thumbnail_url && post.post_view.post.url}
-    <PostLink
-      thumbnail_url={post.post_view.post.thumbnail_url}
+
+  {#if pType == 'image'}
+    <PostImage
+      name={post.post_view.post.name}
       url={post.post_view.post.url}
+      id={post.post_view.post.id}
       nsfw={post.post_view.post.nsfw}
+      nsfwBlur={$userSettings.nsfwBlur}
+      link={false}
+      fullResolution={true}
+      instance={getInstance()}
     />
   {/if}
+
+  {#if post.post_view.post.url}
+    {#if pType == 'video'}
+      <PostVideo url={post.post_view.post.url} />
+    {/if}
+
+    {#if pType == 'youtube'}
+      <PostYouTube url={post.post_view.post.url} />
+    {/if}
+
+    {#if pType == 'link'}
+      <a
+        href={post.post_view.post.url}
+        class="max-w-full overflow-hidden overflow-ellipsis whitespace-nowrap text-sky-400 hover:underline text-xs"
+        style="word-break: break-word;"
+      >
+        {post.post_view.post.url}
+      </a>
+    {/if}
+
+    {#if pType == 'thumbLink'}
+      <PostLink
+        thumbnail_url={post.post_view.post.thumbnail_url}
+        url={post.post_view.post.url}
+        nsfw={post.post_view.post.nsfw}
+      />
+    {/if}
+  {/if}
+
+  <!--- Post Body --->
   {#if post.post_view.post.body}
     <div
-      class="bg-slate-100 border border-slate-200 dark:border-zinc-800
-    dark:bg-zinc-900 p-2 text-sm rounded-md leading-[22px]"
+      class="bg-slate-100 border border-slate-200 dark:border-zinc-800 dark:bg-zinc-900 p-2 text-sm rounded-md leading-[22px]"
     >
       <Markdown source={post.post_view.post.body} />
     </div>
   {/if}
+
   <div class="w-full relative">
     <PostActions
       bind:post={post.post_view}
@@ -187,6 +212,8 @@
         })}
     />
   </div>
+
+  <!--- Crosspost Bar --->
   {#if post.cross_posts?.length > 0}
     <details
       class="text-sm font-bold mt-2 w-full cursor-pointer"
@@ -194,13 +221,13 @@
     >
       <summary class="inline-block w-full">
         <SectionTitle class="text-inherit dark:text-inherit">
-          Crossposts <span
-            class="text-slate-600 dark:text-zinc-400 text-xs ml-1"
-          >
+          Crossposts
+          <span class="text-slate-600 dark:text-zinc-400 text-xs ml-1">
             {post.cross_posts.length}
           </span>
         </SectionTitle>
       </summary>
+
       <div class="divide-y divide-slate-200 dark:divide-zinc-800 flex flex-col">
         {#each post.cross_posts as crosspost}
           <div class="py-2.5 flex flex-col gap-1">
@@ -223,23 +250,28 @@
     </details>
   {/if}
 </div>
+
 <div class="mt-4 flex flex-col gap-2">
   <div class="font-bold text-lg">
-    Comments <span class="text-sm font-normal ml-2 opacity-80">
+    Comments
+    <span class="text-sm font-normal ml-2 opacity-80">
       {post.post_view.counts.comments}
     </span>
   </div>
+
   <MultiSelect
     options={['Hot', 'Top', 'New']}
     bind:selected={commentSort}
     on:select={reloadComments}
   />
+
   {#if data.singleThread}
     <Card class="py-2 px-4 text-sm flex flex-row items-center flex-wrap gap-4">
       <p>You're viewing a single thread.</p>
       <Button on:click={reloadComments}>View full thread</Button>
     </Card>
   {/if}
+
   {#await data.streamed.comments}
     <div class="h-16 mx-auto grid place-items-center">
       <Spinner width={24} />
@@ -257,6 +289,7 @@
           $page.params.instance.toLowerCase() != $instance.toLowerCase()}
       />
     {/if}
+
     {#await buildCommentsTreeAsync(comments.comments)}
       <div class="h-16 mx-auto grid place-items-center">
         <Spinner width={36} />

@@ -140,6 +140,13 @@
     <span slot="description">Alternate vote design</span>
   </Setting>
 
+  <Setting>
+    <Checkbox bind:checked={$userSettings.showEmbeds} slot="title">
+      Enable Embedded Content
+    </Checkbox>
+    <span slot="description">Enables embedded content from Youtube, Spotify, Invidious, etc</span>
+  </Setting>
+
   <SectionTitle class="mt-4">Instances</SectionTitle>
   <Setting>
     <span slot="title">Show instances</span>

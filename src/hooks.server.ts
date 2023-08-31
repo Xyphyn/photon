@@ -42,7 +42,7 @@ export async function handle({ event, resolve }) {
           }),
           {
             status: 500,
-          }
+          },
         )
       }
 
@@ -62,7 +62,7 @@ export async function handle({ event, resolve }) {
           }),
           {
             status: 500,
-          }
+          },
         )
       }
 
@@ -73,7 +73,7 @@ export async function handle({ event, resolve }) {
           }),
           {
             status: data.status,
-          }
+          },
         )
       }
 
@@ -90,7 +90,7 @@ export async function handle({ event, resolve }) {
         }),
         {
           status: 500,
-        }
+        },
       )
     }
   }

@@ -2,9 +2,6 @@ import type { CommentSortType, SortType } from 'lemmy-js-client'
 import { writable } from 'svelte/store'
 import { env } from '$env/dynamic/public'
 
-console.log('Using the following default settings from the environment:')
-console.log(env)
-
 export const SSR_ENABLED = env.PUBLIC_SSR_ENABLED?.toLowerCase() == 'true'
 
 // Returns a proper boolean or null.  Used to set boolean values from env var strings while allowing nullish coalescing to set default values.
@@ -54,6 +51,7 @@ interface Settings {
   modlogCardView: boolean | undefined
   debugInfo: boolean
   systemUI: boolean
+  showEmbeds: boolean
 }
 
 export const defaultSettings: Settings = {
@@ -93,13 +91,14 @@ export const defaultSettings: Settings = {
   modlogCardView: toBool(env.PUBLIC_MODLOG_CARD_VIEW) ?? undefined,
   debugInfo: false,
   systemUI: true,
+  showEmbeds: toBool(env.PUBLIC_SHOW_EMBEDS) ?? true,
 }
 
 export const userSettings = writable(defaultSettings)
 
 if (typeof window != 'undefined') {
   let oldUserSettings = JSON.parse(
-    localStorage.getItem('settings') ?? JSON.stringify(defaultSettings)
+    localStorage.getItem('settings') ?? JSON.stringify(defaultSettings),
   )
 
   userSettings.set({ ...defaultSettings, ...oldUserSettings })
