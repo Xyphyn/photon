@@ -1,4 +1,4 @@
-import type { PostView } from "lemmy-js-client"
+import type { PostView } from 'lemmy-js-client'
 
 export const isImage = (url: string | undefined) => {
   if (!url) return false
@@ -29,10 +29,19 @@ export const isYouTube = (url: string | undefined) => {
   )
 }
 
+export type PostType =
+  | 'image'
+  | 'video'
+  | 'youtube'
+  | 'link'
+  | 'thumbLink'
+  | 'text'
+  | undefined
+
 // Returns a string representing the detected post type
 // image | video | youtube | link | thumbLink | text
-export const postType = (post: PostView | undefined) => {
-  if (!post) return false
+export const postType = (post: PostView | undefined): PostType => {
+  if (!post) return undefined
 
   if (isImage(post.post.url)) {
     return 'image'

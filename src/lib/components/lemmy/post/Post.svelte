@@ -17,6 +17,8 @@
   export let post: PostView
   export let actions: boolean = true
   export let hideCommunity = false
+
+  let type = postType(post)
 </script>
 
 <Card class="bg-white flex flex-col w-full p-5 gap-2.5" id={post.post.id}>
@@ -85,7 +87,7 @@
 
     {#if post.post.url}
       <!--- Direct Image Post --->
-      {#if postType(post) == 'image'}
+      {#if type == 'image'}
         <PostImage
           instance={getInstance()}
           name={post.post.name}
@@ -97,22 +99,16 @@
         />
       {/if}
 
-      <!--- Direct Video Post --->
-      {#if postType(post) == 'video'}
-        <PostVideo url={post.post.url} />
-      {/if}
-
-      <!--- YouTube Video Post (or other supported embed: YT, Invidious, Spotify --->
-      {#if postType(post) == 'youtube'}
-        <PostYouTube url={post.post.url} />
-      {/if}
-
       <!--- Link-style post that is not Youtube --->
-      {#if postType(post) == 'thumbLink'}
+      {#if type == 'thumbLink' || type == 'video' || type == 'youtube'}
         <PostLink
           url={post.post.url}
+          goto={type == 'video' || type == 'youtube'
+            ? `/post/${getInstance()}/${post.post.id}`
+            : undefined}
           thumbnail_url="{post.post.thumbnail_url}?format=webp&thumbnail=768"
           nsfw={post.post.nsfw}
+          {type}
         />
       {/if}
     {/if}
