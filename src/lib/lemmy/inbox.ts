@@ -26,7 +26,7 @@ export function getInboxItemPublished(item: InboxItemView): string {
 }
 
 export function isRead(
-  item: PersonMentionView | CommentReplyView | PrivateMessageView
+  item: PersonMentionView | CommentReplyView | PrivateMessageView,
 ) {
   if ('person_mention' in item) {
     return (item as PersonMentionView).person_mention.read
@@ -45,7 +45,7 @@ export function isRead(
 
 export const getInbox = async (
   jwt: string,
-  until?: number
+  until?: number,
 ): Promise<InboxItem[]> => {
   const client = getClient()
 

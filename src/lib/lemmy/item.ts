@@ -64,5 +64,5 @@ export const isCommentReport = (item: Result): item is CommentReportView =>
   'comment_report' in item
 
 export const isPrivateMessageReport = (
-  item: Result
+  item: Result,
 ): item is PrivateMessageReportView => 'private_message_report' in item

@@ -5,7 +5,7 @@ import { get } from 'svelte/store'
 
 export const findClosestNumber = (numbers: number[], target: number): number =>
   numbers.reduce((prev, curr) =>
-    Math.abs(curr - target) < Math.abs(prev - target) ? curr : prev
+    Math.abs(curr - target) < Math.abs(prev - target) ? curr : prev,
   )
 
 export const searchParam = (
@@ -61,7 +61,7 @@ export const placeholders = {
 export function moveItem<T>(
   array: T[],
   currentIndex: number,
-  newIndex: number
+  newIndex: number,
 ): T[] {
   if (
     currentIndex < 0 ||

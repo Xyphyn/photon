@@ -24,7 +24,7 @@ function getDepthFromComment(comment?: Comment): number | undefined {
 
 export function buildCommentsTree(
   comments: CommentView[],
-  baseDepth: number = 0
+  baseDepth: number = 0,
 ): CommentNodeI[] {
   const map = new Map<number, CommentNodeI>()
 
@@ -70,7 +70,7 @@ export function buildCommentsTree(
 
 export function searchCommentTree(
   tree: CommentNodeI[],
-  id: number
+  id: number,
 ): CommentNodeI | undefined {
   for (const node of tree) {
     if (node.comment_view.comment.id === id) {
@@ -91,7 +91,7 @@ export function searchCommentTree(
 export function insertCommentIntoTree(
   tree: CommentNodeI[],
   cv: CommentView,
-  parentComment: boolean
+  parentComment: boolean,
 ) {
   // Building a fake node to be used for later
   const node: CommentNodeI = {
@@ -112,9 +112,7 @@ export function insertCommentIntoTree(
   }
 }
 
-export async function buildCommentsTreeAsync(
-  comments: CommentView[],
-) {
+export async function buildCommentsTreeAsync(comments: CommentView[]) {
   const result = buildCommentsTree(comments)
 
   return result

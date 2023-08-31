@@ -21,7 +21,7 @@ export const isBlocked = (me: MyUserInfo, user: number) =>
 
 export const addSubscription = (
   community: Community,
-  subscribe: boolean = true
+  subscribe: boolean = true,
 ) => {
   const p = get(profile)
 
@@ -44,7 +44,7 @@ export const addSubscription = (
   } else {
     p.user.follows.splice(
       p.user.follows.findIndex((i) => i.community.id == community.id),
-      1
+      1,
     )
     profile.set(p)
   }

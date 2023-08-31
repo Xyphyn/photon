@@ -57,7 +57,7 @@ const communityLinks = {
 
     if (!self.re.community) {
       self.re.community = new RegExp(
-        /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z]{2,6})/
+        /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z]{2,6})/,
       )
     }
     if (self.re.community.test(tail)) {

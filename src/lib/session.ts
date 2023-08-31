@@ -19,7 +19,7 @@ interface SessionStorage {
 
 export const setSessionStorage = (
   key: keyof SessionStorage,
-  value: SessionStorage[typeof key]
+  value: SessionStorage[typeof key],
 ) => {
   if (value == undefined) {
     sessionStorage.removeItem(key)
@@ -29,7 +29,7 @@ export const setSessionStorage = (
 }
 
 export const getSessionStorage = (
-  key: keyof SessionStorage
+  key: keyof SessionStorage,
 ): SessionStorage[typeof key] => {
   return JSON.parse(sessionStorage.getItem(key)!)
 }

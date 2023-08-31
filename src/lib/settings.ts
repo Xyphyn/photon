@@ -98,7 +98,7 @@ export const userSettings = writable(defaultSettings)
 
 if (typeof window != 'undefined') {
   let oldUserSettings = JSON.parse(
-    localStorage.getItem('settings') ?? JSON.stringify(defaultSettings)
+    localStorage.getItem('settings') ?? JSON.stringify(defaultSettings),
   )
 
   userSettings.set({ ...defaultSettings, ...oldUserSettings })
