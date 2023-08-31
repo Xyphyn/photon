@@ -10,7 +10,10 @@
     try {
       // Parse URLs to pick out video IDs to create embed URLs
       // YouTube
-      if (url.includes('youtu.be') || url.includes('youtube.com')) {
+      if (
+        url.startsWith('https://youtu.be') ||
+        url.startsWith('https://youtube.com')
+      ) {
         const pathname = new URL(url).pathname.replace('/', '')
         embedURL = 'https://www.youtube-nocookie.com/embed'
 
@@ -21,19 +24,19 @@
 
       // Spotify
       // https://open.spotify.com/embed/track/2RUs0cO0KpvuZJ0J4hqFFC
-      if (url.includes('open.spotify.com/embed')) return url
+      if (url.startsWith('https://open.spotify.com/embed')) return url
 
-      if (url.includes('open.spotify.com/track')) {
+      if (url.startsWith('https://open.spotify.com/track')) {
         const trackID = new URL(url).pathname.replace('/track/', '')
         return `https://open.spotify.com/embed/track/${trackID}?theme=0`
       }
 
-      if (url.includes('open.spotify.com/playlist')) {
+      if (url.startsWith('https://open.spotify.com/playlist')) {
         const trackID = new URL(url).pathname.replace('/playlist/', '')
         return `https://open.spotify.com/embed/playlist/${trackID}?theme=0`
       }
 
-      if (url.includes('open.spotify.com/album')) {
+      if (url.startsWith('https://open.spotify.com/album')) {
         let trackID = new URL(url).pathname.replace('/album/', '')
         return `https://open.spotify.com/embed/album/${trackID}?theme=0`
       }
