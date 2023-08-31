@@ -1,5 +1,6 @@
 <script lang="ts">
     import Link from '$lib/components/input/Link.svelte'
+    import { userSettings } from '$lib/settings.js'
     export let url: string
 
     let videoID:  string|boolean = false
@@ -86,7 +87,7 @@
 
 <Link href={url} highlight nowrap />
 
-{#if embedURL}
+{#if $userSettings.showEmbeds && embedURL}
 
 <div class="overflow-hidden z-10 relative bg-slate-200 dark:bg-zinc-800 rounded-md max-w-full">
     <div class="ml-auto mr-auto mt-1 mb-1 max-w-4xl">

@@ -85,7 +85,6 @@
         {/if}
 
         <!--- Direct Image Post --->
-        <!--{#if isImage(post.post.url)}-->
         {#if postType(post) == "image"}
         <PostImage
             instance = {getInstance()}
@@ -96,23 +95,24 @@
             nsfwBlur = {userSettings.nsfwBlur}
             link = true
         />
-
+        {/if}
+        
         <!--- Direct Video Post --->
-        <!--{:else if isVideo(post.post.url)}-->
-        {:else if postType(post) == "video"}
+        {#if postType(post) == "video"}
         <PostVideo
             url = {post.post.url}
         />
-        
-        <!--- YouTube Video Post --->
-        {:else if postType(post) == "youtube"}
+        {/if}
+
+        <!--- YouTube Video Post (or other supported embed: YT, Invidious, Spotify --->
+        {#if postType(post) == "youtube"}
         <PostYouTube
             url = {post.post.url}
         />
+        {/if}
 
         <!--- Link-style post that is not Youtube --->
-        <!--{:else if post.post.thumbnail_url && post.post.url && !isYouTube(post.post.url)}-->
-        {:else if postType(post) == "thumbLink"}
+        {#if postType(post) == "thumbLink"}
         <PostLink
             url={post.post.url}
             thumbnail_url="{post.post.thumbnail_url}?format=webp&thumbnail=768"
