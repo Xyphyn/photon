@@ -24,6 +24,7 @@
   import Link from '$lib/components/input/Link.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import { userSettings } from '$lib/settings.js'
+  import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
 
   export let data
 
@@ -94,7 +95,7 @@
       type_: 'All',
       post_id: post.post_view.post.id,
       sort: commentSort,
-      max_depth: 3,
+      max_depth: data.post.post_view.counts.comments > 100 ? 1 : 3,
     })
   }
 </script>
@@ -170,7 +171,9 @@
     />
   {/if}
   {#if post.post_view.post.body}
-    <div class="text-base rounded-md leading-[22px]">
+    <div
+      class="text-sm text-slate-800 dark:text-zinc-300 rounded-md leading-[22px]"
+    >
       <Markdown source={post.post_view.post.body} />
     </div>
   {/if}
@@ -221,16 +224,19 @@
   {/if}
 </div>
 <div class="mt-4 flex flex-col gap-2">
-  <div class="font-bold text-lg">
-    Comments <span class="text-sm font-normal ml-2 opacity-80">
-      {post.post_view.counts.comments}
-    </span>
+  <div class="flex flex-row justify-between">
+    <div class="font-bold opacity-80 text-base">
+      Comments <span class="text-lg font-medium ml-2">
+        <FormattedNumber number={post.post_view.counts.comments} />
+      </span>
+    </div>
+    <MultiSelect
+      options={['Hot', 'Top', 'New']}
+      bind:selected={commentSort}
+      on:select={reloadComments}
+      headless
+    />
   </div>
-  <MultiSelect
-    options={['Hot', 'Top', 'New']}
-    bind:selected={commentSort}
-    on:select={reloadComments}
-  />
   {#if data.singleThread}
     <Card class="py-2 px-4 text-sm flex flex-row items-center flex-wrap gap-4">
       <p>You're viewing a single thread.</p>
