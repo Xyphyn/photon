@@ -42,11 +42,11 @@
     />
   </Button>
   <SidebarButton href="/" expanded={$userSettings.expandSidebar}>
-    <Icon src={Home} mini size="18" title="Frontpage" />
+    <Icon src={Home} mini size="20" title="Frontpage" />
     <span class:hidden={!$userSettings.expandSidebar}>Frontpage</span>
   </SidebarButton>
   <SidebarButton href="/settings" expanded={$userSettings.expandSidebar}>
-    <Icon src={Cog6Tooth} mini size="18" title="Settings" />
+    <Icon src={Cog6Tooth} mini size="20" title="Settings" />
     <span class:hidden={!$userSettings.expandSidebar}>Settings</span>
   </SidebarButton>
   {#if $profileData.profiles.length >= 1}
@@ -57,7 +57,7 @@
       </div>
     {/each}
     <SidebarButton href="/accounts" expanded={$userSettings.expandSidebar}>
-      <Icon src={UserGroup} mini size="18" />
+      <Icon src={UserGroup} mini size="20" />
       <span class:hidden={!$userSettings.expandSidebar}>Accounts</span>
     </SidebarButton>
   {/if}
@@ -81,7 +81,7 @@
       color="tertiary"
       alignment="left"
     >
-      <Icon mini src={GlobeAlt} size="18" />
+      <Icon mini src={GlobeAlt} size="20" />
       <span class:hidden={!$userSettings.expandSidebar}>Communities</span>
     </Button>
   {:else}
@@ -91,7 +91,7 @@
       color="tertiary"
       alignment="left"
     >
-      <Icon mini src={ArrowLeftOnRectangle} size="18" />
+      <Icon mini src={ArrowLeftOnRectangle} size="20" />
       <span class:hidden={!$userSettings.expandSidebar}>Log in</span>
     </Button>
   {/if}
