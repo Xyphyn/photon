@@ -170,10 +170,7 @@
     />
   {/if}
   {#if post.post_view.post.body}
-    <div
-      class="bg-slate-100 border border-slate-200 dark:border-zinc-800
-    dark:bg-zinc-900 p-2 text-sm rounded-md leading-[22px]"
-    >
+    <div class="text-base rounded-md leading-[22px]">
       <Markdown source={post.post_view.post.body} />
     </div>
   {/if}
