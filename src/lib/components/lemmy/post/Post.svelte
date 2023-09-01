@@ -107,7 +107,7 @@
             : 'text-slate-600 max-h-48'}"
         >
           <Markdown inline source={post.post.body.slice(0, 400)} />
-          {#if post.post.body.length > (compact ? 300 : 600)}
+          {#if post.post.body.length > (compact ? 200 : 600)}
             <div
               class="absolute bottom-0 w-full h-16 bg-gradient-to-b {compact
                 ? 'dark:from-zinc-950/0 dark:to-zinc-950 from-slate-50/0 to-slate-50'

@@ -68,7 +68,7 @@
   {:else}
     <div
       class="flex items-center text-sm gap-1 rounded-md border border-slate-200
-    dark:border-zinc-700 px-1 h-full duration-200"
+    dark:border-zinc-700 px-1 h-full duration-200 dark:bg-zinc-900"
     >
       <Button
         aria-label="Upvote"
