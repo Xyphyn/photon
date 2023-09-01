@@ -140,7 +140,7 @@
     {/if}
   </div>
   {#if actions}
-    <div class="w-full z-30" class:mt-2={compact}>
+    <div class="w-full" class:mt-2={compact}>
       <PostActions
         bind:post
         on:edit={(e) => {
