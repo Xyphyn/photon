@@ -35,7 +35,7 @@
   export let locked: boolean = false
 </script>
 
-<div class="flex flex-col gap-1">
+<div class="flex flex-col gap-1 w-full">
   <span class="flex flex-row gap-2 text-sm items-center">
     {#if community}
       <Avatar url={community.icon} width={24} alt={community.name} />
