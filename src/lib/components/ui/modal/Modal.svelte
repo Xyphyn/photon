@@ -23,10 +23,10 @@ flex flex-col items-center justify-center bg-black/50 backdrop-blur-sm box-borde
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div
       transition:scale={{ start: 0.9, easing: expoOut }}
-      class="overflow-y-auto {$$props.class} rounded-xl max-w-full box-border w-full"
+      class="overflow-y-auto {$$props.class} rounded-xl max-w-full box-border w-full overscroll-contain"
     >
       <div
-        class="w-full dark:!bg-zinc-950 rounded-xl max-w-xl box-border mx-auto"
+        class="w-full dark:!bg-zinc-950 rounded-xl max-w-xl box-border mx-auto overscroll-contain"
         on:click={() => {}}
       >
         <div
