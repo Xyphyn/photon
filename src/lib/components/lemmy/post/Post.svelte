@@ -20,13 +20,13 @@
 </script>
 
 <Card
-  class="flex flex-col w-full gap-2.5 {compact
+  class="flex flex-col max-w-full min-w-0 w-full gap-2.5 {compact
     ? '!bg-transparent !border-0 py-5'
     : 'p-5'}"
   id={post.post.id}
 >
-  <div class="flex flex-row gap-2 w-full">
-    <div class="flex flex-col gap-2 w-full">
+  <div class="flex flex-row gap-2 max-w-full w-full">
+    <div class="flex flex-col w-full gap-2">
       <div class="flex flex-col w-full gap-2">
         <PostMeta
           community={hideCommunity ? undefined : post.community}
@@ -92,10 +92,10 @@
               />
             </picture>
           </a>
-        {:else if post.post.thumbnail_url && post.post.url}
+        {:else if post.post.url}
           <PostLink
             url={post.post.url}
-            thumbnail_url="{post.post.thumbnail_url}?format=webp&thumbnail=512"
+            thumbnail_url={post.post.thumbnail_url ? `${post.post.thumbnail_url}?format=webp&thumbnail=512` : undefined}
             nsfw={post.post.nsfw}
           />
         {/if}
@@ -103,8 +103,8 @@
       {#if post.post.body && !post.post.nsfw}
         <div
           class="text-sm relative overflow-hidden {compact
-            ? `text-zinc-500 max-h-24`
-            : 'text-slate-600 max-h-48'}"
+            ? `text-zinc-600 dark:text-zinc-400 max-h-24`
+            : 'text-slate-600 dark:text-zinc-400 max-h-48'}"
         >
           <Markdown inline source={post.post.body.slice(0, 400)} />
           {#if post.post.body.length > (compact ? 200 : 600)}
