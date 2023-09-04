@@ -7,7 +7,7 @@
   import { getClient } from '$lib/lemmy.js'
   import type { CommentView, Post } from 'lemmy-js-client'
   import { fly } from 'svelte/transition'
-  import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import { toast } from 'mono-svelte'
   import { profile } from '$lib/auth.js'
   import { Button } from 'mono-svelte'
 

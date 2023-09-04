@@ -1,7 +1,7 @@
 <script lang="ts">
   import { profile } from '$lib/auth.js'
   import FileInput from '$lib/components/input/FileInput.svelte'
-  import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import { toast } from 'mono-svelte'
   import { uploadImage } from '$lib/lemmy.js'
   import { Button, Modal } from 'mono-svelte'
   import { createEventDispatcher } from 'svelte'

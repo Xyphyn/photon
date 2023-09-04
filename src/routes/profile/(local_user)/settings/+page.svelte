@@ -4,7 +4,7 @@
   import FileInput from '$lib/components/input/FileInput.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import Card from '$lib/components/ui/Card.svelte'
-  import { removeToast, toast } from '$lib/components/ui/toasts/toasts.js'
+  import { removeToast, toast } from 'mono-svelte'
   import { getClient, uploadImage } from '$lib/lemmy.js'
   import type { SaveUserSettings } from 'lemmy-js-client'
   import { Button, Checkbox, Modal, TextInput } from 'mono-svelte'

@@ -13,7 +13,7 @@
   } from 'lemmy-js-client'
   import { ChatBubbleOvalLeft, Check, Icon } from 'svelte-hero-icons'
   import { page } from '$app/stores'
-  import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import { toast } from 'mono-svelte'
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import { Button } from 'mono-svelte'

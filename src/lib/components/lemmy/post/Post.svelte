@@ -7,7 +7,7 @@
   import { userSettings } from '$lib/settings.js'
   import PostLink from '$lib/components/lemmy/post/PostLink.svelte'
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
-  import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import { toast } from 'mono-svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import Spinner from '$lib/components/ui/loader/Spinner.svelte'
 
@@ -95,7 +95,9 @@
         {:else if post.post.url}
           <PostLink
             url={post.post.url}
-            thumbnail_url={post.post.thumbnail_url ? `${post.post.thumbnail_url}?format=webp&thumbnail=512` : undefined}
+            thumbnail_url={post.post.thumbnail_url
+              ? `${post.post.thumbnail_url}?format=webp&thumbnail=512`
+              : undefined}
             nsfw={post.post.nsfw}
           />
         {/if}

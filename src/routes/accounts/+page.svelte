@@ -11,7 +11,7 @@
   import EditableList from '$lib/components/ui/list/EditableList.svelte'
   import Menu from '$lib/components/ui/menu/Menu.svelte'
   import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
-  import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import { toast } from 'mono-svelte'
   import DebugObject from '$lib/components/util/debug/DebugObject.svelte'
   import {
     DEFAULT_INSTANCE_URL,
@@ -173,7 +173,12 @@
           </div>
           <div class="ml-auto" />
           <Menu alignment="bottom-right">
-            <Button let:toggleOpen on:click={toggleOpen} size="square-md" slot="button">
+            <Button
+              let:toggleOpen
+              on:click={toggleOpen}
+              size="square-md"
+              slot="button"
+            >
               <Icon src={EllipsisHorizontal} mini size="16" slot="prefix" />
             </Button>
             <MenuButton on:click={() => moveProfile(profile.id, true)}>
@@ -246,12 +251,15 @@
         label="Guest instance"
         bind:value={newInstance}
         disabled={LINKED_INSTANCE_URL != undefined}
-      />
+        size="sm"
+      >
+        <span slot="prefix">https://</span>
+      </TextInput>
       <Button
         color="primary"
         {loading}
         disabled={loading || LINKED_INSTANCE_URL != undefined}
-        class="h-[42px] self-end"
+        class="self-end"
       >
         Change
       </Button>

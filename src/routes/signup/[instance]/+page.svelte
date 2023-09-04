@@ -8,7 +8,7 @@
   import Card from '$lib/components/ui/Card.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import Spinner from '$lib/components/ui/loader/Spinner.svelte'
-  import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import { toast } from 'mono-svelte'
   import { getClient } from '$lib/lemmy.js'
   import type { GetCaptchaResponse } from 'lemmy-js-client'
   import { Button, TextArea, TextInput } from 'mono-svelte'

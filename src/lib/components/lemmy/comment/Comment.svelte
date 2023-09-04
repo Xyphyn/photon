@@ -15,7 +15,7 @@
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import CommentActions from '$lib/components/lemmy/comment/CommentActions.svelte'
   import { getClient } from '$lib/lemmy.js'
-  import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import { toast } from 'mono-svelte'
   import { profile } from '$lib/auth.js'
   import { Button, Modal } from 'mono-svelte'
 

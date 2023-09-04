@@ -4,7 +4,7 @@
 
   import Card from '$lib/components/ui/Card.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
-  import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import { toast } from 'mono-svelte'
   import { getClient } from '$lib/lemmy.js'
   import type { RegistrationApplicationView } from 'lemmy-js-client'
   import { Button } from 'mono-svelte'

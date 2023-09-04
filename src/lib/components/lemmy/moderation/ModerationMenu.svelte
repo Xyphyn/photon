@@ -16,7 +16,7 @@
   } from 'svelte-hero-icons'
   import { Color } from '$lib/ui/colors.js'
   import { isCommentView, isPostView } from '$lib/lemmy/item.js'
-  import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import { toast } from 'mono-svelte'
   import { profile } from '$lib/auth.js'
   import { Button } from 'mono-svelte'
 

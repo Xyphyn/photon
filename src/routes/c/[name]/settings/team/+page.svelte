@@ -5,7 +5,7 @@
   import { Icon, Plus, Trash } from 'svelte-hero-icons'
   import type { PageData } from './$types.js'
   import { profile } from '$lib/auth.js'
-  import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import { toast } from 'mono-svelte'
   import { getClient } from '$lib/lemmy.js'
   import { flip } from 'svelte/animate'
   import { Button, TextInput } from 'mono-svelte'

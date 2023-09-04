@@ -4,7 +4,7 @@
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import EditableList from '$lib/components/ui/list/EditableList.svelte'
-  import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import { toast } from 'mono-svelte'
   import { getClient } from '$lib/lemmy.js'
   import type { Tagline } from 'lemmy-js-client'
   import { Button } from 'mono-svelte'

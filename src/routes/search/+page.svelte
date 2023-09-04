@@ -1,5 +1,7 @@
 <script lang="ts">
   import { page } from '$app/stores'
+  import { profile } from '$lib/auth.js'
+  import ObjectAutocomplete from '$lib/components/lemmy/ObjectAutocomplete.svelte'
   import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
   import CommunityItem from '$lib/components/lemmy/community/CommunityItem.svelte'
   import Post from '$lib/components/lemmy/post/Post.svelte'
@@ -29,7 +31,7 @@
 
   export let data
 
-  let query = ''
+  let query = data.query || ''
 
   let pageNum = data.page
 </script>
@@ -50,7 +52,7 @@
       Type
     </span>
     <option value="All">All</option>
-    <option value="Local">Posts</option>
+    <option value="Posts">Posts</option>
     <option value="Comments">Comments</option>
     <option value="Communities">Communities</option>
     <option value="Users">Users</option>
@@ -69,6 +71,16 @@
       Search
     </Button>
   </div>
+</div>
+<div class="max-w-sm mt-2">
+  <ObjectAutocomplete
+    label="Community"
+    jwt={$profile?.jwt}
+    listing_type={'All'}
+    showWhenEmpty={true}
+    on:select={(c) =>
+      searchParam($page.url, 'community', c.detail?.id || undefined, 'page')}
+  />
 </div>
 {#if !data.results}
   <Placeholder

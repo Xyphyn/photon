@@ -18,7 +18,7 @@
     Trash,
   } from 'svelte-hero-icons'
   import { getClient, getInstance } from '$lib/lemmy.js'
-  import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import { toast } from 'mono-svelte'
   import Menu from '$lib/components/ui/menu/Menu.svelte'
   import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
   import { createEventDispatcher } from 'svelte'

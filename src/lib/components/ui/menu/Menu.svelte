@@ -50,7 +50,7 @@
 <div
   class="overflow-visible {absolute
     ? 'absolute'
-    : 'relative'} cursor-auto {clazz} {itemsClass}"
+    : 'relative'} cursor-auto h-max {clazz} {itemsClass}"
   bind:this={element}
   tabindex="-1"
 >
@@ -70,7 +70,7 @@
           {$$props.containerClass}"
     >
       {#if open}
-        <div on:click={toggleOpen} class="flex flex-col gap-0">
+        <div on:click={toggleOpen} class="flex flex-col gap-0 h-max">
           <slot {toggleOpen} />
         </div>
       {/if}

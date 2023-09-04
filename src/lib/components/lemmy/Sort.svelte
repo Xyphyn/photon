@@ -14,7 +14,7 @@
 
 <div class="flex flex-row gap-4 flex-wrap">
   {#if selected?.startsWith('Top')}
-    <div class="w-32" transition:fly={{ x: 4 }}>
+    <div transition:fly={{ x: 4 }}>
       <Select
         bind:value={selected}
         on:change={(e) => {
@@ -45,7 +45,6 @@
       setSelected()
       if (navigate) searchParam($page.url, 'sort', selected, 'page')
     }}
-    class="w-32"
   >
     <span slot="label" class="flex items-center gap-1">
       <Icon src={ChartBar} size="14" mini />
@@ -56,5 +55,7 @@
     <option value="TopAll">Top</option>
     <option value="New">New</option>
     <option value="Old">Old</option>
+    <option value="MostComments">Most Comments</option>
+    <option value="NewComments">New Comments</option>
   </Select>
 </div>

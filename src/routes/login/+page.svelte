@@ -2,7 +2,7 @@
   import { goto } from '$app/navigation'
   import { setUser } from '$lib/auth.js'
   import Link from '$lib/components/input/Link.svelte'
-  import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import { toast } from 'mono-svelte'
   import { DEFAULT_INSTANCE_URL, LINKED_INSTANCE_URL } from '$lib/instance.js'
   import { getClient, validateInstance } from '$lib/lemmy.js'
   import { Button, TextInput } from 'mono-svelte'

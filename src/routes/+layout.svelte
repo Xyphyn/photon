@@ -4,15 +4,13 @@
   import { navigating } from '$app/stores'
   import nProgress from 'nprogress'
   import 'nprogress/nprogress.css'
-  import ToastContainer from '$lib/components/ui/toasts/ToastContainer.svelte'
   import Moderation from '$lib/components/lemmy/moderation/Moderation.svelte'
   import Sidebar from '$lib/components/ui/sidebar/Sidebar.svelte'
-  import { onMount } from 'svelte'
   // @ts-ignore
   import { pwaInfo } from 'virtual:pwa-info'
-  import PwaReload from '$lib/PwaReload.svelte'
   import { inDarkTheme } from '$lib/ui/colors.js'
   import { userSettings } from '$lib/settings.js'
+  import { ToastContainer } from 'mono-svelte'
 
   nProgress.configure({
     minimum: 0.4,

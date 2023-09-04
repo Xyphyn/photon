@@ -3,7 +3,7 @@
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import EditableList from '$lib/components/ui/list/EditableList.svelte'
-  import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import { toast } from 'mono-svelte'
   import { instance } from '$lib/instance.js'
   import { getClient } from '$lib/lemmy.js'
   import { addAdmin } from '$lib/lemmy/user.js'

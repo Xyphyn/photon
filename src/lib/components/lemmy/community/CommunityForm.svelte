@@ -3,7 +3,7 @@
   import { profile } from '$lib/auth.js'
   import FileInput from '$lib/components/input/FileInput.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
-  import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import { toast } from 'mono-svelte'
   import { getClient, uploadImage } from '$lib/lemmy.js'
   import { addSubscription } from '$lib/lemmy/user.js'
   import { Button, Checkbox, TextInput } from 'mono-svelte'

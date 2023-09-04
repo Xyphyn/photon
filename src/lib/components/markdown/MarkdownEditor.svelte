@@ -3,7 +3,7 @@
   import FileInput from '$lib/components/input/FileInput.svelte'
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
-  import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import { toast } from 'mono-svelte'
   import { uploadImage } from '$lib/lemmy.js'
   import { Button, Label, Modal, TextArea } from 'mono-svelte'
   import { createEventDispatcher } from 'svelte'

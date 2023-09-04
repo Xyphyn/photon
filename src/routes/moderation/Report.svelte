@@ -1,7 +1,7 @@
 <script lang="ts">
   import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
   import Post from '$lib/components/lemmy/post/Post.svelte'
-  import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import { toast } from 'mono-svelte'
   import { getClient } from '$lib/lemmy.js'
   import { isCommentReport, isPostReport } from '$lib/lemmy/item.js'
   import type {
