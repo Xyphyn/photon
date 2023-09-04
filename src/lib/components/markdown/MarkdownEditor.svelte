@@ -2,11 +2,10 @@
   import { profile } from '$lib/auth.js'
   import FileInput from '$lib/components/input/FileInput.svelte'
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
-  import TextArea from '$lib/components/input/TextArea.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import { toast } from '$lib/components/ui/toasts/toasts.js'
   import { uploadImage } from '$lib/lemmy.js'
-  import { Button, Modal } from 'mono-svelte'
+  import { Button, Modal, TextArea } from 'mono-svelte'
   import { createEventDispatcher } from 'svelte'
   import {
     CodeBracket,
@@ -226,7 +225,7 @@ overflow-hidden focus-within:border-black focus-within:dark:border-white transit
       </div>
       <!--Actual text area-->
       <TextArea
-        class="bg-inherit border-0 rounded-none"
+        class="bg-inherit border-0 rounded-none !ring-0 focus:!ring-transparent !transition-none"
         bind:value
         bind:item={textArea}
         on:keydown={(e) => {
@@ -244,14 +243,18 @@ overflow-hidden focus-within:border-black focus-within:dark:border-white transit
         {...$$restProps}
       />
     {/if}
+
+    {#if $$slots.default || previewButton}
+      <div class="p-2 flex items-center w-full">
+        {#if previewButton}
+          <MultiSelect
+            bind:selected={previewing}
+            options={[false, true]}
+            optionNames={['Edit', 'Preview']}
+          />
+        {/if}
+        <slot />
+      </div>
+    {/if}
   </div>
-  {#if previewButton}
-    <div class="mt-2">
-      <MultiSelect
-        bind:selected={previewing}
-        options={[false, true]}
-        optionNames={['Edit', 'Preview']}
-      />
-    </div>
-  {/if}
 </div>

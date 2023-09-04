@@ -24,10 +24,8 @@
   import { isCommentView } from '$lib/lemmy/item.js'
   import { getClient } from '$lib/lemmy.js'
   import { isBlocked } from '$lib/lemmy/user.js'
-  import MultiSelect from '$lib/components/input/MultiSelect.svelte'
   import { toast } from '$lib/components/ui/toasts/toasts.js'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
-  import TextArea from '$lib/components/input/TextArea.svelte'
   import { profile } from '$lib/auth.js'
   import { ban, isAdmin } from '$lib/components/lemmy/moderation/moderation.js'
   import Menu from '$lib/components/ui/menu/Menu.svelte'
@@ -36,6 +34,7 @@
   import { searchParam } from '$lib/util.js'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { Button, Modal, Select } from 'mono-svelte'
+  import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
 
   export let data
 
@@ -122,7 +121,7 @@
       <p class="inline-flex flex-row gap-2 items-center">
         Sending <UserLink avatar user={data.person_view.person} /> a message
       </p>
-      <TextArea
+      <MarkdownEditor
         bind:value={message}
         label="Message"
         placeholder="your hair looks nice today"

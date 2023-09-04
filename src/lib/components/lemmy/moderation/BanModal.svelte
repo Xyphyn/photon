@@ -1,11 +1,11 @@
 <script lang="ts">
-  import TextArea from '$lib/components/input/TextArea.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import type { Community, Person, PersonView } from 'lemmy-js-client'
   import { getClient } from '$lib/lemmy.js'
   import { toast } from '$lib/components/ui/toasts/toasts.js'
   import { profile } from '$lib/auth.js'
   import { Button, Checkbox, Modal, TextInput } from 'mono-svelte'
+  import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
 
   export let open = false
   let item: Person | undefined
@@ -114,7 +114,7 @@
         {banned ? 'Unbanning' : 'Banning'} from
         <span class="font-bold">{community ? community.name : 'site'}</span>
       </p>
-      <TextArea
+      <MarkdownEditor
         required
         bind:value={reason}
         label="Reason"

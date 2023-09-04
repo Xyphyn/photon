@@ -1,6 +1,5 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
-  import TextArea from '$lib/components/input/TextArea.svelte'
   import Comment from '$lib/components/lemmy/comment/Comment.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import Card from '$lib/components/ui/Card.svelte'
@@ -18,6 +17,7 @@
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import { Button } from 'mono-svelte'
+  import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
 
   export let item: CommentReplyView | PersonMentionView | PrivateMessageView
   export let read: boolean
@@ -176,7 +176,7 @@
     {#if isPrivateMessage(item)}
       {#if replying}
         <div class="mt-2 flex flex-col gap-2">
-          <TextArea placeholder="Message" bind:value={reply} rows={3} />
+          <MarkdownEditor placeholder="Message" bind:value={reply} rows={4} />
           <div class="ml-auto w-24">
             <Button
               disabled={loading}

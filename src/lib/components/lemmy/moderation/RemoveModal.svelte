@@ -1,5 +1,4 @@
 <script lang="ts">
-  import TextArea from '$lib/components/input/TextArea.svelte'
   import Comment from '$lib/components/lemmy/comment/Comment.svelte'
   import Post from '$lib/components/lemmy/post/Post.svelte'
   import { toast } from '$lib/components/ui/toasts/toasts.js'
@@ -193,7 +192,7 @@
         <Post actions={false} post={item} />
       {/if}
 
-      <TextArea
+      <MarkdownEditor
         rows={3}
         label="Reason"
         placeholder="Optional"
