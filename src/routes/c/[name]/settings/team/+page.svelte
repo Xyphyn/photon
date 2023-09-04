@@ -119,11 +119,9 @@
           </span>
         </div>
       </div>
-      <Button
-        size="square-md"
-        on:click={() => action(moderator.moderator)}
-        icon={Trash}
-      />
+      <Button size="square-md" on:click={() => action(moderator.moderator)}>
+        <Icon src={Trash} mini size="16" />
+      </Button>
     </div>
   {/each}
 </EditableList>

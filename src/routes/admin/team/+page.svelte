@@ -10,7 +10,7 @@
   import { addAdmin } from '$lib/lemmy/user.js'
   import { removeItem, trycatch } from '$lib/util.js'
   import { Button } from 'mono-svelte'
-  import { Plus, QuestionMarkCircle, Trash } from 'svelte-hero-icons'
+  import { Icon, Plus, QuestionMarkCircle, Trash } from 'svelte-hero-icons'
 
   export let data
 
@@ -61,11 +61,9 @@
       {#each data.site?.admins ?? [] as admin}
         <div class="py-3 flex items-center justify-between">
           <UserLink avatar showInstance={false} user={admin.person} />
-          <Button
-            on:click={() => action(admin.person.id)}
-            icon={Trash}
-            size="square-md"
-          />
+          <Button on:click={() => action(admin.person.id)} size="square-md">
+            <Icon src={Trash} mini size="16" />
+          </Button>
         </div>
       {/each}
     {/if}
@@ -98,14 +96,8 @@
       class="flex-1"
       pattern={'@[^ |]{1,}'}
     />
-    <Button
-      loading={adding}
-      disabled={adding}
-      icon={Plus}
-      size="md"
-      class="h-full"
-      submit
-    >
+    <Button loading={adding} disabled={adding} size="md" class="h-full" submit>
+      <Icon src={Plus} mini size="16" slot="prefix" />
       Add Admin
     </Button>
   </form>

@@ -16,8 +16,8 @@ export async function load({ url, fetch }) {
   const query = url.searchParams.get('q')
   const page = Number(url.searchParams.get('page')) || 1
   const community = url.searchParams.get('community_name')
-  const sort = url.searchParams.get('sort')
-  const type = url.searchParams.get('type')
+  const sort = url.searchParams.get('sort') || 'New'
+  const type = url.searchParams.get('type') || 'All'
 
   if (query) {
     const results = await getClient(undefined, fetch).search({
@@ -44,6 +44,8 @@ export async function load({ url, fetch }) {
     )
 
     return {
+      type: type,
+      sort: sort,
       page: page,
       results: everything,
       streamed: {

@@ -8,7 +8,7 @@
   export let selected: string
   export let navigate: boolean = true
 
-  let sort: string
+  let sort: string = selected
   const setSelected = () => (selected = sort)
 </script>
 
