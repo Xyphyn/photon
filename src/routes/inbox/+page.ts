@@ -13,14 +13,13 @@ export async function load({ url, fetch }) {
     (url.searchParams.get('type') as InboxFeedType) || 'all'
   const client = getClient(undefined, fetch)
   const page = Number(url.searchParams.get('page')) || 1
-  const unreadOnly: boolean =
-    (url.searchParams.get('unreadOnly') || 'true') == 'true'
+  const unreadOnly: string = url.searchParams.get('unreadOnly') || 'true'
 
   const params = {
-    limit: 50,
+    limit: 20,
     page: page,
     auth: auth.jwt,
-    unread_only: unreadOnly,
+    unread_only: unreadOnly == 'true',
   }
 
   const [replies, mentions, privateMessages] = await Promise.all([
