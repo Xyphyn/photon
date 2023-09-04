@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Spinner from '$lib/components/ui/loader/Spinner.svelte'
   import { Color } from '$lib/ui/colors'
+  import { Spinner } from 'mono-svelte'
   import { createEventDispatcher } from 'svelte'
 
   type ButtonColor = keyof typeof buttonColors

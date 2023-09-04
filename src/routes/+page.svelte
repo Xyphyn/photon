@@ -1,16 +1,14 @@
 <script lang="ts">
   import { page } from '$app/stores'
   import StickyCard from '$lib/components/ui/StickyCard.svelte'
-  import MultiSelect from '$lib/components/input/MultiSelect.svelte'
   import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
-  import Spinner from '$lib/components/ui/loader/Spinner.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
-  import { profile } from '$lib/auth.js'
   import Sort from '$lib/components/lemmy/Sort.svelte'
   import { searchParam } from '$lib/util.js'
   import PostFeed from '$lib/components/lemmy/post/PostFeed.svelte'
-  import { Button, Modal, Select } from 'mono-svelte'
+  import { Button, Modal, Select, Spinner } from 'mono-svelte'
   import { GlobeAmericas, Icon } from 'svelte-hero-icons'
+  import { profile } from '$lib/auth.js'
 
   export let data
 
@@ -53,7 +51,7 @@
         </span>
         <option value="All">All</option>
         <option value="Local">Local</option>
-        <option value="Subscribed">Subscribed</option>
+        <option value="Subscribed" disabled={!$profile?.jwt}>Subscribed</option>
       </Select>
       <Sort selected={data.sort} />
     </div>

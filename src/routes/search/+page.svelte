@@ -8,7 +8,6 @@
   import UserItem from '$lib/components/lemmy/user/UserItem.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import Spinner from '$lib/components/ui/loader/Spinner.svelte'
   import {
     isCommentView,
     isCommunityView,
@@ -22,7 +21,7 @@
     PersonView,
     PostView,
   } from 'lemmy-js-client'
-  import { Button, Select, TextInput } from 'mono-svelte'
+  import { Button, Select, Spinner, TextInput } from 'mono-svelte'
   import { Bars3BottomRight, Icon, MagnifyingGlass } from 'svelte-hero-icons'
   import { expoOut } from 'svelte/easing'
   import { slide } from 'svelte/transition'

@@ -9,7 +9,6 @@
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
   import { toast } from 'mono-svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
-  import Spinner from '$lib/components/ui/loader/Spinner.svelte'
 
   export let post: PostView
   export let actions: boolean = true

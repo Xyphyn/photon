@@ -30,12 +30,11 @@
   } from '$lib/components/lemmy/moderation/moderation.js'
   import ModerationMenu from '$lib/components/lemmy/moderation/ModerationMenu.svelte'
   import { profile } from '$lib/auth.js'
-  import Spinner from '$lib/components/ui/loader/Spinner.svelte'
   import { deleteItem, markAsRead, save } from '$lib/lemmy/contentview.js'
   import { setSessionStorage } from '$lib/session.js'
   import { goto } from '$app/navigation'
   import { userSettings } from '$lib/settings.js'
-  import { Button, Modal } from 'mono-svelte'
+  import { Button, Modal, Spinner } from 'mono-svelte'
 
   export let post: PostView
 

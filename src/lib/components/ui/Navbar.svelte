@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { profile, profileData, setUserID } from '$lib/auth.js'
+  import { profile, profileData } from '$lib/auth.js'
   import Link from '$lib/components/input/Link.svelte'
   import ShieldIcon from '$lib/components/lemmy/moderation/ShieldIcon.svelte'
   import {
@@ -8,13 +8,12 @@
   } from '$lib/components/lemmy/moderation/moderation.js'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import Logo from '$lib/components/ui/Logo.svelte'
-  import Spinner from '$lib/components/ui/loader/Spinner.svelte'
   import Menu from '$lib/components/ui/menu/Menu.svelte'
   import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
   import { LINKED_INSTANCE_URL, instance } from '$lib/instance.js'
   import { site } from '$lib/lemmy.js'
   import { theme } from '$lib/ui/colors.js'
-  import { Button, Select } from 'mono-svelte'
+  import { Button, Select, Spinner } from 'mono-svelte'
   import {
     ArrowLeftOnRectangle,
     Bars3,
