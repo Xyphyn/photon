@@ -68,7 +68,7 @@
       </Button>
     </div>
   {:else}
-    <Popover targetClass="h-8 z-30" openOnHover>
+    <Popover targetClass="h-8" openOnHover>
       <div
         class="flex items-center text-sm gap-1 rounded-md border border-slate-200
     dark:border-zinc-700 px-1 h-8 duration-200 dark:bg-zinc-900"

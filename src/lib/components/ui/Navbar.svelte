@@ -139,7 +139,7 @@
       <Icon mini src={GlobeAlt} size="16" slot="prefix" />
       <span class="hidden md:inline">Explore</span>
     </Button>
-    <Menu origin="bottom-right">
+    <Menu origin="bottom-right" targetClass="h-8">
       <Button
         color="primary"
         slot="target"
@@ -179,7 +179,7 @@
   <Menu
     origin="bottom-right"
     itemsClass="h-8 md:h-8 z-10"
-    targetClass="z-10"
+    targetClass="z-10 h-8"
     containerClass="!max-h-[28rem] z-10"
   >
     <button
