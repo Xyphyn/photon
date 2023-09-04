@@ -42,7 +42,6 @@
 </p>
 <div class="flex flex-row flex-wrap gap-4 mt-4">
   <Select
-    class="w-48"
     bind:value={data.type}
     on:change={() => searchParam($page.url, 'type', data.type ?? 'All', 'page')}
   >
@@ -58,20 +57,10 @@
   <div class="flex flex-col sm:flex-row gap-2 sm:ml-auto items-center">
     <TextInput
       bind:value={search}
-      on:change={() => {
-        $page.url.searchParams.set('q', search)
-        goto($page.url.toString(), {
-          invalidateAll: true,
-        })
-      }}
+      on:change={() => () => searchParam($page.url, 'q', search, 'page')}
     />
     <Button
-      on:click={() => {
-        $page.url.searchParams.set('q', search)
-        goto($page.url.toString(), {
-          invalidateAll: true,
-        })
-      }}
+      on:click={() => searchParam($page.url, 'q', search, 'page')}
       color="ghost"
       class="h-max"
     >
