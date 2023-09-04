@@ -28,7 +28,10 @@
 <Modal bind:open={sidebar}>
   <span slot="title">About</span>
   <div class="mx-auto">
-    <CommunityCard community_view={data.community.community_view} />
+    <CommunityCard
+      community_view={data.community.community_view}
+      moderators={data.community.moderators}
+    />
   </div>
 </Modal>
 
@@ -66,6 +69,9 @@
     />
   </div>
   <div class="hidden xl:block">
-    <CommunityCard community_view={data.community.community_view} />
+    <CommunityCard
+      community_view={data.community.community_view}
+      moderators={data.community.moderators}
+    />
   </div>
 </div>

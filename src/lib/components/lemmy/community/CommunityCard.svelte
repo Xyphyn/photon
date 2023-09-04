@@ -4,13 +4,13 @@
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import StickyCard from '$lib/components/ui/StickyCard.svelte'
-  import { toast } from 'mono-svelte'
+  import { Popover, toast } from 'mono-svelte'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import { getClient } from '$lib/lemmy.js'
   import { addSubscription } from '$lib/lemmy/user.js'
   import { fullCommunityName } from '$lib/util.js'
-  import type { CommunityView } from 'lemmy-js-client'
+  import type { CommunityModeratorView, CommunityView } from 'lemmy-js-client'
   import { Button } from 'mono-svelte'
   import {
     Calendar,
@@ -24,6 +24,7 @@
   } from 'svelte-hero-icons'
 
   export let community_view: CommunityView
+  export let moderators: CommunityModeratorView[]
 
   let loading = {
     blocking: false,
@@ -108,6 +109,34 @@
       <FormattedNumber number={community_view.counts.comments} />
     </span>
   </div>
+  {#if moderators}
+    <div class="flex flex-col gap-2 max-w-full">
+      <span class="font-bold">Moderators</span>
+      <div
+        class="flex items-center -space-x-1 flex-wrap hover:space-x-1 transition-all
+    cursor-pointer"
+      >
+        {#each moderators as moderator (moderator.moderator.id)}
+          <Popover openOnHover origin="top-left" class="transition-all">
+            <a
+              class="block ring rounded-full ring-slate-50 dark:ring-zinc-950 transition-all"
+              href="/u/{moderator.moderator.name}@{new URL(
+                moderator.moderator.actor_id
+              ).hostname}"
+              slot="target"
+            >
+              <Avatar
+                width={28}
+                url={moderator.moderator.avatar}
+                alt={moderator.moderator.name}
+              />
+            </a>
+            <span class="font-bold">{moderator.moderator.name}</span>
+          </Popover>
+        {/each}
+      </div>
+    </div>
+  {/if}
   {#if $profile?.jwt}
     <div class="w-full mt-2 flex flex-col gap-2">
       <Button

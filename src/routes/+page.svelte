@@ -24,7 +24,11 @@
   <span slot="title">About</span>
   <div class="mx-auto">
     {#await data.streamed.site then site}
-      <SiteCard site={site.site_view} taglines={site.taglines} />
+      <SiteCard
+        site={site.site_view}
+        taglines={site.taglines}
+        admins={site.admins}
+      />
     {/await}
   </div>
 </Modal>
