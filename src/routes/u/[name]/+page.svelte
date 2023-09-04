@@ -144,7 +144,6 @@
       <Select
         bind:value={data.sort}
         on:change={() => searchParam($page.url, 'sort', data.sort, 'page')}
-        class="w-48"
       >
         <span slot="label" class="flex items-center gap-1">
           <Icon src={ChartBar} size="14" mini />
@@ -157,7 +156,6 @@
       <Select
         bind:value={data.type}
         on:change={() => searchParam($page.url, 'type', data.type, 'page')}
-        class="w-48"
       >
         <span slot="label" class="flex items-center gap-1">
           <Icon src={Bars3BottomRight} size="15" mini />
