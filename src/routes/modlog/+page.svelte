@@ -8,8 +8,18 @@
   import { userSettings } from '$lib/settings.js'
   import ModlogItemCard from './item/ModlogItemCard.svelte'
   import ModlogItemTable from './item/ModlogItemTable.svelte'
+  import { Select } from 'mono-svelte'
+  import { Bars3BottomRight, Icon, ViewColumns } from 'svelte-hero-icons'
 
   export let data
+
+  let view = `${
+    $userSettings.modlogCardView ??
+    !window.matchMedia('(min-width: 1600px)').matches
+  }`
+
+  $: $userSettings.modlogCardView =
+    view == 'true' ? true : view == 'false' ? false : undefined
 </script>
 
 <svelte:head>
@@ -18,64 +28,58 @@
 
 <div class="flex flex-col gap-4">
   <h1 class="font-bold text-2xl">Modlog</h1>
-  <div class="flex flex-col gap-2">
-    <MultiSelect
-      options={[
-        'All',
-        'ModRemovePost',
-        'ModLockPost',
-        'ModFeaturePost',
-        'ModRemoveComment',
-        'ModRemoveCommunity',
-        'ModBanFromCommunity',
-        'ModAddCommunity',
-        'ModTransferCommunity',
-        'ModAdd',
-        'ModBan',
-        'ModHideCommunity',
-        'AdminPurgePerson',
-        'AdminPurgeCommunity',
-        'AdminPurgePost',
-        'AdminPurgeComment',
-      ]}
-      optionNames={[
-        'All',
-        'Remove Post',
-        'Lock Post',
-        'Feature Post',
-        'Remove Comment',
-        'Remove Community',
-        'Ban From Community',
-        'Add Community',
-        'Transfer Community',
-        'Add',
-        'Ban',
-        'Hide Community',
-        'Purge Person',
-        'Purge Community',
-        'Purge Post',
-        'Purge Comment',
-      ]}
-      selected={data.type}
-      on:select={(e) => searchParam($page.url, 'type', e.detail, 'page')}
-    />
-    <div class="max-w-sm">
-      <div class="block my-1 font-bold text-sm">Community</div>
-      <ObjectAutocomplete
-        placeholder="Filter by community"
-        jwt={$profile?.jwt}
-        listing_type="All"
-        showWhenEmpty={true}
-        on:select={(e) =>
-          searchParam($page.url, 'community', e.detail?.id.toString(), 'page')}
-      />
-    </div>
-    <MultiSelect
-      options={[false, true, undefined]}
-      optionNames={['Table', 'Cards', 'Default']}
-      selected={$userSettings.modlogCardView ??
-        !window.matchMedia('(min-width: 1600px)').matches}
-      on:select={(e) => ($userSettings.modlogCardView = e.detail)}
+  <div class="flex flex-row flex-wrap gap-2">
+    <Select
+      bind:value={data.type}
+      on:change={(e) => searchParam($page.url, 'type', data.type, 'page')}
+      class="w-48"
+    >
+      <span slot="label" class="flex gap-1 items-center">
+        <Icon src={Bars3BottomRight} size="15" mini />
+        Type
+      </span>
+      <option value="All">All</option>
+      <option value="ModRemovePost">Remove Post</option>
+      <option value="ModLockPost">Lock Post</option>
+      <option value="ModFeaturePost">Feature Post</option>
+      <option value="ModRemoveComment">Remove Comment</option>
+      <option value="ModRemoveCommunity">Remove Community</option>
+      <option value="ModBanFromCommunity">Ban From Community</option>
+      <option value="ModAddCommunity">Add Moderator</option>
+      <option value="ModTransferCommunity">Transfer Community</option>
+      <option value="ModAdd">Add Admin</option>
+      <option value="ModBan">Ban Admin</option>
+      <option value="ModHideCommunity">Hide Community</option>
+      <option value="AdminPurgePerson">Purge User</option>
+      <option value="AdminPurgeCommunity">Purge Community</option>
+      <option value="AdminPurgePost">Purge Post</option>
+      <option value="AdminPurgeComment">Purge Comment</option>
+    </Select>
+
+    <Select bind:value={view} class="w-36">
+      <span slot="label" class="flex gap-1 items-center">
+        <Icon src={ViewColumns} size="15" mini />
+        View
+      </span>
+      <option value="false">Table</option>
+      <option value="true">Cards</option>
+      <option value="undefined">Default</option>
+    </Select>
+  </div>
+  <div class="max-w-sm">
+    <div class="block my-1 font-bold text-sm">Community</div>
+    <ObjectAutocomplete
+      placeholder="Filter by community"
+      jwt={$profile?.jwt}
+      listing_type="All"
+      showWhenEmpty={true}
+      on:select={(e) =>
+        searchParam(
+          $page.url,
+          'community',
+          e.detail?.id.toString() ?? '',
+          'page'
+        )}
     />
   </div>
   {#if data.modlog}
