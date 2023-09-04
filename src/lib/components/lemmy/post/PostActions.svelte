@@ -75,6 +75,8 @@
   <PostVote
     post={post.post}
     bind:vote={post.my_vote}
+    bind:upvotes={post.counts.upvotes}
+    bind:downvotes={post.counts.downvotes}
     bind:score={post.counts.score}
   />
 
@@ -107,7 +109,11 @@
   {#if $profile?.user && (amMod($profile.user, post.community) || isAdmin($profile.user))}
     <ModerationMenu bind:item={post} community={post.community} />
   {/if}
-  <Menu alignment="bottom-right" containerClass="overflow-auto max-h-[400px]">
+  <Menu
+    alignment="bottom-right"
+    containerClass="overflow-auto max-h-[400px]"
+    class="h-full max-h-screen"
+  >
     <Button
       let:toggleOpen
       slot="button"
