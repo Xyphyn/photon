@@ -4,13 +4,12 @@
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
   import Sort from '$lib/components/lemmy/Sort.svelte'
   import { toast } from '$lib/components/ui/toasts/toasts.js'
-  import Checkbox from '$lib/components/input/Checkbox.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import Link from '$lib/components/input/Link.svelte'
   import { ArrowPath, Icon } from 'svelte-hero-icons'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { removalTemplate } from '$lib/components/lemmy/moderation/moderation.js'
-  import { Button } from 'mono-svelte'
+  import { Button, Checkbox } from 'mono-svelte'
 
   let data = {
     loading: false,

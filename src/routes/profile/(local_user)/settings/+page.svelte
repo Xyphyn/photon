@@ -1,7 +1,6 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { profile, profileData, setUserID } from '$lib/auth.js'
-  import Checkbox from '$lib/components/input/Checkbox.svelte'
   import FileInput from '$lib/components/input/FileInput.svelte'
   import TextInput from '$lib/components/input/TextInput.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
@@ -10,7 +9,7 @@
   import { removeToast, toast } from '$lib/components/ui/toasts/toasts.js'
   import { getClient, uploadImage } from '$lib/lemmy.js'
   import type { SaveUserSettings } from 'lemmy-js-client'
-  import { Button } from 'mono-svelte'
+  import { Button, Checkbox } from 'mono-svelte'
 
   export let data
 

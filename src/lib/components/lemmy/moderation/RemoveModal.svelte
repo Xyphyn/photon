@@ -8,7 +8,6 @@
   import { isCommentView, isPostView } from '$lib/lemmy/item.js'
   import type { CommentView, PostView } from 'lemmy-js-client'
   import { profile } from '$lib/auth.js'
-  import Checkbox from '$lib/components/input/Checkbox.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { Fire, Icon, Trash } from 'svelte-hero-icons'
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
@@ -16,7 +15,7 @@
   import { userSettings } from '$lib/settings.js'
   import { fullCommunityName } from '$lib/util.js'
   import { amMod, isAdmin } from './moderation'
-  import { Button } from 'mono-svelte'
+  import { Button, Checkbox } from 'mono-svelte'
 
   export let open: boolean
   export let item: PostView | CommentView | undefined = undefined
@@ -202,7 +201,7 @@
         bind:value={reason}
       />
 
-      {#if !removed && $profile?.user && ( amMod($profile.user, item.community) || (isAdmin($profile.user) && item.community.local))}
+      {#if !removed && $profile?.user && (amMod($profile.user, item.community) || (isAdmin($profile.user) && item.community.local))}
         <Checkbox bind:checked={commentReason}>Reply with reason</Checkbox>
 
         {#if commentReason}

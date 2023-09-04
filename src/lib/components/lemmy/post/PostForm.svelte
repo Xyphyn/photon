@@ -11,7 +11,7 @@
   import { profile } from '$lib/auth.js'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { placeholders } from '$lib/util.js'
-  import Checkbox from '$lib/components/input/Checkbox.svelte'
+  import { Checkbox } from 'mono-svelte'
   import { getSessionStorage, setSessionStorage } from '$lib/session.js'
   import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
   import ObjectAutocomplete from '$lib/components/lemmy/ObjectAutocomplete.svelte'

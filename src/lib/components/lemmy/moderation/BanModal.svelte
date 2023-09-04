@@ -1,6 +1,5 @@
 <script lang="ts">
   import TextArea from '$lib/components/input/TextArea.svelte'
-  import UserItem from '$lib/components/lemmy/user/UserItem.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import Modal from '$lib/components/ui/modal/Modal.svelte'
   import type { Community, Person, PersonView } from 'lemmy-js-client'
@@ -8,8 +7,7 @@
   import { toast } from '$lib/components/ui/toasts/toasts.js'
   import TextInput from '$lib/components/input/TextInput.svelte'
   import { profile } from '$lib/auth.js'
-  import Checkbox from '$lib/components/input/Checkbox.svelte'
-  import { Button } from 'mono-svelte'
+  import { Button, Checkbox } from 'mono-svelte'
 
   export let open = false
   let item: Person | undefined
@@ -127,7 +125,14 @@
           : 'banning'} {item.name}?"
       />
       {#if !banned}
-        <Checkbox bind:checked={deleteData}>Delete data</Checkbox>
+        <Checkbox bind:checked={deleteData}>
+          Delete data
+          <svelte:fragment slot="description">
+            This will delete ALL of this user's posts and comments on this {community
+              ? 'community'
+              : 'site'}.
+          </svelte:fragment>
+        </Checkbox>
         <TextInput
           bind:value={expires}
           label="Expires (UTC)"

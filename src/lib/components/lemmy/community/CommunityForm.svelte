@@ -1,7 +1,6 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { profile } from '$lib/auth.js'
-  import Checkbox from '$lib/components/input/Checkbox.svelte'
   import FileInput from '$lib/components/input/FileInput.svelte'
   import TextArea from '$lib/components/input/TextArea.svelte'
   import TextInput from '$lib/components/input/TextInput.svelte'
@@ -9,7 +8,7 @@
   import { toast } from '$lib/components/ui/toasts/toasts.js'
   import { getClient, uploadImage } from '$lib/lemmy.js'
   import { addSubscription } from '$lib/lemmy/user.js'
-  import { Button } from 'mono-svelte'
+  import { Button, Checkbox } from 'mono-svelte'
 
   /**
    * The community ID to edit.
