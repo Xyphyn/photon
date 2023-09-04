@@ -1,9 +1,8 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { profile } from '$lib/auth.js'
-  import FileInput from '$lib/components/input/FileInput.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
-  import { toast } from 'mono-svelte'
+  import { ImageInput, toast } from 'mono-svelte'
   import { getClient, uploadImage } from '$lib/lemmy.js'
   import { addSubscription } from '$lib/lemmy/user.js'
   import { Button, Checkbox, TextInput } from 'mono-svelte'
@@ -118,8 +117,8 @@
     disabled={edit != undefined}
   />
   <TextInput required label="Display name" bind:value={formData.displayName} />
-  <FileInput label="Icon" bind:files={formData.icon} image />
-  <FileInput label="Banner" bind:files={formData.banner} image />
+  <ImageInput label="Icon" bind:files={formData.icon} />
+  <ImageInput label="Banner" bind:files={formData.banner} />
   <MarkdownEditor previewButton label="Sidebar" bind:value={formData.sidebar} />
 
   <Checkbox bind:checked={formData.nsfw}>NSFW</Checkbox>

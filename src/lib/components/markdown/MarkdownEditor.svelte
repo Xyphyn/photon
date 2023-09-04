@@ -1,9 +1,8 @@
 <script lang="ts">
   import { profile } from '$lib/auth.js'
-  import FileInput from '$lib/components/input/FileInput.svelte'
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
-  import { toast } from 'mono-svelte'
+  import { ImageInput, toast } from 'mono-svelte'
   import { uploadImage } from '$lib/lemmy.js'
   import { Button, Label, Modal, TextArea } from 'mono-svelte'
   import { createEventDispatcher } from 'svelte'
@@ -102,7 +101,7 @@
   <Modal bind:open={uploadingImage}>
     <span slot="title">Upload image</span>
     <form class="flex flex-col gap-4" on:submit|preventDefault={upload}>
-      <FileInput image bind:files={image} />
+      <ImageInput bind:files={image} />
       <Button {loading} disabled={loading} submit color="primary" size="lg">
         Upload
       </Button>

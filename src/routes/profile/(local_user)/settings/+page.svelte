@@ -1,9 +1,8 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { profile, profileData, setUserID } from '$lib/auth.js'
-  import FileInput from '$lib/components/input/FileInput.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
-  import { Material, removeToast, toast } from 'mono-svelte'
+  import { ImageInput, Material, removeToast, toast } from 'mono-svelte'
   import { getClient, uploadImage } from '$lib/lemmy.js'
   import type { SaveUserSettings } from 'lemmy-js-client'
   import { Button, Checkbox, Modal, TextInput } from 'mono-svelte'
@@ -160,7 +159,7 @@
       label="Bio"
       previewButton
     />
-    <FileInput label="Profile image" image bind:files={profileImage} />
+    <ImageInput label="Profile image" bind:files={profileImage} />
     <TextInput label="Email" bind:value={formData.email} />
     <TextInput
       label="Matrix User"
