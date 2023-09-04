@@ -1,7 +1,7 @@
 <script lang="ts">
   import { ChevronDown, Icon } from 'svelte-hero-icons'
+  import { Button } from 'mono-svelte'
 
-  import Button from '$lib/components/input/Button.svelte'
   import { createEventDispatcher } from 'svelte'
   type T = $$Generic
   export let options: T[]

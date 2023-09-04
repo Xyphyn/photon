@@ -1,10 +1,7 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
-  import Button from '$lib/components/input/Button.svelte'
-  import TextArea from '$lib/components/input/TextArea.svelte'
   import Comment from '$lib/components/lemmy/comment/Comment.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
-  import Card from '$lib/components/ui/Card.svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import { getClient } from '$lib/lemmy.js'
   import { profile } from '$lib/auth.js'
@@ -15,9 +12,11 @@
   } from 'lemmy-js-client'
   import { ChatBubbleOvalLeft, Check, Icon } from 'svelte-hero-icons'
   import { page } from '$app/stores'
-  import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import { Material, toast } from 'mono-svelte'
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
+  import { Button } from 'mono-svelte'
+  import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
 
   export let item: CommentReplyView | PersonMentionView | PrivateMessageView
   export let read: boolean
@@ -90,7 +89,7 @@
   }
 </script>
 
-<Card elevation={0} class="flex flex-col rounded-md p-5 max-w-full gap-2">
+<Material padding="lg" class="flex flex-col max-w-full gap-2">
   {#if !isPrivateMessage(item)}
     <PostMeta
       published={new Date(item.post.published)}
@@ -132,7 +131,7 @@
         disabled={loading}
         on:click={() => markAsRead(!read)}
       >
-        <Icon slot="icon" src={Check} mini size="16" />
+        <Icon slot="prefix" src={Check} mini size="16" />
       </Button>
 
       <Button href="/comment/{item.comment.id}" size="md" class="h-8">
@@ -176,7 +175,7 @@
     {#if isPrivateMessage(item)}
       {#if replying}
         <div class="mt-2 flex flex-col gap-2">
-          <TextArea placeholder="Message" bind:value={reply} rows={3} />
+          <MarkdownEditor placeholder="Message" bind:value={reply} rows={4} />
           <div class="ml-auto w-24">
             <Button
               disabled={loading}
@@ -192,4 +191,4 @@
       {/if}
     {/if}
   {/if}
-</Card>
+</Material>

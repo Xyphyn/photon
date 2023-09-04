@@ -1,16 +1,11 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { profile, profileData, setUserID } from '$lib/auth.js'
-  import Button from '$lib/components/input/Button.svelte'
-  import Checkbox from '$lib/components/input/Checkbox.svelte'
-  import FileInput from '$lib/components/input/FileInput.svelte'
-  import TextInput from '$lib/components/input/TextInput.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
-  import Card from '$lib/components/ui/Card.svelte'
-  import Modal from '$lib/components/ui/modal/Modal.svelte'
-  import { removeToast, toast } from '$lib/components/ui/toasts/toasts.js'
+  import { ImageInput, Material, removeToast, toast } from 'mono-svelte'
   import { getClient, uploadImage } from '$lib/lemmy.js'
   import type { SaveUserSettings } from 'lemmy-js-client'
+  import { Button, Checkbox, Modal, TextInput } from 'mono-svelte'
 
   export let data
 
@@ -164,7 +159,7 @@
       label="Bio"
       previewButton
     />
-    <FileInput label="Profile image" image bind:files={profileImage} />
+    <ImageInput label="Profile image" bind:files={profileImage} />
     <TextInput label="Email" bind:value={formData.email} />
     <TextInput
       label="Matrix User"
@@ -190,9 +185,7 @@
       Save
     </Button>
   {:else}
-    <Card cardColor="warning" class="p-5">
-      The API didn't return your user settings.
-    </Card>
+    <Material padding="lg">The API didn't return your user settings.</Material>
   {/if}
   <Button
     on:click={() => deleteAccount(0)}

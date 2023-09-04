@@ -1,6 +1,5 @@
 <script lang="ts">
-  import { profile, profileData, setUserID } from '$lib/auth.js'
-  import Button from '$lib/components/input/Button.svelte'
+  import { profile, profileData } from '$lib/auth.js'
   import Link from '$lib/components/input/Link.svelte'
   import ShieldIcon from '$lib/components/lemmy/moderation/ShieldIcon.svelte'
   import {
@@ -9,14 +8,18 @@
   } from '$lib/components/lemmy/moderation/moderation.js'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import Logo from '$lib/components/ui/Logo.svelte'
-  import Spinner from '$lib/components/ui/loader/Spinner.svelte'
-  import Menu from '$lib/components/ui/menu/Menu.svelte'
-  import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
   import { LINKED_INSTANCE_URL, instance } from '$lib/instance.js'
   import { site } from '$lib/lemmy.js'
   import { theme } from '$lib/ui/colors.js'
   import {
-    ArrowLeftOnRectangle,
+    Button,
+    Menu,
+    MenuButton,
+    MenuDivider,
+    Select,
+    Spinner,
+  } from 'mono-svelte'
+  import {
     Bars3,
     Bookmark,
     Cog6Tooth,
@@ -97,7 +100,7 @@
         dark:text-zinc-300 text-slate-700 hover:text-inherit hover:dark:text-inherit
       hover:bg-slate-200 relative hover:border-slate-300"
       >
-        <Icon src={CommandLine} mini size="16" slot="icon" />
+        <Icon src={CommandLine} mini size="16" slot="prefix" />
         <span class="hidden md:inline">Admin</span>
       </Button>
     {/if}
@@ -123,7 +126,7 @@
       class="max-md:w-9 max-md:h-8 max-md:!p-0
       dark:text-zinc-300 text-slate-700 hover:text-inherit hover:dark:text-inherit hover:bg-slate-200 hover:border-slate-300"
     >
-      <Icon mini src={MagnifyingGlass} width={16} slot="icon" />
+      <Icon mini src={MagnifyingGlass} width={16} slot="prefix" />
       <span class="hidden md:inline">Search</span>
     </Button>
     <Button
@@ -133,21 +136,20 @@
       dark:text-zinc-300 text-slate-700 hover:text-inherit
       hover:dark:text-inherit hover:bg-slate-200 hover:border-slate-300"
     >
-      <Icon mini src={GlobeAlt} size="16" slot="icon" />
+      <Icon mini src={GlobeAlt} size="16" slot="prefix" />
       <span class="hidden md:inline">Explore</span>
     </Button>
-    <Menu let:toggleOpen alignment="bottom-right">
+    <Menu origin="bottom-right" targetClass="h-8">
       <Button
         color="primary"
-        slot="button"
+        slot="target"
         aria-label="Create"
-        on:click={toggleOpen}
         class="max-md:w-9 max-md:h-8 max-md:!p-0"
       >
-        <Icon src={Plus} width={18} mini slot="icon" />
+        <Icon src={Plus} width={18} mini slot="prefix" />
         <span class="hidden md:inline">Create</span>
       </Button>
-      <li class="text-xs opacity-80 text-left mx-4 my-1 py-1">Create</li>
+      <MenuDivider>Create</MenuDivider>
       <MenuButton
         link
         href="/create/post"
@@ -175,17 +177,16 @@
     </Menu>
   </div>
   <Menu
-    let:toggleOpen
-    alignment="bottom-right"
-    itemsClass="h-8 md:h-8"
-    containerClass="!max-h-[28rem]"
+    origin="bottom-right"
+    itemsClass="h-8 md:h-8 z-10"
+    targetClass="z-10 h-8"
+    containerClass="!max-h-[28rem] z-10"
   >
     <button
       class="w-8 h-8 rounded-full ring-1 ring-slate-300 bg-slate-100
       dark:bg-zinc-800 relative"
       aria-label="Profile"
-      slot="button"
-      on:click={toggleOpen}
+      slot="target"
     >
       {#if $profile?.user}
         <div class="w-8 h-8 aspect-square object-cover rounded-full">
@@ -206,9 +207,9 @@
         </div>
       {/if}
     </button>
-    <li class="text-xs opacity-80 text-left mx-4 my-1 py-1">
+    <MenuDivider>
       {$profile?.user ? $profile.user.local_user_view.person.name : 'Profile'}
-    </li>
+    </MenuDivider>
     {#if $profile?.user}
       <MenuButton link href="/profile">
         <Icon src={UserCircle} mini width={16} /> Profile
@@ -238,7 +239,7 @@
       </span>
     </MenuButton>
     <hr class="dark:opacity-10 w-[90%] my-2 mx-auto" />
-    <li class="text-xs px-4 py-1 my-1 opacity-80">App</li>
+    <MenuDivider>App</MenuDivider>
     <MenuButton link href="/settings">
       <Icon src={Cog6Tooth} mini width={16} />
       Settings
@@ -259,17 +260,18 @@
         mini
         size="16"
       />
-      <div class="flex flex-row flex-wrap justify-between w-full">
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <!-- svelte-ignore a11y-no-static-element-interactions -->
+      <div
+        class="flex flex-row flex-wrap justify-between w-full items-center"
+        on:click|stopPropagation
+      >
         <span>Theme</span>
-        <select
-          bind:value={$theme}
-          on:click|stopPropagation
-          class="ml-auto w-max px-1 rounded-sm cursor-pointer bg-transparent border dark:border-zinc-700"
-        >
+        <Select bind:value={$theme} class="ml-auto w-24" size="sm">
           <option value="system">System</option>
           <option value="light">Light</option>
           <option value="dark">Dark</option>
-        </select>
+        </Select>
       </div>
     </MenuButton>
     <hr class="dark:opacity-10 w-[90%] my-2 mx-auto" />

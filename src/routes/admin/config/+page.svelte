@@ -1,16 +1,11 @@
 <script lang="ts">
   import { profile } from '$lib/auth.js'
-  import Button from '$lib/components/input/Button.svelte'
-  import Checkbox from '$lib/components/input/Checkbox.svelte'
-  import SelectMenu from '$lib/components/input/SelectMenu.svelte'
-  import TextArea from '$lib/components/input/TextArea.svelte'
-  import TextInput from '$lib/components/input/TextInput.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
-  import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import { toast } from 'mono-svelte'
   import { getClient } from '$lib/lemmy.js'
   import type { EditSite } from 'lemmy-js-client'
   import type { PageData } from './$types.js'
-  import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
+  import { Button, Checkbox, Select, TextInput } from 'mono-svelte'
 
   export let data: PageData
 
@@ -74,17 +69,11 @@
     <Checkbox checked={formData.enable_nsfw} defaultValue={true}>
       Enable NSFW
     </Checkbox>
-    <SelectMenu
-      label="Registration mode"
-      alignment="top-left"
-      options={['Closed', 'RequireApplication', 'Open']}
-      optionNames={['Closed', 'Require Application', 'Open Registration']}
-      selected={formData.registration_mode ?? 'Open'}
-      on:select={(e) => {
-        // @ts-ignore
-        formData.registration_mode = e.detail
-      }}
-    />
+    <Select label="Registration Mode" bind:value={formData.registration_mode}>
+      <option value="Open">Open</option>
+      <option value="RequireApplication">Require Application</option>
+      <option value="Closed">Closed</option>
+    </Select>
     {#if formData.registration_mode == 'RequireApplication'}
       <MarkdownEditor
         previewButton

@@ -1,15 +1,11 @@
 <script lang="ts">
-  import Button from '$lib/components/input/Button.svelte'
-  import TextArea from '$lib/components/input/TextArea.svelte'
-  import UserItem from '$lib/components/lemmy/user/UserItem.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
-  import Modal from '$lib/components/ui/modal/Modal.svelte'
   import type { Community, Person, PersonView } from 'lemmy-js-client'
   import { getClient } from '$lib/lemmy.js'
-  import { toast } from '$lib/components/ui/toasts/toasts.js'
-  import TextInput from '$lib/components/input/TextInput.svelte'
+  import { toast } from 'mono-svelte'
   import { profile } from '$lib/auth.js'
-  import Checkbox from '$lib/components/input/Checkbox.svelte'
+  import { Button, Checkbox, Modal, TextInput } from 'mono-svelte'
+  import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
 
   export let open = false
   let item: Person | undefined
@@ -118,7 +114,7 @@
         {banned ? 'Unbanning' : 'Banning'} from
         <span class="font-bold">{community ? community.name : 'site'}</span>
       </p>
-      <TextArea
+      <MarkdownEditor
         required
         bind:value={reason}
         label="Reason"
@@ -127,7 +123,14 @@
           : 'banning'} {item.name}?"
       />
       {#if !banned}
-        <Checkbox bind:checked={deleteData}>Delete data</Checkbox>
+        <Checkbox bind:checked={deleteData}>
+          Delete data
+          <svelte:fragment slot="description">
+            This will delete ALL of this user's posts and comments on this {community
+              ? 'community'
+              : 'site'}.
+          </svelte:fragment>
+        </Checkbox>
         <TextInput
           bind:value={expires}
           label="Expires (UTC)"

@@ -3,13 +3,13 @@
   import { buildCommentsTree, type CommentNodeI } from './comments'
   import { page } from '$app/stores'
   import { onMount, setContext } from 'svelte'
-  import Button from '$lib/components/input/Button.svelte'
   import { ChevronDown, Icon, Plus, PlusCircle } from 'svelte-hero-icons'
   import { getClient } from '$lib/lemmy.js'
   import type { CommentView, Post } from 'lemmy-js-client'
   import { fly } from 'svelte/transition'
-  import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import { toast } from 'mono-svelte'
   import { profile } from '$lib/auth.js'
+  import { Button } from 'mono-svelte'
 
   export let nodes: CommentNodeI[]
   export let isParent: boolean
@@ -131,7 +131,7 @@
               fetchChildren(node).then(() => (node.loading = false))
             }}
           >
-            <Icon src={Plus} width={18} mini slot="icon" />
+            <Icon src={Plus} width={18} mini slot="prefix" />
             {node.comment_view.counts.child_count} more
           </Button>
         </button>

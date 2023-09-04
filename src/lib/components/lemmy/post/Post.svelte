@@ -1,15 +1,13 @@
 <script lang="ts">
   import type { PostView } from 'lemmy-js-client'
   import { isImage } from '$lib/ui/image.js'
-  import Card from '$lib/components/ui/Card.svelte'
   import { getInstance } from '$lib/lemmy.js'
   import PostActions from '$lib/components/lemmy/post/PostActions.svelte'
   import { userSettings } from '$lib/settings.js'
   import PostLink from '$lib/components/lemmy/post/PostLink.svelte'
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
-  import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import { Material, toast } from 'mono-svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
-  import Spinner from '$lib/components/ui/loader/Spinner.svelte'
 
   export let post: PostView
   export let actions: boolean = true
@@ -19,7 +17,9 @@
   let loaded = false
 </script>
 
-<Card
+<Material
+  color="distinct"
+  padding="none"
   class="flex flex-col max-w-full min-w-0 w-full gap-2.5 {compact
     ? '!bg-transparent !border-0 py-5'
     : 'p-5'}"
@@ -43,7 +43,7 @@
         />
         <a
           href="/post/{getInstance()}/{post.post.id}"
-          class="font-medium max-w-full w-full break-words"
+          class="font-medium max-w-full w-full break-words text-base"
           style="word-break: break-word;"
           class:text-slate-500={post.read && $userSettings.markReadPosts}
           class:dark:text-zinc-400={post.read && $userSettings.markReadPosts}
@@ -52,14 +52,6 @@
         </a>
       </div>
       {#if !$userSettings.showCompactPosts}
-        {#if post.post.url && !post.post.thumbnail_url}
-          <a
-            href={post.post.url}
-            class="max-w-full overflow-hidden overflow-ellipsis whitespace-nowrap text-sky-400 hover:underline text-xs"
-          >
-            {post.post.url}
-          </a>
-        {/if}
         {#if isImage(post.post.url)}
           <!--disabled preloads here since most people will hover over every image while scrolling-->
           <a
@@ -95,7 +87,9 @@
         {:else if post.post.url}
           <PostLink
             url={post.post.url}
-            thumbnail_url={post.post.thumbnail_url ? `${post.post.thumbnail_url}?format=webp&thumbnail=512` : undefined}
+            thumbnail_url={post.post.thumbnail_url
+              ? `${post.post.thumbnail_url}?format=webp&thumbnail=512`
+              : undefined}
             nsfw={post.post.nsfw}
           />
         {/if}
@@ -152,4 +146,4 @@
       />
     </div>
   {/if}
-</Card>
+</Material>

@@ -1,19 +1,21 @@
 <script lang="ts">
-  import Switch from '$lib/components/input/Switch.svelte'
   import { defaultSettings, userSettings } from '$lib/settings'
   import Setting from './Setting.svelte'
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
   import Sort from '$lib/components/lemmy/Sort.svelte'
-  import { toast } from '$lib/components/ui/toasts/toasts.js'
-  import Button from '$lib/components/input/Button.svelte'
-  import { getInboxNotifications } from '$lib/auth.js'
-  import Checkbox from '$lib/components/input/Checkbox.svelte'
+  import { toast } from 'mono-svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import Link from '$lib/components/input/Link.svelte'
-  import { ArrowLeftCircle, ArrowPath, Icon } from 'svelte-hero-icons'
-  import TextArea from '$lib/components/input/TextArea.svelte'
+  import {
+    ArrowPath,
+    ChatBubbleOvalLeftEllipsis,
+    GlobeAmericas,
+    Icon,
+  } from 'svelte-hero-icons'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { removalTemplate } from '$lib/components/lemmy/moderation/moderation.js'
+  import { Button, Checkbox, Select } from 'mono-svelte'
+  import ViewSelect from '$lib/components/lemmy/ViewSelect.svelte'
 
   let data = {
     loading: false,
@@ -36,7 +38,7 @@
       }}
       class="font-normal"
     >
-      <Icon src={ArrowPath} mini size="16" slot="icon" />
+      <Icon src={ArrowPath} mini size="16" slot="prefix" />
       Reset to default
     </Button>
   </h1>
@@ -46,22 +48,30 @@
     <span slot="description">The default sort to use for feeds.</span>
     <div class="flex flex-wrap flex-row gap-4 w-full">
       <div class="max-w-full">
-        <span class="block my-1 font-bold">Feed</span>
-        <MultiSelect
-          options={['Subscribed', 'Local', 'All']}
-          bind:selected={$userSettings.defaultSort.feed}
-        />
+        <Select bind:value={$userSettings.defaultSort.feed} class="w-28">
+          <span slot="label" class="flex items-center gap-1">
+            <Icon src={GlobeAmericas} size="16" mini />
+            Location
+          </span>
+          <option value="All">All</option>
+          <option value="Local">Local</option>
+          <option value="Subscribed">Subscribed</option>
+        </Select>
       </div>
       <div class="max-w-full">
-        <span class="block my-1 font-bold">Sort</span>
         <Sort bind:selected={$userSettings.defaultSort.sort} navigate={false} />
       </div>
       <div class="max-w-full">
-        <span class="block my-1 font-bold">Comments</span>
-        <MultiSelect
-          options={['Hot', 'Top', 'New']}
-          bind:selected={$userSettings.defaultSort.comments}
-        />
+        <Select bind:value={$userSettings.defaultSort.comments}>
+          <span slot="label" class="flex items-center gap-1">
+            <Icon src={ChatBubbleOvalLeftEllipsis} size="14" mini />
+            Comments
+          </span>
+
+          <option value="Hot">Hot</option>
+          <option value="Top">Top</option>
+          <option value="New">New</option>
+        </Select>
       </div>
     </div>
   </Setting>
@@ -121,11 +131,7 @@
   </Setting>
   <Setting>
     <span slot="title">Post style</span>
-    <MultiSelect
-      options={[false, true]}
-      optionNames={['Cards', 'Compact']}
-      bind:selected={$userSettings.showCompactPosts}
-    />
+    <ViewSelect />
   </Setting>
   <Setting>
     <Checkbox bind:checked={$userSettings.nsfwBlur} slot="title">

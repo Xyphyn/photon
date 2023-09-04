@@ -1,13 +1,11 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { setUser } from '$lib/auth.js'
-  import Button from '$lib/components/input/Button.svelte'
   import Link from '$lib/components/input/Link.svelte'
-  import TextInput from '$lib/components/input/TextInput.svelte'
-  import Card from '$lib/components/ui/Card.svelte'
-  import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import { toast } from 'mono-svelte'
   import { DEFAULT_INSTANCE_URL, LINKED_INSTANCE_URL } from '$lib/instance.js'
   import { getClient, validateInstance } from '$lib/lemmy.js'
+  import { Button, TextInput } from 'mono-svelte'
   import { AtSymbol, Icon } from 'svelte-hero-icons'
 
   let data = {
@@ -66,7 +64,10 @@
         placeholder="Example"
         class="flex-1"
         required
-      />
+        inlineAffixes
+      >
+        <span slot="prefix">@</span>
+      </TextInput>
       {#if !LINKED_INSTANCE_URL}
         <span class="flex items-center font-bold mt-6">
           <Icon src={AtSymbol} mini size="20" class="mt-auto" />
@@ -101,12 +102,6 @@
         minlength={6}
         maxlength={6}
         class="w-24"
-        on:input={(e) => {
-          if (!Number.isInteger(Number(e.detail.data))) {
-            e.preventDefault()
-            data.totp = data.totp.replace(e.detail.data, '')
-          }
-        }}
       />
     </div>
     <Button

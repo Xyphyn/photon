@@ -15,15 +15,15 @@ import { get } from 'svelte/store'
 export async function load({ url, fetch }) {
   const query = url.searchParams.get('q')
   const page = Number(url.searchParams.get('page')) || 1
-  const community = url.searchParams.get('community_name')
-  const sort = url.searchParams.get('sort')
-  const type = url.searchParams.get('type')
+  const community = Number(url.searchParams.get('community')) || undefined
+  const sort = url.searchParams.get('sort') || 'New'
+  const type = url.searchParams.get('type') || 'All'
 
   if (query) {
     const results = await getClient(undefined, fetch).search({
       q: query,
       auth: get(profile)?.jwt,
-      community_name: community ?? undefined,
+      community_id: community ?? undefined,
       limit: 40,
       page: page,
       sort: (sort as SortType) || 'New',
@@ -44,7 +44,10 @@ export async function load({ url, fetch }) {
     )
 
     return {
+      type: type,
+      sort: sort,
       page: page,
+      query: query,
       results: everything,
       streamed: {
         object: get(profile)?.jwt
@@ -59,5 +62,8 @@ export async function load({ url, fetch }) {
 
   return {
     page: 1,
+    sort: sort,
+    type: type,
+    query: query,
   }
 }

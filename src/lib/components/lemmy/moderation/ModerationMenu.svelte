@@ -1,24 +1,20 @@
 <script lang="ts">
   import { getClient } from '$lib/lemmy'
-  import type { CommentView, Community, PostView } from 'lemmy-js-client'
+  import type { CommentView, PostView } from 'lemmy-js-client'
   import { amMod, ban, isAdmin, remove } from './moderation'
-  import Menu from '$lib/components/ui/menu/Menu.svelte'
-  import Button from '$lib/components/input/Button.svelte'
-  import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
   import {
     Fire,
     Icon,
-    InformationCircle,
     LockClosed,
     LockOpen,
     Megaphone,
     ShieldExclamation,
     Trash,
   } from 'svelte-hero-icons'
-  import { Color } from '$lib/ui/colors.js'
   import { isCommentView, isPostView } from '$lib/lemmy/item.js'
-  import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import { Menu, MenuButton, MenuDivider, toast } from 'mono-svelte'
   import { profile } from '$lib/auth.js'
+  import { Button } from 'mono-svelte'
 
   export let item: PostView | CommentView
 
@@ -88,11 +84,10 @@
   }
 </script>
 
-<Menu let:toggleOpen alignment="bottom-right">
+<Menu origin="bottom-right">
   <Button
     class="hover:text-green-500 dark:text-zinc-400 text-slate-500"
-    on:click={toggleOpen}
-    slot="button"
+    slot="target"
     size="square-md"
     loading={acting}
     {...$$restProps}
@@ -103,7 +98,7 @@
       viewBox="0 0 20 22"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      slot="icon"
+      slot="prefix"
     >
       <path
         fill-rule="evenodd"
@@ -114,11 +109,13 @@
     </svg>
   </Button>
   {#if ($profile?.user && amMod($profile.user, item.community)) || ($profile?.user && isAdmin($profile.user))}
-    <span class="px-4 py-1 my-1 text-xs text-slate-600 dark:text-zinc-400">
-      Moderation {#if !item.community.local && !amMod($profile.user, item.community)} (Instance Only) {/if}
-    </span>
+    <MenuDivider>
+      Moderation {#if !item.community.local && !amMod($profile.user, item.community)}
+        (Instance Only)
+      {/if}
+    </MenuDivider>
     <MenuButton
-      color="warning"
+      color="warning-subtle"
       on:click={() => lock(!item.post.locked)}
       loading={locking}
       disabled={locking}
@@ -127,13 +124,13 @@
         src={item.post.locked ? LockOpen : LockClosed}
         size="16"
         mini
-        slot="icon"
+        slot="prefix"
       />
       {item.post.locked ? 'Unlock' : 'Lock'}
     </MenuButton>
 
     <MenuButton
-      color="success"
+      color="success-subtle"
       on:click={() =>
         pin(isPostView(item) ? !item.post.featured_community : false)}
       loading={pinning}
@@ -149,7 +146,7 @@
         {/if}
       </div>
     </MenuButton>
-    <MenuButton color="dangerSecondary" on:click={() => remove(item)}>
+    <MenuButton color="danger-subtle" on:click={() => remove(item)}>
       <Icon src={Trash} size="16" mini />
       {#if isCommentView(item)}
         {item.comment.removed ? 'Restore' : 'Remove'}
@@ -158,11 +155,13 @@
       {/if}
     </MenuButton>
     {#if $profile?.user && $profile.user.local_user_view.person.id != item.creator.id}
-      <span class="px-4 py-1 my-1 text-xs text-slate-600 dark:text-zinc-400">
-        User {#if !item.community.local && !amMod($profile.user, item.community)} (Instance Only) {/if}
-      </span>
+      <MenuDivider>
+        User {#if !item.community.local && !amMod($profile.user, item.community)}
+          (Instance Only)
+        {/if}
+      </MenuDivider>
       <MenuButton
-        color="dangerSecondary"
+        color="danger-subtle"
         on:click={() =>
           ban(item.creator_banned_from_community, item.creator, item.community)}
       >
@@ -174,11 +173,9 @@
     {/if}
   {/if}
   {#if $profile?.user && isAdmin($profile.user)}
-    <span class="px-4 py-1 my-1 text-xs text-slate-600 dark:text-zinc-400">
-      Admin
-    </span>
+    <MenuDivider>Admin</MenuDivider>
     <MenuButton
-      color="success"
+      color="success-subtle"
       on:click={() =>
         pin(isPostView(item) ? !item.post.featured_local : false, true)}
     >
@@ -190,7 +187,7 @@
         <span class="text-xs opacity-80">Instance</span>
       </div>
     </MenuButton>
-    <MenuButton color="dangerSecondary" on:click={() => remove(item, true)}>
+    <MenuButton color="danger-subtle" on:click={() => remove(item, true)}>
       <Icon src={Fire} size="16" mini />
       Purge
     </MenuButton>

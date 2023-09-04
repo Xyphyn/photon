@@ -14,6 +14,7 @@
     }}
   />
 {:else}
+  User data is missing.
   <pre>
     {JSON.stringify(data)}
   </pre>

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Button from '$lib/components/input/Button.svelte'
+  import { Button } from 'mono-svelte'
   import { createEventDispatcher } from 'svelte'
 
   export let page: number

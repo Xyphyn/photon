@@ -1,17 +1,13 @@
 <script lang="ts">
-  import { goto } from '$app/navigation'
   import { page } from '$app/stores'
-  import Button from '$lib/components/input/Button.svelte'
-  import MultiSelect from '$lib/components/input/MultiSelect.svelte'
-  import TextInput from '$lib/components/input/TextInput.svelte'
-  import Comment from '$lib/components/lemmy/comment/Comment.svelte'
+  import { profile } from '$lib/auth.js'
+  import ObjectAutocomplete from '$lib/components/lemmy/ObjectAutocomplete.svelte'
   import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
   import CommunityItem from '$lib/components/lemmy/community/CommunityItem.svelte'
   import Post from '$lib/components/lemmy/post/Post.svelte'
   import UserItem from '$lib/components/lemmy/user/UserItem.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import Spinner from '$lib/components/ui/loader/Spinner.svelte'
   import {
     isCommentView,
     isCommunityView,
@@ -25,15 +21,21 @@
     PersonView,
     PostView,
   } from 'lemmy-js-client'
-  import { Icon, MagnifyingGlass } from 'svelte-hero-icons'
-  import { expoInOut, expoOut } from 'svelte/easing'
-  import { fly, slide } from 'svelte/transition'
+  import { Button, Select, Spinner, TextInput } from 'mono-svelte'
+  import {
+    AdjustmentsHorizontal,
+    Bars3BottomRight,
+    Icon,
+    MagnifyingGlass,
+  } from 'svelte-hero-icons'
+  import { expoOut } from 'svelte/easing'
+  import { slide } from 'svelte/transition'
 
   type Result = PostView | CommentView | PersonView | CommunityView
 
   export let data
 
-  let query = ''
+  let query = data.query || ''
 
   let pageNum = data.page
 </script>
@@ -44,11 +46,20 @@
 
 <h1 class="font-bold text-2xl">Search</h1>
 <div class="flex flex-row flex-wrap sm:justify-between items-center gap-4 mt-4">
-  <MultiSelect
-    options={['All', 'Posts', 'Comments', 'Communities', 'Users']}
-    selected={$page.url.searchParams.get('type') ?? 'All'}
-    on:select={(e) => searchParam($page.url, 'type', e.detail, 'page')}
-  />
+  <Select
+    bind:value={data.type}
+    on:change={() => searchParam($page.url, 'type', data.type ?? 'All', 'page')}
+  >
+    <span slot="label" class="flex items-center gap-1">
+      <Icon src={AdjustmentsHorizontal} mini size="15" />
+      Type
+    </span>
+    <option value="All">All</option>
+    <option value="Posts">Posts</option>
+    <option value="Comments">Comments</option>
+    <option value="Communities">Communities</option>
+    <option value="Users">Users</option>
+  </Select>
   <div class="flex flex-row gap-2 items-center">
     <TextInput
       bind:value={query}
@@ -63,6 +74,16 @@
       Search
     </Button>
   </div>
+</div>
+<div class="max-w-sm mt-2">
+  <ObjectAutocomplete
+    label="Community"
+    jwt={$profile?.jwt}
+    listing_type={'All'}
+    showWhenEmpty={true}
+    on:select={(c) =>
+      searchParam($page.url, 'community', c.detail?.id || undefined, 'page')}
+  />
 </div>
 {#if !data.results}
   <Placeholder

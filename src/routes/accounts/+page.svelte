@@ -3,18 +3,13 @@
     profileData,
     setUserID,
     profile as currentProfile,
-    resetProfile,
     deleteProfile,
     moveProfile,
     type Profile,
     profile,
   } from '$lib/auth.js'
-  import Button from '$lib/components/input/Button.svelte'
-  import TextInput from '$lib/components/input/TextInput.svelte'
   import EditableList from '$lib/components/ui/list/EditableList.svelte'
-  import Menu from '$lib/components/ui/menu/Menu.svelte'
-  import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
-  import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import { Menu, MenuButton, toast } from 'mono-svelte'
   import DebugObject from '$lib/components/util/debug/DebugObject.svelte'
   import {
     DEFAULT_INSTANCE_URL,
@@ -24,6 +19,7 @@
   import { validateInstance } from '$lib/lemmy.js'
   import ProfileAvatar from '$lib/lemmy/ProfileAvatar.svelte'
   import { userSettings } from '$lib/settings.js'
+  import { Button, TextInput } from 'mono-svelte'
   import {
     ArrowLeftOnRectangle,
     ArrowUturnLeft,
@@ -105,7 +101,7 @@
         <h1 class="font-bold text-3xl">No accounts</h1>
       </div>
       <Button href="/login" size="lg">
-        <Icon slot="icon" src={ArrowLeftOnRectangle} size="16" mini />
+        <Icon slot="prefix" src={ArrowLeftOnRectangle} size="16" mini />
         Log in
       </Button>
       <div class="flex flex-row font-normal gap-2">
@@ -174,23 +170,26 @@
             </div>
           </div>
           <div class="ml-auto" />
-          <Menu let:toggleOpen alignment="bottom-right">
-            <Button on:click={toggleOpen} size="square-md" slot="button">
-              <Icon src={EllipsisHorizontal} mini size="16" slot="icon" />
+          <Menu origin="bottom-right">
+            <Button
+              size="square-md"
+              slot="target"
+            >
+              <Icon src={EllipsisHorizontal} mini size="16" slot="prefix" />
             </Button>
             <MenuButton on:click={() => moveProfile(profile.id, true)}>
-              <Icon src={ChevronUp} size="16" mini slot="icon" />
+              <Icon src={ChevronUp} size="16" mini slot="prefix" />
               Move Up
             </MenuButton>
             <MenuButton on:click={() => moveProfile(profile.id, false)}>
-              <Icon src={ChevronDown} size="16" mini slot="icon" />
+              <Icon src={ChevronDown} size="16" mini slot="prefix" />
               Move Down
             </MenuButton>
             <MenuButton
               disabled={!profile.color}
               on:click={() => (profile.color = undefined)}
             >
-              <Icon src={ArrowUturnLeft} size="16" mini slot="icon" />
+              <Icon src={ArrowUturnLeft} size="16" mini slot="prefix" />
               Reset Color
             </MenuButton>
             {#if $userSettings.debugInfo}
@@ -200,7 +199,7 @@
                   debugging = !debugging
                 }}
               >
-                <Icon src={BugAnt} size="16" mini slot="icon" />
+                <Icon src={BugAnt} size="16" mini slot="prefix" />
                 Debug Info
               </MenuButton>
             {/if}
@@ -222,7 +221,7 @@
             class="!p-2"
             color="danger"
           >
-            <Icon slot="icon" src={Trash} size="16" mini />
+            <Icon slot="prefix" src={Trash} size="16" mini />
           </Button>
         </div>
       {/each}
@@ -248,18 +247,21 @@
         label="Guest instance"
         bind:value={newInstance}
         disabled={LINKED_INSTANCE_URL != undefined}
-      />
+        size="sm"
+      >
+        <span slot="prefix">https://</span>
+      </TextInput>
       <Button
         color="primary"
         {loading}
         disabled={loading || LINKED_INSTANCE_URL != undefined}
-        class="h-[42px] self-end"
+        class="self-end"
       >
         Change
       </Button>
     </div>
     <Button href="/login" size="lg">
-      <Icon slot="icon" src={Plus} size="16" mini />
+      <Icon slot="prefix" src={Plus} size="16" mini />
       Add more
     </Button>
   </div>

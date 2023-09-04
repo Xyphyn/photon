@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { toast as showToast } from '$lib/components/ui/toasts/toasts.js'
+  import { toast as showToast } from 'mono-svelte'
   import { useRegisterSW } from 'virtual:pwa-register/svelte'
   const { needRefresh, updateServiceWorker, offlineReady } = useRegisterSW({
     onRegistered(r) {

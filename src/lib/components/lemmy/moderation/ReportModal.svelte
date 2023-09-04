@@ -1,13 +1,12 @@
 <script lang="ts">
-  import Button from '$lib/components/input/Button.svelte'
-  import TextArea from '$lib/components/input/TextArea.svelte'
   import Comment from '$lib/components/lemmy/comment/Comment.svelte'
   import Post from '$lib/components/lemmy/post/Post.svelte'
-  import Modal from '$lib/components/ui/modal/Modal.svelte'
-  import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import { toast } from 'mono-svelte'
   import { getClient } from '$lib/lemmy.js'
   import type { CommentView, PostView } from 'lemmy-js-client'
   import { profile } from '$lib/auth.js'
+  import { Button, Modal } from 'mono-svelte'
+  import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
 
   export let open: boolean
   export let item: PostView | CommentView | undefined = undefined
@@ -82,9 +81,9 @@
         {/if}
       </div>
     {/if}
-    <TextArea
+    <MarkdownEditor
       required
-      rows={3}
+      rows={4}
       label="Reason"
       placeholder="he's being a meanie :("
       bind:value={reason}

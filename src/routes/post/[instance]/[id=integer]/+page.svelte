@@ -2,29 +2,26 @@
   import { buildCommentsTreeAsync } from '$lib/components/lemmy/comment/comments.js'
   import Comments from '$lib/components/lemmy/comment/Comments.svelte'
   import { isImage, isVideo } from '$lib/ui/image.js'
-  import { getClient, getInstance } from '$lib/lemmy.js'
+  import { getClient } from '$lib/lemmy.js'
   import CommentForm from '$lib/components/lemmy/comment/CommentForm.svelte'
   import { onMount } from 'svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
-  import Button from '$lib/components/input/Button.svelte'
   import { page } from '$app/stores'
   import PostActions from '$lib/components/lemmy/post/PostActions.svelte'
   import { ExclamationTriangle, Icon } from 'svelte-hero-icons'
-  import Spinner from '$lib/components/ui/loader/Spinner.svelte'
-  import Card from '$lib/components/ui/Card.svelte'
   import PostLink from '$lib/components/lemmy/post/PostLink.svelte'
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
-  import { removeToast, toast } from '$lib/components/ui/toasts/toasts.js'
+  import { Badge, Material, Spinner, removeToast, toast } from 'mono-svelte'
   import type { CommentSortType } from 'lemmy-js-client'
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
   import { profile } from '$lib/auth.js'
   import { instance } from '$lib/instance.js'
-  import { afterNavigate, beforeNavigate, goto } from '$app/navigation'
+  import { afterNavigate, goto } from '$app/navigation'
   import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
   import Link from '$lib/components/input/Link.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
-  import { userSettings } from '$lib/settings.js'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
+  import { Button } from 'mono-svelte'
 
   export let data
 
@@ -114,7 +111,10 @@
 
 <div class="flex flex-col gap-2">
   {#if $page.params.instance.toLowerCase() != $instance.toLowerCase()}
-    <Card cardColor="warning" class="p-4 flex flex-col gap-1">
+    <Material
+      class="p-4 flex flex-col gap-1 border
+    border-yellow-300 dark:bg-yellow-950/30 dark:border-yellow-900 bg-yellow-50"
+    >
       <Icon
         src={ExclamationTriangle}
         width={24}
@@ -126,7 +126,7 @@
         This URL is for a different instance than you're logged into. You
         probably won't be able to vote or comment.
       </p>
-    </Card>
+    </Material>
   {/if}
 
   <PostMeta
@@ -223,12 +223,24 @@
     </details>
   {/if}
 </div>
-<div class="mt-4 flex flex-col gap-2">
+{#if data.singleThread}
+  <Material
+    elevation="max"
+    padding="none"
+    color="distinct"
+    class="py-2 px-4 text-sm flex flex-row justify-between items-center
+    flex-wrap gap-4 sticky top-20 w-full box-border z-[100] mt-4"
+  >
+    <p>You're viewing a single thread.</p>
+    <Button on:click={reloadComments}>View full thread</Button>
+  </Material>
+{/if}
+<div class="mt-4 flex flex-col gap-2 w-full">
   <div class="flex flex-row justify-between">
-    <div class="font-bold opacity-80 text-base">
-      Comments <span class="text-lg font-medium ml-2">
+    <div class="font-bold opacity-80 text-base flex items-center gap-2">
+      Comments <Badge color="gray" class="!text-sm">
         <FormattedNumber number={post.post_view.counts.comments} />
-      </span>
+      </Badge>
     </div>
     <MultiSelect
       options={['Hot', 'Top', 'New']}
@@ -237,12 +249,6 @@
       headless
     />
   </div>
-  {#if data.singleThread}
-    <Card class="py-2 px-4 text-sm flex flex-row items-center flex-wrap gap-4">
-      <p>You're viewing a single thread.</p>
-      <Button on:click={reloadComments}>View full thread</Button>
-    </Card>
-  {/if}
   {#await data.streamed.comments}
     <div class="h-16 mx-auto grid place-items-center">
       <Spinner width={24} />

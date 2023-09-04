@@ -1,7 +1,7 @@
 <script lang="ts">
   import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
-  import Badge from '$lib/components/ui/Badge.svelte'
+  import { Badge } from 'mono-svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import type { Community, Person } from 'lemmy-js-client'
@@ -68,16 +68,16 @@
 
     <div class="flex flex-row ml-auto gap-2 flex-wrap">
       {#if nsfw}
-        <Badge color="red">NSFW</Badge>
+        <Badge color="red-subtle">NSFW</Badge>
       {/if}
       {#if saved}
-        <Badge label="Saved" color="yellow">
+        <Badge label="Saved" color="yellow-subtle">
           <Icon src={Bookmark} mini size="12" />
           Saved
         </Badge>
       {/if}
       {#if locked}
-        <Badge label="Locked" color="yellow">
+        <Badge label="Locked" color="yellow-subtle">
           <Icon src={LockClosed} mini size="14" />
           Locked
         </Badge>
@@ -89,7 +89,7 @@
         </Badge>
       {/if}
       {#if deleted}
-        <Badge label="Deleted" color="red">
+        <Badge label="Deleted" color="red-subtle">
           <Icon src={Trash} mini size="14" />
           Deleted
         </Badge>

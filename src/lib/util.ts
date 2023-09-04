@@ -1,5 +1,5 @@
 import { goto } from '$app/navigation'
-import { toast } from '$lib/components/ui/toasts/toasts.js'
+import { toast } from 'mono-svelte'
 import { userSettings } from '$lib/settings.js'
 import { get } from 'svelte/store'
 

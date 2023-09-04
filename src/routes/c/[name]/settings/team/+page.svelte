@@ -1,15 +1,14 @@
 <script lang="ts">
-  import Button from '$lib/components/input/Button.svelte'
-  import TextInput from '$lib/components/input/TextInput.svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import EditableList from '$lib/components/ui/list/EditableList.svelte'
   import { Icon, Plus, Trash } from 'svelte-hero-icons'
   import type { PageData } from './$types.js'
   import { profile } from '$lib/auth.js'
-  import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import { toast } from 'mono-svelte'
   import { getClient } from '$lib/lemmy.js'
   import { flip } from 'svelte/animate'
+  import { Button, TextInput } from 'mono-svelte'
 
   export let data: PageData
 
@@ -119,11 +118,9 @@
           </span>
         </div>
       </div>
-      <Button
-        size="square-md"
-        on:click={() => action(moderator.moderator)}
-        icon={Trash}
-      />
+      <Button size="square-md" on:click={() => action(moderator.moderator)}>
+        <Icon src={Trash} mini size="16" />
+      </Button>
     </div>
   {/each}
 </EditableList>
@@ -140,6 +137,6 @@
     class="w-max flex-shrink-0"
     on:click={addModerator}
   >
-    <Icon slot="icon" src={Plus} mini size="16" />Add moderator
+    <Icon slot="prefix" src={Plus} mini size="16" />Add moderator
   </Button>
 </div>

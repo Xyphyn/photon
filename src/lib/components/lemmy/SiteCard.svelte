@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Button from '$lib/components/input/Button.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import StickyCard from '$lib/components/ui/StickyCard.svelte'
@@ -7,6 +6,7 @@
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import { getClient } from '$lib/lemmy.js'
   import type { SiteView, Tagline } from 'lemmy-js-client'
+  import { Button } from 'mono-svelte'
   import {
     Calendar,
     ChatBubbleOvalLeftEllipsis,
