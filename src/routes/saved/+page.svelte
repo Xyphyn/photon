@@ -1,11 +1,10 @@
 <script lang="ts">
   import type { CommentView, PostView } from 'lemmy-js-client'
-  import Card from '$lib/components/ui/Card.svelte'
   import Post from '$lib/components/lemmy/post/Post.svelte'
   import Comment from '$lib/components/lemmy/comment/Comment.svelte'
   import { fly } from 'svelte/transition'
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
-  import { Button } from 'mono-svelte'
+  import { Button, Material } from 'mono-svelte'
 
   export let data
 
@@ -27,7 +26,7 @@
     {#each data.data as item, index}
       <div in:fly={{ opacity: 0, y: -4, delay: index * 50 }}>
         {#if isComment(item)}
-          <Card class="flex flex-col bg-white rounded-md p-5 flex-1">
+          <Material padding="lg" color="distinct" class="flex flex-col flex-1">
             <div class="flex flex-row items-center">
               <PostMeta
                 title={item.post.name}
@@ -45,7 +44,7 @@
             <Button class="ml-auto" href="/comment/{item.comment.id}">
               Jump
             </Button>
-          </Card>
+          </Material>
         {:else}
           <Post post={item} />
         {/if}

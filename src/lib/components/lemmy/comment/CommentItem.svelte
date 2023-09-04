@@ -1,15 +1,14 @@
 <script lang="ts">
   import Comment from '$lib/components/lemmy/comment/Comment.svelte'
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
-  import Card from '$lib/components/ui/Card.svelte'
   import { getInstance } from '$lib/lemmy.js'
   import type { CommentView } from 'lemmy-js-client'
-  import { Button } from 'mono-svelte'
+  import { Button, Material } from 'mono-svelte'
 
   export let comment: CommentView
 </script>
 
-<Card class="flex flex-col bg-white rounded-md p-5 flex-1 gap-1">
+<Material class="flex flex-col flex-1 gap-1" color="distinct" padding="lg">
   <div class="flex flex-row justify-between items-center">
     <PostMeta
       community={comment.community}
@@ -42,4 +41,4 @@
       replying={false}
     />
   </div>
-</Card>
+</Material>

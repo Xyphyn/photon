@@ -2,7 +2,6 @@
   import { goto } from '$app/navigation'
   import Comment from '$lib/components/lemmy/comment/Comment.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
-  import Card from '$lib/components/ui/Card.svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import { getClient } from '$lib/lemmy.js'
   import { profile } from '$lib/auth.js'
@@ -13,7 +12,7 @@
   } from 'lemmy-js-client'
   import { ChatBubbleOvalLeft, Check, Icon } from 'svelte-hero-icons'
   import { page } from '$app/stores'
-  import { toast } from 'mono-svelte'
+  import { Material, toast } from 'mono-svelte'
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import { Button } from 'mono-svelte'
@@ -90,7 +89,7 @@
   }
 </script>
 
-<Card elevation={0} class="flex flex-col rounded-md p-5 max-w-full gap-2">
+<Material padding="lg" class="flex flex-col max-w-full gap-2">
   {#if !isPrivateMessage(item)}
     <PostMeta
       published={new Date(item.post.published)}
@@ -192,4 +191,4 @@
       {/if}
     {/if}
   {/if}
-</Card>
+</Material>

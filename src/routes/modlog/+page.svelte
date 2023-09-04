@@ -4,7 +4,6 @@
   import { page } from '$app/stores'
   import ObjectAutocomplete from '$lib/components/lemmy/ObjectAutocomplete.svelte'
   import { profile } from '$lib/auth.js'
-  import MultiSelect from '$lib/components/input/MultiSelect.svelte'
   import { userSettings } from '$lib/settings.js'
   import ModlogItemCard from './item/ModlogItemCard.svelte'
   import ModlogItemTable from './item/ModlogItemTable.svelte'

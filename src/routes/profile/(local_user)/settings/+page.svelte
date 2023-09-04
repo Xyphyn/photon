@@ -3,8 +3,7 @@
   import { profile, profileData, setUserID } from '$lib/auth.js'
   import FileInput from '$lib/components/input/FileInput.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
-  import Card from '$lib/components/ui/Card.svelte'
-  import { removeToast, toast } from 'mono-svelte'
+  import { Material, removeToast, toast } from 'mono-svelte'
   import { getClient, uploadImage } from '$lib/lemmy.js'
   import type { SaveUserSettings } from 'lemmy-js-client'
   import { Button, Checkbox, Modal, TextInput } from 'mono-svelte'
@@ -187,9 +186,7 @@
       Save
     </Button>
   {:else}
-    <Card cardColor="warning" class="p-5">
-      The API didn't return your user settings.
-    </Card>
+    <Material padding="lg">The API didn't return your user settings.</Material>
   {/if}
   <Button
     on:click={() => deleteAccount(0)}

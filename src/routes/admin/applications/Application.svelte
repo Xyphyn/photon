@@ -1,10 +1,8 @@
 <script lang="ts">
   import { profile } from '$lib/auth.js'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
-
-  import Card from '$lib/components/ui/Card.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
-  import { toast } from 'mono-svelte'
+  import { Material, toast } from 'mono-svelte'
   import { getClient } from '$lib/lemmy.js'
   import type { RegistrationApplicationView } from 'lemmy-js-client'
   import { Button } from 'mono-svelte'
@@ -50,7 +48,7 @@
   }
 </script>
 
-<Card elevation={0} class="p-4 flex flex-col gap-2">
+<Material class="flex flex-col gap-2">
   <div class="flex flex-col gap-1">
     <SectionTitle>User</SectionTitle>
     <span class="text-sm">
@@ -102,4 +100,4 @@
       </Button>
     </div>
   </div>
-</Card>
+</Material>

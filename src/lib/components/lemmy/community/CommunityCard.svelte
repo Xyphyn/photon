@@ -3,7 +3,6 @@
   import { amMod } from '$lib/components/lemmy/moderation/moderation.js'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
-  import Card from '$lib/components/ui/Card.svelte'
   import StickyCard from '$lib/components/ui/StickyCard.svelte'
   import { toast } from 'mono-svelte'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
