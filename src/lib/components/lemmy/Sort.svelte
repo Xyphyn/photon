@@ -8,7 +8,7 @@
   export let selected: string
   export let navigate: boolean = true
 
-  let sort: string = selected
+  let sort: string = selected.startsWith('Top') ? 'TopAll' : selected
   const setSelected = () => (selected = sort)
 </script>
 
