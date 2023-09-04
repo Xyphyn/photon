@@ -6,7 +6,9 @@
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import {
+    Bars3BottomRight,
     Calendar,
+    ChartBar,
     ChatBubbleOvalLeftEllipsis,
     Envelope,
     Icon,
@@ -33,7 +35,7 @@
   import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
   import { searchParam } from '$lib/util.js'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import { Button, Modal } from 'mono-svelte'
+  import { Button, Modal, Select } from 'mono-svelte'
 
   export let data
 
@@ -141,19 +143,33 @@
 
 <div class="flex flex-col-reverse xl:flex-row gap-4 max-w-full w-full">
   <div class="flex flex-col gap-4 max-w-full w-full min-w-0">
-    <div class="flex flex-row gap-4 flex-wrap">
-      <MultiSelect
-        options={['New', 'TopAll', 'Old']}
-        optionNames={['New', 'Top', 'Old']}
-        selected={data.sort}
-        on:select={(e) => searchParam($page.url, 'sort', e.detail, 'page')}
-      />
-      <MultiSelect
-        options={['all', 'posts', 'comments']}
-        optionNames={['All', 'Posts', 'Comments']}
-        selected={data.type}
-        on:select={(e) => searchParam($page.url, 'type', e.detail, 'page')}
-      />
+    <div class="flex flex-row gap-4 flex-wrap justify-between">
+      <Select
+        bind:value={data.sort}
+        on:change={() => searchParam($page.url, 'sort', data.sort, 'page')}
+        class="w-48"
+      >
+        <span slot="label" class="flex items-center gap-1">
+          <Icon src={ChartBar} size="14" mini />
+          Sort
+        </span>
+        <option value="New">New</option>
+        <option value="TopAll">Top</option>
+        <option value="Old">Old</option>
+      </Select>
+      <Select
+        bind:value={data.type}
+        on:change={() => searchParam($page.url, 'type', data.type, 'page')}
+        class="w-48"
+      >
+        <span slot="label" class="flex items-center gap-1">
+          <Icon src={Bars3BottomRight} size="15" mini />
+          Type
+        </span>
+        <option value="all">All</option>
+        <option value="posts">Posts</option>
+        <option value="comments">Comments</option>
+      </Select>
     </div>
     {#if data.items.length == 0}
       <Placeholder

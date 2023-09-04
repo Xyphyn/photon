@@ -6,10 +6,15 @@
   import { toast } from '$lib/components/ui/toasts/toasts.js'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import Link from '$lib/components/input/Link.svelte'
-  import { ArrowPath, Icon } from 'svelte-hero-icons'
+  import {
+    ArrowPath,
+    ChatBubbleOvalLeftEllipsis,
+    GlobeAmericas,
+    Icon,
+  } from 'svelte-hero-icons'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { removalTemplate } from '$lib/components/lemmy/moderation/moderation.js'
-  import { Button, Checkbox } from 'mono-svelte'
+  import { Button, Checkbox, Select } from 'mono-svelte'
 
   let data = {
     loading: false,
@@ -42,22 +47,30 @@
     <span slot="description">The default sort to use for feeds.</span>
     <div class="flex flex-wrap flex-row gap-4 w-full">
       <div class="max-w-full">
-        <span class="block my-1 font-bold">Feed</span>
-        <MultiSelect
-          options={['Subscribed', 'Local', 'All']}
-          bind:selected={$userSettings.defaultSort.feed}
-        />
+        <Select bind:value={$userSettings.defaultSort.feed} class="w-28">
+          <span slot="label" class="flex items-center gap-1">
+            <Icon src={GlobeAmericas} size="16" mini />
+            Location
+          </span>
+          <option value="All">All</option>
+          <option value="Local">Local</option>
+          <option value="Subscribed">Subscribed</option>
+        </Select>
       </div>
       <div class="max-w-full">
-        <span class="block my-1 font-bold">Sort</span>
         <Sort bind:selected={$userSettings.defaultSort.sort} navigate={false} />
       </div>
       <div class="max-w-full">
-        <span class="block my-1 font-bold">Comments</span>
-        <MultiSelect
-          options={['Hot', 'Top', 'New']}
-          bind:selected={$userSettings.defaultSort.comments}
-        />
+        <Select bind:value={$userSettings.defaultSort.comments}>
+          <span slot="label" class="flex items-center gap-1">
+            <Icon src={ChatBubbleOvalLeftEllipsis} size="14" mini />
+            Comments
+          </span>
+
+          <option value="Hot">Hot</option>
+          <option value="Top">Top</option>
+          <option value="New">New</option>
+        </Select>
       </div>
     </div>
   </Setting>

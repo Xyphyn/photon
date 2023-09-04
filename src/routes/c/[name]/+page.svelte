@@ -51,13 +51,13 @@
         </span>
       </div>
     </div>
-    <div class="xl:hidden">
-      <Button color="secondary" on:click={() => (sidebar = !sidebar)}>
-        About
-      </Button>
-    </div>
-    <div class="flex flex-col sm:flex-row gap-4 max-w-full w-full">
+    <div class="flex flex-row gap-4 max-w-full w-full items-end">
       <Sort selected={data.sort} />
+      <div class="xl:hidden">
+        <Button color="secondary" on:click={() => (sidebar = !sidebar)}>
+          About
+        </Button>
+      </div>
     </div>
     <PostFeed posts={data.posts.posts} />
     <Pageination
