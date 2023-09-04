@@ -1,52 +1,60 @@
 <script lang="ts">
   import { page } from '$app/stores'
   import { searchParam } from '$lib/util.js'
-  import MultiSelect from '../input/MultiSelect.svelte'
+  import { Select } from 'mono-svelte'
+  import { ChartBar, Clock, Icon } from 'svelte-hero-icons'
+  import { fly } from 'svelte/transition'
 
   export let selected: string
   export let navigate: boolean = true
+
+  let sort: string
+  const setSelected = () => (selected = sort)
 </script>
 
-<MultiSelect
-  options={[
-    'Active',
-    'Hot',
-    'TopAll',
-    'New',
-    'Old',
-    'TopNineMonths',
-    'TopSixMonths',
-    'TopThreeMonths',
-    'TopMonth',
-    'TopWeek',
-    'TopDay',
-    'TopTwelveHour',
-    'TopSixHour',
-    'TopHour',
-    'MostComments',
-    'NewComments',
-  ]}
-  optionNames={[
-    'Active',
-    'Hot',
-    'Top',
-    'New',
-    'Old',
-    'Top 9 Months',
-    'Top 6 Months',
-    'Top 3 Months',
-    'Top Month',
-    'Top Week',
-    'Top Day',
-    'Top 12 Hours',
-    'Top 6 Hours',
-    'Top Hour',
-    'Most Comments',
-    'New Comments',
-  ]}
-  bind:selected
-  on:select={(e) => {
-    if (navigate) searchParam($page.url, 'sort', e.detail, 'page')
-  }}
-  class="w-full"
-/>
+<div class="flex flex-row gap-4 flex-wrap">
+  {#if selected?.startsWith('Top')}
+    <div class="w-32" transition:fly={{ x: 4 }}>
+      <Select
+        bind:value={selected}
+        on:change={(e) => {
+          sort = 'TopAll'
+          if (navigate) searchParam($page.url, 'sort', selected, 'page')
+        }}
+      >
+        <span slot="label" class="flex items-center gap-1">
+          <Icon src={Clock} size="16" mini />
+          Time
+        </span>
+        <option value="TopAll">All</option>
+        <option value="TopNineMonths">9 Months</option>
+        <option value="TopSixMonths">6 Months</option>
+        <option value="TopThreeMonths">3 Months</option>
+        <option value="TopMonth">Month</option>
+        <option value="TopWeek">Week</option>
+        <option value="TopDay">Day</option>
+        <option value="TopTwelveHour">12 Hours</option>
+        <option value="TopSixHour">6 Hours</option>
+        <option value="TopHour">Hour</option>
+      </Select>
+    </div>
+  {/if}
+  <Select
+    bind:value={sort}
+    on:change={(e) => {
+      setSelected()
+      if (navigate) searchParam($page.url, 'sort', selected, 'page')
+    }}
+    class="w-32"
+  >
+    <span slot="label" class="flex items-center gap-1">
+      <Icon src={ChartBar} size="14" mini />
+      Sort
+    </span>
+    <option value="Active">Active</option>
+    <option value="Hot">Hot</option>
+    <option value="TopAll">Top</option>
+    <option value="New">New</option>
+    <option value="Old">Old</option>
+  </Select>
+</div>

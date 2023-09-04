@@ -9,7 +9,8 @@
   import Sort from '$lib/components/lemmy/Sort.svelte'
   import { searchParam } from '$lib/util.js'
   import PostFeed from '$lib/components/lemmy/post/PostFeed.svelte'
-  import { Button, Modal } from 'mono-svelte'
+  import { Button, Modal, Select } from 'mono-svelte'
+  import { GlobeAmericas, Icon } from 'svelte-hero-icons'
 
   export let data
 
@@ -40,12 +41,20 @@
     <div
       class="flex flex-row gap-4 max-w-full w-full justify-between flex-wrap"
     >
-      <MultiSelect
-        options={['Subscribed', 'Local', 'All']}
-        disabled={[$profile?.jwt == undefined]}
-        selected={data.listingType}
-        on:select={(e) => searchParam($page.url, 'type', e.detail, 'page')}
-      />
+      <Select
+        bind:value={data.listingType}
+        on:change={() =>
+          searchParam($page.url, 'type', data.listingType, 'page')}
+        class="w-28"
+      >
+        <span slot="label" class="flex items-center gap-1">
+          <Icon src={GlobeAmericas} size="16" mini />
+          Location
+        </span>
+        <option value="All">All</option>
+        <option value="Local">Local</option>
+        <option value="Subscribed">Subscribed</option>
+      </Select>
       <Sort selected={data.sort} />
     </div>
     <section class="flex flex-col gap-3 sm:gap-4 h-full">
