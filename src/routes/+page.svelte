@@ -56,7 +56,9 @@
       </Select>
       <div class="flex gap-4 flex-wrap">
         <Sort selected={data.sort} />
-        <ViewSelect />
+        <div class="max-[400px]:hidden">
+          <ViewSelect />
+        </div>
       </div>
     </div>
     <section class="flex flex-col gap-3 sm:gap-4 h-full">
