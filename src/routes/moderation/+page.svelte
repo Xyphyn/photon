@@ -4,10 +4,16 @@
   import Report from './Report.svelte'
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
   import { page } from '$app/stores'
-  import { EnvelopeOpen, Icon, Inbox, Newspaper } from 'svelte-hero-icons'
+  import {
+    EnvelopeOpen,
+    Funnel,
+    Icon,
+    Inbox,
+    Newspaper,
+  } from 'svelte-hero-icons'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { searchParam } from '$lib/util.js'
-  import { Button, Material } from 'mono-svelte'
+  import { Button, Material, Select } from 'mono-svelte'
 
   export let data
 </script>
@@ -15,12 +21,17 @@
 <div class="mb-4 flex flex-col gap-4">
   <h1 class="font-bold text-2xl">Reports</h1>
   <div class="flex flex-row gap-2 flex-wrap items-center">
-    <MultiSelect
-      selected={data.type}
-      options={['all', 'unread']}
-      optionNames={['All', 'Unread']}
-      on:select={(e) => searchParam($page.url, 'type', e.detail, 'page')}
-    />
+    <Select
+      bind:value={data.type}
+      on:change={() => searchParam($page.url, 'type', data.type, 'page')}
+    >
+      <span slot="label" class="flex items-center gap-1">
+        <Icon src={Funnel} size="15" mini />
+        Filter
+      </span>
+      <option value="all">All</option>
+      <option value="unread">Unread</option>
+    </Select>
     <Button href="/modlog" class="h-max ml-auto">
       <Icon src={Newspaper} size="16" mini />
       Modlog
