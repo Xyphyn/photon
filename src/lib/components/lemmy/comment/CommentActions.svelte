@@ -1,15 +1,10 @@
 <script lang="ts">
   import type { CommentView } from 'lemmy-js-client'
   import CommentVote from '$lib/components/lemmy/comment/CommentVote.svelte'
-  import { page } from '$app/stores'
-  import { userSettings } from '$lib/settings.js'
-  import { Color } from '$lib/ui/colors.js'
   import {
-    ArrowLeftCircle,
     ArrowUturnLeft,
     Bookmark,
     BookmarkSlash,
-    ChatBubbleOvalLeft,
     EllipsisHorizontal,
     Flag,
     Icon,
@@ -17,10 +12,6 @@
     Square2Stack,
     Trash,
   } from 'svelte-hero-icons'
-  import { getClient, getInstance } from '$lib/lemmy.js'
-  import { toast } from 'mono-svelte'
-  import Menu from '$lib/components/ui/menu/Menu.svelte'
-  import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
   import { createEventDispatcher } from 'svelte'
   import { isCommentMutable } from '$lib/components/lemmy/post/helpers.js'
   import {
@@ -28,11 +19,10 @@
     isAdmin,
     report,
   } from '$lib/components/lemmy/moderation/moderation.js'
-  import ModerationMenu from '$lib/components/lemmy/moderation/ModerationMenu.svelte'
   import CommentModerationMenu from '$lib/components/lemmy/moderation/CommentModerationMenu.svelte'
   import { profile } from '$lib/auth.js'
   import { deleteItem, save } from '$lib/lemmy/contentview.js'
-  import { Button } from 'mono-svelte'
+  import { Button, Menu, MenuButton, MenuDivider } from 'mono-svelte'
 
   export let comment: CommentView
   export let replying: boolean = false
@@ -58,11 +48,9 @@
   {#if $profile?.user && (amMod($profile?.user, comment.community) || isAdmin($profile.user))}
     <CommentModerationMenu bind:item={comment} />
   {/if}
-  <Menu class="top-0 leading-3" alignment="bottom-center">
+  <Menu origin="bottom-center">
     <Button
-      let:toggleOpen
-      slot="button"
-      on:click={toggleOpen}
+      slot="target"
       class="!p-1"
       aria-label="Comment actions"
       color="ghost"
@@ -75,7 +63,7 @@
         slot="prefix"
       />
     </Button>
-    <span class="text-xs opacity-80 py-1 my-1 px-4">Comment actions</span>
+    <MenuDivider>Actions</MenuDivider>
     <MenuButton
       on:click={() => {
         navigator.share?.({
@@ -84,7 +72,7 @@
       }}
     >
       <Icon src={Square2Stack} mini size="16" />
-      <span>Copy Link</span>
+      <divv>Copy Link</divv>
     </MenuButton>
     {#if $profile?.jwt}
       {#if comment.creator.id == $profile.user?.local_user_view.person.id}
@@ -104,7 +92,7 @@
       </MenuButton>
       {#if $profile?.user && $profile.jwt && isCommentMutable(comment, $profile.user.local_user_view)}
         <MenuButton
-          color="dangerSecondary"
+          color="danger-subtle"
           on:click={async () => {
             if ($profile?.jwt)
               comment.comment.deleted = await deleteItem(
@@ -119,7 +107,7 @@
         </MenuButton>
       {/if}
       {#if $profile.jwt && $profile.user?.local_user_view.person.id != comment.creator.id}
-        <MenuButton on:click={() => report(comment)} color="dangerSecondary">
+        <MenuButton on:click={() => report(comment)} color="danger-subtle">
           <Icon src={Flag} mini size="16" />
           <span>Report</span>
         </MenuButton>

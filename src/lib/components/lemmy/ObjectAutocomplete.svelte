@@ -1,9 +1,8 @@
 <script lang="ts">
   import Avatar from '$lib/components/ui/Avatar.svelte'
-  import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
   import { getClient } from '$lib/lemmy.js'
   import type { Community, ListingType } from 'lemmy-js-client'
-  import { Search } from 'mono-svelte'
+  import { MenuButton, Search } from 'mono-svelte'
   import { createEventDispatcher } from 'svelte'
   import { Icon, XCircle } from 'svelte-hero-icons'
   import { fly } from 'svelte/transition'

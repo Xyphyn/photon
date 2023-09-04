@@ -8,14 +8,18 @@
   } from '$lib/components/lemmy/moderation/moderation.js'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import Logo from '$lib/components/ui/Logo.svelte'
-  import Menu from '$lib/components/ui/menu/Menu.svelte'
-  import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
   import { LINKED_INSTANCE_URL, instance } from '$lib/instance.js'
   import { site } from '$lib/lemmy.js'
   import { theme } from '$lib/ui/colors.js'
-  import { Button, Select, Spinner } from 'mono-svelte'
   import {
-    ArrowLeftOnRectangle,
+    Button,
+    Menu,
+    MenuButton,
+    MenuDivider,
+    Select,
+    Spinner,
+  } from 'mono-svelte'
+  import {
     Bars3,
     Bookmark,
     Cog6Tooth,
@@ -135,19 +139,17 @@
       <Icon mini src={GlobeAlt} size="16" slot="prefix" />
       <span class="hidden md:inline">Explore</span>
     </Button>
-    <Menu alignment="bottom-right">
+    <Menu origin="bottom-right">
       <Button
-        let:toggleOpen
         color="primary"
-        slot="button"
+        slot="target"
         aria-label="Create"
-        on:click={toggleOpen}
         class="max-md:w-9 max-md:h-8 max-md:!p-0"
       >
         <Icon src={Plus} width={18} mini slot="prefix" />
         <span class="hidden md:inline">Create</span>
       </Button>
-      <li class="text-xs opacity-80 text-left mx-4 my-1 py-1">Create</li>
+      <MenuDivider>Create</MenuDivider>
       <MenuButton
         link
         href="/create/post"
@@ -175,17 +177,16 @@
     </Menu>
   </div>
   <Menu
-    alignment="bottom-right"
-    itemsClass="h-8 md:h-8"
-    containerClass="!max-h-[28rem]"
+    origin="bottom-right"
+    itemsClass="h-8 md:h-8 z-10"
+    targetClass="z-10"
+    containerClass="!max-h-[28rem] z-10"
   >
     <button
       class="w-8 h-8 rounded-full ring-1 ring-slate-300 bg-slate-100
       dark:bg-zinc-800 relative"
       aria-label="Profile"
-      slot="button"
-      let:toggleOpen
-      on:click={toggleOpen}
+      slot="target"
     >
       {#if $profile?.user}
         <div class="w-8 h-8 aspect-square object-cover rounded-full">
@@ -206,9 +207,9 @@
         </div>
       {/if}
     </button>
-    <li class="text-xs opacity-80 text-left mx-4 my-1 py-1">
+    <MenuDivider>
       {$profile?.user ? $profile.user.local_user_view.person.name : 'Profile'}
-    </li>
+    </MenuDivider>
     {#if $profile?.user}
       <MenuButton link href="/profile">
         <Icon src={UserCircle} mini width={16} /> Profile
@@ -238,7 +239,7 @@
       </span>
     </MenuButton>
     <hr class="dark:opacity-10 w-[90%] my-2 mx-auto" />
-    <li class="text-xs px-4 py-1 my-1 opacity-80">App</li>
+    <MenuDivider>App</MenuDivider>
     <MenuButton link href="/settings">
       <Icon src={Cog6Tooth} mini width={16} />
       Settings

@@ -9,7 +9,6 @@
   import { placeholders } from '$lib/util.js'
   import { Checkbox, TextInput } from 'mono-svelte'
   import { getSessionStorage, setSessionStorage } from '$lib/session.js'
-  import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
   import ObjectAutocomplete from '$lib/components/lemmy/ObjectAutocomplete.svelte'
   import { Button } from 'mono-svelte'
 

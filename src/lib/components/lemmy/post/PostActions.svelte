@@ -20,8 +20,6 @@
     UserCircle,
   } from 'svelte-hero-icons'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
-  import Menu from '$lib/components/ui/menu/Menu.svelte'
-  import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
   import { createEventDispatcher } from 'svelte'
   import {
     amMod,
@@ -34,7 +32,14 @@
   import { setSessionStorage } from '$lib/session.js'
   import { goto } from '$app/navigation'
   import { userSettings } from '$lib/settings.js'
-  import { Button, Modal, Spinner } from 'mono-svelte'
+  import {
+    Button,
+    Menu,
+    MenuButton,
+    MenuDivider,
+    Modal,
+    Spinner,
+  } from 'mono-svelte'
 
   export let post: PostView
 
@@ -109,21 +114,20 @@
     <ModerationMenu bind:item={post} community={post.community} />
   {/if}
   <Menu
-    alignment="bottom-right"
+    origin="bottom-right"
     containerClass="overflow-auto max-h-[400px]"
-    itemsClass="!h-full"
+    class="h-8"
+    targetClass="h-full"
   >
     <Button
-      let:toggleOpen
-      slot="button"
+      slot="target"
       aria-label="Post actions"
-      on:click={toggleOpen}
       class="hover:text-inherit h-8"
       size="square-md"
     >
       <Icon slot="prefix" src={EllipsisHorizontal} width={16} mini />
     </Button>
-    <li class="mx-4 text-xs opacity-80 text-left my-1 py-1">Creator</li>
+    <MenuDivider>Creator</MenuDivider>
     <MenuButton
       link
       href="/u/{post.creator.name}@{new URL(post.creator.actor_id).hostname}"
@@ -140,7 +144,7 @@
       <span>{post.community.title}</span>
     </MenuButton>
     <hr class="w-[90%] mx-auto opacity-100 dark:opacity-10 my-2" />
-    <li class="mx-4 text-xs opacity-80 text-left my-1 py-1">Actions</li>
+    <MenuDivider>Actions</MenuDivider>
     {#if $profile?.user && $profile?.jwt && $profile.user.local_user_view.person.id == post.creator.id}
       <MenuButton on:click={() => (editing = true)}>
         <Icon src={PencilSquare} width={16} mini />
@@ -210,14 +214,14 @@
                 $profile.jwt
               )
           }}
-          color="dangerSecondary"
+          color="danger-subtle"
         >
           <Icon src={Trash} width={16} mini />
           {post.post.deleted ? 'Restore' : 'Delete'}
         </MenuButton>
       {/if}
       {#if $profile.user?.local_user_view.person.id != post.creator.id}
-        <MenuButton on:click={() => report(post)} color="dangerSecondary">
+        <MenuButton on:click={() => report(post)} color="danger-subtle">
           <Icon src={Flag} width={16} mini />
           Report
         </MenuButton>

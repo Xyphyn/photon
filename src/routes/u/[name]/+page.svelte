@@ -24,13 +24,11 @@
   import { isCommentView } from '$lib/lemmy/item.js'
   import { getClient } from '$lib/lemmy.js'
   import { isBlocked } from '$lib/lemmy/user.js'
-  import { toast } from 'mono-svelte'
+  import { Menu, MenuButton, toast } from 'mono-svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import { profile } from '$lib/auth.js'
   import { ban, isAdmin } from '$lib/components/lemmy/moderation/moderation.js'
-  import Menu from '$lib/components/ui/menu/Menu.svelte'
   import ShieldIcon from '$lib/components/lemmy/moderation/ShieldIcon.svelte'
-  import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
   import { searchParam } from '$lib/util.js'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { Button, Modal, Select } from 'mono-svelte'
@@ -255,21 +253,16 @@
           </Button>
         </div>
         {#if isAdmin($profile?.user)}
-          <Menu class="ml-auto" alignment="bottom-right">
-            <Button
-              let:toggleOpen
-              size="square-md"
-              on:click={toggleOpen}
-              slot="button"
-            >
+          <Menu class="ml-auto" origin="bottom-right">
+            <Button size="square-md" slot="target">
               <ShieldIcon width={16} filled />
             </Button>
             <MenuButton
-              color="dangerSecondary"
+              color="danger-subtle"
               on:click={() =>
                 ban(data.person_view.person.banned, data.person_view.person)}
             >
-              <Icon slot="icon" mini size="16" src={ShieldExclamation} />
+              <Icon slot="prefix" mini size="16" src={ShieldExclamation} />
               {data.person_view.person.banned ? 'Unban' : 'Ban'}
             </MenuButton>
           </Menu>

@@ -9,9 +9,7 @@
     profile,
   } from '$lib/auth.js'
   import EditableList from '$lib/components/ui/list/EditableList.svelte'
-  import Menu from '$lib/components/ui/menu/Menu.svelte'
-  import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
-  import { toast } from 'mono-svelte'
+  import { Menu, MenuButton, toast } from 'mono-svelte'
   import DebugObject from '$lib/components/util/debug/DebugObject.svelte'
   import {
     DEFAULT_INSTANCE_URL,
@@ -172,28 +170,26 @@
             </div>
           </div>
           <div class="ml-auto" />
-          <Menu alignment="bottom-right">
+          <Menu origin="bottom-right">
             <Button
-              let:toggleOpen
-              on:click={toggleOpen}
               size="square-md"
-              slot="button"
+              slot="target"
             >
               <Icon src={EllipsisHorizontal} mini size="16" slot="prefix" />
             </Button>
             <MenuButton on:click={() => moveProfile(profile.id, true)}>
-              <Icon src={ChevronUp} size="16" mini slot="icon" />
+              <Icon src={ChevronUp} size="16" mini slot="prefix" />
               Move Up
             </MenuButton>
             <MenuButton on:click={() => moveProfile(profile.id, false)}>
-              <Icon src={ChevronDown} size="16" mini slot="icon" />
+              <Icon src={ChevronDown} size="16" mini slot="prefix" />
               Move Down
             </MenuButton>
             <MenuButton
               disabled={!profile.color}
               on:click={() => (profile.color = undefined)}
             >
-              <Icon src={ArrowUturnLeft} size="16" mini slot="icon" />
+              <Icon src={ArrowUturnLeft} size="16" mini slot="prefix" />
               Reset Color
             </MenuButton>
             {#if $userSettings.debugInfo}
@@ -203,7 +199,7 @@
                   debugging = !debugging
                 }}
               >
-                <Icon src={BugAnt} size="16" mini slot="icon" />
+                <Icon src={BugAnt} size="16" mini slot="prefix" />
                 Debug Info
               </MenuButton>
             {/if}

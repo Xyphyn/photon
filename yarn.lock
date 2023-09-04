@@ -2977,10 +2977,10 @@ mlly@^1.2.0, mlly@^1.4.0:
     pkg-types "^1.0.3"
     ufo "^1.1.2"
 
-mono-svelte@^0.2.8:
-  version "0.2.8"
-  resolved "https://registry.yarnpkg.com/mono-svelte/-/mono-svelte-0.2.8.tgz#30f6e83089a1f2517dfede8bba2cf36a6f26161c"
-  integrity sha512-M9KveQgHjBIp0xBPYJTPiDlNAFPIOeEQcq0H7ZokKfiyeDS+ZYCvNyyWC15ziJYWOtErKQd2e0cG7OVdE1ppPA==
+mono-svelte@^0.2.15:
+  version "0.2.15"
+  resolved "https://registry.yarnpkg.com/mono-svelte/-/mono-svelte-0.2.15.tgz#efc8be5f484499ca93e16f8853a24a3114dff712"
+  integrity sha512-ImItUKzapM9NOKnOgEZqg0x7ykUIuTdM8NAoG8rSnZejrFQVXsjdA6K1TRcj3MQlSx1scr4VbEnByQBDbpVYWw==
 
 mri@^1.1.0:
   version "1.2.0"
