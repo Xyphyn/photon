@@ -14,7 +14,7 @@
   import { LINKED_INSTANCE_URL, instance } from '$lib/instance.js'
   import { site } from '$lib/lemmy.js'
   import { theme } from '$lib/ui/colors.js'
-  import { Button } from 'mono-svelte'
+  import { Button, Select } from 'mono-svelte'
   import {
     ArrowLeftOnRectangle,
     Bars3,
@@ -260,17 +260,18 @@
         mini
         size="16"
       />
-      <div class="flex flex-row flex-wrap justify-between w-full">
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <!-- svelte-ignore a11y-no-static-element-interactions -->
+      <div
+        class="flex flex-row flex-wrap justify-between w-full items-center"
+        on:click|stopPropagation
+      >
         <span>Theme</span>
-        <select
-          bind:value={$theme}
-          on:click|stopPropagation
-          class="ml-auto w-max px-1 rounded-sm cursor-pointer bg-transparent border dark:border-zinc-700"
-        >
+        <Select bind:value={$theme} class="ml-auto w-24" size="sm">
           <option value="system">System</option>
           <option value="light">Light</option>
           <option value="dark">Dark</option>
-        </select>
+        </Select>
       </div>
     </MenuButton>
     <hr class="dark:opacity-10 w-[90%] my-2 mx-auto" />
