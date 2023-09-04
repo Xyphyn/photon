@@ -15,6 +15,7 @@
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { removalTemplate } from '$lib/components/lemmy/moderation/moderation.js'
   import { Button, Checkbox, Select } from 'mono-svelte'
+  import ViewSelect from '$lib/components/lemmy/ViewSelect.svelte'
 
   let data = {
     loading: false,
@@ -130,11 +131,7 @@
   </Setting>
   <Setting>
     <span slot="title">Post style</span>
-    <MultiSelect
-      options={[false, true]}
-      optionNames={['Cards', 'Compact']}
-      bind:selected={$userSettings.showCompactPosts}
-    />
+    <ViewSelect />
   </Setting>
   <Setting>
     <Checkbox bind:checked={$userSettings.nsfwBlur} slot="title">

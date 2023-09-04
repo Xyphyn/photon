@@ -9,6 +9,7 @@
   import { Button, Modal, Select, Spinner } from 'mono-svelte'
   import { GlobeAmericas, Icon } from 'svelte-hero-icons'
   import { profile } from '$lib/auth.js'
+  import ViewSelect from '$lib/components/lemmy/ViewSelect.svelte'
 
   export let data
 
@@ -37,7 +38,7 @@
       <Button on:click={() => (sidebar = !sidebar)}>About</Button>
     </div>
     <div
-      class="flex flex-row gap-4 max-w-full w-full justify-between flex-wrap"
+      class="flex flex-row gap-4 max-w-full justify-between w-full flex-wrap"
     >
       <Select
         bind:value={data.listingType}
@@ -53,7 +54,10 @@
         <option value="Local">Local</option>
         <option value="Subscribed" disabled={!$profile?.jwt}>Subscribed</option>
       </Select>
-      <Sort selected={data.sort} />
+      <div class="flex gap-4 flex-wrap">
+        <Sort selected={data.sort} />
+        <ViewSelect />
+      </div>
     </div>
     <section class="flex flex-col gap-3 sm:gap-4 h-full">
       <PostFeed posts={data.posts.posts} />

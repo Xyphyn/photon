@@ -111,14 +111,14 @@
   <Menu
     alignment="bottom-right"
     containerClass="overflow-auto max-h-[400px]"
-    class="h-full max-h-screen"
+    itemsClass="!h-full"
   >
     <Button
       let:toggleOpen
       slot="button"
       aria-label="Post actions"
       on:click={toggleOpen}
-      class="hover:text-inherit"
+      class="hover:text-inherit h-8"
       size="square-md"
     >
       <Icon slot="prefix" src={EllipsisHorizontal} width={16} mini />
