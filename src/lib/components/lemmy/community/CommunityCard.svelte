@@ -22,6 +22,7 @@
     Plus,
     UserGroup,
   } from 'svelte-hero-icons'
+  import { publishedToDate } from '$lib/components/util/date.js'
 
   export let community_view: CommunityView
   export let moderators: CommunityModeratorView[]
@@ -93,7 +94,7 @@
   </div>
   <span class="flex flex-row items-center gap-1 text-sm">
     <Icon src={Calendar} width={16} height={16} mini />
-    <RelativeDate date={new Date(community_view.community.published + 'Z')} />
+    <RelativeDate date={publishedToDate(community_view.community.published)} />
   </span>
   <div class="text-sm flex flex-row flex-wrap gap-3">
     <span class="flex flex-row items-center gap-1">

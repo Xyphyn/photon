@@ -6,6 +6,16 @@
     style: 'narrow',
   }
 
+  const toLocaleDateString = (date: Date): string => {
+    try {
+      return date.toLocaleString()
+    } catch (err) {
+      return 'Invalid Date'
+    }
+  }
+
+  $: dateTime = toLocaleDateString(date)
+
   function formatRelativeDate(date: Date) {
     try {
       const now = relativeTo?.getTime() ?? Date.now()
@@ -38,11 +48,11 @@
       }
       return 'Now'
     } catch (err) {
-      return 'Now'
+      return 'Invalid Date'
     }
   }
 </script>
 
-<time datetime={date.toISOString()} title={date.toLocaleDateString()}>
+<time datetime={dateTime} title={dateTime}>
   {formatRelativeDate(date)}
 </time>

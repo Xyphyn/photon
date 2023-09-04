@@ -18,6 +18,7 @@
   import { toast } from 'mono-svelte'
   import { profile } from '$lib/auth.js'
   import { Button, Modal } from 'mono-svelte'
+  import { publishedToDate } from '$lib/components/util/date.js'
 
   export let node: CommentNodeI
   export let postId: number
@@ -102,7 +103,7 @@
           </div>
         {/if}
         <RelativeDate
-          date={new Date(node.comment_view.comment.published + 'Z')}
+          date={publishedToDate(node.comment_view.comment.published)}
         />
         <span>•</span>
         <span>

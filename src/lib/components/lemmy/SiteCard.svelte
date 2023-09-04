@@ -4,6 +4,7 @@
   import StickyCard from '$lib/components/ui/StickyCard.svelte'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
+  import { publishedToDate } from '$lib/components/util/date.js'
   import { getClient } from '$lib/lemmy.js'
   import type { PersonView, SiteView, Tagline } from 'lemmy-js-client'
   import { Button, Popover } from 'mono-svelte'
@@ -35,7 +36,7 @@
   </div>
   <span class="flex flex-row items-center gap-1 text-sm">
     <Icon src={Calendar} width={16} height={16} mini />
-    <RelativeDate date={new Date(site.site.published + 'Z')} />
+    <RelativeDate date={publishedToDate(site.site.published)} />
   </span>
   <div class="text-sm flex flex-row flex-wrap gap-3">
     <span class="flex flex-row items-center gap-1">

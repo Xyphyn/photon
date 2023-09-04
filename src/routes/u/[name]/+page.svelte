@@ -34,6 +34,7 @@
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { Button, Modal, Select } from 'mono-svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
+  import { publishedToDate } from '$lib/components/util/date.js'
 
   export let data
 
@@ -199,7 +200,7 @@
         <Icon src={Calendar} width={16} height={16} mini />
         <span class="capitalize">
           <RelativeDate
-            date={new Date(data.person_view.person.published + 'Z')}
+            date={publishedToDate(data.person_view.person.published)}
           />
         </span>
       </span>
