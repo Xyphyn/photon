@@ -8,7 +8,12 @@
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import { page } from '$app/stores'
   import PostActions from '$lib/components/lemmy/post/PostActions.svelte'
-  import { ExclamationTriangle, Icon } from 'svelte-hero-icons'
+  import {
+    ArrowLeft,
+    ArrowPath,
+    ExclamationTriangle,
+    Icon,
+  } from 'svelte-hero-icons'
   import PostLink from '$lib/components/lemmy/post/PostLink.svelte'
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
   import { Badge, Material, Spinner, removeToast, toast } from 'mono-svelte'
@@ -129,20 +134,31 @@
     </Material>
   {/if}
 
-  <PostMeta
-    community={post.post_view.community}
-    user={post.post_view.creator}
-    upvotes={post.post_view.counts.upvotes}
-    downvotes={post.post_view.counts.downvotes}
-    deleted={post.post_view.post.deleted}
-    removed={post.post_view.post.removed}
-    locked={post.post_view.post.locked}
-    featured={post.post_view.post.featured_community ||
-      post.post_view.post.featured_local}
-    nsfw={post.post_view.post.nsfw}
-    published={new Date(post.post_view.post.published + 'Z')}
-    saved={post.post_view.saved}
-  />
+  <div class="flex flex-row justify-between items-center gap-2 flex-wrap">
+    <div class="w-max">
+      <PostMeta
+        community={post.post_view.community}
+        user={post.post_view.creator}
+        upvotes={post.post_view.counts.upvotes}
+        downvotes={post.post_view.counts.downvotes}
+        deleted={post.post_view.post.deleted}
+        removed={post.post_view.post.removed}
+        locked={post.post_view.post.locked}
+        featured={post.post_view.post.featured_community ||
+          post.post_view.post.featured_local}
+        nsfw={post.post_view.post.nsfw}
+        published={new Date(post.post_view.post.published + 'Z')}
+        saved={post.post_view.saved}
+      />
+    </div>
+    <Button
+      on:click={() => history.back()}
+      size="square-md"
+      class={history.length < 3 ? 'hidden' : ''}
+    >
+      <Icon src={ArrowLeft} mini size="16" slot="prefix" />
+    </Button>
+  </div>
   <h1 class="font-bold text-lg">{post.post_view.post.name}</h1>
   {#if isImage(post.post_view.post.url)}
     <img
@@ -236,18 +252,23 @@
   </Material>
 {/if}
 <div class="mt-4 flex flex-col gap-2 w-full">
-  <div class="flex flex-row justify-between">
+  <div class="flex flex-row justify-between flex-wrap gap-2">
     <div class="font-bold opacity-80 text-base flex items-center gap-2">
       Comments <Badge color="gray" class="!text-sm">
         <FormattedNumber number={post.post_view.counts.comments} />
       </Badge>
     </div>
-    <MultiSelect
-      options={['Hot', 'Top', 'New']}
-      bind:selected={commentSort}
-      on:select={reloadComments}
-      headless
-    />
+    <div class="gap-2 flex">
+      <MultiSelect
+        options={['Hot', 'Top', 'New']}
+        bind:selected={commentSort}
+        on:select={reloadComments}
+        headless
+      />
+      <Button size="square-md" on:click={reloadComments}>
+        <Icon src={ArrowPath} size="16" mini slot="prefix" />
+      </Button>
+    </div>
   </div>
   {#await data.streamed.comments}
     <div class="h-16 mx-auto grid place-items-center">

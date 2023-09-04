@@ -49,6 +49,10 @@
     <Icon src={Cog6Tooth} mini size="20" title="Settings" />
     <span class:hidden={!$userSettings.expandSidebar}>Settings</span>
   </SidebarButton>
+  <SidebarButton expanded={$userSettings.expandSidebar} href="/communities">
+    <Icon mini src={GlobeAlt} size="20" />
+    <span class:hidden={!$userSettings.expandSidebar}>Communities</span>
+  </SidebarButton>
   {#if $profileData.profiles.length >= 1}
     <hr class="border-slate-300 dark:border-zinc-800 my-1" />
     {#each $profileData.profiles as prof, index (prof.id)}
@@ -75,15 +79,6 @@
       expanded={$userSettings.expandSidebar}
       items={$profile.user.follows.map((i) => i.community)}
     />
-    <Button
-      class="hover:bg-slate-200 {$userSettings.expandSidebar ? '' : '!p-1.5'}"
-      href="/communities"
-      color="tertiary"
-      alignment="left"
-    >
-      <Icon mini src={GlobeAlt} size="20" />
-      <span class:hidden={!$userSettings.expandSidebar}>Communities</span>
-    </Button>
   {:else}
     <Button
       class="hover:bg-slate-200 {$userSettings.expandSidebar ? '' : '!p-1.5'}"
