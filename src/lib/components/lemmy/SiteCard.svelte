@@ -5,8 +5,8 @@
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import { getClient } from '$lib/lemmy.js'
-  import type { SiteView, Tagline } from 'lemmy-js-client'
-  import { Button } from 'mono-svelte'
+  import type { PersonView, SiteView, Tagline } from 'lemmy-js-client'
+  import { Button, Popover } from 'mono-svelte'
   import {
     Calendar,
     ChatBubbleOvalLeftEllipsis,
@@ -18,6 +18,7 @@
 
   export let site: SiteView
   export let taglines: Tagline[] | undefined = undefined
+  export let admins: PersonView[] | undefined = undefined
 </script>
 
 <StickyCard>
@@ -60,6 +61,33 @@
       Modlog
     </Button>
   </div>
+
+  {#if admins}
+    <span class="font-bold">Admins</span>
+    <div
+      class="flex items-center -space-x-1 flex-wrap hover:space-x-1 transition-all
+      cursor-pointer"
+    >
+      {#each admins as admin (admin.person.id)}
+        <Popover openOnHover origin="top-left" class="transition-all">
+          <a
+            class="block ring rounded-full ring-slate-50 dark:ring-zinc-950 transition-all"
+            href="/u/{admin.person.name}@{new URL(admin.person.actor_id)
+              .hostname}"
+            slot="target"
+          >
+            <Avatar
+              width={28}
+              url={admin.person.avatar}
+              alt={admin.person.name}
+            />
+          </a>
+          <span class="font-bold">{admin.person.name}</span>
+        </Popover>
+      {/each}
+    </div>
+  {/if}
+  <hr class="border-slate-300 dark:border-zinc-700" />
   {#if taglines && taglines.length > 0}
     <Markdown
       source={taglines[Math.floor(Math.random() * taglines.length)].content}

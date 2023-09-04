@@ -79,7 +79,11 @@
         </div>
       </StickyCard>
     {:then site}
-      <SiteCard site={site.site_view} taglines={site.taglines} />
+      <SiteCard
+        site={site.site_view}
+        taglines={site.taglines}
+        admins={site.admins}
+      />
     {:catch}
       <StickyCard>
         <h1 class="font-bold text-lg">Failed to load</h1>
