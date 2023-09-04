@@ -11,14 +11,13 @@
     UserGroup,
   } from 'svelte-hero-icons'
   import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
-  import TextInput from '$lib/components/input/TextInput.svelte'
   import Subscribe from './Subscribe.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import { searchParam } from '$lib/util.js'
   import { addSubscription } from '$lib/lemmy/user.js'
   import { LINKED_INSTANCE_URL } from '$lib/instance.js'
   import { profile } from '$lib/auth.js'
-  import { Button, Select } from 'mono-svelte'
+  import { Button, Select, TextInput } from 'mono-svelte'
   import Sort from '$lib/components/lemmy/Sort.svelte'
 
   export let data

@@ -1,5 +1,4 @@
 <script lang="ts">
-  import TextInput from '$lib/components/input/TextInput.svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import EditableList from '$lib/components/ui/list/EditableList.svelte'
@@ -9,7 +8,7 @@
   import { toast } from '$lib/components/ui/toasts/toasts.js'
   import { getClient } from '$lib/lemmy.js'
   import { flip } from 'svelte/animate'
-  import { Button } from 'mono-svelte'
+  import { Button, TextInput } from 'mono-svelte'
 
   export let data: PageData
 

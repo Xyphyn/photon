@@ -3,13 +3,11 @@
     profileData,
     setUserID,
     profile as currentProfile,
-    resetProfile,
     deleteProfile,
     moveProfile,
     type Profile,
     profile,
   } from '$lib/auth.js'
-  import TextInput from '$lib/components/input/TextInput.svelte'
   import EditableList from '$lib/components/ui/list/EditableList.svelte'
   import Menu from '$lib/components/ui/menu/Menu.svelte'
   import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
@@ -23,7 +21,7 @@
   import { validateInstance } from '$lib/lemmy.js'
   import ProfileAvatar from '$lib/lemmy/ProfileAvatar.svelte'
   import { userSettings } from '$lib/settings.js'
-  import { Button } from 'mono-svelte'
+  import { Button, TextInput } from 'mono-svelte'
   import {
     ArrowLeftOnRectangle,
     ArrowUturnLeft,

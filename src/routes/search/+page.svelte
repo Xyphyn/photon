@@ -1,7 +1,5 @@
 <script lang="ts">
   import { page } from '$app/stores'
-  import MultiSelect from '$lib/components/input/MultiSelect.svelte'
-  import TextInput from '$lib/components/input/TextInput.svelte'
   import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
   import CommunityItem from '$lib/components/lemmy/community/CommunityItem.svelte'
   import Post from '$lib/components/lemmy/post/Post.svelte'
@@ -22,10 +20,10 @@
     PersonView,
     PostView,
   } from 'lemmy-js-client'
-  import { Button, Select } from 'mono-svelte'
+  import { Button, Select, TextInput } from 'mono-svelte'
   import { Bars3BottomRight, Icon, MagnifyingGlass } from 'svelte-hero-icons'
-  import { expoInOut, expoOut } from 'svelte/easing'
-  import { fly, slide } from 'svelte/transition'
+  import { expoOut } from 'svelte/easing'
+  import { slide } from 'svelte/transition'
 
   type Result = PostView | CommentView | PersonView | CommunityView
 

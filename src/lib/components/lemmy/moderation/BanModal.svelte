@@ -4,9 +4,8 @@
   import type { Community, Person, PersonView } from 'lemmy-js-client'
   import { getClient } from '$lib/lemmy.js'
   import { toast } from '$lib/components/ui/toasts/toasts.js'
-  import TextInput from '$lib/components/input/TextInput.svelte'
   import { profile } from '$lib/auth.js'
-  import { Button, Checkbox, Modal } from 'mono-svelte'
+  import { Button, Checkbox, Modal, TextInput } from 'mono-svelte'
 
   export let open = false
   let item: Person | undefined

@@ -1,7 +1,7 @@
 <script lang="ts">
-  import TextInput from '$lib/components/input/TextInput.svelte'
   import Menu from '$lib/components/ui/menu/Menu.svelte'
   import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
+  import { TextInput } from 'mono-svelte'
   import { createEventDispatcher } from 'svelte'
 
   export let query: string

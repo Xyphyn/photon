@@ -1,6 +1,5 @@
 <script lang="ts">
   import { profile } from '$lib/auth.js'
-  import TextInput from '$lib/components/input/TextInput.svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import EditableList from '$lib/components/ui/list/EditableList.svelte'
@@ -9,7 +8,7 @@
   import { getClient } from '$lib/lemmy.js'
   import { addAdmin } from '$lib/lemmy/user.js'
   import { removeItem, trycatch } from '$lib/util.js'
-  import { Button } from 'mono-svelte'
+  import { Button, TextInput } from 'mono-svelte'
   import { Icon, Plus, QuestionMarkCircle, Trash } from 'svelte-hero-icons'
 
   export let data

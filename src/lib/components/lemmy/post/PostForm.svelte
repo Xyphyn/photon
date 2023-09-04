@@ -2,16 +2,12 @@
   import { createEventDispatcher, onDestroy, onMount } from 'svelte'
   import { getClient, uploadImage } from '$lib/lemmy.js'
   import type { Community, Post, PostView } from 'lemmy-js-client'
-  import TextInput from '$lib/components/input/TextInput.svelte'
-  import TextArea from '$lib/components/input/TextArea.svelte'
-  import FileInput from '$lib/components/input/FileInput.svelte'
   import { toast } from '$lib/components/ui/toasts/toasts.js'
-  import SearchInput from '$lib/components/input/SearchInput.svelte'
   import { Check, Icon, Photo } from 'svelte-hero-icons'
   import { profile } from '$lib/auth.js'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { placeholders } from '$lib/util.js'
-  import { Checkbox } from 'mono-svelte'
+  import { Checkbox, TextInput } from 'mono-svelte'
   import { getSessionStorage, setSessionStorage } from '$lib/session.js'
   import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
   import ObjectAutocomplete from '$lib/components/lemmy/ObjectAutocomplete.svelte'
@@ -190,7 +186,7 @@
         bind:q={communitySearch}
         bind:items={communities}
         jwt={$profile?.jwt}
-	listing_type="All"
+        listing_type="All"
         on:select={(e) => {
           const c = e.detail
           if (!c) {

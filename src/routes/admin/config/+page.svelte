@@ -1,13 +1,12 @@
 <script lang="ts">
   import { profile } from '$lib/auth.js'
   import SelectMenu from '$lib/components/input/SelectMenu.svelte'
-  import TextInput from '$lib/components/input/TextInput.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { toast } from '$lib/components/ui/toasts/toasts.js'
   import { getClient } from '$lib/lemmy.js'
   import type { EditSite } from 'lemmy-js-client'
   import type { PageData } from './$types.js'
-  import { Button, Checkbox } from 'mono-svelte'
+  import { Button, Checkbox, TextInput } from 'mono-svelte'
 
   export let data: PageData
 
