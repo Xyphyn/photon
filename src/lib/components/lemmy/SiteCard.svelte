@@ -68,7 +68,7 @@
       class="flex items-center -space-x-1 flex-wrap hover:space-x-1 transition-all
       cursor-pointer"
     >
-      {#each admins as admin (admin.person.id)}
+      {#each admins as admin}
         <Popover openOnHover origin="top-left" class="transition-all">
           <a
             class="block ring rounded-full ring-slate-50 dark:ring-zinc-950 transition-all"

@@ -39,6 +39,7 @@ export async function load({ params, url, fetch }) {
     page: page,
     sort: sort,
     person_view: user.person_view,
+    moderates: user.moderates,
     items,
   }
 }

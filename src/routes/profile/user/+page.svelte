@@ -9,6 +9,7 @@
       items: data.user.submissions,
       page: data.page,
       person_view: data.user.person_view,
+      moderates: data.user.moderates,
       sort: data.sort,
       type: data.type,
     }}

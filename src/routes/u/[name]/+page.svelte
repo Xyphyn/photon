@@ -25,7 +25,7 @@
   import { isCommentView } from '$lib/lemmy/item.js'
   import { getClient } from '$lib/lemmy.js'
   import { isBlocked } from '$lib/lemmy/user.js'
-  import { Menu, MenuButton, toast } from 'mono-svelte'
+  import { Menu, MenuButton, Popover, toast } from 'mono-svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import { profile } from '$lib/auth.js'
   import { ban, isAdmin } from '$lib/components/lemmy/moderation/moderation.js'
@@ -213,6 +213,34 @@
           <FormattedNumber number={data.person_view.counts.comment_count} />
         </span>
       </div>
+      {#if (data.moderates ?? []).length > 0}
+        <div class="flex flex-col gap-2 max-w-full">
+          <span class="font-bold">Moderates</span>
+          <div
+            class="flex items-center -space-x-1 flex-wrap hover:space-x-1 transition-all
+    cursor-pointer"
+          >
+            {#each data.moderates as moderator}
+              <Popover openOnHover origin="top-left" class="transition-all">
+                <a
+                  class="block ring rounded-full ring-slate-50 dark:ring-zinc-950 transition-all"
+                  href="/c/{moderator.community.name}@{new URL(
+                    moderator.community.actor_id
+                  ).hostname}"
+                  slot="target"
+                >
+                  <Avatar
+                    width={28}
+                    url={moderator.community.icon}
+                    alt={moderator.community.title}
+                  />
+                </a>
+                <span class="font-bold">{moderator.community.title}</span>
+              </Popover>
+            {/each}
+          </div>
+        </div>
+      {/if}
       {#if $profile?.user && $profile.jwt && data.person_view.person.id != $profile.user.local_user_view.person.id}
         <div class="flex flex-col gap-2">
           <div class="flex items-center gap-2 w-full">
