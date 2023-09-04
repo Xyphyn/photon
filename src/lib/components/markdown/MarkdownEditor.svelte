@@ -5,7 +5,7 @@
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import { toast } from '$lib/components/ui/toasts/toasts.js'
   import { uploadImage } from '$lib/lemmy.js'
-  import { Button, Modal, TextArea } from 'mono-svelte'
+  import { Button, Label, Modal, TextArea } from 'mono-svelte'
   import { createEventDispatcher } from 'svelte'
   import {
     CodeBracket,
@@ -112,14 +112,19 @@
 
 <div>
   {#if label}
-    <div class="block my-1 font-bold text-sm">{label}</div>
+    <Label>
+      {label}
+    </Label>
   {/if}
   <div
     class="flex flex-col border border-slate-300 dark:border-zinc-800 rounded-md
 overflow-hidden focus-within:border-black focus-within:dark:border-white transition-colors"
+    class:mt-1={label}
   >
     {#if previewing}
-      <div class="px-3 py-2.5 h-32 overflow-auto text-sm resize-y">
+      <div
+        class="px-3 py-2.5 h-32 overflow-auto text-sm resize-y bg-white dark:bg-zinc-950"
+      >
         <Markdown source={beforePreview(value)} />
       </div>
     {:else}
@@ -245,7 +250,7 @@ overflow-hidden focus-within:border-black focus-within:dark:border-white transit
     {/if}
 
     {#if $$slots.default || previewButton}
-      <div class="p-2 flex items-center w-full">
+      <div class="p-2 flex items-center w-full bg-white dark:bg-zinc-950">
         {#if previewButton}
           <MultiSelect
             bind:selected={previewing}
