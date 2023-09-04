@@ -33,7 +33,7 @@
     {#each posts as post, index (post.post.id)}
       {#if !($userSettings.hidePosts.deleted && post.post.deleted) && !($userSettings.hidePosts.removed && post.post.removed)}
         <div
-          in:fly={{
+          in:fly|global={{
             y: -8,
             duration: 500,
             opacity: 0,
