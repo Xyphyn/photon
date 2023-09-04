@@ -1,12 +1,11 @@
 <script lang="ts">
   import { profile } from '$lib/auth.js'
-  import SelectMenu from '$lib/components/input/SelectMenu.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { toast } from '$lib/components/ui/toasts/toasts.js'
   import { getClient } from '$lib/lemmy.js'
   import type { EditSite } from 'lemmy-js-client'
   import type { PageData } from './$types.js'
-  import { Button, Checkbox, TextInput } from 'mono-svelte'
+  import { Button, Checkbox, Select, TextInput } from 'mono-svelte'
 
   export let data: PageData
 
@@ -70,17 +69,11 @@
     <Checkbox checked={formData.enable_nsfw} defaultValue={true}>
       Enable NSFW
     </Checkbox>
-    <SelectMenu
-      label="Registration mode"
-      alignment="top-left"
-      options={['Closed', 'RequireApplication', 'Open']}
-      optionNames={['Closed', 'Require Application', 'Open Registration']}
-      selected={formData.registration_mode ?? 'Open'}
-      on:select={(e) => {
-        // @ts-ignore
-        formData.registration_mode = e.detail
-      }}
-    />
+    <Select label="Registration Mode" bind:value={formData.registration_mode}>
+      <option value="Open">Open</option>
+      <option value="RequireApplication">Require Application</option>
+      <option value="Closed">Closed</option>
+    </Select>
     {#if formData.registration_mode == 'RequireApplication'}
       <MarkdownEditor
         previewButton
