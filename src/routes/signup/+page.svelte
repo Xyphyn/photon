@@ -1,10 +1,10 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
-  import Button from '$lib/components/input/Button.svelte'
   import TextInput from '$lib/components/input/TextInput.svelte'
   import { toast } from '$lib/components/ui/toasts/toasts.js'
   import { DEFAULT_INSTANCE_URL } from '$lib/instance.js'
   import { validateInstance } from '$lib/lemmy.js'
+  import { Button } from 'mono-svelte'
 
   let instance: string = ''
   let validating: boolean = false

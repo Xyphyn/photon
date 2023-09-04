@@ -1,13 +1,12 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { setUser } from '$lib/auth.js'
-  import Button from '$lib/components/input/Button.svelte'
   import Link from '$lib/components/input/Link.svelte'
   import TextInput from '$lib/components/input/TextInput.svelte'
-  import Card from '$lib/components/ui/Card.svelte'
   import { toast } from '$lib/components/ui/toasts/toasts.js'
   import { DEFAULT_INSTANCE_URL, LINKED_INSTANCE_URL } from '$lib/instance.js'
   import { getClient, validateInstance } from '$lib/lemmy.js'
+  import { Button } from 'mono-svelte'
   import { AtSymbol, Icon } from 'svelte-hero-icons'
 
   let data = {

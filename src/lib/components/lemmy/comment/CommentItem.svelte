@@ -1,10 +1,10 @@
 <script lang="ts">
-  import Button from '$lib/components/input/Button.svelte'
   import Comment from '$lib/components/lemmy/comment/Comment.svelte'
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
   import Card from '$lib/components/ui/Card.svelte'
   import { getInstance } from '$lib/lemmy.js'
   import type { CommentView } from 'lemmy-js-client'
+  import { Button } from 'mono-svelte'
 
   export let comment: CommentView
 </script>

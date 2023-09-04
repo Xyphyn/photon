@@ -1,6 +1,5 @@
 <script lang="ts">
   import { profile } from '$lib/auth.js'
-  import Button from '$lib/components/input/Button.svelte'
   import { amMod } from '$lib/components/lemmy/moderation/moderation.js'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
@@ -13,6 +12,7 @@
   import { addSubscription } from '$lib/lemmy/user.js'
   import { fullCommunityName } from '$lib/util.js'
   import type { CommunityView } from 'lemmy-js-client'
+  import { Button } from 'mono-svelte'
   import {
     Calendar,
     ChatBubbleOvalLeftEllipsis,
@@ -117,7 +117,7 @@
         size="lg"
         disabled={community_view.community.posting_restricted_to_mods}
       >
-        <Icon src={PencilSquare} mini size="16" slot="icon" />
+        <Icon src={PencilSquare} mini size="16" slot="prefix" />
         Create Post
       </Button>
       <Button
@@ -131,7 +131,7 @@
           src={community_view.subscribed == 'Subscribed' ? Minus : Plus}
           mini
           size="16"
-          slot="icon"
+          slot="prefix"
         />
         {community_view.subscribed == 'Subscribed' ||
         community_view.subscribed == 'Pending'
@@ -156,7 +156,7 @@
             )}/settings"
             size="square-md"
           >
-            <Icon src={Cog6Tooth} mini size="16" slot="icon" />
+            <Icon src={Cog6Tooth} mini size="16" slot="prefix" />
           </Button>
         </div>
       {/if}

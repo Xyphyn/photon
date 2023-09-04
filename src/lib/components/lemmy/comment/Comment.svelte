@@ -19,7 +19,7 @@
   import { toast } from '$lib/components/ui/toasts/toasts.js'
   import { profile } from '$lib/auth.js'
   import { slide } from 'svelte/transition'
-  import Button from '$lib/components/input/Button.svelte'
+  import { Button } from 'mono-svelte'
 
   export let node: CommentNodeI
   export let postId: number

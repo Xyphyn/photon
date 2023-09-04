@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Button from '$lib/components/input/Button.svelte'
   import TextArea from '$lib/components/input/TextArea.svelte'
   import Comment from '$lib/components/lemmy/comment/Comment.svelte'
   import Post from '$lib/components/lemmy/post/Post.svelte'
@@ -17,6 +16,7 @@
   import { userSettings } from '$lib/settings.js'
   import { fullCommunityName } from '$lib/util.js'
   import { amMod, isAdmin } from './moderation'
+  import { Button } from 'mono-svelte'
 
   export let open: boolean
   export let item: PostView | CommentView | undefined = undefined
@@ -202,7 +202,7 @@
         bind:value={reason}
       />
 
-      {#if !removed && ( amMod($profile.user, item.community) || (isAdmin($profile.user) && item.community.local))}
+      {#if !removed && $profile?.user && ( amMod($profile.user, item.community) || (isAdmin($profile.user) && item.community.local))}
         <Checkbox bind:checked={commentReason}>Reply with reason</Checkbox>
 
         {#if commentReason}
@@ -227,7 +227,7 @@
         disabled={loading}
         submit
       >
-        <Icon src={purge ? Fire : Trash} mini size="16" slot="icon" />
+        <Icon src={purge ? Fire : Trash} mini size="16" slot="prefix" />
         {#if purge}
           Purge
         {:else}

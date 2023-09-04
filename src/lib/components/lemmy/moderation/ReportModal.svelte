@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Button from '$lib/components/input/Button.svelte'
   import TextArea from '$lib/components/input/TextArea.svelte'
   import Comment from '$lib/components/lemmy/comment/Comment.svelte'
   import Post from '$lib/components/lemmy/post/Post.svelte'
@@ -8,6 +7,7 @@
   import { getClient } from '$lib/lemmy.js'
   import type { CommentView, PostView } from 'lemmy-js-client'
   import { profile } from '$lib/auth.js'
+  import { Button } from 'mono-svelte'
 
   export let open: boolean
   export let item: PostView | CommentView | undefined = undefined

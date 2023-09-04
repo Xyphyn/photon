@@ -5,7 +5,6 @@
   import TextInput from '$lib/components/input/TextInput.svelte'
   import TextArea from '$lib/components/input/TextArea.svelte'
   import FileInput from '$lib/components/input/FileInput.svelte'
-  import Button from '$lib/components/input/Button.svelte'
   import { toast } from '$lib/components/ui/toasts/toasts.js'
   import SearchInput from '$lib/components/input/SearchInput.svelte'
   import { Check, Icon, Photo } from 'svelte-hero-icons'
@@ -16,6 +15,7 @@
   import { getSessionStorage, setSessionStorage } from '$lib/session.js'
   import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
   import ObjectAutocomplete from '$lib/components/lemmy/ObjectAutocomplete.svelte'
+  import { Button } from 'mono-svelte'
 
   export let edit = false
 
@@ -222,7 +222,7 @@
       on:click={() => (uploadingImage = !uploadingImage)}
       style="width: 46px !important; height: 42px; padding: 0;"
     >
-      <Icon src={Photo} size="18" mini slot="icon" />
+      <Icon src={Photo} size="18" mini slot="prefix" />
     </Button>
   </div>
   <MarkdownEditor

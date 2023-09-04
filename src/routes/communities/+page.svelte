@@ -12,13 +12,12 @@
   import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
   import TextInput from '$lib/components/input/TextInput.svelte'
   import Subscribe from './Subscribe.svelte'
-  import Button from '$lib/components/input/Button.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import { searchParam } from '$lib/util.js'
   import { addSubscription } from '$lib/lemmy/user.js'
-  import Link from '$lib/components/input/Link.svelte'
   import { LINKED_INSTANCE_URL } from '$lib/instance.js'
   import { profile } from '$lib/auth.js'
+  import { Button } from 'mono-svelte'
 
   export let data
 

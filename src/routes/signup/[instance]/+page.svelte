@@ -2,7 +2,6 @@
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
   import { setUser } from '$lib/auth.js'
-  import Button from '$lib/components/input/Button.svelte'
   import TextArea from '$lib/components/input/TextArea.svelte'
   import TextInput from '$lib/components/input/TextInput.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
@@ -13,6 +12,7 @@
   import { toast } from '$lib/components/ui/toasts/toasts.js'
   import { getClient } from '$lib/lemmy.js'
   import type { GetCaptchaResponse } from 'lemmy-js-client'
+  import { Button } from 'mono-svelte'
   import {
     ArrowPath,
     ExclamationCircle,

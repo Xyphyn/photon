@@ -1,18 +1,18 @@
 <script lang="ts">
   import { profile } from '$lib/auth.js'
-  import Button from '$lib/components/input/Button.svelte'
-  import TextInput from '$lib/components/input/TextInput.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import EditableList from '$lib/components/ui/list/EditableList.svelte'
   import { toast } from '$lib/components/ui/toasts/toasts.js'
   import { getClient } from '$lib/lemmy.js'
+  import type { Tagline } from 'lemmy-js-client'
+  import { Button } from 'mono-svelte'
   import { Icon, Plus, QuestionMarkCircle, Trash } from 'svelte-hero-icons'
 
   export let data
 
-  let taglines = [...(data.site?.taglines.map((t) => t.content) ?? [])]
+  let taglines = [...(data.site?.taglines.map((t: Tagline) => t.content) ?? [])]
   let newTagline = ''
 
   let saving = false
@@ -97,7 +97,7 @@
     />
 
     <Button size="lg" submit>
-      <Icon src={Plus} size="16" mini slot="icon" />
+      <Icon src={Plus} size="16" mini slot="prefix" />
       Add
     </Button>
   </form>
@@ -126,7 +126,7 @@
           />
 
           <Button size="lg" submit>
-            <Icon src={Plus} size="16" mini slot="icon" />
+            <Icon src={Plus} size="16" mini slot="prefix" />
             Add
           </Button>
         </form>

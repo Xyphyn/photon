@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores'
-  import Button from '$lib/components/input/Button.svelte'
+  import { Button } from 'mono-svelte'
 </script>
 
 <div class="flex flex-col mx-auto gap-4 justify-center items-center h-full">

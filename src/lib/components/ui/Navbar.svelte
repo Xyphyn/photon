@@ -1,6 +1,5 @@
 <script lang="ts">
   import { profile, profileData, setUserID } from '$lib/auth.js'
-  import Button from '$lib/components/input/Button.svelte'
   import Link from '$lib/components/input/Link.svelte'
   import ShieldIcon from '$lib/components/lemmy/moderation/ShieldIcon.svelte'
   import {
@@ -15,6 +14,7 @@
   import { LINKED_INSTANCE_URL, instance } from '$lib/instance.js'
   import { site } from '$lib/lemmy.js'
   import { theme } from '$lib/ui/colors.js'
+  import { Button } from 'mono-svelte'
   import {
     ArrowLeftOnRectangle,
     Bars3,
@@ -97,7 +97,7 @@
         dark:text-zinc-300 text-slate-700 hover:text-inherit hover:dark:text-inherit
       hover:bg-slate-200 relative hover:border-slate-300"
       >
-        <Icon src={CommandLine} mini size="16" slot="icon" />
+        <Icon src={CommandLine} mini size="16" slot="prefix" />
         <span class="hidden md:inline">Admin</span>
       </Button>
     {/if}
@@ -123,7 +123,7 @@
       class="max-md:w-9 max-md:h-8 max-md:!p-0
       dark:text-zinc-300 text-slate-700 hover:text-inherit hover:dark:text-inherit hover:bg-slate-200 hover:border-slate-300"
     >
-      <Icon mini src={MagnifyingGlass} width={16} slot="icon" />
+      <Icon mini src={MagnifyingGlass} width={16} slot="prefix" />
       <span class="hidden md:inline">Search</span>
     </Button>
     <Button
@@ -133,18 +133,19 @@
       dark:text-zinc-300 text-slate-700 hover:text-inherit
       hover:dark:text-inherit hover:bg-slate-200 hover:border-slate-300"
     >
-      <Icon mini src={GlobeAlt} size="16" slot="icon" />
+      <Icon mini src={GlobeAlt} size="16" slot="prefix" />
       <span class="hidden md:inline">Explore</span>
     </Button>
-    <Menu let:toggleOpen alignment="bottom-right">
+    <Menu alignment="bottom-right">
       <Button
+        let:toggleOpen
         color="primary"
         slot="button"
         aria-label="Create"
         on:click={toggleOpen}
         class="max-md:w-9 max-md:h-8 max-md:!p-0"
       >
-        <Icon src={Plus} width={18} mini slot="icon" />
+        <Icon src={Plus} width={18} mini slot="prefix" />
         <span class="hidden md:inline">Create</span>
       </Button>
       <li class="text-xs opacity-80 text-left mx-4 my-1 py-1">Create</li>
@@ -175,7 +176,6 @@
     </Menu>
   </div>
   <Menu
-    let:toggleOpen
     alignment="bottom-right"
     itemsClass="h-8 md:h-8"
     containerClass="!max-h-[28rem]"
@@ -185,6 +185,7 @@
       dark:bg-zinc-800 relative"
       aria-label="Profile"
       slot="button"
+      let:toggleOpen
       on:click={toggleOpen}
     >
       {#if $profile?.user}

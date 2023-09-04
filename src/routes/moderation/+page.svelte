@@ -8,8 +8,8 @@
   import { goto } from '$app/navigation'
   import { EnvelopeOpen, Icon, Inbox, Newspaper } from 'svelte-hero-icons'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import Button from '$lib/components/input/Button.svelte'
   import { searchParam } from '$lib/util.js'
+  import { Button } from 'mono-svelte'
 
   export let data
 </script>

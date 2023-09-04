@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Button from '$lib/components/input/Button.svelte'
   import TextArea from '$lib/components/input/TextArea.svelte'
   import UserItem from '$lib/components/lemmy/user/UserItem.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
@@ -10,6 +9,7 @@
   import TextInput from '$lib/components/input/TextInput.svelte'
   import { profile } from '$lib/auth.js'
   import Checkbox from '$lib/components/input/Checkbox.svelte'
+  import { Button } from 'mono-svelte'
 
   export let open = false
   let item: Person | undefined

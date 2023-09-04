@@ -1,6 +1,5 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
-  import Button from '$lib/components/input/Button.svelte'
   import TextArea from '$lib/components/input/TextArea.svelte'
   import Comment from '$lib/components/lemmy/comment/Comment.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
@@ -18,6 +17,7 @@
   import { toast } from '$lib/components/ui/toasts/toasts.js'
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
+  import { Button } from 'mono-svelte'
 
   export let item: CommentReplyView | PersonMentionView | PrivateMessageView
   export let read: boolean
@@ -132,7 +132,7 @@
         disabled={loading}
         on:click={() => markAsRead(!read)}
       >
-        <Icon slot="icon" src={Check} mini size="16" />
+        <Icon slot="prefix" src={Check} mini size="16" />
       </Button>
 
       <Button href="/comment/{item.comment.id}" size="md" class="h-8">

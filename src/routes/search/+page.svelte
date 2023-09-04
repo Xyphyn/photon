@@ -1,10 +1,7 @@
 <script lang="ts">
-  import { goto } from '$app/navigation'
   import { page } from '$app/stores'
-  import Button from '$lib/components/input/Button.svelte'
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
   import TextInput from '$lib/components/input/TextInput.svelte'
-  import Comment from '$lib/components/lemmy/comment/Comment.svelte'
   import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
   import CommunityItem from '$lib/components/lemmy/community/CommunityItem.svelte'
   import Post from '$lib/components/lemmy/post/Post.svelte'
@@ -25,6 +22,7 @@
     PersonView,
     PostView,
   } from 'lemmy-js-client'
+  import { Button } from 'mono-svelte'
   import { Icon, MagnifyingGlass } from 'svelte-hero-icons'
   import { expoInOut, expoOut } from 'svelte/easing'
   import { fly, slide } from 'svelte/transition'

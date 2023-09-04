@@ -21,7 +21,6 @@
   import { toast } from '$lib/components/ui/toasts/toasts.js'
   import Menu from '$lib/components/ui/menu/Menu.svelte'
   import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
-  import Button from '$lib/components/input/Button.svelte'
   import { createEventDispatcher } from 'svelte'
   import { isCommentMutable } from '$lib/components/lemmy/post/helpers.js'
   import {
@@ -33,6 +32,7 @@
   import CommentModerationMenu from '$lib/components/lemmy/moderation/CommentModerationMenu.svelte'
   import { profile } from '$lib/auth.js'
   import { deleteItem, save } from '$lib/lemmy/contentview.js'
+  import { Button } from 'mono-svelte'
 
   export let comment: CommentView
   export let replying: boolean = false
@@ -58,15 +58,22 @@
   {#if $profile?.user && (amMod($profile?.user, comment.community) || isAdmin($profile.user))}
     <CommentModerationMenu bind:item={comment} />
   {/if}
-  <Menu let:toggleOpen class="top-0 leading-3" alignment="bottom-center">
+  <Menu class="top-0 leading-3" alignment="bottom-center">
     <Button
+      let:toggleOpen
       slot="button"
       on:click={toggleOpen}
       class="!p-1"
       aria-label="Comment actions"
       color="ghost"
     >
-      <Icon src={EllipsisHorizontal} width={16} height={16} mini slot="icon" />
+      <Icon
+        src={EllipsisHorizontal}
+        width={16}
+        height={16}
+        mini
+        slot="prefix"
+      />
     </Button>
     <span class="text-xs opacity-80 py-1 my-1 px-4">Comment actions</span>
     <MenuButton

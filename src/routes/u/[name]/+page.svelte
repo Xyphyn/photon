@@ -14,9 +14,7 @@
     PencilSquare,
     ShieldCheck,
     ShieldExclamation,
-    UserPlus,
   } from 'svelte-hero-icons'
-  import Button from '$lib/components/input/Button.svelte'
   import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import { page } from '$app/stores'
@@ -36,6 +34,7 @@
   import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
   import { searchParam } from '$lib/util.js'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
+  import { Button } from 'mono-svelte'
 
   export let data
 
@@ -212,7 +211,7 @@
               on:click={() => (messaging = true)}
               class="flex-1"
             >
-              <Icon slot="icon" solid size="16" src={Envelope} />
+              <Icon slot="prefix" solid size="16" src={Envelope} />
               Message
             </Button>
             {#if data.person_view.person.matrix_user_id}
@@ -223,7 +222,7 @@
                   .matrix_user_id}"
                 class="flex-1"
               >
-                <Icon slot="icon" solid size="16" src={ShieldCheck} />
+                <Icon slot="prefix" solid size="16" src={ShieldCheck} />
                 Matrix User
               </Button>
             {/if}
@@ -235,15 +234,20 @@
             disabled={blocking}
             on:click={() => blockUser(data.person_view.person.id)}
           >
-            <Icon slot="icon" mini size="16" src={NoSymbol} />
+            <Icon slot="prefix" mini size="16" src={NoSymbol} />
             {isBlocked($profile.user, data.person_view.person.id)
               ? 'Unblock'
               : 'Block'}
           </Button>
         </div>
         {#if isAdmin($profile?.user)}
-          <Menu let:toggleOpen class="ml-auto" alignment="bottom-right">
-            <Button size="square-md" on:click={toggleOpen} slot="button">
+          <Menu class="ml-auto" alignment="bottom-right">
+            <Button
+              let:toggleOpen
+              size="square-md"
+              on:click={toggleOpen}
+              slot="button"
+            >
               <ShieldIcon width={16} filled />
             </Button>
             <MenuButton

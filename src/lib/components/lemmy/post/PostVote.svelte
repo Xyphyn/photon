@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Button from '$lib/components/input/Button.svelte'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import { getClient } from '$lib/lemmy'
   import { userSettings } from '$lib/settings.js'
@@ -14,6 +13,7 @@
   } from 'svelte-hero-icons'
   import { profile } from '$lib/auth.js'
   import { vote as voteItem } from '$lib/lemmy/contentview.js'
+  import { Button } from 'mono-svelte'
 
   export let post: Post
   export let vote: number = 0

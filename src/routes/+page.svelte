@@ -1,7 +1,6 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
-  import Button from '$lib/components/input/Button.svelte'
   import StickyCard from '$lib/components/ui/StickyCard.svelte'
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
   import Post from '$lib/components/lemmy/post/Post.svelte'
@@ -17,6 +16,7 @@
   import { userSettings } from '$lib/settings.js'
   import PostFeed from '$lib/components/lemmy/post/PostFeed.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
+  import { Button } from 'mono-svelte'
 
   export let data
 

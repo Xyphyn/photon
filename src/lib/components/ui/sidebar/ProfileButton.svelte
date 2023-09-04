@@ -2,8 +2,8 @@
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
   import { profile, setUserID, type Profile } from '$lib/auth.js'
-  import Button from '$lib/components/input/Button.svelte'
   import ProfileAvatar from '$lib/lemmy/ProfileAvatar.svelte'
+  import { Button } from 'mono-svelte'
 
   export let expanded: boolean = false
   export let prof: Profile
@@ -41,7 +41,7 @@
     profile={prof}
     {index}
     selected={$profile?.id == prof.id}
-    slot="icon"
+    slot="prefix"
   />
   <span class:hidden={!expanded} class="flex flex-col gap-0">
     {prof.username ?? prof.user?.local_user_view.person.name}

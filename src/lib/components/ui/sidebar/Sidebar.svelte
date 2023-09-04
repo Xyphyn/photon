@@ -8,7 +8,6 @@
     Icon,
     UserGroup,
   } from 'svelte-hero-icons'
-  import Button from '../../input/Button.svelte'
   import { profile, profileData } from '$lib/auth.js'
   import { userSettings } from '$lib/settings.js'
   import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
@@ -16,6 +15,7 @@
   import ProfileButton from '$lib/components/ui/sidebar/ProfileButton.svelte'
   import { flip } from 'svelte/animate'
   import { expoOut } from 'svelte/easing'
+  import { Button } from 'mono-svelte'
 </script>
 
 <nav

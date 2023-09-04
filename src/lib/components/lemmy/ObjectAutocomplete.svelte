@@ -16,7 +16,7 @@
   export let showWhenEmpty: boolean = false
   let showNone: boolean = false
 
-  const dispatcher = createEventDispatcher<{ select: Community }>()
+  const dispatcher = createEventDispatcher<{ select: Community | undefined }>()
 </script>
 
 {#if type == 'community'}

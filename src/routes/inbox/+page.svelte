@@ -1,13 +1,6 @@
 <script lang="ts">
   import InboxItem from './InboxItem.svelte'
-  import Button from '$lib/components/input/Button.svelte'
-  import {
-    ArchiveBox,
-    Check,
-    EnvelopeOpen,
-    Icon,
-    Inbox,
-  } from 'svelte-hero-icons'
+  import { Check, Icon, Inbox } from 'svelte-hero-icons'
   import { getClient } from '$lib/lemmy.js'
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
@@ -18,6 +11,7 @@
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { fly } from 'svelte/transition'
   import { searchParam } from '$lib/util.js'
+  import { Button } from 'mono-svelte'
 
   export let data
 
@@ -59,7 +53,7 @@
     disabled={markingAsRead}
     size="md"
   >
-    <Icon src={Check} width={16} mini slot="icon" />
+    <Icon src={Check} width={16} mini slot="prefix" />
     Mark all as read
   </Button>
 </div>

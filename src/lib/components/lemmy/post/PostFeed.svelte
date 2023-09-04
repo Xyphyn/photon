@@ -1,9 +1,9 @@
 <script lang="ts">
-  import Button from '$lib/components/input/Button.svelte'
   import Post from '$lib/components/lemmy/post/Post.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { userSettings } from '$lib/settings.js'
   import type { PostView } from 'lemmy-js-client'
+  import { Button } from 'mono-svelte'
   import { ArchiveBox, Icon, Plus } from 'svelte-hero-icons'
   import { fly } from 'svelte/transition'
 
@@ -24,7 +24,7 @@
         description="There are no posts that match this filter."
       >
         <Button href="/communities">
-          <Icon src={Plus} size="16" mini slot="icon" />
+          <Icon src={Plus} size="16" mini slot="prefix" />
           <span>Follow some communities</span>
         </Button>
       </Placeholder>

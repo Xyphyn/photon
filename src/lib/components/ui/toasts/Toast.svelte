@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Button from '$lib/components/input/Button.svelte'
   import Spinner from '$lib/components/ui/loader/Spinner.svelte'
   import {
     type Toast,

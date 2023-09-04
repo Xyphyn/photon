@@ -9,7 +9,6 @@
     type Profile,
     profile,
   } from '$lib/auth.js'
-  import Button from '$lib/components/input/Button.svelte'
   import TextInput from '$lib/components/input/TextInput.svelte'
   import EditableList from '$lib/components/ui/list/EditableList.svelte'
   import Menu from '$lib/components/ui/menu/Menu.svelte'
@@ -24,6 +23,7 @@
   import { validateInstance } from '$lib/lemmy.js'
   import ProfileAvatar from '$lib/lemmy/ProfileAvatar.svelte'
   import { userSettings } from '$lib/settings.js'
+  import { Button } from 'mono-svelte'
   import {
     ArrowLeftOnRectangle,
     ArrowUturnLeft,
@@ -105,7 +105,7 @@
         <h1 class="font-bold text-3xl">No accounts</h1>
       </div>
       <Button href="/login" size="lg">
-        <Icon slot="icon" src={ArrowLeftOnRectangle} size="16" mini />
+        <Icon slot="prefix" src={ArrowLeftOnRectangle} size="16" mini />
         Log in
       </Button>
       <div class="flex flex-row font-normal gap-2">
@@ -174,9 +174,9 @@
             </div>
           </div>
           <div class="ml-auto" />
-          <Menu let:toggleOpen alignment="bottom-right">
-            <Button on:click={toggleOpen} size="square-md" slot="button">
-              <Icon src={EllipsisHorizontal} mini size="16" slot="icon" />
+          <Menu alignment="bottom-right">
+            <Button let:toggleOpen on:click={toggleOpen} size="square-md" slot="button">
+              <Icon src={EllipsisHorizontal} mini size="16" slot="prefix" />
             </Button>
             <MenuButton on:click={() => moveProfile(profile.id, true)}>
               <Icon src={ChevronUp} size="16" mini slot="icon" />
@@ -222,7 +222,7 @@
             class="!p-2"
             color="danger"
           >
-            <Icon slot="icon" src={Trash} size="16" mini />
+            <Icon slot="prefix" src={Trash} size="16" mini />
           </Button>
         </div>
       {/each}
@@ -259,7 +259,7 @@
       </Button>
     </div>
     <Button href="/login" size="lg">
-      <Icon slot="icon" src={Plus} size="16" mini />
+      <Icon slot="prefix" src={Plus} size="16" mini />
       Add more
     </Button>
   </div>

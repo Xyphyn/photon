@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Button from '$lib/components/input/Button.svelte'
   import { Color } from '$lib/ui/colors.js'
   import type { CommentResponse } from 'lemmy-js-client'
   import { getClient } from '$lib/lemmy.js'
@@ -11,6 +10,7 @@
   import { toast } from '$lib/components/ui/toasts/toasts.js'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { placeholders } from '$lib/util.js'
+  import { Button } from 'mono-svelte'
 
   export let postId: number
   export let parentId: number | undefined = undefined

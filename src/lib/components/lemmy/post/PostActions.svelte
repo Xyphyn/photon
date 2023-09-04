@@ -21,7 +21,6 @@
   } from 'svelte-hero-icons'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import Menu from '$lib/components/ui/menu/Menu.svelte'
-  import Button from '$lib/components/input/Button.svelte'
   import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
   import { createEventDispatcher } from 'svelte'
   import Modal from '$lib/components/ui/modal/Modal.svelte'
@@ -37,6 +36,7 @@
   import { setSessionStorage } from '$lib/session.js'
   import { goto } from '$app/navigation'
   import { userSettings } from '$lib/settings.js'
+  import { Button } from 'mono-svelte'
 
   export let post: PostView
 
@@ -85,7 +85,7 @@
     class="!text-inherit h-8 px-3"
   >
     <Icon
-      slot="icon"
+      slot="prefix"
       src={ChatBubbleOvalLeftEllipsis}
       mini
       width={16}
@@ -102,25 +102,22 @@
       {/await}
     {/if}
     <Button on:click={() => (debug = true)} size="square-md">
-      <Icon src={BugAnt} mini size="16" slot="icon" />
+      <Icon src={BugAnt} mini size="16" slot="prefix" />
     </Button>
   {/if}
   {#if $profile?.user && (amMod($profile.user, post.community) || isAdmin($profile.user))}
     <ModerationMenu bind:item={post} community={post.community} />
   {/if}
-  <Menu
-    alignment="bottom-right"
-    containerClass="overflow-auto max-h-[400px]"
-    let:toggleOpen
-  >
+  <Menu alignment="bottom-right" containerClass="overflow-auto max-h-[400px]">
     <Button
+      let:toggleOpen
       slot="button"
       aria-label="Post actions"
       on:click={toggleOpen}
       class="hover:text-inherit"
       size="square-md"
     >
-      <Icon slot="icon" src={EllipsisHorizontal} width={16} mini />
+      <Icon slot="prefix" src={EllipsisHorizontal} width={16} mini />
     </Button>
     <li class="mx-4 text-xs opacity-80 text-left my-1 py-1">Creator</li>
     <MenuButton

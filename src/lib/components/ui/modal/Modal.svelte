@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Button from '$lib/components/input/Button.svelte'
   import Card from '$lib/components/ui/Card.svelte'
+  import { Button } from 'mono-svelte'
   import { createEventDispatcher } from 'svelte'
   import { Icon, XMark } from 'svelte-hero-icons'
   import { expoOut } from 'svelte/easing'
