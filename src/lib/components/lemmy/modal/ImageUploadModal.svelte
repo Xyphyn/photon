@@ -1,10 +1,9 @@
 <script lang="ts">
   import { profile } from '$lib/auth.js'
   import FileInput from '$lib/components/input/FileInput.svelte'
-  import Modal from '$lib/components/ui/modal/Modal.svelte'
   import { toast } from '$lib/components/ui/toasts/toasts.js'
   import { uploadImage } from '$lib/lemmy.js'
-  import { Button } from 'mono-svelte'
+  import { Button, Modal } from 'mono-svelte'
   import { createEventDispatcher } from 'svelte'
 
   export let open: boolean

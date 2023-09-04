@@ -2,7 +2,6 @@
   import TextArea from '$lib/components/input/TextArea.svelte'
   import Comment from '$lib/components/lemmy/comment/Comment.svelte'
   import Post from '$lib/components/lemmy/post/Post.svelte'
-  import Modal from '$lib/components/ui/modal/Modal.svelte'
   import { toast } from '$lib/components/ui/toasts/toasts.js'
   import { getClient } from '$lib/lemmy.js'
   import { isCommentView, isPostView } from '$lib/lemmy/item.js'
@@ -15,7 +14,7 @@
   import { userSettings } from '$lib/settings.js'
   import { fullCommunityName } from '$lib/util.js'
   import { amMod, isAdmin } from './moderation'
-  import { Button, Checkbox } from 'mono-svelte'
+  import { Button, Checkbox, Modal } from 'mono-svelte'
 
   export let open: boolean
   export let item: PostView | CommentView | undefined = undefined

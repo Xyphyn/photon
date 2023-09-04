@@ -4,11 +4,9 @@
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
   import TextArea from '$lib/components/input/TextArea.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
-  import Modal from '$lib/components/ui/modal/Modal.svelte'
   import { toast } from '$lib/components/ui/toasts/toasts.js'
   import { uploadImage } from '$lib/lemmy.js'
-  import type { Community, Person } from 'lemmy-js-client'
-  import { Button } from 'mono-svelte'
+  import { Button, Modal } from 'mono-svelte'
   import { createEventDispatcher } from 'svelte'
   import {
     CodeBracket,

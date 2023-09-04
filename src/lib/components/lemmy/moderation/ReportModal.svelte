@@ -2,12 +2,11 @@
   import TextArea from '$lib/components/input/TextArea.svelte'
   import Comment from '$lib/components/lemmy/comment/Comment.svelte'
   import Post from '$lib/components/lemmy/post/Post.svelte'
-  import Modal from '$lib/components/ui/modal/Modal.svelte'
   import { toast } from '$lib/components/ui/toasts/toasts.js'
   import { getClient } from '$lib/lemmy.js'
   import type { CommentView, PostView } from 'lemmy-js-client'
   import { profile } from '$lib/auth.js'
-  import { Button } from 'mono-svelte'
+  import { Button, Modal } from 'mono-svelte'
 
   export let open: boolean
   export let item: PostView | CommentView | undefined = undefined

@@ -1,22 +1,15 @@
 <script lang="ts">
-  import { goto } from '$app/navigation'
   import { page } from '$app/stores'
   import StickyCard from '$lib/components/ui/StickyCard.svelte'
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
-  import Post from '$lib/components/lemmy/post/Post.svelte'
   import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
-  import { fly } from 'svelte/transition'
   import Spinner from '$lib/components/ui/loader/Spinner.svelte'
-  import { ArchiveBox, Icon, Plus } from 'svelte-hero-icons'
   import Pageination from '$lib/components/ui/Pageination.svelte'
-  import Modal from '$lib/components/ui/modal/Modal.svelte'
   import { profile } from '$lib/auth.js'
   import Sort from '$lib/components/lemmy/Sort.svelte'
   import { searchParam } from '$lib/util.js'
-  import { userSettings } from '$lib/settings.js'
   import PostFeed from '$lib/components/lemmy/post/PostFeed.svelte'
-  import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import { Button } from 'mono-svelte'
+  import { Button, Modal } from 'mono-svelte'
 
   export let data
 

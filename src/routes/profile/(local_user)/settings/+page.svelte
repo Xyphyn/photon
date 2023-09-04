@@ -5,11 +5,10 @@
   import TextInput from '$lib/components/input/TextInput.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import Card from '$lib/components/ui/Card.svelte'
-  import Modal from '$lib/components/ui/modal/Modal.svelte'
   import { removeToast, toast } from '$lib/components/ui/toasts/toasts.js'
   import { getClient, uploadImage } from '$lib/lemmy.js'
   import type { SaveUserSettings } from 'lemmy-js-client'
-  import { Button, Checkbox } from 'mono-svelte'
+  import { Button, Checkbox, Modal } from 'mono-svelte'
 
   export let data
 

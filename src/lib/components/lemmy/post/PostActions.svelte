@@ -23,7 +23,6 @@
   import Menu from '$lib/components/ui/menu/Menu.svelte'
   import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
   import { createEventDispatcher } from 'svelte'
-  import Modal from '$lib/components/ui/modal/Modal.svelte'
   import {
     amMod,
     isAdmin,
@@ -36,7 +35,7 @@
   import { setSessionStorage } from '$lib/session.js'
   import { goto } from '$app/navigation'
   import { userSettings } from '$lib/settings.js'
-  import { Button } from 'mono-svelte'
+  import { Button, Modal } from 'mono-svelte'
 
   export let post: PostView
 

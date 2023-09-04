@@ -14,12 +14,10 @@
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import CommentActions from '$lib/components/lemmy/comment/CommentActions.svelte'
-  import Modal from '$lib/components/ui/modal/Modal.svelte'
   import { getClient } from '$lib/lemmy.js'
   import { toast } from '$lib/components/ui/toasts/toasts.js'
   import { profile } from '$lib/auth.js'
-  import { slide } from 'svelte/transition'
-  import { Button } from 'mono-svelte'
+  import { Button, Modal } from 'mono-svelte'
 
   export let node: CommentNodeI
   export let postId: number

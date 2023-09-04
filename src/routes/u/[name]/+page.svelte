@@ -24,7 +24,6 @@
   import { isBlocked } from '$lib/lemmy/user.js'
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
   import { toast } from '$lib/components/ui/toasts/toasts.js'
-  import Modal from '$lib/components/ui/modal/Modal.svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import TextArea from '$lib/components/input/TextArea.svelte'
   import { profile } from '$lib/auth.js'
@@ -34,7 +33,7 @@
   import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
   import { searchParam } from '$lib/util.js'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import { Button } from 'mono-svelte'
+  import { Button, Modal } from 'mono-svelte'
 
   export let data
 

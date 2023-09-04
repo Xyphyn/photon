@@ -1,7 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores'
   import CommunityCard from '$lib/components/lemmy/community/CommunityCard.svelte'
-  import Modal from '$lib/components/ui/modal/Modal.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import Sort from '$lib/components/lemmy/Sort.svelte'
@@ -9,7 +8,7 @@
   import { onMount } from 'svelte'
   import { setSessionStorage } from '$lib/session.js'
   import PostFeed from '$lib/components/lemmy/post/PostFeed.svelte'
-  import { Button } from 'mono-svelte'
+  import { Button, Modal } from 'mono-svelte'
 
   export let data
 
