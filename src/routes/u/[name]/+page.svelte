@@ -6,6 +6,7 @@
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import {
+    AdjustmentsHorizontal,
     Bars3BottomRight,
     Calendar,
     ChartBar,
@@ -158,7 +159,7 @@
         on:change={() => searchParam($page.url, 'type', data.type, 'page')}
       >
         <span slot="label" class="flex items-center gap-1">
-          <Icon src={Bars3BottomRight} size="15" mini />
+          <Icon src={AdjustmentsHorizontal} size="15" mini />
           Type
         </span>
         <option value="all">All</option>

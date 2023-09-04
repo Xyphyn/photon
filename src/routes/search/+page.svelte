@@ -22,7 +22,12 @@
     PostView,
   } from 'lemmy-js-client'
   import { Button, Select, Spinner, TextInput } from 'mono-svelte'
-  import { Bars3BottomRight, Icon, MagnifyingGlass } from 'svelte-hero-icons'
+  import {
+    AdjustmentsHorizontal,
+    Bars3BottomRight,
+    Icon,
+    MagnifyingGlass,
+  } from 'svelte-hero-icons'
   import { expoOut } from 'svelte/easing'
   import { slide } from 'svelte/transition'
 
@@ -42,12 +47,11 @@
 <h1 class="font-bold text-2xl">Search</h1>
 <div class="flex flex-row flex-wrap sm:justify-between items-center gap-4 mt-4">
   <Select
-    class="w-48"
     bind:value={data.type}
     on:change={() => searchParam($page.url, 'type', data.type ?? 'All', 'page')}
   >
     <span slot="label" class="flex items-center gap-1">
-      <Icon src={Bars3BottomRight} mini size="15" />
+      <Icon src={AdjustmentsHorizontal} mini size="15" />
       Type
     </span>
     <option value="All">All</option>

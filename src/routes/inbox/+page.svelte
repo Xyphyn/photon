@@ -1,6 +1,7 @@
 <script lang="ts">
   import InboxItem from './InboxItem.svelte'
   import {
+    AdjustmentsHorizontal,
     Bars3BottomRight,
     Check,
     Funnel,
@@ -87,7 +88,7 @@
     on:change={() => searchParam($page.url, 'type', data.type ?? 'all', 'page')}
   >
     <span slot="label" class="flex items-center gap-1">
-      <Icon src={Bars3BottomRight} size="15" mini />
+      <Icon src={AdjustmentsHorizontal} size="15" mini />
       Type
     </span>
     <option value="all">All</option>
