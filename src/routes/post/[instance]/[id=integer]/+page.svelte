@@ -11,7 +11,7 @@
   import { ExclamationTriangle, Icon } from 'svelte-hero-icons'
   import PostLink from '$lib/components/lemmy/post/PostLink.svelte'
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
-  import { Material, Spinner, removeToast, toast } from 'mono-svelte'
+  import { Badge, Material, Spinner, removeToast, toast } from 'mono-svelte'
   import type { CommentSortType } from 'lemmy-js-client'
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
   import { profile } from '$lib/auth.js'
@@ -237,10 +237,10 @@
 {/if}
 <div class="mt-4 flex flex-col gap-2 w-full">
   <div class="flex flex-row justify-between">
-    <div class="font-bold opacity-80 text-base">
-      Comments <span class="text-lg font-medium ml-2">
+    <div class="font-bold opacity-80 text-base flex items-center gap-2">
+      Comments <Badge color="gray" class="!text-sm">
         <FormattedNumber number={post.post_view.counts.comments} />
-      </span>
+      </Badge>
     </div>
     <MultiSelect
       options={['Hot', 'Top', 'New']}
