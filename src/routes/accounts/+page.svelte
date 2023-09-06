@@ -171,10 +171,7 @@
           </div>
           <div class="ml-auto" />
           <Menu origin="bottom-right">
-            <Button
-              size="square-md"
-              slot="target"
-            >
+            <Button size="square-md" slot="target">
               <Icon src={EllipsisHorizontal} mini size="16" slot="prefix" />
             </Button>
             <MenuButton on:click={() => moveProfile(profile.id, true)}>
@@ -214,7 +211,7 @@
             }}
             color={profile.id == $currentProfile?.id ? 'primary' : 'secondary'}
           >
-            {profile.id == $currentProfile?.id ? 'Current' : 'Switch to'}
+            {profile.id == $currentProfile?.id ? 'Current' : 'Switch'}
           </Button>
           <Button
             on:click={() => action(profile.id)}
