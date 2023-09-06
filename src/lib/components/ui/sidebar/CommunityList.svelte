@@ -1,7 +1,7 @@
 <script lang="ts">
-  import Button from '$lib/components/input/Button.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import type { Community } from 'lemmy-js-client'
+  import { Button } from 'mono-svelte'
   import { flip } from 'svelte/animate'
   import { expoOut } from 'svelte/easing'
   import { slide } from 'svelte/transition'
@@ -27,7 +27,7 @@
           alt={follow.name}
           title={follow.title}
           width={20}
-          slot="icon"
+          slot="prefix"
         />
       </div>
       <span class="max-w-full break-words" class:hidden={!expanded}>

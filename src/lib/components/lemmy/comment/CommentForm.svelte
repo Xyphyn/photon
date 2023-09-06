@@ -1,16 +1,14 @@
 <script lang="ts">
-  import Button from '$lib/components/input/Button.svelte'
-  import { Color } from '$lib/ui/colors.js'
   import type { CommentResponse } from 'lemmy-js-client'
   import { getClient } from '$lib/lemmy.js'
   import { createEventDispatcher } from 'svelte'
-  import TextArea from '$lib/components/input/TextArea.svelte'
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import { profile } from '$lib/auth.js'
-  import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import { toast } from 'mono-svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { placeholders } from '$lib/util.js'
+  import { Button } from 'mono-svelte'
 
   export let postId: number
   export let parentId: number | undefined = undefined
@@ -75,30 +73,23 @@
       bind:value
       disabled={locked || loading}
       on:confirm={submit}
-    />
-  {/if}
-  {#if actions || previewAction}
-    <div class="flex flex-row items-center justify-between">
-      {#if previewAction}
-        <MultiSelect
-          options={[false, true]}
-          optionNames={['Edit', 'Preview']}
-          bind:selected={preview}
-        />
-      {/if}
+      previewButton={previewAction}
+    >
       {#if actions}
-        <Button
-          large
-          on:click={submit}
-          color="primary"
-          size="lg"
-          class="sm:ml-auto w-28"
-          {loading}
-          disabled={locked || loading}
-        >
-          Submit
-        </Button>
+        <div class="ml-auto">
+          <Button
+            large
+            on:click={submit}
+            color="primary"
+            size="lg"
+            class="sm:ml-auto w-28"
+            {loading}
+            disabled={locked || loading}
+          >
+            Submit
+          </Button>
+        </div>
       {/if}
-    </div>
+    </MarkdownEditor>
   {/if}
 </div>

@@ -40,6 +40,7 @@ export async function load({ params, url, fetch }) {
     sort: sort,
     user: {
       person_view: user.person_view,
+      moderates: user.moderates,
       submissions: items,
     },
   }

@@ -1,31 +1,25 @@
 <script lang="ts">
-  import SearchInput from '$lib/components/input/SearchInput.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
-  import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
   import { getClient } from '$lib/lemmy.js'
   import type { Community, ListingType } from 'lemmy-js-client'
+  import { MenuButton, Search } from 'mono-svelte'
   import { createEventDispatcher } from 'svelte'
   import { Icon, XCircle } from 'svelte-hero-icons'
+  import { fly } from 'svelte/transition'
 
   let type: 'community' = 'community'
   export let q: string = ''
 
   export let jwt: string | undefined = undefined
   export let listing_type: ListingType = 'Subscribed'
-  export let items: Community[] | undefined = undefined
   export let showWhenEmpty: boolean = false
-  let showNone: boolean = false
 
-  const dispatcher = createEventDispatcher<{ select: Community }>()
+  const dispatcher = createEventDispatcher<{ select: Community | undefined }>()
 </script>
 
 {#if type == 'community'}
-  <SearchInput
-    options={items || []}
-    on:search={async () => {
-      if (q == '') showNone = true
-      else showNone = false
-
+  <Search
+    search={async (q) => {
       const results = await getClient().search({
         q: q || ' ',
         auth: jwt,
@@ -35,38 +29,38 @@
         sort: 'TopAll',
       })
 
-      items = results.communities.map((c) => c.community)
+      return results.communities.map((c) => c.community)
     }}
-    debounceTime={600}
-    extractName={(c) => c.title}
-    bind:query={q}
-    extractSelected={(c) => {
-      if (c) dispatcher('select', c)
-    }}
-    let:extractName
-    let:extractSelected
-    let:option
+    extractName={(c) => `${c.title}@${new URL(c.actor_id).hostname}`}
+    on:select
+    bind:q
     {showWhenEmpty}
     {...$$restProps}
-    let:query
+    let:item
+    let:select
   >
-    {#if query == '' && showWhenEmpty}
-      <MenuButton on:click={() => dispatcher('select', undefined)}>
-        <Icon src={XCircle} size="16" mini />
+    <div class="w-full h-full" slot="noresults">
+      {#if q == '' && showWhenEmpty}
+        <MenuButton on:click={() => dispatcher('select', undefined)}>
+          <Icon src={XCircle} size="16" mini />
+          <div class="flex flex-col text-left">
+            <span>None</span>
+          </div>
+        </MenuButton>
+      {:else}
+        <span class="mx-auto my-auto">No results.</span>
+      {/if}
+    </div>
+    <div in:fly|global={{ y: -4, opacity: 0 }}>
+      <MenuButton on:click={() => select(item)}>
+        <Avatar url={item.icon} alt={item.title} width={24} />
         <div class="flex flex-col text-left">
-          <span>None</span>
-        </div>
-      </MenuButton>
-    {:else if option}
-      <MenuButton on:click={() => extractSelected(option)}>
-        <Avatar url={option.icon} alt={option.title} width={24} />
-        <div class="flex flex-col text-left">
-          <span>{option.title}</span>
+          <span>{item.title}</span>
           <span class="text-xs opacity-80">
-            {new URL(option.actor_id).hostname}
+            {new URL(item.actor_id).hostname}
           </span>
         </div>
       </MenuButton>
-    {/if}
-  </SearchInput>
+    </div>
+  </Search>
 {/if}

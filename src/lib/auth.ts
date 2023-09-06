@@ -1,5 +1,5 @@
 import { amModOfAny } from '$lib/components/lemmy/moderation/moderation.js'
-import { toast } from '$lib/components/ui/toasts/toasts.js'
+import { toast } from 'mono-svelte'
 import { DEFAULT_INSTANCE_URL, instance } from '$lib/instance.js'
 import { getClient, site } from '$lib/lemmy.js'
 import { getInbox, getInboxItemPublished } from '$lib/lemmy/inbox.js'

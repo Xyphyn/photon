@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Button from '$lib/components/input/Button.svelte'
   import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
   import type { CommunityView } from 'lemmy-js-client'
   import Subscribe from '../../../../routes/communities/Subscribe.svelte'
@@ -10,6 +9,7 @@
     UserGroup,
   } from 'svelte-hero-icons'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
+  import { Button } from 'mono-svelte'
 
   export let community: CommunityView
 </script>

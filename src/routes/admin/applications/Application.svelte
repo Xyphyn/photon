@@ -1,13 +1,11 @@
 <script lang="ts">
   import { profile } from '$lib/auth.js'
-  import Button from '$lib/components/input/Button.svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
-
-  import Card from '$lib/components/ui/Card.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
-  import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import { Material, toast } from 'mono-svelte'
   import { getClient } from '$lib/lemmy.js'
   import type { RegistrationApplicationView } from 'lemmy-js-client'
+  import { Button } from 'mono-svelte'
   import { Check, Icon, XMark } from 'svelte-hero-icons'
 
   export let application: RegistrationApplicationView
@@ -50,7 +48,7 @@
   }
 </script>
 
-<Card elevation={0} class="p-4 flex flex-col gap-2">
+<Material class="flex flex-col gap-2">
   <div class="flex flex-col gap-1">
     <SectionTitle>User</SectionTitle>
     <span class="text-sm">
@@ -85,7 +83,7 @@
         loading={denying}
         disabled={approving || denying}
       >
-        <Icon src={XMark} mini size="16" slot="icon" />
+        <Icon src={XMark} mini size="16" slot="prefix" />
       </Button>
       <Button
         size="square-md"
@@ -98,8 +96,8 @@
         loading={approving}
         disabled={approving || denying}
       >
-        <Icon src={Check} mini size="16" slot="icon" />
+        <Icon src={Check} mini size="16" slot="prefix" />
       </Button>
     </div>
   </div>
-</Card>
+</Material>

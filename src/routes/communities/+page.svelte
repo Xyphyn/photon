@@ -4,22 +4,22 @@
   import { page } from '$app/stores'
   import {
     ChatBubbleOvalLeftEllipsis,
+    GlobeAmericas,
     Icon,
     PencilSquare,
     QuestionMarkCircle,
     UserGroup,
   } from 'svelte-hero-icons'
   import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
-  import TextInput from '$lib/components/input/TextInput.svelte'
   import Subscribe from './Subscribe.svelte'
-  import Button from '$lib/components/input/Button.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import { searchParam } from '$lib/util.js'
   import { addSubscription } from '$lib/lemmy/user.js'
-  import Link from '$lib/components/input/Link.svelte'
   import { LINKED_INSTANCE_URL } from '$lib/instance.js'
   import { profile } from '$lib/auth.js'
   import { _ } from 'svelte-i18n'
+  import { Button, Select, TextInput } from 'mono-svelte'
+  import Sort from '$lib/components/lemmy/Sort.svelte'
 
   export let data
 
@@ -41,30 +41,27 @@
   page, and search with this syntax:
   <code>!community@instance.com</code>
 </p>
-<div class="flex flex-col sm:flex-row gap-4 mt-4">
-  <MultiSelect
-    options={['Subscribed', 'Local', 'All']}
-    selected={$page.url.searchParams.get('type') ??
-      (LINKED_INSTANCE_URL ? 'Local' : 'All')}
-    on:select={(e) => searchParam($page.url, 'type', e.detail, 'page')}
-  />
+<div class="flex flex-row flex-wrap gap-4 mt-4">
+  <Select
+    bind:value={data.type}
+    on:change={() => searchParam($page.url, 'type', data.type ?? 'All', 'page')}
+  >
+    <span slot="label" class="flex items-center gap-1">
+      <Icon src={GlobeAmericas} mini size="15" />
+      Location
+    </span>
+    <option value="All">All</option>
+    <option value="Local">Local</option>
+    <option value="Subscribed">Subscribed</option>
+  </Select>
+  <Sort selected={data.sort} />
   <div class="flex flex-col sm:flex-row gap-2 sm:ml-auto items-center">
     <TextInput
       bind:value={search}
-      on:change={() => {
-        $page.url.searchParams.set('q', search)
-        goto($page.url.toString(), {
-          invalidateAll: true,
-        })
-      }}
+      on:change={() => () => searchParam($page.url, 'q', search, 'page')}
     />
     <Button
-      on:click={() => {
-        $page.url.searchParams.set('q', search)
-        goto($page.url.toString(), {
-          invalidateAll: true,
-        })
-      }}
+      on:click={() => searchParam($page.url, 'q', search, 'page')}
       color="ghost"
       class="h-max"
     >

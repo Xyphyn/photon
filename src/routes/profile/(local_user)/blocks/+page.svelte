@@ -6,13 +6,13 @@
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import { getClient } from '$lib/lemmy.js'
   import { profile } from '$lib/auth.js'
-  import Button from '$lib/components/input/Button.svelte'
   import { Check, Icon, Trash } from 'svelte-hero-icons'
   import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
   import { flip } from 'svelte/animate'
   import { slide } from 'svelte/transition'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { _ } from 'svelte-i18n'
+  import { Button } from 'mono-svelte'
 
   // sveltekit doesn't feel like making types work right now
   export let data: PageData & {
@@ -75,7 +75,7 @@
           >
             <UserLink user={block.target} avatar badges />
             <Button size="square-md" on:click={() => action(block)}>
-              <Icon src={Trash} mini size="16" slot="icon" />
+              <Icon src={Trash} mini size="16" slot="prefix" />
             </Button>
           </div>
         {/each}
@@ -102,7 +102,7 @@
           >
             <CommunityLink community={block.community} avatar />
             <Button size="square-md" on:click={() => action(block)}>
-              <Icon src={Trash} mini size="16" slot="icon" />
+              <Icon src={Trash} mini size="16" slot="prefix" />
             </Button>
           </div>
         {/each}

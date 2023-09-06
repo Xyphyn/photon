@@ -1,16 +1,12 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { profile } from '$lib/auth.js'
-  import Button from '$lib/components/input/Button.svelte'
-  import Checkbox from '$lib/components/input/Checkbox.svelte'
-  import FileInput from '$lib/components/input/FileInput.svelte'
-  import TextArea from '$lib/components/input/TextArea.svelte'
-  import TextInput from '$lib/components/input/TextInput.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
-  import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import { ImageInput, toast } from 'mono-svelte'
   import { getClient, uploadImage } from '$lib/lemmy.js'
   import { addSubscription } from '$lib/lemmy/user.js'
   import { _ } from 'svelte-i18n'
+  import { Button, Checkbox, TextInput } from 'mono-svelte'
 
   /**
    * The community ID to edit.
@@ -119,11 +115,11 @@
     on:input={() => {
       formData.name = formData.name.toLowerCase().replaceAll(' ', '_')
     }}
-    disabled={edit}
+    disabled={edit != undefined}
   />
   <TextInput required label="Display name" bind:value={formData.displayName} />
-  <FileInput label="Icon" bind:files={formData.icon} image />
-  <FileInput label="Banner" bind:files={formData.banner} image />
+  <ImageInput label="Icon" bind:files={formData.icon} />
+  <ImageInput label="Banner" bind:files={formData.banner} />
   <MarkdownEditor previewButton label="Sidebar" bind:value={formData.sidebar} />
 
   <Checkbox bind:checked={formData.nsfw}>NSFW</Checkbox>

@@ -2,7 +2,7 @@
   import { getClient } from '$lib/lemmy.js'
   import type { CommunityView } from 'lemmy-js-client'
   import { profile } from '$lib/auth.js'
-  import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import { toast } from 'mono-svelte'
 
   export let community: CommunityView
 

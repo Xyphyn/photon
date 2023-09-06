@@ -3,13 +3,13 @@
   import { buildCommentsTree, type CommentNodeI } from './comments'
   import { page } from '$app/stores'
   import { onMount, setContext } from 'svelte'
-  import Button from '$lib/components/input/Button.svelte'
-  import { ChevronDown, Icon } from 'svelte-hero-icons'
+  import { ChevronDown, Icon, Plus, PlusCircle } from 'svelte-hero-icons'
   import { getClient } from '$lib/lemmy.js'
   import type { CommentView, Post } from 'lemmy-js-client'
   import { fly } from 'svelte/transition'
-  import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import { toast } from 'mono-svelte'
   import { profile } from '$lib/auth.js'
+  import { Button } from 'mono-svelte'
 
   export let nodes: CommentNodeI[]
   export let isParent: boolean
@@ -112,23 +112,29 @@
         <svelte:self {post} bind:nodes={node.children} isParent={false} />
       {/if}
       {#if node.comment_view.counts.child_count > 0 && node.children.length == 0}
-        <div
-          class="my-2 w-max h-8 border-l-2 border-slate-200 dark:border-zinc-900 pl-2"
+        <button
+          class="w-full my-2 h-8 border-l-2 border-slate-200 dark:border-zinc-800 pl-2 text-left"
+          on:click={() => {
+            node.loading = true
+            fetchChildren(node).then(() => (node.loading = false))
+          }}
         >
           <Button
             loading={node.loading}
             disabled={node.loading}
             size="sm"
             color="tertiary"
+            alignment="left"
+            loaderWidth={18}
             on:click={() => {
               node.loading = true
               fetchChildren(node).then(() => (node.loading = false))
             }}
           >
-            <Icon src={ChevronDown} width={16} mini slot="icon" />
+            <Icon src={Plus} width={18} mini slot="prefix" />
             {node.comment_view.counts.child_count} more
           </Button>
-        </div>
+        </button>
       {/if}
     </Comment>
   {/each}

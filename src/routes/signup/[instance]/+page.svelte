@@ -2,17 +2,14 @@
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
   import { setUser } from '$lib/auth.js'
-  import Button from '$lib/components/input/Button.svelte'
-  import TextArea from '$lib/components/input/TextArea.svelte'
-  import TextInput from '$lib/components/input/TextInput.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
+  import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
-  import Card from '$lib/components/ui/Card.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import Spinner from '$lib/components/ui/loader/Spinner.svelte'
-  import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import { Material, Spinner, toast } from 'mono-svelte'
   import { getClient } from '$lib/lemmy.js'
   import type { GetCaptchaResponse } from 'lemmy-js-client'
+  import { Button, TextInput } from 'mono-svelte'
   import {
     ArrowPath,
     ExclamationCircle,
@@ -134,18 +131,15 @@
       type="password"
     />
     {#if data.site_view.local_site.registration_mode == 'RequireApplication'}
-      <Card
-        class="p-4 dark:text-yellow-200 text-yellow-800"
-        cardColor="warning"
-      >
+      <Material class="dark:text-yellow-200 text-yellow-800 bg-yellow-500/20">
         <Icon src={ExclamationTriangle} mini size="20" />
         To join this instance, you need to fill out this application, and wait to
         be accepted.
-      </Card>
+      </Material>
       {#if data.site_view.local_site.application_question}
         <Markdown source={data.site_view.local_site.application_question} />
       {/if}
-      <TextArea
+      <MarkdownEditor
         label="Application"
         required
         placeholder="i like this instance's icon "
@@ -167,16 +161,21 @@
               />
               <audio controls src={captchaAudio} />
             {:else}
-              <Card cardColor="warning" class="p-3 flex gap-2">
+              <Material
+                class="flex gap-2 dark:text-yellow-200 text-yellow-800 bg-yellow-500/20"
+              >
                 <Icon src={QuestionMarkCircle} mini size="24" />
                 No captcha was returned
-              </Card>
+              </Material>
             {/if}
           {:catch err}
-            <Card cardColor="error" class="p-3 flex gap-2">
+            <Material
+              padding="sm"
+              class="flex gap-2 dark:text-yellow-200 text-yellow-800 bg-yellow-500/20"
+            >
               <Icon src={ExclamationCircle} mini size="24" />
               {err}
-            </Card>
+            </Material>
           {/await}
           <Button on:click={() => getCaptcha()} size="square-md">
             <Icon src={ArrowPath} size="16" mini />

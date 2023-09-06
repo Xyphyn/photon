@@ -14,12 +14,11 @@
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import CommentActions from '$lib/components/lemmy/comment/CommentActions.svelte'
-  import Modal from '$lib/components/ui/modal/Modal.svelte'
   import { getClient } from '$lib/lemmy.js'
-  import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import { toast } from 'mono-svelte'
   import { profile } from '$lib/auth.js'
-  import { slide } from 'svelte/transition'
-  import Button from '$lib/components/input/Button.svelte'
+  import { Button, Modal } from 'mono-svelte'
+  import { publishedToDate } from '$lib/components/util/date.js'
 
   export let node: CommentNodeI
   export let postId: number
@@ -104,7 +103,7 @@
           </div>
         {/if}
         <RelativeDate
-          date={new Date(node.comment_view.comment.published + 'Z')}
+          date={publishedToDate(node.comment_view.comment.published)}
         />
         <span>•</span>
         <span>

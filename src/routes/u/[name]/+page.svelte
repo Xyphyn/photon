@@ -6,7 +6,10 @@
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import {
+    AdjustmentsHorizontal,
+    Bars3BottomRight,
     Calendar,
+    ChartBar,
     ChatBubbleOvalLeftEllipsis,
     Envelope,
     Icon,
@@ -14,9 +17,7 @@
     PencilSquare,
     ShieldCheck,
     ShieldExclamation,
-    UserPlus,
   } from 'svelte-hero-icons'
-  import Button from '$lib/components/input/Button.svelte'
   import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import { page } from '$app/stores'
@@ -24,18 +25,16 @@
   import { isCommentView } from '$lib/lemmy/item.js'
   import { getClient } from '$lib/lemmy.js'
   import { isBlocked } from '$lib/lemmy/user.js'
-  import MultiSelect from '$lib/components/input/MultiSelect.svelte'
-  import { toast } from '$lib/components/ui/toasts/toasts.js'
-  import Modal from '$lib/components/ui/modal/Modal.svelte'
+  import { Menu, MenuButton, Popover, toast } from 'mono-svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
-  import TextArea from '$lib/components/input/TextArea.svelte'
   import { profile } from '$lib/auth.js'
   import { ban, isAdmin } from '$lib/components/lemmy/moderation/moderation.js'
-  import Menu from '$lib/components/ui/menu/Menu.svelte'
   import ShieldIcon from '$lib/components/lemmy/moderation/ShieldIcon.svelte'
-  import MenuButton from '$lib/components/ui/menu/MenuButton.svelte'
   import { searchParam } from '$lib/util.js'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
+  import { Button, Modal, Select } from 'mono-svelte'
+  import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
+  import { publishedToDate } from '$lib/components/util/date.js'
 
   export let data
 
@@ -122,7 +121,7 @@
       <p class="inline-flex flex-row gap-2 items-center">
         Sending <UserLink avatar user={data.person_view.person} /> a message
       </p>
-      <TextArea
+      <MarkdownEditor
         bind:value={message}
         label="Message"
         placeholder="your hair looks nice today"
@@ -143,19 +142,31 @@
 
 <div class="flex flex-col-reverse xl:flex-row gap-4 max-w-full w-full">
   <div class="flex flex-col gap-4 max-w-full w-full min-w-0">
-    <div class="flex flex-row gap-4 flex-wrap">
-      <MultiSelect
-        options={['New', 'TopAll', 'Old']}
-        optionNames={['New', 'Top', 'Old']}
-        selected={data.sort}
-        on:select={(e) => searchParam($page.url, 'sort', e.detail, 'page')}
-      />
-      <MultiSelect
-        options={['all', 'posts', 'comments']}
-        optionNames={['All', 'Posts', 'Comments']}
-        selected={data.type}
-        on:select={(e) => searchParam($page.url, 'type', e.detail, 'page')}
-      />
+    <div class="flex flex-row gap-4 flex-wrap justify-between">
+      <Select
+        bind:value={data.sort}
+        on:change={() => searchParam($page.url, 'sort', data.sort, 'page')}
+      >
+        <span slot="label" class="flex items-center gap-1">
+          <Icon src={ChartBar} size="14" mini />
+          Sort
+        </span>
+        <option value="New">New</option>
+        <option value="TopAll">Top</option>
+        <option value="Old">Old</option>
+      </Select>
+      <Select
+        bind:value={data.type}
+        on:change={() => searchParam($page.url, 'type', data.type, 'page')}
+      >
+        <span slot="label" class="flex items-center gap-1">
+          <Icon src={AdjustmentsHorizontal} size="15" mini />
+          Type
+        </span>
+        <option value="all">All</option>
+        <option value="posts">Posts</option>
+        <option value="comments">Comments</option>
+      </Select>
     </div>
     {#if data.items.length == 0}
       <Placeholder
@@ -189,7 +200,7 @@
         <Icon src={Calendar} width={16} height={16} mini />
         <span class="capitalize">
           <RelativeDate
-            date={new Date(data.person_view.person.published + 'Z')}
+            date={publishedToDate(data.person_view.person.published)}
           />
         </span>
       </span>
@@ -203,6 +214,34 @@
           <FormattedNumber number={data.person_view.counts.comment_count} />
         </span>
       </div>
+      {#if (data.moderates ?? []).length > 0}
+        <div class="flex flex-col gap-2 max-w-full">
+          <span class="font-bold">Moderates</span>
+          <div
+            class="flex items-center -space-x-1 flex-wrap hover:space-x-1 transition-all
+    cursor-pointer"
+          >
+            {#each data.moderates as moderator}
+              <Popover openOnHover origin="top-left" class="transition-all">
+                <a
+                  class="block ring rounded-full ring-slate-50 dark:ring-zinc-950 transition-all"
+                  href="/c/{moderator.community.name}@{new URL(
+                    moderator.community.actor_id
+                  ).hostname}"
+                  slot="target"
+                >
+                  <Avatar
+                    width={28}
+                    url={moderator.community.icon}
+                    alt={moderator.community.title}
+                  />
+                </a>
+                <span class="font-bold">{moderator.community.title}</span>
+              </Popover>
+            {/each}
+          </div>
+        </div>
+      {/if}
       {#if $profile?.user && $profile.jwt && data.person_view.person.id != $profile.user.local_user_view.person.id}
         <div class="flex flex-col gap-2">
           <div class="flex items-center gap-2 w-full">
@@ -212,7 +251,7 @@
               on:click={() => (messaging = true)}
               class="flex-1"
             >
-              <Icon slot="icon" solid size="16" src={Envelope} />
+              <Icon slot="prefix" solid size="16" src={Envelope} />
               Message
             </Button>
             {#if data.person_view.person.matrix_user_id}
@@ -223,7 +262,7 @@
                   .matrix_user_id}"
                 class="flex-1"
               >
-                <Icon slot="icon" solid size="16" src={ShieldCheck} />
+                <Icon slot="prefix" solid size="16" src={ShieldCheck} />
                 Matrix User
               </Button>
             {/if}
@@ -235,23 +274,23 @@
             disabled={blocking}
             on:click={() => blockUser(data.person_view.person.id)}
           >
-            <Icon slot="icon" mini size="16" src={NoSymbol} />
+            <Icon slot="prefix" mini size="16" src={NoSymbol} />
             {isBlocked($profile.user, data.person_view.person.id)
               ? 'Unblock'
               : 'Block'}
           </Button>
         </div>
         {#if isAdmin($profile?.user)}
-          <Menu let:toggleOpen class="ml-auto" alignment="bottom-right">
-            <Button size="square-md" on:click={toggleOpen} slot="button">
+          <Menu class="ml-auto" origin="bottom-right">
+            <Button size="square-md" slot="target">
               <ShieldIcon width={16} filled />
             </Button>
             <MenuButton
-              color="dangerSecondary"
+              color="danger-subtle"
               on:click={() =>
                 ban(data.person_view.person.banned, data.person_view.person)}
             >
-              <Icon slot="icon" mini size="16" src={ShieldExclamation} />
+              <Icon slot="prefix" mini size="16" src={ShieldExclamation} />
               {data.person_view.person.banned ? 'Unban' : 'Ban'}
             </MenuButton>
           </Menu>

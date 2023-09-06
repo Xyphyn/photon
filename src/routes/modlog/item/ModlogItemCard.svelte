@@ -3,16 +3,16 @@
   import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
   import ShieldIcon from '$lib/components/lemmy/moderation/ShieldIcon.svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
-  import Card from '$lib/components/ui/Card.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
+  import { Material } from 'mono-svelte'
   import type { ModLog } from '../+page.js'
   import ModlogAction from '../ModlogAction.svelte'
 
   export let item: ModLog
 </script>
 
-<Card elevation={0} class="p-5 flex flex-col gap-2 text-sm">
+<Material padding="lg" class="flex flex-col gap-2">
   <div class="flex flex-row justify-between flex-wrap gap-2">
     {#if item.community}
       <CommunityLink community={item.community} avatar showInstance />
@@ -58,4 +58,4 @@
     <SectionTitle class="mt-2">Reason</SectionTitle>
     <p>{item.reason}</p>
   {/if}
-</Card>
+</Material>

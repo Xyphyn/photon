@@ -1,18 +1,17 @@
 <script lang="ts">
   import { profile } from '$lib/auth.js'
-  import Button from '$lib/components/input/Button.svelte'
   import { amMod } from '$lib/components/lemmy/moderation/moderation.js'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
-  import Card from '$lib/components/ui/Card.svelte'
   import StickyCard from '$lib/components/ui/StickyCard.svelte'
-  import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import { Popover, toast } from 'mono-svelte'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import { getClient } from '$lib/lemmy.js'
   import { addSubscription } from '$lib/lemmy/user.js'
   import { fullCommunityName } from '$lib/util.js'
-  import type { CommunityView } from 'lemmy-js-client'
+  import type { CommunityModeratorView, CommunityView } from 'lemmy-js-client'
+  import { Button } from 'mono-svelte'
   import {
     Calendar,
     ChatBubbleOvalLeftEllipsis,
@@ -23,8 +22,10 @@
     Plus,
     UserGroup,
   } from 'svelte-hero-icons'
+  import { publishedToDate } from '$lib/components/util/date.js'
 
   export let community_view: CommunityView
+  export let moderators: CommunityModeratorView[]
 
   let loading = {
     blocking: false,
@@ -93,7 +94,7 @@
   </div>
   <span class="flex flex-row items-center gap-1 text-sm">
     <Icon src={Calendar} width={16} height={16} mini />
-    <RelativeDate date={new Date(community_view.community.published + 'Z')} />
+    <RelativeDate date={publishedToDate(community_view.community.published)} />
   </span>
   <div class="text-sm flex flex-row flex-wrap gap-3">
     <span class="flex flex-row items-center gap-1">
@@ -109,6 +110,34 @@
       <FormattedNumber number={community_view.counts.comments} />
     </span>
   </div>
+  {#if moderators}
+    <div class="flex flex-col gap-2 max-w-full">
+      <span class="font-bold">Moderators</span>
+      <div
+        class="flex items-center -space-x-1 flex-wrap hover:space-x-1 transition-all
+    cursor-pointer"
+      >
+        {#each moderators as moderator}
+          <Popover openOnHover origin="top-left" class="transition-all">
+            <a
+              class="block ring rounded-full ring-slate-50 dark:ring-zinc-950 transition-all"
+              href="/u/{moderator.moderator.name}@{new URL(
+                moderator.moderator.actor_id
+              ).hostname}"
+              slot="target"
+            >
+              <Avatar
+                width={28}
+                url={moderator.moderator.avatar}
+                alt={moderator.moderator.name}
+              />
+            </a>
+            <span class="font-bold">{moderator.moderator.name}</span>
+          </Popover>
+        {/each}
+      </div>
+    </div>
+  {/if}
   {#if $profile?.jwt}
     <div class="w-full mt-2 flex flex-col gap-2">
       <Button
@@ -117,7 +146,7 @@
         size="lg"
         disabled={community_view.community.posting_restricted_to_mods}
       >
-        <Icon src={PencilSquare} mini size="16" slot="icon" />
+        <Icon src={PencilSquare} mini size="16" slot="prefix" />
         Create Post
       </Button>
       <Button
@@ -131,7 +160,7 @@
           src={community_view.subscribed == 'Subscribed' ? Minus : Plus}
           mini
           size="16"
-          slot="icon"
+          slot="prefix"
         />
         {community_view.subscribed == 'Subscribed' ||
         community_view.subscribed == 'Pending'
@@ -156,7 +185,7 @@
             )}/settings"
             size="square-md"
           >
-            <Icon src={Cog6Tooth} mini size="16" slot="icon" />
+            <Icon src={Cog6Tooth} mini size="16" slot="prefix" />
           </Button>
         </div>
       {/if}

@@ -1,12 +1,13 @@
 <script lang="ts">
-  import Button from '$lib/components/input/Button.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import StickyCard from '$lib/components/ui/StickyCard.svelte'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
+  import { publishedToDate } from '$lib/components/util/date.js'
   import { getClient } from '$lib/lemmy.js'
-  import type { SiteView, Tagline } from 'lemmy-js-client'
+  import type { PersonView, SiteView, Tagline } from 'lemmy-js-client'
+  import { Button, Popover } from 'mono-svelte'
   import {
     Calendar,
     ChatBubbleOvalLeftEllipsis,
@@ -18,6 +19,7 @@
 
   export let site: SiteView
   export let taglines: Tagline[] | undefined = undefined
+  export let admins: PersonView[] | undefined = undefined
 </script>
 
 <StickyCard>
@@ -34,7 +36,7 @@
   </div>
   <span class="flex flex-row items-center gap-1 text-sm">
     <Icon src={Calendar} width={16} height={16} mini />
-    <RelativeDate date={new Date(site.site.published + 'Z')} />
+    <RelativeDate date={publishedToDate(site.site.published)} />
   </span>
   <div class="text-sm flex flex-row flex-wrap gap-3">
     <span class="flex flex-row items-center gap-1">
@@ -60,6 +62,33 @@
       Modlog
     </Button>
   </div>
+
+  {#if admins}
+    <span class="font-bold">Admins</span>
+    <div
+      class="flex items-center -space-x-1 flex-wrap hover:space-x-1 transition-all
+      cursor-pointer"
+    >
+      {#each admins as admin}
+        <Popover openOnHover origin="top-left" class="transition-all">
+          <a
+            class="block ring rounded-full ring-slate-50 dark:ring-zinc-950 transition-all"
+            href="/u/{admin.person.name}@{new URL(admin.person.actor_id)
+              .hostname}"
+            slot="target"
+          >
+            <Avatar
+              width={28}
+              url={admin.person.avatar}
+              alt={admin.person.name}
+            />
+          </a>
+          <span class="font-bold">{admin.person.name}</span>
+        </Popover>
+      {/each}
+    </div>
+  {/if}
+  <hr class="border-slate-300 dark:border-zinc-700" />
   {#if taglines && taglines.length > 0}
     <Markdown
       source={taglines[Math.floor(Math.random() * taglines.length)].content}

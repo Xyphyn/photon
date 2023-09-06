@@ -67,7 +67,7 @@ export const defaultSettings: Settings = {
     community: toBool(env.PUBLIC_SHOW_INSTANCES_COMMUNITY) ?? true,
     comments: toBool(env.PUBLIC_SHOW_INSTANCES_COMMENTS) ?? false,
   },
-  showCompactPosts: toBool(env.PUBLIC_SHOW_COMPACT_POSTS) ?? false,
+  showCompactPosts: toBool(env.PUBLIC_SHOW_COMPACT_POSTS) ?? true,
   defaultSort: {
     sort: env.PUBLIC_DEFAULT_FEED_SORT ?? ('Active' as any),
     feed: env.PUBLIC_DEFAULT_FEED ?? ('Local' as any),

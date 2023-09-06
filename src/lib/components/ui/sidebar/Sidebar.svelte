@@ -8,7 +8,6 @@
     Icon,
     UserGroup,
   } from 'svelte-hero-icons'
-  import Button from '../../input/Button.svelte'
   import { profile, profileData } from '$lib/auth.js'
   import { userSettings } from '$lib/settings.js'
   import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
@@ -17,6 +16,7 @@
   import { flip } from 'svelte/animate'
   import { expoOut } from 'svelte/easing'
   import { _ } from 'svelte-i18n'
+  import { Button } from 'mono-svelte'
 </script>
 
 <nav
@@ -43,16 +43,16 @@
     />
   </Button>
   <SidebarButton href="/" expanded={$userSettings.expandSidebar}>
-    <Icon src={Home} mini size="18" title="Frontpage" />
-    <span class:hidden={!$userSettings.expandSidebar}>
-      {$_('common.frontpage')}
-    </span>
+    <Icon src={Home} mini size="20" title={$_('common.frontpage')} />
+    <span class:hidden={!$userSettings.expandSidebar}>{$_('common.frontpage')}</span>
   </SidebarButton>
   <SidebarButton href="/settings" expanded={$userSettings.expandSidebar}>
-    <Icon src={Cog6Tooth} mini size="18" title="Settings" />
-    <span class:hidden={!$userSettings.expandSidebar}>
-      {$_('common.settings')}
-    </span>
+    <Icon src={Cog6Tooth} mini size="20" title={$_('common.settings')} />
+    <span class:hidden={!$userSettings.expandSidebar}>{$_('common.settings')}</span>
+  </SidebarButton>
+  <SidebarButton expanded={$userSettings.expandSidebar} href="/communities">
+    <Icon mini src={GlobeAlt} size="20" title={$_('common.communities')} />
+    <span class:hidden={!$userSettings.expandSidebar}>{$_('common.communities')}</span>
   </SidebarButton>
   {#if $profileData.profiles.length >= 1}
     <hr class="border-slate-300 dark:border-zinc-800 my-1" />
@@ -62,10 +62,8 @@
       </div>
     {/each}
     <SidebarButton href="/accounts" expanded={$userSettings.expandSidebar}>
-      <Icon src={UserGroup} mini size="18" />
-      <span class:hidden={!$userSettings.expandSidebar}>
-        {$_('common.accounts.accounts')}
-      </span>
+      <Icon src={UserGroup} mini size="20" />
+      <span class:hidden={!$userSettings.expandSidebar}>{$_('common.accounts.accounts')}</span>
     </SidebarButton>
   {/if}
   <hr class="border-slate-300 dark:border-zinc-800 my-1" />
@@ -82,17 +80,6 @@
       expanded={$userSettings.expandSidebar}
       items={$profile.user.follows.map((i) => i.community)}
     />
-    <Button
-      class="hover:bg-slate-200 {$userSettings.expandSidebar ? '' : '!p-1.5'}"
-      href="/communities"
-      color="tertiary"
-      alignment="left"
-    >
-      <Icon mini src={GlobeAlt} size="18" />
-      <span class:hidden={!$userSettings.expandSidebar}>
-        {$_('common.communities')}
-      </span>
-    </Button>
   {:else}
     <Button
       class="hover:bg-slate-200 {$userSettings.expandSidebar ? '' : '!p-1.5'}"
@@ -100,10 +87,8 @@
       color="tertiary"
       alignment="left"
     >
-      <Icon mini src={ArrowLeftOnRectangle} size="18" />
-      <span class:hidden={!$userSettings.expandSidebar}>
-        {$_('common.login')}
-      </span>
+      <Icon mini src={ArrowLeftOnRectangle} size="20" />
+      <span class:hidden={!$userSettings.expandSidebar}>{$_('common.login')}</span>
     </Button>
   {/if}
 </nav>

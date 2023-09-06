@@ -1,14 +1,10 @@
 <script lang="ts">
   import { profile } from '$lib/auth.js'
-  import Button from '$lib/components/input/Button.svelte'
-  import FileInput from '$lib/components/input/FileInput.svelte'
   import MultiSelect from '$lib/components/input/MultiSelect.svelte'
-  import TextArea from '$lib/components/input/TextArea.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
-  import Modal from '$lib/components/ui/modal/Modal.svelte'
-  import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import { ImageInput, toast } from 'mono-svelte'
   import { uploadImage } from '$lib/lemmy.js'
-  import type { Community, Person } from 'lemmy-js-client'
+  import { Button, Label, Modal, TextArea } from 'mono-svelte'
   import { createEventDispatcher } from 'svelte'
   import {
     CodeBracket,
@@ -105,7 +101,7 @@
   <Modal bind:open={uploadingImage}>
     <span slot="title">Upload image</span>
     <form class="flex flex-col gap-4" on:submit|preventDefault={upload}>
-      <FileInput image bind:files={image} />
+      <ImageInput bind:files={image} />
       <Button {loading} disabled={loading} submit color="primary" size="lg">
         Upload
       </Button>
@@ -115,14 +111,19 @@
 
 <div>
   {#if label}
-    <div class="block my-1 font-bold text-sm">{label}</div>
+    <Label>
+      {label}
+    </Label>
   {/if}
   <div
     class="flex flex-col border border-slate-300 dark:border-zinc-800 rounded-md
 overflow-hidden focus-within:border-black focus-within:dark:border-white transition-colors"
+    class:mt-1={label}
   >
     {#if previewing}
-      <div class="px-3 py-2.5 h-32 overflow-auto text-sm resize-y">
+      <div
+        class="px-3 py-2.5 h-32 overflow-auto text-sm resize-y bg-white dark:bg-zinc-950"
+      >
         <Markdown source={beforePreview(value)} />
       </div>
     {:else}
@@ -228,9 +229,9 @@ overflow-hidden focus-within:border-black focus-within:dark:border-white transit
       </div>
       <!--Actual text area-->
       <TextArea
-        class="bg-inherit border-0 rounded-none"
+        class="bg-inherit border-0 rounded-none !ring-0 focus:!ring-transparent !transition-none"
         bind:value
-        bind:item={textArea}
+        bind:element={textArea}
         on:keydown={(e) => {
           if (disabled) return
           if (e.ctrlKey || e.metaKey) {
@@ -246,14 +247,18 @@ overflow-hidden focus-within:border-black focus-within:dark:border-white transit
         {...$$restProps}
       />
     {/if}
+
+    {#if $$slots.default || previewButton}
+      <div class="p-2 flex items-center w-full bg-white dark:bg-zinc-950">
+        {#if previewButton}
+          <MultiSelect
+            bind:selected={previewing}
+            options={[false, true]}
+            optionNames={['Edit', 'Preview']}
+          />
+        {/if}
+        <slot />
+      </div>
+    {/if}
   </div>
-  {#if previewButton}
-    <div class="mt-2">
-      <MultiSelect
-        bind:selected={previewing}
-        options={[false, true]}
-        optionNames={['Edit', 'Preview']}
-      />
-    </div>
-  {/if}
 </div>

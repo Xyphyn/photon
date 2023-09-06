@@ -1,18 +1,16 @@
 <script lang="ts">
-  import { goto } from '$app/navigation'
   import { profile } from '$lib/auth.js'
-  import Button from '$lib/components/input/Button.svelte'
-  import TextInput from '$lib/components/input/TextInput.svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import EditableList from '$lib/components/ui/list/EditableList.svelte'
-  import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import { toast } from 'mono-svelte'
   import { instance } from '$lib/instance.js'
   import { getClient } from '$lib/lemmy.js'
   import { addAdmin } from '$lib/lemmy/user.js'
   import { removeItem, trycatch } from '$lib/util.js'
-  import { Plus, QuestionMarkCircle, Trash } from 'svelte-hero-icons'
   import { _ } from 'svelte-i18n'
+  import { Button, TextInput } from 'mono-svelte'
+  import { Icon, Plus, QuestionMarkCircle, Trash } from 'svelte-hero-icons'
 
   export let data
 
@@ -63,11 +61,9 @@
       {#each data.site?.admins ?? [] as admin}
         <div class="py-3 flex items-center justify-between">
           <UserLink avatar showInstance={false} user={admin.person} />
-          <Button
-            on:click={() => action(admin.person.id)}
-            icon={Trash}
-            size="square-md"
-          />
+          <Button on:click={() => action(admin.person.id)} size="square-md">
+            <Icon src={Trash} mini size="16" />
+          </Button>
         </div>
       {/each}
     {/if}
@@ -100,14 +96,8 @@
       class="flex-1"
       pattern={'@[^ |]{1,}'}
     />
-    <Button
-      loading={adding}
-      disabled={adding}
-      icon={Plus}
-      size="md"
-      class="h-full"
-      submit
-    >
+    <Button loading={adding} disabled={adding} size="md" class="h-full" submit>
+      <Icon src={Plus} mini size="16" slot="prefix" />
       Add Admin
     </Button>
   </form>

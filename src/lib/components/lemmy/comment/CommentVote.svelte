@@ -10,8 +10,8 @@
   import { getClient } from '$lib/lemmy'
   import { userSettings } from '$lib/settings'
   import { profile } from '$lib/auth.js'
-  import Button from '$lib/components/input/Button.svelte'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
+  import { Button } from 'mono-svelte'
 
   export let vote: number = 0
   export let score: number

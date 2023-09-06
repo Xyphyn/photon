@@ -1,10 +1,10 @@
 <script lang="ts">
   import InboxItem from './InboxItem.svelte'
-  import Button from '$lib/components/input/Button.svelte'
   import {
-    ArchiveBox,
+    AdjustmentsHorizontal,
+    Bars3BottomRight,
     Check,
-    EnvelopeOpen,
+    Funnel,
     Icon,
     Inbox,
   } from 'svelte-hero-icons'
@@ -19,6 +19,7 @@
   import { fly } from 'svelte/transition'
   import { searchParam } from '$lib/util.js'
   import { _ } from 'svelte-i18n'
+  import { Button, Select } from 'mono-svelte'
 
   export let data
 
@@ -60,36 +61,42 @@
     disabled={markingAsRead}
     size="md"
   >
-    <Icon src={Check} width={16} mini slot="icon" />
+    <Icon src={Check} width={16} mini slot="prefix" />
     Mark all as read
   </Button>
 </div>
 <div class="mt-4" />
 <div class="flex flex-row gap-4 flex-wrap">
-  <MultiSelect
-    selected={data.unreadOnly}
-    options={[false, true]}
-    optionNames={['All', 'Unread']}
-    on:select={(e) => {
-      $page.url.searchParams.delete('page')
-      $page.url.searchParams.set('unreadOnly', (e.detail ?? false).toString())
-      goto($page.url.toString(), {
-        invalidateAll: true,
-      })
-    }}
-  />
-  <MultiSelect
-    selected={data.type}
-    options={['all', 'mentions', 'replies', 'messages']}
-    optionNames={['All', 'Mentions', 'Replies', 'Messages']}
-    on:select={(e) => {
-      $page.url.searchParams.delete('page')
-      $page.url.searchParams.set('type', e.detail ?? 'all')
-      goto($page.url.toString(), {
-        invalidateAll: true,
-      })
-    }}
-  />
+  <Select
+    bind:value={data.unreadOnly}
+    on:change={() =>
+      searchParam(
+        $page.url,
+        'unreadOnly',
+        data.unreadOnly?.toString() ?? 'false',
+        'page'
+      )}
+  >
+    <span slot="label" class="flex items-center gap-1">
+      <Icon src={Funnel} size="15" mini />
+      Filter
+    </span>
+    <option value="false">All</option>
+    <option value="true">Unread</option>
+  </Select>
+  <Select
+    bind:value={data.type}
+    on:change={() => searchParam($page.url, 'type', data.type ?? 'all', 'page')}
+  >
+    <span slot="label" class="flex items-center gap-1">
+      <Icon src={AdjustmentsHorizontal} size="15" mini />
+      Type
+    </span>
+    <option value="all">All</option>
+    <option value="mentions">Mentions</option>
+    <option value="replies">Replies</option>
+    <option value="messages">Messages</option>
+  </Select>
 </div>
 <div class="flex flex-col gap-4 list-none my-4 flex-1">
   {#if !data.data || (data.data?.length ?? 0) == 0}

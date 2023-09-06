@@ -88,5 +88,6 @@
 
   .markdown :global(p) {
     @apply leading-[1.5] max-w-3xl;
+    word-break: break-word;
   }
 </style>

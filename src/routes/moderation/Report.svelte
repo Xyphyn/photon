@@ -1,8 +1,7 @@
 <script lang="ts">
-  import Button from '$lib/components/input/Button.svelte'
   import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
   import Post from '$lib/components/lemmy/post/Post.svelte'
-  import { toast } from '$lib/components/ui/toasts/toasts.js'
+  import { toast } from 'mono-svelte'
   import { getClient } from '$lib/lemmy.js'
   import { isCommentReport, isPostReport } from '$lib/lemmy/item.js'
   import type {
@@ -12,6 +11,7 @@
   } from 'lemmy-js-client'
   import { Check, Icon } from 'svelte-hero-icons'
   import { profile } from '$lib/auth.js'
+  import { Button } from 'mono-svelte'
 
   export let item: PostReportView | CommentReportView | PrivateMessageReportView
 
@@ -100,7 +100,7 @@
       loading={resolving}
       disabled={resolving}
     >
-      <Icon src={Check} mini size="16" slot="icon" />
+      <Icon src={Check} mini size="16" slot="prefix" />
     </Button>
   </div>
 {:else if isPostReport(item)}
@@ -132,7 +132,7 @@
       loading={resolving}
       disabled={resolving}
     >
-      <Icon src={Check} mini size="16" slot="icon" />
+      <Icon src={Check} mini size="16" slot="prefix" />
     </Button>
   </div>
 {/if}

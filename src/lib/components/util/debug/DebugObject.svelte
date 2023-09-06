@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Modal from '$lib/components/ui/modal/Modal.svelte'
   import DebugTree from '$lib/components/util/debug/DebugTree.svelte'
+  import { Modal } from 'mono-svelte'
 
   export let object: any
   export let open: boolean = false

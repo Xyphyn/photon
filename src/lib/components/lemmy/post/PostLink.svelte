@@ -3,12 +3,13 @@
   import { Icon, Link as LinkIcon } from 'svelte-hero-icons'
 
   export let url: string
-  export let thumbnail_url: string
+  export let thumbnail_url: string | undefined = undefined
   export let nsfw: boolean = false
 </script>
 
 <Link href={url} highlight nowrap />
 
+{#if thumbnail_url}
 <a href={url}>
   <img
     src={thumbnail_url}
@@ -19,3 +20,4 @@
     class:blur-3xl={nsfw}
   />
 </a>
+{/if}
