@@ -48,7 +48,6 @@
         bind:value={data.listingType}
         on:change={() =>
           searchParam($page.url, 'type', data.listingType, 'page')}
-        class="w-28"
       >
         <span slot="label" class="flex items-center gap-1">
           <Icon src={GlobeAmericas} size="16" mini />
