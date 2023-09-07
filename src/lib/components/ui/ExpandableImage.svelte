@@ -24,7 +24,7 @@
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <!-- svelte-ignore a11y-positive-tabindex -->
   <div
-    class="fixed top-0 left-0 w-screen h-screen overflow-auto bg-black/50 flex flex-col z-[100]"
+    class="fixed top-0 left-0 w-screen h-screen overflow-auto bg-black/50 flex flex-col z-[100] overscroll-contain"
     transition:fade={{ duration: 200 }}
     on:click={() => (open = false)}
   >
@@ -37,7 +37,7 @@
     </Button>
     <img
       src={url}
-      class="w-full h-full object-contain max-w-screen-sm mx-auto my-auto"
+      class="w-full h-full object-contain max-w-screen-sm mx-auto my-auto overscroll-contain"
       transition:scale={{ start: 0.9, easing: expoOut }}
       {alt}
     />
