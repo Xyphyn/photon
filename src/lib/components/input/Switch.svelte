@@ -44,7 +44,7 @@
 </script>
 
 <div class={containerClass}>
-  {#each options.slice(0, 4) as option, index}
+  {#each options as option, index}
     <button
       class={buttonClass(selected == option)}
       on:click|preventDefault={() => (selected = option)}
@@ -59,22 +59,5 @@
       {/if}
     </button>
   {/each}
-  {#if options.length > 4}
-    <select
-      bind:value={selected}
-      class="bg-inherit text-sm mr-2 p-1.5 rounded-md cursor-pointer {options
-        .slice(4)
-        .includes(selected)
-        ? 'bg-slate-900 text-slate-50 dark:bg-zinc-100 dark:text-black w-max'
-        : 'w-4'}"
-    >
-      <Button color="tertiary">
-        <Icon src={ChevronDown} size="16" mini />
-      </Button>
-      {#each options.slice(4) as option, index}
-        <option value={option}>{optionNames[index + 4] || option}</option>
-      {/each}
-    </select>
-  {/if}
 </div>
 <slot {selected} />

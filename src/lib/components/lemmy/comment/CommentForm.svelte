@@ -2,7 +2,6 @@
   import type { CommentResponse } from 'lemmy-js-client'
   import { getClient } from '$lib/lemmy.js'
   import { createEventDispatcher } from 'svelte'
-  import MultiSelect from '$lib/components/input/MultiSelect.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import { profile } from '$lib/auth.js'
   import { toast } from 'mono-svelte'

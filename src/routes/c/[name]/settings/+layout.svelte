@@ -1,7 +1,7 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
-  import MultiSelect from '$lib/components/input/MultiSelect.svelte'
+  import MultiSelect from '$lib/components/input/Switch.svelte'
   import { fullCommunityName } from '$lib/util.js'
   import type { PageData } from './$types.js'
 

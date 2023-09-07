@@ -2,7 +2,7 @@
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
 
-  import MultiSelect from '$lib/components/input/MultiSelect.svelte'
+  import MultiSelect from '$lib/components/input/Switch.svelte'
 </script>
 
 <svelte:head>

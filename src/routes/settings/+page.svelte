@@ -1,7 +1,7 @@
 <script lang="ts">
   import { defaultSettings, userSettings } from '$lib/settings'
   import Setting from './Setting.svelte'
-  import MultiSelect from '$lib/components/input/MultiSelect.svelte'
+  import MultiSelect from '$lib/components/input/Switch.svelte'
   import Sort from '$lib/components/lemmy/Sort.svelte'
   import { toast } from 'mono-svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'

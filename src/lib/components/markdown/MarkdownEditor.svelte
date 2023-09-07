@@ -1,6 +1,6 @@
 <script lang="ts">
   import { profile } from '$lib/auth.js'
-  import MultiSelect from '$lib/components/input/MultiSelect.svelte'
+  import MultiSelect from '$lib/components/input/Switch.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import { ImageInput, toast } from 'mono-svelte'
   import { uploadImage } from '$lib/lemmy.js'

@@ -2,7 +2,7 @@
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import { fly } from 'svelte/transition'
   import Report from './Report.svelte'
-  import MultiSelect from '$lib/components/input/MultiSelect.svelte'
+  import MultiSelect from '$lib/components/input/Switch.svelte'
   import { page } from '$app/stores'
   import {
     EnvelopeOpen,

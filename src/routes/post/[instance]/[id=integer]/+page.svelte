@@ -18,7 +18,7 @@
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
   import { Badge, Material, Spinner, removeToast, toast } from 'mono-svelte'
   import type { CommentSortType } from 'lemmy-js-client'
-  import MultiSelect from '$lib/components/input/MultiSelect.svelte'
+  import MultiSelect from '$lib/components/input/Switch.svelte'
   import { profile } from '$lib/auth.js'
   import { instance } from '$lib/instance.js'
   import { afterNavigate, goto } from '$app/navigation'

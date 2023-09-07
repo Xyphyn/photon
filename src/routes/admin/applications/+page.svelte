@@ -5,7 +5,7 @@
   import { searchParam } from '$lib/util.js'
   import { ClipboardDocumentCheck, Icon } from 'svelte-hero-icons'
   import Application from './Application.svelte'
-  import MultiSelect from '$lib/components/input/MultiSelect.svelte'
+  import MultiSelect from '$lib/components/input/Switch.svelte'
 
   export let data
 </script>

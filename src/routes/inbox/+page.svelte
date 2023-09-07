@@ -13,7 +13,7 @@
   import { page } from '$app/stores'
   import { isRead } from '$lib/lemmy/inbox.js'
   import Pageination from '$lib/components/ui/Pageination.svelte'
-  import MultiSelect from '$lib/components/input/MultiSelect.svelte'
+  import MultiSelect from '$lib/components/input/Switch.svelte'
   import { profile } from '$lib/auth.js'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { fly } from 'svelte/transition'

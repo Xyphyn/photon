@@ -10,6 +10,8 @@
   }
 </script>
 
-<ul class="divide-y divide-slate-200 dark:divide-zinc-900 flex flex-col">
+<ul
+  class="divide-y divide-slate-200 dark:divide-zinc-900 flex flex-col {$$props.class}"
+>
   <slot {action} />
 </ul>

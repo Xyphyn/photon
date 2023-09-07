@@ -8,7 +8,7 @@
   import { profile } from '$lib/auth.js'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { Fire, Icon, Trash } from 'svelte-hero-icons'
-  import MultiSelect from '$lib/components/input/MultiSelect.svelte'
+  import MultiSelect from '$lib/components/input/Switch.svelte'
   import { removalTemplate } from '$lib/components/lemmy/moderation/moderation.js'
   import { userSettings } from '$lib/settings.js'
   import { fullCommunityName } from '$lib/util.js'
