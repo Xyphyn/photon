@@ -12,6 +12,11 @@ export const bestImageURL = (
   compact: boolean = true,
   width: number = 1024
 ) => {
+  if (width > 1024) {
+  	if (post.url) return `${post.url}?format=webp`
+	else if (post.thumbnail_url) return `${post.thumbnail_url}?format=webp`
+  }
+
   if (compact && post.thumbnail_url)
     return `${post.thumbnail_url}?thumbnail=256&format=webp`
   else if (compact && post.url) return `${post.url}?thumbnail=256&format=webp`
