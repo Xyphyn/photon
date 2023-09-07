@@ -48,7 +48,7 @@
           class:text-slate-500={post.read && $userSettings.markReadPosts}
           class:dark:text-zinc-400={post.read && $userSettings.markReadPosts}
         >
-          {post.post.name}
+          <Markdown source={post.post.name} inline />
         </a>
       </div>
       {#if !$userSettings.showCompactPosts}

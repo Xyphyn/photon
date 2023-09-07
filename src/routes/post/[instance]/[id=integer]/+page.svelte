@@ -159,7 +159,9 @@
       <Icon src={ArrowLeft} mini size="16" slot="prefix" />
     </Button>
   </div>
-  <h1 class="font-bold text-lg">{post.post_view.post.name}</h1>
+  <h1 class="font-bold text-lg">
+    <Markdown source={post.post_view.post.name} inline />
+  </h1>
   {#if isImage(post.post_view.post.url)}
     <img
       src={post.post_view.post.url}
