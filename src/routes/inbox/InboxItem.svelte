@@ -17,6 +17,8 @@
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import { Button } from 'mono-svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
+  import RelativeDate from '$lib/components/util/RelativeDate.svelte'
+  import { publishedToDate } from '$lib/components/util/date.js'
 
   export let item: CommentReplyView | PersonMentionView | PrivateMessageView
   export let read: boolean
@@ -26,6 +28,10 @@
   ): item is PrivateMessageView {
     return 'private_message' in item
   }
+
+  const isCommentReply = (
+    item: CommentReplyView | PersonMentionView | PrivateMessageView
+  ): item is CommentReplyView => 'comment_reply' in item
 
   let replying = false
   let reply = ''
@@ -91,11 +97,16 @@
 
 <Material padding="lg" class="flex flex-col max-w-full gap-2">
   {#if !isPrivateMessage(item)}
-    <PostMeta
-      published={new Date(item.post.published)}
-      title={item.post.name}
-      id={item.post.id}
-    />
+    <div class="flex flex-col gap-1">
+      <span class="text-xs text-slate-600 dark:text-zinc-400">
+        {#if isCommentReply(item)}
+          <RelativeDate date={publishedToDate(item.comment_reply.published)} />
+        {:else}
+          <RelativeDate date={publishedToDate(item.person_mention.published)} />
+        {/if}
+      </span>
+      <PostMeta title={item.post.name} id={item.post.id} />
+    </div>
     <div
       class="flex flex-col"
       class:mt-2={$profile?.user &&

@@ -18,7 +18,7 @@
 
   export let community: Community | undefined = undefined
   export let user: Person | undefined = undefined
-  export let published: Date
+  export let published: Date | undefined = undefined
   export let title: string | undefined = undefined
   export let id: number | undefined = undefined
 
@@ -56,7 +56,9 @@
             <UserLink avatarSize={20} {user} avatar={!community} />
           </div>
         {/if}
-        <RelativeDate date={published} />
+        {#if published}
+          <RelativeDate date={published} />
+        {/if}
         {#if upvotes != undefined && downvotes != undefined}
           <span>•</span>
           <span>
