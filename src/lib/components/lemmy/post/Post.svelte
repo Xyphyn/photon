@@ -60,6 +60,7 @@
           <svelte:component
             this={$userSettings.expandImages ? ExpandableImage : Empty}
             url={bestImageURL(post.post, false, 2048)}
+	    class="self-start max-w-full"
           >
             <svelte:element
               this={$userSettings.expandImages ? 'div' : 'a'}
@@ -83,7 +84,7 @@
                 <img
                   src={bestImageURL(post.post, false, 1024)}
                   loading="lazy"
-                  class="max-w-full object-cover rounded-md max-h-[80vh] h-auto z-30 opacity-0 transition-opacity duration-300"
+                  class="max-w-full w-max object-cover rounded-md max-h-[80vh] h-auto z-30 opacity-0 transition-opacity duration-300"
                   class:opacity-100={loaded}
                   width={512}
                   height={300}
