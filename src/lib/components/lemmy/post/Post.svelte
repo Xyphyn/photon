@@ -134,7 +134,7 @@
             {/if}
           </a>
         {:else}
-          <ExpandableImage url={bestImageURL(post.post, false)}>
+          <ExpandableImage url={bestImageURL(post.post, false, 2048)}>
             {#if post.post.thumbnail_url}
               <!-- svelte-ignore a11y-missing-attribute -->
               <img
