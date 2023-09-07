@@ -145,6 +145,15 @@
     </Checkbox>
     <span slot="description">Alternate vote design</span>
   </Setting>
+  <Setting>
+    <Checkbox bind:checked={$userSettings.expandImages} slot="title">
+      Expand Images
+    </Checkbox>
+    <span slot="description">
+      Clicking on an image brings you to an expanded view rather than sending
+      you to the post page.
+    </span>
+  </Setting>
 
   <SectionTitle class="mt-4">Instances</SectionTitle>
   <Setting>

@@ -54,6 +54,7 @@ interface Settings {
   modlogCardView: boolean | undefined
   debugInfo: boolean
   systemUI: boolean
+  expandImages: boolean
 }
 
 export const defaultSettings: Settings = {
@@ -93,6 +94,7 @@ export const defaultSettings: Settings = {
   modlogCardView: toBool(env.PUBLIC_MODLOG_CARD_VIEW) ?? undefined,
   debugInfo: false,
   systemUI: true,
+  expandImages: true,
 }
 
 export const userSettings = writable(defaultSettings)
