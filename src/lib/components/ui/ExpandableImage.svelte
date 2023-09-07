@@ -36,8 +36,10 @@
       <Icon src={XMark} size="16" mini slot="prefix" />
     </Button>
     <img
+      width={400}
+      height={400}
       src={url}
-      class="w-full h-full object-contain max-w-screen-sm mx-auto my-auto overscroll-contain"
+      class="w-full h-auto object-contain max-w-screen-sm mx-auto my-auto overscroll-contain bg-white dark:bg-zinc-900"
       transition:scale={{ start: 0.9, easing: expoOut }}
       {alt}
     />
