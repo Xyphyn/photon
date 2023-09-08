@@ -38,11 +38,7 @@
     UserCircle,
     UserGroup,
   } from 'svelte-hero-icons'
-
-  let scrollY = 0
 </script>
-
-<svelte:window bind:scrollY />
 
 <nav
   class="flex flex-row gap-2 items-center sticky top-0 bg-slate-100/80

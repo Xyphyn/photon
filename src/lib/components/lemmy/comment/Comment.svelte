@@ -15,7 +15,7 @@
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import CommentActions from '$lib/components/lemmy/comment/CommentActions.svelte'
   import { getClient } from '$lib/lemmy.js'
-  import { toast } from 'mono-svelte'
+  import { Disclosure, toast } from 'mono-svelte'
   import { profile } from '$lib/auth.js'
   import { Button, Modal } from 'mono-svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
@@ -78,8 +78,9 @@
   class="py-2 {$$props.class}"
   id="#{node.comment_view.comment.id.toString()}"
 >
-  <details bind:open class="flex flex-col gap-1">
-    <summary
+  <Disclosure bind:open class="flex flex-col">
+    <div
+      slot="summary"
       class="flex flex-row cursor-pointer gap-2 items-center group text-xs flex-wrap"
     >
       <span class:font-bold={op} class="flex flex-row gap-1 items-center">
@@ -94,14 +95,6 @@
         {/if}
       </span>
       <span class="text-slate-600 dark:text-zinc-400 flex flex-row gap-1">
-        {#if !open}
-          <div
-            class="flex items-center gap-0.5 mr-1 text-slate-800 dark:text-zinc-200"
-          >
-            <Icon src={ArrowUp} mini size="14" />
-            {node.comment_view.counts.score}
-          </div>
-        {/if}
         <RelativeDate
           date={publishedToDate(node.comment_view.comment.published)}
         />
@@ -138,25 +131,10 @@
           />
         {/if}
       </span>
-      <Button
-        class="ml-auto translate-x-1 opacity-0 group-hover:translate-x-0
-        group-hover:opacity-100 text-xs !transition-all
-        pointer-events-none"
-        size="sm"
-      >
-        {#if open}
-          <Icon src={Minus} width={16} height={16} mini />
-        {:else}
-          <Icon src={Plus} width={16} height={16} mini />
-          {#if node.children.length > 0}
-            <span class="text-xs opacity-50">+{node.children.length}</span>
-          {/if}
-        {/if}
-      </Button>
-    </summary>
+    </div>
     <div
       class="flex flex-col whitespace-pre-wrap
-      max-w-full gap-1"
+      max-w-full gap-1 mt-1"
     >
       <div class="max-w-full mt-0.5 break-words text-sm">
         <Markdown source={node.comment_view.comment.content} />
@@ -194,5 +172,5 @@
     <div class="bg-transparent dark:bg-transparent">
       <slot />
     </div>
-  </details>
+  </Disclosure>
 </li>
