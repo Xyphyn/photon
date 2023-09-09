@@ -75,7 +75,7 @@
 {/if}
 
 <li
-  class="py-2 {$$props.class}"
+  class="py-3 {$$props.class}"
   id="#{node.comment_view.comment.id.toString()}"
 >
   <Disclosure bind:open class="flex flex-col">
