@@ -247,7 +247,7 @@
     padding="none"
     color="distinct"
     class="py-2 px-4 text-sm flex flex-row justify-between items-center
-    flex-wrap gap-4 sticky top-20 w-full box-border z-[100] mt-4"
+    flex-wrap gap-4 sticky top-20 w-full box-border z-[50] mt-4"
   >
     <p>You're viewing a single thread.</p>
     <Button on:click={reloadComments}>View full thread</Button>
