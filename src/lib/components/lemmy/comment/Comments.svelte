@@ -123,15 +123,14 @@
             loading={node.loading}
             disabled={node.loading}
             size="sm"
-            color="none"
+            color="tertiary"
             alignment="left"
-            class="text-xs"
             on:click={() => {
               node.loading = true
               fetchChildren(node).then(() => (node.loading = false))
             }}
           >
-            <Icon src={PlusCircle} width={16} slot="prefix" />
+            <Icon src={ChevronDown} mini size="16" slot="prefix" />
             {node.comment_view.counts.child_count} more
           </Button>
         </button>
