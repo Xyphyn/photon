@@ -106,7 +106,12 @@
         <DebugObject object={post} bind:open={debug} />
       {/await}
     {/if}
-    <Button on:click={() => (debug = true)} size="square-md">
+    <Button
+      on:click={() => (debug = true)}
+      size="square-md"
+      color="ghost"
+      class="text-slate-600 dark:text-zinc-400"
+    >
       <Icon src={BugAnt} mini size="16" slot="prefix" />
     </Button>
   {/if}
@@ -122,7 +127,7 @@
     <Button
       slot="target"
       aria-label="Post actions"
-      class="hover:text-inherit h-8"
+      color="ghost"
       size="square-md"
     >
       <Icon slot="prefix" src={EllipsisHorizontal} width={16} mini />

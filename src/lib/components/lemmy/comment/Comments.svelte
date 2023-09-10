@@ -99,7 +99,7 @@
   in:fly={{ opacity: 0, y: -4 }}
   class={isParent
     ? 'divide-y dark:divide-zinc-800 divide-slate-200'
-    : 'pl-3.5 border-l-2 border-slate-200 dark:border-zinc-800 my-1'}
+    : 'pl-3.5 border-l border-slate-200 dark:border-zinc-800 my-1'}
 >
   {#each nodes as node (node.comment_view.comment.id)}
     <Comment
@@ -123,15 +123,15 @@
             loading={node.loading}
             disabled={node.loading}
             size="sm"
-            color="tertiary"
+            color="none"
             alignment="left"
-            loaderWidth={18}
+            class="text-xs"
             on:click={() => {
               node.loading = true
               fetchChildren(node).then(() => (node.loading = false))
             }}
           >
-            <Icon src={Plus} width={18} mini slot="prefix" />
+            <Icon src={PlusCircle} width={16} slot="prefix" />
             {node.comment_view.counts.child_count} more
           </Button>
         </button>

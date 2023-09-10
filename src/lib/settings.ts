@@ -16,17 +16,21 @@ const toBool = (str: string | undefined) => {
 }
 
 interface Settings {
-  newComments: boolean
   expandableImages: boolean
+  // should have been named "fade" read posts
   markReadPosts: boolean
+  // ???
   instance?: string
-  revertColors: boolean
   showInstances: {
     user: boolean
     community: boolean
     comments: boolean
   }
+  // deprecated
   showCompactPosts: boolean
+
+  view: 'card' | 'list' | 'compact'
+
   defaultSort: {
     sort: SortType
     feed: 'All' | 'Subscribed' | 'Local'
@@ -36,7 +40,6 @@ interface Settings {
     deleted: boolean
     removed: boolean
   }
-  fullWidthLayout: boolean
   expandSidebar: boolean
   notifications: {
     enabled: boolean
@@ -58,10 +61,8 @@ interface Settings {
 }
 
 export const defaultSettings: Settings = {
-  newComments: true,
   expandableImages: toBool(env.PUBLIC_EXPANDABLE_IMAGES) ?? true,
   markReadPosts: toBool(env.PUBLIC_MARK_READ_POSTS) ?? true,
-  revertColors: toBool(env.PUBLIC_REVERT_VOTE_COLORS) ?? false,
   showInstances: {
     user: toBool(env.PUBLIC_SHOW_INSTANCES_USER) ?? false,
     community: toBool(env.PUBLIC_SHOW_INSTANCES_COMMUNITY) ?? true,
@@ -77,7 +78,6 @@ export const defaultSettings: Settings = {
     deleted: toBool(env.PUBLIC_HIDE_DELETED) ?? true,
     removed: toBool(env.PUBLIC_HIDE_REMOVED) ?? false,
   },
-  fullWidthLayout: toBool(env.PUBLIC_FULL_WIDTH_LAYOUT) ?? false,
   expandSidebar: toBool(env.PUBLIC_EXPAND_SIDEBAR) ?? true,
   notifications: {
     enabled: false,
@@ -95,6 +95,7 @@ export const defaultSettings: Settings = {
   debugInfo: false,
   systemUI: true,
   expandImages: true,
+  view: 'list',
 }
 
 export const userSettings = writable(defaultSettings)

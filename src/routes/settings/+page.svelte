@@ -76,6 +76,19 @@
     </div>
   </Setting>
   <Setting>
+    <span slot="title">Post style</span>
+    <ViewSelect />
+    <p>
+      {#if $userSettings.view == 'list'}
+        Show posts in a list, with post bodies and compact images.
+      {:else if $userSettings.view == 'compact'}
+        Show posts in a list, without post bodies and with tighter spacing.
+      {:else if $userSettings.view == 'card'}
+        Show posts in cards, with large images.
+      {/if}
+    </p>
+  </Setting>
+  <Setting>
     <span slot="title">Hide Posts</span>
     <span slot="description">
       <p>Hide certain types of posts.</p>
@@ -117,33 +130,15 @@
   <SectionTitle class="mt-4">UI</SectionTitle>
   <Setting>
     <Checkbox bind:checked={$userSettings.markReadPosts} slot="title">
-      Mark read posts
+      Fade read posts
     </Checkbox>
     <span slot="description">Fade the title of posts you've already read.</span>
-  </Setting>
-  <Setting>
-    <Checkbox bind:checked={$userSettings.revertColors} slot="title">
-      Revert vote colors
-    </Checkbox>
-    <span slot="description">
-      Make upvotes orange and downvotes blue, like Reddit used to do.
-    </span>
-  </Setting>
-  <Setting>
-    <span slot="title">Post style</span>
-    <ViewSelect />
   </Setting>
   <Setting>
     <Checkbox bind:checked={$userSettings.nsfwBlur} slot="title">
       NSFW blur
     </Checkbox>
     <span slot="description">Blur images of NSFW content.</span>
-  </Setting>
-  <Setting>
-    <Checkbox bind:checked={$userSettings.newVote} slot="title">
-      New vote design
-    </Checkbox>
-    <span slot="description">Alternate vote design</span>
   </Setting>
   <Setting>
     <Checkbox bind:checked={$userSettings.expandImages} slot="title">

@@ -11,10 +11,11 @@
 </script>
 
 <div
-  class="flex flex-col {!$userSettings.showCompactPosts
+  class="flex flex-col {$userSettings.view == 'card'
     ? 'gap-3 md:gap-4'
     : ''} divide-slate-200 dark:divide-zinc-800"
-  class:divide-y={$userSettings.showCompactPosts}
+  class:divide-y={$userSettings.view == 'compact' ||
+    $userSettings.view == 'list'}
 >
   {#if posts.length == 0}
     <div class="h-full grid place-items-center">
@@ -40,7 +41,7 @@
             delay: index < 4 ? index * 100 : 0,
           }}
         >
-          <Post compact={$userSettings.showCompactPosts} {post} />
+          <Post view={$userSettings.view} {post} />
         </div>
       {/if}
     {/each}
