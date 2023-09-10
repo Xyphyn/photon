@@ -16,7 +16,7 @@
   export let post: PostView
   export let actions: boolean = true
   export let hideCommunity = false
-  export let view: 'card' | 'list' | 'compact' = 'list'
+  export let view: 'card' | 'list' | 'compact' = 'card'
 
   let loaded = false
 
