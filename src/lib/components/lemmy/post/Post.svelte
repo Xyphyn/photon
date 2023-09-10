@@ -46,7 +46,7 @@
     {#if view == 'list' || view == 'compact'}
       <div
         class="absolute -inset-1 group-hover:-inset-4
-      transition-all -z-10 rounded-xl group-hover:bg-slate-100 group-hover:dark:bg-zinc-900"
+      transition-all -z-[5] rounded-xl group-hover:bg-slate-100 group-hover:dark:bg-zinc-900"
       />
     {/if}
     <div class="flex flex-row gap-2 max-w-full w-full">
@@ -129,15 +129,16 @@
           <div
             class="text-sm relative overflow-hidden {view == 'list'
               ? `text-zinc-600 dark:text-zinc-400 max-h-24`
-              : 'text-slate-600 dark:text-zinc-400 max-h-48'}"
+              : 'text-slate-600 dark:text-zinc-400 max-h-48'} paragraph"
           >
             <Markdown inline source={post.post.body.slice(0, 400)} />
             {#if post.post.body.length > (view == 'list' ? 200 : 600)}
               <div
                 class="absolute bottom-0 w-full h-16 bg-gradient-to-b {view ==
                 'list'
-                  ? 'dark:from-zinc-950/0 dark:to-zinc-950 from-slate-50/0 to-slate-50'
-                  : 'dark:from-zinc-900/0 dark:to-zinc-900 from-white/0 to-white'} "
+                  ? `dark:from-zinc-950/0 dark:to-zinc-950 group-hover:dark:to-zinc-900
+                  from-slate-50/0 to-slate-50 group-hover:to-slate-100 transition-all`
+                  : 'dark:from-zinc-900/0 dark:to-zinc-900 from-white/0 to-white'}"
               />
             {/if}
           </div>
