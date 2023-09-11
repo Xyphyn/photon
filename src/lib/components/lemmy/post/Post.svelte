@@ -44,7 +44,7 @@
   <div
     id={post.post.id.toString()}
     on:click={onclick}
-    class="relative flex flex-col gap-2.5 cursor-pointer"
+    class="relative flex flex-col gap-2.5"
   >
     {#if view == 'list' || view == 'compact'}
       <div
