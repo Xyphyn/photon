@@ -27,7 +27,7 @@
       target: any
     }
   ) => {
-    if (e.target.id == post.post.id) goto(postLink(post.post))
+    if (e.target.id == post.post.id.toString()) goto(postLink(post.post))
   }
 </script>
 
@@ -48,34 +48,36 @@
   >
     {#if view == 'list' || view == 'compact'}
       <div
-        class="absolute -inset-0.5 group-hover:-inset-2.5 group-hover:-inset-y-3 group-hover:md:-inset-4
+        class="absolute -inset-0.5 group-hover:-inset-2 group-hover:-inset-y-3 group-hover:md:-inset-4
       transition-all -z-[5] rounded-xl group-hover:bg-slate-100 group-hover:dark:bg-zinc-900"
       />
     {/if}
     <div class="flex flex-row gap-2 max-w-full w-full">
-      <div class="flex flex-col gap-2">
-        <PostMeta
-          community={hideCommunity ? undefined : post.community}
-          user={post.creator}
-          published={new Date(post.post.published + 'Z')}
-          upvotes={post.counts.upvotes}
-          downvotes={post.counts.downvotes}
-          deleted={post.post.deleted}
-          removed={post.post.removed}
-          locked={post.post.locked}
-          featured={post.post.featured_local || post.post.featured_community}
-          nsfw={post.post.nsfw}
-          saved={post.saved}
-        />
-        <a
-          href="/post/{getInstance()}/{post.post.id}"
-          class="font-medium max-w-full w-full break-words text-base"
-          style="word-break: break-word;"
-          class:text-slate-500={post.read && $userSettings.markReadPosts}
-          class:dark:text-zinc-400={post.read && $userSettings.markReadPosts}
-        >
-          <Markdown source={post.post.name} inline />
-        </a>
+      <div class="flex flex-col w-full gap-2">
+        <div class="flex flex-col w-full gap-2">
+          <PostMeta
+            community={hideCommunity ? undefined : post.community}
+            user={post.creator}
+            published={new Date(post.post.published + 'Z')}
+            upvotes={post.counts.upvotes}
+            downvotes={post.counts.downvotes}
+            deleted={post.post.deleted}
+            removed={post.post.removed}
+            locked={post.post.locked}
+            featured={post.post.featured_local || post.post.featured_community}
+            nsfw={post.post.nsfw}
+            saved={post.saved}
+          />
+          <a
+            href="/post/{getInstance()}/{post.post.id}"
+            class="font-medium max-w-full w-full break-words text-base"
+            style="word-break: break-word;"
+            class:text-slate-500={post.read && $userSettings.markReadPosts}
+            class:dark:text-zinc-400={post.read && $userSettings.markReadPosts}
+          >
+            <Markdown source={post.post.name} inline />
+          </a>
+        </div>
         {#if $userSettings.view == 'card'}
           {#if isImage(post.post.url)}
             <!--disabled preloads here since most people will hover over every image while scrolling-->
@@ -146,7 +148,7 @@
         {/if}
       </div>
       {#if ($userSettings.view == 'list' || $userSettings.view == 'compact') && (post.post.thumbnail_url || isImage(post.post.url))}
-        <div class="flex-none w-24 h-24 ml-auto">
+        <div class="flex-none w-24 h-24">
           {#if !$userSettings.expandImages || (post.post.thumbnail_url && !isImage(post.post.url))}
             <a href={postLink(post.post)}>
               {#if post.post.thumbnail_url}
