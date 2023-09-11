@@ -38,7 +38,7 @@
         on:click={async () => {
           if (!$profile?.jwt) return
           vote = vote == 1 ? 0 : 1
-          score = await voteItem(post, vote == 1 ? 0 : 1, $profile.jwt)
+          score = await voteItem(post, vote, $profile.jwt)
         }}
         size="square-sm"
         color="tertiary"
@@ -57,7 +57,7 @@
         on:click={async () => {
           if (!$profile?.jwt) return
           vote = vote == -1 ? 0 : -1
-          score = await voteItem(post, vote == -1 ? 0 : -1, $profile.jwt)
+          score = await voteItem(post, vote, $profile.jwt)
         }}
         size="square-sm"
         color="tertiary"
