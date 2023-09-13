@@ -31,7 +31,13 @@
     class:text-red-500={user.admin}
     class:font-bold={user.admin}
   >
-    {$userSettings.displayNames ? user.display_name ?? user.name : user.name}
+    <span
+      class:font-medium={($userSettings.showInstances.comments && inComment) ||
+        $userSettings.showInstances.user ||
+        showInstance}
+    >
+      {$userSettings.displayNames ? user.display_name ?? user.name : user.name}
+    </span>
     {#if $userSettings.showInstances.user || ($userSettings.showInstances.comments && inComment) || showInstance}
       <span class="text-slate-500 dark:text-zinc-500 font-normal">
         @{new URL(user.actor_id).hostname}

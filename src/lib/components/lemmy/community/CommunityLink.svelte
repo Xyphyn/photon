@@ -31,7 +31,7 @@
   {#if name}
     <span class="flex gap-0">
       {#if showInstance != undefined ? showInstance : $userSettings.showInstances.community}
-        {community.title}
+        <span class="font-medium">{community.title}</span>
         <span class="text-slate-500 dark:text-zinc-500 font-normal">
           @{new URL(community.actor_id).hostname}
         </span>
