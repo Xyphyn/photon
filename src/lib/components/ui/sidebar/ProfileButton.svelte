@@ -32,10 +32,7 @@
 
     switching = false
   }}
-  class="w-full hover:bg-slate-200 {expanded ? '' : '!p-1.5'} {$profile?.id ==
-  prof.id
-    ? 'font-bold'
-    : ''}"
+  class="w-full hover:bg-slate-200 {expanded ? '' : '!p-1.5'}"
 >
   <ProfileAvatar
     profile={prof}
@@ -43,7 +40,10 @@
     selected={$profile?.id == prof.id}
     slot="prefix"
   />
-  <span class:hidden={!expanded} class="flex flex-col gap-0">
+  <span
+    class:hidden={!expanded}
+    class="flex flex-col gap-0 {$profile?.id == prof.id ? 'font-bold' : ''}"
+  >
     {prof.username ?? prof.user?.local_user_view.person.name}
     <span class="text-slate-500 dark:text-zinc-400 font-normal text-xs">
       {prof.instance}

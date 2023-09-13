@@ -32,6 +32,7 @@ export interface Profile {
   jwt?: string
   user?: PersonData
   username?: string
+  avatar?: string
   favorites?: number[]
   color?: string
 }
@@ -89,7 +90,13 @@ profile.subscribe(async (p) => {
     ...p,
     user: user!.user,
     username: user?.user.local_user_view.person.name,
+    avatar: user?.user.local_user_view.person.avatar,
   }))
+
+  profile.update((pro) => {
+    console.log(pro)
+    return pro
+  })
 })
 
 export async function setUser(jwt: string, inst: string, username: string) {
@@ -120,6 +127,7 @@ export async function setUser(jwt: string, inst: string, username: string) {
       instance: inst,
       jwt: jwt,
       username: user.user.local_user_view.person.name,
+      avatar: user.user.local_user_view.person.avatar,
     }
 
     profile.set({
@@ -212,6 +220,7 @@ export async function setUserID(id: number) {
     const user = await userFromJwt(prof.jwt, prof.instance)
     instance.set(prof.instance)
     prof.user = user?.user
+    prof.avatar = user?.user.local_user_view.person.avatar
     site.set(user?.site)
   }
 
