@@ -14,14 +14,14 @@ export async function load(req: any) {
   return {
     sort: sort,
     page: page,
-    posts: await getClient(undefined, req.fetch).getPosts({
+    posts: getClient(undefined, req.fetch).getPosts({
       limit: 40,
       community_name: req.params.name,
       page: page,
       sort: sort,
       auth: get(profile)?.jwt,
     }),
-    community: await getClient(undefined, req.fetch).getCommunity({
+    community: getClient(undefined, req.fetch).getCommunity({
       name: req.params.name,
       auth: get(profile)?.jwt,
     }),
