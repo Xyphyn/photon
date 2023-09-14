@@ -56,8 +56,9 @@ interface Settings {
   randomPlaceholders: boolean
   modlogCardView: boolean | undefined
   debugInfo: boolean
-  systemUI: boolean
   expandImages: boolean
+
+  font: 'inter' | 'system' | 'browser'
 }
 
 export const defaultSettings: Settings = {
@@ -93,9 +94,9 @@ export const defaultSettings: Settings = {
   randomPlaceholders: toBool(env.PUBLIC_RANDOM_PLACEHOLDERS) ?? true,
   modlogCardView: toBool(env.PUBLIC_MODLOG_CARD_VIEW) ?? undefined,
   debugInfo: false,
-  systemUI: true,
   expandImages: true,
   view: 'list',
+  font: 'system',
 }
 
 export const userSettings = writable(defaultSettings)

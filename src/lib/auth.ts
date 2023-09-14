@@ -92,11 +92,6 @@ profile.subscribe(async (p) => {
     username: user?.user.local_user_view.person.name,
     avatar: user?.user.local_user_view.person.avatar,
   }))
-
-  profile.update((pro) => {
-    console.log(pro)
-    return pro
-  })
 })
 
 export async function setUser(jwt: string, inst: string, username: string) {

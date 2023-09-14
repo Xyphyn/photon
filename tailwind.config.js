@@ -10,6 +10,7 @@ export default {
       sans: ['sans-serif'],
       system: ['system-ui'],
       serif: ['serif'],
+      inter: ['Inter'],
     },
     extend: {
       animation: {
@@ -21,6 +22,9 @@ export default {
         },
       },
       colors: {
+        slate: {
+          25: 'rgb(252,253,254)',
+        },
         zinc: {
           700: '#34343b',
           800: '#1f1f24',

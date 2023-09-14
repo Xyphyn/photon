@@ -22,7 +22,7 @@
 
 <div
   bind:this={div}
-  class="break-words flex flex-col markdown gap-2 leading-[1.5]"
+  class="break-words flex flex-col markdown gap-2 leading-[1.5] font-sans"
 >
   {#if inline}
     {@html mdInline.render(source)}

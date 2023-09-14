@@ -23,7 +23,7 @@
         }}
       >
         <span slot="label" class="flex items-center gap-1">
-          <Icon src={Clock} size="16" mini />
+          <Icon src={Clock} size="15" mini />
           Time
         </span>
         <option value="TopAll">All</option>
@@ -47,7 +47,7 @@
     }}
   >
     <span slot="label" class="flex items-center gap-1">
-      <Icon src={ChartBar} size="14" mini />
+      <Icon src={ChartBar} size="13" mini />
       Sort
     </span>
     <option value="Active">Active</option>

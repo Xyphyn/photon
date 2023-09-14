@@ -16,7 +16,7 @@
     animate:flip={{ duration: 500, easing: expoOut }}
   >
     <Button
-      class="hover:bg-slate-200 w-full h-max {expanded ? '' : '!p-1.5'}"
+      class="font-normal w-full h-max {expanded ? '' : '!p-1.5'}"
       color="tertiary"
       alignment="left"
       href="/c/{follow.name}@{new URL(follow.actor_id).hostname}"

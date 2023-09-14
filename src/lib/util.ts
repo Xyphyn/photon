@@ -2,6 +2,7 @@ import { goto } from '$app/navigation'
 import { toast } from 'mono-svelte'
 import { userSettings } from '$lib/settings.js'
 import { get } from 'svelte/store'
+import type { SubscribedType } from 'lemmy-js-client'
 
 export const findClosestNumber = (numbers: number[], target: number): number =>
   numbers.reduce((prev, curr) =>
@@ -98,3 +99,9 @@ export const trycatch = <T>(func: () => T): Maybe<T> => {
 export const removeItem = <T>(array: T[], predicate: (item: T) => boolean) => {
   array.splice(array.findIndex(predicate), 1)
 }
+
+export const DOMAIN_REGEX = /^((?!-)[A-Za-z0-9-]{1,63}\.)+[A-Za-z]{2,63}/gi
+export const DOMAIN_REGEX_FORMS = '^((?!-)[A-Za-z0-9-]{1,63}.)+[A-Za-z]{2,63}'
+
+export const isSubscribed = (subscribed: SubscribedType) =>
+  subscribed == 'Pending' || subscribed == 'Subscribed'

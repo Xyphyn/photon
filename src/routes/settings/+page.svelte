@@ -26,23 +26,46 @@
   <title>Settings</title>
 </svelte:head>
 
-<div class="flex flex-col">
-  <h1 class="text-3xl font-bold flex justify-between">
-    Settings <Button
-      on:click={() => {
-        toast({
-          content:
-            'Are you sure you want to reset your settings to the default?',
-          action: () => ($userSettings = defaultSettings),
-        })
-      }}
-      class="font-normal"
-    >
-      <Icon src={ArrowPath} mini size="16" slot="prefix" />
-      Reset to default
-    </Button>
-  </h1>
-  <SectionTitle class="mt-4">General</SectionTitle>
+<h1 class="text-3xl font-bold flex justify-between">
+  Settings <Button
+    on:click={() => {
+      toast({
+        content: 'Are you sure you want to reset your settings to the default?',
+        action: () => ($userSettings = defaultSettings),
+      })
+    }}
+    class="font-normal"
+  >
+    <Icon src={ArrowPath} mini size="16" slot="prefix" />
+    Reset to default
+  </Button>
+</h1>
+
+<div class="flex flex-col max-w-4xl mx-auto">
+  <SectionTitle class="mt-4">UI</SectionTitle>
+  <Setting>
+    <span slot="title">Post style</span>
+    <ViewSelect />
+    <p slot="description">
+      {#if $userSettings.view == 'list'}
+        Show posts in a list, with post bodies and compact images.
+      {:else if $userSettings.view == 'compact'}
+        Show posts in a list, without post bodies and with tighter spacing.
+      {:else if $userSettings.view == 'card'}
+        Show posts in cards, with large images.
+      {/if}
+    </p>
+  </Setting>
+  <Setting>
+    <span slot="title">Random placeholders</span>
+    <span slot="description">
+      Show a random placeholder for forms for comments, posts, etc.
+    </span>
+    <Checkbox bind:checked={$userSettings.randomPlaceholders}>
+      {$userSettings.randomPlaceholders ? 'Enabled' : 'Disabled'}
+    </Checkbox>
+  </Setting>
+
   <Setting>
     <span slot="title">Default sort</span>
     <span slot="description">The default sort to use for feeds.</span>
@@ -76,17 +99,42 @@
     </div>
   </Setting>
   <Setting>
-    <span slot="title">Post style</span>
-    <ViewSelect />
-    <p>
-      {#if $userSettings.view == 'list'}
-        Show posts in a list, with post bodies and compact images.
-      {:else if $userSettings.view == 'compact'}
-        Show posts in a list, without post bodies and with tighter spacing.
-      {:else if $userSettings.view == 'card'}
-        Show posts in cards, with large images.
-      {/if}
-    </p>
+    <span slot="title">Use display name</span>
+    <span slot="description">
+      Show a user's display name instead of their account username.
+    </span>
+
+    <Checkbox bind:checked={$userSettings.displayNames}>
+      {$userSettings.displayNames ? 'Enabled' : 'Disabled'}
+    </Checkbox>
+  </Setting>
+
+  <SectionTitle class="mt-4">Posts</SectionTitle>
+  <Setting>
+    <span slot="title">Fade read posts</span>
+    <span slot="description">Fade the title of posts you've already read.</span>
+    <Checkbox bind:checked={$userSettings.markReadPosts}>
+      {$userSettings.markReadPosts ? 'Enabled' : 'Disabled'}
+    </Checkbox>
+  </Setting>
+  <Setting>
+    <span slot="title">NSFW blur</span>
+    <span slot="description">
+      Blur images and remove post bodies of NSFW content.
+    </span>
+    <Checkbox bind:checked={$userSettings.nsfwBlur}>
+      {$userSettings.nsfwBlur ? 'Enabled' : 'Disabled'}
+    </Checkbox>
+  </Setting>
+  <Setting>
+    <span slot="title">Expand Images</span>
+    <span slot="description">
+      Clicking on an image brings you to an expanded view rather than sending
+      you to the post page.
+    </span>
+    <Checkbox bind:checked={$userSettings.expandImages}>
+      {$userSettings.expandImages ? 'Enabled' : 'Disabled'}
+    </Checkbox>
   </Setting>
   <Setting>
     <span slot="title">Hide Posts</span>
@@ -109,45 +157,6 @@
         Removed
       </Checkbox>
     </div>
-  </Setting>
-  <Setting>
-    <Checkbox slot="title" bind:checked={$userSettings.displayNames}>
-      Use display name
-    </Checkbox>
-    <span slot="description">
-      Show a user's display name instead of their account username.
-    </span>
-  </Setting>
-  <Setting>
-    <Checkbox slot="title" bind:checked={$userSettings.randomPlaceholders}>
-      Random placeholders
-    </Checkbox>
-    <span slot="description">
-      Show a random placeholder for forms for comments, posts, etc.
-    </span>
-  </Setting>
-
-  <SectionTitle class="mt-4">UI</SectionTitle>
-  <Setting>
-    <Checkbox bind:checked={$userSettings.markReadPosts} slot="title">
-      Fade read posts
-    </Checkbox>
-    <span slot="description">Fade the title of posts you've already read.</span>
-  </Setting>
-  <Setting>
-    <Checkbox bind:checked={$userSettings.nsfwBlur} slot="title">
-      NSFW blur
-    </Checkbox>
-    <span slot="description">Blur images of NSFW content.</span>
-  </Setting>
-  <Setting>
-    <Checkbox bind:checked={$userSettings.expandImages} slot="title">
-      Expand Images
-    </Checkbox>
-    <span slot="description">
-      Clicking on an image brings you to an expanded view rather than sending
-      you to the post page.
-    </span>
   </Setting>
 
   <SectionTitle class="mt-4">Instances</SectionTitle>
@@ -215,17 +224,19 @@
     <span slot="title">Font</span>
     <span slot="description">What font Photon should use.</span>
     <MultiSelect
-      options={[true, false]}
-      optionNames={['System UI', 'Browser Font']}
-      bind:selected={$userSettings.systemUI}
+      options={['inter', 'system', 'browser']}
+      optionNames={['Inter', 'System UI', 'Browser Font']}
+      bind:selected={$userSettings.font}
     />
   </Setting>
   <Setting>
-    <Checkbox bind:checked={$userSettings.debugInfo} slot="title">
-      Debug Info
-    </Checkbox>
+    <span slot="title">Debug Info</span>
     <span slot="description">
       Show an option to show debug information. (in posts and such)
     </span>
+
+    <Checkbox bind:checked={$userSettings.debugInfo}>
+      {$userSettings.debugInfo ? 'Enabled' : 'Disabled'}
+    </Checkbox>
   </Setting>
 </div>

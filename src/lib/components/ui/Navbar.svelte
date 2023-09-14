@@ -41,7 +41,7 @@
 </script>
 
 <nav
-  class="flex flex-row gap-2 items-center sticky top-0 bg-slate-100/80
+  class="flex flex-row gap-2 items-center sticky top-0 bg-slate-50/80
   dark:bg-black/80 backdrop-blur-3xl w-full mx-auto px-4 py-2 z-50 box-border h-16"
 >
   <div class="flex flex-row gap-2 items-center mr-auto">
@@ -92,9 +92,7 @@
       <Button
         href="/admin"
         aria-label="Admin"
-        class="max-md:w-9 max-md:h-8 max-md:!p-0
-        dark:text-zinc-300 text-slate-700 hover:text-inherit hover:dark:text-inherit
-      hover:bg-slate-200 relative hover:border-slate-300"
+        class="max-md:w-9 max-md:h-8 max-md:!p-0 relative"
       >
         <Icon src={CommandLine} mini size="16" slot="prefix" />
         <span class="hidden md:inline">Admin</span>
@@ -104,8 +102,7 @@
       <Button
         href="/moderation"
         aria-label="Moderation"
-        class="max-md:w-9 max-md:h-8 max-md:!p-0 dark:text-zinc-300 text-slate-700
-        hover:text-inherit hover:bg-slate-200 hover:dark:text-inherit relative hover:border-slate-300"
+        class="max-md:w-9 max-md:h-8 max-md:!p-0 dark:text-zinc-300 text-slate-700 relative"
       >
         {#if $profile?.user?.reports ?? 0 > 0}
           <div
@@ -119,8 +116,7 @@
     <Button
       href="/search"
       aria-label="Search"
-      class="max-md:w-9 max-md:h-8 max-md:!p-0
-      dark:text-zinc-300 text-slate-700 hover:text-inherit hover:dark:text-inherit hover:bg-slate-200 hover:border-slate-300"
+      class="max-md:w-9 max-md:h-8 max-md:!p-0"
     >
       <Icon mini src={MagnifyingGlass} width={16} slot="prefix" />
       <span class="hidden md:inline">Search</span>
@@ -128,9 +124,7 @@
     <Button
       href="/communities"
       aria-label="Communities"
-      class="max-md:w-9 max-md:h-8 max-md:!p-0
-      dark:text-zinc-300 text-slate-700 hover:text-inherit
-      hover:dark:text-inherit hover:bg-slate-200 hover:border-slate-300"
+      class="max-md:w-9 max-md:h-8 max-md:!p-0"
     >
       <Icon mini src={GlobeAlt} size="16" slot="prefix" />
       <span class="hidden md:inline">Explore</span>

@@ -49,10 +49,10 @@
     {#if view == 'list' || view == 'compact'}
       <div
         class="absolute -inset-0.5 group-hover:-inset-2 group-hover:-inset-y-3 group-hover:md:-inset-4
-      transition-all -z-[5] rounded-xl group-hover:bg-slate-100 group-hover:dark:bg-zinc-900"
+      transition-all rounded-xl group-hover:bg-slate-50 group-hover:dark:bg-zinc-900"
       />
     {/if}
-    <div class="flex flex-row gap-2 max-w-full w-full">
+    <div class="flex flex-row gap-2 max-w-full w-full z-10">
       <div class="flex flex-col w-full gap-2">
         <div class="flex flex-col w-full gap-2">
           <PostMeta

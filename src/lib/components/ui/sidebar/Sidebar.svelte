@@ -20,7 +20,7 @@
 
 <nav
   class="hidden sm:flex flex-col pl-4 pr-4 py-4 overflow-auto sticky top-16 bottom-0
-  gap-1 max-h-[calc(100svh-4rem)] w-full bg-slate-100 dark:bg-black
+  gap-1 max-h-[calc(100svh-4rem)] w-full bg-slate-50 dark:bg-black
   {$userSettings.expandSidebar
     ? 'max-w-[25%] resize-x min-w-[12rem]'
     : 'w-max max-w-max min-w-max'}"
@@ -28,7 +28,7 @@
   <Button
     on:click={() =>
       ($userSettings.expandSidebar = !$userSettings.expandSidebar)}
-    class="w-max !p-2 hover:bg-slate-200"
+    class="w-max !p-2"
     aria-label="Collapse sidebar"
   >
     <Icon

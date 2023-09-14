@@ -9,7 +9,9 @@
   color="tertiary"
   alignment="left"
   on:click
-  class="hover:bg-slate-200 {expanded ? '' : '!p-1.5'} {$$props.class}"
+  class="hover:bg-slate-100 font-normal {expanded
+    ? ''
+    : '!p-1.5'} {$$props.class}"
 >
   <slot />
 </Button>

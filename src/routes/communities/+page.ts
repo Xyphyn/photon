@@ -25,6 +25,8 @@ export async function load({ url, fetch }) {
       })),
       type: type,
       sort: sort,
+      query: query,
+      page: page,
     }
   } else {
     return {
@@ -37,6 +39,8 @@ export async function load({ url, fetch }) {
       })),
       type: type,
       sort: sort,
+      query: query,
+      page: page,
     }
   }
 }

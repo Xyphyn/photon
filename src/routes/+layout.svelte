@@ -42,9 +42,14 @@
 </svelte:head>
 
 <div
-  class="flex flex-col min-h-screen {$userSettings.systemUI
+  class="flex flex-col min-h-screen
+  font-inter
+  {$userSettings.font == 'inter'
+    ? 'font-inter'
+    : $userSettings.font == 'system'
     ? 'font-system'
-    : 'font-sans'}"
+    : 'font-sans'}
+  "
 >
   <Navbar />
   <ToastContainer />
@@ -53,7 +58,7 @@
     <Sidebar />
     <main
       class="p-3 sm:p-6 min-w-0 w-full flex-[3] sm:rounded-tl-lg
-      border-slate-200 dark:border-zinc-900 sm:border-l border-t"
+      border-slate-200 dark:border-zinc-900 sm:border-l border-t bg-slate-25 dark:bg-zinc-950"
     >
       <slot />
     </main>

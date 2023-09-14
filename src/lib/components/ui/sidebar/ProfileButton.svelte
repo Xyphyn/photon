@@ -32,7 +32,7 @@
 
     switching = false
   }}
-  class="w-full hover:bg-slate-200 {expanded ? '' : '!p-1.5'}"
+  class="w-full {expanded ? '' : '!p-1.5'}"
 >
   <ProfileAvatar
     profile={prof}
