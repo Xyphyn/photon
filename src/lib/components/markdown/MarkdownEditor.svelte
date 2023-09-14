@@ -229,7 +229,7 @@ overflow-hidden focus-within:border-black focus-within:dark:border-white transit
       </div>
       <!--Actual text area-->
       <TextArea
-        class="bg-inherit border-0 rounded-none !ring-0 focus:!ring-transparent !transition-none"
+        class="bg-inherit z-0 border-0 rounded-none !ring-0 focus:!ring-transparent !transition-none"
         bind:value
         bind:element={textArea}
         on:keydown={(e) => {
