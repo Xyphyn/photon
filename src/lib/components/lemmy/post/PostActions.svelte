@@ -75,7 +75,7 @@
   </Modal>
 {/if}
 
-<div class="flex flex-row gap-2 items-center h-8 [&>*]:z-10">
+<div class="flex flex-row gap-2 items-center h-8">
   <PostVote
     post={post.post}
     bind:vote={post.my_vote}
