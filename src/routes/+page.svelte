@@ -37,11 +37,15 @@
 <div class="flex flex-row gap-4 w-full h-full">
   <div class="flex flex-col gap-4 max-w-full w-full min-w-0">
     <header>
-      <h1 class="text-3xl font-bold">Frontpage</h1>
+      <h1
+        class="text-3xl font-bold flex items-center w-full justify-between flex-wrap"
+      >
+        Frontpage
+        <span class="xl:hidden">
+          <Button on:click={() => (sidebar = !sidebar)}>About</Button>
+        </span>
+      </h1>
     </header>
-    <div class="xl:hidden">
-      <Button on:click={() => (sidebar = !sidebar)}>About</Button>
-    </div>
     <div
       class="flex flex-row gap-4 max-w-full justify-between w-full flex-wrap"
     >
