@@ -6,6 +6,7 @@
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import type { Community, Person } from 'lemmy-js-client'
   import {
+    ArrowTrendingDown,
     Bookmark,
     Icon,
     InformationCircle,
@@ -75,31 +76,31 @@
       {#if saved}
         <Badge label="Saved" color="yellow-subtle">
           <Icon src={Bookmark} mini size="12" />
-          Saved
+          <span class="max-md:hidden">Saved</span>
         </Badge>
       {/if}
       {#if locked}
         <Badge label="Locked" color="yellow-subtle">
           <Icon src={LockClosed} mini size="14" />
-          Locked
+          <span class="max-md:hidden">Locked</span>
         </Badge>
       {/if}
       {#if removed}
         <Badge label="Removed" color="red">
           <Icon src={Trash} mini size="14" />
-          Removed
+          <span class="max-md:hidden">Removed</span>
         </Badge>
       {/if}
       {#if deleted}
         <Badge label="Deleted" color="red-subtle">
           <Icon src={Trash} mini size="14" />
-          Deleted
+          <span class="max-md:hidden">Deleted</span>
         </Badge>
       {/if}
       {#if featured}
         <Badge label="Featured" color="green">
           <Icon src={Megaphone} mini size="14" />
-          Featured
+          <span class="max-md:hidden">Featured</span>
         </Badge>
       {/if}
     </div>

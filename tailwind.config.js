@@ -10,7 +10,7 @@ export default {
       sans: ['sans-serif'],
       system: ['system-ui'],
       serif: ['serif'],
-      inter: ['Inter'],
+      inter: ['Inter', 'system-ui', 'sans-serif'],
     },
     extend: {
       animation: {
