@@ -69,7 +69,11 @@
     <Checkbox checked={formData.enable_nsfw} defaultValue={true}>
       Enable NSFW
     </Checkbox>
-    <Select label="Registration Mode" bind:value={formData.registration_mode}>
+    <Select
+      label="Registration Mode"
+      bind:value={formData.registration_mode}
+      class="w-max"
+    >
       <option value="Open">Open</option>
       <option value="RequireApplication">Require Application</option>
       <option value="Closed">Closed</option>
@@ -102,6 +106,14 @@
     <Checkbox bind:checked={formData.reports_email_admins} defaultValue={true}>
       Email admins on receiving new reports
     </Checkbox>
+    <Select
+      label="Listing Type"
+      bind:value={formData.default_post_listing_type}
+      class="w-max"
+    >
+      <option value="All">All</option>
+      <option value="Local">Local</option>
+    </Select>
     <Checkbox bind:checked={formData.private_instance} defaultValue={true}>
       Private instance
     </Checkbox>
