@@ -140,7 +140,7 @@
                 class="absolute bottom-0 w-full h-16 bg-gradient-to-b {view ==
                 'list'
                   ? `dark:from-zinc-950/0 dark:to-zinc-950
-                  from-slate-50/0 to-slate-50 transition-all`
+                  from-slate-25/0 to-slate-25 transition-all`
                   : 'dark:from-zinc-900/0 dark:to-zinc-900 from-white/0 to-white'}"
               />
             {/if}
