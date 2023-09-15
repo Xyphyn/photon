@@ -1,14 +1,15 @@
 <script lang="ts">
-  import { page } from '$app/stores'
+  import { navigating, page } from '$app/stores'
   import CommunityCard from '$lib/components/lemmy/community/CommunityCard.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import Sort from '$lib/components/lemmy/Sort.svelte'
   import { fullCommunityName, searchParam } from '$lib/util.js'
-  import { onMount } from 'svelte'
+  import { onDestroy, onMount } from 'svelte'
   import { setSessionStorage } from '$lib/session.js'
   import PostFeed from '$lib/components/lemmy/post/PostFeed.svelte'
   import { Button, Modal } from 'mono-svelte'
+  import { afterNavigate } from '$app/navigation'
 
   export let data
 
@@ -22,6 +23,12 @@
         data.community.community_view.community.actor_id
       ),
     })
+  })
+
+  onDestroy(() => {
+    if ($navigating?.to?.route?.id == '/create/post') return
+
+    setSessionStorage('lastSeenCommunity', undefined)
   })
 </script>
 

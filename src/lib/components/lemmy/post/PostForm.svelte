@@ -45,6 +45,7 @@
   }
 
   let saveDraft = edit ? false : true
+  let communitySearch = passedCommunity?.name ?? ''
 
   let communities: Community[] = []
 
@@ -143,8 +144,6 @@
     }
   }
 
-  let communitySearch = ''
-
   let uploadingImage = false
 </script>
 
@@ -177,7 +176,7 @@
             src={Check}
             mini
             size="20"
-            class="text-green-400 ml-auto inline"
+            class="text-green-600 ml-auto inline"
           />
         {/if}
       </div>

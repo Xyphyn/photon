@@ -2,7 +2,7 @@
   import { goto } from '$app/navigation'
   import PostForm from '$lib/components/lemmy/post/PostForm.svelte'
   import { profile } from '$lib/auth.js'
-  import { onMount } from 'svelte'
+  import { onDestroy, onMount } from 'svelte'
   import { getSessionStorage, setSessionStorage } from '$lib/session.js'
 
   export let data
@@ -17,7 +17,9 @@
     | { id: number; name: string }
     | undefined
 
-  setSessionStorage('lastSeenCommunity', undefined)
+  onDestroy(() => {
+    setSessionStorage('lastSeenCommunity', undefined)
+  })
 
   let draft = getSessionStorage('postDraft') as any
 </script>
