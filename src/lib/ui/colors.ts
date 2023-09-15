@@ -17,8 +17,9 @@ import { get, writable } from 'svelte/store'
 import { env } from '$env/dynamic/public'
 
 const configuredTheme = env.PUBLIC_THEME ?? 'system'
-export const theme = writable<'system' | 'light' | 'dark'>(configuredTheme)
-
+export const theme = writable<'system' | 'light' | 'dark'>(
+  configuredTheme as 'system' | 'light' | 'dark'
+)
 
 export const toggleTheme = () => {
   theme.update((theme) => {
@@ -43,7 +44,8 @@ export const inDarkTheme = (): boolean => {
 
 if (typeof localStorage != 'undefined') {
   const localTheme: 'system' | 'light' | 'dark' =
-    (localStorage.getItem('theme') as 'system' | 'light' | 'dark') || configuredTheme
+    (localStorage.getItem('theme') as 'system' | 'light' | 'dark') ||
+    configuredTheme
 
   theme.update((theme) => localTheme)
 

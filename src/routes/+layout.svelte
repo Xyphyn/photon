@@ -8,9 +8,11 @@
   import Sidebar from '$lib/components/ui/sidebar/Sidebar.svelte'
   // @ts-ignore
   import { pwaInfo } from 'virtual:pwa-info'
-  import { inDarkTheme } from '$lib/ui/colors.js'
+  import { inDarkTheme, theme } from '$lib/ui/colors.js'
   import { userSettings } from '$lib/settings.js'
   import { ToastContainer } from 'mono-svelte'
+  import { onMount } from 'svelte'
+  import { browser } from '$app/environment'
 
   nProgress.configure({
     minimum: 0.4,
@@ -34,10 +36,23 @@
   }
 
   $: webManifest = pwaInfo ? pwaInfo.webManifest.linkTag : ''
+  $: darkTheme = $theme && inDarkTheme()
+
+  $: console.log(darkTheme)
+
+  onMount(() => {
+    if (browser) {
+      window
+        .matchMedia('(prefers-color-scheme: dark)')
+        .addEventListener('change', (event) => {
+          darkTheme = inDarkTheme()
+        })
+    }
+  })
 </script>
 
 <svelte:head>
-  <meta name="theme-color" content={inDarkTheme() ? '#020202' : '#f6f9fb'} />
+  <meta name="theme-color" content={darkTheme ? '#020202' : '#f6f9fb'} />
   {@html webManifest}
 </svelte:head>
 
