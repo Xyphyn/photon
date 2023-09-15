@@ -1,5 +1,6 @@
 <script lang="ts">
   import { md, mdInline, photonify } from '$lib/components/markdown/markdown'
+  import { userSettings } from '$lib/settings.js'
 
   export let source: string = ''
   export let inline: boolean = false
@@ -18,11 +19,20 @@
   $: if (source && div) {
     replaceURLs(div)
   }
+
+  let font =
+    $userSettings.font == 'system'
+      ? 'font-system'
+      : $userSettings.font == 'browser'
+      ? 'font-sans'
+      : inline
+      ? 'font-inter'
+      : 'font-system'
 </script>
 
 <div
   bind:this={div}
-  class="break-words flex flex-col markdown gap-2 leading-[1.5] font-sans"
+  class="break-words flex flex-col markdown gap-2 leading-[1.5] {font}"
 >
   {#if inline}
     {@html mdInline.render(source)}
