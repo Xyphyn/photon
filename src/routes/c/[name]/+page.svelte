@@ -70,10 +70,26 @@
       </div>
     </div>
     <PostFeed posts={data.posts.posts} />
+
     <Pageination
       page={data.page}
       on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
-    />
+    >
+      {#if data.posts.posts.length > 0}
+        <span class="max-sm:hidden">
+          You've scrolled <span class="text-primary-900 dark:text-primary-100">
+            {data.page * 20}
+          </span>
+          posts.
+        </span>
+        <span class="sm:hidden">
+          <span class="text-primary-900 dark:text-primary-100">
+            {data.page * 20}
+          </span>
+           posts
+        </span>
+      {/if}
+    </Pageination>
   </div>
   <div class="hidden xl:block">
     <CommunityCard

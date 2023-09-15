@@ -76,7 +76,22 @@
       <Pageination
         page={data.page}
         on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
-      />
+      >
+        <span class="max-sm:hidden">
+          You've viewed <span
+            class="text-primary-900 dark:text-primary-100 font-bold"
+          >
+            {data.page * 20}
+          </span>
+          posts.
+        </span>
+        <span class="sm:hidden">
+          <span class="text-primary-900 dark:text-primary-100">
+            {data.page * 20}
+          </span>
+          posts
+        </span>
+      </Pageination>
     </div>
   </div>
   <div class="hidden xl:block">

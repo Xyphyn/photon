@@ -11,6 +11,7 @@
   import {
     ArrowLeft,
     ArrowPath,
+    ChevronDoubleUp,
     ExclamationTriangle,
     Icon,
   } from 'svelte-hero-icons'
@@ -27,6 +28,7 @@
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import { Button } from 'mono-svelte'
+  import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
 
   export let data
 
@@ -295,6 +297,20 @@
       </div>
     {:then comments}
       <Comments post={post.post_view.post} nodes={comments} isParent={true} />
+      {#if comments.length > 5}
+        <EndPlaceholder>
+          You've viewed {post.post_view.counts.comments} comments.
+
+          <Button
+            color="tertiary"
+            on:click={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            slot="action"
+          >
+            <Icon src={ChevronDoubleUp} mini size="16" slot="prefix" />
+            Scroll to top
+          </Button>
+        </EndPlaceholder>
+      {/if}
     {/await}
   {:catch}
     <div class="bg-red-500/10 border border-red-500 rounded-md p-4">
