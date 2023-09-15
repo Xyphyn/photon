@@ -10,6 +10,7 @@
   import { GlobeAmericas, Icon } from 'svelte-hero-icons'
   import { profile } from '$lib/auth.js'
   import ViewSelect from '$lib/components/lemmy/ViewSelect.svelte'
+  import { site } from '$lib/lemmy.js'
 
   export let data
 
@@ -23,13 +24,13 @@
 <Modal bind:open={sidebar}>
   <span slot="title">About</span>
   <div class="mx-auto">
-    {#await data.streamed.site then site}
+    {#if $site}
       <SiteCard
-        site={site.site_view}
-        taglines={site.taglines}
-        admins={site.admins}
+        site={$site.site_view}
+        taglines={$site.taglines}
+        admins={$site.admins}
       />
-    {/await}
+    {/if}
   </div>
 </Modal>
 
@@ -75,22 +76,18 @@
     </div>
   </div>
   <div class="hidden xl:block">
-    {#await data.streamed.site}
+    {#if !$site}
       <StickyCard>
         <div class="h-64 grid place-items-center">
           <Spinner width={32} />
         </div>
       </StickyCard>
-    {:then site}
+    {:else}
       <SiteCard
-        site={site.site_view}
-        taglines={site.taglines}
-        admins={site.admins}
+        site={$site.site_view}
+        taglines={$site.taglines}
+        admins={$site.admins}
       />
-    {:catch}
-      <StickyCard>
-        <h1 class="font-bold text-lg">Failed to load</h1>
-      </StickyCard>
-    {/await}
+    {/if}
   </div>
 </div>

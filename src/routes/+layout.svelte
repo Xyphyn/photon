@@ -38,8 +38,6 @@
   $: webManifest = pwaInfo ? pwaInfo.webManifest.linkTag : ''
   $: darkTheme = $theme && inDarkTheme()
 
-  $: console.log(darkTheme)
-
   onMount(() => {
     if (browser) {
       window

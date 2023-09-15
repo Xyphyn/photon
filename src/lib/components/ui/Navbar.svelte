@@ -66,7 +66,7 @@
                 Powered by <Link
                   href="https://github.com/Xyphyn/photon"
                   highlight={false}
-                  class="font-bold flex items-center gap-0.5 hover:underline text-black dark:text-white"
+                  class="!font-bold flex items-center gap-0.5 hover:underline text-black dark:text-white"
                 >
                   <Logo width={12} /> Photon
                 </Link>

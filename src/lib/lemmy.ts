@@ -39,12 +39,6 @@ export const getInstance = () => get(instance)
 
 export const site = writable<GetSiteResponse | undefined>(undefined)
 
-if (LINKED_INSTANCE_URL) {
-  getClient(LINKED_INSTANCE_URL)
-    .getSite({})
-    .then((s) => site.set(s))
-}
-
 export async function validateInstance(instance: string): Promise<boolean> {
   if (instance == '') return false
 

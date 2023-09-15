@@ -5,7 +5,11 @@ import { getClient, site } from '$lib/lemmy.js'
 import { getInbox, getInboxItemPublished } from '$lib/lemmy/inbox.js'
 import { userSettings } from '$lib/settings.js'
 import { moveItem } from '$lib/util.js'
-import type { GetSiteResponse, MyUserInfo } from 'lemmy-js-client'
+import {
+  LemmyHttp,
+  type GetSiteResponse,
+  type MyUserInfo,
+} from 'lemmy-js-client'
 import { get, writable } from 'svelte/store'
 
 const getDefaultProfile = (): Profile => ({
@@ -197,9 +201,20 @@ const serializeUser = (user: Profile): Profile => ({
   user: undefined,
 })
 
+instance.subscribe(async (i) => {
+  try {
+    // fetching site is handled by auth.ts if logged in
+    if (get(profile)?.jwt) return
+    const s = await new LemmyHttp(`https://${i}`).getSite()
+
+    site.set(s)
+  } catch (e) {}
+})
+
 export async function setUserID(id: number) {
   const pd = get(profileData)
   if (id == -1) {
+    instance.set(DEFAULT_INSTANCE_URL)
     resetProfile()
     return
   }

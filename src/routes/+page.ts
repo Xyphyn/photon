@@ -27,9 +27,6 @@ export async function load({ url, fetch }) {
         type_: listingType,
         auth: get(profile)?.jwt,
       }),
-      streamed: {
-        site: getClient(undefined, fetch).getSite({}),
-      },
     }
   } catch (err) {
     throw error(500, {
