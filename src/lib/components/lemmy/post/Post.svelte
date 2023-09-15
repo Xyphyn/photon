@@ -139,8 +139,8 @@
               <div
                 class="absolute bottom-0 w-full h-16 bg-gradient-to-b {view ==
                 'list'
-                  ? `dark:from-zinc-950/0 dark:to-zinc-950 group-hover:dark:to-zinc-900
-                  from-slate-50/0 to-slate-50 group-hover:to-slate-100 transition-all`
+                  ? `dark:from-zinc-950/0 dark:to-zinc-950
+                  from-slate-50/0 to-slate-50 transition-all`
                   : 'dark:from-zinc-900/0 dark:to-zinc-900 from-white/0 to-white'}"
               />
             {/if}
