@@ -19,20 +19,11 @@
   $: if (source && div) {
     replaceURLs(div)
   }
-
-  let font =
-    $userSettings.font == 'system'
-      ? 'font-system'
-      : $userSettings.font == 'browser'
-      ? 'font-sans'
-      : inline
-      ? 'font-inter'
-      : 'font-system'
 </script>
 
 <div
   bind:this={div}
-  class="break-words flex flex-col markdown gap-2 leading-[1.5] {font}"
+  class="break-words flex flex-col markdown gap-2 leading-[1.5]"
 >
   {#if inline}
     {@html mdInline.render(source)}
@@ -60,8 +51,16 @@
     @apply w-full mx-auto my-2 border-slate-300 dark:border-zinc-800;
   }
 
+  :global(.dark .markdown hr) {
+    @apply w-full mx-auto my-2 border-zinc-800;
+  }
+
   .markdown :global(img) {
     @apply max-h-[40vh] border rounded-md border-slate-200 dark:border-zinc-800;
+  }
+
+  :global(.dark .markdown img) {
+    @apply border-zinc-800;
   }
 
   .markdown :global(a) {

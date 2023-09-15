@@ -9,6 +9,7 @@
   import type { PersonView, SiteView, Tagline } from 'lemmy-js-client'
   import { Button, Popover } from 'mono-svelte'
   import {
+    BuildingOffice,
     Calendar,
     ChatBubbleOvalLeftEllipsis,
     Icon,
@@ -34,32 +35,36 @@
       </span>
     </div>
   </div>
-  <span class="flex flex-row items-center gap-1 text-sm">
+  <span class="flex flex-row items-center gap-1 text-sm" title="Created">
     <Icon src={Calendar} width={16} height={16} mini />
     <RelativeDate date={publishedToDate(site.site.published)} />
   </span>
-  <div class="text-sm flex flex-row flex-wrap gap-3">
+  <div class="text-sm flex flex-row flex-wrap gap-3" title="Users">
     <span class="flex flex-row items-center gap-1">
       <Icon src={UserGroup} width={16} height={16} mini />
       <FormattedNumber number={site.counts.users} />
     </span>
-    <span class="flex flex-row items-center gap-1">
+    <span class="flex flex-row items-center gap-1" title="Posts">
       <Icon src={PencilSquare} width={16} height={16} mini />
       <FormattedNumber number={site.counts.posts} />
     </span>
-    <span class="flex flex-row items-center gap-1">
+    <span class="flex flex-row items-center gap-1" title="Comments">
       <Icon src={ChatBubbleOvalLeftEllipsis} width={16} height={16} mini />
       <FormattedNumber number={site.counts.comments} />
     </span>
-    <span class="flex flex-row items-center gap-1">
+    <span class="flex flex-row items-center gap-1" title="Communities">
       <Icon src={Newspaper} width={16} height={16} mini />
       <FormattedNumber number={site.counts.communities} />
     </span>
   </div>
-  <div class="flex flex-row gap-2 items-center">
-    <Button href="/modlog">
+  <div class="flex flex-row items-center">
+    <Button href="/modlog" size="md" class="rounded-r-none">
       <Icon src={Newspaper} size="16" mini />
       Modlog
+    </Button>
+    <Button href="/legal" size="md" class="rounded-l-none border-l-0">
+      <Icon src={BuildingOffice} size="16" mini />
+      Legal
     </Button>
   </div>
 
