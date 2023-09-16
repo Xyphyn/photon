@@ -32,7 +32,9 @@
 
     switching = false
   }}
-  class="w-full {expanded ? '' : '!p-1.5'}"
+  class="w-full font-normal {$profile?.id == prof.id
+    ? 'bg-slate-100 dark:bg-zinc-900'
+    : ''} {expanded ? '' : '!p-1.5'}"
 >
   <ProfileAvatar
     profile={prof}
