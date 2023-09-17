@@ -1,6 +1,7 @@
 <script>
   import Link from '$lib/components/input/Link.svelte'
   import Logo from '$lib/components/ui/Logo.svelte'
+  import Profile from './Profile.svelte'
 </script>
 
 <div class="max-w-xl mx-auto">
@@ -39,4 +40,42 @@
       <Link href="https://buymeacoffee.com/xylight" highlight>Donate</Link>
     </li>
   </ul>
+  <h1 class="text-2xl font-bold leading-8">Credits</h1>
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+    <Profile
+      avatar="https://lemmy.xylight.dev/pictrs/image/3281f13c-68bb-47c9-8c98-b67f67714d5a.png?format=webp&thumbnail=128"
+      description="Main developer"
+      name="Xylight"
+      class="sm:col-span-3 place-self-center"
+      link="https://xylight.dev"
+    />
+    <hr class="border-slate-200 dark:border-zinc-800 w-full sm:col-span-3" />
+    <Profile
+      description="Early contributor"
+      name="pbui"
+      link="https://github.com/pbui"
+    />
+    <Profile
+      description="Early supporter"
+      name="iJeff"
+      link="https://lemdro.id/u/ijeff"
+    />
+    <Profile
+      description="Early contributor"
+      name="Cole"
+      link="https://lemdro.id/u/cole"
+    />
+    <Profile
+      description="Big supporter"
+      name="lemmy.world team"
+      link="https://lemmy.world"
+    />
+    <Profile description="Massive donator" name="rooki" />
+    <Profile description="Programming help" name="Sheodox" />
+    <Profile description="Design inspiration" name="ljdawson" />
+  </div>
+  <div class="mt-4">
+    If you've contributed in any way and aren't mentioned here, please let me
+    know and I'll add you here ASAP.
+  </div>
 </div>
