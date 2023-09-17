@@ -165,7 +165,7 @@
       {edit ? 'Edit' : 'Create'} Post
     </h1>
   </slot>
-  {#if !edit}
+  {#if !edit && data}
     <div>
       <div class="flex flex-row">
         <span class="block my-1 font-bold text-sm">

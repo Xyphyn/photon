@@ -5,7 +5,9 @@
   import { onDestroy, onMount } from 'svelte'
   import { getSessionStorage, setSessionStorage } from '$lib/session.js'
 
-  export let data
+  export let data = {
+    crosspost: false,
+  }
 
   onMount(() => {
     if (!$profile?.jwt) {
@@ -30,7 +32,17 @@
 
 <div class="w-full max-w-5xl mx-auto h-full">
   <PostForm
-    data={data.crosspost ? draft : undefined}
+    data={data.crosspost == true
+      ? draft
+      : {
+          body: '',
+          community: null,
+          image: null,
+          loading: false,
+          nsfw: false,
+          title: '',
+          url: undefined,
+        }}
     passedCommunity={community}
     on:submit={(e) => goto(`/post/${e.detail.post.id}`)}
   >

@@ -33,7 +33,7 @@
     switching = false
   }}
   class="w-full font-normal {$profile?.id == prof.id
-    ? 'bg-slate-100 dark:bg-zinc-900'
+    ? '!bg-slate-100 dark:!bg-zinc-900'
     : ''} {expanded ? '' : '!p-1.5'}"
 >
   <ProfileAvatar
@@ -44,7 +44,7 @@
   />
   <span
     class:hidden={!expanded}
-    class="flex flex-col gap-0 {$profile?.id == prof.id ? 'font-bold' : ''}"
+    class="flex flex-col gap-0 {$profile?.id == prof.id ? 'font-semibold' : ''}"
   >
     {prof.username ?? prof.user?.local_user_view.person.name}
     <span class="text-slate-500 dark:text-zinc-400 font-normal text-xs">
