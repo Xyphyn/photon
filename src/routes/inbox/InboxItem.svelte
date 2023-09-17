@@ -12,26 +12,18 @@
   } from 'lemmy-js-client'
   import { ChatBubbleOvalLeft, Check, Icon } from 'svelte-hero-icons'
   import { page } from '$app/stores'
-  import { Material, toast } from 'mono-svelte'
+  import { Material, Modal, toast } from 'mono-svelte'
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import { Button } from 'mono-svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
+  import type { InboxItem, InboxItemView } from '$lib/lemmy/inbox.js'
+  import PrivateMessage from '$lib/components/lemmy/inbox/PrivateMessage.svelte'
+  import PrivateMessageModal from '$lib/components/lemmy/modal/PrivateMessageModal.svelte'
 
-  export let item: CommentReplyView | PersonMentionView | PrivateMessageView
-  export let read: boolean
-
-  function isPrivateMessage(
-    item: CommentReplyView | PersonMentionView | PrivateMessageView
-  ): item is PrivateMessageView {
-    return 'private_message' in item
-  }
-
-  const isCommentReply = (
-    item: CommentReplyView | PersonMentionView | PrivateMessageView
-  ): item is CommentReplyView => 'comment_reply' in item
+  export let item: InboxItem
 
   let replying = false
   let reply = ''
@@ -74,132 +66,94 @@
 
     loading = true
 
-    if ('person_mention' in item) {
+    if (item.type == 'person_mention') {
       await getClient().markPersonMentionAsRead({
         auth: $profile?.jwt,
-        person_mention_id: item.person_mention.id,
+        person_mention_id: item.id,
         read: isRead,
       })
-    } else if ('comment_reply' in item) {
+    } else if (item.type == 'comment_reply') {
       await getClient().markCommentReplyAsRead({
         auth: $profile?.jwt,
-        comment_reply_id: item.comment_reply.id,
+        comment_reply_id: item.id,
         read: isRead,
       })
     }
 
-    read = isRead
+    item.read = isRead
     if ($profile.user) $profile.user.unreads += isRead ? -1 : 1
 
     loading = false
   }
 </script>
 
+{#if replying && item.type == 'private_message'}
+  <PrivateMessageModal bind:open={replying} user={item.item.creator} />
+{/if}
+
 <Material padding="lg" class="flex flex-col max-w-full gap-2">
-  {#if !isPrivateMessage(item)}
-    <div class="flex flex-col gap-1">
-      <span class="text-xs text-slate-600 dark:text-zinc-400">
-        {#if isCommentReply(item)}
-          <RelativeDate date={publishedToDate(item.comment_reply.published)} />
-        {:else}
-          <RelativeDate date={publishedToDate(item.person_mention.published)} />
-        {/if}
-      </span>
-      <PostMeta title={item.post.name} id={item.post.id} />
-    </div>
-    <div
-      class="flex flex-col"
-      class:mt-2={$profile?.user &&
-        item.post.creator_id != $profile.user.local_user_view.person.id}
-    >
-      <SectionTitle class="mb-2 text-xs">Reply</SectionTitle>
-      {#if $profile?.user && item.post.creator_id != $profile.user.local_user_view.person.id}
-        <div class="flex flex-row text-xs items-center gap-2">
-          <div
-            class="border-t w-8 rounded-tl h-2 border-l ml-2 border-zinc-700"
-          />
-          <div>
-            <UserLink
-              avatar
-              avatarSize={16}
-              user={$profile.user.local_user_view.person}
-            />
-          </div>
-        </div>
+  <div class="flex flex-col gap-1">
+    <span class="text-xs text-slate-600 dark:text-zinc-400">
+      <RelativeDate date={publishedToDate(item.published)} />
+    </span>
+    {#if item.type != 'private_message'}
+      <PostMeta title={item.item.post.name} id={item.item.post.id} />
+    {/if}
+  </div>
+  <div class="flex flex-col">
+    <SectionTitle class="mb-2 text-xs">
+      {#if item.type == 'private_message'}
+        Message
+      {:else if item.type == 'person_mention'}
+        Mention
+      {:else if item.type == 'comment_reply'}
+        Reply
       {/if}
+    </SectionTitle>
+    {#if item.type != 'private_message' && $profile?.user && item.item.post.creator_id != $profile.user.local_user_view.person.id}
+      <div class="flex flex-row text-xs items-center gap-2">
+        <div
+          class="border-t w-8 rounded-tl h-2 border-l ml-2 border-zinc-700"
+        />
+        <div>
+          <UserLink
+            avatar
+            avatarSize={16}
+            user={$profile.user.local_user_view.person}
+          />
+        </div>
+      </div>
+    {/if}
+    {#if item.type == 'private_message'}
+      <PrivateMessage message={item.item} />
+    {:else}
       <Comment
-        postId={item.post.id}
-        node={{ children: [], comment_view: item, depth: 1 }}
+        postId={item.item.post.id}
+        node={{ children: [], comment_view: item.item, depth: 1 }}
         replying={false}
         class="!p-0"
       />
-    </div>
-    <div class="flex flex-row ml-auto gap-2">
-      <Button
-        class={read ? '!text-green-500' : ''}
-        size="square-md"
-        {loading}
-        disabled={loading}
-        on:click={() => markAsRead(!read)}
-      >
-        <Icon slot="prefix" src={Check} mini size="16" />
-      </Button>
+    {/if}
+  </div>
+  <div class="flex flex-row ml-auto gap-2 h-8">
+    <Button
+      class={item.read ? '!text-green-500' : ''}
+      size="square-md"
+      {loading}
+      disabled={loading}
+      on:click={() => markAsRead(!item.read)}
+    >
+      <Icon slot="prefix" src={Check} mini size="16" />
+    </Button>
 
-      <Button href="/comment/{item.comment.id}" size="md" class="h-8">
+    {#if item.type == 'private_message'}
+      {#if item.item.creator.id != $profile?.user?.local_user_view.person.id}
+        <Button size="md" on:click={() => (replying = !replying)}>Reply</Button>
+      {/if}
+    {:else}
+      <Button href="/comment/{item.item.comment.id}" size="md" class="h-full">
         Jump
       </Button>
-    </div>
-  {:else}
-    <div class="flex flex-row items-center">
-      <div
-        class="text-sm max-w-[80ch] whitespace-nowrap text-ellipsis
-    overflow-hidden flex flex-row items-center gap-1 {read ? 'opacity-80' : ''}"
-      >
-        <span class="font-bold flex items-center">
-          {#if item.creator.id == $profile?.user?.local_user_view.person.id}
-            You
-          {:else}
-            <UserLink avatar user={item.creator} />
-          {/if}
-        </span>
-        <span>messaged</span>
-        <span class="font-bold flex items-center">
-          {#if item.recipient.id == $profile?.user?.local_user_view.person.id}
-            You
-          {:else}
-            <UserLink avatar user={item.recipient} />
-          {/if}
-        </span>
-      </div>
-    </div>
-    <p class="text-sm py-2">
-      <Markdown source={item.private_message.content} />
-    </p>
-    {#if item.recipient.id == $profile?.user?.local_user_view.person.id}
-      <div class="flex flex-row gap-2">
-        <Button color="ghost" on:click={() => (replying = !replying)}>
-          <Icon mini src={ChatBubbleOvalLeft} width={16} />
-          Reply
-        </Button>
-      </div>
     {/if}
-    {#if isPrivateMessage(item)}
-      {#if replying}
-        <div class="mt-2 flex flex-col gap-2">
-          <MarkdownEditor placeholder="Message" bind:value={reply} rows={4} />
-          <div class="ml-auto w-24">
-            <Button
-              disabled={loading}
-              {loading}
-              on:click={() => replyToMessage(item)}
-              color="primary"
-              size="sm"
-            >
-              Submit
-            </Button>
-          </div>
-        </div>
-      {/if}
-    {/if}
-  {/if}
+  </div>
 </Material>

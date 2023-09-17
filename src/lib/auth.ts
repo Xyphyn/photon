@@ -2,7 +2,6 @@ import { amModOfAny } from '$lib/components/lemmy/moderation/moderation.js'
 import { toast } from 'mono-svelte'
 import { DEFAULT_INSTANCE_URL, instance } from '$lib/instance.js'
 import { getClient, site } from '$lib/lemmy.js'
-import { getInbox, getInboxItemPublished } from '$lib/lemmy/inbox.js'
 import { userSettings } from '$lib/settings.js'
 import { moveItem } from '$lib/util.js'
 import {
@@ -294,41 +293,3 @@ setInterval(async () => {
     user: user,
   }))
 }, get(userSettings).notifications.pollRate ?? 30 * 1000)
-
-setFromStorage('seenUntil', Date.now().toString(), false)
-
-export async function getInboxNotifications(dontUpdate: boolean = false) {
-  if (!get(profile) || !get(userSettings).notifications.enabled) return
-
-  const { jwt } = get(profile)!
-  if (!jwt) return
-
-  let until = Number(localStorage.getItem('seenUntil'))
-
-  if (Number.isNaN(until) || until == 0) {
-    const now = Date.now()
-    localStorage.setItem('seenUntil', now.toString())
-    until = now
-  }
-
-  const inbox = await getInbox(jwt, until)
-
-  inbox.forEach((item) => {
-    const notif = new Notification(
-      item.person.display_name ?? item.person.name,
-      {
-        body: item.body,
-        timestamp: item.created,
-        icon: item.person.avatar,
-      }
-    )
-
-    notif.onclick = (e) => {
-      window.open('/inbox')
-    }
-  })
-
-  if (dontUpdate) return
-
-  localStorage.setItem('seenUntil', Date.now().toString())
-}

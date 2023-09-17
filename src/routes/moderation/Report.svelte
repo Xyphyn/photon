@@ -12,14 +12,10 @@
   import { Check, Icon } from 'svelte-hero-icons'
   import { profile } from '$lib/auth.js'
   import { Button } from 'mono-svelte'
+  import type { ReportView } from '$lib/lemmy/report.js'
+  import PrivateMessage from '$lib/components/lemmy/inbox/PrivateMessage.svelte'
 
-  export let item: PostReportView | CommentReportView | PrivateMessageReportView
-
-  $: resolved = isCommentReport(item)
-    ? item.comment_report.resolved
-    : isPostReport(item)
-    ? item.post_report.resolved
-    : false
+  export let item: ReportView
 
   let resolving = false
   async function resolve() {
@@ -27,31 +23,60 @@
     resolving = true
 
     try {
-      if (isCommentReport(item)) {
-        await getClient().resolveCommentReport({
-          auth: $profile.jwt,
-          report_id: item.comment_report.id,
-          resolved: !resolved,
-        })
+      switch (item.type) {
+        case 'comment': {
+          const res = await getClient().resolveCommentReport({
+            auth: $profile.jwt,
+            report_id: item.id,
+            resolved: !item.resolved,
+          })
 
-        resolved = !resolved
+          item.resolved = res.comment_report_view.comment_report.resolved
 
-        toast({
-          content: `${resolved ? 'Resolved' : 'Unresolved'} that report.`,
-          type: 'success',
-        })
-      } else if (isPostReport(item)) {
-        await getClient().resolvePostReport({
-          auth: $profile.jwt,
-          report_id: item.post_report.id,
-          resolved: !resolved,
-        })
+          toast({
+            content: `${
+              item.resolved ? 'Resolved' : 'Unresolved'
+            } that report.`,
+            type: 'success',
+          })
 
-        resolved = !resolved
-        toast({
-          content: `${resolved ? 'Resolved' : 'Unresolved'} that report.`,
-          type: 'success',
-        })
+          break
+        }
+        case 'post': {
+          const res = await getClient().resolvePostReport({
+            auth: $profile.jwt,
+            report_id: item.id,
+            resolved: !item.resolved,
+          })
+
+          item.resolved = res.post_report_view.post_report.resolved
+          toast({
+            content: `${
+              item.resolved ? 'Resolved' : 'Unresolved'
+            } that report.`,
+            type: 'success',
+          })
+
+          break
+        }
+        case 'message': {
+          const res = await getClient().resolvePrivateMessageReport({
+            auth: $profile.jwt,
+            report_id: item.id,
+            resolved: !item.resolved,
+          })
+
+          item.resolved =
+            res.private_message_report_view.private_message_report.resolved
+          toast({
+            content: `${
+              item.resolved ? 'Resolved' : 'Unresolved'
+            } that report.`,
+            type: 'success',
+          })
+
+          break
+        }
       }
 
       const reports = await getClient().getReportCount({
@@ -73,66 +98,39 @@
   }
 </script>
 
-{#if isCommentReport(item)}
-  <CommentItem
-    comment={{
-      ...item,
-      subscribed: 'NotSubscribed',
-      creator_blocked: false,
-      saved: false,
-      creator: item.comment_creator,
+{#if item.type == 'comment'}
+  <CommentItem comment={item.item} />
+{:else if item.type == 'post'}
+  <Post post={item.item} />
+{:else if item.type == 'message'}
+  <PrivateMessage
+    message={{
+      creator: item.reportee,
+      private_message: item.item,
+      recipient: item.creator,
     }}
   />
-  <div class="flex flex-row gap-4 items-center">
-    <div>
-      <span class="text-xs font-bold dark:text-zinc-400 text-slate-600">
-        Reason
-      </span>
-      <p>
-        {item.comment_report.reason}
-      </p>
-    </div>
-    <Button
-      on:click={resolve}
-      class="w-8 h-8 !p-1 ml-auto {resolved ? '!text-green-500' : ''}"
-      aria-label="Resolve"
-      title="Resolve"
-      loading={resolving}
-      disabled={resolving}
-    >
-      <Icon src={Check} mini size="16" slot="prefix" />
-    </Button>
-  </div>
-{:else if isPostReport(item)}
-  <Post
-    post={{
-      ...item,
-      saved: false,
-      subscribed: 'NotSubscribed',
-      unread_comments: 0,
-      read: false,
-      creator_blocked: false,
-      creator: item.post_creator,
-    }}
-  />
-  <div class="flex flex-row gap-4 items-center">
-    <div>
-      <span class="text-xs font-bold dark:text-zinc-400 text-slate-600">
-        Reason
-      </span>
-      <p>
-        {item.post_report.reason}
-      </p>
-    </div>
-    <Button
-      on:click={resolve}
-      class="w-8 h-8 !p-1 ml-auto {resolved ? '!text-green-500' : ''}"
-      aria-label="Resolve"
-      title="Resolve"
-      loading={resolving}
-      disabled={resolving}
-    >
-      <Icon src={Check} mini size="16" slot="prefix" />
-    </Button>
-  </div>
 {/if}
+
+<div class="flex flex-row gap-4 items-center">
+  <div>
+    <span class="text-xs font-bold dark:text-zinc-400 text-slate-600">
+      Reason
+    </span>
+    <p>
+      {item.reason}
+    </p>
+  </div>
+  <Button
+    on:click={resolve}
+    class="w-8 h-8 !p-1 ml-auto {item.resolved
+      ? '!text-green-600 dark:!text-green-400'
+      : ''}"
+    aria-label="Resolve"
+    title="Resolve"
+    loading={resolving}
+    disabled={resolving}
+  >
+    <Icon src={Check} mini size="16" slot="prefix" />
+  </Button>
+</div>

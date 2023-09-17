@@ -1,6 +1,11 @@
 import { profile } from '$lib/auth.js'
+import { isAdmin } from '$lib/components/lemmy/moderation/moderation.js'
 import { getClient } from '$lib/lemmy.js'
-import { getItemPublished } from '$lib/lemmy/item.js'
+import {
+  generalizeCommentReport,
+  generalizePostReport,
+  generalizePrivateMessageReport,
+} from '$lib/lemmy/report.js'
 import { get } from 'svelte/store'
 
 type ReportListType = 'unread' | 'all'
@@ -33,18 +38,25 @@ export async function load({ url, fetch }) {
     unresolved_only: type == 'unread',
   }
 
-  const [posts, comments] = await Promise.all([
+  const admin = get(profile)?.user ? isAdmin(get(profile)!.user!) : false
+
+  const [posts, comments, messages] = await Promise.all([
     client.listPostReports({
       ...params,
     }),
     client.listCommentReports({
       ...params,
     }),
+    admin ? client.listPrivateMessageReports({ ...params }) : undefined,
   ])
 
-  const everything = [...posts.post_reports, ...comments.comment_reports].sort(
-    (a, b) => Date.parse(getItemPublished(b)) - Date.parse(getItemPublished(a))
-  )
+  const everything = [
+    ...posts.post_reports.map(generalizePostReport),
+    ...comments.comment_reports.map(generalizeCommentReport),
+    ...(messages?.private_message_reports ?? []).map(
+      generalizePrivateMessageReport
+    ),
+  ].sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime())
 
   return {
     type: type,

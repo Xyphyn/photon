@@ -1,6 +1,11 @@
 import { profile } from '$lib/auth.js'
+import { publishedToDate } from '$lib/components/util/date.js'
 import { getClient } from '$lib/lemmy.js'
-import { getInboxItemPublished } from '$lib/lemmy/inbox.js'
+import {
+  generalizeCommentReply,
+  generalizePersonMention,
+  generalizePrivateMessage,
+} from '$lib/lemmy/inbox.js'
 import { get } from 'svelte/store'
 
 type InboxFeedType = 'replies' | 'mentions' | 'messages' | 'all'
@@ -45,13 +50,13 @@ export async function load({ url, fetch }) {
   ])
 
   const data = [
-    ...replies.replies,
-    ...mentions.mentions,
-    ...privateMessages.private_messages,
+    ...replies.replies.map(generalizeCommentReply),
+    ...mentions.mentions.map(generalizePersonMention),
+    ...privateMessages.private_messages.map(generalizePrivateMessage),
   ].sort(
     (a, b) =>
-      Date.parse(getInboxItemPublished(b)) -
-      Date.parse(getInboxItemPublished(a))
+      publishedToDate(b.published).getTime() -
+      publishedToDate(a.published).getTime()
   )
 
   return { unreadOnly: unreadOnly, type: type, page: page, data: data }

@@ -35,6 +35,7 @@
   import { Button, Modal, Select } from 'mono-svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
+  import PrivateMessageModal from '$lib/components/lemmy/modal/PrivateMessageModal.svelte'
 
   export let data
 
@@ -77,37 +78,7 @@
     blocking = false
   }
 
-  let loadingMessage = false
   let messaging = false
-  let message = ''
-
-  async function sendMessage() {
-    if (!$profile?.jwt || message == '') return
-
-    loadingMessage = true
-
-    try {
-      await getClient().createPrivateMessage({
-        auth: $profile.jwt,
-        content: message,
-        recipient_id: data.person_view.person.id,
-      })
-
-      toast({
-        content: 'Successfully sent that person a message.',
-        type: 'success',
-      })
-
-      messaging = false
-    } catch (err) {
-      toast({
-        content: err as any,
-        type: 'error',
-      })
-    }
-
-    loadingMessage = false
-  }
 </script>
 
 <svelte:head>
@@ -115,29 +86,10 @@
 </svelte:head>
 
 {#if $profile?.user}
-  <Modal bind:open={messaging}>
-    <h1 class="text-2xl font-bold" slot="title">Message</h1>
-    <form on:submit|preventDefault={sendMessage} class="flex flex-col gap-4">
-      <p class="inline-flex flex-row gap-2 items-center">
-        Sending <UserLink avatar user={data.person_view.person} /> a message
-      </p>
-      <MarkdownEditor
-        bind:value={message}
-        label="Message"
-        placeholder="your hair looks nice today"
-        rows={4}
-      />
-      <Button
-        color="primary"
-        size="lg"
-        submit
-        loading={loadingMessage}
-        disabled={loadingMessage}
-      >
-        Send
-      </Button>
-    </form>
-  </Modal>
+  <PrivateMessageModal
+    bind:user={data.person_view.person}
+    bind:open={messaging}
+  />
 {/if}
 
 <div class="flex flex-col-reverse xl:flex-row gap-4 max-w-full w-full">

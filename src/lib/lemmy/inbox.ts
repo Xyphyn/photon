@@ -1,10 +1,12 @@
+import { publishedToDate } from '$lib/components/util/date.js'
 import { getClient } from '$lib/lemmy.js'
 import type { Result } from '$lib/lemmy/item.js'
 import type {
+  Comment,
   CommentReplyView,
+  CommentView,
   Person,
   PersonMentionView,
-  PersonView,
   PrivateMessageView,
 } from 'lemmy-js-client'
 
@@ -13,110 +15,58 @@ export type InboxItemView =
   | CommentReplyView
   | PrivateMessageView
 
-export function getInboxItemPublished(item: InboxItemView): string {
-  if ('comment_reply' in item) {
-    return item.comment_reply.published
-  }
+export const generalizeCommentReply = (item: CommentReplyView): InboxItem => ({
+  type: 'comment_reply',
+  id: item.comment_reply.id,
+  published: item.comment_reply.published,
+  item: { ...item },
+  creator: item.creator,
+  read: item.comment_reply.read,
+})
 
-  if ('private_message' in item) {
-    return item.private_message.published
-  }
+export const generalizePersonMention = (
+  item: PersonMentionView
+): InboxItem => ({
+  type: 'person_mention',
+  id: item.person_mention.id,
+  published: item.person_mention.published,
+  item: {
+    ...item,
+  },
+  creator: item.creator,
+  read: item.person_mention.read,
+})
 
-  return item.person_mention.published
+export const generalizePrivateMessage = (
+  item: PrivateMessageView
+): InboxItem => ({
+  type: 'private_message',
+  id: item.private_message.id,
+  published: item.private_message.published,
+  item: item,
+  creator: item.creator,
+  read: item.private_message.read,
+})
+
+interface PrivateMessage {
+  type: 'private_message'
+  item: PrivateMessageView
+}
+interface CommentReply {
+  type: 'comment_reply'
+  item: CommentView
+}
+interface PersonMention {
+  type: 'person_mention'
+  item: CommentView
 }
 
-export function isRead(
-  item: PersonMentionView | CommentReplyView | PrivateMessageView
-) {
-  if ('person_mention' in item) {
-    return (item as PersonMentionView).person_mention.read
-  }
-
-  if ('comment_reply' in item) {
-    return (item as CommentReplyView).comment_reply.read
-  }
-
-  if ('private_message' in item) {
-    return (item as PrivateMessageView).private_message.read
-  }
-
-  return false
+interface BaseInboxItem {
+  creator: Person
+  published: string
+  read: boolean
+  id: number
 }
 
-export const getInbox = async (
-  jwt: string,
-  until?: number
-): Promise<InboxItem[]> => {
-  const client = getClient()
-
-  const params = {
-    limit: 50,
-    auth: jwt,
-    unread_only: true,
-  }
-
-  const [replies, mentions, privateMessages] = await Promise.all([
-    client.getReplies({
-      ...params,
-      sort: 'New',
-    }),
-    client.getPersonMentions({
-      ...params,
-      sort: 'New',
-    }),
-    client.getPrivateMessages({ ...params }),
-  ])
-
-  let items = [
-    ...replies.replies,
-    ...mentions.mentions,
-    ...privateMessages.private_messages,
-  ]
-    .map(toInboxItem)
-    .sort((a, b) => b.created - a.created)
-
-  if (until) {
-    items = items.filter((item) => item.created > until)
-  }
-
-  return items
-}
-
-const toInboxItem = (item: InboxItemView): InboxItem => {
-  let type: 'private_message' | 'comment_reply' | 'person_mention'
-  let body: string
-  let personView: Person
-  let created: number
-  if ('comment_reply' in item) {
-    type = 'comment_reply'
-    body = item.comment.content
-    personView = item.creator
-    created = Date.parse(`${item.comment_reply.published}Z`)
-  } else if ('person_mention' in item) {
-    type = 'person_mention'
-    body = item.comment.content
-    personView = item.creator
-    created = Date.parse(`${item.person_mention.published}Z`)
-  } else if ('private_message' in item) {
-    type = 'private_message'
-    body = item.private_message.content
-    personView = item.creator
-    created = Date.parse(`${item.private_message.published}Z`)
-  } else {
-    throw new Error('Invalid item')
-  }
-
-  return {
-    type: type,
-    body: body,
-    person: personView,
-    created,
-  }
-}
-
-interface InboxItem {
-  type: 'private_message' | 'comment_reply' | 'person_mention'
-  body: string
-  person: Person
-  created: number
-}
+export type InboxItem = BaseInboxItem &
+  (PrivateMessage | CommentReply | PersonMention)
