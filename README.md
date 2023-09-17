@@ -9,7 +9,8 @@ An alternative web client for Lemmy with the UI of Xylo
 
 ## Screenshots
 
-![Screenshot from 2023-08-03 13-23-07](https://github.com/Xyphyn/photon/assets/80978739/16469b73-42f3-4fe3-9e60-5757a750d61e)
+![image](https://github.com/Xyphyn/photon/assets/80978739/dab88315-691b-4471-add7-321b8a803c54)
+
 
 ## Self-hosting
 
