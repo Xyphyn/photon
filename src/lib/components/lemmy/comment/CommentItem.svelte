@@ -19,7 +19,6 @@
 >
   <div class="flex flex-row justify-between items-center">
     <PostMeta
-      community={comment.community}
       deleted={false}
       featured={false}
       nsfw={comment.post.nsfw}

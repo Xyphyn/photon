@@ -24,7 +24,7 @@ export async function load({ url, fetch }) {
       q: query,
       auth: get(profile)?.jwt,
       community_id: community ?? undefined,
-      limit: 40,
+      limit: 20,
       page: page,
       sort: (sort as SortType) || 'New',
       listing_type: 'All',

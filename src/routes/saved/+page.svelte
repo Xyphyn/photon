@@ -5,6 +5,8 @@
   import { fly } from 'svelte/transition'
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
   import { Button, Material } from 'mono-svelte'
+  import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
+  import { userSettings } from '$lib/settings.js'
 
   export let data
 
@@ -18,7 +20,9 @@
 
 <h1 class="text-2xl font-bold">Saved</h1>
 <div
-  class="flex flex-col gap-4 list-none my-4 !divide-y divide-slate-200 dark:divide-zinc-800"
+  class="flex flex-col list-none my-4 divide-slate-200 dark:divide-zinc-800"
+  class:gap-4={$userSettings.view == 'card'}
+  class:!divide-y={$userSettings.view != 'card'}
 >
   {#if !data.data || (data.data?.length ?? 0) == 0}
     <p class="text-center opacity-60 text-lg mx-4">
@@ -28,25 +32,7 @@
     {#each data.data as item, index}
       <div in:fly={{ opacity: 0, y: -4, delay: index * 50 }}>
         {#if isComment(item)}
-          <Material padding="lg" color="distinct" class="flex flex-col flex-1">
-            <div class="flex flex-row items-center">
-              <PostMeta
-                title={item.post.name}
-                id={item.post.id}
-                published={new Date(item.post.published)}
-              />
-            </div>
-            <div class="list-none">
-              <Comment
-                postId={item.post.id}
-                node={{ children: [], comment_view: item, depth: 1 }}
-                replying={false}
-              />
-            </div>
-            <Button class="ml-auto" href="/comment/{item.comment.id}">
-              Jump
-            </Button>
-          </Material>
+          <CommentItem comment={item} />
         {:else}
           <Post post={item} />
         {/if}

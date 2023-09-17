@@ -14,6 +14,7 @@
     isPostView,
     isUser,
   } from '$lib/lemmy/item.js'
+  import { userSettings } from '$lib/settings.js'
   import { searchParam } from '$lib/util.js'
   import type {
     CommentView,
@@ -119,7 +120,9 @@
     {/if}
   {/await}
   <div
-    class="flex flex-col mt-4 !divide-y divide-slate-200 dark:divide-zinc-800"
+    class="flex flex-col mt-4 divide-slate-200 dark:divide-zinc-800"
+    class:!divide-y={$userSettings.view != 'card'}
+    class:gap-4={$userSettings.view == 'card'}
   >
     {#each data.results as result}
       {#if isPostView(result)}
