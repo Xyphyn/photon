@@ -17,7 +17,9 @@
 </svelte:head>
 
 <h1 class="text-2xl font-bold">Saved</h1>
-<div class="flex flex-col gap-4 list-none my-4">
+<div
+  class="flex flex-col gap-4 list-none my-4 !divide-y divide-slate-200 dark:divide-zinc-800"
+>
   {#if !data.data || (data.data?.length ?? 0) == 0}
     <p class="text-center opacity-60 text-lg mx-4">
       Wow, it's quite empty in here.

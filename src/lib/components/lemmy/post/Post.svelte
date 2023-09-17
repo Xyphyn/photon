@@ -16,7 +16,7 @@
   export let post: PostView
   export let actions: boolean = true
   export let hideCommunity = false
-  export let view: 'card' | 'list' | 'compact' = 'card'
+  export let view: 'card' | 'list' | 'compact' = $userSettings.view
 
   let loaded = false
 
@@ -151,25 +151,21 @@
         <div class="flex-none w-24 h-24">
           {#if !$userSettings.expandImages || (post.post.thumbnail_url && !isImage(post.post.url))}
             <a href={postLink(post.post)}>
-              {#if post.post.thumbnail_url}
-                <!-- svelte-ignore a11y-missing-attribute -->
-                <img
-                  src={bestImageURL(post.post, true)}
-                  loading="lazy"
-                  class="object-cover bg-slate-100 rounded-md h-24 w-24 border border-slate-200 dark:border-zinc-700"
-                />
-              {/if}
+              <!-- svelte-ignore a11y-missing-attribute -->
+              <img
+                src={bestImageURL(post.post, true)}
+                loading="lazy"
+                class="object-cover bg-slate-100 rounded-md h-24 w-24 border border-slate-200 dark:border-zinc-700"
+              />
             </a>
           {:else}
             <ExpandableImage url={bestImageURL(post.post, false, 2048)}>
-              {#if post.post.thumbnail_url}
-                <!-- svelte-ignore a11y-missing-attribute -->
-                <img
-                  src={bestImageURL(post.post, true)}
-                  loading="lazy"
-                  class="object-cover bg-slate-100 rounded-md h-24 w-24 border border-slate-200 dark:border-zinc-700"
-                />
-              {/if}
+              <!-- svelte-ignore a11y-missing-attribute -->
+              <img
+                src={bestImageURL(post.post, true)}
+                loading="lazy"
+                class="object-cover bg-slate-100 rounded-md h-24 w-24 border border-slate-200 dark:border-zinc-700"
+              />
             </ExpandableImage>
           {/if}
         </div>
