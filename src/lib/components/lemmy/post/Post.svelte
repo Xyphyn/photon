@@ -52,7 +52,11 @@
       transition-all rounded-xl group-hover:bg-slate-50 group-hover:dark:bg-zinc-900"
       />
     {/if} -->
-    <div class="flex flex-row gap-2 max-w-full w-full">
+    <div
+      class="flex {$userSettings.leftAlign
+        ? 'flex-row-reverse'
+        : 'flex-row'} gap-4 max-w-full w-full"
+    >
       <div class="flex flex-col w-full gap-2">
         <div class="flex flex-col w-full gap-2">
           <PostMeta

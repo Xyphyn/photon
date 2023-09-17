@@ -59,6 +59,7 @@ interface Settings {
   expandImages: boolean
 
   font: 'inter' | 'system' | 'browser'
+  leftAlign: boolean
 }
 
 export const defaultSettings: Settings = {
@@ -97,6 +98,7 @@ export const defaultSettings: Settings = {
   expandImages: true,
   view: 'list',
   font: 'system',
+  leftAlign: false,
 }
 
 export const userSettings = writable(defaultSettings)

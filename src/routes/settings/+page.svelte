@@ -158,6 +158,17 @@
       </Checkbox>
     </div>
   </Setting>
+  <Setting>
+    <span slot="title">Thumbnail Alignment</span>
+    <span slot="description">
+      Where thumbnails should be on the post in list/compact view.
+    </span>
+    <MultiSelect
+      options={[true, false]}
+      optionNames={['Left', 'Right']}
+      bind:selected={$userSettings.leftAlign}
+    />
+  </Setting>
 
   <SectionTitle class="mt-4">Instances</SectionTitle>
   <Setting>
