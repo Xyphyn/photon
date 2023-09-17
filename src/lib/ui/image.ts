@@ -1,13 +1,19 @@
 export const isImage = (url: string | undefined) => {
-  if (!url) return false
+  try {
+    if (!url) return false
 
-  return /\.(jpeg|jpg|gif|png|svg|bmp|webp)$/i.test(new URL(url).pathname)
+    return /\.(jpeg|jpg|gif|png|svg|bmp|webp)$/i.test(new URL(url).pathname)
+  } catch (err) {
+    return false
+  }
 }
 
-export const isVideo = (inputUrl: string | undefined) => {
-  if (!inputUrl) return false
+export const isVideo = (url: string | undefined) => {
+  try {
+    if (!url) return false
 
-  const url = new URL(inputUrl).pathname.toLowerCase()
-
-  return url.endsWith('mp4') || url.endsWith('webm') || url.endsWith('mov') || url.endsWith('m4v')
+    return /\.(mp4|mov|webm|mkv)$/i.test(new URL(url).pathname)
+  } catch (err) {
+    return false
+  }
 }

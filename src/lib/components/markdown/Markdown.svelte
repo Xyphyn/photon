@@ -5,10 +5,13 @@
   export let source: string = ''
   export let inline: boolean = false
 
-  function replaceURLs(node: HTMLElement) {
+  function replaceURLs(node: HTMLElement, source: string) {
+    if (!div) return
+    console.log('replacing source', source)
     const links = node.querySelectorAll('a')
 
     links.forEach((l) => {
+      console.log('replacing link', l.href)
       const photonified = photonify(l.href)
       if (photonified) l.href = photonified
     })
@@ -16,9 +19,7 @@
 
   let div: HTMLElement
 
-  $: if (source && div) {
-    replaceURLs(div)
-  }
+  $: replaceURLs(div, source)
 </script>
 
 <div

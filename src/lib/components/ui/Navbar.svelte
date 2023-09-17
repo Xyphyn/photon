@@ -10,6 +10,7 @@
   import Logo from '$lib/components/ui/Logo.svelte'
   import { LINKED_INSTANCE_URL, instance } from '$lib/instance.js'
   import { site } from '$lib/lemmy.js'
+  import { userSettings } from '$lib/settings.js'
   import { theme } from '$lib/ui/colors.js'
   import {
     Button,
@@ -22,6 +23,7 @@
   import {
     Bars3,
     Bookmark,
+    BugAnt,
     Cog6Tooth,
     CommandLine,
     ComputerDesktop,
@@ -264,6 +266,12 @@
         </Select>
       </div>
     </MenuButton>
+    {#if $userSettings.debugInfo}
+      <MenuButton link href="/util">
+        <Icon src={BugAnt} mini width={16} />
+        Debug
+      </MenuButton>
+    {/if}
     <hr class="dark:opacity-10 w-[90%] my-2 mx-auto" />
     <li class="flex flex-col px-4 py-1 mx-auto my-1 text-xs w-full">
       <div class="flex flex-row gap-2 w-full">
