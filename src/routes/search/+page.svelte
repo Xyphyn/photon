@@ -76,7 +76,7 @@
     </Button>
   </div>
 </div>
-<div class="max-w-sm mt-2">
+<div class="max-w-sm my-2">
   <ObjectAutocomplete
     label="Community"
     jwt={$profile?.jwt}
