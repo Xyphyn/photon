@@ -89,13 +89,7 @@
     href="/post/{getInstance()}/{post.post.id}"
     class="!text-inherit h-8 px-3"
   >
-    <Icon
-      slot="prefix"
-      src={ChatBubbleOvalLeftEllipsis}
-      mini
-      width={16}
-      height={16}
-    />
+    <Icon slot="prefix" src={ChatBubbleOvalLeftEllipsis} mini size="16" />
     <FormattedNumber number={post.counts.comments} />
   </Button>
   <div class="ml-auto" />

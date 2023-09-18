@@ -3,7 +3,6 @@
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import type { PrivateMessageView } from 'lemmy-js-client'
-  import { Icon, PaperAirplane } from 'svelte-hero-icons'
 
   export let message: PrivateMessageView
 </script>
@@ -16,12 +15,6 @@
       user={message.creator}
       avatar
       avatarSize={20}
-      shownBadges={{
-        admin: true,
-        banned: true,
-        bot: true,
-        you: $profile?.user?.local_user_view.person.id == message.creator.id,
-      }}
     />
     {#if $profile?.user?.local_user_view.person.id != message.recipient.id}
       to
@@ -30,13 +23,6 @@
         user={message.recipient}
         avatar
         avatarSize={20}
-        shownBadges={{
-          admin: true,
-          banned: true,
-          bot: true,
-          you:
-            $profile?.user?.local_user_view.person.id == message.recipient.id,
-        }}
       />
     {/if}
   </div>

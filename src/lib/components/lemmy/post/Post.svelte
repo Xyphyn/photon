@@ -11,7 +11,6 @@
   import ExpandableImage from '$lib/components/ui/ExpandableImage.svelte'
   import { bestImageURL, postLink } from '$lib/components/lemmy/post/helpers.js'
   import Empty from '$lib/components/helper/Empty.svelte'
-  import { goto } from '$app/navigation'
 
   export let post: PostView
   export let actions: boolean = true
@@ -19,16 +18,6 @@
   export let view: 'card' | 'list' | 'compact' = $userSettings.view
 
   let loaded = false
-
-  // hack because you cant use typescript types in svelte markup
-  const onclick = (
-    e: MouseEvent & {
-      currentTarget: EventTarget & HTMLDivElement
-      target: any
-    }
-  ) => {
-    if (e.target.id == post.post.id.toString()) goto(postLink(post.post))
-  }
 </script>
 
 <Material
@@ -41,17 +30,7 @@
 >
   <!-- svelte-ignore a11y-no-static-element-interactions -->
   <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <div
-    id={post.post.id.toString()}
-    on:click={onclick}
-    class="relative flex flex-col gap-2.5"
-  >
-    <!-- {#if view == 'list' || view == 'compact'}
-      <div
-        class="absolute -inset-0.5 group-hover:-inset-2 group-hover:-inset-y-3 group-hover:md:-inset-4
-      transition-all rounded-xl group-hover:bg-slate-50 group-hover:dark:bg-zinc-900"
-      />
-    {/if} -->
+  <div id={post.post.id.toString()} class="relative flex flex-col gap-2.5">
     <div
       class="flex {$userSettings.leftAlign
         ? 'flex-row-reverse'

@@ -6,16 +6,13 @@
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import type { Community, Person } from 'lemmy-js-client'
   import {
-    ArrowTrendingDown,
     Bookmark,
     Icon,
-    InformationCircle,
     LockClosed,
     Megaphone,
     Trash,
   } from 'svelte-hero-icons'
   import { getInstance } from '$lib/lemmy.js'
-  import { userSettings } from '$lib/settings.js'
 
   export let community: Community | undefined = undefined
   export let user: Person | undefined = undefined

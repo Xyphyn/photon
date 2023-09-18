@@ -1,6 +1,7 @@
 import { sveltekit } from '@sveltejs/kit/vite'
 import { defineConfig, type PluginOption } from 'vite'
 import { SvelteKitPWA } from '@vite-pwa/sveltekit'
+import { visualizer } from 'rollup-plugin-visualizer'
 
 export default defineConfig({
   plugins: [
@@ -30,6 +31,9 @@ export default defineConfig({
         start_url: '/',
       },
     }),
+    visualizer({
+      template: 'network',
+    }) as PluginOption,
   ],
 
   define: {

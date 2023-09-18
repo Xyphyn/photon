@@ -7,17 +7,12 @@
   export let avatar: boolean = false
   export let name: boolean = true
   export let avatarSize: number = 24
-  export let showInstance: boolean | undefined = undefined
-
-  function linkFromCommunity(community: Community) {
-    const domain = new URL(community.actor_id).hostname
-    return `/c/${community.name}@${domain}`
-  }
+  export let showInstance: boolean = $userSettings.showInstances.community
 </script>
 
 <a
   class="items-center flex flex-row gap-2 hover:underline"
-  href={linkFromCommunity(community)}
+  href="/c/{community.name}@{new URL(community.actor_id).hostname}"
 >
   {#if avatar}
     <Avatar
@@ -30,7 +25,7 @@
 
   {#if name}
     <span class="flex gap-0">
-      {#if showInstance != undefined ? showInstance : $userSettings.showInstances.community}
+      {#if showInstance}
         <span class="font-medium">{community.title}</span>
         <span class="text-slate-500 dark:text-zinc-500 font-normal">
           @{new URL(community.actor_id).hostname}
