@@ -4,6 +4,7 @@
   import type { Community } from 'lemmy-js-client'
 
   export let community: Community
+
   export let avatar: boolean = false
   export let name: boolean = true
   export let avatarSize: number = 24
@@ -11,7 +12,7 @@
 </script>
 
 <a
-  class="items-center flex flex-row gap-2 hover:underline"
+  class="items-center flex flex-row gap-2 hover:underline flex-shrink-0"
   href="/c/{community.name}@{new URL(community.actor_id).hostname}"
 >
   {#if avatar}
