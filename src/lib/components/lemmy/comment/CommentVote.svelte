@@ -7,7 +7,7 @@
     ChevronUp,
     Icon,
   } from 'svelte-hero-icons'
-  import { getClient } from '$lib/lemmy'
+  import { getClient, site } from '$lib/lemmy'
   import { userSettings } from '$lib/settings'
   import { profile } from '$lib/auth.js'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
@@ -66,17 +66,7 @@
   }
 
   const voteColor = (vote: number) => `
-  ${
-    vote == 1
-      ? $userSettings.revertColors
-        ? '!text-orange-500'
-        : '!text-blue-500'
-      : vote == -1
-      ? $userSettings.revertColors
-        ? '!text-blue-500'
-        : '!text-red-500'
-      : ''
-  }
+  ${vote == 1 ? '!text-blue-500' : vote == -1 ? '!text-red-500' : ''}
   `
 </script>
 
@@ -92,13 +82,20 @@ dark:border-zinc-800"
   >
     <Icon src={ChevronUp} width={19} mini />
   </button>
-  <span class="text-sm font-medium {voteColor(vote)}">
+  <span
+    class="text-sm font-medium {voteColor(vote)}"
+    class:hidden={$profile?.user?.local_user_view.local_user.show_scores ==
+      false}
+  >
     <FormattedNumber number={score} />
   </span>
   <button
     on:click={downvote}
-    class="px-1.5 {vote == -1 ? 'text-red-400' : ''}"
+    class="px-1.5 {vote == -1
+      ? 'text-red-400'
+      : ''} disabled:pointer-events-none disabled:opacity-50"
     aria-label="Downvote"
+    disabled={$site?.site_view.local_site.enable_downvotes == false}
   >
     <Icon src={ChevronDown} width={19} mini />
   </button>
