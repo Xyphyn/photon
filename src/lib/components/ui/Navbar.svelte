@@ -47,7 +47,7 @@
   dark:bg-black/80 backdrop-blur-3xl w-full mx-auto px-4 py-2 z-50 box-border h-16"
 >
   <div class="flex flex-row gap-2 items-center mr-auto">
-    <a href="/" class="flex flex-row items-center gap-2">
+    <a href="/" class="flex flex-row items-center gap-2 logo group">
       {#if LINKED_INSTANCE_URL}
         {#if $site}
           <Avatar
@@ -82,7 +82,11 @@
         <Logo width={40} />
         <div class="flex flex-row items-center gap-2 max-[1000px]:hidden">
           <span class="opacity-30 text-xl">/</span>
-          <span class="text-sm font-bold">
+          <span
+            class="text-sm font-bold group-hover:bg-gradient-to-r
+            group-hover:text-transparent group-hover:bg-clip-text
+            group-hover:from-violet-500 group-hover:to-pink-600 transition-colors"
+          >
             {$instance}
           </span>
         </div>
