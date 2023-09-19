@@ -7,11 +7,9 @@
 
   function replaceURLs(node: HTMLElement, source: string) {
     if (!div) return
-    console.log('replacing source', source)
     const links = node.querySelectorAll('a')
 
     links.forEach((l) => {
-      console.log('replacing link', l.href)
       const photonified = photonify(l.href)
       if (photonified) l.href = photonified
     })
@@ -19,18 +17,25 @@
 
   let div: HTMLElement
 
-  $: replaceURLs(div, source)
+  const render = (source: string): string => {
+    if (!source || source == '') return ''
+
+    try {
+      return inline ? mdInline.render(source) : md.render(source)
+    } catch (err) {
+      return ''
+    }
+  }
+
+  $: rendered = render(source)
+  $: replaceURLs(div, rendered)
 </script>
 
 <div
   bind:this={div}
   class="break-words flex flex-col markdown gap-2 leading-[1.5]"
 >
-  {#if inline}
-    {@html mdInline.render(source)}
-  {:else}
-    {@html md.render(source)}
-  {/if}
+  {@html rendered}
 </div>
 
 <style lang="postcss">
