@@ -3023,10 +3023,10 @@ mlly@^1.2.0, mlly@^1.4.0:
     pkg-types "^1.0.3"
     ufo "^1.1.2"
 
-mono-svelte@^0.3.2:
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/mono-svelte/-/mono-svelte-0.3.2.tgz#646a247698b7aac4cd8c6c0d03ad448081e6b310"
-  integrity sha512-CiJzyCtQ6xM8XXhowyqIqCp8R4Q7IVDHbg7Ly+W5QSjfaBRYFbv2L/qhi0FkvBzQ6WOSoCK8Lz0vN81WbaPbyA==
+mono-svelte@^0.3.3:
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/mono-svelte/-/mono-svelte-0.3.3.tgz#001a4f0d95f4a33f7bb0c7e3b5681eb1ff21eabd"
+  integrity sha512-EmGgBESe0YiVAbolHFZ+/JWiAnqPqcwhJS1kNQCJjoSEY1VDPxswkZQ60yJHZad34U6jaYbRZRU2Mop1Xa7eYA==
 
 mri@^1.1.0:
   version "1.2.0"

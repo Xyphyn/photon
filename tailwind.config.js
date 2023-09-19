@@ -23,6 +23,7 @@ export default {
       },
       colors: {
         slate: {
+          200: '#e8edf4',
           25: 'rgb(252,253,254)',
         },
         zinc: {

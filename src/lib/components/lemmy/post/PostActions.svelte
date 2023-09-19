@@ -7,6 +7,7 @@
     Bookmark,
     BookmarkSlash,
     BugAnt,
+    ChatBubbleOvalLeft,
     ChatBubbleOvalLeftEllipsis,
     EllipsisHorizontal,
     Eye,
@@ -75,12 +76,10 @@
   </Modal>
 {/if}
 
-<div class="flex flex-row gap-2 items-center h-8">
+<div class="flex flex-row gap-2 items-center h-8 z-10">
   <PostVote
     post={post.post}
     bind:vote={post.my_vote}
-    bind:upvotes={post.counts.upvotes}
-    bind:downvotes={post.counts.downvotes}
     bind:score={post.counts.score}
   />
 
@@ -89,7 +88,7 @@
     href="/post/{getInstance()}/{post.post.id}"
     class="!text-inherit h-8 px-3"
   >
-    <Icon slot="prefix" src={ChatBubbleOvalLeftEllipsis} mini size="16" />
+    <Icon slot="prefix" src={ChatBubbleOvalLeft} mini size="14" />
     <FormattedNumber number={post.counts.comments} />
   </Button>
   <div class="ml-auto" />

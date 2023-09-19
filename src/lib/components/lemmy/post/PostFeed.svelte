@@ -13,7 +13,7 @@
 <div
   class="flex flex-col {$userSettings.view == 'card'
     ? 'gap-3 md:gap-4'
-    : ''} divide-slate-200 dark:divide-zinc-800"
+    : ''} divide-slate-200 dark:divide-zinc-800 z-[5]"
   class:divide-y={$userSettings.view == 'compact' ||
     $userSettings.view == 'list'}
 >

@@ -43,7 +43,7 @@
     "@dicebear/initials": "^6.0.4",
     "lemmy-js-client": "^0.18.0-rc.2",
     "markdown-it": "^13.0.1",
-    "mono-svelte": "^0.3.2"
+    "mono-svelte": "^0.3.3"
   },
   "type": "module"
 }
