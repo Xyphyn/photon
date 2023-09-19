@@ -1,19 +1,11 @@
 <script lang="ts">
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
-  import { userSettings } from '$lib/settings.js'
   import type { Post } from 'lemmy-js-client'
-  import {
-    ArrowDown,
-    ArrowDownCircle,
-    ArrowUp,
-    ArrowUpCircle,
-    ChevronDown,
-    ChevronUp,
-    Icon,
-  } from 'svelte-hero-icons'
+  import { ChevronDown, ChevronUp, Icon } from 'svelte-hero-icons'
   import { profile } from '$lib/auth.js'
   import { vote as voteItem } from '$lib/lemmy/contentview.js'
-  import { Button, Material, Popover } from 'mono-svelte'
+  import { Button } from 'mono-svelte'
+  import { site } from '$lib/lemmy.js'
 
   export let post: Post
   export let vote: number = 0
@@ -42,12 +34,19 @@
     >
       <Icon src={ChevronUp} mini size="18" />
     </Button>
-    <span class="font-medium transition-colors duration-200 {voteColor(vote)}">
+    <span
+      class="font-medium transition-colors duration-200 {voteColor(vote)}"
+      class:hidden={$profile?.user?.local_user_view.local_user.show_scores ==
+        false}
+    >
       <FormattedNumber number={score} />
     </span>
     <Button
       aria-label="Downvote"
-      class={vote == -1 ? voteColor(vote) : ''}
+      class="{vote == -1 ? voteColor(vote) : ''} {$site?.site_view.local_site
+        .enable_downvotes
+        ? ''
+        : 'pointer-events-none opacity-50'}"
       on:click={async () => {
         if (!$profile?.jwt) return
         vote = vote == -1 ? 0 : -1
