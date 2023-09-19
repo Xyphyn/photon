@@ -128,7 +128,7 @@
               class="absolute bottom-0 w-full h-16 bg-gradient-to-b {view ==
               'list'
                 ? `dark:from-zinc-950/0 dark:to-zinc-950
-                  from-slate-25/0 to-slate-25 group-hover:from-slate-100/0 group-hover:to-slate-100
+                  from-slate-25/0 to-slate-25 group-hover:from-slate-50/0 group-hover:to-slate-50
                   transition-all group-hover:dark:from-zinc-900/0 group-hover:dark:to-zinc-900`
                 : 'dark:from-zinc-900/0 dark:to-zinc-900 from-white/0 to-white'}"
             />
@@ -144,7 +144,7 @@
             <img
               src={bestImageURL(post.post, true)}
               loading="lazy"
-              class="object-cover bg-slate-100 rounded-md h-24 w-24 border border-slate-200 dark:border-zinc-700"
+              class="object-cover bg-slate-100 dark:bg-zinc-800 rounded-md h-24 w-24 border border-slate-200 dark:border-zinc-700"
             />
           </a>
         {:else}
