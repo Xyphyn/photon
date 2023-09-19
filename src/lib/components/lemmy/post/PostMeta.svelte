@@ -4,17 +4,23 @@
   import { Badge } from 'mono-svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
-  import type { Community, Person } from 'lemmy-js-client'
+  import type { Community, Person, SubscribedType } from 'lemmy-js-client'
   import {
     Bookmark,
+    Check,
     Icon,
     LockClosed,
     Megaphone,
+    Plus,
     Trash,
   } from 'svelte-hero-icons'
   import { getInstance } from '$lib/lemmy.js'
+  import { profile } from '$lib/auth.js'
+  import Subscribe from '../../../../routes/communities/Subscribe.svelte'
 
   export let community: Community | undefined = undefined
+  export let subscribed: SubscribedType | undefined = undefined
+
   export let user: Person | undefined = undefined
   export let published: Date | undefined = undefined
   export let title: string | undefined = undefined
@@ -36,7 +42,34 @@
 <div class="flex flex-col gap-1 w-full">
   <span class="flex flex-row gap-2 text-sm items-center">
     {#if community}
-      <Avatar url={community.icon} width={24} alt={community.name} />
+      <Subscribe let:subscribe let:subscribing>
+        <button
+          on:click={async () => {
+            if (!community) return
+            await subscribe(community.id, subscribed)
+            subscribed =
+              subscribed == 'NotSubscribed' ? 'Subscribed' : 'NotSubscribed'
+          }}
+          class="relative cursor-pointer"
+        >
+          <Avatar url={community.icon} width={28} alt={community.name} />
+          {#if subscribed != undefined && $profile?.jwt}
+            <div
+              class="absolute w-3.5 h-3.5 {subscribed == 'NotSubscribed'
+                ? 'bg-primary-900 dark:bg-primary-100 text-white dark:text-black'
+                : 'bg-primary-100 dark:bg-primary-900 text-black dark:text-white'} rounded-full ring-2 box-border
+            ring-slate-50 dark:ring-zinc-950
+            -bottom-1.5 -right-1.5 grid place-items-center transition-all"
+            >
+              <Icon
+                src={subscribed == 'NotSubscribed' ? Plus : Check}
+                mini
+                size="12"
+              />
+            </div>
+          {/if}
+        </button>
+      </Subscribe>
     {/if}
     <div class="flex flex-col text-xs">
       {#if community}

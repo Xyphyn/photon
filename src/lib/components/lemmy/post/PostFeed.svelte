@@ -41,7 +41,7 @@
             delay: index < 4 ? index * 100 : 0,
           }}
         >
-          <Post view={$userSettings.view} {post} />
+          <Post view={$userSettings.view} bind:post />
         </div>
       {/if}
     {/each}

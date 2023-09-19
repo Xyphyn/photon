@@ -1,23 +1,27 @@
 <script lang="ts">
   import { getClient } from '$lib/lemmy.js'
-  import type { CommunityView } from 'lemmy-js-client'
+  import type { CommunityView, SubscribedType } from 'lemmy-js-client'
   import { profile } from '$lib/auth.js'
   import { toast } from 'mono-svelte'
 
-  export let community: CommunityView
+  export let community: CommunityView | undefined = undefined
 
   let subscribing = false
 
-  async function subscribe() {
+  async function subscribe(
+    id: number | undefined = community?.community.id,
+    subscribed: SubscribedType | undefined = community?.subscribed
+  ) {
     if (!$profile?.jwt) return
+    if (!id || !subscribed) return
 
     subscribing = true
 
     try {
       const res = await getClient().followCommunity({
         auth: $profile.jwt,
-        community_id: community.community.id,
-        follow: community.subscribed == 'NotSubscribed',
+        community_id: id,
+        follow: subscribed == 'NotSubscribed',
       })
 
       subscribing = false
