@@ -30,10 +30,12 @@
 >
   <!-- svelte-ignore a11y-no-static-element-interactions -->
   <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <div
-    class="absolute -inset-x-2 md:-inset-x-4 inset-y-2 scale-95 opacity-0 bg-slate-100 dark:bg-zinc-900
+  {#if view == 'list'}
+    <div
+      class="absolute -inset-x-2 md:-inset-x-4 inset-y-2 scale-95 opacity-0 bg-slate-100 dark:bg-zinc-900
     -z-10 rounded-xl group-hover:opacity-100 group-hover:scale-100 transition-all"
-  />
+    />
+  {/if}
   <div
     class="flex {$userSettings.leftAlign
       ? 'flex-row-reverse'
@@ -126,7 +128,8 @@
               class="absolute bottom-0 w-full h-16 bg-gradient-to-b {view ==
               'list'
                 ? `dark:from-zinc-950/0 dark:to-zinc-950
-                  from-slate-25/0 to-slate-25 transition-all`
+                  from-slate-25/0 to-slate-25 group-hover:from-slate-100/0 group-hover:to-slate-100
+                  transition-all group-hover:dark:from-zinc-900/0 group-hover:dark:to-zinc-900`
                 : 'dark:from-zinc-900/0 dark:to-zinc-900 from-white/0 to-white'}"
             />
           {/if}
