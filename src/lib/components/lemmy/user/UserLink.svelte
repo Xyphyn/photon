@@ -29,7 +29,7 @@
     class:font-bold={user.admin}
   >
     <span class:font-medium={showInstance}>
-      {user.name}
+      {user.display_name || user.name}
     </span>
     {#if showInstance}
       <span class="text-slate-500 dark:text-zinc-500 font-normal">
