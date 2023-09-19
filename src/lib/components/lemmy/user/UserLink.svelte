@@ -17,7 +17,7 @@
 
 <a
   class="items-center inline-flex flex-row gap-1 hover:underline"
-  href="/u/${user.name}@${new URL(user.actor_id).hostname}"
+  href="/u/{user.name}@{new URL(user.actor_id).hostname}"
 >
   {#if avatar}
     <Avatar url={user.avatar} alt={user.name} width={avatarSize} />

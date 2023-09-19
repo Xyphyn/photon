@@ -32,7 +32,7 @@
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   {#if view == 'list'}
     <div
-      class="absolute -inset-x-2 md:-inset-x-4 inset-y-2 scale-95 opacity-0 bg-slate-100 dark:bg-zinc-900
+      class="absolute -inset-x-2 md:-inset-x-4 inset-y-2 scale-95 opacity-0 bg-slate-50 dark:bg-zinc-900
     -z-10 rounded-xl group-hover:opacity-100 group-hover:scale-100 transition-all"
     />
   {/if}
