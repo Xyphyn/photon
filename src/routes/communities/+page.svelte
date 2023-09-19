@@ -84,8 +84,7 @@
   </Select>
   <Sort selected={data.sort} />
   <form
-    on:submit|preventDefault={() =>
-      goto(`/search?q=${search}&type=Communities`)}
+    on:submit|preventDefault={() => searchParam($page.url, 'q', search, 'page')}
     class="flex flex-col sm:flex-row gap-2 sm:ml-auto items-center"
   >
     <TextInput bind:value={search} />
