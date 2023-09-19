@@ -11,7 +11,6 @@ An alternative web client for Lemmy with the UI of Xylo
 
 ![image](https://github.com/Xyphyn/photon/assets/80978739/dab88315-691b-4471-add7-321b8a803c54)
 
-
 ## Self-hosting
 
 Put Photon on your own domain for easier onboarding.
@@ -72,6 +71,7 @@ The following environment variables can be set to override the default settings:
 | PUBLIC_NSFW_BLUR                | `bool`              | true                                   |
 | PUBLIC_NEW_VOTE_BUTTONS         | `bool`              | false                                  |
 | PUBLIC_RANDOM_PLACEHOLDERS      | `bool`              | true                                   |
+| PUBLIC_HIDE_POWERED_BY          | `bool`              | false                                  |
 
 The values for `SortType`, `ListingType`, and `CommentSortType` are defined by the lemmy-js-client library.
 

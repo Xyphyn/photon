@@ -60,6 +60,7 @@ interface Settings {
 
   font: 'inter' | 'system' | 'browser'
   leftAlign: boolean
+  hidePhoton: boolean
 }
 
 export const defaultSettings: Settings = {
@@ -99,6 +100,7 @@ export const defaultSettings: Settings = {
   view: 'list',
   font: 'system',
   leftAlign: false,
+  hidePhoton: toBool(env.PUBLIC_HIDE_POWERED_BY) ?? false,
 }
 
 export const userSettings = writable(defaultSettings)

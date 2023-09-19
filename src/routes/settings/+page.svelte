@@ -16,6 +16,7 @@
   import { removalTemplate } from '$lib/components/lemmy/moderation/moderation.js'
   import { Button, Checkbox, Select } from 'mono-svelte'
   import ViewSelect from '$lib/components/lemmy/ViewSelect.svelte'
+  import { LINKED_INSTANCE_URL } from '$lib/instance.js'
 
   let data = {
     loading: false,
@@ -169,6 +170,17 @@
       bind:selected={$userSettings.leftAlign}
     />
   </Setting>
+  {#if LINKED_INSTANCE_URL}
+    <Setting>
+      <span slot="title">Disable "powered by"</span>
+      <span slot="description">
+        Disable the "Powered by Photon" in the top left corner.
+      </span>
+      <Checkbox bind:checked={$userSettings.hidePhoton}>
+        {$userSettings.hidePhoton ? 'Enabled' : 'Disabled'}
+      </Checkbox>
+    </Setting>
+  {/if}
 
   <SectionTitle class="mt-4">Instances</SectionTitle>
   <Setting>

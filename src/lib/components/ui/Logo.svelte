@@ -8,6 +8,7 @@
   viewBox="0 0 100 100"
   fill="none"
   xmlns="http://www.w3.org/2000/svg"
+  class="inline"
 >
   <linearGradient
     gradientTransform="rotate(315, 0.5, 0.5)"
