@@ -39,9 +39,9 @@
   <div
     class="flex {$userSettings.leftAlign
       ? 'flex-row-reverse'
-      : 'flex-row'} gap-4 max-w-full w-full"
+      : 'flex-row'} gap-4 max-w-full w-full min-w-0"
   >
-    <div class="flex flex-col w-full gap-2">
+    <div class="flex flex-col w-full gap-2 flex-1 max-w-full min-w-0">
       <div class="flex flex-col w-full gap-2">
         <PostMeta
           community={hideCommunity ? undefined : post.community}
@@ -66,8 +66,8 @@
           <Markdown source={post.post.name} inline />
         </a>
       </div>
-      {#if $userSettings.view == 'card'}
-        {#if isImage(post.post.url)}
+      {#if isImage(post.post.url)}
+        {#if view == 'card'}
           <!--disabled preloads here since most people will hover over every image while scrolling-->
           <svelte:component
             this={$userSettings.expandImages ? ExpandableImage : Empty}
@@ -106,38 +106,31 @@
               </picture>
             </svelte:element>
           </svelte:component>
-        {:else if post.post.url}
-          <PostLink
-            url={post.post.url}
-            thumbnail_url={post.post.thumbnail_url
-              ? `${post.post.thumbnail_url}?format=webp&thumbnail=512`
-              : undefined}
-            nsfw={post.post.nsfw}
-          />
         {/if}
+      {:else if post.post.url}
+        <PostLink
+          url={post.post.url}
+          thumbnail_url={view == 'card'
+            ? 'post.post.thumbnail_url'
+              ? `${post.post.thumbnail_url}?format=webp&thumbnail=512`
+              : undefined
+            : undefined}
+          nsfw={post.post.nsfw}
+        />
       {/if}
       {#if post.post.body && !post.post.nsfw && (view == 'list' || view == 'card')}
         <div
-          class="text-sm relative overflow-hidden {view == 'list'
-            ? `text-zinc-600 dark:text-zinc-400 max-h-24`
-            : 'text-slate-600 dark:text-zinc-400 max-h-48'} paragraph"
+          class="text-sm relative overflow-hidden
+          bg-gradient-to-b text-transparent from-slate-600 via-slate-600
+          dark:from-zinc-400 dark:via-zinc-400 bg-clip-text
+          {view == 'list' ? `max-h-24` : 'max-h-48'}"
         >
           <Markdown inline source={post.post.body.slice(0, 400)} />
-          {#if post.post.body.length > (view == 'list' ? 200 : 600)}
-            <div
-              class="absolute bottom-0 w-full h-16 bg-gradient-to-b {view ==
-              'list'
-                ? `dark:from-zinc-950/0 dark:to-zinc-950
-                  from-slate-25/0 to-slate-25 group-hover:from-slate-50/0 group-hover:to-slate-50
-                  transition-all group-hover:dark:from-zinc-900/0 group-hover:dark:to-zinc-900`
-                : 'dark:from-zinc-900/0 dark:to-zinc-900 from-white/0 to-white'}"
-            />
-          {/if}
         </div>
       {/if}
     </div>
     {#if ($userSettings.view == 'list' || $userSettings.view == 'compact') && (post.post.thumbnail_url || isImage(post.post.url))}
-      <div class="flex-none w-24 h-24">
+      <div class="flex-shrink-0 w-24 h-24">
         {#if !$userSettings.expandImages || (post.post.thumbnail_url && !isImage(post.post.url))}
           <a href={postLink(post.post)}>
             <!-- svelte-ignore a11y-missing-attribute -->
