@@ -57,12 +57,12 @@
     />
     <Profile
       description="Early supporter"
-      name="iJeff"
+      name="iJeff of lemdro.id"
       link="https://lemdro.id/u/ijeff"
     />
     <Profile
       description="Early contributor"
-      name="Cole"
+      name="Cole of lemdro.id"
       link="https://lemdro.id/u/cole"
     />
     <Profile
