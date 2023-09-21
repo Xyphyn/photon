@@ -172,10 +172,14 @@
   </Setting>
   {#if LINKED_INSTANCE_URL}
     <Setting>
-      <span slot="title">Remove Credits</span>
+      <span slot="title">
+        Remove original project's credit because you don't like them as a person
+      </span>
       <span slot="description">
         Disable the "Powered by Photon" in the top left corner, thus decreasing
-        visibility of the original project and limiting discovery.
+        visibility of the original project and limiting discovery. The creator
+        of Photon intentionally made it unobtrusive, but if you want to remove
+        it because a 120x16 div bothers you so much, you have that option.
       </span>
       <Checkbox bind:checked={$userSettings.hidePhoton}>
         {$userSettings.hidePhoton ? 'Enabled' : 'Disabled'}
