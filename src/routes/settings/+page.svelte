@@ -172,9 +172,10 @@
   </Setting>
   {#if LINKED_INSTANCE_URL}
     <Setting>
-      <span slot="title">Disable "powered by"</span>
+      <span slot="title">Remove Credits</span>
       <span slot="description">
-        Disable the "Powered by Photon" in the top left corner.
+        Disable the "Powered by Photon" in the top left corner, thus decreasing
+        visibility of the original project and limiting discovery.
       </span>
       <Checkbox bind:checked={$userSettings.hidePhoton}>
         {$userSettings.hidePhoton ? 'Enabled' : 'Disabled'}

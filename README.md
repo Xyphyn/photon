@@ -71,7 +71,7 @@ The following environment variables can be set to override the default settings:
 | PUBLIC_NSFW_BLUR                | `bool`              | true                                   |
 | PUBLIC_NEW_VOTE_BUTTONS         | `bool`              | false                                  |
 | PUBLIC_RANDOM_PLACEHOLDERS      | `bool`              | true                                   |
-| PUBLIC_HIDE_POWERED_BY          | `bool`              | false                                  |
+| PUBLIC_REMOVE_CREDIT            | `bool`              | false                                  |
 
 The values for `SortType`, `ListingType`, and `CommentSortType` are defined by the lemmy-js-client library.
 

@@ -100,7 +100,7 @@ export const defaultSettings: Settings = {
   view: 'list',
   font: 'system',
   leftAlign: false,
-  hidePhoton: toBool(env.PUBLIC_HIDE_POWERED_BY) ?? false,
+  hidePhoton: toBool(env.PUBLIC_REMOVE_CREDIT) ?? false,
 }
 
 export const userSettings = writable(defaultSettings)
