@@ -173,7 +173,8 @@
   {#if LINKED_INSTANCE_URL}
     <Setting>
       <span slot="title">
-        Remove original project's credit because you don't like them as a person
+        Remove original project's credit because you don't like the creator as a
+        person
       </span>
       <span slot="description">
         Disable the "Powered by Photon" in the top left corner, thus decreasing
