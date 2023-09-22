@@ -102,7 +102,7 @@ export const defaultSettings: Settings = {
   font: 'system',
   leftAlign: false,
   hidePhoton: toBool(env.PUBLIC_REMOVE_CREDIT) ?? false,
-  glow: true
+  glow: false,
 }
 
 export const userSettings = writable(defaultSettings)
