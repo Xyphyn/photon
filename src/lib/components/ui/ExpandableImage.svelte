@@ -47,6 +47,6 @@
   </div>
 {/if}
 
-<button on:click={() => (open = !open)} class="w-max {$$props.class}">
+<button on:click={() => (open = !open)} class="{$$props.class}">
   <slot />
 </button>
