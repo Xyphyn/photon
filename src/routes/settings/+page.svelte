@@ -170,13 +170,6 @@
       bind:selected={$userSettings.leftAlign}
     />
   </Setting>
-  <Setting>
-    <span slot="title">Glow</span>
-    <p slot="description">Show a nice little glow in the top left corner.</p>
-    <Checkbox bind:checked={$userSettings.glow}>
-      {$userSettings.glow ? 'Enabled' : 'Disabled'}
-    </Checkbox>
-  </Setting>
   {#if LINKED_INSTANCE_URL}
     <Setting>
       <span slot="title">

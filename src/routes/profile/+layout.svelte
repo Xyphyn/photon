@@ -9,7 +9,7 @@
   <title>Profile</title>
 </svelte:head>
 
-<div class="flex flex-col gap-4">
+<div class="flex flex-col gap-4 h-full">
   <MultiSelect
     headless
     options={['/profile/user', '/profile/settings', '/profile/blocks']}

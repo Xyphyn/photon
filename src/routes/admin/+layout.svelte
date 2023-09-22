@@ -4,7 +4,7 @@
   import MultiSelect from '$lib/components/input/Switch.svelte'
 </script>
 
-<div class="flex flex-col gap-4">
+<div class="flex flex-col gap-4 h-full">
   <MultiSelect
     headless
     options={[
