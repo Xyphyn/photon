@@ -13,6 +13,7 @@
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import { Button } from 'mono-svelte'
   import { isSubscribed } from '$lib/util.js'
+  import { profile } from '$lib/auth.js'
 
   export let community: CommunityView
 </script>
@@ -31,7 +32,7 @@
     <div class="ml-auto">
       <Subscribe {community} let:subscribe let:subscribing>
         <Button
-          disabled={subscribing}
+          disabled={subscribing || !$profile?.jwt}
           loading={subscribing}
           on:click={async () => {
             const res = await subscribe()
