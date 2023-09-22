@@ -13,6 +13,7 @@
   import { ToastContainer } from 'mono-svelte'
   import { onMount } from 'svelte'
   import { browser } from '$app/environment'
+  import Gradient from '$lib/components/ui/Gradient.svelte'
 
   nProgress.configure({
     minimum: 0.4,
@@ -55,8 +56,7 @@
 </svelte:head>
 
 <div
-  class="flex flex-col min-h-screen
-  font-inter
+  class="main-container min-h-screen
   {$userSettings.font == 'inter'
     ? 'font-inter'
     : $userSettings.font == 'system'
@@ -64,16 +64,37 @@
     : 'font-sans'}
   "
 >
+  {#if $userSettings.glow}
+    <Gradient />
+  {/if}
   <Navbar />
+  <Sidebar class="z-0 w-full min-w-0 sticky" />
   <ToastContainer />
   <Moderation />
-  <div class="flex flex-row h-full w-full max-w-full flex-1">
-    <Sidebar />
-    <main
-      class="p-3 sm:p-6 min-w-0 w-full flex-[3] sm:rounded-tl-lg
-      border-slate-200 dark:border-zinc-900 sm:border-l border-t bg-slate-25 dark:bg-zinc-950"
-    >
-      <slot />
-    </main>
-  </div>
+  <main
+    style="grid-area: c;"
+    class="p-3 sm:p-6 sm:rounded-l-lg max-w-full min-w-0
+      border-slate-200 dark:border-zinc-900 sm:border-l border-t bg-slate-25 dark:bg-zinc-950
+      h-full place-self-stretch"
+  >
+    <slot />
+  </main>
 </div>
+
+<style>
+  .main-container {
+    display: grid;
+    grid-template-columns: minmax(min-content, auto) 3fr;
+    grid-template-areas:
+      'a a'
+      'b c';
+    place-items: start;
+  }
+
+  @media (min-width: 640px) {
+    .main-container {
+      grid-template-columns: minmax(auto-fit, 1fr) 1fr;
+      grid-template-rows: max-content;
+    }
+  }
+</style>

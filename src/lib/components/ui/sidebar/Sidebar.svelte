@@ -3,9 +3,11 @@
     ArrowLeftOnRectangle,
     ChevronDoubleLeft,
     Cog6Tooth,
+    ComputerDesktop,
     GlobeAlt,
     Home,
     Icon,
+    ServerStack,
     UserGroup,
   } from 'svelte-hero-icons'
   import { profile, profileData } from '$lib/auth.js'
@@ -16,14 +18,16 @@
   import { flip } from 'svelte/animate'
   import { expoOut } from 'svelte/easing'
   import { Button } from 'mono-svelte'
+  import { site } from '$lib/lemmy.js'
 </script>
 
-<nav
-  class="hidden sm:flex flex-col pl-4 pr-4 py-4 overflow-auto sticky top-16 bottom-0
+<aside
+  class="hidden sm:flex flex-col pl-4 pr-4 py-4 overflow-auto top-16 bottom-0
   gap-1 max-h-[calc(100svh-4rem)] w-full bg-slate-50 dark:bg-black
   {$userSettings.expandSidebar
-    ? 'max-w-[25%] resize-x min-w-[12rem]'
-    : 'w-max max-w-max min-w-max'}"
+    ? 'max-w-[35vw] w-[25vw] resize-x min-w-[12rem]'
+    : 'w-max max-w-max min-w-max'} {$$props.class}"
+  style="grid-area: b;"
 >
   <Button
     on:click={() =>
@@ -90,4 +94,20 @@
       <span class:hidden={!$userSettings.expandSidebar}>Log in</span>
     </Button>
   {/if}
-</nav>
+  {#if $userSettings.expandSidebar}
+    <div
+      class="mt-4 text-slate-600 dark:text-zinc-400 text-sm flex flex-row
+    items-center gap-4 flex-wrap"
+    >
+      <span class="flex gap-1 items-center" title="Lemmy version">
+        <Icon src={ServerStack} size="16" mini />
+        {$site?.version}
+      </span>
+      <!-- svelte-ignore missing-declaration -->
+      <span class="flex gap-1 items-center" title="Photon version">
+        <Icon src={ComputerDesktop} size="16" mini />
+        {__VERSION__}
+      </span>
+    </div>
+  {/if}
+</aside>
