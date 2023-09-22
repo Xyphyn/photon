@@ -72,17 +72,17 @@
           <svelte:component
             this={$userSettings.expandImages ? ExpandableImage : Empty}
             url={bestImageURL(post.post, false, 2048)}
-            class="self-start max-w-full"
+            class="self-stretch max-w-full"
           >
             <svelte:element
               this={$userSettings.expandImages ? 'div' : 'a'}
               href={postLink(post.post)}
-              class="self-start overflow-hidden z-10 relative bg-slate-200 dark:bg-zinc-800 rounded-md max-w-full"
+              class="self-stretch overflow-hidden z-10 relative bg-slate-200 dark:bg-zinc-800 rounded-md max-w-full"
               data-sveltekit-preload-data="off"
               aria-label={post.post.name}
             >
               <picture
-                class="rounded-md overflow-hidden max-h-[min(50vh,500px)] w-full max-w-full"
+                class="flex justify-center rounded-md overflow-hidden max-h-[min(min-content, 50vh,500px)] w-full max-w-full"
               >
                 <source
                   srcset={bestImageURL(post.post, false, 512)}
