@@ -123,14 +123,14 @@
           nsfw={post.post.nsfw}
         />
       {/if}
-      {#if post.post.body && !post.post.nsfw && (view == 'list' || view == 'card')}
+      {#if post.post.body && !post.post.nsfw && view != 'compact'}
         <div
           class="text-sm relative overflow-hidden
           bg-gradient-to-b text-transparent from-slate-600 via-slate-600
           dark:from-zinc-400 dark:via-zinc-400 bg-clip-text
           {view == 'list' ? `max-h-24` : 'max-h-48'}"
         >
-          <Markdown inline source={post.post.body.slice(0, 400)} />
+          <Markdown inline source={post.post.body.slice(0, 500)} />
         </div>
       {/if}
     </div>
