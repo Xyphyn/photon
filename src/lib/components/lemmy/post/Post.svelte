@@ -15,7 +15,7 @@
   export let post: PostView
   export let actions: boolean = true
   export let hideCommunity = false
-  export let view: 'card' | 'list' | 'compact' = $userSettings.view
+  export let view = $userSettings.view
 
   let loaded = false
 </script>
@@ -24,13 +24,15 @@
   color="distinct"
   padding="none"
   class="relative max-w-full min-w-0 w-full group
-  {view == 'list' || view == 'compact'
-    ? '!bg-transparent !border-0'
-    : 'p-5'} {view == 'list' ? 'py-5' : view == 'compact' ? 'py-4' : ''}"
+  {view != 'card' ? '!bg-transparent !border-0' : 'p-5'} {view == 'compact'
+    ? 'py-4'
+    : view == 'list'
+    ? 'py-5'
+    : 'py-5'}"
 >
   <!-- svelte-ignore a11y-no-static-element-interactions -->
   <!-- svelte-ignore a11y-click-events-have-key-events -->
-  {#if view == 'list'}
+  {#if view == 'list' || view == 'cozy'}
     <div
       class="absolute -inset-x-2 md:-inset-x-4 inset-y-2 scale-95 opacity-0 bg-slate-50 dark:bg-zinc-900
     -z-10 rounded-xl group-hover:opacity-100 group-hover:scale-100 transition-all"
@@ -67,7 +69,7 @@
         </a>
       </div>
       {#if isImage(post.post.url)}
-        {#if view == 'card'}
+        {#if view == 'card' || view == 'cozy'}
           <!--disabled preloads here since most people will hover over every image while scrolling-->
           <svelte:component
             this={$userSettings.expandImages ? ExpandableImage : Empty}
@@ -77,12 +79,15 @@
             <svelte:element
               this={$userSettings.expandImages ? 'div' : 'a'}
               href={postLink(post.post)}
-              class="self-stretch overflow-hidden z-10 relative bg-slate-200 dark:bg-zinc-800 rounded-md max-w-full"
+              class="self-stretch overflow-hidden z-10 relative {loaded
+                ? ''
+                : 'bg-slate-200 dark:bg-zinc-800'} rounded-md max-w-full"
               data-sveltekit-preload-data="off"
               aria-label={post.post.name}
             >
               <picture
-                class="flex justify-center rounded-md overflow-hidden max-h-[min(min-content, 50vh,500px)] w-full max-w-full"
+                class="flex justify-center rounded-xl
+                 overflow-hidden w-[50vh] h-auto max-w-full"
               >
                 <source
                   srcset={bestImageURL(post.post, false, 512)}

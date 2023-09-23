@@ -14,8 +14,7 @@
   class="flex flex-col {$userSettings.view == 'card'
     ? 'gap-3 md:gap-4'
     : ''} divide-slate-200 dark:divide-zinc-800 z-[5]"
-  class:divide-y={$userSettings.view == 'compact' ||
-    $userSettings.view == 'list'}
+  class:divide-y={$userSettings.view != 'card'}
 >
   {#if posts.length == 0}
     <div class="h-full grid place-items-center">

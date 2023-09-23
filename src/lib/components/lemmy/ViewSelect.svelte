@@ -9,7 +9,8 @@
     <Icon src={ViewColumns} size="14" mini />
     View
   </span>
-  <option value="list">List</option>
   <option value="card">Cards</option>
+  <option value="cozy">Cozy</option>
+  <option value="list">List</option>
   <option value="compact">Compact</option>
 </Select>

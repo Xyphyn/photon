@@ -5,6 +5,8 @@ import { env } from '$env/dynamic/public'
 console.log('Using the following default settings from the environment:')
 console.log(env)
 
+export type View = 'card' | 'cozy' | 'list' | 'compact'
+
 export const SSR_ENABLED = env.PUBLIC_SSR_ENABLED?.toLowerCase() == 'true'
 
 // Returns a proper boolean or null.  Used to set boolean values from env var strings while allowing nullish coalescing to set default values.
@@ -29,7 +31,7 @@ interface Settings {
   // deprecated
   showCompactPosts: boolean
 
-  view: 'card' | 'list' | 'compact'
+  view: View
 
   defaultSort: {
     sort: SortType
@@ -97,7 +99,7 @@ export const defaultSettings: Settings = {
   modlogCardView: toBool(env.PUBLIC_MODLOG_CARD_VIEW) ?? undefined,
   debugInfo: false,
   expandImages: true,
-  view: 'list',
+  view: 'cozy',
   font: 'system',
   leftAlign: false,
   hidePhoton: toBool(env.PUBLIC_REMOVE_CREDIT) ?? false,

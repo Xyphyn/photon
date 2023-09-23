@@ -11,9 +11,9 @@
 </script>
 
 <Material
-  class="flex flex-col flex-1 gap-1 {view == 'list' || view == 'compact'
+  class="flex flex-col flex-1 gap-1 {view != 'card'
     ? '!bg-transparent !border-0 rounded-none'
-    : 'p-5'} {view == 'list' ? 'py-5' : view == 'compact' ? 'py-4' : ''}"
+    : 'p-5'} {view == 'list' ? 'py-5' : view == 'compact' ? 'py-4' : 'py-5'}"
   color="distinct"
   padding="none"
 >
