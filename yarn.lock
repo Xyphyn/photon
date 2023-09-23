@@ -3023,10 +3023,18 @@ mlly@^1.2.0, mlly@^1.4.0:
     pkg-types "^1.0.3"
     ufo "^1.1.2"
 
-mono-svelte@^0.3.5:
-  version "0.3.5"
-  resolved "https://registry.yarnpkg.com/mono-svelte/-/mono-svelte-0.3.5.tgz#1b9ae079ea54a1454f014d8ab8571c3a799a530f"
-  integrity sha512-rYOzJ+2T67XL8qLBYiyzUtuRl0eVjF+Fj+odiR3MpL8oSSdXi8up5WN5Ylfh3rxnl5ln1PtzG3PbHLwPWj4Kvw==
+mono-svelte@^0.3.7:
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/mono-svelte/-/mono-svelte-0.3.7.tgz#d8100ca072699d672fb951dc33cb9d9f9fb2b60f"
+  integrity sha512-hgxFt7JhaX+jLIQNpbi29XJZ5yuYk3kyCX6sEBsUppxcrT/xqN7ajAm8uXaHg/kSORoiIBR38iHftEMMbeaxgA==
+  dependencies:
+    svelte-focus-trap "^1.2.0"
+    svelte-hero-icons "^5.0.0"
+
+mousetrap@^1.6.5:
+  version "1.6.5"
+  resolved "https://registry.yarnpkg.com/mousetrap/-/mousetrap-1.6.5.tgz#8a766d8c272b08393d5f56074e0b5ec183485bf9"
+  integrity sha512-QNo4kEepaIBwiT8CDhP98umTetp+JNfQYBWvC1pc6/OAibuXtRcxZ58Qz8skvEHYvURne/7R8T5VoOI7rDsEUA==
 
 mri@^1.1.0:
   version "1.2.0"
@@ -3768,6 +3776,13 @@ svelte-check@^3.0.1:
     sade "^1.7.4"
     svelte-preprocess "^5.0.4"
     typescript "^5.0.3"
+
+svelte-focus-trap@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/svelte-focus-trap/-/svelte-focus-trap-1.2.0.tgz#8794510edea7afb527a53c60c1207aa9b9c9cda5"
+  integrity sha512-/hIUHgKcFlewsQreq8v7DYNBkQe7rR0c94PNBOCsmeUwoIYAy6iXJ1pH0k3rWpjwZHKtUxeXbX1iRFlFhipbeg==
+  dependencies:
+    mousetrap "^1.6.5"
 
 svelte-hero-icons@^5.0.0:
   version "5.0.0"

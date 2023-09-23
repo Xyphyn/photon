@@ -1,7 +1,7 @@
 <script lang="ts">
   import Navbar from '$lib/components/ui/Navbar.svelte'
   import '../style/app.css'
-  import { navigating } from '$app/stores'
+  import { navigating, page } from '$app/stores'
   import nProgress from 'nprogress'
   import 'nprogress/nprogress.css'
   import Moderation from '$lib/components/lemmy/moderation/Moderation.svelte'
@@ -10,9 +10,10 @@
   import { pwaInfo } from 'virtual:pwa-info'
   import { inDarkTheme, theme } from '$lib/ui/colors.js'
   import { userSettings } from '$lib/settings.js'
-  import { ToastContainer } from 'mono-svelte'
+  import { Button, ToastContainer } from 'mono-svelte'
   import { onMount } from 'svelte'
   import { browser } from '$app/environment'
+  import { Forward, Icon } from 'svelte-hero-icons'
 
   nProgress.configure({
     minimum: 0.4,
@@ -40,6 +41,13 @@
 
   onMount(() => {
     if (browser) {
+      if (window.location.hash == 'main') {
+        history.replaceState(
+          null,
+          '',
+          window.location.toString().replace('#main', '')
+        )
+      }
       window
         .matchMedia('(prefers-color-scheme: dark)')
         .addEventListener('change', (event) => {
@@ -53,6 +61,14 @@
   <meta name="theme-color" content={darkTheme ? '#020202' : '#f6f9fb'} />
   {@html webManifest}
 </svelte:head>
+
+<Button
+  class="fixed -top-16 focus:top-0 left-0 m-4 z-[300] transition-all"
+  href="#main"
+>
+  <Icon src={Forward} mini size="16" slot="prefix" />
+  Skip Navigation
+</Button>
 
 <div
   class="flex flex-col min-h-screen
@@ -72,6 +88,7 @@
     <main
       class="p-3 sm:p-6 min-w-0 w-full flex-[3] sm:rounded-tl-lg
       border-slate-200 dark:border-zinc-900 sm:border-l border-t bg-slate-25 dark:bg-zinc-950"
+      id="main"
     >
       <slot />
     </main>
