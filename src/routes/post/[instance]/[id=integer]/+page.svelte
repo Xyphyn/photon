@@ -14,6 +14,7 @@
     ChevronDoubleUp,
     ExclamationTriangle,
     Icon,
+    Plus,
   } from 'svelte-hero-icons'
   import PostLink from '$lib/components/lemmy/post/PostLink.svelte'
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
@@ -102,6 +103,8 @@
       max_depth: data.post.post_view.counts.comments > 100 ? 1 : 3,
     })
   }
+
+  let showCreateComment = false
 </script>
 
 <svelte:head>
@@ -281,16 +284,28 @@
     </div>
   {:then comments}
     {#if $profile?.user}
-      <CommentForm
-        postId={post.post_view.post.id}
-        on:comment={(comment) =>
-          (comments.comments = [
-            comment.detail.comment_view,
-            ...comments.comments,
-          ])}
-        locked={post.post_view.post.locked ||
-          $page.params.instance.toLowerCase() != $instance.toLowerCase()}
-      />
+      {#if showCreateComment}
+        <CommentForm
+          postId={post.post_view.post.id}
+          on:comment={(comment) =>
+            (comments.comments = [
+              comment.detail.comment_view,
+              ...comments.comments,
+            ])}
+          locked={post.post_view.post.locked ||
+            $page.params.instance.toLowerCase() != $instance.toLowerCase()}
+        />
+      {:else}
+        <Button
+          on:click={() => (showCreateComment = !showCreateComment)}
+          class="w-max"
+          size="lg"
+          rounding="lg"
+        >
+          <Icon src={Plus} size="16" mini slot="prefix" />
+          Add a comment
+        </Button>
+      {/if}
     {/if}
     {#await buildCommentsTreeAsync(comments.comments)}
       <div class="h-16 mx-auto grid place-items-center">
