@@ -29,6 +29,7 @@
         site={$site.site_view}
         taglines={$site.taglines}
         admins={$site.admins}
+        version={$site.version}
       />
     {/if}
   </div>
@@ -106,6 +107,7 @@
         site={$site.site_view}
         taglines={$site.taglines}
         admins={$site.admins}
+        version={$site.version}
       />
     {/if}
   </div>

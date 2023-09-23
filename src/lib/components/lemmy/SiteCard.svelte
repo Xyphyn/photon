@@ -15,12 +15,14 @@
     Icon,
     Newspaper,
     PencilSquare,
+    ServerStack,
     UserGroup,
   } from 'svelte-hero-icons'
 
   export let site: SiteView
   export let taglines: Tagline[] | undefined = undefined
   export let admins: PersonView[] | undefined = undefined
+  export let version: string | undefined = undefined
 </script>
 
 <StickyCard>
@@ -103,4 +105,14 @@
   <Markdown source={site.site.description} />
   <hr class="border-slate-300 dark:border-zinc-700" />
   <Markdown source={site.site.sidebar} />
+  {#if version}
+    <hr class="border-slate-300 dark:border-zinc-700" />
+    <span
+      class="text-slate-600 flex flex-row items-center gap-1 dark:text-zinc-400"
+      title="Lemmy version"
+    >
+      <Icon src={ServerStack} mini size="16" />
+      {version}
+    </span>
+  {/if}
 </StickyCard>
