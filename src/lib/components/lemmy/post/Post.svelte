@@ -154,7 +154,7 @@
     {/if}
   </div>
   {#if actions}
-    <div class="w-full" class:mt-2={view == 'list'}>
+    <div class="w-full mt-2">
       <PostActions
         bind:post
         on:edit={(e) => {
