@@ -8,7 +8,7 @@
   import { onDestroy, onMount } from 'svelte'
   import { setSessionStorage } from '$lib/session.js'
   import PostFeed from '$lib/components/lemmy/post/PostFeed.svelte'
-  import { Button, Modal } from 'mono-svelte'
+  import { Button, Modal, toast } from 'mono-svelte'
   import { afterNavigate } from '$app/navigation'
 
   export let data
@@ -54,11 +54,23 @@
         <h1 class="font-bold text-xl">
           {data.community.community_view.community.title}
         </h1>
-        <span class="dark:text-zinc-400 text-slate-600 text-sm">
+        <button
+          on:click={() => {
+            navigator?.clipboard?.writeText?.(
+              `!${data.community.community_view.community.name}@${
+                new URL(data.community.community_view.community.actor_id)
+                  .hostname
+              }`
+            )
+
+            toast({ content: 'Copied to clipboard.' })
+          }}
+          class="dark:text-zinc-400 text-slate-600 text-sm"
+        >
           !{data.community.community_view.community.name}@{new URL(
             data.community.community_view.community.actor_id
           ).hostname}
-        </span>
+        </button>
       </div>
     </div>
     <div class="flex flex-row gap-4 max-w-full w-full items-end">
@@ -86,7 +98,7 @@
           <span class="text-primary-900 dark:text-primary-100">
             {data.page * 20}
           </span>
-           posts
+          posts
         </span>
       {/if}
     </Pageination>
