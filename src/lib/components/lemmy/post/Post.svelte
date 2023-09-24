@@ -79,12 +79,35 @@
             <svelte:element
               this={$userSettings.expandImages ? 'div' : 'a'}
               href={postLink(post.post)}
-              class="container mx-auto z-10 relative {loaded
+              class="container mx-auto z-10 transition-colors {loaded
                 ? ''
-                : 'bg-slate-200 dark:bg-zinc-800'} rounded-md w-fit max-h-[70vh]"
+                : 'bg-slate-200 dark:bg-zinc-800'} rounded-xl max-h-[60vh] relative overflow-hidden"
               data-sveltekit-preload-data="off"
               aria-label={post.post.name}
             >
+              <picture
+                class="absolute top-1/2 -translate-y-1/2 left-0 w-full
+               opacity-30 object-cover scale-[1.2] blur-3xl -z-10"
+              >
+                <source
+                  srcset={bestImageURL(post.post, false, 512)}
+                  media="(max-width: 256px)"
+                />
+                <source
+                  srcset={bestImageURL(post.post, false, 512)}
+                  media="(max-width: 512px)"
+                />
+                <!-- svelte-ignore a11y-missing-attribute -->
+                <img
+                  src={bestImageURL(post.post, false, 1024)}
+                  loading="lazy"
+                  class="w-full h-full object-cover rounded-xl blur-3xl z-50"
+                  width={512}
+                  height={300}
+                  class:blur-3xl={post.post.nsfw && $userSettings.nsfwBlur}
+                  on:load={() => (loaded = true)}
+                />
+              </picture>
               <picture class="max-h-[inherit]">
                 <source
                   srcset={bestImageURL(post.post, false, 512)}
@@ -98,7 +121,8 @@
                 <img
                   src={bestImageURL(post.post, false, 1024)}
                   loading="lazy"
-                  class="max-h-[inherit] w-auto rounded-md z-30 opacity-0 transition-opacity duration-300"
+                  class="max-h-[inherit] max-w-full h-auto z-30
+                  opacity-0 transition-opacity duration-300 object-contain mx-auto"
                   class:opacity-100={loaded}
                   width={512}
                   height={300}

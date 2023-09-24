@@ -63,6 +63,8 @@ interface Settings {
   font: 'inter' | 'system' | 'browser'
   leftAlign: boolean
   hidePhoton: boolean
+
+  newWidth: boolean
 }
 
 export const defaultSettings: Settings = {
@@ -103,6 +105,7 @@ export const defaultSettings: Settings = {
   font: 'system',
   leftAlign: false,
   hidePhoton: toBool(env.PUBLIC_REMOVE_CREDIT) ?? false,
+  newWidth: false,
 }
 
 export const userSettings = writable(defaultSettings)

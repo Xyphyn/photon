@@ -47,6 +47,6 @@
   </div>
 {/if}
 
-<button on:click={() => (open = !open)} class="{$$props.class}">
+<button on:click={() => (open = !open)} class="contents {$$props.class}">
   <slot />
 </button>

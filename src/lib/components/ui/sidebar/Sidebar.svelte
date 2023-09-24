@@ -23,7 +23,7 @@
   gap-1 max-h-[calc(100svh-4rem)] w-full bg-slate-50 dark:bg-black
   {$userSettings.expandSidebar
     ? 'max-w-[25%] resize-x min-w-[12rem]'
-    : 'w-max max-w-max min-w-max'}"
+    : 'w-max max-w-max min-w-max'} {$$props.class}"
 >
   <Button
     on:click={() =>

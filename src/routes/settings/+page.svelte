@@ -81,6 +81,15 @@
         {$userSettings.randomPlaceholders ? 'Enabled' : 'Disabled'}
       </Checkbox>
     </Setting>
+    <Setting>
+      <span slot="title">Limit Layout Width</span>
+      <span slot="description">
+        Improve readability by limiting main content width.
+      </span>
+      <Checkbox bind:checked={$userSettings.newWidth}>
+        {$userSettings.newWidth ? 'Enabled' : 'Disabled'}
+      </Checkbox>
+    </Setting>
 
     <Setting>
       <span slot="title">Default sort</span>
