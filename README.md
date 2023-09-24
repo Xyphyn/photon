@@ -127,6 +127,7 @@ Want your instance added here? Make a GitHub issue or make a PR! (this is for ge
 | --------------------------------------- | ------------ | --------------------------------------------- |
 | [phtn.app](https://phtn.app)            | 🇺🇸 US West   | [photon@phtn.app](photon@phtn.app)            |
 | [ph.openxng.com](https://ph.opnxng.com) | 🇸🇬 Singapore | [about.openxng.com](https://about.opnxng.com) |
+| [photon.zhenyapav.com](https://photon.zhenyapav.com) | 🇮🇸 Iceland | [zhenyapav@zhenyapav.com](zhenyapav@zhenyapav.com) |
 
 ## Donate
 
