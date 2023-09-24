@@ -35,7 +35,9 @@
   </div>
 </Modal>
 
-<div class="flex flex-row gap-4 w-full h-full xl:divide-x">
+<div
+  class="flex flex-row gap-4 w-full h-full xl:divide-x divide-slate-200 dark:divide-zinc-900"
+>
   <div class="flex flex-col gap-4 max-w-full w-full min-w-0">
     <header>
       <h1
