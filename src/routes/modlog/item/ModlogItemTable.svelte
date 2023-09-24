@@ -23,6 +23,8 @@
         avatarSize={20}
         user={item.moderator}
       />
+    {:else}
+      <p class="text-slate-500 dark:text-zinc-500">Hidden<p/>
     {/if}
   </td>
   <td>
