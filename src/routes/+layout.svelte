@@ -93,7 +93,7 @@
   >
     <Sidebar />
     <div
-      class="w-full border-t sm:border-l border-slate-200 dark:border-zinc-900
+      class="w-full min-w-0 border-t sm:border-l border-slate-200 dark:border-zinc-900
     sm:rounded-xl bg-slate-25 dark:bg-zinc-950"
     >
       <main
