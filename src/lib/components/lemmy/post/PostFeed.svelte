@@ -8,6 +8,7 @@
   import { fly } from 'svelte/transition'
 
   export let posts: PostView[]
+  export let community: boolean = false
 </script>
 
 <div
@@ -40,7 +41,7 @@
             delay: index < 4 ? index * 100 : 0,
           }}
         >
-          <Post view={$userSettings.view} bind:post />
+          <Post hideCommunity={community} view={$userSettings.view} bind:post />
         </div>
       {/if}
     {/each}

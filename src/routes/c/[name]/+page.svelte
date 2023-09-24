@@ -81,7 +81,7 @@
         </Button>
       </div>
     </div>
-    <PostFeed posts={data.posts.posts} />
+    <PostFeed community={true} posts={data.posts.posts} />
 
     <Pageination
       page={data.page}
