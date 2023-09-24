@@ -123,11 +123,13 @@ values:
 
 Want your instance added here? Make a GitHub issue or make a PR! (this is for general purpose Photon instances.)
 
-| Instance                                | Location     | Contact                                       |
-| --------------------------------------- | ------------ | --------------------------------------------- |
-| [phtn.app](https://phtn.app)            | 🇺🇸 US West   | [photon@phtn.app](photon@phtn.app)            |
-| [ph.openxng.com](https://ph.opnxng.com) | 🇸🇬 Singapore | [about.openxng.com](https://about.opnxng.com) |
-| [photon.zhenyapav.com](https://photon.zhenyapav.com) | 🇮🇸 Iceland | [zhenyapav@zhenyapav.com](zhenyapav@zhenyapav.com) |
+[phtn.app](https://phtn.app) is the official instance and will get updates instantly.
+
+| Instance                                             | Location     | Contact                                            |
+| ---------------------------------------------------- | ------------ | -------------------------------------------------- |
+| [phtn.app (Official)](https://phtn.app)              | 🇺🇸 US West   | [photon@xylight.dev](photon@xylight.dev)           |
+| [ph.openxng.com](https://ph.opnxng.com)              | 🇸🇬 Singapore | [about.openxng.com](https://about.opnxng.com)      |
+| [photon.zhenyapav.com](https://photon.zhenyapav.com) | 🇮🇸 Iceland   | [zhenyapav@zhenyapav.com](zhenyapav@zhenyapav.com) |
 
 ## Donate
 
