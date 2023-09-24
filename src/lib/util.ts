@@ -3,6 +3,7 @@ import { toast } from 'mono-svelte'
 import { userSettings } from '$lib/settings.js'
 import { get } from 'svelte/store'
 import type { SubscribedType } from 'lemmy-js-client'
+import { page } from '$app/stores'
 
 export const findClosestNumber = (numbers: number[], target: number): number =>
   numbers.reduce((prev, curr) =>
@@ -105,3 +106,27 @@ export const DOMAIN_REGEX_FORMS = '^((?!-)[A-Za-z0-9-]{1,63}.)+[A-Za-z]{2,63}'
 
 export const isSubscribed = (subscribed: SubscribedType) =>
   subscribed == 'Pending' || subscribed == 'Subscribed'
+
+export const routes = {
+  '/': 'Frontpage',
+  get '/post/[instance]/[id=integer]'() {
+    return get(page)?.data?.post?.post_view?.post?.name
+  },
+  '/settings': 'Settings',
+  '/communities': 'Communities',
+  '/search': 'Search',
+  '/moderation': 'Moderation',
+  '/create/post': 'Create post',
+  '/create/community': 'Create community',
+  get '/c/[name]'() {
+    return get(page)?.data?.community?.community_view?.community?.title
+  },
+  '/accounts': 'Accounts',
+  '/admin/config': 'Administration',
+  '/inbox': 'Inbox',
+  '/saved': 'Saved',
+  '/about': 'About',
+  '/profile/user': 'Profile',
+  '/profile/settings': 'Profile Settings',
+  '/profile/blocks': 'Blocks',
+}

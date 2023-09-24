@@ -1,3 +1,5 @@
+import { writable } from 'svelte/store'
+
 interface SessionStorage {
   lastSeenCommunity: // prettier-ignore
   {
@@ -33,3 +35,9 @@ export const getSessionStorage = (
 ): SessionStorage[typeof key] => {
   return JSON.parse(sessionStorage.getItem(key)!)
 }
+
+interface Route {
+  title: string
+}
+
+export const route = writable<Route | undefined>(undefined)

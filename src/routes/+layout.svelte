@@ -14,6 +14,8 @@
   import { onMount } from 'svelte'
   import { browser } from '$app/environment'
   import { Forward, Icon } from 'svelte-hero-icons'
+  import { DEFAULT_INSTANCE_URL, instance } from '$lib/instance.js'
+  import { routes } from '$lib/util.js'
 
   nProgress.configure({
     minimum: 0.4,
@@ -55,6 +57,8 @@
         })
     }
   })
+
+  $: title = routes[($page.route.id as keyof typeof routes) ?? '']
 </script>
 
 <svelte:head>
@@ -80,7 +84,7 @@
     : 'font-sans'}
   "
 >
-  <Navbar />
+  <Navbar {title} />
   <ToastContainer />
   <Moderation />
   <div

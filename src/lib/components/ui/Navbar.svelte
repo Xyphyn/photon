@@ -40,12 +40,14 @@
     UserCircle,
     UserGroup,
   } from 'svelte-hero-icons'
+  import { fly } from 'svelte/transition'
+
+  export let title: string | undefined = ''
 </script>
 
 <nav
   class="flex flex-row gap-2 items-center sticky top-0 bg-slate-50/80
   dark:bg-black/80 backdrop-blur-3xl w-full mx-auto px-4 py-2 z-50 box-border h-16
-  
   "
 >
   <div class="flex flex-row gap-2 items-center mr-auto">
@@ -88,9 +90,19 @@
           <span
             class="text-sm font-bold group-hover:bg-gradient-to-r
             group-hover:text-transparent group-hover:bg-clip-text
-            group-hover:from-violet-500 group-hover:to-pink-600 transition-colors"
+            group-hover:from-violet-500 group-hover:to-pink-600 transition-colors
+            grid place-items-start"
           >
-            {$instance}
+            {#key title || $instance}
+              <span
+                in:fly={{ y: -12 }}
+                out:fly={{ y: 12 }}
+                style="grid-row: 1; grid-column: 1; max-width: 24ch;"
+                class="overflow-hidden break-words overflow-ellipsis whitespace-nowrap"
+              >
+                {title || $instance}
+              </span>
+            {/key}
           </span>
         </div>
       {/if}
