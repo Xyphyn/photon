@@ -74,21 +74,18 @@
           <svelte:component
             this={$userSettings.expandImages ? ExpandableImage : Empty}
             url={bestImageURL(post.post, false, 2048)}
-            class="self-stretch max-w-full"
+            class="container mx-auto w-fit"
           >
             <svelte:element
               this={$userSettings.expandImages ? 'div' : 'a'}
               href={postLink(post.post)}
-              class="self-stretch overflow-hidden z-10 relative {loaded
+              class="container mx-auto z-10 relative {loaded
                 ? ''
-                : 'bg-slate-200 dark:bg-zinc-800'} rounded-md max-w-full"
+                : 'bg-slate-200 dark:bg-zinc-800'} rounded-md w-fit max-h-[70vh]"
               data-sveltekit-preload-data="off"
               aria-label={post.post.name}
             >
-              <picture
-                class="flex justify-center rounded-xl
-                 overflow-hidden w-[50vh] h-auto max-w-full"
-              >
+              <picture class="max-h-[inherit]">
                 <source
                   srcset={bestImageURL(post.post, false, 512)}
                   media="(max-width: 256px)"
@@ -101,7 +98,7 @@
                 <img
                   src={bestImageURL(post.post, false, 1024)}
                   loading="lazy"
-                  class="max-w-full w-max object-cover rounded-md max-h-[80vh] h-auto z-30 opacity-0 transition-opacity duration-300"
+                  class="max-h-[inherit] w-auto rounded-md z-30 opacity-0 transition-opacity duration-300"
                   class:opacity-100={loaded}
                   width={512}
                   height={300}
