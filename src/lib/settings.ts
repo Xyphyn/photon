@@ -17,6 +17,11 @@ const toBool = (str: string | undefined) => {
   return str.toLowerCase() === 'true'
 }
 
+interface Preset {
+  title?: string
+  content: string
+}
+
 interface Settings {
   expandableImages: boolean
   // should have been named "fade" read posts
@@ -52,7 +57,7 @@ interface Settings {
   displayNames: boolean
   nsfwBlur: boolean
   moderation: {
-    removalReasonPreset: string
+    presets: Preset[]
   }
   newVote: boolean
   randomPlaceholders: boolean
@@ -94,7 +99,12 @@ export const defaultSettings: Settings = {
   displayNames: toBool(env.PUBLIC_DISPLAY_NAMES) ?? true,
   nsfwBlur: toBool(env.PUBLIC_NSFW_BLUR) ?? true,
   moderation: {
-    removalReasonPreset: `Your submission in *"{{post}}"* was removed for {{reason}}.`,
+    presets: [
+      {
+        title: 'Preset 1',
+        content: `Your submission in *"{{post}}"* was removed for {{reason}}.`,
+      },
+    ],
   },
   newVote: toBool(env.PUBLIC_NEW_VOTE_BUTTONS) ?? false,
   randomPlaceholders: toBool(env.PUBLIC_RANDOM_PLACEHOLDERS) ?? true,
@@ -110,10 +120,26 @@ export const defaultSettings: Settings = {
 
 export const userSettings = writable(defaultSettings)
 
+const migrate = (settings: any): Settings => {
+  if (typeof settings.moderation.removalReasonPreset == 'string') {
+    settings.moderation.presets = [
+      {
+        title: 'Preset 1',
+        content: settings.moderation.removalReasonPreset,
+      },
+    ]
+    settings.moderation.removalReasonPreset = undefined
+  }
+
+  return settings
+}
+
 if (typeof window != 'undefined') {
   let oldUserSettings = JSON.parse(
     localStorage.getItem('settings') ?? JSON.stringify(defaultSettings)
   )
+
+  oldUserSettings = migrate(oldUserSettings)
 
   userSettings.set({ ...defaultSettings, ...oldUserSettings })
 }

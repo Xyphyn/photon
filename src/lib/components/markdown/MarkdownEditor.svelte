@@ -110,9 +110,13 @@
 {/if}
 
 <div>
-  {#if label}
+  {#if label || $$slots.label}
     <Label>
-      {label}
+      {#if label}
+        {label}
+      {:else if $$slots.label}
+        <slot name="label" />
+      {/if}
     </Label>
   {/if}
   <div

@@ -1,7 +1,7 @@
 <script lang="ts">
   import Comment from '$lib/components/lemmy/comment/Comment.svelte'
   import Post from '$lib/components/lemmy/post/Post.svelte'
-  import { toast } from 'mono-svelte'
+  import { Select, toast } from 'mono-svelte'
   import { getClient } from '$lib/lemmy.js'
   import { isCommentView, isPostView } from '$lib/lemmy/item.js'
   import type { CommentView, PostView } from 'lemmy-js-client'
@@ -23,6 +23,7 @@
   let commentReason: boolean = false
   let privateMessage: boolean = false
   let loading = false
+  let preset = $userSettings.moderation.presets[0]?.content ?? ''
 
   $: removed = item
     ? isCommentView(item)
@@ -30,10 +31,10 @@
       : item.post.removed
     : false
 
-  const getReplyReason = (reason: string) => {
+  const getReplyReason = (reason: string, preset: string) => {
     if (!item) return `no template`
 
-    return removalTemplate($userSettings.moderation.removalReasonPreset, {
+    return removalTemplate(preset, {
       communityLink: `!${fullCommunityName(
         item!.community.name,
         item!.community.actor_id
@@ -44,7 +45,7 @@
     })
   }
 
-  $: replyReason = commentReason ? getReplyReason(reason) : ''
+  $: replyReason = commentReason ? getReplyReason(reason, preset) : ''
 
   async function remove() {
     if (!item) return
@@ -212,8 +213,18 @@
             bind:value={replyReason}
             placeholder={replyReason}
             rows={3}
-            label="Reply"
-          />
+          >
+            <div class="flex justify-between items-end mb-1" slot="label">
+              Reply
+              <Select bind:value={preset} placeholder="No preset">
+                {#each $userSettings.moderation.presets as preset}
+                  <option value={preset.content}>
+                    {preset.title}
+                  </option>
+                {/each}
+              </Select>
+            </div>
+          </MarkdownEditor>
         {/if}
       {/if}
 

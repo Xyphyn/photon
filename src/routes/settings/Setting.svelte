@@ -13,7 +13,8 @@
   </div>
   {#if $$slots.default}
     <div
-      class="w-full px-5 py-3 bg-slate-50 dark:bg-zinc-950 border-t dark:border-zinc-800 mt-4"
+      class="w-full px-5 py-3 bg-slate-50 dark:bg-zinc-950 border-t dark:border-zinc-800 mt-4
+      flex flex-col gap-2"
     >
       <slot />
     </div>
