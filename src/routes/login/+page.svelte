@@ -2,11 +2,11 @@
   import { goto } from '$app/navigation'
   import { setUser } from '$lib/auth.js'
   import Link from '$lib/components/input/Link.svelte'
-  import { toast } from 'mono-svelte'
+  import { Material, toast } from 'mono-svelte'
   import { DEFAULT_INSTANCE_URL, LINKED_INSTANCE_URL } from '$lib/instance.js'
   import { getClient, validateInstance } from '$lib/lemmy.js'
   import { Button, TextInput } from 'mono-svelte'
-  import { AtSymbol, Icon } from 'svelte-hero-icons'
+  import { AtSymbol, Icon, Identification } from 'svelte-hero-icons'
 
   let data = {
     instance: DEFAULT_INSTANCE_URL,
@@ -53,9 +53,12 @@
   <title>Login</title>
 </svelte:head>
 
-<div class="max-w-lg w-full mx-auto">
-  <form on:submit|preventDefault={logIn} class="flex flex-col gap-6">
-    <h1 class="font-bold text-2xl">Log in</h1>
+<div class="max-w-xl w-full mx-auto h-max my-auto">
+  <form on:submit|preventDefault={logIn} class="flex flex-col gap-5">
+    <div class="flex flex-col gap-2">
+      <h1 class="font-bold text-3xl">Log In</h1>
+      <p>Enter the fediverse</p>
+    </div>
     <div class="flex flex-row w-full items-center gap-2">
       <TextInput
         id="username"
@@ -64,14 +67,8 @@
         placeholder="Example"
         class="flex-1"
         required
-        inlineAffixes
-      >
-        <span slot="prefix">@</span>
-      </TextInput>
+      />
       {#if !LINKED_INSTANCE_URL}
-        <span class="flex items-center font-bold mt-6">
-          <Icon src={AtSymbol} mini size="20" class="mt-auto" />
-        </span>
         <TextInput
           id="instance_url"
           label="Instance URL"
@@ -111,11 +108,14 @@
       size="lg"
       submit
     >
-      Log in
+      Log In
     </Button>
     <hr class="dark:border-zinc-700" />
-    <p class="text-sm text-center opacity-80">
-      Don't have an account? <Link href="/signup" highlight>Sign up</Link>
-    </p>
+    <div class="flex flex-row items-center gap-2">
+      <Button color="tertiary" href="/signup">
+        <Icon src={Identification} mini size="16" />
+        Sign Up
+      </Button>
+    </div>
   </form>
 </div>
