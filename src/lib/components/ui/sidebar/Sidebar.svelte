@@ -6,6 +6,8 @@
     GlobeAlt,
     Home,
     Icon,
+    Identification,
+    ServerStack,
     UserGroup,
   } from 'svelte-hero-icons'
   import { profile, profileData } from '$lib/auth.js'
@@ -82,12 +84,33 @@
   {:else}
     <Button
       class="hover:bg-slate-200 {$userSettings.expandSidebar ? '' : '!p-1.5'}"
+      href="/login"
+      color="tertiary"
+      alignment="left"
+      title="Log In"
+    >
+      <Icon mini src={ArrowLeftOnRectangle} size="20" />
+      <span class:hidden={!$userSettings.expandSidebar}>Log In</span>
+    </Button>
+    <Button
+      class="hover:bg-slate-200 {$userSettings.expandSidebar ? '' : '!p-1.5'}"
+      href="/signup"
+      color="tertiary"
+      alignment="left"
+      title="Sign Up"
+    >
+      <Icon mini src={Identification} size="20" />
+      <span class:hidden={!$userSettings.expandSidebar}>Sign Up</span>
+    </Button>
+    <Button
+      class="hover:bg-slate-200 {$userSettings.expandSidebar ? '' : '!p-1.5'}"
       href="/accounts"
       color="tertiary"
       alignment="left"
+      title="Change Instance"
     >
-      <Icon mini src={ArrowLeftOnRectangle} size="20" />
-      <span class:hidden={!$userSettings.expandSidebar}>Log in</span>
+      <Icon mini src={ServerStack} size="20" />
+      <span class:hidden={!$userSettings.expandSidebar}>Change instance</span>
     </Button>
   {/if}
 </nav>

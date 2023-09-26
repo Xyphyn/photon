@@ -95,15 +95,13 @@
     <option value="messages">Messages</option>
   </Select>
 </div>
-<div class="flex flex-col gap-4 list-none my-4 flex-1">
+<div class="flex flex-col gap-4 list-none my-4 flex-1 h-full">
   {#if !data.data || (data.data?.length ?? 0) == 0}
-    <div class="mt-auto">
-      <Placeholder
-        icon={Inbox}
-        title="No new notifications"
-        description="Messages, replies, and mentions will appear here."
-      />
-    </div>
+    <Placeholder
+      icon={Inbox}
+      title="No new notifications"
+      description="Messages, replies, and mentions will appear here."
+    />
   {:else}
     {#each data.data as item}
       <div in:fly={{ duration: 500, y: -6, opacity: 0 }}>

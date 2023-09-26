@@ -2,8 +2,8 @@
   import { profile } from '$lib/auth.js'
   import MultiSelect from '$lib/components/input/Switch.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
+  import { uploadImage } from '$lib/util.js'
   import { ImageInput, toast } from 'mono-svelte'
-  import { uploadImage } from '$lib/lemmy.js'
   import { Button, Label, Modal, TextArea } from 'mono-svelte'
   import { createEventDispatcher } from 'svelte'
   import {
@@ -68,7 +68,11 @@
     loading = true
 
     try {
-      const uploaded = await uploadImage(image[0])
+      const uploaded = await uploadImage(
+        image[0],
+        $profile.instance,
+        $profile.jwt
+      )
 
       if (!uploaded) throw new Error('Image upload returned undefined')
 

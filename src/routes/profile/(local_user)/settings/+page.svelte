@@ -3,9 +3,10 @@
   import { profile, profileData, setUserID } from '$lib/auth.js'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { ImageInput, Material, removeToast, toast } from 'mono-svelte'
-  import { getClient, uploadImage } from '$lib/lemmy.js'
+  import { getClient } from '$lib/lemmy.js'
   import type { SaveUserSettings } from 'lemmy-js-client'
   import { Button, Checkbox, Modal, TextInput } from 'mono-svelte'
+  import { uploadImage } from '$lib/util.js'
 
   export let data
 
@@ -22,7 +23,9 @@
     loading = true
 
     try {
-      let pfp = profileImage ? await uploadImage(profileImage[0]) : undefined
+      let pfp = profileImage
+        ? await uploadImage(profileImage[0], $profile.instance, $profile.jwt)
+        : undefined
       const res = await getClient().saveUserSettings({
         auth: $profile.jwt,
         ...formData,

@@ -94,10 +94,10 @@
     <Sidebar />
     <div
       class="w-full min-w-0 border-t sm:border-l border-slate-200 dark:border-zinc-900
-    sm:rounded-xl bg-slate-25 dark:bg-zinc-950"
+    sm:rounded-xl bg-slate-25 dark:bg-zinc-950 min-h-full"
     >
       <main
-        class="p-3 sm:p-6 min-w-0 w-full flex-[3] sm:rounded-tl-lg mx-auto
+        class="p-3 sm:p-6 min-w-0 w-full flex-[3] sm:rounded-tl-lg mx-auto flex flex-col min-h-full
       "
         class:max-w-6xl={$userSettings.newWidth}
         id="main"

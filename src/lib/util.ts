@@ -130,3 +130,39 @@ export const routes = {
   '/profile/settings': 'Profile Settings',
   '/profile/blocks': 'Blocks',
 }
+
+export async function uploadImage(
+  image: File | null | undefined,
+  instance: string,
+  jwt: string
+): Promise<string | undefined> {
+  if (!image || jwt) return
+
+  const formData = new FormData()
+  formData.append('images[]', image)
+
+  const response = await fetch(
+    `${
+      window.location.origin
+    }/cors/${instance}/pictrs/image?${new URLSearchParams({
+      auth: jwt,
+    })}`,
+    {
+      method: 'POST',
+      body: formData,
+    }
+  )
+
+  const json = await response.json()
+
+  if (json.msg == 'ok') {
+    return `https://${instance}/pictrs/image/${json.files?.[0]?.file}`
+  }
+
+  throw new Error(
+    `${
+      (await response.text().catch((_) => undefined)) ??
+      'Failed to upload image'
+    }: ${response.status}: ${response.statusText}`
+  )
+}

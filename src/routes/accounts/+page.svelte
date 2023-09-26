@@ -28,6 +28,7 @@
     ChevronUp,
     EllipsisHorizontal,
     Icon,
+    Identification,
     PaintBrush,
     Plus,
     Trash,
@@ -92,18 +93,25 @@
 {/if}
 
 {#if $profileData.profiles.length == 0}
-  <div class="h-full flex items-center justify-center">
+  <div class="h-max flex items-center justify-center my-auto">
     <div
-      class="text-slate-600 dark:text-zinc-400 flex flex-col justify-center items-center py-8 gap-4"
+      class="flex flex-col justify-center items-center py-8 gap-4
+      my-auto"
     >
       <div class="flex flex-col items-center">
         <Icon src={ArrowLeftOnRectangle} size="48" solid />
         <h1 class="font-bold text-3xl">No accounts</h1>
       </div>
-      <Button href="/login" size="lg">
-        <Icon slot="prefix" src={ArrowLeftOnRectangle} size="16" mini />
-        Log in
-      </Button>
+      <div class="flex flex-row items-center gap-2">
+        <Button href="/login" size="lg">
+          <Icon slot="prefix" src={ArrowLeftOnRectangle} size="16" mini />
+          Log in
+        </Button>
+        <Button href="/signup" size="lg">
+          <Icon slot="prefix" src={Identification} size="16" mini />
+          Sign up
+        </Button>
+      </div>
       <div class="flex flex-row font-normal gap-2">
         <TextInput
           label="Guest instance"

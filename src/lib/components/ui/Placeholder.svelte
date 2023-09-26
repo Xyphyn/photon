@@ -8,7 +8,7 @@
 </script>
 
 <div
-  class="text-slate-700 dark:text-zinc-300 flex flex-col justify-center items-center gap-2"
+  class="text-slate-700 dark:text-zinc-300 flex flex-col justify-center items-center gap-2 {$$props.class}"
 >
   {#if icon}
     <div

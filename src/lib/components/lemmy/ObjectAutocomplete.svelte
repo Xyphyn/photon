@@ -7,7 +7,7 @@
   import { Icon, XCircle } from 'svelte-hero-icons'
   import { fly } from 'svelte/transition'
 
-  let type: 'community' = 'community'
+  let type: 'community' | 'instance' = 'community'
   export let q: string = ''
 
   export let jwt: string | undefined = undefined

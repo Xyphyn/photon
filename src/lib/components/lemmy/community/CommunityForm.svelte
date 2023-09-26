@@ -3,9 +3,10 @@
   import { profile } from '$lib/auth.js'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { ImageInput, toast } from 'mono-svelte'
-  import { getClient, uploadImage } from '$lib/lemmy.js'
+  import { getClient } from '$lib/lemmy.js'
   import { addSubscription } from '$lib/lemmy/user.js'
   import { Button, Checkbox, TextInput } from 'mono-svelte'
+  import { uploadImage } from '$lib/util.js'
 
   /**
    * The community ID to edit.
@@ -39,9 +40,11 @@
     formData.submitting = true
 
     try {
-      let icon = formData.icon ? await uploadImage(formData.icon[0]) : undefined
+      let icon = formData.icon
+        ? await uploadImage(formData.icon[0], $profile.instance, $profile.jwt)
+        : undefined
       let banner = formData.banner
-        ? await uploadImage(formData.banner[0])
+        ? await uploadImage(formData.banner[0], $profile.instance, $profile.jwt)
         : undefined
 
       const res = edit

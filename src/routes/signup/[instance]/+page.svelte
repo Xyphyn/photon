@@ -92,7 +92,7 @@
 </svelte:head>
 
 <form
-  class="flex flex-col gap-4 max-w-2xl mx-auto h-full"
+  class="flex flex-col gap-4 max-w-2xl mx-auto h-full w-full"
   on:submit|preventDefault={submit}
 >
   <span class="flex gap-4 items-center font-bold text-xl text-center mx-auto">

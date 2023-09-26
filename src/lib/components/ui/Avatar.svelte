@@ -22,6 +22,7 @@
     {title}
     loading="lazy"
     class="aspect-square object-cover overflow-hidden {$$props.class}"
+    style="width: {width}px; height: {width}px;"
     class:rounded-full={circle}
   />
 {:else}

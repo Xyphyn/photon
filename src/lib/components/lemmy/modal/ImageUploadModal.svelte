@@ -1,7 +1,7 @@
 <script lang="ts">
   import { profile } from '$lib/auth.js'
+  import { uploadImage } from '$lib/util.js'
   import { ImageInput, toast } from 'mono-svelte'
-  import { uploadImage } from '$lib/lemmy.js'
   import { Button, Modal } from 'mono-svelte'
   import { createEventDispatcher } from 'svelte'
 
@@ -17,7 +17,11 @@
     loading = true
 
     try {
-      const uploaded = await uploadImage(image[0])
+      const uploaded = await uploadImage(
+        image[0],
+        $profile.instance,
+        $profile.jwt
+      )
 
       if (!uploaded) throw new Error('Image upload returned undefined')
 

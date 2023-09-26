@@ -1,8 +1,7 @@
 import { type GetSiteResponse, LemmyHttp } from 'lemmy-js-client'
 import { get, writable } from 'svelte/store'
-import { profile } from '$lib/auth.js'
 import { error } from '@sveltejs/kit'
-import { LINKED_INSTANCE_URL, instance } from '$lib/instance.js'
+import { instance } from '$lib/instance.js'
 
 async function customFetch(
   func: (
@@ -49,40 +48,4 @@ export async function validateInstance(instance: string): Promise<boolean> {
   } catch (err) {
     return false
   }
-}
-
-export async function uploadImage(
-  image: File | null | undefined
-): Promise<string | undefined> {
-  if (!image || !get(profile)?.jwt) return
-
-  const formData = new FormData()
-  formData.append('images[]', image)
-
-  const response = await fetch(
-    `${
-      window.location.origin
-    }/cors/${getInstance()}/pictrs/image?${new URLSearchParams({
-      auth: get(profile)!.jwt!,
-    })}`,
-    {
-      method: 'POST',
-      body: formData,
-    }
-  )
-
-  const json = await response.json()
-
-  if (json.msg == 'ok') {
-    return `https://${get(profile)?.instance}/pictrs/image/${
-      json.files?.[0]?.file
-    }`
-  }
-
-  throw new Error(
-    `${
-      (await response.text().catch((_) => undefined)) ??
-      'Failed to upload image'
-    }: ${response.status}: ${response.statusText}`
-  )
 }

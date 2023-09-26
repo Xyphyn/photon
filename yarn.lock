@@ -3807,6 +3807,11 @@ svelte-preprocess@^5.0.4:
     sorcery "^0.11.0"
     strip-indent "^3.0.0"
 
+svelte-tiny-virtual-list@^2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/svelte-tiny-virtual-list/-/svelte-tiny-virtual-list-2.0.5.tgz#5a88b14f2041eedc060dc799a2f146ee0355073f"
+  integrity sha512-xg9ckb8UeeIme4/5qlwCrl2QNmUZ8SCQYZn3Ji83cUsoASqRNy3KWjpmNmzYvPDqCHSZjruBBsoB7t5hwuzw5g==
+
 svelte@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/svelte/-/svelte-4.2.0.tgz#0e4304c15524450b22fba02516eb72efbd8847b6"

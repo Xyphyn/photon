@@ -1,12 +1,12 @@
 <script lang="ts">
   import { createEventDispatcher, onDestroy, onMount } from 'svelte'
-  import { getClient, uploadImage } from '$lib/lemmy.js'
+  import { getClient } from '$lib/lemmy.js'
   import type { Community, Post, PostView } from 'lemmy-js-client'
   import { toast } from 'mono-svelte'
   import { Check, Icon, Photo } from 'svelte-hero-icons'
   import { profile } from '$lib/auth.js'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
-  import { placeholders } from '$lib/util.js'
+  import { placeholders, uploadImage } from '$lib/util.js'
   import { Checkbox, TextInput } from 'mono-svelte'
   import { getSessionStorage, setSessionStorage } from '$lib/session.js'
   import ObjectAutocomplete from '$lib/components/lemmy/ObjectAutocomplete.svelte'
@@ -121,7 +121,7 @@
 
         dispatcher('submit', post.post_view)
       } else {
-        let image = data.image ? await uploadImage(data.image[0]) : undefined
+        let image = data.image ? await uploadImage(data.image[0], $profile.instance, $profile.jwt) : undefined
         data.url = image || data.url || undefined
         const post = await getClient().createPost({
           auth: $profile.jwt,
