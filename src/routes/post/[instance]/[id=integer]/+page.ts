@@ -47,9 +47,7 @@ export async function load({ params, url, fetch }) {
     post: post,
     commentSort: sort,
     streamed: {
-      comments: SSR_ENABLED
-        ? await getClient(params.instance, fetch).getComments(commentParams)
-        : getClient(params.instance, fetch).getComments(commentParams),
+      comments: getClient(params.instance, fetch).getComments(commentParams),
     },
   }
 }

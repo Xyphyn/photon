@@ -10,25 +10,29 @@
   import PostFeed from '$lib/components/lemmy/post/PostFeed.svelte'
   import { Button, Modal, toast } from 'mono-svelte'
   import { afterNavigate } from '$app/navigation'
+  import { browser } from '$app/environment'
 
   export let data
 
   let sidebar: boolean = false
 
   onMount(() => {
-    setSessionStorage('lastSeenCommunity', {
-      id: data.community.community_view.community.id,
-      name: fullCommunityName(
-        data.community.community_view.community.name,
-        data.community.community_view.community.actor_id
-      ),
-    })
+    if (browser)
+      setSessionStorage('lastSeenCommunity', {
+        id: data.community.community_view.community.id,
+        name: fullCommunityName(
+          data.community.community_view.community.name,
+          data.community.community_view.community.actor_id
+        ),
+      })
   })
 
   onDestroy(() => {
-    if ($navigating?.to?.route?.id == '/create/post') return
+    if (browser) {
+      if ($navigating?.to?.route?.id == '/create/post') return
 
-    setSessionStorage('lastSeenCommunity', undefined)
+      setSessionStorage('lastSeenCommunity', undefined)
+    }
   })
 </script>
 

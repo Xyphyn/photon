@@ -157,11 +157,7 @@
         saved={post.post_view.saved}
       />
     </div>
-    <Button
-      on:click={() => history.back()}
-      size="square-md"
-      class={history.length < 3 ? 'hidden' : ''}
-    >
+    <Button on:click={() => history.back()} size="square-md">
       <Icon src={ArrowLeft} mini size="16" slot="prefix" />
     </Button>
   </div>
