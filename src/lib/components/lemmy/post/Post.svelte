@@ -137,7 +137,7 @@
         <PostLink
           url={post.post.url}
           thumbnail_url={view == 'card'
-            ? 'post.post.thumbnail_url'
+            ? post.post.thumbnail_url
               ? `${post.post.thumbnail_url}?format=webp&thumbnail=512`
               : undefined
             : undefined}
