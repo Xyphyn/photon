@@ -1,14 +1,17 @@
 <script lang="ts">
-  import { profile, setUser, setUserID, updateJwt } from '$lib/auth.js'
+  import { deleteProfile, profile, setUser } from '$lib/auth.js'
   import { getClient } from '$lib/lemmy.js'
   import { trycatch } from '$lib/util.js'
   import { Button, TextInput, toast } from 'mono-svelte'
+  import { instance as currentInstance } from '$lib/instance.js'
 
   let oldPassword = '',
     newPassword = '',
     newPasswordVerify = ''
+  let loading = false
 
   async function submit() {
+    loading = true
     const res = await trycatch(async () => {
       if (!$profile?.jwt) return
       const res = await getClient().changePassword({
@@ -18,8 +21,10 @@
         old_password: oldPassword,
       })
       if (res?.jwt) {
-        updateJwt($profile.id, res.jwt)
-        await setUserID($profile.id)
+        const { instance, username } = $profile
+        deleteProfile($profile.id)
+        await setUser(res.jwt, instance, username!)
+        $currentInstance = instance
 
         toast({ content: 'Your login was refreshed.', type: 'success' })
       } else {
@@ -28,6 +33,8 @@
     })
 
     if (res) toast({ content: 'Successfully changed your password. ' })
+
+    loading = false
   }
 </script>
 
@@ -51,5 +58,7 @@
     type="password"
     required
   />
-  <Button size="lg" color="primary" submit>Submit</Button>
+  <Button size="lg" color="primary" submit {loading} disabled={loading}>
+    Submit
+  </Button>
 </form>

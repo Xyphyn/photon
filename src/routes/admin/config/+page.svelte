@@ -128,6 +128,16 @@
     <Checkbox bind:checked={formData.federation_enabled} defaultValue={true}>
       Federation enabled
     </Checkbox>
+    <Checkbox bind:checked={formData.federation_debug} defaultValue={false}>
+      Federation debug mode
+    </Checkbox>
+    <Checkbox bind:checked={formData.captcha_enabled} defaultValue={false}>
+      Captcha enabled
+    </Checkbox>
+    {#if formData.captcha_enabled}
+      {console.log(formData.captcha_difficulty)}
+      <Select bind:value={formData.captcha_difficulty} />
+    {/if}
   {/if}
   <Button color="primary" size="lg" loading={saving} disabled={saving} submit>
     Save

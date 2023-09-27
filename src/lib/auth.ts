@@ -227,19 +227,6 @@ instance.subscribe(async (i) => {
   } catch (e) {}
 })
 
-export function updateJwt(id: number, newJwt: string) {
-  const pd = get(profileData)
-  let prof = pd.profiles.find((p) => p.id == id)
-
-  if (!prof) return
-  prof = serializeUser(prof)
-  prof.jwt = newJwt
-
-  profileData.update((p) => ({ ...p, profile: id }))
-
-  profile.update(() => prof)
-}
-
 export async function setUserID(id: number) {
   const pd = get(profileData)
   if (id == -1) {
