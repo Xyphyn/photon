@@ -136,7 +136,7 @@ export async function uploadImage(
   instance: string,
   jwt: string
 ): Promise<string | undefined> {
-  if (!image || jwt) return
+  if (!image) return
 
   const formData = new FormData()
   formData.append('images[]', image)
