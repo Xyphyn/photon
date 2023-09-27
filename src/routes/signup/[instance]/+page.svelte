@@ -6,7 +6,7 @@
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import { Material, Spinner, toast } from 'mono-svelte'
+  import { Checkbox, Material, Spinner, toast } from 'mono-svelte'
   import { getClient } from '$lib/lemmy.js'
   import type { GetCaptchaResponse } from 'lemmy-js-client'
   import { Button, TextInput } from 'mono-svelte'
@@ -38,7 +38,8 @@
     verifyCaptcha: string | undefined = undefined,
     application: string | undefined = undefined,
     submitting: boolean = false,
-    honeypot: string | undefined = undefined
+    honeypot: string | undefined = undefined,
+    nsfw: boolean = false
 
   const getCaptcha = async () =>
     (captcha = await getClient(instance, fetch).getCaptcha())
@@ -56,7 +57,7 @@
         email: email,
         password: password,
         password_verify: passwordVerify,
-        show_nsfw: true,
+        show_nsfw: nsfw,
         answer: application,
         captcha_answer: verifyCaptcha,
         captcha_uuid: captcha?.ok?.uuid,
@@ -194,6 +195,7 @@
         </div>
       </div>
     {/if}
+    <Checkbox bind:checked={nsfw}>Show NSFW content</Checkbox>
     <input type="dn" name="honeypot" bind:value={honeypot} class="hidden" />
     <Button
       submit
