@@ -135,7 +135,7 @@ export async function setUser(jwt: string, inst: string, username: string) {
 
     return {
       profile: id,
-      profiles: [...pd.profiles, newProfile],
+      profiles: [newProfile, ...pd.profiles],
     }
   })
 
@@ -146,7 +146,24 @@ async function userFromJwt(
   jwt: string,
   instance: string
 ): Promise<{ user: PersonData; site: GetSiteResponse } | undefined> {
-  const site = await getClient(instance).getSite({ auth: jwt })
+  const sitePromise = getClient(instance).getSite({
+    auth: jwt,
+  })
+
+  let timer = setTimeout(
+    () =>
+      toast({
+        content: `It's taking a while to fetch your user. Is your instance down?`,
+        type: 'warning',
+      }),
+    5000
+  )
+
+  const site = await sitePromise.then((r) => {
+    clearTimeout(timer)
+    return r
+  })
+
   const myUser = site.my_user
   if (!myUser) return undefined
 

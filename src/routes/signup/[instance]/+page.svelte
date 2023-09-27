@@ -19,6 +19,7 @@
     QuestionMarkCircle,
     XCircle,
   } from 'svelte-hero-icons'
+  import { instance as currentInstance } from '$lib/instance.js'
 
   export let data
 
@@ -63,19 +64,25 @@
       })
 
       toast({
-        content: `Signed up.${
-          res.verify_email_sent ? ' A verification email was sent.' : ''
-        }`,
+        content: 'Signed up.',
         type: 'success',
       })
 
-      if (res?.jwt) {
+      if (res?.jwt && res.verify_email_sent) {
         await setUser(res.jwt, $page.params.instance, username)
 
         toast({ content: 'Successfully logged in.', type: 'success' })
         goto('/')
+      } else if (res.verify_email_sent) {
+        currentInstance.set(instance)
+        toast({
+          content:
+            'A verification link was sent to your email. Verify your email, and then you can log in.',
+          type: 'info',
+        })
+        goto('/')
       } else {
-        throw new Error('Invalid credentials')
+        throw new Error('Failed to sign up.')
       }
     } catch (err) {
       toast({

@@ -46,6 +46,6 @@
     passedCommunity={community}
     on:submit={(e) => goto(`/post/${e.detail.post.id}`)}
   >
-    <h1 class="text-2xl font-bold" slot="formtitle">Create Post</h1>
+    <h1 class="text-3xl font-bold" slot="formtitle">Create Post</h1>
   </PostForm>
 </div>

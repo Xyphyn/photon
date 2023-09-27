@@ -1,12 +1,16 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { setUser } from '$lib/auth.js'
-  import Link from '$lib/components/input/Link.svelte'
-  import { Material, toast } from 'mono-svelte'
+  import { toast } from 'mono-svelte'
   import { DEFAULT_INSTANCE_URL, LINKED_INSTANCE_URL } from '$lib/instance.js'
   import { getClient, validateInstance } from '$lib/lemmy.js'
   import { Button, TextInput } from 'mono-svelte'
-  import { AtSymbol, Icon, Identification } from 'svelte-hero-icons'
+  import {
+    AtSymbol,
+    Icon,
+    Identification,
+    QuestionMarkCircle,
+  } from 'svelte-hero-icons'
 
   let data = {
     instance: DEFAULT_INSTANCE_URL,
@@ -115,6 +119,10 @@
       <Button color="tertiary" href="/signup">
         <Icon src={Identification} mini size="16" />
         Sign Up
+      </Button>
+      <Button color="tertiary" href="/login_reset">
+        <Icon src={QuestionMarkCircle} mini size="16" />
+        Forgot Password
       </Button>
     </div>
   </form>
