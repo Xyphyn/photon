@@ -11,9 +11,9 @@
   let loading = false
 
   async function submit() {
-    loading = true
-    const res = await trycatch(async () => {
+    try {
       if (!$profile?.jwt) return
+      loading = true
       const res = await getClient().changePassword({
         auth: $profile?.jwt,
         new_password: newPassword,
@@ -30,9 +30,14 @@
       } else {
         throw new Error('Invalid credentials')
       }
-    })
 
-    if (res) toast({ content: 'Successfully changed your password. ' })
+      toast({ content: 'Successfully changed your password. ' })
+    } catch (e) {
+      toast({
+        content: e as any,
+        type: 'error',
+      })
+    }
 
     loading = false
   }
