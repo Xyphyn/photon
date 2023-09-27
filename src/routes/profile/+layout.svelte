@@ -18,7 +18,7 @@
       '/profile/blocks',
       '/profile/password',
     ]}
-    optionNames={['User', 'Settings', 'Blocks', 'Login']}
+    optionNames={['User', 'Settings', 'Blocks', 'Credentials']}
     selected={$page.url.pathname}
     on:select={(e) => {
       goto(e.detail)

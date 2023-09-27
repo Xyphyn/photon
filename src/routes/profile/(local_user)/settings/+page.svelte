@@ -26,15 +26,18 @@
       let pfp = profileImage
         ? await uploadImage(profileImage[0], $profile.instance, $profile.jwt)
         : undefined
+
       const res = await getClient().saveUserSettings({
         auth: $profile.jwt,
         ...formData,
         avatar: pfp,
       })
+
       toast({
         content: 'Saved your user settings.',
         type: 'success',
       })
+
       if (res.verify_email_sent) {
         toast({
           content: 'A verification email was sent.',
