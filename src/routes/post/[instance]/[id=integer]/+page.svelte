@@ -30,16 +30,20 @@
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import { Button } from 'mono-svelte'
   import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
+  import { userSettings } from '$lib/settings.js'
 
   export let data
 
   let post = data.post
 
   onMount(async () => {
-    if (!post.post_view.read && $profile?.jwt) {
+    if (
+      !(post.post_view.read && $userSettings.markPostsAsRead) &&
+      $profile?.jwt
+    ) {
       getClient().markPostAsRead({
         auth: $profile.jwt,
-        read: true,
+        read: $userSettings.markPostsAsRead,
         post_id: post.post_view.post.id,
       })
     }

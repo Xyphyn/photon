@@ -70,6 +70,7 @@ interface Settings {
   hidePhoton: boolean
 
   newWidth: boolean
+  markPostsAsRead: boolean
 }
 
 export const defaultSettings: Settings = {
@@ -116,6 +117,7 @@ export const defaultSettings: Settings = {
   leftAlign: false,
   hidePhoton: toBool(env.PUBLIC_REMOVE_CREDIT) ?? false,
   newWidth: true,
+  markPostsAsRead: true,
 }
 
 export const userSettings = writable(defaultSettings)

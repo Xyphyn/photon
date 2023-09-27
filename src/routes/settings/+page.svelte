@@ -144,6 +144,13 @@
 
     <SectionTitle class="mt-4" id="posts">Posts</SectionTitle>
     <Setting>
+      <span slot="title">Mark read posts</span>
+      <span slot="description">Mark a post as read when you click on it.</span>
+      <Checkbox bind:checked={$userSettings.markPostsAsRead}>
+        {$userSettings.markPostsAsRead ? 'Enabled' : 'Disabled'}
+      </Checkbox>
+    </Setting>
+    <Setting>
       <span slot="title">Fade read posts</span>
       <span slot="description">
         Fade the title of posts you've already read.
