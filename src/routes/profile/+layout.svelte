@@ -12,8 +12,13 @@
 <div class="flex flex-col gap-4 h-full">
   <MultiSelect
     headless
-    options={['/profile/user', '/profile/settings', '/profile/blocks']}
-    optionNames={['User', 'Settings', 'Blocks']}
+    options={[
+      '/profile/user',
+      '/profile/settings',
+      '/profile/blocks',
+      '/profile/password',
+    ]}
+    optionNames={['User', 'Settings', 'Blocks', 'Password']}
     selected={$page.url.pathname}
     on:select={(e) => {
       goto(e.detail)

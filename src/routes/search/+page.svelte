@@ -45,7 +45,7 @@
   <title>Search</title>
 </svelte:head>
 
-<h1 class="font-bold text-2xl">Search</h1>
+<h1 class="font-bold text-3xl">Search</h1>
 <div class="flex flex-row flex-wrap sm:justify-between items-center gap-4 mt-4">
   <Select
     bind:value={data.type}

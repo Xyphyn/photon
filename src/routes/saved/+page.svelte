@@ -18,7 +18,7 @@
   <title>Saved</title>
 </svelte:head>
 
-<h1 class="text-2xl font-bold">Saved</h1>
+<h1 class="text-3xl font-bold">Saved</h1>
 <div
   class="flex flex-col list-none my-4 divide-slate-200 dark:divide-zinc-800"
   class:gap-4={$userSettings.view == 'card'}

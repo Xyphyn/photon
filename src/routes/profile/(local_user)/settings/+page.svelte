@@ -11,8 +11,8 @@
   export let data
 
   let formData: Omit<SaveUserSettings, 'auth'> | undefined = {
-    ...data.local_user_view?.local_user,
-    ...data.local_user_view?.person,
+    ...data.my_user?.local_user_view?.local_user,
+    ...data.my_user?.local_user_view?.person,
   }
 
   let profileImage: FileList | undefined
@@ -150,7 +150,7 @@
 
 <form class="flex flex-col gap-4 h-full" on:submit|preventDefault={save}>
   <h1 class="font-bold text-2xl">User settings</h1>
-  {#if data.local_user_view?.local_user && formData}
+  {#if data.my_user?.local_user_view?.local_user && formData}
     <TextInput
       label="Display name"
       bind:value={formData.display_name}

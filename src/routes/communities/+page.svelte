@@ -40,7 +40,7 @@
   <title>Communities</title>
 </svelte:head>
 
-<h1 class="text-2xl font-bold">
+<h1 class="text-3xl font-bold">
   <span>Communities</span>
   <Popover
     openOnHover
