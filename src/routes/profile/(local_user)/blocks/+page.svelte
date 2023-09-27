@@ -57,8 +57,8 @@
   }
 </script>
 
-{#if data.community_blocks.length > 0 || data.person_blocks.length > 0}
-  {#if data.person_blocks.length > 0}
+{#if data.community_blocks?.length > 0 || data.person_blocks?.length > 0}
+  {#if data.person_blocks?.length > 0}
     <div>
       <SectionTitle>Users</SectionTitle>
       <EditableList let:action on:action={(i) => unblockUser(i.detail)}>
@@ -85,7 +85,7 @@
     />
   {/if}
 
-  {#if data.community_blocks.length > 0}
+  {#if data.community_blocks?.length > 0}
     <div>
       <SectionTitle>Communities</SectionTitle>
       <EditableList let:action on:action={(i) => unblockCommunity(i.detail)}>
