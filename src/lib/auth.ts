@@ -87,6 +87,12 @@ profile.subscribe(async (p) => {
   instance.set(p.instance)
   // fetch the user because p.user is undefined
   const user = await userFromJwt(p.jwt, p.instance)
+
+  if (!user?.user)
+    toast({
+      content: 'Your login has expired. Re-login to fix this issue.',
+      type: 'warning',
+    })
   site.set(user?.site)
 
   profile.update(() => ({
