@@ -60,13 +60,21 @@
     </span>
   </div>
   <div class="flex flex-row items-center">
-    <Button href="/modlog" size="md" class="rounded-r-none">
+    <Button href="/modlog" size="sm" class="rounded-r-none">
       <Icon src={Newspaper} size="16" mini />
       Modlog
     </Button>
-    <Button href="/legal" size="md" class="rounded-l-none border-l-0">
+    <Button
+      href="/legal"
+      size="sm"
+      class="rounded-l-none rounded-r-none border-x-0"
+    >
       <Icon src={BuildingOffice} size="16" mini />
       Legal
+    </Button>
+    <Button href="/instances" size="sm" class="rounded-l-none">
+      <Icon src={ServerStack} size="16" mini />
+      Instances
     </Button>
   </div>
 
