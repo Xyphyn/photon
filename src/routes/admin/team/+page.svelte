@@ -28,7 +28,6 @@
     const result = await trycatch(() =>
       getClient().addAdmin({
         added: false,
-        auth: $profile!.jwt!,
         person_id: id,
       })
     )

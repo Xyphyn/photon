@@ -24,7 +24,6 @@
 
     try {
       await getClient().editSite({
-        auth: jwt,
         ...formData,
       })
       toast({

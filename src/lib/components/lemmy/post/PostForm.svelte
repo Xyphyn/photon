@@ -63,7 +63,6 @@
       communitySearch = passedCommunity.name
     } else {
       const list = await getClient().listCommunities({
-        auth: $profile?.jwt,
         type_: 'All',
         sort: 'Active',
         limit: 40,
@@ -107,7 +106,6 @@
         }
 
         const post = await getClient().editPost({
-          auth: $profile.jwt,
           name: data.title,
           body: data.body,
           url: data.url || undefined,
@@ -121,10 +119,11 @@
 
         dispatcher('submit', post.post_view)
       } else {
-        let image = data.image ? await uploadImage(data.image[0], $profile.instance, $profile.jwt) : undefined
+        let image = data.image
+          ? await uploadImage(data.image[0], $profile.instance, $profile.jwt)
+          : undefined
         data.url = image || data.url || undefined
         const post = await getClient().createPost({
-          auth: $profile.jwt,
           community_id: data.community!,
           name: data.title,
           body: data.body,

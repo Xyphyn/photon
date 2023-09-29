@@ -1,7 +1,9 @@
 function buildUrl(inputUrl: URL): URL {
   let withoutCors = inputUrl.pathname.replace('/cors/', '')
 
-  if (!withoutCors.startsWith('https://')) {
+  if (
+    !(withoutCors.startsWith('https://') || withoutCors.startsWith('http://'))
+  ) {
     withoutCors = 'https://' + withoutCors
   }
 

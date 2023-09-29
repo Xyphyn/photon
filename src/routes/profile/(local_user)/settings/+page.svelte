@@ -28,7 +28,6 @@
         : undefined
 
       const res = await getClient().saveUserSettings({
-        auth: $profile.jwt,
         ...formData,
         avatar: pfp,
       })
@@ -104,9 +103,10 @@
     try {
       const { jwt } = $profile
 
+      // TODO - add option to delete content
       await getClient().deleteAccount({
-        auth: jwt,
         password: deletion.password,
+        delete_content: false,
       })
 
       profileData.update((pd) => {

@@ -31,7 +31,6 @@
 
     try {
       const response = await getClient().createComment({
-        auth: $profile.jwt,
         content: value,
         post_id: postId,
         parent_id: parentId,

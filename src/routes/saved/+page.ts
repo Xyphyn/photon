@@ -1,6 +1,12 @@
 import { profile } from '$lib/auth.js'
 import { getClient } from '$lib/lemmy.js'
-import type { CommentSortType, CommentView, ListingType, PostView, SortType } from 'lemmy-js-client'
+import type {
+  CommentSortType,
+  CommentView,
+  ListingType,
+  PostView,
+  SortType,
+} from 'lemmy-js-client'
 import { get } from 'svelte/store'
 
 function getSavedItemPublished(item: PostView | CommentView) {
@@ -18,12 +24,11 @@ export async function load({ url, fetch }) {
   const client = getClient(undefined, fetch)
 
   const params = {
-    auth: get(profile)!.jwt!,
     saved_only: true,
     limit: 20,
     page: page,
     sort: 'New' as SortType & CommentSortType,
-    type_: 'All' as ListingType
+    type_: 'All' as ListingType,
   }
 
   const [posts, comments] = await Promise.all([

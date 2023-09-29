@@ -78,7 +78,7 @@ export const amMod = (me: MyUserInfo, community: Community) =>
 export const amModOfAny = (me?: MyUserInfo) =>
   me && (me.moderates.length > 0 || isAdmin(me))
 
-export const isAdmin = (me: MyUserInfo) => me.local_user_view.person.admin
+export const isAdmin = (me: MyUserInfo) => me.local_user_view.local_user.admin
 
 export const removalTemplate = (
   input: string,

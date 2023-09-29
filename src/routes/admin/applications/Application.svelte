@@ -25,7 +25,6 @@
     try {
       await getClient().approveRegistrationApplication({
         approve: approve,
-        auth: $profile.jwt,
         id: application.registration_application.id,
       })
       toast({

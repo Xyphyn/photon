@@ -26,7 +26,6 @@
       switch (item.type) {
         case 'comment': {
           const res = await getClient().resolveCommentReport({
-            auth: $profile.jwt,
             report_id: item.id,
             resolved: !item.resolved,
           })
@@ -44,7 +43,6 @@
         }
         case 'post': {
           const res = await getClient().resolvePostReport({
-            auth: $profile.jwt,
             report_id: item.id,
             resolved: !item.resolved,
           })
@@ -61,7 +59,6 @@
         }
         case 'message': {
           const res = await getClient().resolvePrivateMessageReport({
-            auth: $profile.jwt,
             report_id: item.id,
             resolved: !item.resolved,
           })
@@ -79,9 +76,7 @@
         }
       }
 
-      const reports = await getClient().getReportCount({
-        auth: $profile?.jwt,
-      })
+      const reports = await getClient().getReportCount({})
 
       $profile.user.reports =
         reports.comment_reports +

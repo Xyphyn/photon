@@ -12,7 +12,6 @@ export async function load({ data, fetch, url }) {
   const unreadOnly = (url.searchParams.get('unreadOnly') || 'true') == 'true'
 
   const res = await getClient(undefined, fetch).listRegistrationApplications({
-    auth: jwt,
     page: page,
     limit: 40,
     unread_only: unreadOnly,

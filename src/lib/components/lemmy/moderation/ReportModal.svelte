@@ -27,13 +27,11 @@
     try {
       if (isComment(item)) {
         await getClient().createCommentReport({
-          auth: $profile.jwt,
           comment_id: item.comment.id,
           reason: reason,
         })
       } else if (isPost(item)) {
         await getClient().createPostReport({
-          auth: $profile.jwt,
           post_id: item.post.id,
           reason: reason,
         })

@@ -25,7 +25,6 @@ export async function load({ url, fetch }) {
         page: page,
         sort: sort,
         type_: listingType,
-        auth: get(profile)?.jwt,
       }),
     }
   } catch (err) {

@@ -15,6 +15,7 @@
     newPasswordVerify = ''
   let loading = false
 
+  // @ts-ignore
   $: totpLink = data.my_user?.local_user_view?.local_user?.totp_2fa_url
 
   async function changePassword() {
@@ -22,7 +23,6 @@
       if (!$profile?.jwt) return
       loading = true
       const res = await getClient().changePassword({
-        auth: $profile?.jwt,
         new_password: newPassword,
         new_password_verify: newPasswordVerify,
         old_password: oldPassword,
@@ -56,8 +56,8 @@
       await getClient().saveUserSettings({
         ...data.my_user?.local_user_view.local_user,
         ...data.my_user?.local_user_view.person,
+        // @ts-ignore
         generate_totp_2fa: enabled,
-        auth: $profile?.jwt,
       })
       goto($page.url, { invalidateAll: true })
       toast({

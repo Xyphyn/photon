@@ -30,7 +30,6 @@
     data.person_blocks = data.person_blocks
 
     await getClient().blockPerson({
-      auth: $profile.jwt,
       block: false,
       person_id: item.target.id,
     })
@@ -50,7 +49,6 @@
     data.community_blocks = data.community_blocks
 
     await getClient().blockCommunity({
-      auth: $profile.jwt,
       block: false,
       community_id: item.community.id,
     })

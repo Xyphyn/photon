@@ -49,7 +49,6 @@
 
       const res = edit
         ? await getClient().editCommunity({
-            auth: $profile.jwt,
             title: formData.displayName,
             description: formData.sidebar,
             nsfw: formData.nsfw,
@@ -59,7 +58,6 @@
             community_id: edit,
           })
         : await getClient().createCommunity({
-            auth: $profile.jwt,
             name: formData.name,
             title: formData.displayName,
             description: formData.sidebar,

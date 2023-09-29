@@ -22,7 +22,6 @@ export async function load({ url, fetch }) {
   if (query) {
     const results = await getClient(undefined, fetch).search({
       q: query,
-      auth: get(profile)?.jwt,
       community_id: community ?? undefined,
       limit: 20,
       page: page,
@@ -52,7 +51,6 @@ export async function load({ url, fetch }) {
       streamed: {
         object: get(profile)?.jwt
           ? getClient(undefined, fetch).resolveObject({
-              auth: get(profile)!.jwt!,
               q: query,
             })
           : undefined,

@@ -66,7 +66,6 @@
       if (!blocked) allowedInstances.push(instance)
 
       await getClient().editSite({
-        auth: $profile.jwt,
         blocked_instances: blockedInstances,
         allowed_instances: allowedInstances,
       })
@@ -102,7 +101,6 @@
         )
 
       return await getClient().editSite({
-        auth: $profile.jwt,
         allowed_instances: allowedInstances,
         blocked_instances: blockedInstances,
       })

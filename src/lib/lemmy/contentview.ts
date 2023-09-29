@@ -70,7 +70,6 @@ export async function save(
   if (item.type == 'post') {
     return (
       await getClient().savePost({
-        auth: jwt,
         post_id: item.id,
         save: save,
       })
@@ -78,7 +77,6 @@ export async function save(
   } else if (item.type == 'comment') {
     return (
       await getClient().saveComment({
-        auth: jwt,
         comment_id: item.id,
         save: save,
       })
@@ -97,7 +95,6 @@ export async function deleteItem(
   if (item.type == 'post') {
     return (
       await getClient().deletePost({
-        auth: jwt,
         post_id: item.id,
         deleted: deleted,
       })
@@ -105,7 +102,6 @@ export async function deleteItem(
   } else if (item.type == 'comment') {
     return (
       await getClient().deleteComment({
-        auth: jwt,
         comment_id: item.id,
         deleted: deleted,
       })
@@ -124,7 +120,6 @@ export async function vote(
   if (item.type == 'post') {
     return (
       await getClient().likePost({
-        auth: jwt,
         post_id: item.id,
         score: vote,
       })
@@ -132,7 +127,6 @@ export async function vote(
   } else if (item.type == 'comment') {
     return (
       await getClient().likeComment({
-        auth: jwt,
         comment_id: item.id,
         score: vote,
       })
@@ -151,7 +145,6 @@ export async function markAsRead(
   if (item.type == 'post') {
     return (
       await getClient().markPostAsRead({
-        auth: jwt,
         post_id: item.id,
         read: read,
       })

@@ -41,7 +41,6 @@
 
     try {
       await getClient().followCommunity({
-        auth: $profile.jwt,
         community_id: community_view.community.id,
         follow: !subscribed,
       })
@@ -61,7 +60,6 @@
 
     try {
       await getClient().blockCommunity({
-        auth: $profile.jwt,
         community_id: community_view.community.id,
         block: !blocked,
       })

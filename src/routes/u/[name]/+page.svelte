@@ -49,7 +49,6 @@
       const blocked = isBlocked($profile.user, block)
 
       await getClient().blockPerson({
-        auth: $profile.jwt,
         block: !blocked,
         person_id: block,
       })
@@ -130,7 +129,7 @@
       <div
         class="!divide-y divide-slate-200 dark:divide-zinc-800 flex flex-col"
       >
-        {#each data.items as item (item.counts.id)}
+        {#each data.items as item}
           {#if isCommentView(item) && (data.type == 'all' || data.type == 'comments')}
             <CommentItem comment={item} />
           {:else if !isCommentView(item) && (data.type == 'all' || data.type == 'posts')}

@@ -41,7 +41,6 @@
 
       try {
         await getClient().editComment({
-          auth: $profile.jwt,
           comment_id: node.comment_view.comment.id,
           content: newComment,
         })

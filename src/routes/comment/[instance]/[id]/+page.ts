@@ -6,7 +6,6 @@ import { get } from 'svelte/store'
 export async function load({ params, fetch }) {
   const comment = await getClient(undefined, fetch).getComment({
     id: Number(params.id),
-    auth: get(profile)?.jwt,
   })
 
   throw redirect(
