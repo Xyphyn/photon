@@ -12,6 +12,7 @@
   import ViewSelect from '$lib/components/lemmy/ViewSelect.svelte'
   import { site } from '$lib/lemmy.js'
   import { amModOfAny } from '$lib/components/lemmy/moderation/moderation.js'
+  import { feature } from '$lib/version.js'
 
   export let data
 
@@ -65,12 +66,14 @@
         <option value="All">All</option>
         <option value="Local">Local</option>
         <option value="Subscribed" disabled={!$profile?.jwt}>Subscribed</option>
-        <option
-          value="ModeratorView"
-          disabled={!$profile?.jwt || !amModOfAny($profile?.user)}
-        >
-          Moderator
-        </option>
+        {#if feature('moderatorView', $site?.version)}
+          <option
+            value="ModeratorView"
+            disabled={!$profile?.jwt || !amModOfAny($profile?.user)}
+          >
+            Moderator
+          </option>
+        {/if}
       </Select>
       <div class="flex gap-4 flex-wrap">
         <Sort selected={data.sort} />

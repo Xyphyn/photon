@@ -5,6 +5,8 @@ import { instance } from '$lib/instance.js'
 import { instanceToURL } from '$lib/util.js'
 import { profile } from '$lib/auth.js'
 
+export const site = writable<GetSiteResponse | undefined>(undefined)
+
 const isURL = (input: RequestInfo | URL): input is URL =>
   typeof input == 'object' && 'searchParams' in input
 
@@ -76,7 +78,6 @@ export function getClient(
 }
 
 export const getInstance = () => encodeURIComponent(get(instance))
-export const site = writable<GetSiteResponse | undefined>(undefined)
 
 export async function validateInstance(instance: string): Promise<boolean> {
   if (instance == '') return false
