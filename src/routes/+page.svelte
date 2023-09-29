@@ -57,7 +57,7 @@
       <Select
         bind:value={data.listingType}
         on:change={() =>
-          searchParam($page.url, 'type', data.listingType, 'page')}
+          searchParam($page.url, 'type', data.listingType, 'page', 'cursor')}
       >
         <span slot="label" class="flex items-center gap-1">
           <Icon src={GlobeAmericas} size="16" mini />
@@ -88,7 +88,9 @@
     <div class="mt-auto">
       <Pageination
         page={data.page}
+        next_cursor={data.next_page}
         on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
+        on:cursor={(c) => searchParam($page.url, 'cursor', c.detail)}
       >
         <span class="max-sm:hidden">
           You've viewed <span
