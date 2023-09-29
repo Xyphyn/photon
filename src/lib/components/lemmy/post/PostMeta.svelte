@@ -116,7 +116,7 @@
         </Badge>
       {/if}
       {#if removed}
-        <Badge label="Removed" color="red">
+        <Badge label="Removed" color="red-subtle">
           <Icon src={Trash} mini size="14" />
           <span class="max-md:hidden">Removed</span>
         </Badge>
@@ -128,7 +128,7 @@
         </Badge>
       {/if}
       {#if featured}
-        <Badge label="Featured" color="green">
+        <Badge label="Featured" color="green-subtle">
           <Icon src={Megaphone} mini size="14" />
           <span class="max-md:hidden">Featured</span>
         </Badge>
