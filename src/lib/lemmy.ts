@@ -5,15 +5,37 @@ import { instance } from '$lib/instance.js'
 import { instanceToURL } from '$lib/util.js'
 import { profile } from '$lib/auth.js'
 
+const isURL = (input: RequestInfo | URL): input is URL =>
+  typeof input == 'object' && 'searchParams' in input
+
+const toURL = (input: RequestInfo | URL): URL | undefined => {
+  if (isURL(input)) return input
+
+  try {
+    return new URL(input.toString())
+  } catch (e) {
+    return
+  }
+}
+
 async function customFetch(
-  func: (
-    input: RequestInfo | URL,
-    init?: RequestInit | undefined
-  ) => Promise<Response>,
+  func:
+    | ((
+        input: RequestInfo | URL,
+        init?: RequestInit | undefined
+      ) => Promise<Response>)
+    | undefined,
   input: RequestInfo | URL,
-  init?: RequestInit | undefined
+  init?: RequestInit | undefined,
+  auth?: string
 ): Promise<Response> {
-  const res = await func(input, init)
+  const f = func ? func : fetch
+
+  const url = toURL(input)
+
+  if (auth && url) url.searchParams.set('auth', auth)
+
+  const res = await f(url ?? input, init)
   if (!res.ok) throw error(res.status, await res.text())
   return res
 }
@@ -37,7 +59,7 @@ export function client({
   let headers = jwt ? { Authorization: `Bearer ${jwt}` } : { Authorization: '' }
 
   return new LemmyHttp(instanceToURL(instanceURL), {
-    fetchFunction: func,
+    fetchFunction: (input, init) => customFetch(func, input, init, jwt),
     headers: headers,
   })
 }

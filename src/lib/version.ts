@@ -1,4 +1,4 @@
-export const MINIMUM_VERSION = '0.19.0'
+export const MINIMUM_VERSION = '0.18.1'
 export const MAXIMUM_VERSION = '0.999'
 
 export const versionIsSupported = (v: string, minimum: string) => {
