@@ -89,6 +89,8 @@
 
     <Pageination
       page={data.page}
+      next_cursor={data.posts.next_page}
+      on:cursor={(c) => searchParam($page.url, 'cursor', c.detail)}
       on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
     >
       {#if data.posts.posts.length > 0}
