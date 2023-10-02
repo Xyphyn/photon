@@ -8,6 +8,7 @@ import { feature } from '$lib/version.js'
 
 export async function load({ url, fetch }) {
   const cursor = url.searchParams.get('cursor') as string | undefined
+  const prevCursor = url.searchParams.get('prevCursor') as string | undefined
   const page = Number(url.searchParams.get('page')) || undefined
 
   const sort: SortType =
@@ -22,7 +23,7 @@ export async function load({ url, fetch }) {
     page: page,
     sort: sort,
     type_: listingType,
-    page_cursor: cursor
+    page_cursor: cursor,
   })
 
   try {
@@ -31,7 +32,11 @@ export async function load({ url, fetch }) {
       listingType: listingType,
       page: page || 1,
       posts: posts,
-      next_page: posts.next_page
+      cursor: {
+        next: posts.next_page,
+        back: prevCursor,
+        current: cursor,
+      },
     }
   } catch (err) {
     throw error(500, {

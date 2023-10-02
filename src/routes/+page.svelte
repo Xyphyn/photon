@@ -88,9 +88,11 @@
     <div class="mt-auto">
       <Pageination
         page={data.page}
-        next_cursor={data.next_page}
+        cursor={{ next: data.cursor.next, back: data.cursor.back }}
         on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
-        on:cursor={(c) => searchParam($page.url, 'cursor', c.detail)}
+        on:cursor={(c) => {
+          searchParam($page.url, 'cursor', c.detail)
+        }}
       >
         <span class="max-sm:hidden">
           You've viewed <span
