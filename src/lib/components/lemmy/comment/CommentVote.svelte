@@ -35,7 +35,6 @@
     await getClient()
       .likeComment({
         score: upvoted ? 0 : 1,
-        auth: $profile.jwt,
         comment_id: commentId,
       })
       .catch((_) => undefined)
@@ -59,7 +58,6 @@
     await getClient()
       .likeComment({
         score: upvoted ? 0 : -1,
-        auth: $profile.jwt,
         comment_id: commentId,
       })
       .catch((_) => undefined)

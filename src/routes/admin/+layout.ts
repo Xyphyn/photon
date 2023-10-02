@@ -8,9 +8,7 @@ export async function load({ fetch }) {
   let site = get(siteStore)
 
   if (!site) {
-    const res = await getClient(undefined, fetch).getSite({
-      auth: jwt,
-    })
+    const res = await getClient(undefined, fetch).getSite()
 
     site = res
   }

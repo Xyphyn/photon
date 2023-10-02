@@ -22,7 +22,6 @@
     search={async (q) => {
       const results = await getClient().search({
         q: q || ' ',
-        auth: jwt,
         type_: 'Communities',
         limit: 20,
         listing_type: listing_type,

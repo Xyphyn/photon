@@ -1,9 +1,6 @@
 import { getInstance } from '$lib/lemmy.js'
 import type { CommentView, PersonView, Post, PostView } from 'lemmy-js-client'
 
-export const isMutable = (post: PostView, me: PersonView) =>
-  (me.person.admin && post.post.local) || me.person.id == post.creator.id
-
 export const isCommentMutable = (comment: CommentView, me: PersonView) =>
   me.person.id == comment.creator.id
 
@@ -13,8 +10,8 @@ export const bestImageURL = (
   width: number = 1024
 ) => {
   if (width > 1024) {
-  	if (post.url) return `${post.url}?format=webp`
-	else if (post.thumbnail_url) return `${post.thumbnail_url}?format=webp`
+    if (post.url) return `${post.url}?format=webp`
+    else if (post.thumbnail_url) return `${post.thumbnail_url}?format=webp`
   }
 
   if (compact && post.thumbnail_url)

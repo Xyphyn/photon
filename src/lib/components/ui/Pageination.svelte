@@ -10,8 +10,9 @@
   } from 'svelte-hero-icons'
 
   export let page: number
+  export let cursor: { next?: string; back?: string } | undefined = undefined
 
-  const dispatcher = createEventDispatcher<{ change: number }>()
+  const dispatcher = createEventDispatcher<{ change: number; cursor: string }>()
 </script>
 
 <div class="flex flex-row w-full gap-4 items-center">
@@ -21,20 +22,24 @@
     </span>
     <hr class="border-slate-200 dark:border-zinc-800 flex-1" />
   {/if}
-  <Button
-    on:click={() => {
-      dispatcher('change', --page)
-    }}
-    disabled={page <= 1}
-    class={$$slots.default ? '' : 'flex-1'}
-  >
-    <Icon src={ChevronLeft} size="18" mini slot="prefix" />
-    Back
-  </Button>
+  {#if cursor?.back}
+    <Button
+      on:click={() => {
+        if (cursor?.back) dispatcher('cursor', cursor.back)
+        else dispatcher('change', --page)
+      }}
+      disabled={page <= 1}
+      class={$$slots.default ? '' : 'flex-1'}
+    >
+      <Icon src={ChevronLeft} size="18" mini slot="prefix" />
+      Back
+    </Button>
+  {/if}
 
   <Button
     on:click={() => {
-      dispatcher('change', ++page)
+      if (cursor?.next) dispatcher('cursor', cursor?.next)
+      else dispatcher('change', ++page)
     }}
     class={$$slots.default ? '' : 'flex-1'}
   >

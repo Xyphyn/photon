@@ -49,7 +49,6 @@
       $profile?.jwt
     ) {
       getClient().markPostAsRead({
-        auth: $profile.jwt,
         read: $userSettings.markPostsAsRead,
         post_id: post.post_view.post.id,
       })
@@ -80,7 +79,6 @@
 
     try {
       const res = await getClient().resolveObject({
-        auth: jwt,
         q: post.post_view.post.ap_id,
       })
 
@@ -105,7 +103,6 @@
     commentsPage = 1
 
     data.streamed.comments = getClient().getComments({
-      auth: $profile?.jwt,
       page: 1,
       limit: 25,
       type_: 'All',

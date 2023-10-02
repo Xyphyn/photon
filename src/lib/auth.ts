@@ -1,15 +1,16 @@
 import { amModOfAny } from '$lib/components/lemmy/moderation/moderation.js'
 import { toast } from 'mono-svelte'
 import { DEFAULT_INSTANCE_URL, instance } from '$lib/instance.js'
-import { getClient, site } from '$lib/lemmy.js'
+import { client, getClient, site } from '$lib/lemmy.js'
 import { userSettings } from '$lib/settings.js'
-import { moveItem } from '$lib/util.js'
+import { instanceToURL, moveItem } from '$lib/util.js'
 import {
   LemmyHttp,
   type GetSiteResponse,
   type MyUserInfo,
 } from 'lemmy-js-client'
 import { get, writable } from 'svelte/store'
+import { MINIMUM_VERSION, versionIsSupported } from '$lib/version.js'
 
 const getDefaultProfile = (): Profile => ({
   id: -1,
@@ -87,13 +88,21 @@ profile.subscribe(async (p) => {
   instance.set(p.instance)
   // fetch the user because p.user is undefined
   const user = await userFromJwt(p.jwt, p.instance)
+    .then((user) => {
+      if (!user?.user)
+        toast({
+          content: 'Your login has expired. Re-login to fix this issue.',
+          type: 'warning',
+        })
+      site.set(user?.site)
 
-  if (!user?.user)
-    toast({
-      content: 'Your login has expired. Re-login to fix this issue.',
-      type: 'warning',
+      return user
     })
-  site.set(user?.site)
+    .catch((err) => {
+      toast({ content: err as any, type: 'error' })
+    })
+
+  if (!user?.user) return
 
   profile.update(() => ({
     ...p,
@@ -105,13 +114,17 @@ profile.subscribe(async (p) => {
 
 export async function setUser(jwt: string, inst: string, username: string) {
   try {
-    new URL(`https://${inst}`)
+    new URL(instanceToURL(inst))
   } catch (err) {
     return
   }
 
   const user = await userFromJwt(jwt, inst)
-  if (!user) {
+    .then((u) => u)
+    .catch((err) => {
+      toast({ content: err as any, type: 'error' })
+    })
+  if (!user?.user) {
     toast({
       content: 'Failed to fetch your user. Is your instance down?',
       type: 'error',
@@ -152,9 +165,7 @@ async function userFromJwt(
   jwt: string,
   instance: string
 ): Promise<{ user: PersonData; site: GetSiteResponse } | undefined> {
-  const sitePromise = getClient(instance).getSite({
-    auth: jwt,
-  })
+  const sitePromise = client({ instanceURL: instance, auth: jwt }).getSite()
 
   let timer = setTimeout(
     () =>
@@ -169,6 +180,12 @@ async function userFromJwt(
     clearTimeout(timer)
     return r
   })
+
+  if (!versionIsSupported(site.version, MINIMUM_VERSION)) {
+    throw new Error(
+      `This version of Photon only supports Lemmy instances with version ${MINIMUM_VERSION} or higher. This Lemmy instance is running: ${site.version}`
+    )
+  }
 
   const myUser = site.my_user
   if (!myUser) return undefined
@@ -250,6 +267,10 @@ export async function setUserID(id: number) {
 
   if (prof?.jwt) {
     const user = await userFromJwt(prof.jwt, prof.instance)
+      .then((u) => u)
+      .catch((err) => {
+        toast({ content: err as any, type: 'error' })
+      })
     instance.set(prof.instance)
     prof.user = user?.user
     prof.avatar = user?.user.local_user_view.person.avatar
@@ -276,16 +297,12 @@ export function moveProfile(id: number, up: boolean) {
 }
 
 const getNotificationCount = async (jwt: string, mod: boolean) => {
-  const unreads = await getClient().getUnreadCount({
-    auth: jwt,
-  })
+  const unreads = await getClient().getUnreadCount()
 
   let reports: number = 0
 
   if (mod) {
-    const reportRes = await getClient().getReportCount({
-      auth: jwt,
-    })
+    const reportRes = await getClient().getReportCount({})
 
     reports =
       reportRes.comment_reports +

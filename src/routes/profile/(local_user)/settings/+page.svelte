@@ -28,7 +28,6 @@
         : undefined
 
       const res = await getClient().saveUserSettings({
-        auth: $profile.jwt,
         ...formData,
         avatar: pfp,
       })
@@ -56,6 +55,7 @@
   let deletion = {
     modal: false,
     password: '',
+    deleteContent: false,
   }
 
   async function deleteAccount(level: number) {
@@ -102,11 +102,10 @@
     })
 
     try {
-      const { jwt } = $profile
-
       await getClient().deleteAccount({
-        auth: jwt,
         password: deletion.password,
+
+        delete_content: deletion.deleteContent,
       })
 
       profileData.update((pd) => {
@@ -148,6 +147,12 @@
       type="password"
       bind:value={deletion.password}
     />
+    <Checkbox bind:checked={deletion.deleteContent}>
+      Delete content
+      <span slot="description">
+        This will delete ALL of your account's posts and comments.
+      </span>
+    </Checkbox>
   </Modal>
 {/if}
 

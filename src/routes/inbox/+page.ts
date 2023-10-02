@@ -23,7 +23,6 @@ export async function load({ url, fetch }) {
   const params = {
     limit: 20,
     page: page,
-    auth: auth.jwt,
     unread_only: unreadOnly == 'true',
   }
 

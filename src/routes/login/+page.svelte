@@ -1,7 +1,7 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { setUser } from '$lib/auth.js'
-  import { toast } from 'mono-svelte'
+  import { Note, toast } from 'mono-svelte'
   import { DEFAULT_INSTANCE_URL, LINKED_INSTANCE_URL } from '$lib/instance.js'
   import { getClient, validateInstance } from '$lib/lemmy.js'
   import { Button, TextInput } from 'mono-svelte'
@@ -11,6 +11,8 @@
     Identification,
     QuestionMarkCircle,
   } from 'svelte-hero-icons'
+  import { DOMAIN_REGEX_FORMS } from '$lib/util.js'
+  import { MINIMUM_VERSION } from '$lib/version.js'
 
   let data = {
     instance: DEFAULT_INSTANCE_URL,
@@ -36,10 +38,12 @@
       })
 
       if (response?.jwt) {
-        await setUser(response.jwt, data.instance, data.username)
+        const result = await setUser(response.jwt, data.instance, data.username)
 
-        toast({ content: 'Successfully logged in.', type: 'success' })
-        goto('/')
+        if (result) {
+          toast({ content: 'Successfully logged in.', type: 'success' })
+          goto('/')
+        }
       } else {
         throw new Error('Invalid credentials')
       }
@@ -62,6 +66,13 @@
     <div class="flex flex-col gap-2">
       <h1 class="font-bold text-3xl">Log In</h1>
       <p>Enter the fediverse</p>
+      <Note>
+        This version of Photon supports instances running
+        <span style="font-family: monospace;">
+          v{MINIMUM_VERSION}
+        </span>
+        or higher.
+      </Note>
     </div>
     <div class="flex flex-row w-full items-center gap-2">
       <TextInput
@@ -81,7 +92,7 @@
           bind:value={data.instance}
           class="flex-1"
           required
-          pattern={'(?!-)[A-Za-z0-9-]+([-.]{1}[a-z0-9]+)*.[A-Za-z]{2,6}'}
+          pattern={DOMAIN_REGEX_FORMS}
         />
       {/if}
     </div>

@@ -24,7 +24,6 @@
 
     try {
       await getClient().editSite({
-        auth: $profile.jwt,
         taglines: taglines,
       })
       toast({

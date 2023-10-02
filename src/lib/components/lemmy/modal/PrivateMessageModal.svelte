@@ -20,7 +20,6 @@
 
     try {
       await getClient().createPrivateMessage({
-        auth: $profile.jwt,
         content: message,
         recipient_id: user.id,
       })

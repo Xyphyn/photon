@@ -17,7 +17,6 @@ export async function load({ url, fetch, parent }) {
     page: page,
     username: my_user?.local_user_view.person.name,
     sort: sort,
-    auth: get(profile)?.jwt,
   })
 
   const items = [...user.posts, ...user.comments]

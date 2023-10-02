@@ -5,8 +5,7 @@ import type { SortType } from 'lemmy-js-client'
 import { get } from 'svelte/store'
 
 export async function load({ params, url, fetch }) {
-  const my_user = (await getClient().getSite({ auth: get(profile)?.jwt }))
-    .my_user
+  const my_user = (await getClient().getSite()).my_user
 
   return {
     my_user: my_user,

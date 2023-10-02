@@ -5,7 +5,8 @@ import type { ListingType, SortType } from 'lemmy-js-client'
 import { get } from 'svelte/store'
 
 export async function load(req: any) {
-  const page = Number(req.url.searchParams.get('page') || 1) || 1
+  const cursor: string | undefined = req.url.searchParams.get('cursor')
+  const page = Number(req.url.searchParams.get('page')) || undefined
 
   const sort: SortType =
     (req.url.searchParams.get('sort') as SortType) ||
@@ -13,17 +14,16 @@ export async function load(req: any) {
 
   return {
     sort: sort,
-    page: page,
+    page: page || 1,
     posts: getClient(undefined, req.fetch).getPosts({
       limit: 40,
       community_name: req.params.name,
       page: page,
       sort: sort,
-      auth: get(profile)?.jwt,
+      page_cursor: cursor
     }),
     community: getClient(undefined, req.fetch).getCommunity({
       name: req.params.name,
-      auth: get(profile)?.jwt,
     }),
   }
 }

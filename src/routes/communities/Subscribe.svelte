@@ -19,7 +19,6 @@
 
     try {
       const res = await getClient().followCommunity({
-        auth: $profile.jwt,
         community_id: id,
         follow: subscribed == 'NotSubscribed',
       })

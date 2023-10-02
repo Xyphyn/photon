@@ -43,7 +43,6 @@
       parent.loading = true
 
       const newComments = await getClient($page.params.instance).getComments({
-        auth: $profile?.jwt,
         max_depth: 5,
         parent_id: parent.comment_view.comment.id,
         type_: 'All',

@@ -7,10 +7,12 @@
   import { searchParam } from '$lib/util.js'
   import PostFeed from '$lib/components/lemmy/post/PostFeed.svelte'
   import { Button, Modal, Select, Spinner } from 'mono-svelte'
-  import { GlobeAmericas, Icon } from 'svelte-hero-icons'
+  import { ChartBar, GlobeAmericas, Icon } from 'svelte-hero-icons'
   import { profile } from '$lib/auth.js'
   import ViewSelect from '$lib/components/lemmy/ViewSelect.svelte'
   import { site } from '$lib/lemmy.js'
+  import { amModOfAny } from '$lib/components/lemmy/moderation/moderation.js'
+  import { feature } from '$lib/version.js'
 
   export let data
 
@@ -55,7 +57,7 @@
       <Select
         bind:value={data.listingType}
         on:change={() =>
-          searchParam($page.url, 'type', data.listingType, 'page')}
+          searchParam($page.url, 'type', data.listingType, 'page', 'cursor')}
       >
         <span slot="label" class="flex items-center gap-1">
           <Icon src={GlobeAmericas} size="16" mini />
@@ -64,6 +66,14 @@
         <option value="All">All</option>
         <option value="Local">Local</option>
         <option value="Subscribed" disabled={!$profile?.jwt}>Subscribed</option>
+        {#if feature('moderatorView', $site?.version)}
+          <option
+            value="ModeratorView"
+            disabled={!$profile?.jwt || !amModOfAny($profile?.user)}
+          >
+            Moderator
+          </option>
+        {/if}
       </Select>
       <div class="flex gap-4 flex-wrap">
         <Sort selected={data.sort} />
@@ -78,21 +88,18 @@
     <div class="mt-auto">
       <Pageination
         page={data.page}
+        cursor={{ next: data.cursor.next, back: data.cursor.back }}
         on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
+        on:cursor={(c) => {
+          searchParam($page.url, 'cursor', c.detail)
+        }}
       >
-        <span class="max-sm:hidden">
-          You've viewed <span
-            class="text-primary-900 dark:text-primary-100 font-bold"
-          >
-            {data.page * 20}
+        <span class="flex flex-row items-center gap-1">
+          <Icon src={ChartBar} size="16" mini />
+          <span class="font-medium text-black dark:text-white">
+            {$site?.site_view.counts.users_active_day}
           </span>
-          posts.
-        </span>
-        <span class="sm:hidden">
-          <span class="text-primary-900 dark:text-primary-100">
-            {data.page * 20}
-          </span>
-          posts
+          <span class="font-normal">Active users</span>
         </span>
       </Pageination>
     </div>

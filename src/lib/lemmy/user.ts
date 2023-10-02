@@ -10,7 +10,6 @@ export const blockUser = async (block: boolean, id: number) => {
   if (!auth) throw new Error('Unauthorized')
 
   const response = await getClient().blockPerson({
-    auth: auth,
     block: block,
     person_id: id,
   })
@@ -53,14 +52,12 @@ export const addSubscription = (
 export const addAdmin = async (handle: string, added: boolean, jwt: string) =>
   trycatch(async () => {
     const user = await getClient().resolveObject({
-      auth: jwt,
       q: handle,
     })
 
     if (!user.person) throw new Error('No user found')
 
     return await getClient().addAdmin({
-      auth: jwt,
       added: true,
       person_id: user.person.person.id,
     })

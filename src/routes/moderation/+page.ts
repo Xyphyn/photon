@@ -32,7 +32,6 @@ export async function load({ url, fetch }) {
   const client = getClient(undefined, fetch)
 
   const params = {
-    auth: jwt,
     limit: 20,
     page: page,
     unresolved_only: type == 'unread',

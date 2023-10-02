@@ -1,6 +1,8 @@
 <script lang="ts">
   import { page } from '$app/stores'
+  import { site } from '$lib/lemmy.js'
   import { searchParam } from '$lib/util.js'
+  import { feature } from '$lib/version.js'
   import { Select } from 'mono-svelte'
   import { ChartBar, Clock, Icon } from 'svelte-hero-icons'
   import { fly } from 'svelte/transition'
@@ -19,7 +21,7 @@
         bind:value={selected}
         on:change={(e) => {
           sort = 'TopAll'
-          if (navigate) searchParam($page.url, 'sort', selected, 'page')
+          if (navigate) searchParam($page.url, 'sort', selected, 'page', 'cursor')
         }}
       >
         <span slot="label" class="flex items-center gap-1">
@@ -52,8 +54,14 @@
     </span>
     <option value="Active">Active</option>
     <option value="Hot">Hot</option>
+    {#if feature('scaledSort', $site?.version)}
+      <option value="Scaled">Rising</option>
+    {/if}
     <option value="TopAll">Top</option>
     <option value="New">New</option>
+    {#if feature('controversialSort', $site?.version)}
+      <option value="Controversial">Controversial</option>
+    {/if}
     <option value="Old">Old</option>
     <option value="MostComments">Most Comments</option>
     <option value="NewComments">New Comments</option>

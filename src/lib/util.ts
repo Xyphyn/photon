@@ -101,8 +101,10 @@ export const removeItem = <T>(array: T[], predicate: (item: T) => boolean) => {
   array.splice(array.findIndex(predicate), 1)
 }
 
-export const DOMAIN_REGEX = /^((?!-)[A-Za-z0-9-]{1,63}\.)+[A-Za-z]{2,63}/gi
-export const DOMAIN_REGEX_FORMS = '^((?!-)[A-Za-z0-9-]{1,63}.)+[A-Za-z]{2,63}'
+export const DOMAIN_REGEX =
+  /^(http(s)?:\/\/)?((?!-)[A-Za-z0-9-]{1,63}\.)+[A-Za-z]{2,63}(:[0-9]{0,5})$/g
+export const DOMAIN_REGEX_FORMS =
+  '(http(s)?://)?((?!-)[A-Za-z0-9-]{1,63}.)+[A-Za-z]{2,63}(:[0-9]{0,5})?'
 
 export const isSubscribed = (subscribed: SubscribedType) =>
   subscribed == 'Pending' || subscribed == 'Subscribed'
@@ -166,3 +168,8 @@ export async function uploadImage(
     }: ${response.status}: ${response.statusText}`
   )
 }
+
+export const instanceToURL = (input: string) =>
+  input.startsWith('http://') || input.startsWith('https://')
+    ? input
+    : `https://${input}`

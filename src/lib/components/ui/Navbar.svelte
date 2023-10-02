@@ -113,7 +113,7 @@
       <Button
         href="/admin"
         aria-label="Admin"
-        class="max-md:w-9 max-md:h-8 max-md:!p-0 relative"
+        class="max-md:w-9 max-md:h-8 max-md:!p-0 "
       >
         <Icon src={CommandLine} mini size="16" slot="prefix" />
         <span class="hidden md:inline">Admin</span>
