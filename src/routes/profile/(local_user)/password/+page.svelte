@@ -1,12 +1,13 @@
 <script lang="ts">
   import { deleteProfile, profile, setUser } from '$lib/auth.js'
-  import { getClient } from '$lib/lemmy.js'
+  import { getClient, site } from '$lib/lemmy.js'
   import { trycatch } from '$lib/util.js'
   import { Button, Snippet, TextInput, toast } from 'mono-svelte'
   import { instance as currentInstance } from '$lib/instance.js'
   import { ClipboardDocument, Icon } from 'svelte-hero-icons'
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
+  import { feature } from '$lib/version.js'
 
   export let data
 
@@ -15,8 +16,12 @@
     newPasswordVerify = ''
   let loading = false
 
+  let verify_totp = ''
+
   // @ts-ignore
-  $: totpLink = data.my_user?.local_user_view?.local_user?.totp_2fa_url
+  let totpLink: string | undefined = undefined
+  $: totpEnabled =
+    data.my_user?.local_user_view.local_user.totp_2fa_enabled ?? totpLink
 
   async function changePassword() {
     try {
@@ -49,16 +54,28 @@
     loading = false
   }
 
-  async function twofa(enabled: boolean) {
+  async function twofa(enabled: boolean, update: boolean = false) {
     if (!$profile?.jwt) return
 
     try {
-      await getClient().saveUserSettings({
-        ...data.my_user?.local_user_view.local_user,
-        ...data.my_user?.local_user_view.person,
-        // @ts-ignore
-        generate_totp_2fa: enabled,
-      })
+      if (feature('newTotp', $site?.version)) {
+        if (update) {
+          await getClient().updateTotp({
+            enabled: enabled,
+            totp_token: verify_totp,
+          })
+        } else {
+          const res = await getClient().generateTotpSecret()
+          totpLink = res.totp_secret_url
+        }
+      } else {
+        const res = await getClient().saveUserSettings({
+          ...data.my_user?.local_user_view.local_user,
+          ...data.my_user?.local_user_view.person,
+          // @ts-ignore
+          generate_totp_2fa: enabled,
+        })
+      }
       goto($page.url, { invalidateAll: true })
       toast({
         content: `Successfully ${enabled ? 'enabled' : 'disabled'} 2FA.`,
@@ -105,27 +122,49 @@
     <h1 class="font-bold text-2xl">2FA</h1>
     <p>
       2FA on Lemmy is unstable and you may lock yourself out of your account.
+      {#if feature('newTotp', $site?.version)}
+        <strong>
+          You cannot disable 2FA if you lose access to your authenticator.
+        </strong>
+      {/if}
     </p>
-    {#if totpLink}
-      <TextInput disabled type="password" value={totpLink} label="TOTP Link">
-        <button
-          slot="suffix"
-          class="contents"
-          on:click={() => {
-            if (!totpLink) return
-            navigator.clipboard?.writeText(totpLink)
-            toast({ content: 'Copied to clipboard.' })
-          }}
-        >
-          <Icon src={ClipboardDocument} size="20" mini />
-        </button>
-        <span class="font-normal text-xs">
-          Paste this in your authenticator app.
-        </span>
-      </TextInput>
-      <Button on:click={() => twofa(false)} size="lg" color="primary">
-        Disable
-      </Button>
+    {#if totpEnabled}
+      <!--v0.18.0 2FA: Shows a TOTP code which you copy-->
+      {#if totpLink}
+        <TextInput disabled type="password" value={totpLink} label="TOTP Link">
+          <button
+            slot="suffix"
+            class="contents"
+            on:click={() => {
+              if (!totpLink) return
+              navigator.clipboard?.writeText(totpLink)
+              toast({ content: 'Copied to clipboard.' })
+            }}
+          >
+            <Icon src={ClipboardDocument} size="20" mini />
+          </button>
+          <span class="font-normal text-xs">
+            Paste this in your authenticator app.
+          </span>
+        </TextInput>
+      {/if}
+      <p>To change your 2FA state, enter your code here.</p>
+      <form class="flex flex-col gap-2" on:submit|preventDefault={() => {}}>
+        <TextInput
+          bind:value={verify_totp}
+          placeholder="012345"
+          label="2FA Code"
+        />
+        {#if totpEnabled}
+          <Button on:click={() => twofa(false, true)} size="lg" color="primary">
+            Disable
+          </Button>
+        {:else}
+          <Button on:click={() => twofa(true, true)} size="lg" color="primary">
+            Enable
+          </Button>
+        {/if}
+      </form>
     {:else}
       <Button on:click={() => twofa(true)} size="lg" color="primary">
         Setup

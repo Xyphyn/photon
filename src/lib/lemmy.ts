@@ -33,8 +33,13 @@ async function customFetch(
 ): Promise<Response> {
   const f = func ? func : fetch
 
-  const url = toURL(input)
+  if (init?.body && auth) {
+    const json = JSON.parse(init.body.toString())
+    json.auth = auth
+    init.body = JSON.stringify(json)
+  }
 
+  const url = toURL(input)
   if (auth && url) url.searchParams.set('auth', auth)
 
   const res = await f(url ?? input, init)
