@@ -18,7 +18,14 @@
   } from 'svelte-hero-icons'
   import PostLink from '$lib/components/lemmy/post/PostLink.svelte'
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
-  import { Badge, Material, Spinner, removeToast, toast } from 'mono-svelte'
+  import {
+    Badge,
+    Material,
+    Select,
+    Spinner,
+    removeToast,
+    toast,
+  } from 'mono-svelte'
   import type { CommentSortType } from 'lemmy-js-client'
   import MultiSelect from '$lib/components/input/Switch.svelte'
   import { profile } from '$lib/auth.js'
@@ -259,17 +266,25 @@
 <div class="mt-4 flex flex-col gap-2 w-full">
   <div class="flex flex-row justify-between flex-wrap gap-2">
     <div class="font-bold opacity-80 text-base flex items-center gap-2">
-      Comments <Badge color="gray" class="!text-sm">
+      Comments <Badge
+        color="blue-subtle"
+        class="min-w-[1rem] justify-center !font-bold"
+      >
         <FormattedNumber number={post.post_view.counts.comments} />
       </Badge>
     </div>
-    <div class="gap-2 flex">
-      <MultiSelect
-        options={['Hot', 'Top', 'New']}
-        bind:selected={commentSort}
-        on:select={reloadComments}
-        headless
-      />
+    <div class="gap-2 flex items-center h-8">
+      <Select
+        size="sm"
+        class="!h-full"
+        bind:value={commentSort}
+        on:change={reloadComments}
+      >
+        <option value="Hot">Hot</option>
+        <option value="Top">Top</option>
+        <option value="New">New</option>
+        <option value="Old">Old</option>
+      </Select>
       <Button size="square-md" on:click={reloadComments}>
         <Icon src={ArrowPath} size="16" mini slot="prefix" />
       </Button>
@@ -295,9 +310,9 @@
       {:else}
         <Button
           on:click={() => (showCreateComment = !showCreateComment)}
-          class="w-max"
           size="lg"
           rounding="lg"
+          color="tertiary"
         >
           <Icon src={Plus} size="16" mini slot="prefix" />
           Add a comment

@@ -3023,10 +3023,10 @@ mlly@^1.2.0, mlly@^1.4.0:
     pkg-types "^1.0.3"
     ufo "^1.1.2"
 
-mono-svelte@^0.3.7:
-  version "0.3.7"
-  resolved "https://registry.yarnpkg.com/mono-svelte/-/mono-svelte-0.3.7.tgz#d8100ca072699d672fb951dc33cb9d9f9fb2b60f"
-  integrity sha512-hgxFt7JhaX+jLIQNpbi29XJZ5yuYk3kyCX6sEBsUppxcrT/xqN7ajAm8uXaHg/kSORoiIBR38iHftEMMbeaxgA==
+mono-svelte@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/mono-svelte/-/mono-svelte-0.4.1.tgz#9237b92aaec435db315967851df651d1650a1936"
+  integrity sha512-yzDxdQaSJroiL6Yt3qnOIM8thI0d4IB3uOOG0dp/oBemiTtyOBY7niJcXhF0zkU0X/LmarBWYNI8Rs139N2NHw==
   dependencies:
     svelte-focus-trap "^1.2.0"
     svelte-hero-icons "^5.0.0"
