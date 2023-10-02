@@ -1,13 +1,10 @@
-import { site } from '$lib/lemmy.js'
-import { derived } from 'svelte/store'
-
 const FEATURES = {
   moderatorView: '0.19.0',
   controversialSort: '0.19.0',
   scaledSort: '0.19.0',
   unproxiedImageUpload: '0.19.0',
   cursorPagination: '0.19.0',
-  newTotp: '0.19.0'
+  newTotp: '0.19.0',
 }
 
 type Feature = keyof typeof FEATURES
