@@ -1,13 +1,23 @@
 <script lang="ts">
   import { profile } from '$lib/auth.js'
-  import { amMod } from '$lib/components/lemmy/moderation/moderation.js'
+  import {
+    amMod,
+    isAdmin,
+  } from '$lib/components/lemmy/moderation/moderation.js'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import StickyCard from '$lib/components/ui/StickyCard.svelte'
-  import { Popover, toast } from 'mono-svelte'
+  import {
+    Menu,
+    MenuButton,
+    Modal,
+    Popover,
+    removeToast,
+    toast,
+  } from 'mono-svelte'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
-  import { getClient } from '$lib/lemmy.js'
+  import { client, getClient } from '$lib/lemmy.js'
   import { addSubscription } from '$lib/lemmy/user.js'
   import { fullCommunityName } from '$lib/util.js'
   import type { CommunityModeratorView, CommunityView } from 'lemmy-js-client'
@@ -16,8 +26,11 @@
     Calendar,
     ChatBubbleOvalLeftEllipsis,
     Cog6Tooth,
+    EllipsisHorizontal,
+    Fire,
     Icon,
     Minus,
+    NoSymbol,
     PencilSquare,
     Plus,
     UserGroup,
@@ -70,7 +83,63 @@
     community_view.blocked = !blocked
     loading.blocking = false
   }
+
+  let purgingCommunity = false
+  let purgeEnabled = false
+  $: if (purgingCommunity) {
+    purgeEnabled = false
+    setTimeout(() => {
+      purgeEnabled = true
+    }, 3000)
+  }
+
+  async function purgeCommunity() {
+    purgingCommunity = false
+    const purgeToast = toast({ content: 'Purging community...', loading: true })
+
+    try {
+      await client().purgeCommunity({
+        community_id: community_view.community.id,
+      })
+      removeToast(purgeToast)
+      toast({ content: 'Purged that community.', type: 'success' })
+    } catch (e) {
+      toast({ content: e as any, type: 'error' })
+    }
+  }
 </script>
+
+{#if purgingCommunity}
+  <Modal bind:open={purgingCommunity}>
+    <svelte:fragment slot="title">Purging Community</svelte:fragment>
+    <p>
+      Purging community <span class="font-bold">
+        {community_view.community.title}
+      </span>
+    </p>
+    <p>
+      Are you sure you want to do this? (The button will enable in 3 seconds.)
+    </p>
+    <div class="flex flex-row gap-2">
+      <Button
+        size="lg"
+        on:click={() => (purgingCommunity = false)}
+        class="flex-1"
+      >
+        Cancel
+      </Button>
+      <Button
+        size="lg"
+        color="danger"
+        on:click={purgeCommunity}
+        disabled={!purgeEnabled}
+        class="flex-1"
+      >
+        Purge
+      </Button>
+    </div>
+  </Modal>
+{/if}
 
 <StickyCard>
   <div class="flex flex-row gap-3 items-center">
@@ -165,17 +234,8 @@
           ? 'Unsubscribe'
           : 'Subscribe'}
       </Button>
-      <Button
-        disabled={loading.blocking}
-        loading={loading.blocking}
-        color="danger"
-        size="lg"
-        on:click={block}
-      >
-        {community_view.blocked ? 'Unblock' : 'Block'}
-      </Button>
-      {#if $profile.user && amMod($profile.user, community_view.community)}
-        <div class="flex flex-row gap-2 ml-auto">
+      <div class="flex flex-row gap-2 ml-auto">
+        {#if $profile.user && amMod($profile.user, community_view.community)}
           <Button
             href="/c/{fullCommunityName(
               community_view.community.name,
@@ -185,8 +245,26 @@
           >
             <Icon src={Cog6Tooth} mini size="16" slot="prefix" />
           </Button>
-        </div>
-      {/if}
+        {/if}
+        <Menu origin="bottom-right">
+          <Button size="square-md" slot="target">
+            <Icon src={EllipsisHorizontal} size="16" mini slot="prefix" />
+          </Button>
+          <MenuButton color="danger-subtle" size="lg" on:click={block}>
+            <Icon src={NoSymbol} size="16" mini slot="prefix" />
+            {community_view.blocked ? 'Unblock' : 'Block'}
+          </MenuButton>
+          {#if $profile.user && isAdmin($profile.user)}
+            <MenuButton
+              color="danger-subtle"
+              on:click={() => (purgingCommunity = !purgingCommunity)}
+            >
+              <Icon src={Fire} size="16" mini slot="prefix" />
+              Purge
+            </MenuButton>
+          {/if}
+        </Menu>
+      </div>
     </div>
   {/if}
   <Markdown source={community_view.community.description} />

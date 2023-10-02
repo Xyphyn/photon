@@ -5,6 +5,7 @@ const FEATURES = {
   unproxiedImageUpload: '0.19.0',
   cursorPagination: '0.19.0',
   newTotp: '0.19.0',
+  blockInstances: '0.19.0',
 }
 
 type Feature = keyof typeof FEATURES
