@@ -11,6 +11,7 @@
   import { Button, Modal, toast } from 'mono-svelte'
   import { afterNavigate } from '$app/navigation'
   import { browser } from '$app/environment'
+  import { ChartBar, Icon } from 'svelte-hero-icons'
 
   export let data
 
@@ -94,17 +95,17 @@
       on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
     >
       {#if data.posts.posts.length > 0}
-        <span class="max-sm:hidden">
-          You've scrolled <span class="text-primary-900 dark:text-primary-100">
-            {data.page * 20}
+        <span class="flex flex-row items-center gap-1">
+          <Icon src={ChartBar} size="16" mini />
+          <span class="font-medium text-black dark:text-white">
+            {data.community.community_view.counts.users_active_day}
           </span>
-          posts.
-        </span>
-        <span class="sm:hidden">
-          <span class="text-primary-900 dark:text-primary-100">
-            {data.page * 20}
+          <span class="font-normal">
+            Active user{data.community.community_view.counts.users_active_day >
+            1
+              ? 's'
+              : ''}
           </span>
-          posts
         </span>
       {/if}
     </Pageination>

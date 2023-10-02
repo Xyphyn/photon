@@ -7,7 +7,7 @@
   import { searchParam } from '$lib/util.js'
   import PostFeed from '$lib/components/lemmy/post/PostFeed.svelte'
   import { Button, Modal, Select, Spinner } from 'mono-svelte'
-  import { GlobeAmericas, Icon } from 'svelte-hero-icons'
+  import { ChartBar, GlobeAmericas, Icon } from 'svelte-hero-icons'
   import { profile } from '$lib/auth.js'
   import ViewSelect from '$lib/components/lemmy/ViewSelect.svelte'
   import { site } from '$lib/lemmy.js'
@@ -94,19 +94,12 @@
           searchParam($page.url, 'cursor', c.detail)
         }}
       >
-        <span class="max-sm:hidden">
-          You've viewed <span
-            class="text-primary-900 dark:text-primary-100 font-bold"
-          >
-            {data.page * 20}
+        <span class="flex flex-row items-center gap-1">
+          <Icon src={ChartBar} size="16" mini />
+          <span class="font-medium text-black dark:text-white">
+            {$site?.site_view.counts.users_active_day}
           </span>
-          posts.
-        </span>
-        <span class="sm:hidden">
-          <span class="text-primary-900 dark:text-primary-100">
-            {data.page * 20}
-          </span>
-          posts
+          <span class="font-normal">Active users</span>
         </span>
       </Pageination>
     </div>
