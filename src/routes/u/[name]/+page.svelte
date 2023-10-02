@@ -11,7 +11,9 @@
     Calendar,
     ChartBar,
     ChatBubbleOvalLeftEllipsis,
+    EllipsisHorizontal,
     Envelope,
+    Fire,
     Icon,
     NoSymbol,
     PencilSquare,
@@ -23,9 +25,9 @@
   import { page } from '$app/stores'
   import { goto } from '$app/navigation'
   import { isCommentView } from '$lib/lemmy/item.js'
-  import { getClient } from '$lib/lemmy.js'
+  import { client, getClient } from '$lib/lemmy.js'
   import { isBlocked } from '$lib/lemmy/user.js'
-  import { Menu, MenuButton, Popover, toast } from 'mono-svelte'
+  import { Menu, MenuButton, Popover, removeToast, toast } from 'mono-svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import { profile } from '$lib/auth.js'
   import { ban, isAdmin } from '$lib/components/lemmy/moderation/moderation.js'
@@ -78,6 +80,30 @@
   }
 
   let messaging = false
+
+  let purgingUser = false
+  let purgeEnabled = false
+  $: if (purgingUser) {
+    purgeEnabled = false
+    setTimeout(() => {
+      purgeEnabled = true
+    }, 3000)
+  }
+
+  async function purgeUser() {
+    purgingUser = false
+    const purgeToast = toast({ content: 'Purging user...', loading: true })
+
+    try {
+      await client().purgePerson({
+        person_id: data.person_view.person.id,
+      })
+      removeToast(purgeToast)
+      toast({ content: 'Purged that user.', type: 'success' })
+    } catch (e) {
+      toast({ content: e as any, type: 'error' })
+    }
+  }
 </script>
 
 <svelte:head>
@@ -89,6 +115,34 @@
     bind:user={data.person_view.person}
     bind:open={messaging}
   />
+{/if}
+
+{#if purgingUser}
+  <Modal bind:open={purgingUser}>
+    <svelte:fragment slot="title">Purging User</svelte:fragment>
+    <p>
+      Purging user <span class="font-bold">
+        {data.person_view.person.name}
+      </span>
+    </p>
+    <p>
+      Are you sure you want to do this? (The button will enable in 3 seconds.)
+    </p>
+    <div class="flex flex-row gap-2">
+      <Button size="lg" on:click={() => (purgingUser = false)} class="flex-1">
+        Cancel
+      </Button>
+      <Button
+        size="lg"
+        color="danger"
+        on:click={purgeUser}
+        disabled={!purgeEnabled}
+        class="flex-1"
+      >
+        Purge
+      </Button>
+    </div>
+  </Modal>
 {/if}
 
 <div class="flex flex-col-reverse xl:flex-row gap-4 max-w-full w-full">
@@ -222,34 +276,48 @@
               </Button>
             {/if}
           </div>
-          <Button
-            size="lg"
-            color="danger"
-            loading={blocking}
-            disabled={blocking}
-            on:click={() => blockUser(data.person_view.person.id)}
-          >
-            <Icon slot="prefix" mini size="16" src={NoSymbol} />
-            {isBlocked($profile.user, data.person_view.person.id)
-              ? 'Unblock'
-              : 'Block'}
-          </Button>
+          <div class="flex flex-row gap-2 ml-auto">
+            {#if isAdmin($profile?.user)}
+              <Menu class="ml-auto" origin="bottom-right">
+                <Button size="square-md" slot="target">
+                  <ShieldIcon width={16} filled />
+                </Button>
+                <MenuButton
+                  color="danger-subtle"
+                  on:click={() =>
+                    ban(
+                      data.person_view.person.banned,
+                      data.person_view.person
+                    )}
+                >
+                  <Icon slot="prefix" mini size="16" src={ShieldExclamation} />
+                  {data.person_view.person.banned ? 'Unban' : 'Ban'}
+                </MenuButton>
+                <MenuButton
+                  color="danger-subtle"
+                  on:click={() => (purgingUser = !purgingUser)}
+                >
+                  <Icon slot="prefix" mini size="16" src={Fire} />
+                  Purge
+                </MenuButton>
+              </Menu>
+            {/if}
+            <Menu origin="bottom-right">
+              <Button size="square-md" slot="target">
+                <Icon src={EllipsisHorizontal} slot="prefix" size="16" mini />
+              </Button>
+              <MenuButton
+                color="danger-subtle"
+                on:click={() => blockUser(data.person_view.person.id)}
+              >
+                <Icon slot="prefix" mini size="16" src={NoSymbol} />
+                {isBlocked($profile.user, data.person_view.person.id)
+                  ? 'Unblock'
+                  : 'Block'}
+              </MenuButton>
+            </Menu>
+          </div>
         </div>
-        {#if isAdmin($profile?.user)}
-          <Menu class="ml-auto" origin="bottom-right">
-            <Button size="square-md" slot="target">
-              <ShieldIcon width={16} filled />
-            </Button>
-            <MenuButton
-              color="danger-subtle"
-              on:click={() =>
-                ban(data.person_view.person.banned, data.person_view.person)}
-            >
-              <Icon slot="prefix" mini size="16" src={ShieldExclamation} />
-              {data.person_view.person.banned ? 'Unban' : 'Ban'}
-            </MenuButton>
-          </Menu>
-        {/if}
       {/if}
       <div>
         <h1 class="font-bold text-lg">
