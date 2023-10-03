@@ -39,6 +39,7 @@
   import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
   import { userSettings } from '$lib/settings.js'
   import { feature } from '$lib/version.js'
+  import { publishedToDate } from '$lib/components/util/date.js'
 
   export let data
 
@@ -162,7 +163,7 @@
         featured={post.post_view.post.featured_community ||
           post.post_view.post.featured_local}
         nsfw={post.post_view.post.nsfw}
-        published={new Date(post.post_view.post.published + 'Z')}
+        published={publishedToDate(post.post_view.post.published)}
         saved={post.post_view.saved}
       />
     </div>

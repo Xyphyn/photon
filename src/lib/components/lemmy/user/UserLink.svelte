@@ -22,12 +22,7 @@
   {#if avatar}
     <Avatar url={user.avatar} alt={user.name} width={avatarSize} />
   {/if}
-  <span
-    class="flex flex-wrap gap-0"
-    class:ml-0.5={avatar}
-    class:text-red-500={user.admin}
-    class:font-bold={user.admin}
-  >
+  <span class="flex flex-wrap gap-0" class:ml-0.5={avatar}>
     <span class:font-medium={showInstance}>
       {user.display_name || user.name}
     </span>
@@ -38,11 +33,6 @@
     {/if}
   </span>
   {#if badges}
-    {#if user.admin}
-      <div class="text-red-500" title="Admin">
-        <ShieldIcon width={12} filled />
-      </div>
-    {/if}
     {#if user.banned}
       <div class="text-red-500" title="Banned">
         <Icon src={NoSymbol} mini size="12" />

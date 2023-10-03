@@ -33,9 +33,6 @@
       class="flex items-center gap-1 text-green-600 dark:text-green-400 font-medium"
     >
       <UserLink showInstance={true} avatar user={item.moderator} />
-      {#if !item.moderator.admin}
-        <ShieldIcon filled width={16} />
-      {/if}
     </span>
   {/if}
   {#if item.moderatee}

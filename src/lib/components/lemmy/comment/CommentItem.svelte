@@ -1,6 +1,7 @@
 <script lang="ts">
   import Comment from '$lib/components/lemmy/comment/Comment.svelte'
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
+  import { publishedToDate } from '$lib/components/util/date.js'
   import { getInstance } from '$lib/lemmy.js'
   import { userSettings } from '$lib/settings.js'
   import type { CommentView } from 'lemmy-js-client'
@@ -23,7 +24,7 @@
       deleted={false}
       featured={false}
       nsfw={comment.post.nsfw}
-      published={new Date(comment.post.published + 'Z')}
+      published={publishedToDate(comment.comment.published)}
       saved={false}
       community={community ? comment.community : undefined}
     />

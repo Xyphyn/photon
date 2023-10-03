@@ -11,6 +11,7 @@
   import ExpandableImage from '$lib/components/ui/ExpandableImage.svelte'
   import { bestImageURL, postLink } from '$lib/components/lemmy/post/helpers.js'
   import Empty from '$lib/components/helper/Empty.svelte'
+  import { publishedToDate } from '$lib/components/util/date.js'
 
   export let post: PostView
   export let actions: boolean = true
@@ -48,7 +49,7 @@
         <PostMeta
           community={hideCommunity ? undefined : post.community}
           user={post.creator}
-          published={new Date(post.post.published + 'Z')}
+          published={publishedToDate(post.post.published)}
           upvotes={post.counts.upvotes}
           downvotes={post.counts.downvotes}
           deleted={post.post.deleted}
