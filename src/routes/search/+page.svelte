@@ -22,10 +22,11 @@
     PersonView,
     PostView,
   } from 'lemmy-js-client'
-  import { Button, Select, Spinner, TextInput } from 'mono-svelte'
+  import { Button, Disclosure, Select, Spinner, TextInput } from 'mono-svelte'
   import {
     AdjustmentsHorizontal,
     Bars3BottomRight,
+    ChevronDown,
     Icon,
     MagnifyingGlass,
   } from 'svelte-hero-icons'
@@ -39,6 +40,8 @@
   let query = data.query || ''
 
   let pageNum = data.page
+
+  let moreOptions = false
 </script>
 
 <svelte:head>
@@ -46,7 +49,7 @@
 </svelte:head>
 
 <h1 class="font-bold text-3xl">Search</h1>
-<div class="flex flex-row flex-wrap sm:justify-between items-center gap-4 mt-4">
+<div class="flex flex-row flex-wrap items-center gap-4 mt-4">
   <Select
     bind:value={data.type}
     on:change={() => searchParam($page.url, 'type', data.type ?? 'All', 'page')}
@@ -61,36 +64,54 @@
     <option value="Communities">Communities</option>
     <option value="Users">Users</option>
   </Select>
-  <div class="flex flex-row gap-2 items-center">
+  <form
+    class="flex flex-row gap-2 items-center ml-auto"
+    on:submit|preventDefault={() => searchParam($page.url, 'q', query, 'page')}
+  >
     <TextInput
+      label="Query"
       bind:value={query}
       placeholder="!community@instance.com"
-      on:change={() => searchParam($page.url, 'q', query, 'page')}
-    />
-    <Button
-      on:click={() => searchParam($page.url, 'q', query, 'page')}
-      size="lg"
-      class="h-full"
+      inlineAffixes
     >
-      Search
-    </Button>
+      <button
+        type="submit"
+        aria-label="Search"
+        slot="suffix"
+        class="flex items-center"
+      >
+        <Icon src={MagnifyingGlass} size="20" mini />
+      </button>
+    </TextInput>
+  </form>
+  <Button
+    slot="summary"
+    size="square-lg"
+    color="tertiary"
+    class="self-end justify-self-center"
+    on:click={() => (moreOptions = !moreOptions)}
+  >
+    <Icon src={ChevronDown} size="20" mini />
+  </Button>
+</div>
+{#if moreOptions}
+  <div transition:slide={{ axis: 'y', easing: expoOut }} class="max-w-sm">
+    <ObjectAutocomplete
+      label="Community"
+      jwt={$profile?.jwt}
+      listing_type={'All'}
+      showWhenEmpty={true}
+      on:select={(c) =>
+        searchParam($page.url, 'community', c.detail?.id || undefined, 'page')}
+    />
   </div>
-</div>
-<div class="max-w-sm my-2">
-  <ObjectAutocomplete
-    label="Community"
-    jwt={$profile?.jwt}
-    listing_type={'All'}
-    showWhenEmpty={true}
-    on:select={(c) =>
-      searchParam($page.url, 'community', c.detail?.id || undefined, 'page')}
-  />
-</div>
+{/if}
 {#if !data.results}
   <Placeholder
     icon={MagnifyingGlass}
     title="No results"
     description="Search across the fediverse"
+    class="pt-4"
   />
 {:else}
   {#await data.streamed.object}

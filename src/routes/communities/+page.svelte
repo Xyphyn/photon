@@ -8,6 +8,7 @@
     GlobeAmericas,
     Icon,
     InformationCircle,
+    MagnifyingGlass,
     PencilSquare,
     Plus,
     QuestionMarkCircle,
@@ -87,8 +88,21 @@
     on:submit|preventDefault={() => searchParam($page.url, 'q', search, 'page')}
     class="flex flex-col sm:flex-row gap-2 sm:ml-auto items-center"
   >
-    <TextInput bind:value={search} />
-    <Button submit color="ghost" class="h-max">Search</Button>
+    <TextInput
+      bind:value={search}
+      placeholder="Search for a community..."
+      label="Query"
+      size="sm"
+    />
+    <Button
+      submit
+      color="ghost"
+      size="square-md"
+      class="self-end"
+      aria-label="Search"
+    >
+      <Icon src={MagnifyingGlass} size="16" mini />
+    </Button>
   </form>
 </div>
 <ul class="flex flex-col divide-y dark:divide-zinc-800">
