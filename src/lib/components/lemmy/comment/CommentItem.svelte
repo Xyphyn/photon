@@ -8,6 +8,7 @@
 
   export let comment: CommentView
   export let view = $userSettings.view
+  export let community = false
 </script>
 
 <Material
@@ -24,6 +25,7 @@
       nsfw={comment.post.nsfw}
       published={new Date(comment.post.published + 'Z')}
       saved={false}
+      community={community ? comment.community : undefined}
     />
     <Button
       color="secondary"

@@ -94,7 +94,7 @@
 </script>
 
 {#if item.type == 'comment'}
-  <CommentItem comment={item.item} />
+  <CommentItem community={true} comment={item.item} />
 {:else if item.type == 'post'}
   <Post post={item.item} />
 {:else if item.type == 'message'}

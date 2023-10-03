@@ -154,11 +154,6 @@
       {/if}
     </MenuButton>
     {#if $profile?.user && $profile.user.local_user_view.person.id != item.creator.id}
-      <MenuDivider>
-        User {#if !item.community.local && !amMod($profile.user, item.community)}
-          (Instance Only)
-        {/if}
-      </MenuDivider>
       <MenuButton
         color="danger-subtle"
         on:click={() =>
