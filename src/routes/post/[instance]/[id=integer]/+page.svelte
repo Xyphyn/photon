@@ -2,7 +2,7 @@
   import { buildCommentsTreeAsync } from '$lib/components/lemmy/comment/comments.js'
   import Comments from '$lib/components/lemmy/comment/Comments.svelte'
   import { isImage, isVideo } from '$lib/ui/image.js'
-  import { getClient } from '$lib/lemmy.js'
+  import { getClient, site } from '$lib/lemmy.js'
   import CommentForm from '$lib/components/lemmy/comment/CommentForm.svelte'
   import { onMount } from 'svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
@@ -38,6 +38,7 @@
   import { Button } from 'mono-svelte'
   import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
   import { userSettings } from '$lib/settings.js'
+  import { feature } from '$lib/version.js'
 
   export let data
 
@@ -128,7 +129,7 @@
 </svelte:head>
 
 <div class="flex flex-col gap-2">
-  {#if $page.params.instance.toLowerCase() != $instance.toLowerCase()}
+  {#if $page.params.instance?.toLowerCase() != $instance.toLowerCase()}
     <Material
       class="p-4 flex flex-col gap-1 border
     border-yellow-300 dark:bg-yellow-950/30 dark:border-yellow-900 bg-yellow-50"
@@ -284,6 +285,9 @@
         <option value="Top">Top</option>
         <option value="New">New</option>
         <option value="Old">Old</option>
+        {#if feature('controversialSort', $page.params.instance == $instance ? $site?.version : '0.0.0')}
+          <option value="Controversial">Controversial</option>
+        {/if}
       </Select>
       <Button size="square-md" on:click={reloadComments}>
         <Icon src={ArrowPath} size="16" mini slot="prefix" />
@@ -312,7 +316,7 @@
           on:click={() => (showCreateComment = !showCreateComment)}
           size="lg"
           rounding="lg"
-          color="tertiary"
+          class="mx-auto max-w-sm w-full"
         >
           <Icon src={Plus} size="16" mini slot="prefix" />
           Add a comment
