@@ -69,7 +69,7 @@
         type: 'success',
       })
 
-      if (res?.jwt && res.verify_email_sent) {
+      if (res?.jwt) {
         await setUser(res.jwt, $page.params.instance, username)
 
         toast({ content: 'Successfully logged in.', type: 'success' })
