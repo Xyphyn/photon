@@ -1,5 +1,13 @@
 <script lang="ts">
   export let width = 48
+
+  const monthColors: {
+    [x: number]: string
+  } = {
+    9: '--hover-color-1: #ff3f00; --hover-color-2: #7b2cbf;',
+  }
+
+  const getMonthColor = () => monthColors[new Date().getMonth()]
 </script>
 
 <svg
@@ -9,6 +17,7 @@
   fill="none"
   xmlns="http://www.w3.org/2000/svg"
   class="inline"
+  style={getMonthColor()}
 >
   <linearGradient
     gradientTransform="rotate(315, 0.5, 0.5)"
@@ -18,8 +27,8 @@
     y2="100%"
     id="gradient"
   >
-    <stop stop-color="black" stop-opacity="1" offset="0%" />
-    <stop stop-color="black" stop-opacity="1" offset="100%" />
+    <stop stop-color="var(--color-1)" stop-opacity="1" offset="0%" />
+    <stop stop-color="var(--color-2)" stop-opacity="1" offset="100%" />
   </linearGradient>
   <path
     id="hexagon"
@@ -29,20 +38,24 @@
 </svg>
 
 <style>
+  svg {
+    --color-1: black;
+    --color-2: black;
+    --hover-color-1: #7f27c7;
+    --hover-color-2: #f30386;
+  }
+
+  :global(.dark) svg {
+    --color-1: white;
+    --color-2: white;
+  }
+
+  :global(.logo:hover) svg {
+    --color-1: var(--hover-color-1);
+    --color-2: var(--hover-color-2);
+  }
+
   stop {
-    transition: stop-color 200ms;
-    stop-color: black;
-  }
-
-  :global(.dark) stop {
-    stop-color: white;
-  }
-
-  :global(.logo:hover) svg stop:first-child {
-    stop-color: #7f27c7;
-  }
-
-  :global(.logo:hover) svg stop:last-child {
-    stop-color: #f30386;
+    transition: stop-color 200ms ease-out;
   }
 </style>

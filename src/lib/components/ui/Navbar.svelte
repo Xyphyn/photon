@@ -87,12 +87,7 @@
         <Logo width={40} />
         <div class="flex flex-row items-center gap-2 max-[1000px]:hidden">
           <span class="opacity-30 text-xl">/</span>
-          <span
-            class="text-sm font-bold group-hover:bg-gradient-to-r
-            group-hover:text-transparent group-hover:bg-clip-text
-            group-hover:from-violet-500 group-hover:to-pink-600 transition-colors
-            grid place-items-start"
-          >
+          <span class="text-sm font-bold grid place-items-start">
             {#key title || $instance}
               <span
                 in:fly={{ y: -12 }}
