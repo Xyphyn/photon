@@ -1,25 +1,16 @@
 <script lang="ts">
-  import { goto } from '$app/navigation'
   import Comment from '$lib/components/lemmy/comment/Comment.svelte'
-  import Markdown from '$lib/components/markdown/Markdown.svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import { getClient } from '$lib/lemmy.js'
   import { profile } from '$lib/auth.js'
-  import type {
-    CommentReplyView,
-    PersonMentionView,
-    PrivateMessageView,
-  } from 'lemmy-js-client'
-  import { ChatBubbleOvalLeft, Check, Icon } from 'svelte-hero-icons'
-  import { page } from '$app/stores'
-  import { Material, Modal, toast } from 'mono-svelte'
+  import { Check, Icon } from 'svelte-hero-icons'
+  import { Material } from 'mono-svelte'
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import { Button } from 'mono-svelte'
-  import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
-  import type { InboxItem, InboxItemView } from '$lib/lemmy/inbox.js'
+  import type { InboxItem } from '$lib/lemmy/inbox.js'
   import PrivateMessage from '$lib/components/lemmy/inbox/PrivateMessage.svelte'
   import PrivateMessageModal from '$lib/components/lemmy/modal/PrivateMessageModal.svelte'
 
@@ -28,37 +19,6 @@
   let replying = false
   let reply = ''
   let loading = false
-
-  async function replyToMessage(
-    message: PrivateMessageView | CommentReplyView | PersonMentionView
-  ) {
-    if (!$profile?.jwt) return
-
-    loading = true
-
-    try {
-      await getClient().createPrivateMessage({
-        content: reply,
-        recipient_id: message.creator.id,
-      })
-
-      toast({
-        content: 'Successfully replied to that message.',
-        type: 'success',
-      })
-
-      replying = false
-
-      goto($page.url, {
-        invalidateAll: true,
-        replaceState: true,
-      })
-    } catch (error) {
-      toast({ content: error as any, type: 'error' })
-    }
-
-    loading = false
-  }
 
   async function markAsRead(isRead: boolean) {
     if (!$profile?.jwt) return
