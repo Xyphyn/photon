@@ -65,16 +65,27 @@
 
     loading = true
 
-    if (item.type == 'person_mention') {
-      await getClient().markPersonMentionAsRead({
-        person_mention_id: item.id,
-        read: isRead,
-      })
-    } else if (item.type == 'comment_reply') {
-      await getClient().markCommentReplyAsRead({
-        comment_reply_id: item.id,
-        read: isRead,
-      })
+    switch (item.type) {
+      case 'person_mention': {
+        await getClient().markPersonMentionAsRead({
+          person_mention_id: item.id,
+          read: isRead,
+        })
+        break
+      }
+      case 'comment_reply': {
+        await getClient().markCommentReplyAsRead({
+          comment_reply_id: item.id,
+          read: isRead,
+        })
+        break
+      }
+      case 'private_message': {
+        await getClient().markPrivateMessageAsRead({
+          private_message_id: item.id,
+          read: isRead,
+        })
+      }
     }
 
     item.read = isRead
