@@ -74,7 +74,7 @@
 
   @media (min-width: 1280px) {
     .content {
-      grid-template-columns: 1fr 2fr 1fr;
+      grid-template-columns: 1fr 3fr 1fr;
     }
   }
 
