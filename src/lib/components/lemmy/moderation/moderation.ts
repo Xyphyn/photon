@@ -1,6 +1,6 @@
 import type { SubmissionView } from '$lib/lemmy/contentview.js'
 import type { Community, MyUserInfo, Person } from 'lemmy-js-client'
-import { writable } from 'svelte/store'
+import { get, writable } from 'svelte/store'
 
 interface Modals {
   reporting: {

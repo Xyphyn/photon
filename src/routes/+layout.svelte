@@ -75,6 +75,9 @@
   Skip Navigation
 </Button>
 
+<Moderation />
+<ToastContainer />
+
 <Shell
   class="min-h-screen {$userSettings.font == 'inter'
     ? 'font-inter'

@@ -3,12 +3,11 @@
 </script>
 
 <!--These weird await hacks are for lazy loading, better network performance-->
-
 {#if $modals.reporting.open}
   {#await import('$lib/components/lemmy/moderation/ReportModal.svelte') then { default: ReportModal }}
     <ReportModal
       bind:open={$modals.reporting.open}
-      item={$modals.reporting.item}
+      bind:item={$modals.reporting.item}
     />
   {/await}
 {/if}

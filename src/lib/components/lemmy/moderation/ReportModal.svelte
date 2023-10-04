@@ -7,6 +7,7 @@
   import { profile } from '$lib/auth.js'
   import { Button, Modal } from 'mono-svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
+  import { onMount } from 'svelte'
 
   export let open: boolean
   export let item: PostView | CommentView | undefined = undefined
