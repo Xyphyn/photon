@@ -5,7 +5,6 @@
   import ProfileAvatar from '$lib/lemmy/ProfileAvatar.svelte'
   import { Button } from 'mono-svelte'
 
-  export let expanded: boolean = false
   export let prof: Profile
   export let index: number
 
@@ -34,7 +33,7 @@
   }}
   class="w-full font-normal {$profile?.id == prof.id
     ? '!bg-slate-100 dark:!bg-zinc-900'
-    : ''} {expanded ? '' : '!p-1.5'}"
+    : ''}"
 >
   <ProfileAvatar
     profile={prof}
@@ -43,7 +42,6 @@
     slot="prefix"
   />
   <span
-    class:hidden={!expanded}
     class="flex flex-col gap-0 {$profile?.id == prof.id ? 'font-semibold' : ''}"
   >
     {prof.username ?? prof.user?.local_user_view.person.name}
