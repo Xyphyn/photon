@@ -63,7 +63,7 @@
 </script>
 
 <svelte:head>
-  <meta name="theme-color" content={darkTheme ? '#020202' : '#f6f9fb'} />
+  <meta name="theme-color" content={darkTheme ? '#09090b' : '#f8fafc'} />
   {@html webManifest}
 </svelte:head>
 
