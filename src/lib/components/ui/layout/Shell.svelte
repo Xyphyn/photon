@@ -62,19 +62,23 @@
     margin-right: auto;
     grid-area: content;
     grid-template-columns: 1fr;
-    grid-template-areas: 'sidebar main suffix';
-    justify-items: end center start;
+    grid-template-areas: 'main';
+    justify-items: start;
   }
 
   @media (min-width: 768px) {
     .content {
       grid-template-columns: 1fr 2fr;
+      justify-items: end start;
+      grid-template-areas: 'sidebar main';
     }
   }
 
   @media (min-width: 1280px) {
     .content {
       grid-template-columns: 1fr 3fr 1fr;
+      justify-items: end center start;
+      grid-template-areas: 'sidebar main suffix';
     }
   }
 
