@@ -11,7 +11,7 @@
   import { Button, Modal, toast } from 'mono-svelte'
   import { afterNavigate } from '$app/navigation'
   import { browser } from '$app/environment'
-  import { ChartBar, Icon } from 'svelte-hero-icons'
+  import { ChartBar, EllipsisHorizontal, Icon } from 'svelte-hero-icons'
 
   export let data
 
@@ -70,21 +70,24 @@
 
             toast({ content: 'Copied to clipboard.' })
           }}
-          class="dark:text-zinc-400 text-slate-600 text-sm"
+          class="dark:text-zinc-400 text-slate-600 text-sm text-left"
         >
           !{data.community.community_view.community.name}@{new URL(
             data.community.community_view.community.actor_id
           ).hostname}
         </button>
       </div>
+      <Button
+        size="square-md"
+        color="secondary"
+        class="ml-auto"
+        on:click={() => (sidebar = !sidebar)}
+      >
+        <Icon src={EllipsisHorizontal} size="16" mini />
+      </Button>
     </div>
     <div class="flex flex-row gap-4 max-w-full w-full items-end">
       <Sort selected={data.sort} />
-      <div class="xl:hidden">
-        <Button color="secondary" on:click={() => (sidebar = !sidebar)}>
-          About
-        </Button>
-      </div>
     </div>
     <PostFeed community={true} posts={data.posts.posts} />
 
@@ -109,11 +112,5 @@
         </span>
       {/if}
     </Pageination>
-  </div>
-  <div class="hidden xl:block">
-    <CommunityCard
-      community_view={data.community.community_view}
-      moderators={data.community.moderators}
-    />
   </div>
 </div>

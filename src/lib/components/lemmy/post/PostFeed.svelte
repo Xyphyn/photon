@@ -14,7 +14,7 @@
 <div
   class="flex flex-col {$userSettings.view == 'card'
     ? 'gap-3 md:gap-4'
-    : ''} divide-slate-200 dark:divide-zinc-800 z-[5]"
+    : ''} divide-slate-200 dark:divide-zinc-800"
   class:divide-y={$userSettings.view != 'card'}
 >
   {#if posts.length == 0}

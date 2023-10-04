@@ -10,11 +10,14 @@
   import { pwaInfo } from 'virtual:pwa-info'
   import { inDarkTheme, theme } from '$lib/ui/colors.js'
   import { userSettings } from '$lib/settings.js'
-  import { Button, ToastContainer } from 'mono-svelte'
+  import { Button, Spinner, ToastContainer } from 'mono-svelte'
   import { onMount } from 'svelte'
   import { browser } from '$app/environment'
   import { Forward, Icon } from 'svelte-hero-icons'
   import { routes } from '$lib/util.js'
+  import Shell from '$lib/components/ui/layout/Shell.svelte'
+  import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
+  import { site } from '$lib/lemmy.js'
 
   nProgress.configure({
     minimum: 0.4,
@@ -72,36 +75,53 @@
   Skip Navigation
 </Button>
 
-<div
-  class="flex flex-col min-h-screen
-  font-inter
-  {$userSettings.font == 'inter'
+<Shell
+  class="min-h-screen {$userSettings.font == 'inter'
     ? 'font-inter'
     : $userSettings.font == 'system'
     ? 'font-system'
-    : 'font-sans'}
-  "
+    : 'font-sans'}"
+  route={$page.route}
 >
-  <Navbar {title} />
-  <ToastContainer />
-  <Moderation />
-  <div
-    class="flex flex-row h-full w-full max-w-full flex-1
-  "
+  <Navbar
+    slot="navbar"
+    let:style={s}
+    let:class={c}
+    class={c}
+    style={s}
+    {title}
+  />
+  <Sidebar
+    route={$page.route.id ?? ''}
+    slot="sidebar"
+    let:style={s}
+    let:class={c}
+    class={c}
+    style={s}
+  />
+  <main
+    slot="main"
+    let:style={s}
+    let:class={c}
+    class="p-3 sm:p-6 min-w-0 w-full flex flex-col min-h-full {c}"
+    style={s}
+    class:max-w-6xl={$userSettings.newWidth}
+    id="main"
   >
-    <Sidebar />
-    <div
-      class="w-full min-w-0 border-t sm:border-l border-slate-200 dark:border-zinc-900
-    sm:rounded-xl bg-slate-25 dark:bg-zinc-950 min-h-full"
-    >
-      <main
-        class="p-3 sm:p-6 min-w-0 w-full flex-[3] sm:rounded-tl-lg mx-auto flex flex-col min-h-full
-      "
-        class:max-w-6xl={$userSettings.newWidth}
-        id="main"
-      >
-        <slot />
-      </main>
-    </div>
+    <slot />
+  </main>
+  <div slot="suffix" let:class={c} let:style={s} class={c} style={s}>
+    {#if $site}
+      <SiteCard
+        site={$site.site_view}
+        taglines={$site.taglines}
+        admins={$site.admins}
+        version={$site.version}
+      />
+    {:else}
+      <div class="h-64 grid place-items-center">
+        <Spinner width={32} />
+      </div>
+    {/if}
   </div>
-</div>
+</Shell>

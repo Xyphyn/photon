@@ -46,9 +46,11 @@
 </script>
 
 <nav
-  class="flex flex-row gap-2 items-center sticky top-0 bg-slate-50/80
-  dark:bg-black/80 backdrop-blur-3xl w-full mx-auto px-4 py-2 z-50 box-border h-16
+  class="flex flex-row gap-2 items-center
+   backdrop-blur-3xl w-full mx-auto px-4 py-2 z-50 box-border h-16
+  {$$props.class}
   "
+  style={$$props.style}
 >
   <div class="flex flex-row gap-2 items-center mr-auto">
     <a href="/" class="flex flex-row items-center gap-2 logo group">

@@ -30,9 +30,15 @@
           slot="prefix"
         />
       </div>
-      <span class="max-w-full break-words" class:hidden={!expanded}>
-        {follow.title}
-      </span>
+      <div
+        class="flex flex-col max-w-full break-words"
+        class:hidden={!expanded}
+      >
+        <span>{follow.title}</span>
+        <span class="text-xs text-slate-600 dark:text-zinc-400">
+          {new URL(follow.actor_id).hostname}
+        </span>
+      </div>
     </Button>
   </div>
 {/each}

@@ -104,7 +104,7 @@
       </Pageination>
     </div>
   </div>
-  <div class="hidden xl:block">
+  <!-- <div class="hidden xl:block">
     {#if !$site}
       <StickyCard>
         <div class="h-64 grid place-items-center">
@@ -119,5 +119,5 @@
         version={$site.version}
       />
     {/if}
-  </div>
+  </div> -->
 </div>
