@@ -7,7 +7,6 @@
   import { slide } from 'svelte/transition'
 
   export let items: Community[]
-  export let expanded: boolean
 </script>
 
 {#each items.sort( (a, b) => a.title.localeCompare(b.title) ) as follow (follow.id)}
@@ -16,7 +15,7 @@
     animate:flip={{ duration: 500, easing: expoOut }}
   >
     <Button
-      class="font-normal w-full h-max {expanded ? '' : '!p-1.5'}"
+      class="font-normal w-full h-max"
       color="tertiary"
       alignment="left"
       href="/c/{follow.name}@{new URL(follow.actor_id).hostname}"
@@ -30,10 +29,7 @@
           slot="prefix"
         />
       </div>
-      <div
-        class="flex flex-col max-w-full break-words"
-        class:hidden={!expanded}
-      >
+      <div class="flex flex-col max-w-full break-words">
         <span>{follow.title}</span>
         <span class="text-xs text-slate-600 dark:text-zinc-400">
           {new URL(follow.actor_id).hostname}
