@@ -10,6 +10,8 @@
       return undefined
     }
   }
+
+  $: richURL = parseURL(href)
 </script>
 
 <a {href} class="{highlight ? 'text-blue-500' : ''} hover:underline max-w-full">
@@ -18,10 +20,26 @@
     <span
       class="flex relative gap-0 {nowrap
         ? 'w-full whitespace-nowrap overflow-hidden text-ellipsis text-xs'
-        : ''} {$$props.class} text-transparent bg-clip-text bg-gradient-to-r
-        from-blue-500 via-blue-500 to-blue-500/0"
+        : ''} {$$props.class}"
     >
+      {#if richURL}
+        <span class="text-blue-300 dark:text-blue-800">
+          {richURL.protocol}//
+        </span>
+        <span class="font-medium">
+          {richURL.hostname}
+        </span>
+        <span
+          class="text-transparent bg-clip-text bg-gradient-to-r
+        from-blue-300 via-blue-300 to-blue-300/0 w-full
+        dark:from-blue-800 dark:via-blue-800 dark:to-blue-800/0
+        "
+        >
+          {richURL.pathname}
+        </span>
+      {:else}
         {href}
+      {/if}
     </span>
   </slot>
 </a>
