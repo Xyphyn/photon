@@ -185,19 +185,12 @@
     <video class="rounded-md max-w-screen max-h-[80svh] mx-auto" controls>
       <source src={post.post_view.post.url} />
     </video>
-  {:else if post.post_view.post.url && !post.post_view.post.thumbnail_url}
-    <a
-      href={post.post_view.post.url}
-      class="max-w-full overflow-hidden overflow-ellipsis whitespace-nowrap text-sky-400 hover:underline text-xs"
-      style="word-break: break-word;"
-    >
-      {post.post_view.post.url}
-    </a>
-  {:else if post.post_view.post.thumbnail_url && post.post_view.post.url}
+  {:else if post.post_view.post.url}
     <PostLink
-      thumbnail_url={post.post_view.post.thumbnail_url}
       url={post.post_view.post.url}
-      nsfw={post.post_view.post.nsfw}
+      embed_description={post.post_view.post.embed_description}
+      embed_title={post.post_view.post.embed_title}
+      thumbnail_url={post.post_view.post.thumbnail_url}
     />
   {/if}
   {#if post.post_view.post.body}

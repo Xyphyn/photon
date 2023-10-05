@@ -40,10 +40,10 @@
       {/if}
     </div>
     {#if thumbnail_url}
-      <a href={url} class="ml-auto">
+      <a href={url} class="ml-auto max-w-[150px] w-full flex-shrink">
         <img
           src={thumbnail_url}
-          class="rounded-lg max-w-[200px] w-full h-auto aspect-video object-cover bg-slate-200 dark:bg-zinc-800"
+          class="rounded-lg max-w-[200px] w-full h-full max-h-24 object-cover bg-slate-200 dark:bg-zinc-800"
           width={600}
           height={400}
           alt=""
