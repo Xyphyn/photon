@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Navbar from '$lib/components/ui/Navbar.svelte'
   import { userSettings } from '$lib/settings.js'
   import { routes } from '$lib/util.js'
 
@@ -34,7 +33,7 @@
     />
     <slot
       name="main"
-      class="w-full bg-slate-25 dark:bg-transparent justify-self-center"
+      class="w-full bg-slate-25 dark:bg-zinc-925 dark:bg-transparent justify-self-center shadow-sm"
       style="grid-area: main"
     />
     <slot
