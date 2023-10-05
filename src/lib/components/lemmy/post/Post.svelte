@@ -59,15 +59,17 @@
           nsfw={post.post.nsfw}
           saved={post.saved}
         />
-        <a
-          href="/post/{getInstance()}/{post.post.id}"
-          class="font-medium max-w-full w-full break-words text-base"
-          style="word-break: break-word;"
-          class:text-slate-500={post.read && $userSettings.markReadPosts}
-          class:dark:text-zinc-400={post.read && $userSettings.markReadPosts}
-        >
-          <Markdown source={post.post.name} inline />
-        </a>
+        {#if post.post.embed_title != post.post.name || view == 'compact'}
+          <a
+            href="/post/{getInstance()}/{post.post.id}"
+            class="font-medium max-w-full w-full break-words text-base"
+            style="word-break: break-word;"
+            class:text-slate-500={post.read && $userSettings.markReadPosts}
+            class:dark:text-zinc-400={post.read && $userSettings.markReadPosts}
+          >
+            <Markdown source={post.post.name} inline />
+          </a>
+        {/if}
       </div>
       {#if isImage(post.post.url)}
         {#if view == 'card' || view == 'cozy'}
