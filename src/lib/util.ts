@@ -4,6 +4,8 @@ import { userSettings } from '$lib/settings.js'
 import { get } from 'svelte/store'
 import type { SubscribedType } from 'lemmy-js-client'
 import { page } from '$app/stores'
+import { feature } from '$lib/version.js'
+import { client, site } from '$lib/lemmy.js'
 
 export const findClosestNumber = (numbers: number[], target: number): number =>
   numbers.reduce((prev, curr) =>
@@ -143,30 +145,38 @@ export async function uploadImage(
   const formData = new FormData()
   formData.append('images[]', image)
 
-  const response = await fetch(
-    `${
-      window.location.origin
-    }/cors/${instance}/pictrs/image?${new URLSearchParams({
-      auth: jwt,
-    })}`,
-    {
-      method: 'POST',
-      body: formData,
+  if (feature('unproxiedImageUpload', get(site)?.version)) {
+    const res = await client({ auth: jwt, instanceURL: instance }).uploadImage({
+      image: image,
+    })
+
+    if (res.url) return res.url
+    else throw new Error(`Failed to upload image. ${res.msg}`)
+  } else {
+    const response = await fetch(
+      `${
+        window.location.origin
+      }/cors/${instance}/pictrs/image?${new URLSearchParams({
+        auth: jwt,
+      })}`,
+      {
+        method: 'POST',
+        body: formData,
+      }
+    )
+
+    const json = await response.json()
+
+    if (json.msg == 'ok') {
+      return `https://${instance}/pictrs/image/${json.files?.[0]?.file}`
     }
-  )
-
-  const json = await response.json()
-
-  if (json.msg == 'ok') {
-    return `https://${instance}/pictrs/image/${json.files?.[0]?.file}`
+    throw new Error(
+      `${
+        (await response.text().catch((_) => undefined)) ??
+        'Failed to upload image'
+      }: ${response.status}: ${response.statusText}`
+    )
   }
-
-  throw new Error(
-    `${
-      (await response.text().catch((_) => undefined)) ??
-      'Failed to upload image'
-    }: ${response.status}: ${response.statusText}`
-  )
 }
 
 export const instanceToURL = (input: string) =>

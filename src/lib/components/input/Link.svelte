@@ -1,20 +1,27 @@
-<script lang="ts">
-  export let href: string
-  export let highlight: boolean = false
-  export let nowrap: boolean = false
-
-  const parseURL = (href: string) => {
+<script lang="ts" context="module">
+  export const parseURL = (href: string) => {
     try {
       return new URL(href)
     } catch (e) {
       return undefined
     }
   }
-
-  $: richURL = parseURL(href)
 </script>
 
-<a {href} class="{highlight ? 'text-blue-500' : ''} hover:underline max-w-full">
+<script lang="ts">
+  export let href: string
+  export let highlight: boolean = false
+  export let nowrap: boolean = false
+
+  $: richURL = $$slots.default ? undefined : parseURL(href)
+</script>
+
+<a
+  {href}
+  class="{highlight
+    ? 'text-blue-500'
+    : ''} hover:underline max-w-full inline-flex items-center gap-1 {$$props.class}"
+>
   <slot name="icon" />
   <slot>
     <span

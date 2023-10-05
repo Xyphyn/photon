@@ -137,12 +137,10 @@
       {:else if post.post.url}
         <PostLink
           url={post.post.url}
-          thumbnail_url={view == 'card'
-            ? post.post.thumbnail_url
-              ? `${post.post.thumbnail_url}?format=webp&thumbnail=512`
-              : undefined
-            : undefined}
+          thumbnail_url={post.post.thumbnail_url}
           nsfw={post.post.nsfw}
+          embed_description={post.post.embed_description}
+          embed_title={post.post.embed_title}
         />
       {/if}
       {#if post.post.body && !post.post.nsfw && view != 'compact'}

@@ -12,6 +12,7 @@
 <svelte:window bind:scrollY={scroll} />
 
 <div class="shell {$$props.class}">
+  <slot />
   <slot
     name="navbar"
     class="sticky top-0 border-b border-slate-200 dark:border-zinc-900

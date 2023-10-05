@@ -74,10 +74,6 @@
   <Icon src={Forward} mini size="16" slot="prefix" />
   Skip Navigation
 </Button>
-
-<Moderation />
-<ToastContainer />
-
 <Shell
   class="min-h-screen {$userSettings.font == 'inter'
     ? 'font-inter'
@@ -86,6 +82,8 @@
     : 'font-sans'}"
   route={$page.route}
 >
+  <Moderation />
+  <ToastContainer />
   <Navbar
     slot="navbar"
     let:style={s}

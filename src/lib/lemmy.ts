@@ -34,9 +34,13 @@ async function customFetch(
   const f = func ? func : fetch
 
   if (init?.body && auth) {
-    const json = JSON.parse(init.body.toString())
-    json.auth = auth
-    init.body = JSON.stringify(json)
+    try {
+      const json = JSON.parse(init.body.toString())
+      json.auth = auth
+      init.body = JSON.stringify(json)
+    } catch (e) {
+      // It seems this isn't a JSON request. Ignore adding an auth parameter.
+    }
   }
 
   const url = toURL(input)
