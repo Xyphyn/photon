@@ -39,7 +39,7 @@
       {/if}
     </div>
     {#if thumbnail_url}
-      <a href={url}>
+      <a href={url} class="ml-auto">
         <img
           src={thumbnail_url}
           class="rounded-lg max-w-[200px] w-full h-auto aspect-video object-cover bg-slate-200 dark:bg-zinc-800"
