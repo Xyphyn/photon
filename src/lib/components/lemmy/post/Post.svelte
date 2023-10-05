@@ -157,7 +157,7 @@
         </div>
       {/if}
     </div>
-    {#if ($userSettings.view == 'list' || $userSettings.view == 'compact') && (post.post.thumbnail_url || isImage(post.post.url))}
+    {#if (view == 'list' || view == 'compact') && !post.post.embed_title && (post.post.thumbnail_url || isImage(post.post.url))}
       <div class="flex-shrink-0 w-24 h-24">
         {#if !$userSettings.expandImages || (post.post.thumbnail_url && !isImage(post.post.url))}
           <a href={postLink(post.post)}>
