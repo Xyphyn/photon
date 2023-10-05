@@ -8,11 +8,12 @@
   export let nsfw: boolean = false
   export let embed_title: string | undefined = undefined
   export let embed_description: string | undefined = undefined
+  export let compact: boolean = false
 
   $: richURL = parseURL(url)
 </script>
 
-{#if embed_title}
+{#if embed_title && !compact}
   <Material class="flex flex-row gap-4">
     <div class="flex flex-col gap-2">
       {#if richURL}

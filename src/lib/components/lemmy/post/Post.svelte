@@ -141,6 +141,7 @@
           nsfw={post.post.nsfw}
           embed_description={post.post.embed_description}
           embed_title={post.post.embed_title}
+          compact={view == 'compact'}
         />
       {/if}
       {#if post.post.body && !post.post.nsfw && view != 'compact'}
