@@ -23,13 +23,9 @@
           <Button on:click={() => (siteOpen = !siteOpen)}>Site</Button>
         </span>
       </h1>
-      <Markdown source={$site.site_view.local_site.legal_information} />
-    </div>
-    <div class="max-lg:hidden">
-      <SiteCard
-        site={$site.site_view}
-        admins={$site.admins}
-        taglines={$site.taglines}
+      <Markdown
+        source={$site.site_view.local_site.legal_information ??
+          'This instance does not have any legal information.'}
       />
     </div>
   {:else}

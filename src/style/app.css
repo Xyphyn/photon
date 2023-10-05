@@ -50,6 +50,7 @@ body {
 #nprogress .bar {
   @apply bg-black dark:bg-white !important;
   z-index: 999 !important;
+  height: 1px !important;
 }
 
 #nprogress .peg {

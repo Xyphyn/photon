@@ -14,6 +14,7 @@
   import { Button } from 'mono-svelte'
   import { isSubscribed } from '$lib/util.js'
   import { profile } from '$lib/auth.js'
+  import { addSubscription } from '$lib/lemmy/user.js'
 
   export let community: CommunityView
 </script>
@@ -38,10 +39,16 @@
             const res = await subscribe()
 
             if (res) {
-              community.subscribed =
+              const newSubscribed =
                 res.community_view.subscribed != 'NotSubscribed'
                   ? 'Subscribed'
                   : 'NotSubscribed'
+
+              community.subscribed = newSubscribed
+              addSubscription(
+                community.community,
+                newSubscribed == 'Subscribed'
+              )
             }
           }}
           color={isSubscribed(community.subscribed) ? 'elevatedLow' : 'primary'}
