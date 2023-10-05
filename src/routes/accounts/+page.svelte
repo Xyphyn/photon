@@ -9,7 +9,7 @@
     profile,
   } from '$lib/auth.js'
   import EditableList from '$lib/components/ui/list/EditableList.svelte'
-  import { Menu, MenuButton, toast } from 'mono-svelte'
+  import { Menu, MenuButton, Modal, toast } from 'mono-svelte'
   import DebugObject from '$lib/components/util/debug/DebugObject.svelte'
   import {
     DEFAULT_INSTANCE_URL,
@@ -24,9 +24,11 @@
     ArrowLeftOnRectangle,
     ArrowUturnLeft,
     BugAnt,
+    Check,
     ChevronDown,
     ChevronUp,
     EllipsisHorizontal,
+    ExclamationTriangle,
     Icon,
     Identification,
     PaintBrush,
@@ -72,6 +74,13 @@
 
   let debugging = false
   let debugProfile: Profile | undefined = undefined
+
+  let removing = {
+    shown: false,
+    account: undefined as Profile | undefined,
+  }
+
+  let switching = -69
 </script>
 
 <svelte:head>
@@ -90,6 +99,43 @@
       </span>
     </span>
   </DebugObject>
+{/if}
+
+{#if removing.shown && removing.account}
+  <Modal bind:open={removing.shown}>
+    <span slot="title">Removing Account</span>
+    <div class="flex flex-row items-center gap-2">
+      <ProfileAvatar profile={removing.account} selected={true} />
+
+      <div class="flex flex-col">
+        <span class="font-bold">{removing.account.username}</span>
+        <span class="text-sm text-slate-600 dark:text-zinc-400">
+          {removing.account.instance}
+        </span>
+      </div>
+    </div>
+    <p>This removes the account from Photon, it does not delete the account.</p>
+    <div class="flex flex-row gap-2 items-center">
+      <Button
+        size="lg"
+        class="flex-1"
+        on:click={() => (removing.shown = false)}
+      >
+        Cancel
+      </Button>
+      <Button
+        on:click={() => {
+          removing.shown = false
+          if (removing.account) deleteProfile(removing.account.id)
+        }}
+        size="lg"
+        class="flex-1"
+        color="danger"
+      >
+        Remove
+      </Button>
+    </div>
+  </Modal>
 {/if}
 
 {#if $profileData.profiles.length == 0}
@@ -138,8 +184,9 @@
       <h1 class="text-2xl font-bold">Accounts</h1>
     </div>
     <EditableList
-      on:action={(id) => {
-        deleteProfile(id.detail)
+      on:action={(acc) => {
+        removing.account = acc.detail
+        removing.shown = !removing.shown
       }}
       let:action
     >
@@ -178,6 +225,27 @@
             </div>
           </div>
           <div class="ml-auto" />
+          <Button
+            aria-label={profile.id == $currentProfile?.id
+              ? 'Switch'
+              : 'Current'}
+            on:click={async () => {
+              if (profile.id == $currentProfile?.id) setUserID(-1)
+              else {
+                switching = profile.id
+                await setUserID(profile.id)
+                switching = -69
+              }
+            }}
+            size="square-md"
+            color={profile.id == $currentProfile?.id ? 'primary' : 'secondary'}
+            loading={switching == profile.id}
+            disabled={switching == profile.id}
+          >
+            {#if profile.id == $currentProfile?.id}
+              <Icon src={Check} mini size="16" />
+            {/if}
+          </Button>
           <Menu origin="bottom-right">
             <Button size="square-md" slot="target">
               <Icon src={EllipsisHorizontal} mini size="16" slot="prefix" />
@@ -208,26 +276,11 @@
                 Debug Info
               </MenuButton>
             {/if}
+            <MenuButton on:click={() => action(profile)} color="danger-subtle">
+              <Icon slot="prefix" src={Trash} size="16" mini />
+              Delete
+            </MenuButton>
           </Menu>
-          <Button
-            on:click={() => {
-              if (profile.id == $currentProfile?.id) {
-                setUserID(-1)
-              } else {
-                setUserID(profile.id)
-              }
-            }}
-            color={profile.id == $currentProfile?.id ? 'primary' : 'secondary'}
-          >
-            {profile.id == $currentProfile?.id ? 'Current' : 'Switch'}
-          </Button>
-          <Button
-            on:click={() => action(profile.id)}
-            class="!p-2"
-            color="danger"
-          >
-            <Icon slot="prefix" src={Trash} size="16" mini />
-          </Button>
         </div>
       {/each}
       <div class="flex flex-row gap-4 items-center py-4">
