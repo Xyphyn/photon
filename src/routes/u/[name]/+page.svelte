@@ -198,7 +198,7 @@
     />
   </div>
 
-  <div class="mx-auto">
+  <div class="mx-auto max-w-sm w-full">
     <StickyCard>
       <Avatar
         width={64}
