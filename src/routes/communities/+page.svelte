@@ -47,7 +47,7 @@
     openOnHover
     class="!inline-flex"
     targetClass="inline"
-    origin="bottom-center"
+    placement="bottom"
   >
     <Icon
       src={InformationCircle}

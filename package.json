@@ -44,7 +44,7 @@
     "@dicebear/core": "^6.0.4",
     "@dicebear/initials": "^6.0.4",
     "markdown-it": "^13.0.1",
-    "mono-svelte": "^0.4.1"
+    "mono-svelte": "^1.2.2"
   },
   "type": "module"
 }

@@ -263,7 +263,7 @@
       <h2 class="font-bold text-lg flex items-center space-x-1">
         <span>Allowed Instances</span>
         {#if allowInstance.instance || !(data.federated_instances.federated_instances.allowed?.length == 0)}
-          <Popover openOnHover origin="bottom-right">
+          <Popover openOnHover placement="bottom-end">
             <Icon
               src={ExclamationTriangle}
               solid

@@ -246,7 +246,7 @@
               <Icon src={Check} mini size="16" />
             {/if}
           </Button>
-          <Menu origin="bottom-right">
+          <Menu placement="bottom-end">
             <Button size="square-md" slot="target">
               <Icon src={EllipsisHorizontal} mini size="16" slot="prefix" />
             </Button>

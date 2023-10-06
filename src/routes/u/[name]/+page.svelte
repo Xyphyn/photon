@@ -231,7 +231,7 @@
     cursor-pointer"
           >
             {#each data.moderates as moderator}
-              <Popover openOnHover origin="top-left" class="transition-all">
+              <Popover openOnHover placement="top" class="transition-all">
                 <a
                   class="block ring rounded-full ring-slate-50 dark:ring-zinc-950 transition-all"
                   href="/c/{moderator.community.name}@{new URL(
@@ -278,7 +278,7 @@
           </div>
           <div class="flex flex-row gap-2 ml-auto">
             {#if isAdmin($profile?.user)}
-              <Menu class="ml-auto" origin="bottom-right">
+              <Menu class="ml-auto" placement="bottom-end">
                 <Button size="square-md" slot="target">
                   <ShieldIcon width={16} filled />
                 </Button>
@@ -302,7 +302,7 @@
                 </MenuButton>
               </Menu>
             {/if}
-            <Menu origin="bottom-right">
+            <Menu placement="bottom-end">
               <Button size="square-md" slot="target">
                 <Icon src={EllipsisHorizontal} slot="prefix" size="16" mini />
               </Button>

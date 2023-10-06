@@ -48,7 +48,7 @@
   {#if $profile?.user && (amMod($profile?.user, comment.community) || isAdmin($profile.user))}
     <CommentModerationMenu bind:item={comment} />
   {/if}
-  <Menu origin="bottom-center">
+  <Menu placement="bottom">
     <Button
       slot="target"
       class="!p-1"

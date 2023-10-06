@@ -36,6 +36,7 @@
     Newspaper,
     PencilSquare,
     Plus,
+    ServerStack,
     Sun,
     UserCircle,
     UserGroup,
@@ -110,9 +111,9 @@
       <Button
         href="/admin"
         aria-label="Admin"
-        class="max-md:w-9 max-md:h-8 max-md:!p-0 "
+        class="max-md:w-9 max-md:h-8 max-md:!p-0 dark:text-zinc-300 text-slate-700"
       >
-        <Icon src={CommandLine} mini size="16" slot="prefix" />
+        <Icon src={ServerStack} mini size="18" slot="prefix" />
         <span class="hidden md:inline">Admin</span>
       </Button>
     {/if}
@@ -147,7 +148,7 @@
       <Icon mini src={GlobeAlt} size="16" slot="prefix" />
       <span class="hidden md:inline">Explore</span>
     </Button>
-    <Menu origin="bottom-right" targetClass="h-8">
+    <Menu placement="bottom-end" targetClass="h-8">
       <Button
         color="primary"
         slot="target"
@@ -185,7 +186,7 @@
     </Menu>
   </div>
   <Menu
-    origin="bottom-right"
+    placement="bottom-end"
     itemsClass="h-8 md:h-8 z-10"
     targetClass="z-10 h-8"
     containerClass="!max-h-[28rem] z-10"

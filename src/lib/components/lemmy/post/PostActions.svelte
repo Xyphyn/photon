@@ -112,7 +112,7 @@
     <ModerationMenu bind:item={post} community={post.community} />
   {/if}
   <Menu
-    origin="bottom-right"
+    placement="bottom-end"
     containerClass="overflow-auto max-h-[400px]"
     class="h-8"
     targetClass="h-full"

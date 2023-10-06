@@ -55,7 +55,7 @@
       <h2 class="font-bold text-xl flex flex-row items-center gap-1">
         Blocked
 
-        <Popover openOnHover origin="bottom-center">
+        <Popover openOnHover placement="bottom">
           <Icon src={InformationCircle} mini size="20" slot="target" />
           <p class="font-normal">
             These are the instances your instance is explicitly blocking content

@@ -185,7 +185,7 @@
     cursor-pointer"
       >
         {#each moderators as moderator}
-          <Popover openOnHover origin="top-left" class="transition-all">
+          <Popover openOnHover placement="top-start" class="transition-all">
             <a
               class="block ring rounded-full ring-slate-50 dark:ring-zinc-950 transition-all"
               href="/u/{moderator.moderator.name}@{new URL(
@@ -246,7 +246,7 @@
             <Icon src={Cog6Tooth} mini size="16" slot="prefix" />
           </Button>
         {/if}
-        <Menu origin="bottom-right">
+        <Menu placement="bottom-end">
           <Button size="square-md" slot="target">
             <Icon src={EllipsisHorizontal} size="16" mini slot="prefix" />
           </Button>

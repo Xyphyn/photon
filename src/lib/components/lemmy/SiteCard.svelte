@@ -85,7 +85,7 @@
       cursor-pointer"
     >
       {#each admins as admin}
-        <Popover openOnHover origin="top-left" class="transition-all">
+        <Popover openOnHover placement="top-start" class="transition-all">
           <a
             class="block ring rounded-full ring-slate-50 dark:ring-zinc-950 transition-all"
             href="/u/{admin.person.name}@{new URL(admin.person.actor_id)

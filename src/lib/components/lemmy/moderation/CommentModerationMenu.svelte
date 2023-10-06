@@ -10,7 +10,7 @@
   export let item: PostView | CommentView
 </script>
 
-<Menu origin="bottom-center" class="top-0 h-[26px] w-[26px] ">
+<Menu placement="bottom" class="top-0 h-[26px] w-[26px] ">
   <Button
     class="w-[26px] h-[26px] hover:!text-green-500 dark:text-zinc-400 text-slate-600"
     size="square-md"

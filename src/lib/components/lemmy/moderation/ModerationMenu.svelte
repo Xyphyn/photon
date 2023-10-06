@@ -82,7 +82,7 @@
   }
 </script>
 
-<Menu origin="bottom-right">
+<Menu placement="bottom-end">
   <Button
     class="hover:!text-green-500 dark:text-zinc-400 text-slate-500"
     slot="target"
