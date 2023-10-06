@@ -32,7 +32,7 @@
     }}
     extractName={(c) => `${c.title}@${new URL(c.actor_id).hostname}`}
     on:select
-    bind:q
+    bind:query={q}
     {showWhenEmpty}
     {...$$restProps}
     let:item

@@ -1,9 +1,9 @@
 <script lang="ts">
   import { createEventDispatcher, onDestroy, onMount } from 'svelte'
-  import { getClient } from '$lib/lemmy.js'
+  import { client } from '$lib/lemmy.js'
   import type { Community, Post, PostView } from 'lemmy-js-client'
   import { toast } from 'mono-svelte'
-  import { Check, Icon, Photo } from 'svelte-hero-icons'
+  import { Check, Icon, Photo, BookOpen } from 'svelte-hero-icons'
   import { profile } from '$lib/auth.js'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { placeholders, uploadImage } from '$lib/util.js'
@@ -61,8 +61,9 @@
     if (passedCommunity) {
       data.community = passedCommunity.id
       communitySearch = passedCommunity.name
+      console.log(communitySearch)
     } else {
-      const list = await getClient().listCommunities({
+      const list = await client().listCommunities({
         type_: 'All',
         sort: 'Active',
         limit: 40,
@@ -105,7 +106,7 @@
           throw new Error('Post is being edited but editingPost is null')
         }
 
-        const post = await getClient().editPost({
+        const post = await client().editPost({
           name: data.title,
           body: data.body,
           url: data.url || undefined,
@@ -123,7 +124,7 @@
           ? await uploadImage(data.image[0], $profile.instance, $profile.jwt)
           : undefined
         data.url = image || data.url || undefined
-        const post = await getClient().createPost({
+        const post = await client().createPost({
           community_id: data.community!,
           name: data.title,
           body: data.body,
@@ -144,6 +145,52 @@
   }
 
   let uploadingImage = false
+
+  const generateTitle = async (url: string | undefined) => {
+    if (!url) return
+    generation.loading = true
+    try {
+      const res = await client().getSiteMetadata({
+        url: url,
+      })
+
+      // for backup
+      const oldData = { ...data }
+
+      if (res.metadata.title) data.title = res.metadata.title
+      if (res.metadata.description) data.body = res.metadata.description
+
+      toast({
+        content: `Generated title and body from that website. Would you like to undo this action?`,
+        type: 'info',
+        action: () => (data = oldData),
+        duration: 15 * 1000,
+      })
+    } catch (e) {
+      toast({
+        content: 'There was no usable title or description of that website.',
+      })
+    }
+    generation.loading = false
+  }
+
+  const canGenerateTitle = (url: string | undefined) => {
+    if (!url) return false
+    try {
+      new URL(url)
+    } catch (e) {
+      return false
+    }
+    return true
+  }
+
+  let generation = {
+    loading: false,
+    generatable: false,
+    title: '',
+  }
+
+  $: generation.generatable = canGenerateTitle(data.url)
 </script>
 
 {#if uploadingImage}
@@ -211,9 +258,20 @@
       class="w-full"
     />
     <Button
-      size="square-md"
+      on:click={() => generateTitle(data.url)}
+      style="width: 38px; height: 38px; padding: 0;"
+      class="flex-shrink-0"
+      title="Generate title/body"
+      loading={generation.loading}
+      disabled={!generation.generatable || generation.loading}
+    >
+      <Icon src={BookOpen} size="18" mini slot="prefix" />
+    </Button>
+    <Button
       on:click={() => (uploadingImage = !uploadingImage)}
-      style="width: 46px !important; height: 42px; padding: 0;"
+      style="width: 38px; height: 38px; padding: 0;"
+      class="flex-shrink-0"
+      title="Upload image"
     >
       <Icon src={Photo} size="18" mini slot="prefix" />
     </Button>
