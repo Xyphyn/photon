@@ -141,9 +141,8 @@
       }
     } catch (err) {
       toast({ content: err as any, type: 'error' })
+      data.loading = false
     }
-
-    data.loading = false
   }
 
   let uploadingImage = false
