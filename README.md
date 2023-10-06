@@ -128,11 +128,12 @@ Want your instance added here? Make a GitHub issue or make a PR! (this is for ge
 
 [phtn.app](https://phtn.app) is the official instance and will get updates instantly.
 
-| Instance                                             | Location     | Contact                                            |
-| ---------------------------------------------------- | ------------ | -------------------------------------------------- |
-| [phtn.app (Official)](https://phtn.app)              | 🇺🇸 US West   | [photon@xylight.dev](photon@xylight.dev)           |
-| [ph.openxng.com](https://ph.opnxng.com)              | 🇸🇬 Singapore | [about.openxng.com](https://about.opnxng.com)      |
-| [photon.zhenyapav.com](https://photon.zhenyapav.com) | 🇮🇸 Iceland   | [zhenyapav@zhenyapav.com](zhenyapav@zhenyapav.com) |
+| Instance                                                     | Location     | Contact                                                                        |
+| ------------------------------------------------------------ | ------------ | ------------------------------------------------------------------------------ |
+| [phtn.app (Official)](https://phtn.app)                      | 🇺🇸 US West   | [photon@xylight.dev](photon@xylight.dev)                                       |
+| [ph.openxng.com](https://ph.opnxng.com)                      | 🇸🇬 Singapore | [about.openxng.com](https://about.opnxng.com)                                  |
+| [photon.zhenyapav.com](https://photon.zhenyapav.com)         | 🇮🇸 Iceland   | [zhenyapav@zhenyapav.com](zhenyapav@zhenyapav.com)                             |
+| [photon.thesanewriter.com](https://photon.thesanewriter.com) | 🇺🇸 US East   | [thesanewriter@lemmy.thesanewriter.com](thesanewriter@lemmy.thesanewriter.com) |
 
 ## Donate
 
