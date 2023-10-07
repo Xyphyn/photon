@@ -36,7 +36,12 @@
     ? '!bg-slate-100 dark:!bg-zinc-900'
     : ''}"
 >
-  <ProfileAvatar profile={prof} {index} selected={$profile?.id == prof.id} />
+  <ProfileAvatar
+    profile={prof}
+    {index}
+    selected={$profile?.id == prof.id}
+    slot="prefix"
+  />
   <span
     class="flex flex-col gap-0 {$profile?.id == prof.id ? 'font-semibold' : ''}"
     slot="label"

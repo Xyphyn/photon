@@ -12,6 +12,7 @@
     ? ''
     : 'max-lg:!p-1 [&>*]:max-lg:!justify-center'} {$$props.class}"
 >
+  <slot name="prefix" slot="prefix" />
   <slot />
   <div class={$userSettings.expandSidebar ? 'contents' : 'max-lg:hidden'}>
     <slot name="label" />
