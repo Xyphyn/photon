@@ -3,7 +3,13 @@
   import { buildCommentsTree, type CommentNodeI } from './comments'
   import { page } from '$app/stores'
   import { onMount, setContext } from 'svelte'
-  import { ChevronDown, Icon, Plus, PlusCircle } from 'svelte-hero-icons'
+  import {
+    ChevronDoubleDown,
+    ChevronDown,
+    Icon,
+    Plus,
+    PlusCircle,
+  } from 'svelte-hero-icons'
   import { getClient } from '$lib/lemmy.js'
   import type { CommentView, Post } from 'lemmy-js-client'
   import { fly } from 'svelte/transition'
@@ -15,10 +21,6 @@
   export let isParent: boolean
   export let post: Post
 
-  if (isParent) {
-    setContext('comments:tree', nodes)
-  }
-
   onMount(() => {
     if (isParent && $page.url.hash) {
       document.getElementById($page.url.hash)?.scrollIntoView({
@@ -29,6 +31,7 @@
   })
 
   let loadingChildren = false
+  let childrenPage = 0
 
   async function fetchChildren(parent: CommentNodeI) {
     if (
@@ -46,6 +49,7 @@
         max_depth: 5,
         parent_id: parent.comment_view.comment.id,
         type_: 'All',
+        page: childrenPage,
       })
 
       if (newComments.comments.length == 0) {
@@ -84,6 +88,7 @@
           })
         }
       }
+      childrenPage++
     } catch (error) {
       console.error(error)
       toast({
@@ -124,12 +129,13 @@
             size="sm"
             color="tertiary"
             alignment="left"
+            class="font-normal"
             on:click={() => {
               node.loading = true
               fetchChildren(node).then(() => (node.loading = false))
             }}
           >
-            <Icon src={ChevronDown} mini size="16" slot="prefix" />
+            <Icon src={ChevronDoubleDown} mini size="16" slot="prefix" />
             {node.comment_view.counts.child_count} more
           </Button>
         </button>

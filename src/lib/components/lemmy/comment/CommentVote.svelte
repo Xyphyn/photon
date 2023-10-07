@@ -2,6 +2,7 @@
   import { Color } from '$lib/ui/colors'
   import {
     ArrowDownCircle,
+    ArrowUp,
     ArrowUpCircle,
     ChevronDown,
     ChevronUp,
@@ -70,18 +71,20 @@
 
 <div
   class="flex flex-row items-center rounded-md transition-all
-cursor-pointer h-[26px] border border-slate-200
+cursor-pointer h-full border-slate-200
 dark:border-zinc-800"
 >
   <button
     on:click={upvote}
-    class="px-1.5 {vote == 1 ? 'dark:text-blue-500 text-blue-600' : ''}"
+    class="pr-1 transition-colors {vote == 1
+      ? 'dark:text-blue-500 text-blue-600'
+      : ''}"
     aria-label="Upvote"
   >
-    <Icon src={ChevronUp} width={19} mini />
+    <Icon src={ChevronUp} size="20" mini />
   </button>
   <span
-    class="text-sm font-medium {voteColor(vote)}"
+    class="text-sm font-medium transition-colors {voteColor(vote)}"
     class:hidden={$profile?.user?.local_user_view.local_user.show_scores ==
       false}
   >
@@ -89,12 +92,12 @@ dark:border-zinc-800"
   </span>
   <button
     on:click={downvote}
-    class="px-1.5 {vote == -1
+    class="pl-1 {vote == -1
       ? 'text-red-400'
-      : ''} disabled:pointer-events-none disabled:opacity-50"
+      : ''} transition-colors disabled:pointer-events-none disabled:opacity-50"
     aria-label="Downvote"
     disabled={$site?.site_view.local_site.enable_downvotes == false}
   >
-    <Icon src={ChevronDown} width={19} mini />
+    <Icon src={ChevronDown} size="20" mini />
   </button>
 </div>

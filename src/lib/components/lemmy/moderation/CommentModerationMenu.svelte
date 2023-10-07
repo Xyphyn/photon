@@ -15,7 +15,7 @@
     class="w-[26px] h-[26px] hover:!text-green-500 dark:text-zinc-400 text-slate-600"
     size="square-md"
     slot="target"
-    color="ghost"
+    color="tertiary"
     {...$$restProps}
   >
     <ShieldIcon filled width={14} />

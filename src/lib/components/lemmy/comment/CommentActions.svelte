@@ -30,7 +30,7 @@
   const dispatcher = createEventDispatcher<{ edit: CommentView }>()
 </script>
 
-<div class="flex flex-row gap-2 items-center mt-1 h-7 relative">
+<div class="flex flex-row items-center gap-0.5 mt-1 h-7 relative">
   <CommentVote
     bind:score={comment.counts.score}
     bind:vote={comment.my_vote}
@@ -38,7 +38,8 @@
   />
   <Button
     size="sm"
-    color="ghost"
+    color="tertiary"
+    class="text-slate-600 dark:text-zinc-400"
     on:click={() => (replying = !replying)}
     disabled={comment.post.locked}
   >
@@ -51,9 +52,9 @@
   <Menu placement="bottom">
     <Button
       slot="target"
-      class="!p-1"
+      class="!p-1 text-slate-600 dark:text-zinc-400"
       aria-label="Comment actions"
-      color="ghost"
+      color="tertiary"
     >
       <Icon
         src={EllipsisHorizontal}
