@@ -114,7 +114,7 @@ export async function vote(
   item: ContentView | Submission,
   vote: number,
   jwt: string
-): Promise<number> {
+): Promise<{ upvotes: number; downvotes: number; score: number }> {
   if (isSubmission(item)) item = contentItem(item)
 
   if (item.type == 'post') {
@@ -123,16 +123,16 @@ export async function vote(
         post_id: item.id,
         score: vote,
       })
-    ).post_view.counts.score
+    ).post_view.counts
   } else if (item.type == 'comment') {
     return (
       await getClient().likeComment({
         comment_id: item.id,
         score: vote,
       })
-    ).comment_view.counts.score
+    ).comment_view.counts
   }
-  return 0
+  return { upvotes: 0, downvotes: 0, score: 0 }
 }
 
 export async function markAsRead(

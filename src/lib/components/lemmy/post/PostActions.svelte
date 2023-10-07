@@ -81,6 +81,8 @@
     post={post.post}
     bind:vote={post.my_vote}
     bind:score={post.counts.score}
+    bind:upvotes={post.counts.upvotes}
+    bind:downvotes={post.counts.downvotes}
   />
 
   <Button
