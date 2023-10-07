@@ -5,7 +5,7 @@ Jump to:
 - [Self-hosting](#self-hosting)
 - [Public Instances](#public-instances)
 
-An alternative web client for Lemmy with the UI of Xylo
+An sleek web client for Lemmy using mono-ui, a custom design system.
 
 ## Screenshots
 
