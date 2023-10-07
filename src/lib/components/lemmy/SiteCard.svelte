@@ -81,13 +81,13 @@
   {#if admins}
     <span class="font-bold">Admins</span>
     <div
-      class="flex items-center -space-x-1 flex-wrap hover:space-x-1 transition-all
+      class="flex items-center flex-wrap group transition-all
       cursor-pointer"
     >
       {#each admins as admin}
-        <Popover openOnHover placement="top-start" class="transition-all">
+        <Popover openOnHover placement="top">
           <a
-            class="block ring rounded-full ring-slate-50 dark:ring-zinc-950 transition-all"
+            class="block ring rounded-full ring-slate-50 dark:ring-zinc-950 transition-all -mx-0.5 group-hover:mx-0.5"
             href="/u/{admin.person.name}@{new URL(admin.person.actor_id)
               .hostname}"
             slot="target"

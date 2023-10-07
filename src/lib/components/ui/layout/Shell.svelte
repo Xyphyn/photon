@@ -68,7 +68,7 @@
 
   @media (min-width: 768px) {
     .content {
-      grid-template-columns: 1fr 2fr;
+      grid-template-columns: min-content 2fr;
       justify-items: end start;
       grid-template-areas: 'sidebar main';
     }

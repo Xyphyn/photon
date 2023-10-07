@@ -1,5 +1,6 @@
 <script lang="ts">
   import Avatar from '$lib/components/ui/Avatar.svelte'
+  import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
   import type { Community } from 'lemmy-js-client'
   import { Button } from 'mono-svelte'
   import { flip } from 'svelte/animate'
@@ -14,7 +15,7 @@
     class="inline-flex w-full"
     animate:flip={{ duration: 500, easing: expoOut }}
   >
-    <Button
+    <SidebarButton
       class="font-normal w-full h-max"
       color="tertiary"
       alignment="left"
@@ -29,12 +30,12 @@
           slot="prefix"
         />
       </div>
-      <div class="flex flex-col max-w-full break-words">
+      <div class="flex flex-col max-w-full break-words" slot="label">
         <span>{follow.title}</span>
         <span class="text-xs text-slate-600 dark:text-zinc-400">
           {new URL(follow.actor_id).hostname}
         </span>
       </div>
-    </Button>
+    </SidebarButton>
   </div>
 {/each}

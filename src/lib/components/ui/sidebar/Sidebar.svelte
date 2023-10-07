@@ -1,6 +1,7 @@
 <script lang="ts">
   import {
     ArrowLeftOnRectangle,
+    ChevronDoubleRight,
     Cog6Tooth,
     GlobeAlt,
     Home,
@@ -26,9 +27,17 @@
   gap-1 max-h-[calc(100svh-4rem)] {$$props.class}"
   style={$$props.style}
 >
+  <Button
+    on:click={() =>
+      ($userSettings.expandSidebar = !$userSettings.expandSidebar)}
+    size="square-md"
+    class="flex-shrink-0 lg:hidden"
+  >
+    <Icon src={ChevronDoubleRight} size="16" mini />
+  </Button>
   <SidebarButton href="/">
     <Icon src={Home} mini={route == '/'} size="20" title="Frontpage" />
-    <span>Frontpage</span>
+    <span slot="label">Frontpage</span>
   </SidebarButton>
   <SidebarButton href="/settings">
     <Icon
@@ -37,11 +46,11 @@
       size="20"
       title="Settings"
     />
-    <span>Settings</span>
+    <span slot="label">Settings</span>
   </SidebarButton>
   <SidebarButton href="/communities">
     <Icon mini={route == '/communities'} src={GlobeAlt} size="20" />
-    <span>Communities</span>
+    <span slot="label">Communities</span>
   </SidebarButton>
   {#if $profileData.profiles.length >= 1}
     <hr class="border-slate-300 dark:border-zinc-800 my-1" />
@@ -52,7 +61,7 @@
     {/each}
     <SidebarButton href="/accounts">
       <Icon src={UserGroup} mini size="20" />
-      <span>Accounts</span>
+      <span slot="label">Accounts</span>
     </SidebarButton>
   {/if}
   <hr class="border-slate-300 dark:border-zinc-800 my-1" />

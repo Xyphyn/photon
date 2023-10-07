@@ -2,6 +2,7 @@
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
   import { profile, setUserID, type Profile } from '$lib/auth.js'
+  import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
   import ProfileAvatar from '$lib/lemmy/ProfileAvatar.svelte'
   import { Button } from 'mono-svelte'
 
@@ -11,7 +12,7 @@
   let switching: boolean = false
 </script>
 
-<Button
+<SidebarButton
   color="tertiary"
   alignment="left"
   loading={switching}
@@ -35,18 +36,14 @@
     ? '!bg-slate-100 dark:!bg-zinc-900'
     : ''}"
 >
-  <ProfileAvatar
-    profile={prof}
-    {index}
-    selected={$profile?.id == prof.id}
-    slot="prefix"
-  />
+  <ProfileAvatar profile={prof} {index} selected={$profile?.id == prof.id} />
   <span
     class="flex flex-col gap-0 {$profile?.id == prof.id ? 'font-semibold' : ''}"
+    slot="label"
   >
     {prof.username ?? prof.user?.local_user_view.person.name}
     <span class="text-slate-500 dark:text-zinc-400 font-normal text-xs">
       {prof.instance}
     </span>
   </span>
-</Button>
+</SidebarButton>
