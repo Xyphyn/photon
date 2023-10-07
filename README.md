@@ -9,9 +9,8 @@ An sleek web client for Lemmy using mono-ui, a custom design system.
 
 ## Screenshots
 
-![image](https://github.com/Xyphyn/photon/assets/80978739/7bcd676e-7042-4801-a7fe-fd7764fbd7ff)
-
-![image](https://github.com/Xyphyn/photon/assets/80978739/7f0bda3b-85cd-4950-8173-c38c1ce89d2f)
+![Screenshot from 2023-10-07 12-44-01](https://github.com/Xyphyn/photon/assets/80978739/4807c0aa-1ffe-4f6d-b33a-432d68def70d)
+![Screenshot from 2023-10-07 12-44-07](https://github.com/Xyphyn/photon/assets/80978739/1a6f1515-f95a-447d-8d3c-39e9d8e48dd1)
 
 
 ## Self-hosting
