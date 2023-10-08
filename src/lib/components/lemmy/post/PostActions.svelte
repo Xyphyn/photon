@@ -185,9 +185,7 @@
       <MenuButton
         on:click={() => {
           setSessionStorage('postDraft', {
-            body: `cross-posted from: ${post.post.ap_id} (!${
-              post.community.name
-            }@${new URL(post.community.actor_id).hostname})\n${
+            body: `cross-posted from: ${post.post.ap_id}\n${
               post.post.body
                 ? '>' + post.post.body.split('\n').join('\n> ')
                 : ''
