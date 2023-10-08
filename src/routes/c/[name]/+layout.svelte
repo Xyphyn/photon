@@ -14,6 +14,10 @@
       name="og:description"
       content={data.community.community_view.community.description}
     />
+    <meta
+      name="description"
+      content={data.community.community_view.community.description}
+    />
   {/if}
 </svelte:head>
 <slot />
