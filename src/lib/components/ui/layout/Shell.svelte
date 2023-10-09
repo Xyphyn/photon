@@ -29,8 +29,8 @@
   >
     <slot
       name="sidebar"
-      class="hidden md:flex sticky top-16 justify-self-end left-0 w-full max-w-full"
-      style="grid-area: sidebar; max-width: 20rem;"
+      class="hidden md:flex sticky top-16 left-0 w-full max-w-full"
+      style="grid-area: sidebar; width: 100% !important;"
     />
     <slot
       name="main"
@@ -39,8 +39,8 @@
     />
     <slot
       name="suffix"
-      class="hidden xl:flex w-full justify-self-start"
-      style="grid-area: suffix; max-width: 20rem;"
+      class="max-xl:hidden w-full"
+      style="grid-area: suffix;"
     />
   </div>
 </div>
@@ -76,13 +76,13 @@
 
   @media (min-width: 1280px) {
     .content {
-      grid-template-columns: 1fr 3fr 1fr;
+      grid-template-columns: 20% 1fr 20%;
       justify-items: end center start;
       grid-template-areas: 'sidebar main suffix';
     }
   }
 
   .limit-width {
-    max-width: 96rem;
+    max-width: 100rem;
   }
 </style>

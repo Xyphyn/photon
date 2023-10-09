@@ -141,18 +141,21 @@
   </Modal>
 {/if}
 
-<StickyCard>
+<StickyCard class="min-w-full {$$props.class}">
   <div class="flex flex-row gap-3 items-center">
     <div class="flex-shrink-0">
       <Avatar
-        width={48}
+        width={42}
         url={community_view.community.icon}
         alt={community_view.community.name}
       />
     </div>
     <div class="flex flex-col gap-0">
       <h1 class="font-bold text-xl">{community_view.community.title}</h1>
-      <span class="dark:text-zinc-400 text-slate-600 text-sm">
+      <span
+        class="dark:text-zinc-400 text-slate-600 text-sm break-words max-w-full"
+        style="word-break: break-all;"
+      >
         !{community_view.community.name}@{new URL(
           community_view.community.actor_id
         ).hostname}
@@ -209,7 +212,6 @@
     <div class="w-full mt-2 flex flex-col gap-2">
       <Button
         href="/create/post"
-        color="ghost"
         size="lg"
         disabled={community_view.community.posting_restricted_to_mods}
       >
@@ -219,7 +221,6 @@
       <Button
         disabled={loading.subscribing}
         loading={loading.subscribing}
-        color="ghost"
         size="lg"
         on:click={subscribe}
       >

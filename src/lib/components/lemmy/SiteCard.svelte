@@ -25,7 +25,7 @@
   export let version: string | undefined = undefined
 </script>
 
-<StickyCard>
+<StickyCard class="w-full {$$props.class}">
   <div class="flex flex-row gap-3 items-center">
     {#if site.site.icon}
       <Avatar width={42} url={site.site.icon} alt={site.site.name} />
@@ -59,20 +59,19 @@
       <FormattedNumber number={site.counts.communities} />
     </span>
   </div>
-  <div class="flex flex-row items-center">
-    <Button href="/modlog" size="sm" class="rounded-r-none">
+  <div class="flex flex-col 3xl:flex-row 3xl:items-center gap-2 3xl:gap-0">
+    <Button href="/modlog" class="3xl:rounded-r-none">
       <Icon src={Newspaper} size="16" mini />
       Modlog
     </Button>
     <Button
       href="/legal"
-      size="sm"
-      class="rounded-l-none rounded-r-none border-x-0"
+      class="3xl:rounded-l-none 3xl:rounded-r-none 3xl:border-x-0"
     >
       <Icon src={BuildingOffice} size="16" mini />
       Legal
     </Button>
-    <Button href="/instances" size="sm" class="rounded-l-none">
+    <Button href="/instances" class="3xl:rounded-l-none">
       <Icon src={ServerStack} size="16" mini />
       Instances
     </Button>

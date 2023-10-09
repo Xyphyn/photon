@@ -1,4 +1,7 @@
 // See https://kit.svelte.dev/docs/types#app
+
+import type { ComponentType, SvelteComponent } from 'svelte'
+
 // for information about these interfaces
 declare global {
   namespace App {
@@ -6,7 +9,14 @@ declare global {
     interface Locals {
       instance?: string
     }
-    // interface PageData {}
+    interface PageData {
+      slots?: {
+        sidebar?: {
+          component?: ComponentType
+          props?: any
+        }
+      }
+    }
     // interface Platform {}
   }
   declare const __VERSION__: string

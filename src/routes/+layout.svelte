@@ -112,7 +112,13 @@
     <slot />
   </main>
   <div slot="suffix" let:class={c} let:style={s} class={c} style={s}>
-    {#if $site}
+    {#if $page.data.slots?.sidebar?.component}
+      <svelte:component
+        this={$page.data.slots.sidebar.component}
+        {...$page.data.slots.sidebar.props}
+        class={c}
+      />
+    {:else if $site}
       <SiteCard
         site={$site.site_view}
         taglines={$site.taglines}

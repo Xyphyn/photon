@@ -253,8 +253,8 @@ instance.subscribe(async (i) => {
 export async function setUserID(id: number) {
   const pd = get(profileData)
   if (id == -1) {
-    instance.set(DEFAULT_INSTANCE_URL)
     resetProfile()
+    instance.set(DEFAULT_INSTANCE_URL)
     return
   }
 
