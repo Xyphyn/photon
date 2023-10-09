@@ -30,7 +30,7 @@
   const dispatcher = createEventDispatcher<{ edit: CommentView }>()
 </script>
 
-<div class="flex flex-row items-center gap-0.5 mt-1 h-7 relative">
+<div class="flex flex-row items-center gap-0.5 h-7 relative">
   <CommentVote
     bind:score={comment.counts.score}
     bind:vote={comment.my_vote}

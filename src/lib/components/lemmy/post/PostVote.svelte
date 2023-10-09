@@ -47,7 +47,9 @@
     >
       <Button
         aria-label="Upvote"
-        class={vote == 1 ? voteColor(vote) : ''}
+        class={vote == 1
+          ? voteColor(vote)
+          : 'hover:dark:text-blue-600 hover:text-blue-500'}
         on:click={async () => castVote(vote == 1 ? 0 : 1)}
         size="square-sm"
         color="tertiary"
@@ -76,7 +78,7 @@
         aria-label="Downvote"
         class="{vote == -1 ? voteColor(vote) : ''} {$site?.site_view.local_site
           .enable_downvotes
-          ? ''
+          ? 'hover:dark:text-red-600 hover:text-red-500'
           : 'pointer-events-none opacity-50'}"
         on:click={async () => castVote(vote == -1 ? 0 : -1)}
         size="square-sm"

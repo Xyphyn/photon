@@ -72,17 +72,19 @@
 <div
   class="flex flex-row items-center rounded-md transition-all
 cursor-pointer h-full border-slate-200
-dark:border-zinc-800"
+dark:border-zinc-800 gap-0.5"
 >
-  <button
+  <Button
     on:click={upvote}
-    class="pr-1 transition-colors {vote == 1
+    class=" transition-colors {vote == 1
       ? 'dark:text-blue-500 text-blue-600'
-      : ''}"
+      : 'hover:dark:text-blue-500 hover:text-blue-600'}"
     aria-label="Upvote"
+    size="custom"
+    color="tertiary"
   >
     <Icon src={ChevronUp} size="20" mini />
-  </button>
+  </Button>
   <span
     class="text-sm font-medium transition-colors {voteColor(vote)}"
     class:hidden={$profile?.user?.local_user_view.local_user.show_scores ==
@@ -90,14 +92,16 @@ dark:border-zinc-800"
   >
     <FormattedNumber number={score} />
   </span>
-  <button
+  <Button
     on:click={downvote}
-    class="pl-1 {vote == -1
+    class="{vote == -1
       ? 'text-red-400'
-      : ''} transition-colors disabled:pointer-events-none disabled:opacity-50"
+      : 'hover:dark:text-red-500 hover:text-red-600'} transition-colors disabled:pointer-events-none disabled:opacity-50"
     aria-label="Downvote"
     disabled={$site?.site_view.local_site.enable_downvotes == false}
+    size="custom"
+    color="tertiary"
   >
     <Icon src={ChevronDown} size="20" mini />
-  </button>
+  </Button>
 </div>
