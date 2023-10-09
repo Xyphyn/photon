@@ -1,4 +1,5 @@
 import { profile } from '$lib/auth.js'
+import { publishedToDate } from '$lib/components/util/date.js'
 import { getClient } from '$lib/lemmy.js'
 import type {
   AdminPurgeCommentView,
@@ -37,6 +38,8 @@ export type ActionName =
   | 'postFeature'
   | 'modAdd'
   | 'modRemove'
+  | 'adminAdd'
+  | 'adminRemove'
   | 'purge'
   | 'Unknown'
 
@@ -69,7 +72,7 @@ export interface ModLog {
 
 const fullUserName = (user: Person) =>
   `${user.name}@${new URL(user.actor_id).hostname}`
-const timestamp = (when: string) => Date.parse(`${when}Z`)
+const timestamp = (when: string) => publishedToDate(when).getTime()
 
 export const _toModLog = (item: ModAction): ModLog => {
   if ('mod_ban_from_community' in item) {
@@ -186,7 +189,7 @@ export const _toModLog = (item: ModAction): ModLog => {
     }
   } else if ('mod_add' in item) {
     return {
-      actionName: item.mod_add.removed ? 'modRemove' : 'modAdd',
+      actionName: item.mod_add.removed ? 'adminRemove' : 'adminAdd',
       timestamp: timestamp(item.mod_add.when_),
       moderator: item.moderator,
       moderatee: item.modded_person,
@@ -201,6 +204,7 @@ export const _toModLog = (item: ModAction): ModLog => {
 
 export async function load({ url }) {
   let community = Number(url.searchParams.get('community')) || undefined
+  let user = Number(url.searchParams.get('user')) || undefined
   let modId = Number(url.searchParams.get('mod_id')) || undefined
   const page = Number(url.searchParams.get('page')) || 1
   let type: ModlogActionType =
@@ -212,6 +216,7 @@ export async function load({ url }) {
     type_: type,
     page: page,
     mod_person_id: modId,
+    other_person_id: user,
   })
 
   const moderation = [

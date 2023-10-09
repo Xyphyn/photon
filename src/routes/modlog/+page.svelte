@@ -8,7 +8,15 @@
   import ModlogItemCard from './item/ModlogItemCard.svelte'
   import ModlogItemTable from './item/ModlogItemTable.svelte'
   import { Select } from 'mono-svelte'
-  import { Bars3BottomRight, Icon, ViewColumns } from 'svelte-hero-icons'
+  import {
+    Bars3BottomRight,
+    Icon,
+    MagnifyingGlass,
+    ViewColumns,
+  } from 'svelte-hero-icons'
+  import UserAutocomplete from '$lib/components/lemmy/user/UserAutocomplete.svelte'
+  import Placeholder from '$lib/components/ui/Placeholder.svelte'
+  import { isAdmin } from '$lib/components/lemmy/moderation/moderation.js'
 
   export let data
 
@@ -65,13 +73,15 @@
       <option value="undefined">Default</option>
     </Select>
   </div>
-  <div class="max-w-sm">
-    <div class="block my-1 font-bold text-sm">Community</div>
+  <div class="flex flex-col md:flex-row md:items-center gap-2 w-full">
     <ObjectAutocomplete
       placeholder="Filter by community"
       jwt={$profile?.jwt}
       listing_type="All"
       showWhenEmpty={true}
+      label="Community"
+      class="flex-1"
+      q={$page.url.searchParams.get('community') ? 'Selected' : ''}
       on:select={(e) =>
         searchParam(
           $page.url,
@@ -80,8 +90,37 @@
           'page'
         )}
     />
+    <UserAutocomplete
+      placeholder="Filter by user"
+      jwt={$profile?.jwt}
+      listing_type="All"
+      showWhenEmpty={true}
+      class="flex-1"
+      label="User"
+      q={$page.url.searchParams.get('user') ? 'Selected' : ''}
+      on:select={(e) =>
+        searchParam($page.url, 'user', e.detail?.id.toString() ?? '', 'page')}
+    />
+    {#if $profile?.user && isAdmin($profile?.user)}
+      <UserAutocomplete
+        placeholder="Filter by moderator"
+        jwt={$profile?.jwt}
+        listing_type="All"
+        showWhenEmpty={true}
+        class="flex-1"
+        label="Moderator"
+        q={$page.url.searchParams.get('mod_id') ? 'Selected' : ''}
+        on:select={(e) =>
+          searchParam(
+            $page.url,
+            'mod_id',
+            e.detail?.id.toString() ?? '',
+            'page'
+          )}
+      />
+    {/if}
   </div>
-  {#if data.modlog}
+  {#if data.modlog && data.modlog.length > 0}
     {#if $userSettings.modlogCardView ?? !window.matchMedia('(min-width: 1600px)').matches}
       <div class="flex flex-col gap-4">
         {#each data.modlog as modlog}
@@ -124,11 +163,17 @@
         </table>
       </div>
     {/if}
+    <Pageination
+      page={data.page}
+      on:change={(e) => searchParam($page.url, 'page', e.detail.toString())}
+    />
+  {:else}
+    <Placeholder
+      title="No results"
+      description="There are no mod logs with that filter. Try refining your search."
+      icon={MagnifyingGlass}
+    />
   {/if}
-  <Pageination
-    page={data.page}
-    on:change={(e) => searchParam($page.url, 'page', e.detail.toString())}
-  />
 </div>
 
 <style lang="postcss">

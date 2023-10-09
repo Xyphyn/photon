@@ -129,6 +129,20 @@
           text: 'Purge',
         }
       }
+      case 'adminAdd': {
+        return {
+          icon: UserPlus,
+          class: 'text-green-600 dark:text-green-400',
+          text: 'Added Admin',
+        }
+      }
+      case 'adminRemove': {
+        return {
+          icon: UserMinus,
+          class: 'text-red-600 dark:text-red-400',
+          text: 'Removed Admin',
+        }
+      }
     }
 
     return {
