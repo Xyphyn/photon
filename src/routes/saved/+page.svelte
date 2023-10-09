@@ -1,12 +1,14 @@
 <script lang="ts">
   import type { CommentView, PostView } from 'lemmy-js-client'
   import Post from '$lib/components/lemmy/post/Post.svelte'
-  import Comment from '$lib/components/lemmy/comment/Comment.svelte'
   import { fly } from 'svelte/transition'
-  import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
-  import { Button, Material } from 'mono-svelte'
   import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
   import { userSettings } from '$lib/settings.js'
+  import Pageination from '$lib/components/ui/Pageination.svelte'
+  import { searchParam } from '$lib/util.js'
+  import { page } from '$app/stores'
+  import Placeholder from '$lib/components/ui/Placeholder.svelte'
+  import { Bookmark } from 'svelte-hero-icons'
 
   export let data
 
@@ -25,9 +27,11 @@
   class:!divide-y={$userSettings.view != 'card'}
 >
   {#if !data.data || (data.data?.length ?? 0) == 0}
-    <p class="text-center opacity-60 text-lg mx-4">
-      Wow, it's quite empty in here.
-    </p>
+    <Placeholder
+      icon={Bookmark}
+      title="No saved items"
+      description="Save posts or comments, and they'll be here to refer to them later."
+    />
   {:else}
     {#each data.data as item, index}
       <div in:fly={{ opacity: 0, y: -4, delay: index * 50 }}>
@@ -40,3 +44,7 @@
     {/each}
   {/if}
 </div>
+<Pageination
+  on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
+  page={data.page}
+/>

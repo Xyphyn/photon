@@ -18,7 +18,7 @@ function getSavedItemPublished(item: PostView | CommentView) {
 }
 
 export async function load({ url, fetch }) {
-  if (!get(profile)) return { posts: [] }
+  if (!get(profile)) return { posts: [], page: 0 }
   const page = Number(url.searchParams.get('page')) || 1
 
   const client = getClient(undefined, fetch)
@@ -43,5 +43,5 @@ export async function load({ url, fetch }) {
       Date.parse(getSavedItemPublished(a))
   )
 
-  return { data: everything }
+  return { page: page, data: everything }
 }
