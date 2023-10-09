@@ -21,7 +21,8 @@
         bind:value={selected}
         on:change={(e) => {
           sort = 'TopAll'
-          if (navigate) searchParam($page.url, 'sort', selected, 'page', 'cursor')
+          if (navigate)
+            searchParam($page.url, 'sort', selected, 'page', 'cursor')
         }}
       >
         <span slot="label" class="flex items-center gap-1">
@@ -45,7 +46,7 @@
     bind:value={sort}
     on:change={(e) => {
       setSelected()
-      if (navigate) searchParam($page.url, 'sort', selected, 'page')
+      if (navigate) searchParam($page.url, 'sort', selected, 'page', 'cursor')
     }}
   >
     <span slot="label" class="flex items-center gap-1">

@@ -104,20 +104,4 @@
       </Pageination>
     </div>
   </div>
-  <!-- <div class="hidden xl:block">
-    {#if !$site}
-      <StickyCard>
-        <div class="h-64 grid place-items-center">
-          <Spinner width={32} />
-        </div>
-      </StickyCard>
-    {:else}
-      <SiteCard
-        site={$site.site_view}
-        taglines={$site.taglines}
-        admins={$site.admins}
-        version={$site.version}
-      />
-    {/if}
-  </div> -->
 </div>
