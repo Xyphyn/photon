@@ -76,9 +76,10 @@ dark:border-zinc-800 gap-0.5"
 >
   <Button
     on:click={upvote}
-    class=" transition-colors {vote == 1
-      ? 'dark:text-blue-500 text-blue-600'
-      : 'hover:dark:text-blue-500 hover:text-blue-600'}"
+    class=" transition-colors hover:dark:text-blue-500 hover:text-blue-600 {vote ==
+    1
+      ? 'dark:!text-blue-500 !text-blue-600'
+      : ''}"
     aria-label="Upvote"
     size="custom"
     color="tertiary"
@@ -94,9 +95,9 @@ dark:border-zinc-800 gap-0.5"
   </span>
   <Button
     on:click={downvote}
-    class="{vote == -1
-      ? 'text-red-400'
-      : 'hover:dark:text-red-500 hover:text-red-600'} transition-colors disabled:pointer-events-none disabled:opacity-50"
+    class=" hover:dark:text-red-500 hover:text-red-600 {vote == -1
+      ? '!text-red-500 !dark:text-red-600'
+      : ''} transition-colors disabled:pointer-events-none disabled:opacity-50"
     aria-label="Downvote"
     disabled={$site?.site_view.local_site.enable_downvotes == false}
     size="custom"
