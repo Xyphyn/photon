@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { PostView } from 'lemmy-js-client'
-  import { isImage } from '$lib/ui/image.js'
+  import { isImage, isVideo } from '$lib/ui/image.js'
   import { getInstance } from '$lib/lemmy.js'
   import PostActions from '$lib/components/lemmy/post/PostActions.svelte'
   import { userSettings } from '$lib/settings.js'
@@ -12,6 +12,7 @@
   import { bestImageURL, postLink } from '$lib/components/lemmy/post/helpers.js'
   import Empty from '$lib/components/helper/Empty.svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
+  import { Icon, VideoCamera } from 'svelte-hero-icons'
 
   export let post: PostView
   export let actions: boolean = true
@@ -136,6 +137,20 @@
             </svelte:element>
           </svelte:component>
         {/if}
+      {:else if isVideo(post.post.url) && (view == 'cozy' || view == 'card')}
+        <a
+          href={postLink(post.post)}
+          style="height: 300px;"
+          class="w-full rounded-xl flex flex-col items-center justify-center relative z-0 overflow-hidden
+          text-white p-4"
+        >
+          <div
+            class="absolute blur-xl -z-10 top-0 left-0 w-full h-full bg-gradient-to-br from-green-800 via-blue-900 via-20% to-red-700"
+          />
+          <Icon src={VideoCamera} solid size="48" />
+          <span class="font-bold text-2xl">Video</span>
+          <p class="text-base">Go to the post to view this video.</p>
+        </a>
       {:else if post.post.url}
         <PostLink
           url={post.post.url}
