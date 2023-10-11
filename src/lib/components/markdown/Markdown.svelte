@@ -31,6 +31,11 @@
   }
   $: rendered = render(source)
   $: replaceURLs(div, rendered)
+  /*
+    Horrendous hack to get @html reactivity working
+    From server to client, the rendered html won't change for some reason
+    I have no clue why this fixes it, but it does.
+  */
   onMount(() => {
     rendered = `${rendered} `
   })
