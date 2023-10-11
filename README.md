@@ -12,7 +12,6 @@ An sleek web client for Lemmy using mono-ui, a custom design system.
 ![Screenshot from 2023-10-07 12-44-01](https://github.com/Xyphyn/photon/assets/80978739/4807c0aa-1ffe-4f6d-b33a-432d68def70d)
 ![Screenshot from 2023-10-07 12-44-07](https://github.com/Xyphyn/photon/assets/80978739/1a6f1515-f95a-447d-8d3c-39e9d8e48dd1)
 
-
 ## Self-hosting
 
 Put Photon on your own domain for easier onboarding.
@@ -47,13 +46,17 @@ There you go, you now have an instance of Photon running.
 
 ### Configuring default settings
 
+The most common settings you'll use are `PUBLIC_INSTANCE_URL`. Some selfhosters with `PUBLIC_SSR_ENABLED` set to true might want the instance url to be different for the server. You can use the `PUBLIC_INTERNAL_INSTANCE` variable for that.
+
 The following environment variables can be set to override the default settings:
 
 | Variable                        | Values              | Default Value                          |
 | ------------------------------- | ------------------- | -------------------------------------- |
 | PUBLIC_INSTANCE_URL             | URL                 | `lemmy.ml`                             |
+| PUBLIC_INTERNAL_INSTANCE        | URL?                | null                                   |
 | PUBLIC_LOCK_TO_INSTANCE         | `bool`              | `true` if `PUBLIC_INSTANCE_URL` is set |
 | PUBLIC_SSR_ENABLED              | `bool`              | `false`                                |
+|                                 |                     |                                        |
 | PUBLIC_THEME                    | system\|dark\|light | system                                 |
 | PUBLIC_EXPANDABLE_IMAGES        | `bool`              | true                                   |
 | PUBLIC_MARK_READ_POSTS          | `bool`              | true                                   |
@@ -133,7 +136,7 @@ Want your instance added here? Make a GitHub issue or make a PR! (this is for ge
 | [ph.openxng.com](https://ph.opnxng.com)                      | 🇸🇬 Singapore | [about.openxng.com](https://about.opnxng.com)                                  |
 | [photon.zhenyapav.com](https://photon.zhenyapav.com)         | 🇮🇸 Iceland   | [zhenyapav@zhenyapav.com](zhenyapav@zhenyapav.com)                             |
 | [photon.thesanewriter.com](https://photon.thesanewriter.com) | 🇺🇸 US East   | [thesanewriter@lemmy.thesanewriter.com](thesanewriter@lemmy.thesanewriter.com) |
-| [ph.buckodr.ink](https://ph.buckodr.ink) | 🇺🇸 US East   | [admin@buckodr.ink](admin@buckodr.ink) |
+| [ph.buckodr.ink](https://ph.buckodr.ink)                     | 🇺🇸 US East   | [admin@buckodr.ink](admin@buckodr.ink)                                         |
 
 ## Donate
 
