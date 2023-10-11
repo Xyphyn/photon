@@ -160,6 +160,14 @@
       </Checkbox>
     </Setting>
     <Setting>
+      <span slot="title">Vote style</span>
+      <MultiSelect
+        options={[false, true]}
+        optionNames={['Combined', 'Separate']}
+        bind:selected={$userSettings.separateVotes}
+      />
+    </Setting>
+    <Setting>
       <span slot="title">NSFW blur</span>
       <span slot="description">
         Blur images and remove post bodies of NSFW content.

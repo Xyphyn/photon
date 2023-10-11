@@ -14,6 +14,7 @@
   import { Button, Popover, toast } from 'mono-svelte'
   import { site } from '$lib/lemmy.js'
   import { fly } from 'svelte/transition'
+  import { userSettings } from '$lib/settings.js'
 
   export let post: Post
   export let vote: number = 0
@@ -25,6 +26,16 @@
 
   const voteColor = (vote: number, border: boolean = false) =>
     vote == 1 ? `!text-blue-500` : vote == -1 ? `!text-red-500` : ''
+
+  const shouldShowVoteColor = (
+    vote: number,
+    type: 'upvotes' | 'downvotes'
+  ): string =>
+    (vote == -1 && type == 'downvotes') ||
+    (vote == 1 && type == 'upvotes') ||
+    !$userSettings.separateVotes
+      ? voteColor(vote)
+      : ''
 
   const castVote = async (newVote: number) => {
     if (!$profile?.jwt) {
@@ -41,58 +52,82 @@
 <slot {vote} {score}>
   <!-- <Popover openOnHover placement="bottom"> -->
   <div
-    class=" flex items-center text-sm gap-1 rounded-md border border-slate-200
+    class="flex items-center text-sm rounded-md border border-slate-200
       dark:border-zinc-800 bg-white dark:bg-zinc-900 px-1 h-8 cursor-pointer"
+    class:pr-2.5={$userSettings.separateVotes}
   >
-    <Button
-      aria-label="Upvote"
-      class={vote == 1
-        ? voteColor(vote)
-        : 'hover:dark:text-blue-600 hover:text-blue-500'}
-      on:click={async () => castVote(vote == 1 ? 0 : 1)}
-      size="square-sm"
-      color="tertiary"
-      alignment="center"
-    >
-      <Icon src={ChevronUp} mini size="18" />
-    </Button>
-    <span
-      class="font-medium transition-colors duration-200 grid {voteColor(vote)}"
-      class:hidden={$profile?.user?.local_user_view.local_user.show_scores ==
-        false}
-    >
-      {#key score}
+    <div class="flex items-center">
+      <Button
+        aria-label="Upvote"
+        class={vote == 1
+          ? voteColor(vote)
+          : 'hover:dark:text-blue-600 hover:text-blue-500'}
+        on:click={async () => castVote(vote == 1 ? 0 : 1)}
+        size="square-sm"
+        color="tertiary"
+        alignment="center"
+      >
+        <Icon src={ChevronUp} mini size="18" />
+      </Button>
+      <span
+        class="font-medium transition-colors duration-200 grid {shouldShowVoteColor(
+          vote,
+          'upvotes'
+        )}"
+        class:hidden={$profile?.user?.local_user_view.local_user.show_scores ==
+          false}
+      >
+        {#key $userSettings.separateVotes ? upvotes : score}
+          <span
+            in:fly={{ y: -4, duration: 200 }}
+            out:fly={{ y: 4, duration: 200 }}
+            style="grid-column: 1; grid-row: 1;"
+          >
+            <FormattedNumber
+              number={$userSettings.separateVotes ? upvotes : score}
+            />
+          </span>
+        {/key}
+      </span>
+    </div>
+    {#if $userSettings.separateVotes}
+      <div class="h-full py-1.5 pl-2 pr-0.5">
+        <div class="border-l dark:border-zinc-700 h-full" />
+      </div>
+    {/if}
+    <div class="flex items-center">
+      <Button
+        aria-label="Downvote"
+        class="{vote == -1 ? voteColor(vote) : ''} {$site?.site_view.local_site
+          .enable_downvotes
+          ? 'hover:dark:text-red-600 hover:text-red-500'
+          : 'pointer-events-none opacity-50'}"
+        on:click={async () => castVote(vote == -1 ? 0 : -1)}
+        size="square-sm"
+        color="tertiary"
+      >
+        <Icon src={ChevronDown} mini size="18" />
+      </Button>
+      {#if $userSettings.separateVotes}
         <span
-          in:fly={{ y: score > oldScore ? 4 : -4, duration: 200 }}
-          out:fly={{ y: score > oldScore ? -4 : 4, duration: 200 }}
-          style="grid-column: 1; grid-row: 1;"
+          class="font-medium transition-colors duration-200 grid {shouldShowVoteColor(
+            vote,
+            'downvotes'
+          )}"
+          class:hidden={$profile?.user?.local_user_view.local_user
+            .show_scores == false}
         >
-          <FormattedNumber number={score} />
+          {#key downvotes}
+            <span
+              in:fly={{ y: -4, duration: 200 }}
+              out:fly={{ y: 4, duration: 200 }}
+              style="grid-column: 1; grid-row: 1;"
+            >
+              <FormattedNumber number={downvotes} />
+            </span>
+          {/key}
         </span>
-      {/key}
-    </span>
-    <Button
-      aria-label="Downvote"
-      class="{vote == -1 ? voteColor(vote) : ''} {$site?.site_view.local_site
-        .enable_downvotes
-        ? 'hover:dark:text-red-600 hover:text-red-500'
-        : 'pointer-events-none opacity-50'}"
-      on:click={async () => castVote(vote == -1 ? 0 : -1)}
-      size="square-sm"
-      color="tertiary"
-    >
-      <Icon src={ChevronDown} mini size="18" />
-    </Button>
+      {/if}
+    </div>
   </div>
-  <!-- <div class="flex items-center gap-2">
-    <div class="flex items-center font-medium text-blue-500 gap-0.5">
-      <Icon src={ArrowUp} mini size="18" title="Upvotes" />
-      {upvotes}
-    </div>
-    <div class="flex items-center font-medium text-red-500 gap-0.5">
-      <Icon src={ArrowDown} mini size="18" title="Downvotes" />
-      {downvotes}
-    </div>
-  </div> -->
-  <!-- </Popover> -->
 </slot>

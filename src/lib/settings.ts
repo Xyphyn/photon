@@ -71,6 +71,7 @@ interface Settings {
 
   newWidth: boolean
   markPostsAsRead: boolean
+  separateVotes: boolean
 }
 
 export const defaultSettings: Settings = {
@@ -118,6 +119,7 @@ export const defaultSettings: Settings = {
   hidePhoton: toBool(env.PUBLIC_REMOVE_CREDIT) ?? false,
   newWidth: true,
   markPostsAsRead: true,
+  separateVotes: false,
 }
 
 export const userSettings = writable(defaultSettings)
