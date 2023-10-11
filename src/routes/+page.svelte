@@ -37,71 +37,63 @@
   </div>
 </Modal>
 
-<div
-  class="flex flex-row gap-4 w-full h-full xl:divide-x divide-slate-200 dark:divide-zinc-900"
->
-  <div class="flex flex-col gap-4 max-w-full w-full min-w-0">
-    <header>
-      <h1
-        class="text-3xl font-bold flex items-center w-full justify-between flex-wrap"
-      >
-        Frontpage
-        <span class="xl:hidden">
-          <Button on:click={() => (sidebar = !sidebar)}>About</Button>
-        </span>
-      </h1>
-    </header>
-    <div
-      class="flex flex-row gap-4 max-w-full justify-between w-full flex-wrap"
+<div class="flex flex-col gap-4 max-w-full w-full min-w-0">
+  <header>
+    <h1
+      class="text-3xl font-bold flex items-center w-full justify-between flex-wrap"
     >
-      <Select
-        bind:value={data.listingType}
-        on:change={() =>
-          searchParam($page.url, 'type', data.listingType, 'page', 'cursor')}
-      >
-        <span slot="label" class="flex items-center gap-1">
-          <Icon src={GlobeAmericas} size="16" mini />
-          Location
-        </span>
-        <option value="All">All</option>
-        <option value="Local">Local</option>
-        <option value="Subscribed" disabled={!$profile?.jwt}>Subscribed</option>
-        {#if feature('moderatorView', $site?.version)}
-          <option
-            value="ModeratorView"
-            disabled={!$profile?.jwt || !amModOfAny($profile?.user)}
-          >
-            Moderator
-          </option>
-        {/if}
-      </Select>
-      <div class="flex gap-4 flex-wrap">
-        <Sort selected={data.sort} />
-        <div class="max-[420px]:hidden">
-          <ViewSelect />
-        </div>
+      Frontpage
+      <span class="xl:hidden">
+        <Button on:click={() => (sidebar = !sidebar)}>About</Button>
+      </span>
+    </h1>
+  </header>
+  <div class="flex flex-row gap-4 max-w-full justify-between w-full flex-wrap">
+    <Select
+      bind:value={data.listingType}
+      on:change={() =>
+        searchParam($page.url, 'type', data.listingType, 'page', 'cursor')}
+    >
+      <span slot="label" class="flex items-center gap-1">
+        <Icon src={GlobeAmericas} size="16" mini />
+        Location
+      </span>
+      <option value="All">All</option>
+      <option value="Local">Local</option>
+      <option value="Subscribed" disabled={!$profile?.jwt}>Subscribed</option>
+      {#if feature('moderatorView', $site?.version)}
+        <option
+          value="ModeratorView"
+          disabled={!$profile?.jwt || !amModOfAny($profile?.user)}
+        >
+          Moderator
+        </option>
+      {/if}
+    </Select>
+    <div class="flex gap-4 flex-wrap">
+      <Sort selected={data.sort} />
+      <div class="max-[420px]:hidden">
+        <ViewSelect />
       </div>
     </div>
-    <section class="flex flex-col gap-3 sm:gap-4 h-full">
-      <PostFeed posts={data.posts.posts} />
-    </section>
-    <div class="mt-auto">
-      <Pageination
-        page={data.page}
-        cursor={{ next: data.cursor.next, back: data.cursor.back }}
-        on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
-        on:cursor={(c) => {
-          searchParam($page.url, 'cursor', c.detail)
-        }}
-      >
-        <span class="flex flex-row items-center gap-1">
-          <Icon src={ChartBar} size="16" mini />
-          <span class="font-medium text-black dark:text-white">
-            {$site?.site_view.counts.users_active_day}
-          </span>
-          <span class="font-normal">Active users</span>
+  </div>
+  <PostFeed posts={data.posts.posts} />
+  <div class="mt-auto">
+    <Pageination
+      page={data.page}
+      cursor={{ next: data.cursor.next, back: data.cursor.back }}
+      on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
+      on:cursor={(c) => {
+        searchParam($page.url, 'cursor', c.detail)
+      }}
+    >
+      <span class="flex flex-row items-center gap-1">
+        <Icon src={ChartBar} size="16" mini />
+        <span class="font-medium text-black dark:text-white">
+          {$site?.site_view.counts.users_active_day}
         </span>
-      </Pageination>
-    </div>
+        <span class="font-normal">Active users</span>
+      </span>
+    </Pageination>
   </div>
 </div>

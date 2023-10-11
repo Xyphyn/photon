@@ -31,6 +31,7 @@
     : view == 'list'
     ? 'py-5'
     : 'py-5'}"
+  id={post.post.id}
 >
   <!-- svelte-ignore a11y-no-static-element-interactions -->
   <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -83,9 +84,7 @@
             <svelte:element
               this={$userSettings.expandImages ? 'div' : 'a'}
               href={postLink(post.post)}
-              class="container mx-auto z-10 transition-colors {loaded
-                ? ''
-                : 'bg-slate-200 dark:bg-zinc-800'} rounded-xl max-h-[60vh] relative overflow-hidden"
+              class="container mx-auto z-10 transition-colors rounded-xl max-h-[60vh] relative overflow-hidden"
               data-sveltekit-preload-data="off"
               aria-label={post.post.name}
             >
@@ -126,8 +125,7 @@
                   src={bestImageURL(post.post, false, 1024)}
                   loading="lazy"
                   class="max-h-[inherit] max-w-full h-auto z-30
-                  opacity-0 transition-opacity duration-300 object-contain mx-auto"
-                  class:opacity-100={loaded}
+                  transition-opacity duration-300 object-contain mx-auto"
                   width={512}
                   height={300}
                   class:blur-3xl={post.post.nsfw && $userSettings.nsfwBlur}
@@ -168,7 +166,7 @@
           dark:from-zinc-400 dark:via-zinc-400 bg-clip-text
           {view == 'list' ? `max-h-24` : 'max-h-48'}"
         >
-          <Markdown inline source={post.post.body.slice(0, 500)} />
+          <Markdown inline source={post.post.body} />
         </div>
       {/if}
     </div>

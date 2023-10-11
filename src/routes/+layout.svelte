@@ -23,19 +23,17 @@
     minimum: 0.4,
     trickleSpeed: 200,
     showSpinner: false,
+    easing: 'ease-out',
+    speed: 300,
   })
 
   $: {
-    if ($navigating) {
-      if (typeof document != 'undefined') {
+    if (browser) {
+      if ($navigating) {
         nProgress.start()
-        document?.documentElement?.classList?.toggle('wait', true)
       }
-    }
-    if (!$navigating) {
-      if (typeof document != 'undefined') {
-        nProgress.done(true)
-        document?.documentElement?.classList?.toggle('wait', false)
+      if (!$navigating) {
+        nProgress.done()
       }
     }
   }

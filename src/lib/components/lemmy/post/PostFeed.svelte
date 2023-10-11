@@ -11,11 +11,10 @@
   export let community: boolean = false
 </script>
 
-<div
-  class="flex flex-col {$userSettings.view == 'card'
+<ul
+  class="flex flex-col list-none {$userSettings.view == 'card'
     ? 'gap-3 md:gap-4'
-    : ''} divide-slate-200 dark:divide-zinc-800"
-  class:divide-y={$userSettings.view != 'card'}
+    : 'divide-y'} divide-slate-200 dark:divide-zinc-800"
 >
   {#if posts.length == 0}
     <div class="h-full grid place-items-center">
@@ -31,9 +30,9 @@
       </Placeholder>
     </div>
   {:else}
-    {#each posts as post, index (post.post.id)}
+    {#each posts as post, index}
       {#if !($userSettings.hidePosts.deleted && post.post.deleted) && !($userSettings.hidePosts.removed && post.post.removed)}
-        <div
+        <li
           in:fly|global={{
             y: -8,
             duration: 500,
@@ -42,8 +41,8 @@
           }}
         >
           <Post hideCommunity={community} view={$userSettings.view} bind:post />
-        </div>
+        </li>
       {/if}
     {/each}
   {/if}
-</div>
+</ul>

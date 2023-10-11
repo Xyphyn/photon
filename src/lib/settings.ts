@@ -113,7 +113,7 @@ export const defaultSettings: Settings = {
   debugInfo: false,
   expandImages: true,
   view: 'cozy',
-  font: 'system',
+  font: 'inter',
   leftAlign: false,
   hidePhoton: toBool(env.PUBLIC_REMOVE_CREDIT) ?? false,
   newWidth: true,

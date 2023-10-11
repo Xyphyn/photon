@@ -1,9 +1,11 @@
 <script lang="ts">
   import { md, mdInline, photonify } from '$lib/components/markdown/markdown'
-  import { userSettings } from '$lib/settings.js'
+  import { onMount } from 'svelte'
 
   export let source: string = ''
   export let inline: boolean = false
+
+  let rendered = ''
 
   function replaceURLs(node: HTMLElement, source: string) {
     if (!div) return
@@ -17,18 +19,22 @@
 
   let div: HTMLElement
 
-  const render = (source: string): string => {
+  function render(source: string): string {
     if (!source || source == '') return ''
 
     try {
-      return inline ? mdInline.render(source) : md.render(source)
+      const output = inline ? mdInline.render(source) : md.render(source)
+      return output
     } catch (err) {
+      console.error(err)
       return ''
     }
   }
-
   $: rendered = render(source)
   $: replaceURLs(div, rendered)
+  onMount(() => {
+    rendered = `${rendered} `
+  })
 </script>
 
 <div
