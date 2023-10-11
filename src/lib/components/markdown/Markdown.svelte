@@ -23,8 +23,7 @@
     if (!source || source == '') return ''
 
     try {
-      const output = inline ? mdInline.render(source) : md.render(source)
-      return output
+      return inline ? mdInline.render(source) : md.render(source)
     } catch (err) {
       console.error(err)
       return ''
