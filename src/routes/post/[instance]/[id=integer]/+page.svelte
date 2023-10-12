@@ -20,6 +20,7 @@
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
   import {
     Badge,
+    Disclosure,
     Material,
     Select,
     Spinner,
@@ -211,19 +212,17 @@
     />
   </div>
   {#if post.cross_posts?.length > 0}
-    <details
-      class="text-sm font-bold mt-2 w-full cursor-pointer"
+    <Disclosure
+      class="text-base font-bold mt-2 w-full cursor-pointer"
       open={post.cross_posts?.length <= 3}
     >
-      <summary class="inline-block w-full">
-        <SectionTitle class="text-inherit dark:text-inherit">
-          Crossposts <span
-            class="text-slate-600 dark:text-zinc-400 text-xs ml-1"
-          >
-            {post.cross_posts.length}
-          </span>
-        </SectionTitle>
-      </summary>
+      <div
+        slot="summary"
+        class="inline-block w-full text-left text-base font-normal"
+      >
+        <span class="font-bold">{post.cross_posts.length}</span>
+        crosspost
+      </div>
       <div class="divide-y divide-slate-200 dark:divide-zinc-800 flex flex-col">
         {#each post.cross_posts as crosspost}
           <div class="py-2.5 flex flex-col gap-1">
@@ -243,7 +242,7 @@
           </div>
         {/each}
       </div>
-    </details>
+    </Disclosure>
   {/if}
 </div>
 {#if data.singleThread}
@@ -260,13 +259,11 @@
 {/if}
 <div class="mt-4 flex flex-col gap-2 w-full">
   <div class="flex flex-row justify-between flex-wrap gap-2">
-    <div class="font-bold opacity-80 text-base flex items-center gap-2">
-      Comments <Badge
-        color="blue-subtle"
-        class="min-w-[1rem] justify-center !font-bold"
-      >
+    <div class="text-base">
+      <span class="font-bold">
         <FormattedNumber number={post.post_view.counts.comments} />
-      </Badge>
+      </span>
+      comments
     </div>
     <div class="gap-2 flex items-center h-8">
       <Select
