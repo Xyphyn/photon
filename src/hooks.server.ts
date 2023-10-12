@@ -10,13 +10,6 @@ function buildUrl(inputUrl: URL): URL {
   return new URL(`${withoutCors}?${inputUrl.searchParams.toString()}`)
 }
 
-export function handleError({ error, event }) {
-  console.error(error)
-  return {
-    message: 'There was an error during rendering',
-  }
-}
-
 export async function handle({ event, resolve }) {
   // annoying hack to fix lemmy's CORS
   if (event.url.pathname.startsWith('/cors')) {
