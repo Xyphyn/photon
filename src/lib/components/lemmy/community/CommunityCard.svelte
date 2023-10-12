@@ -31,6 +31,7 @@
     Fire,
     Icon,
     Minus,
+    Newspaper,
     NoSymbol,
     PencilSquare,
     Plus,
@@ -210,10 +211,10 @@
     </div>
   {/if}
   <Markdown source={community_view.community.description} />
-  {#if $profile?.jwt}
-    <div
-      class="flex flex-row items-center gap-2 sticky bottom-0 drop-shadow-xl"
-    >
+  <div
+    class="flex flex-row items-center gap-2 sticky bottom-0 drop-shadow-xl w-full"
+  >
+    {#if $profile?.jwt}
       <Button
         disabled={loading.subscribing}
         loading={loading.subscribing}
@@ -238,21 +239,27 @@
           ? 'Subscribed'
           : 'Subscribe'}
       </Button>
-      {#if $profile?.user && amMod($profile.user, community_view.community)}
-        <Button
-          href="/c/{fullCommunityName(
-            community_view.community.name,
-            community_view.community.actor_id
-          )}/settings"
-          size="square-md"
-        >
-          <Icon src={Cog6Tooth} mini size="16" slot="prefix" />
-        </Button>
-      {/if}
-      <Menu placement="bottom-end">
-        <Button size="square-md" slot="target">
-          <Icon src={EllipsisHorizontal} size="16" mini slot="prefix" />
-        </Button>
+    {/if}
+    {#if $profile?.user && amMod($profile.user, community_view.community)}
+      <Button
+        href="/c/{fullCommunityName(
+          community_view.community.name,
+          community_view.community.actor_id
+        )}/settings"
+        size="square-md"
+      >
+        <Icon src={Cog6Tooth} mini size="16" slot="prefix" />
+      </Button>
+    {/if}
+    <Menu placement="top-end">
+      <Button size="square-md" slot="target" class="ml-auto">
+        <Icon src={EllipsisHorizontal} size="16" mini slot="prefix" />
+      </Button>
+      <MenuButton href="/modlog?community={community_view.community.id}">
+        <Icon src={Newspaper} size="16" mini />
+        Modlog
+      </MenuButton>
+      {#if $profile?.jwt}
         <MenuButton color="danger-subtle" size="lg" on:click={block}>
           <Icon src={NoSymbol} size="16" mini slot="prefix" />
           {community_view.blocked ? 'Unblock' : 'Block'}
@@ -266,7 +273,7 @@
             Purge
           </MenuButton>
         {/if}
-      </Menu>
-    </div>
-  {/if}
+      {/if}
+    </Menu>
+  </div>
 </StickyCard>
