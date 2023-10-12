@@ -39,7 +39,7 @@
   import { publishedToDate } from '$lib/components/util/date.js'
 
   export let community_view: CommunityView
-  export let moderators: CommunityModeratorView[]
+  export let moderators: CommunityModeratorView[] = []
 
   let loading = {
     blocking: false,
@@ -181,7 +181,7 @@
       <FormattedNumber number={community_view.counts.comments} />
     </span>
   </div>
-  {#if moderators}
+  {#if moderators && moderators.length > 0}
     <div class="flex flex-col gap-2 max-w-full">
       <span class="font-bold">Moderators</span>
       <div

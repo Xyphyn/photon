@@ -1,5 +1,6 @@
 import { env } from '$env/dynamic/public'
 import { profile } from '$lib/auth.js'
+import CommunityCard from '$lib/components/lemmy/community/CommunityCard.svelte'
 import { getClient } from '$lib/lemmy.js'
 import { SSR_ENABLED, userSettings } from '$lib/settings.js'
 import { error } from '@sveltejs/kit'
@@ -46,6 +47,14 @@ export async function load({ params, url, fetch }) {
     commentSort: sort,
     streamed: {
       comments: getClient(params.instance, fetch).getComments(commentParams),
+    },
+    slots: {
+      sidebar: {
+        component: CommunityCard,
+        props: {
+          community_view: post.community_view,
+        },
+      },
     },
   }
 }
