@@ -8,6 +8,7 @@
   import Link from '$lib/components/input/Link.svelte'
   import {
     ArrowPath,
+    ArrowRight,
     ChatBubbleOvalLeftEllipsis,
     ChevronDown,
     ChevronRight,
@@ -61,6 +62,11 @@
       Instances
     </Button>
     <Button href="#other" alignment="left" color="tertiary">Other</Button>
+    <hr class="border-slate-200 dark:border-zinc-800" />
+    <Button href="/settings/theme" color="tertiary" alignment="left">
+      <Icon src={ArrowRight} size="16" mini slot="suffix" />
+      Themes
+    </Button>
   </nav>
   <div class="flex flex-col md:flex-1 md:pl-4 min-w-0">
     <SectionTitle id="ui" class="mt-4">UI</SectionTitle>

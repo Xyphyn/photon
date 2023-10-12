@@ -109,7 +109,8 @@
       </div>
     </Material>
     <Material class="flex-1">
-      <div class="font-bold text-lg mb-2">Primary</div>
+      <div class="font-bold text-lg">Primary</div>
+      <p class="mb-2">Used for buttons</p>
       <div class="flex flex-row flex-wrap gap-2 items-center">
         <Color
           fallback="bg-primary-100"
