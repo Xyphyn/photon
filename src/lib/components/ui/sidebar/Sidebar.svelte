@@ -73,35 +73,17 @@
 
     <CommunityList items={$profile.user.follows.map((i) => i.community)} />
   {:else}
-    <Button
-      class="hover:bg-slate-200"
-      href="/login"
-      color="tertiary"
-      alignment="left"
-      title="Log In"
-    >
+    <SidebarButton href="/login" title="Log In">
       <Icon mini src={ArrowLeftOnRectangle} size="20" />
       <span>Log In</span>
-    </Button>
-    <Button
-      class="hover:bg-slate-200"
-      href="/signup"
-      color="tertiary"
-      alignment="left"
-      title="Sign Up"
-    >
+    </SidebarButton>
+    <SidebarButton href="/signup" title="Sign Up">
       <Icon mini src={Identification} size="20" />
       <span>Sign Up</span>
-    </Button>
-    <Button
-      class="hover:bg-slate-200"
-      href="/accounts"
-      color="tertiary"
-      alignment="left"
-      title="Change Instance"
-    >
+    </SidebarButton>
+    <SidebarButton href="/accounts" title="Change Instance">
       <Icon mini src={ServerStack} size="20" />
       <span>Change instance</span>
-    </Button>
+    </SidebarButton>
   {/if}
 </nav>
