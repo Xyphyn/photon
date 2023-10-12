@@ -24,14 +24,14 @@
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <!-- svelte-ignore a11y-positive-tabindex -->
   <div
-    class="isolate fixed backdrop-blur-sm top-0 left-0 w-screen h-screen overflow-auto bg-black/50
+    class="!isolate fixed backdrop-blur-sm top-0 left-0 w-screen h-screen overflow-auto bg-black/50
     flex flex-col z-[200] overscroll-contain"
     transition:fade={{ duration: 200 }}
     on:click={() => (open = false)}
   >
     <Button
       size="square-md"
-      class="absolute z-[110] top-0 right-0 m-4"
+      class="fixed z-[110] top-0 right-0 m-4"
       on:click={() => (open = false)}
     >
       <Icon src={XMark} size="16" mini slot="prefix" />

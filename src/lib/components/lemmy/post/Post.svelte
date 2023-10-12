@@ -13,6 +13,8 @@
   import Empty from '$lib/components/helper/Empty.svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
   import { Icon, VideoCamera } from 'svelte-hero-icons'
+  import PostMedia from '$lib/components/lemmy/post/media/PostMedia.svelte'
+  import PostMediaCompact from '$lib/components/lemmy/post/media/PostMediaCompact.svelte'
 
   export let post: PostView
   export let actions: boolean = true
@@ -23,24 +25,16 @@
 </script>
 
 <Material
-  color="distinct"
+  color={view != 'card' ? 'none' : 'distinct'}
   padding="none"
   class="relative max-w-full min-w-0 w-full group
-  {view != 'card' ? '!bg-transparent !border-0' : 'p-5'} {view == 'compact'
+  {view != 'card' ? 'bg-transparent !border-0' : 'p-5'} {view == 'compact'
     ? 'py-4'
     : view == 'list'
     ? 'py-5'
     : 'py-5'}"
   id={post.post.id}
 >
-  <!-- svelte-ignore a11y-no-static-element-interactions -->
-  <!-- svelte-ignore a11y-click-events-have-key-events -->
-  {#if view == 'list' || view == 'cozy'}
-    <div
-      class="absolute -inset-x-2 md:-inset-x-4 inset-y-2 scale-95 opacity-0 bg-slate-50 dark:bg-zinc-900
-    -z-10 rounded-xl group-hover:opacity-100 group-hover:scale-100 transition-all"
-    />
-  {/if}
   <div
     class="flex {$userSettings.leftAlign
       ? 'flex-row-reverse'
@@ -73,92 +67,7 @@
           </a>
         {/if}
       </div>
-      {#if isImage(post.post.url)}
-        {#if view == 'card' || view == 'cozy'}
-          <!--disabled preloads here since most people will hover over every image while scrolling-->
-          <svelte:component
-            this={$userSettings.expandImages ? ExpandableImage : Empty}
-            url={bestImageURL(post.post, false, 2048)}
-            class="container mx-auto w-fit"
-          >
-            <svelte:element
-              this={$userSettings.expandImages ? 'div' : 'a'}
-              href={postLink(post.post)}
-              class="container mx-auto z-10 transition-colors rounded-xl max-h-[60vh] relative overflow-hidden"
-              data-sveltekit-preload-data="off"
-              aria-label={post.post.name}
-            >
-              <picture
-                class="absolute top-1/2 -translate-y-1/2 left-0 w-full
-               opacity-30 object-cover scale-[1.2] blur-3xl -z-10"
-              >
-                <source
-                  srcset={bestImageURL(post.post, false, 512)}
-                  media="(max-width: 256px)"
-                />
-                <source
-                  srcset={bestImageURL(post.post, false, 512)}
-                  media="(max-width: 512px)"
-                />
-                <!-- svelte-ignore a11y-missing-attribute -->
-                <img
-                  src={bestImageURL(post.post, false, 1024)}
-                  loading="lazy"
-                  class="w-full h-full object-cover rounded-xl blur-3xl z-50"
-                  width={512}
-                  height={300}
-                  class:blur-3xl={post.post.nsfw && $userSettings.nsfwBlur}
-                  on:load={() => (loaded = true)}
-                />
-              </picture>
-              <picture class="max-h-[inherit]">
-                <source
-                  srcset={bestImageURL(post.post, false, 512)}
-                  media="(max-width: 256px)"
-                />
-                <source
-                  srcset={bestImageURL(post.post, false, 512)}
-                  media="(max-width: 512px)"
-                />
-                <!-- svelte-ignore a11y-missing-attribute -->
-                <img
-                  src={bestImageURL(post.post, false, 1024)}
-                  loading="lazy"
-                  class="max-h-[inherit] max-w-full h-auto z-30
-                  transition-opacity duration-300 object-contain mx-auto"
-                  width={512}
-                  height={300}
-                  class:blur-3xl={post.post.nsfw && $userSettings.nsfwBlur}
-                  on:load={() => (loaded = true)}
-                />
-              </picture>
-            </svelte:element>
-          </svelte:component>
-        {/if}
-      {:else if isVideo(post.post.url) && (view == 'cozy' || view == 'card')}
-        <a
-          href={postLink(post.post)}
-          style="height: 300px;"
-          class="w-full rounded-xl flex flex-col items-center justify-center relative z-0 overflow-hidden
-          text-white p-4"
-        >
-          <div
-            class="absolute blur-xl -z-10 top-0 left-0 w-full h-full bg-gradient-to-br from-green-800 via-blue-900 via-20% to-red-700"
-          />
-          <Icon src={VideoCamera} solid size="48" />
-          <span class="font-bold text-2xl">Video</span>
-          <p class="text-base">Go to the post to view this video.</p>
-        </a>
-      {:else if post.post.url}
-        <PostLink
-          url={post.post.url}
-          thumbnail_url={post.post.thumbnail_url}
-          nsfw={post.post.nsfw}
-          embed_description={post.post.embed_description}
-          embed_title={post.post.embed_title}
-          compact={view == 'compact'}
-        />
-      {/if}
+      <PostMedia bind:post={post.post} {view} />
       {#if post.post.body && !post.post.nsfw && view != 'compact'}
         <div
           class="text-sm relative overflow-hidden
@@ -170,28 +79,8 @@
         </div>
       {/if}
     </div>
-    {#if (view == 'list' || view == 'compact') && !post.post.embed_title && (post.post.thumbnail_url || isImage(post.post.url))}
-      <div class="flex-shrink-0 w-24 h-24">
-        {#if !$userSettings.expandImages || (post.post.thumbnail_url && !isImage(post.post.url))}
-          <a href={postLink(post.post)}>
-            <!-- svelte-ignore a11y-missing-attribute -->
-            <img
-              src={bestImageURL(post.post, true)}
-              loading="lazy"
-              class="object-cover bg-slate-100 dark:bg-zinc-800 rounded-md h-24 w-24 border border-slate-200 dark:border-zinc-700"
-            />
-          </a>
-        {:else}
-          <ExpandableImage url={bestImageURL(post.post, false, 2048)}>
-            <!-- svelte-ignore a11y-missing-attribute -->
-            <img
-              src={bestImageURL(post.post, true)}
-              loading="lazy"
-              class="object-cover bg-slate-100 rounded-md h-24 w-24 border border-slate-200 dark:border-zinc-700"
-            />
-          </ExpandableImage>
-        {/if}
-      </div>
+    {#if view == 'list' || view == 'compact'}
+      <PostMediaCompact {view} bind:post={post.post} />
     {/if}
   </div>
   {#if actions}
