@@ -25,6 +25,7 @@
   import {
     Calendar,
     ChatBubbleOvalLeftEllipsis,
+    Check,
     Cog6Tooth,
     EllipsisHorizontal,
     Fire,
@@ -208,65 +209,64 @@
       </div>
     </div>
   {/if}
+  <Markdown source={community_view.community.description} />
   {#if $profile?.jwt}
-    <div class="w-full mt-2 flex flex-col gap-2">
-      <Button
-        href="/create/post"
-        size="lg"
-        disabled={community_view.community.posting_restricted_to_mods}
-      >
-        <Icon src={PencilSquare} mini size="16" slot="prefix" />
-        Create Post
-      </Button>
+    <div
+      class="flex flex-row items-center gap-2 sticky bottom-0 drop-shadow-xl"
+    >
       <Button
         disabled={loading.subscribing}
         loading={loading.subscribing}
-        size="lg"
+        size="md"
+        color={community_view.subscribed == 'Subscribed'
+          ? 'secondary'
+          : 'primary'}
         on:click={subscribe}
+        class="flex-1 relative z-[inherit]"
       >
+        <div
+          class="absolute top-0 left-0 bg-white dark:bg-black w-full h-full -z-10 rounded-md"
+        />
         <Icon
-          src={community_view.subscribed == 'Subscribed' ? Minus : Plus}
+          src={community_view.subscribed == 'Subscribed' ? Check : Plus}
           mini
           size="16"
           slot="prefix"
         />
         {community_view.subscribed == 'Subscribed' ||
         community_view.subscribed == 'Pending'
-          ? 'Unsubscribe'
+          ? 'Subscribed'
           : 'Subscribe'}
       </Button>
-      <div class="flex flex-row gap-2 ml-auto">
-        {#if $profile.user && amMod($profile.user, community_view.community)}
-          <Button
-            href="/c/{fullCommunityName(
-              community_view.community.name,
-              community_view.community.actor_id
-            )}/settings"
-            size="square-md"
+      {#if $profile?.user && amMod($profile.user, community_view.community)}
+        <Button
+          href="/c/{fullCommunityName(
+            community_view.community.name,
+            community_view.community.actor_id
+          )}/settings"
+          size="square-md"
+        >
+          <Icon src={Cog6Tooth} mini size="16" slot="prefix" />
+        </Button>
+      {/if}
+      <Menu placement="bottom-end">
+        <Button size="square-md" slot="target">
+          <Icon src={EllipsisHorizontal} size="16" mini slot="prefix" />
+        </Button>
+        <MenuButton color="danger-subtle" size="lg" on:click={block}>
+          <Icon src={NoSymbol} size="16" mini slot="prefix" />
+          {community_view.blocked ? 'Unblock' : 'Block'}
+        </MenuButton>
+        {#if $profile?.user && isAdmin($profile.user)}
+          <MenuButton
+            color="danger-subtle"
+            on:click={() => (purgingCommunity = !purgingCommunity)}
           >
-            <Icon src={Cog6Tooth} mini size="16" slot="prefix" />
-          </Button>
-        {/if}
-        <Menu placement="bottom-end">
-          <Button size="square-md" slot="target">
-            <Icon src={EllipsisHorizontal} size="16" mini slot="prefix" />
-          </Button>
-          <MenuButton color="danger-subtle" size="lg" on:click={block}>
-            <Icon src={NoSymbol} size="16" mini slot="prefix" />
-            {community_view.blocked ? 'Unblock' : 'Block'}
+            <Icon src={Fire} size="16" mini slot="prefix" />
+            Purge
           </MenuButton>
-          {#if $profile.user && isAdmin($profile.user)}
-            <MenuButton
-              color="danger-subtle"
-              on:click={() => (purgingCommunity = !purgingCommunity)}
-            >
-              <Icon src={Fire} size="16" mini slot="prefix" />
-              Purge
-            </MenuButton>
-          {/if}
-        </Menu>
-      </div>
+        {/if}
+      </Menu>
     </div>
   {/if}
-  <Markdown source={community_view.community.description} />
 </StickyCard>
