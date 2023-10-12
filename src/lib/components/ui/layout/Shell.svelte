@@ -39,7 +39,7 @@
     />
     <slot
       name="suffix"
-      class="max-xl:hidden w-full"
+      class="max-xl:hidden w-full sticky top-16 left-0 h-full max-h-[calc(100svh-4rem)]"
       style="grid-area: suffix;"
     />
   </div>
