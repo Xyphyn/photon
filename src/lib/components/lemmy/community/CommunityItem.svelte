@@ -6,18 +6,27 @@
     ChatBubbleOvalLeftEllipsis,
     Check,
     Icon,
+    InformationCircle,
     PencilSquare,
     Plus,
     UserGroup,
   } from 'svelte-hero-icons'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
-  import { Button } from 'mono-svelte'
+  import { Button, Modal } from 'mono-svelte'
   import { isSubscribed } from '$lib/util.js'
   import { profile } from '$lib/auth.js'
   import { addSubscription } from '$lib/lemmy/user.js'
+  import Avatar from '$lib/components/ui/Avatar.svelte'
+  import CommunityCard from '$lib/components/lemmy/community/CommunityCard.svelte'
 
   export let community: CommunityView
+
+  let showInfo = false
 </script>
+
+<Modal title="Community" bind:open={showInfo}>
+  <CommunityCard community_view={community} />
+</Modal>
 
 <div class="py-4 flex flex-col gap-1 text-sm max-w-full">
   <div class="flex flex-row items-center">
@@ -30,7 +39,10 @@
         community={community.community}
       />
     </span>
-    <div class="ml-auto">
+    <div class="ml-auto flex flex-row items-center gap-2">
+      <Button size="square-md" on:click={() => (showInfo = !showInfo)}>
+        <Icon src={InformationCircle} size="16" mini />
+      </Button>
       <Subscribe {community} let:subscribe let:subscribing>
         <Button
           disabled={subscribing || !$profile?.jwt}
@@ -71,8 +83,8 @@
       </Subscribe>
     </div>
   </div>
-  <span class="opacity-80 mb-2">
-    {new URL(community.community.actor_id).hostname}
+  <span class="text-slate-600 dark:text-zinc-400 mb-2">
+    !{community.community.name}@{new URL(community.community.actor_id).hostname}
   </span>
   <div class="flex flex-row gap-3 items-center">
     <div class="flex flex-row gap-1 items-center">
