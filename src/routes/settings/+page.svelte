@@ -21,7 +21,6 @@
   import { Button, Checkbox, Select } from 'mono-svelte'
   import ViewSelect from '$lib/components/lemmy/ViewSelect.svelte'
   import { LINKED_INSTANCE_URL } from '$lib/instance.js'
-  import { removeItem } from '$lib/util.js'
 
   let data = {
     loading: false,
@@ -32,19 +31,22 @@
   <title>Settings</title>
 </svelte:head>
 
-<h1 class="text-3xl font-bold flex justify-between">
-  Settings <Button
-    on:click={() => {
-      toast({
-        content: 'Are you sure you want to reset your settings to the default?',
-        action: () => ($userSettings = defaultSettings),
-      })
-    }}
-    class="font-normal"
-  >
-    <Icon src={ArrowPath} mini size="16" slot="prefix" />
-    Reset to default
-  </Button>
+<h1 class="text-3xl font-bold flex justify-between items-center">
+  Settings <div class="flex items-center font-normal gap-2">
+    <Button
+      on:click={() => {
+        toast({
+          content:
+            'Are you sure you want to reset your settings to the default?',
+          action: () => ($userSettings = defaultSettings),
+        })
+      }}
+      class="font-normal"
+    >
+      <Icon src={ArrowPath} mini size="16" slot="prefix" />
+      Reset to default
+    </Button>
+  </div>
 </h1>
 
 <div

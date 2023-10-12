@@ -1,6 +1,7 @@
 import type { CommentSortType, SortType } from 'lemmy-js-client'
 import { writable } from 'svelte/store'
 import { env } from '$env/dynamic/public'
+import { browser } from '$app/environment'
 
 console.log('Using the following default settings from the environment:')
 console.log(env)
@@ -122,6 +123,43 @@ export const defaultSettings: Settings = {
   separateVotes: false,
 }
 
+/**
+ * Use this for validation.
+ */
+export const defaultColor: Colors = {
+  white: '',
+  black: '',
+  'bg-light-25': '',
+  'bg-light-50': '',
+  'bg-light-100': '',
+  'bg-light-200': '',
+  'bg-dark-925': '',
+  'bg-dark-950': '',
+  'primary-100': '',
+  'primary-900': '',
+}
+
+interface Colors {
+  white?: string
+  black?: string
+  'bg-light-25'?: string
+  'bg-light-50'?: string
+  'bg-light-100'?: string
+  'bg-light-200'?: string
+  'bg-dark-925'?: string
+  'bg-dark-950'?: string
+  'primary-100'?: string
+  'primary-900'?: string
+}
+
+export const colors = writable<Colors>(
+  browser ? JSON.parse(localStorage.getItem('colors') ?? '{}') : {}
+)
+colors.subscribe((c) => {
+  if (!browser) return
+  localStorage.setItem('colors', JSON.stringify(c))
+})
+
 export const userSettings = writable(defaultSettings)
 
 const migrate = (settings: any): Settings => {
@@ -138,13 +176,12 @@ const migrate = (settings: any): Settings => {
   return settings
 }
 
-if (typeof window != 'undefined') {
+if (browser) {
   let oldUserSettings = JSON.parse(
     localStorage.getItem('settings') ?? JSON.stringify(defaultSettings)
   )
 
   oldUserSettings = migrate(oldUserSettings)
-
   userSettings.set({ ...defaultSettings, ...oldUserSettings })
 }
 

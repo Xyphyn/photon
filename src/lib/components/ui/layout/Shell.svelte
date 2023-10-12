@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { userSettings } from '$lib/settings.js'
+  import { colors, userSettings } from '$lib/settings.js'
   import { routes } from '$lib/util.js'
 
   export let route: { id: string | null } | undefined = undefined
@@ -11,7 +11,19 @@
 
 <svelte:window bind:scrollY={scroll} />
 
-<div class="shell {$$props.class}">
+<div
+  style:--white={$colors?.['white']}
+  style:--black={$colors?.['black']}
+  style:--bg-light-25={$colors?.['bg-light-25']}
+  style:--bg-light-50={$colors?.['bg-light-50']}
+  style:--bg-light-100={$colors?.['bg-light-100']}
+  style:--bg-light-200={$colors?.['bg-light-200']}
+  style:--bg-dark-925={$colors?.['bg-dark-925']}
+  style:--bg-dark-950={$colors?.['bg-dark-950']}
+  style:--primary-900={$colors?.['primary-900']}
+  style:--primary-100={$colors?.['primary-100']}
+  class="shell {$$props.class}"
+>
   <slot />
   <slot
     name="navbar"
@@ -29,17 +41,18 @@
   >
     <slot
       name="sidebar"
-      class="hidden md:flex sticky top-16 left-0 w-full max-w-full"
+      class="hidden md:flex sticky top-16 left-0 w-full max-w-full bg-slate-50 dark:bg-zinc-950"
       style="grid-area: sidebar; width: 100% !important;"
     />
     <slot
       name="main"
-      class="w-full bg-slate-25 dark:bg-zinc-925 dark:bg-transparent justify-self-center shadow-sm"
+      class="w-full bg-slate-25 dark:bg-zinc-925 justify-self-center shadow-sm"
       style="grid-area: main"
     />
     <slot
       name="suffix"
-      class="max-xl:hidden w-full"
+      class="max-xl:hidden w-full h-full sticky top-16 left-0 bg-slate-50 dark:bg-zinc-950
+      max-h-[calc(100svh-4rem)]"
       style="grid-area: suffix;"
     />
   </div>
