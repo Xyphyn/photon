@@ -124,7 +124,7 @@
         version={$site.version}
       />
     {:else}
-      <div class="h-64 w-64 grid place-items-center">
+      <div class="h-64 w-full grid place-items-center">
         <Spinner width={32} />
       </div>
     {/if}
