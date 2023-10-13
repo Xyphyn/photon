@@ -6,6 +6,7 @@
   export let selected: boolean = false
   export let index: number = 0
   export let size: number = 20
+  export let guest: boolean = false
 </script>
 
 {#if profile}
@@ -26,7 +27,9 @@
         size={`${size}`}
         title={profile.username}
         class="text-blue-500 flex-shrink-0"
-        style={profile.color
+        style={guest
+          ? `color: gray`
+          : profile.color
           ? `color: ${profile.color}`
           : `filter: hue-rotate(${index * 50}deg)`}
       />

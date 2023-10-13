@@ -18,6 +18,7 @@
   import { flip } from 'svelte/animate'
   import { expoOut } from 'svelte/easing'
   import { Button } from 'mono-svelte'
+  import { DEFAULT_INSTANCE_URL } from '$lib/instance.js'
 
   export let route = ''
 </script>
@@ -53,22 +54,31 @@
     <span slot="label">Communities</span>
   </SidebarButton>
   {#if $profileData.profiles.length >= 1}
-    <hr class="border-slate-300 dark:border-zinc-800 my-1" />
-    {#each $profileData.profiles as prof, index (prof.id)}
+    <hr class="border-slate-200 dark:border-zinc-800 my-1" />
+    {#each [...$profileData.profiles] as prof, index (prof.id)}
       <div animate:flip={{ duration: 300, easing: expoOut }} class="w-full">
         <ProfileButton {index} {prof} />
       </div>
     {/each}
+    <ProfileButton
+      index={0}
+      prof={{
+        id: -1,
+        instance: $profileData?.defaultInstance ?? DEFAULT_INSTANCE_URL,
+        username: 'Guest',
+      }}
+      guest
+    />
     <SidebarButton href="/accounts">
       <Icon src={UserGroup} mini size="20" />
       <span slot="label">Accounts</span>
     </SidebarButton>
   {/if}
-  <hr class="border-slate-300 dark:border-zinc-800 my-1" />
+  <hr class="border-slate-200 dark:border-zinc-800 my-1" />
   {#if $profile?.user}
     {#if $profile?.user.moderates.length > 0}
       <CommunityList items={$profile.user.moderates.map((i) => i.community)} />
-      <hr class="border-slate-300 dark:border-zinc-800 my-1" />
+      <hr class="border-slate-200 dark:border-zinc-800 my-1" />
     {/if}
 
     <CommunityList items={$profile.user.follows.map((i) => i.community)} />

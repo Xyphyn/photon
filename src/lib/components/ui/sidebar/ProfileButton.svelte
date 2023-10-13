@@ -10,6 +10,7 @@
   export let index: number
 
   let switching: boolean = false
+  export let guest: boolean = false
 </script>
 
 <SidebarButton
@@ -39,6 +40,7 @@
   <ProfileAvatar
     profile={prof}
     {index}
+    {guest}
     selected={$profile?.id == prof.id}
     slot="prefix"
   />
@@ -47,8 +49,10 @@
     slot="label"
   >
     {prof.username ?? prof.user?.local_user_view.person.name}
-    <span class="text-slate-500 dark:text-zinc-400 font-normal text-xs">
-      {prof.instance}
-    </span>
+    {#if !guest}
+      <span class="text-slate-500 dark:text-zinc-400 font-normal text-xs">
+        {prof.instance}
+      </span>
+    {/if}
   </span>
 </SidebarButton>
