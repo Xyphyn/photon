@@ -7,6 +7,8 @@
   import type { RegistrationApplicationView } from 'lemmy-js-client'
   import { Button } from 'mono-svelte'
   import { Check, Icon, XMark } from 'svelte-hero-icons'
+  import RelativeDate from '$lib/components/util/RelativeDate.svelte';
+  import { publishedToDate } from '$lib/components/util/date';
 
   export let application: RegistrationApplicationView
 
@@ -49,6 +51,10 @@
 
 <Material class="flex flex-col gap-2">
   <div class="flex flex-col gap-1">
+    <span class="text-slate-600 dark:text-zinc-400">
+    <RelativeDate date={publishedToDate(application.registration_application.published)} />
+    </span>
+
     <SectionTitle>User</SectionTitle>
     <span class="text-sm">
       <UserLink user={application.creator} avatar avatarSize={20} />
