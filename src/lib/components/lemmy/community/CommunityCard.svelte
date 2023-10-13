@@ -225,9 +225,6 @@
         on:click={subscribe}
         class="flex-1 relative z-[inherit]"
       >
-        <div
-          class="absolute top-0 left-0 bg-white dark:bg-black w-full h-full -z-10 rounded-md"
-        />
         <Icon
           src={community_view.subscribed == 'Subscribed' ? Check : Plus}
           mini
