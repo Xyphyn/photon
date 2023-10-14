@@ -6,7 +6,7 @@
   import { Badge } from 'mono-svelte'
 </script>
 
-{#if $profile?.user?.notifications.applications ?? 0 > 0}
+{#if ($profile?.user?.notifications.applications ?? 0) > 0}
   <span class="flex flex-row text-red-500 gap-2">
     <Badge color="red-subtle" class="w-max">
       {$profile?.user?.notifications.applications}

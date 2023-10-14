@@ -117,7 +117,7 @@
         <Icon src={ServerStack} mini size="18" slot="prefix" />
         <span class="hidden md:inline">Admin</span>
 
-        {#if $profile?.user?.notifications.applications ?? 0 > 0}
+        {#if ($profile?.user?.notifications.applications ?? 0) > 0}
           <div
             class="rounded-full w-2 h-2 bg-red-500 absolute -top-1 -left-1"
           />
@@ -130,7 +130,7 @@
         aria-label="Moderation"
         class="max-md:w-9 max-md:h-8 max-md:!p-0 dark:text-zinc-300 text-slate-700 relative"
       >
-        {#if $profile?.user?.notifications.reports ?? 0 > 0}
+        {#if ($profile?.user?.notifications.reports ?? 0) > 0}
           <div
             class="rounded-full w-2 h-2 bg-red-500 absolute -top-1 -left-1"
           />

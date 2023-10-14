@@ -64,27 +64,41 @@
         honeypot,
       })
 
-      toast({
-        content: 'Signed up.',
-        type: 'success',
-      })
-
       if (res?.jwt) {
         await setUser(res.jwt, $page.params.instance, username)
 
         toast({ content: 'Successfully logged in.', type: 'success' })
         goto('/')
-      } else if (res.verify_email_sent) {
+      } else if (
+        res.verify_email_sent ||
+        data.site_view.local_site.registration_mode == 'RequireApplication'
+      ) {
         currentInstance.set(instance)
-        toast({
-          content:
-            'A verification link was sent to your email. Verify your email, and then you can log in.',
-          type: 'info',
-        })
+        if (res.verify_email_sent) {
+          toast({
+            content:
+              'A verification link was sent to your email. Verify your email, and then you can log in.',
+            type: 'info',
+          })
+        }
+        if (
+          data.site_view.local_site.registration_mode == 'RequireApplication'
+        ) {
+          toast({
+            content:
+              'Please wait for your registration application to be approved before you can log in.',
+            type: 'info',
+          })
+        }
         goto('/')
       } else {
         throw new Error('Failed to sign up.')
       }
+
+      toast({
+        content: 'Signed up.',
+        type: 'success',
+      })
     } catch (err) {
       toast({
         content: err as any,
