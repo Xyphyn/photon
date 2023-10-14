@@ -85,15 +85,15 @@
   {:else}
     <SidebarButton href="/login" title="Log In">
       <Icon mini src={ArrowLeftOnRectangle} size="20" />
-      <span>Log In</span>
+      <span slot="label">Log In</span>
     </SidebarButton>
     <SidebarButton href="/signup" title="Sign Up">
       <Icon mini src={Identification} size="20" />
-      <span>Sign Up</span>
+      <span slot="label">Sign Up</span>
     </SidebarButton>
     <SidebarButton href="/accounts" title="Change Instance">
       <Icon mini src={ServerStack} size="20" />
-      <span>Change instance</span>
+      <span slot="label">Change instance</span>
     </SidebarButton>
   {/if}
 </nav>
