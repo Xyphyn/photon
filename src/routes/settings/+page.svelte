@@ -23,6 +23,7 @@
   import { LINKED_INSTANCE_URL } from '$lib/instance.js'
   import { removeItem } from '$lib/util.js'
   import Section from './Section.svelte'
+  import ToggleSetting from './ToggleSetting.svelte'
 
   let data = {
     loading: false,
@@ -49,7 +50,7 @@
 </h1>
 
 <div class="flex flex-col gap-4" style="scroll-behavior: smooth;">
-  <Section title="UI">
+  <Section title="Photon">
     <Setting>
       <span slot="title">Post style</span>
       <ViewSelect showLabel={false} />
@@ -65,26 +66,12 @@
         {/if}
       </p>
     </Setting>
-    <Setting>
-      <span slot="title">Random placeholders</span>
-      <span slot="description">
-        Show a random placeholder for forms for comments, posts, etc.
-      </span>
-      <Switch bind:checked={$userSettings.randomPlaceholders} />
-    </Setting>
-    <Setting>
-      <span slot="title">Limit Layout Width</span>
-      <span slot="description">
-        Improve readability by limiting main content width.
-      </span>
-      <Switch bind:checked={$userSettings.newWidth} />
-    </Setting>
-    <Setting optionClass="flex-[2]">
+    <Setting optionClass="flex-[2] max-w-full flex-wrap min-w-0">
       <span slot="title">Default sort</span>
       <span slot="description">The default sort to use for feeds.</span>
-      <div class="flex flex-wrap flex-row gap-4 w-max max-w-full">
+      <div class="flex max-[500px]:flex-col flex-wrap gap-4 w-max max-w-full">
         <div class="max-w-full">
-          <Select bind:value={$userSettings.defaultSort.feed} class="w-28">
+          <Select bind:value={$userSettings.defaultSort.feed}>
             <span slot="label" class="flex items-center gap-1">
               <Icon src={GlobeAmericas} size="16" mini />
               Location
@@ -115,14 +102,6 @@
       </div>
     </Setting>
     <Setting>
-      <span slot="title">Use display name</span>
-      <span slot="description">
-        Show a user's display name instead of their account username.
-      </span>
-
-      <Switch bind:checked={$userSettings.displayNames} />
-    </Setting>
-    <Setting>
       <span slot="title">Vote style</span>
       <MultiSelect
         options={[false, true]}
@@ -130,14 +109,27 @@
         bind:selected={$userSettings.separateVotes}
       />
     </Setting>
-    <Setting>
-      <span slot="title">Expand Images</span>
-      <span slot="description">
-        Clicking on a post's image brings you to an expanded view rather than
-        sending you to the post page.
-      </span>
-      <Switch bind:checked={$userSettings.expandImages} />
-    </Setting>
+    <ToggleSetting
+      bind:checked={$userSettings.displayNames}
+      title="Use display name"
+      description="Show a user's display name instead of their account username."
+    />
+    <ToggleSetting
+      bind:checked={$userSettings.newWidth}
+      title="Limit layout width"
+      description="Improve readability by limiting main content width."
+    />
+    <ToggleSetting
+      bind:checked={$userSettings.randomPlaceholders}
+      title="Random placeholders"
+      description="Show a random placeholder for forms for comments, posts, etc."
+    />
+    <ToggleSetting
+      bind:checked={$userSettings.randomPlaceholders}
+      title="Expand Images"
+      description="Clicking on a post's image brings you to an expanded view rather than
+      sending you to the post page."
+    />
     <Setting>
       <span slot="title">Thumbnail Alignment</span>
       <span slot="description">
@@ -150,36 +142,30 @@
       />
     </Setting>
     {#if LINKED_INSTANCE_URL}
-      <Setting>
-        <span slot="title">Remove "Powered by Photon"</span>
-        <span slot="description">
-          Remove the massive 120x16 div in the top left corner.
-        </span>
-        <Switch bind:checked={$userSettings.hidePhoton} />
-      </Setting>
+      <ToggleSetting
+        title={'Remove "Powered by Photon"'}
+        description="Remove the massive 120x16 div in the top left corner."
+        bind:checked={$userSettings.hidePhoton}
+      />
     {/if}
   </Section>
 
   <Section title="Lemmy">
-    <Setting>
-      <span slot="title">Mark read posts</span>
-      <span slot="description">Mark a post as read when you click on it.</span>
-      <Switch bind:checked={$userSettings.markPostsAsRead} />
-    </Setting>
-    <Setting>
-      <span slot="title">Fade read posts</span>
-      <span slot="description">
-        Fade the title of posts you've already read.
-      </span>
-      <Switch bind:checked={$userSettings.markReadPosts} />
-    </Setting>
-    <Setting>
-      <span slot="title">NSFW blur</span>
-      <span slot="description">
-        Blur images and remove post bodies of NSFW content.
-      </span>
-      <Switch bind:checked={$userSettings.nsfwBlur} />
-    </Setting>
+    <ToggleSetting
+      bind:checked={$userSettings.markPostsAsRead}
+      title="Mark read posts"
+      description="Mark a post as read when you click on it."
+    />
+    <ToggleSetting
+      bind:checked={$userSettings.markReadPosts}
+      title="Fade read posts"
+      description="Fade the title of posts you've already read."
+    />
+    <ToggleSetting
+      bind:checked={$userSettings.nsfwBlur}
+      title="NSFW blur"
+      description="Blur images and remove post bodies of NSFW content."
+    />
     <Setting>
       <span slot="title">Hide Posts</span>
       <span slot="description">
@@ -315,13 +301,10 @@
   </Section>
 
   <Section title="Other">
-    <Setting>
-      <span slot="title">Debug Info</span>
-      <span slot="description">
-        Show an option to show debug information. (in posts and such)
-      </span>
-
-      <Switch bind:checked={$userSettings.debugInfo} />
-    </Setting>
+    <ToggleSetting
+      bind:checked={$userSettings.debugInfo}
+      title="Debug info"
+      description="Display debug information"
+    />
   </Section>
 </div>
