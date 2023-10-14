@@ -82,7 +82,7 @@
     <Setting optionClass="flex-[2]">
       <span slot="title">Default sort</span>
       <span slot="description">The default sort to use for feeds.</span>
-      <div class="flex flex-wrap flex-row gap-4 w-max">
+      <div class="flex flex-wrap flex-row gap-4 w-max max-w-full">
         <div class="max-w-full">
           <Select bind:value={$userSettings.defaultSort.feed} class="w-28">
             <span slot="label" class="flex items-center gap-1">
