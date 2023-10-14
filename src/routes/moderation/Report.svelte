@@ -76,12 +76,7 @@
         }
       }
 
-      const reports = await getClient().getReportCount({})
-
-      $profile.user.reports =
-        reports.comment_reports +
-        reports.post_reports +
-        (reports.private_message_reports ?? 0)
+      $profile.user.notifications.reports += item.resolved ? 1 : -1
     } catch (err) {
       toast({
         content: err as any,

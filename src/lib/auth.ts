@@ -1,4 +1,7 @@
-import { amModOfAny } from '$lib/components/lemmy/moderation/moderation.js'
+import {
+  amModOfAny,
+  isAdmin,
+} from '$lib/components/lemmy/moderation/moderation.js'
 import { toast } from 'mono-svelte'
 import { DEFAULT_INSTANCE_URL, instance } from '$lib/instance.js'
 import { client, getClient, site } from '$lib/lemmy.js'
@@ -51,8 +54,11 @@ interface ProfileData {
 }
 
 interface PersonData extends MyUserInfo {
-  unreads: number
-  reports: number
+  notifications: {
+    inbox: number
+    reports: number
+    applications: number
+  }
 }
 
 export let profileData = writable<ProfileData>(
@@ -192,8 +198,11 @@ async function userFromJwt(
 
   return {
     user: {
-      unreads: 0,
-      reports: 0,
+      notifications: {
+        applications: 0,
+        inbox: 0,
+        reports: 0,
+      },
       ...myUser,
     },
     site: site,
@@ -296,23 +305,44 @@ export function moveProfile(id: number, up: boolean) {
   }
 }
 
-const getNotificationCount = async (jwt: string, mod: boolean) => {
+const getNotificationCount = async (
+  jwt: string,
+  mod: boolean,
+  admin: boolean
+) => {
   const unreads = await getClient().getUnreadCount()
 
   let reports: number = 0
+  let applications: number = 0
 
   if (mod) {
-    const reportRes = await getClient().getReportCount({})
+    try {
+      const reportRes = await getClient().getReportCount({})
 
-    reports =
-      reportRes.comment_reports +
-      reportRes.post_reports +
-      (reportRes.private_message_reports ?? 0)
+      reports =
+        reportRes.comment_reports +
+        reportRes.post_reports +
+        (reportRes.private_message_reports ?? 0)
+    } catch (e) {
+      // doesn't matter
+    }
+  }
+
+  if (admin) {
+    try {
+      const applicationRes =
+        await getClient().getUnreadRegistrationApplicationCount()
+
+      applications = applicationRes.registration_applications
+    } catch (e) {
+      // doesn't matter
+    }
   }
 
   return {
     unreads: unreads.mentions + unreads.private_messages + unreads.replies,
     reports: reports,
+    applications: applications,
   }
 }
 
@@ -323,13 +353,20 @@ setInterval(async () => {
   const { user, jwt } = get(profile)!
   if (!jwt || !user) return
 
-  const notifs = await getNotificationCount(jwt, amModOfAny(user) ?? false)
+  const notifs = await getNotificationCount(
+    jwt,
+    amModOfAny(user) ?? false,
+    isAdmin(user)
+  )
 
-  user.unreads = notifs.unreads
-  user.reports = notifs.reports
+  user.notifications = {
+    inbox: notifs.unreads,
+    applications: notifs.applications,
+    reports: notifs.reports,
+  }
 
   profile.update((p) => ({
     ...p!,
     user: user,
   }))
-}, get(userSettings).notifications.pollRate ?? 30 * 1000)
+}, 5 * 60 * 1000)

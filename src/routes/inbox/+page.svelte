@@ -32,7 +32,7 @@
 
     const response = await getClient().markAllAsRead()
 
-    $profile.user.unreads = 0
+    $profile.user.notifications.inbox = 0
 
     goto($page.url, {
       invalidateAll: true,

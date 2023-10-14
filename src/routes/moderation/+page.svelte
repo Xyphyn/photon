@@ -19,7 +19,7 @@
 </script>
 
 <div class="mb-4 flex flex-col gap-4">
-  <h1 class="font-bold text-3xl">Reports</h1>
+  <h1 class="font-bold text-3xl">Moderation</h1>
   <div class="flex flex-row gap-2 flex-wrap items-center">
     <Select
       bind:value={data.type}

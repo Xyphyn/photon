@@ -13,6 +13,7 @@
   import { userSettings } from '$lib/settings.js'
   import { theme } from '$lib/ui/colors.js'
   import {
+    Badge,
     Button,
     Menu,
     MenuButton,
@@ -111,10 +112,16 @@
       <Button
         href="/admin"
         aria-label="Admin"
-        class="max-md:w-9 max-md:h-8 max-md:!p-0 dark:text-zinc-300 text-slate-700"
+        class="max-md:w-9 max-md:h-8 max-md:!p-0 dark:text-zinc-300 text-slate-700 relative"
       >
         <Icon src={ServerStack} mini size="18" slot="prefix" />
         <span class="hidden md:inline">Admin</span>
+
+        {#if $profile?.user?.notifications.applications ?? 0 > 0}
+          <div
+            class="rounded-full w-2 h-2 bg-red-500 absolute -top-1 -left-1"
+          />
+        {/if}
       </Button>
     {/if}
     {#if amModOfAny($profile?.user)}
@@ -123,7 +130,7 @@
         aria-label="Moderation"
         class="max-md:w-9 max-md:h-8 max-md:!p-0 dark:text-zinc-300 text-slate-700 relative"
       >
-        {#if $profile?.user?.reports ?? 0 > 0}
+        {#if $profile?.user?.notifications.reports ?? 0 > 0}
           <div
             class="rounded-full w-2 h-2 bg-red-500 absolute -top-1 -left-1"
           />
@@ -205,7 +212,7 @@
             alt={$profile.user.local_user_view.person.name}
           />
         </div>
-        {#if $profile.user.unreads > 0}
+        {#if $profile.user.notifications.inbox > 0}
           <div
             class="rounded-full w-2 h-2 bg-red-500 absolute top-0 left-0 z-10"
           />
@@ -226,12 +233,10 @@
       <MenuButton link href="/inbox">
         <Icon src={Inbox} mini width={16} />
         Inbox
-        {#if $profile.user.unreads > 0}
-          <div
-            class="rounded-full w-auto flex items-center px-2 h-5 justify-center font-bold bg-red-500 ml-auto"
-          >
-            {$profile.user.unreads}
-          </div>
+        {#if $profile.user.notifications.inbox > 0}
+          <Badge color="red-subtle" class="text-xs ml-auto font-bold !py-0.5">
+            {$profile.user.notifications.inbox}
+          </Badge>
         {/if}
       </MenuButton>
       <MenuButton link href="/saved">
@@ -241,11 +246,6 @@
     <MenuButton link href="/accounts">
       <Icon src={UserGroup} mini width={16} />
       Accounts
-      <span
-        class="text-xs font-bold bg-slate-100 dark:bg-zinc-700 px-2 py-0.5 rounded-md ml-auto"
-      >
-        {$profileData.profiles.length}
-      </span>
     </MenuButton>
     <hr class="dark:opacity-10 w-[90%] my-2 mx-auto" />
     <MenuDivider>App</MenuDivider>

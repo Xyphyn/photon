@@ -7,8 +7,8 @@
   import type { RegistrationApplicationView } from 'lemmy-js-client'
   import { Button } from 'mono-svelte'
   import { Check, Icon, XMark } from 'svelte-hero-icons'
-  import RelativeDate from '$lib/components/util/RelativeDate.svelte';
-  import { publishedToDate } from '$lib/components/util/date';
+  import RelativeDate from '$lib/components/util/RelativeDate.svelte'
+  import { publishedToDate } from '$lib/components/util/date'
 
   export let application: RegistrationApplicationView
 
@@ -37,6 +37,8 @@
       })
       application.creator_local_user.accepted_application = approve
       application.admin = $profile.user!.local_user_view.person
+
+      $profile.user!.notifications.applications -= 1
     } catch (err) {
       toast({
         content: err as any,
@@ -52,7 +54,9 @@
 <Material class="flex flex-col gap-2">
   <div class="flex flex-col gap-1">
     <span class="text-slate-600 dark:text-zinc-400">
-    <RelativeDate date={publishedToDate(application.registration_application.published)} />
+      <RelativeDate
+        date={publishedToDate(application.registration_application.published)}
+      />
     </span>
 
     <SectionTitle>User</SectionTitle>
@@ -79,8 +83,8 @@
     <div class="ml-auto">
       <Button
         size="square-md"
-        class="hover:bg-slate-200 {!application.creator_local_user
-          .accepted_application
+        class="hover:bg-slate-200 {application.creator_local_user
+          .accepted_application === false && application.admin
           ? '!text-red-500'
           : ''}"
         aria-label="Deny"
