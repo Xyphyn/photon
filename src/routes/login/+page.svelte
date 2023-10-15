@@ -3,10 +3,9 @@
   import { setUser } from '$lib/auth.js'
   import { Note, toast } from 'mono-svelte'
   import { DEFAULT_INSTANCE_URL, LINKED_INSTANCE_URL } from '$lib/instance.js'
-  import { getClient, validateInstance } from '$lib/lemmy.js'
+  import { getClient, mayBeIncompatible, site, validateInstance } from '$lib/lemmy.js'
   import { Button, TextInput } from 'mono-svelte'
   import {
-    AtSymbol,
     Icon,
     Identification,
     QuestionMarkCircle,
@@ -65,21 +64,21 @@
   <form on:submit|preventDefault={logIn} class="flex flex-col gap-5">
     <div class="flex flex-col gap-2">
       <h1 class="font-bold text-3xl">Log In</h1>
-      <p>Enter the fediverse</p>
-      <Note>
-        This version of Photon supports instances running
-        <span style="font-family: monospace;">
-          v{MINIMUM_VERSION}
-        </span>
-        or higher.
-      </Note>
+      {#if $site && mayBeIncompatible(MINIMUM_VERSION, $site.version.replace("v", ""))}
+        <Note>
+          This version of Photon supports instances running
+          <span style="font-family: monospace;">
+            v{MINIMUM_VERSION}
+          </span>
+          or higher.
+        </Note>
+      {/if}
     </div>
     <div class="flex flex-row w-full items-center gap-2">
       <TextInput
         id="username"
         bind:value={data.username}
         label="Username"
-        placeholder="Example"
         class="flex-1"
         required
       />

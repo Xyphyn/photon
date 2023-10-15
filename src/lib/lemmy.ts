@@ -99,3 +99,28 @@ export async function validateInstance(instance: string): Promise<boolean> {
     return false
   }
 }
+
+export function mayBeIncompatible(minVersion: string, availableVersion: string) {
+  if (minVersion.valueOf() === availableVersion.valueOf()) return false;
+
+  const versionFormatter = /[\d.]/;
+  if (!minVersion.match(versionFormatter) || !availableVersion.match(availableVersion)) {
+    return true;
+  }
+
+  const splitMinVersion = minVersion.split('.');
+  const splitAvailableVersion = availableVersion.split('.');
+
+  if (splitMinVersion.length !== splitAvailableVersion.length) return true;
+
+  for (let i = 0; i < splitMinVersion.length; ++i) {
+    const minVersionDigit = parseInt(splitMinVersion[i]);
+    const availableVersionDigit = parseInt(splitAvailableVersion[i]);
+
+    if (availableVersionDigit === undefined) return true;
+    if (minVersionDigit < availableVersionDigit) return false;
+    if (availableVersionDigit < minVersionDigit) return true;
+  }
+
+  return false;
+}
