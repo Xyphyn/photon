@@ -125,7 +125,7 @@
       description="Show a random placeholder for forms for comments, posts, etc."
     />
     <ToggleSetting
-      bind:checked={$userSettings.randomPlaceholders}
+      bind:checked={$userSettings.expandImages}
       title="Expand Images"
       description="Clicking on a post's image brings you to an expanded view rather than
       sending you to the post page."
