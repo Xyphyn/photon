@@ -158,24 +158,25 @@
           Sign up
         </Button>
       </div>
-      <div class="flex flex-row font-normal gap-2">
-        <TextInput
-          label="Guest instance"
-          on:change={changeGuestInstance}
-          placeholder="Instance URL"
-          bind:value={newInstance}
-          disabled={LINKED_INSTANCE_URL != undefined}
-        />
-        <Button
-          color="primary"
-          class="h-max self-end"
-          size="lg"
-          {loading}
-          disabled={loading || LINKED_INSTANCE_URL != undefined}
-        >
-          Change
-        </Button>
-      </div>
+      {#if LINKED_INSTANCE_URL === undefined}
+        <div class="flex flex-row font-normal gap-2">
+          <TextInput
+            label="Guest instance"
+            on:change={changeGuestInstance}
+            placeholder="Instance URL"
+            bind:value={newInstance}
+          />
+          <Button
+            color="primary"
+            class="h-max self-end"
+            size="lg"
+            {loading}
+            disabled={loading}
+          >
+            Change
+          </Button>
+        </div>
+      {/if}
     </div>
   </div>
 {:else}
