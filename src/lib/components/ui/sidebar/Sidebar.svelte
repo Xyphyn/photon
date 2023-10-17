@@ -18,7 +18,7 @@
   import { flip } from 'svelte/animate'
   import { expoOut } from 'svelte/easing'
   import { Button } from 'mono-svelte'
-  import { DEFAULT_INSTANCE_URL } from '$lib/instance.js'
+  import { DEFAULT_INSTANCE_URL, LINKED_INSTANCE_URL } from '$lib/instance.js'
 
   export let route = ''
 </script>
@@ -91,9 +91,11 @@
       <Icon mini src={Identification} size="20" />
       <span slot="label">Sign Up</span>
     </SidebarButton>
-    <SidebarButton href="/accounts" title="Change Instance">
-      <Icon mini src={ServerStack} size="20" />
-      <span slot="label">Change instance</span>
-    </SidebarButton>
+    {#if LINKED_INSTANCE_URL === undefined}
+      <SidebarButton href="/accounts" title="Change Instance">
+        <Icon mini src={ServerStack} size="20" />
+        <span slot="label">Change instance</span>
+      </SidebarButton>
+    {/if}
   {/if}
 </nav>
