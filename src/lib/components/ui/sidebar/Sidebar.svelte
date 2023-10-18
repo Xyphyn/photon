@@ -94,7 +94,7 @@
     {#if LINKED_INSTANCE_URL === undefined}
       <SidebarButton href="/accounts" title="Change Instance">
         <Icon mini src={ServerStack} size="20" />
-        <span slot="label">Change instance</span>
+        <span slot="label">Change Instance</span>
       </SidebarButton>
     {/if}
   {/if}
