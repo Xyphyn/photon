@@ -65,7 +65,7 @@
           <a
             target={$userSettings.openLinksInNewTab ? '_blank' : ''}
             href="/post/{getInstance()}/{post.post.id}"
-            class="font-medium max-w-full w-full break-words text-base"
+            class="font-medium max-w-full w-full break-words text-lg"
             style="word-break: break-word;"
             class:text-slate-500={post.read && $userSettings.markReadPosts}
             class:dark:text-zinc-400={post.read && $userSettings.markReadPosts}

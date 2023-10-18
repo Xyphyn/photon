@@ -177,7 +177,7 @@
       <Icon src={ArrowLeft} mini size="16" slot="prefix" />
     </Button>
   </div>
-  <h1 class="font-bold text-lg">
+  <h1 class="font-bold text-xl">
     <Markdown source={post.post_view.post.name} inline />
   </h1>
   <PostMedia
