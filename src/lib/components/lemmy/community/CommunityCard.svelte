@@ -30,7 +30,6 @@
     EllipsisHorizontal,
     Fire,
     Icon,
-    Minus,
     Newspaper,
     NoSymbol,
     PencilSquare,
@@ -146,14 +145,30 @@
 <StickyCard class="min-w-full {$$props.class}">
   <div class="flex flex-row gap-3 items-center">
     <div class="flex-shrink-0">
-      <Avatar
-        width={42}
-        url={community_view.community.icon}
-        alt={community_view.community.name}
-      />
+      <a
+        href="/c/{fullCommunityName(
+          community_view.community.name,
+          community_view.community.actor_id
+        )}"
+      >
+        <Avatar
+          width={42}
+          url={community_view.community.icon}
+          alt={community_view.community.name}
+        />
+      </a>
     </div>
     <div class="flex flex-col gap-0">
-      <h1 class="font-bold text-xl">{community_view.community.title}</h1>
+      <h1 class="font-bold text-xl">
+        <a
+          href="/c/{fullCommunityName(
+            community_view.community.name,
+            community_view.community.actor_id
+          )}"
+        >
+          {community_view.community.title}
+        </a>
+      </h1>
       <span
         class="dark:text-zinc-400 text-slate-600 text-sm break-words max-w-full"
         style="word-break: break-all;"
