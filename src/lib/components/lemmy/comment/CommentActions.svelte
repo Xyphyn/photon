@@ -28,6 +28,8 @@
   export let replying: boolean = false
 
   const dispatcher = createEventDispatcher<{ edit: CommentView }>()
+
+  let reply = ''
 </script>
 
 <div class="flex flex-row items-center gap-0.5 h-7 relative">

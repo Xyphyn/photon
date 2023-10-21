@@ -71,7 +71,7 @@
             <div class="text-sm font-bold inline-flex flex-col">
               <span>{$site.site_view.site.name}</span>
               {#if !$userSettings.hidePhoton}
-                <span
+                <div
                   class="text-xs flex items-center gap-1 text-slate-600 dark:text-zinc-400 font-normal"
                 >
                   Powered by <a
@@ -80,7 +80,7 @@
                   >
                     <Logo width={12} /> Photon
                   </a>
-                </span>
+                </div>
               {/if}
             </div>
           </div>
