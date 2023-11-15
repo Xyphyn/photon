@@ -89,6 +89,7 @@
     size="sm"
     href="/post/{getInstance()}/{post.post.id}"
     class="!text-inherit h-8 px-3"
+    target={$userSettings.openLinksInNewTab ? '_blank' : ''}
   >
     <Icon slot="prefix" src={ChatBubbleOvalLeft} mini size="14" />
     <FormattedNumber number={post.counts.comments} />

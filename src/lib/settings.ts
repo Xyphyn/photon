@@ -72,6 +72,8 @@ interface Settings {
   newWidth: boolean
   markPostsAsRead: boolean
   separateVotes: boolean
+
+  openLinksInNewTab: boolean
 }
 
 export const defaultSettings: Settings = {
@@ -120,6 +122,7 @@ export const defaultSettings: Settings = {
   newWidth: true,
   markPostsAsRead: true,
   separateVotes: false,
+  openLinksInNewTab: false
 }
 
 export const userSettings = writable(defaultSettings)

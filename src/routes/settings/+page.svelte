@@ -110,6 +110,11 @@
       />
     </Setting>
     <ToggleSetting
+      bind:checked={$userSettings.openLinksInNewTab}
+      title="Open posts in new tab"
+      description="Rather than opening posts in the same tab, open a separate one."
+    />
+    <ToggleSetting
       bind:checked={$userSettings.displayNames}
       title="Use display name"
       description="Show a user's display name instead of their account username."
