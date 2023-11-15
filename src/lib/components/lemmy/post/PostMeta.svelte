@@ -1,10 +1,10 @@
 <script lang="ts">
-  import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
-  import Avatar from '$lib/components/ui/Avatar.svelte'
-  import { Badge } from 'mono-svelte'
-  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
-  import RelativeDate from '$lib/components/util/RelativeDate.svelte'
-  import type { Community, Person, SubscribedType } from 'lemmy-js-client'
+  import CommunityLink from "$lib/components/lemmy/community/CommunityLink.svelte"
+  import Avatar from "$lib/components/ui/Avatar.svelte"
+  import { Badge } from "mono-svelte"
+  import UserLink from "$lib/components/lemmy/user/UserLink.svelte"
+  import RelativeDate from "$lib/components/util/RelativeDate.svelte"
+  import type { Community, Person, SubscribedType } from "lemmy-js-client"
   import {
     Bookmark,
     Check,
@@ -13,10 +13,10 @@
     Megaphone,
     Plus,
     Trash,
-  } from 'svelte-hero-icons'
-  import { getInstance } from '$lib/lemmy.js'
-  import { profile } from '$lib/auth.js'
-  import Subscribe from '../../../../routes/communities/Subscribe.svelte'
+  } from "svelte-hero-icons"
+  import { getInstance } from "$lib/lemmy.js"
+  import { profile } from "$lib/auth.js"
+  import Subscribe from "../../../../routes/communities/Subscribe.svelte"
 
   export let community: Community | undefined = undefined
   export let subscribed: SubscribedType | undefined = undefined
@@ -48,7 +48,7 @@
             if (!community) return
             await subscribe(community.id, subscribed)
             subscribed =
-              subscribed == 'NotSubscribed' ? 'Subscribed' : 'NotSubscribed'
+              subscribed == "NotSubscribed" ? "Subscribed" : "NotSubscribed"
           }}
           class="relative cursor-pointer"
         >
@@ -62,7 +62,7 @@
             -bottom-1.5 -right-1.5 grid place-items-center transition-all"
             >
               <Icon
-                src={subscribed == 'NotSubscribed' ? Plus : Check}
+                src={subscribed == "NotSubscribed" ? Plus : Check}
                 mini
                 size="12"
               />
@@ -99,7 +99,9 @@
       </span>
     </div>
 
-    <div class="flex flex-row ml-auto gap-2 flex-wrap">
+    <div
+      class="flex flex-row ml-auto gap-2 flex-shrink overflow-scroll [&>*]:flex-shrink-0"
+    >
       {#if nsfw}
         <Badge color="red-subtle">NSFW</Badge>
       {/if}
@@ -133,6 +135,7 @@
           <span class="max-md:hidden">Featured</span>
         </Badge>
       {/if}
+      <slot name="badges" />
     </div>
   </span>
   {#if title && id}
