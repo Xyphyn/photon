@@ -1,12 +1,12 @@
 <script lang="ts">
-  import Post from "$lib/components/lemmy/post/Post.svelte"
-  import Placeholder from "$lib/components/ui/Placeholder.svelte"
-  import { userSettings } from "$lib/settings.js"
-  import type { PostView } from "lemmy-js-client"
-  import { Badge, Button } from "mono-svelte"
-  import { ArchiveBox, Icon, Minus, Plus } from "svelte-hero-icons"
-  import { expoOut } from "svelte/easing"
-  import { fly, slide } from "svelte/transition"
+  import Post from '$lib/components/lemmy/post/Post.svelte'
+  import Placeholder from '$lib/components/ui/Placeholder.svelte'
+  import { userSettings } from '$lib/settings.js'
+  import type { PostView } from 'lemmy-js-client'
+  import { Badge, Button } from 'mono-svelte'
+  import { ArchiveBox, Icon, Minus, Plus } from 'svelte-hero-icons'
+  import { expoOut } from 'svelte/easing'
+  import { fly, slide } from 'svelte/transition'
 
   type PostViewWithCrossposts = PostView & {
     withCrossposts: true
@@ -116,8 +116,8 @@
                     <Icon mini src={Plus} size="14" />
                   {/if}
                   {post.crossposts.length} crosspost{post.crossposts.length == 1
-                    ? ""
-                    : "s"}
+                    ? ''
+                    : 's'}
                 </Badge>
               {/if}
             </button>
@@ -125,18 +125,21 @@
           {#if post.withCrossposts && viewPost == post.post.id}
             <div
               transition:slide|global={{
-                axis: "y",
+                axis: 'y',
                 duration: 500,
                 easing: expoOut,
               }}
             >
-              <span class="text-sm flex flex-row gap-2 items-center">
+              <span
+                class="text-sm flex flex-row gap-2 items-center"
+                class:my-4={$userSettings.view == 'card'}
+              >
                 Crossposts <hr class="w-full dark:border-zinc-800" />
                 {post.crossposts.length}
               </span>
               {#each post.crossposts as crosspost, index}
                 <div class="w-full transition-all mb-4">
-                  <Post post={crosspost} />
+                  <Post post={crosspost} view={$userSettings.view} />
                 </div>
               {/each}
             </div>
