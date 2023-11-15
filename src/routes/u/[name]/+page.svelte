@@ -198,7 +198,7 @@
     />
   </div>
 
-  <StickyCard class="px-0">
+  <StickyCard class="px-0 !static">
     <Avatar
       width={64}
       url={data.person_view.person.avatar}
