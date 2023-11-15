@@ -70,7 +70,12 @@
         : placeholders.get('comment')}
       bind:value
       disabled={locked || loading}
-      on:confirm={submit}
+      on:confirm={() => {
+        if (actions) {
+          submit()
+        }
+      }}
+      on:confirm
       previewButton={previewAction}
     >
       {#if actions}

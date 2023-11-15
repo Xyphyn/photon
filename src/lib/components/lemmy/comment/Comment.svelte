@@ -30,46 +30,62 @@
 
   let editing = false
   let newComment = node.comment_view.comment.content
+
+  let editingLoad = false
+
+  async function save() {
+    if (!$profile?.jwt || newComment.length <= 0) return
+
+    editingLoad = true
+
+    try {
+      await getClient().editComment({
+        comment_id: node.comment_view.comment.id,
+        content: newComment,
+      })
+
+      node.comment_view.comment.content = newComment
+
+      editing = false
+
+      toast({
+        content: 'Successfully edited comment.',
+        type: 'success',
+      })
+    } catch (err) {
+      toast({
+        // @ts-ignore i hate this
+        content: err,
+        type: 'error',
+      })
+    }
+
+    editingLoad = false
+  }
 </script>
 
 {#if editing}
-  <Modal
-    bind:open={editing}
-    action="Save"
-    on:action={async () => {
-      if (!$profile?.jwt || newComment.length <= 0) return
-
-      try {
-        await getClient().editComment({
-          comment_id: node.comment_view.comment.id,
-          content: newComment,
-        })
-
-        node.comment_view.comment.content = newComment
-
-        editing = false
-
-        toast({
-          content:
-            'Successfully edited comment. You may need to refresh to see changes.',
-          type: 'success',
-        })
-      } catch (err) {
-        toast({
-          // @ts-ignore i hate this
-          content: err,
-          type: 'error',
-        })
-      }
-    }}
-  >
+  <Modal bind:open={editing}>
     <span slot="title">Edit comment</span>
-    <CommentForm
-      postId={node.comment_view.comment.id}
-      bind:value={newComment}
-      actions={false}
-      preview={true}
-    />
+    <form on:submit|preventDefault={save} class="contents">
+      <CommentForm
+        postId={node.comment_view.comment.id}
+        bind:value={newComment}
+        actions={false}
+        preview={true}
+        on:confirm={save}
+      />
+      <Button
+        submit
+        color="primary"
+        size="lg"
+        loading={editingLoad}
+        disabled={editingLoad}
+        class="w-full"
+      >
+        Save
+      </Button>
+    </form>
   </Modal>
 {/if}
 
