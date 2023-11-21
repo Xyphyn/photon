@@ -20,23 +20,24 @@
     flex flex-row items-center w-max max-w-full overflow-auto
     ${
       headless
-        ? 'pb-1'
-        : 'bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-lg p-1'
+        ? 'pb-1 gap-1'
+        : 'gap-1.5'
     }
-    gap-1
     ${$$props.class}
   `
 
   const buttonClass = (selected: boolean) => `
-    px-3 py-1.5 text-sm
+    px-3.5 py-1.5 text-sm
     ${!selected ? 'hover:bg-slate-100 hover:dark:bg-zinc-800' : ''}
-     transition-colors rounded-md
+     transition-colors rounded-full
     ${
       selected
         ? headless
           ? ''
-          : 'bg-slate-900 text-slate-50 dark:bg-zinc-100 dark:text-black hover:bg-slate-800 hover:dark:bg-zinc-300'
-        : ''
+          : 'bg-primary-900 text-slate-50 dark:bg-primary-100 dark:text-black hover:bg-slate-800 hover:dark:bg-zinc-300'
+        : headless
+	  ? ''
+	  : 'bg-slate-100 dark:bg-zinc-800'
     }
     disabled:opacity-60 disabled:pointer-events-none whitespace-nowrap
     relative
