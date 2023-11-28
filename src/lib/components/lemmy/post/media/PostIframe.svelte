@@ -15,13 +15,19 @@
 </script>
 
 <script lang="ts">
-  import { Icon, PuzzlePiece } from 'svelte-hero-icons'
+  import {
+    Icon,
+    PuzzlePiece,
+    VideoCamera,
+    type IconSource,
+  } from 'svelte-hero-icons'
   import type { IframeType, MediaType } from '../helpers'
   import { userSettings } from '$lib/settings'
 
   export let type: IframeType = 'none'
+  export let thumbnail: string | undefined = undefined
   export let url: string
-  let opened = false
+  let opened = !$userSettings.embeds.clickToView
 
   const urlToEmbed = (inputUrl: string) => {
     if (type == 'youtube') {
@@ -37,6 +43,29 @@
     return ''
   }
 
+  const typeData = (
+    type: IframeType
+  ): {
+    icon: IconSource
+    text: string
+  } => {
+    switch (type) {
+      case 'youtube': {
+        return {
+          icon: VideoCamera,
+          text: 'YouTube Video',
+        }
+      }
+      default: {
+        return {
+          icon: PuzzlePiece,
+          text: 'Embed',
+        }
+      }
+    }
+  }
+
+  $: data = typeData(type)
   $: embedUrl = urlToEmbed(url)
 </script>
 
@@ -54,11 +83,19 @@
     on:click={() => (opened = true)}
     class="aspect-video w-full h-full z-0 overflow-hidden relative rounded-xl flex flex-col gap-2 items-center justify-center"
   >
-    <div
-      class="absolute blur-3xl -z-10 top-0 left-0 w-full h-full bg-gradient-to-br from-green-800 via-blue-900 via-20% to-red-700"
-    />
-    <Icon src={PuzzlePiece} solid size="48" />
-    <h1 class="font-bold text-xl">Embed</h1>
+    {#if thumbnail}
+      <img
+        src={thumbnail}
+        class="absolute top-0 left-0 -z-10 brightness-[25%]"
+        alt=""
+      />
+    {:else}
+      <div
+        class="absolute blur-3xl -z-10 top-0 left-0 w-full h-full bg-gradient-to-br from-green-800 via-blue-900 via-20% to-red-700"
+      />
+    {/if}
+    <Icon src={data.icon} solid size="48" />
+    <h1 class="font-bold text-xl">{data.text}</h1>
     <p>Click to view this content.</p>
   </button>
 {/if}

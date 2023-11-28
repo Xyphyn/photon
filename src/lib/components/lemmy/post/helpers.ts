@@ -38,7 +38,7 @@ export const isYoutubeLink = (url?: string): boolean => {
 export const postLink = (post: Post) => `/post/${getInstance()}/${post.id}`
 
 export type MediaType = 'video' | 'image' | 'iframe' | 'embed' | 'none'
-export type IframeType = 'youtube'
+export type IframeType = 'youtube' | 'none'
 
 export const mediaType = (post: Post, view: View = 'cozy'): MediaType => {
   if (post.url) {

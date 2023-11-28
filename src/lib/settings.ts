@@ -77,6 +77,7 @@ interface Settings {
   crosspostOriginalLink: boolean
 
   embeds: {
+    clickToView: boolean
     youtube: 'youtube' | 'invidious' | 'piped'
   }
 }
@@ -130,6 +131,7 @@ export const defaultSettings: Settings = {
   openLinksInNewTab: false,
   crosspostOriginalLink: true,
   embeds: {
+    clickToView: true,
     youtube: 'youtube',
   }
 }

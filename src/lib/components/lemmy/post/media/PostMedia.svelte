@@ -92,7 +92,7 @@
     <p class="text-base">Go to the post to view this video.</p>
   </a>
 {:else if type == 'iframe' && (view == 'cozy' || view == 'card') && post.url}
-  <PostIframe type="youtube" url={post.url} />
+  <PostIframe thumbnail={post.thumbnail_url} type="youtube" url={post.url} />
 {:else if type == 'embed' && post.url}
   <PostLink
     url={post.url}

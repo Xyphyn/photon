@@ -156,6 +156,11 @@
   </Section>
 
   <Section title="Embeds">
+    <ToggleSetting
+      title="Click to view"
+      description="Before loading embeds, click. (It is recommended to leave this on, to not load a video you don't want to load.)"
+      bind:checked={$userSettings.embeds.clickToView}
+    />
     <Setting>
       <span slot="title">YouTube</span>
       <span slot="description">
