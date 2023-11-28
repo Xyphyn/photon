@@ -1,5 +1,8 @@
 <script lang="ts">
-  import { buildCommentsTreeAsync } from '$lib/components/lemmy/comment/comments.js'
+  import {
+    buildCommentsTree,
+    buildCommentsTreeAsync,
+  } from '$lib/components/lemmy/comment/comments.js'
   import Comments from '$lib/components/lemmy/comment/Comments.svelte'
   import { isImage, isVideo } from '$lib/ui/image.js'
   import { getClient, site } from '$lib/lemmy.js'
@@ -99,13 +102,10 @@
   let commentsPage = 1
   let commentSort: CommentSortType = data.commentSort
   let loading = false
-  let moreComments = true
 
   async function reloadComments() {
-    data.singleThread = false
-    commentsPage = 1
-
-    data.streamed.comments = getClient().getComments({
+    loading = true
+    data.comments = await getClient().getComments({
       page: 1,
       limit: 25,
       type_: 'All',
@@ -113,6 +113,9 @@
       sort: commentSort,
       max_depth: data.post.post_view.counts.comments > 100 ? 1 : 3,
     })
+    loading = false
+    data.singleThread = false
+    commentsPage = 1
   }
 
   let showCreateComment = false
@@ -254,7 +257,9 @@
     flex-wrap gap-4 sticky top-20 w-full box-border z-[50] mt-4"
   >
     <p>You're viewing a single thread.</p>
-    <Button on:click={reloadComments}>View full thread</Button>
+    <Button {loading} disabled={loading} on:click={reloadComments}>
+      View full thread
+    </Button>
   </Material>
 {/if}
 <div class="mt-4 flex flex-col gap-2 w-full">
@@ -285,59 +290,45 @@
       </Button>
     </div>
   </div>
-  {#await data.streamed.comments}
-    <div class="h-16 mx-auto grid place-items-center">
-      <Spinner width={24} />
-    </div>
-  {:then comments}
-    {#if $profile?.user}
-      {#if showCreateComment}
-        <CommentForm
-          postId={post.post_view.post.id}
-          on:comment={(comment) =>
-            (comments.comments = [
-              comment.detail.comment_view,
-              ...comments.comments,
-            ])}
-          locked={post.post_view.post.locked ||
-            $page.params.instance.toLowerCase() != $instance.toLowerCase()}
-        />
-      {:else}
-        <Button
-          on:click={() => (showCreateComment = !showCreateComment)}
-          size="lg"
-          rounding="lg"
-          class="mx-auto max-w-sm w-full"
-        >
-          <Icon src={Plus} size="16" mini slot="prefix" />
-          Add a comment
-        </Button>
-      {/if}
+  {#if $profile?.user}
+    {#if showCreateComment}
+      <CommentForm
+        postId={post.post_view.post.id}
+        on:comment={(comment) =>
+          (data.comments.comments = [
+            comment.detail.comment_view,
+            ...data.comments.comments,
+          ])}
+        locked={post.post_view.post.locked ||
+          $page.params.instance.toLowerCase() != $instance.toLowerCase()}
+      />
+    {:else}
+      <Button
+        on:click={() => (showCreateComment = !showCreateComment)}
+        size="lg"
+        rounding="lg"
+        class="mx-auto max-w-sm w-full"
+      >
+        <Icon src={Plus} size="16" mini slot="prefix" />
+        Add a comment
+      </Button>
     {/if}
-    {#await buildCommentsTreeAsync(comments.comments)}
-      <div class="h-16 mx-auto grid place-items-center">
-        <Spinner width={36} />
-      </div>
-    {:then comments}
-      <Comments post={post.post_view.post} nodes={comments} isParent={true} />
-      {#if comments.length > 5}
-        <EndPlaceholder>
-          You've viewed {post.post_view.counts.comments} comments.
+  {/if}
+  <Comments
+    post={post.post_view.post}
+    nodes={buildCommentsTree(data.comments.comments)}
+    isParent={true}
+  />
+  <EndPlaceholder>
+    You've viewed {post.post_view.counts.comments} comments.
 
-          <Button
-            color="tertiary"
-            on:click={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            slot="action"
-          >
-            <Icon src={ChevronDoubleUp} mini size="16" slot="prefix" />
-            Scroll to top
-          </Button>
-        </EndPlaceholder>
-      {/if}
-    {/await}
-  {:catch}
-    <div class="bg-red-500/10 border border-red-500 rounded-md p-4">
-      Failed to load comments.
-    </div>
-  {/await}
+    <Button
+      color="tertiary"
+      on:click={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+      slot="action"
+    >
+      <Icon src={ChevronDoubleUp} mini size="16" slot="prefix" />
+      Scroll to top
+    </Button>
+  </EndPlaceholder>
 </div>

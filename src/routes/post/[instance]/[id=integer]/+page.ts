@@ -45,9 +45,7 @@ export async function load({ params, url, fetch }) {
     singleThread: parentId != undefined,
     post: post,
     commentSort: sort,
-    streamed: {
-      comments: getClient(params.instance, fetch).getComments(commentParams),
-    },
+      comments: await getClient(params.instance, fetch).getComments(commentParams),
     slots: {
       sidebar: {
         component: CommunityCard,

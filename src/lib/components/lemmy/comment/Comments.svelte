@@ -21,7 +21,10 @@
   export let isParent: boolean
   export let post: Post
 
+  let hydrated = false
+
   onMount(() => {
+    hydrated = true
     if (isParent && $page.url.hash) {
       document.getElementById($page.url.hash)?.scrollIntoView({
         behavior: 'smooth',
@@ -116,12 +119,10 @@
         <svelte:self {post} bind:nodes={node.children} isParent={false} />
       {/if}
       {#if node.comment_view.counts.child_count > 0 && node.children.length == 0}
-        <button
+        <svelte:element
+          this={hydrated ? 'div' : 'a'}
           class="w-full my-2 h-8 border-l-2 border-slate-200 dark:border-zinc-800 pl-2 text-left"
-          on:click={() => {
-            node.loading = true
-            fetchChildren(node).then(() => (node.loading = false))
-          }}
+          href="/comment/{$page.params.instance}/{node.comment_view.comment.id}"
         >
           <Button
             loading={node.loading}
@@ -138,7 +139,7 @@
             <Icon src={ChevronDoubleDown} mini size="16" slot="prefix" />
             {node.comment_view.counts.child_count} more
           </Button>
-        </button>
+        </svelte:element>
       {/if}
     </Comment>
   {/each}
