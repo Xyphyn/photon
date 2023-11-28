@@ -11,7 +11,7 @@
 
     export let denying: boolean
 
-    export let denyReason = ''
+    export let denyReason: string = ''
 
     let loading = false
 
