@@ -4,31 +4,45 @@
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import { Material, toast } from 'mono-svelte'
   import { getClient } from '$lib/lemmy.js'
-  import type { RegistrationApplicationView } from 'lemmy-js-client'
+  import type {ApproveRegistrationApplication, RegistrationApplicationView} from 'lemmy-js-client'
   import { Button } from 'mono-svelte'
   import { Check, Icon, XMark } from 'svelte-hero-icons'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import { publishedToDate } from '$lib/components/util/date'
+  import ApplicationDenyModal from "$lib/components/lemmy/modal/ApplicationDenyModal.svelte";
 
   export let application: RegistrationApplicationView
 
   let approving = false
   let denying = false
+  let denyReason = ''
+  let reviewing = false
 
   async function review(approve: boolean) {
     if (!$profile?.jwt) return
 
+    let registrationApplicationAnswer: ApproveRegistrationApplication = {
+      approve: approve,
+      id: application.registration_application.id,
+    }
+
     if (approve) {
       approving = true
     } else {
-      denying = true
+      reviewing = true
+      while (reviewing) {
+        await new Promise(res => setTimeout(res, 1000))
+      }
+      if (!denying) return
+      if (denyReason != "") {
+        registrationApplicationAnswer.deny_reason = denyReason
+      }
     }
 
+
+
     try {
-      await getClient().approveRegistrationApplication({
-        approve: approve,
-        id: application.registration_application.id,
-      })
+      await getClient().approveRegistrationApplication(registrationApplicationAnswer)
       toast({
         content: `Successfully ${
           approve ? 'approved' : 'denied'
@@ -37,6 +51,7 @@
       })
       application.creator_local_user.accepted_application = approve
       application.admin = $profile.user!.local_user_view.person
+      application.registration_application.deny_reason = denyReason
 
       $profile.user!.notifications.applications -= 1
     } catch (err) {
@@ -48,9 +63,13 @@
 
     approving = false
     denying = false
+    denyReason = ''
   }
 </script>
 
+{#if reviewing}
+  <ApplicationDenyModal bind:open={reviewing} bind:denying bind:denyReason user={application.creator}/>
+{/if}
 <Material class="flex flex-col gap-2">
   <div class="flex flex-col gap-1">
     <span class="text-slate-600 dark:text-zinc-400">
@@ -70,40 +89,56 @@
   </div>
   <div class="flex flex-col md:flex-row gap-2 md:items-center">
     {#if application.admin}
-      <div class="flex items-center gap-1 text-sm">
-        <SectionTitle>
+      {#if typeof application.registration_application.deny_reason !== 'undefined' && application.registration_application.deny_reason !== ''}
+        <div>
+          <div class="flex items-center gap-1 text-sm">
+            <SectionTitle>
+              {application.creator_local_user.accepted_application
+                      ? 'Approved'
+                      : 'Denied'} by
+            </SectionTitle>
+            <UserLink avatar user={application.admin} />
+            <SectionTitle>:</SectionTitle>
+          </div>
+          <p>{application.registration_application.deny_reason}</p>
+        </div>
+        <div class="md:ml-auto" />
+      {:else}
+        <div class="flex items-center gap-1 text-sm">
+          <SectionTitle>
           {application.creator_local_user.accepted_application
-            ? 'Approved'
-            : 'Denied'} by
-        </SectionTitle>
-        <UserLink avatar user={application.admin} />
-      </div>
-      <div class="md:ml-auto" />
+                  ? 'Approved'
+                  : 'Denied'} by
+          </SectionTitle>
+          <UserLink avatar user={application.admin} />
+        </div>
+        <div class="md:ml-auto" />
+      {/if}
     {/if}
     <div class="ml-auto">
       <Button
-        size="square-md"
-        class="hover:bg-slate-200 {application.creator_local_user
-          .accepted_application === false && application.admin
-          ? '!text-red-500'
-          : ''}"
-        aria-label="Deny"
-        on:click={() => review(false)/* Instead of finishing the review add a Textbox and transform the X into a "Deny"*/}
-        loading={denying}
-        disabled={approving || denying}
+              size="square-md"
+              class="hover:bg-slate-200 {application.creator_local_user
+         .accepted_application === false && application.admin
+         ? '!text-red-500'
+         : ''}"
+              aria-label="Deny"
+              on:click={() => review(false)}
+              loading={denying || reviewing}
+              disabled={approving || denying || reviewing}
       >
         <Icon src={XMark} mini size="16" slot="prefix" />
       </Button>
       <Button
-        size="square-md"
-        class="hover:bg-slate-200 {application.creator_local_user
-          .accepted_application
-          ? '!text-green-500'
-          : ''}"
-        aria-label="Approve"
-        on:click={() => review(true)}
-        loading={approving}
-        disabled={approving || denying}
+              size="square-md"
+              class="hover:bg-slate-200 {application.creator_local_user
+         .accepted_application
+         ? '!text-green-500'
+         : ''}"
+              aria-label="Approve"
+              on:click={() => review(true)}
+              loading={approving}
+              disabled={approving || denying || reviewing}
       >
         <Icon src={Check} mini size="16" slot="prefix" />
       </Button>
