@@ -1,6 +1,6 @@
 {
   "name": "photon-lemmy",
-  "version": "1.22.2",
+  "version": "1.23.0",
   "private": true,
   "scripts": {
     "dev": "vite dev",

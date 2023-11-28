@@ -1,18 +1,24 @@
 <script lang="ts">
   import Empty from '$lib/components/helper/Empty.svelte'
   import PostLink from '$lib/components/lemmy/post/PostLink.svelte'
-  import { bestImageURL, postLink } from '$lib/components/lemmy/post/helpers.js'
+  import {
+    bestImageURL,
+    postLink,
+    type MediaType,
+  } from '$lib/components/lemmy/post/helpers.js'
   import ExpandableImage from '$lib/components/ui/ExpandableImage.svelte'
   import { userSettings } from '$lib/settings.js'
   import { isImage, isVideo } from '$lib/ui/image'
   import type { Post } from 'lemmy-js-client'
   import { Icon, VideoCamera } from 'svelte-hero-icons'
+  import PostIframe from './PostIframe.svelte'
 
   export let view: 'card' | 'cozy' | 'list' | 'compact' = 'cozy'
   export let post: Post
+  export let type: MediaType = 'none'
 </script>
 
-{#if isImage(post.url)}
+{#if type == 'image'}
   {#if view == 'card' || view == 'cozy'}
     <!--disabled preloads here since most people will hover over every image while scrolling-->
     <svelte:component
@@ -71,7 +77,7 @@
       </svelte:element>
     </svelte:component>
   {/if}
-{:else if isVideo(post.url) && (view == 'cozy' || view == 'card')}
+{:else if type == 'video' && (view == 'cozy' || view == 'card')}
   <a
     href={postLink(post)}
     style="height: 300px;"
@@ -85,7 +91,9 @@
     <span class="font-bold text-2xl">Video</span>
     <p class="text-base">Go to the post to view this video.</p>
   </a>
-{:else if post.url}
+{:else if type == 'iframe' && (view == 'cozy' || view == 'card') && post.url}
+  <PostIframe type="youtube" url={post.url} />
+{:else if type == 'embed' && post.url}
   <PostLink
     url={post.url}
     thumbnail_url={post.thumbnail_url}

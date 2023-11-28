@@ -155,6 +155,20 @@
     {/if}
   </Section>
 
+  <Section title="Embeds">
+    <Setting>
+      <span slot="title">YouTube</span>
+      <span slot="description">
+        The website to use to embed YouTube content.
+      </span>
+      <Select bind:value={$userSettings.embeds.youtube}>
+        <option value="youtube">YouTube</option>
+        <option value="invidious">Invidious</option>
+        <option value="piped">Piped</option>
+      </Select>
+    </Setting>
+  </Section>
+
   <Section title="Lemmy">
     <ToggleSetting
       bind:checked={$userSettings.markPostsAsRead}

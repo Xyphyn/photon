@@ -9,7 +9,11 @@
   import { Material, toast } from 'mono-svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import ExpandableImage from '$lib/components/ui/ExpandableImage.svelte'
-  import { bestImageURL, postLink } from '$lib/components/lemmy/post/helpers.js'
+  import {
+    bestImageURL,
+    mediaType,
+    postLink,
+  } from '$lib/components/lemmy/post/helpers.js'
   import Empty from '$lib/components/helper/Empty.svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
   import { Icon, VideoCamera } from 'svelte-hero-icons'
@@ -70,7 +74,11 @@
           </a>
         {/if}
       </div>
-      <PostMedia bind:post={post.post} {view} />
+      <PostMedia
+        bind:post={post.post}
+        {view}
+        type={mediaType(post.post, view)}
+      />
       {#if post.post.body && !post.post.nsfw && view != 'compact'}
         <div
           class="text-sm relative overflow-hidden

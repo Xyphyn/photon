@@ -75,6 +75,10 @@ interface Settings {
 
   openLinksInNewTab: boolean
   crosspostOriginalLink: boolean
+
+  embeds: {
+    youtube: 'youtube' | 'invidious' | 'piped'
+  }
 }
 
 export const defaultSettings: Settings = {
@@ -124,7 +128,10 @@ export const defaultSettings: Settings = {
   markPostsAsRead: true,
   separateVotes: false,
   openLinksInNewTab: false,
-  crosspostOriginalLink: true
+  crosspostOriginalLink: true,
+  embeds: {
+    youtube: 'youtube',
+  }
 }
 
 export const userSettings = writable(defaultSettings)
