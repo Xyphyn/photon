@@ -75,6 +75,22 @@
   </div>
   <div class="flex flex-col md:flex-row md:items-center gap-2 w-full">
     <ObjectAutocomplete
+      type="instance"
+      placeholder="Filter by instance"
+      jwt={$profile?.jwt}
+      showWhenEmpty={true}
+      label="Instance"
+      class="flex-1"
+      q={$page.url.searchParams.get('instance') || ''}
+      on:select={(e) =>
+        searchParam(
+          $page.url,
+          'instance',
+          e.detail?.domain.toString() ?? '',
+          'page', 'community', 'user', 'mod_id'
+        )}
+    />
+    <ObjectAutocomplete
       placeholder="Filter by community"
       jwt={$profile?.jwt}
       listing_type="All"
@@ -91,6 +107,7 @@
         )}
     />
     <UserAutocomplete
+      instance={$page.url.searchParams.get('instance') || undefined}
       placeholder="Filter by user"
       jwt={$profile?.jwt}
       listing_type="All"

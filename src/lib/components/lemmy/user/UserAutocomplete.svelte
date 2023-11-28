@@ -9,6 +9,7 @@
 
   export let q: string = ''
 
+  export let instance: string | undefined = undefined
   export let listing_type: ListingType = 'Subscribed'
   export let showWhenEmpty: boolean = false
 
@@ -17,7 +18,7 @@
 
 <Search
   search={async (q) => {
-    const results = await getClient().search({
+    const results = await getClient(instance).search({
       q: q || ' ',
       type_: 'Users',
       limit: 20,

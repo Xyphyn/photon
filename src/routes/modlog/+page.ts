@@ -203,6 +203,7 @@ export const _toModLog = (item: ModAction): ModLog => {
 }
 
 export async function load({ url }) {
+  let instance = url.searchParams.get('instance') || undefined
   let community = Number(url.searchParams.get('community')) || undefined
   let user = Number(url.searchParams.get('user')) || undefined
   let modId = Number(url.searchParams.get('mod_id')) || undefined
@@ -210,7 +211,7 @@ export async function load({ url }) {
   let type: ModlogActionType =
     (url.searchParams.get('type') as ModlogActionType) || 'All'
 
-  const results = await getClient().getModlog({
+  const results = await getClient(instance).getModlog({
     community_id: community,
     limit: 40,
     type_: type,
