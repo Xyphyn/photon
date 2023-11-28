@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { PUBLIC_SSR_ENABLED } from '$env/static/public'
   import { md, mdInline, photonify } from '$lib/components/markdown/markdown'
   import { onMount } from 'svelte'
 
@@ -36,9 +37,12 @@
     From server to client, the rendered html won't change for some reason
     I have no clue why this fixes it, but it does.
   */
-  onMount(() => {
-    rendered = `${rendered} `
-  })
+  if (PUBLIC_SSR_ENABLED.toLowerCase() == 'true') {
+    onMount(() => {
+      rendered = `${rendered} `
+      replaceURLs(div, rendered)
+    })
+  }
 </script>
 
 <div
