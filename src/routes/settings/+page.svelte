@@ -167,6 +167,11 @@
       description="Fade the title of posts you've already read."
     />
     <ToggleSetting
+      bind:checked={$userSettings.crosspostOriginalLink}
+      title="'Crossposted from' when crossposting"
+      description="If enabled, crossposts will include a link to the original post."
+    />
+    <ToggleSetting
       bind:checked={$userSettings.nsfwBlur}
       title="NSFW blur"
       description="Blur images and remove post bodies of NSFW content."

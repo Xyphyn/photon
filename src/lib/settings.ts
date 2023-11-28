@@ -74,6 +74,7 @@ interface Settings {
   separateVotes: boolean
 
   openLinksInNewTab: boolean
+  crosspostOriginalLink: boolean
 }
 
 export const defaultSettings: Settings = {
@@ -122,7 +123,8 @@ export const defaultSettings: Settings = {
   newWidth: true,
   markPostsAsRead: true,
   separateVotes: false,
-  openLinksInNewTab: false
+  openLinksInNewTab: false,
+  crosspostOriginalLink: true
 }
 
 export const userSettings = writable(defaultSettings)

@@ -186,7 +186,11 @@
       <MenuButton
         on:click={() => {
           setSessionStorage('postDraft', {
-            body: `cross-posted from: ${post.post.ap_id}\n${
+            body: `${
+              $userSettings.crosspostOriginalLink
+                ? `cross-posted from: ${post.post.ap_id}`
+                : ``
+            }\n${
               post.post.body
                 ? '>' + post.post.body.split('\n').join('\n> ')
                 : ''
