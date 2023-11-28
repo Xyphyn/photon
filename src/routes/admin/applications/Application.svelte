@@ -88,7 +88,7 @@
           ? '!text-red-500'
           : ''}"
         aria-label="Deny"
-        on:click={() => review(false)}
+        on:click={() => review(false)/* Instead of finishing the review add a Textbox and transform the X into a "Deny"*/}
         loading={denying}
         disabled={approving || denying}
       >
