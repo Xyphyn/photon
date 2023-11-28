@@ -16,6 +16,7 @@
   export let view: 'card' | 'cozy' | 'list' | 'compact' = 'cozy'
   export let post: Post
   export let type: MediaType = 'none'
+  export let opened: boolean | undefined = undefined
 </script>
 
 {#if type == 'image'}
@@ -92,7 +93,12 @@
     <p class="text-base">Go to the post to view this video.</p>
   </a>
 {:else if type == 'iframe' && (view == 'cozy' || view == 'card') && post.url}
-  <PostIframe thumbnail={post.thumbnail_url} type="youtube" url={post.url} />
+  <PostIframe
+    thumbnail={post.thumbnail_url}
+    type="youtube"
+    url={post.url}
+    {opened}
+  />
 {:else if type == 'embed' && post.url}
   <PostLink
     url={post.url}

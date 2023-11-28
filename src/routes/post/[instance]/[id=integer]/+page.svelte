@@ -44,6 +44,8 @@
   import { userSettings } from '$lib/settings.js'
   import { feature } from '$lib/version.js'
   import { publishedToDate } from '$lib/components/util/date.js'
+  import PostMedia from '$lib/components/lemmy/post/media/PostMedia.svelte'
+  import { mediaType } from '$lib/components/lemmy/post/helpers.js'
 
   export let data
 
@@ -178,25 +180,11 @@
   <h1 class="font-bold text-lg">
     <Markdown source={post.post_view.post.name} inline />
   </h1>
-  {#if isImage(post.post_view.post.url)}
-    <img
-      src={post.post_view.post.url}
-      alt={post.post_view.post.name}
-      class="rounded-md max-w-screen max-h-[80svh] mx-auto"
-    />
-  {:else if isVideo(post.post_view.post.url)}
-    <!-- svelte-ignore a11y-media-has-caption -->
-    <video class="rounded-md max-w-screen max-h-[80svh] mx-auto" controls>
-      <source src={post.post_view.post.url} />
-    </video>
-  {:else if post.post_view.post.url}
-    <PostLink
-      url={post.post_view.post.url}
-      embed_description={post.post_view.post.embed_description}
-      embed_title={post.post_view.post.embed_title}
-      thumbnail_url={post.post_view.post.thumbnail_url}
-    />
-  {/if}
+  <PostMedia
+    type={mediaType(post.post_view.post)}
+    post={post.post_view.post}
+    opened
+  />
   {#if post.post_view.post.body}
     <div
       class="text-sm text-slate-800 dark:text-zinc-300 rounded-md leading-[22px]"
@@ -319,16 +307,18 @@
     nodes={buildCommentsTree(data.comments.comments)}
     isParent={true}
   />
-  <EndPlaceholder>
-    You've viewed {post.post_view.counts.comments} comments.
+  {#if post.post_view.counts.comments > 5}
+    <EndPlaceholder>
+      You've viewed {post.post_view.counts.comments} comments.
 
-    <Button
-      color="tertiary"
-      on:click={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-      slot="action"
-    >
-      <Icon src={ChevronDoubleUp} mini size="16" slot="prefix" />
-      Scroll to top
-    </Button>
-  </EndPlaceholder>
+      <Button
+        color="tertiary"
+        on:click={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        slot="action"
+      >
+        <Icon src={ChevronDoubleUp} mini size="16" slot="prefix" />
+        Scroll to top
+      </Button>
+    </EndPlaceholder>
+  {/if}
 </div>

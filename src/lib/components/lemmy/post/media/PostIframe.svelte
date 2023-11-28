@@ -27,7 +27,7 @@
   export let type: IframeType = 'none'
   export let thumbnail: string | undefined = undefined
   export let url: string
-  let opened = !$userSettings.embeds.clickToView
+  export let opened = !$userSettings.embeds.clickToView
 
   const urlToEmbed = (inputUrl: string) => {
     if (type == 'youtube') {
