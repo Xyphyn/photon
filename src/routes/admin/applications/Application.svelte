@@ -115,7 +115,7 @@
         <div class="md:ml-auto" />
       {/if}
     {/if}
-    <div class="ml-auto">
+    <div class="ml-auto self-end">
       <Button
         size="square-md"
         class="hover:bg-slate-200 {application.creator_local_user
