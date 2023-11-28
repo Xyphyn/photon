@@ -25,16 +25,16 @@
     <h1 class="text-2xl font-bold" slot="title">Deny Application</h1>
     <form on:submit|preventDefault={() => deny()} class="flex flex-col gap-4">
         <p class="inline-flex flex-row gap-2 items-center">
-            Denying <UserLink avatar {user} />'s Application
+          Denying <UserLink avatar {user} />'s Application
         </p>
         <MarkdownEditor
-                bind:value={denyReason}
-                label="Deny Reason (optional)"
-                placeholder="Application Reason breaks rule #3"
-                rows={4}
+          bind:value={denyReason}
+          label="Deny Reason (optional)"
+          placeholder="Application Reason breaks rule #3"
+          rows={4}
         />
         <Button color="primary" size="lg" submit {loading} disabled={loading}>
-            Deny
+          Deny
         </Button>
     </form>
 </Modal>

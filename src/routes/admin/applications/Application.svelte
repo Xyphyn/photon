@@ -94,8 +94,8 @@
           <div class="flex items-center gap-1 text-sm">
             <SectionTitle>
               {application.creator_local_user.accepted_application
-                      ? 'Approved'
-                      : 'Denied'} by
+                ? 'Approved'
+                : 'Denied'} by
             </SectionTitle>
             <UserLink avatar user={application.admin} />
             <SectionTitle>:</SectionTitle>
@@ -107,8 +107,8 @@
         <div class="flex items-center gap-1 text-sm">
           <SectionTitle>
           {application.creator_local_user.accepted_application
-                  ? 'Approved'
-                  : 'Denied'} by
+            ? 'Approved'
+            : 'Denied'} by
           </SectionTitle>
           <UserLink avatar user={application.admin} />
         </div>
@@ -117,28 +117,28 @@
     {/if}
     <div class="ml-auto">
       <Button
-              size="square-md"
-              class="hover:bg-slate-200 {application.creator_local_user
-         .accepted_application === false && application.admin
-         ? '!text-red-500'
-         : ''}"
-              aria-label="Deny"
-              on:click={() => review(false)}
-              loading={denying || reviewing}
-              disabled={approving || denying || reviewing}
+        size="square-md"
+        class="hover:bg-slate-200 {application.creator_local_user
+          .accepted_application === false && application.admin
+          ? '!text-red-500'
+          : ''}"
+        aria-label="Deny"
+        on:click={() => review(false)}
+        loading={denying || reviewing}
+        disabled={approving || denying || reviewing}
       >
         <Icon src={XMark} mini size="16" slot="prefix" />
       </Button>
       <Button
-              size="square-md"
-              class="hover:bg-slate-200 {application.creator_local_user
-         .accepted_application
-         ? '!text-green-500'
-         : ''}"
-              aria-label="Approve"
-              on:click={() => review(true)}
-              loading={approving}
-              disabled={approving || denying || reviewing}
+        size="square-md"
+        class="hover:bg-slate-200 {application.creator_local_user
+          .accepted_application
+          ? '!text-green-500'
+          : ''}"
+        aria-label="Approve"
+        on:click={() => review(true)}
+        loading={approving}
+        disabled={approving || denying || reviewing}
       >
         <Icon src={Check} mini size="16" slot="prefix" />
       </Button>
