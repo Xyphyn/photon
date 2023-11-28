@@ -86,7 +86,7 @@
     {#if thumbnail}
       <img
         src={thumbnail}
-        class="absolute top-0 left-0 -z-10 brightness-[25%]"
+        class="absolute top-0 left-0 -z-10 brightness-[25%] w-full object-cover h-full"
         alt=""
       />
     {:else}
