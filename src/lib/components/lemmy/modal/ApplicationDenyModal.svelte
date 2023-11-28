@@ -1,10 +1,8 @@
 <script lang="ts">
-    import { profile } from '$lib/auth.js'
     import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
     import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
-    import { getClient } from '$lib/lemmy.js'
     import type { Person } from 'lemmy-js-client'
-    import { Button, Modal, toast } from 'mono-svelte'
+    import { Button, Modal } from 'mono-svelte'
 
     export let open: boolean = false
     export let user: Person
