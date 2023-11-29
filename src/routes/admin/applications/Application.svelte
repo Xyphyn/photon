@@ -33,7 +33,10 @@
       while (reviewing) {
         await new Promise(res => setTimeout(res, 1000))
       }
-      if (!denying) return
+      if (!denying) {
+        denyReason = ""
+        return
+      }
       if (denyReason != "") {
         registrationApplicationAnswer.deny_reason = denyReason
       }
