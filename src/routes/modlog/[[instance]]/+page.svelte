@@ -5,8 +5,8 @@
   import ObjectAutocomplete from '$lib/components/lemmy/ObjectAutocomplete.svelte'
   import { profile } from '$lib/auth.js'
   import { userSettings } from '$lib/settings.js'
-  import ModlogItemCard from './item/ModlogItemCard.svelte'
-  import ModlogItemTable from './item/ModlogItemTable.svelte'
+  import ModlogItemCard from '../item/ModlogItemCard.svelte'
+  import ModlogItemTable from '../item/ModlogItemTable.svelte'
   import { Select } from 'mono-svelte'
   import {
     Bars3BottomRight,
@@ -81,7 +81,7 @@
       showWhenEmpty={true}
       label="Instance"
       class="flex-1"
-      q={$page.url.searchParams.get('instance') || ''}
+      q={$page.params.instance}
       on:select={(e) =>
         searchParam(
           $page.url,
@@ -97,7 +97,7 @@
       showWhenEmpty={true}
       label="Community"
       class="flex-1"
-      instance={$page.url.searchParams.get('instance') || undefined}
+      instance={$page.params.instance}
       q={$page.url.searchParams.get('community') ? 'Selected' : ''}
       on:select={(e) =>
         searchParam(
@@ -114,7 +114,7 @@
       showWhenEmpty={true}
       class="flex-1"
       label="User"
-      instance={$page.url.searchParams.get('instance') || undefined}
+      instance={$page.params.instance}
       q={$page.url.searchParams.get('user') ? 'Selected' : ''}
       on:select={(e) =>
         searchParam($page.url, 'user', e.detail?.id.toString() ?? '', 'page')}
@@ -127,7 +127,7 @@
         showWhenEmpty={true}
         class="flex-1"
         label="Moderator"
-        instance={$page.url.searchParams.get('instance') || undefined}
+        instance={$page.params.instance}
         q={$page.url.searchParams.get('mod_id') ? 'Selected' : ''}
         on:select={(e) =>
           searchParam(
