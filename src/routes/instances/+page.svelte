@@ -1,13 +1,38 @@
 <script lang="ts">
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
+  import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
-  import type { Instance } from 'lemmy-js-client'
-  import { Material, Popover } from 'mono-svelte'
+  import { getClient } from '$lib/lemmy.js';
+  import { Material, MenuButton, Modal, Popover, Spinner } from 'mono-svelte'
   import { Check, Icon, InformationCircle } from 'svelte-hero-icons'
+  import type { Instance } from 'lemmy-js-client';
 
   export let data
+
+  let instance: string | undefined = undefined
+  let modalOpen: boolean = false
+
+  const showModal = (_instance: Instance) => {
+    instance = _instance.domain
+    modalOpen = !modalOpen
+  }
 </script>
+
+<Modal bind:open={modalOpen}>
+  {#await getClient(instance).getSite()}
+    <Spinner />
+  {:then site}
+  <SiteCard
+    site={site.site_view}
+    taglines={site.taglines}
+    admins={site.admins}
+    version={site.version}
+  />
+  {:catch}
+    <p>Not a Lemmy instance</p>
+  {/await}
+</Modal>
 
 <h1 class="font-bold text-3xl mb-4">Linked Instances</h1>
 {#if data}
@@ -30,16 +55,18 @@
         {#if data.linked && data.linked.length > 0}
           {#each data.linked?.sort((b, a) => b.id - a.id) as instance}
             <div class="flex justify-between items-center first:pt-0 last:pb-0">
-              <div class="flex flex-col">
-                <span class="font-medium">{instance.domain}</span>
-                <span
-                  class="text-xs text-slate-600 dark:text-zinc-400 capitalize"
-                >
-                  {instance.software ?? 'Unknown'} • <RelativeDate
-                    date={publishedToDate(instance.published)}
-                  />
-                </span>
-              </div>
+              <MenuButton on:click={() => showModal(instance)}>
+                <div class="flex flex-col">
+                  <span class="font-medium">{instance.domain}</span>
+                  <span
+                    class="text-xs text-slate-600 dark:text-zinc-400 capitalize"
+                  >
+                    {instance.software ?? 'Unknown'} • <RelativeDate
+                      date={publishedToDate(instance.published)}
+                    />
+                  </span>
+                </div>
+              </MenuButton>
             </div>
           {/each}
         {:else}
