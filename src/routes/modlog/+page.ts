@@ -249,5 +249,10 @@ export async function load({ url }) {
     page: page,
     type: type,
     modlog: moderationActions,
+    filters: {
+      user: user ? moderationActions[0]?.moderatee?.name : undefined,
+      community: community ? moderationActions[0]?.community?.title : undefined,
+      moderator: modId ? moderationActions[0]?.moderator?.name : undefined
+    }
   }
 }

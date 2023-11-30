@@ -7,22 +7,25 @@
   import { userSettings } from '$lib/settings.js'
   import ModlogItemCard from './item/ModlogItemCard.svelte'
   import ModlogItemTable from './item/ModlogItemTable.svelte'
-  import { Select } from 'mono-svelte'
+  import { Button, Select } from 'mono-svelte'
   import {
     Bars3BottomRight,
     Icon,
     MagnifyingGlass,
     ViewColumns,
+    XMark,
   } from 'svelte-hero-icons'
   import UserAutocomplete from '$lib/components/lemmy/user/UserAutocomplete.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { isAdmin } from '$lib/components/lemmy/moderation/moderation.js'
+  import { browser } from '$app/environment'
 
   export let data
 
   let view = `${
-    $userSettings.modlogCardView ??
-    !window.matchMedia('(min-width: 1600px)').matches
+    $userSettings.modlogCardView ?? browser
+      ? !window.matchMedia('(min-width: 1600px)').matches
+      : false
   }`
 
   $: $userSettings.modlogCardView =
@@ -87,7 +90,10 @@
           $page.url,
           'instance',
           e.detail?.domain.toString() ?? '',
-          'page', 'community', 'user', 'mod_id'
+          'page',
+          'community',
+          'user',
+          'mod_id'
         )}
     />
     <ObjectAutocomplete
@@ -114,7 +120,9 @@
       showWhenEmpty={true}
       class="flex-1"
       label="User"
-      q={$page.url.searchParams.get('user') ? 'Selected' : ''}
+      q={$page.url.searchParams.get('user')
+        ? data.filters.user ?? 'Selected'
+        : ''}
       on:select={(e) =>
         searchParam($page.url, 'user', e.detail?.id.toString() ?? '', 'page')}
     />
@@ -126,7 +134,9 @@
         showWhenEmpty={true}
         class="flex-1"
         label="Moderator"
-        q={$page.url.searchParams.get('mod_id') ? 'Selected' : ''}
+        q={$page.url.searchParams.get('mod_id')
+          ? data.filters.moderator ?? 'Selected'
+          : ''}
         on:select={(e) =>
           searchParam(
             $page.url,
@@ -136,6 +146,24 @@
           )}
       />
     {/if}
+    <Button
+      on:click={() => {
+        searchParam(
+          $page.url,
+          '',
+          '',
+          'user',
+          'moderator',
+          'community',
+          'instance'
+        )
+      }}
+      size="square-lg"
+      class="self-end flex-shrink-0"
+      title="Clear filters"
+    >
+      <Icon src={XMark} size="16" mini />
+    </Button>
   </div>
   {#if data.modlog && data.modlog.length > 0}
     {#if $userSettings.modlogCardView ?? !window.matchMedia('(min-width: 1600px)').matches}
