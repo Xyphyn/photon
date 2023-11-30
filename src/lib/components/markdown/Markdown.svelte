@@ -14,7 +14,12 @@
 
     links.forEach((l) => {
       const photonified = photonify(l.href)
+
       if (photonified) l.href = photonified
+      else {
+        l.target = '_blank'
+        l.rel = 'noopener noreferrer'
+      }
     })
   }
 

@@ -23,6 +23,7 @@
     "jsdom": "^22.1.0",
     "lemmy-js-client": "^0.19.0-rc.13",
     "markdown-it-container": "^3.0.0",
+    "markdown-it-html5-media": "^0.7.1",
     "markdown-it-sub": "^1.0.0",
     "markdown-it-sup": "^1.0.0",
     "nprogress": "^0.2.0",
