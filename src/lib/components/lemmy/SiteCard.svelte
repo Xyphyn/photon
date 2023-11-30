@@ -5,7 +5,7 @@
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
-  import { getClient } from '$lib/lemmy.js'
+  import { site as instance } from '$lib/lemmy.js'
   import type { PersonView, SiteView, Tagline } from 'lemmy-js-client'
   import { Button, Popover } from 'mono-svelte'
   import {
@@ -23,6 +23,10 @@
   export let taglines: Tagline[] | undefined = undefined
   export let admins: PersonView[] | undefined = undefined
   export let version: string | undefined = undefined
+  
+  const siteLink = (href: string) => 
+    site.site.actor_id !== $instance?.site_view.site.actor_id ? 
+      `${href}/${new URL(site.site.actor_id).hostname}` : href
 </script>
 
 <StickyCard class="w-full {$$props.class}">
@@ -60,18 +64,18 @@
     </span>
   </div>
   <div class="flex flex-col 3xl:flex-row 3xl:items-center gap-2 3xl:gap-0">
-    <Button href="/modlog" class="3xl:rounded-r-none">
+    <Button href={siteLink("/modlog")} class="3xl:rounded-r-none">
       <Icon src={Newspaper} size="16" mini />
       Modlog
     </Button>
     <Button
-      href="/legal"
+      href={siteLink("/legal")}
       class="3xl:rounded-l-none 3xl:rounded-r-none 3xl:border-x-0"
     >
       <Icon src={BuildingOffice} size="16" mini />
       Legal
     </Button>
-    <Button href="/instances" class="3xl:rounded-l-none">
+    <Button href={siteLink("/instances")} class="3xl:rounded-l-none">
       <Icon src={ServerStack} size="16" mini />
       Instances
     </Button>
