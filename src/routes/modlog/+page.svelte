@@ -97,6 +97,7 @@
       showWhenEmpty={true}
       label="Community"
       class="flex-1"
+      instance={$page.url.searchParams.get('instance') || undefined}
       q={$page.url.searchParams.get('community') ? 'Selected' : ''}
       on:select={(e) =>
         searchParam(
@@ -107,13 +108,13 @@
         )}
     />
     <UserAutocomplete
-      instance={$page.url.searchParams.get('instance') || undefined}
       placeholder="Filter by user"
       jwt={$profile?.jwt}
       listing_type="All"
       showWhenEmpty={true}
       class="flex-1"
       label="User"
+      instance={$page.url.searchParams.get('instance') || undefined}
       q={$page.url.searchParams.get('user') ? 'Selected' : ''}
       on:select={(e) =>
         searchParam($page.url, 'user', e.detail?.id.toString() ?? '', 'page')}
@@ -126,6 +127,7 @@
         showWhenEmpty={true}
         class="flex-1"
         label="Moderator"
+        instance={$page.url.searchParams.get('instance') || undefined}
         q={$page.url.searchParams.get('mod_id') ? 'Selected' : ''}
         on:select={(e) =>
           searchParam(
