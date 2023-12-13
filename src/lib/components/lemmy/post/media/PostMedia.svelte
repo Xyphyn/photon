@@ -5,6 +5,7 @@
     bestImageURL,
     postLink,
     type MediaType,
+    iframeType,
   } from '$lib/components/lemmy/post/helpers.js'
   import ExpandableImage from '$lib/components/ui/ExpandableImage.svelte'
   import { userSettings } from '$lib/settings.js'
@@ -95,7 +96,7 @@
 {:else if type == 'iframe' && (view == 'cozy' || view == 'card') && post.url}
   <PostIframe
     thumbnail={post.thumbnail_url}
-    type="youtube"
+    type={iframeType(post)}
     url={post.url}
     {opened}
   />

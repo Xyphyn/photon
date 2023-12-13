@@ -30,6 +30,10 @@
   export let opened = !$userSettings.embeds.clickToView
 
   const urlToEmbed = (inputUrl: string) => {
+    if (type == 'video') {
+      return inputUrl
+    }
+
     if (type == 'youtube') {
       const url = new URL(inputUrl)
       const videoID = url.searchParams.get('v')
@@ -56,6 +60,12 @@
           text: 'YouTube Video',
         }
       }
+      case 'video': {
+        return {
+          icon: VideoCamera,
+          text: 'Video',
+        }
+      }
       default: {
         return {
           icon: PuzzlePiece,
@@ -70,18 +80,25 @@
 </script>
 
 {#if opened}
-  <iframe
-    src={embedUrl}
-    title="Embed player"
-    frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowfullscreen
-    class="aspect-video rounded-xl dark:bg-zinc-900"
-  />
+  {#if type == 'video'}
+    <!-- svelte-ignore a11y-media-has-caption -->
+    <video controls class="rounded-xl aspect-video">
+      <source src={url} />
+    </video>
+  {:else}
+    <iframe
+      src={embedUrl}
+      title="Embed player"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen
+      class="aspect-video rounded-xl dark:bg-zinc-900"
+    />
+  {/if}
 {:else}
   <button
     on:click={() => (opened = true)}
-    class="aspect-video w-full h-full z-0 overflow-hidden relative rounded-xl flex flex-col gap-2 items-center justify-center"
+    class="aspect-video w-full h-full z-0 overflow-hidden relative rounded-xl flex flex-col gap-2 items-center justify-center text-white"
   >
     {#if thumbnail}
       <img

@@ -27,26 +27,31 @@ export const bestImageURL = (
   return post.url ?? ''
 }
 
-const YOUTUBE_REGEX = /^(?:https?:\/\/)?(?:www\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=)?(\w|-){11}$/
+const YOUTUBE_REGEX = /^(?:(?:https?:)?\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/
 
-export const isYoutubeLink = (url?: string): boolean => {
-  if (!url) return false
+export const isYoutubeLink = (url?: string): RegExpMatchArray | null => {
+  if (!url) return null
 
-  return YOUTUBE_REGEX.test(url)
+  return url.match(url)
 }
 
 export const postLink = (post: Post) => `/post/${getInstance()}/${post.id}`
 
 export type MediaType = 'video' | 'image' | 'iframe' | 'embed' | 'none'
-export type IframeType = 'youtube' | 'none'
+export type IframeType = 'youtube' | 'video' | 'none'
 
 export const mediaType = (post: Post, view: View = 'cozy'): MediaType => {
   if (post.url) {
     if (isImage(post.url)) return 'image'
-    if (isVideo(post.url)) return 'video'
+    if (isVideo(post.url)) return 'iframe'
     if (isYoutubeLink(post.url)) return 'iframe'
     return 'embed'
   }
 
+  return 'none'
+}
+export const iframeType = (post: Post): IframeType => {
+  if (isVideo(post.url)) return 'video'
+  if (isYoutubeLink(post.url)) return 'youtube'
   return 'none'
 }
