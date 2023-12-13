@@ -48,16 +48,18 @@ There you go, you now have an instance of Photon running.
 
 The most common settings you'll use are `PUBLIC_INSTANCE_URL`. Some selfhosters with `PUBLIC_SSR_ENABLED` set to true might want the instance url to be different for the server. You can use the `PUBLIC_INTERNAL_INSTANCE` variable for that.
 
+`PUBLIC_MIGRATE_COOKIE` is useful if you want to switch Photon to your default frontend. It'll convert the logged in cookie from lemmy-ui to a Photon account. It will only work if you have `PUBLIC_INSTANCE_URL` set, and it will login with that instance.
+
 The following environment variables can be set to override the default settings:
 
 
 | Variable                        | Values              | Default Value                          |
-| --------------------------------- | --------------------- | ---------------------------------------- |
+| ------------------------------- | ------------------- | -------------------------------------- |
 | PUBLIC_INSTANCE_URL             | URL                 | `lemmy.ml`                             |
 | PUBLIC_INTERNAL_INSTANCE        | URL?                | null                                   |
 | PUBLIC_LOCK_TO_INSTANCE         | `bool`              | `true` if `PUBLIC_INSTANCE_URL` is set |
 | PUBLIC_SSR_ENABLED              | `bool`              | `false`                                |
-|                                 |                     |                                        |
+| PUBLIC_MIGRATE_COOKIE           | `bool`              | `false`                                |
 | PUBLIC_THEME                    | system\|dark\|light | system                                 |
 | PUBLIC_EXPANDABLE_IMAGES        | `bool`              | true                                   |
 | PUBLIC_MARK_READ_POSTS          | `bool`              | true                                   |

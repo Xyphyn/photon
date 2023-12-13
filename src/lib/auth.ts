@@ -14,6 +14,8 @@ import {
 } from 'lemmy-js-client'
 import { get, writable } from 'svelte/store'
 import { MINIMUM_VERSION, versionIsSupported } from '$lib/version.js'
+import { browser } from '$app/environment'
+import { env } from '$env/dynamic/public'
 
 const getDefaultProfile = (): Profile => ({
   id: -1,
@@ -61,6 +63,14 @@ interface PersonData extends MyUserInfo {
   }
 }
 
+const getCookie = (key: string): string | undefined => {
+  if (!browser) return undefined
+
+  // sorry i was dying when i wrote this line
+  // ask chatgpt or something to explain this for you
+  return document?.cookie?.split(';').map(c => c.trim()).find(c => c.split('=')?.[0] == key)?.split('=')?.[1]
+}
+
 export let profileData = writable<ProfileData>(
   getFromStorage<ProfileData>('profileData') ?? { profiles: [], profile: -1 }
 )
@@ -78,6 +88,23 @@ profileData.subscribe(async (pd) => {
     instance?.set(get(profileData).defaultInstance ?? DEFAULT_INSTANCE_URL)
   }
 })
+
+if (env.PUBLIC_MIGRATE_COOKIE && get(profileData).profiles.length == 0 && env.PUBLIC_INSTANCE_URL) {
+  const jwt = getCookie('jwt')
+  if (jwt) {
+    new Promise(async () => {
+        const user = await userFromJwt(jwt, env.PUBLIC_INSTANCE_URL)
+        if (!user) return
+
+        const result = await setUser(jwt, env.PUBLIC_INSTANCE_URL, user?.user.local_user_view.person.name)
+  
+        if (result) 
+          toast({ content: 'Your instance migrated to Photon, and you were logged in using a leftover cookie.', type: 'success' })
+      
+    })
+    
+  }
+}
 
 export let profile = writable<Profile | undefined>(getProfile())
 

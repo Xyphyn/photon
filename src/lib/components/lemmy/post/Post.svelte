@@ -25,6 +25,8 @@
   export let hideCommunity = false
   export let view = $userSettings.view
 
+  $: type = mediaType(post.post.url, view)
+
   let loaded = false
 </script>
 
@@ -35,8 +37,8 @@
   {view != 'card' ? 'bg-transparent !border-0' : 'p-5'} {view == 'compact'
     ? 'py-4'
     : view == 'list'
-    ? 'py-5'
-    : 'py-5'} {$$props.class}"
+      ? 'py-5'
+      : 'py-5'} {$$props.class}"
   id={post.post.id}
 >
   <div
@@ -61,7 +63,7 @@
         >
           <slot name="badges" slot="badges" />
         </PostMeta>
-        {#if post.post.embed_title != post.post.name || view == 'compact'}
+        {#if !(post.post.embed_title == post.post.name && type == 'embed') || view == 'compact'}
           <a
             target={$userSettings.openLinksInNewTab ? '_blank' : ''}
             href="/post/{getInstance()}/{post.post.id}"
@@ -74,11 +76,7 @@
           </a>
         {/if}
       </div>
-      <PostMedia
-        bind:post={post.post}
-        {view}
-        type={mediaType(post.post, view)}
-      />
+      <PostMedia bind:post={post.post} {view} {type} />
       {#if post.post.body && !post.post.nsfw && view != 'compact'}
         <div
           class="text-sm relative overflow-hidden

@@ -181,7 +181,7 @@
     <Markdown source={post.post_view.post.name} inline />
   </h1>
   <PostMedia
-    type={mediaType(post.post_view.post)}
+    type={mediaType(post.post_view.post.url)}
     post={post.post_view.post}
     opened
   />

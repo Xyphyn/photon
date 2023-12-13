@@ -32,7 +32,7 @@ const YOUTUBE_REGEX = /^(?:(?:https?:)?\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\
 export const isYoutubeLink = (url?: string): RegExpMatchArray | null => {
   if (!url) return null
 
-  return url.match(url)
+  return url?.match?.(YOUTUBE_REGEX)
 }
 
 export const postLink = (post: Post) => `/post/${getInstance()}/${post.id}`
@@ -40,11 +40,11 @@ export const postLink = (post: Post) => `/post/${getInstance()}/${post.id}`
 export type MediaType = 'video' | 'image' | 'iframe' | 'embed' | 'none'
 export type IframeType = 'youtube' | 'video' | 'none'
 
-export const mediaType = (post: Post, view: View = 'cozy'): MediaType => {
-  if (post.url) {
-    if (isImage(post.url)) return 'image'
-    if (isVideo(post.url)) return 'iframe'
-    if (isYoutubeLink(post.url)) return 'iframe'
+export const mediaType = (url?: string, view: View = 'cozy'): MediaType => {
+  if (url) {
+    if (isImage(url)) return 'image'
+    if (isVideo(url)) return 'iframe'
+    if (isYoutubeLink(url)) return 'iframe'
     return 'embed'
   }
 

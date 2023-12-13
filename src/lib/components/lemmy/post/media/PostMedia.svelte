@@ -18,6 +18,8 @@
   export let post: Post
   export let type: MediaType = 'none'
   export let opened: boolean | undefined = undefined
+
+  console.log
 </script>
 
 {#if type == 'image'}
@@ -79,21 +81,7 @@
       </svelte:element>
     </svelte:component>
   {/if}
-{:else if type == 'video' && (view == 'cozy' || view == 'card')}
-  <a
-    href={postLink(post)}
-    style="height: 300px;"
-    class="w-full rounded-xl flex flex-col items-center justify-center relative z-0 overflow-hidden
-          text-white p-4"
-  >
-    <div
-      class="absolute blur-xl -z-10 top-0 left-0 w-full h-full bg-gradient-to-br from-green-800 via-blue-900 via-20% to-red-700"
-    />
-    <Icon src={VideoCamera} solid size="48" />
-    <span class="font-bold text-2xl">Video</span>
-    <p class="text-base">Go to the post to view this video.</p>
-  </a>
-{:else if type == 'iframe' && (view == 'cozy' || view == 'card') && post.url}
+{:else if (type == 'iframe' || type == 'video') && (view == 'cozy' || view == 'card') && post.url}
   <PostIframe
     thumbnail={post.thumbnail_url}
     type={iframeType(post)}
