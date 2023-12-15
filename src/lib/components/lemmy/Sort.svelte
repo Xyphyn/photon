@@ -56,7 +56,7 @@
     <option value="Active">Active</option>
     <option value="Hot">Hot</option>
     {#if feature('scaledSort', $site?.version)}
-      <option value="Scaled">Rising</option>
+      <option value="Scaled">Scaled</option>
     {/if}
     <option value="TopAll">Top</option>
     <option value="New">New</option>

@@ -1,6 +1,3 @@
-<span
-  {...$$restProps}
-  class="text-sm font-bold text-slate-600 dark:text-zinc-400 {$$props.class}"
->
+<span {...$$restProps} class="text-lg font-semibold {$$props.class}">
   <slot />
 </span>

@@ -23,6 +23,7 @@
   import type { CommunityModeratorView, CommunityView } from 'lemmy-js-client'
   import { Button } from 'mono-svelte'
   import {
+    BuildingOffice2,
     Calendar,
     ChatBubbleOvalLeftEllipsis,
     Check,
@@ -73,9 +74,23 @@
     const blocked = community_view.blocked
 
     try {
+      const loading = toast({
+        content: `${blocked ? 'Unblocking' : 'blocking'} community...`,
+        loading: true,
+      })
+
       await getClient().blockCommunity({
         community_id: community_view.community.id,
         block: !blocked,
+      })
+
+      removeToast(loading)
+
+      toast({
+        content: `Successfully ${
+          blocked ? 'unblocked' : 'blocked'
+        } that community.`,
+        type: 'success',
       })
     } catch (error) {
       toast({ content: error as any, type: 'error' })
@@ -106,6 +121,30 @@
       toast({ content: 'Purged that community.', type: 'success' })
     } catch (e) {
       toast({ content: e as any, type: 'error' })
+    }
+  }
+
+  async function blockInstance() {
+    if (!$profile?.jwt) return
+    try {
+      const loading = toast({
+        content: `Blocking instance...`,
+        loading: true,
+      })
+
+      await getClient().blockInstance({
+        instance_id: community_view.community.instance_id,
+        block: true,
+      })
+
+      removeToast(loading)
+
+      toast({
+        content: `Successfully blocked that instance.`,
+        type: 'success',
+      })
+    } catch (error) {
+      toast({ content: error as any, type: 'error' })
     }
   }
 </script>
@@ -276,6 +315,12 @@
           <Icon src={NoSymbol} size="16" mini slot="prefix" />
           {community_view.blocked ? 'Unblock' : 'Block'}
         </MenuButton>
+        {#if $profile?.user}
+          <MenuButton color="danger-subtle" size="lg" on:click={blockInstance}>
+            <Icon src={BuildingOffice2} size="16" mini slot="prefix" />
+            Block instance
+          </MenuButton>
+        {/if}
         {#if $profile?.user && isAdmin($profile.user)}
           <MenuButton
             color="danger-subtle"

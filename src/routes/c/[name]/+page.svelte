@@ -11,7 +11,14 @@
   import { Button, Modal, toast } from 'mono-svelte'
   import { afterNavigate } from '$app/navigation'
   import { browser } from '$app/environment'
-  import { ChartBar, EllipsisHorizontal, Icon } from 'svelte-hero-icons'
+  import {
+    ArrowRight,
+    ChartBar,
+    EllipsisHorizontal,
+    Icon,
+    XMark,
+  } from 'svelte-hero-icons'
+  import Placeholder from '$lib/components/ui/Placeholder.svelte'
 
   export let data
 
@@ -89,7 +96,20 @@
     <div class="flex flex-row gap-4 max-w-full w-full items-end">
       <Sort selected={data.sort} />
     </div>
-    <PostFeed community={true} posts={data.posts.posts} />
+    {#if data.community.community_view.blocked}
+      <Placeholder
+        icon={XMark}
+        title="Blocked"
+        description="You've blocked this community."
+      >
+        <Button href="/profile/blocks">
+          <Icon src={ArrowRight} size="16" mini slot="suffix" />
+          Blocked Communities
+        </Button>
+      </Placeholder>
+    {:else}
+      <PostFeed community={true} posts={data.posts.posts} />
+    {/if}
 
     <Pageination
       page={data.page}
