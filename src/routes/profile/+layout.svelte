@@ -11,7 +11,6 @@
 
 <div class="flex flex-col gap-4 h-full">
   <MultiSelect
-    headless
     options={[
       '/profile/user',
       '/profile/settings',
