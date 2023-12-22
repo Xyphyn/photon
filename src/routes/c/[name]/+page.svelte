@@ -14,6 +14,7 @@
   import {
     ArrowRight,
     ChartBar,
+    Cog6Tooth,
     EllipsisHorizontal,
     Icon,
     XMark,
@@ -84,14 +85,26 @@
           ).hostname}
         </button>
       </div>
-      <Button
-        size="square-md"
-        color="secondary"
-        class="ml-auto"
-        on:click={() => (sidebar = !sidebar)}
-      >
-        <Icon src={EllipsisHorizontal} size="16" mini />
-      </Button>
+      <div class="flex items-center gap-2 w-max ml-auto">
+        <Button
+          size="square-md"
+          color="secondary"
+          href="/c/{fullCommunityName(
+            data.community.community_view.community.name,
+            data.community.community_view.community.actor_id
+          )}/settings"
+          on:click={() => (sidebar = !sidebar)}
+        >
+          <Icon src={Cog6Tooth} size="16" mini />
+        </Button>
+        <Button
+          size="square-md"
+          color="secondary"
+          on:click={() => (sidebar = !sidebar)}
+        >
+          <Icon src={EllipsisHorizontal} size="16" mini />
+        </Button>
+      </div>
     </div>
     <div class="flex flex-row gap-4 max-w-full w-full items-end">
       <Sort selected={data.sort} />

@@ -19,6 +19,7 @@
   import { Icon, VideoCamera } from 'svelte-hero-icons'
   import PostMedia from '$lib/components/lemmy/post/media/PostMedia.svelte'
   import PostMediaCompact from '$lib/components/lemmy/post/media/PostMediaCompact.svelte'
+  import PostBody from './PostBody.svelte'
 
   export let post: PostView
   export let actions: boolean = true
@@ -78,14 +79,7 @@
       </div>
       <PostMedia bind:post={post.post} {view} {type} />
       {#if post.post.body && !post.post.nsfw && view != 'compact'}
-        <div
-          class="text-sm relative overflow-hidden
-          bg-gradient-to-b text-transparent from-slate-600 via-slate-600
-          dark:from-zinc-400 dark:via-zinc-400 bg-clip-text
-          {view == 'list' ? `max-h-24` : 'max-h-48'}"
-        >
-          <Markdown inline source={post.post.body} />
-        </div>
+        <PostBody body={post.post.body} {view} />
       {/if}
     </div>
     {#if view == 'list' || view == 'compact'}
