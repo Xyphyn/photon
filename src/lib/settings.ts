@@ -86,9 +86,9 @@ export const defaultSettings: Settings = {
   expandableImages: toBool(env.PUBLIC_EXPANDABLE_IMAGES) ?? true,
   markReadPosts: toBool(env.PUBLIC_MARK_READ_POSTS) ?? true,
   showInstances: {
-    user: toBool(env.PUBLIC_SHOW_INSTANCES_USER) ?? false,
+    user: toBool(env.PUBLIC_SHOW_INSTANCES_USER) ?? true,
     community: toBool(env.PUBLIC_SHOW_INSTANCES_COMMUNITY) ?? true,
-    comments: toBool(env.PUBLIC_SHOW_INSTANCES_COMMENTS) ?? false,
+    comments: toBool(env.PUBLIC_SHOW_INSTANCES_COMMENTS) ?? true,
   },
   showCompactPosts: toBool(env.PUBLIC_SHOW_COMPACT_POSTS) ?? true,
   defaultSort: {
