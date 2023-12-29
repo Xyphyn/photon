@@ -134,14 +134,15 @@ Want your instance added here? Make a GitHub issue or make a PR! (this is for ge
 [phtn.app](https://phtn.app) is the official instance and will get updates instantly.
 
 
-| Instance                                                                                | Location       | Contact                                                                        |
-| ----------------------------------------------------------------------------------------- | ---------------- | -------------------------------------------------------------------------------- |
-| [phtn.app (Official)](https://phtn.app)                                                 | 🇺🇸 US West   | [photon@xylight.dev](photon@xylight.dev)                                       |
-| [ph.opnxng.com](https://ph.opnxng.com)                                                  | 🇸🇬 Singapore | [about.opnxng.com](https://about.opnxng.com)                                   |
-| [photon.thesanewriter.com](https://photon.thesanewriter.com)                            | 🇺🇸 US East   | [thesanewriter@lemmy.thesanewriter.com](thesanewriter@lemmy.thesanewriter.com) |
-| [p.lemmy.ohaa.xyz](https://p.lemmy.ohaa.xyz)                                            | 🇦🇹 Austria   | (???)                                                                          |
-| [~~photon.zhenyapav.com~~ (Has not updated since v1.9.2)](https://photon.zhenyapav.com) | 🇮🇸 Iceland   | [zhenyapav@zhenyapav.com](zhenyapav@zhenyapav.com)                             |
-| [~~ph.buckodr.ink~~ (Has not updated since v1.21.1)](https://ph.buckodr.ink)            | 🇺🇸 US East   | [admin@buckodr.ink](admin@buckodr.ink)                                         |
+| Instance                                                                             | Location    | Contact                                                                            |
+| --------------------------------------------------------------------------------------- | ------------ | ------------------------------------------------------------------------------------- |
+| [phtn.app (Official)](https://phtn.app)                                                 | 🇺🇸 US West   | [photon@xylight.dev](mailto:photon@xylight.dev)                                       |
+| [ph.opnxng.com](https://ph.opnxng.com)                                                  | 🇸🇬 Singapore | [about.opnxng.com](https://about.opnxng.com)                                          |
+| [photon.thesanewriter.com](https://photon.thesanewriter.com)                            | 🇺🇸 US East   | [thesanewriter@lemmy.thesanewriter.com](mailto:thesanewriter@lemmy.thesanewriter.com) |
+| [p.lemmy.ohaa.xyz](https://p.lemmy.ohaa.xyz)                                            | 🇦🇹 Austria   | (???)                                                                                 |
+| [~~photon.zhenyapav.com~~ (Has not updated since v1.9.2)](https://photon.zhenyapav.com) | 🇮🇸 Iceland   | [zhenyapav@zhenyapav.com](mailto:zhenyapav@zhenyapav.com)                             |
+| [~~ph.buckodr.ink~~ (Has not updated since v1.21.1)](https://ph.buckodr.ink)            | 🇺🇸 US East   | [admin@buckodr.ink](mailto:admin@buckodr.ink)                                         |
+| [phtn.ngn.tf](https://phtn.ngn.tf)                                                      | 🇹🇷 Turkey    | [services@ngn.tf](mailto:services@ngn.tf)
 
 ## Donate
 
