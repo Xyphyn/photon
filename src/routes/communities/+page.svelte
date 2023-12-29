@@ -1,34 +1,19 @@
 <script lang="ts">
-  import { goto } from '$app/navigation'
-  import MultiSelect from '$lib/components/input/Switch.svelte'
   import { page } from '$app/stores'
   import {
-    ChatBubbleOvalLeftEllipsis,
-    Check,
     GlobeAmericas,
     Icon,
     InformationCircle,
     MagnifyingGlass,
-    PencilSquare,
-    Plus,
     QuestionMarkCircle,
-    UserGroup,
   } from 'svelte-hero-icons'
-  import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
-  import Subscribe from './Subscribe.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import {
-    DOMAIN_REGEX,
-    DOMAIN_REGEX_FORMS,
-    isSubscribed,
     searchParam,
   } from '$lib/util.js'
-  import { addSubscription } from '$lib/lemmy/user.js'
-  import { profile } from '$lib/auth.js'
   import { Button, Material, Popover, Select, TextInput } from 'mono-svelte'
   import Sort from '$lib/components/lemmy/Sort.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import CommunityItem from '$lib/components/lemmy/community/CommunityItem.svelte'
 
   export let data

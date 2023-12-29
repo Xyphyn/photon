@@ -20,6 +20,7 @@
     XMark,
   } from 'svelte-hero-icons'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
+    import { profile } from '$lib/auth';
 
   export let data
 
@@ -86,6 +87,7 @@
         </button>
       </div>
       <div class="flex items-center gap-2 w-max ml-auto">
+        {#if $profile?.user && $profile.user.moderates.map(c => c.community.id).includes(data.community.community_view.community.id)}
         <Button
           size="square-md"
           color="secondary"
@@ -93,10 +95,10 @@
             data.community.community_view.community.name,
             data.community.community_view.community.actor_id
           )}/settings"
-          on:click={() => (sidebar = !sidebar)}
         >
           <Icon src={Cog6Tooth} size="16" mini />
         </Button>
+        {/if}
         <Button
           size="square-md"
           color="secondary"
