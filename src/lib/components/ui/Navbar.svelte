@@ -238,7 +238,7 @@
       </MenuDivider>
     {/if}
     {#if $profile?.user}
-      <MenuButton link href="/profile">
+      <MenuButton  link href="/profile">
         <Icon src={UserCircle} mini width={16} /> Profile
       </MenuButton>
       <MenuButton link href="/inbox">
@@ -259,16 +259,12 @@
       Accounts
     </MenuButton>
     <hr class="dark:opacity-10 w-[90%] my-2 mx-auto" />
-    <MenuDivider>App</MenuDivider>
+    <MenuDivider>Photon</MenuDivider>
     <MenuButton link href="/settings">
       <Icon src={Cog6Tooth} mini width={16} />
       Settings
     </MenuButton>
-    <MenuButton link href="/about">
-      <Icon src={InformationCircle} mini width={16} />
-      About
-    </MenuButton>
-    <MenuButton>
+    <MenuButton class="!py-0">
       <Icon
         src={$theme == 'system'
           ? ComputerDesktop
@@ -287,7 +283,7 @@
         on:click|stopPropagation
       >
         <span>Theme</span>
-        <Select bind:value={$theme} class="ml-auto w-24" size="sm">
+        <Select bind:value={$theme} class="ml-auto my-auto w-24" size="sm">
           <option value="system">System</option>
           <option value="light">Light</option>
           <option value="dark">Dark</option>
@@ -320,6 +316,9 @@
       </Button>
       <Button color="tertiary" href="https://github.com/Xyphyn/Photon" title="GitHub" size="square-md">
         <Icon src={CodeBracketSquare} size="16" mini />
+      </Button>
+      <Button color="tertiary" href="/about" title="About" size="square-md">
+        <Icon src={InformationCircle} size="16" mini />
       </Button>
       </div>
     </li>
