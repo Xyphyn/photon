@@ -124,7 +124,7 @@
     </Label>
   {/if}
   <div
-    class="flex flex-col border border-slate-300 dark:border-zinc-800 rounded-md
+    class="flex flex-col border border-slate-300 dark:border-zinc-800 rounded-xl
 overflow-hidden focus-within:border-black focus-within:dark:border-white transition-colors"
     class:mt-1={label}
   >

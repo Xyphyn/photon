@@ -7,6 +7,7 @@
 
   export let open: boolean
   export let image: FileList | null = null
+  export let output: string | undefined = undefined
   let loading = false
 
   const dispatcher = createEventDispatcher<{ upload: string }>()
@@ -26,6 +27,7 @@
       if (!uploaded) throw new Error('Image upload returned undefined')
 
       dispatcher('upload', uploaded)
+      output = uploaded
       loading = false
     } catch (err) {
       toast({
@@ -38,7 +40,7 @@
   }
 </script>
 
-<Modal bind:open>
+<Modal bind:open bind:output>
   <span slot="title">Upload image</span>
   <form class="flex flex-col gap-4" on:submit|preventDefault={upload}>
     <ImageInput accept="image/jpeg,image/png,image/webp" bind:files={image} />

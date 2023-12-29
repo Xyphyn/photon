@@ -3054,10 +3054,10 @@ mlly@^1.2.0, mlly@^1.4.0:
     pkg-types "^1.0.3"
     ufo "^1.1.2"
 
-mono-svelte@^1.4.2:
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/mono-svelte/-/mono-svelte-1.4.2.tgz#c66520ac9f56e964656228fad34149d5e85d3813"
-  integrity sha512-iAqtHfJBAoBNiE/WSRPEyU/MWTMgLLTbNYhVKq+U2+ktJ9/wC9rhTgbq7CuCzfWBWKFJgtqsZNS/w0TBtIhgXA==
+mono-svelte@^1.4.4:
+  version "1.4.4"
+  resolved "https://registry.yarnpkg.com/mono-svelte/-/mono-svelte-1.4.4.tgz#6c7d406f82f97bec17b48a95c3b034e00b5ad62c"
+  integrity sha512-lGemcq9N5tjvRM+s1rFzmLeOnFj4swyd5uw1FcQlPUMfcXTNyOSTwq+/gvfuGjNnJnKQOFkjAltZDQwYlHNTPw==
   dependencies:
     "@floating-ui/core" "^1.5.0"
     svelte-floating-ui "^1.5.3"
