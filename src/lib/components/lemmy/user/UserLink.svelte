@@ -24,7 +24,7 @@
   {/if}
   <span class="flex flex-wrap gap-0" class:ml-0.5={avatar}>
     <span class:font-medium={showInstance}>
-      {user.display_name || user.name}
+      {$userSettings.displayNames ? (user.display_name || user.name) : user.name}
     </span>
     {#if showInstance}
       <span class="text-slate-500 dark:text-zinc-500 font-normal">
