@@ -20,15 +20,19 @@
     MenuDivider,
     Select,
     Spinner,
+    toast,
   } from 'mono-svelte'
   import {
     Bars3,
     Bookmark,
     BugAnt,
+    CodeBracket,
+    CodeBracketSquare,
     Cog6Tooth,
     CommandLine,
     ComputerDesktop,
     GlobeAlt,
+    Heart,
     Icon,
     Inbox,
     InformationCircle,
@@ -223,9 +227,16 @@
         </div>
       {/if}
     </button>
-    <MenuDivider>
-      {$profile?.user ? $profile.user.local_user_view.person.name : 'Profile'}
-    </MenuDivider>
+    {#if $profile?.user}
+      <div class="flex flex-row gap-2 items-center py-2 mx-4 font-medium">
+        <Avatar width={22} url={$profile?.user?.local_user_view.person.avatar} alt={$profile?.username} />
+        {$profile?.user?.local_user_view?.person.name}
+      </div>
+    {:else}
+      <MenuDivider>
+        Profile
+      </MenuDivider>
+    {/if}
     {#if $profile?.user}
       <MenuButton link href="/profile">
         <Icon src={UserCircle} mini width={16} /> Profile
@@ -291,20 +302,26 @@
     {/if}
     <hr class="dark:opacity-10 w-[90%] my-2 mx-auto" />
     <li class="flex flex-col px-4 py-1 mx-auto my-1 text-xs w-full">
-      <div class="flex flex-row gap-2 w-full">
+      <div class="flex flex-row gap-2 w-full items-center">
         <!-- svelte-ignore missing-declaration -->
-        <span class="mr-auto">v{__VERSION__}</span>
-        <div class="ml-auto" />
-        <a href="https://buymeacoffee.com/xylight" class="hover:underline">
-          Donate
-        </a>
-        <a href="https://github.com/Xyphyn/photon" class="hover:underline">
-          GitHub
-        </a>
+        <div class="flex-1">
+        <button
+          class="hover:brightness-110 transition-all"
+          on:click={() => { 
+            navigator?.clipboard?.writeText(__VERSION__)
+            toast({ content: 'Copied version to clipboard.' })
+          }}
+        >
+          <Badge>{__VERSION__}</Badge>
+        </button>
       </div>
-      <span class="opacity-70 ml-auto w-max">
-        Made by <Link href="https://xylight.dev">Xylight</Link>
-      </span>
+      <Button color="tertiary" href="https://buymeacoffee.com/xylight" title="Donate" size="square-md">
+        <Icon src={Heart} size="16" mini />
+      </Button>
+      <Button color="tertiary" href="https://github.com/Xyphyn/Photon" title="GitHub" size="square-md">
+        <Icon src={CodeBracketSquare} size="16" mini />
+      </Button>
+      </div>
     </li>
   </Menu>
 </nav>
