@@ -1,68 +1,73 @@
 <script lang="ts">
-  import Post from '$lib/components/lemmy/post/Post.svelte'
-  import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import { userSettings } from '$lib/settings.js'
-  import type { PostView } from 'lemmy-js-client'
-  import { Badge, Button } from 'mono-svelte'
-  import { ArchiveBox, Icon, Minus, Plus } from 'svelte-hero-icons'
-  import { expoOut } from 'svelte/easing'
-  import { fly, slide } from 'svelte/transition'
+  import Post from "$lib/components/lemmy/post/Post.svelte";
+  import Placeholder from "$lib/components/ui/Placeholder.svelte";
+  import { userSettings } from "$lib/settings.js";
+  import type { PostView } from "lemmy-js-client";
+  import { Badge, Button } from "mono-svelte";
+  import { ArchiveBox, Icon, Minus, Plus } from "svelte-hero-icons";
+  import { expoOut } from "svelte/easing";
+  import { fly, slide } from "svelte/transition";
+  import InfiniteScroll from "svelte-infinite-scroll";
+  import { loadPosts } from "$lib/lemmy";
+  import { page } from "$app/stores";
+  import { goto } from "$app/navigation";
 
   type PostViewWithCrossposts = PostView & {
-    withCrossposts: true
-    crossposts: PostView[]
-  }
-  type PostViewWithoutCrossposts = PostView & { withCrossposts?: false }
+    withCrossposts: true;
+    crossposts: PostView[];
+  };
+  type PostViewWithoutCrossposts = PostView & { withCrossposts?: false };
 
-  export let posts: PostView[]
-  export let community: boolean = false
+  export let posts: PostView[];
+  export let cursor: { next?: string; back?: string } | undefined = undefined;
+  export let community;
 
   const addCrosspostProperty = (
     post: PostView,
-    crossposts: PostView[]
+    crossposts: PostView[],
   ): PostViewWithCrossposts => ({
     ...post,
     crossposts: crossposts,
     withCrossposts: true,
-  })
+  });
 
   const combineCrossposts = (
-    posts: PostView[]
+    posts: PostView[],
   ): (PostViewWithCrossposts | PostViewWithoutCrossposts)[] => {
     const urlMap = new Map<
       string,
       PostViewWithCrossposts | PostViewWithoutCrossposts
-    >()
-    const results: (PostViewWithCrossposts | PostViewWithoutCrossposts)[] = []
-    const seenUrls = new Set<string>()
+    >();
+    const results: (PostViewWithCrossposts | PostViewWithoutCrossposts)[] = [];
+    const seenUrls = new Set<string>();
 
     posts.forEach((post) => {
       if (!post.post.url) {
-        results.push(post)
-        return
+        results.push(post);
+        return;
       }
 
-      let existing = urlMap.get(post.post.url)
+      let existing = urlMap.get(post.post.url);
       if (existing) {
-        existing.withCrossposts = true
+        existing.withCrossposts = true;
         if (existing.withCrossposts) {
-          existing.crossposts = [...(existing.crossposts || []), post]
+          existing.crossposts = [...(existing.crossposts || []), post];
         }
 
-        urlMap.set(post.post.url, existing)
+        urlMap.set(post.post.url, existing);
       } else {
-        urlMap.set(post.post.url, post)
-        results.push(post)
+        urlMap.set(post.post.url, post);
+        results.push(post);
       }
-      seenUrls.add(post.post.url)
-    })
+      seenUrls.add(post.post.url);
+    });
 
-    return results
-  }
+    return results;
+  };
 
-  $: combinedPosts = combineCrossposts(posts)
+  $: combinedPosts = combineCrossposts(posts);
 
-  let viewPost: number = -1
+  let viewPost: number = -1;
 </script>
 
 <ul
@@ -108,8 +113,8 @@
               slot="badges"
               class:hidden={!post.withCrossposts}
               on:click={() => {
-                if (viewPost == post.post.id) viewPost = -1
-                else viewPost = post.post.id
+                if (viewPost == post.post.id) viewPost = -1;
+                else viewPost = post.post.id;
               }}
             >
               {#if post.withCrossposts}
@@ -123,8 +128,8 @@
                     <Icon mini src={Plus} size="14" />
                   {/if}
                   {post.crossposts.length} crosspost{post.crossposts.length == 1
-                    ? ''
-                    : 's'}
+                    ? ""
+                    : "s"}
                 </Badge>
               {/if}
             </button>
@@ -132,14 +137,14 @@
           {#if post.withCrossposts && viewPost == post.post.id}
             <div
               transition:slide|global={{
-                axis: 'y',
+                axis: "y",
                 duration: 500,
                 easing: expoOut,
               }}
             >
               <span
                 class="text-sm flex flex-row gap-2 items-center"
-                class:my-4={$userSettings.view == 'card'}
+                class:my-4={$userSettings.view == "card"}
               >
                 Crossposts <hr class="w-full dark:border-zinc-800" />
                 {post.crossposts.length}
@@ -155,4 +160,19 @@
       {/if}
     {/each}
   {/if}
+  <InfiniteScroll
+    window={true}
+    threshold={100}
+    on:loadMore={async () => {
+      let newUrl = $page.url;
+      newUrl.searchParams.set("cursor", cursor?.next || "");
+
+      goto(newUrl, { invalidateAll: false, noScroll: true });
+
+      let newPosts = await loadPosts(newUrl, fetch);
+      posts = [...posts, ...newPosts.posts.posts];
+
+      cursor = newPosts.cursor;
+    }}
+  />
 </ul>
