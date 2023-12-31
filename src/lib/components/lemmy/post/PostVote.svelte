@@ -11,7 +11,7 @@
   } from 'svelte-hero-icons'
   import { profile } from '$lib/auth.js'
   import { vote as voteItem } from '$lib/lemmy/contentview.js'
-  import { Button, Popover, toast } from 'mono-svelte'
+  import { Button, Popover, buttonColor, toast } from 'mono-svelte'
   import { site } from '$lib/lemmy.js'
   import { fly } from 'svelte/transition'
   import { userSettings } from '$lib/settings.js'
@@ -52,8 +52,7 @@
 <slot {vote} {score}>
   <!-- <Popover openOnHover placement="bottom"> -->
   <div
-    class="flex items-center text-sm rounded-lg border border-slate-200
-      dark:border-zinc-800 bg-white dark:bg-zinc-900 px-1 h-8 cursor-pointer"
+    class="flex items-center text-sm rounded-lg border {buttonColor.secondary} hover:bg-white dark:hover:bg-zinc-900 px-1 h-8 cursor-pointer"
     class:pr-2.5={$userSettings.separateVotes}
   >
     <div class="flex items-center">
