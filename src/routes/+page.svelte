@@ -1,22 +1,22 @@
 <script lang="ts">
-  import { page } from '$app/stores'
-  import StickyCard from '$lib/components/ui/StickyCard.svelte'
-  import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
-  import Pageination from '$lib/components/ui/Pageination.svelte'
-  import Sort from '$lib/components/lemmy/Sort.svelte'
-  import { searchParam } from '$lib/util.js'
-  import PostFeed from '$lib/components/lemmy/post/PostFeed.svelte'
-  import { Button, Modal, Select, Spinner } from 'mono-svelte'
-  import { ChartBar, GlobeAmericas, Icon, ServerStack } from 'svelte-hero-icons'
-  import { profile } from '$lib/auth.js'
-  import ViewSelect from '$lib/components/lemmy/ViewSelect.svelte'
-  import { site } from '$lib/lemmy.js'
-  import { amModOfAny } from '$lib/components/lemmy/moderation/moderation.js'
-  import { feature } from '$lib/version.js'
+  import { page } from "$app/stores";
+  import StickyCard from "$lib/components/ui/StickyCard.svelte";
+  import SiteCard from "$lib/components/lemmy/SiteCard.svelte";
+  import Pageination from "$lib/components/ui/Pageination.svelte";
+  import Sort from "$lib/components/lemmy/Sort.svelte";
+  import { searchParam } from "$lib/util.js";
+  import PostFeed from "$lib/components/lemmy/post/PostFeed.svelte";
+  import { Button, Modal, Select, Spinner } from "mono-svelte";
+  import { ChartBar, GlobeAmericas, Icon, ServerStack } from "svelte-hero-icons";
+  import { profile } from "$lib/auth.js";
+  import ViewSelect from "$lib/components/lemmy/ViewSelect.svelte";
+  import { site } from "$lib/lemmy.js";
+  import { amModOfAny } from "$lib/components/lemmy/moderation/moderation.js";
+  import { feature } from "$lib/version.js";
 
-  export let data
+  export let data;
 
-  let sidebar = false
+  let sidebar = false;
 </script>
 
 <svelte:head>
@@ -54,7 +54,7 @@
     <Select
       bind:value={data.listingType}
       on:change={() =>
-        searchParam($page.url, 'type', data.listingType, 'page', 'cursor')}
+        searchParam($page.url, "type", data.listingType, "page", "cursor")}
     >
       <span slot="label" class="flex items-center gap-1">
         <Icon src={GlobeAmericas} size="16" mini />
@@ -63,7 +63,7 @@
       <option value="All">All</option>
       <option value="Local">Local</option>
       <option value="Subscribed" disabled={!$profile?.jwt}>Subscribed</option>
-      {#if feature('moderatorView', $site?.version)}
+      {#if feature("moderatorView", $site?.version)}
         <option
           value="ModeratorView"
           disabled={!$profile?.jwt || !amModOfAny($profile?.user)}
@@ -79,14 +79,17 @@
       </div>
     </div>
   </div>
-  <PostFeed posts={data.posts.posts} />
+  <PostFeed
+    posts={data.posts.posts}
+    cursor={{ next: data.cursor.next, back: data.cursor.back }}
+  />
   <div class="mt-auto">
     <Pageination
       page={data.page}
       cursor={{ next: data.cursor.next, back: data.cursor.back }}
-      on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
+      on:change={(p) => searchParam($page.url, "page", p.detail.toString())}
       on:cursor={(c) => {
-        searchParam($page.url, 'cursor', c.detail)
+        searchParam($page.url, "cursor", c.detail);
       }}
     >
       <span class="flex flex-row items-center gap-1">
