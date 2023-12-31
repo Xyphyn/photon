@@ -52,7 +52,7 @@
 <slot {vote} {score}>
   <!-- <Popover openOnHover placement="bottom"> -->
   <div
-    class="flex items-center text-sm rounded-md border border-slate-200
+    class="flex items-center text-sm rounded-lg border border-slate-200
       dark:border-zinc-800 bg-white dark:bg-zinc-900 px-1 h-8 cursor-pointer"
     class:pr-2.5={$userSettings.separateVotes}
   >
