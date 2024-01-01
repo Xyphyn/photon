@@ -123,7 +123,7 @@
         </Button>
       </Placeholder>
     {:else}
-      <PostFeed community={true} posts={data.posts.posts} />
+      <PostFeed community={true} initialPosts={data.posts.posts} />
     {/if}
 
     <Pageination

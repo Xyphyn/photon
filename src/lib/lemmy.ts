@@ -1,5 +1,5 @@
-import { type GetSiteResponse, LemmyHttp, type SortType, type ListingType } from 'lemmy-js-client'
-import { get, writable } from 'svelte/store'
+import { type GetSiteResponse, LemmyHttp, type SortType, type ListingType, type PostView } from 'lemmy-js-client'
+import { get, writable, type Writable } from 'svelte/store'
 import { error } from '@sveltejs/kit'
 import { instance } from '$lib/instance.js'
 import { instanceToURL } from '$lib/util.js'
@@ -164,3 +164,5 @@ export async function loadPosts(url: URL, fetch: any) {
 		})
 	}
 }
+
+export const loadedPosts: Writable<PostView[]> = writable([]);

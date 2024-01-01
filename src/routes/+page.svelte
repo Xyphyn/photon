@@ -1,6 +1,5 @@
 <script lang="ts">
   import { page } from "$app/stores";
-  import StickyCard from "$lib/components/ui/StickyCard.svelte";
   import SiteCard from "$lib/components/lemmy/SiteCard.svelte";
   import Pageination from "$lib/components/ui/Pageination.svelte";
   import Sort from "$lib/components/lemmy/Sort.svelte";
@@ -80,7 +79,7 @@
     </div>
   </div>
   <PostFeed
-    posts={data.posts.posts}
+    initialPosts={data.posts.posts}
     cursor={{ next: data.cursor.next, back: data.cursor.back }}
   />
   <div class="mt-auto">
