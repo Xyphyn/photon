@@ -8,9 +8,8 @@
   import { expoOut } from "svelte/easing";
   import { fly, slide } from "svelte/transition";
   import InfiniteScroll from "svelte-infinite-scroll";
-  import { loadPosts } from "$lib/lemmy";
+  import { loadPosts, loadedPosts } from "$lib/lemmy.ts";
   import { page } from "$app/stores";
-  import { goto } from "$app/navigation";
 
   type PostViewWithCrossposts = PostView & {
     withCrossposts: true;
@@ -18,9 +17,13 @@
   };
   type PostViewWithoutCrossposts = PostView & { withCrossposts?: false };
 
-  export let posts: PostView[];
+  export let initialPosts: PostView[];
   export let cursor: { next?: string; back?: string } | undefined = undefined;
   export let community;
+
+  if ($loadedPosts.length == 0) {
+    $loadedPosts = initialPosts;
+  }
 
   const addCrosspostProperty = (
     post: PostView,
@@ -65,7 +68,7 @@
     return results;
   };
 
-  $: combinedPosts = combineCrossposts(posts);
+  $: combinedPosts = combineCrossposts($loadedPosts);
 
   let viewPost: number = -1;
 </script>
@@ -75,7 +78,7 @@
     ? 'gap-3 md:gap-4'
     : 'divide-y'} divide-slate-200 dark:divide-zinc-800"
 >
-  {#if posts.length == 0}
+  {#if $loadedPosts.length == 0}
     <div class="h-full grid place-items-center">
       <Placeholder
         icon={ArchiveBox}
@@ -167,10 +170,8 @@
       let newUrl = $page.url;
       newUrl.searchParams.set("cursor", cursor?.next || "");
 
-      goto(newUrl, { invalidateAll: false, noScroll: true });
-
       let newPosts = await loadPosts(newUrl, fetch);
-      posts = [...posts, ...newPosts.posts.posts];
+      $loadedPosts = [...$loadedPosts, ...newPosts.posts.posts];
 
       cursor = newPosts.cursor;
     }}
