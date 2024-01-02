@@ -33,31 +33,10 @@
       <svelte:element
         this={$userSettings.expandImages ? 'div' : 'a'}
         href={postLink(post)}
-        class="container mx-auto z-10 transition-colors rounded-xl max-h-[60vh] relative overflow-hidden"
+        class="container mx-auto z-10 rounded-xl max-h-[60vh] relative overflow-hidden bg-slate-100 dark:bg-zinc-900 bg-gradient-to-br from-blue-500/5 to-pink-500/5"
         data-sveltekit-preload-data="off"
         aria-label={post.name}
       >
-        <picture
-          class="absolute top-1/2 -translate-y-1/2 left-0 w-full
-               opacity-30 object-cover scale-[1.2] blur-3xl -z-10"
-        >
-          <source
-            srcset={bestImageURL(post, false, 512)}
-            media="(max-width: 256px)"
-          />
-          <source
-            srcset={bestImageURL(post, false, 512)}
-            media="(max-width: 512px)"
-          />
-          <!-- svelte-ignore a11y-missing-attribute -->
-          <img
-            src={bestImageURL(post, false, 1024)}
-            loading="lazy"
-            class="w-full h-full object-cover rounded-xl blur-3xl z-50"
-            width={512}
-            height={300}
-          />
-        </picture>
         <picture class="max-h-[inherit]">
           <source
             srcset={bestImageURL(post, false, 512)}
