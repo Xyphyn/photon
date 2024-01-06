@@ -11,14 +11,17 @@
   import {
     BuildingOffice,
     Calendar,
+    ChartBar,
     ChatBubbleOvalLeftEllipsis,
     Icon,
+    InformationCircle,
     Newspaper,
     PencilSquare,
     ServerStack,
     UserGroup,
   } from 'svelte-hero-icons'
   import Expandable from '../ui/Expandable.svelte'
+  import LabelStat from '../ui/LabelStat.svelte'
 
   export let site: SiteView
   export let taglines: Tagline[] | undefined = undefined
@@ -59,15 +62,26 @@
   {/if}
 
     <Expandable>
-      <div slot="title" class="font-medium w-full text-left">About</div>
+      <svelte:fragment slot="title"><Icon src={InformationCircle} size="15" mini /> About</svelte:fragment>
       <Markdown source={site.site.description} />
       <div class="my-4" />
       <Markdown source={site.site.sidebar} />
     </Expandable>
 
+    <Expandable>
+      <svelte:fragment slot="title">
+        <Icon src={ChartBar} size="15" mini /> Stats
+      </svelte:fragment>
+        <div class="flex flex-row gap-4 flex-wrap">
+        <LabelStat label="Users" content="{site.counts.users.toString()}" formatted />
+        <LabelStat label="Posts" content="{site.counts.posts.toString()}" formatted />
+        <LabelStat label="Communities" content="{site.counts.communities.toString()}" formatted />
+      </div>
+    </Expandable>
+
     {#if admins}
     <Expandable>
-      <div slot="title" class="font-medium w-full text-left">Admins</div>
+      <svelte:fragment slot="title"><Icon src={UserGroup} size="15" mini /> Admins</svelte:fragment>
       <div
         class="flex items-center flex-wrap group transition-all
         cursor-pointer"

@@ -38,6 +38,7 @@
     UserGroup,
   } from 'svelte-hero-icons'
   import { publishedToDate } from '$lib/components/util/date.js'
+  import CommunityLink from './CommunityLink.svelte'
 
   export let community_view: CommunityView
   export let moderators: CommunityModeratorView[] = []
@@ -183,22 +184,9 @@
 
 <StickyCard class="min-w-full {$$props.class}">
   <div class="flex flex-row gap-3 items-center">
-    <div class="flex-shrink-0">
-      <a
-        href="/c/{fullCommunityName(
-          community_view.community.name,
-          community_view.community.actor_id
-        )}"
-      >
-        <Avatar
-          width={42}
-          url={community_view.community.icon}
-          alt={community_view.community.name}
-        />
-      </a>
-    </div>
+    <CommunityLink name={false} avatar avatarSize={32} community={community_view.community} />
     <div class="flex flex-col gap-0">
-      <h1 class="font-bold text-xl">
+      <h1 class="font-bold text-lg">
         <a
           href="/c/{fullCommunityName(
             community_view.community.name,
