@@ -7,7 +7,7 @@
   import { publishedToDate } from '$lib/components/util/date.js'
   import { getClient } from '$lib/lemmy.js'
   import type { PersonView, SiteView, Tagline } from 'lemmy-js-client'
-  import { Button, Popover } from 'mono-svelte'
+  import { Button, Disclosure, Popover } from 'mono-svelte'
   import {
     BuildingOffice,
     Calendar,
@@ -18,6 +18,7 @@
     ServerStack,
     UserGroup,
   } from 'svelte-hero-icons'
+  import Expandable from '../ui/Expandable.svelte'
 
   export let site: SiteView
   export let taglines: Tagline[] | undefined = undefined
@@ -28,7 +29,7 @@
 <StickyCard class="w-full {$$props.class}">
   <div class="flex flex-row gap-3 items-center">
     {#if site.site.icon}
-      <Avatar width={42} url={site.site.icon} alt={site.site.name} />
+      <Avatar width={32} url={site.site.icon} alt={site.site.name} />
     {/if}
     <div class="flex flex-col">
       <h1 class="font-bold text-base">{site.site.name}</h1>
@@ -37,83 +38,62 @@
       </span>
     </div>
   </div>
-  <span class="flex flex-row items-center gap-1 text-sm" title="Created">
-    <Icon src={Calendar} width={16} height={16} mini />
-    <RelativeDate date={publishedToDate(site.site.published)} />
-  </span>
-  <div class="text-sm flex flex-row flex-wrap gap-3" title="Users">
-    <span class="flex flex-row items-center gap-1">
-      <Icon src={UserGroup} width={16} height={16} mini />
-      <FormattedNumber number={site.counts.users} />
-    </span>
-    <span class="flex flex-row items-center gap-1" title="Posts">
-      <Icon src={PencilSquare} width={16} height={16} mini />
-      <FormattedNumber number={site.counts.posts} />
-    </span>
-    <span class="flex flex-row items-center gap-1" title="Comments">
-      <Icon src={ChatBubbleOvalLeftEllipsis} width={16} height={16} mini />
-      <FormattedNumber number={site.counts.comments} />
-    </span>
-    <span class="flex flex-row items-center gap-1" title="Communities">
-      <Icon src={Newspaper} width={16} height={16} mini />
-      <FormattedNumber number={site.counts.communities} />
-    </span>
-  </div>
-  <div class="flex flex-col 3xl:flex-row 3xl:items-center gap-2 3xl:gap-0">
-    <Button href="/modlog" class="3xl:rounded-r-none">
+  <div class="flex flex-row gap-1 !border-0">
+    <Button href="/modlog" title="Modlog" color="ghost" size="square-md">
       <Icon src={Newspaper} size="16" mini />
-      Modlog
     </Button>
-    <Button
-      href="/legal"
-      class="3xl:rounded-l-none 3xl:rounded-r-none 3xl:border-x-0"
-    >
+    <Button href="/legal" title="Legal" color="ghost" size="square-md">
       <Icon src={BuildingOffice} size="16" mini />
-      Legal
     </Button>
-    <Button href="/instances" class="3xl:rounded-l-none">
+    <Button href="/instances" title="Instances" class="3xl:rounded-l-none" color="ghost" size="square-md">
       <Icon src={ServerStack} size="16" mini />
-      Instances
     </Button>
   </div>
 
-  {#if admins}
-    <span class="font-bold">Admins</span>
-    <div
-      class="flex items-center flex-wrap group transition-all
-      cursor-pointer"
-    >
-      {#each admins as admin}
-        <Popover openOnHover placement="top">
-          <a
-            class="block ring rounded-full ring-slate-50 dark:ring-zinc-950 transition-all -mx-0.5 group-hover:mx-0.5"
-            href="/u/{admin.person.name}@{new URL(admin.person.actor_id)
-              .hostname}"
-            slot="target"
-          >
-            <Avatar
-              width={28}
-              url={admin.person.avatar}
-              alt={admin.person.name}
-            />
-          </a>
-          <span class="font-bold">{admin.person.name}</span>
-        </Popover>
-      {/each}
-    </div>
-  {/if}
-  <hr class="border-slate-300 dark:border-zinc-700" />
+  
+  <div class="flex flex-col [&>*]:py-3 divide-y divide-slate-200 dark:divide-zinc-800">
   {#if taglines && taglines.length > 0}
-    <Markdown
+    <Markdown class="!pt-0"
       source={taglines[Math.floor(Math.random() * taglines.length)].content}
     />
-    <hr class="border-slate-300 dark:border-zinc-700" />
   {/if}
-  <Markdown source={site.site.description} />
-  <hr class="border-slate-300 dark:border-zinc-700" />
-  <Markdown source={site.site.sidebar} />
+
+    <Expandable>
+      <div slot="title" class="font-medium w-full text-left">About</div>
+      <Markdown source={site.site.description} />
+      <div class="my-4" />
+      <Markdown source={site.site.sidebar} />
+    </Expandable>
+
+    {#if admins}
+    <Expandable>
+      <div slot="title" class="font-medium w-full text-left">Admins</div>
+      <div
+        class="flex items-center flex-wrap group transition-all
+        cursor-pointer"
+      >
+        {#each admins as admin}
+          <Popover openOnHover placement="top">
+            <a
+              class="block ring rounded-full ring-slate-50 dark:ring-zinc-950 transition-all -mx-0.5 group-hover:mx-0.5"
+              href="/u/{admin.person.name}@{new URL(admin.person.actor_id)
+                .hostname}"
+              slot="target"
+            >
+              <Avatar
+                width={28}
+                url={admin.person.avatar}
+                alt={admin.person.name}
+              />
+            </a>
+            <span class="font-bold">{admin.person.name}</span>
+          </Popover>
+        {/each}
+      </div>
+    </Expandable>
+  {/if}
+
   {#if version}
-    <hr class="border-slate-300 dark:border-zinc-700" />
     <span
       class="text-slate-600 flex flex-row items-center gap-1 dark:text-zinc-400"
       title="Lemmy version"
@@ -122,4 +102,5 @@
       {version}
     </span>
   {/if}
+  </div>
 </StickyCard>

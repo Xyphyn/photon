@@ -7,7 +7,7 @@
   import { searchParam } from '$lib/util.js'
   import PostFeed from '$lib/components/lemmy/post/PostFeed.svelte'
   import { Button, Modal, Select, Spinner } from 'mono-svelte'
-  import { ChartBar, GlobeAmericas, Icon } from 'svelte-hero-icons'
+  import { ChartBar, GlobeAmericas, Icon, ServerStack } from 'svelte-hero-icons'
   import { profile } from '$lib/auth.js'
   import ViewSelect from '$lib/components/lemmy/ViewSelect.svelte'
   import { site } from '$lib/lemmy.js'
@@ -44,7 +44,9 @@
     >
       Frontpage
       <span class="xl:hidden">
-        <Button on:click={() => (sidebar = !sidebar)}>About</Button>
+        <Button on:click={() => (sidebar = !sidebar)} size="square-md">
+          <Icon src={ServerStack} size="16" mini />
+        </Button>
       </span>
     </h1>
   </header>
