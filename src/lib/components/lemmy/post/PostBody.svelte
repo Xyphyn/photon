@@ -23,7 +23,7 @@ ${view == 'list' ? `max-h-24` : 'max-h-48'}`
     on:click={() => (expanded = !expanded)}
     size="square-sm"
     color="tertiary"
-    class="text-black dark:text-white absolute z-10 isolate shadow-xl {expanded
+    class="text-black dark:text-white absolute z-10 isolate drop-shadow-xl {expanded
       ? 'bottom-6'
       : 'bottom-16'} left-1/2 -translate-x-1/2"
   >
