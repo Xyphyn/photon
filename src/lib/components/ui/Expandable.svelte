@@ -5,7 +5,7 @@
 
 </script>
 
-<Disclosure buttonClass="text-red-500" class="items-start justify-items-start gap-2">
+<Disclosure class="items-start justify-items-start gap-2 {$$props.class}">
   <div slot="summary" class="font-medium w-full text-left flex flex-row items-center justify-between">
     <div class="flex flex-row gap-1 items-center"><slot name="title" /></div>
     <Icon src={ChevronDown} size="20" mini />

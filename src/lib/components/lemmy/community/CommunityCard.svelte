@@ -39,6 +39,8 @@
   } from 'svelte-hero-icons'
   import { publishedToDate } from '$lib/components/util/date.js'
   import CommunityLink from './CommunityLink.svelte'
+  import Expandable from '$lib/components/ui/Expandable.svelte'
+  import LabelStat from '$lib/components/ui/LabelStat.svelte'
 
   export let community_view: CommunityView
   export let moderators: CommunityModeratorView[] = []
@@ -206,53 +208,50 @@
       </span>
     </div>
   </div>
-  <span class="flex flex-row items-center gap-1 text-sm">
-    <Icon src={Calendar} width={16} height={16} mini />
-    <RelativeDate date={publishedToDate(community_view.community.published)} />
-  </span>
-  <div class="text-sm flex flex-row flex-wrap gap-3">
-    <span class="flex flex-row items-center gap-1">
-      <Icon src={UserGroup} width={16} height={16} mini />
-      <FormattedNumber number={community_view.counts.subscribers} />
-    </span>
-    <span class="flex flex-row items-center gap-1">
-      <Icon src={PencilSquare} width={16} height={16} mini />
-      <FormattedNumber number={community_view.counts.posts} />
-    </span>
-    <span class="flex flex-row items-center gap-1">
-      <Icon src={ChatBubbleOvalLeftEllipsis} width={16} height={16} mini />
-      <FormattedNumber number={community_view.counts.comments} />
-    </span>
-  </div>
-  {#if moderators && moderators.length > 0}
-    <div class="flex flex-col gap-2 max-w-full">
-      <span class="font-bold">Moderators</span>
-      <div
-        class="flex items-center -space-x-1 flex-wrap hover:space-x-1 transition-all
-    cursor-pointer"
-      >
-        {#each moderators as moderator}
-          <Popover openOnHover placement="top-start" class="transition-all">
-            <a
-              class="block ring rounded-full ring-slate-50 dark:ring-zinc-950 transition-all"
-              href="/u/{moderator.moderator.name}@{new URL(
-                moderator.moderator.actor_id
-              ).hostname}"
-              slot="target"
-            >
-              <Avatar
-                width={28}
-                url={moderator.moderator.avatar}
-                alt={moderator.moderator.name}
-              />
-            </a>
-            <span class="font-bold">{moderator.moderator.name}</span>
-          </Popover>
-        {/each}
+  
+  <div class="flex flex-col divide-y divide-slate-300 dark:divide-zinc-800 [&>*]:py-3">
+    <Expandable class="!pt-0">
+      <span slot="title">About</span>
+      <Markdown source={community_view.community.description} />
+    </Expandable>
+
+    <Expandable>
+      <span slot="title">Stats</span>
+      <div class="flex flex-row gap-4 flex-wrap">
+        <LabelStat label="Members" content={community_view.counts.subscribers.toString()} formatted />
+        <LabelStat label="Posts" content={community_view.counts.posts.toString()} formatted />
       </div>
-    </div>
-  {/if}
-  <Markdown source={community_view.community.description} />
+    </Expandable>
+
+    {#if moderators && moderators.length > 0}
+      <Expandable>
+        <span slot="title">Moderators</span>
+        <div
+          class="flex items-center -space-x-1 flex-wrap hover:space-x-1 transition-all
+      cursor-pointer"
+        >
+          {#each moderators as moderator}
+            <Popover openOnHover placement="top-start" class="transition-all">
+              <a
+                class="block ring rounded-full ring-slate-50 dark:ring-zinc-950 transition-all"
+                href="/u/{moderator.moderator.name}@{new URL(
+                  moderator.moderator.actor_id
+                ).hostname}"
+                slot="target"
+              >
+                <Avatar
+                  width={28}
+                  url={moderator.moderator.avatar}
+                  alt={moderator.moderator.name}
+                />
+              </a>
+              <span class="font-bold">{moderator.moderator.name}</span>
+            </Popover>
+          {/each}
+        </div>
+      </Expandable>
+    {/if}
+  </div>
   <div
     class="flex flex-row items-center gap-2 sticky bottom-0 drop-shadow-xl w-full"
   >
