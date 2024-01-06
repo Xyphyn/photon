@@ -29,7 +29,7 @@
   } from '$lib/components/lemmy/moderation/moderation.js'
   import ModerationMenu from '$lib/components/lemmy/moderation/ModerationMenu.svelte'
   import { profile } from '$lib/auth.js'
-  import { deleteItem, markAsRead, save } from '$lib/lemmy/contentview.js'
+  import { contentView, deleteItem, markAsRead, save } from '$lib/lemmy/contentview.js'
   import { setSessionStorage } from '$lib/session.js'
   import { goto } from '$app/navigation'
   import { userSettings } from '$lib/settings.js'
@@ -47,6 +47,7 @@
   const dispatcher = createEventDispatcher<{ edit: PostView }>()
 
   let editing = false
+  let saving = false
   export let debug: boolean = false
 </script>
 
@@ -90,6 +91,7 @@
     href="/post/{getInstance()}/{post.post.id}"
     class="!text-inherit h-8 px-3"
     target={$userSettings.openLinksInNewTab ? '_blank' : ''}
+    title="Comments"
   >
     <Icon slot="prefix" src={ChatBubbleOvalLeft} mini size="14" />
     <FormattedNumber number={post.counts.comments} />
@@ -114,15 +116,35 @@
   {#if $profile?.user && (amMod($profile.user, post.community) || isAdmin($profile.user))}
     <ModerationMenu bind:item={post} community={post.community} />
   {/if}
+
+  {#if $profile?.jwt}
+  <Button
+    on:click={async () => {
+      if (!$profile?.jwt) return
+      saving = true
+      post.saved = await save(post, !post.saved, $profile?.jwt)
+      saving = false
+    }}
+    size="square-md" 
+    color="ghost" 
+    loading={saving}
+    disabled={saving}
+    title={post.saved ? 'Unsave' : 'Save'} 
+  >
+    <Icon src={post.saved ? BookmarkSlash : Bookmark} size="16" mini slot="prefix" />
+  </Button>
+  {/if}
+
   <Menu
     placement="bottom-end"
     containerClass="overflow-auto max-h-[400px]"
     class="h-8"
     targetClass="h-full"
+    title="Post actions"
   >
     <Button
       slot="target"
-      aria-label="Post actions"
+      title="Post actions"
       color="ghost"
       size="square-md"
     >
@@ -174,15 +196,6 @@
       Share
     </MenuButton>
     {#if $profile?.jwt}
-      <MenuButton
-        on:click={async () => {
-          if ($profile?.jwt)
-            post.saved = await save(post, !post.saved, $profile.jwt)
-        }}
-      >
-        <Icon src={post.saved ? BookmarkSlash : Bookmark} width={16} mini />
-        {post.saved ? 'Unsave' : 'Save'}
-      </MenuButton>
       <MenuButton
         on:click={() => {
           setSessionStorage('postDraft', {
