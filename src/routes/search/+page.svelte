@@ -41,7 +41,7 @@
 
   let pageNum = data.page
 
-  let moreOptions = false
+  let moreOptions = !!$page.url.searchParams.get('community')
 </script>
 
 <svelte:head>
@@ -101,6 +101,9 @@
       jwt={$profile?.jwt}
       listing_type={'All'}
       showWhenEmpty={true}
+      q={$page.url.searchParams.get('community')
+        ? data.filters?.community ?? 'Selected'
+        : ''}
       on:select={(c) =>
         searchParam($page.url, 'community', c.detail?.id || undefined, 'page')}
     />
