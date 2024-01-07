@@ -46,6 +46,7 @@
     UserCircle,
     UserGroup,
   } from 'svelte-hero-icons'
+  import { _ } from 'svelte-i18n'
   import { fly } from 'svelte/transition'
 
   export let title: string | undefined = ''
@@ -74,18 +75,6 @@
             <span class="opacity-30 text-xl">/</span>
             <div class="text-sm font-bold inline-flex flex-col">
               <span>{$site.site_view.site.name}</span>
-              {#if !$userSettings.hidePhoton}
-                <div
-                  class="text-xs flex items-center gap-1 text-slate-600 dark:text-zinc-400 font-normal"
-                >
-                  Powered by <a
-                    href="https://github.com/Xyphyn/photon"
-                    class="font-bold flex items-center gap-0.5 hover:underline text-black dark:text-white"
-                  >
-                    <Logo width={12} /> Photon
-                  </a>
-                </div>
-              {/if}
             </div>
           </div>
         {:else}
@@ -115,11 +104,11 @@
     {#if $profile?.user && isAdmin($profile.user)}
       <Button
         href="/admin"
-        aria-label="Admin"
+        aria-label={$_('nav.admin')}
         class="max-md:w-9 max-md:h-8 max-md:!p-0 dark:text-zinc-300 text-slate-700 relative"
       >
         <Icon src={ServerStack} mini size="18" slot="prefix" />
-        <span class="hidden md:inline">Admin</span>
+        <span class="hidden md:inline">{$_('nav.admin')}</span>
 
         {#if ($profile?.user?.notifications.applications ?? 0) > 0}
           <div
@@ -131,7 +120,7 @@
     {#if amModOfAny($profile?.user)}
       <Button
         href="/moderation"
-        aria-label="Moderation"
+        aria-label={$_('nav.moderation')}
         class="max-md:w-9 max-md:h-8 max-md:!p-0 dark:text-zinc-300 text-slate-700 relative"
       >
         {#if ($profile?.user?.notifications.reports ?? 0) > 0}
@@ -140,43 +129,43 @@
           />
         {/if}
         <ShieldIcon filled width={15} />
-        <span class="hidden md:inline">Reports</span>
+        <span class="hidden md:inline">{$_('nav.moderation')}</span>
       </Button>
     {/if}
     <Button
       href="/search"
-      aria-label="Search"
+      aria-label={$_('nav.search')}
       class="max-md:w-9 max-md:h-8 max-md:!p-0"
     >
       <Icon mini src={MagnifyingGlass} width={16} slot="prefix" />
-      <span class="hidden md:inline">Search</span>
+      <span class="hidden md:inline">{$_('nav.search')}</span>
     </Button>
     <Button
       href="/communities"
-      aria-label="Communities"
+      aria-label={$_('nav.explore')}
       class="max-md:w-9 max-md:h-8 max-md:!p-0"
     >
       <Icon mini src={GlobeAlt} size="16" slot="prefix" />
-      <span class="hidden md:inline">Explore</span>
+      <span class="hidden md:inline">{$_('nav.explore')}</span>
     </Button>
     <Menu placement="bottom-end" targetClass="h-8">
       <Button
         color="primary"
         slot="target"
-        aria-label="Create"
+        aria-label={$_('nav.create')}
         class="max-md:w-9 max-md:h-8 max-md:!p-0"
       >
         <Icon src={Plus} width={18} mini slot="prefix" />
-        <span class="hidden md:inline">Create</span>
+        <span class="hidden md:inline">{$_('nav.create')}</span>
       </Button>
-      <MenuDivider>Create</MenuDivider>
+      <MenuDivider>{$_('nav.create')}</MenuDivider>
       <MenuButton
         link
         href="/create/post"
         disabled={$profile?.jwt == undefined}
       >
         <Icon src={PencilSquare} mini width={16} />
-        Post
+        {$_('post.post')}
       </MenuButton>
       <MenuButton
         link
@@ -187,11 +176,11 @@
             !isAdmin($profile.user))}
       >
         <Icon src={Newspaper} mini width={16} />
-        Community
+        {$_('community.community')}
       </MenuButton>
       {#if !$profile?.jwt}
         <span class="text-sm mx-4 my-1 py-1">
-          <Link highlight href="/login">Log in</Link> to create content.
+          <Link highlight href="/login">{$_('account.login')}</Link>
         </span>
       {/if}
     </Menu>
@@ -205,7 +194,7 @@
     <button
       class="w-8 h-8 rounded-full ring-1 ring-slate-300 bg-slate-100
       dark:bg-zinc-800 relative"
-      aria-label="Profile"
+      aria-label={$_('profile.profile')}
       slot="target"
     >
       {#if $profile?.user}
@@ -234,16 +223,16 @@
       </div>
     {:else}
       <MenuDivider>
-        Profile
+        {$_('profile.profile')}
       </MenuDivider>
     {/if}
     {#if $profile?.user}
       <MenuButton  link href="/profile">
-        <Icon src={UserCircle} mini width={16} /> Profile
+        <Icon src={UserCircle} mini width={16} /> {$_('profile.profile')}
       </MenuButton>
       <MenuButton link href="/inbox">
         <Icon src={Inbox} mini width={16} />
-        Inbox
+        {$_('nav.profile.inbox')}
         {#if $profile.user.notifications.inbox > 0}
           <Badge color="red-subtle" class="text-xs ml-auto font-bold !py-0.5">
             {$profile.user.notifications.inbox}
@@ -251,18 +240,18 @@
         {/if}
       </MenuButton>
       <MenuButton link href="/saved">
-        <Icon src={Bookmark} mini width={16} /> Saved
+        <Icon src={Bookmark} mini width={16} /> {$_('nav.profile.saved')}
       </MenuButton>
     {/if}
     <MenuButton link href="/accounts">
       <Icon src={UserGroup} mini width={16} />
-      Accounts
+      {$_('nav.profile.accounts')}
     </MenuButton>
     <hr class="dark:opacity-10 w-[90%] my-2 mx-auto" />
-    <MenuDivider>Photon</MenuDivider>
+    <MenuDivider>{$_('brand')}</MenuDivider>
     <MenuButton link href="/settings">
       <Icon src={Cog6Tooth} mini width={16} />
-      Settings
+      {$_('nav.app.settings')}
     </MenuButton>
     <MenuButton class="!py-0">
       <Icon
@@ -282,11 +271,11 @@
         class="flex flex-row flex-wrap justify-between w-full items-center"
         on:click|stopPropagation
       >
-        <span>Theme</span>
+        <span>{$_('nav.app.theme.theme')}</span>
         <Select bind:value={$theme} class="ml-auto my-auto w-24" size="sm">
-          <option value="system">System</option>
-          <option value="light">Light</option>
-          <option value="dark">Dark</option>
+          <option value="system">{$_('nav.app.theme.system')}</option>
+          <option value="light">{$_('nav.app.theme.light')}</option>
+          <option value="dark">{$_('nav.app.theme.dark')}</option>
         </Select>
       </div>
     </MenuButton>
@@ -305,7 +294,7 @@
           class="hover:brightness-110 transition-all"
           on:click={() => { 
             navigator?.clipboard?.writeText(__VERSION__)
-            toast({ content: 'Copied version to clipboard.' })
+            toast({ content: $_('toasts.clipboard') })
           }}
         >
           <Badge>{__VERSION__}</Badge>
