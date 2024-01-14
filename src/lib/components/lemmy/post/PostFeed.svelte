@@ -7,8 +7,8 @@
   import { ArchiveBox, Icon, Minus, Plus } from "svelte-hero-icons";
   import { expoOut } from "svelte/easing";
   import { fly, slide } from "svelte/transition";
-  import InfiniteScroll from "svelte-infinite-scroll";
   import { loadPosts, loadedPosts } from "$lib/lemmy.ts";
+  import InfiniteLoading from "svelte-infinite-loading";
   import { page } from "$app/stores";
 
   type PostViewWithCrossposts = PostView & {
@@ -163,17 +163,21 @@
       {/if}
     {/each}
   {/if}
-  <InfiniteScroll
-    window={true}
-    threshold={100}
-    on:loadMore={async () => {
-      let newUrl = $page.url;
-      newUrl.searchParams.set("cursor", cursor?.next || "");
-
-      let newPosts = await loadPosts(newUrl, fetch);
-      $loadedPosts = [...$loadedPosts, ...newPosts.posts.posts];
-
-      cursor = newPosts.cursor;
-    }}
-  />
 </ul>
+<InfiniteLoading
+  on:infinite={async ({ detail: { loaded, complete } }) => {
+    let newUrl = $page.url;
+    newUrl.searchParams.set("cursor", cursor?.next || "");
+
+    let newPosts = await loadPosts(newUrl, fetch);
+    if (newPosts.posts.posts.length == 0) {
+      loaded();
+      complete();
+    } else {
+      $loadedPosts = [...$loadedPosts, ...newPosts.posts.posts];
+      cursor = newPosts.cursor;
+      loaded();
+    }
+  }}
+  spinner="wavedots"
+/>

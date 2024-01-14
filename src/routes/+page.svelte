@@ -82,22 +82,4 @@
     initialPosts={data.posts.posts}
     cursor={{ next: data.cursor.next, back: data.cursor.back }}
   />
-  <div class="mt-auto">
-    <Pageination
-      page={data.page}
-      cursor={{ next: data.cursor.next, back: data.cursor.back }}
-      on:change={(p) => searchParam($page.url, "page", p.detail.toString())}
-      on:cursor={(c) => {
-        searchParam($page.url, "cursor", c.detail);
-      }}
-    >
-      <span class="flex flex-row items-center gap-1">
-        <Icon src={ChartBar} size="16" mini />
-        <span class="font-medium text-black dark:text-white">
-          {$site?.site_view.counts.users_active_day}
-        </span>
-        <span class="font-normal">Active users</span>
-      </span>
-    </Pageination>
-  </div>
 </div>
