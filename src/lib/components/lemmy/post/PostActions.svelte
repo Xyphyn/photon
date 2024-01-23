@@ -16,6 +16,7 @@
     Icon,
     Newspaper,
     PencilSquare,
+    ServerStack,
     Share,
     Trash,
     UserCircle,
@@ -41,6 +42,8 @@
     Modal,
     Spinner,
   } from 'mono-svelte'
+  import { fediseer, type Data } from '$lib/fediseer/fediseer'
+  import Fediseer from '$lib/fediseer/Fediseer.svelte'
 
   export let post: PostView
 
@@ -49,7 +52,15 @@
   let editing = false
   let saving = false
   export let debug: boolean = false
+
+  let fediseerOpen = false
+  let fediseerData: Data | null = null
+  let fediseerLoading = false
 </script>
+
+{#if fediseerData}
+<Fediseer bind:open={fediseerOpen} data={fediseerData} />
+{/if}
 
 {#if editing}
   <Modal bind:open={editing}>
@@ -166,6 +177,28 @@
       <Icon src={Newspaper} width={16} mini />
       <span>{post.community.title}</span>
     </MenuButton>
+    <MenuButton
+      loading={fediseerLoading}
+      on:click={async (e) => {
+        e.stopImmediatePropagation()
+
+        fediseerLoading = true
+        const data = await fediseer.getInstanceInfo(new URL(post.community.actor_id).hostname)
+        console.log(data)
+        fediseerData = data
+        fediseerOpen = true
+        fediseerLoading = false
+
+        return
+      }}
+    >
+      {#if fediseerLoading}
+      <Spinner width={14} />
+      {:else}
+      <Icon src={ServerStack} width={16} mini />
+      {/if}
+      <span>{new URL(post.community.actor_id).hostname}</span>
+    </MenuButton>
     <hr class="w-[90%] mx-auto opacity-100 dark:opacity-10 my-2" />
     <MenuDivider>Actions</MenuDivider>
     {#if $profile?.user && $profile?.jwt && $profile.user.local_user_view.person.id == post.creator.id}
@@ -181,7 +214,7 @@
             post.read = await markAsRead(post.post, !post.read, $profile.jwt)
         }}
       >
-        <Icon src={post.read ? EyeSlash : Eye} width={16} mini />
+        <Icon slot="prefix" src={post.read ? EyeSlash : Eye} width={16} mini />
         Mark as {post.read ? 'Unread' : 'Read'}
       </MenuButton>
     {/if}

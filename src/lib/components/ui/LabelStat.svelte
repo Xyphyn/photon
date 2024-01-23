@@ -7,8 +7,8 @@
 </script>
 
 <div class="flex flex-col {$$props.class}">
-  <span class="text-slate-600 dark:text-zinc-400 text-xs">{label}</span>
-  <span class="text-base">
+  <span class="text-slate-600 dark:text-zinc-400 text-xs {$$props.labelClass}">{label}</span>
+  <span class="text-base {$$props.contentClass}">
     {#if formatted}
       <FormattedNumber number={Number(content)} />
     {:else}
