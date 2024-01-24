@@ -1,0 +1,26 @@
+{
+  "nav": {
+    "frontpage": "Frontpage",
+    "create": "Create",
+    "explore": "Explore",
+    "communities": "Communities",
+    "search": "Search",
+    "moderation": "Reports",
+    "admin": "Admin",
+    "changeinstance": "Change Instance",
+    "profile": {
+      "inbox": "Inbox",
+      "accounts": "Accounts",
+      "saved": "Saved"
+    },
+    "app": {
+      "settings": "Settings",
+      "theme": {
+        "theme": "Theme",
+        "light": "Light",
+        "dark": "Dark",
+        "system": "System"
+      }
+    }
+  }
+}

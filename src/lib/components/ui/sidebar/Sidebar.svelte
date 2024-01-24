@@ -19,6 +19,7 @@
   import { expoOut } from 'svelte/easing'
   import { Button } from 'mono-svelte'
   import { DEFAULT_INSTANCE_URL, LINKED_INSTANCE_URL } from '$lib/instance.js'
+  import { _ } from 'svelte-i18n'
 
   export let route = ''
 </script>
@@ -36,22 +37,21 @@
   >
     <Icon src={ChevronDoubleRight} size="16" mini />
   </Button>
-  <SidebarButton href="/">
-    <Icon src={Home} mini={route == '/'} size="20" title="Frontpage" />
-    <span slot="label">Frontpage</span>
+  <SidebarButton href="/" aria-label={$_('nav.frontpage')}>
+    <Icon src={Home} mini={route == '/'} size="20" />
+    <span slot="label">{$_('nav.frontpage')}</span>
   </SidebarButton>
-  <SidebarButton href="/settings">
+  <SidebarButton href="/settings" aria-label={$_('nav.app.settings')}>
     <Icon
       src={Cog6Tooth}
       mini={route == '/settings'}
       size="20"
-      title="Settings"
     />
-    <span slot="label">Settings</span>
+    <span slot="label">{$_('nav.app.settings')}</span>
   </SidebarButton>
-  <SidebarButton href="/communities">
+  <SidebarButton href="/communities" aria-label={$_('nav.communities')}>
     <Icon mini={route == '/communities'} src={GlobeAlt} size="20" />
-    <span slot="label">Communities</span>
+    <span slot="label">{$_('nav.communities')}</span>
   </SidebarButton>
   {#if $profileData.profiles.length >= 1}
     <hr class="border-slate-200 dark:border-zinc-800 my-1" />
@@ -65,13 +65,13 @@
       prof={{
         id: -1,
         instance: $profileData?.defaultInstance ?? DEFAULT_INSTANCE_URL,
-        username: 'Guest',
+        username: $_('account.guest'),
       }}
       guest
     />
-    <SidebarButton href="/accounts">
+    <SidebarButton href="/accounts" aria-label={$_('account.accounts')}>
       <Icon src={UserGroup} mini size="20" />
-      <span slot="label">Accounts</span>
+      <span slot="label">{$_('account.accounts')}</span>
     </SidebarButton>
   {/if}
   <hr class="border-slate-200 dark:border-zinc-800 my-1" />
@@ -83,18 +83,18 @@
 
     <CommunityList items={$profile.user.follows.map((i) => i.community)} />
   {:else}
-    <SidebarButton href="/login" title="Log In">
+    <SidebarButton href="/login" title={$_('account.login')}>
       <Icon mini src={ArrowLeftOnRectangle} size="20" />
-      <span slot="label">Log In</span>
+      <span slot="label">{$_('account.login')}</span>
     </SidebarButton>
-    <SidebarButton href="/signup" title="Sign Up">
+    <SidebarButton href="/signup" title={$_('account.signup')}>
       <Icon mini src={Identification} size="20" />
-      <span slot="label">Sign Up</span>
+      <span slot="label">{$_('account.signup')}</span>
     </SidebarButton>
     {#if LINKED_INSTANCE_URL === undefined}
-      <SidebarButton href="/accounts" title="Change Instance">
+      <SidebarButton href="/accounts" title={$_('nav.changeinstance')}>
         <Icon mini src={ServerStack} size="20" />
-        <span slot="label">Change Instance</span>
+        <span slot="label">{$_('nav.changeinstance')}</span>
       </SidebarButton>
     {/if}
   {/if}

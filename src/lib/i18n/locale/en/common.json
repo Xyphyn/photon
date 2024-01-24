@@ -1,0 +1,29 @@
+{
+  "brand": "Photon",
+  "post": {
+    "post": "Post",
+    "create": "Create Post"
+  },
+  "community": {
+    "community": "Community",
+    "create": "Create Community"
+  },
+  "comment": {
+    "comment": "Comment",
+    "create": "Comment"
+  },
+  "user": "User",
+  "forms": {
+    "submit": "Submit"
+  },
+  "profile": {
+    "profile": "Profile"
+  },
+  "account": {
+    "login": "Log In",
+    "signup": "Sign Up",
+    "logout": "Log Out",
+    "guest": "Guest",
+    "accounts": "Accounts"
+  }
+}
