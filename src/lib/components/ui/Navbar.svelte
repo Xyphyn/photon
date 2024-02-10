@@ -116,7 +116,7 @@
       <Button
         href="/admin"
         aria-label="Admin"
-        class="max-md:w-8 max-md:h-8 max-md:!p-0 dark:text-zinc-300 text-slate-700 relative"
+        class="max-md:w-9 max-md:h-8 max-md:!p-0 dark:text-zinc-300 text-slate-700 relative"
       >
         <Icon src={ServerStack} mini size="18" slot="prefix" />
         <span class="hidden md:inline">Admin</span>
@@ -132,7 +132,7 @@
       <Button
         href="/moderation"
         aria-label="Moderation"
-        class="max-md:w-8 max-md:h-8 max-md:!p-0 dark:text-zinc-300 text-slate-700 relative"
+        class="max-md:w-9 max-md:h-8 max-md:!p-0 dark:text-zinc-300 text-slate-700 relative"
       >
         {#if ($profile?.user?.notifications.reports ?? 0) > 0}
           <div
@@ -146,7 +146,7 @@
     <Button
       href="/search"
       aria-label="Search"
-      class="max-md:w-8 max-md:h-8 max-md:!p-0"
+      class="max-md:w-9 max-md:h-8 max-md:!p-0"
     >
       <Icon mini src={MagnifyingGlass} width={16} slot="prefix" />
       <span class="hidden md:inline">Search</span>
@@ -154,7 +154,7 @@
     <Button
       href="/communities"
       aria-label="Communities"
-      class="max-md:w-8 max-md:h-8 max-md:!p-0"
+      class="max-md:w-9 max-md:h-8 max-md:!p-0"
     >
       <Icon mini src={GlobeAlt} size="16" slot="prefix" />
       <span class="hidden md:inline">Explore</span>
@@ -164,7 +164,7 @@
         color="primary"
         slot="target"
         aria-label="Create"
-        class="max-md:w-8 max-md:h-8 max-md:!p-0"
+        class="max-md:w-9 max-md:h-8 max-md:!p-0"
       >
         <Icon src={Plus} width={18} mini slot="prefix" />
         <span class="hidden md:inline">Create</span>
@@ -203,7 +203,7 @@
     containerClass="!max-h-[28rem] z-10"
   >
     <button
-      class="w-8 h-8 rounded-full ring-1 ring-slate-300 dark:ring-zinc-600 bg-slate-100
+      class="w-8 h-8 rounded-full ring-1 ring-slate-300 bg-slate-100
       dark:bg-zinc-800 relative"
       aria-label="Profile"
       slot="target"
@@ -229,18 +229,16 @@
     </button>
     {#if $profile?.user}
       <div class="flex flex-row gap-2 items-center py-2 mx-4 font-medium">
-        <Avatar
-          width={22}
-          url={$profile?.user?.local_user_view.person.avatar}
-          alt={$profile?.username}
-        />
+        <Avatar width={22} url={$profile?.user?.local_user_view.person.avatar} alt={$profile?.username} />
         {$profile?.user?.local_user_view?.person.name}
       </div>
     {:else}
-      <MenuDivider>Profile</MenuDivider>
+      <MenuDivider>
+        Profile
+      </MenuDivider>
     {/if}
     {#if $profile?.user}
-      <MenuButton link href="/profile">
+      <MenuButton  link href="/profile">
         <Icon src={UserCircle} mini width={16} /> Profile
       </MenuButton>
       <MenuButton link href="/inbox">
@@ -271,10 +269,10 @@
         src={$theme == 'system'
           ? ComputerDesktop
           : $theme == 'light'
-            ? Sun
-            : $theme == 'dark'
-              ? Moon
-              : Moon}
+          ? Sun
+          : $theme == 'dark'
+          ? Moon
+          : Moon}
         mini
         size="16"
       />
@@ -303,35 +301,25 @@
       <div class="flex flex-row gap-2 w-full items-center">
         <!-- svelte-ignore missing-declaration -->
         <div class="flex-1">
-          <button
-            class="hover:brightness-110 transition-all"
-            on:click={() => {
-              navigator?.clipboard?.writeText(__VERSION__)
-              toast({ content: 'Copied version to clipboard.' })
-            }}
-          >
-            <Badge>{__VERSION__}</Badge>
-          </button>
-        </div>
-        <Button
-          color="tertiary"
-          href="https://buymeacoffee.com/xylight"
-          title="Donate"
-          size="square-md"
+        <button
+          class="hover:brightness-110 transition-all"
+          on:click={() => { 
+            navigator?.clipboard?.writeText(__VERSION__)
+            toast({ content: 'Copied version to clipboard.' })
+          }}
         >
-          <Icon src={Heart} size="16" mini />
-        </Button>
-        <Button
-          color="tertiary"
-          href="https://github.com/Xyphyn/Photon"
-          title="GitHub"
-          size="square-md"
-        >
-          <Icon src={CodeBracketSquare} size="16" mini />
-        </Button>
-        <Button color="tertiary" href="/about" title="About" size="square-md">
-          <Icon src={InformationCircle} size="16" mini />
-        </Button>
+          <Badge>{__VERSION__}</Badge>
+        </button>
+      </div>
+      <Button color="tertiary" href="https://buymeacoffee.com/xylight" title="Donate" size="square-md">
+        <Icon src={Heart} size="16" mini />
+      </Button>
+      <Button color="tertiary" href="https://github.com/Xyphyn/Photon" title="GitHub" size="square-md">
+        <Icon src={CodeBracketSquare} size="16" mini />
+      </Button>
+      <Button color="tertiary" href="/about" title="About" size="square-md">
+        <Icon src={InformationCircle} size="16" mini />
+      </Button>
       </div>
     </li>
   </Menu>
