@@ -1,17 +1,17 @@
-FROM node:20-alpine
+FROM oven/bun:alpine
 
 WORKDIR /app
 
 COPY package.json ./
 
-RUN npm install
+RUN bun install
 
 EXPOSE 3000
 
 COPY . .
 
-RUN ADAPTER=node npm run build
+RUN ADAPTER=bun bun run build
 
-USER node
+USER bun
 
-CMD ["npm", "run", "start"]
+CMD ["bun", "run", "bunstart"]
