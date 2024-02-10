@@ -93,3 +93,7 @@ pre {
 .dark ::-webkit-scrollbar-thumb {
   @apply bg-zinc-800;
 }
+
+.banner {
+  mask-image: linear-gradient(to left, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+}

@@ -20,7 +20,7 @@
     XMark,
   } from 'svelte-hero-icons'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
-    import { profile } from '$lib/auth';
+  import { profile } from '$lib/auth'
 
   export let data
 
@@ -56,9 +56,16 @@
   </div>
 </Modal>
 
+{#if data.community.community_view.community.banner}
+  <img
+    src={data.community.community_view.community.banner}
+    class="absolute top-0 right-0 object-cover w-full h-40 banner"
+    alt="Community banner"
+  />
+{/if}
 <div class="flex flex-col md:flex-row gap-4 w-full">
   <div class="flex flex-col gap-3 sm:gap-4 max-w-full w-full min-w-0">
-    <div class="flex flex-row gap-3 items-center">
+    <div class="flex flex-row gap-3 items-center z-0">
       <Avatar
         width={48}
         url={data.community.community_view.community.icon}
@@ -87,17 +94,19 @@
         </button>
       </div>
       <div class="flex items-center gap-2 w-max ml-auto">
-        {#if $profile?.user && $profile.user.moderates.map(c => c.community.id).includes(data.community.community_view.community.id)}
-        <Button
-          size="square-md"
-          color="secondary"
-          href="/c/{fullCommunityName(
-            data.community.community_view.community.name,
-            data.community.community_view.community.actor_id
-          )}/settings"
-        >
-          <Icon src={Cog6Tooth} size="16" mini />
-        </Button>
+        {#if $profile?.user && $profile.user.moderates
+            .map((c) => c.community.id)
+            .includes(data.community.community_view.community.id)}
+          <Button
+            size="square-md"
+            color="secondary"
+            href="/c/{fullCommunityName(
+              data.community.community_view.community.name,
+              data.community.community_view.community.actor_id
+            )}/settings"
+          >
+            <Icon src={Cog6Tooth} size="16" mini />
+          </Button>
         {/if}
         <Button
           size="square-md"
@@ -108,7 +117,7 @@
         </Button>
       </div>
     </div>
-    <div class="flex flex-row gap-4 max-w-full w-full items-end">
+    <div class="flex flex-row gap-4 max-w-full w-full items-end z-0">
       <Sort selected={data.sort} />
     </div>
     {#if data.community.community_view.blocked}
@@ -149,3 +158,6 @@
     </Pageination>
   </div>
 </div>
+
+<style>
+</style>

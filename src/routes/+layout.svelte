@@ -76,8 +76,8 @@
   class="min-h-screen {$userSettings.font == 'inter'
     ? 'font-inter'
     : $userSettings.font == 'system'
-    ? 'font-system'
-    : 'font-sans'}"
+      ? 'font-system'
+      : 'font-sans'}"
   route={$page.route}
 >
   <Moderation />
@@ -102,7 +102,7 @@
     slot="main"
     let:style={s}
     let:class={c}
-    class="p-3 sm:p-6 min-w-0 w-full flex flex-col min-h-full {c}"
+    class="p-3 sm:p-6 min-w-0 w-full flex flex-col min-h-full relative {c}"
     style={s}
     class:max-w-6xl={$userSettings.newWidth}
     id="main"

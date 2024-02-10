@@ -145,6 +145,13 @@
   </Modal>
 {/if}
 
+{#if data.person_view.person.banner}
+<img
+  src={data.person_view.person.banner}
+  class="absolute top-0 right-0 object-cover w-full h-40 banner"
+  alt="User banner"
+/>
+{/if}
 <div class="flex flex-col-reverse gap-4 max-w-full w-full">
   <div class="flex flex-col gap-4 max-w-full w-full min-w-0">
     <div class="flex flex-row gap-4 flex-wrap justify-between">
