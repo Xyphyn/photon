@@ -55,6 +55,7 @@
         .addEventListener('change', (event) => {
           darkTheme = inDarkTheme()
         })
+      document.body.querySelector('.loader')?.classList.add('hidden')
     }
   })
   $: title = routes[($page.route.id as keyof typeof routes) ?? '']
