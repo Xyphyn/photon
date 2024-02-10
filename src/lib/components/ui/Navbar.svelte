@@ -53,7 +53,7 @@
 
 <nav
   class="flex flex-row gap-2 items-center
-   backdrop-blur-sm w-full mx-auto px-4 py-2 z-50 box-border h-16
+   backdrop-blur-lg w-full mx-auto px-4 py-2 z-50 box-border h-16
   {$$props.class}
   "
   style={$$props.style}
