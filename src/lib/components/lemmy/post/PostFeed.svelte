@@ -89,7 +89,7 @@
         <li
           in:fly|global={{
             y: -8,
-            duration: 500,
+            duration: index < 4 ? 500 : 0,
             opacity: 0,
             delay: index < 4 ? index * 100 : 0,
           }}
