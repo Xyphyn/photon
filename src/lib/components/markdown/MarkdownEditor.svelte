@@ -156,7 +156,7 @@ overflow-hidden focus-within:border-black focus-within:dark:border-white transit
           <span class="italic font-bold">I</span>
         </Button>
         <Button
-          on:click={() => wrapSelection('[label](url)', '')}
+          on:click={() => wrapSelection('[', '](https://example.com)')}
           title="Link"
           size="square-md"
         >
