@@ -101,14 +101,6 @@
         </div>
       </div>
     </Setting>
-    <Setting>
-      <span slot="title">Vote style</span>
-      <MultiSelect
-        options={[false, true]}
-        optionNames={['Combined', 'Separate']}
-        bind:selected={$userSettings.separateVotes}
-      />
-    </Setting>
     <ToggleSetting
       bind:checked={$userSettings.openLinksInNewTab}
       title="Open posts in new tab"

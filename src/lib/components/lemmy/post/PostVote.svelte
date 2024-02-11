@@ -50,83 +50,48 @@
 </script>
 
 <slot {vote} {score}>
-  <!-- <Popover openOnHover placement="bottom"> -->
   <div
-    class="flex items-center text-sm rounded-lg border {buttonColor.secondary} hover:bg-white dark:hover:bg-zinc-900 px-1 h-8 cursor-pointer"
-    class:pr-2.5={$userSettings.separateVotes}
+    class="{buttonColor.secondary} rounded-lg h-full flex items-center [&>*]:p-2
+    hover:bg-white hover:dark:bg-zinc-900 overflow-hidden"
   >
-    <div class="flex items-center">
-      <Button
-        aria-label="Upvote"
-        class={vote == 1
-          ? voteColor(vote)
-          : 'hover:dark:text-blue-600 hover:text-blue-500'}
-        on:click={async () => castVote(vote == 1 ? 0 : 1)}
-        size="square-sm"
-        color="tertiary"
-        alignment="center"
-      >
-        <Icon src={ChevronUp} mini size="18" />
-      </Button>
-      <span
-        class="font-medium transition-colors duration-200 grid {shouldShowVoteColor(
-          vote,
-          'upvotes'
-        )}"
-        class:hidden={$profile?.user?.local_user_view.local_user.show_scores ==
-          false}
-      >
-        {#key $userSettings.separateVotes ? upvotes : score}
+    <button
+      on:click={() => castVote(vote == 1 ? 0 : 1)}
+      class="flex items-center gap-0.5 {buttonColor.secondary} transition-colors border-0
+      {vote == 1 ? shouldShowVoteColor(vote, 'upvotes') : ''}"
+    >
+      <Icon src={ChevronUp} size="18" mini />
+      <span class="grid text-sm">
+        {#key upvotes}
           <span
-            in:fly={{ y: -4, duration: 200 }}
-            out:fly={{ y: 4, duration: 200 }}
             style="grid-column: 1; grid-row: 1;"
+            in:fly={{ duration: 200, y: -6 }}
+            out:fly={{ duration: 200, y: 6 }}
           >
-            <FormattedNumber
-              number={$userSettings.separateVotes ? upvotes : score}
-            />
+            <FormattedNumber number={upvotes} />
           </span>
         {/key}
       </span>
-    </div>
-    {#if $userSettings.separateVotes}
-      <div class="h-full py-1.5 pl-2 pr-0.5">
-        <div class="border-l dark:border-zinc-700 h-full" />
-      </div>
-    {/if}
-    <div class="flex items-center">
-      <Button
-        aria-label="Downvote"
-        class="{vote == -1 ? voteColor(vote) : ''} {$site?.site_view.local_site
-          .enable_downvotes
-          ? 'hover:dark:text-red-600 hover:text-red-500'
-          : 'pointer-events-none opacity-50'}"
-        on:click={async () => castVote(vote == -1 ? 0 : -1)}
-        size="square-sm"
-        color="tertiary"
-      >
-        <Icon src={ChevronDown} mini size="18" />
-      </Button>
-      {#if $userSettings.separateVotes}
-        <span
-          class="font-medium transition-colors duration-200 grid {shouldShowVoteColor(
-            vote,
-            'downvotes'
-          )}"
-          class:hidden={$profile?.user?.local_user_view.local_user
-            .show_scores == false}
-        >
-          {#key downvotes}
-            <span
-              in:fly={{ y: -4, duration: 200 }}
-              out:fly={{ y: 4, duration: 200 }}
-              style="grid-column: 1; grid-row: 1;"
-            >
-              <FormattedNumber number={downvotes} />
-            </span>
-          {/key}
-        </span>
-      {/if}
-    </div>
+    </button>
+    <div
+      class="border-l h-6 w-0 !p-0 border-slate-200 dark:border-zinc-800"
+    ></div>
+    <button
+      on:click={() => castVote(vote == -1 ? 0 : -1)}
+      class="flex items-center gap-0.5 !pr-2.5 {buttonColor.secondary} transition-colors border-0
+      {vote == -1 ? shouldShowVoteColor(vote, 'downvotes') : ''}"
+    >
+      <Icon src={ChevronDown} size="18" mini />
+      <span class="grid text-sm">
+        {#key downvotes}
+          <span
+            style="grid-column: 1; grid-row: 1;"
+            in:fly={{ duration: 200, y: -6 }}
+            out:fly={{ duration: 200, y: 6 }}
+          >
+            <FormattedNumber number={downvotes} />
+          </span>
+        {/key}
+      </span>
+    </button>
   </div>
 </slot>

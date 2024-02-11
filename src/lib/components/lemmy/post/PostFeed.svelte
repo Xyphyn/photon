@@ -36,8 +36,9 @@
     const results: (PostViewWithCrossposts | PostViewWithoutCrossposts)[] = []
     const seenUrls = new Set<string>()
 
-    posts.forEach((post) => {
-      if (!post.post.url) {
+    posts?.forEach((post) => {
+      if (!post) return
+      if (!post?.post?.url) {
         results.push(post)
         return
       }
@@ -70,7 +71,7 @@
     ? 'gap-3 md:gap-4'
     : 'divide-y'} divide-slate-200 dark:divide-zinc-800"
 >
-  {#if posts.length == 0}
+  {#if posts?.length == 0}
     <div class="h-full grid place-items-center">
       <Placeholder
         icon={ArchiveBox}

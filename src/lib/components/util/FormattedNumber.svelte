@@ -6,4 +6,6 @@
   }
 </script>
 
-<span>{Intl.NumberFormat(locale, options).format(number)}</span>
+<span>
+  {Intl.NumberFormat(locale, options).format(number)}
+</span>

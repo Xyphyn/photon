@@ -16,7 +16,7 @@ export async function load({ params, fetch, url }) {
   return {
     sort: sort,
     page: page || 1,
-    posts: client({ func: fetch }).getPosts({
+    posts: await client({ func: fetch }).getPosts({
       limit: 40,
       community_name: params.name,
       page: page,
