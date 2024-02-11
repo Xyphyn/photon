@@ -8,8 +8,8 @@ export async function load({ params, fetch }) {
     id: Number(params.id),
   })
 
-  throw redirect(
-    300,
-    `/post/${params.instance}/${comment.comment_view.post.id}?thread=${comment.comment_view.comment.path}#${comment.comment_view.comment.id}`
-  )
+  redirect(
+        300,
+        `/post/${params.instance}/${comment.comment_view.post.id}?thread=${comment.comment_view.comment.path}#${comment.comment_view.comment.id}`
+      );
 }

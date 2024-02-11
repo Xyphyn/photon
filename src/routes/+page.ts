@@ -39,8 +39,8 @@ export async function load({ url, fetch }) {
       },
     }
   } catch (err) {
-    throw error(500, {
-      message: 'Failed to fetch homepage.',
-    })
+    error(500, {
+            message: 'Failed to fetch homepage.',
+          });
   }
 }

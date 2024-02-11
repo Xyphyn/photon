@@ -1,7 +1,7 @@
 import node from '@sveltejs/adapter-node';
 import bun from '@catdadcode/svelte-adapter-bun'
 import vercel from '@sveltejs/adapter-vercel'
-import { vitePreprocess } from '@sveltejs/kit/vite';
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {

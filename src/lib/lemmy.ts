@@ -47,7 +47,7 @@ async function customFetch(
   if (auth && url) url.searchParams.set('auth', auth)
 
   const res = await f(url ?? input, init)
-  if (!res.ok) throw error(res.status, await res.text())
+  if (!res.ok) error(res.status, await res.text());
   return res
 }
 

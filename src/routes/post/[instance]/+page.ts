@@ -12,8 +12,8 @@ export function load({ params, url }) {
     const newUrl = new URL(url)
     newUrl.pathname = split.join('/')
 
-    throw redirect(300, newUrl.toString())
+    redirect(300, newUrl.toString());
   }
 
-  throw error(404, 'Not found')
+  error(404, 'Not found');
 }
