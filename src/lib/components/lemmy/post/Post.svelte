@@ -20,6 +20,7 @@
   import PostMedia from '$lib/components/lemmy/post/media/PostMedia.svelte'
   import PostMediaCompact from '$lib/components/lemmy/post/media/PostMediaCompact.svelte'
   import PostBody from './PostBody.svelte'
+  import { profile } from '$lib/auth'
 
   export let post: PostView
   export let actions: boolean = true
@@ -61,6 +62,11 @@
           featured={post.post.featured_local || post.post.featured_community}
           nsfw={post.post.nsfw}
           saved={post.saved}
+          subscribed={$profile?.user?.follows
+            .map((c) => c.community.id)
+            .includes(post.community.id)
+            ? 'Subscribed'
+            : 'NotSubscribed'}
         >
           <slot name="badges" slot="badges" />
         </PostMeta>

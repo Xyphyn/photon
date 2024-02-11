@@ -14,7 +14,7 @@
 </script>
 
 {#if embed_title && !compact}
-  <Material class="flex flex-row gap-4">
+  <Material color="distinct" class="flex flex-row gap-4">
     <div class="flex flex-col gap-2">
       {#if richURL}
         <Link
@@ -29,21 +29,21 @@
         {embed_title}
       </a>
       {#if embed_description}
-        <p
-          class="text-sm text-transparent bg-clip-text bg-gradient-to-b
-        from-slate-700 dark:from-zinc-400
-        via-slate-700 dark:via-zinc-400
-        to-slate-700/0 dark:to-zinc-400/0"
-        >
-          {embed_description.slice(0, 300)}
+        <p class="text-sm">
+          {embed_description.slice(0, 300)}{embed_description.length > 300
+            ? '...'
+            : ''}
         </p>
       {/if}
     </div>
     {#if thumbnail_url}
-      <a href={url} class="ml-auto max-w-[150px] w-full flex-shrink">
+      <a
+        href={url}
+        class="ml-auto w-full thumbnail rounded-r-lg overflow-hidden flex-shrink -m-4"
+      >
         <img
           src={thumbnail_url}
-          class="rounded-lg max-w-[200px] w-full h-full max-h-24 object-cover bg-slate-200 dark:bg-zinc-800"
+          class="w-full h-full object-cover bg-slate-200 dark:bg-zinc-800"
           width={600}
           height={400}
           alt=""
@@ -67,3 +67,10 @@
     </a>
   {/if}
 {/if}
+
+<style>
+  .thumbnail {
+    max-width: 240px;
+    height: calc(100%+16px);
+  }
+</style>
