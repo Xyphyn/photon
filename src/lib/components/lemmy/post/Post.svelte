@@ -63,8 +63,6 @@
           community={hideCommunity ? undefined : post.community}
           user={post.creator}
           published={publishedToDate(post.post.published)}
-          upvotes={post.counts.upvotes}
-          downvotes={post.counts.downvotes}
           deleted={post.post.deleted}
           removed={post.post.removed}
           locked={post.post.locked}

@@ -12,6 +12,7 @@
 </script>
 
 <a
+  {...$$restProps}
   class="items-center flex flex-row gap-2 hover:underline flex-shrink-0"
   href="/c/{community.name}@{new URL(community.actor_id).hostname}"
 >

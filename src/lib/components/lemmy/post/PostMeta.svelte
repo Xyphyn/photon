@@ -26,10 +26,6 @@
   export let title: string | undefined = undefined
   export let id: number | undefined = undefined
 
-  // Score
-  export let upvotes: number | undefined = undefined
-  export let downvotes: number | undefined = undefined
-
   // Badges
   export let nsfw: boolean = false
   export let saved: boolean = false
@@ -39,108 +35,112 @@
   export let locked: boolean = false
 </script>
 
-<div class="flex flex-col gap-1 w-full">
-  <span class="flex flex-row gap-2 text-sm items-center">
-    {#if community}
-      <Subscribe let:subscribe let:subscribing>
-        <button
-          on:click={async () => {
-            if (!community) return
-            await subscribe(community.id, subscribed)
-            subscribed =
-              subscribed == 'NotSubscribed' ? 'Subscribed' : 'NotSubscribed'
-          }}
-          class="relative cursor-pointer"
-        >
-          <Avatar url={community.icon} width={28} alt={community.name} />
-          {#if subscribed != undefined && $profile?.jwt}
-            <div
-              class="absolute w-3.5 h-3.5 {subscribed == 'NotSubscribed'
-                ? 'bg-primary-900 dark:bg-primary-100 text-white dark:text-black'
-                : 'bg-primary-100 dark:bg-primary-900 text-black dark:text-white'} rounded-full ring-2 box-border
-            ring-slate-50 dark:ring-zinc-950
-            -bottom-1.5 -right-1.5 grid place-items-center transition-all"
-            >
-              <Icon
-                src={subscribed == 'NotSubscribed' ? Plus : Check}
-                mini
-                size="12"
-              />
-            </div>
-          {/if}
-        </button>
-      </Subscribe>
-    {/if}
-    <div class="flex flex-col text-xs">
-      {#if community}
-        <CommunityLink {community} />
-      {/if}
-      <span
-        class="text-slate-600 dark:text-zinc-400 flex flex-row gap-1 flex-wrap items-center"
+<div
+  class="grid w-full meta {community ? 'grid-rows-2' : 'grid-rows-1'} text-xs"
+>
+  {#if community}
+    <Subscribe let:subscribe let:subscribing>
+      <button
+        on:click={async () => {
+          if (!community) return
+          await subscribe(community.id, subscribed)
+          subscribed =
+            subscribed == 'NotSubscribed' ? 'Subscribed' : 'NotSubscribed'
+        }}
+        class="relative cursor-pointer row-span-2 pr-2"
       >
-        {#if user}
+        <Avatar
+          url={community.icon}
+          width={28}
+          alt={community.name}
+          style="grid-area: avatar; height: 100%;"
+        />
+        {#if subscribed != undefined && $profile?.jwt}
           <div
-            class="mr-0.5 flex items-center"
-            class:text-slate-900={!community}
-            class:dark:text-zinc-100={!community}
+            class="absolute w-3.5 h-3.5 {subscribed == 'NotSubscribed'
+              ? 'bg-primary-900 dark:bg-primary-100 text-white dark:text-black'
+              : 'bg-primary-100 dark:bg-primary-900 text-black dark:text-white'} rounded-full ring-2 box-border
+            ring-slate-50 dark:ring-zinc-950
+            -bottom-1 right-1 grid place-items-center transition-all"
           >
-            <UserLink avatarSize={20} {user} avatar={!community} />
+            <Icon
+              src={subscribed == 'NotSubscribed' ? Plus : Check}
+              mini
+              size="12"
+            />
           </div>
         {/if}
-        {#if published}
-          <RelativeDate date={published} />
-        {/if}
-        {#if upvotes != undefined && downvotes != undefined}
-          <span>•</span>
-          <span>
-            {Math.floor((upvotes / (upvotes + downvotes || 1)) * 100)}%
-          </span>
-        {/if}
-      </span>
-    </div>
-
-    <div
-      class="flex flex-row ml-auto gap-2 flex-shrink overflow-auto [&>*]:flex-shrink-0"
-    >
-      {#if nsfw}
-        <Badge color="red-subtle">NSFW</Badge>
-      {/if}
-      {#if saved}
-        <Badge label="Saved" color="yellow-subtle">
-          <Icon src={Bookmark} mini size="12" />
-          <span class="max-md:hidden">Saved</span>
-        </Badge>
-      {/if}
-      {#if locked}
-        <Badge label="Locked" color="yellow-subtle">
-          <Icon src={LockClosed} mini size="14" />
-          <span class="max-md:hidden">Locked</span>
-        </Badge>
-      {/if}
-      {#if removed}
-        <Badge label="Removed" color="red-subtle">
-          <Icon src={Trash} mini size="14" />
-          <span class="max-md:hidden">Removed</span>
-        </Badge>
-      {/if}
-      {#if deleted}
-        <Badge label="Deleted" color="red-subtle">
-          <Icon src={Trash} mini size="14" />
-          <span class="max-md:hidden">Deleted</span>
-        </Badge>
-      {/if}
-      {#if featured}
-        <Badge label="Featured" color="green-subtle">
-          <Icon src={Megaphone} mini size="14" />
-          <span class="max-md:hidden">Featured</span>
-        </Badge>
-      {/if}
-      <slot name="badges" />
-    </div>
+      </button>
+    </Subscribe>
+  {/if}
+  {#if community}
+    <CommunityLink {community} style="grid-area: community;" />
+  {/if}
+  <span
+    class="text-slate-600 dark:text-zinc-400 flex flex-row gap-2 flex-wrap items-center row-span-2"
+    style="grid-area: stats;"
+  >
+    {#if user}
+      <UserLink avatarSize={20} {user} avatar={!community} />
+    {/if}
+    {#if published}
+      <RelativeDate date={published} />
+    {/if}
   </span>
+
+  <div
+    class="flex flex-row items-center place-self-end overflow-auto [&>*]:flex-shrink-0"
+    style="grid-area: badges;"
+  >
+    {#if nsfw}
+      <Badge color="red-subtle">NSFW</Badge>
+    {/if}
+    {#if saved}
+      <Badge label="Saved" color="yellow-subtle">
+        <Icon src={Bookmark} mini size="12" />
+        <span class="max-md:hidden">Saved</span>
+      </Badge>
+    {/if}
+    {#if locked}
+      <Badge label="Locked" color="yellow-subtle">
+        <Icon src={LockClosed} mini size="14" />
+        <span class="max-md:hidden">Locked</span>
+      </Badge>
+    {/if}
+    {#if removed}
+      <Badge label="Removed" color="red-subtle">
+        <Icon src={Trash} mini size="14" />
+        <span class="max-md:hidden">Removed</span>
+      </Badge>
+    {/if}
+    {#if deleted}
+      <Badge label="Deleted" color="red-subtle">
+        <Icon src={Trash} mini size="14" />
+        <span class="max-md:hidden">Deleted</span>
+      </Badge>
+    {/if}
+    {#if featured}
+      <Badge label="Featured" color="green-subtle">
+        <Icon src={Megaphone} mini size="14" />
+        <span class="max-md:hidden">Featured</span>
+      </Badge>
+    {/if}
+    <slot name="badges" />
+  </div>
   {#if title && id}
     <a href="/post/{getInstance()}/{id}" class="font-medium">
       {title}
     </a>
   {/if}
 </div>
+
+<style>
+  .meta {
+    display: grid;
+    grid-template-areas:
+      'avatar community badges'
+      'avatar stats badges';
+    gap: 0;
+    grid-template-columns: max-content;
+  }
+</style>
