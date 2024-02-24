@@ -34,7 +34,7 @@
 <Material
   color={view != 'card' ? 'none' : 'distinct'}
   padding="none"
-  class="relative max-w-full min-w-0 w-full group z-10 flex flex-col gap-2
+  class="relative max-w-full min-w-0 w-full group flex flex-col gap-2
   {view != 'card' ? 'bg-transparent !border-0' : 'p-5'} {view == 'compact'
     ? 'py-4'
     : view == 'list'
@@ -42,14 +42,6 @@
       : 'py-5'} {$$props.class}"
   id={post.post.id}
 >
-  {#if view == 'cozy' || view == 'list'}
-    <button
-      on:click={() => goto(postLink(post.post))}
-      class="-z-20 bg-slate-50 dark:bg-zinc-900 rounded-xl absolute -mx-6 top-0 left-0 w-[calc(100%+3rem)]
-    h-full opacity-0 scale-95 group-hover:scale-[99%] group-hover:opacity-100 transition-all
-    "
-    ></button>
-  {/if}
   <PostMeta
     community={hideCommunity ? undefined : post.community}
     user={post.creator}
