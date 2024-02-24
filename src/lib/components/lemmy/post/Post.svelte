@@ -29,14 +29,12 @@
   export let view = $userSettings.view
 
   $: type = mediaType(post.post.url, view)
-
-  let loaded = false
 </script>
 
 <Material
   color={view != 'card' ? 'none' : 'distinct'}
   padding="none"
-  class="relative max-w-full min-w-0 w-full group z-10 isolation-auto
+  class="relative max-w-full min-w-0 w-full group z-10 flex flex-col gap-2
   {view != 'card' ? 'bg-transparent !border-0' : 'p-5'} {view == 'compact'
     ? 'py-4'
     : view == 'list'
@@ -52,66 +50,42 @@
     "
     ></button>
   {/if}
-  <div
-    class="flex {$userSettings.leftAlign
-      ? 'flex-row-reverse'
-      : 'flex-row'} gap-4 max-w-full w-full min-w-0"
+  <PostMeta
+    community={hideCommunity ? undefined : post.community}
+    user={post.creator}
+    published={publishedToDate(post.post.published)}
+    deleted={post.post.deleted}
+    removed={post.post.removed}
+    locked={post.post.locked}
+    featured={post.post.featured_local || post.post.featured_community}
+    nsfw={post.post.nsfw}
+    saved={post.saved}
+    subscribed={$profile?.user?.follows
+      .map((c) => c.community.id)
+      .includes(post.community.id)
+      ? 'Subscribed'
+      : 'NotSubscribed'}
+    id={post.post.id}
+    title={post.post.name}
   >
-    <div class="flex flex-col w-full gap-2 flex-1 max-w-full min-w-0">
-      <div class="flex flex-col w-full gap-2 z-10">
-        <PostMeta
-          community={hideCommunity ? undefined : post.community}
-          user={post.creator}
-          published={publishedToDate(post.post.published)}
-          deleted={post.post.deleted}
-          removed={post.post.removed}
-          locked={post.post.locked}
-          featured={post.post.featured_local || post.post.featured_community}
-          nsfw={post.post.nsfw}
-          saved={post.saved}
-          subscribed={$profile?.user?.follows
-            .map((c) => c.community.id)
-            .includes(post.community.id)
-            ? 'Subscribed'
-            : 'NotSubscribed'}
-        >
-          <slot name="badges" slot="badges" />
-        </PostMeta>
-        {#if !(post.post.embed_title == post.post.name && type == 'embed') || view == 'compact'}
-          <a
-            target={$userSettings.openLinksInNewTab ? '_blank' : ''}
-            href="/post/{getInstance()}/{post.post.id}"
-            class="font-medium max-w-full w-full break-words text-base"
-            style="word-break: break-word;"
-            class:text-slate-500={post.read && $userSettings.markReadPosts}
-            class:dark:text-zinc-400={post.read && $userSettings.markReadPosts}
-          >
-            <Markdown source={post.post.name} inline />
-          </a>
-        {/if}
-      </div>
-      <div class="contents z-50 isolate">
-        <PostMedia bind:post={post.post} {view} {type} />
-      </div>
-      {#if post.post.body && !post.post.nsfw && view != 'compact'}
-        <PostBody body={post.post.body} {view} />
-      {/if}
-    </div>
-    {#if view == 'list' || view == 'compact'}
-      <PostMediaCompact {view} bind:post={post.post} />
-    {/if}
-  </div>
+    <slot name="badges" slot="badges" />
+  </PostMeta>
+  <PostMedia bind:post={post.post} {view} {type} />
+  {#if post.post.body && !post.post.nsfw && view != 'compact'}
+    <PostBody body={post.post.body} {view} />
+  {/if}
+  {#if view == 'list' || view == 'compact'}
+    <PostMediaCompact {view} bind:post={post.post} />
+  {/if}
   {#if actions}
-    <div class="w-full mt-2">
-      <PostActions
-        bind:post
-        on:edit={(e) => {
-          toast({
-            content: 'The post was edited successfully.',
-            type: 'success',
-          })
-        }}
-      />
-    </div>
+    <PostActions
+      bind:post
+      on:edit={(e) => {
+        toast({
+          content: 'The post was edited successfully.',
+          type: 'success',
+        })
+      }}
+    />
   {/if}
 </Material>

@@ -77,7 +77,7 @@
     <CommunityLink {community} style="grid-area: community;" />
   {/if}
   <span
-    class="text-slate-600 dark:text-zinc-400 flex flex-row gap-2 flex-wrap items-center row-span-2"
+    class="text-slate-600 dark:text-zinc-400 flex flex-row gap-2 flex-wrap items-center row-span-1"
     style="grid-area: stats;"
   >
     {#if user}
@@ -127,12 +127,16 @@
     {/if}
     <slot name="badges" />
   </div>
-  {#if title && id}
-    <a href="/post/{getInstance()}/{id}" class="font-medium">
-      {title}
-    </a>
-  {/if}
 </div>
+{#if title && id}
+  <a
+    href="/post/{getInstance()}/{id}"
+    class="font-medium row-span-1 text-base"
+    style="grid-area: title;"
+  >
+    {title}
+  </a>
+{/if}
 
 <style>
   .meta {
