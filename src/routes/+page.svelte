@@ -19,10 +19,6 @@
   let sidebar = false
 </script>
 
-<svelte:head>
-  <title>Photon</title>
-</svelte:head>
-
 <Modal bind:open={sidebar}>
   <span slot="title">About</span>
   <div class="mx-auto">

@@ -52,11 +52,9 @@ The most common settings you'll use are `PUBLIC_INSTANCE_URL`. Some selfhosters 
 
 The following environment variables can be set to override the default settings:
 
-
 | Variable                        | Values              | Default Value                          |
 | ------------------------------- | ------------------- | -------------------------------------- |
 | PUBLIC_INSTANCE_URL             | URL                 | `lemmy.ml`                             |
-| PUBLIC_INTERNAL_INSTANCE        | URL?                | null                                   |
 | PUBLIC_LOCK_TO_INSTANCE         | `bool`              | `true` if `PUBLIC_INSTANCE_URL` is set |
 | PUBLIC_SSR_ENABLED              | `bool`              | `false`                                |
 | PUBLIC_MIGRATE_COOKIE           | `bool`              | `false`                                |
@@ -133,8 +131,7 @@ Want your instance added here? Make a GitHub issue or make a PR! (this is for ge
 
 [phtn.app](https://phtn.app) is the official instance and will get updates instantly.
 
-
-| Instance                                                                             | Location    | Contact                                                                            |
+| Instance                                                                                | Location     | Contact                                                                               |
 | --------------------------------------------------------------------------------------- | ------------ | ------------------------------------------------------------------------------------- |
 | [phtn.app (Official)](https://phtn.app)                                                 | 🇺🇸 US West   | [photon@xylight.dev](mailto:photon@xylight.dev)                                       |
 | [ph.opnxng.com](https://ph.opnxng.com)                                                  | 🇸🇬 Singapore | [about.opnxng.com](https://about.opnxng.com)                                          |
@@ -142,7 +139,7 @@ Want your instance added here? Make a GitHub issue or make a PR! (this is for ge
 | [p.lemmy.ohaa.xyz](https://p.lemmy.ohaa.xyz)                                            | 🇦🇹 Austria   | (???)                                                                                 |
 | [~~photon.zhenyapav.com~~ (Has not updated since v1.9.2)](https://photon.zhenyapav.com) | 🇮🇸 Iceland   | [zhenyapav@zhenyapav.com](mailto:zhenyapav@zhenyapav.com)                             |
 | [~~ph.buckodr.ink~~ (Has not updated since v1.21.1)](https://ph.buckodr.ink)            | 🇺🇸 US East   | [admin@buckodr.ink](mailto:admin@buckodr.ink)                                         |
-| [phtn.ngn.tf](https://phtn.ngn.tf)                                                      | 🇹🇷 Turkey    | [services@ngn.tf](mailto:services@ngn.tf)
+| [phtn.ngn.tf](https://phtn.ngn.tf)                                                      | 🇹🇷 Turkey    | [services@ngn.tf](mailto:services@ngn.tf)                                             |
 
 ## Donate
 

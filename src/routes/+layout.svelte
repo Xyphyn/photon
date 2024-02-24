@@ -19,6 +19,7 @@
   import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
   import { site } from '$lib/lemmy.js'
   import ExpandableImage from '$lib/components/ui/ExpandableImage.svelte'
+  import { LINKED_INSTANCE_URL } from '$lib/instance'
 
   nProgress.configure({
     minimum: 0.4,
@@ -64,6 +65,15 @@
 
 <svelte:head>
   <meta name="theme-color" content={darkTheme ? '#09090b' : '#f8fafc'} />
+  {#if $site}
+    <title>{$site.site_view.site.name}</title>
+    {#if LINKED_INSTANCE_URL}
+      <link rel="icon" href={$site.site_view.site.icon} />
+      <meta name="description" content={$site.site_view.site.description} />
+    {:else}
+      <meta name="description" content="A sleek client for Lemmy" />
+    {/if}
+  {/if}
   {@html webManifest}
 </svelte:head>
 
