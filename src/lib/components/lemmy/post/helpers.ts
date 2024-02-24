@@ -1,6 +1,7 @@
 import { getInstance } from '$lib/lemmy.js'
 import type { View } from '$lib/settings'
 import { isImage, isVideo } from '$lib/ui/image'
+import { findClosestNumber } from '$lib/util'
 import type { CommentView, PersonView, Post, PostView } from 'lemmy-js-client'
 
 export const isCommentMutable = (comment: CommentView, me: PersonView) =>
@@ -25,6 +26,20 @@ export const bestImageURL = (
     return `${post.thumbnail_url}?thumbnail=${width}&format=webp`
 
   return post.url ?? ''
+}
+
+export const optimizeImageURL = (
+  urlStr: string,
+  width: number = 1024
+): string => {
+  try {
+    const url = new URL(urlStr)
+    url.searchParams.append('format', 'webp')
+    url.searchParams.append('thumbnail', findClosestNumber([128, 256, 512, 1024], width).toString())
+    return url.toString()
+  } catch (e) {
+    return urlStr
+  }
 }
 
 const YOUTUBE_REGEX = /^(?:(?:https?:)?\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/

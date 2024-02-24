@@ -21,7 +21,7 @@
     VideoCamera,
     type IconSource,
   } from 'svelte-hero-icons'
-  import type { IframeType, MediaType } from '../helpers'
+  import { optimizeImageURL, type IframeType, type MediaType } from '../helpers'
   import { userSettings } from '$lib/settings'
 
   export let type: IframeType = 'none'
@@ -102,7 +102,7 @@
   >
     {#if thumbnail}
       <img
-        src={thumbnail}
+        src={optimizeImageURL(thumbnail, 512)}
         class="absolute top-0 left-0 -z-10 brightness-[25%] w-full object-cover h-full"
         alt=""
       />

@@ -2,6 +2,7 @@
   import Link, { parseURL } from '$lib/components/input/Link.svelte'
   import { Material } from 'mono-svelte'
   import { Icon, Link as LinkIcon } from 'svelte-hero-icons'
+  import { optimizeImageURL } from './helpers'
 
   export let url: string
   export let thumbnail_url: string | undefined = undefined
@@ -39,10 +40,10 @@
     {#if thumbnail_url}
       <a
         href={url}
-        class="ml-auto w-full thumbnail rounded-r-lg overflow-hidden flex-shrink -m-4"
+        class="ml-auto w-full thumbnail rounded-r-lg overflow-hidden flex-shrink -m-4 max-h-48"
       >
         <img
-          src={thumbnail_url}
+          src={optimizeImageURL(thumbnail_url, 256)}
           class="w-full h-full object-cover bg-slate-200 dark:bg-zinc-800"
           width={600}
           height={400}
@@ -57,7 +58,7 @@
   {#if thumbnail_url && !compact}
     <a href={url}>
       <img
-        src={thumbnail_url}
+        src={optimizeImageURL(thumbnail_url, 256)}
         class="rounded-md max-w-[300px] w-full h-auto aspect-video object-cover bg-slate-200 dark:bg-zinc-800"
         width={600}
         height={400}

@@ -11,17 +11,13 @@
     showImage,
   } from '$lib/components/ui/ExpandableImage.svelte'
   import { userSettings } from '$lib/settings.js'
-  import { isImage, isVideo } from '$lib/ui/image'
   import type { Post } from 'lemmy-js-client'
-  import { Icon, VideoCamera } from 'svelte-hero-icons'
   import PostIframe from './PostIframe.svelte'
 
   export let view: 'card' | 'cozy' | 'list' | 'compact' = 'cozy'
   export let post: Post
   export let type: MediaType = 'none'
   export let opened: boolean | undefined = undefined
-
-  console.log
 </script>
 
 {#if type == 'image'}
