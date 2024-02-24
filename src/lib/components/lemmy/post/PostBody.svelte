@@ -37,6 +37,7 @@ ${view == 'list' ? `max-h-24` : 'max-h-48'}`
       class="text-black dark:text-white absolute z-10 isolate drop-shadow-xl {expanded
         ? 'bottom-6'
         : 'bottom-16'} left-1/2 -translate-x-1/2"
+      title="Expand"
     >
       <Icon
         src={ChevronDown}

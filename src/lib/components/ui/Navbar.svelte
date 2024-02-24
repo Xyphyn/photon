@@ -59,7 +59,11 @@
   style={$$props.style}
 >
   <div class="flex flex-row gap-2 items-center mr-auto">
-    <a href="/" class="flex flex-row items-center gap-2 logo group">
+    <a
+      href="/"
+      class="flex flex-row items-center gap-2 logo group"
+      title="Home"
+    >
       {#if LINKED_INSTANCE_URL}
         {#if $site}
           <Avatar
@@ -229,16 +233,18 @@
     </button>
     {#if $profile?.user}
       <div class="flex flex-row gap-2 items-center py-2 mx-4 font-medium">
-        <Avatar width={22} url={$profile?.user?.local_user_view.person.avatar} alt={$profile?.username} />
+        <Avatar
+          width={22}
+          url={$profile?.user?.local_user_view.person.avatar}
+          alt={$profile?.username}
+        />
         {$profile?.user?.local_user_view?.person.name}
       </div>
     {:else}
-      <MenuDivider>
-        Profile
-      </MenuDivider>
+      <MenuDivider>Profile</MenuDivider>
     {/if}
     {#if $profile?.user}
-      <MenuButton  link href="/profile">
+      <MenuButton link href="/profile">
         <Icon src={UserCircle} mini width={16} /> Profile
       </MenuButton>
       <MenuButton link href="/inbox">
@@ -269,10 +275,10 @@
         src={$theme == 'system'
           ? ComputerDesktop
           : $theme == 'light'
-          ? Sun
-          : $theme == 'dark'
-          ? Moon
-          : Moon}
+            ? Sun
+            : $theme == 'dark'
+              ? Moon
+              : Moon}
         mini
         size="16"
       />
@@ -301,25 +307,35 @@
       <div class="flex flex-row gap-2 w-full items-center">
         <!-- svelte-ignore missing-declaration -->
         <div class="flex-1">
-        <button
-          class="hover:brightness-110 transition-all"
-          on:click={() => { 
-            navigator?.clipboard?.writeText(__VERSION__)
-            toast({ content: 'Copied version to clipboard.' })
-          }}
+          <button
+            class="hover:brightness-110 transition-all"
+            on:click={() => {
+              navigator?.clipboard?.writeText(__VERSION__)
+              toast({ content: 'Copied version to clipboard.' })
+            }}
+          >
+            <Badge>{__VERSION__}</Badge>
+          </button>
+        </div>
+        <Button
+          color="tertiary"
+          href="https://buymeacoffee.com/xylight"
+          title="Donate"
+          size="square-md"
         >
-          <Badge>{__VERSION__}</Badge>
-        </button>
-      </div>
-      <Button color="tertiary" href="https://buymeacoffee.com/xylight" title="Donate" size="square-md">
-        <Icon src={Heart} size="16" mini />
-      </Button>
-      <Button color="tertiary" href="https://github.com/Xyphyn/Photon" title="GitHub" size="square-md">
-        <Icon src={CodeBracketSquare} size="16" mini />
-      </Button>
-      <Button color="tertiary" href="/about" title="About" size="square-md">
-        <Icon src={InformationCircle} size="16" mini />
-      </Button>
+          <Icon src={Heart} size="16" mini />
+        </Button>
+        <Button
+          color="tertiary"
+          href="https://github.com/Xyphyn/Photon"
+          title="GitHub"
+          size="square-md"
+        >
+          <Icon src={CodeBracketSquare} size="16" mini />
+        </Button>
+        <Button color="tertiary" href="/about" title="About" size="square-md">
+          <Icon src={InformationCircle} size="16" mini />
+        </Button>
       </div>
     </li>
   </Menu>

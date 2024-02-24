@@ -47,7 +47,7 @@
           class="w-full h-full object-cover bg-slate-200 dark:bg-zinc-800"
           width={600}
           height={400}
-          alt=""
+          alt={embed_title}
           class:blur-3xl={nsfw}
         />
       </a>
@@ -62,7 +62,7 @@
         class="rounded-md max-w-[300px] w-full h-auto aspect-video object-cover bg-slate-200 dark:bg-zinc-800"
         width={600}
         height={400}
-        alt=""
+        alt={embed_title ?? 'Embed prevented alt text'}
         class:blur-3xl={nsfw}
       />
     </a>
