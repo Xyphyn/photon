@@ -17,6 +17,9 @@ declare global {
         }
       }
     }
+    interface PageState {
+      openImage: url
+    }
     // interface Platform {}
   }
   declare const __VERSION__: string

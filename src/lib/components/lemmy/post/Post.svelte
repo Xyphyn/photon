@@ -21,6 +21,7 @@
   import PostMediaCompact from '$lib/components/lemmy/post/media/PostMediaCompact.svelte'
   import PostBody from './PostBody.svelte'
   import { profile } from '$lib/auth'
+  import { goto } from '$app/navigation'
 
   export let post: PostView
   export let actions: boolean = true
@@ -35,7 +36,7 @@
 <Material
   color={view != 'card' ? 'none' : 'distinct'}
   padding="none"
-  class="relative max-w-full min-w-0 w-full group
+  class="relative max-w-full min-w-0 w-full group z-10 isolation-auto
   {view != 'card' ? 'bg-transparent !border-0' : 'p-5'} {view == 'compact'
     ? 'py-4'
     : view == 'list'
@@ -43,13 +44,21 @@
       : 'py-5'} {$$props.class}"
   id={post.post.id}
 >
+  {#if view == 'cozy' || view == 'list'}
+    <button
+      on:click={() => goto(postLink(post.post))}
+      class="-z-20 bg-slate-50 dark:bg-zinc-900 rounded-xl absolute -mx-6 top-0 left-0 w-[calc(100%+3rem)]
+    h-full opacity-0 scale-95 group-hover:scale-[99%] group-hover:opacity-100 transition-all
+    "
+    ></button>
+  {/if}
   <div
     class="flex {$userSettings.leftAlign
       ? 'flex-row-reverse'
       : 'flex-row'} gap-4 max-w-full w-full min-w-0"
   >
     <div class="flex flex-col w-full gap-2 flex-1 max-w-full min-w-0">
-      <div class="flex flex-col w-full gap-2">
+      <div class="flex flex-col w-full gap-2 z-10">
         <PostMeta
           community={hideCommunity ? undefined : post.community}
           user={post.creator}
@@ -83,7 +92,9 @@
           </a>
         {/if}
       </div>
-      <PostMedia bind:post={post.post} {view} {type} />
+      <div class="contents z-50 isolate">
+        <PostMedia bind:post={post.post} {view} {type} />
+      </div>
       {#if post.post.body && !post.post.nsfw && view != 'compact'}
         <PostBody body={post.post.body} {view} />
       {/if}

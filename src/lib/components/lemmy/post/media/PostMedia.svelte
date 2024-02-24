@@ -7,7 +7,9 @@
     type MediaType,
     iframeType,
   } from '$lib/components/lemmy/post/helpers.js'
-  import ExpandableImage from '$lib/components/ui/ExpandableImage.svelte'
+  import ExpandableImage, {
+    showImage,
+  } from '$lib/components/ui/ExpandableImage.svelte'
   import { userSettings } from '$lib/settings.js'
   import { isImage, isVideo } from '$lib/ui/image'
   import type { Post } from 'lemmy-js-client'
@@ -25,40 +27,37 @@
 {#if type == 'image'}
   {#if view == 'card' || view == 'cozy'}
     <!--disabled preloads here since most people will hover over every image while scrolling-->
-    <svelte:component
-      this={$userSettings.expandImages ? ExpandableImage : Empty}
-      url={bestImageURL(post, false, 2048)}
-      class="container mx-auto w-fit"
+    <svelte:element
+      this={$userSettings.expandImages ? 'button' : 'a'}
+      href={postLink(post)}
+      class="container mx-auto z-10 rounded-xl max-h-[60vh] relative overflow-hidden bg-slate-100 dark:bg-zinc-900 bg-gradient-to-br from-blue-500/5 to-pink-500/5"
+      data-sveltekit-preload-data="off"
+      aria-label={post.name}
+      on:click={() => showImage(bestImageURL(post, false, 2048))}
+      role="button"
+      tabindex="0"
     >
-      <svelte:element
-        this={$userSettings.expandImages ? 'div' : 'a'}
-        href={postLink(post)}
-        class="container mx-auto z-10 rounded-xl max-h-[60vh] relative overflow-hidden bg-slate-100 dark:bg-zinc-900 bg-gradient-to-br from-blue-500/5 to-pink-500/5"
-        data-sveltekit-preload-data="off"
-        aria-label={post.name}
-      >
-        <picture class="max-h-[inherit]">
-          <source
-            srcset={bestImageURL(post, false, 512)}
-            media="(max-width: 256px)"
-          />
-          <source
-            srcset={bestImageURL(post, false, 512)}
-            media="(max-width: 512px)"
-          />
-          <!-- svelte-ignore a11y-missing-attribute -->
-          <img
-            src={bestImageURL(post, false, 1024)}
-            loading="lazy"
-            class="max-h-[inherit] max-w-full h-auto z-30
+      <picture class="max-h-[inherit]">
+        <source
+          srcset={bestImageURL(post, false, 512)}
+          media="(max-width: 256px)"
+        />
+        <source
+          srcset={bestImageURL(post, false, 512)}
+          media="(max-width: 512px)"
+        />
+        <!-- svelte-ignore a11y-missing-attribute -->
+        <img
+          src={bestImageURL(post, false, 1024)}
+          loading="lazy"
+          class="max-h-[inherit] max-w-full h-auto z-30
                   transition-opacity duration-300 object-contain mx-auto"
-            width={512}
-            height={300}
-            class:blur-3xl={post.nsfw && $userSettings.nsfwBlur}
-          />
-        </picture>
-      </svelte:element>
-    </svelte:component>
+          width={512}
+          height={300}
+          class:blur-3xl={post.nsfw && $userSettings.nsfwBlur}
+        />
+      </picture>
+    </svelte:element>
   {/if}
 {:else if (type == 'iframe' || type == 'video') && (view == 'cozy' || view == 'card') && post.url}
   <PostIframe

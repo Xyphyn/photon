@@ -18,6 +18,7 @@
   import Shell from '$lib/components/ui/layout/Shell.svelte'
   import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
   import { site } from '$lib/lemmy.js'
+  import ExpandableImage from '$lib/components/ui/ExpandableImage.svelte'
 
   nProgress.configure({
     minimum: 0.4,
@@ -83,6 +84,8 @@
 >
   <Moderation />
   <ToastContainer />
+  <ExpandableImage />
+
   <Navbar
     slot="navbar"
     let:style={s}
