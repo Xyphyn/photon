@@ -8,7 +8,7 @@
 
 <Button
   {...$$restProps}
-  class="px-3 py-1.5 max-md:py-0 max-md:px-0 max-md:h-9 max-md:w-9 {$$props.class ??
+  class="px-3 py-1.5 max-md:py-0 max-md:px-0 max-md:h-8 max-md:w-8 {$$props.class ??
     ''}"
   size="custom"
   title={label}

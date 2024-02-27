@@ -33,8 +33,9 @@
 
 <Menu {...$$restProps}>
   <button
-    class="w-8 h-8 rounded-full ring-1 ring-slate-300 bg-slate-100
-      dark:bg-zinc-800 relative"
+    class="w-8 h-8 rounded-full ring-1 ring-slate-200 dark:ring-zinc-700
+    transition-all bg-slate-50 dark:bg-zinc-900 relative
+    hover:dark:brightness-125 hover:brightness-95"
     aria-label="Profile"
     slot="target"
   >
