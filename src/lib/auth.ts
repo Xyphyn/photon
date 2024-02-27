@@ -93,10 +93,10 @@ if (env.PUBLIC_MIGRATE_COOKIE && get(profileData).profiles.length == 0 && env.PU
   const jwt = getCookie('jwt')
   if (jwt) {
     new Promise(async () => {
-        const user = await userFromJwt(jwt, env.PUBLIC_INSTANCE_URL)
+        const user = await userFromJwt(jwt, env.PUBLIC_INSTANCE_URL ?? '')
         if (!user) return
 
-        const result = await setUser(jwt, env.PUBLIC_INSTANCE_URL, user?.user.local_user_view.person.name)
+        const result = await setUser(jwt, env.PUBLIC_INSTANCE_URL ?? '', user?.user.local_user_view.person.name)
   
         if (result) 
           toast({ content: 'Your instance migrated to Photon, and you were logged in using a leftover cookie.', type: 'success' })
@@ -373,8 +373,7 @@ const getNotificationCount = async (
   }
 }
 
-// show unread dot
-setInterval(async () => {
+async function checkInboxRepeatedly() {
   if (!get(profile)) return
 
   const { user, jwt } = get(profile)!
@@ -396,4 +395,8 @@ setInterval(async () => {
     ...p!,
     user: user,
   }))
-}, 5 * 60 * 1000)
+
+  setTimeout(checkInboxRepeatedly, 5 * 60 * 1000)
+}
+
+checkInboxRepeatedly()
