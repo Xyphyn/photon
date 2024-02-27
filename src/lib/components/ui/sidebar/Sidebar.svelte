@@ -19,6 +19,8 @@
   import { expoOut } from 'svelte/easing'
   import { Button } from 'mono-svelte'
   import { DEFAULT_INSTANCE_URL, LINKED_INSTANCE_URL } from '$lib/instance.js'
+  import Expandable from '$lib/components/ui/Expandable.svelte'
+  import EndPlaceholder from '../EndPlaceholder.svelte'
 
   export let route = ''
 </script>
@@ -81,7 +83,17 @@
       <hr class="border-slate-200 dark:border-zinc-800 my-1" />
     {/if}
 
-    <CommunityList items={$profile.user.follows.map((i) => i.community)} />
+    <Expandable open>
+      <span slot="title" class="px-2 py-1 w-full">
+        <EndPlaceholder>
+          Subscribed
+          <span slot="action" class="dark:text-white text-black">
+            {$profile.user.follows.length}
+          </span>
+        </EndPlaceholder>
+      </span>
+      <CommunityList items={$profile.user.follows.map((i) => i.community)} />
+    </Expandable>
   {:else}
     <SidebarButton href="/login" title="Log In">
       <Icon mini src={ArrowLeftOnRectangle} size="20" />
