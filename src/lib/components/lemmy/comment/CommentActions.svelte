@@ -34,7 +34,8 @@
 
 <div class="flex flex-row items-center gap-0.5 h-7 relative">
   <CommentVote
-    bind:score={comment.counts.score}
+    bind:upvotes={comment.counts.upvotes}
+    bind:downvotes={comment.counts.downvotes}
     bind:vote={comment.my_vote}
     commentId={comment.comment.id}
   />
@@ -93,7 +94,7 @@
         <Icon src={comment.saved ? BookmarkSlash : Bookmark} mini size="16" />
         <span>{comment.saved ? 'Unsave' : 'Save'}</span>
       </MenuButton>
-      {#if $profile?.user && $profile.jwt && isCommentMutable(comment, $profile.user.local_user_view)}
+      {#if $profile?.user && $profile.jwt && $profile.user.local_user_view.person.id == comment.creator.id}
         <MenuButton
           color="danger-subtle"
           on:click={async () => {

@@ -1,3 +1,17 @@
+<script lang="ts" context="module">
+  import { userSettings } from '$lib/settings.js'
+  export const voteColor = (vote: number, border: boolean = false) =>
+    vote == 1 ? `!text-blue-500` : vote == -1 ? `!text-red-500` : ''
+
+  export const shouldShowVoteColor = (
+    vote: number,
+    type: 'upvotes' | 'downvotes'
+  ): string =>
+    (vote == -1 && type == 'downvotes') || (vote == 1 && type == 'upvotes')
+      ? voteColor(vote)
+      : ''
+</script>
+
 <script lang="ts">
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import type { Post } from 'lemmy-js-client'
@@ -14,7 +28,6 @@
   import { Button, Popover, buttonColor, toast } from 'mono-svelte'
   import { site } from '$lib/lemmy.js'
   import { fly } from 'svelte/transition'
-  import { userSettings } from '$lib/settings.js'
 
   export let post: Post
   export let vote: number = 0
@@ -23,19 +36,6 @@
   export let downvotes: number = 0
 
   let oldScore = score
-
-  const voteColor = (vote: number, border: boolean = false) =>
-    vote == 1 ? `!text-blue-500` : vote == -1 ? `!text-red-500` : ''
-
-  const shouldShowVoteColor = (
-    vote: number,
-    type: 'upvotes' | 'downvotes'
-  ): string =>
-    (vote == -1 && type == 'downvotes') ||
-    (vote == 1 && type == 'upvotes') ||
-    !$userSettings.separateVotes
-      ? voteColor(vote)
-      : ''
 
   const castVote = async (newVote: number) => {
     if (!$profile?.jwt) {

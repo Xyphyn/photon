@@ -12,97 +12,69 @@
   import { userSettings } from '$lib/settings'
   import { profile } from '$lib/auth.js'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
-  import { Button } from 'mono-svelte'
+  import { Button, buttonColor, toast } from 'mono-svelte'
+  import { vote as voteItem } from '$lib/lemmy/contentview'
+  import { shouldShowVoteColor } from '../post/PostVote.svelte'
+  import { fly } from 'svelte/transition'
 
   export let vote: number = 0
-  export let score: number
+  export let upvotes: number
+  export let downvotes: number
   export let commentId: number
 
-  async function upvote() {
-    if (!$profile?.jwt) return
-
-    const upvoted = vote == 1
-
-    if (vote == -1) {
-      score += 2
-    } else if (vote == 1) {
-      score -= 1
-    } else if (vote == 0) {
-      score += 1
+  const castVote = async (newVote: number) => {
+    if (!$profile?.jwt) {
+      toast({ content: 'You must be logged in to vote.', type: 'warning' })
+      return
     }
 
-    vote = Number(!upvoted)
-
-    await getClient()
-      .likeComment({
-        score: upvoted ? 0 : 1,
-        comment_id: commentId,
-      })
-      .catch((_) => undefined)
+    vote = newVote
+    const res = await getClient().likeComment({
+      comment_id: commentId,
+      score: vote,
+    })
+    ;({ upvotes, downvotes } = res.comment_view.counts)
   }
-
-  async function downvote() {
-    if (!$profile?.jwt) return
-
-    const upvoted = vote == -1
-
-    if (vote == -1) {
-      score += 1
-    } else if (vote == 1) {
-      score -= 2
-    } else if (vote == 0) {
-      score -= 1
-    }
-
-    vote = -Number(!upvoted)
-
-    await getClient()
-      .likeComment({
-        score: upvoted ? 0 : -1,
-        comment_id: commentId,
-      })
-      .catch((_) => undefined)
-  }
-
-  const voteColor = (vote: number) => `
-  ${vote == 1 ? '!text-blue-500' : vote == -1 ? '!text-red-500' : ''}
-  `
 </script>
 
-<div
-  class="flex flex-row items-center rounded-md transition-all
-cursor-pointer h-full border-slate-200
-dark:border-zinc-800 gap-0.5"
->
-  <Button
-    on:click={upvote}
-    class=" transition-colors hover:dark:text-blue-500 hover:text-blue-600 {vote ==
-    1
-      ? 'dark:!text-blue-500 !text-blue-600'
-      : ''}"
-    aria-label="Upvote"
-    size="custom"
-    color="tertiary"
+<div class="rounded-lg h-full flex items-center [&>*]:p-2 overflow-hidden">
+  <button
+    on:click={() => castVote(vote == 1 ? 0 : 1)}
+    class="flex items-center gap-0.5 {buttonColor.tertiary} transition-colors border-0 !pl-2
+      {vote == 1 ? shouldShowVoteColor(vote, 'upvotes') : ''}"
   >
-    <Icon src={ChevronUp} size="20" mini />
-  </Button>
-  <span
-    class="text-sm font-medium transition-colors {voteColor(vote)}"
-    class:hidden={$profile?.user?.local_user_view.local_user.show_scores ==
-      false}
+    <Icon src={ChevronUp} size="18" mini />
+    <span class="grid text-sm">
+      {#key upvotes}
+        <span
+          style="grid-column: 1; grid-row: 1;"
+          in:fly={{ duration: 200, y: -6 }}
+          out:fly={{ duration: 200, y: 6 }}
+        >
+          <FormattedNumber number={upvotes} />
+        </span>
+      {/key}
+    </span>
+  </button>
+  <div
+    class="border-l h-6 w-0 !p-0 border-slate-200 dark:border-zinc-800"
+  ></div>
+  <button
+    on:click={() => castVote(vote == -1 ? 0 : -1)}
+    class="flex items-center gap-0.5 {buttonColor.tertiary} transition-colors border-0 !pr-2
+      {vote == -1 ? shouldShowVoteColor(vote, 'downvotes') : ''}"
   >
-    <FormattedNumber number={score} />
-  </span>
-  <Button
-    on:click={downvote}
-    class=" hover:dark:text-red-500 hover:text-red-600 {vote == -1
-      ? '!text-red-500 !dark:text-red-600'
-      : ''} transition-colors disabled:pointer-events-none disabled:opacity-50"
-    aria-label="Downvote"
-    disabled={$site?.site_view.local_site.enable_downvotes == false}
-    size="custom"
-    color="tertiary"
-  >
-    <Icon src={ChevronDown} size="20" mini />
-  </Button>
+    <Icon src={ChevronDown} size="18" mini />
+    <span class="grid text-sm">
+      {#key downvotes}
+        <span
+          style="grid-column: 1; grid-row: 1;"
+          in:fly={{ duration: 200, y: -6 }}
+          out:fly={{ duration: 200, y: 6 }}
+        >
+          <FormattedNumber number={downvotes} />
+        </span>
+      {/key}
+    </span>
+  </button>
 </div>

@@ -143,12 +143,11 @@ export async function markAsRead(
   if (isSubmission(item)) item = contentItem(item)
 
   if (item.type == 'post') {
-    return (
-      await getClient().markPostAsRead({
-        post_id: item.id,
-        read: read,
-      })
-    ).post_view.read
+    getClient().markPostAsRead({
+      post_id: item.id,
+      read: read,
+    })
+    return read
   }
   return false
 }

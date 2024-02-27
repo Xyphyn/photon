@@ -53,6 +53,6 @@
   }
 </script>
 
-<time datetime={dateTime} title={dateTime}>
+<time datetime={dateTime} title={dateTime} class={$$props.class ?? ''}>
   {formatRelativeDate(date)}
 </time>

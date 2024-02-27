@@ -101,7 +101,7 @@
       <span class:font-bold={op} class="flex flex-row gap-1 items-center">
         <UserLink
           inComment
-          avatarSize={20}
+          avatarSize={22}
           avatar
           user={node.comment_view.creator}
         />
@@ -109,20 +109,10 @@
           <span class="text-sky-500">OP</span>
         {/if}
       </span>
-      <span class="text-slate-600 dark:text-zinc-400 flex flex-row gap-1">
-        <RelativeDate
-          date={publishedToDate(node.comment_view.comment.published)}
-        />
-        <span>•</span>
-        <span>
-          {Math.floor(
-            (node.comment_view.counts.upvotes /
-              (node.comment_view.counts.upvotes +
-                node.comment_view.counts.downvotes)) *
-              100
-          ) || 0}%
-        </span>
-      </span>
+      <RelativeDate
+        class="text-zinc-400"
+        date={publishedToDate(node.comment_view.comment.published)}
+      />
       <span class="text-slate-600 dark:text-zinc-400 flex flex-row gap-2 ml-1">
         {#if node.comment_view.comment.updated}
           <Icon src={Pencil} solid size="12" title="Edited" />
