@@ -40,7 +40,7 @@
 <div class="rounded-lg h-full flex items-center [&>*]:p-2 overflow-hidden">
   <button
     on:click={() => castVote(vote == 1 ? 0 : 1)}
-    class="flex items-center gap-0.5 {buttonColor.tertiary} transition-colors border-0 !pl-2
+    class="flex items-center gap-0.5 {buttonColor.tertiary} transition-colors border-0 !pl-2 !pr-3
       {vote == 1 ? shouldShowVoteColor(vote, 'upvotes') : ''}"
   >
     <Icon src={ChevronUp} size="18" mini />
