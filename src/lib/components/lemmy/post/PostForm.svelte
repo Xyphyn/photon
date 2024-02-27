@@ -74,7 +74,7 @@
   })
 
   async function submit() {
-    if ((!data.community || communitySearch == '') && !edit) {
+    if ((!data.community) && !edit) {
       toast({
         type: 'warning',
         content: 'You need to set a community.',
