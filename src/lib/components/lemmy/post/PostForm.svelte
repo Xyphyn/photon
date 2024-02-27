@@ -2,8 +2,8 @@
   import { createEventDispatcher, onDestroy, onMount } from 'svelte'
   import { client } from '$lib/lemmy.js'
   import type { Community, Post, PostView } from 'lemmy-js-client'
-  import { toast } from 'mono-svelte'
-  import { Check, Icon, Photo, BookOpen } from 'svelte-hero-icons'
+  import { Switch, toast } from 'mono-svelte'
+  import { Check, Icon, Photo, BookOpen, ArrowPath } from 'svelte-hero-icons'
   import { profile } from '$lib/auth.js'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { placeholders, uploadImage } from '$lib/util.js'
@@ -293,32 +293,37 @@
     placeholder={placeholders.get('post')}
     previewButton
   />
-  <Checkbox bind:checked={data.nsfw}>NSFW</Checkbox>
+  <Switch bind:checked={data.nsfw}>NSFW</Switch>
   <div class="mt-auto" />
-  {#if !edit}
+  <div class="flex flex-row items-center gap-2">
     <Button
-      on:click={() => {
-        const draft = getSessionStorage('postDraft')
-        if (draft && !edit) {
-          // @ts-ignore
-          draft.loading = false
-          // @ts-ignore
-          data = draft
-        }
-      }}
+      submit
+      color="primary"
+      loading={data.loading}
       size="lg"
-      disabled={!getSessionStorage('postDraft')}
+      disabled={data.loading}
+      class="flex-1"
     >
-      Restore from draft
+      Submit
     </Button>
-  {/if}
-  <Button
-    submit
-    color="primary"
-    loading={data.loading}
-    size="lg"
-    disabled={data.loading}
-  >
-    Submit
-  </Button>
+
+    {#if !edit}
+      <Button
+        on:click={() => {
+          toast({ content: 'Restored from draft' })
+          const draft = getSessionStorage('postDraft')
+          if (draft && !edit) {
+            // @ts-ignore
+            draft.loading = false
+            // @ts-ignore
+            data = draft
+          }
+        }}
+        size="square-lg"
+        disabled={!getSessionStorage('postDraft')}
+      >
+        <Icon src={ArrowPath} size="16" mini />
+      </Button>
+    {/if}
+  </div>
 </form>
