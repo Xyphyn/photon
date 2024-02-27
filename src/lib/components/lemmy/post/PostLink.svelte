@@ -27,7 +27,11 @@
           {richURL.hostname}
         </Link>
       {/if}
-      <a href={url} class="font-medium text-base hover:underline">
+      <a
+        href={url}
+        target="_blank"
+        class="font-medium text-base hover:underline"
+      >
         {embed_title}
       </a>
       {#if embed_description}

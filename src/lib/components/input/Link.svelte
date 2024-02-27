@@ -17,6 +17,7 @@
 </script>
 
 <a
+  {...$$restProps}
   {href}
   class="{highlight
     ? 'text-blue-500'
