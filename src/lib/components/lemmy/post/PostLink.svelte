@@ -20,6 +20,7 @@
       {#if richURL}
         <Link
           href={url}
+          target="_blank"
           class="text-slate-600 dark:text-zinc-400 inline-flex items-center gap-1 text-xs"
         >
           <Icon src={LinkIcon} size="12" mini slot="icon" />
@@ -40,6 +41,7 @@
     {#if thumbnail_url}
       <a
         href={url}
+        target="_blank"
         class="ml-auto w-full thumbnail rounded-r-lg overflow-hidden flex-shrink -m-4 max-h-48"
       >
         <img
@@ -56,7 +58,7 @@
 {:else}
   <Link href={url} highlight nowrap />
   {#if thumbnail_url && !compact}
-    <a href={url}>
+    <a href={url} target="_blank">
       <img
         src={optimizeImageURL(thumbnail_url, 256)}
         class="rounded-md max-w-[300px] w-full h-auto aspect-video object-cover bg-slate-200 dark:bg-zinc-800"
