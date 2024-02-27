@@ -96,7 +96,7 @@
   <Disclosure bind:open class="flex flex-col">
     <div
       slot="summary"
-      class="flex flex-row cursor-pointer gap-2 items-center group text-xs flex-wrap"
+      class="flex flex-row cursor-pointer gap-2 items-center group text-[13px] flex-wrap"
     >
       <span class:font-bold={op} class="flex flex-row gap-1 items-center">
         <UserLink
