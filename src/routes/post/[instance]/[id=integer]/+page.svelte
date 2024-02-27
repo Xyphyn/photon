@@ -126,12 +126,18 @@
 <svelte:head>
   <title>{post.post_view.post.name}</title>
   <meta property="og:title" content={post.post_view.post.name} />
+  <meta property="twitter:title" content={post.post_view.post.name} />
   <meta property="og:url" content={$page.url.toString()} />
   {#if isImage(post.post_view.post.url)}
     <meta property="og:image" content={post.post_view.post.url} />
+    <meta property="twitter:card" content={post.post_view.post.url} />
+  {:else if post.post_view.post.thumbnail_url}
+    <meta property="og:image" content={post.post_view.post.thumbnail_url} />
+    <meta property="twitter:card" content={post.post_view.post.thumbnail_url} />
   {/if}
   {#if post.post_view.post.body}
     <meta property="og:description" content={post.post_view.post.body} />
+    <meta property="twitter:description" content={post.post_view.post.body} />
   {/if}
 </svelte:head>
 
