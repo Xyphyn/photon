@@ -321,6 +321,7 @@
         }}
         size="square-lg"
         disabled={!getSessionStorage('postDraft')}
+        title="Restore From Draft"
       >
         <Icon src={ArrowPath} size="16" mini />
       </Button>
