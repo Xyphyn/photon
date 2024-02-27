@@ -28,13 +28,10 @@
 
   onMount(() => {
     if (browser)
-      setSessionStorage('lastSeenCommunity', {
-        id: data.community.community_view.community.id,
-        name: fullCommunityName(
-          data.community.community_view.community.name,
-          data.community.community_view.community.actor_id
-        ),
-      })
+      setSessionStorage(
+        'lastSeenCommunity',
+        data.community.community_view.community
+      )
   })
 
   onDestroy(() => {

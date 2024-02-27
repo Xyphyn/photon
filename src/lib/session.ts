@@ -1,14 +1,11 @@
+import type { Community } from 'lemmy-js-client'
 import { writable } from 'svelte/store'
 
 interface SessionStorage {
-  lastSeenCommunity: // prettier-ignore
-  {
-    id: number
-    name: string
-  } | undefined
+  lastSeenCommunity: Community | undefined
   postDraft:
     | {
-        community: number | null
+        community: Community | null
         title: string
         body: string
         image: FileList | null

@@ -11,6 +11,7 @@
   import { getSessionStorage, setSessionStorage } from '$lib/session.js'
   import ObjectAutocomplete from '$lib/components/lemmy/ObjectAutocomplete.svelte'
   import { Button } from 'mono-svelte'
+  import Avatar from '$lib/components/ui/Avatar.svelte'
 
   export let edit = false
 
@@ -19,15 +20,10 @@
    */
   export let editingPost: Post | undefined = undefined
 
-  export let passedCommunity:
-    | {
-        id: number
-        name: string
-      }
-    | undefined = undefined
+  export let passedCommunity: Community | undefined = undefined
 
   export let data: {
-    community: number | null
+    community: Community | null
     title: string
     body: string
     image: FileList | null
@@ -59,7 +55,7 @@
     }
 
     if (passedCommunity) {
-      data.community = passedCommunity.id
+      data.community = passedCommunity
       communitySearch = passedCommunity.name
       console.log(communitySearch)
     } else {
@@ -125,7 +121,7 @@
           : undefined
         data.url = image || data.url || undefined
         const post = await client().createPost({
-          community_id: data.community!,
+          community_id: data.community!.id,
           name: data.title,
           body: data.body,
           url: data.url,
@@ -213,25 +209,14 @@
     </h1>
   </slot>
   {#if !edit && data}
-    <div>
-      <div class="flex flex-row">
-        <span class="block my-1 font-bold text-sm">
-          Community <span class="text-red-500">*</span>
-        </span>
-        {#if data.community}
-          <Icon
-            src={Check}
-            mini
-            size="20"
-            class="text-green-600 ml-auto inline"
-          />
-        {/if}
-      </div>
+    {#if !data.community}
       <ObjectAutocomplete
         bind:q={communitySearch}
         bind:items={communities}
         jwt={$profile?.jwt}
         listing_type="All"
+        label="Community"
+        required
         on:select={(e) => {
           const c = e.detail
           if (!c) {
@@ -239,11 +224,35 @@
             return
           }
 
-          data.community = c.id
-          communitySearch = `${c.name}@${new URL(c.actor_id).hostname}`
+          communitySearch = ''
+
+          data.community = c
         }}
       />
-    </div>
+    {:else}
+      <div class="flex flex-col gap-1">
+        <span class="font-medium text-sm">Community</span>
+        <Button
+          class="w-full !bg-white dark:!bg-black h-[38px]"
+          on:click={() => (data.community = null)}
+          alignment="left"
+          size="sm"
+        >
+          <Avatar
+            url={data.community.icon}
+            alt={data.community.name}
+            width={24}
+            slot="prefix"
+          />
+          <div class="flex flex-col gap-0">
+            <span class="text-xs">{data.community.name}</span>
+            <span class="text-[10px] leading-3">
+              {new URL(data.community.actor_id).hostname}
+            </span>
+          </div>
+        </Button>
+      </div>
+    {/if}
   {/if}
   <TextInput
     required

@@ -161,8 +161,6 @@
         community={post.post_view.community}
         user={post.post_view.creator}
         bind:subscribed={post.community_view.subscribed}
-        upvotes={post.post_view.counts.upvotes}
-        downvotes={post.post_view.counts.downvotes}
         deleted={post.post_view.post.deleted}
         removed={post.post_view.post.removed}
         locked={post.post_view.post.locked}
