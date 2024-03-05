@@ -48,6 +48,7 @@ interface Settings {
     removed: boolean
   }
   expandSidebar: boolean
+  expandCommunities: boolean
   notifications: {
     enabled: boolean
     pollRate: number
@@ -101,6 +102,7 @@ export const defaultSettings: Settings = {
     removed: toBool(env.PUBLIC_HIDE_REMOVED) ?? false,
   },
   expandSidebar: toBool(env.PUBLIC_EXPAND_SIDEBAR) ?? true,
+  expandCommunities: true,
   notifications: {
     enabled: false,
     pollRate: 60 * 1000,

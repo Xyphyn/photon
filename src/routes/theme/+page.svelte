@@ -57,10 +57,6 @@
       <Icon src={ArrowDownTray} size="16" mini />
       Export
     </Button>
-    <Button on:click={() => {}} size="lg">
-      <Icon src={Bookmark} size="16" mini />
-      Save
-    </Button>
   </div>
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
     {#each svelteIntellisenseSucks() as category}

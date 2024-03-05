@@ -83,7 +83,7 @@
       <hr class="border-slate-200 dark:border-zinc-800 my-1" />
     {/if}
 
-    <Expandable open>
+    <Expandable bind:open={$userSettings.expandCommunities}>
       <span
         slot="title"
         class="px-2 py-1 w-full {$userSettings.expandSidebar
