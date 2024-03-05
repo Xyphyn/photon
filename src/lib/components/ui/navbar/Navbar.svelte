@@ -10,41 +10,15 @@
   import Logo from '$lib/components/ui/Logo.svelte'
   import { LINKED_INSTANCE_URL, instance } from '$lib/instance.js'
   import { site } from '$lib/lemmy.js'
-  import { userSettings } from '$lib/settings.js'
-  import { theme } from '$lib/ui/colors.js'
+  import { Menu, MenuButton, MenuDivider, Spinner } from 'mono-svelte'
   import {
-    Badge,
-    Button,
-    Menu,
-    MenuButton,
-    MenuDivider,
-    Select,
-    Spinner,
-    toast,
-  } from 'mono-svelte'
-  import {
-    Bars3,
-    Bookmark,
-    BugAnt,
-    CodeBracket,
-    CodeBracketSquare,
-    Cog6Tooth,
-    CommandLine,
-    ComputerDesktop,
     GlobeAlt,
-    Heart,
     Icon,
-    Inbox,
-    InformationCircle,
     MagnifyingGlass,
-    Moon,
     Newspaper,
     PencilSquare,
     Plus,
     ServerStack,
-    Sun,
-    UserCircle,
-    UserGroup,
   } from 'svelte-hero-icons'
   import { fly } from 'svelte/transition'
   import Profile from './Profile.svelte'

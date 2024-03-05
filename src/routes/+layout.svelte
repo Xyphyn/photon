@@ -8,7 +8,7 @@
   import Sidebar from '$lib/components/ui/sidebar/Sidebar.svelte'
   // @ts-ignore
   import { pwaInfo } from 'virtual:pwa-info'
-  import { inDarkTheme, theme } from '$lib/ui/colors.js'
+  import { inDarkLegacyTheme, legacyTheme } from '$lib/ui/colors.js'
   import { userSettings } from '$lib/settings.js'
   import { Button, Spinner, ToastContainer } from 'mono-svelte'
   import { onMount } from 'svelte'
@@ -41,7 +41,7 @@
   }
 
   $: webManifest = pwaInfo ? pwaInfo.webManifest.linkTag : ''
-  $: darkTheme = $theme && inDarkTheme()
+  $: darklegacyTheme = $legacyTheme && inDarkLegacyTheme()
 
   onMount(() => {
     if (browser) {
@@ -55,7 +55,7 @@
       window
         .matchMedia('(prefers-color-scheme: dark)')
         .addEventListener('change', (event) => {
-          darkTheme = inDarkTheme()
+          darklegacyTheme = inDarkLegacyTheme()
         })
       document.body.querySelector('.loader')?.classList.add('hidden')
     }
@@ -64,7 +64,7 @@
 </script>
 
 <svelte:head>
-  <meta name="theme-color" content={darkTheme ? '#09090b' : '#f8fafc'} />
+  <meta name="theme-color" content={darklegacyTheme ? '#09090b' : '#f8fafc'} />
   {#if $site}
     <title>{$site.site_view.site.name}</title>
     {#if LINKED_INSTANCE_URL}

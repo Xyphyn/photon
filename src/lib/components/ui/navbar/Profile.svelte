@@ -27,8 +27,9 @@
     UserCircle,
     UserGroup,
   } from 'svelte-hero-icons'
-  import { theme } from '$lib/ui/colors'
+  import { legacyTheme } from '$lib/ui/colors'
   import { userSettings } from '$lib/settings'
+  import { goto } from '$app/navigation'
 </script>
 
 <Menu {...$$restProps}>
@@ -97,26 +98,28 @@
     <Icon src={Cog6Tooth} mini width={16} />
     Settings
   </MenuButton>
-  <MenuButton class="!py-0">
+  <MenuButton
+    class="!py-0"
+    on:click={() => {
+      goto('/theme')
+    }}
+  >
     <Icon
-      src={$theme == 'system'
+      src={$legacyTheme == 'system'
         ? ComputerDesktop
-        : $theme == 'light'
+        : $legacyTheme == 'light'
           ? Sun
-          : $theme == 'dark'
+          : $legacyTheme == 'dark'
             ? Moon
             : Moon}
       mini
       size="16"
     />
+    <span>Color Scheme</span>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions -->
-    <div
-      class="flex flex-row flex-wrap justify-between w-full items-center"
-      on:click|stopPropagation
-    >
-      <span>Theme</span>
-      <Select bind:value={$theme} class="ml-auto my-auto w-24" size="sm">
+    <div class="contents" on:click|stopPropagation={() => {}}>
+      <Select bind:value={$legacyTheme} class="ml-auto my-auto w-24" size="sm">
         <option value="system">System</option>
         <option value="light">Light</option>
         <option value="dark">Dark</option>

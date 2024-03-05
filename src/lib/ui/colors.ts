@@ -15,17 +15,154 @@ export enum Color {
 
 import { get, writable } from 'svelte/store'
 import { env } from '$env/dynamic/public'
+import { browser } from '$app/environment'
 
-const configuredTheme = env.PUBLIC_THEME ?? 'system'
-export const theme = writable<'system' | 'light' | 'dark'>(
-  configuredTheme as 'system' | 'light' | 'dark'
+interface ColorData {
+  theme: number
+  themes: Colors[]
+}
+
+interface Theme {
+  colors: Colors
+  name: string
+  id: number
+}
+
+export interface Colors {
+  slate: {
+    25?: string,
+    50?: string
+    100?: string
+    200?: string
+    400?: string
+    500?: string
+    600?: string
+    700?: string
+    800?: string
+    900?: string
+    925?: string
+    950?: string
+  },
+  zinc: {
+    100?: string
+    200?: string
+    300?: string
+    400?: string
+    500?: string
+    600?: string
+    700?: string
+    800?: string
+    900?: string
+    925?: string
+    950?: string
+  },
+  primary: {
+    100?: string,
+    900?: string,
+  },
+  other: {
+    black?: string,
+    white?: string
+  }
+}
+
+export const defaultColors = {
+  slate: {
+    25: 'var(--c-s-25,rgb(252,253,254))',
+    50: `var(--c-s-50,#f8fafc)`,
+    100: `var(--c-s-100,#f1f5f9)`,
+    200: `var(--c-s-200,#e2e8f0)`,
+    300: `var(--c-s-300,#cbd5e1)`,
+    400: `var(--c-s-400,#94a3b8)`,
+    500: `var(--c-s-500,#64748b)`,
+    600: `var(--c-s-600,#475569)`,
+    700: `var(--c-s-700,#334155)`,
+    800: `var(--c-s-800,#1e293b)`,
+    900: `var(--c-s-900,#0f172a`,
+    950: `var(--c-s-950,#020617)`,
+  },
+  zinc: {
+    50: `var(--c-z-50,#fafafa)`,
+    100: `var(--c-z-100,#f4f4f5)`,
+    200: `var(--c-z-200,#e4e4e7)`,
+    300: `var(--c-z-300,#d4d4d8)`,
+    400: `var(--c-z-400,#a1a1aa)`,
+    500: `var(--c-z-500,#71717a)`,
+    600: `var(--c-z-600,#52525b)`,
+    700: 'var(--c-z-700,#34343b)',
+    800: 'var(--c-z-800,#1f1f24)',
+    900: 'var(--c-z-900,#121215)',
+    925: 'var(--c-z-925,#0c0c0e)',
+    950: `var(--c-z-950,#09090b)`,
+  },
+  primary: {
+    100: 'var(--c-p-100,#f1f5f9)',
+    900: 'var(--c-p-900,#0f172a)',
+  },
+  other: {
+    black: `#000`,
+    white: `var(--c-o-white,#fff)`
+  }
+}
+
+export let colors = writable<Colors>({
+  slate: {},
+  zinc: {},
+  primary: {},
+  other: {}
+})
+
+export function colorsToVars(colors: Colors): string {
+  let vars: string[] = []
+  for (let category in colors) {
+    for (let shade in colors[category as keyof Colors]) {
+      console.log(shade)
+      if (category)
+        // @ts-ignore
+        vars.push(`--c-${category.slice(0, 1)}-${shade}:${colors[category][shade]}`)
+    }
+  }
+  return vars.join(';')
+}
+
+export const colorToVar = (category: keyof Colors, shade: keyof keyof Colors): string =>
+  `--c-${category.slice(0,2)}-${shade.toString()}`
+
+colors.subscribe((v) => {
+
+})
+
+function loadColors() {
+  const loaded = localStorage.getItem('colors')
+  if (!loaded) return
+  colors.set(JSON.parse(loaded))
+}
+
+if (browser) {
+  loadColors()
+}
+
+
+
+
+
+
+
+
+
+
+
+
+const configuredLegacyTheme = env.PUBLIC_LEGACYTHEME ?? 'system'
+export const legacyTheme = writable<'system' | 'light' | 'dark'>(
+  configuredLegacyTheme as 'system' | 'light' | 'dark'
 )
 
-export const toggleTheme = () => {
-  theme.update((theme) => {
-    if (theme == 'light') {
+export const toggleLegacyTheme = () => {
+  legacyTheme.update((legacyTheme) => {
+    if (legacyTheme == 'light') {
       return 'dark'
-    } else if (theme == 'dark') {
+    } else if (legacyTheme == 'dark') {
       return 'system'
     } else {
       return 'light'
@@ -33,23 +170,23 @@ export const toggleTheme = () => {
   })
 }
 
-export const inDarkTheme = (): boolean => {
+export const inDarkLegacyTheme = (): boolean => {
   if (typeof window != 'undefined') {
-    return get(theme) == 'system'
+    return get(legacyTheme) == 'system'
       ? window.matchMedia('(prefers-color-scheme: dark)').matches
-      : get(theme) == 'dark'
+      : get(legacyTheme) == 'dark'
   }
   return false
 }
 
 if (typeof localStorage != 'undefined') {
-  const localTheme: 'system' | 'light' | 'dark' =
-    (localStorage.getItem('theme') as 'system' | 'light' | 'dark') ||
-    configuredTheme
+  const localLegacyTheme: 'system' | 'light' | 'dark' =
+    (localStorage.getItem('legacyTheme') as 'system' | 'light' | 'dark') ||
+    configuredLegacyTheme
 
-  theme.update((theme) => localTheme)
+  legacyTheme.update((legacyTheme) => localLegacyTheme)
 
-  theme.subscribe((theme) => {
+  legacyTheme.subscribe((legacyTheme) => {
     if (typeof document != 'undefined') {
       const prefersDark = window.matchMedia(
         '(prefers-color-scheme: dark)'
@@ -57,13 +194,13 @@ if (typeof localStorage != 'undefined') {
 
       const html = document.querySelector('html')
 
-      if (theme == 'system') {
+      if (legacyTheme == 'system') {
         html?.classList.toggle('dark', prefersDark)
       } else {
-        html?.classList.toggle('dark', theme === 'dark')
+        html?.classList.toggle('dark', legacyTheme === 'dark')
       }
 
-      localStorage.setItem('theme', theme)
+      localStorage.setItem('legacyTheme', legacyTheme)
     }
   })
 }
