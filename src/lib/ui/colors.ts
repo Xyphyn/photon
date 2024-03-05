@@ -130,8 +130,9 @@ export const colorToVar = (category: keyof Colors, shade: keyof keyof Colors): s
 
 function loadColors() {
   const loaded = localStorage.getItem('colors')
-  if (!loaded) return
-  colors.set(JSON.parse(loaded))
+  if (loaded) {
+    colors.set(JSON.parse(loaded))
+  }
   colors.subscribe((v) => {
     localStorage.setItem('colors', JSON.stringify(v))
   })
