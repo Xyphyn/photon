@@ -1,7 +1,21 @@
 <script lang="ts">
-  import { Button, Material, Modal, TextArea, toast } from 'mono-svelte'
+  import {
+    Button,
+    Material,
+    Modal,
+    TextArea,
+    action,
+    modal,
+    toast,
+  } from 'mono-svelte'
   import { defaultColors, type Colors, colors } from '$lib/ui/colors'
-  import { ArrowDownTray, ArrowUpTray, Bookmark, Icon } from 'svelte-hero-icons'
+  import {
+    ArrowDownTray,
+    ArrowPath,
+    ArrowUpTray,
+    Bookmark,
+    Icon,
+  } from 'svelte-hero-icons'
 
   const c = defaultColors
 
@@ -56,6 +70,32 @@
     >
       <Icon src={ArrowDownTray} size="16" mini />
       Export
+    </Button>
+    <Button
+      on:click={() => {
+        modal({
+          actions: [
+            action({
+              content: 'Close',
+              close: true,
+            }),
+            action({
+              action: () => {
+                $colors = { other: {}, primary: {}, zinc: {}, slate: {} }
+              },
+              content: 'Reset',
+              close: true,
+              type: 'danger',
+            }),
+          ],
+          title: 'Reset Theme',
+          body: 'This will reset all your colors to the default. We recommend exporting your theme first.',
+        })
+      }}
+      size="lg"
+    >
+      <Icon src={ArrowPath} size="16" mini />
+      Reset
     </Button>
   </div>
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">

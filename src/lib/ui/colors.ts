@@ -116,7 +116,6 @@ export function colorsToVars(colors: Colors): string {
   let vars: string[] = []
   for (let category in colors) {
     for (let shade in colors[category as keyof Colors]) {
-      console.log(shade)
       if (category)
         // @ts-ignore
         vars.push(`--c-${category.slice(0, 1)}-${shade}:${colors[category][shade]}`)
@@ -128,29 +127,19 @@ export function colorsToVars(colors: Colors): string {
 export const colorToVar = (category: keyof Colors, shade: keyof keyof Colors): string =>
   `--c-${category.slice(0,2)}-${shade.toString()}`
 
-colors.subscribe((v) => {
-
-})
 
 function loadColors() {
   const loaded = localStorage.getItem('colors')
   if (!loaded) return
   colors.set(JSON.parse(loaded))
+  colors.subscribe((v) => {
+    localStorage.setItem('colors', JSON.stringify(v))
+  })
 }
 
 if (browser) {
   loadColors()
 }
-
-
-
-
-
-
-
-
-
-
 
 
 const configuredLegacyTheme = env.PUBLIC_LEGACYTHEME ?? 'system'

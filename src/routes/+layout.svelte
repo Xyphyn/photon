@@ -10,7 +10,7 @@
   import { pwaInfo } from 'virtual:pwa-info'
   import { inDarkLegacyTheme, legacyTheme } from '$lib/ui/colors.js'
   import { userSettings } from '$lib/settings.js'
-  import { Button, Spinner, ToastContainer } from 'mono-svelte'
+  import { Button, ModalContainer, Spinner, ToastContainer } from 'mono-svelte'
   import { onMount } from 'svelte'
   import { browser } from '$app/environment'
   import { Forward, Icon } from 'svelte-hero-icons'
@@ -95,6 +95,7 @@
   <Moderation />
   <ToastContainer />
   <ExpandableImage />
+  <ModalContainer />
 
   <Navbar
     slot="navbar"

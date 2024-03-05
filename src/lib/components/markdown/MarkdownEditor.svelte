@@ -8,6 +8,7 @@
   import { createEventDispatcher } from 'svelte'
   import {
     CodeBracket,
+    DocumentPlus,
     ExclamationTriangle,
     Icon,
     Link,
@@ -60,16 +61,17 @@
 
   let uploadingImage = false
   let loading = false
-  let image: FileList | null = null
+  let image: any
+  $: previewURL = image instanceof FileList ? URL.createObjectURL(image[0]) : image ? URL.createObjectURL(image) : ''
 
   async function upload() {
-    if (!$profile?.jwt || image == null) return
+    if (!$profile?.jwt || !image) return
 
     loading = true
 
     try {
       const uploaded = await uploadImage(
-        image[0],
+        image instanceof FileList ? image[0] : image,
         $profile.instance,
         $profile.jwt
       )
@@ -105,7 +107,35 @@
   <Modal bind:open={uploadingImage}>
     <span slot="title">Upload image</span>
     <form class="flex flex-col gap-4" on:submit|preventDefault={upload}>
-      <ImageInput bind:files={image} />
+      <div class="flex flex-col gap-1">
+        <label
+          class="flex flex-col items-center px-8 py-4 mx-auto w-full rounded-lg
+        border border-slate-300 dark:border-zinc-700 bg-white dark:bg-black
+        cursor-pointer min-h-36 transition-colors
+        "
+          on:drop|preventDefault={(event) => (image = event.dataTransfer?.files?.[0])}
+          on:dragover|preventDefault={(event) => {
+            if (event.dataTransfer) {
+              event.dataTransfer.dropEffect = 'copy'
+            }
+          }}
+        >
+          {#if image}
+            <!-- svelte-ignore a11y-missing-attribute -->
+            <img
+              src={previewURL}
+              on:load={() => {
+                if (previewURL) URL.revokeObjectURL(previewURL)
+              }}
+              class="w-full max-w-sm h-full rounded-lg"
+            />
+          {:else}
+            <Icon src={DocumentPlus} class="opacity-50" size="36" />
+            <p class="text-sm opacity-50">Attach a file</p>
+          {/if}
+          <input type="file" bind:files={image} accept="image/*" class="hidden" />
+        </label>
+      </div>
       <Button {loading} disabled={loading} submit color="primary" size="lg">
         Upload
       </Button>
@@ -249,6 +279,14 @@ overflow-hidden focus-within:border-black focus-within:dark:border-white transit
               e.preventDefault()
               shortcut?.()
             }
+          }
+        }}
+        on:paste={(e) => {
+          if (!e.clipboardData?.files) return
+          const files = Array.from(e.clipboardData.files)
+          if (files[0]?.type.startsWith('image/')) {
+            image = e.clipboardData.files[0]
+            uploadingImage = true
           }
         }}
         {rows}
