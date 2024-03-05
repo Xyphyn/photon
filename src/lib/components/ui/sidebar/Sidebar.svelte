@@ -84,7 +84,12 @@
     {/if}
 
     <Expandable open>
-      <span slot="title" class="px-2 py-1 w-full">
+      <span
+        slot="title"
+        class="px-2 py-1 w-full {$userSettings.expandSidebar
+          ? ''
+          : 'max-lg:hidden'}"
+      >
         <EndPlaceholder>
           Subscribed
           <span slot="action" class="dark:text-white text-black">

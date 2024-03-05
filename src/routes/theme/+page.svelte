@@ -35,7 +35,7 @@
   </Modal>
 {/if}
 
-<div class="flex flex-col gap-4">
+<div class="flex flex-col gap-4 h-full">
   <h1 class="font-bold text-3xl">Theme</h1>
   <div class="flex items-center gap-4">
     <Button
@@ -66,7 +66,7 @@
     {#each svelteIntellisenseSucks() as category}
       <Material class="flex flex-col gap-2">
         <h1 class="capitalize font-semibold text-lg">{category}</h1>
-        <div class="flex flex-row gap-1 flex-wrap items-center justify-between">
+        <div class="flex flex-row gap-1 flex-wrap items-center space-evenly">
           {#each Object.keys(c[category]) as shade}
             <div class="flex flex-col gap-0.5 w-10 group">
               <div
@@ -86,5 +86,18 @@
         </div>
       </Material>
     {/each}
+  </div>
+  <div
+    class="flex items-center gap-2 sm:gap-8 flex-col sm:flex-row mt-auto mx-auto text-sm text-slate-600 dark:text-zinc-400"
+  >
+    <span>Slate is for light theme, Zinc is for dark</span>
+    <span>
+      You can share themes at <a
+        href="/c/photon@lemdro.id"
+        class="text-sky-600 dark:text-sky-500 hover:underline"
+      >
+        photon@lemdro.id
+      </a>
+    </span>
   </div>
 </div>
