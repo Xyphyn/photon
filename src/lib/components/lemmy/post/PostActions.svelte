@@ -93,7 +93,7 @@
   </Modal>
 {/if}
 
-<div class="flex flex-row gap-2 items-center h-8">
+<div class="flex flex-row gap-2 items-center h-8" style={$$props.style ?? ""}>
   <PostVote
     post={post.post}
     bind:vote={post.my_vote}

@@ -19,7 +19,7 @@
 </script>
 
 <div
-  style="transition: max-height 300ms cubic-bezier(0.075, 0.82, 0.165, 1)"
+  style="transition: max-height 300ms cubic-bezier(0.075, 0.82, 0.165, 1); {$$props.style ?? ''}"
   class={!expanded
     ? `text-sm overflow-hidden
 bg-gradient-to-b text-transparent from-slate-600 via-slate-600

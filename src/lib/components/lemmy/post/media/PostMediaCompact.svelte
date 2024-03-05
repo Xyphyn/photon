@@ -10,7 +10,7 @@
 </script>
 
 {#if (view == 'list' || view == 'compact') && !post.embed_title && (post.thumbnail_url || isImage(post.url))}
-  <div class="flex-shrink-0 w-24 h-24">
+  <div class="flex-shrink-0 w-24 h-24" style={$$props.style ?? ''}>
     {#if !$userSettings.expandImages || (post.thumbnail_url && !isImage(post.url))}
       <a href={postLink(post)}>
         <!-- svelte-ignore a11y-missing-attribute -->

@@ -34,7 +34,7 @@
 <Material
   color={view != 'card' ? 'none' : 'distinct'}
   padding="none"
-  class="relative max-w-full min-w-0 w-full group flex flex-col gap-2
+  class="relative max-w-full min-w-0 w-full group gap-2  flex flex-col
   {view != 'card' ? 'bg-transparent !border-0' : 'p-5'} {view == 'compact'
     ? 'py-4'
     : view == 'list'
@@ -63,11 +63,11 @@
     <slot name="badges" slot="badges" />
   </PostMeta>
   <PostMedia bind:post={post.post} {view} {type} />
-  {#if post.post.body && !post.post.nsfw && view != 'compact'}
-    <PostBody body={post.post.body} {view} />
-  {/if}
   {#if view == 'list' || view == 'compact'}
-    <PostMediaCompact {view} bind:post={post.post} />
+    <PostMediaCompact {view} bind:post={post.post} style="grid-area: media; grid-column: span 2 / span 2;" />
+  {/if}
+  {#if post.post.body && !post.post.nsfw && view != 'compact'}
+    <PostBody body={post.post.body} {view} style="grid-area: body; grid-column: span 1 / span 1;" />
   {/if}
   {#if actions}
     <PostActions
@@ -78,6 +78,22 @@
           type: 'success',
         })
       }}
+      style="grid-area: actions; grid-column: span 2 / span 2;"
     />
   {/if}
 </Material>
+
+<style>
+  :global(.list-type) {
+    display: grid;
+    gap: 0;
+    grid-template-areas:
+      'meta' 'media'
+      'body' 'media'
+      'actions' 'actions';
+    width: 100%;
+    height: 100%;
+    grid-template-rows: 3;
+    grid-template-columns: 2;
+  }
+</style>
