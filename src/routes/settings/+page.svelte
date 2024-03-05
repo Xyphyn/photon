@@ -8,6 +8,7 @@
   import Link from '$lib/components/input/Link.svelte'
   import {
     ArrowPath,
+    ArrowRight,
     ChatBubbleOvalLeftEllipsis,
     ChevronDown,
     ChevronRight,
@@ -24,10 +25,6 @@
   import { removeItem } from '$lib/util.js'
   import Section from './Section.svelte'
   import ToggleSetting from './ToggleSetting.svelte'
-
-  let data = {
-    loading: false,
-  }
 </script>
 
 <svelte:head>
@@ -45,12 +42,18 @@
     class="font-normal"
   >
     <Icon src={ArrowPath} mini size="16" slot="prefix" />
-    Reset to default
+    Reset
   </Button>
 </h1>
 
 <div class="flex flex-col gap-4" style="scroll-behavior: smooth;">
   <Section title="Photon">
+    <Setting>
+      <span slot="title">Theming</span>
+      <Button href="/theme">
+        Go to themes <Icon src={ArrowRight} size="16" mini slot="suffix" />
+      </Button>
+    </Setting>
     <Setting>
       <span slot="title">Post style</span>
       <ViewSelect showLabel={false} />
