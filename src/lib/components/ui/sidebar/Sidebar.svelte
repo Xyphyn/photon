@@ -56,7 +56,7 @@
     <span slot="label">Communities</span>
   </SidebarButton>
   {#if $profileData.profiles.length >= 1}
-    <hr class="border-slate-200 dark:border-zinc-800 my-1" />
+    <hr class="border-slate-200 dark:border-zinc-900 my-1" />
     {#each [...$profileData.profiles] as prof, index (prof.id)}
       <div animate:flip={{ duration: 300, easing: expoOut }} class="w-full">
         <ProfileButton {index} {prof} />
@@ -76,11 +76,11 @@
       <span slot="label">Accounts</span>
     </SidebarButton>
   {/if}
-  <hr class="border-slate-200 dark:border-zinc-800 my-1" />
+  <hr class="border-slate-200 dark:border-zinc-900 my-1" />
   {#if $profile?.user}
     {#if $profile?.user.moderates.length > 0}
       <CommunityList items={$profile.user.moderates.map((i) => i.community)} />
-      <hr class="border-slate-200 dark:border-zinc-800 my-1" />
+      <hr class="border-slate-200 dark:border-zinc-900 my-1" />
     {/if}
 
     <Expandable bind:open={$userSettings.expandCommunities}>

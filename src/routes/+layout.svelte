@@ -8,7 +8,12 @@
   import Sidebar from '$lib/components/ui/sidebar/Sidebar.svelte'
   // @ts-ignore
   import { pwaInfo } from 'virtual:pwa-info'
-  import { colors, inDarkLegacyTheme, legacyTheme } from '$lib/ui/colors.js'
+  import {
+    colors,
+    colorsToVars,
+    inDarkLegacyTheme,
+    legacyTheme,
+  } from '$lib/ui/colors.js'
   import { userSettings } from '$lib/settings.js'
   import { Button, ModalContainer, Spinner, ToastContainer } from 'mono-svelte'
   import { onMount } from 'svelte'
@@ -61,10 +66,16 @@
     }
   })
   $: title = routes[($page.route.id as keyof typeof routes) ?? '']
+  $: browser ? document.body.setAttribute('style', colorsToVars($colors)) : ''
 </script>
 
 <svelte:head>
-  <meta name="theme-color" content={darklegacyTheme ? $colors?.zinc?.[950] ?? '#09090b' : $colors?.slate?.[50] ?? '#f8fafc'} />
+  <meta
+    name="theme-color"
+    content={darklegacyTheme
+      ? $colors?.zinc?.[950] ?? '#09090b'
+      : $colors?.slate?.[50] ?? '#f8fafc'}
+  />
   {#if $site}
     <title>{$site.site_view.site.name}</title>
     {#if LINKED_INSTANCE_URL}
