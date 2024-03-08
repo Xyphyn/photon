@@ -13,7 +13,7 @@
   <slot
     name="navbar"
     class="sticky top-0 border-b border-slate-200 dark:border-zinc-900
-      bg-slate-25 dark:bg-zinc-950 transition-colors duration-500"
+      bg-slate-50 dark:bg-zinc-950 transition-colors duration-500"
     style="grid-area: navbar"
     {title}
   />
