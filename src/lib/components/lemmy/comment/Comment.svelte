@@ -110,7 +110,7 @@
         {/if}
       </span>
       <RelativeDate
-        class="text-zinc-400"
+        class="text-slate-600 dark:text-zinc-400"
         date={publishedToDate(node.comment_view.comment.published)}
       />
       <span class="text-slate-600 dark:text-zinc-400 flex flex-row gap-2 ml-1">
