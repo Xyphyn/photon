@@ -400,5 +400,11 @@ async function checkInbox() {
 }
 
 setInterval(checkInbox, 4 * 60 * 1000)
-checkInbox()
+
+let prevId: number | undefined = -2
+profile.subscribe((p) => {
+  if (p?.id == prevId || !p?.user) return
+  prevId = p?.id
+  if (p.id != -1) checkInbox()
+})
 
