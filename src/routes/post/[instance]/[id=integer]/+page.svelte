@@ -168,14 +168,19 @@
         community={post.post_view.community}
         user={post.post_view.creator}
         bind:subscribed={post.community_view.subscribed}
-        deleted={post.post_view.post.deleted}
-        removed={post.post_view.post.removed}
-        locked={post.post_view.post.locked}
-        featured={post.post_view.post.featured_community ||
-          post.post_view.post.featured_local}
-        nsfw={post.post_view.post.nsfw}
+        badges={{
+          deleted: post.post_view.post.deleted,
+          removed: post.post_view.post.removed,
+          locked: post.post_view.post.locked,
+          featured:
+            post.post_view.post.featured_community ||
+            post.post_view.post.featured_local,
+          nsfw: post.post_view.post.nsfw,
+          saved: post.post_view.saved,
+          admin: post.post_view.creator_is_admin,
+          moderator: post.post_view.creator_is_moderator,
+        }}
         published={publishedToDate(post.post_view.post.published)}
-        saved={post.post_view.saved}
       />
     </div>
     <Button on:click={() => history.back()} size="square-md">

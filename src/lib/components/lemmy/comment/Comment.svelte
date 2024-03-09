@@ -19,6 +19,7 @@
   import { profile } from '$lib/auth.js'
   import { Button, Modal } from 'mono-svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
+  import ShieldIcon from '../moderation/ShieldIcon.svelte'
 
   export let node: CommentNodeI
   export let postId: number
@@ -104,7 +105,16 @@
           avatarSize={22}
           avatar
           user={node.comment_view.creator}
-        />
+        >
+          <svelte:fragment slot="badges">
+            {#if node.comment_view.creator_is_moderator}
+              <ShieldIcon filled width={14} class="text-green-500" />
+            {/if}
+            {#if node.comment_view.creator_is_admin}
+              <ShieldIcon filled width={14} class="text-red-500" />
+            {/if}
+          </svelte:fragment>
+        </UserLink>
         {#if op}
           <span class="text-sky-500">OP</span>
         {/if}

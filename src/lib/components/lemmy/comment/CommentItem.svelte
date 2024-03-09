@@ -21,11 +21,18 @@
 >
   <div class="flex flex-row justify-between items-center">
     <PostMeta
-      deleted={false}
-      featured={false}
-      nsfw={comment.post.nsfw}
+      badges={{
+        nsfw: comment.post.nsfw,
+        removed: comment.post.removed,
+        admin: false,
+        moderator: false,
+        saved: false,
+        deleted: comment.post.deleted,
+        featured:
+          comment.post.featured_community || comment.post.featured_local,
+        locked: comment.post.locked,
+      }}
       published={publishedToDate(comment.comment.published)}
-      saved={false}
       community={community ? comment.community : undefined}
     />
     <Button

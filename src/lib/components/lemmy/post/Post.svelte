@@ -46,12 +46,16 @@
     community={hideCommunity ? undefined : post.community}
     user={post.creator}
     published={publishedToDate(post.post.published)}
-    deleted={post.post.deleted}
-    removed={post.post.removed}
-    locked={post.post.locked}
-    featured={post.post.featured_local || post.post.featured_community}
-    nsfw={post.post.nsfw}
-    saved={post.saved}
+    badges={{
+      deleted: post.post.deleted,
+      removed: post.post.removed,
+      locked: post.post.locked,
+      featured: post.post.featured_local || post.post.featured_community,
+      nsfw: post.post.nsfw,
+      saved: post.saved,
+      admin: post.creator_is_admin,
+      moderator: post.creator_is_moderator,
+    }}
     subscribed={$profile?.user?.follows
       .map((c) => c.community.id)
       .includes(post.community.id)
@@ -64,10 +68,18 @@
   </PostMeta>
   <PostMedia bind:post={post.post} {view} {type} />
   {#if view == 'list' || view == 'compact'}
-    <PostMediaCompact {view} bind:post={post.post} style="grid-area: media; grid-column: span 2 / span 2;" />
+    <PostMediaCompact
+      {view}
+      bind:post={post.post}
+      style="grid-area: media; grid-column: span 2 / span 2;"
+    />
   {/if}
   {#if post.post.body && !post.post.nsfw && view != 'compact'}
-    <PostBody body={post.post.body} {view} style="grid-area: body; grid-column: span 1 / span 1;" />
+    <PostBody
+      body={post.post.body}
+      {view}
+      style="grid-area: body; grid-column: span 1 / span 1;"
+    />
   {/if}
   {#if actions}
     <PostActions

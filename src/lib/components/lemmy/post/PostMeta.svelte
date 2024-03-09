@@ -17,6 +17,7 @@
   import { getInstance } from '$lib/lemmy.js'
   import { profile } from '$lib/auth.js'
   import Subscribe from '../../../../routes/communities/Subscribe.svelte'
+  import ShieldIcon from '../moderation/ShieldIcon.svelte'
 
   export let community: Community | undefined = undefined
   export let subscribed: SubscribedType | undefined = undefined
@@ -27,12 +28,16 @@
   export let id: number | undefined = undefined
 
   // Badges
-  export let nsfw: boolean = false
-  export let saved: boolean = false
-  export let featured: boolean = false
-  export let deleted: boolean = false
-  export let removed: boolean = false
-  export let locked: boolean = false
+  export let badges = {
+    nsfw: false,
+    saved: false,
+    featured: false,
+    deleted: false,
+    removed: false,
+    locked: false,
+    moderator: false,
+    admin: false,
+  }
 </script>
 
 <div
@@ -81,7 +86,16 @@
     style="grid-area: stats;"
   >
     {#if user}
-      <UserLink avatarSize={20} {user} avatar={!community} />
+      <UserLink avatarSize={20} {user} avatar={!community}>
+        <svelte:fragment slot="badges">
+          {#if badges.moderator}
+            <ShieldIcon filled width={14} class="text-green-500" />
+          {/if}
+          {#if badges.admin}
+            <ShieldIcon filled width={14} class="text-red-500" />
+          {/if}
+        </svelte:fragment>
+      </UserLink>
     {/if}
     {#if published}
       <RelativeDate date={published} />
@@ -92,34 +106,34 @@
     class="flex flex-row items-center place-self-end overflow-auto [&>*]:flex-shrink-0"
     style="grid-area: badges;"
   >
-    {#if nsfw}
+    {#if badges.nsfw}
       <Badge color="red-subtle">NSFW</Badge>
     {/if}
-    {#if saved}
+    {#if badges.saved}
       <Badge label="Saved" color="yellow-subtle">
         <Icon src={Bookmark} mini size="12" />
         <span class="max-md:hidden">Saved</span>
       </Badge>
     {/if}
-    {#if locked}
+    {#if badges.locked}
       <Badge label="Locked" color="yellow-subtle">
         <Icon src={LockClosed} mini size="14" />
         <span class="max-md:hidden">Locked</span>
       </Badge>
     {/if}
-    {#if removed}
+    {#if badges.removed}
       <Badge label="Removed" color="red-subtle">
         <Icon src={Trash} mini size="14" />
         <span class="max-md:hidden">Removed</span>
       </Badge>
     {/if}
-    {#if deleted}
+    {#if badges.deleted}
       <Badge label="Deleted" color="red-subtle">
         <Icon src={Trash} mini size="14" />
         <span class="max-md:hidden">Deleted</span>
       </Badge>
     {/if}
-    {#if featured}
+    {#if badges.featured}
       <Badge label="Featured" color="green-subtle">
         <Icon src={Megaphone} mini size="14" />
         <span class="max-md:hidden">Featured</span>

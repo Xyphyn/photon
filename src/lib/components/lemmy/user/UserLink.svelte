@@ -45,5 +45,6 @@
     {#if user.bot_account}
       <div class="text-blue-500 font-bold" title="Bot">BOT</div>
     {/if}
+    <slot name="badges" />
   {/if}
 </a>
