@@ -60,7 +60,23 @@
     {/if}
   </Material>
 {:else}
-  <Link href={url} highlight nowrap />
+  <Link
+    href={url}
+    target="_blank"
+    class="text-slate-700 dark:text-zinc-300 inline-flex items-center gap-1 text-sm"
+  >
+    <Icon src={LinkIcon} size="14" mini slot="icon" />
+    {#if richURL}
+      <span>
+        {richURL.hostname}
+      </span>
+      <span class="text-slate-500 dark:text-zinc-500">
+        {richURL.pathname}
+      </span>
+    {:else}
+      {url}
+    {/if}
+  </Link>
   {#if thumbnail_url && !compact}
     <a href={url} target="_blank">
       <img
