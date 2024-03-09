@@ -219,7 +219,7 @@
               />
             </div>
             <div class="flex flex-col">
-              <span class="font-bold">{profile.username}</span>
+              <span class="font-medium">{profile.username}</span>
               <span class="text-sm text-slate-600 dark:text-zinc-400">
                 {profile.instance}
               </span>
