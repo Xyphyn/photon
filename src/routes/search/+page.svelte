@@ -2,6 +2,7 @@
   import { page } from '$app/stores'
   import { profile } from '$lib/auth.js'
   import ObjectAutocomplete from '$lib/components/lemmy/ObjectAutocomplete.svelte'
+  import Sort from '$lib/components/lemmy/Sort.svelte'
   import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
   import CommunityItem from '$lib/components/lemmy/community/CommunityItem.svelte'
   import Post from '$lib/components/lemmy/post/Post.svelte'
@@ -56,7 +57,7 @@
   >
     <span slot="label" class="flex items-center gap-1">
       <Icon src={AdjustmentsHorizontal} mini size="15" />
-      Type
+      Filter
     </span>
     <option value="All">All</option>
     <option value="Posts">Posts</option>
@@ -64,25 +65,27 @@
     <option value="Communities">Communities</option>
     <option value="Users">Users</option>
   </Select>
+  <Sort navigate bind:selected={data.sort} />
   <form
-    class="flex flex-row gap-2 items-center ml-auto"
     on:submit|preventDefault={() => searchParam($page.url, 'q', query, 'page')}
+    class="flex flex-col sm:flex-row gap-2 sm:ml-auto items-center"
   >
     <TextInput
-      label="Query"
       bind:value={query}
-      placeholder="!community@instance.com"
-      inlineAffixes
+      placeholder="Search for a keyword..."
+      label="Query"
+      size="md"
+    />
+    <Button
+      submit
+      color="secondary"
+      size="custom"
+      class="self-end"
+      style="width: 38px; height: 38px;"
+      title="Search"
     >
-      <button
-        type="submit"
-        aria-label="Search"
-        slot="suffix"
-        class="flex items-center"
-      >
-        <Icon src={MagnifyingGlass} size="20" mini />
-      </button>
-    </TextInput>
+      <Icon src={MagnifyingGlass} size="16" mini />
+    </Button>
   </form>
   <Button
     slot="summary"

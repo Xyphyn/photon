@@ -25,7 +25,7 @@ export async function load({ url, fetch }) {
       community_id: community ?? undefined,
       limit: 20,
       page: page,
-      sort: (sort as SortType) || 'New',
+      sort: (sort as SortType) || 'TopAll',
       listing_type: 'All',
       type_: (type as SearchType) ?? 'All',
     })
@@ -37,10 +37,7 @@ export async function load({ url, fetch }) {
       results.communities,
     ]
 
-    const everything = [...posts, ...comments, ...users, ...communities].sort(
-      (a, b) =>
-        Date.parse(getItemPublished(b)) - Date.parse(getItemPublished(a))
-    )
+    const everything = [...posts, ...comments, ...users, ...communities]
 
     return {
       type: type,

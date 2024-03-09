@@ -53,7 +53,7 @@
     </Material>
   </Popover>
 </h1>
-<div class="flex flex-row flex-wrap gap-4 mt-4">
+<div class="flex flex-row flex-wrap gap-4 mt-4 items-center">
   <Select
     bind:value={data.type}
     on:change={() => searchParam($page.url, 'type', data.type ?? 'All', 'page')}
@@ -75,14 +75,15 @@
       bind:value={search}
       placeholder="Search for a community..."
       label="Query"
-      size="sm"
+      size="md"
     />
     <Button
       submit
-      color="ghost"
-      size="square-md"
+      color="secondary"
+      size="custom"
       class="self-end"
-      aria-label="Search"
+      style="width: 38px; height: 38px;"
+      title="Search"
     >
       <Icon src={MagnifyingGlass} size="16" mini />
     </Button>
