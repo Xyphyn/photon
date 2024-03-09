@@ -318,11 +318,11 @@
                 <Button
                   size="square-md"
                   on:click={() => {
-                    if (!data.federated_instances?.federated_instances?.blocked)
+                    if (!data.federated_instances?.federated_instances?.allowed)
                       return
 
-                    data.federated_instances.federated_instances.blocked =
-                      data.federated_instances?.federated_instances?.blocked.filter(
+                    data.federated_instances.federated_instances.allowed =
+                      data.federated_instances?.federated_instances?.allowed.filter(
                         (i) => i.id != instance.id
                       )
                   }}
