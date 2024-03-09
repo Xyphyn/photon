@@ -373,7 +373,7 @@ const getNotificationCount = async (
   }
 }
 
-async function checkInboxRepeatedly() {
+async function checkInbox() {
   if (!get(profile)) return
 
   const { user, jwt } = get(profile)!
@@ -396,7 +396,14 @@ async function checkInboxRepeatedly() {
     user: user,
   }))
 
-  setTimeout(checkInboxRepeatedly, 5 * 60 * 1000)
+  
 }
 
-checkInboxRepeatedly()
+setInterval(checkInbox, 4 * 60 * 1000)
+
+profile.subscribe((p) => {
+  if (!p) return
+
+  checkInbox()
+})
+
