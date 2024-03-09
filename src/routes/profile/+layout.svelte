@@ -9,7 +9,7 @@
   <title>Profile</title>
 </svelte:head>
 
-<div class="flex flex-col gap-4 h-full">
+<div class="flex flex-col gap-4 h-full z-50">
   <MultiSelect
     options={[
       '/profile/user',

@@ -35,6 +35,7 @@
       const res = await getClient().saveUserSettings({
         ...formData,
         avatar: pfp,
+        banner: banner,
       })
 
       toast({
