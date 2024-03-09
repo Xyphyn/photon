@@ -8,9 +8,7 @@
     QuestionMarkCircle,
   } from 'svelte-hero-icons'
   import Pageination from '$lib/components/ui/Pageination.svelte'
-  import {
-    searchParam,
-  } from '$lib/util.js'
+  import { searchParam } from '$lib/util.js'
   import { Button, Material, Popover, Select, TextInput } from 'mono-svelte'
   import Sort from '$lib/components/lemmy/Sort.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
@@ -90,7 +88,7 @@
     </Button>
   </form>
 </div>
-<ul class="flex flex-col divide-y dark:divide-zinc-800">
+<ul class="flex flex-col divide-y divide-slate-200 dark:divide-zinc-800">
   {#if data.communities.length == 0}
     <Placeholder
       icon={QuestionMarkCircle}

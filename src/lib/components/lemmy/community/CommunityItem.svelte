@@ -18,6 +18,8 @@
   import { addSubscription } from '$lib/lemmy/user.js'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import CommunityCard from '$lib/components/lemmy/community/CommunityCard.svelte'
+  import LabelStat from '$lib/components/ui/LabelStat.svelte'
+  import PostBody from '../post/PostBody.svelte'
 
   export let community: CommunityView
 
@@ -28,17 +30,17 @@
   <CommunityCard community_view={community} />
 </Modal>
 
-<div class="py-4 flex flex-col gap-1 text-sm max-w-full">
+<div class="py-4 flex flex-col gap-2 text-sm max-w-full relative">
   <div class="flex flex-row items-center">
-    <span
-      class="break-words max-w-full w-max text-base font-bold hover:underline"
-    >
+    <div class="flex flex-col">
       <CommunityLink
-        showInstance={false}
+        showInstance={true}
         avatar
         community={community.community}
+        class="font-medium text-base"
+        instanceClass="text-xs"
       />
-    </span>
+    </div>
     <div class="ml-auto flex flex-row items-center gap-2">
       <Button size="square-md" on:click={() => (showInfo = !showInfo)}>
         <Icon src={InformationCircle} size="16" mini />
@@ -83,21 +85,24 @@
       </Subscribe>
     </div>
   </div>
-  <span class="text-slate-600 dark:text-zinc-400 mb-2">
-    !{community.community.name}@{new URL(community.community.actor_id).hostname}
-  </span>
+  {#if community.community.description}
+    <PostBody body={community.community.description} view="list"></PostBody>
+  {/if}
   <div class="flex flex-row gap-3 items-center">
-    <div class="flex flex-row gap-1 items-center">
-      <Icon src={UserGroup} width={16} mini />
-      <FormattedNumber number={community.counts.subscribers} />
-    </div>
-    <div class="flex flex-row gap-1 items-center">
-      <Icon src={PencilSquare} mini width={16} />
-      <FormattedNumber number={community.counts.posts} />
-    </div>
-    <div class="flex flex-row gap-1 items-center">
-      <Icon src={ChatBubbleOvalLeftEllipsis} mini width={16} />
-      <FormattedNumber number={community.counts.comments} />
-    </div>
+    <LabelStat
+      content={community.counts.posts.toString()}
+      formatted
+      label="Posts"
+    />
+    <LabelStat
+      content={community.counts.subscribers.toString()}
+      formatted
+      label="Members"
+    />
+    <LabelStat
+      content={community.counts.comments.toString()}
+      formatted
+      label="Comments"
+    />
   </div>
 </div>
