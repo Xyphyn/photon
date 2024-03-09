@@ -155,7 +155,7 @@
     alt="User banner"
   />
 {/if}
-<div class="flex flex-col-reverse gap-4 max-w-full w-full z-0">
+<div class="flex flex-col-reverse gap-4 max-w-full w-full">
   <div class="flex flex-col gap-4 max-w-full w-full min-w-0">
     <div class="flex flex-row gap-4 flex-wrap justify-between">
       <Select
