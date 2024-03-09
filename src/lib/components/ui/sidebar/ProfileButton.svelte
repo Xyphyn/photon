@@ -18,6 +18,7 @@
   alignment="left"
   loading={switching}
   loaderWidth={20}
+  selected={$profile?.id == prof.id}
   on:click={async () => {
     switching = true
 

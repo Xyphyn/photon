@@ -93,7 +93,7 @@
     Accounts
   </MenuButton>
   <hr class="dark:opacity-10 w-[90%] my-2 mx-auto" />
-  <MenuDivider>Photon</MenuDivider>
+  <MenuDivider>App</MenuDivider>
   <MenuButton link href="/settings">
     <Icon src={Cog6Tooth} mini width={16} />
     Settings

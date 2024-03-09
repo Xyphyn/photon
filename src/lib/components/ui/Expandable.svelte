@@ -6,7 +6,8 @@
 
 <Disclosure
   bind:open
-  class="items-start justify-items-start gap-2 {$$props.class}"
+  class="items-start justify-items-start gap-2 hover:text-primary-900
+   hover:dark:text-primary-100 transition-colors {$$props.class}"
 >
   <div
     slot="summary"

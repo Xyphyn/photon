@@ -7,6 +7,7 @@
     Home,
     Icon,
     Identification,
+    MagnifyingGlass,
     ServerStack,
     UserGroup,
   } from 'svelte-hero-icons'
@@ -38,11 +39,11 @@
   >
     <Icon src={ChevronDoubleRight} size="16" mini />
   </Button>
-  <SidebarButton href="/">
+  <SidebarButton href="/" selected={route == '/'}>
     <Icon src={Home} mini={route == '/'} size="20" title="Frontpage" />
     <span slot="label">Frontpage</span>
   </SidebarButton>
-  <SidebarButton href="/settings">
+  <SidebarButton href="/settings" selected={route == '/settings'}>
     <Icon
       src={Cog6Tooth}
       mini={route == '/settings'}
@@ -51,7 +52,11 @@
     />
     <span slot="label">Settings</span>
   </SidebarButton>
-  <SidebarButton href="/communities">
+  <SidebarButton href="/search" selected={route == '/search'}>
+    <Icon mini={route == '/search'} src={MagnifyingGlass} size="20" />
+    <span slot="label">Search</span>
+  </SidebarButton>
+  <SidebarButton href="/communities" selected={route == '/communities'}>
     <Icon mini={route == '/communities'} src={GlobeAlt} size="20" />
     <span slot="label">Communities</span>
   </SidebarButton>
@@ -71,8 +76,8 @@
       }}
       guest
     />
-    <SidebarButton href="/accounts">
-      <Icon src={UserGroup} mini size="20" />
+    <SidebarButton href="/accounts" selected={route == '/accounts'}>
+      <Icon src={UserGroup} mini={route == '/accounts'} size="20" />
       <span slot="label">Accounts</span>
     </SidebarButton>
   {/if}

@@ -29,7 +29,7 @@
   export let version: string | undefined = undefined
 </script>
 
-<StickyCard class="w-full {$$props.class}">
+<StickyCard class="w-full {$$props.class} text-slate-600 dark:text-zinc-400">
   <div class="flex flex-row gap-3 items-center">
     {#if site.site.icon}
       <Avatar width={32} url={site.site.icon} alt={site.site.name} />
@@ -48,21 +48,31 @@
     <Button href="/legal" title="Legal" color="ghost" size="square-md">
       <Icon src={BuildingOffice} size="16" mini />
     </Button>
-    <Button href="/instances" title="Instances" class="3xl:rounded-l-none" color="ghost" size="square-md">
+    <Button
+      href="/instances"
+      title="Instances"
+      class="3xl:rounded-l-none"
+      color="ghost"
+      size="square-md"
+    >
       <Icon src={ServerStack} size="16" mini />
     </Button>
   </div>
 
-  
-  <div class="flex flex-col [&>*]:py-3 divide-y divide-slate-200 dark:divide-zinc-800">
-  {#if taglines && taglines.length > 0}
-    <Markdown class="!pt-0"
-      source={taglines[Math.floor(Math.random() * taglines.length)].content}
-    />
-  {/if}
+  <div
+    class="flex flex-col [&>*]:py-3 divide-y divide-slate-200 dark:divide-zinc-800"
+  >
+    {#if taglines && taglines.length > 0}
+      <Markdown
+        class="!pt-0"
+        source={taglines[Math.floor(Math.random() * taglines.length)].content}
+      />
+    {/if}
 
     <Expandable>
-      <svelte:fragment slot="title"><Icon src={InformationCircle} size="15" mini /> About</svelte:fragment>
+      <svelte:fragment slot="title">
+        <Icon src={InformationCircle} size="15" mini /> About
+      </svelte:fragment>
       <Markdown source={site.site.description} />
       <div class="my-4" />
       <Markdown source={site.site.sidebar} />
@@ -72,49 +82,63 @@
       <svelte:fragment slot="title">
         <Icon src={ChartBar} size="15" mini /> Stats
       </svelte:fragment>
-        <div class="flex flex-row gap-4 flex-wrap">
-        <LabelStat label="Users" content="{site.counts.users.toString()}" formatted />
-        <LabelStat label="Posts" content="{site.counts.posts.toString()}" formatted />
-        <LabelStat label="Communities" content="{site.counts.communities.toString()}" formatted />
+      <div class="flex flex-row gap-4 flex-wrap">
+        <LabelStat
+          label="Users"
+          content={site.counts.users.toString()}
+          formatted
+        />
+        <LabelStat
+          label="Posts"
+          content={site.counts.posts.toString()}
+          formatted
+        />
+        <LabelStat
+          label="Communities"
+          content={site.counts.communities.toString()}
+          formatted
+        />
       </div>
     </Expandable>
 
     {#if admins}
-    <Expandable>
-      <svelte:fragment slot="title"><Icon src={UserGroup} size="15" mini /> Admins</svelte:fragment>
-      <div
-        class="flex items-center flex-wrap group transition-all
+      <Expandable>
+        <svelte:fragment slot="title">
+          <Icon src={UserGroup} size="15" mini /> Admins
+        </svelte:fragment>
+        <div
+          class="flex items-center flex-wrap group transition-all
         cursor-pointer"
-      >
-        {#each admins as admin}
-          <Popover openOnHover placement="top">
-            <a
-              class="block ring rounded-full ring-slate-50 dark:ring-zinc-950 transition-all -mx-0.5 group-hover:mx-0.5"
-              href="/u/{admin.person.name}@{new URL(admin.person.actor_id)
-                .hostname}"
-              slot="target"
-            >
-              <Avatar
-                width={28}
-                url={admin.person.avatar}
-                alt={admin.person.name}
-              />
-            </a>
-            <span class="font-bold">{admin.person.name}</span>
-          </Popover>
-        {/each}
-      </div>
-    </Expandable>
-  {/if}
+        >
+          {#each admins as admin}
+            <Popover openOnHover placement="top">
+              <a
+                class="block ring rounded-full ring-slate-50 dark:ring-zinc-950 transition-all -mx-0.5 group-hover:mx-0.5"
+                href="/u/{admin.person.name}@{new URL(admin.person.actor_id)
+                  .hostname}"
+                slot="target"
+              >
+                <Avatar
+                  width={28}
+                  url={admin.person.avatar}
+                  alt={admin.person.name}
+                />
+              </a>
+              <span class="font-bold">{admin.person.name}</span>
+            </Popover>
+          {/each}
+        </div>
+      </Expandable>
+    {/if}
 
-  {#if version}
-    <span
-      class="text-slate-600 flex flex-row items-center gap-1 dark:text-zinc-400"
-      title="Lemmy version"
-    >
-      <Icon src={ServerStack} mini size="16" />
-      {version}
-    </span>
-  {/if}
+    {#if version}
+      <span
+        class="text-slate-600 flex flex-row items-center gap-1 dark:text-zinc-400"
+        title="Lemmy version"
+      >
+        <Icon src={ServerStack} mini size="16" />
+        {version}
+      </span>
+    {/if}
   </div>
 </StickyCard>
