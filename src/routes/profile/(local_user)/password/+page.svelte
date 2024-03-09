@@ -7,6 +7,7 @@
   import { ClipboardDocument, Icon } from 'svelte-hero-icons'
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
+  import Switch from '$lib/components/input/Switch.svelte'
   import { feature } from '$lib/version.js'
 
   export let data
@@ -58,29 +59,23 @@
     if (!$profile?.jwt) return
 
     try {
-      if (feature('newTotp', $site?.version)) {
-        if (update) {
-          await getClient().updateTotp({
-            enabled: enabled,
-            totp_token: verify_totp,
-          })
-        } else {
-          const res = await getClient().generateTotpSecret()
-          totpLink = res.totp_secret_url
-        }
-      } else {
-        const res = await getClient().saveUserSettings({
-          ...data.my_user?.local_user_view.local_user,
-          ...data.my_user?.local_user_view.person,
-          // @ts-ignore
-          generate_totp_2fa: enabled,
+      if (update) {
+        await getClient().updateTotp({
+          enabled: enabled,
+          totp_token: verify_totp,
         })
+
+        toast({
+          content: `2FA has been ${enabled ? 'enabled' : 'disabled'}`,
+          type: 'success',
+        })
+
+        goto($page.url, { invalidateAll: true })
+      } else {
+        const res = await getClient().generateTotpSecret()
+        totpLink = res.totp_secret_url
+        totpEnabled = true
       }
-      goto($page.url, { invalidateAll: true })
-      toast({
-        content: `Successfully ${enabled ? 'enabled' : 'disabled'} 2FA.`,
-        type: 'success',
-      })
     } catch (e) {
       toast({ content: e as any, type: 'error' })
     }
@@ -118,19 +113,15 @@
       </Button>
     </form>
   </div>
-  <div class="flex flex-col gap-2 max-w-sm w-full">
+  <div class="flex flex-col gap-4 max-w-sm w-full">
     <h1 class="font-bold text-2xl">2FA</h1>
     <p>
-      2FA on Lemmy is unstable and you may lock yourself out of your account.
-      {#if feature('newTotp', $site?.version)}
-        <strong>
-          You cannot disable 2FA if you lose access to your authenticator.
-        </strong>
-      {/if}
+      2FA is <span class="font-bold">
+        {totpEnabled ? 'enabled' : 'disabled'}
+      </span>
     </p>
-    {#if totpEnabled}
-      <!--v0.18.0 2FA: Shows a TOTP code which you copy-->
-      {#if totpLink}
+    {#if totpEnabled || totpLink}
+      {#if totpLink && !totpEnabled}
         <TextInput disabled type="password" value={totpLink} label="TOTP Link">
           <button
             slot="suffix"
@@ -148,7 +139,6 @@
           </span>
         </TextInput>
       {/if}
-      <p>To change your 2FA state, enter your code here.</p>
       <form class="flex flex-col gap-2" on:submit|preventDefault={() => {}}>
         <TextInput
           bind:value={verify_totp}

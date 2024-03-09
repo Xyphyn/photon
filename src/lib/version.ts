@@ -16,7 +16,7 @@ type Feature = keyof typeof FEATURES
 export const feature = (feature: Feature, version: string = '0.0.0'): boolean =>
   versionIsSupported(version, FEATURES[feature])
 
-export const MINIMUM_VERSION = '0.18.1'
+export const MINIMUM_VERSION = '0.19.0'
 export const MAXIMUM_VERSION = '0.999'
 
 export const versionIsSupported = (v: string, minimum: string) => {
