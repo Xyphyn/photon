@@ -46,6 +46,7 @@
   import { publishedToDate } from '$lib/components/util/date.js'
   import PostMedia from '$lib/components/lemmy/post/media/PostMedia.svelte'
   import { mediaType } from '$lib/components/lemmy/post/helpers.js'
+  import Post from '$lib/components/lemmy/post/Post.svelte'
 
   export let data
 
@@ -208,7 +209,7 @@
   </div>
   {#if post.cross_posts?.length > 0}
     <Disclosure
-      class="text-base font-bold mt-2 w-full cursor-pointer"
+      class="text-base mt-2 w-full cursor-pointer"
       open={post.cross_posts?.length <= 3}
     >
       <div
@@ -216,25 +217,13 @@
         class="inline-block w-full text-left text-base font-normal"
       >
         <span class="font-bold">{post.cross_posts.length}</span>
-        crosspost
+        crossposts
       </div>
-      <div class="divide-y divide-slate-200 dark:divide-zinc-800 flex flex-col">
+      <div
+        class="!divide-y divide-slate-200 dark:divide-zinc-800 flex flex-col"
+      >
         {#each post.cross_posts as crosspost}
-          <div class="py-2.5 flex flex-col gap-1">
-            <span class="text-xs flex flex-col pointer-events-none">
-              <CommunityLink
-                community={crosspost.community}
-                avatarSize={22}
-                avatar={true}
-              />
-            </span>
-            <Link
-              class="text-sm"
-              href="/post/{$page.params.instance}/{crosspost.post.id}"
-            >
-              {crosspost.post.name}
-            </Link>
-          </div>
+          <Post view="compact" actions={false} post={crosspost} />
         {/each}
       </div>
     </Disclosure>
