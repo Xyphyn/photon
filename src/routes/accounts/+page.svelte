@@ -289,12 +289,16 @@
         <div class="ml-auto" />
 
         <Button
-          on:click={() => {
-            setUserID(-1)
+          aria-label={$currentProfile?.id != -1 ? 'Switch' : 'Current'}
+          on:click={async () => {
+            if ($currentProfile?.id != -1) setUserID(-1)
           }}
+          size="square-md"
           color={$currentProfile?.id == -1 ? 'primary' : 'secondary'}
         >
-          {$currentProfile?.id == -1 ? 'Current' : 'Switch to'}
+          {#if $currentProfile?.id == -1}
+            <Icon src={Check} mini size="16" />
+          {/if}
         </Button>
       </div>
     </EditableList>
