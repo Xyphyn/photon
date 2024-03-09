@@ -16,6 +16,7 @@
   }
 
   let profileImage: FileList | undefined
+  let bannerImage: FileList | undefined
 
   async function save() {
     if (!formData || !$profile?.jwt) return
@@ -27,22 +28,20 @@
         ? await uploadImage(profileImage[0], $profile.instance, $profile.jwt)
         : undefined
 
+      let banner = bannerImage
+        ? await uploadImage(bannerImage[0], $profile.instance, $profile.jwt)
+        : undefined
+
       const res = await getClient().saveUserSettings({
         ...formData,
         avatar: pfp,
       })
 
       toast({
-        content: 'Saved your user settings.',
+        content:
+          'Saved your user settings. If you changed your email, a verification email will have been sent.',
         type: 'success',
       })
-
-      if (res.verify_email_sent) {
-        toast({
-          content: 'A verification email was sent.',
-          type: 'info',
-        })
-      }
     } catch (err) {
       toast({
         content: err as any,
@@ -170,7 +169,8 @@
       label="Bio"
       previewButton
     />
-    <ImageInput label="Profile image" bind:files={profileImage} />
+    <ImageInput label="Profile Image" bind:files={profileImage} />
+    <ImageInput label="Banner Image" bind:files={bannerImage} />
     <TextInput label="Email" bind:value={formData.email} />
     <TextInput
       label="Matrix User"
