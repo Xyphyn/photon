@@ -400,10 +400,5 @@ async function checkInbox() {
 }
 
 setInterval(checkInbox, 4 * 60 * 1000)
-
-profile.subscribe((p) => {
-  if (!p) return
-
-  checkInbox()
-})
+checkInbox()
 
