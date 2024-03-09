@@ -16,18 +16,22 @@
 </script>
 
 <a
-  class="items-center inline-flex flex-row gap-1 hover:underline"
+  class="items-center inline-flex flex-row gap-1 hover:underline {$$props.class ??
+    ''}"
   href="/u/{user.name}@{new URL(user.actor_id).hostname}"
 >
   {#if avatar}
     <Avatar url={user.avatar} alt={user.name} width={avatarSize} />
   {/if}
-  <span class="flex flex-wrap gap-0" class:ml-0.5={avatar}>
+  <span class="flex flex-wrap gap-0 items-center" class:ml-0.5={avatar}>
     <span class:font-medium={showInstance}>
-      {$userSettings.displayNames ? (user.display_name || user.name) : user.name}
+      {$userSettings.displayNames ? user.display_name || user.name : user.name}
     </span>
     {#if showInstance}
-      <span class="text-slate-500 dark:text-zinc-500 font-normal">
+      <span
+        class="text-slate-500 dark:text-zinc-500 font-normal {$$props.instanceClass ??
+          ''}"
+      >
         @{new URL(user.actor_id).hostname}
       </span>
     {/if}

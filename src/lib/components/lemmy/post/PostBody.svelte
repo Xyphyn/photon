@@ -20,12 +20,12 @@
 
 <div
   style={$$props.style ?? ''}
-  class={!expanded
+  class="{!expanded
     ? `text-sm overflow-hidden
 bg-gradient-to-b text-transparent from-slate-600 via-slate-600
 dark:from-zinc-400 dark:via-zinc-400 bg-clip-text z-0
 ${view == 'list' ? `max-h-24` : 'max-h-48'}`
-    : 'text-slate-600 dark:text-zinc-400 max-h-full'}
+    : 'text-slate-600 dark:text-zinc-400 max-h-full'} {$$props.class ?? ''}"
   use:isOverflown
 >
   <Markdown inline={!expanded} source={body} />
