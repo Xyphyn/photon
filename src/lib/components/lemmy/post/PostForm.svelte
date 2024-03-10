@@ -42,7 +42,8 @@
 
   let saveDraft = edit ? false : true
   let communitySearch = passedCommunity?.name ?? ''
-
+  let isUploadingImageViaUrlInput = false
+  
   let communities: Community[] = []
 
   const dispatcher = createEventDispatcher<{ submit: PostView }>()
@@ -143,6 +144,22 @@
 
   let uploadingImage = false
 
+  const handlePaste = async (event: ClipboardEvent) => {
+    if (!$profile?.jwt) return
+    const file = event.clipboardData?.files[0]
+    if (!file) return
+    if (!file.type.startsWith('image/')) return
+    const image = file
+    isUploadingImageViaUrlInput = true
+    const uploaded = await uploadImage(
+        image,
+        $profile.instance,
+        $profile.jwt
+      )
+    data.url = uploaded
+    isUploadingImageViaUrlInput = false
+  }
+
   const generateTitle = async (url: string | undefined) => {
     if (!url) return
     generation.loading = true
@@ -202,7 +219,7 @@
   {/await}
 {/if}
 
-<form on:submit|preventDefault={submit} class="flex flex-col gap-4 h-full">
+<form on:paste={event => handlePaste(event)} on:submit|preventDefault={submit} class="flex flex-col gap-4 h-full">
   <slot name="formtitle">
     <h1 class="font-bold text-xl">
       {edit ? 'Edit' : 'Create'} Post
@@ -266,6 +283,7 @@
       bind:value={data.url}
       placeholder={placeholders.get('url')}
       class="w-full"
+      disabled={isUploadingImageViaUrlInput}
     />
     <Button
       on:click={() => generateTitle(data.url)}
@@ -282,6 +300,7 @@
       style="width: 38px; height: 38px; padding: 0;"
       class="flex-shrink-0"
       title="Upload image"
+      loading={isUploadingImageViaUrlInput}
     >
       <Icon src={Photo} size="18" mini slot="prefix" />
     </Button>
