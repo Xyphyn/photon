@@ -89,7 +89,7 @@ https://github.com/LemmyNet/lemmy-js-client/blob/main/src/types/ListingType.ts
 - All
 - Local
 - Subscribed
-- Moderator View (not implemented in Photon)
+- Moderator
 
 #### Sort Type
 
@@ -109,11 +109,11 @@ https://github.com/LemmyNet/lemmy-js-client/blob/main/src/types/SortType.ts
 - NewComments
 - TopHour
 - TopSixHour
-- TopTwelveHour (Not implemented in Photon)
-- TopThreeMonths (Not implemented in Photon)
-- TopSixMonths (Not implemented in Photon)
-- TopNineMonths (Not implemented in Photon)
-- TopYear (Not implemented in Photon)
+- TopTwelveHour
+- TopThreeMonths
+- TopSixMonths
+- TopNineMonths
+- TopYear
 
 #### Comment Sort Type
 
@@ -123,8 +123,8 @@ values:
 - Hot
 - Top
 - New
-- Old (not implemented in Photon)
-- Controversial (not implemented in Photon)
+- Old
+- Controversial
 
 ## Public Instances
 
