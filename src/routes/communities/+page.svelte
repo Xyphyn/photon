@@ -10,7 +10,7 @@
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import { searchParam } from '$lib/util.js'
   import { Button, Material, Popover, Select, TextInput } from 'mono-svelte'
-  import Sort from '$lib/components/lemmy/Sort.svelte'
+  import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import CommunityItem from '$lib/components/lemmy/community/CommunityItem.svelte'
 

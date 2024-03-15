@@ -3,13 +3,13 @@
   import StickyCard from '$lib/components/ui/StickyCard.svelte'
   import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
-  import Sort from '$lib/components/lemmy/Sort.svelte'
+  import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
+  import ViewSelect from '$lib/components/lemmy/dropdowns/ViewSelect.svelte'
   import { searchParam } from '$lib/util.js'
   import PostFeed from '$lib/components/lemmy/post/PostFeed.svelte'
   import { Button, Modal, Select, Spinner } from 'mono-svelte'
   import { ChartBar, GlobeAmericas, Icon, ServerStack } from 'svelte-hero-icons'
   import { profile } from '$lib/auth.js'
-  import ViewSelect from '$lib/components/lemmy/ViewSelect.svelte'
   import { site } from '$lib/lemmy.js'
   import { amModOfAny } from '$lib/components/lemmy/moderation/moderation.js'
   import { feature } from '$lib/version.js'
@@ -46,7 +46,7 @@
       </span>
     </h1>
   </header>
-  <div class="flex flex-row gap-4 max-w-full justify-between w-full flex-wrap">
+  <div class="flex flex-row gap-2 max-w-full justify-between w-full flex-wrap">
     <Select
       bind:value={data.listingType}
       on:change={() =>
@@ -68,7 +68,7 @@
         </option>
       {/if}
     </Select>
-    <div class="flex gap-4 flex-wrap">
+    <div class="flex gap-2 flex-wrap">
       <Sort selected={data.sort} />
       <div class="max-[420px]:hidden">
         <ViewSelect />

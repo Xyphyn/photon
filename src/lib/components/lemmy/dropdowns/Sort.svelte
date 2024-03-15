@@ -14,7 +14,7 @@
   const setSelected = () => (selected = sort)
 </script>
 
-<div class="flex flex-row gap-4 {$$props.class}">
+<div class="flex flex-row gap-2 {$$props.class}">
   {#if selected?.startsWith('Top')}
     <div transition:fly={{ x: 4 }}>
       <Select

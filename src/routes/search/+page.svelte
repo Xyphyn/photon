@@ -2,7 +2,7 @@
   import { page } from '$app/stores'
   import { profile } from '$lib/auth.js'
   import ObjectAutocomplete from '$lib/components/lemmy/ObjectAutocomplete.svelte'
-  import Sort from '$lib/components/lemmy/Sort.svelte'
+  import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
   import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
   import CommunityItem from '$lib/components/lemmy/community/CommunityItem.svelte'
   import Post from '$lib/components/lemmy/post/Post.svelte'

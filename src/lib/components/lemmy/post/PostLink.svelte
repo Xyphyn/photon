@@ -65,14 +65,14 @@
     target="_blank"
     class="text-slate-700 dark:text-zinc-300 inline-flex items-center gap-1 text-sm"
   >
-    <Icon src={LinkIcon} size="14" mini slot="icon" />
+    <Icon src={LinkIcon} size="14" mini slot="icon" class="flex-shrink-0" />
     {#if richURL}
-      <span>
+      <div class="flex max-w-full overflow-hidden">
         {richURL.hostname}
-      </span>
-      <span class="text-slate-500 dark:text-zinc-500">
-        {richURL.pathname}
-      </span>
+        <span class="text-slate-500 dark:text-zinc-500 whitespace-nowrap">
+          {richURL.pathname}
+        </span>
+      </div>
     {:else}
       {url}
     {/if}

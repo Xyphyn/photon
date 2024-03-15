@@ -3,7 +3,7 @@
   import CommunityCard from '$lib/components/lemmy/community/CommunityCard.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
-  import Sort from '$lib/components/lemmy/Sort.svelte'
+  import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
   import { fullCommunityName, searchParam } from '$lib/util.js'
   import { onDestroy, onMount } from 'svelte'
   import { setSessionStorage } from '$lib/session.js'

@@ -2,7 +2,7 @@
   import { defaultSettings, userSettings } from '$lib/settings'
   import Setting from './Setting.svelte'
   import MultiSelect from '$lib/components/input/Switch.svelte'
-  import Sort from '$lib/components/lemmy/Sort.svelte'
+  import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
   import { Disclosure, Material, Switch, TextInput, toast } from 'mono-svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import Link from '$lib/components/input/Link.svelte'
@@ -20,7 +20,7 @@
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { removalTemplate } from '$lib/components/lemmy/moderation/moderation.js'
   import { Button, Checkbox, Select } from 'mono-svelte'
-  import ViewSelect from '$lib/components/lemmy/ViewSelect.svelte'
+  import ViewSelect from '$lib/components/lemmy/dropdowns/ViewSelect.svelte'
   import { LINKED_INSTANCE_URL } from '$lib/instance.js'
   import { removeItem } from '$lib/util.js'
   import Section from './Section.svelte'
@@ -72,7 +72,7 @@
     <Setting optionClass="flex-[2] max-w-full flex-wrap min-w-0">
       <span slot="title">Default sort</span>
       <span slot="description">The default sort to use for feeds.</span>
-      <div class="flex max-[500px]:flex-col flex-wrap gap-4 w-max max-w-full">
+      <div class="flex max-[500px]:flex-col flex-wrap gap-2 w-max max-w-full">
         <div class="max-w-full">
           <Select bind:value={$userSettings.defaultSort.feed}>
             <span slot="label" class="flex items-center gap-1">
