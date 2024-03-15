@@ -37,7 +37,12 @@
     const seenUrls = new Set<string>()
 
     posts?.forEach((post) => {
-      if (!post) return
+      if (
+        !post ||
+        ($userSettings.hidePosts.deleted && post.post.deleted) ||
+        ($userSettings.hidePosts.removed && post.post.removed)
+      )
+        return
       if (!post?.post?.url) {
         results.push(post)
         return

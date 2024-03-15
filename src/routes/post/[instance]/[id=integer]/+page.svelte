@@ -302,7 +302,15 @@
   {/if}
   <Comments
     post={post.post_view.post}
-    nodes={buildCommentsTree(data.comments.comments)}
+    nodes={buildCommentsTree(
+      data.comments.comments,
+      undefined,
+      (c) =>
+        !(
+          ($userSettings.hidePosts.deleted && c.comment.deleted) ||
+          ($userSettings.hidePosts.removed && c.comment.removed)
+        )
+    )}
     isParent={true}
   />
   {#if post.post_view.counts.comments > 5}

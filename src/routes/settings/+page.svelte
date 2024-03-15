@@ -191,9 +191,9 @@
       description="Blur images and remove post bodies of NSFW content."
     />
     <Setting>
-      <span slot="title">Hide Posts</span>
+      <span slot="title">Hide Submissions</span>
       <span slot="description">
-        <p>Hide certain types of posts.</p>
+        <p>Hide certain types of submissions.</p>
         <p>
           Looking to hide read posts? That was moved to your <Link
             href="/profile/settings"
