@@ -84,7 +84,7 @@
 
 <Menu placement="bottom-end">
   <Button
-    class="hover:!text-green-500 dark:text-zinc-400 text-slate-500"
+    class="hover:!text-green-500"
     slot="target"
     size="square-md"
     color="ghost"

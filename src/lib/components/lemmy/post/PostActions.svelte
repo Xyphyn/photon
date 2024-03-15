@@ -93,7 +93,7 @@
   </Modal>
 {/if}
 
-<div class="flex flex-row gap-2 items-center h-8" style={$$props.style ?? ""}>
+<div class="flex flex-row gap-2 items-center h-8" style={$$props.style ?? ''}>
   <PostVote
     post={post.post}
     bind:vote={post.my_vote}
@@ -120,12 +120,7 @@
         <DebugObject object={post} bind:open={debug} />
       {/await}
     {/if}
-    <Button
-      on:click={() => (debug = true)}
-      size="square-md"
-      color="ghost"
-      class="text-slate-600 dark:text-zinc-400"
-    >
+    <Button on:click={() => (debug = true)} size="square-md" color="ghost">
       <Icon src={BugAnt} mini size="16" slot="prefix" />
     </Button>
   {/if}
