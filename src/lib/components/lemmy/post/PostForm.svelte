@@ -74,7 +74,7 @@
   })
 
   async function submit() {
-    if ((!data.community) && !edit) {
+    if (!data.community && !edit) {
       toast({
         type: 'warning',
         content: 'You need to set a community.',
@@ -155,7 +155,11 @@
       const oldData = { ...data }
 
       if (res.metadata.title) data.title = res.metadata.title
-      if (res.metadata.description) data.body = res.metadata.description
+      if (res.metadata.description)
+        data.body = res.metadata.description
+          .split('\n')
+          .map((l) => `> ${l}`)
+          .join('\n')
 
       toast({
         content: `Generated title and body from that website. Would you like to undo this action?`,
