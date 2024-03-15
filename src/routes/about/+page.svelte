@@ -12,13 +12,7 @@
   <h1 class="text-2xl font-bold leading-8">About</h1>
   <p class="my-3">
     <strong>Photon</strong>
-    is a client for
-    <a href="https://join-lemmy.org" class="underline">Lemmy</a>
-    that is meant to replace the default lemmy-ui.
-  </p>
-  <p class="my-3">
-    It's named that because some random person in a Discord server said that
-    would be a good name. Great choice, I know.
+    is a replacement user interface for Lemmy, with more features and modern design.
   </p>
   <h1 class="text-2xl font-bold leading-8">Links</h1>
   <ul class="list-disc pl-4 my-3">
@@ -40,42 +34,96 @@
       <Link href="https://buymeacoffee.com/xylight" highlight>Donate</Link>
     </li>
   </ul>
-  <h1 class="text-2xl font-bold leading-8">Credits</h1>
-  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+  <h1 class="text-2xl font-bold leading-10">Credits</h1>
+  <div class="flex flex-row flex-wrap gap-6 items-center w-full">
+    <Profile name="Xylight" description="Main developer" />
     <Profile
-      avatar="https://lemmy.xylight.dev/pictrs/image/3281f13c-68bb-47c9-8c98-b67f67714d5a.png?format=webp&thumbnail=128"
-      description="Main developer"
-      name="Xylight"
-      class="sm:col-span-3 place-self-center"
-      link="https://xylight.dev"
+      name="Cole"
+      badge="lemdro.id"
+      description="Contributor"
+      link="/u/cole@lemdro.id"
     />
-    <hr class="border-slate-200 dark:border-zinc-800 w-full sm:col-span-3" />
     <Profile
-      description="Early contributor"
+      name="iJeff"
+      badge="lemdro.id"
+      description="Contributor"
+      link="/u/ijeff@lemdro.id"
+    />
+    <Profile
       name="pbui"
+      description="Contributor"
       link="https://github.com/pbui"
     />
     <Profile
-      description="Early supporter"
-      name="iJeff of lemdro.id"
-      link="https://lemdro.id/u/ijeff"
+      name="Neshura87"
+      description="Contributor"
+      link="https://github.com/neshura87"
     />
     <Profile
-      description="Early contributor"
-      name="Cole of lemdro.id"
-      link="https://lemdro.id/u/cole"
+      name="Pieterdd"
+      description="Contributor"
+      link="https://github.com/pieterdd"
     />
     <Profile
-      description="Big supporter"
-      name="lemmy.world team"
-      link="https://lemmy.world"
+      name="0xCmdrKeen"
+      description="Contributor"
+      link="https://github.com/0xCmdrKeen"
     />
-    <Profile description="Massive donator" name="rooki" />
-    <Profile description="Programming help" name="Sheodox" />
-    <Profile description="Design inspiration" name="ljdawson" />
-  </div>
-  <div class="mt-4">
-    If you've contributed in any way and aren't mentioned here, please let me
-    know and I'll add you here ASAP.
+    <Profile
+      name="sant0s12"
+      description="Contributor"
+      link="https://github.com/sant0s12"
+    />
+    <Profile
+      name="tfaughnan"
+      description="Contributor"
+      link="https://github.com/tfaughnan"
+    />
+    <Profile
+      name="paradox460"
+      description="Contributor"
+      link="https://github.com/paradox460"
+    />
+    <Profile
+      name="ngn13"
+      description="Contributor"
+      link="https://github.com/ngn13"
+    />
+    <Profile
+      name="Tmpod"
+      description="Contributor"
+      link="https://github.com/Tmpod"
+    />
+    <Profile
+      name="Xusontha"
+      description="Contributor"
+      link="https://github.com/Xusontha"
+    />
+    <Profile
+      name="TheSaneWriter"
+      description="Contributor"
+      link="https://github.com/TheSaneWriter"
+    />
+    <Profile
+      name="ZhenyaPav"
+      description="Contributor"
+      link="https://github.com/ZhenyaPav"
+    />
+    <Profile
+      name="zamuz"
+      description="Contributor"
+      link="https://github.com/zamuz"
+    />
+    <Profile
+      name="danielwolbach"
+      description="Contributor"
+      link="https://github.com/danielwolbach"
+    />
+    <Profile
+      name="danielwolbach"
+      description="Contributor"
+      link="https://github.com/danielwolbach"
+    />
+    <span>...and you, for using this app!</span>
   </div>
 </div>

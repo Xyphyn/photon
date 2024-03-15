@@ -9,7 +9,7 @@ export async function load({ params, fetch }) {
   })
 
   redirect(
-        300,
+    302,
         `/post/${params.instance}/${comment.comment_view.post.id}?thread=${comment.comment_view.comment.path}#${comment.comment_view.comment.id}`
       );
 }

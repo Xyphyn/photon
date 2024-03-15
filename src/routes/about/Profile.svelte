@@ -1,34 +1,24 @@
 <script lang="ts">
-  export let avatar: string | undefined = undefined
+  import { Badge } from 'mono-svelte'
 
   export let name: string
   export let description: string
+  export let badge: string | undefined = undefined
 
   export let link: string = '#'
 </script>
 
-<div class="flex flex-row items-center gap-2 {$$props.class}">
-  {#if $$slots.avatar || avatar}
-    {#if $$slots.avatar}
-      <slot name="avatar" />
-    {:else}
-      <img
-        src={avatar}
-        alt="{name}'s profile"
-        width={40}
-        height={40}
-        class="w-10 h-10 rounded-full"
-      />
+<div class="flex flex-col w-max {$$props.class}">
+  <a
+    href={link}
+    class="text-base font-medium inline-flex items-center gap-2 {link != '#'
+      ? 'hover:underline'
+      : ''}"
+  >
+    {name}
+    {#if badge}
+      <Badge color="gray-subtle" class="!p-0.5 !px-2">{badge}</Badge>
     {/if}
-  {/if}
-  <div class="flex flex-col">
-    <a
-      href={link}
-      class="font-semibold text-lg"
-      class:hover:underline={link != '#'}
-    >
-      {name}
-    </a>
-    <span class="text-slate-700 dark:text-zinc-300">{description}</span>
-  </div>
+  </a>
+  <span class="text-sm">{description}</span>
 </div>
