@@ -3,7 +3,14 @@
   import { client } from '$lib/lemmy.js'
   import type { Community, Post, PostView } from 'lemmy-js-client'
   import { Switch, toast } from 'mono-svelte'
-  import { Check, Icon, Photo, BookOpen, ArrowPath } from 'svelte-hero-icons'
+  import {
+    Check,
+    Icon,
+    Photo,
+    BookOpen,
+    ArrowPath,
+    Sparkles,
+  } from 'svelte-hero-icons'
   import { profile } from '$lib/auth.js'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { placeholders, uploadImage } from '$lib/util.js'
@@ -273,13 +280,18 @@
     />
     <Button
       on:click={() => generateTitle(data.url)}
-      style="width: 38px; height: 38px; padding: 0;"
+      style="height: 38px; {!generation.generatable
+        ? 'width: 38px; padding: 0;'
+        : ''}"
       class="flex-shrink-0"
       title="Generate title/body"
       loading={generation.loading}
       disabled={!generation.generatable || generation.loading}
     >
-      <Icon src={BookOpen} size="18" mini slot="prefix" />
+      <Icon src={Sparkles} size="18" mini slot="prefix" />
+      {#if generation.generatable}
+        Generate Title
+      {/if}
     </Button>
     <Button
       on:click={() => (uploadingImage = !uploadingImage)}
