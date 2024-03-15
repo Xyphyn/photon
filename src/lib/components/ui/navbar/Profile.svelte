@@ -73,10 +73,10 @@
   {/if}
   {#if $profile?.user}
     <MenuButton link href="/profile">
-      <Icon src={UserCircle} mini width={16} /> Profile
+      <Icon src={UserCircle} mini width={16} slot="prefix" /> Profile
     </MenuButton>
     <MenuButton link href="/inbox">
-      <Icon src={Inbox} mini width={16} />
+      <Icon src={Inbox} mini width={16} slot="prefix" />
       Inbox
       {#if $profile.user.notifications.inbox > 0}
         <Badge color="red-subtle" class="text-xs ml-auto font-bold !py-0.5">
@@ -85,17 +85,17 @@
       {/if}
     </MenuButton>
     <MenuButton link href="/saved">
-      <Icon src={Bookmark} mini width={16} /> Saved
+      <Icon src={Bookmark} mini width={16} slot="prefix" /> Saved
     </MenuButton>
   {/if}
   <MenuButton link href="/accounts">
-    <Icon src={UserGroup} mini width={16} />
+    <Icon src={UserGroup} mini width={16} slot="prefix" />
     Accounts
   </MenuButton>
   <hr class="dark:opacity-10 w-[90%] my-2 mx-auto" />
   <MenuDivider>App</MenuDivider>
   <MenuButton link href="/settings">
-    <Icon src={Cog6Tooth} mini width={16} />
+    <Icon src={Cog6Tooth} mini width={16} slot="prefix" />
     Settings
   </MenuButton>
   <MenuButton
@@ -114,6 +114,7 @@
             : Moon}
       mini
       size="16"
+      slot="prefix"
     />
     <span>Color Scheme</span>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -128,7 +129,7 @@
   </MenuButton>
   {#if $userSettings.debugInfo}
     <MenuButton link href="/util">
-      <Icon src={BugAnt} mini width={16} />
+      <Icon src={BugAnt} mini width={16} slot="prefix" />
       Debug
     </MenuButton>
   {/if}
@@ -144,7 +145,7 @@
             toast({ content: 'Copied version to clipboard.' })
           }}
         >
-          <Badge>{__VERSION__}</Badge>
+          <Badge color="blue-subtle">{__VERSION__}</Badge>
         </button>
       </div>
       <Button

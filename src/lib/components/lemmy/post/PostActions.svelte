@@ -166,7 +166,7 @@
       link
       href="/u/{post.creator.name}@{new URL(post.creator.actor_id).hostname}"
     >
-      <Icon src={UserCircle} width={16} mini />
+      <Icon src={UserCircle} width={16} mini slot="prefix" />
       <span>{post.creator.name}</span>
     </MenuButton>
     <MenuButton
@@ -174,7 +174,7 @@
       href="/c/{post.community.name}@{new URL(post.community.actor_id)
         .hostname}"
     >
-      <Icon src={Newspaper} width={16} mini />
+      <Icon src={Newspaper} width={16} mini slot="prefix" />
       <span>{post.community.title}</span>
     </MenuButton>
     <MenuButton
@@ -194,18 +194,20 @@
         return
       }}
     >
-      {#if fediseerLoading}
-        <Spinner width={14} />
-      {:else}
-        <Icon src={ServerStack} width={16} mini />
-      {/if}
+      <svelte:fragment slot="prefix">
+        {#if fediseerLoading}
+          <Spinner width={14} />
+        {:else}
+          <Icon src={ServerStack} width={16} mini />
+        {/if}
+      </svelte:fragment>
       <span>{new URL(post.community.actor_id).hostname}</span>
     </MenuButton>
     <hr class="w-[90%] mx-auto opacity-100 dark:opacity-10 my-2" />
     <MenuDivider>Actions</MenuDivider>
     {#if $profile?.user && $profile?.jwt && $profile.user.local_user_view.person.id == post.creator.id}
       <MenuButton on:click={() => (editing = true)}>
-        <Icon src={PencilSquare} width={16} mini />
+        <Icon src={PencilSquare} width={16} mini slot="prefix" />
         Edit
       </MenuButton>
     {/if}
@@ -227,7 +229,7 @@
         }) ?? navigator.clipboard.writeText(post.post.ap_id)
       }}
     >
-      <Icon src={Share} width={16} mini />
+      <Icon src={Share} width={16} mini slot="prefix" />
       Share
     </MenuButton>
     {#if $profile?.jwt}
@@ -254,7 +256,7 @@
           goto('/create/post?crosspost=true')
         }}
       >
-        <Icon src={ArrowTopRightOnSquare} width={16} mini />
+        <Icon src={ArrowTopRightOnSquare} width={16} mini slot="prefix" />
         Crosspost
       </MenuButton>
       {#if $profile.user && post.creator.id == $profile.user.local_user_view.person.id}
@@ -269,13 +271,13 @@
           }}
           color="danger-subtle"
         >
-          <Icon src={Trash} width={16} mini />
+          <Icon src={Trash} width={16} mini slot="prefix" />
           {post.post.deleted ? 'Restore' : 'Delete'}
         </MenuButton>
       {/if}
       {#if $profile.user?.local_user_view.person.id != post.creator.id}
         <MenuButton on:click={() => report(post)} color="danger-subtle">
-          <Icon src={Flag} width={16} mini />
+          <Icon src={Flag} width={16} mini slot="prefix" />
           Report
         </MenuButton>
       {/if}
