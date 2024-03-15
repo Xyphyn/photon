@@ -77,26 +77,28 @@
         {/key}
       </span>
     </button>
-    <div
-      class="border-l h-6 w-0 !p-0 border-slate-200 dark:border-zinc-800"
-    ></div>
-    <button
-      on:click={() => castVote(vote == -1 ? 0 : -1)}
-      class="flex items-center gap-0.5 !pr-2.5 {buttonColor.secondary} transition-colors border-0
+    {#if $site?.site_view.local_site.enable_downvotes ?? true}
+      <div
+        class="border-l h-6 w-0 !p-0 border-slate-200 dark:border-zinc-800"
+      ></div>
+      <button
+        on:click={() => castVote(vote == -1 ? 0 : -1)}
+        class="flex items-center gap-0.5 !pr-2.5 {buttonColor.secondary} transition-colors border-0
       {vote == -1 ? shouldShowVoteColor(vote, 'downvotes') : ''}"
-    >
-      <Icon src={ChevronDown} size="18" mini />
-      <span class="grid text-sm">
-        {#key downvotes}
-          <span
-            style="grid-column: 1; grid-row: 1;"
-            in:fly={{ duration: 200, y: -6 }}
-            out:fly={{ duration: 200, y: 6 }}
-          >
-            <FormattedNumber number={downvotes} />
-          </span>
-        {/key}
-      </span>
-    </button>
+      >
+        <Icon src={ChevronDown} size="18" mini />
+        <span class="grid text-sm">
+          {#key downvotes}
+            <span
+              style="grid-column: 1; grid-row: 1;"
+              in:fly={{ duration: 200, y: -6 }}
+              out:fly={{ duration: 200, y: 6 }}
+            >
+              <FormattedNumber number={downvotes} />
+            </span>
+          {/key}
+        </span>
+      </button>
+    {/if}
   </div>
 </slot>

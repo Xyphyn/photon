@@ -6,16 +6,22 @@
 
   export let body: string
   export let view: View = 'cozy'
-  let overflows = false
   let expanded = false
+  let element: Element
 
-  function isOverflown(element: Element) {
-    overflows =
+  function isOverflown(element: Element, body: string = '') {
+    if (!element) return
+    let overflows =
       element.scrollHeight > element.clientHeight ||
       element.scrollWidth > element.clientWidth
 
     if (!overflows) expanded = true
+    else expanded = false
+
+    return overflows
   }
+
+  $: overflows = isOverflown(element, body)
 </script>
 
 <div
@@ -26,7 +32,7 @@ bg-gradient-to-b text-transparent from-slate-600 via-slate-600
 dark:from-zinc-400 dark:via-zinc-400 bg-clip-text z-0
 ${view == 'list' ? `max-h-24` : 'max-h-48'}`
     : 'text-slate-600 dark:text-zinc-400 max-h-full'} {$$props.class ?? ''}"
-  use:isOverflown
+  bind:this={element}
 >
   <Markdown inline={!expanded} source={body} />
   {#if overflows}
