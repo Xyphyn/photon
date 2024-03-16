@@ -75,6 +75,14 @@
   class="flex flex-col list-none {$userSettings.view == 'card'
     ? 'gap-3 md:gap-4'
     : 'divide-y'} divide-slate-200 dark:divide-zinc-800"
+  style={$userSettings.leftAlign
+    ? `--template-areas: 
+'media meta'
+'media title'
+'media body'
+'embed embed'
+'actions actions'; --template-columns: auto 1fr;`
+    : ``}
 >
   {#if posts?.length == 0}
     <div class="h-full grid place-items-center">

@@ -53,7 +53,7 @@
           subscribed =
             subscribed == 'NotSubscribed' ? 'Subscribed' : 'NotSubscribed'
         }}
-        class="relative cursor-pointer row-span-2 pr-2"
+        class="relative cursor-pointer pr-2 row-span-2"
       >
         <Avatar
           url={community.icon}
@@ -83,7 +83,7 @@
     <CommunityLink {community} style="grid-area: community;" />
   {/if}
   <span
-    class="text-slate-600 dark:text-zinc-400 flex flex-row gap-2 flex-wrap items-center row-span-1"
+    class="text-slate-600 dark:text-zinc-400 flex flex-row gap-2 flex-wrap items-center"
     style="grid-area: stats;"
   >
     {#if user}
@@ -146,7 +146,7 @@
 {#if title && id}
   <a
     href="/post/{getInstance()}/{id}"
-    class="font-medium row-span-1 text-base"
+    class="font-medium text-base"
     style="grid-area: title;"
   >
     {title}
@@ -160,6 +160,7 @@
       'avatar community badges'
       'avatar stats badges';
     gap: 0;
-    grid-template-columns: max-content;
+    grid-template-rows: auto auto;
+    grid-template-columns: auto 1fr;
   }
 </style>

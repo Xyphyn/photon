@@ -34,11 +34,11 @@
 <Material
   color={view != 'card' ? 'none' : 'distinct'}
   padding="none"
-  class="relative max-w-full min-w-0 w-full group gap-2  flex flex-col
+  class="relative max-w-full min-w-0 w-full group gap-2 flex flex-col
   {view != 'card' ? 'bg-transparent !border-0' : 'p-5'} {view == 'compact'
-    ? 'py-4'
+    ? 'py-4 list-type'
     : view == 'list'
-      ? 'py-5'
+      ? 'py-5 list-type'
       : 'py-5'} {$$props.class}"
   id={post.post.id}
 >
@@ -63,23 +63,18 @@
       : 'NotSubscribed'}
     id={post.post.id}
     title={post.post.name}
+    style="grid-area: meta;"
   >
     <slot name="badges" slot="badges" />
   </PostMeta>
-  <PostMedia bind:post={post.post} {view} {type} />
+  <div style="grid-area:embed">
+    <PostMedia bind:post={post.post} {view} {type} />
+  </div>
   {#if view == 'list' || view == 'compact'}
-    <PostMediaCompact
-      {view}
-      bind:post={post.post}
-      style="grid-area: media; grid-column: span 2 / span 2;"
-    />
+    <PostMediaCompact {view} bind:post={post.post} style="grid-area: media;" />
   {/if}
   {#if post.post.body && !post.post.nsfw && view != 'compact'}
-    <PostBody
-      body={post.post.body}
-      {view}
-      style="grid-area: body; grid-column: span 1 / span 1;"
-    />
+    <PostBody body={post.post.body} {view} style="grid-area: body" />
   {/if}
   {#if actions}
     <PostActions
@@ -90,7 +85,7 @@
           type: 'success',
         })
       }}
-      style="grid-area: actions; grid-column: span 2 / span 2;"
+      style="grid-area: actions;"
     />
   {/if}
 </Material>
@@ -98,14 +93,14 @@
 <style>
   :global(.list-type) {
     display: grid;
-    gap: 0;
-    grid-template-areas:
-      'meta' 'media'
-      'body' 'media'
-      'actions' 'actions';
+    gap: 0.5rem;
+    grid-template-areas: var(
+      --template-areas,
+      'meta media' 'title media' 'body media' 'embed embed' 'actions actions'
+    );
     width: 100%;
     height: 100%;
-    grid-template-rows: 3;
-    grid-template-columns: 2;
+    grid-template-rows: auto auto auto auto auto;
+    grid-template-columns: var(--template-columns, 1fr auto);
   }
 </style>
