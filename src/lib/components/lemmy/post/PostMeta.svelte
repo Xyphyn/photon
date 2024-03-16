@@ -18,6 +18,7 @@
   import { profile } from '$lib/auth.js'
   import Subscribe from '../../../../routes/communities/Subscribe.svelte'
   import ShieldIcon from '../moderation/ShieldIcon.svelte'
+  import { userSettings } from '$lib/settings'
 
   export let community: Community | undefined = undefined
   export let subscribed: SubscribedType | undefined = undefined
@@ -26,6 +27,7 @@
   export let published: Date | undefined = undefined
   export let title: string | undefined = undefined
   export let id: number | undefined = undefined
+  export let read: boolean = false
 
   // Badges
   export let badges = {
@@ -147,6 +149,8 @@
   <a
     href="/post/{getInstance()}/{id}"
     class="font-medium text-base"
+    class:text-slate-600={$userSettings.markReadPosts && read}
+    class:dark:text-zinc-400={$userSettings.markReadPosts && read}
     style="grid-area: title;"
   >
     {title}

@@ -63,6 +63,7 @@
       : 'NotSubscribed'}
     id={post.post.id}
     title={post.post.name}
+    read={post.read}
     style="grid-area: meta;"
   >
     <slot name="badges" slot="badges" />
