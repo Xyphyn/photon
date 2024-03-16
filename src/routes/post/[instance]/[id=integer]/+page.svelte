@@ -17,6 +17,7 @@
     ChevronDoubleUp,
     ExclamationTriangle,
     Icon,
+    InformationCircle,
     Plus,
   } from 'svelte-hero-icons'
   import PostLink from '$lib/components/lemmy/post/PostLink.svelte'
@@ -240,11 +241,14 @@
     padding="none"
     color="distinct"
     class="py-2 px-4 text-sm flex flex-row justify-between items-center
-    flex-wrap gap-4 sticky top-20 w-full box-border z-[50] mt-4"
+    flex-wrap gap-4 sticky top-20 w-full box-border z-20 mt-4"
   >
-    <p>You're viewing a single thread.</p>
+    <p class="font-medium text-sm flex items-center gap-2">
+      <Icon src={InformationCircle} mini size="20" />
+      You're viewing a single thread.
+    </p>
     <Button {loading} disabled={loading} on:click={reloadComments}>
-      View full thread
+      View all comments
     </Button>
   </Material>
 {/if}
