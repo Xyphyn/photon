@@ -57,7 +57,7 @@
     size="md"
   >
     <Icon src={Check} width={16} mini slot="prefix" />
-    Mark all as read
+    Mark All Read
   </Button>
 </div>
 <div class="mt-4" />

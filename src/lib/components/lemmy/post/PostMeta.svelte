@@ -42,6 +42,7 @@
 
 <div
   class="grid w-full meta {community ? 'grid-rows-2' : 'grid-rows-1'} text-xs"
+  style={$$props.style ?? ''}
 >
   {#if community}
     <Subscribe let:subscribe let:subscribing>

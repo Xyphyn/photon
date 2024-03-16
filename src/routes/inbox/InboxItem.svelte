@@ -3,7 +3,15 @@
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import { getClient } from '$lib/lemmy.js'
   import { profile } from '$lib/auth.js'
-  import { Check, Icon } from 'svelte-hero-icons'
+  import {
+    ArrowUturnLeft,
+    ArrowUturnUp,
+    AtSymbol,
+    ChatBubbleOvalLeft,
+    Check,
+    Envelope,
+    Icon,
+  } from 'svelte-hero-icons'
   import { Material } from 'mono-svelte'
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
@@ -59,25 +67,62 @@
   <PrivateMessageModal bind:open={replying} user={item.item.creator} />
 {/if}
 
-<Material padding="lg" class="flex flex-col max-w-full gap-2">
-  <div class="flex flex-col gap-1">
-    <span class="text-xs text-slate-600 dark:text-zinc-400">
-      <RelativeDate date={publishedToDate(item.published)} />
-    </span>
+<Material class="flex flex-col max-w-full gap-4">
+  <div class="meta w-full">
+    <div
+      class="rounded-full p-1 h-10 w-10 border grid place-items-center"
+      style="grid-area: a;"
+    >
+      <Icon
+        src={item.type == 'private_message'
+          ? Envelope
+          : item.type == 'comment_reply'
+            ? ChatBubbleOvalLeft
+            : AtSymbol}
+        size="24"
+      />
+    </div>
+    <RelativeDate
+      class="text-xs text-slate-600 dark:text-zinc-400"
+      date={publishedToDate(item.published)}
+      style="grid-area: b;"
+    />
     {#if item.type != 'private_message'}
       <PostMeta title={item.item.post.name} id={item.item.post.id} />
+    {:else}
+      <PrivateMessage message={item.item} style="grid-area: title;" />
     {/if}
+    <div class="flex flex-row gap-2 h-8" style="grid-area: actions;">
+      {#if !(item.type == 'private_message' && item.item.creator.id == $profile?.user?.local_user_view.person.id)}
+        <Button
+          class={item.read ? '!text-green-500' : ''}
+          size="square-md"
+          {loading}
+          disabled={loading}
+          on:click={() => markAsRead(!item.read)}
+        >
+          <Icon slot="prefix" src={Check} mini size="16" />
+        </Button>
+      {/if}
+
+      {#if item.type == 'private_message'}
+        {#if item.item.creator.id != $profile?.user?.local_user_view.person.id}
+          <Button size="square-md" on:click={() => (replying = !replying)}>
+            <Icon src={ArrowUturnLeft} size="16" mini />
+          </Button>
+        {/if}
+      {:else}
+        <Button
+          title="Jump"
+          href="/comment/{item.item.comment.id}"
+          size="square-md"
+        >
+          <Icon src={ArrowUturnUp} mini size="16" />
+        </Button>
+      {/if}
+    </div>
   </div>
   <div class="flex flex-col">
-    <SectionTitle class="mb-2 text-xs">
-      {#if item.type == 'private_message'}
-        Message
-      {:else if item.type == 'person_mention'}
-        Mention
-      {:else if item.type == 'comment_reply'}
-        Reply
-      {/if}
-    </SectionTitle>
     {#if item.type != 'private_message' && $profile?.user && item.item.post.creator_id != $profile.user.local_user_view.person.id}
       <div class="flex flex-row text-xs items-center gap-2">
         <div
@@ -92,9 +137,7 @@
         </div>
       </div>
     {/if}
-    {#if item.type == 'private_message'}
-      <PrivateMessage message={item.item} />
-    {:else}
+    {#if item.type != 'private_message'}
       <Comment
         postId={item.item.post.id}
         node={{ children: [], comment_view: item.item, depth: 1 }}
@@ -103,25 +146,16 @@
       />
     {/if}
   </div>
-  <div class="flex flex-row ml-auto gap-2 h-8">
-    <Button
-      class={item.read ? '!text-green-500' : ''}
-      size="square-md"
-      {loading}
-      disabled={loading}
-      on:click={() => markAsRead(!item.read)}
-    >
-      <Icon slot="prefix" src={Check} mini size="16" />
-    </Button>
-
-    {#if item.type == 'private_message'}
-      {#if item.item.creator.id != $profile?.user?.local_user_view.person.id}
-        <Button size="md" on:click={() => (replying = !replying)}>Reply</Button>
-      {/if}
-    {:else}
-      <Button href="/comment/{item.item.comment.id}" size="md" class="h-full">
-        Jump
-      </Button>
-    {/if}
-  </div>
 </Material>
+
+<style>
+  .meta {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: auto 1fr;
+    column-gap: 0.5rem;
+    grid-template-areas:
+      'a b     actions'
+      'a title actions';
+  }
+</style>
