@@ -47,6 +47,7 @@
   import PostMedia from '$lib/components/lemmy/post/media/PostMedia.svelte'
   import { mediaType } from '$lib/components/lemmy/post/helpers.js'
   import Post from '$lib/components/lemmy/post/Post.svelte'
+  import Expandable from '$lib/components/ui/Expandable.svelte'
 
   export let data
 
@@ -145,7 +146,7 @@
 <div class="flex flex-col gap-2">
   {#if $page.params.instance?.toLowerCase() != $instance.toLowerCase()}
     <Material
-      class="p-4 flex flex-col gap-1 border
+      class="p-4 flex flex-row gap-1 border
     border-yellow-300 dark:bg-yellow-950/30 dark:border-yellow-900 bg-yellow-50"
     >
       <Icon
@@ -154,8 +155,7 @@
         solid
         class="text-yellow-500"
       />
-      <h1 class="font-bold">Warning</h1>
-      <p class="text-sm">
+      <p class="text-sm text-yellow-700 dark:text-yellow-300">
         This URL is for a different instance than you're logged into. You
         probably won't be able to vote or comment.
       </p>
@@ -213,12 +213,12 @@
     />
   </div>
   {#if post.cross_posts?.length > 0}
-    <Disclosure
+    <Expandable
       class="text-base mt-2 w-full cursor-pointer"
       open={post.cross_posts?.length <= 3}
     >
       <div
-        slot="summary"
+        slot="title"
         class="inline-block w-full text-left text-base font-normal"
       >
         <span class="font-bold">{post.cross_posts.length}</span>
@@ -231,7 +231,7 @@
           <Post view="compact" actions={false} post={crosspost} />
         {/each}
       </div>
-    </Disclosure>
+    </Expandable>
   {/if}
 </div>
 {#if data.singleThread}
