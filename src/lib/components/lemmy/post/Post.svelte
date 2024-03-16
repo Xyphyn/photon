@@ -34,7 +34,7 @@
 <Material
   color={view != 'card' ? 'none' : 'distinct'}
   padding="none"
-  class="relative max-w-full min-w-0 w-full group gap-2 flex flex-col
+  class="relative max-w-full min-w-0 w-full test group gap-2 flex flex-col
   {view != 'card' ? 'bg-transparent !border-0' : 'p-5'} {view == 'compact'
     ? 'py-4 list-type'
     : view == 'list'
@@ -68,7 +68,10 @@
   >
     <slot name="badges" slot="badges" />
   </PostMeta>
-  <div style="grid-area:embed">
+  <div
+    style="grid-area:embed"
+    class={view == 'list' || view == 'compact' ? '' : 'contents'}
+  >
     <PostMedia bind:post={post.post} {view} {type} />
   </div>
   {#if view == 'list' || view == 'compact'}
@@ -101,7 +104,7 @@
     );
     width: 100%;
     height: 100%;
-    grid-template-rows: auto auto auto auto auto;
+    grid-auto-rows: minmax(-0.5rem, auto);
     grid-template-columns: var(--template-columns, 1fr auto);
   }
 </style>
