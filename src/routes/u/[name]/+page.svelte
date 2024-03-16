@@ -221,13 +221,15 @@
       class="text-base"
       instanceClass="text-sm"
     />
-    {#if data.person_view.person.bio}
-      <PostBody
-        class="text-sm"
-        view="list"
-        body={data.person_view.person.bio}
-      />
-    {/if}
+    <div class="relative">
+      {#if data.person_view.person.bio}
+        <PostBody
+          class="text-sm"
+          view="list"
+          body={data.person_view.person.bio}
+        />
+      {/if}
+    </div>
     <div class="text-sm flex flex-row flex-wrap gap-3">
       <LabelStat
         content={data.person_view.counts.post_count.toString()}

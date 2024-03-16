@@ -6,6 +6,7 @@
   import { userSettings } from '$lib/settings.js'
   import type { CommentView } from 'lemmy-js-client'
   import { Button, Material } from 'mono-svelte'
+  import { ArrowUturnUp, Icon } from 'svelte-hero-icons'
 
   export let comment: CommentView
   export let view = $userSettings.view
@@ -13,13 +14,13 @@
 </script>
 
 <Material
-  class="flex flex-col flex-1 gap-1 {view != 'card'
+  class="flex flex-col flex-1 {view != 'card'
     ? '!bg-transparent !border-0 rounded-none'
     : 'p-5'} {view == 'list' ? 'py-5' : view == 'compact' ? 'py-4' : 'py-5'}"
   color="distinct"
   padding="none"
 >
-  <div class="flex flex-row justify-between items-center">
+  <div class="flex flex-row justify-between items-center gap-2">
     <PostMeta
       badges={{
         nsfw: comment.post.nsfw,
@@ -39,10 +40,11 @@
       color="secondary"
       href="/post/{comment.post.id}?thread={comment.comment.path}#{comment
         .comment.id}"
-      size="sm"
+      size="square-md"
       class="self-start"
+      title="Jump"
     >
-      Jump
+      <Icon src={ArrowUturnUp} size="16" mini />
     </Button>
   </div>
   <a
