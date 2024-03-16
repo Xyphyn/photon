@@ -20,6 +20,8 @@
   import { Button, Modal } from 'mono-svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
   import ShieldIcon from '../moderation/ShieldIcon.svelte'
+  import { page } from '$app/stores'
+  import { onMount } from 'svelte'
 
   export let node: CommentNodeI
   export let postId: number
@@ -63,6 +65,17 @@
 
     editingLoad = false
   }
+
+  onMount(() => {
+    if ('#' + node.comment_view.comment.id.toString() == $page.url.hash) {
+      highlight = 'text-primary-900 dark:text-primary-100 font-medium'
+
+      setTimeout(() => (highlight = 'duration-[3s] transition-all'), 500)
+      setTimeout(() => (highlight = ''), 600)
+    }
+  })
+
+  let highlight = ''
 </script>
 
 {#if editing}
@@ -91,7 +104,7 @@
 {/if}
 
 <li
-  class="py-3 {$$props.class}"
+  class="py-3 {highlight} {$$props.class}"
   id="#{node.comment_view.comment.id.toString()}"
 >
   <Disclosure bind:open class="flex flex-col">
