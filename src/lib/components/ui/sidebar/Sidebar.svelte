@@ -7,6 +7,7 @@
     Home,
     Icon,
     Identification,
+    Inbox,
     MagnifyingGlass,
     ServerStack,
     UserGroup,
@@ -18,7 +19,7 @@
   import ProfileButton from '$lib/components/ui/sidebar/ProfileButton.svelte'
   import { flip } from 'svelte/animate'
   import { expoOut } from 'svelte/easing'
-  import { Button } from 'mono-svelte'
+  import { Badge, Button } from 'mono-svelte'
   import { DEFAULT_INSTANCE_URL, LINKED_INSTANCE_URL } from '$lib/instance.js'
   import Expandable from '$lib/components/ui/Expandable.svelte'
   import EndPlaceholder from '../EndPlaceholder.svelte'
@@ -40,26 +41,42 @@
     <Icon src={ChevronDoubleRight} size="16" mini />
   </Button>
   <SidebarButton href="/" selected={route == '/'}>
-    <Icon src={Home} mini={route == '/'} size="20" title="Frontpage" />
+    <Icon src={Home} solid={route == '/'} size="20" title="Frontpage" />
     <span slot="label">Frontpage</span>
   </SidebarButton>
   <SidebarButton href="/settings" selected={route == '/settings'}>
     <Icon
       src={Cog6Tooth}
-      mini={route == '/settings'}
+      solid={route == '/settings'}
       size="20"
       title="Settings"
     />
     <span slot="label">Settings</span>
   </SidebarButton>
   <SidebarButton href="/search" selected={route == '/search'}>
-    <Icon mini={route == '/search'} src={MagnifyingGlass} size="20" />
+    <Icon solid={route == '/search'} src={MagnifyingGlass} size="20" />
     <span slot="label">Search</span>
   </SidebarButton>
   <SidebarButton href="/communities" selected={route == '/communities'}>
-    <Icon mini={route == '/communities'} src={GlobeAlt} size="20" />
+    <Icon solid={route == '/communities'} src={GlobeAlt} size="20" />
     <span slot="label">Communities</span>
   </SidebarButton>
+  {#if $profile?.jwt}
+    <SidebarButton href="/inbox" selected={route == '/inbox'}>
+      <Icon solid={route == '/inbox'} src={Inbox} size="20" />
+      <span slot="label" class="inline-flex items-center flex-1">
+        <span class="flex-shrink-0 flex-1">Inbox</span>
+        {#if ($profile?.user?.notifications.inbox ?? 0) > 0}
+          <Badge
+            color="red-subtle"
+            class="w-5 h-5 !p-0 grid place-items-center"
+          >
+            {$profile?.user?.notifications.inbox}
+          </Badge>
+        {/if}
+      </span>
+    </SidebarButton>
+  {/if}
   {#if $profileData.profiles.length >= 1}
     <hr class="border-slate-200 dark:border-zinc-900 my-1" />
     {#each [...$profileData.profiles] as prof, index (prof.id)}
