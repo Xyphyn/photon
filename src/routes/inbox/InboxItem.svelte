@@ -70,7 +70,7 @@
 <Material class="flex flex-col max-w-full gap-4">
   <div class="meta w-full">
     <div
-      class="rounded-full p-1 h-10 w-10 border grid place-items-center"
+      class="rounded-full p-1 h-10 w-10 border border-slate-200 dark:border-zinc-800 grid place-items-center"
       style="grid-area: a;"
     >
       <Icon

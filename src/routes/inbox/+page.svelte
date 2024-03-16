@@ -17,6 +17,7 @@
   import { fly } from 'svelte/transition'
   import { searchParam } from '$lib/util.js'
   import { Button, Select } from 'mono-svelte'
+  import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
 
   export let data
 
@@ -106,9 +107,11 @@
         <InboxItem {item} />
       </div>
     {/each}
-    <Pageination
-      page={data.page}
-      on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
-    />
+    <div class="ml-auto mt-auto">
+      <Pageination
+        page={data.page}
+        on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
+      />
+    </div>
   {/if}
 </div>
