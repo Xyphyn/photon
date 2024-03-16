@@ -15,9 +15,17 @@ export async function load({ params, url, fetch }) {
 
   const thread = url.searchParams.get('thread')
   let parentId: number | undefined
+  let showContext: string | undefined = undefined
 
   if (thread) {
-    parentId = Number(thread.split('.')[1])
+    const split = thread.split('.')
+    if (split.length >= 9) {
+      const sliced = split.slice(0, split.length - 4)
+      showContext = sliced[sliced.length - 1]
+      parentId = Number(split[split.length - 5])
+    } else {
+      parentId = Number(split[1])
+    }
 
     if (!Number.isInteger(parentId)) {
       parentId = undefined
@@ -42,10 +50,13 @@ export async function load({ params, url, fetch }) {
   }
 
   return {
-    singleThread: parentId != undefined,
+    thread: {
+      showContext: showContext,
+      singleThread: parentId != undefined
+    },
     post: post,
     commentSort: sort,
-      comments: await getClient(params.instance, fetch).getComments(commentParams),
+    comments: await getClient(params.instance, fetch).getComments(commentParams),
     slots: {
       sidebar: {
         component: CommunityCard,

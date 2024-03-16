@@ -16,6 +16,7 @@
   import { toast } from 'mono-svelte'
   import { profile } from '$lib/auth.js'
   import { Button } from 'mono-svelte'
+  import { afterNavigate } from '$app/navigation'
 
   export let nodes: CommentNodeI[]
   export let isParent: boolean
@@ -25,6 +26,8 @@
 
   onMount(() => {
     hydrated = true
+  })
+  afterNavigate(() => {
     if (isParent && $page.url.hash) {
       document.getElementById($page.url.hash)?.scrollIntoView({
         behavior: 'smooth',

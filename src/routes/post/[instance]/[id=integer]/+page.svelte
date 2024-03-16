@@ -119,7 +119,7 @@
       max_depth: data.post.post_view.counts.comments > 100 ? 1 : 3,
     })
     loading = false
-    data.singleThread = false
+    data.thread.singleThread = false
     commentsPage = 1
   }
 
@@ -235,7 +235,27 @@
     </Expandable>
   {/if}
 </div>
-{#if data.singleThread}
+{#if data.thread.showContext}
+  <Material
+    elevation="max"
+    padding="none"
+    color="distinct"
+    class="py-2 px-4 text-sm flex flex-row justify-between items-center
+flex-wrap gap-4 sticky top-20 w-full box-border z-20 mt-4"
+  >
+    <p class="font-medium text-sm flex items-center gap-2">
+      <Icon src={InformationCircle} mini size="20" />
+      You're viewing part of a thread.
+    </p>
+    <Button
+      {loading}
+      disabled={loading}
+      href="/comment/{$page.params.instance}/{data.thread.showContext}"
+    >
+      Show Context
+    </Button>
+  </Material>
+{:else if data.thread.singleThread}
   <Material
     elevation="max"
     padding="none"
