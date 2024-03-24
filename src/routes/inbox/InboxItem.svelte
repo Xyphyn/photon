@@ -67,7 +67,11 @@
   <PrivateMessageModal bind:open={replying} user={item.item.creator} />
 {/if}
 
-<Material class="flex flex-col max-w-full gap-4">
+<Material
+  class="flex flex-col max-w-full gap-4"
+  color="transparent"
+  rounding="xl"
+>
   <div class="meta w-full">
     <div
       class="rounded-full p-1 h-10 w-10 border border-slate-200 dark:border-zinc-800 grid place-items-center"

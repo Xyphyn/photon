@@ -18,26 +18,31 @@
 
   let containerClass = `
     flex flex-row items-center w-max max-w-full overflow-auto
-    ${
-      headless
-        ? 'pb-1 gap-1'
-        : 'gap-1.5'
-    }
+    ${headless ? 'pb-1 gap-1' : ''}
     ${$$props.class}
   `
 
   const buttonClass = (selected: boolean) => `
-    px-3.5 py-1.5 text-sm
-    ${!selected ? 'hover:bg-slate-100 hover:dark:bg-zinc-800' : ''}
-     transition-colors rounded-full
+    first:rounded-l-lg first:border-l first:dark:border-l-transparent
+    last:rounded-r-lg last:border-r last:dark:border-r-transparent
+    rounded-l-none
+    rounded-r-none
+    px-3 py-1.5 text-sm hover:brightness-110
+    ${
+      !selected
+        ? `hover:dark:bg-zinc-800 border-slate-100 border-t border-b border-b-slate-300 dark:border-b-0
+      dark:border-t dark:border-t-zinc-700`
+        : ''
+    }
+     transition-all transition-filters rounded-full
     ${
       selected
         ? headless
           ? ''
-          : 'bg-primary-900 text-slate-50 dark:bg-primary-100 dark:text-black hover:bg-slate-800 hover:dark:bg-zinc-300'
+          : `bg-primary-900 dark:bg-primary-100 text-slate-50 dark:text-zinc-900`
         : headless
-	  ? ''
-	  : 'bg-slate-100 dark:bg-zinc-800'
+          ? ''
+          : 'bg-white dark:bg-zinc-800'
     }
     disabled:opacity-60 disabled:pointer-events-none whitespace-nowrap
     relative

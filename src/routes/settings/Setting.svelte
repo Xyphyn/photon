@@ -1,4 +1,6 @@
-<div class="flex flex-row items-center w-full justify-between gap-4 max-w-full">
+<div
+  class="flex flex-row items-center w-full justify-between gap-4 max-w-full {$$props.mainClass}"
+>
   <div class="flex flex-col gap-0.5 flex-1 {$$props.class}">
     <h1 class="font-medium text-base"><slot name="title" /></h1>
     {#if $$slots.description}

@@ -47,7 +47,7 @@
     "@dicebear/core": "^6.0.4",
     "@dicebear/initials": "^6.0.4",
     "markdown-it": "^13.0.1",
-    "mono-svelte": "1.5.5"
+    "mono-svelte": "1.5.6"
   },
   "overrides": {
     "@rollup/plugin-node-resolve": "^15.2.3",

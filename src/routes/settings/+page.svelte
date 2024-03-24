@@ -239,7 +239,7 @@
   </Section>
 
   <Section title="Moderation">
-    <Setting>
+    <Setting mainClass="md:flex-row flex-col !items-start">
       <span slot="title">Removal reply presets</span>
       <span slot="description">
         <p>Presets to use for "Reply reason" in a submission removal.</p>
@@ -264,7 +264,12 @@
         </ul>
       </span>
       {#each $userSettings.moderation.presets as preset, index}
-        <Material color="distinct" padding="md" class="py-3 w-full">
+        <Material
+          color="transparent"
+          rounding="xl"
+          padding="sm"
+          class="py-3 w-full rounded-full"
+        >
           <details>
             <summary
               class="cursor-pointer inline-flex flex-row items-center w-full gap-1"
@@ -273,6 +278,7 @@
               {preset.title}
               <Button
                 size="square-md"
+                rounding="lg"
                 class="ml-auto"
                 on:click={() => {
                   $userSettings.moderation.presets.splice(index, 1)
@@ -306,21 +312,25 @@
           </details>
         </Material>
       {/each}
-      <Button
-        on:click={() => {
-          $userSettings.moderation.presets = [
-            ...$userSettings.moderation.presets,
-            {
-              title: `Preset ${$userSettings.moderation.presets.length + 1}`,
-              content:
-                'Your submission in *{{post}}* was removed for *{{reason}}*.',
-            },
-          ]
-        }}
-      >
-        <Icon src={Plus} mini size="16" slot="prefix" />
-        Add Preset
-      </Button>
+      <Material color="transparent" rounding="xl" padding="none" class="w-full">
+        <Button
+          color="none"
+          class="w-full"
+          on:click={() => {
+            $userSettings.moderation.presets = [
+              ...$userSettings.moderation.presets,
+              {
+                title: `Preset ${$userSettings.moderation.presets.length + 1}`,
+                content:
+                  'Your submission in *{{post}}* was removed for *{{reason}}*.',
+              },
+            ]
+          }}
+        >
+          <Icon src={Plus} mini size="16" slot="prefix" />
+          Add Preset
+        </Button>
+      </Material>
     </Setting>
   </Section>
 
