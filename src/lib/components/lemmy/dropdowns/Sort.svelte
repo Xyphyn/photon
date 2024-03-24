@@ -1,17 +1,23 @@
 <script lang="ts">
   import { page } from '$app/stores'
   import { site } from '$lib/lemmy.js'
+  import { userSettings } from '$lib/settings'
   import { searchParam } from '$lib/util.js'
   import { feature } from '$lib/version.js'
+  import type { SortType } from 'lemmy-js-client'
   import { Select } from 'mono-svelte'
   import { ChartBar, Clock, Icon } from 'svelte-hero-icons'
   import { fly } from 'svelte/transition'
 
   export let selected: string
   export let navigate: boolean = true
+  export let changeDefault: boolean = false
 
   let sort: string = selected.startsWith('Top') ? 'TopAll' : selected
   const setSelected = () => (selected = sort)
+  $: changeDefault
+    ? ($userSettings.defaultSort.sort = selected as SortType)
+    : undefined
 </script>
 
 <div class="flex flex-row gap-2 {$$props.class}">

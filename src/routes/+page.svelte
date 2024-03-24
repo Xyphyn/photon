@@ -13,6 +13,7 @@
   import { site } from '$lib/lemmy.js'
   import { amModOfAny } from '$lib/components/lemmy/moderation/moderation.js'
   import { feature } from '$lib/version.js'
+  import { userSettings } from '$lib/settings.js'
 
   export let data
 
@@ -49,8 +50,11 @@
   <div class="flex flex-row gap-2 max-w-full justify-between w-full flex-wrap">
     <Select
       bind:value={data.listingType}
-      on:change={() =>
-        searchParam($page.url, 'type', data.listingType, 'page', 'cursor')}
+      on:change={() => {
+        // @ts-ignore
+        $userSettings.defaultSort.feed = data.listingType
+        searchParam($page.url, 'type', data.listingType, 'page', 'cursor')
+      }}
     >
       <span slot="label" class="flex items-center gap-1">
         <Icon src={GlobeAmericas} size="16" mini />
@@ -69,7 +73,7 @@
       {/if}
     </Select>
     <div class="flex gap-2 flex-wrap">
-      <Sort selected={data.sort} />
+      <Sort changeDefault selected={data.sort} />
       <div class="max-[420px]:hidden">
         <ViewSelect />
       </div>
