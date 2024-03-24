@@ -61,11 +61,11 @@
         {#if $userSettings.view == 'list'}
           Show posts in a list, with post bodies and compact images.
         {:else if $userSettings.view == 'cozy'}
-          Card view, but without a background.
+          Show posts with large images, rich embeds and longer post bodies.
         {:else if $userSettings.view == 'compact'}
           Show posts in a list, without post bodies and with tighter spacing.
         {:else if $userSettings.view == 'card'}
-          Show posts in cards, with large images.
+          Photon's old post style.
         {/if}
       </p>
     </Setting>

@@ -106,39 +106,39 @@
   </span>
 
   <div
-    class="flex flex-row items-center place-self-end overflow-auto [&>*]:flex-shrink-0"
+    class="flex flex-row items-center place-self-end overflow-auto gap-2 [&>*]:flex-shrink-0"
     style="grid-area: badges;"
   >
     {#if badges.nsfw}
       <Badge color="red-subtle">NSFW</Badge>
     {/if}
     {#if badges.saved}
-      <Badge label="Saved" color="yellow-subtle">
-        <Icon src={Bookmark} mini size="12" />
-        <span class="max-md:hidden">Saved</span>
+      <Badge label="Saved" color="yellow-subtle" allowIconOnly>
+        <Icon src={Bookmark} mini size="12" slot="icon" />
+        Saved
       </Badge>
     {/if}
     {#if badges.locked}
-      <Badge label="Locked" color="yellow-subtle">
-        <Icon src={LockClosed} mini size="14" />
+      <Badge label="Locked" color="yellow-subtle" allowIconOnly>
+        <Icon src={LockClosed} mini size="14" slot="icon" />
         <span class="max-md:hidden">Locked</span>
       </Badge>
     {/if}
     {#if badges.removed}
-      <Badge label="Removed" color="red-subtle">
-        <Icon src={Trash} mini size="14" />
+      <Badge label="Removed" color="red-subtle" allowIconOnly>
+        <Icon src={Trash} mini size="14" slot="icon" />
         <span class="max-md:hidden">Removed</span>
       </Badge>
     {/if}
     {#if badges.deleted}
-      <Badge label="Deleted" color="red-subtle">
-        <Icon src={Trash} mini size="14" />
+      <Badge label="Deleted" color="red-subtle" allowIconOnly>
+        <Icon src={Trash} mini size="14" slot="icon" />
         <span class="max-md:hidden">Deleted</span>
       </Badge>
     {/if}
     {#if badges.featured}
-      <Badge label="Featured" color="green-subtle">
-        <Icon src={Megaphone} mini size="14" />
+      <Badge label="Featured" color="green-subtle" allowIconOnly>
+        <Icon src={Megaphone} mini size="14" slot="icon" />
         <span class="max-md:hidden">Featured</span>
       </Badge>
     {/if}

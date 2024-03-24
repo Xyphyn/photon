@@ -15,8 +15,8 @@
       </span>
     {/if}
   </svelte:fragment>
-  <option value="card">Cards</option>
   <option value="cozy">Cozy</option>
   <option value="list">List</option>
   <option value="compact">Compact</option>
+  <option value="card">Legacy</option>
 </Select>
