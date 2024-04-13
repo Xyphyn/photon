@@ -41,7 +41,7 @@
         return
 
       if (favs.length >= 3) favs.pop()
-      favs.push({
+      favs.unshift({
         avatar: data.community.community_view.community.icon,
         id: data.community.community_view.community.id,
         url: $page.url,

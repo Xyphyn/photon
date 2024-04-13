@@ -7,8 +7,6 @@
     isAdmin,
   } from '$lib/components/lemmy/moderation/moderation.js'
   import Avatar from '$lib/components/ui/Avatar.svelte'
-  import Logo from '$lib/components/ui/Logo.svelte'
-  import { LINKED_INSTANCE_URL, instance } from '$lib/instance.js'
   import { site } from '$lib/lemmy.js'
   import { Menu, MenuButton, MenuDivider, Spinner } from 'mono-svelte'
   import {
@@ -21,13 +19,16 @@
     Plus,
     ServerStack,
   } from 'svelte-hero-icons'
-  import { fly } from 'svelte/transition'
   import Profile from './Profile.svelte'
   import NavButton from './NavButton.svelte'
+  import { scale } from 'svelte/transition'
+  import { expoOut, backOut } from 'svelte/easing'
+  import { flip } from 'svelte/animate'
 </script>
 
 <nav
-  class="flex flex-row gap-2 items-center w-full mx-auto p-1 z-50 box-border h-16
+  class="flex flex-row gap-2 items-center w-full mx-auto z-50 box-border h-16
+  p-1 duration-150
   {$$props.class}
   "
   style={$$props.style}
@@ -45,15 +46,36 @@
         class="px-2 border-r border-l border-slate-200 dark:border-zinc-900
     flex flex-row items-center gap-2 flex-shrink overflow-hidden max-[500px]:hidden"
       >
-        {#each $profile.favorites ?? [] as favorite}
-          <NavButton href={favorite.url.toString()} label="Community">
-            <Avatar
-              alt={favorite.name}
-              url={favorite.avatar}
-              res={64}
-              width={28}
-            />
-          </NavButton>
+        {#each $profile.favorites ?? [] as favorite (favorite.id)}
+          <div
+            class="h-9 w-9 flex"
+            transition:scale|global={{
+              start: 0.7,
+              easing: backOut,
+              duration: 400,
+              delay: 200,
+            }}
+            animate:flip={{
+              easing: backOut,
+              duration: 400,
+              delay: 100,
+            }}
+          >
+            <NavButton
+              class="w-full h-full bg-slate-100 dark:bg-zinc-900"
+              title={favorite.name}
+              href={favorite.url.toString()}
+              label="Community"
+            >
+              <Avatar
+                alt={favorite.name}
+                url={favorite.avatar}
+                res={64}
+                width={28}
+                class="w-full"
+              />
+            </NavButton>
+          </div>
         {/each}
       </div>
     {/if}
