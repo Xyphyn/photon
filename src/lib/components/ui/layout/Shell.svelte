@@ -38,7 +38,7 @@
     <slot
       name="navbar"
       class="border rounded-full border-slate-200 dark:border-zinc-800 shadow-2xl
-      bg-white dark:bg-zinc-950 transition-colors duration-500"
+      backdrop-blur-xl dark:backdrop-brightness-[25%] bg-[#ffffff]/75 dark:bg-transparent transition-colors duration-500"
       style="grid-area: navbar"
       {title}
     />
