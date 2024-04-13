@@ -11,7 +11,7 @@
 <div class="shell {$$props.class}" style={colorsToVars($colors)}>
   <slot />
   <div
-    class="content md:divide-x divide-slate-200 dark:divide-zinc-900 {$userSettings.newWidth
+    class="content md:divide-x divide-slate-200 dark:divide-zinc-900 min-h-screen {$userSettings.newWidth
       ? 'limit-width'
       : ''}"
   >
@@ -22,7 +22,7 @@
     />
     <slot
       name="main"
-      class="w-full bg-slate-25 dark:bg-zinc-925 justify-self-center shadow-sm"
+      class="w-full bg-slate-25 dark:bg-zinc-925 justify-self-center shadow-sm  !pb-24"
       style="grid-area: main"
     />
     <slot
@@ -32,7 +32,7 @@
     />
   </div>
   <div
-    class="p-4 w-full sticky bottom-0 z-50 max-w-3xl mx-auto"
+    class="p-4 w-full fixed bottom-0 z-50 max-w-3xl left-1/2 -translate-x-1/2"
     style="grid-area: navbar;"
   >
     <slot

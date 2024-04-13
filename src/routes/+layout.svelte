@@ -108,14 +108,6 @@
   <ExpandableImage />
   <ModalContainer />
 
-  <Navbar
-    slot="navbar"
-    let:style={s}
-    let:class={c}
-    class={c}
-    style={s}
-    {title}
-  />
   <Sidebar
     route={$page.route.id ?? ''}
     slot="sidebar"
@@ -135,6 +127,14 @@
   >
     <slot />
   </main>
+  <Navbar
+    slot="navbar"
+    let:style={s}
+    let:class={c}
+    class={c}
+    style={s}
+    {title}
+  />
   <div slot="suffix" let:class={c} let:style={s} class={c} style={s}>
     {#if $page.data.slots?.sidebar?.component}
       <svelte:component
