@@ -13,6 +13,7 @@
   import { Menu, MenuButton, MenuDivider, Spinner } from 'mono-svelte'
   import {
     GlobeAlt,
+    Home,
     Icon,
     MagnifyingGlass,
     Newspaper,
@@ -23,62 +24,55 @@
   import { fly } from 'svelte/transition'
   import Profile from './Profile.svelte'
   import NavButton from './NavButton.svelte'
-
-  export let title: string | undefined = ''
 </script>
 
 <nav
-  class="flex flex-row gap-2 items-center
-   backdrop-blur-lg w-full mx-auto px-4 py-2 z-50 box-border h-16
+  class="flex flex-row gap-2 items-center w-full mx-auto p-1 z-50 box-border h-16
   {$$props.class}
   "
   style={$$props.style}
 >
-  <div class="flex flex-row gap-2 items-center mr-auto">
-    <a
-      href="/"
-      class="flex flex-row items-center gap-2 logo group"
-      title="Home"
-    >
-      {#if LINKED_INSTANCE_URL}
-        {#if $site}
-          <Avatar
-            url={$site.site_view.site.icon}
-            alt={$site.site_view.site.name}
-            width={32}
-            res={64}
-            circle={false}
-            class="rounded-md"
+  <div class="flex flex-row gap-2 py-2 px-2 items-center w-full">
+    <Profile
+      placement="top"
+      itemsClass="h-8 md:h-8 z-10"
+      targetClass="z-10 h-8"
+      containerClass="!max-h-[28rem] z-10"
+      buttonClass=""
+    />
+    {#if $profile}
+      <div
+        class="px-2 border-r border-l border-slate-200 dark:border-zinc-900
+    flex flex-row items-center gap-2 flex-shrink overflow-hidden max-[500px]:hidden"
+      >
+        {#each $profile.favorites ?? [] as favorite}
+          <NavButton href={favorite.url.toString()} label="Community">
+            <Avatar
+              alt={favorite.name}
+              url={favorite.avatar}
+              res={64}
+              width={28}
+            />
+          </NavButton>
+        {/each}
+      </div>
+    {/if}
+    <div class="ml-auto" />
+    {#if amModOfAny($profile?.user)}
+      <NavButton href="/moderation" label="Moderation" class="relative">
+        {#if ($profile?.user?.notifications.reports ?? 0) > 0}
+          <div
+            class="rounded-full w-2 h-2 bg-red-500 absolute -top-1 -left-1"
           />
-          <div class="flex flex-row items-center gap-2 max-[500px]:hidden">
-            <span class="opacity-30 text-xl">/</span>
-            {$site.site_view.site.name}
-          </div>
-        {:else}
-          <Spinner width={32} />
         {/if}
-      {:else}
-        <Logo width={40} />
-        <div class="flex flex-row items-center gap-2 max-[1000px]:hidden">
-          <span class="opacity-30 text-xl">/</span>
-          <span class="text-sm font-bold grid place-items-start">
-            {#key title || $instance}
-              <span
-                in:fly={{ y: -12 }}
-                out:fly={{ y: 12 }}
-                style="grid-row: 1; grid-column: 1; max-width: 24ch;"
-                class="overflow-hidden break-words overflow-ellipsis whitespace-nowrap"
-              >
-                {title || $instance}
-              </span>
-            {/key}
-          </span>
-        </div>
-      {/if}
-    </a>
-  </div>
-  <div class="flex flex-row gap-2 py-2 px-2 items-center">
-    {#if $profile?.user && isAdmin($profile.user)}
+        <ShieldIcon let:isSelected slot="icon" filled={isSelected} width={18} />
+      </NavButton>
+    {/if}
+    <NavButton
+      href="/communities"
+      label="Explore"
+      icon={GlobeAlt}
+    />{#if $profile?.user && isAdmin($profile.user)}
       <NavButton
         href="/admin"
         label="Admin"
@@ -92,19 +86,9 @@
         {/if}
       </NavButton>
     {/if}
-    {#if amModOfAny($profile?.user)}
-      <NavButton href="/moderation" label="Moderation" class="relative">
-        {#if ($profile?.user?.notifications.reports ?? 0) > 0}
-          <div
-            class="rounded-full w-2 h-2 bg-red-500 absolute -top-1 -left-1"
-          />
-        {/if}
-        <ShieldIcon slot="icon" filled width={15} />
-      </NavButton>
-    {/if}
     <NavButton href="/search" label="Search" icon={MagnifyingGlass} />
-    <NavButton href="/communities" label="Explore" icon={GlobeAlt} />
-    <Menu placement="bottom-end" targetClass="h-8">
+    <NavButton href="/" label="Home" icon={Home} />
+    <Menu placement="top" targetClass="h-8">
       <NavButton
         class="relative"
         color="primary"
@@ -138,11 +122,5 @@
         </span>
       {/if}
     </Menu>
-    <Profile
-      placement="bottom-end"
-      itemsClass="h-8 md:h-8 z-10"
-      targetClass="z-10 h-8"
-      containerClass="!max-h-[28rem] z-10"
-    />
   </div>
 </nav>

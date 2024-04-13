@@ -34,6 +34,23 @@
       )
   })
 
+  afterNavigate(() => {
+    if ($profile) {
+      let favs = $profile?.favorites ?? []
+      if (favs.map((fav) => fav.url.toString()).includes($page.url.toString()))
+        return
+
+      if (favs.length >= 3) favs.pop()
+      favs.push({
+        avatar: data.community.community_view.community.icon,
+        id: data.community.community_view.community.id,
+        url: $page.url,
+        name: data.community.community_view.community.title,
+      })
+      $profile.favorites = favs
+    }
+  })
+
   onDestroy(() => {
     if (browser) {
       if ($navigating?.to?.route?.id == '/create/post') return

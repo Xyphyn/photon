@@ -10,13 +10,6 @@
 
 <div class="shell {$$props.class}" style={colorsToVars($colors)}>
   <slot />
-  <slot
-    name="navbar"
-    class="sticky top-0 border-b border-slate-200 dark:border-zinc-900
-      bg-slate-50 dark:bg-zinc-950 transition-colors duration-500"
-    style="grid-area: navbar"
-    {title}
-  />
   <div
     class="content md:divide-x divide-slate-200 dark:divide-zinc-900 {$userSettings.newWidth
       ? 'limit-width'
@@ -24,7 +17,7 @@
   >
     <slot
       name="sidebar"
-      class="hidden md:flex sticky top-16 left-0 w-full max-w-full bg-slate-50 dark:bg-zinc-950"
+      class="hidden md:flex sticky top-0 left-0 w-full max-w-full bg-slate-50 dark:bg-zinc-950"
       style="grid-area: sidebar; width: 100% !important;"
     />
     <slot
@@ -34,8 +27,20 @@
     />
     <slot
       name="suffix"
-      class="max-xl:hidden w-full sticky top-16 left-0 h-full max-h-[calc(100svh-4rem)] bg-slate-50 dark:bg-zinc-950"
+      class="max-xl:hidden w-full sticky top-0 left-0 h-max bg-slate-50 dark:bg-zinc-950"
       style="grid-area: suffix;"
+    />
+  </div>
+  <div
+    class="p-4 w-full sticky bottom-0 z-50 max-w-3xl mx-auto"
+    style="grid-area: navbar;"
+  >
+    <slot
+      name="navbar"
+      class="border rounded-full border-slate-200 dark:border-zinc-800 shadow-2xl
+      bg-white dark:bg-zinc-950 transition-colors duration-500"
+      style="grid-area: navbar"
+      {title}
     />
   </div>
 </div>
@@ -46,8 +51,8 @@
     grid-template-columns: 1fr;
     grid-template-rows: auto 1fr;
     grid-template-areas:
-      'navbar'
-      'content';
+      'content'
+      'navbar';
   }
 
   .content {

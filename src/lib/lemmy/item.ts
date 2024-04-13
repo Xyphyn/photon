@@ -66,3 +66,10 @@ export const isCommentReport = (item: Result): item is CommentReportView =>
 export const isPrivateMessageReport = (
   item: Result
 ): item is PrivateMessageReportView => 'private_message_report' in item
+
+export interface ResumableCommunity {
+  url: URL
+  id: number
+  name: string
+  avatar?: string
+}
