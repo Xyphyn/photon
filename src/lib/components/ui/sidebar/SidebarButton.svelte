@@ -1,12 +1,17 @@
 <script lang="ts">
+  import { page } from '$app/stores'
   import { userSettings } from '$lib/settings.js'
   import { Button } from 'mono-svelte'
+  import { Icon, type IconSource } from 'svelte-hero-icons'
 
-  export let selected: boolean = false
+  export let href: string | undefined = undefined
+  export let icon: IconSource | undefined = undefined
+  $: selected = href != undefined && $page.url.pathname == href
 </script>
 
 <Button
   {...$$restProps}
+  {href}
   color="tertiary"
   alignment="left"
   on:click
@@ -16,7 +21,11 @@
     ? ''
     : 'max-lg:!p-1 [&>*]:max-lg:!justify-center'} {$$props.class}"
 >
-  <slot name="prefix" slot="prefix" />
+  {#if icon}
+    <Icon src={icon} solid={selected} size="20" />
+  {:else}
+    <slot {selected} name="icon" />
+  {/if}
   <slot />
   <div class={$userSettings.expandSidebar ? 'contents' : 'max-lg:hidden'}>
     <slot name="label" />

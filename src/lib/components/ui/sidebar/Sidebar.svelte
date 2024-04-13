@@ -1,6 +1,7 @@
 <script lang="ts">
   import {
     ArrowLeftOnRectangle,
+    Bookmark,
     ChevronDoubleRight,
     Cog6Tooth,
     GlobeAlt,
@@ -10,6 +11,7 @@
     Inbox,
     MagnifyingGlass,
     ServerStack,
+    UserCircle,
     UserGroup,
   } from 'svelte-hero-icons'
   import { profile, profileData } from '$lib/auth.js'
@@ -23,8 +25,6 @@
   import { DEFAULT_INSTANCE_URL, LINKED_INSTANCE_URL } from '$lib/instance.js'
   import Expandable from '$lib/components/ui/Expandable.svelte'
   import EndPlaceholder from '../EndPlaceholder.svelte'
-
-  export let route = ''
 </script>
 
 <nav
@@ -32,6 +32,23 @@
   gap-1 h-screen {$$props.class}"
   style={$$props.style}
 >
+  {#if $profile}
+    <SidebarButton icon={UserCircle} href="/profile/user">
+      Profile
+    </SidebarButton>
+    <SidebarButton icon={Inbox} href="/inbox">
+      Inbox
+      {#if $profile?.user?.notifications.inbox}
+        <Badge
+          class="w-5 h-5 !p-0 grid place-items-center ml-auto"
+          color="red-subtle"
+        >
+          {$profile?.user?.notifications.inbox}
+        </Badge>
+      {/if}
+    </SidebarButton>
+    <SidebarButton icon={Bookmark} href="/saved">Saved</SidebarButton>
+  {/if}
   {#if $profileData.profiles.length >= 1}
     <hr class="border-slate-200 dark:border-zinc-900 my-1" />
     {#each [...$profileData.profiles] as prof, index (prof.id)}
@@ -48,8 +65,7 @@
       }}
       guest
     />
-    <SidebarButton href="/accounts" selected={route == '/accounts'}>
-      <Icon src={UserGroup} mini={route == '/accounts'} size="20" />
+    <SidebarButton href="/accounts" icon={UserGroup}>
       <span slot="label">Accounts</span>
     </SidebarButton>
   {/if}
@@ -77,17 +93,18 @@
       <CommunityList items={$profile.user.follows.map((i) => i.community)} />
     </Expandable>
   {:else}
-    <SidebarButton href="/login" title="Log In">
-      <Icon mini src={ArrowLeftOnRectangle} size="20" />
+    <SidebarButton href="/login" title="Log In" icon={ArrowLeftOnRectangle}>
       <span slot="label">Log In</span>
     </SidebarButton>
-    <SidebarButton href="/signup" title="Sign Up">
-      <Icon mini src={Identification} size="20" />
+    <SidebarButton href="/signup" title="Sign Up" icon={Identification}>
       <span slot="label">Sign Up</span>
     </SidebarButton>
     {#if LINKED_INSTANCE_URL === undefined}
-      <SidebarButton href="/accounts" title="Change Instance">
-        <Icon mini src={ServerStack} size="20" />
+      <SidebarButton
+        href="/accounts"
+        title="Change Instance"
+        icon={ServerStack}
+      >
         <span slot="label">Change Instance</span>
       </SidebarButton>
     {/if}

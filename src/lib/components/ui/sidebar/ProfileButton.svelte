@@ -43,7 +43,7 @@
     {index}
     {guest}
     selected={$profile?.id == prof.id}
-    slot="prefix"
+    slot="icon"
   />
   <span
     class="flex flex-col gap-0 {$profile?.id == prof.id ? 'font-semibold' : ''}"
