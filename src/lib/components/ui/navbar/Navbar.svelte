@@ -50,11 +50,11 @@
         {#each $profile.favorites ?? [] as favorite (favorite.id)}
           <div
             class="h-10 w-10 flex"
-            transition:scale|global={{
+            transition:scale={{
               start: 0.7,
               easing: backOut,
               duration: 400,
-              delay: 100,
+              delay: 0,
             }}
             animate:flip={{
               easing: backOut,
