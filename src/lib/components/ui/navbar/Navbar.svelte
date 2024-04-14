@@ -37,7 +37,7 @@
     <Profile
       placement="top"
       itemsClass="h-8 md:h-8 z-10"
-      targetClass="z-10 h-8"
+      targetClass="z-10 h-10"
       containerClass="!max-h-[28rem] z-10"
       buttonClass=""
     />
@@ -76,7 +76,7 @@
                     <Avatar
                       alt={favorite.subdivision.name}
                       url={favorite.subdivision.avatar}
-                      width={28}
+                      width={32}
                       res={64}
                       class=""
                     />
@@ -93,7 +93,7 @@
                   alt={favorite.name}
                   url={favorite.avatar}
                   res={64}
-                  width={28}
+                  width={32}
                   class="w-full"
                 />
                 <Icon
@@ -119,11 +119,8 @@
         <ShieldIcon let:isSelected slot="icon" filled={isSelected} width={18} />
       </NavButton>
     {/if}
-    <NavButton
-      href="/communities"
-      label="Explore"
-      icon={GlobeAlt}
-    />{#if $profile?.user && isAdmin($profile.user)}
+    <NavButton href="/communities" label="Explore" icon={GlobeAlt} />
+    {#if $profile?.user && isAdmin($profile.user)}
       <NavButton
         href="/admin"
         label="Admin"
@@ -139,7 +136,7 @@
     {/if}
     <NavButton href="/search" label="Search" icon={MagnifyingGlass} />
     <NavButton href="/" label="Home" icon={Home} />
-    <Menu placement="top" targetClass="h-8">
+    <Menu placement="top">
       <NavButton
         class="relative"
         color="primary"
