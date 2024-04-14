@@ -22,6 +22,7 @@
   import { Button, TextInput } from 'mono-svelte'
   import {
     ArrowLeftOnRectangle,
+    ArrowRightOnRectangle,
     ArrowUturnLeft,
     BugAnt,
     Check,
@@ -251,14 +252,22 @@
             <Button size="square-md" slot="target">
               <Icon src={EllipsisHorizontal} mini size="16" slot="prefix" />
             </Button>
-            <MenuButton on:click={() => moveProfile(profile.id, true)}>
-              <Icon src={ChevronUp} size="16" mini slot="prefix" />
-              Move Up
-            </MenuButton>
-            <MenuButton on:click={() => moveProfile(profile.id, false)}>
-              <Icon src={ChevronDown} size="16" mini slot="prefix" />
-              Move Down
-            </MenuButton>
+            <div class="px-4 py-2 flex items-center gap-2">
+              <Button
+                size="square-md"
+                color="secondary"
+                on:click={() => moveProfile(profile.id, true)}
+              >
+                <Icon src={ChevronUp} size="16" mini slot="prefix" />
+              </Button>
+              <Button
+                size="square-md"
+                color="secondary"
+                on:click={() => moveProfile(profile.id, false)}
+              >
+                <Icon src={ChevronDown} size="16" mini slot="prefix" />
+              </Button>
+            </div>
             <MenuButton
               disabled={!profile.color}
               on:click={() => (profile.color = undefined)}
@@ -278,8 +287,8 @@
               </MenuButton>
             {/if}
             <MenuButton on:click={() => action(profile)} color="danger-subtle">
-              <Icon slot="prefix" src={Trash} size="16" mini />
-              Delete
+              <Icon slot="prefix" src={ArrowRightOnRectangle} size="16" mini />
+              Log Out
             </MenuButton>
           </Menu>
         </div>
@@ -324,8 +333,8 @@
       </Button>
     </div>
     <Button href="/login" size="lg">
-      <Icon slot="prefix" src={Plus} size="16" mini />
-      Add more
+      <Icon slot="prefix" src={ArrowLeftOnRectangle} size="16" mini />
+      Log In
     </Button>
   </div>
 {/if}

@@ -45,7 +45,7 @@
       <div
         class="px-2 border-r border-l border-slate-200 dark:border-zinc-900
     flex flex-row items-center gap-2 [&>*]:flex-shrink-0 overflow-x-auto overflow-y-hidden
-    md:max-w-64 sm:max-w-48 max-w-36 w-full"
+    md:max-w-64 sm:max-w-48 max-w-36 w-full max-[424px]:hidden"
       >
         {#each $profile.favorites ?? [] as favorite (favorite.id)}
           <div
