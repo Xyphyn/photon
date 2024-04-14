@@ -28,7 +28,7 @@
 
 <nav
   class="flex flex-row gap-2 items-center w-full mx-auto z-50 box-border h-16
-  p-1 duration-150 overflow-x-auto overflow-y-hidden
+  p-1 duration-150
   {$$props.class}
   "
   style={$$props.style}
