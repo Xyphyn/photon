@@ -54,12 +54,12 @@
               start: 0.7,
               easing: backOut,
               duration: 400,
-              delay: 200,
+              delay: 100,
             }}
             animate:flip={{
               easing: backOut,
               duration: 400,
-              delay: 100,
+              delay: 0,
             }}
           >
             <NavButton
