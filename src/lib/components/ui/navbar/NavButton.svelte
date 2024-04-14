@@ -14,15 +14,16 @@
   color="tertiary"
   {...$$restProps}
   class="rounded-full w-10 h-10 flex-shrink-0 {isSelected
-    ? 'bg-slate-200 dark:bg-zinc-900'
+    ? 'bg-slate-200 dark:bg-zinc-900 text-primary-900 dark:text-primary-100'
     : ''} {$$props.class ?? ''}"
   size="custom"
   {href}
   rounding="pill"
   title={label}
+  style="transition-property: background-color, filter;"
 >
   {#if icon}
-    <Icon src={icon} mini={isSelected} size="18" />
+    <Icon src={icon} solid={isSelected} size="18" />
   {:else}
     <slot {isSelected} name="icon" />
   {/if}

@@ -84,7 +84,7 @@
                       src={PencilSquare}
                       mini
                       size="20"
-                      class="absolute -bottom-1 -right-1 rounded-full bg-zinc-900 p-0.5"
+                      class="absolute -bottom-1 -right-1 rounded-full bg-slate-100 dark:bg-zinc-900 p-0.5"
                     />
                   {/if}
                 </div>
@@ -100,7 +100,7 @@
                   src={Newspaper}
                   mini
                   size="20"
-                  class="absolute -bottom-1 -right-1 rounded-full bg-zinc-900 p-0.5"
+                  class="absolute -bottom-1 -right-1 rounded-full bg-slate-100 dark:bg-zinc-900 p-0.5"
                 />
               {/if}
             </NavButton>
