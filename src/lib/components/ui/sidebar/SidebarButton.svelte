@@ -21,11 +21,11 @@
     ? ''
     : 'max-lg:!p-1 [&>*]:max-lg:!justify-center'} {$$props.class}"
 >
-  {#if icon}
-    <Icon src={icon} solid={selected} size="20" />
-  {:else}
-    <slot {selected} name="icon" />
-  {/if}
+  <slot {selected} name="icon" slot="prefix">
+    {#if icon}
+      <Icon src={icon} solid={selected} size="20" />
+    {/if}
+  </slot>
   <slot />
   <div class={$userSettings.expandSidebar ? 'contents' : 'max-lg:hidden'}>
     <slot name="label" />

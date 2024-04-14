@@ -28,7 +28,7 @@
 
 <nav
   class="flex flex-row gap-2 items-center w-full mx-auto z-50 box-border h-16
-  p-1 duration-150
+  p-1 duration-150 overflow-x-auto overflow-y-hidden
   {$$props.class}
   "
   style={$$props.style}
@@ -44,11 +44,12 @@
     {#if $profile}
       <div
         class="px-2 border-r border-l border-slate-200 dark:border-zinc-900
-    flex flex-row items-center gap-2 flex-shrink overflow-hidden max-[500px]:hidden"
+    flex flex-row items-center gap-2 [&>*]:flex-shrink-0 overflow-x-auto overflow-y-hidden
+    md:max-w-64 sm:max-w-48 max-w-36 w-full"
       >
         {#each $profile.favorites ?? [] as favorite (favorite.id)}
           <div
-            class="h-9 w-9 flex"
+            class="h-10 w-10 flex"
             transition:scale|global={{
               start: 0.7,
               easing: backOut,
@@ -62,18 +63,46 @@
             }}
           >
             <NavButton
-              class="w-full h-full bg-slate-100 dark:bg-zinc-900"
+              class="w-full h-full bg-slate-100 dark:bg-zinc-900 relative"
               title={favorite.name}
               href={favorite.url.toString()}
-              label="Community"
+              label={favorite.name}
             >
-              <Avatar
-                alt={favorite.name}
-                url={favorite.avatar}
-                res={64}
-                width={28}
-                class="w-full"
-              />
+              {#if favorite.type == 'post'}
+                <div
+                  class="relative w-full h-full grid place-items-center overflow-visible"
+                >
+                  {#if favorite.subdivision}
+                    <Avatar
+                      alt={favorite.subdivision.name}
+                      url={favorite.subdivision.avatar}
+                      width={28}
+                      res={64}
+                      class=""
+                    />
+                    <Icon
+                      src={PencilSquare}
+                      mini
+                      size="20"
+                      class="absolute -bottom-1 -right-1 rounded-full bg-zinc-900 p-0.5"
+                    />
+                  {/if}
+                </div>
+              {:else}
+                <Avatar
+                  alt={favorite.name}
+                  url={favorite.avatar}
+                  res={64}
+                  width={28}
+                  class="w-full"
+                />
+                <Icon
+                  src={Newspaper}
+                  mini
+                  size="20"
+                  class="absolute -bottom-1 -right-1 rounded-full bg-zinc-900 p-0.5"
+                />
+              {/if}
             </NavButton>
           </div>
         {/each}

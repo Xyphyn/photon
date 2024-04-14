@@ -16,7 +16,7 @@ import { get, writable } from 'svelte/store'
 import { MINIMUM_VERSION, versionIsSupported } from '$lib/version.js'
 import { browser } from '$app/environment'
 import { env } from '$env/dynamic/public'
-import type { ResumableCommunity } from './lemmy/item'
+import type { ResumableItem } from './lemmy/item'
 
 const getDefaultProfile = (): Profile => ({
   id: -1,
@@ -43,7 +43,7 @@ export interface Profile {
   user?: PersonData
   username?: string
   avatar?: string
-  favorites?: ResumableCommunity[]
+  favorites?: ResumableItem[]
   color?: string
 }
 

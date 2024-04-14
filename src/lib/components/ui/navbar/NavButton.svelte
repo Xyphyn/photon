@@ -13,7 +13,7 @@
 <Button
   color="tertiary"
   {...$$restProps}
-  class="rounded-full w-9 h-9 {isSelected
+  class="rounded-full w-10 h-10 flex-shrink-0 {isSelected
     ? 'bg-slate-200 dark:bg-zinc-900'
     : ''} {$$props.class ?? ''}"
   size="custom"
