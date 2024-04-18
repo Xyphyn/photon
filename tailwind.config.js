@@ -18,6 +18,9 @@ export default {
       animation: {
         'pop-in': 'pop-in 0.25s ease-out forwards',
       },
+      spacing: {
+        '22': '88px'
+      },
       keyframes: {
         'pop-in': {
           '0%, 100%': { transform: 'translateX(8px)', opacity: 0 },

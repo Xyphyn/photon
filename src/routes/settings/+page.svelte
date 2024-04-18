@@ -150,10 +150,27 @@
     {/if}
   </Section>
 
+  <Section title="Navigation">
+    <Setting>
+      <span slot="title">Dock Alignment</span>
+      <span slot="description">Where the dock should be put</span>
+      <MultiSelect
+        options={[true, false]}
+        optionNames={['Top', 'Bottom']}
+        bind:selected={$userSettings.dock.top}
+      />
+    </Setting>
+    <ToggleSetting
+      bind:checked={$userSettings.dock.noGap}
+      title="Panel"
+      description="Make the dock not float, similar to a panel."
+    />
+  </Section>
+
   <Section title="Embeds">
     <ToggleSetting
       title="Click to view"
-      description="Before loading embeds, click. (It is recommended to leave this on, to not load a video you don't want to load.)"
+      description="Don't load an embed until you click it. (It is recommended to leave this on, to not load a video you don't want to load.)"
       bind:checked={$userSettings.embeds.clickToView}
     />
     <Setting>

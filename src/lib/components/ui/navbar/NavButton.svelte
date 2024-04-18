@@ -13,6 +13,7 @@
 <Button
   color="tertiary"
   {...$$restProps}
+  on:click
   class="rounded-full w-10 h-10 flex-shrink-0 {isSelected
     ? 'bg-slate-200 dark:bg-zinc-900 text-primary-900 dark:!text-primary-100'
     : ''} {$$props.class ?? ''}"

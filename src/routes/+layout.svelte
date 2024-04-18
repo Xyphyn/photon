@@ -11,6 +11,7 @@
   import {
     colors,
     colorsToVars,
+    defaultColors,
     inDarkLegacyTheme,
     legacyTheme,
   } from '$lib/ui/colors.js'
@@ -73,8 +74,8 @@
   <meta
     name="theme-color"
     content={darklegacyTheme
-      ? $colors?.zinc?.[950] ?? '#09090b'
-      : $colors?.slate?.[50] ?? '#f8fafc'}
+      ? $colors?.zinc?.[925] ?? defaultColors.zinc[925]
+      : $colors?.slate?.[25] ?? defaultColors.slate[25]}
   />
   {#if $site}
     <title>{$site.site_view.site.name}</title>
@@ -148,6 +149,7 @@
         taglines={$site.taglines}
         admins={$site.admins}
         version={$site.version}
+        class="pt-4"
       />
     {:else}
       <div class="h-64 w-full grid place-items-center">

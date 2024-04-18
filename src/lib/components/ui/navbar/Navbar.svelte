@@ -8,7 +8,7 @@
   } from '$lib/components/lemmy/moderation/moderation.js'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import { site } from '$lib/lemmy.js'
-  import { Menu, MenuButton, MenuDivider, Spinner } from 'mono-svelte'
+  import { Button, Menu, MenuButton, MenuDivider, Spinner } from 'mono-svelte'
   import {
     GlobeAlt,
     Home,
@@ -18,21 +18,57 @@
     PencilSquare,
     Plus,
     ServerStack,
+    XMark,
   } from 'svelte-hero-icons'
   import Profile from './Profile.svelte'
   import NavButton from './NavButton.svelte'
   import { scale } from 'svelte/transition'
   import { expoOut, backOut } from 'svelte/easing'
   import { flip } from 'svelte/animate'
+  import SearchBar from '$lib/components/lemmy/util/SearchBar.svelte'
+
+  let searching = false
 </script>
 
 <nav
   class="flex flex-row gap-2 items-center w-full mx-auto z-50 box-border h-16
-  p-1 duration-150
+  duration-150
   {$$props.class}
   "
   style={$$props.style}
 >
+  {#if searching}
+    <div
+      class="w-full h-full absolute z-20 p-2 flex items-center gap-2 backdrop-brightness-0 rounded-full"
+      transition:scale={{
+        start: 0.96,
+        duration: 250,
+        easing: backOut,
+      }}
+    >
+      <Button
+        size="custom"
+        rounding="pill"
+        class="w-11 h-11 flex-shrink-0"
+        on:click={() => (searching = false)}
+      >
+        <Icon src={XMark} size="18" mini />
+      </Button>
+      <SearchBar let:search let:loading class="!rounded-full z-20">
+        <Button
+          size="custom"
+          rounding="pill"
+          class="w-11 h-11 flex-shrink-0"
+          on:click={search}
+          color="primary"
+          type="submit"
+          {loading}
+        >
+          <Icon src={MagnifyingGlass} size="18" mini slot="prefix" />
+        </Button>
+      </SearchBar>
+    </div>
+  {/if}
   <div class="flex flex-row gap-2 py-2 px-2 items-center w-full">
     <Profile
       placement="top"
@@ -134,7 +170,11 @@
         {/if}
       </NavButton>
     {/if}
-    <NavButton href="/search" label="Search" icon={MagnifyingGlass} />
+    <NavButton
+      on:click={() => (searching = true)}
+      label="Search"
+      icon={MagnifyingGlass}
+    />
     <NavButton href="/" label="Home" icon={Home} />
     <Menu placement="top">
       <NavButton
