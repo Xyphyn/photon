@@ -141,13 +141,6 @@
         bind:selected={$userSettings.leftAlign}
       />
     </Setting>
-    {#if LINKED_INSTANCE_URL}
-      <ToggleSetting
-        title={'Remove "Powered by Photon"'}
-        description="Remove the massive 120x16 div in the top left corner."
-        bind:checked={$userSettings.hidePhoton}
-      />
-    {/if}
   </Section>
 
   <Section title="Navigation">
@@ -162,8 +155,8 @@
     </Setting>
     <ToggleSetting
       bind:checked={$userSettings.dock.noGap}
-      title="Panel"
-      description="Make the dock not float, similar to a panel."
+      title="Panel mode"
+      description="Extend the dock to screen edges, similar to a panel."
     />
   </Section>
 

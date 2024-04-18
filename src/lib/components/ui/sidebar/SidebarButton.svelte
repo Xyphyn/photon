@@ -6,7 +6,12 @@
 
   export let href: string | undefined = undefined
   export let icon: IconSource | undefined = undefined
-  $: selected = href != undefined && $page.url.pathname == href
+  export let selected = false
+  $: {
+    if (href != undefined) {
+      selected = $page.url.pathname == href
+    }
+  }
 </script>
 
 <Button
