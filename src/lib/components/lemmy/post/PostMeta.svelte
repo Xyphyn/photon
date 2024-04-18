@@ -148,7 +148,7 @@
 {#if title && id}
   <a
     href="/post/{getInstance()}/{id}"
-    class="font-medium text-base"
+    class="font-medium text-base w-max"
     class:text-slate-600={$userSettings.markReadPosts && read}
     class:dark:text-zinc-400={$userSettings.markReadPosts && read}
     style="grid-area: title;"

@@ -39,7 +39,8 @@
 >
   {#if searching}
     <div
-      class="w-full h-full absolute z-20 p-2 flex items-center gap-2 backdrop-brightness-0 rounded-full"
+      class="w-full h-full absolute z-20 p-2 flex items-center gap-2 bg-white dark:bg-zinc-950
+      rounded-full"
       transition:scale={{
         start: 0.96,
         duration: 250,

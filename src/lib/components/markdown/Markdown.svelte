@@ -112,8 +112,12 @@
     @apply m-0 leading-[1.5] !important;
   }
 
-  .markdown :global(li > *) {
+  .markdown :global(li > p) {
     @apply m-0 leading-[1.5] !important;
+  }
+
+  .markdown :global(li > p) {
+    @apply contents !important;
   }
 
   .markdown :global(blockquote) {
