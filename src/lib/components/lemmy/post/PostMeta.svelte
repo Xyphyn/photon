@@ -43,7 +43,9 @@
 </script>
 
 <div
-  class="grid w-full meta {community ? 'grid-rows-2' : 'grid-rows-1'} text-xs"
+  class="grid w-full meta {community
+    ? 'grid-rows-2'
+    : 'grid-rows-1'} text-xs min-w-0 max-w-full"
   style={$$props.style ?? ''}
 >
   {#if community}
@@ -148,7 +150,7 @@
 {#if title && id}
   <a
     href="/post/{getInstance()}/{id}"
-    class="font-medium text-base w-max max-w-full"
+    class="font-medium text-base w-full"
     class:text-slate-600={$userSettings.markReadPosts && read}
     class:dark:text-zinc-400={$userSettings.markReadPosts && read}
     style="grid-area: title;"

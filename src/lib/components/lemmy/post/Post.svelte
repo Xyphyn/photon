@@ -29,6 +29,13 @@
   export let view = $userSettings.view
 
   $: type = mediaType(post.post.url, view)
+  $: hideTitle =
+    $userSettings.posts.deduplicateEmbed &&
+    post.post.embed_title == post.post.name
+
+  $: hideBody =
+    $userSettings.posts.deduplicateEmbed &&
+    post.post.embed_description == post.post.body
 </script>
 
 <Material
@@ -62,7 +69,7 @@
       ? 'Subscribed'
       : 'NotSubscribed'}
     id={post.post.id}
-    title={post.post.name}
+    title={hideTitle ? undefined : post.post.name}
     read={post.read}
     style="grid-area: meta;"
   >
@@ -77,7 +84,7 @@
   {#if view == 'list' || view == 'compact'}
     <PostMediaCompact {view} bind:post={post.post} style="grid-area: media;" />
   {/if}
-  {#if post.post.body && !post.post.nsfw && view != 'compact'}
+  {#if post.post.body && !post.post.nsfw && view != 'compact' && !hideBody}
     <PostBody body={post.post.body} {view} style="grid-area: body" />
   {/if}
   {#if actions}

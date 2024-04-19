@@ -85,6 +85,9 @@ interface Settings {
     noGap: boolean
     top: boolean
   }
+  posts: {
+    deduplicateEmbed: boolean
+  }
 }
 
 export const defaultSettings: Settings = {
@@ -143,6 +146,9 @@ export const defaultSettings: Settings = {
   dock: {
     noGap: false,
     top: false
+  },
+  posts: {
+    deduplicateEmbed: true
   }
 }
 
