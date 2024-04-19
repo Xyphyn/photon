@@ -75,7 +75,7 @@
       class="
       {$userSettings.dock.noGap
         ? $userSettings.dock.top
-          ? 'border-b'
+          ? 'border-b shadow-none'
           : 'border-t'
         : 'border rounded-full'}
       border-slate-200 dark:border-zinc-800 shadow-2xl
