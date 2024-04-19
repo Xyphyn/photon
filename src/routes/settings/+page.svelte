@@ -47,9 +47,39 @@
 </h1>
 
 <div class="flex flex-col gap-4" style="scroll-behavior: smooth;">
+  <Section title="Navigation">
+    <div>
+      <Button
+        color="ghost"
+        on:click={() => {
+          $userSettings.dock.noGap = true
+          $userSettings.dock.top = true
+        }}
+        disabled={$userSettings.dock.noGap && $userSettings.dock.top}
+      >
+        Legacy Navigation Style
+      </Button>
+    </div>
+    <Setting>
+      <span slot="title">Dock alignment</span>
+      <span slot="description">Where the dock should be put</span>
+      <MultiSelect
+        options={[true, false]}
+        optionNames={['Top', 'Bottom']}
+        bind:selected={$userSettings.dock.top}
+      />
+    </Setting>
+    <ToggleSetting
+      bind:checked={$userSettings.dock.noGap}
+      title="Panel mode"
+      description="Extend the dock to screen edges, similar to a panel."
+    />
+  </Section>
+
   <Section title="Photon">
     <Setting>
       <span slot="title">Theming</span>
+      <span slot="description">Customize Photon's colors.</span>
       <Button href="/theme">
         Go to themes <Icon src={ArrowRight} size="16" mini slot="suffix" />
       </Button>
@@ -126,12 +156,17 @@
     />
     <ToggleSetting
       bind:checked={$userSettings.expandImages}
-      title="Expand Images"
+      title="Expand images"
       description="Clicking on a post's image brings you to an expanded view rather than
       sending you to the post page."
     />
+    <ToggleSetting
+      bind:checked={$userSettings.posts.deduplicateEmbed}
+      title="Hide duplicate titles/bodies"
+      description="Hides the post title and body if they're the same as the embed."
+    />
     <Setting>
-      <span slot="title">Thumbnail Alignment</span>
+      <span slot="title">Thumbnail alignment</span>
       <span slot="description">
         Where thumbnails should be on the post in list/compact view.
       </span>
@@ -141,19 +176,12 @@
         bind:selected={$userSettings.leftAlign}
       />
     </Setting>
-    {#if LINKED_INSTANCE_URL}
-      <ToggleSetting
-        title={'Remove "Powered by Photon"'}
-        description="Remove the massive 120x16 div in the top left corner."
-        bind:checked={$userSettings.hidePhoton}
-      />
-    {/if}
   </Section>
 
   <Section title="Embeds">
     <ToggleSetting
       title="Click to view"
-      description="Before loading embeds, click. (It is recommended to leave this on, to not load a video you don't want to load.)"
+      description="Don't load an embed until you click it. (It is recommended to leave this on, to not load a video you don't want to load.)"
       bind:checked={$userSettings.embeds.clickToView}
     />
     <Setting>
@@ -166,6 +194,15 @@
         <option value="invidious">Invidious</option>
         <option value="piped">Piped</option>
       </Select>
+    </Setting>
+    <Setting>
+      <span slot="title">Font</span>
+      <span slot="description">What font Photon should use.</span>
+      <MultiSelect
+        options={['inter', 'system', 'browser']}
+        optionNames={['Inter', 'System UI', 'Browser Font']}
+        bind:selected={$userSettings.font}
+      />
     </Setting>
   </Section>
 
@@ -184,11 +221,6 @@
       bind:checked={$userSettings.crosspostOriginalLink}
       title="'Crossposted from' when crossposting"
       description="If enabled, crossposts will include a link to the original post."
-    />
-    <ToggleSetting
-      bind:checked={$userSettings.nsfwBlur}
-      title="NSFW blur"
-      description="Blur images and remove post bodies of NSFW content."
     />
     <Setting>
       <span slot="title">Hide Submissions</span>
@@ -212,15 +244,11 @@
         </Checkbox>
       </div>
     </Setting>
-    <Setting>
-      <span slot="title">Font</span>
-      <span slot="description">What font Photon should use.</span>
-      <MultiSelect
-        options={['inter', 'system', 'browser']}
-        optionNames={['Inter', 'System UI', 'Browser Font']}
-        bind:selected={$userSettings.font}
-      />
-    </Setting>
+    <ToggleSetting
+      bind:checked={$userSettings.nsfwBlur}
+      title="NSFW blur"
+      description="Blur images and remove post bodies of content tagged NSFW."
+    />
     <Setting>
       <span slot="title">Show instances</span>
       <span slot="description">Show items' instances.</span>

@@ -7,77 +7,156 @@
     isAdmin,
   } from '$lib/components/lemmy/moderation/moderation.js'
   import Avatar from '$lib/components/ui/Avatar.svelte'
-  import Logo from '$lib/components/ui/Logo.svelte'
-  import { LINKED_INSTANCE_URL, instance } from '$lib/instance.js'
   import { site } from '$lib/lemmy.js'
-  import { Menu, MenuButton, MenuDivider, Spinner } from 'mono-svelte'
+  import { Button, Menu, MenuButton, MenuDivider, Spinner } from 'mono-svelte'
   import {
     GlobeAlt,
+    Home,
     Icon,
     MagnifyingGlass,
     Newspaper,
     PencilSquare,
     Plus,
     ServerStack,
+    XMark,
   } from 'svelte-hero-icons'
-  import { fly } from 'svelte/transition'
   import Profile from './Profile.svelte'
   import NavButton from './NavButton.svelte'
+  import { scale } from 'svelte/transition'
+  import { expoOut, backOut } from 'svelte/easing'
+  import { flip } from 'svelte/animate'
+  import SearchBar from '$lib/components/lemmy/util/SearchBar.svelte'
 
-  export let title: string | undefined = ''
+  let searching = false
 </script>
 
 <nav
-  class="flex flex-row gap-2 items-center
-   backdrop-blur-lg w-full mx-auto px-4 py-2 z-50 box-border h-16
+  class="flex flex-row gap-2 items-center w-full mx-auto z-50 box-border h-16
+  duration-150
   {$$props.class}
   "
   style={$$props.style}
 >
-  <div class="flex flex-row gap-2 items-center mr-auto">
-    <a
-      href="/"
-      class="flex flex-row items-center gap-2 logo group"
-      title="Home"
+  {#if searching}
+    <div
+      class="w-full h-full absolute z-20 p-2 flex items-center gap-2 bg-white dark:bg-zinc-950
+      rounded-full"
+      transition:scale={{
+        start: 0.96,
+        duration: 250,
+        easing: backOut,
+      }}
     >
-      {#if LINKED_INSTANCE_URL}
-        {#if $site}
-          <Avatar
-            url={$site.site_view.site.icon}
-            alt={$site.site_view.site.name}
-            width={32}
-            res={64}
-            circle={false}
-            class="rounded-md"
-          />
-          <div class="flex flex-row items-center gap-2 max-[500px]:hidden">
-            <span class="opacity-30 text-xl">/</span>
-            {$site.site_view.site.name}
+      <Button
+        size="custom"
+        rounding="pill"
+        class="w-11 h-11 flex-shrink-0"
+        on:click={() => (searching = false)}
+      >
+        <Icon src={XMark} size="18" mini />
+      </Button>
+      <SearchBar let:search let:loading class="!rounded-full z-20">
+        <Button
+          size="custom"
+          rounding="pill"
+          class="w-11 h-11 flex-shrink-0"
+          on:click={search}
+          color="primary"
+          type="submit"
+          {loading}
+        >
+          <Icon src={MagnifyingGlass} size="18" mini slot="prefix" />
+        </Button>
+      </SearchBar>
+    </div>
+  {/if}
+  <div class="flex flex-row gap-2 py-2 px-2 items-center w-full">
+    <Profile
+      placement="top"
+      itemsClass="h-8 md:h-8 z-10"
+      targetClass="z-10 h-10"
+      containerClass="!max-h-[28rem] z-10"
+      buttonClass=""
+    />
+    {#if $profile}
+      <div
+        class="px-2 border-r border-l border-slate-200 dark:border-zinc-900
+    flex flex-row items-center gap-2 [&>*]:flex-shrink-0 overflow-x-auto overflow-y-hidden
+    md:max-w-64 sm:max-w-48 max-w-36 w-full max-[424px]:hidden"
+      >
+        {#each $profile.favorites ?? [] as favorite (favorite.id)}
+          <div
+            class="h-10 w-10 flex"
+            transition:scale={{
+              start: 0.7,
+              easing: backOut,
+              duration: 400,
+              delay: 0,
+            }}
+            animate:flip={{
+              easing: backOut,
+              duration: 400,
+              delay: 0,
+            }}
+          >
+            <NavButton
+              class="w-full h-full bg-slate-100 dark:bg-zinc-900 relative"
+              title={favorite.name}
+              href={favorite.url.toString()}
+              label={favorite.name}
+            >
+              {#if favorite.type == 'post'}
+                <div
+                  class="relative w-full h-full grid place-items-center overflow-visible"
+                >
+                  {#if favorite.subdivision}
+                    <Avatar
+                      alt={favorite.subdivision.name}
+                      url={favorite.subdivision.avatar}
+                      width={32}
+                      res={64}
+                      class=""
+                    />
+                    <Icon
+                      src={PencilSquare}
+                      mini
+                      size="20"
+                      class="absolute -bottom-1 -right-1 rounded-full bg-slate-100 dark:bg-zinc-900 p-0.5"
+                    />
+                  {/if}
+                </div>
+              {:else}
+                <Avatar
+                  alt={favorite.name}
+                  url={favorite.avatar}
+                  res={64}
+                  width={32}
+                  class="w-full"
+                />
+                <Icon
+                  src={Newspaper}
+                  mini
+                  size="20"
+                  class="absolute -bottom-1 -right-1 rounded-full bg-slate-100 dark:bg-zinc-900 p-0.5"
+                />
+              {/if}
+            </NavButton>
           </div>
-        {:else}
-          <Spinner width={32} />
+        {/each}
+      </div>
+    {/if}
+    <div class="ml-auto" />
+    {#if amModOfAny($profile?.user)}
+      <NavButton href="/moderation" label="Moderation" class="relative">
+        {#if ($profile?.user?.notifications.reports ?? 0) > 0}
+          <div
+            class="rounded-full w-2 h-2 bg-red-500 absolute -top-1 -left-1"
+          />
         {/if}
-      {:else}
-        <Logo width={40} />
-        <div class="flex flex-row items-center gap-2 max-[1000px]:hidden">
-          <span class="opacity-30 text-xl">/</span>
-          <span class="text-sm font-bold grid place-items-start">
-            {#key title || $instance}
-              <span
-                in:fly={{ y: -12 }}
-                out:fly={{ y: 12 }}
-                style="grid-row: 1; grid-column: 1; max-width: 24ch;"
-                class="overflow-hidden break-words overflow-ellipsis whitespace-nowrap"
-              >
-                {title || $instance}
-              </span>
-            {/key}
-          </span>
-        </div>
-      {/if}
-    </a>
-  </div>
-  <div class="flex flex-row gap-2 py-2 px-2 items-center">
+        <ShieldIcon let:isSelected slot="icon" filled={isSelected} width={18} />
+      </NavButton>
+    {/if}
+    <NavButton href="/communities" label="Explore" icon={GlobeAlt} />
     {#if $profile?.user && isAdmin($profile.user)}
       <NavButton
         href="/admin"
@@ -92,19 +171,13 @@
         {/if}
       </NavButton>
     {/if}
-    {#if amModOfAny($profile?.user)}
-      <NavButton href="/moderation" label="Moderation" class="relative">
-        {#if ($profile?.user?.notifications.reports ?? 0) > 0}
-          <div
-            class="rounded-full w-2 h-2 bg-red-500 absolute -top-1 -left-1"
-          />
-        {/if}
-        <ShieldIcon slot="icon" filled width={15} />
-      </NavButton>
-    {/if}
-    <NavButton href="/search" label="Search" icon={MagnifyingGlass} />
-    <NavButton href="/communities" label="Explore" icon={GlobeAlt} />
-    <Menu placement="bottom-end" targetClass="h-8">
+    <NavButton
+      on:click={() => (searching = true)}
+      label="Search"
+      icon={MagnifyingGlass}
+    />
+    <NavButton href="/" label="Home" icon={Home} />
+    <Menu placement="top">
       <NavButton
         class="relative"
         color="primary"
@@ -138,11 +211,5 @@
         </span>
       {/if}
     </Menu>
-    <Profile
-      placement="bottom-end"
-      itemsClass="h-8 md:h-8 z-10"
-      targetClass="z-10 h-8"
-      containerClass="!max-h-[28rem] z-10"
-    />
   </div>
 </nav>

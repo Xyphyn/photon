@@ -28,6 +28,7 @@
   import { Button, Popover, buttonColor, toast } from 'mono-svelte'
   import { site } from '$lib/lemmy.js'
   import { fly } from 'svelte/transition'
+  import { backOut } from 'svelte/easing'
 
   export let post: Post
   export let vote: number = 0
@@ -69,8 +70,8 @@
         {#key upvotes}
           <span
             style="grid-column: 1; grid-row: 1;"
-            in:fly={{ duration: 200, y: -6 }}
-            out:fly={{ duration: 200, y: 6 }}
+            in:fly={{ duration: 400, y: -10, easing: backOut }}
+            out:fly={{ duration: 400, y: 10, easing: backOut }}
           >
             <FormattedNumber number={upvotes} />
           </span>
@@ -91,8 +92,8 @@
           {#key downvotes}
             <span
               style="grid-column: 1; grid-row: 1;"
-              in:fly={{ duration: 200, y: -6 }}
-              out:fly={{ duration: 200, y: 6 }}
+              in:fly={{ duration: 400, y: -10, easing: backOut }}
+              out:fly={{ duration: 400, y: 10, easing: backOut }}
             >
               <FormattedNumber number={downvotes} />
             </span>

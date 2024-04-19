@@ -34,17 +34,19 @@
 
 <Menu {...$$restProps}>
   <button
-    class="w-8 h-8 rounded-full ring-1 ring-slate-200 dark:ring-zinc-700
+    class="w-10 h-10 rounded-full ring-1 ring-slate-200 dark:ring-zinc-700
     transition-all bg-slate-50 dark:bg-zinc-900 relative
-    hover:dark:brightness-125 hover:brightness-95"
+    hover:dark:brightness-125 hover:brightness {$$props.buttonClass}"
     aria-label="Profile"
     slot="target"
   >
     {#if $profile?.user}
-      <div class="w-8 h-8 aspect-square object-cover rounded-full">
+      <div
+        class="w-10 h-10 aspect-square object-cover rounded-full grid place-items-center"
+      >
         <Avatar
           url={$profile.user.local_user_view.person.avatar}
-          width={32}
+          width={38}
           alt={$profile.user.local_user_view.person.name}
         />
       </div>

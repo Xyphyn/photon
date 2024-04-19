@@ -14,6 +14,7 @@
   import { amModOfAny } from '$lib/components/lemmy/moderation/moderation.js'
   import { feature } from '$lib/version.js'
   import { userSettings } from '$lib/settings.js'
+  import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
 
   export let data
 
@@ -91,10 +92,11 @@
     >
       <span class="flex flex-row items-center gap-1">
         <Icon src={ChartBar} size="16" mini />
-        <span class="font-medium text-black dark:text-white">
-          {$site?.site_view.counts.users_active_day}
-        </span>
-        <span class="font-normal">Active users</span>
+        <FormattedNumber
+          number={$site?.site_view.counts.users_active_day ?? 0}
+          class="text-black dark:text-white font-medium"
+        />
+        <span class="font-normal">active users</span>
       </span>
     </Pageination>
   </div>

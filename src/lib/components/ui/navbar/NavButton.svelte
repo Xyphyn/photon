@@ -1,23 +1,33 @@
 <script lang="ts">
+  import { page } from '$app/stores'
   import { Button } from 'mono-svelte'
   import { Icon, type IconSource } from 'svelte-hero-icons'
 
   export let label: string
   export let icon: IconSource | undefined = undefined
+  export let href: string | undefined = undefined
+
+  $: isSelected = href != undefined && $page.url.pathname == href
 </script>
 
 <Button
+  color="tertiary"
   {...$$restProps}
-  class="px-3 py-1.5 max-md:py-0 max-md:px-0 max-md:h-8 max-md:w-8 {$$props.class ??
-    ''}"
+  on:click
+  class="rounded-full w-10 h-10 flex-shrink-0 {isSelected
+    ? 'bg-slate-200 dark:bg-zinc-900 text-primary-900 dark:!text-primary-100'
+    : ''} {$$props.class ?? ''}"
   size="custom"
+  {href}
+  rounding="pill"
   title={label}
+  style="transition-property: background-color, filter;"
 >
   {#if icon}
-    <Icon src={icon} mini size="16" />
+    <Icon src={icon} solid={isSelected} size="18" />
   {:else}
-    <slot name="icon" />
+    <slot {isSelected} name="icon" />
   {/if}
-  <span class="max-md:hidden">{label}</span>
+  <!-- <span class="max-md:hidden">{label}</span> -->
   <slot />
 </Button>

@@ -1,3 +1,4 @@
+import { profile } from '$lib/auth'
 import type {
   CommentReportView,
   CommentView,
@@ -10,6 +11,7 @@ import type {
   PrivateMessageReportView,
   PrivateMessageView,
 } from 'lemmy-js-client'
+import { get } from 'svelte/store'
 
 export type Result =
   | PostView
@@ -66,3 +68,30 @@ export const isCommentReport = (item: Result): item is CommentReportView =>
 export const isPrivateMessageReport = (
   item: Result
 ): item is PrivateMessageReportView => 'private_message_report' in item
+
+export interface ResumableItem {
+  url: URL
+  id: number
+  name: string
+  avatar?: string
+  type: 'community' | 'post'
+  subdivision?: {
+    avatar?: string
+    name: string
+  }
+}
+
+export function addResumable(item: ResumableItem) {
+  const p = get(profile)
+  if (!p) return
+
+  let favs = p.favorites ?? []
+  if (favs.map((fav) => fav.url.toString()).includes(item.url.toString()))
+    return
+  if (favs.length >= 5) favs.pop()
+  favs.unshift(item)
+  profile.update(() => ({
+    ...p,
+    favorites: favs
+  }))
+}

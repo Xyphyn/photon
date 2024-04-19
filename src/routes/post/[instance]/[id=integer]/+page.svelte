@@ -46,9 +46,14 @@
   import { feature } from '$lib/version.js'
   import { publishedToDate } from '$lib/components/util/date.js'
   import PostMedia from '$lib/components/lemmy/post/media/PostMedia.svelte'
-  import { mediaType } from '$lib/components/lemmy/post/helpers.js'
+  import {
+    bestImageURL,
+    mediaType,
+    optimizeImageURL,
+  } from '$lib/components/lemmy/post/helpers.js'
   import Post from '$lib/components/lemmy/post/Post.svelte'
   import Expandable from '$lib/components/ui/Expandable.svelte'
+  import { addResumable } from '$lib/lemmy/item.js'
 
   export let data
 
@@ -78,6 +83,21 @@
           if ($profile?.jwt) fetchOnHome($profile.jwt)
         },
         duration: 9999 * 1000,
+      })
+    }
+    if ($profile) {
+      addResumable({
+        avatar: post.post_view.post.thumbnail_url
+          ? optimizeImageURL(post.post_view.post.thumbnail_url, 64)
+          : undefined,
+        id: post.post_view.post.id,
+        url: $page.url,
+        name: post.post_view.post.name,
+        type: 'post',
+        subdivision: {
+          name: post.post_view.community.name,
+          avatar: post.post_view.community.icon,
+        },
       })
     }
   })

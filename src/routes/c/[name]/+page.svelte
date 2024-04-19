@@ -21,6 +21,7 @@
   } from 'svelte-hero-icons'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { profile } from '$lib/auth'
+  import { addResumable } from '$lib/lemmy/item.js'
 
   export let data
 
@@ -32,6 +33,18 @@
         'lastSeenCommunity',
         data.community.community_view.community
       )
+  })
+
+  afterNavigate(() => {
+    if ($profile) {
+      addResumable({
+        avatar: data.community.community_view.community.icon,
+        id: data.community.community_view.community.id,
+        url: $page.url,
+        name: data.community.community_view.community.title,
+        type: 'community',
+      })
+    }
   })
 
   onDestroy(() => {

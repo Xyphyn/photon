@@ -6,6 +6,6 @@
   }
 </script>
 
-<span>
+<span class={$$props.class ?? ''}>
   {Intl.NumberFormat(locale, options).format(number)}
 </span>

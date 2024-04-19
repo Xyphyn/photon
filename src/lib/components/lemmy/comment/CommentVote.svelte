@@ -16,6 +16,7 @@
   import { vote as voteItem } from '$lib/lemmy/contentview'
   import { shouldShowVoteColor } from '../post/PostVote.svelte'
   import { fly } from 'svelte/transition'
+  import { backOut } from 'svelte/easing'
 
   export let vote: number = 0
   export let upvotes: number
@@ -48,8 +49,8 @@
       {#key upvotes}
         <span
           style="grid-column: 1; grid-row: 1;"
-          in:fly={{ duration: 200, y: -6 }}
-          out:fly={{ duration: 200, y: 6 }}
+          in:fly={{ duration: 400, y: -10, easing: backOut }}
+          out:fly={{ duration: 400, y: 10, easing: backOut }}
         >
           <FormattedNumber number={upvotes} />
         </span>
@@ -69,8 +70,8 @@
       {#key downvotes}
         <span
           style="grid-column: 1; grid-row: 1;"
-          in:fly={{ duration: 200, y: -6 }}
-          out:fly={{ duration: 200, y: 6 }}
+          in:fly={{ duration: 400, y: -10, easing: backOut }}
+          out:fly={{ duration: 400, y: 10, easing: backOut }}
         >
           <FormattedNumber number={downvotes} />
         </span>

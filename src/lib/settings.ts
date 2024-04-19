@@ -81,6 +81,13 @@ interface Settings {
     clickToView: boolean
     youtube: 'youtube' | 'invidious' | 'piped'
   }
+  dock: {
+    noGap: boolean
+    top: boolean
+  }
+  posts: {
+    deduplicateEmbed: boolean
+  }
 }
 
 export const defaultSettings: Settings = {
@@ -135,6 +142,13 @@ export const defaultSettings: Settings = {
   embeds: {
     clickToView: true,
     youtube: 'youtube',
+  },
+  dock: {
+    noGap: false,
+    top: false
+  },
+  posts: {
+    deduplicateEmbed: true
   }
 }
 

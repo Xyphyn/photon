@@ -17,6 +17,7 @@
   import { profile } from '$lib/auth.js'
   import { Button } from 'mono-svelte'
   import { afterNavigate } from '$app/navigation'
+  import { backOut } from 'svelte/easing'
 
   export let nodes: CommentNodeI[]
   export let isParent: boolean
@@ -106,7 +107,7 @@
 </script>
 
 <ul
-  in:fly={{ opacity: 0, y: -4 }}
+  in:fly={{ opacity: 0, y: -4, duration: 400, easing: backOut }}
   class={isParent
     ? 'divide-y dark:divide-zinc-800 divide-slate-100'
     : 'pl-3.5 border-l border-slate-200 dark:border-zinc-800 my-1'}

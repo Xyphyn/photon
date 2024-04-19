@@ -11,6 +11,7 @@
   import {
     colors,
     colorsToVars,
+    defaultColors,
     inDarkLegacyTheme,
     legacyTheme,
   } from '$lib/ui/colors.js'
@@ -73,8 +74,8 @@
   <meta
     name="theme-color"
     content={darklegacyTheme
-      ? $colors?.zinc?.[950] ?? '#09090b'
-      : $colors?.slate?.[50] ?? '#f8fafc'}
+      ? $colors?.zinc?.[925] ?? defaultColors.zinc[925]
+      : $colors?.slate?.[25] ?? defaultColors.slate[25]}
   />
   {#if $site}
     <title>{$site.site_view.site.name}</title>
@@ -108,14 +109,6 @@
   <ExpandableImage />
   <ModalContainer />
 
-  <Navbar
-    slot="navbar"
-    let:style={s}
-    let:class={c}
-    class={c}
-    style={s}
-    {title}
-  />
   <Sidebar
     route={$page.route.id ?? ''}
     slot="sidebar"
@@ -128,13 +121,21 @@
     slot="main"
     let:style={s}
     let:class={c}
-    class="p-3 sm:p-6 min-w-0 w-full flex flex-col min-h-full relative {c}"
+    class="p-4 sm:p-6 min-w-0 w-full flex flex-col min-h-full relative {c}"
     style={s}
     class:max-w-6xl={$userSettings.newWidth}
     id="main"
   >
     <slot />
   </main>
+  <Navbar
+    slot="navbar"
+    let:style={s}
+    let:class={c}
+    class={c}
+    style={s}
+    {title}
+  />
   <div slot="suffix" let:class={c} let:style={s} class={c} style={s}>
     {#if $page.data.slots?.sidebar?.component}
       <svelte:component
@@ -148,6 +149,7 @@
         taglines={$site.taglines}
         admins={$site.admins}
         version={$site.version}
+        class="pt-4"
       />
     {:else}
       <div class="h-64 w-full grid place-items-center">
