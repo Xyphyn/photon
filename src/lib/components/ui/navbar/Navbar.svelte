@@ -31,7 +31,7 @@
 </script>
 
 <nav
-  class="flex flex-row gap-2 items-center w-full mx-auto z-50 box-border h-16
+  class="flex flex-row gap-2 items-center w-full mx-auto z-50 box-border p-0.5
   duration-150
   {$$props.class}
   "
