@@ -68,7 +68,7 @@ export interface Colors {
 
 export const defaultColors = {
   slate: {
-    25: 'var(--c-s-25,rgb(252,253,254))',
+    25: 'var(--c-s-25,#fcfdfe)',
     50: `var(--c-s-50,#f8fafc)`,
     100: `var(--c-s-100,#f1f5f9)`,
     200: `var(--c-s-200,#e2e8f0)`,

@@ -28,7 +28,7 @@ export default {
       },
       colors: {
         slate: {
-          25: 'var(--c-s-25,rgb(252,253,254))',
+          25: 'var(--c-s-25,#fcfdfe)',
           50: `var(--c-s-50,${colors.slate[50]})`,
           100: `var(--c-s-100,${colors.slate[100]})`,
           200: `var(--c-s-200,#e8edf4)`,
