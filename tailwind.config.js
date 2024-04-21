@@ -13,6 +13,8 @@ export default {
       system: ['system-ui'],
       serif: ['serif'],
       inter: ['Inter', 'system-ui', 'sans-serif'],
+      nunito: ['Nunito', 'system-ui', 'sans-serif'],
+      display: ['Satoshi', 'system-ui', 'sans-serif']
     },
     extend: {
       animation: {

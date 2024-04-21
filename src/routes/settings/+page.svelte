@@ -199,8 +199,8 @@
       <span slot="title">Font</span>
       <span slot="description">What font Photon should use.</span>
       <MultiSelect
-        options={['inter', 'system', 'browser']}
-        optionNames={['Inter', 'System UI', 'Browser Font']}
+        options={['inter', 'satoshi/nunito', 'system', 'browser']}
+        optionNames={['Inter', 'Satoshi/Nunito', 'System UI', 'Browser Font']}
         bind:selected={$userSettings.font}
       />
     </Setting>

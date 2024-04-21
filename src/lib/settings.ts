@@ -66,7 +66,7 @@ interface Settings {
   debugInfo: boolean
   expandImages: boolean
 
-  font: 'inter' | 'system' | 'browser'
+  font: 'inter' | 'satoshi/nunito' | 'system' | 'browser'
   leftAlign: boolean
   hidePhoton: boolean
 

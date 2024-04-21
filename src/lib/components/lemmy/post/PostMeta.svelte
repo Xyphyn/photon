@@ -150,7 +150,9 @@
 {#if title && id}
   <a
     href="/post/{getInstance()}/{id}"
-    class="font-medium text-base w-full"
+    class="text-lg leading-6 w-full {$userSettings.font == 'satoshi/nunito'
+      ? 'font-display font-semibold'
+      : 'font-medium'}"
     class:text-slate-600={$userSettings.markReadPosts && read}
     class:dark:text-zinc-400={$userSettings.markReadPosts && read}
     style="grid-area: title;"

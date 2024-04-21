@@ -101,7 +101,9 @@
     ? 'font-inter'
     : $userSettings.font == 'system'
       ? 'font-system'
-      : 'font-sans'}"
+      : $userSettings.font == 'satoshi/nunito'
+        ? 'font-nunito'
+        : 'font-sans'}"
   route={$page.route}
 >
   <Moderation />

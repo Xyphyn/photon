@@ -24,6 +24,18 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Satoshi';
+  src: url('/font/Satoshi.woff2') format('woff2');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Nunito';
+  src: url('/font/Nunito.woff2') format('woff2');
+  font-display: swap;
+}
+
 body {
   @apply bg-slate-50 text-slate-900 dark:bg-zinc-950 dark:text-zinc-100 accent-slate-950 dark:accent-zinc-50;
 }

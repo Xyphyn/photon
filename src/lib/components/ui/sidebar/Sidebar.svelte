@@ -25,6 +25,7 @@
   import { DEFAULT_INSTANCE_URL, LINKED_INSTANCE_URL } from '$lib/instance.js'
   import Expandable from '$lib/components/ui/Expandable.svelte'
   import EndPlaceholder from '../EndPlaceholder.svelte'
+  import Application from '../../../../routes/admin/applications/Application.svelte'
 </script>
 
 <nav
@@ -32,7 +33,7 @@
   gap-1 h-screen {$$props.class}"
   style={$$props.style}
 >
-  {#if $profile}
+  {#if $profile?.jwt}
     <SidebarButton icon={UserCircle} href="/profile/user">
       Profile
     </SidebarButton>
@@ -48,6 +49,22 @@
       {/if}
     </SidebarButton>
     <SidebarButton icon={Bookmark} href="/saved">Saved</SidebarButton>
+  {:else}
+    <SidebarButton href="/login" title="Log In" icon={ArrowLeftOnRectangle}>
+      <span slot="label">Log In</span>
+    </SidebarButton>
+    <SidebarButton href="/signup" title="Sign Up" icon={Identification}>
+      <span slot="label">Sign Up</span>
+    </SidebarButton>
+    {#if LINKED_INSTANCE_URL === undefined}
+      <SidebarButton
+        href="/accounts"
+        title="Change Instance"
+        icon={ServerStack}
+      >
+        <span slot="label">Change Instance</span>
+      </SidebarButton>
+    {/if}
   {/if}
   {#if $profileData.profiles.length >= 1}
     <hr class="border-slate-200 dark:border-zinc-900 my-1" />
@@ -92,21 +109,5 @@
       </span>
       <CommunityList items={$profile.user.follows.map((i) => i.community)} />
     </Expandable>
-  {:else}
-    <SidebarButton href="/login" title="Log In" icon={ArrowLeftOnRectangle}>
-      <span slot="label">Log In</span>
-    </SidebarButton>
-    <SidebarButton href="/signup" title="Sign Up" icon={Identification}>
-      <span slot="label">Sign Up</span>
-    </SidebarButton>
-    {#if LINKED_INSTANCE_URL === undefined}
-      <SidebarButton
-        href="/accounts"
-        title="Change Instance"
-        icon={ServerStack}
-      >
-        <span slot="label">Change Instance</span>
-      </SidebarButton>
-    {/if}
   {/if}
 </nav>
