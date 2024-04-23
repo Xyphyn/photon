@@ -195,7 +195,7 @@
         <option value="piped">Piped</option>
       </Select>
     </Setting>
-    <Setting>
+    <Setting vertical>
       <span slot="title">Font</span>
       <span slot="description">What font Photon should use.</span>
       <MultiSelect
