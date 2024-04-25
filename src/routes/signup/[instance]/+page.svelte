@@ -49,6 +49,13 @@
     : ''
 
   async function submit() {
+    if (password.length < 10) {
+      return toast({
+        content: `Password needs to have at least 10 characters`,
+        type: 'error',
+      })
+    }
+
     submitting = true
 
     try {
@@ -141,7 +148,7 @@
     />
     <TextInput
       bind:value={password}
-      label="Password"
+      label="Password (min. 10 characters)"
       required
       type="password"
     />
