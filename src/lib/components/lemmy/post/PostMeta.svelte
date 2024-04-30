@@ -150,7 +150,9 @@
 {#if title && id}
   <a
     href="/post/{getInstance()}/{id}"
-    class="text-lg leading-6 w-full {$userSettings.font == 'satoshi/nunito'
+    class="text-lg leading-6 w-full hover:underline hover:text-primary-900 hover:dark:text-primary-100
+    transition-colors
+    {$userSettings.font == 'satoshi/nunito'
       ? 'font-display font-semibold'
       : 'font-medium'}"
     class:text-slate-600={$userSettings.markReadPosts && read}
