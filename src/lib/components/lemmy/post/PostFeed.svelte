@@ -111,7 +111,10 @@
         >
           <Post
             hideCommunity={community}
-            view={$userSettings.view}
+            view={(post.post.featured_community || post.post.featured_local) &&
+            $userSettings.posts.compactFeatured
+              ? 'compact'
+              : $userSettings.view}
             {post}
             class="transition-all duration-250 {post.withCrossposts &&
             viewPost != post.post.id

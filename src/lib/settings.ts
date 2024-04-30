@@ -127,12 +127,12 @@ export const defaultSettings: Settings = {
     youtube: 'youtube',
   },
   dock: {
-    noGap: false,
-    top: false
+    noGap: toBool(env.PUBLIC_DOCK_PANEL) ?? false,
+    top: toBool(env.PUBLIC_DOCK_TOP) ?? false
   },
   posts: {
-    deduplicateEmbed: true,
-    compactFeatured: true
+    deduplicateEmbed: toBool(env.PUBLIC_DEDUPLICATE_EMBED) ?? true,
+    compactFeatured: toBool(env.PUBLIC_COMPACT_FEATURED) ?? true
   }
 }
 

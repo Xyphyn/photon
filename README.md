@@ -5,7 +5,7 @@ Jump to:
 - [Self-hosting](#self-hosting)
 - [Public Instances](#public-instances)
 
-An sleek web client for Lemmy using mono-ui, a custom design system.
+A better, more intuitive way to use Lemmy, with a cleaner UI, more features, and greater speed.
 
 ## Screenshots
 
@@ -50,35 +50,31 @@ The most common settings you'll use are `PUBLIC_INSTANCE_URL`. Some selfhosters 
 
 `PUBLIC_MIGRATE_COOKIE` is useful if you want to switch Photon to your default frontend. It'll convert the logged in cookie from lemmy-ui to a Photon account. It will only work if you have `PUBLIC_INSTANCE_URL` set, and it will login with that instance.
 
-The following environment variables can be set to override the default settings:
+`PUBLIC_SSR_ENABLED` will have the initial load be rendered by the server, before the client router is loaded. This can lead to a faster feeling load initally, and will allow your instance to be better indexed by search bots, and allow users with JavaScript disabled to view Photon with a basic view.
 
-| Variable                        | Values              | Default Value                          |
-| ------------------------------- | ------------------- | -------------------------------------- |
-| PUBLIC_INSTANCE_URL             | URL                 | `lemmy.ml`                             |
-| PUBLIC_FAVICON                  | URL                 | `/img/logo-background.svg              |
-| PUBLIC_LOCK_TO_INSTANCE         | `bool`              | `true` if `PUBLIC_INSTANCE_URL` is set |
-| PUBLIC_SSR_ENABLED              | `bool`              | `false`                                |
-| PUBLIC_MIGRATE_COOKIE           | `bool`              | `false`                                |
-| PUBLIC_THEME                    | system\|dark\|light | system                                 |
-| PUBLIC_EXPANDABLE_IMAGES        | `bool`              | true                                   |
-| PUBLIC_MARK_READ_POSTS          | `bool`              | true                                   |
-| PUBLIC_REVERT_VOTE_COLORS       | `bool`              | false                                  |
-| PUBLIC_SHOW_INSTANCES_USER      | `bool`              | false                                  |
-| PUBLIC_SHOW_INSTANCES_COMMUNITY | `bool`              | true                                   |
-| PUBLIC_SHOW_INSTANCES_COMMENTS  | `bool`              | false                                  |
-| PUBLIC_SHOW_COMPACT_POSTS       | `bool`              | false                                  |
-| PUBLIC_DEFAULT_FEED_SORT        | `SortType`          | Active                                 |
-| PUBLIC_DEFAULT_FEED             | `ListingType`       | Local                                  |
-| PUBLIC_DEFAULT_COMMENT_SORT     | `CommentSortType`   | Hot                                    |
-| PUBLIC_HIDE_DELETED             | `bool`              | true                                   |
-| PUBLIC_HIDE_REMOVED             | `bool`              | false                                  |
-| PUBLIC_FULL_WIDTH_LAYOUT        | `bool`              | false                                  |
-| PUBLIC_EXPAND_SIDEBAR           | `bool`              | true                                   |
-| PUBLIC_DISPLAY_NAMES            | `bool`              | true                                   |
-| PUBLIC_NSFW_BLUR                | `bool`              | true                                   |
-| PUBLIC_NEW_VOTE_BUTTONS         | `bool`              | false                                  |
-| PUBLIC_RANDOM_PLACEHOLDERS      | `bool`              | true                                   |
-| PUBLIC_REMOVE_CREDIT            | `bool`              | false                                  |
+These are the most important environment variables that you can change:
+
+| Variable                    | Values              | Default Value                          |
+| --------------------------- | ------------------- | -------------------------------------- |
+| PUBLIC_INSTANCE_URL         | URL                 | `lemmy.ml`                             |
+| PUBLIC_INTERNAL_INSTANCE    | URL                 | Value of `PUBLIC_INSTANCE_URL`         |
+| PUBLIC_LOCK_TO_INSTANCE     | `bool`              | `true` if `PUBLIC_INSTANCE_URL` is set |
+| PUBLIC_FAVICON              | URL                 | `/img/logo-background.svg              |
+| PUBLIC_SSR_ENABLED          | `bool`              | `false`                                |
+| PUBLIC_MIGRATE_COOKIE       | `bool`              | `false`                                |
+| PUBLIC_THEME                | system\|dark\|light | system                                 |
+| PUBLIC_EXPANDABLE_IMAGES    | `bool`              | true                                   |
+| PUBLIC_MARK_READ_POSTS      | `bool`              | true                                   |
+| PUBLIC_DEFAULT_FEED_SORT    | `SortType`          | Active                                 |
+| PUBLIC_DEFAULT_FEED         | `ListingType`       | Local                                  |
+| PUBLIC_DEFAULT_COMMENT_SORT | `CommentSortType`   | Hot                                    |
+| PUBLIC_HIDE_DELETED         | `bool`              | true                                   |
+| PUBLIC_HIDE_REMOVED         | `bool`              | true                                   |
+| PUBLIC_NSFW_BLUR            | `bool`              | true                                   |
+| PUBLIC_RANDOM_PLACEHOLDERS  | `bool`              | true                                   |
+| PUBLIC_REMOVE_CREDIT        | `bool`              | false                                  |
+
+There are more options available that you can see at `src/lib/settings.ts`, by looking at the `defaultSettings` object.
 
 The values for `SortType`, `ListingType`, and `CommentSortType` are defined by the lemmy-js-client library.
 
@@ -137,12 +133,11 @@ Want your instance added here? Make a GitHub issue or make a PR! (this is for ge
 | [phtn.app (Official)](https://phtn.app)                                                 | 🇺🇸 US West   | [photon@xylight.dev](mailto:photon@xylight.dev)                                       |
 | [ph.opnxng.com](https://ph.opnxng.com)                                                  | 🇸🇬 Singapore | [about.opnxng.com](https://about.opnxng.com)                                          |
 | [photon.thesanewriter.com](https://photon.thesanewriter.com)                            | 🇺🇸 US East   | [thesanewriter@lemmy.thesanewriter.com](mailto:thesanewriter@lemmy.thesanewriter.com) |
-| [p.darrennathanael.com](https://p.darrennathanael.com)                            | 🇺🇸 US East   | [noc@darrennathanael.com](mailto:noc@darrennathanael.com) |
+| [p.darrennathanael.com](https://p.darrennathanael.com)                                  | 🇺🇸 US East   | [noc@darrennathanael.com](mailto:noc@darrennathanael.com)                             |
 | [p.lemmy.ohaa.xyz](https://p.lemmy.ohaa.xyz)                                            | 🇦🇹 Austria   | (???)                                                                                 |
 | [~~photon.zhenyapav.com~~ (Has not updated since v1.9.2)](https://photon.zhenyapav.com) | 🇮🇸 Iceland   | [zhenyapav@zhenyapav.com](mailto:zhenyapav@zhenyapav.com)                             |
 | [~~ph.buckodr.ink~~ (Has not updated since v1.21.1)](https://ph.buckodr.ink)            | 🇺🇸 US East   | [admin@buckodr.ink](mailto:admin@buckodr.ink)                                         |
 | [phtn.ngn.tf](https://phtn.ngn.tf)                                                      | 🇹🇷 Turkey    | [services@ngn.tf](mailto:services@ngn.tf)                                             |
-
 
 ## Donate
 

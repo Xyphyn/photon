@@ -208,6 +208,11 @@
 
   <Section title="Lemmy">
     <ToggleSetting
+      bind:checked={$userSettings.posts.compactFeatured}
+      title="Compact featured posts"
+      description="Make featured posts more compact."
+    />
+    <ToggleSetting
       bind:checked={$userSettings.markPostsAsRead}
       title="Mark read posts"
       description="Mark a post as read when you click on it."
