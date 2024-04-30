@@ -75,6 +75,7 @@ interface Settings {
   }
   posts: {
     deduplicateEmbed: boolean
+    compactFeatured: boolean
   }
 }
 
@@ -130,7 +131,8 @@ export const defaultSettings: Settings = {
     top: false
   },
   posts: {
-    deduplicateEmbed: true
+    deduplicateEmbed: true,
+    compactFeatured: true
   }
 }
 

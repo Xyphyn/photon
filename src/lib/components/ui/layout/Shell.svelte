@@ -16,7 +16,7 @@
       if (top) return '!pt-22'
       else return '!pb-22'
     } else {
-      if (!content) return ''
+      if (!content) return '!pt-4'
 
       if (top) return '!pt-24'
       else return '!pb-24'
@@ -80,8 +80,7 @@
     />
     <slot
       name="suffix"
-      class="max-xl:hidden w-full sticky top-0 left-0 h-max bg-slate-50 dark:bg-zinc-950
-      {sidePadding}"
+      class="max-xl:hidden w-full sticky top-0 left-0 h-max bg-slate-50 dark:bg-zinc-950 {sidePadding}"
       style="grid-area: suffix;"
     />
   </div>

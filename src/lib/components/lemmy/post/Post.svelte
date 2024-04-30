@@ -31,11 +31,13 @@
   $: type = mediaType(post.post.url, view)
   $: hideTitle =
     $userSettings.posts.deduplicateEmbed &&
-    post.post.embed_title == post.post.name
+    post.post.embed_title == post.post.name &&
+    view != 'compact'
 
   $: hideBody =
     $userSettings.posts.deduplicateEmbed &&
-    post.post.embed_description == post.post.body
+    post.post.embed_description == post.post.body &&
+    view != 'compact'
 </script>
 
 <Material
