@@ -143,7 +143,6 @@
       <svelte:component
         this={$page.data.slots.sidebar.component}
         {...$page.data.slots.sidebar.props}
-        class={c}
       />
     {:else if $site}
       <SiteCard
@@ -151,7 +150,7 @@
         taglines={$site.taglines}
         admins={$site.admins}
         version={$site.version}
-        class="pt-4"
+        class="!pt-0"
       />
     {:else}
       <div class="h-64 w-full grid place-items-center">

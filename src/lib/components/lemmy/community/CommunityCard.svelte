@@ -184,9 +184,14 @@
   </Modal>
 {/if}
 
-<StickyCard class="min-w-full {$$props.class}">
+<StickyCard class="min-w-full pt-0 {$$props.class}">
   <div class="flex flex-row gap-3 items-center">
-    <CommunityLink name={false} avatar avatarSize={32} community={community_view.community} />
+    <CommunityLink
+      name={false}
+      avatar
+      avatarSize={32}
+      community={community_view.community}
+    />
     <div class="flex flex-col gap-0">
       <h1 class="font-bold text-lg">
         <a
@@ -208,8 +213,10 @@
       </span>
     </div>
   </div>
-  
-  <div class="flex flex-col divide-y divide-slate-300 dark:divide-zinc-800 [&>*]:py-3">
+
+  <div
+    class="flex flex-col divide-y divide-slate-300 dark:divide-zinc-800 [&>*]:py-3"
+  >
     <Expandable class="!pt-0">
       <span slot="title">About</span>
       <Markdown source={community_view.community.description} />
@@ -218,8 +225,16 @@
     <Expandable>
       <span slot="title">Stats</span>
       <div class="flex flex-row gap-4 flex-wrap">
-        <LabelStat label="Members" content={community_view.counts.subscribers.toString()} formatted />
-        <LabelStat label="Posts" content={community_view.counts.posts.toString()} formatted />
+        <LabelStat
+          label="Members"
+          content={community_view.counts.subscribers.toString()}
+          formatted
+        />
+        <LabelStat
+          label="Posts"
+          content={community_view.counts.posts.toString()}
+          formatted
+        />
       </div>
     </Expandable>
 
