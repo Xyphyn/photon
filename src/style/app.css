@@ -60,7 +60,7 @@ body {
 }
 
 #nprogress .bar {
-  @apply bg-black dark:bg-white !important;
+  @apply bg-primary-900 dark:bg-primary-100 !important;
   z-index: 999 !important;
   height: 1px !important;
 }

@@ -7,7 +7,8 @@
   import type { SortType } from 'lemmy-js-client'
   import { Select } from 'mono-svelte'
   import { ChartBar, Clock, Icon } from 'svelte-hero-icons'
-  import { fly } from 'svelte/transition'
+  import { backOut } from 'svelte/easing'
+  import { fly, slide } from 'svelte/transition'
 
   export let selected: string
   export let navigate: boolean = true
@@ -20,10 +21,38 @@
     : undefined
 </script>
 
-<div class="flex flex-row gap-2 {$$props.class}">
+<div class="flex flex-row {$$props.class}">
+  <Select
+    {...$$restProps}
+    class={selected?.startsWith('Top') ? 'rounded-r-none' : ''}
+    bind:value={sort}
+    on:change={(e) => {
+      setSelected()
+      if (navigate) searchParam($page.url, 'sort', selected, 'page', 'cursor')
+    }}
+  >
+    <span slot="label" class="flex items-center gap-1">
+      <Icon src={ChartBar} size="13" mini />
+      Sort
+    </span>
+    <option value="Active">Active</option>
+    <option value="Hot">Hot</option>
+    {#if feature('scaledSort', $site?.version)}
+      <option value="Scaled">Scaled</option>
+    {/if}
+    <option value="TopAll">Top</option>
+    <option value="New">New</option>
+    {#if feature('controversialSort', $site?.version)}
+      <option value="Controversial">Controversial</option>
+    {/if}
+    <option value="Old">Old</option>
+    <option value="MostComments">Comments</option>
+    <option value="NewComments">New Replies</option>
+  </Select>
   {#if selected?.startsWith('Top')}
-    <div transition:fly={{ x: 4 }}>
+    <div transition:fly={{ easing: backOut, x: 2 }}>
       <Select
+        class="border-l-0 rounded-l-none"
         bind:value={selected}
         on:change={(e) => {
           sort = 'TopAll'
@@ -48,29 +77,4 @@
       </Select>
     </div>
   {/if}
-  <Select
-    bind:value={sort}
-    on:change={(e) => {
-      setSelected()
-      if (navigate) searchParam($page.url, 'sort', selected, 'page', 'cursor')
-    }}
-  >
-    <span slot="label" class="flex items-center gap-1">
-      <Icon src={ChartBar} size="13" mini />
-      Sort
-    </span>
-    <option value="Active">Active</option>
-    <option value="Hot">Hot</option>
-    {#if feature('scaledSort', $site?.version)}
-      <option value="Scaled">Scaled</option>
-    {/if}
-    <option value="TopAll">Top</option>
-    <option value="New">New</option>
-    {#if feature('controversialSort', $site?.version)}
-      <option value="Controversial">Controversial</option>
-    {/if}
-    <option value="Old">Old</option>
-    <option value="MostComments">Most Comments</option>
-    <option value="NewComments">New Comments</option>
-  </Select>
 </div>

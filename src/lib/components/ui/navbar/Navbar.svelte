@@ -22,10 +22,11 @@
   } from 'svelte-hero-icons'
   import Profile from './Profile.svelte'
   import NavButton from './NavButton.svelte'
-  import { scale } from 'svelte/transition'
+  import { fly, scale } from 'svelte/transition'
   import { expoOut, backOut } from 'svelte/easing'
   import { flip } from 'svelte/animate'
   import SearchBar from '$lib/components/lemmy/util/SearchBar.svelte'
+  import { swipeGesture } from '$lib/input/swipe'
 
   let searching = false
 </script>

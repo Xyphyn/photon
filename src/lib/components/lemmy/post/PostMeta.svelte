@@ -108,7 +108,7 @@
   </span>
 
   <div
-    class="flex flex-row items-center place-self-end overflow-auto gap-2 [&>*]:flex-shrink-0"
+    class="flex flex-row items-center place-self-end overflow-auto gap-2 [&>*]:flex-shrink-0 mx-2"
     style="grid-area: badges;"
   >
     {#if badges.nsfw}

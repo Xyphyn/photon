@@ -15,6 +15,7 @@
   import { feature } from '$lib/version.js'
   import { userSettings } from '$lib/settings.js'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
+  import Location from '$lib/components/lemmy/dropdowns/Location.svelte'
 
   export let data
 
@@ -48,36 +49,11 @@
       </span>
     </h1>
   </header>
-  <div class="flex flex-row gap-2 max-w-full justify-between w-full flex-wrap">
-    <Select
-      bind:value={data.listingType}
-      on:change={() => {
-        // @ts-ignore
-        $userSettings.defaultSort.feed = data.listingType
-        searchParam($page.url, 'type', data.listingType, 'page', 'cursor')
-      }}
-    >
-      <span slot="label" class="flex items-center gap-1">
-        <Icon src={GlobeAmericas} size="16" mini />
-        Location
-      </span>
-      <option value="All">All</option>
-      <option value="Local">Local</option>
-      <option value="Subscribed" disabled={!$profile?.jwt}>Subscribed</option>
-      {#if feature('moderatorView', $site?.version)}
-        <option
-          value="ModeratorView"
-          disabled={!$profile?.jwt || !amModOfAny($profile?.user)}
-        >
-          Moderator
-        </option>
-      {/if}
-    </Select>
-    <div class="flex gap-2 flex-wrap">
-      <Sort changeDefault selected={data.sort} />
-      <div class="max-[420px]:hidden">
-        <ViewSelect />
-      </div>
+  <div class="flex items-center gap-2">
+    <Location changeDefault selected={data.listingType} />
+    <Sort changeDefault selected={data.sort} />
+    <div class="max-[420px]:hidden">
+      <ViewSelect />
     </div>
   </div>
   <PostFeed posts={data.posts.posts} />

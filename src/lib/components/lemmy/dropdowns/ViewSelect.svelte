@@ -6,7 +6,7 @@
   export let showLabel = true
 </script>
 
-<Select bind:value={$userSettings.view}>
+<Select {...$$restProps} bind:value={$userSettings.view}>
   <svelte:fragment slot="label">
     {#if showLabel}
       <span class="flex items-center gap-1">
