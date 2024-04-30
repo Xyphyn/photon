@@ -131,14 +131,8 @@
       label="Email"
       required={data.site_view.local_site.require_email_verification}
       type="email"
-      placeholder="nigerianprince@notascam.com"
     />
-    <TextInput
-      bind:value={username}
-      label="Username"
-      required
-      placeholder="BobTheDestroyer"
-    />
+    <TextInput bind:value={username} label="Username" required />
     <TextInput
       bind:value={password}
       label="Password"
@@ -154,8 +148,8 @@
     {#if data.site_view.local_site.registration_mode == 'RequireApplication'}
       <Material class="dark:text-yellow-200 text-yellow-800 bg-yellow-500/20">
         <Icon src={ExclamationTriangle} mini size="20" />
-        To join this instance, you need to fill out this application, and wait to
-        be accepted.
+        To join this instance, you must fill out this application, and wait to be
+        accepted. You will receive an email if your application is accepted.
       </Material>
       {#if data.site_view.local_site.application_question}
         <Markdown source={data.site_view.local_site.application_question} />
@@ -163,7 +157,7 @@
       <MarkdownEditor
         label="Application"
         required
-        placeholder="i like this instance's icon "
+        placeholder="An explanation of why you think this instance is awesome"
         bind:value={application}
       />
     {/if}
@@ -201,11 +195,7 @@
           <Button on:click={() => getCaptcha()} size="square-md">
             <Icon src={ArrowPath} size="16" mini />
           </Button>
-          <TextInput
-            required
-            bind:value={verifyCaptcha}
-            placeholder="i guess i'm a robot"
-          />
+          <TextInput required bind:value={verifyCaptcha} />
         </div>
       </div>
     {/if}

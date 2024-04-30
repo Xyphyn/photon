@@ -3,13 +3,14 @@
   import { setUser } from '$lib/auth.js'
   import { Note, toast } from 'mono-svelte'
   import { DEFAULT_INSTANCE_URL, LINKED_INSTANCE_URL } from '$lib/instance.js'
-  import { getClient, mayBeIncompatible, site, validateInstance } from '$lib/lemmy.js'
-  import { Button, TextInput } from 'mono-svelte'
   import {
-    Icon,
-    Identification,
-    QuestionMarkCircle,
-  } from 'svelte-hero-icons'
+    getClient,
+    mayBeIncompatible,
+    site,
+    validateInstance,
+  } from '$lib/lemmy.js'
+  import { Button, TextInput } from 'mono-svelte'
+  import { Icon, Identification, QuestionMarkCircle } from 'svelte-hero-icons'
   import { DOMAIN_REGEX_FORMS } from '$lib/util.js'
   import { MINIMUM_VERSION } from '$lib/version.js'
 
@@ -64,7 +65,7 @@
   <form on:submit|preventDefault={logIn} class="flex flex-col gap-5">
     <div class="flex flex-col gap-2">
       <h1 class="font-bold text-3xl">Log In</h1>
-      {#if $site && mayBeIncompatible(MINIMUM_VERSION, $site.version.replace("v", ""))}
+      {#if $site && mayBeIncompatible(MINIMUM_VERSION, $site.version.replace('v', ''))}
         <Note>
           This version of Photon supports instances running
           <span style="font-family: monospace;">
@@ -101,6 +102,7 @@
         bind:value={data.password}
         label="Password"
         type="password"
+        minlength={10}
         required
         class="w-full"
       />

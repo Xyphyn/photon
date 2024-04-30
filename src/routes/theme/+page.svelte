@@ -16,11 +16,12 @@
     Bookmark,
     Icon,
   } from 'svelte-hero-icons'
+  import ColorSwatch from './ColorSwatch.svelte'
 
   const c = defaultColors
 
   const svelteIntellisenseSucks = (): (keyof Colors)[] =>
-    Object.keys(c) as (keyof Colors)[]
+    ['slate', 'zinc', 'other'] as (keyof Colors)[]
 
   let importing = false
   let importText = ''
@@ -98,24 +99,33 @@
       Reset
     </Button>
   </div>
+  <Material color="transparent" class="items-center gap-x-4 color-grid gap-y-2">
+    <h1 class="text-2xl font-bold col-span-2">Accent</h1>
+    <ColorSwatch
+      backgroundColor={defaultColors.primary[900]}
+      bind:value={$colors.primary[900]}
+      class="!w-12 !h-12 col-span-1"
+    />
+    <ColorSwatch
+      backgroundColor={defaultColors.primary[100]}
+      bind:value={$colors.primary[100]}
+      class="!w-12 !h-12 col-span-1"
+    />
+    <span class="font-semibold text-base">Light</span>
+    <span class="font-semibold text-base">Dark</span>
+  </Material>
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
     {#each svelteIntellisenseSucks() as category}
-      <Material class="flex flex-col gap-2">
+      <Material color="transparent" class="flex flex-col gap-2">
         <h1 class="capitalize font-semibold text-lg">{category}</h1>
         <div class="flex flex-row gap-1 flex-wrap items-center space-evenly">
           {#each Object.keys(c[category]) as shade}
             <div class="flex flex-col gap-0.5 w-10 group">
-              <div
-                class="w-full h-8 relative rounded-md border dark:border-zinc-600 hover:dark:border-zinc-400
-                transition-colors"
-                style="background-color: {defaultColors[category][shade]}"
-              >
-                <input
-                  class="rounded-md border cursor-pointer absolute top-0 left-0 w-full h-full opacity-0"
-                  type="color"
-                  bind:value={$colors[category][shade]}
-                />
-              </div>
+              <!--@ts-ignore-->
+              <ColorSwatch
+                bind:value={$colors[category][shade]}
+                backgroundColor={defaultColors[category][shade]}
+              />
               <span class="font-medium capitalize">{shade}</span>
             </div>
           {/each}
@@ -137,3 +147,10 @@
     </span>
   </div>
 </div>
+
+<style>
+  :global(.color-grid) {
+    display: grid;
+    grid-template-columns: min-content min-content;
+  }
+</style>

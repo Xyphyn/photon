@@ -94,18 +94,21 @@
         bind:value={oldPassword}
         label="Current Password"
         type="password"
+        minlength={10}
         required
       />
       <TextInput
         bind:value={newPassword}
         label="New Password"
         type="password"
+        minlength={10}
         required
       />
       <TextInput
         bind:value={newPasswordVerify}
         label="New Password (Verify)"
         type="password"
+        minlength={10}
         required
       />
       <Button size="lg" color="primary" submit {loading} disabled={loading}>

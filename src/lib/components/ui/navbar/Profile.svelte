@@ -24,6 +24,7 @@
     InformationCircle,
     Moon,
     Sun,
+    Swatch,
     UserCircle,
     UserGroup,
   } from 'svelte-hero-icons'
@@ -100,12 +101,7 @@
     <Icon src={Cog6Tooth} mini width={16} slot="prefix" />
     Settings
   </MenuButton>
-  <MenuButton
-    class="!py-0"
-    on:click={() => {
-      goto('/theme')
-    }}
-  >
+  <MenuButton class="!py-0">
     <Icon
       src={$legacyTheme == 'system'
         ? ComputerDesktop
@@ -128,6 +124,10 @@
         <option value="dark">Dark</option>
       </Select>
     </div>
+  </MenuButton>
+  <MenuButton href="/theme">
+    <Icon src={Swatch} size="16" mini slot="prefix" />
+    Theme
   </MenuButton>
   {#if $userSettings.debugInfo}
     <MenuButton link href="/util">

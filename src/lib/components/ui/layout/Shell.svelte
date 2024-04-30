@@ -40,6 +40,28 @@
 <div class="shell {$$props.class}" style={colorsToVars($colors)}>
   <slot />
   <div
+    class="
+    {$userSettings.dock.noGap ? '' : 'p-4 max-w-3xl left-1/2 -translate-x-1/2'}
+    {$userSettings.dock.top ? 'top-0' : 'bottom-0'}
+    w-full fixed z-50 pointer-events-none"
+    style="grid-area: navbar;"
+  >
+    <slot
+      name="navbar"
+      class="
+      {$userSettings.dock.noGap
+        ? $userSettings.dock.top
+          ? 'border-b shadow-none'
+          : 'border-t'
+        : 'border rounded-full'}
+      border-slate-200 dark:border-zinc-800 shadow-2xl
+      backdrop-blur-xl dark:backdrop-brightness-[25%] bg-[#ffffff]/75 dark:bg-transparent transition-colors duration-500
+      pointer-events-auto"
+      style="grid-area: navbar"
+      {title}
+    />
+  </div>
+  <div
     class="content md:divide-x divide-slate-200 dark:divide-zinc-900 min-h-screen {$userSettings.newWidth
       ? 'limit-width'
       : ''}"
@@ -61,28 +83,6 @@
       class="max-xl:hidden w-full sticky top-0 left-0 h-max bg-slate-50 dark:bg-zinc-950
       {sidePadding}"
       style="grid-area: suffix;"
-    />
-  </div>
-  <div
-    class="
-    {$userSettings.dock.noGap ? '' : 'p-4 max-w-3xl left-1/2 -translate-x-1/2'}
-    {$userSettings.dock.top ? 'top-0' : 'bottom-0'}
-    w-full fixed z-50 pointer-events-none"
-    style="grid-area: navbar;"
-  >
-    <slot
-      name="navbar"
-      class="
-      {$userSettings.dock.noGap
-        ? $userSettings.dock.top
-          ? 'border-b shadow-none'
-          : 'border-t'
-        : 'border rounded-full'}
-      border-slate-200 dark:border-zinc-800 shadow-2xl
-      backdrop-blur-xl dark:backdrop-brightness-[25%] bg-[#ffffff]/75 dark:bg-transparent transition-colors duration-500
-      pointer-events-auto"
-      style="grid-area: navbar"
-      {title}
     />
   </div>
 </div>

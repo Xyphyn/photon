@@ -26,15 +26,11 @@ interface Settings {
   expandableImages: boolean
   // should have been named "fade" read posts
   markReadPosts: boolean
-  // ???
-  instance?: string
   showInstances: {
     user: boolean
     community: boolean
     comments: boolean
   }
-  // deprecated
-  showCompactPosts: boolean
 
   view: View
 
@@ -49,18 +45,11 @@ interface Settings {
   }
   expandSidebar: boolean
   expandCommunities: boolean
-  notifications: {
-    enabled: boolean
-    pollRate: number
-    // how often to check in the background
-    notifRate: number
-  }
   displayNames: boolean
   nsfwBlur: boolean
   moderation: {
     presets: Preset[]
   }
-  newVote: boolean
   randomPlaceholders: boolean
   modlogCardView: boolean | undefined
   debugInfo: boolean
@@ -72,7 +61,6 @@ interface Settings {
 
   newWidth: boolean
   markPostsAsRead: boolean
-  separateVotes: boolean
 
   openLinksInNewTab: boolean
   crosspostOriginalLink: boolean
@@ -98,7 +86,6 @@ export const defaultSettings: Settings = {
     community: toBool(env.PUBLIC_SHOW_INSTANCES_COMMUNITY) ?? true,
     comments: toBool(env.PUBLIC_SHOW_INSTANCES_COMMENTS) ?? true,
   },
-  showCompactPosts: toBool(env.PUBLIC_SHOW_COMPACT_POSTS) ?? true,
   defaultSort: {
     sort: env.PUBLIC_DEFAULT_FEED_SORT ?? ('Active' as any),
     feed: env.PUBLIC_DEFAULT_FEED ?? ('Local' as any),
@@ -109,12 +96,7 @@ export const defaultSettings: Settings = {
     removed: toBool(env.PUBLIC_HIDE_REMOVED) ?? false,
   },
   expandSidebar: toBool(env.PUBLIC_EXPAND_SIDEBAR) ?? true,
-  expandCommunities: true,
-  notifications: {
-    enabled: false,
-    pollRate: 60 * 1000,
-    notifRate: 10 * 60 * 1000,
-  },
+  expandCommunities: toBool(env.PUBLIC_EXPAND_COMMUNITIES) ?? true,
   displayNames: toBool(env.PUBLIC_DISPLAY_NAMES) ?? true,
   nsfwBlur: toBool(env.PUBLIC_NSFW_BLUR) ?? true,
   moderation: {
@@ -125,18 +107,18 @@ export const defaultSettings: Settings = {
       },
     ],
   },
-  newVote: toBool(env.PUBLIC_NEW_VOTE_BUTTONS) ?? false,
   randomPlaceholders: toBool(env.PUBLIC_RANDOM_PLACEHOLDERS) ?? true,
   modlogCardView: toBool(env.PUBLIC_MODLOG_CARD_VIEW) ?? undefined,
-  debugInfo: false,
-  expandImages: true,
-  view: 'cozy',
-  font: 'inter',
-  leftAlign: false,
+  debugInfo: toBool(env.PUBLIC_DEBUG_INFO) ?? false,
+  expandImages: toBool(env.PUBLIC_EXPAND_IMAGES) ?? true,
+  // @ts-ignore
+  view: env.PUBLIC_VIEW ?? 'cozy',
+  // @ts-ignore
+  font: env.PUBLIC_FONT ?? 'inter',
+  leftAlign: toBool(env.PUBLIC_LEFT_ALIGN) ?? false,
   hidePhoton: toBool(env.PUBLIC_REMOVE_CREDIT) ?? false,
-  newWidth: true,
-  markPostsAsRead: true,
-  separateVotes: false,
+  newWidth: toBool(env.PUBLIC_LIMIT_LAYOUT_WIDTH) ?? true,
+  markPostsAsRead: toBool(env.PUBLIC_MARK_POSTS_AS_READ) ?? true,
   openLinksInNewTab: false,
   crosspostOriginalLink: true,
   embeds: {
