@@ -14,7 +14,7 @@
   ): string => {
     if (panel) {
       if (top) return '!pt-22'
-      else return '!pb-22'
+      else return '!pb-22 !pt-4'
     } else {
       if (!content) return '!pt-4'
 
