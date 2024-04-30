@@ -5,12 +5,14 @@ Jump to:
 - [Self-hosting](#self-hosting)
 - [Public Instances](#public-instances)
 
-A better, more intuitive way to use Lemmy, with a cleaner UI, more features, and greater speed.
+A better, more intuitive way to use Lemmy, with a cleaner UI, more features, and snappier usage.
 
 ## Screenshots
 
-![Screenshot from 2023-10-07 12-44-01](https://github.com/Xyphyn/photon/assets/80978739/4807c0aa-1ffe-4f6d-b33a-432d68def70d)
-![Screenshot from 2023-10-07 12-44-07](https://github.com/Xyphyn/photon/assets/80978739/1a6f1515-f95a-447d-8d3c-39e9d8e48dd1)
+![image](https://github.com/Xyphyn/photon/assets/80978739/8e19d8ee-9630-4152-bc7a-17ce2685afb9)
+
+![image](https://github.com/Xyphyn/photon/assets/80978739/e36468f6-03c5-4267-94e8-3bba60b6ccb2)
+
 
 ## Self-hosting
 
