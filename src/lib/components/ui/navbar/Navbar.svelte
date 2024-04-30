@@ -147,6 +147,21 @@
       </div>
     {/if}
     <div class="ml-auto" />
+    {#if $profile?.user && isAdmin($profile.user)}
+      <NavButton
+        href="/admin"
+        label="Admin"
+        icon={ServerStack}
+        class="relative"
+        isSelectedFilter={(path) => path.startsWith('/admin')}
+      >
+        {#if ($profile?.user?.notifications.applications ?? 0) > 0}
+          <div
+            class="rounded-full w-2 h-2 bg-red-500 absolute -top-1 -left-1"
+          />
+        {/if}
+      </NavButton>
+    {/if}
     {#if amModOfAny($profile?.user)}
       <NavButton href="/moderation" label="Moderation" class="relative">
         {#if ($profile?.user?.notifications.reports ?? 0) > 0}
@@ -158,20 +173,6 @@
       </NavButton>
     {/if}
     <NavButton href="/communities" label="Explore" icon={GlobeAlt} />
-    {#if $profile?.user && isAdmin($profile.user)}
-      <NavButton
-        href="/admin"
-        label="Admin"
-        icon={ServerStack}
-        class="relative"
-      >
-        {#if ($profile?.user?.notifications.applications ?? 0) > 0}
-          <div
-            class="rounded-full w-2 h-2 bg-red-500 absolute -top-1 -left-1"
-          />
-        {/if}
-      </NavButton>
-    {/if}
     <NavButton
       on:click={() => (searching = true)}
       label="Search"

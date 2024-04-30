@@ -92,8 +92,8 @@ export const defaultSettings: Settings = {
     comments: env.PUBLIC_DEFAULT_COMMENT_SORT ?? ('Hot' as any),
   },
   hidePosts: {
-    deleted: toBool(env.PUBLIC_HIDE_DELETED) ?? false,
-    removed: toBool(env.PUBLIC_HIDE_REMOVED) ?? false,
+    deleted: toBool(env.PUBLIC_HIDE_DELETED) ?? true,
+    removed: toBool(env.PUBLIC_HIDE_REMOVED) ?? true,
   },
   expandSidebar: toBool(env.PUBLIC_EXPAND_SIDEBAR) ?? true,
   expandCommunities: toBool(env.PUBLIC_EXPAND_COMMUNITIES) ?? true,

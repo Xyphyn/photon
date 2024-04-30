@@ -235,13 +235,11 @@
           </Link>
         </p>
       </span>
-      <div class="flex flex-row items-center gap-4 flex-wrap">
-        <Checkbox bind:checked={$userSettings.hidePosts.deleted}>
-          Deleted
-        </Checkbox>
-        <Checkbox bind:checked={$userSettings.hidePosts.removed}>
-          Removed
-        </Checkbox>
+      <div class="flex flex-col items-start gap-4 flex-wrap">
+        <Switch bind:checked={$userSettings.hidePosts.deleted}>Deleted</Switch>
+        <Switch bind:checked={$userSettings.hidePosts.removed}>
+          Removed by Moderator
+        </Switch>
       </div>
     </Setting>
     <ToggleSetting

@@ -7,7 +7,10 @@
   export let icon: IconSource | undefined = undefined
   export let href: string | undefined = undefined
 
-  $: isSelected = href != undefined && $page.url.pathname == href
+  export let isSelectedFilter: (path: string) => boolean = (path) =>
+    href != undefined && path == href
+
+  $: isSelected = isSelectedFilter($page.url.pathname)
 </script>
 
 <Button
