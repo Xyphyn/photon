@@ -20,6 +20,7 @@
   export let value: string = ''
   export let label: string | undefined = undefined
   export let previewButton: boolean = false
+  export let tools: boolean = true
   export let disabled: boolean = false
   export let rows: number = 4
 
@@ -62,7 +63,12 @@
   let uploadingImage = false
   let loading = false
   let image: any
-  $: previewURL = image instanceof FileList ? URL.createObjectURL(image[0]) : image ? URL.createObjectURL(image) : ''
+  $: previewURL =
+    image instanceof FileList
+      ? URL.createObjectURL(image[0])
+      : image
+        ? URL.createObjectURL(image)
+        : ''
 
   async function upload() {
     if (!$profile?.jwt || !image) return
@@ -113,7 +119,8 @@
         border border-slate-300 dark:border-zinc-700 bg-white dark:bg-black
         cursor-pointer min-h-36 transition-colors
         "
-          on:drop|preventDefault={(event) => (image = event.dataTransfer?.files?.[0])}
+          on:drop|preventDefault={(event) =>
+            (image = event.dataTransfer?.files?.[0])}
           on:dragover|preventDefault={(event) => {
             if (event.dataTransfer) {
               event.dataTransfer.dropEffect = 'copy'
@@ -133,7 +140,12 @@
             <Icon src={DocumentPlus} class="opacity-50" size="36" />
             <p class="text-sm opacity-50">Attach a file</p>
           {/if}
-          <input type="file" bind:files={image} accept="image/*" class="hidden" />
+          <input
+            type="file"
+            bind:files={image}
+            accept="image/*"
+            class="hidden"
+          />
         </label>
       </div>
       <Button {loading} disabled={loading} submit color="primary" size="lg">
@@ -154,8 +166,10 @@
     </Label>
   {/if}
   <div
-    class="flex flex-col border border-slate-300 dark:border-zinc-800 rounded-xl
-overflow-hidden focus-within:border-black focus-within:dark:border-white transition-colors"
+    class="flex flex-col border border-slate-300 dark:border-zinc-800
+    focus-within:border-primary-900 focus-within:dark:border-primary-100 focus-within:ring ring-slate-300
+    dark:ring-zinc-700 rounded-xl
+overflow-hidden transition-colors"
     class:mt-1={label}
   >
     {#if previewing}
@@ -165,106 +179,108 @@ overflow-hidden focus-within:border-black focus-within:dark:border-white transit
         <Markdown source={beforePreview(value)} />
       </div>
     {:else}
-      <!--Toolbar-->
-      <div
-        class="[&>*]:flex-shrink-0 flex flex-row overflow-auto p-1.5 gap-1.5 {$$props.disabled
-          ? 'opacity-60 pointer-events-none'
-          : ''}"
-      >
-        <Button
-          on:click={() => wrapSelection('**', '**')}
-          title="Bold"
-          size="square-md"
+      {#if tools}
+        <!--Toolbar-->
+        <div
+          class="[&>*]:flex-shrink-0 flex flex-row overflow-auto p-1.5 gap-1.5 {$$props.disabled
+            ? 'opacity-60 pointer-events-none'
+            : ''}"
         >
-          <span class="font-bold">B</span>
-        </Button>
-        <Button
-          on:click={() => wrapSelection('*', '*')}
-          title="Italic"
-          size="square-md"
-        >
-          <span class="italic font-bold">I</span>
-        </Button>
-        <Button
-          on:click={() => wrapSelection('[', '](https://example.com)')}
-          title="Link"
-          size="square-md"
-        >
-          <Icon src={Link} mini size="16" />
-        </Button>
-        <Button
-          on:click={() => wrapSelection('\n# ', '')}
-          title="Header"
-          size="square-md"
-        >
-          <span class="italic font-bold font-serif">H</span>
-        </Button>
-        <Button
-          on:click={() => wrapSelection('~~', '~~')}
-          title="Strikethrough"
-          size="square-md"
-        >
-          <span class="line-through font-bold">S</span>
-        </Button>
-        <Button
-          on:click={() => wrapSelection('\n> ', '')}
-          title="Quote"
-          size="square-md"
-        >
-          <span class="font-bold font-serif">"</span>
-        </Button>
-        <Button
-          on:click={() => wrapSelection('\n- ', '')}
-          title="List"
-          size="square-md"
-        >
-          <Icon src={ListBullet} mini size="16" />
-        </Button>
-        <Button
-          on:click={() => wrapSelection('`', '`')}
-          title="Code"
-          size="square-md"
-        >
-          <Icon src={CodeBracket} mini size="16" />
-        </Button>
-        <Button
-          on:click={() =>
-            wrapSelection('::: spoiler <spoiler title>\n', '\n:::')}
-          title="Spoiler"
-          size="square-md"
-        >
-          <Icon src={ExclamationTriangle} mini size="16" />
-        </Button>
-        <Button
-          on:click={() => wrapSelection('~', '~')}
-          title="Subscript"
-          size="square-md"
-        >
-          <span class="font-bold">
-            X
-            <sub>1</sub>
-          </span>
-        </Button>
-        <Button
-          on:click={() => wrapSelection('^', '^')}
-          title="Superscript"
-          size="square-md"
-        >
-          <span class="font-bold">
-            X
-            <sup>1</sup>
-          </span>
-        </Button>
-        {#if images}
           <Button
-            on:click={() => (uploadingImage = !uploadingImage)}
-            title="Image"
+            on:click={() => wrapSelection('**', '**')}
+            title="Bold"
             size="square-md"
           >
-            <Icon src={Photo} size="16" mini />
+            <span class="font-bold">B</span>
           </Button>
-        {/if}
-      </div>
+          <Button
+            on:click={() => wrapSelection('*', '*')}
+            title="Italic"
+            size="square-md"
+          >
+            <span class="italic font-bold">I</span>
+          </Button>
+          <Button
+            on:click={() => wrapSelection('[', '](https://example.com)')}
+            title="Link"
+            size="square-md"
+          >
+            <Icon src={Link} mini size="16" />
+          </Button>
+          <Button
+            on:click={() => wrapSelection('\n# ', '')}
+            title="Header"
+            size="square-md"
+          >
+            <span class="italic font-bold font-serif">H</span>
+          </Button>
+          <Button
+            on:click={() => wrapSelection('~~', '~~')}
+            title="Strikethrough"
+            size="square-md"
+          >
+            <span class="line-through font-bold">S</span>
+          </Button>
+          <Button
+            on:click={() => wrapSelection('\n> ', '')}
+            title="Quote"
+            size="square-md"
+          >
+            <span class="font-bold font-serif">"</span>
+          </Button>
+          <Button
+            on:click={() => wrapSelection('\n- ', '')}
+            title="List"
+            size="square-md"
+          >
+            <Icon src={ListBullet} mini size="16" />
+          </Button>
+          <Button
+            on:click={() => wrapSelection('`', '`')}
+            title="Code"
+            size="square-md"
+          >
+            <Icon src={CodeBracket} mini size="16" />
+          </Button>
+          <Button
+            on:click={() =>
+              wrapSelection('::: spoiler <spoiler title>\n', '\n:::')}
+            title="Spoiler"
+            size="square-md"
+          >
+            <Icon src={ExclamationTriangle} mini size="16" />
+          </Button>
+          <Button
+            on:click={() => wrapSelection('~', '~')}
+            title="Subscript"
+            size="square-md"
+          >
+            <span class="font-bold">
+              X
+              <sub>1</sub>
+            </span>
+          </Button>
+          <Button
+            on:click={() => wrapSelection('^', '^')}
+            title="Superscript"
+            size="square-md"
+          >
+            <span class="font-bold">
+              X
+              <sup>1</sup>
+            </span>
+          </Button>
+          {#if images}
+            <Button
+              on:click={() => (uploadingImage = !uploadingImage)}
+              title="Image"
+              size="square-md"
+            >
+              <Icon src={Photo} size="16" mini />
+            </Button>
+          {/if}
+        </div>
+      {/if}
       <!--Actual text area-->
       <TextArea
         class="bg-inherit z-0 border-0 rounded-none !ring-0 focus:!ring-transparent !transition-none"
@@ -281,6 +297,7 @@ overflow-hidden focus-within:border-black focus-within:dark:border-white transit
             }
           }
         }}
+        on:focus
         on:paste={(e) => {
           if (!e.clipboardData?.files) return
           const files = Array.from(e.clipboardData.files)
@@ -294,7 +311,7 @@ overflow-hidden focus-within:border-black focus-within:dark:border-white transit
       />
     {/if}
 
-    {#if $$slots.default || previewButton}
+    {#if $$slots.default && previewButton}
       <div class="p-2 flex items-center w-full bg-white dark:bg-zinc-950">
         {#if previewButton}
           <MultiSelect

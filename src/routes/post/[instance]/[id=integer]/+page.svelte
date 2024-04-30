@@ -143,7 +143,7 @@
     commentsPage = 1
   }
 
-  let showCreateComment = false
+  let commenting = false
 </script>
 
 <svelte:head>
@@ -288,7 +288,7 @@ flex-wrap gap-4 sticky top-20 w-full box-border z-20 mt-4"
       You're viewing a single thread.
     </p>
     <Button {loading} disabled={loading} on:click={reloadComments}>
-      View all comments
+      All comments
     </Button>
   </Material>
 {/if}
@@ -321,28 +321,21 @@ flex-wrap gap-4 sticky top-20 w-full box-border z-20 mt-4"
     </div>
   </div>
   {#if $profile?.user}
-    {#if showCreateComment}
-      <CommentForm
-        postId={post.post_view.post.id}
-        on:comment={(comment) =>
-          (data.comments.comments = [
-            comment.detail.comment_view,
-            ...data.comments.comments,
-          ])}
-        locked={post.post_view.post.locked ||
-          $page.params.instance.toLowerCase() != $instance.toLowerCase()}
-      />
-    {:else}
-      <Button
-        on:click={() => (showCreateComment = !showCreateComment)}
-        size="lg"
-        rounding="lg"
-        class="mx-auto max-w-sm w-full"
-      >
-        <Icon src={Plus} size="16" mini slot="prefix" />
-        Add a comment
-      </Button>
-    {/if}
+    <CommentForm
+      postId={post.post_view.post.id}
+      on:comment={(comment) =>
+        (data.comments.comments = [
+          comment.detail.comment_view,
+          ...data.comments.comments,
+        ])}
+      locked={post.post_view.post.locked ||
+        $page.params.instance.toLowerCase() != $instance.toLowerCase()}
+      on:focus={() => (commenting = true)}
+      tools={commenting}
+      preview={commenting}
+      placeholder={commenting ? undefined : 'Add a comment'}
+      rows={commenting ? 7 : 1}
+    />
   {/if}
   <Comments
     post={post.post_view.post}

@@ -12,6 +12,8 @@
   export let postId: number
   export let parentId: number | undefined = undefined
   export let locked: boolean = false
+  export let rows: number = 7
+  export let placeholder: string | undefined = undefined
 
   const dispatch = createEventDispatcher<{ comment: CommentResponse }>()
 
@@ -64,10 +66,11 @@
     </div>
   {:else}
     <MarkdownEditor
-      rows={7}
+      {...$$restProps}
+      {rows}
       placeholder={locked
         ? 'This post is locked.'
-        : placeholders.get('comment')}
+        : placeholder ?? placeholders.get('comment')}
       bind:value
       disabled={locked || loading}
       on:confirm={() => {
@@ -75,7 +78,7 @@
           submit()
         }
       }}
-      on:confirm
+      on:focus
       previewButton={previewAction}
     >
       {#if actions}

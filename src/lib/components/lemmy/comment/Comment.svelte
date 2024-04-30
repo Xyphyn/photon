@@ -178,7 +178,9 @@
       {/if}
     </div>
     {#if replying}
-      <div class="max-w-full my-2">
+      <div
+        class="max-w-full my-2 border-l border-slate-200 dark:border-zinc-800 pl-4"
+      >
         <h1 class="font-bold text-sm mb-2">Reply</h1>
         <CommentForm
           {postId}
