@@ -12,7 +12,7 @@
   import { page } from '$app/stores'
   import { Button } from 'mono-svelte'
   import { Icon, XMark } from 'svelte-hero-icons'
-  import { expoOut } from 'svelte/easing'
+  import { backOut, expoOut } from 'svelte/easing'
   import { fade, scale } from 'svelte/transition'
 
   /**
@@ -40,7 +40,7 @@
       height={400}
       src={$page.state.openImage}
       class="w-full h-auto object-contain max-w-screen-sm mx-auto my-auto overscroll-contain bg-white dark:bg-zinc-900"
-      transition:scale={{ start: 0.9, easing: expoOut }}
+      transition:scale={{ start: 0.9, easing: backOut }}
       {alt}
     />
   </div>

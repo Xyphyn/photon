@@ -32,7 +32,12 @@
 <StickyCard class="w-full {$$props.class} text-slate-600 dark:text-zinc-400">
   <div class="flex flex-row gap-3 items-center">
     {#if site.site.icon}
-      <Avatar width={32} url={site.site.icon} alt={site.site.name} />
+      <Avatar
+        width={32}
+        url={site.site.icon}
+        alt={site.site.name}
+        circle={false}
+      />
     {/if}
     <div class="flex flex-col">
       <h1 class="font-bold text-base">{site.site.name}</h1>

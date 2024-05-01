@@ -15,30 +15,17 @@
     ArrowLeft,
     ArrowPath,
     ChevronDoubleUp,
-    ExclamationTriangle,
     Icon,
     InformationCircle,
-    Plus,
+    Home,
   } from 'svelte-hero-icons'
   import PostLink from '$lib/components/lemmy/post/PostLink.svelte'
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
-  import {
-    Badge,
-    Disclosure,
-    Material,
-    Select,
-    Spinner,
-    removeToast,
-    toast,
-  } from 'mono-svelte'
+  import { Material, Select, removeToast, toast } from 'mono-svelte'
   import type { CommentSortType } from 'lemmy-js-client'
-  import MultiSelect from '$lib/components/input/Switch.svelte'
   import { profile } from '$lib/auth.js'
   import { instance } from '$lib/instance.js'
   import { afterNavigate, goto } from '$app/navigation'
-  import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
-  import Link from '$lib/components/input/Link.svelte'
-  import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import { Button } from 'mono-svelte'
   import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
@@ -54,6 +41,7 @@
   import Post from '$lib/components/lemmy/post/Post.svelte'
   import Expandable from '$lib/components/ui/Expandable.svelte'
   import { addResumable } from '$lib/lemmy/item.js'
+  import { Popover } from 'mono-svelte'
 
   export let data
 
@@ -74,17 +62,6 @@
   afterNavigate(async () => {
     // reactivity hack
     post = data.post
-
-    if ($page.params.instance.toLowerCase() != $instance.toLowerCase()) {
-      if (!$profile?.jwt) return
-      toast({
-        content: 'Do you want to open this post on your home instance?',
-        action: () => {
-          if ($profile?.jwt) fetchOnHome($profile.jwt)
-        },
-        duration: 9999 * 1000,
-      })
-    }
     if ($profile) {
       addResumable({
         avatar: post.post_view.post.thumbnail_url
@@ -144,6 +121,9 @@
   }
 
   let commenting = false
+
+  $: remoteView =
+    $page.params.instance?.toLowerCase() != $instance.toLowerCase()
 </script>
 
 <svelte:head>
@@ -164,23 +144,43 @@
   {/if}
 </svelte:head>
 
-<div class="flex flex-col gap-2">
-  {#if $page.params.instance?.toLowerCase() != $instance.toLowerCase()}
-    <Material
-      class="p-4 flex flex-row gap-1 border
-    border-yellow-300 dark:bg-yellow-950/30 dark:border-yellow-900 bg-yellow-50"
+<div class="flex flex-col gap-2 {remoteView ? '' : ''}">
+  {#if remoteView}
+    <div
+      class="sticky top-0 bg-slate-50 dark:bg-zinc-950 z-20
+      border-b border-zinc-800
+      -mx-4 -mt-4 md:-mt-6 md:-mx-6 sticky-header px-4 py-2
+      flex items-center gap-2 mb-4 h-12
+      "
     >
-      <Icon
-        src={ExclamationTriangle}
-        width={24}
-        solid
-        class="text-yellow-500"
-      />
-      <p class="text-sm text-yellow-700 dark:text-yellow-300">
-        This URL is for a different instance than you're logged into. You
-        probably won't be able to vote or comment.
-      </p>
-    </Material>
+      <Popover openOnHover>
+        <Icon
+          src={InformationCircle}
+          size="24"
+          solid
+          slot="target"
+          class="bg-slate-200 dark:bg-zinc-700 p-0.5 rounded-full text-primary-900 dark:text-primary-100"
+        />
+        This post was fetched from a different server than your account's. Many actions
+        won't work.
+      </Popover>
+      <span class="text-primary-900 dark:text-primary-100 font-bold">
+        Remote View
+      </span>
+      {#if $profile?.jwt}
+        <Button
+          class="ml-auto"
+          on:click={() => {
+            if ($profile?.jwt) {
+              fetchOnHome($profile?.jwt)
+            }
+          }}
+        >
+          <Icon src={Home} mini size="16" />
+          Local View
+        </Button>
+      {/if}
+    </div>
   {/if}
 
   <div class="flex flex-row justify-between items-center gap-2 flex-wrap">
@@ -280,8 +280,8 @@ flex-wrap gap-4 sticky top-20 w-full box-border z-20 mt-4"
     elevation="max"
     padding="none"
     color="distinct"
-    class="py-2 px-4 text-sm flex flex-row justify-between items-center
-    flex-wrap gap-4 sticky top-20 w-full box-border z-20 mt-4"
+    class="py-2 px-4 text-sm flex sm:flex-row justify-between items-center
+    sm:gap-4 sticky top-20 w-full box-border z-20 mt-4 flex-col gap-2"
   >
     <p class="font-medium text-sm flex items-center gap-2">
       <Icon src={InformationCircle} mini size="20" />
