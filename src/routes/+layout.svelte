@@ -123,7 +123,7 @@
     slot="main"
     let:style={s}
     let:class={c}
-    class="p-4 sm:p-6 min-w-0 w-full flex flex-col min-h-full relative {c}"
+    class="p-4 sm:p-6 min-w-0 w-full flex flex-col h-full relative {c}"
     style={s}
     class:max-w-6xl={$userSettings.newWidth}
     id="main"
@@ -150,7 +150,7 @@
         taglines={$site.taglines}
         admins={$site.admins}
         version={$site.version}
-        class="!pt-0"
+        class=""
       />
     {:else}
       <div class="h-64 w-full grid place-items-center">

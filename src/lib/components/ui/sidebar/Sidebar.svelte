@@ -30,7 +30,7 @@
 
 <nav
   class="flex flex-col p-4 overflow-auto
-  gap-1 h-screen {$$props.class}"
+  gap-1 h-fit max-h-screen {$$props.class}"
   style={$$props.style}
 >
   {#if $profile?.jwt}

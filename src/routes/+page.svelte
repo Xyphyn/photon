@@ -16,6 +16,7 @@
   import { userSettings } from '$lib/settings.js'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import Location from '$lib/components/lemmy/dropdowns/Location.svelte'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
   export let data
 
@@ -38,16 +39,7 @@
 
 <div class="flex flex-col gap-4 max-w-full w-full min-w-0">
   <header>
-    <h1
-      class="text-3xl font-bold flex items-center w-full justify-between flex-wrap"
-    >
-      Frontpage
-      <span class="xl:hidden">
-        <Button on:click={() => (sidebar = !sidebar)} size="square-md">
-          <Icon src={ServerStack} size="16" mini />
-        </Button>
-      </span>
-    </h1>
+    <Header>Frontpage</Header>
   </header>
   <div class="flex items-center gap-2">
     <Location changeDefault selected={data.listingType} />

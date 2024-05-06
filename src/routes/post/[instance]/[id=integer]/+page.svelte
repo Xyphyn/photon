@@ -352,7 +352,10 @@ flex-wrap gap-4 sticky top-20 w-full box-border z-20 mt-4"
   />
   {#if post.post_view.counts.comments > 5}
     <EndPlaceholder>
-      You've viewed {post.post_view.counts.comments} comments.
+      <span class="text-black dark:text-white font-bold">
+        {post.post_view.counts.comments}
+      </span>
+      comments
 
       <Button
         color="tertiary"

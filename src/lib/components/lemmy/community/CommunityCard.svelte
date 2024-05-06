@@ -25,12 +25,14 @@
   import {
     BuildingOffice2,
     Calendar,
+    ChartBar,
     ChatBubbleOvalLeftEllipsis,
     Check,
     Cog6Tooth,
     EllipsisHorizontal,
     Fire,
     Icon,
+    InformationCircle,
     Newspaper,
     NoSymbol,
     PencilSquare,
@@ -41,6 +43,7 @@
   import CommunityLink from './CommunityLink.svelte'
   import Expandable from '$lib/components/ui/Expandable.svelte'
   import LabelStat from '$lib/components/ui/LabelStat.svelte'
+  import ShieldIcon from '../moderation/ShieldIcon.svelte'
 
   export let community_view: CommunityView
   export let moderators: CommunityModeratorView[] = []
@@ -215,15 +218,19 @@
   </div>
 
   <div
-    class="flex flex-col divide-y divide-slate-300 dark:divide-zinc-800 [&>*]:py-3"
+    class="flex flex-col divide-y divide-slate-200 dark:divide-zinc-800 [&>*]:py-3"
   >
     <Expandable class="!pt-0">
-      <span slot="title">About</span>
+      <svelte:fragment slot="title">
+        <Icon src={InformationCircle} size="15" mini /> About
+      </svelte:fragment>
       <Markdown source={community_view.community.description} />
     </Expandable>
 
     <Expandable>
-      <span slot="title">Stats</span>
+      <svelte:fragment slot="title">
+        <Icon src={ChartBar} size="15" mini /> Stats
+      </svelte:fragment>
       <div class="flex flex-row gap-4 flex-wrap">
         <LabelStat
           label="Members"
@@ -240,7 +247,9 @@
 
     {#if moderators && moderators.length > 0}
       <Expandable>
-        <span slot="title">Moderators</span>
+        <svelte:fragment slot="title">
+          <ShieldIcon width={15} filled /> Moderators
+        </svelte:fragment>
         <div
           class="flex items-center -space-x-1 flex-wrap hover:space-x-1 transition-all
       cursor-pointer"
