@@ -72,18 +72,19 @@
     <slot
       name="sidebar"
       class="hidden md:flex sticky top-0 left-0 w-full max-w-full h-max bg-slate-50 dark:bg-zinc-950
+      z-40
       {sidePadding}"
       style="grid-area: sidebar; width: 100% !important;"
     />
     <slot
       name="main"
-      class="w-full bg-slate-25 dark:bg-zinc-925 justify-self-center shadow-sm
+      class="w-full bg-slate-25 dark:bg-zinc-925 justify-self-center shadow-sm z-0
       {contentPadding}"
       style="grid-area: main"
     />
     <slot
       name="suffix"
-      class="max-xl:hidden w-full sticky top-0 left-0 h-max bg-slate-50 dark:bg-zinc-950 {sidePadding}"
+      class="max-xl:hidden w-full sticky top-0 left-0 h-max bg-slate-50 dark:bg-zinc-950 z-40 {sidePadding}"
       style="grid-area: suffix;"
     />
   </div>

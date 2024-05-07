@@ -37,6 +37,10 @@
   </div>
 </Modal>
 
+<div
+  class="background-gradient w-full h-64 absolute top-0 left-0 -z-10 object-cover"
+></div>
+
 <div class="flex flex-col gap-4 max-w-full w-full min-w-0">
   <header>
     <Header>Frontpage</Header>
@@ -69,3 +73,20 @@
     </Pageination>
   </div>
 </div>
+
+<style>
+  .background-gradient {
+    background-image: radial-gradient(
+        circle at left,
+        rgba(162, 1, 114, 0.1) 0%,
+        rgba(255, 0, 43, 0) 100%
+      ),
+      radial-gradient(
+        circle at 60% 80%,
+        rgba(162, 33, 1, 0.2) 0%,
+        rgba(255, 0, 174, 0) 100%
+      );
+    background-repeat: no-repeat;
+    mask-image: linear-gradient(to bottom, rgba(0 0 0 / 100%), transparent);
+  }
+</style>

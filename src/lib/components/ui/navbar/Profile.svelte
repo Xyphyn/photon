@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { profile } from '$lib/auth'
 
   import {
@@ -7,6 +7,7 @@
     Menu,
     MenuButton,
     MenuDivider,
+    Modal,
     Select,
     toast,
   } from 'mono-svelte'
@@ -23,6 +24,7 @@
     Inbox,
     InformationCircle,
     Moon,
+    ServerStack,
     Sun,
     Swatch,
     UserCircle,
@@ -31,6 +33,8 @@
   import { legacyTheme } from '$lib/ui/colors'
   import { userSettings } from '$lib/settings'
   import { goto } from '$app/navigation'
+  import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
+  import { site } from '$lib/lemmy'
 </script>
 
 <Menu {...$$restProps}>

@@ -4,6 +4,7 @@ import { error } from '@sveltejs/kit'
 import { instance } from '$lib/instance.js'
 import { instanceToURL } from '$lib/util.js'
 import { profile } from '$lib/auth.js'
+import { toast } from 'mono-svelte'
 
 export const site = writable<GetSiteResponse | undefined>(undefined)
 
