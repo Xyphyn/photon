@@ -9,6 +9,7 @@
   import { page } from '$app/stores'
   import Switch from '$lib/components/input/Switch.svelte'
   import { feature } from '$lib/version.js'
+  import QrCode from "svelte-qrcode"
 
   export let data
 
@@ -80,6 +81,7 @@
       toast({ content: e as any, type: 'error' })
     }
   }
+
 </script>
 
 <h1 class="font-bold text-3xl">Credentials</h1>
@@ -125,6 +127,8 @@
     </p>
     {#if totpEnabled || totpLink}
       {#if totpLink && !totpEnabled}
+      <span class="font-normal text-xs">Scan this code using your authenticator app or add it manually</span>
+      <QrCode value={totpLink} size=1024/>
         <TextInput disabled type="password" value={totpLink} label="TOTP Link">
           <button
             slot="suffix"
@@ -135,11 +139,8 @@
               toast({ content: 'Copied to clipboard.' })
             }}
           >
-            <Icon src={ClipboardDocument} size="20" mini />
-          </button>
-          <span class="font-normal text-xs">
-            Paste this in your authenticator app.
-          </span>
+          <Icon src={ClipboardDocument} size="20" mini />
+        </button>
         </TextInput>
       {/if}
       <form class="flex flex-col gap-2" on:submit|preventDefault={() => {}}>
