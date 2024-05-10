@@ -37,10 +37,6 @@
   </div>
 </Modal>
 
-<div
-  class="background-gradient w-full h-48 absolute top-0 left-0 -z-10 object-cover"
-></div>
-
 <div class="flex flex-col gap-4 max-w-full w-full min-w-0">
   <header>
     <Header>Frontpage</Header>
