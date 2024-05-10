@@ -78,7 +78,7 @@
     />
     <slot
       name="main"
-      class="w-full bg-slate-25 dark:bg-zinc-925 justify-self-center shadow-sm z-0
+      class="w-full bg-slate-25 dark:bg-zinc-925 justify-self-center shadow-sm
       {contentPadding}"
       style="grid-area: main"
     />
