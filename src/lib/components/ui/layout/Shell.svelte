@@ -15,7 +15,7 @@
     if (panel) {
       if (top) {
         if (content) return '!pt-20'
-        else return 'top-16'
+        else return 'top-16 max-h-[calc(100vh-4rem)]'
       } else return '!pb-20'
     } else {
       if (!content) return ''
@@ -84,7 +84,7 @@
     />
     <slot
       name="suffix"
-      class="max-xl:hidden w-full sticky top-0 left-0 h-max bg-slate-50 dark:bg-zinc-950 z-40 {sidePadding}"
+      class="max-xl:hidden w-full sticky top-0 left-0 max-h-screen bg-slate-50 dark:bg-zinc-950 z-40 {sidePadding}"
       style="grid-area: suffix;"
     />
   </div>
