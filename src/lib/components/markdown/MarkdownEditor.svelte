@@ -19,7 +19,7 @@
   export let images: boolean = true
   export let value: string = ''
   export let label: string | undefined = undefined
-  export let previewButton: boolean = false
+  export let previewButton: boolean = true
   export let tools: boolean = true
   export let disabled: boolean = false
   export let rows: number = 4
