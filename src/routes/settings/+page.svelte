@@ -61,7 +61,7 @@
       </Button>
     </div>
     <Setting>
-      <span slot="title">Dock alignment</span>
+      <span slot="title">Dock position</span>
       <span slot="description">Where the dock should be put</span>
       <MultiSelect
         options={[true, false]}
