@@ -45,16 +45,18 @@
     view != 'compact'
 </script>
 
-<Material
+<!-- svelte-ignore a11y-no-static-element-interactions -->
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<div
   color={view != 'card' ? 'none' : 'distinct'}
-  padding="none"
-  class="relative max-w-full min-w-0 w-full test group gap-2 
+  class="relative max-w-full min-w-0 w-full group gap-2
   {view != 'card' ? 'bg-transparent !border-0' : 'p-5'} {view == 'compact'
     ? 'py-4 list-type'
     : view == 'list'
       ? 'py-5 list-type'
       : 'py-5 flex flex-col'} {$$props.class}"
-  id={post.post.id}
+  id={post.post.id.toString()}
+  on:click={() => postLink(post.post)}
 >
   <PostMeta
     community={hideCommunity ? undefined : post.community}
@@ -117,7 +119,7 @@
       </Badge>
     </div>
   {/if}
-</Material>
+</div>
 
 <style>
   :global(.list-type) {

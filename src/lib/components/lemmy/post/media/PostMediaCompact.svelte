@@ -17,7 +17,7 @@
         <img
           src={bestImageURL(post, true)}
           loading="lazy"
-          class="object-cover bg-slate-100 dark:bg-zinc-800 rounded-md h-24 w-24 border border-slate-200 dark:border-zinc-700"
+          class="object-cover bg-slate-100 dark:bg-zinc-800 rounded-lg h-24 w-24 border border-slate-200 dark:border-zinc-700"
         />
       </a>
     {:else}
@@ -26,7 +26,7 @@
         <img
           src={bestImageURL(post, true)}
           loading="lazy"
-          class="object-cover bg-slate-100 rounded-md h-24 w-24 border border-slate-200 dark:border-zinc-700"
+          class="object-cover bg-slate-100 rounded-lg h-24 w-24 border border-slate-200 dark:border-zinc-700"
         />
       </button>
     {/if}
