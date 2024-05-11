@@ -6,7 +6,7 @@
   import { userSettings } from '$lib/settings.js'
   import PostLink from '$lib/components/lemmy/post/PostLink.svelte'
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
-  import { Material, toast } from 'mono-svelte'
+  import { Badge, Material, toast } from 'mono-svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import ExpandableImage from '$lib/components/ui/ExpandableImage.svelte'
   import {
@@ -16,7 +16,12 @@
   } from '$lib/components/lemmy/post/helpers.js'
   import Empty from '$lib/components/helper/Empty.svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
-  import { Icon, VideoCamera } from 'svelte-hero-icons'
+  import {
+    ArrowUp,
+    ChatBubbleOvalLeft,
+    Icon,
+    VideoCamera,
+  } from 'svelte-hero-icons'
   import PostMedia from '$lib/components/lemmy/post/media/PostMedia.svelte'
   import PostMediaCompact from '$lib/components/lemmy/post/media/PostMediaCompact.svelte'
   import PostBody from './PostBody.svelte'
@@ -43,12 +48,12 @@
 <Material
   color={view != 'card' ? 'none' : 'distinct'}
   padding="none"
-  class="relative max-w-full min-w-0 w-full test group gap-2 flex flex-col
+  class="relative max-w-full min-w-0 w-full test group gap-2 
   {view != 'card' ? 'bg-transparent !border-0' : 'p-5'} {view == 'compact'
     ? 'py-4 list-type'
     : view == 'list'
       ? 'py-5 list-type'
-      : 'py-5'} {$$props.class}"
+      : 'py-5 flex flex-col'} {$$props.class}"
   id={post.post.id}
 >
   <PostMeta
@@ -100,6 +105,17 @@
       }}
       style="grid-area: actions;"
     />
+  {:else if view == 'compact'}
+    <div class="flex flex-row items-center gap-2 text-sm">
+      <Badge>
+        <Icon src={ArrowUp} slot="icon" size="14" micro />
+        {post.counts.score}
+      </Badge>
+      <Badge>
+        <Icon src={ChatBubbleOvalLeft} slot="icon" size="14" micro />
+        {post.counts.comments}
+      </Badge>
+    </div>
   {/if}
 </Material>
 
