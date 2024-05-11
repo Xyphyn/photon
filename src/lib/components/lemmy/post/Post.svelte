@@ -47,7 +47,7 @@
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<div
+<Material
   color={view != 'card' ? 'none' : 'distinct'}
   class="relative max-w-full min-w-0 w-full group gap-2
   {view != 'card' ? 'bg-transparent !border-0' : 'p-5'} {view == 'compact'
@@ -56,7 +56,6 @@
       ? 'py-5 list-type'
       : 'py-5 flex flex-col'} {$$props.class}"
   id={post.post.id.toString()}
-  on:click={() => postLink(post.post)}
 >
   <PostMeta
     community={hideCommunity ? undefined : post.community}
@@ -119,7 +118,7 @@
       </Badge>
     </div>
   {/if}
-</div>
+</Material>
 
 <style>
   :global(.list-type) {
