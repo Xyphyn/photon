@@ -56,6 +56,7 @@
       ? 'py-5 list-type'
       : 'py-5 flex flex-col'} {$$props.class}"
   id={post.post.id.toString()}
+  padding="none"
 >
   <PostMeta
     community={hideCommunity ? undefined : post.community}
