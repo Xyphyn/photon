@@ -311,7 +311,7 @@ overflow-hidden transition-colors"
       />
     {/if}
 
-    {#if $$slots.default && previewButton}
+    {#if previewButton}
       <div class="p-2 flex items-center w-full bg-white dark:bg-zinc-950">
         {#if previewButton}
           <MultiSelect
