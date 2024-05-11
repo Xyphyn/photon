@@ -144,11 +144,11 @@
   {/if}
 </svelte:head>
 
-<div class="flex flex-col gap-2 {remoteView ? '' : ''}">
+<div class="flex flex-col gap-2">
   {#if remoteView}
     <div
       class="sticky top-0 bg-slate-50 dark:bg-zinc-950 z-20
-      border-b border-zinc-800
+      border-b dark:border-zinc-800 border-slate-300
       -mx-4 -mt-4 md:-mt-6 md:-mx-6 sticky-header px-4 py-2
       flex items-center gap-2 mb-4 h-12
       "
