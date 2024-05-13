@@ -154,12 +154,7 @@
       {#if data.site_view.local_site.application_question}
         <Markdown source={data.site_view.local_site.application_question} />
       {/if}
-      <MarkdownEditor
-        label="Application"
-        required
-        placeholder="An explanation of why you think this instance is awesome"
-        bind:value={application}
-      />
+      <MarkdownEditor label="Application" required bind:value={application} />
     {/if}
     {#if captchaRequired}
       <div>
