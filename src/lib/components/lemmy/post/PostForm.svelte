@@ -59,6 +59,7 @@
       data.url = editingPost.url ?? ''
       data.body = editingPost.body ?? ''
       data.title = editingPost.name
+      data.nsfw = editingPost.nsfw
     }
 
     if (passedCommunity) {
