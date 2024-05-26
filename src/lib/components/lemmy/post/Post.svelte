@@ -37,7 +37,8 @@
   $: hideTitle =
     $userSettings.posts.deduplicateEmbed &&
     post.post.embed_title == post.post.name &&
-    view != 'compact'
+    view != 'compact' &&
+    type != 'iframe'
 
   $: hideBody =
     $userSettings.posts.deduplicateEmbed &&
