@@ -16,6 +16,7 @@
     bind:value={query}
     class="w-full h-full {$$props.class}"
     placeholder="Search"
+    autofocus
   />
 </form>
 <slot {search} {loading} />
