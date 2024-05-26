@@ -15,7 +15,7 @@
     if (panel) {
       if (top) {
         if (content) return '!pt-20'
-        else return 'top-16 max-h-[calc(100vh-4rem)]'
+        else return 'top-16 !max-h-[calc(100vh-4rem)]'
       } else return '!pb-20'
     } else {
       if (!content) return ''
