@@ -48,20 +48,21 @@
     {$userSettings.dock.top ? 'top-0' : 'bottom-0'}
     {topPanel ? 'fixed top-0' : 'fixed'}
     w-full z-50 pointer-events-none"
-    style="grid-area: navbar;"
+    style="grid-area: navbar; transition: padding 250ms cubic-bezier(0.075, 0.82, 0.165, 1);"
   >
     <slot
       name="navbar"
       class="
       {$userSettings.dock.noGap
         ? $userSettings.dock.top
-          ? 'border-b shadow-none'
-          : 'border-t'
+          ? 'border-b shadow-none rounded-none'
+          : 'border-t rounded-none'
         : 'border rounded-full'}
       border-slate-200 dark:border-zinc-800 shadow-2xl
       backdrop-blur-xl dark:backdrop-brightness-[25%] bg-[#ffffff]/75 dark:bg-transparent transition-colors duration-500
       pointer-events-auto"
       {title}
+      style="transition: border-radius 250ms;"
     />
   </div>
   <div

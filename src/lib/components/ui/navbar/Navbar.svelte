@@ -27,6 +27,7 @@
   import { flip } from 'svelte/animate'
   import SearchBar from '$lib/components/lemmy/util/SearchBar.svelte'
   import { swipeGesture } from '$lib/input/swipe'
+  import Logo from '../Logo.svelte'
 
   let searching = false
 </script>
@@ -38,6 +39,9 @@
   "
   style={$$props.style}
 >
+  <NavButton href="/" label="Home" class="ml-2 logo">
+    <Logo width={32} slot="icon" />
+  </NavButton>
   {#if searching}
     <div
       class="w-full h-full absolute z-20 p-2 flex items-center gap-2 bg-white dark:bg-zinc-950
@@ -72,13 +76,6 @@
     </div>
   {/if}
   <div class="flex flex-row gap-2 py-2 px-2 items-center w-full">
-    <Profile
-      placement="top"
-      itemsClass="h-8 md:h-8 z-10"
-      targetClass="z-10 h-10"
-      containerClass="!max-h-[28rem] z-10"
-      buttonClass=""
-    />
     {#if $profile}
       <div
         class="px-2 border-r border-l border-slate-200 dark:border-zinc-900
@@ -178,7 +175,6 @@
       label="Search"
       icon={MagnifyingGlass}
     />
-    <NavButton href="/" label="Home" icon={Home} />
     <Menu placement="top">
       <NavButton
         class="relative"
@@ -213,5 +209,12 @@
         </span>
       {/if}
     </Menu>
+    <Profile
+      placement="top"
+      itemsClass="h-8 md:h-8 z-10"
+      targetClass="z-10 h-10"
+      containerClass="!max-h-[28rem] z-10"
+      buttonClass=""
+    />
   </div>
 </nav>
