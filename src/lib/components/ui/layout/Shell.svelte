@@ -27,34 +27,65 @@
     return 'hi this is easter egg, my code broke'
   }
 
-  $: contentPadding = calculatePadding(
-    $userSettings.dock.noGap,
-    $userSettings.dock.top,
-    true
-  )
-  $: sidePadding = calculatePadding(
-    $userSettings.dock.noGap,
-    $userSettings.dock.top,
-    false
-  )
+  let screenWidth = 1000
+
+  const calculateDockProperties = (
+    settings: typeof $userSettings.dock,
+    screenWidth: number
+  ): {
+    noGap: boolean
+    top: boolean
+  } => {
+    let panel = false
+    let top = false
+
+    if (screenWidth > 1000) {
+      panel = true
+      top = true
+    } else if (screenWidth > 800) {
+      panel = true
+      top = false
+    } else if (screenWidth > 600) {
+      panel = false
+      top = false
+    }
+
+    panel = settings.noGap ?? panel
+    top = settings.top ?? top
+
+    return {
+      noGap: panel,
+      top: top,
+    }
+  }
+
+  $: dockProps = calculateDockProperties($userSettings.dock, screenWidth)
+
+  $: contentPadding = calculatePadding(dockProps.noGap, dockProps.top, true)
+  $: sidePadding = calculatePadding(dockProps.noGap, dockProps.top, false)
   $: topPanel = $userSettings.dock.noGap && $userSettings.dock.top
 </script>
+
+<svelte:window bind:innerWidth={screenWidth} />
 
 <div class="shell {$$props.class}" style={colorsToVars($colors)}>
   <slot />
   <div
     class="
-    {$userSettings.dock.noGap ? '' : 'p-4 max-w-3xl left-1/2 -translate-x-1/2'}
-    {$userSettings.dock.top ? 'top-0' : 'bottom-0'}
+    {dockProps.noGap ? '' : 'p-4 max-w-3xl left-1/2 -translate-x-1/2'}
+    {dockProps.top ? 'top-0' : 'bottom-0'}
     {topPanel ? 'fixed top-0' : 'fixed'}
     w-full z-50 pointer-events-none"
-    style="grid-area: navbar; transition: padding 250ms cubic-bezier(0.075, 0.82, 0.165, 1);"
+    style="grid-area: navbar;
+    transition-property: padding, top, bottom;
+    transition-duration: 250ms;
+    transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);"
   >
     <slot
       name="navbar"
       class="
-      {$userSettings.dock.noGap
-        ? $userSettings.dock.top
+      {dockProps.noGap
+        ? dockProps.top
           ? 'border-b shadow-none rounded-none'
           : 'border-t rounded-none'
         : 'border rounded-full'}

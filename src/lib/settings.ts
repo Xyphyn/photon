@@ -70,8 +70,8 @@ interface Settings {
     youtube: 'youtube' | 'invidious' | 'piped'
   }
   dock: {
-    noGap: boolean
-    top: boolean
+    noGap: boolean | null
+    top: boolean | null
   }
   posts: {
     deduplicateEmbed: boolean
@@ -127,8 +127,8 @@ export const defaultSettings: Settings = {
     youtube: 'youtube',
   },
   dock: {
-    noGap: toBool(env.PUBLIC_DOCK_PANEL) ?? false,
-    top: toBool(env.PUBLIC_DOCK_TOP) ?? false
+    noGap: toBool(env.PUBLIC_DOCK_PANEL) ?? null,
+    top: toBool(env.PUBLIC_DOCK_TOP) ?? null
   },
   posts: {
     deduplicateEmbed: toBool(env.PUBLIC_DEDUPLICATE_EMBED) ?? true,

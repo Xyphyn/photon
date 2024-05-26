@@ -64,16 +64,22 @@
       <span slot="title">Dock position</span>
       <span slot="description">Where the dock should be put</span>
       <MultiSelect
-        options={[true, false]}
-        optionNames={['Top', 'Bottom']}
+        options={[true, false, null]}
+        optionNames={['Top', 'Bottom', 'Adaptive']}
         bind:selected={$userSettings.dock.top}
       />
     </Setting>
-    <ToggleSetting
-      bind:checked={$userSettings.dock.noGap}
-      title="Panel mode"
-      description="Extend the dock to screen edges, similar to a panel."
-    />
+    <Setting>
+      <span slot="title">Panel mode</span>
+      <span slot="description">
+        Extend the dock to screen edges, similar to a panel.
+      </span>
+      <MultiSelect
+        options={[true, false, null]}
+        optionNames={['On', 'Off', 'Adaptive']}
+        bind:selected={$userSettings.dock.noGap}
+      />
+    </Setting>
   </Section>
 
   <Section title="Photon">

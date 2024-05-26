@@ -28,6 +28,7 @@
   import SearchBar from '$lib/components/lemmy/util/SearchBar.svelte'
   import { swipeGesture } from '$lib/input/swipe'
   import Logo from '../Logo.svelte'
+  import { LINKED_INSTANCE_URL } from '$lib/instance'
 
   let searching = false
 </script>
@@ -40,7 +41,22 @@
   style={$$props.style}
 >
   <NavButton href="/" label="Home" class="ml-2 logo">
-    <Logo width={32} slot="icon" />
+    <svelte:fragment slot="icon">
+      {#if LINKED_INSTANCE_URL}
+        {#if $site}
+          <Avatar
+            alt={$site.site_view.site.name}
+            url={$site.site_view.site.icon}
+            width={32}
+            circle={false}
+          />
+        {:else}
+          <Spinner width={32} />
+        {/if}
+      {:else}
+        <Logo width={32} />
+      {/if}
+    </svelte:fragment>
   </NavButton>
   {#if searching}
     <div
