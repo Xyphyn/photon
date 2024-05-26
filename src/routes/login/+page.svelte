@@ -103,6 +103,7 @@
         label="Password"
         type="password"
         minlength={10}
+        maxlength={60}
         required
         class="w-full"
       />
