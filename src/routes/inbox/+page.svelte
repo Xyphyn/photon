@@ -2,6 +2,7 @@
   import InboxItem from './InboxItem.svelte'
   import {
     AdjustmentsHorizontal,
+    ArrowPath,
     Bars3BottomRight,
     Check,
     Funnel,
@@ -49,13 +50,21 @@
   <title>Inbox</title>
 </svelte:head>
 
-<div class="flex flex-row justify-between">
-  <h1 class="font-bold text-3xl">Inbox</h1>
+<div class="flex flex-row gap-2">
+  <h1 class="font-bold text-3xl mr-auto">Inbox</h1>
+  <Button
+    on:click={() => goto($page.url, { invalidateAll: true })}
+    size="square-md"
+    title="Refresh"
+  >
+    <Icon src={ArrowPath} size="16" mini slot="prefix" />
+  </Button>
   <Button
     on:click={markAllAsRead}
     loading={markingAsRead}
     disabled={markingAsRead}
     size="md"
+    class="!h-8"
   >
     <Icon src={Check} width={16} mini slot="prefix" />
     Mark All Read
