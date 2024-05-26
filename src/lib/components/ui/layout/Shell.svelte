@@ -39,7 +39,7 @@
     let panel = false
     let top = false
 
-    if (screenWidth > 1000) {
+    if (screenWidth >= 1000) {
       panel = true
       top = true
     } else if (screenWidth > 800) {
