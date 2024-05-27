@@ -32,7 +32,11 @@
     {/if}
   </slot>
   <slot />
-  <div class={$userSettings.expandSidebar ? '//contents' : 'max-lg:hidden'}>
+  <div
+    class="{$userSettings.expandSidebar
+      ? 'contents'
+      : '//max-lg:hidden'} contents"
+  >
     <slot name="label" />
   </div>
 </Button>

@@ -105,7 +105,7 @@
         slot="title"
         class="px-2 py-1 w-full {$userSettings.expandSidebar
           ? ''
-          : 'max-lg:hidden'}"
+          : '//max-lg:hidden'}"
       >
         <EndPlaceholder>
           Subscribed
