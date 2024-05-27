@@ -24,7 +24,7 @@
     ? 'text-primary-900 dark:!text-primary-100'
     : 'text-slate-600 dark:text-zinc-400'} {$userSettings.expandSidebar
     ? ''
-    : 'max-lg:!p-1 [&>*]:max-lg:!justify-center'} {$$props.class}"
+    : '//max-lg:!p-1 //[&>*]:max-lg:!justify-center'} {$$props.class}"
 >
   <slot {selected} name="icon" slot="prefix">
     {#if icon}
@@ -32,7 +32,7 @@
     {/if}
   </slot>
   <slot />
-  <div class={$userSettings.expandSidebar ? 'contents' : 'max-lg:hidden'}>
+  <div class={$userSettings.expandSidebar ? '//contents' : 'max-lg:hidden'}>
     <slot name="label" />
   </div>
 </Button>

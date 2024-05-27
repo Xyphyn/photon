@@ -103,7 +103,7 @@
   >
     <slot
       name="sidebar"
-      class="hidden md:flex sticky top-0 left-0 w-full max-w-full h-max bg-slate-50 dark:bg-zinc-950
+      class="hidden md:flex sticky top-0 left-0 max-w-full h-max bg-slate-50 dark:bg-zinc-950
       z-40
       {sidePadding}"
       style="grid-area: sidebar; width: 100% !important;"

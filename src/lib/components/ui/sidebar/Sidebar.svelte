@@ -35,20 +35,24 @@
 >
   {#if $profile?.jwt}
     <SidebarButton icon={UserCircle} href="/profile/user">
-      Profile
+      <span slot="label">Profile</span>
     </SidebarButton>
     <SidebarButton icon={Inbox} href="/inbox">
-      Inbox
-      {#if $profile?.user?.notifications.inbox}
-        <Badge
-          class="w-5 h-5 !p-0 grid place-items-center ml-auto"
-          color="red-subtle"
-        >
-          {$profile?.user?.notifications.inbox}
-        </Badge>
-      {/if}
+      <span slot="label">
+        Inbox
+        {#if $profile?.user?.notifications.inbox}
+          <Badge
+            class="w-5 h-5 !p-0 grid place-items-center ml-auto"
+            color="red-subtle"
+          >
+            {$profile?.user?.notifications.inbox}
+          </Badge>
+        {/if}
+      </span>
     </SidebarButton>
-    <SidebarButton icon={Bookmark} href="/saved">Saved</SidebarButton>
+    <SidebarButton icon={Bookmark} href="/saved">
+      <span slot="label">Saved</span>
+    </SidebarButton>
   {:else}
     <SidebarButton href="/login" title="Log In" icon={ArrowLeftOnRectangle}>
       <span slot="label">Log In</span>
@@ -93,7 +97,10 @@
       <hr class="border-slate-200 dark:border-zinc-900 my-1" />
     {/if}
 
-    <Expandable bind:open={$userSettings.expandCommunities}>
+    <Expandable
+      class="max-w-full min-w-0 w-full"
+      bind:open={$userSettings.expandCommunities}
+    >
       <span
         slot="title"
         class="px-2 py-1 w-full {$userSettings.expandSidebar
