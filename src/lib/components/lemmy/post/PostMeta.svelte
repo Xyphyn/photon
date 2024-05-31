@@ -160,7 +160,7 @@
     class:dark:text-zinc-400={$userSettings.markReadPosts && read}
     style="grid-area: title;"
   >
-    <Markdown source={title} inline></Markdown>
+    <Markdown source={title} inline noStyle></Markdown>
   </a>
 {/if}
 

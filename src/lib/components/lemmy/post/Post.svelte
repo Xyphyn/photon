@@ -50,12 +50,12 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <Material
   color={view != 'card' ? 'none' : 'distinct'}
-  class="relative max-w-full min-w-0 w-full group gap-2
+  class="relative max-w-full min-w-0 w-full group
   {view != 'card' ? 'bg-transparent !border-0' : 'p-5'} {view == 'compact'
     ? 'py-4 list-type'
     : view == 'list'
       ? 'py-5 list-type'
-      : 'py-5 flex flex-col'} {$$props.class}"
+      : 'py-5 flex flex-col gap-2'} {$$props.class}"
   id={post.post.id.toString()}
   padding="none"
 >
@@ -125,14 +125,16 @@
 <style>
   :global(.list-type) {
     display: grid;
-    gap: 0.5rem;
     grid-template-areas: var(
       --template-areas,
       'meta media' 'title media' 'body media' 'embed embed' 'actions actions'
     );
     width: 100%;
     height: 100%;
-    grid-auto-rows: minmax(-0.5rem, auto);
     grid-template-columns: var(--template-columns, 1fr auto);
+  }
+
+  :global(.list-type > *:not(:first-child)) {
+    padding-top: 0.5rem;
   }
 </style>

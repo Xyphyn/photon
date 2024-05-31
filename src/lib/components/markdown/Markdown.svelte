@@ -5,6 +5,7 @@
 
   export let source: string = ''
   export let inline: boolean = false
+  export let noStyle: boolean = false
 
   let rendered = ''
 
@@ -52,7 +53,10 @@
 
 <div
   bind:this={div}
-  class="break-words flex flex-col markdown gap-2 leading-[1.5] {$$props.class}"
+  class="{noStyle
+    ? ''
+    : 'break-words flex flex-col markdown gap-2 leading-[1.5]'} {$$props.class}"
+  style={$$props.style}
 >
   {@html rendered}
 </div>
