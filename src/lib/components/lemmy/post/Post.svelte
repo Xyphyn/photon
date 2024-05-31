@@ -96,7 +96,7 @@
       <PostMediaCompact
         {view}
         bind:post={post.post}
-        class="ml-2 flex-shrink"
+        class="{$userSettings.leftAlign ? 'mr-2' : 'ml-2'} flex-shrink"
         style="grid-area: media;"
       />
     {/if}

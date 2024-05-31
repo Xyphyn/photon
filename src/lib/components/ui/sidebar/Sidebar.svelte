@@ -38,7 +38,7 @@
       <span slot="label">Profile</span>
     </SidebarButton>
     <SidebarButton icon={Inbox} href="/inbox">
-      <span slot="label">
+      <span slot="label" class="flex items-center gap-2">
         Inbox
         {#if $profile?.user?.notifications.inbox}
           <Badge
