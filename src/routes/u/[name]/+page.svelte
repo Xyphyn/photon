@@ -41,6 +41,9 @@
   import PrivateMessageModal from '$lib/components/lemmy/modal/PrivateMessageModal.svelte'
   import LabelStat from '$lib/components/ui/LabelStat.svelte'
   import PostBody from '$lib/components/lemmy/post/PostBody.svelte'
+  import Expandable from '$lib/components/ui/Expandable.svelte'
+  import { communityLink } from '$lib/lemmy/generic.js'
+  import ItemList from '$lib/components/lemmy/generic/ItemList.svelte'
 
   export let data
 
@@ -243,32 +246,24 @@
       />
     </div>
     {#if (data.moderates ?? []).length > 0}
-      <div class="flex flex-col gap-2 max-w-full">
-        <span class="font-bold">Moderates</span>
-        <div
-          class="flex items-center -space-x-1 flex-wrap hover:space-x-1 transition-all
-    cursor-pointer"
-        >
-          {#each data.moderates as moderator}
-            <Popover openOnHover placement="top" class="transition-all">
-              <a
-                class="block ring rounded-full ring-slate-50 dark:ring-zinc-950 transition-all"
-                href="/c/{moderator.community.name}@{new URL(
-                  moderator.community.actor_id
-                ).hostname}"
-                slot="target"
-              >
-                <Avatar
-                  width={28}
-                  url={moderator.community.icon}
-                  alt={moderator.community.title}
-                />
-              </a>
-              <span class="font-bold">{moderator.community.title}</span>
-            </Popover>
-          {/each}
-        </div>
-      </div>
+      <Expandable
+        class="border-y w-full py-3
+      dark:border-zinc-800 text-slate-700 dark:text-zinc-300 transition-colors"
+      >
+        <span slot="title" class="flex items-center gap-1">
+          <ShieldIcon width={14} filled />
+          Moderates
+        </span>
+        <ItemList
+          items={data.moderates.map((m) => ({
+            id: m.community.id,
+            name: m.community.title,
+            url: communityLink(m.community),
+            avatar: m.community.icon,
+            instance: new URL(m.community.actor_id).hostname,
+          }))}
+        />
+      </Expandable>
     {/if}
     {#if $profile?.user && $profile.jwt && data.person_view.person.id != $profile.user.local_user_view.person.id}
       <div class="flex items-center gap-2 w-full">

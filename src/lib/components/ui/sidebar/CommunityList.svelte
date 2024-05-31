@@ -26,7 +26,7 @@
           url={follow.icon}
           alt={follow.name}
           title={follow.title}
-          width={20}
+          width={24}
           slot="prefix"
         />
       </div>

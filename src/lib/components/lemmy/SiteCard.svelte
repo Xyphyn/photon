@@ -22,6 +22,8 @@
   } from 'svelte-hero-icons'
   import Expandable from '../ui/Expandable.svelte'
   import LabelStat from '../ui/LabelStat.svelte'
+  import ItemList from './generic/ItemList.svelte'
+  import { userLink } from '$lib/lemmy/generic'
 
   export let site: SiteView
   export let taglines: Tagline[] | undefined = undefined
@@ -111,28 +113,15 @@
         <svelte:fragment slot="title">
           <Icon src={UserGroup} size="15" mini /> Admins
         </svelte:fragment>
-        <div
-          class="flex items-center flex-wrap group transition-all
-        cursor-pointer"
-        >
-          {#each admins as admin}
-            <Popover openOnHover placement="top">
-              <a
-                class="block ring rounded-full ring-slate-50 dark:ring-zinc-950 transition-all -mx-0.5 group-hover:mx-0.5"
-                href="/u/{admin.person.name}@{new URL(admin.person.actor_id)
-                  .hostname}"
-                slot="target"
-              >
-                <Avatar
-                  width={28}
-                  url={admin.person.avatar}
-                  alt={admin.person.name}
-                />
-              </a>
-              <span class="font-bold">{admin.person.name}</span>
-            </Popover>
-          {/each}
-        </div>
+        <ItemList
+          items={admins.map((a) => ({
+            id: a.person.id,
+            name: a.person.name,
+            url: userLink(a.person),
+            avatar: a.person.avatar,
+            instance: new URL(a.person.actor_id).hostname,
+          }))}
+        />
       </Expandable>
     {/if}
 
