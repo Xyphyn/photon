@@ -96,6 +96,7 @@
       <PostMediaCompact
         {view}
         bind:post={post.post}
+        class="ml-2 flex-shrink"
         style="grid-area: media;"
       />
     {/if}
