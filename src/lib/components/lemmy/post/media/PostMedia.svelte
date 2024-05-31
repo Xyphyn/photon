@@ -49,9 +49,17 @@
           srcset={bestImageURL(post, false, 512)}
           media="(max-width: 512px)"
         />
+        <source
+          srcset={bestImageURL(post, false, 1024)}
+          media="(max-width: 1024px)"
+        />
+        <source
+          srcset={bestImageURL(post, false, 1512)}
+          media="(max-width: 1512px)"
+        />
         <!-- svelte-ignore a11y-missing-attribute -->
         <img
-          src={bestImageURL(post, false, 1024)}
+          src={bestImageURL(post, false, 2048)}
           loading="lazy"
           class="max-h-[inherit] max-w-full h-auto z-30
                   transition-opacity duration-300 object-contain mx-auto"
