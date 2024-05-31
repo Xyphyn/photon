@@ -19,6 +19,7 @@
   import Subscribe from '../../../../routes/communities/Subscribe.svelte'
   import ShieldIcon from '../moderation/ShieldIcon.svelte'
   import { userSettings } from '$lib/settings'
+  import Markdown from '$lib/components/markdown/Markdown.svelte'
 
   export let community: Community | undefined = undefined
   export let subscribed: SubscribedType | undefined = undefined
@@ -159,7 +160,7 @@
     class:dark:text-zinc-400={$userSettings.markReadPosts && read}
     style="grid-area: title;"
   >
-    {title}
+    <Markdown source={title} inline></Markdown>
   </a>
 {/if}
 
