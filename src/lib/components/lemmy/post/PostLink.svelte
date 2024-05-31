@@ -46,7 +46,7 @@
       <a
         href={url}
         target="_blank"
-        class="ml-auto w-full thumbnail rounded-r-lg overflow-hidden flex-shrink -m-4 max-h-48"
+        class="ml-auto w-full thumbnail rounded-r-lg overflow-hidden flex-shrink -m-4"
       >
         <img
           src={optimizeImageURL(thumbnail_url, 256)}
