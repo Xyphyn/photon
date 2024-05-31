@@ -10,25 +10,23 @@
 </script>
 
 {#if (view == 'list' || view == 'compact') && !post.embed_title && (post.thumbnail_url || isImage(post.url))}
-  <div class="flex-shrink-0 w-24 h-24" style={$$props.style ?? ''}>
-    {#if !$userSettings.expandImages || (post.thumbnail_url && !isImage(post.url))}
-      <a href={postLink(post)}>
-        <!-- svelte-ignore a11y-missing-attribute -->
-        <img
-          src={bestImageURL(post, true)}
-          loading="lazy"
-          class="object-cover bg-slate-100 dark:bg-zinc-800 rounded-lg h-24 w-24 border border-slate-200 dark:border-zinc-700"
-        />
-      </a>
-    {:else}
-      <button on:click={() => showImage(bestImageURL(post, false, 2048))}>
-        <!-- svelte-ignore a11y-missing-attribute -->
-        <img
-          src={bestImageURL(post, true)}
-          loading="lazy"
-          class="object-cover bg-slate-100 rounded-lg h-24 w-24 border border-slate-200 dark:border-zinc-700"
-        />
-      </button>
-    {/if}
+  <div class="w-32 h-24" style={$$props.style ?? ''}>
+    <svelte:element
+      this={!$userSettings.expandImages ||
+      (post.thumbnail_url && !isImage(post.url))
+        ? 'a'
+        : 'button'}
+      href={postLink(post)}
+      on:click={() => showImage(bestImageURL(post, false, 2048))}
+      role="button"
+      tabindex="0"
+    >
+      <img
+        src={bestImageURL(post, true)}
+        loading="lazy"
+        class="object-cover overflow-hidden bg-slate-100 dark:bg-zinc-800 rounded-xl h-24 w-32 border border-slate-200 dark:border-zinc-800"
+        alt={post.name}
+      />
+    </svelte:element>
   </div>
 {/if}

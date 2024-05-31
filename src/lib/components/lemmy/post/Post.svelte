@@ -85,15 +85,21 @@
   >
     <slot name="badges" slot="badges" />
   </PostMeta>
-  <div
-    style="grid-area:embed"
-    class={view == 'list' || view == 'compact' ? '' : 'contents'}
-  >
-    <PostMedia bind:post={post.post} {view} {type} />
-  </div>
-  {#if view == 'list' || view == 'compact'}
-    <PostMediaCompact {view} bind:post={post.post} style="grid-area: media;" />
-  {/if}
+  {#key post.post.url}
+    <div
+      style="grid-area:embed;"
+      class={view == 'list' || view == 'compact' ? '' : 'contents'}
+    >
+      <PostMedia bind:post={post.post} {view} {type} />
+    </div>
+    {#if view == 'list' || view == 'compact'}
+      <PostMediaCompact
+        {view}
+        bind:post={post.post}
+        style="grid-area: media;"
+      />
+    {/if}
+  {/key}
   {#if post.post.body && !post.post.nsfw && view != 'compact' && !hideBody}
     <PostBody body={post.post.body} {view} style="grid-area: body" />
   {/if}
