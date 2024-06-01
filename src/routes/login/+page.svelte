@@ -10,7 +10,12 @@
     validateInstance,
   } from '$lib/lemmy.js'
   import { Button, TextInput } from 'mono-svelte'
-  import { Icon, Identification, QuestionMarkCircle } from 'svelte-hero-icons'
+  import {
+    Icon,
+    Identification,
+    QuestionMarkCircle,
+    UserCircle,
+  } from 'svelte-hero-icons'
   import { DOMAIN_REGEX_FORMS } from '$lib/util.js'
   import { MINIMUM_VERSION } from '$lib/version.js'
 
@@ -136,6 +141,10 @@
       <Button color="tertiary" href="/login_reset">
         <Icon src={QuestionMarkCircle} mini size="16" />
         Forgot Password
+      </Button>
+      <Button color="tertiary" href="/login/guest">
+        <Icon src={UserCircle} mini size="16" />
+        Guest
       </Button>
     </div>
   </form>

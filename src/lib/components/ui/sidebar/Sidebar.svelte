@@ -77,15 +77,6 @@
         <ProfileButton {index} {prof} />
       </div>
     {/each}
-    <ProfileButton
-      index={0}
-      prof={{
-        id: -1,
-        instance: $profileData?.defaultInstance ?? DEFAULT_INSTANCE_URL,
-        username: 'Guest',
-      }}
-      guest
-    />
     <SidebarButton href="/accounts" icon={UserGroup}>
       <span slot="label">Accounts</span>
     </SidebarButton>

@@ -5,6 +5,7 @@
   import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
   import ProfileAvatar from '$lib/lemmy/ProfileAvatar.svelte'
   import { Button } from 'mono-svelte'
+  import { Icon, QuestionMarkCircle } from 'svelte-hero-icons'
 
   export let prof: Profile
   export let index: number
@@ -46,8 +47,9 @@
     slot="icon"
   />
   <span
-    class="flex flex-col gap-0 {$profile?.id == prof.id ? 'font-semibold' : ''}"
-    slot="label"
+    class="inline-flex flex-col gap-0 {$profile?.id == prof.id
+      ? 'font-semibold'
+      : ''}"
   >
     {prof.username ?? prof.user?.local_user_view.person.name}
     {#if !guest}
@@ -56,4 +58,7 @@
       </span>
     {/if}
   </span>
+  {#if !prof.jwt}
+    <Icon src={QuestionMarkCircle} size="14" micro class="ml-auto opacity-50" />
+  {/if}
 </SidebarButton>

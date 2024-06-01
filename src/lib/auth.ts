@@ -69,11 +69,25 @@ const getCookie = (key: string): string | undefined => {
 
   // sorry i was dying when i wrote this line
   // ask chatgpt or something to explain this for you
-  return document?.cookie?.split(';').map(c => c.trim()).find(c => c.split('=')?.[0] == key)?.split('=')?.[1]
+  return document?.cookie
+    ?.split(';')
+    .map((c) => c.trim())
+    .find((c) => c.split('=')?.[0] == key)
+    ?.split('=')?.[1]
 }
 
 export let profileData = writable<ProfileData>(
-  getFromStorage<ProfileData>('profileData') ?? { profiles: [], profile: -1 }
+  getFromStorage<ProfileData>('profileData') ?? {
+    profiles: [
+      {
+        id: 1,
+        instance: DEFAULT_INSTANCE_URL,
+        username: 'Guest',
+        color: '#505050',
+      },
+    ],
+    profile: 1,
+  }
 )
 
 // stupid hack to get dev server working
@@ -88,22 +102,45 @@ profileData.subscribe(async (pd) => {
     initialInstance = get(profileData).defaultInstance ?? DEFAULT_INSTANCE_URL
     instance?.set(get(profileData).defaultInstance ?? DEFAULT_INSTANCE_URL)
   }
+  if (pd.profiles.length == 0) {
+    profileData.update((pd) => ({
+      ...pd,
+      profiles: [
+        {
+          id: 1,
+          instance: DEFAULT_INSTANCE_URL,
+          username: 'Guest',
+        },
+      ],
+      profile: 1,
+    }))
+  }
 })
 
-if (env.PUBLIC_MIGRATE_COOKIE && get(profileData).profiles.length == 0 && env.PUBLIC_INSTANCE_URL) {
+if (
+  env.PUBLIC_MIGRATE_COOKIE &&
+  get(profileData).profiles.length == 0 &&
+  env.PUBLIC_INSTANCE_URL
+) {
   const jwt = getCookie('jwt')
   if (jwt) {
     new Promise(async () => {
-        const user = await userFromJwt(jwt, env.PUBLIC_INSTANCE_URL ?? '')
-        if (!user) return
+      const user = await userFromJwt(jwt, env.PUBLIC_INSTANCE_URL ?? '')
+      if (!user) return
 
-        const result = await setUser(jwt, env.PUBLIC_INSTANCE_URL ?? '', user?.user.local_user_view.person.name)
-  
-        if (result) 
-          toast({ content: 'Your instance migrated to Photon, and you were logged in using a leftover cookie.', type: 'success' })
-      
+      const result = await setUser(
+        jwt,
+        env.PUBLIC_INSTANCE_URL ?? '',
+        user?.user.local_user_view.person.name
+      )
+
+      if (result)
+        toast({
+          content:
+            'Your instance migrated to Photon, and you were logged in using a leftover cookie.',
+          type: 'success',
+        })
     })
-    
   }
 }
 
@@ -113,37 +150,36 @@ profile.subscribe(async (p) => {
   if (p?.id == -1) {
     instance?.set(get(profileData).defaultInstance ?? DEFAULT_INSTANCE_URL)
   }
-  if (!p || !p.jwt) {
-    profileData.update((pd) => ({ ...pd, profile: -1 }))
-    return
-  }
+  if (!p) return
   if (p.user) return
 
   instance.set(p.instance)
   // fetch the user because p.user is undefined
-  const user = await userFromJwt(p.jwt, p.instance)
-    .then((user) => {
-      if (!user?.user)
-        toast({
-          content: 'Your login has expired. Re-login to fix this issue.',
-          type: 'warning',
-        })
-      site.set(user?.site)
+  if (p?.jwt) {
+    const user = await userFromJwt(p.jwt, p.instance)
+      .then((user) => {
+        if (!user?.user)
+          toast({
+            content: 'Your login has expired. Re-login to fix this issue.',
+            type: 'warning',
+          })
+        site.set(user?.site)
 
-      return user
-    })
-    .catch((err) => {
-      toast({ content: err as any, type: 'error' })
-    })
+        return user
+      })
+      .catch((err) => {
+        toast({ content: err as any, type: 'error' })
+      })
 
-  if (!user?.user) return
+    if (!user?.user) return
 
-  profile.update(() => ({
-    ...p,
-    user: user!.user,
-    username: user?.user.local_user_view.person.name,
-    avatar: user?.user.local_user_view.person.avatar,
-  }))
+    profile.update(() => ({
+      ...p,
+      user: user!.user,
+      username: user?.user.local_user_view.person.name,
+      avatar: user?.user.local_user_view.person.avatar,
+    }))
+  }
 })
 
 export async function setUser(jwt: string, inst: string, username: string) {
@@ -396,8 +432,6 @@ async function checkInbox() {
     ...p!,
     user: user,
   }))
-
-  
 }
 
 setInterval(checkInbox, 4 * 60 * 1000)
@@ -408,4 +442,3 @@ profile.subscribe((p) => {
   prevId = p?.id
   if (p.id != -1) checkInbox()
 })
-

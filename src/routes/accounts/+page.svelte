@@ -293,48 +293,17 @@
           </Menu>
         </div>
       {/each}
-      <div class="flex flex-row gap-4 items-center py-4">
-        <span class="font-bold flex flex-col">Guest</span>
-        <div class="ml-auto" />
-
-        <Button
-          aria-label={$currentProfile?.id != -1 ? 'Switch' : 'Current'}
-          on:click={async () => {
-            if ($currentProfile?.id != -1) setUserID(-1)
-          }}
-          size="square-md"
-          color={$currentProfile?.id == -1 ? 'primary' : 'secondary'}
-        >
-          {#if $currentProfile?.id == -1}
-            <Icon src={Check} mini size="16" />
-          {/if}
-        </Button>
-      </div>
     </EditableList>
     <div class="mt-auto" />
-    <div class="flex flex-row font-normal gap-2">
-      <TextInput
-        on:change={changeGuestInstance}
-        placeholder="Instance URL"
-        label="Guest instance"
-        bind:value={newInstance}
-        disabled={LINKED_INSTANCE_URL != undefined}
-        size="sm"
-      >
-        <span slot="prefix">https://</span>
-      </TextInput>
-      <Button
-        color="primary"
-        {loading}
-        disabled={loading || LINKED_INSTANCE_URL != undefined}
-        class="self-end"
-      >
-        Change
+    <div class="flex items-center gap-2">
+      <Button href="/login" size="lg" class="flex-1">
+        <Icon slot="prefix" src={ArrowLeftOnRectangle} size="16" mini />
+        Log In
+      </Button>
+      <Button href="/login/guest" size="lg">
+        <Icon slot="prefix" src={Plus} size="16" mini />
+        Add Guest
       </Button>
     </div>
-    <Button href="/login" size="lg">
-      <Icon slot="prefix" src={ArrowLeftOnRectangle} size="16" mini />
-      Log In
-    </Button>
   </div>
 {/if}
