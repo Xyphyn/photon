@@ -13,6 +13,7 @@ A better, more intuitive way to use Lemmy, with a cleaner UI, more features, and
 
 ![image](https://github.com/Xyphyn/photon/assets/80978739/e36468f6-03c5-4267-94e8-3bba60b6ccb2)
 
+Photon's design philosophy is easy: all features must be intuitive and simple. If a feature can't be easily slipped in while making sense, it will not be added.
 
 ## Self-hosting
 
