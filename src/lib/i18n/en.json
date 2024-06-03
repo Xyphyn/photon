@@ -118,6 +118,17 @@
       "moderates": "Moderates"
     },
     "accounts": "Accounts",
+    "communities": "Communities",
+    "search": {
+      "title": "Search",
+      "federating": "Federating",
+      "query": "Query",
+      "noResults": {
+        "title": "No Results",
+        "description": "There are no results that match that filter. Try refining your search.",
+        "alt": "Search across the fediverse"
+      }
+    },
     "post": {
       "crosspostCount": "crossposts",
       "commentCount": "comments",

@@ -33,6 +33,7 @@
   } from 'svelte-hero-icons'
   import { expoOut } from 'svelte/easing'
   import { slide } from 'svelte/transition'
+  import { t } from '$lib/translations.js'
 
   type Result = PostView | CommentView | PersonView | CommunityView
 
@@ -57,25 +58,20 @@
   >
     <span slot="label" class="flex items-center gap-1">
       <Icon src={AdjustmentsHorizontal} mini size="15" />
-      Filter
+      {$t('filter.type')}
     </span>
-    <option value="All">All</option>
-    <option value="Posts">Posts</option>
-    <option value="Comments">Comments</option>
-    <option value="Communities">Communities</option>
-    <option value="Users">Users</option>
+    <option value="All">{$t('content.all')}</option>
+    <option value="Posts">{$t('content.posts')}</option>
+    <option value="Comments">{$t('content.comments')}</option>
+    <option value="Communities">{$t('content.communities')}</option>
+    <option value="Users">{$t('content.users')}</option>
   </Select>
   <Sort navigate bind:selected={data.sort} />
   <form
     on:submit|preventDefault={() => searchParam($page.url, 'q', query, 'page')}
     class="flex flex-col sm:flex-row gap-2 sm:ml-auto items-center"
   >
-    <TextInput
-      bind:value={query}
-      placeholder="Search for a keyword..."
-      label="Query"
-      size="md"
-    />
+    <TextInput bind:value={query} label={$t('routes.search.query')} size="md" />
     <Button
       submit
       color="secondary"
@@ -100,7 +96,7 @@
 {#if moreOptions}
   <div transition:slide={{ axis: 'y', easing: expoOut }} class="max-w-sm">
     <ObjectAutocomplete
-      label="Community"
+      label={$t('nav.create.community')}
       jwt={$profile?.jwt}
       listing_type={'All'}
       showWhenEmpty={true}
@@ -112,8 +108,10 @@
 {#if !data.results}
   <Placeholder
     icon={MagnifyingGlass}
-    title="No results"
-    description="Search across the fediverse"
+    title={$t('routes.search.noResults.title')}
+    description={query == ''
+      ? $t('routes.search.noResults.alt')
+      : $t('routes.search.noResults.description')}
     class="pt-4"
   />
 {:else}
@@ -123,7 +121,7 @@
       out:slide={{ axis: 'y', easing: expoOut }}
     >
       <Spinner width={24} />
-      <span>Federating...</span>
+      <span>{$t('routes.search.federating')}</span>
     </div>
   {:then object}
     {#if object}

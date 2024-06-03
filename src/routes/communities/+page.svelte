@@ -13,6 +13,9 @@
   import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import CommunityItem from '$lib/components/lemmy/community/CommunityItem.svelte'
+  import Location from '$lib/components/lemmy/dropdowns/Location.svelte'
+  import { t } from '$lib/translations.js'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
   export let data
 
@@ -24,8 +27,8 @@
   <title>Communities</title>
 </svelte:head>
 
-<h1 class="text-3xl font-bold">
-  <span>Communities</span>
+<Header>
+  <span>{$t('routes.communities')}</span>
   <Popover
     openOnHover
     class="!inline-flex"
@@ -52,20 +55,9 @@
       </p>
     </Material>
   </Popover>
-</h1>
+</Header>
 <div class="flex flex-row flex-wrap gap-4 mt-4 items-center">
-  <Select
-    bind:value={data.type}
-    on:change={() => searchParam($page.url, 'type', data.type ?? 'All', 'page')}
-  >
-    <span slot="label" class="flex items-center gap-1">
-      <Icon src={GlobeAmericas} mini size="15" />
-      Location
-    </span>
-    <option value="All">All</option>
-    <option value="Local">Local</option>
-    <option value="Subscribed">Subscribed</option>
-  </Select>
+  <Location selected={data.type} />
   <Sort selected={data.sort} />
   <form
     on:submit|preventDefault={() => searchParam($page.url, 'q', search, 'page')}
@@ -73,8 +65,7 @@
   >
     <TextInput
       bind:value={search}
-      placeholder="Search for a community..."
-      label="Query"
+      label={$t('routes.search.query')}
       size="md"
     />
     <Button
@@ -93,9 +84,8 @@
   {#if data.communities.length == 0}
     <Placeholder
       icon={QuestionMarkCircle}
-      title="No communities"
-      description="There are no communities that match this filter. Try refining your
-  search."
+      title={$t('routes.search.noResults.title')}
+      description={$t('routes.search.noResults.description')}
     />
   {/if}
   {#each data.communities as community}
