@@ -44,6 +44,8 @@
   import Expandable from '$lib/components/ui/Expandable.svelte'
   import LabelStat from '$lib/components/ui/LabelStat.svelte'
   import ShieldIcon from '../moderation/ShieldIcon.svelte'
+  import ItemList from '../generic/ItemList.svelte'
+  import { communityLink, userLink } from '$lib/lemmy/generic'
 
   export let community_view: CommunityView
   export let moderators: CommunityModeratorView[] = []
@@ -250,29 +252,15 @@
         <svelte:fragment slot="title">
           <ShieldIcon width={15} filled /> Moderators
         </svelte:fragment>
-        <div
-          class="flex items-center -space-x-1 flex-wrap hover:space-x-1 transition-all
-      cursor-pointer"
-        >
-          {#each moderators as moderator}
-            <Popover openOnHover placement="top-start" class="transition-all">
-              <a
-                class="block ring rounded-full ring-slate-50 dark:ring-zinc-950 transition-all"
-                href="/u/{moderator.moderator.name}@{new URL(
-                  moderator.moderator.actor_id
-                ).hostname}"
-                slot="target"
-              >
-                <Avatar
-                  width={28}
-                  url={moderator.moderator.avatar}
-                  alt={moderator.moderator.name}
-                />
-              </a>
-              <span class="font-bold">{moderator.moderator.name}</span>
-            </Popover>
-          {/each}
-        </div>
+        <ItemList
+          items={moderators.map((m) => ({
+            id: m.moderator.id,
+            name: m.moderator.name,
+            url: userLink(m.moderator),
+            avatar: m.moderator.avatar,
+            instance: new URL(m.moderator.actor_id).hostname,
+          }))}
+        />
       </Expandable>
     {/if}
   </div>
