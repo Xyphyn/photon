@@ -17,29 +17,14 @@
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import Location from '$lib/components/lemmy/dropdowns/Location.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { t } from '$lib/translations.js'
 
   export let data
-
-  let sidebar = false
 </script>
-
-<Modal bind:open={sidebar}>
-  <span slot="title">About</span>
-  <div class="mx-auto">
-    {#if $site}
-      <SiteCard
-        site={$site.site_view}
-        taglines={$site.taglines}
-        admins={$site.admins}
-        version={$site.version}
-      />
-    {/if}
-  </div>
-</Modal>
 
 <div class="flex flex-col gap-4 max-w-full w-full min-w-0">
   <header>
-    <Header>Frontpage</Header>
+    <Header>{$t('routes.frontpage')}</Header>
   </header>
   <div class="flex items-center gap-2">
     <Location changeDefault selected={data.listingType} />

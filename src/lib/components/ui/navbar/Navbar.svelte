@@ -37,6 +37,7 @@
   import Logo from '../Logo.svelte'
   import { LINKED_INSTANCE_URL } from '$lib/instance'
   import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
+  import { t } from '$lib/translations'
 
   let searching = false
 </script>
@@ -48,7 +49,7 @@
   "
   style={$$props.style}
 >
-  <NavButton href="/" label="Home" class="ml-2 logo">
+  <NavButton href="/" label={$t('nav.home')} class="ml-2 logo">
     <svelte:fragment slot="icon">
       {#if LINKED_INSTANCE_URL}
         {#if $site}
@@ -171,7 +172,7 @@
     {#if $profile?.user && isAdmin($profile.user)}
       <NavButton
         href="/admin"
-        label="Admin"
+        label={$t('nav.admin')}
         icon={ServerStack}
         class="relative"
         isSelectedFilter={(path) => path.startsWith('/admin')}
@@ -184,7 +185,11 @@
       </NavButton>
     {/if}
     {#if amModOfAny($profile?.user)}
-      <NavButton href="/moderation" label="Moderation" class="relative">
+      <NavButton
+        href="/moderation"
+        label={$t('nav.moderation')}
+        class="relative"
+      >
         {#if ($profile?.user?.notifications.reports ?? 0) > 0}
           <div
             class="rounded-full w-2 h-2 bg-red-500 absolute -top-1 -left-1"
@@ -193,10 +198,14 @@
         <ShieldIcon let:isSelected slot="icon" filled={isSelected} width={18} />
       </NavButton>
     {/if}
-    <NavButton href="/communities" label="Explore" icon={GlobeAlt} />
+    <NavButton
+      href="/communities"
+      label={$t('nav.communities')}
+      icon={GlobeAlt}
+    />
     <NavButton
       on:click={() => (searching = true)}
-      label="Search"
+      label={$t('nav.search')}
       icon={MagnifyingGlass}
     />
     <Menu placement="top">
@@ -204,13 +213,13 @@
         class="relative"
         color="primary"
         slot="target"
-        label="Create"
+        label={$t('nav.create.label')}
         icon={Plus}
       />
-      <MenuDivider>Create</MenuDivider>
+      <MenuDivider>{$t('nav.create.label')}</MenuDivider>
       <MenuButton link href="/create/post" disabled={!$profile?.jwt}>
         <Icon src={PencilSquare} mini width={16} slot="prefix" />
-        Post
+        {$t('nav.create.post')}
       </MenuButton>
       <MenuButton
         link
@@ -221,11 +230,11 @@
             !isAdmin($profile.user))}
       >
         <Icon src={Newspaper} mini width={16} slot="prefix" />
-        Community
+        {$t('nav.create.community')}
       </MenuButton>
       {#if !$profile?.jwt}
         <span class="text-sm mx-4 my-1 py-1">
-          <Link highlight href="/login">Log in</Link> to create content.
+          {$t('nav.create.logingate')}
         </span>
       {/if}
     </Menu>

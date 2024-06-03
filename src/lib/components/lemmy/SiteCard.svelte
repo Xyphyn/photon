@@ -2,21 +2,14 @@
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import StickyCard from '$lib/components/ui/StickyCard.svelte'
-  import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
-  import RelativeDate from '$lib/components/util/RelativeDate.svelte'
-  import { publishedToDate } from '$lib/components/util/date.js'
-  import { getClient } from '$lib/lemmy.js'
   import type { PersonView, SiteView, Tagline } from 'lemmy-js-client'
-  import { Button, Disclosure, Popover } from 'mono-svelte'
+  import { Button } from 'mono-svelte'
   import {
     BuildingOffice,
-    Calendar,
     ChartBar,
-    ChatBubbleOvalLeftEllipsis,
     Icon,
     InformationCircle,
     Newspaper,
-    PencilSquare,
     ServerStack,
     UserGroup,
   } from 'svelte-hero-icons'
@@ -24,6 +17,7 @@
   import LabelStat from '../ui/LabelStat.svelte'
   import ItemList from './generic/ItemList.svelte'
   import { userLink } from '$lib/lemmy/generic'
+  import { t } from '$lib/translations'
 
   export let site: SiteView
   export let taglines: Tagline[] | undefined = undefined
@@ -49,15 +43,25 @@
     </div>
   </div>
   <div class="flex flex-row gap-1 !border-0">
-    <Button href="/modlog" title="Modlog" color="ghost" size="square-md">
+    <Button
+      href="/modlog"
+      title={$t('routes.modlog')}
+      color="ghost"
+      size="square-md"
+    >
       <Icon src={Newspaper} size="16" mini />
     </Button>
-    <Button href="/legal" title="Legal" color="ghost" size="square-md">
+    <Button
+      href="/legal"
+      title={$t('routes.legal')}
+      color="ghost"
+      size="square-md"
+    >
       <Icon src={BuildingOffice} size="16" mini />
     </Button>
     <Button
       href="/instances"
-      title="Instances"
+      title={$t('routes.instances')}
       class="3xl:rounded-l-none"
       color="ghost"
       size="square-md"
@@ -78,7 +82,8 @@
 
     <Expandable>
       <svelte:fragment slot="title">
-        <Icon src={InformationCircle} size="15" mini /> About
+        <Icon src={InformationCircle} size="15" mini />
+        {$t('cards.site.about')}
       </svelte:fragment>
       <Markdown source={site.site.description} />
       <div class="my-4" />
@@ -87,21 +92,22 @@
 
     <Expandable>
       <svelte:fragment slot="title">
-        <Icon src={ChartBar} size="15" mini /> Stats
+        <Icon src={ChartBar} size="15" mini />
+        {$t('cards.site.stats')}
       </svelte:fragment>
       <div class="flex flex-row gap-4 flex-wrap">
         <LabelStat
-          label="Users"
+          label={$t('content.users')}
           content={site.counts.users.toString()}
           formatted
         />
         <LabelStat
-          label="Posts"
+          label={$t('content.posts')}
           content={site.counts.posts.toString()}
           formatted
         />
         <LabelStat
-          label="Communities"
+          label={$t('content.communities')}
           content={site.counts.communities.toString()}
           formatted
         />
@@ -111,7 +117,8 @@
     {#if admins}
       <Expandable>
         <svelte:fragment slot="title">
-          <Icon src={UserGroup} size="15" mini /> Admins
+          <Icon src={UserGroup} size="15" mini />
+          {$t('cards.site.admins')}
         </svelte:fragment>
         <ItemList
           items={admins.map((a) => ({

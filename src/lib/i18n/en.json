@@ -1,0 +1,113 @@
+{
+  "profile": {
+    "profile": "Profile",
+    "inbox": "Inbox",
+    "saved": "Saved",
+    "subscribed": "Subscribed"
+  },
+  "nav": {
+    "home": "Home",
+    "admin": "Admin",
+    "moderation": "Moderation",
+    "communities": "Explore",
+    "search": "Search",
+    "create": {
+      "label": "Create",
+      "post": "Post",
+      "community": "Community",
+      "logingate": "You must log in to create content."
+    },
+    "menu": {
+      "label": "Profile",
+      "app": "App",
+      "settings": "Settings",
+      "colorscheme": {
+        "label": "Color Scheme",
+        "system": "System",
+        "dark": "Dark",
+        "light": "Light"
+      },
+      "theme": "Theme",
+      "about": "About",
+      "source": "Source",
+      "donate": "Donate",
+      "instance": "Instance"
+    }
+  },
+  "account": {
+    "login": "Log In",
+    "logout": "Log Out",
+    "signup": "Sign Up",
+    "accounts": "Accounts",
+    "changeinstance": "Change Instance"
+  },
+  "filter": {
+    "location": {
+      "label": "Location",
+      "all": "All",
+      "local": "Local",
+      "subscribed": "Subscribed",
+      "moderator": "Moderator"
+    },
+    "sort": {
+      "label": "Sort",
+      "active": "Active",
+      "hot": "Hot",
+      "top": {
+        "label": "Top",
+        "time": {
+          "label": "Time",
+          "all": "All",
+          "9months": "9 Months",
+          "6months": "6 Months",
+          "3months": "3 Months",
+          "month": "Month",
+          "week": "Week",
+          "day": "Day",
+          "12hours": "12 Hours",
+          "6hours": "6 Hours",
+          "hour": "Hour"
+        }
+      },
+      "new": "New",
+      "old": "Old",
+      "controversial": "Controversial",
+      "scaled": "Scaled",
+      "mostcomments": "Comments",
+      "newcomments": "New Replies"
+    },
+    "view": {
+      "label": "View",
+      "cozy": "Cozy",
+      "list": "List",
+      "compact": "Compact",
+      "legacy": "Legacy"
+    }
+  },
+  "form": {
+    "username": "Username",
+    "instance": "Instance URL",
+    "password": "Password",
+    "2fa": "2FA Code",
+    "forgotpassword": "Forgot Password",
+    "submit": "Submit"
+  },
+  "routes": {
+    "frontpage": "Frontpage",
+    "modlog": "Modlog",
+    "instances": "Instances",
+    "legal": "Legal"
+  },
+  "cards": {
+    "site": {
+      "about": "About",
+      "stats": "Stats",
+      "admins": "Admins"
+    }
+  },
+  "content": {
+    "users": "Users",
+    "posts": "Posts",
+    "communities": "Communities"
+  }
+}

@@ -2,6 +2,7 @@
   import { page } from '$app/stores'
   import { site } from '$lib/lemmy.js'
   import { userSettings } from '$lib/settings'
+  import { t } from '$lib/translations'
   import { searchParam } from '$lib/util.js'
   import { feature } from '$lib/version.js'
   import type { SortType } from 'lemmy-js-client'
@@ -33,21 +34,19 @@
   >
     <span slot="label" class="flex items-center gap-1">
       <Icon src={ChartBar} size="13" mini />
-      Sort
+      {$t('filter.sort.label')}
     </span>
-    <option value="Active">Active</option>
-    <option value="Hot">Hot</option>
+    <option value="Active">{$t('filter.sort.active')}</option>
+    <option value="Hot">{$t('filter.sort.hot')}</option>
     {#if feature('scaledSort', $site?.version)}
-      <option value="Scaled">Scaled</option>
+      <option value="Scaled">{$t('filter.sort.scaled')}</option>
     {/if}
-    <option value="TopAll">Top</option>
-    <option value="New">New</option>
-    {#if feature('controversialSort', $site?.version)}
-      <option value="Controversial">Controversial</option>
-    {/if}
-    <option value="Old">Old</option>
-    <option value="MostComments">Comments</option>
-    <option value="NewComments">New Replies</option>
+    <option value="TopAll">{$t('filter.sort.top.label')}</option>
+    <option value="New">{$t('filter.sort.new')}</option>
+    <option value="Old">{$t('filter.sort.old')}</option>
+    <option value="Controversial">{$t('filter.sort.controversial')}</option>
+    <option value="MostComments">{$t('filter.sort.mostcomments')}</option>
+    <option value="NewComments">{$t('filter.sort.newcomments')}</option>
   </Select>
   {#if selected?.startsWith('Top')}
     <div transition:fly={{ easing: backOut, x: 2 }}>
@@ -62,18 +61,26 @@
       >
         <span slot="label" class="flex items-center gap-1">
           <Icon src={Clock} size="15" mini />
-          Time
+          {$t('filter.sort.top.time.label')}
         </span>
-        <option value="TopAll">All</option>
-        <option value="TopNineMonths">9 Months</option>
-        <option value="TopSixMonths">6 Months</option>
-        <option value="TopThreeMonths">3 Months</option>
-        <option value="TopMonth">Month</option>
-        <option value="TopWeek">Week</option>
-        <option value="TopDay">Day</option>
-        <option value="TopTwelveHour">12 Hours</option>
-        <option value="TopSixHour">6 Hours</option>
-        <option value="TopHour">Hour</option>
+        <option value="TopAll">{$t('filter.sort.top.time.all')}</option>
+        <option value="TopNineMonths">
+          {$t('filter.sort.top.time.9months')}
+        </option>
+        <option value="TopSixMonths">
+          {$t('filter.sort.top.time.6months')}
+        </option>
+        <option value="TopThreeMonths">
+          {$t('filter.sort.top.time.3months')}
+        </option>
+        <option value="TopMonth">{$t('filter.sort.top.time.month')}</option>
+        <option value="TopWeek">{$t('filter.sort.top.time.week')}</option>
+        <option value="TopDay">{$t('filter.sort.top.time.day')}</option>
+        <option value="TopTwelveHour">
+          {$t('filter.sort.top.time.12hours')}
+        </option>
+        <option value="TopSixHour">{$t('filter.sort.top.time.6hours')}</option>
+        <option value="TopHour">{$t('filter.sort.top.time.hour')}</option>
       </Select>
     </div>
   {/if}
