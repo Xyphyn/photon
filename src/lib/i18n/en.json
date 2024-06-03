@@ -44,7 +44,8 @@
     "addGuest": "Add Guest",
     "moveUp": "Move Up",
     "moveDown": "Move Down",
-    "guest": "Guest"
+    "guest": "Guest",
+    "versionGate": "This version of Photon supports instances running {{version}} or higher."
   },
   "filter": {
     "location": {
@@ -92,6 +93,7 @@
   },
   "form": {
     "username": "Username",
+    "name": "Name",
     "instance": "Instance URL",
     "password": "Password",
     "2fa": "2FA Code",

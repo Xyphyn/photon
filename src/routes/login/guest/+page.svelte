@@ -7,10 +7,12 @@
   import { profile, profileData, type Profile } from '$lib/auth'
   import { LINKED_INSTANCE_URL } from '$lib/instance'
   import { goto } from '$app/navigation'
+  import { t } from '$lib/translations'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
   let form = {
     instance: '',
-    username: `Guest ${$profileData.profiles.filter((p) => p.jwt == undefined).length + 1}`,
+    username: `${$t('account.guest')} ${$profileData.profiles.filter((p) => p.jwt == undefined).length + 1}`,
     loading: false,
   }
 
@@ -53,21 +55,20 @@
 <div class="max-w-xl w-full mx-auto h-max my-auto">
   <form on:submit|preventDefault={addGuest} class="flex flex-col gap-5">
     <div class="flex flex-col gap-2">
-      <h1 class="font-bold text-3xl">Add Guest</h1>
+      <Header>{$t('account.addGuest')}</Header>
       {#if $site && mayBeIncompatible(MINIMUM_VERSION, $site.version.replace('v', ''))}
         <Note>
-          This version of Photon supports instances running
-          <span style="font-family: monospace;">
-            v{MINIMUM_VERSION}
-          </span>
-          or higher.
+          {$t('account.versionGate', {
+            //@ts-ignore
+            version: `v${MINIMUM_VERSION}`,
+          })}
         </Note>
       {/if}
     </div>
     <div class="inline-flex items-center gap-2">
       <TextInput
         required
-        label="Name"
+        label={$t('form.name')}
         bind:value={form.username}
         placeholder="Guest 2"
         minlength={1}
@@ -76,7 +77,7 @@
       {#if !LINKED_INSTANCE_URL}
         <TextInput
           required
-          label="Instance URL"
+          label={$t('form.instance')}
           bind:value={form.instance}
           pattern={DOMAIN_REGEX_FORMS}
           placeholder="example.com"
@@ -92,7 +93,7 @@
       loading={form.loading}
       disabled={form.loading}
     >
-      Submit
+      {$t('form.submit')}
     </Button>
   </form>
 </div>
