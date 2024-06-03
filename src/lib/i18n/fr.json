@@ -130,6 +130,14 @@
         "delete": "Supprimer",
         "restore": "Restaurer"
       }
+    },
+    "badges": {
+      "nsfw": "NSFW",
+      "locked": "Verrouillé",
+      "featured": "En vedette",
+      "removed": "Supprimé",
+      "deleted": "Supprimé",
+      "saved": "Enregistré"
     }
   },
   "moderation": {

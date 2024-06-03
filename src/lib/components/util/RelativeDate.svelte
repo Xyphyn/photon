@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { locale } from '$lib/translations'
+
   export let date: Date
   export let relativeTo: Date | undefined = undefined
   export let options: Intl.RelativeTimeFormatOptions = {
@@ -36,7 +38,7 @@
         if (diffInMillis >= thresholds[i].threshold) {
           const value = Math.round(diffInMillis / thresholds[i].threshold)
 
-          let language = 'en'
+          let language = $locale
           if (typeof navigator != 'undefined') {
             language = navigator.language
           }
