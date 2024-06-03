@@ -137,6 +137,10 @@
       "about": "About",
       "stats": "Stats",
       "admins": "Admins"
+    },
+    "community": {
+      "members": "Members",
+      "moderators": "Moderators"
     }
   },
   "content": {

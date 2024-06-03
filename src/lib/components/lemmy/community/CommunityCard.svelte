@@ -46,6 +46,7 @@
   import ShieldIcon from '../moderation/ShieldIcon.svelte'
   import ItemList from '../generic/ItemList.svelte'
   import { communityLink, userLink } from '$lib/lemmy/generic'
+  import { t } from '$lib/translations'
 
   export let community_view: CommunityView
   export let moderators: CommunityModeratorView[] = []
@@ -224,23 +225,25 @@
   >
     <Expandable class="!pt-0">
       <svelte:fragment slot="title">
-        <Icon src={InformationCircle} size="15" mini /> About
+        <Icon src={InformationCircle} size="15" mini />
+        {$t('cards.site.about')}
       </svelte:fragment>
       <Markdown source={community_view.community.description} />
     </Expandable>
 
     <Expandable>
       <svelte:fragment slot="title">
-        <Icon src={ChartBar} size="15" mini /> Stats
+        <Icon src={ChartBar} size="15" mini />
+        {$t('cards.site.stats')}
       </svelte:fragment>
       <div class="flex flex-row gap-4 flex-wrap">
         <LabelStat
-          label="Members"
+          label={$t('cards.community.members')}
           content={community_view.counts.subscribers.toString()}
           formatted
         />
         <LabelStat
-          label="Posts"
+          label={$t('content.posts')}
           content={community_view.counts.posts.toString()}
           formatted
         />
@@ -250,7 +253,8 @@
     {#if moderators && moderators.length > 0}
       <Expandable>
         <svelte:fragment slot="title">
-          <ShieldIcon width={15} filled /> Moderators
+          <ShieldIcon width={15} filled />
+          {$t('cards.community.moderators')}
         </svelte:fragment>
         <ItemList
           items={moderators.map((m) => ({
