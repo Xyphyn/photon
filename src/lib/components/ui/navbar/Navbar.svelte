@@ -8,7 +8,14 @@
   } from '$lib/components/lemmy/moderation/moderation.js'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import { site } from '$lib/lemmy.js'
-  import { Button, Menu, MenuButton, MenuDivider, Spinner } from 'mono-svelte'
+  import {
+    Button,
+    Menu,
+    MenuButton,
+    MenuDivider,
+    Modal,
+    Spinner,
+  } from 'mono-svelte'
   import {
     GlobeAlt,
     Home,
@@ -29,6 +36,7 @@
   import { swipeGesture } from '$lib/input/swipe'
   import Logo from '../Logo.svelte'
   import { LINKED_INSTANCE_URL } from '$lib/instance'
+  import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
 
   let searching = false
 </script>

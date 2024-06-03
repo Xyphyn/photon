@@ -9,6 +9,7 @@
     MenuDivider,
     Modal,
     Select,
+    Spinner,
     toast,
   } from 'mono-svelte'
   import Avatar from '../Avatar.svelte'
@@ -32,10 +33,26 @@
   } from 'svelte-hero-icons'
   import { legacyTheme } from '$lib/ui/colors'
   import { userSettings } from '$lib/settings'
-  import { goto } from '$app/navigation'
-  import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
   import { site } from '$lib/lemmy'
+  import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
+
+  let showInstance = false
 </script>
+
+{#if showInstance}
+  <Modal bind:open={showInstance} title="Instance">
+    {#if $site}
+      <SiteCard
+        site={$site.site_view}
+        admins={$site.admins}
+        taglines={$site.taglines}
+        version={$site.version}
+      />
+    {:else}
+      <Spinner />
+    {/if}
+  </Modal>
+{/if}
 
 <Menu {...$$restProps}>
   <button
@@ -154,6 +171,14 @@
           <Badge color="blue-subtle">{__VERSION__}</Badge>
         </button>
       </div>
+      <Button
+        on:click={() => (showInstance = !showInstance)}
+        color="tertiary"
+        title="Instance"
+        size="square-md"
+      >
+        <Icon src={ServerStack} size="16" mini />
+      </Button>
       <Button
         color="tertiary"
         href="https://buymeacoffee.com/xylight"
