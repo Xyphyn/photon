@@ -39,7 +39,12 @@
     "logout": "Log Out",
     "signup": "Sign Up",
     "accounts": "Accounts",
-    "changeinstance": "Change Instance"
+    "changeinstance": "Change Instance",
+    "resetColor": "Reset Color",
+    "addGuest": "Add Guest",
+    "moveUp": "Move Up",
+    "moveDown": "Move Down",
+    "guest": "Guest"
   },
   "filter": {
     "location": {
@@ -107,7 +112,8 @@
       "blocks": "Blocks",
       "credentials": "Credentials",
       "moderates": "Moderates"
-    }
+    },
+    "accounts": "Accounts"
   },
   "cards": {
     "site": {
@@ -155,6 +161,7 @@
   },
   "common": {
     "back": "Back",
-    "next": "Next"
+    "next": "Next",
+    "debug": "Debug"
   }
 }

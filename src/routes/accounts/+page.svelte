@@ -38,6 +38,8 @@
   } from 'svelte-hero-icons'
   import { flip } from 'svelte/animate'
   import { expoInOut, expoOut } from 'svelte/easing'
+  import { t } from '$lib/translations'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
   let newInstance: string = $profileData.defaultInstance ?? DEFAULT_INSTANCE_URL
   let loading = false
@@ -183,7 +185,7 @@
 {:else}
   <div class="flex flex-col h-full gap-4">
     <div class="flex flex-row justify-between">
-      <h1 class="text-2xl font-bold">Accounts</h1>
+      <Header>{$t('routes.accounts')}</Header>
     </div>
     <EditableList
       on:action={(acc) => {
@@ -256,6 +258,7 @@
               <Button
                 size="square-md"
                 color="secondary"
+                title={$t('account.moveUp')}
                 on:click={() => moveProfile(profile.id, true)}
               >
                 <Icon src={ChevronUp} size="16" mini slot="prefix" />
@@ -263,6 +266,7 @@
               <Button
                 size="square-md"
                 color="secondary"
+                title={$t('account.moveDown')}
                 on:click={() => moveProfile(profile.id, false)}
               >
                 <Icon src={ChevronDown} size="16" mini slot="prefix" />
@@ -273,7 +277,7 @@
               on:click={() => (profile.color = undefined)}
             >
               <Icon src={ArrowUturnLeft} size="16" mini slot="prefix" />
-              Reset Color
+              {$t('account.resetColor')}
             </MenuButton>
             {#if $userSettings.debugInfo}
               <MenuButton
@@ -283,12 +287,12 @@
                 }}
               >
                 <Icon src={BugAnt} size="16" mini slot="prefix" />
-                Debug Info
+                {$t('common.debug')}
               </MenuButton>
             {/if}
             <MenuButton on:click={() => action(profile)} color="danger-subtle">
               <Icon slot="prefix" src={ArrowRightOnRectangle} size="16" mini />
-              Log Out
+              {$t('account.logout')}
             </MenuButton>
           </Menu>
         </div>
@@ -298,11 +302,11 @@
     <div class="flex items-center gap-2">
       <Button href="/login" size="lg" class="flex-1">
         <Icon slot="prefix" src={ArrowLeftOnRectangle} size="16" mini />
-        Log In
+        {$t('account.login')}
       </Button>
       <Button href="/login/guest" size="lg">
         <Icon slot="prefix" src={Plus} size="16" mini />
-        Add Guest
+        {$t('account.addGuest')}
       </Button>
     </div>
   </div>
