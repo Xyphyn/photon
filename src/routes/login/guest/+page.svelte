@@ -6,10 +6,11 @@
   import { DOMAIN_REGEX_FORMS } from '$lib/util'
   import { profile, profileData, type Profile } from '$lib/auth'
   import { LINKED_INSTANCE_URL } from '$lib/instance'
+  import { goto } from '$app/navigation'
 
   let form = {
     instance: '',
-    username: 'Guest',
+    username: `Guest ${$profileData.profiles.filter((p) => p.jwt == undefined).length + 1}`,
     loading: false,
   }
 
@@ -37,11 +38,13 @@
 
       return {
         profile: id,
-        profiles: [newProfile, ...pd.profiles],
+        profiles: [...pd.profiles, newProfile],
       }
     })
 
     toast({ content: 'Added that account.', type: 'success' })
+
+    goto('/')
 
     form.loading = false
   }

@@ -200,11 +200,7 @@
         icon={Plus}
       />
       <MenuDivider>Create</MenuDivider>
-      <MenuButton
-        link
-        href="/create/post"
-        disabled={$profile?.jwt == undefined}
-      >
+      <MenuButton link href="/create/post" disabled={!$profile?.jwt}>
         <Icon src={PencilSquare} mini width={16} slot="prefix" />
         Post
       </MenuButton>
