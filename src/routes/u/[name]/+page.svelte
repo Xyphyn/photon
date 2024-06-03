@@ -44,6 +44,7 @@
   import Expandable from '$lib/components/ui/Expandable.svelte'
   import { communityLink } from '$lib/lemmy/generic.js'
   import ItemList from '$lib/components/lemmy/generic/ItemList.svelte'
+  import { t } from '$lib/translations.js'
 
   export let data
 
@@ -158,59 +159,7 @@
     alt="User banner"
   />
 {/if}
-<div class="flex flex-col-reverse gap-4 max-w-full w-full">
-  <div class="flex flex-col gap-4 max-w-full w-full min-w-0">
-    <div class="flex flex-row gap-4 flex-wrap justify-between">
-      <Select
-        bind:value={data.sort}
-        on:change={() => searchParam($page.url, 'sort', data.sort, 'page')}
-      >
-        <span slot="label" class="flex items-center gap-1">
-          <Icon src={ChartBar} size="14" mini />
-          Sort
-        </span>
-        <option value="New">New</option>
-        <option value="TopAll">Top</option>
-        <option value="Old">Old</option>
-      </Select>
-      <Select
-        bind:value={data.type}
-        on:change={() => searchParam($page.url, 'type', data.type, 'page')}
-      >
-        <span slot="label" class="flex items-center gap-1">
-          <Icon src={AdjustmentsHorizontal} size="15" mini />
-          Type
-        </span>
-        <option value="all">All</option>
-        <option value="posts">Posts</option>
-        <option value="comments">Comments</option>
-      </Select>
-    </div>
-    {#if data.items.length == 0}
-      <Placeholder
-        icon={PencilSquare}
-        title="No submissions"
-        description="This user has no submissions that match this filter."
-      />
-    {:else}
-      <div
-        class="!divide-y divide-slate-200 dark:divide-zinc-800 flex flex-col"
-      >
-        {#each data.items as item}
-          {#if isCommentView(item) && (data.type == 'all' || data.type == 'comments')}
-            <CommentItem comment={item} />
-          {:else if !isCommentView(item) && (data.type == 'all' || data.type == 'posts')}
-            <Post post={item} />
-          {/if}
-        {/each}
-      </div>
-    {/if}
-    <Pageination
-      page={data.page}
-      on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
-    />
-  </div>
-
+<div class="flex flex-col gap-4 max-w-full w-full">
   <div class="flex flex-col gap-4">
     <Avatar
       width={64}
@@ -237,12 +186,12 @@
       <LabelStat
         content={data.person_view.counts.post_count.toString()}
         formatted
-        label="Posts"
+        label={$t('content.posts')}
       />
       <LabelStat
         content={data.person_view.counts.comment_count.toString()}
         formatted
-        label="Comments"
+        label={$t('content.comments')}
       />
     </div>
     {#if (data.moderates ?? []).length > 0}
@@ -252,7 +201,7 @@
       >
         <span slot="title" class="flex items-center gap-1">
           <ShieldIcon width={14} filled />
-          Moderates
+          {$t('routes.profile.moderates')}
         </span>
         <ItemList
           items={data.moderates.map((m) => ({
@@ -323,5 +272,57 @@
         </Menu>
       </div>
     {/if}
+  </div>
+
+  <div class="flex flex-col gap-4 max-w-full w-full min-w-0">
+    <div class="flex flex-row gap-4 flex-wrap justify-between">
+      <Select
+        bind:value={data.sort}
+        on:change={() => searchParam($page.url, 'sort', data.sort, 'page')}
+      >
+        <span slot="label" class="flex items-center gap-1">
+          <Icon src={ChartBar} size="14" mini />
+          {$t('filter.sort.label')}
+        </span>
+        <option value="New">{$t('filter.sort.new')}</option>
+        <option value="TopAll">{$t('filter.sort.top.label')}</option>
+        <option value="Old">{$t('filter.sort.old')}</option>
+      </Select>
+      <Select
+        bind:value={data.type}
+        on:change={() => searchParam($page.url, 'type', data.type, 'page')}
+      >
+        <span slot="label" class="flex items-center gap-1">
+          <Icon src={AdjustmentsHorizontal} size="15" mini />
+          {$t('filter.type')}
+        </span>
+        <option value="all">{$t('content.all')}</option>
+        <option value="posts">{$t('content.posts')}</option>
+        <option value="comments">{$t('content.comments')}</option>
+      </Select>
+    </div>
+    {#if data.items.length == 0}
+      <Placeholder
+        icon={PencilSquare}
+        title="No submissions"
+        description="This user has no submissions that match this filter."
+      />
+    {:else}
+      <div
+        class="!divide-y divide-slate-200 dark:divide-zinc-800 flex flex-col"
+      >
+        {#each data.items as item}
+          {#if isCommentView(item) && (data.type == 'all' || data.type == 'comments')}
+            <CommentItem comment={item} />
+          {:else if !isCommentView(item) && (data.type == 'all' || data.type == 'posts')}
+            <Post post={item} />
+          {/if}
+        {/each}
+      </div>
+    {/if}
+    <Pageination
+      page={data.page}
+      on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
+    />
   </div>
 </div>

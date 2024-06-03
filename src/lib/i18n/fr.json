@@ -110,7 +110,9 @@
   },
   "content": {
     "users": "Utilisateurs",
+    "all": "Tout",
     "posts": "Posts",
+    "comments": "Commentaires",
     "communities": "Communautés"
   },
   "post": {

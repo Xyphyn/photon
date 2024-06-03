@@ -82,7 +82,8 @@
       "list": "List",
       "compact": "Compact",
       "legacy": "Legacy"
-    }
+    },
+    "type": "Type"
   },
   "form": {
     "username": "Username",
@@ -99,7 +100,14 @@
     },
     "modlog": "Modlog",
     "instances": "Instances",
-    "legal": "Legal"
+    "legal": "Legal",
+    "profile": {
+      "user": "User",
+      "settings": "Settings",
+      "blocks": "Blocks",
+      "credentials": "Credentials",
+      "moderates": "Moderates"
+    }
   },
   "cards": {
     "site": {
@@ -109,8 +117,10 @@
     }
   },
   "content": {
+    "all": "All",
     "users": "Users",
     "posts": "Posts",
+    "comments": "Comments",
     "communities": "Communities"
   },
   "post": {

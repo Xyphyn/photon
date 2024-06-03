@@ -3,6 +3,7 @@
   import { page } from '$app/stores'
 
   import MultiSelect from '$lib/components/input/Switch.svelte'
+  import { t } from '$lib/translations'
 </script>
 
 <svelte:head>
@@ -17,7 +18,12 @@
       '/profile/blocks',
       '/profile/password',
     ]}
-    optionNames={['User', 'Settings', 'Blocks', 'Credentials']}
+    optionNames={[
+      $t('routes.profile.user'),
+      $t('routes.profile.settings'),
+      $t('routes.profile.blocks'),
+      $t('routes.profile.credentials'),
+    ]}
     selected={$page.url.pathname}
     on:select={(e) => {
       goto(e.detail)
