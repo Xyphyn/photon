@@ -115,7 +115,22 @@
       "credentials": "Credentials",
       "moderates": "Moderates"
     },
-    "accounts": "Accounts"
+    "accounts": "Accounts",
+    "post": {
+      "crosspostCount": "crossposts",
+      "commentCount": "comments",
+      "addComment": "Add a comment",
+      "scrollToTop": "Scroll to top",
+      "instanceWarning": "This post was requested from a different server than your account's. Many actions won't work.",
+      "remoteView": "Remote View",
+      "localView": "Local View",
+      "thread": {
+        "single": "You're viewing a single thread.",
+        "allComments": "All Comments",
+        "part": "You're viewing part of a thread.",
+        "context": "Show Context"
+      }
+    }
   },
   "cards": {
     "site": {

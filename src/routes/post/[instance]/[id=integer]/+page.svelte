@@ -42,6 +42,7 @@
   import Expandable from '$lib/components/ui/Expandable.svelte'
   import { addResumable } from '$lib/lemmy/item.js'
   import { Popover } from 'mono-svelte'
+  import { t } from '$lib/translations.js'
 
   export let data
 
@@ -161,11 +162,10 @@
           slot="target"
           class="bg-slate-200 dark:bg-zinc-700 p-0.5 rounded-full text-primary-900 dark:text-primary-100"
         />
-        This post was fetched from a different server than your account's. Many actions
-        won't work.
+        {$t('routes.post.instanceWarning')}
       </Popover>
       <span class="text-primary-900 dark:text-primary-100 font-bold">
-        Remote View
+        {$t('routes.post.remoteView')}
       </span>
       {#if $profile?.jwt}
         <Button
@@ -177,7 +177,7 @@
           }}
         >
           <Icon src={Home} mini size="16" />
-          Local View
+          {$t('routes.post.localView')}
         </Button>
       {/if}
     </div>
@@ -243,7 +243,7 @@
         class="inline-block w-full text-left text-base font-normal"
       >
         <span class="font-bold">{post.cross_posts.length}</span>
-        crossposts
+        {$t('routes.post.crosspostCount')}
       </div>
       <div
         class="!divide-y divide-slate-200 dark:divide-zinc-800 flex flex-col"
@@ -265,14 +265,14 @@ flex-wrap gap-4 sticky top-20 w-full box-border z-20 mt-4"
   >
     <p class="font-medium text-sm flex items-center gap-2">
       <Icon src={InformationCircle} mini size="20" />
-      You're viewing part of a thread.
+      {$t('routes.post.thread.part')}
     </p>
     <Button
       {loading}
       disabled={loading}
       href="/comment/{$page.params.instance}/{data.thread.showContext}"
     >
-      Show Context
+      {$t('routes.post.thread.context')}
     </Button>
   </Material>
 {:else if data.thread.singleThread}
@@ -285,10 +285,10 @@ flex-wrap gap-4 sticky top-20 w-full box-border z-20 mt-4"
   >
     <p class="font-medium text-sm flex items-center gap-2">
       <Icon src={InformationCircle} mini size="20" />
-      You're viewing a single thread.
+      {$t('routes.post.thread.single')}
     </p>
     <Button {loading} disabled={loading} on:click={reloadComments}>
-      All comments
+      {$t('routes.post.thread.allComments')}
     </Button>
   </Material>
 {/if}
@@ -298,7 +298,7 @@ flex-wrap gap-4 sticky top-20 w-full box-border z-20 mt-4"
       <span class="font-bold">
         <FormattedNumber number={post.post_view.counts.comments} />
       </span>
-      comments
+      {$t('routes.post.commentCount')}
     </div>
     <div class="gap-2 flex items-center h-8">
       <Select
@@ -307,13 +307,11 @@ flex-wrap gap-4 sticky top-20 w-full box-border z-20 mt-4"
         bind:value={commentSort}
         on:change={reloadComments}
       >
-        <option value="Hot">Hot</option>
-        <option value="Top">Top</option>
-        <option value="New">New</option>
-        <option value="Old">Old</option>
-        {#if feature('controversialSort', $page.params.instance == $instance ? $site?.version : '0.0.0')}
-          <option value="Controversial">Controversial</option>
-        {/if}
+        <option value="Hot">{$t('filter.sort.hot')}</option>
+        <option value="Top">{$t('filter.sort.top.label')}</option>
+        <option value="New">{$t('filter.sort.new')}</option>
+        <option value="Old">{$t('filter.sort.old')}</option>
+        <option value="Controversial">{$t('filter.sort.controversial')}</option>
       </Select>
       <Button size="square-md" on:click={reloadComments}>
         <Icon src={ArrowPath} size="16" mini slot="prefix" />
@@ -333,7 +331,7 @@ flex-wrap gap-4 sticky top-20 w-full box-border z-20 mt-4"
       on:focus={() => (commenting = true)}
       tools={commenting}
       preview={commenting}
-      placeholder={commenting ? undefined : 'Add a comment'}
+      placeholder={commenting ? undefined : $t('routes.post.addComment')}
       rows={commenting ? 7 : 1}
     />
   {/if}
@@ -355,7 +353,7 @@ flex-wrap gap-4 sticky top-20 w-full box-border z-20 mt-4"
       <span class="text-black dark:text-white font-bold">
         {post.post_view.counts.comments}
       </span>
-      comments
+      {$t('routes.post.commentCount')}
 
       <Button
         color="tertiary"
@@ -363,7 +361,7 @@ flex-wrap gap-4 sticky top-20 w-full box-border z-20 mt-4"
         slot="action"
       >
         <Icon src={ChevronDoubleUp} mini size="16" slot="prefix" />
-        Scroll to top
+        {$t('routes.post.scrollToTop')}
       </Button>
     </EndPlaceholder>
   {/if}
