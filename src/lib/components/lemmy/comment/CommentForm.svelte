@@ -8,6 +8,7 @@
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { placeholders } from '$lib/util.js'
   import { Button } from 'mono-svelte'
+  import { t } from '$lib/translations'
 
   export let postId: number
   export let parentId: number | undefined = undefined
@@ -69,7 +70,7 @@
       {...$$restProps}
       {rows}
       placeholder={locked
-        ? 'This post is locked.'
+        ? $t('comment.locked')
         : placeholder ?? placeholders.get('comment')}
       bind:value
       disabled={locked || loading}
@@ -92,7 +93,7 @@
             {loading}
             disabled={locked || loading}
           >
-            Submit
+            {$t('form.submit')}
           </Button>
         </div>
       {/if}

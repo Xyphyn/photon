@@ -98,7 +98,9 @@
     "password": "Password",
     "2fa": "2FA Code",
     "forgotpassword": "Forgot Password",
-    "submit": "Submit"
+    "submit": "Submit",
+    "edit": "Edit",
+    "preview": "Preview"
   },
   "routes": {
     "frontpage": {
@@ -182,7 +184,8 @@
     "actions": {
       "label": "Actions",
       "link": "Copy Link"
-    }
+    },
+    "locked": "This post is locked."
   },
   "moderation": {
     "report": "Report"

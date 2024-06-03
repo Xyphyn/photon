@@ -2,6 +2,7 @@
   import { profile } from '$lib/auth.js'
   import MultiSelect from '$lib/components/input/Switch.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
+  import { t } from '$lib/translations'
   import { uploadImage } from '$lib/util.js'
   import { ImageInput, toast } from 'mono-svelte'
   import { Button, Label, Modal, TextArea } from 'mono-svelte'
@@ -317,7 +318,7 @@ overflow-hidden transition-colors"
           <MultiSelect
             bind:selected={previewing}
             options={[false, true]}
-            optionNames={['Edit', 'Preview']}
+            optionNames={[$t('form.edit'), $t('form.preview')]}
           />
         {/if}
         <slot />
