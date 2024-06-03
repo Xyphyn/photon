@@ -3,7 +3,14 @@
   import Setting from './Setting.svelte'
   import MultiSelect from '$lib/components/input/Switch.svelte'
   import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
-  import { Disclosure, Material, Switch, TextInput, toast } from 'mono-svelte'
+  import {
+    Disclosure,
+    Material,
+    Note,
+    Switch,
+    TextInput,
+    toast,
+  } from 'mono-svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import Link from '$lib/components/input/Link.svelte'
   import {
@@ -25,6 +32,7 @@
   import { removeItem } from '$lib/util.js'
   import Section from './Section.svelte'
   import ToggleSetting from './ToggleSetting.svelte'
+  import { locales } from '$lib/translations'
 </script>
 
 <svelte:head>
@@ -89,6 +97,22 @@
       <Button href="/theme">
         Go to themes <Icon src={ArrowRight} size="16" mini slot="suffix" />
       </Button>
+    </Setting>
+    <Setting>
+      <span slot="title">Language</span>
+      <p slot="description">
+        The language used for Photon's UI.
+        <Note>
+          All languages other than US English are community translated, and may
+          be incomplete!
+        </Note>
+      </p>
+      <Select bind:value={$userSettings.language}>
+        <option value={null}>Auto-Detect</option>
+        {#each $locales as locale}
+          <option value={locale}>{locale}</option>
+        {/each}
+      </Select>
     </Setting>
     <Setting>
       <span slot="title">Post style</span>

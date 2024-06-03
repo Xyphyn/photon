@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { t } from '$lib/translations'
   import { Button } from 'mono-svelte'
   import { createEventDispatcher } from 'svelte'
   import {
@@ -32,7 +33,7 @@
       class={$$slots.default ? '' : 'flex-1'}
     >
       <Icon src={ChevronLeft} size="18" mini slot="prefix" />
-      Back
+      {$t('common.back')}
     </Button>
   {/if}
 
@@ -43,7 +44,7 @@
     }}
     class={$$slots.default ? '' : 'flex-1'}
   >
-    Next
+    {$t('common.next')}
     <Icon src={ChevronRight} size="18" mini slot="suffix" />
   </Button>
 </div>

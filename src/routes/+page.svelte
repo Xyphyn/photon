@@ -24,7 +24,7 @@
 
 <div class="flex flex-col gap-4 max-w-full w-full min-w-0">
   <header>
-    <Header>{$t('routes.frontpage')}</Header>
+    <Header>{$t('routes.frontpage.title')}</Header>
   </header>
   <div class="flex items-center gap-2">
     <Location changeDefault selected={data.listingType} />
@@ -45,11 +45,9 @@
     >
       <span class="flex flex-row items-center gap-1">
         <Icon src={ChartBar} size="16" mini />
-        <FormattedNumber
-          number={$site?.site_view.counts.users_active_day ?? 0}
-          class="text-black dark:text-white font-medium"
-        />
-        <span class="font-normal">active users</span>
+        {$t('routes.frontpage.footer', {
+          users: $site?.site_view.counts.users_active_day ?? '??',
+        })}
       </span>
     </Pageination>
   </div>

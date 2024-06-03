@@ -77,6 +77,7 @@ interface Settings {
     deduplicateEmbed: boolean
     compactFeatured: boolean
   }
+  language: string | null
 }
 
 export const defaultSettings: Settings = {
@@ -128,12 +129,13 @@ export const defaultSettings: Settings = {
   },
   dock: {
     noGap: toBool(env.PUBLIC_DOCK_PANEL) ?? null,
-    top: toBool(env.PUBLIC_DOCK_TOP) ?? null
+    top: toBool(env.PUBLIC_DOCK_TOP) ?? null,
   },
   posts: {
     deduplicateEmbed: toBool(env.PUBLIC_DEDUPLICATE_EMBED) ?? true,
-    compactFeatured: toBool(env.PUBLIC_COMPACT_FEATURED) ?? true
-  }
+    compactFeatured: toBool(env.PUBLIC_COMPACT_FEATURED) ?? true,
+  },
+  language: null,
 }
 
 export const userSettings = writable(defaultSettings)

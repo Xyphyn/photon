@@ -93,7 +93,10 @@
     "submit": "Submit"
   },
   "routes": {
-    "frontpage": "Frontpage",
+    "frontpage": {
+      "title": "Frontpage",
+      "footer": "{{users:number}} active {{users; 1:user; default:users;}}"
+    },
     "modlog": "Modlog",
     "instances": "Instances",
     "legal": "Legal"
@@ -109,5 +112,31 @@
     "users": "Users",
     "posts": "Posts",
     "communities": "Communities"
+  },
+  "post": {
+    "actions": {
+      "comments": "Comments",
+      "save": "Save",
+      "unsave": "Unsave",
+      "more": {
+        "label": "More Actions",
+        "edit": "Edit",
+        "creator": "Creator",
+        "actions": "Actions",
+        "markRead": "Mark as Read",
+        "markUnread": "Mark as Unread",
+        "share": "Share",
+        "crosspost": "Crosspost",
+        "delete": "Delete",
+        "restore": "Restore"
+      }
+    }
+  },
+  "moderation": {
+    "report": "Report"
+  },
+  "common": {
+    "back": "Back",
+    "next": "Next"
   }
 }

@@ -8,6 +8,7 @@ const config: Config = {
       loader: async () => (await import('./i18n/en.json')).default,
     },
   ],
+  fallbackLocale: 'en',
 }
 
 export const { t, locale, locales, loading, loadTranslations } = new i18n(
