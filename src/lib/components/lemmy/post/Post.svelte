@@ -50,7 +50,7 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <Material
   color={view != 'card' ? 'none' : 'distinct'}
-  class="relative max-w-full min-w-0 w-full group
+  class="relative max-w-full min-w-0 w-full
   {view != 'card' ? 'bg-transparent !border-0' : 'p-5'} {view == 'compact'
     ? 'py-4 list-type'
     : view == 'list'
@@ -96,7 +96,9 @@
       <PostMediaCompact
         {view}
         bind:post={post.post}
-        class="{$userSettings.leftAlign ? 'mr-2' : 'ml-2'} flex-shrink"
+        class="{$userSettings.leftAlign
+          ? 'mr-2'
+          : 'ml-2'} flex-shrink no-list-margin"
         style="grid-area: media;"
       />
     {/if}
@@ -141,7 +143,7 @@
     grid-template-columns: var(--template-columns, 1fr auto);
   }
 
-  :global(.list-type > *:not(:first-child)) {
-    padding-top: 0.5rem;
+  :global(.list-type > *:not(.no-list-margin):not(:first-child)) {
+    margin-top: 0.5rem;
   }
 </style>
