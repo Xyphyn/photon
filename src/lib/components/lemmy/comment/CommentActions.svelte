@@ -23,6 +23,7 @@
   import { profile } from '$lib/auth.js'
   import { deleteItem, save } from '$lib/lemmy/contentview.js'
   import { Button, Menu, MenuButton, MenuDivider } from 'mono-svelte'
+  import { t } from '$lib/translations'
 
   export let comment: CommentView
   export let replying: boolean = false
@@ -56,7 +57,7 @@
     <Button
       slot="target"
       class="!p-1 text-slate-600 dark:text-zinc-400"
-      aria-label="Comment actions"
+      title={$t('comment.actions.label')}
       color="tertiary"
     >
       <Icon
@@ -67,7 +68,7 @@
         slot="prefix"
       />
     </Button>
-    <MenuDivider>Actions</MenuDivider>
+    <MenuDivider>{$t('comment.actions.label')}</MenuDivider>
     <MenuButton
       on:click={() => {
         navigator.share?.({
@@ -76,13 +77,13 @@
       }}
     >
       <Icon src={Square2Stack} mini size="16" />
-      <divv>Copy Link</divv>
+      <div>{$t('comment.actions.link')}</div>
     </MenuButton>
     {#if $profile?.jwt}
       {#if comment.creator.id == $profile.user?.local_user_view.person.id}
         <MenuButton on:click={() => dispatcher('edit', comment)}>
           <Icon src={PencilSquare} mini size="16" />
-          <span>Edit</span>
+          <span>{$t('post.actions.more.edit')}</span>
         </MenuButton>
       {/if}
       <MenuButton
@@ -92,7 +93,9 @@
         }}
       >
         <Icon src={comment.saved ? BookmarkSlash : Bookmark} mini size="16" />
-        <span>{comment.saved ? 'Unsave' : 'Save'}</span>
+        <span>
+          {comment.saved ? $t('post.actions.unsave') : $t('post.actions.save')}
+        </span>
       </MenuButton>
       {#if $profile?.user && $profile.jwt && $profile.user.local_user_view.person.id == comment.creator.id}
         <MenuButton
@@ -107,13 +110,17 @@
           }}
         >
           <Icon src={Trash} mini size="16" />
-          <span>{comment.comment.deleted ? 'Restore' : 'Delete'}</span>
+          <span>
+            {comment.comment.deleted
+              ? $t('post.actions.more.restore')
+              : $t('post.actions.more.delete')}
+          </span>
         </MenuButton>
       {/if}
       {#if $profile.jwt && $profile.user?.local_user_view.person.id != comment.creator.id}
         <MenuButton on:click={() => report(comment)} color="danger-subtle">
           <Icon src={Flag} mini size="16" />
-          <span>Report</span>
+          <span>{$t('moderation.report')}</span>
         </MenuButton>
       {/if}
     {/if}

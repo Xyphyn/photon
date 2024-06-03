@@ -22,6 +22,7 @@
   import ShieldIcon from '../moderation/ShieldIcon.svelte'
   import { page } from '$app/stores'
   import { onMount } from 'svelte'
+  import { t } from '$lib/translations'
 
   export let node: CommentNodeI
   export let postId: number
@@ -145,7 +146,7 @@
             src={Trash}
             solid
             size="12"
-            title="Deleted"
+            title={$t('post.badges.deleted')}
             class="text-red-600 dark:text-red-500"
           />
         {/if}
@@ -154,7 +155,7 @@
             src={Bookmark}
             solid
             size="12"
-            title="Saved"
+            title={$t('post.badges.saved')}
             class="text-yellow-600 dark:text-yellow-500"
           />
         {/if}
@@ -181,7 +182,7 @@
       <div
         class="max-w-full my-2 border-l border-slate-200 dark:border-zinc-800 pl-4"
       >
-        <h1 class="font-bold text-sm mb-2">Reply</h1>
+        <h1 class="font-bold text-sm mb-2">{$t('comment.reply')}</h1>
         <CommentForm
           {postId}
           parentId={node.comment_view.comment.id}

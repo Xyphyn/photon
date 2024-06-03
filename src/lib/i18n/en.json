@@ -177,6 +177,13 @@
       "saved": "Saved"
     }
   },
+  "comment": {
+    "reply": "Reply",
+    "actions": {
+      "label": "Actions",
+      "link": "Copy Link"
+    }
+  },
   "moderation": {
     "report": "Report"
   },
