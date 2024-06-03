@@ -1,0 +1,142 @@
+{
+  "profile": {
+    "profile": "Profil",
+    "inbox": "Boîte de réception",
+    "saved": "Enregistré",
+    "subscribed": "Abonné"
+  },
+  "nav": {
+    "home": "Accueil",
+    "admin": "Admin",
+    "moderation": "Modération",
+    "communities": "Explorer",
+    "search": "Rechercher",
+    "create": {
+      "label": "Créer",
+      "post": "Post",
+      "community": "Communauté",
+      "logingate": "Vous devez vous connecter pour créer du contenu."
+    },
+    "menu": {
+      "label": "Profil",
+      "app": "App",
+      "settings": "Paramètres",
+      "colorscheme": {
+        "label": "Schéma de couleurs",
+        "system": "Système",
+        "dark": "Sombre",
+        "light": "Clair"
+      },
+      "theme": "Thème",
+      "about": "À propos",
+      "source": "Source",
+      "donate": "Faire un don",
+      "instance": "Instance"
+    }
+  },
+  "account": {
+    "login": "Se connecter",
+    "logout": "Se déconnecter",
+    "signup": "S'inscrire",
+    "accounts": "Comptes",
+    "changeinstance": "Changer d'instance"
+  },
+  "filter": {
+    "location": {
+      "label": "Lieu",
+      "all": "Tout",
+      "local": "Local",
+      "subscribed": "Abonné",
+      "moderator": "Modérateur"
+    },
+    "sort": {
+      "label": "Trier",
+      "active": "Actif",
+      "hot": "Populaire",
+      "top": {
+        "label": "Top",
+        "time": {
+          "label": "Temps",
+          "all": "Tout",
+          "9months": "9 Mois",
+          "6months": "6 Mois",
+          "3months": "3 Mois",
+          "month": "Mois",
+          "week": "Semaine",
+          "day": "Jour",
+          "12hours": "12 Heures",
+          "6hours": "6 Heures",
+          "hour": "Heure"
+        }
+      },
+      "new": "Nouveau",
+      "old": "Ancien",
+      "controversial": "Controversé",
+      "scaled": "Adapté",
+      "mostcomments": "Commentaires",
+      "newcomments": "Nouvelles réponses"
+    },
+    "view": {
+      "label": "Vue",
+      "cozy": "Cosy",
+      "list": "Liste",
+      "compact": "Compact",
+      "legacy": "Ancien"
+    }
+  },
+  "form": {
+    "username": "Nom d'utilisateur",
+    "instance": "URL de l'instance",
+    "password": "Mot de passe",
+    "2fa": "Code 2FA",
+    "forgotpassword": "Mot de passe oublié",
+    "submit": "Soumettre"
+  },
+  "routes": {
+    "frontpage": {
+      "title": "Page d'accueil",
+      "footer": "{{users:number}} {{users; 1:utilisateur; default:utilisateurs;}} actif(s)"
+    },
+    "modlog": "Modlog",
+    "instances": "Instances",
+    "legal": "Légal"
+  },
+  "cards": {
+    "site": {
+      "about": "À propos",
+      "stats": "Statistiques",
+      "admins": "Admins"
+    }
+  },
+  "content": {
+    "users": "Utilisateurs",
+    "posts": "Posts",
+    "communities": "Communautés"
+  },
+  "post": {
+    "actions": {
+      "comments": "Commentaires",
+      "save": "Enregistrer",
+      "unsave": "Désénregistrer",
+      "more": {
+        "label": "Plus d'actions",
+        "edit": "Éditer",
+        "creator": "Créateur",
+        "actions": "Actions",
+        "markRead": "Marquer comme lu",
+        "markUnread": "Marquer comme non lu",
+        "share": "Partager",
+        "crosspost": "Crossposter",
+        "delete": "Supprimer",
+        "restore": "Restaurer"
+      }
+    }
+  },
+  "moderation": {
+    "report": "Signaler"
+  },
+  "common": {
+    "back": "Retour",
+    "next": "Suivant"
+  }
+}

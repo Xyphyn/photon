@@ -46,6 +46,7 @@
       <span class="flex flex-row items-center gap-1">
         <Icon src={ChartBar} size="16" mini />
         {$t('routes.frontpage.footer', {
+          // @ts-ignore
           users: $site?.site_view.counts.users_active_day ?? '??',
         })}
       </span>

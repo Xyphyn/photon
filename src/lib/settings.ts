@@ -1,6 +1,8 @@
 import type { CommentSortType, SortType } from 'lemmy-js-client'
 import { writable } from 'svelte/store'
 import { env } from '$env/dynamic/public'
+import { locale } from './translations'
+import { browser } from '$app/environment'
 
 console.log('Using the following default settings from the environment:')
 console.log(env)
@@ -167,5 +169,10 @@ if (typeof window != 'undefined') {
 userSettings.subscribe((settings) => {
   if (typeof window != 'undefined') {
     localStorage.setItem('settings', JSON.stringify(settings))
+  }
+  if (settings.language) {
+    locale.set(settings.language)
+  } else {
+    if (browser) locale.set(navigator?.language)
   }
 })
