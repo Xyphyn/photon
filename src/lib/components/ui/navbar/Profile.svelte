@@ -198,14 +198,6 @@
       >
         <Icon src={CodeBracketSquare} size="16" mini />
       </Button>
-      <Button
-        color="tertiary"
-        href="/about"
-        title={$t('nav.menu.about')}
-        size="square-md"
-      >
-        <Icon src={InformationCircle} size="16" mini />
-      </Button>
     </div>
   </li>
 </Menu>
