@@ -6,6 +6,7 @@
     instance as currentInstance,
   } from '$lib/instance.js'
   import { getClient, validateInstance } from '$lib/lemmy.js'
+  import { t } from '$lib/translations'
   import { Button, TextInput, toast } from 'mono-svelte'
 
   export let data: {
@@ -46,38 +47,37 @@
 </script>
 
 <div class="my-auto max-w-xl mx-auto flex flex-col gap-2">
-  <h1 class="font-bold text-3xl">Reset Password</h1>
+  <h1 class="font-bold text-3xl">{$t('routes.passwordChange.title')}</h1>
   <p>
-    You've clicked an email with the password reset link in it. Now, choose your
-    new password.
+    {$t('routes.passwordChange.description')}
   </p>
   <form class="mt-2 flex flex-col gap-4" on:submit|preventDefault={submit}>
     {#if !LINKED_INSTANCE_URL}
       <TextInput
         bind:value={instance}
-        label="Instance URL"
+        label={$t('form.password')}
         placeholder={DEFAULT_INSTANCE_URL}
         required
       >
         <span class="font-normal text-xs">
-          What instance did you reset your password for?
+          {$t('routes.passwordChange.instance')}
         </span>
       </TextInput>
     {/if}
     <TextInput
       bind:value={password}
-      label="New Password"
+      label={$t('form.profile.newPassword')}
       type="password"
       required
     />
     <TextInput
       bind:value={password_verify}
-      label="New Password (Verify)"
+      label={$t('form.profile.verifyNewPassword')}
       type="password"
       required
     />
     <Button color="primary" size="lg" {loading} disabled={loading} submit>
-      Submit
+      {$t('form.submit')}
     </Button>
   </form>
 </div>

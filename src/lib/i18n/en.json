@@ -171,7 +171,10 @@
     },
     "modlog": "Modlog",
     "instances": "Instances",
-    "legal": "Legal",
+    "legal": {
+      "title": "Legal",
+      "noLegal": "This instance does not have any legal information."
+    },
     "profile": {
       "user": "User",
       "settings": "Settings",
@@ -229,6 +232,15 @@
     "verifyEmail": {
       "message": "Your email was verified. You can now close this window.",
       "error": "Failed to verify your email."
+    },
+    "passwordChange": {
+      "title": "Change Password",
+      "description": "Choose your new password.",
+      "instance": "Which instance is your account hosted on?"
+    },
+    "resetLogin": {
+      "title": "Reset Password",
+      "description": "Enter your account's email, and a password reset link will be sent. If your account does not have an email, contact your instance admins."
     }
   },
   "cards": {

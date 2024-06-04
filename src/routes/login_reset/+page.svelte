@@ -5,6 +5,7 @@
     instance as currentInstance,
   } from '$lib/instance.js'
   import { getClient, validateInstance } from '$lib/lemmy.js'
+  import { t } from '$lib/translations'
   import { Button, TextInput, toast } from 'mono-svelte'
 
   let instance = LINKED_INSTANCE_URL || $currentInstance || ''
@@ -36,29 +37,28 @@
 </script>
 
 <div class="my-auto max-w-xl mx-auto flex flex-col gap-2">
-  <h1 class="font-bold text-3xl">Reset Password</h1>
+  <h1 class="font-bold text-3xl">{$t('routes.resetLogin.title')}</h1>
   <p>
-    Enter the email of your account, and a password reset link will be sent. If
-    you did not have an email set up, contact your instance admins.
+    {$t('routes.resetLogin.description')}
   </p>
   <form class="mt-2 flex flex-col gap-4" on:submit|preventDefault={submit}>
     {#if !LINKED_INSTANCE_URL}
       <TextInput
         bind:value={instance}
-        label="Instance URL"
+        label={$t('form.instance')}
         placeholder={DEFAULT_INSTANCE_URL}
         required
       />
     {/if}
     <TextInput
       bind:value={email}
-      label="Email"
+      label={$t('form.email')}
       type="email"
       required
       placeholder="example@example.com"
     />
     <Button color="primary" size="lg" {loading} disabled={loading} submit>
-      Submit
+      {$t('form.submit')}
     </Button>
   </form>
 </div>
