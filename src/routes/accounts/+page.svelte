@@ -44,37 +44,6 @@
   let newInstance: string = $profileData.defaultInstance ?? DEFAULT_INSTANCE_URL
   let loading = false
 
-  async function changeGuestInstance() {
-    loading = true
-    try {
-      const valid = await validateInstance(newInstance.trim())
-
-      if (!valid) {
-        throw new Error('invalid instance')
-      }
-
-      toast({
-        content: 'Changed guest instance.',
-        type: 'success',
-      })
-    } catch (err) {
-      toast({
-        content: 'Failed to contact that instance URL. Is it down?',
-        type: 'error',
-      })
-
-      loading = false
-
-      return
-    }
-
-    $profileData.defaultInstance = newInstance
-    if ($currentProfile && $currentProfile.id == -1) {
-      $instance = newInstance
-    }
-    loading = false
-  }
-
   let debugging = false
   let debugProfile: Profile | undefined = undefined
 
@@ -161,25 +130,6 @@
           Sign up
         </Button>
       </div>
-      {#if LINKED_INSTANCE_URL === undefined}
-        <div class="flex flex-row font-normal gap-2">
-          <TextInput
-            label="Guest instance"
-            on:change={changeGuestInstance}
-            placeholder="Instance URL"
-            bind:value={newInstance}
-          />
-          <Button
-            color="primary"
-            class="h-max self-end"
-            size="lg"
-            {loading}
-            disabled={loading}
-          >
-            Change
-          </Button>
-        </div>
-      {/if}
     </div>
   </div>
 {:else}

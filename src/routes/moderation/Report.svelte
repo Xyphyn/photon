@@ -34,9 +34,9 @@
           item.resolved = res.comment_report_view.comment_report.resolved
 
           toast({
-            content: `${
-              item.resolved ? 'Resolved' : 'Unresolved'
-            } that report.`,
+            content: item.resolved
+              ? $t('toast.resolveReport')
+              : $t('toast.unresolveReport'),
             type: 'success',
           })
 
@@ -50,9 +50,9 @@
 
           item.resolved = res.post_report_view.post_report.resolved
           toast({
-            content: `${
-              item.resolved ? 'Resolved' : 'Unresolved'
-            } that report.`,
+            content: item.resolved
+              ? $t('toast.resolveReport')
+              : $t('toast.unresolveReport'),
             type: 'success',
           })
 
@@ -67,9 +67,9 @@
           item.resolved =
             res.private_message_report_view.private_message_report.resolved
           toast({
-            content: `${
-              item.resolved ? 'Resolved' : 'Unresolved'
-            } that report.`,
+            content: item.resolved
+              ? $t('toast.resolveReport')
+              : $t('toast.unresolveReport'),
             type: 'success',
           })
 

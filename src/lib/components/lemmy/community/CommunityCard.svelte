@@ -84,7 +84,7 @@
 
     try {
       const loading = toast({
-        content: `${blocked ? 'Unblocking' : 'blocking'} community...`,
+        content: ``,
         loading: true,
       })
 
@@ -96,9 +96,9 @@
       removeToast(loading)
 
       toast({
-        content: `Successfully ${
-          blocked ? 'unblocked' : 'blocked'
-        } that community.`,
+        content: blocked
+          ? $t('toast.unblockedCommunity')
+          : $t('toast.blockedCommunity'),
         type: 'success',
       })
     } catch (error) {
@@ -120,14 +120,14 @@
 
   async function purgeCommunity() {
     purgingCommunity = false
-    const purgeToast = toast({ content: 'Purging community...', loading: true })
+    const purgeToast = toast({ content: '', loading: true })
 
     try {
       await client().purgeCommunity({
         community_id: community_view.community.id,
       })
       removeToast(purgeToast)
-      toast({ content: 'Purged that community.', type: 'success' })
+      toast({ content: $t('toast.purgedCommunity'), type: 'success' })
     } catch (e) {
       toast({ content: e as any, type: 'error' })
     }
@@ -137,7 +137,7 @@
     if (!$profile?.jwt) return
     try {
       const loading = toast({
-        content: `Blocking instance...`,
+        content: ``,
         loading: true,
       })
 
@@ -160,14 +160,12 @@
 
 {#if purgingCommunity}
   <Modal bind:open={purgingCommunity}>
-    <svelte:fragment slot="title">Purging Community</svelte:fragment>
+    <svelte:fragment slot="title">
+      {$t('admin.purgeCommunity.title')}
+    </svelte:fragment>
+    <CommunityLink avatar community={community_view.community} />
     <p>
-      Purging community <span class="font-bold">
-        {community_view.community.title}
-      </span>
-    </p>
-    <p>
-      Are you sure you want to do this? (The button will enable in 3 seconds.)
+      {$t('admin.purgeCommunity.warning')}
     </p>
     <div class="flex flex-row gap-2">
       <Button
@@ -175,7 +173,7 @@
         on:click={() => (purgingCommunity = false)}
         class="flex-1"
       >
-        Cancel
+        {$t('common.cancel')}
       </Button>
       <Button
         size="lg"
@@ -184,7 +182,7 @@
         disabled={!purgeEnabled}
         class="flex-1"
       >
-        Purge
+        {$t('admin.purge')}
       </Button>
     </div>
   </Modal>

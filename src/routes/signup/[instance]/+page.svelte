@@ -69,7 +69,7 @@
       if (res?.jwt) {
         await setUser(res.jwt, $page.params.instance, username)
 
-        toast({ content: 'Successfully logged in.', type: 'success' })
+        toast({ content: $t('toast.logIn'), type: 'success' })
         goto('/')
       } else if (
         res.verify_email_sent ||
@@ -78,8 +78,7 @@
         currentInstance.set(instance)
         if (res.verify_email_sent) {
           toast({
-            content:
-              'A verification link was sent to your email. Verify your email, and then you can log in.',
+            content: $t('toast.verifyEmail'),
             type: 'info',
           })
         }
@@ -87,18 +86,17 @@
           data.site_view.local_site.registration_mode == 'RequireApplication'
         ) {
           toast({
-            content:
-              'Please wait for your registration application to be approved before you can log in.',
+            content: $t('toast.waitApplication'),
             type: 'info',
           })
         }
         goto('/')
       } else {
-        throw new Error('Failed to sign up.')
+        throw new Error($t('toast.failSignup'))
       }
 
       toast({
-        content: 'Signed up.',
+        content: $t('toast.successSignup'),
         type: 'success',
       })
     } catch (err) {

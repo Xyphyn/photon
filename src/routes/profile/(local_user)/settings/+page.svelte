@@ -41,8 +41,7 @@
       })
 
       toast({
-        content:
-          'Saved your user settings. If you changed your email, a verification email will have been sent.',
+        content: $t('toast.saveSettings'),
         type: 'success',
       })
     } catch (err) {
@@ -65,21 +64,21 @@
     switch (level) {
       case 0: {
         toast({
-          content: 'Are you sure you want to delete your account?',
+          content: $t('toast.confirmDelete1'),
           action: () => deleteAccount(1),
         })
         return
       }
       case 1: {
         toast({
-          content: 'Are you really sure?',
+          content: $t('toast.confirmDelete2'),
           action: () => deleteAccount(2),
         })
         return
       }
       case 2: {
         toast({
-          content: 'Final warning. Are you reeeeeeally sure?',
+          content: $t('toast.confirmDelete3'),
           action: () => deleteAccount(3),
         })
         return
@@ -93,13 +92,13 @@
 
     if (!(deletion.password || null)) {
       toast({
-        content: 'You must provide your password.',
+        content: $t('toast.needPassword'),
         type: 'warning',
       })
     }
 
     const id = toast({
-      content: 'You did this. Deleting account...',
+      content: $t('toast.deleting'),
       loading: true,
     })
 
@@ -121,7 +120,7 @@
 
       setUserID(-1)
       toast({
-        content: 'Your account was deleted.',
+        content: $t('toast.deleted'),
       })
       goto('/')
     } catch (err) {

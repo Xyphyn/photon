@@ -16,14 +16,14 @@
     loading = true
     try {
       if (!(await validateInstance(instance)))
-        throw new Error('Failed to contact instance url')
+        throw new Error($t('toast.failInstanceURL'))
 
       await getClient(instance).passwordReset({
         email: email,
       })
 
       toast({
-        content: 'A password reset link was sent to your email.',
+        content: $t('toast.resetLink'),
         type: 'success',
       })
     } catch (err) {

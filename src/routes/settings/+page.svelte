@@ -32,7 +32,7 @@
   import { removeItem } from '$lib/util.js'
   import Section from './Section.svelte'
   import ToggleSetting from './ToggleSetting.svelte'
-  import { locales } from '$lib/translations'
+  import { locales, t } from '$lib/translations'
 </script>
 
 <svelte:head>
@@ -43,7 +43,7 @@
   Settings <Button
     on:click={() => {
       toast({
-        content: 'Are you sure you want to reset your settings to the default?',
+        content: $t('toast.resetSettings'),
         action: () => ($userSettings = defaultSettings),
       })
     }}

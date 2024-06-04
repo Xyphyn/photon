@@ -7,6 +7,7 @@
   import { addSubscription } from '$lib/lemmy/user.js'
   import { Button, Checkbox, TextInput } from 'mono-svelte'
   import { uploadImage } from '$lib/util.js'
+  import { t } from '$lib/translations'
 
   /**
    * The community ID to edit.
@@ -68,7 +69,7 @@
           })
 
       toast({
-        content: `Your community was ${edit ? 'saved' : 'created'}.`,
+        content: $t('toast.updatedCommunity'),
         type: 'success',
       })
 

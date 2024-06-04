@@ -22,6 +22,7 @@
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { profile } from '$lib/auth'
   import { addResumable } from '$lib/lemmy/item.js'
+  import { t } from '$lib/translations.js'
 
   export let data
 
@@ -94,7 +95,7 @@
               }`
             )
 
-            toast({ content: 'Copied to clipboard.' })
+            toast({ content: $t('toast.copied') })
           }}
           class="dark:text-zinc-400 text-slate-600 text-sm text-left"
         >

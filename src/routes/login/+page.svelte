@@ -48,7 +48,7 @@
         const result = await setUser(response.jwt, data.instance, data.username)
 
         if (result) {
-          toast({ content: 'Successfully logged in.', type: 'success' })
+          toast({ content: $t('toast.logIn'), type: 'success' })
           goto('/')
         }
       } else {

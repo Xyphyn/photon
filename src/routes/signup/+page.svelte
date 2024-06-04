@@ -65,7 +65,7 @@
       // ]
     } catch (e) {
       toast({
-        content: 'Failed to fetch available instances.',
+        content: $t('toast.failFetchInstances'),
         type: 'error',
       })
     }
@@ -129,7 +129,7 @@
           goto(`/signup/${selectedInstance}`)
         } else {
           toast({
-            content: 'Could not contact that instance URL',
+            content: $t('toast.failInstanceURL'),
             type: 'error',
           })
         }

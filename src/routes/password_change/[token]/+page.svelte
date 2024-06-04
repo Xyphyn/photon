@@ -22,7 +22,7 @@
     loading = true
     try {
       if (!(await validateInstance(instance)))
-        throw new Error('Failed to contact instance url')
+        throw new Error($t('toast.failInstanceURL'))
 
       await getClient(instance).passwordChangeAfterReset({
         password: password,
@@ -31,7 +31,7 @@
       })
 
       toast({
-        content: 'Your password was reset.',
+        content: $t('toast.passwordReset'),
         type: 'success',
       })
 

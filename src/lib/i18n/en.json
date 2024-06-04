@@ -347,7 +347,11 @@
   "admin": {
     "purge": "Purge",
     "instance": "Instance",
-    "label": "Administration"
+    "label": "Administration",
+    "purgeCommunity": {
+      "title": "Purging Community",
+      "warning": "This will delete all posts. Are you sure? (The button will enable in 3 seconds.)"
+    }
   },
   "content": {
     "all": "All",
@@ -355,7 +359,8 @@
     "posts": "Posts",
     "comments": "Comments",
     "communities": "Communities",
-    "instances": "Instances"
+    "instances": "Instances",
+    "message": "Message"
   },
   "post": {
     "actions": {
@@ -440,10 +445,67 @@
     "disabled": "Disabled",
     "enable": "Enable",
     "disable": "Disable",
-    "add": "Add"
+    "add": "Add",
+    "cancel": "Cancel",
+    "send": "Send"
   },
   "message": {
     "success": "Success",
     "error": "Error"
+  },
+  "toast": {
+    "noComments": "The API returned no comments.",
+    "loginVoteGate": "You must be logged in to vote.",
+    "blockedCommunity": "Blocked that community.",
+    "unblockedCommunity": "Unblocked that community.",
+    "purgedCommunity": "Purged that community.",
+    "blockedInstance": "Blocked that instance.",
+    "updatedCommunity": "Your community was updated.",
+    "sentMessage": "Sent that message.",
+    "invalidDateAbsolute": "Invalid date. It must be an absolute date.",
+    "invalidDateBeforeCurrent": "Invalid date. It is before the current time.",
+    "bannedUser": "Banned that user.",
+    "unbannedUser": "Unbanned that user.",
+    "needCommunity": "You must set a community.",
+    "invalidURL": "Invalid URL",
+    "generatedTitle": "Generated title and body from the URL. Do you want to undo this?",
+    "failGenerateTitle": "There was no usable title or description of that website.",
+    "restoredFromDraft": "Restored your post from the draft.",
+    "copied": "Copied to clipboard.",
+    "approvedApplication": "Approved that application.",
+    "deniedApplication": "Denied that application.",
+    "updatedSite": "Updated your site.",
+    "failCSV": "Failed to read CSV",
+    "removeAdminWarning": "Are you sure you want to remove that admin?",
+    "removeAdmin": "Removed that admin.",
+    "failFindUser": "Could not find that user.",
+    "addMod": "Added that moderator.",
+    "updateMods": "Updated community moderators.",
+    "logIn": "Successfully logged in.",
+    "failInstanceURL": "Failed to contact that instance URL. Is it down?",
+    "addAccount": "Added that account.",
+    "resetLink": "A password reset link was sent to your email.",
+    "resolveReport": "Resolved that report.",
+    "unresolveReport": "Unresolved that report.",
+    "passwordReset": "Your password was reset.",
+    "fetchPostOnHome": "Attempting to fetch this post on your home instance...",
+    "loginRefresh": "Your login was refreshed.",
+    "invalidLogin": "Invalid credentials",
+    "saveSettings": "Saved your user settings. If you changed your email, a verification link was sent.",
+    "confirmDelete1": "Are you sure you want to delete your account?",
+    "confirmDelete2": "Are you really sure?",
+    "confirmDelete3": "Final warning. Are you really sure?",
+    "needPassword": "You must provide your password.",
+    "deleting": "Deleting your account...",
+    "deleted": "Your account was deleted.",
+    "resetSettings": "Do you want to reset your settings to the default?",
+    "failFetchInstances": "Failed to fetch available instances.",
+    "verifyEmail": "A verification link was sent to your email. Verify your email, then log in.",
+    "failSignup": "Failed to sign up.",
+    "successSignup": "Signed up.",
+    "waitApplication": "Wait for your registration application to be accepted before logging in.",
+    "blockUser": "Blocked that user.",
+    "unblockUser": "Unblocked that user.",
+    "purgeUser": "Purged that user."
   }
 }

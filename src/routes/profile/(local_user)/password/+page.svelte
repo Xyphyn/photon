@@ -41,12 +41,12 @@
         await setUser(res.jwt, instance, username!)
         $currentInstance = instance
 
-        toast({ content: 'Your login was refreshed.', type: 'success' })
+        toast({ content: $t('toast.loginRefresh'), type: 'success' })
       } else {
-        throw new Error('Invalid credentials')
+        throw new Error($t('toast.invalidLogin'))
       }
 
-      toast({ content: 'Successfully changed your password. ' })
+      toast({ content: $t('toast.passwordReset') })
     } catch (e) {
       toast({
         content: e as any,
@@ -139,7 +139,7 @@
             on:click={() => {
               if (!totpLink) return
               navigator.clipboard?.writeText(totpLink)
-              toast({ content: 'Copied to clipboard.' })
+              toast({ content: $t('toast.copied') })
             }}
           >
             <Icon src={ClipboardDocument} size="20" mini />

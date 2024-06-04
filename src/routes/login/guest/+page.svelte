@@ -19,7 +19,7 @@
   async function addGuest() {
     form.loading = true
     if (!(await validateInstance(form.instance))) {
-      toast({ content: 'Failed to contact that instance URL.', type: 'error' })
+      toast({ content: $t('toast.failInstanceURL'), type: 'error' })
       form.loading = false
       return
     }
@@ -44,7 +44,7 @@
       }
     })
 
-    toast({ content: 'Added that account.', type: 'success' })
+    toast({ content: $t('toast.addAccount'), type: 'success' })
 
     goto('/')
 

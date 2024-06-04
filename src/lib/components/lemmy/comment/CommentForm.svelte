@@ -41,10 +41,6 @@
       dispatch('comment', response)
 
       value = ''
-      toast({
-        content: 'Your comment was submitted.',
-        type: 'success',
-      })
     } catch (err) {
       console.error(err)
       toast({

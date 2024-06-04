@@ -21,7 +21,7 @@
   async function removeAdmin(id: number, confirm: boolean): Promise<any> {
     if (!confirm)
       return toast({
-        content: 'Are you sure you want to remove that admin?',
+        content: $t('toast.removeAdminWarning'),
         action: () => removeAdmin(id, true),
       })
 
@@ -37,7 +37,7 @@
     if (result) {
       data.site!.admins = result.admins
       toast({
-        content: 'Removed that admin.',
+        content: $t('toast.removeAdmin'),
         type: 'success',
       })
     }

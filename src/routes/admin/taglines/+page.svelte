@@ -29,7 +29,7 @@
         taglines: taglines,
       })
       toast({
-        content: 'Successfully saved taglines.',
+        content: $t('toast.updatedSite'),
         type: 'success',
       })
     } catch (err) {

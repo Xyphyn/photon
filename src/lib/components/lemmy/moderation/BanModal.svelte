@@ -42,7 +42,7 @@
         date = Date.parse(expires)
         if (Number.isNaN(date)) {
           toast({
-            content: 'Invalid date. It must be an absolute date.',
+            content: $t('toast.invalidDateAbsolute'),
             type: 'error',
           })
 
@@ -53,7 +53,7 @@
 
         if (date < Date.now()) {
           toast({
-            content: 'Invalid date. It is before the current time.',
+            content: $t('toast.invalidDateBeforeCurrent'),
             type: 'error',
           })
 
@@ -84,9 +84,7 @@
       open = false
 
       toast({
-        content: `Successfully ${
-          banned ? 'unbanned' : 'banned'
-        } that user. You may need to refresh to see changes.`,
+        content: banned ? $t('toast.unbannedUser') : $t('toast.bannedUser'),
         type: 'success',
       })
 

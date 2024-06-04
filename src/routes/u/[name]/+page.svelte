@@ -70,7 +70,7 @@
       }
 
       toast({
-        content: `Successfully ${blocked ? 'unblocked' : 'blocked'} that user.`,
+        content: blocked ? $t('toast.unblockUser') : $t('toast.blockUser'),
         type: 'success',
       })
 
@@ -99,14 +99,14 @@
 
   async function purgeUser() {
     purgingUser = false
-    const purgeToast = toast({ content: 'Purging user...', loading: true })
+    const purgeToast = toast({ content: '', loading: true })
 
     try {
       await client().purgePerson({
         person_id: data.person_view.person.id,
       })
       removeToast(purgeToast)
-      toast({ content: 'Purged that user.', type: 'success' })
+      toast({ content: $t('toast.purgeUser'), type: 'success' })
     } catch (e) {
       toast({ content: e as any, type: 'error' })
     }

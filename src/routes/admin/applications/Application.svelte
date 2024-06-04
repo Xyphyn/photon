@@ -51,9 +51,9 @@
         registrationApplicationAnswer
       )
       toast({
-        content: `Successfully ${
-          approve ? 'approved' : 'denied'
-        } that application.`,
+        content: approve
+          ? $t('toast.approvedApplication')
+          : $t('toast.deniedApplication'),
         type: 'success',
       })
       application.creator_local_user.accepted_application = approve

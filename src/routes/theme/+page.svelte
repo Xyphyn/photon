@@ -17,6 +17,7 @@
     Icon,
   } from 'svelte-hero-icons'
   import ColorSwatch from './ColorSwatch.svelte'
+  import { t } from '$lib/translations'
 
   const c = defaultColors
 
@@ -36,7 +37,7 @@
           throw new Error('Import is empty')
         }
         $colors = JSON.parse(importText)
-        toast({ content: 'Import successful', type: 'success' })
+        toast({ content: $t('message.success'), type: 'success' })
         importing = false
       } catch (err) {
         // @ts-ignore

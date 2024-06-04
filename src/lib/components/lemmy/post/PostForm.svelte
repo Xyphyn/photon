@@ -86,7 +86,7 @@
     if (!data.community && !edit) {
       toast({
         type: 'warning',
-        content: 'You need to set a community.',
+        content: $t('toast.needCommunity'),
       })
       return
     }
@@ -96,7 +96,7 @@
         new URL(data.url)
       } catch (err) {
         toast({
-          content: 'Invalid URL',
+          content: $t('toast.invalidURL'),
           type: 'warning',
         })
         return
@@ -171,14 +171,14 @@
           .join('\n')
 
       toast({
-        content: `Generated title and body from that website. Would you like to undo this action?`,
+        content: $t('toast.generatedTitle'),
         type: 'info',
         action: () => (data = oldData),
         duration: 15 * 1000,
       })
     } catch (e) {
       toast({
-        content: 'There was no usable title or description of that website.',
+        content: $t('toast.failGenerateTitle'),
       })
     }
     generation.loading = false
@@ -328,7 +328,7 @@
     {#if !edit}
       <Button
         on:click={() => {
-          toast({ content: 'Restored from draft' })
+          toast({ content: $t('toast.restoredFromDraft') })
           const draft = getSessionStorage('postDraft')
           if (draft && !edit) {
             // @ts-ignore

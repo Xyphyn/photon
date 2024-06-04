@@ -26,7 +26,7 @@
       subscribing = false
       return res
     } catch (error) {
-      toast({ content: 'Failed to subscribe to community', type: 'error' })
+      toast({ content: error as any, type: 'error' })
     }
 
     subscribing = false

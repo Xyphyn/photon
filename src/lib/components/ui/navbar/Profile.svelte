@@ -168,7 +168,7 @@
           class="hover:brightness-110 transition-all"
           on:click={() => {
             navigator?.clipboard?.writeText(__VERSION__)
-            toast({ content: 'Copied version to clipboard.' })
+            toast({ content: $t('toast.copied') })
           }}
         >
           <Badge color="blue-subtle">{__VERSION__}</Badge>

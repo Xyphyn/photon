@@ -82,7 +82,7 @@
 
   const fetchOnHome = async (jwt: string) => {
     const id = toast({
-      content: 'Attempting to fetch this post on your home instance...',
+      content: $t('toast.fetchPostOnHome'),
       loading: true,
     })
 

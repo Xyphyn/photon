@@ -51,11 +51,6 @@
       node.comment_view.comment.content = newComment
 
       editing = false
-
-      toast({
-        content: 'Successfully edited comment.',
-        type: 'success',
-      })
     } catch (err) {
       toast({
         // @ts-ignore i hate this

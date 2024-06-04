@@ -109,7 +109,7 @@
 
     if (res) {
       toast({
-        content: 'Edited your site.',
+        content: $t('toast.updatedSite'),
         type: 'success',
       })
     }
@@ -127,8 +127,7 @@
       if (!data.federated_instances?.federated_instances?.blocked)
         throw new Error('Missing instance')
       const content = e.target?.result
-      if (!content)
-        toast({ content: 'No content in that file', type: 'warning' })
+      if (!content) toast({ content: $t('toast.failCSV'), type: 'warning' })
 
       try {
         const instances: Instance[] = []
@@ -152,12 +151,12 @@
 
         data.federated_instances.federated_instances.blocked = instances
       } catch (err) {
-        toast({ content: err as 'Failed to parse CSV', type: 'error' })
+        toast({ content: $t('toast.failCSV'), type: 'error' })
       }
     }
 
     reader.onerror = (e) =>
-      toast({ content: 'Failed to read file.', type: 'error' })
+      toast({ content: $t('toast.failCSV'), type: 'error' })
 
     reader.readAsText(files[0])
   }

@@ -31,7 +31,7 @@
         ...formData,
       })
       toast({
-        content: 'Updated your site.',
+        content: $t('toast.updatedSite'),
         type: 'success',
       })
     } catch (err) {
