@@ -181,8 +181,17 @@
     },
     "community": {
       "members": "Members",
-      "moderators": "Moderators"
+      "moderators": "Moderators",
+      "subscribe": "Subscribe",
+      "subscribed": "Subscribed",
+      "modlog": "Modlog",
+      "block": "Block",
+      "unblock": "Unblock",
+      "blockInstance": "Block instance"
     }
+  },
+  "admin": {
+    "purge": "Purge"
   },
   "content": {
     "all": "All",

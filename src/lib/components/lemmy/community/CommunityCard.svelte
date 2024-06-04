@@ -290,8 +290,8 @@
         />
         {community_view.subscribed == 'Subscribed' ||
         community_view.subscribed == 'Pending'
-          ? 'Subscribed'
-          : 'Subscribe'}
+          ? $t('cards.community.subscribed')
+          : $t('cards.community.subscribe')}
       </Button>
     {/if}
     {#if $profile?.user && amMod($profile.user, community_view.community)}
@@ -311,17 +311,19 @@
       </Button>
       <MenuButton href="/modlog?community={community_view.community.id}">
         <Icon src={Newspaper} size="16" mini />
-        Modlog
+        {$t('cards.community.modlog')}
       </MenuButton>
       {#if $profile?.jwt}
         <MenuButton color="danger-subtle" size="lg" on:click={block}>
           <Icon src={NoSymbol} size="16" mini slot="prefix" />
-          {community_view.blocked ? 'Unblock' : 'Block'}
+          {community_view.blocked
+            ? $t('cards.community.unblock')
+            : $t('cards.community.block')}
         </MenuButton>
         {#if $profile?.user}
           <MenuButton color="danger-subtle" size="lg" on:click={blockInstance}>
             <Icon src={BuildingOffice2} size="16" mini slot="prefix" />
-            Block instance
+            {$t('cards.community.blockInstance')}
           </MenuButton>
         {/if}
         {#if $profile?.user && isAdmin($profile.user)}
@@ -330,7 +332,7 @@
             on:click={() => (purgingCommunity = !purgingCommunity)}
           >
             <Icon src={Fire} size="16" mini slot="prefix" />
-            Purge
+            {$t('admin.purge')}
           </MenuButton>
         {/if}
       {/if}
