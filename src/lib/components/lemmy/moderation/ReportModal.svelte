@@ -8,6 +8,8 @@
   import { Button, Modal } from 'mono-svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { onMount } from 'svelte'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { t } from '$lib/translations'
 
   export let open: boolean
   export let item: PostView | CommentView | undefined = undefined
@@ -39,7 +41,7 @@
       }
       open = false
       toast({
-        content: 'That submission has been reported.',
+        content: $t('moderation.reportModal.success'),
         type: 'success',
       })
     } catch (err) {
@@ -59,10 +61,9 @@
 </script>
 
 <Modal bind:open>
-  <h1 class="font-bold text-2xl" slot="title">Report</h1>
+  <Header slot="title">{$t('moderation.reportModal.title')}</Header>
   <form class="flex flex-col gap-4" on:submit|preventDefault={report}>
     {#if item}
-      <span>Reporting this submission</span>
       <div class="pointer-events-none list-none">
         {#if isComment(item)}
           <Comment
@@ -83,12 +84,11 @@
     <MarkdownEditor
       required
       rows={4}
-      label="Reason"
-      placeholder="he's being a meanie :("
+      label={$t('moderation.reason')}
       bind:value={reason}
     />
     <Button submit {loading} disabled={loading} color="primary" size="lg">
-      Submit
+      {$t('form.submit')}
     </Button>
   </form>
 </Modal>
