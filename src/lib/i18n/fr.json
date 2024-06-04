@@ -7,19 +7,19 @@
   },
   "nav": {
     "home": "Accueil",
-    "admin": "Admin",
+    "admin": "Administration",
     "moderation": "Modération",
     "communities": "Explorer",
     "search": "Rechercher",
     "create": {
       "label": "Créer",
-      "post": "Post",
+      "post": "Publication",
       "community": "Communauté",
       "logingate": "Vous devez vous connecter pour créer du contenu."
     },
     "menu": {
       "label": "Profil",
-      "app": "App",
+      "app": "Application",
       "settings": "Paramètres",
       "colorscheme": {
         "label": "Schéma de couleurs",
@@ -39,7 +39,13 @@
     "logout": "Se déconnecter",
     "signup": "S'inscrire",
     "accounts": "Comptes",
-    "changeinstance": "Changer d'instance"
+    "changeinstance": "Changer d'instance",
+    "resetColor": "Réinitialiser la couleur",
+    "addGuest": "Ajouter un invité",
+    "moveUp": "Monter",
+    "moveDown": "Descendre",
+    "guest": "Invité",
+    "versionGate": "Cette version de Photon prend en charge les instances exécutant {{version}} ou une version supérieure."
   },
   "filter": {
     "location": {
@@ -58,60 +64,114 @@
         "time": {
           "label": "Temps",
           "all": "Tout",
-          "9months": "9 Mois",
-          "6months": "6 Mois",
-          "3months": "3 Mois",
+          "9months": "9 mois",
+          "6months": "6 mois",
+          "3months": "3 mois",
           "month": "Mois",
           "week": "Semaine",
           "day": "Jour",
-          "12hours": "12 Heures",
-          "6hours": "6 Heures",
+          "12hours": "12 heures",
+          "6hours": "6 heures",
           "hour": "Heure"
         }
       },
       "new": "Nouveau",
       "old": "Ancien",
       "controversial": "Controversé",
-      "scaled": "Adapté",
+      "scaled": "Redimensionné",
       "mostcomments": "Commentaires",
       "newcomments": "Nouvelles réponses"
     },
     "view": {
       "label": "Vue",
-      "cozy": "Cosy",
+      "cozy": "Confortable",
       "list": "Liste",
       "compact": "Compact",
-      "legacy": "Ancien"
-    }
+      "legacy": "Hérité"
+    },
+    "type": "Type"
   },
   "form": {
     "username": "Nom d'utilisateur",
+    "name": "Nom",
     "instance": "URL de l'instance",
     "password": "Mot de passe",
     "2fa": "Code 2FA",
     "forgotpassword": "Mot de passe oublié",
-    "submit": "Soumettre"
+    "submit": "Soumettre",
+    "edit": "Modifier",
+    "preview": "Aperçu",
+    "post": {
+      "create": "Créer une publication",
+      "edit": "Modifier la publication",
+      "community": "Communauté",
+      "title": "Titre",
+      "url": "URL",
+      "body": "Corps",
+      "nsfw": "NSFW",
+      "generateTitle": "Générer le titre",
+      "uploadImage": "Télécharger une image"
+    }
   },
   "routes": {
     "frontpage": {
       "title": "Page d'accueil",
       "footer": "{{users:number}} {{users; 1:utilisateur; default:utilisateurs;}} actif(s)"
     },
-    "modlog": "Modlog",
+    "modlog": "Journal de modération",
     "instances": "Instances",
-    "legal": "Légal"
+    "legal": "Mentions légales",
+    "profile": {
+      "user": "Utilisateur",
+      "settings": "Paramètres",
+      "blocks": "Bloqués",
+      "credentials": "Informations d'identification",
+      "moderates": "Modère"
+    },
+    "accounts": "Comptes",
+    "communities": "Communautés",
+    "search": {
+      "title": "Rechercher",
+      "federating": "Fédérer",
+      "query": "Requête",
+      "noResults": {
+        "title": "Aucun résultat",
+        "description": "Il n'y a aucun résultat correspondant à ce filtre. Essayez d'affiner votre recherche.",
+        "alt": "Rechercher dans le fediverse"
+      }
+    },
+    "createPost": "Créer une publication",
+    "post": {
+      "crosspostCount": "rediffusions",
+      "commentCount": "commentaires",
+      "addComment": "Ajouter un commentaire",
+      "scrollToTop": "Défiler vers le haut",
+      "instanceWarning": "Cette publication a été demandée à partir d'un serveur différent de celui de votre compte. De nombreuses actions ne fonctionneront pas.",
+      "remoteView": "Vue distante",
+      "localView": "Vue locale",
+      "thread": {
+        "single": "Vous visualisez un fil unique.",
+        "allComments": "Tous les commentaires",
+        "part": "Vous visualisez une partie d'un fil.",
+        "context": "Afficher le contexte"
+      }
+    }
   },
   "cards": {
     "site": {
       "about": "À propos",
       "stats": "Statistiques",
-      "admins": "Admins"
+      "admins": "Administrateurs"
+    },
+    "community": {
+      "members": "Membres",
+      "moderators": "Modérateurs"
     }
   },
   "content": {
-    "users": "Utilisateurs",
     "all": "Tout",
-    "posts": "Posts",
+    "users": "Utilisateurs",
+    "posts": "Publications",
     "comments": "Commentaires",
     "communities": "Communautés"
   },
@@ -122,13 +182,13 @@
       "unsave": "Désénregistrer",
       "more": {
         "label": "Plus d'actions",
-        "edit": "Éditer",
+        "edit": "Modifier",
         "creator": "Créateur",
         "actions": "Actions",
         "markRead": "Marquer comme lu",
         "markUnread": "Marquer comme non lu",
         "share": "Partager",
-        "crosspost": "Crossposter",
+        "crosspost": "Republier",
         "delete": "Supprimer",
         "restore": "Restaurer"
       }
@@ -142,11 +202,20 @@
       "saved": "Enregistré"
     }
   },
+  "comment": {
+    "reply": "Répondre",
+    "actions": {
+      "label": "Actions",
+      "link": "Copier le lien"
+    },
+    "locked": "Cette publication est verrouillée."
+  },
   "moderation": {
     "report": "Signaler"
   },
   "common": {
     "back": "Retour",
-    "next": "Suivant"
+    "next": "Suivant",
+    "debug": "Débogage"
   }
 }

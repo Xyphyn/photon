@@ -19,6 +19,7 @@
   import ObjectAutocomplete from '$lib/components/lemmy/ObjectAutocomplete.svelte'
   import { Button } from 'mono-svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
+  import { t } from '$lib/translations'
 
   export let edit = false
 
@@ -217,7 +218,7 @@
 <form on:submit|preventDefault={submit} class="flex flex-col gap-4 h-full">
   <slot name="formtitle">
     <h1 class="font-bold text-xl">
-      {edit ? 'Edit' : 'Create'} Post
+      {edit ? $t('form.post.edit') : $t('form.post.create')}
     </h1>
   </slot>
   {#if !edit && data}
@@ -227,7 +228,7 @@
         bind:items={communities}
         jwt={$profile?.jwt}
         listing_type="All"
-        label="Community"
+        label={$t('form.post.community')}
         required
         on:select={(e) => {
           const c = e.detail
@@ -243,7 +244,7 @@
       />
     {:else}
       <div class="flex flex-col gap-1">
-        <span class="font-medium text-sm">Community</span>
+        <span class="font-medium text-sm">{$t('form.post.community')}</span>
         <Button
           class="w-full !bg-white dark:!bg-black h-[38px]"
           on:click={() => (data.community = null)}
@@ -268,13 +269,13 @@
   {/if}
   <TextInput
     required
-    label="Title"
+    label={$t('form.post.title')}
     bind:value={data.title}
     placeholder={placeholders.get('post')}
   />
   <div class="flex gap-2 w-full items-end">
     <TextInput
-      label="URL"
+      label={$t('form.post.url')}
       bind:value={data.url}
       placeholder={placeholders.get('url')}
       class="w-full"
@@ -285,32 +286,32 @@
         ? 'width: 38px; padding: 0;'
         : ''}"
       class="flex-shrink-0"
-      title="Generate title/body"
+      title={$t('form.post.generateTitle')}
       loading={generation.loading}
       disabled={!generation.generatable || generation.loading}
     >
       <Icon src={Sparkles} size="18" mini slot="prefix" />
       {#if generation.generatable}
-        Generate Title
+        {$t('form.post.generateTitle')}
       {/if}
     </Button>
     <Button
       on:click={() => (uploadingImage = !uploadingImage)}
       style="width: 38px; height: 38px; padding: 0;"
       class="flex-shrink-0"
-      title="Upload image"
+      title={$t('form.post.uploadImage')}
     >
       <Icon src={Photo} size="18" mini slot="prefix" />
     </Button>
   </div>
   <MarkdownEditor
     rows={8}
-    label="Body"
+    label={$t('form.post.body')}
     bind:value={data.body}
     placeholder={placeholders.get('post')}
     previewButton
   />
-  <Switch bind:checked={data.nsfw}>NSFW</Switch>
+  <Switch bind:checked={data.nsfw}>{$t('form.post.nsfw')}</Switch>
   <div class="mt-auto" />
   <div class="flex flex-row items-center gap-2">
     <Button
@@ -321,7 +322,7 @@
       disabled={data.loading}
       class="flex-1"
     >
-      Submit
+      {$t('form.submit')}
     </Button>
 
     {#if !edit}

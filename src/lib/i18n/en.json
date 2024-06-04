@@ -89,7 +89,8 @@
       "compact": "Compact",
       "legacy": "Legacy"
     },
-    "type": "Type"
+    "type": "Type",
+    "filter": "Filter"
   },
   "form": {
     "username": "Username",
@@ -100,7 +101,18 @@
     "forgotpassword": "Forgot Password",
     "submit": "Submit",
     "edit": "Edit",
-    "preview": "Preview"
+    "preview": "Preview",
+    "post": {
+      "create": "Create Post",
+      "edit": "Edit Post",
+      "community": "Community",
+      "title": "Title",
+      "url": "URL",
+      "body": "Body",
+      "nsfw": "NSFW",
+      "generateTitle": "Generate Title",
+      "uploadImage": "Upload Image"
+    }
   },
   "routes": {
     "frontpage": {
@@ -129,6 +141,7 @@
         "alt": "Search across the fediverse"
       }
     },
+    "createPost": "Create Post",
     "post": {
       "crosspostCount": "crossposts",
       "commentCount": "comments",
@@ -142,6 +155,14 @@
         "allComments": "All Comments",
         "part": "You're viewing part of a thread.",
         "context": "Show Context"
+      }
+    },
+    "inbox": {
+      "title": "Inbox",
+      "markAsRead": "Mark All Read",
+      "empty": {
+        "title": "No new notifications",
+        "description": "Messages, replies, and mentions will appear here."
       }
     }
   },
@@ -204,6 +225,7 @@
   "common": {
     "back": "Back",
     "next": "Next",
-    "debug": "Debug"
+    "debug": "Debug",
+    "refresh": "Refresh"
   }
 }

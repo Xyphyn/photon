@@ -48,7 +48,7 @@
     disabled={comment.post.locked}
   >
     <Icon src={ArrowUturnLeft} width={14} height={14} mini />
-    <span class="text-xs">Reply</span>
+    <span class="text-xs">{$t('comment.reply')}</span>
   </Button>
   {#if $profile?.user && (amMod($profile?.user, comment.community) || isAdmin($profile.user))}
     <CommentModerationMenu bind:item={comment} />
