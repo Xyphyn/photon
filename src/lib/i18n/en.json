@@ -225,6 +225,10 @@
       "reason": "Reason",
       "resolve": "Resolve",
       "unresolve": "Unresolve"
+    },
+    "verifyEmail": {
+      "message": "Your email was verified. You can now close this window.",
+      "error": "Failed to verify your email."
     }
   },
   "cards": {
@@ -304,5 +308,9 @@
     "disabled": "Disabled",
     "enable": "Enable",
     "disable": "Disable"
+  },
+  "message": {
+    "success": "Success",
+    "error": "Error"
   }
 }
