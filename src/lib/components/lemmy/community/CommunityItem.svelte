@@ -20,6 +20,7 @@
   import CommunityCard from '$lib/components/lemmy/community/CommunityCard.svelte'
   import LabelStat from '$lib/components/ui/LabelStat.svelte'
   import PostBody from '../post/PostBody.svelte'
+  import { t } from '$lib/translations'
 
   export let community: CommunityView
 
@@ -77,9 +78,9 @@
             slot="prefix"
           />
           {#if isSubscribed(community.subscribed)}
-            Subscribed
+            {$t('cards.community.subscribed')}
           {:else}
-            Subscribe
+            {$t('cards.community.subscribe')}
           {/if}
         </Button>
       </Subscribe>
