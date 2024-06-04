@@ -345,7 +345,9 @@
     }
   },
   "admin": {
-    "purge": "Purge"
+    "purge": "Purge",
+    "instance": "Instance",
+    "label": "Administration"
   },
   "content": {
     "all": "All",
@@ -397,14 +399,19 @@
       "unbanning": "Unbanning User",
       "deleteData": "Delete data",
       "warning": "This will delete ALL of this user's submissions here.",
-      "expires": "Expires (UTC)"
+      "expires": "Expires (UTC)",
+      "banFromCommunity": "Ban from community",
+      "unbanFromCommunity": "Unban from community"
     },
     "reason": "Reason",
     "lock": "Lock",
     "unlock": "Unlock",
     "remove": "Remove",
     "restore": "Restore",
-    "label": "Moderation"
+    "label": "Moderation",
+    "labelInstanceOnly": "Moderation (Instance Only)",
+    "feature": "Feature",
+    "unfeature": "Unfeature"
   },
   "common": {
     "back": "Back",

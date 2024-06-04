@@ -15,6 +15,8 @@
   import { Menu, MenuButton, MenuDivider, toast } from 'mono-svelte'
   import { profile } from '$lib/auth.js'
   import { Button } from 'mono-svelte'
+  import { t } from '$lib/translations'
+  import ShieldIcon from './ShieldIcon.svelte'
 
   export let item: PostView | CommentView
 
@@ -34,11 +36,6 @@
       })
 
       item.post.locked = lock
-
-      toast({
-        content: `Successfully ${lock ? 'locked' : 'unlocked'} that post.`,
-        type: 'success',
-      })
     } catch (err) {
       toast({
         content: err as any,
@@ -62,11 +59,6 @@
       })
 
       item.post.featured_community = pinned
-
-      toast({
-        content: `Successfully ${pinned ? 'pinned' : 'unpinned'} that post.`,
-        type: 'success',
-      })
     } catch (err) {
       toast({
         content: err as any,
@@ -87,26 +79,14 @@
     loading={acting}
     {...$$restProps}
   >
-    <svg
-      width="16"
-      height="16"
-      viewBox="0 0 20 22"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      slot="prefix"
-    >
-      <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
-        d="M10.516 1.17C10.3767 1.03791 10.192 0.964283 10 0.964283C9.80801 0.964283 9.62333 1.03791 9.484 1.17C7.36127 3.18588 4.53412 4.29133 1.607 4.25C1.44753 4.24793 1.29156 4.29674 1.16172 4.38935C1.03189 4.48196 0.934957 4.61355 0.885 4.765C0.462973 6.05116 0.248618 7.39637 0.25 8.75C0.25 14.692 4.314 19.683 9.813 21.098C9.93566 21.1296 10.0643 21.1296 10.187 21.098C15.686 19.683 19.75 14.692 19.75 8.75C19.75 7.36 19.527 6.02 19.115 4.765C19.0652 4.61336 18.9684 4.48156 18.8385 4.38875C18.7087 4.29595 18.5526 4.247 18.393 4.249L18.25 4.25C15.254 4.25 12.533 3.08 10.516 1.17Z"
-        fill="currentColor"
-      />
-    </svg>
+    <ShieldIcon filled width={16} />
   </Button>
   {#if ($profile?.user && amMod($profile.user, item.community)) || ($profile?.user && isAdmin($profile.user))}
     <MenuDivider>
-      Moderation {#if !item.community.local && !amMod($profile.user, item.community)}
-        (Instance Only)
+      {#if !item.community.local && !amMod($profile.user, item.community)}
+        {$t('moderation.labelInstanceOnly')}
+      {:else}
+        {$t('moderation.label')}
       {/if}
     </MenuDivider>
     <MenuButton
@@ -121,7 +101,7 @@
         mini
         slot="prefix"
       />
-      {item.post.locked ? 'Unlock' : 'Lock'}
+      {item.post.locked ? $t('moderation.unlock') : $t('moderation.lock')}
     </MenuButton>
 
     <MenuButton
@@ -135,18 +115,24 @@
       <div
         class="flex flex-row gap-2 text-left items-center justify-between w-full"
       >
-        <span>{item.post.featured_community ? 'Unfeature' : 'Feature'}</span>
+        <span>
+          {item.post.featured_community
+            ? $t('moderation.unfeature')
+            : $t('moderation.feature')}
+        </span>
         {#if isAdmin($profile.user)}
-          <span class="text-xs opacity-80">Community</span>
+          <span class="text-xs opacity-80">{$t('form.post.community')}</span>
         {/if}
       </div>
     </MenuButton>
     <MenuButton color="danger-subtle" on:click={() => remove(item)}>
       <Icon src={Trash} size="16" mini />
       {#if isCommentView(item)}
-        {item.comment.removed ? 'Restore' : 'Remove'}
+        {item.comment.removed
+          ? $t('moderation.restore')
+          : $t('moderation.remove')}
       {:else}
-        {item.post.removed ? 'Restore' : 'Remove'}
+        {item.post.removed ? $t('moderation.restore') : $t('moderation.remove')}
       {/if}
     </MenuButton>
     {#if $profile?.user && $profile.user.local_user_view.person.id != item.creator.id}
@@ -157,13 +143,13 @@
       >
         <Icon src={ShieldExclamation} size="16" mini />
         {item.creator_banned_from_community
-          ? 'Unban from community'
-          : 'Ban from community'}
+          ? $t('moderation.ban.unbanFromCommunity')
+          : $t('moderation.ban.banFromCommunity')}
       </MenuButton>
     {/if}
   {/if}
   {#if $profile?.user && isAdmin($profile.user)}
-    <MenuDivider>Admin</MenuDivider>
+    <MenuDivider>{$t('admin.label')}</MenuDivider>
     <MenuButton
       color="success-subtle"
       on:click={() =>
@@ -173,13 +159,17 @@
       <div
         class="flex flex-row gap-2 text-left items-center justify-between w-full"
       >
-        <span>{item.post.featured_local ? 'Unfeature' : 'Feature'}</span>
-        <span class="text-xs opacity-80">Instance</span>
+        <span>
+          {item.post.featured_local
+            ? $t('moderation.unfeature')
+            : $t('moderation.feature')}
+        </span>
+        <span class="text-xs opacity-80">{$t('admin.instance')}</span>
       </div>
     </MenuButton>
     <MenuButton color="danger-subtle" on:click={() => remove(item, true)}>
       <Icon src={Fire} size="16" mini />
-      Purge
+      {$t('admin.purge')}
     </MenuButton>
   {/if}
 </Menu>
