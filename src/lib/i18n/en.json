@@ -507,5 +507,146 @@
     "blockUser": "Blocked that user.",
     "unblockUser": "Unblocked that user.",
     "purgeUser": "Purged that user."
+  },
+  "settings": {
+    "title": "Settings",
+    "navigation": {
+      "title": "Navigation",
+      "dockPos": {
+        "title": "Dock position",
+        "description": "Where the dock should be positioned on the screen.",
+        "top": "Top",
+        "bottom": "Bottom",
+        "adaptive": "Adaptive"
+      },
+      "panel": {
+        "title": "Panel mode",
+        "description": "Extend the dock to the screen edges, similar to a panel.",
+        "on": "On",
+        "off": "Off",
+        "adaptive": "Adaptive"
+      }
+    },
+    "app": {
+      "title": "Photon",
+      "theming": {
+        "title": "Theming",
+        "description": "Customize Photon's colors.",
+        "link": "Go to themes"
+      },
+      "lang": {
+        "title": "Language",
+        "description": "The language used for Photon's UI.",
+        "note": "Languages other than English and Hebrew are community translated, and may be incomplete.",
+        "": "Dont translate the below!",
+        "en": "English",
+        "en-US": "English",
+        "he": "Hebrew",
+        "auto": "Auto"
+      },
+      "view": {
+        "title": "Post style",
+        "list": "Show posts in a list, with post bodies and compact media.",
+        "cozy": "Show posts with large images, rich embeds, and longer post bodies.",
+        "compact": "Show posts in a list, without post bodies and with tighter spacing.",
+        "legacy": "The old look of Photon."
+      },
+      "sort": {
+        "title": "Default sort",
+        "description": "The default sorting to use in feeds."
+      },
+      "postsInNewTab": {
+        "title": "Open posts in new tab",
+        "description": "Open posts in a separate tab instead of the current."
+      },
+      "displayName": {
+        "title": "Use display name",
+        "description": "Show users' display names instead of their actual usernames."
+      },
+      "limitLayoutWidth": {
+        "title": "Limit layout width",
+        "description": "Improve readability by limiting the main content width."
+      },
+      "placeholders": {
+        "title": "Random placeholders",
+        "description": "Show random placeholders for certain text inputs."
+      },
+      "expandImages": {
+        "title": "Expand images",
+        "description": "Clicking on a post's image brings you to an expanded view rather than the post page."
+      },
+      "duplicateTitles": {
+        "title": "Hide duplicate titles/bodies",
+        "description": "Hides the post title and body if they are identical to the embed."
+      },
+      "thumbnailSide": {
+        "title": "Thumbnail alignment",
+        "description": "Where thumbnails should be on the post in list/compact mode",
+        "left": "Left",
+        "right": "Right"
+      },
+      "font": {
+        "title": "Font",
+        "description": "What font Photon uses in the UI."
+      }
+    },
+    "embeds": {
+      "title": "Embeds",
+      "clickToView": {
+        "title": "Click to view",
+        "description": "Only load embeds once you click on them."
+      },
+      "youtube": {
+        "description": "The website to embed YouTube content in."
+      }
+    },
+    "lemmy": {
+      "title": "Lemmy",
+      "compactFeatured": {
+        "title": "Compact featured posts",
+        "description": "Make featured posts more compact"
+      },
+      "markReadPosts": {
+        "title": "Mark read posts",
+        "description": "Mark a post as read when you click on it"
+      },
+      "fadeReadPosts": {
+        "title": "Fade read posts",
+        "description": "Fade the title of posts you've already read"
+      },
+      "crosspostMarker": {
+        "title": "Mark crossposts",
+        "description": "Show 'crossposted from' when crossposting."
+      },
+      "hideSubmissions": {
+        "title": "Hide submissions",
+        "description": "Hide certain types of submissions.",
+        "deleted": "Deleted by user",
+        "removed": "Removed by moderator"
+      },
+      "nsfwBlur": {
+        "title": "NSFW blur",
+        "description": "Blur images and remove post bodies of NSFW posts."
+      },
+      "instances": {
+        "title": "Show instances",
+        "description": "Show the instances where certain content is from."
+      }
+    },
+    "moderation": {
+      "title": "Moderation",
+      "replyPresets": {
+        "title": "Removal reply presets",
+        "description": "Presets to use for 'reply reason' in the submission removal dialog.",
+        "syntax": "Syntax"
+      }
+    },
+    "other": {
+      "title": "Other",
+      "debug": {
+        "title": "Debug info",
+        "description": "Display debug information"
+      }
+    }
   }
 }
