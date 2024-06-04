@@ -103,8 +103,8 @@
       <p slot="description">
         The language used for Photon's UI.
         <Note>
-          All languages other than US English are community translated, and may
-          be incomplete!
+          All languages other than US English and Hebrew are community
+          translated, and may be incomplete!
         </Note>
       </p>
       <Select bind:value={$userSettings.language}>

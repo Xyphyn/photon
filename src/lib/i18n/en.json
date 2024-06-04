@@ -162,7 +162,8 @@
         "description": "This instance has registrations closed. Find another instance.",
         "anotherInstance": "Find another instance"
       }
-    }
+    },
+    "description": "Description"
   },
   "routes": {
     "frontpage": {
@@ -228,6 +229,53 @@
       "reason": "Reason",
       "resolve": "Resolve",
       "unresolve": "Unresolve"
+    },
+    "admin": {
+      "title": "Administration",
+      "config": {
+        "title": "Configuration",
+        "sidebar": "Sidebar",
+        "icon": "Icon",
+        "banner": "Banner",
+        "downvotesEnabled": "Enable Downvotes",
+        "nsfwEnabled": "Enable NSFW",
+        "registration": {
+          "label": "Registration Mode",
+          "open": "Open",
+          "application": "Require Application",
+          "closed": "Closed"
+        },
+        "applicationQuestion": "Application Question",
+        "adminCommunityOnly": "Only admins can create communities",
+        "requireVerifyEmail": "Require email verification",
+        "emailAdminsOnApplication": "Email admins on receiving new applications",
+        "emailAdminsOnReport": "Email admins on receiving new reports",
+        "listingType": {
+          "label": "Listing Type",
+          "all": "All",
+          "local": "Local"
+        },
+        "private": "Private instance",
+        "hideModlogModNames": "Hide modlog mod names",
+        "slurFilter": "Slur filter regex",
+        "federation": "Federation enabled",
+        "federationDebug": "Federation debug mode",
+        "captcha": {
+          "enabled": "Enabled"
+        }
+      },
+      "applications": {
+        "title": "Applications"
+      },
+      "taglines": {
+        "title": "Taglines"
+      },
+      "team": {
+        "title": "Team"
+      },
+      "federation": {
+        "title": "Federation"
+      }
     },
     "verifyEmail": {
       "message": "Your email was verified. You can now close this window.",
