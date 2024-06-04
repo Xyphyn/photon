@@ -5,6 +5,7 @@
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
   import { getClient } from '$lib/lemmy.js'
+  import { t } from '$lib/translations.js'
   import { trycatch } from '$lib/util.js'
   import type { Instance } from 'lemmy-js-client'
   import {
@@ -167,24 +168,20 @@
 </script>
 
 <svelte:head>
-  <title>Federation</title>
+  <title>{$t('routes.admin.federation.title')}</title>
 </svelte:head>
 
 <h1 class="font-bold text-2xl flex items-center justify-between">
-  Federation <Button
-    color="primary"
-    on:click={save}
-    loading={saving}
-    disabled={saving}
-  >
-    Save
+  {$t('routes.admin.federation.title')}
+  <Button color="primary" on:click={save} loading={saving} disabled={saving}>
+    {$t('common.save')}
   </Button>
 </h1>
 {#if data.site && data.federated_instances?.federated_instances?.blocked}
   <FileInput preview={false} bind:files={csv}>
     <Button class="w-max" slot="button">
       <Icon src={Plus} mini size="18" slot="prefix" />
-      Upload a CSV
+      {$t('routes.admin.federation.csv')}
     </Button>
     <svelte:fragment slot="choose">
       {''}
@@ -192,14 +189,14 @@
   </FileInput>
   <div class="flex flex-col md:flex-row gap-4">
     <div class="flex-1 w-full max-h-[42rem] h-full flex flex-col gap-2">
-      <h2 class="font-bold text-lg">Blocked Instances</h2>
+      <h2 class="font-bold text-lg">{$t('routes.admin.federation.blocked')}</h2>
       <form
         on:submit|preventDefault={() =>
           moderateInstance(blockInstance.instance, true)}
         class="flex flex-row gap-2"
       >
         <TextInput
-          placeholder="Block an instance..."
+          placeholder={$t('routes.admin.federation.blockplaceholder')}
           class="flex-1"
           bind:value={blockInstance.instance}
         />
@@ -208,7 +205,7 @@
           loading={blockInstance.loading}
           disabled={blockInstance.loading}
         >
-          Block
+          {$t('routes.admin.federation.block')}
         </Button>
       </form>
       <Material class="h-full overflow-auto" color="distinct">
@@ -252,8 +249,8 @@
           {:else}
             <Placeholder
               icon={Check}
-              title="No blocked instances"
-              description="Blocking an instance will hide submissions from that instance."
+              title={$t('routes.admin.federation.emptyBlock.title')}
+              description={$t('routes.admin.federation.emptyBlock.description')}
             />
           {/if}
         </EditableList>
@@ -261,7 +258,7 @@
     </div>
     <div class="md:flex-1 w-full max-h-[42rem] flex flex-col gap-2">
       <h2 class="font-bold text-lg flex items-center space-x-1">
-        <span>Allowed Instances</span>
+        <span>{$t('routes.admin.federation.allowed')}</span>
         {#if allowInstance.instance || !(data.federated_instances.federated_instances.allowed?.length == 0)}
           <Popover openOnHover placement="bottom-end">
             <Icon
@@ -272,9 +269,7 @@
               size="20"
             />
             <p class="font-normal">
-              Adding items to "Allowed Instances" will <strong>
-                block every other instance.
-              </strong>
+              {$t('routes.admin.federation.emptyAllow.description')}
             </p>
           </Popover>
         {/if}
@@ -285,7 +280,7 @@
         class="flex flex-row gap-2"
       >
         <TextInput
-          placeholder="Allow an instance..."
+          placeholder={$t('routes.admin.federation.allowplaceholder')}
           class="flex-1"
           bind:value={allowInstance.instance}
         />
@@ -294,7 +289,7 @@
           loading={allowInstance.loading}
           disabled={allowInstance.loading}
         >
-          Allow
+          {$t('routes.admin.federation.allow')}
         </Button>
       </form>
       <Material class="h-full overflow-auto" color="distinct">
@@ -335,8 +330,10 @@
             <div class="my-auto h-max">
               <Placeholder
                 icon={Check}
-                title="No allowed instances"
-                description="Adding an item to this will block every other instance."
+                title={$t('routes.admin.federation.emptyAllow.title')}
+                description={$t(
+                  'routes.admin.federation.emptyAllow.description'
+                )}
               />
             </div>
           {/if}

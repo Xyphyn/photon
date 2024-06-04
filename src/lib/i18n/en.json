@@ -295,7 +295,22 @@
         }
       },
       "federation": {
-        "title": "Federation"
+        "title": "Federation",
+        "csv": "Upload CSV",
+        "blocked": "Blocked Instances",
+        "block": "Block",
+        "blockplaceholder": "Block an instance...",
+        "allowed": "Whitelisted Instances",
+        "allow": "Whitelist",
+        "allowplaceholder": "Whitelist an instance",
+        "emptyBlock": {
+          "title": "No blocked instances",
+          "description": "Blocking an instance will hide new submissions from that instance."
+        },
+        "emptyAllow": {
+          "title": "No whitelisted instances",
+          "description": "Whitelisting an instance will block every other instance."
+        }
       }
     },
     "verifyEmail": {
