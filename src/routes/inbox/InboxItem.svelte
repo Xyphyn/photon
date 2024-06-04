@@ -21,6 +21,7 @@
   import type { InboxItem } from '$lib/lemmy/inbox.js'
   import PrivateMessage from '$lib/components/lemmy/inbox/PrivateMessage.svelte'
   import PrivateMessageModal from '$lib/components/lemmy/modal/PrivateMessageModal.svelte'
+  import { t } from '$lib/translations'
 
   export let item: InboxItem
 
@@ -104,6 +105,7 @@
           {loading}
           disabled={loading}
           on:click={() => markAsRead(!item.read)}
+          title={$t('post.actions.more.markRead')}
         >
           <Icon slot="prefix" src={Check} mini size="16" />
         </Button>
@@ -117,7 +119,7 @@
         {/if}
       {:else}
         <Button
-          title="Jump"
+          title={$t('common.jump')}
           href="/comment/{item.item.comment.id}"
           size="square-md"
         >

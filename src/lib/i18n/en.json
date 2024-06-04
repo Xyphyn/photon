@@ -90,7 +90,13 @@
       "legacy": "Legacy"
     },
     "type": "Type",
-    "filter": "Filter"
+    "filter": "Filter",
+    "unread": "Unread",
+    "inbox": {
+      "messages": "Messages",
+      "replies": "Replies",
+      "mentions": "Mentions"
+    }
   },
   "form": {
     "username": "Username",
@@ -226,6 +232,7 @@
     "back": "Back",
     "next": "Next",
     "debug": "Debug",
-    "refresh": "Refresh"
+    "refresh": "Refresh",
+    "jump": "Jump"
   }
 }
