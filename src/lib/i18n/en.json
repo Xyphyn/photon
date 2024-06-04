@@ -403,6 +403,18 @@
       "banFromCommunity": "Ban from community",
       "unbanFromCommunity": "Unban from community"
     },
+    "removeSubmission": {
+      "title": "Removing Submission",
+      "titleRestore": "Restoring Submission",
+      "titlePurge": "Purging Submission",
+      "withReason": "Reply with reason",
+      "comment": "Comment",
+      "message": "Message",
+      "failReply": "Failed to post reply. Removing anyway...",
+      "failMessage": "Failed to message user. Removing anyway...",
+      "failEmptyReply": "Your reply cannot be empty if 'Reply with reason' is enabled.",
+      "successPurge": "Successfully purged that submission."
+    },
     "reason": "Reason",
     "lock": "Lock",
     "unlock": "Unlock",
