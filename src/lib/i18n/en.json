@@ -198,7 +198,8 @@
     "users": "Users",
     "posts": "Posts",
     "comments": "Comments",
-    "communities": "Communities"
+    "communities": "Communities",
+    "instances": "Instances"
   },
   "post": {
     "actions": {
