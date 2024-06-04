@@ -20,6 +20,8 @@
     XCircle,
   } from 'svelte-hero-icons'
   import { instance as currentInstance } from '$lib/instance.js'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { t } from '$lib/translations.js'
 
   export let data
 
@@ -125,36 +127,39 @@
   </span>
 
   {#if data.site_view.local_site.registration_mode != 'Closed'}
-    <h1 class="font-bold text-3xl">Create account</h1>
+    <Header>{$t('form.signup.title')}</Header>
     <TextInput
       bind:value={email}
-      label="Email"
+      label={$t('form.email')}
       required={data.site_view.local_site.require_email_verification}
       type="email"
     />
-    <TextInput bind:value={username} label="Username" required />
+    <TextInput bind:value={username} label={$t('form.username')} required />
     <TextInput
       bind:value={password}
-      label="Password"
+      label={$t('form.password')}
       required
       type="password"
     />
     <TextInput
       bind:value={passwordVerify}
-      label="Confirm Password"
+      label={$t('form.confirmPassword')}
       required
       type="password"
     />
     {#if data.site_view.local_site.registration_mode == 'RequireApplication'}
       <Material class="dark:text-yellow-200 text-yellow-800 bg-yellow-500/20">
         <Icon src={ExclamationTriangle} mini size="20" />
-        To join this instance, you must fill out this application, and wait to be
-        accepted. You will receive an email if your application is accepted.
+        {$t('form.signup.application.info')}
       </Material>
       {#if data.site_view.local_site.application_question}
         <Markdown source={data.site_view.local_site.application_question} />
       {/if}
-      <MarkdownEditor label="Application" required bind:value={application} />
+      <MarkdownEditor
+        label={$t('form.signup.application.label')}
+        required
+        bind:value={application}
+      />
     {/if}
     {#if captchaRequired}
       <div>
@@ -194,7 +199,7 @@
         </div>
       </div>
     {/if}
-    <Checkbox bind:checked={nsfw}>Show NSFW content</Checkbox>
+    <Checkbox bind:checked={nsfw}>{$t('form.profile.showNSFW')}</Checkbox>
     <input type="dn" name="honeypot" bind:value={honeypot} class="hidden" />
     <Button
       submit
@@ -204,17 +209,17 @@
       disabled={submitting}
       class="mt-auto"
     >
-      Submit
+      {$t('form.submit')}
     </Button>
   {:else}
     <div class="my-auto">
       <Placeholder
         icon={XCircle}
-        title="Registrations closed"
-        description="New account creation has been disabled on this instance."
+        title={$t('form.signup.closed.title')}
+        description={$t('form.signup.closed.description')}
       >
-        <Button icon={Plus} href="https://join-lemmy.org">
-          Find another instance
+        <Button icon={Plus} href="/signup">
+          {$t('form.signup.closed.anotherInstance')}
         </Button>
       </Placeholder>
     </div>

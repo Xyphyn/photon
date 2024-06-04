@@ -103,6 +103,7 @@
     "name": "Name",
     "instance": "Instance URL",
     "password": "Password",
+    "confirmPassword": "Confirm Password",
     "2fa": "2FA Code",
     "forgotpassword": "Forgot Password",
     "submit": "Submit",
@@ -145,7 +146,23 @@
         "warning": "This will delete ALL of your submissions."
       }
     },
-    "setup": "Setup"
+    "email": "Email",
+    "setup": "Setup",
+    "signup": {
+      "title": "Sign Up",
+      "description": "Choose an instance that interests you, or type the URL manually.",
+      "info": "An instance is the server that your account will be hosted on, but you can still access and interact with content from other instances.",
+      "chooseInstance": "Choose an instance",
+      "application": {
+        "label": "Application",
+        "info": "To join this instance, you must fill out this application, and wait to be accepted. You will receive an email if your application is accepted."
+      },
+      "closed": {
+        "title": "Registrations closed",
+        "description": "This instance has registrations closed. Find another instance.",
+        "anotherInstance": "Find another instance"
+      }
+    }
   },
   "routes": {
     "frontpage": {

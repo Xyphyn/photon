@@ -21,6 +21,7 @@
   import { Button, TextInput } from 'mono-svelte'
   import { onMount } from 'svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
+  import { t } from '$lib/translations'
 
   let selectedInstance: string = ''
   let validating: boolean = false
@@ -78,15 +79,14 @@
 </script>
 
 <svelte:head>
-  <title>Sign up | Choose Instance</title>
+  <title>{$t('form.signup.title')}</title>
 </svelte:head>
 
 <div class="mx-auto max-w-xl flex flex-col gap-4 my-auto h-max w-full">
-  <h1 class="font-bold text-4xl">Sign Up</h1>
-  <p>Choose an instance that interests you, or type the URL manually.</p>
+  <h1 class="font-bold text-4xl">{$t('form.signup.title')}</h1>
+  <p>{$t('form.signup.description')}</p>
   <p>
-    An instance is the server that your account will be hosted on, but you can
-    still access and interact with content from other instances.
+    {$t('form.signup.info')}
   </p>
   <Material color="distinct" class="h-64 overflow-auto">
     <div
@@ -140,7 +140,7 @@
   >
     <TextInput
       bind:value={selectedInstance}
-      label="Choose an instance"
+      label={$t('form.signup.chooseInstance')}
       required
       {placeholder}
       on:input={() => {
@@ -154,7 +154,7 @@
       loading={validating}
       disabled={validating}
     >
-      Go
+      {$t('form.submit')}
     </Button>
   </form>
 </div>
