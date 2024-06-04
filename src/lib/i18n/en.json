@@ -391,7 +391,20 @@
     "locked": "This post is locked."
   },
   "moderation": {
-    "report": "Report"
+    "report": "Report",
+    "ban": {
+      "banning": "Banning User",
+      "unbanning": "Unbanning User",
+      "deleteData": "Delete data",
+      "warning": "This will delete ALL of this user's submissions here.",
+      "expires": "Expires (UTC)"
+    },
+    "reason": "Reason",
+    "lock": "Lock",
+    "unlock": "Unlock",
+    "remove": "Remove",
+    "restore": "Restore",
+    "label": "Moderation"
   },
   "common": {
     "back": "Back",
