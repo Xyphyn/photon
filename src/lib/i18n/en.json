@@ -265,7 +265,19 @@
         }
       },
       "applications": {
-        "title": "Applications"
+        "title": "Applications",
+        "empty": {
+          "title": "No new applications",
+          "description": "Applications to join your instance will appear here."
+        },
+        "application": "Application",
+        "approved": "Approved",
+        "denied": "Denied",
+        "user": "User",
+        "deny": "Deny",
+        "approve": "Approve",
+        "reason": "Reason",
+        "modalTitle": "Deny Application"
       },
       "taglines": {
         "title": "Taglines"
