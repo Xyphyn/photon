@@ -7,6 +7,8 @@
   import type { SaveUserSettings } from 'lemmy-js-client'
   import { Button, Checkbox, Modal, TextInput } from 'mono-svelte'
   import { uploadImage } from '$lib/util.js'
+  import { t } from '$lib/translations.js'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
   export let data
 
@@ -141,50 +143,58 @@
     action="Submit"
     on:action={() => deleteAccount(4)}
   >
-    <span slot="title">Delete account</span>
+    <span slot="title">{$t('form.profile.deleteAccount.label')}</span>
     <TextInput
-      label="Password"
+      label={$t('form.password')}
       type="password"
       bind:value={deletion.password}
     />
     <Checkbox bind:checked={deletion.deleteContent}>
-      Delete content
+      {$t('form.profile.deleteAccount.deleteContent')}
       <span slot="description">
-        This will delete ALL of your account's posts and comments.
+        {$t('form.profile.deleteAccount.warning')}
       </span>
     </Checkbox>
   </Modal>
 {/if}
 
 <form class="flex flex-col gap-4 h-full" on:submit|preventDefault={save}>
-  <h1 class="font-bold text-2xl">User settings</h1>
+  <Header>{$t('routes.profile.settings')}</Header>
   {#if data.my_user?.local_user_view?.local_user && formData}
     <TextInput
-      label="Display name"
+      label={$t('form.profile.displayName')}
       bind:value={formData.display_name}
       placeholder="Optional"
     />
     <MarkdownEditor
       images={false}
       bind:value={formData.bio}
-      label="Bio"
+      label={$t('form.profile.bio')}
       previewButton
     />
-    <ImageInput label="Profile Image" bind:files={profileImage} />
-    <ImageInput label="Banner Image" bind:files={bannerImage} />
-    <TextInput label="Email" bind:value={formData.email} />
+    <ImageInput label={$t('form.profile.avatar')} bind:files={profileImage} />
+    <ImageInput label={$t('form.profile.banner')} bind:files={bannerImage} />
+    <TextInput label={$t('form.profile.email')} bind:value={formData.email} />
     <TextInput
-      label="Matrix User"
+      label={$t('form.profile.matrix')}
       bind:value={formData.matrix_user_id}
       placeholder="@user:example.com"
     />
-    <Checkbox bind:checked={formData.show_nsfw}>Show NSFW content</Checkbox>
-    <Checkbox bind:checked={formData.show_scores}>Show Scores</Checkbox>
-    <Checkbox bind:checked={formData.bot_account}>Bot Account</Checkbox>
-    <Checkbox bind:checked={formData.show_bot_accounts}>
-      Show Bot Accounts
+    <Checkbox bind:checked={formData.show_nsfw}>
+      {$t('form.profile.showNSFW')}
     </Checkbox>
-    <Checkbox bind:checked={formData.show_read_posts}>Show Read Posts</Checkbox>
+    <Checkbox bind:checked={formData.show_scores}>
+      {$t('form.profile.scores')}
+    </Checkbox>
+    <Checkbox bind:checked={formData.bot_account}>
+      {$t('form.profile.bot')}
+    </Checkbox>
+    <Checkbox bind:checked={formData.show_bot_accounts}>
+      {$t('form.profile.showBots')}
+    </Checkbox>
+    <Checkbox bind:checked={formData.show_read_posts}>
+      {$t('form.profile.showRead')}
+    </Checkbox>
 
     <Button
       submit
@@ -194,10 +204,8 @@
       {loading}
       disabled={loading}
     >
-      Save
+      {$t('common.save')}
     </Button>
-  {:else}
-    <Material padding="lg">The API didn't return your user settings.</Material>
   {/if}
   <Button
     on:click={() => deleteAccount(0)}
@@ -205,6 +213,6 @@
     size="lg"
     class="ml-auto"
   >
-    Delete account
+    {$t('form.profile.deleteAccount.label')}
   </Button>
 </form>

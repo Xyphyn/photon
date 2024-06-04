@@ -118,7 +118,34 @@
       "nsfw": "NSFW",
       "generateTitle": "Generate Title",
       "uploadImage": "Upload Image"
-    }
+    },
+    "profile": {
+      "displayName": "Display name",
+      "bio": "Bio",
+      "avatar": "Avatar",
+      "banner": "Banner",
+      "email": "Email",
+      "matrix": "Matrix User",
+      "showNSFW": "Show NSFW content",
+      "scores": "Show Scores",
+      "bot": "Bot Account",
+      "showBots": "Show Bots",
+      "showRead": "Show Read Posts",
+      "currentPassword": "Current Password",
+      "newPassword": "New Password",
+      "verifyNewPassword": "Verify New Password",
+      "2fa": {
+        "totp": "TOTP",
+        "2fa": "2FA",
+        "paste": "Paste this in your authenticator app."
+      },
+      "deleteAccount": {
+        "label": "Delete account",
+        "deleteContent": "Delete content",
+        "warning": "This will delete ALL of your submissions."
+      }
+    },
+    "setup": "Setup"
   },
   "routes": {
     "frontpage": {
@@ -244,6 +271,11 @@
     "next": "Next",
     "debug": "Debug",
     "refresh": "Refresh",
-    "jump": "Jump"
+    "jump": "Jump",
+    "save": "Save",
+    "enabled": "Enabled",
+    "disabled": "Disabled",
+    "enable": "Enable",
+    "disable": "Disable"
   }
 }
