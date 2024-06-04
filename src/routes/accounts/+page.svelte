@@ -87,7 +87,7 @@
 </script>
 
 <svelte:head>
-  <title>Accounts</title>
+  <title>{$t('routes.accounts')}</title>
 </svelte:head>
 
 {#if debugging}

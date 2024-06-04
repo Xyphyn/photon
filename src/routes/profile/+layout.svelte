@@ -7,7 +7,7 @@
 </script>
 
 <svelte:head>
-  <title>Profile</title>
+  <title>{$t('profile.profile')}</title>
 </svelte:head>
 
 <div class="flex flex-col gap-4 h-full z-0">

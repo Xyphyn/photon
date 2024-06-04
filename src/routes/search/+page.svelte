@@ -34,6 +34,7 @@
   import { expoOut } from 'svelte/easing'
   import { slide } from 'svelte/transition'
   import { t } from '$lib/translations.js'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
   type Result = PostView | CommentView | PersonView | CommunityView
 
@@ -47,10 +48,10 @@
 </script>
 
 <svelte:head>
-  <title>Search</title>
+  <title>{$t('routes.search.title')}</title>
 </svelte:head>
 
-<h1 class="font-bold text-3xl">Search</h1>
+<Header>{$t('routes.search.title')}</Header>
 <div class="flex flex-row flex-wrap items-center gap-4 mt-4">
   <Select
     bind:value={data.type}

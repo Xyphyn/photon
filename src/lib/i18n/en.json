@@ -147,6 +147,7 @@
         "alt": "Search across the fediverse"
       }
     },
+    "saved": "Saved",
     "createPost": "Create Post",
     "post": {
       "crosspostCount": "crossposts",
