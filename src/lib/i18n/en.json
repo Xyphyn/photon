@@ -280,10 +280,19 @@
         "modalTitle": "Deny Application"
       },
       "taglines": {
-        "title": "Taglines"
+        "title": "Taglines",
+        "add": "Add a tagline",
+        "empty": {
+          "title": "No taglines",
+          "description": "A random tagline will appear on the site card when users visit your instance."
+        }
       },
       "team": {
-        "title": "Team"
+        "title": "Admins",
+        "empty": {
+          "title": "No admins",
+          "description": "Somehow there's no admins of this site. How??"
+        }
       },
       "federation": {
         "title": "Federation"
@@ -379,7 +388,8 @@
     "enabled": "Enabled",
     "disabled": "Disabled",
     "enable": "Enable",
-    "disable": "Disable"
+    "disable": "Disable",
+    "add": "Add"
   },
   "message": {
     "success": "Success",

@@ -10,6 +10,8 @@
   import { removeItem, trycatch } from '$lib/util.js'
   import { Button, TextInput } from 'mono-svelte'
   import { Icon, Plus, QuestionMarkCircle, Trash } from 'svelte-hero-icons'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { t } from '$lib/translations.js'
 
   export let data
 
@@ -42,18 +44,14 @@
   }
 </script>
 
-<svelte:head>
-  <title>Admin Team</title>
-</svelte:head>
-
-<h1 class="font-bold text-2xl">Admins</h1>
+<Header>{$t('routes.admin.team.title')}</Header>
 {#if data.site}
   <EditableList let:action on:action={(e) => removeAdmin(e.detail, false)}>
     {#if data.site.admins.length <= 0}
       <Placeholder
         icon={QuestionMarkCircle}
-        title="No admins"
-        description="Somehow there's no admins of this site. How?!"
+        title={$t('routes.admin.team.empty.title')}
+        description={$t('routes.admin.team.empty.description')}
       />
     {:else}
       {#each data.site?.admins ?? [] as admin}
@@ -96,7 +94,7 @@
     />
     <Button loading={adding} disabled={adding} size="md" class="h-full" submit>
       <Icon src={Plus} mini size="16" slot="prefix" />
-      Add Admin
+      {$t('common.add')}
     </Button>
   </form>
 {/if}
