@@ -215,6 +215,16 @@
         "title": "No new notifications",
         "description": "Messages, replies, and mentions will appear here."
       }
+    },
+    "moderation": {
+      "title": "Moderation",
+      "empty": {
+        "title": "No new reports",
+        "description": "When submissions are reported, you can act on them here."
+      },
+      "reason": "Reason",
+      "resolve": "Resolve",
+      "unresolve": "Unresolve"
     }
   },
   "cards": {

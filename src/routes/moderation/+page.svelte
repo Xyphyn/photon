@@ -14,12 +14,14 @@
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { searchParam } from '$lib/util.js'
   import { Button, Material, Select } from 'mono-svelte'
+  import { t } from '$lib/translations'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
   export let data
 </script>
 
 <div class="mb-4 flex flex-col gap-4">
-  <h1 class="font-bold text-3xl">Moderation</h1>
+  <Header>{$t('routes.moderation.title')}</Header>
   <div class="flex flex-row gap-2 flex-wrap items-center">
     <Select
       bind:value={data.type}
@@ -27,14 +29,14 @@
     >
       <span slot="label" class="flex items-center gap-1">
         <Icon src={Funnel} size="15" mini />
-        Filter
+        {$t('filter.filter')}
       </span>
-      <option value="all">All</option>
-      <option value="unread">Unread</option>
+      <option value="all">{$t('filter.location.all')}</option>
+      <option value="unread">{$t('filter.unread')}</option>
     </Select>
     <Button href="/modlog" class="h-max ml-auto">
       <Icon src={Newspaper} size="16" mini />
-      Modlog
+      {$t('routes.modlog')}
     </Button>
   </div>
 </div>
@@ -60,7 +62,7 @@
 {:else}
   <Placeholder
     icon={Inbox}
-    title="No new reports"
-    description="When submissions are reported, you can act on them here."
+    title={$t('routes.moderation.empty.title')}
+    description={$t('routes.moderation.empty.description')}
   />
 {/if}
