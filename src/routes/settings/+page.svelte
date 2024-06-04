@@ -113,6 +113,9 @@
             {$t(`settings.app.lang.${locale}`, { default: locale })}
           </option>
         {/each}
+        {#if $userSettings.debugInfo}
+          <option value="dev">Raw Strings</option>
+        {/if}
       </Select>
     </Setting>
     <Setting>

@@ -144,7 +144,7 @@
     <div class="contents" on:click|stopPropagation={() => {}}>
       <Select bind:value={$legacyTheme} class="ml-auto my-auto w-24" size="sm">
         <option value="system">{$t('nav.menu.colorscheme.system')}</option>
-        <option value="light">{$t('nav.menu.colorscheme.label')}</option>
+        <option value="light">{$t('nav.menu.colorscheme.light')}</option>
         <option value="dark">{$t('nav.menu.colorscheme.dark')}</option>
       </Select>
     </div>
