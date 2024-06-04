@@ -7,11 +7,6 @@ const config: Config = {
       key: '',
       loader: async () => (await import('./i18n/en.json')).default,
     },
-    {
-      locale: 'fr',
-      key: '',
-      loader: async () => (await import('./i18n/fr.json')).default,
-    },
   ],
   fallbackLocale: 'en',
 }
