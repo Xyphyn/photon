@@ -64,12 +64,11 @@
   let uploadingImage = false
   let loading = false
   let image: any
-  $: previewURL =
-    image instanceof FileList
-      ? URL.createObjectURL(image[0])
-      : image
-        ? URL.createObjectURL(image)
-        : ''
+  $: previewURL = image?.length
+    ? URL.createObjectURL(image[0])
+    : image
+      ? URL.createObjectURL(image)
+      : ''
 
   async function upload() {
     if (!$profile?.jwt || !image) return
