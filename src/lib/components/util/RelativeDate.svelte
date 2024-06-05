@@ -39,9 +39,6 @@
           const value = Math.round(diffInMillis / thresholds[i].threshold)
 
           let language = $locale
-          if (typeof navigator != 'undefined') {
-            language = navigator.language
-          }
 
           const rtf = new Intl.RelativeTimeFormat(language, options)
 
