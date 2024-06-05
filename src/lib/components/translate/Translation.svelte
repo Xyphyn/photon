@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Button, Modal, Select, Spinner, TextArea } from 'mono-svelte'
   import { text } from './translation'
-  import { t } from '$lib/translations'
+  import { locale, t } from '$lib/translations'
   import { userSettings } from '$lib/settings'
   import { ArrowRight, Icon } from 'svelte-hero-icons'
   import MarkdownEditor from '../markdown/MarkdownEditor.svelte'
@@ -16,7 +16,7 @@
 
   let result: Promise<TranslateResponse> | undefined = undefined
   let from = 'auto'
-  let to = 'en'
+  let to = $locale
 
   async function translate(text: string) {
     const url = $userSettings.translator
