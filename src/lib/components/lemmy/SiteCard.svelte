@@ -53,7 +53,7 @@
     </Button>
     <Button
       href="/legal"
-      title={$t('routes.legal')}
+      title={$t('routes.legal.title')}
       color="ghost"
       size="square-md"
     >
