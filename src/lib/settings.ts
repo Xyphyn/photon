@@ -80,6 +80,7 @@ interface Settings {
     compactFeatured: boolean
   }
   language: string | null
+  translator: string | undefined
 }
 
 export const defaultSettings: Settings = {
@@ -138,6 +139,7 @@ export const defaultSettings: Settings = {
     compactFeatured: toBool(env.PUBLIC_COMPACT_FEATURED) ?? true,
   },
   language: null,
+  translator: undefined,
 }
 
 export const userSettings = writable(defaultSettings)

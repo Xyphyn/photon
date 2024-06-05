@@ -14,6 +14,7 @@
     EyeSlash,
     Flag,
     Icon,
+    Language,
     Newspaper,
     PencilSquare,
     ServerStack,
@@ -50,6 +51,8 @@
   import { fediseer, type Data } from '$lib/fediseer/fediseer'
   import Fediseer from '$lib/fediseer/Fediseer.svelte'
   import { t } from '$lib/translations'
+  import { text } from '$lib/components/translate/translation'
+  import Translation from '$lib/components/translate/Translation.svelte'
 
   export let post: PostView
 
@@ -62,6 +65,8 @@
   let fediseerOpen = false
   let fediseerData: Data | null = null
   let fediseerLoading = false
+
+  let translating = false
 </script>
 
 {#if fediseerData}
@@ -93,6 +98,8 @@
     {/await}
   </Modal>
 {/if}
+
+<Translation bind:open={translating} />
 
 <div
   class="flex flex-row gap-2 items-center !h-8 flex-shrink-0"
@@ -247,6 +254,18 @@
       <Icon src={Share} width={16} mini slot="prefix" />
       {$t('post.actions.more.share')}
     </MenuButton>
+    {#if post.post.body && $userSettings.translator}
+      <MenuButton
+        on:click={() => {
+          // @ts-ignore
+          text.set(post.post.body)
+          translating = !translating
+        }}
+      >
+        <Icon src={Language} size="16" mini slot="prefix" />
+        {$t('post.actions.more.translate')}
+      </MenuButton>
+    {/if}
     {#if $profile?.jwt}
       <MenuButton
         on:click={() => {

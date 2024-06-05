@@ -29,7 +29,7 @@
   import { Button, Checkbox, Select } from 'mono-svelte'
   import ViewSelect from '$lib/components/lemmy/dropdowns/ViewSelect.svelte'
   import { LINKED_INSTANCE_URL } from '$lib/instance.js'
-  import { removeItem } from '$lib/util.js'
+  import { DOMAIN_REGEX_FORMS, removeItem } from '$lib/util.js'
   import Section from './Section.svelte'
   import ToggleSetting from './ToggleSetting.svelte'
   import { locales, t } from '$lib/translations'
@@ -222,6 +222,17 @@
         options={['inter', 'satoshi/nunito', 'system', 'browser']}
         optionNames={['Inter', 'Satoshi/Nunito', 'System UI', 'Browser Font']}
         bind:selected={$userSettings.font}
+      />
+    </Setting>
+    <Setting>
+      <span slot="title">{$t('settings.app.translation.title')}</span>
+      <span slot="description">
+        {$t('settings.app.translation.description')}
+      </span>
+      <TextInput
+        bind:value={$userSettings.translator}
+        label={$t('settings.app.translation.instance')}
+        pattern={DOMAIN_REGEX_FORMS}
       />
     </Setting>
   </Section>

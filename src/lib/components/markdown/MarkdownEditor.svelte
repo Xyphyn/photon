@@ -97,7 +97,7 @@
     loading = false
   }
 
-  let previewing = false
+  export let previewing = false
 
   const shortcuts = {
     KeyB: () => wrapSelection('**', '**'),
@@ -174,7 +174,8 @@ overflow-hidden transition-colors"
   >
     {#if previewing}
       <div
-        class="px-3 py-2.5 h-32 overflow-auto text-sm resize-y bg-white dark:bg-zinc-950"
+        class="px-3 py-2.5 overflow-auto text-sm resize-y bg-white dark:bg-zinc-950"
+        style="height: {rows * 2}em"
       >
         <Markdown source={beforePreview(value)} />
       </div>

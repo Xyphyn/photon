@@ -8,6 +8,7 @@
     EllipsisHorizontal,
     Flag,
     Icon,
+    Language,
     PencilSquare,
     Square2Stack,
     Trash,
@@ -24,6 +25,9 @@
   import { deleteItem, save } from '$lib/lemmy/contentview.js'
   import { Button, Menu, MenuButton, MenuDivider } from 'mono-svelte'
   import { t } from '$lib/translations'
+  import Translation from '$lib/components/translate/Translation.svelte'
+  import { text } from '$lib/components/translate/translation'
+  import { userSettings } from '$lib/settings'
 
   export let comment: CommentView
   export let replying: boolean = false
@@ -31,7 +35,12 @@
   const dispatcher = createEventDispatcher<{ edit: CommentView }>()
 
   let reply = ''
+  let translating = false
 </script>
+
+{#if translating}
+  <Translation bind:open={translating} />
+{/if}
 
 <div class="flex flex-row items-center gap-0.5 h-7 relative">
   <CommentVote
@@ -79,6 +88,18 @@
       <Icon src={Square2Stack} mini size="16" />
       <div>{$t('comment.actions.link')}</div>
     </MenuButton>
+    {#if $userSettings.translator}
+      <MenuButton
+        on:click={() => {
+          // @ts-ignore
+          text.set(comment.comment.content)
+          translating = !translating
+        }}
+      >
+        <Icon src={Language} size="16" mini slot="prefix" />
+        {$t('post.actions.more.translate')}
+      </MenuButton>
+    {/if}
     {#if $profile?.jwt}
       {#if comment.creator.id == $profile.user?.local_user_view.person.id}
         <MenuButton on:click={() => dispatcher('edit', comment)}>

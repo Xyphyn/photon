@@ -375,6 +375,7 @@
         "actions": "Actions",
         "markRead": "Mark as Read",
         "markUnread": "Mark as Unread",
+        "translate": "Translate",
         "share": "Share",
         "crosspost": "Crosspost",
         "delete": "Delete",
@@ -589,6 +590,11 @@
       "font": {
         "title": "Font",
         "description": "What font Photon uses in the UI."
+      },
+      "translation": {
+        "title": "Translation",
+        "description": "The LibreTranslate instance to use for translation.",
+        "instance": "Domain"
       }
     },
     "embeds": {
