@@ -1,3 +1,4 @@
+import { browser } from '$app/environment'
 import type { Community } from 'lemmy-js-client'
 import { writable } from 'svelte/store'
 
@@ -20,6 +21,7 @@ export const setSessionStorage = (
   key: keyof SessionStorage,
   value: SessionStorage[typeof key]
 ) => {
+  if (!browser) return
   if (value == undefined) {
     sessionStorage.removeItem(key)
   } else {
@@ -30,6 +32,7 @@ export const setSessionStorage = (
 export const getSessionStorage = (
   key: keyof SessionStorage
 ): SessionStorage[typeof key] => {
+  if (!browser) return
   return JSON.parse(sessionStorage.getItem(key)!)
 }
 

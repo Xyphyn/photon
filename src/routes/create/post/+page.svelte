@@ -4,6 +4,7 @@
   import { profile } from '$lib/auth.js'
   import { onDestroy, onMount } from 'svelte'
   import { getSessionStorage, setSessionStorage } from '$lib/session.js'
+  import { t } from '$lib/translations.js'
 
   export let data = {
     crosspost: false,
@@ -27,7 +28,7 @@
 </script>
 
 <svelte:head>
-  <title>Create post</title>
+  <title>{$t('form.post.create')}</title>
 </svelte:head>
 
 <div class="w-full max-w-5xl mx-auto h-full">
