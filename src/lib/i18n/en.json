@@ -197,6 +197,7 @@
     },
     "saved": "Saved",
     "createPost": "Create Post",
+    "createCommunity": "Create Community",
     "post": {
       "crosspostCount": "crossposts",
       "commentCount": "comments",
