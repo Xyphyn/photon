@@ -11,9 +11,9 @@ export const LINKED_INSTANCE_URL =
 
 const getDefaultInstance = (): string => {
   if (browser) {
-    return env.PUBLIC_INSTANCE_URL || 'lemmy.ml'
+    return env.PUBLIC_INSTANCE_URL || 'lemm.ee'
   } else {
-    return env.PUBLIC_INTERNAL_INSTANCE || env.PUBLIC_INSTANCE_URL || 'lemmy.ml'
+    return env.PUBLIC_INTERNAL_INSTANCE || env.PUBLIC_INSTANCE_URL || 'lemm.ee'
   }
 }
 
