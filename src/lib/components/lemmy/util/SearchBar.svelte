@@ -1,5 +1,6 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
+  import { t } from '$lib/translations'
   import { TextInput } from 'mono-svelte'
 
   let query: string = ''
@@ -15,7 +16,7 @@
   <TextInput
     bind:value={query}
     class="w-full h-full {$$props.class}"
-    placeholder="Search"
+    placeholder={$t('nav.search')}
     autofocus
   />
 </form>

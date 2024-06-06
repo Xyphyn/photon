@@ -29,6 +29,7 @@
   import { site } from '$lib/lemmy.js'
   import { fly } from 'svelte/transition'
   import { backOut } from 'svelte/easing'
+  import { t } from '$lib/translations'
 
   export let post: Post
   export let vote: number = 0
@@ -42,7 +43,7 @@
 
   const castVote = async (newVote: number) => {
     if (!$profile?.jwt) {
-      toast({ content: 'You must be logged in to vote.', type: 'warning' })
+      toast({ content: $t('toast.loginVoteGate'), type: 'warning' })
       return
     }
     loading = true

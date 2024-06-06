@@ -26,6 +26,7 @@
   import Expandable from '$lib/components/ui/Expandable.svelte'
   import EndPlaceholder from '../EndPlaceholder.svelte'
   import Application from '../../../../routes/admin/applications/Application.svelte'
+  import { t } from '$lib/translations'
 </script>
 
 <nav
@@ -35,11 +36,13 @@
 >
   {#if $profile?.jwt}
     <SidebarButton icon={UserCircle} href="/profile/user">
-      <span slot="label">Profile</span>
+      <span slot="label">
+        {$t('profile.profile')}
+      </span>
     </SidebarButton>
     <SidebarButton icon={Inbox} href="/inbox">
       <span slot="label" class="flex items-center gap-2">
-        Inbox
+        {$t('profile.inbox')}
         {#if $profile?.user?.notifications.inbox}
           <Badge
             class="w-5 h-5 !p-0 grid place-items-center ml-auto"
@@ -51,22 +54,30 @@
       </span>
     </SidebarButton>
     <SidebarButton icon={Bookmark} href="/saved">
-      <span slot="label">Saved</span>
+      <span slot="label">{$t('profile.saved')}</span>
     </SidebarButton>
   {:else}
-    <SidebarButton href="/login" title="Log In" icon={ArrowLeftOnRectangle}>
-      <span slot="label">Log In</span>
+    <SidebarButton
+      href="/login"
+      title={$t('account.login')}
+      icon={ArrowLeftOnRectangle}
+    >
+      <span slot="label">{$t('account.login')}</span>
     </SidebarButton>
-    <SidebarButton href="/signup" title="Sign Up" icon={Identification}>
-      <span slot="label">Sign Up</span>
+    <SidebarButton
+      href="/signup"
+      title={$t('account.signup')}
+      icon={Identification}
+    >
+      <span slot="label">{$t('account.signup')}</span>
     </SidebarButton>
     {#if LINKED_INSTANCE_URL === undefined}
       <SidebarButton
         href="/accounts"
-        title="Change Instance"
+        title={$t('account.changeinstance')}
         icon={ServerStack}
       >
-        <span slot="label">Change Instance</span>
+        <span slot="label">{$t('account.changeinstance')}</span>
       </SidebarButton>
     {/if}
   {/if}
@@ -78,7 +89,7 @@
       </div>
     {/each}
     <SidebarButton href="/accounts" icon={UserGroup}>
-      <span slot="label">Accounts</span>
+      <span slot="label">{$t('account.accounts')}</span>
     </SidebarButton>
   {/if}
   <hr class="border-slate-200 dark:border-zinc-900 my-1" />
@@ -99,7 +110,7 @@
           : '//max-lg:hidden'}"
       >
         <EndPlaceholder>
-          Subscribed
+          {$t('profile.subscribed')}
           <span slot="action" class="dark:text-white text-black">
             {$profile.user.follows.length}
           </span>

@@ -6,6 +6,7 @@
   import { Select } from 'mono-svelte'
   import { GlobeAmericas, Icon } from 'svelte-hero-icons'
   import { amModOfAny } from '../moderation/moderation'
+  import { t } from '$lib/translations'
 
   export let selected: string
   export let navigate: boolean = true
@@ -33,19 +34,19 @@
     {#if showLabel}
       <span class="flex items-center gap-1">
         <Icon src={GlobeAmericas} size="16" mini />
-        Location
+        {$t('filter.location.label')}
       </span>
     {/if}
   </svelte:fragment>
-  <option value="All">All</option>
-  <option value="Local">Local</option>
+  <option value="All">{$t('filter.location.all')}</option>
+  <option value="Local">{$t('filter.location.local')}</option>
   <option value="Subscribed" disabled={$profile?.jwt == undefined}>
-    Subscribed
+    {$t('filter.location.subscribed')}
   </option>
   <option
     value="ModeratorView"
     disabled={!$profile?.jwt || !amModOfAny($profile?.user)}
   >
-    Moderator
+    {$t('filter.location.moderator')}
   </option>
 </Select>

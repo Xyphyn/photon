@@ -9,6 +9,8 @@
   import { page } from '$app/stores'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { Bookmark } from 'svelte-hero-icons'
+  import { t } from '$lib/translations.js'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
   export let data
 
@@ -17,10 +19,10 @@
 </script>
 
 <svelte:head>
-  <title>Saved</title>
+  <title>{$t('routes.saved')}</title>
 </svelte:head>
 
-<h1 class="text-3xl font-bold">Saved</h1>
+<Header>{$t('routes.saved')}</Header>
 <div
   class="flex flex-col list-none my-4 divide-slate-200 dark:divide-zinc-800"
   class:gap-4={$userSettings.view == 'card'}

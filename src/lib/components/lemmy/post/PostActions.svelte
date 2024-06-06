@@ -14,6 +14,7 @@
     EyeSlash,
     Flag,
     Icon,
+    Language,
     Newspaper,
     PencilSquare,
     ServerStack,
@@ -49,6 +50,9 @@
   } from 'mono-svelte'
   import { fediseer, type Data } from '$lib/fediseer/fediseer'
   import Fediseer from '$lib/fediseer/Fediseer.svelte'
+  import { t } from '$lib/translations'
+  import { text } from '$lib/components/translate/translation'
+  import Translation from '$lib/components/translate/Translation.svelte'
 
   export let post: PostView
 
@@ -61,6 +65,8 @@
   let fediseerOpen = false
   let fediseerData: Data | null = null
   let fediseerLoading = false
+
+  let translating = false
 </script>
 
 {#if fediseerData}
@@ -93,6 +99,8 @@
   </Modal>
 {/if}
 
+<Translation bind:open={translating} />
+
 <div
   class="flex flex-row gap-2 items-center !h-8 flex-shrink-0"
   style={$$props.style ?? ''}
@@ -110,7 +118,7 @@
     href="/post/{getInstance()}/{post.post.id}"
     class="!text-inherit h-8 px-3"
     target={$userSettings.openLinksInNewTab ? '_blank' : ''}
-    title="Comments"
+    title={$t('post.actions.comments')}
   >
     <Icon slot="prefix" src={ChatBubbleOvalLeft} mini size="14" />
     <FormattedNumber number={post.counts.comments} />
@@ -123,7 +131,12 @@
         <DebugObject object={post} bind:open={debug} />
       {/await}
     {/if}
-    <Button on:click={() => (debug = true)} size="square-md" color="ghost">
+    <Button
+      on:click={() => (debug = true)}
+      title="Debug"
+      size="square-md"
+      color="ghost"
+    >
       <Icon src={BugAnt} mini size="16" slot="prefix" />
     </Button>
   {/if}
@@ -143,7 +156,7 @@
       color="ghost"
       loading={saving}
       disabled={saving}
-      title={post.saved ? 'Unsave' : 'Save'}
+      title={post.saved ? $t('post.actions.unsave') : $t('post.actions.save')}
     >
       <Icon
         src={post.saved ? BookmarkSlash : Bookmark}
@@ -159,12 +172,17 @@
     containerClass="overflow-auto max-h-[400px]"
     class="h-8"
     targetClass="h-full"
-    title="Post actions"
+    title={$t('post.actions.more.label')}
   >
-    <Button slot="target" title="Post actions" color="ghost" size="square-md">
+    <Button
+      slot="target"
+      title={$t('post.actions.more.label')}
+      color="ghost"
+      size="square-md"
+    >
       <Icon slot="prefix" src={EllipsisHorizontal} width={16} mini />
     </Button>
-    <MenuDivider>Creator</MenuDivider>
+    <MenuDivider>{$t('post.actions.more.creator')}</MenuDivider>
     <MenuButton
       link
       href="/u/{post.creator.name}@{new URL(post.creator.actor_id).hostname}"
@@ -189,7 +207,6 @@
         const data = await fediseer.getInstanceInfo(
           new URL(post.community.actor_id).hostname
         )
-        console.log(data)
         fediseerData = data
         fediseerOpen = true
         fediseerLoading = false
@@ -207,11 +224,11 @@
       <span>{new URL(post.community.actor_id).hostname}</span>
     </MenuButton>
     <hr class="w-[90%] mx-auto opacity-100 dark:opacity-10 my-2" />
-    <MenuDivider>Actions</MenuDivider>
+    <MenuDivider>{$t('post.actions.more.actions')}</MenuDivider>
     {#if $profile?.user && $profile?.jwt && $profile.user.local_user_view.person.id == post.creator.id}
       <MenuButton on:click={() => (editing = true)}>
         <Icon src={PencilSquare} width={16} mini slot="prefix" />
-        Edit
+        {$t('post.actions.more.edit')}
       </MenuButton>
     {/if}
     {#if $profile?.jwt}
@@ -222,7 +239,9 @@
         }}
       >
         <Icon slot="prefix" src={post.read ? EyeSlash : Eye} width={16} mini />
-        Mark as {post.read ? 'Unread' : 'Read'}
+        {post.read
+          ? $t('post.actions.more.markUnread')
+          : $t('post.actions.more.markRead')}
       </MenuButton>
     {/if}
     <MenuButton
@@ -233,8 +252,20 @@
       }}
     >
       <Icon src={Share} width={16} mini slot="prefix" />
-      Share
+      {$t('post.actions.more.share')}
     </MenuButton>
+    {#if post.post.body && $userSettings.translator}
+      <MenuButton
+        on:click={() => {
+          // @ts-ignore
+          text.set(post.post.body)
+          translating = !translating
+        }}
+      >
+        <Icon src={Language} size="16" mini slot="prefix" />
+        {$t('post.actions.more.translate')}
+      </MenuButton>
+    {/if}
     {#if $profile?.jwt}
       <MenuButton
         on:click={() => {
@@ -260,7 +291,7 @@
         }}
       >
         <Icon src={ArrowTopRightOnSquare} width={16} mini slot="prefix" />
-        Crosspost
+        {$t('post.actions.more.crosspost')}
       </MenuButton>
       {#if $profile.user && post.creator.id == $profile.user.local_user_view.person.id}
         <MenuButton
@@ -275,13 +306,15 @@
           color="danger-subtle"
         >
           <Icon src={Trash} width={16} mini slot="prefix" />
-          {post.post.deleted ? 'Restore' : 'Delete'}
+          {post.post.deleted
+            ? $t('post.actions.more.restore')
+            : $t('post.actions.more.delete')}
         </MenuButton>
       {/if}
       {#if $profile.user?.local_user_view.person.id != post.creator.id}
         <MenuButton on:click={() => report(post)} color="danger-subtle">
           <Icon src={Flag} width={16} mini slot="prefix" />
-          Report
+          {$t('moderation.report')}
         </MenuButton>
       {/if}
     {/if}

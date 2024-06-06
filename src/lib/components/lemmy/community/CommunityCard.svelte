@@ -46,6 +46,7 @@
   import ShieldIcon from '../moderation/ShieldIcon.svelte'
   import ItemList from '../generic/ItemList.svelte'
   import { communityLink, userLink } from '$lib/lemmy/generic'
+  import { t } from '$lib/translations'
 
   export let community_view: CommunityView
   export let moderators: CommunityModeratorView[] = []
@@ -83,7 +84,7 @@
 
     try {
       const loading = toast({
-        content: `${blocked ? 'Unblocking' : 'blocking'} community...`,
+        content: ``,
         loading: true,
       })
 
@@ -95,9 +96,9 @@
       removeToast(loading)
 
       toast({
-        content: `Successfully ${
-          blocked ? 'unblocked' : 'blocked'
-        } that community.`,
+        content: blocked
+          ? $t('toast.unblockedCommunity')
+          : $t('toast.blockedCommunity'),
         type: 'success',
       })
     } catch (error) {
@@ -119,14 +120,14 @@
 
   async function purgeCommunity() {
     purgingCommunity = false
-    const purgeToast = toast({ content: 'Purging community...', loading: true })
+    const purgeToast = toast({ content: '', loading: true })
 
     try {
       await client().purgeCommunity({
         community_id: community_view.community.id,
       })
       removeToast(purgeToast)
-      toast({ content: 'Purged that community.', type: 'success' })
+      toast({ content: $t('toast.purgedCommunity'), type: 'success' })
     } catch (e) {
       toast({ content: e as any, type: 'error' })
     }
@@ -136,7 +137,7 @@
     if (!$profile?.jwt) return
     try {
       const loading = toast({
-        content: `Blocking instance...`,
+        content: ``,
         loading: true,
       })
 
@@ -159,14 +160,12 @@
 
 {#if purgingCommunity}
   <Modal bind:open={purgingCommunity}>
-    <svelte:fragment slot="title">Purging Community</svelte:fragment>
+    <svelte:fragment slot="title">
+      {$t('admin.purgeCommunity.title')}
+    </svelte:fragment>
+    <CommunityLink avatar community={community_view.community} />
     <p>
-      Purging community <span class="font-bold">
-        {community_view.community.title}
-      </span>
-    </p>
-    <p>
-      Are you sure you want to do this? (The button will enable in 3 seconds.)
+      {$t('admin.purgeCommunity.warning')}
     </p>
     <div class="flex flex-row gap-2">
       <Button
@@ -174,7 +173,7 @@
         on:click={() => (purgingCommunity = false)}
         class="flex-1"
       >
-        Cancel
+        {$t('common.cancel')}
       </Button>
       <Button
         size="lg"
@@ -183,7 +182,7 @@
         disabled={!purgeEnabled}
         class="flex-1"
       >
-        Purge
+        {$t('admin.purge')}
       </Button>
     </div>
   </Modal>
@@ -224,23 +223,25 @@
   >
     <Expandable class="!pt-0">
       <svelte:fragment slot="title">
-        <Icon src={InformationCircle} size="15" mini /> About
+        <Icon src={InformationCircle} size="15" mini />
+        {$t('cards.site.about')}
       </svelte:fragment>
       <Markdown source={community_view.community.description} />
     </Expandable>
 
     <Expandable>
       <svelte:fragment slot="title">
-        <Icon src={ChartBar} size="15" mini /> Stats
+        <Icon src={ChartBar} size="15" mini />
+        {$t('cards.site.stats')}
       </svelte:fragment>
       <div class="flex flex-row gap-4 flex-wrap">
         <LabelStat
-          label="Members"
+          label={$t('cards.community.members')}
           content={community_view.counts.subscribers.toString()}
           formatted
         />
         <LabelStat
-          label="Posts"
+          label={$t('content.posts')}
           content={community_view.counts.posts.toString()}
           formatted
         />
@@ -250,7 +251,8 @@
     {#if moderators && moderators.length > 0}
       <Expandable>
         <svelte:fragment slot="title">
-          <ShieldIcon width={15} filled /> Moderators
+          <ShieldIcon width={15} filled />
+          {$t('cards.community.moderators')}
         </svelte:fragment>
         <ItemList
           items={moderators.map((m) => ({
@@ -286,8 +288,8 @@
         />
         {community_view.subscribed == 'Subscribed' ||
         community_view.subscribed == 'Pending'
-          ? 'Subscribed'
-          : 'Subscribe'}
+          ? $t('cards.community.subscribed')
+          : $t('cards.community.subscribe')}
       </Button>
     {/if}
     {#if $profile?.user && amMod($profile.user, community_view.community)}
@@ -307,17 +309,19 @@
       </Button>
       <MenuButton href="/modlog?community={community_view.community.id}">
         <Icon src={Newspaper} size="16" mini />
-        Modlog
+        {$t('cards.community.modlog')}
       </MenuButton>
       {#if $profile?.jwt}
         <MenuButton color="danger-subtle" size="lg" on:click={block}>
           <Icon src={NoSymbol} size="16" mini slot="prefix" />
-          {community_view.blocked ? 'Unblock' : 'Block'}
+          {community_view.blocked
+            ? $t('cards.community.unblock')
+            : $t('cards.community.block')}
         </MenuButton>
         {#if $profile?.user}
           <MenuButton color="danger-subtle" size="lg" on:click={blockInstance}>
             <Icon src={BuildingOffice2} size="16" mini slot="prefix" />
-            Block instance
+            {$t('cards.community.blockInstance')}
           </MenuButton>
         {/if}
         {#if $profile?.user && isAdmin($profile.user)}
@@ -326,7 +330,7 @@
             on:click={() => (purgingCommunity = !purgingCommunity)}
           >
             <Icon src={Fire} size="16" mini slot="prefix" />
-            Purge
+            {$t('admin.purge')}
           </MenuButton>
         {/if}
       {/if}

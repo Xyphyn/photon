@@ -20,6 +20,7 @@
   import ShieldIcon from '../moderation/ShieldIcon.svelte'
   import { userSettings } from '$lib/settings'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
+  import { t } from '$lib/translations'
 
   export let community: Community | undefined = undefined
   export let subscribed: SubscribedType | undefined = undefined
@@ -113,36 +114,48 @@
     style="grid-area: badges;"
   >
     {#if badges.nsfw}
-      <Badge color="red-subtle">NSFW</Badge>
+      <Badge color="red-subtle">{$t('post.badges.nsfw')}</Badge>
     {/if}
     {#if badges.saved}
-      <Badge label="Saved" color="yellow-subtle" allowIconOnly>
+      <Badge
+        label={$t('post.badges.saved')}
+        color="yellow-subtle"
+        allowIconOnly
+      >
         <Icon src={Bookmark} mini size="12" slot="icon" />
-        Saved
+        {$t('post.badges.saved')}
       </Badge>
     {/if}
     {#if badges.locked}
-      <Badge label="Locked" color="yellow-subtle" allowIconOnly>
+      <Badge
+        label={$t('post.badges.locked')}
+        color="yellow-subtle"
+        allowIconOnly
+      >
         <Icon src={LockClosed} mini size="14" slot="icon" />
-        <span class="max-md:hidden">Locked</span>
+        <span class="max-md:hidden">{$t('post.badges.locked')}</span>
       </Badge>
     {/if}
     {#if badges.removed}
-      <Badge label="Removed" color="red-subtle" allowIconOnly>
+      <Badge label={$t('post.badges.removed')} color="red-subtle" allowIconOnly>
         <Icon src={Trash} mini size="14" slot="icon" />
-        <span class="max-md:hidden">Removed</span>
+        <span class="max-md:hidden">{$t('post.badges.removed')}</span>
       </Badge>
     {/if}
     {#if badges.deleted}
-      <Badge label="Deleted" color="red-subtle" allowIconOnly>
+      <Badge label={$t('post.badges.deleted')} color="red-subtle" allowIconOnly>
         <Icon src={Trash} mini size="14" slot="icon" />
-        <span class="max-md:hidden">Deleted</span>
+        <span class="max-md:hidden">{$t('post.badges.deleted')}</span>
       </Badge>
     {/if}
     {#if badges.featured}
-      <Badge label="Featured" color="green-subtle" allowIconOnly>
+      <Badge
+        label={$t('post.badges.featured')}
+        color="green-subtle"
+        allowIconOnly
+      >
         <Icon src={Megaphone} mini size="14" slot="icon" />
-        <span class="max-md:hidden">Featured</span>
+        <span class="max-md:hidden">{$t('post.badges.featured')}</span>
       </Badge>
     {/if}
     <slot name="badges" />

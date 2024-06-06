@@ -9,6 +9,8 @@
   import type { Tagline } from 'lemmy-js-client'
   import { Button } from 'mono-svelte'
   import { Icon, Plus, QuestionMarkCircle, Trash } from 'svelte-hero-icons'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { t } from '$lib/translations.js'
 
   export let data
 
@@ -27,7 +29,7 @@
         taglines: taglines,
       })
       toast({
-        content: 'Successfully saved taglines.',
+        content: $t('toast.updatedSite'),
         type: 'success',
       })
     } catch (err) {
@@ -43,7 +45,7 @@
 
 {#if taglines.length > 0}
   <div class="flex flex-row justify-between items-center">
-    <h1 class="font-bold text-2xl">Taglines</h1>
+    <Header>{$t('routes.admin.taglines.title')}</Header>
     <Button
       color="primary"
       on:click={save}
@@ -52,7 +54,7 @@
       size="lg"
       class="h-max"
     >
-      Save
+      {$t('common.save')}
     </Button>
   </div>
   <EditableList
@@ -89,23 +91,19 @@
       newTagline = ''
     }}
   >
-    <MarkdownEditor
-      bind:value={newTagline}
-      placeholder="Add a tagline"
-      images={false}
-    />
+    <MarkdownEditor bind:value={newTagline} images={false} />
 
     <Button size="lg" submit>
       <Icon src={Plus} size="16" mini slot="prefix" />
-      Add
+      {$t('common.add')}
     </Button>
   </form>
 {:else}
   <div class="my-auto">
     <Placeholder
       icon={Plus}
-      title="No taglines"
-      description="A random tagline will appear when users visit your instance."
+      title={$t('routes.admin.taglines.empty.title')}
+      description={$t('routes.admin.taglines.empty.description')}
     >
       <div class="mt-4 max-w-xl w-full flex flex-col gap-2">
         <form
@@ -120,18 +118,18 @@
         >
           <MarkdownEditor
             bind:value={newTagline}
-            placeholder="Add a tagline"
+            placeholder={$t('routes.admin.taglines.add')}
             images={false}
           />
 
           <Button size="lg" submit>
             <Icon src={Plus} size="16" mini slot="prefix" />
-            Add
+            {$t('common.add')}
           </Button>
         </form>
 
         <Button on:click={save} color="primary" size="lg" class="w-full">
-          Save
+          {$t('common.save')}
         </Button>
       </div>
     </Placeholder>

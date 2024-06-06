@@ -3,7 +3,14 @@
   import Setting from './Setting.svelte'
   import MultiSelect from '$lib/components/input/Switch.svelte'
   import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
-  import { Disclosure, Material, Switch, TextInput, toast } from 'mono-svelte'
+  import {
+    Disclosure,
+    Material,
+    Note,
+    Switch,
+    TextInput,
+    toast,
+  } from 'mono-svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import Link from '$lib/components/input/Link.svelte'
   import {
@@ -22,102 +29,129 @@
   import { Button, Checkbox, Select } from 'mono-svelte'
   import ViewSelect from '$lib/components/lemmy/dropdowns/ViewSelect.svelte'
   import { LINKED_INSTANCE_URL } from '$lib/instance.js'
-  import { removeItem } from '$lib/util.js'
+  import { DOMAIN_REGEX_FORMS, removeItem } from '$lib/util.js'
   import Section from './Section.svelte'
   import ToggleSetting from './ToggleSetting.svelte'
+  import { locales, t } from '$lib/translations'
 </script>
 
 <svelte:head>
-  <title>Settings</title>
+  <title>{$t('settings.title')}</title>
 </svelte:head>
 
 <h1 class="text-3xl font-bold flex justify-between">
-  Settings <Button
+  {$t('settings.title')}
+  <Button
+    size="square-md"
     on:click={() => {
       toast({
-        content: 'Are you sure you want to reset your settings to the default?',
+        content: $t('toast.resetSettings'),
         action: () => ($userSettings = defaultSettings),
       })
     }}
     class="font-normal"
   >
     <Icon src={ArrowPath} mini size="16" slot="prefix" />
-    Reset
   </Button>
 </h1>
 
 <div class="flex flex-col gap-4" style="scroll-behavior: smooth;">
-  <Section title="Navigation">
-    <div>
-      <Button
-        color="ghost"
-        on:click={() => {
-          $userSettings.dock.noGap = true
-          $userSettings.dock.top = true
-        }}
-        disabled={$userSettings.dock.noGap && $userSettings.dock.top}
-      >
-        Legacy Navigation Style
-      </Button>
-    </div>
+  <Section title={$t('settings.navigation.title')}>
     <Setting>
-      <span slot="title">Dock position</span>
-      <span slot="description">Where the dock should be put</span>
+      <span slot="title">{$t('settings.navigation.dockPos.title')}</span>
+      <span slot="description">
+        {$t('settings.navigation.dockPos.description')}
+      </span>
       <MultiSelect
         options={[true, false, null]}
-        optionNames={['Top', 'Bottom', 'Adaptive']}
+        optionNames={[
+          $t('settings.navigation.dockPos.top'),
+          $t('settings.navigation.dockPos.bottom'),
+          $t('settings.navigation.dockPos.adaptive'),
+        ]}
         bind:selected={$userSettings.dock.top}
       />
     </Setting>
     <Setting>
-      <span slot="title">Panel mode</span>
+      <span slot="title">{$t('settings.navigation.panel.title')}</span>
       <span slot="description">
-        Extend the dock to screen edges, similar to a panel.
+        {$t('settings.navigation.panel.description')}
       </span>
       <MultiSelect
         options={[true, false, null]}
-        optionNames={['On', 'Off', 'Adaptive']}
+        optionNames={[
+          $t('settings.navigation.panel.on'),
+          $t('settings.navigation.panel.off'),
+          $t('settings.navigation.panel.adaptive'),
+        ]}
         bind:selected={$userSettings.dock.noGap}
       />
     </Setting>
   </Section>
 
-  <Section title="Photon">
+  <Section title={$t('settings.app.title')}>
     <Setting>
-      <span slot="title">Theming</span>
-      <span slot="description">Customize Photon's colors.</span>
+      <span slot="title">{$t('settings.app.theming.title')}</span>
+      <span slot="description">{$t('settings.app.theming.description')}</span>
       <Button href="/theme">
-        Go to themes <Icon src={ArrowRight} size="16" mini slot="suffix" />
+        {$t('settings.app.theming.link')}
+        <Icon src={ArrowRight} size="16" mini slot="suffix" />
       </Button>
     </Setting>
     <Setting>
-      <span slot="title">Post style</span>
+      <span slot="title">{$t('settings.app.lang.title')}</span>
+      <p slot="description">
+        {$t('settings.app.lang.description')}
+        <Note>
+          {$t('settings.app.lang.note')}
+        </Note>
+        <Link href="/translators" highlight class="text-base font-semibold">
+          {$t('settings.app.lang.credits')}
+        </Link>
+      </p>
+      <Select bind:value={$userSettings.language}>
+        <option value={null}>{$t('settings.app.lang.auto')}</option>
+        {#each $locales as locale}
+          <option value={locale}>
+            {$t(`settings.app.lang.${locale}`, { default: locale })}
+          </option>
+        {/each}
+        {#if $userSettings.debugInfo}
+          <option value="dev">Raw Strings</option>
+        {/if}
+      </Select>
+    </Setting>
+    <Setting>
+      <span slot="title">{$t('settings.app.view.title')}</span>
       <ViewSelect showLabel={false} />
       <p slot="description">
         {#if $userSettings.view == 'list'}
-          Show posts in a list, with post bodies and compact images.
+          {$t('settings.app.view.list')}
         {:else if $userSettings.view == 'cozy'}
-          Show posts with large images, rich embeds and longer post bodies.
+          {$t('settings.app.view.cozy')}
         {:else if $userSettings.view == 'compact'}
-          Show posts in a list, without post bodies and with tighter spacing.
+          {$t('settings.app.view.compact')}
         {:else if $userSettings.view == 'card'}
-          Photon's old post style.
+          {$t('settings.app.view.legacy')}
         {/if}
       </p>
     </Setting>
     <Setting optionClass="flex-[2] max-w-full flex-wrap min-w-0">
-      <span slot="title">Default sort</span>
-      <span slot="description">The default sort to use for feeds.</span>
+      <span slot="title">{$t('settings.app.sort.title')}</span>
+      <span slot="description">{$t('settings.app.sort.description')}</span>
       <div class="flex max-[500px]:flex-col flex-wrap gap-2 w-max max-w-full">
         <div class="max-w-full">
           <Select bind:value={$userSettings.defaultSort.feed}>
             <span slot="label" class="flex items-center gap-1">
               <Icon src={GlobeAmericas} size="16" mini />
-              Location
+              {$t('filter.location.label')}
             </span>
-            <option value="All">All</option>
-            <option value="Local">Local</option>
-            <option value="Subscribed">Subscribed</option>
+            <option value="All">{$t('filter.location.all')}</option>
+            <option value="Local">{$t('filter.location.local')}</option>
+            <option value="Subscribed">
+              {$t('filter.location.subscribed')}
+            </option>
+            <option value="Moderator">{$t('filter.location.moderator')}</option>
           </Select>
         </div>
         <div class="max-w-full">
@@ -130,70 +164,92 @@
           <Select bind:value={$userSettings.defaultSort.comments}>
             <span slot="label" class="flex items-center gap-1">
               <Icon src={ChatBubbleOvalLeftEllipsis} size="14" mini />
-              Comments
+              {$t('content.comments')}
             </span>
 
-            <option value="Hot">Hot</option>
-            <option value="Top">Top</option>
-            <option value="New">New</option>
+            <option value="Hot">{$t('filter.sort.hot')}</option>
+            <option value="Top">{$t('filter.sort.top.label')}</option>
+            <option value="New">{$t('filter.sort.new')}</option>
           </Select>
         </div>
       </div>
     </Setting>
     <ToggleSetting
       bind:checked={$userSettings.openLinksInNewTab}
-      title="Open posts in new tab"
-      description="Rather than opening posts in the same tab, open a separate one."
+      title={$t('settings.app.postsInNewTab.title')}
+      description={$t('settings.app.postsInNewTab.description')}
     />
     <ToggleSetting
       bind:checked={$userSettings.displayNames}
-      title="Use display name"
-      description="Show a user's display name instead of their account username."
+      title={$t('settings.app.displayName.title')}
+      description={$t('settings.app.displayName.description')}
     />
     <ToggleSetting
       bind:checked={$userSettings.newWidth}
-      title="Limit layout width"
-      description="Improve readability by limiting main content width."
+      title={$t('settings.app.limitLayoutWidth.title')}
+      description={$t('settings.app.limitLayoutWidth.description')}
     />
     <ToggleSetting
       bind:checked={$userSettings.randomPlaceholders}
-      title="Random placeholders"
-      description="Show a random placeholder for forms for comments, posts, etc."
+      title={$t('settings.app.placeholders.title')}
+      description={$t('settings.app.placeholders.description')}
     />
     <ToggleSetting
       bind:checked={$userSettings.expandImages}
-      title="Expand images"
-      description="Clicking on a post's image brings you to an expanded view rather than
-      sending you to the post page."
+      title={$t('settings.app.expandImages.title')}
+      description={$t('settings.app.expandImages.description')}
     />
     <ToggleSetting
       bind:checked={$userSettings.posts.deduplicateEmbed}
-      title="Hide duplicate titles/bodies"
-      description="Hides the post title and body if they're the same as the embed."
+      title={$t('settings.app.duplicateTitles.title')}
+      description={$t('settings.app.duplicateTitles.description')}
     />
     <Setting>
-      <span slot="title">Thumbnail alignment</span>
+      <span slot="title">{$t('settings.app.thumbnailSide.title')}</span>
       <span slot="description">
-        Where thumbnails should be on the post in list/compact view.
+        {$t('settings.app.thumbnailSide.title')}
       </span>
       <MultiSelect
         options={[true, false]}
-        optionNames={['Left', 'Right']}
+        optionNames={[
+          $t('settings.app.thumbnailSide.left'),
+          $t('settings.app.thumbnailSide.right'),
+        ]}
         bind:selected={$userSettings.leftAlign}
+      />
+    </Setting>
+    <Setting vertical>
+      <span slot="title">{$t('settings.app.font.title')}</span>
+      <span slot="description">{$t('settings.app.font.description')}</span>
+      <MultiSelect
+        options={['inter', 'satoshi/nunito', 'system', 'browser']}
+        optionNames={['Inter', 'Satoshi/Nunito', 'System UI', 'Browser Font']}
+        bind:selected={$userSettings.font}
+      />
+    </Setting>
+    <Setting>
+      <span slot="title">{$t('settings.app.translation.title')}</span>
+      <span slot="description">
+        {$t('settings.app.translation.description')}
+      </span>
+      <TextInput
+        bind:value={$userSettings.translator}
+        label={$t('settings.app.translation.instance')}
+        pattern={DOMAIN_REGEX_FORMS}
       />
     </Setting>
   </Section>
 
-  <Section title="Embeds">
+  <Section title={$t('settings.embeds.title')}>
     <ToggleSetting
-      title="Click to view"
-      description="Don't load an embed until you click it. (It is recommended to leave this on, to not load a video you don't want to load.)"
+      title={$t('settings.embeds.clickToView.title')}
+      description={$t('settings.embeds.clickToView.description')}
       bind:checked={$userSettings.embeds.clickToView}
     />
     <Setting>
       <span slot="title">YouTube</span>
       <span slot="description">
-        The website to use to embed YouTube content.
+        {$t('settings.embeds.youtube.description')}
       </span>
       <Select bind:value={$userSettings.embeds.youtube}>
         <option value="youtube">YouTube</option>
@@ -201,102 +257,85 @@
         <option value="piped">Piped</option>
       </Select>
     </Setting>
-    <Setting vertical>
-      <span slot="title">Font</span>
-      <span slot="description">What font Photon should use.</span>
-      <MultiSelect
-        options={['inter', 'satoshi/nunito', 'system', 'browser']}
-        optionNames={['Inter', 'Satoshi/Nunito', 'System UI', 'Browser Font']}
-        bind:selected={$userSettings.font}
-      />
-    </Setting>
   </Section>
 
-  <Section title="Lemmy">
+  <Section title={$t('settings.lemmy.title')}>
     <ToggleSetting
       bind:checked={$userSettings.posts.compactFeatured}
-      title="Compact featured posts"
-      description="Make featured posts more compact."
+      title={$t('settings.lemmy.compactFeatured.title')}
+      description={$t('settings.lemmy.compactFeatured.description')}
     />
     <ToggleSetting
       bind:checked={$userSettings.markPostsAsRead}
-      title="Mark read posts"
-      description="Mark a post as read when you click on it."
+      title={$t('settings.lemmy.markReadPosts.title')}
+      description={$t('settings.lemmy.markReadPosts.description')}
     />
     <ToggleSetting
       bind:checked={$userSettings.markReadPosts}
-      title="Fade read posts"
-      description="Fade the title of posts you've already read."
+      title={$t('settings.lemmy.fadeReadPosts.title')}
+      description={$t('settings.lemmy.fadeReadPosts.title')}
     />
     <ToggleSetting
       bind:checked={$userSettings.crosspostOriginalLink}
-      title="'Crossposted from' when crossposting"
-      description="If enabled, crossposts will include a link to the original post."
+      title={$t('settings.lemmy.crosspostMarker.title')}
+      description={$t('settings.lemmy.crosspostMarker.description')}
     />
     <Setting>
-      <span slot="title">Hide Submissions</span>
+      <span slot="title">{$t('settings.lemmy.hideSubmissions.title')}</span>
       <span slot="description">
-        <p>Hide certain types of submissions.</p>
-        <p>
-          Looking to hide read posts? That was moved to your <Link
-            href="/profile/settings"
-            highlight
-          >
-            profile settings.
-          </Link>
-        </p>
+        <p>{$t('settings.lemmy.hideSubmissions.description')}</p>
       </span>
       <div class="flex flex-col items-start gap-4 flex-wrap">
-        <Switch bind:checked={$userSettings.hidePosts.deleted}>Deleted</Switch>
+        <Switch bind:checked={$userSettings.hidePosts.deleted}>
+          {$t('settings.lemmy.hideSubmissions.deleted')}
+        </Switch>
         <Switch bind:checked={$userSettings.hidePosts.removed}>
-          Removed by Moderator
+          {$t('settings.lemmy.hideSubmissions.removed')}
         </Switch>
       </div>
     </Setting>
     <ToggleSetting
       bind:checked={$userSettings.nsfwBlur}
-      title="NSFW blur"
-      description="Blur images and remove post bodies of content tagged NSFW."
+      title={$t('settings.lemmy.nsfwBlur.title')}
+      description={$t('settings.lemmy.nsfwBlur.description')}
     />
     <Setting>
-      <span slot="title">Show instances</span>
-      <span slot="description">Show items' instances.</span>
+      <span slot="title">{$t('settings.lemmy.instances.title')}</span>
+      <span slot="description">
+        {$t('settings.lemmy.instances.description')}
+      </span>
       <div class="flex flex-row flex-wrap items-center gap-4">
         <Checkbox bind:checked={$userSettings.showInstances.user}>
-          Users
+          {$t('content.users')}
         </Checkbox>
         <Checkbox bind:checked={$userSettings.showInstances.comments}>
-          Comments
+          {$t('content.comments')}
         </Checkbox>
         <Checkbox bind:checked={$userSettings.showInstances.community}>
-          Communities
+          {$t('content.communities')}
         </Checkbox>
       </div>
     </Setting>
   </Section>
 
-  <Section title="Moderation">
+  <Section title={$t('settings.moderation.title')}>
     <Setting mainClass="md:flex-row flex-col !items-start">
-      <span slot="title">Removal reply presets</span>
+      <span slot="title">{$t('settings.moderation.replyPresets.title')}</span>
       <span slot="description">
-        <p>Presets to use for "Reply reason" in a submission removal.</p>
+        <p>{$t('settings.moderation.replyPresets.description')}</p>
         <ul class="leading-6">
-          <li>Syntax:</li>
+          <li>{$t('settings.moderation.replyPresets.syntax')}</li>
           <li>
             <code>{'{{reason}}'}</code>
-            : The provided reason
           </li>
           <li>
             <code>{'{{post}}'}</code>
-            : The title of the post
           </li>
           <li>
             <code>{'{{community}}'}</code>
-            : The community the submission was removed in.
           </li>
           <li>
             <code>{'{{username}}'}</code>
-            : The username of the creator of the submission.
           </li>
         </ul>
       </span>
@@ -371,11 +410,11 @@
     </Setting>
   </Section>
 
-  <Section title="Other">
+  <Section title={$t('settings.other.title')}>
     <ToggleSetting
       bind:checked={$userSettings.debugInfo}
-      title="Debug info"
-      description="Display debug information"
+      title={$t('settings.other.debug.title')}
+      description={$t('settings.other.debug.description')}
     />
   </Section>
 </div>

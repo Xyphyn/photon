@@ -19,6 +19,8 @@
   import { searchParam } from '$lib/util.js'
   import { Button, Select } from 'mono-svelte'
   import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { t } from '$lib/translations'
 
   export let data
 
@@ -51,11 +53,11 @@
 </svelte:head>
 
 <div class="flex flex-row gap-2">
-  <h1 class="font-bold text-3xl mr-auto">Inbox</h1>
+  <Header class="mr-auto">{$t('routes.inbox.title')}</Header>
   <Button
     on:click={() => goto($page.url, { invalidateAll: true })}
     size="square-md"
-    title="Refresh"
+    title={$t('common.refresh')}
   >
     <Icon src={ArrowPath} size="16" mini slot="prefix" />
   </Button>
@@ -67,7 +69,7 @@
     class="!h-8"
   >
     <Icon src={Check} width={16} mini slot="prefix" />
-    Mark All Read
+    {$t('routes.inbox.markAsRead')}
   </Button>
 </div>
 <div class="mt-4" />
@@ -84,10 +86,10 @@
   >
     <span slot="label" class="flex items-center gap-1">
       <Icon src={Funnel} size="15" mini />
-      Filter
+      {$t('filter.filter')}
     </span>
-    <option value="false">All</option>
-    <option value="true">Unread</option>
+    <option value="false">{$t('filter.location.all')}</option>
+    <option value="true">{$t('filter.unread')}</option>
   </Select>
   <Select
     bind:value={data.type}
@@ -95,20 +97,20 @@
   >
     <span slot="label" class="flex items-center gap-1">
       <Icon src={AdjustmentsHorizontal} size="15" mini />
-      Type
+      {$t('filter.type')}
     </span>
-    <option value="all">All</option>
-    <option value="mentions">Mentions</option>
-    <option value="replies">Replies</option>
-    <option value="messages">Messages</option>
+    <option value="all">{$t('filter.location.all')}</option>
+    <option value="mentions">{$t('filter.inbox.mentions')}</option>
+    <option value="replies">{$t('filter.inbox.replies')}</option>
+    <option value="messages">{$t('filter.inbox.messages')}</option>
   </Select>
 </div>
 <div class="flex flex-col gap-4 list-none my-4 flex-1 h-full">
   {#if !data.data || (data.data?.length ?? 0) == 0}
     <Placeholder
       icon={Inbox}
-      title="No new notifications"
-      description="Messages, replies, and mentions will appear here."
+      title={$t('routes.inbox.empty.title')}
+      description={$t('routes.inbox.empty.description')}
     />
   {:else}
     {#each data.data as item}

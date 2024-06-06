@@ -18,6 +18,8 @@
   } from 'svelte-hero-icons'
   import { DOMAIN_REGEX_FORMS } from '$lib/util.js'
   import { MINIMUM_VERSION } from '$lib/version.js'
+  import { t } from '$lib/translations'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
   let data = {
     instance: DEFAULT_INSTANCE_URL,
@@ -46,7 +48,7 @@
         const result = await setUser(response.jwt, data.instance, data.username)
 
         if (result) {
-          toast({ content: 'Successfully logged in.', type: 'success' })
+          toast({ content: $t('toast.logIn'), type: 'success' })
           goto('/')
         }
       } else {
@@ -69,14 +71,13 @@
 <div class="max-w-xl w-full mx-auto h-max my-auto">
   <form on:submit|preventDefault={logIn} class="flex flex-col gap-5">
     <div class="flex flex-col gap-2">
-      <h1 class="font-bold text-3xl">Log In</h1>
+      <Header>{$t('account.login')}</Header>
       {#if $site && mayBeIncompatible(MINIMUM_VERSION, $site.version.replace('v', ''))}
         <Note>
-          This version of Photon supports instances running
-          <span style="font-family: monospace;">
-            v{MINIMUM_VERSION}
-          </span>
-          or higher.
+          {$t('account.versionGate', {
+            //@ts-ignore
+            version: `v${MINIMUM_VERSION}`,
+          })}
         </Note>
       {/if}
     </div>
@@ -84,14 +85,14 @@
       <TextInput
         id="username"
         bind:value={data.username}
-        label="Username"
+        label={$t('form.username')}
         class="flex-1"
         required
       />
       {#if !LINKED_INSTANCE_URL}
         <TextInput
           id="instance_url"
-          label="Instance URL"
+          label={$t('form.instance')}
           placeholder={DEFAULT_INSTANCE_URL}
           disabled={LINKED_INSTANCE_URL != undefined}
           bind:value={data.instance}
@@ -105,7 +106,7 @@
       <TextInput
         id="password"
         bind:value={data.password}
-        label="Password"
+        label={$t('form.password')}
         type="password"
         minlength={10}
         maxlength={60}
@@ -115,7 +116,7 @@
       <TextInput
         id="totp"
         bind:value={data.totp}
-        label="2FA Code"
+        label={$t('form.2fa')}
         placeholder="123456"
         pattern={'\\d{6}'}
         minlength={6}
@@ -130,21 +131,21 @@
       size="lg"
       submit
     >
-      Log In
+      {$t('account.login')}
     </Button>
     <hr class="dark:border-zinc-700" />
     <div class="flex flex-row items-center gap-2">
       <Button color="tertiary" href="/signup">
         <Icon src={Identification} mini size="16" />
-        Sign Up
+        {$t('account.signup')}
       </Button>
       <Button color="tertiary" href="/login_reset">
         <Icon src={QuestionMarkCircle} mini size="16" />
-        Forgot Password
+        {$t('form.forgotpassword')}
       </Button>
       <Button color="tertiary" href="/login/guest">
         <Icon src={UserCircle} mini size="16" />
-        Guest
+        {$t('account.guest')}
       </Button>
     </div>
   </form>

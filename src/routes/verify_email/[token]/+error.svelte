@@ -1,5 +1,6 @@
 <script>
   import { page } from '$app/stores'
+  import { t } from '$lib/translations'
   import { XMark, Icon } from 'svelte-hero-icons'
 </script>
 
@@ -9,7 +10,9 @@
   >
     <Icon src={XMark} size="32" mini />
   </div>
-  <h1 class="text-red-800 dark:text-red-300 text-2xl font-semibold">Error</h1>
-  <p class="text-red-800 dark:text-red-300">Failed to verify your email.</p>
+  <h1 class="text-red-800 dark:text-red-300 text-2xl font-semibold">
+    {$t('message.error')}
+  </h1>
+  <p class="text-red-800 dark:text-red-300">{$t('routes.verifyEmail.error')}</p>
   <code>{$page.error?.message}</code>
 </div>

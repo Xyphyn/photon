@@ -8,6 +8,7 @@
     EllipsisHorizontal,
     Flag,
     Icon,
+    Language,
     PencilSquare,
     Square2Stack,
     Trash,
@@ -23,6 +24,10 @@
   import { profile } from '$lib/auth.js'
   import { deleteItem, save } from '$lib/lemmy/contentview.js'
   import { Button, Menu, MenuButton, MenuDivider } from 'mono-svelte'
+  import { t } from '$lib/translations'
+  import Translation from '$lib/components/translate/Translation.svelte'
+  import { text } from '$lib/components/translate/translation'
+  import { userSettings } from '$lib/settings'
 
   export let comment: CommentView
   export let replying: boolean = false
@@ -30,7 +35,12 @@
   const dispatcher = createEventDispatcher<{ edit: CommentView }>()
 
   let reply = ''
+  let translating = false
 </script>
+
+{#if translating}
+  <Translation bind:open={translating} />
+{/if}
 
 <div class="flex flex-row items-center gap-0.5 h-7 relative">
   <CommentVote
@@ -47,7 +57,7 @@
     disabled={comment.post.locked}
   >
     <Icon src={ArrowUturnLeft} width={14} height={14} mini />
-    <span class="text-xs">Reply</span>
+    <span class="text-xs">{$t('comment.reply')}</span>
   </Button>
   {#if $profile?.user && (amMod($profile?.user, comment.community) || isAdmin($profile.user))}
     <CommentModerationMenu bind:item={comment} />
@@ -56,7 +66,7 @@
     <Button
       slot="target"
       class="!p-1 text-slate-600 dark:text-zinc-400"
-      aria-label="Comment actions"
+      title={$t('comment.actions.label')}
       color="tertiary"
     >
       <Icon
@@ -67,7 +77,7 @@
         slot="prefix"
       />
     </Button>
-    <MenuDivider>Actions</MenuDivider>
+    <MenuDivider>{$t('comment.actions.label')}</MenuDivider>
     <MenuButton
       on:click={() => {
         navigator.share?.({
@@ -76,13 +86,25 @@
       }}
     >
       <Icon src={Square2Stack} mini size="16" />
-      <divv>Copy Link</divv>
+      <div>{$t('comment.actions.link')}</div>
     </MenuButton>
+    {#if $userSettings.translator}
+      <MenuButton
+        on:click={() => {
+          // @ts-ignore
+          text.set(comment.comment.content)
+          translating = !translating
+        }}
+      >
+        <Icon src={Language} size="16" mini slot="prefix" />
+        {$t('post.actions.more.translate')}
+      </MenuButton>
+    {/if}
     {#if $profile?.jwt}
       {#if comment.creator.id == $profile.user?.local_user_view.person.id}
         <MenuButton on:click={() => dispatcher('edit', comment)}>
           <Icon src={PencilSquare} mini size="16" />
-          <span>Edit</span>
+          <span>{$t('post.actions.more.edit')}</span>
         </MenuButton>
       {/if}
       <MenuButton
@@ -92,7 +114,9 @@
         }}
       >
         <Icon src={comment.saved ? BookmarkSlash : Bookmark} mini size="16" />
-        <span>{comment.saved ? 'Unsave' : 'Save'}</span>
+        <span>
+          {comment.saved ? $t('post.actions.unsave') : $t('post.actions.save')}
+        </span>
       </MenuButton>
       {#if $profile?.user && $profile.jwt && $profile.user.local_user_view.person.id == comment.creator.id}
         <MenuButton
@@ -107,13 +131,17 @@
           }}
         >
           <Icon src={Trash} mini size="16" />
-          <span>{comment.comment.deleted ? 'Restore' : 'Delete'}</span>
+          <span>
+            {comment.comment.deleted
+              ? $t('post.actions.more.restore')
+              : $t('post.actions.more.delete')}
+          </span>
         </MenuButton>
       {/if}
       {#if $profile.jwt && $profile.user?.local_user_view.person.id != comment.creator.id}
         <MenuButton on:click={() => report(comment)} color="danger-subtle">
           <Icon src={Flag} mini size="16" />
-          <span>Report</span>
+          <span>{$t('moderation.report')}</span>
         </MenuButton>
       {/if}
     {/if}

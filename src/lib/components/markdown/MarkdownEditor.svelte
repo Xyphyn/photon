@@ -2,6 +2,7 @@
   import { profile } from '$lib/auth.js'
   import MultiSelect from '$lib/components/input/Switch.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
+  import { t } from '$lib/translations'
   import { uploadImage } from '$lib/util.js'
   import { ImageInput, toast } from 'mono-svelte'
   import { Button, Label, Modal, TextArea } from 'mono-svelte'
@@ -63,12 +64,11 @@
   let uploadingImage = false
   let loading = false
   let image: any
-  $: previewURL =
-    image instanceof FileList
-      ? URL.createObjectURL(image[0])
-      : image
-        ? URL.createObjectURL(image)
-        : ''
+  $: previewURL = image?.length
+    ? URL.createObjectURL(image[0])
+    : image
+      ? URL.createObjectURL(image)
+      : ''
 
   async function upload() {
     if (!$profile?.jwt || !image) return
@@ -97,7 +97,7 @@
     loading = false
   }
 
-  let previewing = false
+  export let previewing = false
 
   const shortcuts = {
     KeyB: () => wrapSelection('**', '**'),
@@ -174,7 +174,8 @@ overflow-hidden transition-colors"
   >
     {#if previewing}
       <div
-        class="px-3 py-2.5 h-32 overflow-auto text-sm resize-y bg-white dark:bg-zinc-950"
+        class="px-3 py-2.5 overflow-auto text-sm resize-y bg-white dark:bg-zinc-950"
+        style="height: {rows * 2}em"
       >
         <Markdown source={beforePreview(value)} />
       </div>
@@ -317,7 +318,7 @@ overflow-hidden transition-colors"
           <MultiSelect
             bind:selected={previewing}
             options={[false, true]}
-            optionNames={['Edit', 'Preview']}
+            optionNames={[$t('form.edit'), $t('form.preview')]}
           />
         {/if}
         <slot />

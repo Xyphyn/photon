@@ -14,6 +14,7 @@
   import { Button } from 'mono-svelte'
   import type { ReportView } from '$lib/lemmy/report.js'
   import PrivateMessage from '$lib/components/lemmy/inbox/PrivateMessage.svelte'
+  import { t } from '$lib/translations'
 
   export let item: ReportView
 
@@ -33,9 +34,9 @@
           item.resolved = res.comment_report_view.comment_report.resolved
 
           toast({
-            content: `${
-              item.resolved ? 'Resolved' : 'Unresolved'
-            } that report.`,
+            content: item.resolved
+              ? $t('toast.resolveReport')
+              : $t('toast.unresolveReport'),
             type: 'success',
           })
 
@@ -49,9 +50,9 @@
 
           item.resolved = res.post_report_view.post_report.resolved
           toast({
-            content: `${
-              item.resolved ? 'Resolved' : 'Unresolved'
-            } that report.`,
+            content: item.resolved
+              ? $t('toast.resolveReport')
+              : $t('toast.unresolveReport'),
             type: 'success',
           })
 
@@ -66,9 +67,9 @@
           item.resolved =
             res.private_message_report_view.private_message_report.resolved
           toast({
-            content: `${
-              item.resolved ? 'Resolved' : 'Unresolved'
-            } that report.`,
+            content: item.resolved
+              ? $t('toast.resolveReport')
+              : $t('toast.unresolveReport'),
             type: 'success',
           })
 
@@ -105,7 +106,7 @@
 <div class="flex flex-row gap-4 items-center">
   <div>
     <span class="text-xs font-bold dark:text-zinc-400 text-slate-600">
-      Reason
+      {$t('routes.moderation.reason')}
     </span>
     <p>
       {item.reason}
@@ -116,8 +117,7 @@
     class="w-8 h-8 !p-1 ml-auto {item.resolved
       ? '!text-green-600 dark:!text-green-400'
       : ''}"
-    aria-label="Resolve"
-    title="Resolve"
+    title={$t('routes.moderation.resolve')}
     loading={resolving}
     disabled={resolving}
   >

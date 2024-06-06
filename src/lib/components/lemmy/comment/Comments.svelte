@@ -18,6 +18,7 @@
   import { Button } from 'mono-svelte'
   import { afterNavigate } from '$app/navigation'
   import { backOut } from 'svelte/easing'
+  import { t } from '$lib/translations'
 
   export let nodes: CommentNodeI[]
   export let isParent: boolean
@@ -62,7 +63,7 @@
       if (newComments.comments.length == 0) {
         loadingChildren = false
         toast({
-          content: 'The API returned no comments.',
+          content: $t('toast.noComments'),
           type: 'error',
         })
         return
@@ -81,7 +82,7 @@
         parent.children = treeParent.children
         if (treeParent.children.length == 0) {
           toast({
-            content: 'The API returned no comments.',
+            content: $t('toast.noComments'),
             type: 'warning',
           })
         }
@@ -90,7 +91,7 @@
         parent.children = tree
         if (tree.length == 0) {
           toast({
-            content: 'The API returned no comments.',
+            content: $t('toast.noComments'),
             type: 'warning',
           })
         }
@@ -99,7 +100,7 @@
     } catch (error) {
       console.error(error)
       toast({
-        content: `Failed to fetch comments. ${error as any}`,
+        content: error as any,
         type: 'error',
       })
     }
@@ -112,7 +113,7 @@
     ? 'divide-y dark:divide-zinc-800 divide-slate-100'
     : 'pl-3.5 border-l border-slate-200 dark:border-zinc-800 my-1'}
 >
-  {#each nodes as node (node.comment_view.comment.id)}
+  {#each nodes as node}
     <Comment
       postId={post.id}
       bind:node

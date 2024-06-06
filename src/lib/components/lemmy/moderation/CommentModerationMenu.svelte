@@ -6,6 +6,7 @@
   import { profile } from '$lib/auth.js'
   import ShieldIcon from '$lib/components/lemmy/moderation/ShieldIcon.svelte'
   import { Button, Menu, MenuButton, MenuDivider } from 'mono-svelte'
+  import { t } from '$lib/translations'
 
   export let item: PostView | CommentView
 </script>
@@ -22,16 +23,20 @@
   </Button>
   {#if ($profile?.user && amMod($profile.user, item.community)) || ($profile?.user && isAdmin($profile.user))}
     <MenuDivider>
-      Moderation {#if !item.community.local && !amMod($profile.user, item.community)}
-        (Instance Only)
+      {#if !item.community.local && !amMod($profile.user, item.community)}
+        {$t('moderation.labelInstanceOnly')}
+      {:else}
+        {$t('moderation.label')}
       {/if}
     </MenuDivider>
     <MenuButton color="success-subtle" on:click={() => remove(item)}>
       <Icon src={Trash} size="16" mini />
       {#if isCommentView(item)}
-        {item.comment.removed ? 'Restore' : 'Remove'}
+        {item.comment.removed
+          ? $t('moderation.restore')
+          : $t('moderation.remove')}
       {:else}
-        {item.post.removed ? 'Restore' : 'Remove'}
+        {item.post.removed ? $t('moderation.restore') : $t('moderation.remove')}
       {/if}
     </MenuButton>
     {#if $profile?.user && $profile.user?.local_user_view.person.id != item.creator.id}
@@ -42,17 +47,17 @@
       >
         <Icon src={ShieldExclamation} size="16" mini />
         {item.creator_banned_from_community
-          ? 'Unban from community'
-          : 'Ban from community'}
+          ? $t('moderation.ban.unbanFromCommunity')
+          : $t('moderation.ban.banFromCommunity')}
       </MenuButton>
     {/if}
   {/if}
 
   {#if $profile?.user && isAdmin($profile.user)}
-    <MenuDivider>Admin</MenuDivider>
+    <MenuDivider>{$t('admin.label')}</MenuDivider>
     <MenuButton color="danger-subtle" on:click={() => remove(item, true)}>
       <Icon src={Fire} size="16" mini slot="prefix" />
-      Purge
+      {$t('admin.purge')}
     </MenuButton>
   {/if}
 </Menu>

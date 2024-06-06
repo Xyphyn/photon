@@ -14,6 +14,7 @@
   import { fullCommunityName } from '$lib/util.js'
   import { amMod, isAdmin } from './moderation'
   import { Button, Checkbox, Modal } from 'mono-svelte'
+  import { t } from '$lib/translations'
 
   export let open: boolean
   export let item: PostView | CommentView | undefined = undefined
@@ -68,7 +69,7 @@
         }
 
         toast({
-          content: 'Successfully purged that submission.',
+          content: $t('moderation.removeSubmission.successPurge'),
           type: 'success',
         })
 
@@ -81,7 +82,7 @@
       if (commentReason) {
         if (replyReason == '') {
           toast({
-            content: 'Your reply cannot be empty if "Reply reason" is enabled.',
+            content: $t('moderation.removeSubmission.failEmptyReply'),
           })
           return
         }
@@ -96,7 +97,7 @@
             })
             .catch(() => {
               toast({
-                content: 'Failed to message user. Removing anyway...',
+                content: $t('moderation.removeSubmission.failMessage'),
                 type: 'warning',
               })
             })
@@ -109,7 +110,7 @@
             })
             .catch(() => {
               toast({
-                content: 'Failed to post reply. Removing anyway...',
+                content: $t('moderation.removeSubmission.failReply'),
                 type: 'warning',
               })
             })
@@ -134,13 +135,6 @@
       }
 
       open = false
-
-      toast({
-        content: `Successfully ${
-          removed ? 'restored' : 'removed'
-        } that submission.`,
-        type: 'success',
-      })
     } catch (err) {
       toast({
         content: err as any,
@@ -166,7 +160,11 @@
 
 <Modal bind:open>
   <span slot="title">
-    {purge ? 'Purging' : removed ? 'Restoring' : 'Removing'} submission
+    {purge
+      ? $t('moderation.removeSubmission.titlePurge')
+      : removed
+        ? $t('moderation.removeSubmission.titleRestore')
+        : $t('moderation.removeSubmission.title')}
   </span>
   {#if item}
     <form
@@ -195,12 +193,17 @@
       />
 
       {#if !removed && $profile?.user && (amMod($profile.user, item.community) || (isAdmin($profile.user) && item.community.local))}
-        <Checkbox bind:checked={commentReason}>Reply with reason</Checkbox>
+        <Checkbox bind:checked={commentReason}>
+          {$t('moderation.removeSubmission.withReason')}
+        </Checkbox>
 
         {#if commentReason}
           <MultiSelect
             options={[false, true]}
-            optionNames={['Comment', 'Message']}
+            optionNames={[
+              $t('moderation.removeSubmission.comment'),
+              $t('moderation.removeSubmission.message'),
+            ]}
             bind:selected={privateMessage}
           />
           <MarkdownEditor
@@ -209,7 +212,7 @@
             rows={3}
           >
             <div class="flex justify-between items-end mb-1" slot="label">
-              Reply
+              {$t('comment.reply')}
               <Select bind:value={preset} placeholder="No preset">
                 {#each $userSettings.moderation.presets as preset}
                   <option value={preset.content}>
@@ -231,9 +234,9 @@
       >
         <Icon src={purge ? Fire : Trash} mini size="16" slot="prefix" />
         {#if purge}
-          Purge
+          {$t('admin.purge')}
         {:else}
-          {removed ? 'Restore' : 'Remove'}
+          {removed ? $t('moderation.restore') : $t('moderation.remove')}
         {/if}
       </Button>
     </form>

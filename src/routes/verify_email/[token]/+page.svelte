@@ -1,5 +1,6 @@
 <script>
   import { LINKED_INSTANCE_URL } from '$lib/instance'
+  import { t } from '$lib/translations'
   import { Check, Icon } from 'svelte-hero-icons'
 </script>
 
@@ -10,10 +11,10 @@
     <Icon src={Check} size="32" mini />
   </div>
   <h1 class="text-green-800 dark:text-green-200 text-2xl font-semibold">
-    Success
+    {$t('message.success')}
   </h1>
   <p class="text-green-800 dark:text-green-200">
-    Your email was verified. You can safely close this window.
+    {$t('routes.verifyEmail.message')}
   </p>
   {#if !LINKED_INSTANCE_URL}
     <p>

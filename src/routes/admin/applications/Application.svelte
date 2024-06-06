@@ -4,12 +4,16 @@
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import { Material, toast } from 'mono-svelte'
   import { getClient } from '$lib/lemmy.js'
-  import type {ApproveRegistrationApplication, RegistrationApplicationView} from 'lemmy-js-client'
+  import type {
+    ApproveRegistrationApplication,
+    RegistrationApplicationView,
+  } from 'lemmy-js-client'
   import { Button } from 'mono-svelte'
   import { Check, Icon, XMark } from 'svelte-hero-icons'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import { publishedToDate } from '$lib/components/util/date'
-  import ApplicationDenyModal from "$lib/components/lemmy/modal/ApplicationDenyModal.svelte";
+  import ApplicationDenyModal from '$lib/components/lemmy/modal/ApplicationDenyModal.svelte'
+  import { t } from '$lib/translations'
 
   export let application: RegistrationApplicationView
 
@@ -31,25 +35,25 @@
     } else {
       reviewing = true
       while (reviewing) {
-        await new Promise(res => setTimeout(res, 1000))
+        await new Promise((res) => setTimeout(res, 1000))
       }
       if (!denying) {
-        denyReason = ""
+        denyReason = ''
         return
       }
-      if (denyReason != "") {
+      if (denyReason != '') {
         registrationApplicationAnswer.deny_reason = denyReason
       }
     }
 
-
-
     try {
-      await getClient().approveRegistrationApplication(registrationApplicationAnswer)
+      await getClient().approveRegistrationApplication(
+        registrationApplicationAnswer
+      )
       toast({
-        content: `Successfully ${
-          approve ? 'approved' : 'denied'
-        } that application.`,
+        content: approve
+          ? $t('toast.approvedApplication')
+          : $t('toast.deniedApplication'),
         type: 'success',
       })
       application.creator_local_user.accepted_application = approve
@@ -71,7 +75,12 @@
 </script>
 
 {#if reviewing}
-  <ApplicationDenyModal bind:open={reviewing} bind:denying bind:denyReason user={application.creator}/>
+  <ApplicationDenyModal
+    bind:open={reviewing}
+    bind:denying
+    bind:denyReason
+    user={application.creator}
+  />
 {/if}
 <Material class="flex flex-col gap-2">
   <div class="flex flex-col gap-1">
@@ -81,7 +90,7 @@
       />
     </span>
 
-    <SectionTitle>User</SectionTitle>
+    <SectionTitle>{$t('routes.admin.applications.user')}</SectionTitle>
     <span class="text-sm">
       <UserLink user={application.creator} avatar avatarSize={20} />
     </span>
@@ -95,12 +104,12 @@
       {#if typeof application.registration_application.deny_reason !== 'undefined' && application.registration_application.deny_reason !== ''}
         <div>
           <div class="flex items-center gap-1 text-sm">
+            <UserLink avatar user={application.admin} />
             <SectionTitle>
               {application.creator_local_user.accepted_application
-                ? 'Approved'
-                : 'Denied'} by
+                ? $t('routes.admin.applications.approved')
+                : $t('routes.admin.applications.denied')}
             </SectionTitle>
-            <UserLink avatar user={application.admin} />
             <SectionTitle>:</SectionTitle>
           </div>
           <p>{application.registration_application.deny_reason}</p>
@@ -108,12 +117,12 @@
         <div class="md:ml-auto" />
       {:else}
         <div class="flex items-center gap-1 text-sm">
-          <SectionTitle>
-          {application.creator_local_user.accepted_application
-            ? 'Approved'
-            : 'Denied'} by
-          </SectionTitle>
           <UserLink avatar user={application.admin} />
+          <SectionTitle>
+            {application.creator_local_user.accepted_application
+              ? $t('routes.admin.applications.approved')
+              : $t('routes.admin.applications.denied')}}
+          </SectionTitle>
         </div>
         <div class="md:ml-auto" />
       {/if}
@@ -125,7 +134,7 @@
           .accepted_application === false && application.admin
           ? '!text-red-500'
           : ''}"
-        aria-label="Deny"
+        aria-label={$t('routes.admin.applications.deny')}
         on:click={() => review(false)}
         loading={denying || reviewing}
         disabled={approving || denying || reviewing}
@@ -138,7 +147,7 @@
           .accepted_application
           ? '!text-green-500'
           : ''}"
-        aria-label="Approve"
+        title={$t('routes.admin.applications.approve')}
         on:click={() => review(true)}
         loading={approving}
         disabled={approving || denying || reviewing}
