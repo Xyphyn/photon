@@ -11,8 +11,11 @@
   }
 
   export let open: boolean = false
+  let error = false
 
-  $: if (open && $text) translate($text)
+  const opened = () => translate($text)
+
+  $: if (open) opened()
 
   let result: Promise<TranslateResponse> | undefined = undefined
   let from = 'auto'
@@ -25,6 +28,8 @@
       return
     }
 
+    error = false
+
     const requestURL = new URL(`https://${url}/translate`)
     requestURL.searchParams.set('q', text)
     requestURL.searchParams.set('source', from)
@@ -33,18 +38,32 @@
 
     result = fetch(requestURL.toString(), {
       method: 'POST',
-    }).then(async (res) => await res.json())
+    }).then(async (res) => {
+      if (!res.ok) {
+        error = true
+        throw new Error(`${res.status} ${res.statusText}`)
+        return {
+          translatedText: `${res.status} ${res.statusText}`,
+        }
+      }
+
+      return await res.json()
+    })
   }
 </script>
 
 <Modal title={$t('post.actions.more.translate')} bind:open>
-  <TextArea value={$text} rows={2}></TextArea>
+  <TextArea bind:value={$text} rows={2}>
+    <Button on:click={() => translate($text)} slot="suffix" color="primary">
+      {$t('post.actions.more.translate')}
+    </Button>
+  </TextArea>
   <div class="flex items-center gap-2 w-full">
     <Select bind:value={from} class="flex-1">
       <option value="auto">Auto</option>
     </Select>
     <Icon src={ArrowRight} mini size="20" />
-    <Select bind:value={to} class="flex-1">
+    <Select on:change={() => translate($text)} bind:value={to} class="flex-1">
       <option value="en">English</option>
       <option value="ar">Arabic</option>
       <option value="zh">Chinese</option>
@@ -64,27 +83,34 @@
   {#if result}
     {#await result}
       <div
-        style="height: 194px; width:100%;"
+        style="height: 226px; width:100%;"
         class="flex items-center justify-center"
       >
         <Spinner width={32} />
       </div>
     {:then result}
+      {#if !error}
+        <MarkdownEditor
+          previewButton={false}
+          previewing
+          tools={false}
+          rows={8}
+          value={result.translatedText || 'Failed to translate'}
+          disabled
+        ></MarkdownEditor>
+      {/if}
+    {:catch err}
       <MarkdownEditor
         previewButton={false}
         previewing
         tools={false}
-        rows={8}
-        value={result.translatedText}
         disabled
+        rows={8}
+        value={err || 'Failed to translate'}
+        class="!border-red-500 !ring-red-500 !text-red-500"
       ></MarkdownEditor>
-    {:catch err}
-      <TextArea rows={8} value={err}></TextArea>
     {/await}
   {:else}
     <TextArea disabled />
   {/if}
-  <Button on:click={() => translate($text)} color="primary" size="lg">
-    {$t('post.actions.more.translate')}
-  </Button>
 </Modal>
