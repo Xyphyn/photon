@@ -8,9 +8,9 @@ const config: Config = {
       loader: async () => (await import('./i18n/en.json')).default,
     },
     {
-      locale: 'ee',
+      locale: 'et',
       key: '',
-      loader: async () => (await import('./i18n/ee.json')).default,
+      loader: async () => (await import('./i18n/et.json')).default,
     },
   ],
   fallbackLocale: 'en',
