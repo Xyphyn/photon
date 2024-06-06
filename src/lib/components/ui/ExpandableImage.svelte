@@ -39,7 +39,7 @@
       width={400}
       height={400}
       src={$page.state.openImage}
-      class="w-max h-full object-contain max-w-screen-md mx-auto my-auto overscroll-contain bg-white dark:bg-zinc-900"
+      class="w-max object-contain max-w-screen-md mx-auto my-auto overscroll-contain bg-white dark:bg-zinc-900"
       transition:scale={{ start: 0.95, easing: backOut, duration: 250 }}
       {alt}
     />
