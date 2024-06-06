@@ -1,0 +1,660 @@
+{
+  "profile": {
+    "profile": "Profiil",
+    "inbox": "Postkast",
+    "saved": "Saved",
+    "subscribed": "Tellitud"
+  },
+  "nav": {
+    "home": "Pealeht",
+    "admin": "Admin",
+    "moderation": "Moderation",
+    "communities": "Uuri",
+    "search": "SearcOtsi",
+    "create": {
+      "label": "Koosta",
+      "post": "Postida",
+      "community": "Community",
+      "logingate": "sa pead logima sisse et postidata."
+    },
+    "menu": {
+      "label": "Profiil",
+      "app": "App",
+      "settings": "Settingud",
+      "colorscheme": {
+        "label": "Värvi Skeem",
+        "system": "Süsteem",
+        "dark": "Must",
+        "light": "Valge"
+      },
+      "theme": "Theme",
+      "about": "About",
+      "source": "Source",
+      "donate": "Anneta",
+      "instance": "Instance"
+    }
+  },
+  "account": {
+    "login": "Logi sisse",
+    "logout": "Logi Välja",
+    "signup": "Sign up",
+    "accounts": "Kasutajad",
+    "changeinstance": "vaheta Instance",
+    "resetColor": "Reset Color",
+    "addGuest": "Add Guest",
+    "moveUp": "Liigu ülesse",
+    "moveDown": "Liigu alla",
+    "guest": "Guest",
+    "versionGate": "This version of Photon supports instances running {{version}} or higher."
+  },
+  "filter": {
+    "location": {
+      "label": "Asukoht",
+      "all": "Küik",
+      "local": "Locaalne",
+      "subscribed": "Tellitud",
+      "moderator": "Moderator"
+    },
+    "sort": {
+      "label": "Sort",
+      "active": "aktiivne",
+      "hot": "Hot",
+      "top": {
+        "label": "Topp",
+        "time": {
+          "label": "Aeg",
+          "all": "Kõik",
+          "9months": "9 Kuud",
+          "6months": "6 Kuud",
+          "3months": "3 Kuud",
+          "month": "Kuu",
+          "week": "Nädal",
+          "day": "Päev",
+          "12hours": "12 Tundi",
+          "6hours": "6 Tundi",
+          "hour": "Tund"
+        }
+      },
+      "new": "Uus",
+      "old": "Vana",
+      "controversial": "Controversial",
+      "scaled": "Scaled",
+      "mostcomments": "Comments",
+      "newcomments": "New Replies"
+    },
+    "view": {
+      "label": "Vaata",
+      "cozy": "Cozy",
+      "list": "List",
+      "compact": "Compact",
+      "legacy": "Vana menüü"
+    },
+    "type": "Tüüp",
+    "filter": "Filter",
+    "unread": "Unread",
+    "inbox": {
+      "messages": "Messages",
+      "replies": "Replies",
+      "mentions": "Mentions"
+    }
+  },
+  "form": {
+    "username": "Username",
+    "name": "Nimi",
+    "instance": "Instance URL",
+    "password": "Parool",
+    "confirmPassword": "kinnita parooli",
+    "2fa": "2FA Code",
+    "forgotpassword": "Unustasid parooli?",
+    "submit": "Submit",
+    "edit": "Muuda",
+    "preview": "Preview",
+    "post": {
+      "create": "Koosta postitus",
+      "edit": "Muuda postistust",
+      "community": "Community",
+      "title": "Title",
+      "url": "URL",
+      "body": "Body",
+      "nsfw": "NSFW",
+      "generateTitle": "Generate Title",
+      "uploadImage": "Upload Image"
+    },
+    "profile": {
+      "displayName": "Display name",
+      "bio": "Bio",
+      "avatar": "Pilt",
+      "banner": "Banner",
+      "email": "Email",
+      "matrix": "Matrix user",
+      "showNSFW": "Show NSFW content",
+      "scores": "Show Scores",
+      "bot": "Robot kasutaja",
+      "showBots": "Show Bots",
+      "showRead": "Show Read Posts",
+      "currentPassword": "Präägune parool",
+      "newPassword": "uus parool",
+      "verifyNewPassword": "Verify New Password",
+      "2fa": {
+        "totp": "TOTP",
+        "2fa": "2FA",
+        "paste": "Paste this in your authenticator app."
+      },
+      "deleteAccount": {
+        "label": "Delete account",
+        "deleteContent": "Delete content",
+        "warning": "This will delete ALL of your submissions."
+      }
+    },
+    "email": "Email",
+    "setup": "Setup",
+    "signup": {
+      "title": "Sign Up",
+      "description": "Choose an instance that interests you, or type the URL manually.",
+      "info": "An instance is the server that your account will be hosted on, but you can still access and interact with content from other instances.",
+      "chooseInstance": "Choose an instance",
+      "application": {
+        "label": "Application",
+        "info": "To join this instance, you must fill out this application, and wait to be accepted. You will receive an email if your application is accepted."
+      },
+      "closed": {
+        "title": "Registrations closed",
+        "description": "This instance has registrations closed. Find another instance.",
+        "anotherInstance": "Find another instance"
+      }
+    },
+    "description": "Description"
+  },
+  "routes": {
+    "frontpage": {
+      "title": "Frontpage",
+      "footer": "{{users:number}} active {{users; 1:user; default:users;}}"
+    },
+    "modlog": "Modlog",
+    "instances": "Instances",
+    "legal": {
+      "title": "Legal",
+      "noLegal": "This instance does not have any legal information."
+    },
+    "profile": {
+      "user": "User",
+      "settings": "Settings",
+      "blocks": "Blocks",
+      "credentials": "Credentials",
+      "moderates": "Moderates"
+    },
+    "accounts": "Accounts",
+    "communities": "Communities",
+    "search": {
+      "title": "Otsi",
+      "federating": "Federating",
+      "query": "Query",
+      "noResults": {
+        "title": "Pole midagi nähtavat",
+        "description": "There are no results that match that filter. Try refining your search.",
+        "alt": "Search across the fediverse"
+      }
+    },
+    "saved": "Saved",
+    "createPost": "koodta postitus",
+    "createCommunity": "Create Community",
+    "post": {
+      "crosspostCount": "crossposts",
+      "commentCount": "comments",
+      "addComment": "Add a comment",
+      "scrollToTop": "Scroll to top",
+      "instanceWarning": "This post was requested from a different server than your account's. Many actions won't work.",
+      "remoteView": "Remote View",
+      "localView": "Local View",
+      "thread": {
+        "single": "You're viewing a single thread.",
+        "allComments": "All Comments",
+        "part": "You're viewing part of a thread.",
+        "context": "Vaata  Contexti"
+      }
+    },
+    "inbox": {
+      "title": "Postkast",
+      "markAsRead": "Mark All Read",
+      "empty": {
+        "title": "No new notifications",
+        "description": "Messages, replies, and mentions will appear here."
+      }
+    },
+    "moderation": {
+      "title": "Moderation",
+      "empty": {
+        "title": "No new reports",
+        "description": "When submissions are reported, you can act on them here."
+      },
+      "reason": "Reason",
+      "resolve": "Resolve",
+      "unresolve": "Unresolve"
+    },
+    "admin": {
+      "title": "Administration",
+      "config": {
+        "title": "Configuration",
+        "sidebar": "Sidebar",
+        "icon": "Icon",
+        "banner": "Banner",
+        "downvotesEnabled": "Enable Downvotes",
+        "nsfwEnabled": "Enable NSFW",
+        "registration": {
+          "label": "Registration Mode",
+          "open": "Open",
+          "application": "Require Application",
+          "closed": "Kinni"
+        },
+        "applicationQuestion": "Application Question",
+        "adminCommunityOnly": "Only admins can create communities",
+        "requireVerifyEmail": "Require email verification",
+        "emailAdminsOnApplication": "Email admins on receiving new applications",
+        "emailAdminsOnReport": "Email admins on receiving new reports",
+        "listingType": {
+          "label": "Listing Type",
+          "all": "Kõik",
+          "local": "Locaalne"
+        },
+        "private": "Private instance",
+        "hideModlogModNames": "Hide modlog mod names",
+        "slurFilter": "Slur filter regex",
+        "federation": "Federation enabled",
+        "federationDebug": "Federation debug mode",
+        "captcha": {
+          "enabled": "Enabled"
+        }
+      },
+      "applications": {
+        "title": "Applications",
+        "empty": {
+          "title": "No new applications",
+          "description": "Applications to join your instance will appear here."
+        },
+        "application": "Application",
+        "approved": "Approved",
+        "denied": "Denied",
+        "user": "Kasutaja",
+        "deny": "Deny",
+        "approve": "Approve",
+        "reason": "Reason",
+        "modalTitle": "Deny Application"
+      },
+      "taglines": {
+        "title": "Taglines",
+        "add": "Add a tagline",
+        "empty": {
+          "title": "No taglines",
+          "description": "A random tagline will appear on the site card when users visit your instance."
+        }
+      },
+      "team": {
+        "title": "Admins",
+        "empty": {
+          "title": "No admins",
+          "description": "Somehow there's no admins of this site. How??"
+        }
+      },
+      "federation": {
+        "title": "Federation",
+        "csv": "Upload CSV",
+        "blocked": "Blocked Instances",
+        "block": "Block",
+        "blockplaceholder": "Block an instance...",
+        "allowed": "Whitelisted Instances",
+        "allow": "Whitelist",
+        "allowplaceholder": "Whitelist an instance",
+        "emptyBlock": {
+          "title": "No blocked instances",
+          "description": "Blocking an instance will hide new submissions from that instance."
+        },
+        "emptyAllow": {
+          "title": "No whitelisted instances",
+          "description": "Whitelisting an instance will block every other instance."
+        }
+      }
+    },
+    "verifyEmail": {
+      "message": "Your email was verified. You can now close this window.",
+      "error": "Failed to verify your email."
+    },
+    "passwordChange": {
+      "title": "Vaheta Parooli",
+      "description": "Tee oma uus parool.",
+      "instance": "Which instance is your account hosted on?"
+    },
+    "resetLogin": {
+      "title": "Reset Password",
+      "description": "Enter your account's email, and a password reset link will be sent. If your account does not have an email, contact your instance admins."
+    }
+  },
+  "cards": {
+    "site": {
+      "about": "About",
+      "stats": "Stats",
+      "admins": "Admins"
+    },
+    "community": {
+      "members": "Kasutajad",
+      "moderators": "Moderators",
+      "subscribe": "Subscribe",
+      "subscribed": "Subscribed",
+      "modlog": "Modlog",
+      "block": "Block",
+      "unblock": "Unblock",
+      "blockInstance": "Block instance"
+    }
+  },
+  "admin": {
+    "purge": "Purge",
+    "instance": "Instance",
+    "label": "Administration",
+    "purgeCommunity": {
+      "title": "Purging Community",
+      "warning": "This will delete all posts. Are you sure? (The button will enable in 3 seconds.)"
+    }
+  },
+  "content": {
+    "all": "Kõik",
+    "users": "Kasutajad",
+    "posts": "Postitused",
+    "comments": "Comments",
+    "communities": "Communities",
+    "instances": "Instances",
+    "message": "Message"
+  },
+  "post": {
+    "actions": {
+      "comments": "Comments",
+      "save": "Save",
+      "unsave": "Unsave",
+      "more": {
+        "label": "More Actions",
+        "edit": "Edit",
+        "creator": "Creator",
+        "actions": "Actions",
+        "markRead": "Mark as Read",
+        "markUnread": "Mark as Unread",
+        "translate": "Translate",
+        "share": "Share",
+        "crosspost": "Crosspost",
+        "delete": "Kustuta",
+        "restore": "Restore"
+      }
+    },
+    "badges": {
+      "nsfw": "NSFW",
+      "locked": "Lukustatud",
+      "featured": "Featured",
+      "removed": "Removed",
+      "deleted": "Deleted",
+      "saved": "Saved"
+    }
+  },
+  "comment": {
+    "reply": "Reply",
+    "actions": {
+      "label": "Actions",
+      "link": "Copy Link"
+    },
+    "locked": "This post is locked."
+  },
+  "moderation": {
+    "report": "Report",
+    "ban": {
+      "banning": "Banning User",
+      "unbanning": "Unbanning User",
+      "deleteData": "Delete data",
+      "warning": "This will delete ALL of this user's submissions here.",
+      "expires": "Expires (UTC)",
+      "banFromCommunity": "Ban from community",
+      "unbanFromCommunity": "Unban from community"
+    },
+    "removeSubmission": {
+      "title": "Removing Submission",
+      "titleRestore": "Restoring Submission",
+      "titlePurge": "Purging Submission",
+      "withReason": "Reply with reason",
+      "comment": "Comment",
+      "message": "Message",
+      "failReply": "Failed to post reply. Removing anyway...",
+      "failMessage": "Failed to message user. Removing anyway...",
+      "failEmptyReply": "Your reply cannot be empty if 'Reply with reason' is enabled.",
+      "successPurge": "Successfully purged that submission."
+    },
+    "reportModal": {
+      "title": "Report",
+      "success": "Reported that submission."
+    },
+    "reason": "Reason",
+    "lock": "Lukusta",
+    "unlock": "unblock",
+    "remove": "Remove",
+    "restore": "Restore",
+    "label": "Moderation",
+    "labelInstanceOnly": "Moderation (Instance Only)",
+    "feature": "Feature",
+    "unfeature": "Unfeature"
+  },
+  "common": {
+    "back": "Tagasi",
+    "next": "Järgmine",
+    "debug": "Debug",
+    "refresh": "Refresh",
+    "jump": "Jump",
+    "save": "Save",
+    "enabled": "Enabled",
+    "disabled": "Disabled",
+    "enable": "Enable",
+    "disable": "Disable",
+    "add": "Add",
+    "cancel": "Cancel",
+    "send": "Saada"
+  },
+  "message": {
+    "success": "Success",
+    "error": "Error"
+  },
+  "toast": {
+    "noComments": "The API returned no comments.",
+    "loginVoteGate": "You must be logged in to vote.",
+    "blockedCommunity": "Blocked that community.",
+    "unblockedCommunity": "Unblocked that community.",
+    "purgedCommunity": "Purged that community.",
+    "blockedInstance": "Blocked that instance.",
+    "updatedCommunity": "Your community was updated.",
+    "sentMessage": "Sent that message.",
+    "invalidDateAbsolute": "Invalid date. It must be an absolute date.",
+    "invalidDateBeforeCurrent": "Invalid date. It is before the current time.",
+    "bannedUser": "Banned that user.",
+    "unbannedUser": "Unbanned that user.",
+    "needCommunity": "You must set a community.",
+    "invalidURL": "Invalid URL",
+    "generatedTitle": "Generated title and body from the URL. Do you want to undo this?",
+    "failGenerateTitle": "There was no usable title or description of that website.",
+    "restoredFromDraft": "Restored your post from the draft.",
+    "copied": "Copied to clipboard.",
+    "approvedApplication": "Approved that application.",
+    "deniedApplication": "Denied that application.",
+    "updatedSite": "Updated your site.",
+    "failCSV": "Failed to read CSV",
+    "removeAdminWarning": "Are you sure you want to remove that admin?",
+    "removeAdmin": "Removed that admin.",
+    "failFindUser": "Could not find that user.",
+    "addMod": "Added that moderator.",
+    "updateMods": "Updated community moderators.",
+    "logIn": "Successfully logged in.",
+    "failInstanceURL": "Failed to contact that instance URL. Is it down?",
+    "addAccount": "Added that account.",
+    "resetLink": "A password reset link was sent to your email.",
+    "resolveReport": "Resolved that report.",
+    "unresolveReport": "Unresolved that report.",
+    "passwordReset": "Your password was reset.",
+    "fetchPostOnHome": "Attempting to fetch this post on your home instance...",
+    "loginRefresh": "Your login was refreshed.",
+    "invalidLogin": "Invalid credentials",
+    "saveSettings": "Saved your user settings. If you changed your email, a verification link was sent.",
+    "confirmDelete1": "Are you sure you want to delete your account?",
+    "confirmDelete2": "Are you really sure?",
+    "confirmDelete3": "Final warning. Are you really sure?",
+    "needPassword": "You must provide your password.",
+    "deleting": "Deleting your account...",
+    "deleted": "Your account was deleted.",
+    "resetSettings": "Do you want to reset your settings to the default?",
+    "failFetchInstances": "Failed to fetch available instances.",
+    "verifyEmail": "A verification link was sent to your email. Verify your email, then log in.",
+    "failSignup": "Failed to sign up.",
+    "successSignup": "Signed up.",
+    "waitApplication": "Wait for your registration application to be accepted before logging in.",
+    "blockUser": "Blocked that user.",
+    "unblockUser": "Unblocked that user.",
+    "purgeUser": "Purged that user."
+  },
+  "settings": {
+    "title": "Settings",
+    "navigation": {
+      "title": "Navigation",
+      "dockPos": {
+        "title": "Dock position",
+        "description": "Where the dock should be positioned on the screen.",
+        "top": "ülemine",
+        "bottom": "Alumine",
+        "adaptive": "Adaptiivne"
+      },
+      "panel": {
+        "title": "Panel mode",
+        "description": "Extend the dock to the screen edges, similar to a panel.",
+        "on": "On",
+        "off": "Off",
+        "adaptive": "Adaptive"
+      }
+    },
+    "app": {
+      "title": "Photon",
+      "theming": {
+        "title": "Theming",
+        "description": "Customize Photon's colors.",
+        "link": "Go to themes"
+      },
+      "lang": {
+        "title": "keel",
+        "description": "The language used for Photon's UI.",
+        "note": "Languages other than English and Hebrew are community translated, and may be incomplete.",
+        "": "Dont translate the below!",
+        "en": "English",
+        "en-US": "English",
+        "he": "Hebrew",
+        "ee": "estonian",
+        "auto": "Auto"
+      },
+      "view": {
+        "title": "Postituse stiil",
+        "list": "Show posts in a list, with post bodies and compact media.",
+        "cozy": "Show posts with large images, rich embeds, and longer post bodies.",
+        "compact": "Show posts in a list, without post bodies and with tighter spacing.",
+        "legacy": "Vana photoni nägemus."
+      },
+      "sort": {
+        "title": "Default sort",
+        "description": "The default sorting to use in feeds."
+      },
+      "postsInNewTab": {
+        "title": "Open posts in new tab",
+        "description": "Open posts in a separate tab instead of the current."
+      },
+      "displayName": {
+        "title": "Use display name",
+        "description": "Show users' display names instead of their actual usernames."
+      },
+      "limitLayoutWidth": {
+        "title": "Limit layout width",
+        "description": "Improve readability by limiting the main content width."
+      },
+      "placeholders": {
+        "title": "Random placeholders",
+        "description": "Show random placeholders for certain text inputs."
+      },
+      "expandImages": {
+        "title": "Expand images",
+        "description": "Clicking on a post's image brings you to an expanded view rather than the post page."
+      },
+      "duplicateTitles": {
+        "title": "Hide duplicate titles/bodies",
+        "description": "Hides the post title and body if they are identical to the embed."
+      },
+      "thumbnailSide": {
+        "title": "Thumbnail alignment",
+        "description": "Where thumbnails should be on the post in list/compact mode",
+        "left": "Left",
+        "right": "Right"
+      },
+      "font": {
+        "title": "Font",
+        "description": "What font Photon uses in the UI."
+      },
+      "translation": {
+        "title": "Translation",
+        "description": "The LibreTranslate instance to use for translation.",
+        "instance": "Domeen"
+      }
+    },
+    "embeds": {
+      "title": "Embeds",
+      "clickToView": {
+        "title": "Klõpsa et näha",
+        "description": "Only load embeds once you click on them."
+      },
+      "youtube": {
+        "description": "The website to embed YouTube content in."
+      }
+    },
+    "lemmy": {
+      "title": "Lemmy",
+      "compactFeatured": {
+        "title": "Compact featured posts",
+        "description": "Make featured posts more compact"
+      },
+      "markReadPosts": {
+        "title": "Mark read posts",
+        "description": "Mark a post as read when you click on it"
+      },
+      "fadeReadPosts": {
+        "title": "Fade read posts",
+        "description": "Fade the title of posts you've already read"
+      },
+      "crosspostMarker": {
+        "title": "Mark crossposts",
+        "description": "Show 'crossposted from' when crossposting."
+      },
+      "hideSubmissions": {
+        "title": "Hide submissions",
+        "description": "Hide certain types of submissions.",
+        "deleted": "Deleted by user",
+        "removed": "Removed by moderator"
+      },
+      "nsfwBlur": {
+        "title": "NSFW blur",
+        "description": "Blur images and remove post bodies of NSFW posts."
+      },
+      "instances": {
+        "title": "Show instances",
+        "description": "Show the instances where certain content is from."
+      }
+    },
+    "moderation": {
+      "title": "Moderation",
+      "replyPresets": {
+        "title": "Removal reply presets",
+        "description": "Presets to use for 'reply reason' in the submission removal dialog.",
+        "syntax": "Syntax"
+      }
+    },
+    "other": {
+      "title": "Muu",
+      "debug": {
+        "title": "Debug info",
+        "description": "Display debug information"
+      }
+    }
+  }
+}
