@@ -105,6 +105,9 @@
         <Note>
           {$t('settings.app.lang.note')}
         </Note>
+        <Link href="/translators" highlight class="text-base font-semibold">
+          {$t('settings.app.lang.credits')}
+        </Link>
       </p>
       <Select bind:value={$userSettings.language}>
         <option value={null}>{$t('settings.app.lang.auto')}</option>

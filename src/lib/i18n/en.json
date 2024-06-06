@@ -183,6 +183,7 @@
       "credentials": "Credentials",
       "moderates": "Moderates"
     },
+    "translators": "Translators",
     "accounts": "Accounts",
     "communities": "Communities",
     "search": {
@@ -544,7 +545,10 @@
         "en": "English",
         "en-US": "English",
         "he": "Hebrew",
-        "auto": "Auto"
+        "ee": "Estonian",
+        "fr": "French",
+        "auto": "Auto",
+        "credits": "Credits"
       },
       "view": {
         "title": "Post style",
