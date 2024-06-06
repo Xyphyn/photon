@@ -327,6 +327,17 @@
     "resetLogin": {
       "title": "Reset Password",
       "description": "Enter your account's email, and a password reset link will be sent. If your account does not have an email, contact your instance admins."
+    },
+    "theme": {
+      "title": "Theme",
+      "import": "Import",
+      "export": "Export",
+      "reset": "Reset",
+      "accent": "Accent",
+      "resetWarning": {
+        "title": "Reset Theme",
+        "description": "This will reset all of your colors to the default. It is recommended to export your theme before this."
+      }
     }
   },
   "cards": {
@@ -541,7 +552,6 @@
         "title": "Language",
         "description": "The language used for Photon's UI.",
         "note": "Languages other than English and Hebrew are community translated, and may be incomplete.",
-        "": "Dont translate the below!",
         "en": "English",
         "en-US": "English",
         "he": "Hebrew",

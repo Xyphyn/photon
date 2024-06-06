@@ -18,6 +18,7 @@
   } from 'svelte-hero-icons'
   import ColorSwatch from './ColorSwatch.svelte'
   import { t } from '$lib/translations'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
   const c = defaultColors
 
@@ -44,15 +45,15 @@
         toast({ content: err, type: 'error' })
       }
     }}
-    title="Import"
-    action="Import"
+    title={$t('routes.theme.import')}
+    action={$t('routes.theme.import')}
   >
     <TextArea bind:value={importText} style="font-family: monospace;" />
   </Modal>
 {/if}
 
 <div class="flex flex-col gap-4 h-full">
-  <h1 class="font-bold text-3xl">Theme</h1>
+  <Header>Theme</Header>
   <div class="flex items-center gap-4">
     <Button
       on:click={() => {
@@ -61,7 +62,7 @@
       size="lg"
     >
       <Icon src={ArrowUpTray} size="16" mini />
-      Import
+      {$t('routes.theme.import')}
     </Button>
     <Button
       on:click={() => {
@@ -71,37 +72,37 @@
       size="lg"
     >
       <Icon src={ArrowDownTray} size="16" mini />
-      Export
+      {$t('routes.theme.export')}
     </Button>
     <Button
       on:click={() => {
         modal({
           actions: [
             action({
-              content: 'Close',
+              content: $t('common.cancel'),
               close: true,
             }),
             action({
               action: () => {
                 $colors = { other: {}, primary: {}, zinc: {}, slate: {} }
               },
-              content: 'Reset',
+              content: $t('routes.theme.reset'),
               close: true,
               type: 'danger',
             }),
           ],
-          title: 'Reset Theme',
-          body: 'This will reset all your colors to the default. We recommend exporting your theme first.',
+          title: $t('routes.theme.resetWarning.title'),
+          body: $t('routes.theme.resetWarning.description'),
         })
       }}
       size="lg"
     >
       <Icon src={ArrowPath} size="16" mini />
-      Reset
+      {$t('routes.theme.reset')}
     </Button>
   </div>
   <Material color="transparent" class="items-center gap-x-4 color-grid gap-y-2">
-    <h1 class="text-2xl font-bold col-span-2">Accent</h1>
+    <h1 class="text-2xl font-bold col-span-2">{$t('routes.theme.accent')}</h1>
     <ColorSwatch
       backgroundColor={defaultColors.primary[900]}
       bind:value={$colors.primary[900]}
@@ -112,8 +113,12 @@
       bind:value={$colors.primary[100]}
       class="!w-12 !h-12 col-span-1"
     />
-    <span class="font-semibold text-base">Light</span>
-    <span class="font-semibold text-base">Dark</span>
+    <span class="font-semibold text-base">
+      {$t('nav.menu.colorscheme.light')}
+    </span>
+    <span class="font-semibold text-base">
+      {$t('nav.menu.colorscheme.dark')}
+    </span>
   </Material>
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
     {#each svelteIntellisenseSucks() as category}
