@@ -524,6 +524,7 @@
   },
   "settings": {
     "title": "Settings",
+    "beta": "Beta",
     "navigation": {
       "title": "Navigation",
       "dockPos": {

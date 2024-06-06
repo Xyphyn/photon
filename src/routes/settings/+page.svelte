@@ -4,6 +4,7 @@
   import MultiSelect from '$lib/components/input/Switch.svelte'
   import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
   import {
+    Badge,
     Disclosure,
     Material,
     Note,
@@ -99,7 +100,10 @@
       </Button>
     </Setting>
     <Setting>
-      <span slot="title">{$t('settings.app.lang.title')}</span>
+      <span slot="title" class="inline-flex items-center gap-2">
+        {$t('settings.app.lang.title')}
+        <Badge>{$t('settings.beta')}</Badge>
+      </span>
       <p slot="description">
         {$t('settings.app.lang.description')}
         <Note>
