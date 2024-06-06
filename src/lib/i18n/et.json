@@ -7,19 +7,15 @@
   },
   "nav": {
     "home": "Pealeht",
-    "admin": "Admin",
-    "moderation": "Moderation",
     "communities": "Uuri",
     "search": "Otsi",
     "create": {
       "label": "Koosta",
       "post": "Postida",
-      "community": "Community",
       "logingate": "sa pead logima sisse et postidata."
     },
     "menu": {
       "label": "Profiil",
-      "app": "App",
       "settings": "Settingud",
       "colorscheme": {
         "label": "Värvi Skeem",
@@ -28,8 +24,6 @@
         "light": "Valge"
       },
       "theme": "theme",
-      "about": "About",
-      "source": "Source",
       "donate": "Anneta",
       "instance": "Server"
     }
@@ -41,10 +35,8 @@
     "accounts": "Kasutajad",
     "changeinstance": "vaheta Instance",
     "resetColor": "Restarti värv",
-    "addGuest": "Add Guest",
     "moveUp": "Liigu ülesse",
     "moveDown": "Liigu alla",
-    "guest": "Guest",
     "versionGate": "See versioon Photonist Toetab servereid millel on {{version}} Või üles."
   },
   "filter": {
@@ -52,13 +44,11 @@
       "label": "Asukoht",
       "all": "Küik",
       "local": "Locaalne",
-      "subscribed": "Tellitud",
-      "moderator": "Moderator"
+      "subscribed": "Tellitud"
     },
     "sort": {
       "label": "Sorteeri",
       "active": "aktiivne",
-      "hot": "Hot",
       "top": {
         "label": "Topp",
         "time": {
@@ -77,26 +67,11 @@
       },
       "new": "Uus",
       "old": "Vana",
-      "controversial": "Kontreversed",
-      "scaled": "Scaled",
-      "mostcomments": "Comments",
-      "newcomments": "New Replies"
+      "controversial": "Kontreversed"
     },
-    "view": {
-      "label": "Vaata",
-      "cozy": "Cozy",
-      "list": "List",
-      "compact": "Compact",
-      "legacy": "Vana menüü"
-    },
+    "view": { "label": "Vaata", "legacy": "Vana menüü" },
     "type": "Tüüp",
-    "filter": "Filter",
-    "unread": "Unread",
-    "inbox": {
-      "messages": "Messages",
-      "replies": "Replies",
-      "mentions": "Mentions"
-    }
+    "inbox": {}
   },
   "form": {
     "username": "Kasutaja nimi",
@@ -112,549 +87,154 @@
     "post": {
       "create": "Koosta postitus",
       "edit": "Muuda postistust",
-      "community": "Community",
-      "title": "Tiitel",
-      "url": "URL",
-      "body": "Body",
-      "nsfw": "NSFW",
-      "generateTitle": "Generate Title",
-      "uploadImage": "Upload Image"
+      "title": "Tiitel"
     },
     "profile": {
-      "displayName": "Display name",
       "bio": "all text",
       "avatar": "Pilt",
-      "banner": "Banner",
-      "email": "Email",
       "matrix": "Matrix Kasutaja",
-      "showNSFW": "Show NSFW content",
-      "scores": "Show Scores",
       "bot": "Robot kasutaja",
-      "showBots": "Show Bots",
-      "showRead": "Show Read Posts",
       "currentPassword": "Präägune parool",
       "newPassword": "uus parool",
-      "verifyNewPassword": "Verify New Password",
-      "2fa": {
-        "totp": "TOTP",
-        "2fa": "2FA",
-        "paste": "Kllebi seda enda authenticatori äppi."
-      },
-      "deleteAccount": {
-        "label": "Delete account",
-        "deleteContent": "Delete content",
-        "warning": "This will delete ALL of your submissions."
-      }
+      "2fa": { "paste": "Kllebi seda enda authenticatori äppi." },
+      "deleteAccount": {}
     },
-    "email": "Email",
-    "setup": "Setup",
-    "signup": {
-      "title": "Regisreeru",
-      "description": "Choose an instance that interests you, or type the URL manually.",
-      "info": "An instance is the server that your account will be hosted on, but you can still access and interact with content from other instances.",
-      "chooseInstance": "Choose an instance",
-      "application": {
-        "label": "Application",
-        "info": "To join this instance, you must fill out this application, and wait to be accepted. You will receive an email if your application is accepted."
-      },
-      "closed": {
-        "title": "Registrations closed",
-        "description": "This instance has registrations closed. Find another instance.",
-        "anotherInstance": "Find another instance"
-      }
-    },
-    "description": "Description"
+    "signup": { "title": "Regisreeru", "application": {}, "closed": {} }
   },
   "routes": {
-    "frontpage": {
-      "title": "Frontpage",
-      "footer": "{{users:number}} active {{users; 1:user; default:users;}}"
-    },
-    "modlog": "Modlog",
-    "instances": "Instances",
-    "legal": {
-      "title": "Legal",
-      "noLegal": "This instance does not have any legal information."
-    },
-    "profile": {
-      "user": "User",
-      "settings": "Settings",
-      "blocks": "Blocks",
-      "credentials": "Credentials",
-      "moderates": "Moderates"
-    },
-    "accounts": "Accounts",
-    "communities": "Communities",
+    "frontpage": {},
+    "legal": {},
+    "profile": {},
     "search": {
       "title": "Otsi",
       "federating": "Födiversing",
-      "query": "Query",
       "noResults": {
         "title": "Pole midagi nähtavat",
-        "description": "There are no results that match that filter. Try refining your search.",
         "alt": "Otsi Födiversumist"
       }
     },
     "saved": "Salvestatud",
     "createPost": "koosta postitus",
-    "createCommunity": "Create Community",
     "post": {
       "crosspostCount": "crosspost",
-      "commentCount": "comments",
-      "addComment": "Add a comment",
-      "scrollToTop": "Scroll to top",
-      "instanceWarning": "This post was requested from a different server than your account's. Many actions won't work.",
-      "remoteView": "Remote View",
-      "localView": "Local View",
-      "thread": {
-        "single": "You're viewing a single thread.",
-        "allComments": "All Comments",
-        "part": "You're viewing part of a thread.",
-        "context": "Vaata  Contexti"
-      }
+      "thread": { "context": "Vaata  Contexti" }
     },
-    "inbox": {
-      "title": "Postkast",
-      "markAsRead": "Mark All Read",
-      "empty": {
-        "title": "No new notifications",
-        "description": "Messages, replies, and mentions will appear here."
-      }
-    },
-    "moderation": {
-      "title": "Moderation",
-      "empty": {
-        "title": "No new reports",
-        "description": "When submissions are reported, you can act on them here."
-      },
-      "reason": "Reason",
-      "resolve": "Resolve",
-      "unresolve": "Unresolve"
-    },
+    "inbox": { "title": "Postkast", "empty": {} },
+    "moderation": { "empty": {} },
     "admin": {
-      "title": "Administration",
       "config": {
-        "title": "Configuration",
-        "sidebar": "Sidebar",
-        "icon": "Icon",
-        "banner": "Banner",
-        "downvotesEnabled": "Enable Downvotes",
-        "nsfwEnabled": "Enable NSFW",
-        "registration": {
-          "label": "Registration Mode",
-          "open": "Lahti",
-          "application": "Require Application",
-          "closed": "Kinni"
-        },
-        "applicationQuestion": "Application Question",
-        "adminCommunityOnly": "Only admins can create communities",
-        "requireVerifyEmail": "Require email verification",
-        "emailAdminsOnApplication": "Email admins on receiving new applications",
-        "emailAdminsOnReport": "Email admins on receiving new reports",
-        "listingType": {
-          "label": "Listing Type",
-          "all": "Kõik",
-          "local": "Locaalne"
-        },
+        "registration": { "open": "Lahti", "closed": "Kinni" },
+        "listingType": { "all": "Kõik", "local": "Locaalne" },
         "private": "Privaatne server",
-        "hideModlogModNames": "Hide modlog mod names",
-        "slurFilter": "Slur filter regex",
-        "federation": "Federation enabled",
-        "federationDebug": "Federation debug mode",
-        "captcha": {
-          "enabled": "Enabled"
-        }
+        "captcha": {}
       },
-      "applications": {
-        "title": "Applications",
-        "empty": {
-          "title": "No new applications",
-          "description": "Applications to join your instance will appear here."
-        },
-        "application": "Application",
-        "approved": "Approved",
-        "denied": "Denied",
-        "user": "Kasutaja",
-        "deny": "Deny",
-        "approve": "Approve",
-        "reason": "Reason",
-        "modalTitle": "Deny Application"
-      },
-      "taglines": {
-        "title": "Taglines",
-        "add": "Add a tagline",
-        "empty": {
-          "title": "No taglines",
-          "description": "A random tagline will appear on the site card when users visit your instance."
-        }
-      },
-      "team": {
-        "title": "Admins",
-        "empty": {
-          "title": "No admins",
-          "description": "Somehow there's no admins of this site. How??"
-        }
-      },
+      "applications": { "empty": {}, "user": "Kasutaja" },
+      "taglines": { "empty": {} },
+      "team": { "empty": {} },
       "federation": {
-        "title": "Federation",
-        "csv": "Upload CSV",
-        "blocked": "Blocked Instances",
         "block": "Blokeeri",
         "blockplaceholder": "Blokeeri server...",
-        "allowed": "Whitelisted Instances",
-        "allow": "Whitelist",
-        "allowplaceholder": "Whitelist an instance",
-        "emptyBlock": {
-          "title": "No blocked instances",
-          "description": "Blocking an instance will hide new submissions from that instance."
-        },
-        "emptyAllow": {
-          "title": "No whitelisted instances",
-          "description": "Whitelisting an instance will block every other instance."
-        }
+        "emptyBlock": {},
+        "emptyAllow": {}
       }
     },
-    "verifyEmail": {
-      "message": "Your email was verified. You can now close this window.",
-      "error": "Failed to verify your email."
-    },
+    "verifyEmail": {},
     "passwordChange": {
       "title": "Vaheta Parooli",
       "description": "Tee oma uus parool.",
       "instance": "Mis serveris on sinu kasutaja?"
     },
-    "resetLogin": {
-      "title": "Reset Password",
-      "description": "Enter your account's email, and a password reset link will be sent. If your account does not have an email, contact your instance admins."
-    }
+    "resetLogin": {}
   },
   "cards": {
-    "site": {
-      "about": "About",
-      "stats": "Stats",
-      "admins": "Admins"
-    },
+    "site": {},
     "community": {
       "members": "Kasutajad",
-      "moderators": "Moderators",
       "subscribe": "Telli",
       "subscribed": "Tellitud",
-      "modlog": "Modlog",
       "block": "Blokeeri",
       "unblock": "lõpeta blokeerimine",
       "blockInstance": "Blokeeri server"
     }
   },
-  "admin": {
-    "purge": "Purge",
-    "instance": "Server",
-    "label": "Administration",
-    "purgeCommunity": {
-      "title": "Purging Community",
-      "warning": "This will delete all posts. Are you sure? (The button will enable in 3 seconds.)"
-    }
-  },
+  "admin": { "instance": "Server", "purgeCommunity": {} },
   "content": {
     "all": "Kõik",
     "users": "Kasutajad",
     "posts": "Postitused",
-    "comments": "Comments",
-    "communities": "Communities",
-    "instances": "Instances",
     "message": "Kiri"
   },
   "post": {
-    "actions": {
-      "comments": "Comments",
-      "save": "Save",
-      "unsave": "Unsave",
-      "more": {
-        "label": "More Actions",
-        "edit": "Edit",
-        "creator": "Creator",
-        "actions": "Actions",
-        "markRead": "Mark as Read",
-        "markUnread": "Mark as Unread",
-        "translate": "Translate",
-        "share": "Share",
-        "crosspost": "Crosspost",
-        "delete": "Kustuta",
-        "restore": "Restore"
-      }
-    },
-    "badges": {
-      "nsfw": "NSFW",
-      "locked": "Lukustatud",
-      "featured": "Featured",
-      "removed": "Removed",
-      "deleted": "Deleted",
-      "saved": "Saved"
-    }
+    "actions": { "more": { "delete": "Kustuta" } },
+    "badges": { "locked": "Lukustatud" }
   },
-  "comment": {
-    "reply": "Reply",
-    "actions": {
-      "label": "Actions",
-      "link": "Copy Link"
-    },
-    "locked": "See postitus on lukustatud."
-  },
+  "comment": { "actions": {}, "locked": "See postitus on lukustatud." },
   "moderation": {
-    "report": "Report",
-    "ban": {
-      "banning": "Banning User",
-      "unbanning": "Unbanning User",
-      "deleteData": "Delete data",
-      "warning": "This will delete ALL of this user's submissions here.",
-      "expires": "Expires (UTC)",
-      "banFromCommunity": "Ban from community",
-      "unbanFromCommunity": "Unban from community"
-    },
-    "removeSubmission": {
-      "title": "Removing Submission",
-      "titleRestore": "Restoring Submission",
-      "titlePurge": "Purging Submission",
-      "withReason": "Reply with reason",
-      "comment": "Comment",
-      "message": "Kiri",
-      "failReply": "Failed to post reply. Removing anyway...",
-      "failMessage": "Failed to message user. Removing anyway...",
-      "failEmptyReply": "Your reply cannot be empty if 'Reply with reason' is enabled.",
-      "successPurge": "Successfully purged that submission."
-    },
-    "reportModal": {
-      "title": "Report",
-      "success": "Reported that submission."
-    },
-    "reason": "Reason",
+    "ban": {},
+    "removeSubmission": { "message": "Kiri" },
+    "reportModal": {},
     "lock": "Lukusta",
-    "unlock": "unblock",
-    "remove": "Remove",
-    "restore": "Restore",
-    "label": "Moderation",
-    "labelInstanceOnly": "Moderation (Instance Only)",
-    "feature": "Feature",
-    "unfeature": "Unfeature"
+    "unlock": "unblock"
   },
   "common": {
     "back": "Tagasi",
     "next": "Järgmine",
-    "debug": "Debug",
-    "refresh": "Refresh",
-    "jump": "Jump",
-    "save": "Save",
-    "enabled": "Enabled",
-    "disabled": "Disabled",
-    "enable": "Enable",
-    "disable": "Disable",
     "add": "Pane",
-    "cancel": "Cancel",
     "send": "Saada"
   },
-  "message": {
-    "success": "Success",
-    "error": "Error"
-  },
+  "message": {},
   "toast": {
-    "noComments": "The API returned no comments.",
-    "loginVoteGate": "You must be logged in to vote.",
-    "blockedCommunity": "Blocked that community.",
-    "unblockedCommunity": "Unblocked that community.",
-    "purgedCommunity": "Purged that community.",
-    "blockedInstance": "Blocked that instance.",
-    "updatedCommunity": "Your community was updated.",
-    "sentMessage": "Sent that message.",
-    "invalidDateAbsolute": "Invalid date. It must be an absolute date.",
-    "invalidDateBeforeCurrent": "Invalid date. It is before the current time.",
-    "bannedUser": "Banned that user.",
-    "unbannedUser": "Unbanned that user.",
-    "needCommunity": "You must set a community.",
-    "invalidURL": "Invalid URL",
-    "generatedTitle": "Generated title and body from the URL. Do you want to undo this?",
-    "failGenerateTitle": "There was no usable title or description of that website.",
-    "restoredFromDraft": "Restored your post from the draft.",
     "copied": "Kopeeritud.",
-    "approvedApplication": "Approved that application.",
-    "deniedApplication": "Denied that application.",
-    "updatedSite": "Updated your site.",
-    "failCSV": "Failed to read CSV",
-    "removeAdminWarning": "Are you sure you want to remove that admin?",
-    "removeAdmin": "Removed that admin.",
     "failFindUser": "ei leidnud seda kasutajat.",
-    "addMod": "Added that moderator.",
-    "updateMods": "Updated community moderators.",
-    "logIn": "Successfully logged in.",
-    "failInstanceURL": "Failed to contact that instance URL. Is it down?",
-    "addAccount": "Added that account.",
-    "resetLink": "A password reset link was sent to your email.",
-    "resolveReport": "Resolved that report.",
-    "unresolveReport": "Unresolved that report.",
-    "passwordReset": "Your password was reset.",
-    "fetchPostOnHome": "Attempting to fetch this post on your home instance...",
-    "loginRefresh": "Your login was refreshed.",
-    "invalidLogin": "Invalid credentials",
-    "saveSettings": "Saved your user settings. If you changed your email, a verification link was sent.",
     "confirmDelete1": "kas oled kindel et tahad kustudata oma profiili?",
     "confirmDelete2": "Kassa oled väga kindel?",
     "confirmDelete3": "Viimane hüüatus. Kas a oled kindel?",
     "needPassword": "Sul on vaja parooli.",
     "deleting": "Kustutan kasutajat...",
-    "deleted": "Sinu kasutaja on kustutatud.",
-    "resetSettings": "Do you want to reset your settings to the default?",
-    "failFetchInstances": "Failed to fetch available instances.",
-    "verifyEmail": "A verification link was sent to your email. Verify your email, then log in.",
-    "failSignup": "Failed to sign up.",
-    "successSignup": "Signed up.",
-    "waitApplication": "Wait for your registration application to be accepted before logging in.",
-    "blockUser": "Blocked that user.",
-    "unblockUser": "Unblocked that user.",
-    "purgeUser": "Purged that user."
+    "deleted": "Sinu kasutaja on kustutatud."
   },
   "settings": {
     "title": "Settingud",
     "navigation": {
       "title": "Navigatioon",
       "dockPos": {
-        "title": "Dock position",
-        "description": "Where the dock should be positioned on the screen.",
         "top": "ülemine",
         "bottom": "Alumine",
         "adaptive": "Adaptiivne"
       },
-      "panel": {
-        "title": "Panel mode",
-        "description": "Extend the dock to the screen edges, similar to a panel.",
-        "on": "On",
-        "off": "Off",
-        "adaptive": "Adaptive"
-      }
+      "panel": {}
     },
     "app": {
-      "title": "Photon",
-      "theming": {
-        "title": "Theming",
-        "description": "Customize Photon's colors.",
-        "link": "Go to themes"
-      },
-      "lang": {
-        "title": "keel",
-        "description": "The language used for Photon's UI.",
-        "note": "Languages other than English and Hebrew are community translated, and may be incomplete.",
-        "": "Dont translate the below!",
-        "en": "English",
-        "en-US": "English",
-        "he": "Hebrew",
-        "et": "Estonian",
-        "auto": "Auto"
-      },
-      "view": {
-        "title": "Postituse stiil",
-        "list": "Show posts in a list, with post bodies and compact media.",
-        "cozy": "Show posts with large images, rich embeds, and longer post bodies.",
-        "compact": "Show posts in a list, without post bodies and with tighter spacing.",
-        "legacy": "Vana photoni nägemus."
-      },
-      "sort": {
-        "title": "tavaline sorteerimine",
-        "description": "The default sorting to use in feeds."
-      },
-      "postsInNewTab": {
-        "title": "Tee postituded uues browseri välilehele",
-        "description": "Open posts in a separate tab instead of the current."
-      },
-      "displayName": {
-        "title": "Use display name",
-        "description": "Show users' display names instead of their actual usernames."
-      },
-      "limitLayoutWidth": {
-        "title": "Limit layout width",
-        "description": "Improve readability by limiting the main content width."
-      },
-      "placeholders": {
-        "title": "Random placeholders",
-        "description": "Show random placeholders for certain text inputs."
-      },
-      "expandImages": {
-        "title": "Expand images",
-        "description": "Clicking on a post's image brings you to an expanded view rather than the post page."
-      },
-      "duplicateTitles": {
-        "title": "Hide duplicate titles/bodies",
-        "description": "Hides the post title and body if they are identical to the embed."
-      },
-      "thumbnailSide": {
-        "title": "Thumbnail alignment",
-        "description": "Where thumbnails should be on the post in list/compact mode",
-        "left": "Left",
-        "right": "Right"
-      },
-      "font": {
-        "title": "Font",
-        "description": "What font Photon uses in the UI."
-      },
-      "translation": {
-        "title": "Translation",
-        "description": "The LibreTranslate instance to use for translation.",
-        "instance": "Domeen(server)"
-      }
+      "theming": {},
+      "lang": { "title": "keel", "": "Dont translate the below!" },
+      "view": { "title": "Postituse stiil", "legacy": "Vana photoni nägemus." },
+      "sort": { "title": "tavaline sorteerimine" },
+      "postsInNewTab": { "title": "Tee postituded uues browseri välilehele" },
+      "displayName": {},
+      "limitLayoutWidth": {},
+      "placeholders": {},
+      "expandImages": {},
+      "duplicateTitles": {},
+      "thumbnailSide": {},
+      "font": {},
+      "translation": { "instance": "Domeen(server)" }
     },
     "embeds": {
-      "title": "Embeds",
-      "clickToView": {
-        "title": "Klõpsa et näha",
-        "description": "Only load embeds once you click on them."
-      },
+      "clickToView": { "title": "Klõpsa et näha" },
       "youtube": {
         "description": "Interneti domeen et embedida YouTuubi videoid."
       }
     },
     "lemmy": {
-      "title": "Lemmy",
-      "compactFeatured": {
-        "title": "Compact featured posts",
-        "description": "Make featured posts more compact"
-      },
-      "markReadPosts": {
-        "title": "Mark read posts",
-        "description": "Mark a post as read when you click on it"
-      },
-      "fadeReadPosts": {
-        "title": "Fade read posts",
-        "description": "Fade the title of posts you've already read"
-      },
-      "crosspostMarker": {
-        "title": "Mark crossposts",
-        "description": "Show 'crossposted from' when crossposting."
-      },
-      "hideSubmissions": {
-        "title": "Hide submissions",
-        "description": "Hide certain types of submissions.",
-        "deleted": "Deleted by user",
-        "removed": "Removed by moderator"
-      },
-      "nsfwBlur": {
-        "title": "NSFW blur",
-        "description": "Blur images and remove post bodies of NSFW posts."
-      },
-      "instances": {
-        "title": "Näe serverit",
-        "description": "Show the instances where certain content is from."
-      }
+      "compactFeatured": {},
+      "markReadPosts": {},
+      "fadeReadPosts": {},
+      "crosspostMarker": {},
+      "hideSubmissions": {},
+      "nsfwBlur": {},
+      "instances": { "title": "Näe serverit" }
     },
-    "moderation": {
-      "title": "Moderation",
-      "replyPresets": {
-        "title": "Removal reply presets",
-        "description": "Presets to use for 'reply reason' in the submission removal dialog.",
-        "syntax": "Süntax"
-      }
-    },
-    "other": {
-      "title": "Muu",
-      "debug": {
-        "title": "Debug info",
-        "description": "Display debug information"
-      }
-    }
+    "moderation": { "replyPresets": { "syntax": "Süntax" } },
+    "other": { "title": "Muu", "debug": {} }
   }
 }
