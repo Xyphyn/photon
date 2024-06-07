@@ -42,7 +42,7 @@
     "filter": {
         "location": {
             "label": "Asukoht",
-            "all": "Küik",
+            "all": "Küik - kõik",
             "local": "Locaalne",
             "subscribed": "Tellitud"
         },
