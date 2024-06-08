@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { page } from '$app/stores'
   import { env } from '$env/dynamic/public'
   import { md, mdInline, photonify } from '$lib/components/markdown/markdown'
   import { onMount } from 'svelte'
@@ -17,7 +18,7 @@
       const photonified = photonify(l.href)
 
       if (photonified) l.href = photonified
-      else {
+      else if (!l.href.startsWith($page.url.origin)) {
         l.target = '_blank'
         l.rel = 'noopener noreferrer'
       }
