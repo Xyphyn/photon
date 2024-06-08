@@ -261,6 +261,32 @@
         <option value="piped">Piped</option>
       </Select>
     </Setting>
+    {#if $userSettings.embeds.youtube == 'invidious'}
+      <Setting>
+        <span slot="title">{$t('settings.embeds.instance.invidious')}</span>
+        <span slot="description">
+          {$t('settings.embeds.instance.description')}
+        </span>
+        <TextInput
+          label={$t('settings.embeds.instance.invidious')}
+          pattern={DOMAIN_REGEX_FORMS}
+          bind:value={$userSettings.embeds.invidious}
+        />
+      </Setting>
+    {/if}
+    {#if $userSettings.embeds.youtube == 'piped'}
+      <Setting>
+        <span slot="title">{$t('settings.embeds.instance.piped')}</span>
+        <span slot="description">
+          {$t('settings.embeds.instance.description')}
+        </span>
+        <TextInput
+          label={$t('settings.embeds.instance.piped')}
+          pattern={DOMAIN_REGEX_FORMS}
+          bind:value={$userSettings.embeds.piped}
+        />
+      </Setting>
+    {/if}
   </Section>
 
   <Section title={$t('settings.lemmy.title')}>

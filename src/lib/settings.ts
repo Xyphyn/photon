@@ -70,6 +70,8 @@ interface Settings {
   embeds: {
     clickToView: boolean
     youtube: 'youtube' | 'invidious' | 'piped'
+    invidious: string | undefined
+    piped: string | undefined
   }
   dock: {
     noGap: boolean | null
@@ -129,6 +131,8 @@ export const defaultSettings: Settings = {
   embeds: {
     clickToView: true,
     youtube: 'youtube',
+    invidious: undefined,
+    piped: undefined,
   },
   dock: {
     noGap: toBool(env.PUBLIC_DOCK_PANEL) ?? null,

@@ -5,10 +5,10 @@
         return 'www.youtube-nocookie.com'
       }
       case 'invidious': {
-        return 'vid.puffyan.us'
+        return get(userSettings).embeds.invidious || 'yewtu.be'
       }
       case 'piped': {
-        return 'piped.video'
+        return get(userSettings).embeds.piped || 'piped.video'
       }
     }
   }
@@ -35,6 +35,7 @@
   } from 'svelte-hero-icons'
   import { optimizeImageURL, type IframeType, type MediaType } from '../helpers'
   import { userSettings } from '$lib/settings'
+  import { get } from 'svelte/store'
 
   export let type: IframeType = 'none'
   export let thumbnail: string | undefined = undefined

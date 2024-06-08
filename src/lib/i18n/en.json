@@ -620,6 +620,11 @@
       },
       "youtube": {
         "description": "The website to embed YouTube content in."
+      },
+      "instance": {
+        "invidious": "Invidious instance",
+        "piped": "Piped instance",
+        "description": "The instance to embed YouTube content in."
       }
     },
     "lemmy": {
