@@ -80,6 +80,7 @@ interface Settings {
   posts: {
     deduplicateEmbed: boolean
     compactFeatured: boolean
+    showHidden: boolean
   }
   language: string | null
   translator: string | undefined
@@ -141,6 +142,7 @@ export const defaultSettings: Settings = {
   posts: {
     deduplicateEmbed: toBool(env.PUBLIC_DEDUPLICATE_EMBED) ?? true,
     compactFeatured: toBool(env.PUBLIC_COMPACT_FEATURED) ?? true,
+    showHidden: false,
   },
   language: null,
   translator: undefined,

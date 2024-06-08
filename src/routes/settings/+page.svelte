@@ -291,6 +291,11 @@
 
   <Section title={$t('settings.lemmy.title')}>
     <ToggleSetting
+      bind:checked={$userSettings.posts.showHidden}
+      title={$t('settings.lemmy.showHiddenPosts.title')}
+      description={$t('settings.lemmy.showHiddenPosts.description')}
+    />
+    <ToggleSetting
       bind:checked={$userSettings.posts.compactFeatured}
       title={$t('settings.lemmy.compactFeatured.title')}
       description={$t('settings.lemmy.compactFeatured.description')}

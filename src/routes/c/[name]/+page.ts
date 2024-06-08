@@ -22,6 +22,7 @@ export async function load({ params, fetch, url }) {
       page: page,
       sort: sort,
       page_cursor: cursor,
+      show_hidden: get(userSettings).posts.showHidden,
     }),
   }
 }

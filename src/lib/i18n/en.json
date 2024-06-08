@@ -387,6 +387,8 @@
         "actions": "Actions",
         "markRead": "Mark as Read",
         "markUnread": "Mark as Unread",
+        "hide": "Hide",
+        "unhide": "Unhide",
         "translate": "Translate",
         "share": "Share",
         "crosspost": "Crosspost",
@@ -629,6 +631,10 @@
     },
     "lemmy": {
       "title": "Lemmy",
+      "showHiddenPosts": {
+        "title": "Show hidden posts",
+        "description": "Show the posts you've manually hidden."
+      },
       "compactFeatured": {
         "title": "Compact featured posts",
         "description": "Make featured posts more compact"

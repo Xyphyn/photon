@@ -1,4 +1,4 @@
-import { getInstance } from '$lib/lemmy.js'
+import { client, getInstance } from '$lib/lemmy.js'
 import type { View } from '$lib/settings'
 import { isImage, isVideo } from '$lib/ui/image'
 import { findClosestNumber } from '$lib/util'
@@ -73,4 +73,17 @@ export const iframeType = (post: Post): IframeType => {
   if (isVideo(post.url)) return 'video'
   if (isYoutubeLink(post.url)) return 'youtube'
   return 'none'
+}
+
+export async function hidePost(
+  id: number,
+  hide: boolean,
+  jwt: string
+): Promise<boolean> {
+  const res = await client({ auth: jwt }).hidePost({
+    hide: hide,
+    post_ids: [id],
+  })
+
+  return hide
 }

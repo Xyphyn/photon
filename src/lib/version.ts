@@ -6,6 +6,7 @@ const FEATURES = {
   cursorPagination: '0.19.0',
   newTotp: '0.19.0',
   blockInstances: '0.19.0',
+  hidePosts: '0.19.4',
 }
 
 type Feature = keyof typeof FEATURES

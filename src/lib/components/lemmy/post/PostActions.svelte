@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { PostView } from 'lemmy-js-client'
   import PostVote from './PostVote.svelte'
-  import { getInstance } from '$lib/lemmy.js'
+  import { getInstance, site } from '$lib/lemmy.js'
   import {
     ArrowTopRightOnSquare,
     Bookmark,
@@ -21,6 +21,7 @@
     Share,
     Trash,
     UserCircle,
+    XMark,
   } from 'svelte-hero-icons'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import { createEventDispatcher } from 'svelte'
@@ -53,10 +54,12 @@
   import { t } from '$lib/translations'
   import { text } from '$lib/components/translate/translation'
   import Translation from '$lib/components/translate/Translation.svelte'
+  import { hidePost } from './helpers'
+  import { feature } from '$lib/version'
 
   export let post: PostView
 
-  const dispatcher = createEventDispatcher<{ edit: PostView }>()
+  const dispatcher = createEventDispatcher<{ edit: PostView; hide: boolean }>()
 
   let editing = false
   let saving = false
@@ -312,6 +315,28 @@
         </MenuButton>
       {/if}
       {#if $profile.user?.local_user_view.person.id != post.creator.id}
+        {#if feature('hidePosts', $site?.version)}
+          <MenuButton
+            on:click={async () => {
+              if (!$profile?.jwt) return
+              const hidden = await hidePost(
+                post.post.id,
+                !post.hidden,
+                $profile?.jwt
+              )
+              post.hidden = hidden
+              if (hidden) {
+                dispatcher('hide', hidden)
+              }
+            }}
+            color="danger-subtle"
+          >
+            <Icon slot="prefix" src={XMark} size="16" mini />
+            {post.hidden
+              ? $t('post.actions.more.unhide')
+              : $t('post.actions.more.hide')}
+          </MenuButton>
+        {/if}
         <MenuButton on:click={() => report(post)} color="danger-subtle">
           <Icon src={Flag} width={16} mini slot="prefix" />
           {$t('moderation.report')}

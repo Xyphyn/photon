@@ -98,7 +98,7 @@
       </Placeholder>
     </div>
   {:else}
-    {#each combinedPosts as post, index}
+    {#each combinedPosts as post, index (post.post.id)}
       {#if !($userSettings.hidePosts.deleted && post.post.deleted) && !($userSettings.hidePosts.removed && post.post.removed)}
         <li
           in:fly|global={{
@@ -120,6 +120,9 @@
             viewPost != post.post.id
               ? ''
               : ''}"
+            on:hide={() => {
+              combinedPosts = combinedPosts.toSpliced(index, 1)
+            }}
           >
             <button
               slot="badges"

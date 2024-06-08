@@ -11,12 +11,12 @@ export async function load({ url, fetch }) {
   const prevCursor = url.searchParams.get('prevCursor') as string | undefined
   const page = Number(url.searchParams.get('page')) || undefined
 
+  const settings = get(userSettings)
+
   const sort: SortType =
-    (url.searchParams.get('sort') as SortType) ||
-    get(userSettings).defaultSort.sort
+    (url.searchParams.get('sort') as SortType) || settings.defaultSort.sort
   const listingType: ListingType =
-    (url.searchParams.get('type') as ListingType) ||
-    get(userSettings).defaultSort.feed
+    (url.searchParams.get('type') as ListingType) || settings.defaultSort.feed
 
   const posts = await getClient(undefined, fetch).getPosts({
     limit: 20,
@@ -24,6 +24,7 @@ export async function load({ url, fetch }) {
     sort: sort,
     type_: listingType,
     page_cursor: cursor,
+    show_hidden: settings.posts.showHidden,
   })
 
   try {
@@ -40,7 +41,7 @@ export async function load({ url, fetch }) {
     }
   } catch (err) {
     error(500, {
-            message: 'Failed to fetch homepage.',
-          });
+      message: 'Failed to fetch homepage.',
+    })
   }
 }
