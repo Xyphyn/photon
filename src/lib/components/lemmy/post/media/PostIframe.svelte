@@ -12,6 +12,18 @@
       }
     }
   }
+
+  function youtubeVideoID(url: string): string | null {
+    const regex =
+      /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|shorts\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/
+    const match = url.match(regex)
+
+    if (match && match[1]) {
+      return match[1]
+    }
+
+    return null
+  }
 </script>
 
 <script lang="ts">
@@ -36,8 +48,8 @@
 
     if (type == 'youtube') {
       const url = new URL(inputUrl)
-      const videoID = url.searchParams.get('v')
-      url.searchParams.delete('v')
+
+      const videoID = youtubeVideoID(inputUrl)
 
       return `https://${youtubeDomain(
         $userSettings.embeds.youtube

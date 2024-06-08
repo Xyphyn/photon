@@ -35,14 +35,18 @@ export const optimizeImageURL = (
   try {
     const url = new URL(urlStr)
     url.searchParams.append('format', 'webp')
-    url.searchParams.append('thumbnail', findClosestNumber([128, 256, 512, 1024], width).toString())
+    url.searchParams.append(
+      'thumbnail',
+      findClosestNumber([128, 256, 512, 1024], width).toString()
+    )
     return url.toString()
   } catch (e) {
     return urlStr
   }
 }
 
-const YOUTUBE_REGEX = /^(?:(?:https?:)?\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/
+const YOUTUBE_REGEX =
+  /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|shorts\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/
 
 export const isYoutubeLink = (url?: string): RegExpMatchArray | null => {
   if (!url) return null
