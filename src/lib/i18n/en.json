@@ -560,6 +560,9 @@
         "he": "Hebrew",
         "et": "Estonian",
         "fr": "French",
+        "de": "German",
+        "fi": "Finnish",
+        "pt": "Portuguese",
         "auto": "Auto",
         "credits": "Credits"
       },
