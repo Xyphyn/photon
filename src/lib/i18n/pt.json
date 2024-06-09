@@ -1,5 +1,100 @@
 {
     "profile": {
-        "profile": "Perfil"
+        "profile": "Perfil",
+        "saved": "Guardado",
+        "subscribed": "Subscrita",
+        "inbox": "Caixa de entrada"
+    },
+    "nav": {
+        "home": "Página inicial",
+        "moderation": "Moderação",
+        "communities": "Explorar",
+        "menu": {
+            "label": "Perfil",
+            "settings": "Definições",
+            "app": "Aplicação",
+            "colorscheme": {
+                "label": "Esquema de cores",
+                "system": "Sistema",
+                "dark": "Escuro",
+                "light": "Claro"
+            },
+            "theme": "Tema",
+            "about": "Sobre",
+            "source": "Código fonte",
+            "donate": "Doar",
+            "instance": "Instância"
+        },
+        "admin": "Admin",
+        "search": "Pesquisar",
+        "create": {
+            "label": "Criar",
+            "post": "Publicar",
+            "community": "Comunidade",
+            "logingate": "É necessário iniciar sessão para publicar."
+        }
+    },
+    "account": {
+        "login": "Iniciar sessão",
+        "moveDown": "Mover para baixo",
+        "versionGate": "Esta versão do Photon suporta instâncias na versão {{version}} ou superior.",
+        "logout": "Terminar sessão",
+        "signup": "Registar",
+        "accounts": "Contas",
+        "changeinstance": "Trocar de instância",
+        "resetColor": "Repor cor",
+        "addGuest": "Adicionar convidado",
+        "moveUp": "Mover para cima",
+        "guest": "Convidado"
+    },
+    "filter": {
+        "filter": "Filtro",
+        "sort": {
+            "top": {
+                "time": {
+                    "12hours": "12 horas",
+                    "9months": "9 meses",
+                    "label": "Quando",
+                    "all": "Sempre",
+                    "6months": "6 meses",
+                    "3months": "3 meses",
+                    "week": "Semana",
+                    "month": "Mês",
+                    "day": "Dia",
+                    "6hours": "6 horas",
+                    "hour": "Hora"
+                },
+                "label": "Topo"
+            },
+            "label": "Ordem",
+            "active": "Ativas",
+            "hot": "Populares",
+            "new": "Novas",
+            "old": "Antigas",
+            "controversial": "Controversas",
+            "scaled": "Escaladas",
+            "mostcomments": "Comentários",
+            "newcomments": "Novos comentários"
+        },
+        "location": {
+            "local": "Local",
+            "subscribed": "Subscrito",
+            "moderator": "Moderador",
+            "label": "Fonte",
+            "all": "Tudo"
+        },
+        "view": {
+            "label": "Vista",
+            "cozy": "Confortável",
+            "list": "Lista",
+            "compact": "Conpacta",
+            "legacy": "Antiga"
+        },
+        "type": "Tipo",
+        "unread": "Por ler",
+        "inbox": {
+            "messages": "Mensagens",
+            "replies": "Respostas"
+        }
     }
 }
