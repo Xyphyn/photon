@@ -94,7 +94,383 @@
         "unread": "Por ler",
         "inbox": {
             "messages": "Mensagens",
-            "replies": "Respostas"
+            "replies": "Respostas",
+            "mentions": "Menções"
         }
+    },
+    "form": {
+        "profile": {
+            "displayName": "Nome de exibição",
+            "showRead": "Mostrar publicações lidas",
+            "deleteAccount": {
+                "warning": "Isto irá eliminar TODAS as tuas submissões.",
+                "label": "Eliminar conta",
+                "deleteContent": "Eliminar conteúdo"
+            },
+            "bio": "Bio",
+            "avatar": "Avatar",
+            "banner": "Foto de capa",
+            "email": "E-mail",
+            "matrix": "Utilizador de Matrix",
+            "showNSFW": "Mostrar conteúdo NSFW",
+            "scores": "Mostrar pontoação",
+            "bot": "Conta robô",
+            "showBots": "Mostrar robôs",
+            "currentPassword": "Senha atual",
+            "newPassword": "Nova senha",
+            "verifyNewPassword": "Verificar nova senha",
+            "2fa": {
+                "totp": "TOTP",
+                "2fa": "A2F",
+                "paste": "Cola isto no teu autenticador."
+            }
+        },
+        "signup": {
+            "info": "A tua instância é o servidor no qual a tua conta irá residir, permitindo na mesma aceder e interagir com conteúdo de outras instâncias.",
+            "application": {
+                "info": "Para te juntares a esta instância, tens que preencher esta candidatura, e aguardar a sua aprovação. Receberás um e-mail se fores aceite.",
+                "label": "Candidatura"
+            },
+            "title": "Registar",
+            "description": "Escolhe uma instância do teu interesse, ou escreve um URL manualmente.",
+            "chooseInstance": "Escolher uma instância",
+            "closed": {
+                "title": "Registos fechados",
+                "description": "Esta instância não está a permitir novos registos. Por favor, encontra outra.",
+                "anotherInstance": "Encontrar outra instância"
+            }
+        },
+        "username": "Nome de utilizador",
+        "name": "Nome",
+        "instance": "URL da instância",
+        "password": "Senha",
+        "confirmPassword": "Confirmar senha",
+        "2fa": "Código A2F",
+        "forgotpassword": "Esqueci-me da senha",
+        "submit": "Submeter",
+        "edit": "Editar",
+        "preview": "Pré-visualizar",
+        "post": {
+            "create": "Criar publicação",
+            "edit": "Editar publicação",
+            "community": "Comunidade",
+            "title": "Título",
+            "url": "URL",
+            "body": "Corpo",
+            "nsfw": "NSFW",
+            "generateTitle": "Gerar título",
+            "uploadImage": "Carregar imagem"
+        },
+        "email": "E-mail",
+        "setup": "Configurar",
+        "description": "Descrição"
+    },
+    "routes": {
+        "frontpage": {
+            "footer": "{{users:number}} {{users; 1:utilizador ativo; default:utilizadores ativos;}}",
+            "title": "Página inicial"
+        },
+        "search": {
+            "noResults": {
+                "description": "Sem resultados para essa pesquisa. Tenta ajustá-la.",
+                "title": "Sem resultados",
+                "alt": "Pesquisa por todo o fediverso"
+            },
+            "title": "Pesquisar",
+            "federating": "A federar",
+            "query": "Pesquisa"
+        },
+        "post": {
+            "instanceWarning": "Esta publicação foi pedida a um servidor diferente do da tua conta. Algumas ações não vão funcionar.",
+            "crosspostCount": "publicações cruzadas",
+            "commentCount": "comentários",
+            "addComment": "Adicionar comentário",
+            "scrollToTop": "Ir para o topo",
+            "remoteView": "Vista remota",
+            "localView": "Vista local",
+            "thread": {
+                "single": "Estás a ver uma única linha de comentários.",
+                "allComments": "Todos os comentários",
+                "part": "Estás a ver parte de uma linha de comentários.",
+                "context": "Mostrar conteúdo"
+            }
+        },
+        "admin": {
+            "config": {
+                "downvotesEnabled": "Ativar votos negativos",
+                "title": "Configuração",
+                "sidebar": "Barra lateral",
+                "icon": "Ícone",
+                "banner": "Foto de capa",
+                "nsfwEnabled": "Ativar NSFW",
+                "registration": {
+                    "label": "Modo de registos",
+                    "open": "Abertos",
+                    "closed": "Fechados",
+                    "application": "Exigir candidatura"
+                },
+                "applicationQuestion": "Questão de candidatura",
+                "requireVerifyEmail": "Exigir verificação de e-mail",
+                "emailAdminsOnApplication": "Enviar e-mail aos administradores ao receber novas candidaturas",
+                "emailAdminsOnReport": "Enviar e-mail aos administradores ao receber novas denúncias",
+                "listingType": {
+                    "label": "Tipo de listagem",
+                    "all": "Tudo",
+                    "local": "Local"
+                },
+                "private": "Instância privada",
+                "slurFilter": "Regex de filtragem de insultos",
+                "federation": "Federação ativada",
+                "federationDebug": "Modo de depuração de federação",
+                "captcha": {
+                    "enabled": "Ativado"
+                },
+                "adminCommunityOnly": "Apenas administradores podem criar comunidades",
+                "hideModlogModNames": "Esconder o nome dos moderadores no registo"
+            },
+            "title": "Administração",
+            "applications": {
+                "title": "Candidaturas",
+                "empty": {
+                    "title": "Sem novas candidaturas",
+                    "description": "Candidaturas de registo para a tua instância irão aparecer aqui."
+                },
+                "application": "Candidatura",
+                "approved": "Aprovada",
+                "denied": "Recusada",
+                "user": "Utilizador",
+                "deny": "Recusar",
+                "approve": "Aprovar",
+                "reason": "Razão",
+                "modalTitle": "Recusar candidatura"
+            },
+            "taglines": {
+                "title": "Mensagens de cabeçalho",
+                "add": "Adicionar uma mensagem",
+                "empty": {
+                    "title": "Sem mensagens",
+                    "description": "Uma mensagem aleatória irá aparecer no cartão do site, quando os utilizadores visitarem a tua instância."
+                }
+            },
+            "team": {
+                "title": "Admins",
+                "empty": {
+                    "title": "Sem admins",
+                    "description": "Por algum motivo não há admins neste site. Como??"
+                }
+            },
+            "federation": {
+                "title": "Federação",
+                "csv": "Carregar CSV",
+                "blocked": "Instâncias bloqueadas",
+                "block": "Bloquear",
+                "allow": "Permitir",
+                "allowplaceholder": "Permitir uma instância",
+                "emptyBlock": {
+                    "title": "Sem instâncias bloqueadas",
+                    "description": "Bloquear uma instância irá esconder submissões daí."
+                },
+                "emptyAllow": {
+                    "title": "Sem instâncias permitidas",
+                    "description": "Permitir uma instância irá bloquear todas as outras."
+                },
+                "blockplaceholder": "Bloquear uma instância...",
+                "allowed": "Instâncias permitidas"
+            }
+        },
+        "moderation": {
+            "unresolve": "Desfazer resolução",
+            "title": "Moderação",
+            "empty": {
+                "title": "Sem novas denúncias",
+                "description": "Quando forem denunciadas submissões, podes geri-las aqui."
+            },
+            "reason": "Razão",
+            "resolve": "Resolver"
+        },
+        "modlog": "Registo de moderação",
+        "instances": "Instâncias",
+        "legal": {
+            "title": "Info legal",
+            "noLegal": "Esta instância não tem informação legal."
+        },
+        "profile": {
+            "user": "Utilizador",
+            "settings": "Definições",
+            "blocks": "Bloqueios",
+            "credentials": "Credenciais",
+            "moderates": "Modera"
+        },
+        "translators": "Tradutores",
+        "accounts": "Contas",
+        "communities": "Comunidades",
+        "saved": "Guardados",
+        "createPost": "Criar publicação",
+        "createCommunity": "Criar comunidade",
+        "inbox": {
+            "title": "Caixa de entrada",
+            "markAsRead": "Marcar tudo como lido",
+            "empty": {
+                "title": "Sem notificações novas",
+                "description": "Mensagens, respostas e menções irão aparecer aqui."
+            }
+        },
+        "verifyEmail": {
+            "message": "O teu e-mail foi verificado. Já podes fechar esta janela.",
+            "error": "Falha ao verificar o teu e-mail."
+        },
+        "passwordChange": {
+            "title": "Alterar senha",
+            "description": "Escolhe a tua nova senha.",
+            "instance": "Em que instância reside a tua conta?"
+        },
+        "resetLogin": {
+            "title": "Repor senha",
+            "description": "Insere o e-mail da tua conta, e ser-te-á enviada uma ligação para a reposição da senha. Se a tua conta não tem um e-mail, contacta os administradores da tua instância."
+        },
+        "theme": {
+            "title": "Tema",
+            "import": "Importar",
+            "export": "Exportar",
+            "reset": "Repor",
+            "accent": "Destaque",
+            "resetWarning": {
+                "title": "Repor tema",
+                "description": "Isto irá repor todas as tuas cores às predefinições. Recomenda-se que exportes o teu tema antes de continuar."
+            }
+        }
+    },
+    "cards": {
+        "site": {
+            "about": "Sobre",
+            "stats": "Estatísticas",
+            "admins": "Administradores"
+        },
+        "community": {
+            "members": "Membros",
+            "moderators": "Moderadores",
+            "subscribe": "Subscrever",
+            "subscribed": "Subscrita",
+            "modlog": "Registo de moderação",
+            "block": "Bloquear",
+            "unblock": "Desbloquear",
+            "blockInstance": "Bloquear instância"
+        }
+    },
+    "admin": {
+        "purge": "Purgar",
+        "instance": "Instância",
+        "label": "Administração",
+        "purgeCommunity": {
+            "title": "A purgar comunidade",
+            "warning": "Isto irá eliminar todas as publicações. Tens a certeza? (O botão irá ativar-se em 3 segundos)"
+        }
+    },
+    "content": {
+        "all": "Tudo",
+        "users": "Utilizadores",
+        "posts": "Publicações",
+        "comments": "Comentários",
+        "communities": "Comunidades",
+        "instances": "Instâncias",
+        "message": "Mensagem"
+    },
+    "post": {
+        "actions": {
+            "comments": "Comentários",
+            "save": "Guardar",
+            "unsave": "Esquecer",
+            "more": {
+                "label": "Mais ações",
+                "edit": "Editar",
+                "creator": "Criador",
+                "actions": "Ações",
+                "markRead": "Marcar como lida",
+                "markUnread": "Marcar como não lida",
+                "hide": "Esconder",
+                "share": "Partilhar",
+                "unhide": "Revelar",
+                "translate": "Traduzir",
+                "crosspost": "Fazer publicação cruzada",
+                "delete": "Eliminar",
+                "restore": "Restaurar"
+            }
+        },
+        "badges": {
+            "nsfw": "NSFW",
+            "locked": "Trancada",
+            "featured": "Destacada",
+            "removed": "Removida",
+            "deleted": "Eliminada",
+            "saved": "Guardada"
+        }
+    },
+    "common": {
+        "cancel": "Cancelar",
+        "back": "Voltar",
+        "next": "Próximo",
+        "debug": "Depuração",
+        "refresh": "Atualizar",
+        "jump": "Saltar",
+        "save": "Guardar",
+        "enabled": "Ativado",
+        "disabled": "Desativado",
+        "enable": "Ativar",
+        "disable": "Desativar",
+        "add": "Adicionar",
+        "send": "Enviar"
+    },
+    "comment": {
+        "actions": {
+            "label": "Ações",
+            "link": "Copiar ligação"
+        },
+        "reply": "Responder",
+        "locked": "Esta publicação está trancada."
+    },
+    "moderation": {
+        "removeSubmission": {
+            "failEmptyReply": "A tua resposta não pode estar vazia se 'Responder com razão' estiver ativada.",
+            "failReply": "Falha ao publicar resposta. A remover ainda assim...",
+            "successPurge": "Submissão purgada com sucesso.",
+            "title": "Remover submissão",
+            "titleRestore": "Restaurar submissão",
+            "titlePurge": "Purgar submissão",
+            "withReason": "Responder com razão",
+            "comment": "Comentar",
+            "message": "Enviar mensagem",
+            "failMessage": "Falha ao enviar mensagem ao utilizador. A remover ainda assim..."
+        },
+        "ban": {
+            "warning": "Isto irá eliminar TODAS as submissões deste utilizador aqui.",
+            "banning": "Banir utilizador",
+            "unbanning": "Desbanir utilizador",
+            "deleteData": "Eliminar dados",
+            "expires": "Expiração (UTC)",
+            "banFromCommunity": "Banir da comnunidade",
+            "unbanFromCommunity": "Desbanir da comunidade"
+        },
+        "report": "Denunciar",
+        "reportModal": {
+            "title": "Denunciar",
+            "success": "Submissão denunciada."
+        },
+        "reason": "Razão",
+        "lock": "Trancar",
+        "unlock": "Destrancar",
+        "remove": "Remover",
+        "restore": "Restaurar",
+        "label": "Moderação",
+        "labelInstanceOnly": "Moderação (apenas na instância)",
+        "feature": "Destacar",
+        "unfeature": "Remover destaque"
+    },
+    "toast": {
+        "loginVoteGate": "É necessário ter sessão iniciada para votar.",
+        "noComments": "A API não devolveu qualquer comentário."
+    },
+    "message": {
+        "success": "Sucesso",
+        "error": "Erro"
     }
 }
