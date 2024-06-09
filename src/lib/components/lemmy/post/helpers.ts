@@ -41,6 +41,7 @@ export const optimizeImageURL = (
     )
     return url.toString()
   } catch (e) {
+    console.log(e)
     return urlStr
   }
 }

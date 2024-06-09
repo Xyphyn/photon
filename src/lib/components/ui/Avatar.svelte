@@ -12,11 +12,26 @@
 
   export let width: number
   export let res: number | undefined = undefined
+
+  const optimizeUrl = (url: string | undefined): string | undefined => {
+    if (url === undefined) return
+
+    const urlObj = new URL(url)
+    urlObj.searchParams.append('format', 'webp')
+    urlObj.searchParams.append(
+      'thumbnail',
+      findClosestNumber(sizes, res || width).toString()
+    )
+
+    return urlObj.toString()
+  }
+
+  $: optimizedURL = optimizeUrl(url)
 </script>
 
-{#if url}
+{#if optimizedURL}
   <img
-    src="{url}?format=webp&thumbnail={findClosestNumber(sizes, res || width)}"
+    src={optimizedURL}
     {alt}
     {width}
     {title}

@@ -1,5 +1,9 @@
 <script lang="ts">
-  import { bestImageURL, postLink } from '$lib/components/lemmy/post/helpers.js'
+  import {
+    bestImageURL,
+    optimizeImageURL,
+    postLink,
+  } from '$lib/components/lemmy/post/helpers.js'
   import { showImage } from '$lib/components/ui/ExpandableImage.svelte'
   import { userSettings } from '$lib/settings.js'
   import { isImage } from '$lib/ui/image'
@@ -25,7 +29,7 @@
       tabindex="0"
     >
       <img
-        src={bestImageURL(post, true)}
+        src={optimizeImageURL(post.thumbnail_url || post.url || '', 128)}
         loading="lazy"
         class="object-cover overflow-hidden bg-slate-100 dark:bg-zinc-800 rounded-xl h-24 w-24 sm:w-32
         border border-slate-200 dark:border-zinc-800 group-hover/media:border-slate-400
