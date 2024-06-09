@@ -44,13 +44,22 @@
     $userSettings.posts.deduplicateEmbed &&
     post.post.embed_description == post.post.body &&
     view != 'compact'
+
+  function onClick(e: any) {
+    const event = e as MouseEvent
+    const parent = document.getElementById(post.post.id.toString())
+
+    if (event.target == parent) {
+      goto(postLink(post.post))
+    }
+  }
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <Material
   color={view != 'card' ? 'none' : 'distinct'}
-  class="relative max-w-full min-w-0 w-full
+  class="relative max-w-full min-w-0 w-full group cursor-pointer
   {view != 'card' ? 'bg-transparent !border-0' : 'p-5'} {view == 'compact'
     ? 'py-4 list-type'
     : view == 'list'
@@ -58,6 +67,9 @@
       : 'py-5 flex flex-col gap-2'} {$$props.class}"
   id={post.post.id.toString()}
   padding="none"
+  on:click={(e) => {
+    onClick(e)
+  }}
 >
   <PostMeta
     community={hideCommunity ? undefined : post.community}
@@ -120,6 +132,10 @@
       </Badge>
     </div>
   {/if}
+  <div
+    class="absolute overflow-hidden inset-y-0.5 -inset-x-4 sm:-inset-x-5 sm:rounded-xl bg-slate-100 dark:bg-zinc-900
+  opacity-0 group-hover:opacity-100 transition-all -z-10 no-list-margin"
+  />
 </Material>
 
 <style>

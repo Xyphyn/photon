@@ -44,13 +44,6 @@
     "vitest": "^1.0.0",
     "workbox-window": "^7.0.0"
   },
-  "dependencies": {
-    "@dicebear/core": "^6.0.4",
-    "@dicebear/initials": "^6.0.4",
-    "@sveltejs/adapter-auto": "^3.2.1",
-    "markdown-it": "^13.0.1",
-    "mono-svelte": "latest"
-  },
   "overrides": {
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@sveltejs/kit": "^2.0.0"

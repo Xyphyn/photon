@@ -164,8 +164,8 @@
 {#if title && id}
   <a
     href="/post/{getInstance()}/{id}"
-    class="text-lg leading-6 w-full hover:underline hover:text-primary-900 hover:dark:text-primary-100
-    transition-colors
+    class="inline text-lg hover:underline
+    hover:text-primary-900 hover:dark:text-primary-100 transition-colors
     {$userSettings.font == 'satoshi/nunito'
       ? 'font-display font-semibold'
       : 'font-medium'}"
@@ -173,7 +173,7 @@
     class:dark:text-zinc-400={$userSettings.markReadPosts && read}
     style="grid-area: title;"
   >
-    <Markdown source={title} inline noStyle></Markdown>
+    <Markdown source={title} inline noStyle class="leading-6"></Markdown>
   </a>
 {/if}
 
