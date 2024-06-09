@@ -1,1 +1,327 @@
-{}
+{
+    "profile": {
+        "inbox": "Posteingang",
+        "saved": "Gespeichert",
+        "subscribed": "Abboniert",
+        "profile": "Profil"
+    },
+    "nav": {
+        "home": "Startseite",
+        "admin": "Admin",
+        "communities": "Erkunden",
+        "search": "Suchen",
+        "create": {
+            "label": "Erstellen",
+            "post": "Absenden",
+            "community": "Gemeinschaft",
+            "logingate": "Du musst dich anmelden um Beiträge zu erstellen."
+        },
+        "menu": {
+            "label": "Profil",
+            "app": "App",
+            "settings": "Einstellungen",
+            "colorscheme": {
+                "label": "Farbschema",
+                "system": "System",
+                "dark": "Dunkel",
+                "light": "Hell"
+            },
+            "theme": "Thema",
+            "about": "Über",
+            "source": "Quellcode",
+            "donate": "Spenden",
+            "instance": "Instanz"
+        },
+        "moderation": "Moderation"
+    },
+    "account": {
+        "login": "Anmelden",
+        "logout": "Abmelden",
+        "signup": "Registrieren",
+        "accounts": "Konten",
+        "changeinstance": "Instanz wechseln",
+        "resetColor": "Farbe zurücksetzen",
+        "moveUp": "Nach oben",
+        "moveDown": "Nach unten",
+        "guest": "Gast",
+        "addGuest": "Gast hinzufügen",
+        "versionGate": "Diese Version von Photon unterstützt Instanzen mit {{version}} oder höher."
+    },
+    "filter": {
+        "location": {
+            "label": "Ort",
+            "local": "Lokal",
+            "subscribed": "Abboniert",
+            "moderator": "Moderator",
+            "all": "Alle"
+        },
+        "sort": {
+            "label": "Sortieren",
+            "active": "Aktiv",
+            "hot": "Heiß",
+            "top": {
+                "time": {
+                    "label": "Zeit",
+                    "all": "Alle",
+                    "9months": "9 Monate",
+                    "6months": "6 Monate",
+                    "3months": "3 Monate",
+                    "month": "Monat",
+                    "week": "Woche",
+                    "day": "Tag",
+                    "12hours": "12 Stunden",
+                    "6hours": "6 Stunden",
+                    "hour": "Stunde"
+                },
+                "label": "Spitze"
+            },
+            "new": "Neu",
+            "old": "Alt",
+            "scaled": "Skaliert",
+            "mostcomments": "Kommentare",
+            "newcomments": "Neue Antworten",
+            "controversial": "Kontrovers"
+        },
+        "view": {
+            "label": "Ansicht",
+            "cozy": "Bequem",
+            "list": "Liste",
+            "compact": "Kompakt",
+            "legacy": "Legacy"
+        },
+        "type": "Art",
+        "filter": "Filter",
+        "unread": "Ungelesen",
+        "inbox": {
+            "messages": "Nachrichten",
+            "replies": "Antworten",
+            "mentions": "Erwähnungen"
+        }
+    },
+    "form": {
+        "username": "Benutzername",
+        "name": "Name",
+        "instance": "Instanz URL",
+        "password": "Passwort",
+        "confirmPassword": "Passwort bestätigen",
+        "2fa": "2FA Code",
+        "forgotpassword": "Passwort vergessen",
+        "submit": "Absenden",
+        "edit": "Editieren",
+        "preview": "Vorschau",
+        "post": {
+            "edit": "Beitrag editieren",
+            "community": "Gemeinschaft",
+            "title": "Titel",
+            "url": "URL",
+            "body": "Hauptteil",
+            "nsfw": "NSFW",
+            "generateTitle": "Titel generieren",
+            "uploadImage": "Bild hochladen",
+            "create": "Beitrag erstellen"
+        },
+        "profile": {
+            "bio": "Werdegang",
+            "avatar": "Avatar",
+            "banner": "Banner",
+            "email": "Email",
+            "matrix": "Matrix Nutzer",
+            "showNSFW": "NSFW Beiträge anzeigen",
+            "bot": "Botkonto",
+            "showBots": "Bots anzeigen",
+            "showRead": "Gelesene Beiträge anzeigen",
+            "currentPassword": "Derzeitiges Passwort",
+            "newPassword": "Neues Passwort",
+            "verifyNewPassword": "Neues Passwort wiederholen",
+            "2fa": {
+                "totp": "TOTP",
+                "2fa": "2FA",
+                "paste": "Füg dies in deine Authenticator-App ein."
+            },
+            "deleteAccount": {
+                "label": "Konto löschen",
+                "deleteContent": "Beiträge löschen",
+                "warning": "Dies wird ALLE deine Beiträge löschen."
+            },
+            "displayName": "Anzeigename",
+            "scores": "Stände anzeigen"
+        },
+        "email": "Email",
+        "setup": "Einrichten",
+        "signup": {
+            "title": "Registrieren",
+            "info": "Eine Instanz ist der Server, auf dem Ihr Konto gehostet wird, aber Du kannst weiterhin auf Inhalte von anderen Instanzen zugreifen und mit diesen interagieren.",
+            "chooseInstance": "Instanz auswählen",
+            "application": {
+                "label": "Anwendung",
+                "info": "Um dieser Instanz beizutreten, musst Du diesen Antrag ausfüllen und warten, bis er angenommen wird. Du erhältst eine E-Mail, wenn Dein Antrag angenommen wurde."
+            },
+            "closed": {
+                "title": "Registrierungen geschlossen",
+                "description": "Diese Instanz hat Registrierungen geschlossen. Find eine andere Instanz.",
+                "anotherInstance": "Finden eine andere Instanz"
+            },
+            "description": "Wähle eine Instanz aus, die Dich interessiert, oder gebe die URL manuell ein."
+        },
+        "description": "Beschreibung"
+    },
+    "routes": {
+        "frontpage": {
+            "title": "Startseite",
+            "footer": "{{users:number}} aktiv {{users; 1:user; default:users;}}"
+        },
+        "modlog": "Modlog",
+        "instances": "Instanzen",
+        "legal": {
+            "title": "Rechtliches",
+            "noLegal": "Diese Instanz hat keine rechtlichen Hinweise."
+        },
+        "profile": {
+            "user": "Benutzer",
+            "settings": "Einstellungen",
+            "blocks": "Blöcke",
+            "credentials": "Ausweise",
+            "moderates": "Moderiert"
+        },
+        "translators": "Übersetzer",
+        "communities": "Gemeinschaften",
+        "search": {
+            "title": "Suchen",
+            "federating": "Föderiert",
+            "query": "Anfrage",
+            "noResults": {
+                "description": "Es gibt keine Ergebnisse, die diesem Filter entsprechen. Bitte die Suche anders formulieren.",
+                "alt": "Das Fediverse durchsuchen",
+                "title": "Keine Ergebnisse"
+            }
+        },
+        "saved": "Gespeichert",
+        "createPost": "Beitrag erstellen",
+        "post": {
+            "crosspostCount": "Querposts",
+            "commentCount": "Kommentare",
+            "addComment": "Kommentar hinzufügen",
+            "scrollToTop": "Nach oben scrollen",
+            "remoteView": "Entfernte Ansicht",
+            "localView": "Lokale Ansicht",
+            "thread": {
+                "single": "Du betrachtest gerade einen einzelnen Beitrag.",
+                "allComments": "Alle Kommentare",
+                "part": "Du betrachtest einen Teil des Beitrags.",
+                "context": "Kontext anzeigen"
+            },
+            "instanceWarning": "Dieser Beitrag wurde von einem anderen Server als dem deines Kontos angefordert. Viele Aktionen werden nicht funktionieren."
+        },
+        "inbox": {
+            "title": "Posteingang",
+            "markAsRead": "Alle als gelesen markieren",
+            "empty": {
+                "title": "Keine neuen Benachrichtigungen",
+                "description": "Nachrichten, Antworten und Erwähnungen werden hier angezeigt."
+            }
+        },
+        "moderation": {
+            "title": "Moderation",
+            "empty": {
+                "title": "Keine neuen Meldungen",
+                "description": "Wenn Beiträge gemeldet werden, kannst du hier darauf reagieren."
+            },
+            "reason": "Grund",
+            "resolve": "Abschließen",
+            "unresolve": "Aufmachen"
+        },
+        "admin": {
+            "title": "Administration",
+            "config": {
+                "title": "Einstellung",
+                "sidebar": "Seitenleiste",
+                "icon": "Symbol",
+                "banner": "Banner",
+                "downvotesEnabled": "Herabwählen aktivieren",
+                "nsfwEnabled": "NSFW aktivieren",
+                "registration": {
+                    "open": "Offen",
+                    "application": "Antrag erforderlich",
+                    "closed": "Geschlossen",
+                    "label": "Registrationsmodus"
+                },
+                "applicationQuestion": "Antragsfrage",
+                "adminCommunityOnly": "Nur Admins können Gemeinschaften erstellen",
+                "requireVerifyEmail": "Email Verifikation erforderlich",
+                "emailAdminsOnReport": "Admins bei neuen Meldungen per Email benachrichtigen",
+                "listingType": {
+                    "label": "Sortierart",
+                    "all": "Alle",
+                    "local": "Lokal"
+                },
+                "private": "Private Instanz",
+                "slurFilter": "Beleidigungsfilter Regex",
+                "federation": "Föderation aktiviert",
+                "captcha": {
+                    "enabled": "Aktiviert"
+                },
+                "federationDebug": "Föderationsfehlerbehebungsmodus",
+                "emailAdminsOnApplication": "Bei neuen Anträgen Admins per Email benachrichtigen",
+                "hideModlogModNames": "Moderatornamen im Modlog verstecken"
+            },
+            "applications": {
+                "title": "Anträge",
+                "empty": {
+                    "title": "Keine neuen Anträge",
+                    "description": "Anträge deiner Instanz beizutreten werden hier erscheinen."
+                },
+                "application": "Anträge",
+                "approved": "Genehmigt",
+                "denied": "Abgelehnt",
+                "user": "Nutzer",
+                "deny": "Ablehen",
+                "approve": "Genehmigen",
+                "reason": "Grund",
+                "modalTitle": "Antrag ablehnen"
+            },
+            "taglines": {
+                "title": "Mottos",
+                "add": "Motto hinzufügen",
+                "empty": {
+                    "title": "Keine Mottos",
+                    "description": "Ein zufälliges Motto wird auf der Webseite erscheinen wenn Benutzer deine Instanz besuchen."
+                }
+            },
+            "team": {
+                "title": "Admins",
+                "empty": {
+                    "title": "Keine Admins",
+                    "description": "Irgendwie gibt es keine Admins auf dieser Seite. Wie ist das möglich??"
+                }
+            },
+            "federation": {
+                "title": "Föderation",
+                "csv": "CSV hochladen",
+                "blocked": "Blockierte Instanzen",
+                "block": "Blockieren",
+                "blockplaceholder": "Eine Instanz blockieren...",
+                "allowed": "Erlaubte Instanzen",
+                "allow": "Erlaubliste",
+                "allowplaceholder": "Eine Instanz erlauben",
+                "emptyBlock": {
+                    "title": "Keine blockierten Instanzen",
+                    "description": "Eine Instanz blockieren versteckt neue Beiträge von dieser Instanz."
+                },
+                "emptyAllow": {
+                    "title": "Keine Instanzen auf der Erlaubliste",
+                    "description": "Alle Instanzen die nicht auf der Erlaubliste sind werden blockiert."
+                }
+            }
+        },
+        "verifyEmail": {
+            "message": "Deine Emailadresse wurde bestätigt. Du kannst dieses Fenster nun schließen.",
+            "error": "Konnte deine Emailadresse nicht verifizieren."
+        },
+        "passwordChange": {
+            "title": "Passwort ändern",
+            "description": "Ein neues Passwort auswählen."
+        },
+        "accounts": "Konten",
+        "createCommunity": "Gemeinschaft erstellen"
+    }
+}
