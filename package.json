@@ -14,6 +14,9 @@
   },
   "devDependencies": {
     "@catdadcode/svelte-adapter-bun": "^0.5.7",
+    "@dicebear/core": "^8.0.1",
+    "@dicebear/initials": "^8.0.1",
+    "@sveltejs/adapter-auto": "^3.2.1",
     "@sveltejs/adapter-node": "^2.0.0",
     "@sveltejs/adapter-vercel": "^5.1.0",
     "@sveltejs/kit": "latest",
@@ -25,9 +28,11 @@
     "autoprefixer": "^10.4.16",
     "jsdom": "^22.1.0",
     "lemmy-js-client": "latest",
+    "markdown-it": "^14.1.0",
     "markdown-it-container": "^3.0.0",
     "markdown-it-sub": "^1.0.0",
     "markdown-it-sup": "^1.0.0",
+    "mono-svelte": "^1.5.14",
     "nprogress": "^0.2.0",
     "postcss": "^8.4.30",
     "rollup-plugin-visualizer": "^5.9.2",
@@ -43,10 +48,6 @@
     "vite-plugin-pwa": "^0.18.0",
     "vitest": "^1.0.0",
     "workbox-window": "^7.0.0"
-  },
-  "overrides": {
-    "@rollup/plugin-node-resolve": "^15.2.3",
-    "@sveltejs/kit": "^2.0.0"
   },
   "type": "module"
 }

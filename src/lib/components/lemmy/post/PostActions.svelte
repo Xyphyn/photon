@@ -102,7 +102,9 @@
   </Modal>
 {/if}
 
-<Translation bind:open={translating} />
+{#if translating}
+  <Translation bind:open={translating} />
+{/if}
 
 <div
   class="flex flex-row gap-2 items-center !h-8 flex-shrink-0"
