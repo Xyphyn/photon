@@ -13,8 +13,20 @@
     <span>pewgar_seemsimandroid@lemmy.blahaj.zone</span>
   </li>
   <li class="flex flex-col">
+    <span class="font-bold text-lg">Finnish</span>
+    <span>sevonj</span>
+  </li>
+  <li class="flex flex-col">
     <span class="font-bold text-lg">French</span>
     <span>Blisterexe@lemmy.zip</span>
+  </li>
+  <li class="flex flex-col">
+    <span class="font-bold text-lg">German</span>
+    <span>Tmpod</span>
+  </li>
+  <li class="flex flex-col">
+    <span class="font-bold text-lg">Portuguese</span>
+    <span>poVoq</span>
   </li>
 </ul>
 
