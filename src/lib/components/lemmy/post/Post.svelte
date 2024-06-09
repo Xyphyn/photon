@@ -133,8 +133,10 @@
     </div>
   {/if}
   <div
-    class="absolute overflow-hidden inset-y-0.5 -inset-x-4 sm:-inset-x-5 sm:rounded-xl bg-slate-100 dark:bg-zinc-900
-  opacity-0 group-hover:opacity-100 transition-all -z-10 no-list-margin"
+    class="absolute overflow-hidden inset-0 group-hover:inset-y-0.5 group-hover:-inset-x-4 group-hover:sm:-inset-x-5
+    sm:rounded-xl bg-slate-50 dark:bg-zinc-900
+    opacity-0 group-hover:opacity-100 transition-all -z-10 no-list-margin
+    duration-150"
   />
 </Material>
 
