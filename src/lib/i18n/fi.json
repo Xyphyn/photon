@@ -7,7 +7,7 @@
         },
         "resetLogin": {
             "title": "Palauta salasana",
-            "description": "Syötä tiliisi liitetty sähköposti. Salasanan palautuslinkki lähetetään sinne. Jos tiliisi ei ole liitetty sähköpostia, ota yhteys instanssisi ylläpitoon."
+            "description": "Syötä käyttäjätiliisi liitetty sähköposti. Salasanan palautuslinkki lähetetään sinne. Jos tiliisi ei ole liitetty sähköpostia, ota yhteys instanssisi ylläpitoon."
         },
         "theme": {
             "title": "Teema",
@@ -60,7 +60,7 @@
             },
             "remoteView": "Etänäkymä",
             "localView": "Paikallinen näkymä",
-            "crosspostCount": "Ristijaot",
+            "crosspostCount": "ristijakoa",
             "instanceWarning": "Tämä julkaisu haettiin eri palvelimelta, kuin käyttäjäsi. Moni toiminto ei toimi."
         },
         "inbox": {
@@ -186,8 +186,8 @@
             "subscribe": "Tilaa",
             "subscribed": "Tilattu",
             "modlog": "Moderointiloki",
-            "block": "Estä",
-            "unblock": "Poista esto",
+            "block": "Estä yhteisö",
+            "unblock": "Poista yhteisön esto",
             "blockInstance": "Estä instanssi"
         }
     },
@@ -200,8 +200,8 @@
                 "translate": "Käännä",
                 "label": "Lisää toimintoja",
                 "edit": "Muokkaa",
-                "creator": "Luoja",
-                "crosspost": "Ristijaa",
+                "creator": "Lähettäjä",
+                "crosspost": "Jaa (ristijulkaisu)",
                 "actions": "Toiminnot",
                 "delete": "Poista",
                 "restore": "Palauta",
@@ -241,14 +241,14 @@
     },
     "nav": {
         "menu": {
-            "app": "Appi",
+            "app": "Sovellus",
             "label": "Profiili",
             "settings": "Asetukset",
             "colorscheme": {
                 "dark": "Tumma",
                 "light": "Vaalea",
                 "label": "Väriteema",
-                "system": "Järjestelmän teema"
+                "system": "Järjestelmä"
             },
             "theme": "Teema",
             "about": "Tietoja",
@@ -278,7 +278,7 @@
         "login": "Kirjaudu sisään",
         "logout": "Kirjaudu ulos",
         "signup": "Luo tili",
-        "accounts": "Tilit",
+        "accounts": "Käyttäjätilit",
         "changeinstance": "Vaihda instanssia",
         "resetColor": "Palauta väri",
         "addGuest": "Lisää vieras",
@@ -292,16 +292,16 @@
             "top": {
                 "label": "Parhaat",
                 "time": {
-                    "all": "Kaikkien aikojen parhaat",
+                    "all": "milloin tahansa",
                     "label": "Aika",
                     "9months": "9 kk",
                     "3months": "3 kk",
-                    "month": "Kuukausi",
-                    "week": "Viikko",
-                    "day": "Päivä",
-                    "hour": "Tunti",
-                    "12hours": "12 tuntia",
-                    "6hours": "6 tuntia",
+                    "month": "kuukausi",
+                    "week": "viikko",
+                    "day": "päivä",
+                    "hour": "tunti",
+                    "12hours": "12 t",
+                    "6hours": "6 t",
                     "6months": "6 kk"
                 }
             },
@@ -309,8 +309,8 @@
             "label": "Lajittelu",
             "active": "Aktiiviset",
             "controversial": "Kiistanalaiset",
-            "new": "Uudet",
-            "old": "Vanhat",
+            "new": "Uusimmat",
+            "old": "Vanhimmat",
             "newcomments": "Uusia vastauksia",
             "scaled": "Skaalattu",
             "mostcomments": "Eniten kommentteja"
@@ -328,7 +328,7 @@
             "replies": "Vastaukset"
         },
         "view": {
-            "compact": "Tiivis",
+            "compact": "Tiivis lista",
             "label": "Näkymä",
             "cozy": "Mukava",
             "list": "Lista",
@@ -339,7 +339,7 @@
         "unread": "Lukemattomat"
     },
     "form": {
-        "2fa": "Kaksivaiheisen tunnistautumisen (2FA) -koodi",
+        "2fa": "2FA-koodi",
         "username": "Käyttäjänimi",
         "forgotpassword": "Unohdin salasanani",
         "name": "Nimi",
@@ -434,7 +434,7 @@
         "reason": "Syy",
         "lock": "Lukitse",
         "unlock": "Poista lukitus",
-        "remove": "Poista (moderointi)",
+        "remove": "Poista",
         "restore": "Palauta",
         "label": "Moderointi",
         "labelInstanceOnly": "Moderointi (vain instanssi)",
@@ -545,7 +545,7 @@
                 "et": "viro",
                 "fr": "ranska",
                 "auto": "automaattinen",
-                "credits": "Photonin mahdollistaa",
+                "credits": "Kääntäjät",
                 "description": "Käyttöliittymän kieli.",
                 "note": "Muut kielet, kuin englanti ja heprea ovat yhteisön kääntämiä, eivätkä välttämättä ole täydellisiä."
             },
@@ -557,7 +557,7 @@
             },
             "displayName": {
                 "title": "Käytä näyttönimeä",
-                "description": "Näytä käyttäjien näyttönimet oikeiden käittäjänimien sijaan."
+                "description": "Näytä käyttäjien näyttönimet oikeiden käyttäjänimien sijaan."
             },
             "limitLayoutWidth": {
                 "title": "Rajoita leveyttä",
@@ -565,7 +565,7 @@
             },
             "expandImages": {
                 "title": "Laajenna kuvat",
-                "description": "Julkaisun kuvan klikkaaminen suurentaa sen, eikä avaa itse postausta."
+                "description": "Julkaisun kuvan klikkaaminen suurentaa sen, eikä avaa itse julkaisua."
             },
             "duplicateTitles": {
                 "title": "Piilota identtinen otsikko ja sisältö",
@@ -577,7 +577,7 @@
             },
             "translation": {
                 "title": "Käännös",
-                "description": "LibreTranslate-instanssi, jota käyttää käännöksiin.",
+                "description": "LibreTranslate-instanssi, jota käyttää konekäännöksiin.",
                 "instance": "Verkkotunnus"
             },
             "thumbnailSide": {
@@ -588,11 +588,11 @@
             },
             "postsInNewTab": {
                 "title": "Avaa uudessa välilehdessä",
-                "description": "Avaa julkaisut uudessa välilehdessä nykyisen sijaan."
+                "description": "Avaa julkaisut aina uudessa välilehdessä."
             },
             "placeholders": {
                 "title": "Satunnaiset paikkamerkit",
-                "description": "Lisää satunnainen paikkamerkki joillekin tekstikentille."
+                "description": "Näytä satunnaisia paikkamerkkejä tyhjillä tekstikentillä."
             }
         },
         "title": "Asetukset",
@@ -643,8 +643,8 @@
             },
             "title": "Lemmy",
             "crosspostMarker": {
-                "title": "Merkitse ristijaot",
-                "description": "Näytä ristijaot."
+                "title": "Merkitse ristijulkaisut",
+                "description": "Näytä ristijulkaisut."
             },
             "showHiddenPosts": {
                 "title": "Näytä piilotetut julkaisut",
@@ -662,7 +662,7 @@
         "embeds": {
             "title": "Upotukset",
             "clickToView": {
-                "title": "Klikkaa avataksesi",
+                "title": "Klikkaa näyttääksesi",
                 "description": "Lataa upotus vasta, kun olet klikannut sitä."
             },
             "youtube": {
