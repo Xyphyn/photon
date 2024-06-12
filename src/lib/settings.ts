@@ -46,7 +46,11 @@ interface Settings {
     removed: boolean
   }
   expandSidebar: boolean
-  expandCommunities: boolean
+  expand: {
+    communities: boolean
+    moderates: boolean
+    favorites: boolean
+  }
   displayNames: boolean
   nsfwBlur: boolean
   moderation: {
@@ -104,8 +108,11 @@ export const defaultSettings: Settings = {
     removed: toBool(env.PUBLIC_HIDE_REMOVED) ?? true,
   },
   expandSidebar: toBool(env.PUBLIC_EXPAND_SIDEBAR) ?? true,
-  expandCommunities: toBool(env.PUBLIC_EXPAND_COMMUNITIES) ?? true,
-  expandFavorites: toBool(env.PUBLIC_EXPAND_FAVORITES) ?? true,
+  expand: {
+    communities: toBool(env.PUBLIC_EXPAND_COMMUNITIES) ?? true,
+    favorites: toBool(env.PUBLIC_EXPAND_FAVORITES) ?? true,
+    moderates: toBool(env.PUBLIC_EXPAND_MODERATES) ?? true,
+  },
   displayNames: toBool(env.PUBLIC_DISPLAY_NAMES) ?? true,
   nsfwBlur: toBool(env.PUBLIC_NSFW_BLUR) ?? true,
   moderation: {

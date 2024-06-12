@@ -70,7 +70,7 @@ export const isPrivateMessageReport = (
 ): item is PrivateMessageReportView => 'private_message_report' in item
 
 export interface ResumableItem {
-  url: URL
+  url: string
   id: number
   name: string
   avatar?: string
@@ -88,10 +88,9 @@ export function addResumable(item: ResumableItem) {
   let favs = p.favorites ?? []
   if (favs.map((fav) => fav.url.toString()).includes(item.url.toString()))
     return
-  if (favs.length >= 5) favs.pop()
   favs.unshift(item)
   profile.update(() => ({
     ...p,
-    favorites: favs
+    favorites: favs,
   }))
 }

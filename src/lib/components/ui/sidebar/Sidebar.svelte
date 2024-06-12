@@ -27,6 +27,7 @@
   import EndPlaceholder from '../EndPlaceholder.svelte'
   import Application from '../../../../routes/admin/applications/Application.svelte'
   import { t } from '$lib/translations'
+  import ItemList from '$lib/components/lemmy/generic/ItemList.svelte'
 </script>
 
 <nav
@@ -93,15 +94,65 @@
     </SidebarButton>
   {/if}
   <hr class="border-slate-200 dark:border-zinc-900 my-1" />
+  {#if $profile?.favorites && $profile?.favorites.length > 0}
+    <Expandable
+      class="max-w-full min-w-0 w-full"
+      bind:open={$userSettings.expand.favorites}
+    >
+      <span
+        slot="title"
+        class="px-2 py-1 w-full {$userSettings.expandSidebar
+          ? ''
+          : '//max-lg:hidden'}"
+      >
+        <EndPlaceholder>
+          {$t('routes.profile.favorites')}
+          <span slot="action" class="dark:text-white text-black">
+            {$profile.favorites.length}
+          </span>
+        </EndPlaceholder>
+      </span>
+      <ItemList
+        items={$profile.favorites.map((i) => ({
+          avatar: i.avatar ?? '',
+          id: i.id,
+          name: i.name,
+          url: i.url.toString(),
+          instance: 'doesnt exist',
+        }))}
+      />
+    </Expandable>
+    <hr class="border-slate-200 dark:border-zinc-900 my-1" />
+  {/if}
   {#if $profile?.user}
     {#if $profile?.user.moderates.length > 0}
-      <CommunityList items={$profile.user.moderates.map((i) => i.community)} />
+      <Expandable
+        class="max-w-full min-w-0 w-full"
+        bind:open={$userSettings.expand.moderates}
+      >
+        <span
+          slot="title"
+          class="px-2 py-1 w-full {$userSettings.expandSidebar
+            ? ''
+            : '//max-lg:hidden'}"
+        >
+          <EndPlaceholder>
+            {$t('routes.profile.moderates')}
+            <span slot="action" class="dark:text-white text-black">
+              {$profile.user.moderates.length}
+            </span>
+          </EndPlaceholder>
+        </span>
+        <CommunityList
+          items={$profile.user.moderates.map((i) => i.community)}
+        />
+      </Expandable>
       <hr class="border-slate-200 dark:border-zinc-900 my-1" />
     {/if}
 
     <Expandable
       class="max-w-full min-w-0 w-full"
-      bind:open={$userSettings.expandCommunities}
+      bind:open={$userSettings.expand.communities}
     >
       <span
         slot="title"
