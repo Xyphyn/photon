@@ -53,7 +53,8 @@
       "all": "All",
       "local": "Local",
       "subscribed": "Subscribed",
-      "moderator": "Moderator"
+      "moderator": "Moderator",
+      "global": "Global"
     },
     "sort": {
       "label": "Sort",

@@ -13,6 +13,8 @@
     Eye,
     EyeSlash,
     Flag,
+    GlobeAlt,
+    Home,
     Icon,
     Language,
     Newspaper,
@@ -48,14 +50,17 @@
     MenuDivider,
     Modal,
     Spinner,
+    toast,
   } from 'mono-svelte'
   import { fediseer, type Data } from '$lib/fediseer/fediseer'
   import Fediseer from '$lib/fediseer/Fediseer.svelte'
   import { t } from '$lib/translations'
   import { text } from '$lib/components/translate/translation'
   import Translation from '$lib/components/translate/Translation.svelte'
-  import { hidePost } from './helpers'
+  import { hidePost, postLink } from './helpers'
   import { feature } from '$lib/version'
+  import Switch from '$lib/components/input/Switch.svelte'
+  import { instanceToURL } from '$lib/util'
 
   export let post: PostView
 
@@ -70,6 +75,8 @@
   let fediseerLoading = false
 
   let translating = false
+
+  let localShare = false
 </script>
 
 {#if fediseerData}
@@ -252,12 +259,33 @@
     <MenuButton
       on:click={() => {
         navigator.share?.({
-          url: post.post.ap_id,
-        }) ?? navigator.clipboard.writeText(post.post.ap_id)
+          url: localShare
+            ? `${instanceToURL(getInstance())}/post/${post.post.id}`
+            : post.post.ap_id,
+        }) ??
+          navigator.clipboard.writeText(
+            localShare
+              ? `${instanceToURL(getInstance())}/post/${post.post.id}`
+              : post.post.ap_id
+          )
+        toast({ content: $t('toast.copied') })
       }}
+      class="flex-1 py-0"
     >
       <Icon src={Share} width={16} mini slot="prefix" />
       {$t('post.actions.more.share')}
+      {#if !post.post.local}
+        <Switch
+          optionNames={[
+            $t('filter.location.global'),
+            $t('filter.location.local'),
+          ]}
+          options={[false, true]}
+          bind:selected={localShare}
+          class="ml-auto"
+          buttonClass="!py-1"
+        />
+      {/if}
     </MenuButton>
     {#if post.post.body && $userSettings.translator}
       <MenuButton
