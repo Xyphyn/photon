@@ -39,12 +39,14 @@
     class="aspect-square object-cover overflow-hidden {$$props.class}"
     style="width: {width}px; height: {width}px;"
     class:rounded-full={circle}
+    class:rounded-md={!circle}
   />
 {:else}
   <div
     style="width: {width}px; height: {width}px;"
     class="aspect-square object-cover overflow-hidden {$$props.class}"
     class:rounded-full={circle}
+    class:rounded-md={!circle}
   >
     {@html createAvatar(initials, {
       seed: alt,

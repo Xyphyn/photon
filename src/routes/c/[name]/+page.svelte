@@ -36,18 +36,6 @@
       )
   })
 
-  afterNavigate(() => {
-    if ($profile) {
-      addResumable({
-        avatar: data.community.community_view.community.icon,
-        id: data.community.community_view.community.id,
-        url: $page.url,
-        name: data.community.community_view.community.title,
-        type: 'community',
-      })
-    }
-  })
-
   onDestroy(() => {
     if (browser) {
       if ($navigating?.to?.route?.id == '/create/post') return

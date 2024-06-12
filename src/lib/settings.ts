@@ -105,6 +105,7 @@ export const defaultSettings: Settings = {
   },
   expandSidebar: toBool(env.PUBLIC_EXPAND_SIDEBAR) ?? true,
   expandCommunities: toBool(env.PUBLIC_EXPAND_COMMUNITIES) ?? true,
+  expandFavorites: toBool(env.PUBLIC_EXPAND_FAVORITES) ?? true,
   displayNames: toBool(env.PUBLIC_DISPLAY_NAMES) ?? true,
   nsfwBlur: toBool(env.PUBLIC_NSFW_BLUR) ?? true,
   moderation: {
@@ -144,8 +145,8 @@ export const defaultSettings: Settings = {
     compactFeatured: toBool(env.PUBLIC_COMPACT_FEATURED) ?? true,
     showHidden: false,
   },
-  language: null,
-  translator: undefined,
+  language: env.PUBLIC_LANGUAGE ?? null,
+  translator: env.PUBLIC_TRANSLATOR ?? undefined,
 }
 
 export const userSettings = writable(defaultSettings)

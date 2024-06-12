@@ -354,7 +354,9 @@
       "modlog": "Modlog",
       "block": "Block",
       "unblock": "Unblock",
-      "blockInstance": "Block instance"
+      "blockInstance": "Block instance",
+      "favorite": "Favorite",
+      "unfavorite": "Remove Favorite"
     }
   },
   "admin": {

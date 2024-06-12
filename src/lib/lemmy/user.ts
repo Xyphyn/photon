@@ -1,4 +1,4 @@
-import { profile } from '$lib/auth.js'
+import { profile, type Profile } from '$lib/auth.js'
 import { getClient } from '$lib/lemmy.js'
 import { trycatch } from '$lib/util.js'
 import type { Community, MyUserInfo, PersonView } from 'lemmy-js-client'
@@ -62,3 +62,6 @@ export const addAdmin = async (handle: string, added: boolean, jwt: string) =>
       person_id: user.person.person.id,
     })
   })
+
+export const hasFavorite = (profile: Profile, id: number): boolean =>
+  profile?.favorites?.map((i) => i.id).includes(id) ?? false

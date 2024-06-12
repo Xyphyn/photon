@@ -18,7 +18,7 @@
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import { client, getClient } from '$lib/lemmy.js'
-  import { addSubscription } from '$lib/lemmy/user.js'
+  import { addSubscription, hasFavorite } from '$lib/lemmy/user.js'
   import { fullCommunityName } from '$lib/util.js'
   import type { CommunityModeratorView, CommunityView } from 'lemmy-js-client'
   import { Button } from 'mono-svelte'
@@ -37,6 +37,7 @@
     NoSymbol,
     PencilSquare,
     Plus,
+    Star,
     UserGroup,
   } from 'svelte-hero-icons'
   import { publishedToDate } from '$lib/components/util/date.js'
@@ -47,6 +48,7 @@
   import ItemList from '../generic/ItemList.svelte'
   import { communityLink, userLink } from '$lib/lemmy/generic'
   import { t } from '$lib/translations'
+  import Entity from '$lib/components/ui/Entity.svelte'
 
   export let community_view: CommunityView
   export let moderators: CommunityModeratorView[] = []
@@ -188,35 +190,24 @@
   </Modal>
 {/if}
 
-<StickyCard class="min-w-full pt-0 {$$props.class}">
-  <div class="flex flex-row gap-3 items-center">
-    <CommunityLink
-      name={false}
-      avatar
-      avatarSize={32}
-      community={community_view.community}
+<StickyCard
+  class="min-w-full pt-0 text-slate-600 dark:text-zinc-400 {$$props.class}"
+>
+  <Entity
+    name={community_view.community.title}
+    label="!{fullCommunityName(
+      community_view.community.name,
+      community_view.community.actor_id
+    )}"
+  >
+    <Avatar
+      width={32}
+      url={community_view.community.icon}
+      alt={community_view.community.name}
+      circle={false}
+      slot="icon"
     />
-    <div class="flex flex-col gap-0">
-      <h1 class="font-bold text-lg">
-        <a
-          href="/c/{fullCommunityName(
-            community_view.community.name,
-            community_view.community.actor_id
-          )}"
-        >
-          {community_view.community.title}
-        </a>
-      </h1>
-      <span
-        class="dark:text-zinc-400 text-slate-600 text-sm break-words max-w-full"
-        style="word-break: break-all;"
-      >
-        !{community_view.community.name}@{new URL(
-          community_view.community.actor_id
-        ).hostname}
-      </span>
-    </div>
-  </div>
+  </Entity>
 
   <div
     class="flex flex-col divide-y divide-slate-200 dark:divide-zinc-800 [&>*]:py-3"
@@ -267,7 +258,7 @@
     {/if}
   </div>
   <div
-    class="flex flex-row items-center gap-2 sticky bottom-0 drop-shadow-xl w-full"
+    class="flex flex-row items-center gap-1 sticky bottom-0 drop-shadow-xl w-full"
   >
     {#if $profile?.jwt}
       <Button

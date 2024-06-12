@@ -18,6 +18,7 @@
   import ItemList from './generic/ItemList.svelte'
   import { userLink } from '$lib/lemmy/generic'
   import { t } from '$lib/translations'
+  import Entity from '../ui/Entity.svelte'
 
   export let site: SiteView
   export let taglines: Tagline[] | undefined = undefined
@@ -26,22 +27,15 @@
 </script>
 
 <StickyCard class="w-full {$$props.class} text-slate-600 dark:text-zinc-400">
-  <div class="flex flex-row gap-3 items-center">
-    {#if site.site.icon}
-      <Avatar
-        width={32}
-        url={site.site.icon}
-        alt={site.site.name}
-        circle={false}
-      />
-    {/if}
-    <div class="flex flex-col">
-      <h1 class="font-bold text-base">{site.site.name}</h1>
-      <span class="text-sm opacity-60">
-        {new URL(site.site.actor_id).hostname}
-      </span>
-    </div>
-  </div>
+  <Entity name={site.site.name} label={new URL(site.site.actor_id).hostname}>
+    <Avatar
+      width={32}
+      url={site.site.icon}
+      alt={site.site.name}
+      circle={false}
+      slot="icon"
+    />
+  </Entity>
   <div class="flex flex-row gap-1 !border-0">
     <Button
       href="/modlog"
