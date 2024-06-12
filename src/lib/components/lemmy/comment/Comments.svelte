@@ -113,7 +113,7 @@
     ? 'divide-y dark:divide-zinc-900 divide-slate-100'
     : 'pl-3.5 border-l border-slate-200 dark:border-zinc-800 my-1'}
 >
-  {#each nodes as node}
+  {#each nodes as node (node.comment_view.comment.id)}
     <Comment
       postId={post.id}
       bind:node
