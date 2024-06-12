@@ -23,6 +23,8 @@
   import { page } from '$app/stores'
   import { onMount } from 'svelte'
   import { t } from '$lib/translations'
+  import { slide } from 'svelte/transition'
+  import { expoOut } from 'svelte/easing'
 
   export let node: CommentNodeI
   export let postId: number
@@ -176,6 +178,7 @@
     {#if replying}
       <div
         class="max-w-full my-2 border-l border-slate-200 dark:border-zinc-800 pl-4"
+        transition:slide={{ axis: 'y', duration: 400, easing: expoOut }}
       >
         <h1 class="font-bold text-sm mb-2">{$t('comment.reply')}</h1>
         <CommentForm

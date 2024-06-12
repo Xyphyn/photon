@@ -142,7 +142,10 @@
             }}
           >
             <Icon src={ChevronDoubleDown} mini size="16" slot="prefix" />
-            {node.comment_view.counts.child_count} more
+            {$t('comment.more', {
+              // @ts-ignore
+              comments: node.comment_view.counts.child_count,
+            })}
           </Button>
         </svelte:element>
       {/if}

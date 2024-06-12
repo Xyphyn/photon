@@ -183,7 +183,8 @@ overflow-hidden transition-colors"
       {#if tools}
         <!--Toolbar-->
         <div
-          class="[&>*]:flex-shrink-0 flex flex-row overflow-auto p-1.5 gap-1.5 {$$props.disabled
+          class="[&>*]:flex-shrink-0 flex flex-row overflow-auto p-1.5 gap-1.5 border-b
+          border-slate-200 dark:border-zinc-900 {$$props.disabled
             ? 'opacity-60 pointer-events-none'
             : ''}"
         >

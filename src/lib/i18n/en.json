@@ -413,7 +413,8 @@
       "label": "Actions",
       "link": "Copy Link"
     },
-    "locked": "This post is locked."
+    "locked": "This post is locked.",
+    "more": "{{comments:number}} more"
   },
   "moderation": {
     "report": "Report",
