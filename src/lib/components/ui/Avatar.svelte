@@ -16,14 +16,18 @@
   const optimizeUrl = (url: string | undefined): string | undefined => {
     if (url === undefined) return
 
-    const urlObj = new URL(url)
-    urlObj.searchParams.append('format', 'webp')
-    urlObj.searchParams.append(
-      'thumbnail',
-      findClosestNumber(sizes, res || width).toString()
-    )
+    try {
+      const urlObj = new URL(url)
+      urlObj.searchParams.append('format', 'webp')
+      urlObj.searchParams.append(
+        'thumbnail',
+        findClosestNumber(sizes, res || width).toString()
+      )
 
-    return urlObj.toString()
+      return urlObj.toString()
+    } catch (e) {
+      return undefined
+    }
   }
 
   $: optimizedURL = optimizeUrl(url)
