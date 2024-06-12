@@ -45,15 +45,17 @@
   })
 </script>
 
-<Modal bind:open={sidebar}>
-  <span slot="title">About</span>
-  <div class="mx-auto">
-    <CommunityCard
-      community_view={data.community.community_view}
-      moderators={data.community.moderators}
-    />
-  </div>
-</Modal>
+{#if sidebar}
+  <Modal bind:open={sidebar}>
+    <span slot="title">About</span>
+    <div class="mx-auto">
+      <CommunityCard
+        community_view={data.community.community_view}
+        moderators={data.community.moderators}
+      />
+    </div>
+  </Modal>
+{/if}
 
 {#if data.community.community_view.community.banner}
   <img
