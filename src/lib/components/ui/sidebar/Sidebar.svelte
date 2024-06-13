@@ -28,6 +28,8 @@
   import Application from '../../../../routes/admin/applications/Application.svelte'
   import { t } from '$lib/translations'
   import ItemList from '$lib/components/lemmy/generic/ItemList.svelte'
+
+  $: if ($profile) console.log('profile changed')
 </script>
 
 <nav
@@ -112,15 +114,7 @@
           </span>
         </EndPlaceholder>
       </span>
-      <ItemList
-        items={$profile.favorites.map((i) => ({
-          avatar: i.avatar ?? '',
-          id: i.id,
-          name: i.name,
-          url: i.url.toString(),
-          instance: 'doesnt exist',
-        }))}
-      />
+      <CommunityList isFavorites items={$profile.favorites} />
     </Expandable>
     <hr class="border-slate-200 dark:border-zinc-900 my-1" />
   {/if}

@@ -40,7 +40,6 @@
   } from '$lib/components/lemmy/post/helpers.js'
   import Post from '$lib/components/lemmy/post/Post.svelte'
   import Expandable from '$lib/components/ui/Expandable.svelte'
-  import { addResumable } from '$lib/lemmy/item.js'
   import { Popover } from 'mono-svelte'
   import { t } from '$lib/translations.js'
 

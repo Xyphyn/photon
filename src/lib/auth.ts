@@ -11,6 +11,7 @@ import {
   LemmyHttp,
   type GetSiteResponse,
   type MyUserInfo,
+  type Community,
 } from 'lemmy-js-client'
 import { get, writable } from 'svelte/store'
 import { MINIMUM_VERSION, versionIsSupported } from '$lib/version.js'
@@ -43,7 +44,7 @@ export interface Profile {
   user?: PersonData
   username?: string
   avatar?: string
-  favorites?: ResumableItem[]
+  favorites?: Community[]
   color?: string
 }
 
@@ -151,11 +152,10 @@ profile.subscribe(async (p) => {
     instance?.set(get(profileData).defaultInstance ?? DEFAULT_INSTANCE_URL)
   }
   if (!p) return
-  if (p.user) return
 
   instance.set(p.instance)
   // fetch the user because p.user is undefined
-  if (p?.jwt) {
+  if (p?.jwt && !p?.user) {
     const user = await userFromJwt(p.jwt, p.instance)
       .then((user) => {
         if (!user?.user)

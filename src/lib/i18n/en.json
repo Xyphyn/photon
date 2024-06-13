@@ -182,7 +182,8 @@
       "settings": "Settings",
       "blocks": "Blocks",
       "credentials": "Credentials",
-      "moderates": "Moderates"
+      "moderates": "Moderates",
+      "favorites": "Favorites"
     },
     "translators": "Translators",
     "accounts": "Accounts",

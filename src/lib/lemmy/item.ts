@@ -1,4 +1,4 @@
-import { profile } from '$lib/auth'
+import { profile, profileData } from '$lib/auth'
 import type {
   CommentReportView,
   CommentView,
@@ -10,6 +10,7 @@ import type {
   Post,
   PrivateMessageReportView,
   PrivateMessageView,
+  Community,
 } from 'lemmy-js-client'
 import { get } from 'svelte/store'
 
@@ -81,16 +82,24 @@ export interface ResumableItem {
   }
 }
 
-export function addResumable(item: ResumableItem) {
-  const p = get(profile)
+export function addFavorite(item: Community, add: boolean = true) {
+  const pd = get(profileData)
+  const p = pd.profiles.find((p) => p.id == get(profile)?.id)
   if (!p) return
 
   let favs = p.favorites ?? []
-  if (favs.map((fav) => fav.url.toString()).includes(item.url.toString()))
-    return
-  favs.unshift(item)
-  profile.update(() => ({
+  if (favs.map((fav) => fav.id).includes(item.id)) if (add) return
+  if (!add) {
+    favs.splice(favs.map((c) => c.id).indexOf(item.id), 1)
+  } else {
+    favs.unshift(item)
+  }
+  p.favorites = favs
+  profileData.update(() => pd)
+  profile.update((p) => ({
     ...p,
     favorites: favs,
+    id: p!.id,
+    instance: p!.instance,
   }))
 }

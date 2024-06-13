@@ -21,7 +21,6 @@
   } from 'svelte-hero-icons'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { profile } from '$lib/auth'
-  import { addResumable } from '$lib/lemmy/item.js'
   import { t } from '$lib/translations.js'
 
   export let data
