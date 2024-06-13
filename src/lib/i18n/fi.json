@@ -30,7 +30,8 @@
             "blocks": "Estot",
             "credentials": "Kirjautumistiedot",
             "moderates": "Moderoidut yhteisöt",
-            "settings": "Asetukset"
+            "settings": "Asetukset",
+            "favorites": "Suosikit"
         },
         "instances": "Instanssit",
         "createPost": "Luo julkaisu",
@@ -188,7 +189,9 @@
             "modlog": "Moderointiloki",
             "block": "Estä yhteisö",
             "unblock": "Poista yhteisön esto",
-            "blockInstance": "Estä instanssi"
+            "blockInstance": "Estä instanssi",
+            "favorite": "Lisää suosikkeihin",
+            "unfavorite": "Poista suosikeista"
         }
     },
     "post": {
@@ -248,7 +251,7 @@
                 "dark": "Tumma",
                 "light": "Vaalea",
                 "label": "Väriteema",
-                "system": "Järjestelmä"
+                "system": "Oletus"
             },
             "theme": "Teema",
             "about": "Tietoja",
@@ -320,7 +323,8 @@
             "label": "Sijainti",
             "local": "Paikallinen",
             "subscribed": "Tilaukset",
-            "all": "Kaikki"
+            "all": "Kaikki",
+            "global": "Yleinen"
         },
         "inbox": {
             "mentions": "Maininnat",
@@ -448,7 +452,8 @@
             "label": "Toiminnot"
         },
         "locked": "Tämä julkaisu on lukittu.",
-        "reply": "Vastaa"
+        "reply": "Vastaa",
+        "more": "{{comments:number}} lisää"
     },
     "common": {
         "back": "Takaisin",
