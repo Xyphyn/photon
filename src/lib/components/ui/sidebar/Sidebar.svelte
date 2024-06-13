@@ -74,15 +74,13 @@
     >
       <span slot="label">{$t('account.signup')}</span>
     </SidebarButton>
-    {#if LINKED_INSTANCE_URL === undefined}
-      <SidebarButton
-        href="/accounts"
-        title={$t('account.changeinstance')}
-        icon={ServerStack}
-      >
-        <span slot="label">{$t('account.changeinstance')}</span>
-      </SidebarButton>
-    {/if}
+    <SidebarButton
+      href="/settings"
+      title={$t('nav.menu.settings')}
+      icon={Cog6Tooth}
+    >
+      <span slot="label">{$t('nav.menu.settings')}</span>
+    </SidebarButton>
   {/if}
   {#if $profileData.profiles.length >= 1}
     <hr class="border-slate-200 dark:border-zinc-900 my-1" />

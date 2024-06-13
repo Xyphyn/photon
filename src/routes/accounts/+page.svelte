@@ -250,14 +250,16 @@
     </EditableList>
     <div class="mt-auto" />
     <div class="flex items-center gap-2">
-      <Button href="/login" size="lg" class="flex-1">
+      <Button href="/login" size="lg" class="flex-1" color="primary">
         <Icon slot="prefix" src={ArrowLeftOnRectangle} size="16" mini />
         {$t('account.login')}
       </Button>
-      <Button href="/login/guest" size="lg">
-        <Icon slot="prefix" src={Plus} size="16" mini />
-        {$t('account.addGuest')}
-      </Button>
+      {#if !LINKED_INSTANCE_URL}
+        <Button href="/login/guest" size="lg">
+          <Icon slot="prefix" src={Plus} size="16" mini />
+          {$t('account.addGuest')}
+        </Button>
+      {/if}
     </div>
   </div>
 {/if}

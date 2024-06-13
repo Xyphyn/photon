@@ -3,6 +3,7 @@
   import { page } from '$app/stores'
   import { profile, setUserID, type Profile } from '$lib/auth.js'
   import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
+  import { LINKED_INSTANCE_URL } from '$lib/instance'
   import ProfileAvatar from '$lib/lemmy/ProfileAvatar.svelte'
   import { Button } from 'mono-svelte'
   import { Icon, QuestionMarkCircle } from 'svelte-hero-icons'
@@ -52,7 +53,7 @@
       : ''}"
   >
     {prof.username ?? prof.user?.local_user_view.person.name}
-    {#if !guest}
+    {#if !guest && !LINKED_INSTANCE_URL}
       <span class="text-slate-500 dark:text-zinc-400 font-normal text-xs">
         {prof.instance}
       </span>
