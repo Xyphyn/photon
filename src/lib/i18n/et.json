@@ -25,7 +25,8 @@
             },
             "theme": "Theme",
             "donate": "Anneta",
-            "instance": "Server"
+            "instance": "Server",
+            "app": "Äpp"
         }
     },
     "account": {
