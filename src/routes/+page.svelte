@@ -18,6 +18,7 @@
   import Location from '$lib/components/lemmy/dropdowns/Location.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { t } from '$lib/translations.js'
+  import { enhance } from '$app/forms'
 
   export let data
 </script>
@@ -27,8 +28,8 @@
     <Header>{$t('routes.frontpage.title')}</Header>
   </header>
   <div class="flex items-center gap-2">
-    <Location changeDefault selected={data.listingType} />
-    <Sort changeDefault selected={data.sort} />
+    <Location navigate={false} changeDefault selected={data.listingType} />
+    <Sort navigate={false} changeDefault selected={data.sort} />
     <div class="max-[420px]:hidden">
       <ViewSelect />
     </div>

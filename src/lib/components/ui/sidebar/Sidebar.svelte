@@ -28,8 +28,6 @@
   import Application from '../../../../routes/admin/applications/Application.svelte'
   import { t } from '$lib/translations'
   import ItemList from '$lib/components/lemmy/generic/ItemList.svelte'
-
-  $: if ($profile) console.log('profile changed')
 </script>
 
 <nav
