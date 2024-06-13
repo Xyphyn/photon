@@ -62,21 +62,6 @@
   afterNavigate(async () => {
     // reactivity hack
     post = data.post
-    if ($profile) {
-      addResumable({
-        avatar: post.post_view.post.thumbnail_url
-          ? optimizeImageURL(post.post_view.post.thumbnail_url, 64)
-          : undefined,
-        id: post.post_view.post.id,
-        url: $page.url,
-        name: post.post_view.post.name,
-        type: 'post',
-        subdivision: {
-          name: post.post_view.community.name,
-          avatar: post.post_view.community.icon,
-        },
-      })
-    }
   })
 
   const fetchOnHome = async (jwt: string) => {
