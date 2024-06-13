@@ -13,7 +13,7 @@
             "title": "Teema",
             "import": "Tuo",
             "export": "Vie",
-            "reset": "Palauta oletus",
+            "reset": "Palauta oletukset",
             "accent": "Korostusväri",
             "resetWarning": {
                 "title": "Palauta teema",
@@ -29,7 +29,7 @@
             "user": "Käyttäjä",
             "blocks": "Estot",
             "credentials": "Kirjautumistiedot",
-            "moderates": "Moderoi",
+            "moderates": "Moderoidut yhteisöt",
             "settings": "Asetukset"
         },
         "instances": "Instanssit",
@@ -201,7 +201,7 @@
                 "label": "Lisää toimintoja",
                 "edit": "Muokkaa",
                 "creator": "Lähettäjä",
-                "crosspost": "Jaa (ristijulkaisu)",
+                "crosspost": "Jaa (tee ristijulkaisu)",
                 "actions": "Toiminnot",
                 "delete": "Poista",
                 "restore": "Palauta",
@@ -547,7 +547,10 @@
                 "auto": "automaattinen",
                 "credits": "Kääntäjät",
                 "description": "Käyttöliittymän kieli.",
-                "note": "Muut kielet, kuin englanti ja heprea ovat yhteisön kääntämiä, eivätkä välttämättä ole täydellisiä."
+                "note": "Virallisesti tuetut kielet ovat englanti ja heprea. Muut käännökset ovat yhteisön tekemiä, eivätkä siten välttämättä ole täydellisiä.",
+                "fi": "suomi",
+                "pt": "portugali",
+                "de": "saksa"
             },
             "title": "Photon",
             "theming": {
