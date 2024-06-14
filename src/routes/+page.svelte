@@ -28,8 +28,8 @@
     <Header>{$t('routes.frontpage.title')}</Header>
   </header>
   <div class="flex items-center gap-2">
-    <Location navigate={false} changeDefault selected={data.listingType} />
-    <Sort navigate={false} changeDefault selected={data.sort} />
+    <Location changeDefault selected={data.listingType} />
+    <Sort changeDefault selected={data.sort} />
     <div class="max-[420px]:hidden">
       <ViewSelect />
     </div>
