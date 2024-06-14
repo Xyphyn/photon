@@ -128,7 +128,7 @@
   <ImageInput label={$t('form.profile.banner')} bind:files={formData.banner} />
   <MarkdownEditor
     previewButton
-    label={$t('routes.admin.config.banner')}
+    label={$t('routes.admin.config.sidebar')}
     bind:value={formData.sidebar}
   />
 

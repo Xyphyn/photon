@@ -265,7 +265,7 @@
         "federation": "Federation enabled",
         "federationDebug": "Federation debug mode",
         "captcha": {
-          "enabled": "Enabled"
+          "enabled": "CAPTCHA Enabled"
         }
       },
       "applications": {
