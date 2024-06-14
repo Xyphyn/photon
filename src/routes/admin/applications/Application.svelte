@@ -121,7 +121,7 @@
           <SectionTitle>
             {application.creator_local_user.accepted_application
               ? $t('routes.admin.applications.approved')
-              : $t('routes.admin.applications.denied')}}
+              : $t('routes.admin.applications.denied')}
           </SectionTitle>
         </div>
         <div class="md:ml-auto" />
