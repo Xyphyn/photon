@@ -250,10 +250,10 @@
             "colorscheme": {
                 "dark": "Tumma",
                 "light": "Vaalea",
-                "label": "Väriteema",
+                "label": "Väritila",
                 "system": "Oletus"
             },
-            "theme": "Teema",
+            "theme": "Teemat",
             "about": "Tietoja",
             "source": "Lähdekoodi",
             "donate": "Lahjoita",
