@@ -54,7 +54,7 @@
     color="tertiary"
     class="text-slate-600 dark:text-zinc-400"
     on:click={() => (replying = !replying)}
-    disabled={comment.post.locked}
+    disabled={comment.post.locked || comment.banned_from_community}
   >
     <Icon src={ArrowUturnLeft} width={14} height={14} mini />
     <span class="text-xs">{$t('comment.reply')}</span>
