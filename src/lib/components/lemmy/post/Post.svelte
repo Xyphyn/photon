@@ -108,6 +108,7 @@
       <PostMediaCompact
         {view}
         bind:post={post.post}
+        bind:type={type}
         class="{$userSettings.leftAlign
           ? 'mr-2'
           : 'ml-2'} flex-shrink no-list-margin"
