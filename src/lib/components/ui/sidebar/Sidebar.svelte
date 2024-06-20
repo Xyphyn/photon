@@ -35,6 +35,22 @@
   gap-1 h-fit max-h-screen {$$props.class}"
   style={$$props.style}
 >
+<SidebarButton icon={Home} href="/">
+  <span slot="label">
+    {$t('nav.home')}
+  </span>
+</SidebarButton>
+<SidebarButton icon={Cog6Tooth} href="/settings">
+  <span slot="label">
+    {$t('nav.menu.settings')}
+  </span>
+</SidebarButton>
+<SidebarButton icon={GlobeAlt} href="/communities">
+  <span slot="label">
+    {$t('nav.communities')}
+  </span>
+</SidebarButton>
+<hr class="border-slate-200 dark:border-zinc-900 my-1" />
   {#if $profile?.jwt}
     <SidebarButton icon={UserCircle} href="/profile/user">
       <span slot="label">
