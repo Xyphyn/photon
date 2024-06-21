@@ -56,7 +56,7 @@
           group-hover/media:dark:border-zinc-600 transition-colors text-slate-400 dark:text-zinc-600 grid
           place-items-center"
         >
-          <Icon src={type == 'embed' ? Link : DocumentText} size="32"/>
+          <Icon src={type == 'embed' ? Link : DocumentText} solid size="32"/>
         </div>
       {/if}
     </svelte:element>
