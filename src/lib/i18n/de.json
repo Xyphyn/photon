@@ -53,7 +53,8 @@
             "local": "Lokal",
             "subscribed": "Abboniert",
             "moderator": "Moderator",
-            "all": "Alle"
+            "all": "Alle",
+            "global": "Global"
         },
         "sort": {
             "label": "Sortieren",
@@ -181,7 +182,8 @@
             "settings": "Einstellungen",
             "blocks": "Blöcke",
             "credentials": "Ausweise",
-            "moderates": "Moderiert"
+            "moderates": "Moderiert",
+            "favorites": "Favoriten"
         },
         "translators": "Übersetzer",
         "communities": "Gemeinschaften",
@@ -319,9 +321,167 @@
         },
         "passwordChange": {
             "title": "Passwort ändern",
-            "description": "Ein neues Passwort auswählen."
+            "description": "Ein neues Passwort auswählen.",
+            "instance": "Auf welcher Instanz ist dein Konto gehostet?"
         },
         "accounts": "Konten",
-        "createCommunity": "Gemeinschaft erstellen"
+        "createCommunity": "Gemeinschaft erstellen",
+        "resetLogin": {
+            "title": "Passwort zurücksetzen",
+            "description": "Gib die E-Mail deines Kontos ein, und ein Link zum Zurücksetzen des Passworts wird gesendet. Wenn dein Konto keine E-Mail hat, wende dich an die Administratoren deiner Instanz."
+        },
+        "theme": {
+            "title": "Thema",
+            "import": "Importieren",
+            "export": "Exportieren",
+            "reset": "Zurücksetzen",
+            "accent": "Akzentuierung",
+            "resetWarning": {
+                "title": "Thema zurücksetzen",
+                "description": "Dadurch werden alle Farben auf die Standardwerte zurückgesetzt. Es wird empfohlen, das Thema vorher zu exportieren."
+            }
+        }
+    },
+    "toast": {
+        "unblockedCommunity": "Die Blockierung dieser Gemeinschaft wurde aufgehoben.",
+        "noComments": "Die API gab keine Kommentare zurück.",
+        "loginVoteGate": "Du musst angemeldet sein um zu wählen.",
+        "blockedCommunity": "Diese Gemeinschaft wurde blockiert.",
+        "purgedCommunity": "Diese Gemeinschaft wurde ausgelöscht.",
+        "blockedInstance": "Diese Instanz wurde blockiert.",
+        "updatedCommunity": "Deine Gemeinschaft wurde aktualisiert.",
+        "sentMessage": "Diese Nachricht wurde versandt."
+    },
+    "cards": {
+        "community": {
+            "modlog": "Modlog",
+            "members": "Mitglieder",
+            "moderators": "Moderatoren",
+            "subscribe": "Abbonieren",
+            "subscribed": "Abboniert",
+            "block": "Blockieren",
+            "unblock": "Unblockieren",
+            "blockInstance": "Instanz blockieren",
+            "favorite": "Favoritieren",
+            "unfavorite": "Unfavoritieren"
+        },
+        "site": {
+            "about": "Über",
+            "stats": "Statistik",
+            "admins": "Admins"
+        }
+    },
+    "post": {
+        "actions": {
+            "more": {
+                "delete": "Löschen",
+                "hide": "Verstecken",
+                "label": "Mehr Aktionen",
+                "edit": "Editieren",
+                "creator": "Ersteller",
+                "actions": "Aktionen",
+                "markRead": "Als gelesen markieren",
+                "markUnread": "Als ungelesen markieren",
+                "unhide": "Aufdecken",
+                "translate": "Übersetzen",
+                "share": "Teilen",
+                "crosspost": "Querpost",
+                "restore": "Wiederherstellen"
+            },
+            "comments": "Kommentare",
+            "save": "Speichern",
+            "unsave": "Unspeichern"
+        },
+        "badges": {
+            "nsfw": "NSFW",
+            "locked": "Geschlossen",
+            "featured": "Vorgestellt",
+            "removed": "Entfernt",
+            "deleted": "Gelöscht",
+            "saved": "Gespeichert"
+        }
+    },
+    "comment": {
+        "locked": "Dieser Beitrag ist geschlossen.",
+        "reply": "Antworten",
+        "actions": {
+            "label": "Aktionen",
+            "link": "Link kopieren"
+        },
+        "more": "{{comments:number}} mehr"
+    },
+    "moderation": {
+        "removeSubmission": {
+            "failEmptyReply": "Deine Antwort kann nicht leer sein, wenn 'Antwort mit Grund' aktiviert ist.",
+            "failReply": "Antwort konnte nicht verschickt werden. Entferne trotzdem...",
+            "failMessage": "Nutzer konnte nicht benachrichtigt werden. Entferne trotzdem...",
+            "title": "Entferne Beitrag",
+            "titleRestore": "Beitrag wird wiederhergestellt",
+            "titlePurge": "Beitrag wird ausgelöscht",
+            "withReason": "Antwort mit Grund",
+            "comment": "Kommentar",
+            "message": "Nachricht",
+            "successPurge": "Dieser Beitrag wurde erfolgreich ausgelöscht."
+        },
+        "ban": {
+            "warning": "Dies wird ALLE Beiträge dieses Nutzers hier löschen.",
+            "deleteData": "Lösche Daten",
+            "banning": "Nutzer verbannen",
+            "unbanning": "Nutzerverbannung aufheben",
+            "expires": "Verfällt (UTC)",
+            "banFromCommunity": "Von Gemeinschaft verbannen",
+            "unbanFromCommunity": "Verbannung von Gemeinschaft aufheben"
+        },
+        "report": "Melden",
+        "reportModal": {
+            "title": "Melden",
+            "success": "Dieser Beitrag wurde gemeldet."
+        },
+        "reason": "Grund",
+        "lock": "Schließen",
+        "unlock": "Aufschließen",
+        "remove": "Entfernen",
+        "restore": "Wiederherstellen",
+        "label": "Moderation",
+        "labelInstanceOnly": "Moderation (Nur diese Instanz)",
+        "feature": "Vorstellen",
+        "unfeature": "Vorstellung aufheben"
+    },
+    "admin": {
+        "purgeCommunity": {
+            "warning": "Dadurch werden alle Beiträge gelöscht. Bist du sicher? (Die Schaltfläche wird in 3 Sekunden aktiviert.)",
+            "title": "Gemeinschaft auslöschen"
+        },
+        "instance": "Instanz",
+        "purge": "Auslöschen",
+        "label": "Administration"
+    },
+    "common": {
+        "jump": "Springen",
+        "back": "Zurück",
+        "next": "Weiter",
+        "debug": "Fehlerbehebung",
+        "refresh": "Aktualisieren",
+        "save": "Speichern",
+        "enabled": "Aktiviert",
+        "disabled": "Deaktiviert",
+        "enable": "Aktivieren",
+        "disable": "Deaktivieren",
+        "add": "Hinzufügen",
+        "cancel": "Abbrechen",
+        "send": "Senden"
+    },
+    "content": {
+        "all": "Alles",
+        "users": "Nutzer",
+        "posts": "Beiträge",
+        "comments": "Kommentare",
+        "communities": "Gemeinschaften",
+        "instances": "Instanzen",
+        "message": "Nachricht"
+    },
+    "message": {
+        "success": "Erfolg",
+        "error": "Fehler"
     }
 }
