@@ -12,6 +12,7 @@
 
   export let postId: number
   export let parentId: number | undefined = undefined
+  export let banned: boolean = false
   export let locked: boolean = false
   export let rows: number = 7
   export let placeholder: string | undefined = undefined
@@ -67,9 +68,10 @@
       {rows}
       placeholder={locked
         ? $t('comment.locked')
+        : banned ? $t('comment.banned')
         : placeholder ?? placeholders.get('comment')}
       bind:value
-      disabled={locked || loading}
+      disabled={banned || locked || loading}
       on:confirm={() => {
         if (actions) {
           submit()
@@ -87,7 +89,7 @@
             size="lg"
             class="sm:ml-auto w-28"
             {loading}
-            disabled={locked || loading}
+            disabled={banned || locked || loading}
           >
             {$t('form.submit')}
           </Button>
