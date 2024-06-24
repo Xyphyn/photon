@@ -2,7 +2,7 @@
     "profile": {
         "inbox": "Posteingang",
         "saved": "Gespeichert",
-        "subscribed": "Abboniert",
+        "subscribed": "Abonniert",
         "profile": "Profil"
     },
     "nav": {
@@ -14,7 +14,7 @@
             "label": "Erstellen",
             "post": "Absenden",
             "community": "Gemeinschaft",
-            "logingate": "Du musst dich anmelden um Beiträge zu erstellen."
+            "logingate": "Du musst dich anmelden, um Beiträge zu erstellen."
         },
         "menu": {
             "label": "Profil",
@@ -51,7 +51,7 @@
         "location": {
             "label": "Ort",
             "local": "Lokal",
-            "subscribed": "Abboniert",
+            "subscribed": "Abonniert",
             "moderator": "Moderator",
             "all": "Alle",
             "global": "Global"
@@ -85,7 +85,7 @@
         },
         "view": {
             "label": "Ansicht",
-            "cozy": "Bequem",
+            "cozy": "Gemütlich",
             "list": "Liste",
             "compact": "Kompakt",
             "legacy": "Legacy"
@@ -108,7 +108,7 @@
         "2fa": "2FA Code",
         "forgotpassword": "Passwort vergessen",
         "submit": "Absenden",
-        "edit": "Editieren",
+        "edit": "Bearbeiten",
         "preview": "Vorschau",
         "post": {
             "edit": "Beitrag editieren",
@@ -122,22 +122,22 @@
             "create": "Beitrag erstellen"
         },
         "profile": {
-            "bio": "Werdegang",
+            "bio": "Biografie",
             "avatar": "Avatar",
             "banner": "Banner",
-            "email": "Email",
+            "email": "E-Mail",
             "matrix": "Matrix Nutzer",
             "showNSFW": "NSFW Beiträge anzeigen",
-            "bot": "Botkonto",
+            "bot": "Bot-Konto",
             "showBots": "Bots anzeigen",
             "showRead": "Gelesene Beiträge anzeigen",
-            "currentPassword": "Derzeitiges Passwort",
+            "currentPassword": "Aktuelles Passwort",
             "newPassword": "Neues Passwort",
             "verifyNewPassword": "Neues Passwort wiederholen",
             "2fa": {
                 "totp": "TOTP",
                 "2fa": "2FA",
-                "paste": "Füg dies in deine Authenticator-App ein."
+                "paste": "Füge dies in deine Authenticator-App ein."
             },
             "deleteAccount": {
                 "label": "Konto löschen",
@@ -147,11 +147,11 @@
             "displayName": "Anzeigename",
             "scores": "Stände anzeigen"
         },
-        "email": "Email",
+        "email": "E-Mail",
         "setup": "Einrichten",
         "signup": {
             "title": "Registrieren",
-            "info": "Eine Instanz ist der Server, auf dem Ihr Konto gehostet wird, aber Du kannst weiterhin auf Inhalte von anderen Instanzen zugreifen und mit diesen interagieren.",
+            "info": "Eine Instanz ist der Server, auf dem Dein Konto gehostet wird, aber Du kannst weiterhin auf Inhalte von anderen Instanzen zugreifen und mit diesen interagieren.",
             "chooseInstance": "Instanz auswählen",
             "application": {
                 "label": "Anwendung",
@@ -159,8 +159,8 @@
             },
             "closed": {
                 "title": "Registrierungen geschlossen",
-                "description": "Diese Instanz hat Registrierungen geschlossen. Find eine andere Instanz.",
-                "anotherInstance": "Finden eine andere Instanz"
+                "description": "Diese Instanz hat Registrierungen geschlossen. Finde eine andere Instanz.",
+                "anotherInstance": "Eine andere Instanz finden"
             },
             "description": "Wähle eine Instanz aus, die Dich interessiert, oder gebe die URL manuell ein."
         },
@@ -171,7 +171,7 @@
             "title": "Startseite",
             "footer": "{{users:number}} aktiv {{users; 1:user; default:users;}}"
         },
-        "modlog": "Modlog",
+        "modlog": "Moderationsverlauf",
         "instances": "Instanzen",
         "legal": {
             "title": "Rechtliches",
@@ -181,7 +181,7 @@
             "user": "Benutzer",
             "settings": "Einstellungen",
             "blocks": "Blöcke",
-            "credentials": "Ausweise",
+            "credentials": "Anmeldedaten",
             "moderates": "Moderiert",
             "favorites": "Favoriten"
         },
@@ -192,7 +192,7 @@
             "federating": "Föderiert",
             "query": "Anfrage",
             "noResults": {
-                "description": "Es gibt keine Ergebnisse, die diesem Filter entsprechen. Bitte die Suche anders formulieren.",
+                "description": "Es gibt keine Ergebnisse, die diesem Filter entsprechen. Versuche Deine Suche anders zu formulieren.",
                 "alt": "Das Fediverse durchsuchen",
                 "title": "Keine Ergebnisse"
             }
@@ -212,7 +212,7 @@
                 "part": "Du betrachtest einen Teil des Beitrags.",
                 "context": "Kontext anzeigen"
             },
-            "instanceWarning": "Dieser Beitrag wurde von einem anderen Server als dem deines Kontos angefordert. Viele Aktionen werden nicht funktionieren."
+            "instanceWarning": "Dieser Beitrag wurde von einem anderen Server als dem Deines Kontos angefordert. Viele Aktionen werden nicht funktionieren."
         },
         "inbox": {
             "title": "Posteingang",
@@ -235,7 +235,7 @@
         "admin": {
             "title": "Administration",
             "config": {
-                "title": "Einstellung",
+                "title": "Konfiguration",
                 "sidebar": "Seitenleiste",
                 "icon": "Symbol",
                 "banner": "Banner",
@@ -245,12 +245,12 @@
                     "open": "Offen",
                     "application": "Antrag erforderlich",
                     "closed": "Geschlossen",
-                    "label": "Registrationsmodus"
+                    "label": "Registrierungsmodus"
                 },
                 "applicationQuestion": "Antragsfrage",
                 "adminCommunityOnly": "Nur Admins können Gemeinschaften erstellen",
-                "requireVerifyEmail": "Email Verifikation erforderlich",
-                "emailAdminsOnReport": "Admins bei neuen Meldungen per Email benachrichtigen",
+                "requireVerifyEmail": "E-mail Verifizierung erforderlich",
+                "emailAdminsOnReport": "Admins bei neuen Meldungen per E-Mail benachrichtigen",
                 "listingType": {
                     "label": "Sortierart",
                     "all": "Alle",
@@ -260,11 +260,11 @@
                 "slurFilter": "Beleidigungsfilter Regex",
                 "federation": "Föderation aktiviert",
                 "captcha": {
-                    "enabled": "Aktiviert"
+                    "enabled": "CAPTCHA Aktiviert"
                 },
                 "federationDebug": "Föderationsfehlerbehebungsmodus",
-                "emailAdminsOnApplication": "Bei neuen Anträgen Admins per Email benachrichtigen",
-                "hideModlogModNames": "Moderatornamen im Modlog verstecken"
+                "emailAdminsOnApplication": "Bei neuen Anträgen Admins per E-Mail benachrichtigen",
+                "hideModlogModNames": "Moderatorennamen im Moderationsverlauf verstecken"
             },
             "applications": {
                 "title": "Anträge",
@@ -272,11 +272,11 @@
                     "title": "Keine neuen Anträge",
                     "description": "Anträge deiner Instanz beizutreten werden hier erscheinen."
                 },
-                "application": "Anträge",
+                "application": "Antrag",
                 "approved": "Genehmigt",
                 "denied": "Abgelehnt",
                 "user": "Nutzer",
-                "deny": "Ablehen",
+                "deny": "Ablehnen",
                 "approve": "Genehmigen",
                 "reason": "Grund",
                 "modalTitle": "Antrag ablehnen"
@@ -286,7 +286,7 @@
                 "add": "Motto hinzufügen",
                 "empty": {
                     "title": "Keine Mottos",
-                    "description": "Ein zufälliges Motto wird auf der Webseite erscheinen wenn Benutzer deine Instanz besuchen."
+                    "description": "Ein zufälliges Motto wird auf der Webseite erscheinen, wenn Benutzer deine Instanz besuchen."
                 }
             },
             "team": {
@@ -316,8 +316,8 @@
             }
         },
         "verifyEmail": {
-            "message": "Deine Emailadresse wurde bestätigt. Du kannst dieses Fenster nun schließen.",
-            "error": "Konnte deine Emailadresse nicht verifizieren."
+            "message": "Deine E-Mail Adresse wurde bestätigt. Du kannst dieses Fenster nun schließen.",
+            "error": "Deine E-Mail Adresse konnte nicht verifiziert werden."
         },
         "passwordChange": {
             "title": "Passwort ändern",
@@ -328,7 +328,7 @@
         "createCommunity": "Gemeinschaft erstellen",
         "resetLogin": {
             "title": "Passwort zurücksetzen",
-            "description": "Gib die E-Mail deines Kontos ein, und ein Link zum Zurücksetzen des Passworts wird gesendet. Wenn dein Konto keine E-Mail hat, wende dich an die Administratoren deiner Instanz."
+            "description": "Gib die E-Mail deines Kontos ein, und ein Link zum Zurücksetzen des Passworts wird Dir zugesendet. Wenn dein Konto keine E-Mail hat, wende dich an die Administratoren deiner Instanz."
         },
         "theme": {
             "title": "Thema",
@@ -345,29 +345,64 @@
     "toast": {
         "unblockedCommunity": "Die Blockierung dieser Gemeinschaft wurde aufgehoben.",
         "noComments": "Die API gab keine Kommentare zurück.",
-        "loginVoteGate": "Du musst angemeldet sein um zu wählen.",
+        "loginVoteGate": "Du musst angemeldet sein, um zu wählen.",
         "blockedCommunity": "Diese Gemeinschaft wurde blockiert.",
         "purgedCommunity": "Diese Gemeinschaft wurde ausgelöscht.",
         "blockedInstance": "Diese Instanz wurde blockiert.",
         "updatedCommunity": "Deine Gemeinschaft wurde aktualisiert.",
-        "sentMessage": "Diese Nachricht wurde versandt."
+        "sentMessage": "Diese Nachricht wurde versandt.",
+        "saveSettings": "Benutzereinstellungen wurden gespeichert. Wenn du Deine E-Mail Adresse geändert hast, wurde ein Verifizierungslink an diese versendet.",
+        "removeAdminWarning": "Bist du sicher, dass du diesen Admin entfernen möchtest?",
+        "failFindUser": "Nutzer konnte nicht gefunden werden.",
+        "verifyEmail": "Ein Verifizierungslink wurde an deine E-Mail versendet. Verifiziere deine E-Mail und melde dich dann an.",
+        "resetLink": "Ein \"Passwort Zurücksetzen\"-Link wurde an Deine E-Mail gesendet.",
+        "invalidDateAbsolute": "Ungültiges Datum. Es muss ein absolutes Datum sein.",
+        "invalidDateBeforeCurrent": "Ungültiges Datum. Es ist vor der aktuellen Zeit.",
+        "bannedUser": "Nutzer wurde gebannt.",
+        "unbannedUser": "Verbannung des Nutzers wurde aufgehoben.",
+        "needCommunity": "Du musst eine Gemeinschaft festlegen.",
+        "invalidURL": "Ungültige URL",
+        "restoredFromDraft": "Dein Beitrag wurde vom Entwurf wiederhergestellt.",
+        "copied": "In die Zwischenablage kopiert.",
+        "approvedApplication": "Antrag wurde angenommen.",
+        "deniedApplication": "Antrag wurde abgelehnt.",
+        "updatedSite": "Deine Seite wurde aktualisiert.",
+        "failCSV": "Fehler beim Lesen von CSV",
+        "removeAdmin": "Admin wurde entfernt.",
+        "addMod": "Moderator wurde hinzugefügt.",
+        "logIn": "Anmeldung erfolgreich.",
+        "addAccount": "Account wurde hinzugefügt.",
+        "passwordReset": "Dein Passwort wurde zurückgesetzt.",
+        "invalidLogin": "Ungültige Anmeldedaten",
+        "confirmDelete1": "Bist Du sicher, dass du Deinen Account löschen möchtest?",
+        "confirmDelete2": "Bist Du wirklich sicher?",
+        "confirmDelete3": "Letzte Warnung. Bist Du wirklich sicher?",
+        "needPassword": "Du musst dein Passwort angeben.",
+        "deleting": "Dein Account wird gelöscht...",
+        "deleted": "Dein Account wurde gelöscht.",
+        "resetSettings": "Möchtest du Deine Einstellung auf Standard zurücksetzen?",
+        "failSignup": "Registrierung fehlgeschlagen.",
+        "successSignup": "Erfolgreich registriert.",
+        "waitApplication": "Warte bis dein Registrierungsantrag akzeptiert wurde, bevor Du versuchst Dich anzumelden.",
+        "blockUser": "Nutzer wurde blockiert.",
+        "unblockUser": "Blockierung des Nutzers aufgehoben."
     },
     "cards": {
         "community": {
-            "modlog": "Modlog",
+            "modlog": "Moderationsverlauf",
             "members": "Mitglieder",
             "moderators": "Moderatoren",
-            "subscribe": "Abbonieren",
-            "subscribed": "Abboniert",
+            "subscribe": "Abonnieren",
+            "subscribed": "Abonniert",
             "block": "Blockieren",
-            "unblock": "Unblockieren",
+            "unblock": "Blockierung aufheben",
             "blockInstance": "Instanz blockieren",
-            "favorite": "Favoritieren",
-            "unfavorite": "Unfavoritieren"
+            "favorite": "Favorisieren",
+            "unfavorite": "Favorisierung aufheben"
         },
         "site": {
             "about": "Über",
-            "stats": "Statistik",
+            "stats": "Statistiken",
             "admins": "Admins"
         }
     },
@@ -390,7 +425,7 @@
             },
             "comments": "Kommentare",
             "save": "Speichern",
-            "unsave": "Unspeichern"
+            "unsave": "Speichern aufheben"
         },
         "badges": {
             "nsfw": "NSFW",
@@ -426,8 +461,8 @@
         "ban": {
             "warning": "Dies wird ALLE Beiträge dieses Nutzers hier löschen.",
             "deleteData": "Lösche Daten",
-            "banning": "Nutzer verbannen",
-            "unbanning": "Nutzerverbannung aufheben",
+            "banning": "Nutzer sperren",
+            "unbanning": "Nutzersperrung aufheben",
             "expires": "Verfällt (UTC)",
             "banFromCommunity": "Von Gemeinschaft verbannen",
             "unbanFromCommunity": "Verbannung von Gemeinschaft aufheben"
@@ -450,10 +485,10 @@
     "admin": {
         "purgeCommunity": {
             "warning": "Dadurch werden alle Beiträge gelöscht. Bist du sicher? (Die Schaltfläche wird in 3 Sekunden aktiviert.)",
-            "title": "Gemeinschaft auslöschen"
+            "title": "Gemeinschaft bereinigen"
         },
         "instance": "Instanz",
-        "purge": "Auslöschen",
+        "purge": "Bereinigen",
         "label": "Administration"
     },
     "common": {
@@ -483,5 +518,134 @@
     "message": {
         "success": "Erfolg",
         "error": "Fehler"
+    },
+    "settings": {
+        "other": {
+            "debug": {
+                "title": "Fehlerbehebungsinformationen",
+                "description": "Fehlerbehebungsinformationen anzeigen"
+            },
+            "title": "Andere"
+        },
+        "app": {
+            "translation": {
+                "description": "Die LibreTranslate Instanz, die für die Übersetzung verwendet wird.",
+                "title": "Übersetzung",
+                "instance": "Domäne"
+            },
+            "limitLayoutWidth": {
+                "description": "Verbessere die Lesbarkeit, durch die Begrenzung der Breite des Hauptinhalts.",
+                "title": "Layout Breite begrenzen"
+            },
+            "lang": {
+                "description": "Die verwendete Sprache für Photons UI.",
+                "note": "Sprachen außer Englisch und Hebräisch wurden von der Community übersetzt und könnten unvollständig sein.",
+                "de": "Deutsch",
+                "fi": "Finnisch",
+                "pt": "Portugiesisch",
+                "auto": "Automatisch",
+                "credits": "Credits",
+                "title": "Sprache",
+                "en": "Englisch",
+                "en-US": "Englisch (US)",
+                "he": "Hebräisch",
+                "et": "Estnisch",
+                "fr": "Französisch"
+            },
+            "view": {
+                "title": "Beitragsstil",
+                "legacy": "Der alte Photon-Look."
+            },
+            "sort": {
+                "title": "Standard-Sortierung"
+            },
+            "postsInNewTab": {
+                "title": "Beiträge in einem neuen Tab öffnen",
+                "description": "Beiträge in einem separaten Tab öffnen statt im Aktuellen."
+            },
+            "thumbnailSide": {
+                "left": "Links",
+                "right": "Rechts"
+            },
+            "title": "Photon",
+            "theming": {
+                "description": "Photons Farben anpassen.",
+                "link": "Gehe zu Themen"
+            },
+            "displayName": {
+                "title": "Anzeigename verwenden",
+                "description": "Zeige die Anzeigenamen von Nutzern statt ihren tatsächlichen Nutzernamen."
+            },
+            "placeholders": {
+                "title": "Zufällige Platzhalter",
+                "description": "Zeige zufällige Platzhalter für bestimmte Texteingabefelder."
+            },
+            "expandImages": {
+                "title": "Bilder erweitern",
+                "description": "Durch Klicken auf ein Beitragsbild gelangt man in eine vergrößerte Ansicht des Bildes statt in die Beitragsansicht."
+            },
+            "font": {
+                "title": "Schriftart",
+                "description": "Welche Schriftart Photon in der UI verwendet."
+            }
+        },
+        "navigation": {
+            "dockPos": {
+                "description": "Wo das Dock auf dem Bildschirm positioniert sein soll.",
+                "title": "Dock Position",
+                "top": "Oben",
+                "bottom": "Unten",
+                "adaptive": "Adaptiv"
+            },
+            "title": "Navigation",
+            "panel": {
+                "title": "Panel Modus",
+                "description": "Erweitere das Dock zum Rand des Bildschirms, ähnlich zu einem Panel.",
+                "on": "An",
+                "off": "Aus",
+                "adaptive": "Adaptiv"
+            }
+        },
+        "lemmy": {
+            "compactFeatured": {
+                "description": "Stelle vorgestellte Beiträge kompakter dar",
+                "title": "Kompakte vorgestellte Beiträge"
+            },
+            "markReadPosts": {
+                "title": "Gelesene Beiträge markieren",
+                "description": "Markiere einen Beitrag als gelesen, wenn Du auf ihn klickst"
+            },
+            "fadeReadPosts": {
+                "title": "Gelesene Beiträge verblassen",
+                "description": "Titel von Beiträgen, die Du bereits gelesen hast, verblassen lassen"
+            },
+            "hideSubmissions": {
+                "deleted": "Vom Nutzer gelöscht",
+                "removed": "Durch einen Moderator entfernt"
+            },
+            "instances": {
+                "title": "Instanzen anzeigen"
+            },
+            "title": "Lemmy",
+            "showHiddenPosts": {
+                "title": "Versteckte Beiträge anzeigen",
+                "description": "Zeige die von Dir versteckten Beiträge an."
+            }
+        },
+        "beta": "Beta",
+        "embeds": {
+            "title": "Einbettungen",
+            "clickToView": {
+                "description": "Einbettungen nur laden, sobald Du auf sie klickst.",
+                "title": "Zum Ansehen klicken"
+            }
+        },
+        "title": "Einstellungen",
+        "moderation": {
+            "title": "Moderation",
+            "replyPresets": {
+                "syntax": "Syntax"
+            }
+        }
     }
 }
