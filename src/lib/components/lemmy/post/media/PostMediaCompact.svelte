@@ -9,14 +9,14 @@
   import { userSettings } from '$lib/settings.js'
   import { isImage } from '$lib/ui/image'
   import type { Post } from 'lemmy-js-client'
-  import { DocumentText, Icon, Link, VideoCamera } from 'svelte-hero-icons';
+  import { DocumentText, Icon, Link, VideoCamera } from 'svelte-hero-icons'
 
   export let view: 'card' | 'cozy' | 'list' | 'compact' = 'cozy'
   export let post: Post
   export let type: MediaType = 'none'
 </script>
 
-{#if view == "compact" || (view == "list" && !post.embed_title && (post.thumbnail_url || isImage(post.url)))}
+{#if view == 'compact' || (view == 'list' && (!post.embed_title || type == 'iframe') && type != 'none')}
   <div
     class="w-24 sm:w-32 h-24 group/media {$$props.class ?? ''}"
     style={$$props.style ?? ''}
@@ -25,8 +25,8 @@
       this={!$userSettings.expandImages || type != 'image' ? 'a' : 'button'}
       href={postLink(post)}
       on:click={() => {
-        if (type == "image") {
-          showImage(bestImageURL(post, false, 2048));
+        if (type == 'image') {
+          showImage(bestImageURL(post, false, 2048))
         }
       }}
       role="button"
@@ -46,7 +46,7 @@
             class="relative w-7 h-7 bottom-8 left-1 rounded-lg text-slate-800 dark:text-zinc-200
             backdrop-blur-sm bg-[#ffffff]/75 dark:bg-black/75 grid place-items-center"
           >
-            <Icon src={type == 'iframe' ? VideoCamera : Link} mini size="16"/>
+            <Icon src={type == 'iframe' ? VideoCamera : Link} mini size="16" />
           </div>
         {/if}
       {:else}
@@ -56,7 +56,15 @@
           group-hover/media:dark:border-zinc-600 transition-colors text-slate-400 dark:text-zinc-600 grid
           place-items-center"
         >
-          <Icon src={type == 'embed' ? Link : type == 'iframe' ? VideoCamera : DocumentText} solid size="32"/>
+          <Icon
+            src={type == 'embed'
+              ? Link
+              : type == 'iframe'
+                ? VideoCamera
+                : DocumentText}
+            solid
+            size="32"
+          />
         </div>
       {/if}
     </svelte:element>
