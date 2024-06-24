@@ -88,6 +88,7 @@ interface Settings {
   }
   language: string | null
   translator: string | undefined
+  legacySidebarNavigation: boolean
 }
 
 export const defaultSettings: Settings = {
@@ -154,6 +155,7 @@ export const defaultSettings: Settings = {
   },
   language: env.PUBLIC_LANGUAGE ?? null,
   translator: env.PUBLIC_TRANSLATOR ?? undefined,
+  legacySidebarNavigation: toBool(env.PUBLIC_LEGACY_SIDEBAR_NAVIGATION) ?? false,
 }
 
 export const userSettings = writable(defaultSettings)

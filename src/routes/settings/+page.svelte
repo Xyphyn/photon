@@ -88,6 +88,11 @@
         bind:selected={$userSettings.dock.noGap}
       />
     </Setting>
+    <ToggleSetting
+      bind:checked={$userSettings.legacySidebarNavigation}
+      title={$t('settings.navigation.legacySidebarNavigation.title')}
+      description={$t('settings.navigation.legacySidebarNavigation.description')}
+    />
   </Section>
 
   <Section title={$t('settings.app.title')}>

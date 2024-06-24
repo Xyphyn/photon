@@ -547,6 +547,10 @@
         "on": "On",
         "off": "Off",
         "adaptive": "Adaptive"
+      },
+      "legacySidebarNavigation": {
+        "title": "Legacy sidebar navigation",
+        "description": "Use the old sidebar navigation"
       }
     },
     "app": {
