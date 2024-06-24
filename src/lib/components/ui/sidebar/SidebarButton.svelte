@@ -16,10 +16,11 @@
 
 <Button
   color="tertiary"
+  alignment="left"
   {...$$restProps}
   {href}
-  alignment="left"
   on:click
+  on:contextmenu
   class="font-normal {selected
     ? 'text-primary-900 dark:!text-primary-100'
     : 'text-slate-600 dark:text-zinc-400'} {$userSettings.expandSidebar

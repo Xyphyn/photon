@@ -11,6 +11,7 @@
     Switch,
     TextInput,
     toast,
+    Popover,
   } from 'mono-svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import Link from '$lib/components/input/Link.svelte'
@@ -18,6 +19,7 @@
     ArrowPath,
     ArrowRight,
     ChatBubbleOvalLeftEllipsis,
+    CheckCircle,
     ChevronDown,
     ChevronRight,
     GlobeAmericas,
@@ -34,6 +36,9 @@
   import Section from './Section.svelte'
   import ToggleSetting from './ToggleSetting.svelte'
   import { locales, t } from '$lib/translations'
+  import { defaultLinks, iconOfLink } from '$lib/components/ui/navbar/link'
+
+  let pin: string = ''
 </script>
 
 <svelte:head>
@@ -87,6 +92,38 @@
         ]}
         bind:selected={$userSettings.dock.noGap}
       />
+    </Setting>
+    <Setting>
+      <span slot="title">{$t('settings.navigation.pins.title')}</span>
+      <span slot="description">
+        {$t('settings.navigation.pins.description')}
+      </span>
+      <div class="flex items-center gap-1 flex-wrap">
+        {#each defaultLinks as pin}
+          <Popover openOnHover placement="bottom">
+            <Button
+              size="square-md"
+              slot="target"
+              on:click={() => {
+                $userSettings.dock.pins = [
+                  ...($userSettings.dock.pins ?? []),
+                  pin,
+                ]
+              }}
+            >
+              <Icon src={iconOfLink(pin.url)} mini size="16" />
+            </Button>
+            <Material
+              slot="popover"
+              padding="none"
+              class="px-4 py-2 flex flex-col"
+            >
+              <span class="font-medium text-lg">{pin.label}</span>
+              <code class="!bg-zinc-950 !rounded-md">{pin.url}</code>
+            </Material>
+          </Popover>
+        {/each}
+      </div>
     </Setting>
   </Section>
 

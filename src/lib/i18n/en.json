@@ -547,6 +547,10 @@
         "on": "On",
         "off": "Off",
         "adaptive": "Adaptive"
+      },
+      "pins": {
+        "title": "Pins",
+        "description": "Click a pin to send it to the top of the sidebar. Right click a pinned item to remove it."
       }
     },
     "app": {

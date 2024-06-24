@@ -3,6 +3,7 @@ import { writable } from 'svelte/store'
 import { env } from '$env/dynamic/public'
 import { locale } from './translations'
 import { browser } from '$app/environment'
+import type { Link } from './components/ui/navbar/link'
 
 console.log('Using the following default settings from the environment:')
 console.log(env)
@@ -80,6 +81,7 @@ interface Settings {
   dock: {
     noGap: boolean | null
     top: boolean | null
+    pins: Link[]
   }
   posts: {
     deduplicateEmbed: boolean
@@ -146,6 +148,7 @@ export const defaultSettings: Settings = {
   dock: {
     noGap: toBool(env.PUBLIC_DOCK_PANEL) ?? null,
     top: toBool(env.PUBLIC_DOCK_TOP) ?? null,
+    pins: [],
   },
   posts: {
     deduplicateEmbed: toBool(env.PUBLIC_DEDUPLICATE_EMBED) ?? true,

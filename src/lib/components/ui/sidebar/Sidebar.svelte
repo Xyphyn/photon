@@ -28,6 +28,21 @@
   import Application from '../../../../routes/admin/applications/Application.svelte'
   import { t } from '$lib/translations'
   import ItemList from '$lib/components/lemmy/generic/ItemList.svelte'
+  import { iconOfLink } from '../navbar/link'
+  import { goto } from '$app/navigation'
+  import { page } from '$app/stores'
+
+  function pinsEvent(node: HTMLElement) {
+    node.oncontextmenu = (e) => {
+      e.preventDefault()
+      console.log('test')
+      // $userSettings.dock.pins = $userSettings.dock.pins.splice(
+      //   $userSettings.dock.pins.findIndex((p) => pin.url == p.url),
+      //   1
+      // )
+      return false
+    }
+  }
 </script>
 
 <nav
@@ -35,6 +50,29 @@
   gap-1 h-fit max-h-screen {$$props.class}"
   style={$$props.style}
 >
+  {#if $userSettings.dock.pins?.length ?? 0 > 0}
+    <div class="flex items-center flex-wrap gap-2 pl-1.5">
+      {#each $userSettings.dock.pins as pin}
+        <SidebarButton
+          icon={iconOfLink(pin.url)}
+          on:click={() => goto(pin.url)}
+          color="tertiary"
+          alignment="center"
+          selected={`${$page.url.pathname}${$page.url.search}` == pin.url}
+          on:contextmenu={(e) => {
+            e.preventDefault()
+            $userSettings.dock.pins = $userSettings.dock.pins.toSpliced(
+              $userSettings.dock.pins.findIndex((p) => pin.url == p.url),
+              1
+            )
+            return false
+          }}
+          size="square-md"
+        ></SidebarButton>
+      {/each}
+    </div>
+    <hr class="border-slate-200 dark:border-zinc-900 my-1" />
+  {/if}
   {#if $profile?.jwt}
     <SidebarButton icon={UserCircle} href="/profile/user">
       <span slot="label">

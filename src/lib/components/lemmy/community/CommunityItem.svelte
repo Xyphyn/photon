@@ -27,9 +27,11 @@
   let showInfo = false
 </script>
 
-<Modal title="Community" bind:open={showInfo}>
-  <CommunityCard community_view={community} />
-</Modal>
+{#if showInfo}
+  <Modal title="Community" bind:open={showInfo}>
+    <CommunityCard community_view={community} />
+  </Modal>
+{/if}
 
 <div class="py-4 flex flex-col gap-2 text-sm max-w-full relative">
   <div class="flex flex-row items-center">
