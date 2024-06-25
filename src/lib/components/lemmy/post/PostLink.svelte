@@ -6,7 +6,7 @@
 
   export let url: string
   export let thumbnail_url: string | undefined = undefined
-  export let left_thumbnail: boolean = false;
+  export let left_thumbnail: boolean = false
   export let nsfw: boolean = false
   export let embed_title: string | undefined = undefined
   export let embed_description: string | undefined = undefined
