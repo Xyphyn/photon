@@ -85,5 +85,6 @@
     embed_description={post.embed_description}
     embed_title={post.embed_title}
     compact={view == 'compact' || (view == 'list' && !post.embed_title)}
+    left_thumbnail={view == 'list' && $userSettings.leftAlign}
   />
 {/if}

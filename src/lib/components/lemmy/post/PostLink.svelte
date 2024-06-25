@@ -6,6 +6,7 @@
 
   export let url: string
   export let thumbnail_url: string | undefined = undefined
+  export let left_thumbnail: boolean = false;
   export let nsfw: boolean = false
   export let embed_title: string | undefined = undefined
   export let embed_description: string | undefined = undefined
@@ -15,49 +16,61 @@
 </script>
 
 {#if embed_title && !compact}
-  <Material color="distinct" class="flex flex-row gap-4">
-    <div class="flex flex-col gap-2">
-      {#if richURL}
-        <Link
+  <Material color="distinct" class="overflow-hidden">
+    <div
+      class="grid"
+      style={!thumbnail_url
+        ? `grid-template-areas: 'text';`
+        : left_thumbnail
+          ? `grid-template-areas: 'thumbnail text'; grid-template-columns: 240px auto;`
+          : `grid-template-areas: 'text thumbnail'; grid-template-columns: auto 240px;`}
+    >
+      <div class="flex flex-col gap-2" style="grid-area: text;">
+        {#if richURL}
+          <Link
+            href={url}
+            target="_blank"
+            class="text-slate-600 dark:text-zinc-400 inline-flex items-center gap-1 text-xs"
+          >
+            <Icon src={LinkIcon} size="12" mini slot="icon" />
+            {richURL.hostname}
+          </Link>
+        {/if}
+        <a
           href={url}
           target="_blank"
-          class="text-slate-600 dark:text-zinc-400 inline-flex items-center gap-1 text-xs"
+          class="font-medium text-base hover:underline"
         >
-          <Icon src={LinkIcon} size="12" mini slot="icon" />
-          {richURL.hostname}
-        </Link>
-      {/if}
-      <a
-        href={url}
-        target="_blank"
-        class="font-medium text-base hover:underline"
-      >
-        {embed_title}
-      </a>
-      {#if embed_description}
-        <p class="text-sm">
-          {embed_description.slice(0, 300)}{embed_description.length > 300
-            ? '...'
-            : ''}
-        </p>
+          {embed_title}
+        </a>
+        {#if embed_description}
+          <p class="text-sm">
+            {embed_description.slice(0, 300)}{embed_description.length > 300
+              ? '...'
+              : ''}
+          </p>
+        {/if}
+      </div>
+      {#if thumbnail_url}
+        <a
+          href={url}
+          target="_blank"
+          class="thumbnail overflow-hidden -m-4 {left_thumbnail
+            ? 'mr-auto'
+            : 'ml-auto'}"
+          style="grid-area: thumbnail;"
+        >
+          <img
+            src={optimizeImageURL(thumbnail_url, 256)}
+            class="w-full h-full object-cover bg-slate-200 dark:bg-zinc-800"
+            width={600}
+            height={400}
+            alt={embed_title}
+            class:blur-3xl={nsfw}
+          />
+        </a>
       {/if}
     </div>
-    {#if thumbnail_url}
-      <a
-        href={url}
-        target="_blank"
-        class="ml-auto w-full thumbnail rounded-r-lg overflow-hidden flex-shrink -m-4"
-      >
-        <img
-          src={optimizeImageURL(thumbnail_url, 256)}
-          class="w-full h-full object-cover bg-slate-200 dark:bg-zinc-800"
-          width={600}
-          height={400}
-          alt={embed_title}
-          class:blur-3xl={nsfw}
-        />
-      </a>
-    {/if}
   </Material>
 {:else}
   <Link
