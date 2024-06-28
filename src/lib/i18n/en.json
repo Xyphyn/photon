@@ -532,6 +532,9 @@
   "settings": {
     "title": "Settings",
     "beta": "Beta",
+    "desktop": "Desktop",
+    "tablet": "Tablet",
+    "mobile": "Mobile",
     "navigation": {
       "title": "Navigation",
       "dockPos": {
@@ -559,6 +562,10 @@
         "title": "Theming",
         "description": "Customize Photon's colors.",
         "link": "Go to themes"
+      },
+      "colorscheme": {
+        "title": "Color Scheme",
+        "description": "The color scheme to use."
       },
       "lang": {
         "title": "Language",

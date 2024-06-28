@@ -93,7 +93,9 @@
         bind:selected={$userSettings.dock.noGap}
       />
     </Setting>
-    <Setting>
+    <Setting
+      supportedPlatforms={{ desktop: true, tablet: true, mobile: false }}
+    >
       <span slot="title">{$t('settings.navigation.pins.title')}</span>
       <span slot="description">
         {$t('settings.navigation.pins.description')}
@@ -128,14 +130,6 @@
   </Section>
 
   <Section title={$t('settings.app.title')}>
-    <Setting>
-      <span slot="title">{$t('settings.app.theming.title')}</span>
-      <span slot="description">{$t('settings.app.theming.description')}</span>
-      <Button href="/theme">
-        {$t('settings.app.theming.link')}
-        <Icon src={ArrowRight} size="16" mini slot="suffix" />
-      </Button>
-    </Setting>
     <Setting>
       <span slot="title" class="inline-flex items-center gap-2">
         {$t('settings.app.lang.title')}
@@ -226,6 +220,7 @@
       description={$t('settings.app.displayName.description')}
     />
     <ToggleSetting
+      supportedPlatforms={{ desktop: true, tablet: false, mobile: false }}
       bind:checked={$userSettings.newWidth}
       title={$t('settings.app.limitLayoutWidth.title')}
       description={$t('settings.app.limitLayoutWidth.description')}
@@ -259,7 +254,7 @@
         bind:selected={$userSettings.leftAlign}
       />
     </Setting>
-    <Setting vertical>
+    <Setting itemsClass="flex-col !items-start">
       <span slot="title">{$t('settings.app.font.title')}</span>
       <span slot="description">{$t('settings.app.font.description')}</span>
       <MultiSelect
@@ -267,6 +262,14 @@
         optionNames={['Inter', 'Satoshi/Nunito', 'System UI', 'Browser Font']}
         bind:selected={$userSettings.font}
       />
+    </Setting>
+    <Setting>
+      <span slot="title">{$t('settings.app.theming.title')}</span>
+      <span slot="description">{$t('settings.app.theming.description')}</span>
+      <Button href="/theme">
+        {$t('settings.app.theming.link')}
+        <Icon src={ArrowRight} size="16" mini slot="suffix" />
+      </Button>
     </Setting>
     <Setting>
       <span slot="title">{$t('settings.app.translation.title')}</span>

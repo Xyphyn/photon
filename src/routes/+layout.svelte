@@ -14,6 +14,7 @@
     defaultColors,
     inDarkLegacyTheme,
     legacyTheme,
+    type Colors,
   } from '$lib/ui/colors.js'
   import { userSettings } from '$lib/settings.js'
   import { Button, ModalContainer, Spinner, ToastContainer } from 'mono-svelte'
@@ -62,21 +63,28 @@
         .matchMedia('(prefers-color-scheme: dark)')
         .addEventListener('change', (event) => {
           darklegacyTheme = inDarkLegacyTheme()
+          themeColor = getMetaColor($colors)
         })
       document.body.querySelector('.loader')?.classList.add('hidden')
     }
   })
   $: title = routes[($page.route.id as keyof typeof routes) ?? '']
   $: browser ? document.body.setAttribute('style', colorsToVars($colors)) : ''
+
+  // svelte reactivity goof
+  const getMetaColor = (colors: Colors): string | undefined => {
+    const regex = /var\([^,]+,\s*(#[0-9A-Fa-f]{6})\)/m
+
+    return darklegacyTheme
+      ? colors.zinc?.[925] ?? defaultColors.zinc[925].match(regex)?.[1]
+      : colors.slate?.[25] ?? defaultColors.slate[25].match(regex)?.[1]
+  }
+
+  $: themeColor = getMetaColor($colors)
 </script>
 
 <svelte:head>
-  <meta
-    name="theme-color"
-    content={darklegacyTheme
-      ? $colors?.zinc?.[925] ?? defaultColors.zinc[925]
-      : $colors?.slate?.[25] ?? defaultColors.slate[25]}
-  />
+  <meta name="theme-color" content={themeColor} />
   {#if $site}
     <title>{$site.site_view.site.name}</title>
     {#if LINKED_INSTANCE_URL}
