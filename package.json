@@ -21,6 +21,7 @@
     "@sveltejs/adapter-vercel": "^5.1.0",
     "@sveltejs/kit": "latest",
     "@sveltejs/vite-plugin-svelte": "^3.0.0",
+    "@tailwindcss/container-queries": "^0.1.1",
     "@types/markdown-it": "^12.2.3",
     "@types/markdown-it-container": "^2.0.6",
     "@types/nprogress": "^0.2.0",

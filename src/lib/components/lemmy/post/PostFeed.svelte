@@ -124,30 +124,30 @@
               combinedPosts = combinedPosts.toSpliced(index, 1)
             }}
           >
-            <button
-              slot="badges"
-              class:hidden={!post.withCrossposts}
-              on:click={() => {
-                if (viewPost == post.post.id) viewPost = -1
-                else viewPost = post.post.id
-              }}
-            >
+            <svelte:fragment slot="badges">
               {#if post.withCrossposts}
-                <Badge
-                  class="z-10 backdrop-blur-xl hover:brightness-110 cursor-pointer transition-all"
-                  color="gray-subtle"
+                <button
+                  on:click={() => {
+                    if (viewPost == post.post.id) viewPost = -1
+                    else viewPost = post.post.id
+                  }}
                 >
-                  {#if viewPost == post.post.id}
-                    <Icon mini src={Minus} size="14" />
-                  {:else}
-                    <Icon mini src={Plus} size="14" />
-                  {/if}
-                  {post.crossposts.length} crosspost{post.crossposts.length == 1
-                    ? ''
-                    : 's'}
-                </Badge>
-              {/if}
-            </button>
+                  <Badge
+                    class="z-10 backdrop-blur-xl hover:brightness-110 cursor-pointer transition-all"
+                    color="gray-subtle"
+                  >
+                    {#if viewPost == post.post.id}
+                      <Icon mini src={Minus} size="14" />
+                    {:else}
+                      <Icon mini src={Plus} size="14" />
+                    {/if}
+                    {post.crossposts.length} crosspost{post.crossposts.length ==
+                    1
+                      ? ''
+                      : 's'}
+                  </Badge>
+                </button>{/if}
+            </svelte:fragment>
           </Post>
           {#if post.withCrossposts && viewPost == post.post.id}
             <div

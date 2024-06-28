@@ -100,7 +100,9 @@
       </SearchBar>
     </div>
   {/if}
-  <div class="flex flex-row gap-2 py-2 px-2 items-center w-full">
+  <div
+    class="flex flex-row gap-2 py-2 px-2 items-center w-full rounded-full overflow-auto"
+  >
     <div class="ml-auto" />
     {#if $profile?.user && isAdmin($profile.user)}
       <NavButton

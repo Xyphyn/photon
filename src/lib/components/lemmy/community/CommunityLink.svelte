@@ -13,7 +13,7 @@
 
 <a
   {...$$restProps}
-  class="items-center flex flex-row gap-2 hover:underline flex-shrink-0 {$$props.class ||
+  class="items-center flex flex-row gap-2 hover:underline max-w-full min-w-0 {$$props.class ||
     ''}"
   href="/c/{community.name}@{new URL(community.actor_id).hostname}"
 >
@@ -27,18 +27,25 @@
   {/if}
 
   {#if name}
-    <span class="flex gap-0 items-center">
+    <span class="flex gap-0 items-center max-w-full min-w-0 flex-shrink">
+      <span class="font-medium">{community.title}</span>
       {#if showInstance}
-        <span class="font-medium">{community.title}</span>
         <span
-          class="text-slate-500 dark:text-zinc-500 font-normal {$$props.instanceClass ||
-            ''}"
+          class="text-slate-500 dark:text-zinc-500 font-normal
+          instance-text flex-shrink {$$props.instanceClass || ''}"
         >
           @{new URL(community.actor_id).hostname}
         </span>
-      {:else}
-        {community.title}
       {/if}
     </span>
   {/if}
 </a>
+
+<style>
+  .instance-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+</style>

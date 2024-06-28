@@ -16,20 +16,28 @@
 </script>
 
 <a
-  class="items-center inline-flex flex-row gap-1 hover:underline {$$props.class ??
+  class="items-center flex flex-row gap-1 hover:underline max-w-full min-w-0 {$$props.class ??
     ''}"
   href="/u/{user.name}@{new URL(user.actor_id).hostname}"
 >
   {#if avatar}
-    <Avatar url={user.avatar} alt={user.name} width={avatarSize} />
+    <Avatar
+      url={user.avatar}
+      alt={user.name}
+      width={avatarSize}
+      class="flex-shrink-0"
+    />
   {/if}
-  <span class="flex flex-wrap gap-0 items-center" class:ml-0.5={avatar}>
+  <span
+    class="flex gap-0 items-center flex-shrink max-w-full min-w-0"
+    class:ml-0.5={avatar}
+  >
     <span class:font-medium={showInstance}>
       {$userSettings.displayNames ? user.display_name || user.name : user.name}
     </span>
     {#if showInstance}
       <span
-        class="text-slate-500 dark:text-zinc-500 font-normal {$$props.instanceClass ??
+        class="text-slate-500 dark:text-zinc-500 font-normal instance-text flex-shrink {$$props.instanceClass ??
           ''}"
       >
         @{new URL(user.actor_id).hostname}
@@ -48,3 +56,12 @@
     <slot name="badges" />
   {/if}
 </a>
+
+<style>
+  .instance-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+</style>
