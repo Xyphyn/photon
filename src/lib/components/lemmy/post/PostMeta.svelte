@@ -8,6 +8,7 @@
   import {
     Bookmark,
     Check,
+    ExclamationTriangle,
     Icon,
     LockClosed,
     Megaphone,
@@ -108,13 +109,16 @@
       <RelativeDate date={published} />
     {/if}
   </span>
-
   <div
-    class="flex flex-row items-center self-center overflow-auto gap-2 [&>*]:flex-shrink-0"
+    class="flex flex-row items-center self-center flex-wrap gap-2 [&>*]:flex-shrink-0
+    {Object.values(badges).some(Boolean) ? 'pt-2' : ''}"
     style="grid-area: badges;"
   >
     {#if badges.nsfw}
-      <Badge color="red-subtle">{$t('post.badges.nsfw')}</Badge>
+      <Badge label={$t('post.badges.nsfw')} color="red-subtle" allowIconOnly>
+        <Icon src={ExclamationTriangle} size="14" micro slot="icon" />
+        {$t('post.badges.nsfw')}
+      </Badge>
     {/if}
     {#if badges.saved}
       <Badge
@@ -122,7 +126,7 @@
         color="yellow-subtle"
         allowIconOnly
       >
-        <Icon src={Bookmark} mini size="12" slot="icon" />
+        <Icon src={Bookmark} micro size="14" slot="icon" />
         {$t('post.badges.saved')}
       </Badge>
     {/if}
@@ -132,19 +136,19 @@
         color="yellow-subtle"
         allowIconOnly
       >
-        <Icon src={LockClosed} mini size="14" slot="icon" />
+        <Icon src={LockClosed} micro size="14" slot="icon" />
         <span class="max-md:hidden">{$t('post.badges.locked')}</span>
       </Badge>
     {/if}
     {#if badges.removed}
       <Badge label={$t('post.badges.removed')} color="red-subtle" allowIconOnly>
-        <Icon src={Trash} mini size="14" slot="icon" />
+        <Icon src={Trash} micro size="14" slot="icon" />
         <span class="max-md:hidden">{$t('post.badges.removed')}</span>
       </Badge>
     {/if}
     {#if badges.deleted}
       <Badge label={$t('post.badges.deleted')} color="red-subtle" allowIconOnly>
-        <Icon src={Trash} mini size="14" slot="icon" />
+        <Icon src={Trash} micro size="14" slot="icon" />
         <span class="max-md:hidden">{$t('post.badges.deleted')}</span>
       </Badge>
     {/if}
@@ -154,7 +158,7 @@
         color="green-subtle"
         allowIconOnly
       >
-        <Icon src={Megaphone} mini size="14" slot="icon" />
+        <Icon src={Megaphone} micro size="14" slot="icon" />
         <span class="max-md:hidden">{$t('post.badges.featured')}</span>
       </Badge>
     {/if}
@@ -181,10 +185,11 @@
   .meta {
     display: grid;
     grid-template-areas:
-      'avatar community badges'
-      'avatar stats badges';
+      'avatar community'
+      'avatar stats'
+      'badges badges';
     gap: 0;
-    grid-template-rows: auto auto;
+    grid-template-rows: auto auto auto;
     grid-template-columns: auto 1fr;
   }
 </style>
