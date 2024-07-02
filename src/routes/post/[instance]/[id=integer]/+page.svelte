@@ -21,7 +21,7 @@
   } from 'svelte-hero-icons'
   import PostLink from '$lib/components/lemmy/post/PostLink.svelte'
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
-  import { Material, Select, removeToast, toast } from 'mono-svelte'
+  import { Material, Select, Spinner, removeToast, toast } from 'mono-svelte'
   import type { CommentSortType } from 'lemmy-js-client'
   import { profile } from '$lib/auth.js'
   import { instance } from '$lib/instance.js'
@@ -47,17 +47,17 @@
 
   let post = data.post
 
-  onMount(async () => {
-    if (
-      !(post.post_view.read && $userSettings.markPostsAsRead) &&
-      $profile?.jwt
-    ) {
-      getClient().markPostAsRead({
-        read: $userSettings.markPostsAsRead,
-        post_id: post.post_view.post.id,
-      })
-    }
-  })
+  // onMount(async () => {
+  //   if (
+  //     !(post.post_view.read && $userSettings.markPostsAsRead) &&
+  //     $profile?.jwt
+  //   ) {
+  //     getClient().markPostAsRead({
+  //       read: $userSettings.markPostsAsRead,
+  //       post_id: post.post_view.post.id,
+  //     })
+  //   }
+  // })
 
   afterNavigate(async () => {
     // reactivity hack
@@ -109,6 +109,8 @@
 
   $: remoteView =
     $page.params.instance?.toLowerCase() != $instance.toLowerCase()
+
+  const test = 'wow'
 </script>
 
 <svelte:head>
@@ -302,36 +304,48 @@ flex-wrap gap-4 sticky top-20 w-full box-border z-20 mt-4"
       </Button>
     </div>
   </div>
-  {#if $profile?.user}
-    <CommentForm
-      postId={post.post_view.post.id}
-      on:comment={(comment) =>
-        (data.comments.comments = [
-          comment.detail.comment_view,
-          ...data.comments.comments,
-        ])}
-      locked={post.post_view.post.locked ||
-        $page.params.instance.toLowerCase() != $instance.toLowerCase()}
-      on:focus={() => (commenting = true)}
-      tools={commenting}
-      preview={commenting}
-      placeholder={commenting ? undefined : $t('routes.post.addComment')}
-      rows={commenting ? 7 : 1}
+  {#await data.comments}
+    <div class="flex flex-col gap-4">
+      {#each new Array(10) as empty}
+        <div class="animate-pulse flex flex-col gap-2 skeleton w-full">
+          <div class="w-96 h-4" />
+          <div class="w-full h-12" />
+          <div class="w-48 h-4" />
+        </div>
+      {/each}
+    </div>
+  {:then comments}
+    {#if $profile?.user}
+      <CommentForm
+        postId={post.post_view.post.id}
+        on:comment={(comment) =>
+          (comments.comments = [
+            comment.detail.comment_view,
+            ...comments.comments,
+          ])}
+        locked={post.post_view.post.locked ||
+          $page.params.instance.toLowerCase() != $instance.toLowerCase()}
+        on:focus={() => (commenting = true)}
+        tools={commenting}
+        preview={commenting}
+        placeholder={commenting ? undefined : $t('routes.post.addComment')}
+        rows={commenting ? 7 : 1}
+      />
+    {/if}
+    <Comments
+      post={post.post_view.post}
+      nodes={buildCommentsTree(
+        comments.comments,
+        undefined,
+        (c) =>
+          !(
+            ($userSettings.hidePosts.deleted && c.comment.deleted) ||
+            ($userSettings.hidePosts.removed && c.comment.removed)
+          )
+      )}
+      isParent={true}
     />
-  {/if}
-  <Comments
-    post={post.post_view.post}
-    nodes={buildCommentsTree(
-      data.comments.comments,
-      undefined,
-      (c) =>
-        !(
-          ($userSettings.hidePosts.deleted && c.comment.deleted) ||
-          ($userSettings.hidePosts.removed && c.comment.removed)
-        )
-    )}
-    isParent={true}
-  />
+  {/await}
   {#if post.post_view.counts.comments > 5}
     <EndPlaceholder>
       <span class="text-black dark:text-white font-bold">
@@ -350,3 +364,9 @@ flex-wrap gap-4 sticky top-20 w-full box-border z-20 mt-4"
     </EndPlaceholder>
   {/if}
 </div>
+
+<style lang="postcss">
+  .skeleton * {
+    @apply bg-slate-200 dark:bg-zinc-800 rounded-md;
+  }
+</style>

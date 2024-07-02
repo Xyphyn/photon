@@ -1,21 +1,19 @@
+import { browser } from '$app/environment'
 import { env } from '$env/dynamic/public'
 import { profile } from '$lib/auth.js'
 import CommunityCard from '$lib/components/lemmy/community/CommunityCard.svelte'
 import { getClient } from '$lib/lemmy.js'
+import { awaitIfServer } from '$lib/promise.js'
 import { SSR_ENABLED, userSettings } from '$lib/settings.js'
 import { error } from '@sveltejs/kit'
 import { get } from 'svelte/store'
 
 export async function load({ params, url, fetch }) {
-  const post = await getClient(params.instance.toLowerCase(), fetch).getPost({
-    id: Number(params.id),
-  })
-
-  let max_depth = post.post_view.counts.comments > 100 ? 1 : 3
-
   const thread = url.searchParams.get('thread')
   let parentId: number | undefined
   let showContext: string | undefined = undefined
+
+  let max_depth = 3
 
   if (thread) {
     const split = thread.split('.')
@@ -49,21 +47,26 @@ export async function load({ params, url, fetch }) {
     parent_id: parentId,
   }
 
+  const post = await getClient(params.instance.toLowerCase(), fetch).getPost({
+    id: Number(params.id),
+  })
+  const comments = getClient(params.instance, fetch).getComments(commentParams)
+
   return {
     thread: {
       showContext: showContext,
-      singleThread: parentId != undefined
+      singleThread: parentId != undefined,
     },
     post: post,
     commentSort: sort,
-    comments: await getClient(params.instance, fetch).getComments(commentParams),
-    slots: {
-      sidebar: {
-        component: CommunityCard,
-        props: {
-          community_view: post.community_view,
-        },
-      },
-    },
+    comments: (await awaitIfServer(comments)).data,
+    // slots: {
+    //   sidebar: {
+    //     component: CommunityCard,
+    //     props: {
+    //       community_view: post.community_view,
+    //     },
+    //   },
+    // },
   }
 }
