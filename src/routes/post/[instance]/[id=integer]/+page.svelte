@@ -373,6 +373,6 @@ flex-wrap gap-4 sticky top-20 w-full box-border z-20 mt-4"
 
 <style lang="postcss">
   .skeleton * {
-    @apply bg-slate-200 dark:bg-zinc-800 rounded-md;
+    @apply bg-slate-100 dark:bg-zinc-800 rounded-md;
   }
 </style>

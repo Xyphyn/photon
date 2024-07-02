@@ -166,7 +166,7 @@
     >
       {#if node.comment_view.comment.distinguished}
         <div
-          class="-z-10 bg-slate-200 dark:bg-zinc-900 absolute -top-9 -bottom-1.5
+          class="-z-10 bg-slate-100 dark:bg-zinc-900 absolute -top-9 -bottom-1.5
           -inset-x-6 -right-6"
         />
       {/if}
