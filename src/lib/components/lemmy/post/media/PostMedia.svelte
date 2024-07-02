@@ -13,11 +13,14 @@
   import { userSettings } from '$lib/settings.js'
   import type { Post } from 'lemmy-js-client'
   import PostIframe from './PostIframe.svelte'
+  import { Button, Material } from 'mono-svelte'
 
   export let view: 'card' | 'cozy' | 'list' | 'compact' = 'cozy'
   export let post: Post
   export let type: MediaType = 'none'
   export let opened: boolean | undefined = undefined
+
+  let showAltText = false
 </script>
 
 {#if type == 'image'}
@@ -70,12 +73,22 @@
         />
       </picture>
       {#if post.alt_text}
-        <button
-          class="absolute bottom-0 left-0 text-sm m-2 bg-white dark:bg-zinc-900 px-3 py-1.5
-          rounded-full border border-slate-200 dark:border-zinc-800 shadow-lg text-left"
+        <Button
+          on:click={(e) => {
+            e.stopPropagation()
+            showAltText = !showAltText
+          }}
+          class="absolute bottom-0 left-0 text-sm m-2 text-left"
+          size="sm"
+          rounding="pill"
+          alignment="left"
         >
-          {post.alt_text}
-        </button>
+          {#if showAltText}
+            {post.alt_text}
+          {:else}
+            <span class="font-bold">ALT</span>
+          {/if}
+        </Button>
       {/if}
     </svelte:element>
   {/if}

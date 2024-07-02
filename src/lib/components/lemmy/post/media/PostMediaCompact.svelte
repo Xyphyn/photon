@@ -9,6 +9,7 @@
   import { userSettings } from '$lib/settings.js'
   import { isImage } from '$lib/ui/image'
   import type { Post } from 'lemmy-js-client'
+  import { Material, Popover } from 'mono-svelte'
   import { DocumentText, Icon, Link, VideoCamera } from 'svelte-hero-icons'
 
   export let view: 'card' | 'cozy' | 'list' | 'compact' = 'cozy'
@@ -18,9 +19,25 @@
 
 {#if view == 'compact' || (view == 'list' && (!post.embed_title || type == 'iframe') && type != 'none')}
   <div
-    class="w-24 sm:w-32 h-24 group/media {$$props.class ?? ''}"
+    class="w-24 sm:w-32 h-24 relative group/media {$$props.class ?? ''}"
     style={$$props.style ?? ''}
   >
+    {#if post.alt_text}
+      <Popover openOnHover placement="bottom-end">
+        <Material
+          slot="target"
+          padding="none"
+          rounding="full"
+          elevation="high"
+          class="w-max absolute bottom-0 left-0 py-0.5 px-1.5 m-1 font-bold"
+        >
+          ALT
+        </Material>
+        <div class="max-w-sm">
+          {post.alt_text}
+        </div>
+      </Popover>
+    {/if}
     <svelte:element
       this={!$userSettings.expandImages || type != 'image' ? 'a' : 'button'}
       href={postLink(post)}
