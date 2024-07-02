@@ -115,7 +115,7 @@
                 "slurFilter": "Kielletyt sanat (regex)",
                 "federation": "Federointi päällä",
                 "captcha": {
-                    "enabled": "Päällä"
+                    "enabled": "CAPTCHA Päällä"
                 },
                 "emailAdminsOnApplication": "Lähetä ylläpitäjille sähköposti-ilmoitus hakemuksista",
                 "federationDebug": "Federoinnin vianetsintätila"
@@ -357,7 +357,8 @@
             "generateTitle": "Hae otsikko",
             "create": "Luo julkaisu",
             "edit": "Muokkaa julkaisua",
-            "url": "URL"
+            "url": "URL",
+            "altText": "Vaihtoehtoinen teksti"
         },
         "profile": {
             "2fa": {
@@ -601,6 +602,10 @@
             "placeholders": {
                 "title": "Satunnaiset paikkamerkit",
                 "description": "Näytä satunnaisia paikkamerkkejä tyhjillä tekstikentillä."
+            },
+            "colorscheme": {
+                "title": "Väritila",
+                "description": "Valitse väritila."
             }
         },
         "title": "Asetukset",
@@ -620,6 +625,10 @@
                 "on": "Päällä",
                 "off": "Pois päältä",
                 "adaptive": "Mukautuva"
+            },
+            "pins": {
+                "title": "Kiinnitykset",
+                "description": "Lisää kiinnityksiä sivupalkkiin napsauttamalla kuvaketta. Napsauta oikealla poistaaksesi sen."
             }
         },
         "lemmy": {
@@ -688,6 +697,9 @@
                 "description": "Näytä vianetsintätiedot"
             },
             "title": "Muut"
-        }
+        },
+        "desktop": "Työpöytä",
+        "tablet": "Tabletti",
+        "mobile": "Mobiili"
     }
 }
