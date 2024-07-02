@@ -46,9 +46,7 @@
 </script>
 
 <div
-    class="grid w-full meta {community
-        ? 'grid-rows-2'
-        : 'grid-rows-1'} text-xs min-w-0 max-w-full"
+    class="flex flex-row w-full text-xs min-w-48"
     style={$$props.style ?? ""}
 >
     {#if community}
@@ -68,7 +66,7 @@
                     url={community.icon}
                     width={28}
                     alt={community.name}
-                    style="grid-area: avatar; height: 100%;"
+                    style="height: 100%;"
                     class="flex-shrink-0"
                 />
                 {#if subscribed != undefined && $profile?.jwt}
@@ -90,36 +88,30 @@
             </button>
         </Subscribe>
     {/if}
-    {#if community}
-        <CommunityLink
-            {community}
-            style="grid-area: community;"
-            class="flex-shrink"
-        />
-    {/if}
-    <span
-        class="text-slate-600 dark:text-zinc-400 flex flex-row gap-2 items-center"
-        style="grid-area: stats;"
-    >
-        {#if user}
-            <UserLink avatarSize={20} {user} avatar={!community}>
-                <svelte:fragment slot="badges">
-                    {#if badges.moderator}
-                        <ShieldIcon filled width={14} class="text-green-500" />
-                    {/if}
-                    {#if badges.admin}
-                        <ShieldIcon filled width={14} class="text-red-500" />
-                    {/if}
-                </svelte:fragment>
-            </UserLink>
+    <div class="flex flex-col min-w-32 mr-1">
+        {#if community}
+            <CommunityLink {community}/>
         {/if}
-        {#if published}
-            <RelativeDate date={published} class="flex-shrink-0" />
-        {/if}
-    </span>
+        <div class="text-slate-600 dark:text-zinc-400 flex flex-row gap-2 items-center">
+            {#if user}
+                <UserLink avatarSize={20} {user} avatar={!community}>
+                    <svelte:fragment slot="badges">
+                        {#if badges.moderator}
+                            <ShieldIcon filled width={14} class="text-green-500 flex-shrink-0" />
+                        {/if}
+                        {#if badges.admin}
+                            <ShieldIcon filled width={14} class="text-red-500 flex-shrink-0" />
+                        {/if}
+                    </svelte:fragment>
+                </UserLink>
+            {/if}
+            {#if published}
+                <RelativeDate date={published} class="flex-shrink-0" />
+            {/if}
+        </div>
+    </div>
     <div
         class="flex flex-row items-center self-center flex-wrap gap-2 [&>*]:flex-shrink-0 badges"
-        style="grid-area: badges;"
     >
         {#if badges.nsfw}
             <Badge
@@ -199,15 +191,3 @@
         <Markdown source={title} inline noStyle class="leading-6"></Markdown>
     </a>
 {/if}
-
-<style>
-    .meta {
-        display: grid;
-        grid-template-areas:
-            "avatar community badges"
-            "avatar stats badges";
-        gap: 0;
-        grid-template-rows: auto auto;
-        grid-template-columns: auto 1fr;
-    }
-</style>

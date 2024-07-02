@@ -28,22 +28,21 @@
       class="flex-shrink-0"
     />
   {/if}
-  <span
-    class="flex gap-0 items-center flex-shrink max-w-full min-w-0"
+  <!-- div text color affects ellipsis. -->
+  <div
+    class="text-slate-500 dark:text-zinc-500 userlink-text"
     class:ml-0.5={avatar}
   >
-    <span class:font-medium={showInstance}>
+    <span class:font-medium={showInstance} class="text-slate-600 dark:text-zinc-400">
       {$userSettings.displayNames ? user.display_name || user.name : user.name}
     </span>
     {#if showInstance}
-      <span
-        class="text-slate-500 dark:text-zinc-500 font-normal instance-text flex-shrink {$$props.instanceClass ??
-          ''}"
-      >
+      <span class="-ml-1 {$$props.instanceClass ?? ''}">
         @{new URL(user.actor_id).hostname}
       </span>
     {/if}
-  </span>
+  </div>
+
   {#if badges}
     {#if user.banned}
       <div class="text-red-500" title="Banned">
@@ -58,10 +57,9 @@
 </a>
 
 <style>
-  .instance-text {
+  .userlink-text {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 100%;
   }
 </style>

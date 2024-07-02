@@ -27,25 +27,24 @@
   {/if}
 
   {#if name}
-    <span class="flex gap-0 items-center max-w-full min-w-0 flex-shrink">
-      <span class="font-medium">{community.title}</span>
+    <!-- div text color affects ellipsis. -->
+    <div class="communitylink-text text-slate-500 dark:text-zinc-500">
+      <span class="font-medium text-slate-950 dark:text-zinc-50">
+        {community.title}
+      </span>
       {#if showInstance}
-        <span
-          class="text-slate-500 dark:text-zinc-500 font-normal
-          instance-text flex-shrink {$$props.instanceClass || ''}"
-        >
+        <span class="-ml-1 {$$props.instanceClass || ''}">
           @{new URL(community.actor_id).hostname}
         </span>
       {/if}
-    </span>
+    </div>
   {/if}
 </a>
 
 <style>
-  .instance-text {
+  .communitylink-text {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 100%;
   }
 </style>
