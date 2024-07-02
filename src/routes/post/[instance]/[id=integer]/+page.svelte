@@ -323,7 +323,13 @@ flex-wrap gap-4 sticky top-20 w-full box-border z-20 mt-4"
             comment.detail.comment_view,
             ...comments.comments,
           ])}
-        locked={post.post_view.post.locked ||
+        locked={(post.post_view.post.locked &&
+          !(
+            $profile?.user.local_user_view.local_user.admin ||
+            $profile?.user?.moderates
+              .map((c) => c.community.id)
+              .includes(data.post.community_view.community.id)
+          )) ||
           $page.params.instance.toLowerCase() != $instance.toLowerCase()}
         on:focus={() => (commenting = true)}
         tools={commenting}
