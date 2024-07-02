@@ -42,7 +42,7 @@
   <Translation bind:open={translating} />
 {/if}
 
-<div class="flex flex-row items-center gap-0.5 h-7 relative">
+<div class="flex flex-row items-center gap-0.5 h-7">
   <CommentVote
     bind:upvotes={comment.counts.upvotes}
     bind:downvotes={comment.counts.downvotes}

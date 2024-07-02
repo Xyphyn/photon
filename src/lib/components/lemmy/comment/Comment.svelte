@@ -102,7 +102,9 @@
 {/if}
 
 <li
-  class="py-3 {highlight} {$$props.class}"
+  class="py-3 relative {node.comment_view.comment.distinguished
+    ? ' text-primary-900 dark:text-primary-100'
+    : ''} {highlight} {$$props.class}"
   id="#{node.comment_view.comment.id.toString()}"
 >
   <Disclosure bind:open class="flex flex-col">
@@ -160,8 +162,14 @@
     </div>
     <div
       class="flex flex-col whitespace-pre-wrap
-      max-w-full gap-1 mt-1"
+      max-w-full gap-1 mt-1 relative"
     >
+      {#if node.comment_view.comment.distinguished}
+        <div
+          class="-z-10 bg-slate-200 dark:bg-zinc-900 absolute -top-9 -bottom-1.5
+          -inset-x-6 -right-6"
+        />
+      {/if}
       <div class="max-w-full mt-0.5 break-words text-sm">
         <Markdown source={node.comment_view.comment.content} />
       </div>
