@@ -31,18 +31,6 @@
   import { iconOfLink } from '../navbar/link'
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
-
-  function pinsEvent(node: HTMLElement) {
-    node.oncontextmenu = (e) => {
-      e.preventDefault()
-      console.log('test')
-      // $userSettings.dock.pins = $userSettings.dock.pins.splice(
-      //   $userSettings.dock.pins.findIndex((p) => pin.url == p.url),
-      //   1
-      // )
-      return false
-    }
-  }
 </script>
 
 <nav
@@ -62,7 +50,7 @@
           on:contextmenu={(e) => {
             e.preventDefault()
             $userSettings.dock.pins = $userSettings.dock.pins.toSpliced(
-              $userSettings.dock.pins.findIndex((p) => pin.url == p.url),
+              $userSettings.dock.pins.findLastIndex((p) => pin.url == p.url),
               1
             )
             return false

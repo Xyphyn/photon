@@ -12,6 +12,7 @@ import {
   ShieldCheck,
   ServerStack,
   PencilSquare,
+  MapPin,
 } from 'svelte-hero-icons'
 import { get } from 'svelte/store'
 
@@ -21,10 +22,6 @@ export interface Link {
 }
 
 export const defaultLinks: Link[] = [
-  {
-    url: '/profile',
-    label: get(t)('profile.profile'),
-  },
   {
     url: '/',
     label: t.get('nav.home'),
@@ -69,16 +66,14 @@ export const defaultLinks: Link[] = [
 
 export const iconOfLink = (url: string): IconSource => {
   switch (url) {
-    case '/profile':
-      return UserCircle
     case '/':
       return Home
     case '/?type=All':
-      return ChartBar
+      return GlobeAmericas
     case '/?type=Subscribed':
       return Newspaper
     case '/?type=Local':
-      return GlobeAmericas
+      return MapPin
     case '/communities':
       return GlobeAlt
     case '/search':

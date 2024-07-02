@@ -106,6 +106,9 @@
             <Button
               size="square-md"
               slot="target"
+              disabled={$userSettings.dock.pins
+                .map((p) => p.url)
+                .includes(pin.url)}
               on:click={() => {
                 $userSettings.dock.pins = [
                   ...($userSettings.dock.pins ?? []),
@@ -121,7 +124,9 @@
               class="px-4 py-2 flex flex-col"
             >
               <span class="font-medium text-lg">{pin.label}</span>
-              <code class="!bg-zinc-950 !rounded-md">{pin.url}</code>
+              <code class="bg-slate-50 dark:!bg-zinc-950 !rounded-md">
+                {pin.url}
+              </code>
             </Material>
           </Popover>
         {/each}

@@ -63,7 +63,7 @@
 
   $: contentPadding = calculatePadding(dockProps.noGap, dockProps.top, true)
   $: sidePadding = calculatePadding(dockProps.noGap, dockProps.top, false)
-  $: topPanel = $userSettings.dock.noGap && $userSettings.dock.top
+  $: topPanel = dockProps.noGap && dockProps.top
 </script>
 
 <svelte:window bind:innerWidth={screenWidth} />
