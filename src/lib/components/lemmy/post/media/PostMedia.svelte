@@ -34,11 +34,11 @@
       role="button"
       tabindex="0"
     >
+      <!-- svelte-ignore a11y-missing-attribute -->
       <img
         src={bestImageURL(post, false, 256)}
         loading="lazy"
         class="-z-10 absolute top-0 left-0 w-full h-full object-cover blur-xl opacity-50"
-        alt="the background blur"
       />
       <picture class="max-h-[inherit]">
         <source
@@ -66,8 +66,17 @@
           width={512}
           height={300}
           class:blur-3xl={post.nsfw && $userSettings.nsfwBlur}
+          alt={post.alt_text ?? ''}
         />
       </picture>
+      {#if post.alt_text}
+        <button
+          class="absolute bottom-0 left-0 text-sm m-2 bg-white dark:bg-zinc-900 px-3 py-1.5
+          rounded-full border border-slate-200 dark:border-zinc-800 shadow-lg text-left"
+        >
+          {post.alt_text}
+        </button>
+      {/if}
     </svelte:element>
   {/if}
 {:else if (type == 'iframe' || type == 'video') && (view == 'cozy' || view == 'card') && post.url}

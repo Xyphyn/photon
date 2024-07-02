@@ -10,6 +10,7 @@
     BookOpen,
     ArrowPath,
     Sparkles,
+    ChatBubbleBottomCenterText,
   } from 'svelte-hero-icons'
   import { profile } from '$lib/auth.js'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
@@ -20,6 +21,8 @@
   import { Button } from 'mono-svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import { t } from '$lib/translations'
+  import { slide } from 'svelte/transition'
+  import { feature } from '$lib/version'
 
   export let edit = false
 
@@ -35,17 +38,21 @@
     title: string
     body: string
     image: FileList | null
+    thumbnail: string | undefined
     url: string | undefined
     nsfw: boolean
     loading: boolean
+    alt_text: string | undefined
   } = {
     community: null,
     title: '',
     body: '',
     image: null,
+    thumbnail: undefined,
     url: undefined,
     nsfw: false,
     loading: false,
+    alt_text: undefined,
   }
 
   let saveDraft = edit ? false : true
@@ -61,6 +68,8 @@
       data.body = editingPost.body ?? ''
       data.title = editingPost.name
       data.nsfw = editingPost.nsfw
+      data.alt_text = editingPost.alt_text
+      data.thumbnail = editingPost.thumbnail_url
     }
 
     if (passedCommunity) {
@@ -117,6 +126,8 @@
           url: data.url || undefined,
           post_id: editingPost.id,
           nsfw: data.nsfw,
+          alt_text: data.alt_text,
+          custom_thumbnail: data.thumbnail,
         })
 
         if (!post) throw new Error('Failed to edit post')
@@ -125,16 +136,14 @@
 
         dispatcher('submit', post.post_view)
       } else {
-        let image = data.image
-          ? await uploadImage(data.image[0], $profile.instance, $profile.jwt)
-          : undefined
-        data.url = image || data.url || undefined
         const post = await client().createPost({
           community_id: data.community!.id,
           name: data.title,
           body: data.body,
           url: data.url,
           nsfw: data.nsfw,
+          custom_thumbnail: data.thumbnail,
+          alt_text: data.alt_text,
         })
 
         if (!post) throw new Error('Failed to upload post')
@@ -199,6 +208,8 @@
     generatable: false,
     title: '',
   }
+
+  let addAltText = false
 
   $: generation.generatable = canGenerateTitle(data.url)
 </script>
@@ -296,6 +307,14 @@
       {/if}
     </Button>
     <Button
+      on:click={() => (addAltText = !addAltText)}
+      style="width: 38px; height: 38px; padding: 0;"
+      class="flex-shrink-0"
+      title={$t('form.post.altText')}
+    >
+      <Icon src={ChatBubbleBottomCenterText} size="18" mini slot="prefix" />
+    </Button>
+    <Button
       on:click={() => (uploadingImage = !uploadingImage)}
       style="width: 38px; height: 38px; padding: 0;"
       class="flex-shrink-0"
@@ -304,6 +323,11 @@
       <Icon src={Photo} size="18" mini slot="prefix" />
     </Button>
   </div>
+  {#if addAltText}
+    <div transition:slide={{ axis: 'y', duration: 150 }} class="w-full">
+      <TextInput label={$t('form.post.altText')} bind:value={data.alt_text} />
+    </div>
+  {/if}
   <MarkdownEditor
     rows={8}
     label={$t('form.post.body')}

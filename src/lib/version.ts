@@ -7,6 +7,8 @@ const FEATURES = {
   newTotp: '0.19.0',
   blockInstances: '0.19.0',
   hidePosts: '0.19.4',
+  altText: '0.19.4',
+  customThumbnail: '0.19.4',
 }
 
 type Feature = keyof typeof FEATURES

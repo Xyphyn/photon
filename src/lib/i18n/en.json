@@ -119,7 +119,8 @@
       "body": "Body",
       "nsfw": "NSFW",
       "generateTitle": "Generate Title",
-      "uploadImage": "Upload Image"
+      "uploadImage": "Upload Image",
+      "altText": "Alt Text"
     },
     "profile": {
       "displayName": "Display name",
