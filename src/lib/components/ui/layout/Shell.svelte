@@ -89,9 +89,12 @@
           ? 'border-b shadow-none rounded-none'
           : 'border-t rounded-none'
         : 'border rounded-full'}
-      border-slate-200 dark:border-zinc-800 shadow-2xl
-      backdrop-blur-xl dark:backdrop-brightness-[25%] bg-[#ffffff]/75 dark:bg-transparent transition-colors duration-500
-      pointer-events-auto"
+       
+       dark:bg-transparent transition-colors duration-500
+      pointer-events-auto {topPanel
+        ? 'bg-slate-50 dark:bg-zinc-950 border-slate-100 dark:border-zinc-900'
+        : `border-slate-200 dark:border-zinc-800 shadow-2xl backdrop-blur-xl
+        dark:backdrop-brightness-[25%] bg-[#ffffff]/75`}"
       {title}
       style="transition: border-radius 250ms;"
     />
