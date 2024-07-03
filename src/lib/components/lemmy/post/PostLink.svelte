@@ -63,9 +63,10 @@
   <Button
     href={url}
     target="_blank"
-    class="text-slate-700 dark:text-zinc-300 inline-flex items-center gap-1 text-sm"
+    class="text-slate-700 dark:text-zinc-300 inline-flex items-center gap-1 text-xs overflow-hidden"
     size="sm"
     color="ghost"
+    rounding="pill"
   >
     <Icon src={LinkIcon} size="14" mini slot="prefix" class="flex-shrink-0" />
     {#if richURL}
