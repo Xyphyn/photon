@@ -1,26 +1,37 @@
 <script lang="ts">
   import { page } from '$app/stores'
-  import StickyCard from '$lib/components/ui/StickyCard.svelte'
-  import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
   import ViewSelect from '$lib/components/lemmy/dropdowns/ViewSelect.svelte'
   import { searchParam } from '$lib/util.js'
   import PostFeed from '$lib/components/lemmy/post/PostFeed.svelte'
-  import { Button, Modal, Select, Spinner } from 'mono-svelte'
   import { ChartBar, GlobeAmericas, Icon, ServerStack } from 'svelte-hero-icons'
-  import { profile } from '$lib/auth.js'
-  import { site } from '$lib/lemmy.js'
-  import { amModOfAny } from '$lib/components/lemmy/moderation/moderation.js'
-  import { feature } from '$lib/version.js'
-  import { userSettings } from '$lib/settings.js'
-  import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
+  import { getClient, site } from '$lib/lemmy.js'
   import Location from '$lib/components/lemmy/dropdowns/Location.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { t } from '$lib/translations.js'
-  import { enhance } from '$app/forms'
+  import InfiniteScroll from 'svelte-infinite-scroll'
+  import { _posts } from './+page.js'
+  import { Spinner } from 'mono-svelte'
 
   export let data
+
+  async function loadMore() {
+    console.log('loading more')
+
+    const newPosts = await getClient().getPosts({
+      limit: 20,
+      page: data.page,
+      sort: data.sort,
+      type_: data.listingType,
+      page_cursor: data.cursor.next,
+    })
+
+    data.cursor.next = newPosts.next_page
+    data.posts.posts = [...data.posts.posts, ...newPosts.posts]
+
+    _posts.set({ data: data.posts, params: $page.url.searchParams })
+  }
 </script>
 
 <div class="flex flex-col gap-4 max-w-full w-full min-w-0">
@@ -34,7 +45,13 @@
       <ViewSelect />
     </div>
   </div>
-  <PostFeed posts={data.posts.posts} />
+
+  <PostFeed posts={data.posts.posts}>
+    <div class="w-full grid place-items-center h-48">
+      <Spinner width={32} />
+    </div>
+    <InfiniteScroll window threshold={400} on:loadMore={loadMore} />
+  </PostFeed>
   <div class="mt-auto">
     <Pageination
       page={data.page}

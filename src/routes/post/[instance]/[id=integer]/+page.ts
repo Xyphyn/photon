@@ -6,6 +6,7 @@ import { getClient } from '$lib/lemmy.js'
 import { awaitIfServer } from '$lib/promise.js'
 import { SSR_ENABLED, userSettings } from '$lib/settings.js'
 import { error } from '@sveltejs/kit'
+import type { GetComments } from 'lemmy-js-client'
 import { get } from 'svelte/store'
 
 export async function load({ params, url, fetch }) {
@@ -36,7 +37,7 @@ export async function load({ params, url, fetch }) {
 
   const sort = get(userSettings)?.defaultSort?.comments ?? 'Hot'
 
-  const commentParams: any = {
+  const commentParams: GetComments = {
     post_id: Number(params.id),
     type_: 'All',
     limit: 50,
@@ -47,10 +48,10 @@ export async function load({ params, url, fetch }) {
     parent_id: parentId,
   }
 
+  const comments = getClient(params.instance, fetch).getComments(commentParams)
   const post = await getClient(params.instance.toLowerCase(), fetch).getPost({
     id: Number(params.id),
   })
-  const comments = getClient(params.instance, fetch).getComments(commentParams)
 
   return {
     thread: {

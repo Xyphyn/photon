@@ -98,7 +98,7 @@
       </Placeholder>
     </div>
   {:else}
-    {#each combinedPosts as post, index (post.post.id)}
+    {#each combinedPosts as post, index}
       {#if !($userSettings.hidePosts.deleted && post.post.deleted) && !($userSettings.hidePosts.removed && post.post.removed)}
         <li
           in:fly|global={{
@@ -175,4 +175,5 @@
       {/if}
     {/each}
   {/if}
+  <slot />
 </ul>

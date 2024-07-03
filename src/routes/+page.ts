@@ -1,10 +1,13 @@
 import { getClient } from '$lib/lemmy.js'
 import { userSettings } from '$lib/settings.js'
-import type { ListingType, SortType } from 'lemmy-js-client'
-import { get } from 'svelte/store'
+import type { GetPostsResponse, ListingType, SortType } from 'lemmy-js-client'
+import { get, writable } from 'svelte/store'
 import { error } from '@sveltejs/kit'
-import { profile } from '$lib/auth.js'
-import { feature } from '$lib/version.js'
+
+export const _posts = writable<{
+  data: GetPostsResponse
+  params: URLSearchParams
+}>(undefined)
 
 export async function load({ url, fetch }) {
   const cursor = url.searchParams.get('cursor') as string | undefined
@@ -18,14 +21,22 @@ export async function load({ url, fetch }) {
   const listingType: ListingType =
     (url.searchParams.get('type') as ListingType) || settings.defaultSort.feed
 
-  const posts = await getClient(undefined, fetch).getPosts({
-    limit: 20,
-    page: page,
-    sort: sort,
-    type_: listingType,
-    page_cursor: cursor,
-    show_hidden: settings.posts.showHidden,
-  })
+  const cached = get(_posts)
+
+  const posts =
+    cached && url.searchParams.toString() == cached.params.toString()
+      ? cached.data
+      : await getClient(undefined, fetch).getPosts({
+          limit: 20,
+          page: page,
+          sort: sort,
+          type_: listingType,
+          page_cursor: cursor,
+          show_hidden: settings.posts.showHidden,
+        })
+
+  if (!(cached && url.searchParams.toString() == cached.params.toString()))
+    _posts.set({ data: posts, params: url.searchParams })
 
   try {
     return {
