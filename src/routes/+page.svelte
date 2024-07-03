@@ -16,16 +16,23 @@
 
   export let data
 
+  const limit = 20
+  let hasMore = data.posts.posts.length == limit
+
   async function loadMore() {
     console.log('loading more')
 
+    if (!hasMore) return
+
     const newPosts = await getClient().getPosts({
-      limit: 20,
+      limit: limit,
       page: data.page,
       sort: data.sort,
       type_: data.listingType,
       page_cursor: data.cursor.next,
     })
+
+    hasMore = newPosts.posts.length == limit
 
     data.cursor.next = newPosts.next_page
     data.posts.posts = [...data.posts.posts, ...newPosts.posts]
@@ -47,10 +54,15 @@
   </div>
 
   <PostFeed posts={data.posts.posts}>
-    <div class="w-full grid place-items-center h-48">
-      <Spinner width={32} />
+    <div class="w-full flex flex-col skeleton gap-2 animate-pulse pt-6">
+      <div class="w-96 h-8"></div>
+      <div class="w-full h-48"></div>
+      <div class="!bg-transparent h-8 flex justify-between">
+        <div class="w-48 h-8"></div>
+        <div class="w-24 h-8"></div>
+      </div>
     </div>
-    <InfiniteScroll window threshold={400} on:loadMore={loadMore} />
+    <InfiniteScroll window threshold={750} {hasMore} on:loadMore={loadMore} />
   </PostFeed>
   <div class="mt-auto">
     <Pageination
@@ -71,3 +83,9 @@
     </Pageination>
   </div>
 </div>
+
+<style lang="postcss">
+  .skeleton * {
+    @apply bg-slate-100 dark:bg-zinc-800 rounded-md;
+  }
+</style>

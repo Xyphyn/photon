@@ -180,6 +180,7 @@
     class:text-slate-600={$userSettings.markReadPosts && read}
     class:dark:text-zinc-400={$userSettings.markReadPosts && read}
     style="grid-area: title;"
+    data-sveltekit-preload-data="tap"
   >
     <Markdown source={title} inline noStyle class="leading-[1.3]"></Markdown>
   </a>

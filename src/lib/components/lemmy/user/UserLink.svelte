@@ -19,6 +19,7 @@
   class="items-center flex flex-row gap-1 hover:underline max-w-full min-w-0 {$$props.class ??
     ''}"
   href="/u/{user.name}@{new URL(user.actor_id).hostname}"
+  data-sveltekit-preload-data="tap"
 >
   {#if avatar}
     <Avatar
