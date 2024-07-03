@@ -3,11 +3,8 @@ import { userSettings } from '$lib/settings.js'
 import type { GetPostsResponse, ListingType, SortType } from 'lemmy-js-client'
 import { get, writable } from 'svelte/store'
 import { error } from '@sveltejs/kit'
-
-export const _posts = writable<{
-  data: GetPostsResponse
-  params: URLSearchParams
-}>(undefined)
+import { _posts } from './+page.svelte'
+import { browser } from '$app/environment'
 
 export async function load({ url, fetch }) {
   const cursor = url.searchParams.get('cursor') as string | undefined
@@ -35,7 +32,10 @@ export async function load({ url, fetch }) {
           show_hidden: settings.posts.showHidden,
         })
 
-  if (!(cached && url.searchParams.toString() == cached.params.toString()))
+  if (
+    !(cached && url.searchParams.toString() == cached.params.toString()) &&
+    browser
+  )
     _posts.set({ data: posts, params: url.searchParams })
 
   try {

@@ -1,3 +1,10 @@
+<script lang="ts" context="module">
+  export const _posts = writable<{
+    data: GetPostsResponse
+    params: URLSearchParams
+  }>(undefined)
+</script>
+
 <script lang="ts">
   import { page } from '$app/stores'
   import Pageination from '$lib/components/ui/Pageination.svelte'
@@ -11,8 +18,9 @@
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { t } from '$lib/translations.js'
   import InfiniteScroll from 'svelte-infinite-scroll'
-  import { _posts } from './+page.js'
   import { Spinner } from 'mono-svelte'
+  import { writable } from 'svelte/store'
+  import type { GetPostsResponse } from 'lemmy-js-client'
 
   export let data
 
@@ -20,8 +28,6 @@
   let hasMore = data.posts.posts.length == limit
 
   async function loadMore() {
-    console.log('loading more')
-
     if (!hasMore) return
 
     const newPosts = await getClient().getPosts({
@@ -33,6 +39,8 @@
     })
 
     hasMore = newPosts.posts.length == limit
+
+    console.log(hasMore)
 
     data.cursor.next = newPosts.next_page
     data.posts.posts = [...data.posts.posts, ...newPosts.posts]
@@ -54,15 +62,17 @@
   </div>
 
   <PostFeed posts={data.posts.posts}>
-    <div class="w-full flex flex-col skeleton gap-2 animate-pulse pt-6">
-      <div class="w-96 h-8"></div>
-      <div class="w-full h-48"></div>
-      <div class="!bg-transparent h-8 flex justify-between">
-        <div class="w-48 h-8"></div>
-        <div class="w-24 h-8"></div>
+    {#if hasMore}
+      <div class="w-full flex flex-col skeleton gap-2 animate-pulse pt-6">
+        <div class="w-96 h-8"></div>
+        <div class="w-full h-48"></div>
+        <div class="!bg-transparent h-8 flex justify-between">
+          <div class="w-48 h-8"></div>
+          <div class="w-24 h-8"></div>
+        </div>
       </div>
-    </div>
-    <InfiniteScroll window threshold={750} {hasMore} on:loadMore={loadMore} />
+    {/if}
+    <InfiniteScroll window threshold={750} on:loadMore={loadMore} />
   </PostFeed>
   <div class="mt-auto">
     <Pageination
