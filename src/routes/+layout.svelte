@@ -40,9 +40,11 @@
     if (browser) {
       if ($navigating) {
         nProgress.start()
+        console.log(`saving scroll at ${window.scrollY}`)
       }
       if (!$navigating) {
         nProgress.done()
+        console.log(`scrolling to ${window.scrollY}`)
       }
     }
   }

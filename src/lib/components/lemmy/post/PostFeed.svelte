@@ -8,8 +8,9 @@
   import { expoOut } from 'svelte/easing'
   import { fly, slide } from 'svelte/transition'
   import { browser } from '$app/environment'
-  import { afterUpdate, type SvelteComponent } from 'svelte'
+  import { afterUpdate, onMount, tick, type SvelteComponent } from 'svelte'
   import { createWindowVirtualizer } from '@tanstack/svelte-virtual'
+  import { afterNavigate, beforeNavigate } from '$app/navigation'
 
   type PostViewWithCrossposts = PostView & {
     withCrossposts: true
