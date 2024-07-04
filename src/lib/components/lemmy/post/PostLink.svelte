@@ -63,7 +63,7 @@
   <Button
     href={url}
     target="_blank"
-    class="text-slate-700 dark:text-zinc-300 inline-flex items-center gap-1 text-xs overflow-hidden"
+    class="text-slate-700 dark:text-zinc-300 inline-flex items-center gap-1 text-xs overflow-hidden w-max max-w-full"
     size="sm"
     color="ghost"
     rounding="pill"
