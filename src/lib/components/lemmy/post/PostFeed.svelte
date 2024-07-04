@@ -7,6 +7,9 @@
   import { ArchiveBox, Icon, Minus, Plus } from 'svelte-hero-icons'
   import { expoOut } from 'svelte/easing'
   import { fly, slide } from 'svelte/transition'
+  import { browser } from '$app/environment'
+  import { afterUpdate, type SvelteComponent } from 'svelte'
+  import { createWindowVirtualizer } from '@tanstack/svelte-virtual'
 
   type PostViewWithCrossposts = PostView & {
     withCrossposts: true
@@ -69,6 +72,36 @@
   $: combinedPosts = combineCrossposts(posts)
 
   let viewPost: number = -1
+
+  let list: any
+
+  function calculateHeight(index: number): number {
+    if (browser) {
+      const el = document.querySelector(`[data-index="${index}"]`)
+      return el?.clientHeight ?? 150
+    } else return 150
+
+    return 150
+  }
+
+  afterUpdate(() => {
+    setTimeout(() => {
+      list?.recomputeSizes?.(0)
+    })
+  })
+
+  const virtualizer = createWindowVirtualizer({
+    count: posts.length,
+    estimateSize: () => 150,
+  })
+
+  let virtualItemEls: HTMLElement[] = []
+
+  $: items = $virtualizer.getVirtualItems()
+  $: {
+    if (virtualItemEls.length)
+      virtualItemEls.forEach((el) => $virtualizer.measureElement(el))
+  }
 </script>
 
 <ul
@@ -98,82 +131,94 @@
       </Placeholder>
     </div>
   {:else}
-    {#each combinedPosts as post, index}
-      {#if !($userSettings.hidePosts.deleted && post.post.deleted) && !($userSettings.hidePosts.removed && post.post.removed)}
-        <li
-          in:fly|global={{
-            y: -8,
-            duration: index < 4 ? 500 : 0,
-            opacity: 0,
-            delay: index < 4 ? index * 100 : 0,
-          }}
-          class="relative"
-        >
-          <Post
-            hideCommunity={community}
-            view={(post.post.featured_community || post.post.featured_local) &&
-            $userSettings.posts.compactFeatured
-              ? 'compact'
-              : $userSettings.view}
-            {post}
-            class="transition-all duration-250 {post.withCrossposts &&
-            viewPost != post.post.id
-              ? ''
-              : ''}"
-            on:hide={() => {
-              combinedPosts = combinedPosts.toSpliced(index, 1)
+    <!-- {#each combinedPosts as post, index} -->
+    <!-- {#if !($userSettings.hidePosts.deleted && post.post.deleted) && !($userSettings.hidePosts.removed && post.post.removed)} -->
+    <div
+      style="position:relative; height: {$virtualizer.getTotalSize()}px; width: 100%;"
+    >
+      <div
+        style="position: absolute; top: 0; left: 0; width: 100%; transform: translateY({items[0]
+          ? items[0].start
+          : 0}px);"
+      >
+        {#each items as row, index (row.index)}
+          <li
+            in:fly|global={{
+              y: -8,
+              duration: 500,
+              opacity: 0,
+              delay: 200,
             }}
+            bind:this={virtualItemEls[index]}
+            data-index={row.index}
+            class="relative"
           >
-            <svelte:fragment slot="badges">
-              {#if post.withCrossposts}
-                <button
-                  on:click={() => {
-                    if (viewPost == post.post.id) viewPost = -1
-                    else viewPost = post.post.id
-                  }}
-                >
-                  <Badge
-                    class="z-10 backdrop-blur-xl hover:brightness-110 cursor-pointer transition-all"
-                    color="gray-subtle"
-                  >
-                    {#if viewPost == post.post.id}
-                      <Icon mini src={Minus} size="14" />
-                    {:else}
-                      <Icon mini src={Plus} size="14" />
-                    {/if}
-                    {post.crossposts.length} crosspost{post.crossposts.length ==
-                    1
-                      ? ''
-                      : 's'}
-                  </Badge>
-                </button>{/if}
-            </svelte:fragment>
-          </Post>
-          {#if post.withCrossposts && viewPost == post.post.id}
-            <div
-              transition:slide|global={{
-                axis: 'y',
-                duration: 500,
-                easing: expoOut,
+            <Post
+              hideCommunity={community}
+              view={(posts[row.index].post.featured_community ||
+                posts[row.index].post.featured_local) &&
+              $userSettings.posts.compactFeatured
+                ? 'compact'
+                : $userSettings.view}
+              post={posts[row.index]}
+              class="transition-all duration-250"
+              on:hide={() => {
+                posts = posts.toSpliced(row.index, 1)
               }}
             >
-              <span
-                class="text-sm flex flex-row gap-2 items-center"
-                class:my-4={$userSettings.view == 'card'}
+              <svelte:fragment slot="badges">
+                <!-- {#if posts[index].withCrossposts}
+                  <button
+                    on:click={() => {
+                      if (viewPost == posts[index].post.id) viewPost = -1
+                      else viewPost = posts[index].post.id
+                    }}
+                  >
+                    <Badge
+                      class="z-10 backdrop-blur-xl hover:brightness-110 cursor-pointer transition-all"
+                      color="gray-subtle"
+                    >
+                      {#if viewPost == posts[index].post.id}
+                        <Icon mini src={Minus} size="14" />
+                      {:else}
+                        <Icon mini src={Plus} size="14" />
+                      {/if}
+                      {posts[index].crossposts.length} crosspost{posts[index]
+                        .crossposts.length == 1
+                        ? ''
+                        : 's'}
+                    </Badge>
+                  </button>{/if} -->
+              </svelte:fragment>
+            </Post>
+            <!-- {#if posts[index].withCrossposts && viewPost == posts[index].post.id}
+              <div
+                transition:slide|global={{
+                  axis: 'y',
+                  duration: 500,
+                  easing: expoOut,
+                }}
               >
-                Crossposts <hr class="w-full dark:border-zinc-800" />
-                {post.crossposts.length}
-              </span>
-              {#each post.crossposts as crosspost, index}
-                <div class="w-full transition-all mb-4">
-                  <Post post={crosspost} view={$userSettings.view} />
-                </div>
-              {/each}
-            </div>
-          {/if}
-        </li>
-      {/if}
-    {/each}
+                <span
+                  class="text-sm flex flex-row gap-2 items-center"
+                  class:my-4={$userSettings.view == 'card'}
+                >
+                  Crossposts <hr class="w-full dark:border-zinc-800" />
+                  {posts[index].crossposts.length}
+                </span>
+                {#each posts[index].crossposts as crosspost, index}
+                  <div class="w-full transition-all mb-4">
+                    <Post post={crosspost} view={$userSettings.view} />
+                  </div>
+                {/each}
+              </div>
+            {/if} -->
+          </li>
+        {/each}
+      </div>
+    </div>
+    <!-- {/if} -->
+    <!-- {/each} -->
   {/if}
   <slot />
 </ul>

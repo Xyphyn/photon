@@ -70,6 +70,7 @@
   on:click={(e) => {
     onClick(e)
   }}
+  style={$$props.style ?? ''}
 >
   <PostMeta
     community={hideCommunity ? undefined : post.community}
@@ -108,7 +109,7 @@
       <PostMediaCompact
         {view}
         bind:post={post.post}
-        bind:type={type}
+        bind:type
         class="{$userSettings.leftAlign
           ? 'mr-2'
           : 'ml-2'} flex-shrink no-list-margin"
