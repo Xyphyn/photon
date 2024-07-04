@@ -215,6 +215,7 @@
       </div>
     </Setting>
     <ToggleSetting
+      beta
       bind:checked={$userSettings.infiniteScroll}
       title={$t('settings.app.infiniteScroll.title')}
       description={$t('settings.app.infiniteScroll.description')}

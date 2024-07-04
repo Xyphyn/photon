@@ -1,6 +1,7 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
+  import { t } from '$lib/translations'
   import { Button } from 'mono-svelte'
   import { Icon, XMark } from 'svelte-hero-icons'
 </script>
@@ -18,6 +19,6 @@
     {$page.error?.message}
   </code>
   <Button size="sm" class="w-max" on:click={() => goto($page.url)}>
-    Retry
+    {$t('message.retry')}
   </Button>
 </div>

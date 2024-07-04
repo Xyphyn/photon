@@ -473,7 +473,8 @@
   },
   "message": {
     "success": "Success",
-    "error": "Error"
+    "error": "Error",
+    "retry": "Retry"
   },
   "toast": {
     "noComments": "The API returned no comments.",

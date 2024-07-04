@@ -12,13 +12,20 @@
   import ViewSelect from '$lib/components/lemmy/dropdowns/ViewSelect.svelte'
   import { searchParam } from '$lib/util.js'
   import PostFeed from '$lib/components/lemmy/post/PostFeed.svelte'
-  import { ChartBar, GlobeAmericas, Icon, ServerStack } from 'svelte-hero-icons'
+  import {
+    ChartBar,
+    ExclamationCircle,
+    ExclamationTriangle,
+    GlobeAmericas,
+    Icon,
+    ServerStack,
+  } from 'svelte-hero-icons'
   import { getClient, site } from '$lib/lemmy.js'
   import Location from '$lib/components/lemmy/dropdowns/Location.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { t } from '$lib/translations.js'
   import InfiniteScroll from 'svelte-infinite-scroll'
-  import { Spinner } from 'mono-svelte'
+  import { Button, Material, Spinner } from 'mono-svelte'
   import { writable } from 'svelte/store'
   import type { GetPostsResponse } from 'lemmy-js-client'
   import { userSettings } from '$lib/settings.js'
@@ -27,24 +34,40 @@
 
   const limit = 20
   let hasMore = data.posts.posts.length != 0
+  let error: any = undefined
+  let loading = false
 
   async function loadMore() {
     if (!hasMore) return
 
-    const newPosts = await getClient().getPosts({
-      limit: limit,
-      page: data.page,
-      sort: data.sort,
-      type_: data.listingType,
-      page_cursor: data.cursor.next,
-    })
+    try {
+      loading = true
+      const newPosts = await getClient()
+        .getPosts({
+          limit: limit,
+          page: data.page,
+          sort: data.sort,
+          type_: data.listingType,
+          page_cursor: data.cursor.next,
+        })
+        .catch((e) => {
+          throw new Error(e)
+        })
 
-    hasMore = newPosts.posts.length != 0
+      error = null
 
-    data.cursor.next = newPosts.next_page
-    data.posts.posts = [...data.posts.posts, ...newPosts.posts]
+      hasMore = newPosts.posts.length != 0
 
-    _posts.update((ps) => ({ data: data.posts, params: ps.params }))
+      data.cursor.next = newPosts.next_page
+      data.posts.posts = [...data.posts.posts, ...newPosts.posts]
+
+      _posts.update((ps) => ({ data: data.posts, params: ps.params }))
+
+      loading = false
+    } catch (e) {
+      error = e
+      loading = false
+    }
   }
 </script>
 
@@ -62,7 +85,26 @@
 
   <PostFeed posts={data.posts.posts}>
     {#if $userSettings.infiniteScroll}
-      {#if hasMore}
+      {#if error}
+        <div
+          class="flex flex-col justify-center items-center
+           rounded-xl gap-2 py-8 mt-6
+          border !border-b !border-red-500 bg-red-500/5"
+        >
+          <div class="bg-red-500/30 rounded-full p-3 text-red-500">
+            <Icon src={ExclamationTriangle} size="24" solid></Icon>
+          </div>
+          <pre class="py-0.5">{error}</pre>
+          <Button
+            color="primary"
+            {loading}
+            disabled={loading}
+            on:click={loadMore}
+          >
+            {$t('message.retry')}
+          </Button>
+        </div>
+      {:else if hasMore}
         <div class="w-full flex flex-col skeleton gap-2 animate-pulse pt-6">
           <div class="w-96 h-8"></div>
           <div class="w-full h-48"></div>

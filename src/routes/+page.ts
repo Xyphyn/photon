@@ -20,9 +20,6 @@ export async function load({ url, fetch }) {
 
   const cached = get(_posts)
 
-  console.log(url.searchParams.toString())
-  console.log(cached?.params?.toString())
-
   const posts =
     cached && url.searchParams.toString() == cached.params.toString()
       ? cached.data
