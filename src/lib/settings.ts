@@ -88,6 +88,7 @@ interface Settings {
     compactFeatured: boolean
     showHidden: boolean
   }
+  infiniteScroll: boolean
   language: string | null
   translator: string | undefined
 }
@@ -155,6 +156,7 @@ export const defaultSettings: Settings = {
     compactFeatured: toBool(env.PUBLIC_COMPACT_FEATURED) ?? true,
     showHidden: false,
   },
+  infiniteScroll: true,
   language: env.PUBLIC_LANGUAGE ?? null,
   translator: env.PUBLIC_TRANSLATOR ?? undefined,
 }

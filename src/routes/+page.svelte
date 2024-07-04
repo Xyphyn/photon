@@ -21,11 +21,12 @@
   import { Spinner } from 'mono-svelte'
   import { writable } from 'svelte/store'
   import type { GetPostsResponse } from 'lemmy-js-client'
+  import { userSettings } from '$lib/settings.js'
 
   export let data
 
   const limit = 20
-  let hasMore = data.posts.posts.length == limit
+  let hasMore = data.posts.posts.length != 0
 
   async function loadMore() {
     if (!hasMore) return
@@ -38,14 +39,12 @@
       page_cursor: data.cursor.next,
     })
 
-    hasMore = newPosts.posts.length == limit
-
-    console.log(hasMore)
+    hasMore = newPosts.posts.length != 0
 
     data.cursor.next = newPosts.next_page
     data.posts.posts = [...data.posts.posts, ...newPosts.posts]
 
-    _posts.set({ data: data.posts, params: $page.url.searchParams })
+    _posts.update((ps) => ({ data: data.posts, params: ps.params }))
   }
 </script>
 
@@ -62,19 +61,24 @@
   </div>
 
   <PostFeed posts={data.posts.posts}>
-    {#if hasMore}
-      <div class="w-full flex flex-col skeleton gap-2 animate-pulse pt-6">
-        <div class="w-96 h-8"></div>
-        <div class="w-full h-48"></div>
-        <div class="!bg-transparent h-8 flex justify-between">
-          <div class="w-48 h-8"></div>
-          <div class="w-24 h-8"></div>
+    {#if $userSettings.infiniteScroll}
+      {#if hasMore}
+        <div class="w-full flex flex-col skeleton gap-2 animate-pulse pt-6">
+          <div class="w-96 h-8"></div>
+          <div class="w-full h-48"></div>
+          <div class="!bg-transparent h-8 flex justify-between">
+            <div class="w-48 h-8"></div>
+            <div class="w-24 h-8"></div>
+          </div>
         </div>
-      </div>
+      {/if}
+      <InfiniteScroll window threshold={1000} on:loadMore={loadMore} />
     {/if}
-    <InfiniteScroll window threshold={750} on:loadMore={loadMore} />
   </PostFeed>
-  <div class="mt-auto">
+  <svelte:element
+    this={$userSettings.infiniteScroll ? 'noscript' : 'div'}
+    class="mt-auto"
+  >
     <Pageination
       page={data.page}
       cursor={{ next: data.cursor.next, back: data.cursor.back }}
@@ -91,7 +95,7 @@
         })}
       </span>
     </Pageination>
-  </div>
+  </svelte:element>
 </div>
 
 <style lang="postcss">

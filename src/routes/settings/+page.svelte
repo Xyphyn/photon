@@ -215,6 +215,11 @@
       </div>
     </Setting>
     <ToggleSetting
+      bind:checked={$userSettings.infiniteScroll}
+      title={$t('settings.app.infiniteScroll.title')}
+      description={$t('settings.app.infiniteScroll.description')}
+    />
+    <ToggleSetting
       bind:checked={$userSettings.openLinksInNewTab}
       title={$t('settings.app.postsInNewTab.title')}
       description={$t('settings.app.postsInNewTab.description')}

@@ -594,6 +594,10 @@
         "title": "Default sort",
         "description": "The default sorting to use in feeds."
       },
+      "infiniteScroll": {
+        "title": "Infinite scroll",
+        "description": "New posts are added as you scroll down, without having to click 'next'."
+      },
       "postsInNewTab": {
         "title": "Open posts in new tab",
         "description": "Open posts in a separate tab instead of the current."
