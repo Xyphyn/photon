@@ -23,6 +23,7 @@
   import {
     ArrowLeftOnRectangle,
     ArrowRightOnRectangle,
+    ArrowsRightLeft,
     ArrowUturnLeft,
     BugAnt,
     Check,
@@ -184,21 +185,24 @@
               ? 'Switch'
               : 'Current'}
             on:click={async () => {
-              if (profile.id == $currentProfile?.id) setUserID(-1)
-              else {
+              if (profile.id != $currentProfile?.id) {
                 switching = profile.id
                 await setUserID(profile.id)
                 switching = -69
               }
             }}
             size="square-md"
-            color={profile.id == $currentProfile?.id ? 'primary' : 'secondary'}
+            color={profile.id == $currentProfile?.id ? 'primary' : 'ghost'}
             loading={switching == profile.id}
             disabled={switching == profile.id}
           >
-            {#if profile.id == $currentProfile?.id}
-              <Icon src={Check} mini size="16" />
-            {/if}
+            <svelte:fragment slot="prefix">
+              {#if profile.id == $currentProfile?.id}
+                <Icon src={Check} mini size="16" />
+              {:else}
+                <Icon src={ArrowsRightLeft} size="16" mini />
+              {/if}
+            </svelte:fragment>
           </Button>
           <Menu placement="bottom-end">
             <Button size="square-md" slot="target">
