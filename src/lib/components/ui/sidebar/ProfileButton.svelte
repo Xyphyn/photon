@@ -24,9 +24,7 @@
   on:click={async () => {
     switching = true
 
-    if ($profile?.id == prof.id) {
-      await setUserID(-1)
-    } else {
+    if ($profile?.id != prof.id) {
       await setUserID(prof.id)
     }
 
