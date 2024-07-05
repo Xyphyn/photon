@@ -36,7 +36,7 @@ export async function load({ url, fetch }) {
     !(cached && url.searchParams.toString() == cached.params.toString()) &&
     browser
   )
-    _posts.set({ data: posts, params: url.searchParams })
+    _posts.set({ data: posts, params: url.searchParams, lastSeen: 0 })
 
   try {
     return {

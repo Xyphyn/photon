@@ -2,6 +2,7 @@
   export const _posts = writable<{
     data: GetPostsResponse
     params: URLSearchParams
+    lastSeen: number
   }>(undefined)
 </script>
 
@@ -29,6 +30,9 @@
   import { writable } from 'svelte/store'
   import type { GetPostsResponse } from 'lemmy-js-client'
   import { userSettings } from '$lib/settings.js'
+  import { afterNavigate } from '$app/navigation'
+  import { browser } from '$app/environment'
+  import { onMount } from 'svelte'
 
   export let data
 
@@ -61,7 +65,11 @@
       data.cursor.next = newPosts.next_page
       data.posts.posts = [...data.posts.posts, ...newPosts.posts]
 
-      _posts.update((ps) => ({ data: data.posts, params: ps.params }))
+      _posts.update((ps) => ({
+        data: data.posts,
+        params: ps.params,
+        lastSeen: ps.lastSeen,
+      }))
 
       loading = false
     } catch (e) {
@@ -69,6 +77,54 @@
       loading = false
     }
   }
+
+  const callback: IntersectionObserverCallback = (entries, observer) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return
+
+      const element = entry.target as HTMLElement
+      const id = element.getAttribute('data-index')
+
+      if (!id) return
+
+      $_posts.lastSeen = Number(id)
+      observer.unobserve(element)
+    })
+  }
+
+  const observer = new IntersectionObserver(callback, {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.5,
+  })
+
+  onMount(() => {
+    const elements = document.querySelectorAll('.post-container')
+    elements.forEach((el) => observer.observe(el))
+
+    const postContainer = document.querySelector('#feed')
+    if (postContainer) {
+      const mutationObserver = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.type === 'childList') {
+            mutation.addedNodes.forEach((node) => {
+              if (
+                node instanceof HTMLElement &&
+                node.classList.contains('post-container')
+              ) {
+                observer.observe(node)
+              }
+            })
+          }
+        })
+      })
+
+      mutationObserver.observe(postContainer, {
+        childList: true,
+        subtree: true,
+      })
+    }
+  })
 </script>
 
 <div class="flex flex-col gap-4 max-w-full w-full min-w-0">

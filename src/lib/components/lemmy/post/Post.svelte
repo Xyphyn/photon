@@ -59,7 +59,7 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <Material
   color={view != 'card' ? 'none' : 'distinct'}
-  class="relative max-w-full min-w-0 w-full group cursor-pointer
+  class="post relative max-w-full min-w-0 w-full group cursor-pointer
   {view != 'card' ? 'bg-transparent !border-0' : 'p-5'} {view == 'compact'
     ? 'py-4 list-type'
     : view == 'list'

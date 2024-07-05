@@ -11,6 +11,7 @@
   import { afterUpdate, onMount, tick, type SvelteComponent } from 'svelte'
   import { createWindowVirtualizer } from '@tanstack/svelte-virtual'
   import { afterNavigate, beforeNavigate } from '$app/navigation'
+  import { _posts } from '../../../../routes/+page.svelte'
 
   type PostViewWithCrossposts = PostView & {
     withCrossposts: true
@@ -91,6 +92,10 @@
     if (virtualItemEls.length)
       virtualItemEls.forEach((el) => $virtualizer.measureElement(el))
   }
+
+  afterNavigate(() => {
+    $virtualizer.scrollToIndex($_posts.lastSeen)
+  })
 </script>
 
 <ul
@@ -130,6 +135,7 @@
           ? items[0].start
           : 0}px);"
         class="divide-y divide-slate-200 dark:divide-zinc-800"
+        id="feed"
       >
         {#each items as row, index (row.index)}
           <li
@@ -141,7 +147,7 @@
             }}
             bind:this={virtualItemEls[index]}
             data-index={row.index}
-            class="relative"
+            class="relative post-container"
           >
             <Post
               hideCommunity={community}
