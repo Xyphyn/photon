@@ -17,7 +17,7 @@
   export let type: MediaType = 'none'
 </script>
 
-{#if view == 'compact' || (view == 'list' && type != 'none')}
+{#if view == 'compact' || view == 'list'}
   <div
     class="w-24 sm:w-32 h-24 relative group/media {$$props.class ?? ''}"
     style={$$props.style ?? ''}
