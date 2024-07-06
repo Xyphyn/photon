@@ -92,6 +92,8 @@ export let profileData = writable<ProfileData>(
   }
 )
 
+let fetchingUser = false
+
 export let profile = derived<Writable<ProfileData>, Profile>(
   profileData,
   (pd) => {
@@ -99,23 +101,34 @@ export let profile = derived<Writable<ProfileData>, Profile>(
       pd.profiles.find((p) => p.id == pd.profile) ?? getDefaultProfile()
 
     if (profile?.jwt) {
-      if (!profile.user) {
+      if (!profile.user && !fetchingUser) {
         site.set(undefined)
 
-        userFromJwt(profile.jwt, profile.instance).then((res) => {
-          if (!res?.user)
-            toast({
-              content: 'Your login has expired. Re-login to fix this issue.',
-              type: 'warning',
-            })
+        fetchingUser = true
 
-          site.set(res?.site)
+        notifications.set({ applications: 0, inbox: 0, reports: 0 })
 
-          profile.user = res?.user
-          profile.avatar = res?.user.local_user_view.person.avatar
+        userFromJwt(profile.jwt, profile.instance)
+          .then((res) => {
+            if (!res?.user)
+              toast({
+                content: 'Your login has expired. Re-login to fix this issue.',
+                type: 'warning',
+              })
 
-          checkInbox()
-        })
+            site.set(res?.site)
+
+            profile.user = res?.user
+            profile.avatar = res?.user.local_user_view.person.avatar
+
+            checkInbox()
+
+            fetchingUser = false
+          })
+          .catch((e) => {
+            fetchingUser = false
+            toast({ content: e, type: 'error' })
+          })
       }
     } else {
       site.set(undefined)
