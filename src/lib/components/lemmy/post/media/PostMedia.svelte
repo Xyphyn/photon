@@ -80,7 +80,7 @@
           }}
           class="absolute bottom-0 left-0 text-sm m-2 text-left"
           size="sm"
-          rounding="pill"
+          rounding="lg"
           alignment="left"
         >
           {#if showAltText}
@@ -102,7 +102,7 @@
 {:else if type == 'embed' && post.url}
   <PostLink
     url={post.url}
-    thumbnail_url={post.thumbnail_url}
+    thumbnail_url={view != 'list' ? post.thumbnail_url : undefined}
     nsfw={post.nsfw}
     embed_description={post.embed_description}
     embed_title={post.embed_title}

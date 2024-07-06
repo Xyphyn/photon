@@ -107,8 +107,8 @@
               size="square-md"
               slot="target"
               disabled={$userSettings.dock.pins
-                .map((p) => p.url)
-                .includes(pin.url)}
+                ?.map((p) => p.url)
+                ?.includes(pin.url)}
               on:click={() => {
                 $userSettings.dock.pins = [
                   ...($userSettings.dock.pins ?? []),

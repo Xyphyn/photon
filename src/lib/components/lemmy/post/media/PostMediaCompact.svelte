@@ -17,13 +17,16 @@
   export let type: MediaType = 'none'
 </script>
 
-{#if view == 'compact' || (view == 'list' && (!post.embed_title || type == 'iframe') && type != 'none')}
+{#if view == 'compact' || (view == 'list' && type != 'none')}
   <div
     class="w-24 sm:w-32 h-24 relative group/media {$$props.class ?? ''}"
     style={$$props.style ?? ''}
   >
     {#if post.alt_text}
-      <Popover openOnHover placement="bottom-end">
+      <Popover
+        openOnHover
+        placement={$userSettings.leftAlign ? 'bottom-start' : 'bottom-end'}
+      >
         <Material
           slot="target"
           padding="none"
