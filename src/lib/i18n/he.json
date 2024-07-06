@@ -1,1 +1,182 @@
-{}
+{
+    "filter": {
+        "unread": "לא נקרא",
+        "location": {
+            "label": "מיקום",
+            "all": "הכל",
+            "local": "מקומי",
+            "subscribed": "רשום",
+            "moderator": "מנהל",
+            "global": "גלובלי"
+        },
+        "sort": {
+            "label": "מיון",
+            "active": "פעיל",
+            "hot": "חם",
+            "top": {
+                "time": {
+                    "label": "זמן",
+                    "all": "הכל",
+                    "9months": "9 חודשים",
+                    "6months": "6 חודשים",
+                    "3months": "3 חודשים",
+                    "month": "חודש",
+                    "week": "שבוע",
+                    "day": "יום",
+                    "12hours": "12 שעות",
+                    "6hours": "6 שעות",
+                    "hour": "שעה"
+                }
+            },
+            "new": "חדש",
+            "old": "ישן",
+            "controversial": "שנוי במחלוקת",
+            "mostcomments": "תגובות",
+            "newcomments": "תגובות חדשות"
+        },
+        "view": {
+            "label": "פריסה",
+            "cozy": "נוח",
+            "list": "רשימה",
+            "compact": "דחוס",
+            "legacy": "ישן"
+        },
+        "type": "סוג",
+        "filter": "סינון",
+        "inbox": {
+            "messages": "הודעות",
+            "replies": "תגובות",
+            "mentions": "אזכורים"
+        }
+    },
+    "form": {
+        "profile": {
+            "showBots": "הצגת בוטים",
+            "2fa": {
+                "paste": "נא להדביק את זה באפליקציית ה-authenticator שלך.",
+                "totp": "TOTP",
+                "2fa": "2FA"
+            },
+            "displayName": "כינוי",
+            "bio": "אודות",
+            "avatar": "תמונת פרופיל",
+            "banner": "באנר",
+            "email": "אימייל",
+            "matrix": "משתמש Matrix",
+            "showNSFW": "הצגת תוכן למבוגרים",
+            "bot": "חשבון בוט",
+            "currentPassword": "סיסמה נוכחית",
+            "newPassword": "סיסמה חדשה",
+            "verifyNewPassword": "אימות סיסמה חדשה",
+            "deleteAccount": {
+                "label": "מחיקת חשבון",
+                "deleteContent": "מחיקת תוכן"
+            }
+        },
+        "confirmPassword": "אישור סיסמה",
+        "post": {
+            "title": "כותרת",
+            "altText": "טקסט חלופי",
+            "create": "יצירת פוסט",
+            "edit": "עריכת פוסט",
+            "community": "קהילה",
+            "url": "קישור",
+            "body": "גוף",
+            "nsfw": "תוכן למבוגרים",
+            "generateTitle": "יצירת כותרת",
+            "uploadImage": "העלאת תמונה"
+        },
+        "signup": {
+            "application": {
+                "info": "כדי להצטרף לשרת זה, חובה למלא את בקשת ההצטרפות ולחכות לקבלה. ישלח אימייל כאשר בקשתך התקבלה.",
+                "label": "בקשה להצטרפות"
+            },
+            "title": "הרשמה",
+            "description": "נא לבחור שרת שמעניין אותך, או לכתוב קישור באופן ידני.",
+            "chooseInstance": "בחירת שרת",
+            "closed": {
+                "title": "רישומים סגורים",
+                "description": "בשרת זה הרישומים סגורים. נא למצוא שרת אחר.",
+                "anotherInstance": "מציאת שרת אחר"
+            }
+        },
+        "email": "אימייל",
+        "description": "תיאור",
+        "username": "שם משתמש",
+        "name": "שם",
+        "password": "סיסמה",
+        "2fa": "קוד 2FA",
+        "forgotpassword": "שכחתי את הסיסמה",
+        "submit": "שליחה",
+        "edit": "עריכה",
+        "preview": "תצוגה מקדימה"
+    },
+    "profile": {
+        "profile": "פרופיל",
+        "inbox": "דואר נכנס",
+        "saved": "שמורים"
+    },
+    "routes": {
+        "frontpage": {
+            "footer": "{{users:number}} {{users; 1:משתמש; default:משתמשים;}} {{users; 1:פעיל; default:פעילים;}}",
+            "title": "דף הבית"
+        },
+        "modlog": "יומן הנהלה",
+        "instances": "שרתים",
+        "legal": {
+            "title": "משפטי",
+            "noLegal": "לשרת זה אין מידע משפטי."
+        },
+        "profile": {
+            "user": "משתמש",
+            "settings": "הגדרות"
+        },
+        "translators": "מתרגמים",
+        "accounts": "חשבונות",
+        "communities": "קהילות",
+        "search": {
+            "title": "חיפוש"
+        }
+    },
+    "nav": {
+        "home": "בית",
+        "admin": "מנהל",
+        "moderation": "מנהל",
+        "communities": "קהילות",
+        "search": "חיפוש",
+        "create": {
+            "label": "יצירה",
+            "community": "קהילה",
+            "logingate": "חובה עליך להתחבר כדי ליצור תוכן."
+        },
+        "menu": {
+            "label": "פרופיל",
+            "app": "אפליקציה",
+            "settings": "הגדרות",
+            "colorscheme": {
+                "label": "צבעים",
+                "system": "מערכת",
+                "dark": "כהה",
+                "light": "בהיר"
+            },
+            "theme": "סגנון",
+            "about": "אודות",
+            "source": "מקור",
+            "donate": "תרומה",
+            "instance": "שרת"
+        }
+    },
+    "account": {
+        "login": "התחברות",
+        "logout": "התנתקות",
+        "signup": "הרשמה",
+        "accounts": "חשבונות",
+        "changeinstance": "שינוי שרת",
+        "resetColor": "איפוס צבעים",
+        "addGuest": "הוספת אורח",
+        "moveUp": "הזזה למעלה",
+        "moveDown": "הזזה למטה",
+        "guest": "אורח",
+        "versionGate": "הגרסה הזו של Photon תומכת בשרתים המריצים {{version}} או גרסה עדכנית יותר."
+    }
+}
