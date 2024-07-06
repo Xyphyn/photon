@@ -183,6 +183,8 @@
   >
     <Markdown source={title} inline noStyle class="leading-[1.3]"></Markdown>
   </a>
+{:else}
+  <div style="grid-area: title; margin: 0;"></div>
 {/if}
 
 <style>
