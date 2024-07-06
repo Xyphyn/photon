@@ -70,8 +70,11 @@
             "verifyNewPassword": "אימות סיסמה חדשה",
             "deleteAccount": {
                 "label": "מחיקת חשבון",
-                "deleteContent": "מחיקת תוכן"
-            }
+                "deleteContent": "מחיקת תוכן",
+                "warning": "פעולה זו תמחק את כל התוכן שלך."
+            },
+            "scores": "הצגת הצבעות",
+            "showRead": "תצוגת פוסטים שנקראו"
         },
         "confirmPassword": "אישור סיסמה",
         "post": {
@@ -98,7 +101,8 @@
                 "title": "רישומים סגורים",
                 "description": "בשרת זה הרישומים סגורים. נא למצוא שרת אחר.",
                 "anotherInstance": "מציאת שרת אחר"
-            }
+            },
+            "info": "השרת הוא היכן שחשבונך שמור, אך עדיין ניתן לגשת לתוכן משרתים נוספים."
         },
         "email": "אימייל",
         "description": "תיאור",
@@ -109,7 +113,8 @@
         "forgotpassword": "שכחתי את הסיסמה",
         "submit": "שליחה",
         "edit": "עריכה",
-        "preview": "תצוגה מקדימה"
+        "preview": "תצוגה מקדימה",
+        "instance": "קישור לשרת"
     },
     "profile": {
         "profile": "פרופיל",
@@ -135,19 +140,95 @@
         "accounts": "חשבונות",
         "communities": "קהילות",
         "search": {
-            "title": "חיפוש"
+            "title": "חיפוש",
+            "noResults": {
+                "title": "אין תוצאות",
+                "description": "אין תוצאות שתואמות את מילות המפתח שלך. מומלץ לעדכן את חיפושך.",
+                "alt": "חיפוש ברחבי הפדיורס"
+            }
+        },
+        "admin": {
+            "config": {
+                "captcha": {
+                    "enabled": "CAPTCHA מופעלת"
+                },
+                "federation": "פדרציה מופעלת",
+                "title": "הגדרות",
+                "sidebar": "סרגל צידי",
+                "icon": "סמל",
+                "banner": "באנר",
+                "downvotesEnabled": "הפעלת הצבעות נגד",
+                "nsfwEnabled": "הפעלת תוכן למבוגרים",
+                "registration": {
+                    "label": "מצב רישום",
+                    "open": "פתוח",
+                    "application": "חייב בקשה",
+                    "closed": "סגור"
+                },
+                "applicationQuestion": "שאלת בקשה",
+                "adminCommunityOnly": "רק מנהלים גבוהים יכולים ליצור קהילות",
+                "requireVerifyEmail": "חייב אימות על ידי אימייל",
+                "emailAdminsOnApplication": "שליחות אימייל למנהלים גבוהים בעת קבלת בקשות חדשות",
+                "emailAdminsOnReport": "שליחת אימייל למנהלים גבוהים בעת קבלת דיווחים חדשים",
+                "listingType": {
+                    "label": "סוג רישום",
+                    "all": "הכל",
+                    "local": "מקומי"
+                },
+                "private": "שרת פרטי",
+                "slurFilter": "סינון קללות regex",
+                "federationDebug": "מצב דיבוג פדרציה",
+                "hideModlogModNames": "הסתרת שמות מנהלים ביומן ההנהלה"
+            },
+            "title": "מנהל גבוה"
+        },
+        "saved": "שמורים",
+        "createPost": "יצירת פוסט",
+        "createCommunity": "יצירת קהילה",
+        "post": {
+            "commentCount": "תגובות",
+            "addComment": "הוספת תגובה",
+            "scrollToTop": "גלילה לתחילת העמוד",
+            "instanceWarning": "הפוסט הזה מבוקש משרת השונה משל חשבונך. פעולות רבות יכשלו.",
+            "remoteView": "תצוגה מרחוק",
+            "localView": "תצוגה מקומית",
+            "thread": {
+                "single": "מוצג שרשור בודד.",
+                "allComments": "כל התגובות",
+                "part": "מוצג חלק משרשור",
+                "context": "תצוגת הקשר"
+            }
+        },
+        "inbox": {
+            "title": "דואר נכנס",
+            "markAsRead": "סימון הכל כנקרא",
+            "empty": {
+                "title": "אין הודעות חדשות",
+                "description": "הודעות, תגובות, ואזכורים יופיעו פה."
+            }
+        },
+        "moderation": {
+            "title": "מנהל",
+            "empty": {
+                "title": "אין דיווחים חדשים",
+                "description": "כאשר תוכן מדווח, ניתן לפעול בנידון כאן."
+            },
+            "reason": "סיבה",
+            "resolve": "פתירה",
+            "unresolve": "הסרת פתירה"
         }
     },
     "nav": {
         "home": "בית",
-        "admin": "מנהל",
+        "admin": "מנהל גבוה",
         "moderation": "מנהל",
         "communities": "קהילות",
         "search": "חיפוש",
         "create": {
             "label": "יצירה",
             "community": "קהילה",
-            "logingate": "חובה עליך להתחבר כדי ליצור תוכן."
+            "logingate": "חובה עליך להתחבר כדי ליצור תוכן.",
+            "post": "פוסט"
         },
         "menu": {
             "label": "פרופיל",
