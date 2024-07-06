@@ -58,12 +58,12 @@ interface ProfileData {
   defaultInstance?: string
 }
 
-interface PersonData extends MyUserInfo {
-  notifications: {
-    inbox: number
-    reports: number
-    applications: number
-  }
+interface PersonData extends MyUserInfo {}
+
+interface Notifications {
+  inbox: number
+  reports: number
+  applications: number
 }
 
 const getCookie = (key: string): string | undefined => {
@@ -99,7 +99,7 @@ export let profile = derived<Writable<ProfileData>, Profile>(
       pd.profiles.find((p) => p.id == pd.profile) ?? getDefaultProfile()
 
     if (profile?.jwt) {
-      if (profile.user) {
+      if (!profile.user) {
         site.set(undefined)
 
         userFromJwt(profile.jwt, profile.instance).then((res) => {
@@ -126,6 +126,12 @@ export let profile = derived<Writable<ProfileData>, Profile>(
     return profile
   }
 )
+
+export let notifications = writable<Notifications>({
+  applications: 0,
+  inbox: 0,
+  reports: 0,
+})
 
 profileData.subscribe(async (pd) => {
   const serialized: ProfileData = {
@@ -254,14 +260,7 @@ async function userFromJwt(
   if (!myUser) return undefined
 
   return {
-    user: {
-      notifications: {
-        applications: 0,
-        inbox: 0,
-        reports: 0,
-      },
-      ...myUser,
-    },
+    user: myUser,
     site: site,
   }
 }
@@ -373,11 +372,11 @@ async function checkInbox() {
     isAdmin(user)
   )
 
-  user.notifications = {
+  notifications.set({
     inbox: notifs.unreads,
     applications: notifs.applications,
     reports: notifs.reports,
-  }
+  })
 }
 
 setInterval(checkInbox, 4 * 60 * 1000)

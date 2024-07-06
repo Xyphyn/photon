@@ -13,7 +13,7 @@
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
   import Pageination from '$lib/components/ui/Pageination.svelte'
-  import { profile } from '$lib/auth.js'
+  import { notifications, profile } from '$lib/auth.js'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { fly } from 'svelte/transition'
   import { searchParam } from '$lib/util.js'
@@ -36,7 +36,7 @@
 
     const response = await getClient().markAllAsRead()
 
-    $profile.user.notifications.inbox = 0
+    $notifications.inbox = 0
 
     goto($page.url, {
       invalidateAll: true,

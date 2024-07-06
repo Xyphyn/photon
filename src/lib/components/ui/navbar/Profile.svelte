@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { profile } from '$lib/auth'
+  import { notifications, profile } from '$lib/auth'
 
   import {
     Badge,
@@ -73,7 +73,7 @@
           alt={$profile.user.local_user_view.person.name}
         />
       </div>
-      {#if $profile.user.notifications.inbox > 0}
+      {#if $notifications.inbox > 0}
         <div
           class="rounded-full w-2 h-2 bg-red-500 absolute top-0 left-0 z-10"
         />
@@ -104,9 +104,9 @@
     <MenuButton link href="/inbox">
       <Icon src={Inbox} mini width={16} slot="prefix" />
       {$t('profile.inbox')}
-      {#if $profile.user.notifications.inbox > 0}
+      {#if $notifications.inbox > 0}
         <Badge color="red-subtle" class="text-xs ml-auto font-bold !py-0.5">
-          {$profile.user.notifications.inbox}
+          {$notifications.inbox}
         </Badge>
       {/if}
     </MenuButton>
