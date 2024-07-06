@@ -25,7 +25,6 @@
   import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
   import ViewSelect from '$lib/components/lemmy/dropdowns/ViewSelect.svelte'
   import { searchParam } from '$lib/util.js'
-  import PostFeed from '$lib/components/lemmy/post/PostFeed.svelte'
   import {
     ChartBar,
     ExclamationCircle,
@@ -47,6 +46,8 @@
   import { browser } from '$app/environment'
   import { onMount } from 'svelte'
   import { instance } from '$lib/instance.js'
+  import VirtualFeed from '$lib/components/lemmy/post/feed/VirtualFeed.svelte'
+  import PostFeed from '$lib/components/lemmy/post/feed/PostFeed.svelte'
 
   export let data
 
@@ -107,13 +108,13 @@
     })
   }
 
-  const observer = new IntersectionObserver(callback, {
-    root: null,
-    rootMargin: '0px',
-    threshold: 0.5,
-  })
-
   onMount(() => {
+    const observer = new IntersectionObserver(callback, {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.5,
+    })
+
     const elements = document.querySelectorAll('.post-container')
     elements.forEach((el) => observer.observe(el))
 
@@ -154,8 +155,11 @@
     </div>
   </div>
 
-  <PostFeed posts={data.posts.posts}>
-    {#if $userSettings.infiniteScroll}
+  <svelte:component
+    this={browser ? VirtualFeed : PostFeed}
+    posts={data.posts.posts}
+  >
+    {#if $userSettings.infiniteScroll && browser}
       {#if error}
         <div
           class="flex flex-col justify-center items-center
@@ -187,7 +191,7 @@
       {/if}
       <InfiniteScroll window threshold={1000} on:loadMore={loadMore} />
     {/if}
-  </PostFeed>
+  </svelte:component>
   <svelte:element
     this={$userSettings.infiniteScroll ? 'noscript' : 'div'}
     class="mt-auto"

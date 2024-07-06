@@ -11,7 +11,7 @@
   import { afterUpdate, onMount, tick, type SvelteComponent } from 'svelte'
   import { createWindowVirtualizer } from '@tanstack/svelte-virtual'
   import { afterNavigate, beforeNavigate } from '$app/navigation'
-  import { _posts } from '../../../../routes/+page.svelte'
+  import { _posts } from '../../../../../routes/+page.svelte'
 
   type PostViewWithCrossposts = PostView & {
     withCrossposts: true
@@ -128,7 +128,9 @@
     <!-- {#each combinedPosts as post, index} -->
     <!-- {#if !($userSettings.hidePosts.deleted && post.post.deleted) && !($userSettings.hidePosts.removed && post.post.removed)} -->
     <div
-      style="position:relative; height: {$virtualizer.getTotalSize()}px; width: 100%;"
+      style="position:relative; height: {browser
+        ? `${$virtualizer.getTotalSize()}px`
+        : '100%'}; width: 100%;"
     >
       <div
         style="position: absolute; top: 0; left: 0; width: 100%; transform: translateY({items[0]

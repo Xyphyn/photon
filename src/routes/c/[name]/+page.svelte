@@ -7,7 +7,7 @@
   import { fullCommunityName, searchParam } from '$lib/util.js'
   import { onDestroy, onMount } from 'svelte'
   import { setSessionStorage } from '$lib/session.js'
-  import PostFeed from '$lib/components/lemmy/post/PostFeed.svelte'
+  import PostFeed from '$lib/components/lemmy/post/feed/VirtualFeed.svelte'
   import { Button, Modal, toast } from 'mono-svelte'
   import { afterNavigate } from '$app/navigation'
   import { browser } from '$app/environment'
