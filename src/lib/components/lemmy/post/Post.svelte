@@ -55,6 +55,11 @@
   }
 </script>
 
+<!-- 
+  @component
+  This is the sole component for displaying posts.
+  It adapts to all kinds of form factors for different contexts, such as feeds, full post view, and crosspost list.
+-->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <Material

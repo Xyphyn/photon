@@ -45,6 +45,10 @@
   }
 </script>
 
+<!-- 
+  @component
+  This component will build two different things: a post's meta block and the title.
+-->
 <div
   class="grid w-full meta {community
     ? 'grid-rows-2'
