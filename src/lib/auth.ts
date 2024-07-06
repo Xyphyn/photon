@@ -112,6 +112,9 @@ export let profile = derived<Writable<ProfileData>, Profile>(
           site.set(res?.site)
 
           profile.user = res?.user
+          profile.avatar = res?.user.local_user_view.person.avatar
+
+          checkInbox()
         })
       }
     } else {
@@ -369,7 +372,7 @@ async function checkInbox() {
   const notifs = await getNotificationCount(
     jwt,
     amModOfAny(user) ?? false,
-    isAdmin(user)
+    user ? isAdmin(user) : false
   )
 
   notifications.set({
@@ -380,10 +383,3 @@ async function checkInbox() {
 }
 
 setInterval(checkInbox, 4 * 60 * 1000)
-
-let prevId: number | undefined = -2
-profile.subscribe((p) => {
-  if (p?.id == prevId || !p?.user) return
-  prevId = p?.id
-  if (p.id != -1) checkInbox()
-})
