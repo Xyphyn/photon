@@ -1,7 +1,7 @@
 import { profile } from '$lib/auth.js'
 import { get } from 'svelte/store'
 import { getClient } from '$lib/lemmy.js'
-import { site as siteStore } from '$lib/site'
+import { site as siteStore } from '$lib/lemmy'
 
 export async function load({ fetch }) {
   if (!get(profile)) return
