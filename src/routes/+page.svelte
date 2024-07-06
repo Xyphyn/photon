@@ -1,9 +1,22 @@
 <script lang="ts" context="module">
-  export const _posts = writable<{
+  interface CachedPosts {
     data: GetPostsResponse
     params: URLSearchParams
     lastSeen: number
-  }>(undefined)
+    instance: string
+  }
+
+  export const _posts = writable<CachedPosts>(undefined)
+
+  export const shouldReload = (
+    cache: CachedPosts,
+    params: string,
+    instance: string
+  ): boolean =>
+    !(
+      cache &&
+      (params == cache.params.toString() || cache.instance != instance)
+    )
 </script>
 
 <script lang="ts">
@@ -27,12 +40,13 @@
   import { t } from '$lib/translations.js'
   import InfiniteScroll from 'svelte-infinite-scroll'
   import { Button, Material, Spinner } from 'mono-svelte'
-  import { writable } from 'svelte/store'
+  import { get, writable } from 'svelte/store'
   import type { GetPostsResponse } from 'lemmy-js-client'
   import { userSettings } from '$lib/settings.js'
   import { afterNavigate } from '$app/navigation'
   import { browser } from '$app/environment'
   import { onMount } from 'svelte'
+  import { instance } from '$lib/instance.js'
 
   export let data
 
@@ -69,6 +83,7 @@
         data: data.posts,
         params: ps.params,
         lastSeen: ps.lastSeen,
+        instance: ps.instance,
       }))
 
       loading = false

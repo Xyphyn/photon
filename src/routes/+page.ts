@@ -3,8 +3,9 @@ import { userSettings } from '$lib/settings.js'
 import type { GetPostsResponse, ListingType, SortType } from 'lemmy-js-client'
 import { get, writable } from 'svelte/store'
 import { error } from '@sveltejs/kit'
-import { _posts } from './+page.svelte'
+import { _posts, shouldReload } from './+page.svelte'
 import { browser } from '$app/environment'
+import { instance } from '$lib/instance'
 
 export async function load({ url, fetch }) {
   const cursor = url.searchParams.get('cursor') as string | undefined
@@ -20,23 +21,27 @@ export async function load({ url, fetch }) {
 
   const cached = get(_posts)
 
-  const posts =
-    cached && url.searchParams.toString() == cached.params.toString()
-      ? cached.data
-      : await getClient(undefined, fetch).getPosts({
-          limit: 20,
-          page: page,
-          sort: sort,
-          type_: listingType,
-          page_cursor: cursor,
-          show_hidden: settings.posts.showHidden,
-        })
+  const posts = shouldReload(cached, url.searchParams.toString(), get(instance))
+    ? await getClient(undefined, fetch).getPosts({
+        limit: 20,
+        page: page,
+        sort: sort,
+        type_: listingType,
+        page_cursor: cursor,
+        show_hidden: settings.posts.showHidden,
+      })
+    : cached.data
 
   if (
-    !(cached && url.searchParams.toString() == cached.params.toString()) &&
+    shouldReload(cached, url.searchParams.toString(), get(instance)) &&
     browser
   )
-    _posts.set({ data: posts, params: url.searchParams, lastSeen: 0 })
+    _posts.set({
+      data: posts,
+      params: url.searchParams,
+      lastSeen: 0,
+      instance: get(instance),
+    })
 
   try {
     return {
