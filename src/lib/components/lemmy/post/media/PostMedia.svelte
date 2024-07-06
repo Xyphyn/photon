@@ -23,6 +23,12 @@
   let showAltText = false
 </script>
 
+<!-- 
+  @component
+  This component will show either
+  - A media item (pictures, videos) (large form factor posts only)
+  - Embed link/card.
+-->
 {#if type == 'image'}
   {#if view == 'card' || view == 'cozy'}
     <!--disabled preloads here since most people will hover over every image while scrolling-->

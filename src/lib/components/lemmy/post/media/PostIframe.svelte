@@ -92,6 +92,10 @@
   $: embedUrl = urlToEmbed(url)
 </script>
 
+<!-- 
+  @component
+  Displays a video file or embedded video iframe.
+-->
 {#if opened}
   {#if type == 'video'}
     <!-- svelte-ignore a11y-media-has-caption -->

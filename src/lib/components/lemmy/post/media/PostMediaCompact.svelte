@@ -17,6 +17,10 @@
   export let type: MediaType = 'none'
 </script>
 
+<!-- 
+  @component
+  Thumbnails for compact and list view posts.
+-->
 {#if view == 'compact' || (view == 'list' && type != 'none')}
   <div
     class="w-24 sm:w-32 h-24 relative group/media {$$props.class ?? ''}"
