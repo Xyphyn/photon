@@ -18,12 +18,12 @@ export const bestImageURL = (
   }
 
   if (compact && post.thumbnail_url)
-    return `${post.thumbnail_url}?thumbnail=256&format=webp`
-  else if (compact && post.url) return `${post.url}?thumbnail=256&format=webp`
+    return `${post.thumbnail_url}?thumbnail=512&format=webp`
+  else if (compact && post.url) return `${post.url}?thumbnail=512&format=webp`
 
-  if (post.url) return `${post.url}?thumbnail=${width}&format=webp`
+  if (post.url) return `${post.url}?thumbnail=${width * 2}&format=webp`
   else if (post.thumbnail_url)
-    return `${post.thumbnail_url}?thumbnail=${width}&format=webp`
+    return `${post.thumbnail_url}?thumbnail=${width * 2}&format=webp`
 
   return post.url ?? ''
 }
@@ -37,7 +37,7 @@ export const optimizeImageURL = (
     url.searchParams.append('format', 'webp')
     url.searchParams.append(
       'thumbnail',
-      findClosestNumber([128, 256, 512, 1024], width).toString()
+      findClosestNumber([128, 256, 512, 1024], width * 2).toString()
     )
     return url.toString()
   } catch (e) {

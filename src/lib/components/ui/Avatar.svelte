@@ -21,7 +21,7 @@
       urlObj.searchParams.append('format', 'webp')
       urlObj.searchParams.append(
         'thumbnail',
-        findClosestNumber(sizes, res || width).toString()
+        findClosestNumber(sizes, (res || width) * 2).toString()
       )
 
       return urlObj.toString()

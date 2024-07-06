@@ -45,9 +45,9 @@
     >
       <!-- svelte-ignore a11y-missing-attribute -->
       <img
-        src={bestImageURL(post, false, 256)}
+        src={bestImageURL(post, false, 64)}
         loading="lazy"
-        class="-z-10 absolute top-0 left-0 w-full h-full object-cover blur-xl opacity-50"
+        class="-z-10 absolute top-0 left-0 w-full h-full object-cover blur-xl opacity-40"
       />
       <picture class="max-h-[inherit]">
         <source
