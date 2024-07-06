@@ -12,7 +12,6 @@
   import { Material, Popover } from 'mono-svelte'
   import { DocumentText, Icon, Link, VideoCamera } from 'svelte-hero-icons'
 
-  export let view: 'card' | 'cozy' | 'list' | 'compact' = 'cozy'
   export let post: Post
   export let type: MediaType = 'none'
 </script>
