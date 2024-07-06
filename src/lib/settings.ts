@@ -89,6 +89,7 @@ interface Settings {
     showHidden: boolean
   }
   language: string | null
+  useRtl: boolean
   translator: string | undefined
 }
 
@@ -156,6 +157,7 @@ export const defaultSettings: Settings = {
     showHidden: false,
   },
   language: env.PUBLIC_LANGUAGE ?? null,
+  useRtl: false,
   translator: env.PUBLIC_TRANSLATOR ?? undefined,
 }
 

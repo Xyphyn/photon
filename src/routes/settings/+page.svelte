@@ -35,7 +35,7 @@
   import { DOMAIN_REGEX_FORMS, removeItem } from '$lib/util.js'
   import Section from './Section.svelte'
   import ToggleSetting from './ToggleSetting.svelte'
-  import { locales, t } from '$lib/translations'
+  import { locale, locales, t } from '$lib/translations'
   import { defaultLinks, iconOfLink } from '$lib/components/ui/navbar/link'
 
   let pin: string = ''
@@ -135,32 +135,40 @@
   </Section>
 
   <Section title={$t('settings.app.title')}>
-    <Setting>
-      <span slot="title" class="inline-flex items-center gap-2">
-        {$t('settings.app.lang.title')}
-        <Badge>{$t('settings.beta')}</Badge>
-      </span>
-      <p slot="description">
-        {$t('settings.app.lang.description')}
-        <Note>
-          {$t('settings.app.lang.note')}
-        </Note>
-        <Link href="/translators" highlight class="text-base font-semibold">
-          {$t('settings.app.lang.credits')}
-        </Link>
-      </p>
-      <Select bind:value={$userSettings.language}>
-        <option value={null}>{$t('settings.app.lang.auto')}</option>
-        {#each $locales as locale}
-          <option value={locale}>
-            {$t(`settings.app.lang.${locale}`, { default: locale })}
-          </option>
-        {/each}
-        {#if $userSettings.debugInfo}
-          <option value="dev">Raw Strings</option>
-        {/if}
-      </Select>
-    </Setting>
+    <div class="flex flex-col gap-2">
+      <Setting>
+        <span slot="title" class="inline-flex items-center gap-2">
+          {$t('settings.app.lang.title')}
+          <Badge>{$t('settings.beta')}</Badge>
+        </span>
+        <p slot="description">
+          {$t('settings.app.lang.description')}
+          <Note>
+            {$t('settings.app.lang.note')}
+          </Note>
+          <Link href="/translators" highlight class="text-base font-semibold">
+            {$t('settings.app.lang.credits')}
+          </Link>
+        </p>
+        <Select bind:value={$userSettings.language}>
+          <option value={null}>{$t('settings.app.lang.auto')}</option>
+          {#each $locales as locale}
+            <option value={locale}>
+              {$t(`settings.app.lang.${locale}`, { default: locale })}
+            </option>
+          {/each}
+          {#if $userSettings.debugInfo}
+            <option value="dev">Raw Strings</option>
+          {/if}
+        </Select>
+      </Setting>
+      {#if $locale == 'he'}
+        <ToggleSetting
+          bind:checked={$userSettings.useRtl}
+          title={$t('settings.app.lang.useRtl.title')}
+        ></ToggleSetting>
+      {/if}
+    </div>
     <Setting>
       <span slot="title">{$t('settings.app.view.title')}</span>
       <ViewSelect showLabel={false} />

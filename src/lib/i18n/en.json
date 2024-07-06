@@ -581,7 +581,11 @@
         "fi": "Finnish",
         "pt": "Portuguese",
         "auto": "Auto",
-        "credits": "Credits"
+        "credits": "Credits",
+        "useRtl": {
+          "title": "Use RTL layout",
+          "description": "Use an RTL layout for RTL languages."
+        }
       },
       "view": {
         "title": "Post style",
