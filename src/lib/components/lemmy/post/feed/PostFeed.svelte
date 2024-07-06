@@ -74,15 +74,6 @@
   $: combinedPosts = combineCrossposts(posts)
 
   let viewPost: number = -1
-
-  const virtualizer = createWindowVirtualizer({
-    count: posts.length,
-    estimateSize: () => 150,
-  })
-
-  afterNavigate(() => {
-    $virtualizer.scrollToIndex($_posts.lastSeen)
-  })
 </script>
 
 <ul

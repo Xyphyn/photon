@@ -94,7 +94,7 @@
   }
 
   afterNavigate(() => {
-    $virtualizer.scrollToIndex($_posts.lastSeen)
+    $virtualizer.scrollToIndex($_posts?.lastSeen)
   })
 </script>
 
