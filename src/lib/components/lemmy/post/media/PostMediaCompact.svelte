@@ -23,7 +23,10 @@
     style={$$props.style ?? ''}
   >
     {#if post.alt_text}
-      <Popover openOnHover placement="bottom-end">
+      <Popover
+        openOnHover
+        placement={$userSettings.leftAlign ? 'bottom-start' : 'bottom-end'}
+      >
         <Material
           slot="target"
           padding="none"
