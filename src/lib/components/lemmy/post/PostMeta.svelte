@@ -22,6 +22,7 @@
   import { userSettings } from '$lib/settings'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import { t } from '$lib/translations'
+  import type { IconSource } from 'svelte-hero-icons'
 
   export let community: Community | undefined = undefined
   export let subscribed: SubscribedType | undefined = undefined
@@ -42,6 +43,48 @@
     locked: false,
     moderator: false,
     admin: false,
+  }
+
+  interface Tag {
+    content: string
+    color?: string
+    icon?: IconSource
+  }
+
+  const textToTag: Map<string, Tag> = new Map<string, Tag>([
+    ['OC', { content: 'OC', color: '#03A8F240' }],
+    ['NSFL', { content: 'NSFL', color: '#ff000040' }],
+    ['CW', { content: 'CW', color: '#ff000040' }],
+  ])
+
+  const parseTags = (title?: string): { tags: Tag[]; title?: string } => {
+    if (!title) return { tags: [] }
+
+    let extracted: Tag[] = []
+
+    title = title.replace(/\[(.*?)\]/g, (match, content) => {
+      extracted.push(
+        textToTag.get(content) ?? {
+          content: content,
+        }
+      )
+      return ''
+    })
+
+    return {
+      tags: extracted,
+      title: title,
+    }
+  }
+
+  let tags: Tag[] = []
+
+  $: {
+    if (title) {
+      const result = parseTags(title)
+      tags = result.tags
+      title = result.title
+    }
   }
 </script>
 
@@ -122,6 +165,18 @@
     class="flex flex-row items-center self-center flex-wrap gap-2 [&>*]:flex-shrink-0 badges"
     style="grid-area: badges;"
   >
+    {#if tags}
+      {#each tags as tag}
+        <div style={tag.color ? `--tag-color: ${tag.color};` : ''}>
+          <Badge class={tag.color ? 'badge-tag-color' : ''}>
+            <svelte:fragment slot="icon">
+              {#if tag.icon}<Icon src={tag.icon} micro size="14" />{/if}
+            </svelte:fragment>
+            {tag.content}
+          </Badge>
+        </div>
+      {/each}
+    {/if}
     {#if badges.nsfw}
       <Badge label={$t('post.badges.nsfw')} color="red-subtle" allowIconOnly>
         <Icon src={ExclamationTriangle} size="14" micro slot="icon" />
@@ -200,5 +255,9 @@
     gap: 0;
     grid-template-rows: auto auto;
     grid-template-columns: auto 1fr auto;
+  }
+
+  :global(.badge-tag-color) {
+    background-color: var(--tag-color) !important;
   }
 </style>
