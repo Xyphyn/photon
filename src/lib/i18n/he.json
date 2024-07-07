@@ -180,7 +180,44 @@
                 "federationDebug": "מצב דיבוג פדרציה",
                 "hideModlogModNames": "הסתרת שמות מנהלים ביומן ההנהלה"
             },
-            "title": "מנהל גבוה"
+            "title": "מנהל גבוה",
+            "applications": {
+                "title": "בקשות",
+                "empty": {
+                    "title": "אין בקשות חדשות",
+                    "description": "בקשות להצטרפות השרת יופיעו פה."
+                },
+                "application": "בקשה",
+                "approved": "מאושרת",
+                "denied": "נדחתה",
+                "user": "משתמש",
+                "deny": "לדחות",
+                "approve": "לאשר",
+                "reason": "סיבה",
+                "modalTitle": "דחיית בקשה"
+            },
+            "taglines": {
+                "title": "שורות תיוג",
+                "add": "הוספת שורת תיוג",
+                "empty": {
+                    "title": "אין שורות תיוג",
+                    "description": "שורת תיוג אקראית תופיע על כרטיס האתר כאשר משתמשים יבקרו בשרתך."
+                }
+            },
+            "team": {
+                "title": "מנהלים גבוהים",
+                "empty": {
+                    "title": "אין מנהלים גבוהים",
+                    "description": "איכשהו אין מנהלים גבוהים לאתר זה. איך??"
+                }
+            },
+            "federation": {
+                "title": "פדרציה",
+                "csv": "העלאת CSV",
+                "block": "חסימה",
+                "blockplaceholder": "חסימת שרת...",
+                "blocked": "שרתים חסומים"
+            }
         },
         "saved": "שמורים",
         "createPost": "יצירת פוסט",
