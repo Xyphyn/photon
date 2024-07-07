@@ -3,7 +3,7 @@
   import { createAvatar } from '@dicebear/core'
   import * as initials from '@dicebear/initials'
 
-  const sizes = [48, 64, 128, 256, 512]
+  const sizes = [16, 32, 48, 64, 128, 256, 512]
 
   export let url: string | undefined
   export let alt: string = ''
@@ -21,7 +21,7 @@
       urlObj.searchParams.append('format', 'webp')
       urlObj.searchParams.append(
         'thumbnail',
-        findClosestNumber(sizes, (res || width) * 2).toString()
+        findClosestNumber(sizes, res || width).toString()
       )
 
       return urlObj.toString()
