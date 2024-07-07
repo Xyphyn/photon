@@ -117,7 +117,8 @@
             "generateTitle": "Generate le Titre",
             "uploadImage": "Ajouter une Image",
             "url": "URL",
-            "nsfw": "NSFW"
+            "nsfw": "NSFW",
+            "altText": "Équivalent textuel"
         },
         "profile": {
             "displayName": "Nom affiché",
@@ -171,7 +172,8 @@
             "footer": "{{users:number}} En ligne {{users; 1:user; default:users;}}"
         },
         "legal": {
-            "noLegal": "Cet instance n'a aucune information legale."
+            "noLegal": "Cet instance n'a aucune information legale.",
+            "title": "Légal"
         },
         "profile": {
             "user": "Utilisateur",
@@ -258,7 +260,7 @@
                 "federation": "Federation activée",
                 "federationDebug": "mode de débogage de federation",
                 "captcha": {
-                    "enabled": "Activé"
+                    "enabled": "CAPTCHA Activé"
                 },
                 "title": "Configuration"
             },
@@ -290,7 +292,7 @@
                 "title": "Administrateurs",
                 "empty": {
                     "title": "Aucun administrateurs",
-                    "description": "Il n'y a aucun administrateur de serveur, je sais pas comment vous avez fait cela."
+                    "description": "Il n'y a aucun administrateur de serveur, je ne sais pas comment vous avez reussi a faire cela."
                 }
             },
             "federation": {
@@ -303,7 +305,12 @@
                 "allow": "Whitelister",
                 "allowplaceholder": "Whitelister une instance",
                 "emptyBlock": {
-                    "title": "Aucune instances blocqués"
+                    "title": "Aucune instances bloqués",
+                    "description": "Le bloc d'une instance cachera toutes nouvelles soumissions de cette instance."
+                },
+                "emptyAllow": {
+                    "title": "Aucunes instances sur la liste blanche",
+                    "description": "Mettre une instance sur la liste blanche bloquera toutes les autres instances."
                 }
             }
         },
@@ -334,7 +341,12 @@
         },
         "instances": "Instances",
         "translators": "Traducteurs",
-        "createCommunity": "Créer une communauté"
+        "createCommunity": "Créer une communauté",
+        "modlog": "Journal de modération",
+        "verifyEmail": {
+            "message": "Votre email a été verifié, vous pouvez maintenant fermer cette fenêtre.",
+            "error": "La vérification de l'email a échouée."
+        }
     },
     "verifyEmail": {
         "message": "Votre e-mail est maintenant vérifié. Vous pouvez maintenant fermer cette fenetre.",
@@ -354,6 +366,22 @@
             "lang": {
                 "": "Dont translate the below!"
             }
+        }
+    },
+    "comment": {
+        "reply": "Répondre",
+        "actions": {
+            "link": "Copier le lien"
+        }
+    },
+    "moderation": {
+        "report": "Créer un signalement",
+        "ban": {
+            "banning": "Bannir l'utilisateur",
+            "deleteData": "Suprimmer les données",
+            "warning": "Cette option supprimera TOUTES les publications de cet utilisateur.",
+            "expires": "Expire (UTC)",
+            "banFromCommunity": "Ban d'une communauté"
         }
     }
 }
