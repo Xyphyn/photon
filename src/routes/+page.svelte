@@ -161,7 +161,7 @@
         <div
           class="flex flex-col justify-center items-center
            rounded-xl gap-2 py-8 mt-6
-          border !border-b !border-red-500 bg-red-500/5"
+          border !border-b !border-red-500 bg-red-500/5 px-4"
         >
           <div class="bg-red-500/30 rounded-full p-3 text-red-500">
             <Icon src={ExclamationTriangle} size="24" solid></Icon>
