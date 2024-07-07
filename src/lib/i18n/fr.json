@@ -346,6 +346,26 @@
         "verifyEmail": {
             "message": "Votre email a été verifié, vous pouvez maintenant fermer cette fenêtre.",
             "error": "La vérification de l'email a échouée."
+        },
+        "passwordChange": {
+            "title": "Changer le mot de passe",
+            "description": "Choisissez votre nouveaux mot de passe.",
+            "instance": "Sur quelle instance est hostée votre compte?"
+        },
+        "resetLogin": {
+            "title": "Réinitialiser le mot de passe",
+            "description": "Mettez l'email de vôtre compte, et un lien de réinitialision de mot de passe sera envoyé. Si vôtre compte n'a pas de email, vous devez contacter les administrateurs de votre instance."
+        },
+        "theme": {
+            "import": "Importer",
+            "export": "Exporter",
+            "reset": "Réinitialiser",
+            "accent": "Couleur d'accentuation",
+            "resetWarning": {
+                "title": "Réinitialiser les paramètres d'apparence",
+                "description": "Ceci remettera a zéro toute la configuration de l'apparence, il est conseillé de l'exporter d'abord."
+            },
+            "title": "Apparence"
         }
     },
     "verifyEmail": {
@@ -365,6 +385,9 @@
         "app": {
             "lang": {
                 "": "Dont translate the below!"
+            },
+            "theming": {
+                "link": "Configuration d'apparence"
             }
         }
     },
@@ -382,6 +405,21 @@
             "warning": "Cette option supprimera TOUTES les publications de cet utilisateur.",
             "expires": "Expire (UTC)",
             "banFromCommunity": "Ban d'une communauté"
+        }
+    },
+    "cards": {
+        "site": {
+            "stats": "Statistiques",
+            "admins": "Administrateurs"
+        },
+        "community": {
+            "members": "Membres",
+            "moderators": "Modérateurs",
+            "subscribe": "S'abonner",
+            "subscribed": "Abonné",
+            "modlog": "Journal de modération",
+            "block": "Bloquer",
+            "unblock": "Débloquer"
         }
     }
 }
