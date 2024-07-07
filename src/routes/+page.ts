@@ -3,7 +3,7 @@ import { userSettings } from '$lib/settings.js'
 import type { GetPostsResponse, ListingType, SortType } from 'lemmy-js-client'
 import { get, writable } from 'svelte/store'
 import { error } from '@sveltejs/kit'
-import { _posts, shouldReload } from './+page.svelte'
+import { _posts, shouldReload, type CachedPosts } from './+page.svelte'
 import { browser } from '$app/environment'
 import { instance } from '$lib/instance'
 
@@ -19,7 +19,7 @@ export async function load({ url, fetch }) {
   const listingType: ListingType =
     (url.searchParams.get('type') as ListingType) || settings.defaultSort.feed
 
-  const cached = get(_posts)
+  const cached: CachedPosts | undefined = get(_posts)
 
   const posts = shouldReload(cached, url.searchParams.toString(), get(instance))
     ? await getClient(undefined, fetch).getPosts({

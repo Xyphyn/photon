@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-  interface CachedPosts {
+  export interface CachedPosts {
     data: GetPostsResponse
     params: URLSearchParams
     lastSeen: number
@@ -9,14 +9,11 @@
   export const _posts = writable<CachedPosts>(undefined)
 
   export const shouldReload = (
-    cache: CachedPosts,
+    cache: CachedPosts | undefined,
     params: string,
     instance: string
   ): boolean =>
-    !(
-      cache &&
-      (params == cache.params.toString() || cache.instance != instance)
-    )
+    cache?.instance != instance || cache?.params.toString() != params
 </script>
 
 <script lang="ts">
@@ -112,7 +109,7 @@
     const observer = new IntersectionObserver(callback, {
       root: null,
       rootMargin: '0px',
-      threshold: 0.5,
+      threshold: 0.25,
     })
 
     const elements = document.querySelectorAll('.post-container')
