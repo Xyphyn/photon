@@ -20,7 +20,7 @@
       const urlObj = new URL(url)
       urlObj.searchParams.append('format', 'webp')
       urlObj.searchParams.append(
-        'thumbnail',
+        'resize',
         findClosestNumber(sizes, res || width).toString()
       )
 
