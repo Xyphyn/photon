@@ -48,17 +48,19 @@
 
   let post = data.post
 
-  // onMount(async () => {
-  //   if (
-  //     !(post.post_view.read && $userSettings.markPostsAsRead) &&
-  //     $profile?.jwt
-  //   ) {
-  //     getClient().markPostAsRead({
-  //       read: $userSettings.markPostsAsRead,
-  //       post_id: post.post_view.post.id,
-  //     })
-  //   }
-  // })
+  onMount(async () => {
+    if (
+      !(post.post_view.read && $userSettings.markPostsAsRead) &&
+      $profile?.jwt
+    ) {
+      getClient().markPostAsRead({
+        read: $userSettings.markPostsAsRead,
+        post_ids: [post.post_view.post.id],
+        // @ts-ignore
+        post_id: post.post_view.post.id,
+      })
+    }
+  })
 
   afterNavigate(async () => {
     // reactivity hack
@@ -333,7 +335,7 @@ flex-wrap gap-4 sticky top-20 w-full box-border z-20 mt-4"
       {/each}
     </div>
   {:then comments}
-    {#if $profile?.user}
+    {#if $profile?.jwt}
       <CommentForm
         postId={post.post_view.post.id}
         on:comment={(comment) =>
@@ -343,7 +345,7 @@ flex-wrap gap-4 sticky top-20 w-full box-border z-20 mt-4"
           ])}
         locked={(post.post_view.post.locked &&
           !(
-            $profile?.user.local_user_view.local_user.admin ||
+            $profile?.user?.local_user_view.local_user.admin ||
             $profile?.user?.moderates
               .map((c) => c.community.id)
               .includes(data.post.community_view.community.id)

@@ -68,7 +68,11 @@
 
 <svelte:window bind:innerWidth={screenWidth} />
 
-<div class="shell {$$props.class}" style={colorsToVars($colors)}>
+<div
+  {...$$restProps}
+  class="shell {$$props.class}"
+  style={colorsToVars($colors)}
+>
   <slot />
   <div
     class="

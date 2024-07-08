@@ -10,7 +10,7 @@
     PrivateMessageReportView,
   } from 'lemmy-js-client'
   import { Check, Icon } from 'svelte-hero-icons'
-  import { profile } from '$lib/auth.js'
+  import { notifications, profile } from '$lib/auth.js'
   import { Button } from 'mono-svelte'
   import type { ReportView } from '$lib/lemmy/report.js'
   import PrivateMessage from '$lib/components/lemmy/inbox/PrivateMessage.svelte'
@@ -77,7 +77,7 @@
         }
       }
 
-      $profile.user.notifications.reports += item.resolved ? 1 : -1
+      $notifications.reports += item.resolved ? 1 : -1
     } catch (err) {
       toast({
         content: err as any,

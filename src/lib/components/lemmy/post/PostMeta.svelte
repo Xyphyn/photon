@@ -45,6 +45,10 @@
   }
 </script>
 
+<!-- 
+  @component
+  This component will build two different things: a post's meta block and the title.
+-->
 <div
   class="grid w-full meta {community
     ? 'grid-rows-2'
@@ -184,6 +188,8 @@
   >
     <Markdown source={title} inline noStyle class="leading-[1.3]"></Markdown>
   </a>
+{:else}
+  <div style="grid-area: title; margin: 0;"></div>
 {/if}
 
 <style>

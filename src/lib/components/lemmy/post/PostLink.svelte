@@ -14,6 +14,10 @@
   $: richURL = parseURL(url)
 </script>
 
+<!-- 
+  @component
+  For embed-type posts. Displays embed card or a compact link.
+-->
 {#if embed_title && !compact}
   <Material color="distinct" class="flex flex-row gap-4">
     <div class="flex flex-col gap-2">
