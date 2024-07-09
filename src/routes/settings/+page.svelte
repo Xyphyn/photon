@@ -12,12 +12,17 @@
     TextInput,
     toast,
     Popover,
+    Modal,
+    TextArea,
   } from 'mono-svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import Link from '$lib/components/input/Link.svelte'
   import {
+    ArrowDownTray,
     ArrowPath,
     ArrowRight,
+    ArrowUpOnSquare,
+    ArrowUpTray,
     ChatBubbleOvalLeftEllipsis,
     CheckCircle,
     ChevronDown,
@@ -39,26 +44,84 @@
   import { defaultLinks, iconOfLink } from '$lib/components/ui/navbar/link'
 
   let pin: string = ''
+  let importing = false
+  let importText = ''
 </script>
 
 <svelte:head>
   <title>{$t('settings.title')}</title>
 </svelte:head>
 
+{#if importing}
+  <Modal
+    bind:open={importing}
+    on:action={() => {
+      try {
+        if (importText == '') {
+          throw new Error('Import is empty')
+        }
+        const parsed = JSON.parse(importText)
+        const merged = { ...defaultSettings, ...parsed }
+
+        $userSettings = merged
+
+        toast({ content: $t('toast.settingsImport'), type: 'success' })
+        importing = false
+      } catch (err) {
+        // @ts-ignore
+        toast({ content: err, type: 'error' })
+      }
+    }}
+    title={$t('routes.theme.import')}
+    action={$t('routes.theme.import')}
+  >
+    <TextArea bind:value={importText} style="font-family: monospace;" />
+  </Modal>
+{/if}
+
 <h1 class="text-3xl font-bold flex justify-between">
   {$t('settings.title')}
-  <Button
-    size="square-md"
-    on:click={() => {
-      toast({
-        content: $t('toast.resetSettings'),
-        action: () => ($userSettings = defaultSettings),
-      })
-    }}
-    class="font-normal"
-  >
-    <Icon src={ArrowPath} mini size="16" slot="prefix" />
-  </Button>
+  <div class="flex items-center">
+    <Button
+      size="square-lg"
+      on:click={() => {
+        importText = ''
+        importing = true
+      }}
+      class="font-normal"
+      title={$t('settings.import')}
+      roundingSide="left"
+    >
+      <Icon src={ArrowDownTray} mini size="18" slot="prefix" />
+    </Button>
+    <Button
+      size="square-lg"
+      on:click={() => {
+        const json = JSON.stringify($userSettings)
+        navigator?.clipboard?.writeText?.(json)
+        toast({ content: $t('toast.copied') })
+      }}
+      class="font-normal"
+      title={$t('settings.export')}
+      rounding="none"
+    >
+      <Icon src={ArrowUpTray} mini size="18" slot="prefix" />
+    </Button>
+    <Button
+      size="square-lg"
+      on:click={() => {
+        toast({
+          content: $t('toast.resetSettings'),
+          action: () => ($userSettings = defaultSettings),
+        })
+      }}
+      class="font-normal"
+      title={$t('settings.reset')}
+      roundingSide="right"
+    >
+      <Icon src={ArrowPath} mini size="18" slot="prefix" />
+    </Button>
+  </div>
 </h1>
 
 <div class="flex flex-col gap-4" style="scroll-behavior: smooth;">

@@ -529,7 +529,9 @@
     "waitApplication": "Wait for your registration application to be accepted before logging in.",
     "blockUser": "Blocked that user.",
     "unblockUser": "Unblocked that user.",
-    "purgeUser": "Purged that user."
+    "purgeUser": "Purged that user.",
+    "settingsImport": "Successfully imported settings",
+    "settingsImportWarning": "The imported settings don't seem valid. Are you sure you want to import this?"
   },
   "settings": {
     "title": "Settings",
@@ -537,6 +539,9 @@
     "desktop": "Desktop",
     "tablet": "Tablet",
     "mobile": "Mobile",
+    "export": "Export",
+    "import": "Import",
+    "reset": "Reset",
     "navigation": {
       "title": "Navigation",
       "dockPos": {

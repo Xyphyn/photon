@@ -176,7 +176,7 @@ export const defaultSettings: Settings = {
 export const userSettings = writable(defaultSettings)
 
 const migrate = (settings: any): Settings => {
-  if (typeof settings.moderation.removalReasonPreset == 'string') {
+  if (typeof settings?.moderation?.removalReasonPreset == 'string') {
     settings.moderation.presets = [
       {
         title: 'Preset 1',
