@@ -42,6 +42,7 @@
   import Expandable from '$lib/components/ui/Expandable.svelte'
   import { Popover } from 'mono-svelte'
   import { t } from '$lib/translations.js'
+  import { createWindowVirtualizer } from '@tanstack/svelte-virtual'
 
   export let data
 
@@ -112,7 +113,24 @@
   $: remoteView =
     $page.params.instance?.toLowerCase() != $instance.toLowerCase()
 
-  const test = 'wow'
+  const virtualizer = createWindowVirtualizer({
+    count: 0,
+    estimateSize: () => 50,
+  })
+
+  onMount(async () => {
+    const comments = await data.comments
+
+    $virtualizer.setOptions({ count: comments.comments.length })
+  })
+
+  let virtualItemEls: HTMLElement[] = []
+
+  $: items = $virtualizer.getVirtualItems()
+  $: {
+    if (virtualItemEls.length)
+      virtualItemEls.forEach((el) => $virtualizer.measureElement(el))
+  }
 </script>
 
 <svelte:head>

@@ -7,6 +7,11 @@
   import { ArchiveBox, Icon, Minus, Plus } from 'svelte-hero-icons'
   import { expoOut } from 'svelte/easing'
   import { fly, slide } from 'svelte/transition'
+  import { browser } from '$app/environment'
+  import { afterUpdate, onMount, tick, type SvelteComponent } from 'svelte'
+  import { createWindowVirtualizer } from '@tanstack/svelte-virtual'
+  import { afterNavigate, beforeNavigate } from '$app/navigation'
+  import { _posts } from '../../../../../routes/+page.svelte'
 
   type PostViewWithCrossposts = PostView & {
     withCrossposts: true
@@ -98,16 +103,16 @@
       </Placeholder>
     </div>
   {:else}
-    {#each combinedPosts as post, index (post.post.id)}
+    {#each combinedPosts as post, index}
       {#if !($userSettings.hidePosts.deleted && post.post.deleted) && !($userSettings.hidePosts.removed && post.post.removed)}
         <li
           in:fly|global={{
             y: -8,
-            duration: index < 4 ? 500 : 0,
+            duration: 500,
             opacity: 0,
-            delay: index < 4 ? index * 100 : 0,
+            delay: 100 + index * 20,
           }}
-          class="relative"
+          class="relative post-container"
         >
           <Post
             hideCommunity={community}
@@ -116,12 +121,9 @@
               ? 'compact'
               : $userSettings.view}
             {post}
-            class="transition-all duration-250 {post.withCrossposts &&
-            viewPost != post.post.id
-              ? ''
-              : ''}"
+            class="transition-all duration-250"
             on:hide={() => {
-              combinedPosts = combinedPosts.toSpliced(index, 1)
+              posts = posts.toSpliced(index, 1)
             }}
           >
             <svelte:fragment slot="badges">
@@ -175,4 +177,5 @@
       {/if}
     {/each}
   {/if}
+  <slot />
 </ul>

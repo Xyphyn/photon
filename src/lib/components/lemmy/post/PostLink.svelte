@@ -1,6 +1,6 @@
 <script lang="ts">
   import Link, { parseURL } from '$lib/components/input/Link.svelte'
-  import { Material } from 'mono-svelte'
+  import { Button, Material } from 'mono-svelte'
   import { Icon, Link as LinkIcon } from 'svelte-hero-icons'
   import { optimizeImageURL } from './helpers'
 
@@ -64,12 +64,15 @@
     {/if}
   </Material>
 {:else}
-  <Link
+  <Button
     href={url}
     target="_blank"
-    class="text-slate-700 dark:text-zinc-300 inline-flex items-center gap-1 text-sm"
+    class="text-slate-700 dark:text-zinc-300 inline-flex items-center gap-1 text-xs overflow-hidden w-max max-w-full"
+    size="sm"
+    color="ghost"
+    rounding="pill"
   >
-    <Icon src={LinkIcon} size="14" mini slot="icon" class="flex-shrink-0" />
+    <Icon src={LinkIcon} size="14" mini slot="prefix" class="flex-shrink-0" />
     {#if richURL}
       <div class="flex max-w-full overflow-hidden">
         {richURL.hostname}
@@ -80,7 +83,7 @@
     {:else}
       {url}
     {/if}
-  </Link>
+  </Button>
   {#if thumbnail_url && !compact}
     <a href={url} target="_blank">
       <img
