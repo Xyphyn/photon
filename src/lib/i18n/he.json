@@ -26,13 +26,15 @@
                     "12hours": "12 שעות",
                     "6hours": "6 שעות",
                     "hour": "שעה"
-                }
+                },
+                "label": "הטובים ביותר"
             },
             "new": "חדש",
             "old": "ישן",
             "controversial": "שנוי במחלוקת",
             "mostcomments": "תגובות",
-            "newcomments": "תגובות חדשות"
+            "newcomments": "תגובות חדשות",
+            "scaled": "מטפסים"
         },
         "view": {
             "label": "פריסה",
@@ -114,12 +116,14 @@
         "submit": "שליחה",
         "edit": "עריכה",
         "preview": "תצוגה מקדימה",
-        "instance": "קישור לשרת"
+        "instance": "קישור לשרת",
+        "setup": "הגדרה"
     },
     "profile": {
         "profile": "פרופיל",
         "inbox": "דואר נכנס",
-        "saved": "שמורים"
+        "saved": "שמורים",
+        "subscribed": "רשומים"
     },
     "routes": {
         "frontpage": {
@@ -134,7 +138,10 @@
         },
         "profile": {
             "user": "משתמש",
-            "settings": "הגדרות"
+            "settings": "הגדרות",
+            "credentials": "אימות",
+            "moderates": "מנהל/ת",
+            "favorites": "אהובים"
         },
         "translators": "מתרגמים",
         "accounts": "חשבונות",
@@ -145,7 +152,8 @@
                 "title": "אין תוצאות",
                 "description": "אין תוצאות שתואמות את מילות המפתח שלך. מומלץ לעדכן את חיפושך.",
                 "alt": "חיפוש ברחבי הפדיורס"
-            }
+            },
+            "query": "חיפוש"
         },
         "admin": {
             "config": {
@@ -216,7 +224,8 @@
                 "csv": "העלאת CSV",
                 "block": "חסימה",
                 "blockplaceholder": "חסימת שרת...",
-                "blocked": "שרתים חסומים"
+                "blocked": "שרתים חסומים",
+                "allowed": "שרתים מורשים"
             }
         },
         "saved": "שמורים",
@@ -234,7 +243,8 @@
                 "allComments": "כל התגובות",
                 "part": "מוצג חלק משרשור",
                 "context": "תצוגת הקשר"
-            }
+            },
+            "crosspostCount": "פוסטים משותפים"
         },
         "inbox": {
             "title": "דואר נכנס",
