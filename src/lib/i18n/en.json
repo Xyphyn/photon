@@ -581,6 +581,9 @@
         "de": "German",
         "fi": "Finnish",
         "pt": "Portuguese",
+        "zh": "Chinese",
+        "zh-Hans": "Chinese (Simplified)",
+        "zh-Hant": "Chinese (Traditional)",
         "auto": "Auto",
         "credits": "Credits",
         "useRtl": {
