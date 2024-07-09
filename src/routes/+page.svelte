@@ -54,7 +54,7 @@
   let loading = false
 
   async function loadMore() {
-    if (!hasMore) return
+    if (!hasMore || loading) return
 
     try {
       loading = true
