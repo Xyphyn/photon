@@ -32,17 +32,19 @@
   nProgress.configure({
     minimum: 0.4,
     trickleSpeed: 200,
-    showSpinner: false,
     easing: 'ease-out',
     speed: 300,
   })
 
+  let barTimeout: any = 0
+
   $: {
     if (browser) {
       if ($navigating) {
-        nProgress.start()
+        barTimeout = setTimeout(() => nProgress.start(), 100)
       }
       if (!$navigating) {
+        clearTimeout(barTimeout)
         nProgress.done()
       }
     }

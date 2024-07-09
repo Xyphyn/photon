@@ -143,9 +143,9 @@
           <li
             in:fly|global={{
               y: -8,
-              duration: 500,
+              duration: 300,
               opacity: 0,
-              delay: 100 + index * 20,
+              delay: 50 + index * 20,
             }}
             bind:this={virtualItemEls[index]}
             data-index={row.index}
