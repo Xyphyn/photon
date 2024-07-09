@@ -150,7 +150,7 @@
       />
     {/if}
   {/key}
-  {#if post.post.body && !post.post.nsfw && view != 'compact' && !hideBody}
+  {#if post.post.body && !post.post.nsfw && view != 'compact' && !hideBody && rule != 'hide'}
     <PostBody body={post.post.body} {view} style="grid-area: body" />
   {/if}
   {#if actions}
