@@ -91,6 +91,9 @@ interface Settings {
   language: string | null
   useRtl: boolean
   translator: string | undefined
+  tagRules: {
+    [key: string]: 'hide' | 'blur'
+  }
 }
 
 export const defaultSettings: Settings = {
@@ -159,6 +162,10 @@ export const defaultSettings: Settings = {
   language: env.PUBLIC_LANGUAGE ?? null,
   useRtl: false,
   translator: env.PUBLIC_TRANSLATOR ?? undefined,
+  tagRules: {
+    cw: 'blur',
+    nsfl: 'blur',
+  },
 }
 
 export const userSettings = writable(defaultSettings)

@@ -636,6 +636,10 @@
         "title": "Translation",
         "description": "The LibreTranslate instance to use for translation.",
         "instance": "Domain"
+      },
+      "titleTags": {
+        "title": "Parse tags in title",
+        "description": "Take text in [brackets] and turn it into tags that you can click to search for."
       }
     },
     "embeds": {
