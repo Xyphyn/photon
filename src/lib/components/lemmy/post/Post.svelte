@@ -5,7 +5,10 @@
   import PostActions from '$lib/components/lemmy/post/PostActions.svelte'
   import { userSettings } from '$lib/settings.js'
   import PostLink from '$lib/components/lemmy/post/PostLink.svelte'
-  import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
+  import PostMeta, {
+    parseTags,
+    type Tag,
+  } from '$lib/components/lemmy/post/PostMeta.svelte'
   import { Badge, Material, toast } from 'mono-svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import ExpandableImage from '$lib/components/ui/ExpandableImage.svelte'
@@ -34,6 +37,10 @@
   export let view = $userSettings.view
 
   $: type = mediaType(post.post.url, view)
+
+  $: tags = parseTags(post.post.name)
+  $: rule = getTagRule(tags.tags)
+
   $: hideTitle =
     $userSettings.posts.deduplicateEmbed &&
     post.post.embed_title == post.post.name &&
@@ -44,6 +51,19 @@
     $userSettings.posts.deduplicateEmbed &&
     post.post.embed_description == post.post.body &&
     view != 'compact'
+
+  function getTagRule(tags: Tag[]): 'blur' | 'hide' | undefined {
+    const tagContent = tags.map((t) => t.content.toLowerCase())
+
+    let rule: 'blur' | 'hide' | undefined
+    tagContent.forEach((tag) => {
+      if ($userSettings.tagRules?.[tag])
+        rule = $userSettings.tagRules?.[tag] ?? rule
+      if (rule == 'hide') return rule
+    })
+
+    return rule
+  }
 
   function onClick(e: any) {
     const event = e as MouseEvent
@@ -77,7 +97,8 @@
   }}
 >
   <PostMeta
-    community={hideCommunity ? undefined : post.community}
+    community={post.community}
+    showCommunity={!hideCommunity}
     user={post.creator}
     published={publishedToDate(post.post.published)}
     badges={{
@@ -96,9 +117,10 @@
       ? 'Subscribed'
       : 'NotSubscribed'}
     id={post.post.id}
-    title={hideTitle ? undefined : post.post.name}
+    title={hideTitle ? undefined : tags?.title ? tags.title : post.post.name}
     read={post.read}
     style="grid-area: meta;"
+    tags={tags?.tags}
   >
     <slot name="badges" slot="badges" />
   </PostMeta>
@@ -107,13 +129,20 @@
       style="grid-area:embed;"
       class={view == 'list' || view == 'compact' ? '' : 'contents'}
     >
-      <PostMedia bind:post={post.post} {view} {type} />
+      {#if rule != 'hide'}
+        <PostMedia
+          bind:post={post.post}
+          blur={rule == 'blur' ? true : undefined}
+          {view}
+          {type}
+        />
+      {/if}
     </div>
     {#if view == 'list' || view == 'compact'}
       <PostMediaCompact
         {view}
         bind:post={post.post}
-        bind:type={type}
+        bind:type
         class="{$userSettings.leftAlign
           ? 'mr-2'
           : 'ml-2'} flex-shrink no-list-margin"
@@ -121,7 +150,7 @@
       />
     {/if}
   {/key}
-  {#if post.post.body && !post.post.nsfw && view != 'compact' && !hideBody}
+  {#if post.post.body && !post.post.nsfw && view != 'compact' && !hideBody && rule != 'hide'}
     <PostBody body={post.post.body} {view} style="grid-area: body" />
   {/if}
   {#if actions}

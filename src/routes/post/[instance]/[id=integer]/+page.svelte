@@ -190,6 +190,7 @@
           moderator: post.post_view.creator_is_moderator,
         }}
         published={publishedToDate(post.post_view.post.published)}
+        bind:title={post.post_view.post.name}
       />
     </div>
     <Button on:click={() => history.back()} size="square-md">

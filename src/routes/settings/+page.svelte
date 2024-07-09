@@ -295,6 +295,35 @@
         pattern={DOMAIN_REGEX_FORMS}
       />
     </Setting>
+    <div>
+      <ToggleSetting
+        title={$t('settings.app.titleTags.title')}
+        description={$t('settings.app.titleTags.description')}
+        bind:checked={$userSettings.parseTags}
+      />
+      <Setting>
+        <svelte:fragment slot="title">
+          {$t('settings.app.titleTags.rules.title')}
+        </svelte:fragment>
+        <div
+          class="flex flex-col divide-y [&>*]:py-2 items-end divide-slate-200 dark:divide-zinc-800"
+        >
+          {#each Object.keys($userSettings.tagRules) as rule}
+            <div class="flex flex-row flex-wrap items-center gap-2">
+              <span class="text-lg font-medium">{rule}</span>
+              <MultiSelect
+                bind:selected={$userSettings.tagRules[rule]}
+                options={['blur', 'hide']}
+                optionNames={[
+                  $t('settings.app.titleTags.rules.blur'),
+                  $t('settings.app.titleTags.rules.hide'),
+                ]}
+              />
+            </div>
+          {/each}
+        </div>
+      </Setting>
+    </div>
   </Section>
 
   <Section title={$t('settings.embeds.title')}>

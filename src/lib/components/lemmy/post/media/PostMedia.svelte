@@ -19,6 +19,7 @@
   export let post: Post
   export let type: MediaType = 'none'
   export let opened: boolean | undefined = undefined
+  export let blur: boolean = post.nsfw && $userSettings.nsfwBlur
 
   let showAltText = false
 </script>
@@ -74,7 +75,7 @@
                   transition-opacity duration-300 object-contain mx-auto"
           width={512}
           height={300}
-          class:blur-3xl={post.nsfw && $userSettings.nsfwBlur}
+          class:blur-3xl={blur}
           alt={post.alt_text ?? ''}
         />
       </picture>
