@@ -40,7 +40,7 @@ export const optimizeImageURL = (
 
     if (width > 0) {
       url.searchParams.append(
-        'resize',
+        'thumbnail',
         findClosestNumber([128, 256, 512, 728, 1024, 1536], width).toString()
       )
     }
