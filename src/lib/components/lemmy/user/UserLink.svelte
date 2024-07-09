@@ -32,7 +32,7 @@
     class="flex gap-0 items-center flex-shrink max-w-full min-w-0"
     class:ml-0.5={avatar}
   >
-    <span class:font-medium={showInstance}>
+    <span class:font-medium={showInstance} class="username-text">
       {$userSettings.displayNames ? user.display_name || user.name : user.name}
     </span>
     {#if showInstance}
@@ -62,6 +62,14 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    min-width: 0;
     max-width: 100%;
+    flex: 1;
+  }
+
+  .username-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 </style>

@@ -127,8 +127,8 @@
             class="absolute w-3.5 h-3.5 {subscribed == 'NotSubscribed'
               ? 'bg-primary-900 dark:bg-primary-100 text-white dark:text-black'
               : 'bg-primary-100 dark:bg-primary-900 text-black dark:text-white'} rounded-full ring-2 box-border
-            ring-slate-50 dark:ring-zinc-950
-            -bottom-1 right-1 grid place-items-center transition-all"
+            ring-slate-50 dark:ring-zinc-950 grid place-items-center transition-all
+            right-0 -translate-x-1 -translate-y-2"
           >
             <Icon
               src={subscribed == 'NotSubscribed' ? Plus : Check}
@@ -144,11 +144,11 @@
     <CommunityLink
       {community}
       style="grid-area: community;"
-      class="flex-shrink"
+      class="flex-shrink self-end"
     />
   {/if}
   <span
-    class="text-slate-600 dark:text-zinc-400 flex flex-row gap-2 items-center"
+    class="text-slate-600 dark:text-zinc-400 flex flex-row gap-2 items-center self-start"
     style="grid-area: stats;"
   >
     {#if user}
@@ -168,7 +168,7 @@
     {/if}
   </span>
   <div
-    class="flex flex-row items-center self-center flex-wrap gap-2 [&>*]:flex-shrink-0 badges"
+    class="flex flex-row justify-end items-center self-center flex-wrap gap-2 [&>*]:flex-shrink-0 badges ml-2"
     style="grid-area: badges;"
   >
     {#if tags}
@@ -268,7 +268,7 @@
       'avatar stats badges';
     gap: 0;
     grid-template-rows: auto auto;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: max-content minmax(0, auto) auto;
   }
 
   :global(.badge-tag-color) {

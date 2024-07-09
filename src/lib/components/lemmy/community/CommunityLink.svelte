@@ -28,7 +28,7 @@
 
   {#if name}
     <span class="flex gap-0 items-center max-w-full min-w-0 flex-shrink">
-      <span class="font-medium">{community.title}</span>
+      <span class="font-medium username-text">{community.title}</span>
       {#if showInstance}
         <span
           class="text-slate-500 dark:text-zinc-500 font-normal
@@ -47,5 +47,12 @@
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
+    flex: 1;
+  }
+
+  .username-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 </style>
