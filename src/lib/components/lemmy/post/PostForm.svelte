@@ -140,7 +140,7 @@
           community_id: data.community!.id,
           name: data.title,
           body: data.body,
-          url: data.url,
+          url: data.url || undefined,
           nsfw: data.nsfw,
           custom_thumbnail: data.thumbnail,
           alt_text: data.alt_text,
