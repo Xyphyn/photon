@@ -19,8 +19,8 @@
             "label": "Profil",
             "settings": "Paramètres",
             "colorscheme": {
-                "label": "Apparence",
-                "system": "Systeme",
+                "label": "Couleurs",
+                "system": "Système",
                 "dark": "Sombre",
                 "light": "Clair"
             },
@@ -28,7 +28,8 @@
             "about": "À propos",
             "donate": "Faire un Don",
             "source": "Source",
-            "instance": "Instance"
+            "instance": "Instance",
+            "app": "Application"
         },
         "home": "Page d'acceuil",
         "admin": "Administrateur"
@@ -410,7 +411,8 @@
     "cards": {
         "site": {
             "stats": "Statistiques",
-            "admins": "Administrateurs"
+            "admins": "Administrateurs",
+            "about": "À propos"
         },
         "community": {
             "members": "Membres",
@@ -419,7 +421,45 @@
             "subscribed": "Abonné",
             "modlog": "Journal de modération",
             "block": "Bloquer",
-            "unblock": "Débloquer"
+            "unblock": "Débloquer",
+            "blockInstance": "Bloquer l'instance"
+        }
+    },
+    "admin": {
+        "instance": "Instance",
+        "label": "Administration",
+        "purgeCommunity": {
+            "warning": "Ceci effacera toutes les publications. Êtes-vous sur de vouloir faire ceci? (Il sera possible de cliquer le bouton dans 3 secondes.)"
+        }
+    },
+    "content": {
+        "all": "Tout",
+        "users": "Utilisateurs",
+        "posts": "Publications",
+        "comments": "Commentaires",
+        "communities": "Communautés",
+        "instances": "Instances",
+        "message": "Message"
+    },
+    "post": {
+        "actions": {
+            "comments": "Commentaires",
+            "save": "Sauvegarder",
+            "unsave": "Retirer la sauvegarde",
+            "more": {
+                "label": "Plus d'Actions",
+                "edit": "Modifier",
+                "creator": "créateur",
+                "actions": "Actions",
+                "markRead": "Marquer comme lu",
+                "hide": "Cacher",
+                "unhide": "Faire reapparaitre",
+                "translate": "Traduire",
+                "share": "Partager",
+                "crosspost": "Crosspublication",
+                "delete": "Supprimer",
+                "markUnread": "Marquer comme non lu"
+            }
         }
     }
 }
