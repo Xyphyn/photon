@@ -42,6 +42,7 @@
   import ToggleSetting from './ToggleSetting.svelte'
   import { locale, locales, t } from '$lib/translations'
   import { defaultLinks, iconOfLink } from '$lib/components/ui/navbar/link'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
   let pin: string = ''
   let importing = false
@@ -79,7 +80,7 @@
   </Modal>
 {/if}
 
-<h1 class="text-3xl font-bold flex justify-between">
+<Header class="text-3xl font-bold flex justify-between">
   {$t('settings.title')}
   <div class="flex items-center">
     <Button
@@ -122,7 +123,7 @@
       <Icon src={ArrowPath} mini size="18" slot="prefix" />
     </Button>
   </div>
-</h1>
+</Header>
 
 <div class="flex flex-col gap-4" style="scroll-behavior: smooth;">
   <Section title={$t('settings.navigation.title')}>

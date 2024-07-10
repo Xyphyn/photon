@@ -23,6 +23,7 @@
   import { t } from '$lib/translations'
   import { slide } from 'svelte/transition'
   import { feature } from '$lib/version'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
   export let edit = false
 
@@ -228,9 +229,9 @@
 
 <form on:submit|preventDefault={submit} class="flex flex-col gap-4 h-full">
   <slot name="formtitle">
-    <h1 class="font-bold text-xl">
+    <Header class="font-bold text-xl">
       {edit ? $t('form.post.edit') : $t('form.post.create')}
-    </h1>
+    </Header>
   </slot>
   {#if !edit && data}
     {#if !data.community}
