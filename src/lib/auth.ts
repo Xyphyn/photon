@@ -131,10 +131,12 @@ export let profile = derived<Writable<ProfileData>, Profile>(
           })
       }
     } else {
-      site.set(undefined)
-      client({ instanceURL: profile.instance })
-        .getSite()
-        .then((res) => site.set(res))
+      if (browser) {
+        site.set(undefined)
+        client({ instanceURL: profile.instance })
+          .getSite()
+          .then((res) => site.set(res))
+      }
     }
 
     instance.set(profile.instance)
