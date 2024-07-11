@@ -40,7 +40,7 @@
     {width}
     {title}
     loading="lazy"
-    class="aspect-square object-cover overflow-hidden {$$props.class}"
+    class="aspect-square object-cover overflow-hidden {$$props.class} flex-shrink-0"
     style="width: {width}px; height: {width}px;"
     class:rounded-full={circle}
     class:rounded-md={!circle}
@@ -48,7 +48,7 @@
 {:else}
   <div
     style="width: {width}px; height: {width}px;"
-    class="aspect-square object-cover overflow-hidden {$$props.class}"
+    class="aspect-square object-cover overflow-hidden {$$props.class} flex-shrink-0"
     class:rounded-full={circle}
     class:rounded-md={!circle}
   >
