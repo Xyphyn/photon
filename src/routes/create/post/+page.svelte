@@ -4,6 +4,8 @@
   import { profile } from '$lib/auth.js'
   import { onDestroy, onMount } from 'svelte'
   import { getSessionStorage, setSessionStorage } from '$lib/session.js'
+  import { t } from '$lib/translations.js'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
   export let data = {
     crosspost: false,
@@ -27,7 +29,7 @@
 </script>
 
 <svelte:head>
-  <title>Create post</title>
+  <title>{$t('form.post.create')}</title>
 </svelte:head>
 
 <div class="w-full max-w-5xl mx-auto h-full">
@@ -46,6 +48,6 @@
     passedCommunity={community}
     on:submit={(e) => goto(`/post/${e.detail.post.id}`)}
   >
-    <h1 class="text-3xl font-bold" slot="formtitle">Create Post</h1>
+    <Header class="text-3xl font-bold" slot="formtitle">Create Post</Header>
   </PostForm>
 </div>

@@ -4,15 +4,17 @@ import {
 } from '$lib/components/lemmy/moderation/moderation.js'
 import { toast } from 'mono-svelte'
 import { DEFAULT_INSTANCE_URL, instance } from '$lib/instance.js'
-import { client, getClient, site } from '$lib/lemmy.js'
+import { client, getClient } from '$lib/lemmy.js'
+import { site } from './lemmy'
 import { userSettings } from '$lib/settings.js'
 import { instanceToURL, moveItem } from '$lib/util.js'
 import {
   LemmyHttp,
   type GetSiteResponse,
   type MyUserInfo,
+  type Community,
 } from 'lemmy-js-client'
-import { get, writable } from 'svelte/store'
+import { derived, get, writable, type Writable } from 'svelte/store'
 import { MINIMUM_VERSION, versionIsSupported } from '$lib/version.js'
 import { browser } from '$app/environment'
 import { env } from '$env/dynamic/public'
@@ -43,7 +45,7 @@ export interface Profile {
   user?: PersonData
   username?: string
   avatar?: string
-  favorites?: ResumableItem[]
+  favorites?: Community[]
   color?: string
 }
 
@@ -56,12 +58,12 @@ interface ProfileData {
   defaultInstance?: string
 }
 
-interface PersonData extends MyUserInfo {
-  notifications: {
-    inbox: number
-    reports: number
-    applications: number
-  }
+interface PersonData extends MyUserInfo {}
+
+interface Notifications {
+  inbox: number
+  reports: number
+  applications: number
 }
 
 const getCookie = (key: string): string | undefined => {
@@ -69,82 +71,138 @@ const getCookie = (key: string): string | undefined => {
 
   // sorry i was dying when i wrote this line
   // ask chatgpt or something to explain this for you
-  return document?.cookie?.split(';').map(c => c.trim()).find(c => c.split('=')?.[0] == key)?.split('=')?.[1]
+  return document?.cookie
+    ?.split(';')
+    .map((c) => c.trim())
+    .find((c) => c.split('=')?.[0] == key)
+    ?.split('=')?.[1]
 }
 
 export let profileData = writable<ProfileData>(
-  getFromStorage<ProfileData>('profileData') ?? { profiles: [], profile: -1 }
+  getFromStorage<ProfileData>('profileData') ?? {
+    profiles: [
+      {
+        id: 1,
+        instance: DEFAULT_INSTANCE_URL,
+        username: 'Guest',
+        color: '#505050',
+      },
+    ],
+    profile: 1,
+  }
 )
 
-// stupid hack to get dev server working
-// why does this always happen to me
+let fetchingUser = false
 
-let initialInstance = get(profileData).defaultInstance
+export let profile = derived<Writable<ProfileData>, Profile>(
+  profileData,
+  (pd) => {
+    const profile =
+      pd.profiles.find((p) => p.id == pd.profile) ?? getDefaultProfile()
+
+    if (profile?.jwt) {
+      if (!profile.user && !fetchingUser) {
+        site.set(undefined)
+
+        fetchingUser = true
+
+        notifications.set({ applications: 0, inbox: 0, reports: 0 })
+
+        userFromJwt(profile.jwt, profile.instance)
+          .then((res) => {
+            if (!res?.user)
+              toast({
+                content: 'Your login has expired. Re-login to fix this issue.',
+                type: 'warning',
+              })
+
+            site.set(res?.site)
+
+            profile.user = res?.user
+            profile.avatar = res?.user.local_user_view.person.avatar
+
+            checkInbox()
+
+            fetchingUser = false
+          })
+          .catch((e) => {
+            fetchingUser = false
+            toast({ content: e, type: 'error' })
+          })
+      }
+    } else {
+      if (browser) {
+        site.set(undefined)
+        client({ instanceURL: profile.instance })
+          .getSite()
+          .then((res) => site.set(res))
+      }
+    }
+
+    instance.set(profile.instance)
+
+    return profile
+  }
+)
+
+export let notifications = writable<Notifications>({
+  applications: 0,
+  inbox: 0,
+  reports: 0,
+})
 
 profileData.subscribe(async (pd) => {
-  setFromStorage('profileData', pd)
+  const serialized: ProfileData = {
+    ...pd,
+    profiles: pd.profiles.map((p) => serializeUser(p)),
+  }
 
-  if (pd.profile == -1 && initialInstance != pd.defaultInstance) {
-    initialInstance = get(profileData).defaultInstance ?? DEFAULT_INSTANCE_URL
+  setFromStorage('profileData', serialized)
+
+  if (serialized.profile == -1) {
     instance?.set(get(profileData).defaultInstance ?? DEFAULT_INSTANCE_URL)
+  }
+  if (serialized.profiles.length == 0) {
+    profileData.update((pd) => ({
+      ...pd,
+      profiles: [
+        {
+          id: 1,
+          instance: DEFAULT_INSTANCE_URL,
+          username: 'Guest',
+        },
+      ],
+      profile: 1,
+    }))
   }
 })
 
-if (env.PUBLIC_MIGRATE_COOKIE && get(profileData).profiles.length == 0 && env.PUBLIC_INSTANCE_URL) {
+if (
+  env.PUBLIC_MIGRATE_COOKIE &&
+  get(profileData).profiles.length == 0 &&
+  env.PUBLIC_INSTANCE_URL
+) {
   const jwt = getCookie('jwt')
   if (jwt) {
     new Promise(async () => {
-        const user = await userFromJwt(jwt, env.PUBLIC_INSTANCE_URL ?? '')
-        if (!user) return
+      const user = await userFromJwt(jwt, env.PUBLIC_INSTANCE_URL ?? '')
+      if (!user) return
 
-        const result = await setUser(jwt, env.PUBLIC_INSTANCE_URL ?? '', user?.user.local_user_view.person.name)
-  
-        if (result) 
-          toast({ content: 'Your instance migrated to Photon, and you were logged in using a leftover cookie.', type: 'success' })
-      
+      const result = await setUser(
+        jwt,
+        env.PUBLIC_INSTANCE_URL ?? '',
+        user?.user.local_user_view.person.name
+      )
+
+      if (result)
+        toast({
+          content:
+            'Your instance migrated to Photon, and you were logged in using a leftover cookie.',
+          type: 'success',
+        })
     })
-    
   }
 }
-
-export let profile = writable<Profile | undefined>(getProfile())
-
-profile.subscribe(async (p) => {
-  if (p?.id == -1) {
-    instance?.set(get(profileData).defaultInstance ?? DEFAULT_INSTANCE_URL)
-  }
-  if (!p || !p.jwt) {
-    profileData.update((pd) => ({ ...pd, profile: -1 }))
-    return
-  }
-  if (p.user) return
-
-  instance.set(p.instance)
-  // fetch the user because p.user is undefined
-  const user = await userFromJwt(p.jwt, p.instance)
-    .then((user) => {
-      if (!user?.user)
-        toast({
-          content: 'Your login has expired. Re-login to fix this issue.',
-          type: 'warning',
-        })
-      site.set(user?.site)
-
-      return user
-    })
-    .catch((err) => {
-      toast({ content: err as any, type: 'error' })
-    })
-
-  if (!user?.user) return
-
-  profile.update(() => ({
-    ...p,
-    user: user!.user,
-    username: user?.user.local_user_view.person.name,
-    avatar: user?.user.local_user_view.person.avatar,
-  }))
-})
 
 export async function setUser(jwt: string, inst: string, username: string) {
   try {
@@ -180,11 +238,6 @@ export async function setUser(jwt: string, inst: string, username: string) {
       username: user.user.local_user_view.person.name,
       avatar: user.user.local_user_view.person.avatar,
     }
-
-    profile.set({
-      ...newProfile,
-      user: user!.user,
-    })
 
     return {
       profile: id,
@@ -225,32 +278,12 @@ async function userFromJwt(
   if (!myUser) return undefined
 
   return {
-    user: {
-      notifications: {
-        applications: 0,
-        inbox: 0,
-        reports: 0,
-      },
-      ...myUser,
-    },
+    user: myUser,
     site: site,
   }
 }
 
-function getProfile() {
-  const id = get(profileData).profile
-
-  if (id == -1) {
-    return getDefaultProfile()
-  }
-
-  const pd = get(profileData)
-
-  return pd.profiles.find((p) => p.id == id)
-}
-
 export function resetProfile() {
-  profile.set(getDefaultProfile())
   profileData.update((p) => ({ ...p, profile: -1 }))
 }
 
@@ -272,10 +305,12 @@ export function deleteProfile(id: number) {
   }
 }
 
-const serializeUser = (user: Profile): Profile => ({
-  ...user,
-  user: undefined,
-})
+function serializeUser(user: Profile): Profile {
+  return {
+    ...user,
+    user: undefined,
+  }
+}
 
 instance.subscribe(async (i) => {
   try {
@@ -288,35 +323,8 @@ instance.subscribe(async (i) => {
 })
 
 export async function setUserID(id: number) {
-  const pd = get(profileData)
-  if (id == -1) {
-    resetProfile()
-    instance.set(DEFAULT_INSTANCE_URL)
-    return
-  }
-
-  let prof = pd.profiles.find((p) => p.id == id)
-
-  if (!prof) return profile.update(() => getDefaultProfile())
-  prof = serializeUser(prof)
-
   profileData.update((p) => ({ ...p, profile: id }))
-
-  if (prof?.jwt) {
-    const user = await userFromJwt(prof.jwt, prof.instance)
-      .then((u) => u)
-      .catch((err) => {
-        toast({ content: err as any, type: 'error' })
-      })
-    instance.set(prof.instance)
-    prof.user = user?.user
-    prof.avatar = user?.user.local_user_view.person.avatar
-    site.set(user?.site)
-  }
-
-  profile.update(() => prof ?? getDefaultProfile())
-
-  return prof
+  return get(profile)
 }
 
 export function moveProfile(id: number, up: boolean) {
@@ -333,11 +341,7 @@ export function moveProfile(id: number, up: boolean) {
   }
 }
 
-const getNotificationCount = async (
-  jwt: string,
-  mod: boolean,
-  admin: boolean
-) => {
+async function getNotificationCount(jwt: string, mod: boolean, admin: boolean) {
   const unreads = await getClient().getUnreadCount()
 
   let reports: number = 0
@@ -383,29 +387,14 @@ async function checkInbox() {
   const notifs = await getNotificationCount(
     jwt,
     amModOfAny(user) ?? false,
-    isAdmin(user)
+    user ? isAdmin(user) : false
   )
 
-  user.notifications = {
+  notifications.set({
     inbox: notifs.unreads,
     applications: notifs.applications,
     reports: notifs.reports,
-  }
-
-  profile.update((p) => ({
-    ...p!,
-    user: user,
-  }))
-
-  
+  })
 }
 
 setInterval(checkInbox, 4 * 60 * 1000)
-
-let prevId: number | undefined = -2
-profile.subscribe((p) => {
-  if (p?.id == prevId || !p?.user) return
-  prevId = p?.id
-  if (p.id != -1) checkInbox()
-})
-

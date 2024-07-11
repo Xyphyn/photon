@@ -14,14 +14,14 @@ export default {
       serif: ['serif'],
       inter: ['Inter', 'system-ui', 'sans-serif'],
       nunito: ['Nunito', 'system-ui', 'sans-serif'],
-      display: ['Satoshi', 'system-ui', 'sans-serif']
+      display: ['Satoshi', 'system-ui', 'sans-serif'],
     },
     extend: {
       animation: {
         'pop-in': 'pop-in 0.25s ease-out forwards',
       },
       spacing: {
-        '22': '88px'
+        22: '88px',
       },
       keyframes: {
         'pop-in': {
@@ -62,9 +62,9 @@ export default {
           900: 'var(--c-p-900,#0f172a)',
         },
         black: `#000`,
-        white: `var(--c-o-white,#fff)`
+        white: `var(--c-o-white,#fff)`,
       },
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/container-queries')],
 }

@@ -10,6 +10,8 @@
   import Switch from '$lib/components/input/Switch.svelte'
   import { feature } from '$lib/version.js'
   import QrCode from "svelte-qrcode"
+  import { t } from '$lib/translations.js'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
   export let data
 
@@ -40,12 +42,12 @@
         await setUser(res.jwt, instance, username!)
         $currentInstance = instance
 
-        toast({ content: 'Your login was refreshed.', type: 'success' })
+        toast({ content: $t('toast.loginRefresh'), type: 'success' })
       } else {
-        throw new Error('Invalid credentials')
+        throw new Error($t('toast.invalidLogin'))
       }
 
-      toast({ content: 'Successfully changed your password. ' })
+      toast({ content: $t('toast.passwordReset') })
     } catch (e) {
       toast({
         content: e as any,
@@ -84,84 +86,91 @@
 
 </script>
 
-<h1 class="font-bold text-3xl">Credentials</h1>
+<h1 class="font-bold text-3xl">{$t('routes.profile.credentials')}</h1>
 <div class="flex flex-row flex-wrap gap-8">
   <div class="flex flex-col gap-2 max-w-sm w-full">
-    <h1 class="font-bold text-2xl">Password</h1>
+    <h1 class="font-bold text-2xl">{$t('form.password')}</h1>
     <form
       on:submit|preventDefault={changePassword}
       class="max-w-sm flex flex-col gap-4"
     >
       <TextInput
         bind:value={oldPassword}
-        label="Current Password"
+        label={$t('form.profile.currentPassword')}
         type="password"
         minlength={10}
         required
       />
       <TextInput
         bind:value={newPassword}
-        label="New Password"
+        label={$t('form.profile.newPassword')}
         type="password"
         minlength={10}
         required
       />
       <TextInput
         bind:value={newPasswordVerify}
-        label="New Password (Verify)"
+        label={$t('form.profile.verifyNewPassword')}
         type="password"
         minlength={10}
         required
       />
       <Button size="lg" color="primary" submit {loading} disabled={loading}>
-        Submit
+        {$t('form.submit')}
       </Button>
     </form>
   </div>
   <div class="flex flex-col gap-4 max-w-sm w-full">
-    <h1 class="font-bold text-2xl">2FA</h1>
+    <Header>{$t('form.profile.2fa.2fa')}</Header>
     <p>
-      2FA is <span class="font-bold">
-        {totpEnabled ? 'enabled' : 'disabled'}
+      <span class="font-bold">
+        {totpEnabled ? $t('common.enabled') : $t('common.disabled')}
       </span>
     </p>
     {#if totpEnabled || totpLink}
       {#if totpLink && !totpEnabled}
-      <span class="font-normal text-xs">Scan this code using your authenticator app or add it manually</span>
-      <QrCode value={totpLink} size=1024/>
-        <TextInput disabled type="password" value={totpLink} label="TOTP Link">
+        <QrCode value={totpLink} size=768/>
+        <TextInput
+          disabled
+          type="password"
+          value={totpLink}
+          label={$t('form.profile.2fa.totp')}
+        >
           <button
             slot="suffix"
             class="contents"
             on:click={() => {
               if (!totpLink) return
               navigator.clipboard?.writeText(totpLink)
-              toast({ content: 'Copied to clipboard.' })
+              toast({ content: $t('toast.copied') })
             }}
           >
-          <Icon src={ClipboardDocument} size="20" mini />
-        </button>
+            <Icon src={ClipboardDocument} size="20" mini />
+          </button>
+          <span class="font-normal text-xs">
+            {$t('form.profile.2fa.paste')}
+          </span>
         </TextInput>
       {/if}
       <form class="flex flex-col gap-2" on:submit|preventDefault={() => {}}>
         <TextInput
           bind:value={verify_totp}
           placeholder="012345"
-          label="2FA Code"
+          label={$t('form.2fa')}
         />
         {#if totpEnabled}
           <Button on:click={() => twofa(false, true)} size="lg" color="primary">
-            Disable
+            {$t('common.disabled')}
           </Button>
         {:else}
           <Button on:click={() => twofa(true, true)} size="lg" color="primary">
-            Enable
+            {$t('common.enabled')}
           </Button>
         {/if}
       </form>
     {:else}
       <Button on:click={() => twofa(true)} size="lg" color="primary">
-        Setup
+        {$t('form.setup')}
       </Button>
     {/if}
   </div>

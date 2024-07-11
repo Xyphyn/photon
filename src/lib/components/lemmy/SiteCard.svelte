@@ -2,26 +2,23 @@
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import StickyCard from '$lib/components/ui/StickyCard.svelte'
-  import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
-  import RelativeDate from '$lib/components/util/RelativeDate.svelte'
-  import { publishedToDate } from '$lib/components/util/date.js'
-  import { getClient } from '$lib/lemmy.js'
   import type { PersonView, SiteView, Tagline } from 'lemmy-js-client'
-  import { Button, Disclosure, Popover } from 'mono-svelte'
+  import { Button } from 'mono-svelte'
   import {
     BuildingOffice,
-    Calendar,
     ChartBar,
-    ChatBubbleOvalLeftEllipsis,
     Icon,
     InformationCircle,
     Newspaper,
-    PencilSquare,
     ServerStack,
     UserGroup,
   } from 'svelte-hero-icons'
   import Expandable from '../ui/Expandable.svelte'
   import LabelStat from '../ui/LabelStat.svelte'
+  import ItemList from './generic/ItemList.svelte'
+  import { userLink } from '$lib/lemmy/generic'
+  import { t } from '$lib/translations'
+  import Entity from '../ui/Entity.svelte'
 
   export let site: SiteView
   export let taglines: Tagline[] | undefined = undefined
@@ -30,32 +27,35 @@
 </script>
 
 <StickyCard class="w-full {$$props.class} text-slate-600 dark:text-zinc-400">
-  <div class="flex flex-row gap-3 items-center">
-    {#if site.site.icon}
-      <Avatar
-        width={32}
-        url={site.site.icon}
-        alt={site.site.name}
-        circle={false}
-      />
-    {/if}
-    <div class="flex flex-col">
-      <h1 class="font-bold text-base">{site.site.name}</h1>
-      <span class="text-sm opacity-60">
-        {new URL(site.site.actor_id).hostname}
-      </span>
-    </div>
-  </div>
+  <Entity name={site.site.name} label={new URL(site.site.actor_id).hostname}>
+    <Avatar
+      width={32}
+      url={site.site.icon}
+      alt={site.site.name}
+      circle={false}
+      slot="icon"
+    />
+  </Entity>
   <div class="flex flex-row gap-1 !border-0">
-    <Button href="/modlog" title="Modlog" color="ghost" size="square-md">
+    <Button
+      href="/modlog"
+      title={$t('routes.modlog')}
+      color="ghost"
+      size="square-md"
+    >
       <Icon src={Newspaper} size="16" mini />
     </Button>
-    <Button href="/legal" title="Legal" color="ghost" size="square-md">
+    <Button
+      href="/legal"
+      title={$t('routes.legal.title')}
+      color="ghost"
+      size="square-md"
+    >
       <Icon src={BuildingOffice} size="16" mini />
     </Button>
     <Button
       href="/instances"
-      title="Instances"
+      title={$t('routes.instances')}
       class="3xl:rounded-l-none"
       color="ghost"
       size="square-md"
@@ -76,7 +76,8 @@
 
     <Expandable>
       <svelte:fragment slot="title">
-        <Icon src={InformationCircle} size="15" mini /> About
+        <Icon src={InformationCircle} size="15" mini />
+        {$t('cards.site.about')}
       </svelte:fragment>
       <Markdown source={site.site.description} />
       <div class="my-4" />
@@ -85,21 +86,22 @@
 
     <Expandable>
       <svelte:fragment slot="title">
-        <Icon src={ChartBar} size="15" mini /> Stats
+        <Icon src={ChartBar} size="15" mini />
+        {$t('cards.site.stats')}
       </svelte:fragment>
       <div class="flex flex-row gap-4 flex-wrap">
         <LabelStat
-          label="Users"
+          label={$t('content.users')}
           content={site.counts.users.toString()}
           formatted
         />
         <LabelStat
-          label="Posts"
+          label={$t('content.posts')}
           content={site.counts.posts.toString()}
           formatted
         />
         <LabelStat
-          label="Communities"
+          label={$t('content.communities')}
           content={site.counts.communities.toString()}
           formatted
         />
@@ -109,30 +111,18 @@
     {#if admins}
       <Expandable>
         <svelte:fragment slot="title">
-          <Icon src={UserGroup} size="15" mini /> Admins
+          <Icon src={UserGroup} size="15" mini />
+          {$t('cards.site.admins')}
         </svelte:fragment>
-        <div
-          class="flex items-center flex-wrap group transition-all
-        cursor-pointer"
-        >
-          {#each admins as admin}
-            <Popover openOnHover placement="top">
-              <a
-                class="block ring rounded-full ring-slate-50 dark:ring-zinc-950 transition-all -mx-0.5 group-hover:mx-0.5"
-                href="/u/{admin.person.name}@{new URL(admin.person.actor_id)
-                  .hostname}"
-                slot="target"
-              >
-                <Avatar
-                  width={28}
-                  url={admin.person.avatar}
-                  alt={admin.person.name}
-                />
-              </a>
-              <span class="font-bold">{admin.person.name}</span>
-            </Popover>
-          {/each}
-        </div>
+        <ItemList
+          items={admins.map((a) => ({
+            id: a.person.id,
+            name: a.person.name,
+            url: userLink(a.person),
+            avatar: a.person.avatar,
+            instance: new URL(a.person.actor_id).hostname,
+          }))}
+        />
       </Expandable>
     {/if}
 

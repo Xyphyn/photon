@@ -30,7 +30,7 @@ interface Theme {
 
 export interface Colors {
   slate: {
-    25?: string,
+    25?: string
     50?: string
     100?: string
     200?: string
@@ -42,7 +42,7 @@ export interface Colors {
     900?: string
     925?: string
     950?: string
-  },
+  }
   zinc: {
     100?: string
     200?: string
@@ -55,13 +55,13 @@ export interface Colors {
     900?: string
     925?: string
     950?: string
-  },
+  }
   primary: {
-    100?: string,
-    900?: string,
-  },
+    100?: string
+    900?: string
+  }
   other: {
-    black?: string,
+    black?: string
     white?: string
   }
 }
@@ -101,15 +101,15 @@ export const defaultColors = {
   },
   other: {
     black: `#000`,
-    white: `var(--c-o-white,#fff)`
-  }
+    white: `var(--c-o-white,#fff)`,
+  },
 }
 
 export let colors = writable<Colors>({
   slate: {},
   zinc: {},
   primary: {},
-  other: {}
+  other: {},
 })
 
 export function colorsToVars(colors: Colors): string {
@@ -118,15 +118,18 @@ export function colorsToVars(colors: Colors): string {
     for (let shade in colors[category as keyof Colors]) {
       if (category)
         // @ts-ignore
-        vars.push(`--c-${category.slice(0, 1)}-${shade}:${colors[category][shade]}`)
+        vars.push(
+          `--c-${category.slice(0, 1)}-${shade}:${colors[category][shade]}`
+        )
     }
   }
   return vars.join(';')
 }
 
-export const colorToVar = (category: keyof Colors, shade: keyof keyof Colors): string =>
-  `--c-${category.slice(0,2)}-${shade.toString()}`
-
+export const colorToVar = (
+  category: keyof Colors,
+  shade: keyof (keyof Colors)
+): string => `--c-${category.slice(0, 2)}-${shade.toString()}`
 
 function loadColors() {
   const loaded = localStorage.getItem('colors')
@@ -141,7 +144,6 @@ function loadColors() {
 if (browser) {
   loadColors()
 }
-
 
 const configuredLegacyTheme = env.PUBLIC_LEGACYTHEME ?? 'system'
 export const legacyTheme = writable<'system' | 'light' | 'dark'>(

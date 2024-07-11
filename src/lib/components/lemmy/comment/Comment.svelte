@@ -22,6 +22,9 @@
   import ShieldIcon from '../moderation/ShieldIcon.svelte'
   import { page } from '$app/stores'
   import { onMount } from 'svelte'
+  import { t } from '$lib/translations'
+  import { slide } from 'svelte/transition'
+  import { expoOut } from 'svelte/easing'
 
   export let node: CommentNodeI
   export let postId: number
@@ -50,11 +53,6 @@
       node.comment_view.comment.content = newComment
 
       editing = false
-
-      toast({
-        content: 'Successfully edited comment.',
-        type: 'success',
-      })
     } catch (err) {
       toast({
         // @ts-ignore i hate this
@@ -104,7 +102,9 @@
 {/if}
 
 <li
-  class="py-3 {highlight} {$$props.class}"
+  class="py-3 relative {node.comment_view.comment.distinguished
+    ? ' text-primary-900 dark:text-primary-100'
+    : ''} {highlight} {$$props.class}"
   id="#{node.comment_view.comment.id.toString()}"
 >
   <Disclosure bind:open class="flex flex-col">
@@ -145,7 +145,7 @@
             src={Trash}
             solid
             size="12"
-            title="Deleted"
+            title={$t('post.badges.deleted')}
             class="text-red-600 dark:text-red-500"
           />
         {/if}
@@ -154,7 +154,7 @@
             src={Bookmark}
             solid
             size="12"
-            title="Saved"
+            title={$t('post.badges.saved')}
             class="text-yellow-600 dark:text-yellow-500"
           />
         {/if}
@@ -162,8 +162,14 @@
     </div>
     <div
       class="flex flex-col whitespace-pre-wrap
-      max-w-full gap-1 mt-1"
+      max-w-full gap-1 mt-1 relative"
     >
+      {#if node.comment_view.comment.distinguished}
+        <div
+          class="-z-10 bg-slate-100 dark:bg-zinc-900 absolute -top-9 -bottom-1.5
+          -inset-x-6 -right-6"
+        />
+      {/if}
       <div class="max-w-full mt-0.5 break-words text-sm">
         <Markdown source={node.comment_view.comment.content} />
       </div>
@@ -180,8 +186,9 @@
     {#if replying}
       <div
         class="max-w-full my-2 border-l border-slate-200 dark:border-zinc-800 pl-4"
+        transition:slide={{ axis: 'y', duration: 400, easing: expoOut }}
       >
-        <h1 class="font-bold text-sm mb-2">Reply</h1>
+        <h1 class="font-bold text-sm mb-2">{$t('comment.reply')}</h1>
         <CommentForm
           {postId}
           parentId={node.comment_view.comment.id}

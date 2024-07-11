@@ -1,4 +1,4 @@
-import { getInstance } from '$lib/lemmy.js'
+import { client, getInstance } from '$lib/lemmy.js'
 import type { View } from '$lib/settings'
 import { isImage, isVideo } from '$lib/ui/image'
 import { findClosestNumber } from '$lib/util'
@@ -12,18 +12,19 @@ export const bestImageURL = (
   compact: boolean = true,
   width: number = 1024
 ) => {
-  if (width > 1024) {
-    if (post.url) return `${post.url}?format=webp`
-    else if (post.thumbnail_url) return `${post.thumbnail_url}?format=webp`
-  }
+  let fetchWidth =
+    width > 1024
+      ? // -1 disables a small thumbnail
+        -1
+      : // set width to 512 if compact
+      compact
+      ? 512
+      : // otherwise, just use the original width
+        width
 
-  if (compact && post.thumbnail_url)
-    return `${post.thumbnail_url}?thumbnail=256&format=webp`
-  else if (compact && post.url) return `${post.url}?thumbnail=256&format=webp`
-
-  if (post.url) return `${post.url}?thumbnail=${width}&format=webp`
-  else if (post.thumbnail_url)
-    return `${post.thumbnail_url}?thumbnail=${width}&format=webp`
+  if (post.thumbnail_url)
+    return optimizeImageURL(post.thumbnail_url, fetchWidth)
+  else if (post.url) return optimizeImageURL(post.url, fetchWidth)
 
   return post.url ?? ''
 }
@@ -34,15 +35,25 @@ export const optimizeImageURL = (
 ): string => {
   try {
     const url = new URL(urlStr)
+
     url.searchParams.append('format', 'webp')
-    url.searchParams.append('thumbnail', findClosestNumber([128, 256, 512, 1024], width).toString())
+
+    if (width > 0) {
+      url.searchParams.append(
+        'thumbnail',
+        findClosestNumber([128, 256, 512, 728, 1024, 1536], width).toString()
+      )
+    }
+
     return url.toString()
   } catch (e) {
+    console.log(e)
     return urlStr
   }
 }
 
-const YOUTUBE_REGEX = /^(?:(?:https?:)?\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/
+const YOUTUBE_REGEX =
+  /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|shorts\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/
 
 export const isYoutubeLink = (url?: string): RegExpMatchArray | null => {
   if (!url) return null
@@ -69,4 +80,17 @@ export const iframeType = (post: Post): IframeType => {
   if (isVideo(post.url)) return 'video'
   if (isYoutubeLink(post.url)) return 'youtube'
   return 'none'
+}
+
+export async function hidePost(
+  id: number,
+  hide: boolean,
+  jwt: string
+): Promise<boolean> {
+  const res = await client({ auth: jwt }).hidePost({
+    hide: hide,
+    post_ids: [id],
+  })
+
+  return hide
 }

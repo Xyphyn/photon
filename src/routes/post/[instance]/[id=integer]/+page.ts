@@ -1,62 +1,66 @@
-import { env } from '$env/dynamic/public'
-import { profile } from '$lib/auth.js'
-import CommunityCard from '$lib/components/lemmy/community/CommunityCard.svelte'
-import { getClient } from '$lib/lemmy.js'
-import { SSR_ENABLED, userSettings } from '$lib/settings.js'
-import { error } from '@sveltejs/kit'
-import { get } from 'svelte/store'
+import { browser } from "$app/environment";
+import { env } from "$env/dynamic/public";
+import { profile } from "$lib/auth.js";
+import CommunityCard from "$lib/components/lemmy/community/CommunityCard.svelte";
+import { getClient } from "$lib/lemmy.js";
+import { awaitIfServer } from "$lib/promise.js";
+import { SSR_ENABLED, userSettings } from "$lib/settings.js";
+import { error } from "@sveltejs/kit";
+import type { GetComments } from "lemmy-js-client";
+import { get } from "svelte/store";
 
 export async function load({ params, url, fetch }) {
-  const post = await getClient(params.instance.toLowerCase(), fetch).getPost({
-    id: Number(params.id),
-  })
+  const thread = url.searchParams.get("thread");
+  let parentId: number | undefined;
+  let showContext: string | undefined = undefined;
 
-  let max_depth = post.post_view.counts.comments > 100 ? 1 : 3
-
-  const thread = url.searchParams.get('thread')
-  let parentId: number | undefined
-  let showContext: string | undefined = undefined
+  let max_depth = 3;
 
   if (thread) {
-    const split = thread.split('.')
+    const split = thread.split(".");
     if (split.length >= 9) {
-      const sliced = split.slice(0, split.length - 4)
-      showContext = sliced[sliced.length - 1]
-      parentId = Number(split[split.length - 5])
+      const sliced = split.slice(0, split.length - 4);
+      showContext = sliced[sliced.length - 1];
+      parentId = Number(split[split.length - 5]);
     } else {
-      parentId = Number(split[1])
+      parentId = Number(split[1]);
     }
 
     if (!Number.isInteger(parentId)) {
-      parentId = undefined
+      parentId = undefined;
     }
   }
 
   if (parentId) {
-    max_depth = 10
+    max_depth = 10;
   }
 
-  const sort = get(userSettings)?.defaultSort?.comments ?? 'Hot'
+  const sort = get(userSettings)?.defaultSort?.comments ?? "Hot";
 
-  const commentParams: any = {
+  const commentParams: GetComments = {
     post_id: Number(params.id),
-    type_: 'All',
+    type_: "All",
     limit: 50,
     page: 1,
     max_depth: max_depth,
     saved_only: false,
     sort: sort,
     parent_id: parentId,
-  }
+  };
+
+  const comments = getClient(params.instance, fetch).getComments(commentParams);
+  const post = await getClient(params.instance.toLowerCase(), fetch).getPost({
+    id: Number(params.id),
+  });
 
   return {
     thread: {
       showContext: showContext,
-      singleThread: parentId != undefined
+      singleThread: parentId != undefined,
     },
     post: post,
     commentSort: sort,
-    comments: await getClient(params.instance, fetch).getComments(commentParams),
+    comments: (await awaitIfServer(comments)).data,
     slots: {
       sidebar: {
         component: CommunityCard,
@@ -65,5 +69,5 @@ export async function load({ params, url, fetch }) {
         },
       },
     },
-  }
+  };
 }

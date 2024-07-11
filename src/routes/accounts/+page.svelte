@@ -23,6 +23,7 @@
   import {
     ArrowLeftOnRectangle,
     ArrowRightOnRectangle,
+    ArrowsRightLeft,
     ArrowUturnLeft,
     BugAnt,
     Check,
@@ -38,40 +39,11 @@
   } from 'svelte-hero-icons'
   import { flip } from 'svelte/animate'
   import { expoInOut, expoOut } from 'svelte/easing'
+  import { t } from '$lib/translations'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
   let newInstance: string = $profileData.defaultInstance ?? DEFAULT_INSTANCE_URL
   let loading = false
-
-  async function changeGuestInstance() {
-    loading = true
-    try {
-      const valid = await validateInstance(newInstance.trim())
-
-      if (!valid) {
-        throw new Error('invalid instance')
-      }
-
-      toast({
-        content: 'Changed guest instance.',
-        type: 'success',
-      })
-    } catch (err) {
-      toast({
-        content: 'Failed to contact that instance URL. Is it down?',
-        type: 'error',
-      })
-
-      loading = false
-
-      return
-    }
-
-    $profileData.defaultInstance = newInstance
-    if ($currentProfile && $currentProfile.id == -1) {
-      $instance = newInstance
-    }
-    loading = false
-  }
 
   let debugging = false
   let debugProfile: Profile | undefined = undefined
@@ -85,7 +57,7 @@
 </script>
 
 <svelte:head>
-  <title>Accounts</title>
+  <title>{$t('routes.accounts')}</title>
 </svelte:head>
 
 {#if debugging}
@@ -159,31 +131,12 @@
           Sign up
         </Button>
       </div>
-      {#if LINKED_INSTANCE_URL === undefined}
-        <div class="flex flex-row font-normal gap-2">
-          <TextInput
-            label="Guest instance"
-            on:change={changeGuestInstance}
-            placeholder="Instance URL"
-            bind:value={newInstance}
-          />
-          <Button
-            color="primary"
-            class="h-max self-end"
-            size="lg"
-            {loading}
-            disabled={loading}
-          >
-            Change
-          </Button>
-        </div>
-      {/if}
     </div>
   </div>
 {:else}
   <div class="flex flex-col h-full gap-4">
     <div class="flex flex-row justify-between">
-      <h1 class="text-2xl font-bold">Accounts</h1>
+      <Header>{$t('routes.accounts')}</Header>
     </div>
     <EditableList
       on:action={(acc) => {
@@ -232,21 +185,24 @@
               ? 'Switch'
               : 'Current'}
             on:click={async () => {
-              if (profile.id == $currentProfile?.id) setUserID(-1)
-              else {
+              if (profile.id != $currentProfile?.id) {
                 switching = profile.id
                 await setUserID(profile.id)
                 switching = -69
               }
             }}
             size="square-md"
-            color={profile.id == $currentProfile?.id ? 'primary' : 'secondary'}
+            color={profile.id == $currentProfile?.id ? 'primary' : 'ghost'}
             loading={switching == profile.id}
             disabled={switching == profile.id}
           >
-            {#if profile.id == $currentProfile?.id}
-              <Icon src={Check} mini size="16" />
-            {/if}
+            <svelte:fragment slot="prefix">
+              {#if profile.id == $currentProfile?.id}
+                <Icon src={Check} mini size="16" />
+              {:else}
+                <Icon src={ArrowsRightLeft} size="16" mini />
+              {/if}
+            </svelte:fragment>
           </Button>
           <Menu placement="bottom-end">
             <Button size="square-md" slot="target">
@@ -256,6 +212,7 @@
               <Button
                 size="square-md"
                 color="secondary"
+                title={$t('account.moveUp')}
                 on:click={() => moveProfile(profile.id, true)}
               >
                 <Icon src={ChevronUp} size="16" mini slot="prefix" />
@@ -263,6 +220,7 @@
               <Button
                 size="square-md"
                 color="secondary"
+                title={$t('account.moveDown')}
                 on:click={() => moveProfile(profile.id, false)}
               >
                 <Icon src={ChevronDown} size="16" mini slot="prefix" />
@@ -273,7 +231,7 @@
               on:click={() => (profile.color = undefined)}
             >
               <Icon src={ArrowUturnLeft} size="16" mini slot="prefix" />
-              Reset Color
+              {$t('account.resetColor')}
             </MenuButton>
             {#if $userSettings.debugInfo}
               <MenuButton
@@ -283,58 +241,29 @@
                 }}
               >
                 <Icon src={BugAnt} size="16" mini slot="prefix" />
-                Debug Info
+                {$t('common.debug')}
               </MenuButton>
             {/if}
             <MenuButton on:click={() => action(profile)} color="danger-subtle">
               <Icon slot="prefix" src={ArrowRightOnRectangle} size="16" mini />
-              Log Out
+              {$t('account.logout')}
             </MenuButton>
           </Menu>
         </div>
       {/each}
-      <div class="flex flex-row gap-4 items-center py-4">
-        <span class="font-bold flex flex-col">Guest</span>
-        <div class="ml-auto" />
-
-        <Button
-          aria-label={$currentProfile?.id != -1 ? 'Switch' : 'Current'}
-          on:click={async () => {
-            if ($currentProfile?.id != -1) setUserID(-1)
-          }}
-          size="square-md"
-          color={$currentProfile?.id == -1 ? 'primary' : 'secondary'}
-        >
-          {#if $currentProfile?.id == -1}
-            <Icon src={Check} mini size="16" />
-          {/if}
-        </Button>
-      </div>
     </EditableList>
     <div class="mt-auto" />
-    <div class="flex flex-row font-normal gap-2">
-      <TextInput
-        on:change={changeGuestInstance}
-        placeholder="Instance URL"
-        label="Guest instance"
-        bind:value={newInstance}
-        disabled={LINKED_INSTANCE_URL != undefined}
-        size="sm"
-      >
-        <span slot="prefix">https://</span>
-      </TextInput>
-      <Button
-        color="primary"
-        {loading}
-        disabled={loading || LINKED_INSTANCE_URL != undefined}
-        class="self-end"
-      >
-        Change
+    <div class="flex items-center gap-2">
+      <Button href="/login" size="lg" class="flex-1" color="primary">
+        <Icon slot="prefix" src={ArrowLeftOnRectangle} size="16" mini />
+        {$t('account.login')}
       </Button>
+      {#if !LINKED_INSTANCE_URL}
+        <Button href="/login/guest" size="lg">
+          <Icon slot="prefix" src={Plus} size="16" mini />
+          {$t('account.addGuest')}
+        </Button>
+      {/if}
     </div>
-    <Button href="/login" size="lg">
-      <Icon slot="prefix" src={ArrowLeftOnRectangle} size="16" mini />
-      Log In
-    </Button>
   </div>
 {/if}

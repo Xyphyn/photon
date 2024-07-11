@@ -31,7 +31,8 @@
 bg-gradient-to-b text-transparent from-slate-600 via-slate-600
 dark:from-zinc-400 dark:via-zinc-400 bg-clip-text z-0
 ${view == 'list' ? `max-h-24` : 'max-h-48'}`
-    : 'text-slate-600 dark:text-zinc-400 max-h-full'} {$$props.class ?? ''}"
+    : 'text-slate-600 dark:text-zinc-400 max-h-full'} pointer-events-none {$$props.class ??
+    ''}"
   bind:this={element}
 >
   <Markdown inline={!expanded} source={body} />
@@ -40,7 +41,7 @@ ${view == 'list' ? `max-h-24` : 'max-h-48'}`
       on:click={() => (expanded = !expanded)}
       size="square-sm"
       color="tertiary"
-      class="text-black dark:text-white absolute z-10 isolate drop-shadow-xl {expanded
+      class="text-black dark:text-white absolute z-10 isolate drop-shadow-xl pointer-events-auto {expanded
         ? 'bottom-6'
         : 'bottom-16'} left-1/2 -translate-x-1/2"
       title="Expand"

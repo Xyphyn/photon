@@ -20,15 +20,18 @@
   import CommunityCard from '$lib/components/lemmy/community/CommunityCard.svelte'
   import LabelStat from '$lib/components/ui/LabelStat.svelte'
   import PostBody from '../post/PostBody.svelte'
+  import { t } from '$lib/translations'
 
   export let community: CommunityView
 
   let showInfo = false
 </script>
 
-<Modal title="Community" bind:open={showInfo}>
-  <CommunityCard community_view={community} />
-</Modal>
+{#if showInfo}
+  <Modal title="Community" bind:open={showInfo}>
+    <CommunityCard community_view={community} />
+  </Modal>
+{/if}
 
 <div class="py-4 flex flex-col gap-2 text-sm max-w-full relative">
   <div class="flex flex-row items-center">
@@ -77,9 +80,9 @@
             slot="prefix"
           />
           {#if isSubscribed(community.subscribed)}
-            Subscribed
+            {$t('cards.community.subscribed')}
           {:else}
-            Subscribe
+            {$t('cards.community.subscribe')}
           {/if}
         </Button>
       </Subscribe>

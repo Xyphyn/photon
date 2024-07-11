@@ -29,6 +29,7 @@
   import { site } from '$lib/lemmy.js'
   import { fly } from 'svelte/transition'
   import { backOut } from 'svelte/easing'
+  import { t } from '$lib/translations'
 
   export let post: Post
   export let vote: number = 0
@@ -42,7 +43,7 @@
 
   const castVote = async (newVote: number) => {
     if (!$profile?.jwt) {
-      toast({ content: 'You must be logged in to vote.', type: 'warning' })
+      toast({ content: $t('toast.loginVoteGate'), type: 'warning' })
       return
     }
     loading = true
@@ -56,8 +57,8 @@
 
 <slot {vote} {score}>
   <div
-    class="{buttonColor.secondary} rounded-lg h-full flex items-center [&>*]:p-2
-    hover:bg-white hover:dark:bg-zinc-900 overflow-hidden transition-colors
+    class="{buttonColor.secondary} rounded-lg h-8 flex items-center [&>*]:p-2
+    hover:bg-white hover:dark:bg-zinc-900 overflow-hidden transition-colors flex-shrink-0
     {loading ? 'animate-pulse opacity-75 pointer-events-none' : ''}"
   >
     <button

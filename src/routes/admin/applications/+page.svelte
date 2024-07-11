@@ -6,15 +6,17 @@
   import { ClipboardDocumentCheck, Icon } from 'svelte-hero-icons'
   import Application from './Application.svelte'
   import MultiSelect from '$lib/components/input/Switch.svelte'
+  import { t } from '$lib/translations'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
   export let data
 </script>
 
-<h1 class="font-bold text-2xl">Applications</h1>
+<Header>{$t('routes.admin.applications.title')}</Header>
 <MultiSelect
   options={[false, true]}
   selected={data.unreadOnly ?? true}
-  optionNames={['All', 'Unread']}
+  optionNames={[$t('filter.location.all'), $t('filter.unread')]}
   on:select={(e) =>
     searchParam($page.url, 'unreadOnly', e.detail.toString(), 'page')}
 />
@@ -35,7 +37,7 @@
 {:else}
   <Placeholder
     icon={ClipboardDocumentCheck}
-    title="No new applications"
-    description="Applications to join your instance will appear here."
+    title={$t('routes.admin.applications.empty.title')}
+    description={$t('routes.admin.applications.empty.description')}
   />
 {/if}

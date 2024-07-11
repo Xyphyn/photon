@@ -7,9 +7,11 @@
 </script>
 
 <div class="flex flex-row gap-2 items-center">
-  <Avatar url={icon} width={32} />
+  <slot name="icon">
+    <Avatar url={icon} width={32} />
+  </slot>
   <div class="flex flex-col">
-    <span class="font-medium">{name}</span>
+    <span class="font-bold text-base">{name}</span>
     <span class="text-sm">{label}</span>
   </div>
 </div>

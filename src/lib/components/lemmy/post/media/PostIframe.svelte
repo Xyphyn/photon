@@ -5,12 +5,24 @@
         return 'www.youtube-nocookie.com'
       }
       case 'invidious': {
-        return 'vid.puffyan.us'
+        return get(userSettings).embeds.invidious || 'yewtu.be'
       }
       case 'piped': {
-        return 'piped.video'
+        return get(userSettings).embeds.piped || 'piped.video'
       }
     }
+  }
+
+  function youtubeVideoID(url: string): string | null {
+    const regex =
+      /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|shorts\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/
+    const match = url.match(regex)
+
+    if (match && match[1]) {
+      return match[1]
+    }
+
+    return null
   }
 </script>
 
@@ -23,6 +35,7 @@
   } from 'svelte-hero-icons'
   import { optimizeImageURL, type IframeType, type MediaType } from '../helpers'
   import { userSettings } from '$lib/settings'
+  import { get } from 'svelte/store'
 
   export let type: IframeType = 'none'
   export let thumbnail: string | undefined = undefined
@@ -36,8 +49,8 @@
 
     if (type == 'youtube') {
       const url = new URL(inputUrl)
-      const videoID = url.searchParams.get('v')
-      url.searchParams.delete('v')
+
+      const videoID = youtubeVideoID(inputUrl)
 
       return `https://${youtubeDomain(
         $userSettings.embeds.youtube
@@ -79,6 +92,10 @@
   $: embedUrl = urlToEmbed(url)
 </script>
 
+<!-- 
+  @component
+  Displays a video file or embedded video iframe.
+-->
 {#if opened}
   {#if type == 'video'}
     <!-- svelte-ignore a11y-media-has-caption -->

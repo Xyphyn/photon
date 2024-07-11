@@ -2,6 +2,7 @@
   import { profile } from '$lib/auth.js'
   import MultiSelect from '$lib/components/input/Switch.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
+  import { t } from '$lib/translations'
   import { uploadImage } from '$lib/util.js'
   import { ImageInput, toast } from 'mono-svelte'
   import { Button, Label, Modal, TextArea } from 'mono-svelte'
@@ -19,7 +20,7 @@
   export let images: boolean = true
   export let value: string = ''
   export let label: string | undefined = undefined
-  export let previewButton: boolean = false
+  export let previewButton: boolean = true
   export let tools: boolean = true
   export let disabled: boolean = false
   export let rows: number = 4
@@ -63,12 +64,11 @@
   let uploadingImage = false
   let loading = false
   let image: any
-  $: previewURL =
-    image instanceof FileList
-      ? URL.createObjectURL(image[0])
-      : image
-        ? URL.createObjectURL(image)
-        : ''
+  $: previewURL = image?.length
+    ? URL.createObjectURL(image[0])
+    : image
+      ? URL.createObjectURL(image)
+      : ''
 
   async function upload() {
     if (!$profile?.jwt || !image) return
@@ -97,7 +97,7 @@
     loading = false
   }
 
-  let previewing = false
+  export let previewing = false
 
   const shortcuts = {
     KeyB: () => wrapSelection('**', '**'),
@@ -166,7 +166,7 @@
     </Label>
   {/if}
   <div
-    class="flex flex-col border border-slate-300 dark:border-zinc-800
+    class="flex flex-col border border-slate-200 border-b-slate-300 dark:border-t-zinc-700 dark:border-zinc-800
     focus-within:border-primary-900 focus-within:dark:border-primary-100 focus-within:ring ring-slate-300
     dark:ring-zinc-700 rounded-xl
 overflow-hidden transition-colors"
@@ -174,7 +174,8 @@ overflow-hidden transition-colors"
   >
     {#if previewing}
       <div
-        class="px-3 py-2.5 h-32 overflow-auto text-sm resize-y bg-white dark:bg-zinc-950"
+        class="px-3 py-2.5 overflow-auto text-sm resize-y bg-white dark:bg-zinc-950"
+        style="height: {rows * 2}em"
       >
         <Markdown source={beforePreview(value)} />
       </div>
@@ -182,7 +183,8 @@ overflow-hidden transition-colors"
       {#if tools}
         <!--Toolbar-->
         <div
-          class="[&>*]:flex-shrink-0 flex flex-row overflow-auto p-1.5 gap-1.5 {$$props.disabled
+          class="[&>*]:flex-shrink-0 flex flex-row overflow-auto p-1.5 gap-1.5 border-b
+          border-slate-200 dark:border-zinc-900 {$$props.disabled
             ? 'opacity-60 pointer-events-none'
             : ''}"
         >
@@ -311,13 +313,13 @@ overflow-hidden transition-colors"
       />
     {/if}
 
-    {#if $$slots.default && previewButton}
+    {#if previewButton}
       <div class="p-2 flex items-center w-full bg-white dark:bg-zinc-950">
         {#if previewButton}
           <MultiSelect
             bind:selected={previewing}
             options={[false, true]}
-            optionNames={['Edit', 'Preview']}
+            optionNames={[$t('form.edit'), $t('form.preview')]}
           />
         {/if}
         <slot />

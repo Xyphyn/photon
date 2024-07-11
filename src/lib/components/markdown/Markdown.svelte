@@ -1,10 +1,12 @@
 <script lang="ts">
+  import { page } from '$app/stores'
   import { env } from '$env/dynamic/public'
   import { md, mdInline, photonify } from '$lib/components/markdown/markdown'
   import { onMount } from 'svelte'
 
   export let source: string = ''
   export let inline: boolean = false
+  export let noStyle: boolean = false
 
   let rendered = ''
 
@@ -16,7 +18,7 @@
       const photonified = photonify(l.href)
 
       if (photonified) l.href = photonified
-      else {
+      else if (!l.href.startsWith($page.url.origin)) {
         l.target = '_blank'
         l.rel = 'noopener noreferrer'
       }
@@ -52,7 +54,10 @@
 
 <div
   bind:this={div}
-  class="break-words flex flex-col markdown gap-2 leading-[1.5] {$$props.class}"
+  class="{noStyle
+    ? ''
+    : 'break-words flex flex-col markdown gap-2 leading-[1.5]'} {$$props.class}"
+  style={$$props.style}
 >
   {@html rendered}
 </div>

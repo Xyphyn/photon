@@ -1,0 +1,425 @@
+{
+    "profile": {
+        "profile": "Profil",
+        "inbox": "Boîte de réception",
+        "saved": "Sauvegardé",
+        "subscribed": "Abonnés"
+    },
+    "nav": {
+        "moderation": "Modération",
+        "communities": "Explorer",
+        "search": "Recherche",
+        "create": {
+            "label": "Créer",
+            "post": "Publication",
+            "community": "communauté",
+            "logingate": "Vous devez vous inscrire pour créer du contenu."
+        },
+        "menu": {
+            "label": "Profil",
+            "settings": "Paramètres",
+            "colorscheme": {
+                "label": "Apparence",
+                "system": "Systeme",
+                "dark": "Sombre",
+                "light": "Clair"
+            },
+            "theme": "Apparence",
+            "about": "À propos",
+            "donate": "Faire un Don",
+            "source": "Source",
+            "instance": "Instance"
+        },
+        "home": "Page d'acceuil",
+        "admin": "Administrateur"
+    },
+    "account": {
+        "login": "Connexion",
+        "logout": "Déconnexion",
+        "signup": "S'inscrire",
+        "accounts": "Comptes",
+        "changeinstance": "Changer de Instance",
+        "addGuest": "Ajouter un autre Invité",
+        "moveUp": "Monter",
+        "moveDown": "Descendre",
+        "guest": "invité",
+        "versionGate": "Cette version de Photon prend en charge des instances qui tournent la version {{version}} ou mieux.",
+        "resetColor": "Remettre à zéro les couleurs"
+    },
+    "filter": {
+        "location": {
+            "label": "Emplacement",
+            "all": "Tout",
+            "subscribed": "Abonnés",
+            "moderator": "Modérateur",
+            "global": "Tout",
+            "local": "Local"
+        },
+        "sort": {
+            "label": "Trier",
+            "active": "Actif",
+            "hot": "Tendances",
+            "top": {
+                "time": {
+                    "label": "Temps",
+                    "all": "De tout temps",
+                    "9months": "Des neuf derniers mois",
+                    "6months": "Des six derniers mois",
+                    "3months": "Des trois derniers mois",
+                    "month": "Du mois",
+                    "week": "De la semaine",
+                    "day": "Du jour",
+                    "12hours": "Des douze dernières heures",
+                    "6hours": "Des six dernières heures",
+                    "hour": "De l'heure"
+                },
+                "label": "Top"
+            },
+            "new": "Nouveaux",
+            "old": "Ancien",
+            "controversial": "Controversé",
+            "scaled": "Mis à l'échelle",
+            "mostcomments": "Plus commentés",
+            "newcomments": "Nouveaux commentaires"
+        },
+        "view": {
+            "label": "Style",
+            "cozy": "Confortable",
+            "list": "Liste",
+            "compact": "Compacte",
+            "legacy": "Classique"
+        },
+        "filter": "Filtrer",
+        "unread": "Non lu",
+        "inbox": {
+            "replies": "Réponses",
+            "messages": "Messages",
+            "mentions": "Mentions"
+        },
+        "type": "Type"
+    },
+    "form": {
+        "username": "Utilisateur",
+        "name": "Nom affiché",
+        "instance": "Adresse de l'instance",
+        "confirmPassword": "Confirmer mot de passe",
+        "2fa": "Code 2FA",
+        "forgotpassword": "Mot de passe oublié",
+        "submit": "Soumettre",
+        "edit": "Modifier",
+        "preview": "Aperçu",
+        "post": {
+            "create": "Créer une publication",
+            "edit": "Éditer publication",
+            "community": "Communauté",
+            "title": "Titre",
+            "body": "Contenu",
+            "generateTitle": "Generate le Titre",
+            "uploadImage": "Ajouter une Image",
+            "url": "URL",
+            "nsfw": "NSFW",
+            "altText": "Équivalent textuel"
+        },
+        "profile": {
+            "displayName": "Nom affiché",
+            "bio": "Biographie",
+            "banner": "Bannière",
+            "matrix": "Utilisateur Matrix",
+            "showNSFW": "Afficher le contenu NSFW",
+            "scores": "Afficher les Scores",
+            "bot": "Compte automatisé",
+            "showBots": "Afficher le contenu automatisé",
+            "showRead": "Afficher les publications lues",
+            "currentPassword": "Mot de passe actuel",
+            "newPassword": "Nouveau mot de passe",
+            "verifyNewPassword": "Vérifiez le mot de passe",
+            "2fa": {
+                "paste": "Copier ceci dans votre applicaton d'authentication.",
+                "totp": "L'authentification à plusieurs facteurs",
+                "2fa": "l'authentification à deux facteurs"
+            },
+            "deleteAccount": {
+                "label": "Supprimer le compte",
+                "deleteContent": "Supprimer le contenu",
+                "warning": "Cette opération supprimera TOUTES vos publications."
+            },
+            "avatar": "Avatar",
+            "email": "Email"
+        },
+        "email": "Adresse E-mail",
+        "setup": "Activer",
+        "signup": {
+            "title": "S’inscrire",
+            "description": "Choisissez une instance qui vous intéresse ou entrez l'URL d'une instance vous-même.",
+            "info": "L'instance que vous choisiriez est le serveur sur lequel votre compte sera hébergé, mais vous pouvez toujours accéder et interagir avec le contenu sur d'autres instances.",
+            "chooseInstance": "Choisissez une instance",
+            "application": {
+                "label": "Demande d'autorisation",
+                "info": "Pour rejoindre cet instance, vous devez remplir cette demande d'autorisation et attendre q'uelle soit accepté. Vous recevrez un courriel si votre demande d'autorisation est acceptée."
+            },
+            "closed": {
+                "title": "Les inscriptions sont closes",
+                "description": "Cet instance n'accepte plus les registration. Trouvez un autre instance.",
+                "anotherInstance": "Trouver une autre instance"
+            }
+        },
+        "password": "Mot de passe",
+        "description": "Description"
+    },
+    "routes": {
+        "frontpage": {
+            "title": "Page d'accueil",
+            "footer": "{{users:number}} En ligne {{users; 1:user; default:users;}}"
+        },
+        "legal": {
+            "noLegal": "Cet instance n'a aucune information legale.",
+            "title": "Légal"
+        },
+        "profile": {
+            "user": "Utilisateur",
+            "settings": "Paramètres",
+            "blocks": "Blocages",
+            "credentials": "sécurité",
+            "moderates": "Modérés",
+            "favorites": "Favoris"
+        },
+        "accounts": "Comptes",
+        "communities": "Communautés",
+        "search": {
+            "title": "Rechercher",
+            "federating": "Federation",
+            "query": "Requête",
+            "noResults": {
+                "title": "Aucun résultats",
+                "description": "Il n'y a aucun resultat qui correspond a ce filtre. Faite une autre Recherche.",
+                "alt": "Recherchez toute la 'Fediverse'"
+            }
+        },
+        "saved": "Sauvegardé",
+        "createPost": "Créer une publication",
+        "post": {
+            "crosspostCount": "crosspublications",
+            "commentCount": "commentaires",
+            "addComment": "Ajouter un commentaire",
+            "scrollToTop": "Revenir vers le haut",
+            "instanceWarning": "Ce message a été demandé à partir d'une instance différent de celui de votre compte. La plupart des actions ne fonctionneront pas.",
+            "remoteView": "Vue a partir d'un autre instance",
+            "localView": "Vue a partir de l'instance du compte",
+            "thread": {
+                "single": "Vous regardez un seul fil de commentaires.",
+                "allComments": "Voir tout les commentaires",
+                "part": "Vous regardez une partie d'un fil de commentaires.",
+                "context": "Afficher le contexte"
+            }
+        },
+        "inbox": {
+            "title": "Boîte de réception",
+            "markAsRead": "Marquer tout comme lu",
+            "empty": {
+                "title": "Boîte de réception est vide",
+                "description": "les messages, réponses, and mentions will appear here."
+            }
+        },
+        "moderation": {
+            "title": "modération",
+            "empty": {
+                "title": "Aucun nouveaux signalements",
+                "description": "Quand il y a des nouveaux signalements, vous pourrez agir ici."
+            },
+            "reason": "Raison",
+            "resolve": "Resolu",
+            "unresolve": "Non resolu"
+        },
+        "admin": {
+            "title": "L'administration",
+            "config": {
+                "sidebar": "Barre latérale",
+                "icon": "Icone",
+                "banner": "Bannière",
+                "downvotesEnabled": "Activer les downvotes",
+                "nsfwEnabled": "Permettre le contenu NSFW",
+                "registration": {
+                    "label": "Mode d'inscription",
+                    "open": "Ouvrir",
+                    "application": "Exiger une demande d'adhésion",
+                    "closed": "fermée"
+                },
+                "applicationQuestion": "Question pour la demande d'adhésion",
+                "adminCommunityOnly": "Seul les administrateurs peuvent créer des communautés",
+                "requireVerifyEmail": "Exiger un courriel de verification",
+                "emailAdminsOnApplication": "Envoyer un courriel au administrateurs a chaque nouvelle inscription",
+                "emailAdminsOnReport": "Envoyer un courriel au administrateurs a chaque nouveau signalement",
+                "listingType": {
+                    "label": "Type d'annonce",
+                    "all": "Tout",
+                    "local": "Local"
+                },
+                "private": "Instance privé",
+                "hideModlogModNames": "Cacher les noms dans le journal du modérateur",
+                "slurFilter": "Filtre anti-bavure",
+                "federation": "Federation activée",
+                "federationDebug": "mode de débogage de federation",
+                "captcha": {
+                    "enabled": "CAPTCHA Activé"
+                },
+                "title": "Configuration"
+            },
+            "applications": {
+                "title": "Demandes",
+                "empty": {
+                    "title": "Pas de nouvelles demandes",
+                    "description": "Les demandes d'adhesion a votre instance apparaitront ici."
+                },
+                "application": "Demande",
+                "approved": "acceptée",
+                "denied": "Rejetée",
+                "user": "Utilisateur",
+                "deny": "Rejeter",
+                "approve": "Accepter",
+                "reason": "Raison",
+                "modalTitle": "Rejeter la demande d'authorisation"
+            },
+            "taglines": {
+                "title": "Pas de slogans",
+                "add": "Ajoutez un slogan",
+                "description": "Un slogan aleatoire apparaitra quand un utilisateur visitera votre instance.",
+                "empty": {
+                    "title": "Aucun slogan",
+                    "description": "Un slogan apparaîtra au hasard quand un utilisateur visitera votre instance."
+                }
+            },
+            "team": {
+                "title": "Administrateurs",
+                "empty": {
+                    "title": "Aucun administrateurs",
+                    "description": "Il n'y a aucun administrateur de serveur, je ne sais pas comment vous avez reussi a faire cela."
+                }
+            },
+            "federation": {
+                "title": "Federation",
+                "csv": "Charger un CSV",
+                "blocked": "Instances Bloquées",
+                "block": "Bloquer",
+                "blockplaceholder": "Bloquer une instance...",
+                "allowed": "Instances Whitelistées",
+                "allow": "Whitelister",
+                "allowplaceholder": "Whitelister une instance",
+                "emptyBlock": {
+                    "title": "Aucune instances bloqués",
+                    "description": "Le bloc d'une instance cachera toutes nouvelles soumissions de cette instance."
+                },
+                "emptyAllow": {
+                    "title": "Aucunes instances sur la liste blanche",
+                    "description": "Mettre une instance sur la liste blanche bloquera toutes les autres instances."
+                }
+            }
+        },
+        "team": {
+            "title": "administrateurs",
+            "empty": {
+                "title": "Aucun administrateurs",
+                "description": "Il n'y a aucun administrateur pour cet instance, il y a un probleme"
+            }
+        },
+        "federation": {
+            "title": "Federation",
+            "csv": "Envoyez un CSV",
+            "blocked": "Instances bloqués",
+            "block": "Bloque",
+            "blockplaceholder": "Bloque une instance...",
+            "allowed": "Instances ",
+            "allow": "Whitelist",
+            "allowplaceholder": "Whitelist une instance",
+            "emptyBlock": {
+                "title": "Aucunes instances bloquées",
+                "description": "Blocking an instance will hide new submissions from that instance."
+            },
+            "emptyAllow": {
+                "title": "pas de instances whitelistées",
+                "description": "Whitelister une instance va bloquer toutes les autres instances."
+            }
+        },
+        "instances": "Instances",
+        "translators": "Traducteurs",
+        "createCommunity": "Créer une communauté",
+        "modlog": "Journal de modération",
+        "verifyEmail": {
+            "message": "Votre email a été verifié, vous pouvez maintenant fermer cette fenêtre.",
+            "error": "La vérification de l'email a échouée."
+        },
+        "passwordChange": {
+            "title": "Changer le mot de passe",
+            "description": "Choisissez votre nouveaux mot de passe.",
+            "instance": "Sur quelle instance est hostée votre compte?"
+        },
+        "resetLogin": {
+            "title": "Réinitialiser le mot de passe",
+            "description": "Mettez l'email de vôtre compte, et un lien de réinitialision de mot de passe sera envoyé. Si vôtre compte n'a pas de email, vous devez contacter les administrateurs de votre instance."
+        },
+        "theme": {
+            "import": "Importer",
+            "export": "Exporter",
+            "reset": "Réinitialiser",
+            "accent": "Couleur d'accentuation",
+            "resetWarning": {
+                "title": "Réinitialiser les paramètres d'apparence",
+                "description": "Ceci remettera a zéro toute la configuration de l'apparence, il est conseillé de l'exporter d'abord."
+            },
+            "title": "Apparence"
+        }
+    },
+    "verifyEmail": {
+        "message": "Votre e-mail est maintenant vérifié. Vous pouvez maintenant fermer cette fenetre.",
+        "error": "Votre e-mail n'a pas pu etre vérifié."
+    },
+    "passwordChange": {
+        "title": "Changer votre mot de passe",
+        "description": "Choisir votre nouveau code.",
+        "instance": "De quelle instance viens votre compte?"
+    },
+    "resetLogin": {
+        "title": "Réinitialiser le mot de passe",
+        "description": "Entrez l'email de votre compte, et un lien pour réinitialiser le mot de passe vont être envoyés à cette adresse e-mai. Si votre compte n'a pas de adresse e-mail, contactez votre administrateur"
+    },
+    "settings": {
+        "app": {
+            "lang": {
+                "": "Dont translate the below!"
+            },
+            "theming": {
+                "link": "Configuration d'apparence"
+            }
+        }
+    },
+    "comment": {
+        "reply": "Répondre",
+        "actions": {
+            "link": "Copier le lien"
+        }
+    },
+    "moderation": {
+        "report": "Créer un signalement",
+        "ban": {
+            "banning": "Bannir l'utilisateur",
+            "deleteData": "Suprimmer les données",
+            "warning": "Cette option supprimera TOUTES les publications de cet utilisateur.",
+            "expires": "Expire (UTC)",
+            "banFromCommunity": "Ban d'une communauté"
+        }
+    },
+    "cards": {
+        "site": {
+            "stats": "Statistiques",
+            "admins": "Administrateurs"
+        },
+        "community": {
+            "members": "Membres",
+            "moderators": "Modérateurs",
+            "subscribe": "S'abonner",
+            "subscribed": "Abonné",
+            "modlog": "Journal de modération",
+            "block": "Bloquer",
+            "unblock": "Débloquer"
+        }
+    }
+}

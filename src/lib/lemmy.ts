@@ -44,11 +44,8 @@ async function customFetch(
     }
   }
 
-  const url = toURL(input)
-  if (auth && url) url.searchParams.set('auth', auth)
-
-  const res = await f(url ?? input, init)
-  if (!res.ok) error(res.status, await res.text());
+  const res = await f(input, init)
+  if (!res.ok) error(res.status, await res.text())
   return res
 }
 
@@ -101,27 +98,33 @@ export async function validateInstance(instance: string): Promise<boolean> {
   }
 }
 
-export function mayBeIncompatible(minVersion: string, availableVersion: string) {
-  if (minVersion.valueOf() === availableVersion.valueOf()) return false;
+export function mayBeIncompatible(
+  minVersion: string,
+  availableVersion: string
+) {
+  if (minVersion.valueOf() === availableVersion.valueOf()) return false
 
-  const versionFormatter = /[\d.]/;
-  if (!minVersion.match(versionFormatter) || !availableVersion.match(availableVersion)) {
-    return true;
+  const versionFormatter = /[\d.]/
+  if (
+    !minVersion.match(versionFormatter) ||
+    !availableVersion.match(availableVersion)
+  ) {
+    return true
   }
 
-  const splitMinVersion = minVersion.split('.');
-  const splitAvailableVersion = availableVersion.split('.');
+  const splitMinVersion = minVersion.split('.')
+  const splitAvailableVersion = availableVersion.split('.')
 
-  if (splitMinVersion.length !== splitAvailableVersion.length) return true;
+  if (splitMinVersion.length !== splitAvailableVersion.length) return true
 
   for (let i = 0; i < splitMinVersion.length; ++i) {
-    const minVersionDigit = parseInt(splitMinVersion[i]);
-    const availableVersionDigit = parseInt(splitAvailableVersion[i]);
+    const minVersionDigit = parseInt(splitMinVersion[i])
+    const availableVersionDigit = parseInt(splitAvailableVersion[i])
 
-    if (availableVersionDigit === undefined) return true;
-    if (minVersionDigit < availableVersionDigit) return false;
-    if (availableVersionDigit < minVersionDigit) return true;
+    if (availableVersionDigit === undefined) return true
+    if (minVersionDigit < availableVersionDigit) return false
+    if (availableVersionDigit < minVersionDigit) return true
   }
 
-  return false;
+  return false
 }

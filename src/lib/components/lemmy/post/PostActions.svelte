@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { PostView } from 'lemmy-js-client'
   import PostVote from './PostVote.svelte'
-  import { getInstance } from '$lib/lemmy.js'
+  import { getInstance, site } from '$lib/lemmy.js'
   import {
     ArrowTopRightOnSquare,
     Bookmark,
@@ -13,13 +13,17 @@
     Eye,
     EyeSlash,
     Flag,
+    GlobeAlt,
+    Home,
     Icon,
+    Language,
     Newspaper,
     PencilSquare,
     ServerStack,
     Share,
     Trash,
     UserCircle,
+    XMark,
   } from 'svelte-hero-icons'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import { createEventDispatcher } from 'svelte'
@@ -46,13 +50,21 @@
     MenuDivider,
     Modal,
     Spinner,
+    toast,
   } from 'mono-svelte'
   import { fediseer, type Data } from '$lib/fediseer/fediseer'
   import Fediseer from '$lib/fediseer/Fediseer.svelte'
+  import { t } from '$lib/translations'
+  import { text } from '$lib/components/translate/translation'
+  import Translation from '$lib/components/translate/Translation.svelte'
+  import { hidePost, postLink } from './helpers'
+  import { feature } from '$lib/version'
+  import Switch from '$lib/components/input/Switch.svelte'
+  import { instanceToURL } from '$lib/util'
 
   export let post: PostView
 
-  const dispatcher = createEventDispatcher<{ edit: PostView }>()
+  const dispatcher = createEventDispatcher<{ edit: PostView; hide: boolean }>()
 
   let editing = false
   let saving = false
@@ -61,6 +73,10 @@
   let fediseerOpen = false
   let fediseerData: Data | null = null
   let fediseerLoading = false
+
+  let translating = false
+
+  let localShare = false
 </script>
 
 {#if fediseerData}
@@ -93,7 +109,14 @@
   </Modal>
 {/if}
 
-<div class="flex flex-row gap-2 items-center h-8" style={$$props.style ?? ''}>
+{#if translating}
+  <Translation bind:open={translating} />
+{/if}
+
+<div
+  class="flex flex-row gap-2 items-center !h-8 flex-shrink-0"
+  style={$$props.style ?? ''}
+>
   <PostVote
     post={post.post}
     bind:vote={post.my_vote}
@@ -107,7 +130,7 @@
     href="/post/{getInstance()}/{post.post.id}"
     class="!text-inherit h-8 px-3"
     target={$userSettings.openLinksInNewTab ? '_blank' : ''}
-    title="Comments"
+    title={$t('post.actions.comments')}
   >
     <Icon slot="prefix" src={ChatBubbleOvalLeft} mini size="14" />
     <FormattedNumber number={post.counts.comments} />
@@ -120,7 +143,12 @@
         <DebugObject object={post} bind:open={debug} />
       {/await}
     {/if}
-    <Button on:click={() => (debug = true)} size="square-md" color="ghost">
+    <Button
+      on:click={() => (debug = true)}
+      title="Debug"
+      size="square-md"
+      color="ghost"
+    >
       <Icon src={BugAnt} mini size="16" slot="prefix" />
     </Button>
   {/if}
@@ -140,7 +168,7 @@
       color="ghost"
       loading={saving}
       disabled={saving}
-      title={post.saved ? 'Unsave' : 'Save'}
+      title={post.saved ? $t('post.actions.unsave') : $t('post.actions.save')}
     >
       <Icon
         src={post.saved ? BookmarkSlash : Bookmark}
@@ -156,12 +184,17 @@
     containerClass="overflow-auto max-h-[400px]"
     class="h-8"
     targetClass="h-full"
-    title="Post actions"
+    title={$t('post.actions.more.label')}
   >
-    <Button slot="target" title="Post actions" color="ghost" size="square-md">
+    <Button
+      slot="target"
+      title={$t('post.actions.more.label')}
+      color="ghost"
+      size="square-md"
+    >
       <Icon slot="prefix" src={EllipsisHorizontal} width={16} mini />
     </Button>
-    <MenuDivider>Creator</MenuDivider>
+    <MenuDivider>{$t('post.actions.more.creator')}</MenuDivider>
     <MenuButton
       link
       href="/u/{post.creator.name}@{new URL(post.creator.actor_id).hostname}"
@@ -186,7 +219,6 @@
         const data = await fediseer.getInstanceInfo(
           new URL(post.community.actor_id).hostname
         )
-        console.log(data)
         fediseerData = data
         fediseerOpen = true
         fediseerLoading = false
@@ -204,11 +236,11 @@
       <span>{new URL(post.community.actor_id).hostname}</span>
     </MenuButton>
     <hr class="w-[90%] mx-auto opacity-100 dark:opacity-10 my-2" />
-    <MenuDivider>Actions</MenuDivider>
+    <MenuDivider>{$t('post.actions.more.actions')}</MenuDivider>
     {#if $profile?.user && $profile?.jwt && $profile.user.local_user_view.person.id == post.creator.id}
       <MenuButton on:click={() => (editing = true)}>
         <Icon src={PencilSquare} width={16} mini slot="prefix" />
-        Edit
+        {$t('post.actions.more.edit')}
       </MenuButton>
     {/if}
     {#if $profile?.jwt}
@@ -219,19 +251,54 @@
         }}
       >
         <Icon slot="prefix" src={post.read ? EyeSlash : Eye} width={16} mini />
-        Mark as {post.read ? 'Unread' : 'Read'}
+        {post.read
+          ? $t('post.actions.more.markUnread')
+          : $t('post.actions.more.markRead')}
       </MenuButton>
     {/if}
     <MenuButton
       on:click={() => {
         navigator.share?.({
-          url: post.post.ap_id,
-        }) ?? navigator.clipboard.writeText(post.post.ap_id)
+          url: localShare
+            ? `${instanceToURL(getInstance())}/post/${post.post.id}`
+            : post.post.ap_id,
+        }) ??
+          navigator.clipboard.writeText(
+            localShare
+              ? `${instanceToURL(getInstance())}/post/${post.post.id}`
+              : post.post.ap_id
+          )
+        toast({ content: $t('toast.copied') })
       }}
+      class="flex-1 py-0"
     >
       <Icon src={Share} width={16} mini slot="prefix" />
-      Share
+      {$t('post.actions.more.share')}
+      {#if !post.post.local}
+        <Switch
+          optionNames={[
+            $t('filter.location.global'),
+            $t('filter.location.local'),
+          ]}
+          options={[false, true]}
+          bind:selected={localShare}
+          class="ml-auto"
+          buttonClass="!py-1"
+        />
+      {/if}
     </MenuButton>
+    {#if post.post.body && $userSettings.translator}
+      <MenuButton
+        on:click={() => {
+          // @ts-ignore
+          text.set(post.post.body)
+          translating = !translating
+        }}
+      >
+        <Icon src={Language} size="16" mini slot="prefix" />
+        {$t('post.actions.more.translate')}
+      </MenuButton>
+    {/if}
     {#if $profile?.jwt}
       <MenuButton
         on:click={() => {
@@ -257,7 +324,7 @@
         }}
       >
         <Icon src={ArrowTopRightOnSquare} width={16} mini slot="prefix" />
-        Crosspost
+        {$t('post.actions.more.crosspost')}
       </MenuButton>
       {#if $profile.user && post.creator.id == $profile.user.local_user_view.person.id}
         <MenuButton
@@ -272,13 +339,37 @@
           color="danger-subtle"
         >
           <Icon src={Trash} width={16} mini slot="prefix" />
-          {post.post.deleted ? 'Restore' : 'Delete'}
+          {post.post.deleted
+            ? $t('post.actions.more.restore')
+            : $t('post.actions.more.delete')}
         </MenuButton>
       {/if}
       {#if $profile.user?.local_user_view.person.id != post.creator.id}
+        {#if feature('hidePosts', $site?.version)}
+          <MenuButton
+            on:click={async () => {
+              if (!$profile?.jwt) return
+              const hidden = await hidePost(
+                post.post.id,
+                !post.hidden,
+                $profile?.jwt
+              )
+              post.hidden = hidden
+              if (hidden) {
+                dispatcher('hide', hidden)
+              }
+            }}
+            color="danger-subtle"
+          >
+            <Icon slot="prefix" src={XMark} size="16" mini />
+            {post.hidden
+              ? $t('post.actions.more.unhide')
+              : $t('post.actions.more.hide')}
+          </MenuButton>
+        {/if}
         <MenuButton on:click={() => report(post)} color="danger-subtle">
           <Icon src={Flag} width={16} mini slot="prefix" />
-          Report
+          {$t('moderation.report')}
         </MenuButton>
       {/if}
     {/if}

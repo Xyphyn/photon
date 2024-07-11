@@ -21,7 +21,7 @@
   } from 'svelte-hero-icons'
   import PostLink from '$lib/components/lemmy/post/PostLink.svelte'
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
-  import { Material, Select, removeToast, toast } from 'mono-svelte'
+  import { Material, Select, Spinner, removeToast, toast } from 'mono-svelte'
   import type { CommentSortType } from 'lemmy-js-client'
   import { profile } from '$lib/auth.js'
   import { instance } from '$lib/instance.js'
@@ -40,8 +40,9 @@
   } from '$lib/components/lemmy/post/helpers.js'
   import Post from '$lib/components/lemmy/post/Post.svelte'
   import Expandable from '$lib/components/ui/Expandable.svelte'
-  import { addResumable } from '$lib/lemmy/item.js'
   import { Popover } from 'mono-svelte'
+  import { t } from '$lib/translations.js'
+  import { createWindowVirtualizer } from '@tanstack/svelte-virtual'
 
   export let data
 
@@ -54,6 +55,8 @@
     ) {
       getClient().markPostAsRead({
         read: $userSettings.markPostsAsRead,
+        post_ids: [post.post_view.post.id],
+        // @ts-ignore
         post_id: post.post_view.post.id,
       })
     }
@@ -62,26 +65,11 @@
   afterNavigate(async () => {
     // reactivity hack
     post = data.post
-    if ($profile) {
-      addResumable({
-        avatar: post.post_view.post.thumbnail_url
-          ? optimizeImageURL(post.post_view.post.thumbnail_url, 64)
-          : undefined,
-        id: post.post_view.post.id,
-        url: $page.url,
-        name: post.post_view.post.name,
-        type: 'post',
-        subdivision: {
-          name: post.post_view.community.name,
-          avatar: post.post_view.community.icon,
-        },
-      })
-    }
   })
 
   const fetchOnHome = async (jwt: string) => {
     const id = toast({
-      content: 'Attempting to fetch this post on your home instance...',
+      content: $t('toast.fetchPostOnHome'),
       loading: true,
     })
 
@@ -124,6 +112,25 @@
 
   $: remoteView =
     $page.params.instance?.toLowerCase() != $instance.toLowerCase()
+
+  const virtualizer = createWindowVirtualizer({
+    count: 0,
+    estimateSize: () => 50,
+  })
+
+  onMount(async () => {
+    const comments = await data.comments
+
+    $virtualizer.setOptions({ count: comments.comments.length })
+  })
+
+  let virtualItemEls: HTMLElement[] = []
+
+  $: items = $virtualizer.getVirtualItems()
+  $: {
+    if (virtualItemEls.length)
+      virtualItemEls.forEach((el) => $virtualizer.measureElement(el))
+  }
 </script>
 
 <svelte:head>
@@ -144,11 +151,11 @@
   {/if}
 </svelte:head>
 
-<div class="flex flex-col gap-2 {remoteView ? '' : ''}">
+<div class="flex flex-col gap-2">
   {#if remoteView}
     <div
       class="sticky top-0 bg-slate-50 dark:bg-zinc-950 z-20
-      border-b border-zinc-800
+      border-b dark:border-zinc-800 border-slate-300
       -mx-4 -mt-4 md:-mt-6 md:-mx-6 sticky-header px-4 py-2
       flex items-center gap-2 mb-4 h-12
       "
@@ -161,11 +168,10 @@
           slot="target"
           class="bg-slate-200 dark:bg-zinc-700 p-0.5 rounded-full text-primary-900 dark:text-primary-100"
         />
-        This post was fetched from a different server than your account's. Many actions
-        won't work.
+        {$t('routes.post.instanceWarning')}
       </Popover>
       <span class="text-primary-900 dark:text-primary-100 font-bold">
-        Remote View
+        {$t('routes.post.remoteView')}
       </span>
       {#if $profile?.jwt}
         <Button
@@ -177,7 +183,7 @@
           }}
         >
           <Icon src={Home} mini size="16" />
-          Local View
+          {$t('routes.post.localView')}
         </Button>
       {/if}
     </div>
@@ -202,6 +208,7 @@
           moderator: post.post_view.creator_is_moderator,
         }}
         published={publishedToDate(post.post_view.post.published)}
+        bind:title={post.post_view.post.name}
       />
     </div>
     <Button on:click={() => history.back()} size="square-md">
@@ -243,7 +250,7 @@
         class="inline-block w-full text-left text-base font-normal"
       >
         <span class="font-bold">{post.cross_posts.length}</span>
-        crossposts
+        {$t('routes.post.crosspostCount')}
       </div>
       <div
         class="!divide-y divide-slate-200 dark:divide-zinc-800 flex flex-col"
@@ -265,14 +272,14 @@ flex-wrap gap-4 sticky top-20 w-full box-border z-20 mt-4"
   >
     <p class="font-medium text-sm flex items-center gap-2">
       <Icon src={InformationCircle} mini size="20" />
-      You're viewing part of a thread.
+      {$t('routes.post.thread.part')}
     </p>
     <Button
       {loading}
       disabled={loading}
       href="/comment/{$page.params.instance}/{data.thread.showContext}"
     >
-      Show Context
+      {$t('routes.post.thread.context')}
     </Button>
   </Material>
 {:else if data.thread.singleThread}
@@ -285,10 +292,10 @@ flex-wrap gap-4 sticky top-20 w-full box-border z-20 mt-4"
   >
     <p class="font-medium text-sm flex items-center gap-2">
       <Icon src={InformationCircle} mini size="20" />
-      You're viewing a single thread.
+      {$t('routes.post.thread.single')}
     </p>
     <Button {loading} disabled={loading} on:click={reloadComments}>
-      All comments
+      {$t('routes.post.thread.allComments')}
     </Button>
   </Material>
 {/if}
@@ -298,7 +305,7 @@ flex-wrap gap-4 sticky top-20 w-full box-border z-20 mt-4"
       <span class="font-bold">
         <FormattedNumber number={post.post_view.counts.comments} />
       </span>
-      comments
+      {$t('routes.post.commentCount')}
     </div>
     <div class="gap-2 flex items-center h-8">
       <Select
@@ -307,55 +314,71 @@ flex-wrap gap-4 sticky top-20 w-full box-border z-20 mt-4"
         bind:value={commentSort}
         on:change={reloadComments}
       >
-        <option value="Hot">Hot</option>
-        <option value="Top">Top</option>
-        <option value="New">New</option>
-        <option value="Old">Old</option>
-        {#if feature('controversialSort', $page.params.instance == $instance ? $site?.version : '0.0.0')}
-          <option value="Controversial">Controversial</option>
-        {/if}
+        <option value="Hot">{$t('filter.sort.hot')}</option>
+        <option value="Top">{$t('filter.sort.top.label')}</option>
+        <option value="New">{$t('filter.sort.new')}</option>
+        <option value="Old">{$t('filter.sort.old')}</option>
+        <option value="Controversial">{$t('filter.sort.controversial')}</option>
       </Select>
       <Button size="square-md" on:click={reloadComments}>
         <Icon src={ArrowPath} size="16" mini slot="prefix" />
       </Button>
     </div>
   </div>
-  {#if $profile?.user}
-    <CommentForm
-      postId={post.post_view.post.id}
-      on:comment={(comment) =>
-        (data.comments.comments = [
-          comment.detail.comment_view,
-          ...data.comments.comments,
-        ])}
-      locked={post.post_view.post.locked ||
-        $page.params.instance.toLowerCase() != $instance.toLowerCase()}
-      on:focus={() => (commenting = true)}
-      tools={commenting}
-      preview={commenting}
-      placeholder={commenting ? undefined : 'Add a comment'}
-      rows={commenting ? 7 : 1}
+  {#await data.comments}
+    <div class="flex flex-col gap-4">
+      {#each new Array(10) as empty}
+        <div class="animate-pulse flex flex-col gap-2 skeleton w-full">
+          <div class="w-96 h-4" />
+          <div class="w-full h-12" />
+          <div class="w-48 h-4" />
+        </div>
+      {/each}
+    </div>
+  {:then comments}
+    {#if $profile?.jwt}
+      <CommentForm
+        postId={post.post_view.post.id}
+        on:comment={(comment) =>
+          (comments.comments = [
+            comment.detail.comment_view,
+            ...comments.comments,
+          ])}
+        locked={(post.post_view.post.locked &&
+          !(
+            $profile?.user?.local_user_view.local_user.admin ||
+            $profile?.user?.moderates
+              .map((c) => c.community.id)
+              .includes(data.post.community_view.community.id)
+          )) ||
+          $page.params.instance.toLowerCase() != $instance.toLowerCase()}
+        on:focus={() => (commenting = true)}
+        tools={commenting}
+        preview={commenting}
+        placeholder={commenting ? undefined : $t('routes.post.addComment')}
+        rows={commenting ? 7 : 1}
+      />
+    {/if}
+    <Comments
+      post={post.post_view.post}
+      nodes={buildCommentsTree(
+        comments.comments,
+        undefined,
+        (c) =>
+          !(
+            ($userSettings.hidePosts.deleted && c.comment.deleted) ||
+            ($userSettings.hidePosts.removed && c.comment.removed)
+          )
+      )}
+      isParent={true}
     />
-  {/if}
-  <Comments
-    post={post.post_view.post}
-    nodes={buildCommentsTree(
-      data.comments.comments,
-      undefined,
-      (c) =>
-        !(
-          ($userSettings.hidePosts.deleted && c.comment.deleted) ||
-          ($userSettings.hidePosts.removed && c.comment.removed)
-        )
-    )}
-    isParent={true}
-  />
+  {/await}
   {#if post.post_view.counts.comments > 5}
     <EndPlaceholder>
       <span class="text-black dark:text-white font-bold">
         {post.post_view.counts.comments}
       </span>
-      comments
+      {$t('routes.post.commentCount')}
 
       <Button
         color="tertiary"
@@ -363,8 +386,14 @@ flex-wrap gap-4 sticky top-20 w-full box-border z-20 mt-4"
         slot="action"
       >
         <Icon src={ChevronDoubleUp} mini size="16" slot="prefix" />
-        Scroll to top
+        {$t('routes.post.scrollToTop')}
       </Button>
     </EndPlaceholder>
   {/if}
 </div>
+
+<style lang="postcss">
+  .skeleton * {
+    @apply bg-slate-100 dark:bg-zinc-800 rounded-md;
+  }
+</style>

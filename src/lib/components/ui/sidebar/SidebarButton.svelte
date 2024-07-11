@@ -15,16 +15,17 @@
 </script>
 
 <Button
-  {...$$restProps}
-  {href}
   color="tertiary"
   alignment="left"
+  {...$$restProps}
+  {href}
   on:click
-  class="hover:bg-slate-100 font-normal {selected
+  on:contextmenu
+  class="font-normal {selected
     ? 'text-primary-900 dark:!text-primary-100'
     : 'text-slate-600 dark:text-zinc-400'} {$userSettings.expandSidebar
     ? ''
-    : 'max-lg:!p-1 [&>*]:max-lg:!justify-center'} {$$props.class}"
+    : '//max-lg:!p-1 //[&>*]:max-lg:!justify-center'} {$$props.class}"
 >
   <slot {selected} name="icon" slot="prefix">
     {#if icon}
@@ -32,7 +33,11 @@
     {/if}
   </slot>
   <slot />
-  <div class={$userSettings.expandSidebar ? 'contents' : 'max-lg:hidden'}>
+  <div
+    class="{$userSettings.expandSidebar
+      ? 'contents'
+      : '//max-lg:hidden'} contents"
+  >
     <slot name="label" />
   </div>
 </Button>

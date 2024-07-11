@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { profile } from '$lib/auth'
+  import { notifications, profile } from '$lib/auth'
 
   import {
     Badge,
@@ -9,6 +9,7 @@
     MenuDivider,
     Modal,
     Select,
+    Spinner,
     toast,
   } from 'mono-svelte'
   import Avatar from '../Avatar.svelte'
@@ -32,17 +33,34 @@
   } from 'svelte-hero-icons'
   import { legacyTheme } from '$lib/ui/colors'
   import { userSettings } from '$lib/settings'
-  import { goto } from '$app/navigation'
-  import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
   import { site } from '$lib/lemmy'
+  import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
+  import { t } from '$lib/translations'
+
+  let showInstance = false
 </script>
+
+{#if showInstance}
+  <Modal bind:open={showInstance} title="Instance">
+    {#if $site}
+      <SiteCard
+        site={$site.site_view}
+        admins={$site.admins}
+        taglines={$site.taglines}
+        version={$site.version}
+      />
+    {:else}
+      <Spinner />
+    {/if}
+  </Modal>
+{/if}
 
 <Menu {...$$restProps}>
   <button
     class="w-10 h-10 rounded-full ring-1 ring-slate-200 dark:ring-zinc-700
     transition-all bg-slate-50 dark:bg-zinc-900 relative
     hover:dark:brightness-125 hover:brightness {$$props.buttonClass}"
-    aria-label="Profile"
+    title={$t('profile.profile')}
     slot="target"
   >
     {#if $profile?.user}
@@ -55,7 +73,7 @@
           alt={$profile.user.local_user_view.person.name}
         />
       </div>
-      {#if $profile.user.notifications.inbox > 0}
+      {#if $notifications.inbox > 0}
         <div
           class="rounded-full w-2 h-2 bg-red-500 absolute top-0 left-0 z-10"
         />
@@ -76,34 +94,36 @@
       {$profile?.user?.local_user_view?.person.name}
     </div>
   {:else}
-    <MenuDivider>Profile</MenuDivider>
+    <MenuDivider>{$t('nav.menu.label')}</MenuDivider>
   {/if}
   {#if $profile?.user}
     <MenuButton link href="/profile">
-      <Icon src={UserCircle} mini width={16} slot="prefix" /> Profile
+      <Icon src={UserCircle} mini width={16} slot="prefix" />
+      {$t('profile.profile')}
     </MenuButton>
     <MenuButton link href="/inbox">
       <Icon src={Inbox} mini width={16} slot="prefix" />
-      Inbox
-      {#if $profile.user.notifications.inbox > 0}
+      {$t('profile.inbox')}
+      {#if $notifications.inbox > 0}
         <Badge color="red-subtle" class="text-xs ml-auto font-bold !py-0.5">
-          {$profile.user.notifications.inbox}
+          {$notifications.inbox}
         </Badge>
       {/if}
     </MenuButton>
     <MenuButton link href="/saved">
-      <Icon src={Bookmark} mini width={16} slot="prefix" /> Saved
+      <Icon src={Bookmark} mini width={16} slot="prefix" />
+      {$t('profile.saved')}
     </MenuButton>
   {/if}
   <MenuButton link href="/accounts">
     <Icon src={UserGroup} mini width={16} slot="prefix" />
-    Accounts
+    {$t('account.accounts')}
   </MenuButton>
   <hr class="dark:opacity-10 w-[90%] my-2 mx-auto" />
-  <MenuDivider>App</MenuDivider>
+  <MenuDivider>{$t('nav.menu.app')}</MenuDivider>
   <MenuButton link href="/settings">
     <Icon src={Cog6Tooth} mini width={16} slot="prefix" />
-    Settings
+    {$t('nav.menu.settings')}
   </MenuButton>
   <MenuButton class="!py-0">
     <Icon
@@ -118,20 +138,20 @@
       size="16"
       slot="prefix"
     />
-    <span>Color Scheme</span>
+    <span>{$t('nav.menu.colorscheme.label')}</span>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div class="contents" on:click|stopPropagation={() => {}}>
       <Select bind:value={$legacyTheme} class="ml-auto my-auto w-24" size="sm">
-        <option value="system">System</option>
-        <option value="light">Light</option>
-        <option value="dark">Dark</option>
+        <option value="system">{$t('nav.menu.colorscheme.system')}</option>
+        <option value="light">{$t('nav.menu.colorscheme.light')}</option>
+        <option value="dark">{$t('nav.menu.colorscheme.dark')}</option>
       </Select>
     </div>
   </MenuButton>
   <MenuButton href="/theme">
     <Icon src={Swatch} size="16" mini slot="prefix" />
-    Theme
+    {$t('nav.menu.theme')}
   </MenuButton>
   {#if $userSettings.debugInfo}
     <MenuButton link href="/util">
@@ -148,16 +168,24 @@
           class="hover:brightness-110 transition-all"
           on:click={() => {
             navigator?.clipboard?.writeText(__VERSION__)
-            toast({ content: 'Copied version to clipboard.' })
+            toast({ content: $t('toast.copied') })
           }}
         >
           <Badge color="blue-subtle">{__VERSION__}</Badge>
         </button>
       </div>
       <Button
+        on:click={() => (showInstance = !showInstance)}
+        color="tertiary"
+        title={$t('nav.menu.instance')}
+        size="square-md"
+      >
+        <Icon src={ServerStack} size="16" mini />
+      </Button>
+      <Button
         color="tertiary"
         href="https://buymeacoffee.com/xylight"
-        title="Donate"
+        title={$t('nav.menu.donate')}
         size="square-md"
       >
         <Icon src={Heart} size="16" mini />
@@ -165,13 +193,10 @@
       <Button
         color="tertiary"
         href="https://github.com/Xyphyn/Photon"
-        title="GitHub"
+        title={$t('nav.menu.source')}
         size="square-md"
       >
         <Icon src={CodeBracketSquare} size="16" mini />
-      </Button>
-      <Button color="tertiary" href="/about" title="About" size="square-md">
-        <Icon src={InformationCircle} size="16" mini />
       </Button>
     </div>
   </li>

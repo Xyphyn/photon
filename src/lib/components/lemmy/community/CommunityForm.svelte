@@ -7,6 +7,8 @@
   import { addSubscription } from '$lib/lemmy/user.js'
   import { Button, Checkbox, TextInput } from 'mono-svelte'
   import { uploadImage } from '$lib/util.js'
+  import { t } from '$lib/translations'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
   /**
    * The community ID to edit.
@@ -68,7 +70,7 @@
           })
 
       toast({
-        content: `Your community was ${edit ? 'saved' : 'created'}.`,
+        content: $t('toast.updatedCommunity'),
         type: 'success',
       })
 
@@ -106,23 +108,31 @@
 
 <form on:submit|preventDefault={submit} class="flex flex-col gap-4 h-full">
   <slot name="formtitle">
-    <h1 class="text-2xl font-bold">Create Community</h1>
+    <Header>{$t('routes.createCommunity')}</Header>
   </slot>
   <TextInput
     required
-    label="Name"
+    label={$t('form.name')}
     bind:value={formData.name}
     on:input={() => {
       formData.name = formData.name.toLowerCase().replaceAll(' ', '_')
     }}
     disabled={edit != undefined}
   />
-  <TextInput required label="Display name" bind:value={formData.displayName} />
-  <ImageInput label="Icon" bind:files={formData.icon} />
-  <ImageInput label="Banner" bind:files={formData.banner} />
-  <MarkdownEditor previewButton label="Sidebar" bind:value={formData.sidebar} />
+  <TextInput
+    required
+    label={$t('form.profile.displayName')}
+    bind:value={formData.displayName}
+  />
+  <ImageInput label={$t('form.profile.avatar')} bind:files={formData.icon} />
+  <ImageInput label={$t('form.profile.banner')} bind:files={formData.banner} />
+  <MarkdownEditor
+    previewButton
+    label={$t('routes.admin.config.sidebar')}
+    bind:value={formData.sidebar}
+  />
 
-  <Checkbox bind:checked={formData.nsfw}>NSFW</Checkbox>
+  <Checkbox bind:checked={formData.nsfw}>{$t('post.badges.nsfw')}</Checkbox>
   <Checkbox bind:checked={formData.postsLockedToModerators}>
     Only moderators can post
   </Checkbox>
@@ -134,6 +144,6 @@
     loading={formData.submitting}
     disabled={formData.submitting}
   >
-    {edit ? 'Save' : 'Create'}
+    {edit ? $t('common.save') : $t('form.submit')}
   </Button>
 </form>

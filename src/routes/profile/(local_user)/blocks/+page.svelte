@@ -17,6 +17,7 @@
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { Button } from 'mono-svelte'
   import Entity from '$lib/components/ui/Entity.svelte'
+  import { t } from '$lib/translations.js'
 
   // sveltekit doesn't feel like making types work right now
   export let data: PageData & {
@@ -81,7 +82,7 @@
 {#if data.community_blocks?.length > 0 || data.person_blocks?.length > 0 || (data.my_user?.instance_blocks?.length ?? 0) > 0}
   {#if data.my_user?.instance_blocks && (data.my_user?.instance_blocks?.length ?? 0) > 0}
     <div>
-      <SectionTitle>Instances</SectionTitle>
+      <SectionTitle>{$t('content.instances')}</SectionTitle>
       <EditableList let:action on:action={(i) => unblockInstances(i.detail)}>
         {#each data.my_user?.instance_blocks as block (block.instance.id)}
           <div
@@ -105,17 +106,10 @@
         {/each}
       </EditableList>
     </div>
-  {:else}
-    <Placeholder
-      description="Go to a community's page and click 'block instance' to stop seeing posts and
-    comments from its instance."
-      title="No blocked instances"
-      center={false}
-    />
   {/if}
   {#if data.community_blocks?.length > 0}
     <div>
-      <SectionTitle>Communities</SectionTitle>
+      <SectionTitle>{$t('content.communities')}</SectionTitle>
       <EditableList let:action on:action={(i) => unblockCommunity(i.detail)}>
         {#each data.community_blocks as block (block.community.id)}
           <div
@@ -135,17 +129,10 @@
         {/each}
       </EditableList>
     </div>
-  {:else}
-    <Placeholder
-      description="Go to a community's page and click 'block' to stop seeing posts and
-  comments from it."
-      title="No blocked communities"
-      center={false}
-    />
   {/if}
   {#if data.person_blocks?.length > 0}
     <div>
-      <SectionTitle>Users</SectionTitle>
+      <SectionTitle>{$t('content.users')}</SectionTitle>
       <EditableList let:action on:action={(i) => unblockUser(i.detail)}>
         {#each data.person_blocks as block (block.target.id)}
           <div
@@ -165,20 +152,5 @@
         {/each}
       </EditableList>
     </div>
-  {:else}
-    <Placeholder
-      description="Go to a user's profile and click 'block' to stop seeing posts and
-    comments from them."
-      title="No blocked users"
-      center={false}
-    />
   {/if}
-{:else}
-  <div class="my-auto">
-    <Placeholder
-      description="Go to a community or user's page and click 'block' to stop seeing submissions from it."
-      title="No blocks"
-      center={false}
-    />
-  </div>
 {/if}

@@ -1,0 +1,228 @@
+{
+    "form": {
+        "profile": {
+            "email": "Email",
+            "displayName": "顯示名稱",
+            "bio": "個人簡介",
+            "avatar": "大頭貼",
+            "banner": "背景橫幅",
+            "showNSFW": "顯示限制級(NSFW)內容",
+            "scores": "顯示讚數",
+            "bot": "機器人帳號",
+            "showBots": "顯示機器人貼文",
+            "showRead": "顯示已讀貼文",
+            "currentPassword": "當前密碼",
+            "newPassword": "新密碼",
+            "verifyNewPassword": "確認密碼"
+        },
+        "username": "使用者名稱",
+        "name": "名稱",
+        "instance": "站點網址",
+        "password": "密碼",
+        "confirmPassword": "確認密碼",
+        "2fa": "2FA兩步驗證碼",
+        "forgotpassword": "忘記密碼",
+        "submit": "送出",
+        "edit": "編輯",
+        "preview": "預覽",
+        "post": {
+            "create": "發文",
+            "edit": "編輯貼文",
+            "community": "社群",
+            "title": "標題",
+            "url": "網址",
+            "body": "內文",
+            "nsfw": "限制級(NSFW)",
+            "generateTitle": "代入標題",
+            "uploadImage": "上傳影像",
+            "altText": "替代文字"
+        },
+        "signup": {
+            "title": "註冊"
+        }
+    },
+    "routes": {
+        "createPost": "發文",
+        "saved": "保存",
+        "createCommunity": "創建社群",
+        "post": {
+            "crosspostCount": "轉貼",
+            "commentCount": "留言",
+            "addComment": "新增留言"
+        },
+        "verifyEmail": {
+            "message": "您的電子郵件已通過驗證。您現在可以關閉此視窗。",
+            "error": "無法驗證您的電子郵件。"
+        },
+        "passwordChange": {
+            "title": "更改密碼",
+            "description": "選擇您的新密碼。",
+            "instance": "您的帳戶託管在哪個實例上？"
+        },
+        "resetLogin": {
+            "title": "重置密碼",
+            "description": "輸入您帳戶的電子郵件，將發送密碼重設連結。如果您的帳戶沒有電子郵件，請聯繫您的實例管理員。"
+        },
+        "theme": {
+            "title": "主題",
+            "import": "匯入",
+            "export": "匯出",
+            "reset": "重設"
+        }
+    },
+    "common": {
+        "back": "往前",
+        "next": "往後",
+        "refresh": "重整"
+    },
+    "profile": {
+        "profile": "個人資料",
+        "inbox": "信箱",
+        "saved": "保存",
+        "subscribed": "訂閱"
+    },
+    "nav": {
+        "home": "首頁",
+        "admin": "設定",
+        "moderation": "管理",
+        "communities": "探索",
+        "search": "搜尋",
+        "create": {
+            "label": "新增",
+            "post": "貼文",
+            "community": "社群",
+            "logingate": "你需要登入,才能發文."
+        },
+        "menu": {
+            "label": "個人資料",
+            "app": "App",
+            "settings": "設定",
+            "colorscheme": {
+                "label": "主題",
+                "system": "系統",
+                "dark": "暗黑",
+                "light": "光亮"
+            },
+            "theme": "主題",
+            "about": "關於",
+            "source": "來源",
+            "instance": "站點"
+        }
+    },
+    "account": {
+        "login": "登入",
+        "logout": "登出",
+        "signup": "註冊",
+        "accounts": "帳號",
+        "changeinstance": "變更站點",
+        "resetColor": "重設顏色",
+        "addGuest": "新增遊客",
+        "moveUp": "往上",
+        "moveDown": "往下",
+        "guest": "遊客"
+    },
+    "filter": {
+        "location": {
+            "label": "範圍",
+            "all": "所有",
+            "local": "本站",
+            "subscribed": "已訂閱",
+            "moderator": "管理的",
+            "global": "全部"
+        },
+        "sort": {
+            "label": "排序",
+            "active": "活躍",
+            "hot": "熱門",
+            "top": {
+                "label": "最佳",
+                "time": {
+                    "label": "時間",
+                    "all": "所有",
+                    "9months": "9月以來",
+                    "6months": "6月以來",
+                    "3months": "3月以來",
+                    "month": "這月以來",
+                    "week": "這周",
+                    "day": "日",
+                    "12hours": "12小時",
+                    "6hours": "6小時",
+                    "hour": "這小時"
+                }
+            },
+            "new": "最新",
+            "old": "最舊",
+            "controversial": "最有爭議",
+            "scaled": "各版熱門",
+            "mostcomments": "最多留言",
+            "newcomments": "最新留言"
+        },
+        "view": {
+            "label": "顯示模式",
+            "cozy": "可莉",
+            "list": "列表",
+            "compact": "緊湊",
+            "legacy": "經典"
+        },
+        "type": "類型",
+        "filter": "過濾",
+        "unread": "未讀",
+        "inbox": {
+            "messages": "私信",
+            "replies": "回覆",
+            "mentions": "標記"
+        }
+    },
+    "cards": {
+        "site": {
+            "about": "關於",
+            "stats": "統計",
+            "admins": "管理員"
+        },
+        "community": {
+            "members": "訪客",
+            "moderators": "管理員",
+            "subscribe": "訂閱",
+            "subscribed": "已訂閱",
+            "block": "封鎖",
+            "unblock": "取消封鎖",
+            "blockInstance": "封鎖站點",
+            "favorite": "最愛",
+            "unfavorite": "取消最愛"
+        }
+    },
+    "content": {
+        "all": "所有",
+        "users": "使用者"
+    },
+    "post": {
+        "actions": {
+            "save": "保存",
+            "more": {
+                "crosspost": "轉貼"
+            }
+        },
+        "badges": {
+            "nsfw": "限制級(NSFW)",
+            "featured": "置頂"
+        }
+    },
+    "moderation": {
+        "report": "檢舉"
+    },
+    "settings": {
+        "title": "設定",
+        "app": {
+            "lang": {
+                "title": "語言",
+                "auto": "自動"
+            }
+        },
+        "lemmy": {
+            "nsfwBlur": {
+                "title": "限制級(NSFW) 遮擋",
+                "description": "模糊圖片並隱藏限制級(NSFW)帖文預覽。"
+            }
+        }
+    }
+}

@@ -7,7 +7,7 @@
   import { fullCommunityName, searchParam } from '$lib/util.js'
   import { onDestroy, onMount } from 'svelte'
   import { setSessionStorage } from '$lib/session.js'
-  import PostFeed from '$lib/components/lemmy/post/PostFeed.svelte'
+  import PostFeed from '$lib/components/lemmy/post/feed/PostFeed.svelte'
   import { Button, Modal, toast } from 'mono-svelte'
   import { afterNavigate } from '$app/navigation'
   import { browser } from '$app/environment'
@@ -21,7 +21,7 @@
   } from 'svelte-hero-icons'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { profile } from '$lib/auth'
-  import { addResumable } from '$lib/lemmy/item.js'
+  import { t } from '$lib/translations.js'
 
   export let data
 
@@ -35,18 +35,6 @@
       )
   })
 
-  afterNavigate(() => {
-    if ($profile) {
-      addResumable({
-        avatar: data.community.community_view.community.icon,
-        id: data.community.community_view.community.id,
-        url: $page.url,
-        name: data.community.community_view.community.title,
-        type: 'community',
-      })
-    }
-  })
-
   onDestroy(() => {
     if (browser) {
       if ($navigating?.to?.route?.id == '/create/post') return
@@ -56,15 +44,17 @@
   })
 </script>
 
-<Modal bind:open={sidebar}>
-  <span slot="title">About</span>
-  <div class="mx-auto">
-    <CommunityCard
-      community_view={data.community.community_view}
-      moderators={data.community.moderators}
-    />
-  </div>
-</Modal>
+{#if sidebar}
+  <Modal bind:open={sidebar}>
+    <span slot="title">About</span>
+    <div class="mx-auto">
+      <CommunityCard
+        community_view={data.community.community_view}
+        moderators={data.community.moderators}
+      />
+    </div>
+  </Modal>
+{/if}
 
 {#if data.community.community_view.community.banner}
   <img
@@ -94,7 +84,7 @@
               }`
             )
 
-            toast({ content: 'Copied to clipboard.' })
+            toast({ content: $t('toast.copied') })
           }}
           class="dark:text-zinc-400 text-slate-600 text-sm text-left"
         >

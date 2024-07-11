@@ -17,6 +17,7 @@
   import { shouldShowVoteColor } from '../post/PostVote.svelte'
   import { fly } from 'svelte/transition'
   import { backOut } from 'svelte/easing'
+  import { t } from '$lib/translations'
 
   export let vote: number = 0
   export let upvotes: number
@@ -25,7 +26,7 @@
 
   const castVote = async (newVote: number) => {
     if (!$profile?.jwt) {
-      toast({ content: 'You must be logged in to vote.', type: 'warning' })
+      toast({ content: $t('toast.loginVoteGate'), type: 'warning' })
       return
     }
 

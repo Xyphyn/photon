@@ -14,7 +14,7 @@
     UserCircle,
     UserGroup,
   } from 'svelte-hero-icons'
-  import { profile, profileData } from '$lib/auth.js'
+  import { notifications, profile, profileData } from '$lib/auth.js'
   import { userSettings } from '$lib/settings.js'
   import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
   import CommunityList from '$lib/components/ui/sidebar/CommunityList.svelte'
@@ -26,6 +26,11 @@
   import Expandable from '$lib/components/ui/Expandable.svelte'
   import EndPlaceholder from '../EndPlaceholder.svelte'
   import Application from '../../../../routes/admin/applications/Application.svelte'
+  import { t } from '$lib/translations'
+  import ItemList from '$lib/components/lemmy/generic/ItemList.svelte'
+  import { iconOfLink } from '../navbar/link'
+  import { goto } from '$app/navigation'
+  import { page } from '$app/stores'
 </script>
 
 <nav
@@ -33,38 +38,73 @@
   gap-1 h-fit max-h-screen {$$props.class}"
   style={$$props.style}
 >
+  {#if $userSettings.dock.pins?.length ?? 0 > 0}
+    <div class="flex items-center flex-wrap gap-2 pl-1.5">
+      {#each $userSettings.dock.pins as pin}
+        <SidebarButton
+          icon={iconOfLink(pin.url)}
+          on:click={() => goto(pin.url)}
+          color="tertiary"
+          alignment="center"
+          selected={`${$page.url.pathname}${$page.url.search}` == pin.url}
+          on:contextmenu={(e) => {
+            e.preventDefault()
+            $userSettings.dock.pins = $userSettings.dock.pins.toSpliced(
+              $userSettings.dock.pins.findLastIndex((p) => pin.url == p.url),
+              1
+            )
+            return false
+          }}
+          size="square-md"
+        ></SidebarButton>
+      {/each}
+    </div>
+    <hr class="border-slate-200 dark:border-zinc-900 my-1" />
+  {/if}
   {#if $profile?.jwt}
     <SidebarButton icon={UserCircle} href="/profile/user">
-      Profile
+      <span slot="label">
+        {$t('profile.profile')}
+      </span>
     </SidebarButton>
     <SidebarButton icon={Inbox} href="/inbox">
-      Inbox
-      {#if $profile?.user?.notifications.inbox}
-        <Badge
-          class="w-5 h-5 !p-0 grid place-items-center ml-auto"
-          color="red-subtle"
-        >
-          {$profile?.user?.notifications.inbox}
-        </Badge>
-      {/if}
+      <span slot="label" class="flex items-center gap-2">
+        {$t('profile.inbox')}
+        {#if $notifications.inbox}
+          <Badge
+            class="w-5 h-5 !p-0 grid place-items-center ml-auto"
+            color="red-subtle"
+          >
+            {$notifications.inbox}
+          </Badge>
+        {/if}
+      </span>
     </SidebarButton>
-    <SidebarButton icon={Bookmark} href="/saved">Saved</SidebarButton>
+    <SidebarButton icon={Bookmark} href="/saved">
+      <span slot="label">{$t('profile.saved')}</span>
+    </SidebarButton>
   {:else}
-    <SidebarButton href="/login" title="Log In" icon={ArrowLeftOnRectangle}>
-      <span slot="label">Log In</span>
+    <SidebarButton
+      href="/login"
+      title={$t('account.login')}
+      icon={ArrowLeftOnRectangle}
+    >
+      <span slot="label">{$t('account.login')}</span>
     </SidebarButton>
-    <SidebarButton href="/signup" title="Sign Up" icon={Identification}>
-      <span slot="label">Sign Up</span>
+    <SidebarButton
+      href="/signup"
+      title={$t('account.signup')}
+      icon={Identification}
+    >
+      <span slot="label">{$t('account.signup')}</span>
     </SidebarButton>
-    {#if LINKED_INSTANCE_URL === undefined}
-      <SidebarButton
-        href="/accounts"
-        title="Change Instance"
-        icon={ServerStack}
-      >
-        <span slot="label">Change Instance</span>
-      </SidebarButton>
-    {/if}
+    <SidebarButton
+      href="/settings"
+      title={$t('nav.menu.settings')}
+      icon={Cog6Tooth}
+    >
+      <span slot="label">{$t('nav.menu.settings')}</span>
+    </SidebarButton>
   {/if}
   {#if $profileData.profiles.length >= 1}
     <hr class="border-slate-200 dark:border-zinc-900 my-1" />
@@ -73,35 +113,71 @@
         <ProfileButton {index} {prof} />
       </div>
     {/each}
-    <ProfileButton
-      index={0}
-      prof={{
-        id: -1,
-        instance: $profileData?.defaultInstance ?? DEFAULT_INSTANCE_URL,
-        username: 'Guest',
-      }}
-      guest
-    />
     <SidebarButton href="/accounts" icon={UserGroup}>
-      <span slot="label">Accounts</span>
+      <span slot="label">{$t('account.accounts')}</span>
     </SidebarButton>
   {/if}
   <hr class="border-slate-200 dark:border-zinc-900 my-1" />
-  {#if $profile?.user}
-    {#if $profile?.user.moderates.length > 0}
-      <CommunityList items={$profile.user.moderates.map((i) => i.community)} />
-      <hr class="border-slate-200 dark:border-zinc-900 my-1" />
-    {/if}
-
-    <Expandable bind:open={$userSettings.expandCommunities}>
+  {#if $profile?.favorites && $profile?.favorites.length > 0}
+    <Expandable
+      class="max-w-full min-w-0 w-full"
+      bind:open={$userSettings.expand.favorites}
+    >
       <span
         slot="title"
         class="px-2 py-1 w-full {$userSettings.expandSidebar
           ? ''
-          : 'max-lg:hidden'}"
+          : '//max-lg:hidden'}"
       >
         <EndPlaceholder>
-          Subscribed
+          {$t('routes.profile.favorites')}
+          <span slot="action" class="dark:text-white text-black">
+            {$profile.favorites.length}
+          </span>
+        </EndPlaceholder>
+      </span>
+      <CommunityList isFavorites items={$profile.favorites} />
+    </Expandable>
+    <hr class="border-slate-200 dark:border-zinc-900 my-1" />
+  {/if}
+  {#if $profile?.user}
+    {#if $profile?.user.moderates.length > 0}
+      <Expandable
+        class="max-w-full min-w-0 w-full"
+        bind:open={$userSettings.expand.moderates}
+      >
+        <span
+          slot="title"
+          class="px-2 py-1 w-full {$userSettings.expandSidebar
+            ? ''
+            : '//max-lg:hidden'}"
+        >
+          <EndPlaceholder>
+            {$t('routes.profile.moderates')}
+            <span slot="action" class="dark:text-white text-black">
+              {$profile.user.moderates.length}
+            </span>
+          </EndPlaceholder>
+        </span>
+        <CommunityList
+          items={$profile.user.moderates.map((i) => i.community)}
+        />
+      </Expandable>
+      <hr class="border-slate-200 dark:border-zinc-900 my-1" />
+    {/if}
+
+    <Expandable
+      class="max-w-full min-w-0 w-full"
+      bind:open={$userSettings.expand.communities}
+    >
+      <span
+        slot="title"
+        class="px-2 py-1 w-full {$userSettings.expandSidebar
+          ? ''
+          : '//max-lg:hidden'}"
+      >
+        <EndPlaceholder>
+          {$t('profile.subscribed')}
           <span slot="action" class="dark:text-white text-black">
             {$profile.user.follows.length}
           </span>

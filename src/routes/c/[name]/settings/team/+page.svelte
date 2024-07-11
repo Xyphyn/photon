@@ -9,6 +9,8 @@
   import { getClient } from '$lib/lemmy.js'
   import { flip } from 'svelte/animate'
   import { Button, TextInput } from 'mono-svelte'
+  import { t } from '$lib/translations.js'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
   export let data: PageData
 
@@ -37,14 +39,14 @@
         data.community.moderators = addModRes.moderators
 
         toast({
-          content: 'Added that user as a moderator.',
+          content: $t('toast.addMod'),
           type: 'success',
         })
 
         formData.newModerator = ''
       } else {
         toast({
-          content: 'Could not find that user.',
+          content: $t('toast.failFindUser'),
           type: 'warning',
         })
       }
@@ -71,7 +73,7 @@
       data.community.moderators = res.moderators
 
       toast({
-        content: 'Successfully updated community moderators.',
+        content: $t('toast.updateMods'),
         type: 'success',
       })
     } catch (err) {
@@ -83,11 +85,7 @@
   }
 </script>
 
-<svelte:head>
-  <title>Moderator Team</title>
-</svelte:head>
-
-<h1 class="text-2xl font-bold">Moderators</h1>
+<Header>Moderators</Header>
 <EditableList
   let:action
   on:action={(e) => {

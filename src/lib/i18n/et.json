@@ -1,0 +1,262 @@
+{
+    "profile": {
+        "profile": "Profiil",
+        "inbox": "Postkast",
+        "saved": "Salvestatud",
+        "subscribed": "Tellitud"
+    },
+    "nav": {
+        "home": "Pealeht",
+        "communities": "Uuri",
+        "search": "Otsi",
+        "create": {
+            "label": "Koosta",
+            "post": "Postida",
+            "logingate": "sa pead logima sisse et postidata."
+        },
+        "menu": {
+            "label": "Profiil",
+            "settings": "Settingud",
+            "colorscheme": {
+                "label": "Värvi Skeem",
+                "system": "Süsteem",
+                "dark": "Must",
+                "light": "Valge"
+            },
+            "theme": "Theme",
+            "donate": "Anneta",
+            "instance": "Server",
+            "app": "Äpp"
+        }
+    },
+    "account": {
+        "login": "Logi sisse",
+        "logout": "Logi Välja",
+        "signup": "Registreeru",
+        "accounts": "Kasutajad",
+        "changeinstance": "vaheta Instance",
+        "resetColor": "Restarti värv",
+        "moveUp": "Liigu ülesse",
+        "moveDown": "Liigu alla",
+        "versionGate": "See versioon Photonist Toetab servereid millel on {{version}} Või üles."
+    },
+    "filter": {
+        "location": {
+            "label": "Asukoht",
+            "all": "Küik - kõik",
+            "local": "Locaalne",
+            "subscribed": "Tellitud"
+        },
+        "sort": {
+            "label": "Sorteeri",
+            "active": "aktiivne",
+            "top": {
+                "label": "Topp",
+                "time": {
+                    "label": "Aeg",
+                    "all": "Kõik",
+                    "9months": "9 Kuud",
+                    "6months": "6 Kuud",
+                    "3months": "3 Kuud",
+                    "month": "Kuu",
+                    "week": "Nädal",
+                    "day": "Päev",
+                    "12hours": "12 Tundi",
+                    "6hours": "6 Tundi",
+                    "hour": "Tund"
+                }
+            },
+            "new": "Uus",
+            "old": "Vana",
+            "controversial": "Kontreversed"
+        },
+        "view": {
+            "label": "Vaata",
+            "legacy": "Vana menüü"
+        },
+        "type": "Tüüp"
+    },
+    "form": {
+        "username": "Kasutaja nimi",
+        "name": "Nimi",
+        "instance": "Serveri URL",
+        "password": "Parool",
+        "confirmPassword": "kinnita parooli",
+        "2fa": "2FA kood",
+        "forgotpassword": "Unustasid parooli?",
+        "submit": "Esita",
+        "edit": "Muuda",
+        "preview": "enne vaata",
+        "post": {
+            "create": "Koosta postitus",
+            "edit": "Muuda postistust",
+            "title": "Tiitel"
+        },
+        "profile": {
+            "bio": "all text",
+            "avatar": "Pilt",
+            "matrix": "Matrix Kasutaja",
+            "bot": "Robot kasutaja",
+            "currentPassword": "Präägune parool",
+            "newPassword": "uus parool",
+            "2fa": {
+                "paste": "Kllebi seda enda authenticatori äppi."
+            }
+        },
+        "signup": {
+            "title": "Regisreeru"
+        }
+    },
+    "routes": {
+        "search": {
+            "title": "Otsi",
+            "federating": "Födiversing",
+            "noResults": {
+                "title": "Pole midagi nähtavat",
+                "alt": "Otsi Födiversumist"
+            }
+        },
+        "saved": "Salvestatud",
+        "createPost": "koosta postitus",
+        "post": {
+            "crosspostCount": "crosspost",
+            "thread": {
+                "context": "Vaata  Contexti"
+            }
+        },
+        "inbox": {
+            "title": "Postkast"
+        },
+        "admin": {
+            "config": {
+                "registration": {
+                    "open": "Lahti",
+                    "closed": "Kinni"
+                },
+                "listingType": {
+                    "all": "Kõik",
+                    "local": "Locaalne"
+                },
+                "private": "Privaatne server"
+            },
+            "applications": {
+                "user": "Kasutaja"
+            },
+            "federation": {
+                "block": "Blokeeri",
+                "blockplaceholder": "Blokeeri server..."
+            }
+        },
+        "passwordChange": {
+            "title": "Vaheta Parooli",
+            "description": "Tee oma uus parool.",
+            "instance": "Mis serveris on sinu kasutaja?"
+        }
+    },
+    "cards": {
+        "community": {
+            "members": "Kasutajad",
+            "subscribe": "Telli",
+            "subscribed": "Tellitud",
+            "block": "Blokeeri",
+            "unblock": "lõpeta blokeerimine",
+            "blockInstance": "Blokeeri server"
+        }
+    },
+    "admin": {
+        "instance": "Server"
+    },
+    "content": {
+        "all": "Kõik",
+        "users": "Kasutajad",
+        "posts": "Postitused",
+        "message": "Kiri"
+    },
+    "post": {
+        "actions": {
+            "more": {
+                "delete": "Kustuta"
+            }
+        },
+        "badges": {
+            "locked": "Lukustatud"
+        }
+    },
+    "comment": {
+        "locked": "See postitus on lukustatud."
+    },
+    "moderation": {
+        "removeSubmission": {
+            "message": "Kiri"
+        },
+        "lock": "Lukusta",
+        "unlock": "unblock"
+    },
+    "common": {
+        "back": "Tagasi",
+        "next": "Järgmine",
+        "add": "Pane",
+        "send": "Saada"
+    },
+    "toast": {
+        "copied": "Kopeeritud.",
+        "failFindUser": "ei leidnud seda kasutajat.",
+        "confirmDelete1": "kas oled kindel et tahad kustudata oma profiili?",
+        "confirmDelete2": "Kassa oled väga kindel?",
+        "confirmDelete3": "Viimane hüüatus. Kas sa oled kindel?",
+        "needPassword": "Sul on vaja parooli.",
+        "deleting": "Kustutan kasutajat...",
+        "deleted": "Sinu kasutaja on kustutatud."
+    },
+    "settings": {
+        "title": "Settingud",
+        "navigation": {
+            "title": "Navigatioon",
+            "dockPos": {
+                "top": "ülemine",
+                "bottom": "Alumine",
+                "adaptive": "Adaptiivne"
+            }
+        },
+        "app": {
+            "lang": {
+                "title": "keel",
+                "": "Dont translate the below!"
+            },
+            "view": {
+                "title": "Postituse stiil",
+                "legacy": "Vana photoni nägemus."
+            },
+            "sort": {
+                "title": "tavaline sorteerimine"
+            },
+            "postsInNewTab": {
+                "title": "Tee postituded uues browseri välilehele"
+            },
+            "translation": {
+                "instance": "Domeen(server)"
+            }
+        },
+        "embeds": {
+            "clickToView": {
+                "title": "Klõpsa et näha"
+            },
+            "youtube": {
+                "description": "Interneti domeen et embedida YouTuubi videoid."
+            }
+        },
+        "lemmy": {
+            "instances": {
+                "title": "Näe serverit"
+            }
+        },
+        "moderation": {
+            "replyPresets": {
+                "syntax": "Süntax"
+            }
+        },
+        "other": {
+            "title": "Muu"
+        }
+    }
+}

@@ -13,13 +13,23 @@
   import { userSettings } from '$lib/settings.js'
   import type { Post } from 'lemmy-js-client'
   import PostIframe from './PostIframe.svelte'
+  import { Button, Material } from 'mono-svelte'
 
   export let view: 'card' | 'cozy' | 'list' | 'compact' = 'cozy'
   export let post: Post
   export let type: MediaType = 'none'
   export let opened: boolean | undefined = undefined
+  export let blur: boolean = post.nsfw && $userSettings.nsfwBlur
+
+  let showAltText = false
 </script>
 
+<!-- 
+  @component
+  This component will show either
+  - A media item (pictures, videos) (large form factor posts only)
+  - Embed link/card.
+-->
 {#if type == 'image'}
   {#if view == 'card' || view == 'cozy'}
     <!--disabled preloads here since most people will hover over every image while scrolling-->
@@ -34,11 +44,11 @@
       role="button"
       tabindex="0"
     >
+      <!-- svelte-ignore a11y-missing-attribute -->
       <img
-        src={bestImageURL(post, false, 256)}
+        src={bestImageURL(post, false, 64)}
         loading="lazy"
-        class="-z-10 absolute top-0 left-0 w-full h-full object-cover blur-xl opacity-50"
-        alt="the background blur"
+        class="-z-10 absolute top-0 left-0 w-full h-full object-cover blur-xl opacity-40"
       />
       <picture class="max-h-[inherit]">
         <source
@@ -49,17 +59,44 @@
           srcset={bestImageURL(post, false, 512)}
           media="(max-width: 512px)"
         />
+        <source
+          srcset={bestImageURL(post, false, 1024)}
+          media="(max-width: 1024px)"
+        />
+        <source
+          srcset={bestImageURL(post, false, 1512)}
+          media="(max-width: 1512px)"
+        />
         <!-- svelte-ignore a11y-missing-attribute -->
         <img
-          src={bestImageURL(post, false, 1024)}
+          src={bestImageURL(post, false, 2048)}
           loading="lazy"
           class="max-h-[inherit] max-w-full h-auto z-30
                   transition-opacity duration-300 object-contain mx-auto"
           width={512}
           height={300}
-          class:blur-3xl={post.nsfw && $userSettings.nsfwBlur}
+          class:blur-3xl={blur}
+          alt={post.alt_text ?? ''}
         />
       </picture>
+      {#if post.alt_text}
+        <Button
+          on:click={(e) => {
+            e.stopPropagation()
+            showAltText = !showAltText
+          }}
+          class="absolute bottom-0 left-0 text-sm m-2 text-left"
+          size="sm"
+          rounding="lg"
+          alignment="left"
+        >
+          {#if showAltText}
+            {post.alt_text}
+          {:else}
+            <span class="font-bold">ALT</span>
+          {/if}
+        </Button>
+      {/if}
     </svelte:element>
   {/if}
 {:else if (type == 'iframe' || type == 'video') && (view == 'cozy' || view == 'card') && post.url}
@@ -72,10 +109,10 @@
 {:else if type == 'embed' && post.url}
   <PostLink
     url={post.url}
-    thumbnail_url={post.thumbnail_url}
+    thumbnail_url={view != 'list' ? post.thumbnail_url : undefined}
     nsfw={post.nsfw}
     embed_description={post.embed_description}
     embed_title={post.embed_title}
-    compact={view == 'compact'}
+    compact={view == 'compact' || (view == 'list' && !post.embed_title)}
   />
 {/if}

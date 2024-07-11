@@ -15,7 +15,7 @@
     if (panel) {
       if (top) {
         if (content) return '!pt-20'
-        else return 'top-16'
+        else return 'top-16 !max-h-[calc(100vh-4rem)]'
       } else return '!pb-20'
     } else {
       if (!content) return ''
@@ -27,41 +27,80 @@
     return 'hi this is easter egg, my code broke'
   }
 
-  $: contentPadding = calculatePadding(
-    $userSettings.dock.noGap,
-    $userSettings.dock.top,
-    true
-  )
-  $: sidePadding = calculatePadding(
-    $userSettings.dock.noGap,
-    $userSettings.dock.top,
-    false
-  )
-  $: topPanel = $userSettings.dock.noGap && $userSettings.dock.top
+  let screenWidth = 1000
+
+  const calculateDockProperties = (
+    settings: typeof $userSettings.dock,
+    screenWidth: number
+  ): {
+    noGap: boolean
+    top: boolean
+  } => {
+    let panel = false
+    let top = false
+
+    if (screenWidth >= 1000) {
+      panel = true
+      top = true
+    } else if (screenWidth > 800) {
+      panel = true
+      top = false
+    } else if (screenWidth > 600) {
+      panel = false
+      top = false
+    }
+
+    panel = settings.noGap ?? panel
+    top = settings.top ?? top
+
+    return {
+      noGap: panel,
+      top: top,
+    }
+  }
+
+  $: dockProps = calculateDockProperties($userSettings.dock, screenWidth)
+
+  $: contentPadding = calculatePadding(dockProps.noGap, dockProps.top, true)
+  $: sidePadding = calculatePadding(dockProps.noGap, dockProps.top, false)
+  $: topPanel = dockProps.noGap && dockProps.top
 </script>
 
-<div class="shell {$$props.class}" style={colorsToVars($colors)}>
+<svelte:window bind:innerWidth={screenWidth} />
+
+<div
+  {...$$restProps}
+  class="shell {$$props.class}"
+  style={colorsToVars($colors)}
+>
   <slot />
   <div
     class="
-    {$userSettings.dock.noGap ? '' : 'p-4 max-w-3xl left-1/2 -translate-x-1/2'}
-    {$userSettings.dock.top ? 'top-0' : 'bottom-0'}
+    {dockProps.noGap ? '' : 'p-4 max-w-3xl left-1/2 -translate-x-1/2'}
+    {dockProps.top ? 'top-0' : 'bottom-0'}
     {topPanel ? 'fixed top-0' : 'fixed'}
     w-full z-50 pointer-events-none"
-    style="grid-area: navbar;"
+    style="grid-area: navbar;
+    transition-property: padding, top, bottom;
+    transition-duration: 250ms;
+    transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);"
   >
     <slot
       name="navbar"
       class="
-      {$userSettings.dock.noGap
-        ? $userSettings.dock.top
-          ? 'border-b shadow-none'
-          : 'border-t'
+      {dockProps.noGap
+        ? dockProps.top
+          ? 'border-b shadow-none rounded-none'
+          : 'border-t rounded-none'
         : 'border rounded-full'}
-      border-slate-200 dark:border-zinc-800 shadow-2xl
-      backdrop-blur-xl dark:backdrop-brightness-[25%] bg-[#ffffff]/75 dark:bg-transparent transition-colors duration-500
-      pointer-events-auto"
+       
+       dark:bg-transparent transition-colors duration-500
+      pointer-events-auto {topPanel
+        ? 'bg-slate-50 dark:bg-zinc-950 border-slate-100 dark:border-zinc-900'
+        : `border-slate-200 dark:border-zinc-800 shadow-2xl backdrop-blur-xl
+        dark:backdrop-brightness-[25%] bg-[#ffffff]/75`}"
       {title}
+      style="transition: border-radius 250ms;"
     />
   </div>
   <div
@@ -71,7 +110,7 @@
   >
     <slot
       name="sidebar"
-      class="hidden md:flex sticky top-0 left-0 w-full max-w-full h-max bg-slate-50 dark:bg-zinc-950
+      class="hidden md:flex sticky top-0 left-0 max-w-full h-max bg-slate-50 dark:bg-zinc-950
       z-40
       {sidePadding}"
       style="grid-area: sidebar; width: 100% !important;"
@@ -84,7 +123,7 @@
     />
     <slot
       name="suffix"
-      class="max-xl:hidden w-full sticky top-0 left-0 h-max bg-slate-50 dark:bg-zinc-950 z-40 {sidePadding}"
+      class="max-xl:hidden w-full sticky top-0 left-0 max-h-screen bg-slate-50 dark:bg-zinc-950 z-40 {sidePadding}"
       style="grid-area: suffix;"
     />
   </div>

@@ -67,11 +67,13 @@
 {:else if type == 'instance'}
   <Search
     search={async (q) => {
-      const results = await instances || {}
+      const results = (await instances) || {}
 
-      return q ? (results.federated_instances?.linked || []).filter(
-        (i) => i.software === 'lemmy' && i.domain.includes(q)
-      ) : []
+      return q
+        ? (results.federated_instances?.linked || []).filter(
+            (i) => i.software === 'lemmy' && i.domain.includes(q)
+          )
+        : []
     }}
     extractName={(i) => `${i.domain}`}
     on:select

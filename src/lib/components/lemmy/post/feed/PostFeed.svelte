@@ -7,6 +7,11 @@
   import { ArchiveBox, Icon, Minus, Plus } from 'svelte-hero-icons'
   import { expoOut } from 'svelte/easing'
   import { fly, slide } from 'svelte/transition'
+  import { browser } from '$app/environment'
+  import { afterUpdate, onMount, tick, type SvelteComponent } from 'svelte'
+  import { createWindowVirtualizer } from '@tanstack/svelte-virtual'
+  import { afterNavigate, beforeNavigate } from '$app/navigation'
+  import { _posts } from '../../../../../routes/+page.svelte'
 
   type PostViewWithCrossposts = PostView & {
     withCrossposts: true
@@ -103,11 +108,11 @@
         <li
           in:fly|global={{
             y: -8,
-            duration: index < 4 ? 500 : 0,
+            duration: 500,
             opacity: 0,
-            delay: index < 4 ? index * 100 : 0,
+            delay: 100 + index * 20,
           }}
-          class="relative"
+          class="relative post-container"
         >
           <Post
             hideCommunity={community}
@@ -116,35 +121,35 @@
               ? 'compact'
               : $userSettings.view}
             {post}
-            class="transition-all duration-250 {post.withCrossposts &&
-            viewPost != post.post.id
-              ? ''
-              : ''}"
+            class="transition-all duration-250"
+            on:hide={() => {
+              posts = posts.toSpliced(index, 1)
+            }}
           >
-            <button
-              slot="badges"
-              class:hidden={!post.withCrossposts}
-              on:click={() => {
-                if (viewPost == post.post.id) viewPost = -1
-                else viewPost = post.post.id
-              }}
-            >
+            <svelte:fragment slot="badges">
               {#if post.withCrossposts}
-                <Badge
-                  class="z-10 backdrop-blur-xl hover:brightness-110 cursor-pointer transition-all"
-                  color="gray-subtle"
+                <button
+                  on:click={() => {
+                    if (viewPost == post.post.id) viewPost = -1
+                    else viewPost = post.post.id
+                  }}
                 >
-                  {#if viewPost == post.post.id}
-                    <Icon mini src={Minus} size="14" />
-                  {:else}
-                    <Icon mini src={Plus} size="14" />
-                  {/if}
-                  {post.crossposts.length} crosspost{post.crossposts.length == 1
-                    ? ''
-                    : 's'}
-                </Badge>
-              {/if}
-            </button>
+                  <Badge
+                    class="z-10 backdrop-blur-xl hover:brightness-110 cursor-pointer transition-all"
+                    color="gray-subtle"
+                  >
+                    {#if viewPost == post.post.id}
+                      <Icon mini src={Minus} size="14" />
+                    {:else}
+                      <Icon mini src={Plus} size="14" />
+                    {/if}
+                    {post.crossposts.length} crosspost{post.crossposts.length ==
+                    1
+                      ? ''
+                      : 's'}
+                  </Badge>
+                </button>{/if}
+            </svelte:fragment>
           </Post>
           {#if post.withCrossposts && viewPost == post.post.id}
             <div
@@ -172,4 +177,5 @@
       {/if}
     {/each}
   {/if}
+  <slot />
 </ul>

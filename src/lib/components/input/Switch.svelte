@@ -27,7 +27,7 @@
     last:rounded-r-lg last:border-r last:dark:border-r-transparent
     rounded-l-none
     rounded-r-none
-    px-3 py-1.5 text-sm hover:brightness-110
+    px-3 py-1.5 text-sm hover:brightness-110 ${$$props.buttonClass || ''}
     ${
       !selected
         ? `hover:dark:bg-zinc-800 border-slate-100 border-t border-b border-b-slate-300 dark:border-b-0

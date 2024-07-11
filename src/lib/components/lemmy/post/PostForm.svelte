@@ -10,6 +10,7 @@
     BookOpen,
     ArrowPath,
     Sparkles,
+    ChatBubbleBottomCenterText,
   } from 'svelte-hero-icons'
   import { profile } from '$lib/auth.js'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
@@ -19,6 +20,10 @@
   import ObjectAutocomplete from '$lib/components/lemmy/ObjectAutocomplete.svelte'
   import { Button } from 'mono-svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
+  import { t } from '$lib/translations'
+  import { slide } from 'svelte/transition'
+  import { feature } from '$lib/version'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
   export let edit = false
 
@@ -34,17 +39,21 @@
     title: string
     body: string
     image: FileList | null
+    thumbnail: string | undefined
     url: string | undefined
     nsfw: boolean
     loading: boolean
+    alt_text: string | undefined
   } = {
     community: null,
     title: '',
     body: '',
     image: null,
+    thumbnail: undefined,
     url: undefined,
     nsfw: false,
     loading: false,
+    alt_text: undefined,
   }
 
   let saveDraft = edit ? false : true
@@ -59,6 +68,9 @@
       data.url = editingPost.url ?? ''
       data.body = editingPost.body ?? ''
       data.title = editingPost.name
+      data.nsfw = editingPost.nsfw
+      data.alt_text = editingPost.alt_text
+      data.thumbnail = editingPost.thumbnail_url
     }
 
     if (passedCommunity) {
@@ -84,7 +96,7 @@
     if (!data.community && !edit) {
       toast({
         type: 'warning',
-        content: 'You need to set a community.',
+        content: $t('toast.needCommunity'),
       })
       return
     }
@@ -94,7 +106,7 @@
         new URL(data.url)
       } catch (err) {
         toast({
-          content: 'Invalid URL',
+          content: $t('toast.invalidURL'),
           type: 'warning',
         })
         return
@@ -115,6 +127,8 @@
           url: data.url || undefined,
           post_id: editingPost.id,
           nsfw: data.nsfw,
+          alt_text: data.alt_text,
+          custom_thumbnail: data.thumbnail,
         })
 
         if (!post) throw new Error('Failed to edit post')
@@ -123,16 +137,14 @@
 
         dispatcher('submit', post.post_view)
       } else {
-        let image = data.image
-          ? await uploadImage(data.image[0], $profile.instance, $profile.jwt)
-          : undefined
-        data.url = image || data.url || undefined
         const post = await client().createPost({
           community_id: data.community!.id,
           name: data.title,
           body: data.body,
-          url: data.url,
+          url: data.url || undefined,
           nsfw: data.nsfw,
+          custom_thumbnail: data.thumbnail,
+          alt_text: data.alt_text,
         })
 
         if (!post) throw new Error('Failed to upload post')
@@ -169,14 +181,14 @@
           .join('\n')
 
       toast({
-        content: `Generated title and body from that website. Would you like to undo this action?`,
+        content: $t('toast.generatedTitle'),
         type: 'info',
         action: () => (data = oldData),
         duration: 15 * 1000,
       })
     } catch (e) {
       toast({
-        content: 'There was no usable title or description of that website.',
+        content: $t('toast.failGenerateTitle'),
       })
     }
     generation.loading = false
@@ -198,6 +210,8 @@
     title: '',
   }
 
+  let addAltText = false
+
   $: generation.generatable = canGenerateTitle(data.url)
 </script>
 
@@ -215,9 +229,9 @@
 
 <form on:submit|preventDefault={submit} class="flex flex-col gap-4 h-full">
   <slot name="formtitle">
-    <h1 class="font-bold text-xl">
-      {edit ? 'Edit' : 'Create'} Post
-    </h1>
+    <Header class="font-bold text-xl">
+      {edit ? $t('form.post.edit') : $t('form.post.create')}
+    </Header>
   </slot>
   {#if !edit && data}
     {#if !data.community}
@@ -226,7 +240,7 @@
         bind:items={communities}
         jwt={$profile?.jwt}
         listing_type="All"
-        label="Community"
+        label={$t('form.post.community')}
         required
         on:select={(e) => {
           const c = e.detail
@@ -242,7 +256,7 @@
       />
     {:else}
       <div class="flex flex-col gap-1">
-        <span class="font-medium text-sm">Community</span>
+        <span class="font-medium text-sm">{$t('form.post.community')}</span>
         <Button
           class="w-full !bg-white dark:!bg-black h-[38px]"
           on:click={() => (data.community = null)}
@@ -267,13 +281,13 @@
   {/if}
   <TextInput
     required
-    label="Title"
+    label={$t('form.post.title')}
     bind:value={data.title}
     placeholder={placeholders.get('post')}
   />
   <div class="flex gap-2 w-full items-end">
     <TextInput
-      label="URL"
+      label={$t('form.post.url')}
       bind:value={data.url}
       placeholder={placeholders.get('url')}
       class="w-full"
@@ -284,32 +298,45 @@
         ? 'width: 38px; padding: 0;'
         : ''}"
       class="flex-shrink-0"
-      title="Generate title/body"
+      title={$t('form.post.generateTitle')}
       loading={generation.loading}
       disabled={!generation.generatable || generation.loading}
     >
       <Icon src={Sparkles} size="18" mini slot="prefix" />
       {#if generation.generatable}
-        Generate Title
+        {$t('form.post.generateTitle')}
       {/if}
+    </Button>
+    <Button
+      on:click={() => (addAltText = !addAltText)}
+      style="width: 38px; height: 38px; padding: 0;"
+      class="flex-shrink-0"
+      title={$t('form.post.altText')}
+    >
+      <Icon src={ChatBubbleBottomCenterText} size="18" mini slot="prefix" />
     </Button>
     <Button
       on:click={() => (uploadingImage = !uploadingImage)}
       style="width: 38px; height: 38px; padding: 0;"
       class="flex-shrink-0"
-      title="Upload image"
+      title={$t('form.post.uploadImage')}
     >
       <Icon src={Photo} size="18" mini slot="prefix" />
     </Button>
   </div>
+  {#if addAltText}
+    <div transition:slide={{ axis: 'y', duration: 150 }} class="w-full">
+      <TextInput label={$t('form.post.altText')} bind:value={data.alt_text} />
+    </div>
+  {/if}
   <MarkdownEditor
     rows={8}
-    label="Body"
+    label={$t('form.post.body')}
     bind:value={data.body}
     placeholder={placeholders.get('post')}
     previewButton
   />
-  <Switch bind:checked={data.nsfw}>NSFW</Switch>
+  <Switch bind:checked={data.nsfw}>{$t('form.post.nsfw')}</Switch>
   <div class="mt-auto" />
   <div class="flex flex-row items-center gap-2">
     <Button
@@ -320,13 +347,13 @@
       disabled={data.loading}
       class="flex-1"
     >
-      Submit
+      {$t('form.submit')}
     </Button>
 
     {#if !edit}
       <Button
         on:click={() => {
-          toast({ content: 'Restored from draft' })
+          toast({ content: $t('toast.restoredFromDraft') })
           const draft = getSessionStorage('postDraft')
           if (draft && !edit) {
             // @ts-ignore

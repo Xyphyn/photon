@@ -6,6 +6,8 @@
   import { profile } from '$lib/auth.js'
   import { Button, Checkbox, Modal, TextInput } from 'mono-svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
+  import { t } from '$lib/translations'
+  import CommunityLink from '../community/CommunityLink.svelte'
 
   export let open = false
   let item: Person | undefined
@@ -40,7 +42,7 @@
         date = Date.parse(expires)
         if (Number.isNaN(date)) {
           toast({
-            content: 'Invalid date. It must be an absolute date.',
+            content: $t('toast.invalidDateAbsolute'),
             type: 'error',
           })
 
@@ -51,7 +53,7 @@
 
         if (date < Date.now()) {
           toast({
-            content: 'Invalid date. It is before the current time.',
+            content: $t('toast.invalidDateBeforeCurrent'),
             type: 'error',
           })
 
@@ -82,9 +84,7 @@
       open = false
 
       toast({
-        content: `Successfully ${
-          banned ? 'unbanned' : 'banned'
-        } that user. You may need to refresh to see changes.`,
+        content: banned ? $t('toast.unbannedUser') : $t('toast.bannedUser'),
         type: 'success',
       })
 
@@ -101,42 +101,38 @@
 </script>
 
 <Modal bind:open class="max-w-xl w-full">
-  <h1 slot="title">{banned ? 'Unbanning' : 'Banning'} user</h1>
+  <h1 slot="title">
+    {banned ? $t('moderation.ban.unbanning') : $t('moderation.ban.banning')}
+  </h1>
   {#if item}
     <form class="flex flex-col gap-4" on:submit|preventDefault={submit}>
       <div class="flex items-center gap-1">
         <Avatar url={item.avatar} alt={item.name} width={24} />
         <span class="font-bold">{item.name}</span>
       </div>
-      <p>
-        {banned ? 'Unbanning' : 'Banning'} from
-        <span class="font-bold">{community ? community.name : 'site'}</span>
-      </p>
+      {#if community}
+        <CommunityLink {community} avatar />
+      {/if}
       <MarkdownEditor
         required
         bind:value={reason}
-        label="Reason"
-        placeholder="Why are you {banned
-          ? 'unbanning'
-          : 'banning'} {item.name}?"
+        label={$t('moderation.reason')}
       />
       {#if !banned}
         <Checkbox bind:checked={deleteData}>
-          Delete data
+          {$t('moderation.ban.deleteData')}
           <svelte:fragment slot="description">
-            This will delete ALL of this user's posts and comments on this {community
-              ? 'community'
-              : 'site'}.
+            {$t('moderation.ban.warning')}
           </svelte:fragment>
         </Checkbox>
         <TextInput
           bind:value={expires}
-          label="Expires (UTC)"
+          label={$t('moderation.ban.expires')}
           placeholder="2024 August 5"
         />
       {/if}
       <Button submit color="primary" {loading} disabled={loading} size="lg">
-        Submit
+        {$t('form.submit')}
       </Button>
     </form>
   {/if}

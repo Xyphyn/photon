@@ -1,6 +1,9 @@
 import type { CommentSortType, SortType } from 'lemmy-js-client'
 import { writable } from 'svelte/store'
 import { env } from '$env/dynamic/public'
+import { locale } from './translations'
+import { browser } from '$app/environment'
+import type { Link } from './components/ui/navbar/link'
 
 console.log('Using the following default settings from the environment:')
 console.log(env)
@@ -44,7 +47,11 @@ interface Settings {
     removed: boolean
   }
   expandSidebar: boolean
-  expandCommunities: boolean
+  expand: {
+    communities: boolean
+    moderates: boolean
+    favorites: boolean
+  }
   displayNames: boolean
   nsfwBlur: boolean
   moderation: {
@@ -68,14 +75,26 @@ interface Settings {
   embeds: {
     clickToView: boolean
     youtube: 'youtube' | 'invidious' | 'piped'
+    invidious: string | undefined
+    piped: string | undefined
   }
   dock: {
-    noGap: boolean
-    top: boolean
+    noGap: boolean | null
+    top: boolean | null
+    pins: Link[]
   }
   posts: {
     deduplicateEmbed: boolean
     compactFeatured: boolean
+    showHidden: boolean
+  }
+  infiniteScroll: boolean
+  language: string | null
+  useRtl: boolean
+  translator: string | undefined
+  parseTags: boolean
+  tagRules: {
+    [key: string]: 'hide' | 'blur'
   }
 }
 
@@ -97,7 +116,11 @@ export const defaultSettings: Settings = {
     removed: toBool(env.PUBLIC_HIDE_REMOVED) ?? true,
   },
   expandSidebar: toBool(env.PUBLIC_EXPAND_SIDEBAR) ?? true,
-  expandCommunities: toBool(env.PUBLIC_EXPAND_COMMUNITIES) ?? true,
+  expand: {
+    communities: toBool(env.PUBLIC_EXPAND_COMMUNITIES) ?? true,
+    favorites: toBool(env.PUBLIC_EXPAND_FAVORITES) ?? true,
+    moderates: toBool(env.PUBLIC_EXPAND_MODERATES) ?? true,
+  },
   displayNames: toBool(env.PUBLIC_DISPLAY_NAMES) ?? true,
   nsfwBlur: toBool(env.PUBLIC_NSFW_BLUR) ?? true,
   moderation: {
@@ -125,21 +148,35 @@ export const defaultSettings: Settings = {
   embeds: {
     clickToView: true,
     youtube: 'youtube',
+    invidious: undefined,
+    piped: undefined,
   },
   dock: {
-    noGap: toBool(env.PUBLIC_DOCK_PANEL) ?? false,
-    top: toBool(env.PUBLIC_DOCK_TOP) ?? false
+    noGap: toBool(env.PUBLIC_DOCK_PANEL) ?? null,
+    top: toBool(env.PUBLIC_DOCK_TOP) ?? null,
+    pins: [],
   },
   posts: {
     deduplicateEmbed: toBool(env.PUBLIC_DEDUPLICATE_EMBED) ?? true,
-    compactFeatured: toBool(env.PUBLIC_COMPACT_FEATURED) ?? true
-  }
+    compactFeatured: toBool(env.PUBLIC_COMPACT_FEATURED) ?? true,
+    showHidden: false,
+  },
+  infiniteScroll: true,
+  language: env.PUBLIC_LANGUAGE ?? null,
+  useRtl: false,
+  translator: env.PUBLIC_TRANSLATOR ?? undefined,
+  parseTags: true,
+  tagRules: {
+    cw: 'blur',
+    nsfl: 'blur',
+    nsfw: 'blur',
+  },
 }
 
 export const userSettings = writable(defaultSettings)
 
 const migrate = (settings: any): Settings => {
-  if (typeof settings.moderation.removalReasonPreset == 'string') {
+  if (typeof settings?.moderation?.removalReasonPreset == 'string') {
     settings.moderation.presets = [
       {
         title: 'Preset 1',
@@ -165,5 +202,10 @@ if (typeof window != 'undefined') {
 userSettings.subscribe((settings) => {
   if (typeof window != 'undefined') {
     localStorage.setItem('settings', JSON.stringify(settings))
+  }
+  if (settings.language) {
+    locale.set(settings.language)
+  } else {
+    if (browser) locale.set(navigator?.language)
   }
 })
