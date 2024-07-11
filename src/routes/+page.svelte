@@ -30,27 +30,18 @@
   import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
   import ViewSelect from '$lib/components/lemmy/dropdowns/ViewSelect.svelte'
   import { searchParam } from '$lib/util.js'
-  import {
-    ChartBar,
-    ExclamationCircle,
-    ExclamationTriangle,
-    GlobeAmericas,
-    Icon,
-    ServerStack,
-  } from 'svelte-hero-icons'
+  import { ChartBar, ExclamationTriangle, Icon } from 'svelte-hero-icons'
   import { getClient, site } from '$lib/lemmy.js'
   import Location from '$lib/components/lemmy/dropdowns/Location.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { t } from '$lib/translations.js'
   import InfiniteScroll from 'svelte-infinite-scroll'
-  import { Button, Material, Spinner } from 'mono-svelte'
-  import { get, writable } from 'svelte/store'
+  import { Button } from 'mono-svelte'
+  import { writable } from 'svelte/store'
   import type { GetPostsResponse, ListingType, SortType } from 'lemmy-js-client'
   import { userSettings } from '$lib/settings.js'
-  import { afterNavigate } from '$app/navigation'
   import { browser } from '$app/environment'
   import { onMount } from 'svelte'
-  import { instance } from '$lib/instance.js'
   import VirtualFeed from '$lib/components/lemmy/post/feed/VirtualFeed.svelte'
   import PostFeed from '$lib/components/lemmy/post/feed/PostFeed.svelte'
 
@@ -118,7 +109,7 @@
     const observer = new IntersectionObserver(callback, {
       root: null,
       rootMargin: '0px',
-      threshold: 0.25,
+      threshold: 0.5,
     })
 
     const elements = document.querySelectorAll('.post-container')
