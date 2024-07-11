@@ -417,6 +417,7 @@
       "link": "Copy Link"
     },
     "locked": "This post is locked.",
+    "banned": "You are banned from this community.",
     "more": "{{comments:number}} more"
   },
   "moderation": {

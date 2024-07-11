@@ -352,6 +352,7 @@ flex-wrap gap-4 sticky top-20 w-full box-border z-20 mt-4"
               .includes(data.post.community_view.community.id)
           )) ||
           $page.params.instance.toLowerCase() != $instance.toLowerCase()}
+        banned={data.post.community_view.banned_from_community}
         on:focus={() => (commenting = true)}
         tools={commenting}
         preview={commenting}

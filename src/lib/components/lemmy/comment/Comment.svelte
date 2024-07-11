@@ -179,6 +179,8 @@
             bind:comment={node.comment_view}
             bind:replying
             on:edit={() => (editing = true)}
+            disabled={node.comment_view.banned_from_community ||
+              node.comment_view.post.locked}
           />
         </div>
       {/if}
