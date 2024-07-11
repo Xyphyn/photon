@@ -2,14 +2,14 @@
   import { deleteProfile, profile, setUser } from '$lib/auth.js'
   import { getClient, site } from '$lib/lemmy.js'
   import { trycatch } from '$lib/util.js'
-  import { Button, Snippet, TextInput, toast } from 'mono-svelte'
+  import { Button, Material, Snippet, TextInput, toast } from 'mono-svelte'
   import { instance as currentInstance } from '$lib/instance.js'
   import { ClipboardDocument, Icon } from 'svelte-hero-icons'
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
   import Switch from '$lib/components/input/Switch.svelte'
   import { feature } from '$lib/version.js'
-  import QrCode from "svelte-qrcode"
+  import { qr } from '@svelte-put/qr/svg'
   import { t } from '$lib/translations.js'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
@@ -83,7 +83,6 @@
       toast({ content: e as any, type: 'error' })
     }
   }
-
 </script>
 
 <h1 class="font-bold text-3xl">{$t('routes.profile.credentials')}</h1>
@@ -129,7 +128,9 @@
     </p>
     {#if totpEnabled || totpLink}
       {#if totpLink && !totpEnabled}
-        <QrCode value={totpLink} size=768/>
+        <Material color="transparent" class="!fill-white">
+          <svg use:qr={{ data: totpLink, logo: '/img/logo-isolated.svg' }} />
+        </Material>
         <TextInput
           disabled
           type="password"
