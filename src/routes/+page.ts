@@ -30,31 +30,41 @@ export async function load({ url, fetch }) {
         page_cursor: cursor,
         show_hidden: settings.posts.showHidden,
       })
-    : cached.data
+    : cached.data.posts
 
   if (
     shouldReload(cached, url.searchParams.toString(), get(instance)) &&
     browser
   )
     _posts.set({
-      data: posts,
+      data: {
+        sort: sort,
+        listingType: listingType,
+        page: page || 1,
+        posts: posts,
+        cursor: {
+          next: posts.next_page,
+        },
+      },
       params: url.searchParams,
       lastSeen: 0,
       instance: get(instance),
     })
 
   try {
-    return {
-      sort: sort,
-      listingType: listingType,
-      page: page || 1,
-      posts: posts,
-      cursor: {
-        next: posts.next_page,
-        back: prevCursor,
-        current: cursor,
-      },
-    }
+    return shouldReload(cached, url.searchParams.toString(), get(instance))
+      ? {
+          sort: sort,
+          listingType: listingType,
+          page: page || 1,
+          posts: posts,
+          cursor: {
+            next: posts.next_page,
+            back: prevCursor,
+            current: cursor,
+          },
+        }
+      : cached.data
   } catch (err) {
     error(500, {
       message: 'Failed to fetch homepage.',

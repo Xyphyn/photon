@@ -1,6 +1,14 @@
 <script lang="ts" context="module">
   export interface CachedPosts {
-    data: GetPostsResponse
+    data: {
+      sort: SortType
+      listingType: ListingType
+      page: number
+      posts: GetPostsResponse
+      cursor: {
+        next: string | undefined
+      }
+    }
     params: URLSearchParams
     lastSeen: number
     instance: string
@@ -37,7 +45,7 @@
   import InfiniteScroll from 'svelte-infinite-scroll'
   import { Button, Material, Spinner } from 'mono-svelte'
   import { get, writable } from 'svelte/store'
-  import type { GetPostsResponse } from 'lemmy-js-client'
+  import type { GetPostsResponse, ListingType, SortType } from 'lemmy-js-client'
   import { userSettings } from '$lib/settings.js'
   import { afterNavigate } from '$app/navigation'
   import { browser } from '$app/environment'
@@ -58,6 +66,7 @@
 
     try {
       loading = true
+      console.log(`loading more with cursor ${data.cursor.next}`)
       const newPosts = await getClient()
         .getPosts({
           limit: limit,
@@ -78,7 +87,7 @@
       data.posts.posts = [...data.posts.posts, ...newPosts.posts]
 
       _posts.update((ps) => ({
-        data: data.posts,
+        data: data,
         params: ps.params,
         lastSeen: ps.lastSeen,
         instance: ps.instance,
@@ -195,7 +204,7 @@
   >
     <Pageination
       page={data.page}
-      cursor={{ next: data.cursor.next, back: data.cursor.back }}
+      cursor={{ next: data.cursor.next }}
       on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
       on:cursor={(c) => {
         searchParam($page.url, 'cursor', c.detail)
