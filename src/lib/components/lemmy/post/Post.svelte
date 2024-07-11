@@ -141,7 +141,6 @@
     </div>
     {#if view == 'list' || view == 'compact'}
       <PostMediaCompact
-        {view}
         bind:post={post.post}
         bind:type
         class="{$userSettings.leftAlign
