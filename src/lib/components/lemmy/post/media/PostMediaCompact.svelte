@@ -16,14 +16,43 @@
   export let type: MediaType = 'none'
 </script>
 
-<div
-  class="w-24 sm:w-32 h-24 relative group/media {$$props.class ?? ''}"
-  style={$$props.style ?? ''}
->
-  {#if post.alt_text}
-    <Popover
-      openOnHover
-      placement={$userSettings.leftAlign ? 'bottom-start' : 'bottom-end'}
+<!-- 
+  @component
+  Thumbnails for compact and list view posts.
+-->
+  <div
+    class="w-24 sm:w-32 h-24 relative group/media {$$props.class ?? ''}"
+    style={$$props.style ?? ''}
+  >
+    {#if post.alt_text}
+      <Popover
+        openOnHover
+        placement={$userSettings.leftAlign ? 'bottom-start' : 'bottom-end'}
+      >
+        <Material
+          slot="target"
+          padding="none"
+          rounding="full"
+          elevation="high"
+          class="w-max absolute bottom-0 left-0 py-0.5 px-1.5 m-1 font-bold"
+        >
+          ALT
+        </Material>
+        <div class="max-w-sm">
+          {post.alt_text}
+        </div>
+      </Popover>
+    {/if}
+    <svelte:element
+      this={!$userSettings.expandImages || type != 'image' ? 'a' : 'button'}
+      href={postLink(post)}
+      on:click={() => {
+        if (type == 'image') {
+          showImage(bestImageURL(post, false, 2048))
+        }
+      }}
+      role="button"
+      tabindex="0"
     >
       <Material
         slot="target"

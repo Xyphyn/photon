@@ -96,10 +96,4 @@ export function addFavorite(item: Community, add: boolean = true) {
   }
   p.favorites = favs
   profileData.update(() => pd)
-  profile.update((p) => ({
-    ...p,
-    favorites: favs,
-    id: p!.id,
-    instance: p!.instance,
-  }))
 }

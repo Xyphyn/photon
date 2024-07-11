@@ -1,4 +1,4 @@
-import { profile, type Profile } from '$lib/auth.js'
+import { profile, profileData, type Profile } from '$lib/auth.js'
 import { getClient } from '$lib/lemmy.js'
 import { trycatch } from '$lib/util.js'
 import type { Community, MyUserInfo, PersonView } from 'lemmy-js-client'
@@ -22,30 +22,19 @@ export const addSubscription = (
   community: Community,
   subscribe: boolean = true
 ) => {
-  const p = get(profile)
+  const pd = get(profileData)
+  const p = pd.profiles.find((p) => p.id == pd.profile)
 
   if (!p?.user) return
 
   if (subscribe) {
-    profile.set({
-      ...p,
-      user: {
-        ...p.user,
-        follows: [
-          ...p.user.follows,
-          {
-            community: community,
-            follower: p.user.local_user_view.person,
-          },
-        ],
-      },
-    })
+    profileData.set(pd)
   } else {
     p.user.follows.splice(
       p.user.follows.findIndex((i) => i.community.id == community.id),
       1
     )
-    profile.set(p)
+    profileData.set(pd)
   }
 }
 

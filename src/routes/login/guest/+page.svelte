@@ -34,10 +34,6 @@
         username: form.username,
       }
 
-      profile.set({
-        ...newProfile,
-      })
-
       return {
         profile: id,
         profiles: [...pd.profiles, newProfile],

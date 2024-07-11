@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { profile, profileData } from '$lib/auth.js'
+  import { notifications, profile, profileData } from '$lib/auth.js'
   import Link from '$lib/components/input/Link.svelte'
   import ShieldIcon from '$lib/components/lemmy/moderation/ShieldIcon.svelte'
   import {
@@ -112,7 +112,7 @@
         class="relative"
         isSelectedFilter={(path) => path.startsWith('/admin')}
       >
-        {#if ($profile?.user?.notifications.applications ?? 0) > 0}
+        {#if ($notifications.applications ?? 0) > 0}
           <div
             class="rounded-full w-2 h-2 bg-red-500 absolute -top-1 -left-1"
           />
@@ -125,7 +125,7 @@
         label={$t('nav.moderation')}
         class="relative"
       >
-        {#if ($profile?.user?.notifications.reports ?? 0) > 0}
+        {#if ($notifications.reports ?? 0) > 0}
           <div
             class="rounded-full w-2 h-2 bg-red-500 absolute -top-1 -left-1"
           />

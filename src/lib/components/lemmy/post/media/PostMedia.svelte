@@ -19,10 +19,17 @@
   export let post: Post
   export let type: MediaType = 'none'
   export let opened: boolean | undefined = undefined
+  export let blur: boolean = post.nsfw && $userSettings.nsfwBlur
 
   let showAltText = false
 </script>
 
+<!-- 
+  @component
+  This component will show either
+  - A media item (pictures, videos) (large form factor posts only)
+  - Embed link/card.
+-->
 {#if type == 'image'}
   {#if view == 'card' || view == 'cozy'}
     <!--disabled preloads here since most people will hover over every image while scrolling-->
@@ -39,9 +46,9 @@
     >
       <!-- svelte-ignore a11y-missing-attribute -->
       <img
-        src={bestImageURL(post, false, 256)}
+        src={bestImageURL(post, false, 64)}
         loading="lazy"
-        class="-z-10 absolute top-0 left-0 w-full h-full object-cover blur-xl opacity-50"
+        class="-z-10 absolute top-0 left-0 w-full h-full object-cover blur-xl opacity-40"
       />
       <picture class="max-h-[inherit]">
         <source
@@ -68,7 +75,7 @@
                   transition-opacity duration-300 object-contain mx-auto"
           width={512}
           height={300}
-          class:blur-3xl={post.nsfw && $userSettings.nsfwBlur}
+          class:blur-3xl={blur}
           alt={post.alt_text ?? ''}
         />
       </picture>

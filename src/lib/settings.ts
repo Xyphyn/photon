@@ -88,8 +88,14 @@ interface Settings {
     compactFeatured: boolean
     showHidden: boolean
   }
+  infiniteScroll: boolean
   language: string | null
+  useRtl: boolean
   translator: string | undefined
+  parseTags: boolean
+  tagRules: {
+    [key: string]: 'hide' | 'blur'
+  }
 }
 
 export const defaultSettings: Settings = {
@@ -155,14 +161,22 @@ export const defaultSettings: Settings = {
     compactFeatured: toBool(env.PUBLIC_COMPACT_FEATURED) ?? true,
     showHidden: false,
   },
+  infiniteScroll: true,
   language: env.PUBLIC_LANGUAGE ?? null,
+  useRtl: false,
   translator: env.PUBLIC_TRANSLATOR ?? undefined,
+  parseTags: true,
+  tagRules: {
+    cw: 'blur',
+    nsfl: 'blur',
+    nsfw: 'blur',
+  },
 }
 
 export const userSettings = writable(defaultSettings)
 
 const migrate = (settings: any): Settings => {
-  if (typeof settings.moderation.removalReasonPreset == 'string') {
+  if (typeof settings?.moderation?.removalReasonPreset == 'string') {
     settings.moderation.presets = [
       {
         title: 'Preset 1',

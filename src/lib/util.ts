@@ -5,7 +5,8 @@ import { get } from 'svelte/store'
 import type { SubscribedType } from 'lemmy-js-client'
 import { page } from '$app/stores'
 import { feature } from '$lib/version.js'
-import { client, site } from '$lib/lemmy.js'
+import { client } from '$lib/lemmy.js'
+import { site } from './lemmy'
 
 export const findClosestNumber = (numbers: number[], target: number): number =>
   numbers.reduce((prev, curr) =>

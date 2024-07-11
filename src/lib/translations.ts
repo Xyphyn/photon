@@ -28,9 +28,24 @@ const config: Config = {
       loader: async () => (await import('./i18n/de.json')).default,
     },
     {
+      locale: 'he',
+      key: '',
+      loader: async () => (await import('./i18n/he.json')).default,
+    },
+    {
       locale: 'pt',
       key: '',
       loader: async () => (await import('./i18n/pt.json')).default,
+    },
+    {
+      locale: 'zh-Hans',
+      key: '',
+      loader: async () => (await import('./i18n/zh-Hans.json')).default,
+    },
+    {
+      locale: 'zh-Hant',
+      key: '',
+      loader: async () => (await import('./i18n/zh-Hant.json')).default,
     },
   ],
   fallbackLocale: 'en',

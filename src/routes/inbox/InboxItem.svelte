@@ -2,7 +2,7 @@
   import Comment from '$lib/components/lemmy/comment/Comment.svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import { getClient } from '$lib/lemmy.js'
-  import { profile } from '$lib/auth.js'
+  import { notifications, profile } from '$lib/auth.js'
   import {
     ArrowUturnLeft,
     ArrowUturnUp,
@@ -58,7 +58,7 @@
     }
 
     item.read = isRead
-    if ($profile.user) $profile.user.notifications.inbox += isRead ? -1 : 1
+    if ($profile.user) $notifications.inbox += isRead ? -1 : 1
 
     loading = false
   }

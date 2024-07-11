@@ -12,12 +12,17 @@
     TextInput,
     toast,
     Popover,
+    Modal,
+    TextArea,
   } from 'mono-svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import Link from '$lib/components/input/Link.svelte'
   import {
+    ArrowDownTray,
     ArrowPath,
     ArrowRight,
+    ArrowUpOnSquare,
+    ArrowUpTray,
     ChatBubbleOvalLeftEllipsis,
     CheckCircle,
     ChevronDown,
@@ -35,31 +40,90 @@
   import { DOMAIN_REGEX_FORMS, removeItem } from '$lib/util.js'
   import Section from './Section.svelte'
   import ToggleSetting from './ToggleSetting.svelte'
-  import { locales, t } from '$lib/translations'
+  import { locale, locales, t } from '$lib/translations'
   import { defaultLinks, iconOfLink } from '$lib/components/ui/navbar/link'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
   let pin: string = ''
+  let importing = false
+  let importText = ''
 </script>
 
 <svelte:head>
   <title>{$t('settings.title')}</title>
 </svelte:head>
 
-<h1 class="text-3xl font-bold flex justify-between">
-  {$t('settings.title')}
-  <Button
-    size="square-md"
-    on:click={() => {
-      toast({
-        content: $t('toast.resetSettings'),
-        action: () => ($userSettings = defaultSettings),
-      })
+{#if importing}
+  <Modal
+    bind:open={importing}
+    on:action={() => {
+      try {
+        if (importText == '') {
+          throw new Error('Import is empty')
+        }
+        const parsed = JSON.parse(importText)
+        const merged = { ...defaultSettings, ...parsed }
+
+        $userSettings = merged
+
+        toast({ content: $t('toast.settingsImport'), type: 'success' })
+        importing = false
+      } catch (err) {
+        // @ts-ignore
+        toast({ content: err, type: 'error' })
+      }
     }}
-    class="font-normal"
+    title={$t('routes.theme.import')}
+    action={$t('routes.theme.import')}
   >
-    <Icon src={ArrowPath} mini size="16" slot="prefix" />
-  </Button>
-</h1>
+    <TextArea bind:value={importText} style="font-family: monospace;" />
+  </Modal>
+{/if}
+
+<Header class="text-3xl font-bold flex justify-between">
+  {$t('settings.title')}
+  <div class="flex items-center">
+    <Button
+      size="square-lg"
+      on:click={() => {
+        importText = ''
+        importing = true
+      }}
+      class="font-normal"
+      title={$t('settings.import')}
+      roundingSide="left"
+    >
+      <Icon src={ArrowDownTray} mini size="18" slot="prefix" />
+    </Button>
+    <Button
+      size="square-lg"
+      on:click={() => {
+        const json = JSON.stringify($userSettings)
+        navigator?.clipboard?.writeText?.(json)
+        toast({ content: $t('toast.copied') })
+      }}
+      class="font-normal"
+      title={$t('settings.export')}
+      rounding="none"
+    >
+      <Icon src={ArrowUpTray} mini size="18" slot="prefix" />
+    </Button>
+    <Button
+      size="square-lg"
+      on:click={() => {
+        toast({
+          content: $t('toast.resetSettings'),
+          action: () => ($userSettings = defaultSettings),
+        })
+      }}
+      class="font-normal"
+      title={$t('settings.reset')}
+      roundingSide="right"
+    >
+      <Icon src={ArrowPath} mini size="18" slot="prefix" />
+    </Button>
+  </div>
+</Header>
 
 <div class="flex flex-col gap-4" style="scroll-behavior: smooth;">
   <Section title={$t('settings.navigation.title')}>
@@ -135,32 +199,40 @@
   </Section>
 
   <Section title={$t('settings.app.title')}>
-    <Setting>
-      <span slot="title" class="inline-flex items-center gap-2">
-        {$t('settings.app.lang.title')}
-        <Badge>{$t('settings.beta')}</Badge>
-      </span>
-      <p slot="description">
-        {$t('settings.app.lang.description')}
-        <Note>
-          {$t('settings.app.lang.note')}
-        </Note>
-        <Link href="/translators" highlight class="text-base font-semibold">
-          {$t('settings.app.lang.credits')}
-        </Link>
-      </p>
-      <Select bind:value={$userSettings.language}>
-        <option value={null}>{$t('settings.app.lang.auto')}</option>
-        {#each $locales as locale}
-          <option value={locale}>
-            {$t(`settings.app.lang.${locale}`, { default: locale })}
-          </option>
-        {/each}
-        {#if $userSettings.debugInfo}
-          <option value="dev">Raw Strings</option>
-        {/if}
-      </Select>
-    </Setting>
+    <div class="flex flex-col gap-2">
+      <Setting>
+        <span slot="title" class="inline-flex items-center gap-2">
+          {$t('settings.app.lang.title')}
+          <Badge>{$t('settings.beta')}</Badge>
+        </span>
+        <p slot="description">
+          {$t('settings.app.lang.description')}
+          <Note>
+            {$t('settings.app.lang.note')}
+          </Note>
+          <Link href="/translators" highlight class="text-base font-semibold">
+            {$t('settings.app.lang.credits')}
+          </Link>
+        </p>
+        <Select bind:value={$userSettings.language}>
+          <option value={null}>{$t('settings.app.lang.auto')}</option>
+          {#each $locales as locale}
+            <option value={locale}>
+              {$t(`settings.app.lang.${locale}`, { default: locale })}
+            </option>
+          {/each}
+          {#if $userSettings.debugInfo}
+            <option value="dev">Raw Strings</option>
+          {/if}
+        </Select>
+      </Setting>
+      {#if $locale == 'he'}
+        <ToggleSetting
+          bind:checked={$userSettings.useRtl}
+          title={$t('settings.app.lang.useRtl.title')}
+        ></ToggleSetting>
+      {/if}
+    </div>
     <Setting>
       <span slot="title">{$t('settings.app.view.title')}</span>
       <ViewSelect showLabel={false} />
@@ -214,6 +286,12 @@
         </div>
       </div>
     </Setting>
+    <ToggleSetting
+      beta
+      bind:checked={$userSettings.infiniteScroll}
+      title={$t('settings.app.infiniteScroll.title')}
+      description={$t('settings.app.infiniteScroll.description')}
+    />
     <ToggleSetting
       bind:checked={$userSettings.openLinksInNewTab}
       title={$t('settings.app.postsInNewTab.title')}
@@ -287,6 +365,35 @@
         pattern={DOMAIN_REGEX_FORMS}
       />
     </Setting>
+    <div>
+      <ToggleSetting
+        title={$t('settings.app.titleTags.title')}
+        description={$t('settings.app.titleTags.description')}
+        bind:checked={$userSettings.parseTags}
+      />
+      <Setting>
+        <svelte:fragment slot="title">
+          {$t('settings.app.titleTags.rules.title')}
+        </svelte:fragment>
+        <div
+          class="flex flex-col divide-y [&>*]:py-2 items-end divide-slate-200 dark:divide-zinc-800"
+        >
+          {#each Object.keys($userSettings.tagRules) as rule}
+            <div class="flex flex-row flex-wrap items-center gap-2">
+              <span class="text-lg font-medium">{rule}</span>
+              <MultiSelect
+                bind:selected={$userSettings.tagRules[rule]}
+                options={['blur', 'hide']}
+                optionNames={[
+                  $t('settings.app.titleTags.rules.blur'),
+                  $t('settings.app.titleTags.rules.hide'),
+                ]}
+              />
+            </div>
+          {/each}
+        </div>
+      </Setting>
+    </div>
   </Section>
 
   <Section title={$t('settings.embeds.title')}>

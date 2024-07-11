@@ -12,18 +12,19 @@ export const bestImageURL = (
   compact: boolean = true,
   width: number = 1024
 ) => {
-  if (width > 1024) {
-    if (post.url) return `${post.url}?format=webp`
-    else if (post.thumbnail_url) return `${post.thumbnail_url}?format=webp`
-  }
+  let fetchWidth =
+    width > 1024
+      ? // -1 disables a small thumbnail
+        -1
+      : // set width to 512 if compact
+      compact
+      ? 512
+      : // otherwise, just use the original width
+        width
 
-  if (compact && post.thumbnail_url)
-    return `${post.thumbnail_url}?thumbnail=256&format=webp`
-  else if (compact && post.url) return `${post.url}?thumbnail=256&format=webp`
-
-  if (post.url) return `${post.url}?thumbnail=${width}&format=webp`
-  else if (post.thumbnail_url)
-    return `${post.thumbnail_url}?thumbnail=${width}&format=webp`
+  if (post.thumbnail_url)
+    return optimizeImageURL(post.thumbnail_url, fetchWidth)
+  else if (post.url) return optimizeImageURL(post.url, fetchWidth)
 
   return post.url ?? ''
 }
@@ -34,11 +35,16 @@ export const optimizeImageURL = (
 ): string => {
   try {
     const url = new URL(urlStr)
+
     url.searchParams.append('format', 'webp')
-    url.searchParams.append(
-      'thumbnail',
-      findClosestNumber([128, 256, 512, 1024], width).toString()
-    )
+
+    if (width > 0) {
+      url.searchParams.append(
+        'thumbnail',
+        findClosestNumber([128, 256, 512, 728, 1024, 1536], width).toString()
+      )
+    }
+
     return url.toString()
   } catch (e) {
     console.log(e)

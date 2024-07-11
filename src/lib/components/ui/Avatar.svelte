@@ -3,7 +3,7 @@
   import { createAvatar } from '@dicebear/core'
   import * as initials from '@dicebear/initials'
 
-  const sizes = [48, 64, 128, 256, 512]
+  const sizes = [16, 32, 48, 64, 128, 256, 512]
 
   export let url: string | undefined
   export let alt: string = ''

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { profile } from '$lib/auth.js'
+  import { notifications, profile } from '$lib/auth.js'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import { Material, toast } from 'mono-svelte'
@@ -60,7 +60,7 @@
       application.admin = $profile.user!.local_user_view.person
       application.registration_application.deny_reason = denyReason
 
-      $profile.user!.notifications.applications -= 1
+      $notifications.applications -= 1
     } catch (err) {
       toast({
         content: err as any,

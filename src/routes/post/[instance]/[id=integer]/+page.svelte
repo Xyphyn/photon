@@ -42,22 +42,25 @@
   import Expandable from '$lib/components/ui/Expandable.svelte'
   import { Popover } from 'mono-svelte'
   import { t } from '$lib/translations.js'
+  import { createWindowVirtualizer } from '@tanstack/svelte-virtual'
 
   export let data
 
   let post = data.post
 
-  // onMount(async () => {
-  //   if (
-  //     !(post.post_view.read && $userSettings.markPostsAsRead) &&
-  //     $profile?.jwt
-  //   ) {
-  //     getClient().markPostAsRead({
-  //       read: $userSettings.markPostsAsRead,
-  //       post_id: post.post_view.post.id,
-  //     })
-  //   }
-  // })
+  onMount(async () => {
+    if (
+      !(post.post_view.read && $userSettings.markPostsAsRead) &&
+      $profile?.jwt
+    ) {
+      getClient().markPostAsRead({
+        read: $userSettings.markPostsAsRead,
+        post_ids: [post.post_view.post.id],
+        // @ts-ignore
+        post_id: post.post_view.post.id,
+      })
+    }
+  })
 
   afterNavigate(async () => {
     // reactivity hack
@@ -110,7 +113,24 @@
   $: remoteView =
     $page.params.instance?.toLowerCase() != $instance.toLowerCase()
 
-  const test = 'wow'
+  const virtualizer = createWindowVirtualizer({
+    count: 0,
+    estimateSize: () => 50,
+  })
+
+  onMount(async () => {
+    const comments = await data.comments
+
+    $virtualizer.setOptions({ count: comments.comments.length })
+  })
+
+  let virtualItemEls: HTMLElement[] = []
+
+  $: items = $virtualizer.getVirtualItems()
+  $: {
+    if (virtualItemEls.length)
+      virtualItemEls.forEach((el) => $virtualizer.measureElement(el))
+  }
 </script>
 
 <svelte:head>
@@ -188,6 +208,7 @@
           moderator: post.post_view.creator_is_moderator,
         }}
         published={publishedToDate(post.post_view.post.published)}
+        bind:title={post.post_view.post.name}
       />
     </div>
     <Button on:click={() => history.back()} size="square-md">
@@ -315,7 +336,7 @@ flex-wrap gap-4 sticky top-20 w-full box-border z-20 mt-4"
       {/each}
     </div>
   {:then comments}
-    {#if $profile?.user}
+    {#if $profile?.jwt}
       <CommentForm
         postId={post.post_view.post.id}
         on:comment={(comment) =>
@@ -325,7 +346,7 @@ flex-wrap gap-4 sticky top-20 w-full box-border z-20 mt-4"
           ])}
         locked={(post.post_view.post.locked &&
           !(
-            $profile?.user.local_user_view.local_user.admin ||
+            $profile?.user?.local_user_view.local_user.admin ||
             $profile?.user?.moderates
               .map((c) => c.community.id)
               .includes(data.post.community_view.community.id)

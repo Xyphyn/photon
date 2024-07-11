@@ -14,7 +14,7 @@
     UserCircle,
     UserGroup,
   } from 'svelte-hero-icons'
-  import { profile, profileData } from '$lib/auth.js'
+  import { notifications, profile, profileData } from '$lib/auth.js'
   import { userSettings } from '$lib/settings.js'
   import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
   import CommunityList from '$lib/components/ui/sidebar/CommunityList.svelte'
@@ -70,12 +70,12 @@
     <SidebarButton icon={Inbox} href="/inbox">
       <span slot="label" class="flex items-center gap-2">
         {$t('profile.inbox')}
-        {#if $profile?.user?.notifications.inbox}
+        {#if $notifications.inbox}
           <Badge
             class="w-5 h-5 !p-0 grid place-items-center ml-auto"
             color="red-subtle"
           >
-            {$profile?.user?.notifications.inbox}
+            {$notifications.inbox}
           </Badge>
         {/if}
       </span>

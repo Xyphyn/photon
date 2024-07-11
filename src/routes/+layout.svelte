@@ -27,21 +27,24 @@
   import { site } from '$lib/lemmy.js'
   import ExpandableImage from '$lib/components/ui/ExpandableImage.svelte'
   import { LINKED_INSTANCE_URL } from '$lib/instance'
+  import { locale } from '$lib/translations'
 
   nProgress.configure({
     minimum: 0.4,
     trickleSpeed: 200,
-    showSpinner: false,
     easing: 'ease-out',
     speed: 300,
   })
 
+  let barTimeout: any = 0
+
   $: {
     if (browser) {
       if ($navigating) {
-        nProgress.start()
+        barTimeout = setTimeout(() => nProgress.start(), 100)
       }
       if (!$navigating) {
+        clearTimeout(barTimeout)
         nProgress.done()
       }
     }
@@ -105,6 +108,7 @@
   Skip Navigation
 </Button>
 <Shell
+  dir={$locale == 'he' && $userSettings.useRtl ? 'rtl' : 'ltr'}
   class="min-h-screen {$userSettings.font == 'inter'
     ? 'font-inter'
     : $userSettings.font == 'system'

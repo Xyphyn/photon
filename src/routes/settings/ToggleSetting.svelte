@@ -11,6 +11,7 @@
   export let title: string
   export let description: string | undefined = undefined
   export let checked: boolean = false
+  export let beta = false
 
   export let supportedPlatforms = {
     desktop: true,
@@ -20,25 +21,30 @@
 </script>
 
 <div class="flex flex-col w-full justify-between gap-2 max-w-full">
-  {#if Object.values(supportedPlatforms).some((v) => v == false)}
+  {#if Object.values(supportedPlatforms).some((v) => v == false) || beta}
     <div class="flex items-center gap-2 flex-wrap">
-      {#if supportedPlatforms.desktop}
-        <Badge>
-          <Icon src={ComputerDesktop} micro size="14" slot="icon" />
-          {$t('settings.desktop')}
-        </Badge>
+      {#if beta}
+        <Badge>Beta</Badge>
       {/if}
-      {#if supportedPlatforms.tablet}
-        <Badge>
-          <Icon src={DeviceTablet} micro size="14" slot="icon" />
-          {$t('settings.tablet')}
-        </Badge>
-      {/if}
-      {#if supportedPlatforms.mobile}
-        <Badge>
-          <Icon src={DevicePhoneMobile} micro size="14" slot="icon" />
-          {$t('settings.mobile')}
-        </Badge>
+      {#if Object.values(supportedPlatforms).some((v) => v == false)}
+        {#if supportedPlatforms.desktop}
+          <Badge>
+            <Icon src={ComputerDesktop} micro size="14" slot="icon" />
+            {$t('settings.desktop')}
+          </Badge>
+        {/if}
+        {#if supportedPlatforms.tablet}
+          <Badge>
+            <Icon src={DeviceTablet} micro size="14" slot="icon" />
+            {$t('settings.tablet')}
+          </Badge>
+        {/if}
+        {#if supportedPlatforms.mobile}
+          <Badge>
+            <Icon src={DevicePhoneMobile} micro size="14" slot="icon" />
+            {$t('settings.mobile')}
+          </Badge>
+        {/if}
       {/if}
     </div>
   {/if}

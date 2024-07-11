@@ -1,3 +1,39 @@
+<script lang="ts" context="module">
+  export interface Tag {
+    content: string
+    color?: string
+    icon?: IconSource
+  }
+
+  export const textToTag: Map<string, Tag> = new Map<string, Tag>([
+    ['OC', { content: 'OC', color: '#03A8F240' }],
+    ['NSFL', { content: 'NSFL', color: '#ff000040' }],
+    ['CW', { content: 'CW', color: '#ff000040' }],
+  ])
+
+  export const parseTags = (
+    title?: string
+  ): { tags: Tag[]; title?: string } => {
+    if (!title) return { tags: [] }
+
+    let extracted: Tag[] = []
+
+    title = title.replace(/\[(.*?)\]/g, (match, content) => {
+      extracted.push(
+        textToTag.get(content) ?? {
+          content: content,
+        }
+      )
+      return ''
+    })
+
+    return {
+      tags: extracted,
+      title: title,
+    }
+  }
+</script>
+
 <script lang="ts">
   import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
@@ -13,6 +49,7 @@
     LockClosed,
     Megaphone,
     Plus,
+    Tag,
     Trash,
   } from 'svelte-hero-icons'
   import { getInstance } from '$lib/lemmy.js'
@@ -22,8 +59,10 @@
   import { userSettings } from '$lib/settings'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import { t } from '$lib/translations'
+  import type { IconSource } from 'svelte-hero-icons'
 
   export let community: Community | undefined = undefined
+  export let showCommunity: boolean = true
   export let subscribed: SubscribedType | undefined = undefined
 
   export let user: Person | undefined = undefined
@@ -43,15 +82,29 @@
     moderator: false,
     admin: false,
   }
+
+  export let tags: Tag[] = []
+
+  $: {
+    if (title && tags.length == 0) {
+      const result = parseTags(title)
+      tags = result.tags
+      title = result.title
+    }
+  }
 </script>
 
+<!-- 
+  @component
+  This component will build two different things: a post's meta block and the title.
+-->
 <div
   class="grid w-full meta {community
     ? 'grid-rows-2'
     : 'grid-rows-1'} text-xs min-w-0 max-w-full"
   style={$$props.style ?? ''}
 >
-  {#if community}
+  {#if showCommunity && community}
     <Subscribe let:subscribe let:subscribing>
       <button
         on:click={async () => {
@@ -74,8 +127,8 @@
             class="absolute w-3.5 h-3.5 {subscribed == 'NotSubscribed'
               ? 'bg-primary-900 dark:bg-primary-100 text-white dark:text-black'
               : 'bg-primary-100 dark:bg-primary-900 text-black dark:text-white'} rounded-full ring-2 box-border
-            ring-slate-50 dark:ring-zinc-950
-            -bottom-1 right-1 grid place-items-center transition-all"
+            ring-slate-50 dark:ring-zinc-950 grid place-items-center transition-all
+            right-0 -translate-x-1 -translate-y-2"
           >
             <Icon
               src={subscribed == 'NotSubscribed' ? Plus : Check}
@@ -87,19 +140,19 @@
       </button>
     </Subscribe>
   {/if}
-  {#if community}
+  {#if showCommunity && community}
     <CommunityLink
       {community}
       style="grid-area: community;"
-      class="flex-shrink"
+      class="flex-shrink self-end"
     />
   {/if}
   <span
-    class="text-slate-600 dark:text-zinc-400 flex flex-row gap-2 items-center"
+    class="text-slate-600 dark:text-zinc-400 flex flex-row gap-2 items-center self-start"
     style="grid-area: stats;"
   >
     {#if user}
-      <UserLink avatarSize={20} {user} avatar={!community}>
+      <UserLink avatarSize={20} {user} avatar={!showCommunity}>
         <svelte:fragment slot="badges">
           {#if badges.moderator}
             <ShieldIcon filled width={14} class="text-green-500" />
@@ -115,9 +168,29 @@
     {/if}
   </span>
   <div
-    class="flex flex-row items-center self-center flex-wrap gap-2 [&>*]:flex-shrink-0 badges"
+    class="flex flex-row justify-end items-center self-center flex-wrap gap-2 [&>*]:flex-shrink-0 badges ml-2"
     style="grid-area: badges;"
   >
+    {#if tags}
+      {#each tags as tag}
+        <a
+          class="hover:brightness-110"
+          href="/search?community={community?.id}&q=[{tag.content}]&type=Posts"
+          style={tag.color ? `--tag-color: ${tag.color};` : ''}
+        >
+          <Badge class={tag.color ? 'badge-tag-color' : ''}>
+            <svelte:fragment slot="icon">
+              {#if tag.icon}
+                <Icon src={tag.icon} micro size="14" />
+              {:else}
+                <Icon src={Tag} micro size="14" />
+              {/if}
+            </svelte:fragment>
+            {tag.content}
+          </Badge>
+        </a>
+      {/each}
+    {/if}
     {#if badges.nsfw}
       <Badge label={$t('post.badges.nsfw')} color="red-subtle" allowIconOnly>
         <Icon src={ExclamationTriangle} size="14" micro slot="icon" />
@@ -180,9 +253,12 @@
     class:text-slate-600={$userSettings.markReadPosts && read}
     class:dark:text-zinc-400={$userSettings.markReadPosts && read}
     style="grid-area: title;"
+    data-sveltekit-preload-data="tap"
   >
     <Markdown source={title} inline noStyle class="leading-[1.3]"></Markdown>
   </a>
+{:else}
+  <div style="grid-area: title; margin: 0;"></div>
 {/if}
 
 <style>
@@ -193,6 +269,10 @@
       'avatar stats badges';
     gap: 0;
     grid-template-rows: auto auto;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: max-content minmax(0, auto) auto;
+  }
+
+  :global(.badge-tag-color) {
+    background-color: var(--tag-color) !important;
   }
 </style>
