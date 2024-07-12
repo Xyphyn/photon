@@ -50,7 +50,7 @@
       <a
         href={url}
         target="_blank"
-        class="-m-4 mb-auto sm:-mb-4 sm:ml-auto flex-shrink-0 sm:w-[30%] sm:max-w-60"
+        class="-m-4 mb-auto sm:-mb-4 sm:ml-auto flex-shrink-0 sm:w-1/3 sm:max-w-60"
       >
         <img
           src={optimizeImageURL(thumbnail_url, 256)}
