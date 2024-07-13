@@ -395,8 +395,11 @@
     "comment": {
         "reply": "Répondre",
         "actions": {
-            "link": "Copier le lien"
-        }
+            "link": "Copier le lien",
+            "label": "Actions"
+        },
+        "locked": "Cette publication est verrouillée.",
+        "more": "{{comments:number}} en plus"
     },
     "moderation": {
         "report": "Créer un signalement",
@@ -405,8 +408,30 @@
             "deleteData": "Suprimmer les données",
             "warning": "Cette option supprimera TOUTES les publications de cet utilisateur.",
             "expires": "Expire (UTC)",
-            "banFromCommunity": "Ban d'une communauté"
-        }
+            "banFromCommunity": "Ban d'une communauté",
+            "unbanning": "Débannir l'utilisateur",
+            "unbanFromCommunity": "Débannir d'une communauté"
+        },
+        "removeSubmission": {
+            "titleRestore": "Rétablissant la soumission",
+            "withReason": "Répondez avec une raison",
+            "comment": "Commentaire",
+            "message": "Message",
+            "title": "Enlevant la Soumission",
+            "failEmptyReply": "Votre reponse ne peux pas être vide si l'option \"repondre avec une raison\" est choisie."
+        },
+        "reportModal": {
+            "title": "Signaler"
+        },
+        "reason": "Raison",
+        "remove": "Retirer",
+        "restore": "Restaurer",
+        "label": "Modération",
+        "labelInstanceOnly": "Modération (Instance seulement)",
+        "feature": "Présenter",
+        "unfeature": "Retirer la présentation",
+        "unlock": "Déverrouiller",
+        "lock": "Verrouiller"
     },
     "cards": {
         "site": {
@@ -460,6 +485,59 @@
                 "delete": "Supprimer",
                 "markUnread": "Marquer comme non lu"
             }
+        },
+        "badges": {
+            "nsfw": "NSFW",
+            "locked": "Verrouillée",
+            "featured": "Présenté",
+            "removed": "Enlevé",
+            "deleted": "Supprimé",
+            "saved": "Sauvegardé"
         }
+    },
+    "common": {
+        "back": "Revenir en arrière",
+        "next": "Suivant",
+        "refresh": "Actualiser",
+        "jump": "Passer",
+        "save": "Sauvegarder",
+        "enabled": "Activé",
+        "disabled": "Désactivé",
+        "enable": "Activer",
+        "disable": "Désactiver",
+        "add": "Ajouter",
+        "cancel": "Annuler",
+        "send": "Envoyer",
+        "debug": "Déboguer"
+    },
+    "message": {
+        "success": "Succès",
+        "error": "Erreur"
+    },
+    "toast": {
+        "noComments": "L'API n'a pas renvoyé de commentaire.",
+        "loginVoteGate": "Vous devez être connecté pour voter.",
+        "blockedCommunity": "Communauté bloquée.",
+        "unblockedCommunity": "Communauté debloquée.",
+        "blockedInstance": "Instance bloquée.",
+        "updatedCommunity": "Communauté mise a jour.",
+        "invalidDateAbsolute": "La date doit être absolue. Réessayez.",
+        "bannedUser": "Cet utilisateur a été banni.",
+        "needCommunity": "Vous devez choisir une communauté.",
+        "invalidURL": "URL invalide",
+        "failGenerateTitle": "Il n'y avait aucun titre ou description pour ce URL.",
+        "restoredFromDraft": "Publication a étée retablie a partir du brouillon.",
+        "copied": "copié dans le presse-papier.",
+        "updatedSite": "Site mis a jour.",
+        "failCSV": "La lecture du CSV a étée un echec",
+        "failFindUser": "Utilisateur n'a pas été trouvé.",
+        "addMod": "Modérateur ajouté.",
+        "failInstanceURL": "Erreur de connection, votre instance est peut-être en panne.",
+        "addAccount": "Compte ajouté.",
+        "sentMessage": "Message envoyé.",
+        "invalidDateBeforeCurrent": "La date est en avance de la date actuelle. Réessayez.",
+        "unbannedUser": "Cet utilisateur n'est plus banni.",
+        "logIn": "Vous êtes maintenant connecté!",
+        "generatedTitle": "Titre et corps généré a partir du url, voulez-vous revenir en arrière ?"
     }
 }
