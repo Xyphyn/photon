@@ -41,7 +41,10 @@ export const optimizeImageURL = (
     if (width > 0) {
       url.searchParams.append(
         'thumbnail',
-        findClosestNumber([128, 256, 512, 728, 1024, 1536], width).toString()
+        findClosestNumber(
+          [128, 196, 256, 512, 728, 1024, 1536],
+          width
+        ).toString()
       )
     }
 

@@ -56,7 +56,7 @@
   >
     {#if post.thumbnail_url || isImage(post.url)}
       <img
-        src={optimizeImageURL(post.thumbnail_url || post.url || '', 128)}
+        src={optimizeImageURL(post.thumbnail_url || post.url || '', 196)}
         loading="lazy"
         class="object-cover overflow-hidden bg-slate-100 dark:bg-zinc-800 rounded-xl h-24 w-24 sm:w-32
         border border-slate-200 dark:border-zinc-800 group-hover/media:border-slate-400
@@ -65,15 +65,15 @@
       />
       {#if type != 'image'}
         <div
-          class="relative w-7 h-7 bottom-8 left-1 rounded-lg text-slate-800 dark:text-zinc-200
+          class="absolute w-7 h-7 bottom-0 left-0 m-2 rounded-lg text-slate-800 dark:text-zinc-200
           backdrop-blur-sm bg-[#ffffff]/75 dark:bg-black/75 grid place-items-center"
         >
-          <Icon src={type == 'iframe' ? VideoCamera : Link} mini size="16" />
+          <Icon src={type == 'iframe' ? VideoCamera : Link} micro size="16" />
         </div>
       {/if}
     {:else}
       <div
-        class="object-cover overflow-hidden bg-slate-100 dark:bg-zinc-800 rounded-xl h-24 w-24 sm:w-32
+        class="object-cover overflow-hidden bg-slate-50 dark:bg-zinc-900 rounded-xl h-24 w-24 sm:w-32
         border border-slate-200 dark:border-zinc-800 group-hover/media:border-slate-400
         group-hover/media:dark:border-zinc-600 transition-colors text-slate-400 dark:text-zinc-600 grid
         place-items-center"
