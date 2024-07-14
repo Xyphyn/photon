@@ -538,6 +538,11 @@
         "invalidDateBeforeCurrent": "La date est en avance de la date actuelle. Réessayez.",
         "unbannedUser": "Cet utilisateur n'est plus banni.",
         "logIn": "Vous êtes maintenant connecté!",
-        "generatedTitle": "Titre et corps généré a partir du url, voulez-vous revenir en arrière ?"
+        "generatedTitle": "Titre et corps généré a partir du url, voulez-vous revenir en arrière ?",
+        "resolveReport": "Le signalement a été résolu.",
+        "unresolveReport": "le signalement n'est plus résolu.",
+        "passwordReset": "Votre mot de passe est remis à zéro.",
+        "resetLink": "Un lien pour réinitialiser votre mot de passe a été envoyé a votre email.",
+        "fetchPostOnHome": "Tentative de recuperation de la publication sur l'instance de votre compte."
     }
 }
