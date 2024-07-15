@@ -27,7 +27,8 @@
             "donate": "Anneta",
             "instance": "Server",
             "app": "Äpp"
-        }
+        },
+        "admin": "Admin"
     },
     "account": {
         "login": "Logi sisse",
@@ -179,7 +180,9 @@
             }
         },
         "badges": {
-            "locked": "Lukustatud"
+            "locked": "Lukustatud",
+            "deleted": "Kustutatud",
+            "removed": "Kustutatud"
         }
     },
     "comment": {
