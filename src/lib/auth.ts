@@ -118,7 +118,7 @@ export let profile = derived<Writable<ProfileData>, Profile>(
             site.set(res?.site)
 
             profile.user = res?.user
-            profile.avatar = res?.user.local_user_view.person.avatar
+            profile.avatar = res?.user?.local_user_view.person.avatar
 
             checkInbox()
 
@@ -190,7 +190,7 @@ if (
       const result = await setUser(
         jwt,
         env.PUBLIC_INSTANCE_URL ?? '',
-        user?.user.local_user_view.person.name
+        user?.user?.local_user_view.person.name
       )
 
       if (result)
@@ -203,7 +203,7 @@ if (
   }
 }
 
-export async function setUser(jwt: string, inst: string, username: string) {
+export async function setUser(jwt: string, inst: string, username?: string) {
   try {
     new URL(instanceToURL(inst))
   } catch (err) {
@@ -248,7 +248,7 @@ export async function setUser(jwt: string, inst: string, username: string) {
 async function userFromJwt(
   jwt: string,
   instance: string
-): Promise<{ user: PersonData; site: GetSiteResponse } | undefined> {
+): Promise<{ user: PersonData | undefined; site: GetSiteResponse } | undefined> {
   const sitePromise = client({ instanceURL: instance, auth: jwt }).getSite()
 
   let timer = setTimeout(
@@ -273,7 +273,6 @@ async function userFromJwt(
   }
 
   const myUser = site.my_user
-  if (!myUser) return undefined
 
   return {
     user: myUser,
