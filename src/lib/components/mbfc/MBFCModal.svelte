@@ -68,8 +68,8 @@
 
 <Modal title={$t('post.actions.more.mediaBias')} {...$$restProps} bind:open>
   {#await import('./data.json')}
-    <div class="w-full h-64 flex justify-center items-center">
-      <Spinner width={32} />
+    <div class="w-full h-64 flex flex-col gap-2 justify-center items-center">
+      <Spinner width={48} />
       <span>{$t('post.actions.mediaBias.downloading')}</span>
     </div>
   {:then json}
