@@ -19,7 +19,7 @@
   export const shouldReload = (
     cache: CachedPosts | undefined,
     params: string,
-    instance: string
+    instance: string,
   ): boolean =>
     cache?.instance != instance || cache?.params.toString() != params
 </script>
@@ -57,7 +57,6 @@
 
     try {
       loading = true
-      console.log(`loading more with cursor ${data.cursor.next}`)
       const newPosts = await getClient()
         .getPosts({
           limit: limit,

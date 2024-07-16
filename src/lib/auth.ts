@@ -6,7 +6,6 @@ import { toast } from 'mono-svelte'
 import { DEFAULT_INSTANCE_URL, instance } from '$lib/instance.js'
 import { client, getClient } from '$lib/lemmy.js'
 import { site } from './lemmy'
-import { userSettings } from '$lib/settings.js'
 import { instanceToURL, moveItem } from '$lib/util.js'
 import {
   LemmyHttp,
@@ -18,7 +17,7 @@ import { derived, get, writable, type Writable } from 'svelte/store'
 import { MINIMUM_VERSION, versionIsSupported } from '$lib/version.js'
 import { browser } from '$app/environment'
 import { env } from '$env/dynamic/public'
-import type { ResumableItem } from './lemmy/item'
+import { t } from './translations'
 
 const getDefaultProfile = (): Profile => ({
   id: -1,
@@ -169,7 +168,7 @@ profileData.subscribe(async (pd) => {
         {
           id: 1,
           instance: DEFAULT_INSTANCE_URL,
-          username: 'Guest',
+          username: t.get('account.guest') || 'Guest',
         },
       ],
       profile: 1,
@@ -218,25 +217,23 @@ export async function setUser(jwt: string, inst: string, username: string) {
     })
   if (!user?.user) {
     toast({
-      content: 'Failed to fetch your user. Is your instance down?',
+      content: 'Failed to fetch your user.',
       type: 'error',
     })
-
-    return
   }
 
   instance.set(inst)
 
   profileData.update((pd) => {
     // too lazy to make a decent system
-    const id = Math.floor(Math.random() * 100000)
+    const id = Math.max(...pd.profiles.map(p => p.id)) + 1
 
     const newProfile: Profile = {
       id: id,
       instance: inst,
       jwt: jwt,
-      username: user.user.local_user_view.person.name,
-      avatar: user.user.local_user_view.person.avatar,
+      username: user?.user?.local_user_view.person.name,
+      avatar: user?.user?.local_user_view.person.avatar
     }
 
     return {
@@ -257,8 +254,9 @@ async function userFromJwt(
   let timer = setTimeout(
     () =>
       toast({
-        content: `It's taking a while to fetch your user. Is your instance down?`,
+        content: `Still loading your user data...`,
         type: 'warning',
+        loading: true
       }),
     5000
   )
@@ -288,21 +286,16 @@ export function resetProfile() {
 }
 
 export function deleteProfile(id: number) {
-  const pd = get(profileData)
+  profileData.update((pd) => {
+    const index = pd.profiles.findIndex((p) => p.id == id)
+    if (index <= -1) return pd
+  
+    pd.profiles.splice(index, 1)
 
-  const index = pd.profiles.findIndex((p) => p.id == id)
-  if (index <= -1) return
-
-  pd.profiles.splice(index, 1)
-
-  profileData.update((p) => ({
-    ...p,
-    profiles: pd.profiles,
-  }))
-
-  if (id == get(profile)?.id) {
-    resetProfile()
-  }
+    if (id == pd.profile) resetProfile()
+    
+    return pd
+  })
 }
 
 function serializeUser(user: Profile): Profile {

@@ -532,7 +532,8 @@
     "unblockUser": "Unblocked that user.",
     "purgeUser": "Purged that user.",
     "settingsImport": "Successfully imported settings",
-    "settingsImportWarning": "The imported settings don't seem valid. Are you sure you want to import this?"
+    "settingsImportWarning": "The imported settings don't seem valid. Are you sure you want to import this?",
+    "userLoading": "Still loading your user data..."
   },
   "settings": {
     "title": "Settings",
