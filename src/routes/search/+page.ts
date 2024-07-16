@@ -1,9 +1,10 @@
 import { profile } from '$lib/auth.js'
-import { getClient } from '$lib/lemmy.js'
+import { client, getClient } from '$lib/lemmy.js'
 import { getItemPublished } from '$lib/lemmy/item.js'
 import type {
   CommentView,
   CommunityView,
+  ListingType,
   PersonView,
   PostView,
   SearchResponse,
@@ -18,15 +19,16 @@ export async function load({ url, fetch }) {
   const community = Number(url.searchParams.get('community')) || undefined
   const sort = url.searchParams.get('sort') || 'New'
   const type = url.searchParams.get('type') || 'All'
+  const listing_type = url.searchParams.get('listing_type') as ListingType || 'All'
 
   if (query) {
-    const results = await getClient(undefined, fetch).search({
+    const results = await client({ func: fetch }).search({
       q: query,
       community_id: community ?? undefined,
       limit: 20,
       page: page,
       sort: (sort as SortType) || 'TopAll',
-      listing_type: 'All',
+      listing_type: listing_type,
       type_: (type as SearchType) ?? 'All',
     })
 
