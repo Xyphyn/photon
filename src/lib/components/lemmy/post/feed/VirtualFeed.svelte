@@ -12,18 +12,22 @@
   import { createWindowVirtualizer } from '@tanstack/svelte-virtual'
   import { afterNavigate, beforeNavigate } from '$app/navigation'
   import { _posts } from '../../../../../routes/+page.svelte'
+  import { combineCrossposts } from './crosspost'
 
   export let posts: PostView[]
   export let community: boolean = false
 
+  let combinedPosts = combineCrossposts(posts)
+  $: combinedPosts = combineCrossposts(posts)
+
   const virtualizer = createWindowVirtualizer({
-    count: posts.length,
+    count: combinedPosts.length,
     estimateSize: () => 150,
   })
 
-  $: if (posts.length)
+  $: if (combinedPosts.length)
     $virtualizer.setOptions({
-      count: posts.length,
+      count: combinedPosts.length,
     })
 
   let virtualItemEls: HTMLElement[] = []
@@ -90,15 +94,15 @@
             data-index={row.index}
             class="relative post-container"
           >
-            {#if posts[row.index]}
+            {#if combinedPosts[row.index]}
               <Post
                 hideCommunity={community}
-                view={(posts[row.index]?.post.featured_community ||
-                  posts[row.index]?.post.featured_local) &&
+                view={(combinedPosts[row.index]?.post.featured_community ||
+                  combinedPosts[row.index]?.post.featured_local) &&
                 $userSettings.posts.compactFeatured
                   ? 'compact'
                   : $userSettings.view}
-                post={posts?.[row.index]}
+                post={combinedPosts?.[row.index]}
                 class="transition-all duration-250"
                 on:hide={() => {
                   posts = posts.toSpliced(row.index, 1)

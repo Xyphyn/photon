@@ -12,64 +12,10 @@
   import { createWindowVirtualizer } from '@tanstack/svelte-virtual'
   import { afterNavigate, beforeNavigate } from '$app/navigation'
   import { _posts } from '../../../../../routes/+page.svelte'
-
-  type PostViewWithCrossposts = PostView & {
-    withCrossposts: true
-    crossposts: PostView[]
-  }
-  type PostViewWithoutCrossposts = PostView & { withCrossposts?: false }
+  import { combineCrossposts } from './crosspost'
 
   export let posts: PostView[]
   export let community: boolean = false
-
-  const addCrosspostProperty = (
-    post: PostView,
-    crossposts: PostView[]
-  ): PostViewWithCrossposts => ({
-    ...post,
-    crossposts: crossposts,
-    withCrossposts: true,
-  })
-
-  const combineCrossposts = (
-    posts: PostView[]
-  ): (PostViewWithCrossposts | PostViewWithoutCrossposts)[] => {
-    const urlMap = new Map<
-      string,
-      PostViewWithCrossposts | PostViewWithoutCrossposts
-    >()
-    const results: (PostViewWithCrossposts | PostViewWithoutCrossposts)[] = []
-    const seenUrls = new Set<string>()
-
-    posts?.forEach((post) => {
-      if (
-        !post ||
-        ($userSettings.hidePosts.deleted && post.post.deleted) ||
-        ($userSettings.hidePosts.removed && post.post.removed)
-      )
-        return
-      if (!post?.post?.url) {
-        results.push(post)
-        return
-      }
-
-      let existing = urlMap.get(post.post.url)
-      if (existing) {
-        existing.withCrossposts = true
-        if (existing.withCrossposts) {
-          existing.crossposts = [...(existing.crossposts || []), post]
-        }
-
-        urlMap.set(post.post.url, existing)
-      } else {
-        urlMap.set(post.post.url, post)
-        results.push(post)
-      }
-      seenUrls.add(post.post.url)
-    })
-
-    return results
-  }
 
   $: combinedPosts = combineCrossposts(posts)
 
