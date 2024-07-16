@@ -52,8 +52,11 @@
 
       const videoID = youtubeVideoID(inputUrl)
 
+      if ($userSettings.embeds.clickToView)
+        url.searchParams.set('autoplay', '1')
+
       return `https://${youtubeDomain(
-        $userSettings.embeds.youtube
+        $userSettings.embeds.youtube,
       )}/embed/${videoID}?${url.searchParams.toString()}`
     }
 
@@ -61,7 +64,7 @@
   }
 
   const typeData = (
-    type: IframeType
+    type: IframeType,
   ): {
     icon: IconSource
     text: string
@@ -99,7 +102,11 @@
 {#if opened}
   {#if type == 'video'}
     <!-- svelte-ignore a11y-media-has-caption -->
-    <video controls class="rounded-xl aspect-video">
+    <video
+      autoplay={$userSettings.embeds.clickToView}
+      controls
+      class="rounded-xl aspect-video"
+    >
       <source src={url} />
     </video>
   {:else}
