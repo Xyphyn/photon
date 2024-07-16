@@ -296,7 +296,7 @@
           )
         toast({ content: $t('toast.copied') })
       }}
-      class="flex-1 py-0"
+      class="flex-1 !py-0"
     >
       <Icon src={Share} width={16} mini slot="prefix" />
       {$t('post.actions.more.share')}
