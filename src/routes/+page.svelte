@@ -140,16 +140,14 @@
 </script>
 
 <div class="flex flex-col gap-4 max-w-full w-full min-w-0">
-  <header>
+  <header class="flex flex-col gap-4 relative">
     <Header>{$t('routes.frontpage.title')}</Header>
-  </header>
-  <div class="flex items-center gap-2">
-    <Location changeDefault selected={data.listingType} />
-    <Sort changeDefault selected={data.sort} />
-    <div class="max-[420px]:hidden">
+    <div class="flex items-center gap-2">
+      <Location changeDefault selected={data.listingType} />
+      <Sort changeDefault selected={data.sort} />
       <ViewSelect />
     </div>
-  </div>
+  </header>
 
   <svelte:component
     this={browser ? VirtualFeed : PostFeed}

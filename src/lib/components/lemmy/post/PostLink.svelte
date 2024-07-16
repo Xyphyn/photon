@@ -76,9 +76,11 @@
     {#if richURL}
       <div class="flex max-w-full overflow-hidden">
         {richURL.hostname}
-        <span class="text-slate-500 dark:text-zinc-500 whitespace-nowrap">
-          {richURL.pathname}
-        </span>
+        {#if richURL.pathname != '/'}
+          <span class="text-slate-500 dark:text-zinc-500 whitespace-nowrap">
+            {richURL.pathname}
+          </span>
+        {/if}
       </div>
     {:else}
       {url}
