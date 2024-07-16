@@ -9,6 +9,7 @@
     BugAnt,
     ChatBubbleOvalLeft,
     ChatBubbleOvalLeftEllipsis,
+    CheckBadge,
     EllipsisHorizontal,
     Eye,
     EyeSlash,
@@ -19,6 +20,7 @@
     Language,
     Newspaper,
     PencilSquare,
+    Scale,
     ServerStack,
     Share,
     Trash,
@@ -57,18 +59,19 @@
   import { t } from '$lib/translations'
   import { text } from '$lib/components/translate/translation'
   import Translation from '$lib/components/translate/Translation.svelte'
-  import { hidePost, postLink } from './helpers'
+  import { hidePost, postLink, type MediaType } from './helpers'
   import { feature } from '$lib/version'
   import Switch from '$lib/components/input/Switch.svelte'
   import { instanceToURL } from '$lib/util'
 
   export let post: PostView
+  export let type: MediaType | undefined = undefined
+  export let debug: boolean = false
 
   const dispatcher = createEventDispatcher<{ edit: PostView; hide: boolean }>()
 
   let editing = false
   let saving = false
-  export let debug: boolean = false
 
   let fediseerOpen = false
   let fediseerData: Data | null = null
@@ -77,6 +80,11 @@
   let translating = false
 
   let localShare = false
+
+  let mediaBias = false
+
+  const stripSubdomain = (url: string) =>
+    new URL(url).hostname.split('.').slice(-2).join('.')
 </script>
 
 {#if fediseerData}
@@ -110,7 +118,15 @@
 {/if}
 
 {#if translating}
-  <Translation bind:open={translating} />
+  {#await import('$lib/components/translate/Translation.svelte') then { default: Translation }}
+    <Translation bind:open={translating} />
+  {/await}
+{/if}
+
+{#if mediaBias && post.post.url}
+  {#await import('$lib/components/mbfc/MBFCModal.svelte') then { default: MbfcModal }}
+    <MbfcModal domain={stripSubdomain(post.post.url)} bind:open={mediaBias} />
+  {/await}
 {/if}
 
 <div
@@ -179,6 +195,16 @@
     </Button>
   {/if}
 
+  {#if post.post.url && type == 'embed'}
+    <Button
+      size="square-md"
+      color="ghost"
+      on:click={() => (mediaBias = !mediaBias)}
+      title={$t('post.actions.more.mediaBias')}
+    >
+      <Icon src={CheckBadge} micro size="16" />
+    </Button>
+  {/if}
   <Menu
     placement="bottom-end"
     containerClass="overflow-auto max-h-[400px]"
@@ -217,7 +243,7 @@
 
         fediseerLoading = true
         const data = await fediseer.getInstanceInfo(
-          new URL(post.community.actor_id).hostname
+          new URL(post.community.actor_id).hostname,
         )
         fediseerData = data
         fediseerOpen = true
@@ -266,7 +292,7 @@
           navigator.clipboard.writeText(
             localShare
               ? `${instanceToURL(getInstance())}/post/${post.post.id}`
-              : post.post.ap_id
+              : post.post.ap_id,
           )
         toast({ content: $t('toast.copied') })
       }}
@@ -333,7 +359,7 @@
               post.post.deleted = await deleteItem(
                 post,
                 !post.post.deleted,
-                $profile.jwt
+                $profile.jwt,
               )
           }}
           color="danger-subtle"
@@ -352,7 +378,7 @@
               const hidden = await hidePost(
                 post.post.id,
                 !post.hidden,
-                $profile?.jwt
+                $profile?.jwt,
               )
               post.hidden = hidden
               if (hidden) {

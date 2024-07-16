@@ -95,7 +95,8 @@ interface Settings {
   parseTags: boolean
   tagRules: {
     [key: string]: 'hide' | 'blur'
-  }
+  },
+  downloadMbfc: boolean
 }
 
 export const defaultSettings: Settings = {
@@ -171,6 +172,7 @@ export const defaultSettings: Settings = {
     nsfl: 'blur',
     nsfw: 'blur',
   },
+  downloadMbfc: false
 }
 
 export const userSettings = writable(defaultSettings)

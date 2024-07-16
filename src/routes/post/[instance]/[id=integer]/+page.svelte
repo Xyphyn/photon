@@ -48,6 +48,8 @@
 
   let post = data.post
 
+  $: type = mediaType(post.post_view.post.url, 'cozy')
+
   onMount(async () => {
     if (
       !(post.post_view.read && $userSettings.markPostsAsRead) &&
@@ -81,7 +83,7 @@
       if (res.post) {
         removeToast(id)
         goto(`/post/${$instance}/${res.post.post.id}`, {}).then(() =>
-          removeToast(id)
+          removeToast(id),
         )
       }
     } catch (err) {
@@ -238,6 +240,7 @@
           content: 'The post was edited successfully.',
           type: 'success',
         })}
+      {type}
     />
   </div>
   {#if post.cross_posts?.length > 0}
@@ -369,7 +372,7 @@ flex-wrap gap-4 sticky top-20 w-full box-border z-20 mt-4"
           !(
             ($userSettings.hidePosts.deleted && c.comment.deleted) ||
             ($userSettings.hidePosts.removed && c.comment.removed)
-          )
+          ),
       )}
       isParent={true}
     />

@@ -67,17 +67,19 @@
   <Button
     href={url}
     target="_blank"
-    class="text-slate-700 dark:text-zinc-300 inline-flex items-center gap-1 text-xs overflow-hidden w-max max-w-full"
+    class="text-slate-900 dark:text-zinc-300 inline-flex items-center gap-1 text-xs overflow-hidden w-max max-w-full"
     size="sm"
     color="ghost"
     rounding="pill"
   >
     <Icon src={LinkIcon} size="14" mini slot="prefix" class="flex-shrink-0" />
     {#if richURL}
-      <div class="flex max-w-full overflow-hidden">
+      <div class="flex max-w-full overflow-hidden font-medium">
         {richURL.hostname}
         {#if richURL.pathname != '/'}
-          <span class="text-slate-500 dark:text-zinc-500 whitespace-nowrap">
+          <span
+            class="text-slate-500 dark:text-zinc-500 whitespace-nowrap font-normal"
+          >
             {richURL.pathname}
           </span>
         {/if}
