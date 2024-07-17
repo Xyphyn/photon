@@ -206,17 +206,6 @@
     </Button>
   {/if}
 
-  {#if post.post.url && type == 'embed'}
-    <Button
-      size="custom"
-      class={buttonSquare}
-      color="ghost"
-      on:click={() => (mediaBias = !mediaBias)}
-      title={$t('post.actions.more.mediaBias')}
-    >
-      <Icon src={CheckBadge} micro size="16" />
-    </Button>
-  {/if}
   <Menu
     placement="bottom-end"
     containerClass="overflow-auto max-h-[400px]"
@@ -293,6 +282,12 @@
         {post.read
           ? $t('post.actions.more.markUnread')
           : $t('post.actions.more.markRead')}
+      </MenuButton>
+    {/if}
+    {#if post.post.url && type == 'embed'}
+      <MenuButton on:click={() => (mediaBias = !mediaBias)}>
+        <Icon src={CheckBadge} micro size="16" slot="prefix" />
+        {$t('post.actions.more.mediaBias')}
       </MenuButton>
     {/if}
     <MenuButton
