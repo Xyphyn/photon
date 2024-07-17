@@ -222,7 +222,7 @@ export async function setUser(jwt: string, inst: string, username?: string) {
     })
   if (!user?.user) {
     toast({
-      content: 'Failed to fetch your user.',
+      content: 'Your instance\'s API did not return your user data.',
       type: 'error',
     })
   }
@@ -269,7 +269,7 @@ async function userFromJwt(
   const site = await sitePromise.then((r) => {
     clearTimeout(timer)
     return r
-  }).catch((e) => { toast({ content: `Failed to load user data. ${e}` }) })
+  }).catch((e) => { toast({ content: `Failed to contact the instance. ${e}` }) })
 
   if (!site) return
 
