@@ -19,6 +19,7 @@
   import { afterNavigate } from '$app/navigation'
   import { backOut } from 'svelte/easing'
   import { t } from '$lib/translations'
+  import { browser } from '$app/environment'
 
   export let nodes: CommentNodeI[]
   export let isParent: boolean
@@ -28,9 +29,7 @@
 
   onMount(() => {
     hydrated = true
-  })
-  afterNavigate(() => {
-    if (isParent && $page.url.hash) {
+    if (isParent && $page.url.hash && browser) {
       document.getElementById($page.url.hash)?.scrollIntoView({
         behavior: 'smooth',
         block: 'center',
@@ -74,7 +73,7 @@
       // 0.18.2 -> 0.18.3 broke this
       // so i'm adding this check
       const treeParent = tree.find(
-        (c) => c.comment_view.comment.id == parent.comment_view.comment.id
+        (c) => c.comment_view.comment.id == parent.comment_view.comment.id,
       )
 
       if (treeParent) {
