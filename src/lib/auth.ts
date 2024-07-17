@@ -57,7 +57,7 @@ interface ProfileData {
   defaultInstance?: string
 }
 
-interface PersonData extends MyUserInfo {}
+interface PersonData extends MyUserInfo { }
 
 interface Notifications {
   inbox: number
@@ -295,11 +295,11 @@ export function deleteProfile(id: number) {
   profileData.update((pd) => {
     const index = pd.profiles.findIndex((p) => p.id == id)
     if (index <= -1) return pd
-  
+
     pd.profiles.splice(index, 1)
 
     if (id == pd.profile) resetProfile()
-    
+
     return pd
   })
 }
@@ -318,7 +318,7 @@ instance.subscribe(async (i) => {
     const s = await new LemmyHttp(`https://${i}`).getSite()
 
     site.set(s)
-  } catch (e) {}
+  } catch (e) { }
 })
 
 export async function setUserID(id: number) {
