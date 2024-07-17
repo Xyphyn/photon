@@ -86,7 +86,7 @@
   color={view != 'card' ? 'none' : 'distinct'}
   class="post relative max-w-full min-w-0 w-full group cursor-pointer
   {view != 'card' ? 'bg-transparent !border-0' : 'p-5'} {view == 'compact'
-    ? 'py-4 list-type'
+    ? 'py-3 list-type compact-view'
     : view == 'list'
       ? 'py-5 list-type'
       : 'py-5 flex flex-col gap-2'} {$$props.class}"
@@ -122,6 +122,7 @@
     read={post.read}
     style="grid-area: meta;"
     tags={tags?.tags}
+    {view}
   >
     <slot name="badges" slot="badges" />
   </PostMeta>
@@ -147,6 +148,7 @@
           ? 'mr-2'
           : 'ml-2'} flex-shrink no-list-margin"
         style="grid-area: media;"
+        {view}
       />
     {/if}
   {/key}
@@ -154,7 +156,7 @@
     <PostBody body={post.post.body} {view} style="grid-area: body" />
   {/if}
   {#if actions}
-    <PostActions on:hide bind:post {type} style="grid-area: actions;" />
+    <PostActions on:hide bind:post {type} style="grid-area: actions;" {view} />
   {:else if view == 'compact'}
     <div class="flex flex-row items-center gap-2 text-sm">
       <Badge>
@@ -187,7 +189,13 @@
     grid-template-columns: var(--template-columns, 1fr auto);
   }
 
-  :global(.list-type > *:not(.no-list-margin):not(:first-child)) {
+  :global(.compact-view > *:not(.no-list-margin):not(:first-child)) {
+    margin-top: 0.3rem;
+  }
+
+  :global(
+      .list-type:not(.compact-view) > *:not(.no-list-margin):not(:first-child)
+    ) {
     margin-top: 0.5rem;
   }
 </style>

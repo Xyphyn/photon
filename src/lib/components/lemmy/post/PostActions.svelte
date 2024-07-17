@@ -44,7 +44,7 @@
   } from '$lib/lemmy/contentview.js'
   import { setSessionStorage } from '$lib/session.js'
   import { goto } from '$app/navigation'
-  import { userSettings } from '$lib/settings.js'
+  import { userSettings, type View } from '$lib/settings.js'
   import {
     Button,
     Menu,
@@ -66,6 +66,7 @@
 
   export let post: PostView
   export let type: MediaType | undefined = undefined
+  export let view: View = 'cozy'
   export let debug: boolean = false
 
   const dispatcher = createEventDispatcher<{ edit: PostView; hide: boolean }>()
@@ -85,6 +86,9 @@
 
   const stripSubdomain = (url: string) =>
     new URL(url).hostname.split('.').slice(-2).join('.')
+
+  $: buttonHeight = view == 'compact' ? 'h-[30px]' : 'h-8'
+  $: buttonSquare = view == 'compact' ? 'w-[30px] h-[30px]' : 'w-8 h-8'
 </script>
 
 {#if fediseerData}
@@ -130,7 +134,7 @@
 {/if}
 
 <div
-  class="flex flex-row gap-2 items-center !h-8 flex-shrink-0"
+  class="flex flex-row gap-2 items-center flex-shrink-0 {buttonHeight}"
   style={$$props.style ?? ''}
 >
   <PostVote
@@ -144,7 +148,7 @@
   <Button
     size="sm"
     href="/post/{getInstance()}/{post.post.id}"
-    class="!text-inherit h-8 px-3"
+    class="!text-inherit h-full px-3"
     target={$userSettings.openLinksInNewTab ? '_blank' : ''}
     title={$t('post.actions.comments')}
   >
@@ -162,14 +166,20 @@
     <Button
       on:click={() => (debug = true)}
       title="Debug"
-      size="square-md"
+      size="custom"
       color="ghost"
+      class={buttonSquare}
     >
       <Icon src={BugAnt} mini size="16" slot="prefix" />
     </Button>
   {/if}
   {#if $profile?.user && (amMod($profile.user, post.community) || isAdmin($profile.user))}
-    <ModerationMenu bind:item={post} community={post.community} />
+    <ModerationMenu
+      size="custom"
+      class={buttonSquare}
+      bind:item={post}
+      community={post.community}
+    />
   {/if}
 
   {#if $profile?.jwt}
@@ -180,7 +190,8 @@
         post.saved = await save(post, !post.saved, $profile?.jwt)
         saving = false
       }}
-      size="square-md"
+      size="custom"
+      class={buttonSquare}
       color="ghost"
       loading={saving}
       disabled={saving}
@@ -197,7 +208,8 @@
 
   {#if post.post.url && type == 'embed'}
     <Button
-      size="square-md"
+      size="custom"
+      class={buttonSquare}
       color="ghost"
       on:click={() => (mediaBias = !mediaBias)}
       title={$t('post.actions.more.mediaBias')}
@@ -216,7 +228,8 @@
       slot="target"
       title={$t('post.actions.more.label')}
       color="ghost"
-      size="square-md"
+      size="custom"
+      class={buttonSquare}
     >
       <Icon slot="prefix" src={EllipsisHorizontal} width={16} mini />
     </Button>

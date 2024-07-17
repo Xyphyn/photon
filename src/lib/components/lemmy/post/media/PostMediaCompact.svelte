@@ -6,7 +6,7 @@
     type MediaType,
   } from '$lib/components/lemmy/post/helpers.js'
   import { showImage } from '$lib/components/ui/ExpandableImage.svelte'
-  import { userSettings } from '$lib/settings.js'
+  import { userSettings, type View } from '$lib/settings.js'
   import { isImage } from '$lib/ui/image'
   import type { Post } from 'lemmy-js-client'
   import { Material, Popover } from 'mono-svelte'
@@ -14,6 +14,12 @@
 
   export let post: Post
   export let type: MediaType = 'none'
+  export let view: View = 'cozy'
+
+  const thumbnailSize = (view: View) =>
+    view == 'compact' ? 'w-22 h-22 sm:w-28' : 'w-24 h-24 sm:w-32'
+
+  $: size = thumbnailSize(view)
 </script>
 
 <!-- 
@@ -21,7 +27,7 @@
   Thumbnails for compact and list view posts.
 -->
 <div
-  class="w-24 sm:w-32 h-24 relative group/media {$$props.class ?? ''}"
+  class="{size} relative group/media {$$props.class ?? ''}"
   style={$$props.style ?? ''}
 >
   {#if post.alt_text}
@@ -48,7 +54,7 @@
     href={postLink(post)}
     on:click={() => {
       if (type == 'image') {
-        showImage(bestImageURL(post, false, 2048))
+        showImage(bestImageURL(post, false, -1))
       }
     }}
     role="button"
@@ -58,9 +64,8 @@
       <img
         src={optimizeImageURL(post.thumbnail_url || post.url || '', 196)}
         loading="lazy"
-        class="object-cover overflow-hidden bg-slate-100 dark:bg-zinc-800 rounded-xl h-24 w-24 sm:w-32
-        border border-slate-200 dark:border-zinc-800 group-hover/media:border-slate-400
-        group-hover/media:dark:border-zinc-600 transition-colors"
+        class="object-cover overflow-hidden bg-slate-100 dark:bg-zinc-800 rounded-xl
+        transition-colors {size}"
         alt={post.name}
       />
       {#if type != 'image'}
@@ -73,10 +78,10 @@
       {/if}
     {:else}
       <div
-        class="object-cover overflow-hidden bg-slate-50 dark:bg-zinc-900 rounded-xl h-24 w-24 sm:w-32
+        class="object-cover overflow-hidden bg-slate-50 dark:bg-zinc-900 rounded-xl
         border border-slate-200 dark:border-zinc-800 group-hover/media:border-slate-400
         group-hover/media:dark:border-zinc-600 transition-colors text-slate-400 dark:text-zinc-600 grid
-        place-items-center"
+        place-items-center {size}"
       >
         <Icon
           src={type == 'embed'

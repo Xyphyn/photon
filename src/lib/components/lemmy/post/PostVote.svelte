@@ -5,7 +5,7 @@
 
   export const shouldShowVoteColor = (
     vote: number,
-    type: 'upvotes' | 'downvotes'
+    type: 'upvotes' | 'downvotes',
   ): string =>
     (vote == -1 && type == 'downvotes') || (vote == 1 && type == 'upvotes')
       ? voteColor(vote)
@@ -57,7 +57,7 @@
 
 <slot {vote} {score}>
   <div
-    class="{buttonColor.secondary} rounded-lg h-8 flex items-center [&>*]:p-2
+    class="{buttonColor.secondary} rounded-lg h-full font-medium flex items-center [&>*]:p-2
     hover:bg-white hover:dark:bg-zinc-900 overflow-hidden transition-colors flex-shrink-0
     {loading ? 'animate-pulse opacity-75 pointer-events-none' : ''}"
   >

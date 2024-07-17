@@ -12,7 +12,7 @@
   ])
 
   export const parseTags = (
-    title?: string
+    title?: string,
   ): { tags: Tag[]; title?: string } => {
     if (!title) return { tags: [] }
 
@@ -22,7 +22,7 @@
       extracted.push(
         textToTag.get(content) ?? {
           content: content,
-        }
+        },
       )
       return ''
     })
@@ -56,7 +56,7 @@
   import { profile } from '$lib/auth.js'
   import Subscribe from '../../../../routes/communities/Subscribe.svelte'
   import ShieldIcon from '../moderation/ShieldIcon.svelte'
-  import { userSettings } from '$lib/settings'
+  import { userSettings, type View } from '$lib/settings'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import { t } from '$lib/translations'
   import type { IconSource } from 'svelte-hero-icons'
@@ -70,6 +70,8 @@
   export let title: string | undefined = undefined
   export let id: number | undefined = undefined
   export let read: boolean = false
+
+  export let view: View = 'cozy'
 
   // Badges
   export let badges = {
@@ -245,17 +247,24 @@
 {#if title && id}
   <a
     href="/post/{getInstance()}/{id}"
-    class="inline text-lg hover:underline
+    class="inline hover:underline
     hover:text-primary-900 hover:dark:text-primary-100 transition-colors
     {$userSettings.font == 'satoshi/nunito'
       ? 'font-display font-semibold'
       : 'font-medium'}"
     class:text-slate-600={$userSettings.markReadPosts && read}
     class:dark:text-zinc-400={$userSettings.markReadPosts && read}
+    class:text-base={view == 'compact'}
+    class:text-lg={view != 'compact'}
     style="grid-area: title;"
     data-sveltekit-preload-data="tap"
   >
-    <Markdown source={title} inline noStyle class="leading-[1.3]"></Markdown>
+    <Markdown
+      source={title}
+      inline
+      noStyle
+      class={view == 'compact' ? '' : 'leading-[1.3]'}
+    ></Markdown>
   </a>
 {:else}
   <div style="grid-area: title; margin: 0;"></div>
