@@ -59,7 +59,7 @@
         history.replaceState(
           null,
           '',
-          window.location.toString().replace('#main', '')
+          window.location.toString().replace('#main', ''),
         )
       }
       window
@@ -88,11 +88,11 @@
 
 <svelte:head>
   <meta name="theme-color" content={themeColor} />
-  {#if $site}
-    <title>{$site.site_view.site.name}</title>
+  {#if $site?.site_view}
+    <title>{$site?.site_view.site.name}</title>
     {#if LINKED_INSTANCE_URL}
-      <link rel="icon" href={$site.site_view.site.icon} />
-      <meta name="description" content={$site.site_view.site.description} />
+      <link rel="icon" href={$site?.site_view?.site.icon} />
+      <meta name="description" content={$site?.site_view?.site.description} />
     {:else}
       <meta name="description" content="A sleek client for Lemmy" />
     {/if}
