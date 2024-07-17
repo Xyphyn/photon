@@ -24,7 +24,7 @@
   import { onMount } from 'svelte'
   import { t } from '$lib/translations'
   import { slide } from 'svelte/transition'
-  import { expoOut } from 'svelte/easing'
+  import { expoInOut, expoOut } from 'svelte/easing'
 
   export let node: CommentNodeI
   export let postId: number
@@ -107,111 +107,113 @@
     : ''} {highlight} {$$props.class}"
   id="#{node.comment_view.comment.id.toString()}"
 >
-  <Disclosure bind:open class="flex flex-col">
-    <div
-      slot="summary"
-      class="flex flex-row cursor-pointer gap-2 items-center group text-[13px] flex-wrap"
-    >
-      <span class:font-bold={op} class="flex flex-row gap-1 items-center">
-        <UserLink
-          inComment
-          avatarSize={22}
-          avatar
-          user={node.comment_view.creator}
-        >
-          <svelte:fragment slot="badges">
-            {#if node.comment_view.creator_is_moderator}
-              <ShieldIcon filled width={14} class="text-green-500" />
-            {/if}
-            {#if node.comment_view.creator_is_admin}
-              <ShieldIcon filled width={14} class="text-red-500" />
-            {/if}
-          </svelte:fragment>
-        </UserLink>
-        {#if op}
-          <span class="text-sky-500">OP</span>
-        {/if}
-      </span>
-      <RelativeDate
-        class="text-slate-600 dark:text-zinc-400"
-        date={publishedToDate(node.comment_view.comment.published)}
-      />
-      <span class="text-slate-600 dark:text-zinc-400 flex flex-row gap-2 ml-1">
-        {#if node.comment_view.comment.updated}
-          <Icon src={Pencil} solid size="12" title="Edited" />
-        {/if}
-        {#if node.comment_view.comment.deleted || node.comment_view.comment.removed}
-          <Icon
-            src={Trash}
-            solid
-            size="12"
-            title={$t('post.badges.deleted')}
-            class="text-red-600 dark:text-red-500"
-          />
-        {/if}
-        {#if node.comment_view.saved}
-          <Icon
-            src={Bookmark}
-            solid
-            size="12"
-            title={$t('post.badges.saved')}
-            class="text-yellow-600 dark:text-yellow-500"
-          />
-        {/if}
-      </span>
-    </div>
-    <div
-      class="flex flex-col whitespace-pre-wrap
-      max-w-full gap-1 mt-1 relative"
-    >
-      {#if node.comment_view.comment.distinguished}
-        <div
-          class="-z-10 bg-slate-100 dark:bg-zinc-900 absolute -top-9 -bottom-1.5
-          -inset-x-6 -right-6"
+  <button
+    on:click={() => (open = !open)}
+    class="flex flex-row cursor-pointer gap-2 items-center group text-[13px] flex-wrap w-full"
+  >
+    <span class:font-bold={op} class="flex flex-row gap-1 items-center">
+      <UserLink
+        inComment
+        avatarSize={22}
+        avatar
+        user={node.comment_view.creator}
+      >
+        <svelte:fragment slot="badges">
+          {#if node.comment_view.creator_is_moderator}
+            <ShieldIcon filled width={14} class="text-green-500" />
+          {/if}
+          {#if node.comment_view.creator_is_admin}
+            <ShieldIcon filled width={14} class="text-red-500" />
+          {/if}
+        </svelte:fragment>
+      </UserLink>
+      {#if op}
+        <span class="text-sky-500">OP</span>
+      {/if}
+    </span>
+    <RelativeDate
+      class="text-slate-600 dark:text-zinc-400"
+      date={publishedToDate(node.comment_view.comment.published)}
+    />
+    <span class="text-slate-600 dark:text-zinc-400 flex flex-row gap-2 ml-1">
+      {#if node.comment_view.comment.updated}
+        <Icon src={Pencil} solid size="12" title="Edited" />
+      {/if}
+      {#if node.comment_view.comment.deleted || node.comment_view.comment.removed}
+        <Icon
+          src={Trash}
+          solid
+          size="12"
+          title={$t('post.badges.deleted')}
+          class="text-red-600 dark:text-red-500"
         />
       {/if}
+      {#if node.comment_view.saved}
+        <Icon
+          src={Bookmark}
+          solid
+          size="12"
+          title={$t('post.badges.saved')}
+          class="text-yellow-600 dark:text-yellow-500"
+        />
+      {/if}
+    </span>
+  </button>
+  {#if open}
+    <div transition:slide={{ duration: 500, easing: expoOut }}>
       <div
-        class="max-w-full mt-0.5 break-words text-[15px] text-slate-800 dark:text-zinc-100"
+        class="flex flex-col whitespace-pre-wrap
+      max-w-full gap-1 mt-1 relative"
       >
-        <Markdown source={node.comment_view.comment.content} />
+        {#if node.comment_view.comment.distinguished}
+          <div
+            class="-z-10 bg-slate-100 dark:bg-zinc-900 absolute -top-9 -bottom-1.5
+          -inset-x-6 -right-6"
+          />
+        {/if}
+        <div
+          class="max-w-full mt-0.5 break-words text-[15px] text-slate-800 dark:text-zinc-100"
+        >
+          <Markdown source={node.comment_view.comment.content} />
+        </div>
+        {#if actions}
+          <div class="flex flex-row gap-2 items-center">
+            <CommentActions
+              bind:comment={node.comment_view}
+              bind:replying
+              on:edit={() => (editing = true)}
+              disabled={node.comment_view.banned_from_community ||
+                node.comment_view.post.locked}
+            />
+          </div>
+        {/if}
       </div>
-      {#if actions}
-        <div class="flex flex-row gap-2 items-center">
-          <CommentActions
-            bind:comment={node.comment_view}
-            bind:replying
-            on:edit={() => (editing = true)}
-            disabled={node.comment_view.banned_from_community ||
-              node.comment_view.post.locked}
+      {#if replying}
+        <div
+          class="max-w-full my-2 border-l border-slate-200 dark:border-zinc-800 pl-4"
+          transition:slide={{ axis: 'y', duration: 400, easing: expoOut }}
+        >
+          <h1 class="font-bold text-sm mb-2">{$t('comment.reply')}</h1>
+          <CommentForm
+            {postId}
+            parentId={node.comment_view.comment.id}
+            on:comment={(e) => {
+              node.children = [
+                {
+                  children: [],
+                  comment_view: e.detail.comment_view,
+                  depth: node.depth + 1,
+                },
+                ...node.children,
+              ]
+              replying = false
+            }}
           />
         </div>
       {/if}
-    </div>
-    {#if replying}
-      <div
-        class="max-w-full my-2 border-l border-slate-200 dark:border-zinc-800 pl-4"
-        transition:slide={{ axis: 'y', duration: 400, easing: expoOut }}
-      >
-        <h1 class="font-bold text-sm mb-2">{$t('comment.reply')}</h1>
-        <CommentForm
-          {postId}
-          parentId={node.comment_view.comment.id}
-          on:comment={(e) => {
-            node.children = [
-              {
-                children: [],
-                comment_view: e.detail.comment_view,
-                depth: node.depth + 1,
-              },
-              ...node.children,
-            ]
-            replying = false
-          }}
-        />
+      <div class="bg-transparent dark:bg-transparent">
+        <slot />
       </div>
-    {/if}
-    <div class="bg-transparent dark:bg-transparent">
-      <slot />
     </div>
-  </Disclosure>
+  {/if}
 </li>
