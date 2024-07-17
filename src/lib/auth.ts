@@ -91,7 +91,10 @@ export let profileData = writable<ProfileData>(
   }
 )
 
-let fetchingUser = false
+let fetchUser = {
+  loading: false,
+  prevProfile: -1
+}
 
 export let profile = derived<Writable<ProfileData>, Profile>(
   profileData,
@@ -100,10 +103,10 @@ export let profile = derived<Writable<ProfileData>, Profile>(
       pd.profiles.find((p) => p.id == pd.profile) ?? getDefaultProfile()
 
     if (profile?.jwt) {
-      if (!profile.user && !fetchingUser) {
+      if ((profile.id != fetchUser.prevProfile) && !fetchUser.loading) {
         site.set(undefined)
 
-        fetchingUser = true
+        fetchUser.loading = true
 
         notifications.set({ applications: 0, inbox: 0, reports: 0 })
 
@@ -120,21 +123,23 @@ export let profile = derived<Writable<ProfileData>, Profile>(
             profile.user = res?.user
             profile.avatar = res?.user?.local_user_view.person.avatar
 
+            fetchUser.loading = false
+            fetchUser.prevProfile = profile.id
             checkInbox()
 
-            fetchingUser = false
           })
           .catch((e) => {
-            fetchingUser = false
+            fetchUser.loading = false
             toast({ content: e, type: 'error' })
           })
       }
     } else {
-      if (browser) {
+      if (browser && !fetchUser.loading) {
         site.set(undefined)
         client({ instanceURL: profile.instance })
           .getSite()
           .then((res) => site.set(res))
+        fetchUser.loading = false
       }
     }
 
@@ -264,7 +269,9 @@ async function userFromJwt(
   const site = await sitePromise.then((r) => {
     clearTimeout(timer)
     return r
-  })
+  }).catch((e) => { toast({ content: `Failed to load user data. ${e}` }) })
+
+  if (!site) return
 
   if (!versionIsSupported(site.version, MINIMUM_VERSION)) {
     throw new Error(
