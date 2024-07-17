@@ -170,7 +170,9 @@
           -inset-x-6 -right-6"
         />
       {/if}
-      <div class="max-w-full mt-0.5 break-words text-sm">
+      <div
+        class="max-w-full mt-0.5 break-words text-[15px] text-slate-800 dark:text-zinc-100"
+      >
         <Markdown source={node.comment_view.comment.content} />
       </div>
       {#if actions}
