@@ -1,37 +1,10 @@
-<script lang="ts">
-  import { userSettings } from '$lib/settings.js'
-  import { colors, colorsToVars } from '$lib/ui/colors'
-  import { routes } from '$lib/util.js'
-
-  export let route: { id: string | null } | undefined = undefined
-
-  $: title = route ? routes[(route.id as keyof typeof routes) ?? ''] : ''
-
-  const calculatePadding = (
-    panel: boolean,
-    top: boolean,
-    content: boolean
-  ): string => {
-    if (panel) {
-      if (top) {
-        if (content) return '!pt-20'
-        else return 'top-16 !max-h-[calc(100vh-4rem)]'
-      } else return '!pb-20'
-    } else {
-      if (!content) return ''
-
-      if (top) return '!pt-24'
-      else return '!pb-24'
-    }
-
-    return 'hi this is easter egg, my code broke'
-  }
-
-  let screenWidth = 1000
-
+<script lang="ts" context="module">
   const calculateDockProperties = (
-    settings: typeof $userSettings.dock,
-    screenWidth: number
+    settings: {
+      top: boolean | null
+      noGap: boolean | null
+    },
+    screenWidth: number,
   ): {
     noGap: boolean
     top: boolean
@@ -59,14 +32,55 @@
     }
   }
 
-  $: dockProps = calculateDockProperties($userSettings.dock, screenWidth)
+  export const calculatePadding = (
+    panel: boolean,
+    top: boolean,
+    content: boolean,
+  ): {
+    top: number
+    class: string
+  } => {
+    if (panel) {
+      if (top) {
+        if (content) return { top: 80, class: '!pt-20' }
+        else return { top: 64, class: 'top-16 !max-h-[calc(100vh-4rem)]' }
+      } else return { top: 0, class: '!pb-20' }
+    } else {
+      if (!content) return { top: 0, class: '' }
 
-  $: contentPadding = calculatePadding(dockProps.noGap, dockProps.top, true)
-  $: sidePadding = calculatePadding(dockProps.noGap, dockProps.top, false)
-  $: topPanel = dockProps.noGap && dockProps.top
+      if (top) return { top: 96, class: '!pt-24' }
+      else return { top: 0, class: '!pb-24' }
+    }
+
+    return { top: 0, class: ' failed-to-calculate' }
+  }
+
+  export let screenWidth = writable(1000)
+  export let dockProps: Readable<ReturnType<typeof calculateDockProperties>> =
+    derived([userSettings, screenWidth], ([$settings, $screenWidth], set) => {
+      set(calculateDockProperties($settings.dock, $screenWidth))
+    })
+  export let contentPadding: Readable<ReturnType<typeof calculatePadding>> =
+    derived(dockProps, ($dockProps, set) =>
+      set(calculatePadding($dockProps.noGap, $dockProps.top, true)),
+    )
 </script>
 
-<svelte:window bind:innerWidth={screenWidth} />
+<script lang="ts">
+  import { userSettings } from '$lib/settings.js'
+  import { colors, colorsToVars } from '$lib/ui/colors'
+  import { routes } from '$lib/util.js'
+  import { derived, writable, type Readable, type Writable } from 'svelte/store'
+
+  export let route: { id: string | null } | undefined = undefined
+
+  $: title = route ? routes[(route.id as keyof typeof routes) ?? ''] : ''
+
+  $: sidePadding = calculatePadding($dockProps.noGap, $dockProps.top, false)
+  $: topPanel = $dockProps.noGap && $dockProps.top
+</script>
+
+<svelte:window bind:innerWidth={$screenWidth} />
 
 <div
   {...$$restProps}
@@ -76,8 +90,8 @@
   <slot />
   <div
     class="
-    {dockProps.noGap ? '' : 'p-4 max-w-3xl left-1/2 -translate-x-1/2'}
-    {dockProps.top ? 'top-0' : 'bottom-0'}
+    {$dockProps.noGap ? '' : 'p-4 max-w-3xl left-1/2 -translate-x-1/2'}
+    {$dockProps.top ? 'top-0' : 'bottom-0'}
     {topPanel ? 'fixed top-0' : 'fixed'}
     w-full z-50 pointer-events-none"
     style="grid-area: navbar;
@@ -88,8 +102,8 @@
     <slot
       name="navbar"
       class="
-      {dockProps.noGap
-        ? dockProps.top
+      {$dockProps.noGap
+        ? $dockProps.top
           ? 'border-b shadow-none rounded-none'
           : 'border-t rounded-none'
         : 'border rounded-full'}
@@ -112,18 +126,18 @@
       name="sidebar"
       class="hidden md:flex sticky top-0 left-0 max-w-full h-max bg-slate-50 dark:bg-zinc-950
       z-40
-      {sidePadding}"
+      {sidePadding.class}"
       style="grid-area: sidebar; width: 100% !important;"
     />
     <slot
       name="main"
       class="w-full bg-slate-25 dark:bg-zinc-925 justify-self-center shadow-sm z-0
-      {contentPadding}"
+      {$contentPadding.class}"
       style="grid-area: main"
     />
     <slot
       name="suffix"
-      class="max-xl:hidden w-full sticky top-0 left-0 max-h-screen bg-slate-50 dark:bg-zinc-950 z-40 {sidePadding}"
+      class="max-xl:hidden w-full sticky top-0 left-0 max-h-screen bg-slate-50 dark:bg-zinc-950 z-40 {sidePadding.class}"
       style="grid-area: suffix;"
     />
   </div>

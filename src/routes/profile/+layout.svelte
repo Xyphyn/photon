@@ -3,6 +3,8 @@
   import { page } from '$app/stores'
 
   import MultiSelect from '$lib/components/input/Switch.svelte'
+  import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
+  import { contentPadding } from '$lib/components/ui/layout/Shell.svelte'
   import { t } from '$lib/translations'
 </script>
 
@@ -11,23 +13,33 @@
 </svelte:head>
 
 <div class="flex flex-col gap-4 h-full z-0">
-  <MultiSelect
-    options={[
-      '/profile/user',
-      '/profile/settings',
-      '/profile/blocks',
-      '/profile/password',
-    ]}
-    optionNames={[
-      $t('routes.profile.user'),
-      $t('routes.profile.settings'),
-      $t('routes.profile.blocks'),
-      $t('routes.profile.credentials'),
-    ]}
-    selected={$page.url.pathname}
-    on:select={(e) => {
-      goto(e.detail)
-    }}
-  />
+  <div
+    class="sticky mx-auto z-50 max-w-full"
+    style="top: max(1.5rem, {$contentPadding.top}px);"
+  >
+    <Tabs
+      routes={[
+        {
+          href: '/profile/user',
+          name: $t('routes.profile.user'),
+        },
+
+        {
+          href: '/profile/settings',
+          name: $t('routes.profile.settings'),
+        },
+
+        {
+          href: '/profile/blocks',
+          name: $t('routes.profile.blocks'),
+        },
+
+        {
+          href: '/profile/password',
+          name: $t('routes.profile.credentials'),
+        },
+      ]}
+    />
+  </div>
   <slot />
 </div>
