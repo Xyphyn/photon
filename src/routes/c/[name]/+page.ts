@@ -13,19 +13,15 @@ export async function load({ params, fetch, url }) {
     (url.searchParams.get('sort') as SortType) ||
     get(userSettings).defaultSort.sort
 
-  return {
-    sort: sort,
-    page: page || 1,
-    posts: await postFeed({
-      id: 'community',
-      url: url,
-      request: {
-        page: page,
-        page_cursor: cursor,
-        sort: sort,
-        limit: 20,
-        community_name: params.name,
-      }
-    }),
-  }
+  return await postFeed({
+    id: 'community',
+    url: url,
+    request: {
+      page: page,
+      page_cursor: cursor,
+      sort: sort,
+      limit: 20,
+      community_name: params.name,
+    }
+  })
 }

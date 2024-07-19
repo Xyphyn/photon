@@ -68,7 +68,7 @@
   </Modal>
 {/if}
 
-<div class="flex flex-col gap-3 sm:gap-4 max-w-full w-full min-w-0">
+<div class="flex flex-col gap-4 max-w-full w-full min-w-0">
   <EntityHeader
     banner={community.community.banner}
     avatar={community.community.icon}
@@ -163,9 +163,7 @@
       </Button>
     </div>
   </EntityHeader>
-  <div class="flex flex-row gap-4 max-w-full w-full items-end z-0">
-    <Sort selected={data.sort} />
-  </div>
+  <Sort selected={data.sort} />
   {#if community.blocked}
     <Placeholder
       icon={XMark}
@@ -180,10 +178,10 @@
   {:else}
     <svelte:component
       this={browser ? VirtualFeed : PostFeed}
-      posts={data.posts.posts.posts}
-      bind:feedData={data.posts}
+      posts={data.posts.posts}
+      bind:feedData={data}
       lastSeen={$postFeeds.community.lastSeen}
-      feedId="main"
+      feedId="community"
     />
   {/if}
 
@@ -193,7 +191,7 @@
   >
     <Pageination
       page={data.page}
-      cursor={{ next: data.posts.cursor.next }}
+      cursor={{ next: data.cursor.next }}
       on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
       on:cursor={(c) => {
         searchParam($page.url, 'cursor', c.detail)
