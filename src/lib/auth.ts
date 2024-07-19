@@ -13,7 +13,7 @@ import {
   type MyUserInfo,
   type Community,
 } from 'lemmy-js-client'
-import { derived, get, writable, type Writable } from 'svelte/store'
+import { derived, get, writable, type Readable, type Writable } from 'svelte/store'
 import { MINIMUM_VERSION, versionIsSupported } from '$lib/version.js'
 import { browser } from '$app/environment'
 import { env } from '$env/dynamic/public'
@@ -96,11 +96,14 @@ let fetchUser = {
   prevProfile: -1
 }
 
-export let profile = derived<Writable<ProfileData>, Profile>(
+export let profile: Readable<Profile> = derived(
   profileData,
-  (pd) => {
+  (pd, set, update) => {
     const profile =
       pd.profiles.find((p) => p.id == pd.profile) ?? getDefaultProfile()
+
+    instance.set(profile.instance)
+    set(profile)
 
     if (profile?.jwt) {
       if ((profile.id != fetchUser.prevProfile) && !fetchUser.loading) {
@@ -127,6 +130,7 @@ export let profile = derived<Writable<ProfileData>, Profile>(
             fetchUser.prevProfile = profile.id
             checkInbox()
 
+            update(() => profile)
           })
           .catch((e) => {
             fetchUser.loading = false
@@ -143,9 +147,6 @@ export let profile = derived<Writable<ProfileData>, Profile>(
       }
     }
 
-    instance.set(profile.instance)
-
-    return profile
   }
 )
 
