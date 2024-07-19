@@ -66,9 +66,3 @@
     </Pageination>
   </svelte:element>
 </div>
-
-<style lang="postcss">
-  .skeleton * {
-    @apply bg-slate-100 dark:bg-zinc-800 rounded-md;
-  }
-</style>
