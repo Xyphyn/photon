@@ -9,6 +9,7 @@
   export let name: boolean = true
   export let avatarSize: number = 24
   export let showInstance: boolean = $userSettings.showInstances.community
+  export let displayName: boolean = true
 </script>
 
 <a
@@ -29,7 +30,9 @@
 
   {#if name}
     <span class="flex gap-0 items-center max-w-full min-w-0 flex-shrink">
-      <span class="font-medium username-text">{community.title}</span>
+      <span class="font-medium username-text">
+        {displayName ? community.title : community.name}
+      </span>
       {#if showInstance}
         <span
           class="text-slate-500 dark:text-zinc-500 font-normal

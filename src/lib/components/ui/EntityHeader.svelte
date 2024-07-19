@@ -19,7 +19,7 @@
     <div class="max-h-36 overflow-visible">
       <img
         src={banner}
-        class="w-full object-cover h-48 rounded-xl rounded-b-none"
+        class="w-full object-cover h-48 rounded-xl bg-white dark:bg-zinc-900"
         height="192"
         alt="User banner"
       />
@@ -31,8 +31,7 @@
         width={64}
         url={avatar}
         alt={name}
-        circle={false}
-        class="ring-4 rounded-3xl ring-slate-25 dark:ring-zinc-925"
+        class="ring-4 ring-slate-25 dark:ring-zinc-925 bg-slate-25 dark:bg-zinc-925"
       />
       <div>
         <span class="text-lg font-semibold">

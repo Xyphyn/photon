@@ -1,17 +1,9 @@
 <script lang="ts">
   import Post from '$lib/components/lemmy/post/Post.svelte'
-  import Markdown from '$lib/components/markdown/Markdown.svelte'
-  import Avatar from '$lib/components/ui/Avatar.svelte'
-  import StickyCard from '$lib/components/ui/StickyCard.svelte'
-  import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
-  import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import {
     AdjustmentsHorizontal,
     AtSymbol,
-    Bars3BottomRight,
-    Calendar,
     ChartBar,
-    ChatBubbleOvalLeftEllipsis,
     EllipsisHorizontal,
     Envelope,
     Fire,
@@ -28,14 +20,7 @@
   import { isCommentView } from '$lib/lemmy/item.js'
   import { client, getClient } from '$lib/lemmy.js'
   import { isBlocked } from '$lib/lemmy/user.js'
-  import {
-    Material,
-    Menu,
-    MenuButton,
-    Popover,
-    removeToast,
-    toast,
-  } from 'mono-svelte'
+  import { Menu, MenuButton, removeToast, toast } from 'mono-svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import { profile } from '$lib/auth.js'
   import { ban, isAdmin } from '$lib/components/lemmy/moderation/moderation.js'
@@ -43,15 +28,11 @@
   import { searchParam } from '$lib/util.js'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { Button, Modal, Select } from 'mono-svelte'
-  import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
-  import { publishedToDate } from '$lib/components/util/date.js'
   import PrivateMessageModal from '$lib/components/lemmy/modal/PrivateMessageModal.svelte'
-  import LabelStat from '$lib/components/ui/LabelStat.svelte'
-  import PostBody from '$lib/components/lemmy/post/PostBody.svelte'
   import Expandable from '$lib/components/ui/Expandable.svelte'
   import { communityLink } from '$lib/lemmy/generic.js'
   import ItemList from '$lib/components/lemmy/generic/ItemList.svelte'
-  import { locale, t } from '$lib/translations.js'
+  import { t } from '$lib/translations.js'
   import EntityHeader from '$lib/components/ui/EntityHeader.svelte'
 
   export let data
@@ -177,10 +158,7 @@
       },
     ]}
   >
-    <span
-      class="text-sm text-slate-600 dark:text-zinc-400 flex gap-0 items-center"
-      slot="nameDetail"
-    >
+    <span class="text-sm flex gap-0 items-center" slot="nameDetail">
       @
       <UserLink
         showInstance

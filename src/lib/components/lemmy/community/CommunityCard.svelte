@@ -197,7 +197,7 @@
     name={community_view.community.title}
     label="!{fullCommunityName(
       community_view.community.name,
-      community_view.community.actor_id
+      community_view.community.actor_id,
     )}"
   >
     <Avatar
@@ -287,7 +287,7 @@
       <Button
         href="/c/{fullCommunityName(
           community_view.community.name,
-          community_view.community.actor_id
+          community_view.community.actor_id,
         )}/settings"
         size="square-md"
       >

@@ -359,7 +359,8 @@
       "unblock": "Unblock",
       "blockInstance": "Block instance",
       "favorite": "Favorite",
-      "unfavorite": "Remove Favorite"
+      "unfavorite": "Remove Favorite",
+      "activeDay": "Active Today"
     }
   },
   "admin": {

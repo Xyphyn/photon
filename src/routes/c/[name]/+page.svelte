@@ -15,9 +15,12 @@
   import {
     ArrowRight,
     ChartBar,
+    Check,
     Cog6Tooth,
     EllipsisHorizontal,
     Icon,
+    InformationCircle,
+    Plus,
     XMark,
   } from 'svelte-hero-icons'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
@@ -26,8 +29,13 @@
   import { userSettings } from '$lib/settings.js'
   import { site } from '$lib/lemmy.js'
   import { postFeeds } from '$lib/lemmy/postfeed.js'
+  import EntityHeader from '$lib/components/ui/EntityHeader.svelte'
+  import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
+  import Subscribe from '../../communities/Subscribe.svelte'
 
   export let data
+
+  $: community = data.community.community_view
 
   let sidebar: boolean = false
 
@@ -51,122 +59,155 @@
 {#if sidebar}
   <Modal bind:open={sidebar}>
     <span slot="title">About</span>
-    <div class="mx-auto">
+    <div>
       <CommunityCard
-        community_view={data.community.community_view}
+        bind:community_view={community}
         moderators={data.community.moderators}
       />
     </div>
   </Modal>
 {/if}
 
-{#if data.community.community_view.community.banner}
-  <img
-    src={data.community.community_view.community.banner}
-    class="absolute top-0 right-0 object-cover w-full h-40 banner"
-    alt="Community banner"
-  />
-{/if}
-<div class="flex flex-col md:flex-row gap-4 w-full">
-  <div class="flex flex-col gap-3 sm:gap-4 max-w-full w-full min-w-0">
-    <div class="flex flex-row gap-3 items-center z-0">
-      <Avatar
-        width={48}
-        url={data.community.community_view.community.icon}
-        alt={data.community.community_view.community.name}
-      />
-      <div class="flex flex-col gap-0">
-        <h1 class="font-bold text-xl">
-          {data.community.community_view.community.title}
-        </h1>
-        <button
-          on:click={() => {
-            navigator?.clipboard?.writeText?.(
-              `!${data.community.community_view.community.name}@${
-                new URL(data.community.community_view.community.actor_id)
-                  .hostname
-              }`,
-            )
-
-            toast({ content: $t('toast.copied') })
-          }}
-          class="dark:text-zinc-400 text-slate-600 text-sm text-left"
-        >
-          !{data.community.community_view.community.name}@{new URL(
-            data.community.community_view.community.actor_id,
-          ).hostname}
-        </button>
-      </div>
-      <div class="flex items-center gap-2 w-max ml-auto">
-        {#if $profile?.user && $profile.user.moderates
-            .map((c) => c.community.id)
-            .includes(data.community.community_view.community.id)}
+<div class="flex flex-col gap-3 sm:gap-4 max-w-full w-full min-w-0">
+  <EntityHeader
+    banner={community.community.banner}
+    avatar={community.community.icon}
+    name={community.community.title}
+    stats={[
+      {
+        name: $t('cards.community.members'),
+        value: community.counts.subscribers.toString(),
+      },
+      {
+        name: $t('content.posts'),
+        value: community.counts.posts.toString(),
+      },
+      {
+        name: $t('cards.community.activeDay'),
+        value: community.counts.users_active_day.toString(),
+      },
+    ]}
+  >
+    <button
+      on:click={() => {
+        navigator?.clipboard?.writeText?.(
+          fullCommunityName(
+            community.community.name,
+            community.community.actor_id,
+          ),
+        )
+        toast({ content: $t('toast.copied') })
+      }}
+      class="text-sm flex gap-0 items-center"
+      slot="nameDetail"
+    >
+      !{fullCommunityName(
+        community.community.name,
+        community.community.actor_id,
+      )}
+    </button>
+    <div class="flex items-center gap-2" slot="actions">
+      {#if $profile?.jwt}
+        <Subscribe let:subscribe bind:community let:subscribing>
           <Button
-            size="square-md"
-            color="secondary"
-            href="/c/{fullCommunityName(
-              data.community.community_view.community.name,
-              data.community.community_view.community.actor_id,
-            )}/settings"
+            disabled={subscribing}
+            loading={subscribing}
+            size="md"
+            color={community.subscribed == 'NotSubscribed'
+              ? 'primary'
+              : 'secondary'}
+            on:click={async () => {
+              community.subscribed =
+                (await subscribe())?.community_view.subscribed ??
+                'NotSubscribed'
+
+              if ($page.data.slots?.sidebar?.props.community_view)
+                $page.data.slots.sidebar.props.community_view = community
+            }}
+            class="flex-1 relative z-[inherit]"
           >
-            <Icon src={Cog6Tooth} size="16" mini />
+            <Icon
+              src={community.subscribed != 'NotSubscribed' ? Check : Plus}
+              mini
+              size="16"
+              slot="prefix"
+            />
+            {community.subscribed == 'Subscribed' ||
+            community.subscribed == 'Pending'
+              ? $t('cards.community.subscribed')
+              : $t('cards.community.subscribe')}
           </Button>
-        {/if}
+        </Subscribe>
+      {/if}
+
+      {#if $profile?.user && $profile.user.moderates
+          .map((c) => c.community.id)
+          .includes(community.community.id)}
         <Button
           size="square-md"
           color="secondary"
-          on:click={() => (sidebar = !sidebar)}
+          href="/c/{fullCommunityName(
+            community.community.name,
+            community.community.actor_id,
+          )}/settings"
         >
-          <Icon src={EllipsisHorizontal} size="16" mini />
+          <Icon src={Cog6Tooth} size="16" mini />
         </Button>
-      </div>
-    </div>
-    <div class="flex flex-row gap-4 max-w-full w-full items-end z-0">
-      <Sort selected={data.sort} />
-    </div>
-    {#if data.community.community_view.blocked}
-      <Placeholder
-        icon={XMark}
-        title="Blocked"
-        description="You've blocked this community."
+      {/if}
+      <Button
+        size="square-md"
+        color="secondary"
+        on:click={() => (sidebar = !sidebar)}
       >
-        <Button href="/profile/blocks">
-          <Icon src={ArrowRight} size="16" mini slot="suffix" />
-          Blocked Communities
-        </Button>
-      </Placeholder>
-    {:else}
-      <svelte:component
-        this={browser ? VirtualFeed : PostFeed}
-        posts={data.posts.posts.posts}
-        bind:feedData={data.posts}
-        lastSeen={$postFeeds.community.lastSeen}
-        feedId="main"
-      />
-    {/if}
-
-    <svelte:element
-      this={$userSettings.infiniteScroll ? 'noscript' : 'div'}
-      class="mt-auto"
-    >
-      <Pageination
-        page={data.page}
-        cursor={{ next: data.posts.cursor.next }}
-        on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
-        on:cursor={(c) => {
-          searchParam($page.url, 'cursor', c.detail)
-        }}
-      >
-        <span class="flex flex-row items-center gap-1">
-          <Icon src={ChartBar} size="16" mini />
-          {$t('routes.frontpage.footer', {
-            // @ts-ignore
-            users: $site?.site_view.counts.users_active_day ?? '??',
-          })}
-        </span>
-      </Pageination>
-    </svelte:element>
+        <Icon src={InformationCircle} size="16" mini />
+      </Button>
+    </div>
+  </EntityHeader>
+  <div class="flex flex-row gap-4 max-w-full w-full items-end z-0">
+    <Sort selected={data.sort} />
   </div>
+  {#if community.blocked}
+    <Placeholder
+      icon={XMark}
+      title="Blocked"
+      description="You've blocked this community."
+    >
+      <Button href="/profile/blocks">
+        <Icon src={ArrowRight} size="16" mini slot="suffix" />
+        Blocked Communities
+      </Button>
+    </Placeholder>
+  {:else}
+    <svelte:component
+      this={browser ? VirtualFeed : PostFeed}
+      posts={data.posts.posts.posts}
+      bind:feedData={data.posts}
+      lastSeen={$postFeeds.community.lastSeen}
+      feedId="main"
+    />
+  {/if}
+
+  <svelte:element
+    this={$userSettings.infiniteScroll ? 'noscript' : 'div'}
+    class="mt-auto"
+  >
+    <Pageination
+      page={data.page}
+      cursor={{ next: data.posts.cursor.next }}
+      on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
+      on:cursor={(c) => {
+        searchParam($page.url, 'cursor', c.detail)
+      }}
+    >
+      <span class="flex flex-row items-center gap-1">
+        <Icon src={ChartBar} size="16" mini />
+        {$t('routes.frontpage.footer', {
+          // @ts-ignore
+          users: $site?.site_view.counts.users_active_day ?? '??',
+        })}
+      </span>
+    </Pageination>
+  </svelte:element>
 </div>
 
 <style>

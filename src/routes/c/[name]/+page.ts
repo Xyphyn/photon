@@ -1,4 +1,3 @@
-import { client } from '$lib/lemmy.js'
 import { postFeed } from '$lib/lemmy/postfeed.js'
 import { userSettings } from '$lib/settings.js'
 import type { SortType } from 'lemmy-js-client'
