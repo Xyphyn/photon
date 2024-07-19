@@ -3,7 +3,7 @@
     "profile": "Profile",
     "inbox": "Inbox",
     "saved": "Saved",
-    "subscribed": "Subscribed"
+    "subscribed": "Subscriptions"
   },
   "nav": {
     "home": "Home",
@@ -52,7 +52,7 @@
       "label": "Location",
       "all": "All",
       "local": "Local",
-      "subscribed": "Subscribed",
+      "subscribed": "Subscriptions",
       "moderator": "Moderator",
       "global": "Global"
     },
@@ -183,7 +183,7 @@
       "settings": "Settings",
       "blocks": "Blocks",
       "credentials": "Credentials",
-      "moderates": "Moderates",
+      "moderates": "Moderating",
       "favorites": "Favorites"
     },
     "translators": "Translators",
@@ -346,7 +346,7 @@
   "cards": {
     "site": {
       "about": "About",
-      "stats": "Stats",
+      "stats": "Statistics",
       "admins": "Admins"
     },
     "community": {
