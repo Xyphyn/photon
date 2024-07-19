@@ -3,7 +3,7 @@
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import StickyCard from '$lib/components/ui/StickyCard.svelte'
   import type { PersonView, SiteView, Tagline } from 'lemmy-js-client'
-  import { Button } from 'mono-svelte'
+  import { Badge, Button } from 'mono-svelte'
   import {
     BuildingOffice,
     ChartBar,
@@ -127,13 +127,12 @@
     {/if}
 
     {#if version}
-      <span
-        class="text-slate-600 flex flex-row items-center gap-1 dark:text-zinc-400"
-        title="Lemmy version"
-      >
-        <Icon src={ServerStack} mini size="16" />
-        {version}
-      </span>
+      <div class="w-max">
+        <Badge title="Lemmy version">
+          <Icon src={ServerStack} micro size="14" />
+          {version}
+        </Badge>
+      </div>
     {/if}
   </div>
 </StickyCard>
