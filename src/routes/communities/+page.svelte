@@ -24,7 +24,7 @@
 </script>
 
 <svelte:head>
-  <title>Communities</title>
+  <title>{$t('routes.communities')}</title>
 </svelte:head>
 
 <Header>
