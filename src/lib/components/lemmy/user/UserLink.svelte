@@ -13,6 +13,7 @@
   export let showInstance: boolean =
     $userSettings.showInstances.user ||
     ($userSettings.showInstances.comments && inComment)
+  export let displayName = $userSettings.displayNames
 </script>
 
 <a
@@ -34,7 +35,7 @@
     class:ml-0.5={avatar}
   >
     <span class:font-medium={showInstance} class="username-text">
-      {$userSettings.displayNames ? user.display_name || user.name : user.name}
+      {displayName ? user.display_name || user.name : user.name}
     </span>
     {#if showInstance}
       <span

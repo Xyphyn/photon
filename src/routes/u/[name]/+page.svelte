@@ -28,7 +28,14 @@
   import { isCommentView } from '$lib/lemmy/item.js'
   import { client, getClient } from '$lib/lemmy.js'
   import { isBlocked } from '$lib/lemmy/user.js'
-  import { Menu, MenuButton, Popover, removeToast, toast } from 'mono-svelte'
+  import {
+    Material,
+    Menu,
+    MenuButton,
+    Popover,
+    removeToast,
+    toast,
+  } from 'mono-svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import { profile } from '$lib/auth.js'
   import { ban, isAdmin } from '$lib/components/lemmy/moderation/moderation.js'
@@ -152,142 +159,146 @@
   </Modal>
 {/if}
 
-{#if data.person_view.person.banner}
-  <img
-    src={data.person_view.person.banner}
-    class="absolute top-0 right-0 object-cover w-full h-40 banner -z-10"
-    alt="User banner"
-  />
-{/if}
 <div class="flex flex-col gap-4 max-w-full w-full">
-  <div class="flex flex-col gap-4">
-    <Avatar
-      width={64}
-      url={data.person_view.person.avatar}
-      alt={data.person_view.person.name}
-    />
-    <UserLink
-      badges
-      user={data.person_view.person}
-      showInstance
-      class="text-base"
-      instanceClass="text-sm"
-    />
-    <div class="relative">
-      {#if data.person_view.person.bio}
-        <PostBody
-          class="text-sm"
-          view="list"
-          body={data.person_view.person.bio}
+  <Material class="flex flex-col gap-4" color="transparent" padding="none">
+    {#if data.person_view.person.banner}
+      <div class="max-h-32 overflow-visible">
+        <img
+          src={data.person_view.person.banner}
+          class="w-full object-cover h-max max-h-48 rounded-lg"
+          height="192"
+          alt="User banner"
         />
-      {/if}
-    </div>
-    <div class="text-sm flex flex-row flex-wrap gap-3">
-      <LabelStat
-        content={data.person_view.counts.post_count.toString()}
-        formatted
-        label={$t('content.posts')}
-      />
-      <LabelStat
-        content={data.person_view.counts.comment_count.toString()}
-        formatted
-        label={$t('content.comments')}
-      />
-    </div>
-    {#if (data.moderates ?? []).length > 0}
-      <Expandable
-        class="border-y w-full py-3
-      dark:border-zinc-800 text-slate-700 dark:text-zinc-300 transition-colors"
-      >
-        <span slot="title" class="flex items-center gap-1">
-          <ShieldIcon width={14} filled />
-          {$t('routes.profile.moderates')}
-        </span>
-        <ItemList
-          items={data.moderates.map((m) => ({
-            id: m.community.id,
-            name: m.community.title,
-            url: communityLink(m.community),
-            avatar: m.community.icon,
-            instance: new URL(m.community.actor_id).hostname,
-          }))}
-        />
-      </Expandable>
+      </div>
     {/if}
-    {#if $profile?.user && $profile.jwt && data.person_view.person.id != $profile.user.local_user_view.person.id}
-      <div class="flex items-center gap-2 w-full">
-        <Button
-          size="square-md"
-          color="secondary"
-          on:click={() => (messaging = true)}
-          title="Message"
+    <div class="p-4 flex flex-col gap-3">
+      <Avatar
+        width={64}
+        url={data.person_view.person.avatar}
+        alt={data.person_view.person.name}
+        class="ring-4 ring-slate-25 dark:ring-zinc-925"
+      />
+      <div class="space-y-1">
+        <span class="text-lg font-semibold">
+          {data.person_view.person.display_name || data.person_view.person.name}
+        </span>
+        <span
+          class="flex items-center gap-0 text-sm text-slate-600 dark:text-zinc-400"
         >
-          <Icon slot="prefix" solid size="16" src={Envelope} />
-        </Button>
-        {#if data.person_view.person.matrix_user_id}
+          @
+          <UserLink
+            showInstance
+            user={data.person_view.person}
+            displayName={false}
+          />
+        </span>
+      </div>
+      <div class="relative">
+        {#if data.person_view.person.bio}
+          <PostBody
+            class="text-sm"
+            view="list"
+            body={data.person_view.person.bio}
+            clickThrough
+          />
+        {/if}
+      </div>
+      <div class="text-sm flex flex-row flex-wrap gap-3">
+        <LabelStat
+          content={data.person_view.counts.post_count.toString()}
+          formatted
+          label={$t('content.posts')}
+        />
+        <LabelStat
+          content={data.person_view.counts.comment_count.toString()}
+          formatted
+          label={$t('content.comments')}
+        />
+      </div>
+      {#if (data.moderates ?? []).length > 0}
+        <Expandable
+          class="border-y w-full py-3
+      dark:border-zinc-800 text-slate-700 dark:text-zinc-300 transition-colors"
+        >
+          <span slot="title" class="flex items-center gap-1">
+            <ShieldIcon width={14} filled />
+            {$t('routes.profile.moderates')}
+          </span>
+          <ItemList
+            items={data.moderates.map((m) => ({
+              id: m.community.id,
+              name: m.community.title,
+              url: communityLink(m.community),
+              avatar: m.community.icon,
+              instance: new URL(m.community.actor_id).hostname,
+            }))}
+          />
+        </Expandable>
+      {/if}
+      {#if $profile?.user && $profile.jwt && data.person_view.person.id != $profile.user.local_user_view.person.id}
+        <div class="flex items-center gap-2 w-full">
           <Button
             size="square-md"
             color="secondary"
-            href="https://matrix.to/#/{data.person_view.person.matrix_user_id}"
-            title="Matrix User"
+            on:click={() => (messaging = true)}
+            title="Message"
           >
-            <Icon slot="prefix" solid size="16" src={AtSymbol} />
+            <Icon slot="prefix" solid size="16" src={Envelope} />
           </Button>
-        {/if}
-        {#if isAdmin($profile?.user)}
-          <Menu class="ml-auto" placement="bottom-start">
+          {#if data.person_view.person.matrix_user_id}
+            <Button
+              size="square-md"
+              color="secondary"
+              href="https://matrix.to/#/{data.person_view.person
+                .matrix_user_id}"
+              title="Matrix User"
+            >
+              <Icon slot="prefix" solid size="16" src={AtSymbol} />
+            </Button>
+          {/if}
+          {#if isAdmin($profile?.user)}
+            <Menu class="ml-auto" placement="bottom-start">
+              <Button size="square-md" slot="target">
+                <ShieldIcon width={16} filled />
+              </Button>
+              <MenuButton
+                color="danger-subtle"
+                on:click={() =>
+                  ban(data.person_view.person.banned, data.person_view.person)}
+              >
+                <Icon slot="prefix" mini size="16" src={ShieldExclamation} />
+                {data.person_view.person.banned ? 'Unban' : 'Ban'}
+              </MenuButton>
+              <MenuButton
+                color="danger-subtle"
+                on:click={() => (purgingUser = !purgingUser)}
+              >
+                <Icon slot="prefix" mini size="16" src={Fire} />
+                Purge
+              </MenuButton>
+            </Menu>
+          {/if}
+          <Menu placement="bottom-start">
             <Button size="square-md" slot="target">
-              <ShieldIcon width={16} filled />
+              <Icon src={EllipsisHorizontal} slot="prefix" size="16" mini />
             </Button>
             <MenuButton
               color="danger-subtle"
-              on:click={() =>
-                ban(data.person_view.person.banned, data.person_view.person)}
+              on:click={() => blockUser(data.person_view.person.id)}
             >
-              <Icon slot="prefix" mini size="16" src={ShieldExclamation} />
-              {data.person_view.person.banned ? 'Unban' : 'Ban'}
-            </MenuButton>
-            <MenuButton
-              color="danger-subtle"
-              on:click={() => (purgingUser = !purgingUser)}
-            >
-              <Icon slot="prefix" mini size="16" src={Fire} />
-              Purge
+              <Icon slot="prefix" mini size="16" src={NoSymbol} />
+              {isBlocked($profile.user, data.person_view.person.id)
+                ? 'Unblock'
+                : 'Block'}
             </MenuButton>
           </Menu>
-        {/if}
-        <Menu placement="bottom-start">
-          <Button size="square-md" slot="target">
-            <Icon src={EllipsisHorizontal} slot="prefix" size="16" mini />
-          </Button>
-          <MenuButton
-            color="danger-subtle"
-            on:click={() => blockUser(data.person_view.person.id)}
-          >
-            <Icon slot="prefix" mini size="16" src={NoSymbol} />
-            {isBlocked($profile.user, data.person_view.person.id)
-              ? 'Unblock'
-              : 'Block'}
-          </MenuButton>
-        </Menu>
-      </div>
-    {/if}
-  </div>
+        </div>
+      {/if}
+    </div>
+  </Material>
 
   <div class="flex flex-col gap-4 max-w-full w-full min-w-0">
-    <div class="flex flex-row gap-4 flex-wrap justify-between">
-      <Select
-        bind:value={data.sort}
-        on:change={() => searchParam($page.url, 'sort', data.sort, 'page')}
-      >
-        <span slot="label" class="flex items-center gap-1">
-          <Icon src={ChartBar} size="14" mini />
-          {$t('filter.sort.label')}
-        </span>
-        <option value="New">{$t('filter.sort.new')}</option>
-        <option value="TopAll">{$t('filter.sort.top.label')}</option>
-        <option value="Old">{$t('filter.sort.old')}</option>
-      </Select>
+    <div class="flex flex-row gap-4 flex-wrap">
       <Select
         bind:value={data.type}
         on:change={() => searchParam($page.url, 'type', data.type, 'page')}
@@ -299,6 +310,18 @@
         <option value="all">{$t('content.all')}</option>
         <option value="posts">{$t('content.posts')}</option>
         <option value="comments">{$t('content.comments')}</option>
+      </Select>
+      <Select
+        bind:value={data.sort}
+        on:change={() => searchParam($page.url, 'sort', data.sort, 'page')}
+      >
+        <span slot="label" class="flex items-center gap-1">
+          <Icon src={ChartBar} size="14" mini />
+          {$t('filter.sort.label')}
+        </span>
+        <option value="New">{$t('filter.sort.new')}</option>
+        <option value="TopAll">{$t('filter.sort.top.label')}</option>
+        <option value="Old">{$t('filter.sort.old')}</option>
       </Select>
     </div>
     {#if data.items.length == 0}
