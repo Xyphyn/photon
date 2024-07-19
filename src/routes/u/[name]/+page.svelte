@@ -209,64 +209,67 @@
         />
       </Expandable>
     {/if}
-    {#if $profile?.user && $profile.jwt && data.person_view.person.id != $profile.user.local_user_view.person.id}
-      <div class="flex items-center gap-2 w-full">
-        <Button
-          size="square-md"
-          color="secondary"
-          on:click={() => (messaging = true)}
-          title="Message"
-        >
-          <Icon slot="prefix" solid size="16" src={Envelope} />
-        </Button>
-        {#if data.person_view.person.matrix_user_id}
+    <svelte:fragment slot="actions">
+      {#if $profile?.user && $profile.jwt && data.person_view.person.id != $profile.user.local_user_view.person.id}
+        <div class="flex items-center gap-2 w-full">
           <Button
             size="square-md"
             color="secondary"
-            href="https://matrix.to/#/{data.person_view.person.matrix_user_id}"
-            title="Matrix User"
+            on:click={() => (messaging = true)}
+            title="Message"
           >
-            <Icon slot="prefix" solid size="16" src={AtSymbol} />
+            <Icon slot="prefix" solid size="16" src={Envelope} />
           </Button>
-        {/if}
-        {#if isAdmin($profile?.user)}
-          <Menu class="ml-auto" placement="bottom-start">
+          {#if data.person_view.person.matrix_user_id}
+            <Button
+              size="square-md"
+              color="secondary"
+              href="https://matrix.to/#/{data.person_view.person
+                .matrix_user_id}"
+              title="Matrix User"
+            >
+              <Icon slot="prefix" solid size="16" src={AtSymbol} />
+            </Button>
+          {/if}
+          {#if isAdmin($profile?.user)}
+            <Menu class="ml-auto" placement="bottom-end">
+              <Button size="square-md" slot="target">
+                <ShieldIcon width={16} filled />
+              </Button>
+              <MenuButton
+                color="danger-subtle"
+                on:click={() =>
+                  ban(data.person_view.person.banned, data.person_view.person)}
+              >
+                <Icon slot="prefix" mini size="16" src={ShieldExclamation} />
+                {data.person_view.person.banned ? 'Unban' : 'Ban'}
+              </MenuButton>
+              <MenuButton
+                color="danger-subtle"
+                on:click={() => (purgingUser = !purgingUser)}
+              >
+                <Icon slot="prefix" mini size="16" src={Fire} />
+                Purge
+              </MenuButton>
+            </Menu>
+          {/if}
+          <Menu placement="bottom-end">
             <Button size="square-md" slot="target">
-              <ShieldIcon width={16} filled />
+              <Icon src={EllipsisHorizontal} slot="prefix" size="16" mini />
             </Button>
             <MenuButton
               color="danger-subtle"
-              on:click={() =>
-                ban(data.person_view.person.banned, data.person_view.person)}
+              on:click={() => blockUser(data.person_view.person.id)}
             >
-              <Icon slot="prefix" mini size="16" src={ShieldExclamation} />
-              {data.person_view.person.banned ? 'Unban' : 'Ban'}
-            </MenuButton>
-            <MenuButton
-              color="danger-subtle"
-              on:click={() => (purgingUser = !purgingUser)}
-            >
-              <Icon slot="prefix" mini size="16" src={Fire} />
-              Purge
+              <Icon slot="prefix" mini size="16" src={NoSymbol} />
+              {isBlocked($profile.user, data.person_view.person.id)
+                ? 'Unblock'
+                : 'Block'}
             </MenuButton>
           </Menu>
-        {/if}
-        <Menu placement="bottom-start">
-          <Button size="square-md" slot="target">
-            <Icon src={EllipsisHorizontal} slot="prefix" size="16" mini />
-          </Button>
-          <MenuButton
-            color="danger-subtle"
-            on:click={() => blockUser(data.person_view.person.id)}
-          >
-            <Icon slot="prefix" mini size="16" src={NoSymbol} />
-            {isBlocked($profile.user, data.person_view.person.id)
-              ? 'Unblock'
-              : 'Block'}
-          </MenuButton>
-        </Menu>
-      </div>
-    {/if}
+        </div>
+      {/if}
+    </svelte:fragment>
   </EntityHeader>
 
   <div class="flex flex-col gap-4 max-w-full w-full min-w-0">

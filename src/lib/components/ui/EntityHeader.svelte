@@ -14,26 +14,27 @@
   }[] = []
 </script>
 
-<Material class="flex flex-col gap-4" color="transparent" padding="none">
+<Material color="transparent" padding="none" rounding="xl">
   {#if banner}
-    <div class="max-h-32 overflow-visible">
+    <div class="max-h-36 overflow-visible">
       <img
         src={banner}
-        class="w-full object-cover h-max max-h-48 rounded-lg rounded-b-none"
+        class="w-full object-cover h-48 rounded-xl rounded-b-none"
         height="192"
         alt="User banner"
       />
     </div>
   {/if}
-  <div class="p-4 flex flex-row gap-3">
-    <div class="gap-3 flex flex-col flex-1">
+  <div class="p-4 flex flex-row gap-4">
+    <div class="space-y-3 flex-1">
       <Avatar
         width={64}
         url={avatar}
         alt={name}
-        class="ring-4 ring-slate-25 dark:ring-zinc-925"
+        circle={false}
+        class="ring-4 rounded-3xl ring-slate-25 dark:ring-zinc-925"
       />
-      <div class="space-y-1">
+      <div>
         <span class="text-lg font-semibold">
           {name}
         </span>
@@ -55,7 +56,14 @@
           {/each}
         </div>
       {/if}
-      <slot />
     </div>
+    {#if $$slots.actions}
+      <div class="space-y-3 flex flex-col" class:pt-12={banner != undefined}>
+        <slot name="actions" />
+      </div>
+    {/if}
+  </div>
+  <div class="space-y-3 p-4 pt-0">
+    <slot />
   </div>
 </Material>
