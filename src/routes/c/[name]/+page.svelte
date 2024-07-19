@@ -180,7 +180,6 @@
       this={browser ? VirtualFeed : PostFeed}
       posts={data.posts.posts}
       bind:feedData={data}
-      lastSeen={$postFeeds.community.lastSeen}
       feedId="community"
     />
   {/if}

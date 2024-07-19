@@ -20,7 +20,10 @@
   import { fly, slide } from 'svelte/transition'
   import { browser } from '$app/environment'
   import { afterUpdate, onMount, tick, type SvelteComponent } from 'svelte'
-  import { createWindowVirtualizer } from '@tanstack/svelte-virtual'
+  import {
+    createVirtualizer,
+    createWindowVirtualizer,
+  } from '@tanstack/svelte-virtual'
   import { afterNavigate, beforeNavigate } from '$app/navigation'
   import { combineCrossposts } from './crosspost'
   import { client } from '$lib/lemmy'
@@ -40,17 +43,14 @@
   let combinedPosts = combineCrossposts(posts)
   $: combinedPosts = combineCrossposts(posts)
 
-  const virtualizer = createWindowVirtualizer({
-    count: combinedPosts.length,
-    estimateSize: () => 150,
-  })
-
-  $: if (combinedPosts.length)
-    $virtualizer.setOptions({
-      count: combinedPosts.length,
-    })
-
   let virtualItemEls: HTMLElement[] = []
+  let virtualListEl: HTMLElement | undefined = undefined
+
+  $: virtualizer = createWindowVirtualizer({
+    count: combinedPosts.length,
+    estimateSize: () => 0,
+    scrollMargin: virtualListEl?.offsetTop ?? 0,
+  })
 
   $: items = $virtualizer.getVirtualItems()
   $: {
@@ -148,6 +148,14 @@
                 observer.observe(node)
               }
             })
+            mutation.removedNodes.forEach((node) => {
+              if (
+                node instanceof HTMLElement &&
+                node.classList.contains('post-container')
+              ) {
+                observer.unobserve(node)
+              }
+            })
           }
         })
       })
@@ -172,6 +180,7 @@
 'embed embed'
 'actions actions'; --template-columns: auto 1fr;`
     : ``}
+  bind:this={virtualListEl}
 >
   {#if posts?.length == 0}
     <div class="h-full grid place-items-center">
@@ -194,7 +203,7 @@
     >
       <div
         style="position: absolute; top: 0; left: 0; width: 100%; transform: translateY({items?.[0]
-          ? items?.[0]?.start
+          ? items?.[0]?.start - $virtualizer.options.scrollMargin
           : 0}px);"
         class="divide-y divide-slate-200 dark:divide-zinc-800"
         id="feed"

@@ -42,7 +42,6 @@
     this={browser ? VirtualFeed : PostFeed}
     posts={data.posts.posts}
     bind:feedData={data}
-    lastSeen={$postFeeds.main.lastSeen}
     feedId="main"
   />
   <svelte:element
