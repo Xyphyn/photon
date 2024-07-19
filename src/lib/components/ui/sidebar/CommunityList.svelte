@@ -2,7 +2,6 @@
   import { profile } from '$lib/auth'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
-  import { communityLink } from '$lib/lemmy/generic'
   import { addFavorite } from '$lib/lemmy/item'
   import { hasFavorite } from '$lib/lemmy/user'
   import type { Community } from 'lemmy-js-client'
@@ -10,13 +9,12 @@
   import { Icon, Star, Trash } from 'svelte-hero-icons'
   import { flip } from 'svelte/animate'
   import { expoOut } from 'svelte/easing'
-  import { slide } from 'svelte/transition'
 
   export let items: Community[]
   export let isFavorites = false
 </script>
 
-{#each items.sort( (a, b) => a.title.localeCompare(b.title) ) as follow (follow.id)}
+{#each items.sort( (a, b) => a.title.localeCompare(b.title), ) as follow (follow.id)}
   <div
     class="inline-flex w-full items-center pl-3 hover:bg-slate-100 hover:dark:bg-zinc-800
     transition-colors rounded-lg"

@@ -93,21 +93,29 @@
       </Subscribe>
     </div>
   </div>
-  <div class="flex flex-row gap-3 items-center">
-    <LabelStat
-      content={community.counts.posts.toString()}
-      formatted
-      label="Posts"
-    />
-    <LabelStat
-      content={community.counts.subscribers.toString()}
-      formatted
-      label="Members"
-    />
-    <LabelStat
-      content={community.counts.comments.toString()}
-      formatted
-      label="Comments"
-    />
-  </div>
+  {#if community.counts}
+    <div class="flex flex-row gap-3 items-center">
+      {#if community.counts.posts}
+        <LabelStat
+          content={community.counts.posts.toString()}
+          formatted
+          label="Posts"
+        />
+      {/if}
+      {#if community.counts.subscribers}
+        <LabelStat
+          content={community.counts.subscribers.toString()}
+          formatted
+          label="Members"
+        />
+      {/if}
+      {#if community.counts.comments}
+        <LabelStat
+          content={community.counts.comments.toString()}
+          formatted
+          label="Comments"
+        />
+      {/if}
+    </div>
+  {/if}
 </div>

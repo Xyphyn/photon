@@ -60,8 +60,7 @@
   }
 </script>
 
-<Modal bind:open>
-  <Header slot="title">{$t('moderation.reportModal.title')}</Header>
+<Modal bind:open title={$t('moderation.reportModal.title')}>
   <form class="flex flex-col gap-4" on:submit|preventDefault={report}>
     {#if item}
       <div class="pointer-events-none list-none">

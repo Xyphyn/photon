@@ -100,10 +100,10 @@
   }
 </script>
 
-<Modal bind:open class="max-w-xl w-full">
-  <h1 slot="title">
-    {banned ? $t('moderation.ban.unbanning') : $t('moderation.ban.banning')}
-  </h1>
+<Modal
+  bind:open
+  title={banned ? $t('moderation.ban.unbanning') : $t('moderation.ban.banning')}
+>
   {#if item}
     <form class="flex flex-col gap-4" on:submit|preventDefault={submit}>
       <div class="flex items-center gap-1">

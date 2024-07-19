@@ -38,7 +38,7 @@
     return removalTemplate(preset, {
       communityLink: `!${fullCommunityName(
         item!.community.name,
-        item!.community.actor_id
+        item!.community.actor_id,
       )}`,
       postTitle: item.post.name,
       reason: reason,
@@ -158,14 +158,14 @@
   }
 </script>
 
-<Modal bind:open>
-  <span slot="title">
-    {purge
-      ? $t('moderation.removeSubmission.titlePurge')
-      : removed
-        ? $t('moderation.removeSubmission.titleRestore')
-        : $t('moderation.removeSubmission.title')}
-  </span>
+<Modal
+  bind:open
+  title={purge
+    ? $t('moderation.removeSubmission.titlePurge')
+    : removed
+      ? $t('moderation.removeSubmission.titleRestore')
+      : $t('moderation.removeSubmission.title')}
+>
   {#if item}
     <form
       on:submit|preventDefault={remove}
