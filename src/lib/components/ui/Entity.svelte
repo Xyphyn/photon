@@ -11,7 +11,7 @@
     <Avatar url={icon} width={32} />
   </slot>
   <div class="flex flex-col">
-    <span class="font-bold text-base">{name}</span>
+    <span class="font-semibold text-base">{name}</span>
     <span class="text-sm">{label}</span>
   </div>
 </div>

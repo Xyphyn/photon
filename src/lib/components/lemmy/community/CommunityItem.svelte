@@ -13,7 +13,7 @@
   } from 'svelte-hero-icons'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import { Button, Modal } from 'mono-svelte'
-  import { isSubscribed } from '$lib/util.js'
+  import { fullCommunityName, isSubscribed } from '$lib/util.js'
   import { profile } from '$lib/auth.js'
   import { addSubscription } from '$lib/lemmy/user.js'
   import Avatar from '$lib/components/ui/Avatar.svelte'
@@ -21,6 +21,7 @@
   import LabelStat from '$lib/components/ui/LabelStat.svelte'
   import PostBody from '../post/PostBody.svelte'
   import { t } from '$lib/translations'
+  import Entity from '$lib/components/ui/Entity.svelte'
 
   export let community: CommunityView
 
@@ -28,22 +29,26 @@
 </script>
 
 {#if showInfo}
-  <Modal title="Community" bind:open={showInfo}>
+  <Modal title={$t('routes.community.title')} bind:open={showInfo}>
     <CommunityCard community_view={community} />
   </Modal>
 {/if}
 
 <div class="py-4 flex flex-col gap-2 text-sm max-w-full relative">
-  <div class="flex flex-row items-center">
-    <div class="flex flex-col">
-      <CommunityLink
-        showInstance={true}
-        avatar
-        community={community.community}
-        class="font-medium text-base"
-        instanceClass="text-xs"
-      />
-    </div>
+  <div class="flex flex-row items-center max-w-full w-full">
+    <a
+      href="/c/{fullCommunityName(
+        community.community.name,
+        community.community.actor_id,
+      )}"
+      class="hover:underline"
+    >
+      <Entity
+        icon={community.community.icon}
+        label={new URL(community.community.actor_id).hostname}
+        name={community.community.title}
+      ></Entity>
+    </a>
     <div class="ml-auto flex flex-row items-center gap-2">
       <Button size="square-md" on:click={() => (showInfo = !showInfo)}>
         <Icon src={InformationCircle} size="16" mini />
@@ -64,7 +69,7 @@
               community.subscribed = newSubscribed
               addSubscription(
                 community.community,
-                newSubscribed == 'Subscribed'
+                newSubscribed == 'Subscribed',
               )
             }
           }}
@@ -88,9 +93,6 @@
       </Subscribe>
     </div>
   </div>
-  {#if community.community.description}
-    <PostBody body={community.community.description} view="list"></PostBody>
-  {/if}
   <div class="flex flex-row gap-3 items-center">
     <LabelStat
       content={community.counts.posts.toString()}
