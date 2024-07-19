@@ -8,6 +8,7 @@
   import { onDestroy, onMount } from 'svelte'
   import { setSessionStorage } from '$lib/session.js'
   import PostFeed from '$lib/components/lemmy/post/feed/PostFeed.svelte'
+  import VirtualFeed from '$lib/components/lemmy/post/feed/VirtualFeed.svelte'
   import { Button, Modal, toast } from 'mono-svelte'
   import { afterNavigate } from '$app/navigation'
   import { browser } from '$app/environment'
@@ -22,6 +23,9 @@
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { profile } from '$lib/auth'
   import { t } from '$lib/translations.js'
+  import { userSettings } from '$lib/settings.js'
+  import { site } from '$lib/lemmy.js'
+  import { postFeeds } from '$lib/lemmy/postfeed.js'
 
   export let data
 
@@ -31,7 +35,7 @@
     if (browser)
       setSessionStorage(
         'lastSeenCommunity',
-        data.community.community_view.community
+        data.community.community_view.community,
       )
   })
 
@@ -81,7 +85,7 @@
               `!${data.community.community_view.community.name}@${
                 new URL(data.community.community_view.community.actor_id)
                   .hostname
-              }`
+              }`,
             )
 
             toast({ content: $t('toast.copied') })
@@ -89,7 +93,7 @@
           class="dark:text-zinc-400 text-slate-600 text-sm text-left"
         >
           !{data.community.community_view.community.name}@{new URL(
-            data.community.community_view.community.actor_id
+            data.community.community_view.community.actor_id,
           ).hostname}
         </button>
       </div>
@@ -102,7 +106,7 @@
             color="secondary"
             href="/c/{fullCommunityName(
               data.community.community_view.community.name,
-              data.community.community_view.community.actor_id
+              data.community.community_view.community.actor_id,
             )}/settings"
           >
             <Icon src={Cog6Tooth} size="16" mini />
@@ -132,30 +136,36 @@
         </Button>
       </Placeholder>
     {:else}
-      <PostFeed community={true} posts={data.posts.posts} />
+      <svelte:component
+        this={browser ? VirtualFeed : PostFeed}
+        posts={data.posts.posts.posts}
+        bind:feedData={data.posts}
+        lastSeen={$postFeeds.community.lastSeen}
+        feedId="main"
+      />
     {/if}
 
-    <Pageination
-      page={data.page}
-      cursor={{ next: data.posts.next_page }}
-      on:cursor={(c) => searchParam($page.url, 'cursor', c.detail)}
-      on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
+    <svelte:element
+      this={$userSettings.infiniteScroll ? 'noscript' : 'div'}
+      class="mt-auto"
     >
-      {#if data.posts.posts.length > 0}
+      <Pageination
+        page={data.page}
+        cursor={{ next: data.posts.cursor.next }}
+        on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
+        on:cursor={(c) => {
+          searchParam($page.url, 'cursor', c.detail)
+        }}
+      >
         <span class="flex flex-row items-center gap-1">
           <Icon src={ChartBar} size="16" mini />
-          <span class="font-medium text-black dark:text-white">
-            {data.community.community_view.counts.users_active_day}
-          </span>
-          <span class="font-normal">
-            Active user{data.community.community_view.counts.users_active_day >
-            1
-              ? 's'
-              : ''}
-          </span>
+          {$t('routes.frontpage.footer', {
+            // @ts-ignore
+            users: $site?.site_view.counts.users_active_day ?? '??',
+          })}
         </span>
-      {/if}
-    </Pageination>
+      </Pageination>
+    </svelte:element>
   </div>
 </div>
 

@@ -2,20 +2,40 @@
   import Post from '$lib/components/lemmy/post/Post.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { userSettings } from '$lib/settings.js'
-  import type { PostView } from 'lemmy-js-client'
+  import type {
+    GetPostsResponse,
+    ListingType,
+    PostView,
+    SortType,
+  } from 'lemmy-js-client'
   import { Badge, Button } from 'mono-svelte'
-  import { ArchiveBox, Icon, Minus, Plus } from 'svelte-hero-icons'
+  import {
+    ArchiveBox,
+    ExclamationTriangle,
+    Icon,
+    Minus,
+    Plus,
+  } from 'svelte-hero-icons'
   import { expoOut } from 'svelte/easing'
   import { fly, slide } from 'svelte/transition'
   import { browser } from '$app/environment'
   import { afterUpdate, onMount, tick, type SvelteComponent } from 'svelte'
   import { createWindowVirtualizer } from '@tanstack/svelte-virtual'
   import { afterNavigate, beforeNavigate } from '$app/navigation'
-  import { _posts } from '../../../../../routes/+page.svelte'
   import { combineCrossposts } from './crosspost'
+  import { client } from '$lib/lemmy'
+  import {
+    postFeeds,
+    type PostFeed,
+    type PostFeedID,
+  } from '$lib/lemmy/postfeed'
+  import { t } from '$lib/translations'
+  import InfiniteScroll from 'svelte-infinite-scroll'
 
   export let posts: PostView[]
   export let community: boolean = false
+  export let lastSeen: number | undefined = undefined
+  export let feedId: PostFeedID
 
   let combinedPosts = combineCrossposts(posts)
   $: combinedPosts = combineCrossposts(posts)
@@ -39,7 +59,104 @@
   }
 
   afterNavigate(() => {
-    $virtualizer.scrollToIndex($_posts?.lastSeen)
+    $virtualizer.scrollToIndex(lastSeen ?? 0, { align: 'auto' })
+  })
+
+  export let feedData: PostFeed['data']
+
+  const limit = 20
+  let error: any = undefined
+  let loading = false
+  let hasMore = true
+
+  async function loadMore() {
+    if (!hasMore || loading) return
+
+    try {
+      loading = true
+
+      const newPosts = await client()
+        .getPosts({
+          page_cursor: feedData.cursor.next,
+          disliked_only: feedData.disliked_only,
+          liked_only: feedData.liked_only,
+          community_id: feedData.community_id,
+          community_name: feedData.community_name,
+          limit: feedData.limit,
+          page: feedData.page,
+          saved_only: feedData.saved_only,
+          show_hidden: feedData.show_hidden,
+          sort: feedData.sort,
+          type_: feedData.type_,
+        })
+        .catch((e) => {
+          throw new Error(e)
+        })
+
+      error = null
+
+      hasMore = newPosts.posts.length != 0
+
+      feedData.cursor.next = newPosts.next_page
+      feedData.posts.posts = [...feedData.posts.posts, ...newPosts.posts]
+
+      postFeeds.updateFeed(feedId, {
+        data: feedData,
+      })
+
+      loading = false
+    } catch (e) {
+      error = e
+      loading = false
+    }
+  }
+
+  const callback: IntersectionObserverCallback = (entries, observer) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return
+
+      const element = entry.target as HTMLElement
+      const id = element.getAttribute('data-index')
+
+      if (!id) return
+
+      $postFeeds.main.lastSeen = Number(id)
+      observer.unobserve(element)
+    })
+  }
+
+  onMount(() => {
+    const observer = new IntersectionObserver(callback, {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.5,
+    })
+
+    const elements = document.querySelectorAll('.post-container')
+    elements.forEach((el) => observer.observe(el))
+
+    const postContainer = document.querySelector('#feed')
+    if (postContainer) {
+      const mutationObserver = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.type === 'childList') {
+            mutation.addedNodes.forEach((node) => {
+              if (
+                node instanceof HTMLElement &&
+                node.classList.contains('post-container')
+              ) {
+                observer.observe(node)
+              }
+            })
+          }
+        })
+      })
+
+      mutationObserver.observe(postContainer, {
+        childList: true,
+        subtree: true,
+      })
+    }
   })
 </script>
 
@@ -113,6 +230,39 @@
         {/each}
       </div>
     </div>
+  {/if}
+
+  {#if $userSettings.infiniteScroll && browser}
+    {#if error}
+      <div
+        class="flex flex-col justify-center items-center
+        rounded-xl gap-2 py-8 mt-6
+        border !border-b !border-red-500 bg-red-500/5 px-4"
+      >
+        <div class="bg-red-500/30 rounded-full p-3 text-red-500">
+          <Icon src={ExclamationTriangle} size="24" solid></Icon>
+        </div>
+        <pre class="py-0.5">{error}</pre>
+        <Button
+          color="primary"
+          {loading}
+          disabled={loading}
+          on:click={() => loadMore()}
+        >
+          {$t('message.retry')}
+        </Button>
+      </div>
+    {:else if hasMore}
+      <div class="w-full flex flex-col skeleton gap-2 animate-pulse pt-6">
+        <div class="w-96 h-8"></div>
+        <div class="w-full h-48"></div>
+        <div class="!bg-transparent h-8 flex justify-between">
+          <div class="w-48 h-8"></div>
+          <div class="w-24 h-8"></div>
+        </div>
+      </div>
+    {/if}
+    <InfiniteScroll window threshold={1000} on:loadMore={loadMore} />
   {/if}
   <slot />
 </ul>

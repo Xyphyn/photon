@@ -7,15 +7,11 @@
   import { ArchiveBox, Icon, Minus, Plus } from 'svelte-hero-icons'
   import { expoOut } from 'svelte/easing'
   import { fly, slide } from 'svelte/transition'
-  import { browser } from '$app/environment'
-  import { afterUpdate, onMount, tick, type SvelteComponent } from 'svelte'
-  import { createWindowVirtualizer } from '@tanstack/svelte-virtual'
-  import { afterNavigate, beforeNavigate } from '$app/navigation'
-  import { _posts } from '../../../../../routes/+page.svelte'
   import { combineCrossposts } from './crosspost'
 
   export let posts: PostView[]
   export let community: boolean = false
+  let etc = $$restProps
 
   $: combinedPosts = combineCrossposts(posts)
 

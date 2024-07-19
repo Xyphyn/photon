@@ -10,7 +10,7 @@
     Icon,
   } from 'svelte-hero-icons'
 
-  export let page: number
+  export let page: number = 0
   export let cursor: { next?: string; back?: string } | undefined = undefined
 
   const dispatcher = createEventDispatcher<{ change: number; cursor: string }>()

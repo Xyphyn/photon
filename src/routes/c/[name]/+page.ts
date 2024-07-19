@@ -1,4 +1,5 @@
 import { client } from '$lib/lemmy.js'
+import { postFeed } from '$lib/lemmy/postfeed.js'
 import { userSettings } from '$lib/settings.js'
 import type { SortType } from 'lemmy-js-client'
 import { get } from 'svelte/store'
@@ -16,13 +17,16 @@ export async function load({ params, fetch, url }) {
   return {
     sort: sort,
     page: page || 1,
-    posts: await client({ func: fetch }).getPosts({
-      limit: 40,
-      community_name: params.name,
-      page: page,
-      sort: sort,
-      page_cursor: cursor,
-      show_hidden: get(userSettings).posts.showHidden,
+    posts: await postFeed({
+      id: 'community',
+      url: url,
+      request: {
+        page: page,
+        page_cursor: cursor,
+        sort: sort,
+        limit: 20,
+        community_name: params.name,
+      }
     }),
   }
 }
