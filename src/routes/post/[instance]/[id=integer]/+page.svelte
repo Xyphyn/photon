@@ -43,6 +43,7 @@
   import { Popover } from 'mono-svelte'
   import { t } from '$lib/translations.js'
   import { createWindowVirtualizer } from '@tanstack/svelte-virtual'
+  import { resumables } from '$lib/lemmy/item.js'
 
   export let data
 
@@ -62,6 +63,17 @@
         post_id: post.post_view.post.id,
       })
     }
+
+    $resumables = [
+      ...$resumables,
+      {
+        id: Math.floor(Math.random() * 1000000),
+        name: post.post_view.post.name,
+        type: 'post',
+        url: $page.url.toString(),
+        avatar: post.post_view.post.thumbnail_url,
+      },
+    ]
   })
 
   afterNavigate(async () => {
