@@ -303,7 +303,7 @@
                 <CommandItem
                   {action}
                   class="{globalIndex == selectedIndex
-                    ? 'bg-slate-200 dark:bg-zinc-800 text-inherit'
+                    ? '!bg-slate-100 dark:!bg-zinc-800 text-inherit'
                     : 'text-slate-600 dark:text-zinc-400'} block"
                 />
               </li>
