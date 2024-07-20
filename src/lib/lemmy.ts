@@ -61,7 +61,7 @@ export function client({
   ) => Promise<Response>
   auth?: string
 } = {}) {
-  if (!instanceURL) instanceURL = get(instance)
+  if (!instanceURL) instanceURL = get(profile).instance
 
   let jwt = auth ? auth : get(profile)?.jwt
 
