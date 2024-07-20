@@ -6,6 +6,7 @@ import {
 import { resumables, type ResumableItem } from '$lib/lemmy/item'
 import { userSettings } from '$lib/settings'
 import { t } from '$lib/translations'
+import { legacyTheme } from '$lib/ui/colors'
 import { fullCommunityName } from '$lib/util'
 import {
   ArrowRightOnRectangle,
@@ -23,6 +24,10 @@ import {
   UserGroup,
   ViewColumns,
   type IconSource,
+  PaintBrush,
+  ComputerDesktop,
+  Sun,
+  Moon,
 } from 'svelte-hero-icons'
 
 export interface Group {
@@ -178,6 +183,33 @@ export function getGroups(resumables: ResumableItem[], profile: Profile) {
                   ...s,
                   view: 'card',
                 })),
+            },
+          ],
+        },
+        {
+          name: t.get('nav.commands.setColor'),
+          icon: PaintBrush,
+          subActions: [
+            {
+              name: t.get('nav.commands.setColorTo', {
+                default: t.get('nav.menu.colorscheme.system'),
+              }),
+              handle: () => legacyTheme.set('system'),
+              icon: ComputerDesktop,
+            },
+            {
+              name: t.get('nav.commands.setColorTo', {
+                default: t.get('nav.menu.colorscheme.light'),
+              }),
+              handle: () => legacyTheme.set('light'),
+              icon: Sun,
+            },
+            {
+              name: t.get('nav.commands.setColorTo', {
+                default: t.get('nav.menu.colorscheme.dark'),
+              }),
+              handle: () => legacyTheme.set('dark'),
+              icon: Moon,
             },
           ],
         },
