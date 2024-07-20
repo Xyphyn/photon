@@ -19,7 +19,7 @@
   For embed-type posts. Displays embed card or a compact link.
 -->
 {#if embed_title && !compact}
-  <Material color="distinct" class="flex flex-row gap-4">
+  <Material color="distinct" class="flex flex-col-reverse sm:flex-row overflow-hidden gap-4">
     <div class="flex flex-col gap-2">
       {#if richURL}
         <Link
@@ -50,7 +50,7 @@
       <a
         href={url}
         target="_blank"
-        class="ml-auto w-full thumbnail rounded-r-lg overflow-hidden flex-shrink -m-4"
+        class="-m-4 mb-auto sm:-mb-4 sm:ml-auto flex-shrink-0 sm:w-1/3 sm:max-w-60"
       >
         <img
           src={optimizeImageURL(thumbnail_url, 256)}
@@ -101,10 +101,3 @@
     </a>
   {/if}
 {/if}
-
-<style>
-  .thumbnail {
-    max-width: 240px;
-    height: calc(100%+16px);
-  }
-</style>
