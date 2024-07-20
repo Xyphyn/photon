@@ -288,9 +288,10 @@ async function userFromJwt(
   if (!site) return
 
   if (!versionIsSupported(site.version, MINIMUM_VERSION)) {
-    throw new Error(
-      `This version of Photon only supports Lemmy instances with version ${MINIMUM_VERSION} or higher. This Lemmy instance is running: ${site.version}`
-    )
+    toast({
+      content: `This version of Photon only supports Lemmy instances with version ${MINIMUM_VERSION} or higher. This Lemmy instance is running: ${site.version}`,
+      type: 'error',
+    })
   }
 
   const myUser = site.my_user

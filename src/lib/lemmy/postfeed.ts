@@ -1,13 +1,18 @@
-import { browser } from "$app/environment"
-import { instance } from "$lib/instance"
-import { client } from "$lib/lemmy"
-import type { GetPosts, GetPostsResponse, ListingType, SortType } from "lemmy-js-client"
-import { get, writable } from "svelte/store"
+import { browser } from '$app/environment'
+import { instance } from '$lib/instance'
+import { client } from '$lib/lemmy'
+import type {
+  GetPosts,
+  GetPostsResponse,
+  ListingType,
+  SortType,
+} from 'lemmy-js-client'
+import { get, writable } from 'svelte/store'
 
 export const shouldReload = (
   cache: PostFeed | undefined,
   url: URL,
-  instance: string,
+  instance: string
 ): boolean =>
   cache?.instance != instance || cache?.url.toString() != url.toString()
 
@@ -18,27 +23,28 @@ interface FetchPostFeed extends GetPosts {
 
 export async function postFeed(args: {
   id: PostFeedID
-  request: FetchPostFeed,
+  request: FetchPostFeed
   url: URL
+  fetch?: (
+    input: RequestInfo | URL,
+    init?: RequestInit | undefined
+  ) => Promise<Response>
 }) {
   const feed = get(postFeeds)[args.id]
 
   const posts = shouldReload(feed, args.url, get(instance))
-    ? await client().getPosts(args.request)
+    ? await client({ func: fetch }).getPosts(args.request)
     : feed.data.posts
 
-  if (
-    shouldReload(feed, args.url, get(instance)) &&
-    browser
-  )
+  if (shouldReload(feed, args.url, get(instance)) && browser)
     postFeeds.updateFeed(args.id, {
       data: {
         ...args.request,
         posts: posts,
         cursor: {
-          next: posts.next_page
+          next: posts.next_page,
         },
-        type_: args.request.type_
+        type_: args.request.type_,
       },
       url: args.url,
       lastSeen: 0,
@@ -54,35 +60,38 @@ export function getPostFeed(feeds: Map<PostFeedID, PostFeed>, id: PostFeedID) {
 
 function createPostFeedsStore() {
   // @ts-ignore
-  const { subscribe, update, set } = writable<Record<PostFeedID, PostFeed>>({});
+  const { subscribe, update, set } = writable<Record<PostFeedID, PostFeed>>({})
 
   return {
     subscribe,
-    addFeed: (id: PostFeedID, feed: PostFeed) => update(feeds => ({ ...feeds, [id]: feed })),
-    updateFeed: (id: PostFeedID, feed: Partial<PostFeed>) => update(feeds => {
-      return {
-        ...feeds,
-        [id]: { ...feeds[id], ...feed } as PostFeed
-      };
-    }),
-    removeFeed: (id: PostFeedID) => update(feeds => {
-      const { [id]: _, ...rest } = feeds;
-      return rest as Record<PostFeedID, PostFeed>;
-    }),
+    addFeed: (id: PostFeedID, feed: PostFeed) =>
+      update((feeds) => ({ ...feeds, [id]: feed })),
+    updateFeed: (id: PostFeedID, feed: Partial<PostFeed>) =>
+      update((feeds) => {
+        return {
+          ...feeds,
+          [id]: { ...feeds[id], ...feed } as PostFeed,
+        }
+      }),
+    removeFeed: (id: PostFeedID) =>
+      update((feeds) => {
+        const { [id]: _, ...rest } = feeds
+        return rest as Record<PostFeedID, PostFeed>
+      }),
     clearAll: () => set({} as Record<PostFeedID, PostFeed>),
-    set
-  };
+    set,
+  }
 }
 
-export type PostFeedID = 'main' | 'community' | 'profile'
+export type PostFeedID = 'main' | 'community' | 'profile' | 'votes'
 
 export interface PostFeed {
   data: GetPosts & {
-    posts: GetPostsResponse,
+    posts: GetPostsResponse
     cursor: {
       next?: string
-    },
-    sort: SortType,
+    }
+    sort: SortType
   }
   url: URL
   lastSeen: number
