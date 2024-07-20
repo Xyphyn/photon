@@ -225,7 +225,7 @@
 <svelte:window on:keydown={handleKeydown} />
 
 <TextInput bind:value={search} autofocus class="sticky" />
-<div class="h-96 overflow-auto border-t border-slate-200 dark:border-zinc-800">
+<div class="h-96 overflow-auto border-slate-200 dark:border-zinc-800">
   {#if breadcrumbs.length > 0}
     <div class="flex items-center gap-2 my-1">
       <button
