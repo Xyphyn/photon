@@ -37,20 +37,21 @@
 
   export let posts: PostView[]
   export let community: boolean = false
-  export let lastSeen: number | undefined = undefined
   export let feedId: PostFeedID
-
-  let combinedPosts = combineCrossposts(posts)
-  $: combinedPosts = combineCrossposts(posts)
 
   let virtualItemEls: HTMLElement[] = []
   let virtualListEl: HTMLElement | undefined = undefined
 
-  $: virtualizer = createWindowVirtualizer({
-    count: combinedPosts.length,
-    estimateSize: () => 0,
-    scrollMargin: virtualListEl?.offsetTop ?? 0,
+  const virtualizer = createWindowVirtualizer({
+    count: posts.length,
+    estimateSize: () => 150,
   })
+
+  $: if (posts.length)
+    $virtualizer.setOptions({
+      count: posts.length,
+      scrollMargin: virtualListEl?.offsetTop,
+    })
 
   $: items = $virtualizer.getVirtualItems()
   $: {
@@ -59,12 +60,12 @@
   }
 
   afterNavigate(() => {
+    console.log($postFeeds[feedId].lastSeen)
     $virtualizer.scrollToIndex($postFeeds[feedId].lastSeen ?? 0)
   })
 
   export let feedData: PostFeed['data']
 
-  const limit = 20
   let error: any = undefined
   let loading = false
   let hasMore = true
@@ -220,15 +221,15 @@
             data-index={row.index}
             class="relative post-container"
           >
-            {#if combinedPosts[row.index]}
+            {#if posts[row.index]}
               <Post
                 hideCommunity={community}
-                view={(combinedPosts[row.index]?.post.featured_community ||
-                  combinedPosts[row.index]?.post.featured_local) &&
+                view={(posts[row.index]?.post.featured_community ||
+                  posts[row.index]?.post.featured_local) &&
                 $userSettings.posts.compactFeatured
                   ? 'compact'
                   : $userSettings.view}
-                post={combinedPosts?.[row.index]}
+                post={posts?.[row.index]}
                 class="transition-all duration-250"
                 on:hide={() => {
                   posts = posts.toSpliced(row.index, 1)
