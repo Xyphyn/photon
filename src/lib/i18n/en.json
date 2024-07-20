@@ -42,7 +42,8 @@
       "setView": "Set view",
       "setViewTo": "Set view to {{default}}",
       "setColor": "Set color scheme",
-      "setColorTo": "Set color scheme to {{default}}"
+      "setColorTo": "Set color scheme to {{default}}",
+      "feeds": "Feeds"
     }
   },
   "account": {

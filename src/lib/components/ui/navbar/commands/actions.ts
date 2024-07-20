@@ -28,6 +28,18 @@ import {
   ComputerDesktop,
   Sun,
   Moon,
+  MapPin,
+  GlobeAmericas,
+  ChartBar,
+  Trophy,
+  ArrowTrendingUp,
+  Fire,
+  Scale,
+  Star,
+  Clock,
+  ArrowTrendingDown,
+  ChatBubbleOvalLeftEllipsis,
+  ChatBubbleLeftRight,
 } from 'svelte-hero-icons'
 
 export interface Group {
@@ -82,6 +94,129 @@ export function getGroups(resumables: ResumableItem[], profile: Profile) {
               },
             ]
           : []),
+      ],
+    },
+    {
+      name: t.get('nav.commands.feeds'),
+      actions: [
+        {
+          name: t.get('filter.location.label'),
+          icon: GlobeAmericas,
+          subActions: [
+            {
+              name: t.get('filter.location.all'),
+              icon: GlobeAmericas,
+              href: '/?type=All',
+            },
+            {
+              name: t.get('filter.location.local'),
+              icon: MapPin,
+              href: '/?type=Local',
+            },
+            {
+              name: t.get('filter.location.subscribed'),
+              icon: Newspaper,
+              href: '/?type=Subscribed',
+            },
+          ],
+        },
+        {
+          name: t.get('filter.sort.label'),
+          icon: ChartBar,
+          subActions: [
+            {
+              name: t.get('filter.sort.top.label'),
+              icon: Trophy,
+              subActions: [
+                {
+                  name: t.get('filter.sort.top.time.all'),
+                  icon: ChartBar,
+                  href: '/?sort=TopAll',
+                },
+                {
+                  name: t.get('filter.sort.top.time.9months'),
+                  icon: ChartBar,
+                  href: '/?sort=Top9Months',
+                },
+                {
+                  name: t.get('filter.sort.top.time.6months'),
+                  icon: ChartBar,
+                  href: '/?sort=Top6Months',
+                },
+                {
+                  name: t.get('filter.sort.top.time.3months'),
+                  icon: ChartBar,
+                  href: '/?sort=Top3Months',
+                },
+                {
+                  name: t.get('filter.sort.top.time.month'),
+                  icon: ChartBar,
+                  href: '/?sort=TopMonth',
+                },
+                {
+                  name: t.get('filter.sort.top.time.week'),
+                  icon: ChartBar,
+                  href: '/?sort=TopWeek',
+                },
+                {
+                  name: t.get('filter.sort.top.time.day'),
+                  icon: ChartBar,
+                  href: '/?sort=TopDay',
+                },
+                {
+                  name: t.get('filter.sort.top.time.6hours'),
+                  icon: ChartBar,
+                  href: '/?sort=Top6Hours',
+                },
+                {
+                  name: t.get('filter.sort.top.time.hour'),
+                  icon: ChartBar,
+                  href: '/?sort=TopHour',
+                },
+              ],
+            },
+            {
+              name: t.get('filter.sort.active'),
+              icon: ArrowTrendingUp,
+              href: '/?sort=Active',
+            },
+            {
+              name: t.get('filter.sort.hot'),
+              icon: Fire,
+              href: '/?sort=Hot',
+            },
+            {
+              name: t.get('filter.sort.scaled'),
+              icon: Scale,
+              href: '/?sort=Scaled',
+            },
+            {
+              name: t.get('filter.sort.new'),
+              icon: Star,
+              href: '/?sort=New',
+            },
+            {
+              name: t.get('filter.sort.old'),
+              icon: Clock,
+              href: '/?sort=Old',
+            },
+            {
+              name: t.get('filter.sort.controversial'),
+              icon: ArrowTrendingDown,
+              href: '/?sort=Controversial',
+            },
+            {
+              name: t.get('filter.sort.mostcomments'),
+              icon: ChatBubbleOvalLeftEllipsis,
+              href: '/?sort=MostComments',
+            },
+            {
+              name: t.get('filter.sort.newcomments'),
+              icon: ChatBubbleLeftRight,
+              href: '/?sort=NewComments',
+            },
+          ],
+        },
       ],
     },
     {
