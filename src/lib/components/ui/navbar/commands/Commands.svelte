@@ -34,6 +34,7 @@
   import { afterNavigate, goto } from '$app/navigation'
   import { profile } from '$lib/auth'
   import { fullCommunityName } from '$lib/util'
+  import { getGroups } from './actions'
 
   export let open = false
   $: if (open) search = ''
@@ -54,93 +55,7 @@
 
   export let groups: Group[] = []
 
-  $: groups = [
-    {
-      name: $t('nav.commands.recents'),
-      actions: $resumables.map((r) => ({
-        name: r.name,
-        icon: r.avatar ?? PencilSquare,
-        href: r.url,
-      })),
-    },
-    {
-      name: $t('nav.commands.main'),
-      actions: [
-        { href: '/', name: $t('nav.home'), icon: Home, shortcut: 'h' },
-        { href: '/communities', name: $t('nav.communities'), icon: GlobeAlt },
-      ],
-    },
-    {
-      name: $t('profile.profile'),
-      actions: [
-        {
-          href: '/profile/user',
-          name: $t('profile.profile'),
-          icon: UserCircle,
-        },
-        {
-          href: '/inbox',
-          name: $t('profile.inbox'),
-          icon: Inbox,
-          shortcut: 'i',
-        },
-        {
-          href: '/saved',
-          name: $t('profile.saved'),
-          icon: Bookmark,
-        },
-        {
-          href: '/accounts',
-          name: $t('account.accounts'),
-          icon: UserGroup,
-        },
-        {
-          href: '/login',
-          name: $t('account.login'),
-          icon: ArrowRightOnRectangle,
-        },
-        {
-          href: '/signup',
-          name: $t('account.signup'),
-          icon: Identification,
-        },
-      ],
-    },
-    {
-      name: $t('nav.menu.app'),
-      actions: [
-        {
-          href: '/settings',
-          name: $t('nav.menu.settings'),
-          icon: Cog6Tooth,
-        },
-      ],
-    },
-    {
-      name: $t('nav.commands.content'),
-      actions: [
-        {
-          href: '/create/post',
-          name: $t('routes.createPost'),
-          icon: PencilSquare,
-        },
-        {
-          href: '/create/community',
-          name: $t('routes.createCommunity'),
-          icon: Newspaper,
-        },
-      ],
-    },
-    {
-      name: $t('profile.subscribed'),
-      actions:
-        $profile?.user?.follows.map((f) => ({
-          icon: f.community.icon,
-          name: f.community.title,
-          href: `/c/${fullCommunityName(f.community.name, f.community.actor_id)}`,
-        })) ?? [],
-    },
-  ]
+  $: groups = getGroups($resumables, $profile)
 
   let search = ''
   let container: HTMLElement
@@ -194,7 +109,7 @@
         actions: scoredActions,
         score: Math.max(
           fuzzySearch(group.name, search),
-          ...scoredActions.map((a) => a.score),
+          ...scoredActions.map((a) => a.score)
         ),
       }
     })
