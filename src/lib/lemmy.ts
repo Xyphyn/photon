@@ -65,10 +65,11 @@ export function client({
 
   let jwt = auth ? auth : get(profile)?.jwt
 
-  let headers = jwt ? { Authorization: `Bearer ${jwt}` } : { Authorization: '' }
+  let headers = jwt ? { Authorization: `Bearer ${jwt}` } : {}
 
   return new LemmyHttp(instanceToURL(instanceURL), {
     fetchFunction: (input, init) => customFetch(func, input, init, jwt),
+    //@ts-ignore
     headers: headers,
   })
 }
