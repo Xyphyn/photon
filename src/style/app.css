@@ -2,22 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer utilities {
-  /*
-    Chromium browsers don't render nested backdrop filters.
-    As a workaround, add 'before:' to the outer filter, along with 'before:backdrop-hack':
-
-      <div class="before:backdrop-blur-md before:backdrop-hack>
-        <div class="backdrop-blur-md"></div>
-      </div>
-
-    See https://stackoverflow.com/a/76207141.
-  */
-  .backdrop-hack {
-    @apply absolute inset-0 -z-10;
-  }
-}
-
 @font-face {
   font-family: 'Inter';
   src: url('/font/Inter.woff2') format('woff2');
@@ -104,8 +88,4 @@ pre {
 
 .dark ::-webkit-scrollbar-thumb {
   @apply bg-zinc-800;
-}
-
-.banner {
-  mask-image: linear-gradient(to left, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
 }
