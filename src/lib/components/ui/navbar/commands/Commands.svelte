@@ -9,19 +9,25 @@
   } from 'mono-svelte'
   import { createEventDispatcher, onMount } from 'svelte'
   import {
+    ArrowRightOnRectangle,
     Bookmark,
+    Cog6Tooth,
     Icon,
+    Identification,
     Inbox,
+    MagnifyingGlass,
+    Newspaper,
     PencilSquare,
     QuestionMarkCircle,
     UserCircle,
+    UserGroup,
     type IconSource,
   } from 'svelte-hero-icons'
   import Avatar from '../../Avatar.svelte'
   import { t } from '$lib/translations'
   import CommandItem from './CommandItem.svelte'
   import { browser } from '$app/environment'
-  import { goto } from '$app/navigation'
+  import { afterNavigate, goto } from '$app/navigation'
 
   export let open = false
   $: if (open) search = ''
@@ -44,7 +50,7 @@
 
   $: groups = [
     {
-      name: 'Recents',
+      name: $t('nav.commands.recents'),
       actions: $resumables.map((r) => ({
         name: r.name,
         icon: r.avatar ?? PencilSquare,
@@ -69,6 +75,46 @@
           name: $t('profile.saved'),
           icon: Bookmark,
         },
+        {
+          href: '/accounts',
+          name: $t('account.accounts'),
+          icon: UserGroup,
+        },
+        {
+          href: '/login',
+          name: $t('account.login'),
+          icon: ArrowRightOnRectangle,
+        },
+        {
+          href: '/signup',
+          name: $t('account.signup'),
+          icon: Identification,
+        },
+      ],
+    },
+    {
+      name: $t('nav.menu.app'),
+      actions: [
+        {
+          href: '/settings',
+          name: $t('nav.menu.settings'),
+          icon: Cog6Tooth,
+        },
+      ],
+    },
+    {
+      name: $t('nav.commands.content'),
+      actions: [
+        {
+          href: '/create/post',
+          name: $t('routes.createPost'),
+          icon: PencilSquare,
+        },
+        {
+          href: '/create/community',
+          name: $t('routes.createCommunity'),
+          icon: Newspaper,
+        },
       ],
     },
   ]
@@ -77,6 +123,15 @@
   let container: HTMLElement
   const dispatch = createEventDispatcher()
   let selectedIndex = 0
+
+  $: filteredGroups = groups
+    .map((group) => ({
+      ...group,
+      actions: group.actions.filter((action) =>
+        action.name.toLowerCase().includes(search.toLowerCase()),
+      ),
+    }))
+    .filter((group) => group.actions.length > 0)
 
   $: flattenedActions = groups.flatMap((group) =>
     group.actions.map((action) => ({ ...action, group: group.name })),
@@ -87,7 +142,7 @@
   )
 
   function togglePalette() {
-    open = false
+    open = !open
     if (open) {
       search = ''
       selectedIndex = 0
@@ -97,7 +152,7 @@
   function handleKeydown(event: KeyboardEvent) {
     if ((event.ctrlKey && event.key === 'k') || event.key == '/') {
       event.preventDefault()
-      open = true
+      togglePalette()
     }
 
     if (!open) return
@@ -106,18 +161,16 @@
       case 'ArrowDown':
         event.preventDefault()
         selectedIndex = (selectedIndex + 1) % filteredActions.length
+        focusItem(selectedIndex)
         break
       case 'ArrowUp':
         event.preventDefault()
         selectedIndex =
           (selectedIndex - 1 + filteredActions.length) % filteredActions.length
+        focusItem(selectedIndex)
         break
       case 'Enter':
-        event.preventDefault()
-        if (filteredActions[selectedIndex]) {
-          handleSelect(filteredActions[selectedIndex])
-          dispatch('select', filteredActions[selectedIndex])
-        }
+        handleSelect(filteredActions[selectedIndex])
         break
       case 'Escape':
         event.preventDefault()
@@ -136,32 +189,55 @@
   async function handleSelect(action: Action & { group: string }) {
     if (action.href) await goto(action.href)
     if (action.handle) action.handle()
+    togglePalette()
     dispatch('select', action)
   }
+
+  afterNavigate(() => {
+    open = false
+  })
 </script>
 
 <svelte:window on:keydown={handleKeydown} />
 
-<Modal title="Command Prompt" bind:open>
-  <TextInput bind:value={search} autofocus />
-  <div class="space-y-1" bind:this={container}>
-    {#if search == ''}
-      {#each groups as group}
-        <span class="text-slate-700 dark:text-zinc-300 font-medium text-sm">
-          {group.name}
-        </span>
-        <ul class="flex flex-col gap-1">
-          {#each group.actions as action, index}
-            <CommandItem {action} />
-          {/each}
-        </ul>
+<Modal title={$t('nav.commands.prompt')} bind:open>
+  <TextInput bind:value={search} autofocus class="sticky" />
+  <div
+    class="h-96 overflow-auto border-t border-slate-200 dark:border-zinc-800"
+  >
+    <div class="space-y-1" bind:this={container}>
+      {#each filteredGroups as group, groupIndex}
+        <div class="space-y-1">
+          <span class="text-sm font-medium">{group.name}</span>
+          <ul class="flex flex-col gap-1">
+            {#each group.actions as action, actionIndex}
+              {@const globalIndex =
+                filteredGroups
+                  .slice(0, groupIndex)
+                  .reduce((sum, g) => sum + g.actions.length, 0) + actionIndex}
+              <li>
+                <CommandItem
+                  {action}
+                  class="{globalIndex == selectedIndex
+                    ? 'bg-slate-200 dark:bg-zinc-800 text-inherit'
+                    : 'text-slate-600 dark:text-zinc-400'} block"
+                />
+              </li>
+            {/each}
+          </ul>
+        </div>
       {/each}
-    {:else}
-      <ul class="flex flex-col gap-1">
-        {#each filteredActions as action, index}
-          <CommandItem {action} />
-        {/each}
-      </ul>
-    {/if}
+      <CommandItem
+        action={{
+          name: search,
+          href: `/search?q=${encodeURIComponent(search)}`,
+          icon: MagnifyingGlass,
+        }}
+      >
+        <span class="font-normal text-slate-600 dark:text-zinc-400">
+          {$t('nav.commands.search', { default: '' })}
+        </span>
+      </CommandItem>
+    </div>
   </div>
 </Modal>

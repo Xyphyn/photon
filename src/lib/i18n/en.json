@@ -32,6 +32,12 @@
       "source": "Source",
       "donate": "Donate",
       "instance": "Instance"
+    },
+    "commands": {
+      "prompt": "Command Prompt",
+      "recents": "Recents",
+      "content": "Content",
+      "search": "Search for {{default}}"
     }
   },
   "account": {

@@ -19,12 +19,13 @@
   alignment="left"
   color="tertiary"
   size="lg"
-  class="focus:bg-slate-200 focus:dark:bg-zinc-800"
+  class="focus:bg-slate-200 focus:dark:bg-zinc-800 block {$$props.class}"
 >
   {#if typeof action.icon === 'string'}
     <Avatar url={action.icon} width={20} />
   {:else}
     <Icon src={action.icon ?? QuestionMarkCircle} size="20" />
   {/if}
+  <slot />
   {action.name}
 </Button>
