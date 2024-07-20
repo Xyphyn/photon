@@ -13,7 +13,13 @@ import {
   type MyUserInfo,
   type Community,
 } from 'lemmy-js-client'
-import { derived, get, writable, type Readable, type Writable } from 'svelte/store'
+import {
+  derived,
+  get,
+  writable,
+  type Readable,
+  type Writable,
+} from 'svelte/store'
 import { MINIMUM_VERSION, versionIsSupported } from '$lib/version.js'
 import { browser } from '$app/environment'
 import { env } from '$env/dynamic/public'
@@ -57,7 +63,7 @@ interface ProfileData {
   defaultInstance?: string
 }
 
-interface PersonData extends MyUserInfo { }
+interface PersonData extends MyUserInfo {}
 
 interface Notifications {
   inbox: number
@@ -93,7 +99,7 @@ export let profileData = writable<ProfileData>(
 
 let fetchUser = {
   loading: false,
-  prevProfile: -1
+  prevProfile: -1,
 }
 
 export let profile: Readable<Profile> = derived(
@@ -106,7 +112,7 @@ export let profile: Readable<Profile> = derived(
     set(profile)
 
     if (profile?.jwt) {
-      if ((profile.id != fetchUser.prevProfile) && !fetchUser.loading) {
+      if (profile.id != fetchUser.prevProfile && !fetchUser.loading) {
         site.set(undefined)
 
         fetchUser.loading = true
@@ -125,6 +131,7 @@ export let profile: Readable<Profile> = derived(
 
             profile.user = res?.user
             profile.avatar = res?.user?.local_user_view.person.avatar
+            profile.username = res?.user?.local_user_view.person.name
 
             fetchUser.loading = false
             fetchUser.prevProfile = profile.id
@@ -146,7 +153,6 @@ export let profile: Readable<Profile> = derived(
         fetchUser.loading = false
       }
     }
-
   }
 )
 
@@ -223,7 +229,7 @@ export async function setUser(jwt: string, inst: string, username?: string) {
     })
   if (!user?.user) {
     toast({
-      content: 'Your instance\'s API did not return your user data.',
+      content: "Your instance's API did not return your user data.",
       type: 'error',
     })
   }
@@ -232,14 +238,14 @@ export async function setUser(jwt: string, inst: string, username?: string) {
 
   profileData.update((pd) => {
     // too lazy to make a decent system
-    const id = Math.max(...pd.profiles.map(p => p.id)) + 1
+    const id = Math.max(...pd.profiles.map((p) => p.id)) + 1
 
     const newProfile: Profile = {
       id: id,
       instance: inst,
       jwt: jwt,
       username: user?.user?.local_user_view.person.name,
-      avatar: user?.user?.local_user_view.person.avatar
+      avatar: user?.user?.local_user_view.person.avatar,
     }
 
     return {
@@ -254,7 +260,9 @@ export async function setUser(jwt: string, inst: string, username?: string) {
 async function userFromJwt(
   jwt: string,
   instance: string
-): Promise<{ user: PersonData | undefined; site: GetSiteResponse } | undefined> {
+): Promise<
+  { user: PersonData | undefined; site: GetSiteResponse } | undefined
+> {
   const sitePromise = client({ instanceURL: instance, auth: jwt }).getSite()
 
   let timer = setTimeout(
@@ -262,15 +270,19 @@ async function userFromJwt(
       toast({
         content: `Still loading your user data...`,
         type: 'warning',
-        loading: true
+        loading: true,
       }),
     5000
   )
 
-  const site = await sitePromise.then((r) => {
-    clearTimeout(timer)
-    return r
-  }).catch((e) => { toast({ content: `Failed to contact the instance. ${e}` }) })
+  const site = await sitePromise
+    .then((r) => {
+      clearTimeout(timer)
+      return r
+    })
+    .catch((e) => {
+      toast({ content: `Failed to contact the instance. ${e}` })
+    })
 
   if (!site) return
 
@@ -319,7 +331,7 @@ instance.subscribe(async (i) => {
     const s = await new LemmyHttp(`https://${i}`).getSite()
 
     site.set(s)
-  } catch (e) { }
+  } catch (e) {}
 })
 
 export async function setUserID(id: number) {
