@@ -38,13 +38,13 @@
   import { LINKED_INSTANCE_URL } from '$lib/instance'
   import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
   import { t } from '$lib/translations'
-  import Commands from './commands/Commands.svelte'
+  import CommandsWrapper from './commands/CommandsWrapper.svelte'
 
   let searching = false
   let promptOpen: boolean = false
 </script>
 
-<Commands bind:open={promptOpen} />
+<CommandsWrapper bind:open={promptOpen} />
 <nav
   class="flex flex-row gap-2 items-center w-full mx-auto z-50 box-border p-0.5
   duration-150

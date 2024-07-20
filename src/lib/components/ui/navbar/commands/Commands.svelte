@@ -1,57 +1,17 @@
 <script lang="ts">
   import { resumables } from '$lib/lemmy/item'
-  import {
-    Button,
-    buttonColor,
-    buttonSize,
-    Modal,
-    TextInput,
-  } from 'mono-svelte'
+  import { TextInput } from 'mono-svelte'
   import { createEventDispatcher, onMount } from 'svelte'
-  import {
-    ArrowRightOnRectangle,
-    Bookmark,
-    Cog6Tooth,
-    Fire,
-    GlobeAlt,
-    Home,
-    Icon,
-    Identification,
-    Inbox,
-    MagnifyingGlass,
-    Newspaper,
-    PencilSquare,
-    QuestionMarkCircle,
-    ShieldCheck,
-    UserCircle,
-    UserGroup,
-    type IconSource,
-  } from 'svelte-hero-icons'
-  import Avatar from '../../Avatar.svelte'
+  import { Home, Icon, MagnifyingGlass } from 'svelte-hero-icons'
   import { t } from '$lib/translations'
   import CommandItem from './CommandItem.svelte'
   import { browser } from '$app/environment'
   import { afterNavigate, goto } from '$app/navigation'
   import { profile } from '$lib/auth'
-  import { fullCommunityName } from '$lib/util'
-  import { getGroups } from './actions'
+  import { getGroups, type Action, type Group } from './actions'
 
   export let open = false
   $: if (open) search = ''
-
-  interface Group {
-    name: string
-    actions: Action[]
-  }
-
-  interface Action {
-    name: string
-    desc?: string
-    handle?: () => any
-    href?: string
-    shortcut?: string
-    icon: string | IconSource
-  }
 
   export let groups: Group[] = []
 
@@ -61,6 +21,8 @@
   let container: HTMLElement
   const dispatch = createEventDispatcher()
   let selectedIndex = 0
+  let filteredGroups: Group[] = []
+  let breadcrumbs: Action[] = []
 
   function fuzzySearch(text: string, pattern: string): number {
     const textLower = text.toLowerCase()
@@ -94,47 +56,97 @@
     return score
   }
 
-  $: filteredGroups = groups
-    .map((group) => {
-      const scoredActions = group.actions
-        .map((action) => ({
-          ...action,
-          score: Math.max(fuzzySearch(action.name, search)),
-        }))
-        .filter((action) => action.score > 0)
-        .sort((a, b) => b.score - a.score)
+  const debounce = (fn: Function, ms = 300) => {
+    let timeoutId: ReturnType<typeof setTimeout>
+    return function (this: any, ...args: any[]) {
+      clearTimeout(timeoutId)
+      timeoutId = setTimeout(() => fn.apply(this, args), ms)
+    }
+  }
 
-      return {
-        ...group,
-        actions: scoredActions,
-        score: Math.max(
-          fuzzySearch(group.name, search),
-          ...scoredActions.map((a) => a.score)
-        ),
+  const debouncedSearch = debounce((term: string) => {
+    if (term.length < 1) {
+      if (breadcrumbs.length <= 0) {
+        filteredGroups = groups.map((group) => ({
+          ...group,
+          actions: flattenActions(group.actions, false),
+        }))
       }
-    })
-    .filter((group) => group.actions.length > 0)
-    .sort((a, b) => b.score - a.score)
+    } else {
+      filteredGroups = groups
+        .map((group) => {
+          const scoredActions = flattenActions(group.actions)
+            .map((action) => ({
+              ...action,
+              score: Math.max(
+                fuzzySearch(action.name, term),
+                fuzzySearch(group.name, term)
+              ),
+            }))
+            .filter((action) => action.score > 0)
+            .sort((a, b) => b.score - a.score)
+
+          return {
+            ...group,
+            actions: scoredActions,
+            score: Math.max(
+              fuzzySearch(group.name, term),
+              ...scoredActions.map((a) => a.score)
+            ),
+          }
+        })
+        .filter((group) => group.actions.length > 0)
+        .sort((a, b) => b.score - a.score)
+    }
+  }, 50)
+
+  function updateFilteredGroups() {
+    if (breadcrumbs.length === 0) {
+      filteredGroups = groups
+    } else {
+      const lastAction = breadcrumbs[breadcrumbs.length - 1]
+      filteredGroups = [
+        {
+          name: lastAction.name,
+          actions: lastAction.subActions || [],
+        },
+      ]
+    }
+    selectedIndex = 0
+    search = ''
+  }
+
+  function goBack() {
+    breadcrumbs.pop()
+    updateFilteredGroups()
+  }
 
   $: flattenedActions = filteredGroups.flatMap((group) => group.actions)
+  $: debouncedSearch(search)
+
+  function flattenActions(
+    actions: Action[],
+    subaction: boolean = true
+  ): Action[] {
+    return actions.flatMap((action) => [
+      action,
+      ...(action.subActions && subaction
+        ? flattenActions(action.subActions)
+        : []),
+    ])
+  }
 
   function togglePalette() {
     open = !open
     if (open) {
       search = ''
       selectedIndex = 0
+      filteredGroups = groups
+      breadcrumbs = []
     }
   }
 
   function handleKeydown(event: KeyboardEvent) {
-    if (
-      (event.ctrlKey && event.key === 'p') ||
-      (event.key == '/' && document.activeElement == document.body)
-    ) {
-      event.preventDefault()
-      togglePalette()
-    }
-
     if (event.ctrlKey) {
       const actions = groups
         .flatMap((g) => g.actions)
@@ -169,7 +181,12 @@
         break
       case 'Escape':
         event.preventDefault()
-        togglePalette()
+        if (breadcrumbs.length > 0) {
+          breadcrumbs.pop()
+          updateFilteredGroups()
+        } else {
+          togglePalette()
+        }
         break
     }
 
@@ -189,59 +206,80 @@
 
   async function handleSelect(action: Action) {
     if (!action) return
-    if (action.href) goto(action.href)
-    if (action.handle) action.handle()
-    togglePalette()
-    dispatch('select', action)
+    if (action.subActions && action.subActions.length > 0) {
+      breadcrumbs = [...breadcrumbs, action]
+      updateFilteredGroups()
+    } else {
+      if (action.href) goto(action.href)
+      if (action.handle) action.handle()
+      togglePalette()
+      dispatch('select', action)
+    }
   }
 
   afterNavigate(() => {
-    open = false
+    // open = false
   })
 </script>
 
 <svelte:window on:keydown={handleKeydown} />
 
-<Modal title={$t('nav.commands.prompt')} bind:open>
-  <TextInput bind:value={search} autofocus class="sticky" />
-  <div
-    class="h-96 overflow-auto border-t border-slate-200 dark:border-zinc-800"
-  >
-    <div class="space-y-1" bind:this={container}>
-      {#each filteredGroups as group, groupIndex}
-        <div class="space-y-1">
-          <span class="text-sm font-medium">{group.name}</span>
-          <ul class="flex flex-col gap-1">
-            {#each group.actions as action, actionIndex}
-              {@const globalIndex =
-                filteredGroups
-                  .slice(0, groupIndex)
-                  .reduce((sum, g) => sum + g.actions.length, 0) + actionIndex}
-              <li>
-                <CommandItem
-                  {action}
-                  class="{globalIndex == selectedIndex
-                    ? '!bg-slate-100 dark:!bg-zinc-800 text-inherit'
-                    : 'text-slate-600 dark:text-zinc-400'} block"
-                />
-              </li>
-            {/each}
-          </ul>
-        </div>
+<TextInput bind:value={search} autofocus class="sticky" />
+<div class="h-96 overflow-auto border-t border-slate-200 dark:border-zinc-800">
+  {#if breadcrumbs.length > 0}
+    <div class="flex items-center gap-2 my-1">
+      <button
+        class="text-[13px] font-medium text-slate-600 dark:text-zinc-400"
+        on:click={goBack}
+      >
+        <Icon src={Home} size="16" mini />
+      </button>
+      {#each breadcrumbs as crumb, index}
+        <span class="text-base text-slate-400 dark:text-zinc-600">/</span>
+        <span class="text-[13px] font-medium">
+          {crumb.name}
+        </span>
       {/each}
-      {#if search != ''}
-        <CommandItem
-          action={{
-            name: search,
-            href: `/search?q=${encodeURIComponent(search)}`,
-            icon: MagnifyingGlass,
-          }}
-        >
-          <span class="font-normal text-slate-600 dark:text-zinc-400">
-            {$t('nav.commands.search', { default: '' })}
-          </span>
-        </CommandItem>
-      {/if}
     </div>
+  {/if}
+  <div class="space-y-1" bind:this={container}>
+    {#each filteredGroups as group, groupIndex}
+      <div class="space-y-1">
+        <span class="text-sm font-medium">{group.name}</span>
+        <ul class="flex flex-col gap-1">
+          {#each group.actions as action, actionIndex}
+            {@const globalIndex =
+              filteredGroups
+                .slice(0, groupIndex)
+                .reduce((sum, g) => sum + g.actions.length, 0) + actionIndex}
+            <li>
+              <CommandItem
+                {action}
+                on:click={(e) => {
+                  e.stopPropagation()
+                  handleSelect(action)
+                }}
+                class="{globalIndex == selectedIndex
+                  ? '!bg-slate-100 dark:!bg-zinc-800 text-inherit'
+                  : 'text-slate-600 dark:text-zinc-400'} block"
+              />
+            </li>
+          {/each}
+        </ul>
+      </div>
+    {/each}
+    {#if search != ''}
+      <CommandItem
+        action={{
+          name: search,
+          href: `/search?q=${encodeURIComponent(search)}`,
+          icon: MagnifyingGlass,
+        }}
+      >
+        <span class="font-normal text-slate-600 dark:text-zinc-400">
+          {$t('nav.commands.search', { default: '' })}
+        </span>
+      </CommandItem>
+    {/if}
   </div>
-</Modal>
+</div>

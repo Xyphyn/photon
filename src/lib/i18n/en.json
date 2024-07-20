@@ -38,7 +38,9 @@
       "recents": "Recents",
       "content": "Content",
       "search": "Search for {{default}}",
-      "main": "Main"
+      "main": "Main",
+      "setView": "Set view",
+      "setViewTo": "Set view to {{default}}"
     }
   },
   "account": {

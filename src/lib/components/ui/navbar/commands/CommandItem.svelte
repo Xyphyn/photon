@@ -1,25 +1,24 @@
 <script lang="ts">
   import { Button, Material } from 'mono-svelte'
-  import { Icon, QuestionMarkCircle, type IconSource } from 'svelte-hero-icons'
+  import {
+    ArrowUturnDown,
+    Icon,
+    QuestionMarkCircle,
+    type IconSource,
+  } from 'svelte-hero-icons'
   import Avatar from '../../Avatar.svelte'
+  import type { Action } from './actions'
 
-  export let action: {
-    name: string
-    desc?: string
-    handle?: () => any
-    href?: string
-    shortcut?: string
-    icon: string | IconSource
-  }
+  export let action: Action
 </script>
 
 <Button
   href={action.href}
-  on:click={action.handle}
+  on:click
   alignment="left"
   color="tertiary"
   size="lg"
-  class="focus:bg-slate-200 focus:dark:bg-zinc-800 block {$$props.class}"
+  class="focus:bg-slate-200 focus:dark:bg-zinc-800 block w-full {$$props.class}"
   data-sveltekit-preload-code="viewport"
   data-sveltekit-preload-data="tap"
 >
@@ -29,10 +28,13 @@
     <Icon src={action.icon ?? QuestionMarkCircle} size="20" />
   {/if}
   <slot />
-  {action.name}
+  <span class="mr-auto">{action.name}</span>
   {#if action.shortcut}
-    <div class="ml-auto flex items-center gap-0.5 text-xs font-medium">
+    <div class="flex items-center gap-0.5 text-xs font-medium">
       ⌘ {action.shortcut}
     </div>
+  {/if}
+  {#if action.subActions}
+    <Icon src={ArrowUturnDown} size="16" micro />
   {/if}
 </Button>

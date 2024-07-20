@@ -1,5 +1,10 @@
 import type { Profile } from '$lib/auth'
+import {
+  amModOfAny,
+  isAdmin,
+} from '$lib/components/lemmy/moderation/moderation'
 import { resumables, type ResumableItem } from '$lib/lemmy/item'
+import { userSettings } from '$lib/settings'
 import { t } from '$lib/translations'
 import { fullCommunityName } from '$lib/util'
 import {
@@ -12,9 +17,28 @@ import {
   Inbox,
   Newspaper,
   PencilSquare,
+  ServerStack,
+  ShieldCheck,
   UserCircle,
   UserGroup,
+  ViewColumns,
+  type IconSource,
 } from 'svelte-hero-icons'
+
+export interface Group {
+  name: string
+  actions: Action[]
+}
+
+export interface Action {
+  name: string
+  desc?: string
+  handle?: () => any
+  href?: string
+  shortcut?: string
+  icon: string | IconSource
+  subActions?: Action[]
+}
 
 export function getGroups(resumables: ResumableItem[], profile: Profile) {
   return [
@@ -35,6 +59,24 @@ export function getGroups(resumables: ResumableItem[], profile: Profile) {
           name: t.get('nav.communities'),
           icon: GlobeAlt,
         },
+        ...(amModOfAny(profile.user)
+          ? [
+              {
+                href: '/moderation',
+                name: t.get('nav.moderation'),
+                icon: ShieldCheck,
+              },
+            ]
+          : []),
+        ...(profile.user && isAdmin(profile.user)
+          ? [
+              {
+                href: '/admin',
+                name: t.get('nav.admin'),
+                icon: ServerStack,
+              },
+            ]
+          : []),
       ],
     },
     {
@@ -88,6 +130,56 @@ export function getGroups(resumables: ResumableItem[], profile: Profile) {
           href: '/settings',
           name: t.get('nav.menu.settings'),
           icon: Cog6Tooth,
+        },
+        {
+          name: t.get('nav.commands.setView'),
+          icon: ViewColumns,
+          subActions: [
+            {
+              name: t.get('nav.commands.setViewTo', {
+                default: t.get('filter.view.compact'),
+              }),
+              icon: ViewColumns,
+              handle: () =>
+                userSettings.update((s) => ({
+                  ...s,
+                  view: 'compact',
+                })),
+            },
+            {
+              name: t.get('nav.commands.setViewTo', {
+                default: t.get('filter.view.cozy'),
+              }),
+              icon: ViewColumns,
+              handle: () =>
+                userSettings.update((s) => ({
+                  ...s,
+                  view: 'cozy',
+                })),
+            },
+            {
+              name: t.get('nav.commands.setViewTo', {
+                default: t.get('filter.view.list'),
+              }),
+              icon: ViewColumns,
+              handle: () =>
+                userSettings.update((s) => ({
+                  ...s,
+                  view: 'list',
+                })),
+            },
+            {
+              name: t.get('nav.commands.setViewTo', {
+                default: t.get('filter.view.legacy'),
+              }),
+              icon: ViewColumns,
+              handle: () =>
+                userSettings.update((s) => ({
+                  ...s,
+                  view: 'card',
+                })),
+            },
+          ],
         },
       ],
     },
