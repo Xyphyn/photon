@@ -12,6 +12,9 @@
     ArrowRightOnRectangle,
     Bookmark,
     Cog6Tooth,
+    Fire,
+    GlobeAlt,
+    Home,
     Icon,
     Identification,
     Inbox,
@@ -19,6 +22,7 @@
     Newspaper,
     PencilSquare,
     QuestionMarkCircle,
+    ShieldCheck,
     UserCircle,
     UserGroup,
     type IconSource,
@@ -28,6 +32,8 @@
   import CommandItem from './CommandItem.svelte'
   import { browser } from '$app/environment'
   import { afterNavigate, goto } from '$app/navigation'
+  import { profile } from '$lib/auth'
+  import { fullCommunityName } from '$lib/util'
 
   export let open = false
   $: if (open) search = ''
@@ -56,6 +62,13 @@
         icon: r.avatar ?? PencilSquare,
         href: r.url,
       })),
+    },
+    {
+      name: $t('nav.commands.main'),
+      actions: [
+        { href: '/', name: $t('nav.home'), icon: Home },
+        { href: '/communities', name: $t('nav.communities'), icon: GlobeAlt },
+      ],
     },
     {
       name: $t('profile.profile'),
@@ -117,6 +130,15 @@
         },
       ],
     },
+    {
+      name: $t('profile.subscribed'),
+      actions:
+        $profile?.user?.follows.map((f) => ({
+          icon: f.community.icon,
+          name: f.community.title,
+          href: `/c/${fullCommunityName(f.community.name, f.community.actor_id)}`,
+        })) ?? [],
+    },
   ]
 
   let search = ''
@@ -124,22 +146,61 @@
   const dispatch = createEventDispatcher()
   let selectedIndex = 0
 
+  function fuzzySearch(text: string, pattern: string): number {
+    const textLower = text.toLowerCase()
+    const patternLower = pattern.toLowerCase()
+    let score = 0
+    let lastIndex = -1
+    let consecutiveBonus = 0
+
+    for (let i = 0; i < patternLower.length; i++) {
+      const index = textLower.indexOf(patternLower[i], lastIndex + 1)
+      if (index === -1) return 0
+
+      score += 1
+      if (index === lastIndex + 1) {
+        consecutiveBonus++
+        score += consecutiveBonus
+      } else {
+        consecutiveBonus = 0
+      }
+
+      lastIndex = index
+    }
+
+    // Bonus for matching start of words
+    if (textLower.startsWith(patternLower)) {
+      score += 2
+    } else if (textLower.includes(' ' + patternLower)) {
+      score += 1
+    }
+
+    return score
+  }
+
   $: filteredGroups = groups
-    .map((group) => ({
-      ...group,
-      actions: group.actions.filter((action) =>
-        action.name.toLowerCase().includes(search.toLowerCase()),
-      ),
-    }))
+    .map((group) => {
+      const scoredActions = group.actions
+        .map((action) => ({
+          ...action,
+          score: Math.max(fuzzySearch(action.name, search)),
+        }))
+        .filter((action) => action.score > 0)
+        .sort((a, b) => b.score - a.score)
+
+      return {
+        ...group,
+        actions: scoredActions,
+        score: Math.max(
+          fuzzySearch(group.name, search),
+          ...scoredActions.map((a) => a.score),
+        ),
+      }
+    })
     .filter((group) => group.actions.length > 0)
+    .sort((a, b) => b.score - a.score)
 
-  $: flattenedActions = groups.flatMap((group) =>
-    group.actions.map((action) => ({ ...action, group: group.name })),
-  )
-
-  $: filteredActions = flattenedActions.filter((action) =>
-    action.name.toLowerCase().includes(search.toLowerCase()),
-  )
+  $: flattenedActions = filteredGroups.flatMap((group) => group.actions)
 
   function togglePalette() {
     open = !open
@@ -160,23 +221,26 @@
     switch (event.key) {
       case 'ArrowDown':
         event.preventDefault()
-        selectedIndex = (selectedIndex + 1) % filteredActions.length
+        selectedIndex = (selectedIndex + 1) % flattenedActions.length
         focusItem(selectedIndex)
         break
       case 'ArrowUp':
         event.preventDefault()
         selectedIndex =
-          (selectedIndex - 1 + filteredActions.length) % filteredActions.length
+          (selectedIndex - 1 + flattenedActions.length) %
+          flattenedActions.length
         focusItem(selectedIndex)
         break
       case 'Enter':
-        handleSelect(filteredActions[selectedIndex])
+        handleSelect(flattenedActions[selectedIndex])
         break
       case 'Escape':
         event.preventDefault()
         togglePalette()
         break
     }
+
+    if (selectedIndex >= flattenedActions.length) selectedIndex = 0
   }
 
   function focusItem(index: number) {
@@ -184,10 +248,15 @@
 
     const listItems = container?.querySelectorAll('li')
     listItems[index % listItems.length].focus()
+    listItems[index % listItems.length].scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+    })
   }
 
-  async function handleSelect(action: Action & { group: string }) {
-    if (action.href) await goto(action.href)
+  async function handleSelect(action: Action) {
+    if (!action) return
+    if (action.href) goto(action.href)
     if (action.handle) action.handle()
     togglePalette()
     dispatch('select', action)
@@ -227,17 +296,19 @@
           </ul>
         </div>
       {/each}
-      <CommandItem
-        action={{
-          name: search,
-          href: `/search?q=${encodeURIComponent(search)}`,
-          icon: MagnifyingGlass,
-        }}
-      >
-        <span class="font-normal text-slate-600 dark:text-zinc-400">
-          {$t('nav.commands.search', { default: '' })}
-        </span>
-      </CommandItem>
+      {#if search != ''}
+        <CommandItem
+          action={{
+            name: search,
+            href: `/search?q=${encodeURIComponent(search)}`,
+            icon: MagnifyingGlass,
+          }}
+        >
+          <span class="font-normal text-slate-600 dark:text-zinc-400">
+            {$t('nav.commands.search', { default: '' })}
+          </span>
+        </CommandItem>
+      {/if}
     </div>
   </div>
 </Modal>

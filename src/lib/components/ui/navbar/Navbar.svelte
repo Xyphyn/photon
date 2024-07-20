@@ -41,9 +41,10 @@
   import Commands from './commands/Commands.svelte'
 
   let searching = false
+  let promptOpen: boolean = false
 </script>
 
-<Commands />
+<Commands bind:open={promptOpen} />
 <nav
   class="flex flex-row gap-2 items-center w-full mx-auto z-50 box-border p-0.5
   duration-150
@@ -51,7 +52,16 @@
   "
   style={$$props.style}
 >
-  <NavButton href="/" label={$t('nav.home')} class="ml-2 logo">
+  <NavButton
+    on:contextmenu={(e) => {
+      e.preventDefault()
+      promptOpen = true
+      return true
+    }}
+    href="/"
+    label={$t('nav.home')}
+    class="ml-2 logo"
+  >
     <svelte:fragment slot="icon">
       {#if LINKED_INSTANCE_URL}
         {#if $site}

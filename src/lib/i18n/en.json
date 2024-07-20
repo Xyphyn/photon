@@ -37,7 +37,8 @@
       "prompt": "Command Prompt",
       "recents": "Recents",
       "content": "Content",
-      "search": "Search for {{default}}"
+      "search": "Search for {{default}}",
+      "main": "Main"
     }
   },
   "account": {

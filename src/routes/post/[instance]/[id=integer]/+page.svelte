@@ -66,7 +66,6 @@
 
     if (!$resumables.find((r) => r.url == $page.url.toString()))
       $resumables = [
-        ...$resumables,
         {
           id: Math.floor(Math.random() * 1000000),
           name: post.post_view.post.name,
@@ -74,6 +73,7 @@
           url: $page.url.toString(),
           avatar: post.post_view.post.thumbnail_url,
         },
+        ...$resumables,
       ]
   })
 
