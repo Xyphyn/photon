@@ -105,7 +105,11 @@
     KeyS: () => wrapSelection('~~', '~~'),
     KeyH: () => wrapSelection('\n# ', ''),
     KeyK: () => wrapSelection('[](', ')'),
-    Enter: () => dispatcher('confirm', value),
+    Enter: (e: any) => {
+      dispatcher('confirm', value)
+      const newEvent = new Event('submit', { cancelable: true })
+      e.target.form.dispatchEvent(newEvent)
+    },
   }
 </script>
 
@@ -295,7 +299,7 @@ overflow-hidden transition-colors"
             let shortcut = shortcuts[e.code]
             if (shortcut) {
               e.preventDefault()
-              shortcut?.()
+              shortcut?.(e)
             }
           }
         }}

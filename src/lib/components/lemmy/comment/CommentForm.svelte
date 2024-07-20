@@ -17,7 +17,10 @@
   export let rows: number = 7
   export let placeholder: string | undefined = undefined
 
-  const dispatch = createEventDispatcher<{ comment: CommentResponse }>()
+  const dispatch = createEventDispatcher<{
+    comment: CommentResponse
+    confirm: string
+  }>()
 
   export let value = ''
   export let actions = true
@@ -76,6 +79,7 @@
       on:confirm={() => {
         if (actions) {
           submit()
+          dispatch('confirm', value)
         }
       }}
       on:focus
