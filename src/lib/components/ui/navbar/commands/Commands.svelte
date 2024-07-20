@@ -64,7 +64,7 @@
     }
   }
 
-  const debouncedSearch = debounce((term: string) => {
+  function searchGroup(term: string) {
     if (term.length < 1) {
       if (breadcrumbs.length <= 0) {
         filteredGroups = groups.map((group) => ({
@@ -98,7 +98,9 @@
         .filter((group) => group.actions.length > 0)
         .sort((a, b) => b.score - a.score)
     }
-  }, 50)
+  }
+
+  const debouncedSearch = debounce((term: string) => searchGroup(term), 50)
 
   function updateFilteredGroups() {
     if (breadcrumbs.length === 0) {
@@ -177,6 +179,7 @@
         focusItem(selectedIndex)
         break
       case 'Enter':
+        searchGroup(search)
         handleSelect(flattenedActions[selectedIndex])
         break
       case 'Escape':
