@@ -18,7 +18,6 @@ export async function load({ url, fetch }) {
   const listingType: ListingType =
     (url.searchParams.get('type') as ListingType) || settings.defaultSort.feed
 
-
   return await postFeed({
     id: 'main',
     request: {
@@ -26,8 +25,9 @@ export async function load({ url, fetch }) {
       sort: sort,
       type_: listingType,
       limit: 20,
-      show_hidden: settings.posts.showHidden
+      show_hidden: settings.posts.showHidden,
     },
-    url: url
+    url: url,
+    fetch: fetch,
   })
 }
