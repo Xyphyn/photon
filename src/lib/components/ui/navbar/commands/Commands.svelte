@@ -127,7 +127,10 @@
   }
 
   function handleKeydown(event: KeyboardEvent) {
-    if ((event.ctrlKey && event.key === 'k') || event.key == '/') {
+    if (
+      (event.ctrlKey && event.key === 'k') ||
+      (event.key == '/' && document.activeElement == document.body)
+    ) {
       event.preventDefault()
       togglePalette()
     }
