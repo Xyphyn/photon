@@ -20,6 +20,8 @@
   color="tertiary"
   size="lg"
   class="focus:bg-slate-200 focus:dark:bg-zinc-800 block {$$props.class}"
+  data-sveltekit-preload-code="viewport"
+  data-sveltekit-preload-data="tap"
 >
   {#if typeof action.icon === 'string'}
     <Avatar url={action.icon} width={20} />
