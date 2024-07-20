@@ -37,6 +37,7 @@
       <ViewSelect />
     </div>
   </header>
+  <div class="h-96">test</div>
 
   <svelte:component
     this={browser ? VirtualFeed : PostFeed}
