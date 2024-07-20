@@ -34,7 +34,7 @@
       "instance": "Instance"
     },
     "commands": {
-      "prompt": "Command Prompt",
+      "prompt": "Command Palette",
       "recents": "Recents",
       "content": "Content",
       "search": "Search for {{default}}",
@@ -43,7 +43,8 @@
       "setViewTo": "Set view to {{default}}",
       "setColor": "Set color scheme",
       "setColorTo": "Set color scheme to {{default}}",
-      "feeds": "Feeds"
+      "feeds": "Feeds",
+      "downloading": "Downloading actions"
     }
   },
   "account": {

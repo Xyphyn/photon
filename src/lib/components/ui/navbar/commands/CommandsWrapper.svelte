@@ -38,7 +38,9 @@
     {#await import('./Commands.svelte')}
       <div class="h-96 flex flex-col gap-2 items-center justify-center">
         <Spinner width={32} />
-        <span class="font-medium text-lg">Downloading actions...</span>
+        <span class="font-medium text-lg">
+          {$t('nav.commands.downloading')}
+        </span>
       </div>
     {:then { default: Commands }}
       <Commands bind:open />
