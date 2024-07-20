@@ -62,7 +62,6 @@
     })
 
   afterNavigate(() => {
-    console.log($postFeeds[feedId].lastSeen)
     $virtualizer.scrollToIndex($postFeeds[feedId].lastSeen ?? 0)
   })
 
