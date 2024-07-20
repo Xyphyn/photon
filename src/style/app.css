@@ -106,11 +106,9 @@ pre {
   @apply bg-zinc-800;
 }
 
-.banner {
-  mask-image: linear-gradient(to left, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
-}
-
-select:focus-visible, a:focus-visible, button:focus-visible {
+select:focus-visible,
+a:focus-visible,
+button:focus-visible {
   outline: none;
-  @apply ring-2 ring-primary-900 dark:ring-primary-100
+  @apply ring-2 ring-primary-900 dark:ring-primary-100;
 }
