@@ -23,6 +23,7 @@
   import {
     createVirtualizer,
     createWindowVirtualizer,
+    type SvelteVirtualizer,
   } from '@tanstack/svelte-virtual'
   import { afterNavigate, beforeNavigate } from '$app/navigation'
   import { combineCrossposts } from './crosspost'
@@ -34,6 +35,7 @@
   } from '$lib/lemmy/postfeed'
   import { t } from '$lib/translations'
   import InfiniteScroll from 'svelte-infinite-scroll'
+  import type { Readable } from 'svelte/motion'
 
   export let posts: PostView[]
   export let community: boolean = false
@@ -47,17 +49,17 @@
     estimateSize: () => 150,
   })
 
-  $: if (posts.length)
-    $virtualizer.setOptions({
-      count: posts.length,
-      scrollMargin: virtualListEl?.offsetTop,
-    })
-
   $: items = $virtualizer.getVirtualItems()
   $: {
     if (virtualItemEls.length)
       virtualItemEls.forEach((el) => $virtualizer.measureElement(el))
   }
+
+  $: if (posts.length && virtualListEl)
+    $virtualizer.setOptions({
+      scrollMargin: virtualListEl?.offsetTop,
+      count: posts.length,
+    })
 
   afterNavigate(() => {
     console.log($postFeeds[feedId].lastSeen)
@@ -167,6 +169,11 @@
       })
     }
   })
+
+  onMount(async () => {
+    await tick()
+    $virtualizer.measure()
+  })
 </script>
 
 <ul
@@ -181,7 +188,6 @@
 'embed embed'
 'actions actions'; --template-columns: auto 1fr;`
     : ``}
-  bind:this={virtualListEl}
 >
   {#if posts?.length == 0}
     <div class="h-full grid place-items-center">
@@ -201,6 +207,7 @@
       style="position:relative; height: {browser
         ? `${$virtualizer.getTotalSize()}px`
         : '100%'}; width: 100%;"
+      bind:this={virtualListEl}
     >
       <div
         style="position: absolute; top: 0; left: 0; width: 100%; transform: translateY({items?.[0]
@@ -211,15 +218,9 @@
       >
         {#each items as row, index (row.index)}
           <li
-            in:fly|global={{
-              y: -8,
-              duration: 300,
-              opacity: 0,
-              delay: 50 + index * 20,
-            }}
             bind:this={virtualItemEls[index]}
             data-index={row.index}
-            class="relative post-container"
+            class="relative post-container pop-in"
           >
             {#if posts[row.index]}
               <Post
@@ -280,5 +281,20 @@
 <style lang="postcss">
   .skeleton * {
     @apply bg-slate-100 dark:bg-zinc-800 rounded-md;
+  }
+
+  @keyframes popIn {
+    from {
+      transform: translateY(-24px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0px);
+      opacity: 1;
+    }
+  }
+
+  .pop-in {
+    animation: popIn 500ms cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
   }
 </style>
