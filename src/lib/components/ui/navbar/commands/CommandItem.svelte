@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button } from 'mono-svelte'
+  import { Button, Material } from 'mono-svelte'
   import { Icon, QuestionMarkCircle, type IconSource } from 'svelte-hero-icons'
   import Avatar from '../../Avatar.svelte'
 
@@ -28,4 +28,9 @@
   {/if}
   <slot />
   {action.name}
+  {#if action.shortcut}
+    <div class="ml-auto flex items-center gap-0.5 text-xs font-medium">
+      ⌘ {action.shortcut}
+    </div>
+  {/if}
 </Button>

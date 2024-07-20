@@ -66,7 +66,7 @@
     {
       name: $t('nav.commands.main'),
       actions: [
-        { href: '/', name: $t('nav.home'), icon: Home },
+        { href: '/', name: $t('nav.home'), icon: Home, shortcut: 'h' },
         { href: '/communities', name: $t('nav.communities'), icon: GlobeAlt },
       ],
     },
@@ -82,6 +82,7 @@
           href: '/inbox',
           name: $t('profile.inbox'),
           icon: Inbox,
+          shortcut: 'i',
         },
         {
           href: '/saved',
@@ -214,6 +215,20 @@
     if ((event.ctrlKey && event.key === 'k') || event.key == '/') {
       event.preventDefault()
       togglePalette()
+    }
+
+    if (event.ctrlKey) {
+      const actions = groups
+        .flatMap((g) => g.actions)
+        .filter((a) => a.shortcut != undefined)
+
+      actions.forEach((a) => {
+        if (event.key === a.shortcut) {
+          event.preventDefault()
+          if (a.href) goto(a.href)
+          if (a.handle) a.handle()
+        }
+      })
     }
 
     if (!open) return
