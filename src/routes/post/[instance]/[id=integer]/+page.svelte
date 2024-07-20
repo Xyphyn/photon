@@ -91,7 +91,7 @@
       if (res.post) {
         removeToast(id)
         goto(`/post/${$instance}/${res.post.post.id}`, {}).then(() =>
-          removeToast(id),
+          removeToast(id)
         )
       }
     } catch (err) {
@@ -380,7 +380,7 @@ flex-wrap gap-4 sticky top-20 w-full box-border z-20 mt-4"
           !(
             ($userSettings.hidePosts.deleted && c.comment.deleted) ||
             ($userSettings.hidePosts.removed && c.comment.removed)
-          ),
+          )
       )}
       isParent={true}
     />
