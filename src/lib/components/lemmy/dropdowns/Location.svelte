@@ -14,7 +14,7 @@
   export let showLabel: boolean = true
 
   let feed: string = selected
-  const setSelected = () => (selected = feed)
+  $: feed = selected
   $: changeDefault
     ? ($userSettings.defaultSort.feed = selected as
         | 'All'

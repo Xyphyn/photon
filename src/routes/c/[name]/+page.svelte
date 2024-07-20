@@ -32,6 +32,7 @@
   import EntityHeader from '$lib/components/ui/EntityHeader.svelte'
   import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
   import Subscribe from '../../communities/Subscribe.svelte'
+  import { resumables } from '$lib/lemmy/item'
 
   export let data
 
@@ -45,6 +46,13 @@
         'lastSeenCommunity',
         data.community.community_view.community,
       )
+
+    resumables.add({
+      name: community.community.title,
+      type: 'community',
+      url: $page.url.toString(),
+      avatar: community.community.icon,
+    })
   })
 
   onDestroy(() => {

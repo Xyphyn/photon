@@ -43,6 +43,7 @@
   import { Popover } from 'mono-svelte'
   import { t } from '$lib/translations.js'
   import { createWindowVirtualizer } from '@tanstack/svelte-virtual'
+  import { resumables } from '$lib/lemmy/item.js'
 
   export let data
 
@@ -62,6 +63,13 @@
         post_id: post.post_view.post.id,
       })
     }
+
+    resumables.add({
+      name: post.post_view.post.name,
+      type: 'post',
+      url: $page.url.toString(),
+      avatar: post.post_view.post.thumbnail_url,
+    })
   })
 
   afterNavigate(async () => {
@@ -83,7 +91,7 @@
       if (res.post) {
         removeToast(id)
         goto(`/post/${$instance}/${res.post.post.id}`, {}).then(() =>
-          removeToast(id),
+          removeToast(id)
         )
       }
     } catch (err) {
@@ -372,7 +380,7 @@ flex-wrap gap-4 sticky top-20 w-full box-border z-20 mt-4"
           !(
             ($userSettings.hidePosts.deleted && c.comment.deleted) ||
             ($userSettings.hidePosts.removed && c.comment.removed)
-          ),
+          )
       )}
       isParent={true}
     />

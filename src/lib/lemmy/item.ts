@@ -12,7 +12,7 @@ import type {
   PrivateMessageView,
   Community,
 } from 'lemmy-js-client'
-import { get } from 'svelte/store'
+import { get, writable } from 'svelte/store'
 
 export type Result =
   | PostView
@@ -72,7 +72,7 @@ export const isPrivateMessageReport = (
 
 export interface ResumableItem {
   url: string
-  id: number
+  id?: number
   name: string
   avatar?: string
   type: 'community' | 'post'
@@ -81,6 +81,24 @@ export interface ResumableItem {
     name: string
   }
 }
+
+function resumableStore(limit: number = 10) {
+  const { subscribe, set, update } = writable<ResumableItem[]>([])
+
+  return {
+    subscribe, set, update,
+    add: (item: ResumableItem) => {
+      update(resumables => {
+        if (resumables.find(i => JSON.stringify(i) == JSON.stringify(item))) return resumables
+        resumables.unshift(item)
+        if (resumables.length > limit) resumables.pop()
+        return resumables
+      })
+    }
+  }
+}
+
+export let resumables = resumableStore()
 
 export function addFavorite(item: Community, add: boolean = true) {
   const pd = get(profileData)
