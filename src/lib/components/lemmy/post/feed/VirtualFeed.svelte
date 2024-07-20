@@ -23,6 +23,7 @@
   import {
     createVirtualizer,
     createWindowVirtualizer,
+    type SvelteVirtualizer,
   } from '@tanstack/svelte-virtual'
   import { afterNavigate, beforeNavigate } from '$app/navigation'
   import { combineCrossposts } from './crosspost'
@@ -34,6 +35,7 @@
   } from '$lib/lemmy/postfeed'
   import { t } from '$lib/translations'
   import InfiniteScroll from 'svelte-infinite-scroll'
+  import type { Readable } from 'svelte/motion'
 
   export let posts: PostView[]
   export let community: boolean = false
@@ -45,19 +47,20 @@
   const virtualizer = createWindowVirtualizer({
     count: posts.length,
     estimateSize: () => 150,
+    // @ts-ignore
+    scrollMargin: virtualListEl?.offsetTop ?? 0,
   })
-
-  $: if (posts.length)
-    $virtualizer.setOptions({
-      count: posts.length,
-      scrollMargin: virtualListEl?.offsetTop,
-    })
 
   $: items = $virtualizer.getVirtualItems()
   $: {
     if (virtualItemEls.length)
       virtualItemEls.forEach((el) => $virtualizer.measureElement(el))
   }
+
+  $: $virtualizer.setOptions({
+    scrollMargin: virtualListEl?.offsetTop ?? 0,
+    count: posts.length,
+  })
 
   afterNavigate(() => {
     console.log($postFeeds[feedId].lastSeen)
@@ -211,12 +214,6 @@
       >
         {#each items as row, index (row.index)}
           <li
-            in:fly|global={{
-              y: -8,
-              duration: 300,
-              opacity: 0,
-              delay: 50 + index * 20,
-            }}
             bind:this={virtualItemEls[index]}
             data-index={row.index}
             class="relative post-container"
