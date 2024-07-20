@@ -62,7 +62,7 @@
     })
 
   afterNavigate(() => {
-    $virtualizer.scrollToIndex($postFeeds[feedId].lastSeen ?? 0)
+    $virtualizer.scrollToIndex($postFeeds[feedId]?.lastSeen ?? 0)
   })
 
   export let feedData: PostFeed['data']
@@ -122,7 +122,9 @@
 
       if (!id) return
 
-      $postFeeds[feedId].lastSeen = Number(id)
+      postFeeds.updateFeed(feedId, {
+        lastSeen: Number(id),
+      })
       observer.unobserve(element)
     })
   }

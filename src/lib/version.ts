@@ -9,6 +9,8 @@ const FEATURES = {
   hidePosts: '0.19.4',
   altText: '0.19.4',
   customThumbnail: '0.19.4',
+  mediaAndVotes: '0.19.4',
+  distinguishComments: '0.19.4',
 }
 
 type Feature = keyof typeof FEATURES
@@ -19,7 +21,7 @@ type Feature = keyof typeof FEATURES
 export const feature = (feature: Feature, version: string = '0.0.0'): boolean =>
   versionIsSupported(version, FEATURES[feature])
 
-export const MINIMUM_VERSION = '0.19.4'
+export const MINIMUM_VERSION = '0.19.0'
 export const MAXIMUM_VERSION = '0.999'
 
 export const versionIsSupported = (v: string, minimum: string) => {
