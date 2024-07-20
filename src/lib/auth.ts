@@ -123,8 +123,9 @@ export let profile: Readable<Profile> = derived(
           .then((res) => {
             if (!res?.user)
               toast({
-                content: 'Your login has expired. Re-login to fix this issue.',
-                type: 'warning',
+                content:
+                  "Your account's instance did not return your user data. Your login may have expired.",
+                type: 'error',
               })
 
             site.set(res?.site)
@@ -323,16 +324,6 @@ function serializeUser(user: Profile): Profile {
     user: undefined,
   }
 }
-
-instance.subscribe(async (i) => {
-  try {
-    // fetching site is handled by auth.ts if logged in
-    if (get(profile)?.jwt) return
-    const s = await new LemmyHttp(`https://${i}`).getSite()
-
-    site.set(s)
-  } catch (e) {}
-})
 
 export async function setUserID(id: number) {
   profileData.update((p) => ({ ...p, profile: id }))
