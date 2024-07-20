@@ -1,5 +1,6 @@
+import { client } from '$lib/lemmy'
 import type { SubmissionView } from '$lib/lemmy/contentview.js'
-import type { Community, MyUserInfo, Person } from 'lemmy-js-client'
+import type { Comment, Community, MyUserInfo, Person } from 'lemmy-js-client'
 import { get, writable } from 'svelte/store'
 
 interface Modals {
@@ -69,6 +70,13 @@ export function ban(banned: boolean, item: Person, community?: Community) {
       community,
     },
   }))
+}
+
+export async function feature(featured: boolean, item: Comment, jwt: string) {
+  return await client({ auth: jwt }).distinguishComment({
+    comment_id: item.id,
+    distinguished: featured,
+  })
 }
 
 export const amMod = (me: MyUserInfo, community: Community) =>
