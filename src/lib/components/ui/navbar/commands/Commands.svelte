@@ -128,7 +128,7 @@
 
   function handleKeydown(event: KeyboardEvent) {
     if (
-      (event.ctrlKey && event.key === 'k') ||
+      (event.ctrlKey && event.key === 'p') ||
       (event.key == '/' && document.activeElement == document.body)
     ) {
       event.preventDefault()
