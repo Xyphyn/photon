@@ -29,6 +29,7 @@
       dispatcher('upload', uploaded)
       output = uploaded
       loading = false
+      open = false
     } catch (err) {
       toast({
         content: err as any,
@@ -40,7 +41,7 @@
   }
 </script>
 
-<Modal bind:open bind:output>
+<Modal bind:open>
   <span slot="title">Upload image</span>
   <form class="flex flex-col gap-4" on:submit|preventDefault={upload}>
     <ImageInput accept="image/jpeg,image/png,image/webp" bind:files={image} />
