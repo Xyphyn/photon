@@ -1,16 +1,18 @@
 import { profile } from '$lib/auth.js'
-import { getClient } from '$lib/lemmy.js'
+import { client, getClient } from '$lib/lemmy.js'
 import { getItemPublished } from '$lib/lemmy/item.js'
 import type { SortType } from 'lemmy-js-client'
 import { get } from 'svelte/store'
 
 export async function load({ params, url, fetch }) {
-  const my_user = (await getClient().getSite()).my_user
+  const my_user =
+    get(profile)?.user ??
+    (await client({ auth: get(profile)?.jwt }).getSite()).my_user
 
   return {
     my_user: my_user,
     community_blocks: my_user?.community_blocks,
     person_blocks: my_user?.person_blocks,
-    follows: my_user?.follows
+    follows: my_user?.follows,
   }
 }

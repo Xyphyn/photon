@@ -184,7 +184,13 @@
       "blocks": "Blocks",
       "credentials": "Credentials",
       "moderates": "Moderating",
-      "favorites": "Favorites"
+      "favorites": "Favorites",
+      "upvoted": "Upvoted",
+      "downvoted": "Downvoted",
+      "media": {
+        "title": "Media",
+        "download": "Download"
+      }
     },
     "translators": "Translators",
     "accounts": "Accounts",
