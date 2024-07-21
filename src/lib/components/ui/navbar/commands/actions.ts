@@ -136,17 +136,17 @@ export function getGroups(resumables: ResumableItem[], profile: Profile) {
                 {
                   name: t.get('filter.sort.top.time.9months'),
                   icon: ChartBar,
-                  href: '/?sort=Top9Months',
+                  href: '/?sort=TopNineMonths',
                 },
                 {
                   name: t.get('filter.sort.top.time.6months'),
                   icon: ChartBar,
-                  href: '/?sort=Top6Months',
+                  href: '/?sort=TopSixMonths',
                 },
                 {
                   name: t.get('filter.sort.top.time.3months'),
                   icon: ChartBar,
-                  href: '/?sort=Top3Months',
+                  href: '/?sort=TopThreeMonths',
                 },
                 {
                   name: t.get('filter.sort.top.time.month'),
@@ -166,7 +166,7 @@ export function getGroups(resumables: ResumableItem[], profile: Profile) {
                 {
                   name: t.get('filter.sort.top.time.6hours'),
                   icon: ChartBar,
-                  href: '/?sort=Top6Hours',
+                  href: '/?sort=TopSixHours',
                 },
                 {
                   name: t.get('filter.sort.top.time.hour'),

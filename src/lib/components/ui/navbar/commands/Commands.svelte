@@ -259,6 +259,10 @@
               <CommandItem
                 {action}
                 on:click={(e) => {
+		  if (action.href) {
+		    togglePalette()
+		    return
+		  }
                   e.stopPropagation()
                   handleSelect(action)
                 }}
