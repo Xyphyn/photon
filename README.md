@@ -1,4 +1,4 @@
-Photon
+# Photon
 
 Jump to:
 
@@ -7,13 +7,14 @@ Jump to:
 
 A better, more intuitive way to use Lemmy, with a cleaner UI, more features, and snappier usage.
 
+It is designed for all features to have an appealing and intuitive design, while being fast.
+
 ## Screenshots
 
 ![image](https://github.com/Xyphyn/photon/assets/80978739/8e19d8ee-9630-4152-bc7a-17ce2685afb9)
 
 ![image](https://github.com/Xyphyn/photon/assets/80978739/e36468f6-03c5-4267-94e8-3bba60b6ccb2)
 
-Photon's design philosophy is easy: all features must be intuitive and simple. If a feature can't be easily slipped in while making sense, it will not be added.
 
 ## Self-hosting
 
