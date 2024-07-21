@@ -221,7 +221,8 @@
           <li
             bind:this={virtualItemEls[index]}
             data-index={row.index}
-            class="relative post-container pop-in"
+            class="relative post-container"
+	    in:fly={{ y: -16, easing: expoOut, duration: 500, opacity: 0 }}
           >
             {#if posts[row.index]}
               <Post
