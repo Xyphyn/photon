@@ -3,16 +3,16 @@
         "profile": "Profil",
         "inbox": "Boîte de réception",
         "saved": "Sauvegardé",
-        "subscribed": "Abonnés"
+        "subscribed": "Abonnements"
     },
     "nav": {
         "moderation": "Modération",
         "communities": "Explorer",
-        "search": "Recherche",
+        "search": "Rechercher",
         "create": {
             "label": "Créer",
             "post": "Publication",
-            "community": "communauté",
+            "community": "Communauté",
             "logingate": "Vous devez vous inscrire pour créer du contenu."
         },
         "menu": {
@@ -39,19 +39,19 @@
         "logout": "Déconnexion",
         "signup": "S'inscrire",
         "accounts": "Comptes",
-        "changeinstance": "Changer de Instance",
-        "addGuest": "Ajouter un autre Invité",
+        "changeinstance": "Changer d'instance",
+        "addGuest": "Ajouter un Invité",
         "moveUp": "Monter",
         "moveDown": "Descendre",
         "guest": "invité",
-        "versionGate": "Cette version de Photon prend en charge des instances qui tournent la version {{version}} ou mieux.",
-        "resetColor": "Remettre à zéro les couleurs"
+        "versionGate": "Cette version de Photon prend en charge des instances en version {{version}} ou supérieure.",
+        "resetColor": "Réinitialiser les couleurs"
     },
     "filter": {
         "location": {
             "label": "Emplacement",
             "all": "Tout",
-            "subscribed": "Abonnés",
+            "subscribed": "Abonnements",
             "moderator": "Modérateur",
             "global": "Tout",
             "local": "Local"
