@@ -181,8 +181,12 @@
             "settings": "Paramètres",
             "blocks": "Blocages",
             "credentials": "sécurité",
-            "moderates": "Modérés",
-            "favorites": "Favoris"
+            "moderates": "Modère",
+            "favorites": "Favoris",
+            "media": {
+                "title": "Média",
+                "download": "Telecharger"
+            }
         },
         "accounts": "Comptes",
         "communities": "Communautés",
@@ -390,7 +394,14 @@
             "theming": {
                 "link": "Configuration d'apparence"
             }
-        }
+        },
+        "title": "Paramètres",
+        "beta": "Beta",
+        "desktop": "Ordinateur",
+        "tablet": "Tablette",
+        "mobile": "Portable",
+        "export": "Exporter",
+        "import": "Importer"
     },
     "comment": {
         "reply": "Répondre",
@@ -399,7 +410,8 @@
             "label": "Actions"
         },
         "locked": "Cette publication est verrouillée.",
-        "more": "{{comments:number}} en plus"
+        "more": "{{comments:number}} en plus",
+        "banned": "Vous êtes banni de cette communauté."
     },
     "moderation": {
         "report": "Créer un signalement",
@@ -409,8 +421,8 @@
             "warning": "Cette option supprimera TOUTES les publications de cet utilisateur.",
             "expires": "Expire (UTC)",
             "banFromCommunity": "Ban d'une communauté",
-            "unbanning": "Débannir l'utilisateur",
-            "unbanFromCommunity": "Débannir d'une communauté"
+            "unbanning": "Readmettre l'utilisateur",
+            "unbanFromCommunity": "Readmettre dans la communauté"
         },
         "removeSubmission": {
             "titleRestore": "Rétablissant la soumission",
@@ -447,15 +459,19 @@
             "modlog": "Journal de modération",
             "block": "Bloquer",
             "unblock": "Débloquer",
-            "blockInstance": "Bloquer l'instance"
+            "blockInstance": "Bloquer l'instance",
+            "favorite": "Favoris",
+            "unfavorite": "Enlever Le Favori"
         }
     },
     "admin": {
         "instance": "Instance",
         "label": "Administration",
         "purgeCommunity": {
-            "warning": "Ceci effacera toutes les publications. Êtes-vous sur de vouloir faire ceci? (Il sera possible de cliquer le bouton dans 3 secondes.)"
-        }
+            "warning": "Ceci effacera toutes les publications. Êtes-vous sur de vouloir faire ceci? (Il sera possible de cliquer le bouton dans 3 secondes.)",
+            "title": "Purge la communautée"
+        },
+        "purge": "Purger"
     },
     "content": {
         "all": "Tout",
@@ -483,7 +499,20 @@
                 "share": "Partager",
                 "crosspost": "Crosspublication",
                 "delete": "Supprimer",
-                "markUnread": "Marquer comme non lu"
+                "markUnread": "Marquer comme non lu",
+                "mediaBias": "Barème de partialitée",
+                "restore": "Rétablir"
+            },
+            "mediaBias": {
+                "noData": {
+                    "description": "Il n'y a pas de données sur la partialitée de ce site.",
+                    "title": "Aucune données"
+                },
+                "description": "Description",
+                "credibility": "Crédibilité",
+                "reporting": "Reportage factuel",
+                "downloading": "téléchargement des données sur la partialitée",
+                "loading": "Chargement de la source"
             }
         },
         "badges": {
@@ -512,7 +541,8 @@
     },
     "message": {
         "success": "Succès",
-        "error": "Erreur"
+        "error": "Erreur",
+        "retry": "Réessayer"
     },
     "toast": {
         "noComments": "L'API n'a pas renvoyé de commentaire.",
@@ -524,8 +554,8 @@
         "invalidDateAbsolute": "La date doit être absolue. Réessayez.",
         "bannedUser": "Cet utilisateur a été banni.",
         "needCommunity": "Vous devez choisir une communauté.",
-        "invalidURL": "URL invalide",
-        "failGenerateTitle": "Il n'y avait aucun titre ou description pour ce URL.",
+        "invalidURL": "URL non valide",
+        "failGenerateTitle": "Il n'y avait aucun titre ou description pour cet URL.",
         "restoredFromDraft": "Publication a étée retablie a partir du brouillon.",
         "copied": "copié dans le presse-papier.",
         "updatedSite": "Site mis a jour.",
@@ -543,6 +573,31 @@
         "unresolveReport": "le signalement n'est plus résolu.",
         "passwordReset": "Votre mot de passe est remis à zéro.",
         "resetLink": "Un lien pour réinitialiser votre mot de passe a été envoyé a votre email.",
-        "fetchPostOnHome": "Tentative de recuperation de la publication sur l'instance de votre compte."
+        "fetchPostOnHome": "Tentative de recuperation de la publication sur l'instance de votre compte.",
+        "loginRefresh": "votre inscription a étée mise a jour.",
+        "settingsImportWarning": "Les paramètres importés ne semblent pas valides. Êtes-vous sûr de vouloir les importer ?",
+        "saveSettings": "Sauvegarde de vos paramètres d'utilisateur. Si vous avez changé d'adresse email, un lien de vérification vous a été envoyé.",
+        "resetSettings": "Souhaitez-vous rétablir les paramètres au défaut ?",
+        "waitApplication": "Attendez que votre demande d'inscription soit acceptée avant de vous connecter.",
+        "updateMods": "Moderateurs de communautée mis a jour.",
+        "approvedApplication": "Application approuvée.",
+        "deniedApplication": "Application rejetée.",
+        "removeAdminWarning": "Voulez-vous vraiment enlever cet administrateur ?",
+        "removeAdmin": "administrateur enlevé.",
+        "invalidLogin": "Certificats invalides",
+        "confirmDelete1": "Êtes-vous sûr de vouloir supprimer votre compte ?",
+        "confirmDelete2": "en êtes-vous vraiment sûr ?",
+        "confirmDelete3": "Dernier avertissement. En êtes-vous vraiment sûr ?",
+        "needPassword": "Vous devez d'abord fournir votre mot de passe.",
+        "deleting": "Effacement de votre compte...",
+        "deleted": "Votre compte a été effacé.",
+        "failFetchInstances": "Échec de recherche des instances.",
+        "verifyEmail": "Un lien de vérification a été envoyé à votre adresse email. Vérifiez votre courriel, puis connectez-vous.",
+        "failSignup": "Échec d'inscription.",
+        "successSignup": "Compte Inscrit.",
+        "blockUser": "Utilisateur bloqué.",
+        "unblockUser": "Utilisateur debloqué.",
+        "settingsImport": "L'importation des paramètres a réussie",
+        "userLoading": "En train de charger vos données d'utilisateur..."
     }
 }
