@@ -31,7 +31,13 @@
             "credentials": "Kirjautumistiedot",
             "moderates": "Moderoidut yhteisöt",
             "settings": "Asetukset",
-            "favorites": "Suosikit"
+            "favorites": "Suosikit",
+            "media": {
+                "title": "Media",
+                "download": "Lataa"
+            },
+            "upvoted": "Ylä-äänet",
+            "downvoted": "Alaäänet"
         },
         "instances": "Instanssit",
         "createPost": "Luo julkaisu",
@@ -191,7 +197,8 @@
             "unblock": "Poista yhteisön esto",
             "blockInstance": "Estä instanssi",
             "favorite": "Lisää suosikkeihin",
-            "unfavorite": "Poista suosikeista"
+            "unfavorite": "Poista suosikeista",
+            "activeDay": "Aktiivisia tänään"
         }
     },
     "post": {
@@ -209,11 +216,23 @@
                 "delete": "Poista",
                 "restore": "Palauta",
                 "hide": "Piilota",
-                "unhide": "Näytä"
+                "unhide": "Näytä",
+                "mediaBias": "Median puolueellisuus"
             },
             "comments": "Kommentit",
             "save": "Tallenna",
-            "unsave": "Poista tallennus"
+            "unsave": "Poista tallennus",
+            "mediaBias": {
+                "description": "Kuvaus",
+                "noData": {
+                    "title": "Ei tietoja",
+                    "description": "Ei tietoja sivuston puolueellisuudesta."
+                },
+                "credibility": "Uskottavuus",
+                "downloading": "Ladataan tietoja",
+                "loading": "Ladataan lähdettä",
+                "reporting": "Todenmukainen raportointi"
+            }
         },
         "badges": {
             "featured": "Nostettu",
@@ -454,7 +473,8 @@
         },
         "locked": "Tämä julkaisu on lukittu.",
         "reply": "Vastaa",
-        "more": "{{comments:number}} lisää"
+        "more": "{{comments:number}} lisää",
+        "banned": "Olet saanut porttikiellon tähän yhteisöön."
     },
     "common": {
         "back": "Takaisin",
@@ -473,7 +493,8 @@
     },
     "message": {
         "success": "Onnistui",
-        "error": "Virhe"
+        "error": "Virhe",
+        "retry": "Yritä uudelleen"
     },
     "toast": {
         "noComments": "API ei palauttanut kommentteja.",
@@ -528,7 +549,10 @@
         "resetLink": "Palautuslinkki lähetettin sähköpostiisi.",
         "invalidLogin": "Virheelliset kirjautuimistiedot",
         "confirmDelete3": "Viimeinen varoitus. Oletko oikeasti varma?",
-        "verifyEmail": "Vahvistuslinkki lähetettiin sähköpostiisi. Vahvista sähköpostisi ja sitten kirjaudu."
+        "verifyEmail": "Vahvistuslinkki lähetettiin sähköpostiisi. Vahvista sähköpostisi ja sitten kirjaudu.",
+        "settingsImport": "Asetusten tuonti onnistui.",
+        "settingsImportWarning": "Tuodut asetukset eivät vaikuta kelvollisilta. Haluatko yrittää siitä huolimatta?",
+        "userLoading": "Ladataan käyttäjätietoja..."
     },
     "settings": {
         "app": {
@@ -556,7 +580,14 @@
                 "note": "Virallisesti tuetut kielet ovat englanti ja heprea. Muut käännökset ovat yhteisön tekemiä, eivätkä siten välttämättä ole täydellisiä.",
                 "fi": "suomi",
                 "pt": "portugali",
-                "de": "saksa"
+                "de": "saksa",
+                "useRtl": {
+                    "title": "Oikealta vasemmalle -asettelu",
+                    "description": "Käytä asettelua oikealta vasemmalle luettaville kielille."
+                },
+                "zh": "kiina",
+                "zh-Hans": "kiina (yksinkertaistettu)",
+                "zh-Hant": "kiina (perinteinen)"
             },
             "title": "Photon",
             "theming": {
@@ -606,6 +637,20 @@
             "colorscheme": {
                 "title": "Väritila",
                 "description": "Valitse väritila."
+            },
+            "infiniteScroll": {
+                "description": "Julkaisut näytetään yhdellä sivulla, joka kasvaa alaspäin vieritettäessä.",
+                "title": "Jatkuva selaus"
+            },
+            "titleTags": {
+                "description": "Muuta [hakasulkeissa] olevat tekstinpätkät tageiksi, joiden avulla voi hakea sisältöä.",
+                "title": "Erottele tagit otsikoista",
+                "rules": {
+                    "blur": "Sumenna",
+                    "hide": "Piilota",
+                    "show": "Näytä",
+                    "title": "Asetukset"
+                }
             }
         },
         "title": "Asetukset",
@@ -700,6 +745,9 @@
         },
         "desktop": "Työpöytä",
         "tablet": "Tabletti",
-        "mobile": "Mobiili"
+        "mobile": "Mobiili",
+        "export": "Vie",
+        "import": "Tuo",
+        "reset": "Palauta oletukset"
     }
 }
