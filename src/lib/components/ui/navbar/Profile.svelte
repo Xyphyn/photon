@@ -96,7 +96,7 @@
   {:else}
     <MenuDivider>{$t('nav.menu.label')}</MenuDivider>
   {/if}
-  {#if $profile?.user}
+  {#if $profile?.jwt}
     <MenuButton link href="/profile">
       <Icon src={UserCircle} mini width={16} slot="prefix" />
       {$t('profile.profile')}
