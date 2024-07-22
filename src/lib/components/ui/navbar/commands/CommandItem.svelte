@@ -28,7 +28,12 @@
     <Icon src={action.icon ?? QuestionMarkCircle} size="20" />
   {/if}
   <slot />
-  <span class="mr-auto">{action.name}</span>
+  <span class="mr-auto inline-flex flex-col">
+    <span>{action.name}</span>
+    {#if action.detail}
+      <span class="font-normal text-xs">{action.detail}</span>
+    {/if}
+  </span>
   {#if action.shortcut}
     <div class="flex items-center gap-0.5 text-xs font-medium">
       ⌘ {action.shortcut}

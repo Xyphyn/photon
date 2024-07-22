@@ -1,4 +1,6 @@
-import type { Profile } from '$lib/auth'
+import { goto } from '$app/navigation'
+import { page } from '$app/stores'
+import { setUserID, type Profile } from '$lib/auth'
 import {
   amModOfAny,
   isAdmin,
@@ -41,6 +43,7 @@ import {
   ChatBubbleOvalLeftEllipsis,
   ChatBubbleLeftRight,
 } from 'svelte-hero-icons'
+import { get } from 'svelte/store'
 
 export interface Group {
   name: string
@@ -55,9 +58,14 @@ export interface Action {
   shortcut?: string
   icon: string | IconSource
   subActions?: Action[]
+  detail?: string
 }
 
-export function getGroups(resumables: ResumableItem[], profile: Profile) {
+export function getGroups(
+  resumables: ResumableItem[],
+  profile: Profile,
+  profiles: Profile[]
+) {
   return [
     {
       name: t.get('nav.commands.recents'),
@@ -264,6 +272,23 @@ export function getGroups(resumables: ResumableItem[], profile: Profile) {
           ],
     },
     {
+      name: t.get('account.accounts'),
+      actions: profiles.map((p) => ({
+        name: p.username ?? t.get('account.guest'),
+        icon: p.avatar ?? UserCircle,
+        detail: p.instance,
+        handle: async () => {
+          if (profile.id != p.id) {
+            await setUserID(p.id)
+          }
+
+          await goto(get(page).url, {
+            invalidateAll: true,
+          })
+        },
+      })),
+    },
+    {
       name: t.get('nav.menu.app'),
       actions: [
         {
@@ -375,6 +400,7 @@ export function getGroups(resumables: ResumableItem[], profile: Profile) {
             f.community.name,
             f.community.actor_id
           )}`,
+          detail: new URL(f.community.actor_id).hostname,
         })) ?? [],
     },
   ]

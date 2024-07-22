@@ -7,7 +7,7 @@
   import CommandItem from './CommandItem.svelte'
   import { browser } from '$app/environment'
   import { afterNavigate, goto } from '$app/navigation'
-  import { profile } from '$lib/auth'
+  import { profile, profileData } from '$lib/auth'
   import { getGroups, type Action, type Group } from './actions'
 
   export let open = false
@@ -15,7 +15,7 @@
 
   export let groups: Group[] = []
 
-  $: groups = getGroups($resumables, $profile)
+  $: groups = getGroups($resumables, $profile, $profileData.profiles)
 
   let search = ''
   let container: HTMLElement
@@ -80,7 +80,8 @@
               ...action,
               score: Math.max(
                 fuzzySearch(action.name, term),
-                fuzzySearch(group.name, term)
+                fuzzySearch(group.name, term),
+                action.detail ? fuzzySearch(action.detail, term) : -1
               ),
             }))
             .filter((action) => action.score > 0)
@@ -259,10 +260,10 @@
               <CommandItem
                 {action}
                 on:click={(e) => {
-		  if (action.href) {
-		    togglePalette()
-		    return
-		  }
+                  if (action.href) {
+                    togglePalette()
+                    return
+                  }
                   e.stopPropagation()
                   handleSelect(action)
                 }}
