@@ -267,7 +267,7 @@
       </div>
     {:else if hasMore}
       <div class="w-full flex flex-col skeleton gap-2 animate-pulse pt-6">
-        <div class="w-96 h-8"></div>
+        <div class="w-96 max-w-full h-8"></div>
         <div class="w-full h-48"></div>
         <div class="!bg-transparent h-8 flex justify-between">
           <div class="w-48 h-8"></div>
