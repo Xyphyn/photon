@@ -56,7 +56,7 @@ export const optimizeImageURL = (
 }
 
 const YOUTUBE_REGEX =
-  /^(?:https?:\/\/)?(?:www\.|m\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|shorts\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/
+  /^(?:https?:\/\/)?(?:www\.|m\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|shorts\/|live\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/
 
 export const isYoutubeLink = (url?: string): RegExpMatchArray | null => {
   if (!url) return null
