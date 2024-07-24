@@ -274,6 +274,10 @@
           <div class="w-24 h-8"></div>
         </div>
       </div>
+    {:else}
+      <div class="w-full flex justify-center pt-4 text-sm text-slate-500 dark:text-zinc-500">
+        You have reached the end of {feedData.community_name ?? "the feed"}.
+      </div>
     {/if}
     <InfiniteScroll window threshold={1000} on:loadMore={loadMore} />
   {/if}
