@@ -19,7 +19,10 @@
   For embed-type posts. Displays embed card or a compact link.
 -->
 {#if embed_title && !compact}
-  <Material color="distinct" class="flex flex-col-reverse sm:flex-row overflow-hidden gap-4">
+  <Material
+    color="distinct"
+    class="flex flex-col-reverse sm:flex-row overflow-hidden gap-4"
+  >
     <div class="flex flex-col gap-2">
       {#if richURL}
         <Link
@@ -52,14 +55,28 @@
         target="_blank"
         class="-m-4 mb-auto sm:-mb-4 sm:ml-auto flex-shrink-0 sm:w-1/3 sm:max-w-60"
       >
-        <img
-          src={optimizeImageURL(thumbnail_url, 256)}
-          class="w-full h-full object-cover bg-slate-200 dark:bg-zinc-800"
-          width={600}
-          height={400}
-          alt={embed_title}
-          class:blur-3xl={nsfw}
-        />
+        <picture>
+          <source
+            srcset={optimizeImageURL(thumbnail_url, 256)}
+            media="(max-width: 256px)"
+          />
+          <source
+            srcset={optimizeImageURL(thumbnail_url, 512)}
+            media="(max-width: 512px)"
+          />
+          <source
+            srcset={optimizeImageURL(thumbnail_url, 1024)}
+            media="(max-width: 1024px)"
+          />
+          <img
+            src={optimizeImageURL(thumbnail_url, -1)}
+            class="object-cover w-full sm:max-w-96 h-48 sm:h-72 bg-slate-200 dark:bg-zinc-800"
+            width={600}
+            height={400}
+            alt={embed_title}
+            class:blur-3xl={nsfw}
+          />
+        </picture>
       </a>
     {/if}
   </Material>
@@ -92,7 +109,7 @@
     <a href={url} target="_blank">
       <img
         src={optimizeImageURL(thumbnail_url, 256)}
-        class="rounded-md max-w-[300px] w-full h-auto aspect-video object-cover bg-slate-200 dark:bg-zinc-800"
+        class="rounded-md max-w-72 w-full h-auto aspect-video object-cover bg-slate-200 dark:bg-zinc-800"
         width={600}
         height={400}
         alt={embed_title ?? 'Embed prevented alt text'}
