@@ -99,6 +99,8 @@
           class="flex-1"
           required
           pattern={DOMAIN_REGEX_FORMS}
+          autocorrect="off"
+          autocapitalize="none"
         />
       {/if}
     </div>
