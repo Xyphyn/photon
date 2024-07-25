@@ -359,6 +359,14 @@
       "resetWarning": {
         "title": "Reset Theme",
         "description": "This will reset all of your colors to the default. It is recommended to export your theme before this."
+      },
+      "preset": {
+        "title": "Can't be modified",
+        "description": "This is a default theme, and can't be modified.",
+        "delete": {
+          "title": "Delete Theme",
+          "confirm": "Confirm"
+        }
       }
     },
     "community": {

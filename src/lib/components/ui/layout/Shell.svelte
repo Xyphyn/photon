@@ -82,7 +82,11 @@
 
 <svelte:window bind:innerWidth={$screenWidth} />
 
-<div {...$$restProps} class="shell {$$props.class}" style={$themeVars}>
+<div
+  {...$$restProps}
+  class="shell bg-slate-50 dark:bg-zinc-950 {$$props.class}"
+  style={$themeVars}
+>
   <slot />
   <div
     class="
@@ -120,7 +124,7 @@
   >
     <slot
       name="sidebar"
-      class="hidden md:flex sticky top-0 left-0 max-w-full h-max bg-slate-50 dark:bg-zinc-950
+      class="hidden md:flex sticky top-0 left-0 h-max bg-slate-50 dark:bg-zinc-950
       z-40
       {sidePadding.class}"
       style="grid-area: sidebar; width: 100% !important;"
@@ -128,7 +132,7 @@
     <slot
       name="main"
       class="w-full bg-slate-25 dark:bg-zinc-925 justify-self-center shadow-sm z-0
-      {$contentPadding.class}"
+      {$contentPadding.class} main"
       style="grid-area: main"
     />
     <slot
@@ -159,6 +163,11 @@
     grid-template-areas: 'main';
     justify-items: start;
   }
+  .content > * {
+    width: 100%; /* Full width for immediate children */
+    max-width: 100rem; /* Limit width */
+    padding: 0 1rem; /* Add some padding on smaller screens */
+  }
 
   @media (min-width: 768px) {
     .content {
@@ -170,13 +179,25 @@
 
   @media (min-width: 1280px) {
     .content {
-      grid-template-columns: 20% 1fr 20%;
+      grid-template-columns: 20% 60% 20%;
       justify-items: end center start;
       grid-template-areas: 'sidebar main suffix';
     }
-  }
 
-  .limit-width {
-    max-width: 100rem;
+    .content:is(.limit-width) {
+      grid-template-columns: 1fr 2fr 1fr;
+    }
+
+    :global(.content:is(.limit-width) > *:first-child) {
+      max-width: 20rem;
+      justify-self: end;
+      width: 100%;
+    }
+
+    :global(.content:is(.limit-width) > *:last-child) {
+      max-width: 20rem;
+      justify-self: start;
+      width: 100%;
+    }
   }
 </style>

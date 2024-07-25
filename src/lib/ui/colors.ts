@@ -9,11 +9,12 @@ import {
   type Readable,
 } from 'svelte/store'
 import { env } from '$env/dynamic/public'
-import { presets } from './presets'
+import { getDefaultTheme, presets } from './presets'
+import { browser } from '$app/environment'
 
 type ColorScheme = 'system' | 'light' | 'dark'
 
-interface ThemeData {
+export interface ThemeData {
   scheme: ColorScheme
   themes: Theme[]
   currentTheme: number
@@ -25,60 +26,9 @@ export interface Theme {
   name: string
 }
 
-interface ThemeColors {
+export interface ThemeColors {
   [scheme: string]: {
     [key: string]: string
-  }
-}
-
-export function getDefaultColors(): ThemeColors {
-  return env.PUBLIC_THEME
-    ? JSON.parse(env.PUBLIC_THEME)
-    : {
-        slate: {
-          25: '252 253 254',
-          50: '248 250 252',
-          100: '241 245 249',
-          200: '226 232 240',
-          300: '203 213 225',
-          400: '148 163 184',
-          500: '100 116 139',
-          600: '71 85 105',
-          700: '51 65 85',
-          800: '30 41 59',
-          900: '15 23 42',
-          950: '2 6 23',
-        },
-        zinc: {
-          50: `249 250 251`,
-          100: `243 244 246`,
-          200: `229 231 235`,
-          300: `209 213 219`,
-          400: `156 163 175`,
-          500: `107 114 128`,
-          600: `75 85 99`,
-          700: '50 60 76',
-          800: '22 31 45',
-          900: '17 24 39',
-          925: '8 12 25',
-          950: `5 9 16`,
-        },
-        primary: {
-          100: 'var(--c-p-100,241 245 249)',
-          900: 'var(--c-p-900,15 23 42)',
-        },
-        other: {
-          black: `var(--c-o-black,0 0 0)`,
-          white: `var(--c-o-white,255 255 255)`,
-        },
-      }
-}
-
-export function getDefaultTheme(): Theme {
-  return {
-    id: 0,
-    colors: getDefaultColors(),
-    name: 'Default',
   }
 }
 
@@ -129,10 +79,18 @@ function themeStore(
   }
 }
 
-export let themeData = writable<ThemeData>({
-  scheme: 'system',
-  themes: presets,
-  currentTheme: 0,
+export let themeData = writable<ThemeData>(
+  loadTheme() ?? {
+    scheme: 'system',
+    themes: presets,
+    currentTheme: 0,
+  }
+)
+
+themeData.subscribe((themeData) => {
+  if (browser) {
+    localStorage.setItem('themeData', JSON.stringify(themeData))
+  }
 })
 
 export let theme = themeStore(
@@ -177,7 +135,7 @@ export const inDarkColorScheme = (): boolean => {
   return false
 }
 
-if (typeof localStorage != 'undefined') {
+function loadColorScheme() {
   const localColorScheme: ColorScheme =
     (localStorage.getItem('colorScheme') as ColorScheme) ||
     configuredColorScheme
@@ -201,4 +159,19 @@ if (typeof localStorage != 'undefined') {
       localStorage.setItem('colorScheme', colorScheme)
     }
   })
+}
+
+function loadTheme() {
+  if (!browser) return
+  const localTheme = localStorage.getItem('themeData')
+  if (localTheme) {
+    return JSON.parse(localTheme)
+  }
+  return
+}
+
+if (browser) {
+  try {
+    loadColorScheme()
+  } catch (e) {}
 }

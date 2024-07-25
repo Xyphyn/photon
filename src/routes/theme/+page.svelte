@@ -3,6 +3,7 @@
     Button,
     Material,
     Modal,
+    Note,
     TextArea,
     action,
     modal,
@@ -20,13 +21,9 @@
   import ColorSwatch from './ColorSwatch.svelte'
   import { t } from '$lib/translations'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import {
-    calculateVars,
-    getDefaultColors,
-    hexToRgb,
-    theme,
-    themeData,
-  } from '$lib/ui/colors'
+  import { calculateVars, hexToRgb, theme, themeData } from '$lib/ui/colors'
+  import { getDefaultColors } from '$lib/ui/presets'
+  import ThemePreset from './ThemePreset.svelte'
 
   let importing = false
   let importText = ''
@@ -59,56 +56,21 @@
 
 <div class="flex flex-col gap-4 h-full">
   <Header>Theme</Header>
-  <div class="flex flex-row items-center gap-4 overflow-auto h-36">
+  <div class="grid grid-cols-4 items-center gap-4 overflow-auto max-h-72">
     {#each $themeData.themes as theme}
-      <button
-        class="h-full"
-        on:click={() => ($themeData.currentTheme = theme.id)}
-      >
-        <Material
-          padding="none"
-          class="{theme.id == $themeData.currentTheme
-            ? 'ring-2 ring-inset ring-primary-900 dark:ring-primary-100'
-            : ''} flex relative cursor-pointer h-full flex-col text-left"
-        >
-          <div
-            style="{calculateVars(theme)}; --bg-dark: {hexToRgb(
-              theme.colors.zinc?.[925]
-            )}; --bg-light: {hexToRgb(theme.colors.slate?.[25])} margin: 2px;"
-            class="h-20 w-48 rounded-lg rounded-b-none flex flex-row flex-wrap p-4 gap-2
-            theme-bg"
-          >
-            <div class="text-slate-900 dark:text-zinc-100 text-xs">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-            </div>
-            <div
-              class="bg-white dark:bg-zinc-900 w-8 h-4 rounded-sm border border-slate-200 dark:border-zinc-800"
-            />
-          </div>
-          {#if theme.id == $themeData.currentTheme}
-            <Icon
-              src={CheckCircle}
-              size="20"
-              solid
-              class="absolute top-0 right-0 m-2 text-primary-900 dark:text-primary-100"
-            />
-          {/if}
-          <div class="px-4 py-2">
-            <span class="font-medium text-lg font-display">{theme.name}</span>
-          </div>
-        </Material>
-      </button>
+      <ThemePreset {theme} />
     {/each}
     <button
       on:click={() => {
-        $themeData.themes = [
-          ...$themeData.themes,
-          {
-            id: Math.max(...$themeData.themes.map((t) => t.id)) + 1,
-            colors: getDefaultColors(),
-            name: `New Theme`,
-          },
-        ]
+        const newTheme = {
+          id: Math.max(...$themeData.themes.map((t) => t.id)) + 1,
+          colors: getDefaultColors(),
+          name: `New Theme`,
+        }
+
+        $themeData.themes = [...$themeData.themes, newTheme]
+
+        $themeData.currentTheme = newTheme.id
       }}
     >
       <Material
@@ -129,6 +91,7 @@
         importing = !importing
       }}
       size="lg"
+      disabled={$theme.id <= 0}
     >
       <Icon src={ArrowUpTray} size="16" mini />
       {$t('routes.theme.import')}
@@ -144,6 +107,7 @@
       {$t('routes.theme.export')}
     </Button>
     <Button
+      disabled={$theme.id <= 0}
       on:click={() => {
         modal({
           actions: [
@@ -170,75 +134,89 @@
       {$t('routes.theme.reset')}
     </Button>
   </div>
-  <Material color="transparent" class="items-center gap-x-4 color-grid gap-y-2">
-    <h1 class="text-2xl font-bold col-span-2">{$t('routes.theme.accent')}</h1>
-    <ColorSwatch
-      value={$theme.colors.primary?.[900]}
-      on:change={(e) => {
-        $theme.colors.primary[900] = e.detail
-      }}
-      backgroundColor={defaultColors.primary[900]}
-      on:contextmenu={(e) => {
-        e.preventDefault()
-        $theme.colors.primary[900] =
-          // @ts-ignore
-          defaultColors.primary[900]
+  {#if $theme.id <= 0}
+    <Note>
+      {$t('routes.theme.preset.description')}
+    </Note>
+  {/if}
+  <div
+    class="relative"
+    class:opacity-50={$theme.id <= 0}
+    class:pointer-events-none={$theme.id <= 0}
+  >
+    <Material
+      color="transparent"
+      class="items-center gap-x-4 color-grid gap-y-2"
+    >
+      <h1 class="text-2xl font-bold col-span-2">{$t('routes.theme.accent')}</h1>
+      <ColorSwatch
+        value={$theme.colors.primary?.[900]}
+        on:change={(e) => {
+          $theme.colors.primary[900] = e.detail
+        }}
+        backgroundColor={defaultColors.primary[900]}
+        on:contextmenu={(e) => {
+          e.preventDefault()
+          $theme.colors.primary[900] =
+            // @ts-ignore
+            defaultColors.primary[900]
 
-        return true
-      }}
-      class="!w-12 !h-12 col-span-1"
-    />
-    <ColorSwatch
-      value={$theme.colors.primary?.[100]}
-      on:change={(e) => {
-        $theme.colors.primary[100] = e.detail
-      }}
-      backgroundColor={defaultColors.primary[100]}
-      on:contextmenu={(e) => {
-        e.preventDefault()
-        $theme.colors.primary[100] =
-          // @ts-ignore
-          defaultColors.primary[100]
+          return true
+        }}
+        class="!w-12 !h-12 col-span-1"
+      />
+      <ColorSwatch
+        value={$theme.colors.primary?.[100]}
+        on:change={(e) => {
+          $theme.colors.primary[100] = e.detail
+        }}
+        backgroundColor={defaultColors.primary[100]}
+        on:contextmenu={(e) => {
+          e.preventDefault()
+          $theme.colors.primary[100] =
+            // @ts-ignore
+            defaultColors.primary[100]
 
-        return true
-      }}
-      class="!w-12 !h-12 col-span-1"
-    />
-    <span class="font-semibold text-base">
-      {$t('nav.menu.colorscheme.light')}
-    </span>
-    <span class="font-semibold text-base">
-      {$t('nav.menu.colorscheme.dark')}
-    </span>
-  </Material>
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
-    {#each Object.entries(defaultColors) as [category, value]}
-      <Material color="transparent" class="flex flex-col gap-2">
-        <h1 class="capitalize font-semibold text-lg">{category}</h1>
-        <div class="flex flex-row gap-1 flex-wrap items-center space-evenly">
-          {#each Object.entries(value) as [shade, color]}
-            <div class="flex flex-col gap-0.5 w-10 group">
-              <!--@ts-ignore-->
-              <ColorSwatch
-                bind:value={$theme.colors[category][shade]}
-                on:change={(e) => {
-                  $theme.colors[category][shade] = e.detail
-                }}
-                on:contextmenu={(e) => {
-                  e.preventDefault()
-                  $theme.colors[category][shade] =
-                    // @ts-ignore
-                    defaultColors[category][shade]
+          return true
+        }}
+        class="!w-12 !h-12 col-span-1"
+      />
+      <span class="font-semibold text-base">
+        {$t('nav.menu.colorscheme.light')}
+      </span>
+      <span class="font-semibold text-base">
+        {$t('nav.menu.colorscheme.dark')}
+      </span>
+    </Material>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
+      {#each Object.entries(defaultColors) as [category, value]}
+        <Material color="transparent" class="flex flex-col gap-2">
+          <h1 class="capitalize font-semibold text-lg">{category}</h1>
+          <div class="flex flex-row gap-1 flex-wrap items-center space-evenly">
+            {#each Object.entries(value) as [shade, color]}
+              <div class="flex flex-col gap-0.5 w-10 group">
+                <!--@ts-ignore-->
+                <ColorSwatch
+                  bind:value={$theme.colors[category][shade]}
+                  on:change={(e) => {
+                    $theme.colors[category][shade] = e.detail
+                  }}
+                  on:contextmenu={(e) => {
+                    e.preventDefault()
+                    $theme.colors[category][shade] =
+                      // @ts-ignore
+                      defaultColors[category][shade]
 
-                  return true
-                }}
-              />
-              <span class="font-medium capitalize">{shade}</span>
-            </div>
-          {/each}
-        </div>
-      </Material>
-    {/each}
+                    return true
+                  }}
+                />
+                <span class="font-medium capitalize">{shade}</span>
+              </div>
+            {/each}
+          </div>
+        </Material>
+      {/each}
+    </div>
   </div>
   <div
     class="flex items-center gap-2 sm:gap-8 flex-col sm:flex-row mt-auto mx-auto text-sm text-slate-600 dark:text-zinc-400"
@@ -259,13 +237,5 @@
   :global(.color-grid) {
     display: grid;
     grid-template-columns: min-content min-content;
-  }
-
-  .theme-bg {
-    background-color: rgb(var(--bg-light));
-  }
-
-  .dark .theme-bg {
-    background-color: rgb(var(--bg-dark));
   }
 </style>

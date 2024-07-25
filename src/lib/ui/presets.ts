@@ -1,4 +1,55 @@
-import { getDefaultColors, getDefaultTheme, type Theme } from './colors'
+import { env } from '$env/dynamic/public'
+import type { Theme, ThemeColors } from './colors'
+
+export function getDefaultColors(): ThemeColors {
+  return env.PUBLIC_THEME
+    ? JSON.parse(env.PUBLIC_THEME)
+    : {
+        slate: {
+          25: '252 253 254',
+          50: '248 250 252',
+          100: '241 245 249',
+          200: '226 232 240',
+          300: '203 213 225',
+          400: '148 163 184',
+          500: '100 116 139',
+          600: '71 85 105',
+          700: '51 65 85',
+          800: '30 41 59',
+          900: '15 23 42',
+          950: '2 6 23',
+        },
+        zinc: {
+          50: '250 253 255',
+          100: '243 244 246',
+          300: '209 213 219',
+          400: '156 163 175',
+          500: '107 114 128',
+          600: '75 85 99',
+          700: '55 65 81',
+          800: '31 41 55',
+          900: '17 24 39',
+          925: '8 12 25',
+          950: '3 7 18',
+        },
+        primary: {
+          100: 'var(--c-p-100,241 245 249)',
+          900: 'var(--c-p-900,15 23 42)',
+        },
+        other: {
+          black: `var(--c-o-black,0 0 0)`,
+          white: `var(--c-o-white,255 255 255)`,
+        },
+      }
+}
+
+export function getDefaultTheme(): Theme {
+  return {
+    id: 0,
+    colors: getDefaultColors(),
+    name: 'Default',
+  }
+}
 
 export const presets: Theme[] = [
   getDefaultTheme(),
@@ -46,6 +97,48 @@ export const presets: Theme[] = [
   },
   {
     colors: {
+      slate: {
+        25: '252 253 254',
+        50: '248 250 252',
+        100: '241 245 249',
+        200: '226 232 240',
+        300: '203 213 225',
+        400: '148 163 184',
+        500: '100 116 139',
+        600: '71 85 105',
+        700: '51 65 85',
+        800: '30 41 59',
+        900: '15 23 42',
+        950: '2 6 23',
+      },
+      zinc: {
+        50: `249 250 251`,
+        100: `243 244 246`,
+        200: `229 231 235`,
+        300: `209 213 219`,
+        400: `156 163 175`,
+        500: `107 114 128`,
+        600: `75 85 99`,
+        700: '30 30 30',
+        800: '22 22 22',
+        900: '10 10 10',
+        925: '0 0 0',
+        950: `0 0 0`,
+      },
+      primary: {
+        100: 'var(--c-p-100,241 245 249)',
+        900: 'var(--c-p-900,15 23 42)',
+      },
+      other: {
+        black: `var(--c-o-black,0 0 0)`,
+        white: `var(--c-o-white,255 255 255)`,
+      },
+    },
+    id: -2,
+    name: 'AMOLED',
+  },
+  {
+    colors: {
       zinc: {
         50: '#cdd6f4',
         100: '#bac2de',
@@ -69,7 +162,7 @@ export const presets: Theme[] = [
       },
       slate: {},
     },
-    id: -2,
+    id: -3,
     name: 'Catppuccin',
   },
 ]
