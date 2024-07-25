@@ -13,6 +13,7 @@
     inDarkColorScheme,
     rgbToHex,
     theme,
+    themeVars,
   } from '$lib/ui/colors.js'
   import { userSettings } from '$lib/settings.js'
   import { Button, ModalContainer, Spinner, ToastContainer } from 'mono-svelte'
@@ -61,6 +62,9 @@
         )
       }
       document.body.querySelector('.loader')?.classList.add('hidden')
+      themeVars.subscribe((vars) => {
+        document.body.setAttribute('style', vars)
+      })
     }
   })
   $: title = routes[($page.route.id as keyof typeof routes) ?? '']
