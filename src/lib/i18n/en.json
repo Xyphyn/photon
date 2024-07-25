@@ -360,6 +360,12 @@
         "title": "Reset Theme",
         "description": "This will reset all of your colors to the default. It is recommended to export your theme before this."
       }
+    },
+    "community": {
+      "settings": {
+        "team": "Team",
+        "settings": "Settings"
+      }
     }
   },
   "cards": {

@@ -75,15 +75,25 @@
       })
 
       if ($profile.user) {
-        $profile.user = {
-          ...$profile.user,
-          moderates: [
-            ...$profile.user.moderates,
-            {
-              community: res.community_view.community,
-              moderator: $profile.user.local_user_view.person,
-            },
-          ],
+        const c = $profile.user.moderates
+          .map((m) => m.community.id)
+          .indexOf(res.community_view.community.id)
+        if (c != -1) {
+          $profile.user.moderates[c] = {
+            community: res.community_view.community,
+            moderator: $profile.user.local_user_view.person,
+          }
+        } else {
+          $profile.user = {
+            ...$profile.user,
+            moderates: [
+              ...$profile.user.moderates,
+              {
+                community: res.community_view.community,
+                moderator: $profile.user.local_user_view.person,
+              },
+            ],
+          }
         }
 
         addSubscription(res.community_view.community, true)
@@ -106,7 +116,10 @@
   }
 </script>
 
-<form on:submit|preventDefault={submit} class="flex flex-col gap-4 h-full">
+<form
+  on:submit|preventDefault={submit}
+  class="flex flex-col gap-4 h-full w-full"
+>
   <slot name="formtitle">
     <Header>{$t('routes.createCommunity')}</Header>
   </slot>

@@ -19,6 +19,7 @@ import {
   writable,
   type Readable,
   type Writable,
+  type Updater,
 } from 'svelte/store'
 import { MINIMUM_VERSION, versionIsSupported } from '$lib/version.js'
 import { browser } from '$app/environment'
@@ -102,9 +103,31 @@ let fetchUser = {
   prevProfile: -1,
 }
 
-export let profile: Readable<Profile> = derived(
-  profileData,
-  (pd, set, update) => {
+function profileStore(
+  data: Writable<ProfileData>,
+  fn: (
+    values: ProfileData,
+    set: (value: Profile) => void,
+    update: (fn: Updater<Profile>) => void
+  ) => any
+) {
+  const derive: Readable<Profile> = derived(data, fn)
+  const { subscribe } = derive
+
+  return {
+    subscribe,
+    set: (value: Profile) => {
+      data.update((data) => {
+        let index = data.profiles.findIndex((t) => t.id == value.id)
+        data.profiles[index] = value
+        return data
+      })
+    },
+  }
+}
+
+export let profile: Readable<Profile> & { set: (v: Profile) => void } =
+  profileStore(profileData, (pd, set, update) => {
     const profile =
       pd.profiles.find((p) => p.id == pd.profile) ?? getDefaultProfile()
 
@@ -154,8 +177,7 @@ export let profile: Readable<Profile> = derived(
         fetchUser.loading = false
       }
     }
-  }
-)
+  })
 
 export let notifications = writable<Notifications>({
   applications: 0,
