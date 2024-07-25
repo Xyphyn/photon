@@ -4,7 +4,7 @@
       top: boolean | null
       noGap: boolean | null
     },
-    screenWidth: number,
+    screenWidth: number
   ): {
     noGap: boolean
     top: boolean
@@ -35,7 +35,7 @@
   export const calculatePadding = (
     panel: boolean,
     top: boolean,
-    content: boolean,
+    content: boolean
   ): {
     top: number
     class: string
@@ -62,13 +62,13 @@
     })
   export let contentPadding: Readable<ReturnType<typeof calculatePadding>> =
     derived(dockProps, ($dockProps, set) =>
-      set(calculatePadding($dockProps.noGap, $dockProps.top, true)),
+      set(calculatePadding($dockProps.noGap, $dockProps.top, true))
     )
 </script>
 
 <script lang="ts">
   import { userSettings } from '$lib/settings.js'
-  import { colors, colorsToVars } from '$lib/ui/colors'
+  import { themeVars } from '$lib/ui/colors'
   import { routes } from '$lib/util.js'
   import { derived, writable, type Readable, type Writable } from 'svelte/store'
 
@@ -84,8 +84,8 @@
 
 <div
   {...$$restProps}
-  class="shell {$$props.class}"
-  style={colorsToVars($colors)}
+  class="shell bg-slate-50 dark:bg-zinc-950 {$$props.class}"
+  style={$themeVars}
 >
   <slot />
   <div
@@ -109,10 +109,10 @@
         : 'border rounded-full'}
        
        dark:bg-transparent transition-colors duration-500
-      pointer-events-auto {topPanel
-        ? 'bg-slate-50 dark:bg-zinc-950 border-slate-100 dark:border-zinc-900'
-        : `border-slate-200 dark:border-zinc-800 shadow-2xl backdrop-blur-xl
-        dark:backdrop-brightness-[25%] bg-[#ffffff]/75`}"
+      pointer-events-auto backdrop-blur-xl {topPanel
+        ? 'bg-slate-50/50 dark:bg-zinc-950/90 border-slate-100 dark:border-zinc-900'
+        : `border-slate-200 dark:border-zinc-800 shadow-2xl
+        bg-white/50 dark:bg-zinc-925/70`}"
       {title}
       style="transition: border-radius 250ms;"
     />
@@ -124,7 +124,7 @@
   >
     <slot
       name="sidebar"
-      class="hidden md:flex sticky top-0 left-0 max-w-full h-max bg-slate-50 dark:bg-zinc-950
+      class="hidden md:flex sticky top-0 left-0 h-max bg-slate-50 dark:bg-zinc-950
       z-40
       {sidePadding.class}"
       style="grid-area: sidebar; width: 100% !important;"
@@ -132,7 +132,7 @@
     <slot
       name="main"
       class="w-full bg-slate-25 dark:bg-zinc-925 justify-self-center shadow-sm z-0
-      {$contentPadding.class}"
+      {$contentPadding.class} main"
       style="grid-area: main"
     />
     <slot
@@ -163,6 +163,11 @@
     grid-template-areas: 'main';
     justify-items: start;
   }
+  .content > * {
+    width: 100%; /* Full width for immediate children */
+    max-width: 100rem; /* Limit width */
+    padding: 0 1rem; /* Add some padding on smaller screens */
+  }
 
   @media (min-width: 768px) {
     .content {
@@ -174,13 +179,25 @@
 
   @media (min-width: 1280px) {
     .content {
-      grid-template-columns: 20% 1fr 20%;
+      grid-template-columns: 20% 60% 20%;
       justify-items: end center start;
       grid-template-areas: 'sidebar main suffix';
     }
-  }
 
-  .limit-width {
-    max-width: 100rem;
+    .content:is(.limit-width) {
+      grid-template-columns: 1fr 2fr 1fr;
+    }
+
+    :global(.content:is(.limit-width) > *:first-child) {
+      max-width: 20rem;
+      justify-self: end;
+      width: 100%;
+    }
+
+    :global(.content:is(.limit-width) > *:last-child) {
+      max-width: 20rem;
+      justify-self: start;
+      width: 100%;
+    }
   }
 </style>

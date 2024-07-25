@@ -9,12 +9,11 @@
   // @ts-ignore
   import { pwaInfo } from 'virtual:pwa-info'
   import {
-    colors,
-    colorsToVars,
-    defaultColors,
-    inDarkLegacyTheme,
-    legacyTheme,
-    type Colors,
+    colorScheme,
+    inDarkColorScheme,
+    rgbToHex,
+    theme,
+    themeVars,
   } from '$lib/ui/colors.js'
   import { userSettings } from '$lib/settings.js'
   import { Button, ModalContainer, Spinner, ToastContainer } from 'mono-svelte'
@@ -28,6 +27,7 @@
   import ExpandableImage from '$lib/components/ui/ExpandableImage.svelte'
   import { LINKED_INSTANCE_URL } from '$lib/instance'
   import { locale } from '$lib/translations'
+  import { getDefaultColors } from '$lib/ui/presets'
 
   nProgress.configure({
     minimum: 0.4,
@@ -51,7 +51,6 @@
   }
 
   $: webManifest = pwaInfo ? pwaInfo.webManifest.linkTag : ''
-  $: darklegacyTheme = $legacyTheme && inDarkLegacyTheme()
 
   onMount(() => {
     if (browser) {
@@ -59,37 +58,29 @@
         history.replaceState(
           null,
           '',
-          window.location.toString().replace('#main', ''),
+          window.location.toString().replace('#main', '')
         )
       }
-      window
-        .matchMedia('(prefers-color-scheme: dark)')
-        .addEventListener('change', (event) => {
-          darklegacyTheme = inDarkLegacyTheme()
-          themeColor = getMetaColor($colors)
-        })
       document.body.querySelector('.loader')?.classList.add('hidden')
+      themeVars.subscribe((vars) => {
+        document.body.setAttribute('style', vars)
+      })
     }
   })
   $: title = routes[($page.route.id as keyof typeof routes) ?? '']
-  $: browser ? document.body.setAttribute('style', colorsToVars($colors)) : ''
-
-  // svelte reactivity goof
-  const getMetaColor = (colors: Colors): string | undefined => {
-    const regex = /var\([^,]+,\s*(#[0-9A-Fa-f]{6})\)/m
-
-    return darklegacyTheme
-      ? colors.zinc?.[925] ?? defaultColors.zinc[925].match(regex)?.[1]
-      : colors.slate?.[25] ?? defaultColors.slate[25].match(regex)?.[1]
-  }
-
-  $: themeColor = getMetaColor($colors)
 </script>
 
 <svelte:head>
-  <meta name="theme-color" content={themeColor} />
   {#if $site?.site_view}
     <title>{$site?.site_view.site.name}</title>
+    <meta
+      name="theme-color"
+      content={rgbToHex(
+        $colorScheme && inDarkColorScheme()
+          ? $theme.colors.zinc?.[925] ?? getDefaultColors().zinc[925]
+          : $theme.colors.slate?.[25] ?? getDefaultColors().slate[25]
+      )}
+    />
     {#if LINKED_INSTANCE_URL}
       <link rel="icon" href={$site?.site_view?.site.icon} />
       <meta name="description" content={$site?.site_view?.site.description} />

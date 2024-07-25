@@ -15,7 +15,6 @@ It is designed for all features to have an appealing and intuitive design, while
 
 ![image](https://github.com/Xyphyn/photon/assets/80978739/e36468f6-03c5-4267-94e8-3bba60b6ccb2)
 
-
 ## Self-hosting
 
 Put Photon on your own domain for easier onboarding.
@@ -66,7 +65,8 @@ These are the most important environment variables that you can change:
 | PUBLIC_FAVICON              | URL                 | `/img/logo-background.svg              |
 | PUBLIC_SSR_ENABLED          | `bool`              | `false`                                |
 | PUBLIC_MIGRATE_COOKIE       | `bool`              | `false`                                |
-| PUBLIC_THEME                | system\|dark\|light | system                                 |
+| PUBLIC_THEME                | JSON                | Photon's default colors                |
+| PUBLIC_COLORSCHEME          | system\|dark\|light | system                                 |
 | PUBLIC_EXPANDABLE_IMAGES    | `bool`              | true                                   |
 | PUBLIC_MARK_READ_POSTS      | `bool`              | true                                   |
 | PUBLIC_DEFAULT_FEED_SORT    | `SortType`          | Active                                 |

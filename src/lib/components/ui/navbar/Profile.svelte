@@ -31,7 +31,7 @@
     UserCircle,
     UserGroup,
   } from 'svelte-hero-icons'
-  import { legacyTheme } from '$lib/ui/colors'
+  import { colorScheme } from '$lib/ui/colors'
   import { userSettings } from '$lib/settings'
   import { site } from '$lib/lemmy'
   import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
@@ -127,11 +127,11 @@
   </MenuButton>
   <MenuButton class="!py-0">
     <Icon
-      src={$legacyTheme == 'system'
+      src={$colorScheme == 'system'
         ? ComputerDesktop
-        : $legacyTheme == 'light'
+        : $colorScheme == 'light'
           ? Sun
-          : $legacyTheme == 'dark'
+          : $colorScheme == 'dark'
             ? Moon
             : Moon}
       mini
@@ -142,7 +142,7 @@
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div class="contents" on:click|stopPropagation={() => {}}>
-      <Select bind:value={$legacyTheme} class="ml-auto my-auto w-24" size="sm">
+      <Select bind:value={$colorScheme} class="ml-auto my-auto w-24" size="sm">
         <option value="system">{$t('nav.menu.colorscheme.system')}</option>
         <option value="light">{$t('nav.menu.colorscheme.light')}</option>
         <option value="dark">{$t('nav.menu.colorscheme.dark')}</option>

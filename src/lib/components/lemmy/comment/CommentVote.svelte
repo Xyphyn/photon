@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { Color } from '$lib/ui/colors'
   import {
     ArrowDownCircle,
     ArrowUp,
