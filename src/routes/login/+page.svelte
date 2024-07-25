@@ -143,10 +143,12 @@
         <Icon src={QuestionMarkCircle} mini size="16" />
         {$t('form.forgotpassword')}
       </Button>
-      <Button color="tertiary" href="/login/guest">
-        <Icon src={UserCircle} mini size="16" />
-        {$t('account.guest')}
-      </Button>
+      {#if !LINKED_INSTANCE_URL}
+        <Button color="tertiary" href="/login/guest">
+          <Icon src={UserCircle} mini size="16" />
+          {$t('account.guest')}
+        </Button>
+      {/if}
     </div>
   </form>
 </div>

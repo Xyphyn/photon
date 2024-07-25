@@ -244,10 +244,12 @@
                 {$t('common.debug')}
               </MenuButton>
             {/if}
-            <MenuButton on:click={() => action(profile)} color="danger-subtle">
-              <Icon slot="prefix" src={ArrowRightOnRectangle} size="16" mini />
-              {$t('account.logout')}
-            </MenuButton>
+            {#if !LINKED_INSTANCE_URL || profile.user}
+              <MenuButton on:click={() => action(profile)} color="danger-subtle">
+                <Icon slot="prefix" src={ArrowRightOnRectangle} size="16" mini />
+                {$t('account.logout')}
+              </MenuButton>
+            {/if}
           </Menu>
         </div>
       {/each}
