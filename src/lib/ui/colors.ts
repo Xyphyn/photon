@@ -198,7 +198,6 @@ function loadTheme() {
   if (localTheme) {
     const data = JSON.parse(localTheme)
     if (!data) return
-    console.log(data)
     data.themes = [...presets, ...data.themes]
     return data
   }
