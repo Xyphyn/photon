@@ -148,7 +148,7 @@
   <Button
     size="sm"
     href="/post/{getInstance()}/{post.post.id}"
-    class="text-inherit h-full px-3"
+    class="!text-inherit h-full px-3"
     color="ghost"
     rounding="pill"
     target={$userSettings.openLinksInNewTab ? '_blank' : ''}

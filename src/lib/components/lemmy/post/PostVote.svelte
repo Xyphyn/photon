@@ -63,12 +63,13 @@
   <div
     class="{buttonColor.ghost} rounded-full h-full font-medium flex items-center *:p-2
     hover:bg-white hover:dark:bg-zinc-900 overflow-hidden transition-colors flex-shrink-0
+    {vote != 0 ? '' : '!text-inherit'}
     {loading ? 'animate-pulse opacity-75 pointer-events-none' : ''}"
   >
     <button
       on:click={() => castVote(vote == 1 ? 0 : 1)}
       class="flex items-center gap-1 {buttonColor.ghost} transition-colors border-0
-      {vote == 1 ? shouldShowVoteColor(vote, 'upvotes') : ''}"
+      {vote == 1 ? shouldShowVoteColor(vote, 'upvotes') : '!text-inherit'}"
     >
       <Icon src={ChevronUp} size="20" micro />
       <span class="grid text-sm">
@@ -90,7 +91,7 @@
       <button
         on:click={() => castVote(vote == -1 ? 0 : -1)}
         class="flex items-center flex-row-reverse gap-1 {buttonColor.ghost} transition-colors border-0
-      {vote == -1 ? shouldShowVoteColor(vote, 'downvotes') : ''}"
+      {vote == -1 ? shouldShowVoteColor(vote, 'downvotes') : '!text-inherit'}"
       >
         <Icon src={ChevronDown} size="20" micro />
         <span class="grid text-sm">
