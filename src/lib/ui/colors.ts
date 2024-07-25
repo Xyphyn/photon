@@ -214,12 +214,13 @@ if (browser) {
     if (oldColors) {
       themeData.update((td) => ({
         ...td,
+        currentTheme: Math.max(...td.themes.map((t) => t.id)) + 1,
         themes: [
           ...td.themes,
           {
             id: Math.max(...td.themes.map((t) => t.id)) + 1,
             colors: JSON.parse(oldColors),
-            name: t.get('routes.theme.preset.imported') ?? 'Your Theme',
+            name: t.get('routes.theme.preset.imported') || 'Your Theme',
           },
         ],
       }))
