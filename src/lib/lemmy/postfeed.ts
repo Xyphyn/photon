@@ -51,7 +51,16 @@ export async function postFeed(args: {
       instance: get(instance),
     })
 
-  return get(postFeeds)[args.id].data
+  return (
+    get(postFeeds)[args.id]?.data ?? {
+      ...args.request,
+      posts: posts,
+      cursor: {
+        next: posts.next_page,
+      },
+      type_: args.request.type_,
+    }
+  )
 }
 
 export function getPostFeed(feeds: Map<PostFeedID, PostFeed>, id: PostFeedID) {

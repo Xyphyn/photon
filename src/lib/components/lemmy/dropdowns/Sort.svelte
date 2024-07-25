@@ -15,9 +15,9 @@
   export let navigate: boolean = true
   export let changeDefault: boolean = false
 
-  let sort: string = selected.startsWith('Top') ? 'TopAll' : selected
+  let sort: string = selected?.startsWith('Top') ? 'TopAll' : selected
   $: if (selected) {
-    sort = selected.startsWith('Top') ? 'TopAll' : selected
+    sort = selected?.startsWith('Top') ? 'TopAll' : selected
   }
   const setSelected = () => (selected = sort)
   $: changeDefault
