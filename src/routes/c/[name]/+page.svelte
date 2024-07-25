@@ -44,7 +44,7 @@
     if (browser)
       setSessionStorage(
         'lastSeenCommunity',
-        data.community.community_view.community,
+        data.community.community_view.community
       )
 
     resumables.add({
@@ -99,10 +99,10 @@
     <button
       on:click={() => {
         navigator?.clipboard?.writeText?.(
-          fullCommunityName(
+          `!${fullCommunityName(
             community.community.name,
-            community.community.actor_id,
-          ),
+            community.community.actor_id
+          )}`
         )
         toast({ content: $t('toast.copied') })
       }}
@@ -111,7 +111,7 @@
     >
       !{fullCommunityName(
         community.community.name,
-        community.community.actor_id,
+        community.community.actor_id
       )}
     </button>
     <div class="flex items-center gap-2" slot="actions">
@@ -156,7 +156,7 @@
           color="secondary"
           href="/c/{fullCommunityName(
             community.community.name,
-            community.community.actor_id,
+            community.community.actor_id
           )}/settings"
         >
           <Icon src={Cog6Tooth} size="16" mini />

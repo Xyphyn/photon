@@ -25,7 +25,7 @@
       />
     </div>
   {/if}
-  <div class="p-4 flex flex-row gap-4">
+  <div class="p-4 flex flex-col sm:flex-row gap-4">
     <div class="space-y-3 flex-1">
       <Avatar
         width={64}
@@ -48,21 +48,21 @@
           <PostBody class="text-sm" view="list" body={bio} clickThrough />
         {/if}
       </div>
-      {#if stats.length > 0}
-        <div class="text-sm flex flex-row flex-wrap gap-3">
-          {#each stats as stat}
-            <LabelStat content={stat.value} formatted label={stat.name} />
-          {/each}
-        </div>
-      {/if}
     </div>
     {#if $$slots.actions}
-      <div class="space-y-3 flex flex-col" class:pt-12={banner != undefined}>
+      <div class="space-y-3 flex flex-col" class:sm:pt-12={banner != undefined}>
         <slot name="actions" />
       </div>
     {/if}
   </div>
   <div class="space-y-3 p-4 pt-0">
+    {#if stats.length > 0}
+      <div class="text-sm flex flex-row flex-wrap gap-3">
+        {#each stats as stat}
+          <LabelStat content={stat.value} formatted label={stat.name} />
+        {/each}
+      </div>
+    {/if}
     <slot />
   </div>
 </Material>
