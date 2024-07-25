@@ -12,7 +12,7 @@
   ])
 
   export const parseTags = (
-    title?: string,
+    title?: string
   ): { tags: Tag[]; title?: string } => {
     if (!title) return { tags: [] }
 
@@ -22,7 +22,7 @@
       extracted.push(
         textToTag.get(content) ?? {
           content: content,
-        },
+        }
       )
       return ''
     })
@@ -134,8 +134,8 @@
           >
             <Icon
               src={subscribed == 'NotSubscribed' ? Plus : Check}
-              mini
-              size="12"
+              micro
+              size="14"
             />
           </div>
         {/if}
