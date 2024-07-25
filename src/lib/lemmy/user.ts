@@ -22,20 +22,23 @@ export const addSubscription = (
   community: Community,
   subscribe: boolean = true
 ) => {
-  const pd = get(profileData)
-  const p = pd.profiles.find((p) => p.id == pd.profile)
+  const p = get(profile)
 
-  if (!p?.user) return
+  if (!p.user) return
 
-  if (subscribe) {
-    profileData.set(pd)
+  const index = p.user.follows.map((f) => f.community.id).indexOf(community.id)
+
+  if (subscribe && index == -1) {
+    p.user.follows.push({
+      // @ts-ignore
+      follower: p.user.follows[0]?.follower,
+      community: community,
+    })
   } else {
-    p.user.follows.splice(
-      p.user.follows.findIndex((i) => i.community.id == community.id),
-      1
-    )
-    profileData.set(pd)
+    p.user.follows.splice(index, 1)
   }
+
+  profile.set(p)
 }
 
 export const addAdmin = async (handle: string, added: boolean, jwt: string) =>
