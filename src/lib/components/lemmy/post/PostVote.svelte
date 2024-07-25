@@ -5,7 +5,7 @@
 
   export const shouldShowVoteColor = (
     vote: number,
-    type: 'upvotes' | 'downvotes',
+    type: 'upvotes' | 'downvotes'
   ): string =>
     (vote == -1 && type == 'downvotes') || (vote == 1 && type == 'upvotes')
       ? voteColor(vote)
@@ -17,9 +17,13 @@
   import type { Post } from 'lemmy-js-client'
   import {
     ArrowDown,
+    ArrowDownCircle,
     ArrowUp,
+    ArrowUpCircle,
     ChevronDown,
     ChevronUp,
+    HandThumbDown,
+    HandThumbUp,
     Icon,
     Key,
   } from 'svelte-hero-icons'
@@ -57,16 +61,16 @@
 
 <slot {vote} {score}>
   <div
-    class="{buttonColor.secondary} rounded-lg h-full font-medium flex items-center [&>*]:p-2
+    class="{buttonColor.ghost} rounded-full h-full font-medium flex items-center *:p-2
     hover:bg-white hover:dark:bg-zinc-900 overflow-hidden transition-colors flex-shrink-0
     {loading ? 'animate-pulse opacity-75 pointer-events-none' : ''}"
   >
     <button
       on:click={() => castVote(vote == 1 ? 0 : 1)}
-      class="flex items-center gap-0.5 {buttonColor.secondary} transition-colors border-0
+      class="flex items-center gap-1 {buttonColor.ghost} transition-colors border-0
       {vote == 1 ? shouldShowVoteColor(vote, 'upvotes') : ''}"
     >
-      <Icon src={ChevronUp} size="18" mini />
+      <Icon src={ChevronUp} size="20" micro />
       <span class="grid text-sm">
         {#key upvotes}
           <span
@@ -85,10 +89,10 @@
       ></div>
       <button
         on:click={() => castVote(vote == -1 ? 0 : -1)}
-        class="flex items-center gap-0.5 !pr-2.5 {buttonColor.secondary} transition-colors border-0
+        class="flex items-center flex-row-reverse gap-1 {buttonColor.ghost} transition-colors border-0
       {vote == -1 ? shouldShowVoteColor(vote, 'downvotes') : ''}"
       >
-        <Icon src={ChevronDown} size="18" mini />
+        <Icon src={ChevronDown} size="20" micro />
         <span class="grid text-sm">
           {#key downvotes}
             <span

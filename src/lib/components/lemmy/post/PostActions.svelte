@@ -148,11 +148,13 @@
   <Button
     size="sm"
     href="/post/{getInstance()}/{post.post.id}"
-    class="!text-inherit h-full px-3"
+    class="text-inherit h-full px-3"
+    color="ghost"
+    rounding="pill"
     target={$userSettings.openLinksInNewTab ? '_blank' : ''}
     title={$t('post.actions.comments')}
   >
-    <Icon slot="prefix" src={ChatBubbleOvalLeft} mini size="14" />
+    <Icon slot="prefix" src={ChatBubbleOvalLeft} size="18" />
     <FormattedNumber number={post.counts.comments} />
   </Button>
   <div class="ml-auto" />
@@ -168,6 +170,7 @@
       title="Debug"
       size="custom"
       color="ghost"
+      rounding="pill"
       class={buttonSquare}
     >
       <Icon src={BugAnt} mini size="16" slot="prefix" />
@@ -176,6 +179,8 @@
   {#if $profile?.user && (amMod($profile.user, post.community) || isAdmin($profile.user))}
     <ModerationMenu
       size="custom"
+      color="ghost"
+      rounding="pill"
       class={buttonSquare}
       bind:item={post}
       community={post.community}
@@ -193,6 +198,7 @@
       size="custom"
       class={buttonSquare}
       color="ghost"
+      rounding="pill"
       loading={saving}
       disabled={saving}
       title={post.saved ? $t('post.actions.unsave') : $t('post.actions.save')}
@@ -217,6 +223,7 @@
       slot="target"
       title={$t('post.actions.more.label')}
       color="ghost"
+      rounding="pill"
       size="custom"
       class={buttonSquare}
     >
@@ -245,7 +252,7 @@
 
         fediseerLoading = true
         const data = await fediseer.getInstanceInfo(
-          new URL(post.community.actor_id).hostname,
+          new URL(post.community.actor_id).hostname
         )
         fediseerData = data
         fediseerOpen = true
@@ -300,7 +307,7 @@
           navigator.clipboard.writeText(
             localShare
               ? `${instanceToURL(getInstance())}/post/${post.post.id}`
-              : post.post.ap_id,
+              : post.post.ap_id
           )
         toast({ content: $t('toast.copied') })
       }}
@@ -367,7 +374,7 @@
               post.post.deleted = await deleteItem(
                 post,
                 !post.post.deleted,
-                $profile.jwt,
+                $profile.jwt
               )
           }}
           color="danger-subtle"
@@ -386,7 +393,7 @@
               const hidden = await hidePost(
                 post.post.id,
                 !post.hidden,
-                $profile?.jwt,
+                $profile?.jwt
               )
               post.hidden = hidden
               if (hidden) {
