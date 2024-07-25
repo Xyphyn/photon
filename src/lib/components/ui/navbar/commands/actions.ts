@@ -8,7 +8,7 @@ import {
 import { resumables, type ResumableItem } from '$lib/lemmy/item'
 import { userSettings } from '$lib/settings'
 import { t } from '$lib/translations'
-import { legacyTheme } from '$lib/ui/colors'
+import { colorScheme } from '$lib/ui/colors'
 import { fullCommunityName } from '$lib/util'
 import {
   ArrowRightOnRectangle,
@@ -354,21 +354,21 @@ export function getGroups(
               name: t.get('nav.commands.setColorTo', {
                 default: t.get('nav.menu.colorscheme.system'),
               }),
-              handle: () => legacyTheme.set('system'),
+              handle: () => colorScheme.set('system'),
               icon: ComputerDesktop,
             },
             {
               name: t.get('nav.commands.setColorTo', {
                 default: t.get('nav.menu.colorscheme.light'),
               }),
-              handle: () => legacyTheme.set('light'),
+              handle: () => colorScheme.set('light'),
               icon: Sun,
             },
             {
               name: t.get('nav.commands.setColorTo', {
                 default: t.get('nav.menu.colorscheme.dark'),
               }),
-              handle: () => legacyTheme.set('dark'),
+              handle: () => colorScheme.set('dark'),
               icon: Moon,
             },
           ],

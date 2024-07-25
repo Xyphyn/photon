@@ -1,184 +1,190 @@
-/**
- * This enum represents a UI color as tailwind classes.
- */
-
-export enum Color {
-  'accent' = 'border border-black dark:border-white bg-black text-white\
-    dark:bg-white dark:text-black hover:text-inherit hover:bg-transparent hover:dark:bg-transparent active:bg-black/10 active:dark:bg-white/10',
-  'ghost' = 'bg-black/5 dark:bg-white/5 hover:bg-black/10 hover:dark:bg-white/10 text-black dark:text-white border border-transparent',
-  'secondary' = 'hover:bg-black/10 hover:dark:bg-white/10 text-black dark:text-white fill-black dark:fill-white',
-  'danger' = 'border border-red-500 bg-red-500 text-white hover:text-red-500 hover:bg-transparent',
-  'dangerSecondary' = 'hover:bg-red-500 text-red-500 hover:text-white',
-  'border' = 'border border-slate-200 dark:border-zinc-700 bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 hover:dark:bg-zinc-700',
-  'borderDark' = 'border border-slate-200 dark:border-zinc-800 bg-slate-100 dark:bg-zinc-900 hover:bg-slate-200 hover:dark:bg-zinc-800',
-}
-
-import { get, writable } from 'svelte/store'
+import {
+  derived,
+  get,
+  writable,
+  type Stores,
+  type Updater,
+  type Unsubscriber,
+  type Writable,
+  type Readable,
+} from 'svelte/store'
 import { env } from '$env/dynamic/public'
-import { browser } from '$app/environment'
+import { presets } from './presets'
 
-interface ColorData {
-  theme: number
-  themes: Colors[]
+type ColorScheme = 'system' | 'light' | 'dark'
+
+interface ThemeData {
+  scheme: ColorScheme
+  themes: Theme[]
+  currentTheme: number
 }
 
-interface Theme {
-  colors: Colors
-  name: string
+export interface Theme {
   id: number
+  colors: ThemeColors
+  name: string
 }
 
-export interface Colors {
-  slate: {
-    25?: string
-    50?: string
-    100?: string
-    200?: string
-    400?: string
-    500?: string
-    600?: string
-    700?: string
-    800?: string
-    900?: string
-    925?: string
-    950?: string
-  }
-  zinc: {
-    100?: string
-    200?: string
-    300?: string
-    400?: string
-    500?: string
-    600?: string
-    700?: string
-    800?: string
-    900?: string
-    925?: string
-    950?: string
-  }
-  primary: {
-    100?: string
-    900?: string
-  }
-  other: {
-    black?: string
-    white?: string
+interface ThemeColors {
+  [scheme: string]: {
+    [key: string]: string
   }
 }
 
-export const defaultColors = {
-  slate: {
-    25: `var(--c-s-25,#fcfdfe)`,
-    50: `var(--c-s-50,#f8fafc)`,
-    100: `var(--c-s-100,#f1f5f9)`,
-    200: `var(--c-s-200,#e2e8f0)`,
-    300: `var(--c-s-300,#cbd5e1)`,
-    400: `var(--c-s-400,#94a3b8)`,
-    500: `var(--c-s-500,#64748b)`,
-    600: `var(--c-s-600,#475569)`,
-    700: `var(--c-s-700,#334155)`,
-    800: `var(--c-s-800,#1e293b)`,
-    900: `var(--c-s-900,#0f172a`,
-    950: `var(--c-s-950,#020617)`,
-  },
-  zinc: {
-    50: `var(--c-z-50,#fafafa)`,
-    100: `var(--c-z-100,#f4f4f5)`,
-    200: `var(--c-z-200,#e4e4e7)`,
-    300: `var(--c-z-300,#d4d4d8)`,
-    400: `var(--c-z-400,#a1a1aa)`,
-    500: `var(--c-z-500,#71717a)`,
-    600: `var(--c-z-600,#52525b)`,
-    700: 'var(--c-z-700,#34343b)',
-    800: 'var(--c-z-800,#1f1f24)',
-    900: 'var(--c-z-900,#121215)',
-    925: 'var(--c-z-925,#0c0c0e)',
-    950: `var(--c-z-950,#09090b)`,
-  },
-  primary: {
-    100: 'var(--c-p-100,#f1f5f9)',
-    900: 'var(--c-p-900,#0f172a)',
-  },
-  other: {
-    black: `#000`,
-    white: `var(--c-o-white,#fff)`,
-  },
+export function getDefaultColors(): ThemeColors {
+  return env.PUBLIC_THEME
+    ? JSON.parse(env.PUBLIC_THEME)
+    : {
+        slate: {
+          25: '252 253 254',
+          50: '248 250 252',
+          100: '241 245 249',
+          200: '226 232 240',
+          300: '203 213 225',
+          400: '148 163 184',
+          500: '100 116 139',
+          600: '71 85 105',
+          700: '51 65 85',
+          800: '30 41 59',
+          900: '15 23 42',
+          950: '2 6 23',
+        },
+        zinc: {
+          50: `249 250 251`,
+          100: `243 244 246`,
+          200: `229 231 235`,
+          300: `209 213 219`,
+          400: `156 163 175`,
+          500: `107 114 128`,
+          600: `75 85 99`,
+          700: '50 60 76',
+          800: '22 31 45',
+          900: '17 24 39',
+          925: '8 12 25',
+          950: `5 9 16`,
+        },
+        primary: {
+          100: 'var(--c-p-100,241 245 249)',
+          900: 'var(--c-p-900,15 23 42)',
+        },
+        other: {
+          black: `var(--c-o-black,0 0 0)`,
+          white: `var(--c-o-white,255 255 255)`,
+        },
+      }
 }
 
-export let colors = writable<Colors>({
-  slate: {},
-  zinc: {},
-  primary: {},
-  other: {},
+export function getDefaultTheme(): Theme {
+  return {
+    id: 0,
+    colors: getDefaultColors(),
+    name: 'Default',
+  }
+}
+
+export function hexToRgb(value: string) {
+  // Regular expression to match valid hex color codes
+  const hexRegex = /^#?([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/
+
+  if (!hexRegex.test(value)) {
+    return value // Not a valid hex color
+  }
+
+  // Remove # if present
+  let hex = value.replace('#', '')
+
+  // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+  if (hex.length === 3) {
+    hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2]
+  }
+
+  // Convert to RGB values
+  const r = parseInt(hex.substring(0, 2), 16)
+  const g = parseInt(hex.substring(2, 4), 16)
+  const b = parseInt(hex.substring(4, 6), 16)
+
+  return `${r} ${g} ${b}`
+}
+
+function themeStore(
+  data: Writable<ThemeData>,
+  fn: (
+    values: ThemeData,
+    set: (value: Theme) => void,
+    update: (fn: Updater<Theme>) => void
+  ) => any
+) {
+  const derive: Readable<Theme> = derived(data, fn)
+  const { subscribe } = derive
+
+  return {
+    subscribe,
+    set: (value: Theme) => {
+      data.update((data) => {
+        let index = data.themes.findIndex((t) => t.id == value.id)
+        data.themes[index] = value
+        return data
+      })
+    },
+  }
+}
+
+export let themeData = writable<ThemeData>({
+  scheme: 'system',
+  themes: presets,
+  currentTheme: 0,
 })
 
-export function colorsToVars(colors: Colors): string {
-  let vars: string[] = []
-  for (let category in colors) {
-    for (let shade in colors[category as keyof Colors]) {
-      if (category)
-        // @ts-ignore
-        vars.push(
-          `--c-${category.slice(0, 1)}-${shade}:${colors[category][shade]}`
-        )
-    }
-  }
-  return vars.join(';')
-}
-
-export const colorToVar = (
-  category: keyof Colors,
-  shade: keyof (keyof Colors)
-): string => `--c-${category.slice(0, 2)}-${shade.toString()}`
-
-function loadColors() {
-  const loaded = localStorage.getItem('colors')
-  if (loaded) {
-    colors.set(JSON.parse(loaded))
-  }
-  colors.subscribe((v) => {
-    localStorage.setItem('colors', JSON.stringify(v))
-  })
-}
-
-if (browser) {
-  loadColors()
-}
-
-const configuredLegacyTheme = env.PUBLIC_LEGACYTHEME ?? 'system'
-export const legacyTheme = writable<'system' | 'light' | 'dark'>(
-  configuredLegacyTheme as 'system' | 'light' | 'dark'
+export let theme = themeStore(
+  themeData,
+  (data) =>
+    data.themes.find((t) => t.id == data.currentTheme) ?? getDefaultTheme()
 )
 
-export const toggleLegacyTheme = () => {
-  legacyTheme.update((legacyTheme) => {
-    if (legacyTheme == 'light') {
-      return 'dark'
-    } else if (legacyTheme == 'dark') {
-      return 'system'
-    } else {
-      return 'light'
+export function calculateVars(theme: Theme) {
+  let cssVariables = ''
+
+  for (const [scheme, colors] of Object.entries(theme.colors)) {
+    for (const [key, value] of Object.entries(colors)) {
+      cssVariables += `--c-${scheme[0]}-${key}:${hexToRgb(value)}; `
     }
+  }
+
+  return cssVariables.trim()
+}
+
+export const themeVars = derived(theme, (t) => calculateVars(t as Theme))
+
+const configuredColorScheme = env.PUBLIC_COLORSCHEME ?? 'system'
+export const colorScheme = writable<ColorScheme>(
+  configuredColorScheme as ColorScheme
+)
+
+export const toggleColorScheme = () => {
+  colorScheme.update((colorScheme) => {
+    if (colorScheme == 'light') return 'dark'
+    else if (colorScheme == 'dark') return 'system'
+    else return 'light'
   })
 }
 
-export const inDarkLegacyTheme = (): boolean => {
+export const inDarkColorScheme = (): boolean => {
   if (typeof window != 'undefined') {
-    return get(legacyTheme) == 'system'
+    return get(colorScheme) == 'system'
       ? window.matchMedia('(prefers-color-scheme: dark)').matches
-      : get(legacyTheme) == 'dark'
+      : get(colorScheme) == 'dark'
   }
   return false
 }
 
 if (typeof localStorage != 'undefined') {
-  const localLegacyTheme: 'system' | 'light' | 'dark' =
-    (localStorage.getItem('legacyTheme') as 'system' | 'light' | 'dark') ||
-    configuredLegacyTheme
+  const localColorScheme: ColorScheme =
+    (localStorage.getItem('colorScheme') as ColorScheme) ||
+    configuredColorScheme
 
-  legacyTheme.update((legacyTheme) => localLegacyTheme)
+  colorScheme.update((colorScheme) => localColorScheme)
 
-  legacyTheme.subscribe((legacyTheme) => {
+  colorScheme.subscribe((colorScheme) => {
     if (typeof document != 'undefined') {
       const prefersDark = window.matchMedia(
         '(prefers-color-scheme: dark)'
@@ -186,13 +192,13 @@ if (typeof localStorage != 'undefined') {
 
       const html = document.querySelector('html')
 
-      if (legacyTheme == 'system') {
+      if (colorScheme == 'system') {
         html?.classList.toggle('dark', prefersDark)
       } else {
-        html?.classList.toggle('dark', legacyTheme === 'dark')
+        html?.classList.toggle('dark', colorScheme === 'dark')
       }
 
-      localStorage.setItem('legacyTheme', legacyTheme)
+      localStorage.setItem('colorScheme', colorScheme)
     }
   })
 }
