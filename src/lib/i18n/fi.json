@@ -541,7 +541,7 @@
         "unblockUser": "Käyttäjän esto poistettu.",
         "purgeUser": "Käyttäjä puhdistettu.",
         "restoredFromDraft": "Julkaisu palautettu luonnoksesta.",
-        "fetchPostOnHome": "Haetaan julkaisu instanssiltasi...",
+        "fetchPostOnHome": "Haetaan julkaisu omalta instanssiltasi...",
         "updatedCommunity": "Yhteisösi on päivitetty.",
         "invalidDateAbsolute": "Virheellinen päivämäärä. Päivämäärä ei voi olla suhteellinen.",
         "failGenerateTitle": "Otsikon hakeminen sivulta epäonnistui.",
