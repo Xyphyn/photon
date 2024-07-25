@@ -57,6 +57,28 @@ export function hexToRgb(value: string) {
   return `${r} ${g} ${b}`
 }
 
+export function rgbToHex(rgbString: string): string {
+  const rgb = rgbString.split(' ')
+
+  if (rgb.length !== 3) {
+    return rgbString
+  }
+
+  const [r, g, b] = rgb.map((val) => {
+    const num = parseInt(val, 10)
+    if (isNaN(num) || num < 0 || num > 255) {
+      return 0
+    }
+    return num
+  })
+
+  // Convert to hex and pad with zeros if necessary
+  const toHex = (n: number) => n.toString(16).padStart(2, '0')
+
+  // Return the hex color code
+  return `#${toHex(r)}${toHex(g)}${toHex(b)}`
+}
+
 function themeStore(
   data: Writable<ThemeData>,
   fn: (

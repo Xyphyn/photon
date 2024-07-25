@@ -8,7 +8,12 @@
   import Sidebar from '$lib/components/ui/sidebar/Sidebar.svelte'
   // @ts-ignore
   import { pwaInfo } from 'virtual:pwa-info'
-  import { colorScheme } from '$lib/ui/colors.js'
+  import {
+    colorScheme,
+    inDarkColorScheme,
+    rgbToHex,
+    theme,
+  } from '$lib/ui/colors.js'
   import { userSettings } from '$lib/settings.js'
   import { Button, ModalContainer, Spinner, ToastContainer } from 'mono-svelte'
   import { onMount } from 'svelte'
@@ -21,6 +26,7 @@
   import ExpandableImage from '$lib/components/ui/ExpandableImage.svelte'
   import { LINKED_INSTANCE_URL } from '$lib/instance'
   import { locale } from '$lib/translations'
+  import { getDefaultColors } from '$lib/ui/presets'
 
   nProgress.configure({
     minimum: 0.4,
@@ -63,6 +69,14 @@
 <svelte:head>
   {#if $site?.site_view}
     <title>{$site?.site_view.site.name}</title>
+    <meta
+      name="theme-color"
+      content={rgbToHex(
+        $colorScheme && inDarkColorScheme()
+          ? $theme.colors.zinc?.[925] ?? getDefaultColors().zinc[925]
+          : $theme.colors.slate?.[25] ?? getDefaultColors().slate[25]
+      )}
+    />
     {#if LINKED_INSTANCE_URL}
       <link rel="icon" href={$site?.site_view?.site.icon} />
       <meta name="description" content={$site?.site_view?.site.description} />
