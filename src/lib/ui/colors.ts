@@ -112,7 +112,14 @@ export let themeData = writable<ThemeData>(
 
 themeData.subscribe((themeData) => {
   if (browser) {
-    localStorage.setItem('themeData', JSON.stringify(themeData))
+    const filteredThemes = themeData.themes.filter((t) => t.id > 0)
+    localStorage.setItem(
+      'themeData',
+      JSON.stringify({
+        ...themeData,
+        themes: filteredThemes,
+      })
+    )
   }
 })
 
@@ -189,7 +196,11 @@ function loadTheme() {
   const localTheme = localStorage.getItem('themeData')
 
   if (localTheme) {
-    return JSON.parse(localTheme)
+    const data = JSON.parse(localTheme)
+    if (!data) return
+    console.log(data)
+    data.themes = [...presets, ...data.themes]
+    return data
   }
 
   return
