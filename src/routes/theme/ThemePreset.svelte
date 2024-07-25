@@ -1,7 +1,7 @@
 <script lang="ts">
   import { t } from '$lib/translations'
   import { calculateVars, themeData, type Theme } from '$lib/ui/colors'
-  import { Button, Material, modal } from 'mono-svelte'
+  import { action, Button, Material, modal } from 'mono-svelte'
   import { CheckCircle, Icon, Trash } from 'svelte-hero-icons'
 
   export let theme: Theme
@@ -41,39 +41,43 @@
     {/if}
     <div class="px-4 py-2 flex items-center gap-1 justify-between">
       <span class="font-medium text-lg font-display">{theme.name}</span>
-      <Button
-        color="ghost"
-        size="square-md"
-        on:click={() => {
-          modal({
-            actions: [
-              {
-                close: true,
-                content: $t('common.cancel'),
-                type: 'secondary',
-                action: () => {},
-              },
-              {
-                close: true,
-                content: $t('routes.theme.preset.delete.confirm'),
-                type: 'danger',
-                action: () => {
-                  const index = $themeData.themes
-                    .map((t) => t.id)
-                    .indexOf(theme.id)
+      {#if theme.id > 0}
+        <Button
+          color="ghost"
+          size="square-md"
+          on:click={() => {
+            modal({
+              actions: [
+                action({
+                  close: true,
+                  type: 'secondary',
+                  content: $t('common.cancel'),
+                }),
+                {
+                  close: true,
+                  content: $t('routes.theme.preset.delete.confirm'),
+                  type: 'danger',
+                  action: () => {
+                    const index = $themeData.themes
+                      .map((t) => t.id)
+                      .indexOf(theme.id)
 
-                  $themeData.themes = $themeData.themes.toSpliced(index, 1)
+                    $themeData.themes = $themeData.themes.toSpliced(index, 1)
+                    if (theme.id == $themeData.currentTheme) {
+                      $themeData.currentTheme = 0
+                    }
+                  },
                 },
-              },
-            ],
-            type: 'error',
-            body: '',
-            title: $t('routes.theme.preset.delete.title'),
-          })
-        }}
-      >
-        <Icon src={Trash} size="16" mini slot="prefix" />
-      </Button>
+              ],
+              type: 'error',
+              body: '',
+              title: $t('routes.theme.preset.delete.title'),
+            })
+          }}
+        >
+          <Icon src={Trash} size="16" mini slot="prefix" />
+        </Button>
+      {/if}
     </div>
   </Material>
 </button>
