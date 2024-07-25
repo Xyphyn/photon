@@ -61,14 +61,14 @@
     gap-4 overflow-auto max-h-72"
   >
     {#each $themeData.themes as theme}
-      <ThemePreset {theme} />
+      <ThemePreset bind:theme />
     {/each}
     <button
       on:click={() => {
         const newTheme = {
           id: Math.max(...$themeData.themes.map((t) => t.id)) + 1,
           colors: getDefaultColors(),
-          name: `New Theme`,
+          name: $t('routes.theme.preset.new'),
         }
 
         $themeData.themes = [...$themeData.themes, newTheme]

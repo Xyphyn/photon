@@ -1,12 +1,12 @@
 <script lang="ts">
   import { t } from '$lib/translations'
   import { calculateVars, themeData, type Theme } from '$lib/ui/colors'
-  import { action, Button, Material, modal } from 'mono-svelte'
+  import { action, Button, Material, modal, TextInput } from 'mono-svelte'
   import { CheckCircle, Icon, Trash } from 'svelte-hero-icons'
 
   export let theme: Theme
 
-  let editing
+  let editingName = false
 </script>
 
 <button class="h-full" on:click={() => ($themeData.currentTheme = theme.id)}>
@@ -40,11 +40,25 @@
       />
     {/if}
     <div class="px-4 py-2 flex items-center gap-1 justify-between">
-      <span class="font-medium text-lg font-display">{theme.name}</span>
+      {#if editingName}
+        <form on:submit|preventDefault={() => (editingName = false)}>
+          <TextInput bind:value={theme.name}></TextInput>
+        </form>
+      {:else}
+        <button
+          on:click={() => {
+            if (theme.id > 0) editingName = true
+          }}
+          class="text-left font-medium text-lg font-display"
+        >
+          {theme.name}
+        </button>
+      {/if}
       {#if theme.id > 0}
         <Button
           color="ghost"
           size="square-md"
+          class="flex-shrink-0"
           on:click={() => {
             modal({
               actions: [

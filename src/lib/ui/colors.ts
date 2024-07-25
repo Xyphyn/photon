@@ -11,6 +11,7 @@ import {
 import { env } from '$env/dynamic/public'
 import { getDefaultTheme, presets } from './presets'
 import { browser } from '$app/environment'
+import { t } from '$lib/translations'
 
 type ColorScheme = 'system' | 'light' | 'dark'
 
@@ -164,14 +165,33 @@ function loadColorScheme() {
 function loadTheme() {
   if (!browser) return
   const localTheme = localStorage.getItem('themeData')
+
   if (localTheme) {
     return JSON.parse(localTheme)
   }
+
   return
 }
 
 if (browser) {
   try {
     loadColorScheme()
+  } catch (e) {}
+  try {
+    const oldColors = localStorage.getItem('colors')
+    if (oldColors) {
+      themeData.update((td) => ({
+        ...td,
+        themes: [
+          ...td.themes,
+          {
+            id: Math.max(...td.themes.map((t) => t.id)) + 1,
+            colors: JSON.parse(oldColors),
+            name: t.get('routes.theme.preset.imported') ?? 'Your Theme',
+          },
+        ],
+      }))
+      localStorage.removeItem('colors')
+    }
   } catch (e) {}
 }

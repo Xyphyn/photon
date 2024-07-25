@@ -366,7 +366,11 @@
         "delete": {
           "title": "Delete Theme",
           "confirm": "Confirm"
-        }
+        },
+        "default": "Default",
+        "classic": "Classic",
+        "imported": "Your Theme",
+        "new": "New Theme"
       }
     },
     "community": {
