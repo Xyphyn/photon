@@ -22,6 +22,7 @@
   <Material
     color="distinct"
     class="flex flex-col-reverse sm:flex-row overflow-hidden gap-4"
+    rounding="lg"
   >
     <div class="flex flex-col gap-2">
       {#if richURL}
@@ -53,7 +54,7 @@
       <a
         href={url}
         target="_blank"
-        class="-m-4 mb-auto sm:-mb-4 sm:ml-auto flex-shrink-0 sm:w-1/3 sm:max-w-60"
+        class="-m-4 mb-auto sm:-mb-4 sm:ml-auto flex-shrink-0 sm:w-1/3 sm:min-h-40 sm:max-w-60"
       >
         <picture>
           <source
@@ -70,7 +71,7 @@
           />
           <img
             src={optimizeImageURL(thumbnail_url, -1)}
-            class="object-cover w-full sm:max-w-96 h-48 sm:h-72 bg-slate-200 dark:bg-zinc-800"
+            class="object-cover w-full sm:max-w-96 h-48 sm:min-h-40 sm:h-full bg-slate-200 dark:bg-zinc-800"
             width={600}
             height={400}
             alt={embed_title}
