@@ -1,228 +1,753 @@
 {
     "form": {
         "profile": {
-            "email": "Email",
-            "displayName": "顯示名稱",
-            "bio": "個人簡介",
-            "avatar": "大頭貼",
-            "banner": "背景橫幅",
-            "showNSFW": "顯示限制級(NSFW)內容",
-            "scores": "顯示讚數",
-            "bot": "機器人帳號",
-            "showBots": "顯示機器人貼文",
-            "showRead": "顯示已讀貼文",
-            "currentPassword": "當前密碼",
-            "newPassword": "新密碼",
-            "verifyNewPassword": "確認密碼"
+            "email": "邮箱",
+            "displayName": "显示名称",
+            "bio": "个人简介",
+            "avatar": "头像",
+            "banner": "背景横幅",
+            "showNSFW": "显示成人內容(NSFW)",
+            "scores": "显示赞数",
+            "bot": "机器人账号",
+            "showBots": "显示机器人帖子",
+            "showRead": "显示已读",
+            "currentPassword": "当前密码",
+            "newPassword": "新密码",
+            "verifyNewPassword": "确认密码",
+            "matrix": "Matrix 用户",
+            "2fa": {
+                "totp": "TOTP",
+                "paste": "将此粘贴到您的身份验证器应用程序中.",
+                "2fa": "2FA"
+            },
+            "deleteAccount": {
+                "label": "删除帐户",
+                "deleteContent": "删除内容",
+                "warning": "这将删除您提交的所有内容."
+            }
         },
-        "username": "使用者名稱",
-        "name": "名稱",
-        "instance": "站點網址",
-        "password": "密碼",
-        "confirmPassword": "確認密碼",
-        "2fa": "2FA兩步驗證碼",
-        "forgotpassword": "忘記密碼",
-        "submit": "送出",
-        "edit": "編輯",
-        "preview": "預覽",
+        "username": "用户名",
+        "name": "名字",
+        "instance": "网址",
+        "password": "密码",
+        "confirmPassword": "确认密码",
+        "2fa": "2FA两步验证码",
+        "forgotpassword": "忘记密码",
+        "submit": "发送",
+        "edit": "编辑",
+        "preview": "预览",
         "post": {
-            "create": "發文",
-            "edit": "編輯貼文",
-            "community": "社群",
-            "title": "標題",
-            "url": "網址",
+            "create": "发布",
+            "edit": "编辑帖子",
+            "community": "圈子",
+            "title": "标题",
+            "url": "网址",
             "body": "內文",
-            "nsfw": "限制級(NSFW)",
-            "generateTitle": "代入標題",
-            "uploadImage": "上傳影像",
-            "altText": "替代文字"
+            "nsfw": "成人(NSFW)",
+            "generateTitle": "代入标题",
+            "uploadImage": "上传图片",
+            "altText": "图片用文字描述"
         },
         "signup": {
-            "title": "註冊"
-        }
+            "title": "注册",
+            "description": "选择您感兴趣的网站，或输入网址.",
+            "info": "您的账户在本站,也可以访问其他网站内容.",
+            "chooseInstance": "选择一个网站",
+            "application": {
+                "label": "应用程序",
+                "info": "注册请填写申请表，并等待通过."
+            },
+            "closed": {
+                "title": "报名已结束",
+                "description": "关闭注册.",
+                "anotherInstance": "查找别的网站"
+            }
+        },
+        "email": "邮箱",
+        "setup": "安装",
+        "description": "说明"
     },
     "routes": {
-        "createPost": "發文",
+        "createPost": "发帖",
         "saved": "保存",
-        "createCommunity": "創建社群",
+        "createCommunity": "建群",
         "post": {
-            "crosspostCount": "轉貼",
+            "crosspostCount": "转贴",
             "commentCount": "留言",
-            "addComment": "新增留言"
+            "addComment": "新增留言",
+            "instanceWarning": "此帖子是从与您的帐户不同的服务器请求的.许多操作都不起作用.",
+            "scrollToTop": "顶部",
+            "remoteView": "所有",
+            "localView": "本站",
+            "thread": {
+                "single": "您正在查看单个线程.",
+                "allComments": "所有评论",
+                "part": "您正在查看线程的一部分.",
+                "context": "显示上下文"
+            }
         },
         "verifyEmail": {
-            "message": "您的電子郵件已通過驗證。您現在可以關閉此視窗。",
-            "error": "無法驗證您的電子郵件。"
+            "message": "您的电子邮件已验证。您现在可以关闭此窗口.",
+            "error": "无法验证您的电子邮件."
         },
         "passwordChange": {
-            "title": "更改密碼",
-            "description": "選擇您的新密碼。",
-            "instance": "您的帳戶託管在哪個實例上？"
+            "title": "修改密码",
+            "description": "选择您的新密码.",
+            "instance": "您的帐户托管在哪个网站上?"
         },
         "resetLogin": {
-            "title": "重置密碼",
-            "description": "輸入您帳戶的電子郵件，將發送密碼重設連結。如果您的帳戶沒有電子郵件，請聯繫您的實例管理員。"
+            "title": "重置密码",
+            "description": "输入您帐户的电子邮件，系统将发送密码重置链接。如果您的帐户没有电子邮件，请联系您的实例管理员."
         },
         "theme": {
-            "title": "主題",
-            "import": "匯入",
-            "export": "匯出",
-            "reset": "重設"
+            "title": "主题",
+            "import": "进口",
+            "export": "出口",
+            "reset": "重置",
+            "resetWarning": {
+                "description": "这将把所有颜色重置为默认值。建议在此之前导出主题.",
+                "title": "重置主题"
+            },
+            "accent": "口音"
+        },
+        "admin": {
+            "applications": {
+                "empty": {
+                    "description": "加入您网站的应用程序将显示在此处.",
+                    "title": "没有新的应用程序"
+                },
+                "title": "应用",
+                "application": "应用程序",
+                "approved": "经核准的",
+                "denied": "否认",
+                "user": "用户",
+                "deny": "否认",
+                "approve": "批准",
+                "reason": "原因",
+                "modalTitle": "拒绝申请"
+            },
+            "team": {
+                "empty": {
+                    "description": "不知怎么的，这个网站没有管理员。怎样？？",
+                    "title": "没有管理员"
+                },
+                "title": "管理员"
+            },
+            "config": {
+                "slurFilter": "Slur过滤器正则表达式",
+                "title": "配置",
+                "sidebar": "侧边栏",
+                "icon": "图标",
+                "banner": "横幅",
+                "downvotesEnabled": "启用否决权",
+                "nsfwEnabled": "启用NSFW",
+                "registration": {
+                    "label": "注册方式",
+                    "open": "正常开放",
+                    "application": "需要申请",
+                    "closed": "关闭"
+                },
+                "applicationQuestion": "申请问题",
+                "adminCommunityOnly": "只有管理员可以创建圈子",
+                "requireVerifyEmail": "需要电子邮件验证",
+                "emailAdminsOnApplication": "在收到新申请时向管理员发送电子邮件",
+                "emailAdminsOnReport": "在收到新报告时向管理员发送电子邮件",
+                "listingType": {
+                    "label": "列表类型",
+                    "all": "全部",
+                    "local": "本地"
+                },
+                "private": "私有网站",
+                "hideModlogModNames": "隐藏modlog mod名称",
+                "federation": "已启用联盟",
+                "federationDebug": "联合调试模式",
+                "captcha": {
+                    "enabled": "CAPTCHA已启用"
+                }
+            },
+            "federation": {
+                "emptyBlock": {
+                    "description": "阻止网站将隐藏该网站的新提交.",
+                    "title": "没有被阻止的网站"
+                },
+                "title": "联邦",
+                "csv": "上传CSV",
+                "blocked": "被阻止的网站",
+                "block": "阻止",
+                "blockplaceholder": "阻止实例...",
+                "allowed": "白名单实例",
+                "allow": "白名单",
+                "allowplaceholder": "将网站列入白名单",
+                "emptyAllow": {
+                    "title": "没有白名单网站",
+                    "description": "将一个网站列入白名单将阻止其他所有网站."
+                }
+            },
+            "title": "管理",
+            "taglines": {
+                "title": "标语",
+                "add": "添加标语",
+                "empty": {
+                    "title": "没有标语",
+                    "description": "当用户访问您的网站时，网站卡上会出现一个随机的标语."
+                }
+            }
+        },
+        "search": {
+            "noResults": {
+                "description": "没有与该筛选器匹配的结果. 尝试优化你的搜索.",
+                "title": "没有内容",
+                "alt": "在联邦网站上搜索"
+            },
+            "title": "搜索",
+            "federating": "联邦",
+            "query": "查询"
+        },
+        "profile": {
+            "moderates": "管理",
+            "user": "用户",
+            "settings": "设置",
+            "blocks": "菜单",
+            "credentials": "凭证",
+            "favorites": "收藏",
+            "upvoted": "点赞",
+            "downvoted": "反对",
+            "media": {
+                "title": "图片",
+                "download": "下载"
+            }
+        },
+        "moderation": {
+            "resolve": "解析",
+            "unresolve": "无法解决",
+            "title": "适度",
+            "empty": {
+                "title": "无新报告",
+                "description": "当提交报告时，您可以在此处采取行动."
+            },
+            "reason": "原因"
+        },
+        "frontpage": {
+            "title": "首页",
+            "footer": "{{users:number}} 活动 {{users; 1:user; default:users;}}"
+        },
+        "modlog": "日志",
+        "instances": "网站",
+        "legal": {
+            "title": "规则",
+            "noLegal": "无规则."
+        },
+        "translators": "翻译",
+        "accounts": "账户",
+        "communities": "圈子",
+        "inbox": {
+            "title": "收件箱",
+            "markAsRead": "标记全部已读",
+            "empty": {
+                "title": "无新通知",
+                "description": "消息、回复和提及将显示在此处."
+            }
         }
     },
     "common": {
         "back": "往前",
-        "next": "往後",
-        "refresh": "重整"
+        "next": "下一页",
+        "refresh": "刷新",
+        "disabled": "未激活",
+        "cancel": "取消",
+        "debug": "调试",
+        "jump": "跳过",
+        "save": "保存",
+        "enabled": "激活",
+        "enable": "启用",
+        "disable": "禁用",
+        "add": "添加",
+        "send": "发送"
     },
     "profile": {
-        "profile": "個人資料",
-        "inbox": "信箱",
+        "profile": "人个资料",
+        "inbox": "收件箱",
         "saved": "保存",
-        "subscribed": "訂閱"
+        "subscribed": "关注"
     },
     "nav": {
-        "home": "首頁",
-        "admin": "設定",
+        "home": "主页",
+        "admin": "设置",
         "moderation": "管理",
-        "communities": "探索",
-        "search": "搜尋",
+        "communities": "所有",
+        "search": "搜索",
         "create": {
             "label": "新增",
-            "post": "貼文",
-            "community": "社群",
-            "logingate": "你需要登入,才能發文."
+            "post": "帖子",
+            "community": "圈子",
+            "logingate": "你需要登陆,才能发帖."
         },
         "menu": {
-            "label": "個人資料",
+            "label": "个人资料",
             "app": "App",
-            "settings": "設定",
+            "settings": "设置",
             "colorscheme": {
-                "label": "主題",
-                "system": "系統",
-                "dark": "暗黑",
-                "light": "光亮"
+                "label": "主题",
+                "system": "系统",
+                "dark": "黑色",
+                "light": "白色"
             },
-            "theme": "主題",
-            "about": "關於",
-            "source": "來源",
-            "instance": "站點"
+            "theme": "主题",
+            "about": "关于",
+            "source": "来源",
+            "instance": "站点",
+            "donate": "捐款"
         }
     },
     "account": {
-        "login": "登入",
-        "logout": "登出",
-        "signup": "註冊",
-        "accounts": "帳號",
-        "changeinstance": "變更站點",
-        "resetColor": "重設顏色",
-        "addGuest": "新增遊客",
+        "login": "登陆",
+        "logout": "退出",
+        "signup": "注册",
+        "accounts": "账号",
+        "changeinstance": "设置网站",
+        "resetColor": "重置颜色",
+        "addGuest": "新增游客",
         "moveUp": "往上",
         "moveDown": "往下",
-        "guest": "遊客"
+        "guest": "游客",
+        "versionGate": "这个版本的Photon支持运行{{version}}或更高版本的实例."
     },
     "filter": {
         "location": {
-            "label": "範圍",
+            "label": "位置",
             "all": "所有",
             "local": "本站",
-            "subscribed": "已訂閱",
+            "subscribed": "已关注",
             "moderator": "管理的",
             "global": "全部"
         },
         "sort": {
             "label": "排序",
-            "active": "活躍",
-            "hot": "熱門",
+            "active": "活跃",
+            "hot": "热门",
             "top": {
                 "label": "最佳",
                 "time": {
-                    "label": "時間",
+                    "label": "时间",
                     "all": "所有",
-                    "9months": "9月以來",
-                    "6months": "6月以來",
-                    "3months": "3月以來",
-                    "month": "這月以來",
-                    "week": "這周",
-                    "day": "日",
-                    "12hours": "12小時",
-                    "6hours": "6小時",
-                    "hour": "這小時"
+                    "9months": "9月内",
+                    "6months": "6月内",
+                    "3months": "3月内",
+                    "month": "1月内",
+                    "week": "本周",
+                    "day": "今天",
+                    "12hours": "12小时",
+                    "6hours": "6小时",
+                    "hour": "1小时"
                 }
             },
             "new": "最新",
-            "old": "最舊",
-            "controversial": "最有爭議",
-            "scaled": "各版熱門",
-            "mostcomments": "最多留言",
+            "old": "最旧",
+            "controversial": "争议",
+            "scaled": "各版热议",
+            "mostcomments": "评论",
             "newcomments": "最新留言"
         },
         "view": {
-            "label": "顯示模式",
-            "cozy": "可莉",
+            "label": "显示模式",
+            "cozy": "默认",
             "list": "列表",
-            "compact": "緊湊",
-            "legacy": "經典"
+            "compact": "紧湊",
+            "legacy": "经典"
         },
-        "type": "類型",
-        "filter": "過濾",
-        "unread": "未讀",
+        "type": "类型",
+        "filter": "筛选",
+        "unread": "未读",
         "inbox": {
             "messages": "私信",
-            "replies": "回覆",
-            "mentions": "標記"
+            "replies": "回复",
+            "mentions": "标记"
         }
     },
     "cards": {
         "site": {
-            "about": "關於",
-            "stats": "統計",
-            "admins": "管理員"
+            "about": "关于",
+            "stats": "统计",
+            "admins": "管理员"
         },
         "community": {
-            "members": "訪客",
-            "moderators": "管理員",
-            "subscribe": "訂閱",
-            "subscribed": "已訂閱",
-            "block": "封鎖",
-            "unblock": "取消封鎖",
-            "blockInstance": "封鎖站點",
-            "favorite": "最愛",
-            "unfavorite": "取消最愛"
+            "members": "访客",
+            "moderators": "管理员",
+            "subscribe": "关注",
+            "subscribed": "已关注",
+            "block": "屏蔽",
+            "unblock": "取消屏蔽",
+            "blockInstance": "屏蔽网站",
+            "favorite": "收藏",
+            "unfavorite": "取消收藏",
+            "modlog": "日志",
+            "activeDay": "今日活跃"
         }
     },
     "content": {
         "all": "所有",
-        "users": "使用者"
+        "users": "使用者",
+        "posts": "帖子",
+        "comments": "评论",
+        "communities": "圈子",
+        "instances": "网站",
+        "message": "留言"
     },
     "post": {
         "actions": {
             "save": "保存",
             "more": {
-                "crosspost": "轉貼"
-            }
+                "crosspost": "转发",
+                "label": "更多操作",
+                "edit": "编辑",
+                "creator": "作者",
+                "actions": "操作",
+                "markRead": "标记为已读",
+                "markUnread": "标记为未读",
+                "hide": "隐藏",
+                "unhide": "取消隐藏",
+                "translate": "翻译",
+                "mediaBias": "媒体偏见",
+                "share": "分享",
+                "delete": "删除",
+                "restore": "恢复"
+            },
+            "mediaBias": {
+                "noData": {
+                    "description": "本网站没有偏见数据.",
+                    "title": "无数据"
+                },
+                "description": "说明",
+                "credibility": "可靠",
+                "reporting": "事实报道",
+                "downloading": "正在下载数据集",
+                "loading": "加载源"
+            },
+            "comments": "评论",
+            "unsave": "不保存"
         },
         "badges": {
-            "nsfw": "限制級(NSFW)",
-            "featured": "置頂"
+            "nsfw": "限制级(NSFW)",
+            "featured": "置顶",
+            "locked": "已锁定",
+            "removed": "移除",
+            "deleted": "删除",
+            "saved": "保存"
         }
     },
     "moderation": {
-        "report": "檢舉"
+        "report": "举报",
+        "removeSubmission": {
+            "failEmptyReply": "如果启用了“回复原因”，您的回复不能为空.",
+            "title": "删除提交内容",
+            "titleRestore": "恢复提交",
+            "titlePurge": "清除提交",
+            "withReason": "回复理由",
+            "comment": "评论",
+            "message": "留言",
+            "failReply": "未能发布回复. 仍在删除...",
+            "failMessage": "向用户发送消息失败. 仍在删除...",
+            "successPurge": "已成功清除该提交."
+        },
+        "reportModal": {
+            "title": "报告",
+            "success": "报告了该呈件."
+        },
+        "reason": "原因",
+        "unlock": "解锁",
+        "remove": "删除",
+        "lock": "锁定",
+        "label": "适度",
+        "labelInstanceOnly": "适度（仅限网站）",
+        "feature": "特点",
+        "unfeature": "无特色",
+        "ban": {
+            "banning": "禁止用户",
+            "unbanning": "取消关注用户",
+            "deleteData": "删除数据",
+            "warning": "这将删除此用户在此处提交的所有内容.",
+            "expires": "过期 (UTC)",
+            "banFromCommunity": "圈子禁令",
+            "unbanFromCommunity": "解除圈子封锁"
+        },
+        "restore": "恢复"
     },
     "settings": {
-        "title": "設定",
+        "title": "设置",
         "app": {
             "lang": {
-                "title": "語言",
-                "auto": "自動"
+                "title": "语言",
+                "auto": "自动",
+                "zh-Hans": "中文（简体）",
+                "zh-Hant": "中文（繁体）",
+                "useRtl": {
+                    "title": "使用RTL布局",
+                    "description": "对RTL语言使用RTL布局."
+                },
+                "description": "bbs UI使用的语言.",
+                "note": "英语和希伯来语以外的语言由社区翻译，可能不完整.",
+                "en": "英语",
+                "en-US": "English",
+                "he": "Hebrew",
+                "et": "Estonian",
+                "fr": "French",
+                "de": "German",
+                "fi": "Finnish",
+                "pt": "Portuguese",
+                "zh": "中文",
+                "credits": "信用"
+            },
+            "expandImages": {
+                "description": "点击帖子的图片会让你看到一个扩展的视图，而不是帖子页面.",
+                "title": "展开图像"
+            },
+            "view": {
+                "list": "在列表中显示帖子，包括帖子正文和压缩媒体.",
+                "cozy": "显示具有大图像、丰富嵌入和较长帖子正文的帖子.",
+                "compact": "在列表中显示帖子，不显示帖子正文，间距更紧.",
+                "legacy": "老样子.",
+                "title": "帖子风格"
+            },
+            "infiniteScroll": {
+                "description": "新帖子会在您向下滚动时添加，而无需单击“下一步”.",
+                "title": "无限滚动"
+            },
+            "duplicateTitles": {
+                "title": "隐藏重复的标题/正文",
+                "description": "如果帖子标题和正文与嵌入内容相同，则隐藏它们."
+            },
+            "thumbnailSide": {
+                "title": "缩略图对齐",
+                "description": "缩略图应以列表/压缩模式显示在帖子上的位置",
+                "left": "左",
+                "right": "右"
+            },
+            "font": {
+                "title": "字体",
+                "description": "UI中使用什么字体."
+            },
+            "translation": {
+                "title": "翻译",
+                "description": "用于翻译的LibreTranslate网站.",
+                "instance": "域名"
+            },
+            "placeholders": {
+                "title": "随机占位符",
+                "description": "为某些文本输入显示随机占位符."
+            },
+            "limitLayoutWidth": {
+                "description": "通过限制主要内容的宽度来提高可读性.",
+                "title": "限制布局宽度"
+            },
+            "title": "bbs",
+            "theming": {
+                "title": "主题",
+                "description": "自定义bbs的颜色.",
+                "link": "转到主题"
+            },
+            "colorscheme": {
+                "title": "配色方案",
+                "description": "要使用的配色方案."
+            },
+            "sort": {
+                "title": "默认排序",
+                "description": "提要中使用的默认排序."
+            },
+            "postsInNewTab": {
+                "title": "在新选项卡中打开帖子",
+                "description": "在单独的选项卡而不是当前选项卡中打开帖子."
+            },
+            "displayName": {
+                "title": "使用显示名称",
+                "description": "显示用户的昵称，而不是他们的实际用户名."
+            },
+            "titleTags": {
+                "title": "解析标题中的标签",
+                "description": "将[括号]中的文本转换为可以单击搜索的标签.",
+                "rules": {
+                    "title": "规则",
+                    "blur": "模糊",
+                    "hide": "隐藏",
+                    "show": "显示"
+                }
             }
         },
         "lemmy": {
             "nsfwBlur": {
-                "title": "限制級(NSFW) 遮擋",
-                "description": "模糊圖片並隱藏限制級(NSFW)帖文預覽。"
+                "title": "模糊NSFW",
+                "description": "模糊图像并删除NSFW帖子内容."
+            },
+            "fadeReadPosts": {
+                "description": "淡化你已经阅读过的帖子的标题",
+                "title": "淡化已读帖子"
+            },
+            "markReadPosts": {
+                "description": "点击帖子时，将其标记为已读",
+                "title": "标记已读帖子"
+            },
+            "instances": {
+                "description": "显示某些内容来自的网站。",
+                "title": "显示网站"
+            },
+            "title": "圈子",
+            "showHiddenPosts": {
+                "title": "显示隐藏的帖子",
+                "description": "显示您手动隐藏的帖子."
+            },
+            "compactFeatured": {
+                "title": "紧凑的特色帖子",
+                "description": "使特色帖子更简洁"
+            },
+            "crosspostMarker": {
+                "title": "标记转帖",
+                "description": "转帖时显示 '转自'."
+            },
+            "hideSubmissions": {
+                "title": "隐藏提交内容",
+                "description": "隐藏某些类型的提交.",
+                "deleted": "已被用户删除",
+                "removed": "已被管理员删除"
             }
-        }
+        },
+        "navigation": {
+            "pins": {
+                "description": "单击一个图钉将其发送到侧边栏的顶部。右键单击固定项目以将其删除.",
+                "title": "别针"
+            },
+            "dockPos": {
+                "bottom": "底部",
+                "adaptive": "适应的",
+                "title": "任务栏位置",
+                "description": "屏幕上应放任务栏的位置.",
+                "top": "顶部"
+            },
+            "panel": {
+                "title": "面板模式",
+                "description": "将扩展坞延伸到屏幕边缘，类似于面板.",
+                "on": "开",
+                "off": "在",
+                "adaptive": "适应"
+            },
+            "title": "导航"
+        },
+        "embeds": {
+            "title": "嵌入",
+            "clickToView": {
+                "title": "点击查看",
+                "description": "只有点击后才能加载嵌入."
+            },
+            "youtube": {
+                "description": "嵌入YouTube内容的网站."
+            },
+            "instance": {
+                "invidious": "令人反感的网站",
+                "piped": "管道网站",
+                "description": "嵌入YouTube内容的网站."
+            }
+        },
+        "moderation": {
+            "title": "适度",
+            "replyPresets": {
+                "title": "删除回复预设",
+                "description": "在提交删除对话框中用于“回复原因”的预设.",
+                "syntax": "语法"
+            }
+        },
+        "other": {
+            "title": "其他",
+            "debug": {
+                "title": "调试信息",
+                "description": "显示调试信息"
+            }
+        },
+        "beta": "试用版",
+        "desktop": "桌面",
+        "tablet": "平板",
+        "mobile": "手机",
+        "export": "导出",
+        "import": "导入",
+        "reset": "重置"
+    },
+    "toast": {
+        "settingsImportWarning": "导入的设置似乎无效。您确定要导入此吗？",
+        "resetLink": "密码重置链接已发送到您的电子邮件.",
+        "needPassword": "您必须提供密码.",
+        "verifyEmail": "验证链接已发送到您的电子邮件。验证您的电子邮件，然后登录.",
+        "unblockedCommunity": "取消了屏蔽这个圈子.",
+        "invalidDateBeforeCurrent": "日期无效. 这是在当前时间之前.",
+        "confirmDelete3": "最后警告。你真的确定吗？",
+        "failGenerateTitle": "该网站没有可用的标题或描述.",
+        "saveSettings": "已保存您的用户设置。 如果您更改了电子邮件， 则会发送验证链接.",
+        "noComments": "API未返回任何评论.",
+        "loginVoteGate": "您必须登录才能投票.",
+        "blockedCommunity": "屏蔽了这个圈子.",
+        "purgedCommunity": "清除了这个圈子.",
+        "blockedInstance": "屏蔽了该网站.",
+        "updatedCommunity": "您的圈子已更新.",
+        "sentMessage": "发送了该消息.",
+        "invalidDateAbsolute": "日期无效. 它必须是一个绝对的日期.",
+        "bannedUser": "禁止该用户.",
+        "unbannedUser": "取消对该用户的屏蔽.",
+        "needCommunity": "你必须建立一个圈子.",
+        "invalidURL": "URL网址无效",
+        "generatedTitle": "从URL生成的标题和正文. 是否撤消此操作?",
+        "restoredFromDraft": "已从草稿中恢复您的帖子.",
+        "copied": "已复制到剪贴板.",
+        "approvedApplication": "申请已通过.",
+        "deniedApplication": "申请已拒绝.",
+        "updateMods": "更新了圈子管理员.",
+        "logIn": "已成功登录.",
+        "failInstanceURL": "联系该网站失败. 是否已关闭？",
+        "addAccount": "添加了该帐户.",
+        "updatedSite": "更新了您的网站.",
+        "failCSV": "读取CSV失败",
+        "removeAdminWarning": "您确定要删除该管理员吗?",
+        "removeAdmin": "已删除该管理员.",
+        "failFindUser": "找不到该用户.",
+        "addMod": "添加了该管理员.",
+        "resolveReport": "已解决该报告.",
+        "unresolveReport": "未解决该报告.",
+        "passwordReset": "您的密码已重置.",
+        "fetchPostOnHome": "正在尝试在您的主网站上获取此帖子...",
+        "loginRefresh": "您的登录已刷新.",
+        "invalidLogin": "域相关参数设置有误",
+        "confirmDelete1": "您确定要删除您的帐户吗？",
+        "confirmDelete2": "你真的确定吗？",
+        "deleting": "正在删除您的帐户...",
+        "deleted": "您的帐户已被删除.",
+        "resetSettings": "您想将设置重置为默认值吗？",
+        "failFetchInstances": "无法获取可用网站.",
+        "failSignup": "注册失败.",
+        "successSignup": "已注册.",
+        "waitApplication": "在登录之前，请等待您的注册申请被接受.",
+        "blockUser": "屏蔽了该用户.",
+        "unblockUser": "解除对该用户的锁定.",
+        "purgeUser": "已清除该用户.",
+        "settingsImport": "已成功导入设置",
+        "userLoading": "仍在加载用户数据..."
+    },
+    "admin": {
+        "purgeCommunity": {
+            "warning": "这将删除所有帖子. 你确定吗? (该按钮将在3秒后启用)",
+            "title": "删除圈子"
+        },
+        "purge": "删除",
+        "instance": "网站",
+        "label": "管理"
+    },
+    "message": {
+        "success": "成功",
+        "error": "错误",
+        "retry": "重试"
+    },
+    "comment": {
+        "reply": "回复",
+        "actions": {
+            "label": "操作",
+            "link": "复制链接"
+        },
+        "locked": "此帖子已锁定.",
+        "banned": "你被禁止进入这个圈子.",
+        "more": "{{comments:number}} 更多"
     }
 }
