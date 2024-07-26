@@ -85,7 +85,7 @@
     {/if}
   </button>
   {#if $profile?.user}
-    <div class="flex flex-row gap-2 items-center py-2 mx-4 font-medium">
+    <div class="flex flex-row gap-2 items-center py-2 mx-2 font-medium">
       <Avatar
         width={22}
         url={$profile?.user?.local_user_view.person.avatar}
@@ -160,7 +160,7 @@
     </MenuButton>
   {/if}
   <hr class="dark:opacity-10 w-[90%] my-2 mx-auto" />
-  <li class="flex flex-col px-4 py-1 mx-auto my-1 text-xs w-full">
+  <li class="flex flex-col px-2 py-1 mx-auto my-1 text-xs w-full">
     <div class="flex flex-row gap-2 w-full items-center">
       <!-- svelte-ignore missing-declaration -->
       <div class="flex-1">
