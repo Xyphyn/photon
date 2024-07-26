@@ -36,6 +36,7 @@
   import { t } from '$lib/translations'
   import InfiniteScroll from 'svelte-infinite-scroll'
   import type { Readable } from 'svelte/motion'
+  import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte';
 
   export let posts: PostView[]
   export let community: boolean = false
@@ -273,6 +274,16 @@
           <div class="w-48 h-8"></div>
           <div class="w-24 h-8"></div>
         </div>
+      </div>
+    {:else}
+      <div style="border-top-width: 0">
+        <EndPlaceholder>
+          {#if feedData.community_name}
+            You have reached the end of {feedData.community_name}.
+          {:else}
+            You have reached the end of the feed.
+          {/if}
+        </EndPlaceholder>
       </div>
     {/if}
     <InfiniteScroll window threshold={1000} on:loadMore={loadMore} />
