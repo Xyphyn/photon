@@ -28,14 +28,17 @@
 
 <div class="flex flex-col gap-4 max-w-full w-full min-w-0">
   <header class="flex flex-col gap-4 relative">
-    <Header>{$t('routes.frontpage.title')}</Header>
-    <div class="flex items-center gap-2">
-      {#if data.type_}
-        <Location changeDefault selected={data.type_} />
-      {/if}
-      <Sort changeDefault selected={data.sort} />
-      <ViewSelect />
-    </div>
+    <Header>
+      {$t('routes.frontpage.title')}
+
+      <div class="flex items-center gap-2" slot="extended">
+        {#if data.type_}
+          <Location changeDefault selected={data.type_} />
+        {/if}
+        <Sort changeDefault selected={data.sort} />
+        <ViewSelect />
+      </div>
+    </Header>
   </header>
 
   <svelte:component
