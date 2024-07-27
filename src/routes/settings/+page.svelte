@@ -80,7 +80,7 @@
   </Modal>
 {/if}
 
-<Header class="text-3xl font-bold flex justify-between">
+<Header pageHeader class="text-3xl font-bold flex justify-between">
   {$t('settings.title')}
   <div class="flex items-center">
     <Button

@@ -158,7 +158,7 @@
 {/if}
 
 <form class="flex flex-col gap-4 h-full" on:submit|preventDefault={save}>
-  <Header>{$t('routes.profile.settings')}</Header>
+  <Header pageHeader>{$t('routes.profile.settings')}</Header>
   {#if data.my_user?.local_user_view?.local_user && formData}
     <TextInput
       label={$t('form.profile.displayName')}

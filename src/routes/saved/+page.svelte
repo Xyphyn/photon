@@ -22,7 +22,7 @@
   <title>{$t('routes.saved')}</title>
 </svelte:head>
 
-<Header>{$t('routes.saved')}</Header>
+<Header pageHeader>{$t('routes.saved')}</Header>
 <div
   class="flex flex-col list-none my-4 divide-slate-200 dark:divide-zinc-800"
   class:gap-4={$userSettings.view == 'card'}

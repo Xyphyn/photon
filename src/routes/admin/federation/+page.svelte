@@ -1,6 +1,7 @@
 <script lang="ts">
   import { profile } from '$lib/auth.js'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import EditableList from '$lib/components/ui/list/EditableList.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
@@ -170,12 +171,12 @@
   <title>{$t('routes.admin.federation.title')}</title>
 </svelte:head>
 
-<h1 class="font-bold text-2xl flex items-center justify-between">
+<Header pageHeader class="font-bold text-2xl flex items-center justify-between">
   {$t('routes.admin.federation.title')}
   <Button color="primary" on:click={save} loading={saving} disabled={saving}>
     {$t('common.save')}
   </Button>
-</h1>
+</Header>
 {#if data.site && data.federated_instances?.federated_instances?.blocked}
   <FileInput preview={false} bind:files={csv}>
     <Button class="w-max" slot="button">

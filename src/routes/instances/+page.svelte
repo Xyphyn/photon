@@ -1,5 +1,6 @@
 <script lang="ts">
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
   import type { Instance } from 'lemmy-js-client'
@@ -9,7 +10,7 @@
   export let data
 </script>
 
-<h1 class="font-bold text-3xl mb-4">Linked Instances</h1>
+<Header pageHeader>Linked Instances</Header>
 {#if data}
   <div class="flex flex-col md:flex-row gap-4">
     <div class="flex-1 w-full max-h-[42rem] h-full flex flex-col gap-2">

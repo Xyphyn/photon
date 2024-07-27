@@ -21,24 +21,26 @@
 </script>
 
 <div class="mb-4 flex flex-col gap-4">
-  <Header>{$t('routes.moderation.title')}</Header>
-  <div class="flex flex-row gap-2 flex-wrap items-center">
-    <Select
-      bind:value={data.type}
-      on:change={() => searchParam($page.url, 'type', data.type, 'page')}
-    >
-      <span slot="label" class="flex items-center gap-1">
-        <Icon src={Funnel} size="15" mini />
-        {$t('filter.filter')}
-      </span>
-      <option value="all">{$t('filter.location.all')}</option>
-      <option value="unread">{$t('filter.unread')}</option>
-    </Select>
-    <Button href="/modlog" class="h-max ml-auto">
-      <Icon src={Newspaper} size="16" mini />
-      {$t('routes.modlog')}
-    </Button>
-  </div>
+  <Header pageHeader>
+    {$t('routes.moderation.title')}
+    <div class="flex flex-row gap-2 flex-wrap items-end" slot="extended">
+      <Select
+        bind:value={data.type}
+        on:change={() => searchParam($page.url, 'type', data.type, 'page')}
+      >
+        <span slot="label" class="flex items-center gap-1">
+          <Icon src={Funnel} size="15" mini />
+          {$t('filter.filter')}
+        </span>
+        <option value="all">{$t('filter.location.all')}</option>
+        <option value="unread">{$t('filter.unread')}</option>
+      </Select>
+      <Button href="/modlog" class="h-max ml-auto">
+        <Icon src={Newspaper} size="16" mini />
+        {$t('routes.modlog')}
+      </Button>
+    </div>
+  </Header>
 </div>
 {#if data.items && data.items.length > 0}
   <div class="flex flex-col gap-4">

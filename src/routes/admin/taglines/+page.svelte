@@ -44,9 +44,8 @@
 </script>
 
 {#if taglines.length > 0}
-  <div class="flex flex-row justify-between items-center">
-    <Header>{$t('routes.admin.taglines.title')}</Header>
-    <Button
+  <Header pageHeader class="justify-between">
+    {$t('routes.admin.taglines.title')}<Button
       color="primary"
       on:click={save}
       loading={saving}
@@ -56,7 +55,8 @@
     >
       {$t('common.save')}
     </Button>
-  </div>
+  </Header>
+
   <EditableList
     let:action
     on:action={(e) => {

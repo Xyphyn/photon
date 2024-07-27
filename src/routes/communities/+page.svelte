@@ -27,7 +27,7 @@
   <title>{$t('routes.communities')}</title>
 </svelte:head>
 
-<Header>
+<Header pageHeader class="justify-between">
   <span>{$t('routes.communities')}</span>
   <Popover
     openOnHover
@@ -55,18 +55,17 @@
       </p>
     </Material>
   </Popover>
-</Header>
-<div class="flex flex-row flex-wrap gap-4 mt-4 items-center">
-  <Location selected={data.type} />
-  <Sort selected={data.sort} />
+
   <form
     on:submit|preventDefault={() => searchParam($page.url, 'q', search, 'page')}
     class="flex flex-col sm:flex-row gap-2 sm:ml-auto items-center"
+    slot="extended"
   >
     <TextInput
       bind:value={search}
-      label={$t('routes.search.query')}
+      aria-label={$t('routes.search.query')}
       size="md"
+      class="flex-1"
     />
     <Button
       submit
@@ -79,6 +78,10 @@
       <Icon src={MagnifyingGlass} size="16" mini />
     </Button>
   </form>
+</Header>
+<div class="flex flex-row flex-wrap gap-4 mt-4 items-center">
+  <Location selected={data.type} />
+  <Sort selected={data.sort} />
 </div>
 <ul class="flex flex-col divide-y divide-slate-200 dark:divide-zinc-800">
   {#if data.communities.length == 0}

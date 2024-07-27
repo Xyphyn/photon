@@ -44,7 +44,7 @@
   }
 </script>
 
-<Header>{$t('routes.admin.team.title')}</Header>
+<Header pageHeader>{$t('routes.admin.team.title')}</Header>
 {#if data.site}
   <EditableList let:action on:action={(e) => removeAdmin(e.detail, false)}>
     {#if data.site.admins.length <= 0}

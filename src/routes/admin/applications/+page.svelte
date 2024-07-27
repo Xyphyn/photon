@@ -12,7 +12,7 @@
   export let data
 </script>
 
-<Header>{$t('routes.admin.applications.title')}</Header>
+<Header pageHeader>{$t('routes.admin.applications.title')}</Header>
 <MultiSelect
   options={[false, true]}
   selected={data.unreadOnly ?? true}

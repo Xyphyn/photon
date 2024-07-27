@@ -53,7 +53,7 @@
 </svelte:head>
 
 <div class="flex flex-row gap-2">
-  <Header class="justify-between items-end">
+  <Header pageHeader class="justify-between items-end">
     {$t('routes.inbox.title')}
 
     <div class="flex items-center gap-2">

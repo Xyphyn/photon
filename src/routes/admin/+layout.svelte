@@ -1,8 +1,7 @@
 <script>
-  import { goto } from '$app/navigation'
-  import { page } from '$app/stores'
-  import { notifications, profile } from '$lib/auth'
-  import MultiSelect from '$lib/components/input/Switch.svelte'
+  import { notifications } from '$lib/auth'
+  import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
+  import { contentPadding } from '$lib/components/ui/layout/Shell.svelte'
   import { t } from '$lib/translations'
   import { Badge } from 'mono-svelte'
 </script>
@@ -16,25 +15,34 @@
 {/if}
 
 <div class="flex flex-col gap-4 h-full">
-  <MultiSelect
-    options={[
-      '/admin/config',
-      '/admin/applications',
-      '/admin/taglines',
-      '/admin/team',
-      '/admin/federation',
-    ]}
-    optionNames={[
-      $t('routes.admin.config.title'),
-      $t('routes.admin.applications.title'),
-      $t('routes.admin.taglines.title'),
-      $t('routes.admin.team.title'),
-      $t('routes.admin.federation.title'),
-    ]}
-    selected={$page.url.pathname}
-    on:select={(e) => {
-      goto(e.detail)
-    }}
-  />
+  <div
+    class="sticky mx-auto z-50 max-w-full min-w-0 flex items-center gap-2"
+    style="top: max(1.5rem, {$contentPadding.top}px);"
+  >
+    <Tabs
+      routes={[
+        {
+          href: '/admin/config',
+          name: $t('routes.admin.config.title'),
+        },
+        {
+          href: '/admin/applications',
+          name: $t('routes.admin.applications.title'),
+        },
+        {
+          href: '/admin/taglines',
+          name: $t('routes.admin.taglines.title'),
+        },
+        {
+          href: '/admin/team',
+          name: $t('routes.admin.team.title'),
+        },
+        {
+          href: '/admin/federation',
+          name: $t('routes.admin.federation.title'),
+        },
+      ]}
+    />
+  </div>
   <slot />
 </div>

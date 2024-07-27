@@ -11,7 +11,7 @@
   export let data
 </script>
 
-<Header>{$t('routes.profile.media.title')}</Header>
+<Header pageHeader>{$t('routes.profile.media.title')}</Header>
 <div class="media-grid">
   {#each data.images as image (image.local_image.pictrs_delete_token)}
     <div animate:flip={{ duration: 500, easing: expoInOut }}>

@@ -12,7 +12,7 @@
 <div class="flex flex-row w-full">
   {#if $site}
     <div class="flex flex-col flex-1 gap-4">
-      <Header>{$t('routes.legal.title')}</Header>
+      <Header pageHeader>{$t('routes.legal.title')}</Header>
       <Markdown
         source={$site.site_view.local_site.legal_information ??
           $t('routes.legal.noLegal')}

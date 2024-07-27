@@ -1,5 +1,6 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import {
     DEFAULT_INSTANCE_URL,
     LINKED_INSTANCE_URL,
@@ -47,7 +48,7 @@
 </script>
 
 <div class="my-auto max-w-xl mx-auto flex flex-col gap-2">
-  <h1 class="font-bold text-3xl">{$t('routes.passwordChange.title')}</h1>
+  <Header>{$t('routes.passwordChange.title')}</Header>
   <p>
     {$t('routes.passwordChange.description')}
   </p>

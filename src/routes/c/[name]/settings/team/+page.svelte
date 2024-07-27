@@ -85,7 +85,7 @@
   }
 </script>
 
-<Header>Moderators</Header>
+<Header pageHeader>Moderators</Header>
 <EditableList
   let:action
   on:action={(e) => {

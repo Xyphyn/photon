@@ -51,7 +51,31 @@
   <title>{$t('routes.search.title')}</title>
 </svelte:head>
 
-<Header>{$t('routes.search.title')}</Header>
+<Header pageHeader>
+  {$t('routes.search.title')}
+  <form
+    on:submit|preventDefault={() => searchParam($page.url, 'q', query, 'page')}
+    class="flex flex-col sm:flex-row gap-2 sm:ml-auto items-center"
+    slot="extended"
+  >
+    <TextInput
+      bind:value={query}
+      aria-label={$t('routes.search.query')}
+      size="md"
+      class="flex-1 rounded-lg"
+    />
+    <Button
+      submit
+      color="secondary"
+      size="custom"
+      class="self-end"
+      style="width: 38px; height: 38px;"
+      title="Search"
+    >
+      <Icon src={MagnifyingGlass} size="16" mini />
+    </Button>
+  </form>
+</Header>
 <div class="flex flex-row flex-wrap items-center gap-4 mt-4">
   <Select
     bind:value={data.type}
@@ -68,22 +92,6 @@
     <option value="Users">{$t('content.users')}</option>
   </Select>
   <Sort navigate bind:selected={data.sort} />
-  <form
-    on:submit|preventDefault={() => searchParam($page.url, 'q', query, 'page')}
-    class="flex flex-col sm:flex-row gap-2 sm:ml-auto items-center"
-  >
-    <TextInput bind:value={query} label={$t('routes.search.query')} size="md" />
-    <Button
-      submit
-      color="secondary"
-      size="custom"
-      class="self-end"
-      style="width: 38px; height: 38px;"
-      title="Search"
-    >
-      <Icon src={MagnifyingGlass} size="16" mini />
-    </Button>
-  </form>
   <Button
     slot="summary"
     size="square-lg"

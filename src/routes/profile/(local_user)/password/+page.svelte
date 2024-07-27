@@ -88,7 +88,7 @@
 <h1 class="font-bold text-3xl">{$t('routes.profile.credentials')}</h1>
 <div class="flex flex-row flex-wrap gap-8">
   <div class="flex flex-col gap-2 max-w-sm w-full">
-    <h1 class="font-bold text-2xl">{$t('form.password')}</h1>
+    <Header pageHeader>{$t('form.password')}</Header>
     <form
       on:submit|preventDefault={changePassword}
       class="max-w-sm flex flex-col gap-4"

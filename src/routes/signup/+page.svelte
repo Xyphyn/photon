@@ -22,6 +22,7 @@
   import { onMount } from 'svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import { t } from '$lib/translations'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
   let selectedInstance: string = ''
   let validating: boolean = false
@@ -83,7 +84,7 @@
 </svelte:head>
 
 <div class="mx-auto max-w-xl flex flex-col gap-4 my-auto h-max w-full">
-  <h1 class="font-bold text-4xl">{$t('form.signup.title')}</h1>
+  <Header pageHeader>{$t('form.signup.title')}</Header>
   <p>{$t('form.signup.description')}</p>
   <p>
     {$t('form.signup.info')}

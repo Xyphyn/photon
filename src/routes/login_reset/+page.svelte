@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import {
     DEFAULT_INSTANCE_URL,
     LINKED_INSTANCE_URL,
@@ -37,7 +38,7 @@
 </script>
 
 <div class="my-auto max-w-xl mx-auto flex flex-col gap-2">
-  <h1 class="font-bold text-3xl">{$t('routes.resetLogin.title')}</h1>
+  <Header>{$t('routes.resetLogin.title')}</Header>
   <p>
     {$t('routes.resetLogin.description')}
   </p>

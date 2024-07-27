@@ -57,7 +57,7 @@
 </svelte:head>
 
 <form class="flex flex-col gap-4" on:submit|preventDefault={save}>
-  <Header>{$t('routes.admin.config.title')}</Header>
+  <Header pageHeader>{$t('routes.admin.config.title')}</Header>
   {#if formData}
     <TextInput bind:value={formData.name} label={$t('form.name')} />
     <TextInput
