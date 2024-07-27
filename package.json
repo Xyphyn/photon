@@ -1,6 +1,6 @@
 {
   "name": "photon-lemmy",
-  "version": "1.31.1",
+  "version": "1.31.2",
   "devDependencies": {
     "@catdadcode/svelte-adapter-bun": "^0.5.7",
     "@dicebear/core": "^8.0.1",
