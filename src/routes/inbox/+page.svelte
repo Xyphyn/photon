@@ -53,27 +53,32 @@
 </svelte:head>
 
 <div class="flex flex-row gap-2">
-  <Header class="mr-auto">{$t('routes.inbox.title')}</Header>
-  <Button
-    on:click={() => goto($page.url, { invalidateAll: true })}
-    size="square-md"
-    title={$t('common.refresh')}
-  >
-    <Icon src={ArrowPath} size="16" mini slot="prefix" />
-  </Button>
-  <Button
-    on:click={markAllAsRead}
-    loading={markingAsRead}
-    disabled={markingAsRead}
-    size="md"
-    class="!h-8"
-  >
-    <Icon src={Check} width={16} mini slot="prefix" />
-    {$t('routes.inbox.markAsRead')}
-  </Button>
+  <Header class="justify-between items-end">
+    {$t('routes.inbox.title')}
+
+    <div class="flex items-center gap-2">
+      <Button
+        on:click={() => goto($page.url, { invalidateAll: true })}
+        size="square-md"
+        title={$t('common.refresh')}
+      >
+        <Icon src={ArrowPath} size="16" mini slot="prefix" />
+      </Button>
+      <Button
+        on:click={markAllAsRead}
+        loading={markingAsRead}
+        disabled={markingAsRead}
+        size="md"
+        class="h-8"
+      >
+        <Icon src={Check} width={16} mini slot="prefix" />
+        {$t('routes.inbox.markAsRead')}
+      </Button>
+    </div>
+  </Header>
 </div>
 <div class="mt-4" />
-<div class="flex flex-row gap-4 flex-wrap">
+<div class="flex flex-row gap-4 flex-wrap items-end">
   <Select
     bind:value={data.unreadOnly}
     on:change={() =>
@@ -105,7 +110,7 @@
     <option value="messages">{$t('filter.inbox.messages')}</option>
   </Select>
 </div>
-<div class="flex flex-col gap-4 list-none my-4 flex-1 h-full">
+<div class="flex flex-col gap-4 list-none flex-1 h-full justify-center mt-4">
   {#if !data.data || (data.data?.length ?? 0) == 0}
     <Placeholder
       icon={Inbox}
