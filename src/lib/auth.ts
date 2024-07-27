@@ -154,8 +154,10 @@ export let profile: Readable<Profile> & { set: (v: Profile) => void } =
             site.set(res?.site)
 
             profile.user = res?.user
-            profile.avatar = res?.user?.local_user_view.person.avatar
-            profile.username = res?.user?.local_user_view.person.name
+            if (profile.user) {
+              profile.avatar = res?.user?.local_user_view.person.avatar
+              profile.username = res?.user?.local_user_view.person.name
+            }
 
             fetchUser.loading = false
             fetchUser.prevProfile = profile.id
