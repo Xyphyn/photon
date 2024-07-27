@@ -124,9 +124,10 @@ md.linkify.add('u/', {
 })
 
 const regexes = {
-  post: /^https:\/\/([a-zA-Z0-9.-]+)\/post\/(\d+)$/,
-  comment: /^https:\/\/([a-zA-Z0-9.-]+)\/comment\/(\d+)$/,
-  user: /^https:\/\/([a-zA-Z0-9.-]+)\/user\/(\d+)$/,
+  post: /^https:\/\/([a-zA-Z0-9.-]+)\/post\/(\d+)$/i,
+  comment: /^https:\/\/([a-zA-Z0-9.-]+)\/comment\/(\d+)$/i,
+  user: /^https:\/\/([a-zA-Z0-9.-]+)(\/u\/)([a-zA-Z0-9.-]+)$/i,
+  community: /^https:\/\/([a-zA-Z0-9.-]+)(\/c\/)([a-zA-Z0-9.-]+)$/i,
 }
 
 /**
@@ -146,6 +147,11 @@ export const photonify = (link: string) => {
   if (regexes.user.test(link)) {
     const match = link.match(regexes.user)
     if (!match) return
-    return `/u/${match?.[2]}@${match?.[1]}`
+    return `/u/${match?.[3]}@${match?.[1]}`
+  }
+  if (regexes.community.test(link)) {
+    const match = link.match(regexes.community)
+    if (!match) return
+    return `/c/${match?.[3]}@${match?.[1]}`
   }
 }
