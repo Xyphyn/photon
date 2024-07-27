@@ -55,18 +55,18 @@ body {
 }
 
 pre {
-  @apply bg-slate-100 p-2 rounded-md my-2 max-w-full whitespace-pre-wrap
-  border-slate-200 border dark:bg-zinc-900 dark:border-zinc-800 text-sm;
+  @apply bg-slate-100 p-2 rounded-xl my-2 max-w-full whitespace-pre-wrap
+  border-slate-200 border dark:bg-zinc-950 dark:border-zinc-900 text-xs;
 }
 
 :not(pre) > code {
-  @apply bg-slate-100 border border-slate-300 dark:bg-zinc-800
-  dark:border-zinc-700;
+  @apply bg-slate-100 dark:bg-zinc-950;
   padding-left: 0.25rem;
   padding-right: 0.25rem;
   padding-top: 0.125rem;
   padding-bottom: 0.125rem;
-  border-radius: 3px;
+  border-radius: 6px;
+  font-size: 12px;
 }
 
 ::-webkit-scrollbar {
