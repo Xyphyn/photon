@@ -34,6 +34,12 @@ async function customFetch(
 ): Promise<Response> {
   const f = func ? func : fetch
 
+  if (init)
+    init.headers = {
+      ...init.headers,
+      ...(auth ? { authorization: `Bearer ${auth}` } : {}),
+    }
+
   if (init?.body && auth) {
     try {
       const json = JSON.parse(init.body.toString())
