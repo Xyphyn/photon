@@ -18,6 +18,18 @@
             "resetWarning": {
                 "title": "Palauta teema",
                 "description": "Tämä palauttaa kaikki värisi oletukseksi. On suositeltavaa viedä teema ulos ensin."
+            },
+            "preset": {
+                "title": "Ei voi muuttaa",
+                "description": "Oletusteemoja ei voi muuttaa.",
+                "delete": {
+                    "title": "Poista teema",
+                    "confirm": "Vahvista"
+                },
+                "default": "Oletus",
+                "classic": "Vanha",
+                "imported": "Teemasi",
+                "new": "Uusi teema"
             }
         },
         "frontpage": {
@@ -179,7 +191,13 @@
             "message": "Sähköpostisi on vahvistettu. Voit nyt sulkea tämän ikkunan.",
             "error": "Sähköpostin vahvistus epäonnistui."
         },
-        "communities": "Yhteisöt"
+        "communities": "Yhteisöt",
+        "community": {
+            "settings": {
+                "team": "Tiimi",
+                "settings": "Asetukset"
+            }
+        }
     },
     "cards": {
         "site": {
@@ -288,7 +306,20 @@
             "logingate": "Kirjaudu sisään luodaksesi sisältöä."
         },
         "moderation": "Moderointi",
-        "admin": "Ylläpito"
+        "admin": "Ylläpito",
+        "commands": {
+            "prompt": "Komentopaletti",
+            "recents": "Viimeksi luetut",
+            "content": "Sisältö",
+            "search": "Hae: {{default}}",
+            "main": "Päävalikko",
+            "setViewTo": "{{default}}",
+            "setColorTo": "{{default}}",
+            "feeds": "Syötteet",
+            "downloading": "Ladataan toimintoja",
+            "setView": "Valitse näkymä",
+            "setColor": "Valitse väritila"
+        }
     },
     "profile": {
         "profile": "Profiili",
@@ -649,7 +680,7 @@
                     "blur": "Sumenna",
                     "hide": "Piilota",
                     "show": "Näytä",
-                    "title": "Asetukset"
+                    "title": "Valinnat"
                 }
             }
         },
