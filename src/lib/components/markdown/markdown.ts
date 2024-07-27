@@ -126,8 +126,8 @@ md.linkify.add('u/', {
 const regexes = {
   post: /^https:\/\/([a-zA-Z0-9.-]+)\/post\/(\d+)$/i,
   comment: /^https:\/\/([a-zA-Z0-9.-]+)\/comment\/(\d+)$/i,
-  user: /^https:\/\/([a-zA-Z0-9.-]+)(\/u\/)([a-zA-Z0-9.-]+)$/i,
-  community: /^https:\/\/([a-zA-Z0-9.-]+)(\/c\/)([a-zA-Z0-9.-]+)$/i,
+  user: /^https:\/\/([a-zA-Z0-9.-]+)(\/u\/)([a-zA-Z0-9.-_]+)$/i,
+  community: /^https:\/\/([a-zA-Z0-9.-]+)(\/c\/)([a-zA-Z0-9.-_]+)$/i,
 }
 
 /**
