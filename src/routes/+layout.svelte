@@ -65,6 +65,24 @@
       themeVars.subscribe((vars) => {
         document.body.setAttribute('style', vars)
       })
+      userSettings.subscribe((settings) => {
+        document.body.classList.remove(
+          'font-display',
+          'font-inter',
+          'font-sans',
+          'font-system',
+          'font-nunito'
+        )
+        document.body.classList.add(
+          settings.font == 'inter'
+            ? 'font-inter'
+            : $userSettings.font == 'system'
+              ? 'font-system'
+              : $userSettings.font == 'satoshi/nunito'
+                ? 'font-nunito'
+                : 'font-sans'
+        )
+      })
     }
   })
   $: title = routes[($page.route.id as keyof typeof routes) ?? '']
@@ -100,13 +118,7 @@
 </Button>
 <Shell
   dir={$locale == 'he' && $userSettings.useRtl ? 'rtl' : 'ltr'}
-  class="min-h-screen {$userSettings.font == 'inter'
-    ? 'font-inter'
-    : $userSettings.font == 'system'
-      ? 'font-system'
-      : $userSettings.font == 'satoshi/nunito'
-        ? 'font-nunito'
-        : 'font-sans'}"
+  class="min-h-screen "
   route={$page.route}
 >
   <Moderation />
