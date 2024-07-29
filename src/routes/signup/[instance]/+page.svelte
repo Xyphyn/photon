@@ -125,7 +125,7 @@
   </span>
 
   {#if data.site_view.local_site.registration_mode != 'Closed'}
-    <Header pageHeader>{$t('form.signup.title')}</Header>
+    <Header>{$t('form.signup.title')}</Header>
     <TextInput
       bind:value={email}
       label={$t('form.email')}
