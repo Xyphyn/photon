@@ -265,9 +265,9 @@
         "send": "发送"
     },
     "profile": {
-        "profile": "人个资料",
+        "profile": "消息",
         "inbox": "收件箱",
-        "saved": "保存",
+        "saved": "收藏",
         "subscribed": "关注"
     },
     "nav": {
@@ -287,7 +287,7 @@
             "app": "App",
             "settings": "设置",
             "colorscheme": {
-                "label": "主题",
+                "label": "消息",
                 "system": "系统",
                 "dark": "黑色",
                 "light": "白色"
@@ -371,7 +371,7 @@
             "admins": "管理员"
         },
         "community": {
-            "members": "访客",
+            "members": "成员",
             "moderators": "管理员",
             "subscribe": "关注",
             "subscribed": "已关注",
@@ -484,9 +484,9 @@
                     "title": "使用RTL布局",
                     "description": "对RTL语言使用RTL布局."
                 },
-                "description": "bbs UI使用的语言.",
+                "description": "UI使用的语言.",
                 "note": "英语和希伯来语以外的语言由社区翻译，可能不完整.",
-                "en": "英语",
+                "en": "English",
                 "en-US": "English",
                 "he": "Hebrew",
                 "et": "Estonian",
@@ -541,8 +541,8 @@
             },
             "title": "bbs",
             "theming": {
-                "title": "主题",
-                "description": "自定义bbs的颜色.",
+                "title": "主题配色",
+                "description": "自定义颜色.",
                 "link": "转到主题"
             },
             "colorscheme": {
@@ -612,11 +612,11 @@
         "navigation": {
             "pins": {
                 "description": "单击一个图钉将其发送到侧边栏的顶部。右键单击固定项目以将其删除.",
-                "title": "别针"
+                "title": "图标"
             },
             "dockPos": {
                 "bottom": "底部",
-                "adaptive": "适应的",
+                "adaptive": "关",
                 "title": "任务栏位置",
                 "description": "屏幕上应放任务栏的位置.",
                 "top": "顶部"
@@ -625,8 +625,8 @@
                 "title": "面板模式",
                 "description": "将扩展坞延伸到屏幕边缘，类似于面板.",
                 "on": "开",
-                "off": "在",
-                "adaptive": "适应"
+                "off": "关",
+                "adaptive": "关闭"
             },
             "title": "导航"
         },
