@@ -58,7 +58,7 @@
 
   <form
     on:submit|preventDefault={() => searchParam($page.url, 'q', search, 'page')}
-    class="flex flex-col sm:flex-row gap-2 sm:ml-auto items-center"
+    class="flex gap-2 flex-row items-center"
     slot="extended"
   >
     <TextInput

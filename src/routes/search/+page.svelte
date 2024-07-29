@@ -55,7 +55,7 @@
   {$t('routes.search.title')}
   <form
     on:submit|preventDefault={() => searchParam($page.url, 'q', query, 'page')}
-    class="flex flex-col sm:flex-row gap-2 sm:ml-auto items-center"
+    class="flex flex-row gap-2 items-center"
     slot="extended"
   >
     <TextInput
