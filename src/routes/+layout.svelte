@@ -34,6 +34,7 @@
     trickleSpeed: 200,
     easing: 'ease-out',
     speed: 300,
+    showSpinner: false,
   })
 
   let barTimeout: any = 0
