@@ -7,7 +7,19 @@
   import { feature } from '$lib/version.js'
   import type { SortType } from 'lemmy-js-client'
   import { Select } from 'mono-svelte'
-  import { ChartBar, Clock, Icon } from 'svelte-hero-icons'
+  import {
+    ArrowTrendingDown,
+    ArrowTrendingUp,
+    ChartBar,
+    ChatBubbleLeftRight,
+    ChatBubbleOvalLeft,
+    Clock,
+    Fire,
+    Icon,
+    Scale,
+    Star,
+    Trophy,
+  } from 'svelte-hero-icons'
   import { backOut } from 'svelte/easing'
   import { fly, slide } from 'svelte/transition'
 
@@ -39,17 +51,87 @@
       <Icon src={ChartBar} size="13" mini />
       {$t('filter.sort.label')}
     </span>
-    <option value="Active">{$t('filter.sort.active')}</option>
-    <option value="Hot">{$t('filter.sort.hot')}</option>
-    {#if feature('scaledSort', $site?.version)}
-      <option value="Scaled">{$t('filter.sort.scaled')}</option>
-    {/if}
-    <option value="TopAll">{$t('filter.sort.top.label')}</option>
-    <option value="New">{$t('filter.sort.new')}</option>
-    <option value="Old">{$t('filter.sort.old')}</option>
-    <option value="Controversial">{$t('filter.sort.controversial')}</option>
-    <option value="MostComments">{$t('filter.sort.mostcomments')}</option>
-    <option value="NewComments">{$t('filter.sort.newcomments')}</option>
+    <option value="Active">
+      <Icon
+        src={ArrowTrendingUp}
+        size="16"
+        mini
+        class="text-slate-600 dark:text-zinc-400"
+      />
+      {$t('filter.sort.active')}
+    </option>
+    <option value="Hot">
+      <Icon
+        src={Fire}
+        size="16"
+        mini
+        class="text-slate-600 dark:text-zinc-400"
+      />
+      {$t('filter.sort.hot')}
+    </option>
+    <option value="Scaled">
+      <Icon
+        src={Scale}
+        size="16"
+        mini
+        class="text-slate-600 dark:text-zinc-400"
+      />
+      {$t('filter.sort.scaled')}
+    </option>
+    <option value="TopAll">
+      <Icon
+        src={Trophy}
+        size="16"
+        mini
+        class="text-slate-600 dark:text-zinc-400"
+      />
+      {$t('filter.sort.top.label')}
+    </option>
+    <option value="New">
+      <Icon
+        src={Star}
+        size="16"
+        mini
+        class="text-slate-600 dark:text-zinc-400"
+      />
+      {$t('filter.sort.new')}
+    </option>
+    <option value="Old">
+      <Icon
+        src={Clock}
+        size="16"
+        mini
+        class="text-slate-600 dark:text-zinc-400"
+      />
+      {$t('filter.sort.old')}
+    </option>
+    <option value="Controversial">
+      <Icon
+        src={ArrowTrendingDown}
+        size="16"
+        mini
+        class="text-slate-600 dark:text-zinc-400"
+      />
+      {$t('filter.sort.controversial')}
+    </option>
+    <option value="MostComments">
+      <Icon
+        src={ChatBubbleOvalLeft}
+        size="16"
+        mini
+        class="text-slate-600 dark:text-zinc-400"
+      />
+      {$t('filter.sort.mostcomments')}
+    </option>
+    <option value="NewComments">
+      <Icon
+        src={ChatBubbleLeftRight}
+        size="16"
+        mini
+        class="text-slate-600 dark:text-zinc-400"
+      />
+      {$t('filter.sort.newcomments')}
+    </option>
   </Select>
   {#if selected?.startsWith('Top')}
     <div transition:fly={{ easing: backOut, x: 2 }}>

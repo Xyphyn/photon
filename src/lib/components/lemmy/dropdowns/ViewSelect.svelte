@@ -2,7 +2,16 @@
   import { userSettings } from '$lib/settings.js'
   import { t } from '$lib/translations'
   import { Select } from 'mono-svelte'
-  import { Icon, ViewColumns } from 'svelte-hero-icons'
+  import {
+    Bars3,
+    Clock,
+    Icon,
+    ListBullet,
+    QueueList,
+    RectangleGroup,
+    Square2Stack,
+    ViewColumns,
+  } from 'svelte-hero-icons'
 
   export let showLabel = true
 </script>
@@ -16,8 +25,40 @@
       </span>
     {/if}
   </svelte:fragment>
-  <option value="cozy">{$t('filter.view.cozy')}</option>
-  <option value="list">{$t('filter.view.list')}</option>
-  <option value="compact">{$t('filter.view.compact')}</option>
-  <option value="card">{$t('filter.view.legacy')}</option>
+  <option value="cozy">
+    <Icon
+      src={RectangleGroup}
+      size="16"
+      mini
+      class="text-slate-600 dark:text-zinc-400"
+    />
+    {$t('filter.view.cozy')}
+  </option>
+  <option value="list">
+    <Icon
+      src={QueueList}
+      size="16"
+      mini
+      class="text-slate-600 dark:text-zinc-400"
+    />
+    {$t('filter.view.list')}
+  </option>
+  <option value="compact">
+    <Icon
+      src={Bars3}
+      size="16"
+      mini
+      class="text-slate-600 dark:text-zinc-400"
+    />
+    {$t('filter.view.compact')}
+  </option>
+  <option value="card">
+    <Icon
+      src={Clock}
+      size="16"
+      mini
+      class="text-slate-600 dark:text-zinc-400"
+    />
+    {$t('filter.view.legacy')}
+  </option>
 </Select>
