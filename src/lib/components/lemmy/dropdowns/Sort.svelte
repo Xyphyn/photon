@@ -10,14 +10,19 @@
   import {
     ArrowTrendingDown,
     ArrowTrendingUp,
+    Calendar,
+    CalendarDateRange,
+    CalendarDays,
     ChartBar,
     ChatBubbleLeftRight,
     ChatBubbleOvalLeft,
     Clock,
     Fire,
     Icon,
+    PlusCircle,
     Scale,
     Star,
+    Sun,
     Trophy,
   } from 'svelte-hero-icons'
   import { backOut } from 'svelte/easing'
@@ -148,24 +153,89 @@
           <Icon src={Clock} size="15" mini />
           {$t('filter.sort.top.time.label')}
         </span>
-        <option value="TopAll">{$t('filter.sort.top.time.all')}</option>
+        <option value="TopAll">
+          <Icon
+            src={PlusCircle}
+            size="16"
+            mini
+            class="text-slate-600 dark:text-zinc-400"
+          />{$t('filter.sort.top.time.all')}
+        </option>
         <option value="TopNineMonths">
+          <Icon
+            src={Calendar}
+            size="16"
+            mini
+            class="text-slate-600 dark:text-zinc-400"
+          />
           {$t('filter.sort.top.time.9months')}
         </option>
         <option value="TopSixMonths">
+          <Icon
+            src={Calendar}
+            size="16"
+            mini
+            class="text-slate-600 dark:text-zinc-400"
+          />
           {$t('filter.sort.top.time.6months')}
         </option>
         <option value="TopThreeMonths">
+          <Icon
+            src={Calendar}
+            size="16"
+            mini
+            class="text-slate-600 dark:text-zinc-400"
+          />
           {$t('filter.sort.top.time.3months')}
         </option>
-        <option value="TopMonth">{$t('filter.sort.top.time.month')}</option>
-        <option value="TopWeek">{$t('filter.sort.top.time.week')}</option>
-        <option value="TopDay">{$t('filter.sort.top.time.day')}</option>
-        <option value="TopTwelveHour">
-          {$t('filter.sort.top.time.12hours')}
+        <option value="TopMonth">
+          <Icon
+            src={CalendarDays}
+            size="16"
+            mini
+            class="text-slate-600 dark:text-zinc-400"
+          />{$t('filter.sort.top.time.month')}
         </option>
-        <option value="TopSixHour">{$t('filter.sort.top.time.6hours')}</option>
-        <option value="TopHour">{$t('filter.sort.top.time.hour')}</option>
+        <option value="TopWeek">
+          <Icon
+            src={CalendarDateRange}
+            size="16"
+            mini
+            class="text-slate-600 dark:text-zinc-400"
+          />{$t('filter.sort.top.time.week')}
+        </option>
+        <option value="TopDay">
+          <Icon
+            src={Sun}
+            size="16"
+            mini
+            class="text-slate-600 dark:text-zinc-400"
+          />{$t('filter.sort.top.time.day')}
+        </option>
+        <option value="TopTwelveHour">
+          <Icon
+            src={Clock}
+            size="16"
+            mini
+            class="text-slate-600 dark:text-zinc-400"
+          />{$t('filter.sort.top.time.12hours')}
+        </option>
+        <option value="TopSixHour">
+          <Icon
+            src={Clock}
+            size="16"
+            mini
+            class="text-slate-600 dark:text-zinc-400"
+          />{$t('filter.sort.top.time.6hours')}
+        </option>
+        <option value="TopHour">
+          <Icon
+            src={Clock}
+            size="16"
+            mini
+            class="text-slate-600 dark:text-zinc-400"
+          />{$t('filter.sort.top.time.hour')}
+        </option>
       </Select>
     </div>
   {/if}
