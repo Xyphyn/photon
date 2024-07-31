@@ -35,7 +35,7 @@ body {
 }
 
 .wait * {
-  cursor: progress !important;
+  cursor: wait !important;
 }
 
 #nprogress {

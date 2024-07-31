@@ -42,9 +42,11 @@
   $: {
     if (browser) {
       if ($navigating) {
+        document.body.classList.toggle('wait', true)
         barTimeout = setTimeout(() => nProgress.start(), 100)
       }
       if (!$navigating) {
+        document.body.classList.toggle('wait', false)
         clearTimeout(barTimeout)
         nProgress.done()
       }
