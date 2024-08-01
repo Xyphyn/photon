@@ -57,7 +57,7 @@ const communityLinks = {
 
     if (!self.re.community) {
       self.re.community = new RegExp(
-        /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z]{2,6})/i
+        /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z]{2,63})/i
       )
     }
     if (self.re.community.test(tail)) {
@@ -83,7 +83,9 @@ const userLinks = {
     var tail = text.slice(pos)
 
     if (!self.re.user) {
-      self.re.user = new RegExp(/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z]{2,6})/i)
+      self.re.user = new RegExp(
+        /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z]{2,63})/i
+      )
     }
     if (self.re.user.test(tail)) {
       // Linkifier allows punctuation chars before prefix,
