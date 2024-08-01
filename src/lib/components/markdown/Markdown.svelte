@@ -86,7 +86,7 @@
   }
 
   .markdown :global(img) {
-    @apply max-h-[40vh] border rounded-md border-slate-200 dark:border-zinc-800;
+    @apply max-h-[40vh] border rounded-lg border-slate-200 dark:border-zinc-800;
   }
 
   :global(.dark .markdown img) {
