@@ -29,6 +29,7 @@
     ChevronRight,
     GlobeAmericas,
     Icon,
+    Language,
     Plus,
     Trash,
   } from 'svelte-hero-icons'
@@ -47,6 +48,25 @@
   let pin: string = ''
   let importing = false
   let importText = ''
+
+  let localeMap: Map<
+    string,
+    {
+      name: string
+      translated: number
+      flag: string
+    }
+  > = new Map([
+    ['en', { name: 'English', translated: 1, flag: '🇺🇸' }],
+    ['et', { name: 'Eesti keel', translated: 0.25, flag: '🇪🇪' }],
+    ['fi', { name: 'Suomi', translated: 0.99, flag: '🇫🇮' }],
+    ['fr', { name: 'Français', translated: 0.76, flag: '🇫🇷' }],
+    ['de', { name: 'Deutsch', translated: 0.81, flag: '🇩🇪' }],
+    ['he', { name: 'עברית', translated: 0.39, flag: '🇮🇱' }],
+    ['pt', { name: 'Português', translated: 0.87, flag: '🇵🇹' }],
+    ['zh-Hans', { name: '简体中文', translated: 0.96, flag: '🇨🇳' }],
+    ['zh-Hant', { name: '繁體中文', translated: 0.27, flag: '🇭🇰' }],
+  ])
 </script>
 
 <svelte:head>
@@ -207,23 +227,32 @@
         </span>
         <p slot="description">
           {$t('settings.app.lang.description')}
-          <Note>
-            {$t('settings.app.lang.note')}
-          </Note>
           <Link href="/translators" highlight class="text-base font-semibold">
             {$t('settings.app.lang.credits')}
           </Link>
         </p>
+        <!--@ts-ignore-->
         <Select bind:value={$userSettings.language}>
-          <option value={null}>{$t('settings.app.lang.auto')}</option>
+          <option value={null}>
+            <Icon src={Language} size="16" mini />
+            {$t('settings.app.lang.auto')}
+          </option>
           {#each $locales as locale}
+            {@const mapped = localeMap.get(locale) ?? {
+              flag: '',
+              translated: 1,
+              name: locale,
+            }}
             <option value={locale}>
-              {$t(`settings.app.lang.${locale}`, { default: locale })}
+              <span>{mapped?.flag}</span>
+              <span>{mapped?.name}</span>
+              <div
+                class="text-slate-600 dark:text-zinc-400 text-xs ml-auto"
+                data-hide-selected
+                data-label="{mapped.translated * 100}%"
+              ></div>
             </option>
           {/each}
-          {#if $userSettings.debugInfo}
-            <option value="dev">Raw Strings</option>
-          {/if}
         </Select>
       </Setting>
       {#if $locale == 'he'}
@@ -605,3 +634,10 @@
     />
   </Section>
 </div>
+
+<style>
+  [data-hide-selected]::before {
+    content: attr(data-label);
+    font-size: small;
+  }
+</style>
