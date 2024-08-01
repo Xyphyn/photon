@@ -16,7 +16,13 @@
     themeVars,
   } from '$lib/ui/colors.js'
   import { userSettings } from '$lib/settings.js'
-  import { Button, ModalContainer, Spinner, ToastContainer } from 'mono-svelte'
+  import {
+    Button,
+    ModalContainer,
+    Spinner,
+    toast,
+    ToastContainer,
+  } from 'mono-svelte'
   import { onMount } from 'svelte'
   import { browser } from '$app/environment'
   import { Forward, Icon } from 'svelte-hero-icons'

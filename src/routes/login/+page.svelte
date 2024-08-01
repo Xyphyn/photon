@@ -20,6 +20,7 @@
   import { MINIMUM_VERSION } from '$lib/version.js'
   import { t } from '$lib/translations'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { errorMessage } from '$lib/lemmy/error'
 
   let data = {
     instance: DEFAULT_INSTANCE_URL,
@@ -27,6 +28,7 @@
     password: '',
     totp: '',
     loading: false,
+    attempts: 0,
   }
 
   async function logIn() {
@@ -56,16 +58,26 @@
       }
     } catch (error) {
       toast({
-        content: error as any,
+        content:
+          JSON.parse((error as any)?.body?.message ?? '{}')?.error ==
+          'incorrect_login'
+            ? errorMessage(
+                'incorrect_login' +
+                  (data.attempts == 0 || data.attempts >= 12
+                    ? ''
+                    : `_${data.attempts + 1}`)
+              )
+            : errorMessage(error),
         type: 'error',
       })
+      data.attempts++
     }
     data.loading = false
   }
 </script>
 
 <svelte:head>
-  <title>Login</title>
+  <title>{$t('account.login')}</title>
 </svelte:head>
 
 <div class="max-w-xl w-full mx-auto h-max my-auto">

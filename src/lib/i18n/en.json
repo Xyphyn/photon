@@ -780,5 +780,19 @@
         "description": "Display debug information"
       }
     }
+  },
+  "error": {
+    "incorrect_login": "Incorrect login credentials. Please try again.",
+    "incorrect_login_2": "Incorrect login credentials. Try again.",
+    "incorrect_login_3": "Incorrect, again. Try a few more times.",
+    "incorrect_login_4": "Those still aren't the right credentials. Keep trying.",
+    "incorrect_login_5": "I swear, you need to look at the keys you're pressing.",
+    "incorrect_login_6": "Is this a joke to you?",
+    "incorrect_login_7": "Either you struggle with typing or you're harassing me at this point.",
+    "incorrect_login_8": "I give up.",
+    "incorrect_login_9": "Each of these requests you make are sending data through via an incredible technology. And you're using it to make failed logins.",
+    "incorrect_login_10": "Think about this. The poor instance admins have to maintain their server just for you to make these useless requests.",
+    "incorrect_login_11": "I give up, for real this time.",
+    "incorrect_login_12": "..."
   }
 }
