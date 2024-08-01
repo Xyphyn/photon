@@ -15,7 +15,6 @@
     "@types/markdown-it": "^12.2.3",
     "@types/markdown-it-container": "^2.0.6",
     "@types/nprogress": "^0.2.0",
-    "@vite-pwa/sveltekit": "^0.3.0",
     "autoprefixer": "^10.4.16",
     "jsdom": "^22.1.0",
     "lemmy-js-client": "latest",
@@ -36,9 +35,7 @@
     "tslib": "^2.4.1",
     "typescript": "^5.0.0",
     "vite": "^5.0.0",
-    "vite-plugin-pwa": "^0.18.0",
-    "vitest": "^1.0.0",
-    "workbox-window": "^7.0.0"
+    "vitest": "^1.0.0"
   },
   "private": true,
   "scripts": {

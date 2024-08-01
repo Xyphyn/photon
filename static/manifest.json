@@ -20,5 +20,35 @@
   "display": "standalone",
   "scope": "/",
   "theme_color": "#000000",
-  "description": "A sleek client for Lemmy."
+  "description": "A client for Lemmy with design as priority.",
+  "screenshots": [
+    {
+      "form_factor": "wide",
+      "label": "Desktop interface",
+      "type": "image/webp",
+      "src": "img/pwa/wide.webp",
+      "sizes": "3692x1948"
+    },
+    {
+      "form_factor": "narrow",
+      "label": "Mobile interface",
+      "src": "img/pwa/narrow.webp",
+      "sizes": "962x1948"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Inbox",
+      "url": "/inbox"
+    },
+    {
+      "name": "Create post",
+      "url": "/create/post"
+    },
+    {
+      "name": "Profile",
+      "url": "/profile/user"
+    }
+  ],
+  "categories": ["entertainment", "news", "social"]
 }

@@ -6,8 +6,6 @@
   import 'nprogress/nprogress.css'
   import Moderation from '$lib/components/lemmy/moderation/Moderation.svelte'
   import Sidebar from '$lib/components/ui/sidebar/Sidebar.svelte'
-  // @ts-ignore
-  import { pwaInfo } from 'virtual:pwa-info'
   import {
     colorScheme,
     inDarkColorScheme,
@@ -58,8 +56,6 @@
       }
     }
   }
-
-  $: webManifest = pwaInfo ? pwaInfo.webManifest.linkTag : ''
 
   onMount(() => {
     if (browser) {
@@ -115,7 +111,6 @@
       <meta name="description" content="A sleek client for Lemmy" />
     {/if}
   {/if}
-  {@html webManifest}
 </svelte:head>
 
 <Button
