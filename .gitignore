@@ -10,3 +10,4 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 stats.html
 dev-dist
+yarn-error.log
