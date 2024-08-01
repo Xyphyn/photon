@@ -8,19 +8,15 @@
     BookmarkSlash,
     BugAnt,
     ChatBubbleOvalLeft,
-    ChatBubbleOvalLeftEllipsis,
     CheckBadge,
     EllipsisHorizontal,
     Eye,
     EyeSlash,
     Flag,
-    GlobeAlt,
-    Home,
     Icon,
     Language,
     Newspaper,
     PencilSquare,
-    Scale,
     ServerStack,
     Share,
     Trash,
@@ -36,12 +32,7 @@
   } from '$lib/components/lemmy/moderation/moderation.js'
   import ModerationMenu from '$lib/components/lemmy/moderation/ModerationMenu.svelte'
   import { profile } from '$lib/auth.js'
-  import {
-    contentView,
-    deleteItem,
-    markAsRead,
-    save,
-  } from '$lib/lemmy/contentview.js'
+  import { deleteItem, markAsRead, save } from '$lib/lemmy/contentview.js'
   import { setSessionStorage } from '$lib/session.js'
   import { goto } from '$app/navigation'
   import { userSettings, type View } from '$lib/settings.js'
@@ -55,11 +46,9 @@
     toast,
   } from 'mono-svelte'
   import { fediseer, type Data } from '$lib/fediseer/fediseer'
-  import Fediseer from '$lib/fediseer/Fediseer.svelte'
   import { t } from '$lib/translations'
   import { text } from '$lib/components/translate/translation'
-  import Translation from '$lib/components/translate/Translation.svelte'
-  import { hidePost, postLink, type MediaType } from './helpers'
+  import { hidePost, type MediaType } from './helpers'
   import { feature } from '$lib/version'
   import Switch from '$lib/components/input/Switch.svelte'
   import { instanceToURL } from '$lib/util'
@@ -92,7 +81,9 @@
 </script>
 
 {#if fediseerData}
-  <Fediseer bind:open={fediseerOpen} data={fediseerData} />
+  {#await import('$lib/fediseer/Fediseer.svelte') then { default: Fediseer }}
+    <Fediseer bind:open={fediseerOpen} data={fediseerData} />
+  {/await}
 {/if}
 
 {#if editing}

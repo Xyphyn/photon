@@ -173,7 +173,7 @@
     class="flex flex-col border border-slate-200 border-b-slate-300 dark:border-t-zinc-700 dark:border-zinc-800
     focus-within:border-primary-900 focus-within:dark:border-primary-100 focus-within:ring ring-slate-300
     dark:ring-zinc-700 rounded-xl
-overflow-hidden transition-colors"
+overflow-hidden transition-colors {$$props.class}"
     class:mt-1={label}
   >
     {#if previewing}

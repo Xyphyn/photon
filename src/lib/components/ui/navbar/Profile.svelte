@@ -143,9 +143,18 @@
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div class="contents" on:click|stopPropagation={() => {}}>
       <Select bind:value={$colorScheme} class="ml-auto my-auto w-24" size="sm">
-        <option value="system">{$t('nav.menu.colorscheme.system')}</option>
-        <option value="light">{$t('nav.menu.colorscheme.light')}</option>
-        <option value="dark">{$t('nav.menu.colorscheme.dark')}</option>
+        <option value="system">
+          <Icon src={ComputerDesktop} size="16" mini />
+          {$t('nav.menu.colorscheme.system')}
+        </option>
+        <option value="light">
+          <Icon src={Sun} size="16" mini />
+          {$t('nav.menu.colorscheme.light')}
+        </option>
+        <option value="dark">
+          <Icon src={Moon} size="16" mini />
+          {$t('nav.menu.colorscheme.dark')}
+        </option>
       </Select>
     </div>
   </MenuButton>

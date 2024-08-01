@@ -34,7 +34,6 @@
     requestURL.searchParams.set('q', text)
     requestURL.searchParams.set('source', from)
     requestURL.searchParams.set('target', to)
-    requestURL.searchParams.set('alternatives', '')
 
     result = fetch(requestURL.toString(), {
       method: 'POST',
@@ -89,16 +88,14 @@
         <Spinner width={32} />
       </div>
     {:then result}
-      {#if !error}
-        <MarkdownEditor
-          previewButton={false}
-          previewing
-          tools={false}
-          rows={8}
-          value={result.translatedText || 'Failed to translate'}
-          disabled
-        ></MarkdownEditor>
-      {/if}
+      <MarkdownEditor
+        previewButton={false}
+        previewing
+        tools={false}
+        rows={8}
+        value={result.translatedText || 'Failed to translate'}
+        disabled
+      ></MarkdownEditor>
     {:catch err}
       <MarkdownEditor
         previewButton={false}
@@ -106,7 +103,7 @@
         tools={false}
         disabled
         rows={8}
-        value={err || 'Failed to translate'}
+        value="Failed to translate: {err}"
         class="!border-red-500 !ring-red-500 !text-red-500"
       ></MarkdownEditor>
     {/await}
