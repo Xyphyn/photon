@@ -278,11 +278,10 @@
     {:else}
       <div style="border-top-width: 0">
         <EndPlaceholder>
-          {#if feedData.community_name}
-            You have reached the end of {feedData.community_name}.
-          {:else}
-            You have reached the end of the feed.
-          {/if}
+          {$t('routes.frontpage.endFeed', {
+            // @ts-ignore
+            community_name: feedData.community_name ?? 'undefined',
+          })}
         </EndPlaceholder>
       </div>
     {/if}
