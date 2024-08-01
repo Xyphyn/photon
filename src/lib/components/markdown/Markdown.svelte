@@ -133,4 +133,24 @@
     @apply leading-[1.5] max-w-3xl;
     word-break: break-word;
   }
+
+  .markdown :global(table) {
+    @apply rounded-xl w-full overflow-auto min-w-0 table-fixed relative;
+  }
+
+  .markdown :global(table thead tr th) {
+    @apply border border-slate-200 px-4 py-2;
+  }
+
+  .markdown :global(table tr td) {
+    @apply border border-slate-200 px-4 py-2 overflow-auto;
+  }
+
+  :global(.dark) .markdown :global(table tr td) {
+    @apply border border-zinc-800 px-4 py-2 overflow-auto;
+  }
+
+  :global(.dark) .markdown :global(table thead tr th) {
+    @apply border border-zinc-800 bg-zinc-900 px-4 py-2;
+  }
 </style>
