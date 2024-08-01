@@ -285,7 +285,7 @@
                 "modalTitle": "Rejeter la demande d'authorisation"
             },
             "taglines": {
-                "title": "Pas de slogans",
+                "title": "Slogans",
                 "add": "Ajoutez un slogan",
                 "description": "Un slogan aleatoire apparaitra quand un utilisateur visitera votre instance.",
                 "empty": {
@@ -389,10 +389,68 @@
     "settings": {
         "app": {
             "lang": {
-                "": "Dont translate the below!"
+                "": "Dont translate the below!",
+                "useRtl": {
+                    "title": "Disposer l'interface de droite a gauche",
+                    "description": "Disposer l'interface de droite a gauche pour les langues qui se lisent a l'envers."
+                },
+                "de": "Allemand",
+                "fi": "Finlandais",
+                "pt": "Portugais",
+                "auto": "Automatique",
+                "credits": "Crédits",
+                "title": "Langues",
+                "description": "La langue qui est utilisée dans l'interface.",
+                "note": "Les langues autres que l'Anglais et le Hebreu sont traduits par la communautée, et peuvent être incomplets.",
+                "en": "Anglais",
+                "en-US": "Anglais",
+                "he": "Hebreu",
+                "et": "Estonien",
+                "fr": "Français",
+                "zh": "Chinois",
+                "zh-Hans": "Chinois (simplifié)",
+                "zh-Hant": "Chinois (traditionnel)"
             },
             "theming": {
-                "link": "Configuration d'apparence"
+                "link": "Configuration d'apparence",
+                "description": "Change les couleurs de l'interface.",
+                "title": "Apparence"
+            },
+            "infiniteScroll": {
+                "description": "Les nouvelles publications sont ajoutés au fur et à mesure que vous défilez vers le bas, sans qu'il soit nécessaire de cliquer sur \"suivant\".",
+                "title": "Défilement continu"
+            },
+            "placeholders": {
+                "description": "Montrer des placeholders pour certains endroits ou tu peux mettre du texte",
+                "title": "Placeholders aléatoires"
+            },
+            "view": {
+                "cozy": "Afficher les publications avec de grandes images, des embeds riches, et des corps de publication plus longues.",
+                "legacy": "Le vieux look de Photon, similaire en aspect au theme \"confortable\".",
+                "title": "Style de publication",
+                "list": "Afficher les publications dans une liste, avec le corps des publications et les medias compact.",
+                "compact": "Afficher les publications dans une liste, sans corps de publications et moins d'espacement."
+            },
+            "sort": {
+                "description": "Le tri a utiliser par defaut pour la page d'acceuil.",
+                "title": "Tri par défaut"
+            },
+            "title": "Photon",
+            "colorscheme": {
+                "title": "Couleurs",
+                "description": "La palette de couleurs à utiliser."
+            },
+            "postsInNewTab": {
+                "title": "Ouvrir les publications dans un nouvel onglet",
+                "description": "Ouvrir les publications dans un autre onglet a la place au lieu de l'onglet actuel."
+            },
+            "displayName": {
+                "title": "Utiliser les noms affichés",
+                "description": "Utiliser les noms affichés a la place de leurs noms d'utilisateurs."
+            },
+            "limitLayoutWidth": {
+                "title": "Limiter la largeur de la mise en page",
+                "description": "Améliorer la lisibilité en limitant la largeur du contenu principal."
             }
         },
         "title": "Paramètres",
@@ -401,7 +459,28 @@
         "tablet": "Tablette",
         "mobile": "Portable",
         "export": "Exporter",
-        "import": "Importer"
+        "import": "Importer",
+        "navigation": {
+            "panel": {
+                "title": "Mode \"Barre de taches\"",
+                "description": "Etendre le dock au cotés de l'écran, similaire a une barre de taches.",
+                "on": "Oui",
+                "off": "Non",
+                "adaptive": "Automatique"
+            },
+            "pins": {
+                "title": "Épingle",
+                "description": "Clique sur un bouton pour l'épingler sur le haut de la barre latérale. Un click droit l'enlève."
+            },
+            "title": "Navigation",
+            "dockPos": {
+                "title": "Position du dock",
+                "description": "Ou le dock doit être positionnée sur l'écran.",
+                "top": "En haut",
+                "bottom": "En bas",
+                "adaptive": "automatique"
+            }
+        }
     },
     "comment": {
         "reply": "Répondre",
