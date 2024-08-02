@@ -9,12 +9,14 @@
     PostReportView,
     PrivateMessageReportView,
   } from 'lemmy-js-client'
-  import { Check, Icon } from 'svelte-hero-icons'
+  import { Check, CheckCircle, Icon } from 'svelte-hero-icons'
   import { notifications, profile } from '$lib/auth.js'
   import { Button } from 'mono-svelte'
   import type { ReportView } from '$lib/lemmy/report.js'
   import PrivateMessage from '$lib/components/lemmy/inbox/PrivateMessage.svelte'
   import { t } from '$lib/translations'
+  import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
+  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
 
   export let item: ReportView
 
@@ -32,6 +34,7 @@
           })
 
           item.resolved = res.comment_report_view.comment_report.resolved
+          item.resolver = res.comment_report_view.resolver
 
           toast({
             content: item.resolved
@@ -49,6 +52,7 @@
           })
 
           item.resolved = res.post_report_view.post_report.resolved
+          item.resolver = res.post_report_view.resolver
           toast({
             content: item.resolved
               ? $t('toast.resolveReport')
@@ -66,6 +70,9 @@
 
           item.resolved =
             res.private_message_report_view.private_message_report.resolved
+
+          item.resolver = res.private_message_report_view.resolver
+
           toast({
             content: item.resolved
               ? $t('toast.resolveReport')
@@ -103,24 +110,34 @@
   />
 {/if}
 
-<div class="flex flex-row gap-4 items-center">
+<div class="flex flex-row gap-4 items-center flex-wrap">
   <div>
-    <span class="text-xs font-bold dark:text-zinc-400 text-slate-600">
+    <SectionTitle small>
       {$t('routes.moderation.reason')}
-    </span>
+    </SectionTitle>
     <p>
       {item.reason}
     </p>
   </div>
+  {#if item.resolver}
+    <div>
+      <SectionTitle small>
+        {$t('routes.moderation.resolvedBy')}
+      </SectionTitle>
+      <UserLink avatar user={item.resolver} />
+    </div>
+  {/if}
   <Button
     on:click={resolve}
-    class="w-8 h-8 !p-1 ml-auto {item.resolved
+    class="ml-auto {item.resolved
       ? '!text-green-600 dark:!text-green-400'
       : ''}"
-    title={$t('routes.moderation.resolve')}
     loading={resolving}
     disabled={resolving}
   >
-    <Icon src={Check} mini size="16" slot="prefix" />
+    <Icon src={CheckCircle} micro={item.resolved} size="18" slot="prefix" />
+    {!item.resolved
+      ? $t('routes.moderation.resolve')
+      : $t('routes.moderation.resolved')}
   </Button>
 </div>

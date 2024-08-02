@@ -251,7 +251,7 @@
     hover:text-primary-900 hover:dark:text-primary-100 transition-colors
     {$userSettings.font == 'satoshi/nunito'
       ? 'font-display font-semibold'
-      : 'font-medium'}"
+      : 'font-medium'} {$$props.titleClass ?? ''}"
     class:text-slate-600={$userSettings.markReadPosts && read}
     class:dark:text-zinc-400={$userSettings.markReadPosts && read}
     class:text-base={view == 'compact'}

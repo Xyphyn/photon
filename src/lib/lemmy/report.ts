@@ -33,6 +33,7 @@ interface BaseReport {
   timestamp: Date
   resolved: boolean
   id: number
+  resolver?: Person
 }
 
 export const generalizeCommentReport = (
@@ -51,6 +52,7 @@ export const generalizeCommentReport = (
   timestamp: publishedToDate(report.comment_report.published),
   resolved: report.comment_report.resolved,
   id: report.comment_report.id,
+  resolver: report.resolver,
 })
 
 export const generalizePostReport = (report: PostReportView): ReportView => ({
@@ -69,6 +71,7 @@ export const generalizePostReport = (report: PostReportView): ReportView => ({
   timestamp: publishedToDate(report.post_report.published),
   resolved: report.post_report.resolved,
   id: report.post_report.id,
+  resolver: report.resolver,
 })
 
 export const generalizePrivateMessageReport = (
@@ -82,6 +85,7 @@ export const generalizePrivateMessageReport = (
   timestamp: publishedToDate(report.private_message_report.published),
   resolved: report.private_message_report.resolved,
   id: report.private_message_report.id,
+  resolver: report.resolver,
 })
 
 export type Report =

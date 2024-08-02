@@ -252,7 +252,9 @@
             },
             "reason": "Reason",
             "resolve": "Resolve",
-            "unresolve": "Unresolve"
+            "resolved": "Resolved",
+            "unresolve": "Unresolve",
+            "resolvedBy": "Resolved by"
         },
         "admin": {
             "title": "Administration",

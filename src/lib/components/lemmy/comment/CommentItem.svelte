@@ -21,21 +21,26 @@
   padding="none"
 >
   <div class="flex flex-row justify-between items-center gap-2">
-    <PostMeta
-      badges={{
-        nsfw: comment.post.nsfw,
-        removed: comment.post.removed,
-        admin: false,
-        moderator: false,
-        saved: false,
-        deleted: comment.post.deleted,
-        featured:
-          comment.post.featured_community || comment.post.featured_local,
-        locked: comment.post.locked,
-      }}
-      published={publishedToDate(comment.comment.published)}
-      community={community ? comment.community : undefined}
-    />
+    <div class="flex flex-col gap-2">
+      <PostMeta
+        badges={{
+          nsfw: comment.post.nsfw,
+          removed: comment.post.removed,
+          admin: false,
+          moderator: false,
+          saved: false,
+          deleted: comment.post.deleted,
+          featured:
+            comment.post.featured_community || comment.post.featured_local,
+          locked: comment.post.locked,
+        }}
+        published={publishedToDate(comment.comment.published)}
+        community={community ? comment.community : undefined}
+        title={comment.post.name}
+        id={comment.post.id}
+        titleClass="text-sm"
+      />
+    </div>
     <Button
       color="secondary"
       href="/post/{comment.post.id}?thread={comment.comment.path}#{comment
@@ -44,15 +49,9 @@
       class="self-start"
       title="Jump"
     >
-      <Icon src={ArrowUturnUp} size="16" mini />
+      <Icon src={ArrowUturnUp} size="16" micro />
     </Button>
   </div>
-  <a
-    href="/post/{getInstance()}/{comment.post.id}"
-    class="font-medium text-base"
-  >
-    {comment.post.name}
-  </a>
   <div class="list-none">
     <Comment
       postId={comment.post.id}
