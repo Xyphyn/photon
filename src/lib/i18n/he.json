@@ -123,7 +123,7 @@
         "profile": "פרופיל",
         "inbox": "דואר נכנס",
         "saved": "שמורים",
-        "subscribed": "רשומים"
+        "subscribed": "הרשמות"
     },
     "routes": {
         "frontpage": {
@@ -292,6 +292,15 @@
             "source": "מקור",
             "donate": "תרומה",
             "instance": "שרת"
+        },
+        "commands": {
+            "prompt": "לוח פקודות",
+            "recents": "אחרונים",
+            "content": "תוכן",
+            "search": "חיפוש אחרי {{default}}",
+            "main": "ראשי",
+            "setView": "הגדרת תצוגה",
+            "setViewTo": "הגדרת תצוגה ל-{{default}}"
         }
     },
     "account": {
