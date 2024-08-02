@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { photonify } from '$lib/components/markdown/markdown.js'
+  import { photonify } from '$lib/components/markdown/renderers/plugins'
   import { TextInput } from 'mono-svelte'
 
   let link = ''

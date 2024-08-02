@@ -234,9 +234,7 @@
     opened
   />
   {#if post.post_view.post.body}
-    <div
-      class="text-sm text-slate-800 dark:text-zinc-300 rounded-md leading-[22px]"
-    >
+    <div class="text-base text-slate-800 dark:text-zinc-300 leading-[1.5]">
       <Markdown source={post.post_view.post.body} />
     </div>
   {/if}
