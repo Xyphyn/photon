@@ -2,7 +2,7 @@
     "profile": {
         "profile": "Perfil",
         "saved": "Guardado",
-        "subscribed": "Subscrita",
+        "subscribed": "Subscrições",
         "inbox": "Caixa de entrada"
     },
     "nav": {
@@ -32,6 +32,19 @@
             "post": "Publicar",
             "community": "Comunidade",
             "logingate": "É necessário iniciar sessão para publicar."
+        },
+        "commands": {
+            "prompt": "Palete de comandos",
+            "setColorTo": "Definir esquema de cores como {{default}}",
+            "recents": "Recentes",
+            "content": "Conteúdo",
+            "search": "Pesquisar por {{default}}",
+            "main": "Principal",
+            "setView": "Definir vista",
+            "setViewTo": "Definir vista como {{default}}",
+            "setColor": "Definir esquema de cores",
+            "feeds": "Listagens",
+            "downloading": "Ações de descarga"
         }
     },
     "account": {
@@ -78,7 +91,7 @@
         },
         "location": {
             "local": "Local",
-            "subscribed": "Subscrito",
+            "subscribed": "Subscrições",
             "moderator": "Moderador",
             "label": "Fonte",
             "all": "Tudo",
@@ -160,7 +173,8 @@
             "body": "Corpo",
             "nsfw": "NSFW",
             "generateTitle": "Gerar título",
-            "uploadImage": "Carregar imagem"
+            "uploadImage": "Carregar imagem",
+            "altText": "Texto alternativo"
         },
         "email": "E-mail",
         "setup": "Configurar",
@@ -224,7 +238,7 @@
                 "federation": "Federação ativada",
                 "federationDebug": "Modo de depuração de federação",
                 "captcha": {
-                    "enabled": "Ativado"
+                    "enabled": "CAPTCHA ativado"
                 },
                 "adminCommunityOnly": "Apenas administradores podem criar comunidades",
                 "hideModlogModNames": "Esconder o nome dos moderadores no registo"
@@ -301,7 +315,13 @@
             "blocks": "Bloqueios",
             "credentials": "Credenciais",
             "moderates": "Modera",
-            "favorites": "Favoritos"
+            "favorites": "Favoritos",
+            "media": {
+                "download": "Descarregar",
+                "title": "Multimédia"
+            },
+            "upvoted": "Votou positivamente",
+            "downvoted": "Votou negativamente"
         },
         "translators": "Tradutores",
         "accounts": "Contas",
@@ -339,6 +359,24 @@
             "resetWarning": {
                 "title": "Repor tema",
                 "description": "Isto irá repor todas as tuas cores às predefinições. Recomenda-se que exportes o teu tema antes de continuar."
+            },
+            "preset": {
+                "title": "Não modificável",
+                "description": "Este é o tema padrão e não pode ser modificado.",
+                "delete": {
+                    "title": "Eliminar tema",
+                    "confirm": "Confirmar"
+                },
+                "default": "Padrão",
+                "classic": "Clássico",
+                "imported": "O teu tema",
+                "new": "Tema novo"
+            }
+        },
+        "community": {
+            "settings": {
+                "team": "Equipa",
+                "settings": "Configurações"
             }
         }
     },
@@ -358,7 +396,8 @@
             "unblock": "Desbloquear",
             "blockInstance": "Bloquear instância",
             "favorite": "Adicionar aos favoritos",
-            "unfavorite": "Remover dos favoritos"
+            "unfavorite": "Remover dos favoritos",
+            "activeDay": "Utilizadores ativos hoje"
         }
     },
     "admin": {
@@ -397,7 +436,19 @@
                 "translate": "Traduzir",
                 "crosspost": "Fazer publicação cruzada",
                 "delete": "Eliminar",
-                "restore": "Restaurar"
+                "restore": "Restaurar",
+                "mediaBias": "Parcialidade jornalística"
+            },
+            "mediaBias": {
+                "downloading": "A descarregar dados",
+                "description": "Descrição",
+                "credibility": "Credibilidade",
+                "noData": {
+                    "title": "Sem dados",
+                    "description": "Não existem dados de parcialidade para este website."
+                },
+                "loading": "A carregar fonte",
+                "reporting": "Jornalismo factual"
             }
         },
         "badges": {
@@ -431,7 +482,8 @@
         },
         "reply": "Responder",
         "locked": "Esta publicação está trancada.",
-        "more": "Mais {{comments:number}}"
+        "more": "Mais {{comments:number}}",
+        "banned": "Estás banido desta comunidade."
     },
     "moderation": {
         "removeSubmission": {
@@ -523,11 +575,15 @@
         "waitApplication": "Aguarda pela aprovação da tua candidatura antes de iniciares a sessão.",
         "blockUser": "Utilizador bloqueado.",
         "unblockUser": "Utilizador desbloqueado.",
-        "purgeUser": "Utilizador purgado."
+        "purgeUser": "Utilizador purgado.",
+        "settingsImport": "Configurações importadas com sucesso",
+        "settingsImportWarning": "Estas configurações não parecem válidas. Tens a certeza que as queres importar?",
+        "userLoading": "Ainda a carregar os teus dados de utilizador..."
     },
     "message": {
         "success": "Sucesso",
-        "error": "Erro"
+        "error": "Erro",
+        "retry": "Tentar novamente"
     },
     "settings": {
         "lemmy": {
@@ -590,7 +646,14 @@
                 "pt": "Português",
                 "auto": "Automático",
                 "credits": "Créditos",
-                "title": "Idioma"
+                "title": "Idioma",
+                "useRtl": {
+                    "description": "Utilizar uma disposição DPE para idiomas dessa natureza.",
+                    "title": "Utilizar disposição DPE (Direita Para Esquerda; RTL)"
+                },
+                "zh": "Chinês",
+                "zh-Hans": "Chinês (Simplificado)",
+                "zh-Hant": "Chinês (Tradicional)"
             },
             "placeholders": {
                 "description": "Mostrar frases aleatórias em alguns campos de texto.",
@@ -638,6 +701,24 @@
             "font": {
                 "title": "Tipo de letra",
                 "description": "Que tipo de letra o Photon usa na sua interface."
+            },
+            "colorscheme": {
+                "title": "Esquema de cores",
+                "description": "O esquema de cores a usar."
+            },
+            "titleTags": {
+                "title": "Processar etiquetas no título",
+                "description": "Processa o texto entre [parêntesis retos] e transforma-o em etiquetas nas quais podes carregar para pesquisar por mais.",
+                "rules": {
+                    "title": "Regras",
+                    "blur": "Desfocar",
+                    "hide": "Esconder",
+                    "show": "Mostrar"
+                }
+            },
+            "infiniteScroll": {
+                "title": "Listagem infinita",
+                "description": "Em vez de teres que passar de página, as publicações vão aparecendo à medida que andas para baixo."
             }
         },
         "navigation": {
@@ -655,6 +736,10 @@
                 "on": "Ativado",
                 "off": "Desativado",
                 "adaptive": "Adaptável"
+            },
+            "pins": {
+                "description": "Carrega num ícone para o enviar para o topo da barra lateral direita. Usa o botão direito para o removeres.",
+                "title": "Atalhos"
             }
         },
         "embeds": {
@@ -688,6 +773,12 @@
                 "description": "Modelos a usar para \"responder com razão\" na confirmação de remoção de submissões.",
                 "syntax": "Sintaxe"
             }
-        }
+        },
+        "tablet": "Tablet",
+        "export": "Exportar",
+        "import": "Importar",
+        "reset": "Redefinir",
+        "desktop": "Computador",
+        "mobile": "Telemóvel"
     }
 }
