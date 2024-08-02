@@ -54,12 +54,12 @@ body {
   z-index: 999 !important;
 }
 
-pre {
+pre:not(.code-baseline) {
   @apply bg-slate-100 p-2 rounded-xl my-2 max-w-full whitespace-pre-wrap
   border-slate-200 border dark:bg-zinc-950 dark:border-zinc-900 text-xs;
 }
 
-:not(pre) > code {
+:not(pre) > code:not(.code-baseline) {
   @apply bg-slate-100 dark:bg-zinc-950;
   padding-left: 0.25rem;
   padding-right: 0.25rem;

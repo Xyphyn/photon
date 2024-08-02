@@ -41,6 +41,7 @@
   export let thumbnail: string | undefined = undefined
   export let url: string
   export let opened = !$userSettings.embeds.clickToView
+  export let autoplay: boolean = $userSettings.embeds.clickToView
 
   const urlToEmbed = (inputUrl: string) => {
     if (type == 'video') {
@@ -52,11 +53,10 @@
 
       const videoID = youtubeVideoID(inputUrl)
 
-      if ($userSettings.embeds.clickToView)
-        url.searchParams.set('autoplay', '1')
+      if (autoplay) url.searchParams.set('autoplay', '1')
 
       return `https://${youtubeDomain(
-        $userSettings.embeds.youtube,
+        $userSettings.embeds.youtube
       )}/embed/${videoID}?${url.searchParams.toString()}`
     }
 
@@ -64,7 +64,7 @@
   }
 
   const typeData = (
-    type: IframeType,
+    type: IframeType
   ): {
     icon: IconSource
     text: string
@@ -102,11 +102,7 @@
 {#if opened}
   {#if type == 'video'}
     <!-- svelte-ignore a11y-media-has-caption -->
-    <video
-      autoplay={$userSettings.embeds.clickToView}
-      controls
-      class="rounded-xl aspect-video"
-    >
+    <video {autoplay} controls class="rounded-xl aspect-video">
       <source src={url} />
     </video>
   {:else}
@@ -116,7 +112,7 @@
       frameborder="0"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
       allowfullscreen
-      class="aspect-video rounded-xl dark:bg-zinc-900"
+      class="aspect-video rounded-xl dark:bg-zinc-900 {$$props.class ?? ''}"
     />
   {/if}
 {:else}

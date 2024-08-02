@@ -79,9 +79,9 @@ export const mediaType = (url?: string, view: View = 'cozy'): MediaType => {
 
   return 'none'
 }
-export const iframeType = (post: Post): IframeType => {
-  if (isVideo(post.url)) return 'video'
-  if (isYoutubeLink(post.url)) return 'youtube'
+export const iframeType = (url: string): IframeType => {
+  if (isVideo(url)) return 'video'
+  if (isYoutubeLink(url)) return 'youtube'
   return 'none'
 }
 

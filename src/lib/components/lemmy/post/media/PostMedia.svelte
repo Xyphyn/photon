@@ -102,7 +102,7 @@
 {:else if (type == 'iframe' || type == 'video') && (view == 'cozy' || view == 'card') && post.url}
   <PostIframe
     thumbnail={post.thumbnail_url}
-    type={iframeType(post)}
+    type={iframeType(post.url)}
     url={post.url}
     {opened}
   />
