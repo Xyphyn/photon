@@ -22,7 +22,9 @@
 
   marked.setOptions({
     pedantic: false,
+    // @ts-ignore
     mangle: false,
+    // @ts-ignore
     headerIds: false,
   })
 
@@ -62,7 +64,7 @@
     tablerow: MdTableRow,
   }
 
-  export const options = {
+  export const options: any = {
     mangle: false,
     headerIds: false,
   }

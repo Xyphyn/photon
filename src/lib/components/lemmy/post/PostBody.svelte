@@ -36,7 +36,7 @@ ${view == 'list' ? `max-h-24` : 'max-h-48'}`
   class:pointer-events-none={!clickThrough}
   bind:this={element}
 >
-  <Markdown inline={!expanded} source={body} />
+  <Markdown inline={!expanded} source={expanded ? body : body.slice(0, 1000)} />
   {#if overflows}
     <Button
       on:click={() => (expanded = !expanded)}
