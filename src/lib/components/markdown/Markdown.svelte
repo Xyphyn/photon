@@ -1,5 +1,25 @@
 <script lang="ts" context="module">
   import { marked } from 'marked'
+  import {
+    MdCode,
+    MdHeading,
+    MdHr,
+    MdHtml,
+    MdImage,
+    MdLink,
+    MdQuote,
+    MdText,
+    MdList,
+    MdTable,
+    MdTableBody,
+    MdSpoiler,
+    MdTableCell,
+    MdTableHead,
+    MdTableRow,
+  } from './renderers/index'
+  import { linkify } from './renderers/plugins'
+  import containerExtension from './renderers/spoiler/spoiler'
+
   marked.setOptions({
     pedantic: false,
     mangle: false,
@@ -50,26 +70,6 @@
 
 <script lang="ts">
   import SvelteMarkdown from 'svelte-markdown'
-  import { linkify } from './renderers/plugins'
-  import {
-    MdCode,
-    MdHeading,
-    MdHr,
-    MdHtml,
-    MdImage,
-    MdLink,
-    MdQuote,
-    MdText,
-  } from './renderers'
-  import MdList from './renderers/MdList.svelte'
-  import containerExtension from './renderers/spoiler/spoiler'
-  import MdSpoiler from './renderers/MdSpoiler.svelte'
-  import MdTable from './renderers/table/MdTable.svelte'
-  import MdTableBody from './renderers/table/MdTableBody.svelte'
-  import MdTableCell from './renderers/table/MdTableCell.svelte'
-  import MdTableHead from './renderers/table/MdTableHead.svelte'
-  import MdTableRow from './renderers/table/MdTableRow.svelte'
-  import MdParagraph from './renderers/MdParagraph.svelte'
 
   export let source: string = ''
   export let inline: boolean = false
