@@ -11,6 +11,7 @@
   import { Badge, Button } from 'mono-svelte'
   import {
     ArchiveBox,
+    ChevronDoubleUp,
     ExclamationTriangle,
     Icon,
     Minus,
@@ -36,7 +37,7 @@
   import { t } from '$lib/translations'
   import InfiniteScroll from 'svelte-infinite-scroll'
   import type { Readable } from 'svelte/motion'
-  import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte';
+  import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
 
   export let posts: PostView[]
   export let community: boolean = false
@@ -223,7 +224,7 @@
             bind:this={virtualItemEls[index]}
             data-index={row.index}
             class="relative post-container"
-	    in:fly={{ y: -16, easing: expoOut, duration: 500, opacity: 0 }}
+            in:fly={{ y: -16, easing: expoOut, duration: 500, opacity: 0 }}
           >
             {#if posts[row.index]}
               <Post
@@ -282,6 +283,10 @@
             // @ts-ignore
             community_name: feedData.community_name ?? 'undefined',
           })}
+          <Button slot="action" color="tertiary">
+            <Icon src={ChevronDoubleUp} size="16" micro slot="prefix" />
+            {$t('routes.post.scrollToTop')}
+          </Button>
         </EndPlaceholder>
       </div>
     {/if}
