@@ -7,18 +7,9 @@
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import StickyCard from '$lib/components/ui/StickyCard.svelte'
-  import {
-    Menu,
-    MenuButton,
-    Modal,
-    Popover,
-    removeToast,
-    toast,
-  } from 'mono-svelte'
-  import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
-  import RelativeDate from '$lib/components/util/RelativeDate.svelte'
+  import { Menu, MenuButton, Modal, removeToast, toast } from 'mono-svelte'
   import { client, getClient } from '$lib/lemmy.js'
-  import { addSubscription, hasFavorite } from '$lib/lemmy/user.js'
+  import { addSubscription } from '$lib/lemmy/user.js'
   import { fullCommunityName } from '$lib/util.js'
   import type { CommunityModeratorView, CommunityView } from 'lemmy-js-client'
   import { Button } from 'mono-svelte'
@@ -26,7 +17,6 @@
     BuildingOffice2,
     Calendar,
     ChartBar,
-    ChatBubbleOvalLeftEllipsis,
     Check,
     Cog6Tooth,
     EllipsisHorizontal,
@@ -35,20 +25,17 @@
     InformationCircle,
     Newspaper,
     NoSymbol,
-    PencilSquare,
     Plus,
-    Star,
-    UserGroup,
   } from 'svelte-hero-icons'
-  import { publishedToDate } from '$lib/components/util/date.js'
   import CommunityLink from './CommunityLink.svelte'
   import Expandable from '$lib/components/ui/Expandable.svelte'
   import LabelStat from '$lib/components/ui/LabelStat.svelte'
   import ShieldIcon from '../moderation/ShieldIcon.svelte'
   import ItemList from '../generic/ItemList.svelte'
-  import { communityLink, userLink } from '$lib/lemmy/generic'
+  import { userLink } from '$lib/lemmy/generic'
   import { t } from '$lib/translations'
   import Entity from '$lib/components/ui/Entity.svelte'
+  import { userSettings } from '$lib/settings'
 
   export let community_view: CommunityView
   export let moderators: CommunityModeratorView[] = []
@@ -197,7 +184,7 @@
     name={community_view.community.title}
     label="!{fullCommunityName(
       community_view.community.name,
-      community_view.community.actor_id,
+      community_view.community.actor_id
     )}"
   >
     <Avatar
@@ -212,7 +199,7 @@
   <div
     class="flex flex-col divide-y divide-slate-200 dark:divide-zinc-800 [&>*]:py-3"
   >
-    <Expandable class="!pt-0">
+    <Expandable bind:open={$userSettings.expand.about} class="!pt-0">
       <svelte:fragment slot="title">
         <Icon src={InformationCircle} size="15" mini />
         {$t('cards.site.about')}
@@ -220,7 +207,7 @@
       <Markdown source={community_view.community.description} />
     </Expandable>
 
-    <Expandable>
+    <Expandable bind:open={$userSettings.expand.stats}>
       <svelte:fragment slot="title">
         <Icon src={ChartBar} size="15" mini />
         {$t('cards.site.stats')}
@@ -240,7 +227,7 @@
     </Expandable>
 
     {#if moderators && moderators.length > 0}
-      <Expandable>
+      <Expandable bind:open={$userSettings.expand.team}>
         <svelte:fragment slot="title">
           <ShieldIcon width={15} filled />
           {$t('cards.community.moderators')}
@@ -287,7 +274,7 @@
       <Button
         href="/c/{fullCommunityName(
           community_view.community.name,
-          community_view.community.actor_id,
+          community_view.community.actor_id
         )}/settings"
         size="square-md"
       >

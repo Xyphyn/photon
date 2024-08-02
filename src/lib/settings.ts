@@ -26,6 +26,7 @@ interface Preset {
 }
 
 interface Settings {
+  settingsVer: number
   expandableImages: boolean
   // should have been named "fade" read posts
   markReadPosts: boolean
@@ -51,6 +52,9 @@ interface Settings {
     communities: boolean
     moderates: boolean
     favorites: boolean
+    about: boolean
+    stats: boolean
+    team: boolean
   }
   displayNames: boolean
   nsfwBlur: boolean
@@ -95,11 +99,11 @@ interface Settings {
   parseTags: boolean
   tagRules: {
     [key: string]: 'hide' | 'blur'
-  },
-  downloadMbfc: boolean
+  }
 }
 
 export const defaultSettings: Settings = {
+  settingsVer: 1,
   expandableImages: toBool(env.PUBLIC_EXPANDABLE_IMAGES) ?? true,
   markReadPosts: toBool(env.PUBLIC_MARK_READ_POSTS) ?? true,
   showInstances: {
@@ -121,6 +125,9 @@ export const defaultSettings: Settings = {
     communities: toBool(env.PUBLIC_EXPAND_COMMUNITIES) ?? true,
     favorites: toBool(env.PUBLIC_EXPAND_FAVORITES) ?? true,
     moderates: toBool(env.PUBLIC_EXPAND_MODERATES) ?? true,
+    about: false,
+    stats: false,
+    team: false,
   },
   displayNames: toBool(env.PUBLIC_DISPLAY_NAMES) ?? true,
   nsfwBlur: toBool(env.PUBLIC_NSFW_BLUR) ?? true,
@@ -172,7 +179,6 @@ export const defaultSettings: Settings = {
     nsfl: 'blur',
     nsfw: 'blur',
   },
-  downloadMbfc: false
 }
 
 export const userSettings = writable(defaultSettings)
@@ -198,7 +204,11 @@ if (typeof window != 'undefined') {
 
   oldUserSettings = migrate(oldUserSettings)
 
-  userSettings.set({ ...defaultSettings, ...oldUserSettings })
+  userSettings.set({
+    ...defaultSettings,
+    ...oldUserSettings,
+    settingsVer: defaultSettings.settingsVer,
+  })
 }
 
 userSettings.subscribe((settings) => {
