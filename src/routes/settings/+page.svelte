@@ -59,13 +59,13 @@
   > = new Map([
     ['en', { name: 'English', translated: 1, flag: '🇺🇸' }],
     ['et', { name: 'Eesti keel', translated: 0.25, flag: '🇪🇪' }],
-    ['fi', { name: 'Suomi', translated: 0.99, flag: '🇫🇮' }],
-    ['fr', { name: 'Français', translated: 0.76, flag: '🇫🇷' }],
-    ['de', { name: 'Deutsch', translated: 0.81, flag: '🇩🇪' }],
-    ['he', { name: 'עברית', translated: 0.39, flag: '🇮🇱' }],
-    ['pt', { name: 'Português', translated: 0.87, flag: '🇵🇹' }],
-    ['zh-Hans', { name: '简体中文', translated: 0.96, flag: '🇨🇳' }],
-    ['zh-Hant', { name: '繁體中文', translated: 0.27, flag: '🇭🇰' }],
+    ['fi', { name: 'Suomi', translated: 0.98, flag: '🇫🇮' }],
+    ['fr', { name: 'Français', translated: 0.79, flag: '🇫🇷' }],
+    ['de', { name: 'Deutsch', translated: 0.79, flag: '🇩🇪' }],
+    ['he', { name: 'עברית', translated: 0.4, flag: '🇮🇱' }],
+    ['pt', { name: 'Português', translated: 0.97, flag: '🇵🇹' }],
+    ['zh-Hans', { name: '简体中文', translated: 0.94, flag: '🇨🇳' }],
+    ['zh-Hant', { name: '繁體中文', translated: 0.26, flag: '🇭🇰' }],
   ])
 </script>
 
