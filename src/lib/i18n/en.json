@@ -1,784 +1,784 @@
 {
-  "profile": {
-    "profile": "Profile",
-    "inbox": "Inbox",
-    "saved": "Saved",
-    "subscribed": "Subscriptions"
-  },
-  "nav": {
-    "home": "Home",
-    "admin": "Admin",
-    "moderation": "Moderation",
-    "communities": "Explore",
-    "search": "Search",
-    "create": {
-      "label": "Create",
-      "post": "Post",
-      "community": "Community",
-      "logingate": "You must log in to create content."
+    "profile": {
+        "profile": "Profile",
+        "inbox": "Inbox",
+        "saved": "Saved",
+        "subscribed": "Subscriptions"
     },
-    "menu": {
-      "label": "Profile",
-      "app": "App",
-      "settings": "Settings",
-      "colorscheme": {
-        "label": "Color Scheme",
-        "system": "System",
-        "dark": "Dark",
-        "light": "Light"
-      },
-      "theme": "Theme",
-      "about": "About",
-      "source": "Source",
-      "donate": "Donate",
-      "instance": "Instance"
-    },
-    "commands": {
-      "prompt": "Command Palette",
-      "recents": "Recents",
-      "content": "Content",
-      "search": "Search for {{default}}",
-      "main": "Main",
-      "setView": "Set view",
-      "setViewTo": "Set view to {{default}}",
-      "setColor": "Set color scheme",
-      "setColorTo": "Set color scheme to {{default}}",
-      "feeds": "Feeds",
-      "downloading": "Downloading actions"
-    }
-  },
-  "account": {
-    "login": "Log In",
-    "logout": "Log Out",
-    "signup": "Sign Up",
-    "accounts": "Accounts",
-    "changeinstance": "Change Instance",
-    "resetColor": "Reset Color",
-    "addGuest": "Add Guest",
-    "moveUp": "Move Up",
-    "moveDown": "Move Down",
-    "guest": "Guest",
-    "versionGate": "This version of Photon supports instances running {{version}} or higher."
-  },
-  "filter": {
-    "location": {
-      "label": "Location",
-      "all": "All",
-      "local": "Local",
-      "subscribed": "Subscriptions",
-      "moderator": "Moderator",
-      "global": "Global"
-    },
-    "sort": {
-      "label": "Sort",
-      "active": "Active",
-      "hot": "Hot",
-      "top": {
-        "label": "Top",
-        "time": {
-          "label": "Time",
-          "all": "All",
-          "9months": "9 Months",
-          "6months": "6 Months",
-          "3months": "3 Months",
-          "month": "Month",
-          "week": "Week",
-          "day": "Day",
-          "12hours": "12 Hours",
-          "6hours": "6 Hours",
-          "hour": "Hour"
+    "nav": {
+        "home": "Home",
+        "admin": "Admin",
+        "moderation": "Moderation",
+        "communities": "Explore",
+        "search": "Search",
+        "create": {
+            "label": "Create",
+            "post": "Post",
+            "community": "Community",
+            "logingate": "You must log in to create content."
+        },
+        "menu": {
+            "label": "Profile",
+            "app": "App",
+            "settings": "Settings",
+            "colorscheme": {
+                "label": "Color Scheme",
+                "system": "System",
+                "dark": "Dark",
+                "light": "Light"
+            },
+            "theme": "Theme",
+            "about": "About",
+            "source": "Source",
+            "donate": "Donate",
+            "instance": "Instance"
+        },
+        "commands": {
+            "prompt": "Command Palette",
+            "recents": "Recents",
+            "content": "Content",
+            "search": "Search for {{default}}",
+            "main": "Main",
+            "setView": "Set view",
+            "setViewTo": "Set view to {{default}}",
+            "setColor": "Set color scheme",
+            "setColorTo": "Set color scheme to {{default}}",
+            "feeds": "Feeds",
+            "downloading": "Downloading actions"
         }
-      },
-      "new": "New",
-      "old": "Old",
-      "controversial": "Controversial",
-      "scaled": "Scaled",
-      "mostcomments": "Comments",
-      "newcomments": "New Replies"
     },
-    "view": {
-      "label": "View",
-      "cozy": "Cozy",
-      "list": "List",
-      "compact": "Compact",
-      "legacy": "Legacy"
+    "account": {
+        "login": "Log In",
+        "logout": "Log Out",
+        "signup": "Sign Up",
+        "accounts": "Accounts",
+        "changeinstance": "Change Instance",
+        "resetColor": "Reset Color",
+        "addGuest": "Add Guest",
+        "moveUp": "Move Up",
+        "moveDown": "Move Down",
+        "guest": "Guest",
+        "versionGate": "This version of Photon supports instances running {{version}} or higher."
     },
-    "type": "Type",
-    "filter": "Filter",
-    "unread": "Unread",
-    "inbox": {
-      "messages": "Messages",
-      "replies": "Replies",
-      "mentions": "Mentions"
-    }
-  },
-  "form": {
-    "username": "Username",
-    "name": "Name",
-    "instance": "Instance URL",
-    "password": "Password",
-    "confirmPassword": "Confirm Password",
-    "2fa": "2FA Code",
-    "forgotpassword": "Forgot Password",
-    "submit": "Submit",
-    "edit": "Edit",
-    "preview": "Preview",
-    "post": {
-      "create": "Create Post",
-      "edit": "Edit Post",
-      "community": "Community",
-      "title": "Title",
-      "url": "URL",
-      "body": "Body",
-      "nsfw": "NSFW",
-      "generateTitle": "Generate Title",
-      "uploadImage": "Upload Image",
-      "altText": "Alt Text"
+    "filter": {
+        "location": {
+            "label": "Location",
+            "all": "All",
+            "local": "Local",
+            "subscribed": "Subscriptions",
+            "moderator": "Moderator",
+            "global": "Global"
+        },
+        "sort": {
+            "label": "Sort",
+            "active": "Active",
+            "hot": "Hot",
+            "top": {
+                "label": "Top",
+                "time": {
+                    "label": "Time",
+                    "all": "All",
+                    "9months": "9 Months",
+                    "6months": "6 Months",
+                    "3months": "3 Months",
+                    "month": "Month",
+                    "week": "Week",
+                    "day": "Day",
+                    "12hours": "12 Hours",
+                    "6hours": "6 Hours",
+                    "hour": "Hour"
+                }
+            },
+            "new": "New",
+            "old": "Old",
+            "controversial": "Controversial",
+            "scaled": "Scaled",
+            "mostcomments": "Comments",
+            "newcomments": "New Replies"
+        },
+        "view": {
+            "label": "View",
+            "cozy": "Cozy",
+            "list": "List",
+            "compact": "Compact",
+            "legacy": "Legacy"
+        },
+        "type": "Type",
+        "filter": "Filter",
+        "unread": "Unread",
+        "inbox": {
+            "messages": "Messages",
+            "replies": "Replies",
+            "mentions": "Mentions"
+        }
     },
-    "profile": {
-      "displayName": "Display name",
-      "bio": "Bio",
-      "avatar": "Avatar",
-      "banner": "Banner",
-      "email": "Email",
-      "matrix": "Matrix User",
-      "showNSFW": "Show NSFW content",
-      "scores": "Show Scores",
-      "bot": "Bot Account",
-      "showBots": "Show Bots",
-      "showRead": "Show Read Posts",
-      "currentPassword": "Current Password",
-      "newPassword": "New Password",
-      "verifyNewPassword": "Verify New Password",
-      "2fa": {
-        "totp": "TOTP",
-        "2fa": "2FA",
-        "paste": "Paste this in your authenticator app."
-      },
-      "deleteAccount": {
-        "label": "Delete account",
-        "deleteContent": "Delete content",
-        "warning": "This will delete ALL of your submissions."
-      }
+    "form": {
+        "username": "Username",
+        "name": "Name",
+        "instance": "Instance URL",
+        "password": "Password",
+        "confirmPassword": "Confirm Password",
+        "2fa": "2FA Code",
+        "forgotpassword": "Forgot Password",
+        "submit": "Submit",
+        "edit": "Edit",
+        "preview": "Preview",
+        "post": {
+            "create": "Create Post",
+            "edit": "Edit Post",
+            "community": "Community",
+            "title": "Title",
+            "url": "URL",
+            "body": "Body",
+            "nsfw": "NSFW",
+            "generateTitle": "Generate Title",
+            "uploadImage": "Upload Image",
+            "altText": "Alt Text"
+        },
+        "profile": {
+            "displayName": "Display name",
+            "bio": "Bio",
+            "avatar": "Avatar",
+            "banner": "Banner",
+            "email": "Email",
+            "matrix": "Matrix User",
+            "showNSFW": "Show NSFW content",
+            "scores": "Show Scores",
+            "bot": "Bot Account",
+            "showBots": "Show Bots",
+            "showRead": "Show Read Posts",
+            "currentPassword": "Current Password",
+            "newPassword": "New Password",
+            "verifyNewPassword": "Verify New Password",
+            "2fa": {
+                "totp": "TOTP",
+                "2fa": "2FA",
+                "paste": "Paste this in your authenticator app."
+            },
+            "deleteAccount": {
+                "label": "Delete account",
+                "deleteContent": "Delete content",
+                "warning": "This will delete ALL of your submissions."
+            }
+        },
+        "email": "Email",
+        "setup": "Setup",
+        "signup": {
+            "title": "Sign Up",
+            "description": "Choose an instance that interests you, or type the URL manually.",
+            "info": "An instance is the server that your account will be hosted on, but you can still access and interact with content from other instances.",
+            "chooseInstance": "Choose an instance",
+            "application": {
+                "label": "Application",
+                "info": "To join this instance, you must fill out this application, and wait to be accepted. You will receive an email if your application is accepted."
+            },
+            "closed": {
+                "title": "Registrations closed",
+                "description": "This instance has registrations closed. Find another instance.",
+                "anotherInstance": "Find another instance"
+            }
+        },
+        "description": "Description"
     },
-    "email": "Email",
-    "setup": "Setup",
-    "signup": {
-      "title": "Sign Up",
-      "description": "Choose an instance that interests you, or type the URL manually.",
-      "info": "An instance is the server that your account will be hosted on, but you can still access and interact with content from other instances.",
-      "chooseInstance": "Choose an instance",
-      "application": {
-        "label": "Application",
-        "info": "To join this instance, you must fill out this application, and wait to be accepted. You will receive an email if your application is accepted."
-      },
-      "closed": {
-        "title": "Registrations closed",
-        "description": "This instance has registrations closed. Find another instance.",
-        "anotherInstance": "Find another instance"
-      }
+    "routes": {
+        "frontpage": {
+            "title": "Frontpage",
+            "footer": "{{users:number}} active {{users; 1:user; default:users;}}"
+        },
+        "modlog": "Modlog",
+        "instances": "Instances",
+        "legal": {
+            "title": "Legal",
+            "noLegal": "This instance does not have any legal information."
+        },
+        "profile": {
+            "user": "User",
+            "settings": "Settings",
+            "blocks": "Blocks",
+            "credentials": "Credentials",
+            "moderates": "Moderating",
+            "favorites": "Favorites",
+            "upvoted": "Upvoted",
+            "downvoted": "Downvoted",
+            "media": {
+                "title": "Media",
+                "download": "Download"
+            }
+        },
+        "translators": "Translators",
+        "accounts": "Accounts",
+        "communities": "Communities",
+        "search": {
+            "title": "Search",
+            "federating": "Federating",
+            "query": "Query",
+            "noResults": {
+                "title": "No Results",
+                "description": "There are no results that match that filter. Try refining your search.",
+                "alt": "Search across the fediverse"
+            }
+        },
+        "saved": "Saved",
+        "createPost": "Create Post",
+        "createCommunity": "Create Community",
+        "post": {
+            "crosspostCount": "crossposts",
+            "commentCount": "comments",
+            "addComment": "Add a comment",
+            "scrollToTop": "Scroll to top",
+            "instanceWarning": "This post was requested from a different server than your account's. Many actions won't work.",
+            "remoteView": "Remote View",
+            "localView": "Local View",
+            "thread": {
+                "single": "You're viewing a single thread.",
+                "allComments": "All Comments",
+                "part": "You're viewing part of a thread.",
+                "context": "Show Context"
+            }
+        },
+        "inbox": {
+            "title": "Inbox",
+            "markAsRead": "Mark All Read",
+            "empty": {
+                "title": "No new notifications",
+                "description": "Messages, replies, and mentions will appear here."
+            }
+        },
+        "moderation": {
+            "title": "Moderation",
+            "empty": {
+                "title": "No new reports",
+                "description": "When submissions are reported, you can act on them here."
+            },
+            "reason": "Reason",
+            "resolve": "Resolve",
+            "unresolve": "Unresolve"
+        },
+        "admin": {
+            "title": "Administration",
+            "config": {
+                "title": "Configuration",
+                "sidebar": "Sidebar",
+                "icon": "Icon",
+                "banner": "Banner",
+                "downvotesEnabled": "Enable Downvotes",
+                "nsfwEnabled": "Enable NSFW",
+                "registration": {
+                    "label": "Registration Mode",
+                    "open": "Open",
+                    "application": "Require Application",
+                    "closed": "Closed"
+                },
+                "applicationQuestion": "Application Question",
+                "adminCommunityOnly": "Only admins can create communities",
+                "requireVerifyEmail": "Require email verification",
+                "emailAdminsOnApplication": "Email admins on receiving new applications",
+                "emailAdminsOnReport": "Email admins on receiving new reports",
+                "listingType": {
+                    "label": "Listing Type",
+                    "all": "All",
+                    "local": "Local"
+                },
+                "private": "Private instance",
+                "hideModlogModNames": "Hide modlog mod names",
+                "slurFilter": "Slur filter regex",
+                "federation": "Federation enabled",
+                "federationDebug": "Federation debug mode",
+                "captcha": {
+                    "enabled": "CAPTCHA Enabled"
+                }
+            },
+            "applications": {
+                "title": "Applications",
+                "empty": {
+                    "title": "No new applications",
+                    "description": "Applications to join your instance will appear here."
+                },
+                "application": "Application",
+                "approved": "Approved",
+                "denied": "Denied",
+                "user": "User",
+                "deny": "Deny",
+                "approve": "Approve",
+                "reason": "Reason",
+                "modalTitle": "Deny Application"
+            },
+            "taglines": {
+                "title": "Taglines",
+                "add": "Add a tagline",
+                "empty": {
+                    "title": "No taglines",
+                    "description": "A random tagline will appear on the site card when users visit your instance."
+                }
+            },
+            "team": {
+                "title": "Admins",
+                "empty": {
+                    "title": "No admins",
+                    "description": "Somehow there's no admins of this site. How??"
+                }
+            },
+            "federation": {
+                "title": "Federation",
+                "csv": "Upload CSV",
+                "blocked": "Blocked Instances",
+                "block": "Block",
+                "blockplaceholder": "Block an instance...",
+                "allowed": "Whitelisted Instances",
+                "allow": "Whitelist",
+                "allowplaceholder": "Whitelist an instance",
+                "emptyBlock": {
+                    "title": "No blocked instances",
+                    "description": "Blocking an instance will hide new submissions from that instance."
+                },
+                "emptyAllow": {
+                    "title": "No whitelisted instances",
+                    "description": "Whitelisting an instance will block every other instance."
+                }
+            }
+        },
+        "verifyEmail": {
+            "message": "Your email was verified. You can now close this window.",
+            "error": "Failed to verify your email."
+        },
+        "passwordChange": {
+            "title": "Change Password",
+            "description": "Choose your new password.",
+            "instance": "Which instance is your account hosted on?"
+        },
+        "resetLogin": {
+            "title": "Reset Password",
+            "description": "Enter your account's email, and a password reset link will be sent. If your account does not have an email, contact your instance admins."
+        },
+        "theme": {
+            "title": "Theme",
+            "import": "Import",
+            "export": "Export",
+            "reset": "Reset",
+            "accent": "Accent",
+            "resetWarning": {
+                "title": "Reset Theme",
+                "description": "This will reset all of your colors to the default. It is recommended to export your theme before this."
+            },
+            "preset": {
+                "title": "Can't be modified",
+                "description": "This is a default theme, and can't be modified.",
+                "delete": {
+                    "title": "Delete Theme",
+                    "confirm": "Confirm"
+                },
+                "default": "Default",
+                "classic": "Classic",
+                "imported": "Your Theme",
+                "new": "New Theme"
+            }
+        },
+        "community": {
+            "settings": {
+                "team": "Team",
+                "settings": "Settings"
+            }
+        }
     },
-    "description": "Description"
-  },
-  "routes": {
-    "frontpage": {
-      "title": "Frontpage",
-      "footer": "{{users:number}} active {{users; 1:user; default:users;}}"
-    },
-    "modlog": "Modlog",
-    "instances": "Instances",
-    "legal": {
-      "title": "Legal",
-      "noLegal": "This instance does not have any legal information."
-    },
-    "profile": {
-      "user": "User",
-      "settings": "Settings",
-      "blocks": "Blocks",
-      "credentials": "Credentials",
-      "moderates": "Moderating",
-      "favorites": "Favorites",
-      "upvoted": "Upvoted",
-      "downvoted": "Downvoted",
-      "media": {
-        "title": "Media",
-        "download": "Download"
-      }
-    },
-    "translators": "Translators",
-    "accounts": "Accounts",
-    "communities": "Communities",
-    "search": {
-      "title": "Search",
-      "federating": "Federating",
-      "query": "Query",
-      "noResults": {
-        "title": "No Results",
-        "description": "There are no results that match that filter. Try refining your search.",
-        "alt": "Search across the fediverse"
-      }
-    },
-    "saved": "Saved",
-    "createPost": "Create Post",
-    "createCommunity": "Create Community",
-    "post": {
-      "crosspostCount": "crossposts",
-      "commentCount": "comments",
-      "addComment": "Add a comment",
-      "scrollToTop": "Scroll to top",
-      "instanceWarning": "This post was requested from a different server than your account's. Many actions won't work.",
-      "remoteView": "Remote View",
-      "localView": "Local View",
-      "thread": {
-        "single": "You're viewing a single thread.",
-        "allComments": "All Comments",
-        "part": "You're viewing part of a thread.",
-        "context": "Show Context"
-      }
-    },
-    "inbox": {
-      "title": "Inbox",
-      "markAsRead": "Mark All Read",
-      "empty": {
-        "title": "No new notifications",
-        "description": "Messages, replies, and mentions will appear here."
-      }
-    },
-    "moderation": {
-      "title": "Moderation",
-      "empty": {
-        "title": "No new reports",
-        "description": "When submissions are reported, you can act on them here."
-      },
-      "reason": "Reason",
-      "resolve": "Resolve",
-      "unresolve": "Unresolve"
+    "cards": {
+        "site": {
+            "about": "About",
+            "stats": "Statistics",
+            "admins": "Admins"
+        },
+        "community": {
+            "members": "Members",
+            "moderators": "Moderators",
+            "subscribe": "Subscribe",
+            "subscribed": "Subscribed",
+            "modlog": "Modlog",
+            "block": "Block",
+            "unblock": "Unblock",
+            "blockInstance": "Block instance",
+            "favorite": "Favorite",
+            "unfavorite": "Remove Favorite",
+            "activeDay": "Active Today"
+        }
     },
     "admin": {
-      "title": "Administration",
-      "config": {
-        "title": "Configuration",
-        "sidebar": "Sidebar",
-        "icon": "Icon",
-        "banner": "Banner",
-        "downvotesEnabled": "Enable Downvotes",
-        "nsfwEnabled": "Enable NSFW",
-        "registration": {
-          "label": "Registration Mode",
-          "open": "Open",
-          "application": "Require Application",
-          "closed": "Closed"
-        },
-        "applicationQuestion": "Application Question",
-        "adminCommunityOnly": "Only admins can create communities",
-        "requireVerifyEmail": "Require email verification",
-        "emailAdminsOnApplication": "Email admins on receiving new applications",
-        "emailAdminsOnReport": "Email admins on receiving new reports",
-        "listingType": {
-          "label": "Listing Type",
-          "all": "All",
-          "local": "Local"
-        },
-        "private": "Private instance",
-        "hideModlogModNames": "Hide modlog mod names",
-        "slurFilter": "Slur filter regex",
-        "federation": "Federation enabled",
-        "federationDebug": "Federation debug mode",
-        "captcha": {
-          "enabled": "CAPTCHA Enabled"
+        "purge": "Purge",
+        "instance": "Instance",
+        "label": "Administration",
+        "purgeCommunity": {
+            "title": "Purging Community",
+            "warning": "This will delete all posts. Are you sure? (The button will enable in 3 seconds.)"
         }
-      },
-      "applications": {
-        "title": "Applications",
-        "empty": {
-          "title": "No new applications",
-          "description": "Applications to join your instance will appear here."
+    },
+    "content": {
+        "all": "All",
+        "users": "Users",
+        "posts": "Posts",
+        "comments": "Comments",
+        "communities": "Communities",
+        "instances": "Instances",
+        "message": "Message"
+    },
+    "post": {
+        "actions": {
+            "comments": "Comments",
+            "save": "Save",
+            "unsave": "Unsave",
+            "more": {
+                "label": "More Actions",
+                "edit": "Edit",
+                "creator": "Creator",
+                "actions": "Actions",
+                "markRead": "Mark as Read",
+                "markUnread": "Mark as Unread",
+                "hide": "Hide",
+                "unhide": "Unhide",
+                "translate": "Translate",
+                "mediaBias": "Media Bias",
+                "share": "Share",
+                "crosspost": "Crosspost",
+                "delete": "Delete",
+                "restore": "Restore"
+            },
+            "mediaBias": {
+                "description": "Description",
+                "credibility": "Credibility",
+                "reporting": "Factual Reporting",
+                "noData": {
+                    "title": "No data",
+                    "description": "There is no bias data for this website."
+                },
+                "downloading": "Downloading dataset",
+                "loading": "Loading source"
+            }
         },
-        "application": "Application",
-        "approved": "Approved",
-        "denied": "Denied",
-        "user": "User",
-        "deny": "Deny",
-        "approve": "Approve",
-        "reason": "Reason",
-        "modalTitle": "Deny Application"
-      },
-      "taglines": {
-        "title": "Taglines",
-        "add": "Add a tagline",
-        "empty": {
-          "title": "No taglines",
-          "description": "A random tagline will appear on the site card when users visit your instance."
+        "badges": {
+            "nsfw": "NSFW",
+            "locked": "Locked",
+            "featured": "Featured",
+            "removed": "Removed",
+            "deleted": "Deleted",
+            "saved": "Saved"
         }
-      },
-      "team": {
-        "title": "Admins",
-        "empty": {
-          "title": "No admins",
-          "description": "Somehow there's no admins of this site. How??"
-        }
-      },
-      "federation": {
-        "title": "Federation",
-        "csv": "Upload CSV",
-        "blocked": "Blocked Instances",
-        "block": "Block",
-        "blockplaceholder": "Block an instance...",
-        "allowed": "Whitelisted Instances",
-        "allow": "Whitelist",
-        "allowplaceholder": "Whitelist an instance",
-        "emptyBlock": {
-          "title": "No blocked instances",
-          "description": "Blocking an instance will hide new submissions from that instance."
+    },
+    "comment": {
+        "reply": "Reply",
+        "actions": {
+            "label": "Actions",
+            "link": "Copy Link"
         },
-        "emptyAllow": {
-          "title": "No whitelisted instances",
-          "description": "Whitelisting an instance will block every other instance."
-        }
-      }
-    },
-    "verifyEmail": {
-      "message": "Your email was verified. You can now close this window.",
-      "error": "Failed to verify your email."
-    },
-    "passwordChange": {
-      "title": "Change Password",
-      "description": "Choose your new password.",
-      "instance": "Which instance is your account hosted on?"
-    },
-    "resetLogin": {
-      "title": "Reset Password",
-      "description": "Enter your account's email, and a password reset link will be sent. If your account does not have an email, contact your instance admins."
-    },
-    "theme": {
-      "title": "Theme",
-      "import": "Import",
-      "export": "Export",
-      "reset": "Reset",
-      "accent": "Accent",
-      "resetWarning": {
-        "title": "Reset Theme",
-        "description": "This will reset all of your colors to the default. It is recommended to export your theme before this."
-      },
-      "preset": {
-        "title": "Can't be modified",
-        "description": "This is a default theme, and can't be modified.",
-        "delete": {
-          "title": "Delete Theme",
-          "confirm": "Confirm"
-        },
-        "default": "Default",
-        "classic": "Classic",
-        "imported": "Your Theme",
-        "new": "New Theme"
-      }
-    },
-    "community": {
-      "settings": {
-        "team": "Team",
-        "settings": "Settings"
-      }
-    }
-  },
-  "cards": {
-    "site": {
-      "about": "About",
-      "stats": "Statistics",
-      "admins": "Admins"
-    },
-    "community": {
-      "members": "Members",
-      "moderators": "Moderators",
-      "subscribe": "Subscribe",
-      "subscribed": "Subscribed",
-      "modlog": "Modlog",
-      "block": "Block",
-      "unblock": "Unblock",
-      "blockInstance": "Block instance",
-      "favorite": "Favorite",
-      "unfavorite": "Remove Favorite",
-      "activeDay": "Active Today"
-    }
-  },
-  "admin": {
-    "purge": "Purge",
-    "instance": "Instance",
-    "label": "Administration",
-    "purgeCommunity": {
-      "title": "Purging Community",
-      "warning": "This will delete all posts. Are you sure? (The button will enable in 3 seconds.)"
-    }
-  },
-  "content": {
-    "all": "All",
-    "users": "Users",
-    "posts": "Posts",
-    "comments": "Comments",
-    "communities": "Communities",
-    "instances": "Instances",
-    "message": "Message"
-  },
-  "post": {
-    "actions": {
-      "comments": "Comments",
-      "save": "Save",
-      "unsave": "Unsave",
-      "more": {
-        "label": "More Actions",
-        "edit": "Edit",
-        "creator": "Creator",
-        "actions": "Actions",
-        "markRead": "Mark as Read",
-        "markUnread": "Mark as Unread",
-        "hide": "Hide",
-        "unhide": "Unhide",
-        "translate": "Translate",
-        "mediaBias": "Media Bias",
-        "share": "Share",
-        "crosspost": "Crosspost",
-        "delete": "Delete",
-        "restore": "Restore"
-      },
-      "mediaBias": {
-        "description": "Description",
-        "credibility": "Credibility",
-        "reporting": "Factual Reporting",
-        "noData": {
-          "title": "No data",
-          "description": "There is no bias data for this website."
-        },
-        "downloading": "Downloading dataset",
-        "loading": "Loading source"
-      }
-    },
-    "badges": {
-      "nsfw": "NSFW",
-      "locked": "Locked",
-      "featured": "Featured",
-      "removed": "Removed",
-      "deleted": "Deleted",
-      "saved": "Saved"
-    }
-  },
-  "comment": {
-    "reply": "Reply",
-    "actions": {
-      "label": "Actions",
-      "link": "Copy Link"
-    },
-    "locked": "This post is locked.",
-    "banned": "You are banned from this community.",
-    "more": "{{comments:number}} more"
-  },
-  "moderation": {
-    "report": "Report",
-    "ban": {
-      "banning": "Banning User",
-      "unbanning": "Unbanning User",
-      "deleteData": "Delete data",
-      "warning": "This will delete ALL of this user's submissions here.",
-      "expires": "Expires (UTC)",
-      "banFromCommunity": "Ban from community",
-      "unbanFromCommunity": "Unban from community"
-    },
-    "removeSubmission": {
-      "title": "Removing Submission",
-      "titleRestore": "Restoring Submission",
-      "titlePurge": "Purging Submission",
-      "withReason": "Reply with reason",
-      "comment": "Comment",
-      "message": "Message",
-      "failReply": "Failed to post reply. Removing anyway...",
-      "failMessage": "Failed to message user. Removing anyway...",
-      "failEmptyReply": "Your reply cannot be empty if 'Reply with reason' is enabled.",
-      "successPurge": "Successfully purged that submission."
-    },
-    "reportModal": {
-      "title": "Report",
-      "success": "Reported that submission."
-    },
-    "reason": "Reason",
-    "lock": "Lock",
-    "unlock": "Unlock",
-    "remove": "Remove",
-    "restore": "Restore",
-    "label": "Moderation",
-    "labelInstanceOnly": "Moderation (Instance Only)",
-    "feature": "Feature",
-    "unfeature": "Unfeature"
-  },
-  "common": {
-    "back": "Back",
-    "next": "Next",
-    "debug": "Debug",
-    "refresh": "Refresh",
-    "jump": "Jump",
-    "save": "Save",
-    "enabled": "Enabled",
-    "disabled": "Disabled",
-    "enable": "Enable",
-    "disable": "Disable",
-    "add": "Add",
-    "cancel": "Cancel",
-    "send": "Send"
-  },
-  "message": {
-    "success": "Success",
-    "error": "Error",
-    "retry": "Retry"
-  },
-  "toast": {
-    "noComments": "The API returned no comments.",
-    "loginVoteGate": "You must be logged in to vote.",
-    "blockedCommunity": "Blocked that community.",
-    "unblockedCommunity": "Unblocked that community.",
-    "purgedCommunity": "Purged that community.",
-    "blockedInstance": "Blocked that instance.",
-    "updatedCommunity": "Your community was updated.",
-    "sentMessage": "Sent that message.",
-    "invalidDateAbsolute": "Invalid date. It must be an absolute date.",
-    "invalidDateBeforeCurrent": "Invalid date. It is before the current time.",
-    "bannedUser": "Banned that user.",
-    "unbannedUser": "Unbanned that user.",
-    "needCommunity": "You must set a community.",
-    "invalidURL": "Invalid URL",
-    "generatedTitle": "Generated title and body from the URL. Do you want to undo this?",
-    "failGenerateTitle": "There was no usable title or description of that website.",
-    "restoredFromDraft": "Restored your post from the draft.",
-    "copied": "Copied to clipboard.",
-    "approvedApplication": "Approved that application.",
-    "deniedApplication": "Denied that application.",
-    "updatedSite": "Updated your site.",
-    "failCSV": "Failed to read CSV",
-    "removeAdminWarning": "Are you sure you want to remove that admin?",
-    "removeAdmin": "Removed that admin.",
-    "failFindUser": "Could not find that user.",
-    "addMod": "Added that moderator.",
-    "updateMods": "Updated community moderators.",
-    "logIn": "Successfully logged in.",
-    "failInstanceURL": "Failed to contact that instance URL. Is it down?",
-    "addAccount": "Added that account.",
-    "resetLink": "A password reset link was sent to your email.",
-    "resolveReport": "Resolved that report.",
-    "unresolveReport": "Unresolved that report.",
-    "passwordReset": "Your password was reset.",
-    "fetchPostOnHome": "Attempting to fetch this post on your home instance...",
-    "loginRefresh": "Your login was refreshed.",
-    "invalidLogin": "Invalid credentials",
-    "saveSettings": "Saved your user settings. If you changed your email, a verification link was sent.",
-    "confirmDelete1": "Are you sure you want to delete your account?",
-    "confirmDelete2": "Are you really sure?",
-    "confirmDelete3": "Final warning. Are you really sure?",
-    "needPassword": "You must provide your password.",
-    "deleting": "Deleting your account...",
-    "deleted": "Your account was deleted.",
-    "resetSettings": "Do you want to reset your settings to the default?",
-    "failFetchInstances": "Failed to fetch available instances.",
-    "verifyEmail": "A verification link was sent to your email. Verify your email, then log in.",
-    "failSignup": "Failed to sign up.",
-    "successSignup": "Signed up.",
-    "waitApplication": "Wait for your registration application to be accepted before logging in.",
-    "blockUser": "Blocked that user.",
-    "unblockUser": "Unblocked that user.",
-    "purgeUser": "Purged that user.",
-    "settingsImport": "Successfully imported settings",
-    "settingsImportWarning": "The imported settings don't seem valid. Are you sure you want to import this?",
-    "userLoading": "Still loading your user data..."
-  },
-  "settings": {
-    "title": "Settings",
-    "beta": "Beta",
-    "desktop": "Desktop",
-    "tablet": "Tablet",
-    "mobile": "Mobile",
-    "export": "Export",
-    "import": "Import",
-    "reset": "Reset",
-    "navigation": {
-      "title": "Navigation",
-      "dockPos": {
-        "title": "Dock position",
-        "description": "Where the dock should be positioned on the screen.",
-        "top": "Top",
-        "bottom": "Bottom",
-        "adaptive": "Adaptive"
-      },
-      "panel": {
-        "title": "Panel mode",
-        "description": "Extend the dock to the screen edges, similar to a panel.",
-        "on": "On",
-        "off": "Off",
-        "adaptive": "Adaptive"
-      },
-      "pins": {
-        "title": "Pins",
-        "description": "Click a pin to send it to the top of the sidebar. Right click a pinned item to remove it."
-      }
-    },
-    "app": {
-      "title": "Photon",
-      "theming": {
-        "title": "Theming",
-        "description": "Customize Photon's colors.",
-        "link": "Go to themes"
-      },
-      "colorscheme": {
-        "title": "Color Scheme",
-        "description": "The color scheme to use."
-      },
-      "lang": {
-        "title": "Language",
-        "description": "The language used for Photon's UI.",
-        "note": "Languages other than English and Hebrew are community translated, and may be incomplete.",
-        "en": "English",
-        "en-US": "English",
-        "he": "Hebrew",
-        "et": "Estonian",
-        "fr": "French",
-        "de": "German",
-        "fi": "Finnish",
-        "pt": "Portuguese",
-        "zh": "Chinese",
-        "zh-Hans": "Chinese (Simplified)",
-        "zh-Hant": "Chinese (Traditional)",
-        "auto": "Auto",
-        "credits": "Credits",
-        "useRtl": {
-          "title": "Use RTL layout",
-          "description": "Use an RTL layout for RTL languages."
-        }
-      },
-      "view": {
-        "title": "Post style",
-        "list": "Show posts in a list, with post bodies and compact media.",
-        "cozy": "Show posts with large images, rich embeds, and longer post bodies.",
-        "compact": "Show posts in a list, without post bodies and with tighter spacing.",
-        "legacy": "The old look of Photon."
-      },
-      "sort": {
-        "title": "Default sort",
-        "description": "The default sorting to use in feeds."
-      },
-      "infiniteScroll": {
-        "title": "Infinite scroll",
-        "description": "New posts are added as you scroll down, without having to click 'next'."
-      },
-      "postsInNewTab": {
-        "title": "Open posts in new tab",
-        "description": "Open posts in a separate tab instead of the current."
-      },
-      "displayName": {
-        "title": "Use display name",
-        "description": "Show users' display names instead of their actual usernames."
-      },
-      "limitLayoutWidth": {
-        "title": "Limit layout width",
-        "description": "Improve readability by limiting the main content width."
-      },
-      "placeholders": {
-        "title": "Random placeholders",
-        "description": "Show random placeholders for certain text inputs."
-      },
-      "expandImages": {
-        "title": "Expand images",
-        "description": "Clicking on a post's image brings you to an expanded view rather than the post page."
-      },
-      "duplicateTitles": {
-        "title": "Hide duplicate titles/bodies",
-        "description": "Hides the post title and body if they are identical to the embed."
-      },
-      "thumbnailSide": {
-        "title": "Thumbnail alignment",
-        "description": "Where thumbnails should be on the post in list/compact mode",
-        "left": "Left",
-        "right": "Right"
-      },
-      "font": {
-        "title": "Font",
-        "description": "What font Photon uses in the UI."
-      },
-      "translation": {
-        "title": "Translation",
-        "description": "The LibreTranslate instance to use for translation.",
-        "instance": "Domain"
-      },
-      "titleTags": {
-        "title": "Parse tags in title",
-        "description": "Take text in [brackets] and turn it into tags that you can click to search for.",
-        "rules": {
-          "title": "Rules",
-          "blur": "Blur",
-          "hide": "Hide",
-          "show": "Show"
-        }
-      }
-    },
-    "embeds": {
-      "title": "Embeds",
-      "clickToView": {
-        "title": "Click to view",
-        "description": "Only load embeds once you click on them."
-      },
-      "youtube": {
-        "description": "The website to embed YouTube content in."
-      },
-      "instance": {
-        "invidious": "Invidious instance",
-        "piped": "Piped instance",
-        "description": "The instance to embed YouTube content in."
-      }
-    },
-    "lemmy": {
-      "title": "Lemmy",
-      "showHiddenPosts": {
-        "title": "Show hidden posts",
-        "description": "Show the posts you've manually hidden."
-      },
-      "compactFeatured": {
-        "title": "Compact featured posts",
-        "description": "Make featured posts more compact"
-      },
-      "markReadPosts": {
-        "title": "Mark read posts",
-        "description": "Mark a post as read when you click on it"
-      },
-      "fadeReadPosts": {
-        "title": "Fade read posts",
-        "description": "Fade the title of posts you've already read"
-      },
-      "crosspostMarker": {
-        "title": "Mark crossposts",
-        "description": "Show 'crossposted from' when crossposting."
-      },
-      "hideSubmissions": {
-        "title": "Hide submissions",
-        "description": "Hide certain types of submissions.",
-        "deleted": "Deleted by user",
-        "removed": "Removed by moderator"
-      },
-      "nsfwBlur": {
-        "title": "NSFW blur",
-        "description": "Blur images and remove post bodies of NSFW posts."
-      },
-      "instances": {
-        "title": "Show instances",
-        "description": "Show the instances where certain content is from."
-      }
+        "locked": "This post is locked.",
+        "banned": "You are banned from this community.",
+        "more": "{{comments:number}} more"
     },
     "moderation": {
-      "title": "Moderation",
-      "replyPresets": {
-        "title": "Removal reply presets",
-        "description": "Presets to use for 'reply reason' in the submission removal dialog.",
-        "syntax": "Syntax"
-      }
+        "report": "Report",
+        "ban": {
+            "banning": "Banning User",
+            "unbanning": "Unbanning User",
+            "deleteData": "Delete data",
+            "warning": "This will delete ALL of this user's submissions here.",
+            "expires": "Expires (UTC)",
+            "banFromCommunity": "Ban from community",
+            "unbanFromCommunity": "Unban from community"
+        },
+        "removeSubmission": {
+            "title": "Removing Submission",
+            "titleRestore": "Restoring Submission",
+            "titlePurge": "Purging Submission",
+            "withReason": "Reply with reason",
+            "comment": "Comment",
+            "message": "Message",
+            "failReply": "Failed to post reply. Removing anyway...",
+            "failMessage": "Failed to message user. Removing anyway...",
+            "failEmptyReply": "Your reply cannot be empty if 'Reply with reason' is enabled.",
+            "successPurge": "Successfully purged that submission."
+        },
+        "reportModal": {
+            "title": "Report",
+            "success": "Reported that submission."
+        },
+        "reason": "Reason",
+        "lock": "Lock",
+        "unlock": "Unlock",
+        "remove": "Remove",
+        "restore": "Restore",
+        "label": "Moderation",
+        "labelInstanceOnly": "Moderation (Instance Only)",
+        "feature": "Feature",
+        "unfeature": "Unfeature"
     },
-    "other": {
-      "title": "Other",
-      "debug": {
-        "title": "Debug info",
-        "description": "Display debug information"
-      }
+    "common": {
+        "back": "Back",
+        "next": "Next",
+        "debug": "Debug",
+        "refresh": "Refresh",
+        "jump": "Jump",
+        "save": "Save",
+        "enabled": "Enabled",
+        "disabled": "Disabled",
+        "enable": "Enable",
+        "disable": "Disable",
+        "add": "Add",
+        "cancel": "Cancel",
+        "send": "Send"
+    },
+    "message": {
+        "success": "Success",
+        "error": "Error",
+        "retry": "Retry"
+    },
+    "toast": {
+        "noComments": "The API returned no comments.",
+        "loginVoteGate": "You must be logged in to vote.",
+        "blockedCommunity": "Blocked that community.",
+        "unblockedCommunity": "Unblocked that community.",
+        "purgedCommunity": "Purged that community.",
+        "blockedInstance": "Blocked that instance.",
+        "updatedCommunity": "Your community was updated.",
+        "sentMessage": "Sent that message.",
+        "invalidDateAbsolute": "Invalid date. It must be an absolute date.",
+        "invalidDateBeforeCurrent": "Invalid date. It is before the current time.",
+        "bannedUser": "Banned that user.",
+        "unbannedUser": "Unbanned that user.",
+        "needCommunity": "You must set a community.",
+        "invalidURL": "Invalid URL",
+        "generatedTitle": "Generated title and body from the URL. Do you want to undo this?",
+        "failGenerateTitle": "There was no usable title or description of that website.",
+        "restoredFromDraft": "Restored your post from the draft.",
+        "copied": "Copied to clipboard.",
+        "approvedApplication": "Approved that application.",
+        "deniedApplication": "Denied that application.",
+        "updatedSite": "Updated your site.",
+        "failCSV": "Failed to read CSV",
+        "removeAdminWarning": "Are you sure you want to remove that admin?",
+        "removeAdmin": "Removed that admin.",
+        "failFindUser": "Could not find that user.",
+        "addMod": "Added that moderator.",
+        "updateMods": "Updated community moderators.",
+        "logIn": "Successfully logged in.",
+        "failInstanceURL": "Failed to contact that instance URL. Is it down?",
+        "addAccount": "Added that account.",
+        "resetLink": "A password reset link was sent to your email.",
+        "resolveReport": "Resolved that report.",
+        "unresolveReport": "Unresolved that report.",
+        "passwordReset": "Your password was reset.",
+        "fetchPostOnHome": "Attempting to fetch this post on your home instance...",
+        "loginRefresh": "Your login was refreshed.",
+        "invalidLogin": "Invalid credentials",
+        "saveSettings": "Saved your user settings. If you changed your email, a verification link was sent.",
+        "confirmDelete1": "Are you sure you want to delete your account?",
+        "confirmDelete2": "Are you really sure?",
+        "confirmDelete3": "Final warning. Are you really sure?",
+        "needPassword": "You must provide your password.",
+        "deleting": "Deleting your account...",
+        "deleted": "Your account was deleted.",
+        "resetSettings": "Do you want to reset your settings to the default?",
+        "failFetchInstances": "Failed to fetch available instances.",
+        "verifyEmail": "A verification link was sent to your email. Verify your email, then log in.",
+        "failSignup": "Failed to sign up.",
+        "successSignup": "Signed up.",
+        "waitApplication": "Wait for your registration application to be accepted before logging in.",
+        "blockUser": "Blocked that user.",
+        "unblockUser": "Unblocked that user.",
+        "purgeUser": "Purged that user.",
+        "settingsImport": "Successfully imported settings.",
+        "settingsImportWarning": "The imported settings don't seem valid. Are you sure you want to import this?",
+        "userLoading": "Still loading your user data..."
+    },
+    "settings": {
+        "title": "Settings",
+        "beta": "Beta",
+        "desktop": "Desktop",
+        "tablet": "Tablet",
+        "mobile": "Mobile",
+        "export": "Export",
+        "import": "Import",
+        "reset": "Reset",
+        "navigation": {
+            "title": "Navigation",
+            "dockPos": {
+                "title": "Dock position",
+                "description": "Where the dock should be positioned on the screen.",
+                "top": "Top",
+                "bottom": "Bottom",
+                "adaptive": "Adaptive"
+            },
+            "panel": {
+                "title": "Panel mode",
+                "description": "Extend the dock to the screen edges, similar to a panel.",
+                "on": "On",
+                "off": "Off",
+                "adaptive": "Adaptive"
+            },
+            "pins": {
+                "title": "Pins",
+                "description": "Click a pin to send it to the top of the sidebar. Right click a pinned item to remove it."
+            }
+        },
+        "app": {
+            "title": "Photon",
+            "theming": {
+                "title": "Theming",
+                "description": "Customize Photon's colors.",
+                "link": "Go to themes"
+            },
+            "colorscheme": {
+                "title": "Color Scheme",
+                "description": "The color scheme to use."
+            },
+            "lang": {
+                "title": "Language",
+                "description": "The language used for Photon's UI.",
+                "note": "Languages other than English and Hebrew are community translated, and may be incomplete.",
+                "en": "English",
+                "en-US": "English",
+                "he": "Hebrew",
+                "et": "Estonian",
+                "fr": "French",
+                "de": "German",
+                "fi": "Finnish",
+                "pt": "Portuguese",
+                "zh": "Chinese",
+                "zh-Hans": "Chinese (Simplified)",
+                "zh-Hant": "Chinese (Traditional)",
+                "auto": "Auto",
+                "credits": "Credits",
+                "useRtl": {
+                    "title": "Use RTL layout",
+                    "description": "Use an RTL layout for RTL languages."
+                }
+            },
+            "view": {
+                "title": "Post style",
+                "list": "Show posts in a list, with post bodies and compact media.",
+                "cozy": "Show posts with large images, rich embeds, and longer post bodies.",
+                "compact": "Show posts in a list, without post bodies and with tighter spacing.",
+                "legacy": "The old look of Photon."
+            },
+            "sort": {
+                "title": "Default sort",
+                "description": "The default sorting to use in feeds."
+            },
+            "infiniteScroll": {
+                "title": "Infinite scroll",
+                "description": "New posts are added as you scroll down, without having to click 'next'."
+            },
+            "postsInNewTab": {
+                "title": "Open posts in new tab",
+                "description": "Open posts in a separate tab instead of the current."
+            },
+            "displayName": {
+                "title": "Use display name",
+                "description": "Show users' display names instead of their actual usernames."
+            },
+            "limitLayoutWidth": {
+                "title": "Limit layout width",
+                "description": "Improve readability by limiting the main content width."
+            },
+            "placeholders": {
+                "title": "Random placeholders",
+                "description": "Show random placeholders for certain text inputs."
+            },
+            "expandImages": {
+                "title": "Expand images",
+                "description": "Clicking on a post's image brings you to an expanded view rather than the post page."
+            },
+            "duplicateTitles": {
+                "title": "Hide duplicate titles/bodies",
+                "description": "Hides the post title and body if they are identical to the embed."
+            },
+            "thumbnailSide": {
+                "title": "Thumbnail alignment",
+                "description": "Where thumbnails should be on the post in list/compact mode",
+                "left": "Left",
+                "right": "Right"
+            },
+            "font": {
+                "title": "Font",
+                "description": "What font Photon uses in the UI."
+            },
+            "translation": {
+                "title": "Translation",
+                "description": "The LibreTranslate instance to use for translation.",
+                "instance": "Domain"
+            },
+            "titleTags": {
+                "title": "Parse tags in title",
+                "description": "Take text in [brackets] and turn it into tags that you can click to search for.",
+                "rules": {
+                    "title": "Rules",
+                    "blur": "Blur",
+                    "hide": "Hide",
+                    "show": "Show"
+                }
+            }
+        },
+        "embeds": {
+            "title": "Embeds",
+            "clickToView": {
+                "title": "Click to view",
+                "description": "Only load embeds once you click on them."
+            },
+            "youtube": {
+                "description": "The website to embed YouTube content in."
+            },
+            "instance": {
+                "invidious": "Invidious instance",
+                "piped": "Piped instance",
+                "description": "The instance to embed YouTube content in."
+            }
+        },
+        "lemmy": {
+            "title": "Lemmy",
+            "showHiddenPosts": {
+                "title": "Show hidden posts",
+                "description": "Show the posts you've manually hidden."
+            },
+            "compactFeatured": {
+                "title": "Compact featured posts",
+                "description": "Make featured posts more compact"
+            },
+            "markReadPosts": {
+                "title": "Mark read posts",
+                "description": "Mark a post as read when you click on it"
+            },
+            "fadeReadPosts": {
+                "title": "Fade read posts",
+                "description": "Fade the title of posts you've already read"
+            },
+            "crosspostMarker": {
+                "title": "Mark crossposts",
+                "description": "Show 'crossposted from' when crossposting."
+            },
+            "hideSubmissions": {
+                "title": "Hide submissions",
+                "description": "Hide certain types of submissions.",
+                "deleted": "Deleted by user",
+                "removed": "Removed by moderator"
+            },
+            "nsfwBlur": {
+                "title": "NSFW blur",
+                "description": "Blur images and remove post bodies of NSFW posts."
+            },
+            "instances": {
+                "title": "Show instances",
+                "description": "Show the instances where certain content is from."
+            }
+        },
+        "moderation": {
+            "title": "Moderation",
+            "replyPresets": {
+                "title": "Removal reply presets",
+                "description": "Presets to use for 'reply reason' in the submission removal dialog.",
+                "syntax": "Syntax"
+            }
+        },
+        "other": {
+            "title": "Other",
+            "debug": {
+                "title": "Debug info",
+                "description": "Display debug information"
+            }
+        }
     }
-  }
 }
