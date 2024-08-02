@@ -9,7 +9,6 @@
     code: string
     lang?: string
   } {
-    console.log(raw)
     const match = /^```(.*)/gi.exec(src)
 
     if (match?.[1]) {

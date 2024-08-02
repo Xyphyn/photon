@@ -1,6 +1,55 @@
+<script lang="ts" context="module">
+  import { marked } from 'marked'
+  marked.setOptions({
+    pedantic: false,
+    mangle: false,
+    headerIds: false,
+  })
+
+  marked.use(linkify, {
+    extensions: [
+      containerExtension((params: any) => {
+        if (params.type == 'spoiler') {
+          return {
+            type: 'spoiler',
+            raw: params.raw,
+            title: params.options,
+            tokens: [],
+          }
+        }
+        return null
+      }),
+    ],
+  })
+
+  export const renderers = {
+    heading: MdHeading,
+    image: MdImage,
+    link: MdLink,
+    blockquote: MdQuote,
+    hr: MdHr,
+    html: MdHtml,
+    text: MdText,
+    code: MdCode,
+    list: MdList,
+    del: MdText,
+    // @ts-ignore
+    spoiler: MdSpoiler,
+    table: MdTable,
+    tablebody: MdTableBody,
+    tablecell: MdTableCell,
+    tablehead: MdTableHead,
+    tablerow: MdTableRow,
+  }
+
+  export const options = {
+    mangle: false,
+    headerIds: false,
+  }
+</script>
+
 <script lang="ts">
   import SvelteMarkdown from 'svelte-markdown'
-  import { marked } from 'marked'
   import { linkify } from './renderers/plugins'
   import {
     MdCode,
@@ -26,60 +75,19 @@
   export let inline: boolean = false
   export let noStyle: boolean = false
 
-  let div: HTMLElement
-
-  marked.use(linkify, {
-    extensions: [
-      containerExtension((params: any) => {
-        if (params.type == 'spoiler') {
-          return {
-            type: 'spoiler',
-            raw: params.raw,
-            title: params.options,
-            tokens: [],
-          }
-        }
-        return null
-      }),
-    ],
-  })
-
   $: tokens = marked.lexer(source)
 </script>
 
 <div
-  bind:this={div}
   class="{noStyle
     ? ''
-    : 'break-words flex flex-col markdown gap-2 leading-[1.5]'} {$$props.class}"
+    : 'break-words flex flex-col gap-2 leading-[1.5]'} {$$props.class}"
   style={$$props.style}
 >
-  <!-- {@html rendered} -->
   <SvelteMarkdown
     bind:source={tokens}
-    renderers={{
-      heading: MdHeading,
-      image: MdImage,
-      link: MdLink,
-      blockquote: MdQuote,
-      hr: MdHr,
-      code: MdCode,
-      html: MdHtml,
-      text: MdText,
-      list: MdList,
-      del: MdText,
-      // @ts-ignore
-      spoiler: MdSpoiler,
-      table: MdTable,
-      tablebody: MdTableBody,
-      tablecell: MdTableCell,
-      tablehead: MdTableHead,
-      tablerow: MdTableRow,
-      paragraph: MdParagraph,
-    }}
-    options={{
-      pedantic: true,
-    }}
-    isInline={inline}
+    {renderers}
+    {options}
+    isInline={inline || undefined}
   />
 </div>

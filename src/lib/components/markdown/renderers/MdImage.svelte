@@ -15,7 +15,7 @@
 </script>
 
 <div
-  class="max-w-full h-auto rounded-2xl p-2 border border-slate-200 dark:border-zinc-800
+  class="max-w-xl h-auto rounded-2xl p-2 border border-slate-200 dark:border-zinc-800
   inline-block"
 >
   {#if type == 'video' || type == 'embed' || type == 'iframe'}
