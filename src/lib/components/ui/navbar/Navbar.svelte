@@ -1,6 +1,5 @@
 <script lang="ts">
-  import { notifications, profile, profileData } from '$lib/auth.js'
-  import Link from '$lib/components/input/Link.svelte'
+  import { notifications, profile } from '$lib/auth.js'
   import ShieldIcon from '$lib/components/lemmy/moderation/ShieldIcon.svelte'
   import {
     amModOfAny,
@@ -29,14 +28,11 @@
   } from 'svelte-hero-icons'
   import Profile from './Profile.svelte'
   import NavButton from './NavButton.svelte'
-  import { fly, scale } from 'svelte/transition'
-  import { expoOut, backOut } from 'svelte/easing'
-  import { flip } from 'svelte/animate'
+  import { scale } from 'svelte/transition'
+  import { backOut } from 'svelte/easing'
   import SearchBar from '$lib/components/lemmy/util/SearchBar.svelte'
-  import { swipeGesture } from '$lib/input/swipe'
   import Logo from '../Logo.svelte'
   import { LINKED_INSTANCE_URL } from '$lib/instance'
-  import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
   import { t } from '$lib/translations'
   import CommandsWrapper from './commands/CommandsWrapper.svelte'
 

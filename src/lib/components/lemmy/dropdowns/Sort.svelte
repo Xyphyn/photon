@@ -1,17 +1,14 @@
 <script lang="ts">
   import { page } from '$app/stores'
-  import { site } from '$lib/lemmy.js'
   import { userSettings } from '$lib/settings'
   import { t } from '$lib/translations'
   import { searchParam } from '$lib/util.js'
-  import { feature } from '$lib/version.js'
   import type { SortType } from 'lemmy-js-client'
   import { Select } from 'mono-svelte'
   import {
     ArrowTrendingDown,
     ArrowTrendingUp,
     Calendar,
-    CalendarDateRange,
     CalendarDays,
     ChartBar,
     ChatBubbleLeftRight,
@@ -198,7 +195,7 @@
         </option>
         <option value="TopWeek">
           <Icon
-            src={CalendarDateRange}
+            src={CalendarDays}
             size="16"
             mini
             class="text-slate-600 dark:text-zinc-400"

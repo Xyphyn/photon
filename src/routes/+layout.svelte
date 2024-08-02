@@ -90,7 +90,6 @@
       })
     }
   })
-  $: title = routes[($page.route.id as keyof typeof routes) ?? '']
 </script>
 
 <svelte:head>
@@ -149,14 +148,7 @@
   >
     <slot />
   </main>
-  <Navbar
-    slot="navbar"
-    let:style={s}
-    let:class={c}
-    class={c}
-    style={s}
-    {title}
-  />
+  <Navbar slot="navbar" let:style={s} let:class={c} class={c} style={s} />
   <div slot="suffix" let:class={c} let:style={s} class={c} style={s}>
     {#if $page.data.slots?.sidebar?.component}
       <svelte:component

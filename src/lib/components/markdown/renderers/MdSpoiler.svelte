@@ -25,8 +25,6 @@
   }
 
   $: data = extractTitle(raw)
-
-  $: console.log(data.content)
 </script>
 
 <Expandable class="border-y border-slate-200 dark:border-zinc-800 py-2">
