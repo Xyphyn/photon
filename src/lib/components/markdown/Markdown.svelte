@@ -1,55 +1,19 @@
 <script lang="ts">
-  import { page } from '$app/stores'
-  import { env } from '$env/dynamic/public'
-  import { md, mdInline, photonify } from '$lib/components/markdown/markdown'
-  import { onMount } from 'svelte'
+  import SvelteMarkdown from 'svelte-markdown'
+  import { marked } from 'marked'
+  import { linkify, spoilerPlugin } from './renderers/plugins'
+  import Heading from './renderers/Heading.svelte'
+  import MdImage from './renderers/MdImage.svelte'
 
   export let source: string = ''
   export let inline: boolean = false
   export let noStyle: boolean = false
 
-  let rendered = ''
-
-  function replaceURLs(node: HTMLElement, source: string) {
-    if (!div) return
-    const links = node.querySelectorAll('a')
-
-    links.forEach((l) => {
-      const photonified = photonify(l.href)
-
-      if (photonified) l.href = photonified
-      else if (!l.href.startsWith($page.url.origin)) {
-        l.target = '_blank'
-        l.rel = 'noopener noreferrer'
-      }
-    })
-  }
-
   let div: HTMLElement
 
-  function render(source: string): string {
-    if (!source || source == '') return ''
+  marked.use(linkify)
 
-    try {
-      return inline ? mdInline.render(source) : md.render(source)
-    } catch (err) {
-      console.error(err)
-      return ''
-    }
-  }
-  $: rendered = render(source)
-  $: replaceURLs(div, rendered)
-  /*
-    Horrendous hack to get @html reactivity working
-    From server to client, the rendered html won't change for some reason
-    I have no clue why this fixes it, but it does.
-  */
-  if (env?.PUBLIC_SSR_ENABLED?.toLowerCase() == 'true') {
-    onMount(() => {
-      rendered = `${rendered} `
-      replaceURLs(div, rendered)
-    })
-  }
+  $: output = marked.parse(source)
 </script>
 
 <div
@@ -59,98 +23,9 @@
     : 'break-words flex flex-col markdown gap-2 leading-[1.5]'} {$$props.class}"
   style={$$props.style}
 >
-  {@html rendered}
+  <!-- {@html rendered} -->
+  <SvelteMarkdown
+    source={output}
+    renderers={{ heading: Heading, image: MdImage }}
+  />
 </div>
-
-<style lang="postcss">
-  .markdown :global(h1) {
-    @apply text-3xl font-bold;
-  }
-  .markdown :global(h2) {
-    @apply text-2xl font-bold;
-  }
-  .markdown :global(h3) {
-    @apply text-xl font-bold;
-  }
-
-  .markdown :global(details) {
-    @apply cursor-pointer;
-  }
-
-  .markdown :global(hr) {
-    @apply w-full mx-auto my-2 border-slate-300 dark:border-zinc-800;
-  }
-
-  :global(.dark .markdown hr) {
-    @apply w-full mx-auto my-2 border-zinc-800;
-  }
-
-  .markdown :global(img) {
-    @apply max-h-[40vh] border rounded-lg border-slate-200 dark:border-zinc-800;
-  }
-
-  :global(.dark .markdown img) {
-    @apply border-zinc-800;
-  }
-
-  .markdown :global(a) {
-    @apply text-sky-500 hover:underline;
-  }
-
-  .markdown :global(ul) {
-    @apply list-disc pl-4 leading-3;
-  }
-
-  .markdown :global(ol) {
-    @apply list-decimal pl-4 leading-3;
-  }
-
-  .markdown :global(ul > *) {
-    @apply leading-[20px];
-  }
-
-  .markdown :global(ol > *) {
-    @apply leading-[20px];
-  }
-
-  .markdown :global(li) {
-    @apply m-0 leading-[1.5] !important;
-  }
-
-  .markdown :global(li > p) {
-    @apply m-0 leading-[1.5] !important;
-  }
-
-  .markdown :global(li > p) {
-    @apply contents !important;
-  }
-
-  .markdown :global(blockquote) {
-    @apply leading-[1px] border-l-2 border-slate-400 dark:border-zinc-600 pl-2 my-1 h-max;
-  }
-
-  .markdown :global(p) {
-    @apply leading-[1.5] max-w-3xl;
-    word-break: break-word;
-  }
-
-  .markdown :global(table) {
-    @apply rounded-xl w-full overflow-auto min-w-0 table-fixed relative;
-  }
-
-  .markdown :global(table thead tr th) {
-    @apply border border-slate-200 px-4 py-2;
-  }
-
-  .markdown :global(table tr td) {
-    @apply border border-slate-200 px-4 py-2 overflow-auto;
-  }
-
-  :global(.dark) .markdown :global(table tr td) {
-    @apply border border-zinc-800 px-4 py-2 overflow-auto;
-  }
-
-  :global(.dark) .markdown :global(table thead tr th) {
-    @apply border border-zinc-800 bg-zinc-900 px-4 py-2;
-  }
-</style>
