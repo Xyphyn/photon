@@ -53,19 +53,19 @@
       <picture class="max-h-[inherit]">
         <source
           srcset={bestImageURL(post, false, 256)}
-          media="(min-width: 0px)"
+          media="(max-width: 256px)"
         />
         <source
           srcset={bestImageURL(post, false, 512)}
-          media="(min-width: 256px)"
+          media="(max-width: 512px)"
         />
         <source
           srcset={bestImageURL(post, false, 1024)}
-          media="(min-width: 512px)"
+          media="(max-width: 1024px)"
         />
         <source
           srcset={bestImageURL(post, false, 1512)}
-          media="(min-width: 1024px)"
+          media="(max-width: 1512px)"
         />
         <!-- svelte-ignore a11y-missing-attribute -->
         <img
