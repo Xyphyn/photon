@@ -17,7 +17,7 @@
 
   export const findSource = async (
     target: string,
-    dataset: any,
+    dataset: any
   ): Promise<MBFCReport | undefined> => {
     if (!target) return undefined
     let left = 0
@@ -122,13 +122,16 @@
           description={$t('post.actions.mediaBias.noData.description')}
         />
       {/if}
-      <Link
-        href="https://mediabiasfactcheck.com/"
-        class="text-sm text-slate-700 dark:text-zinc-300"
-      >
-        <Icon src={Chain} micro size="14" />
-        mediabiasfactcheck.com
-      </Link>
+      {#if data}
+        <Link
+          target="_blank"
+          href="https://mediabiasfactcheck.com/{data.name}"
+          class="text-sm text-slate-700 dark:text-zinc-300"
+        >
+          <Icon src={Chain} micro size="14" />
+          mediabiasfactcheck.com
+        </Link>
+      {/if}
     {/await}
   {/await}
 </Modal>
