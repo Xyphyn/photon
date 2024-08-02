@@ -780,5 +780,14 @@
         "export": "Vie",
         "import": "Tuo",
         "reset": "Palauta oletukset"
+    },
+    "error": {
+        "incorrect_login": "Virheelliset kirjautumistiedot. Yritä uudelleen.",
+        "incorrect_login_2": "Virheelliset kirjautumistiedot. Yritä uudelleen uudelleen.",
+        "incorrect_login_3": "Virheelliset kirjautumistiedot. Yritä vielä muutaman kerran.",
+        "incorrect_login_6": "Onko tämä mielestäsi jokin vitsi?",
+        "incorrect_login_5": "Katso tarkkaan, mitä näppäimia painelet.",
+        "incorrect_login_7": "Ei jaksa kääntää näitä enempää.",
+        "incorrect_login_4": "Virheelliset kirjautumistiedot. Jatka yrittämistä."
     }
 }
