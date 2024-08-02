@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Disclosure } from 'mono-svelte'
+  import { marked } from 'marked'
 
   export let raw: string
 
@@ -7,7 +7,7 @@
     const spoilerRegex = /^::: spoiler (.+)\n([\s\S]+?)\n:::/gm
 
     return text.replace(spoilerRegex, function (match, title, content) {
-      return `<details><summary class="cursor-pointer">${title}</summary>${content}</details>`
+      return `<details><summary class="cursor-pointer">${marked.parseInline(title)}</summary>${marked.parse(content)}</details>`
     })
   }
 

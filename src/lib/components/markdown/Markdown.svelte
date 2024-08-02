@@ -80,5 +80,6 @@
     options={{
       pedantic: true,
     }}
+    isInline={inline}
   />
 </div>
