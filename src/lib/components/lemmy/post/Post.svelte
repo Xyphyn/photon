@@ -4,7 +4,7 @@
   import { getInstance } from '$lib/lemmy.js'
   import PostActions from '$lib/components/lemmy/post/PostActions.svelte'
   import { userSettings } from '$lib/settings.js'
-  import PostLink from '$lib/components/lemmy/post/PostLink.svelte'
+  import PostLink from '$lib/components/lemmy/post/link/PostLink.svelte'
   import PostMeta, {
     parseTags,
     type Tag,
@@ -172,7 +172,7 @@
   <div
     class="absolute overflow-hidden inset-0 group-hover:inset-y-0.5 group-hover:-inset-x-4 group-hover:sm:-inset-x-5
     sm:rounded-xl bg-slate-50 dark:bg-zinc-900
-    opacity-0 group-hover:opacity-100 transition-all -z-10 no-list-margin
+    opacity-0 group-hover:opacity-100 transition-all -z-50 no-list-margin
     duration-150"
   />
 </Material>

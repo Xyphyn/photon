@@ -451,6 +451,10 @@
                 },
                 "downloading": "Downloading dataset",
                 "loading": "Loading source"
+            },
+            "link": {
+                "title": "Alternative Links",
+                "actions": "Link Actions"
             }
         },
         "badges": {

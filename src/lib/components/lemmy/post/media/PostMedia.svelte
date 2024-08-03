@@ -1,6 +1,6 @@
 <script lang="ts">
   import Empty from '$lib/components/helper/Empty.svelte'
-  import PostLink from '$lib/components/lemmy/post/PostLink.svelte'
+  import PostLink from '$lib/components/lemmy/post/link/PostLink.svelte'
   import {
     bestImageURL,
     postLink,
@@ -113,6 +113,6 @@
     nsfw={post.nsfw}
     embed_description={post.embed_description}
     embed_title={post.embed_title}
-    compact={view == 'compact' || (view == 'list' && !post.embed_title)}
+    {view}
   />
 {/if}

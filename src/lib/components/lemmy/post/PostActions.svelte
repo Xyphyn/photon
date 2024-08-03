@@ -71,11 +71,6 @@
 
   let localShare = false
 
-  let mediaBias = false
-
-  const stripSubdomain = (url: string) =>
-    new URL(url).hostname.split('.').slice(-2).join('.')
-
   $: buttonHeight = view == 'compact' ? 'h-[30px]' : 'h-8'
   $: buttonSquare = view == 'compact' ? 'w-[30px] h-[30px]' : 'w-8 h-8'
 </script>
@@ -115,12 +110,6 @@
 {#if translating}
   {#await import('$lib/components/translate/Translation.svelte') then { default: Translation }}
     <Translation bind:open={translating} />
-  {/await}
-{/if}
-
-{#if mediaBias && post.post.url}
-  {#await import('$lib/components/mbfc/MBFCModal.svelte') then { default: MbfcModal }}
-    <MbfcModal domain={stripSubdomain(post.post.url)} bind:open={mediaBias} />
   {/await}
 {/if}
 
@@ -280,12 +269,6 @@
         {post.read
           ? $t('post.actions.more.markUnread')
           : $t('post.actions.more.markRead')}
-      </MenuButton>
-    {/if}
-    {#if post.post.url && type == 'embed'}
-      <MenuButton on:click={() => (mediaBias = !mediaBias)}>
-        <Icon src={CheckBadge} micro size="16" slot="prefix" />
-        {$t('post.actions.more.mediaBias')}
       </MenuButton>
     {/if}
     <MenuButton

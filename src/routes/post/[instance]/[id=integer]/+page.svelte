@@ -20,7 +20,7 @@
     Home,
     PlusCircle,
   } from 'svelte-hero-icons'
-  import PostLink from '$lib/components/lemmy/post/PostLink.svelte'
+  import PostLink from '$lib/components/lemmy/post/link/PostLink.svelte'
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
   import { Material, Select, Spinner, removeToast, toast } from 'mono-svelte'
   import type { CommentSortType } from 'lemmy-js-client'

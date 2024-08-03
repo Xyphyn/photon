@@ -1,15 +1,18 @@
 <script lang="ts">
   import Link, { parseURL } from '$lib/components/input/Link.svelte'
   import { Button, Material } from 'mono-svelte'
-  import { Icon, Link as LinkIcon } from 'svelte-hero-icons'
-  import { optimizeImageURL } from './helpers'
+  import { ChevronDown, Icon, Link as LinkIcon } from 'svelte-hero-icons'
+  import { optimizeImageURL } from '../helpers'
+  import PostLinkSources from './PostLinkSources.svelte'
+  import { t } from '$lib/translations'
+  import type { View } from '$lib/settings'
 
   export let url: string
   export let thumbnail_url: string | undefined = undefined
   export let nsfw: boolean = false
   export let embed_title: string | undefined = undefined
   export let embed_description: string | undefined = undefined
-  export let compact: boolean = false
+  export let view: View = 'cozy'
 
   $: richURL = parseURL(url)
 </script>
@@ -18,7 +21,7 @@
   @component
   For embed-type posts. Displays embed card or a compact link.
 -->
-{#if embed_title && !compact}
+{#if embed_title && view != 'compact'}
   <Material
     color="distinct"
     class="flex flex-col-reverse sm:flex-row overflow-hidden gap-4"
@@ -31,7 +34,6 @@
           target="_blank"
           class="text-slate-600 dark:text-zinc-400 inline-flex items-center gap-1 text-xs"
         >
-          <Icon src={LinkIcon} size="12" mini slot="icon" />
           {richURL.hostname}
         </Link>
       {/if}
@@ -81,32 +83,74 @@
       </a>
     {/if}
   </Material>
-{:else}
-  <Button
-    href={url}
-    target="_blank"
-    class="text-slate-900 dark:text-zinc-300 inline-flex items-center gap-1 text-xs overflow-hidden w-max max-w-full"
-    size="sm"
-    color="ghost"
-    rounding="pill"
+  <Material
+    color="none"
+    padding="none"
+    class="px-1 py-0 bg-slate-50 dark:bg-zinc-925 h-9 rounded-b-xl rounded-t-none
+  w-[calc(100%-1rem)] {view == 'list'
+      ? ''
+      : '-mt-2'} mx-auto shadow-inner border border-t-0
+  border-slate-200 dark:border-zinc-800
+  flex flex-row items-center overflow-auto"
   >
-    <Icon src={LinkIcon} size="14" mini slot="prefix" class="flex-shrink-0" />
-    {#if richURL}
-      <div class="flex max-w-full overflow-hidden font-medium">
-        {richURL.hostname}
-        {#if richURL.pathname != '/'}
-          <span
-            class="text-slate-500 dark:text-zinc-500 whitespace-nowrap font-normal"
-          >
-            {richURL.pathname}
-          </span>
-        {/if}
-      </div>
-    {:else}
-      {url}
-    {/if}
-  </Button>
-  {#if thumbnail_url && !compact}
+    <PostLinkSources {url}>
+      <Button
+        color="tertiary"
+        slot="target"
+        size="sm"
+        class="w-max text-slate-600 dark:text-zinc-400 block
+      text-xs"
+      >
+        <Icon src={LinkIcon} size="16" micro slot="prefix" />
+        {$t('post.actions.link.actions')}
+      </Button>
+    </PostLinkSources>
+  </Material>
+{:else}
+  <div class="flex items-center gap-1">
+    <PostLinkSources {url}>
+      <Button
+        color="ghost"
+        slot="target"
+        size="sm"
+        rounding="pill"
+        class="p-0.5 px-1 w-max mt-auto text-slate-600 dark:text-zinc-400 block
+        text-xs"
+      >
+        <div class="mr-0.5" style="width: 8px;">
+          <Icon src={LinkIcon} size="16" micro slot="prefix" />
+        </div>
+        <div class="mr-1" style="width: 8px;">
+          <Icon src={ChevronDown} size="16" micro slot="suffix" />
+        </div>
+      </Button>
+    </PostLinkSources>
+    <Button
+      href={url}
+      target="_blank"
+      class="text-slate-900 dark:text-zinc-300 items-center
+    text-xs overflow-hidden max-w-full block"
+      size="sm"
+      color="ghost"
+      rounding="pill"
+    >
+      {#if richURL}
+        <div class="flex max-w-full overflow-hidden font-medium">
+          {richURL.hostname}
+          {#if richURL.pathname != '/'}
+            <span
+              class="text-slate-500 dark:text-zinc-500 whitespace-nowrap font-normal"
+            >
+              {richURL.pathname}
+            </span>
+          {/if}
+        </div>
+      {:else}
+        {url}
+      {/if}
+    </Button>
+  </div>
+  {#if thumbnail_url && view != 'compact'}
     <a href={url} target="_blank">
       <img
         src={optimizeImageURL(thumbnail_url, 256)}
