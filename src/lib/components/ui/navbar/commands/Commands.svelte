@@ -9,13 +9,19 @@
   import { afterNavigate, goto } from '$app/navigation'
   import { profile, profileData } from '$lib/auth'
   import { getGroups, type Action, type Group } from './actions'
+  import { themeData } from '$lib/ui/colors'
 
   export let open = false
   $: if (open) search = ''
 
   export let groups: Group[] = []
 
-  $: groups = getGroups($resumables, $profile, $profileData.profiles)
+  $: groups = getGroups(
+    $resumables,
+    $profile,
+    $profileData.profiles,
+    $themeData
+  )
 
   let search = ''
   let container: HTMLElement

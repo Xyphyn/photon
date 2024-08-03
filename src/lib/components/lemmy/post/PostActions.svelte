@@ -48,13 +48,12 @@
   import { fediseer, type Data } from '$lib/fediseer/fediseer'
   import { t } from '$lib/translations'
   import { text } from '$lib/components/translate/translation'
-  import { hidePost, type MediaType } from './helpers'
+  import { hidePost } from './helpers'
   import { feature } from '$lib/version'
   import Switch from '$lib/components/input/Switch.svelte'
   import { instanceToURL } from '$lib/util'
 
   export let post: PostView
-  export let type: MediaType | undefined = undefined
   export let view: View = 'cozy'
   export let debug: boolean = false
 

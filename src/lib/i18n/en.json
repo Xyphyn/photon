@@ -44,7 +44,9 @@
             "setColor": "Set color scheme",
             "setColorTo": "Set color scheme to {{default}}",
             "feeds": "Feeds",
-            "downloading": "Downloading actions"
+            "downloading": "Downloading actions",
+            "setTheme": "Set theme",
+            "setThemeTo": "Set theme to {{default}}"
         }
     },
     "account": {
