@@ -1,6 +1,14 @@
+<script lang="ts" context="module">
+  import { env } from '$env/dynamic/public'
+
+  const hasPhotonBadge = (actor_id: string) =>
+    env.PUBLIC_PHOTON_BADGE &&
+    env.PUBLIC_PHOTON_BADGE.split(',').includes(actor_id)
+</script>
+
 <script lang="ts">
-  import ShieldIcon from '$lib/components/lemmy/moderation/ShieldIcon.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
+  import Logo from '$lib/components/ui/Logo.svelte'
   import { userSettings } from '$lib/settings.js'
   import type { Person } from 'lemmy-js-client'
   import { Icon, NoSymbol } from 'svelte-hero-icons'
@@ -14,6 +22,7 @@
     $userSettings.showInstances.user ||
     ($userSettings.showInstances.comments && inComment)
   export let displayName = $userSettings.displayNames
+  $: photonBadge = hasPhotonBadge(user.actor_id)
 </script>
 
 <a
@@ -33,6 +42,8 @@
   <span
     class="flex gap-0 items-center flex-shrink max-w-full min-w-0"
     class:ml-0.5={avatar}
+    class:text-indigo-600={photonBadge}
+    class:dark:text-indigo-400={photonBadge}
   >
     <span class:font-medium={showInstance} class="username-text">
       {displayName ? user.display_name || user.name : user.name}
@@ -54,6 +65,9 @@
     {/if}
     {#if user.bot_account}
       <div class="text-blue-500 font-bold" title="Bot">BOT</div>
+    {/if}
+    {#if photonBadge}
+      <Logo width={16} />
     {/if}
     <slot name="badges" />
   {/if}
