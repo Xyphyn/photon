@@ -22,7 +22,14 @@
   } from 'svelte-hero-icons'
   import PostLink from '$lib/components/lemmy/post/link/PostLink.svelte'
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
-  import { Material, Select, Spinner, removeToast, toast } from 'mono-svelte'
+  import {
+    Material,
+    Select,
+    Spinner,
+    buttonColor,
+    removeToast,
+    toast,
+  } from 'mono-svelte'
   import type { CommentSortType } from 'lemmy-js-client'
   import { profile } from '$lib/auth.js'
   import { instance } from '$lib/instance.js'
@@ -315,29 +322,12 @@
   </div>
 {/if}
 <section class="mt-4 flex flex-col gap-2 w-full">
-  <header class="flex flex-row justify-between flex-wrap gap-2">
+  <header>
     <div class="text-base">
       <span class="font-bold">
         <FormattedNumber number={post.post_view.counts.comments} />
       </span>
       {$t('routes.post.commentCount')}
-    </div>
-    <div class="gap-2 flex items-center h-full">
-      <Select
-        size="md"
-        class="h-full"
-        bind:value={commentSort}
-        on:change={reloadComments}
-      >
-        <option value="Hot">{$t('filter.sort.hot')}</option>
-        <option value="Top">{$t('filter.sort.top.label')}</option>
-        <option value="New">{$t('filter.sort.new')}</option>
-        <option value="Old">{$t('filter.sort.old')}</option>
-        <option value="Controversial">{$t('filter.sort.controversial')}</option>
-      </Select>
-      <Button size="square-md" on:click={reloadComments}>
-        <Icon src={ArrowPath} size="16" mini slot="prefix" />
-      </Button>
     </div>
   </header>
   {#await data.comments}
@@ -353,15 +343,36 @@
   {:then comments}
     {#if $profile?.jwt}
       {#if !commenting}
-        <Button
-          rounding="pill"
-          class="mx-auto"
-          size="lg"
-          on:click={() => (commenting = true)}
-        >
-          <Icon src={PlusCircle} size="16" micro />
-          {$t('routes.post.addComment')}
-        </Button>
+        <EndPlaceholder>
+          <Button
+            rounding="pill"
+            class="mx-auto"
+            size="lg"
+            on:click={() => (commenting = true)}
+          >
+            <Icon src={PlusCircle} size="16" micro />
+            {$t('routes.post.addComment')}
+          </Button>
+
+          <div class="gap-2 flex items-center" slot="action">
+            <Select
+              size="md"
+              bind:value={commentSort}
+              on:change={reloadComments}
+            >
+              <option value="Hot">{$t('filter.sort.hot')}</option>
+              <option value="Top">{$t('filter.sort.top.label')}</option>
+              <option value="New">{$t('filter.sort.new')}</option>
+              <option value="Old">{$t('filter.sort.old')}</option>
+              <option value="Controversial">
+                {$t('filter.sort.controversial')}
+              </option>
+            </Select>
+            <Button size="square-md" on:click={reloadComments}>
+              <Icon src={ArrowPath} size="16" mini slot="prefix" />
+            </Button>
+          </div>
+        </EndPlaceholder>
       {:else}
         <CommentForm
           postId={post.post_view.post.id}
@@ -386,6 +397,23 @@
           rows={commenting ? 7 : 1}
         />
       {/if}
+    {/if}
+
+    {#if commenting || !$profile.jwt}
+      <div class="gap-2 flex items-center">
+        <Select size="md" bind:value={commentSort} on:change={reloadComments}>
+          <option value="Hot">{$t('filter.sort.hot')}</option>
+          <option value="Top">{$t('filter.sort.top.label')}</option>
+          <option value="New">{$t('filter.sort.new')}</option>
+          <option value="Old">{$t('filter.sort.old')}</option>
+          <option value="Controversial">
+            {$t('filter.sort.controversial')}
+          </option>
+        </Select>
+        <Button size="square-md" on:click={reloadComments}>
+          <Icon src={ArrowPath} size="16" mini slot="prefix" />
+        </Button>
+      </div>
     {/if}
     <Comments
       post={post.post_view.post}

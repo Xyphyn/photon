@@ -21,7 +21,7 @@
       urlObj.searchParams.append('format', 'webp')
       urlObj.searchParams.append(
         'thumbnail',
-        findClosestNumber(sizes, (res || width) * 1.5).toString(),
+        findClosestNumber(sizes, (res || width) * 1.5).toString()
       )
 
       return urlObj.toString()
@@ -35,11 +35,11 @@
 
 {#if optimizedURL}
   <img
+    loading="lazy"
     src={optimizedURL}
     {alt}
     {width}
     {title}
-    loading="lazy"
     class="aspect-square object-cover overflow-hidden {$$props.class} flex-shrink-0"
     style="width: {width}px; height: {width}px;"
     class:rounded-full={circle}

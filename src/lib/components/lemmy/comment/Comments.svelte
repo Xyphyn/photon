@@ -17,7 +17,7 @@
   import { profile } from '$lib/auth.js'
   import { Button } from 'mono-svelte'
   import { afterNavigate } from '$app/navigation'
-  import { backOut } from 'svelte/easing'
+  import { backOut, expoOut } from 'svelte/easing'
   import { t } from '$lib/translations'
   import { browser } from '$app/environment'
 
@@ -73,7 +73,7 @@
       // 0.18.2 -> 0.18.3 broke this
       // so i'm adding this check
       const treeParent = tree.find(
-        (c) => c.comment_view.comment.id == parent.comment_view.comment.id,
+        (c) => c.comment_view.comment.id == parent.comment_view.comment.id
       )
 
       if (treeParent) {
@@ -107,7 +107,7 @@
 </script>
 
 <ul
-  in:fly={{ opacity: 0, y: -4, duration: 400, easing: backOut }}
+  in:fly={{ duration: 500, easing: expoOut, y: -12 }}
   class={isParent
     ? 'divide-y dark:divide-zinc-900 divide-slate-100'
     : 'pl-3.5 border-l border-slate-200 dark:border-zinc-800 my-1'}
@@ -140,7 +140,7 @@
               fetchChildren(node).then(() => (node.loading = false))
             }}
           >
-            <Icon src={ChevronDoubleDown} mini size="16" slot="prefix" />
+            <Icon src={ChevronDoubleDown} micro size="16" slot="prefix" />
             {$t('comment.more', {
               // @ts-ignore
               comments: node.comment_view.counts.child_count,
