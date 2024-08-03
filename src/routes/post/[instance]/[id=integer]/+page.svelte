@@ -286,9 +286,9 @@
 </article>
 {#if data.thread.showContext || data.thread.singleThread}
   <div
-    class="sticky mx-auto z-50 max-w-full min-w-0 flex items-center gap-8 overflow-auto
+    class="sticky mx-auto z-50 max-w-lg w-full min-w-0 flex items-center overflow-auto gap-1
     bg-slate-50/50 dark:bg-zinc-900/50 backdrop-blur-xl border border-slate-100/50 dark:border-zinc-800/50
-    p-1 rounded-full px-2"
+    p-1 rounded-full px-2 justify-between"
     style="top: max(1.5rem, {$contentPadding.top}px);"
   >
     <p class="font-medium text-sm flex items-center gap-2">
@@ -315,7 +315,7 @@
   </div>
 {/if}
 <section class="mt-4 flex flex-col gap-2 w-full">
-  <div class="flex flex-row justify-between flex-wrap gap-2">
+  <header class="flex flex-row justify-between flex-wrap gap-2">
     <div class="text-base">
       <span class="font-bold">
         <FormattedNumber number={post.post_view.counts.comments} />
@@ -339,7 +339,7 @@
         <Icon src={ArrowPath} size="16" mini slot="prefix" />
       </Button>
     </div>
-  </div>
+  </header>
   {#await data.comments}
     <div class="space-y-4">
       {#each new Array(10) as empty}
