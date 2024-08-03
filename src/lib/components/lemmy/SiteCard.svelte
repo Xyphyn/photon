@@ -77,7 +77,7 @@
 
     <Expandable bind:open={$userSettings.expand.about}>
       <svelte:fragment slot="title">
-        <Icon src={InformationCircle} size="15" mini />
+        <Icon src={InformationCircle} size="16" mini />
         {$t('cards.site.about')}
       </svelte:fragment>
       <Markdown source={site.site.description} />
@@ -87,7 +87,7 @@
 
     <Expandable bind:open={$userSettings.expand.stats}>
       <svelte:fragment slot="title">
-        <Icon src={ChartBar} size="15" mini />
+        <Icon src={ChartBar} size="16" mini />
         {$t('cards.site.stats')}
       </svelte:fragment>
       <div class="flex flex-row gap-4 flex-wrap">
@@ -112,7 +112,7 @@
     {#if admins}
       <Expandable bind:open={$userSettings.expand.team}>
         <svelte:fragment slot="title">
-          <Icon src={UserGroup} size="15" mini />
+          <Icon src={UserGroup} size="16" mini />
           {$t('cards.site.admins')}
         </svelte:fragment>
         <ItemList

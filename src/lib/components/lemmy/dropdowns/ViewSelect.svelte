@@ -20,7 +20,7 @@
   <svelte:fragment slot="label">
     {#if showLabel}
       <span class="flex items-center gap-1">
-        <Icon src={ViewColumns} size="14" mini />
+        <Icon src={ViewColumns} size="14" micro />
         {$t('filter.view.label')}
       </span>
     {/if}
@@ -29,7 +29,7 @@
     <Icon
       src={RectangleGroup}
       size="16"
-      mini
+      micro
       class="text-slate-600 dark:text-zinc-400"
     />
     {$t('filter.view.cozy')}
@@ -38,7 +38,7 @@
     <Icon
       src={QueueList}
       size="16"
-      mini
+      micro
       class="text-slate-600 dark:text-zinc-400"
     />
     {$t('filter.view.list')}
@@ -47,7 +47,7 @@
     <Icon
       src={Bars3}
       size="16"
-      mini
+      micro
       class="text-slate-600 dark:text-zinc-400"
     />
     {$t('filter.view.compact')}
@@ -56,7 +56,7 @@
     <Icon
       src={Clock}
       size="16"
-      mini
+      micro
       class="text-slate-600 dark:text-zinc-400"
     />
     {$t('filter.view.legacy')}

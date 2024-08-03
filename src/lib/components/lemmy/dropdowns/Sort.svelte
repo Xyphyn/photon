@@ -50,14 +50,14 @@
     }}
   >
     <span slot="label" class="flex items-center gap-1">
-      <Icon src={ChartBar} size="13" mini />
+      <Icon src={ChartBar} size="13" micro />
       {$t('filter.sort.label')}
     </span>
     <option value="Active">
       <Icon
         src={ArrowTrendingUp}
         size="16"
-        mini
+        micro
         class="text-slate-600 dark:text-zinc-400"
       />
       {$t('filter.sort.active')}
@@ -66,7 +66,7 @@
       <Icon
         src={Fire}
         size="16"
-        mini
+        micro
         class="text-slate-600 dark:text-zinc-400"
       />
       {$t('filter.sort.hot')}
@@ -75,7 +75,7 @@
       <Icon
         src={Scale}
         size="16"
-        mini
+        micro
         class="text-slate-600 dark:text-zinc-400"
       />
       {$t('filter.sort.scaled')}
@@ -84,7 +84,7 @@
       <Icon
         src={Trophy}
         size="16"
-        mini
+        micro
         class="text-slate-600 dark:text-zinc-400"
       />
       {$t('filter.sort.top.label')}
@@ -93,7 +93,7 @@
       <Icon
         src={Star}
         size="16"
-        mini
+        micro
         class="text-slate-600 dark:text-zinc-400"
       />
       {$t('filter.sort.new')}
@@ -102,7 +102,7 @@
       <Icon
         src={Clock}
         size="16"
-        mini
+        micro
         class="text-slate-600 dark:text-zinc-400"
       />
       {$t('filter.sort.old')}
@@ -111,7 +111,7 @@
       <Icon
         src={ArrowTrendingDown}
         size="16"
-        mini
+        micro
         class="text-slate-600 dark:text-zinc-400"
       />
       {$t('filter.sort.controversial')}
@@ -120,7 +120,7 @@
       <Icon
         src={ChatBubbleOvalLeft}
         size="16"
-        mini
+        micro
         class="text-slate-600 dark:text-zinc-400"
       />
       {$t('filter.sort.mostcomments')}
@@ -129,7 +129,7 @@
       <Icon
         src={ChatBubbleLeftRight}
         size="16"
-        mini
+        micro
         class="text-slate-600 dark:text-zinc-400"
       />
       {$t('filter.sort.newcomments')}
@@ -147,14 +147,14 @@
         }}
       >
         <span slot="label" class="flex items-center gap-1">
-          <Icon src={Clock} size="15" mini />
+          <Icon src={Clock} size="15" micro />
           {$t('filter.sort.top.time.label')}
         </span>
         <option value="TopAll">
           <Icon
             src={PlusCircle}
             size="16"
-            mini
+            micro
             class="text-slate-600 dark:text-zinc-400"
           />{$t('filter.sort.top.time.all')}
         </option>
@@ -162,7 +162,7 @@
           <Icon
             src={Calendar}
             size="16"
-            mini
+            micro
             class="text-slate-600 dark:text-zinc-400"
           />
           {$t('filter.sort.top.time.9months')}
@@ -171,7 +171,7 @@
           <Icon
             src={Calendar}
             size="16"
-            mini
+            micro
             class="text-slate-600 dark:text-zinc-400"
           />
           {$t('filter.sort.top.time.6months')}
@@ -180,7 +180,7 @@
           <Icon
             src={Calendar}
             size="16"
-            mini
+            micro
             class="text-slate-600 dark:text-zinc-400"
           />
           {$t('filter.sort.top.time.3months')}
@@ -189,7 +189,7 @@
           <Icon
             src={CalendarDays}
             size="16"
-            mini
+            micro
             class="text-slate-600 dark:text-zinc-400"
           />{$t('filter.sort.top.time.month')}
         </option>
@@ -197,7 +197,7 @@
           <Icon
             src={CalendarDays}
             size="16"
-            mini
+            micro
             class="text-slate-600 dark:text-zinc-400"
           />{$t('filter.sort.top.time.week')}
         </option>
@@ -205,7 +205,7 @@
           <Icon
             src={Sun}
             size="16"
-            mini
+            micro
             class="text-slate-600 dark:text-zinc-400"
           />{$t('filter.sort.top.time.day')}
         </option>
@@ -213,7 +213,7 @@
           <Icon
             src={Clock}
             size="16"
-            mini
+            micro
             class="text-slate-600 dark:text-zinc-400"
           />{$t('filter.sort.top.time.12hours')}
         </option>
@@ -221,7 +221,7 @@
           <Icon
             src={Clock}
             size="16"
-            mini
+            micro
             class="text-slate-600 dark:text-zinc-400"
           />{$t('filter.sort.top.time.6hours')}
         </option>
@@ -229,7 +229,7 @@
           <Icon
             src={Clock}
             size="16"
-            mini
+            micro
             class="text-slate-600 dark:text-zinc-400"
           />{$t('filter.sort.top.time.hour')}
         </option>

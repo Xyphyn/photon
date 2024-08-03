@@ -39,7 +39,7 @@
   <svelte:fragment slot="label">
     {#if showLabel}
       <span class="flex items-center gap-1">
-        <Icon src={GlobeAmericas} size="16" mini />
+        <Icon src={GlobeAmericas} size="16" micro />
         {$t('filter.location.label')}
       </span>
     {/if}
@@ -48,7 +48,7 @@
     <Icon
       src={GlobeAmericas}
       size="16"
-      mini
+      micro
       class="text-slate-600 dark:text-zinc-400"
     />
     {$t('filter.location.all')}
@@ -57,7 +57,7 @@
     <Icon
       src={MapPin}
       size="16"
-      mini
+      micro
       class="text-slate-600 dark:text-zinc-400"
     />{$t('filter.location.local')}
   </option>
@@ -65,7 +65,7 @@
     <Icon
       src={Newspaper}
       size="16"
-      mini
+      micro
       class="text-slate-600 dark:text-zinc-400"
     />
     {$t('filter.location.subscribed')}
@@ -77,7 +77,7 @@
     <Icon
       src={ShieldCheck}
       size="16"
-      mini
+      micro
       class="text-slate-600 dark:text-zinc-400"
     />
     {$t('filter.location.moderator')}

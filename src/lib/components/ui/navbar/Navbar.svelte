@@ -161,7 +161,7 @@
       />
       <MenuDivider>{$t('nav.create.label')}</MenuDivider>
       <MenuButton link href="/create/post" disabled={!$profile?.jwt}>
-        <Icon src={PencilSquare} mini width={16} slot="prefix" />
+        <Icon src={PencilSquare} size="16" micro slot="prefix" />
         {$t('nav.create.post')}
       </MenuButton>
       <MenuButton
@@ -172,7 +172,7 @@
           ($site?.site_view.local_site.community_creation_admin_only &&
             !isAdmin($profile.user))}
       >
-        <Icon src={Newspaper} mini width={16} slot="prefix" />
+        <Icon src={Newspaper} size="16" micro slot="prefix" />
         {$t('nav.create.community')}
       </MenuButton>
       {#if !$profile?.jwt}

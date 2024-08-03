@@ -80,7 +80,7 @@
       {/if}
     {:else}
       <div class="w-full h-full grid place-items-center">
-        <Icon src={Bars3} mini size="18" />
+        <Icon src={Bars3} micro size="18" />
       </div>
     {/if}
   </button>
@@ -98,11 +98,11 @@
   {/if}
   {#if $profile?.jwt}
     <MenuButton link href="/profile">
-      <Icon src={UserCircle} mini width={16} slot="prefix" />
+      <Icon src={UserCircle} micro width={16} slot="prefix" />
       {$t('profile.profile')}
     </MenuButton>
     <MenuButton link href="/inbox">
-      <Icon src={Inbox} mini width={16} slot="prefix" />
+      <Icon src={Inbox} micro width={16} slot="prefix" />
       {$t('profile.inbox')}
       {#if $notifications.inbox > 0}
         <Badge color="red-subtle" class="text-xs ml-auto font-bold !py-0.5">
@@ -111,18 +111,18 @@
       {/if}
     </MenuButton>
     <MenuButton link href="/saved">
-      <Icon src={Bookmark} mini width={16} slot="prefix" />
+      <Icon src={Bookmark} micro width={16} slot="prefix" />
       {$t('profile.saved')}
     </MenuButton>
   {/if}
   <MenuButton link href="/accounts">
-    <Icon src={UserGroup} mini width={16} slot="prefix" />
+    <Icon src={UserGroup} micro width={16} slot="prefix" />
     {$t('account.accounts')}
   </MenuButton>
   <hr class="dark:opacity-10 w-[90%] my-2 mx-auto" />
   <MenuDivider>{$t('nav.menu.app')}</MenuDivider>
   <MenuButton link href="/settings">
-    <Icon src={Cog6Tooth} mini width={16} slot="prefix" />
+    <Icon src={Cog6Tooth} micro width={16} slot="prefix" />
     {$t('nav.menu.settings')}
   </MenuButton>
   <MenuButton class="!py-0">
@@ -134,7 +134,7 @@
           : $colorScheme == 'dark'
             ? Moon
             : Moon}
-      mini
+      micro
       size="16"
       slot="prefix"
     />
@@ -144,22 +144,22 @@
     <div class="contents" on:click|stopPropagation={() => {}}>
       <Select bind:value={$colorScheme} class="ml-auto my-auto w-24" size="sm">
         <option value="system">
-          <Icon src={ComputerDesktop} size="16" mini />
+          <Icon src={ComputerDesktop} size="16" micro />
           {$t('nav.menu.colorscheme.system')}
         </option>
         <option value="light">
-          <Icon src={Sun} size="16" mini />
+          <Icon src={Sun} size="16" micro />
           {$t('nav.menu.colorscheme.light')}
         </option>
         <option value="dark">
-          <Icon src={Moon} size="16" mini />
+          <Icon src={Moon} size="16" micro />
           {$t('nav.menu.colorscheme.dark')}
         </option>
       </Select>
     </div>
   </MenuButton>
   <MenuButton href="/theme">
-    <Icon src={Swatch} size="16" mini slot="prefix" />
+    <Icon src={Swatch} size="16" micro slot="prefix" />
     {$t('nav.menu.theme')}
   </MenuButton>
   {#if $userSettings.debugInfo}
@@ -189,7 +189,7 @@
         title={$t('nav.menu.instance')}
         size="square-md"
       >
-        <Icon src={ServerStack} size="16" mini />
+        <Icon src={ServerStack} size="16" micro />
       </Button>
       <Button
         color="tertiary"
@@ -197,7 +197,7 @@
         title={$t('nav.menu.donate')}
         size="square-md"
       >
-        <Icon src={Heart} size="16" mini />
+        <Icon src={Heart} size="16" micro />
       </Button>
       <Button
         color="tertiary"
@@ -205,7 +205,7 @@
         title={$t('nav.menu.source')}
         size="square-md"
       >
-        <Icon src={CodeBracketSquare} size="16" mini />
+        <Icon src={CodeBracketSquare} size="16" micro />
       </Button>
     </div>
   </li>

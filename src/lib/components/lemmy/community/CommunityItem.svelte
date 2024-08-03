@@ -39,7 +39,7 @@
     <a
       href="/c/{fullCommunityName(
         community.community.name,
-        community.community.actor_id,
+        community.community.actor_id
       )}"
       class="hover:underline"
     >
@@ -51,7 +51,7 @@
     </a>
     <div class="ml-auto flex flex-row items-center gap-2">
       <Button size="square-md" on:click={() => (showInfo = !showInfo)}>
-        <Icon src={InformationCircle} size="16" mini />
+        <Icon src={InformationCircle} size="16" micro />
       </Button>
       <Subscribe {community} let:subscribe let:subscribing>
         <Button
@@ -69,7 +69,7 @@
               community.subscribed = newSubscribed
               addSubscription(
                 community.community,
-                newSubscribed == 'Subscribed',
+                newSubscribed == 'Subscribed'
               )
             }
           }}
@@ -81,7 +81,7 @@
           <Icon
             src={isSubscribed(community.subscribed) ? Check : Plus}
             size="16"
-            mini
+            micro
             slot="prefix"
           />
           {#if isSubscribed(community.subscribed)}

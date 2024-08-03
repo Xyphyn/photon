@@ -153,7 +153,7 @@
       rounding="pill"
       class={buttonSquare}
     >
-      <Icon src={BugAnt} mini size="16" slot="prefix" />
+      <Icon src={BugAnt} micro size="16" slot="prefix" />
     </Button>
   {/if}
   {#if $profile?.user && (amMod($profile.user, post.community) || isAdmin($profile.user))}
@@ -207,14 +207,14 @@
       size="custom"
       class={buttonSquare}
     >
-      <Icon slot="prefix" src={EllipsisHorizontal} width={16} mini />
+      <Icon slot="prefix" src={EllipsisHorizontal} width={16} micro />
     </Button>
     <MenuDivider>{$t('post.actions.more.creator')}</MenuDivider>
     <MenuButton
       link
       href="/u/{post.creator.name}@{new URL(post.creator.actor_id).hostname}"
     >
-      <Icon src={UserCircle} width={16} mini slot="prefix" />
+      <Icon src={UserCircle} size="16" micro slot="prefix" />
       <span>{post.creator.name}</span>
     </MenuButton>
     <MenuButton
@@ -222,7 +222,7 @@
       href="/c/{post.community.name}@{new URL(post.community.actor_id)
         .hostname}"
     >
-      <Icon src={Newspaper} width={16} mini slot="prefix" />
+      <Icon src={Newspaper} size="16" micro slot="prefix" />
       <span>{post.community.title}</span>
     </MenuButton>
     <MenuButton
@@ -245,7 +245,7 @@
         {#if fediseerLoading}
           <Spinner width={14} />
         {:else}
-          <Icon src={ServerStack} width={16} mini />
+          <Icon src={ServerStack} size="16" micro />
         {/if}
       </svelte:fragment>
       <span>{new URL(post.community.actor_id).hostname}</span>
@@ -254,7 +254,7 @@
     <MenuDivider>{$t('post.actions.more.actions')}</MenuDivider>
     {#if $profile?.user && $profile?.jwt && $profile.user.local_user_view.person.id == post.creator.id}
       <MenuButton on:click={() => (editing = true)}>
-        <Icon src={PencilSquare} width={16} mini slot="prefix" />
+        <Icon src={PencilSquare} size="16" micro slot="prefix" />
         {$t('post.actions.more.edit')}
       </MenuButton>
     {/if}
@@ -265,7 +265,7 @@
             post.read = await markAsRead(post.post, !post.read, $profile.jwt)
         }}
       >
-        <Icon slot="prefix" src={post.read ? EyeSlash : Eye} width={16} mini />
+        <Icon slot="prefix" src={post.read ? EyeSlash : Eye} size="16" micro />
         {post.read
           ? $t('post.actions.more.markUnread')
           : $t('post.actions.more.markRead')}
@@ -287,7 +287,7 @@
       }}
       class="flex-1 !py-0"
     >
-      <Icon src={Share} width={16} mini slot="prefix" />
+      <Icon src={Share} size="16" micro slot="prefix" />
       {$t('post.actions.more.share')}
       {#if !post.post.local}
         <Switch
@@ -310,7 +310,7 @@
           translating = !translating
         }}
       >
-        <Icon src={Language} size="16" mini slot="prefix" />
+        <Icon src={Language} size="16" micro slot="prefix" />
         {$t('post.actions.more.translate')}
       </MenuButton>
     {/if}
@@ -338,7 +338,7 @@
           goto('/create/post?crosspost=true')
         }}
       >
-        <Icon src={ArrowTopRightOnSquare} width={16} mini slot="prefix" />
+        <Icon src={ArrowTopRightOnSquare} size="16" micro slot="prefix" />
         {$t('post.actions.more.crosspost')}
       </MenuButton>
       {#if $profile.user && post.creator.id == $profile.user.local_user_view.person.id}
@@ -353,7 +353,7 @@
           }}
           color="danger-subtle"
         >
-          <Icon src={Trash} width={16} mini slot="prefix" />
+          <Icon src={Trash} size="16" micro slot="prefix" />
           {post.post.deleted
             ? $t('post.actions.more.restore')
             : $t('post.actions.more.delete')}
@@ -376,14 +376,14 @@
             }}
             color="danger-subtle"
           >
-            <Icon slot="prefix" src={XMark} size="16" mini />
+            <Icon slot="prefix" src={XMark} size="16" micro />
             {post.hidden
               ? $t('post.actions.more.unhide')
               : $t('post.actions.more.hide')}
           </MenuButton>
         {/if}
         <MenuButton on:click={() => report(post)} color="danger-subtle">
-          <Icon src={Flag} width={16} mini slot="prefix" />
+          <Icon src={Flag} width={16} micro slot="prefix" />
           {$t('moderation.report')}
         </MenuButton>
       {/if}
