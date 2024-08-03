@@ -13,6 +13,7 @@ const ASSETS = [
 ]
 
 self.addEventListener('install', (event) => {
+  console.info('[i] Installing service worker')
   // Create a new cache and add all files to it
   async function addFilesToCache() {
     const cache = await caches.open(CACHE)
@@ -23,6 +24,7 @@ self.addEventListener('install', (event) => {
 })
 
 self.addEventListener('activate', (event) => {
+  console.info('[i] Activating service worker')
   // Remove previous cached data from disk
   async function deleteOldCaches() {
     for (const key of await caches.keys()) {
@@ -59,10 +61,6 @@ self.addEventListener('fetch', (event) => {
       // instead of throwing - and we can't pass this non-Response to respondWith
       if (!(response instanceof Response)) {
         throw new Error('invalid response from fetch')
-      }
-
-      if (response.status === 200) {
-        cache.put(event.request, response.clone())
       }
 
       return response
