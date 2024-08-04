@@ -344,12 +344,7 @@
     {#if $profile?.jwt}
       {#if !commenting}
         <EndPlaceholder class="">
-          <Button
-            rounding="pill"
-            class="mx-auto"
-            size="lg"
-            on:click={() => (commenting = true)}
-          >
+          <Button color="primary" on:click={() => (commenting = true)}>
             <Icon src={PlusCircle} size="16" micro />
             {$t('routes.post.addComment')}
           </Button>
