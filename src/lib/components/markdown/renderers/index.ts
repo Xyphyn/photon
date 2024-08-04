@@ -5,7 +5,6 @@ import MdQuote from './MdQuote.svelte'
 import MdHr from './MdHr.svelte'
 import MdCode from './MdCode.svelte'
 import MdHtml from './MdHtml.svelte'
-import MdText from './MdText.svelte'
 import MdList from './MdList.svelte'
 import MdSpoiler from './MdSpoiler.svelte'
 import MdTable from './table/MdTable.svelte'
@@ -14,6 +13,9 @@ import MdTableCell from './table/MdTableCell.svelte'
 import MdTableHead from './table/MdTableHead.svelte'
 import MdTableRow from './table/MdTableRow.svelte'
 import MdParagraph from './MdParagraph.svelte'
+import MdListItem from './MdListItem.svelte'
+import MdSubscript from './MdSubscript.svelte'
+import MdSuperscript from './MdSuperscript.svelte'
 
 export {
   MdCode,
@@ -23,7 +25,6 @@ export {
   MdImage,
   MdLink,
   MdQuote,
-  MdText,
   MdList,
   MdSpoiler,
   MdTable,
@@ -32,4 +33,7 @@ export {
   MdTableHead,
   MdTableRow,
   MdParagraph,
+  MdListItem,
+  MdSubscript,
+  MdSuperscript,
 }

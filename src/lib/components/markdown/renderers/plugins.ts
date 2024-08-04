@@ -119,3 +119,37 @@ export const photonify = (link: string) => {
     return `/c/${match?.[3]}@${match?.[1]}`
   }
 }
+
+export function subSupscriptExtension(tokensExtractor: any): any {
+  return {
+    name: 'subscriptSuperscript',
+    level: 'inline',
+    start(src: string) {
+      return src.match(/[~^]/)?.index
+    },
+    tokenizer(src: string, tokens: any[]): any {
+      const subscriptRule = /^~([^~\s](?:[^~]*[^~\s])?)~/
+      const superscriptRule = /^\^([^\^\s](?:[^\^]*[^\^\s])?)\^/
+
+      let match
+
+      if ((match = subscriptRule.exec(src))) {
+        return tokensExtractor({
+          type: 'subscript',
+          content: match[1],
+          raw: match[0],
+          lexer: this.lexer,
+        })
+      }
+
+      if ((match = superscriptRule.exec(src))) {
+        return tokensExtractor({
+          type: 'superscript',
+          content: match[1],
+          raw: match[0],
+          lexer: this.lexer,
+        })
+      }
+    },
+  }
+}

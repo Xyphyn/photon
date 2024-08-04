@@ -10,6 +10,7 @@
 
   function extractTitle(text: string) {
     const spoilerRegex = /^::: ?spoiler (.+)\n([\s\S]+?)\n:::/gm
+
     const result = spoilerRegex.exec(text)
 
     if (!result?.[1] || !result?.[2])

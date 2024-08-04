@@ -8,7 +8,6 @@
     MdImage,
     MdLink,
     MdQuote,
-    MdText,
     MdList,
     MdTable,
     MdTableBody,
@@ -16,17 +15,21 @@
     MdTableCell,
     MdTableHead,
     MdTableRow,
+    MdParagraph,
+    MdListItem,
+    MdSubscript,
+    MdSuperscript,
   } from './renderers/index'
-  import { linkify } from './renderers/plugins'
+  import { linkify, subSupscriptExtension } from './renderers/plugins'
   import containerExtension from './renderers/spoiler/spoiler'
 
-  marked.setOptions({
-    pedantic: false,
-    // @ts-ignore
+  export const options: any = {
     mangle: false,
-    // @ts-ignore
     headerIds: false,
-  })
+    pedantic: false,
+  }
+
+  marked.setOptions(options)
 
   marked.use(linkify, {
     extensions: [
@@ -41,6 +44,23 @@
         }
         return null
       }),
+      subSupscriptExtension((params: any) => {
+        if (params.type == 'subscript') {
+          return {
+            type: 'subscript',
+            raw: params.raw,
+            text: params.content,
+          }
+        }
+        if (params.type == 'superscript') {
+          return {
+            type: 'superscript',
+            raw: params.raw,
+            text: params.content,
+          }
+        }
+        return null
+      }),
     ],
   })
 
@@ -51,10 +71,8 @@
     blockquote: MdQuote,
     hr: MdHr,
     html: MdHtml,
-    text: MdText,
     code: MdCode,
     list: MdList,
-    del: MdText,
     // @ts-ignore
     spoiler: MdSpoiler,
     table: MdTable,
@@ -62,11 +80,10 @@
     tablecell: MdTableCell,
     tablehead: MdTableHead,
     tablerow: MdTableRow,
-  }
-
-  export const options: any = {
-    mangle: false,
-    headerIds: false,
+    paragraph: MdParagraph,
+    listitem: MdListItem,
+    subscript: MdSubscript,
+    superscript: MdSuperscript,
   }
 </script>
 
