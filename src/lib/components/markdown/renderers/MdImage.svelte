@@ -37,7 +37,7 @@
         src={optimizeImageURL(href, 1024)}
         {title}
         alt={text}
-        class="object-contain w-auto h-auto max-h-80 inline"
+        class="object-contain w-auto h-auto max-h-80 inline rounded-lg"
       />
     </button>
   {/if}
