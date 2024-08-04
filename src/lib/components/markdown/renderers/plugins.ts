@@ -7,7 +7,7 @@ export const spoilerPlugin = {
   start(src: string) {
     return src.match(/^:::/)?.index
   },
-  tokenizer(src: string, tokens: marked.TokensList) {
+  tokenizer(src: string, tokens: any) {
     const rule = /^::: spoiler (.+)\n([\s\S]*?)\n:::/
     const match = rule.exec(src)
     if (match) {
@@ -104,7 +104,10 @@ export const photonify = (link: string) => {
   if (regexes.community.test(link)) {
     const match = link.match(regexes.community)
     if (!match) return
-    return `/c/${match?.[3]}@${match?.[1]}`
+
+    // If the match[3] includes @, the URL included an instance already, so don't add one.
+    if (match?.[3].includes('@')) return `/c/${match?.[3]}`
+    else return `/c/${match?.[3]}@${match?.[1]}`
   }
   if (regexes.post.test(link)) {
     const match = link.match(regexes.post)
@@ -119,8 +122,12 @@ export const photonify = (link: string) => {
   if (regexes.user.test(link)) {
     const match = link.match(regexes.user)
     if (!match) return
-    return `/u/${match?.[3]}@${match?.[1]}`
+
+    // Same as above for the community.
+    if (match?.[3].includes('@')) return `/c/${match?.[3]}`
+    else return `/c/${match?.[3]}@${match?.[1]}`
   }
+  // Support implicit user syntax (no preceding @), by messing with mailto links.
   if (regexes.implicitUser.test(link)) {
     const exec = regexes.implicitUser.exec(link)
 
