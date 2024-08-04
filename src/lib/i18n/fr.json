@@ -32,7 +32,19 @@
             "app": "Application"
         },
         "home": "Page d'acceuil",
-        "admin": "Administrateur"
+        "admin": "Administrateur",
+        "commands": {
+            "prompt": "Palette de Commande",
+            "recents": "Récents",
+            "content": "contenu",
+            "search": "Recherche pour {{default}}",
+            "main": "Principal",
+            "setView": "Choisir le style",
+            "setViewTo": "Choisir style {{default}}",
+            "setColor": "Choisir les couleurs",
+            "setColorTo": "Mettre la couleur en mode {{default}}",
+            "feeds": "Tris"
+        }
     },
     "account": {
         "login": "Connexion",
@@ -370,7 +382,19 @@
                 "title": "Réinitialiser les paramètres d'apparence",
                 "description": "Ceci remettera a zéro toute la configuration de l'apparence, il est conseillé de l'exporter d'abord."
             },
-            "title": "Apparence"
+            "title": "Apparence",
+            "preset": {
+                "default": "Défaut",
+                "classic": "Classique",
+                "imported": "Votre Thème",
+                "new": "Nouveau thème"
+            }
+        },
+        "community": {
+            "settings": {
+                "team": "Équipe",
+                "settings": "Paramètres"
+            }
         }
     },
     "verifyEmail": {
@@ -509,7 +533,8 @@
             "comment": "Commentaire",
             "message": "Message",
             "title": "Enlevant la Soumission",
-            "failEmptyReply": "Votre reponse ne peux pas être vide si l'option \"repondre avec une raison\" est choisie."
+            "failEmptyReply": "Votre reponse ne peux pas être vide si l'option \"repondre avec une raison\" est choisie.",
+            "titlePurge": "Purger la publication"
         },
         "reportModal": {
             "title": "Signaler"
