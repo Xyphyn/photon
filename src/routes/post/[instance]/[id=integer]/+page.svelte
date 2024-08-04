@@ -294,8 +294,8 @@
 {#if data.thread.showContext || data.thread.singleThread}
   <div
     class="sticky mx-auto z-50 max-w-lg w-full min-w-0 flex items-center overflow-auto gap-1
-    bg-slate-50/50 dark:bg-zinc-900/50 backdrop-blur-xl border border-slate-100/50 dark:border-zinc-800/50
-    p-1 rounded-full px-2 justify-between"
+    bg-slate-50/50 dark:bg-zinc-900/50 backdrop-blur-xl border border-slate-200/50 dark:border-zinc-800/50
+    p-1 rounded-full px-2.5 justify-between"
     style="top: max(1.5rem, {$contentPadding.top}px);"
   >
     <p class="font-medium text-sm flex items-center gap-2">
@@ -312,7 +312,7 @@
       href={data.thread.showContext
         ? `/comment/${$page.params.instance}/${data.thread.showContext}`
         : undefined}
-      class="hover:bg-slate-200/30 dark:hover:bg-zinc-800/30"
+      class="hover:bg-white/50 dark:hover:bg-zinc-800/30"
       on:click={data.thread.singleThread ? reloadComments : undefined}
     >
       {data.thread.showContext
@@ -343,7 +343,7 @@
   {:then comments}
     {#if $profile?.jwt}
       {#if !commenting}
-        <EndPlaceholder>
+        <EndPlaceholder class="">
           <Button
             rounding="pill"
             class="mx-auto"
