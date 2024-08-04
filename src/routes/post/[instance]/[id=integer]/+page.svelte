@@ -430,14 +430,7 @@
         icon={ChatBubbleLeftRight}
         title={$t('routes.post.emptyComments.title')}
         description={$t('routes.post.emptyComments.description')}
-      >
-        {#if $profile.jwt}
-          <Button color="primary" on:click={() => (commenting = true)}>
-            <Icon src={PlusCircle} size="16" micro />
-            {$t('routes.post.addComment')}
-          </Button>
-        {/if}
-      </Placeholder>
+      ></Placeholder>
     {/if}
   {/await}
   {#if post.post_view.counts.comments > 5}
