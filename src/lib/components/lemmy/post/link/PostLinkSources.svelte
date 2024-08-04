@@ -36,19 +36,21 @@
   import { Menu, MenuButton, MenuDivider } from 'mono-svelte'
   import type { MediaType } from '../helpers'
   import { CheckBadge, Icon } from 'svelte-hero-icons'
+  import type { View } from '$lib/settings'
 
   export let url: string
   export let type: MediaType = 'embed'
+  export let view: View = 'cozy'
 
-  let mediaBias = false
+  export let openMediaBias = false
 
   const stripSubdomain = (url: string) =>
     new URL(url).hostname.split('.').slice(-2).join('.')
 </script>
 
-{#if mediaBias}
+{#if openMediaBias}
   {#await import('$lib/components/mbfc/MBFCModal.svelte') then { default: MbfcModal }}
-    <MbfcModal domain={stripSubdomain(url)} bind:open={mediaBias} />
+    <MbfcModal domain={stripSubdomain(url)} bind:open={openMediaBias} />
   {/await}
 {/if}
 
@@ -63,9 +65,11 @@
       </MenuButton>
     {/if}
   {/each}
-  <MenuDivider>{$t('post.actions.link.actions')}</MenuDivider>
-  <MenuButton on:click={() => (mediaBias = !mediaBias)}>
-    <Icon src={CheckBadge} size="16" micro slot="prefix" />
-    {$t('post.actions.more.mediaBias')}
-  </MenuButton>
+  {#if view == 'compact'}
+    <MenuDivider>{$t('post.actions.link.actions')}</MenuDivider>
+    <MenuButton on:click={() => (openMediaBias = !openMediaBias)}>
+      <Icon src={CheckBadge} size="16" micro slot="prefix" />
+      {$t('post.actions.more.mediaBias')}
+    </MenuButton>
+  {/if}
 </Menu>

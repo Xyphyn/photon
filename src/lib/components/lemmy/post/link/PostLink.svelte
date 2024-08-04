@@ -1,7 +1,12 @@
 <script lang="ts">
   import Link, { parseURL } from '$lib/components/input/Link.svelte'
   import { Button, Material } from 'mono-svelte'
-  import { ChevronDown, Icon, Link as LinkIcon } from 'svelte-hero-icons'
+  import {
+    CheckBadge,
+    ChevronDown,
+    Icon,
+    Link as LinkIcon,
+  } from 'svelte-hero-icons'
   import { optimizeImageURL } from '../helpers'
   import PostLinkSources from './PostLinkSources.svelte'
   import { t } from '$lib/translations'
@@ -13,6 +18,8 @@
   export let embed_title: string | undefined = undefined
   export let embed_description: string | undefined = undefined
   export let view: View = 'cozy'
+
+  let openMediaBias = false
 
   $: richURL = parseURL(url)
 </script>
@@ -93,7 +100,7 @@
   border-slate-200 dark:border-zinc-800
   flex flex-row items-center overflow-auto"
   >
-    <PostLinkSources {url}>
+    <PostLinkSources {url} {view} bind:openMediaBias>
       <Button
         color="tertiary"
         slot="target"
@@ -105,10 +112,20 @@
         {$t('post.actions.link.actions')}
       </Button>
     </PostLinkSources>
+    <Button
+      color="tertiary"
+      size="sm"
+      class="w-max text-slate-600 dark:text-zinc-400 block
+    text-xs"
+      on:click={() => (openMediaBias = !openMediaBias)}
+    >
+      <Icon src={CheckBadge} size="16" micro slot="prefix" />
+      {$t('post.actions.more.mediaBias')}
+    </Button>
   </Material>
 {:else}
   <div class="flex items-center gap-1">
-    <PostLinkSources {url}>
+    <PostLinkSources {url} {view}>
       <Button
         color="ghost"
         slot="target"
