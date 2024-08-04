@@ -11,8 +11,6 @@
   export let title: string | undefined = undefined
   export let text: string = ''
 
-  console.log(href)
-
   $: type = mediaType(href, 'cozy')
 </script>
 
