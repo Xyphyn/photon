@@ -36,16 +36,20 @@ export const optimizeImageURL = (
   try {
     const url = new URL(urlStr)
 
-    url.searchParams.append('format', 'webp')
+    if (!url.searchParams.has('format')) url.searchParams.set('format', 'webp')
 
-    if (width > 0) {
-      url.searchParams.append(
+    if (width > 0 && !url.searchParams.has('thumbnail')) {
+      url.searchParams.set(
         'thumbnail',
         findClosestNumber(
           [128, 196, 256, 512, 728, 1024, 1536],
           width
         ).toString()
       )
+    }
+
+    if (width == -1) {
+      url.searchParams.delete('thumbnail')
     }
 
     return url.toString()
@@ -74,7 +78,8 @@ export const mediaType = (url?: string, view: View = 'cozy'): MediaType => {
     if (isImage(url)) return 'image'
     if (isVideo(url)) return 'iframe'
     if (isYoutubeLink(url)) return 'iframe'
-    return 'embed'
+    if (URL.canParse(url)) return 'embed'
+    return 'none'
   }
 
   return 'none'

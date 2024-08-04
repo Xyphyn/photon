@@ -107,14 +107,14 @@
           on:click={() => markAsRead(!item.read)}
           title={$t('post.actions.more.markRead')}
         >
-          <Icon slot="prefix" src={Check} mini size="16" />
+          <Icon slot="prefix" src={Check} micro size="16" />
         </Button>
       {/if}
 
       {#if item.type == 'private_message'}
         {#if item.item.creator.id != $profile?.user?.local_user_view.person.id}
           <Button size="square-md" on:click={() => (replying = !replying)}>
-            <Icon src={ArrowUturnLeft} size="16" mini />
+            <Icon src={ArrowUturnLeft} size="16" micro />
           </Button>
         {/if}
       {:else}
@@ -123,7 +123,7 @@
           href="/comment/{item.item.comment.id}"
           size="square-md"
         >
-          <Icon src={ArrowUturnUp} mini size="16" />
+          <Icon src={ArrowUturnUp} micro size="16" />
         </Button>
       {/if}
     </div>

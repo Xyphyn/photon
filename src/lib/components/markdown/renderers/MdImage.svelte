@@ -11,11 +11,13 @@
   export let title: string | undefined = undefined
   export let text: string = ''
 
+  console.log(href)
+
   $: type = mediaType(href, 'cozy')
 </script>
 
 <div
-  class="max-w-xl h-auto rounded-2xl p-2 border border-slate-200 dark:border-zinc-800
+  class="w-auto h-auto max-h-96 rounded-2xl p-2 border border-slate-200 dark:border-zinc-800
   inline-block"
 >
   {#if type == 'video' || type == 'embed' || type == 'iframe'}
@@ -27,12 +29,15 @@
       class="w-full"
     />
   {:else}
-    <button on:click={() => showImage(href, text)}>
+    <button
+      class="inline"
+      on:click={() => showImage(optimizeImageURL(href, -1), text)}
+    >
       <img
         src={optimizeImageURL(href, 1024)}
         {title}
         alt={text}
-        class="rounded-lg"
+        class="object-contain w-auto h-auto max-h-80 inline"
       />
     </button>
   {/if}
