@@ -19,6 +19,7 @@
     InformationCircle,
     Home,
     PlusCircle,
+    ChatBubbleLeftRight,
   } from 'svelte-hero-icons'
   import PostLink from '$lib/components/lemmy/post/link/PostLink.svelte'
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
@@ -53,6 +54,7 @@
   import { createWindowVirtualizer } from '@tanstack/svelte-virtual'
   import { resumables } from '$lib/lemmy/item.js'
   import { contentPadding } from '$lib/components/ui/layout/Shell.svelte'
+  import Placeholder from '$lib/components/ui/Placeholder.svelte'
 
   export let data
 
@@ -423,6 +425,20 @@
       )}
       isParent={true}
     />
+    {#if comments.comments.length == 0}
+      <Placeholder
+        icon={ChatBubbleLeftRight}
+        title={$t('routes.post.emptyComments.title')}
+        description={$t('routes.post.emptyComments.description')}
+      >
+        {#if $profile.jwt}
+          <Button color="primary" on:click={() => (commenting = true)}>
+            <Icon src={PlusCircle} size="16" micro />
+            {$t('routes.post.addComment')}
+          </Button>
+        {/if}
+      </Placeholder>
+    {/if}
   {/await}
   {#if post.post_view.counts.comments > 5}
     <EndPlaceholder>

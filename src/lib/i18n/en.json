@@ -236,6 +236,10 @@
                 "allComments": "All Comments",
                 "part": "You're viewing part of a thread.",
                 "context": "Show Context"
+            },
+            "emptyComments": {
+                "title": "No comments",
+                "description": "Start the conversation!"
             }
         },
         "inbox": {
