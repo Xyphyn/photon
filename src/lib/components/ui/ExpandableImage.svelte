@@ -14,6 +14,7 @@
   import { Icon, XMark } from 'svelte-hero-icons'
   import { backOut, expoOut } from 'svelte/easing'
   import { fade, scale } from 'svelte/transition'
+  import { focusTrap } from 'svelte-focus-trap'
 
   /**
    * The full-resolution image URL
@@ -31,6 +32,10 @@
     flex flex-col z-[200] overscroll-contain"
     transition:fade={{ duration: 150 }}
     on:click={() => history.back()}
+    on:keydown={(e) => {
+      if (e.key == 'Escape') history.back()
+    }}
+    use:focusTrap
   >
     <Button size="square-md" class="fixed z-[110] top-0 right-0 m-4">
       <Icon src={XMark} size="16" mini slot="prefix" />
