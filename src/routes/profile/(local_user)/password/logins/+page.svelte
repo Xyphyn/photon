@@ -35,7 +35,7 @@
       </tr>
     </thead>
     <tbody
-      class="divide-y *:h-14 divide-slate-200 dark:divide-zinc-800 bg-white
+      class="divide-y *:h-14 divide-slate-200 dark:divide-zinc-800 bg-white dark:bg-zinc-950
       "
     >
       {#each data.tokens as token}

@@ -18,7 +18,7 @@
   grid-rows-2"
 >
   <EntityHeader
-    color="transparent"
+    color="default"
     avatar={data.my_user?.local_user_view.person.avatar}
     name={$t('routes.profile.welcome', {
       default: data.my_user?.local_user_view.person.name,
