@@ -92,6 +92,7 @@
       : 'py-5 flex flex-col gap-2'} {$$props.class}"
   id={post.post.id.toString()}
   padding="none"
+  rounding={view == 'card' ? undefined : 'none'}
   on:click={(e) => {
     onClick(e)
   }}
@@ -126,6 +127,7 @@
     title={hideTitle ? undefined : tags?.title ? tags.title : post.post.name}
     read={post.read}
     style="grid-area: meta;"
+    edited={post.post.updated != undefined}
     tags={tags?.tags}
     {view}
   >

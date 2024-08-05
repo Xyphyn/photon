@@ -63,7 +63,7 @@
   import { userSettings, type View } from '$lib/settings'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import { t } from '$lib/translations'
-  import type { IconSource } from 'svelte-hero-icons'
+  import { Pencil, type IconSource } from 'svelte-hero-icons'
 
   export let community: Community | undefined = undefined
   export let showCommunity: boolean = true
@@ -74,6 +74,7 @@
   export let title: string | undefined = undefined
   export let id: number | undefined = undefined
   export let read: boolean = false
+  export let edited: boolean = false
 
   export let view: View = 'cozy'
 
@@ -171,6 +172,9 @@
     {/if}
     {#if published}
       <RelativeDate date={published} class="flex-shrink-0" />
+    {/if}
+    {#if edited}
+      <Icon src={Pencil} micro size="14" />
     {/if}
   </span>
   <div
