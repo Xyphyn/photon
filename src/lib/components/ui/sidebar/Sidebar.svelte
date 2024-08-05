@@ -108,14 +108,28 @@
   {/if}
   {#if $profileData.profiles.length >= 1}
     <hr class="border-slate-200 dark:border-zinc-900 my-1" />
-    {#each [...$profileData.profiles] as prof, index (prof.id)}
-      <div animate:flip={{ duration: 300, easing: expoOut }} class="w-full">
-        <ProfileButton {index} {prof} />
-      </div>
-    {/each}
-    <SidebarButton href="/accounts" icon={UserGroup}>
-      <span slot="label">{$t('account.accounts')}</span>
-    </SidebarButton>
+
+    <Expandable
+      class="max-w-full min-w-0 w-full"
+      bind:open={$userSettings.expand.accounts}
+    >
+      <span slot="title" class="px-2 py-1 w-full">
+        <EndPlaceholder>
+          {$t('account.accounts')}
+          <span slot="action" class="dark:text-white text-black">
+            {$profileData.profiles.length}
+          </span>
+        </EndPlaceholder>
+      </span>
+      {#each [...$profileData.profiles] as prof, index (prof.id)}
+        <div animate:flip={{ duration: 300, easing: expoOut }} class="w-full">
+          <ProfileButton {index} {prof} />
+        </div>
+      {/each}
+      <SidebarButton href="/accounts" icon={UserGroup}>
+        {$t('account.accounts')}
+      </SidebarButton>
+    </Expandable>
   {/if}
   <hr class="border-slate-200 dark:border-zinc-900 my-1" />
   {#if $profile?.favorites && $profile?.favorites.length > 0}

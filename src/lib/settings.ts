@@ -55,6 +55,7 @@ interface Settings {
     about: boolean
     stats: boolean
     team: boolean
+    accounts: boolean
   }
   displayNames: boolean
   nsfwBlur: boolean
@@ -128,6 +129,7 @@ export const defaultSettings: Settings = {
     about: false,
     stats: false,
     team: false,
+    accounts: false,
   },
   displayNames: toBool(env.PUBLIC_DISPLAY_NAMES) ?? true,
   nsfwBlur: toBool(env.PUBLIC_NSFW_BLUR) ?? true,

@@ -21,7 +21,7 @@
   {href}
   on:click
   on:contextmenu
-  class="font-normal {selected
+  class="font-normal block {selected
     ? 'text-primary-900 dark:!text-primary-100 bg-slate-100 dark:bg-zinc-800'
     : 'text-slate-600 dark:text-zinc-400'} {$$props.class}"
 >
@@ -31,11 +31,7 @@
     {/if}
   </slot>
   <slot />
-  <div
-    class="{$userSettings.expandSidebar
-      ? 'contents'
-      : '//max-lg:hidden'} contents"
-  >
+  <div class="contents">
     <slot name="label" />
   </div>
 </Button>
