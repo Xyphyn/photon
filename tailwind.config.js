@@ -15,6 +15,7 @@ export default {
       inter: ['Inter', 'system-ui', 'sans-serif'],
       nunito: ['Nunito', 'system-ui', 'sans-serif'],
       display: ['Satoshi', 'system-ui', 'sans-serif'],
+      mono: ['monospace'],
     },
     extend: {
       animation: {

@@ -14,7 +14,7 @@
   }[] = []
 </script>
 
-<Material color="transparent" padding="none" rounding="xl">
+<Material color="transparent" padding="none" rounding="xl" {...$$restProps}>
   {#if banner}
     <div class="max-h-36 overflow-visible">
       <img
@@ -34,7 +34,7 @@
         class="ring-4 ring-slate-25 dark:ring-zinc-925 bg-slate-25 dark:bg-zinc-925"
       />
       <div>
-        <span class="text-lg font-semibold">
+        <span class="text-lg font-medium">
           {name}
         </span>
         <span

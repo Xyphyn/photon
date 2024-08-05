@@ -13,6 +13,7 @@
     "@tailwindcss/container-queries": "^0.1.1",
     "@tanstack/svelte-virtual": "^3.8.1",
     "@types/nprogress": "^0.2.0",
+    "@types/ua-parser-js": "^0.7.39",
     "autoprefixer": "^10.4.16",
     "jsdom": "^22.1.0",
     "lemmy-js-client": "latest",
@@ -32,6 +33,7 @@
     "tailwindcss": "^3.3.3",
     "tslib": "^2.4.1",
     "typescript": "^5.0.0",
+    "ua-parser-js": "^1.0.38",
     "vite": "^5.0.0",
     "vitest": "^1.0.0"
   },

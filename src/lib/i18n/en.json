@@ -197,7 +197,7 @@
             "user": "User",
             "settings": "Settings",
             "blocks": "Blocks",
-            "credentials": "Credentials",
+            "credentials": "Account",
             "moderates": "Moderating",
             "favorites": "Favorites",
             "upvoted": "Upvoted",
@@ -205,6 +205,12 @@
             "media": {
                 "title": "Media",
                 "download": "Download"
+            },
+            "logins": "Logins",
+            "welcome": "Welcome, {{default}}!",
+            "delete": {
+                "title": "Delete account",
+                "warning": "This is permanent. Are you sure you want to do this?"
             }
         },
         "translators": "Translators",
@@ -532,7 +538,8 @@
         "disable": "Disable",
         "add": "Add",
         "cancel": "Cancel",
-        "send": "Send"
+        "send": "Send",
+        "general": "General"
     },
     "message": {
         "success": "Success",

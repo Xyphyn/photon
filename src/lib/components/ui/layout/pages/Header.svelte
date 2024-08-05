@@ -20,7 +20,7 @@
 "
 >
   <h1
-    class="text-3xl font-bold flex items-center gap-2 w-full
+    class="text-3xl font-medium flex items-center gap-2 w-full
   {$userSettings.font == 'satoshi/nunito'
       ? 'font-display'
       : ''} {$$props.class ?? ''}"
