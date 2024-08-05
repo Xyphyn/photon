@@ -84,7 +84,7 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <Material
   color={view != 'card' ? 'none' : 'distinct'}
-  class="post relative max-w-full min-w-0 w-full group cursor-pointer
+  class="post relative max-w-full min-w-0 w-full cursor-pointer outline-none group
   {view != 'card' ? 'bg-transparent !border-0' : 'p-5'} {view == 'compact'
     ? 'py-3 list-type compact-view'
     : view == 'list'
@@ -95,6 +95,11 @@
   on:click={(e) => {
     onClick(e)
   }}
+  on:keydown={(e) => {
+    // @ts-ignore
+    if (e.key == 'Enter') onClick(e)
+  }}
+  tabindex="0"
   style={$$props.style ?? ''}
 >
   <PostMeta
@@ -170,9 +175,11 @@
     </div>
   {/if}
   <div
-    class="absolute overflow-hidden inset-0 group-hover:inset-y-0.5 group-hover:-inset-x-4 group-hover:sm:-inset-x-5
+    class="absolute overflow-hidden inset-0
     sm:rounded-xl bg-slate-50 dark:bg-zinc-900
-    opacity-0 group-hover:opacity-100 transition-all -z-50 no-list-margin
+    opacity-0 transition-all -z-50 no-list-margin
+    group-hover:inset-y-0.5 group-hover:-inset-x-4 group-hover:sm:-inset-x-5 group-hover:opacity-100
+    group-focus:inset-y-0.5 group-focus:-inset-x-4 group-focus:sm:-inset-x-5 group-focus:opacity-100
     duration-150"
   />
 </Material>

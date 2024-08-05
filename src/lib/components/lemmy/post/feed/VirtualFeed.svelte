@@ -38,6 +38,8 @@
   import InfiniteScroll from 'svelte-infinite-scroll'
   import type { Readable } from 'svelte/motion'
   import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
+  import { postLink } from '../helpers'
+  import { writable } from 'svelte/store'
 
   export let posts: PostView[]
   export let community: boolean = false
@@ -177,7 +179,36 @@
     await tick()
     $virtualizer.measure()
   })
+
+  // keyboard handling
+  let selectedIndex = writable(-1)
+
+  function handleKeydown(event: KeyboardEvent) {
+    if (event.key === 'ArrowUp') {
+      event.preventDefault()
+      $selectedIndex = Math.max(0, $selectedIndex - 1)
+    } else if (event.key === 'ArrowDown') {
+      event.preventDefault()
+      $selectedIndex = Math.min(posts.length - 1, $selectedIndex + 1)
+    }
+  }
+
+  onMount(() => {
+    selectedIndex.subscribe(focusItem)
+  })
+
+  function focusItem(index: number) {
+    const el =
+      virtualItemEls.find(
+        (el) => Number(el?.getAttribute('data-index')) == index
+      ) ?? virtualItemEls[1]
+
+    $virtualizer.scrollToIndex(index, { align: 'center', behavior: 'auto' })
+    el?.firstChild?.firstChild?.parentElement?.focus({})
+  }
 </script>
+
+<svelte:window on:keydown={handleKeydown} />
 
 <ul
   class="flex flex-col list-none {$userSettings.view == 'card'
@@ -223,8 +254,7 @@
           <li
             bind:this={virtualItemEls[index]}
             data-index={row.index}
-            class="relative post-container"
-            in:fly={{ y: -16, easing: expoOut, duration: 500, opacity: 0 }}
+            class="relative post-container pop-in"
           >
             {#if posts[row.index]}
               <Post
