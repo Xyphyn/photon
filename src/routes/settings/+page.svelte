@@ -44,6 +44,7 @@
   import { locale, locales, t } from '$lib/translations'
   import { defaultLinks, iconOfLink } from '$lib/components/ui/navbar/link'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import Slider from '$lib/components/input/Slider.svelte'
 
   let pin: string = ''
   let importing = false

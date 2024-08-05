@@ -101,6 +101,7 @@ interface Settings {
   tagRules: {
     [key: string]: 'hide' | 'blur'
   }
+  logoColorMonth: number | null
 }
 
 export const defaultSettings: Settings = {
@@ -181,6 +182,7 @@ export const defaultSettings: Settings = {
     nsfl: 'blur',
     nsfw: 'blur',
   },
+  logoColorMonth: null,
 }
 
 export const userSettings = writable(defaultSettings)

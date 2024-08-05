@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { userSettings } from '$lib/settings'
+
   export let width = 48
 
   const monthColors: {
@@ -18,7 +20,7 @@
     12: '--hover-color-1: #228B22; --hover-color-2: #FFFFFF;',
   }
 
-  const getMonthColor = () => monthColors[new Date().getMonth() + 1]
+  $: monthColor = monthColors[new Date().getMonth() + 1]
 </script>
 
 <svg
@@ -28,7 +30,7 @@
   fill="none"
   xmlns="http://www.w3.org/2000/svg"
   class="inline"
-  style={getMonthColor()}
+  style={monthColor}
 >
   <linearGradient
     gradientTransform="rotate(315, 0.5, 0.5)"
