@@ -186,7 +186,8 @@
     "routes": {
         "frontpage": {
             "title": "Frontpage",
-            "footer": "{{users:number}} active {{users; 1:user; default:users;}}"
+            "footer": "{{users:number}} active {{users; 1:user; default:users;}}",
+            "endFeed": "You have reached the end of {{community_name; undefined:the feed.; default:{{community_name}}.}}"
         },
         "modlog": "Modlog",
         "instances": "Instances",

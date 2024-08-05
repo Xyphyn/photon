@@ -92,6 +92,9 @@
 
   export let source: string = ''
   export let inline: boolean = false
+
+  options.inline = inline
+
   export let noStyle: boolean = false
 
   $: tokens = marked.lexer(source)
