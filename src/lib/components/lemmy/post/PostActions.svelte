@@ -7,7 +7,9 @@
     Bookmark,
     BookmarkSlash,
     BugAnt,
+    ChatBubbleLeftEllipsis,
     ChatBubbleOvalLeft,
+    ChatBubbleOvalLeftEllipsis,
     CheckBadge,
     EllipsisHorizontal,
     Eye,
@@ -19,6 +21,7 @@
     PencilSquare,
     ServerStack,
     Share,
+    Star,
     Trash,
     UserCircle,
     XMark,
@@ -48,10 +51,11 @@
   import { fediseer, type Data } from '$lib/fediseer/fediseer'
   import { t } from '$lib/translations'
   import { text } from '$lib/components/translate/translation'
-  import { hidePost } from './helpers'
+  import { hidePost, postLink } from './helpers'
   import { feature } from '$lib/version'
   import Switch from '$lib/components/input/Switch.svelte'
   import { instanceToURL } from '$lib/util'
+  import { publishedToDate } from '$lib/components/util/date'
 
   export let post: PostView
   export let view: View = 'cozy'
@@ -126,14 +130,20 @@
 
   <Button
     size="sm"
-    href="/post/{getInstance()}/{post.post.id}"
-    class="!text-inherit h-full px-3"
+    href={postLink(post.post)}
+    class="!text-inherit h-full px-3 relative"
     color="ghost"
     rounding="pill"
     target={$userSettings.openLinksInNewTab ? '_blank' : ''}
     title={$t('post.actions.comments')}
   >
-    <Icon slot="prefix" src={ChatBubbleOvalLeft} size="18" />
+    {@const newComment =
+      publishedToDate(post.counts.newest_comment_time).getTime() >
+      new Date().getTime() - 5 * 60 * 1000}
+    <Icon
+      src={newComment ? ChatBubbleOvalLeftEllipsis : ChatBubbleOvalLeft}
+      size="18"
+    />
     <FormattedNumber number={post.counts.comments} />
   </Button>
   <div class="ml-auto" />
