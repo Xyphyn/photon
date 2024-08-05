@@ -4,10 +4,21 @@
   const monthColors: {
     [x: number]: string
   } = {
-    9: '--hover-color-1: #ff3f00; --hover-color-2: #7b2cbf;',
+    1: '--hover-color-1: #B0E0E6; --hover-color-2: #FFFFFF;',
+    2: '--hover-color-1: #A50026; --hover-color-2: #FFB6C1;',
+    3: '--hover-color-1: #90EE90; --hover-color-2: #FFFFE0;',
+    4: '--hover-color-1: #87CEEB; --hover-color-2: #FFD700;',
+    5: '--hover-color-1: #FFCC00; --hover-color-2: #FFFF99;', // Sunflower to Butter Yellow
+    6: '--hover-color-1: #4682B4; --hover-color-2: #F4A460;',
+    7: '--hover-color-1: #00BFFF; --hover-color-2: #1E90FF;', // Deep Sky Blue to Dodger Blue
+    8: '--hover-color-1: #FF5733; --hover-color-2: #FFD700;',
+    9: '--hover-color-1: #FFD700; --hover-color-2: #FF8C00;', // Gold to Orange
+    10: '--hover-color-1: #FF6347; --hover-color-2: #EE45AA;', // Tomato to Orange Red
+    11: '--hover-color-1: #ffaa10; --hover-color-2: #eeBF11;', // Maroon to Amber
+    12: '--hover-color-1: #228B22; --hover-color-2: #FFFFFF;',
   }
 
-  const getMonthColor = () => monthColors[new Date().getMonth()]
+  const getMonthColor = () => monthColors[new Date().getMonth() + 1]
 </script>
 
 <svg
