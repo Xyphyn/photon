@@ -24,7 +24,7 @@ export interface Link {
   label?: string
 }
 
-export const defaultLinks: Link[] = [
+export const getDefaultLinks = (): Link[] => [
   {
     url: '/',
     label: t.get('nav.home'),

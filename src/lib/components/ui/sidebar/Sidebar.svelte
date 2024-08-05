@@ -2,15 +2,9 @@
   import {
     ArrowLeftOnRectangle,
     Bookmark,
-    ChevronDoubleRight,
     Cog6Tooth,
-    GlobeAlt,
-    Home,
-    Icon,
     Identification,
     Inbox,
-    MagnifyingGlass,
-    ServerStack,
     UserCircle,
     UserGroup,
   } from 'svelte-hero-icons'
@@ -21,13 +15,10 @@
   import ProfileButton from '$lib/components/ui/sidebar/ProfileButton.svelte'
   import { flip } from 'svelte/animate'
   import { expoOut } from 'svelte/easing'
-  import { Badge, Button } from 'mono-svelte'
-  import { DEFAULT_INSTANCE_URL, LINKED_INSTANCE_URL } from '$lib/instance.js'
+  import { Badge } from 'mono-svelte'
   import Expandable from '$lib/components/ui/Expandable.svelte'
   import EndPlaceholder from '../EndPlaceholder.svelte'
-  import Application from '../../../../routes/admin/applications/Application.svelte'
   import { t } from '$lib/translations'
-  import ItemList from '$lib/components/lemmy/generic/ItemList.svelte'
   import { iconOfLink } from '../navbar/link'
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'

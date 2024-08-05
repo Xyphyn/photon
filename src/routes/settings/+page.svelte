@@ -42,7 +42,7 @@
   import Section from './Section.svelte'
   import ToggleSetting from './ToggleSetting.svelte'
   import { locale, locales, t } from '$lib/translations'
-  import { defaultLinks, iconOfLink } from '$lib/components/ui/navbar/link'
+  import { getDefaultLinks, iconOfLink } from '$lib/components/ui/navbar/link'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import Slider from '$lib/components/input/Slider.svelte'
 
@@ -186,7 +186,7 @@
         {$t('settings.navigation.pins.description')}
       </span>
       <div class="flex items-center gap-1 flex-wrap">
-        {#each defaultLinks as pin}
+        {#each getDefaultLinks() as pin}
           <Popover openOnHover placement="bottom">
             <Button
               size="square-md"
@@ -208,7 +208,7 @@
               padding="none"
               class="px-4 py-2 flex flex-col"
             >
-              <span class="font-medium text-lg">{pin.label}</span>
+              <span class="font-medum text-base">{pin.label}</span>
               <code class="bg-slate-50 dark:!bg-zinc-950 !rounded-md">
                 {pin.url}
               </code>
