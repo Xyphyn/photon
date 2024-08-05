@@ -328,11 +328,6 @@
       description={$t('settings.app.postsInNewTab.description')}
     />
     <ToggleSetting
-      bind:checked={$userSettings.displayNames}
-      title={$t('settings.app.displayName.title')}
-      description={$t('settings.app.displayName.description')}
-    />
-    <ToggleSetting
       supportedPlatforms={{ desktop: true, tablet: false, mobile: false }}
       bind:checked={$userSettings.newWidth}
       title={$t('settings.app.limitLayoutWidth.title')}
@@ -367,14 +362,15 @@
         bind:selected={$userSettings.leftAlign}
       />
     </Setting>
-    <Setting itemsClass="flex-col !items-start">
+    <Setting>
       <span slot="title">{$t('settings.app.font.title')}</span>
       <span slot="description">{$t('settings.app.font.description')}</span>
-      <MultiSelect
-        options={['inter', 'satoshi/nunito', 'system', 'browser']}
-        optionNames={['Inter', 'Satoshi/Nunito', 'System UI', 'Browser Font']}
-        bind:selected={$userSettings.font}
-      />
+      <Select bind:value={$userSettings.font}>
+        <option value="inter">Inter</option>
+        <option value="satoshi/nunito">Satoshi + Nunito</option>
+        <option value="system">System UI</option>
+        <option value="browser">Browser</option>
+      </Select>
     </Setting>
     <Setting>
       <span slot="title">{$t('settings.app.theming.title')}</span>
@@ -490,7 +486,7 @@
     <ToggleSetting
       bind:checked={$userSettings.markReadPosts}
       title={$t('settings.lemmy.fadeReadPosts.title')}
-      description={$t('settings.lemmy.fadeReadPosts.title')}
+      description={$t('settings.lemmy.fadeReadPosts.description')}
     />
     <ToggleSetting
       bind:checked={$userSettings.crosspostOriginalLink}
@@ -533,6 +529,11 @@
         </Checkbox>
       </div>
     </Setting>
+    <ToggleSetting
+      bind:checked={$userSettings.displayNames}
+      title={$t('settings.app.displayName.title')}
+      description={$t('settings.app.displayName.description')}
+    />
   </Section>
 
   <Section title={$t('settings.moderation.title')}>
