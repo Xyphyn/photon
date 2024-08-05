@@ -153,11 +153,8 @@
       'content';
   }
 
-  .content:not(.limit-width) {
-    width: 100%;
-  }
-
   .content {
+    width: 100%;
     display: grid;
     margin-left: auto;
     margin-right: auto;
@@ -166,10 +163,14 @@
     grid-template-areas: 'main';
     justify-items: start;
   }
+  .content > * {
+    width: 100%; /* Full width for immediate children */
+    padding: 0 1rem; /* Add some padding on smaller screens */
+  }
 
   @media (min-width: 768px) {
     .content {
-      grid-template-columns: 15rem 2fr;
+      grid-template-columns: 14rem 2fr;
       justify-items: end start;
       grid-template-areas: 'sidebar main';
     }
