@@ -19,11 +19,15 @@
     let extracted: Tag[] = []
 
     title = title.replace(/\[(.*?)\]/g, (match, content) => {
-      extracted.push(
-        textToTag.get(content) ?? {
-          content: content,
-        }
-      )
+      const contents = content.split(',').map((part: string) => part.trim())
+
+      contents.forEach((content: string) => {
+        extracted.push(
+          textToTag.get(content) ?? {
+            content: content,
+          }
+        )
+      })
       return ''
     })
 
