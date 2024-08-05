@@ -43,6 +43,7 @@
     {index}
     {guest}
     selected={$profile?.id == prof.id}
+    slot="icon"
   />
   <span
     class="inline-flex flex-col gap-0 {$profile?.id == prof.id
