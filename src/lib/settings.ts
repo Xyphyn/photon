@@ -130,7 +130,7 @@ export const defaultSettings: Settings = {
     about: false,
     stats: false,
     team: false,
-    accounts: false,
+    accounts: true,
   },
   displayNames: toBool(env.PUBLIC_DISPLAY_NAMES) ?? true,
   nsfwBlur: toBool(env.PUBLIC_NSFW_BLUR) ?? true,
