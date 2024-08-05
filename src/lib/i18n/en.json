@@ -135,6 +135,7 @@
             "nsfw": "NSFW",
             "generateTitle": "Generate Title",
             "uploadImage": "Upload Image",
+            "selectFile": "Select a file",
             "altText": "Alt Text"
         },
         "profile": {

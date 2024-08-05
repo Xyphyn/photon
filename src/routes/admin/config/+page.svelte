@@ -82,7 +82,7 @@
         class="flex flex-col gap-4 bg-white dark:bg-black border border-slate-300 dark:border-zinc-800 p-4 w-full h-32 rounded-xl"
       >
         {#if formData.icon}
-          <img src={formData.icon} class="rounded-md mx-auto h-full" />
+          <img src={formData.icon} alt="" class="rounded-md mx-auto h-full" />
         {:else}
           <Icon
             src={DocumentPlus}
@@ -94,8 +94,11 @@
       {#if uploading.icon}
         <ImageUploadModal
           bind:open={uploading.icon}
-          bind:output={formData.icon}
-          on:upload={() => (uploading.icon = false)}
+          multiple={false}
+          on:upload={(uploaded) => {
+            uploading.icon = false
+            formData.icon = uploaded.detail[0]
+          }}
         />
       {/if}
     </div>
@@ -107,7 +110,7 @@
         class="flex flex-col gap-4 bg-white dark:bg-black border border-slate-300 dark:border-zinc-800 p-4 w-full h-32 rounded-xl"
       >
         {#if formData.banner}
-          <img src={formData.banner} class="rounded-md mx-auto h-full" />
+          <img src={formData.banner} alt="" class="rounded-md mx-auto h-full" />
         {:else}
           <Icon
             src={DocumentPlus}
@@ -119,8 +122,11 @@
       {#if uploading.banner}
         <ImageUploadModal
           bind:open={uploading.banner}
-          bind:output={formData.banner}
-          on:upload={() => (uploading.banner = false)}
+          multiple={false}
+          on:upload={(uploaded) => {
+            uploading.banner = false
+            formData.banner = uploaded.detail[0]
+          }}
         />
       {/if}
     </div>

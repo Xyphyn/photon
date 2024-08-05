@@ -16,6 +16,7 @@
     ListBullet,
     Photo,
   } from 'svelte-hero-icons'
+  import ImageUploadModal from '../lemmy/modal/ImageUploadModal.svelte'
 
   export let images: boolean = true
   export let value: string = ''
@@ -62,40 +63,7 @@
   }
 
   let uploadingImage = false
-  let loading = false
   let image: any
-  $: previewURL = image?.length
-    ? URL.createObjectURL(image[0])
-    : image
-      ? URL.createObjectURL(image)
-      : ''
-
-  async function upload() {
-    if (!$profile?.jwt || !image) return
-
-    loading = true
-
-    try {
-      const uploaded = await uploadImage(
-        image instanceof FileList ? image[0] : image,
-        $profile.instance,
-        $profile.jwt
-      )
-
-      if (!uploaded) throw new Error('Image upload returned undefined')
-
-      wrapSelection(`![](${uploaded})`, '')
-
-      uploadingImage = false
-    } catch (err) {
-      toast({
-        content: err as any,
-        type: 'error',
-      })
-    }
-
-    loading = false
-  }
 
   export let previewing = false
 
@@ -114,49 +82,15 @@
 </script>
 
 {#if uploadingImage && images}
-  <Modal bind:open={uploadingImage}>
-    <span slot="title">Upload image</span>
-    <form class="flex flex-col gap-4" on:submit|preventDefault={upload}>
-      <div class="flex flex-col gap-1">
-        <label
-          class="flex flex-col items-center px-8 py-4 mx-auto w-full rounded-lg
-        border border-slate-300 dark:border-zinc-700 bg-white dark:bg-black
-        cursor-pointer min-h-36 transition-colors
-        "
-          on:drop|preventDefault={(event) =>
-            (image = event.dataTransfer?.files?.[0])}
-          on:dragover|preventDefault={(event) => {
-            if (event.dataTransfer) {
-              event.dataTransfer.dropEffect = 'copy'
-            }
-          }}
-        >
-          {#if image}
-            <!-- svelte-ignore a11y-missing-attribute -->
-            <img
-              src={previewURL}
-              on:load={() => {
-                if (previewURL) URL.revokeObjectURL(previewURL)
-              }}
-              class="w-full max-w-sm h-full rounded-lg"
-            />
-          {:else}
-            <Icon src={DocumentPlus} class="opacity-50" size="36" />
-            <p class="text-sm opacity-50">Attach a file</p>
-          {/if}
-          <input
-            type="file"
-            bind:files={image}
-            accept="image/*"
-            class="hidden"
-          />
-        </label>
-      </div>
-      <Button {loading} disabled={loading} submit color="primary" size="lg">
-        Upload
-      </Button>
-    </form>
-  </Modal>
+  <ImageUploadModal
+    bind:open={uploadingImage}
+    bind:image
+    on:upload={(e) => {
+      e.detail.forEach((i) => {
+        wrapSelection(`![](${i})\n\n`, '')
+      })
+    }}
+  />
 {/if}
 
 <div>
