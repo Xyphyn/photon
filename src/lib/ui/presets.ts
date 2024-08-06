@@ -212,6 +212,6 @@ export const presets: Theme[] = [
       },
     },
     id: -4,
-    name: "Sevon's Lightly",
+    name: 'Neutral',
   },
 ]
