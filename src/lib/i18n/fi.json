@@ -34,13 +34,14 @@
         },
         "frontpage": {
             "title": "Etusivu",
-            "footer": "{{users:number}} {{users; 1:aktiivinen käyttäjä; default:aktiivista käyttäjää;}}"
+            "footer": "{{users:number}} {{users; 1:aktiivinen käyttäjä; default:aktiivista käyttäjää;}}",
+            "endFeed": "Olet saavuttanut {{community_name; undefined:syötteen lopun.; default:yhteisön {{community_name}} lopun.}}"
         },
         "modlog": "Moderointiloki",
         "profile": {
             "user": "Käyttäjä",
             "blocks": "Estot",
-            "credentials": "Kirjautumistiedot",
+            "credentials": "Tili",
             "moderates": "Moderoidut yhteisöt",
             "settings": "Asetukset",
             "favorites": "Suosikit",
@@ -49,7 +50,13 @@
                 "download": "Lataa"
             },
             "upvoted": "Ylä-äänet",
-            "downvoted": "Alaäänet"
+            "downvoted": "Alaäänet",
+            "logins": "Kirjautumishistoria",
+            "welcome": "Tervetuloa, {{default}}!",
+            "delete": {
+                "title": "Poista tili",
+                "warning": "Tiliä ei voi palauttaa poistamisen jälkeen. Oletko varma?"
+            }
         },
         "instances": "Instanssit",
         "createPost": "Luo julkaisu",
@@ -80,7 +87,11 @@
             "remoteView": "Etänäkymä",
             "localView": "Paikallinen näkymä",
             "crosspostCount": "ristijakoa",
-            "instanceWarning": "Tämä julkaisu haettiin eri palvelimelta, kuin käyttäjäsi. Moni toiminto ei toimi."
+            "instanceWarning": "Tämä julkaisu haettiin eri palvelimelta, kuin käyttäjäsi. Moni toiminto ei toimi.",
+            "emptyComments": {
+                "title": "Ei kommentteja",
+                "description": "Aloita keskustelu!"
+            }
         },
         "inbox": {
             "title": "Postilaatikko",
@@ -102,7 +113,9 @@
                 "description": "Kun sisältö ilmiannetaan, voit ratkaista tapauksen täällä.",
                 "title": "Ei uusia ilmiantoja"
             },
-            "reason": "Syy"
+            "reason": "Syy",
+            "resolved": "Käsitelty",
+            "resolvedBy": "Käsitellyt"
         },
         "admin": {
             "title": "Ylläpito",
@@ -250,6 +263,10 @@
                 "downloading": "Ladataan tietoja",
                 "loading": "Ladataan lähdettä",
                 "reporting": "Todenmukainen raportointi"
+            },
+            "link": {
+                "title": "Vaihtoehtoiset linkit",
+                "actions": "Linkin toiminnot"
             }
         },
         "badges": {
@@ -318,7 +335,9 @@
             "feeds": "Syötteet",
             "downloading": "Ladataan toimintoja",
             "setView": "Valitse näkymä",
-            "setColor": "Valitse väritila"
+            "setColor": "Valitse väritila",
+            "setTheme": "Aseta teema",
+            "setThemeTo": "Aseta teema: {{default}}"
         }
     },
     "profile": {
@@ -408,7 +427,8 @@
             "create": "Luo julkaisu",
             "edit": "Muokkaa julkaisua",
             "url": "URL",
-            "altText": "Vaihtoehtoinen teksti"
+            "altText": "Vaihtoehtoinen teksti",
+            "selectFile": "Valitse tiedosto"
         },
         "profile": {
             "2fa": {
@@ -520,7 +540,8 @@
         "disable": "Poista käytöstä",
         "add": "Lisää",
         "send": "Lähetä",
-        "cancel": "Peru"
+        "cancel": "Peru",
+        "general": "Yleinen"
     },
     "message": {
         "success": "Onnistui",
@@ -787,7 +808,12 @@
         "incorrect_login_3": "Virheelliset kirjautumistiedot. Yritä vielä muutaman kerran.",
         "incorrect_login_6": "Onko tämä mielestäsi jokin vitsi?",
         "incorrect_login_5": "Katso tarkkaan, mitä näppäimia painelet.",
-        "incorrect_login_7": "Ei jaksa kääntää näitä enempää.",
-        "incorrect_login_4": "Virheelliset kirjautumistiedot. Jatka yrittämistä."
+        "incorrect_login_7": "Sinulla taitaa olla vaikeuksia kirjoittamisen kanssa.",
+        "incorrect_login_4": "Virheelliset kirjautumistiedot. Jatka yrittämistä.",
+        "incorrect_login_12": "...",
+        "incorrect_login_8": "Luovutan.",
+        "incorrect_login_9": "Pyyhkisit joskus nenäsi.",
+        "incorrect_login_10": "Ajattele ylläpitäjiä.",
+        "incorrect_login_11": "Luovutan, oikeasti tällä kertaa."
     }
 }
