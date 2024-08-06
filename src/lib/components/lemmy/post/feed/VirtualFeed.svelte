@@ -181,34 +181,34 @@
   })
 
   // keyboard handling
-  let selectedIndex = writable(-1)
+  // let selectedIndex = writable(-1)
 
-  function handleKeydown(event: KeyboardEvent) {
-    if (event.key === 'ArrowUp') {
-      event.preventDefault()
-      $selectedIndex = Math.max(0, $selectedIndex - 1)
-    } else if (event.key === 'ArrowDown') {
-      event.preventDefault()
-      $selectedIndex = Math.min(posts.length - 1, $selectedIndex + 1)
-    }
-  }
+  // function handleKeydown(event: KeyboardEvent) {
+  //   if (event.key === 'ArrowUp') {
+  //     event.preventDefault()
+  //     $selectedIndex = Math.max(0, $selectedIndex - 1)
+  //   } else if (event.key === 'ArrowDown') {
+  //     event.preventDefault()
+  //     $selectedIndex = Math.min(posts.length - 1, $selectedIndex + 1)
+  //   }
+  // }
 
-  onMount(() => {
-    selectedIndex.subscribe(focusItem)
-  })
+  // onMount(() => {
+  //   selectedIndex.subscribe(focusItem)
+  // })
 
-  function focusItem(index: number) {
-    const el =
-      virtualItemEls.find(
-        (el) => Number(el?.getAttribute('data-index')) == index
-      ) ?? virtualItemEls[1]
+  // function focusItem(index: number) {
+  //   const el =
+  //     virtualItemEls.find(
+  //       (el) => Number(el?.getAttribute('data-index')) == index
+  //     ) ?? virtualItemEls[1]
 
-    $virtualizer.scrollToIndex(index, { align: 'center', behavior: 'auto' })
-    el?.firstChild?.firstChild?.parentElement?.focus({})
-  }
+  //   $virtualizer.scrollToIndex(index, { align: 'center', behavior: 'auto' })
+  //   el?.firstChild?.firstChild?.parentElement?.focus({})
+  // }
 </script>
 
-<svelte:window on:keydown={handleKeydown} />
+<!-- <svelte:window on:keydown={handleKeydown} /> -->
 
 <ul
   class="flex flex-col list-none {$userSettings.view == 'card'
