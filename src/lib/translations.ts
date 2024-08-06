@@ -33,6 +33,11 @@ const config: Config = {
       loader: async () => (await import('./i18n/he.json')).default,
     },
     {
+      locale: 'nl',
+      key: '',
+      loader: async () => (await import('./i18n/nl.json')).default,
+    },
+    {
       locale: 'pt',
       key: '',
       loader: async () => (await import('./i18n/pt.json')).default,

@@ -44,7 +44,6 @@
   import { locale, locales, t } from '$lib/translations'
   import { getDefaultLinks, iconOfLink } from '$lib/components/ui/navbar/link'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import Slider from '$lib/components/input/Slider.svelte'
 
   let pin: string = ''
   let importing = false
@@ -58,15 +57,16 @@
       flag: string
     }
   > = new Map([
-    ['en', { name: 'English', translated: 1, flag: '🇺🇸' }],
-    ['et', { name: 'Eesti keel', translated: 0.25, flag: '🇪🇪' }],
-    ['fi', { name: 'Suomi', translated: 0.98, flag: '🇫🇮' }],
+    ['en', { name: 'English', translated: 1, flag: '🇬🇧' }],
+    ['et', { name: 'Eesti keel', translated: 0.24, flag: '🇪🇪' }],
+    ['de', { name: 'Deutsch', translated: 0.77, flag: '🇩🇪' }],
+    ['fi', { name: 'Suomi', translated: 0.95, flag: '🇫🇮' }],
     ['fr', { name: 'Français', translated: 0.79, flag: '🇫🇷' }],
-    ['de', { name: 'Deutsch', translated: 0.79, flag: '🇩🇪' }],
-    ['he', { name: 'עברית', translated: 0.4, flag: '🇮🇱' }],
-    ['pt', { name: 'Português', translated: 0.97, flag: '🇵🇹' }],
-    ['zh-Hans', { name: '简体中文', translated: 0.94, flag: '🇨🇳' }],
-    ['zh-Hant', { name: '繁體中文', translated: 0.26, flag: '🇭🇰' }],
+    ['he', { name: 'עברית', translated: 0.39, flag: '🇮🇱' }],
+    ['nl', { name: 'Nederlands', translated: 0.97, flag: '🇳🇱' }],
+    ['pt', { name: 'Português', translated: 0.95, flag: '🇵🇹' }],
+    ['zh-Hans', { name: '简体中文', translated: 0.91, flag: '🇨🇳' }],
+    ['zh-Hant', { name: '繁體中文', translated: 0.25, flag: '🇭🇰' }],
   ])
 </script>
 
