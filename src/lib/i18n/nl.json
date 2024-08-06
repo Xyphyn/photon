@@ -1,1 +1,798 @@
-{}
+{
+    "form": {
+        "profile": {
+            "email": "E-mail",
+            "matrix": "Matrix gebruiker",
+            "showNSFW": "Toon NSFW-inhoud",
+            "scores": "Toon Scores",
+            "bot": "Botaccount",
+            "showBots": "Toon Bots",
+            "showRead": "Toon gelezen berichten",
+            "currentPassword": "Huidig wachtwoord",
+            "newPassword": "Nieuw wachtwoord",
+            "verifyNewPassword": "Bevestig nieuw wachtwoord",
+            "2fa": {
+                "totp": "TOTP",
+                "2fa": "2FA",
+                "paste": "Plak dit in je authenticator-app."
+            },
+            "displayName": "Weergavenaam",
+            "bio": "Biografie",
+            "avatar": "Avatar",
+            "banner": "Banner",
+            "deleteAccount": {
+                "label": "Verwijder account",
+                "deleteContent": "Verwijder inhoud",
+                "warning": "Dit verwijdert AL je inzendingen."
+            }
+        },
+        "description": "Beschrijving",
+        "username": "Gebruikersnaam",
+        "name": "Naam",
+        "instance": "Instantie URL",
+        "password": "Wachtwoord",
+        "confirmPassword": "Bevestig wachtwoord",
+        "2fa": "2FA Code",
+        "forgotpassword": "Wachtwoord vergeten",
+        "submit": "Indienen",
+        "edit": "Bewerken",
+        "preview": "Voorbeeld",
+        "post": {
+            "create": "Bericht aanmaken",
+            "edit": "Bericht bewerken",
+            "community": "Gemeenschap",
+            "title": "Titel",
+            "url": "URL",
+            "body": "Inhoud",
+            "nsfw": "NSFW",
+            "generateTitle": "Genereer titel",
+            "uploadImage": "Afbeelding uploaden",
+            "altText": "Alternatieve tekst"
+        },
+        "email": "E-mail",
+        "setup": "Instellen",
+        "signup": {
+            "title": "Aanmelden",
+            "description": "Kies een instantie die je interesseert, of typ de URL handmatig.",
+            "info": "Een instantie is de server waarop je account wordt gehost, maar je kunt nog steeds toegang krijgen tot en interactie hebben met inhoud van andere instanties.",
+            "chooseInstance": "Kies een instantie",
+            "application": {
+                "label": "Aanvraag",
+                "info": "Om je bij deze instantie aan te sluiten, moet je deze aanvraag invullen en wachten op acceptatie. Je ontvangt een e-mail als je aanvraag is geaccepteerd."
+            },
+            "closed": {
+                "title": "Registraties gesloten",
+                "description": "Deze instantie heeft registraties gesloten. Zoek een andere instantie.",
+                "anotherInstance": "Zoek een andere instantie"
+            }
+        }
+    },
+    "routes": {
+        "frontpage": {
+            "title": "Voorpagina",
+            "footer": "{{users:number}} actieve {{users; 1:user; default:users;}}"
+        },
+        "modlog": "Modlog",
+        "instances": "Instanties",
+        "legal": {
+            "title": "Juridisch",
+            "noLegal": "Deze instantie heeft geen juridische informatie."
+        },
+        "profile": {
+            "user": "Gebruiker",
+            "settings": "Instellingen",
+            "blocks": "Blokken",
+            "credentials": "Account",
+            "moderates": "Modereren",
+            "favorites": "Favorieten",
+            "upvoted": "Opgestemd",
+            "downvoted": "Afgestemd",
+            "media": {
+                "title": "Media",
+                "download": "Download"
+            }
+        },
+        "translators": "Vertalers",
+        "accounts": "Accounts",
+        "communities": "Gemeenschappen",
+        "search": {
+            "title": "Zoeken",
+            "federating": "Federeren",
+            "query": "Query",
+            "noResults": {
+                "title": "Geen Resultaten",
+                "description": "Er zijn geen resultaten die aan die filter voldoen. Probeer je zoekopdracht te verfijnen.",
+                "alt": "Zoeken in het fediverse"
+            }
+        },
+        "saved": "Opgeslagen",
+        "createPost": "Bericht Aanmaken",
+        "createCommunity": "Gemeenschap Aanmaken",
+        "post": {
+            "crosspostCount": "crossposts",
+            "commentCount": "reacties",
+            "addComment": "Voeg een reactie toe",
+            "scrollToTop": "Scroll naar boven",
+            "instanceWarning": "Dit bericht is aangevraagd vanaf een andere server dan die van je account. Veel acties zullen niet werken.",
+            "remoteView": "Externe weergave",
+            "localView": "Lokale weergave",
+            "thread": {
+                "single": "Je bekijkt een enkele thread.",
+                "allComments": "Alle reacties",
+                "part": "Je bekijkt een deel van een thread.",
+                "context": "Toon context"
+            }
+        },
+        "inbox": {
+            "title": "Inbox",
+            "markAsRead": "Markeer alles als gelezen",
+            "empty": {
+                "title": "Geen nieuwe meldingen",
+                "description": "Berichten, antwoorden en vermeldingen verschijnen hier."
+            }
+        },
+        "moderation": {
+            "title": "Moderatie",
+            "empty": {
+                "title": "Geen nieuwe rapporten",
+                "description": "Wanneer inzendingen worden gerapporteerd, kun je hier actie ondernemen."
+            },
+            "reason": "Reden",
+            "resolve": "Oplossen",
+            "unresolve": "Oplossen ongedaan maken"
+        },
+        "admin": {
+            "title": "Administratie",
+            "config": {
+                "title": "Configuratie",
+                "sidebar": "Zijbalk",
+                "icon": "Icoon",
+                "banner": "Banner",
+                "downvotesEnabled": "Downvotes inschakelen",
+                "nsfwEnabled": "NSFW Inschakelen",
+                "registration": {
+                    "label": "Registratiemodus",
+                    "open": "Open",
+                    "application": "Aanvraag Vereisen",
+                    "closed": "Gesloten"
+                },
+                "applicationQuestion": "Aanvraagvraag",
+                "adminCommunityOnly": "Alleen beheerders kunnen gemeenschappen aanmaken",
+                "requireVerifyEmail": "E-mailverificatie vereisen",
+                "emailAdminsOnApplication": "E-mail beheerders bij ontvangst van nieuwe aanvragen",
+                "emailAdminsOnReport": "E-mail beheerders bij ontvangst van nieuwe rapporten",
+                "listingType": {
+                    "label": "Lijsttype",
+                    "all": "Alle",
+                    "local": "Lokaal"
+                },
+                "private": "Privé-instantie",
+                "hideModlogModNames": "Verberg modlog mod-namen",
+                "slurFilter": "Scheldwoordenfilter regex",
+                "federation": "Federatie ingeschakeld",
+                "federationDebug": "Federatie debugmodus",
+                "captcha": {
+                    "enabled": "CAPTCHA Ingeschakeld"
+                }
+            },
+            "applications": {
+                "title": "Aanvragen",
+                "empty": {
+                    "title": "Geen nieuwe aanvragen",
+                    "description": "Aanvragen om je bij je instantie aan te sluiten verschijnen hier."
+                },
+                "application": "Aanvraag",
+                "approved": "Goedgekeurd",
+                "denied": "Afgewezen",
+                "user": "Gebruiker",
+                "deny": "Afwijzen",
+                "approve": "Goedkeuren",
+                "reason": "Reden",
+                "modalTitle": "Afwijzen aanvraag"
+            },
+            "taglines": {
+                "title": "Taglines",
+                "add": "Voeg een tagline toe",
+                "empty": {
+                    "title": "Geen taglines",
+                    "description": "Een willekeurige tagline verschijnt op de sitekaart wanneer gebruikers je instantie bezoeken."
+                }
+            },
+            "team": {
+                "title": "Beheerders",
+                "empty": {
+                    "title": "Geen beheerders",
+                    "description": "Er zijn geen beheerders van deze site. Hoe??"
+                }
+            },
+            "federation": {
+                "title": "Federatie",
+                "csv": "CSV Uploaden",
+                "blocked": "Geblokkeerde instanties",
+                "block": "Blokkeer",
+                "blockplaceholder": "Blokkeer een instantie...",
+                "allowed": "Toegestane instanties",
+                "allow": "Toestaan",
+                "allowplaceholder": "Toestaan van een instantie",
+                "emptyBlock": {
+                    "title": "Geen geblokkeerde instanties",
+                    "description": "Het blokkeren van een instantie verbergt nieuwe inzendingen van die instantie."
+                },
+                "emptyAllow": {
+                    "title": "Geen toegestane instanties",
+                    "description": "Het toestaan van een instantie blokkeert elke andere instantie."
+                }
+            }
+        },
+        "verifyEmail": {
+            "message": "Je e-mail is geverifieerd. Je kunt dit venster nu sluiten.",
+            "error": "Het is niet gelukt om je e-mail te verifiëren."
+        },
+        "passwordChange": {
+            "title": "Wachtwoord Wijzigen",
+            "description": "Kies je nieuwe wachtwoord.",
+            "instance": "Op welke instantie is je account gehost?"
+        },
+        "resetLogin": {
+            "title": "Wachtwoord Resetten",
+            "description": "Voer de e-mail van je account in, en een link voor het resetten van het wachtwoord zal worden verzonden. Als je account geen e-mailadres heeft, neem dan contact op met je instantie beheerders."
+        },
+        "theme": {
+            "title": "Thema",
+            "import": "Importeren",
+            "export": "Exporteren",
+            "reset": "Resetten",
+            "accent": "Accent",
+            "resetWarning": {
+                "title": "Thema resetten",
+                "description": "Dit zal al je kleuren resetten naar de standaard. Het wordt aanbevolen om je thema te exporteren voordat je dit doet."
+            },
+            "preset": {
+                "title": "Kan niet worden gewijzigd",
+                "description": "Dit is een standaardthema en kan niet worden gewijzigd.",
+                "delete": {
+                    "title": "Thema verwijderen",
+                    "confirm": "Bevestigen"
+                },
+                "default": "Standaard",
+                "classic": "Klassiek",
+                "imported": "Jouw thema",
+                "new": "Nieuw thema"
+            }
+        },
+        "community": {
+            "settings": {
+                "team": "Team",
+                "settings": "Instellingen"
+            }
+        }
+    },
+    "toast": {
+        "logIn": "Succesvol ingelogd.",
+        "noComments": "De API heeft geen reacties geretourneerd.",
+        "loginVoteGate": "Je moet ingelogd zijn om te stemmen.",
+        "blockedCommunity": "Die gemeenschap geblokkeerd.",
+        "unblockedCommunity": "Die gemeenschap gedeblokkeerd.",
+        "purgedCommunity": "Die gemeenschap verwijderd.",
+        "blockedInstance": "Die instantie geblokkeerd.",
+        "updatedCommunity": "Je gemeenschap is bijgewerkt.",
+        "sentMessage": "Dat bericht verzonden.",
+        "invalidDateAbsolute": "Ongeldige datum. Het moet een absolute datum zijn.",
+        "invalidDateBeforeCurrent": "Ongeldige datum. Het is vóór de huidige tijd.",
+        "bannedUser": "Die gebruiker verbannen.",
+        "unbannedUser": "Die gebruiker gedeblokkeerd.",
+        "needCommunity": "Je moet een gemeenschap instellen.",
+        "invalidURL": "Ongeldige URL",
+        "generatedTitle": "Gegenereerde titel en inhoud van de URL. Wil je dit ongedaan maken?",
+        "failGenerateTitle": "Er was geen bruikbare titel of beschrijving van die website.",
+        "restoredFromDraft": "Je bericht is hersteld vanuit het concept.",
+        "copied": "Gekopieerd naar het klembord.",
+        "approvedApplication": "Die aanvraag goedgekeurd.",
+        "deniedApplication": "Die aanvraag afgewezen.",
+        "updatedSite": "Je site is bijgewerkt.",
+        "failCSV": "Het is niet gelukt om CSV te lezen",
+        "removeAdminWarning": "Weet je zeker dat je die beheerder wilt verwijderen?",
+        "removeAdmin": "Die beheerder verwijderd.",
+        "failFindUser": "Die gebruiker kon niet worden gevonden.",
+        "addMod": "Die moderator toegevoegd.",
+        "updateMods": "Gemeenschapsmoderators bijgewerkt.",
+        "failInstanceURL": "Het is niet gelukt om contact op te nemen met die instantie-URL. Is het down?",
+        "addAccount": "Die account toegevoegd.",
+        "resetLink": "Een link om je wachtwoord te resetten is naar je e-mail verzonden.",
+        "resolveReport": "Die rapportage opgelost.",
+        "unresolveReport": "Die rapportage onopgelost gemaakt.",
+        "passwordReset": "Je wachtwoord is gereset.",
+        "fetchPostOnHome": "Proberen dit bericht op je thuisinstantie op te halen...",
+        "loginRefresh": "Je inloggegevens zijn vernieuwd.",
+        "invalidLogin": "Ongeldige inloggegevens",
+        "saveSettings": "Je gebruikersinstellingen zijn opgeslagen. Als je je e-mailadres hebt gewijzigd, is er een verificatielink verzonden.",
+        "confirmDelete1": "Weet je zeker dat je je account wilt verwijderen?",
+        "confirmDelete2": "Weet je het echt zeker?",
+        "confirmDelete3": "Laatste waarschuwing. Weet je het echt zeker?",
+        "needPassword": "Je moet je wachtwoord opgeven.",
+        "deleting": "Je account wordt verwijderd...",
+        "deleted": "Je account is verwijderd.",
+        "resetSettings": "Wil je je instellingen resetten naar de standaard?",
+        "failFetchInstances": "Het is niet gelukt om beschikbare instanties op te halen.",
+        "verifyEmail": "Er is een verificatielink naar je e-mail verzonden. Verifieer je e-mail en log dan in.",
+        "failSignup": "Aanmelden is mislukt.",
+        "successSignup": "Aanmelden geslaagd.",
+        "waitApplication": "Wacht tot je registratietoepassing is geaccepteerd voordat je inlogt.",
+        "blockUser": "Die gebruiker geblokkeerd.",
+        "unblockUser": "Die gebruiker gedeblokkeerd.",
+        "purgeUser": "Die gebruiker verwijderd.",
+        "settingsImport": "Instellingen succesvol geïmporteerd.",
+        "settingsImportWarning": "De geïmporteerde instellingen lijken niet geldig te zijn. Weet je zeker dat je dit wilt importeren?",
+        "userLoading": "Bezig met het laden van je gebruikersgegevens..."
+    },
+    "settings": {
+        "lemmy": {
+            "hideSubmissions": {
+                "deleted": "Verwijderd door gebruiker",
+                "removed": "Verwijderd door moderator",
+                "title": "Verberg inzendingen",
+                "description": "Verberg bepaalde soorten inzendingen."
+            },
+            "nsfwBlur": {
+                "title": "NSFW vervaging",
+                "description": "Vervag afbeeldingen en verwijder berichtinhoud van NSFW-berichten."
+            },
+            "title": "Lemmy",
+            "showHiddenPosts": {
+                "title": "Toon verborgen berichten",
+                "description": "Toon de berichten die je handmatig hebt verborgen."
+            },
+            "compactFeatured": {
+                "title": "Compacte uitgelichte berichten",
+                "description": "Maak uitgelichte berichten compacter"
+            },
+            "markReadPosts": {
+                "title": "Markeer gelezen berichten",
+                "description": "Markeer een bericht als gelezen wanneer je erop klikt"
+            },
+            "fadeReadPosts": {
+                "title": "Vervagende gelezen berichten",
+                "description": "Vervag de titel van berichten die je al hebt gelezen"
+            },
+            "crosspostMarker": {
+                "title": "Markeer crossposts",
+                "description": "Toon 'gecrosspost vanuit' bij het crossposten."
+            },
+            "instances": {
+                "title": "Toon instanties",
+                "description": "Toon de instanties waar bepaalde inhoud vandaan komt."
+            }
+        },
+        "moderation": {
+            "replyPresets": {
+                "title": "Verwijderingsantwoord presets",
+                "description": "Presets om te gebruiken voor 'antwoordreden' in de verwijderingsdialoog van de inzending.",
+                "syntax": "Syntax"
+            },
+            "title": "Moderatie"
+        },
+        "other": {
+            "title": "Overig",
+            "debug": {
+                "title": "Debug-informatie",
+                "description": "Toon debug-informatie"
+            }
+        },
+        "navigation": {
+            "panel": {
+                "description": "Strek de dock naar de randen van het scherm, vergelijkbaar met een paneel.",
+                "title": "Paneelmodus",
+                "on": "Aan",
+                "off": "Uit",
+                "adaptive": "Adaptief"
+            },
+            "title": "Navigatie",
+            "dockPos": {
+                "title": "Dock positie",
+                "description": "Waar de dock op het scherm moet worden gepositioneerd.",
+                "top": "Boven",
+                "bottom": "Onder",
+                "adaptive": "Adaptief"
+            },
+            "pins": {
+                "title": "Pins",
+                "description": "Klik op een pin om deze naar de bovenkant van de zijbalk te verzenden. Klik met de rechtermuisknop op een vastgezet item om het te verwijderen."
+            }
+        },
+        "title": "Instellingen",
+        "beta": "Bèta",
+        "desktop": "Desktop",
+        "tablet": "Tablet",
+        "mobile": "Mobiel",
+        "export": "Exporteren",
+        "import": "Importeren",
+        "reset": "Resetten",
+        "app": {
+            "title": "Photon",
+            "theming": {
+                "title": "Thema's",
+                "description": "Pas de kleuren van Photon aan.",
+                "link": "Ga naar thema's"
+            },
+            "colorscheme": {
+                "title": "Kleurenpalet",
+                "description": "Het kleurenpalet dat gebruikt moet worden."
+            },
+            "lang": {
+                "title": "Taal",
+                "description": "De taal die wordt gebruikt voor de gebruikersinterface van Photon.",
+                "note": "Talen anders dan Engels en Hebreeuws zijn door de gemeenschap vertaald en kunnen incompleet zijn.",
+                "en": "Engels",
+                "en-US": "Engels",
+                "he": "Hebreeuws",
+                "et": "Estisch",
+                "fr": "Frans",
+                "de": "Duits",
+                "fi": "Fins",
+                "pt": "Portugees",
+                "zh": "Chinees",
+                "zh-Hans": "Chinees (Vereenvoudigd)",
+                "zh-Hant": "Chinees (Traditioneel)",
+                "auto": "Automatisch",
+                "credits": "Credits",
+                "useRtl": {
+                    "title": "Gebruik RTL-indeling",
+                    "description": "Gebruik een RTL-indeling voor RTL-talen."
+                }
+            },
+            "view": {
+                "title": "Berichtstijl",
+                "list": "Toon berichten in een lijst, met berichtinhoud en compacte media.",
+                "cozy": "Toon berichten met grote afbeeldingen, rijke embeds en langere berichtinhoud.",
+                "compact": "Toon berichten in een lijst, zonder berichtinhoud en met strakkere spacing.",
+                "legacy": "De oude look van Photon."
+            },
+            "sort": {
+                "title": "Standaard sortering",
+                "description": "De standaard sortering die gebruikt moet worden in feeds."
+            },
+            "infiniteScroll": {
+                "title": "Oneindig scrollen",
+                "description": "Nieuwe berichten worden toegevoegd terwijl je naar beneden scrolt, zonder dat je op 'volgende' hoeft te klikken."
+            },
+            "postsInNewTab": {
+                "title": "Open berichten in nieuw tabblad",
+                "description": "Open berichten in een apart tabblad in plaats van het huidige."
+            },
+            "displayName": {
+                "title": "Gebruik weergavenaam",
+                "description": "Toon de weergavenamen van gebruikers in plaats van hun daadwerkelijke gebruikersnamen."
+            },
+            "limitLayoutWidth": {
+                "title": "Beperk lay-outbreedte",
+                "description": "Verbeter de leesbaarheid door de breedte van de hoofdinhoud te beperken."
+            },
+            "placeholders": {
+                "title": "Willekeurige placeholders",
+                "description": "Toon willekeurige placeholders voor bepaalde tekstinvoeren."
+            },
+            "expandImages": {
+                "title": "Afbeeldingen uitbreiden",
+                "description": "Door op de afbeelding van een bericht te klikken, krijg je een uitgebreide weergave in plaats van de berichtpagina."
+            },
+            "duplicateTitles": {
+                "title": "Verberg dubbele titels/lichamen",
+                "description": "Verbergt de berichttitel en -inhoud als ze identiek zijn aan de embed."
+            },
+            "thumbnailSide": {
+                "title": "Miniatuuruitlijning",
+                "description": "Waar miniaturen moeten zijn op het bericht in lijst/compact modus",
+                "left": "Links",
+                "right": "Rechts"
+            },
+            "font": {
+                "title": "Lettertype",
+                "description": "Welk lettertype Photon gebruikt in de gebruikersinterface."
+            },
+            "translation": {
+                "title": "Vertaling",
+                "description": "De LibreTranslate-instantie die moet worden gebruikt voor vertaling.",
+                "instance": "Domein"
+            },
+            "titleTags": {
+                "title": "Parse tags in titel",
+                "description": "Neem tekst in [haakjes] en maak er tags van waarop je kunt klikken om naar te zoeken.",
+                "rules": {
+                    "title": "Regels",
+                    "blur": "Vervagen",
+                    "hide": "Verbergen",
+                    "show": "Toon"
+                }
+            }
+        },
+        "embeds": {
+            "title": "Embeds",
+            "clickToView": {
+                "title": "Klik om te bekijken",
+                "description": "Laad embeds alleen als je erop klikt."
+            },
+            "youtube": {
+                "description": "De website om YouTube-inhoud in te embedden."
+            },
+            "instance": {
+                "invidious": "Invidious instantie",
+                "piped": "Piped instantie",
+                "description": "De instantie om YouTube-inhoud in te embedden."
+            }
+        }
+    },
+    "error": {
+        "incorrect_login": "Onjuiste inloggegevens. Probeer het opnieuw.",
+        "incorrect_login_2": "Onjuiste inloggegevens. Probeer het opnieuw.",
+        "incorrect_login_3": "Onjuist, opnieuw. Probeer het nog een paar keer.",
+        "incorrect_login_4": "Die zijn nog steeds niet de juiste inloggegevens. Blijf proberen.",
+        "incorrect_login_5": "Ik zweer het, je moet kijken naar de toetsen die je indrukt.",
+        "incorrect_login_6": "Is dit een grap voor je?",
+        "incorrect_login_7": "Of je hebt moeite met typen of je pest me op dit punt.",
+        "incorrect_login_8": "Ik geef het op.",
+        "incorrect_login_9": "Elke van deze verzoeken die je doet, verzendt gegevens via een ongelooflijke technologie. En je gebruikt het om mislukte inlogpogingen te maken.",
+        "incorrect_login_10": "Denk hier eens over na. De arme instantiebeheerders moeten hun server onderhouden, gewoon zodat jij deze nutteloze verzoeken kunt doen.",
+        "incorrect_login_11": "Ik geef het op, echt deze keer.",
+        "incorrect_login_12": "..."
+    },
+    "profile": {
+        "profile": "Profiel",
+        "inbox": "Inbox",
+        "saved": "Opgeslagen",
+        "subscribed": "Abonnementen"
+    },
+    "nav": {
+        "home": "Home",
+        "admin": "Beheer",
+        "moderation": "Moderatie",
+        "communities": "Verkennen",
+        "search": "Zoeken",
+        "create": {
+            "label": "Aanmaken",
+            "post": "Bericht",
+            "community": "Gemeenschap",
+            "logingate": "Interactie vereist een account."
+        },
+        "menu": {
+            "label": "Profiel",
+            "app": "App",
+            "settings": "Instellingen",
+            "colorscheme": {
+                "label": "Kleurenpalet",
+                "system": "Systeem",
+                "dark": "Donker",
+                "light": "Licht"
+            },
+            "theme": "Thema",
+            "about": "Over",
+            "source": "Bron",
+            "donate": "Doneer",
+            "instance": "Instantie"
+        },
+        "commands": {
+            "prompt": "Opdrachtpalet",
+            "recents": "Recent",
+            "content": "Inhoud",
+            "search": "Zoeken naar {{default}}",
+            "main": "Hoofd",
+            "setView": "Stel weergave in",
+            "setViewTo": "Stel weergave in op {{default}}",
+            "setColor": "Stel kleurenpalet in",
+            "setColorTo": "Stel kleurenpalet in op {{default}}",
+            "feeds": "Feeds",
+            "downloading": "Acties downloaden"
+        }
+    },
+    "account": {
+        "login": "Inloggen",
+        "logout": "Uitloggen",
+        "signup": "Aanmelden",
+        "accounts": "Accounts",
+        "changeinstance": "Wijzig instantie",
+        "resetColor": "Reset kleur",
+        "addGuest": "Voeg gast toe",
+        "moveUp": "Omhoog verplaatsen",
+        "moveDown": "Omlaag verplaatsen",
+        "guest": "Gast",
+        "versionGate": "Deze versie van Photon ondersteunt instanties die draaien op {{version}} of hoger."
+    },
+    "filter": {
+        "location": {
+            "label": "Locatie",
+            "all": "Alle",
+            "local": "Lokaal",
+            "subscribed": "Abonnementen",
+            "moderator": "Moderator",
+            "global": "Globaal"
+        },
+        "sort": {
+            "label": "Sorteer",
+            "active": "Actief",
+            "hot": "Populair",
+            "top": {
+                "label": "Top",
+                "time": {
+                    "label": "Tijd",
+                    "all": "Alle",
+                    "9months": "9 Maanden",
+                    "6months": "6 Maanden",
+                    "3months": "3 Maanden",
+                    "month": "Maand",
+                    "week": "Week",
+                    "day": "Dag",
+                    "12hours": "12 Uur",
+                    "6hours": "6 Uur",
+                    "hour": "Uur"
+                }
+            },
+            "new": "Nieuw",
+            "old": "Oud",
+            "controversial": "Controversieel",
+            "scaled": "Geschaald",
+            "mostcomments": "Reacties",
+            "newcomments": "Nieuwe antwoorden"
+        },
+        "view": {
+            "label": "Weergave",
+            "cozy": "Knus",
+            "list": "Lijst",
+            "compact": "Compact",
+            "legacy": "Oud"
+        },
+        "type": "Type",
+        "filter": "Filter",
+        "unread": "Ongelezen",
+        "inbox": {
+            "messages": "Berichten",
+            "replies": "Antwoorden",
+            "mentions": "Vermeldingen"
+        }
+    },
+    "cards": {
+        "site": {
+            "about": "Over",
+            "stats": "Statistieken",
+            "admins": "Beheerders"
+        },
+        "community": {
+            "members": "Leden",
+            "moderators": "Moderators",
+            "subscribe": "Abonneren",
+            "subscribed": "Geabonneerd",
+            "modlog": "Modlog",
+            "block": "Blokkeer",
+            "unblock": "Deblokkeer",
+            "blockInstance": "Blokkeer instantie",
+            "favorite": "Favoriet",
+            "unfavorite": "Verwijder favoriet",
+            "activeDay": "Actief vandaag"
+        }
+    },
+    "admin": {
+        "purge": "Verwijderen",
+        "instance": "Instantie",
+        "label": "Administratie",
+        "purgeCommunity": {
+            "title": "Gemeenschap verwijderen",
+            "warning": "Dit zal alle berichten verwijderen. Weet je zeker dat je dit wilt doen? (De knop wordt ingeschakeld in 3 seconden.)"
+        }
+    },
+    "content": {
+        "all": "Alle",
+        "users": "Gebruikers",
+        "posts": "Berichten",
+        "comments": "Reacties",
+        "communities": "Gemeenschappen",
+        "instances": "Instanties",
+        "message": "Bericht"
+    },
+    "post": {
+        "actions": {
+            "comments": "Reacties",
+            "save": "Opslaan",
+            "unsave": "Verwijder opslaan",
+            "more": {
+                "label": "Meer acties",
+                "edit": "Bewerken",
+                "creator": "Maker",
+                "actions": "Acties",
+                "markRead": "Markeer als gelezen",
+                "markUnread": "Markeer als ongelezen",
+                "hide": "Verbergen",
+                "unhide": "Toon",
+                "translate": "Vertalen",
+                "mediaBias": "Media Bias",
+                "share": "Delen",
+                "crosspost": "Crosspost",
+                "delete": "Verwijderen",
+                "restore": "Herstellen"
+            },
+            "mediaBias": {
+                "description": "Beschrijving",
+                "credibility": "Betrouwbaarheid",
+                "reporting": "Feitelijke rapportage",
+                "noData": {
+                    "title": "Geen gegevens",
+                    "description": "Er zijn geen bias-gegevens voor deze website."
+                },
+                "downloading": "Dataset downloaden",
+                "loading": "Bron laden"
+            }
+        },
+        "badges": {
+            "nsfw": "NSFW",
+            "locked": "Vergrendeld",
+            "featured": "Uitgelicht",
+            "removed": "Verwijderd",
+            "deleted": "Verwijderd",
+            "saved": "Opgeslagen"
+        }
+    },
+    "comment": {
+        "reply": "Antwoord",
+        "actions": {
+            "label": "Acties",
+            "link": "Kopieer Link"
+        },
+        "locked": "Dit bericht is vergrendeld.",
+        "banned": "Je bent verbannen uit deze gemeenschap.",
+        "more": "{{comments:number}} meer"
+    },
+    "moderation": {
+        "report": "Rapporteer",
+        "ban": {
+            "banning": "Gebruiker verbannen",
+            "unbanning": "Gebruiker deblokkeren",
+            "deleteData": "Verwijder gegevens",
+            "warning": "Dit verwijdert ALLE inzendingen van deze gebruiker hier.",
+            "expires": "Verloopt (UTC)",
+            "banFromCommunity": "Verbannen uit gemeenschap",
+            "unbanFromCommunity": "Deblokkeren uit gemeenschap"
+        },
+        "removeSubmission": {
+            "title": "Inzending verwijderen",
+            "titleRestore": "Inzending herstellen",
+            "titlePurge": "Inzending verwijderen",
+            "withReason": "Antwoord met reden",
+            "comment": "Opmerking",
+            "message": "Bericht",
+            "failReply": "Het is niet gelukt om een antwoord te plaatsen. Verwijderen toch...",
+            "failMessage": "Het is niet gelukt om de gebruiker te berichten. Verwijderen toch...",
+            "failEmptyReply": "Je antwoord kan niet leeg zijn als 'Antwoord met reden' is ingeschakeld.",
+            "successPurge": "Inzending succesvol verwijderd."
+        },
+        "reportModal": {
+            "title": "Rapporteer",
+            "success": "Inzending gerapporteerd."
+        },
+        "reason": "Reden",
+        "lock": "Vergrendelen",
+        "unlock": "Deblokkeren",
+        "remove": "Verwijderen",
+        "restore": "Herstellen",
+        "label": "Moderatie",
+        "labelInstanceOnly": "Moderatie (Alleen Instantie)",
+        "feature": "Uitlichten",
+        "unfeature": "Niet meer uitlichten"
+    },
+    "common": {
+        "back": "Terug",
+        "next": "Volgende",
+        "debug": "Debug",
+        "refresh": "Vernieuwen",
+        "jump": "Springen",
+        "save": "Opslaan",
+        "enabled": "Ingeschakeld",
+        "disabled": "Uitgeschakeld",
+        "enable": "Inschakelen",
+        "disable": "Uitschakelen",
+        "add": "Toevoegen",
+        "cancel": "Annuleren",
+        "send": "Verzenden"
+    },
+    "message": {
+        "success": "Succes",
+        "error": "Fout",
+        "retry": "Opnieuw proberen"
+    }
+}
