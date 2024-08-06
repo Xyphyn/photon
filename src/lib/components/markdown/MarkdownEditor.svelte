@@ -8,13 +8,17 @@
   import { Button, Label, Modal, TextArea } from 'mono-svelte'
   import { createEventDispatcher } from 'svelte'
   import {
+    Bold,
     CodeBracket,
     DocumentPlus,
     ExclamationTriangle,
+    H1,
     Icon,
+    Italic,
     Link,
     ListBullet,
     Photo,
+    Strikethrough,
   } from 'svelte-hero-icons'
   import ImageUploadModal from '../lemmy/modal/ImageUploadModal.svelte'
 
@@ -131,56 +135,56 @@ overflow-hidden transition-colors {$$props.class}"
             title="Bold"
             size="square-md"
           >
-            <span class="font-bold">B</span>
+            <Icon src={Bold} size="16" mini />
           </Button>
           <Button
             on:click={() => wrapSelection('*', '*')}
             title="Italic"
             size="square-md"
           >
-            <span class="italic font-bold">I</span>
+            <Icon src={Italic} size="16" micro />
           </Button>
           <Button
             on:click={() => wrapSelection('[', '](https://example.com)')}
             title="Link"
             size="square-md"
           >
-            <Icon src={Link} mini size="16" />
+            <Icon src={Link} size="16" micro />
           </Button>
           <Button
             on:click={() => wrapSelection('\n# ', '')}
             title="Header"
             size="square-md"
           >
-            <span class="italic font-bold font-serif">H</span>
+            <Icon src={H1} size="16" micro />
           </Button>
           <Button
             on:click={() => wrapSelection('~~', '~~')}
             title="Strikethrough"
             size="square-md"
           >
-            <span class="line-through font-bold">S</span>
+            <Icon src={Strikethrough} size="16" micro />
           </Button>
           <Button
             on:click={() => wrapSelection('\n> ', '')}
             title="Quote"
             size="square-md"
           >
-            <span class="font-bold font-serif">"</span>
+            <span class="font-bold font-serif text-lg">"</span>
           </Button>
           <Button
             on:click={() => wrapSelection('\n- ', '')}
             title="List"
             size="square-md"
           >
-            <Icon src={ListBullet} mini size="16" />
+            <Icon src={ListBullet} micro size="16" />
           </Button>
           <Button
             on:click={() => wrapSelection('`', '`')}
             title="Code"
             size="square-md"
           >
-            <Icon src={CodeBracket} mini size="16" />
+            <Icon src={CodeBracket} micro size="16" />
           </Button>
           <Button
             on:click={() =>
@@ -188,7 +192,7 @@ overflow-hidden transition-colors {$$props.class}"
             title="Spoiler"
             size="square-md"
           >
-            <Icon src={ExclamationTriangle} mini size="16" />
+            <Icon src={ExclamationTriangle} micro size="16" />
           </Button>
           <Button
             on:click={() => wrapSelection('~', '~')}
@@ -216,7 +220,7 @@ overflow-hidden transition-colors {$$props.class}"
               title="Image"
               size="square-md"
             >
-              <Icon src={Photo} size="16" mini />
+              <Icon src={Photo} size="16" micro />
             </Button>
           {/if}
         </div>
