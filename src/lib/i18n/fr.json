@@ -43,7 +43,9 @@
             "setViewTo": "Choisir style {{default}}",
             "setColor": "Choisir les couleurs",
             "setColorTo": "Mettre la couleur en mode {{default}}",
-            "feeds": "Tris"
+            "feeds": "Tris",
+            "setThemeTo": "Choisir theme {{default}}",
+            "setTheme": "Choisir un theme"
         }
     },
     "account": {
@@ -131,7 +133,8 @@
             "uploadImage": "Ajouter une Image",
             "url": "URL",
             "nsfw": "NSFW",
-            "altText": "Équivalent textuel"
+            "altText": "Équivalent textuel",
+            "selectFile": "Choisir un fichier"
         },
         "profile": {
             "displayName": "Nom affiché",
@@ -182,7 +185,8 @@
     "routes": {
         "frontpage": {
             "title": "Page d'accueil",
-            "footer": "{{users:number}} En ligne {{users; 1:user; default:users;}}"
+            "footer": "{{users:number}} En ligne {{users; 1:user; default:users;}}",
+            "endFeed": "Vous avez atteint la fin de {{community_name; undefined:the feed.; default:{{community_name}}.}}"
         },
         "legal": {
             "noLegal": "Cet instance n'a aucune information legale.",
@@ -192,13 +196,19 @@
             "user": "Utilisateur",
             "settings": "Paramètres",
             "blocks": "Blocages",
-            "credentials": "sécurité",
+            "credentials": "Compte",
             "moderates": "Modère",
             "favorites": "Favoris",
             "media": {
                 "title": "Média",
                 "download": "Telecharger"
-            }
+            },
+            "delete": {
+                "warning": "Cette action est permanente. Êtes-vous sûr de vouloir faire ça ?",
+                "title": "Supprimer le compte"
+            },
+            "logins": "Connexions",
+            "welcome": "Bienvenue, {{default}} !"
         },
         "accounts": "Comptes",
         "communities": "Communautés",
@@ -227,6 +237,10 @@
                 "allComments": "Voir tout les commentaires",
                 "part": "Vous regardez une partie d'un fil de commentaires.",
                 "context": "Afficher le contexte"
+            },
+            "emptyComments": {
+                "title": "Pas de commentaires",
+                "description": "Lancez la conversation !"
             }
         },
         "inbox": {
@@ -245,7 +259,9 @@
             },
             "reason": "Raison",
             "resolve": "Resolu",
-            "unresolve": "Non resolu"
+            "unresolve": "Non resolu",
+            "resolved": "Résolu",
+            "resolvedBy": "Résolu par"
         },
         "admin": {
             "title": "L'administration",
@@ -387,7 +403,13 @@
                 "default": "Défaut",
                 "classic": "Classique",
                 "imported": "Votre Thème",
-                "new": "Nouveau thème"
+                "new": "Nouveau thème",
+                "title": "Non modifiable",
+                "description": "Ceci est un thème par défaut, qui ne peut pas être modifié.",
+                "delete": {
+                    "title": "Supprimer le thème",
+                    "confirm": "Confirmer"
+                }
             }
         },
         "community": {
@@ -565,7 +587,8 @@
             "unblock": "Débloquer",
             "blockInstance": "Bloquer l'instance",
             "favorite": "Favoris",
-            "unfavorite": "Enlever Le Favori"
+            "unfavorite": "Enlever Le Favori",
+            "activeDay": "En ligne aujourd'hui"
         }
     },
     "admin": {
@@ -617,6 +640,10 @@
                 "reporting": "Reportage factuel",
                 "downloading": "téléchargement des données sur la partialitée",
                 "loading": "Chargement de la source"
+            },
+            "link": {
+                "title": "Liens alternatifs",
+                "actions": "Actions de lien"
             }
         },
         "badges": {
