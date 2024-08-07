@@ -11,6 +11,7 @@
 
   export let posts: PostView[]
   export let community: boolean = false
+  export let feedData: any
   let etc = $$restProps
 
   $: combinedPosts = combineCrossposts(posts)

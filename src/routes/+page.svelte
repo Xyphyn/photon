@@ -42,7 +42,7 @@
       ? VirtualFeed
       : PostFeed}
     posts={data.posts.posts}
-    feedData={data}
+    bind:feedData={data}
     feedId="main"
   />
   <svelte:element
