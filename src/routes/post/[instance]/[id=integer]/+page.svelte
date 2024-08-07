@@ -55,6 +55,7 @@
   import { resumables } from '$lib/lemmy/item.js'
   import { contentPadding } from '$lib/components/ui/layout/Shell.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
+  import CommentListVirtualizer from '$lib/components/lemmy/comment/CommentListVirtualizer.svelte'
 
   export let data
 
@@ -412,7 +413,7 @@
         </Button>
       </div>
     {/if}
-    <Comments
+    <CommentListVirtualizer
       post={post.post_view.post}
       nodes={buildCommentsTree(
         comments.comments,
@@ -423,7 +424,6 @@
             ($userSettings.hidePosts.removed && c.comment.removed)
           )
       )}
-      isParent={true}
     />
     {#if comments.comments.length == 0}
       <Placeholder
