@@ -163,9 +163,13 @@
     grid-template-areas: 'main';
     justify-items: start;
   }
+
+  .content.limit-width {
+    max-width: 120rem;
+  }
+
   .content > * {
     width: 100%; /* Full width for immediate children */
-    padding: 0 1rem; /* Add some padding on smaller screens */
   }
 
   @media (min-width: 768px) {
@@ -183,19 +187,23 @@
       grid-template-areas: 'sidebar main suffix';
     }
 
-    .content:is(.limit-width) {
+    .content.limit-width {
       grid-template-columns: 1fr 2fr 1fr;
     }
 
-    :global(.content:is(.limit-width) > *:first-child) {
+    :global(.content.limit-width > *:first-child) {
       max-width: 20rem;
       justify-self: end;
       width: 100%;
     }
 
-    :global(.content:is(.limit-width) > *:last-child) {
+    :global(.content.limit-width > *:last-child) {
       max-width: 20rem;
       justify-self: start;
+      width: 100%;
+    }
+
+    .main {
       width: 100%;
     }
   }

@@ -143,7 +143,6 @@
     let:class={c}
     class="p-4 sm:p-6 min-w-0 w-full flex flex-col h-full relative {c}"
     style={s}
-    class:max-w-6xl={$userSettings.newWidth}
     id="main"
   >
     <slot />
