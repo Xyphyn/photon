@@ -799,6 +799,10 @@
             "debug": {
                 "title": "Debug info",
                 "description": "Display debug information"
+            },
+            "virtualizeFeeds": {
+                "title": "Don't virtualize feeds",
+                "description": "Virtualization only renders visible posts, increasing performance drastically. Disable virtualization if you are having stutter problems. This will disable infinite scroll."
             }
         }
     },

@@ -33,7 +33,7 @@ export async function postFeed(args: {
   const feed = get(postFeeds)[args.id]
 
   const posts = shouldReload(feed, args.url, get(instance))
-    ? await client({ func: fetch }).getPosts(args.request)
+    ? await client({ func: args.fetch }).getPosts(args.request)
     : feed.data.posts
 
   if (shouldReload(feed, args.url, get(instance)) && browser)

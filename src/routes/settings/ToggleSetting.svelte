@@ -1,6 +1,7 @@
 <script lang="ts">
   import { t } from '$lib/translations'
   import { Badge, Switch } from 'mono-svelte'
+  import { createEventDispatcher } from 'svelte'
   import {
     ComputerDesktop,
     DevicePhoneMobile,

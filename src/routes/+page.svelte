@@ -7,21 +7,15 @@
   import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
   import ViewSelect from '$lib/components/lemmy/dropdowns/ViewSelect.svelte'
   import { searchParam } from '$lib/util.js'
-  import { ChartBar, ExclamationTriangle, Icon } from 'svelte-hero-icons'
-  import { getClient, site } from '$lib/lemmy.js'
+  import { ChartBar, Icon } from 'svelte-hero-icons'
+  import { site } from '$lib/lemmy.js'
   import Location from '$lib/components/lemmy/dropdowns/Location.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { t } from '$lib/translations.js'
-  import InfiniteScroll from 'svelte-infinite-scroll'
-  import { Button } from 'mono-svelte'
-  import { writable } from 'svelte/store'
-  import type { GetPostsResponse, ListingType, SortType } from 'lemmy-js-client'
   import { userSettings } from '$lib/settings.js'
   import { browser } from '$app/environment'
-  import { onMount } from 'svelte'
   import VirtualFeed from '$lib/components/lemmy/post/feed/VirtualFeed.svelte'
   import PostFeed from '$lib/components/lemmy/post/feed/PostFeed.svelte'
-  import { postFeeds, getPostFeed } from '$lib/lemmy/postfeed.js'
 
   export let data
 </script>
@@ -42,13 +36,19 @@
   </header>
 
   <svelte:component
-    this={browser ? VirtualFeed : PostFeed}
+    this={$userSettings.infiniteScroll &&
+    browser &&
+    !$userSettings.posts.noVirtualize
+      ? VirtualFeed
+      : PostFeed}
     posts={data.posts.posts}
-    bind:feedData={data}
+    feedData={data}
     feedId="main"
   />
   <svelte:element
-    this={$userSettings.infiniteScroll ? 'noscript' : 'div'}
+    this={$userSettings.infiniteScroll && !$userSettings.posts.noVirtualize
+      ? 'noscript'
+      : 'div'}
     class="mt-auto"
   >
     <Pageination

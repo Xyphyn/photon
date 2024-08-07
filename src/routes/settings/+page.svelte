@@ -634,6 +634,11 @@
       title={$t('settings.other.debug.title')}
       description={$t('settings.other.debug.description')}
     />
+    <ToggleSetting
+      bind:checked={$userSettings.posts.noVirtualize}
+      title={$t('settings.other.virtualizeFeeds.title')}
+      description={$t('settings.other.virtualizeFeeds.description')}
+    />
   </Section>
 </div>
 

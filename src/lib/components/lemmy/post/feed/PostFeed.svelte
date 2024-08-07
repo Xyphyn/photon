@@ -47,15 +47,7 @@
   {:else}
     {#each combinedPosts as post, index}
       {#if !($userSettings.hidePosts.deleted && post.post.deleted) && !($userSettings.hidePosts.removed && post.post.removed)}
-        <li
-          in:fly|global={{
-            y: -8,
-            duration: 500,
-            opacity: 0,
-            delay: 100 + index * 20,
-          }}
-          class="relative post-container"
-        >
+        <li class="relative post-container">
           <Post
             hideCommunity={community}
             view={(post.post.featured_community || post.post.featured_local) &&

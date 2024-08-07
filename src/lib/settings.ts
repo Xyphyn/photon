@@ -92,6 +92,7 @@ interface Settings {
     deduplicateEmbed: boolean
     compactFeatured: boolean
     showHidden: boolean
+    noVirtualize: boolean
   }
   infiniteScroll: boolean
   language: string | null
@@ -105,7 +106,7 @@ interface Settings {
 }
 
 export const defaultSettings: Settings = {
-  settingsVer: 1,
+  settingsVer: 2,
   expandableImages: toBool(env.PUBLIC_EXPANDABLE_IMAGES) ?? true,
   markReadPosts: toBool(env.PUBLIC_MARK_READ_POSTS) ?? true,
   showInstances: {
@@ -171,6 +172,7 @@ export const defaultSettings: Settings = {
     deduplicateEmbed: toBool(env.PUBLIC_DEDUPLICATE_EMBED) ?? true,
     compactFeatured: toBool(env.PUBLIC_COMPACT_FEATURED) ?? true,
     showHidden: false,
+    noVirtualize: false,
   },
   infiniteScroll: true,
   language: env.PUBLIC_LANGUAGE ?? null,
