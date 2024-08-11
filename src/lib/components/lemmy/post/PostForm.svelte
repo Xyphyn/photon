@@ -1,8 +1,8 @@
 <script lang="ts">
   import { createEventDispatcher, onDestroy, onMount } from 'svelte'
-  import { client } from '$lib/lemmy.js'
-  import type { Community, Post, PostView } from 'lemmy-js-client'
-  import { Switch, toast } from 'mono-svelte'
+  import { client, site } from '$lib/lemmy.js'
+  import type { Community, Language, Post, PostView } from 'lemmy-js-client'
+  import { Select, Spinner, Switch, toast } from 'mono-svelte'
   import {
     Check,
     Icon,
@@ -39,11 +39,12 @@
     title: string
     body: string
     image: FileList | null
-    thumbnail: string | undefined
-    url: string | undefined
+    thumbnail?: string
+    url?: string
     nsfw: boolean
     loading: boolean
-    alt_text: string | undefined
+    alt_text?: string
+    language_id?: number
   } = {
     community: null,
     title: '',
@@ -71,6 +72,7 @@
       data.nsfw = editingPost.nsfw
       data.alt_text = editingPost.alt_text
       data.thumbnail = editingPost.thumbnail_url
+      data.language_id = editingPost.language_id
     }
 
     if (passedCommunity) {
@@ -89,6 +91,7 @@
   })
 
   onDestroy(() => {
+    // @ts-ignore
     if (saveDraft) setSessionStorage('postDraft', data)
   })
 
@@ -129,6 +132,7 @@
           nsfw: data.nsfw,
           alt_text: data.alt_text,
           custom_thumbnail: data.thumbnail,
+          language_id: data.language_id ? Number(data.language_id) : undefined,
         })
 
         if (!post) throw new Error('Failed to edit post')
@@ -145,6 +149,7 @@
           nsfw: data.nsfw,
           custom_thumbnail: data.thumbnail,
           alt_text: data.alt_text,
+          language_id: data.language_id ? Number(data.language_id) : undefined,
         })
 
         if (!post) throw new Error('Failed to upload post')
@@ -338,6 +343,21 @@
     previewButton
   />
   <Switch bind:checked={data.nsfw}>{$t('form.post.nsfw')}</Switch>
+  {#if $site}
+    <Select
+      class="w-max"
+      label={$t('settings.app.lang.title')}
+      bind:value={data.language_id}
+    >
+      {#each $site?.all_languages as language}
+        <option value={language.id.toString()}>{language.name}</option>
+      {/each}
+    </Select>
+  {:else}
+    <div style="height: 58px;">
+      <Spinner width={24} />
+    </div>
+  {/if}
   <div class="mt-auto" />
   <div class="flex flex-row items-center gap-2">
     <Button
