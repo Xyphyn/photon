@@ -23,6 +23,7 @@
   import { fly } from 'svelte/transition'
   import { backOut } from 'svelte/easing'
   import { t } from '$lib/translations'
+  import { errorMessage } from '$lib/lemmy/error'
 
   export let post: Post
   export let vote: number = 0
@@ -42,7 +43,10 @@
     loading = true
     oldScore = score
     vote = newVote
-    const res = await voteItem(post, newVote, $profile.jwt)
+    const res = await voteItem(post, newVote, $profile.jwt).catch((e) => {
+      toast({ content: errorMessage(e), type: 'error' })
+      return { upvotes: 0, downvotes: 0, score: 0 }
+    })
     ;({ upvotes, downvotes, score } = res)
     loading = false
   }
