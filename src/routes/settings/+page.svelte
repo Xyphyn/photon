@@ -57,13 +57,13 @@
       flag: string
     }
   > = new Map([
-    ['en', { name: 'English', translated: 1, flag: '🇬🇧' }],
+    ['en', { name: 'English', translated: -1, flag: '🇬🇧' }],
+    ['he', { name: 'עברית', translated: -1, flag: '🇮🇱' }],
     ['bg', { name: 'български', translated: 0.66, flag: '🇧🇬' }],
     ['et', { name: 'Eesti keel', translated: 0.24, flag: '🇪🇪' }],
     ['de', { name: 'Deutsch', translated: 0.77, flag: '🇩🇪' }],
     ['fi', { name: 'Suomi', translated: 0.99, flag: '🇫🇮' }],
     ['fr', { name: 'Français', translated: 0.79, flag: '🇫🇷' }],
-    ['he', { name: 'עברית', translated: 0.38, flag: '🇮🇱' }],
     ['nl', { name: 'Nederlands', translated: 0.96, flag: '🇳🇱' }],
     ['pt', { name: 'Português', translated: 0.94, flag: '🇵🇹' }],
     ['zh-Hans', { name: '简体中文', translated: 0.91, flag: '🇨🇳' }],
@@ -251,7 +251,9 @@
               <div
                 class="text-slate-600 dark:text-zinc-400 text-xs ml-auto"
                 data-hide-selected
-                data-label="{mapped.translated * 100}%"
+                data-label={mapped.translated < 0
+                  ? ''
+                  : `${mapped.translated * 100}%`}
               ></div>
             </option>
           {/each}
