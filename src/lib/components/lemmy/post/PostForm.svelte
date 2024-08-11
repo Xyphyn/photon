@@ -359,7 +359,7 @@
     </div>
   {/if}
   <div class="mt-auto" />
-  <div class="flex flex-row items-center gap-2">
+  <div class="flex flex-row items-center gap-2 w-full">
     <Button
       submit
       color="primary"
@@ -383,9 +383,11 @@
             data = draft
           }
         }}
-        size="square-lg"
+        rounding="xl"
+        size="custom"
         disabled={!getSessionStorage('postDraft')}
         title="Restore From Draft"
+        class=" aspect-square h-full"
       >
         <Icon src={ArrowPath} size="16" mini />
       </Button>
