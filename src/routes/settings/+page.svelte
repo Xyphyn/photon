@@ -58,13 +58,14 @@
     }
   > = new Map([
     ['en', { name: 'English', translated: 1, flag: '🇬🇧' }],
+    ['bg', { name: 'български', translated: 0.66, flag: '🇧🇬' }],
     ['et', { name: 'Eesti keel', translated: 0.24, flag: '🇪🇪' }],
     ['de', { name: 'Deutsch', translated: 0.77, flag: '🇩🇪' }],
-    ['fi', { name: 'Suomi', translated: 0.95, flag: '🇫🇮' }],
+    ['fi', { name: 'Suomi', translated: 0.99, flag: '🇫🇮' }],
     ['fr', { name: 'Français', translated: 0.79, flag: '🇫🇷' }],
-    ['he', { name: 'עברית', translated: 0.39, flag: '🇮🇱' }],
-    ['nl', { name: 'Nederlands', translated: 0.97, flag: '🇳🇱' }],
-    ['pt', { name: 'Português', translated: 0.95, flag: '🇵🇹' }],
+    ['he', { name: 'עברית', translated: 0.38, flag: '🇮🇱' }],
+    ['nl', { name: 'Nederlands', translated: 0.96, flag: '🇳🇱' }],
+    ['pt', { name: 'Português', translated: 0.94, flag: '🇵🇹' }],
     ['zh-Hans', { name: '简体中文', translated: 0.91, flag: '🇨🇳' }],
     ['zh-Hant', { name: '繁體中文', translated: 0.25, flag: '🇭🇰' }],
   ])
