@@ -112,7 +112,7 @@
       pointer-events-auto backdrop-blur-xl {topPanel
         ? 'bg-slate-50/50 dark:bg-zinc-950/90 border-slate-100 dark:border-zinc-900'
         : `border-slate-200 dark:border-zinc-800 shadow-2xl
-        bg-white/50 dark:bg-zinc-925/70`}"
+        bg-white/50 dark:bg-zinc-950/70`}"
       {title}
       style="transition: border-radius 250ms;"
     />
