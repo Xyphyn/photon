@@ -14,7 +14,7 @@
     6: '--hover-color-1: #4682B4; --hover-color-2: #F4A460;',
     7: '--hover-color-1: #00BFFF; --hover-color-2: #1E90FF;', // Deep Sky Blue to Dodger Blue
     8: '--hover-color-1: #FF5733; --hover-color-2: #FFD700;',
-    9: '--hover-color-1: #FFD700; --hover-color-2: #FF8C00;', // Gold to Orange
+    9: '--hover-color-1: #D7FF00; --hover-color-2: #8CFF00;', // Gold to Orange
     10: '--hover-color-1: #FF6347; --hover-color-2: #EE45AA;', // Tomato to Orange Red
     11: '--hover-color-1: #ffaa10; --hover-color-2: #eeBF11;', // Maroon to Amber
     12: '--hover-color-1: #228B22; --hover-color-2: #FFFFFF;',
