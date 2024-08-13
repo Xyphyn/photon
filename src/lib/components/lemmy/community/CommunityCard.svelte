@@ -245,7 +245,7 @@
     {/if}
   </div>
   <div
-    class="flex flex-row items-center gap-1 sticky bottom-0 drop-shadow-xl w-full"
+    class="flex flex-row items-center gap-1 sticky bottom-0 drop-shadow-xl w-full pb-4"
   >
     {#if $profile?.jwt}
       <Button
