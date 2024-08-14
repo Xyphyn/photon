@@ -1,1 +1,823 @@
-{}
+{
+    "form": {
+        "forgotpassword": "Zapomniałem hasła",
+        "signup": {
+            "application": {
+                "label": "Aplikuj",
+                "info": "Aby dołączyć do tej instancji, musisz wypełnić aplikację i poczekać na akceptację. Otrzymasz email, jeśli twoja aplikacja zostanie zaakceptowana."
+            },
+            "title": "Zarejestruj się",
+            "description": "Wybierz instancję, która Cię interesuje, lub wprowadź adres URL ręcznie.",
+            "info": "Instancja to serwer, na którym będzie hostowane Twoje konto, ale nadal możesz uzyskiwać dostęp do treści z innych instancji.",
+            "chooseInstance": "Wybierz instancję",
+            "closed": {
+                "title": "Rejestracje zamknięte",
+                "description": "Ta instancja ma zamknięte rejestracje. Znajdź inną instancję.",
+                "anotherInstance": "Znajdź inną instancję"
+            }
+        },
+        "username": "Nazwa użytkownika",
+        "name": "Imię",
+        "instance": "URL instancji",
+        "password": "Hasło",
+        "confirmPassword": "Potwierdź hasło",
+        "2fa": "Kod 2FA",
+        "submit": "Prześlij",
+        "edit": "Edytuj",
+        "preview": "Podgląd",
+        "post": {
+            "create": "Utwórz post",
+            "edit": "Edytuj post",
+            "community": "Społeczność",
+            "title": "Tytuł",
+            "url": "URL",
+            "body": "Treść",
+            "nsfw": "NSFW",
+            "generateTitle": "Generuj tytuł",
+            "uploadImage": "Prześlij obraz",
+            "selectFile": "Wybierz plik",
+            "altText": "Tekst alternatywny"
+        },
+        "profile": {
+            "displayName": "Wyświetlana nazwa",
+            "bio": "Biografia",
+            "avatar": "Awatar",
+            "banner": "Baner",
+            "email": "Email",
+            "matrix": "Użytkownik Matrix",
+            "showNSFW": "Pokaż treści NSFW",
+            "scores": "Pokaż oceny",
+            "bot": "Konto bota",
+            "showBots": "Pokaż boty",
+            "showRead": "Pokaż przeczytane posty",
+            "currentPassword": "Obecne hasło",
+            "newPassword": "Nowe hasło",
+            "verifyNewPassword": "Potwierdź nowe hasło",
+            "2fa": {
+                "totp": "TOTP",
+                "2fa": "2FA",
+                "paste": "Wklej to w swojej aplikacji uwierzytelniającej."
+            },
+            "deleteAccount": {
+                "label": "Usuń konto",
+                "deleteContent": "Usuń treść",
+                "warning": "To usunie WSZYSTKIE twoje posty."
+            }
+        },
+        "email": "Email",
+        "setup": "Konfiguracja",
+        "description": "Opis"
+    },
+    "routes": {
+        "profile": {
+            "moderates": "Moderuje",
+            "user": "Użytkownik",
+            "settings": "Ustawienia",
+            "blocks": "Blokady",
+            "credentials": "Konto",
+            "favorites": "Ulubione",
+            "upvoted": "Polubione",
+            "downvoted": "Niepolubione",
+            "media": {
+                "title": "Media",
+                "download": "Pobierz"
+            },
+            "logins": "Logowania",
+            "welcome": "Witamy, {{default}}!",
+            "delete": {
+                "title": "Usuń konto",
+                "warning": "To jest nieodwracalne. Czy na pewno chcesz to zrobić?"
+            }
+        },
+        "frontpage": {
+            "title": "Strona główna",
+            "footer": "{{users:number}} aktywnych {{users; 1:user; default:users;}}",
+            "endFeed": "Dotarłeś do końca {{community_name; undefined:feedu.; default:{{community_name}}.}}"
+        },
+        "modlog": "Dziennik moderatora",
+        "instances": "Instancje",
+        "legal": {
+            "title": "Informacje prawne",
+            "noLegal": "Ta instancja nie zawiera żadnych informacji prawnych."
+        },
+        "translators": "Tłumacze",
+        "accounts": "Konta",
+        "communities": "Społeczności",
+        "search": {
+            "title": "Szukaj",
+            "federating": "Federowanie",
+            "query": "Zapytanie",
+            "noResults": {
+                "title": "Brak wyników",
+                "description": "Nie znaleziono wyników pasujących do tego filtra. Spróbuj doprecyzować wyszukiwanie.",
+                "alt": "Szukaj w całym fediversum"
+            }
+        },
+        "saved": "Zapisane",
+        "createPost": "Utwórz post",
+        "createCommunity": "Utwórz społeczność",
+        "post": {
+            "crosspostCount": "repostów",
+            "commentCount": "komentarzy",
+            "addComment": "Dodaj komentarz",
+            "scrollToTop": "Przewiń na górę",
+            "instanceWarning": "Ten post został zażądany z innego serwera niż twój. Wiele działań może nie działać.",
+            "remoteView": "Widok zdalny",
+            "localView": "Widok lokalny",
+            "thread": {
+                "single": "Oglądasz pojedynczy wątek.",
+                "allComments": "Wszystkie komentarze",
+                "part": "Oglądasz część wątku.",
+                "context": "Pokaż kontekst"
+            },
+            "emptyComments": {
+                "title": "Brak komentarzy",
+                "description": "Rozpocznij rozmowę!"
+            }
+        },
+        "inbox": {
+            "title": "Skrzynka odbiorcza",
+            "markAsRead": "Oznacz wszystkie jako przeczytane",
+            "empty": {
+                "title": "Brak nowych powiadomień",
+                "description": "Wiadomości, odpowiedzi i wzmianki pojawią się tutaj."
+            }
+        },
+        "moderation": {
+            "title": "Moderacja",
+            "empty": {
+                "title": "Brak nowych zgłoszeń",
+                "description": "Kiedy zgłoszenia zostaną zgłoszone, możesz podjąć działania tutaj."
+            },
+            "reason": "Powód",
+            "resolve": "Rozwiąż",
+            "resolved": "Rozwiązane",
+            "unresolve": "Otwórz ponownie",
+            "resolvedBy": "Rozwiązane przez"
+        },
+        "admin": {
+            "title": "Administracja",
+            "config": {
+                "title": "Konfiguracja",
+                "sidebar": "Pasek boczny",
+                "icon": "Ikona",
+                "banner": "Baner",
+                "downvotesEnabled": "Włącz oceny w dół",
+                "nsfwEnabled": "Włącz NSFW",
+                "registration": {
+                    "label": "Tryb rejestracji",
+                    "open": "Otwarta",
+                    "application": "Wymagana aplikacja",
+                    "closed": "Zamknięta"
+                },
+                "applicationQuestion": "Pytanie aplikacyjne",
+                "adminCommunityOnly": "Tylko administratorzy mogą tworzyć społeczności",
+                "requireVerifyEmail": "Wymagaj weryfikacji e-mail",
+                "emailAdminsOnApplication": "Wyślij e-mail do administratorów po otrzymaniu nowych zgłoszeń",
+                "emailAdminsOnReport": "Wyślij e-mail do administratorów po otrzymaniu nowych zgłoszeń",
+                "listingType": {
+                    "label": "Typ listy",
+                    "all": "Wszystkie",
+                    "local": "Lokalne"
+                },
+                "private": "Prywatna instancja",
+                "hideModlogModNames": "Ukryj nazwy moderatorów w dzienniku",
+                "slurFilter": "Filtr wulgaryzmów regex",
+                "federation": "Federacja włączona",
+                "federationDebug": "Tryb debugowania federacji",
+                "captcha": {
+                    "enabled": "CAPTCHA włączona"
+                }
+            },
+            "applications": {
+                "title": "Aplikacje",
+                "empty": {
+                    "title": "Brak nowych aplikacji",
+                    "description": "Zgłoszenia do dołączenia do twojej instancji pojawią się tutaj."
+                },
+                "application": "Aplikacja",
+                "approved": "Zaakceptowane",
+                "denied": "Odrzucone",
+                "user": "Użytkownik",
+                "deny": "Odrzuć",
+                "approve": "Zaakceptuj",
+                "reason": "Powód",
+                "modalTitle": "Odrzuć aplikację"
+            },
+            "taglines": {
+                "title": "Slogany",
+                "add": "Dodaj slogan",
+                "empty": {
+                    "title": "Brak sloganów",
+                    "description": "Losowy slogan pojawi się na karcie strony, gdy użytkownicy odwiedzą twoją instancję."
+                }
+            },
+            "team": {
+                "title": "Administratorzy",
+                "empty": {
+                    "title": "Brak administratorów",
+                    "description": "Jak to możliwe, że nie ma administratorów tej strony?"
+                }
+            },
+            "federation": {
+                "title": "Federacja",
+                "csv": "Prześlij CSV",
+                "blocked": "Zablokowane instancje",
+                "block": "Zablokuj",
+                "blockplaceholder": "Zablokuj instancję...",
+                "allowed": "Zezwolone instancje",
+                "allow": "Zezwól",
+                "allowplaceholder": "Zezwól na instancję",
+                "emptyBlock": {
+                    "title": "Brak zablokowanych instancji",
+                    "description": "Zablokowanie instancji ukryje nowe zgłoszenia z tej instancji."
+                },
+                "emptyAllow": {
+                    "title": "Brak dozwolonych instancji",
+                    "description": "Zezwolenie na instancję zablokuje każdą inną instancję."
+                }
+            }
+        },
+        "verifyEmail": {
+            "message": "Twój e-mail został zweryfikowany. Możesz teraz zamknąć to okno.",
+            "error": "Nie udało się zweryfikować twojego e-maila."
+        },
+        "passwordChange": {
+            "title": "Zmień hasło",
+            "description": "Wybierz swoje nowe hasło.",
+            "instance": "Na której instancji jest twoje konto?"
+        },
+        "resetLogin": {
+            "title": "Zresetuj hasło",
+            "description": "Wprowadź e-mail swojego konta, a link do resetowania hasła zostanie wysłany. Jeśli twoje konto nie ma e-maila, skontaktuj się z administratorami instancji."
+        },
+        "theme": {
+            "title": "Motyw",
+            "import": "Importuj",
+            "export": "Eksportuj",
+            "reset": "Resetuj",
+            "accent": "Akcent",
+            "resetWarning": {
+                "title": "Resetuj motyw",
+                "description": "To zresetuje wszystkie twoje kolory do domyślnych. Zaleca się wyeksportowanie motywu przed tym."
+            },
+            "preset": {
+                "title": "Nie można modyfikować",
+                "description": "To jest domyślny motyw i nie można go modyfikować.",
+                "delete": {
+                    "title": "Usuń motyw",
+                    "confirm": "Potwierdź"
+                },
+                "default": "Domyślny",
+                "classic": "Klasyczny",
+                "imported": "Twój motyw",
+                "new": "Nowy motyw"
+            }
+        },
+        "community": {
+            "settings": {
+                "team": "Zespół",
+                "settings": "Ustawienia"
+            }
+        }
+    },
+    "nav": {
+        "home": "Strona główna",
+        "admin": "Administrator",
+        "moderation": "Moderacja",
+        "communities": "Odkrywaj",
+        "search": "Szukaj",
+        "create": {
+            "label": "Utwórz",
+            "post": "Post",
+            "community": "Społeczność",
+            "logingate": "Musisz się zalogować, aby tworzyć treści."
+        },
+        "menu": {
+            "label": "Profil",
+            "app": "Aplikacja",
+            "settings": "Ustawienia",
+            "colorscheme": {
+                "label": "Schemat kolorów",
+                "system": "System",
+                "dark": "Ciemny",
+                "light": "Jasny"
+            },
+            "theme": "Motyw",
+            "about": "O nas",
+            "source": "Źródło",
+            "donate": "Przekaż darowiznę",
+            "instance": "Instancja"
+        },
+        "commands": {
+            "prompt": "Paleta poleceń",
+            "recents": "Ostatnie",
+            "content": "Treść",
+            "search": "Szukaj {{default}}",
+            "main": "Główne",
+            "setView": "Ustaw widok",
+            "setViewTo": "Ustaw widok na {{default}}",
+            "setColor": "Ustaw schemat kolorów",
+            "setColorTo": "Ustaw schemat kolorów na {{default}}",
+            "feeds": "Kanały",
+            "downloading": "Pobieranie akcji",
+            "setTheme": "Ustaw motyw",
+            "setThemeTo": "Ustaw motyw na {{default}}"
+        }
+    },
+    "post": {
+        "badges": {
+            "deleted": "Skasowane",
+            "nsfw": "NSFW",
+            "locked": "Zablokowane",
+            "featured": "Polecane",
+            "removed": "Usunięte",
+            "saved": "Zapisane"
+        },
+        "actions": {
+            "comments": "Komentarze",
+            "save": "Zapisz",
+            "unsave": "Usuń zapis",
+            "more": {
+                "label": "Więcej akcji",
+                "edit": "Edytuj",
+                "creator": "Twórca",
+                "actions": "Akcje",
+                "markRead": "Oznacz jako przeczytane",
+                "markUnread": "Oznacz jako nieprzeczytane",
+                "hide": "Ukryj",
+                "unhide": "Odkryj",
+                "translate": "Tłumacz",
+                "mediaBias": "Stronniczość mediów",
+                "share": "Udostępnij",
+                "crosspost": "Krzyżowy post",
+                "delete": "Usuń",
+                "restore": "Przywróć"
+            },
+            "mediaBias": {
+                "description": "Opis",
+                "credibility": "Wiarygodność",
+                "reporting": "Rzetelność raportowania",
+                "noData": {
+                    "title": "Brak danych",
+                    "description": "Brak danych o stronniczości dla tej strony internetowej."
+                },
+                "loading": "Ładowanie źródła",
+                "downloading": "Pobieranie zestawu danych"
+            },
+            "link": {
+                "title": "Alternatywne linki",
+                "actions": "Akcje linków"
+            }
+        }
+    },
+    "account": {
+        "login": "Zaloguj się",
+        "logout": "Wyloguj się",
+        "signup": "Zarejestruj się",
+        "accounts": "Konta",
+        "changeinstance": "Zmień instancję",
+        "resetColor": "Resetuj kolor",
+        "addGuest": "Dodaj gościa",
+        "moveUp": "Przesuń w górę",
+        "moveDown": "Przesuń w dół",
+        "guest": "Gość",
+        "versionGate": "Ta wersja Photon obsługuje instancje działające na {{version}} lub nowszej."
+    },
+    "filter": {
+        "location": {
+            "label": "Lokalizacja",
+            "all": "Wszystkie",
+            "local": "Lokalne",
+            "subscribed": "Subskrypcje",
+            "moderator": "Moderator",
+            "global": "Globalne"
+        },
+        "sort": {
+            "label": "Sortowanie",
+            "active": "Aktywne",
+            "hot": "Popularne",
+            "top": {
+                "label": "Najlepsze",
+                "time": {
+                    "label": "Czas",
+                    "all": "Wszystkie",
+                    "9months": "9 Miesięcy",
+                    "6months": "6 Miesięcy",
+                    "3months": "3 Miesiące",
+                    "month": "Miesiąc",
+                    "week": "Tydzień",
+                    "day": "Dzień",
+                    "12hours": "12 Godzin",
+                    "6hours": "6 Godzin",
+                    "hour": "Godzina"
+                }
+            },
+            "new": "Nowe",
+            "old": "Stare",
+            "controversial": "Kontrowersyjne",
+            "scaled": "Zeskalowane",
+            "mostcomments": "Komentarze",
+            "newcomments": "Nowe odpowiedzi"
+        },
+        "view": {
+            "label": "Widok",
+            "cozy": "Przytulny",
+            "list": "Lista",
+            "compact": "Kompaktowy",
+            "legacy": "Tradycyjny"
+        },
+        "type": "Typ",
+        "filter": "Filtr",
+        "unread": "Nieprzeczytane",
+        "inbox": {
+            "messages": "Wiadomości",
+            "replies": "Odpowiedzi",
+            "mentions": "Wzmianki"
+        }
+    },
+    "cards": {
+        "site": {
+            "about": "O nas",
+            "stats": "Statystyki",
+            "admins": "Administratorzy"
+        },
+        "community": {
+            "members": "Członkowie",
+            "moderators": "Moderatorzy",
+            "subscribe": "Subskrybuj",
+            "subscribed": "Subskrybowane",
+            "modlog": "Dziennik moderatora",
+            "block": "Zablokuj",
+            "unblock": "Odblokuj",
+            "blockInstance": "Zablokuj instancję",
+            "favorite": "Ulubione",
+            "unfavorite": "Usuń z ulubionych",
+            "activeDay": "Aktywny dzisiaj"
+        }
+    },
+    "admin": {
+        "purge": "Oczyść",
+        "instance": "Instancja",
+        "label": "Administracja",
+        "purgeCommunity": {
+            "title": "Czyszczenie społeczności",
+            "warning": "To usunie wszystkie posty. Czy jesteś pewien? (Przycisk włączy się za 3 sekundy.)"
+        }
+    },
+    "content": {
+        "all": "Wszystko",
+        "users": "Użytkownicy",
+        "posts": "Posty",
+        "comments": "Komentarze",
+        "communities": "Społeczności",
+        "instances": "Instancje",
+        "message": "Wiadomość"
+    },
+    "comment": {
+        "reply": "Odpowiedz",
+        "actions": {
+            "label": "Akcje",
+            "link": "Kopiuj link"
+        },
+        "locked": "Ten post jest zablokowany.",
+        "banned": "Zostałeś zbanowany z tej społeczności.",
+        "more": "{{comments:number}} więcej"
+    },
+    "moderation": {
+        "report": "Zgłoś",
+        "ban": {
+            "banning": "Banowanie użytkownika",
+            "unbanning": "Odbanowanie użytkownika",
+            "deleteData": "Usuń dane",
+            "warning": "To usunie WSZYSTKIE posty tego użytkownika tutaj.",
+            "expires": "Wygasa (UTC)",
+            "banFromCommunity": "Zbanuj z społeczności",
+            "unbanFromCommunity": "Odbanuj z społeczności"
+        },
+        "removeSubmission": {
+            "title": "Usuwanie zgłoszenia",
+            "titleRestore": "Przywracanie zgłoszenia",
+            "titlePurge": "Czyszczenie zgłoszenia",
+            "withReason": "Odpowiedz z powodem",
+            "comment": "Komentarz",
+            "message": "Wiadomość",
+            "failReply": "Nie udało się opublikować odpowiedzi. Usuwanie mimo to...",
+            "failMessage": "Nie udało się wysłać wiadomości do użytkownika. Usuwanie mimo to...",
+            "failEmptyReply": "Twoja odpowiedź nie może być pusta, jeśli 'Odpowiedz z powodem' jest włączona.",
+            "successPurge": "Pomyślnie oczyszczono to zgłoszenie."
+        },
+        "reportModal": {
+            "title": "Zgłoś",
+            "success": "Zgłoszono to zgłoszenie."
+        },
+        "reason": "Powód",
+        "lock": "Zablokuj",
+        "unlock": "Odblokuj",
+        "remove": "Usuń",
+        "restore": "Przywróć",
+        "label": "Moderacja",
+        "labelInstanceOnly": "Moderacja (Tylko instancja)",
+        "feature": "Polecane",
+        "unfeature": "Usuń z polecanych"
+    },
+    "common": {
+        "back": "Wstecz",
+        "next": "Dalej",
+        "debug": "Debugowanie",
+        "refresh": "Odśwież",
+        "jump": "Przejdź",
+        "save": "Zapisz",
+        "enabled": "Włączone",
+        "disabled": "Wyłączone",
+        "general": "Ogólne",
+        "enable": "Włącz",
+        "disable": "Wyłącz",
+        "add": "Dodaj",
+        "cancel": "Anuluj",
+        "send": "Wyślij"
+    },
+    "message": {
+        "success": "Sukces",
+        "error": "Błąd",
+        "retry": "Spróbuj ponownie"
+    },
+    "toast": {
+        "noComments": "API nie zwróciło żadnych komentarzy.",
+        "loginVoteGate": "Musisz być zalogowany, aby głosować.",
+        "blockedCommunity": "Zablokowano tę społeczność.",
+        "unblockedCommunity": "Odblokowano tę społeczność.",
+        "purgedCommunity": "Wyczyszczono tę społeczność.",
+        "blockedInstance": "Zablokowano tę instancję.",
+        "updatedCommunity": "Twoja społeczność została zaktualizowana.",
+        "sentMessage": "Wiadomość została wysłana.",
+        "invalidDateAbsolute": "Nieprawidłowa data. Musi to być data absolutna.",
+        "invalidDateBeforeCurrent": "Nieprawidłowa data. Jest wcześniejsza niż obecny czas.",
+        "bannedUser": "Zbanowano tego użytkownika.",
+        "unbannedUser": "Odbanowano tego użytkownika.",
+        "needCommunity": "Musisz ustawić społeczność.",
+        "invalidURL": "Nieprawidłowy URL",
+        "generatedTitle": "Wygenerowano tytuł i treść z URL. Czy chcesz to cofnąć?",
+        "failGenerateTitle": "Nie znaleziono odpowiedniego tytułu ani opisu tej strony internetowej.",
+        "restoredFromDraft": "Przywrócono twój post z wersji roboczej.",
+        "copied": "Skopiowano do schowka.",
+        "approvedApplication": "Zaakceptowano tę aplikację.",
+        "deniedApplication": "Odrzucono tę aplikację.",
+        "updatedSite": "Zaktualizowano twoją stronę.",
+        "failCSV": "Nie udało się odczytać pliku CSV",
+        "removeAdminWarning": "Czy na pewno chcesz usunąć tego administratora?",
+        "removeAdmin": "Usunięto tego administratora.",
+        "failFindUser": "Nie udało się znaleźć tego użytkownika.",
+        "addMod": "Dodano tego moderatora.",
+        "updateMods": "Zaktualizowano moderatorów społeczności.",
+        "logIn": "Pomyślnie zalogowano.",
+        "failInstanceURL": "Nie udało się skontaktować z URL instancji. Czy działa?",
+        "addAccount": "Dodano to konto.",
+        "resetLink": "Link do resetowania hasła został wysłany na twój e-mail.",
+        "resolveReport": "Rozwiązano ten raport.",
+        "unresolveReport": "Otworzono ponownie ten raport.",
+        "passwordReset": "Twoje hasło zostało zresetowane.",
+        "fetchPostOnHome": "Próba pobrania tego posta na twojej domowej instancji...",
+        "loginRefresh": "Twoje logowanie zostało odświeżone.",
+        "invalidLogin": "Nieprawidłowe dane logowania",
+        "saveSettings": "Zapisano twoje ustawienia użytkownika. Jeśli zmieniłeś adres e-mail, wysłano link weryfikacyjny.",
+        "confirmDelete1": "Czy na pewno chcesz usunąć swoje konto?",
+        "confirmDelete2": "Czy na pewno jesteś pewien?",
+        "confirmDelete3": "Ostateczne ostrzeżenie. Czy naprawdę jesteś pewien?",
+        "needPassword": "Musisz podać swoje hasło.",
+        "deleting": "Usuwanie twojego konta...",
+        "deleted": "Twoje konto zostało usunięte.",
+        "resetSettings": "Czy chcesz zresetować swoje ustawienia do domyślnych?",
+        "failFetchInstances": "Nie udało się pobrać dostępnych instancji.",
+        "verifyEmail": "Link weryfikacyjny został wysłany na twój e-mail. Zweryfikuj swój e-mail, a następnie zaloguj się.",
+        "failSignup": "Rejestracja nie powiodła się.",
+        "successSignup": "Zarejestrowano.",
+        "waitApplication": "Poczekaj na zaakceptowanie twojego wniosku rejestracyjnego przed zalogowaniem się.",
+        "blockUser": "Zablokowano tego użytkownika.",
+        "unblockUser": "Odblokowano tego użytkownika.",
+        "purgeUser": "Wyczyszczono dane tego użytkownika.",
+        "settingsImport": "Pomyślnie zaimportowano ustawienia",
+        "settingsImportWarning": "Zaimportowane ustawienia wydają się nieprawidłowe. Czy na pewno chcesz je zaimportować?",
+        "userLoading": "Ładowanie danych użytkownika w toku..."
+    },
+    "settings": {
+        "beta": "Beta",
+        "app": {
+            "lang": {
+                "zh-Hant": "Chiński (tradycyjny)",
+                "title": "Język",
+                "description": "Język używany w interfejsie Photon.",
+                "note": "Języki inne niż angielski i hebrajski są tłumaczone przez społeczność i mogą być niekompletne.",
+                "en": "Angielski",
+                "en-US": "Angielski (US)",
+                "he": "Hebrajski",
+                "et": "Estoński",
+                "fr": "Francuski",
+                "de": "Niemiecki",
+                "fi": "Fiński",
+                "pt": "Portugalski",
+                "zh": "Chiński",
+                "zh-Hans": "Chiński (uproszczony)",
+                "auto": "Auto",
+                "credits": "Kredyty",
+                "useRtl": {
+                    "title": "Użyj układu RTL",
+                    "description": "Użyj układu RTL dla języków RTL."
+                }
+            },
+            "title": "Photon",
+            "theming": {
+                "title": "Motywy",
+                "description": "Dostosuj kolory w Photon.",
+                "link": "Przejdź do motywów"
+            },
+            "colorscheme": {
+                "title": "Schemat kolorów",
+                "description": "Schemat kolorów do użycia."
+            },
+            "view": {
+                "title": "Styl postów",
+                "list": "Pokaż posty w liście, z treścią postów i kompaktowymi multimediami.",
+                "cozy": "Pokaż posty z dużymi obrazami, bogatymi osadzonymi treściami i dłuższymi treściami postów.",
+                "compact": "Pokaż posty w liście, bez treści postów i z ciasnym odstępem.",
+                "legacy": "Stary wygląd Photon."
+            },
+            "sort": {
+                "title": "Domyślne sortowanie",
+                "description": "Domyślne sortowanie w kanałach."
+            },
+            "infiniteScroll": {
+                "title": "Nieskończone przewijanie",
+                "description": "Nowe posty są dodawane podczas przewijania w dół, bez konieczności klikania 'następne'."
+            },
+            "postsInNewTab": {
+                "title": "Otwieraj posty w nowej karcie",
+                "description": "Otwieraj posty w osobnej karcie zamiast w bieżącej."
+            },
+            "displayName": {
+                "title": "Użyj nazwy wyświetlanej",
+                "description": "Pokaż nazwy wyświetlane użytkowników zamiast ich rzeczywistych nazw użytkownika."
+            },
+            "limitLayoutWidth": {
+                "title": "Ogranicz szerokość układu",
+                "description": "Popraw czytelność, ograniczając szerokość głównej treści."
+            },
+            "placeholders": {
+                "title": "Losowe teksty zastępcze",
+                "description": "Pokaż losowe teksty zastępcze dla niektórych pól tekstowych."
+            },
+            "expandImages": {
+                "title": "Rozwiń obrazy",
+                "description": "Kliknięcie na obraz posta przenosi do rozszerzonego widoku zamiast strony posta."
+            },
+            "duplicateTitles": {
+                "title": "Ukryj zduplikowane tytuły/treści",
+                "description": "Ukrywa tytuł i treść posta, jeśli są identyczne z osadzonymi treściami."
+            },
+            "thumbnailSide": {
+                "title": "Wyrównanie miniatury",
+                "description": "Gdzie powinny znajdować się miniatury w trybie listy/kompaktowym",
+                "left": "Lewo",
+                "right": "Prawo"
+            },
+            "font": {
+                "title": "Czcionka",
+                "description": "Jaka czcionka jest używana w interfejsie Photon."
+            },
+            "translation": {
+                "title": "Tłumaczenie",
+                "description": "Instancja LibreTranslate do użycia w tłumaczeniu.",
+                "instance": "Domena"
+            },
+            "titleTags": {
+                "title": "Parsuj tagi w tytule",
+                "description": "Zamień tekst w [nawiasach] na tagi, które można kliknąć, aby wyszukać.",
+                "rules": {
+                    "title": "Zasady",
+                    "blur": "Rozmycie",
+                    "hide": "Ukryj",
+                    "show": "Pokaż"
+                }
+            }
+        },
+        "title": "Ustawienia",
+        "desktop": "Komputer",
+        "tablet": "Tablet",
+        "mobile": "Telefon",
+        "export": "Eksportuj",
+        "import": "Importuj",
+        "reset": "Resetuj",
+        "navigation": {
+            "title": "Nawigacja",
+            "dockPos": {
+                "title": "Pozycja docka",
+                "description": "Gdzie dock powinien być umieszczony na ekranie.",
+                "top": "Góra",
+                "bottom": "Dół",
+                "adaptive": "Adaptacyjne"
+            },
+            "panel": {
+                "title": "Tryb panelu",
+                "description": "Rozszerz dock na krawędzie ekranu, podobnie jak panel.",
+                "on": "Włączone",
+                "off": "Wyłączone",
+                "adaptive": "Adaptacyjne"
+            },
+            "pins": {
+                "title": "Piny",
+                "description": "Kliknij pin, aby przenieść go na górę paska bocznego. Kliknij prawym przyciskiem myszy przypięty element, aby go usunąć."
+            }
+        },
+        "lemmy": {
+            "instances": {
+                "title": "Pokaż instancje",
+                "description": "Pokaż instancje, z których pochodzą określone treści."
+            },
+            "title": "Lemmy",
+            "showHiddenPosts": {
+                "title": "Pokaż ukryte posty",
+                "description": "Pokaż posty, które zostały ręcznie ukryte."
+            },
+            "compactFeatured": {
+                "title": "Kompaktowe wyróżnione posty",
+                "description": "Spraw, by wyróżnione posty były bardziej kompaktowe"
+            },
+            "markReadPosts": {
+                "title": "Oznacz przeczytane posty",
+                "description": "Oznacz post jako przeczytany po jego kliknięciu"
+            },
+            "fadeReadPosts": {
+                "title": "Wygaszone przeczytane posty",
+                "description": "Wygasza tytuł postów, które już zostały przeczytane"
+            },
+            "crosspostMarker": {
+                "title": "Oznacz reposty",
+                "description": "Pokaż 'repost z' podczas repostowania."
+            },
+            "hideSubmissions": {
+                "title": "Ukryj zgłoszenia",
+                "description": "Ukryj określone rodzaje zgłoszeń.",
+                "deleted": "Usunięte przez użytkownika",
+                "removed": "Usunięte przez moderatora"
+            },
+            "nsfwBlur": {
+                "title": "Rozmycie NSFW",
+                "description": "Rozmywa obrazy i usuwa treści postów NSFW."
+            }
+        },
+        "embeds": {
+            "title": "Osadzanie",
+            "clickToView": {
+                "title": "Kliknij, aby zobaczyć",
+                "description": "Osadzane treści ładują się dopiero po kliknięciu."
+            },
+            "youtube": {
+                "description": "Strona internetowa do osadzania treści z YouTube."
+            },
+            "instance": {
+                "invidious": "Instancja Invidious",
+                "piped": "Instancja Piped",
+                "description": "Instancja do osadzania treści z YouTube."
+            }
+        },
+        "moderation": {
+            "title": "Moderacja",
+            "replyPresets": {
+                "title": "Gotowe odpowiedzi na usunięcie",
+                "description": "Gotowe odpowiedzi do użycia przy usuwaniu zgłoszeń.",
+                "syntax": "Składnia"
+            }
+        },
+        "other": {
+            "title": "Inne",
+            "debug": {
+                "title": "Informacje debugowania",
+                "description": "Wyświetl informacje debugowania"
+            },
+            "virtualizeFeeds": {
+                "title": "Nie wirtualizuj kanałów",
+                "description": "Wirtualizacja renderuje tylko widoczne posty, znacznie zwiększając wydajność. Wyłącz wirtualizację, jeśli masz problemy z zacinaniem się. Wyłączenie tej funkcji spowoduje wyłączenie nieskończonego przewijania."
+            }
+        }
+    },
+    "profile": {
+        "saved": "Zapisane",
+        "subscribed": "Subskrypcje",
+        "profile": "Profil",
+        "inbox": "Skrzynka odbiorcza"
+    },
+    "error": {
+        "incorrect_login": "Nieprawidłowe dane logowania. Spróbuj ponownie.",
+        "incorrect_login_2": "Nieprawidłowe dane logowania. Spróbuj ponownie.",
+        "incorrect_login_3": "Nieprawidłowe dane, spróbuj jeszcze kilka razy.",
+        "incorrect_login_4": "Te dane wciąż są niepoprawne. Spróbuj ponownie.",
+        "incorrect_login_5": "Przysięgam, musisz spojrzeć na klawisze, które naciskasz.",
+        "incorrect_login_6": "To jakiś żart?",
+        "incorrect_login_7": "Albo masz problem z pisaniem, albo mnie nękasz.",
+        "incorrect_login_8": "Poddaję się.",
+        "incorrect_login_9": "Każde z tych żądań wysyła dane za pomocą niesamowitej technologii. A ty używasz jej do nieudanych logowań.",
+        "incorrect_login_10": "Pomyśl o tym. Biedni administratorzy instancji muszą utrzymywać swój serwer tylko po to, żebyś mógł wysyłać te bezużyteczne żądania.",
+        "incorrect_login_11": "Poddaję się, tym razem na serio.",
+        "incorrect_login_12": "..."
+    }
+}
