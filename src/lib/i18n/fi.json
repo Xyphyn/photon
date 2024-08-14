@@ -235,14 +235,14 @@
     "post": {
         "actions": {
             "more": {
-                "share": "Jaa",
+                "share": "Jaa linkki",
                 "markRead": "Merkitse luetuksi",
                 "markUnread": "Merkitse lukemattomaksi",
                 "translate": "Käännä",
                 "label": "Lisää toimintoja",
                 "edit": "Muokkaa",
                 "creator": "Lähettäjä",
-                "crosspost": "Jaa (tee ristijulkaisu)",
+                "crosspost": "Tee ristijulkaisu",
                 "actions": "Toiminnot",
                 "delete": "Poista",
                 "restore": "Palauta",
