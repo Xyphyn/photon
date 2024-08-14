@@ -85,7 +85,7 @@
                 "part": "Selaat osittaista ketjua."
             },
             "remoteView": "Etänäkymä",
-            "localView": "Paikallinen näkymä",
+            "localView": "Siirry paikalliseen näkymään",
             "crosspostCount": "ristijakoa",
             "instanceWarning": "Tämä julkaisu haettiin eri palvelimelta, kuin käyttäjäsi. Moni toiminto ei toimi.",
             "emptyComments": {
@@ -793,7 +793,11 @@
                 "title": "Vianetsintätiedot",
                 "description": "Näytä vianetsintätiedot"
             },
-            "title": "Muut"
+            "title": "Muut",
+            "virtualizeFeeds": {
+                "title": "Älä virtualisoi syötettä",
+                "description": "Virtualisotu syöte ei piirrä näytön ulkopuolelle jääviä julkaisuja, mikä tehostaa sivun toimintaa huomattavasti. Poista virtualisointi käytöstä, jos syötteen selaus nykii. Tämä poistaa jatkuvan selauksen käytöstä."
+            }
         },
         "desktop": "Työpöytä",
         "tablet": "Tabletti",
