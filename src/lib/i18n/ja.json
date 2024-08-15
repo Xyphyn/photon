@@ -80,6 +80,18 @@
             "displayName": {
                 "title": "呼び名を使う",
                 "description": "ユーザーの正式アカウント名の代わりに呼び名を使う。"
+            },
+            "placeholders": {
+                "title": "ランダムに空白を付ける",
+                "description": "各種の文章に異なるサイズの空白を付ける。"
+            },
+            "expandImages": {
+                "title": "画像を拡張する",
+                "description": "投稿の添付画像をクリックすると、投稿ページの代わりに画像の拡大表示をします。"
+            },
+            "duplicateTitles": {
+                "title": "重複タイトル・本文を非表示",
+                "description": "投稿の題名と本文がエンベッド内容と一致する場合、表示しません。"
             }
         },
         "title": "設定",
