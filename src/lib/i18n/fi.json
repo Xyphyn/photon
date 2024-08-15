@@ -131,7 +131,7 @@
                     "closed": "Suljettu"
                 },
                 "sidebar": "Sivupalkki",
-                "title": "Sivuston asetukset",
+                "title": "Sivusto",
                 "applicationQuestion": "Hakemuksen kysymys",
                 "adminCommunityOnly": "Vain ylläpitäjät voivat luoda yhteisöjä",
                 "requireVerifyEmail": "Vaadi sähköpostivahvistus",
@@ -818,6 +818,18 @@
         "incorrect_login_8": "Luovutan.",
         "incorrect_login_9": "Pyyhkisit joskus nenäsi.",
         "incorrect_login_10": "Ajattele ylläpitäjiä.",
-        "incorrect_login_11": "Luovutan, oikeasti tällä kertaa."
+        "incorrect_login_11": "Luovutan, oikeasti tällä kertaa.",
+        "email_already_exists": "Sähköpostiosoitteesi on jo käytössä toisella tilillä.",
+        "couldnt_find_post": "Hakemaasi julkaisua ei löytynyt.",
+        "cant_block_yourself": "Et voi estää itseäsi.",
+        "email_not_verified": "Tilisi sähköpostia ei ole vahvistettu.",
+        "passwords_do_not_match": "Antamasi salasanat eivät täsmää.",
+        "downvotes_are_disabled": "Alaäänet ovat poissa käytöstä tällä instanssilla.",
+        "captcha_failed": "CAPTCHA ei mennyt läpi.",
+        "cant_block_local_instance": "Et voi estää omaa instanssiasi.",
+        "invalid_vote_value": "Äänen arvo on virheellinen. Vaalivilppi on Lemmyssä on kielletty.",
+        "registration_application_is_pending": "Tilin rekisteröitymistä ei ole vielä käsitelty.",
+        "honeypot_failed": "Oletko varma, ettet ole robotti? Joku kävi hunajapurkilla.",
+        "slurs": "Lähetyksesi sisältää kiellettyjä sanoja."
     }
 }
