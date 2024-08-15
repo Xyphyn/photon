@@ -55,7 +55,7 @@
 {/if}
 
 <div class="flex flex-col gap-4 h-full">
-  <Header pageHeader>Theme</Header>
+  <Header pageHeader>{$t('routes.theme.title')}</Header>
   <div
     class="grid grid-cols-1 min-[512px]:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4
     gap-4 overflow-auto max-h-72"

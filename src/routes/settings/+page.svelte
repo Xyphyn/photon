@@ -64,8 +64,10 @@
     ['de', { name: 'Deutsch', translated: 0.77, flag: '🇩🇪' }],
     ['fi', { name: 'Suomi', translated: 0.99, flag: '🇫🇮' }],
     ['fr', { name: 'Français', translated: 0.79, flag: '🇫🇷' }],
+    ['ja', { name: '日本語', translated: 0.86, flag: '🇯🇵' }],
     ['nl', { name: 'Nederlands', translated: 0.96, flag: '🇳🇱' }],
-    ['pt', { name: 'Português', translated: 0.94, flag: '🇵🇹' }],
+    ['pl', { name: 'Polski', translated: 0.97, flag: '🇵🇱' }],
+    ['pt', { name: 'Português', translated: 0.92, flag: '🇵🇹' }],
     ['zh-Hans', { name: '简体中文', translated: 0.91, flag: '🇨🇳' }],
     ['zh-Hant', { name: '繁體中文', translated: 0.25, flag: '🇭🇰' }],
   ])

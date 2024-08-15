@@ -38,9 +38,19 @@ const config: Config = {
       loader: async () => (await import('./i18n/de.json')).default,
     },
     {
+      locale: 'ja',
+      key: '',
+      loader: async () => (await import('./i18n/ja.json')).default,
+    },
+    {
       locale: 'nl',
       key: '',
       loader: async () => (await import('./i18n/nl.json')).default,
+    },
+    {
+      locale: 'pl',
+      key: '',
+      loader: async () => (await import('./i18n/pl.json')).default,
     },
     {
       locale: 'pt',
