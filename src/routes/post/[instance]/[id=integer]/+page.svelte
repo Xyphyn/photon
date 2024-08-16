@@ -1,11 +1,7 @@
 <script lang="ts">
-  import {
-    buildCommentsTree,
-    buildCommentsTreeAsync,
-  } from '$lib/components/lemmy/comment/comments.js'
-  import Comments from '$lib/components/lemmy/comment/Comments.svelte'
-  import { isImage, isVideo } from '$lib/ui/image.js'
-  import { getClient, site } from '$lib/lemmy.js'
+  import { buildCommentsTree } from '$lib/components/lemmy/comment/comments.js'
+  import { isImage } from '$lib/ui/image.js'
+  import { getClient } from '$lib/lemmy.js'
   import CommentForm from '$lib/components/lemmy/comment/CommentForm.svelte'
   import { onMount } from 'svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
@@ -21,16 +17,8 @@
     PlusCircle,
     ChatBubbleLeftRight,
   } from 'svelte-hero-icons'
-  import PostLink from '$lib/components/lemmy/post/link/PostLink.svelte'
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
-  import {
-    Material,
-    Select,
-    Spinner,
-    buttonColor,
-    removeToast,
-    toast,
-  } from 'mono-svelte'
+  import { Select, removeToast, toast } from 'mono-svelte'
   import type { CommentSortType } from 'lemmy-js-client'
   import { profile } from '$lib/auth.js'
   import { instance } from '$lib/instance.js'
@@ -39,19 +27,13 @@
   import { Button } from 'mono-svelte'
   import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
   import { userSettings } from '$lib/settings.js'
-  import { feature } from '$lib/version.js'
   import { publishedToDate } from '$lib/components/util/date.js'
   import PostMedia from '$lib/components/lemmy/post/media/PostMedia.svelte'
-  import {
-    bestImageURL,
-    mediaType,
-    optimizeImageURL,
-  } from '$lib/components/lemmy/post/helpers.js'
+  import { mediaType } from '$lib/components/lemmy/post/helpers.js'
   import Post from '$lib/components/lemmy/post/Post.svelte'
   import Expandable from '$lib/components/ui/Expandable.svelte'
   import { Popover } from 'mono-svelte'
   import { t } from '$lib/translations.js'
-  import { createWindowVirtualizer } from '@tanstack/svelte-virtual'
   import { resumables } from '$lib/lemmy/item.js'
   import { contentPadding } from '$lib/components/ui/layout/Shell.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
@@ -134,25 +116,6 @@
 
   $: remoteView =
     $page.params.instance?.toLowerCase() != $instance.toLowerCase()
-
-  const virtualizer = createWindowVirtualizer({
-    count: 0,
-    estimateSize: () => 50,
-  })
-
-  onMount(async () => {
-    const comments = await data.comments
-
-    $virtualizer.setOptions({ count: comments.comments.length })
-  })
-
-  let virtualItemEls: HTMLElement[] = []
-
-  $: items = $virtualizer.getVirtualItems()
-  $: {
-    if (virtualItemEls.length)
-      virtualItemEls.forEach((el) => $virtualizer.measureElement(el))
-  }
 </script>
 
 <svelte:head>
