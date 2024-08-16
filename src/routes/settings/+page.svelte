@@ -542,7 +542,7 @@
   </Section>
 
   <Section title={$t('settings.moderation.title')}>
-    <Setting mainClass="md:flex-row flex-col !items-start">
+    <Setting itemsClass="!flex-col !items-start">
       <span slot="title">{$t('settings.moderation.replyPresets.title')}</span>
       <span slot="description">
         <p>{$t('settings.moderation.replyPresets.description')}</p>

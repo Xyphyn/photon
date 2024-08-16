@@ -100,7 +100,7 @@
   border-slate-200 dark:border-zinc-800
   flex flex-row items-center overflow-auto"
   >
-    <PostLinkSources {url} {view} bind:openMediaBias>
+    <PostLinkSources {url} view="cozy" bind:openMediaBias>
       <Button
         color="tertiary"
         slot="target"
@@ -125,7 +125,7 @@
   </Material>
 {:else}
   <div class="flex items-center gap-1">
-    <PostLinkSources {url} {view}>
+    <PostLinkSources {url} view="compact">
       <Button
         color="ghost"
         slot="target"
