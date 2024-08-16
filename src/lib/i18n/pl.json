@@ -70,7 +70,7 @@
     },
     "routes": {
         "profile": {
-            "moderates": "Moderuje",
+            "moderates": "Moderowane",
             "user": "Użytkownik",
             "settings": "Ustawienia",
             "blocks": "Blokady",
@@ -425,7 +425,7 @@
             "cozy": "Przytulny",
             "list": "Lista",
             "compact": "Kompaktowy",
-            "legacy": "Tradycyjny"
+            "legacy": "Stara wersja"
         },
         "type": "Typ",
         "filter": "Filtr",
