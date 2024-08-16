@@ -3,6 +3,7 @@
     ArrowUp,
     Bookmark,
     Icon,
+    Microphone,
     Minus,
     Pencil,
     Plus,
@@ -78,7 +79,7 @@
 
 {#if editing}
   <Modal bind:open={editing}>
-    <span slot="title">Edit comment</span>
+    <span slot="title">{$t('form.edit')}</span>
     <form on:submit|preventDefault={save} class="contents">
       <CommentForm
         postId={node.comment_view.comment.id}
@@ -95,7 +96,7 @@
         disabled={editingLoad}
         class="w-full"
       >
-        Save
+        {$t('common.save')}
       </Button>
     </form>
   </Modal>
@@ -128,7 +129,7 @@
         </svelte:fragment>
       </UserLink>
       {#if op}
-        <span class="text-sky-500">OP</span>
+        <Icon mini size="16" src={Microphone} class="text-sky-600" />
       {/if}
     </span>
     <RelativeDate
@@ -160,7 +161,7 @@
     </span>
   </button>
   {#if open}
-    <div transition:slide={{ duration: 500, easing: expoOut }}>
+    <div transition:slide={{ duration: 400, easing: expoOut }}>
       <div
         class="flex flex-col whitespace-pre-wrap
       max-w-full gap-1 mt-1 relative"
