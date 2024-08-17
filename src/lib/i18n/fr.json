@@ -45,7 +45,8 @@
             "setColorTo": "Mettre la couleur en mode {{default}}",
             "feeds": "Tris",
             "setThemeTo": "Choisir theme {{default}}",
-            "setTheme": "Choisir un theme"
+            "setTheme": "Choisir un theme",
+            "downloading": "Téléchargement des actions"
         }
     },
     "account": {
@@ -208,7 +209,9 @@
                 "title": "Supprimer le compte"
             },
             "logins": "Connexions",
-            "welcome": "Bienvenue, {{default}} !"
+            "welcome": "Bienvenue, {{default}} !",
+            "upvoted": "Upvoted",
+            "downvoted": "Downvoted"
         },
         "accounts": "Comptes",
         "communities": "Communautés",
@@ -497,6 +500,39 @@
             "limitLayoutWidth": {
                 "title": "Limiter la largeur de la mise en page",
                 "description": "Améliorer la lisibilité en limitant la largeur du contenu principal."
+            },
+            "titleTags": {
+                "description": "Le texte entre [crochets] est transformé en balises sur lesquelles vous pouvez cliquer pour effectuer une recherche.",
+                "title": "Analyse des tags dans le titre",
+                "rules": {
+                    "blur": "Rendre flou",
+                    "hide": "Masquer",
+                    "show": "Afficher",
+                    "title": "Les règles"
+                }
+            },
+            "font": {
+                "title": "Police de caractères",
+                "description": "Police de caractère utilisée par Photon dans l'interface."
+            },
+            "translation": {
+                "title": "Traduction",
+                "description": "L'instance de LibreTranslate à utiliser pour la traduction.",
+                "instance": "URL"
+            },
+            "expandImages": {
+                "description": "En cliquant sur l'image d'une publication, vous accédez à une vue élargie plutôt qu'à la page de la publication.",
+                "title": "Agrandir les images"
+            },
+            "thumbnailSide": {
+                "right": "Droite",
+                "title": "Position des vignettes",
+                "description": "Emplacement des vignettes sur les publications en mode liste ou en mode compacte",
+                "left": "Gauche"
+            },
+            "duplicateTitles": {
+                "title": "Masquer les titres ou corps en double",
+                "description": "Masque le titre et le corps de l'article s'ils sont identiques à ceux du lien."
             }
         },
         "title": "Paramètres",
@@ -526,6 +562,33 @@
                 "bottom": "En bas",
                 "adaptive": "automatique"
             }
+        },
+        "reset": "Réinitialiser",
+        "embeds": {
+            "title": "Liens incorporés",
+            "clickToView": {
+                "title": "Cliquez pour voir",
+                "description": "Ne chargez les liens incorporés qu'une fois que vous avez cliqué dessus."
+            },
+            "youtube": {
+                "description": "Le site web pour charger les liens incorporés de YouTube."
+            },
+            "instance": {
+                "description": "L'instance pour charger les liens incorporés de YouTube.",
+                "piped": "instance de Piped",
+                "invidious": "Instance d'Invidious"
+            }
+        },
+        "lemmy": {
+            "showHiddenPosts": {
+                "description": "Afficher les publications que vous avez masqués.",
+                "title": "Afficher les pubications cachés"
+            },
+            "compactFeatured": {
+                "description": " ",
+                "title": "Rendre compact les publications en vedette."
+            },
+            "title": "Lemmy"
         }
     },
     "comment": {
@@ -556,10 +619,12 @@
             "message": "Message",
             "title": "Enlevant la Soumission",
             "failEmptyReply": "Votre reponse ne peux pas être vide si l'option \"repondre avec une raison\" est choisie.",
-            "titlePurge": "Purger la publication"
+            "titlePurge": "Purger la publication",
+            "successPurge": "Cette soumission a été purgée avec succès."
         },
         "reportModal": {
-            "title": "Signaler"
+            "title": "Signaler",
+            "success": "Publication signalée."
         },
         "reason": "Raison",
         "remove": "Retirer",
@@ -668,7 +733,8 @@
         "add": "Ajouter",
         "cancel": "Annuler",
         "send": "Envoyer",
-        "debug": "Déboguer"
+        "debug": "Déboguer",
+        "general": "Général"
     },
     "message": {
         "success": "Succès",
@@ -729,6 +795,8 @@
         "blockUser": "Utilisateur bloqué.",
         "unblockUser": "Utilisateur debloqué.",
         "settingsImport": "L'importation des paramètres a réussie",
-        "userLoading": "En train de charger vos données d'utilisateur..."
+        "userLoading": "En train de charger vos données d'utilisateur...",
+        "purgeUser": "Utlisateur purgée.",
+        "purgedCommunity": "Communauté purgée."
     }
 }
