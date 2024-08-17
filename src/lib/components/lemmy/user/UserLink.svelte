@@ -7,6 +7,8 @@
     try {
       if (env.PUBLIC_BADGES) {
         return JSON.parse(env.PUBLIC_BADGES)
+      } else {
+        return {}
       }
     } catch (e) {
       return {}
@@ -24,7 +26,7 @@
         iconClass?: string
       }
     | false => {
-    if (badges.photon && badges.photon.includes?.(actor_id)) {
+    if (badges.photon && badges.photon?.includes?.(actor_id)) {
       return {
         classes:
           'bg-gradient-to-r bg-clip-text text-transparent from-blue-500 to-purple-700 dark:from-blue-400 dark:to-purple-500',
@@ -32,7 +34,7 @@
       }
     }
 
-    if (badges.translator && badges.translator.includes?.(actor_id)) {
+    if (badges.translator && badges.translator?.includes?.(actor_id)) {
       return {
         classes:
           'bg-gradient-to-r bg-clip-text text-transparent from-sky-500 to-blue-700 dark:from-blue-300 dark:to-indigo-500',
