@@ -30,10 +30,20 @@
 -->
 {#if embed_title && view != 'compact'}
   <Material
+    style="--img-url: {thumbnail_url}"
     color="distinct"
-    class="flex flex-col-reverse sm:flex-row overflow-hidden gap-4"
-    rounding="lg"
+    class="flex flex-col-reverse sm:flex-row
+    overflow-hidden gap-4 embed-card z-0 relative
+    dark:border-t-zinc-800"
+    rounding="xl"
   >
+    {#if thumbnail_url}
+      <img
+        src={optimizeImageURL(thumbnail_url, 64)}
+        alt=""
+        class="-z-10 absolute top-0 left-0 w-full object-cover h-full opacity-10 brightness-150 dark:brightness-90 dark:opacity-20 blur-2xl"
+      />
+    {/if}
     <div class="flex flex-col gap-2">
       {#if richURL}
         <Link
