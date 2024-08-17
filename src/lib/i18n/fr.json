@@ -41,7 +41,7 @@
             "main": "Principal",
             "setView": "Choisir le style",
             "setViewTo": "Choisir style {{default}}",
-            "setColor": "Choisir les couleurs",
+            "setColor": "Choisir la couleur",
             "setColorTo": "Mettre la couleur en mode {{default}}",
             "feeds": "Tris",
             "setThemeTo": "Choisir theme {{default}}",
@@ -470,7 +470,7 @@
                 "title": "Défilement continu"
             },
             "placeholders": {
-                "description": "Montrer des placeholders pour certains endroits ou tu peux mettre du texte",
+                "description": "Montrer des placeholders pour certains endroits ou tu peux mettre du texte.",
                 "title": "Placeholders aléatoires"
             },
             "view": {
@@ -588,7 +588,44 @@
                 "description": " ",
                 "title": "Rendre compact les publications en vedette."
             },
-            "title": "Lemmy"
+            "title": "Lemmy",
+            "nsfwBlur": {
+                "description": "Flouter les images et supprimer les corps des messages NSFW.",
+                "title": "Flouter le NSFW"
+            },
+            "instances": {
+                "title": "Afficher les instances",
+                "description": "Montrer de quelle instance provient le contenu."
+            },
+            "crosspostMarker": {
+                "title": "Montrez les crosspublications",
+                "description": "Montrez 'crossposté de' en crosspostant."
+            },
+            "hideSubmissions": {
+                "title": "Cacher des publications/commentaires",
+                "description": "Cacher certains types de publications/commentaires.",
+                "deleted": "Supprimé par l'utilisateur",
+                "removed": "Supprimé par un moderateur"
+            }
+        },
+        "moderation": {
+            "title": "Modération",
+            "replyPresets": {
+                "title": "Réponse par defaut des supprimations",
+                "description": "Préréglages à utiliser pour le « motif de la réponse » dans la boîte de dialogue de suppression de la soumission.",
+                "syntax": "Syntaxe"
+            }
+        },
+        "other": {
+            "title": "Autre",
+            "debug": {
+                "description": "Montrer l'info de débogage",
+                "title": "Information de débogage"
+            },
+            "virtualizeFeeds": {
+                "title": "Ne pas virtualiser le flux",
+                "description": "La virtualisation ne charge que les publications visibles, ce qui augmente considérablement la performance du site. Désactivez la virtualisation si vous avez des problèmes de bégaiement (ex : le fil qui remonde en descendant). Cela désactivera le défilement infini."
+            }
         }
     },
     "comment": {
@@ -620,7 +657,9 @@
             "title": "Enlevant la Soumission",
             "failEmptyReply": "Votre reponse ne peux pas être vide si l'option \"repondre avec une raison\" est choisie.",
             "titlePurge": "Purger la publication",
-            "successPurge": "Cette soumission a été purgée avec succès."
+            "successPurge": "Cette soumission a été purgée avec succès.",
+            "failMessage": "Le message n'a pas été envoyée. On l'enleve de toute façon...",
+            "failReply": "La réponse n'a pas été envoyée. On l'enleve de toute façon..."
         },
         "reportModal": {
             "title": "Signaler",
@@ -764,7 +803,7 @@
         "sentMessage": "Message envoyé.",
         "invalidDateBeforeCurrent": "La date est en avance de la date actuelle. Réessayez.",
         "unbannedUser": "Cet utilisateur n'est plus banni.",
-        "logIn": "Vous êtes maintenant connecté!",
+        "logIn": "Vous êtes maintenant connecté.",
         "generatedTitle": "Titre et corps généré a partir du url, voulez-vous revenir en arrière ?",
         "resolveReport": "Le signalement a été résolu.",
         "unresolveReport": "le signalement n'est plus résolu.",
@@ -798,5 +837,31 @@
         "userLoading": "En train de charger vos données d'utilisateur...",
         "purgeUser": "Utlisateur purgée.",
         "purgedCommunity": "Communauté purgée."
+    },
+    "error": {
+        "cant_block_yourself": "Vous ne pouvez pas vous bloquer. Vous ne devriez pas non plus, vous êtes quelqu'un de bien !",
+        "email_not_verified": "L'email de votre compte n'a pas été vérifié.",
+        "passwords_do_not_match": "Les deux mots de passe ne sont pas identiques.",
+        "downvotes_are_disabled": "Les downvotes sont désactivés sur cette instance.",
+        "slurs": "Votre soumission contient un terme interdit sur cette instance.",
+        "captcha_failed": "Réponse CAPTCHA incorrecte.",
+        "cant_block_local_instance": "Vous ne pouvez pas bloquer l'instance que vous utilisez.",
+        "incorrect_login_6": "Vous trouvez ça drôle ?",
+        "incorrect_login_2": "Identifiants de connexion incorrects. Réessayez.",
+        "incorrect_login_3": "Encore incorrect. Réessayez encore un peu.",
+        "incorrect_login_4": "Identifiants de connexion sont toujours incorrects. Veuillez réessayer.",
+        "incorrect_login_8": "J'abandonne.",
+        "incorrect_login_10": "Pensez-y. Les pauvres administrateurs d'instance doivent maintenir leur serveur juste pour que vous fassiez ces essais inutiles.",
+        "incorrect_login_11": "J'abandonne, pour de bon cette fois.",
+        "incorrect_login_12": "...",
+        "incorrect_login_7": "Soit vous avez du mal à taper, soit vous me harcelez. Cela devient excessif.",
+        "incorrect_login_9": "La technologie qui te permet de te connecter est incroyablement complexe. Et vous vous en servez pour échouer à vous connecter.",
+        "honeypot_failed": "Comment avez-vous... êtes-vous un bot ? Beep bop bap boop. Si tu ne l'es pas, la vérification du Honeypot a échoué.",
+        "email_already_exists": "Un compte existe déjà avec cet email.",
+        "registration_application_is_pending": "La demande d'enregistrement pour ce compte n'a pas encore été acceptée.",
+        "couldnt_find_post": "Cette publication n'existe pas, n'est pas sur cette instance ou a été supprimé.",
+        "invalid_vote_value": "Vous ne pouvez pas commettre de fraude électorale sur les publications Lemmy, désolé.",
+        "incorrect_login": "Identifiants de connexion incorrects. Veuillez réessayer.",
+        "incorrect_login_5": "Petite question, regardez-vous les touches sur lesquelles vous appuyez ?"
     }
 }
