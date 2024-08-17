@@ -103,7 +103,7 @@
     {/if}
   </Material>
   <div
-    class="bg-white/40 backdrop-blur-sm dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800
+    class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800
     rounded-full flex p-1 relative -top-7 mx-2 -mb-7 w-max"
   >
     <PostLinkSources {url} view="cozy" bind:openMediaBias>
