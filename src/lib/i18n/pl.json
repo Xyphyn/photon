@@ -389,8 +389,8 @@
             "label": "Lokalizacja",
             "all": "Wszystkie",
             "local": "Lokalne",
-            "subscribed": "Subskrypcje",
-            "moderator": "Moderator",
+            "subscribed": "Subskrybowane",
+            "moderator": "Moderowane",
             "global": "Globalne"
         },
         "sort": {
