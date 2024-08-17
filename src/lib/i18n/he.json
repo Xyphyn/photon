@@ -5,7 +5,7 @@
             "label": "מיקום",
             "all": "הכל",
             "local": "מקומי",
-            "subscribed": "רשום",
+            "subscribed": "מנויים",
             "moderator": "מנהל",
             "global": "גלובלי"
         },
@@ -89,7 +89,8 @@
             "body": "גוף",
             "nsfw": "תוכן למבוגרים",
             "generateTitle": "יצירת כותרת",
-            "uploadImage": "העלאת תמונה"
+            "uploadImage": "העלאת תמונה",
+            "selectFile": "בחירת קובץ"
         },
         "signup": {
             "application": {
@@ -128,7 +129,8 @@
     "routes": {
         "frontpage": {
             "footer": "{{users:number}} {{users; 1:משתמש; default:משתמשים;}} {{users; 1:פעיל; default:פעילים;}}",
-            "title": "דף הבית"
+            "title": "דף הבית",
+            "endFeed": "הגעת לסוף של {{community_name; undefined:הפיד; default:{{community_name}}}."
         },
         "modlog": "יומן הנהלה",
         "instances": "שרתים",
@@ -139,9 +141,22 @@
         "profile": {
             "user": "משתמש",
             "settings": "הגדרות",
-            "credentials": "אימות",
-            "moderates": "מנהל/ת",
-            "favorites": "אהובים"
+            "credentials": "חשבון",
+            "moderates": "ניהול",
+            "favorites": "אהובים",
+            "media": {
+                "title": "מדיה",
+                "download": "הורדה"
+            },
+            "logins": "התחברויות",
+            "delete": {
+                "title": "מחיקת חשבון",
+                "warning": "לא ניתן לבטל פעולה זו. האם זה רצונך?"
+            },
+            "blocks": "חסומים",
+            "upvoted": "הוצבע בעד",
+            "downvoted": "הוצבע נגד",
+            "welcome": "שלום, {{default}}!"
         },
         "translators": "מתרגמים",
         "accounts": "חשבונות",
@@ -153,7 +168,8 @@
                 "description": "אין תוצאות שתואמות את מילות המפתח שלך. מומלץ לעדכן את חיפושך.",
                 "alt": "חיפוש ברחבי הפדיורס"
             },
-            "query": "חיפוש"
+            "query": "חיפוש",
+            "federating": "מתבצע חיפוש..."
         },
         "admin": {
             "config": {
@@ -225,7 +241,17 @@
                 "block": "חסימה",
                 "blockplaceholder": "חסימת שרת...",
                 "blocked": "שרתים חסומים",
-                "allowed": "שרתים מורשים"
+                "allowed": "שרתים מורשים",
+                "allow": "מורשים",
+                "allowplaceholder": "הרשאת שרת",
+                "emptyBlock": {
+                    "description": "חסימת שרת תחביא תוכן חדש מהשרת.",
+                    "title": "אין שרתים חסומים"
+                },
+                "emptyAllow": {
+                    "title": "אין שרתים מורשים",
+                    "description": "הרשאת שרת תחסום כל שרת אחר."
+                }
             }
         },
         "saved": "שמורים",
@@ -244,7 +270,11 @@
                 "part": "מוצג חלק משרשור",
                 "context": "תצוגת הקשר"
             },
-            "crosspostCount": "פוסטים משותפים"
+            "crosspostCount": "פוסטים משותפים",
+            "emptyComments": {
+                "description": "התחילו את השיחה!",
+                "title": "אין תגובות"
+            }
         },
         "inbox": {
             "title": "דואר נכנס",
@@ -262,7 +292,50 @@
             },
             "reason": "סיבה",
             "resolve": "פתירה",
-            "unresolve": "הסרת פתירה"
+            "unresolve": "הסרת פתירה",
+            "resolved": "פתור",
+            "resolvedBy": "נפתר על ידי"
+        },
+        "theme": {
+            "preset": {
+                "title": "לא ניתן לשינוי",
+                "delete": {
+                    "title": "מחיקת סגנון",
+                    "confirm": "אישור"
+                },
+                "default": "ברירת מחדל",
+                "classic": "קלאסי",
+                "imported": "הסגנון שלך",
+                "new": "סגנון חדש",
+                "description": "זה סגנון המוגדר כברירת מחדל, ולא ניתן לשנותו."
+            },
+            "title": "סגנון",
+            "import": "ייבוא",
+            "export": "ייצוא",
+            "reset": "איפוס",
+            "resetWarning": {
+                "title": "איפוס סגנון",
+                "description": "פעולה זו תאפס את כל הצבעים לברירת המחדל. מומלץ לייצא את הסגנון שלך לפני זה."
+            }
+        },
+        "community": {
+            "settings": {
+                "team": "צוות",
+                "settings": "הגדרות"
+            }
+        },
+        "verifyEmail": {
+            "message": "האימייל שלך מאומת. כעת ניתן לסגור את החלון הזה.",
+            "error": "אימות האימייל שלך נכשל."
+        },
+        "passwordChange": {
+            "title": "שינוי סיסמה",
+            "description": "בחירת סיסמה חדשה.",
+            "instance": "באיזה שרת מאוחסן החשבון שלך?"
+        },
+        "resetLogin": {
+            "title": "איפוס סיסמה",
+            "description": "לאחר הזנת האימייל של חשבונך, יישלח קישור לאיפוס הסיסמה. אם לחשבונך אין אימייל, ניתן ליצור קשר עם אדמיני השרת."
         }
     },
     "nav": {
@@ -300,7 +373,13 @@
             "search": "חיפוש אחרי {{default}}",
             "main": "ראשי",
             "setView": "הגדרת תצוגה",
-            "setViewTo": "הגדרת תצוגה ל-{{default}}"
+            "setViewTo": "הגדרת תצוגה ל-{{default}}",
+            "setTheme": "הגדרת סגנון",
+            "setThemeTo": "הגדרת סגנון ל-{{default}}",
+            "setColor": "הגדרת צבעים",
+            "feeds": "פידים",
+            "downloading": "פעולות הורדה",
+            "setColorTo": "הגדרת צבעים ל{{default}}"
         }
     },
     "account": {
@@ -315,5 +394,22 @@
         "moveDown": "הזזה למטה",
         "guest": "אורח",
         "versionGate": "הגרסה הזו של Photon תומכת בשרתים המריצים {{version}} או גרסה עדכנית יותר."
+    },
+    "cards": {
+        "site": {
+            "stats": "סטטיסטיקה",
+            "admins": "אדמינים",
+            "about": "אודות"
+        },
+        "community": {
+            "members": "חברי הקהילה",
+            "moderators": "מנהלים",
+            "subscribe": "הרשמה למינוי",
+            "subscribed": "נרשמת כמנוי",
+            "modlog": "מודלוג",
+            "block": "חסימה",
+            "unblock": "ביטול חסימה",
+            "blockInstance": "חסימת שרת"
+        }
     }
 }
