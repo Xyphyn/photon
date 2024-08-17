@@ -92,6 +92,31 @@
             "duplicateTitles": {
                 "title": "重複タイトル・本文を非表示",
                 "description": "投稿の題名と本文がエンベッド内容と一致する場合、表示しません。"
+            },
+            "thumbnailSide": {
+                "title": "サムネイル画像の配置",
+                "description": "リスト・コンパクト表示モードでの投稿サムネイルの位置",
+                "left": "左側",
+                "right": "右側"
+            },
+            "font": {
+                "title": "フォント",
+                "description": "PhotonのUIが使用する書体。"
+            },
+            "translation": {
+                "title": "翻訳",
+                "description": "使用するLibretranslate翻訳用のインスタンス。",
+                "instance": "ドメイン指定"
+            },
+            "titleTags": {
+                "title": "投稿題名のタグを自動で読み取る",
+                "description": "題名内の[カッコ欄]をタグに変え、クリックして類似するタグを探すことができます。",
+                "rules": {
+                    "title": "ルール",
+                    "blur": "モザイク",
+                    "hide": "隠す",
+                    "show": "表示"
+                }
             }
         },
         "title": "設定",
@@ -101,7 +126,78 @@
         "mobile": "モバイル",
         "export": "エクスポート",
         "import": "インポート",
-        "reset": "リセット"
+        "reset": "リセット",
+        "lemmy": {
+            "crosspostMarker": {
+                "description": "クロスポストを作るときに転送元を表示。",
+                "title": "転送投稿を印付ける"
+            },
+            "compactFeatured": {
+                "description": "モデレーターが勧めた投稿を普通の投稿より小さくする",
+                "title": "ピン付投稿をコンパクト表示する"
+            },
+            "nsfwBlur": {
+                "description": "成人向けの投稿の画像にモザイクを付け、本文プレビューを隠します。",
+                "title": "NSFWモザイク"
+            },
+            "title": "Lemmy",
+            "showHiddenPosts": {
+                "title": "非表示した投稿を見せる",
+                "description": "手動で非表示した投稿を表示します。"
+            },
+            "markReadPosts": {
+                "title": "既読投稿を印付ける",
+                "description": "クリックした投稿を既読として記す"
+            },
+            "fadeReadPosts": {
+                "title": "既読投稿を薄れて表示する",
+                "description": "既に読んだ投稿の題名を薄れて表示します"
+            },
+            "hideSubmissions": {
+                "title": "投稿を隠す",
+                "description": "特定の投稿を非表示します。",
+                "deleted": "ユーザーが削除した投稿",
+                "removed": "モデレーターが撤去した投稿"
+            },
+            "instances": {
+                "title": "インスタンスを表示",
+                "description": "コンテンツはどのインスタンスから送信かを表示。"
+            }
+        },
+        "moderation": {
+            "replyPresets": {
+                "description": "投稿撤去時の理由でよく使うプリセット。",
+                "title": "撤去返信のプリセット",
+                "syntax": "構文"
+            },
+            "title": "モデレーション"
+        },
+        "embeds": {
+            "instance": {
+                "piped": "Pipedインスタンス",
+                "description": "YouTube動画を読み込むサイト。",
+                "invidious": "Invidiousインスタンス"
+            },
+            "title": "エンベッド",
+            "clickToView": {
+                "title": "クリックしてから見る",
+                "description": "エンベッドはクリックしてからのみ読み込んで表示します。"
+            },
+            "youtube": {
+                "description": "YouTubeを読み込むサイト。"
+            }
+        },
+        "other": {
+            "virtualizeFeeds": {
+                "description": "仮想化は画面に見える投稿しか読み込まないので、パフォーマンス性能を上げます。もしスクロール時に反応が荒い場合、は無効できます。無限スクロール機能は仮想化が必要です。",
+                "title": "フィードを仮想化しない"
+            },
+            "title": "その他",
+            "debug": {
+                "title": "デバッグ情報",
+                "description": "デバッグ情報を表示する"
+            }
+        }
     },
     "moderation": {
         "unlock": "解錠",
@@ -709,5 +805,31 @@
         "success": "成功",
         "error": "エラー",
         "retry": "再試行"
+    },
+    "error": {
+        "couldnt_find_post": "この投稿は見つかりませんでした。存在しないか、撤去されたか、このインスタンスには送られてない可能性があります。",
+        "cant_block_yourself": "自分のアカウントはブロックできません。だって、君はいい人なんだもん！",
+        "email_not_verified": "アカウントのEメールは認証されてません。認証を行ってください。",
+        "passwords_do_not_match": "入力したパスワードと確認パスワードは一致していません。",
+        "honeypot_failed": "ど、ど、どうやってこのエラーを発生したか？もしもし、ロボットですか？どうやら隠し囮に引っかかったようです。",
+        "downvotes_are_disabled": "このインスタンスは反対票を受け付けていません。",
+        "email_already_exists": "お使いのeメールにはすでにアカウントは存在します。",
+        "slurs": "このインスタンスが禁止する言葉が投稿に入ってますので、投稿できませんでした。",
+        "captcha_failed": "CAPTCHAの答えは不正解です。",
+        "invalid_vote_value": "不正常な投票を検出しました。詐欺はいけませんよ。",
+        "incorrect_login_3": "認証情報はまたしも正しくありません。よく確認し、またお試しください。",
+        "incorrect_login_4": "認証情報はまだしも正しくありません。もう一度やれば、今度こそはできるでしょうか。",
+        "incorrect_login_5": "なかなかうまくいってないようですね。押してるキーをしっかり見ながらログイン情報を入れましょう。",
+        "registration_application_is_pending": "アカウント登録の申請は未だに承認されてません。",
+        "cant_block_local_instance": "自分のアカウントが住まいのインスタンスはブロックできません。",
+        "incorrect_login": "認証情報は正しくありません。もう一度お試しください。",
+        "incorrect_login_2": "認証情報は正しくありません。再度お試しください。",
+        "incorrect_login_6": "おい。おかしいと思っているか？",
+        "incorrect_login_7": "勘弁してくださいよ。キーボードがものすごく苦手か、わざといじめてるでしょうか。",
+        "incorrect_login_8": "しょうがないや。。。",
+        "incorrect_login_9": "このリクエストはすごい技術を通してサーバーに送信しています。繰り返して不正認証をするのは時間とデータ通信の無駄遣いですよ。",
+        "incorrect_login_10": "ここまで来て、ログインするつもりあるか？可愛そうな管理者を一旦でも考えましょうよ。",
+        "incorrect_login_11": "まったく、話が進まないな。やっぱ無理か、こっちは諦めた。",
+        "incorrect_login_12": "。。。"
     }
 }
