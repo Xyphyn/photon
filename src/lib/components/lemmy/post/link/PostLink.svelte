@@ -34,14 +34,16 @@
     color="distinct"
     class="flex flex-col-reverse sm:flex-row
     overflow-hidden gap-4 embed-card z-0 relative
-    dark:border-t-zinc-800"
+    dark:border-t-zinc-800 border-opacity-80"
     rounding="xl"
   >
     {#if thumbnail_url}
       <img
         src={optimizeImageURL(thumbnail_url, 64)}
         alt=""
-        class="-z-10 absolute top-0 left-0 w-full object-cover h-full opacity-10 brightness-150 dark:brightness-90 dark:opacity-20 blur-2xl"
+        class="-z-10 absolute w-full object-cover h-full opacity-10 brightness-150
+        dark:brightness-90 dark:opacity-20 blur-2xl
+        -inset-px"
       />
     {/if}
     <div class="flex flex-col gap-2">
@@ -62,7 +64,7 @@
         {embed_title}
       </a>
       {#if embed_description}
-        <p class="text-sm">
+        <p class="text-sm mb-2">
           {embed_description.slice(0, 300)}{embed_description.length > 300
             ? '...'
             : ''}
@@ -100,15 +102,9 @@
       </a>
     {/if}
   </Material>
-  <Material
-    color="none"
-    padding="none"
-    class="px-1 py-0 bg-slate-50 dark:bg-zinc-925 h-9 rounded-b-xl rounded-t-none
-  w-[calc(100%-1rem)] {view == 'list'
-      ? ''
-      : '-mt-2'} mx-auto shadow-inner border border-t-0
-  border-slate-200 dark:border-zinc-800
-  flex flex-row items-center overflow-auto"
+  <div
+    class="bg-white/40 backdrop-blur-sm dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800
+    rounded-full flex p-1 relative -top-7 mx-2 -mb-7 w-max"
   >
     <PostLinkSources {url} view="cozy" bind:openMediaBias>
       <Button
@@ -117,6 +113,7 @@
         size="sm"
         class="w-max text-slate-600 dark:text-zinc-400 block
       text-xs"
+        rounding="pill"
       >
         <Icon src={LinkIcon} size="16" micro slot="prefix" />
         {$t('post.actions.link.actions')}
@@ -128,11 +125,12 @@
       class="w-max text-slate-600 dark:text-zinc-400 block
     text-xs"
       on:click={() => (openMediaBias = !openMediaBias)}
+      rounding="pill"
     >
       <Icon src={CheckBadge} size="16" micro slot="prefix" />
       {$t('post.actions.more.mediaBias')}
     </Button>
-  </Material>
+  </div>
 {:else}
   <div class="flex items-center gap-1">
     <PostLinkSources {url} view="compact">
