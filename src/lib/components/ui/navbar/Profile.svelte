@@ -36,6 +36,7 @@
   import { site } from '$lib/lemmy'
   import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
   import { t } from '$lib/translations'
+  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
 
   let showInstance = false
 </script>
@@ -85,14 +86,14 @@
     {/if}
   </button>
   {#if $profile?.user}
-    <div class="flex flex-row gap-2 items-center py-2 mx-2 font-medium">
-      <Avatar
-        width={22}
-        url={$profile?.user?.local_user_view.person.avatar}
-        alt={$profile?.username}
-      />
-      {$profile?.user?.local_user_view?.person.name}
-    </div>
+    <UserLink
+      user={$profile?.user.local_user_view.person}
+      showInstance={false}
+      avatar
+      avatarSize={24}
+      displayName={false}
+      class="font-medium px-2 py-1 pointer-events-none"
+    />
   {:else}
     <MenuDivider>{$t('nav.menu.label')}</MenuDivider>
   {/if}
