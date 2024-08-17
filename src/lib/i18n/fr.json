@@ -606,6 +606,14 @@
                 "description": "Cacher certains types de publications/commentaires.",
                 "deleted": "Supprimé par l'utilisateur",
                 "removed": "Supprimé par un moderateur"
+            },
+            "markReadPosts": {
+                "title": "Marquer les publications lues",
+                "description": "Maquer une publication comme \"lu\" quand vous cliquez dessus"
+            },
+            "fadeReadPosts": {
+                "title": "Rendre les publications lues semi-transparents",
+                "description": "Rendre les titres des publications lues semi-transparents"
             }
         },
         "moderation": {
@@ -810,7 +818,7 @@
         "passwordReset": "Votre mot de passe est remis à zéro.",
         "resetLink": "Un lien pour réinitialiser votre mot de passe a été envoyé a votre email.",
         "fetchPostOnHome": "Tentative de recuperation de la publication sur l'instance de votre compte.",
-        "loginRefresh": "Votre inscription a étée mise a jour.",
+        "loginRefresh": "Votre inscription a étée réactualisée.",
         "settingsImportWarning": "Les paramètres importés ne semblent pas valides. Êtes-vous sûr de vouloir les importer ?",
         "saveSettings": "Sauvegarde de vos paramètres d'utilisateur. Si vous avez changé d'adresse email, un lien de vérification vous a été envoyé.",
         "resetSettings": "Souhaitez-vous rétablir les paramètres au défaut ?",
