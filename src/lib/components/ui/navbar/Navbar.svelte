@@ -35,6 +35,7 @@
   import { LINKED_INSTANCE_URL } from '$lib/instance'
   import { t } from '$lib/translations'
   import CommandsWrapper from './commands/CommandsWrapper.svelte'
+  import { optimizeImageURL } from '$lib/components/lemmy/post/helpers'
 
   let searching = false
   let promptOpen: boolean = false
@@ -181,12 +182,19 @@
         </span>
       {/if}
     </Menu>
-    <Profile
-      placement="top"
-      itemsClass="h-8 md:h-8 z-10"
-      targetClass="z-10 h-10"
-      containerClass="!max-h-[28rem] z-10"
-      buttonClass=""
-    />
+    <div
+      class="absolute right-0 -z-10 h-full
+       overflow-hidden w-full rounded-full"
+    >
+      <img
+        src={optimizeImageURL(
+          $profile?.user?.local_user_view.person.avatar ?? '',
+          32
+        )}
+        class="blur-2xl -z-10 ml-auto object-cover w-48 opacity-50"
+        alt=""
+      />
+    </div>
+    <Profile placement="top" />
   </div>
 </nav>
