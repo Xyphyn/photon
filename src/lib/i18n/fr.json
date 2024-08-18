@@ -223,7 +223,9 @@
                 "title": "Aucun résultats",
                 "description": "Il n'y a aucun resultat qui correspond a ce filtre. Faite une autre Recherche.",
                 "alt": "Recherchez toute la 'Fediverse'"
-            }
+            },
+            "top": "Meilleurs résultats",
+            "other": "Autres résultats"
         },
         "saved": "Sauvegardé",
         "createPost": "Créer une publication",
