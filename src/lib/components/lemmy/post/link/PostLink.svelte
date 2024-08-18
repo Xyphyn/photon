@@ -104,7 +104,7 @@
   </Material>
   <div
     class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800
-    rounded-full flex p-1 relative -top-7 mx-2 -mb-7 w-max"
+    rounded-full flex p-1 relative -top-7 min-[384px]:mx-2 mt-8 min-[384px]:mt-0 mx-auto -mb-7 w-max max-w-full overflow-auto"
   >
     <PostLinkSources {url} view="cozy" bind:openMediaBias>
       <Button
@@ -112,10 +112,16 @@
         slot="target"
         size="sm"
         class="w-max text-slate-600 dark:text-zinc-400 block
-      text-xs"
+      text-xs flex-shrink-0"
         rounding="pill"
       >
-        <Icon src={LinkIcon} size="16" micro slot="prefix" />
+        <Icon
+          src={LinkIcon}
+          size="16"
+          micro
+          slot="prefix"
+          class="flex-shrink-0"
+        />
         {$t('post.actions.link.actions')}
       </Button>
     </PostLinkSources>
@@ -123,11 +129,17 @@
       color="tertiary"
       size="sm"
       class="w-max text-slate-600 dark:text-zinc-400 block
-    text-xs"
+    text-xs flex-shrink-0"
       on:click={() => (openMediaBias = !openMediaBias)}
       rounding="pill"
     >
-      <Icon src={CheckBadge} size="16" micro slot="prefix" />
+      <Icon
+        src={CheckBadge}
+        size="16"
+        micro
+        slot="prefix"
+        class="flex-shrink-0"
+      />
       {$t('post.actions.more.mediaBias')}
     </Button>
   </div>
