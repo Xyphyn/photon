@@ -110,7 +110,8 @@
     </div>
   {/if}
   <div
-    class="flex flex-row gap-2 py-2 px-2 items-center w-full rounded-full overflow-auto"
+    class="flex flex-row gap-2 py-2 px-2 items-center w-full overflow-auto"
+    style="border-radius: inherit;"
   >
     <div class="ml-auto" />
     {#if $profile?.user && isAdmin($profile.user)}
@@ -184,7 +185,8 @@
     </Menu>
     <div
       class="absolute right-0 -z-10 h-full
-       overflow-hidden w-full rounded-full"
+       overflow-hidden w-full"
+      style="border-radius: inherit;"
     >
       <img
         src={optimizeImageURL(
