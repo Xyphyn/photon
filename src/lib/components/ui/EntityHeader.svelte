@@ -3,6 +3,7 @@
   import Avatar from './Avatar.svelte'
   import PostBody from '../lemmy/post/PostBody.svelte'
   import LabelStat from './LabelStat.svelte'
+  import { optimizeImageURL } from '../lemmy/post/helpers'
 
   export let avatar: string | undefined = undefined
   export let name: string
@@ -14,7 +15,13 @@
   }[] = []
 </script>
 
-<Material color="transparent" padding="none" rounding="xl" {...$$restProps}>
+<Material
+  color="transparent"
+  padding="none"
+  rounding="xl"
+  class="z-10 relative"
+  {...$$restProps}
+>
   {#if banner}
     <div class="max-h-36 overflow-visible">
       <img
@@ -22,6 +29,16 @@
         class="w-full object-cover h-48 rounded-xl bg-white dark:bg-zinc-900"
         height="192"
         alt="User banner"
+      />
+    </div>
+    <div
+      class="absolute top-0 left-0 -z-10 object-cover h-full w-full rounded-xl
+      overflow-hidden"
+    >
+      <img
+        src={optimizeImageURL(banner, 64)}
+        alt=""
+        class="opacity-10 blur-2xl h-full w-full saturate-200"
       />
     </div>
   {/if}
