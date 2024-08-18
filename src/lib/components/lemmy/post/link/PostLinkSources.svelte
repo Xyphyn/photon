@@ -28,6 +28,12 @@
       name: 'Ground News',
       type: 'embed',
     },
+    {
+      getLink: (url: string) =>
+        `https://spinscore.io/?url=${encodeURIComponent(url.split('?')[0])}`,
+      name: 'spinscore.io',
+      type: 'embed',
+    },
   ]
 </script>
 
