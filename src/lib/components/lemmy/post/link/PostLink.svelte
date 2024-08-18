@@ -46,7 +46,7 @@
         -inset-px"
       />
     {/if}
-    <div class="flex flex-col gap-2">
+    <div class="flex flex-col gap-2 mb-2">
       {#if richURL}
         <Link
           href={url}
@@ -64,7 +64,7 @@
         {embed_title}
       </a>
       {#if embed_description}
-        <p class="text-sm mb-2">
+        <p class="text-sm">
           {embed_description.slice(0, 300)}{embed_description.length > 300
             ? '...'
             : ''}
@@ -104,7 +104,7 @@
   </Material>
   <div
     class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800
-    rounded-full flex p-1 relative -top-7 min-[384px]:mx-2 mt-8 min-[384px]:mt-0 mx-auto -mb-7 w-max max-w-full overflow-auto"
+    rounded-full flex p-1 relative -top-7 min-[384px]:mx-3 mt-8 min-[384px]:mt-0 mx-auto -mb-7 w-max max-w-full overflow-auto"
   >
     <PostLinkSources {url} view="cozy" bind:openMediaBias>
       <Button
