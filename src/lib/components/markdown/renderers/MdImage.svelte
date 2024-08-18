@@ -24,7 +24,7 @@
       url={href}
       opened={true}
       autoplay={false}
-      class="w-full"
+      class="w-auto h-auto max-h-80 inline-block rounded-lg"
     />
   {:else}
     <button

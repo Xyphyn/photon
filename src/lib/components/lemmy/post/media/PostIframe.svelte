@@ -102,7 +102,7 @@
 {#if opened}
   {#if type == 'video'}
     <!-- svelte-ignore a11y-media-has-caption -->
-    <video {autoplay} controls class="rounded-xl aspect-video">
+    <video {autoplay} controls class="rounded-xl aspect-video {$$props.class}">
       <source src={url} />
     </video>
   {:else}
