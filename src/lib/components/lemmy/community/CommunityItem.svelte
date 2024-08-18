@@ -43,8 +43,8 @@
   <div
     class="flex
      {view == 'cozy'
-      ? 'flex-col gap-2'
-      : 'flex-row'} items-center max-w-full w-full"
+      ? 'flex-col gap-2 items-center'
+      : 'flex-row'} max-w-full w-full"
   >
     <a
       href="/c/{fullCommunityName(
@@ -65,16 +65,25 @@
             alt={community.community.name}
           />
         </slot>
-        <div class="flex flex-col">
-          <div class="font-medium text-base">
+        <div
+          class="flex flex-col overflow-hidden whitespace-nowrap flex-1 min-w-0 flex-shrink"
+        >
+          <div class="font-medium text-base overflow-hidden overflow-ellipsis">
             {community.community.title}
           </div>
-          <div class="text-sm text-slate-600 dark:text-zinc-400">
-            <span>{new URL(community.community.actor_id).hostname}</span>
-            {#if !showCounts}
-              •
-              <FormattedNumber number={community.counts.subscribers} />
-            {/if}
+          <div
+            class="text-sm text-slate-600 dark:text-zinc-400 flex gap-0.5"
+            class:justify-center={view == 'cozy'}
+          >
+            <span class="overflow-hidden overflow-ellipsis">
+              {new URL(community.community.actor_id).hostname}
+            </span>
+            <span class="overflow-hidden overflow-ellipsis">
+              {#if !showCounts}
+                •
+                <FormattedNumber number={community.counts.subscribers} />
+              {/if}
+            </span>
           </div>
         </div>
       </div>
@@ -103,10 +112,15 @@
               )
             }
           }}
+          size="custom"
+          title={isSubscribed(community.subscribed)
+            ? $t('cards.community.subscribed')
+            : $t('cards.community.subscribe')}
           color={isSubscribed(community.subscribed) ? 'elevatedLow' : 'primary'}
-          class={isSubscribed(community.subscribed)
+          class="{isSubscribed(community.subscribed)
             ? 'text-slate-600 dark:text-zinc-400'
             : ''}
+            aspect-square h-8 @md:px-2 @md:min-w-32 @md:aspect-auto"
         >
           <Icon
             src={isSubscribed(community.subscribed) ? Check : Plus}
@@ -114,11 +128,13 @@
             micro
             slot="prefix"
           />
-          {#if isSubscribed(community.subscribed)}
-            {$t('cards.community.subscribed')}
-          {:else}
-            {$t('cards.community.subscribe')}
-          {/if}
+          <span class="hidden @md:block">
+            {#if isSubscribed(community.subscribed)}
+              {$t('cards.community.subscribed')}
+            {:else}
+              {$t('cards.community.subscribe')}
+            {/if}
+          </span>
         </Button>
       </Subscribe>
     </div>

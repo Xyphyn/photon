@@ -24,7 +24,12 @@
 
   let search = data.query || ''
   let instance = ''
+
+  let virtualList: HTMLDivElement
+  let offset: number = 0
 </script>
+
+<svelte:window bind:scrollY={offset} />
 
 <svelte:head>
   <title>{$t('routes.communities')}</title>
@@ -92,7 +97,9 @@
   <Location selected={data.type} />
   <Sort selected={data.sort} />
 </div>
-<ul class="flex flex-col divide-y divide-slate-200 dark:divide-zinc-800 my-6">
+<ul
+  class="flex flex-col divide-y divide-slate-200 dark:divide-zinc-800 my-6 h-full"
+>
   {#if data.communities.length == 0}
     <Placeholder
       icon={QuestionMarkCircle}
@@ -131,13 +138,19 @@
       {$t('routes.search.other')}
     </SectionTitle>
   {/if}
-  {#each data.communities.slice(data.query ?? '' != '' ? 3 : 0) as community}
-    <div
-      class="-mx-4 sm:-mx-6 px-6 hover:bg-slate-100 hover:dark:bg-zinc-800 transition-colors"
-    >
-      <CommunityItem {community} showCounts={false} class="py-3" />
+  {#if data.communities}
+    {@const sliced = data.communities.slice(data.query ?? '' != '' ? 3 : 0)}
+    <div class="-mx-4 sm:-mx-6 h-full" bind:this={virtualList}>
+      {#each sliced as community}
+        <div
+          class="px-6 hover:bg-slate-100 hover:dark:bg-zinc-900 transition-colors @container
+        border-b border-slate-100 dark:border-zinc-800"
+        >
+          <CommunityItem {community} showCounts={false} class="py-3" />
+        </div>
+      {/each}
     </div>
-  {/each}
+  {/if}
 </ul>
 {#if data.communities.length > 0}
   <div class="mt-2 w-full">
