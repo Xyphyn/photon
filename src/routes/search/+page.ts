@@ -19,7 +19,8 @@ export async function load({ url, fetch }) {
   const community = Number(url.searchParams.get('community')) || undefined
   const sort = url.searchParams.get('sort') || 'New'
   const type = url.searchParams.get('type') || 'All'
-  const listing_type = url.searchParams.get('listing_type') as ListingType || 'All'
+  const listing_type =
+    (url.searchParams.get('listing_type') as ListingType) || 'All'
 
   if (query) {
     const results = await client({ func: fetch }).search({
@@ -40,6 +41,14 @@ export async function load({ url, fetch }) {
     ]
 
     const everything = [...posts, ...comments, ...users, ...communities]
+
+    if (sort == 'New') {
+      everything.sort(
+        (a, b) =>
+          new Date(getItemPublished(b)).getTime() -
+          new Date(getItemPublished(a)).getTime()
+      )
+    }
 
     return {
       type: type,

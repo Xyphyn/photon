@@ -35,6 +35,8 @@
   import { slide } from 'svelte/transition'
   import { t } from '$lib/translations.js'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
+  import { contentPadding } from '$lib/components/ui/layout/Shell.svelte'
 
   type Result = PostView | CommentView | PersonView | CommunityView
 
@@ -53,29 +55,36 @@
 
 <Header pageHeader>
   {$t('routes.search.title')}
-  <form
-    on:submit|preventDefault={() => searchParam($page.url, 'q', query, 'page')}
-    class="flex flex-row gap-2 items-center"
-    slot="extended"
-  >
-    <TextInput
-      bind:value={query}
-      aria-label={$t('routes.search.query')}
-      size="md"
-      class="flex-1 rounded-lg"
-    />
-    <Button
-      submit
-      color="secondary"
-      size="custom"
-      class="self-end"
-      style="width: 38px; height: 38px;"
-      title="Search"
-    >
-      <Icon src={MagnifyingGlass} size="16" mini />
-    </Button>
-  </form>
 </Header>
+<div
+  class="mt-4 mb-0 sticky z-30"
+  style="top: max(1.5rem, {$contentPadding.top}px);"
+>
+  <Tabs routes={[]} class="p-2 dark:bg-zinc-925/70">
+    <form
+      on:submit|preventDefault={() =>
+        searchParam($page.url, 'q', query, 'page')}
+      class="flex gap-2 flex-row items-center w-full text-base h-10"
+    >
+      <TextInput
+        bind:value={query}
+        aria-label={$t('routes.search.query')}
+        size="lg"
+        class="flex-1 !rounded-full h-full !text-base"
+      />
+      <Button
+        submit
+        color="secondary"
+        size="custom"
+        class="flex-shrink-0 h-full aspect-square"
+        title="Search"
+        rounding="pill"
+      >
+        <Icon src={MagnifyingGlass} size="16" mini />
+      </Button>
+    </form>
+  </Tabs>
+</div>
 <div class="flex flex-row flex-wrap items-center gap-4 mt-4">
   <Select
     bind:value={data.type}
@@ -136,7 +145,15 @@
     {#if object}
       <div transition:slide={{ axis: 'y', easing: expoOut }}>
         {#if object.community}
-          <CommunityItem community={object.community} />
+          <div
+            class="-mx-4 sm:-mx-6 px-6 hover:bg-slate-100 hover:dark:bg-zinc-800 transition-colors"
+          >
+            <CommunityItem
+              community={object.community}
+              showCounts={false}
+              class="py-3"
+            />
+          </div>
         {/if}
         {#if object.post}
           <Post post={object.post} />
@@ -161,9 +178,17 @@
       {:else if isCommentView(result)}
         <CommentItem comment={result} />
       {:else if isCommunityView(result)}
-        <CommunityItem community={result} />
+        <div
+          class="-mx-4 sm:-mx-6 px-6 hover:bg-slate-100 hover:dark:bg-zinc-800 transition-colors"
+        >
+          <CommunityItem community={result} showCounts={false} class="py-3" />
+        </div>
       {:else if isUser(result)}
-        <UserItem user={result} />
+        <div
+          class="-mx-4 sm:-mx-6 px-6 hover:bg-slate-100 hover:dark:bg-zinc-800 transition-colors"
+        >
+          <UserItem user={result} showCounts={false} class="py-3" />
+        </div>
       {/if}
     {/each}
   </div>

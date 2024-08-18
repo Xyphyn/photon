@@ -226,7 +226,9 @@
                 "title": "No Results",
                 "description": "There are no results that match that filter. Try refining your search.",
                 "alt": "Search across the fediverse"
-            }
+            },
+            "top": "Top results",
+            "other": "Other results"
         },
         "saved": "Saved",
         "createPost": "Create Post",
