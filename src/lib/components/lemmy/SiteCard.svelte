@@ -20,6 +20,7 @@
   import { t } from '$lib/translations'
   import Entity from '../ui/Entity.svelte'
   import { userSettings } from '$lib/settings'
+  import { optimizeImageURL } from './post/helpers'
 
   export let site: SiteView
   export let taglines: Tagline[] | undefined = undefined
@@ -28,6 +29,19 @@
 </script>
 
 <StickyCard class="w-full {$$props.class} text-slate-600 dark:text-zinc-400">
+  {#if site.site.banner}
+    <div
+      class="rounded-xl
+     bg-slate-100 dark:bg-zinc-925"
+    >
+      <img
+        src={optimizeImageURL(site.site.banner, 512)}
+        alt="Site banner"
+        class="h-32 object-cover w-full"
+        style="border-radius: inherit;"
+      />
+    </div>
+  {/if}
   <Entity name={site.site.name} label={new URL(site.site.actor_id).hostname}>
     <Avatar
       width={32}
@@ -66,7 +80,7 @@
   </div>
 
   <div
-    class="flex flex-col [&>*]:py-3 divide-y divide-slate-200 dark:divide-zinc-800"
+    class="flex flex-col [&>*]:py-3 divide-y divide-slate-200 dark:divide-zinc-900"
   >
     {#if taglines && taglines.length > 0}
       <Markdown
