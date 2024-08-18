@@ -183,20 +183,22 @@
         </span>
       {/if}
     </Menu>
-    <div
-      class="absolute right-0 -z-10 h-full
-       overflow-hidden w-full"
-      style="border-radius: inherit;"
-    >
-      <img
-        src={optimizeImageURL(
-          $profile?.user?.local_user_view.person.avatar ?? '',
-          32
-        )}
-        class="blur-2xl -z-10 ml-auto object-cover w-48 opacity-50"
-        alt=""
-      />
-    </div>
+    {#if $profile?.user?.local_user_view.person.avatar}
+      <div
+        class="absolute right-0 -z-10 h-full
+       overflow-hidden w-full ml-auto"
+        style="border-radius: inherit;"
+      >
+        <img
+          src={optimizeImageURL(
+            $profile?.user?.local_user_view.person.avatar ?? '',
+            32
+          )}
+          class="blur-2xl -z-10 object-cover w-48 h-48 opacity-20 dark:opacity-50 ml-auto"
+          alt=""
+        />
+      </div>
+    {/if}
     <Profile placement="top" />
   </div>
 </nav>
