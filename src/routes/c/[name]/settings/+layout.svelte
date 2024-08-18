@@ -28,7 +28,7 @@
           name: $t('routes.community.settings.settings'),
         },
         {
-          href: `${communityUrl}/team`,
+          href: `${communityUrl}/settings/team`,
           name: $t('routes.community.settings.team'),
         },
       ]}
