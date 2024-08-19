@@ -35,6 +35,7 @@
   import { LINKED_INSTANCE_URL } from '$lib/instance'
   import { t } from '$lib/translations'
   import CommandsWrapper from './commands/CommandsWrapper.svelte'
+  import { optimizeImageURL } from '$lib/components/lemmy/post/helpers'
 
   let searching = false
   let promptOpen: boolean = false
@@ -109,7 +110,8 @@
     </div>
   {/if}
   <div
-    class="flex flex-row gap-2 py-2 px-2 items-center w-full rounded-full overflow-auto"
+    class="flex flex-row gap-2 py-2 px-2 items-center w-full overflow-auto"
+    style="border-radius: inherit;"
   >
     <div class="ml-auto" />
     {#if $profile?.user && isAdmin($profile.user)}
@@ -181,12 +183,22 @@
         </span>
       {/if}
     </Menu>
-    <Profile
-      placement="top"
-      itemsClass="h-8 md:h-8 z-10"
-      targetClass="z-10 h-10"
-      containerClass="!max-h-[28rem] z-10"
-      buttonClass=""
-    />
+    {#if $profile?.user?.local_user_view.person.avatar}
+      <div
+        class="absolute right-0 -z-10 h-full
+       overflow-hidden w-full ml-auto"
+        style="border-radius: inherit;"
+      >
+        <img
+          src={optimizeImageURL(
+            $profile?.user?.local_user_view.person.avatar ?? '',
+            32
+          )}
+          class="blur-2xl -z-10 object-cover w-48 h-48 opacity-20 dark:opacity-50 ml-auto"
+          alt=""
+        />
+      </div>
+    {/if}
+    <Profile placement="top" />
   </div>
 </nav>
