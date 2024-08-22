@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { invalidate } from '$app/navigation'
   import { page } from '$app/stores'
   import { fly } from 'svelte/transition'
 
@@ -6,6 +7,7 @@
     href: string
     name: string
   }[]
+  export let currentRoute: string | undefined = undefined
 </script>
 
 <nav
@@ -16,12 +18,13 @@
 >
   {#each routes as route}
     <a
+      on:click={() => invalidate(route.href)}
       href={route.href}
       class="font-medium rounded-full px-4 py-1 hover:bg-slate-200/40 hover:dark:bg-zinc-700/40
       transition-colors duration-100 relative z-0"
     >
       {route.name}
-      {#if $page.url.pathname == route.href}
+      {#if (currentRoute ?? $page.url.pathname) == route.href}
         <div
           class="rounded-full bg-slate-100/60 dark:bg-zinc-700/60
           absolute inset-0 w-full h-full -z-10"

@@ -1,12 +1,20 @@
 import { client } from '$lib/lemmy'
 import type { SubmissionView } from '$lib/lemmy/contentview.js'
-import type { Comment, Community, MyUserInfo, Person } from 'lemmy-js-client'
+import type {
+  Comment,
+  CommentView,
+  Community,
+  MyUserInfo,
+  Person,
+  PostView,
+  PrivateMessageView,
+} from 'lemmy-js-client'
 import { get, writable } from 'svelte/store'
 
 interface Modals {
   reporting: {
     open: boolean
-    item: SubmissionView | undefined
+    item: PostView | CommentView | PrivateMessageView | undefined
   }
   removing: {
     open: boolean
@@ -39,7 +47,7 @@ export let modals = writable<Modals>({
   },
 })
 
-export function report(item: SubmissionView) {
+export function report(item: PostView | CommentView | PrivateMessageView) {
   modals.update((m) => ({
     ...m,
     reporting: {

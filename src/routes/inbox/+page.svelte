@@ -21,6 +21,8 @@
   import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { t } from '$lib/translations'
+  import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
+  import { contentPadding } from '$lib/components/ui/layout/Shell.svelte'
 
   export let data
 
@@ -78,6 +80,33 @@
   </Header>
 </div>
 <div class="mt-4" />
+
+<div
+  class="mt-4 mb-0 sticky z-30 mx-auto"
+  style="top: max(1.5rem, {$contentPadding.top}px);"
+>
+  <Tabs
+    routes={[
+      {
+        href: '/inbox',
+        name: $t('filter.location.all'),
+      },
+      {
+        href: '/inbox?type=Replies',
+        name: $t('filter.inbox.replies'),
+      },
+      {
+        href: '/inbox?type=Mentions',
+        name: $t('filter.inbox.mentions'),
+      },
+      {
+        href: '/inbox/messages',
+        name: $t('filter.inbox.messages'),
+      },
+    ]}
+    currentRoute="{$page.url.pathname}{$page.url.search}"
+  />
+</div>
 <div class="flex flex-row gap-4 flex-wrap items-end">
   <Select
     bind:value={data.unreadOnly}
@@ -95,19 +124,6 @@
     </span>
     <option value="false">{$t('filter.location.all')}</option>
     <option value="true">{$t('filter.unread')}</option>
-  </Select>
-  <Select
-    bind:value={data.type}
-    on:change={() => searchParam($page.url, 'type', data.type ?? 'all', 'page')}
-  >
-    <span slot="label" class="flex items-center gap-1">
-      <Icon src={AdjustmentsHorizontal} size="15" mini />
-      {$t('filter.type')}
-    </span>
-    <option value="all">{$t('filter.location.all')}</option>
-    <option value="mentions">{$t('filter.inbox.mentions')}</option>
-    <option value="replies">{$t('filter.inbox.replies')}</option>
-    <option value="messages">{$t('filter.inbox.messages')}</option>
   </Select>
 </div>
 <div class="flex flex-col gap-4 list-none flex-1 h-full justify-center mt-4">

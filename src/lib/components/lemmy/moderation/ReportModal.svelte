@@ -3,22 +3,34 @@
   import Post from '$lib/components/lemmy/post/Post.svelte'
   import { toast } from 'mono-svelte'
   import { getClient } from '$lib/lemmy.js'
-  import type { CommentView, PostView } from 'lemmy-js-client'
+  import type {
+    CommentView,
+    PostView,
+    PrivateMessageView,
+  } from 'lemmy-js-client'
   import { profile } from '$lib/auth.js'
   import { Button, Modal } from 'mono-svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { onMount } from 'svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { t } from '$lib/translations'
+  import PrivateMessage from '../inbox/PrivateMessage.svelte'
 
   export let open: boolean
-  export let item: PostView | CommentView | undefined = undefined
+  export let item: PostView | CommentView | PrivateMessageView | undefined =
+    undefined
 
-  const isComment = (item: PostView | CommentView): item is CommentView =>
-    'comment' in item
+  const isComment = (
+    item: PostView | CommentView | PrivateMessageView
+  ): item is CommentView => 'comment' in item
 
-  const isPost = (item: PostView | CommentView): item is PostView =>
-    !isComment(item)
+  const isPost = (
+    item: PostView | CommentView | PrivateMessageView
+  ): item is PostView => !isComment(item) && 'post' in item
+
+  const isPrivateMessage = (
+    item: PostView | CommentView | PrivateMessageView
+  ): item is PrivateMessageView => !isComment(item) && 'private_message' in item
 
   let loading = false
   let reason = ''
@@ -36,6 +48,11 @@
       } else if (isPost(item)) {
         await getClient().createPostReport({
           post_id: item.post.id,
+          reason: reason,
+        })
+      } else if (isPrivateMessage(item)) {
+        await getClient().createPrivateMessageReport({
+          private_message_id: item.private_message.id,
           reason: reason,
         })
       }
@@ -77,6 +94,8 @@
           />
         {:else if isPost(item)}
           <Post actions={false} post={item} />
+        {:else}
+          <PrivateMessage message={item} />
         {/if}
       </div>
     {/if}
