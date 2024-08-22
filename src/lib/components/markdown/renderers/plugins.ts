@@ -124,8 +124,8 @@ export const photonify = (link: string) => {
     if (!match) return
 
     // Same as above for the community.
-    if (match?.[3].includes('@')) return `/c/${match?.[3]}`
-    else return `/c/${match?.[3]}@${match?.[1]}`
+    if (match?.[3].includes('@')) return `/u/${match?.[3]}`
+    else return `/u/${match?.[3]}@${match?.[1]}`
   }
   // Support implicit user syntax (no preceding @), by messing with mailto links.
   if (regexes.implicitUser.test(link)) {
