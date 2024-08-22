@@ -18,6 +18,16 @@ const config: Config = {
       loader: async () => (await import('./i18n/bg.json')).default,
     },
     {
+      locale: 'de',
+      key: '',
+      loader: async () => (await import('./i18n/de.json')).default,
+    },
+    {
+      locale: 'es',
+      key: '',
+      loader: async () => (await import('./i18n/es.json')).default,
+    },
+    {
       locale: 'et',
       key: '',
       loader: async () => (await import('./i18n/et.json')).default,
@@ -31,11 +41,6 @@ const config: Config = {
       locale: 'fr',
       key: '',
       loader: async () => (await import('./i18n/fr.json')).default,
-    },
-    {
-      locale: 'de',
-      key: '',
-      loader: async () => (await import('./i18n/de.json')).default,
     },
     {
       locale: 'ja',
