@@ -13,6 +13,7 @@
   import { browser } from '$app/environment'
   import { onMount, tick } from 'svelte'
   import { report } from '$lib/components/lemmy/moderation/moderation'
+  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
 
   export let data
 
@@ -80,7 +81,7 @@
   rounding="2xl"
   padding="none"
   class="bg-white dark:bg-zinc-950 dark:border-t-zinc-900
-  w-full overflow-auto mt-6 relative max-h-[32rem]"
+  w-full overflow-auto mt-6 relative max-h-[32rem] h-full"
 >
   <div class="h-full overflow-auto" bind:this={chatWindow}>
     <ul id="chat-window" class="flex flex-col gap-1 flex-1 px-4 py-4">

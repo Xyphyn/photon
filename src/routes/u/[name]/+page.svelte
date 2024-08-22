@@ -193,7 +193,7 @@
           <Button
             size="square-md"
             color="secondary"
-            on:click={() => (messaging = true)}
+            href="/inbox/messages/{data.person_view.person.id}"
             title="Message"
           >
             <Icon slot="prefix" solid size="16" src={Envelope} />
