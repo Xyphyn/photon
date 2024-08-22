@@ -47,7 +47,8 @@
             "nsfw": "NSFW",
             "generateTitle": "Genereer titel",
             "uploadImage": "Afbeelding uploaden",
-            "altText": "Alternatieve tekst"
+            "altText": "Alternatieve tekst",
+            "selectFile": "Bestand selecteren"
         },
         "email": "E-mail",
         "setup": "Instellen",
@@ -90,6 +91,12 @@
             "media": {
                 "title": "Media",
                 "download": "Download"
+            },
+            "logins": "Logins",
+            "welcome": "Welkom, {{default}}!",
+            "delete": {
+                "title": "Account verwijderen",
+                "warning": "Dit kan niet ongedaan gemaakt worden, weet je het zeker?"
             }
         },
         "translators": "Vertalers",
@@ -121,6 +128,9 @@
                 "allComments": "Alle reacties",
                 "part": "Je bekijkt een deel van een thread.",
                 "context": "Toon context"
+            },
+            "emptyComments": {
+                "title": "Geen reacties"
             }
         },
         "inbox": {
@@ -139,7 +149,8 @@
             },
             "reason": "Reden",
             "resolve": "Oplossen",
-            "unresolve": "Oplossen ongedaan maken"
+            "unresolve": "Oplossen ongedaan maken",
+            "resolvedBy": "Opgelost door"
         },
         "admin": {
             "title": "Administratie",
