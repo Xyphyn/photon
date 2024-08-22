@@ -58,7 +58,9 @@
   {$t('filter.inbox.messages')}
 </Header>
 {#await data.messages}
-  <Spinner width={24} />
+  <div class="w-full h-full grid place-items-center">
+    <Spinner width={24} />
+  </div>
 {:then data}
   {@const conversations = data.private_messages}
   {@const previews = conversationPreviews(conversations).filter(

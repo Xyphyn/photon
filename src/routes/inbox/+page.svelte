@@ -55,7 +55,7 @@
 </svelte:head>
 
 <div class="flex flex-row gap-2">
-  <Header pageHeader class="justify-between items-end">
+  <Header pageHeader class="sm:flex-row flex-col justify-between items-end">
     {$t('routes.inbox.title')}
 
     <div class="flex items-center gap-2">
@@ -82,7 +82,7 @@
 <div class="mt-4" />
 
 <div
-  class="mt-4 mb-0 sticky z-30 mx-auto"
+  class="mt-4 mb-0 sticky z-30 mx-auto max-w-full overflow-hidden"
   style="top: max(1.5rem, {$contentPadding.top}px);"
 >
   <Tabs
@@ -105,6 +105,7 @@
       },
     ]}
     currentRoute="{$page.url.pathname}{$page.url.search}"
+    class="overflow-auto"
   />
 </div>
 <div class="flex flex-row gap-4 flex-wrap items-end">

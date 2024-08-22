@@ -17,7 +17,7 @@
   class="group relative w-full flex gap-1 items-center {primary
     ? 'flex-row-reverse'
     : 'flex-row'}"
-  style="max-width: min(70vw,24rem)"
+  style="max-width: min(80vw,24rem)"
 >
   <div
     class="{primary
