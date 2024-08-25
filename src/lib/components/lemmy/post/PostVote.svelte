@@ -1,7 +1,11 @@
 <script lang="ts" context="module">
   import { userSettings } from '$lib/settings.js'
   export const voteColor = (vote: number, border: boolean = false) =>
-    vote == 1 ? `!text-blue-500` : vote == -1 ? `!text-red-500` : ''
+    vote == 1
+      ? `bg-blue-500 dark:bg-blue-400 text-slate-50 dark:text-zinc-900`
+      : vote == -1
+        ? `bg-red-500 text-slate-50 dark:bg-red-400 dark:text-zinc-900`
+        : ''
 
   export const shouldShowVoteColor = (
     vote: number,
@@ -56,13 +60,17 @@
   <div
     class="{buttonColor.ghost} rounded-full h-full font-medium flex items-center *:p-2
     hover:bg-white hover:dark:bg-zinc-900 overflow-hidden transition-colors flex-shrink-0
-    {vote != 0 ? '' : '!text-inherit'} !text-inherit
+    {vote != 0
+      ? ''
+      : '!text-inherit'} !text-inherit divide-x divide-slate-200 dark:divide-zinc-800
     {loading ? 'animate-pulse opacity-75 pointer-events-none' : ''}"
   >
     <button
       on:click={() => castVote(vote == 1 ? 0 : 1)}
-      class="flex items-center gap-0.5 {buttonColor.ghost} transition-colors border-0
-      {vote == 1 ? shouldShowVoteColor(vote, 'upvotes') : '!text-inherit'}"
+      class="flex items-center gap-0.5 transition-colors
+      {vote == 1
+        ? shouldShowVoteColor(vote, 'upvotes')
+        : 'hover:bg-slate-100 hover:dark:bg-zinc-800'}"
     >
       <Icon src={ChevronUp} size="20" micro />
       <span class="grid text-sm">
@@ -78,13 +86,12 @@
       </span>
     </button>
     {#if $site?.site_view.local_site.enable_downvotes ?? true}
-      <div
-        class="border-l h-6 w-0 !p-0 border-slate-200 dark:border-zinc-800"
-      ></div>
       <button
         on:click={() => castVote(vote == -1 ? 0 : -1)}
-        class="flex items-center flex-row-reverse gap-0.5 {buttonColor.ghost} transition-colors border-0
-      {vote == -1 ? shouldShowVoteColor(vote, 'downvotes') : '!text-inherit'}"
+        class="flex items-center flex-row-reverse gap-0.5 transition-colors
+      {vote == -1
+          ? shouldShowVoteColor(vote, 'downvotes')
+          : 'hover:bg-slate-100 hover:dark:bg-zinc-800'}"
       >
         <Icon src={ChevronDown} size="20" micro />
         <span class="grid text-sm">

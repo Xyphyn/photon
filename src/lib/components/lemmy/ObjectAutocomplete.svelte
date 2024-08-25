@@ -11,7 +11,6 @@
   export let q: string = ''
 
   export let instance: string | undefined = undefined
-  export let jwt: string | undefined = undefined
   export let listing_type: ListingType = 'Subscribed'
   export let showWhenEmpty: boolean = false
 
