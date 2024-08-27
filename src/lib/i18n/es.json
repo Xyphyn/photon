@@ -26,7 +26,7 @@
             "setView": "Establecer vista",
             "setColor": "Establecer esquema de colores",
             "setColorTo": "Establecer esquema de colores a {{default}}",
-            "feeds": "Fuentes",
+            "feeds": "Fuentes de publicaciones",
             "downloading": "Acciones de descarga",
             "setThemeTo": "Establecer tema a {{default}}",
             "setTheme": "Establecer tema"
@@ -154,7 +154,7 @@
             "deleteAccount": {
                 "deleteContent": "Borrar contenido",
                 "label": "Borrar cuenta",
-                "warning": "Esto borrará todas sus publicaciones."
+                "warning": "Esto borrará todos sus aportes."
             },
             "email": "Correo electrónico",
             "verifyNewPassword": "Verificar nueva contraseña"
@@ -257,7 +257,7 @@
             "title": "Moderación",
             "empty": {
                 "title": "Sin nuevos reportes",
-                "description": "Cuando las publicaciones son reportadas, puede actuar sobre ellas aquí."
+                "description": "Cuando los aportes son reportados, puede actuar sobre ellos aquí."
             },
             "reason": "Motivo",
             "resolve": "Resolver",
@@ -491,12 +491,12 @@
             "expires": "Expira (UTC)",
             "banFromCommunity": "Prohibir en la comunidad",
             "unbanFromCommunity": "No prohibir en la comunidad",
-            "warning": "Esto borrará todas las publicaciones de este usuario aquí."
+            "warning": "Esto borrará todos los aportes de este usuario aquí."
         },
         "removeSubmission": {
-            "title": "Eliminando publicaciones",
-            "titleRestore": "Restaurando publicación",
-            "titlePurge": "Limpiando publicación",
+            "title": "Eliminando aporte",
+            "titleRestore": "Restaurando aporte",
+            "titlePurge": "Limpiando aporte",
             "comment": "Comentario",
             "message": "Mensaje",
             "failMessage": "No se pudo contactar al usuario. Eliminando de todas maneras...",
@@ -808,6 +808,7 @@
         "invalid_vote_value": "No puede cometer fraude de votante en publicaciones de Lemmy.",
         "incorrect_login_10": "Considere esto: Los pobres administradores de esta instancia deben mantener el servidor solo para que haga estos intentos inútiles.",
         "incorrect_login_7": "O tiene problemas para digitar, o está intentando tomarme del pelo.",
-        "passwords_do_not_match": "Las contraseñas que ha ingresado no coinciden."
+        "passwords_do_not_match": "Las contraseñas que ha ingresado no coinciden.",
+        "slurs": "Su aporte contiene un término prohibido por esta instancia."
     }
 }
