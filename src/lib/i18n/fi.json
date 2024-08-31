@@ -70,7 +70,9 @@
                 "alt": "Etsi kaikkialta",
                 "description": "Haku ei tuottanut tuloksia näillä rajoituksilla. Yritä muokata hakua."
             },
-            "federating": "Federoidaan"
+            "federating": "Federoidaan",
+            "top": "Parhaat tulokset",
+            "other": "Muut tulokset"
         },
         "saved": "Tallennetut",
         "createCommunity": "Luo yhteisö",
@@ -401,7 +403,7 @@
             "replies": "Vastaukset"
         },
         "view": {
-            "compact": "Tiivis lista",
+            "compact": "Tiivis",
             "label": "Näkymä",
             "cozy": "Mukava",
             "list": "Lista",
