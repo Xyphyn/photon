@@ -1,1 +1,106 @@
-{}
+{
+    "profile": {
+        "inbox": "Postaláda",
+        "saved": "Mentve",
+        "profile": "Profil",
+        "subscribed": "Feliratkozások"
+    },
+    "nav": {
+        "home": "Kezdőoldal",
+        "admin": "Adminisztrátor",
+        "moderation": "Moderálás",
+        "communities": "Felfedezés",
+        "search": "Keresés",
+        "create": {
+            "label": "Létrehozás",
+            "post": "Közzétesz",
+            "community": "Közösség",
+            "logingate": "Tartalom létrehozásához be kell jelentkezned."
+        },
+        "menu": {
+            "label": "Profil",
+            "app": "Alkalmazás",
+            "settings": "Beállítások",
+            "colorscheme": {
+                "label": "Színséma",
+                "system": "Rendszer",
+                "dark": "Sötét",
+                "light": "Világos"
+            },
+            "theme": "Téma",
+            "about": "Névjegy",
+            "source": "Forrás",
+            "donate": "Adományozás",
+            "instance": "Szerver"
+        },
+        "commands": {
+            "content": "Tartalom",
+            "setView": "Nézet beállítása",
+            "setViewTo": "Nézet beállítása erre: {{default}}",
+            "setColor": "Színséma beállítása",
+            "setColorTo": "Színséma beállítása erre: {{default}}",
+            "feeds": "Feedek",
+            "setTheme": "Téma beállítása",
+            "recents": "Legutóbbiak",
+            "search": "Keresés erre: {{default}}"
+        }
+    },
+    "account": {
+        "login": "Bejelentkezés",
+        "signup": "Regisztráció",
+        "accounts": "Fiókok",
+        "changeinstance": "Szerver váltás",
+        "addGuest": "Vendég hozzáadása",
+        "guest": "Vendég",
+        "logout": "Kijelentkezés"
+    },
+    "filter": {
+        "location": {
+            "label": "Hely",
+            "local": "Helyi",
+            "subscribed": "Feliratkozások",
+            "moderator": "Moderátor",
+            "global": "Globális",
+            "all": "Összes"
+        },
+        "sort": {
+            "label": "Rendezés",
+            "active": "Aktív",
+            "hot": "Forró",
+            "top": {
+                "time": {
+                    "label": "Idő",
+                    "all": "Mindenidők",
+                    "9months": "9 hónap",
+                    "6months": "6 hónap",
+                    "3months": "3 hónap",
+                    "month": "Hónap",
+                    "week": "Hét",
+                    "day": "Nap",
+                    "12hours": "12 óra",
+                    "6hours": "6 óra",
+                    "hour": "Óra"
+                },
+                "label": "Legnépszerűbb"
+            },
+            "new": "Új",
+            "old": "Régi",
+            "scaled": "Mérlegelt",
+            "mostcomments": "Megjegyzések",
+            "newcomments": "Új válaszok",
+            "controversial": "Megosztó"
+        },
+        "view": {
+            "label": "Nézet",
+            "cozy": "Kényelmes",
+            "list": "Lista",
+            "compact": "Kompakt"
+        },
+        "filter": "Szűrő",
+        "inbox": {
+            "messages": "Üzenetek"
+        },
+        "unread": "Olvasatlan",
+        "type": "Típus"
+    }
+}
