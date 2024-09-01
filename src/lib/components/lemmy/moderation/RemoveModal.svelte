@@ -1,7 +1,7 @@
 <script lang="ts">
   import Comment from '$lib/components/lemmy/comment/Comment.svelte'
   import Post from '$lib/components/lemmy/post/Post.svelte'
-  import { Select, toast } from 'mono-svelte'
+  import { Select, Switch, toast } from 'mono-svelte'
   import { getClient } from '$lib/lemmy.js'
   import { isCommentView, isPostView } from '$lib/lemmy/item.js'
   import type { CommentView, PostView } from 'lemmy-js-client'
@@ -38,7 +38,7 @@
     return removalTemplate(preset, {
       communityLink: `!${fullCommunityName(
         item!.community.name,
-        item!.community.actor_id,
+        item!.community.actor_id
       )}`,
       postTitle: item.post.name,
       reason: reason,
@@ -177,6 +177,7 @@
             children: [],
             comment_view: item,
             depth: 1,
+            ui: {},
           }}
           postId={item.post.id}
           actions={false}
@@ -193,9 +194,9 @@
       />
 
       {#if !removed && $profile?.user && (amMod($profile.user, item.community) || (isAdmin($profile.user) && item.community.local))}
-        <Checkbox bind:checked={commentReason}>
+        <Switch bind:checked={commentReason}>
           {$t('moderation.removeSubmission.withReason')}
-        </Checkbox>
+        </Switch>
 
         {#if commentReason}
           <MultiSelect
