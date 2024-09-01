@@ -116,7 +116,7 @@
     <Comment
       postId={post.id}
       bind:node
-      open={true}
+      bind:open={node.ui.open}
       op={post.creator_id == node.comment_view.creator.id}
     >
       {#if node.children?.length > 0}
@@ -125,7 +125,7 @@
       {#if node.comment_view.counts.child_count > 0 && node.children.length == 0}
         <svelte:element
           this={hydrated ? 'div' : 'a'}
-          class="w-full my-2 h-8 border-l-2 border-slate-200 dark:border-zinc-800 pl-2 text-left"
+          class="w-full my-2 h-8 border-l border-slate-200 dark:border-zinc-800 pl-2 text-left"
           href="/comment/{$page.params.instance}/{node.comment_view.comment.id}"
         >
           <Button

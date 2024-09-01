@@ -26,6 +26,7 @@
   import { t } from '$lib/translations'
   import { slide } from 'svelte/transition'
   import { expoInOut, expoOut } from 'svelte/easing'
+  import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
 
   export let node: CommentNodeI
   export let postId: number
@@ -110,8 +111,28 @@
 >
   <button
     on:click={() => (open = !open)}
-    class="flex flex-row cursor-pointer gap-2 items-center group text-[13px] flex-wrap w-full"
+    class="flex flex-row cursor-pointer gap-2 items-center group text-[13px] flex-wrap w-full
+    z-0 group relative"
   >
+    <div
+      class="absolute opacity-0 -z-10 inset-0 group-hover:block group-hover:opacity-100
+      bg-slate-100 dark:bg-zinc-900 group-hover:-inset-1 group-hover:-inset-x-2 rounded-full transition-all
+"
+    >
+      <div
+        class="h-full flex items-center justify-center gap-1 ml-auto w-max mr-2"
+      >
+        {#if node.children.length > 0}
+          <FormattedNumber number={node.children.length}></FormattedNumber>
+        {/if}
+        <Icon
+          src={open ? Minus : Plus}
+          size="16"
+          micro
+          class="transition-transform duration-500 {open ? '' : 'rotate-90'}"
+        />
+      </div>
+    </div>
     <span class:font-bold={op} class="flex flex-row gap-1 items-center">
       <UserLink
         inComment
@@ -204,6 +225,7 @@
                   children: [],
                   comment_view: e.detail.comment_view,
                   depth: node.depth + 1,
+                  ui: {},
                 },
                 ...node.children,
               ]
