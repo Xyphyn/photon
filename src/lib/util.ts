@@ -8,9 +8,11 @@ import { feature } from '$lib/version.js'
 import { client } from '$lib/lemmy.js'
 import { site } from './lemmy'
 
+// Despite the name, this will round up
+// Example: findClosestNumber([8, 16, 32, 64, 128], 76) will return 128
 export const findClosestNumber = (numbers: number[], target: number): number =>
   numbers.reduce((prev, curr) =>
-    Math.abs(curr - target) < Math.abs(prev - target) ? curr : prev
+    curr >= target && (prev < target || curr < prev) ? curr : prev
   )
 
 export const searchParam = (

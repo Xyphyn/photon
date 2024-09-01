@@ -37,14 +37,13 @@
   import CommandsWrapper from './commands/CommandsWrapper.svelte'
   import { optimizeImageURL } from '$lib/components/lemmy/post/helpers'
 
-  let searching = false
   let promptOpen: boolean = false
 </script>
 
 <CommandsWrapper bind:open={promptOpen} />
 <nav
   class="flex flex-row gap-2 items-center w-full mx-auto z-50 box-border p-0.5
-  duration-150
+  duration-150 @container
   {$$props.class}
   "
   style={$$props.style}
@@ -58,6 +57,7 @@
     href="/"
     label={$t('nav.home')}
     class="ml-2 logo"
+    adaptive={false}
   >
     <svelte:fragment slot="icon">
       {#if LINKED_INSTANCE_URL}
@@ -76,39 +76,6 @@
       {/if}
     </svelte:fragment>
   </NavButton>
-  {#if searching}
-    <div
-      class="w-full h-full absolute z-20 p-2 flex items-center gap-2 bg-white dark:bg-zinc-950
-      rounded-full"
-      transition:scale={{
-        start: 0.96,
-        duration: 250,
-        easing: backOut,
-      }}
-    >
-      <Button
-        size="custom"
-        rounding="pill"
-        class="w-11 h-11 flex-shrink-0"
-        on:click={() => (searching = false)}
-      >
-        <Icon src={XMark} size="18" mini />
-      </Button>
-      <SearchBar let:search let:loading class="!rounded-full z-20">
-        <Button
-          size="custom"
-          rounding="pill"
-          class="w-11 h-11 flex-shrink-0"
-          on:click={search}
-          color="primary"
-          type="submit"
-          {loading}
-        >
-          <Icon src={MagnifyingGlass} size="18" mini slot="prefix" />
-        </Button>
-      </SearchBar>
-    </div>
-  {/if}
   <div
     class="flex flex-row gap-2 py-2 px-2 items-center w-full overflow-auto"
     style="border-radius: inherit;"
@@ -140,7 +107,13 @@
             class="rounded-full w-2 h-2 bg-red-500 absolute -top-1 -left-1"
           />
         {/if}
-        <ShieldIcon let:isSelected slot="icon" filled={isSelected} width={18} />
+        <ShieldIcon
+          let:size
+          let:isSelected
+          slot="icon"
+          filled={isSelected}
+          width={size}
+        />
       </NavButton>
     {/if}
     <NavButton
@@ -148,11 +121,7 @@
       label={$t('nav.communities')}
       icon={GlobeAlt}
     />
-    <NavButton
-      on:click={() => (searching = true)}
-      label={$t('nav.search')}
-      icon={MagnifyingGlass}
-    />
+    <NavButton href="/search" label={$t('nav.search')} icon={MagnifyingGlass} />
     <Menu placement="top">
       <NavButton
         class="relative"

@@ -118,7 +118,7 @@
     />
   </div>
   <div
-    class="content divide-slate-200 dark:divide-zinc-900 min-h-screen {$userSettings.newWidth
+    class="content divide-x divide-slate-100 dark:divide-zinc-900 min-h-screen {$userSettings.newWidth
       ? 'limit-width'
       : ''}"
   >
