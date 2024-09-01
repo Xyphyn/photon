@@ -1,6 +1,6 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
-  import PostForm from '$lib/components/lemmy/post/PostForm.svelte'
+  import PostForm from '$lib/components/lemmy/post/form/PostForm.svelte'
   import { profile } from '$lib/auth.js'
   import { onDestroy, onMount } from 'svelte'
   import { getSessionStorage, setSessionStorage } from '$lib/session.js'

@@ -11,6 +11,8 @@
     ArrowPath,
     Sparkles,
     ChatBubbleBottomCenterText,
+    EllipsisHorizontal,
+    Plus,
   } from 'svelte-hero-icons'
   import { profile } from '$lib/auth.js'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
@@ -291,44 +293,59 @@
     bind:value={data.title}
     placeholder={placeholders.get('post')}
   />
-  <div class="flex gap-2 w-full items-end">
+  <div class="flex flex-col gap-2">
     <TextInput
       label={$t('form.post.url')}
       bind:value={data.url}
       placeholder={placeholders.get('url')}
       class="w-full"
     />
-    <Button
-      on:click={() => generateTitle(data.url)}
-      style="height: 38px; {!generation.generatable
-        ? 'width: 38px; padding: 0;'
-        : ''}"
-      class="flex-shrink-0"
-      title={$t('form.post.generateTitle')}
-      loading={generation.loading}
-      disabled={!generation.generatable || generation.loading}
-    >
-      <Icon src={Sparkles} size="18" mini slot="prefix" />
-      {#if generation.generatable}
-        {$t('form.post.generateTitle')}
+    <div class="flex items-center gap-2 actions">
+      <div
+        class="border border-slate-100 rounded-xl h-6 w-6 grid place-items-center"
+      >
+        <Icon src={Plus} size="16" micro slot="prefix" />
+      </div>
+      {#if data.url}
+        <Button
+          on:click={() => (addAltText = !addAltText)}
+          rounding="pill"
+          size="sm"
+          color="ghost"
+          class="text-xs"
+        >
+          <Icon
+            src={ChatBubbleBottomCenterText}
+            size="15"
+            micro
+            slot="prefix"
+          />{$t('form.post.altText')}
+        </Button>
       {/if}
-    </Button>
-    <Button
-      on:click={() => (addAltText = !addAltText)}
-      style="width: 38px; height: 38px; padding: 0;"
-      class="flex-shrink-0"
-      title={$t('form.post.altText')}
-    >
-      <Icon src={ChatBubbleBottomCenterText} size="18" mini slot="prefix" />
-    </Button>
-    <Button
-      on:click={() => (uploadingImage = !uploadingImage)}
-      style="width: 38px; height: 38px; padding: 0;"
-      class="flex-shrink-0"
-      title={$t('form.post.uploadImage')}
-    >
-      <Icon src={Photo} size="18" mini slot="prefix" />
-    </Button>
+      <Button
+        on:click={() => (uploadingImage = !uploadingImage)}
+        rounding="pill"
+        size="sm"
+        color="ghost"
+        class="text-xs"
+      >
+        <Icon src={Photo} size="15" micro slot="prefix" />
+        {$t('form.post.uploadImage')}
+      </Button>
+      {#if generation.generatable}
+        <Button
+          on:click={() => generateTitle(data.url)}
+          loading={generation.loading}
+          rounding="pill"
+          size="sm"
+          color="ghost"
+          class="text-xs"
+        >
+          <Icon src={Sparkles} size="15" micro slot="prefix" />
+          {$t('form.post.generateTitle')}
+        </Button>
+      {/if}
+    </div>
   </div>
   {#if addAltText}
     <div transition:slide={{ axis: 'y', duration: 150 }} class="w-full">

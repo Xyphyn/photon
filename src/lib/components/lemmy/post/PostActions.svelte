@@ -87,7 +87,7 @@
 {#if editing}
   <Modal bind:open={editing}>
     <h1 slot="title" class="text-2xl font-bold">Editing post</h1>
-    {#await import('./PostForm.svelte')}
+    {#await import('./form/PostForm.svelte')}
       <div class="mx-auto h-96 flex justify-center items-center">
         <Spinner width={32} />
       </div>
