@@ -95,6 +95,7 @@
         value: community.counts.users_active_day.toString(),
       },
     ]}
+    bio={community.community.description}
   >
     <button
       on:click={() => {
