@@ -26,6 +26,10 @@
   import { slide } from 'svelte/transition'
   import { feature } from '$lib/version'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import ErrorContainer, {
+    pushError,
+  } from '$lib/components/error/ErrorContainer.svelte'
+  import { errorMessage } from '$lib/lemmy/error'
 
   export let edit = false
 
@@ -99,9 +103,9 @@
 
   async function submit() {
     if (!data.community && !edit) {
-      toast({
-        type: 'warning',
-        content: $t('toast.needCommunity'),
+      pushError({
+        message: $t('toast.needCommunity'),
+        scope: 'post-form',
       })
       return
     }
@@ -110,9 +114,9 @@
       try {
         new URL(data.url)
       } catch (err) {
-        toast({
-          content: $t('toast.invalidURL'),
-          type: 'warning',
+        pushError({
+          message: $t('toast.invalidURL'),
+          scope: 'post-form',
         })
         return
       }
@@ -162,7 +166,7 @@
         dispatcher('submit', post.post_view)
       }
     } catch (err) {
-      toast({ content: err as any, type: 'error' })
+      pushError({ message: errorMessage(err as any), scope: 'post-form' })
       data.loading = false
     }
   }
@@ -194,8 +198,9 @@
         duration: 15 * 1000,
       })
     } catch (e) {
-      toast({
-        content: $t('toast.failGenerateTitle'),
+      pushError({
+        message: $t('toast.failGenerateTitle'),
+        scope: 'post-form',
       })
     }
     generation.loading = false
@@ -241,6 +246,7 @@
       {edit ? $t('form.post.edit') : $t('form.post.create')}
     </Header>
   </slot>
+  <ErrorContainer scope="post-form" />
   {#if !edit && data}
     {#if !data.community}
       <ObjectAutocomplete
