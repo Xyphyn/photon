@@ -129,7 +129,9 @@
           src={open ? Minus : Plus}
           size="16"
           micro
-          class="transition-transform duration-500 {open ? '' : 'rotate-90'}"
+          class="transition-transform duration-500 {open
+            ? ''
+            : 'rotate-90'} text-primary-900 dark:text-primary-100"
         />
       </div>
     </div>

@@ -41,7 +41,9 @@ export function buildCommentsTree(
       comment_view,
       children: [],
       depth: depth,
-      ui: {},
+      ui: {
+        open: true,
+      },
     }
     min_depth = Math.min(min_depth, depth)
     if (filter(comment_view)) {
