@@ -6,12 +6,7 @@
     message: string
   }
 
-  export let errors = writable<PageScopedError[]>([
-    {
-      scope: '/login',
-      message: 'AAAAAAAAAAAAAAAAA',
-    },
-  ])
+  export let errors = writable<PageScopedError[]>([])
 
   export function pushError(args: { scope: string; message: string }) {
     errors.update((e) => [...e, args])
