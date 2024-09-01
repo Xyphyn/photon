@@ -29,7 +29,7 @@
   <!-- svelte-ignore a11y-positive-tabindex -->
   <div
     class="!isolate fixed top-0 left-0 w-screen h-screen overflow-auto bg-black/50
-    flex flex-col z-[200] overscroll-contain"
+    flex flex-col z-[200] overscroll-contain backdrop-blur-sm"
     transition:fade={{ duration: 150 }}
     on:click={() => history.back()}
     on:keydown={(e) => {
