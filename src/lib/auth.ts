@@ -8,7 +8,6 @@ import { client, getClient } from '$lib/lemmy.js'
 import { site } from './lemmy'
 import { instanceToURL, moveItem } from '$lib/util.js'
 import {
-  LemmyHttp,
   type GetSiteResponse,
   type MyUserInfo,
   type Community,

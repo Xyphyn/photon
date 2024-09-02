@@ -129,7 +129,7 @@
           src={open ? Minus : Plus}
           size="16"
           micro
-          class="transition-transform duration-500 {open
+          class="transition-transform duration-[400ms] ease-out {open
             ? ''
             : 'rotate-90'} text-primary-900 dark:text-primary-100"
         />

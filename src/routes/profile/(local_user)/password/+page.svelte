@@ -86,7 +86,7 @@
       </span>
     </Material>
   </a>
-  <a href="/profile/password/logins" class="sm:col-span-1">
+  <a href="/profile/password/delete" class="sm:col-span-1">
     <Material
       class="hover:ring-red-500 dark:hover:ring-red-500 hover:ring-2 transition-all
       flex flex-col gap-2 h-full text-red-500"
