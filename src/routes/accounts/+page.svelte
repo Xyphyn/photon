@@ -9,14 +9,9 @@
     profile,
   } from '$lib/auth.js'
   import EditableList from '$lib/components/ui/list/EditableList.svelte'
-  import { Menu, MenuButton, Modal, toast } from 'mono-svelte'
+  import { Menu, MenuButton, Modal } from 'mono-svelte'
   import DebugObject from '$lib/components/util/debug/DebugObject.svelte'
-  import {
-    DEFAULT_INSTANCE_URL,
-    LINKED_INSTANCE_URL,
-    instance,
-  } from '$lib/instance.js'
-  import { validateInstance } from '$lib/lemmy.js'
+  import { DEFAULT_INSTANCE_URL, LINKED_INSTANCE_URL } from '$lib/instance.js'
   import ProfileAvatar from '$lib/lemmy/ProfileAvatar.svelte'
   import { userSettings } from '$lib/settings.js'
   import { Button, TextInput } from 'mono-svelte'
@@ -30,20 +25,17 @@
     ChevronDown,
     ChevronUp,
     EllipsisHorizontal,
-    ExclamationTriangle,
     Icon,
     Identification,
     PaintBrush,
     Plus,
-    Trash,
   } from 'svelte-hero-icons'
   import { flip } from 'svelte/animate'
-  import { expoInOut, expoOut } from 'svelte/easing'
+  import { expoOut } from 'svelte/easing'
   import { t } from '$lib/translations'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
-
-  let newInstance: string = $profileData.defaultInstance ?? DEFAULT_INSTANCE_URL
-  let loading = false
+  import FilterTabs from '$lib/components/ui/tabs/FilterTabs.svelte'
+  import { fly } from 'svelte/transition'
 
   let debugging = false
   let debugProfile: Profile | undefined = undefined
@@ -53,7 +45,7 @@
     account: undefined as Profile | undefined,
   }
 
-  let switching = -69
+  let switching = -2
 </script>
 
 <svelte:head>
@@ -136,136 +128,147 @@
 {:else}
   <div class="flex flex-col h-full gap-4">
     <div class="flex flex-row justify-between">
-      <Header>{$t('routes.accounts')}</Header>
+      <Header pageHeader>{$t('routes.accounts')}</Header>
     </div>
-    <EditableList
-      on:action={(acc) => {
-        removing.account = acc.detail
-        removing.shown = !removing.shown
-      }}
-      let:action
-    >
-      {#each $profileData.profiles as profile, index (profile.id)}
-        <div
-          class="flex flex-row gap-2 items-center py-4"
-          animate:flip={{ duration: 250, easing: expoOut }}
-        >
-          <div class="flex items-center gap-2">
-            <div class="relative group flex-col items-center">
-              <ProfileAvatar
-                {profile}
-                {index}
-                selected={$currentProfile?.id == profile.id}
-                size={24}
-              />
-              <div
-                class="absolute top-0 left-0 w-full h-full opacity-0
+    <div class="flex">
+      <div class="flex gap-2 mr-auto">
+        <Button href="/login" size="lg" class="flex-1 px-8" color="primary">
+          <Icon slot="prefix" src={ArrowLeftOnRectangle} size="16" mini />
+          {$t('account.login')}
+        </Button>
+        {#if !LINKED_INSTANCE_URL}
+          <Button href="/login/guest" size="lg">
+            <Icon slot="prefix" src={Plus} size="16" mini />
+            {$t('account.addGuest')}
+          </Button>
+        {/if}
+      </div>
+    </div>
+    <FilterTabs items={$profileData.profiles} id={(i) => i.instance} let:items>
+      <EditableList
+        on:action={(acc) => {
+          removing.account = acc.detail
+          removing.shown = !removing.shown
+        }}
+        let:action
+      >
+        {#each items as profile, index (profile.id)}
+          <div
+            class="flex flex-row gap-2 items-center py-3"
+            transition:fly={{ duration: 500, y: -12, easing: expoOut }}
+            animate:flip={{ duration: 500, easing: expoOut }}
+          >
+            <Button
+              title={profile.id == $currentProfile?.id ? 'Switch' : 'Current'}
+              on:click={async () => {
+                if (profile.id != $currentProfile?.id) {
+                  switching = profile.id
+                  await setUserID(profile.id)
+                  switching = -69
+                }
+              }}
+              size="square-md"
+              color={profile.id == $currentProfile?.id ? 'primary' : 'ghost'}
+              loading={switching == profile.id}
+              disabled={switching == profile.id}
+              rounding="pill"
+            >
+              <svelte:fragment slot="prefix">
+                {#if profile.id == $currentProfile?.id}
+                  <Icon src={Check} mini size="16" />
+                {:else}
+                  <Icon src={ArrowsRightLeft} size="16" mini />
+                {/if}
+              </svelte:fragment>
+            </Button>
+            <div class="flex items-center gap-2">
+              <div class="relative group flex-col items-center">
+                <ProfileAvatar
+                  {profile}
+                  {index}
+                  selected={$currentProfile?.id == profile.id}
+                  size={24}
+                />
+                <div
+                  class="absolute top-0 left-0 w-full h-full opacity-0
                 grid group-hover:opacity-100 z-20 place-items-center
                 bg-slate-200 dark:bg-zinc-900 border border-slate-300 dark:border-zinc-800 rounded-full
                 transition-all"
-              >
-                <Icon src={PaintBrush} mini size="14" />
+                >
+                  <Icon src={PaintBrush} mini size="14" />
+                </div>
+                <input
+                  type="color"
+                  class="opacity-0 absolute top-0 left-0 h-full w-full rounded-full cursor-pointer z-30"
+                  bind:value={profile.color}
+                />
               </div>
-              <input
-                type="color"
-                class="opacity-0 absolute top-0 left-0 h-full w-full rounded-full cursor-pointer z-30"
-                bind:value={profile.color}
-              />
+              <div class="flex flex-col">
+                <span class="font-medium">{profile.username}</span>
+                <span class="text-sm text-slate-600 dark:text-zinc-400">
+                  {profile.instance}
+                </span>
+              </div>
             </div>
-            <div class="flex flex-col">
-              <span class="font-medium">{profile.username}</span>
-              <span class="text-sm text-slate-600 dark:text-zinc-400">
-                {profile.instance}
-              </span>
-            </div>
-          </div>
-          <div class="ml-auto" />
-          <Button
-            aria-label={profile.id == $currentProfile?.id
-              ? 'Switch'
-              : 'Current'}
-            on:click={async () => {
-              if (profile.id != $currentProfile?.id) {
-                switching = profile.id
-                await setUserID(profile.id)
-                switching = -69
-              }
-            }}
-            size="square-md"
-            color={profile.id == $currentProfile?.id ? 'primary' : 'ghost'}
-            loading={switching == profile.id}
-            disabled={switching == profile.id}
-          >
-            <svelte:fragment slot="prefix">
-              {#if profile.id == $currentProfile?.id}
-                <Icon src={Check} mini size="16" />
-              {:else}
-                <Icon src={ArrowsRightLeft} size="16" mini />
-              {/if}
-            </svelte:fragment>
-          </Button>
-          <Menu placement="bottom-end">
-            <Button size="square-md" slot="target">
-              <Icon src={EllipsisHorizontal} mini size="16" slot="prefix" />
-            </Button>
-            <div class="px-4 py-2 flex items-center gap-2">
-              <Button
-                size="square-md"
-                color="secondary"
-                title={$t('account.moveUp')}
-                on:click={() => moveProfile(profile.id, true)}
-              >
-                <Icon src={ChevronUp} size="16" mini slot="prefix" />
+            <div class="ml-auto" />
+            <Menu placement="bottom-end">
+              <Button size="square-md" slot="target">
+                <Icon src={EllipsisHorizontal} mini size="16" slot="prefix" />
               </Button>
-              <Button
-                size="square-md"
-                color="secondary"
-                title={$t('account.moveDown')}
-                on:click={() => moveProfile(profile.id, false)}
-              >
-                <Icon src={ChevronDown} size="16" mini slot="prefix" />
-              </Button>
-            </div>
-            <MenuButton
-              disabled={!profile.color}
-              on:click={() => (profile.color = undefined)}
-            >
-              <Icon src={ArrowUturnLeft} size="16" mini slot="prefix" />
-              {$t('account.resetColor')}
-            </MenuButton>
-            {#if $userSettings.debugInfo}
+              <div class="px-4 py-2 flex items-center gap-2">
+                <Button
+                  size="square-md"
+                  color="secondary"
+                  title={$t('account.moveUp')}
+                  on:click={() => moveProfile(profile.id, true)}
+                >
+                  <Icon src={ChevronUp} size="16" mini slot="prefix" />
+                </Button>
+                <Button
+                  size="square-md"
+                  color="secondary"
+                  title={$t('account.moveDown')}
+                  on:click={() => moveProfile(profile.id, false)}
+                >
+                  <Icon src={ChevronDown} size="16" mini slot="prefix" />
+                </Button>
+              </div>
               <MenuButton
-                on:click={() => {
-                  debugProfile = profile
-                  debugging = !debugging
-                }}
+                disabled={!profile.color}
+                on:click={() => (profile.color = undefined)}
               >
-                <Icon src={BugAnt} size="16" mini slot="prefix" />
-                {$t('common.debug')}
+                <Icon src={ArrowUturnLeft} size="16" mini slot="prefix" />
+                {$t('account.resetColor')}
               </MenuButton>
-            {/if}
-            {#if !LINKED_INSTANCE_URL || profile.user}
-              <MenuButton on:click={() => action(profile)} color="danger-subtle">
-                <Icon slot="prefix" src={ArrowRightOnRectangle} size="16" mini />
-                {$t('account.logout')}
-              </MenuButton>
-            {/if}
-          </Menu>
-        </div>
-      {/each}
-    </EditableList>
-    <div class="mt-auto" />
-    <div class="flex items-center gap-2">
-      <Button href="/login" size="lg" class="flex-1" color="primary">
-        <Icon slot="prefix" src={ArrowLeftOnRectangle} size="16" mini />
-        {$t('account.login')}
-      </Button>
-      {#if !LINKED_INSTANCE_URL}
-        <Button href="/login/guest" size="lg">
-          <Icon slot="prefix" src={Plus} size="16" mini />
-          {$t('account.addGuest')}
-        </Button>
-      {/if}
-    </div>
+              {#if $userSettings.debugInfo}
+                <MenuButton
+                  on:click={() => {
+                    debugProfile = profile
+                    debugging = !debugging
+                  }}
+                >
+                  <Icon src={BugAnt} size="16" mini slot="prefix" />
+                  {$t('common.debug')}
+                </MenuButton>
+              {/if}
+              {#if !LINKED_INSTANCE_URL || profile.user}
+                <MenuButton
+                  on:click={() => action(profile)}
+                  color="danger-subtle"
+                >
+                  <Icon
+                    slot="prefix"
+                    src={ArrowRightOnRectangle}
+                    size="16"
+                    mini
+                  />
+                  {$t('account.logout')}
+                </MenuButton>
+              {/if}
+            </Menu>
+          </div>
+        {/each}
+      </EditableList>
+    </FilterTabs>
   </div>
 {/if}
