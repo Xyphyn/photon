@@ -50,20 +50,6 @@
         placeholder = instances?.[placeholderIndex].baseurl
         placeholderIndex++
       }, 2000)
-
-      // instances = [
-      //   {
-      //     banner: '',
-      //     baseurl: 'fart.net',
-      //     desc: 'a instance',
-      //     downvotes: false,
-      //     fed: true,
-      //     icon: '',
-      //     langs: [''],
-      //     name: 'fart',
-      //     tags: ['okay'],
-      //   },
-      // ]
     } catch (e) {
       toast({
         content: $t('toast.failFetchInstances'),
@@ -71,12 +57,6 @@
       })
     }
   })
-
-  let heights: number[] = []
-
-  const addHeight = (node: HTMLButtonElement, index: number) => {
-    heights.splice(index, 0, node.clientHeight)
-  }
 </script>
 
 <svelte:head>
@@ -84,12 +64,12 @@
 </svelte:head>
 
 <div class="mx-auto max-w-xl flex flex-col gap-4 my-auto h-max w-full">
-  <Header pageHeader>{$t('form.signup.title')}</Header>
+  <Header>{$t('form.signup.title')}</Header>
   <p>{$t('form.signup.description')}</p>
   <p>
     {$t('form.signup.info')}
   </p>
-  <Material color="distinct" class="h-64 overflow-auto">
+  <Material color="distinct" class="h-96 overflow-auto" rounding="2xl">
     <div
       class="flex flex-col h-full divide-y divide-slate-200 dark:divide-zinc-800"
     >
@@ -97,7 +77,8 @@
         {#each instances as instance}
           <button
             on:click={() => (selectedInstance = instance.baseurl ?? '')}
-            class="flex flex-row gap-2 text-left py-2 first:pt-0 last:pb-0 items-center"
+            class="flex flex-row gap-2 text-left py-2 first:pt-0 last:pb-0 items-center
+            h-16 max-h-16 min-h-16 overflow-hidden w-full"
           >
             <Avatar
               width={32}
@@ -105,11 +86,17 @@
               alt={instance.name}
               class="flex-shrink-0"
             />
-            <div class="flex flex-col">
-              <span class="font-medium text-base">
+            <div class="flex flex-col max-h-full w-full">
+              <span
+                class="font-medium text-base whitespace-nowrap overflow-ellipsis"
+              >
                 {instance.name}
               </span>
-              <span>{instance.desc}</span>
+              <span
+                class="whitespace-nowrap overflow-ellipsis overflow-hidden w-full"
+              >
+                {instance.desc}
+              </span>
             </div>
           </button>
         {/each}
