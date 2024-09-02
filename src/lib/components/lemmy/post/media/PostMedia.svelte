@@ -53,10 +53,11 @@
     >
       <!-- svelte-ignore a11y-missing-attribute -->
       <img
-        src={bestImageURL(post, false, 64)}
         loading="lazy"
-        class="-z-10 absolute top-0 left-0 w-full h-full object-cover blur-xl transition-opacity
-        {imageLoaded === false ? 'opacity-40' : 'opacity-40'}"
+        fetchpriority="auto"
+        src={bestImageURL(post, false, 64)}
+        class="-z-10 absolute top-0 left-0 w-full h-full object-cover blur-lg
+         scale-[1.2] opacity-50"
       />
       <picture class="max-h-[inherit]">
         <source
@@ -94,8 +95,7 @@
       <div
         class="absolute bottom-0 left-0 right-0 flex justify-between items-center
         rounded-full ml-auto w-max m-2 p-0 gap-1
-        *:bg-white *:border *:border-slate-200 *:dark:border-zinc-800 *:dark:bg-zinc-900
-        *:bg-opacity-70 *:backdrop-blur-md"
+        *:bg-white *:border *:border-slate-200 *:dark:border-zinc-800 *:dark:bg-zinc-900"
         on:click|stopPropagation={() => {}}
       >
         <!-- <Button
