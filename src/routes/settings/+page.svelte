@@ -32,6 +32,7 @@
     Language,
     Plus,
     Trash,
+    ArrowTopRightOnSquare,
   } from 'svelte-hero-icons'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { removalTemplate } from '$lib/components/lemmy/moderation/moderation.js'
@@ -44,8 +45,6 @@
   import { locale, locales, t } from '$lib/translations'
   import { getDefaultLinks, iconOfLink } from '$lib/components/ui/navbar/link'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
-
-  let pin: string = ''
   let importing = false
   let importText = ''
 
@@ -151,80 +150,35 @@
   </div>
 </Header>
 
-<div class="flex flex-col gap-4" style="scroll-behavior: smooth;">
-  <Section title={$t('settings.navigation.title')}>
-    <Setting>
-      <span slot="title">{$t('settings.navigation.dockPos.title')}</span>
-      <span slot="description">
-        {$t('settings.navigation.dockPos.description')}
-      </span>
-      <MultiSelect
-        options={[true, false, null]}
-        optionNames={[
-          $t('settings.navigation.dockPos.top'),
-          $t('settings.navigation.dockPos.bottom'),
-          $t('settings.navigation.dockPos.adaptive'),
-        ]}
-        bind:selected={$userSettings.dock.top}
-      />
-    </Setting>
-    <Setting>
-      <span slot="title">{$t('settings.navigation.panel.title')}</span>
-      <span slot="description">
-        {$t('settings.navigation.panel.description')}
-      </span>
-      <MultiSelect
-        options={[true, false, null]}
-        optionNames={[
-          $t('settings.navigation.panel.on'),
-          $t('settings.navigation.panel.off'),
-          $t('settings.navigation.panel.adaptive'),
-        ]}
-        bind:selected={$userSettings.dock.noGap}
-      />
-    </Setting>
-    <Setting
-      supportedPlatforms={{ desktop: true, tablet: true, mobile: false }}
-    >
-      <span slot="title">{$t('settings.navigation.pins.title')}</span>
-      <span slot="description">
-        {$t('settings.navigation.pins.description')}
-      </span>
-      <div class="flex items-center gap-1 flex-wrap">
-        {#each getDefaultLinks() as pin}
-          <Popover openOnHover placement="bottom">
-            <Button
-              size="square-md"
-              slot="target"
-              disabled={$userSettings.dock.pins
-                ?.map((p) => p.url)
-                ?.includes(pin.url)}
-              on:click={() => {
-                $userSettings.dock.pins = [
-                  ...($userSettings.dock.pins ?? []),
-                  pin,
-                ]
-              }}
-            >
-              <Icon src={iconOfLink(pin.url)} mini size="16" />
-            </Button>
-            <Material
-              slot="popover"
-              padding="none"
-              class="px-4 py-2 flex flex-col"
-            >
-              <span class="font-medum text-base">{pin.label}</span>
-              <code class="bg-slate-50 dark:!bg-zinc-950 !rounded-md">
-                {pin.url}
-              </code>
-            </Material>
-          </Popover>
-        {/each}
-      </div>
-    </Setting>
-  </Section>
+<div class="flex items-center gap-2 flex-wrap w-full mt-5">
+  <Button href="#app" size="sm" class="text-xs" rounding="pill">
+    <Icon src={ArrowTopRightOnSquare} size="14" micro />
+    {$t('settings.app.title')}
+  </Button>
+  <Button href="#nav" size="sm" class="text-xs" rounding="pill">
+    <Icon src={ArrowTopRightOnSquare} size="14" micro />
+    {$t('settings.navigation.title')}
+  </Button>
+  <Button href="#embeds" size="sm" class="text-xs" rounding="pill">
+    <Icon src={ArrowTopRightOnSquare} size="14" micro />
+    {$t('settings.embeds.title')}
+  </Button>
+  <Button href="#lemmy" size="sm" class="text-xs" rounding="pill">
+    <Icon src={ArrowTopRightOnSquare} size="14" micro />
+    {$t('settings.lemmy.title')}
+  </Button>
+  <Button href="#moderation" size="sm" class="text-xs" rounding="pill">
+    <Icon src={ArrowTopRightOnSquare} size="14" micro />
+    {$t('settings.moderation.title')}
+  </Button>
+  <Button href="#other" size="sm" class="text-xs" rounding="pill">
+    <Icon src={ArrowTopRightOnSquare} size="14" micro />
+    {$t('settings.other.title')}
+  </Button>
+</div>
 
-  <Section title={$t('settings.app.title')}>
+<div class="flex flex-col gap-4" style="scroll-behavior: smooth;">
+  <Section id="app" title={$t('settings.app.title')}>
     <div class="flex flex-col gap-2">
       <Setting>
         <span slot="title" class="inline-flex items-center gap-2">
@@ -285,10 +239,16 @@
         {/if}
       </p>
     </Setting>
-    <Setting optionClass="flex-[2] max-w-full flex-wrap min-w-0">
+    <Setting
+      optionClass="flex-[2] max-w-full flex-wrap min-w-0 "
+      itemsClass="flex-col !items-start lg:!items-center lg:flex-row"
+    >
       <span slot="title">{$t('settings.app.sort.title')}</span>
       <span slot="description">{$t('settings.app.sort.description')}</span>
-      <div class="flex max-[500px]:flex-col flex-wrap gap-2 w-max max-w-full">
+      <div
+        class="flex flex-row flex-wrap
+          flex-1 gap-2 w-full lg:w-max max-w-full lg:self-end"
+      >
         <div class="max-w-full">
           <Select bind:value={$userSettings.defaultSort.feed}>
             <span slot="label" class="flex items-center gap-1">
@@ -300,7 +260,9 @@
             <option value="Subscribed">
               {$t('filter.location.subscribed')}
             </option>
-            <option value="Moderator">{$t('filter.location.moderator')}</option>
+            <option value="Moderator">
+              {$t('filter.location.moderator')}
+            </option>
           </Select>
         </div>
         <div class="max-w-full">
@@ -428,8 +390,79 @@
       </Setting>
     </div>
   </Section>
+  <Section id="nav" title={$t('settings.navigation.title')}>
+    <Setting>
+      <span slot="title">{$t('settings.navigation.dockPos.title')}</span>
+      <span slot="description">
+        {$t('settings.navigation.dockPos.description')}
+      </span>
+      <MultiSelect
+        options={[true, false, null]}
+        optionNames={[
+          $t('settings.navigation.dockPos.top'),
+          $t('settings.navigation.dockPos.bottom'),
+          $t('settings.navigation.dockPos.adaptive'),
+        ]}
+        bind:selected={$userSettings.dock.top}
+      />
+    </Setting>
+    <Setting>
+      <span slot="title">{$t('settings.navigation.panel.title')}</span>
+      <span slot="description">
+        {$t('settings.navigation.panel.description')}
+      </span>
+      <MultiSelect
+        options={[true, false, null]}
+        optionNames={[
+          $t('settings.navigation.panel.on'),
+          $t('settings.navigation.panel.off'),
+          $t('settings.navigation.panel.adaptive'),
+        ]}
+        bind:selected={$userSettings.dock.noGap}
+      />
+    </Setting>
+    <Setting
+      supportedPlatforms={{ desktop: true, tablet: true, mobile: false }}
+    >
+      <span slot="title">{$t('settings.navigation.pins.title')}</span>
+      <span slot="description">
+        {$t('settings.navigation.pins.description')}
+      </span>
+      <div class="flex items-center gap-1 flex-wrap">
+        {#each getDefaultLinks() as pin}
+          <Popover openOnHover placement="bottom">
+            <Button
+              size="square-md"
+              slot="target"
+              disabled={$userSettings.dock.pins
+                ?.map((p) => p.url)
+                ?.includes(pin.url)}
+              on:click={() => {
+                $userSettings.dock.pins = [
+                  ...($userSettings.dock.pins ?? []),
+                  pin,
+                ]
+              }}
+            >
+              <Icon src={iconOfLink(pin.url)} mini size="16" />
+            </Button>
+            <Material
+              slot="popover"
+              padding="none"
+              class="px-4 py-2 flex flex-col"
+            >
+              <span class="font-medum text-base">{pin.label}</span>
+              <code class="bg-slate-50 dark:!bg-zinc-950 !rounded-md">
+                {pin.url}
+              </code>
+            </Material>
+          </Popover>
+        {/each}
+      </div>
+    </Setting>
+  </Section>
 
-  <Section title={$t('settings.embeds.title')}>
+  <Section id="embeds" title={$t('settings.embeds.title')}>
     <ToggleSetting
       title={$t('settings.embeds.clickToView.title')}
       description={$t('settings.embeds.clickToView.description')}
@@ -474,7 +507,7 @@
     {/if}
   </Section>
 
-  <Section title={$t('settings.lemmy.title')}>
+  <Section id="lemmy" title={$t('settings.lemmy.title')}>
     <ToggleSetting
       bind:checked={$userSettings.posts.showHidden}
       title={$t('settings.lemmy.showHiddenPosts.title')}
@@ -543,7 +576,7 @@
     />
   </Section>
 
-  <Section title={$t('settings.moderation.title')}>
+  <Section id="moderation" title={$t('settings.moderation.title')}>
     <Setting itemsClass="!flex-col !items-start">
       <span slot="title">{$t('settings.moderation.replyPresets.title')}</span>
       <span slot="description">
@@ -635,7 +668,7 @@
     </Setting>
   </Section>
 
-  <Section title={$t('settings.other.title')}>
+  <Section id="other" title={$t('settings.other.title')}>
     <ToggleSetting
       bind:checked={$userSettings.debugInfo}
       title={$t('settings.other.debug.title')}

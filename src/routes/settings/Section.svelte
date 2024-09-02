@@ -1,13 +1,11 @@
 <script lang="ts">
-  import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
-
   export let title: string
+  export let id: string
 </script>
 
 <div
-  class="flex flex-col min-w-0 divide-y divide-slate-200 dark:divide-zinc-800
-[&>*]:py-4 max-w-full w-full"
+  class="flex flex-col min-w-0 divide-y divide-slate-200 dark:divide-zinc-800 *:py-3.5 max-w-full w-full"
 >
-  <SectionTitle class="text-xl text-inherit">{title}</SectionTitle>
+  <h2 class="text-xl font-semibold text-inherit" {id}>{title}</h2>
   <slot />
 </div>
