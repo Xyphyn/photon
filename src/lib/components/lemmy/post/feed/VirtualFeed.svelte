@@ -117,63 +117,63 @@
     }
   }
 
-  const callback: IntersectionObserverCallback = (entries, observer) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) return
+  // const callback: IntersectionObserverCallback = (entries, observer) => {
+  //   entries.forEach((entry) => {
+  //     if (!entry.isIntersecting) return
 
-      const element = entry.target as HTMLElement
-      const id = element.getAttribute('data-index')
+  //     const element = entry.target as HTMLElement
+  //     const id = element.getAttribute('data-index')
 
-      if (!id) return
+  //     if (!id) return
 
-      postFeeds.updateFeed(feedId, {
-        lastSeen: Number(id),
-      })
-      observer.unobserve(element)
-    })
-  }
+  //     postFeeds.updateFeed(feedId, {
+  //       lastSeen: Number(id),
+  //     })
+  //     observer.unobserve(element)
+  //   })
+  // }
 
-  onMount(() => {
-    const observer = new IntersectionObserver(callback, {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.5,
-    })
+  // onMount(() => {
+  //   const observer = new IntersectionObserver(callback, {
+  //     root: null,
+  //     rootMargin: '0px',
+  //     threshold: 0.5,
+  //   })
 
-    const elements = document.querySelectorAll('.post-container')
-    elements.forEach((el) => observer.observe(el))
+  //   const elements = document.querySelectorAll('.post-container')
+  //   elements.forEach((el) => observer.observe(el))
 
-    const postContainer = document.querySelector('#feed')
-    if (postContainer) {
-      const mutationObserver = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-          if (mutation.type === 'childList') {
-            mutation.addedNodes.forEach((node) => {
-              if (
-                node instanceof HTMLElement &&
-                node.classList.contains('post-container')
-              ) {
-                observer.observe(node)
-              }
-            })
-            mutation.removedNodes.forEach((node) => {
-              if (
-                node instanceof HTMLElement &&
-                node.classList.contains('post-container')
-              ) {
-                observer.unobserve(node)
-              }
-            })
-          }
-        })
-      })
+  //   const postContainer = document.querySelector('#feed')
+  //   if (postContainer) {
+  //     const mutationObserver = new MutationObserver((mutations) => {
+  //       mutations.forEach((mutation) => {
+  //         if (mutation.type === 'childList') {
+  //           mutation.addedNodes.forEach((node) => {
+  //             if (
+  //               node instanceof HTMLElement &&
+  //               node.classList.contains('post-container')
+  //             ) {
+  //               observer.observe(node)
+  //             }
+  //           })
+  //           mutation.removedNodes.forEach((node) => {
+  //             if (
+  //               node instanceof HTMLElement &&
+  //               node.classList.contains('post-container')
+  //             ) {
+  //               observer.unobserve(node)
+  //             }
+  //           })
+  //         }
+  //       })
+  //     })
 
-      mutationObserver.observe(postContainer, {
-        childList: true,
-        subtree: true,
-      })
-    }
-  })
+  //     mutationObserver.observe(postContainer, {
+  //       childList: true,
+  //       subtree: true,
+  //     })
+  //   }
+  // })
 
   onMount(async () => {
     await tick()
