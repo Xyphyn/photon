@@ -8,6 +8,12 @@
     name: string
   }[]
   export let currentRoute: string | undefined = undefined
+  export let isSelected: (
+    url: URL,
+    currentRoute: string | undefined,
+    route: string
+  ) => boolean = (url, currentRoute, route) =>
+    (currentRoute ?? url.pathname) == route
 </script>
 
 <nav
@@ -24,7 +30,7 @@
       transition-colors duration-100 relative z-0"
     >
       {route.name}
-      {#if (currentRoute ?? $page.url.pathname) == route.href}
+      {#if isSelected($page.url, currentRoute, route.href)}
         <div
           class="rounded-full bg-slate-100/60 dark:bg-zinc-700/60
           absolute inset-0 w-full h-full -z-10"

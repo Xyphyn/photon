@@ -153,10 +153,15 @@
   {/if}
 </ul>
 {#if data.communities.length > 0}
-  <div class="mt-2 w-full">
-    <Pageination
-      page={Number($page.url.searchParams.get('page')) || 1}
-      on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
-    />
+  <div
+    class="sticky z-30 mx-auto max-w-full"
+    style="bottom: max(1.5rem, {$contentPadding.bottom}px);"
+  >
+    <Tabs routes={[]} class="mx-auto">
+      <Pageination
+        page={Number($page.url.searchParams.get('page')) || 1}
+        on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
+      />
+    </Tabs>
   </div>
 {/if}

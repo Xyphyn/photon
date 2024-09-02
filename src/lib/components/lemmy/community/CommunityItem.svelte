@@ -52,6 +52,7 @@
         community.community.actor_id
       )}"
       class="flex-1"
+      data-sveltekit-preload-data="tap"
     >
       <div
         class="flex {view == 'cozy'
