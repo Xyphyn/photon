@@ -82,7 +82,7 @@
 <div class="mt-4" />
 
 <div
-  class="mt-4 mb-0 sticky z-30 mx-auto max-w-full overflow-hidden"
+  class="mt-4 mb-0 sticky z-30 mx-auto max-w-full"
   style="top: max(1.5rem, {$contentPadding.top}px);"
 >
   <Tabs
@@ -140,11 +140,19 @@
         <InboxItem {item} />
       </div>
     {/each}
-    <div class="ml-auto mt-auto">
-      <Pageination
-        page={data.page}
-        on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
-      />
+  {/if}
+  {#if !(data.page == 1 && (data?.data?.length ?? 0) == 0)}
+    <div
+      class="sticky z-30 mx-auto max-w-full"
+      style="bottom: max(1.5rem, {$contentPadding.bottom}px);"
+    >
+      <Tabs routes={[]} class="mx-auto">
+        <Pageination
+          hasMore={!(!data.data || (data.data?.length ?? 0) == 0)}
+          page={data.page}
+          on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
+        />
+      </Tabs>
     </div>
   {/if}
 </div>

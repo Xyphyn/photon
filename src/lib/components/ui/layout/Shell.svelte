@@ -38,21 +38,27 @@
     content: boolean
   ): {
     top: number
+    bottom: number
     class: string
   } => {
     if (panel) {
       if (top) {
-        if (content) return { top: 80, class: '!pt-20' }
-        else return { top: 64, class: 'top-16 !max-h-[calc(100vh-4rem)]' }
-      } else return { top: 0, class: '!pb-20' }
+        if (content) return { top: 80, class: '!pt-20', bottom: 0 }
+        else
+          return {
+            top: 64,
+            class: 'top-16 !max-h-[calc(100vh-4rem)]',
+            bottom: 0,
+          }
+      } else return { top: 0, class: '!pb-20', bottom: 80 }
     } else {
-      if (!content) return { top: 0, class: '' }
+      if (!content) return { top: 0, class: '', bottom: 0 }
 
-      if (top) return { top: 96, class: '!pt-24' }
-      else return { top: 0, class: '!pb-24' }
+      if (top) return { top: 96, class: '!pt-24', bottom: 0 }
+      else return { top: 0, class: '!pb-24', bottom: 96 }
     }
 
-    return { top: 0, class: ' failed-to-calculate' }
+    return { top: 0, class: ' failed-to-calculate', bottom: 0 }
   }
 
   export let screenWidth = writable(1000)

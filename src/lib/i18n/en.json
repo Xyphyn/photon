@@ -833,5 +833,11 @@
         "captcha_failed": "Incorrect CAPTCHA answer.",
         "cant_block_local_instance": "You can't block the instance you are actively using.",
         "invalid_vote_value": "You can't commit voter fraud on Lemmy posts, sorry."
+    },
+    "aria": {
+        "pagination": {
+            "nav": "Pagination",
+            "current": "Current page"
+        }
     }
 }
