@@ -56,38 +56,49 @@
 
 <div class="flex flex-col gap-4 h-full">
   <Header pageHeader>{$t('routes.theme.title')}</Header>
-  <div
-    class="grid grid-cols-1 min-[512px]:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4
-    gap-4 overflow-auto max-h-72"
+  <h3
+    class="relative top-[26px] z-10 left-6 font-medium text-sm bg-slate-25 dark:bg-zinc-925 w-max px-1"
   >
-    {#each $themeData.themes as theme}
-      <ThemePreset bind:theme />
-    {/each}
-    <button
-      on:click={() => {
-        const newTheme = {
-          id: Math.max(...$themeData.themes.map((t) => t.id)) + 1,
-          colors: getDefaultColors(),
-          name: $t('routes.theme.preset.new'),
-        }
-
-        $themeData.themes = [...$themeData.themes, newTheme]
-
-        $themeData.currentTheme = newTheme.id
-      }}
+    {$t('routes.theme.preset.presets')}
+  </h3>
+  <Material
+    color="transparent"
+    rounding="2xl"
+    class="overflow-auto max-h-96 relative @container"
+  >
+    <div
+      class="grid grid-cols-1 @md:grid-cols-2 @xl:grid-cols-3 @3xl:grid-cols-4
+    gap-2"
     >
-      <Material
-        color="none"
-        padding="sm"
-        class="border-dashed border-2 border-slate-400 dark:border-zinc-600
+      {#each $themeData.themes as theme}
+        <ThemePreset bind:theme />
+      {/each}
+      <button
+        on:click={() => {
+          const newTheme = {
+            id: Math.max(...$themeData.themes.map((t) => t.id)) + 1,
+            colors: getDefaultColors(),
+            name: $t('routes.theme.preset.new'),
+          }
+
+          $themeData.themes = [...$themeData.themes, newTheme]
+
+          $themeData.currentTheme = newTheme.id
+        }}
+      >
+        <Material
+          color="none"
+          padding="sm"
+          class="border-dashed border-2 border-slate-400 dark:border-zinc-600
         text-slate-400 dark:text-zinc-600 hover:border-slate-600 dark:hover:border-zinc-400
         grid place-items-center w-14 h-14"
-        rounding="xl"
-      >
-        <Icon src={Plus} size="28" />
-      </Material>
-    </button>
-  </div>
+          rounding="xl"
+        >
+          <Icon src={Plus} size="28" />
+        </Material>
+      </button>
+    </div>
+  </Material>
   <div class="flex items-center gap-4">
     <Button
       on:click={() => {

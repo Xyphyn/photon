@@ -15,6 +15,7 @@
     class="{theme.id == $themeData.currentTheme
       ? 'ring-2 ring-inset ring-primary-900 dark:ring-primary-100'
       : ''} flex relative cursor-pointer h-full flex-col text-left p-0.5"
+    rounding="xl"
   >
     <div
       style="{calculateVars(theme)};"
@@ -67,7 +68,7 @@
                   type: 'secondary',
                   content: $t('common.cancel'),
                 }),
-                {
+                action({
                   close: true,
                   content: $t('routes.theme.preset.delete.confirm'),
                   type: 'danger',
@@ -81,7 +82,7 @@
                       $themeData.currentTheme = 0
                     }
                   },
-                },
+                }),
               ],
               type: 'error',
               body: '',

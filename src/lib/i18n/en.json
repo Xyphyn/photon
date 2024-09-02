@@ -388,7 +388,8 @@
                 "default": "Default",
                 "classic": "Classic",
                 "imported": "Your Theme",
-                "new": "New Theme"
+                "new": "New Theme",
+                "presets": "Presets"
             }
         },
         "community": {
