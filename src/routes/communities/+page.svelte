@@ -68,7 +68,7 @@
   class="mt-4 mb-0 sticky z-30"
   style="top: max(1.5rem, {$contentPadding.top}px);"
 >
-  <Tabs routes={[]} class="p-2 dark:bg-zinc-925/70">
+  <Tabs routes={[]} class="p-2 dark:bg-zinc-925/70 shadow-md shadow-black/5">
     <form
       on:submit|preventDefault={() =>
         searchParam($page.url, 'q', search, 'page')}

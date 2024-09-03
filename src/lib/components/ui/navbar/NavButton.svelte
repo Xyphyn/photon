@@ -18,7 +18,7 @@
 </script>
 
 <Button
-  color={isPanel ? 'tertiary' : 'tertiary'}
+  color={isPanel ? 'secondary' : 'tertiary'}
   {...$$restProps}
   on:click
   on:contextmenu
