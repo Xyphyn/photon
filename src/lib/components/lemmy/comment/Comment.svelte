@@ -123,7 +123,8 @@
         class="h-full flex items-center justify-center gap-1 ml-auto w-max mr-2"
       >
         {#if node.children.length > 0}
-          <FormattedNumber number={node.children.length}></FormattedNumber>
+          <FormattedNumber number={node.comment_view.counts.child_count}
+          ></FormattedNumber>
         {/if}
         <Icon
           src={open ? Minus : Plus}

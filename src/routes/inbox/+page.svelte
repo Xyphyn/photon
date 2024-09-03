@@ -127,7 +127,7 @@
     <option value="true">{$t('filter.unread')}</option>
   </Select>
 </div>
-<div class="flex flex-col gap-4 list-none flex-1 h-full justify-center mt-4">
+<div class="flex flex-col gap-4 list-none flex-1 h-full mt-4">
   {#if !data.data || (data.data?.length ?? 0) == 0}
     <Placeholder
       icon={Inbox}
@@ -143,12 +143,12 @@
   {/if}
   {#if !(data.page == 1 && (data?.data?.length ?? 0) == 0)}
     <div
-      class="sticky z-30 mx-auto max-w-full"
+      class="sticky z-30 mx-auto max-w-full self-end mt-auto"
       style="bottom: max(1.5rem, {$contentPadding.bottom}px);"
     >
       <Tabs routes={[]} class="mx-auto">
         <Pageination
-          hasMore={!(!data.data || (data.data?.length ?? 0) == 0)}
+          hasMore={!(!data.data || (data.data?.length ?? 0) < data.limit)}
           page={data.page}
           on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
         />

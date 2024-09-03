@@ -38,7 +38,7 @@
     title={$t('common.back')}
     size="square-md"
     rounding="pill"
-    class="text-inherit dark:text-inherit"
+    class="text-inherit dark:text-inherit disabled:!opacity-20 disabled:!bg-transparent"
     disabled={(!cursor?.back && cursor?.next) || page <= 1}
   >
     <Icon src={ChevronLeft} size="24" mini slot="suffix" />

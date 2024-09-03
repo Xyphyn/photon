@@ -58,5 +58,11 @@ export async function load({ url, fetch }) {
       publishedToDate(a.published).getTime()
   )
 
-  return { unreadOnly: unreadOnly, type: type, page: page, data: data }
+  return {
+    unreadOnly: unreadOnly,
+    type: type,
+    page: page,
+    data: data,
+    limit: 20,
+  }
 }
