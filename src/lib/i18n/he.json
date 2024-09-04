@@ -294,7 +294,7 @@
             "resolve": "פתירה",
             "unresolve": "הסרת פתירה",
             "resolved": "פתור",
-            "resolvedBy": "נפתר על ידי"
+            "resolvedBy": "פתור על ידי"
         },
         "theme": {
             "preset": {
