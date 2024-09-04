@@ -31,7 +31,7 @@
   - A media item (pictures, videos) (large form factor posts only)
   - Embed link/card.
 -->
-{#if type == 'image'}
+{#if type == 'image' && (view == 'cozy' || view == 'card')}
   <PostImage {post} {blur} />
 {:else if (type == 'iframe' || type == 'video') && (view == 'cozy' || view == 'card') && post.url}
   <PostIframe
