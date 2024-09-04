@@ -64,6 +64,8 @@
       ? ''
       : '!text-inherit'} !text-inherit divide-x divide-slate-200 dark:divide-zinc-800
     {loading ? 'animate-pulse opacity-75 pointer-events-none' : ''}"
+    role="group"
+    aria-label={$t('aria.vote.group')}
   >
     <button
       on:click={() => castVote(vote == 1 ? 0 : 1)}
@@ -71,6 +73,8 @@
       {vote == 1
         ? shouldShowVoteColor(vote, 'upvotes')
         : 'hover:bg-slate-100 hover:dark:bg-zinc-800'}"
+      aria-pressed={vote == 1}
+      aria-label={$t('post.actions.vote.upvote')}
     >
       <Icon src={ChevronUp} size="20" micro />
       <span class="grid text-sm">
@@ -79,6 +83,7 @@
             style="grid-column: 1; grid-row: 1;"
             in:fly={{ duration: 400, y: -10, easing: backOut }}
             out:fly={{ duration: 400, y: 10, easing: backOut }}
+            aria-label={$t('aria.vote.upvotes', { default: upvotes })}
           >
             <FormattedNumber number={upvotes} />
           </span>
@@ -92,6 +97,8 @@
       {vote == -1
           ? shouldShowVoteColor(vote, 'downvotes')
           : 'hover:bg-slate-100 hover:dark:bg-zinc-800'}"
+        aria-pressed={vote == -1}
+        aria-label={$t('post.actions.vote.downvote')}
       >
         <Icon src={ChevronDown} size="20" micro />
         <span class="grid text-sm">
@@ -100,6 +107,7 @@
               style="grid-column: 1; grid-row: 1;"
               in:fly={{ duration: 400, y: -10, easing: backOut }}
               out:fly={{ duration: 400, y: 10, easing: backOut }}
+              aria-label={$t('aria.vote.downvotes', { default: downvotes })}
             >
               <FormattedNumber number={downvotes} />
             </span>

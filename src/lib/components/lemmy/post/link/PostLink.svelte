@@ -30,12 +30,12 @@
 -->
 {#if embed_title && view != 'compact'}
   <Material
-    style="--img-url: {thumbnail_url}"
     color="distinct"
     class="flex flex-col-reverse sm:flex-row
     overflow-hidden gap-4 embed-card z-0 relative
     dark:border-t-zinc-800 border-opacity-80"
     rounding="xl"
+    element="article"
   >
     {#if thumbnail_url}
       <img
@@ -187,16 +187,4 @@
       {/if}
     </Button>
   </div>
-  {#if thumbnail_url && view != 'compact'}
-    <a href={url} target="_blank">
-      <img
-        src={optimizeImageURL(thumbnail_url, 256)}
-        class="rounded-md max-w-72 w-full h-auto aspect-video object-cover bg-slate-200 dark:bg-zinc-800"
-        width={600}
-        height={400}
-        alt={embed_title ?? 'Embed prevented alt text'}
-        class:blur-3xl={nsfw}
-      />
-    </a>
-  {/if}
 {/if}

@@ -116,7 +116,7 @@
   {/await}
 {/if}
 
-<div
+<footer
   class="flex flex-row gap-2 items-center flex-shrink-0 {buttonHeight}"
   style={$$props.style ?? ''}
 >
@@ -398,4 +398,4 @@
       {/if}
     {/if}
   </Menu>
-</div>
+</footer>

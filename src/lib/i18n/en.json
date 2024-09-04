@@ -472,6 +472,10 @@
             "link": {
                 "title": "Alternative Links",
                 "actions": "Link Actions"
+            },
+            "vote": {
+                "upvote": "Upvote",
+                "downvote": "Downvote"
             }
         },
         "badges": {
@@ -839,6 +843,11 @@
         "pagination": {
             "nav": "Pagination",
             "current": "Current page"
+        },
+        "vote": {
+            "group": "Post voting controls",
+            "upvotes": "{{default}} upvotes",
+            "downvotes": "{{default}} downvotes"
         }
     }
 }

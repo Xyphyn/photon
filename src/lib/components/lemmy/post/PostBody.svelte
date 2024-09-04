@@ -7,6 +7,10 @@
   export let body: string
   export let view: View = 'cozy'
   export let clickThrough = false
+  let htmlElement = 'div'
+
+  export { htmlElement as element }
+
   let expanded = false
   let element: Element
 
@@ -25,7 +29,8 @@
   $: overflows = isOverflown(element, body)
 </script>
 
-<div
+<svelte:element
+  this={htmlElement}
   style={$$props.style ?? ''}
   class="{!expanded
     ? `text-sm overflow-hidden
@@ -55,4 +60,4 @@ ${view == 'list' ? `max-h-24` : 'max-h-48'}`
       />
     </Button>
   {/if}
-</div>
+</svelte:element>

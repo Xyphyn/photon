@@ -105,7 +105,7 @@
   @component
   This component will build two different things: a post's meta block and the title.
 -->
-<div
+<header
   class="grid w-full meta {community
     ? 'grid-rows-2'
     : 'grid-rows-1'} text-xs min-w-0 max-w-full"
@@ -124,7 +124,7 @@
       >
         <Avatar
           url={community.icon}
-          width={28}
+          width={32}
           alt={community.name}
           style="grid-area: avatar; height: 100%;"
           class="flex-shrink-0"
@@ -159,16 +159,18 @@
     style="grid-area: stats;"
   >
     {#if user}
-      <UserLink avatarSize={20} {user} avatar={!showCommunity}>
-        <svelte:fragment slot="badges">
-          {#if badges.moderator}
-            <ShieldIcon filled width={14} class="text-green-500" />
-          {/if}
-          {#if badges.admin}
-            <ShieldIcon filled width={14} class="text-red-500" />
-          {/if}
-        </svelte:fragment>
-      </UserLink>
+      <address>
+        <UserLink avatarSize={20} {user} avatar={!showCommunity}>
+          <svelte:fragment slot="badges">
+            {#if badges.moderator}
+              <ShieldIcon filled width={14} class="text-green-500" />
+            {/if}
+            {#if badges.admin}
+              <ShieldIcon filled width={14} class="text-red-500" />
+            {/if}
+          </svelte:fragment>
+        </UserLink>
+      </address>
     {/if}
     {#if published}
       <RelativeDate date={published} class="flex-shrink-0" />
@@ -251,7 +253,7 @@
     {/if}
     <slot name="badges" />
   </div>
-</div>
+</header>
 {#if title && id}
   <a
     href="/post/{getInstance()}/{id}"

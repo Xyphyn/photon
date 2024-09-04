@@ -13,16 +13,21 @@
   export let width: number
   export let res: number | undefined = undefined
 
-  const optimizeUrl = (url: string | undefined): string | undefined => {
+  const optimizeUrl = (
+    url: string | undefined,
+    res: number
+  ): string | undefined => {
     if (url === undefined) return
 
     try {
       const urlObj = new URL(url)
       urlObj.searchParams.append('format', 'webp')
-      urlObj.searchParams.append(
-        'thumbnail',
-        findClosestNumber(sizes, (res || width) * 1.5).toString()
-      )
+      if (res > -1) {
+        urlObj.searchParams.append(
+          'thumbnail',
+          findClosestNumber(sizes, res).toString()
+        )
+      }
 
       return urlObj.toString()
     } catch (e) {
@@ -30,13 +35,16 @@
     }
   }
 
-  $: optimizedURL = optimizeUrl(url)
+  $: optimizedURLs = [2, 3, 6, -1].map((n) =>
+    optimizeUrl(url, (res || width) * n)
+  )
 </script>
 
-{#if optimizedURL}
+{#if optimizedURLs}
   <img
     loading="lazy"
-    src={optimizedURL}
+    srcset="{optimizedURLs[0]} 1x, {optimizedURLs[1]} 2x, {optimizedURLs[2]} 4x, {optimizedURLs[3]} 6x"
+    src={optimizedURLs[0]}
     {alt}
     {width}
     {title}

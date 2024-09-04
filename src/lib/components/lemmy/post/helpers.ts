@@ -12,19 +12,8 @@ export const bestImageURL = (
   compact: boolean = true,
   width: number = 1024
 ) => {
-  let fetchWidth =
-    width > 1024
-      ? // -1 disables a small thumbnail
-        -1
-      : // set width to 512 if compact
-      compact
-      ? 512
-      : // otherwise, just use the original width
-        width
-
-  if (post.thumbnail_url)
-    return optimizeImageURL(post.thumbnail_url, fetchWidth)
-  else if (post.url) return optimizeImageURL(post.url, fetchWidth)
+  if (post.thumbnail_url) return optimizeImageURL(post.thumbnail_url, width)
+  else if (post.url) return optimizeImageURL(post.url, width)
 
   return post.url ?? ''
 }

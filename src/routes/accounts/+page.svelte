@@ -127,23 +127,23 @@
   </div>
 {:else}
   <div class="flex flex-col h-full gap-4">
-    <div class="flex flex-row justify-between">
-      <Header pageHeader>{$t('routes.accounts')}</Header>
-    </div>
-    <div class="flex">
-      <div class="flex gap-2 mr-auto">
-        <Button href="/login" size="lg" class="flex-1 px-8" color="primary">
-          <Icon slot="prefix" src={ArrowLeftOnRectangle} size="16" mini />
-          {$t('account.login')}
-        </Button>
-        {#if !LINKED_INSTANCE_URL}
-          <Button href="/login/guest" size="lg">
-            <Icon slot="prefix" src={Plus} size="16" mini />
-            {$t('account.addGuest')}
+    <Header pageHeader>
+      {$t('routes.accounts')}
+      <div class="flex" slot="extended">
+        <div class="flex gap-2 mr-auto">
+          <Button href="/login" size="lg" class="flex-1 px-8" color="primary">
+            <Icon slot="prefix" src={ArrowLeftOnRectangle} size="16" mini />
+            {$t('account.login')}
           </Button>
-        {/if}
+          {#if !LINKED_INSTANCE_URL}
+            <Button href="/login/guest" size="lg">
+              <Icon slot="prefix" src={Plus} size="16" mini />
+              {$t('account.addGuest')}
+            </Button>
+          {/if}
+        </div>
       </div>
-    </div>
+    </Header>
     <FilterTabs items={$profileData.profiles} id={(i) => i.instance} let:items>
       <EditableList
         on:action={(acc) => {

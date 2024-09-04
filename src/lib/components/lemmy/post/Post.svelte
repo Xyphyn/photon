@@ -83,6 +83,7 @@
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <Material
+  element="article"
   color={view != 'card' ? 'none' : 'distinct'}
   class="post relative max-w-full min-w-0 w-full cursor-pointer outline-none group
   {view != 'card' ? 'bg-transparent !border-0' : 'p-5'} {view == 'compact'
@@ -160,7 +161,12 @@
     {/if}
   {/key}
   {#if post.post.body && !post.post.nsfw && view != 'compact' && !hideBody && rule != 'hide'}
-    <PostBody body={post.post.body} {view} style="grid-area: body" />
+    <PostBody
+      element="section"
+      body={post.post.body}
+      {view}
+      style="grid-area: body"
+    />
   {/if}
   {#if actions}
     <PostActions on:hide bind:post style="grid-area: actions;" {view} />
