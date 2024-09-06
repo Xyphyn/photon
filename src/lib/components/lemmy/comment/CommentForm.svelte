@@ -9,6 +9,7 @@
   import { placeholders } from '$lib/util.js'
   import { Button } from 'mono-svelte'
   import { t } from '$lib/translations'
+  import { errorMessage } from '$lib/lemmy/error'
 
   export let postId: number
   export let parentId: number | undefined = undefined
@@ -20,6 +21,7 @@
   const dispatch = createEventDispatcher<{
     comment: CommentResponse
     confirm: string
+    cancel: boolean
   }>()
 
   export let value = ''
@@ -48,7 +50,7 @@
     } catch (err) {
       console.error(err)
       toast({
-        content: err as any,
+        content: errorMessage(err as any),
         type: 'error',
       })
     }
@@ -73,7 +75,7 @@
         ? $t('comment.locked')
         : banned
           ? $t('comment.banned')
-          : placeholder ?? placeholders.get('comment')}
+          : (placeholder ?? placeholders.get('comment'))}
       bind:value
       disabled={locked || loading || banned}
       on:confirm={() => {
@@ -85,20 +87,26 @@
       on:focus
       previewButton={previewAction}
     >
+      <div class="flex-1" />
       {#if actions}
-        <div class="ml-auto">
-          <Button
-            large
-            on:click={submit}
-            color="primary"
-            size="lg"
-            class="sm:ml-auto w-28"
-            {loading}
-            disabled={locked || loading || banned}
-          >
-            {$t('form.submit')}
-          </Button>
-        </div>
+        <Button
+          on:click={() => dispatch('cancel', true)}
+          color="tertiary"
+          size="lg"
+          class=" w-28"
+        >
+          {$t('common.cancel')}
+        </Button>
+        <Button
+          on:click={submit}
+          color="primary"
+          size="lg"
+          class=" w-28"
+          {loading}
+          disabled={locked || loading || banned}
+        >
+          {$t('form.submit')}
+        </Button>
       {/if}
     </MarkdownEditor>
   {/if}

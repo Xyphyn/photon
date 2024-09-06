@@ -218,6 +218,7 @@
     type={mediaType(post.post_view.post.url)}
     post={post.post_view.post}
     opened
+    view="cozy"
   />
   {#if post.post_view.post.body}
     <div class="text-base text-slate-800 dark:text-zinc-300 leading-[1.5]">
@@ -356,6 +357,7 @@
           preview={commenting}
           placeholder={commenting ? undefined : $t('routes.post.addComment')}
           rows={commenting ? 7 : 1}
+          on:cancel={() => (commenting = false)}
         />
       {/if}
     {/if}

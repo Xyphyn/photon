@@ -256,7 +256,9 @@ overflow-hidden transition-colors {$$props.class}"
     {/if}
 
     {#if previewButton}
-      <div class="p-2 flex items-center w-full bg-white dark:bg-zinc-950">
+      <div
+        class="p-2 flex flex-row items-center w-full bg-white dark:bg-zinc-950 gap-1"
+      >
         {#if previewButton}
           <MultiSelect
             bind:selected={previewing}

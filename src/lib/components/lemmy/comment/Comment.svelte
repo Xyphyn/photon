@@ -218,7 +218,9 @@
           class="max-w-full my-2 border-l border-slate-200 dark:border-zinc-800 pl-4"
           transition:slide={{ axis: 'y', duration: 400, easing: expoOut }}
         >
-          <h1 class="font-bold text-sm mb-2">{$t('comment.reply')}</h1>
+          <div class="font-medium text-sm mb-2">
+            {$t('comment.reply')}
+          </div>
           <CommentForm
             {postId}
             parentId={node.comment_view.comment.id}
@@ -234,6 +236,7 @@
               ]
               replying = false
             }}
+            on:cancel={() => (replying = false)}
           />
         </div>
       {/if}
