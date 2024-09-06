@@ -159,7 +159,7 @@
     style="grid-area: stats;"
   >
     {#if user}
-      <address>
+      <address class="contents not-italic">
         <UserLink avatarSize={20} {user} avatar={!showCommunity}>
           <svelte:fragment slot="badges">
             {#if badges.moderator}
