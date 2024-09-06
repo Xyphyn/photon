@@ -40,7 +40,7 @@
   )
 </script>
 
-{#if optimizedURLs}
+{#if optimizedURLs[0] != undefined}
   <img
     loading="lazy"
     srcset="{optimizedURLs[0]} 1x, {optimizedURLs[1]} 2x, {optimizedURLs[2]} 4x, {optimizedURLs[3]} 6x"
