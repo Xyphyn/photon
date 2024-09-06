@@ -35,6 +35,8 @@
   export let upvotes: number = 0
   export let downvotes: number = 0
 
+  export let showCounts: boolean = true
+
   let loading = false
 
   let oldScore = score
@@ -77,18 +79,20 @@
       aria-label={$t('post.actions.vote.upvote')}
     >
       <Icon src={ChevronUp} size="20" micro />
-      <span class="grid text-sm">
-        {#key upvotes}
-          <span
-            style="grid-column: 1; grid-row: 1;"
-            in:fly={{ duration: 400, y: -10, easing: backOut }}
-            out:fly={{ duration: 400, y: 10, easing: backOut }}
-            aria-label={$t('aria.vote.upvotes', { default: upvotes })}
-          >
-            <FormattedNumber number={upvotes} />
-          </span>
-        {/key}
-      </span>
+      {#if showCounts}
+        <span class="grid text-sm">
+          {#key upvotes}
+            <span
+              style="grid-column: 1; grid-row: 1;"
+              in:fly={{ duration: 400, y: -10, easing: backOut }}
+              out:fly={{ duration: 400, y: 10, easing: backOut }}
+              aria-label={$t('aria.vote.upvotes', { default: upvotes })}
+            >
+              <FormattedNumber number={upvotes} />
+            </span>
+          {/key}
+        </span>
+      {/if}
     </button>
     {#if $site?.site_view.local_site.enable_downvotes ?? true}
       <button
@@ -101,18 +105,20 @@
         aria-label={$t('post.actions.vote.downvote')}
       >
         <Icon src={ChevronDown} size="20" micro />
-        <span class="grid text-sm">
-          {#key downvotes}
-            <span
-              style="grid-column: 1; grid-row: 1;"
-              in:fly={{ duration: 400, y: -10, easing: backOut }}
-              out:fly={{ duration: 400, y: 10, easing: backOut }}
-              aria-label={$t('aria.vote.downvotes', { default: downvotes })}
-            >
-              <FormattedNumber number={downvotes} />
-            </span>
-          {/key}
-        </span>
+        {#if showCounts}
+          <span class="grid text-sm">
+            {#key downvotes}
+              <span
+                style="grid-column: 1; grid-row: 1;"
+                in:fly={{ duration: 400, y: -10, easing: backOut }}
+                out:fly={{ duration: 400, y: 10, easing: backOut }}
+                aria-label={$t('aria.vote.downvotes', { default: downvotes })}
+              >
+                <FormattedNumber number={downvotes} />
+              </span>
+            {/key}
+          </span>
+        {/if}
       </button>
     {/if}
   </div>

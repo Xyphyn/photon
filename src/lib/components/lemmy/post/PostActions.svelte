@@ -126,6 +126,8 @@
     bind:score={post.counts.score}
     bind:upvotes={post.counts.upvotes}
     bind:downvotes={post.counts.downvotes}
+    showCounts={$profile?.user?.local_user_view?.local_user?.show_scores ??
+      true}
   />
 
   <Button
