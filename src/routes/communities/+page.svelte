@@ -9,7 +9,14 @@
   } from 'svelte-hero-icons'
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import { searchParam } from '$lib/util.js'
-  import { Button, Material, Popover, Select, TextInput } from 'mono-svelte'
+  import {
+    Button,
+    Material,
+    Popover,
+    Select,
+    Spinner,
+    TextInput,
+  } from 'mono-svelte'
   import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import CommunityItem from '$lib/components/lemmy/community/CommunityItem.svelte'
@@ -32,11 +39,11 @@
 <svelte:window bind:scrollY={offset} />
 
 <svelte:head>
-  <title>{$t('routes.communities')}</title>
+  <title>{$t('routes.communities.title')}</title>
 </svelte:head>
 
 <Header pageHeader class="justify-between">
-  <span>{$t('routes.communities')}</span>
+  <span>{$t('routes.communities.title')}</span>
   <Popover
     openOnHover
     class="!inline-flex"
@@ -133,17 +140,17 @@
     </div>
   {/if}
 
-  {#if data.communities.slice(data.query ?? '' != '' ? 3 : 0).length > 0}
+  {#if data.communities.slice((data.query ?? '' != '') ? 3 : 0).length > 0}
     <SectionTitle class="!border-0 pb-2">
       {$t('routes.search.other')}
     </SectionTitle>
   {/if}
   {#if data.communities}
-    {@const sliced = data.communities.slice(data.query ?? '' != '' ? 3 : 0)}
+    {@const sliced = data.communities.slice((data.query ?? '' != '') ? 3 : 0)}
     <div class="-mx-4 sm:-mx-6 h-full" bind:this={virtualList}>
       {#each sliced as community}
         <div
-          class="px-6 hover:bg-slate-100 hover:dark:bg-zinc-900 transition-colors @container
+          class="px-6 hover:bg-slate-50 hover:dark:bg-zinc-900 transition-colors @container
         border-b border-slate-100 dark:border-zinc-800"
         >
           <CommunityItem {community} showCounts={false} class="py-3" />

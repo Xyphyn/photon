@@ -19,7 +19,7 @@
   color="transparent"
   padding="none"
   rounding="xl"
-  class="z-10 relative"
+  class="z-10 relative border-slate-200 dark:border-zinc-700"
   {...$$restProps}
 >
   {#if banner}

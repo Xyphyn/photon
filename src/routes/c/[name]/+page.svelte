@@ -115,13 +115,13 @@
         community.community.actor_id
       )}
     </button>
-    <div class="flex items-center gap-2" slot="actions">
+    <div class="flex items-center gap-2 h-max">
       {#if $profile?.jwt}
         <Subscribe let:subscribe bind:community let:subscribing>
           <Button
             disabled={subscribing}
             loading={subscribing}
-            size="md"
+            size="lg"
             color={community.subscribed == 'NotSubscribed'
               ? 'primary'
               : 'secondary'}
@@ -137,7 +137,7 @@
           >
             <Icon
               src={community.subscribed != 'NotSubscribed' ? Check : Plus}
-              mini
+              micro
               size="16"
               slot="prefix"
             />
@@ -149,27 +149,31 @@
         </Subscribe>
       {/if}
 
+      <Button
+        size="lg"
+        color="secondary"
+        class="flex-1"
+        on:click={() => (sidebar = !sidebar)}
+      >
+        <Icon src={InformationCircle} size="16" micro />
+        {$t('cards.site.about')}
+      </Button>
       {#if $profile?.user && $profile.user.moderates
           .map((c) => c.community.id)
           .includes(community.community.id)}
         <Button
-          size="square-md"
+          size="square-lg"
           color="secondary"
+          rounding="xl"
           href="/c/{fullCommunityName(
             community.community.name,
             community.community.actor_id
           )}/settings"
+          style="height: 38px; width: 38px;"
         >
           <Icon src={Cog6Tooth} size="16" mini />
         </Button>
       {/if}
-      <Button
-        size="square-md"
-        color="secondary"
-        on:click={() => (sidebar = !sidebar)}
-      >
-        <Icon src={InformationCircle} size="16" mini />
-      </Button>
     </div>
   </EntityHeader>
   <Sort selected={data.sort} />

@@ -51,7 +51,7 @@
         community.community.name,
         community.community.actor_id
       )}"
-      class="flex-1"
+      class="flex-1 w-full overflow-hidden"
       data-sveltekit-preload-data="tap"
     >
       <div

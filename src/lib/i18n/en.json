@@ -217,7 +217,10 @@
         },
         "translators": "Translators",
         "accounts": "Accounts",
-        "communities": "Communities",
+        "communities": {
+            "title": "Communities",
+            "trending": "Trending"
+        },
         "search": {
             "title": "Search",
             "federating": "Federating",
