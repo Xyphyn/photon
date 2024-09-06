@@ -114,7 +114,7 @@
         validating = true
 
         if (await validateInstance(selectedInstance.trim())) {
-          goto(`/signup/${selectedInstance}`)
+          goto(`/signup/${encodeURIComponent(selectedInstance)}`)
         } else {
           toast({
             content: $t('toast.failInstanceURL'),
