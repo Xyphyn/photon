@@ -10,7 +10,7 @@
 
 <script lang="ts">
   import { page } from '$app/stores'
-  import { Button, Material } from 'mono-svelte'
+  import { Button, Material, toast } from 'mono-svelte'
   import {
     ArrowDownTray,
     Icon,
@@ -30,6 +30,19 @@
   export let alt: string = ''
 
   let zoomed = false
+  let sharing = false
+
+  async function downloadImage(url: string) {
+    sharing = true
+    const response = await fetch(url)
+
+    const blob = await response.blob()
+
+    const file = new File([blob], `photon_image.webp`, { type: blob.type })
+
+    sharing = false
+    return file
+  }
 </script>
 
 {#if $page.state.openImage || '' != ''}
@@ -38,8 +51,8 @@
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <!-- svelte-ignore a11y-positive-tabindex -->
   <div
-    class="!isolate fixed top-0 left-0 w-screen h-screen overflow-auto bg-black/50
-    flex flex-col z-[200] overscroll-contain backdrop-blur-sm"
+    class="!isolate fixed top-0 left-0 w-screen h-[100svh] overflow-auto bg-black/50
+    flex flex-col z-[100] overscroll-contain backdrop-blur-sm"
     transition:fade={{ duration: 150 }}
     on:click={() => history.back()}
     on:keydown={(e) => {
@@ -77,14 +90,23 @@
           <Icon src={ArrowDownTray} size="20" micro />
         </Button>
         <Button
-          on:click={() => {
-            navigator?.share?.($page.state.openImage) ??
+          on:click={async () => {
+            if (navigator.share) {
+              const file = await downloadImage($page.state.openImage)
+
+              navigator?.share?.({
+                files: [file],
+              })
+            } else {
               navigator.clipboard.writeText($page.state.openImage)
+              toast({ content: $t('toast.copied') })
+            }
           }}
           color="tertiary"
           size="square-lg"
           rounding="pill"
           title={$t('post.actions.more.share')}
+          loading={sharing}
         >
           <Icon src={Share} size="20" micro />
         </Button>
