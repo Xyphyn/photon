@@ -10,8 +10,15 @@
 
 <script lang="ts">
   import { page } from '$app/stores'
-  import { Button } from 'mono-svelte'
-  import { Icon, XMark } from 'svelte-hero-icons'
+  import { Button, Material } from 'mono-svelte'
+  import {
+    ArrowDownTray,
+    Icon,
+    MagnifyingGlassMinus,
+    MagnifyingGlassPlus,
+    Share,
+    XMark,
+  } from 'svelte-hero-icons'
   import { backOut, expoOut } from 'svelte/easing'
   import { fade, scale } from 'svelte/transition'
   import { focusTrap } from 'svelte-focus-trap'
@@ -20,6 +27,8 @@
    * The full-resolution image URL
    */
   export let alt: string = ''
+
+  let zoomed = false
 </script>
 
 {#if $page.state.openImage || '' != ''}
@@ -37,17 +46,66 @@
     }}
     use:focusTrap
   >
-    <Button size="square-md" class="fixed z-[110] top-0 right-0 m-4">
-      <Icon src={XMark} size="16" mini slot="prefix" />
-    </Button>
     <img
       width={400}
       height={400}
       src={$page.state.openImage}
-      class="w-full object-contain max-w-screen-md mx-auto my-auto overscroll-contain bg-white dark:bg-zinc-900"
+      class="w-full object-contain mx-auto my-auto overscroll-contain bg-white dark:bg-zinc-900"
+      class:max-w-screen-md={!zoomed}
       transition:scale={{ start: 0.95, easing: backOut, duration: 250 }}
       {alt}
     />
+    <Material
+      class="sticky z-10 bottom-4 w-max mx-auto bg-opacity-70 border-opacity-70
+      backdrop-blur-md gap-1 p-2
+      flex flex-row items-center"
+      rounding="full"
+      padding="none"
+      on:click={(e) => e.stopPropagation()}
+    >
+      <Button
+        download
+        href={$page.state.openImage}
+        color="tertiary"
+        size="square-lg"
+        rounding="pill"
+      >
+        <Icon src={ArrowDownTray} size="20" micro />
+      </Button>
+      <Button
+        on:click={() => {
+          navigator?.share?.($page.state.openImage) ??
+            navigator.clipboard.writeText($page.state.openImage)
+        }}
+        color="tertiary"
+        size="square-lg"
+        rounding="pill"
+      >
+        <Icon src={Share} size="20" micro />
+      </Button>
+      <Button
+        on:click={() => {
+          zoomed = !zoomed
+        }}
+        color="tertiary"
+        size="square-lg"
+        rounding="pill"
+      >
+        <Icon
+          src={zoomed ? MagnifyingGlassMinus : MagnifyingGlassPlus}
+          size="20"
+          micro
+        />
+      </Button>
+      <Button
+        on:click={() => history.back()}
+        color="tertiary"
+        size="square-lg"
+        rounding="pill"
+      >
+        <Icon src={XMark} size="20" micro slot="prefix" />
+      </Button>
+    </Material>
   </div>
 {/if}
 
