@@ -19,8 +19,8 @@
     Share,
     XMark,
   } from 'svelte-hero-icons'
-  import { backOut, expoOut } from 'svelte/easing'
-  import { fade, scale } from 'svelte/transition'
+  import { backOut, elasticOut, expoOut } from 'svelte/easing'
+  import { fade, fly, scale } from 'svelte/transition'
   import { focusTrap } from 'svelte-focus-trap'
 
   /**
@@ -52,60 +52,63 @@
       src={$page.state.openImage}
       class="w-full object-contain mx-auto my-auto overscroll-contain bg-white dark:bg-zinc-900"
       class:max-w-screen-md={!zoomed}
-      transition:scale={{ start: 0.95, easing: backOut, duration: 250 }}
+      transition:scale={{ start: 0.95, easing: expoOut, duration: 250 }}
       {alt}
     />
-    <Material
-      class="sticky z-10 bottom-4 w-max mx-auto bg-opacity-70 border-opacity-70
-      backdrop-blur-md gap-1 p-2
-      flex flex-row items-center"
-      rounding="full"
-      padding="none"
-      on:click={(e) => e.stopPropagation()}
+    <div
+      class="sticky z-10 bottom-4 w-max mx-auto"
+      transition:fly={{ duration: 350, y: 14, easing: backOut }}
     >
-      <Button
-        download
-        href={$page.state.openImage}
-        color="tertiary"
-        size="square-lg"
-        rounding="pill"
+      <Material
+        class="gap-1 p-2 flex flex-row items-center"
+        rounding="full"
+        padding="none"
+        on:click={(e) => e.stopPropagation()}
       >
-        <Icon src={ArrowDownTray} size="20" micro />
-      </Button>
-      <Button
-        on:click={() => {
-          navigator?.share?.($page.state.openImage) ??
-            navigator.clipboard.writeText($page.state.openImage)
-        }}
-        color="tertiary"
-        size="square-lg"
-        rounding="pill"
-      >
-        <Icon src={Share} size="20" micro />
-      </Button>
-      <Button
-        on:click={() => {
-          zoomed = !zoomed
-        }}
-        color="tertiary"
-        size="square-lg"
-        rounding="pill"
-      >
-        <Icon
-          src={zoomed ? MagnifyingGlassMinus : MagnifyingGlassPlus}
-          size="20"
-          micro
-        />
-      </Button>
-      <Button
-        on:click={() => history.back()}
-        color="tertiary"
-        size="square-lg"
-        rounding="pill"
-      >
-        <Icon src={XMark} size="20" micro slot="prefix" />
-      </Button>
-    </Material>
+        <Button
+          download
+          href={$page.state.openImage}
+          color="tertiary"
+          size="square-lg"
+          rounding="pill"
+        >
+          <Icon src={ArrowDownTray} size="20" micro />
+        </Button>
+        <Button
+          on:click={() => {
+            navigator?.share?.($page.state.openImage) ??
+              navigator.clipboard.writeText($page.state.openImage)
+          }}
+          color="tertiary"
+          size="square-lg"
+          rounding="pill"
+        >
+          <Icon src={Share} size="20" micro />
+        </Button>
+        <Button
+          on:click={() => {
+            zoomed = !zoomed
+          }}
+          color="tertiary"
+          size="square-lg"
+          rounding="pill"
+        >
+          <Icon
+            src={zoomed ? MagnifyingGlassMinus : MagnifyingGlassPlus}
+            size="20"
+            micro
+          />
+        </Button>
+        <Button
+          on:click={() => history.back()}
+          color="tertiary"
+          size="square-lg"
+          rounding="pill"
+        >
+          <Icon src={XMark} size="20" micro slot="prefix" />
+        </Button>
+      </Material>
+    </div>
   </div>
 {/if}
 
