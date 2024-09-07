@@ -51,8 +51,8 @@
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <!-- svelte-ignore a11y-positive-tabindex -->
   <div
-    class="!isolate fixed top-0 left-0 w-screen h-[100svh] overflow-auto bg-black/50
-    flex flex-col z-[100] overscroll-contain backdrop-blur-sm"
+    class="fixed top-0 left-0 w-screen h-[100svh] overflow-auto bg-black/50
+    flex flex-col z-[100] backdrop-blur-sm"
     transition:fade={{ duration: 150 }}
     on:click={() => history.back()}
     on:keydown={(e) => {
@@ -64,13 +64,19 @@
       width={400}
       height={400}
       src={$page.state.openImage}
-      class="w-full object-contain mx-auto my-auto overscroll-contain bg-white dark:bg-zinc-900"
+      class="{zoomed
+        ? 'object-cover'
+        : 'object-contain'} max-w-max mx-auto my-auto overscroll-contain bg-white dark:bg-zinc-900"
       class:max-w-screen-md={!zoomed}
+      class:w-full={!zoomed}
+      class:min-h-screen={zoomed}
+      class:min-w-screen={zoomed}
+      class:w-max={zoomed}
       transition:scale={{ start: 0.95, easing: expoOut, duration: 250 }}
       {alt}
     />
     <div
-      class="sticky z-10 bottom-4 w-max mx-auto"
+      class="sticky z-10 bottom-4 left-1/2 -translate-x-1/2 w-max"
       transition:fly={{ duration: 350, y: 14, easing: backOut }}
     >
       <Material
