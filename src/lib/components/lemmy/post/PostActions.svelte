@@ -15,8 +15,10 @@
     Eye,
     EyeSlash,
     Flag,
+    GlobeAmericas,
     Icon,
     Language,
+    MapPin,
     Newspaper,
     PencilSquare,
     ServerStack,
@@ -300,17 +302,28 @@
     >
       <Icon src={Share} size="16" micro slot="prefix" />
       {$t('post.actions.more.share')}
+      <div class="flex-1" />
       {#if !post.post.local}
-        <Switch
-          optionNames={[
-            $t('filter.location.global'),
-            $t('filter.location.local'),
-          ]}
-          options={[false, true]}
-          bind:selected={localShare}
-          class="ml-auto"
-          buttonClass="!py-1"
-        />
+        <div class="flex">
+          <Button
+            color={!localShare ? 'primary' : 'secondary'}
+            size="square-md"
+            roundingSide="left"
+            on:click={() => (localShare = false)}
+            title={$t('filter.location.global')}
+          >
+            <Icon src={GlobeAmericas} size="16" micro />
+          </Button>
+          <Button
+            color={localShare ? 'primary' : 'secondary'}
+            size="square-md"
+            roundingSide="right"
+            on:click={() => (localShare = true)}
+            title={$t('filter.location.local')}
+          >
+            <Icon src={MapPin} size="16" micro />
+          </Button>
+        </div>
       {/if}
     </MenuButton>
     {#if post.post.body && $userSettings.translator}

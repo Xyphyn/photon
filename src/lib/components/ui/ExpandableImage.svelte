@@ -108,7 +108,7 @@
           title={$t('post.actions.more.share')}
           loading={sharing}
         >
-          <Icon src={Share} size="20" micro />
+          <Icon src={Share} size="20" micro slot="prefix" />
         </Button>
         <Button
           on:click={() => {
