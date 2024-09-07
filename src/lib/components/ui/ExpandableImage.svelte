@@ -22,6 +22,7 @@
   import { backOut, elasticOut, expoOut } from 'svelte/easing'
   import { fade, fly, scale } from 'svelte/transition'
   import { focusTrap } from 'svelte-focus-trap'
+  import { t } from '$lib/translations'
 
   /**
    * The full-resolution image URL
@@ -71,6 +72,7 @@
           color="tertiary"
           size="square-lg"
           rounding="pill"
+          title={$t('routes.profile.media.download')}
         >
           <Icon src={ArrowDownTray} size="20" micro />
         </Button>
@@ -82,6 +84,7 @@
           color="tertiary"
           size="square-lg"
           rounding="pill"
+          title={$t('post.actions.more.share')}
         >
           <Icon src={Share} size="20" micro />
         </Button>
@@ -92,6 +95,7 @@
           color="tertiary"
           size="square-lg"
           rounding="pill"
+          title={zoomed ? $t('post.image.zoomOut') : $t('post.image.zoomIn')}
         >
           <Icon
             src={zoomed ? MagnifyingGlassMinus : MagnifyingGlassPlus}
@@ -104,6 +108,7 @@
           color="tertiary"
           size="square-lg"
           rounding="pill"
+          title={$t('post.image.close')}
         >
           <Icon src={XMark} size="20" micro slot="prefix" />
         </Button>

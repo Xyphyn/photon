@@ -490,6 +490,11 @@
             "removed": "Removed",
             "deleted": "Deleted",
             "saved": "Saved"
+        },
+        "image": {
+            "zoomIn": "Zoom in",
+            "zoomOut": "Zoom out",
+            "close": "Close"
         }
     },
     "comment": {
