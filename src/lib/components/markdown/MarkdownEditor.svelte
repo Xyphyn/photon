@@ -28,7 +28,7 @@
   export let previewButton: boolean = true
   export let tools: boolean = true
   export let disabled: boolean = false
-  export let rows: number = 4
+  export let rows: number = 2
 
   export let beforePreview: (input: string) => string = (input) => input
 
@@ -82,6 +82,11 @@
       const newEvent = new Event('submit', { cancelable: true })
       e.target.form.dispatchEvent(newEvent)
     },
+  }
+
+  function adjustHeight() {
+    textArea.style.height = 'auto' // Reset height to auto to calculate new height
+    textArea.style.height = `${textArea.scrollHeight}px` // Set height to the scrollHeight
   }
 </script>
 
@@ -227,7 +232,7 @@ overflow-hidden transition-colors {$$props.class}"
       {/if}
       <!--Actual text area-->
       <TextArea
-        class="bg-inherit z-0 border-0 rounded-none !ring-0 focus:!ring-transparent !transition-none"
+        class="bg-inherit z-0 border-0 rounded-none !ring-0 focus:!ring-transparent !transition-none resize-none"
         bind:value
         bind:element={textArea}
         on:keydown={(e) => {
@@ -241,6 +246,7 @@ overflow-hidden transition-colors {$$props.class}"
             }
           }
         }}
+        on:input={adjustHeight}
         on:focus
         on:paste={(e) => {
           if (!e.clipboardData?.files) return

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { createEventDispatcher, onDestroy, onMount } from 'svelte'
   import { client, site } from '$lib/lemmy.js'
-  import type { Community, Language, Post, PostView } from 'lemmy-js-client'
+  import type { Community, Post, PostView } from 'lemmy-js-client'
   import { Select, Spinner, Switch, toast } from 'mono-svelte'
   import {
     Check,
@@ -13,6 +13,8 @@
     ChatBubbleBottomCenterText,
     EllipsisHorizontal,
     Plus,
+    Language,
+    Link,
   } from 'svelte-hero-icons'
   import { profile } from '$lib/auth.js'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
@@ -30,6 +32,7 @@
     pushError,
   } from '$lib/components/error/ErrorContainer.svelte'
   import { errorMessage } from '$lib/lemmy/error'
+  import FreeTextInput from '$lib/components/input/FreeTextInput.svelte'
 
   export let edit = false
 
@@ -61,6 +64,7 @@
     nsfw: false,
     loading: false,
     alt_text: undefined,
+    language_id: undefined,
   }
 
   let saveDraft = edit ? false : true
@@ -78,7 +82,7 @@
       data.nsfw = editingPost.nsfw
       data.alt_text = editingPost.alt_text
       data.thumbnail = editingPost.thumbnail_url
-      data.language_id = editingPost.language_id
+      data.language_id = editingPost.language_id.toString()
     }
 
     if (passedCommunity) {
@@ -293,93 +297,121 @@
       </div>
     {/if}
   {/if}
-  <TextInput
+  <FreeTextInput
+    type="text"
     required
-    label={$t('form.post.title')}
     bind:value={data.title}
     placeholder={placeholders.get('post')}
+    label={$t('form.post.title')}
   />
-  <div class="flex flex-col gap-2">
-    <TextInput
-      label={$t('form.post.url')}
-      bind:value={data.url}
-      placeholder={placeholders.get('url')}
-      class="w-full"
-    />
-    <div class="flex items-center gap-2 actions">
-      <div
-        class="border border-slate-100 rounded-xl h-6 w-6 grid place-items-center"
-      >
-        <Icon src={Plus} size="16" micro slot="prefix" />
-      </div>
-      {#if data.url}
+  <MarkdownEditor
+    label={$t('form.post.body')}
+    bind:value={data.body}
+    placeholder={placeholders.get('post')}
+    previewButton
+  />
+  {#if data.url !== undefined}
+    <div class="flex flex-col gap-2">
+      <TextInput
+        label={$t('form.post.url')}
+        bind:value={data.url}
+        placeholder={placeholders.get('url')}
+        class="w-full"
+      />
+      <div class="flex items-center gap-2 actions">
+        <div
+          class="border border-slate-100 rounded-xl h-6 w-6 grid place-items-center"
+        >
+          <Icon src={Plus} size="16" micro slot="prefix" />
+        </div>
+        {#if data.url}
+          <Button
+            on:click={() => (addAltText = !addAltText)}
+            rounding="pill"
+            size="sm"
+            color="ghost"
+            class="text-xs"
+          >
+            <Icon
+              src={ChatBubbleBottomCenterText}
+              size="15"
+              micro
+              slot="prefix"
+            />{$t('form.post.altText')}
+          </Button>
+        {/if}
         <Button
-          on:click={() => (addAltText = !addAltText)}
+          on:click={() => (uploadingImage = !uploadingImage)}
           rounding="pill"
           size="sm"
           color="ghost"
           class="text-xs"
         >
-          <Icon
-            src={ChatBubbleBottomCenterText}
-            size="15"
-            micro
-            slot="prefix"
-          />{$t('form.post.altText')}
+          <Icon src={Photo} size="15" micro slot="prefix" />
+          {$t('form.post.uploadImage')}
         </Button>
-      {/if}
+        {#if generation.generatable}
+          <Button
+            on:click={() => generateTitle(data.url)}
+            loading={generation.loading}
+            rounding="pill"
+            size="sm"
+            color="ghost"
+            class="text-xs"
+          >
+            <Icon src={Sparkles} size="15" micro slot="prefix" />
+            {$t('form.post.generateTitle')}
+          </Button>
+        {/if}
+      </div>
+    </div>
+  {/if}
+  <div class="flex flex-row gap-2 flex-wrap">
+    {#if data.url === undefined}
+      <Button on:click={() => (data.url = '')} size="lg">
+        <Icon src={Link} size="16" micro />
+        {$t('form.post.addUrl')}
+      </Button>
       <Button
-        on:click={() => (uploadingImage = !uploadingImage)}
-        rounding="pill"
-        size="sm"
-        color="ghost"
-        class="text-xs"
+        on:click={() => {
+          data.url = ''
+          uploadingImage = true
+        }}
+        size="lg"
       >
-        <Icon src={Photo} size="15" micro slot="prefix" />
+        <Icon src={Photo} size="16" micro />
         {$t('form.post.uploadImage')}
       </Button>
-      {#if generation.generatable}
-        <Button
-          on:click={() => generateTitle(data.url)}
-          loading={generation.loading}
-          rounding="pill"
-          size="sm"
-          color="ghost"
-          class="text-xs"
-        >
-          <Icon src={Sparkles} size="15" micro slot="prefix" />
-          {$t('form.post.generateTitle')}
-        </Button>
-      {/if}
-    </div>
+    {/if}
+    {#if data.language_id === undefined}
+      <Button size="lg" on:click={() => (data.language_id = 0)}>
+        <Icon src={Language} size="16" micro />
+        {$t('form.post.setLanguage')}
+      </Button>
+    {/if}
   </div>
   {#if addAltText}
     <div transition:slide={{ axis: 'y', duration: 150 }} class="w-full">
       <TextInput label={$t('form.post.altText')} bind:value={data.alt_text} />
     </div>
   {/if}
-  <MarkdownEditor
-    rows={8}
-    label={$t('form.post.body')}
-    bind:value={data.body}
-    placeholder={placeholders.get('post')}
-    previewButton
-  />
   <Switch bind:checked={data.nsfw}>{$t('form.post.nsfw')}</Switch>
-  {#if $site}
-    <Select
-      class="w-max"
-      label={$t('settings.app.lang.title')}
-      bind:value={data.language_id}
-    >
-      {#each $site?.all_languages as language}
-        <option value={language.id.toString()}>{language.name}</option>
-      {/each}
-    </Select>
-  {:else}
-    <div style="height: 58px;">
-      <Spinner width={24} />
-    </div>
+  {#if data.language_id !== undefined}
+    {#if $site}
+      <Select
+        class="w-max"
+        label={$t('settings.app.lang.title')}
+        bind:value={data.language_id}
+      >
+        {#each $site?.all_languages as language}
+          <option value={language.id.toString()}>{language.name}</option>
+        {/each}
+      </Select>
+    {:else}
+      <div style="height: 58px;">
+        <Spinner width={24} />
+      </div>
+    {/if}
   {/if}
   <div class="mt-auto" />
   <div class="flex flex-row items-center gap-2 w-full">

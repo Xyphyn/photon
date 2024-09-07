@@ -136,7 +136,9 @@
             "generateTitle": "Generate Title",
             "uploadImage": "Upload Image",
             "selectFile": "Select a file",
-            "altText": "Alt Text"
+            "altText": "Alt Text",
+            "addUrl": "Add URL",
+            "setLanguage": "Set language"
         },
         "profile": {
             "displayName": "Display name",
