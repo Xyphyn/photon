@@ -225,16 +225,16 @@
       link
       href="/u/{post.creator.name}@{new URL(post.creator.actor_id).hostname}"
     >
-      <Icon src={UserCircle} size="16" micro slot="prefix" />
-      <span>{post.creator.name}</span>
+      <Icon src={UserCircle} size="16" micro slot="prefix" class="flex-shrink-0" />
+      <span class="overflow-hidden overflow-ellipsis whitespace-nowrap">{post.creator.name}</span>
     </MenuButton>
     <MenuButton
       link
       href="/c/{post.community.name}@{new URL(post.community.actor_id)
         .hostname}"
     >
-      <Icon src={Newspaper} size="16" micro slot="prefix" />
-      <span>{post.community.title}</span>
+      <Icon src={Newspaper} size="16" micro slot="prefix" class="flex-shrink-0" />
+      <span class="overflow-hidden overflow-ellipsis whitespace-nowrap">{post.community.title}</span>
     </MenuButton>
     <MenuButton
       loading={fediseerLoading}
@@ -256,10 +256,10 @@
         {#if fediseerLoading}
           <Spinner width={14} />
         {:else}
-          <Icon src={ServerStack} size="16" micro />
+          <Icon src={ServerStack} size="16" micro class="flex-shrink-0" />
         {/if}
       </svelte:fragment>
-      <span>{new URL(post.community.actor_id).hostname}</span>
+      <span class="overflow-hidden overflow-ellipsis whitespace-nowrap">{new URL(post.community.actor_id).hostname}</span>
     </MenuButton>
     <hr class="w-[90%] mx-auto opacity-100 dark:opacity-10 my-2" />
     <MenuDivider>{$t('post.actions.more.actions')}</MenuDivider>
