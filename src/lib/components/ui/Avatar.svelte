@@ -42,6 +42,7 @@
 
 {#if optimizedURLs[0] != undefined}
   <img
+    {...$$restProps}
     loading="lazy"
     srcset="{optimizedURLs[0]} 1x, {optimizedURLs[1]} 2x, {optimizedURLs[2]} 4x, {optimizedURLs[3]} 6x"
     src={optimizedURLs[0]}
@@ -49,7 +50,7 @@
     {width}
     {title}
     class="aspect-square object-cover overflow-hidden {$$props.class} flex-shrink-0"
-    style="width: {width}px; height: {width}px;"
+    style="width: {width}px; height: {width}px; {$$props.style || undefined}"
     class:rounded-full={circle}
     class:rounded-md={!circle}
   />

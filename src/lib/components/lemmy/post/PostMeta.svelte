@@ -41,7 +41,7 @@
 <script lang="ts">
   import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
-  import { Badge } from 'mono-svelte'
+  import { Badge, Material, Popover } from 'mono-svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import type { Community, Person, SubscribedType } from 'lemmy-js-client'
@@ -64,6 +64,7 @@
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import { t } from '$lib/translations'
   import { Pencil, type IconSource } from 'svelte-hero-icons'
+  import CommunityHeader from '../community/CommunityHeader.svelte'
 
   export let community: Community | undefined = undefined
   export let showCommunity: boolean = true
@@ -111,41 +112,29 @@
     : 'grid-rows-1'} text-xs min-w-0 max-w-full"
   style={$$props.style ?? ''}
 >
-  {#if showCommunity && community}
-    <Subscribe let:subscribe let:subscribing>
-      <button
-        on:click={async () => {
-          if (!community) return
-          await subscribe(community.id, subscribed)
-          subscribed =
-            subscribed == 'NotSubscribed' ? 'Subscribed' : 'NotSubscribed'
-        }}
-        class="relative cursor-pointer pr-2 row-span-2 flex-shrink-0"
+  {#if showCommunity && community && subscribed}
+    <Popover>
+      <div
+        class="relative cursor-pointer pr-2 row-span-2 flex-shrink-0 group/community"
+        slot="target"
       >
         <Avatar
           url={community.icon}
           width={32}
           alt={community.name}
-          style="grid-area: avatar; height: 100%;"
-          class="flex-shrink-0"
+          class="group-hover/community:ring-1 transition-all ring-offset-1 ring-primary-900 dark:ring-primary-100"
         />
-        {#if subscribed != undefined && $profile?.jwt}
-          <div
-            class="absolute w-3.5 h-3.5 {subscribed == 'NotSubscribed'
-              ? 'bg-primary-900 dark:bg-primary-100 text-white dark:text-black'
-              : 'bg-primary-100 dark:bg-primary-900 text-black dark:text-white'} rounded-full ring-2 box-border
-            ring-slate-50 dark:ring-zinc-950 grid place-items-center transition-all
-            right-0 -translate-x-1 -translate-y-2"
-          >
-            <Icon
-              src={subscribed == 'NotSubscribed' ? Plus : Check}
-              micro
-              size="14"
-            />
-          </div>
-        {/if}
-      </button>
-    </Subscribe>
+      </div>
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <!-- svelte-ignore a11y-no-static-element-interactions -->
+      <div
+        slot="popover"
+        class="max-w-md rounded-2xl bg-white dark:bg-zinc-950"
+        on:click|stopPropagation={() => {}}
+      >
+        <CommunityHeader bind:community bind:subscribed />
+      </div>
+    </Popover>
   {/if}
   {#if showCommunity && community}
     <CommunityLink

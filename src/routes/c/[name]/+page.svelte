@@ -33,6 +33,7 @@
   import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
   import Subscribe from '../../communities/Subscribe.svelte'
   import { resumables } from '$lib/lemmy/item'
+  import CommunityHeader from '$lib/components/lemmy/community/CommunityHeader.svelte'
 
   export let data
 
@@ -77,105 +78,11 @@
 {/if}
 
 <div class="flex flex-col gap-4 max-w-full w-full min-w-0">
-  <EntityHeader
-    banner={community.community.banner}
-    avatar={community.community.icon}
-    name={community.community.title}
-    stats={[
-      {
-        name: $t('cards.community.members'),
-        value: community.counts.subscribers.toString(),
-      },
-      {
-        name: $t('content.posts'),
-        value: community.counts.posts.toString(),
-      },
-      {
-        name: $t('cards.community.activeDay'),
-        value: community.counts.users_active_day.toString(),
-      },
-    ]}
-    bio={community.community.description}
-  >
-    <button
-      on:click={() => {
-        navigator?.clipboard?.writeText?.(
-          `!${fullCommunityName(
-            community.community.name,
-            community.community.actor_id
-          )}`
-        )
-        toast({ content: $t('toast.copied') })
-      }}
-      class="text-sm flex gap-0 items-center"
-      slot="nameDetail"
-    >
-      !{fullCommunityName(
-        community.community.name,
-        community.community.actor_id
-      )}
-    </button>
-    <div class="flex items-center gap-2 h-max">
-      {#if $profile?.jwt}
-        <Subscribe let:subscribe bind:community let:subscribing>
-          <Button
-            disabled={subscribing}
-            loading={subscribing}
-            size="lg"
-            color={community.subscribed == 'NotSubscribed'
-              ? 'primary'
-              : 'secondary'}
-            on:click={async () => {
-              community.subscribed =
-                (await subscribe())?.community_view.subscribed ??
-                'NotSubscribed'
-
-              if ($page.data.slots?.sidebar?.props.community_view)
-                $page.data.slots.sidebar.props.community_view = community
-            }}
-            class="flex-1 relative z-[inherit]"
-          >
-            <Icon
-              src={community.subscribed != 'NotSubscribed' ? Check : Plus}
-              micro
-              size="16"
-              slot="prefix"
-            />
-            {community.subscribed == 'Subscribed' ||
-            community.subscribed == 'Pending'
-              ? $t('cards.community.subscribed')
-              : $t('cards.community.subscribe')}
-          </Button>
-        </Subscribe>
-      {/if}
-
-      <Button
-        size="lg"
-        color="secondary"
-        class="flex-1"
-        on:click={() => (sidebar = !sidebar)}
-      >
-        <Icon src={InformationCircle} size="16" micro />
-        {$t('cards.site.about')}
-      </Button>
-      {#if $profile?.user && $profile.user.moderates
-          .map((c) => c.community.id)
-          .includes(community.community.id)}
-        <Button
-          size="square-lg"
-          color="secondary"
-          rounding="xl"
-          href="/c/{fullCommunityName(
-            community.community.name,
-            community.community.actor_id
-          )}/settings"
-          style="height: 38px; width: 38px;"
-        >
-          <Icon src={Cog6Tooth} size="16" mini />
-        </Button>
-      {/if}
-    </div>
-  </EntityHeader>
+  <CommunityHeader
+    bind:community={community.community}
+    bind:subscribed={community.subscribed}
+    counts={community.counts}
+  />
   <Sort selected={data.sort} />
   {#if community.blocked}
     <Placeholder
