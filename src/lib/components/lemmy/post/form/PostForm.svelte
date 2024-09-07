@@ -368,7 +368,17 @@
   {/if}
   <div class="flex flex-row gap-2 flex-wrap">
     {#if data.url === undefined}
-      <Button on:click={() => (data.url = '')} size="lg">
+      <Button
+        on:click={async () => {
+          data.url = ''
+          try {
+            const url = new URL(await navigator.clipboard.readText())
+
+            data.url = url.toString()
+          } catch (e) {}
+        }}
+        size="lg"
+      >
         <Icon src={Link} size="16" micro />
         {$t('form.post.addUrl')}
       </Button>

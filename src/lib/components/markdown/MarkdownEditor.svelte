@@ -88,6 +88,8 @@
     textArea.style.height = 'auto' // Reset height to auto to calculate new height
     textArea.style.height = `${textArea.scrollHeight}px` // Set height to the scrollHeight
   }
+
+  $: if (textArea && !previewing) adjustHeight()
 </script>
 
 {#if uploadingImage && images}
@@ -122,7 +124,6 @@ overflow-hidden transition-colors {$$props.class}"
     {#if previewing}
       <div
         class="px-3 py-2.5 overflow-auto text-sm resize-y bg-white dark:bg-zinc-950"
-        style="height: {rows * 2}em"
       >
         <Markdown source={beforePreview(value)} />
       </div>
