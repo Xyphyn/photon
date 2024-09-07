@@ -38,6 +38,7 @@
   import { contentPadding } from '$lib/components/ui/layout/Shell.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import CommentListVirtualizer from '$lib/components/lemmy/comment/CommentListVirtualizer.svelte'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
   export let data
 
@@ -207,7 +208,7 @@
         style="width: max-content;"
       />
       <Button on:click={() => history.back()} size="square-md">
-        <Icon src={ArrowLeft} mini size="16" slot="prefix" />
+        <Icon src={ArrowLeft} micro size="16" slot="prefix" />
       </Button>
     </div>
     <h1 class="font-bold text-xl font-display leading-5">

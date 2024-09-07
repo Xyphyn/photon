@@ -19,7 +19,7 @@
     <Icon
       src={ChevronDown}
       size="20"
-      mini
+      micro
       class="{open ? 'rotate-180' : ''} transition-transform"
     />
   </div>
