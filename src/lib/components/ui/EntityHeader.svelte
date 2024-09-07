@@ -9,6 +9,7 @@
   export let name: string
   export let bio: string | undefined = undefined
   export let banner: string | undefined = undefined
+  export let url: string | undefined = undefined
   export let stats: {
     name: string
     value: string
@@ -51,9 +52,15 @@
         class="ring-4 ring-slate-25 dark:ring-zinc-925 bg-slate-25 dark:bg-zinc-925"
       />
       <div>
-        <span class="text-lg font-medium">
+        <svelte:element
+          this={url ? 'a' : 'span'}
+          href={url}
+          class="text-lg font-medium {url
+            ? 'hover:underline hover:text-primary-900 hover:dark:text-primary-100'
+            : ''}"
+        >
           {name}
-        </span>
+        </svelte:element>
         <span
           class="flex items-center gap-0 text-sm text-slate-600 dark:text-zinc-400"
         >

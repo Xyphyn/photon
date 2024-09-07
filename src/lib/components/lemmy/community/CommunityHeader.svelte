@@ -7,6 +7,7 @@
   import type {
     Community,
     CommunityAggregates,
+    CommunityModeratorView,
     SubscribedType,
   } from 'lemmy-js-client'
   import { Button, toast } from 'mono-svelte'
@@ -18,16 +19,23 @@
     Plus,
   } from 'svelte-hero-icons'
   import Subscribe from '../../../../routes/communities/Subscribe.svelte'
+  import Expandable from '$lib/components/ui/Expandable.svelte'
+  import { userSettings } from '$lib/settings'
+  import ShieldIcon from '../moderation/ShieldIcon.svelte'
+  import ItemList from '../generic/ItemList.svelte'
+  import { userLink } from '$lib/lemmy/generic'
 
   export let community: Community
   export let subscribed: SubscribedType
   export let counts: CommunityAggregates | undefined = undefined
+  export let moderators: CommunityModeratorView[] = []
 </script>
 
 <EntityHeader
   banner={community.banner}
   avatar={community.icon}
   name={community.title}
+  url="/c/{fullCommunityName(community.name, community.actor_id)}"
   stats={counts
     ? [
         {
@@ -58,6 +66,26 @@
   >
     !{fullCommunityName(community.name, community.actor_id)}
   </button>
+  {#if moderators.length > 0}
+    <Expandable
+      bind:open={$userSettings.expand.team}
+      class="py-2 border-y border-slate-200 dark:border-zinc-800"
+    >
+      <svelte:fragment slot="title">
+        <ShieldIcon width={15} filled />
+        {$t('cards.community.moderators')}
+      </svelte:fragment>
+      <ItemList
+        items={moderators.map((m) => ({
+          id: m.moderator.id,
+          name: m.moderator.name,
+          url: userLink(m.moderator),
+          avatar: m.moderator.avatar,
+          instance: new URL(m.moderator.actor_id).hostname,
+        }))}
+      />
+    </Expandable>
+  {/if}
   <div class="flex items-center gap-2 h-max">
     {#if $profile?.jwt}
       <Subscribe
@@ -96,15 +124,6 @@
       </Subscribe>
     {/if}
 
-    <!-- <Button
-      size="lg"
-      color="secondary"
-      class="flex-1"
-      on:click={() => (sidebar = !sidebar)}
-    >
-      <Icon src={InformationCircle} size="16" micro />
-      {$t('cards.site.about')}
-    </Button> -->
     {#if $profile?.user && $profile.user.moderates
         .map((c) => c.community.id)
         .includes(community.id)}

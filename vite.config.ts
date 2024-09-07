@@ -7,4 +7,9 @@ export default defineConfig({
   define: {
     __VERSION__: JSON.stringify(process.env.npm_package_version),
   },
+  server: {
+    watch: {
+      ignored: ['!**/node_modules/mono-svelte/**'],
+    },
+  },
 })

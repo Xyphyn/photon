@@ -100,6 +100,10 @@
       title = result.title
     }
   }
+
+  let popoverOpen = false
+
+  $: console.log(popoverOpen)
 </script>
 
 <!-- 
@@ -113,8 +117,9 @@
   style={$$props.style ?? ''}
 >
   {#if showCommunity && community && subscribed}
-    <Popover>
-      <div
+    <Popover bind:open={popoverOpen} manual>
+      <button
+        on:click={() => (popoverOpen = !popoverOpen)}
         class="relative cursor-pointer pr-2 row-span-2 flex-shrink-0 group/community"
         slot="target"
       >
@@ -122,19 +127,18 @@
           url={community.icon}
           width={32}
           alt={community.name}
-          class="group-hover/community:ring-1 transition-all ring-offset-1 ring-primary-900 dark:ring-primary-100"
+          class="group-hover/community:ring-2 transition-all ring-offset-1 ring-primary-900 dark:ring-primary-100"
         />
-      </div>
-      <!-- svelte-ignore a11y-click-events-have-key-events -->
-      <!-- svelte-ignore a11y-no-static-element-interactions -->
+      </button>
       <div
         slot="popover"
         class="max-w-md rounded-2xl bg-white dark:bg-zinc-950"
-        on:click|stopPropagation={() => {}}
       >
         <CommunityHeader bind:community bind:subscribed />
       </div>
     </Popover>
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
   {/if}
   {#if showCommunity && community}
     <CommunityLink

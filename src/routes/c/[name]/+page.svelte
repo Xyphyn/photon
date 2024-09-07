@@ -81,6 +81,7 @@
   <CommunityHeader
     bind:community={community.community}
     bind:subscribed={community.subscribed}
+    moderators={data.community.moderators}
     counts={community.counts}
   />
   <Sort selected={data.sort} />

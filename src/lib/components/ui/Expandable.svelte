@@ -11,7 +11,7 @@
   <div
     slot="summary"
     class="font-medium w-full text-left flex flex-row items-center justify-between hover:text-primary-900
-    hover:dark:text-primary-100 transition-colors"
+    hover:dark:text-primary-100 transition-colors h-full"
   >
     <div class="flex flex-row gap-1 items-center w-full">
       <slot name="title" />
