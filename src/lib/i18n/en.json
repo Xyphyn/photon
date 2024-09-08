@@ -859,5 +859,8 @@
             "upvotes": "{{default}} upvotes",
             "downvotes": "{{default}} downvotes"
         }
+    },
+    "stats": {
+        "joined": "Joined"
     }
 }

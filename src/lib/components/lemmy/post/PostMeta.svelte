@@ -102,8 +102,6 @@
   }
 
   let popoverOpen = false
-
-  $: console.log(popoverOpen)
 </script>
 
 <!-- 

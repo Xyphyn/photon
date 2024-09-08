@@ -166,6 +166,7 @@
       body={post.post.body}
       {view}
       style="grid-area: body"
+      class="relative"
     />
   {/if}
   {#if actions}

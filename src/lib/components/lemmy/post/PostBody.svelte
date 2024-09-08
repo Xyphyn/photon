@@ -47,9 +47,9 @@ ${view == 'list' ? `max-h-24` : 'max-h-48'}`
       on:click={() => (expanded = !expanded)}
       size="square-sm"
       color="tertiary"
-      class="text-black dark:text-white absolute z-10 isolate drop-shadow-xl pointer-events-auto {expanded
-        ? 'bottom-6'
-        : 'bottom-16'} left-1/2 -translate-x-1/2"
+      class="text-black dark:text-white absolute z-10 isolate pointer-events-auto bottom-0 {expanded
+        ? 'bg-slate-200/50 dark:bg-zinc-900 border shadow-md'
+        : ''} left-1/2 -translate-x-1/2 mb-4"
       title="Expand"
     >
       <Icon

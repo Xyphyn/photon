@@ -68,8 +68,8 @@
   </button>
   {#if moderators.length > 0}
     <Expandable
-      bind:open={$userSettings.expand.team}
-      class="py-2 border-y border-slate-200 dark:border-zinc-800"
+      class="border rounded-xl bg-white/50 dark:bg-zinc-900/50 w-full p-3 px-4
+dark:border-zinc-800 border-slate-300 border-opacity-50 text-slate-700 dark:text-zinc-300 transition-colors"
     >
       <svelte:fragment slot="title">
         <ShieldIcon width={15} filled />
