@@ -182,3 +182,12 @@ export const instanceToURL = (input: string) =>
   input.startsWith('http://') || input.startsWith('https://')
     ? input
     : `https://${input}`
+
+export function canParseUrl(url: string): boolean {
+  try {
+    new URL(url)
+    return true
+  } catch (e) {
+    return false
+  }
+}

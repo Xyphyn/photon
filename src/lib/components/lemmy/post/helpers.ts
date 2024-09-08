@@ -1,7 +1,7 @@
 import { client, getInstance } from '$lib/lemmy.js'
 import type { View } from '$lib/settings'
 import { isImage, isVideo } from '$lib/ui/image'
-import { findClosestNumber } from '$lib/util'
+import { canParseUrl, findClosestNumber } from '$lib/util'
 import type { CommentView, PersonView, Post, PostView } from 'lemmy-js-client'
 
 export const isCommentMutable = (comment: CommentView, me: PersonView) =>
@@ -67,7 +67,7 @@ export const mediaType = (url?: string, view: View = 'cozy'): MediaType => {
     if (isImage(url)) return 'image'
     if (isVideo(url)) return 'iframe'
     if (isYoutubeLink(url)) return 'iframe'
-    if (URL.canParse(url)) return 'embed'
+    if (canParseUrl(url)) return 'embed'
     return 'none'
   }
 
