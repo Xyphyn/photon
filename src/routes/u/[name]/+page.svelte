@@ -164,7 +164,7 @@
           name: $t('stats.joined'),
           value: formatRelativeDate(
             publishedToDate(data.person_view.person.published),
-            { style: 'long' }
+            { style: 'short' }
           ).toString(),
           format: false,
         },
