@@ -48,7 +48,7 @@
       />
     </div>
   {/if}
-  <div class="p-4 flex flex-col sm:flex-row gap-4 items">
+  <div class="p-4 flex flex-col gap-4 items">
     <div class="space-y-3 flex-1 flex flex-col items-center text-center">
       <Avatar
         width={64}
@@ -60,7 +60,7 @@
         <svelte:element
           this={url ? 'a' : 'span'}
           href={url}
-          class="text-xl font-semibold {url
+          class="text-2xl font-semibold {url
             ? 'hover:underline hover:text-primary-900 hover:dark:text-primary-100'
             : ''}"
         >
@@ -71,6 +71,12 @@
         >
           <slot name="nameDetail" />
         </span>
+
+        {#if $$slots.actions}
+          <div class="flex flex-col mt-2">
+            <slot name="actions" />
+          </div>
+        {/if}
       </div>
       {#if bio}
         <div class="relative {center ? 'text-center' : 'text-left'}">
@@ -83,11 +89,6 @@
         </div>
       {/if}
     </div>
-    {#if $$slots.actions}
-      <div class="space-y-3 flex flex-col" class:sm:pt-12={banner != undefined}>
-        <slot name="actions" />
-      </div>
-    {/if}
   </div>
   <div class="space-y-3 p-4 pt-0">
     {#if stats.length > 0}
