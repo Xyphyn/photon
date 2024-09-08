@@ -4,17 +4,15 @@
   import type { Community, Post, PostView } from 'lemmy-js-client'
   import { Select, Spinner, Switch, toast } from 'mono-svelte'
   import {
-    Check,
     Icon,
     Photo,
-    BookOpen,
     ArrowPath,
     Sparkles,
     ChatBubbleBottomCenterText,
-    EllipsisHorizontal,
     Plus,
     Language,
     Link,
+    XMark,
   } from 'svelte-hero-icons'
   import { profile } from '$lib/auth.js'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
@@ -29,6 +27,7 @@
   import { feature } from '$lib/version'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import ErrorContainer, {
+    clearErrorScope,
     pushError,
   } from '$lib/components/error/ErrorContainer.svelte'
   import { errorMessage } from '$lib/lemmy/error'
@@ -66,6 +65,9 @@
     alt_text: undefined,
     language_id: undefined,
   }
+  // weird select menu language handling
+  // @ts-ignore
+  $: if (data.language_id === '') data.language_id = undefined
 
   let saveDraft = edit ? false : true
   let communitySearch = passedCommunity?.name ?? ''
@@ -82,6 +84,7 @@
       data.nsfw = editingPost.nsfw
       data.alt_text = editingPost.alt_text
       data.thumbnail = editingPost.thumbnail_url
+      // @ts-ignore
       data.language_id = editingPost.language_id.toString()
     }
 
@@ -106,6 +109,7 @@
   })
 
   async function submit() {
+    clearErrorScope('post-form')
     if (!data.community && !edit) {
       pushError({
         message: $t('toast.needCommunity'),
@@ -413,6 +417,10 @@
         label={$t('settings.app.lang.title')}
         bind:value={data.language_id}
       >
+        <option value={undefined}>
+          <Icon src={XMark} size="16" micro />
+          {$t('form.post.unset')}
+        </option>
         {#each $site?.all_languages as language}
           <option value={language.id.toString()}>{language.name}</option>
         {/each}

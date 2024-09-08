@@ -138,7 +138,8 @@
             "selectFile": "Select a file",
             "altText": "Alt Text",
             "addUrl": "Add URL",
-            "setLanguage": "Set language"
+            "setLanguage": "Set language",
+            "unset": "Unset"
         },
         "profile": {
             "displayName": "Display name",
@@ -847,7 +848,8 @@
         "slurs": "Your submission contains a term banned in this instance.",
         "captcha_failed": "Incorrect CAPTCHA answer.",
         "cant_block_local_instance": "You can't block the instance you are actively using.",
-        "invalid_vote_value": "You can't commit voter fraud on Lemmy posts, sorry."
+        "invalid_vote_value": "You can't commit voter fraud on Lemmy posts, sorry.",
+        "language_not_allowed": "That language isn't allowed in this community. Unset it to use the community's default."
     },
     "aria": {
         "pagination": {
