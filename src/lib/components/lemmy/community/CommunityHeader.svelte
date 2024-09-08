@@ -24,6 +24,8 @@
   import ShieldIcon from '../moderation/ShieldIcon.svelte'
   import ItemList from '../generic/ItemList.svelte'
   import { userLink } from '$lib/lemmy/generic'
+  import { formatRelativeDate } from '$lib/components/util/RelativeDate.svelte'
+  import { publishedToDate } from '$lib/components/util/date'
 
   export let community: Community
   export let subscribed: SubscribedType
@@ -49,6 +51,13 @@
         {
           name: $t('cards.community.activeDay'),
           value: counts.users_active_day.toString(),
+        },
+        {
+          name: $t('stats.created'),
+          format: false,
+          value: formatRelativeDate(publishedToDate(community.published), {
+            style: 'short',
+          }).toString(),
         },
       ]
     : []}

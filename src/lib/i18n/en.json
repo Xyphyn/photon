@@ -861,6 +861,7 @@
         }
     },
     "stats": {
-        "joined": "Joined"
+        "joined": "Joined",
+        "created": "Created"
     }
 }
