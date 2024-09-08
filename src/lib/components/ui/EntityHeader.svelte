@@ -81,7 +81,7 @@
       {#if bio}
         <div class="relative {center ? 'text-center' : 'text-left'}">
           <div
-            class="p-4 relative bg-white/50 dark:bg-zinc-900/50 border border-slate-300 dark:border-zinc-800 border-opacity-50
+            class="p-4 relative bg-white/30 dark:bg-zinc-900/30 border border-slate-300 dark:border-zinc-800 border-opacity-50
           rounded-xl"
           >
             <PostBody class="text-sm" view="list" body={bio} clickThrough />
@@ -95,7 +95,7 @@
       <div class="text-sm flex flex-row flex-wrap gap-3 mx-auto">
         {#each stats as stat}
           <div
-            class="min-w-36 p-3 px-4 rounded-xl flex-1 bg-white/50 dark:bg-zinc-900/50 border border-slate-300 dark:border-zinc-800 border-opacity-50"
+            class="min-w-36 p-3 px-4 rounded-xl flex-1 bg-white/30 dark:bg-zinc-900/30 border border-slate-300 dark:border-zinc-800 border-opacity-50"
           >
             <div class="text-primary-900 dark:text-primary-100">
               {stat.name}
