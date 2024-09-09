@@ -46,7 +46,7 @@
         -inset-px"
       />
     {/if}
-    <div class="flex flex-col gap-2 mb-2">
+    <div class="flex flex-col gap-2 mb-4">
       {#if richURL}
         <Link
           href={url}
