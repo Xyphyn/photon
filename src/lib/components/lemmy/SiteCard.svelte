@@ -30,15 +30,19 @@
 
 <StickyCard class="w-full {$$props.class} text-slate-600 dark:text-zinc-400">
   {#if site.site.banner}
-    <div
-      class="rounded-xl
-     bg-slate-100 dark:bg-zinc-925"
-    >
+    <div class="h-36 -ml-2 -mr-2 flex justify-center">
       <img
         src={optimizeImageURL(site.site.banner, 512)}
         alt="Site banner"
-        class="h-32 object-cover w-full"
-        style="border-radius: inherit;"
+        class="object-contain max-h-full max-w-full rounded-lg"
+        style=""
+      />
+    </div>
+    <div class="absolute top-0 left-0 -z-10 object-cover w-full">
+      <img
+        src={optimizeImageURL(site.site.banner, 64)}
+        alt=""
+        class="opacity-10 blur-2xl h-full w-full object-cover saturate-200"
       />
     </div>
   {/if}
