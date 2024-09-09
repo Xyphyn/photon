@@ -191,3 +191,7 @@ export function canParseUrl(url: string): boolean {
     return false
   }
 }
+
+export function instanceId(actorId: string) {
+  return new URL(actorId).hostname
+}

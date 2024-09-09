@@ -3,6 +3,7 @@
   import { Icon, XMark } from 'svelte-hero-icons'
   import { expoOut } from 'svelte/easing'
   import { fly, slide } from 'svelte/transition'
+  import TextProps from '../text/TextProps.svelte'
 
   type T = $$Generic
 
@@ -49,12 +50,14 @@
         filters = filters
       }}
       color={filters.has(identifier) ? 'primary' : 'ghost'}
-      class="text-inherit dark:text-inherit text-xs px-2.5"
+      class="text-xs px-2.5"
       rounding="pill"
       size="sm"
     >
       <slot name="identifier" string={identifier}>
-        {identifier}
+        <TextProps wrap="no-wrap">
+          {identifier}
+        </TextProps>
       </slot>
     </Button>
   {/each}

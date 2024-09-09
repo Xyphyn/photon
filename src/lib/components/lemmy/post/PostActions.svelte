@@ -56,8 +56,10 @@
   import { hidePost, postLink } from './helpers'
   import { feature } from '$lib/version'
   import Switch from '$lib/components/input/Switch.svelte'
-  import { instanceToURL } from '$lib/util'
+  import { instanceId, instanceToURL } from '$lib/util'
   import { publishedToDate } from '$lib/components/util/date'
+  import TextProps from '$lib/components/ui/text/TextProps.svelte'
+  import { communityLink, userLink } from '$lib/lemmy/generic'
 
   export let post: PostView
   export let view: View = 'cozy'
@@ -68,10 +70,6 @@
   let editing = false
   let saving = false
 
-  let fediseerOpen = false
-  let fediseerData: Data | null = null
-  let fediseerLoading = false
-
   let translating = false
 
   let localShare = false
@@ -79,12 +77,6 @@
   $: buttonHeight = view == 'compact' ? 'h-[30px]' : 'h-8'
   $: buttonSquare = view == 'compact' ? 'w-[30px] h-[30px]' : 'w-8 h-8'
 </script>
-
-{#if fediseerData}
-  {#await import('$lib/fediseer/Fediseer.svelte') then { default: Fediseer }}
-    <Fediseer bind:open={fediseerOpen} data={fediseerData} />
-  {/await}
-{/if}
 
 {#if editing}
   <Modal bind:open={editing}>
@@ -223,47 +215,39 @@
       <Icon slot="prefix" src={EllipsisHorizontal} width={16} micro />
     </Button>
     <MenuDivider>{$t('post.actions.more.creator')}</MenuDivider>
-    <MenuButton
-      link
-      href="/u/{post.creator.name}@{new URL(post.creator.actor_id).hostname}"
-    >
-      <Icon src={UserCircle} size="16" micro slot="prefix" class="flex-shrink-0" />
-      <span class="overflow-hidden overflow-ellipsis whitespace-nowrap">{post.creator.name}</span>
+    <MenuButton link href={userLink(post.creator)}>
+      <Icon
+        src={UserCircle}
+        size="16"
+        micro
+        slot="prefix"
+        class="flex-shrink-0"
+      />
+      <TextProps wrap="no-wrap">
+        {post.creator.name}
+      </TextProps>
     </MenuButton>
-    <MenuButton
-      link
-      href="/c/{post.community.name}@{new URL(post.community.actor_id)
-        .hostname}"
-    >
-      <Icon src={Newspaper} size="16" micro slot="prefix" class="flex-shrink-0" />
-      <span class="overflow-hidden overflow-ellipsis whitespace-nowrap">{post.community.title}</span>
+    <MenuButton link href={communityLink(post.community)}>
+      <Icon
+        src={Newspaper}
+        size="16"
+        micro
+        slot="prefix"
+        class="flex-shrink-0"
+      />
+      <TextProps wrap="no-wrap">
+        {post.community.title}
+      </TextProps>
     </MenuButton>
-    <MenuButton
-      loading={fediseerLoading}
-      on:click={async (e) => {
-        e.stopImmediatePropagation()
-
-        fediseerLoading = true
-        const data = await fediseer.getInstanceInfo(
-          new URL(post.community.actor_id).hostname
-        )
-        fediseerData = data
-        fediseerOpen = true
-        fediseerLoading = false
-
-        return
-      }}
-    >
+    <!-- <MenuButton href="/instances/{instanceId(post.community.actor_id)}">
       <svelte:fragment slot="prefix">
-        {#if fediseerLoading}
-          <Spinner width={14} />
-        {:else}
-          <Icon src={ServerStack} size="16" micro class="flex-shrink-0" />
-        {/if}
+        <Icon src={ServerStack} size="16" micro class="flex-shrink-0" />
       </svelte:fragment>
-      <span class="overflow-hidden overflow-ellipsis whitespace-nowrap">{new URL(post.community.actor_id).hostname}</span>
-    </MenuButton>
-    <hr class="w-[90%] mx-auto opacity-100 dark:opacity-10 my-2" />
+      <TextProps wrap="no-wrap">
+        {instanceId(post.community.actor_id)}
+      </TextProps>
+    </MenuButton> -->
+    <hr class="border-slate-200 dark:border-zinc-800 mx-2 my-2" />
     <MenuDivider>{$t('post.actions.more.actions')}</MenuDivider>
     {#if $profile?.user && $profile?.jwt && $profile.user.local_user_view.person.id == post.creator.id}
       <MenuButton on:click={() => (editing = true)}>

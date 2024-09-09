@@ -79,10 +79,11 @@
         {/if}
       </div>
       {#if bio}
-        <div class="relative {center ? 'text-center' : 'text-left'}">
+        <div class="relative w-full {center ? 'text-center' : 'text-left'}">
           <div
-            class="p-4 relative bg-white/30 dark:bg-zinc-900/30 border border-slate-300 dark:border-zinc-800 border-opacity-50
-          rounded-xl"
+            class="p-4 relative bg-white/30 dark:bg-zinc-900/30 border border-slate-300
+            dark:border-zinc-800 border-opacity-50 rounded-xl
+            max-w-full w-full"
           >
             <PostBody class="text-sm" view="list" body={bio} clickThrough />
           </div>
