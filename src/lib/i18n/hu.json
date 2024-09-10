@@ -275,6 +275,187 @@
             }
         },
         "createCommunity": "Közösség létrehozása",
-        "communities": "Közösségek"
+        "communities": "Közösségek",
+        "verifyEmail": {
+            "error": "Sikertelen email megerősítés.",
+            "message": "Az email címed sikeresen meg lett erősítve. Mostmár bezárhatod ezt az ablakot."
+        },
+        "passwordChange": {
+            "title": "Jelszó megváltoztatása",
+            "description": "Új jelszó választása",
+            "instance": "Melyik szerveren van a fiókod?"
+        },
+        "resetLogin": {
+            "title": "Jelszó visszaállítása",
+            "description": "Add meg a fiókod email címét és küldünk egy jelszó visszaállítási linket. Ha a fiókodhoz nincs email cím társítva, akkor lépj kapcsolatba a szerver tulajdonosával."
+        },
+        "theme": {
+            "title": "Téma",
+            "import": "Importálás",
+            "export": "Exportálás",
+            "reset": "Alaphelyzet",
+            "resetWarning": {
+                "title": "Téma alaphelyzet",
+                "description": "Ezzel visszaállítod a szím beállításaidat a gyári alapértelmezettre. Mielőtt ezt megteszed, ajánlott a jelenlegi beállításaidat exportálni."
+            },
+            "preset": {
+                "description": "Ez egy alapértelmezett téma és nem lehet módosítani.",
+                "delete": {
+                    "title": "Téma törlése",
+                    "confirm": "Megerősítés"
+                },
+                "default": "Alapértelmezett",
+                "classic": "Klasszikus",
+                "imported": "Saját téma",
+                "new": "Új téma",
+                "title": "Nem lehet módosítani"
+            }
+        },
+        "community": {
+            "settings": {
+                "team": "Csapat",
+                "settings": "Beállítások"
+            }
+        }
+    },
+    "cards": {
+        "site": {
+            "about": "Névjegy",
+            "stats": "Statisztikák",
+            "admins": "Adminisztrátorok"
+        },
+        "community": {
+            "members": "Tagok",
+            "moderators": "Moderátorok",
+            "subscribe": "Feliratkozás",
+            "subscribed": "Feliratkozva",
+            "modlog": "Mod napló",
+            "block": "Tiltás",
+            "unblock": "Tiltás feloldása",
+            "blockInstance": "Szerver tiltása",
+            "favorite": "Kedvenc",
+            "activeDay": "Ma aktív",
+            "unfavorite": "Eltávolítás a kedvencek közül"
+        }
+    },
+    "content": {
+        "all": "Összes",
+        "users": "Felhasználók",
+        "posts": "Bejegyzések",
+        "comments": "Megjegyzések",
+        "communities": "Közösségek",
+        "message": "Üzenet",
+        "instances": "Szerverek"
+    },
+    "post": {
+        "actions": {
+            "comments": "Megjegyzések",
+            "save": "Mentés",
+            "unsave": "Eltávolítás a mentettek közül",
+            "more": {
+                "edit": "Szerkesztés",
+                "creator": "Készítő",
+                "markUnread": "Megjelölés olvasatlanként",
+                "hide": "Elrejtés",
+                "unhide": "Elrejtés visszavonása",
+                "translate": "Fordítás",
+                "mediaBias": "A média elfogultsága",
+                "share": "Megosztás",
+                "delete": "Törlés",
+                "restore": "Visszaállítás",
+                "label": "További műveletek",
+                "actions": "Műveletek",
+                "markRead": "Megjelölés olvasottként"
+            },
+            "mediaBias": {
+                "credibility": "Hitelesség",
+                "reporting": "Tényszerű tudósítás",
+                "downloading": "Adatkészlet letöltése",
+                "loading": "Forrás betöltése",
+                "noData": {
+                    "description": "Nincs elérhető adat erről a weboldalról.",
+                    "title": "Nincs adat"
+                },
+                "description": "Leírás"
+            },
+            "link": {
+                "title": "Alternatív linkek",
+                "actions": "Link opciók"
+            }
+        },
+        "badges": {
+            "nsfw": "NSFW",
+            "locked": "Zárolva",
+            "featured": "Kiemelt",
+            "removed": "Eltávolítva",
+            "deleted": "Törölve",
+            "saved": "Mentve"
+        }
+    },
+    "comment": {
+        "reply": "Válasz",
+        "actions": {
+            "label": "Opciók",
+            "link": "Link másolása"
+        },
+        "locked": "Ez a bejegyzés zárolva van.",
+        "banned": "Ki vagy tiltva ebből a közösségből."
+    },
+    "moderation": {
+        "ban": {
+            "banning": "Felhasználó kitiltása",
+            "unbanning": "Felhasználó tiltásának feloldása",
+            "deleteData": "Adat törlése"
+        },
+        "report": "Jelentés"
+    },
+    "common": {
+        "next": "Következő",
+        "refresh": "Frissítés",
+        "jump": "Ugrás",
+        "save": "Mentés",
+        "enabled": "Engedélyezve",
+        "enable": "Engedélyez",
+        "disable": "Kikapcsolás",
+        "add": "Hozzáadás",
+        "cancel": "Mégse",
+        "send": "Küldés",
+        "general": "Általános",
+        "back": "Vissza",
+        "disabled": "Kikapcsolva"
+    },
+    "message": {
+        "success": "Siker",
+        "error": "Hiba",
+        "retry": "Újra"
+    },
+    "toast": {
+        "blockedCommunity": "A közösség letiltva.",
+        "unblockedCommunity": "A közösség feloldva.",
+        "blockedInstance": "A szerver letiltva.",
+        "sentMessage": "Az üzenet elküldve.",
+        "bannedUser": "Felhasználó kitiltva.",
+        "invalidURL": "Érvénytelen URL",
+        "generatedTitle": "URL-ből generált cím és bejegyzés tartalom. Vissza akarod ezt vonni?",
+        "restoredFromDraft": "Visszaállított bejegyzés a piszkozatból.",
+        "copied": "Vágólapra másolva.",
+        "approvedApplication": "Kérelem jóváhagyva.",
+        "deniedApplication": "Kérelem elutasítva.",
+        "logIn": "Sikeres bejelentkezés.",
+        "passwordReset": "A jelszavad visszaállításra került.",
+        "invalidLogin": "Érvénytelen hitelesítő adatok",
+        "confirmDelete1": "Biztos vagy benne hogy törölni szeretnéd a fiókod?",
+        "confirmDelete2": "Tényleg biztos vagy benne?",
+        "confirmDelete3": "Utolsó figyelmeztetés. Tényleg biztos vagy benne?",
+        "needPassword": "Meg kell adnod a jelszavadat.",
+        "deleting": "Fiók törlése...",
+        "deleted": "A fiókod törölve lett.",
+        "resetLink": "Egy jelszó visszaállító link el lett küldve az email címedre.",
+        "addAccount": "Fiók hozzáadva.",
+        "saveSettings": "Beállításaid mentésre kerültek. Ha megváltoztattad az email címedet, egy hitelesítő linket küldtünk.",
+        "resetSettings": "Vissza akarod állítani a beállításokat az alapértelmezettre?",
+        "unbannedUser": "Felhasználó feloldva.",
+        "failGenerateTitle": "Nem volt használható címe vagy leírása a weboldalnak.",
+        "loginVoteGate": "Ahhoz hogy szavazhass be kell jelentkezned."
     }
 }
