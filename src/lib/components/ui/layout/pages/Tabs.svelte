@@ -18,7 +18,7 @@
 
 <nav
   class="flex flex-row items-center gap-1 p-1 rounded-full bg-white/60 dark:bg-zinc-800/60
-  backdrop-blur-lg border border-slate-200/60 dark:border-zinc-800 shadow-lg {$$props.class ??
+  backdrop-blur-lg border border-slate-200/60 dark:border-zinc-800 shadow-lg border-opacity-50 {$$props.class ??
     ''}
   "
 >

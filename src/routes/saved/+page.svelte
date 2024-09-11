@@ -11,8 +11,21 @@
   import { Bookmark } from 'svelte-hero-icons'
   import { t } from '$lib/translations.js'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
+  import { contentPadding } from '$lib/components/ui/layout/Shell.svelte'
+  import { Select } from 'mono-svelte'
+  import {
+    Icon,
+    Bars3,
+    PencilSquare,
+    ChatBubbleOvalLeft,
+    AdjustmentsHorizontal,
+  } from 'svelte-hero-icons'
 
   export let data
+
+  // svelte being stupid
+  $: type = data.type as any
 
   const isComment = (item: CommentView | PostView): item is CommentView =>
     'comment' in item
@@ -22,7 +35,33 @@
   <title>{$t('routes.saved')}</title>
 </svelte:head>
 
-<Header pageHeader>{$t('routes.saved')}</Header>
+<Header pageHeader>
+  {$t('routes.saved')}
+
+  <div slot="extended" class="flex items-center">
+    <Select
+      bind:value={type}
+      on:change={() => searchParam($page.url, 'type', type, 'page')}
+    >
+      <div class="flex items-center gap-0.5" slot="label">
+        <Icon src={AdjustmentsHorizontal} size="15" mini />
+        {$t('filter.filter')}
+      </div>
+      <option value="all">
+        <Icon src={Bars3} micro size="15" />
+        {$t('content.all')}
+      </option>
+      <option value="posts">
+        <Icon src={PencilSquare} micro size="15" />
+        {$t('content.posts')}
+      </option>
+      <option value="comments">
+        <Icon src={ChatBubbleOvalLeft} micro size="15" />
+        {$t('content.comments')}
+      </option>
+    </Select>
+  </div>
+</Header>
 <div
   class="flex flex-col list-none my-4 divide-slate-200 dark:divide-zinc-800"
   class:gap-4={$userSettings.view == 'card'}
@@ -46,7 +85,14 @@
     {/each}
   {/if}
 </div>
-<Pageination
-  on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
-  page={data.page}
-/>
+<div
+  class="sticky z-30 mx-auto max-w-full"
+  style="bottom: max(1.5rem, {$contentPadding.bottom}px);"
+>
+  <Tabs routes={[]} class="mx-auto">
+    <Pageination
+      on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
+      page={data.page}
+    />
+  </Tabs>
+</div>

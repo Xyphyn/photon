@@ -20,6 +20,8 @@ function getSavedItemPublished(item: PostView | CommentView) {
 export async function load({ url, fetch }) {
   if (!get(profile)) return { posts: [], page: 0 }
   const page = Number(url.searchParams.get('page')) || 1
+  const type: 'comments' | 'posts' | 'all' =
+    (url.searchParams.get('type') as 'comments' | 'posts' | 'all') || 'all'
 
   const client = getClient(undefined, fetch)
 
@@ -27,14 +29,16 @@ export async function load({ url, fetch }) {
     saved_only: true,
     limit: 20,
     page: page,
-    sort: 'New' as SortType & CommentSortType,
+    // sort: 'New' as SortType & CommentSortType,
     type_: 'All' as ListingType,
   }
 
   const [posts, comments] = await Promise.all([
-    client.getPosts(params),
+    type == 'posts' || type == 'all' ? client.getPosts(params) : { posts: [] },
 
-    client.getComments(params),
+    type == 'comments' || type == 'all'
+      ? client.getComments(params)
+      : { comments: [] },
   ])
 
   const everything = [...posts.posts, ...comments.comments].sort(
@@ -43,5 +47,5 @@ export async function load({ url, fetch }) {
       Date.parse(getSavedItemPublished(a))
   )
 
-  return { page: page, data: everything }
+  return { page: page, data: everything, type: type }
 }
