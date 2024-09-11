@@ -11,3 +11,5 @@ vite.config.ts.timestamp-*
 stats.html
 dev-dist
 yarn-error.log
+bun.lockb
+yarn.lock
