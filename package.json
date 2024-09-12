@@ -20,7 +20,7 @@
     "linkify-it": "^5.0.0",
     "marked": "^5.1.2",
     "marked-linkify-it": "^3.1.10",
-    "mono-svelte": "^1.6.26",
+    "mono-svelte": "latest",
     "nprogress": "^0.2.0",
     "postcss": "^8.4.30",
     "rollup-plugin-visualizer": "^5.9.2",

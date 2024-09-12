@@ -44,18 +44,7 @@
 
   export let url: string
   export let type: MediaType = 'embed'
-
-  export let openMediaBias = false
-
-  const stripSubdomain = (url: string) =>
-    new URL(url).hostname.split('.').slice(-2).join('.')
 </script>
-
-{#if openMediaBias}
-  {#await import('$lib/components/mbfc/MBFCModal.svelte') then { default: MbfcModal }}
-    <MbfcModal domain={stripSubdomain(url)} bind:open={openMediaBias} />
-  {/await}
-{/if}
 
 <Menu {...$$restProps}>
   <slot name="target" slot="target" />

@@ -128,7 +128,7 @@
     title={hideTitle ? undefined : tags?.title ? tags.title : post.post.name}
     read={post.read}
     style="grid-area: meta;"
-    edited={post.post.updated != undefined}
+    edited={post.post.updated}
     tags={tags?.tags}
     {view}
   >

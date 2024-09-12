@@ -481,7 +481,8 @@
             },
             "vote": {
                 "upvote": "Upvote",
-                "downvote": "Downvote"
+                "downvote": "Downvote",
+                "score": "Score"
             }
         },
         "badges": {
@@ -496,6 +497,10 @@
             "zoomIn": "Zoom in",
             "zoomOut": "Zoom out",
             "close": "Close"
+        },
+        "meta": {
+            "lastEdited": "Last edited {{default}}",
+            "created": "Created {{default}}"
         }
     },
     "comment": {
@@ -859,7 +864,8 @@
         "vote": {
             "group": "Post voting controls",
             "upvotes": "{{default}} upvotes",
-            "downvotes": "{{default}} downvotes"
+            "downvotes": "{{default}} downvotes",
+            "score": "Score: {{default}}"
         }
     },
     "stats": {

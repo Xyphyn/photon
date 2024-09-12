@@ -3,6 +3,7 @@
   import PostVote from './PostVote.svelte'
   import { getInstance, site } from '$lib/lemmy.js'
   import {
+    ArrowsUpDown,
     ArrowTopRightOnSquare,
     Bookmark,
     BookmarkSlash,
@@ -11,6 +12,7 @@
     ChatBubbleOvalLeft,
     ChatBubbleOvalLeftEllipsis,
     CheckBadge,
+    Clock,
     EllipsisHorizontal,
     Eye,
     EyeSlash,
@@ -20,6 +22,7 @@
     Language,
     MapPin,
     Newspaper,
+    Pencil,
     PencilSquare,
     ServerStack,
     Share,
@@ -60,6 +63,9 @@
   import { publishedToDate } from '$lib/components/util/date'
   import TextProps from '$lib/components/ui/text/TextProps.svelte'
   import { communityLink, userLink } from '$lib/lemmy/generic'
+  import RelativeDate, {
+    formatRelativeDate,
+  } from '$lib/components/util/RelativeDate.svelte'
 
   export let post: PostView
   export let view: View = 'cozy'
@@ -214,6 +220,53 @@
     >
       <Icon slot="prefix" src={EllipsisHorizontal} width={16} micro />
     </Button>
+    <MenuDivider>{$t('cards.site.stats')}</MenuDivider>
+    <div class="flex flex-row gap-1 items-center">
+      <MenuButton class="flex-1">
+        <Icon src={Clock} size="16" micro slot="prefix" />
+        <span>
+          {publishedToDate(post.post.published).toLocaleDateString(undefined, {
+            dateStyle: 'short',
+          })}
+        </span>
+      </MenuButton>
+      {#if post.post.updated}
+        {@const editedTime = formatRelativeDate(
+          publishedToDate(post.post.updated),
+          {
+            style: 'long',
+          }
+        )}
+        <MenuButton class="flex-1" aria-label={editedTime}>
+          <Icon src={Pencil} size="16" micro slot="prefix" />
+          <RelativeDate date={publishedToDate(post.post.updated)} />
+        </MenuButton>
+      {/if}
+    </div>
+    {#if post.counts.score}
+      {@const ratio =
+        post.counts.upvotes / (post.counts.upvotes + post.counts.downvotes)}
+      <MenuButton
+        aria-label={$t('aria.vote.score', { default: post.counts.score })}
+      >
+        <Icon src={ArrowsUpDown} size="16" micro slot="prefix" />
+        {$t('post.actions.vote.score')}
+        •
+        <FormattedNumber
+          number={post.counts.score}
+          options={{ notation: 'standard' }}
+          class="font-medium"
+        />
+        •
+        <FormattedNumber
+          number={ratio}
+          options={{ style: 'percent' }}
+          class="font-medium {ratio > 0.7
+            ? 'text-blue-700 dark:text-blue-300'
+            : 'text-red-500'}"
+        />
+      </MenuButton>
+    {/if}
     <MenuDivider>{$t('post.actions.more.creator')}</MenuDivider>
     <MenuButton link href={userLink(post.creator)}>
       <Icon
@@ -239,16 +292,9 @@
         {post.community.title}
       </TextProps>
     </MenuButton>
-    <!-- <MenuButton href="/instances/{instanceId(post.community.actor_id)}">
-      <svelte:fragment slot="prefix">
-        <Icon src={ServerStack} size="16" micro class="flex-shrink-0" />
-      </svelte:fragment>
-      <TextProps wrap="no-wrap">
-        {instanceId(post.community.actor_id)}
-      </TextProps>
-    </MenuButton> -->
-    <hr class="border-slate-200 dark:border-zinc-800 mx-2 my-2" />
-    <MenuDivider>{$t('post.actions.more.actions')}</MenuDivider>
+    <MenuDivider>
+      {$t('post.actions.more.actions')}
+    </MenuDivider>
     {#if $profile?.user && $profile?.jwt && $profile.user.local_user_view.person.id == post.creator.id}
       <MenuButton on:click={() => (editing = true)}>
         <Icon src={PencilSquare} size="16" micro slot="prefix" />

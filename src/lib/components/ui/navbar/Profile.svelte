@@ -120,7 +120,6 @@
     <Icon src={UserGroup} micro width={16} slot="prefix" />
     {$t('account.accounts')}
   </MenuButton>
-  <hr class="dark:opacity-10 w-[90%] my-2 mx-auto" />
   <MenuDivider>{$t('nav.menu.app')}</MenuDivider>
   <MenuButton link href="/settings">
     <Icon src={Cog6Tooth} micro width={16} slot="prefix" />

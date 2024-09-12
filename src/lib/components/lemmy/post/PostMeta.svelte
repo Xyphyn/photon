@@ -43,7 +43,9 @@
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import { Badge, Material, Popover } from 'mono-svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
-  import RelativeDate from '$lib/components/util/RelativeDate.svelte'
+  import RelativeDate, {
+    formatRelativeDate,
+  } from '$lib/components/util/RelativeDate.svelte'
   import type { Community, Person, SubscribedType } from 'lemmy-js-client'
   import {
     Bookmark,
@@ -65,6 +67,7 @@
   import { t } from '$lib/translations'
   import { Pencil, type IconSource } from 'svelte-hero-icons'
   import CommunityHeader from '../community/CommunityHeader.svelte'
+  import { publishedToDate } from '$lib/components/util/date'
 
   export let community: Community | undefined = undefined
   export let showCommunity: boolean = true
@@ -75,7 +78,7 @@
   export let title: string | undefined = undefined
   export let id: number | undefined = undefined
   export let read: boolean = false
-  export let edited: boolean = false
+  export let edited: string | undefined = undefined
 
   export let view: View = 'cozy'
 
@@ -167,7 +170,15 @@
       <RelativeDate date={published} class="flex-shrink-0" />
     {/if}
     {#if edited}
-      <Icon src={Pencil} micro size="14" />
+      <div
+        title={$t('post.meta.lastEdited', {
+          default: formatRelativeDate(publishedToDate(edited), {
+            style: 'long',
+          }),
+        })}
+      >
+        <Icon src={Pencil} micro size="14" />
+      </div>
     {/if}
   </span>
   <div
