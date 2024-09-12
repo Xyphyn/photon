@@ -204,6 +204,7 @@
           moderator: post.post_view.creator_is_moderator,
         }}
         published={publishedToDate(post.post_view.post.published)}
+        edited={post.post_view.post.updated != undefined}
         bind:title={post.post_view.post.name}
         style="width: max-content;"
       />
