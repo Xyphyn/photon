@@ -854,7 +854,9 @@
         "captcha_failed": "Incorrect CAPTCHA answer.",
         "cant_block_local_instance": "You can't block the instance you are actively using.",
         "invalid_vote_value": "You can't commit voter fraud on Lemmy posts, sorry.",
-        "language_not_allowed": "That language isn't allowed in this community. Unset it to use the community's default."
+        "language_not_allowed": "That language isn't allowed in this community. Unset it to use the community's default.",
+        "couldnt_find_person": "That user doesn't exist.",
+        "couldnt_find_community": "That community doesn't exist."
     },
     "aria": {
         "pagination": {

@@ -6,6 +6,8 @@ export function errorMessage(error: any, instance?: string): string {
       error = JSON.parse(error?.body?.message).error
     } else if (error?.message) {
       error = error?.message
+    } else if (error?.error && typeof error?.error === 'string') {
+      error = error.error
     }
     if (!error) throw error
 
