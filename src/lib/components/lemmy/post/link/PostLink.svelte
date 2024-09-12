@@ -19,8 +19,6 @@
   export let embed_description: string | undefined = undefined
   export let view: View = 'cozy'
 
-  let openMediaBias = false
-
   $: richURL = parseURL(url)
 </script>
 
@@ -106,7 +104,7 @@
     class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800
     rounded-full flex p-1 relative -top-7 min-[384px]:mx-3 mt-8 min-[384px]:mt-0 mx-auto -mb-7 w-max max-w-full overflow-auto"
   >
-    <PostLinkSources {url} view="cozy" bind:openMediaBias>
+    <PostLinkSources {url}>
       <Button
         color="tertiary"
         slot="target"
@@ -125,27 +123,10 @@
         {$t('post.actions.link.actions')}
       </Button>
     </PostLinkSources>
-    <Button
-      color="tertiary"
-      size="sm"
-      class="w-max text-slate-600 dark:text-zinc-400 block
-    text-xs flex-shrink-0"
-      on:click={() => (openMediaBias = !openMediaBias)}
-      rounding="pill"
-    >
-      <Icon
-        src={CheckBadge}
-        size="16"
-        micro
-        slot="prefix"
-        class="flex-shrink-0"
-      />
-      {$t('post.actions.more.mediaBias')}
-    </Button>
   </div>
 {:else}
   <div class="flex items-center gap-1">
-    <PostLinkSources {url} view="compact">
+    <PostLinkSources {url}>
       <Button
         color="ghost"
         slot="target"

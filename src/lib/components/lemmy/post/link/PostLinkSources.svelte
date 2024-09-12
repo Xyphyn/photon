@@ -41,12 +41,9 @@
   import { t } from '$lib/translations'
   import { Menu, MenuButton, MenuDivider } from 'mono-svelte'
   import type { MediaType } from '../helpers'
-  import { CheckBadge, Icon } from 'svelte-hero-icons'
-  import type { View } from '$lib/settings'
 
   export let url: string
   export let type: MediaType = 'embed'
-  export let view: View = 'cozy'
 
   export let openMediaBias = false
 
@@ -71,11 +68,4 @@
       </MenuButton>
     {/if}
   {/each}
-  {#if view == 'compact'}
-    <MenuDivider>{$t('post.actions.link.actions')}</MenuDivider>
-    <MenuButton on:click={() => (openMediaBias = !openMediaBias)}>
-      <Icon src={CheckBadge} size="16" micro slot="prefix" />
-      {$t('post.actions.more.mediaBias')}
-    </MenuButton>
-  {/if}
 </Menu>
