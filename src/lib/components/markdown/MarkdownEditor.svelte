@@ -6,7 +6,7 @@
   import { uploadImage } from '$lib/util.js'
   import { ImageInput, toast } from 'mono-svelte'
   import { Button, Label, Modal, TextArea } from 'mono-svelte'
-  import { createEventDispatcher } from 'svelte'
+  import { createEventDispatcher, tick } from 'svelte'
   import {
     Bold,
     CodeBracket,
@@ -84,12 +84,15 @@
     },
   }
 
-  function adjustHeight() {
-    textArea.style.height = 'auto' // Reset height to auto to calculate new height
-    textArea.style.height = `${textArea.scrollHeight}px` // Set height to the scrollHeight
+  async function adjustHeight() {
+    await tick()
+    if (textArea) {
+      textArea.style.height = 'auto' // Reset height to auto to calculate new height
+      textArea.style.height = `${textArea.scrollHeight}px` // Set height to the scrollHeight
+    }
   }
 
-  $: if (textArea && !previewing) adjustHeight()
+  $: if (!previewing && value) adjustHeight()
 </script>
 
 {#if uploadingImage && images}
