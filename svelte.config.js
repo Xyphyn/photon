@@ -29,6 +29,9 @@ const config = {
     // 	},
     // 	mode: 'nonce'
     // }
+    alias: {
+      'mono-svelte': 'src/lib/mono',
+    },
   },
 }
 
