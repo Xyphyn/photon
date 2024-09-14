@@ -1,0 +1,8 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "app.phtn.twa",
+    "sha256_cert_fingerprints": ["5C:8E:B3:4B:0F:BB:3F:DE:0C:0D:2A:0D:A7:71:C1:41:F8:06:78:2A:BC:7A:D5:C8:E6:4F:9B:46:56:29:DB:E3"]
+  }
+}]
