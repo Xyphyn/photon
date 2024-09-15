@@ -85,7 +85,7 @@
 <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 <div
   class="post relative max-w-full min-w-0 w-full cursor-pointer outline-none
-  group @container/post
+  group
   {$userSettings.leftAlign ? 'left-align' : ''}
   {view == 'compact' ? 'py-3 list-type compact' : ''}
   {view == 'list' ? 'py-5 list-type' : ''}
@@ -191,7 +191,7 @@
   />
 </div>
 
-<style>
+<style lang="postcss">
   .list-type {
     display: grid;
     grid-template-areas: 'meta media' 'title media' 'body media' 'embed embed' 'actions actions';
@@ -200,17 +200,24 @@
     height: 100%;
   }
 
+  /* Swap media/item positions */
   .list-type.left-align {
     grid-template-areas: 'media meta' 'media title' 'media body' 'embed embed' 'actions actions';
     grid-template-columns: auto minmax(0, 1fr);
   }
 
-  .list-type.compact {
-    grid-template-areas: 'meta media' 'title media' 'body media' 'embed media' 'actions media';
+  /* Has media on the right for all of them */
+  @media (min-width: 480px) {
+    .list-type.compact {
+      grid-template-areas: 'meta media' 'title media' 'body media' 'embed media' 'actions media';
+    }
   }
 
-  .list-type.compact.left-align {
-    grid-template-areas: 'media meta' 'media title' 'media body' 'media embed' 'media actions';
+  /* Swap above again */
+  @media (min-width: 480px) {
+    .list-type.compact.left-align {
+      grid-template-areas: 'media meta' 'media title' 'media body' 'media embed' 'media actions';
+    }
   }
 
   :global(.compact > *:not(.no-list-margin):not(:first-child)) {
