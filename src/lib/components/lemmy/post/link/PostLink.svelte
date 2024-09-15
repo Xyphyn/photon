@@ -31,7 +31,7 @@
     color="distinct"
     class="flex flex-col-reverse sm:flex-row
     overflow-hidden gap-4 embed-card z-0 relative
-    dark:border-t-zinc-800 border-opacity-80"
+    dark:border-t-zinc-800 border-opacity-80 max-w-full"
     rounding="xl"
     element="article"
   >
@@ -125,7 +125,7 @@
     </PostLinkSources>
   </div>
 {:else}
-  <div class="flex items-center gap-1">
+  <div class="flex space-x-1">
     <PostLinkSources {url}>
       <Button
         color="ghost"
@@ -147,7 +147,7 @@
       href={url}
       target="_blank"
       class="text-slate-900 dark:text-zinc-300 items-center
-    text-xs overflow-hidden max-w-full block"
+    text-xs overflow-hidden max-w-full block flex-shrink"
       size="sm"
       color="ghost"
       rounding="pill"

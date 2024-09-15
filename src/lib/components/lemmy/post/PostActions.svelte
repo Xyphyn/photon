@@ -80,8 +80,8 @@
 
   let localShare = false
 
-  $: buttonHeight = view == 'compact' ? 'h-[30px]' : 'h-8'
-  $: buttonSquare = view == 'compact' ? 'w-[30px] h-[30px]' : 'w-8 h-8'
+  $: buttonHeight = view == 'compact' ? 'h-7' : 'h-8'
+  $: buttonSquare = view == 'compact' ? 'w-7 h-7' : 'w-8 h-8'
 </script>
 
 {#if editing}
