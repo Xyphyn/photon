@@ -82,18 +82,16 @@
 -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<Material
-  element="article"
-  color={view != 'card' ? 'none' : 'distinct'}
-  class="post relative max-w-full min-w-0 w-full cursor-pointer outline-none group
-  {view != 'card' ? 'bg-transparent !border-0' : 'p-5'} {view == 'compact'
-    ? 'py-3 list-type compact-view'
-    : view == 'list'
-      ? 'py-5 list-type'
-      : 'py-5 flex flex-col gap-2'} {$$props.class}"
+<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+<div
+  class="post relative max-w-full min-w-0 w-full cursor-pointer outline-none
+  group
+  {$userSettings.leftAlign ? 'left-align' : ''}
+  {view == 'compact' ? 'py-3 list-type compact' : ''}
+  {view == 'list' ? 'py-5 list-type' : ''}
+  {view == 'cozy' ? 'py-5 flex flex-col gap-2' : ''}
+  {$$props.class ?? ''}"
   id={post.post.id.toString()}
-  padding="none"
-  rounding={view == 'card' ? undefined : 'none'}
   on:click={(e) => {
     onClick(e)
   }}
@@ -153,8 +151,8 @@
         bind:post={post.post}
         bind:type
         class="{$userSettings.leftAlign
-          ? 'mr-2'
-          : 'ml-2'} flex-shrink no-list-margin"
+          ? 'mr-3'
+          : 'ml-3'} flex-shrink no-list-margin"
         style="grid-area: media;"
         {view}
       />
@@ -191,27 +189,42 @@
     group-focus:inset-y-0.5 group-focus:-inset-x-4 group-focus:sm:-inset-x-5 group-focus:opacity-100
     duration-150"
   />
-</Material>
+</div>
 
-<style>
-  :global(.list-type) {
+<style lang="postcss">
+  .list-type {
     display: grid;
-    grid-template-areas: var(
-      --template-areas,
-      'meta media' 'title media' 'body media' 'embed embed' 'actions actions'
-    );
+    grid-template-areas: 'meta media' 'title media' 'body media' 'embed embed' 'actions actions';
+    grid-template-columns: minmax(0, 1fr) auto;
     width: 100%;
     height: 100%;
-    grid-template-columns: var(--template-columns, 1fr auto);
   }
 
-  :global(.compact-view > *:not(.no-list-margin):not(:first-child)) {
+  /* Swap media/item positions */
+  .list-type.left-align {
+    grid-template-areas: 'media meta' 'media title' 'media body' 'embed embed' 'actions actions';
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  /* Has media on the right for all of them */
+  @media (min-width: 480px) {
+    .list-type.compact {
+      grid-template-areas: 'meta media' 'title media' 'body media' 'embed media' 'actions media';
+    }
+  }
+
+  /* Swap above again */
+  @media (min-width: 480px) {
+    .list-type.compact.left-align {
+      grid-template-areas: 'media meta' 'media title' 'media body' 'media embed' 'media actions';
+    }
+  }
+
+  :global(.compact > *:not(.no-list-margin):not(:first-child)) {
     margin-top: 0.3rem;
   }
 
-  :global(
-      .list-type:not(.compact-view) > *:not(.no-list-margin):not(:first-child)
-    ) {
+  :global(.list-type:not(.compact) > *:not(.no-list-margin):not(:first-child)) {
     margin-top: 0.5rem;
   }
 </style>

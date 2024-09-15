@@ -52,13 +52,4 @@
     />
     {$t('filter.view.compact')}
   </option>
-  <option value="card">
-    <Icon
-      src={Clock}
-      size="16"
-      micro
-      class="text-slate-600 dark:text-zinc-400"
-    />
-    {$t('filter.view.legacy')}
-  </option>
 </Select>

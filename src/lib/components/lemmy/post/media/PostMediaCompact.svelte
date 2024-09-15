@@ -70,8 +70,9 @@
       />
       {#if type != 'image'}
         <div
-          class="absolute w-7 h-7 bottom-0 left-0 m-2 rounded-lg text-slate-800 dark:text-zinc-200
-          backdrop-blur-sm bg-[#ffffff]/75 dark:bg-black/75 grid place-items-center"
+          class="absolute w-8 h-8 bottom-0 left-0 m-1 rounded-xl text-slate-800 dark:text-zinc-200
+          backdrop-blur-sm bg-slate-25/75 dark:bg-zinc-900/75 border border-slate-200/75 dark:border-zinc-700/75
+          grid place-items-center"
         >
           <Icon src={type == 'iframe' ? VideoCamera : Link} micro size="16" />
         </div>

@@ -115,6 +115,7 @@
   class="grid w-full meta {community
     ? 'grid-rows-2'
     : 'grid-rows-1'} text-xs min-w-0 max-w-full"
+  class:compact={view == 'compact'}
   style={$$props.style ?? ''}
 >
   {#if showCommunity && community && subscribed}
@@ -126,7 +127,7 @@
       >
         <Avatar
           url={community.icon}
-          width={32}
+          width={view == 'compact' ? 24 : 32}
           alt={community.name}
           class="group-hover/community:ring-2 transition-all ring-offset-1 ring-primary-900 dark:ring-primary-100"
         />
@@ -145,42 +146,44 @@
     <CommunityLink
       {community}
       style="grid-area: community;"
-      class="flex-shrink self-end"
+      class="flex-shrink"
     />
   {/if}
-  <span
-    class="text-slate-600 dark:text-zinc-400 flex flex-row gap-2 items-center self-start"
-    style="grid-area: stats;"
-  >
-    {#if user}
-      <address class="contents not-italic">
-        <UserLink avatarSize={20} {user} avatar={!showCommunity}>
-          <svelte:fragment slot="badges">
-            {#if badges.moderator}
-              <ShieldIcon filled width={14} class="text-green-500" />
-            {/if}
-            {#if badges.admin}
-              <ShieldIcon filled width={14} class="text-red-500" />
-            {/if}
-          </svelte:fragment>
-        </UserLink>
-      </address>
-    {/if}
-    {#if published}
-      <RelativeDate date={published} class="flex-shrink-0" />
-    {/if}
-    {#if edited}
-      <div
-        title={$t('post.meta.lastEdited', {
-          default: formatRelativeDate(publishedToDate(edited), {
-            style: 'long',
-          }),
-        })}
-      >
-        <Icon src={Pencil} micro size="14" />
-      </div>
-    {/if}
-  </span>
+  {#if view != 'compact'}
+    <span
+      class="text-slate-600 dark:text-zinc-400 flex flex-row gap-2 items-center self-start"
+      style="grid-area: stats;"
+    >
+      {#if user}
+        <address class="contents not-italic">
+          <UserLink avatarSize={20} {user} avatar={!showCommunity}>
+            <svelte:fragment slot="badges">
+              {#if badges.moderator}
+                <ShieldIcon filled width={14} class="text-green-500" />
+              {/if}
+              {#if badges.admin}
+                <ShieldIcon filled width={14} class="text-red-500" />
+              {/if}
+            </svelte:fragment>
+          </UserLink>
+        </address>
+      {/if}
+      {#if published}
+        <RelativeDate date={published} class="flex-shrink-0" />
+      {/if}
+      {#if edited}
+        <div
+          title={$t('post.meta.lastEdited', {
+            default: formatRelativeDate(publishedToDate(edited), {
+              style: 'long',
+            }),
+          })}
+        >
+          <Icon src={Pencil} micro size="14" />
+        </div>
+      {/if}
+    </span>
+  {/if}
   <div
     class="flex flex-row justify-end items-center self-center flex-wrap gap-2 [&>*]:flex-shrink-0 badges ml-2"
     style="grid-area: badges;"
@@ -291,6 +294,12 @@
     gap: 0;
     grid-template-rows: auto auto;
     grid-template-columns: max-content minmax(0, auto) auto;
+  }
+
+  .meta.compact {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
   }
 
   :global(.badge-tag-color) {
