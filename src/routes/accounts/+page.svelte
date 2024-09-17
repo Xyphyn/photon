@@ -269,7 +269,7 @@
               {@const count = notifications.get(profile.id)}
               {#if count === null}
                 <Spinner width={20} />
-              {:else if count > 0}
+              {:else if count ?? 0 > 0}
                 <Badge
                   class="w-6 h-6 grid place-items-center !p-0"
                   color="red-subtle"
