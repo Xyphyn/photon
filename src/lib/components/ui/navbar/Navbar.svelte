@@ -238,7 +238,12 @@
         class="flex flex-row gap-2 py-2 px-2 items-center w-full overflow-auto"
         style="border-radius: inherit; grid-row: 1; grid-column: 1;"
       >
-        <NavButton href="/theme" label={$t('nav.menu.theme')} icon={Swatch} />
+        <NavButton
+          adaptive={false}
+          href="/theme"
+          label={$t('nav.menu.theme')}
+          icon={Swatch}
+        />
         <Menu>
           <NavButton
             slot="target"
@@ -248,18 +253,26 @@
               : $colorScheme == 'light'
                 ? Sun
                 : Moon}
+            adaptive={false}
           />
-          <MenuButton on:click={() => colorScheme.set('system')}>
+          <MenuButton
+            adaptive={false}
+            on:click={() => colorScheme.set('system')}
+          >
             {$t('nav.menu.colorscheme.system')}
           </MenuButton>
-          <MenuButton on:click={() => colorScheme.set('light')}>
+          <MenuButton
+            adaptive={false}
+            on:click={() => colorScheme.set('light')}
+          >
             {$t('nav.menu.colorscheme.light')}
           </MenuButton>
-          <MenuButton on:click={() => colorScheme.set('dark')}>
+          <MenuButton adaptive={false} on:click={() => colorScheme.set('dark')}>
             {$t('nav.menu.colorscheme.dark')}
           </MenuButton>
         </Menu>
         <NavButton
+          adaptive={false}
           href="/settings"
           label={$t('nav.menu.settings')}
           icon={Cog6Tooth}
@@ -268,18 +281,31 @@
           class="flex-1 border-slate-200 dark:border-zinc-800 border-opacity-50"
         />
         <NavButton
+          adaptive={false}
           href="/accounts"
           label={$t('account.accounts')}
           icon={UserGroup}
         />
-        <NavButton href="/saved" label={$t('profile.saved')} icon={Bookmark} />
-        <NavButton href="/inbox" label={$t('profile.inbox')} icon={Inbox} />
         <NavButton
+          adaptive={false}
+          href="/saved"
+          label={$t('profile.saved')}
+          icon={Bookmark}
+        />
+        <NavButton
+          adaptive={false}
+          href="/inbox"
+          label={$t('profile.inbox')}
+          icon={Inbox}
+        />
+        <NavButton
+          adaptive={false}
           href="/profile/user"
           label={$t('profile.profile')}
           icon={UserCircle}
         />
         <NavButton
+          adaptive={false}
           on:click={() => (layer = 0)}
           label={$t('post.image.close')}
           icon={XMark}
