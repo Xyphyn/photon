@@ -464,6 +464,7 @@
       title={$t('settings.navigation.altMenu.title')}
       description={$t('settings.navigation.altMenu.description')}
       bind:checked={$userSettings.dock.altMenu}
+      beta
     />
   </Section>
 

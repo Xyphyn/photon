@@ -17,26 +17,14 @@
   } from 'mono-svelte'
   import {
     GlobeAlt,
-    Home,
     Icon,
     MagnifyingGlass,
     Newspaper,
     PencilSquare,
     Plus,
     ServerStack,
-    XMark,
-    Inbox,
     Bars3,
-    UserCircle,
-    Cog6Tooth,
-    Swatch,
-    ComputerDesktop,
-    Sun,
-    Moon,
-    Bookmark,
-    UserGroup,
-    ChevronDown,
-    ChevronUp,
+    ChevronDoubleDown,
   } from 'svelte-hero-icons'
   import Profile from './Profile.svelte'
   import NavButton from './NavButton.svelte'
@@ -52,20 +40,24 @@
   import { page } from '$app/stores'
   import { userSettings } from '$lib/settings'
   import Contents from '$lib/components/lemmy/util/Contents.svelte'
+  import ProfileLayer from './layers/ProfileLayer.svelte'
 
   let promptOpen: boolean = false
-
   let layer: number = 0
+
+  $: dockMode = layer == 0
 </script>
 
 <CommandsWrapper bind:open={promptOpen} />
 <div class="flex gap-1">
   <nav
     class="items-center w-full mx-auto z-50 box-border p-0.5
-  duration-150 @container grid h-[62px]
+  duration-150 @container grid min-h-[62px] {dockMode
+      ? 'max-h-[62px]'
+      : 'max-h-[384px]'}
   {$$props.class}
   "
-    style={$$props.style}
+    style="{$$props.style};"
   >
     {#if layer == 0}
       <div
@@ -232,83 +224,24 @@
         </svelte:component>
       </div>
     {:else if layer == 1}
+      <ProfileLayer on:move={(e) => (layer += e.detail)} />
+    {:else if layer == 2 && $page.data?.slots?.nav?.component}
       <div
         in:fly={{ y: -16, easing: backOut, duration: 300 }}
         out:fly={{ y: -16, easing: backOut, duration: 300 }}
-        class="flex flex-row gap-2 py-2 px-2 items-center w-full overflow-auto"
+        class="flex flex-row gap-2 py-2 px-2 w-full overflow-auto justify-end"
         style="border-radius: inherit; grid-row: 1; grid-column: 1;"
       >
-        <NavButton
-          adaptive={false}
-          href="/theme"
-          label={$t('nav.menu.theme')}
-          icon={Swatch}
-        />
-        <Menu>
-          <NavButton
-            slot="target"
-            label={$t('nav.menu.colorscheme.label')}
-            icon={$colorScheme == 'system'
-              ? ComputerDesktop
-              : $colorScheme == 'light'
-                ? Sun
-                : Moon}
-            adaptive={false}
-          />
-          <MenuButton
-            adaptive={false}
-            on:click={() => colorScheme.set('system')}
-          >
-            {$t('nav.menu.colorscheme.system')}
-          </MenuButton>
-          <MenuButton
-            adaptive={false}
-            on:click={() => colorScheme.set('light')}
-          >
-            {$t('nav.menu.colorscheme.light')}
-          </MenuButton>
-          <MenuButton adaptive={false} on:click={() => colorScheme.set('dark')}>
-            {$t('nav.menu.colorscheme.dark')}
-          </MenuButton>
-        </Menu>
-        <NavButton
-          adaptive={false}
-          href="/settings"
-          label={$t('nav.menu.settings')}
-          icon={Cog6Tooth}
-        />
-        <hr
-          class="flex-1 border-slate-200 dark:border-zinc-800 border-opacity-50"
+        <svelte:component
+          this={$page.data.slots.nav.component}
+          {...$page.data.slots.nav.props}
         />
         <NavButton
           adaptive={false}
-          href="/accounts"
-          label={$t('account.accounts')}
-          icon={UserGroup}
-        />
-        <NavButton
-          adaptive={false}
-          href="/saved"
-          label={$t('profile.saved')}
-          icon={Bookmark}
-        />
-        <NavButton
-          adaptive={false}
-          href="/inbox"
-          label={$t('profile.inbox')}
-          icon={Inbox}
-        />
-        <NavButton
-          adaptive={false}
-          href="/profile/user"
-          label={$t('profile.profile')}
-          icon={UserCircle}
-        />
-        <NavButton
-          adaptive={false}
-          on:click={() => (layer = 0)}
+          on:click={() => (layer -= 1)}
           label={$t('post.image.close')}
-          icon={XMark}
+          icon={ChevronDoubleDown}
+          class="sticky right-0 bg-zinc-900"
         />
       </div>
     {/if}
