@@ -11,9 +11,8 @@ It is designed for all features to have an appealing and intuitive design, while
 
 ## Screenshots
 
-![image](https://github.com/Xyphyn/photon/assets/80978739/8e19d8ee-9630-4152-bc7a-17ce2685afb9)
-
-![image](https://github.com/Xyphyn/photon/assets/80978739/e36468f6-03c5-4267-94e8-3bba60b6ccb2)
+![desktop-default-dark](https://github.com/user-attachments/assets/4abda138-427a-48b3-8741-0f3ca3510fd0)
+![desktop-default-light](https://github.com/user-attachments/assets/8356d7eb-16c6-4bd8-ba9a-6d227370ddb0)
 
 ## Self-hosting
 
