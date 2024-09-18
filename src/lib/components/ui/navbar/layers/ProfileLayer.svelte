@@ -8,6 +8,7 @@
   import {
     Bookmark,
     ChevronDoubleUp,
+    ChevronDoubleDown,
     Cog6Tooth,
     ComputerDesktop,
     Icon,
@@ -118,7 +119,7 @@
     adaptive={false}
     on:click={() => dispatch('move', -1)}
     label={$t('post.image.close')}
-    icon={XMark}
+    icon={ChevronDoubleDown}
     class="sticky right-0 bg-zinc-900"
   />
 </div>
