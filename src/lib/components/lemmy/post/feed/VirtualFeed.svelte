@@ -51,12 +51,23 @@
   const virtualizer = createWindowVirtualizer({
     count: posts.length,
     estimateSize: () => 150,
+    overscan: 10,
+    measureElement: (element, entry, instance) => {
+      const direction = instance.scrollDirection
+      if (direction === 'forward' || direction === null) {
+        return element.scrollHeight
+      } else {
+        const indexKey = Number(element.getAttribute('data-index'))
+        let cacheMeasurement = instance.itemSizeCache.get(indexKey)
+        return cacheMeasurement
+      }
+    },
   })
 
   $: items = $virtualizer.getVirtualItems()
-  $: {
-    if (virtualItemEls.length)
-      virtualItemEls.forEach((el) => $virtualizer.measureElement(el))
+
+  $: if (virtualItemEls) {
+    virtualItemEls.forEach($virtualizer.measureElement)
   }
 
   $: if (posts.length && virtualListEl)
@@ -117,95 +128,68 @@
     }
   }
 
-  // const callback: IntersectionObserverCallback = (entries, observer) => {
-  //   entries.forEach((entry) => {
-  //     if (!entry.isIntersecting) return
+  const callback: IntersectionObserverCallback = (entries, observer) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return
 
-  //     const element = entry.target as HTMLElement
-  //     const id = element.getAttribute('data-index')
+      const element = entry.target as HTMLElement
+      const id = element.getAttribute('data-index')
 
-  //     if (!id) return
+      if (!id) return
 
-  //     postFeeds.updateFeed(feedId, {
-  //       lastSeen: Number(id),
-  //     })
-  //     observer.unobserve(element)
-  //   })
-  // }
+      postFeeds.updateFeed(feedId, {
+        lastSeen: Number(id),
+      })
+      observer.unobserve(element)
+    })
+  }
 
-  // onMount(() => {
-  //   const observer = new IntersectionObserver(callback, {
-  //     root: null,
-  //     rootMargin: '0px',
-  //     threshold: 0.5,
-  //   })
+  onMount(() => {
+    const observer = new IntersectionObserver(callback, {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.5,
+    })
 
-  //   const elements = document.querySelectorAll('.post-container')
-  //   elements.forEach((el) => observer.observe(el))
+    const elements = document.querySelectorAll('.post-container')
+    elements.forEach((el) => observer.observe(el))
 
-  //   const postContainer = document.querySelector('#feed')
-  //   if (postContainer) {
-  //     const mutationObserver = new MutationObserver((mutations) => {
-  //       mutations.forEach((mutation) => {
-  //         if (mutation.type === 'childList') {
-  //           mutation.addedNodes.forEach((node) => {
-  //             if (
-  //               node instanceof HTMLElement &&
-  //               node.classList.contains('post-container')
-  //             ) {
-  //               observer.observe(node)
-  //             }
-  //           })
-  //           mutation.removedNodes.forEach((node) => {
-  //             if (
-  //               node instanceof HTMLElement &&
-  //               node.classList.contains('post-container')
-  //             ) {
-  //               observer.unobserve(node)
-  //             }
-  //           })
-  //         }
-  //       })
-  //     })
+    const postContainer = document.querySelector('#feed')
+    if (postContainer) {
+      const mutationObserver = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.type === 'childList') {
+            mutation.addedNodes.forEach((node) => {
+              if (
+                node instanceof HTMLElement &&
+                node.classList.contains('post-container')
+              ) {
+                observer.observe(node)
+              }
+            })
+            mutation.removedNodes.forEach((node) => {
+              if (
+                node instanceof HTMLElement &&
+                node.classList.contains('post-container')
+              ) {
+                observer.unobserve(node)
+              }
+            })
+          }
+        })
+      })
 
-  //     mutationObserver.observe(postContainer, {
-  //       childList: true,
-  //       subtree: true,
-  //     })
-  //   }
-  // })
+      mutationObserver.observe(postContainer, {
+        childList: true,
+        subtree: true,
+      })
+    }
+  })
 
   onMount(async () => {
     await tick()
     $virtualizer.measure()
   })
-
-  // keyboard handling
-  // let selectedIndex = writable(-1)
-
-  // function handleKeydown(event: KeyboardEvent) {
-  //   if (event.key === 'ArrowUp') {
-  //     event.preventDefault()
-  //     $selectedIndex = Math.max(0, $selectedIndex - 1)
-  //   } else if (event.key === 'ArrowDown') {
-  //     event.preventDefault()
-  //     $selectedIndex = Math.min(posts.length - 1, $selectedIndex + 1)
-  //   }
-  // }
-
-  // onMount(() => {
-  //   selectedIndex.subscribe(focusItem)
-  // })
-
-  // function focusItem(index: number) {
-  //   const el =
-  //     virtualItemEls.find(
-  //       (el) => Number(el?.getAttribute('data-index')) == index
-  //     ) ?? virtualItemEls[1]
-
-  //   $virtualizer.scrollToIndex(index, { align: 'center', behavior: 'auto' })
-  //   el?.firstChild?.firstChild?.parentElement?.focus({})
-  // }
 </script>
 
 <!-- <svelte:window on:keydown={handleKeydown} /> -->
