@@ -68,7 +68,7 @@
 
   $: items = $virtualizer.getVirtualItems()
 
-  $: if (virtualItemEls) {
+  $: if (virtualItemEls.length) {
     virtualItemEls.forEach($virtualizer.measureElement)
   }
 
