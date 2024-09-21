@@ -38,8 +38,6 @@
   import InfiniteScroll from 'svelte-infinite-scroll'
   import type { Readable } from 'svelte/motion'
   import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
-  import { postLink } from '../helpers'
-  import { writable } from 'svelte/store'
 
   export let posts: PostView[]
   export let community: boolean = false
@@ -53,16 +51,7 @@
     estimateSize: () => 150,
     overscan: 5,
     measureElement: (element, entry, instance) => {
-      const direction = instance.scrollDirection
-      if (direction === 'forward' || direction === null) {
-        return element.scrollHeight
-      } else {
-        const indexKey = Number(element.getAttribute('data-index'))
-        // didnt ask
-        // @ts-ignore
-        let cacheMeasurement = instance.itemSizeCache.get(indexKey)
-        return cacheMeasurement
-      }
+      return element.scrollHeight
     },
   })
 

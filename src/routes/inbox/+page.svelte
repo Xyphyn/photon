@@ -48,6 +48,25 @@
 
     return response.replies
   }
+
+  function addSearchParam(
+    currentSearchParams: URLSearchParams,
+    newParamString: string
+  ) {
+    // Create a new URLSearchParams object from the current search params
+    const updatedParams = new URLSearchParams(currentSearchParams)
+
+    // Parse the new parameter string
+    const newParam = new URLSearchParams(newParamString)
+
+    // Get the key and value of the new parameter
+    const [key, value]: [string, string] = newParam.entries().next().value!
+
+    // Add the new parameter to the updated params
+    updatedParams.set(key, value)
+
+    return updatedParams
+  }
 </script>
 
 <svelte:head>
@@ -55,13 +74,14 @@
 </svelte:head>
 
 <div class="flex flex-row gap-2">
-  <Header pageHeader class="sm:flex-row flex-col justify-between items-end">
+  <Header pageHeader class="sm:flex-row justify-between flex-col">
     {$t('routes.inbox.title')}
 
     <div class="flex items-center gap-2">
       <Button
         on:click={() => goto($page.url, { invalidateAll: true })}
-        size="square-md"
+        size="square-lg"
+        rounding="xl"
         title={$t('common.refresh')}
       >
         <Icon src={ArrowPath} size="16" mini slot="prefix" />
@@ -70,8 +90,8 @@
         on:click={markAllAsRead}
         loading={markingAsRead}
         disabled={markingAsRead}
-        size="md"
-        class="h-8"
+        size="lg"
+        class="h-10"
       >
         <Icon src={Check} width={16} mini slot="prefix" />
         {$t('routes.inbox.markAsRead')}
@@ -82,21 +102,22 @@
 <div class="mt-4" />
 
 <div
-  class="mt-4 mb-0 sticky z-30 mx-auto max-w-full"
+  class="mt-4 mb-0 sticky z-30 mx-auto max-w-full flex gap-2 md:flex-row flex-col
+  items-center px-2"
   style="top: max(1.5rem, {$contentPadding.top}px);"
 >
   <Tabs
     routes={[
       {
-        href: '/inbox',
+        href: '?type=All',
         name: $t('filter.location.all'),
       },
       {
-        href: '/inbox?type=Replies',
+        href: '?type=Replies',
         name: $t('filter.inbox.replies'),
       },
       {
-        href: '/inbox?type=Mentions',
+        href: '?type=Mentions',
         name: $t('filter.inbox.mentions'),
       },
       {
@@ -104,28 +125,37 @@
         name: $t('filter.inbox.messages'),
       },
     ]}
-    currentRoute="{$page.url.pathname}{$page.url.search}"
-    class="overflow-auto"
+    currentRoute={$page.url.search}
+    isSelected={(url, current, route, def) =>
+      $page.url.search == route ||
+      ($page.url.pathname == route && $page.url.search == '') ||
+      $page.url.searchParams.toString().includes(route.slice(1)) ||
+      ($page.url.search == '' && route == def)}
+    class="overflow-auto w-full"
+    buildUrl={(route, href) =>
+      href.includes('?')
+        ? '?' + addSearchParam($page.url.searchParams, href).toString()
+        : `${href}${$page.url.search}`}
+    defaultRoute="?type=All"
   />
-</div>
-<div class="flex flex-row gap-4 flex-wrap items-end">
-  <Select
-    bind:value={data.unreadOnly}
-    on:change={() =>
-      searchParam(
-        $page.url,
-        'unreadOnly',
-        data.unreadOnly?.toString() ?? 'false',
-        'page'
-      )}
-  >
-    <span slot="label" class="flex items-center gap-1">
-      <Icon src={Funnel} size="15" mini />
-      {$t('filter.filter')}
-    </span>
-    <option value="false">{$t('filter.location.all')}</option>
-    <option value="true">{$t('filter.unread')}</option>
-  </Select>
+  <Tabs
+    routes={[
+      {
+        href: '?unreadOnly=false',
+        name: $t('filter.location.all'),
+      },
+      {
+        href: '?unreadOnly=true',
+        name: $t('filter.unread'),
+      },
+    ]}
+    isSelected={(url, current, route, def) =>
+      $page.url.searchParams.toString().includes(route.slice(1)) ||
+      ($page.url.search == '' && route == def)}
+    buildUrl={(route, href) =>
+      '?' + addSearchParam($page.url.searchParams, href).toString()}
+    defaultRoute="?unreadOnly=true"
+  />
 </div>
 <div class="flex flex-col gap-4 list-none flex-1 h-full mt-4">
   {#if !data.data || (data.data?.length ?? 0) == 0}
