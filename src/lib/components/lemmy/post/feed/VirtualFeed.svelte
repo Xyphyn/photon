@@ -51,13 +51,15 @@
   const virtualizer = createWindowVirtualizer({
     count: posts.length,
     estimateSize: () => 150,
-    overscan: 10,
+    overscan: 5,
     measureElement: (element, entry, instance) => {
       const direction = instance.scrollDirection
       if (direction === 'forward' || direction === null) {
         return element.scrollHeight
       } else {
         const indexKey = Number(element.getAttribute('data-index'))
+        // didnt ask
+        // @ts-ignore
         let cacheMeasurement = instance.itemSizeCache.get(indexKey)
         return cacheMeasurement
       }
