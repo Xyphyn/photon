@@ -51,12 +51,25 @@
   const virtualizer = createWindowVirtualizer({
     count: posts.length,
     estimateSize: () => 150,
+    overscan: 5,
+    measureElement: (element, entry, instance) => {
+      const direction = instance.scrollDirection
+      if (direction === 'forward' || direction === null) {
+        return element.scrollHeight
+      } else {
+        const indexKey = Number(element.getAttribute('data-index'))
+        // didnt ask
+        // @ts-ignore
+        let cacheMeasurement = instance.itemSizeCache.get(indexKey)
+        return cacheMeasurement
+      }
+    },
   })
 
   $: items = $virtualizer.getVirtualItems()
-  $: {
-    if (virtualItemEls.length)
-      virtualItemEls.forEach((el) => $virtualizer.measureElement(el))
+
+  $: if (virtualItemEls.length) {
+    virtualItemEls.forEach($virtualizer.measureElement)
   }
 
   $: if (posts.length && virtualListEl)
@@ -179,33 +192,6 @@
     await tick()
     $virtualizer.measure()
   })
-
-  // keyboard handling
-  // let selectedIndex = writable(-1)
-
-  // function handleKeydown(event: KeyboardEvent) {
-  //   if (event.key === 'ArrowUp') {
-  //     event.preventDefault()
-  //     $selectedIndex = Math.max(0, $selectedIndex - 1)
-  //   } else if (event.key === 'ArrowDown') {
-  //     event.preventDefault()
-  //     $selectedIndex = Math.min(posts.length - 1, $selectedIndex + 1)
-  //   }
-  // }
-
-  // onMount(() => {
-  //   selectedIndex.subscribe(focusItem)
-  // })
-
-  // function focusItem(index: number) {
-  //   const el =
-  //     virtualItemEls.find(
-  //       (el) => Number(el?.getAttribute('data-index')) == index
-  //     ) ?? virtualItemEls[1]
-
-  //   $virtualizer.scrollToIndex(index, { align: 'center', behavior: 'auto' })
-  //   el?.firstChild?.firstChild?.parentElement?.focus({})
-  // }
 </script>
 
 <!-- <svelte:window on:keydown={handleKeydown} /> -->
