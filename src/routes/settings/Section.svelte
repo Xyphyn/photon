@@ -16,7 +16,7 @@
     flex items-center justify-between z-0 relative group transition-colors"
     on:click={() => (open = !open)}
   >
-    <h2 class="text-lg font-semibold text-inherit" {id}>
+    <h2 class="text-xl font-semibold text-inherit" {id}>
       <span>{title}</span>
     </h2>
     <Icon

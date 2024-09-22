@@ -311,36 +311,10 @@
       title={$t('settings.app.infiniteScroll.title')}
       description={$t('settings.app.infiniteScroll.description')}
     />
-    <ToggleSetting
-      bind:checked={$userSettings.openLinksInNewTab}
-      title={$t('settings.app.postsInNewTab.title')}
-      description={$t('settings.app.postsInNewTab.description')}
-    />
-    <ToggleSetting
-      supportedPlatforms={{ desktop: true, tablet: false, mobile: false }}
-      bind:checked={$userSettings.newWidth}
-      title={$t('settings.app.limitLayoutWidth.title')}
-      description={$t('settings.app.limitLayoutWidth.description')}
-    />
-    <ToggleSetting
-      bind:checked={$userSettings.randomPlaceholders}
-      title={$t('settings.app.placeholders.title')}
-      description={$t('settings.app.placeholders.description')}
-    />
-    <ToggleSetting
-      bind:checked={$userSettings.expandImages}
-      title={$t('settings.app.expandImages.title')}
-      description={$t('settings.app.expandImages.description')}
-    />
-    <ToggleSetting
-      bind:checked={$userSettings.posts.deduplicateEmbed}
-      title={$t('settings.app.duplicateTitles.title')}
-      description={$t('settings.app.duplicateTitles.description')}
-    />
     <Setting>
       <span slot="title">{$t('settings.app.thumbnailSide.title')}</span>
       <span slot="description">
-        {$t('settings.app.thumbnailSide.title')}
+        {$t('settings.app.thumbnailSide.description')}
       </span>
       <MultiSelect
         options={[true, false]}
@@ -351,6 +325,17 @@
         bind:selected={$userSettings.leftAlign}
       />
     </Setting>
+    <ToggleSetting
+      supportedPlatforms={{ desktop: true, tablet: false, mobile: false }}
+      bind:checked={$userSettings.newWidth}
+      title={$t('settings.app.limitLayoutWidth.title')}
+      description={$t('settings.app.limitLayoutWidth.description')}
+    />
+    <ToggleSetting
+      bind:checked={$userSettings.openLinksInNewTab}
+      title={$t('settings.app.postsInNewTab.title')}
+      description={$t('settings.app.postsInNewTab.description')}
+    />
     <Setting>
       <span slot="title">{$t('settings.app.font.title')}</span>
       <span slot="description">{$t('settings.app.font.description')}</span>
@@ -369,6 +354,21 @@
         <Icon src={ArrowRight} size="16" mini slot="suffix" />
       </Button>
     </Setting>
+    <ToggleSetting
+      bind:checked={$userSettings.randomPlaceholders}
+      title={$t('settings.app.placeholders.title')}
+      description={$t('settings.app.placeholders.description')}
+    />
+    <ToggleSetting
+      bind:checked={$userSettings.expandImages}
+      title={$t('settings.app.expandImages.title')}
+      description={$t('settings.app.expandImages.description')}
+    />
+    <ToggleSetting
+      bind:checked={$userSettings.posts.deduplicateEmbed}
+      title={$t('settings.app.duplicateTitles.title')}
+      description={$t('settings.app.duplicateTitles.description')}
+    />
     <Setting>
       <span slot="title">{$t('settings.app.translation.title')}</span>
       <span slot="description">
