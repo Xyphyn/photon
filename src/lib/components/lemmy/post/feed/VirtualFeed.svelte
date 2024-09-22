@@ -221,7 +221,10 @@
           <li
             bind:this={virtualItemEls[index]}
             data-index={row.index}
-            class="relative post-container pop-in"
+            style={row.index < 7 ? `--anim-delay: ${index * 100}ms` : ''}
+            class="relative post-container {row.index < 7
+              ? 'pop-in opacity-0'
+              : ''}"
           >
             {#if posts[row.index]}
               <Post
@@ -299,7 +302,7 @@
 
   @keyframes popIn {
     from {
-      transform: translateY(-24px);
+      transform: translateY(24px);
       opacity: 0;
     }
     to {
@@ -309,6 +312,7 @@
   }
 
   .pop-in {
-    animation: popIn 500ms cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
+    animation: popIn 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) forwards
+      var(--anim-delay);
   }
 </style>
