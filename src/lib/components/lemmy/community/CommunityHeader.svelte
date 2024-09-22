@@ -1,7 +1,6 @@
 <script lang="ts">
   import { profile } from '$lib/auth'
   import EntityHeader from '$lib/components/ui/EntityHeader.svelte'
-
   import { t } from '$lib/translations'
   import { fullCommunityName } from '$lib/util'
   import type {
@@ -10,27 +9,33 @@
     CommunityModeratorView,
     SubscribedType,
   } from 'lemmy-js-client'
-  import { Button, toast } from 'mono-svelte'
+  import { Button, toast, Menu, MenuButton, modal, action } from 'mono-svelte'
   import {
     Check,
     Cog6Tooth,
     Icon,
-    InformationCircle,
+    EllipsisHorizontal,
     Plus,
+    Newspaper,
+    BuildingOffice2,
+    Fire,
+    NoSymbol,
   } from 'svelte-hero-icons'
   import Subscribe from '../../../../routes/communities/Subscribe.svelte'
   import Expandable from '$lib/components/ui/Expandable.svelte'
-  import { userSettings } from '$lib/settings'
   import ShieldIcon from '../moderation/ShieldIcon.svelte'
   import ItemList from '../generic/ItemList.svelte'
   import { userLink } from '$lib/lemmy/generic'
   import { formatRelativeDate } from '$lib/components/util/RelativeDate.svelte'
   import { publishedToDate } from '$lib/components/util/date'
+  import { isAdmin } from '../moderation/moderation'
+  import { block, blockInstance, purgeCommunity } from './CommunityCard.svelte'
 
   export let community: Community
   export let subscribed: SubscribedType
   export let counts: CommunityAggregates | undefined = undefined
   export let moderators: CommunityModeratorView[] = []
+  export let blocked: boolean = false
 </script>
 
 <EntityHeader
@@ -149,5 +154,69 @@ dark:border-zinc-800 border-slate-300 border-opacity-50 text-slate-700 dark:text
         <Icon src={Cog6Tooth} size="16" mini />
       </Button>
     {/if}
+    <Menu placement="top-end">
+      <Button
+        rounding="xl"
+        size="custom"
+        slot="target"
+        style="height: 38px; width: 38px;"
+      >
+        <Icon src={EllipsisHorizontal} size="16" mini slot="prefix" />
+      </Button>
+      <MenuButton href="/modlog?community={community.id}">
+        <Icon src={Newspaper} size="16" mini />
+        {$t('cards.community.modlog')}
+      </MenuButton>
+      {#if $profile?.jwt}
+        <MenuButton
+          color="danger-subtle"
+          size="lg"
+          on:click={() => block(community.id, !blocked)}
+        >
+          <Icon src={NoSymbol} size="16" mini slot="prefix" />
+          {blocked
+            ? $t('cards.community.unblock')
+            : $t('cards.community.block')}
+        </MenuButton>
+        {#if $profile?.user}
+          <MenuButton
+            color="danger-subtle"
+            size="lg"
+            on:click={() => blockInstance(community.instance_id)}
+          >
+            <Icon src={BuildingOffice2} size="16" mini slot="prefix" />
+            {$t('cards.community.blockInstance')}
+          </MenuButton>
+        {/if}
+        {#if $profile?.user && isAdmin($profile.user)}
+          <MenuButton
+            color="danger-subtle"
+            on:click={() =>
+              modal({
+                title: $t('admin.purgeCommunity.title'),
+                body: `${community.title}: ${$t('admin.purgeCommunity.warning')}`,
+                actions: [
+                  action({
+                    close: true,
+                    content: $t('common.cancel'),
+                  }),
+                  action({
+                    action: () => purgeCommunity(community.id),
+                    close: true,
+                    content: $t('admin.purge'),
+                    type: 'danger',
+                    icon: Fire,
+                  }),
+                ],
+                dismissable: true,
+                type: 'error',
+              })}
+          >
+            <Icon src={Fire} size="16" mini slot="prefix" />
+            {$t('admin.purge')}
+          </MenuButton>
+        {/if}
+      {/if}
+    </Menu>
   </div>
 </EntityHeader>

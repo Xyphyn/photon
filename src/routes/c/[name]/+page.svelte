@@ -81,6 +81,7 @@
   <CommunityHeader
     bind:community={community.community}
     bind:subscribed={community.subscribed}
+    bind:blocked={community.blocked}
     moderators={data.community.moderators}
     counts={community.counts}
   />
