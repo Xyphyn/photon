@@ -27,6 +27,8 @@
   } from '$lib/components/error/ErrorContainer.svelte'
   import { page } from '$app/stores'
 
+  export let ref: string = '/'
+
   let data = {
     instance: DEFAULT_INSTANCE_URL,
     username: '',
@@ -57,7 +59,7 @@
 
         if (result) {
           toast({ content: $t('toast.logIn'), type: 'success' })
-          goto('/')
+          goto(ref)
         }
       } else {
         throw new Error('Invalid credentials')
@@ -89,6 +91,7 @@
 <div class="max-w-xl w-full mx-auto h-max my-auto">
   <form on:submit|preventDefault={logIn} class="flex flex-col gap-5">
     <div class="flex flex-col">
+      <slot />
       <Header>{$t('account.login')}</Header>
       {#if $site && mayBeIncompatible(MINIMUM_VERSION, $site.version.replace('v', ''))}
         <Note>

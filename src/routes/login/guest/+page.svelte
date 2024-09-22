@@ -10,6 +10,8 @@
   import { t } from '$lib/translations'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
+  export let ref: string = '/'
+
   let form = {
     instance: '',
     username: `${$t('account.guest')} ${$profileData.profiles.filter((p) => p.jwt == undefined).length + 1}`,
@@ -42,7 +44,7 @@
 
     toast({ content: $t('toast.addAccount'), type: 'success' })
 
-    goto('/')
+    goto(ref)
 
     form.loading = false
   }
@@ -51,6 +53,7 @@
 <div class="max-w-xl w-full mx-auto h-max my-auto">
   <form on:submit|preventDefault={addGuest} class="flex flex-col gap-5">
     <div class="flex flex-col gap-2">
+      <slot />
       <Header>{$t('account.addGuest')}</Header>
       {#if $site && mayBeIncompatible(MINIMUM_VERSION, $site.version.replace('v', ''))}
         <Note>

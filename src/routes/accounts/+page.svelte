@@ -114,12 +114,12 @@
         <h1 class="font-bold text-3xl">No accounts</h1>
       </div>
       <div class="flex flex-row items-center gap-2">
-        <Button href="/login" size="lg">
-          <Icon slot="prefix" src={ArrowLeftOnRectangle} size="16" mini />
+        <Button href="/accounts/login" size="lg">
+          <Icon slot="prefix" src={ArrowLeftOnRectangle} size="16" micro />
           Log in
         </Button>
         <Button href="/signup" size="lg">
-          <Icon slot="prefix" src={Identification} size="16" mini />
+          <Icon slot="prefix" src={Identification} size="16" micro />
           Sign up
         </Button>
       </div>
@@ -131,13 +131,18 @@
       {$t('routes.accounts')}
       <div class="flex" slot="extended">
         <div class="flex gap-2 mr-auto">
-          <Button href="/login" size="lg" class="flex-1 px-8" color="primary">
+          <Button
+            href="/accounts/login"
+            size="lg"
+            class="flex-1 px-8"
+            color="primary"
+          >
             <Icon slot="prefix" src={ArrowLeftOnRectangle} size="16" mini />
             {$t('account.login')}
           </Button>
           {#if !LINKED_INSTANCE_URL}
-            <Button href="/login/guest" size="lg">
-              <Icon slot="prefix" src={Plus} size="16" mini />
+            <Button href="/accounts/login/guest" size="lg">
+              <Icon slot="prefix" src={Plus} size="16" micro />
               {$t('account.addGuest')}
             </Button>
           {/if}
