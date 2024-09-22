@@ -139,7 +139,8 @@
             "altText": "Alt Text",
             "addUrl": "Add URL",
             "setLanguage": "Set language",
-            "unset": "Unset"
+            "unset": "Unset",
+            "readMore": "Read more"
         },
         "profile": {
             "displayName": "Display name",
