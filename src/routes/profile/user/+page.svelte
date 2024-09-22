@@ -5,6 +5,7 @@
 
 {#if data.user && data.sort && data.type && data.page}
   <UserPage
+    inline
     data={{
       items: data.user.submissions,
       page: data.page,

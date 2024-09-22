@@ -31,8 +31,12 @@
       class="overflow-auto"
       routes={[
         {
+          href: '/profile',
+          name: $t('routes.profile.overview'),
+        },
+        {
           href: '/profile/user',
-          name: $t('routes.profile.user'),
+          name: $t('routes.profile.submissions'),
         },
 
         {
@@ -42,7 +46,7 @@
 
         {
           href: '/profile/blocks',
-          name: $t('routes.profile.blocks'),
+          name: $t('routes.profile.blocks.title'),
         },
 
         {

@@ -201,8 +201,14 @@
         "profile": {
             "user": "User",
             "settings": "Settings",
-            "blocks": "Blocks",
-            "credentials": "Account",
+            "blocks": {
+                "title": "Blocked",
+                "empty": {
+                    "title": "No blocked entities",
+                    "description": "When you block anything, it will no longer appear in your feeds."
+                }
+            },
+            "credentials": "Credentials",
             "moderates": "Moderating",
             "favorites": "Favorites",
             "upvoted": "Upvoted",
@@ -216,7 +222,9 @@
             "delete": {
                 "title": "Delete account",
                 "warning": "This is permanent. Are you sure you want to do this?"
-            }
+            },
+            "overview": "Overview",
+            "submissions": "Submissions"
         },
         "translators": "Translators",
         "accounts": "Accounts",
@@ -827,6 +835,9 @@
                 "title": "Don't virtualize feeds",
                 "description": "Virtualization only renders visible posts, increasing performance drastically. Disable virtualization if you are having stutter problems. This will disable infinite scroll."
             }
+        },
+        "account": {
+            "title": "Account"
         }
     },
     "error": {

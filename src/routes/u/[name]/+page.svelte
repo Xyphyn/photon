@@ -38,6 +38,7 @@
   import { formatRelativeDate } from '$lib/components/util/RelativeDate.svelte'
 
   export let data
+  export let inline: boolean = false
 
   let blocking = false
 
@@ -144,127 +145,134 @@
 {/if}
 
 <div class="flex flex-col gap-4 max-w-full w-full">
-  <div class="">
-    <EntityHeader
-      avatar={data.person_view.person.avatar}
-      name={data.person_view.person.display_name ||
-        data.person_view.person.name}
-      banner={data.person_view.person.banner}
-      bio={data.person_view.person.bio}
-      stats={[
-        {
-          name: $t('content.posts'),
-          value: data.person_view.counts.post_count.toString(),
-        },
-        {
-          name: $t('content.comments'),
-          value: data.person_view.counts.comment_count.toString(),
-        },
-        {
-          name: $t('stats.joined'),
-          value: formatRelativeDate(
-            publishedToDate(data.person_view.person.published),
-            { style: 'short' }
-          ).toString(),
-          format: false,
-        },
-      ]}
-    >
-      <span class="text-sm flex gap-0 items-center w-max" slot="nameDetail">
-        @
-        <UserLink
-          showInstance
-          user={data.person_view.person}
-          displayName={false}
-          class="font-normal"
-        />
-      </span>
-      {#if (data.moderates ?? []).length > 0}
-        <Expandable
-          class="border rounded-xl bg-white/50 dark:bg-zinc-900/50 w-full p-3 px-4
-      dark:border-zinc-800 border-slate-300 border-opacity-50 text-slate-700 dark:text-zinc-300 transition-colors"
-        >
-          <span slot="title" class="flex items-center gap-1">
-            <ShieldIcon width={14} filled />
-            {$t('routes.profile.moderates')}
-          </span>
-          <ItemList
-            items={data.moderates.map((m) => ({
-              id: m.community.id,
-              name: m.community.title,
-              url: communityLink(m.community),
-              avatar: m.community.icon,
-              instance: new URL(m.community.actor_id).hostname,
-            }))}
+  {#if !inline}
+    <div class="">
+      <EntityHeader
+        avatar={data.person_view.person.avatar}
+        name={data.person_view.person.display_name ||
+          data.person_view.person.name}
+        banner={data.person_view.person.banner}
+        bio={data.person_view.person.bio}
+        stats={[
+          {
+            name: $t('content.posts'),
+            value: data.person_view.counts.post_count.toString(),
+          },
+          {
+            name: $t('content.comments'),
+            value: data.person_view.counts.comment_count.toString(),
+          },
+          {
+            name: $t('stats.joined'),
+            value: formatRelativeDate(
+              publishedToDate(data.person_view.person.published),
+              { style: 'short' }
+            ).toString(),
+            format: false,
+          },
+        ]}
+      >
+        <span class="text-sm flex gap-0 items-center w-max" slot="nameDetail">
+          @
+          <UserLink
+            showInstance
+            user={data.person_view.person}
+            displayName={false}
+            class="font-normal"
           />
-        </Expandable>
-      {/if}
-      <svelte:fragment slot="actions">
-        {#if $profile?.user && $profile.jwt && data.person_view.person.id != $profile.user.local_user_view.person.id}
-          <div class="flex items-center gap-2 w-full">
-            <Button
-              size="square-md"
-              color="secondary"
-              href="/inbox/messages/{data.person_view.person.id}"
-              title="Message"
-            >
-              <Icon slot="prefix" solid size="16" src={Envelope} />
-            </Button>
-            {#if data.person_view.person.matrix_user_id}
+        </span>
+        {#if (data.moderates ?? []).length > 0}
+          <Expandable
+            class="border rounded-xl bg-white/50 dark:bg-zinc-900/50 w-full p-3 px-4
+      dark:border-zinc-800 border-slate-300 border-opacity-50 text-slate-700 dark:text-zinc-300 transition-colors"
+          >
+            <span slot="title" class="flex items-center gap-1">
+              <ShieldIcon width={14} filled />
+              {$t('routes.profile.moderates')}
+            </span>
+            <ItemList
+              items={data.moderates.map((m) => ({
+                id: m.community.id,
+                name: m.community.title,
+                url: communityLink(m.community),
+                avatar: m.community.icon,
+                instance: new URL(m.community.actor_id).hostname,
+              }))}
+            />
+          </Expandable>
+        {/if}
+        <svelte:fragment slot="actions">
+          {#if $profile?.user && $profile.jwt && data.person_view.person.id != $profile.user.local_user_view.person.id}
+            <div class="flex items-center gap-2 w-full">
               <Button
                 size="square-md"
                 color="secondary"
-                href="https://matrix.to/#/{data.person_view.person
-                  .matrix_user_id}"
-                title="Matrix User"
+                href="/inbox/messages/{data.person_view.person.id}"
+                title="Message"
               >
-                <Icon slot="prefix" solid size="16" src={AtSymbol} />
+                <Icon slot="prefix" solid size="16" src={Envelope} />
               </Button>
-            {/if}
-            {#if isAdmin($profile?.user)}
-              <Menu class="ml-auto" placement="bottom-end">
+              {#if data.person_view.person.matrix_user_id}
+                <Button
+                  size="square-md"
+                  color="secondary"
+                  href="https://matrix.to/#/{data.person_view.person
+                    .matrix_user_id}"
+                  title="Matrix User"
+                >
+                  <Icon slot="prefix" solid size="16" src={AtSymbol} />
+                </Button>
+              {/if}
+              {#if isAdmin($profile?.user)}
+                <Menu class="ml-auto" placement="bottom-end">
+                  <Button size="square-md" slot="target">
+                    <ShieldIcon width={16} filled />
+                  </Button>
+                  <MenuButton
+                    color="danger-subtle"
+                    on:click={() =>
+                      ban(
+                        data.person_view.person.banned,
+                        data.person_view.person
+                      )}
+                  >
+                    <Icon
+                      slot="prefix"
+                      mini
+                      size="16"
+                      src={ShieldExclamation}
+                    />
+                    {data.person_view.person.banned ? 'Unban' : 'Ban'}
+                  </MenuButton>
+                  <MenuButton
+                    color="danger-subtle"
+                    on:click={() => (purgingUser = !purgingUser)}
+                  >
+                    <Icon slot="prefix" mini size="16" src={Fire} />
+                    Purge
+                  </MenuButton>
+                </Menu>
+              {/if}
+              <Menu placement="bottom-end">
                 <Button size="square-md" slot="target">
-                  <ShieldIcon width={16} filled />
+                  <Icon src={EllipsisHorizontal} slot="prefix" size="16" mini />
                 </Button>
                 <MenuButton
                   color="danger-subtle"
-                  on:click={() =>
-                    ban(
-                      data.person_view.person.banned,
-                      data.person_view.person
-                    )}
+                  on:click={() => blockUser(data.person_view.person.id)}
                 >
-                  <Icon slot="prefix" mini size="16" src={ShieldExclamation} />
-                  {data.person_view.person.banned ? 'Unban' : 'Ban'}
-                </MenuButton>
-                <MenuButton
-                  color="danger-subtle"
-                  on:click={() => (purgingUser = !purgingUser)}
-                >
-                  <Icon slot="prefix" mini size="16" src={Fire} />
-                  Purge
+                  <Icon slot="prefix" mini size="16" src={NoSymbol} />
+                  {isBlocked($profile.user, data.person_view.person.id)
+                    ? 'Unblock'
+                    : 'Block'}
                 </MenuButton>
               </Menu>
-            {/if}
-            <Menu placement="bottom-end">
-              <Button size="square-md" slot="target">
-                <Icon src={EllipsisHorizontal} slot="prefix" size="16" mini />
-              </Button>
-              <MenuButton
-                color="danger-subtle"
-                on:click={() => blockUser(data.person_view.person.id)}
-              >
-                <Icon slot="prefix" mini size="16" src={NoSymbol} />
-                {isBlocked($profile.user, data.person_view.person.id)
-                  ? 'Unblock'
-                  : 'Block'}
-              </MenuButton>
-            </Menu>
-          </div>
-        {/if}
-      </svelte:fragment>
-    </EntityHeader>
-  </div>
+            </div>
+          {/if}
+        </svelte:fragment>
+      </EntityHeader>
+    </div>
+  {/if}
 
   <div class="flex flex-col gap-4 max-w-full w-full min-w-0">
     <div class="flex flex-row gap-4 flex-wrap">

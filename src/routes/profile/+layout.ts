@@ -17,5 +17,6 @@ export async function load({ params, url, fetch }) {
     community_blocks: my_user?.community_blocks,
     person_blocks: my_user?.person_blocks,
     follows: my_user?.follows,
+    moderates: my_user?.moderates,
   }
 }
