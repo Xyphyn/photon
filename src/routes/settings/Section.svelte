@@ -22,6 +22,7 @@
     <Icon
       src={open ? Minus : Plus}
       size="16"
+      micro
       class="{open
         ? ''
         : 'rotate-90'} transition-transform duration-500 ease-out"
