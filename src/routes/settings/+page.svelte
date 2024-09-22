@@ -36,7 +36,7 @@
   } from 'svelte-hero-icons'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { removalTemplate } from '$lib/components/lemmy/moderation/moderation.js'
-  import { Button, Checkbox, Select } from 'mono-svelte'
+  import { Button, Checkbox, Select, Spinner } from 'mono-svelte'
   import ViewSelect from '$lib/components/lemmy/dropdowns/ViewSelect.svelte'
   import { LINKED_INSTANCE_URL } from '$lib/instance.js'
   import { DOMAIN_REGEX_FORMS, removeItem } from '$lib/util.js'
@@ -45,6 +45,8 @@
   import { locale, locales, t } from '$lib/translations'
   import { getDefaultLinks, iconOfLink } from '$lib/components/ui/navbar/link'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { profile } from '$lib/auth'
+  import AccountPage from '../profile/(local_user)/settings/+page.svelte'
   let importing = false
   let importText = ''
 
@@ -150,7 +152,7 @@
   </div>
 </Header>
 
-<div class="flex items-center gap-2 flex-wrap w-full mt-5">
+<div class="flex items-center gap-2 flex-wrap w-full my-5">
   <Button href="#app" size="sm" class="text-xs" rounding="pill">
     <Icon src={ArrowTopRightOnSquare} size="14" micro />
     {$t('settings.app.title')}
@@ -177,7 +179,25 @@
   </Button>
 </div>
 
-<div class="flex flex-col gap-4" style="scroll-behavior: smooth;">
+<div
+  class="flex flex-col *:py-2 divide-y divide-slate-200 dark:divide-zinc-800"
+  style="scroll-behavior: smooth;"
+>
+  {#if $profile?.jwt}
+    <Section open={false} id="account" title={$t('settings.account.title')}>
+      <div>
+        <Button
+          color="primary"
+          size="lg"
+          href="/profile/settings"
+          class="block"
+        >
+          {$t('profile.profile')}
+          <Icon src={ArrowRight} micro size="16" slot="suffix" />
+        </Button>
+      </div>
+    </Section>
+  {/if}
   <Section id="app" title={$t('settings.app.title')}>
     <div class="flex flex-col gap-2">
       <Setting>

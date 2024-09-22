@@ -19,7 +19,7 @@
     currentRoute: string | undefined,
     href: string
   ) => string = (route, href) => href
-  export let defaultRoute: string | undefined
+  export let defaultRoute: string | undefined = undefined
 </script>
 
 <nav

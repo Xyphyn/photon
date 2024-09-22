@@ -4,11 +4,12 @@
   import { ImageInput, Material, removeToast, toast } from 'mono-svelte'
   import { getClient } from '$lib/lemmy.js'
   import type { SaveUserSettings } from 'lemmy-js-client'
-  import { Button, Checkbox, Modal, TextInput } from 'mono-svelte'
+  import { Button, Switch, TextInput } from 'mono-svelte'
   import { uploadImage } from '$lib/util.js'
   import { t } from '$lib/translations.js'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
+  export let inline: boolean = false
   export let data
 
   let formData: Omit<SaveUserSettings, 'auth'> | undefined = {
@@ -56,8 +57,12 @@
 </script>
 
 <form class="flex flex-col gap-4 h-full" on:submit|preventDefault={save}>
-  <Header pageHeader>{$t('routes.profile.settings')}</Header>
+  {#if !inline}
+    <Header pageHeader>{$t('routes.profile.settings')}</Header>
+  {/if}
+  <slot />
   {#if data.my_user?.local_user_view?.local_user && formData}
+    <TextInput label={$t('form.profile.email')} bind:value={formData.email} />
     <TextInput
       label={$t('form.profile.displayName')}
       bind:value={formData.display_name}
@@ -69,29 +74,30 @@
       label={$t('form.profile.bio')}
       previewButton
     />
-    <ImageInput label={$t('form.profile.avatar')} bind:files={profileImage} />
-    <ImageInput label={$t('form.profile.banner')} bind:files={bannerImage} />
-    <TextInput label={$t('form.profile.email')} bind:value={formData.email} />
+    <div class="flex gap-2 items-center *:flex-1">
+      <ImageInput label={$t('form.profile.avatar')} bind:files={profileImage} />
+      <ImageInput label={$t('form.profile.banner')} bind:files={bannerImage} />
+    </div>
     <TextInput
       label={$t('form.profile.matrix')}
       bind:value={formData.matrix_user_id}
       placeholder="@user:example.com"
     />
-    <Checkbox bind:checked={formData.show_nsfw}>
+    <Switch bind:checked={formData.show_nsfw}>
       {$t('form.profile.showNSFW')}
-    </Checkbox>
-    <Checkbox bind:checked={formData.show_scores}>
+    </Switch>
+    <Switch bind:checked={formData.show_scores}>
       {$t('form.profile.scores')}
-    </Checkbox>
-    <Checkbox bind:checked={formData.bot_account}>
+    </Switch>
+    <Switch bind:checked={formData.bot_account}>
       {$t('form.profile.bot')}
-    </Checkbox>
-    <Checkbox bind:checked={formData.show_bot_accounts}>
+    </Switch>
+    <Switch bind:checked={formData.show_bot_accounts}>
       {$t('form.profile.showBots')}
-    </Checkbox>
-    <Checkbox bind:checked={formData.show_read_posts}>
+    </Switch>
+    <Switch bind:checked={formData.show_read_posts}>
       {$t('form.profile.showRead')}
-    </Checkbox>
+    </Switch>
 
     <Button
       submit

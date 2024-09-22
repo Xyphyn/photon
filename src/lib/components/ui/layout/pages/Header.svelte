@@ -15,8 +15,8 @@
   
   "
   style="{pageHeader
-    ? `margin-top: min(-1.5rem, calc(-1 * calc(${$contentPadding.top}px))); padding-top: max(1.5rem, calc(${$contentPadding.top}px));`
-    : ''};
+    ? `margin-top: min(-6rem, calc(-1 * calc(${$contentPadding.top}px))); padding-top: max(6rem, calc(${$contentPadding.top}px));`
+    : ''} {$$props.style};
 "
 >
   <h1

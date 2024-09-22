@@ -23,7 +23,9 @@
       class="{open ? 'rotate-180' : ''} transition-transform"
     />
   </div>
-  <div class="pt-2 text-slate-900 dark:text-zinc-100">
-    <slot />
-  </div>
+  <slot name="content">
+    <div class="pt-2 text-slate-900 dark:text-zinc-100">
+      <slot />
+    </div>
+  </slot>
 </Disclosure>
