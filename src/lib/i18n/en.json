@@ -201,7 +201,13 @@
         "profile": {
             "user": "User",
             "settings": "Settings",
-            "blocks": "Blocks",
+            "blocks": {
+                "title": "Blocked",
+                "empty": {
+                    "title": "No blocked entities",
+                    "description": "When you block anything, it will no longer appear in your feeds."
+                }
+            },
             "credentials": "Credentials",
             "moderates": "Moderating",
             "favorites": "Favorites",

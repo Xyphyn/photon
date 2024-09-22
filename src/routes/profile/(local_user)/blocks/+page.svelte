@@ -18,6 +18,9 @@
   import { Button } from 'mono-svelte'
   import Entity from '$lib/components/ui/Entity.svelte'
   import { t } from '$lib/translations.js'
+  import Switch from '$lib/components/input/Switch.svelte'
+  import UserAutocomplete from '$lib/components/lemmy/user/UserAutocomplete.svelte'
+  import { expoOut } from 'svelte/easing'
 
   // sveltekit doesn't feel like making types work right now
   export let data: PageData & {
@@ -86,22 +89,23 @@
       <EditableList let:action on:action={(i) => unblockInstances(i.detail)}>
         {#each data.my_user?.instance_blocks as block (block.instance.id)}
           <div
-            class="flex flex-row gap-2 items-center py-4 justify-between"
+            class="flex flex-row gap-2 items-center py-4"
             animate:flip={{ duration: 250 }}
             out:slide|local={{ axis: 'y' }}
           >
+            <Button
+              title="Unblock"
+              size="square-md"
+              rounding="pill"
+              on:click={() => action(block)}
+            >
+              <Icon src={XMark} mini size="16" slot="prefix" />
+            </Button>
             <Entity
               icon={block.site?.icon}
               name={block.site?.name ?? block.instance.domain}
               label={block.instance.domain}
             />
-            <Button
-              title="Unblock"
-              size="square-md"
-              on:click={() => action(block)}
-            >
-              <Icon src={XMark} mini size="16" slot="prefix" />
-            </Button>
           </div>
         {/each}
       </EditableList>
@@ -113,18 +117,19 @@
       <EditableList let:action on:action={(i) => unblockCommunity(i.detail)}>
         {#each data.community_blocks as block (block.community.id)}
           <div
-            class="flex flex-row gap-2 items-center py-2 justify-between"
+            class="flex flex-row gap-2 items-center py-2"
             animate:flip={{ duration: 250 }}
-            out:slide|local={{ axis: 'y' }}
+            out:slide|global={{ axis: 'y', easing: expoOut, duration: 300 }}
           >
-            <CommunityLink community={block.community} avatar />
             <Button
               title="Unblock"
               size="square-md"
+              rounding="pill"
               on:click={() => action(block)}
             >
               <Icon src={XMark} mini size="16" slot="prefix" />
             </Button>
+            <CommunityLink community={block.community} avatar />
           </div>
         {/each}
       </EditableList>
@@ -136,21 +141,30 @@
       <EditableList let:action on:action={(i) => unblockUser(i.detail)}>
         {#each data.person_blocks as block (block.target.id)}
           <div
-            class="flex flex-row gap-2 items-center py-2 justify-between"
+            class="flex flex-row gap-2 items-center py-2"
             animate:flip={{ duration: 250 }}
-            out:slide|local={{ axis: 'y' }}
+            out:slide|global={{ axis: 'y', easing: expoOut, duration: 300 }}
           >
-            <UserLink user={block.target} avatar badges />
             <Button
               title="Unblock"
               size="square-md"
+              rounding="pill"
               on:click={() => action(block)}
             >
               <Icon src={XMark} mini size="16" slot="prefix" />
             </Button>
+            <UserLink user={block.target} avatar badges />
           </div>
         {/each}
       </EditableList>
     </div>
   {/if}
+{:else}
+  <div class="h-full w-full grid place-items-center">
+    <Placeholder
+      icon={Check}
+      title={$t('routes.profile.blocks.empty.title')}
+      description={$t('routes.profile.blocks.empty.description')}
+    />
+  </div>
 {/if}

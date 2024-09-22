@@ -46,7 +46,7 @@
 
         {
           href: '/profile/blocks',
-          name: $t('routes.profile.blocks'),
+          name: $t('routes.profile.blocks.title'),
         },
 
         {
