@@ -28,7 +28,10 @@
             "instance": "Server",
             "app": "Äpp"
         },
-        "admin": "Admin"
+        "admin": "Admin",
+        "commands": {
+            "main": "Peamine"
+        }
     },
     "account": {
         "login": "Logi sisse",
@@ -75,7 +78,8 @@
             "label": "Vaata",
             "legacy": "Vana menüü"
         },
-        "type": "Tüüp"
+        "type": "Tüüp",
+        "filter": "Filter"
     },
     "form": {
         "username": "Kasutaja nimi",
@@ -152,7 +156,8 @@
             "title": "Vaheta Parooli",
             "description": "Tee oma uus parool.",
             "instance": "Mis serveris on sinu kasutaja?"
-        }
+        },
+        "instances": "Serverid"
     },
     "cards": {
         "community": {
@@ -193,7 +198,9 @@
             "message": "Kiri"
         },
         "lock": "Lukusta",
-        "unlock": "unblock"
+        "unlock": "Tee lahti",
+        "restore": "Taasta",
+        "remove": "Kustuda"
     },
     "common": {
         "back": "Tagasi",
