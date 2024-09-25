@@ -4,6 +4,7 @@
   import { publishedToDate } from '$lib/components/util/date.js'
   import { getInstance } from '$lib/lemmy.js'
   import { userSettings } from '$lib/settings.js'
+  import { t } from '$lib/translations'
   import type { CommentView } from 'lemmy-js-client'
   import { Button, Material } from 'mono-svelte'
   import { ArrowUturnUp, Icon } from 'svelte-hero-icons'
@@ -42,13 +43,12 @@
       />
     </div>
     <Button
-      color="secondary"
+      color="primary"
       href="/post/{comment.post.id}?thread={comment.comment.path}#{comment
         .comment.id}"
-      size="square-md"
       class="self-start"
-      title="Jump"
     >
+      {$t('common.jump')}
       <Icon src={ArrowUturnUp} size="16" micro />
     </Button>
   </div>

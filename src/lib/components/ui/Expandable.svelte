@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Disclosure } from 'mono-svelte'
-  import { ChevronDown, Icon } from 'svelte-hero-icons'
+  import { Minus, Plus, Icon } from 'svelte-hero-icons'
   export let open: boolean = false
 </script>
 
@@ -17,10 +17,12 @@
       <slot name="title" />
     </div>
     <Icon
-      src={ChevronDown}
-      size="20"
+      src={open ? Minus : Plus}
+      size="16"
       micro
-      class="{open ? 'rotate-180' : ''} transition-transform"
+      class="{open
+        ? ''
+        : 'rotate-90'} transition-transform duration-300 ease-out"
     />
     <div
       class="inset-0 -z-10 opacity-0 absolute bg-slate-100 dark:bg-zinc-900 rounded-full
