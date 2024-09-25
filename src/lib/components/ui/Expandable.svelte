@@ -11,7 +11,7 @@
   <div
     slot="summary"
     class="font-medium w-full text-left flex flex-row items-center justify-between hover:text-primary-900
-    hover:dark:text-primary-100 transition-colors h-full"
+    hover:dark:text-primary-100 transition-colors h-full z-0 group relative"
   >
     <div class="flex flex-row gap-1 items-center w-full">
       <slot name="title" />
@@ -21,6 +21,10 @@
       size="20"
       micro
       class="{open ? 'rotate-180' : ''} transition-transform"
+    />
+    <div
+      class="inset-0 -z-10 opacity-0 absolute bg-slate-100 dark:bg-zinc-900 rounded-full
+    group-hover:opacity-100 group-hover:-inset-1 group-hover:-inset-x-2 transition-all"
     />
   </div>
   <slot name="content">

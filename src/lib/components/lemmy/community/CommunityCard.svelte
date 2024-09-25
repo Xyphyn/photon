@@ -161,22 +161,22 @@
     />
   </Entity>
 
-  <div
-    class="flex flex-col divide-y divide-slate-200 dark:divide-zinc-800 [&>*]:py-3"
-  >
+  <div class="flex flex-col gap-1">
+    <hr class="border-slate-200 dark:border-zinc-900 my-1" />
     <Expandable bind:open={$userSettings.expand.about} class="!pt-0">
-      <svelte:fragment slot="title">
+      <span slot="title" class="py-1 px-1 flex gap-1 items-center">
         <Icon src={InformationCircle} size="15" mini />
         {$t('cards.site.about')}
-      </svelte:fragment>
+      </span>
       <Markdown source={community_view.community.description} />
     </Expandable>
 
+    <hr class="border-slate-200 dark:border-zinc-900 my-1" />
     <Expandable bind:open={$userSettings.expand.stats}>
-      <svelte:fragment slot="title">
+      <span slot="title" class="py-1 px-1 flex gap-1 items-center">
         <Icon src={ChartBar} size="15" mini />
         {$t('cards.site.stats')}
-      </svelte:fragment>
+      </span>
       <div class="flex flex-row gap-4 flex-wrap">
         <LabelStat
           label={$t('cards.community.members')}
@@ -192,11 +192,12 @@
     </Expandable>
 
     {#if moderators && moderators.length > 0}
+      <hr class="border-slate-200 dark:border-zinc-900 my-1" />
       <Expandable bind:open={$userSettings.expand.team}>
-        <svelte:fragment slot="title">
+        <span slot="title" class="py-1 px-1 flex gap-1 items-center">
           <ShieldIcon width={15} filled />
           {$t('cards.community.moderators')}
-        </svelte:fragment>
+        </span>
         <ItemList
           items={moderators.map((m) => ({
             id: m.moderator.id,

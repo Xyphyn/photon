@@ -79,9 +79,7 @@
     </Button>
   </div>
 
-  <div
-    class="flex flex-col [&>*]:py-3 divide-y divide-slate-200 dark:divide-zinc-900"
-  >
+  <div class="flex flex-col gap-1">
     {#if taglines && taglines.length > 0}
       <Markdown
         class="!pt-0"
@@ -89,21 +87,23 @@
       />
     {/if}
 
+    <hr class="border-slate-200 dark:border-zinc-900 my-1" />
     <Expandable bind:open={$userSettings.expand.about}>
-      <svelte:fragment slot="title">
+      <span class="flex items-center gap-1 py-1 px-2" slot="title">
         <Icon src={InformationCircle} size="16" mini />
         {$t('cards.site.about')}
-      </svelte:fragment>
+      </span>
       <Markdown source={site.site.description} />
       <div class="my-4" />
       <Markdown source={site.site.sidebar} />
     </Expandable>
 
+    <hr class="border-slate-200 dark:border-zinc-900 my-1" />
     <Expandable bind:open={$userSettings.expand.stats}>
-      <svelte:fragment slot="title">
+      <span class="flex items-center gap-1 py-1 px-2" slot="title">
         <Icon src={ChartBar} size="16" mini />
         {$t('cards.site.stats')}
-      </svelte:fragment>
+      </span>
       <div class="flex flex-row gap-4 flex-wrap">
         <LabelStat
           label={$t('content.users')}
@@ -124,11 +124,12 @@
     </Expandable>
 
     {#if admins}
+      <hr class="border-slate-200 dark:border-zinc-900 my-1" />
       <Expandable bind:open={$userSettings.expand.team}>
-        <svelte:fragment slot="title">
+        <span class="flex items-center gap-1 py-1 px-2" slot="title">
           <Icon src={UserGroup} size="16" mini />
           {$t('cards.site.admins')}
-        </svelte:fragment>
+        </span>
         <ItemList
           items={admins.map((a) => ({
             id: a.person.id,
