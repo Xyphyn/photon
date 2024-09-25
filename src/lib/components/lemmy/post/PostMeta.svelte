@@ -149,41 +149,40 @@
       class="flex-shrink"
     />
   {/if}
-  {#if view != 'compact'}
-    <span
-      class="text-slate-600 dark:text-zinc-400 flex flex-row gap-2 items-center self-start"
-      style="grid-area: stats;"
-    >
-      {#if user}
-        <address class="contents not-italic">
-          <UserLink avatarSize={20} {user} avatar={!showCommunity}>
-            <svelte:fragment slot="badges">
-              {#if badges.moderator}
-                <ShieldIcon filled width={14} class="text-green-500" />
-              {/if}
-              {#if badges.admin}
-                <ShieldIcon filled width={14} class="text-red-500" />
-              {/if}
-            </svelte:fragment>
-          </UserLink>
-        </address>
-      {/if}
-      {#if published}
-        <RelativeDate date={published} class="flex-shrink-0" />
-      {/if}
-      {#if edited}
-        <div
-          title={$t('post.meta.lastEdited', {
-            default: formatRelativeDate(publishedToDate(edited), {
-              style: 'long',
-            }),
-          })}
-        >
-          <Icon src={Pencil} micro size="14" />
-        </div>
-      {/if}
-    </span>
-  {/if}
+  <div
+    class="text-slate-600 dark:text-zinc-400 flex flex-row gap-2 items-center self-start
+    {view == 'compact' ? 'mx-2' : ''}"
+    style="grid-area: stats;"
+  >
+    {#if user && view != 'compact'}
+      <address class="contents not-italic">
+        <UserLink avatarSize={20} {user} avatar={!showCommunity}>
+          <svelte:fragment slot="badges">
+            {#if badges.moderator}
+              <ShieldIcon filled width={14} class="text-green-500" />
+            {/if}
+            {#if badges.admin}
+              <ShieldIcon filled width={14} class="text-red-500" />
+            {/if}
+          </svelte:fragment>
+        </UserLink>
+      </address>
+    {/if}
+    {#if published}
+      <RelativeDate date={published} class="flex-shrink-0" />
+    {/if}
+    {#if edited}
+      <div
+        title={$t('post.meta.lastEdited', {
+          default: formatRelativeDate(publishedToDate(edited), {
+            style: 'long',
+          }),
+        })}
+      >
+        <Icon src={Pencil} micro size="14" />
+      </div>
+    {/if}
+  </div>
   <div
     class="flex flex-row justify-end items-center self-center flex-wrap gap-2 [&>*]:flex-shrink-0 badges ml-2"
     style="grid-area: badges;"
