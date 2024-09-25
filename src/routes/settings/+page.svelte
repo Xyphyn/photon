@@ -480,6 +480,11 @@
         {/each}
       </div>
     </Setting>
+    <ToggleSetting
+      title={$t('settings.navigation.commands.title')}
+      description={$t('settings.navigation.commands.description')}
+      bind:checked={$userSettings.dock.commands}
+    />
   </Section>
 
   <Section id="embeds" title={$t('settings.embeds.title')}>

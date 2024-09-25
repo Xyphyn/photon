@@ -36,11 +36,14 @@
   import { t } from '$lib/translations'
   import CommandsWrapper from './commands/CommandsWrapper.svelte'
   import { optimizeImageURL } from '$lib/components/lemmy/post/helpers'
+  import { userSettings } from '$lib/settings'
 
   let promptOpen: boolean = false
 </script>
 
-<CommandsWrapper bind:open={promptOpen} />
+{#if $userSettings.dock.commands}
+  <CommandsWrapper bind:open={promptOpen} />
+{/if}
 <nav
   class="flex flex-row gap-2 items-center w-full mx-auto z-50 box-border p-0.5
   duration-150 @container

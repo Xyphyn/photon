@@ -87,6 +87,7 @@ interface Settings {
     noGap: boolean | null
     top: boolean | null
     pins: Link[]
+    commands: boolean
   }
   posts: {
     deduplicateEmbed: boolean
@@ -106,7 +107,7 @@ interface Settings {
 }
 
 export const defaultSettings: Settings = {
-  settingsVer: 2,
+  settingsVer: 3,
   expandableImages: toBool(env.PUBLIC_EXPANDABLE_IMAGES) ?? true,
   markReadPosts: toBool(env.PUBLIC_MARK_READ_POSTS) ?? true,
   showInstances: {
@@ -167,6 +168,7 @@ export const defaultSettings: Settings = {
     noGap: toBool(env.PUBLIC_DOCK_PANEL) ?? null,
     top: toBool(env.PUBLIC_DOCK_TOP) ?? null,
     pins: [],
+    commands: true,
   },
   posts: {
     deduplicateEmbed: toBool(env.PUBLIC_DEDUPLICATE_EMBED) ?? true,

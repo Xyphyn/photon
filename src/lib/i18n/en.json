@@ -666,6 +666,10 @@
             "pins": {
                 "title": "Pins",
                 "description": "Click a pin to send it to the top of the sidebar. Right click a pinned item to remove it."
+            },
+            "commands": {
+                "title": "Command palette",
+                "description": "Press slash or right click the photon logo to navigate around the app by searching."
             }
         },
         "app": {
