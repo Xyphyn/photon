@@ -30,6 +30,6 @@
     }
   }
   .animate-spin {
-    animation: spin 0.2s linear infinite;
+    animation: spin 0.7s linear infinite;
   }
 </style>
