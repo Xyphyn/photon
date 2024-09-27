@@ -87,7 +87,7 @@ interface Settings {
     noGap: boolean | null
     top: boolean | null
     pins: Link[]
-    commands: boolean
+    paletteHotkey: string
   }
   posts: {
     deduplicateEmbed: boolean
@@ -168,7 +168,7 @@ export const defaultSettings: Settings = {
     noGap: toBool(env.PUBLIC_DOCK_PANEL) ?? null,
     top: toBool(env.PUBLIC_DOCK_TOP) ?? null,
     pins: [],
-    commands: true,
+    paletteHotkey: '/',
   },
   posts: {
     deduplicateEmbed: toBool(env.PUBLIC_DEDUPLICATE_EMBED) ?? true,
