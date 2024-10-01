@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { page } from '$app/stores'
+  import { navigating, page } from '$app/stores'
   import {
     GlobeAmericas,
     Icon,
@@ -26,17 +26,28 @@
   import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
   import { contentPadding } from '$lib/components/ui/layout/Shell.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
+  import { fly } from 'svelte/transition'
+  import { backOut, expoOut } from 'svelte/easing'
 
   export let data
 
   let search = data.query || ''
+  let searchElement: HTMLInputElement
   let instance = ''
 
   let virtualList: HTMLDivElement
   let offset: number = 0
+
+  $: showTop =
+    (data.query ?? '' != '') && data.communities.length > 0 && data.page == 1
 </script>
 
-<svelte:window bind:scrollY={offset} />
+<svelte:window
+  bind:scrollY={offset}
+  on:keydown={(e) => {
+    if (e.target == document.body) searchElement?.focus()
+  }}
+/>
 
 <svelte:head>
   <title>{$t('routes.communities.title')}</title>
@@ -83,19 +94,22 @@
     >
       <TextInput
         bind:value={search}
+        bind:element={searchElement}
         aria-label={$t('routes.search.query')}
         size="lg"
-        class="flex-1 !rounded-full h-full !text-base"
+        class="flex-1 !rounded-full h-full"
+        placeholder={$t('routes.communities.search.placeholder')}
       />
       <Button
         submit
-        color="secondary"
+        color="primary"
         size="custom"
         class="flex-shrink-0 h-full aspect-square"
         title="Search"
         rounding="pill"
+        loading={$navigating != null}
       >
-        <Icon src={MagnifyingGlass} size="16" mini />
+        <Icon src={MagnifyingGlass} size="16" micro slot="prefix" />
       </Button>
     </form>
   </Tabs>
@@ -105,7 +119,7 @@
   <Sort selected={data.sort} />
 </div>
 <ul
-  class="flex flex-col divide-y divide-slate-200 dark:divide-zinc-800 my-6 h-full"
+  class="flex flex-col divide-y divide-slate-100 dark:divide-zinc-800 my-6 h-full"
 >
   {#if data.communities.length == 0}
     <Placeholder
@@ -115,43 +129,59 @@
     />
   {/if}
 
-  {#if (data.query ?? '' != '') && data.communities.length > 0}
+  {#if showTop}
     <SectionTitle class="!border-0 pb-2">
       {$t('routes.search.top')}
     </SectionTitle>
     <div
       class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 items-center mb-6 !border-0"
     >
-      {#each data.communities.slice(0, 3) as community}
-        <Material
-          color="distinct"
-          padding="none"
-          rounding="xl"
-          class="dark:border-t-zinc-800 h-full"
+      {#each data.communities.slice(0, 3) as community, index (community.community.id)}
+        <div
+          class="h-full"
+          in:fly|global={{
+            duration: 1000,
+            easing: expoOut,
+            delay: index < 20 ? index * 100 : 0,
+            y: 16,
+          }}
         >
-          <CommunityItem
-            {community}
-            showCounts={false}
-            class="w-full p-4 text-center"
-            view="cozy"
-          />
-        </Material>
+          <Material
+            color="distinct"
+            padding="none"
+            rounding="xl"
+            class="dark:border-t-zinc-800 h-full"
+          >
+            <CommunityItem
+              {community}
+              showCounts={false}
+              class="w-full p-4 text-center"
+              view="cozy"
+            />
+          </Material>
+        </div>
       {/each}
     </div>
   {/if}
 
-  {#if data.communities.slice((data.query ?? '' != '') ? 3 : 0).length > 0}
+  {#if data.communities.slice(showTop ? 3 : 0).length > 0}
     <SectionTitle class="!border-0 pb-2">
       {$t('routes.search.other')}
     </SectionTitle>
   {/if}
   {#if data.communities}
-    {@const sliced = data.communities.slice((data.query ?? '' != '') ? 3 : 0)}
+    {@const sliced = data.communities.slice(showTop ? 3 : 0)}
     <div class="-mx-4 sm:-mx-6 h-full" bind:this={virtualList}>
-      {#each sliced as community}
+      {#each sliced as community, index (community.community.id)}
         <div
           class="px-6 hover:bg-slate-50 hover:dark:bg-zinc-900 transition-colors @container
         border-b border-slate-100 dark:border-zinc-800"
+          in:fly|global={{
+            duration: 1000,
+            easing: expoOut,
+            delay: index < 20 ? index * 35 : 0,
+            y: 16,
+          }}
         >
           <CommunityItem {community} showCounts={false} class="py-3" />
         </div>

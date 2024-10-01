@@ -27,6 +27,7 @@
   export let id: string = generateID()
   export let inlineAffixes: boolean = false
   export let shadow: Shadow = 'none'
+  export let element: HTMLInputElement | undefined = undefined
 
   const borderClass = `
 	border border-slate-200 border-b-slate-300 dark:border-zinc-900 dark:border-t-zinc-800
@@ -68,6 +69,7 @@
       {placeholder}
       {disabled}
       bind:value
+      bind:this={element}
       on:input
       on:change
       on:focus

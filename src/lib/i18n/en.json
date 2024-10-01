@@ -231,7 +231,10 @@
         "accounts": "Accounts",
         "communities": {
             "title": "Communities",
-            "trending": "Trending"
+            "trending": "Trending",
+            "search": {
+                "placeholder": "Search for a new community"
+            }
         },
         "search": {
             "title": "Search",

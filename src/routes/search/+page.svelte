@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { page } from '$app/stores'
+  import { navigating, page } from '$app/stores'
   import { profile } from '$lib/auth.js'
   import ObjectAutocomplete from '$lib/components/lemmy/ObjectAutocomplete.svelte'
   import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
@@ -43,11 +43,18 @@
   export let data
 
   let query = data.query || ''
+  let searchElement: HTMLInputElement
 
   let pageNum = data.page
 
   let moreOptions = false
 </script>
+
+<svelte:window
+  on:keydown={(e) => {
+    if (e.target == document.body) searchElement?.focus()
+  }}
+/>
 
 <svelte:head>
   <title>{$t('routes.search.title')}</title>
@@ -68,19 +75,21 @@
     >
       <TextInput
         bind:value={query}
+        bind:element={searchElement}
         aria-label={$t('routes.search.query')}
         size="lg"
         class="flex-1 !rounded-full h-full !text-base"
       />
       <Button
         submit
-        color="secondary"
+        color="primary"
         size="custom"
         class="flex-shrink-0 h-full aspect-square"
         title="Search"
         rounding="pill"
+        loading={$navigating != null}
       >
-        <Icon src={MagnifyingGlass} size="16" mini />
+        <Icon src={MagnifyingGlass} size="16" micro slot="prefix" />
       </Button>
     </form>
   </Tabs>
