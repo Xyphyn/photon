@@ -68,7 +68,7 @@
   on:click={(e) => {
     if (openOnHover) return
 
-    if (!el?.contains(e.target)) {
+    if (!el?.contains(e.target) && open) {
       open = false
     }
   }}

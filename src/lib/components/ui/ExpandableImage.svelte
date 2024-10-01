@@ -51,7 +51,7 @@
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <!-- svelte-ignore a11y-positive-tabindex -->
   <div
-    class="fixed top-0 left-0 w-screen h-[100svh] overflow-auto bg-black/50
+    class="fixed top-0 left-0 w-screen h-[100svh] overflow-auto bg-white/50 dark:bg-black/50
     flex flex-col z-[100] backdrop-blur-sm"
     transition:fade={{ duration: 150 }}
     on:click={() => history.back()}
@@ -80,9 +80,10 @@
       transition:fly={{ duration: 350, y: 14, easing: backOut }}
     >
       <Material
-        class="gap-1 p-2 flex flex-row items-center"
+        class="gap-1 p-2 flex flex-row items-center dark:bg-zinc-950"
         rounding="full"
         padding="none"
+        color="uniform"
         on:click={(e) => e.stopPropagation()}
       >
         <Button
