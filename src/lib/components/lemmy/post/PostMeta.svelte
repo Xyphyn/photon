@@ -305,7 +305,7 @@
       'avatar stats badges';
     gap: 0;
     grid-template-rows: auto auto;
-    grid-template-columns: 32px minmax(0, auto) auto;
+    grid-template-columns: max-content minmax(0, auto) auto;
   }
 
   @media screen and (max-width: 480px) {
@@ -316,7 +316,7 @@
         'badges badges';
       gap: 0;
       grid-template-rows: auto auto auto;
-      grid-template-columns: 32px minmax(0, auto) auto;
+      grid-template-columns: max-content minmax(0, auto) auto;
     }
   }
 
