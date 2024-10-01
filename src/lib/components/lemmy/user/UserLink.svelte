@@ -73,6 +73,7 @@
   href="/u/{user.name}@{new URL(user.actor_id).hostname}"
   data-sveltekit-preload-data="tap"
 >
+  <slot />
   {#if avatar}
     <Avatar
       url={user.avatar}

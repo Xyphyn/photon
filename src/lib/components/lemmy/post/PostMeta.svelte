@@ -41,7 +41,7 @@
 <script lang="ts">
   import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
-  import { Badge, Material, Popover } from 'mono-svelte'
+  import { Badge, Popover } from 'mono-svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import RelativeDate, {
     formatRelativeDate,
@@ -49,18 +49,15 @@
   import type { Community, Person, SubscribedType } from 'lemmy-js-client'
   import {
     Bookmark,
-    Check,
     ExclamationTriangle,
     Icon,
     LockClosed,
     Megaphone,
-    Plus,
     Tag,
     Trash,
+    PaperAirplane,
   } from 'svelte-hero-icons'
   import { getInstance } from '$lib/lemmy.js'
-  import { profile } from '$lib/auth.js'
-  import Subscribe from '../../../../routes/communities/Subscribe.svelte'
   import ShieldIcon from '../moderation/ShieldIcon.svelte'
   import { userSettings, type View } from '$lib/settings'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
@@ -118,18 +115,18 @@
   class:compact={view == 'compact'}
   style={$$props.style ?? ''}
 >
-  {#if showCommunity && community && subscribed}
+  {#if showCommunity && community && subscribed && showCommunity}
     <Popover bind:open={popoverOpen} manual>
       <button
         on:click={() => (popoverOpen = !popoverOpen)}
-        class="relative cursor-pointer pr-2 row-span-2 flex-shrink-0 group/community"
+        class="relative cursor-pointer row-span-2 flex-shrink-0 pr-2 group/community"
         slot="target"
       >
         <Avatar
           url={community.icon}
           width={view == 'compact' ? 24 : 32}
           alt={community.name}
-          class="group-hover/community:ring-2 transition-all ring-offset-1 ring-primary-900 dark:ring-primary-100"
+          class="group-hover/community:ring-2 transition-all ring-offset-0 ring-primary-900 dark:ring-primary-100"
         />
       </button>
       <div
@@ -146,17 +143,30 @@
     <CommunityLink
       {community}
       style="grid-area: community;"
-      class="flex-shrink"
+      class="flex-shrink no-list-margin"
     />
   {/if}
   <div
-    class="text-slate-600 dark:text-zinc-400 flex flex-row gap-2 items-center self-start
-    {view == 'compact' ? 'mx-2' : ''}"
+    class="text-slate-600 dark:text-zinc-400 flex flex-row gap-2 items-center
+     no-list-margin {view == 'compact' ? 'min-[480px]:mx-2' : ''}"
     style="grid-area: stats;"
   >
-    {#if user && view != 'compact'}
+    {#if user}
       <address class="contents not-italic">
-        <UserLink avatarSize={20} {user} avatar={!showCommunity}>
+        {#if view == 'compact'}
+          <Icon
+            src={PaperAirplane}
+            size="12"
+            micro
+            class="rotate-180 text-slate-400 dark:text-zinc-600 max-[480px]:hidden"
+          />
+        {/if}
+        <UserLink
+          avatarSize={20}
+          {user}
+          avatar={!showCommunity}
+          class="flex-shrink "
+        >
           <svelte:fragment slot="badges">
             {#if badges.moderator}
               <ShieldIcon filled width={14} class="text-green-500" />
@@ -184,7 +194,8 @@
     {/if}
   </div>
   <div
-    class="flex flex-row justify-end items-center self-center flex-wrap gap-2 [&>*]:flex-shrink-0 badges ml-2"
+    class="flex flex-row min-[480px]:justify-end items-center self-center
+    flex-wrap gap-2 [&>*]:flex-shrink-0 badges min-[480px]:ml-2"
     style="grid-area: badges;"
   >
     {#if tags}
@@ -292,13 +303,27 @@
       'avatar stats badges';
     gap: 0;
     grid-template-rows: auto auto;
-    grid-template-columns: max-content minmax(0, auto) auto;
+    grid-template-columns: 32px minmax(0, auto) auto;
   }
 
-  .meta.compact {
-    display: flex;
-    flex-direction: row;
-    align-items: start;
+  @media screen and (max-width: 480px) {
+    .meta {
+      grid-template-areas:
+        'avatar community'
+        'avatar stats'
+        'badges badges';
+      gap: 0;
+      grid-template-rows: auto auto auto;
+      grid-template-columns: 32px minmax(0, auto) auto;
+    }
+  }
+
+  @media screen and (min-width: 480px) {
+    .meta.compact {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
   }
 
   :global(.badge-tag-color) {

@@ -103,6 +103,7 @@
       posts={data.posts.posts}
       bind:feedData={data}
       feedId="community"
+      community
     />
   {/if}
 
