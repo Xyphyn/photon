@@ -48,15 +48,15 @@
       />
     </div>
   {/if}
-  <div class="p-4 flex flex-col gap-4 items">
-    <div class="space-y-3 flex-1 flex flex-col items-center text-center">
+  <div class="p-4 flex flex-col gap-4">
+    <div class="flex-1 flex flex-row items-center text-left gap-4">
       <Avatar
         width={64}
         url={avatar}
         alt={name}
         class=" ring-slate-25 dark:ring-zinc-925 bg-slate-25 dark:bg-zinc-925"
       />
-      <div class="flex flex-col items-center">
+      <div class="flex flex-col">
         <svelte:element
           this={url ? 'a' : 'span'}
           href={url}
@@ -78,18 +78,18 @@
           </div>
         {/if}
       </div>
-      {#if bio}
-        <div class="relative w-full {center ? 'text-center' : 'text-left'}">
-          <div
-            class="p-4 relative bg-white/30 dark:bg-zinc-900/30 border border-slate-300
-            dark:border-zinc-800 border-opacity-50 rounded-xl
-            max-w-full w-full"
-          >
-            <PostBody class="text-sm" view="list" body={bio} clickThrough />
-          </div>
-        </div>
-      {/if}
     </div>
+    {#if bio}
+      <div class="relative w-full {center ? 'text-center' : 'text-left'}">
+        <div
+          class="p-4 relative bg-white/30 dark:bg-zinc-900/30 border border-slate-300
+          dark:border-zinc-800 border-opacity-50 rounded-xl
+          max-w-full w-full"
+        >
+          <PostBody class="text-sm" view="list" body={bio} clickThrough />
+        </div>
+      </div>
+    {/if}
   </div>
   <div class="space-y-3 p-4 pt-0">
     {#if stats.length > 0}

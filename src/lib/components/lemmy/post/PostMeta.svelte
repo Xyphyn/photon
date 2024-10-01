@@ -148,12 +148,14 @@
   {/if}
   <div
     class="text-slate-600 dark:text-zinc-400 flex flex-row gap-2 items-center
-     no-list-margin {view == 'compact' ? 'min-[480px]:mx-2' : ''}"
+     no-list-margin {view == 'compact' && showCommunity
+      ? 'min-[480px]:mx-2'
+      : ''}"
     style="grid-area: stats;"
   >
     {#if user}
       <address class="contents not-italic">
-        {#if view == 'compact'}
+        {#if view == 'compact' && showCommunity}
           <Icon
             src={PaperAirplane}
             size="12"

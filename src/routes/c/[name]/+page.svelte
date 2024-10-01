@@ -24,16 +24,12 @@
     XMark,
   } from 'svelte-hero-icons'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import { profile } from '$lib/auth'
   import { t } from '$lib/translations.js'
   import { userSettings } from '$lib/settings.js'
   import { site } from '$lib/lemmy.js'
-  import { postFeeds } from '$lib/lemmy/postfeed.js'
-  import EntityHeader from '$lib/components/ui/EntityHeader.svelte'
-  import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
-  import Subscribe from '../../communities/Subscribe.svelte'
   import { resumables } from '$lib/lemmy/item'
   import CommunityHeader from '$lib/components/lemmy/community/CommunityHeader.svelte'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
   export let data
 
@@ -78,14 +74,16 @@
 {/if}
 
 <div class="flex flex-col gap-4 max-w-full w-full min-w-0">
-  <CommunityHeader
-    bind:community={community.community}
-    bind:subscribed={community.subscribed}
-    bind:blocked={community.blocked}
-    moderators={data.community.moderators}
-    counts={community.counts}
-  />
-  <Sort selected={data.sort} />
+  <Header pageHeader>
+    <CommunityHeader
+      bind:community={community.community}
+      bind:subscribed={community.subscribed}
+      bind:blocked={community.blocked}
+      moderators={data.community.moderators}
+      counts={community.counts}
+    />
+    <Sort selected={data.sort} slot="extended" />
+  </Header>
   {#if community.blocked}
     <Placeholder
       icon={XMark}
