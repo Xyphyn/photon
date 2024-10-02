@@ -67,6 +67,7 @@
       ]
     : []}
   bio={community.description}
+  class={$$props.class}
 >
   <button
     on:click={() => {

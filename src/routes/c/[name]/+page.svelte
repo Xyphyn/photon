@@ -81,6 +81,7 @@
       bind:blocked={community.blocked}
       moderators={data.community.moderators}
       counts={community.counts}
+      class="w-full relative"
     />
     <Sort selected={data.sort} slot="extended" />
   </Header>
