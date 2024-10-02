@@ -275,7 +275,7 @@
   <a
     href="/post/{getInstance()}/{id}"
     class="inline hover:underline
-    hover:text-primary-900 hover:dark:text-primary-100 transition-colors no-list-margin
+    hover:text-primary-900 hover:dark:text-primary-100 transition-colors max-[480px]:!mt-0
     {$userSettings.font == 'satoshi/nunito'
       ? 'font-display font-semibold'
       : 'font-medium'} {$$props.titleClass ?? ''}"
