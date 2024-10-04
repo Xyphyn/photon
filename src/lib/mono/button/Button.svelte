@@ -148,6 +148,7 @@
       {buttonRounding[rounding][roundingSide]}
 			{buttonShadow[shadow]}
       text-sm transition-all font-medium cursor-pointer duration-100
+      disabled:opacity-50 disabled:pointer-events-none
       {alignment == 'center'
     ? 'origin-center'
     : alignment == 'left'
