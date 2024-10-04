@@ -185,20 +185,20 @@
 
 <style>
   .button-scale > .button-content {
-    transition: transform 500ms cubic-bezier(0.075, 0.82, 0.165, 1);
+    transition: transform 300ms cubic-bezier(0.075, 0.82, 0.165, 1);
   }
 
   .button-scale.origin-left > .button-content {
     transform-origin: left;
   }
   .button-scale:hover > .button-content {
-    transform: scale(105%);
+    transform: scale(103%);
   }
   .anim-large.button-scale:hover > .button-content {
     transform: scale(110%);
   }
   .button-scale:active > .button-content {
-    transform: scale(95%);
+    transform: scale(99%);
   }
   .button-scale:active.anim-large > .button-content {
     transform: scale(95%);
