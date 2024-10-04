@@ -131,13 +131,14 @@
   />
 
   <Button
-    size="sm"
+    size="custom"
     href={postLink(post.post)}
     class="!text-inherit h-full px-3 relative"
     color="ghost"
     rounding="pill"
     target={$userSettings.openLinksInNewTab ? '_blank' : ''}
     title={$t('post.actions.comments')}
+    animations={{ scale: true, large: false }}
   >
     {@const newComment =
       publishedToDate(post.counts.newest_comment_time).getTime() >
@@ -163,6 +164,7 @@
       color="ghost"
       rounding="pill"
       class={buttonSquare}
+      animations={{ scale: true, large: true }}
     >
       <Icon src={BugAnt} micro size="16" slot="prefix" />
     </Button>
@@ -193,6 +195,7 @@
       loading={saving}
       disabled={saving}
       title={post.saved ? $t('post.actions.unsave') : $t('post.actions.save')}
+      animations={{ scale: true, large: true }}
     >
       <Icon
         src={post.saved ? BookmarkSlash : Bookmark}
@@ -217,6 +220,7 @@
       rounding="pill"
       size="custom"
       class={buttonSquare}
+      animations={{ scale: true, large: true }}
     >
       <Icon slot="prefix" src={EllipsisHorizontal} width={16} micro />
     </Button>

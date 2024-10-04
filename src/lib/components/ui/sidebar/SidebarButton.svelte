@@ -21,7 +21,7 @@
   {href}
   on:click
   on:contextmenu
-  class="font-normal block {selected
+  class="font-normal block !origin-left {selected
     ? 'text-primary-900 dark:!text-primary-100 bg-slate-100 dark:bg-zinc-800'
     : 'text-slate-600 dark:text-zinc-400'} {$$props.class}"
 >

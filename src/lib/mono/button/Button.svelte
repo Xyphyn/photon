@@ -4,9 +4,9 @@
   export type ButtonShadow = keyof typeof buttonShadow
 
   export const buttonAlignment = {
-    left: 'justify-start text-left',
-    center: 'justify-center text-center',
-    right: 'justify-end text-right',
+    left: 'justify-start text-left origin-left',
+    center: 'justify-center text-center origin-center',
+    right: 'justify-end text-right origin-right',
   }
 
   export const buttonColor = {
@@ -121,6 +121,10 @@
   export let alignment: ButtonAlignment = 'center'
   export let shadow: ButtonShadow = 'none'
   export let column: boolean = false
+  export let animations = {
+    scale: size != 'sm',
+    large: size == 'square-sm' || size == 'square-md' || size == 'square-lg',
+  }
 
   export let loaderWidth: number | undefined = undefined
 
@@ -139,30 +143,30 @@
   on:dragstart
   on:dragend
   class="
-      {buttonColor[color]}
+      {loading ? buttonColor.secondary : buttonColor[color]}
       {buttonSize[size]}
       {buttonRounding[rounding][roundingSide]}
 			{buttonShadow[shadow]}
-      text-sm transition-all disabled:!opacity-70 disabled:!pointer-events-none
-      disabled:!border disabled:!border-slate-300 disabled:!bg-slate-200
-      disabled:dark:!border-zinc-700 disabled:dark:!bg-zinc-800 disabled:text-inherit
-      font-medium cursor-pointer
-      {$$props.class}
-     {loading
-    ? color == 'primary'
-      ? '!bg-transparent !text-inherit'
-      : ''
-    : ''}"
+      text-sm transition-all font-medium cursor-pointer duration-100
+      {alignment == 'center'
+    ? 'origin-center'
+    : alignment == 'left'
+      ? 'origin-left'
+      : 'origin-right'}
+      {$$props.class}"
+  class:button-scale={animations.scale}
+  class:anim-large={animations.large}
   type={submit ? 'submit' : 'button'}
 >
   <div
     class="flex {column
       ? 'flex-col justify-center'
-      : 'flex-row items-center'} h-full gap-1.5 {buttonAlignment[alignment]}"
+      : 'flex-row items-center'} h-full gap-1.5 button-content {buttonAlignment[
+      alignment
+    ]}"
   >
     {#if loading}
-      <Spinner width={loaderWidth ?? 16}
-      />
+      <Spinner width={loaderWidth ?? 16} />
     {:else if $$slots.prefix}
       <slot name="prefix" />
     {/if}
@@ -177,3 +181,25 @@
   @slot `prefix` -- Will be replaced if `loading` is `true`.
   @slot `suffix`
 -->
+
+<style>
+  .button-scale > .button-content {
+    transition: transform 500ms cubic-bezier(0.075, 0.82, 0.165, 1);
+  }
+
+  .button-scale.origin-left > .button-content {
+    transform-origin: left;
+  }
+  .button-scale:hover > .button-content {
+    transform: scale(105%);
+  }
+  .anim-large.button-scale:hover > .button-content {
+    transform: scale(110%);
+  }
+  .button-scale:active > .button-content {
+    transform: scale(95%);
+  }
+  .button-scale:active.anim-large > .button-content {
+    transform: scale(95%);
+  }
+</style>
