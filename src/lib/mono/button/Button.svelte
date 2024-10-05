@@ -122,8 +122,8 @@
   export let shadow: ButtonShadow = 'none'
   export let column: boolean = false
   export let animations = {
-    scale: size != 'sm',
-    large: size == 'square-sm' || size == 'square-md' || size == 'square-lg',
+    scale: false,
+    large: false,
   }
 
   export let loaderWidth: number | undefined = undefined
@@ -155,8 +155,6 @@
       ? 'origin-left'
       : 'origin-right'}
       {$$props.class}"
-  class:button-scale={animations.scale}
-  class:anim-large={animations.large}
   type={submit ? 'submit' : 'button'}
 >
   <div
@@ -182,25 +180,3 @@
   @slot `prefix` -- Will be replaced if `loading` is `true`.
   @slot `suffix`
 -->
-
-<style>
-  .button-scale > .button-content {
-    transition: transform 300ms cubic-bezier(0.075, 0.82, 0.165, 1);
-  }
-
-  .button-scale.origin-left > .button-content {
-    transform-origin: left;
-  }
-  .button-scale:hover > .button-content {
-    transform: scale(103%);
-  }
-  .anim-large.button-scale:hover > .button-content {
-    transform: scale(110%);
-  }
-  .button-scale:active > .button-content {
-    transform: scale(99%);
-  }
-  .button-scale:active.anim-large > .button-content {
-    transform: scale(95%);
-  }
-</style>
