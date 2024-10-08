@@ -57,11 +57,11 @@
       src={bestImageURL(post, false, -1)}
       loading="lazy"
       class="max-h-[inherit] max-w-full h-auto z-30
-                  transition-opacity duration-500 object-contain mx-auto
+                  transition-opacity duration-500 object-contain mx-auto blur-[64px]
           {imageLoaded === false ? 'opacity-0' : 'opacity-100'}"
       width={512}
       height={300}
-      class:blur-3xl={blur}
+      class:blur-[64px]={blur}
       alt={post.alt_text ?? ''}
       on:load={() => (imageLoaded = true)}
     />

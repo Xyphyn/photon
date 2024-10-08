@@ -144,6 +144,9 @@
       {community}
       style="grid-area: community;"
       class="flex-shrink no-list-margin"
+      badges={{
+        nsfw: community.nsfw,
+      }}
     />
   {/if}
   <div

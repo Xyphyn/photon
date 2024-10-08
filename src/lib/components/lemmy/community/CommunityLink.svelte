@@ -1,7 +1,9 @@
 <script lang="ts">
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import { userSettings } from '$lib/settings.js'
+  import { t } from '$lib/translations'
   import type { Community } from 'lemmy-js-client'
+  import { ExclamationTriangle, Icon } from 'svelte-hero-icons'
 
   export let community: Community
 
@@ -10,6 +12,10 @@
   export let avatarSize: number = 24
   export let showInstance: boolean = $userSettings.showInstances.community
   export let displayName: boolean = true
+
+  export let badges = {
+    nsfw: false,
+  }
 </script>
 
 <a
@@ -42,6 +48,17 @@
         </span>
       {/if}
     </span>
+  {/if}
+  {#if badges}
+    {#if badges.nsfw}
+      <Icon
+        src={ExclamationTriangle}
+        size="14"
+        micro
+        title={$t('post.badges.nsfw')}
+        class="text-red-600 dark:text-red-400"
+      />
+    {/if}
   {/if}
 </a>
 

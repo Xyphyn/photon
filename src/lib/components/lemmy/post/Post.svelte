@@ -112,7 +112,7 @@
       removed: post.post.removed,
       locked: post.post.locked,
       featured: post.post.featured_local || post.post.featured_community,
-      nsfw: post.post.nsfw,
+      nsfw: post.post.nsfw || post.community.nsfw,
       saved: post.saved,
       admin: post.creator_is_admin,
       moderator: post.creator_is_moderator,
@@ -154,6 +154,7 @@
           ? 'mr-3'
           : 'ml-3'} flex-shrink no-list-margin"
         style="grid-area: media;"
+        blur={rule == 'blur' ? true : undefined}
         {view}
       />
     {/if}
