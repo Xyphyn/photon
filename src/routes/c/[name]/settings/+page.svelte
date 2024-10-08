@@ -1,13 +1,19 @@
 <script lang="ts">
   import CommunityForm from '$lib/components/lemmy/community/CommunityForm.svelte'
   import CommunityTitle from '$lib/components/lemmy/community/CommunityTitle.svelte'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
   export let data
 </script>
 
 <div class="flex flex-col gap-4">
-  <CommunityTitle community={data.community.community_view.community} />
-  <h1 class="font-bold text-2xl">Settings</h1>
+  <Header pageHeader>
+    <span>Settings</span>
+    <CommunityTitle
+      slot="extended"
+      community={data.community.community_view.community}
+    />
+  </Header>
   <CommunityForm
     edit={data.community.community_view.community.id}
     formData={{
@@ -17,8 +23,9 @@
       postsLockedToModerators:
         data.community.community_view.community.posting_restricted_to_mods,
       sidebar: data.community.community_view.community.description ?? '',
-      icon: null,
-      banner: null,
+      icon: data.community.community_view.community.icon,
+      banner: data.community.community_view.community.banner,
+      visibility: data.community.community_view.community.visibility,
       submitting: false,
     }}
   >

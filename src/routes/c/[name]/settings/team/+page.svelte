@@ -6,7 +6,7 @@
   import type { PageData } from './$types.js'
   import { profile } from '$lib/auth.js'
   import { toast } from 'mono-svelte'
-  import { getClient } from '$lib/lemmy.js'
+  import { client, getClient } from '$lib/lemmy.js'
   import { flip } from 'svelte/animate'
   import { Button, TextInput } from 'mono-svelte'
   import { t } from '$lib/translations.js'
@@ -25,30 +25,46 @@
     formData.addingModerator = true
 
     try {
-      const res = await getClient().resolveObject({
-        q: formData.newModerator,
-      })
-
-      if (res.person) {
+      if (Number(formData.newModerator)) {
         const addModRes = await getClient().addModToCommunity({
           added: true,
-          person_id: res.person.person.id,
+          person_id: Number(formData.newModerator),
           community_id: data.community.community_view.community.id,
         })
 
         data.community.moderators = addModRes.moderators
-
         toast({
           content: $t('toast.addMod'),
           type: 'success',
         })
 
         formData.newModerator = ''
-      } else {
-        toast({
-          content: $t('toast.failFindUser'),
-          type: 'warning',
+      } else if (formData.newModerator) {
+        const res = await getClient().resolveObject({
+          q: formData.newModerator,
         })
+
+        if (res.person) {
+          const addModRes = await getClient().addModToCommunity({
+            added: true,
+            person_id: res.person.person.id,
+            community_id: data.community.community_view.community.id,
+          })
+
+          data.community.moderators = addModRes.moderators
+
+          toast({
+            content: $t('toast.addMod'),
+            type: 'success',
+          })
+
+          formData.newModerator = ''
+        } else {
+          toast({
+            content: $t('toast.failFindUser'),
+            type: 'warning',
+          })
+        }
       }
     } catch (err) {
       toast({
@@ -119,7 +135,7 @@
     </div>
   {/each}
 </EditableList>
-<div class="mt-auto flex gap-2 w-full">
+<form on:submit|preventDefault={addModerator} class="mt-auto flex gap-2 w-full">
   <TextInput
     bind:value={formData.newModerator}
     class="w-full"
@@ -130,8 +146,9 @@
     disabled={formData.addingModerator}
     size="lg"
     class="w-max flex-shrink-0"
-    on:click={addModerator}
+    color="primary"
+    submit
   >
-    <Icon slot="prefix" src={Plus} mini size="16" />Add moderator
+    <Icon slot="prefix" src={Plus} micro size="16" /> Add moderator
   </Button>
-</div>
+</form>

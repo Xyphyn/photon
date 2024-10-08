@@ -413,7 +413,8 @@
         "community": {
             "settings": {
                 "team": "Team",
-                "settings": "Settings"
+                "settings": "Settings",
+                "manage": "Manage"
             }
         }
     },

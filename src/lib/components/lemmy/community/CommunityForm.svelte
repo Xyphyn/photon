@@ -2,13 +2,18 @@
   import { goto } from '$app/navigation'
   import { profile } from '$lib/auth.js'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
-  import { ImageInput, toast } from 'mono-svelte'
-  import { getClient } from '$lib/lemmy.js'
+  import { ImageInput, Switch, toast } from 'mono-svelte'
+  import { client, getClient } from '$lib/lemmy.js'
   import { addSubscription } from '$lib/lemmy/user.js'
   import { Button, Checkbox, TextInput } from 'mono-svelte'
   import { uploadImage } from '$lib/util.js'
   import { t } from '$lib/translations'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import ImagePreviewInput from '$lib/components/input/ImagePreviewInput.svelte'
+  import Label from 'mono-svelte/forms/Label.svelte'
+  import { DocumentPlus, Icon } from 'svelte-hero-icons'
+  import ImageUploadModal from '../modal/ImageUploadModal.svelte'
+  import Select from 'mono-svelte/forms/Select.svelte'
 
   /**
    * The community ID to edit.
@@ -18,21 +23,21 @@
   export let formData: {
     name: string
     displayName: string
-    icon: FileList | null
-    banner: FileList | null
-    sidebar: string
+    icon?: string
+    banner?: string
+    sidebar?: string
     nsfw: boolean
     postsLockedToModerators: boolean
     submitting: boolean
+    visibility: 'Public' | 'LocalOnly'
   } = {
     name: '',
     displayName: '',
-    icon: null,
-    banner: null,
     sidebar: '',
     nsfw: false,
     postsLockedToModerators: false,
     submitting: false,
+    visibility: 'Public',
   }
 
   async function submit() {
@@ -42,22 +47,16 @@
     formData.submitting = true
 
     try {
-      let icon = formData.icon
-        ? await uploadImage(formData.icon[0], $profile.instance, $profile.jwt)
-        : undefined
-      let banner = formData.banner
-        ? await uploadImage(formData.banner[0], $profile.instance, $profile.jwt)
-        : undefined
-
       const res = edit
         ? await getClient().editCommunity({
             title: formData.displayName,
             description: formData.sidebar,
             nsfw: formData.nsfw,
             posting_restricted_to_mods: formData.postsLockedToModerators,
-            icon: icon,
-            banner: banner,
+            icon: formData.icon,
+            banner: formData.banner,
             community_id: edit,
+            visibility: formData.visibility,
           })
         : await getClient().createCommunity({
             name: formData.name,
@@ -65,8 +64,9 @@
             description: formData.sidebar,
             nsfw: formData.nsfw,
             posting_restricted_to_mods: formData.postsLockedToModerators,
-            icon: icon,
-            banner: banner,
+            icon: formData.icon,
+            banner: formData.banner,
+            visibility: formData.visibility,
           })
 
       toast({
@@ -114,6 +114,11 @@
 
     formData.submitting = false
   }
+
+  let uploading = {
+    banner: false,
+    icon: false,
+  }
 </script>
 
 <form
@@ -137,18 +142,78 @@
     label={$t('form.profile.displayName')}
     bind:value={formData.displayName}
   />
-  <ImageInput label={$t('form.profile.avatar')} bind:files={formData.icon} />
-  <ImageInput label={$t('form.profile.banner')} bind:files={formData.banner} />
+  <div class="flex flex-row gap-4 flex-wrap *:flex-1">
+    <div class="flex flex-col gap-1">
+      <Label>{$t('routes.admin.config.icon')}</Label>
+      <button
+        type="button"
+        on:click={() => (uploading.icon = !uploading.icon)}
+        class="flex flex-col gap-4 bg-white dark:bg-black border border-slate-300 dark:border-zinc-800 p-4 w-full h-32 rounded-xl"
+      >
+        {#if formData.icon}
+          <img src={formData.icon} alt="" class="rounded-md mx-auto h-full" />
+        {:else}
+          <Icon
+            src={DocumentPlus}
+            size="48"
+            class="text-slate-500 dark:text-zinc-500 mx-auto my-auto"
+          />
+        {/if}
+      </button>
+      {#if uploading.icon}
+        <ImageUploadModal
+          bind:open={uploading.icon}
+          multiple={false}
+          on:upload={(uploaded) => {
+            uploading.icon = false
+            formData.icon = uploaded.detail[0]
+          }}
+        />
+      {/if}
+    </div>
+    <div class="flex flex-col gap-1">
+      <Label>{$t('routes.admin.config.banner')}</Label>
+      <button
+        type="button"
+        on:click={() => (uploading.banner = !uploading.banner)}
+        class="flex flex-col gap-4 bg-white dark:bg-black border border-slate-300 dark:border-zinc-800 p-4 w-full h-32 rounded-xl"
+      >
+        {#if formData.banner}
+          <img src={formData.banner} alt="" class="rounded-md mx-auto h-full" />
+        {:else}
+          <Icon
+            src={DocumentPlus}
+            size="48"
+            class="text-slate-500 dark:text-zinc-500 mx-auto my-auto"
+          />
+        {/if}
+      </button>
+      {#if uploading.banner}
+        <ImageUploadModal
+          bind:open={uploading.banner}
+          multiple={false}
+          on:upload={(uploaded) => {
+            uploading.banner = false
+            formData.banner = uploaded.detail[0]
+          }}
+        />
+      {/if}
+    </div>
+  </div>
   <MarkdownEditor
     previewButton
     label={$t('routes.admin.config.sidebar')}
     bind:value={formData.sidebar}
   />
 
-  <Checkbox bind:checked={formData.nsfw}>{$t('post.badges.nsfw')}</Checkbox>
-  <Checkbox bind:checked={formData.postsLockedToModerators}>
+  <Switch bind:checked={formData.nsfw}>{$t('post.badges.nsfw')}</Switch>
+  <Switch bind:checked={formData.postsLockedToModerators}>
     Only moderators can post
-  </Checkbox>
+  </Switch>
+  <Select label="Visibility" class="w-max" bind:value={formData.visibility}>
+    <option value="Public">Public</option>
+    <option value="LocalOnly">Local Only</option>
+  </Select>
   <Button
     submit
     color="primary"
