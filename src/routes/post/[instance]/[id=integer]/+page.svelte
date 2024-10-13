@@ -290,7 +290,7 @@
     </Button>
   </div>
 {/if}
-<section class="mt-4 flex flex-col gap-2 w-full">
+<section class="mt-4 flex flex-col gap-2 w-full" id="comments">
   <header>
     <div class="text-base">
       <span class="font-bold">
@@ -391,6 +391,7 @@
             ($userSettings.hidePosts.removed && c.comment.removed)
           )
       )}
+      scrollTo={data.thread.focus}
     />
     {#if comments.comments.length == 0}
       <Placeholder

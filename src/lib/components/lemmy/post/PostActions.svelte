@@ -132,7 +132,7 @@
 
   <Button
     size="custom"
-    href={postLink(post.post)}
+    href="{postLink(post.post)}#comments"
     class="!text-inherit h-full px-3 relative"
     color="ghost"
     rounding="pill"

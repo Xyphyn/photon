@@ -107,7 +107,7 @@
   class="py-3 relative {node.comment_view.comment.distinguished
     ? ' text-primary-900 dark:text-primary-100'
     : ''} {highlight} {$$props.class}"
-  id="#{node.comment_view.comment.id.toString()}"
+  id={node.comment_view.comment.id.toString()}
 >
   <button
     on:click={() => (open = !open)}

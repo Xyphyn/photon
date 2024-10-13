@@ -4,9 +4,11 @@
   import { createWindowVirtualizer } from '@tanstack/svelte-virtual'
   import Comments from './Comments.svelte'
   import { browser } from '$app/environment'
+  import { onMount } from 'svelte'
 
   export let nodes: CommentNodeI[]
   export let post: Post
+  export let scrollTo: string | undefined
 
   let virtualListEl: HTMLElement | undefined = undefined
 
@@ -18,6 +20,7 @@
       height: 1500,
       width: 99999,
     },
+    overscan: 5,
   })
 
   let virtualItemEls: HTMLElement[] = []
