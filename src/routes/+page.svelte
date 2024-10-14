@@ -20,7 +20,7 @@
   export let data
 </script>
 
-<div class="flex flex-col gap-4 max-w-full w-full min-w-0">
+<div class="flex flex-col gap-2 max-w-full w-full min-w-0">
   <header class="flex flex-col gap-4 relative">
     <Header pageHeader>
       {$t('routes.frontpage.title')}

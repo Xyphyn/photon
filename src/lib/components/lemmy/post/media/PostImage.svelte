@@ -57,7 +57,7 @@
       src={bestImageURL(post, false, -1)}
       loading="lazy"
       class="max-h-[inherit] max-w-full h-auto z-30
-                  transition-opacity duration-500 object-contain mx-auto blur-[64px]
+                  transition-opacity duration-500 object-contain mx-auto
           {imageLoaded === false ? 'opacity-0' : 'opacity-100'}"
       width={512}
       height={300}

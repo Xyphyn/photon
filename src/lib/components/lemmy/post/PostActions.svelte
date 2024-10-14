@@ -149,7 +149,7 @@
     />
     <FormattedNumber number={post.counts.comments} />
   </Button>
-  <div class="ml-auto" />
+  <div class="flex-1" />
 
   {#if $userSettings.debugInfo}
     {#if debug}

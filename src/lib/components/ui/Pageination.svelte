@@ -20,7 +20,7 @@
 </script>
 
 <nav
-  aria-label={$t('aria.pagination')}
+  aria-label={$t('aria.pagination.nav')}
   class="flex flex-row w-full gap-4 items-center justify-center"
 >
   {#if $$slots.default}

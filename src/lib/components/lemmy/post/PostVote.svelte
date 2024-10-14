@@ -2,9 +2,9 @@
   import { userSettings } from '$lib/settings.js'
   export const voteColor = (vote: number, border: boolean = false) =>
     vote == 1
-      ? `bg-blue-500 dark:bg-blue-400 text-slate-50 dark:text-zinc-900`
+      ? `bg-gradient-to-br from-blue-500 to-indigo-500 dark:from-blue-400 dark:to-indigo-500 text-slate-50 dark:text-zinc-900`
       : vote == -1
-        ? `bg-red-500 text-slate-50 dark:bg-red-400 dark:text-zinc-900`
+        ? `bg-gradient-to-br from-red-500 to-pink-500 dark:from-red-400 dark:to-pink-600 text-slate-50 `
         : ''
 
   export const shouldShowVoteColor = (
@@ -24,7 +24,7 @@
   import { vote as voteItem } from '$lib/lemmy/contentview.js'
   import { Button, Popover, buttonColor, toast } from 'mono-svelte'
   import { site } from '$lib/lemmy.js'
-  import { fly } from 'svelte/transition'
+  import { fade, fly } from 'svelte/transition'
   import { backOut } from 'svelte/easing'
   import { t } from '$lib/translations'
   import { errorMessage } from '$lib/lemmy/error'
@@ -71,7 +71,7 @@
   >
     <button
       on:click={() => castVote(vote == 1 ? 0 : 1)}
-      class="flex items-center gap-0.5 transition-colors
+      class="flex items-center gap-0.5 transition-colors relative z-0
       {vote == 1
         ? shouldShowVoteColor(vote, 'upvotes')
         : 'hover:bg-slate-100 hover:dark:bg-zinc-800'}"
@@ -80,7 +80,7 @@
     >
       <Icon src={ChevronUp} size="20" micro />
       {#if showCounts}
-        <span class="grid text-sm">
+        <span class="grid text-sm z-20">
           {#key upvotes}
             <span
               style="grid-column: 1; grid-row: 1;"
