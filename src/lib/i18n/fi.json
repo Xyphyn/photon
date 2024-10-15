@@ -29,7 +29,8 @@
                 "default": "Oletus",
                 "classic": "Vanha",
                 "imported": "Teemasi",
-                "new": "Uusi teema"
+                "new": "Uusi teema",
+                "presets": "Esiasetukset"
             }
         },
         "frontpage": {
@@ -40,8 +41,14 @@
         "modlog": "Moderointiloki",
         "profile": {
             "user": "Käyttäjä",
-            "blocks": "Estot",
-            "credentials": "Tili",
+            "blocks": {
+                "title": "Estot",
+                "empty": {
+                    "title": "Ei estoja",
+                    "description": "Estämiesi käyttäjien ja yhteisöjen sisältö piilotetaan syötteestäsi."
+                }
+            },
+            "credentials": "Kirjautumistiedot",
             "moderates": "Moderoidut yhteisöt",
             "settings": "Asetukset",
             "favorites": "Suosikit",
@@ -56,7 +63,9 @@
             "delete": {
                 "title": "Poista tili",
                 "warning": "Tiliä ei voi palauttaa poistamisen jälkeen. Oletko varma?"
-            }
+            },
+            "overview": "Yleisnäkymä",
+            "submissions": "Lähetykset"
         },
         "instances": "Instanssit",
         "createPost": "Luo julkaisu",
@@ -206,7 +215,13 @@
             "message": "Sähköpostisi on vahvistettu. Voit nyt sulkea tämän ikkunan.",
             "error": "Sähköpostin vahvistus epäonnistui."
         },
-        "communities": "Yhteisöt",
+        "communities": {
+            "title": "Yhteisöt",
+            "trending": "Trendaavat",
+            "search": {
+                "placeholder": "Etsi uusia yhteisöjä"
+            }
+        },
         "community": {
             "settings": {
                 "team": "Tiimi",
@@ -269,6 +284,11 @@
             "link": {
                 "title": "Vaihtoehtoiset linkit",
                 "actions": "Linkin toiminnot"
+            },
+            "vote": {
+                "upvote": "Anna ylä-ääni",
+                "downvote": "Anna alaääni",
+                "score": "Äänet"
             }
         },
         "badges": {
@@ -278,6 +298,15 @@
             "locked": "Lukittu",
             "saved": "Tallennettu",
             "nsfw": "NSFW"
+        },
+        "image": {
+            "zoomIn": "Suurenna",
+            "zoomOut": "Pienennä",
+            "close": "Sulje"
+        },
+        "meta": {
+            "lastEdited": "Viimeksi muokattu {{default}}",
+            "created": "Luotu {{default}}"
         }
     },
     "content": {
@@ -430,7 +459,11 @@
             "edit": "Muokkaa julkaisua",
             "url": "URL",
             "altText": "Vaihtoehtoinen teksti",
-            "selectFile": "Valitse tiedosto"
+            "selectFile": "Valitse tiedosto",
+            "addUrl": "Liitä linkki",
+            "setLanguage": "Aseta kieli",
+            "unset": "Poista",
+            "readMore": "Lue lisää"
         },
         "profile": {
             "2fa": {
@@ -728,6 +761,10 @@
             "pins": {
                 "title": "Kiinnitykset",
                 "description": "Lisää kiinnityksiä sivupalkkiin napsauttamalla kuvaketta. Napsauta oikealla poistaaksesi sen."
+            },
+            "commands": {
+                "description": "Paina vinoviivanäppäintä (/) tai klikkaa logoa oikealla näppäimellä avataksesi komentopaletin.",
+                "title": "Komentopaletti"
             }
         },
         "lemmy": {
@@ -806,7 +843,10 @@
         "mobile": "Mobiili",
         "export": "Vie",
         "import": "Tuo",
-        "reset": "Palauta oletukset"
+        "reset": "Palauta oletukset",
+        "account": {
+            "title": "Käyttäjätili"
+        }
     },
     "error": {
         "incorrect_login": "Virheelliset kirjautumistiedot. Yritä uudelleen.",
@@ -832,6 +872,14 @@
         "invalid_vote_value": "Äänen arvo on virheellinen. Vaalivilppi on Lemmyssä on kielletty.",
         "registration_application_is_pending": "Tilin rekisteröitymistä ei ole vielä käsitelty.",
         "honeypot_failed": "Oletko varma, ettet ole robotti? Joku kävi hunajapurkilla.",
-        "slurs": "Lähetyksesi sisältää kiellettyjä sanoja."
+        "slurs": "Lähetyksesi sisältää kiellettyjä sanoja.",
+        "language_not_allowed": "Valitsemasi kieli ei ole sallitu tässä yhteisössä. Poista valinta käyttääksesi yhteisön oletusta.",
+        "couldnt_find_community": "Tätä yhteisöä ei ole olemassa.",
+        "couldnt_find_person": "Tätä käyttäjää ei ole olemassa."
+    },
+    "aria": {
+        "vote": {
+            "group": "Julkaisun äänestäminen"
+        }
     }
 }
