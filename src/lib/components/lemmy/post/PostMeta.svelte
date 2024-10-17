@@ -129,9 +129,12 @@
           class="group-hover/community:ring-2 transition-all ring-offset-0 ring-primary-900 dark:ring-primary-100"
         />
       </button>
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <!-- svelte-ignore a11y-no-static-element-interactions -->
       <div
         slot="popover"
         class="max-w-md rounded-2xl bg-white dark:bg-zinc-950"
+        on:click|stopPropagation={() => {}}
       >
         <CommunityHeader bind:community bind:subscribed />
       </div>
