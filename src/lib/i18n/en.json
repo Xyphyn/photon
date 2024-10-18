@@ -772,6 +772,10 @@
                     "hide": "Hide",
                     "show": "Show"
                 }
+            },
+            "reverseActions": {
+                "title": "Reverse action row",
+                "description": "Reverses the order of actions on posts and comments."
             }
         },
         "embeds": {

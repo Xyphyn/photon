@@ -118,6 +118,7 @@
 
 <footer
   class="flex flex-row gap-2 items-center flex-shrink-0 {buttonHeight}"
+  class:flex-row-reverse={$userSettings.posts.reverseActions}
   style={$$props.style ?? ''}
 >
   <PostVote

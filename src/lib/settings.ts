@@ -94,6 +94,7 @@ interface Settings {
     compactFeatured: boolean
     showHidden: boolean
     noVirtualize: boolean
+    reverseActions: boolean
   }
   infiniteScroll: boolean
   language: string | null
@@ -175,6 +176,7 @@ export const defaultSettings: Settings = {
     compactFeatured: toBool(env.PUBLIC_COMPACT_FEATURED) ?? true,
     showHidden: false,
     noVirtualize: false,
+    reverseActions: toBool(env.PUBLIC_REVERSE_ACTIONS) ?? false,
   },
   infiniteScroll: true,
   language: env.PUBLIC_LANGUAGE ?? null,

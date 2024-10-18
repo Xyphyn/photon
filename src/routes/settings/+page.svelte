@@ -326,6 +326,11 @@
       />
     </Setting>
     <ToggleSetting
+      bind:checked={$userSettings.posts.reverseActions}
+      title={$t('settings.app.reverseActions.title')}
+      description={$t('settings.app.reverseActions.description')}
+    />
+    <ToggleSetting
       supportedPlatforms={{ desktop: true, tablet: false, mobile: false }}
       bind:checked={$userSettings.newWidth}
       title={$t('settings.app.limitLayoutWidth.title')}

@@ -44,7 +44,10 @@
   <Translation bind:open={translating} />
 {/if}
 
-<div class="flex flex-row items-center gap-0.5 h-7">
+<div
+  class="flex flex-row items-center gap-0.5 h-7 w-full"
+  class:flex-row-reverse={$userSettings.posts.reverseActions}
+>
   <CommentVote
     bind:upvotes={comment.counts.upvotes}
     bind:downvotes={comment.counts.downvotes}
@@ -151,4 +154,5 @@
       {/if}
     {/if}
   </Menu>
+  <div class="flex-1 w-full" />
 </div>
