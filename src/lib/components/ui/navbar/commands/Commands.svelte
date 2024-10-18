@@ -10,6 +10,7 @@
   import { profile, profileData } from '$lib/auth'
   import { getGroups, type Action, type Group } from './actions'
   import { themeData } from '$lib/ui/colors'
+  import { page } from '$app/stores'
 
   export let open = false
   $: if (open) search = ''
@@ -20,7 +21,8 @@
     $resumables,
     $profile,
     $profileData.profiles,
-    $themeData
+    $themeData,
+    $page.data.contextual?.actions
   )
 
   let search = ''

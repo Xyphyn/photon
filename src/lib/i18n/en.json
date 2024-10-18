@@ -46,7 +46,8 @@
             "feeds": "Feeds",
             "downloading": "Downloading actions",
             "setTheme": "Set theme",
-            "setThemeTo": "Set theme to {{default}}"
+            "setThemeTo": "Set theme to {{default}}",
+            "contextual": "On this page"
         }
     },
     "account": {

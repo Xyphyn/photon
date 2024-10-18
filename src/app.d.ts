@@ -1,5 +1,6 @@
 // See https://kit.svelte.dev/docs/types#app
 
+import type { Action } from '$lib/components/ui/navbar/commands/actions'
 import type { ComponentType, SvelteComponent } from 'svelte'
 
 // for information about these interfaces
@@ -15,6 +16,9 @@ declare global {
           component?: ComponentType
           props?: any
         }
+      }
+      contextual?: {
+        actions?: Action[]
       }
     }
     interface PageState {

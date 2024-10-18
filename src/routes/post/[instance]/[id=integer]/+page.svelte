@@ -1,7 +1,7 @@
 <script lang="ts">
   import { buildCommentsTree } from '$lib/components/lemmy/comment/comments.js'
   import { isImage } from '$lib/ui/image.js'
-  import { getClient } from '$lib/lemmy.js'
+  import { client, getClient } from '$lib/lemmy.js'
   import CommentForm from '$lib/components/lemmy/comment/CommentForm.svelte'
   import { onMount } from 'svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
@@ -16,6 +16,10 @@
     Home,
     PlusCircle,
     ChatBubbleLeftRight,
+    Bookmark,
+    BookmarkSlash,
+    ArrowUp,
+    ArrowDown,
   } from 'svelte-hero-icons'
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
   import { Select, removeToast, toast } from 'mono-svelte'
@@ -42,34 +46,80 @@
 
   export let data
 
-  let post = data.post
+  $: type = mediaType(data.post.post_view.post.url, 'cozy')
 
-  $: type = mediaType(post.post_view.post.url, 'cozy')
+  const updateActions = () => {
+    // @ts-ignore
+    data.contextual = {
+      actions: [
+        {
+          name: $t('post.actions.vote.upvote'),
+          icon: ArrowUp,
+          handle: async () => {
+            data.post.post_view.my_vote = (
+              await client().likePost({
+                post_id: data.post.post_view.post.id,
+                score: data.post.post_view.my_vote == 1 ? 0 : 1,
+              })
+            ).post_view.my_vote
+          },
+        },
+        {
+          name: $t('post.actions.vote.downvote'),
+          icon: ArrowDown,
+          handle: async () => {
+            data.post.post_view.my_vote = (
+              await client().likePost({
+                post_id: data.post.post_view.post.id,
+                score: data.post.post_view.my_vote == -1 ? 0 : -1,
+              })
+            ).post_view.my_vote
+          },
+        },
+        {
+          name: data.post.post_view.saved
+            ? $t('post.actions.unsave')
+            : $t('post.actions.save'),
+          handle: async () => {
+            data.post.post_view.saved = (
+              await client().savePost({
+                post_id: data.post.post_view.post.id,
+                save: !data.post.post_view.saved,
+              })
+            ).post_view.saved
+          },
+          icon: data.post.post_view.saved ? BookmarkSlash : Bookmark,
+        },
+      ],
+    }
+  }
+
+  $: if (data.post) updateActions()
 
   onMount(async () => {
     if (
-      !(post.post_view.read && $userSettings.markPostsAsRead) &&
+      !(data.post.post_view.read && $userSettings.markPostsAsRead) &&
       $profile?.jwt
     ) {
       getClient().markPostAsRead({
         read: $userSettings.markPostsAsRead,
-        post_ids: [post.post_view.post.id],
+        post_ids: [data.post.post_view.post.id],
         // @ts-ignore
-        post_id: post.post_view.post.id,
+        post_id: data.post.post_view.post.id,
       })
     }
 
     resumables.add({
-      name: post.post_view.post.name,
+      name: data.post.post_view.post.name,
       type: 'post',
       url: $page.url.toString(),
-      avatar: post.post_view.post.thumbnail_url,
+      avatar: data.post.post_view.post.thumbnail_url,
     })
   })
 
   afterNavigate(async () => {
     // reactivity hack
-    post = data.post
+    data.post = data.post
   })
 
   const fetchOnHome = async (jwt: string) => {
@@ -80,7 +130,7 @@
 
     try {
       const res = await getClient().resolveObject({
-        q: post.post_view.post.ap_id,
+        q: data.post.post_view.post.ap_id,
       })
 
       if (res.post) {
@@ -104,7 +154,7 @@
       page: 1,
       limit: 25,
       type_: 'All',
-      post_id: post.post_view.post.id,
+      post_id: data.post.post_view.post.id,
       sort: commentSort,
       max_depth: data.post.post_view.counts.comments > 100 ? 1 : 3,
     })
@@ -120,29 +170,35 @@
 </script>
 
 <svelte:head>
-  <title>{post.post_view.post.name}</title>
-  <meta property="og:title" content={post.post_view.post.name} />
-  <meta property="twitter:title" content={post.post_view.post.name} />
+  <title>{data.post.post_view.post.name}</title>
+  <meta property="og:title" content={data.post.post_view.post.name} />
+  <meta property="twitter:title" content={data.post.post_view.post.name} />
   <meta property="og:url" content={$page.url.toString()} />
-  {#if isImage(post.post_view.post.url)}
-    <meta property="og:image" content={post.post_view.post.url} />
-    <meta property="twitter:card" content={post.post_view.post.url} />
-  {:else if post.post_view.post.thumbnail_url}
-    <meta property="og:image" content={post.post_view.post.thumbnail_url} />
-    <meta property="twitter:card" content={post.post_view.post.thumbnail_url} />
+  {#if isImage(data.post.post_view.post.url)}
+    <meta property="og:image" content={data.post.post_view.post.url} />
+    <meta property="twitter:card" content={data.post.post_view.post.url} />
+  {:else if data.post.post_view.post.thumbnail_url}
+    <meta
+      property="og:image"
+      content={data.post.post_view.post.thumbnail_url}
+    />
+    <meta
+      property="twitter:card"
+      content={data.post.post_view.post.thumbnail_url}
+    />
   {/if}
-  {#if post.post_view.post.body}
+  {#if data.post.post_view.post.body}
     <meta
       property="description"
-      content={post.post_view.post.body.slice(0, 500)}
+      content={data.post.post_view.post.body.slice(0, 500)}
     />
     <meta
       property="og:description"
-      content={post.post_view.post.body.slice(0, 500)}
+      content={data.post.post_view.post.body.slice(0, 500)}
     />
     <meta
       property="twitter:description"
-      content={post.post_view.post.body.slice(0, 500)}
+      content={data.post.post_view.post.body.slice(0, 500)}
     />
   {/if}
 </svelte:head>
@@ -188,24 +244,24 @@
   <header class="flex flex-col gap-2">
     <div class="flex flex-row justify-between items-center gap-2 flex-wrap">
       <PostMeta
-        community={post.post_view.community}
-        user={post.post_view.creator}
-        bind:subscribed={post.community_view.subscribed}
+        community={data.post.post_view.community}
+        user={data.post.post_view.creator}
+        bind:subscribed={data.post.community_view.subscribed}
         badges={{
-          deleted: post.post_view.post.deleted,
-          removed: post.post_view.post.removed,
-          locked: post.post_view.post.locked,
+          deleted: data.post.post_view.post.deleted,
+          removed: data.post.post_view.post.removed,
+          locked: data.post.post_view.post.locked,
           featured:
-            post.post_view.post.featured_community ||
-            post.post_view.post.featured_local,
-          nsfw: post.post_view.post.nsfw,
-          saved: post.post_view.saved,
-          admin: post.post_view.creator_is_admin,
-          moderator: post.post_view.creator_is_moderator,
+            data.post.post_view.post.featured_community ||
+            data.post.post_view.post.featured_local,
+          nsfw: data.post.post_view.post.nsfw,
+          saved: data.post.post_view.saved,
+          admin: data.post.post_view.creator_is_admin,
+          moderator: data.post.post_view.creator_is_moderator,
         }}
-        published={publishedToDate(post.post_view.post.published)}
-        edited={post.post_view.post.updated}
-        bind:title={post.post_view.post.name}
+        published={publishedToDate(data.post.post_view.post.published)}
+        edited={data.post.post_view.post.updated}
+        bind:title={data.post.post_view.post.name}
         style="width: max-content;"
       />
       <Button on:click={() => history.back()} size="square-md">
@@ -213,23 +269,23 @@
       </Button>
     </div>
     <h1 class="font-bold text-xl font-display leading-5">
-      <Markdown source={post.post_view.post.name} inline />
+      <Markdown source={data.post.post_view.post.name} inline />
     </h1>
   </header>
   <PostMedia
-    type={mediaType(post.post_view.post.url)}
-    post={post.post_view.post}
+    type={mediaType(data.post.post_view.post.url)}
+    post={data.post.post_view.post}
     opened
     view="cozy"
   />
-  {#if post.post_view.post.body}
+  {#if data.post.post_view.post.body}
     <div class="text-base text-slate-800 dark:text-zinc-300 leading-[1.5]">
-      <Markdown source={post.post_view.post.body} />
+      <Markdown source={data.post.post_view.post.body} />
     </div>
   {/if}
   <div class="w-full relative">
     <PostActions
-      bind:post={post.post_view}
+      bind:post={data.post.post_view}
       on:edit={() =>
         toast({
           content: 'The post was edited successfully.',
@@ -238,22 +294,22 @@
       {type}
     />
   </div>
-  {#if post.cross_posts?.length > 0}
+  {#if data.post.cross_posts?.length > 0}
     <Expandable
       class="text-base mt-2 w-full cursor-pointer"
-      open={post.cross_posts?.length <= 3}
+      open={data.post.cross_posts?.length <= 3}
     >
       <div
         slot="title"
         class="inline-block w-full text-left text-base font-normal"
       >
-        <span class="font-bold">{post.cross_posts.length}</span>
+        <span class="font-bold">{data.post.cross_posts.length}</span>
         {$t('routes.post.crosspostCount')}
       </div>
       <div
         class="!divide-y divide-slate-200 dark:divide-zinc-800 flex flex-col"
       >
-        {#each post.cross_posts as crosspost}
+        {#each data.post.cross_posts as crosspost}
           <Post view="compact" actions={false} post={crosspost} />
         {/each}
       </div>
@@ -294,7 +350,7 @@
   <header>
     <div class="text-base">
       <span class="font-bold">
-        <FormattedNumber number={post.post_view.counts.comments} />
+        <FormattedNumber number={data.post.post_view.counts.comments} />
       </span>
       {$t('routes.post.commentCount')}
     </div>
@@ -339,13 +395,13 @@
         </EndPlaceholder>
       {:else}
         <CommentForm
-          postId={post.post_view.post.id}
+          postId={data.post.post_view.post.id}
           on:comment={(comment) =>
             (comments.comments = [
               comment.detail.comment_view,
               ...comments.comments,
             ])}
-          locked={(post.post_view.post.locked &&
+          locked={(data.post.post_view.post.locked &&
             !(
               $profile?.user?.local_user_view.local_user.admin ||
               $profile?.user?.moderates
@@ -381,7 +437,7 @@
       </div>
     {/if}
     <CommentListVirtualizer
-      post={post.post_view.post}
+      post={data.post.post_view.post}
       nodes={buildCommentsTree(
         comments.comments,
         undefined,
@@ -401,10 +457,10 @@
       ></Placeholder>
     {/if}
   {/await}
-  {#if post.post_view.counts.comments > 5}
+  {#if data.post.post_view.counts.comments > 5}
     <EndPlaceholder>
       <span class="text-black dark:text-white font-bold">
-        {post.post_view.counts.comments}
+        {data.post.post_view.counts.comments}
       </span>
       {$t('routes.post.commentCount')}
 

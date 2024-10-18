@@ -43,6 +43,7 @@ import {
   ChatBubbleOvalLeftEllipsis,
   ChatBubbleLeftRight,
   Swatch,
+  Plus,
 } from 'svelte-hero-icons'
 import { get } from 'svelte/store'
 
@@ -66,7 +67,8 @@ export function getGroups(
   resumables: ResumableItem[],
   profile: Profile,
   profiles: Profile[],
-  td: ThemeData
+  td: ThemeData,
+  contextual?: Action[]
 ) {
   return [
     {
@@ -76,6 +78,10 @@ export function getGroups(
         icon: r.avatar ?? PencilSquare,
         href: r.url,
       })),
+    },
+    {
+      name: t.get('nav.commands.contextual'),
+      actions: contextual ?? [],
     },
     {
       name: t.get('nav.commands.main'),
@@ -254,6 +260,26 @@ export function getGroups(
               name: t.get('account.accounts'),
               icon: UserGroup,
             },
+            {
+              href: '/login',
+              name: t.get('account.login'),
+              icon: ArrowRightOnRectangle,
+            },
+            {
+              href: '/signup',
+              name: t.get('account.signup'),
+              icon: Identification,
+            },
+            {
+              href: '/login/guest',
+              name: t.get('account.addGuest'),
+              icon: Plus,
+            },
+            {
+              href: '/accounts',
+              name: t.get('account.accounts'),
+              icon: UserGroup,
+            },
           ]
         : [
             {
@@ -265,6 +291,11 @@ export function getGroups(
               href: '/signup',
               name: t.get('account.signup'),
               icon: Identification,
+            },
+            {
+              href: '/login/guest',
+              name: t.get('account.addGuest'),
+              icon: Plus,
             },
             {
               href: '/accounts',
