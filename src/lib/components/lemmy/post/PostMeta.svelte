@@ -322,7 +322,13 @@
         'badges badges';
       gap: 0;
       grid-template-rows: auto auto auto;
-      grid-template-columns: max-content minmax(0, auto) auto;
+      grid-template-columns: 40px minmax(0, auto);
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .meta.compact {
+      grid-template-columns: 32px minmax(0, auto);
     }
   }
 
