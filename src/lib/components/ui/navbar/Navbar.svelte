@@ -37,6 +37,7 @@
   import CommandsWrapper from './commands/CommandsWrapper.svelte'
   import { optimizeImageURL } from '$lib/components/lemmy/post/helpers'
   import { userSettings } from '$lib/settings'
+  import { dockProps } from '../layout/Shell.svelte'
 
   let promptOpen: boolean = false
 </script>
@@ -153,7 +154,7 @@
         </span>
       {/if}
     </Menu>
-    {#if $profile?.user?.local_user_view.person.avatar}
+    {#if $profile?.user?.local_user_view.person.avatar && !$dockProps.noGap}
       <div
         class="absolute right-0 -z-10 h-full
        overflow-hidden w-full ml-auto"

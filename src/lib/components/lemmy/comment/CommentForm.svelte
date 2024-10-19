@@ -10,6 +10,7 @@
   import { Button } from 'mono-svelte'
   import { t } from '$lib/translations'
   import { errorMessage } from '$lib/lemmy/error'
+  import { Icon, XMark } from 'svelte-hero-icons'
 
   export let postId: number
   export let parentId: number | undefined = undefined
@@ -90,20 +91,21 @@
       <div class="flex-1" />
       {#if actions}
         <Button
+          size="custom"
+          title={$t('common.cancel')}
           on:click={() => dispatch('cancel', true)}
           color="tertiary"
-          size="lg"
-          class=" w-28"
+          class="w-8 h-8"
+          rounding="xl"
         >
-          {$t('common.cancel')}
+          <Icon src={XMark} size="16" micro />
         </Button>
         <Button
           on:click={submit}
           color="primary"
-          size="lg"
-          class=" w-28"
           {loading}
           disabled={locked || loading || banned}
+          size="lg"
         >
           {$t('form.submit')}
         </Button>

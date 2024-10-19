@@ -14,11 +14,11 @@
 		 dark:bg-primary-100 dark:text-black hover:brightness-125 dark:hover:brightness-90 active:brightness-90
 		 active:dark:brightness-75`,
 
-    secondary: `border border-slate-200 border-b-slate-300 dark:border-zinc-800 dark:border-t-zinc-700/70 bg-white dark:bg-zinc-900
+    secondary: `border border-slate-200 border-b-slate-300 dark:border-zinc-800 bg-white dark:bg-zinc-900
 		hover:bg-slate-100 hover:dark:bg-zinc-800 hover:dark:border-zinc-700 hover:dark:border-zinc-700 active:dark:bg-zinc-900 active:bg-slate-200`,
 
     tertiary:
-      'border border-transparent bg-transparent hover:bg-slate-100 hover:dark:bg-zinc-800 dark:text-zinc-200',
+      'border border-transparent bg-transparent hover:bg-slate-100 hover:dark:bg-zinc-700/30 dark:text-zinc-200',
 
     danger:
       'border border-red-500 bg-red-500 hover:text-red-500 hover:bg-transparent text-white',
@@ -51,7 +51,7 @@
   export type ButtonSize = keyof typeof buttonSize
 
   export const buttonSize = {
-    sm: 'px-2 py-1',
+    sm: 'px-3 py-1.5 text-xs',
     md: 'px-3 py-1.5',
     lg: 'px-4 py-2',
     xl: 'px-6 py-3',
@@ -147,7 +147,7 @@
       {buttonSize[size]}
       {buttonRounding[rounding][roundingSide]}
 			{buttonShadow[shadow]}
-      text-sm transition-all font-medium cursor-pointer duration-100
+      text-sm transition-all font-medium cursor-pointer duration-75
       disabled:opacity-50 disabled:pointer-events-none
       {alignment == 'center'
     ? 'origin-center'

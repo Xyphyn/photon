@@ -381,7 +381,8 @@
             data.url = url.toString()
           } catch (e) {}
         }}
-        size="lg"
+        size="sm"
+        rounding="pill"
       >
         <Icon src={Link} size="16" micro />
         {$t('form.post.addUrl')}
@@ -391,14 +392,15 @@
           data.url = ''
           uploadingImage = true
         }}
-        size="lg"
+        size="sm"
+        rounding="pill"
       >
         <Icon src={Photo} size="16" micro />
         {$t('form.post.uploadImage')}
       </Button>
     {/if}
     {#if data.language_id === undefined}
-      <Button size="lg" on:click={() => (data.language_id = 0)}>
+      <Button size="sm" rounding="pill" on:click={() => (data.language_id = 0)}>
         <Icon src={Language} size="16" micro />
         {$t('form.post.setLanguage')}
       </Button>

@@ -31,7 +31,9 @@
   export let node: CommentNodeI
   export let postId: number
   export let op: boolean = false
+
   export let actions: boolean = true
+  export let meta: boolean = true
 
   export let open = true
   export let replying = false
@@ -109,81 +111,83 @@
     : ''} {highlight} {$$props.class}"
   id={node.comment_view.comment.id.toString()}
 >
-  <button
-    on:click={() => (open = !open)}
-    class="flex flex-row cursor-pointer gap-2 items-center group text-[13px] flex-wrap w-full
+  {#if meta}
+    <button
+      on:click={() => (open = !open)}
+      class="flex flex-row cursor-pointer gap-2 items-center group text-[13px] flex-wrap w-full
     z-0 group relative"
-  >
-    <div
-      class="absolute opacity-0 -z-10 inset-0 group-hover:block group-hover:opacity-100
-      bg-slate-100 dark:bg-zinc-900 group-hover:-inset-1 group-hover:-inset-x-2 rounded-full transition-all
-"
     >
       <div
-        class="h-full flex items-center justify-center gap-1 ml-auto w-max mr-2"
+        class="absolute opacity-0 -z-10 inset-0 group-hover:block group-hover:opacity-100
+      bg-slate-100 dark:bg-zinc-900 group-hover:-inset-1 group-hover:-inset-x-2 rounded-full transition-all
+"
       >
-        {#if node.children.length > 0}
-          <FormattedNumber number={node.comment_view.counts.child_count}
-          ></FormattedNumber>
-        {/if}
-        <Icon
-          src={open ? Minus : Plus}
-          size="16"
-          micro
-          class="transition-transform duration-[400ms] ease-out {open
-            ? ''
-            : 'rotate-90'} text-primary-900 dark:text-primary-100"
-        />
+        <div
+          class="h-full flex items-center justify-center gap-1 ml-auto w-max mr-2"
+        >
+          {#if node.children.length > 0}
+            <FormattedNumber number={node.comment_view.counts.child_count}
+            ></FormattedNumber>
+          {/if}
+          <Icon
+            src={open ? Minus : Plus}
+            size="16"
+            micro
+            class="transition-transform duration-[400ms] ease-out {open
+              ? ''
+              : 'rotate-90'} text-primary-900 dark:text-primary-100"
+          />
+        </div>
       </div>
-    </div>
-    <span class:font-bold={op} class="flex flex-row gap-1 items-center">
-      <UserLink
-        inComment
-        avatarSize={22}
-        avatar
-        user={node.comment_view.creator}
-      >
-        <svelte:fragment slot="badges">
-          {#if node.comment_view.creator_is_moderator}
-            <ShieldIcon filled width={14} class="text-green-500" />
-          {/if}
-          {#if node.comment_view.creator_is_admin}
-            <ShieldIcon filled width={14} class="text-red-500" />
-          {/if}
-        </svelte:fragment>
-      </UserLink>
-      {#if op}
-        <Icon mini size="16" src={Microphone} class="text-sky-600" />
-      {/if}
-    </span>
-    <RelativeDate
-      class="text-slate-600 dark:text-zinc-400"
-      date={publishedToDate(node.comment_view.comment.published)}
-    />
-    <span class="text-slate-600 dark:text-zinc-400 flex flex-row gap-2 ml-1">
-      {#if node.comment_view.comment.updated}
-        <Icon src={Pencil} solid size="12" title="Edited" />
-      {/if}
-      {#if node.comment_view.comment.deleted || node.comment_view.comment.removed}
-        <Icon
-          src={Trash}
-          solid
-          size="12"
-          title={$t('post.badges.deleted')}
-          class="text-red-600 dark:text-red-500"
-        />
-      {/if}
-      {#if node.comment_view.saved}
-        <Icon
-          src={Bookmark}
-          solid
-          size="12"
-          title={$t('post.badges.saved')}
-          class="text-yellow-600 dark:text-yellow-500"
-        />
-      {/if}
-    </span>
-  </button>
+      <span class:font-bold={op} class="flex flex-row gap-1 items-center">
+        <UserLink
+          inComment
+          avatarSize={22}
+          avatar
+          user={node.comment_view.creator}
+        >
+          <svelte:fragment slot="badges">
+            {#if node.comment_view.creator_is_moderator}
+              <ShieldIcon filled width={14} class="text-green-500" />
+            {/if}
+            {#if node.comment_view.creator_is_admin}
+              <ShieldIcon filled width={14} class="text-red-500" />
+            {/if}
+          </svelte:fragment>
+        </UserLink>
+        {#if op}
+          <Icon mini size="16" src={Microphone} class="text-sky-600" />
+        {/if}
+      </span>
+      <RelativeDate
+        class="text-slate-600 dark:text-zinc-400"
+        date={publishedToDate(node.comment_view.comment.published)}
+      />
+      <span class="text-slate-600 dark:text-zinc-400 flex flex-row gap-2 ml-1">
+        {#if node.comment_view.comment.updated}
+          <Icon src={Pencil} solid size="12" title="Edited" />
+        {/if}
+        {#if node.comment_view.comment.deleted || node.comment_view.comment.removed}
+          <Icon
+            src={Trash}
+            solid
+            size="12"
+            title={$t('post.badges.deleted')}
+            class="text-red-600 dark:text-red-500"
+          />
+        {/if}
+        {#if node.comment_view.saved}
+          <Icon
+            src={Bookmark}
+            solid
+            size="12"
+            title={$t('post.badges.saved')}
+            class="text-yellow-600 dark:text-yellow-500"
+          />
+        {/if}
+      </span>
+    </button>
+  {/if}
   {#if open}
     <div transition:slide={{ duration: 400, easing: expoOut }}>
       <div

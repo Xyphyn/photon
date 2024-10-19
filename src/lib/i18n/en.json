@@ -277,6 +277,11 @@
             "empty": {
                 "title": "No new notifications",
                 "description": "Messages, replies, and mentions will appear here."
+            },
+            "item": {
+                "reply": "{{user}} replied to you in {{post}}",
+                "mention": "{{user}} mentioned you in {{post}}",
+                "message": "{{user}} messaged {{recipient}}"
             }
         },
         "moderation": {

@@ -23,6 +23,7 @@
   import { t } from '$lib/translations'
   import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
   import { contentPadding } from '$lib/components/ui/layout/Shell.svelte'
+  import { expoOut } from 'svelte/easing'
 
   export let data
 
@@ -97,67 +98,70 @@
         {$t('routes.inbox.markAsRead')}
       </Button>
     </div>
+    <div
+      class="mt-4 mb-0 sticky z-30 mx-auto max-w-full flex gap-2 md:flex-row flex-col
+  items-center px-2 w-max"
+      style="top: max(1.5rem, {$contentPadding.top}px);"
+      slot="extended"
+    >
+      <Tabs
+        routes={[
+          {
+            href: '?type=all',
+            name: $t('filter.location.all'),
+          },
+          {
+            href: '?type=replies',
+            name: $t('filter.inbox.replies'),
+          },
+          {
+            href: '?type=mentions',
+            name: $t('filter.inbox.mentions'),
+          },
+          {
+            href: '/inbox/messages',
+            name: $t('filter.inbox.messages'),
+          },
+        ]}
+        currentRoute={$page.url.search}
+        isSelected={(url, current, route, def) =>
+          $page.url.search == route ||
+          ($page.url.pathname == route && $page.url.search == '') ||
+          $page.url.searchParams.toString().includes(route.slice(1)) ||
+          ($page.url.search == '' && route == def)}
+        class="overflow-auto w-full"
+        buildUrl={(route, href) =>
+          href.includes('?')
+            ? '?' + addSearchParam($page.url.searchParams, href).toString()
+            : `${href}${$page.url.search}`}
+        defaultRoute="?type=All"
+      />
+      <Tabs
+        routes={[
+          {
+            href: '?unreadOnly=false',
+            name: $t('filter.location.all'),
+          },
+          {
+            href: '?unreadOnly=true',
+            name: $t('filter.unread'),
+          },
+        ]}
+        isSelected={(url, current, route, def) =>
+          $page.url.searchParams.toString().includes(route.slice(1)) ||
+          ($page.url.search == '' && route == def)}
+        buildUrl={(route, href) =>
+          '?' + addSearchParam($page.url.searchParams, href).toString()}
+        defaultRoute="?unreadOnly=true"
+      />
+    </div>
   </Header>
 </div>
 <div class="mt-4" />
 
 <div
-  class="mt-4 mb-0 sticky z-30 mx-auto max-w-full flex gap-2 md:flex-row flex-col
-  items-center px-2"
-  style="top: max(1.5rem, {$contentPadding.top}px);"
+  class="flex flex-col list-none flex-1 h-full mt-4 divide-y divide-slate-200 dark:divide-zinc-900 *:py-4"
 >
-  <Tabs
-    routes={[
-      {
-        href: '?type=All',
-        name: $t('filter.location.all'),
-      },
-      {
-        href: '?type=Replies',
-        name: $t('filter.inbox.replies'),
-      },
-      {
-        href: '?type=Mentions',
-        name: $t('filter.inbox.mentions'),
-      },
-      {
-        href: '/inbox/messages',
-        name: $t('filter.inbox.messages'),
-      },
-    ]}
-    currentRoute={$page.url.search}
-    isSelected={(url, current, route, def) =>
-      $page.url.search == route ||
-      ($page.url.pathname == route && $page.url.search == '') ||
-      $page.url.searchParams.toString().includes(route.slice(1)) ||
-      ($page.url.search == '' && route == def)}
-    class="overflow-auto w-full"
-    buildUrl={(route, href) =>
-      href.includes('?')
-        ? '?' + addSearchParam($page.url.searchParams, href).toString()
-        : `${href}${$page.url.search}`}
-    defaultRoute="?type=All"
-  />
-  <Tabs
-    routes={[
-      {
-        href: '?unreadOnly=false',
-        name: $t('filter.location.all'),
-      },
-      {
-        href: '?unreadOnly=true',
-        name: $t('filter.unread'),
-      },
-    ]}
-    isSelected={(url, current, route, def) =>
-      $page.url.searchParams.toString().includes(route.slice(1)) ||
-      ($page.url.search == '' && route == def)}
-    buildUrl={(route, href) =>
-      '?' + addSearchParam($page.url.searchParams, href).toString()}
-    defaultRoute="?unreadOnly=true"
-  />
-</div>
-<div class="flex flex-col gap-4 list-none flex-1 h-full mt-4">
   {#if !data.data || (data.data?.length ?? 0) == 0}
     <Placeholder
       icon={Inbox}
@@ -165,9 +169,19 @@
       description={$t('routes.inbox.empty.description')}
     />
   {:else}
-    {#each data.data as item}
-      <div in:fly={{ duration: 500, y: -6, opacity: 0 }}>
-        <InboxItem {item} />
+    {#each data.data as item, index (item.id)}
+      <div
+        class="-mx-4 sm:-mx-6 px-4 sm:px-6
+        {item.read ? '' : 'bg-yellow-50/50 dark:bg-blue-500/5'}"
+        in:fly|global={{
+          duration: 1000,
+          y: 16,
+          opacity: 0,
+          easing: expoOut,
+          delay: index * 50,
+        }}
+      >
+        <InboxItem bind:item />
       </div>
     {/each}
   {/if}

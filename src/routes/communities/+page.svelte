@@ -149,7 +149,7 @@
       {#each sliced as community, index (community.community.id)}
         <div
           class="px-6 hover:bg-slate-50 hover:dark:bg-zinc-900 transition-colors @container
-        border-b border-slate-100 dark:border-zinc-800"
+        border-b border-slate-100 dark:border-zinc-900"
           in:fly|global={{
             duration: 1000,
             easing: expoOut,
