@@ -130,7 +130,7 @@
       <Button
         color="ghost"
         slot="target"
-        size="sm"
+        size="xs"
         rounding="pill"
         class="p-0.5 px-1 w-max mt-auto text-slate-600 dark:text-zinc-400 block
         text-xs"
@@ -148,7 +148,7 @@
       target="_blank"
       class="text-slate-900 dark:text-zinc-300 items-center
     text-xs overflow-hidden max-w-full block flex-shrink"
-      size="sm"
+      size="xs"
       color="ghost"
       rounding="pill"
     >
