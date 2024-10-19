@@ -55,32 +55,6 @@
 
 <Header pageHeader class="justify-between">
   <span>{$t('routes.communities.title')}</span>
-  <Popover
-    openOnHover
-    class="!inline-flex"
-    targetClass="inline"
-    placement="bottom"
-  >
-    <Icon
-      src={InformationCircle}
-      size="20"
-      mini
-      slot="target"
-      class="!inline"
-    />
-    <Material slot="popover" color="distinct" class="w-72">
-      <p class="font-normal">
-        Can't find a community on your home instance? Go to the <a
-          href="/search"
-          class="text-blue-500 hover:underline"
-        >
-          search
-        </a>
-        page, and search with this syntax:
-        <code>!community@instance.com</code>
-      </p>
-    </Material>
-  </Popover>
 </Header>
 <div
   class="mt-4 mb-0 sticky z-30"
