@@ -14,7 +14,7 @@
 		 dark:bg-primary-100 dark:text-black hover:brightness-125 dark:hover:brightness-90 active:brightness-90
 		 active:dark:brightness-75`,
 
-    secondary: `border border-slate-200 border-b-slate-300 dark:border-zinc-800 bg-white dark:bg-zinc-900
+    secondary: `border border-slate-200 border-b-slate-300 dark:border-zinc-800 dark:border-t-zinc-700/50 bg-white dark:bg-zinc-900
 		hover:bg-slate-100 hover:dark:bg-zinc-800 hover:dark:border-zinc-700 hover:dark:border-zinc-700 active:dark:bg-zinc-900 active:bg-slate-200`,
 
     tertiary:

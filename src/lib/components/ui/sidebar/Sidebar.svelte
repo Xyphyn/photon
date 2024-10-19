@@ -35,7 +35,6 @@
         <SidebarButton
           icon={iconOfLink(pin.url)}
           on:click={() => goto(pin.url)}
-          color="tertiary"
           alignment="center"
           selected={`${$page.url.pathname}${$page.url.search}` == pin.url}
           on:contextmenu={(e) => {
@@ -53,7 +52,7 @@
     <hr class="border-slate-200 dark:border-zinc-900 my-1" />
   {/if}
   {#if $profile?.jwt}
-    <SidebarButton icon={UserCircle} href="/profile/user">
+    <SidebarButton icon={UserCircle} href="/profile">
       <span slot="label">
         {$t('profile.profile')}
       </span>

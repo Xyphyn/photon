@@ -15,15 +15,15 @@
 </script>
 
 <Button
-  color="none"
+  color={selected ? 'primary' : 'tertiary'}
   alignment="left"
   {...$$restProps}
   {href}
   on:click
   on:contextmenu
-  class="font-normal block !origin-left border border-transparent {selected
-    ? 'text-primary-900 dark:!text-primary-100 bg-slate-100 dark:bg-zinc-900'
-    : 'text-slate-600 dark:text-zinc-400'} hover:bg-slate-100 dark:hover:bg-zinc-800 {$$props.class}"
+  class="font-normal block !origin-left border border-transparent {!selected
+    ? 'text-slate-600 dark:text-zinc-400'
+    : ''} {$$props.class}"
 >
   <slot {selected} name="icon" slot="prefix">
     {#if icon}
