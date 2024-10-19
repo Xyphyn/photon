@@ -152,7 +152,7 @@
       {/if}
     </div>
   </div>
-  <div slot="extended" class="flex gap-2 w-full md:hidden">
+  <div slot="extended" class="flex gap-2 w-full md:hidden mt-1">
     <Button
       color={item.read ? 'secondary' : 'primary'}
       {loading}
@@ -165,7 +165,9 @@
       rounding="pill"
     >
       <Icon src={item.read ? EyeSlash : Eye} size="16" micro slot="prefix" />
-      {$t('routes.inbox.item.markRead')}
+      {item.read
+        ? $t('post.actions.more.markUnread')
+        : $t('post.actions.more.markRead')}
     </Button>
     {#if item.type == 'comment_reply' || item.type == 'person_mention'}
       <Button href="/comment/{item.item.comment.id}" size="sm" rounding="pill">
