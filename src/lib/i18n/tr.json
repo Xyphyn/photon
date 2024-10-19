@@ -1,1 +1,13 @@
-{}
+{
+    "profile": {
+        "inbox": "Posta Kutusu",
+        "subscribed": "Abonelikler",
+        "profile": "Profil",
+        "saved": "Kaydedilenler"
+    },
+    "nav": {
+        "home": "Ana Sayfa",
+        "admin": "Yönetici",
+        "moderation": "Moderasyon"
+    }
+}
