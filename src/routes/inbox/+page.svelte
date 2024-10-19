@@ -70,7 +70,7 @@
 </script>
 
 <svelte:head>
-  <title>{$t('routes.inbox.title')}</title>
+  <title>Inbox</title>
 </svelte:head>
 
 <div class="flex flex-row gap-2">

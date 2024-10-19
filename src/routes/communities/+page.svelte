@@ -68,6 +68,18 @@
       slot="target"
       class="!inline"
     />
+    <Material slot="popover" color="distinct" class="w-72">
+      <p class="font-normal">
+        Can't find a community on your home instance? Go to the <a
+          href="/search"
+          class="text-blue-500 hover:underline"
+        >
+          search
+        </a>
+        page, and search with this syntax:
+        <code>!community@instance.com</code>
+      </p>
+    </Material>
   </Popover>
 </Header>
 <div
@@ -88,6 +100,17 @@
         class="flex-1 !rounded-full h-full"
         placeholder={$t('routes.communities.search.placeholder')}
       />
+      <Button
+        submit
+        color="primary"
+        size="custom"
+        class="flex-shrink-0 h-full aspect-square"
+        title="Search"
+        rounding="pill"
+        loading={$navigating != null}
+      >
+        <Icon src={MagnifyingGlass} size="16" micro slot="prefix" />
+      </Button>
     </form>
   </Tabs>
 </div>
