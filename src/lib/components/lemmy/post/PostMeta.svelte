@@ -100,12 +100,17 @@
 
   let displayTitle = title
 
-  $: {
-    if (title && tags.length == 0) {
+  const update = () => {
+    if (tags.length == 0) {
       const result = parseTags(title)
       tags = result.tags
-      console.log('changed display title')
       displayTitle = result.title
+    }
+  }
+
+  $: {
+    if (title) {
+      update()
     }
   }
 
