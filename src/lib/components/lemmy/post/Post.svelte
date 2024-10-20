@@ -56,6 +56,8 @@
     const tagContent = tags.map((t) => t.content.toLowerCase())
 
     let rule: 'blur' | 'hide' | undefined
+    if ($userSettings.nsfwBlur && (post.post.nsfw || post.community.nsfw))
+      rule = 'blur'
     tagContent.forEach((tag) => {
       if ($userSettings.tagRules?.[tag])
         rule = $userSettings.tagRules?.[tag] ?? rule
