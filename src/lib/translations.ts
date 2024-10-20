@@ -73,6 +73,11 @@ const config: Config = {
       loader: async () => (await import('./i18n/ru.json')).default,
     },
     {
+      locale: 'tr',
+      key: '',
+      loader: async () => (await import('./i18n/tr.json')).default,
+    },
+    {
       locale: 'zh-Hans',
       key: '',
       loader: async () => (await import('./i18n/zh-Hans.json')).default,

@@ -71,6 +71,7 @@
     ['nl', { name: 'Nederlands', translated: 0.89, flag: '🇳🇱' }],
     ['pl', { name: 'Polski', translated: 0.91, flag: '🇵🇱' }],
     ['pt', { name: 'Português', translated: 0.86, flag: '🇵🇹' }],
+    ['tr', { name: 'Türkçe', translated: 0.99, flag: '🇹🇷' }],
     ['ru', { name: 'Русский', translated: 0.88, flag: '🇷🇺' }],
     ['zh-Hans', { name: '简体中文', translated: 0.83, flag: '🇨🇳' }],
     ['zh-Hant', { name: '繁體中文', translated: 0.23, flag: '🇹🇼' }],
