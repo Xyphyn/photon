@@ -8,6 +8,42 @@
     "nav": {
         "home": "Ana Sayfa",
         "admin": "Yönetici",
-        "moderation": "Moderasyon"
+        "moderation": "Moderasyon",
+        "communities": "Keşfet",
+        "search": "Ara",
+        "create": {
+            "label": "Oluştur",
+            "post": "Gönderi",
+            "logingate": "İçerik oluşturmak için giriş yapmalısınız.",
+            "community": "Topluluk"
+        },
+        "menu": {
+            "label": "Profil",
+            "app": "Uygulama",
+            "settings": "Ayarlar",
+            "colorscheme": {
+                "label": "Renk Şeması",
+                "system": "Sistem",
+                "light": "Aydınlık",
+                "dark": "Karanlık"
+            },
+            "theme": "Tema",
+            "about": "Hakkında",
+            "source": "Kaynak",
+            "donate": "Bağış Yap",
+            "instance": "Sunucu"
+        },
+        "commands": {
+            "prompt": "Komut Paleti",
+            "content": "İçerik",
+            "search": "{{default}} için yapılan arama",
+            "main": "Ana",
+            "setView": "Görünümü ayarla",
+            "setColor": "Renk şemasını ayarla",
+            "setColorTo": "Renk şemasını şuna ayarla: {{default}}",
+            "feeds": "Yayınlar",
+            "recents": "Son Kullanılanlar",
+            "setViewTo": "Görünümü şu şekilde ayarla: {{default}}"
+        }
     }
 }
