@@ -1,3 +1,12 @@
+<script>
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { t } from '$lib/translations'
+</script>
+
+<Header pageHeader>
+  {$t('routes.translators')}
+</Header>
+
 <ul class="top-list">
   <li>Bulgarian</li>
   <ul>
@@ -61,3 +70,13 @@
     <li>poVoq (1)</li>
   </ul>
 </ul>
+
+<style>
+  ul {
+    padding-left: 2rem;
+  }
+
+  .top-list > li {
+    font-weight: bold;
+  }
+</style>
