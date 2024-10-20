@@ -1,49 +1,903 @@
 {
-    "profile": {
-        "inbox": "Posta Kutusu",
-        "subscribed": "Abonelikler",
-        "profile": "Profil",
-        "saved": "Kaydedilenler"
+  "profile": {
+    "profile": "Profil",
+    "inbox": "Gelen kutusu",
+    "saved": "Kaydedildi",
+    "subscribed": "Abonelikler"
+  },
+  "nav": {
+    "home": "Ana Sayfa",
+    "admin": "Yönetici",
+    "moderation": "Moderasyon",
+    "communities": "Keşfet",
+    "search": "Ara",
+    "create": {
+      "label": "Yarat",
+      "post": "Gönder",
+      "community": "Topluluk",
+      "logingate": "İçerik oluşturmak için giriş yapmalısınız."
     },
-    "nav": {
-        "home": "Ana Sayfa",
-        "admin": "Yönetici",
-        "moderation": "Moderasyon",
-        "communities": "Keşfet",
-        "search": "Ara",
-        "create": {
-            "label": "Oluştur",
-            "post": "Gönderi",
-            "logingate": "İçerik oluşturmak için giriş yapmalısınız.",
-            "community": "Topluluk"
-        },
-        "menu": {
-            "label": "Profil",
-            "app": "Uygulama",
-            "settings": "Ayarlar",
-            "colorscheme": {
-                "label": "Renk Şeması",
-                "system": "Sistem",
-                "light": "Aydınlık",
-                "dark": "Karanlık"
-            },
-            "theme": "Tema",
-            "about": "Hakkında",
-            "source": "Kaynak",
-            "donate": "Bağış Yap",
-            "instance": "Sunucu"
-        },
-        "commands": {
-            "prompt": "Komut Paleti",
-            "content": "İçerik",
-            "search": "{{default}} için yapılan arama",
-            "main": "Ana",
-            "setView": "Görünümü ayarla",
-            "setColor": "Renk şemasını ayarla",
-            "setColorTo": "Renk şemasını şuna ayarla: {{default}}",
-            "feeds": "Yayınlar",
-            "recents": "Son Kullanılanlar",
-            "setViewTo": "Görünümü şu şekilde ayarla: {{default}}"
-        }
+    "menu": {
+      "label": "Profil",
+      "app": "Uygulama",
+      "settings": "Ayarlar",
+      "colorscheme": {
+        "label": "Renk Şeması",
+        "system": "Sistem",
+        "dark": "Karanlık",
+        "light": "Işık"
+      },
+      "theme": "Tema",
+      "about": "Hakkında",
+      "source": "Kaynak",
+      "donate": "Bağış yap",
+      "instance": "Sunucu"
+    },
+    "commands": {
+      "prompt": "Komut Paleti",
+      "recents": "Son Kullanılanlar",
+      "content": "İçerik",
+      "search": "Ara {{default}}",
+      "main": "Ana",
+      "setView": "Görünümü ayarla",
+      "setViewTo": "Görünümü şu şekilde ayarla: {{default}}",
+      "setColor": "Renk şemasını ayarla",
+      "setColorTo": "Renk şemasını şuna ayarla: {{default}}",
+      "feeds": "Yayınlar",
+      "downloading": "Eylemler indiriliyor",
+      "setTheme": "Temayı ayarla",
+      "setThemeTo": "Temayı şuna ayarla: {{default}}",
+      "contextual": "Bu sayfada"
     }
+  },
+  "account": {
+    "login": "Giriş Yap",
+    "logout": "Oturumu Kapat",
+    "signup": "Üye ol",
+    "accounts": "Hesaplar",
+    "changeinstance": "Sunucuyu Değiştir",
+    "resetColor": "Rengi Sıfırla",
+    "addGuest": "Misafir Ekle",
+    "moveUp": "Yukarı Taşı",
+    "moveDown": "Aşağı Taşı",
+    "guest": "Misafir",
+    "versionGate": "Photon'un bu sürümü {{version}} veya daha üstü versiyonda çalışan sunucuları destekler."
+  },
+  "filter": {
+    "location": {
+      "label": "Konum",
+      "all": "Tüm",
+      "local": "Yerel",
+      "subscribed": "Abonelikler",
+      "moderator": "Moderatör",
+      "global": "Küresel"
+    },
+    "sort": {
+      "label": "Düzenle",
+      "active": "Aktif",
+      "hot": "Sıcak",
+      "top": {
+        "label": "Tepe",
+        "time": {
+          "label": "Zaman",
+          "all": "Tüm",
+          "9months": "9 Ay",
+          "6months": "6 Ay",
+          "3months": "3 Ay",
+          "month": "Ay",
+          "week": "Hafta",
+          "day": "Gün",
+          "12hours": "12 Saat",
+          "6hours": "6 Saat",
+          "hour": "Saat"
+        }
+      },
+      "new": "Yeni",
+      "old": "Eskimiş",
+      "controversial": "Tartışmalı",
+      "scaled": "Ölçekli",
+      "mostcomments": "En Çok Yorum",
+      "newcomments": "Yeni Yanıtlar"
+    },
+    "view": {
+      "label": "Görüş",
+      "cozy": "Samimi",
+      "list": "Liste",
+      "compact": "Kompakt",
+      "legacy": "Miras"
+    },
+    "type": "Tip",
+    "filter": "Filtre",
+    "unread": "Okunmamış",
+    "inbox": {
+      "messages": "Mesajlar",
+      "replies": "Yanıtlar",
+      "mentions": "Bahsetmeler"
+    }
+  },
+  "form": {
+    "username": "Kullanıcı adı",
+    "name": "İsim",
+    "instance": "Sunucu URL'si",
+    "password": "Şifre",
+    "confirmPassword": "Şifreyi Onayla",
+    "2fa": "2FA Kodu",
+    "forgotpassword": "Parolanızı mı unuttunuz",
+    "submit": "Göndermek",
+    "edit": "Düzenlemek",
+    "preview": "Önizleme",
+    "post": {
+      "create": "Gönderi Oluştur",
+      "edit": "Gönderiyi Düzenle",
+      "community": "Toplum",
+      "title": "Başlık",
+      "url": "URL'si",
+      "body": "Vücut",
+      "nsfw": "NSFW",
+      "generateTitle": "Başlık Oluştur",
+      "uploadImage": "Resim Yükle",
+      "selectFile": "Bir dosya seçin",
+      "altText": "Alternatif Metin",
+      "addUrl": "URL ekle",
+      "setLanguage": "Dili ayarla",
+      "unset": "Ayarlanmadı",
+      "readMore": "Devamını oku"
+    },
+    "profile": {
+      "displayName": "Görünen ad",
+      "bio": "Biyografi",
+      "avatar": "avatar",
+      "banner": "Afiş",
+      "email": "E-posta",
+      "matrix": "Matrix Kullanıcısı",
+      "showNSFW": "NSFW içeriği göster",
+      "scores": "Puanları Göster",
+      "bot": "Bot Hesabı",
+      "showBots": "Botları Göster",
+      "showRead": "Okunmuş Gönderileri Göster",
+      "currentPassword": "Mevcut Şifre",
+      "newPassword": "Yeni Şifre",
+      "verifyNewPassword": "Yeni Şifreyi Doğrulayın",
+      "2fa": {
+        "totp": "TOTP",
+        "2fa": "2FA",
+        "paste": "Bunu kimlik doğrulayıcı uygulamanıza yapıştırın."
+      },
+      "deleteAccount": {
+        "label": "Hesabı sil",
+        "deleteContent": "İçeriği sil",
+        "warning": "Bu, TÜM gönderimlerinizi silecektir."
+      }
+    },
+    "email": "E-posta",
+    "setup": "Kurulum",
+    "signup": {
+      "title": "Üye olmak",
+      "description": "İlginizi çeken bir sunucuyu seçin veya URL'yi manuel olarak yazın.",
+      "info": "Sunucu, hesabınızın barındırılacağı sunucudur ancak yine de diğer sunucuların içeriğine erişebilir ve bunlarla etkileşimde bulunabilirsiniz.",
+      "chooseInstance": "Bir sunucu seçin",
+      "application": {
+        "label": "Başvuru",
+        "info": "Bu sunucuya katılmak için bu başvuru formunu doldurmalı ve kabul edilmeyi beklemelisiniz. "
+      },
+      "closed": {
+        "title": "Kayıtlar kapandı",
+        "description": "Bu sunucuda kayıtlar kapatıldı. ",
+        "anotherInstance": "Başka bir sunucu bul"
+      }
+    },
+    "description": "Tanım"
+  },
+  "routes": {
+    "frontpage": {
+      "title": "Ön sayfa",
+      "footer": "{{users:number}} aktif {{users; 1:user; default:users;}}",
+      "endFeed": "sonuna ulaştın {{community_name; undefined:the feed.; default:{{community_name}}.}}"
+    },
+    "modlog": "Mod günlüğü",
+    "instances": "Sunucular",
+    "legal": {
+      "title": "Yasal",
+      "noLegal": "Bu sunucuda herhangi bir hukuki bilgi bulunmamaktadır."
+    },
+    "profile": {
+      "user": "Kullanıcı",
+      "settings": "Ayarlar",
+      "blocks": {
+        "title": "Engellendi",
+        "empty": {
+          "title": "Engellenen varlık yok",
+          "description": "Herhangi bir şeyi engellediğinizde, artık yayınlarınızda görünmez."
+        }
+      },
+      "credentials": "Kimlik bilgileri",
+      "moderates": "Denetleniyor",
+      "favorites": "Favoriler",
+      "upvoted": "Olumlu oy verildi",
+      "downvoted": "Olumsuz oy verildi",
+      "media": {
+        "title": "Medya",
+        "download": "İndirmek"
+      },
+      "logins": "Girişler",
+      "welcome": "Hoş geldin, {{default}}!",
+      "delete": {
+        "title": "Hesabı sil",
+        "warning": "Bu kalıcıdır. "
+      },
+      "overview": "Genel Bakış",
+      "submissions": "Gönderimler"
+    },
+    "translators": "Çevirmenler",
+    "accounts": "Hesaplar",
+    "communities": {
+      "title": "Topluluklar",
+      "trending": "Trend olan",
+      "search": {
+        "placeholder": "Yeni bir topluluk arayın"
+      }
+    },
+    "search": {
+      "title": "Ara",
+      "federating": "Federasyon",
+      "query": "Sorgu",
+      "noResults": {
+        "title": "Sonuç Yok",
+        "description": "Bu filtreyle eşleşen sonuç yok. ",
+        "alt": "Federal evrende arama yapın"
+      },
+      "top": "En iyi sonuçlar",
+      "other": "Diğer sonuçlar"
+    },
+    "saved": "Kaydedildi",
+    "createPost": "Gönderi Oluştur",
+    "createCommunity": "Topluluk Oluştur",
+    "post": {
+      "crosspostCount": "çapraz gönderiler",
+      "commentCount": "yorumlar",
+      "addComment": "Yorum ekle",
+      "scrollToTop": "Yukarıya doğru kaydır",
+      "instanceWarning": "Bu gönderi, hesabınızın sunucusundan farklı bir sunucudan istendi. ",
+      "remoteView": "Uzaktan Görünüm",
+      "localView": "Yerel Görünüm",
+      "thread": {
+        "single": "Tek bir konuya bakıyorsunuz.",
+        "allComments": "Tüm Yorumlar",
+        "part": "Bir konunun bir kısmını görüntülüyorsunuz.",
+        "context": "İçeriği Göster"
+      },
+      "emptyComments": {
+        "title": "Yorum yok",
+        "description": "Konuşmayı başlatın!"
+      }
+    },
+    "inbox": {
+      "title": "Gelen kutusu",
+      "markAsRead": "Tümünü Okundu Olarak İşaretle",
+      "empty": {
+        "title": "Yeni bildirim yok",
+        "description": "Mesajlar, yanıtlar ve bahsedenler burada görünecektir."
+      }
+    },
+    "moderation": {
+      "title": "Moderasyon",
+      "empty": {
+        "title": "Yeni rapor yok",
+        "description": "Gönderimler bildirildiğinde, burada bunlarla ilgili işlem yapabilirsiniz."
+      },
+      "reason": "Sebep",
+      "resolve": "Çöz",
+      "resolved": "Çözüldü",
+      "unresolve": "Çöz",
+      "resolvedBy": "Tarafından çözüldü"
+    },
+    "admin": {
+      "title": "Yönetim",
+      "config": {
+        "title": "Yapılandırma",
+        "sidebar": "Kenar çubuğu",
+        "icon": "Simge",
+        "banner": "Afiş",
+        "downvotesEnabled": "Olumsuz Oyları Etkinleştir",
+        "nsfwEnabled": "NSFW'yi etkinleştir",
+        "registration": {
+          "label": "Kayıt Modu",
+          "open": "Açık",
+          "application": "Başvuru Gerektir",
+          "closed": "Kapalı"
+        },
+        "applicationQuestion": "Başvuru Sorusu",
+        "adminCommunityOnly": "Yalnızca yöneticiler topluluk oluşturabilir",
+        "requireVerifyEmail": "E-posta doğrulamasını zorunlu kıl",
+        "emailAdminsOnApplication": "Yeni başvurular alındığında yöneticilere e-posta gönderin",
+        "emailAdminsOnReport": "Yöneticilere yeni raporlar alma konusunda e-posta gönderin",
+        "listingType": {
+          "label": "Listeleme Türü",
+          "all": "Tüm",
+          "local": "Yerel"
+        },
+        "private": "Özel sunucu",
+        "hideModlogModNames": "Modlog mod adlarını gizle",
+        "slurFilter": "Kötü kelime filtresi regex ifadesi",
+        "federation": "Federasyon etkinleştirildi",
+        "federationDebug": "Federasyon hata ayıklama modu",
+        "captcha": {
+          "enabled": "CAPTCHA Etkin"
+        }
+      },
+      "applications": {
+        "title": "Uygulamalar",
+        "empty": {
+          "title": "Yeni başvuru yok",
+          "description": "Sunucunuza katılma başvuruları burada görünecektir."
+        },
+        "application": "Başvuru",
+        "approved": "Onaylı",
+        "denied": "Reddedildi",
+        "user": "Kullanıcı",
+        "deny": "Reddetmek",
+        "approve": "Onaylamak",
+        "reason": "Sebep",
+        "modalTitle": "Başvuruyu Reddet"
+      },
+      "taglines": {
+        "title": "Sloganlar",
+        "add": "Kısa açıklama ekleyin",
+        "empty": {
+          "title": "Kısa açıklama yok",
+          "description": "Kullanıcılar sunucunuzu ziyaret ettiğinde site kartında rastgele bir slogan görünecektir."
+        }
+      },
+      "team": {
+        "title": "Yöneticiler",
+        "empty": {
+          "title": "Yönetici yok",
+          "description": "Nedense bu sitenin yöneticisi yok. "
+        }
+      },
+      "federation": {
+        "title": "Federasyon",
+        "csv": "CSV'yi yükle",
+        "blocked": "Engellenen Sunucular",
+        "block": "Engellemek",
+        "blockplaceholder": "Bir sunucuyu engelle...",
+        "allowed": "Beyaz Listeye Eklenen Sunucular",
+        "allow": "Beyaz liste",
+        "allowplaceholder": "Bir sunucuyu beyaz listeye ekleyin",
+        "emptyBlock": {
+          "title": "Engellenen sunucu yok",
+          "description": "Bir sunucunun engellenmesi, söz konusu sunucudaki yeni gönderilerin gizlenmesine neden olur."
+        },
+        "emptyAllow": {
+          "title": "Beyaz listeye alınmış sunucu yok",
+          "description": "Bir sunucunun beyaz listeye alınması diğer tüm sunucuları engelleyecektir."
+        }
+      }
+    },
+    "verifyEmail": {
+      "message": "E-postanız doğrulandı. ",
+      "error": "E-postanız doğrulanamadı."
+    },
+    "passwordChange": {
+      "title": "Şifre değiştir",
+      "description": "Yeni şifrenizi seçin.",
+      "instance": "Hesabınız hangi sunucuda barındırılıyor?"
+    },
+    "resetLogin": {
+      "title": "Şifreyi Sıfırla",
+      "description": "Hesabınızın e-postasını girin, bir şifre sıfırlama bağlantısı gönderilecektir. "
+    },
+    "theme": {
+      "title": "Tema",
+      "import": "İçe aktar",
+      "export": "Dışa aktar",
+      "reset": "Sıfırla",
+      "accent": "Renk Vurgusu",
+      "resetWarning": {
+        "title": "Temayı Sıfırla",
+        "description": "Bu, tüm renklerinizi varsayılana sıfırlayacaktır. "
+      },
+      "preset": {
+        "title": "Değiştirilemez",
+        "description": "Bu varsayılan bir temadır ve değiştirilemez.",
+        "delete": {
+          "title": "Temayı Sil",
+          "confirm": "Onayla"
+        },
+        "default": "Varsayılan",
+        "classic": "Klasik",
+        "imported": "Temanız",
+        "new": "Yeni Tema",
+        "presets": "Ön ayarlar"
+      }
+    },
+    "community": {
+      "settings": {
+        "team": "Ekip",
+        "settings": "Ayarlar",
+        "manage": "Yönet"
+      }
+    }
+  },
+  "cards": {
+    "site": {
+      "about": "Hakkında",
+      "stats": "İstatistikler",
+      "admins": "Yöneticiler"
+    },
+    "community": {
+      "members": "Üyeler",
+      "moderators": "Moderatörler",
+      "subscribe": "Abone",
+      "subscribed": "Abone olundu",
+      "modlog": "Mod günlüğü",
+      "block": "Engellemek",
+      "unblock": "Engellemeyi kaldır",
+      "blockInstance": "Sunucuyu engelle",
+      "favorite": "Favori",
+      "unfavorite": "Favoriyi Kaldır",
+      "activeDay": "Bugün Aktif"
+    }
+  },
+  "admin": {
+    "purge": "Tasfiye",
+    "instance": "Misal",
+    "label": "Yönetim",
+    "purgeCommunity": {
+      "title": "Topluluğu Silmek",
+      "warning": "Bu, tüm gönderileri silecektir. Emin misiniz? (Buton 3 saniye içerisinde aktif olacak.) "
+    }
+  },
+  "content": {
+    "all": "Tüm",
+    "users": "Kullanıcılar",
+    "posts": "Gönderiler",
+    "comments": "Yorumlar",
+    "communities": "Topluluklar",
+    "instances": "Sunucular",
+    "message": "Mesaj"
+  },
+  "post": {
+    "actions": {
+      "comments": "Yorumlar",
+      "save": "Kaydet",
+      "unsave": "Kaydetmeyi iptal et",
+      "more": {
+        "label": "Daha Fazla Eylem",
+        "edit": "Düzenle",
+        "creator": "Oluşturan",
+        "actions": "Eylemler",
+        "markRead": "Okundu Olarak İşaretle",
+        "markUnread": "Okunmadı Olarak İşaretle",
+        "hide": "Gizle",
+        "unhide": "Göster",
+        "translate": "Çevir",
+        "mediaBias": "Medya Önyargısı",
+        "share": "Paylaşmak",
+        "crosspost": "Çapraz Paylaş",
+        "delete": "Sil",
+        "restore": "Eski haline getir"
+      },
+      "mediaBias": {
+        "description": "Tanım",
+        "credibility": "Güvenilirlik",
+        "reporting": "Gerçek Raporlama",
+        "noData": {
+          "title": "Veri yok",
+          "description": "Bu web sitesi için herhangi bir önyargı verisi bulunmamaktadır."
+        },
+        "downloading": "Veri kümesi indiriliyor",
+        "loading": "Kaynak yükleniyor"
+      },
+      "link": {
+        "title": "Alternatif Bağlantılar",
+        "actions": "Bağlantı Eylemleri"
+      },
+      "vote": {
+        "upvote": "Olumlu oy ver",
+        "downvote": "Olumsuz oy",
+        "score": "Gol"
+      }
+    },
+    "badges": {
+      "nsfw": "NSFW",
+      "locked": "Kilitli",
+      "featured": "Öne Çıkanlar",
+      "removed": "Kaldırıldı",
+      "deleted": "Silindi",
+      "saved": "Kaydedildi"
+    },
+    "image": {
+      "zoomIn": "Yakınlaştır",
+      "zoomOut": "Uzaklaştır",
+      "close": "Kapalı"
+    },
+    "meta": {
+      "lastEdited": "Son düzenleme {{default}}",
+      "created": "Oluşturuldu {{default}}"
+    }
+  },
+  "comment": {
+    "reply": "Cevap vermek",
+    "actions": {
+      "label": "Eylemler",
+      "link": "Bağlantıyı Kopyala"
+    },
+    "locked": "Bu yazı kilitlidir.",
+    "banned": "Bu topluluktan yasaklandınız.",
+    "more": "{{comments:number}} Daha"
+  },
+  "moderation": {
+    "report": "Rapor",
+    "ban": {
+      "banning": "Kullanıcıyı Yasaklama",
+      "unbanning": "Kullanıcının Yasağını Kaldırma",
+      "deleteData": "Verileri sil",
+      "warning": "Bu işlem, bu kullanıcının buradaki TÜM gönderilerini silecektir.",
+      "expires": "Sona erme tarihi (UTC)",
+      "banFromCommunity": "Topluluktan yasakla",
+      "unbanFromCommunity": "Topluluk yasağını kaldır"
+    },
+    "removeSubmission": {
+      "title": "Başvuruyu Kaldırmak",
+      "titleRestore": "Başvuruyu Geri Yükleme",
+      "titlePurge": "Başvuruyu Temizleme",
+      "withReason": "Gerekçesiyle yanıt ver",
+      "comment": "Yorum",
+      "message": "Mesaj",
+      "failReply": "Yanıt gönderilemedi. ",
+      "failMessage": "Kullanıcıya mesaj gönderilemedi. ",
+      "failEmptyReply": "'Nedeniyle yanıtla' seçeneği etkinse yanıtınız boş olamaz.",
+      "successPurge": "Bu gönderim başarıyla silindi."
+    },
+    "reportModal": {
+      "title": "Rapor",
+      "success": "Bu başvuruyu bildirdik."
+    },
+    "reason": "Sebep",
+    "lock": "Kilit",
+    "unlock": "Kilidi aç",
+    "remove": "Kaldır",
+    "restore": "Eski haline getir",
+    "label": "Moderasyon",
+    "labelInstanceOnly": "Moderasyon (Yalnızca Sunucu)",
+    "feature": "Öne Çıkar",
+    "unfeature": "Öne Çıkarmayı İptal Et"
+  },
+  "common": {
+    "back": "Geri",
+    "next": "Sonraki",
+    "debug": "Hata ayıklama",
+    "refresh": "Yenile",
+    "jump": "Zıpla",
+    "save": "Kaydet",
+    "enabled": "Etkinleştirilmiş",
+    "disabled": "Devre Dışı",
+    "enable": "Etkinleştir",
+    "disable": "Devre dışı bırak",
+    "add": "Ekle",
+    "cancel": "İptal et",
+    "send": "Gönder",
+    "general": "Genel"
+  },
+  "message": {
+    "success": "Başarı",
+    "error": "Hata",
+    "retry": "Yeniden dene"
+  },
+  "toast": {
+    "noComments": "API hiçbir yorum döndürmedi.",
+    "loginVoteGate": "Oy vermek için giriş yapmalısınız.",
+    "blockedCommunity": "O topluluğu engelledi.",
+    "unblockedCommunity": "Bu topluluğun engellemesi kaldırıldı.",
+    "purgedCommunity": "O toplumu temizlediler.",
+    "blockedInstance": "Bu sunucuyu engelledi.",
+    "updatedCommunity": "Topluluğunuz güncellendi.",
+    "sentMessage": "O mesajı gönderdim.",
+    "invalidDateAbsolute": "Geçersiz tarih. ",
+    "invalidDateBeforeCurrent": "Geçersiz tarih. ",
+    "bannedUser": "O kullanıcıyı yasakladı.",
+    "unbannedUser": "Bu kullanıcının yasağını kaldırdık.",
+    "needCommunity": "Bir topluluk oluşturmalısınız.",
+    "invalidURL": "Geçersiz URL",
+    "generatedTitle": "URL'den başlık ve gövde oluşturuldu. ",
+    "failGenerateTitle": "Bu web sitesinin kullanılabilir bir başlığı veya açıklaması yoktu.",
+    "restoredFromDraft": "Gönderiniz taslaktan geri yüklendi.",
+    "copied": "Panoya kopyalandı.",
+    "approvedApplication": "O uygulamayı onayladı.",
+    "deniedApplication": "O başvuruyu reddetti",
+    "updatedSite": "Sitenizi güncelledik.",
+    "failCSV": "CSV okunamadı",
+    "removeAdminWarning": "Bu yöneticiyi kaldırmak istediğinizden emin misiniz?",
+    "removeAdmin": "O yöneticiyi kaldırdık.",
+    "failFindUser": "Bu kullanıcı bulunamadı.",
+    "addMod": "O moderatörü ekledim.",
+    "updateMods": "Topluluk moderatörleri güncellendi.",
+    "logIn": "Başarıyla oturum açıldı.",
+    "failInstanceURL": "Bu sunucu URL'siyle bağlantı kurulamadı. ",
+    "addAccount": "Bu hesabı ekledik.",
+    "resetLink": "E-posta adresinize şifre sıfırlama bağlantısı gönderildi.",
+    "resolveReport": "O raporu çözdük.",
+    "unresolveReport": "O rapor çözülmedi.",
+    "passwordReset": "Şifreniz sıfırlandı.",
+    "fetchPostOnHome": "Bu gönderi sunucunuza getirilmeye çalışılıyor...",
+    "loginRefresh": "Giriş bilgileriniz yenilendi.",
+    "invalidLogin": "Geçersiz kimlik bilgileri",
+    "saveSettings": "Kullanıcı ayarlarınız kaydedildi. ",
+    "confirmDelete1": "Hesabınızı silmek istediğinizden emin misiniz?",
+    "confirmDelete2": "Gerçekten emin misin?",
+    "confirmDelete3": "Son uyarı. ",
+    "needPassword": "Şifrenizi girmelisiniz.",
+    "deleting": "Hesabınız siliniyor...",
+    "deleted": "Hesabınız silindi.",
+    "resetSettings": "Ayarlarınızı varsayılana sıfırlamak istiyor musunuz?",
+    "failFetchInstances": "Kullanılabilir sunucular getirilemedi.",
+    "verifyEmail": "E-postanıza bir doğrulama bağlantısı gönderildi. ",
+    "failSignup": "Kaydolma başarısız oldu.",
+    "successSignup": "Kayıt oldum.",
+    "waitApplication": "Giriş yapmadan önce kayıt başvurunuzun kabul edilmesini bekleyin.",
+    "blockUser": "Bu kullanıcıyı engelledi.",
+    "unblockUser": "Bu kullanıcının engellemesini kaldırdık.",
+    "purgeUser": "Bu kullanıcıyı sildi.",
+    "settingsImport": "Ayarlar başarıyla içe aktarıldı",
+    "settingsImportWarning": "İçe aktarılan ayarlar geçerli görünmüyor. ",
+    "userLoading": "Kullanıcı verileriniz hâlâ yükleniyor..."
+  },
+  "settings": {
+    "title": "Ayarlar",
+    "beta": "Beta",
+    "desktop": "Masaüstü",
+    "tablet": "Tablet",
+    "mobile": "Mobil",
+    "export": "Dışa aktar",
+    "import": "İçe aktar",
+    "reset": "Sıfırla",
+    "navigation": {
+      "title": "Navigasyon",
+      "dockPos": {
+        "title": "Araç çubuğu konumu",
+        "description": "Araç çubuğu'nun ekranda konumlandırılması gereken yer.",
+        "top": "Tepe",
+        "bottom": "Alt",
+        "adaptive": "Adaptif"
+      },
+      "panel": {
+        "title": "Panel modu",
+        "description": "Bağlantı birimini panele benzer şekilde ekranın kenarlarına kadar uzatın.",
+        "on": "Açık",
+        "off": "Kapalı",
+        "adaptive": "Adaptif"
+      },
+      "pins": {
+        "title": "Pimler",
+        "description": "Kenar çubuğunun üst kısmına göndermek için pime tıklayın. "
+      },
+      "commands": {
+        "title": "Komut paleti",
+        "description": "Arama yaparak uygulamada gezinmek için eğik çizgiye basın veya Photon logosuna sağ tıklayın."
+      }
+    },
+    "app": {
+      "title": "Photon",
+      "theming": {
+        "title": "Tema",
+        "description": "Photon'un renklerini özelleştirin.",
+        "link": "Temalara git"
+      },
+      "colorscheme": {
+        "title": "Renk Şeması",
+        "description": "Kullanılacak renk şeması."
+      },
+      "lang": {
+        "title": "Dil",
+        "description": "Photon'un kullanıcı arayüzü için kullanılan dil.",
+        "note": "İngilizce ve İbranice dışındaki diller topluluk çevirisidir ve eksik olabilir.",
+        "en": "İngilizce",
+        "en-US": "İngilizce",
+        "he": "İbranice",
+        "et": "Estonyalı",
+        "fr": "Fransızca",
+        "de": "Almanca",
+        "fi": "Fince",
+        "pt": "Portekizce",
+        "zh": "Çince",
+		"tr": "Türkçe",
+        "zh-Hans": "Çince (Basitleştirilmiş)",
+        "zh-Hant": "Çince (Geleneksel)",
+        "auto": "Otomatik",
+        "credits": "Katkıda bulunanlar",
+        "useRtl": {
+          "title": "RTL düzenini kullan",
+          "description": "RTL dilleri için RTL düzeni kullanın."
+        }
+      },
+      "view": {
+        "title": "Gönderi stili",
+        "list": "Gönderileri, gönderi gövdeleri ve kompakt medyayla birlikte bir listede gösterin.",
+        "cozy": "Büyük görsellere, zengin yerleştirmelere ve daha uzun gönderi gövdelerine sahip gönderileri gösterin.",
+        "compact": "Gönderileri, gönderi gövdeleri olmadan ve daha dar aralıklarla bir listede gösterin.",
+        "legacy": "Photon'un eski görünümü."
+      },
+      "sort": {
+        "title": "Varsayılan sıralama",
+        "description": "Feed'lerde kullanılacak varsayılan sıralama."
+      },
+      "infiniteScroll": {
+        "title": "Sonsuz kaydırma",
+        "description": "Yeni gönderiler siz aşağı kaydırdıkça 'ileri'yi tıklamanıza gerek kalmadan eklenir."
+      },
+      "postsInNewTab": {
+        "title": "Gönderileri yeni sekmede aç",
+        "description": "Gönderileri mevcut sekme yerine ayrı bir sekmede açın."
+      },
+      "displayName": {
+        "title": "Görünen adı kullan",
+        "description": "Kullanıcıların gerçek kullanıcı adları yerine görünen adlarını gösterin."
+      },
+      "limitLayoutWidth": {
+        "title": "Düzen genişliğini sınırla",
+        "description": "Ana içerik genişliğini sınırlayarak okunabilirliği artırın."
+      },
+      "placeholders": {
+        "title": "Rastgele yer tutucular",
+        "description": "Belirli metin girişleri için rastgele yer tutucuları gösterin."
+      },
+      "expandImages": {
+        "title": "Resimleri genişlet",
+        "description": "Bir gönderinin görseline tıkladığınızda, gönderi sayfası yerine genişletilmiş bir görünüme yönlendirilirsiniz."
+      },
+      "duplicateTitles": {
+        "title": "Yinelenen başlıkları/gövdeleri gizle",
+        "description": "Yerleştirmeyle aynıysa yazı başlığını ve gövdesini gizler."
+      },
+      "thumbnailSide": {
+        "title": "Küçük resim hizalaması",
+        "description": "Liste/kompakt modda gönderide küçük resimlerin nerede olması gerektiği",
+        "left": "Sol",
+        "right": "Sağ"
+      },
+      "font": {
+        "title": "Yazı tipi",
+        "description": "Photon'un kullanıcı arayüzünde kullandığı yazı tipi."
+      },
+      "translation": {
+        "title": "Çeviri",
+        "description": "Çeviri için kullanılacak LibreTranslate sunucusu.",
+        "instance": "Sunucu"
+      },
+      "titleTags": {
+        "title": "Başlıktaki etiketleri ayrıştır",
+        "description": "Metni [parantez] içine alın ve aramak için tıklayabileceğiniz etiketlere dönüştürün.",
+        "rules": {
+          "title": "Kurallar",
+          "blur": "Bulanıklık",
+          "hide": "Saklamak",
+          "show": "Göstermek"
+        }
+      },
+      "reverseActions": {
+        "title": "Ters işlem satırı",
+        "description": "Gönderiler ve yorumlardaki eylemlerin sırasını tersine çevirir."
+      }
+    },
+    "embeds": {
+      "title": "Gömülü içerikler",
+      "clickToView": {
+        "title": "Görüntülemek için tıklayın",
+        "description": "Gömmeleri yalnızca üzerlerine tıkladıktan sonra yükleyin."
+      },
+      "youtube": {
+        "description": "YouTube içeriğinin yerleştirileceği web sitesi."
+      },
+      "instance": {
+        "invidious": "Invidious sunucusu",
+        "piped": "Piped sunucusu",
+        "description": "YouTube içeriğinin yerleştirileceği sunucu."
+      }
+    },
+    "lemmy": {
+      "title": "Lemmy",
+      "showHiddenPosts": {
+        "title": "Gizli gönderileri göster",
+        "description": "Manuel olarak gizlediğiniz gönderileri gösterin."
+      },
+      "compactFeatured": {
+        "title": "Kompakt öne çıkan gönderiler",
+        "description": "Öne çıkan gönderileri daha kompakt hale getirin"
+      },
+      "markReadPosts": {
+        "title": "Okunmuş gönderileri işaretleme",
+        "description": "Bir gönderiyi tıkladığınızda okundu olarak işaretleme"
+      },
+      "fadeReadPosts": {
+        "title": "Okunan gönderileri soldur",
+        "description": "Daha önce okuduğunuz yazıların başlığını silin"
+      },
+      "crosspostMarker": {
+        "title": "Çapraz gönderileri işaretle",
+        "description": "Çapraz paylaşım sırasında 'çapraz paylaşım yapılan yeri' göster."
+      },
+      "hideSubmissions": {
+        "title": "Gönderimleri gizle",
+        "description": "Belirli gönderim türlerini gizleyin.",
+        "deleted": "Kullanıcı tarafından silindi",
+        "removed": "Moderatör tarafından kaldırıldı"
+      },
+      "nsfwBlur": {
+        "title": "NSFW bulanıklığı",
+        "description": "Görüntüleri bulanıklaştırın ve NSFW gönderilerinin gönderi gövdelerini kaldırın."
+      },
+      "instances": {
+        "title": "Sunucuları göster",
+        "description": "Belirli içeriğin geldiği sunucuları gösterin."
+      }
+    },
+    "moderation": {
+      "title": "Moderasyon",
+      "replyPresets": {
+        "title": "Kaldırma yanıtı ön ayarları",
+        "description": "Gönderimi kaldırma iletişim kutusunda 'yanıt nedeni' olarak kullanılacak ön ayarlar.",
+        "syntax": "Sözdizimi"
+      }
+    },
+    "other": {
+      "title": "Diğer",
+      "debug": {
+        "title": "Hata ayıklama bilgisi",
+        "description": "Hata ayıklama bilgilerini görüntüle"
+      },
+      "virtualizeFeeds": {
+        "title": "Yayınları sanallaştırma",
+        "description": "Sanallaştırma yalnızca görünür gönderileri işleyerek performansı büyük ölçüde artırır. "
+      }
+    },
+    "account": {
+      "title": "Hesap"
+    }
+  },
+  "error": {
+    "incorrect_login": "Yanlış oturum açma kimlik bilgileri. ",
+    "incorrect_login_2": "Yanlış oturum açma kimlik bilgileri. ",
+    "incorrect_login_3": "Yine yanlış. ",
+    "incorrect_login_4": "Bunlar hâlâ doğru kimlik bilgileri değil. ",
+    "incorrect_login_5": "Yemin ederim, bastığınız tuşlara bakmanız gerekiyor.",
+    "incorrect_login_6": "Bu sana göre bir şaka mı?",
+    "incorrect_login_7": "Ya yazmakta zorlanıyorsun ya da bu noktada beni taciz ediyorsun.",
+    "incorrect_login_8": "Pes ediyorum.",
+    "incorrect_login_9": "Yaptığınız bu taleplerin her biri inanılmaz bir teknoloji aracılığıyla veri gönderiyor. ",
+    "incorrect_login_10": "Bunu bir düşün. ",
+    "incorrect_login_11": "Bu sefer gerçekten vazgeçiyorum.",
+    "incorrect_login_12": "...",
+    "registration_application_is_pending": "Bu hesaba ilişkin kayıt başvurusu henüz kabul edilmedi.",
+    "couldnt_find_post": "Bu gönderi mevcut değil, bu sunucuda yer almıyor veya kaldırıldı.",
+    "cant_block_yourself": "Kendinizi engelleyemezsiniz. ",
+    "email_not_verified": "Hesabınızın e-postası doğrulanmadı.",
+    "passwords_do_not_match": "Giriş şifreniz ve doğrulama şifreniz eşleşmiyor.",
+    "honeypot_failed": "Nasıl yani, sen bir robot musun? ",
+    "downvotes_are_disabled": "Bu sunucuda olumsuz oylar devre dışı bırakıldı.",
+    "email_already_exists": "Bu e-postaya sahip bir hesap zaten mevcut.",
+    "slurs": "Gönderiminiz bu durumda yasaklanmış bir terim içeriyor.",
+    "captcha_failed": "Yanlış CAPTCHA yanıtı.",
+    "cant_block_local_instance": "Aktif olarak kullandığınız sunucuyu engelleyemezsiniz.",
+    "invalid_vote_value": "Lemmy paylaşımlarında trafoya kedi giremez, üzgünüm.",
+    "language_not_allowed": "Bu toplulukta bu dile izin verilmiyor. ",
+    "couldnt_find_person": "Bu kullanıcı mevcut değil.",
+    "couldnt_find_community": "O topluluk yok."
+  },
+  "aria": {
+    "pagination": {
+      "nav": "Sayfalandırma",
+      "current": "Geçerli sayfa"
+    },
+    "vote": {
+      "group": "Oylama sonrası kontroller",
+      "upvotes": "{{default}} olumlu oylar",
+      "downvotes": "{{default}} olumsuz oylar",
+      "score": "Gol: {{default}}"
+    }
+  },
+  "stats": {
+    "joined": "Katıldı",
+    "created": "Oluşturuldu"
+  }
 }
