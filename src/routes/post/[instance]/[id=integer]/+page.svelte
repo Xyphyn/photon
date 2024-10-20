@@ -376,10 +376,10 @@
             <div
               class="absolute left-0 rounded-xl h-full -z-10 bg-primary-900/10 dark:bg-primary-100/10"
               style="width:
-          {((results[option.key] ?? 0) / results.total) * 100}%;"
+          {((results?.[option.key] ?? 0) / results.total) * 100}%;"
             />
             <div class="font-bold text-primary-900 dark:text-primary-100">
-              {#if results.self.toString().startsWith(option.key)}
+              {#if results.self?.toString()?.startsWith(option.key)}
                 <Icon src={CheckCircle} micro size="16" />
               {:else}
                 {option.key}
