@@ -269,6 +269,10 @@
             "emptyComments": {
                 "title": "No comments",
                 "description": "Start the conversation!"
+            },
+            "poll": {
+                "vote": "Vote",
+                "warning": "This will comment the following: {{content}}"
             }
         },
         "inbox": {
