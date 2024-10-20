@@ -217,16 +217,17 @@
         class="divide-y divide-slate-200 dark:divide-zinc-800"
         id="feed"
       >
-        {#each items as row, index (row.index)}
-          <li
-            bind:this={virtualItemEls[index]}
-            data-index={row.index}
-            style={row.index < 7 ? `--anim-delay: ${index * 100}ms` : ''}
-            class="relative post-container {row.index < 7
-              ? 'pop-in opacity-0'
-              : ''}"
-          >
-            {#if posts[row.index]}
+        {#each items as row, index (posts[row.index]?.post.id)}
+          {#if posts[row.index]}
+            {@const post = posts?.[row.index]}
+            <li
+              bind:this={virtualItemEls[index]}
+              data-index={row.index}
+              style={row.index < 7 ? `--anim-delay: ${index * 100}ms` : ''}
+              class="relative post-container {row.index < 7
+                ? 'pop-in opacity-0'
+                : ''}"
+            >
               <Post
                 hideCommunity={community}
                 view={(posts[row.index]?.post.featured_community ||
@@ -234,14 +235,14 @@
                 $userSettings.posts.compactFeatured
                   ? 'compact'
                   : $userSettings.view}
-                post={posts?.[row.index]}
+                {post}
                 class="transition-all duration-250"
                 on:hide={() => {
                   posts = posts.toSpliced(row.index, 1)
                 }}
               ></Post>
-            {/if}
-          </li>
+            </li>
+          {/if}
         {/each}
       </div>
     </div>

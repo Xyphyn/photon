@@ -36,9 +36,8 @@
   export let hideCommunity = false
   export let view = $userSettings.view
 
-  $: type = mediaType(post.post.url, view)
-
   $: tags = parseTags(post.post.name)
+  $: type = mediaType(post.post.url, view)
   $: rule = getTagRule(tags.tags)
 
   $: hideTitle =
@@ -141,7 +140,7 @@
     >
       {#if rule != 'hide'}
         <PostMedia
-          bind:post={post.post}
+          post={post.post}
           blur={rule == 'blur' ? true : undefined}
           {view}
           {type}
@@ -150,8 +149,8 @@
     </div>
     {#if view == 'list' || view == 'compact'}
       <PostMediaCompact
-        bind:post={post.post}
-        bind:type
+        post={post.post}
+        {type}
         class="{$userSettings.leftAlign
           ? 'mr-3'
           : 'ml-3'} flex-shrink no-list-margin"
@@ -171,7 +170,7 @@
     />
   {/if}
   {#if actions}
-    <PostActions on:hide bind:post style="grid-area: actions;" {view} />
+    <PostActions on:hide {post} style="grid-area: actions;" {view} />
   {:else if view == 'compact'}
     <div class="flex flex-row items-center gap-2 text-sm">
       <Badge>

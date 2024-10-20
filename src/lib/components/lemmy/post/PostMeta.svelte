@@ -18,9 +18,9 @@
 
     let extracted: Tag[] = []
 
-    const newTitle = title.replace(
-      /^(\[.[^\]]+\])|(\[.[^\]]+\])$/g,
-      (match, content) => {
+    const newTitle = title
+      .toString()
+      .replace(/^(\[.[^\]]+\])|(\[.[^\]]+\])$/g, (match, content) => {
         const contents = match.split(',').map((part: string) => part.trim())
 
         contents
@@ -33,8 +33,7 @@
             )
           })
         return ''
-      }
-    )
+      })
 
     return {
       tags: extracted,
@@ -97,22 +96,6 @@
   }
 
   export let tags: Tag[] = []
-
-  let displayTitle = title
-
-  const update = () => {
-    if (tags.length == 0) {
-      const result = parseTags(title)
-      tags = result.tags
-      displayTitle = result.title
-    }
-  }
-
-  $: {
-    if (title) {
-      update()
-    }
-  }
 
   let popoverOpen = false
 </script>
@@ -306,7 +289,7 @@
     data-sveltekit-preload-data="tap"
   >
     <Markdown
-      source={displayTitle}
+      source={title}
       inline
       noStyle
       class={view == 'compact' ? '' : 'leading-[1.3]'}
