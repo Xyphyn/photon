@@ -21,7 +21,9 @@
     ArrowUp,
     ArrowDown,
   } from 'svelte-hero-icons'
-  import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
+  import PostMeta, {
+    parseTags,
+  } from '$lib/components/lemmy/post/PostMeta.svelte'
   import { Select, removeToast, toast } from 'mono-svelte'
   import type { CommentSortType } from 'lemmy-js-client'
   import { profile } from '$lib/auth.js'
@@ -261,7 +263,7 @@
         }}
         published={publishedToDate(data.post.post_view.post.published)}
         edited={data.post.post_view.post.updated}
-        bind:title={data.post.post_view.post.name}
+        title={data.post.post_view.post.name}
         style="width: max-content;"
       />
       <Button on:click={() => history.back()} size="square-md">
@@ -269,7 +271,11 @@
       </Button>
     </div>
     <h1 class="font-bold text-xl font-display leading-5">
-      <Markdown source={data.post.post_view.post.name} inline />
+      <Markdown
+        source={parseTags(data.post.post_view.post.name).title ??
+          data.post.post_view.post.name}
+        inline
+      />
     </h1>
   </header>
   <PostMedia

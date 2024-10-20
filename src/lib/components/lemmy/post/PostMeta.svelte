@@ -18,22 +18,27 @@
 
     let extracted: Tag[] = []
 
-    title = title.replace(/\[(.*?)\]/g, (match, content) => {
-      const contents = content.split(',').map((part: string) => part.trim())
+    const newTitle = title.replace(
+      /^(\[.[^\]]+\])|(\[.[^\]]+\])$/g,
+      (match, content) => {
+        const contents = match.split(',').map((part: string) => part.trim())
 
-      contents.forEach((content: string) => {
-        extracted.push(
-          textToTag.get(content) ?? {
-            content: content,
-          }
-        )
-      })
-      return ''
-    })
+        contents
+          .map((i) => i.replaceAll(/(\[|\])/g, ''))
+          .forEach((content: string) => {
+            extracted.push(
+              textToTag.get(content) ?? {
+                content: content,
+              }
+            )
+          })
+        return ''
+      }
+    )
 
     return {
       tags: extracted,
-      title: title,
+      title: newTitle,
     }
   }
 </script>
@@ -93,11 +98,14 @@
 
   export let tags: Tag[] = []
 
+  let displayTitle = title
+
   $: {
     if (title && tags.length == 0) {
       const result = parseTags(title)
       tags = result.tags
-      title = result.title
+      console.log('changed display title')
+      displayTitle = result.title
     }
   }
 
@@ -293,7 +301,7 @@
     data-sveltekit-preload-data="tap"
   >
     <Markdown
-      source={title}
+      source={displayTitle}
       inline
       noStyle
       class={view == 'compact' ? '' : 'leading-[1.3]'}
