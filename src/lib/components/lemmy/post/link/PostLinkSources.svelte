@@ -39,8 +39,9 @@
 
 <script lang="ts">
   import { t } from '$lib/translations'
-  import { Menu, MenuButton, MenuDivider } from 'mono-svelte'
+  import { Menu, MenuButton, MenuDivider, toast } from 'mono-svelte'
   import type { MediaType } from '../helpers'
+  import { Icon, Share } from 'svelte-hero-icons'
 
   export let url: string
   export let type: MediaType = 'embed'
@@ -57,4 +58,15 @@
       </MenuButton>
     {/if}
   {/each}
+  <MenuDivider>{$t('post.actions.link.actions')}</MenuDivider>
+  <MenuButton
+    on:click={() => {
+      navigator?.share?.({ url: url }) ?? navigator?.clipboard?.writeText?.(url)
+
+      toast({ content: $t('toast.copied') })
+    }}
+  >
+    <Icon src={Share} size="16" micro slot="prefix" />
+    {$t('post.actions.more.share')}
+  </MenuButton>
 </Menu>
