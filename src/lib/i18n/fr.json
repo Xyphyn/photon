@@ -46,7 +46,8 @@
             "feeds": "Tris",
             "setThemeTo": "Choisir theme {{default}}",
             "setTheme": "Choisir un theme",
-            "downloading": "Téléchargement des actions"
+            "downloading": "Téléchargement des actions",
+            "contextual": "Sur cette page"
         }
     },
     "account": {
@@ -135,7 +136,11 @@
             "url": "URL",
             "nsfw": "NSFW",
             "altText": "Équivalent textuel",
-            "selectFile": "Choisir un fichier"
+            "selectFile": "Choisir un fichier",
+            "addUrl": "Ajouter un URL",
+            "setLanguage": "Choisir la langue",
+            "unset": "Non défini",
+            "readMore": "En savoir plus"
         },
         "profile": {
             "displayName": "Nom affiché",
@@ -196,7 +201,13 @@
         "profile": {
             "user": "Utilisateur",
             "settings": "Paramètres",
-            "blocks": "Blocages",
+            "blocks": {
+                "title": "Bloqué",
+                "empty": {
+                    "title": "Aucune entité bloquée",
+                    "description": "Si vous bloquez quelque-chose, il n'apparaît plus dans vos fils."
+                }
+            },
             "credentials": "Compte",
             "moderates": "Modère",
             "favorites": "Favoris",
