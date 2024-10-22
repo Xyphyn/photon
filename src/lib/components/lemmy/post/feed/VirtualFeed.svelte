@@ -214,7 +214,7 @@
         style="position: absolute; top: 0; left: 0; width: 100%; transform: translateY({items?.[0]
           ? items?.[0]?.start - $virtualizer.options.scrollMargin
           : 0}px);"
-        class="divide-y divide-slate-200 dark:divide-zinc-800"
+        class="divide-y divide-slate-200 dark:divide-zinc-900"
         id="feed"
       >
         {#each items as row, index (posts[row.index]?.post.id)}
@@ -226,7 +226,7 @@
               style={row.index < 7 ? `--anim-delay: ${index * 100}ms` : ''}
               class="relative post-container {row.index < 7
                 ? 'pop-in opacity-0'
-                : ''}"
+                : ''} -mx-4 sm:-mx-6 px-4 sm:px-6"
             >
               <Post
                 hideCommunity={community}
