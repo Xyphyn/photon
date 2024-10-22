@@ -31,6 +31,15 @@
     if (virtualItemEls.length)
       virtualItemEls.forEach((el) => $virtualizer.measureElement(el))
   }
+
+  onMount(() => {
+    if (scrollTo) {
+      const element = document?.getElementById(scrollTo)
+      setTimeout(() => {
+        element?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }, 100)
+    }
+  })
 </script>
 
 <div
@@ -43,11 +52,15 @@
     style="position: absolute; top: 0; left: 0; width: 100%; transform: translateY({items?.[0]
       ? items?.[0]?.start - $virtualizer.options.scrollMargin
       : 0}px);"
-    class="divide-y divide-slate-200 dark:divide-zinc-800"
+    class="divide-y divide-slate-200 dark:divide-zinc-900"
     id="feed"
   >
     {#each items as row, index (row.index)}
-      <div bind:this={virtualItemEls[index]} data-index={row.index}>
+      <div
+        bind:this={virtualItemEls[index]}
+        data-index={row.index}
+        class="-mx-4 sm:-mx-6 px-4 sm:px-6"
+      >
         <Comments isParent={true} nodes={[nodes[row.index]]} {post} />
       </div>
     {/each}

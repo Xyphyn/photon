@@ -8,6 +8,8 @@
     Pencil,
     Plus,
     Trash,
+    PlusCircle,
+    MinusCircle,
   } from 'svelte-hero-icons'
   import type { CommentNodeI } from './comments'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
@@ -24,7 +26,7 @@
   import { page } from '$app/stores'
   import { onMount } from 'svelte'
   import { t } from '$lib/translations'
-  import { slide } from 'svelte/transition'
+  import { fly, slide } from 'svelte/transition'
   import { expoInOut, expoOut } from 'svelte/easing'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
 
@@ -36,6 +38,8 @@
   export let meta: boolean = true
 
   export let open = true
+  let childrenOpen = true
+
   export let replying = false
 
   let editing = false
@@ -142,7 +146,7 @@
       <span class:font-bold={op} class="flex flex-row gap-1 items-center">
         <UserLink
           inComment
-          avatarSize={22}
+          avatarSize={24}
           avatar
           user={node.comment_view.creator}
         >
@@ -189,7 +193,10 @@
     </button>
   {/if}
   {#if open}
-    <div transition:slide={{ duration: 400, easing: expoOut }}>
+    <div
+      class="relative {$$props.contentClass}"
+      transition:slide={{ duration: 400, easing: expoOut }}
+    >
       <div
         class="flex flex-col whitespace-pre-wrap
       max-w-full gap-1 mt-1 relative"
@@ -206,15 +213,13 @@
           <Markdown source={node.comment_view.comment.content} />
         </div>
         {#if actions}
-          <div class="flex flex-row gap-2 items-center">
-            <CommentActions
-              bind:comment={node.comment_view}
-              bind:replying
-              on:edit={() => (editing = true)}
-              disabled={node.comment_view.banned_from_community ||
-                node.comment_view.post.locked}
-            />
-          </div>
+          <CommentActions
+            bind:comment={node.comment_view}
+            bind:replying
+            on:edit={() => (editing = true)}
+            disabled={node.comment_view.banned_from_community ||
+              node.comment_view.post.locked}
+          />
         {/if}
       </div>
       {#if replying}
@@ -222,31 +227,33 @@
           class="max-w-full my-2 border-l border-slate-200 dark:border-zinc-800 pl-4"
           transition:slide={{ axis: 'y', duration: 400, easing: expoOut }}
         >
-          <div class="font-medium text-sm mb-2">
-            {$t('comment.reply')}
+          <div in:fly={{ duration: 500, y: -16, easing: expoOut, delay: 200 }}>
+            <CommentForm
+              label={$t('comment.reply')}
+              {postId}
+              parentId={node.comment_view.comment.id}
+              on:comment={(e) => {
+                node.children = [
+                  {
+                    children: [],
+                    comment_view: e.detail.comment_view,
+                    depth: node.depth + 1,
+                    ui: {},
+                  },
+                  ...node.children,
+                ]
+                replying = false
+              }}
+              on:cancel={() => (replying = false)}
+            />
           </div>
-          <CommentForm
-            {postId}
-            parentId={node.comment_view.comment.id}
-            on:comment={(e) => {
-              node.children = [
-                {
-                  children: [],
-                  comment_view: e.detail.comment_view,
-                  depth: node.depth + 1,
-                  ui: {},
-                },
-                ...node.children,
-              ]
-              replying = false
-            }}
-            on:cancel={() => (replying = false)}
-          />
         </div>
       {/if}
-      <div class="bg-transparent dark:bg-transparent">
-        <slot />
-      </div>
+      {#if childrenOpen}
+        <div class="bg-transparent dark:bg-transparent">
+          <slot />
+        </div>
+      {/if}
     </div>
   {/if}
 </li>

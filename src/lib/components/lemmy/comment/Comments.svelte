@@ -9,6 +9,7 @@
     Icon,
     Plus,
     PlusCircle,
+    ArrowDownCircle,
   } from 'svelte-hero-icons'
   import { getClient } from '$lib/lemmy.js'
   import type { CommentView, Post } from 'lemmy-js-client'
@@ -16,7 +17,7 @@
   import { toast } from 'mono-svelte'
   import { profile } from '$lib/auth.js'
   import { Button } from 'mono-svelte'
-  import { afterNavigate } from '$app/navigation'
+  import { afterNavigate, goto } from '$app/navigation'
   import { backOut, expoOut } from 'svelte/easing'
   import { t } from '$lib/translations'
   import { browser } from '$app/environment'
@@ -110,7 +111,7 @@
   in:fly={{ duration: 500, easing: expoOut, y: -12 }}
   class={isParent
     ? 'divide-y dark:divide-zinc-900 divide-slate-100'
-    : 'pl-3.5 border-l border-slate-200 dark:border-zinc-800 my-1'}
+    : ' border-slate-200 dark:border-zinc-800 my-1'}
 >
   {#each nodes as node (node.comment_view.comment.id)}
     <Comment
@@ -118,6 +119,10 @@
       bind:node
       bind:open={node.ui.open}
       op={post.creator_id == node.comment_view.creator.id}
+      contentClass="pl-3 {node.children.length > 0 ||
+      node.comment_view.counts.child_count > 0
+        ? 'border-l'
+        : ''} ml-3 border-slate-200 dark:border-zinc-800"
     >
       {#if node.children?.length > 0}
         <svelte:self {post} bind:nodes={node.children} isParent={false} />
@@ -125,22 +130,34 @@
       {#if node.comment_view.counts.child_count > 0 && node.children.length == 0}
         <svelte:element
           this={hydrated ? 'div' : 'a'}
-          class="w-full my-2 h-8 border-l border-slate-200 dark:border-zinc-800 pl-2 text-left"
+          class="w-full my-2 h-8"
           href="/comment/{$page.params.instance}/{node.comment_view.comment.id}"
         >
           <Button
             loading={node.loading}
             disabled={node.loading}
-            size="sm"
+            rounding="pill"
             color="tertiary"
-            alignment="left"
-            class="font-normal"
+            class="font-normal text-slate-600 dark:text-zinc-400"
+            loaderWidth={16}
             on:click={() => {
-              node.loading = true
-              fetchChildren(node).then(() => (node.loading = false))
+              if (node.depth > 7) {
+                goto(
+                  `/comment/${$page.params.instance}/${node.comment_view.comment.id}#comments`
+                )
+              } else {
+                node.loading = true
+                fetchChildren(node).then(() => (node.loading = false))
+              }
             }}
           >
-            <Icon src={ChevronDoubleDown} micro size="16" slot="prefix" />
+            <Icon
+              src={ArrowDownCircle}
+              micro
+              size="16"
+              slot="prefix"
+              class="text-primary-900 dark:text-primary-100"
+            />
             {$t('comment.more', {
               // @ts-ignore
               comments: node.comment_view.counts.child_count,
