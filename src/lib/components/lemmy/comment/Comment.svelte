@@ -38,7 +38,6 @@
   export let meta: boolean = true
 
   export let open = true
-  let childrenOpen = true
 
   export let replying = false
 
@@ -121,6 +120,7 @@
       class="flex flex-row cursor-pointer gap-2 items-center group text-[13px] flex-wrap w-full
     z-0 group relative"
     >
+      <slot name="meta-suffix" />
       <div
         class="absolute opacity-0 -z-10 inset-0 group-hover:block group-hover:opacity-100
       bg-slate-100 dark:bg-zinc-900 group-hover:-inset-1 group-hover:-inset-x-2 rounded-full transition-all
@@ -249,11 +249,9 @@
           </div>
         </div>
       {/if}
-      {#if childrenOpen}
-        <div class="bg-transparent dark:bg-transparent">
-          <slot />
-        </div>
-      {/if}
+      <div class="bg-transparent dark:bg-transparent">
+        <slot />
+      </div>
     </div>
   {/if}
 </li>
