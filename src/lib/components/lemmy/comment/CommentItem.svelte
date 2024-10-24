@@ -14,6 +14,8 @@
   export let community = false
 
   export let meta: boolean = true
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
 <Material
@@ -23,7 +25,7 @@
     ? 'py-5'
     : view == 'compact'
       ? 'py-4'
-      : 'py-5'} {$$props.class}"
+      : 'py-5'} {clazz}"
   color="distinct"
   padding="none"
 >

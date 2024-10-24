@@ -10,12 +10,14 @@
     loading = true
     goto(`/search?q=${query}`).then(() => (loading = false))
   }
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
-<form on:submit|preventDefault={search} class="w-full h-full {$$props.class}">
+<form on:submit|preventDefault={search} class="w-full h-full {clazz}">
   <TextInput
     bind:value={query}
-    class="w-full h-full {$$props.class}"
+    class="w-full h-full {clazz}"
     placeholder={$t('nav.search')}
     autofocus
   />

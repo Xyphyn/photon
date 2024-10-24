@@ -12,6 +12,8 @@
       selected = $page.url.pathname == href
     }
   }
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
 <Button
@@ -23,7 +25,7 @@
   on:contextmenu
   class="font-normal block !origin-left border border-transparent {!selected
     ? 'text-slate-600 dark:text-zinc-400'
-    : ''} {$$props.class}"
+    : ''} {clazz}"
 >
   <slot {selected} name="icon" slot="prefix">
     {#if icon}

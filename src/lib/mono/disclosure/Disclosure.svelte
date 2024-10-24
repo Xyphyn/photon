@@ -3,9 +3,11 @@
   import { slide } from 'svelte/transition'
 
   export let open: boolean = false
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
-<div {...$$restProps} class={$$props.class}>
+<div {...$$restProps} class={clazz}>
   <button on:click={() => (open = !open)} class="w-full">
     <slot name="summary" {open} />
   </button>

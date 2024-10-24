@@ -27,16 +27,17 @@
     view == 'compact' ? 'w-22 h-22 sm:w-28' : 'w-24 h-24 sm:w-32'
 
   $: size = thumbnailSize(view)
+
+  export let style: string = ''
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
 <!-- 
   @component
   Thumbnails for compact and list view posts.
 -->
-<div
-  class="{size} relative group/media {$$props.class ?? ''}"
-  style={$$props.style ?? ''}
->
+<div class="{size} relative group/media {clazz ?? ''}" {style}>
   {#if post.alt_text}
     <Popover
       openOnHover

@@ -10,11 +10,14 @@
   export let copy: boolean = true
 
   let copied = false
+
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
 <div
   class="px-4 py-1 flex justify-between max-w-full box-border bg-slate-100 dark:bg-zinc-950 items-center gap-4 rounded-md border dark:border-zinc-800
-  {$$props.class}"
+  {clazz}"
 >
   <pre class="overflow-auto max-w-full whitespace-nowrap w-max">
 		{value}

@@ -10,6 +10,10 @@
   export let selected: T
   export let headless: boolean = false
 
+  let clazz: string = ''
+  export let buttonClazz: string = ''
+  export { clazz as class }
+
   const dispatcher = createEventDispatcher<{ select: T }>()
 
   $: {
@@ -19,7 +23,7 @@
   let containerClass = `
     flex flex-row rtl:flex-row-reverse items-center w-max max-w-full overflow-auto
     ${headless ? 'pb-1 gap-1' : ''}
-    ${$$props.class}
+    ${clazz}
   `
 
   const buttonClass = (selected: boolean) => `
@@ -27,7 +31,7 @@
     last:rounded-r-lg last:border-r last:dark:border-r-transparent
     rounded-l-none
     rounded-r-none
-    px-3 py-1.5 text-sm hover:brightness-110 ${$$props.buttonClass || ''}
+    px-3 py-1.5 text-sm hover:brightness-110 ${buttonClazz || ''}
     ${
       !selected
         ? `hover:dark:bg-zinc-800 border-slate-100 border-t border-b border-b-slate-300 dark:border-b-0

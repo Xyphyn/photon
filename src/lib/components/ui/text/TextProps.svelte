@@ -8,7 +8,9 @@
 <script lang="ts">
   export let wrap: keyof typeof wrapClass = 'wrap'
 
-  $: classes = `${wrapClass[wrap]} ${$$props.class ?? ''}`
+  let clazz: string = ''
+  export { clazz as class }
+  $: classes = `${wrapClass[wrap]} ${clazz ?? ''}`
 </script>
 
 <span class={classes}>

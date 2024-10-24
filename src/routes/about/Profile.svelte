@@ -6,9 +6,12 @@
   export let badge: string | undefined = undefined
 
   export let link: string = '#'
+
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
-<div class="flex flex-col w-max {$$props.class}">
+<div class="flex flex-col w-max {clazz}">
   <a
     href={link}
     class="text-base font-medium inline-flex items-center gap-2 {link != '#'

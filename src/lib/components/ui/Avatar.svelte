@@ -38,6 +38,9 @@
   $: optimizedURLs = [2, 3, 6, -1].map((n) =>
     optimizeUrl(url, (res || width) * n)
   )
+  export let style: string = ''
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
 {#if optimizedURLs[0] != undefined}
@@ -49,15 +52,15 @@
     {alt}
     {width}
     {title}
-    class="aspect-square object-cover overflow-hidden {$$props.class} flex-shrink-0"
-    style="width: {width}px; height: {width}px; {$$props.style || undefined}"
+    class="aspect-square object-cover overflow-hidden {clazz} flex-shrink-0"
+    style="width: {width}px; height: {width}px; {style}"
     class:rounded-full={circle}
     class:rounded-md={!circle}
   />
 {:else}
   <div
     style="width: {width}px; height: {width}px;"
-    class="aspect-square object-cover overflow-hidden {$$props.class} flex-shrink-0"
+    class="aspect-square object-cover overflow-hidden {clazz} flex-shrink-0"
     class:rounded-full={circle}
     class:rounded-md={!circle}
   >

@@ -22,12 +22,16 @@
   import { iconOfLink } from '../navbar/link'
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
+
+  export let style: string = ''
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
 <nav
   class="flex flex-col p-4 overflow-auto
-  gap-1 h-fit max-h-screen {$$props.class}"
-  style={$$props.style}
+  gap-1 h-fit max-h-screen {clazz}"
+  {style}
 >
   {#if $userSettings.dock.pins?.length ?? 0 > 0}
     <div class="flex items-center flex-wrap gap-2 pl-1.5">

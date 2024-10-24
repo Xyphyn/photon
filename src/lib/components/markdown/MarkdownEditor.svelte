@@ -93,6 +93,9 @@
   }
 
   $: if (!previewing && value) adjustHeight()
+
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
 {#if uploadingImage && images}
@@ -121,7 +124,7 @@
     class="flex flex-col border border-slate-200 border-b-slate-300 dark:border-t-zinc-700/70 dark:border-zinc-800
     focus-within:border-primary-900 focus-within:dark:border-primary-100 focus-within:ring ring-slate-300
     dark:ring-zinc-700 rounded-xl
-overflow-hidden transition-colors {$$props.class}"
+overflow-hidden transition-colors {clazz}"
     class:mt-1={label}
   >
     {#if previewing}
@@ -135,7 +138,7 @@ overflow-hidden transition-colors {$$props.class}"
         <!--Toolbar-->
         <div
           class="[&>*]:flex-shrink-0 flex flex-row overflow-auto p-1.5 gap-1.5 border-b
-          border-slate-200 dark:border-zinc-900 {$$props.disabled
+          border-slate-200 dark:border-zinc-900 {disabled
             ? 'opacity-60 pointer-events-none'
             : ''}"
         >

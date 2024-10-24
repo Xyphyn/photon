@@ -15,10 +15,16 @@
     tablet: true,
     mobile: true,
   }
+
+  export let mainClass: string = ''
+  export let itemsClass: string = ''
+  export let optionsClass: string = ''
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
 <div
-  class="flex flex-col w-full justify-between gap-2 max-w-full @container/setting {$$props.mainClass}"
+  class="flex flex-col w-full justify-between gap-2 max-w-full @container/setting {mainClass}"
 >
   {#if Object.values(supportedPlatforms).some((v) => v == false)}
     <div class="flex items-center gap-2 flex-wrap">
@@ -43,10 +49,10 @@
     </div>
   {/if}
   <div
-    class="flex flex-col @md/setting:flex-row items-center gap-2 {$$props.itemsClass}"
+    class="flex flex-col @md/setting:flex-row items-center gap-2 {itemsClass}"
   >
     <div
-      class="flex flex-col gap-0.5 flex-[2] w-full flex-shrink-0 min-w-48 {$$props.class}"
+      class="flex flex-col gap-0.5 flex-[2] w-full flex-shrink-0 min-w-48 {clazz}"
     >
       <h1 class="font-medium text-base"><slot name="title" /></h1>
       {#if $$slots.description}
@@ -58,7 +64,7 @@
     {#if $$slots.default}
       <div
         class="w-full flex flex-col gap-2 flex-1 max-w-full
-         @md/setting:items-end flex-shrink-0 {$$props.optionClass}"
+         @md/setting:items-end flex-shrink-0 {optionClass}"
       >
         <slot />
       </div>

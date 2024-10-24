@@ -1,7 +1,11 @@
+<script lang="ts">
+  let clazz: string = ''
+  export { clazz as class }
+</script>
+
 <div
   class="flex flex-row items-center
-   text-sm text-slate-600 dark:text-zinc-400 gap-2 flex-wrap {$$props.class ||
-    ''}"
+   text-sm text-slate-600 dark:text-zinc-400 gap-2 flex-wrap {clazz}"
 >
   <span class="font-medium text-left">
     <slot />

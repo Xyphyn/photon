@@ -46,6 +46,10 @@
 
   let editingLoad = false
 
+  export let contentClass: string = ''
+  let clazz: string = ''
+  export { clazz as class }
+
   async function save() {
     if (!$profile?.jwt || newComment.length <= 0) return
 
@@ -111,7 +115,7 @@
 <li
   class="py-3 relative {node.comment_view.comment.distinguished
     ? ' text-primary-900 dark:text-primary-100'
-    : ''} {highlight} {$$props.class}"
+    : ''} {highlight} {clazz}"
   id={node.comment_view.comment.id.toString()}
 >
   {#if meta}
@@ -194,7 +198,7 @@
   {/if}
   {#if open}
     <div
-      class="relative {$$props.contentClass}"
+      class="relative {contentClass}"
       transition:slide={{ duration: 400, easing: expoOut }}
     >
       <div

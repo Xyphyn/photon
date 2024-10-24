@@ -16,6 +16,8 @@
       textarea.style.height = `${textarea.scrollHeight}px` // Set height to the scrollHeight
     }
   }
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
 <label class="w-full">
@@ -34,6 +36,6 @@
     {required}
     {...$$restProps}
     rows={1}
-    class="font-semibold text-2xl focus:outline-none w-full bg-transparent resize-none {$$props.class}"
+    class="font-semibold text-2xl focus:outline-none w-full bg-transparent resize-none {clazz}"
   />
 </label>

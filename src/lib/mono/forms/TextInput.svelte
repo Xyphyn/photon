@@ -32,9 +32,11 @@
   const borderClass = `
 	border border-slate-200 border-b-slate-300 dark:border-zinc-900 dark:border-t-zinc-800
 	`
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
-<div class="flex flex-col gap-1 {$$props.class}">
+<div class="flex flex-col gap-1 {clazz}">
   {#if $$slots.label || label}
     <Label
       for={id}
@@ -51,7 +53,7 @@
   focus-within:border-primary-900 focus-within:dark:border-primary-100 focus-within:ring-2
   ring-slate-300 dark:ring-zinc-700
   transition-colors
-  rounded-lg flex flex-row items-center text-sm {$$props.class}"
+  rounded-lg flex flex-row items-center text-sm {clazz}"
   >
     {#if $$slots.prefix}
       <div
@@ -78,7 +80,7 @@
 		 focus:outline-none rounded-lg text-sm w-full disabled:bg-slate-100
 		disabled:cursor-not-allowed disabled:dark:bg-zinc-950 invalid:!border-red-500
 		peer invalid:text-red-500 z-10
-		{$$props.class || ''}"
+		{clazz || ''}"
       class:rounded-l-none={$$slots.prefix}
       class:border-l-0={$$slots.prefix && inlineAffixes}
       class:rounded-r-none={$$slots.suffix}

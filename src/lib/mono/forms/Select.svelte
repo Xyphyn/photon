@@ -48,9 +48,11 @@
     contextmenu: any
     input: any
   }>()
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
-<div class="flex flex-col gap-1 {$$props.class}">
+<div class="flex flex-col gap-1 {clazz}">
   {#if $$slots.label || label}
     <Label for={id} text={label}>
       <slot name="label" />
@@ -67,7 +69,7 @@
           shadow
         ]} {buttonColor.secondary} appearance-none transition-colors rounded-lg text-sm
 	w-full min-w-full cursor-pointer pr-6 {buttonColor.secondary}
-	{$$props.class}"
+	{clazz}"
         bind:value
         on:mousedown={(e) => {
           e.preventDefault()

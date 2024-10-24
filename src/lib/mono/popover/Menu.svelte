@@ -23,6 +23,8 @@
     flip(),
   ]
   export let strategy: Strategy = 'absolute'
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
 <Popover
@@ -34,7 +36,7 @@
   {...$$restProps}
   bind:open
   popoverClass="backdrop-blur-xl rounded-xl w-full max-w-[280px]"
-  class={$$props.class}
+  class={clazz}
 >
   <slot name="target" slot="target" />
   <div

@@ -65,11 +65,14 @@
   export let displayName = $userSettings.displayNames
 
   $: envBadge = getEnvBadge(user.actor_id)
+
+  export let instanceClass: string = ''
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
 <a
-  class="items-center flex flex-row gap-1 hover:underline max-w-full min-w-0 {$$props.class ??
-    ''}"
+  class="items-center flex flex-row gap-1 hover:underline max-w-full min-w-0 {clazz}"
   href="/u/{user.name}@{new URL(user.actor_id).hostname}"
   data-sveltekit-preload-data="tap"
 >
@@ -94,7 +97,7 @@
     </span>
     {#if showInstance}
       <span
-        class="text-slate-500 dark:text-zinc-500 font-normal instance-text flex-shrink {$$props.instanceClass ??
+        class="text-slate-500 dark:text-zinc-500 font-normal instance-text flex-shrink {instanceClass ??
           ''}"
       >
         @{new URL(user.actor_id).hostname}

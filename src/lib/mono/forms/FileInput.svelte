@@ -13,9 +13,12 @@
 
   $: previewURLs =
     preview && files ? Array.from(files).map(URL.createObjectURL) : undefined
+
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
-<div class="flex flex-col gap-1 {$$props.class}">
+<div class="flex flex-col gap-1 {clazz}">
   {#if $$slots.label || label}
     <Label for={id} text={label}>
       <slot name="label" />

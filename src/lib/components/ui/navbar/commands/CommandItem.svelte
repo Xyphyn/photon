@@ -10,6 +10,8 @@
   import type { Action } from './actions'
 
   export let action: Action
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
 <Button
@@ -18,7 +20,7 @@
   alignment="left"
   color="tertiary"
   size="lg"
-  class="focus:bg-slate-200 focus:dark:bg-zinc-800 block w-full {$$props.class}"
+  class="focus:bg-slate-200 focus:dark:bg-zinc-800 block w-full {clazz}"
   data-sveltekit-preload-code="viewport"
   data-sveltekit-preload-data="tap"
 >

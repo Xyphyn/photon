@@ -3,6 +3,10 @@
   import { contentPadding } from '../Shell.svelte'
 
   export let pageHeader = false
+
+  export let style: string = ''
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
 <div
@@ -16,14 +20,12 @@
   "
   style="{pageHeader
     ? `margin-top: min(-6rem, calc(-1 * calc(${$contentPadding.top}px))); padding-top: max(6rem, calc(${$contentPadding.top}px));`
-    : ''} {$$props.style};
+    : ''} {style};
 "
 >
   <h1
     class="text-3xl font-medium flex gap-2 w-full
-  {$userSettings.font == 'satoshi/nunito'
-      ? 'font-display'
-      : ''} {$$props.class ?? ''}"
+  {$userSettings.font == 'satoshi/nunito' ? 'font-display' : ''} {clazz ?? ''}"
   >
     <slot />
   </h1>

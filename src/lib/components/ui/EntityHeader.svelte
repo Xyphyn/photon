@@ -18,6 +18,9 @@
   }[] = []
 
   export let center: boolean = false
+
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
 <Material
@@ -25,7 +28,7 @@
   padding="none"
   rounding="xl"
   {...$$restProps}
-  class="z-10 relative border-slate-200 dark:border-zinc-700 {$$props.class}"
+  class="z-10 relative border-slate-200 dark:border-zinc-700 {clazz}"
 >
   {#if banner || avatar}
     <div class="max-h-36 overflow-visible">

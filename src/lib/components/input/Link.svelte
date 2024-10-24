@@ -14,6 +14,9 @@
   export let nowrap: boolean = false
 
   $: richURL = $$slots.default ? undefined : parseURL(href)
+
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
 <a
@@ -21,14 +24,14 @@
   {href}
   class="{highlight
     ? 'text-blue-500'
-    : ''} hover:underline max-w-full inline-flex items-center gap-1 {$$props.class}"
+    : ''} hover:underline max-w-full inline-flex items-center gap-1 {clazz}"
 >
   <slot name="icon" />
   <slot>
     <span
       class="flex relative gap-0 {nowrap
         ? 'w-full whitespace-nowrap overflow-hidden text-ellipsis text-xs'
-        : ''} {$$props.class}"
+        : ''} {clazz}"
     >
       {#if richURL}
         <span class="text-blue-300 dark:text-blue-800">

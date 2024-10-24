@@ -3,12 +3,11 @@
   import { Minus, Plus, Icon } from 'svelte-hero-icons'
   export let open: boolean = false
   export let icon: boolean = true
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
-<Disclosure
-  bind:open
-  class="items-start justify-items-start gap-2 {$$props.class}"
->
+<Disclosure bind:open class="items-start justify-items-start gap-2 {clazz}">
   <div
     slot="summary"
     class="font-medium w-full text-left flex flex-row items-center justify-between hover:text-primary-900

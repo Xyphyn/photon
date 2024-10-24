@@ -1,9 +1,13 @@
 <script lang="ts">
 	export let defaultValue: boolean = false
 	export let checked: boolean = defaultValue
+
+	export let labelClass: string = ''
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
-<label class="font-normal cursor-pointer flex flex-row items-start gap-4 group {$$props.class}">
+<label class="font-normal cursor-pointer flex flex-row items-start gap-4 group {class}">
 	<div
 		class="w-11 h-6 rounded-full relative z-[inherit] cursor-pointer flex flex-row transition-colors shadow-sm
 {checked ? 'bg-primary-900 dark:bg-primary-100' : 'bg-slate-200 dark:bg-zinc-800'}
@@ -20,7 +24,7 @@
 		rtl:peer-checked:-translate-x-5 rtl:group-active:peer-checked:-translate-x-4"
 		/>
 	</div>
-	<div class="flex flex-col {$$props.labelClass}">
+	<div class="flex flex-col {labelClass}">
 		<slot />
 		{#if $$slots.description}
 			<span class="font-normal text-sm text-slate-700 dark:text-zinc-300">

@@ -3,13 +3,13 @@
 
   export let group: string = generateID()
   export let row: boolean = false
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
 <div class="flex flex-col gap-1">
   <div
-    class="flex {row
-      ? 'flex-row flex-wrap'
-      : 'flex-col'} gap-4 {$$props.class || ''}"
+    class="flex {row ? 'flex-row flex-wrap' : 'flex-col'} gap-4 {clazz || ''}"
   >
     <slot {group} />
   </div>

@@ -82,6 +82,8 @@
 
   $: buttonHeight = view == 'compact' ? 'h-7' : 'h-8'
   $: buttonSquare = view == 'compact' ? 'w-7 h-7' : 'w-8 h-8'
+
+  export let style: string = ''
 </script>
 
 {#if editing}
@@ -119,7 +121,7 @@
 <footer
   class="flex flex-row gap-2 items-center flex-shrink-0 {buttonHeight}"
   class:flex-row-reverse={$userSettings.posts.reverseActions}
-  style={$$props.style ?? ''}
+  {style}
 >
   <PostVote
     post={post.post}

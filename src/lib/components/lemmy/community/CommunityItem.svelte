@@ -28,6 +28,8 @@
   export let showCounts: boolean = true
 
   let showInfo = false
+  let clazz: string = 'py-4 flex flex-col gap-4 text-sm max-w-full relative'
+  export { clazz as class }
 </script>
 
 {#if showInfo}
@@ -36,10 +38,7 @@
   </Modal>
 {/if}
 
-<div
-  class={$$props.class ??
-    'py-4 flex flex-col gap-4 text-sm max-w-full relative'}
->
+<div class={clazz}>
   <div
     class="flex
      {view == 'cozy'

@@ -74,6 +74,10 @@
       goto(postLink(post.post))
     }
   }
+
+  export let style: string = ''
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
 <!-- 
@@ -91,7 +95,7 @@
   {view == 'compact' ? 'py-3 list-type compact' : ''}
   {view == 'list' ? 'py-5 list-type' : ''}
   {view == 'cozy' ? 'py-5 flex flex-col gap-2' : ''}
-  {$$props.class ?? ''}"
+  {clazz ?? ''}"
   id={post.post.id.toString()}
   on:click={(e) => {
     onClick(e)
@@ -101,7 +105,7 @@
     if (e.key == 'Enter') onClick(e)
   }}
   tabindex="0"
-  style={$$props.style ?? ''}
+  {style}
 >
   <PostMeta
     community={post.community}

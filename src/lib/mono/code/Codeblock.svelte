@@ -19,6 +19,9 @@
       navigator.clipboard.writeText(src)
     }
   }
+
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
 <Material
@@ -64,7 +67,7 @@
   <pre
     bind:this={pre}
     {...$$restProps}
-    class="{$$props.class} bg-white dark:bg-zinc-900 px-4 overflow-auto max-h-96">
+    class="{clazz} bg-white dark:bg-zinc-900 px-4 overflow-auto max-h-96">
 		{#if htmlSrc}
       {@html htmlSrc}
     {:else if $$slots.default}

@@ -98,13 +98,17 @@
   export let noStyle: boolean = false
 
   $: tokens = marked.lexer(source)
+
+  export let style: string = ''
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
 <div
   class="{noStyle
     ? ''
-    : 'break-words flex flex-col gap-2 leading-[1.5]'} {$$props.class}"
-  style={$$props.style}
+    : 'break-words flex flex-col gap-2 leading-[1.5]'} {clazz}"
+  {style}
 >
   <SvelteMarkdown
     bind:source={tokens}

@@ -26,9 +26,11 @@
   export let taglines: Tagline[] | undefined = undefined
   export let admins: PersonView[] | undefined = undefined
   export let version: string | undefined = undefined
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
-<StickyCard class="w-full {$$props.class} text-slate-600 dark:text-zinc-400">
+<StickyCard class="w-full {clazz} text-slate-600 dark:text-zinc-400">
   {#if site.site.banner}
     <div
       class="rounded-xl

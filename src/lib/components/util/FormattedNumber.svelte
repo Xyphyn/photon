@@ -7,9 +7,12 @@
     notation: 'compact',
   }
 
+  let clazz: string = ''
+  export { clazz as class }
+
   export { localeToUse as locale }
 </script>
 
-<span class={$$props.class ?? ''}>
+<span class={clazz ?? ''}>
   {Intl.NumberFormat(localeToUse, options).format(number)}
 </span>

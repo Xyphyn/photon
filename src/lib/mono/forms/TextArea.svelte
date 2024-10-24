@@ -26,9 +26,11 @@
   const borderClass = `
 	border border-slate-200 dark:border-zinc-800
 	`
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
-<div class="flex flex-col gap-1 {$$props.class}">
+<div class="flex flex-col gap-1 {clazz}">
   {#if $$slots.label || label}
     <Label
       for={id}
@@ -41,7 +43,7 @@
     </Label>
   {/if}
   <div
-    class="rounded-xl flex flex-col items-center text-sm bg-white dark:bg-zinc-950 {$$props.class}"
+    class="rounded-xl flex flex-col items-center text-sm bg-white dark:bg-zinc-950 {clazz}"
   >
     <textarea
       {id}
@@ -62,7 +64,7 @@
 		dark:ring-zinc-200/50 transition-all text-sm w-full disabled:bg-slate-100
 		disabled:cursor-not-allowed disabled:dark:bg-zinc-900 invalid:!border-red-500
 		peer invalid:text-red-500 z-10
-		{$$props.class || ''}"
+		{clazz || ''}"
       class:rounded-b-none={$$slots.suffix}
       class:border-b-0={$$slots.suffix}
     />

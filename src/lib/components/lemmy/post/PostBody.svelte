@@ -27,18 +27,21 @@
   }
 
   $: overflows = isOverflown(element, body)
+
+  export let style: string = ''
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
 <svelte:element
   this={htmlElement}
-  style={$$props.style ?? ''}
+  {style}
   class="{!expanded
     ? ` overflow-hidden
 bg-gradient-to-b text-transparent from-slate-600 via-slate-600
 dark:from-zinc-400 dark:via-zinc-400 bg-clip-text z-0
 ${view == 'list' ? `max-h-24` : 'max-h-48'}`
-    : 'text-slate-600 dark:text-zinc-400 max-h-full'} text-base {$$props.class ??
-    ''}"
+    : 'text-slate-600 dark:text-zinc-400 max-h-full'} text-base {clazz}"
   class:pointer-events-none={!clickThrough}
   bind:this={element}
 >

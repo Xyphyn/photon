@@ -15,6 +15,8 @@
 
   $: isSelected = isSelectedFilter($page.url.pathname)
   $: isPanel = adaptive ? $dockProps.noGap : false
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
 <Button
@@ -26,7 +28,7 @@
     ? '@3xl:h-8 @3xl:px-3 @3xl:rounded-[10px] @3xl:w-auto'
     : ''} {isSelected
     ? 'bg-slate-200 dark:bg-zinc-900 text-primary-900 dark:!text-primary-100'
-    : ''} {$$props.class ?? ''}"
+    : ''} {clazz}"
   size="custom"
   {href}
   rounding="pill"

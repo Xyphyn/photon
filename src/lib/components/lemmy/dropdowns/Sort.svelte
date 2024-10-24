@@ -37,9 +37,12 @@
   $: changeDefault
     ? ($userSettings.defaultSort.sort = selected as SortType)
     : undefined
+
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
-<div class="flex flex-row {$$props.class}">
+<div class="flex flex-row {clazz}">
   <Select
     {...$$restProps}
     class={selected?.startsWith('Top') ? 'rounded-r-none' : ''}

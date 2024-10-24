@@ -140,11 +140,11 @@
 
     loading.subscribing = false
   }
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
-<StickyCard
-  class="min-w-full pt-0 text-slate-600 dark:text-zinc-400 {$$props.class}"
->
+<StickyCard class="min-w-full pt-0 text-slate-600 dark:text-zinc-400 {clazz}">
   <Entity
     name={community_view.community.title}
     label="!{fullCommunityName(

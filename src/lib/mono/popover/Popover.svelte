@@ -62,6 +62,10 @@
       floatingRef(node)
     }
   }
+
+  export let popoverClass: string = ''
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
 <svelte:body
@@ -92,9 +96,7 @@
     }}
     role="menu"
     type="button"
-    class="{canUseContents
-      ? 'contents text-left'
-      : 'w-max h-max'} {$$props.class}"
+    class="{canUseContents ? 'contents text-left' : 'w-max h-max'} {clazz}"
     bind:this={el}
     use:customFloatingRef
   >
@@ -106,7 +108,7 @@
   <Portal class="z-[150]">
     <div
       transition:scale={{ duration: 200, start: 0.96, easing: backOut }}
-      class="z-[150] {$$props.popoverClass}"
+      class="z-[150] {popoverClass}"
       use:customFloatingContent
       use:focusTrap
     >

@@ -33,11 +33,13 @@
   onDestroy(() => {
     clearErrorScope(scope)
   })
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
 {#if scopedErrors.length > 0}
   <div
-    class={$$props.class}
+    class={clazz}
     in:slide={{ duration: 400, easing: expoOut }}
     out:slide={{ duration: 400, delay: 400, easing: expoOut }}
   >

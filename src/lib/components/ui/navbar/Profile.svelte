@@ -39,6 +39,8 @@
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
 
   let showInstance = false
+
+  export let buttonClass: string = ''
 </script>
 
 {#if showInstance}
@@ -60,7 +62,7 @@
   <button
     class="w-10 h-10 rounded-full border-2 border-slate-200 dark:border-zinc-700
     transition-all bg-slate-50 dark:bg-zinc-900 relative
-    hover:border-primary-900 hover:dark:border-primary-100 active:scale-95 {$$props.buttonClass}"
+    hover:border-primary-900 hover:dark:border-primary-100 active:scale-95 {buttonClass}"
     title={$t('profile.profile')}
     slot="target"
   >

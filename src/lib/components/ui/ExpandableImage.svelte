@@ -43,6 +43,8 @@
     sharing = false
     return file
   }
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
 {#if $page.state.openImage || '' != ''}
@@ -146,6 +148,6 @@
   </div>
 {/if}
 
-<button on:click={() => history.back()} class="contents {$$props.class}">
+<button on:click={() => history.back()} class="contents {clazz}">
   <slot />
 </button>

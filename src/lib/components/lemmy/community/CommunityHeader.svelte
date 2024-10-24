@@ -36,6 +36,8 @@
   export let counts: CommunityAggregates | undefined = undefined
   export let moderators: CommunityModeratorView[] = []
   export let blocked: boolean = false
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
 <EntityHeader
@@ -67,7 +69,7 @@
       ]
     : []}
   bio={community.description}
-  class={$$props.class}
+  class={clazz}
 >
   <button
     on:click={() => {

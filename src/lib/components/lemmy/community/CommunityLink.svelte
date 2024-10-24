@@ -16,12 +16,15 @@
   export let badges = {
     nsfw: false,
   }
+
+  let clazz: string = ''
+  export let instanceClass: string = ''
+  export { clazz as class }
 </script>
 
 <a
   {...$$restProps}
-  class="items-center flex flex-row gap-2 hover:underline max-w-full min-w-0 {$$props.class ||
-    ''}"
+  class="items-center flex flex-row gap-2 hover:underline max-w-full min-w-0 {clazz}"
   href="/c/{community.name}@{new URL(community.actor_id).hostname}"
   data-sveltekit-preload-data="tap"
 >
@@ -42,7 +45,7 @@
       {#if showInstance}
         <span
           class="text-slate-500 dark:text-zinc-500 font-normal
-          instance-text flex-shrink {$$props.instanceClass || ''}"
+          instance-text flex-shrink {instanceClass || ''}"
         >
           @{new URL(community.actor_id).hostname}
         </span>

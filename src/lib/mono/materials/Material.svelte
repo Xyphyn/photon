@@ -49,6 +49,8 @@
   export let color: Color = 'default'
 
   export let element: string = 'div'
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
 <svelte:element
@@ -64,7 +66,7 @@
   {roundedClass[rounding]}
   {colorClass[color]}
    text-sm
-  {$$props.class}
+  {clazz}
   "
 >
   <slot />

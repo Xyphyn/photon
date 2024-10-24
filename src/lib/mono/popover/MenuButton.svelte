@@ -8,6 +8,8 @@
   export let alignment: ButtonAlignment = 'left'
   export let href: string | undefined = undefined
   export let disabled: boolean = false
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
 <Button
@@ -19,7 +21,7 @@
     ? 'opacity-70 pointer-events-none cursor-not-allowed'
     : ''} {color == 'tertiary'
     ? 'hover:dark:bg-zinc-800/70'
-    : ''} duration-100 {$$props.class}"
+    : ''} duration-100 {clazz}"
   {alignment}
   {href}
   {disabled}

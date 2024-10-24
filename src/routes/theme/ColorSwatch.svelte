@@ -5,11 +5,14 @@
   export let value: string
 
   const dispatch = createEventDispatcher<{ change: string }>()
+
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
 <div
   class="w-full h-8 relative rounded-md border dark:border-zinc-600 hover:dark:border-zinc-400
-  transition-colors {$$props.class}"
+  transition-colors {clazz}"
   style="background-color: rgb({value});"
 >
   <input

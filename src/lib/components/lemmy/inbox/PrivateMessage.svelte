@@ -6,9 +6,11 @@
 
   export let message: PrivateMessageView
   export let meta: boolean = true
+
+  export let style: string = ''
 </script>
 
-<div class="flex flex-col gap-2 text-sm" style={$$props.style ?? ''}>
+<div class="flex flex-col gap-2 text-sm" {style}>
   {#if meta}
     <div class="flex flex-row gap-2 items-center flex-wrap">
       <span class="font-medium text-xs">From</span>

@@ -84,13 +84,16 @@
 
   $: sidePadding = calculatePadding($dockProps.noGap, $dockProps.top, false)
   $: topPanel = $dockProps.noGap && $dockProps.top
+
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
 <svelte:window bind:innerWidth={$screenWidth} />
 
 <div
   {...$$restProps}
-  class="shell bg-slate-50 dark:bg-zinc-950 {$$props.class}"
+  class="shell bg-slate-50 dark:bg-zinc-950 {clazz}"
   style={$themeVars}
 >
   <slot />

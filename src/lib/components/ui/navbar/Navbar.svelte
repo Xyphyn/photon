@@ -40,15 +40,18 @@
   import { dockProps } from '../layout/Shell.svelte'
 
   let promptOpen: boolean = false
+  export let style: string = ''
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
 <CommandsWrapper bind:open={promptOpen} />
 <nav
   class="flex flex-row gap-2 items-center w-full mx-auto z-50 box-border p-0.5
   duration-150 @container
-  {$$props.class}
+  {clazz}
   "
-  style={$$props.style}
+  {style}
 >
   <NavButton
     on:contextmenu={(e) => {

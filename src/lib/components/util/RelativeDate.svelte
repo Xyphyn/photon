@@ -57,13 +57,11 @@
   }
 
   $: dateTime = toLocaleDateString(date)
+  export let style: string = ''
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
-<time
-  datetime={dateTime}
-  title={dateTime}
-  class={$$props.class ?? ''}
-  style={$$props.style ?? ''}
->
+<time datetime={dateTime} title={dateTime} class={clazz} {style}>
   {formatRelativeDate(date, options, $locale, relativeTo)}
 </time>

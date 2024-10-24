@@ -98,6 +98,9 @@
   export let tags: Tag[] = []
 
   let popoverOpen = false
+
+  export let style: string = ''
+  export let titleClass: string = ''
 </script>
 
 <!-- 
@@ -109,7 +112,7 @@
     ? 'grid-rows-2'
     : 'grid-rows-1'} text-xs min-w-0 max-w-full"
   class:compact={view == 'compact'}
-  style={$$props.style ?? ''}
+  {style}
 >
   {#if showCommunity && community && subscribed && showCommunity}
     <Popover bind:open={popoverOpen} manual>
@@ -280,7 +283,7 @@
     hover:text-primary-900 hover:dark:text-primary-100 transition-colors max-[480px]:!mt-0
     {$userSettings.font == 'satoshi/nunito'
       ? 'font-display font-semibold'
-      : 'font-medium'} {$$props.titleClass ?? ''}"
+      : 'font-medium'} {titleClass}"
     class:text-slate-600={$userSettings.markReadPosts && read}
     class:dark:text-zinc-400={$userSettings.markReadPosts && read}
     class:text-base={view == 'compact'}

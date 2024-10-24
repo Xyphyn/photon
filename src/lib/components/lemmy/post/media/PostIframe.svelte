@@ -93,6 +93,9 @@
 
   $: data = typeData(type)
   $: embedUrl = urlToEmbed(url)
+
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
 <!-- 
@@ -102,7 +105,7 @@
 {#if opened}
   {#if type == 'video'}
     <!-- svelte-ignore a11y-media-has-caption -->
-    <video {autoplay} controls class="rounded-xl aspect-video {$$props.class}">
+    <video {autoplay} controls class="rounded-xl aspect-video {clazz}">
       <source src={url} />
     </video>
   {:else}
@@ -112,7 +115,7 @@
       frameborder="0"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
       allowfullscreen
-      class="aspect-video rounded-xl dark:bg-zinc-900 {$$props.class ?? ''}"
+      class="aspect-video rounded-xl dark:bg-zinc-900 {clazz ?? ''}"
     />
   {/if}
 {:else}

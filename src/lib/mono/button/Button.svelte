@@ -130,6 +130,9 @@
   export let loaderWidth: number | undefined = undefined
 
   export let href: string | undefined = undefined
+
+  let clazz: string = ''
+  export { clazz as class }
 </script>
 
 <svelte:element
@@ -155,7 +158,7 @@
     : alignment == 'left'
       ? 'origin-left'
       : 'origin-right'}
-      {$$props.class}"
+      {clazz}"
   type={submit ? 'submit' : 'button'}
 >
   <div
