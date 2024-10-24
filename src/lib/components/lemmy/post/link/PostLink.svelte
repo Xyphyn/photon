@@ -113,13 +113,7 @@
       text-xs flex-shrink-0"
         rounding="pill"
       >
-        <Icon
-          src={LinkIcon}
-          size="16"
-          micro
-          slot="prefix"
-          class="flex-shrink-0"
-        />
+        <Icon src={LinkIcon} size="16" micro class="flex-shrink-0" />
         {$t('post.actions.link.actions')}
       </Button>
     </PostLinkSources>
@@ -136,10 +130,10 @@
         text-xs"
       >
         <div class="mr-0.5" style="width: 8px;">
-          <Icon src={LinkIcon} size="16" micro slot="prefix" />
+          <Icon src={LinkIcon} size="16" micro />
         </div>
         <div class="mr-1" style="width: 8px;">
-          <Icon src={ChevronDown} size="16" micro slot="suffix" />
+          <Icon src={ChevronDown} size="16" micro />
         </div>
       </Button>
     </PostLinkSources>

@@ -50,14 +50,14 @@
               transition:scale={{ opacity: 0, start: 0.3 }}
               style="grid-row: 1; grid-column: 1;"
             >
-              <Icon src={Clipboard} size="16" slot="prefix" />
+              <Icon src={Clipboard} size="16" />
             </div>
           {:else}
             <div
               transition:scale={{ opacity: 0, start: 0.3 }}
               style="grid-row: 1; grid-column: 1;"
             >
-              <Icon src={Check} size="16" mini slot="prefix" />
+              <Icon src={Check} size="16" mini />
             </div>
           {/if}
         </div>

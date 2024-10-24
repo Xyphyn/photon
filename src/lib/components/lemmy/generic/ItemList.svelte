@@ -31,7 +31,6 @@
           alt={item.name}
           title={item.name}
           width={24}
-          slot="prefix"
         />
       </div>
       <div class="flex flex-col max-w-full break-words">

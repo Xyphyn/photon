@@ -209,7 +209,7 @@
           <div
             class="-z-10 bg-slate-100 dark:bg-zinc-900 absolute -top-9 -bottom-1.5
           -inset-x-6 -right-6"
-          />
+          ></div>
         {/if}
         <div
           class="max-w-full mt-0.5 break-words text-[15px] text-slate-800 dark:text-zinc-100"

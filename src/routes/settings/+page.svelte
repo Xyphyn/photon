@@ -226,15 +226,8 @@
               name: locale,
             }}
             <option value={locale}>
-              <span>{mapped?.flag}</span>
-              <span>{mapped?.name}</span>
-              <div
-                class="text-slate-600 dark:text-zinc-400 text-xs ml-auto"
-                data-hide-selected
-                data-label={mapped.translated < 0
-                  ? ''
-                  : `${mapped.translated * 100}%`}
-              ></div>
+              {mapped?.flag}
+              {mapped?.name}
             </option>
           {/each}
         </Select>
@@ -635,7 +628,7 @@
             <summary
               class="cursor-pointer inline-flex flex-row items-center w-full gap-1"
             >
-              <Icon src={ChevronDown} mini size="16" slot="prefix" />
+              <Icon src={ChevronDown} mini size="16" />
               {preset.title}
               <Button
                 size="square-md"
@@ -647,7 +640,7 @@
                     $userSettings.moderation.presets
                 }}
               >
-                <Icon src={Trash} size="16" mini slot="prefix" />
+                <Icon src={Trash} size="16" mini />
               </Button>
             </summary>
             <div class="flex flex-col gap-3 mt-2">

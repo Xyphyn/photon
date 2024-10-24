@@ -13,7 +13,7 @@
 </script>
 
 <ul
-  class="divide-y divide-slate-200 dark:divide-zinc-900 flex flex-col {class}"
+  class="divide-y divide-slate-200 dark:divide-zinc-900 flex flex-col {clazz}"
 >
   <slot {action} />
 </ul>

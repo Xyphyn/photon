@@ -8,8 +8,6 @@
     Icon,
   } from 'svelte-hero-icons'
 
-  export let vertical: boolean = false
-
   export let supportedPlatforms = {
     desktop: true,
     tablet: true,
@@ -18,7 +16,7 @@
 
   export let mainClass: string = ''
   export let itemsClass: string = ''
-  export let optionsClass: string = ''
+  export let optionClass: string = ''
   let clazz: string = ''
   export { clazz as class }
 </script>

@@ -58,7 +58,6 @@
         }}
         {...$$restProps}
         inlineAffixes
-        slot="target"
       >
         <div slot="prefix" class="h-5 flex items-center">
           <Icon src={MagnifyingGlass} mini size="16" />

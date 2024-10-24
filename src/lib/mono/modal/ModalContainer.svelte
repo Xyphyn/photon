@@ -32,7 +32,7 @@
             color={action.type}
           >
             {#if action.icon}
-              <Icon src={action.icon} mini size="16" slot="prefix" />
+              <Icon src={action.icon} mini size="16" />
             {/if}
             {action.content}
           </Button>

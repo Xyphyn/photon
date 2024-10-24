@@ -40,7 +40,7 @@
             class="top-0 left-0"
             style="grid-row: 1; grid-column: 1;"
           >
-            <Icon src={Clipboard} size="18" mini slot="prefix" />
+            <Icon src={Clipboard} size="18" mini />
           </div>
         {:else}
           <div
@@ -48,7 +48,7 @@
             class="top-0 left-0"
             style="grid-row: 1; grid-column: 1;"
           >
-            <Icon src={Check} size="18" mini slot="prefix" />
+            <Icon src={Check} size="18" mini />
           </div>
         {/if}
       </div>
