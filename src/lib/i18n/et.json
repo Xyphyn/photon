@@ -3,7 +3,7 @@
         "profile": "Profiil",
         "inbox": "Postkast",
         "saved": "Salvestatud",
-        "subscribed": "Tellitud"
+        "subscribed": "Tellimised"
     },
     "nav": {
         "home": "Pealeht",
@@ -12,7 +12,8 @@
         "create": {
             "label": "Koosta",
             "post": "Postida",
-            "logingate": "sa pead logima sisse et postidata."
+            "logingate": "sa pead logima sisse et postidata.",
+            "community": "kogukond"
         },
         "menu": {
             "label": "Profiil",
@@ -26,12 +27,14 @@
             "theme": "Theme",
             "donate": "Anneta",
             "instance": "Server",
-            "app": "Äpp"
+            "app": "Äpp",
+            "about": "Info"
         },
         "admin": "Admin",
         "commands": {
             "main": "Peamine"
-        }
+        },
+        "moderation": "Moderaator"
     },
     "account": {
         "login": "Logi sisse",
@@ -142,7 +145,13 @@
                     "all": "Kõik",
                     "local": "Locaalne"
                 },
-                "private": "Privaatne server"
+                "private": "Privaatne server",
+                "icon": "ikoon",
+                "adminCommunityOnly": "Ainult administraator saab teha kogukondi",
+                "federation": "Föderatsioon sees",
+                "captcha": {
+                    "enabled": "CAPTCHA (roboti keeldaja) sees"
+                }
             },
             "applications": {
                 "user": "Kasutaja"
@@ -157,7 +166,10 @@
             "description": "Tee oma uus parool.",
             "instance": "Mis serveris on sinu kasutaja?"
         },
-        "instances": "Serverid"
+        "instances": "Serverid",
+        "moderation": {
+            "title": "Moderatsioon"
+        }
     },
     "cards": {
         "community": {
