@@ -171,9 +171,11 @@
         "profile": {
             "user": "Потребител",
             "settings": "Настройки",
-            "blocks": "Блокирани",
+            "blocks": {
+                "title": "Блокирани"
+            },
             "logins": "Влизания",
-            "credentials": "Акаунт",
+            "credentials": "Данни за достъп",
             "welcome": "Добре дошли, {{default}}!",
             "upvoted": "Гласувани нагоре",
             "downvoted": "Гласувани надолу",
@@ -184,10 +186,14 @@
             },
             "delete": {
                 "title": "Изтриване на акаунта"
-            }
+            },
+            "submissions": "Публикувани",
+            "overview": "Обзор"
         },
         "accounts": "Акаунти",
-        "communities": "Общности",
+        "communities": {
+            "title": "Общности"
+        },
         "search": {
             "title": "Търсене",
             "noResults": {
@@ -262,6 +268,12 @@
                 "title": "Администратори",
                 "empty": {
                     "title": "Няма администратори"
+                }
+            },
+            "federation": {
+                "blocked": "Блокирани инстанции",
+                "emptyBlock": {
+                    "title": "Няма блокирани инстанции"
                 }
             }
         },
@@ -560,7 +572,10 @@
                 "title": "Без виртуализиране на емисиите"
             }
         },
-        "export": "Изнасяне"
+        "export": "Изнасяне",
+        "account": {
+            "title": "Акаунт"
+        }
     },
     "cards": {
         "site": {
@@ -629,5 +644,13 @@
         "unblockUser": "Отблокирахте потребителя.",
         "successSignup": "Регистрирахте се.",
         "settingsImport": "Настройките са внесени успешно"
+    },
+    "stats": {
+        "joined": "Присъединяване"
+    },
+    "aria": {
+        "pagination": {
+            "current": "Текуща страница"
+        }
     }
 }
