@@ -44,7 +44,7 @@
     size = 'md',
     id = generateID(),
     rows = 4,
-    element = $bindable(undefined),
+    element = $bindable(),
     class: clazz = '',
     customLabel,
     suffix,

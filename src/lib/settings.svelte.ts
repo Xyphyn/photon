@@ -212,12 +212,18 @@ if (typeof window != 'undefined') {
 }
 
 $effect.root(() => {
-  if (typeof window != 'undefined') {
-    localStorage.setItem('settings', JSON.stringify(settings))
-  }
-  if (settings.language) {
-    locale.set(settings.language)
-  } else {
-    if (browser) locale.set(navigator?.language)
+  $effect(() => {
+    if (typeof window != 'undefined') {
+      localStorage.setItem('settings', JSON.stringify(settings))
+    }
+    if (settings.language) {
+      locale.set(settings.language)
+    } else {
+      if (browser) locale.set(navigator?.language)
+    }
+  })
+
+  return () => {
+    
   }
 })
