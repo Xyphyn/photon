@@ -1,20 +1,22 @@
 <script lang="ts">
-  import { createBubbler } from 'svelte/legacy';
+  import { createBubbler } from 'svelte/legacy'
 
-  const bubble = createBubbler();
   import { hexToRgb } from '$lib/ui/colors'
   import { createEventDispatcher } from 'svelte'
 
-
-  const dispatch = createEventDispatcher<{ change: string }>()
-
   interface Props {
-    value: string;
-    class?: string;
+    value: string
+    class?: string
+    oncontextmenu?: (e: MouseEvent) => any
+    onchange?: (value: string) => any
   }
 
-  let { value = $bindable(), class: clazz = '' }: Props = $props();
-  
+  let {
+    value = $bindable(),
+    oncontextmenu,
+    onchange,
+    class: clazz = '',
+  }: Props = $props()
 </script>
 
 <div
@@ -26,7 +28,7 @@
     class="rounded-md border cursor-pointer absolute top-0 left-0 w-full h-full opacity-0"
     type="color"
     bind:value
-    onchange={() => dispatch('change', hexToRgb(value))}
-    oncontextmenu={bubble('contextmenu')}
+    onchange={() => onchange?.(hexToRgb(value))}
+    {oncontextmenu}
   />
 </div>

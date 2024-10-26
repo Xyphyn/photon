@@ -25,7 +25,7 @@
   import { contentPadding } from '$lib/components/ui/layout/Shell.svelte'
   import { expoOut } from 'svelte/easing'
 
-  let { data } = $props();
+  let { data } = $props()
 
   let markingAsRead = $state(false)
 
@@ -52,7 +52,7 @@
 
   function addSearchParam(
     currentSearchParams: URLSearchParams,
-    newParamString: string
+    newParamString: string,
   ) {
     // Create a new URLSearchParams object from the current search params
     const updatedParams = new URLSearchParams(currentSearchParams)
@@ -142,8 +142,8 @@ items-center px-2 w-max"
         title={$t('common.refresh')}
       >
         {#snippet prefix()}
-                <Icon src={ArrowPath} size="16" mini  />
-              {/snippet}
+          <Icon src={ArrowPath} size="16" mini />
+        {/snippet}
       </Button>
       <Button
         on:click={markAllAsRead}
@@ -153,8 +153,8 @@ items-center px-2 w-max"
         class="h-10"
       >
         {#snippet prefix()}
-                <Icon src={Check} width={16} mini  />
-              {/snippet}
+          <Icon src={Check} width={16} mini />
+        {/snippet}
         {$t('routes.inbox.markAsRead')}
       </Button>
     </div>
@@ -183,7 +183,7 @@ items-center px-2 w-max"
           delay: index * 50,
         }}
       >
-        <InboxItem bind:item />
+        <InboxItem bind:item={data.data[index]} />
       </div>
     {/each}
   {/if}

@@ -70,8 +70,8 @@
       class="grid grid-cols-1 @md:grid-cols-2 @xl:grid-cols-3 @3xl:grid-cols-4
     gap-2"
     >
-      {#each $themeData.themes as theme}
-        <ThemePreset bind:theme />
+      {#each $themeData.themes as theme, index}
+        <ThemePreset bind:theme={$themeData.themes[index]} />
       {/each}
       <button
         onclick={() => {
@@ -165,11 +165,10 @@
       <h1 class="text-2xl font-bold col-span-2">{$t('routes.theme.accent')}</h1>
       <ColorSwatch
         value={$theme.colors.primary?.[900]}
-        on:change={(e) => {
-          $theme.colors.primary[900] = e.detail
+        onchange={(e) => {
+          $theme.colors.primary[900] = e
         }}
-        backgroundColor={defaultColors.primary[900]}
-        on:contextmenu={(e) => {
+        oncontextmenu={(e) => {
           e.preventDefault()
           $theme.colors.primary[900] =
             // @ts-ignore
@@ -181,11 +180,10 @@
       />
       <ColorSwatch
         value={$theme.colors.primary?.[100]}
-        on:change={(e) => {
-          $theme.colors.primary[100] = e.detail
+        onchange={(e) => {
+          $theme.colors.primary[100] = e
         }}
-        backgroundColor={defaultColors.primary[100]}
-        on:contextmenu={(e) => {
+        oncontextmenu={(e) => {
           e.preventDefault()
           $theme.colors.primary[100] =
             // @ts-ignore
@@ -212,10 +210,10 @@
                 <!--@ts-ignore-->
                 <ColorSwatch
                   bind:value={$theme.colors[category][shade]}
-                  on:change={(e) => {
-                    $theme.colors[category][shade] = e.detail
+                  onchange={(e) => {
+                    $theme.colors[category][shade] = e
                   }}
-                  on:contextmenu={(e) => {
+                  oncontextmenu={(e) => {
                     e.preventDefault()
                     $theme.colors[category][shade] =
                       // @ts-ignore
