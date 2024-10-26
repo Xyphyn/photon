@@ -91,14 +91,15 @@
         "password": "Parool",
         "confirmPassword": "kinnita parooli",
         "2fa": "2FA kood",
-        "forgotpassword": "Unustasid parooli?",
+        "forgotpassword": "Unustasid parooli",
         "submit": "Esita",
         "edit": "Muuda",
         "preview": "enne vaata",
         "post": {
             "create": "Koosta postitus",
             "edit": "Muuda postistust",
-            "title": "Tiitel"
+            "title": "Tiitel",
+            "selectFile": "vail fail"
         },
         "profile": {
             "bio": "all text",
@@ -109,11 +110,14 @@
             "newPassword": "uus parool",
             "2fa": {
                 "paste": "Kllebi seda enda authenticatori äppi."
-            }
+            },
+            "email": "Email"
         },
         "signup": {
-            "title": "Regisreeru"
-        }
+            "title": "Regisreeru",
+            "chooseInstance": "vali server"
+        },
+        "email": "Email"
     },
     "routes": {
         "search": {
