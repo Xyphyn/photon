@@ -3,21 +3,18 @@
   import { Check, Icon, Clipboard } from 'svelte-hero-icons'
   import { scale } from 'svelte/transition'
 
-  
-
   let copied = $state(false)
 
   interface Props {
     /**
-   * Show a copy button.
-   */
-    value: string;
-    copy?: boolean;
-    class?: string;
+     * Show a copy button.
+     */
+    value: string
+    copy?: boolean
+    class?: string
   }
 
-  let { value, copy = true, class: clazz = '' }: Props = $props();
-  
+  let { value, copy = true, class: clazz = '' }: Props = $props()
 </script>
 
 <div
@@ -32,7 +29,7 @@
       size="square-md"
       color="tertiary"
       aria-label="Copy"
-      on:click={() => {
+      onclick={() => {
         copied = true
         navigator.clipboard.writeText(value)
         setTimeout(() => (copied = false), 2000)

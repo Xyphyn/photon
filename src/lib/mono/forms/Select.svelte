@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { run, createBubbler } from 'svelte/legacy';
+  import { run, createBubbler } from 'svelte/legacy'
 
-  const bubble = createBubbler();
+  const bubble = createBubbler()
   import {
     buttonColor,
     buttonSize,
@@ -24,12 +24,11 @@
 
   type T = $$Generic
 
-
-
   let open = $state(false)
   let element: HTMLSelectElement | undefined = $state()
 
-  let options: { value: any; label: string | null; disabled: boolean }[] = $state([])
+  let options: { value: any; label: string | null; disabled: boolean }[] =
+    $state([])
 
   // Capture all options from the select element
   run(() => {
@@ -40,7 +39,7 @@
           disabled: option.disabled,
         }))
       : []
-  });
+  })
 
   const dispatcher = createEventDispatcher<{
     change: any
@@ -48,16 +47,16 @@
     input: any
   }>()
   interface Props {
-    value?: T | undefined;
-    placeholder?: string | undefined;
-    label?: string | undefined;
-    size?: ButtonSize;
-    shadow?: ButtonShadow;
-    id?: string;
-    class?: string;
-    customLabel?: import('svelte').Snippet;
-    children?: import('svelte').Snippet;
-    customOption?: import('svelte').Snippet<[any]>;
+    value?: T | undefined
+    placeholder?: string | undefined
+    label?: string | undefined
+    size?: ButtonSize
+    shadow?: ButtonShadow
+    id?: string
+    class?: string
+    customLabel?: import('svelte').Snippet
+    children?: import('svelte').Snippet
+    customOption?: import('svelte').Snippet<[any]>
   }
 
   let {
@@ -70,9 +69,8 @@
     class: clazz = '',
     customLabel,
     children,
-    customOption
-  }: Props = $props();
-  
+    customOption,
+  }: Props = $props()
 </script>
 
 <div class="flex flex-col gap-1 {clazz}">
@@ -85,8 +83,7 @@
   <div class="w-full relative">
     <Menu bind:open>
       {#snippet target()}
-            <select
-          
+        <select
           {id}
           bind:this={element}
           class="{buttonSize[size]} {buttonShadow[
@@ -96,12 +93,12 @@
   	{clazz}"
           bind:value
           onmousedown={(e) => {
-          e.preventDefault()
-        }}
+            e.preventDefault()
+          }}
           onkeypress={(e) => {
-          e.preventDefault()
-          open = !open
-        }}
+            e.preventDefault()
+            open = !open
+          }}
           onchange={bubble('change')}
           oncontextmenu={bubble('contextmenu')}
           {placeholder}
@@ -111,13 +108,16 @@
           {/if}
           {@render children?.()}
         </select>
-          {/snippet}
+      {/snippet}
 
       {#each options as option}
-        {#if customOption}{@render customOption({ option, selected: option.value == value, })}{:else}
+        {#if customOption}{@render customOption({
+            option,
+            selected: option.value == value,
+          })}{:else}
           <MenuButton
             on:contextmenu={() => dispatcher('contextmenu')}
-            on:click={() => {
+            onclick={() => {
               value = option.value
               dispatcher('change')
             }}

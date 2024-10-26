@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { run, preventDefault } from 'svelte/legacy';
+  import { run, preventDefault } from 'svelte/legacy'
 
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
@@ -10,15 +10,15 @@
   import { Button, Material, TextInput, toast } from 'mono-svelte'
   import { ClipboardDocument, Icon } from 'svelte-hero-icons'
 
-  let { data } = $props();
+  let { data } = $props()
 
   // @ts-ignore
   let totpLink: string | undefined = $state(undefined)
-  let totpEnabled;
+  let totpEnabled
   run(() => {
     totpEnabled =
       data.my_user?.local_user_view.local_user.totp_2fa_enabled ?? totpLink
-  });
+  })
 
   let verify_totp = $state('')
 
@@ -65,18 +65,17 @@
         label={$t('form.profile.2fa.totp')}
       >
         {#snippet suffix()}
-                <button
-            
+          <button
             class="contents"
             onclick={() => {
-            if (!totpLink) return
-            navigator.clipboard?.writeText(totpLink)
-            toast({ content: $t('toast.copied') })
-          }}
+              if (!totpLink) return
+              navigator.clipboard?.writeText(totpLink)
+              toast({ content: $t('toast.copied') })
+            }}
           >
             <Icon src={ClipboardDocument} size="20" mini />
           </button>
-              {/snippet}
+        {/snippet}
         <span class="font-normal text-xs">
           {$t('form.profile.2fa.paste')}
         </span>
@@ -92,17 +91,17 @@
         label={$t('form.2fa')}
       />
       {#if totpEnabled}
-        <Button on:click={() => twofa(false, true)} size="lg" color="primary">
+        <Button onclick={() => twofa(false, true)} size="lg" color="primary">
           {$t('common.disable')}
         </Button>
       {:else}
-        <Button on:click={() => twofa(true, true)} size="lg" color="primary">
+        <Button onclick={() => twofa(true, true)} size="lg" color="primary">
           {$t('common.enable')}
         </Button>
       {/if}
     </form>
   {:else}
-    <Button on:click={() => twofa(true)} size="lg" color="primary">
+    <Button onclick={() => twofa(true)} size="lg" color="primary">
       {$t('form.setup')}
     </Button>
   {/if}

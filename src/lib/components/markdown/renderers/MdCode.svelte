@@ -40,7 +40,7 @@
     <Button
       size="square-sm"
       color="tertiary"
-      on:click={() => {
+      onclick={() => {
         navigator?.clipboard?.writeText(codeblock.code)
         toast({ content: $t('toast.copied') })
       }}

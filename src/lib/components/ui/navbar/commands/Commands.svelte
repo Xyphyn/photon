@@ -278,7 +278,7 @@
             <li>
               <CommandItem
                 {action}
-                on:click={(e) => {
+                onclick={(e) => {
                   if (action.href) {
                     togglePalette()
                     return

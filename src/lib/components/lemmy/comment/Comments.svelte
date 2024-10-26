@@ -137,7 +137,7 @@
             color="tertiary"
             class="font-normal text-slate-600 dark:text-zinc-400"
             loaderWidth={16}
-            on:click={() => {
+            onclick={() => {
               if (node.depth > 4) {
                 goto(
                   `/comment/${$page.params.instance}/${node.comment_view.comment.id}#comments`,

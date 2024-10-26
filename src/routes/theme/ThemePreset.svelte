@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { preventDefault } from 'svelte/legacy';
+  import { preventDefault } from 'svelte/legacy'
 
   import { t } from '$lib/translations'
   import { calculateVars, themeData, type Theme } from '$lib/ui/colors'
@@ -7,10 +7,10 @@
   import { CheckCircle, Icon, Trash } from 'svelte-hero-icons'
 
   interface Props {
-    theme: Theme;
+    theme: Theme
   }
 
-  let { theme = $bindable() }: Props = $props();
+  let { theme = $bindable() }: Props = $props()
 
   let editingName = $state(false)
 </script>
@@ -33,10 +33,10 @@
       </div>
       <div
         class="bg-white dark:bg-zinc-900 w-8 h-4 rounded-sm border border-slate-200 dark:border-zinc-800"
-></div>
+      ></div>
       <div
         class="w-3 h-3 bg-primary-900 dark:bg-primary-100 rounded-full ml-auto"
-></div>
+      ></div>
     </div>
     {#if theme.id == $themeData.currentTheme}
       <Icon
@@ -66,7 +66,7 @@
           color="ghost"
           size="square-md"
           class="flex-shrink-0"
-          on:click={() => {
+          onclick={() => {
             modal({
               actions: [
                 action({
@@ -97,8 +97,8 @@
           }}
         >
           {#snippet prefix()}
-                    <Icon src={Trash} size="16" mini  />
-                  {/snippet}
+            <Icon src={Trash} size="16" mini />
+          {/snippet}
         </Button>
       {/if}
     </div>

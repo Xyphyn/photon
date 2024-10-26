@@ -114,7 +114,7 @@
   <div class="flex items-center">
     <Button
       size="square-lg"
-      on:click={() => {
+      onclick={() => {
         importText = ''
         importing = true
       }}
@@ -128,7 +128,7 @@
     </Button>
     <Button
       size="square-lg"
-      on:click={() => {
+      onclick={() => {
         const json = JSON.stringify(settings)
         navigator?.clipboard?.writeText?.(json)
         toast({ content: $t('toast.copied') })
@@ -143,7 +143,7 @@
     </Button>
     <Button
       size="square-lg"
-      on:click={() => {
+      onclick={() => {
         toast({
           content: $t('toast.resetSettings'),
           action: () => {},
@@ -508,7 +508,7 @@
                 disabled={settings.dock.pins
                   ?.map((p) => p.url)
                   ?.includes(pin.url)}
-                on:click={() => {
+                onclick={() => {
                   settings.dock.pins = [...(settings.dock.pins ?? []), pin]
                 }}
               >
@@ -705,7 +705,7 @@
                 size="square-md"
                 rounding="lg"
                 class="ml-auto"
-                on:click={() => {
+                onclick={() => {
                   settings.moderation.presets.splice(index, 1)
                   settings.moderation.presets = settings.moderation.presets
                 }}
@@ -740,7 +740,7 @@
         <Button
           color="none"
           class="w-full"
-          on:click={() => {
+          onclick={() => {
             settings.moderation.presets = [
               ...settings.moderation.presets,
               {

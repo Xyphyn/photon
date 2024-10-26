@@ -165,63 +165,63 @@ overflow-hidden transition-colors {clazz}"
             : ''}"
         >
           <Button
-            on:click={() => wrapSelection('**', '**')}
+            onclick={() => wrapSelection('**', '**')}
             title="Bold"
             size="square-md"
           >
             <Icon src={Bold} size="16" mini />
           </Button>
           <Button
-            on:click={() => wrapSelection('*', '*')}
+            onclick={() => wrapSelection('*', '*')}
             title="Italic"
             size="square-md"
           >
             <Icon src={Italic} size="16" micro />
           </Button>
           <Button
-            on:click={() => wrapSelection('[', '](https://example.com)')}
+            onclick={() => wrapSelection('[', '](https://example.com)')}
             title="Link"
             size="square-md"
           >
             <Icon src={Link} size="16" micro />
           </Button>
           <Button
-            on:click={() => wrapSelection('\n# ', '')}
+            onclick={() => wrapSelection('\n# ', '')}
             title="Header"
             size="square-md"
           >
             <Icon src={H1} size="16" micro />
           </Button>
           <Button
-            on:click={() => wrapSelection('~~', '~~')}
+            onclick={() => wrapSelection('~~', '~~')}
             title="Strikethrough"
             size="square-md"
           >
             <Icon src={Strikethrough} size="16" micro />
           </Button>
           <Button
-            on:click={() => wrapSelection('\n> ', '')}
+            onclick={() => wrapSelection('\n> ', '')}
             title="Quote"
             size="square-md"
           >
             <span class="font-bold font-serif text-lg">"</span>
           </Button>
           <Button
-            on:click={() => wrapSelection('\n- ', '')}
+            onclick={() => wrapSelection('\n- ', '')}
             title="List"
             size="square-md"
           >
             <Icon src={ListBullet} micro size="16" />
           </Button>
           <Button
-            on:click={() => wrapSelection('`', '`')}
+            onclick={() => wrapSelection('`', '`')}
             title="Code"
             size="square-md"
           >
             <Icon src={CodeBracket} micro size="16" />
           </Button>
           <Button
-            on:click={() =>
+            onclick={() =>
               wrapSelection('::: spoiler <spoiler title>\n', '\n:::')}
             title="Spoiler"
             size="square-md"
@@ -229,7 +229,7 @@ overflow-hidden transition-colors {clazz}"
             <Icon src={ExclamationTriangle} micro size="16" />
           </Button>
           <Button
-            on:click={() => wrapSelection('~', '~')}
+            onclick={() => wrapSelection('~', '~')}
             title="Subscript"
             size="square-md"
           >
@@ -239,7 +239,7 @@ overflow-hidden transition-colors {clazz}"
             </span>
           </Button>
           <Button
-            on:click={() => wrapSelection('^', '^')}
+            onclick={() => wrapSelection('^', '^')}
             title="Superscript"
             size="square-md"
           >
@@ -250,7 +250,7 @@ overflow-hidden transition-colors {clazz}"
           </Button>
           {#if images}
             <Button
-              on:click={() => (uploadingImage = !uploadingImage)}
+              onclick={() => (uploadingImage = !uploadingImage)}
               title="Image"
               size="square-md"
             >

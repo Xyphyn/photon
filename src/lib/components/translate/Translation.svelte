@@ -62,7 +62,7 @@
 <Modal title={$t('post.actions.more.translate')} bind:open>
   <TextArea bind:value={$text} rows={2}>
     {#snippet suffix()}
-      <Button on:click={() => translate($text)} color="primary">
+      <Button onclick={() => translate($text)} color="primary">
         {$t('post.actions.more.translate')}
       </Button>
     {/snippet}

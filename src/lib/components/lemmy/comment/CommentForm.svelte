@@ -106,7 +106,7 @@
         <Button
           size="custom"
           title={$t('common.cancel')}
-          on:click={() => dispatch('cancel', true)}
+          onclick={() => dispatch('cancel', true)}
           color="tertiary"
           class="w-8 h-8"
           rounding="xl"
@@ -114,7 +114,7 @@
           <Icon src={XMark} size="16" micro />
         </Button>
         <Button
-          on:click={submit}
+          onclick={submit}
           color="primary"
           {loading}
           disabled={locked || loading || banned}

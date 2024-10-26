@@ -47,7 +47,7 @@
   {#snippet noresults()}
     <div class="w-full h-full">
       {#if showWhenEmpty}
-        <MenuButton on:click={() => dispatcher('select', undefined)}>
+        <MenuButton onclick={() => dispatcher('select', undefined)}>
           <Icon src={XCircle} size="16" mini />
           <div class="flex flex-col text-left">
             <span>None</span>
@@ -60,7 +60,7 @@
   {/snippet}
   {#snippet children({ item, select })}
     <div in:fly|global={{ y: -4, opacity: 0 }}>
-      <MenuButton on:click={() => select(item)}>
+      <MenuButton onclick={() => select(item)}>
         <Avatar url={item.avatar} alt={item.name} width={24} />
         <div class="flex flex-col text-left">
           <span>{item.name}</span>

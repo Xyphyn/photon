@@ -20,7 +20,7 @@
 
 <Button
   href={action.href}
-  on:click
+  onclick
   alignment="left"
   color="tertiary"
   size="lg"

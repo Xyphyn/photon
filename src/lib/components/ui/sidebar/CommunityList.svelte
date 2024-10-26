@@ -32,7 +32,7 @@
           class="hidden group-hover:inline-flex opacity-0 group-hover:opacity-100 transition-all z-20
       items-center justify-center box-border w-7 h-7"
           style="grid-column: 1; grid-row: 1;"
-          on:click={() => addFavorite(follow)}
+          onclick={() => addFavorite(follow)}
         >
           <Icon src={Star} size="16" mini />
         </Button>
@@ -43,7 +43,7 @@
           class="hidden group-hover:inline-flex opacity-0 group-hover:opacity-100 transition-all z-20
     items-center justify-center box-border w-7 h-7"
           style="grid-column: 1; grid-row: 1;"
-          on:click={() => addFavorite(follow, false)}
+          onclick={() => addFavorite(follow, false)}
         >
           <Icon src={Trash} size="16" mini />
         </Button>

@@ -139,7 +139,7 @@
           ? '!text-red-500'
           : ''}"
         aria-label={$t('routes.admin.applications.deny')}
-        on:click={() => review(false)}
+        onclick={() => review(false)}
         loading={denying || reviewing}
         disabled={approving || denying || reviewing}
       >
@@ -154,7 +154,7 @@
           ? '!text-green-500'
           : ''}"
         title={$t('routes.admin.applications.approve')}
-        on:click={() => review(true)}
+        onclick={() => review(true)}
         loading={approving}
         disabled={approving || denying || reviewing}
       >

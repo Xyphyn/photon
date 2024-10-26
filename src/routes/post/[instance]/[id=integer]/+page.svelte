@@ -236,7 +236,7 @@
       {#if $profile?.jwt}
         <Button
           class="ml-auto"
-          on:click={() => {
+          onclick={() => {
             if ($profile?.jwt) {
               fetchOnHome($profile?.jwt)
             }
@@ -272,7 +272,7 @@
         title={data.post.post_view.post.name}
         style="width: max-content;"
       />
-      <Button on:click={() => history.back()} size="square-md">
+      <Button onclick={() => history.back()} size="square-md">
         {#snippet prefix()}
           <Icon src={ArrowLeft} micro size="16" />
         {/snippet}
@@ -350,7 +350,7 @@
         ? `/comment/${$page.params.instance}/${data.thread.showContext}`
         : undefined}
       class="hover:bg-white/50 dark:hover:bg-zinc-800/30"
-      on:click={data.thread.singleThread ? reloadComments : undefined}
+      onclick={data.thread.singleThread ? reloadComments : undefined}
     >
       {data.thread.showContext
         ? $t('routes.post.thread.context')
@@ -381,7 +381,7 @@
     {#if $profile?.jwt}
       {#if !commenting}
         <EndPlaceholder class="">
-          <Button color="primary" on:click={() => (commenting = true)}>
+          <Button color="primary" onclick={() => (commenting = true)}>
             <Icon src={PlusCircle} size="16" micro />
             {$t('routes.post.addComment')}
           </Button>
@@ -401,7 +401,7 @@
                   {$t('filter.sort.controversial')}
                 </option>
               </Select>
-              <Button size="square-md" on:click={reloadComments}>
+              <Button size="square-md" onclick={reloadComments}>
                 {#snippet prefix()}
                   <Icon src={ArrowPath} size="16" mini />
                 {/snippet}
@@ -447,7 +447,7 @@
             {$t('filter.sort.controversial')}
           </option>
         </Select>
-        <Button size="square-md" on:click={reloadComments}>
+        <Button size="square-md" onclick={reloadComments}>
           {#snippet prefix()}
             <Icon src={ArrowPath} size="16" mini />
           {/snippet}
@@ -485,7 +485,7 @@
       {#snippet action()}
         <Button
           color="tertiary"
-          on:click={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          onclick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         >
           {#snippet prefix()}
             <Icon src={ChevronDoubleUp} mini size="16" />

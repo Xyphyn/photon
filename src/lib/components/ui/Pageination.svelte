@@ -13,18 +13,18 @@
   import { fly } from 'svelte/transition'
 
   interface Props {
-    page?: number;
-    cursor?: { next?: string; back?: string } | undefined;
-    hasMore?: boolean;
-    children?: import('svelte').Snippet;
+    page?: number
+    cursor?: { next?: string; back?: string } | undefined
+    hasMore?: boolean
+    children?: import('svelte').Snippet
   }
 
   let {
     page = $bindable(0),
     cursor = undefined,
     hasMore = true,
-    children
-  }: Props = $props();
+    children,
+  }: Props = $props()
 
   const dispatcher = createEventDispatcher<{ change: number; cursor: string }>()
 </script>
@@ -41,7 +41,7 @@
   {/if}
   <Button
     color="ghost"
-    on:click={() => {
+    onclick={() => {
       if (cursor?.back) dispatcher('cursor', cursor?.back)
       else dispatcher('change', --page)
     }}
@@ -52,8 +52,8 @@
     disabled={(!cursor?.back && cursor?.next) || page <= 1}
   >
     {#snippet suffix()}
-        <Icon src={ChevronLeft} size="24" mini  />
-      {/snippet}
+      <Icon src={ChevronLeft} size="24" mini />
+    {/snippet}
   </Button>
 
   {#if page}
@@ -73,7 +73,7 @@
 
   <Button
     color="ghost"
-    on:click={() => {
+    onclick={() => {
       if (cursor?.next) dispatcher('cursor', cursor?.next)
       else dispatcher('change', ++page)
     }}
@@ -84,7 +84,7 @@
     disabled={!hasMore}
   >
     {#snippet suffix()}
-        <Icon src={ChevronRight} size="24" mini  />
-      {/snippet}
+      <Icon src={ChevronRight} size="24" mini />
+    {/snippet}
   </Button>
 </nav>

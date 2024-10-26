@@ -101,7 +101,7 @@
   </Material>
   <div class="flex items-center gap-4">
     <Button
-      on:click={() => {
+      onclick={() => {
         importing = !importing
       }}
       size="lg"
@@ -111,7 +111,7 @@
       {$t('routes.theme.import')}
     </Button>
     <Button
-      on:click={() => {
+      onclick={() => {
         navigator.clipboard.writeText(JSON.stringify($theme.colors))
         toast({ content: 'Copied theme to clipboard.' })
       }}
@@ -122,7 +122,7 @@
     </Button>
     <Button
       disabled={$theme.id <= 0}
-      on:click={() => {
+      onclick={() => {
         modal({
           actions: [
             action({

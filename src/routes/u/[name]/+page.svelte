@@ -138,13 +138,13 @@
       Are you sure you want to do this? (The button will enable in 3 seconds.)
     </p>
     <div class="flex flex-row gap-2">
-      <Button size="lg" on:click={() => (purgingUser = false)} class="flex-1">
+      <Button size="lg" onclick={() => (purgingUser = false)} class="flex-1">
         Cancel
       </Button>
       <Button
         size="lg"
         color="danger"
-        on:click={purgeUser}
+        onclick={purgeUser}
         disabled={!purgeEnabled}
         class="flex-1"
       >
@@ -250,7 +250,7 @@
                   {/snippet}
                   <MenuButton
                     color="danger-subtle"
-                    on:click={() =>
+                    onclick={() =>
                       ban(
                         data.person_view.person.banned,
                         data.person_view.person,
@@ -263,7 +263,7 @@
                   </MenuButton>
                   <MenuButton
                     color="danger-subtle"
-                    on:click={() => (purgingUser = !purgingUser)}
+                    onclick={() => (purgingUser = !purgingUser)}
                   >
                     {#snippet prefix()}
                       <Icon mini size="16" src={Fire} />
@@ -282,7 +282,7 @@
                 {/snippet}
                 <MenuButton
                   color="danger-subtle"
-                  on:click={() => blockUser(data.person_view.person.id)}
+                  onclick={() => blockUser(data.person_view.person.id)}
                 >
                   {#snippet prefix()}
                     <Icon mini size="16" src={NoSymbol} />

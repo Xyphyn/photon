@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
+  import { run } from 'svelte/legacy'
 
   import Button from '../button/Button.svelte'
   import Modal from '../modal/Modal.svelte'
@@ -11,7 +11,7 @@
   // reactivity hack
   run(() => {
     open = $shownModal ? true : false
-  });
+  })
 </script>
 
 {#if $shownModal}
@@ -32,7 +32,7 @@
           <Button
             size="lg"
             class="flex-1 w-full"
-            on:click={action.action}
+            onclick={action.action}
             color={action.type}
           >
             {#if action.icon}

@@ -234,7 +234,7 @@
         color={community_view.subscribed == 'Subscribed'
           ? 'secondary'
           : 'primary'}
-        on:click={subscribe}
+        onclick={subscribe}
         class="flex-1 relative z-[inherit]"
       >
         {#snippet prefix()}
@@ -279,7 +279,7 @@
         <MenuButton
           color="danger-subtle"
           size="lg"
-          on:click={() =>
+          onclick={() =>
             block(community_view.community.id, !community_view.blocked)}
         >
           {#snippet prefix()}
@@ -293,7 +293,7 @@
           <MenuButton
             color="danger-subtle"
             size="lg"
-            on:click={() => blockInstance(community_view.community.instance_id)}
+            onclick={() => blockInstance(community_view.community.instance_id)}
           >
             {#snippet prefix()}
               <Icon src={BuildingOffice2} size="16" mini />
@@ -304,7 +304,7 @@
         {#if $profile?.user && isAdmin($profile.user)}
           <MenuButton
             color="danger-subtle"
-            on:click={() =>
+            onclick={() =>
               modal({
                 title: $t('admin.purgeCommunity.title'),
                 body: `${community_view.community.title}: ${$t('admin.purgeCommunity.warning')}`,

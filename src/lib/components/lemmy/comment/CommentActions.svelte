@@ -67,7 +67,7 @@
     color="tertiary"
     rounding="pill"
     class="text-slate-700 dark:text-zinc-300"
-    on:click={() => (replying = !replying)}
+    onclick={() => (replying = !replying)}
     disabled={comment.post.locked || disabled}
   >
     <Icon src={ChatBubbleOvalLeft} size="14" micro />
@@ -92,7 +92,7 @@
     {/snippet}
     <MenuDivider>{$t('comment.actions.label')}</MenuDivider>
     <MenuButton
-      on:click={() => {
+      onclick={() => {
         navigator.share?.({
           url: comment.comment.ap_id,
         }) ?? navigator.clipboard.writeText(comment.comment.ap_id)
@@ -103,7 +103,7 @@
     </MenuButton>
     {#if settings.translator}
       <MenuButton
-        on:click={() => {
+        onclick={() => {
           // @ts-ignore
           text.set(comment.comment.content)
           translating = !translating
@@ -117,13 +117,13 @@
     {/if}
     {#if $profile?.jwt}
       {#if comment.creator.id == $profile.user?.local_user_view.person.id}
-        <MenuButton on:click={() => dispatcher('edit', comment)}>
+        <MenuButton onclick={() => dispatcher('edit', comment)}>
           <Icon src={PencilSquare} mini size="16" />
           <span>{$t('post.actions.more.edit')}</span>
         </MenuButton>
       {/if}
       <MenuButton
-        on:click={async () => {
+        onclick={async () => {
           if ($profile?.jwt)
             comment.saved = await save(comment, !comment.saved, $profile.jwt)
         }}
@@ -136,7 +136,7 @@
       {#if $profile?.user && $profile.jwt && $profile.user.local_user_view.person.id == comment.creator.id}
         <MenuButton
           color="danger-subtle"
-          on:click={async () => {
+          onclick={async () => {
             if ($profile?.jwt)
               comment.comment.deleted = await deleteItem(
                 comment,
@@ -154,7 +154,7 @@
         </MenuButton>
       {/if}
       {#if $profile.jwt && $profile.user?.local_user_view.person.id != comment.creator.id}
-        <MenuButton on:click={() => report(comment)} color="danger-subtle">
+        <MenuButton onclick={() => report(comment)} color="danger-subtle">
           <Icon src={Flag} mini size="16" />
           <span>{$t('moderation.report')}</span>
         </MenuButton>

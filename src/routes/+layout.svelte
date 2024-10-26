@@ -77,28 +77,31 @@
       themeVars.subscribe((vars) => {
         document.body.setAttribute('style', vars)
       })
-      // $effect(() => {
-      //   if (settings) {
-      //     document.body.classList.remove(
-      //       'font-display',
-      //       'font-inter',
-      //       'font-sans',
-      //       'font-system',
-      //       'font-nunito',
-      //     )
-      //     document.body.classList.add(
-      //       settings.font == 'inter'
-      //         ? 'font-inter'
-      //         : settings.font == 'system'
-      //           ? 'font-system'
-      //           : settings.font == 'satoshi/nunito'
-      //             ? 'font-nunito'
-      //             : 'font-sans',
-      //     )
-      //   }
-      // })
     }
   })
+
+  if (browser) {
+    $effect(() => {
+      if (settings) {
+        document.body.classList.remove(
+          'font-display',
+          'font-inter',
+          'font-sans',
+          'font-system',
+          'font-nunito',
+        )
+        document.body.classList.add(
+          settings.font == 'inter'
+            ? 'font-inter'
+            : settings.font == 'system'
+              ? 'font-system'
+              : settings.font == 'satoshi/nunito'
+                ? 'font-nunito'
+                : 'font-sans',
+        )
+      }
+    })
+  }
 </script>
 
 <svelte:head>

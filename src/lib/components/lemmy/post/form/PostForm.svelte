@@ -295,7 +295,7 @@
         <span class="font-medium text-sm">{$t('form.post.community')}</span>
         <Button
           class="w-full !bg-white dark:!bg-black h-[38px]"
-          on:click={() => (data.community = null)}
+          onclick={() => (data.community = null)}
           alignment="left"
           size="sm"
         >
@@ -347,7 +347,7 @@
         </div>
         {#if data.url}
           <Button
-            on:click={() => (addAltText = !addAltText)}
+            onclick={() => (addAltText = !addAltText)}
             rounding="pill"
             size="sm"
             color="ghost"
@@ -359,7 +359,7 @@
           </Button>
         {/if}
         <Button
-          on:click={() => (uploadingImage = !uploadingImage)}
+          onclick={() => (uploadingImage = !uploadingImage)}
           rounding="pill"
           size="sm"
           color="ghost"
@@ -372,7 +372,7 @@
         </Button>
         {#if generation.generatable}
           <Button
-            on:click={() => generateTitle(data.url)}
+            onclick={() => generateTitle(data.url)}
             loading={generation.loading}
             rounding="pill"
             size="sm"
@@ -391,7 +391,7 @@
   <div class="flex flex-row gap-2 flex-wrap">
     {#if data.url === undefined}
       <Button
-        on:click={async () => {
+        onclick={async () => {
           data.url = ''
           try {
             const url = new URL(await navigator.clipboard.readText())
@@ -406,7 +406,7 @@
         {$t('form.post.addUrl')}
       </Button>
       <Button
-        on:click={() => {
+        onclick={() => {
           data.url = ''
           uploadingImage = true
         }}
@@ -418,7 +418,7 @@
       </Button>
     {/if}
     {#if data.language_id === undefined}
-      <Button size="sm" rounding="pill" on:click={() => (data.language_id = 0)}>
+      <Button size="sm" rounding="pill" onclick={() => (data.language_id = 0)}>
         <Icon src={Language} size="16" micro />
         {$t('form.post.setLanguage')}
       </Button>
@@ -466,7 +466,7 @@
 
     {#if !edit}
       <Button
-        on:click={() => {
+        onclick={() => {
           toast({ content: $t('toast.restoredFromDraft') })
           const draft = getSessionStorage('postDraft')
           if (draft && !edit) {

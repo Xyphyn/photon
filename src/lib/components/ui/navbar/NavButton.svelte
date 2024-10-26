@@ -4,18 +4,15 @@
   import { Icon, type IconSource } from 'svelte-hero-icons'
   import { dockProps } from '../layout/Shell.svelte'
 
-
-
-
   interface Props {
-    label: string;
-    icon?: IconSource | undefined;
-    href?: string | undefined;
-    adaptive?: boolean;
-    isSelectedFilter?: (path: string) => boolean;
-    class?: string;
-    customIcon?: import('svelte').Snippet<[any]>;
-    children?: import('svelte').Snippet;
+    label: string
+    icon?: IconSource | undefined
+    href?: string | undefined
+    adaptive?: boolean
+    isSelectedFilter?: (path: string) => boolean
+    class?: string
+    customIcon?: import('svelte').Snippet<[any]>
+    children?: import('svelte').Snippet
     [key: string]: any
   }
 
@@ -24,14 +21,13 @@
     icon = undefined,
     href = undefined,
     adaptive = true,
-    isSelectedFilter = (path) =>
-    href != undefined && path == href,
+    isSelectedFilter = (path) => href != undefined && path == href,
     class: clazz = '',
     customIcon,
     children,
     ...rest
-  }: Props = $props();
-  
+  }: Props = $props()
+
   let isSelected = $derived(isSelectedFilter($page.url.pathname))
   let isPanel = $derived(adaptive ? $dockProps.noGap : false)
 </script>
@@ -39,7 +35,7 @@
 <Button
   color={isPanel ? 'secondary' : 'tertiary'}
   {...rest}
-  on:click
+  onclick
   on:contextmenu
   class="rounded-full w-10 h-10 flex-shrink-0 {adaptive
     ? '@3xl:h-8 @3xl:px-3 @3xl:rounded-[10px] @3xl:w-auto'
@@ -60,7 +56,7 @@
       size={isPanel ? '16' : '18'}
     />
   {:else}
-    {@render customIcon?.({ size: isPanel ? 16 : 18, isSelected, })}
+    {@render customIcon?.({ size: isPanel ? 16 : 18, isSelected })}
   {/if}
   <span class="hidden {adaptive ? '@3xl:block' : ''}">{label}</span>
   {@render children?.()}

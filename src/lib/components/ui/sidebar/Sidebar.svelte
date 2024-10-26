@@ -41,7 +41,7 @@
       {#each settings.dock.pins as pin}
         <SidebarButton
           icon={iconOfLink(pin.url)}
-          on:click={() => goto(pin.url)}
+          onclick={() => goto(pin.url)}
           alignment="center"
           selected={`${$page.url.pathname}${$page.url.search}` == pin.url}
           on:contextmenu={(e) => {

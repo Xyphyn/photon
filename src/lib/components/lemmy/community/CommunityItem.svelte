@@ -98,7 +98,7 @@
       </div>
     </a>
     <div class="flex flex-row items-center gap-2">
-      <Button size="square-md" on:click={() => (showInfo = !showInfo)}>
+      <Button size="square-md" onclick={() => (showInfo = !showInfo)}>
         <Icon src={InformationCircle} size="16" micro />
       </Button>
       <Subscribe {community}>
@@ -106,7 +106,7 @@
           <Button
             disabled={subscribing || !$profile?.jwt}
             loading={subscribing}
-            on:click={async () => {
+            onclick={async () => {
               const res = await subscribe()
 
               if (res) {

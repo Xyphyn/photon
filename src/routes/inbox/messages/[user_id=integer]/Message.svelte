@@ -8,11 +8,11 @@
   import { EllipsisVertical, Flag, Icon, Trash } from 'svelte-hero-icons'
 
   interface Props {
-    message: PrivateMessageView;
-    primary?: boolean;
+    message: PrivateMessageView
+    primary?: boolean
   }
 
-  let { message, primary = false }: Props = $props();
+  let { message, primary = false }: Props = $props()
 
   const dispatch = createEventDispatcher<{ delete: boolean; report: boolean }>()
 </script>
@@ -33,36 +33,35 @@
   </div>
   <Menu>
     {#snippet target()}
-        <Button
+      <Button
         color="tertiary"
         class="opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-all flex-shrink-0"
         size="square-md"
         rounding="pill"
-        
         title={$t('post.actions.more.actions')}
       >
         <Icon src={EllipsisVertical} size="16" micro />
       </Button>
-      {/snippet}
+    {/snippet}
     <MenuDivider>{$t('post.actions.more.actions')}</MenuDivider>
     {#if primary}
       <MenuButton
         color="danger-subtle"
-        on:click={() => dispatch('delete', true)}
+        onclick={() => dispatch('delete', true)}
       >
         {#snippet prefix()}
-                <Icon src={Trash} size="16" micro  />
-              {/snippet}
+          <Icon src={Trash} size="16" micro />
+        {/snippet}
         {$t('post.actions.more.delete')}
       </MenuButton>
     {:else}
       <MenuButton
         color="danger-subtle"
-        on:click={() => dispatch('report', true)}
+        onclick={() => dispatch('report', true)}
       >
         {#snippet prefix()}
-                <Icon src={Flag} size="16" micro  />
-              {/snippet}
+          <Icon src={Flag} size="16" micro />
+        {/snippet}
         {$t('moderation.report')}
       </MenuButton>
     {/if}

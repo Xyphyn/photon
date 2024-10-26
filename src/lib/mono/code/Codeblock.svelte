@@ -4,7 +4,6 @@
   import { Check, Icon, Clipboard } from 'svelte-hero-icons'
   import { scale } from 'svelte/transition'
 
-
   let copied = $state(false)
 
   let pre: HTMLPreElement = $state()
@@ -18,11 +17,11 @@
   }
 
   interface Props {
-    src: string;
-    filename?: string | undefined;
-    htmlSrc?: string | undefined;
-    children?: import('svelte').Snippet;
-    class?: string;
+    src: string
+    filename?: string | undefined
+    htmlSrc?: string | undefined
+    children?: import('svelte').Snippet
+    class?: string
     [key: string]: any
   }
 
@@ -33,8 +32,7 @@
     children,
     class: clazz = '',
     ...rest
-  }: Props = $props();
-  
+  }: Props = $props()
 </script>
 
 <Material
@@ -51,7 +49,7 @@
         size="square-sm"
         color="tertiary"
         aria-label="Copy"
-        on:click={() => {
+        onclick={() => {
           copied = true
           copy()
           setTimeout(() => (copied = false), 2000)

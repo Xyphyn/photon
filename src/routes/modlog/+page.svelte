@@ -157,7 +157,7 @@
       />
     {/if}
     <Button
-      on:click={() => {
+      onclick={() => {
         searchParam(
           $page.url,
           '',

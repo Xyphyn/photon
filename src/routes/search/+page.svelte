@@ -122,7 +122,7 @@
       size="square-lg"
       color="tertiary"
       class="self-end justify-self-center"
-      on:click={() => (moreOptions = !moreOptions)}
+      onclick={() => (moreOptions = !moreOptions)}
     >
       <Icon src={ChevronDown} size="20" mini />
     </Button>

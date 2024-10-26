@@ -278,7 +278,7 @@
           color="primary"
           {loading}
           disabled={loading}
-          on:click={() => loadMore()}
+          onclick={() => loadMore()}
         >
           {$t('message.retry')}
         </Button>

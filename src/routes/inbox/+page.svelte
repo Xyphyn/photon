@@ -136,7 +136,7 @@ items-center px-2 w-max"
 
     <div class="flex items-center gap-2">
       <Button
-        on:click={() => goto($page.url, { invalidateAll: true })}
+        onclick={() => goto($page.url, { invalidateAll: true })}
         size="square-lg"
         rounding="xl"
         title={$t('common.refresh')}
@@ -146,7 +146,7 @@ items-center px-2 w-max"
         {/snippet}
       </Button>
       <Button
-        on:click={markAllAsRead}
+        onclick={markAllAsRead}
         loading={markingAsRead}
         disabled={markingAsRead}
         size="lg"

@@ -209,7 +209,7 @@
         </button>
       </div>
       <Button
-        on:click={() => (showInstance = !showInstance)}
+        onclick={() => (showInstance = !showInstance)}
         color="tertiary"
         title={$t('nav.menu.instance')}
         size="square-md"

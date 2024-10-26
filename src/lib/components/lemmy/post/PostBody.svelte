@@ -51,7 +51,7 @@ ${view == 'list' ? `max-h-24` : 'max-h-48'}`
   <Markdown inline={!expanded} source={expanded ? body : body.slice(0, 1000)} />
   {#if overflows}
     <Button
-      on:click={() => (expanded = !expanded)}
+      onclick={() => (expanded = !expanded)}
       size="square-sm"
       color="tertiary"
       class="text-black dark:text-white absolute z-10 isolate pointer-events-auto bottom-0 {expanded

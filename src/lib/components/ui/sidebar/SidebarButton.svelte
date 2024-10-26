@@ -40,7 +40,7 @@
   alignment="left"
   {...rest}
   {href}
-  on:click
+  onclick
   on:contextmenu
   class="font-normal block !origin-left border border-transparent {!selected
     ? 'text-slate-600 dark:text-zinc-400'

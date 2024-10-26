@@ -53,7 +53,7 @@
     {#snippet noresults()}
       <div class="w-full h-full">
         {#if q == '' && showWhenEmpty}
-          <MenuButton on:click={() => dispatcher('select', undefined)}>
+          <MenuButton onclick={() => dispatcher('select', undefined)}>
             <Icon src={XCircle} size="16" mini />
             <div class="flex flex-col text-left">
               <span>None</span>
@@ -66,7 +66,7 @@
     {/snippet}
     {#snippet children({ item, select })}
       <div in:fly|global={{ y: -4, opacity: 0 }}>
-        <MenuButton on:click={() => select(item)}>
+        <MenuButton onclick={() => select(item)}>
           <Avatar url={item.icon} alt={item.title} width={24} />
           <div class="flex flex-col text-left">
             <span>{item.title}</span>
@@ -98,7 +98,7 @@
     {#snippet noresults()}
       <div class="w-full h-full">
         {#if q == '' && showWhenEmpty}
-          <MenuButton on:click={() => dispatcher('select', undefined)}>
+          <MenuButton onclick={() => dispatcher('select', undefined)}>
             <div class="flex flex-col text-left">
               <span>None (Start typing to search)</span>
             </div>
@@ -110,7 +110,7 @@
     {/snippet}
     {#snippet children({ item, select })}
       <div in:fly|global={{ y: -4, opacity: 0 }}>
-        <MenuButton on:click={() => select(item)}>
+        <MenuButton onclick={() => select(item)}>
           <Icon src={ServerStack} size="16" mini />
           <div class="flex flex-col text-left">
             <span>{item.domain}</span>

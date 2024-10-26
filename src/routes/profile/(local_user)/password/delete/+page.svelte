@@ -140,7 +140,7 @@
       </span>
     {/snippet}
   </Switch>
-  <Button size="lg" color="danger" on:click={() => deleteAccount(3)}>
+  <Button size="lg" color="danger" onclick={() => deleteAccount(3)}>
     {$t('routes.profile.delete.title')}
   </Button>
 </Material>

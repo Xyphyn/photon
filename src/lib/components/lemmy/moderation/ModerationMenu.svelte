@@ -97,7 +97,7 @@
     </MenuDivider>
     <MenuButton
       color="warning-subtle"
-      on:click={() => lock(!item.post.locked)}
+      onclick={() => lock(!item.post.locked)}
       loading={locking}
       disabled={locking}
     >
@@ -109,7 +109,7 @@
 
     <MenuButton
       color="success-subtle"
-      on:click={() =>
+      onclick={() =>
         pin(isPostView(item) ? !item.post.featured_community : false)}
       loading={pinning}
       disabled={pinning}
@@ -128,7 +128,7 @@
         {/if}
       </div>
     </MenuButton>
-    <MenuButton color="danger-subtle" on:click={() => remove(item)}>
+    <MenuButton color="danger-subtle" onclick={() => remove(item)}>
       <Icon src={Trash} size="16" mini />
       {#if isCommentView(item)}
         {item.comment.removed
@@ -141,7 +141,7 @@
     {#if $profile?.user && $profile.user.local_user_view.person.id != item.creator.id}
       <MenuButton
         color="danger-subtle"
-        on:click={() =>
+        onclick={() =>
           ban(item.creator_banned_from_community, item.creator, item.community)}
       >
         <Icon src={ShieldExclamation} size="16" mini />
@@ -155,7 +155,7 @@
     <MenuDivider>{$t('admin.label')}</MenuDivider>
     <MenuButton
       color="success-subtle"
-      on:click={() =>
+      onclick={() =>
         pin(isPostView(item) ? !item.post.featured_local : false, true)}
     >
       <Icon src={Megaphone} size="16" mini />
@@ -170,7 +170,7 @@
         <span class="text-xs opacity-80">{$t('admin.instance')}</span>
       </div>
     </MenuButton>
-    <MenuButton color="danger-subtle" on:click={() => remove(item, true)}>
+    <MenuButton color="danger-subtle" onclick={() => remove(item, true)}>
       <Icon src={Fire} size="16" mini />
       {$t('admin.purge')}
     </MenuButton>

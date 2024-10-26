@@ -35,7 +35,7 @@
         in:fly={{ duration: 300, easing: expoOut, y: 6, delay: 100 }}
       >
         <Button
-          on:click={() => {
+          onclick={() => {
             filters.clear()
             filters = filters
           }}
@@ -51,7 +51,7 @@
   {/if}
   {#each uniqueIds as id}
     <Button
-      on:click={() => {
+      onclick={() => {
         if (filters.has(id)) filters.delete(id)
         else filters.add(id)
         filters = filters

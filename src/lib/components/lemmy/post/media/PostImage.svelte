@@ -82,7 +82,7 @@
   >
     {#if post.alt_text}
       <Button
-        on:click={(e) => {
+        onclick={(e) => {
           e.stopPropagation()
           modal({
             title: 'Alt',

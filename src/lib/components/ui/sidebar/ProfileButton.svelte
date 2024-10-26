@@ -24,7 +24,7 @@
   loading={switching}
   loaderWidth={20}
   selected={$profile?.id == prof.id}
-  on:click={async () => {
+  onclick={async () => {
     switching = true
 
     if ($profile?.id != prof.id) {

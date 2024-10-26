@@ -8,13 +8,13 @@
   import Portal from '../popover/Portal.svelte'
 
   interface Props {
-    action?: string | undefined;
-    open?: boolean;
-    title?: string | undefined;
-    dismissable?: boolean;
-    customTitle?: import('svelte').Snippet;
-    children?: import('svelte').Snippet;
-    actions?: import('svelte').Snippet<[any]>;
+    action?: string | undefined
+    open?: boolean
+    title?: string | undefined
+    dismissable?: boolean
+    customTitle?: import('svelte').Snippet
+    children?: import('svelte').Snippet
+    actions?: import('svelte').Snippet<[any]>
   }
 
   let {
@@ -24,8 +24,8 @@
     dismissable = true,
     customTitle,
     children,
-    actions
-  }: Props = $props();
+    actions,
+  }: Props = $props()
 
   let el: any = $state()
 
@@ -70,14 +70,14 @@ bg-white/50 dark:bg-black/50 box-border p-4"
             class="absolute top-0 right-0 m-2 text-slate-600 dark:text-zinc-400"
             color="tertiary"
             size="square-sm"
-            on:click={() => {
+            onclick={() => {
               open = false
               dispatcher('dismissed')
             }}
           >
             {#snippet prefix()}
-                        <Icon src={XMark} size="20" mini  />
-                      {/snippet}
+              <Icon src={XMark} size="20" mini />
+            {/snippet}
           </Button>
         {/if}
         <h1 class="font-semibold text-xl max-w-full">
@@ -90,10 +90,10 @@ bg-white/50 dark:bg-black/50 box-border p-4"
         {@render children?.()}
         {#if action}
           <div class="mt-2 flex w-full">
-            {#if actions}{@render actions({ action, })}{:else}
+            {#if actions}{@render actions({ action })}{:else}
               <Button
                 class="w-full"
-                on:click={(e) => {
+                onclick={(e) => {
                   dispatcher('action', e)
                   open = false
                   dispatcher('dismissed')

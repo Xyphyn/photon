@@ -85,15 +85,11 @@
     </div>
     <p>This removes the account from Photon, it does not delete the account.</p>
     <div class="flex flex-row gap-2 items-center">
-      <Button
-        size="lg"
-        class="flex-1"
-        on:click={() => (removing.shown = false)}
-      >
+      <Button size="lg" class="flex-1" onclick={() => (removing.shown = false)}>
         Cancel
       </Button>
       <Button
-        on:click={() => {
+        onclick={() => {
           removing.shown = false
           if (removing.account) deleteProfile(removing.account.id)
         }}
@@ -182,7 +178,7 @@
                   title={profile.id == $currentProfile?.id
                     ? 'Switch'
                     : 'Current'}
-                  on:click={async () => {
+                  onclick={async () => {
                     if (profile.id != $currentProfile?.id) {
                       switching = profile.id
                       await setUserID(profile.id)
@@ -248,7 +244,7 @@
                       size="square-md"
                       color="secondary"
                       title={$t('account.moveUp')}
-                      on:click={() => moveProfile(profile.id, true)}
+                      onclick={() => moveProfile(profile.id, true)}
                     >
                       {#snippet prefix()}
                         <Icon src={ChevronUp} size="16" mini />
@@ -258,7 +254,7 @@
                       size="square-md"
                       color="secondary"
                       title={$t('account.moveDown')}
-                      on:click={() => moveProfile(profile.id, false)}
+                      onclick={() => moveProfile(profile.id, false)}
                     >
                       {#snippet prefix()}
                         <Icon src={ChevronDown} size="16" mini />
@@ -267,7 +263,7 @@
                   </div>
                   <MenuButton
                     disabled={!profile.color}
-                    on:click={() => (profile.color = undefined)}
+                    onclick={() => (profile.color = undefined)}
                   >
                     {#snippet prefix()}
                       <Icon src={ArrowUturnLeft} size="16" mini />
@@ -276,7 +272,7 @@
                   </MenuButton>
                   {#if settings.debugInfo}
                     <MenuButton
-                      on:click={() => {
+                      onclick={() => {
                         debugProfile = profile
                         debugging = !debugging
                       }}
@@ -289,7 +285,7 @@
                   {/if}
                   {#if !LINKED_INSTANCE_URL || profile.user}
                     <MenuButton
-                      on:click={() => action(profile)}
+                      onclick={() => action(profile)}
                       color="danger-subtle"
                     >
                       {#snippet prefix()}

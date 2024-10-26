@@ -102,7 +102,7 @@
                 title="Unblock"
                 size="square-md"
                 rounding="pill"
-                on:click={() => action(block)}
+                onclick={() => action(block)}
               >
                 {#snippet prefix()}
                   <Icon src={XMark} mini size="16" />
@@ -134,7 +134,7 @@
                 title="Unblock"
                 size="square-md"
                 rounding="pill"
-                on:click={() => action(block)}
+                onclick={() => action(block)}
               >
                 {#snippet prefix()}
                   <Icon src={XMark} mini size="16" />
@@ -162,7 +162,7 @@
                 title="Unblock"
                 size="square-md"
                 rounding="pill"
-                on:click={() => action(block)}
+                onclick={() => action(block)}
               >
                 {#snippet prefix()}
                   <Icon src={XMark} mini size="16" />

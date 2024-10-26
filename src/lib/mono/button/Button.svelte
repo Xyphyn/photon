@@ -65,9 +65,6 @@
 </script>
 
 <script lang="ts">
-  import { createBubbler } from 'svelte/legacy';
-
-  const bubble = createBubbler();
   import Spinner from '../loader/Spinner.svelte'
 
   type ButtonRoundness = 'pill' | 'xl' | 'lg' | 'md' | 'none'
@@ -115,27 +112,23 @@
     },
   }
 
-
-
-
-
   interface Props {
-    loading?: boolean;
-    submit?: boolean;
-    color?: ButtonColor;
-    size?: ButtonSize;
-    rounding?: ButtonRoundness;
-    roundingSide?: ButtonRoundingSide;
-    alignment?: ButtonAlignment;
-    shadow?: ButtonShadow;
-    column?: boolean;
-    animations?: any;
-    loaderWidth?: number | undefined;
-    href?: string | undefined;
-    class?: string;
-    prefix?: import('svelte').Snippet;
-    children?: import('svelte').Snippet;
-    suffix?: import('svelte').Snippet;
+    loading?: boolean
+    submit?: boolean
+    color?: ButtonColor
+    size?: ButtonSize
+    rounding?: ButtonRoundness
+    roundingSide?: ButtonRoundingSide
+    alignment?: ButtonAlignment
+    shadow?: ButtonShadow
+    column?: boolean
+    animations?: any
+    loaderWidth?: number | undefined
+    href?: string | undefined
+    class?: string
+    prefix?: import('svelte').Snippet
+    children?: import('svelte').Snippet
+    suffix?: import('svelte').Snippet
     [key: string]: any
   }
 
@@ -150,9 +143,9 @@
     shadow = 'none',
     column = false,
     animations = {
-    scale: false,
-    large: false,
-  },
+      scale: false,
+      large: false,
+    },
     loaderWidth = undefined,
     href = undefined,
     class: clazz = '',
@@ -160,8 +153,7 @@
     children,
     suffix,
     ...rest
-  }: Props = $props();
-  
+  }: Props = $props()
 </script>
 
 <svelte:element
@@ -169,12 +161,6 @@
   role={href ? 'link' : 'button'}
   {href}
   {...rest}
-  onclick={bubble('click')}
-  oncontextmenu={bubble('contextmenu')}
-  ondrag={bubble('drag')}
-  ondrop={bubble('drop')}
-  ondragstart={bubble('dragstart')}
-  ondragend={bubble('dragend')}
   class="
       {loading ? buttonColor.secondary : buttonColor[color]}
       {buttonSize[size]}

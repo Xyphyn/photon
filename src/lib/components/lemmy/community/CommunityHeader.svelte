@@ -132,7 +132,7 @@ dark:border-zinc-800 border-slate-300 border-opacity-50 text-slate-700 dark:text
             loading={subscribing}
             size="lg"
             color={subscribed == 'NotSubscribed' ? 'primary' : 'secondary'}
-            on:click={async () => {
+            onclick={async () => {
               subscribed =
                 (await subscribe())?.community_view.subscribed ??
                 'NotSubscribed'
@@ -186,7 +186,7 @@ dark:border-zinc-800 border-slate-300 border-opacity-50 text-slate-700 dark:text
         <MenuButton
           color="danger-subtle"
           size="lg"
-          on:click={() => block(community.id, !blocked)}
+          onclick={() => block(community.id, !blocked)}
         >
           {#snippet prefix()}
             <Icon src={NoSymbol} size="16" mini />
@@ -199,7 +199,7 @@ dark:border-zinc-800 border-slate-300 border-opacity-50 text-slate-700 dark:text
           <MenuButton
             color="danger-subtle"
             size="lg"
-            on:click={() => blockInstance(community.instance_id)}
+            onclick={() => blockInstance(community.instance_id)}
           >
             {#snippet prefix()}
               <Icon src={BuildingOffice2} size="16" mini />
@@ -210,7 +210,7 @@ dark:border-zinc-800 border-slate-300 border-opacity-50 text-slate-700 dark:text
         {#if $profile?.user && isAdmin($profile.user)}
           <MenuButton
             color="danger-subtle"
-            on:click={() =>
+            onclick={() =>
               modal({
                 title: $t('admin.purgeCommunity.title'),
                 body: `${community.title}: ${$t('admin.purgeCommunity.warning')}`,

@@ -64,7 +64,7 @@
     </Button>
     <Button
       title={$t('post.actions.more.delete')}
-      on:click={() => deleteImage(image)}
+      onclick={() => deleteImage(image)}
       size="square-md"
       {loading}
       disabled={loading}

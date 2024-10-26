@@ -64,7 +64,7 @@
         {/each}
       </div>
       <Button
-        on:click={() => clearErrorScope(scope)}
+        onclick={() => clearErrorScope(scope)}
         color="tertiary"
         size="square-sm"
         class="ml-auto"

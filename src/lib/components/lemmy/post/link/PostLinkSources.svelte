@@ -68,7 +68,7 @@
   {/each}
   <MenuDivider>{$t('post.actions.link.actions')}</MenuDivider>
   <MenuButton
-    on:click={() => {
+    onclick={() => {
       navigator?.share?.({ url: url }) ?? navigator?.clipboard?.writeText?.(url)
 
       toast({ content: $t('toast.copied') })

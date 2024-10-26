@@ -170,7 +170,7 @@
       {/await}
     {/if}
     <Button
-      on:click={() => (debug = true)}
+      onclick={() => (debug = true)}
       title="Debug"
       size="custom"
       color="ghost"
@@ -196,7 +196,7 @@
 
   {#if $profile?.jwt}
     <Button
-      on:click={async () => {
+      onclick={async () => {
         if (!$profile?.jwt) return
         saving = true
         post.saved = await save(post, !post.saved, $profile?.jwt)
@@ -312,7 +312,7 @@
       {$t('post.actions.more.actions')}
     </MenuDivider>
     {#if $profile?.user && $profile?.jwt && $profile.user.local_user_view.person.id == post.creator.id}
-      <MenuButton on:click={() => (editing = true)}>
+      <MenuButton onclick={() => (editing = true)}>
         {#snippet prefix()}
           <Icon src={PencilSquare} size="16" micro />
         {/snippet}
@@ -321,7 +321,7 @@
     {/if}
     {#if $profile?.jwt}
       <MenuButton
-        on:click={async () => {
+        onclick={async () => {
           if ($profile?.jwt)
             post.read = await markAsRead(post.post, !post.read, $profile.jwt)
         }}
@@ -335,7 +335,7 @@
       </MenuButton>
     {/if}
     <MenuButton
-      on:click={() => {
+      onclick={() => {
         navigator.share?.({
           url: localShare
             ? `${instanceToURL(getInstance())}/post/${post.post.id}`
@@ -361,7 +361,7 @@
             color={!localShare ? 'primary' : 'secondary'}
             size="square-md"
             roundingSide="left"
-            on:click={() => (localShare = false)}
+            onclick={() => (localShare = false)}
             title={$t('filter.location.global')}
           >
             <Icon src={GlobeAmericas} size="16" micro />
@@ -370,7 +370,7 @@
             color={localShare ? 'primary' : 'secondary'}
             size="square-md"
             roundingSide="right"
-            on:click={() => (localShare = true)}
+            onclick={() => (localShare = true)}
             title={$t('filter.location.local')}
           >
             <Icon src={MapPin} size="16" micro />
@@ -380,7 +380,7 @@
     </MenuButton>
     {#if post.post.body && settings.translator}
       <MenuButton
-        on:click={() => {
+        onclick={() => {
           // @ts-ignore
           text.set(post.post.body)
           translating = !translating
@@ -394,7 +394,7 @@
     {/if}
     {#if $profile?.jwt}
       <MenuButton
-        on:click={() => {
+        onclick={() => {
           setSessionStorage('postDraft', {
             body: `${
               settings.crosspostOriginalLink
@@ -423,7 +423,7 @@
       </MenuButton>
       {#if $profile.user && post.creator.id == $profile.user.local_user_view.person.id}
         <MenuButton
-          on:click={async () => {
+          onclick={async () => {
             if ($profile?.jwt)
               post.post.deleted = await deleteItem(
                 post,
@@ -444,7 +444,7 @@
       {#if $profile.user?.local_user_view.person.id != post.creator.id}
         {#if feature('hidePosts', $site?.version)}
           <MenuButton
-            on:click={async () => {
+            onclick={async () => {
               if (!$profile?.jwt) return
               const hidden = await hidePost(
                 post.post.id,
@@ -466,7 +466,7 @@
               : $t('post.actions.more.hide')}
           </MenuButton>
         {/if}
-        <MenuButton on:click={() => report(post)} color="danger-subtle">
+        <MenuButton onclick={() => report(post)} color="danger-subtle">
           {#snippet prefix()}
             <Icon src={Flag} width={16} micro />
           {/snippet}

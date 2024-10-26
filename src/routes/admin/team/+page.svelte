@@ -60,7 +60,7 @@
         {#each data.site?.admins ?? [] as admin}
           <div class="py-3 flex items-center justify-between">
             <UserLink avatar showInstance={false} user={admin.person} />
-            <Button on:click={() => action(admin.person.id)} size="square-md">
+            <Button onclick={() => action(admin.person.id)} size="square-md">
               <Icon src={Trash} mini size="16" />
             </Button>
           </div>

@@ -89,7 +89,7 @@
         rounding="full"
         padding="none"
         color="uniform"
-        on:click={(e) => e.stopPropagation()}
+        onclick={(e) => e.stopPropagation()}
       >
         <Button
           download
@@ -102,7 +102,7 @@
           <Icon src={ArrowDownTray} size="20" micro />
         </Button>
         <Button
-          on:click={async () => {
+          onclick={async () => {
             if (navigator.share) {
               const file = await downloadImage($page.state.openImage)
 
@@ -125,7 +125,7 @@
           {/snippet}
         </Button>
         <Button
-          on:click={() => {
+          onclick={() => {
             zoomed = !zoomed
           }}
           color="tertiary"
@@ -140,7 +140,7 @@
           />
         </Button>
         <Button
-          on:click={() => history.back()}
+          onclick={() => history.back()}
           color="tertiary"
           size="square-lg"
           rounding="pill"

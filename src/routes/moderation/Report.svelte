@@ -132,7 +132,7 @@
     </div>
   {/if}
   <Button
-    on:click={resolve}
+    onclick={resolve}
     class="ml-auto {item.resolved
       ? '!text-green-600 dark:!text-green-400'
       : ''}"

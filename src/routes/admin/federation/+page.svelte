@@ -175,7 +175,7 @@
 
 <Header pageHeader class="font-bold text-2xl flex items-center justify-between">
   {$t('routes.admin.federation.title')}
-  <Button color="primary" on:click={save} loading={saving} disabled={saving}>
+  <Button color="primary" onclick={save} loading={saving} disabled={saving}>
     {$t('common.save')}
   </Button>
 </Header>
@@ -239,7 +239,7 @@
                 </div>
                 <Button
                   size="square-md"
-                  on:click={() => {
+                  onclick={() => {
                     if (!data.federated_instances?.federated_instances?.blocked)
                       return
 
@@ -323,7 +323,7 @@
                 </div>
                 <Button
                   size="square-md"
-                  on:click={() => {
+                  onclick={() => {
                     if (!data.federated_instances?.federated_instances?.allowed)
                       return
 

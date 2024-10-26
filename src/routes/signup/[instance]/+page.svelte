@@ -194,7 +194,7 @@
               {err}
             </Material>
           {/await}
-          <Button on:click={() => getCaptcha()} size="square-md">
+          <Button onclick={() => getCaptcha()} size="square-md">
             <Icon src={ArrowPath} size="16" mini />
           </Button>
           <TextInput required bind:value={verifyCaptcha} />

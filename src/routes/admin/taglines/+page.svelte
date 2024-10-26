@@ -51,7 +51,7 @@
   <Header pageHeader class="justify-between">
     {$t('routes.admin.taglines.title')}<Button
       color="primary"
-      on:click={save}
+      onclick={save}
       loading={saving}
       disabled={saving}
       size="lg"
@@ -78,7 +78,7 @@
           <Markdown source={tagline} inline />
 
           <div class="flex gap-2 ml-auto">
-            <Button on:click={() => action(tagline)} size="square-md">
+            <Button onclick={() => action(tagline)} size="square-md">
               <Icon src={Trash} mini size="16" />
             </Button>
           </div>
@@ -137,7 +137,7 @@
           </Button>
         </form>
 
-        <Button on:click={save} color="primary" size="lg" class="w-full">
+        <Button onclick={save} color="primary" size="lg" class="w-full">
           {$t('common.save')}
         </Button>
       </div>

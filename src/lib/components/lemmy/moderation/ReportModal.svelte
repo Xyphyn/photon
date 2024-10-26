@@ -23,7 +23,7 @@
     item?: PostView | CommentView | PrivateMessageView | undefined
   }
 
-  let { open = $bindable(), item = undefined }: Props = $props()
+  let { open = $bindable(), item = $bindable() }: Props = $props()
 
   const isComment = (
     item: PostView | CommentView | PrivateMessageView,

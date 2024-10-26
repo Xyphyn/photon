@@ -41,7 +41,7 @@
         {$t('moderation.label')}
       {/if}
     </MenuDivider>
-    <MenuButton color="danger-subtle" on:click={() => remove(item)}>
+    <MenuButton color="danger-subtle" onclick={() => remove(item)}>
       {#snippet prefix()}
         <Icon src={Trash} size="16" mini />
       {/snippet}
@@ -57,7 +57,7 @@
       <!--Comment made by someone else-->
       <MenuButton
         color="danger-subtle"
-        on:click={() =>
+        onclick={() =>
           ban(item.creator_banned_from_community, item.creator, item.community)}
       >
         {#snippet prefix()}
@@ -71,7 +71,7 @@
       <!--Comment made by self-->
       <MenuButton
         color="success-subtle"
-        on:click={async () => {
+        onclick={async () => {
           if (!$profile.jwt) return
           item.comment = (
             await feature(
@@ -94,7 +94,7 @@
 
   {#if $profile?.user && isAdmin($profile.user)}
     <MenuDivider>{$t('admin.label')}</MenuDivider>
-    <MenuButton color="danger-subtle" on:click={() => remove(item, true)}>
+    <MenuButton color="danger-subtle" onclick={() => remove(item, true)}>
       {#snippet prefix()}
         <Icon src={Fire} size="16" mini />
       {/snippet}
