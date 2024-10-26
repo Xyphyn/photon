@@ -41,7 +41,7 @@
     ? '!bg-slate-100 dark:!bg-zinc-900'
     : ''}"
 >
-  {#snippet icon()}
+  {#snippet customIcon()}
     <ProfileAvatar
       profile={prof}
       {index}

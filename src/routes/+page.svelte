@@ -22,6 +22,7 @@
   let sort = $state(data.sort)
 
   $effect(() => {
+    if (type) settings.defaultSort.feed = type
     if (sort) settings.defaultSort.sort = sort
   })
 
@@ -39,8 +40,10 @@
 
       {#snippet extended()}
         <div class="flex items-center gap-2">
-          <Location bind:selected={type} />
-          <Sort bind:selected={sort} />
+          {#if type}
+            <Location navigate bind:selected={type} />
+          {/if}
+          <Sort navigate bind:selected={sort} />
           <ViewSelect />
         </div>
       {/snippet}

@@ -177,15 +177,15 @@
     }
   })
 
-  onMount(async () => {
-    await tick()
-    $virtualizer.measure()
-  })
+  // onMount(async () => {
+  //   await tick()
+  //   $virtualizer.measure()
+  // })
+
   let items = $derived($virtualizer.getVirtualItems())
-  run(() => {
-    if (virtualItemEls.length) {
+  $effect(() => {
+    if (virtualItemEls.length)
       virtualItemEls.forEach($virtualizer.measureElement)
-    }
   })
   run(() => {
     if (posts.length && virtualListEl)

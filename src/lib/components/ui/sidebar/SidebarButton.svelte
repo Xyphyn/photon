@@ -47,7 +47,9 @@
     : ''} {clazz}"
 >
   {#snippet prefix()}
-    {#if customIcon}{@render customIcon({ selected })}{:else if icon}
+    {#if customIcon}
+      {@render customIcon({ selected })}
+    {:else if icon}
       <Icon src={icon} solid={selected} size="20" />
     {/if}
   {/snippet}
