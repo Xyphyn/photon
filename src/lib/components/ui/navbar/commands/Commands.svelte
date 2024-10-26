@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
+  import { run } from 'svelte/legacy'
 
   import { resumables } from '$lib/lemmy/item'
   import { TextInput } from 'mono-svelte'
@@ -9,19 +9,17 @@
   import CommandItem from './CommandItem.svelte'
   import { browser } from '$app/environment'
   import { afterNavigate, goto } from '$app/navigation'
-  import { profile, profileData } from '$lib/auth'
-  import { getGroups, type Action, type Group } from './actions'
+  import { profile, profileData } from '$lib/auth.svelte'
+  import { getGroups, type Action, type Group } from './actions.svelte'
   import { themeData } from '$lib/ui/colors'
   import { page } from '$app/stores'
 
-
   interface Props {
-    open?: boolean;
-    groups?: Group[];
+    open?: boolean
+    groups?: Group[]
   }
 
-  let { open = $bindable(false), groups = $bindable([]) }: Props = $props();
-
+  let { open = $bindable(false), groups = $bindable([]) }: Props = $props()
 
   let search = $state('')
   let container: HTMLElement = $state()
@@ -87,7 +85,7 @@
               score: Math.max(
                 fuzzySearch(action.name, term),
                 fuzzySearch(group.name, term),
-                action.detail ? fuzzySearch(action.detail, term) : -1
+                action.detail ? fuzzySearch(action.detail, term) : -1,
               ),
             }))
             .filter((action) => action.score > 0)
@@ -98,7 +96,7 @@
             actions: scoredActions,
             score: Math.max(
               fuzzySearch(group.name, term),
-              ...scoredActions.map((a) => a.score)
+              ...scoredActions.map((a) => a.score),
             ),
           }
         })
@@ -130,10 +128,9 @@
     updateFilteredGroups()
   }
 
-
   function flattenActions(
     actions: Action[],
-    subaction: boolean = true
+    subaction: boolean = true,
   ): Action[] {
     return actions.flatMap((action) => [
       action,
@@ -230,20 +227,22 @@
   })
   run(() => {
     if (open) search = ''
-  });
+  })
   run(() => {
     groups = getGroups(
       $resumables,
       $profile,
       $profileData.profiles,
       $themeData,
-      $page.data.contextual?.actions
+      $page.data.contextual?.actions,
     )
-  });
-  let flattenedActions = $derived(filteredGroups.flatMap((group) => group.actions))
+  })
+  let flattenedActions = $derived(
+    filteredGroups.flatMap((group) => group.actions),
+  )
   run(() => {
     debouncedSearch(search)
-  });
+  })
 </script>
 
 <svelte:window onkeydown={handleKeydown} />

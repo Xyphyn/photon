@@ -10,7 +10,7 @@
     PrivateMessageReportView,
   } from 'lemmy-js-client'
   import { Check, CheckCircle, Icon } from 'svelte-hero-icons'
-  import { notifications, profile } from '$lib/auth.js'
+  import { notifications, profile } from '$lib/auth.svelte.js'
   import { Button } from 'mono-svelte'
   import type { ReportView } from '$lib/lemmy/report.js'
   import PrivateMessage from '$lib/components/lemmy/inbox/PrivateMessage.svelte'
@@ -19,10 +19,10 @@
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
 
   interface Props {
-    item: ReportView;
+    item: ReportView
   }
 
-  let { item = $bindable() }: Props = $props();
+  let { item = $bindable() }: Props = $props()
 
   let resolving = $state(false)
   async function resolve() {
@@ -140,8 +140,8 @@
     disabled={resolving}
   >
     {#snippet prefix()}
-        <Icon src={CheckCircle} micro={item.resolved} size="18"  />
-      {/snippet}
+      <Icon src={CheckCircle} micro={item.resolved} size="18" />
+    {/snippet}
     {!item.resolved
       ? $t('routes.moderation.resolve')
       : $t('routes.moderation.resolved')}

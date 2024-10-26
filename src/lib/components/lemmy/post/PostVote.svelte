@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import { userSettings } from '$lib/settings.js'
+  import { settings } from '$lib/settings.svelte.js'
   export const voteColor = (vote: number, border: boolean = false) =>
     vote == 1
       ? `bg-gradient-to-br from-blue-500 to-indigo-500 dark:from-blue-400 dark:to-indigo-500 text-slate-50 dark:text-zinc-900`
@@ -20,7 +20,7 @@
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import type { Post } from 'lemmy-js-client'
   import { ChevronDown, ChevronUp, Icon } from 'svelte-hero-icons'
-  import { profile } from '$lib/auth.js'
+  import { profile } from '$lib/auth.svelte.js'
   import { vote as voteItem } from '$lib/lemmy/contentview.js'
   import { Button, Popover, buttonColor, toast } from 'mono-svelte'
   import { site } from '$lib/lemmy.js'

@@ -1,23 +1,23 @@
 <script lang="ts">
-  import { preventDefault } from 'svelte/legacy';
+  import { preventDefault } from 'svelte/legacy'
 
-  import { profile, profileData, setUserID } from '$lib/auth.js'
+  import { profile, profileData, setUserID } from '$lib/auth.svelte.js'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { ImageInput, Material, removeToast, toast } from 'mono-svelte'
   import { getClient } from '$lib/lemmy.js'
   import type { SaveUserSettings } from 'lemmy-js-client'
   import { Button, Switch, TextInput } from 'mono-svelte'
-  import { uploadImage } from '$lib/util.js'
+  import { uploadImage } from '$lib/util.svelte.js'
   import { t } from '$lib/translations.js'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
   interface Props {
-    inline?: boolean;
-    data: any;
-    children?: import('svelte').Snippet;
+    inline?: boolean
+    data: any
+    children?: import('svelte').Snippet
   }
 
-  let { inline = false, data, children }: Props = $props();
+  let { inline = false, data, children }: Props = $props()
 
   let formData: Omit<SaveUserSettings, 'auth'> | undefined = $state({
     ...data.my_user?.local_user_view?.local_user,

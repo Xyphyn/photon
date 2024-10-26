@@ -65,12 +65,9 @@
 
   export let screenWidth = writable(1000)
   export let dockProps: Readable<ReturnType<typeof calculateDockProperties>> =
-    derivedStore(
-      [userSettings, screenWidth],
-      ([$settings, $screenWidth], set) => {
-        set(calculateDockProperties($settings.dock, $screenWidth))
-      },
-    )
+    derivedStore([screenWidth], ([$screenWidth], set) => {
+      set(calculateDockProperties(settings.dock, $screenWidth))
+    })
   export let contentPadding: Readable<ReturnType<typeof calculatePadding>> =
     derivedStore(dockProps, ($dockProps, set) =>
       set(calculatePadding($dockProps.noGap, $dockProps.top, true)),
@@ -78,9 +75,9 @@
 </script>
 
 <script lang="ts">
-  import { userSettings } from '$lib/settings.js'
+  import { settings } from '$lib/settings.svelte.js'
   import { themeVars } from '$lib/ui/colors'
-  import { routes } from '$lib/util.js'
+  import { routes } from '$lib/util.svelte.js'
   import { writable, type Readable, type Writable } from 'svelte/store'
 
   interface Props {
@@ -155,7 +152,7 @@
     })}
   </div>
   <div
-    class="content divide-x divide-slate-100 dark:divide-zinc-900 min-h-screen {$userSettings.newWidth
+    class="content divide-x divide-slate-100 dark:divide-zinc-900 min-h-screen {settings.newWidth
       ? 'limit-width'
       : ''}"
   >

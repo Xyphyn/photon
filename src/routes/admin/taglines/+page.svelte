@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { preventDefault } from 'svelte/legacy';
+  import { preventDefault } from 'svelte/legacy'
 
-  import { profile } from '$lib/auth.js'
+  import { profile } from '$lib/auth.svelte.js'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
@@ -14,9 +14,11 @@
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { t } from '$lib/translations.js'
 
-  let { data } = $props();
+  let { data } = $props()
 
-  let taglines = $state([...(data.site?.taglines.map((t: Tagline) => t.content) ?? [])])
+  let taglines = $state([
+    ...(data.site?.taglines.map((t: Tagline) => t.content) ?? []),
+  ])
   let newTagline = $state('')
 
   let saving = $state(false)
@@ -60,11 +62,10 @@
   </Header>
 
   <EditableList
-    
     on:action={(e) => {
       taglines.splice(
         taglines.findIndex((i) => i == e.detail),
-        1
+        1,
       )
 
       // hack for reactivity
@@ -72,7 +73,7 @@
     }}
   >
     {#snippet children({ action })}
-        {#each taglines as tagline}
+      {#each taglines as tagline}
         <div class="flex py-3">
           <Markdown source={tagline} inline />
 
@@ -83,8 +84,8 @@
           </div>
         </div>
       {/each}
-          {/snippet}
-    </EditableList>
+    {/snippet}
+  </EditableList>
   <form
     class="flex flex-col mt-auto gap-2 w-full"
     onsubmit={preventDefault(() => {
@@ -99,8 +100,8 @@
 
     <Button size="lg" submit>
       {#snippet prefix()}
-            <Icon src={Plus} size="16" mini  />
-          {/snippet}
+        <Icon src={Plus} size="16" mini />
+      {/snippet}
       {$t('common.add')}
     </Button>
   </form>
@@ -130,8 +131,8 @@
 
           <Button size="lg" submit>
             {#snippet prefix()}
-                        <Icon src={Plus} size="16" mini  />
-                      {/snippet}
+              <Icon src={Plus} size="16" mini />
+            {/snippet}
             {$t('common.add')}
           </Button>
         </form>

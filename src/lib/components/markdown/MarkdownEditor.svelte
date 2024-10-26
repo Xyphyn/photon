@@ -1,11 +1,11 @@
 <script lang="ts">
   import { run } from 'svelte/legacy'
 
-  import { profile } from '$lib/auth.js'
+  import { profile } from '$lib/auth.svelte.js'
   import MultiSelect from '$lib/components/input/Switch.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import { t } from '$lib/translations'
-  import { uploadImage } from '$lib/util.js'
+  import { uploadImage } from '$lib/util.svelte.js'
   import { ImageInput, toast } from 'mono-svelte'
   import { Button, Label, Modal, TextArea } from 'mono-svelte'
   import { createEventDispatcher, tick } from 'svelte'

@@ -10,7 +10,7 @@
   import ExpandableImage, {
     showImage,
   } from '$lib/components/ui/ExpandableImage.svelte'
-  import { userSettings } from '$lib/settings.js'
+  import { settings } from '$lib/settings.svelte.js'
   import type { Post } from 'lemmy-js-client'
   import PostIframe from './PostIframe.svelte'
   import { Button, Material, modal } from 'mono-svelte'
@@ -31,7 +31,7 @@
     post,
     type = 'none',
     opened = undefined,
-    blur = post.nsfw && $userSettings.nsfwBlur,
+    blur = post.nsfw && settings.nsfwBlur,
   }: Props = $props()
 </script>
 

@@ -1,22 +1,21 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
-  import { profile, setUserID, type Profile } from '$lib/auth.js'
+  import { profile, setUserID, type Profile } from '$lib/auth.svelte.js'
   import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
   import { LINKED_INSTANCE_URL } from '$lib/instance'
   import ProfileAvatar from '$lib/lemmy/ProfileAvatar.svelte'
   import { Button } from 'mono-svelte'
   import { Icon, QuestionMarkCircle } from 'svelte-hero-icons'
 
-
   let switching: boolean = $state(false)
   interface Props {
-    prof: Profile;
-    index: number;
-    guest?: boolean;
+    prof: Profile
+    index: number
+    guest?: boolean
   }
 
-  let { prof, index, guest = false }: Props = $props();
+  let { prof, index, guest = false }: Props = $props()
 </script>
 
 <SidebarButton
@@ -48,7 +47,6 @@
       {index}
       {guest}
       selected={$profile?.id == prof.id}
-      
     />
   {/snippet}
   <span

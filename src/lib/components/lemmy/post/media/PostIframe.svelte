@@ -5,10 +5,10 @@
         return 'www.youtube-nocookie.com'
       }
       case 'invidious': {
-        return get(userSettings).embeds.invidious || 'yewtu.be'
+        return settings.embeds.invidious || 'yewtu.be'
       }
       case 'piped': {
-        return get(userSettings).embeds.piped || 'piped.video'
+        return settings.embeds.piped || 'piped.video'
       }
     }
   }
@@ -34,7 +34,7 @@
     type IconSource,
   } from 'svelte-hero-icons'
   import { optimizeImageURL, type IframeType, type MediaType } from '../helpers'
-  import { userSettings } from '$lib/settings'
+  import { settings } from '$lib/settings.svelte'
   import { get } from 'svelte/store'
 
   const urlToEmbed = (inputUrl: string) => {
@@ -50,7 +50,7 @@
       if (autoplay) url.searchParams.set('autoplay', '1')
 
       return `https://${youtubeDomain(
-        $userSettings.embeds.youtube,
+        settings.embeds.youtube,
       )}/embed/${videoID}?${url.searchParams.toString()}`
     }
 
@@ -98,8 +98,8 @@
     type = 'none',
     thumbnail = undefined,
     url,
-    opened = $bindable(!$userSettings.embeds.clickToView),
-    autoplay = $userSettings.embeds.clickToView,
+    opened = $bindable(!settings.embeds.clickToView),
+    autoplay = settings.embeds.clickToView,
     class: clazz = '',
   }: Props = $props()
 

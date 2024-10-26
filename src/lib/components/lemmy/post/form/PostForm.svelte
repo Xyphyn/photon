@@ -16,9 +16,9 @@
     Link,
     XMark,
   } from 'svelte-hero-icons'
-  import { profile } from '$lib/auth.js'
+  import { profile } from '$lib/auth.svelte.js'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
-  import { placeholders, uploadImage } from '$lib/util.js'
+  import { placeholders, uploadImage } from '$lib/util.svelte.js'
   import { Checkbox, TextInput } from 'mono-svelte'
   import { getSessionStorage, setSessionStorage } from '$lib/session.js'
   import ObjectAutocomplete from '$lib/components/lemmy/ObjectAutocomplete.svelte'

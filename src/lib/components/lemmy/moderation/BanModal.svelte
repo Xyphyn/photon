@@ -5,7 +5,7 @@
   import type { Community, Person, PersonView } from 'lemmy-js-client'
   import { getClient } from '$lib/lemmy.js'
   import { toast } from 'mono-svelte'
-  import { profile } from '$lib/auth.js'
+  import { profile } from '$lib/auth.svelte.js'
   import { Button, Checkbox, Modal, TextInput } from 'mono-svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { t } from '$lib/translations'

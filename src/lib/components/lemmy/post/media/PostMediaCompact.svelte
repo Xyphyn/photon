@@ -6,7 +6,7 @@
     type MediaType,
   } from '$lib/components/lemmy/post/helpers.js'
   import { showImage } from '$lib/components/ui/ExpandableImage.svelte'
-  import { userSettings, type View } from '$lib/settings.js'
+  import { settings, type View } from '$lib/settings.svelte.js'
   import { isImage } from '$lib/ui/image'
   import type { Post } from 'lemmy-js-client'
   import { Material, Popover } from 'mono-svelte'
@@ -34,7 +34,7 @@
     post,
     type = 'none',
     view = 'cozy',
-    blur = post.nsfw && $userSettings.nsfwBlur,
+    blur = post.nsfw && settings.nsfwBlur,
     style = '',
     class: clazz = '',
   }: Props = $props()
@@ -50,7 +50,7 @@
   {#if post.alt_text}
     <Popover
       openOnHover
-      placement={$userSettings.leftAlign ? 'bottom-start' : 'bottom-end'}
+      placement={settings.leftAlign ? 'bottom-start' : 'bottom-end'}
     >
       {#snippet target()}
         <Material
@@ -68,7 +68,7 @@
     </Popover>
   {/if}
   <svelte:element
-    this={!$userSettings.expandImages || type != 'image' ? 'a' : 'button'}
+    this={!settings.expandImages || type != 'image' ? 'a' : 'button'}
     href={postLink(post)}
     onclick={() => {
       if (type == 'image') {

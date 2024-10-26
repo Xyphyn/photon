@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { preventDefault } from 'svelte/legacy';
+  import { preventDefault } from 'svelte/legacy'
 
-  import { profile } from '$lib/auth.js'
+  import { profile } from '$lib/auth.svelte.js'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { Label, Switch, toast } from 'mono-svelte'
   import { getClient } from '$lib/lemmy.js'
@@ -14,17 +14,19 @@
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
   interface Props {
-    data: PageData;
+    data: PageData
   }
 
-  let { data }: Props = $props();
+  let { data }: Props = $props()
 
-  const formData: Omit<EditSite, 'auth'> | undefined = $state(data.site
-    ? {
-        ...data.site.site_view.local_site,
-        ...data.site.site_view.site,
-      }
-    : undefined)
+  const formData: Omit<EditSite, 'auth'> | undefined = $state(
+    data.site
+      ? {
+          ...data.site.site_view.local_site,
+          ...data.site.site_view.site,
+        }
+      : undefined,
+  )
 
   async function save() {
     if (!$profile?.jwt) return

@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { run, preventDefault } from 'svelte/legacy';
+  import { run, preventDefault } from 'svelte/legacy'
 
-  import { profile } from '$lib/auth.js'
+  import { profile } from '$lib/auth.svelte.js'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import EditableList from '$lib/components/ui/list/EditableList.svelte'
@@ -9,7 +9,7 @@
   import { publishedToDate } from '$lib/components/util/date.js'
   import { getClient } from '$lib/lemmy.js'
   import { t } from '$lib/translations.js'
-  import { trycatch } from '$lib/util.js'
+  import { trycatch } from '$lib/util.svelte.js'
   import type { Instance } from 'lemmy-js-client'
   import {
     Button,
@@ -31,7 +31,7 @@
   import { expoInOut, expoOut } from 'svelte/easing'
   import { slide } from 'svelte/transition'
 
-  let { data = $bindable() } = $props();
+  let { data = $bindable() } = $props()
 
   let blockInstance = $state({
       instance: '',
@@ -58,12 +58,12 @@
 
       const blockedInstances =
         data.federated_instances.federated_instances.blocked.map(
-          (i) => i.domain
+          (i) => i.domain,
         )
 
       const allowedInstances =
         data.federated_instances.federated_instances.allowed.map(
-          (i) => i.domain
+          (i) => i.domain,
         )
 
       if (blocked) blockedInstances.push(instance)
@@ -97,11 +97,11 @@
 
       const blockedInstances =
         data.federated_instances.federated_instances.blocked.map(
-          (i) => i.domain
+          (i) => i.domain,
         )
       const allowedInstances =
         data.federated_instances.federated_instances.allowed.map(
-          (i) => i.domain
+          (i) => i.domain,
         )
 
       return await getClient().editSite({
@@ -166,7 +166,7 @@
 
   run(() => {
     if (csv) parseCsv(csv)
-  });
+  })
 </script>
 
 <svelte:head>
@@ -182,25 +182,24 @@
 {#if data.site && data.federated_instances?.federated_instances?.blocked}
   <FileInput preview={false} bind:files={csv}>
     {#snippet button()}
-        <Button class="w-max" >
+      <Button class="w-max">
         {#snippet prefix()}
-            <Icon src={Plus} mini size="18"  />
-          {/snippet}
+          <Icon src={Plus} mini size="18" />
+        {/snippet}
         {$t('routes.admin.federation.csv')}
       </Button>
-      {/snippet}
+    {/snippet}
     {#snippet choose()}
-      
-        {''}
-      
-      {/snippet}
+      {''}
+    {/snippet}
   </FileInput>
   <div class="flex flex-col md:flex-row gap-4">
     <div class="flex-1 w-full max-h-[42rem] h-full flex flex-col gap-2">
       <h2 class="font-bold text-lg">{$t('routes.admin.federation.blocked')}</h2>
       <form
         onsubmit={preventDefault(() =>
-          moderateInstance(blockInstance.instance, true))}
+          moderateInstance(blockInstance.instance, true),
+        )}
         class="flex flex-row gap-2"
       >
         <TextInput
@@ -223,7 +222,7 @@
             : ''}"
         >
           {#if data.federated_instances.federated_instances.blocked.length > 0}
-            {#each data.federated_instances.federated_instances.blocked.sort( (b, a) => b.domain.localeCompare(a.domain) ) as instance (instance.id)}
+            {#each data.federated_instances.federated_instances.blocked.sort( (b, a) => b.domain.localeCompare(a.domain), ) as instance (instance.id)}
               <div
                 animate:flip={{ duration: 300, easing: expoOut }}
                 class="flex justify-between items-center first:pt-0 last:pb-0"
@@ -246,13 +245,13 @@
 
                     data.federated_instances.federated_instances.blocked =
                       data.federated_instances?.federated_instances?.blocked.filter(
-                        (i) => i.id != instance.id
+                        (i) => i.id != instance.id,
                       )
                   }}
                 >
                   {#snippet prefix()}
-                                    <Icon src={XMark} size="16" mini  />
-                                  {/snippet}
+                    <Icon src={XMark} size="16" mini />
+                  {/snippet}
                 </Button>
               </div>
             {/each}
@@ -272,14 +271,13 @@
         {#if allowInstance.instance || !(data.federated_instances.federated_instances.allowed?.length == 0)}
           <Popover openOnHover placement="bottom-end">
             {#snippet target()}
-                        <Icon
+              <Icon
                 src={ExclamationTriangle}
                 solid
                 class="text-yellow-500"
-                
                 size="20"
               />
-                      {/snippet}
+            {/snippet}
             <p class="font-normal">
               {$t('routes.admin.federation.emptyAllow.description')}
             </p>
@@ -288,7 +286,8 @@
       </h2>
       <form
         onsubmit={preventDefault(() =>
-          moderateInstance(allowInstance.instance, false))}
+          moderateInstance(allowInstance.instance, false),
+        )}
         class="flex flex-row gap-2"
       >
         <TextInput
@@ -307,7 +306,7 @@
       <Material class="h-full overflow-auto" color="distinct">
         <EditableList class="[&>*]:py-3 dark:!divide-zinc-800 ">
           {#if data.federated_instances.federated_instances.allowed.length > 0}
-            {#each data.federated_instances.federated_instances.allowed.sort( (b, a) => b.domain.localeCompare(a.domain) ) as instance (instance.id)}
+            {#each data.federated_instances.federated_instances.allowed.sort( (b, a) => b.domain.localeCompare(a.domain), ) as instance (instance.id)}
               <div
                 animate:flip={{ duration: 300, easing: expoOut }}
                 class="flex justify-between items-center first:pt-0 last:pb-0"
@@ -330,13 +329,13 @@
 
                     data.federated_instances.federated_instances.allowed =
                       data.federated_instances?.federated_instances?.allowed.filter(
-                        (i) => i.id != instance.id
+                        (i) => i.id != instance.id,
                       )
                   }}
                 >
                   {#snippet prefix()}
-                                    <Icon src={XMark} size="16" mini  />
-                                  {/snippet}
+                    <Icon src={XMark} size="16" mini />
+                  {/snippet}
                 </Button>
               </div>
             {/each}
@@ -346,7 +345,7 @@
                 icon={Check}
                 title={$t('routes.admin.federation.emptyAllow.title')}
                 description={$t(
-                  'routes.admin.federation.emptyAllow.description'
+                  'routes.admin.federation.emptyAllow.description',
                 )}
               />
             </div>

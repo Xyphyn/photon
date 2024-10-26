@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { profile } from '$lib/auth'
+  import { profile } from '$lib/auth.svelte'
   import { publishedToDate } from '$lib/components/util/date'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import { instance } from '$lib/instance'
   import { client } from '$lib/lemmy'
   import { t } from '$lib/translations'
-  import { instanceToURL } from '$lib/util'
+  import { instanceToURL } from '$lib/util.svelte'
   import type { LocalImage } from 'lemmy-js-client'
   import { Button, Material, toast } from 'mono-svelte'
   import { createEventDispatcher } from 'svelte'
@@ -33,10 +33,10 @@
   }
 
   interface Props {
-    image: LocalImage;
+    image: LocalImage
   }
 
-  let { image }: Props = $props();
+  let { image }: Props = $props()
 </script>
 
 <div class="flex flex-col gap-1">
@@ -59,8 +59,8 @@
       class="ml-auto"
     >
       {#snippet prefix()}
-            <Icon src={ArrowDownTray} size="16" mini  />
-          {/snippet}
+        <Icon src={ArrowDownTray} size="16" mini />
+      {/snippet}
     </Button>
     <Button
       title={$t('post.actions.more.delete')}
@@ -70,8 +70,8 @@
       disabled={loading}
     >
       {#snippet prefix()}
-            <Icon src={Trash} size="16" mini  color="text-red-500" />
-          {/snippet}
+        <Icon src={Trash} size="16" mini color="text-red-500" />
+      {/snippet}
     </Button>
   </div>
 </div>

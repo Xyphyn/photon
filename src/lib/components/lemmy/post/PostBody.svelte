@@ -1,22 +1,17 @@
 <script lang="ts">
   import Markdown from '$lib/components/markdown/Markdown.svelte'
-  import type { View } from '$lib/settings'
+  import type { View } from '$lib/settings.svelte'
   import { Button } from 'mono-svelte'
   import { ChevronDown, Icon } from 'svelte-hero-icons'
 
-  let expanded = $state(false)
-  let element: Element = $state()
+  let element: Element | undefined = $state()
 
   function isOverflown(element: Element, body: string = '') {
-    if (!element) return
-    let overflows =
+    if (!element) return false
+    return (
       element.scrollHeight > element.clientHeight ||
       element.scrollWidth > element.clientWidth
-
-    if (!overflows) expanded = true
-    else expanded = false
-
-    return overflows
+    )
   }
 
   interface Props {
@@ -37,7 +32,8 @@
     class: clazz = '',
   }: Props = $props()
 
-  let overflows = $derived(isOverflown(element, body))
+  let overflows = $derived(element ? isOverflown(element, body) : false)
+  let expanded = $state(false)
 </script>
 
 <svelte:element

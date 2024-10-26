@@ -66,7 +66,7 @@
 </script>
 
 <script lang="ts">
-  import { profile } from '$lib/auth.js'
+  import { profile } from '$lib/auth.svelte.js'
   import {
     amMod,
     isAdmin,
@@ -85,7 +85,7 @@
   } from 'mono-svelte'
   import { client, getClient } from '$lib/lemmy.js'
   import { addSubscription } from '$lib/lemmy/user.js'
-  import { fullCommunityName } from '$lib/util.js'
+  import { fullCommunityName } from '$lib/util.svelte.js'
   import type { CommunityModeratorView, CommunityView } from 'lemmy-js-client'
   import { Button } from 'mono-svelte'
   import {
@@ -109,7 +109,7 @@
   import { userLink } from '$lib/lemmy/generic'
   import { t } from '$lib/translations'
   import Entity from '$lib/components/ui/Entity.svelte'
-  import { userSettings } from '$lib/settings'
+  import { settings } from '$lib/settings.svelte'
 
   let loading = $state({
     blocking: false,
@@ -170,7 +170,7 @@
 
   <div class="flex flex-col gap-1">
     <hr class="border-slate-200 dark:border-zinc-900 my-1" />
-    <Expandable bind:open={$userSettings.expand.about} class="!pt-0">
+    <Expandable bind:open={settings.expand.about} class="!pt-0">
       {#snippet title()}
         <span class="py-1 px-1 flex gap-1 items-center">
           <Icon src={InformationCircle} size="15" mini />
@@ -181,7 +181,7 @@
     </Expandable>
 
     <hr class="border-slate-200 dark:border-zinc-900 my-1" />
-    <Expandable bind:open={$userSettings.expand.stats}>
+    <Expandable bind:open={settings.expand.stats}>
       {#snippet title()}
         <span class="py-1 px-1 flex gap-1 items-center">
           <Icon src={ChartBar} size="15" mini />
@@ -204,7 +204,7 @@
 
     {#if moderators && moderators.length > 0}
       <hr class="border-slate-200 dark:border-zinc-900 my-1" />
-      <Expandable bind:open={$userSettings.expand.team}>
+      <Expandable bind:open={settings.expand.team}>
         {#snippet title()}
           <span class="py-1 px-1 flex gap-1 items-center">
             <ShieldIcon width={15} filled />

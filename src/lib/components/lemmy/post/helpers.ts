@@ -1,7 +1,7 @@
 import { client, getInstance } from '$lib/lemmy.js'
 import type { View } from '$lib/settings.svelte'
 import { isImage, isVideo } from '$lib/ui/image'
-import { canParseUrl, findClosestNumber } from '$lib/util'
+import { canParseUrl, findClosestNumber } from '$lib/util.svelte'
 import type { CommentView, PersonView, Post, PostView } from 'lemmy-js-client'
 
 export const isCommentMutable = (comment: CommentView, me: PersonView) =>

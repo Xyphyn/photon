@@ -2,9 +2,9 @@
   import { run } from 'svelte/legacy'
 
   import { page } from '$app/stores'
-  import { userSettings } from '$lib/settings'
+  import { settings } from '$lib/settings.svelte'
   import { t } from '$lib/translations'
-  import { searchParam } from '$lib/util.js'
+  import { searchParam } from '$lib/util.svelte.js'
   import type { SortType } from 'lemmy-js-client'
   import { Select } from 'mono-svelte'
   import {
@@ -45,17 +45,6 @@
 
   let sort: string = $state(selected?.startsWith('Top') ? 'TopAll' : selected)
   const setSelected = () => (selected = sort)
-
-  run(() => {
-    if (selected) {
-      sort = selected?.startsWith('Top') ? 'TopAll' : selected
-    }
-  })
-  run(() => {
-    changeDefault
-      ? ($userSettings.defaultSort.sort = selected as SortType)
-      : undefined
-  })
 </script>
 
 <div class="flex flex-row {clazz}">
@@ -68,7 +57,7 @@
       if (navigate) searchParam($page.url, 'sort', selected, 'page', 'cursor')
     }}
   >
-    {#snippet label()}
+    {#snippet customLabel()}
       <span class="flex items-center gap-1">
         <Icon src={ChartBar} size="13" micro />
         {$t('filter.sort.label')}
@@ -167,7 +156,7 @@
             searchParam($page.url, 'sort', selected, 'page', 'cursor')
         }}
       >
-        {#snippet label()}
+        {#snippet customLabel()}
           <span class="flex items-center gap-1">
             <Icon src={Clock} size="15" micro />
             {$t('filter.sort.top.time.label')}

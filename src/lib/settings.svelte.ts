@@ -1,4 +1,4 @@
-import type { CommentSortType, SortType } from 'lemmy-js-client'
+import type { CommentSortType, ListingType, SortType } from 'lemmy-js-client'
 import { writable } from 'svelte/store'
 import { env } from '$env/dynamic/public'
 import { locale } from './translations'
@@ -40,7 +40,7 @@ interface Settings {
 
   defaultSort: {
     sort: SortType
-    feed: 'All' | 'Subscribed' | 'Local'
+    feed: ListingType
     comments: CommentSortType
   }
   hidePosts: {
@@ -191,37 +191,27 @@ export const defaultSettings: Settings = {
   logoColorMonth: null,
 }
 
-export const userSettings = writable(defaultSettings)
-
-const migrate = (settings: any): Settings => {
-  if (typeof settings?.moderation?.removalReasonPreset == 'string') {
-    settings.moderation.presets = [
-      {
-        title: 'Preset 1',
-        content: settings.moderation.removalReasonPreset,
-      },
-    ]
-    settings.moderation.removalReasonPreset = undefined
-  }
-
+function createSettingsState(initial: Settings) {
+  let settings = $state(initial)
   return settings
 }
+
+export let settings = createSettingsState(defaultSettings)
+
 
 if (typeof window != 'undefined') {
   let oldUserSettings = JSON.parse(
     localStorage.getItem('settings') ?? JSON.stringify(defaultSettings)
   )
 
-  oldUserSettings = migrate(oldUserSettings)
-
-  userSettings.set({
-    ...defaultSettings,
-    ...oldUserSettings,
-    settingsVer: defaultSettings.settingsVer,
-  })
+  // settings = {
+  //   ...defaultSettings,
+  //   ...oldUserSettings,
+  //   settingsVer: defaultSettings.settingsVer,
+  // }
 }
 
-userSettings.subscribe((settings) => {
+$effect.root(() => {
   if (typeof window != 'undefined') {
     localStorage.setItem('settings', JSON.stringify(settings))
   }

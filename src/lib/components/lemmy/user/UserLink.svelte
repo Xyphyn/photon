@@ -50,7 +50,7 @@
 <script lang="ts">
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import Logo from '$lib/components/ui/Logo.svelte'
-  import { userSettings } from '$lib/settings.js'
+  import { settings } from '$lib/settings.svelte.js'
   import type { Person } from 'lemmy-js-client'
   import { Icon, Language, NoSymbol } from 'svelte-hero-icons'
 
@@ -74,9 +74,9 @@
     avatarSize = 24,
     badges = true,
     inComment = false,
-    showInstance = $userSettings.showInstances.user ||
-      ($userSettings.showInstances.comments && inComment),
-    displayName = $userSettings.displayNames,
+    showInstance = settings.showInstances.user ||
+      (settings.showInstances.comments && inComment),
+    displayName = settings.displayNames,
     instanceClass = '',
     class: clazz = '',
     children,

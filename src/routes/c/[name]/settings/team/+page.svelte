@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { preventDefault } from 'svelte/legacy';
+  import { preventDefault } from 'svelte/legacy'
 
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import EditableList from '$lib/components/ui/list/EditableList.svelte'
   import { Icon, Plus, Trash } from 'svelte-hero-icons'
   import type { PageData } from './$types.js'
-  import { profile } from '$lib/auth.js'
+  import { profile } from '$lib/auth.svelte.js'
   import { toast } from 'mono-svelte'
   import { client, getClient } from '$lib/lemmy.js'
   import { flip } from 'svelte/animate'
@@ -15,10 +15,10 @@
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
   interface Props {
-    data: PageData;
+    data: PageData
   }
 
-  let { data = $bindable() }: Props = $props();
+  let { data = $bindable() }: Props = $props()
 
   let formData = $state({
     newModerator: '',
@@ -109,7 +109,6 @@
 
 <Header pageHeader>Moderators</Header>
 <EditableList
-  
   on:action={(e) => {
     toast({
       content: `Are you sure you want to remove ${e.detail.name} as a moderator?`,
@@ -158,7 +157,7 @@
     submit
   >
     {#snippet prefix()}
-        <Icon  src={Plus} micro size="16" />
-      {/snippet} Add moderator
+      <Icon src={Plus} micro size="16" />
+    {/snippet} Add moderator
   </Button>
 </form>

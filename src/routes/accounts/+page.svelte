@@ -7,13 +7,13 @@
     moveProfile,
     type Profile,
     profile,
-  } from '$lib/auth.js'
+  } from '$lib/auth.svelte.js'
   import EditableList from '$lib/components/ui/list/EditableList.svelte'
   import { Menu, MenuButton, Modal } from 'mono-svelte'
   import DebugObject from '$lib/components/util/debug/DebugObject.svelte'
   import { DEFAULT_INSTANCE_URL, LINKED_INSTANCE_URL } from '$lib/instance.js'
   import ProfileAvatar from '$lib/lemmy/ProfileAvatar.svelte'
-  import { userSettings } from '$lib/settings.js'
+  import { settings } from '$lib/settings.svelte.js'
   import { Button, TextInput } from 'mono-svelte'
   import {
     ArrowLeftOnRectangle,
@@ -58,21 +58,21 @@
     bind:open={debugging}
   >
     {#snippet title()}
-        <span  class="flex flex-col">
+      <span class="flex flex-col">
         <h1 class="font-bold text-2xl">Debug</h1>
         <span class="text-slate-600 dark:text-zinc-400 text-base font-normal">
           Do NOT share anything from this menu.
         </span>
       </span>
-      {/snippet}
+    {/snippet}
   </DebugObject>
 {/if}
 
 {#if removing.shown && removing.account}
   <Modal bind:open={removing.shown}>
-    {#snippet title()}
-        <span >Removing Account</span>
-      {/snippet}
+    {#snippet customTitle()}
+      <span>Removing Account</span>
+    {/snippet}
     <div class="flex flex-row items-center gap-2">
       <ProfileAvatar profile={removing.account} selected={true} />
 
@@ -120,14 +120,14 @@
       <div class="flex flex-row items-center gap-2">
         <Button href="/accounts/login" size="lg">
           {#snippet prefix()}
-                    <Icon  src={ArrowLeftOnRectangle} size="16" micro />
-                  {/snippet}
+            <Icon src={ArrowLeftOnRectangle} size="16" micro />
+          {/snippet}
           Log in
         </Button>
         <Button href="/signup" size="lg">
           {#snippet prefix()}
-                    <Icon  src={Identification} size="16" micro />
-                  {/snippet}
+            <Icon src={Identification} size="16" micro />
+          {/snippet}
           Sign up
         </Button>
       </div>
@@ -138,7 +138,7 @@
     <Header pageHeader>
       {$t('routes.accounts')}
       {#snippet extended()}
-            <div class="flex" >
+        <div class="flex">
           <div class="flex gap-2 mr-auto">
             <Button
               href="/accounts/login"
@@ -147,40 +147,41 @@
               color="primary"
             >
               {#snippet prefix()}
-                        <Icon  src={ArrowLeftOnRectangle} size="16" mini />
-                      {/snippet}
+                <Icon src={ArrowLeftOnRectangle} size="16" mini />
+              {/snippet}
               {$t('account.login')}
             </Button>
             {#if !LINKED_INSTANCE_URL}
               <Button href="/accounts/login/guest" size="lg">
                 {#snippet prefix()}
-                            <Icon  src={Plus} size="16" micro />
-                          {/snippet}
+                  <Icon src={Plus} size="16" micro />
+                {/snippet}
                 {$t('account.addGuest')}
               </Button>
             {/if}
           </div>
         </div>
-          {/snippet}
+      {/snippet}
     </Header>
-    <FilterTabs items={$profileData.profiles} id={(i) => i.instance} >
+    <FilterTabs items={$profileData.profiles} id={(i) => i.instance}>
       {#snippet children({ items })}
-            <EditableList
+        <EditableList
           on:action={(acc) => {
             removing.account = acc.detail
             removing.shown = !removing.shown
           }}
-          
         >
           {#snippet children({ action })}
-                {#each items as profile, index (profile.id)}
+            {#each items as profile, index (profile.id)}
               <div
                 class="flex flex-row gap-2 items-center py-3"
                 transition:fly={{ duration: 500, y: -12, easing: expoOut }}
                 animate:flip={{ duration: 500, easing: expoOut }}
               >
                 <Button
-                  title={profile.id == $currentProfile?.id ? 'Switch' : 'Current'}
+                  title={profile.id == $currentProfile?.id
+                    ? 'Switch'
+                    : 'Current'}
                   on:click={async () => {
                     if (profile.id != $currentProfile?.id) {
                       switching = profile.id
@@ -189,20 +190,20 @@
                     }
                   }}
                   size="square-md"
-                  color={profile.id == $currentProfile?.id ? 'primary' : 'ghost'}
+                  color={profile.id == $currentProfile?.id
+                    ? 'primary'
+                    : 'ghost'}
                   loading={switching == profile.id}
                   disabled={switching == profile.id}
                   rounding="pill"
                 >
                   {#snippet prefix()}
-                          
-                      {#if profile.id == $currentProfile?.id}
-                        <Icon src={Check} mini size="16" />
-                      {:else}
-                        <Icon src={ArrowsRightLeft} size="16" mini />
-                      {/if}
-                    
-                          {/snippet}
+                    {#if profile.id == $currentProfile?.id}
+                      <Icon src={Check} mini size="16" />
+                    {:else}
+                      <Icon src={ArrowsRightLeft} size="16" mini />
+                    {/if}
+                  {/snippet}
                 </Button>
                 <div class="flex items-center gap-2">
                   <div class="relative group flex-col items-center">
@@ -236,12 +237,12 @@
                 <div class="ml-auto"></div>
                 <Menu placement="bottom-end">
                   {#snippet target()}
-                            <Button size="square-md" >
+                    <Button size="square-md">
                       {#snippet prefix()}
-                                <Icon src={EllipsisHorizontal} mini size="16"  />
-                              {/snippet}
+                        <Icon src={EllipsisHorizontal} mini size="16" />
+                      {/snippet}
                     </Button>
-                          {/snippet}
+                  {/snippet}
                   <div class="px-4 py-2 flex items-center gap-2">
                     <Button
                       size="square-md"
@@ -250,8 +251,8 @@
                       on:click={() => moveProfile(profile.id, true)}
                     >
                       {#snippet prefix()}
-                                    <Icon src={ChevronUp} size="16" mini  />
-                                  {/snippet}
+                        <Icon src={ChevronUp} size="16" mini />
+                      {/snippet}
                     </Button>
                     <Button
                       size="square-md"
@@ -260,8 +261,8 @@
                       on:click={() => moveProfile(profile.id, false)}
                     >
                       {#snippet prefix()}
-                                    <Icon src={ChevronDown} size="16" mini  />
-                                  {/snippet}
+                        <Icon src={ChevronDown} size="16" mini />
+                      {/snippet}
                     </Button>
                   </div>
                   <MenuButton
@@ -269,11 +270,11 @@
                     on:click={() => (profile.color = undefined)}
                   >
                     {#snippet prefix()}
-                                <Icon src={ArrowUturnLeft} size="16" mini  />
-                              {/snippet}
+                      <Icon src={ArrowUturnLeft} size="16" mini />
+                    {/snippet}
                     {$t('account.resetColor')}
                   </MenuButton>
-                  {#if $userSettings.debugInfo}
+                  {#if settings.debugInfo}
                     <MenuButton
                       on:click={() => {
                         debugProfile = profile
@@ -281,8 +282,8 @@
                       }}
                     >
                       {#snippet prefix()}
-                                    <Icon src={BugAnt} size="16" mini  />
-                                  {/snippet}
+                        <Icon src={BugAnt} size="16" mini />
+                      {/snippet}
                       {$t('common.debug')}
                     </MenuButton>
                   {/if}
@@ -292,22 +293,17 @@
                       color="danger-subtle"
                     >
                       {#snippet prefix()}
-                                    <Icon
-                          
-                          src={ArrowRightOnRectangle}
-                          size="16"
-                          mini
-                        />
-                                  {/snippet}
+                        <Icon src={ArrowRightOnRectangle} size="16" mini />
+                      {/snippet}
                       {$t('account.logout')}
                     </MenuButton>
                   {/if}
                 </Menu>
               </div>
             {/each}
-                        {/snippet}
-            </EditableList>
-                {/snippet}
-        </FilterTabs>
+          {/snippet}
+        </EditableList>
+      {/snippet}
+    </FilterTabs>
   </div>
 {/if}

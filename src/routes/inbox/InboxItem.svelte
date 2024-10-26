@@ -2,7 +2,7 @@
   import Comment from '$lib/components/lemmy/comment/Comment.svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import { getClient } from '$lib/lemmy.js'
-  import { notifications, profile } from '$lib/auth.js'
+  import { notifications, profile } from '$lib/auth.svelte.js'
   import {
     ArrowUturnLeft,
     ArrowUturnUp,
@@ -29,10 +29,10 @@
   import Avatar from '$lib/components/ui/Avatar.svelte'
 
   interface Props {
-    item: InboxItem;
+    item: InboxItem
   }
 
-  let { item = $bindable() }: Props = $props();
+  let { item = $bindable() }: Props = $props()
 
   let replying = $state(false)
   let reply = ''
@@ -79,7 +79,7 @@
 
 <Expandable open icon={false}>
   {#snippet title()}
-    <div class="flex flex-row gap-2 items-center w-full" >
+    <div class="flex flex-row gap-2 items-center w-full">
       <Avatar
         url={item.creator.avatar}
         circle={false}
@@ -141,8 +141,8 @@
           class="flex-shrink-0"
         >
           {#snippet prefix()}
-                <Icon src={item.read ? EyeSlash : Eye} size="16" micro  />
-              {/snippet}
+            <Icon src={item.read ? EyeSlash : Eye} size="16" micro />
+          {/snippet}
           {item.read
             ? $t('post.actions.more.markUnread')
             : $t('post.actions.more.markRead')}
@@ -161,7 +161,7 @@
     </div>
   {/snippet}
   {#snippet extended()}
-    <div  class="flex gap-2 w-full md:hidden mt-1">
+    <div class="flex gap-2 w-full md:hidden mt-1">
       <Button
         color={item.read ? 'secondary' : 'primary'}
         {loading}
@@ -174,33 +174,35 @@
         rounding="pill"
       >
         {#snippet prefix()}
-            <Icon src={item.read ? EyeSlash : Eye} size="16" micro  />
-          {/snippet}
+          <Icon src={item.read ? EyeSlash : Eye} size="16" micro />
+        {/snippet}
         {item.read
           ? $t('post.actions.more.markUnread')
           : $t('post.actions.more.markRead')}
       </Button>
       {#if item.type == 'comment_reply' || item.type == 'person_mention'}
-        <Button href="/comment/{item.item.comment.id}" size="sm" rounding="pill">
+        <Button
+          href="/comment/{item.item.comment.id}"
+          size="sm"
+          rounding="pill"
+        >
           {$t('common.jump')}
         </Button>
       {/if}
     </div>
   {/snippet}
   {#snippet content()}
-  
-      {#if item.type == 'comment_reply' || item.type == 'person_mention'}
-        <CommentItem
-          comment={item.item}
-          community={false}
-          view="cozy"
-          meta={false}
-          class="pt-0 pb-0"
-        />
-      {:else}
-        <PrivateMessage message={item.item} meta={false} />
-      {/if}
-    
+    {#if item.type == 'comment_reply' || item.type == 'person_mention'}
+      <CommentItem
+        comment={item.item}
+        community={false}
+        view="cozy"
+        meta={false}
+        class="pt-0 pb-0"
+      />
+    {:else}
+      <PrivateMessage message={item.item} meta={false} />
+    {/if}
   {/snippet}
 </Expandable>
 

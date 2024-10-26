@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
+  import { run } from 'svelte/legacy'
 
   import { navigating, page } from '$app/stores'
   import CommunityCard from '$lib/components/lemmy/community/CommunityCard.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
-  import { fullCommunityName, searchParam } from '$lib/util.js'
+  import { fullCommunityName, searchParam } from '$lib/util.svelte.js'
   import { onDestroy, onMount } from 'svelte'
   import { setSessionStorage } from '$lib/session.js'
   import PostFeed from '$lib/components/lemmy/post/feed/PostFeed.svelte'
@@ -27,18 +27,13 @@
   } from 'svelte-hero-icons'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { t } from '$lib/translations.js'
-  import { userSettings } from '$lib/settings.js'
+  import { settings } from '$lib/settings.svelte.js'
   import { site } from '$lib/lemmy.js'
   import { resumables } from '$lib/lemmy/item'
   import CommunityHeader from '$lib/components/lemmy/community/CommunityHeader.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
-  let { data = $bindable() } = $props();
-
-  let community;
-  run(() => {
-    community = data.community.community_view
-  });
+  let { data = $bindable() } = $props()
 
   let sidebar: boolean = $state(false)
 
@@ -46,14 +41,14 @@
     if (browser)
       setSessionStorage(
         'lastSeenCommunity',
-        data.community.community_view.community
+        data.community.community_view.community,
       )
 
     resumables.add({
-      name: community.community.title,
+      name: data.community.community_view.community.title,
       type: 'community',
       url: $page.url.toString(),
-      avatar: community.community.icon,
+      avatar: data.community.community_view.community.icon,
     })
   })
 
@@ -68,12 +63,12 @@
 
 {#if sidebar}
   <Modal bind:open={sidebar}>
-    {#snippet title()}
-        <span >About</span>
-      {/snippet}
+    {#snippet customTitle()}
+      <span>About</span>
+    {/snippet}
     <div>
       <CommunityCard
-        bind:community_view={community}
+        bind:community_view={data.community.community_view}
         moderators={data.community.moderators}
       />
     </div>
@@ -83,18 +78,18 @@
 <div class="flex flex-col gap-4 max-w-full w-full min-w-0">
   <Header pageHeader>
     <CommunityHeader
-      bind:community={community.community}
-      bind:subscribed={community.subscribed}
-      bind:blocked={community.blocked}
+      bind:community={data.community.community_view.community}
+      bind:subscribed={data.community.community_view.subscribed}
+      blocked={data.community.community_view.blocked}
       moderators={data.community.moderators}
-      counts={community.counts}
+      counts={data.community.community_view.counts}
       class="w-full relative"
     />
     {#snippet extended()}
-        <Sort selected={data.sort}  />
-      {/snippet}
+      <Sort selected={data.sort} />
+    {/snippet}
   </Header>
-  {#if community.blocked}
+  {#if data.community.community_view.blocked}
     <Placeholder
       icon={XMark}
       title="Blocked"
@@ -102,8 +97,8 @@
     >
       <Button href="/profile/blocks">
         {#snippet suffix()}
-                <Icon src={ArrowRight} size="16" mini  />
-              {/snippet}
+          <Icon src={ArrowRight} size="16" mini />
+        {/snippet}
         Blocked Communities
       </Button>
     </Placeholder>
@@ -118,7 +113,7 @@
   {/if}
 
   <svelte:element
-    this={$userSettings.infiniteScroll ? 'noscript' : 'div'}
+    this={settings.infiniteScroll ? 'noscript' : 'div'}
     class="mt-auto"
   >
     <Pageination

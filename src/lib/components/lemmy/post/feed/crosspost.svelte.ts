@@ -1,4 +1,4 @@
-import { userSettings } from '$lib/settings.svelte'
+import { settings } from '$lib/settings.svelte'
 import type { PostView } from 'lemmy-js-client'
 import { get } from 'svelte/store'
 
@@ -29,8 +29,8 @@ export const combineCrossposts = (
   posts?.forEach((post) => {
     if (
       !post ||
-      (get(userSettings).hidePosts.deleted && post.post.deleted) ||
-      (get(userSettings).hidePosts.removed && post.post.removed)
+      (settings.hidePosts.deleted && post.post.deleted) ||
+      (settings.hidePosts.removed && post.post.removed)
     )
       return
     if (!post?.post?.url) {

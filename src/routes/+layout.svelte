@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
+  import { run } from 'svelte/legacy'
 
   import Navbar from '$lib/components/ui/navbar/Navbar.svelte'
   import '../style/app.css'
@@ -15,7 +15,7 @@
     theme,
     themeVars,
   } from '$lib/ui/colors.js'
-  import { userSettings } from '$lib/settings.js'
+  import { settings } from '$lib/settings.svelte.js'
   import {
     Button,
     ModalContainer,
@@ -26,7 +26,7 @@
   import { onMount } from 'svelte'
   import { browser } from '$app/environment'
   import { Forward, Icon } from 'svelte-hero-icons'
-  import { routes } from '$lib/util.js'
+  import { routes } from '$lib/util.svelte.js'
   import Shell from '$lib/components/ui/layout/Shell.svelte'
   import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
   import { site } from '$lib/lemmy.js'
@@ -35,10 +35,10 @@
   import { locale } from '$lib/translations'
   import { getDefaultColors } from '$lib/ui/presets'
   interface Props {
-    children?: import('svelte').Snippet;
+    children?: import('svelte').Snippet
   }
 
-  let { children }: Props = $props();
+  let { children }: Props = $props()
 
   nProgress.configure({
     minimum: 0.4,
@@ -62,7 +62,7 @@
         nProgress.done()
       }
     }
-  });
+  })
 
   onMount(() => {
     if (browser) {
@@ -70,31 +70,33 @@
         history.replaceState(
           null,
           '',
-          window.location.toString().replace('#main', '')
+          window.location.toString().replace('#main', ''),
         )
       }
       document.body.querySelector('.loader')?.classList.add('hidden')
       themeVars.subscribe((vars) => {
         document.body.setAttribute('style', vars)
       })
-      userSettings.subscribe((settings) => {
-        document.body.classList.remove(
-          'font-display',
-          'font-inter',
-          'font-sans',
-          'font-system',
-          'font-nunito'
-        )
-        document.body.classList.add(
-          settings.font == 'inter'
-            ? 'font-inter'
-            : $userSettings.font == 'system'
-              ? 'font-system'
-              : $userSettings.font == 'satoshi/nunito'
-                ? 'font-nunito'
-                : 'font-sans'
-        )
-      })
+      // $effect(() => {
+      //   if (settings) {
+      //     document.body.classList.remove(
+      //       'font-display',
+      //       'font-inter',
+      //       'font-sans',
+      //       'font-system',
+      //       'font-nunito',
+      //     )
+      //     document.body.classList.add(
+      //       settings.font == 'inter'
+      //         ? 'font-inter'
+      //         : settings.font == 'system'
+      //           ? 'font-system'
+      //           : settings.font == 'satoshi/nunito'
+      //             ? 'font-nunito'
+      //             : 'font-sans',
+      //     )
+      //   }
+      // })
     }
   })
 </script>
@@ -106,8 +108,8 @@
       name="theme-color"
       content={rgbToHex(
         $colorScheme && inDarkColorScheme()
-          ? $theme.colors.zinc?.[925] ?? getDefaultColors().zinc[925]
-          : $theme.colors.slate?.[25] ?? getDefaultColors().slate[25]
+          ? ($theme.colors.zinc?.[925] ?? getDefaultColors().zinc[925])
+          : ($theme.colors.slate?.[25] ?? getDefaultColors().slate[25]),
       )}
     />
     {#if LINKED_INSTANCE_URL}
@@ -124,12 +126,12 @@
   href="#main"
 >
   {#snippet prefix()}
-    <Icon src={Forward} mini size="16"  />
+    <Icon src={Forward} mini size="16" />
   {/snippet}
   Skip Navigation
 </Button>
 <Shell
-  dir={$locale == 'he' && $userSettings.useRtl ? 'rtl' : 'ltr'}
+  dir={$locale == 'he' && settings.useRtl ? 'rtl' : 'ltr'}
   class="min-h-screen "
   route={$page.route}
 >
@@ -139,20 +141,10 @@
   <ModalContainer />
 
   {#snippet sidebar({ style: s, class: c })}
-    <Sidebar
-      route={$page.route.id ?? ''}
-      
-      
-      
-      class={c}
-      style={s}
-    />
+    <Sidebar class={c} style={s} />
   {/snippet}
   {#snippet main({ style: s, class: c })}
     <main
-      
-      
-      
       class="p-4 sm:p-6 min-w-0 w-full flex flex-col h-full relative {c}"
       style={s}
       id="main"
@@ -161,15 +153,13 @@
     </main>
   {/snippet}
   {#snippet navbar({ style: s, class: c })}
-    <Navbar    class={c} style={s} />
+    <Navbar class={c} style={s} />
   {/snippet}
   {#snippet suffix({ class: c, style: s })}
-    <div    class={c} style={s}>
+    <div class={c} style={s}>
       {#if $page.data.slots?.sidebar?.component}
         {@const SvelteComponent = $page.data.slots.sidebar.component}
-      <SvelteComponent
-          {...$page.data.slots.sidebar.props}
-        />
+        <SvelteComponent {...$page.data.slots.sidebar.props} />
       {:else if $site}
         <SiteCard
           site={$site.site_view}

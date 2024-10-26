@@ -1,13 +1,13 @@
 <script lang="ts">
   import Post from '$lib/components/lemmy/post/Post.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import { userSettings } from '$lib/settings.js'
+  import { settings } from '$lib/settings.svelte.js'
   import type { PostView } from 'lemmy-js-client'
   import { Badge, Button } from 'mono-svelte'
   import { ArchiveBox, Icon, Minus, Plus } from 'svelte-hero-icons'
   import { expoOut } from 'svelte/easing'
   import { fly, slide } from 'svelte/transition'
-  import { combineCrossposts } from './crosspost'
+  import { combineCrossposts } from './crosspost.svelte'
 
   interface Props {
     posts: PostView[]
@@ -32,7 +32,7 @@
 </script>
 
 <ul
-  class="flex flex-col list-none {$userSettings.view == 'card'
+  class="flex flex-col list-none {settings.view == 'card'
     ? 'gap-3 md:gap-4'
     : 'divide-y'} divide-slate-200 dark:divide-zinc-800"
 >
@@ -53,14 +53,14 @@
     </div>
   {:else}
     {#each combinedPosts as post, index}
-      {#if !($userSettings.hidePosts.deleted && post.post.deleted) && !($userSettings.hidePosts.removed && post.post.removed)}
+      {#if !(settings.hidePosts.deleted && post.post.deleted) && !(settings.hidePosts.removed && post.post.removed)}
         <li class="relative post-container">
           <Post
             hideCommunity={community}
             view={(post.post.featured_community || post.post.featured_local) &&
-            $userSettings.posts.compactFeatured
+            settings.posts.compactFeatured
               ? 'compact'
-              : $userSettings.view}
+              : settings.view}
             {post}
             class="transition-all duration-250"
             on:hide={() => {
@@ -102,14 +102,14 @@
             >
               <span
                 class="text-sm flex flex-row gap-2 items-center"
-                class:my-4={$userSettings.view == 'card'}
+                class:my-4={settings.view == 'card'}
               >
                 Crossposts <hr class="w-full dark:border-zinc-800" />
                 {post.crossposts.length}
               </span>
               {#each post.crossposts as crosspost, index}
                 <div class="w-full transition-all mb-4">
-                  <Post post={crosspost} view={$userSettings.view} />
+                  <Post post={crosspost} view={settings.view} />
                 </div>
               {/each}
             </div>

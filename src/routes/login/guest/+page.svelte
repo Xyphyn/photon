@@ -1,23 +1,23 @@
 <script lang="ts">
-  import { preventDefault } from 'svelte/legacy';
+  import { preventDefault } from 'svelte/legacy'
 
   import { site, validateInstance } from '$lib/lemmy.js'
   import { Button, Note, TextInput, toast } from 'mono-svelte'
   import { MINIMUM_VERSION } from '$lib/version'
   import { mayBeIncompatible } from '$lib/lemmy'
-  import { DOMAIN_REGEX_FORMS } from '$lib/util'
-  import { profile, profileData, type Profile } from '$lib/auth'
+  import { DOMAIN_REGEX_FORMS } from '$lib/util.svelte'
+  import { profile, profileData, type Profile } from '$lib/auth.svelte'
   import { LINKED_INSTANCE_URL } from '$lib/instance'
   import { goto } from '$app/navigation'
   import { t } from '$lib/translations'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
   interface Props {
-    ref?: string;
-    children?: import('svelte').Snippet;
+    ref?: string
+    children?: import('svelte').Snippet
   }
 
-  let { ref = '/', children }: Props = $props();
+  let { ref = '/', children }: Props = $props()
 
   let form = $state({
     instance: '',

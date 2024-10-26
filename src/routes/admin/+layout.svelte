@@ -1,5 +1,5 @@
 <script>
-  import { notifications } from '$lib/auth'
+  import { notifications } from '$lib/auth.svelte'
   import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
   import { contentPadding } from '$lib/components/ui/layout/Shell.svelte'
   import { t } from '$lib/translations'
@@ -10,7 +10,7 @@
    */
 
   /** @type {Props} */
-  let { children } = $props();
+  let { children } = $props()
 </script>
 
 {#if $notifications.applications > 0}

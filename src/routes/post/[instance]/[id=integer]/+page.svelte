@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
+  import { run } from 'svelte/legacy'
 
-  import { buildCommentsTree } from '$lib/components/lemmy/comment/comments.js'
+  import { buildCommentsTree } from '$lib/components/lemmy/comment/comments.svelte.js'
   import { isImage } from '$lib/ui/image.js'
   import { client, getClient } from '$lib/lemmy.js'
   import CommentForm from '$lib/components/lemmy/comment/CommentForm.svelte'
@@ -28,13 +28,13 @@
   } from '$lib/components/lemmy/post/PostMeta.svelte'
   import { Select, removeToast, toast } from 'mono-svelte'
   import type { CommentSortType } from 'lemmy-js-client'
-  import { profile } from '$lib/auth.js'
+  import { profile } from '$lib/auth.svelte.js'
   import { instance } from '$lib/instance.js'
   import { afterNavigate, goto } from '$app/navigation'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import { Button } from 'mono-svelte'
   import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
-  import { userSettings } from '$lib/settings.js'
+  import { settings } from '$lib/settings.svelte.js'
   import { publishedToDate } from '$lib/components/util/date.js'
   import PostMedia from '$lib/components/lemmy/post/media/PostMedia.svelte'
   import { mediaType } from '$lib/components/lemmy/post/helpers.js'
@@ -48,7 +48,7 @@
   import CommentListVirtualizer from '$lib/components/lemmy/comment/CommentListVirtualizer.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
-  let { data = $bindable() } = $props();
+  let { data = $bindable() } = $props()
 
   let type = $derived(mediaType(data.post.post_view.post.url, 'cozy'))
 
@@ -100,15 +100,15 @@
 
   run(() => {
     if (data.post) updateActions()
-  });
+  })
 
   onMount(async () => {
     if (
-      !(data.post.post_view.read && $userSettings.markPostsAsRead) &&
+      !(data.post.post_view.read && settings.markPostsAsRead) &&
       $profile?.jwt
     ) {
       getClient().markPostAsRead({
-        read: $userSettings.markPostsAsRead,
+        read: settings.markPostsAsRead,
         post_ids: [data.post.post_view.post.id],
         // @ts-ignore
         post_id: data.post.post_view.post.id,
@@ -142,7 +142,7 @@
       if (res.post) {
         removeToast(id)
         goto(`/post/${$instance}/${res.post.post.id}`, {}).then(() =>
-          removeToast(id)
+          removeToast(id),
         )
       }
     } catch (err) {
@@ -171,8 +171,9 @@
 
   let commenting = $state(false)
 
-  let remoteView =
-    $derived($page.params.instance?.toLowerCase() != $instance.toLowerCase())
+  let remoteView = $derived(
+    $page.params.instance?.toLowerCase() != $instance.toLowerCase(),
+  )
 </script>
 
 <svelte:head>
@@ -220,14 +221,13 @@
     >
       <Popover openOnHover>
         {#snippet target()}
-                <Icon
+          <Icon
             src={InformationCircle}
             size="24"
             solid
-            
             class="bg-slate-200 dark:bg-zinc-700 p-0.5 rounded-full text-primary-900 dark:text-primary-100"
           />
-              {/snippet}
+        {/snippet}
         {$t('routes.post.instanceWarning')}
       </Popover>
       <span class="text-primary-900 dark:text-primary-100 font-bold">
@@ -274,8 +274,8 @@
       />
       <Button on:click={() => history.back()} size="square-md">
         {#snippet prefix()}
-                <Icon src={ArrowLeft} micro size="16"  />
-              {/snippet}
+          <Icon src={ArrowLeft} micro size="16" />
+        {/snippet}
       </Button>
     </div>
     <h1 class="font-bold text-xl font-display leading-5">
@@ -305,7 +305,6 @@
           content: 'The post was edited successfully.',
           type: 'success',
         })}
-      {type}
     />
   </div>
   {#if data.post.cross_posts?.length > 0}
@@ -314,14 +313,11 @@
       open={data.post.cross_posts?.length <= 3}
     >
       {#snippet title()}
-            <div
-          
-          class="inline-block w-full text-left text-base font-normal"
-        >
+        <div class="inline-block w-full text-left text-base font-normal">
           <span class="font-bold">{data.post.cross_posts.length}</span>
           {$t('routes.post.crosspostCount')}
         </div>
-          {/snippet}
+      {/snippet}
       <div
         class="!divide-y divide-slate-200 dark:divide-zinc-800 flex flex-col"
       >
@@ -391,7 +387,7 @@
           </Button>
 
           {#snippet action()}
-                    <div class="gap-2 flex items-center" >
+            <div class="gap-2 flex items-center">
               <Select
                 size="md"
                 bind:value={commentSort}
@@ -407,11 +403,11 @@
               </Select>
               <Button size="square-md" on:click={reloadComments}>
                 {#snippet prefix()}
-                            <Icon src={ArrowPath} size="16" mini  />
-                          {/snippet}
+                  <Icon src={ArrowPath} size="16" mini />
+                {/snippet}
               </Button>
             </div>
-                  {/snippet}
+          {/snippet}
         </EndPlaceholder>
       {:else}
         <CommentForm
@@ -453,8 +449,8 @@
         </Select>
         <Button size="square-md" on:click={reloadComments}>
           {#snippet prefix()}
-                    <Icon src={ArrowPath} size="16" mini  />
-                  {/snippet}
+            <Icon src={ArrowPath} size="16" mini />
+          {/snippet}
         </Button>
       </div>
     {/if}
@@ -465,9 +461,9 @@
         undefined,
         (c) =>
           !(
-            ($userSettings.hidePosts.deleted && c.comment.deleted) ||
-            ($userSettings.hidePosts.removed && c.comment.removed)
-          )
+            (settings.hidePosts.deleted && c.comment.deleted) ||
+            (settings.hidePosts.removed && c.comment.removed)
+          ),
       )}
       scrollTo={data.thread.focus}
     />
@@ -487,17 +483,16 @@
       {$t('routes.post.commentCount')}
 
       {#snippet action()}
-            <Button
+        <Button
           color="tertiary"
           on:click={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          
         >
           {#snippet prefix()}
-                <Icon src={ChevronDoubleUp} mini size="16"  />
-              {/snippet}
+            <Icon src={ChevronDoubleUp} mini size="16" />
+          {/snippet}
           {$t('routes.post.scrollToTop')}
         </Button>
-          {/snippet}
+      {/snippet}
     </EndPlaceholder>
   {/if}
 </section>

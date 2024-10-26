@@ -7,16 +7,15 @@
     type IconSource,
   } from 'svelte-hero-icons'
   import Avatar from '../../Avatar.svelte'
-  import type { Action } from './actions'
+  import type { Action } from './actions.svelte'
 
   interface Props {
-    action: Action;
-    class?: string;
-    children?: import('svelte').Snippet;
+    action: Action
+    class?: string
+    children?: import('svelte').Snippet
   }
 
-  let { action, class: clazz = '', children }: Props = $props();
-  
+  let { action, class: clazz = '', children }: Props = $props()
 </script>
 
 <Button

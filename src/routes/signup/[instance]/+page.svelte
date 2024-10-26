@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { run, preventDefault } from 'svelte/legacy';
+  import { run, preventDefault } from 'svelte/legacy'
 
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
-  import { setUser } from '$lib/auth.js'
+  import { setUser } from '$lib/auth.svelte.js'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
@@ -25,7 +25,7 @@
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { t } from '$lib/translations.js'
 
-  let { data } = $props();
+  let { data } = $props()
 
   const instance = $page.params.instance
 
@@ -35,7 +35,7 @@
 
   run(() => {
     if (email == '') email = undefined
-  });
+  })
 
   let username = $state(''),
     password = $state(''),
@@ -50,9 +50,9 @@
   const getCaptcha = async () =>
     (captcha = await getClient(instance, fetch).getCaptcha())
 
-  let captchaAudio = $derived(captcha?.ok?.wav
-    ? `data:audio/wav;base64,${captcha.ok.wav}`
-    : '')
+  let captchaAudio = $derived(
+    captcha?.ok?.wav ? `data:audio/wav;base64,${captcha.ok.wav}` : '',
+  )
 
   async function submit() {
     submitting = true

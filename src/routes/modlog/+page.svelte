@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
+  import { run } from 'svelte/legacy'
 
   import Pageination from '$lib/components/ui/Pageination.svelte'
-  import { searchParam } from '$lib/util.js'
+  import { searchParam } from '$lib/util.svelte.js'
   import { page } from '$app/stores'
   import ObjectAutocomplete from '$lib/components/lemmy/ObjectAutocomplete.svelte'
-  import { profile } from '$lib/auth.js'
-  import { userSettings } from '$lib/settings.js'
+  import { profile } from '$lib/auth.svelte.js'
+  import { settings } from '$lib/settings.svelte.js'
   import ModlogItemCard from './item/ModlogItemCard.svelte'
   import ModlogItemTable from './item/ModlogItemTable.svelte'
   import { Button, Select } from 'mono-svelte'
@@ -22,18 +22,20 @@
   import { isAdmin } from '$lib/components/lemmy/moderation/moderation.js'
   import { browser } from '$app/environment'
 
-  let { data = $bindable() } = $props();
+  let { data = $bindable() } = $props()
 
-  let view = $state(`${
-    $userSettings.modlogCardView ?? browser
-      ? !window.matchMedia('(min-width: 1600px)').matches
-      : false
-  }`)
+  let view = $state(
+    `${
+      (settings.modlogCardView ?? browser)
+        ? !window.matchMedia('(min-width: 1600px)').matches
+        : false
+    }`,
+  )
 
   run(() => {
-    $userSettings.modlogCardView =
+    settings.modlogCardView =
       view == 'true' ? true : view == 'false' ? false : undefined
-  });
+  })
 </script>
 
 <svelte:head>
@@ -49,11 +51,11 @@
       class="w-48"
     >
       {#snippet label()}
-            <span  class="flex gap-1 items-center">
+        <span class="flex gap-1 items-center">
           <Icon src={Bars3BottomRight} size="15" mini />
           Type
         </span>
-          {/snippet}
+      {/snippet}
       <option value="All">All</option>
       <option value="ModRemovePost">Remove Post</option>
       <option value="ModLockPost">Lock Post</option>
@@ -74,11 +76,11 @@
 
     <Select bind:value={view} class="w-36">
       {#snippet label()}
-            <span  class="flex gap-1 items-center">
+        <span class="flex gap-1 items-center">
           <Icon src={ViewColumns} size="15" mini />
           View
         </span>
-          {/snippet}
+      {/snippet}
       <option value="false">Table</option>
       <option value="true">Cards</option>
       <option value="undefined">Default</option>
@@ -101,7 +103,7 @@
           'page',
           'community',
           'user',
-          'mod_id'
+          'mod_id',
         )}
     />
     <ObjectAutocomplete
@@ -117,7 +119,7 @@
           $page.url,
           'community',
           e.detail?.id.toString() ?? '',
-          'page'
+          'page',
         )}
     />
     <UserAutocomplete
@@ -129,7 +131,7 @@
       class="flex-1"
       label="User"
       q={$page.url.searchParams.get('user')
-        ? data.filters.user ?? 'Selected'
+        ? (data.filters.user ?? 'Selected')
         : ''}
       on:select={(e) =>
         searchParam($page.url, 'user', e.detail?.id.toString() ?? '', 'page')}
@@ -143,14 +145,14 @@
         class="flex-1"
         label="Moderator"
         q={$page.url.searchParams.get('mod_id')
-          ? data.filters.moderator ?? 'Selected'
+          ? (data.filters.moderator ?? 'Selected')
           : ''}
         on:select={(e) =>
           searchParam(
             $page.url,
             'mod_id',
             e.detail?.id.toString() ?? '',
-            'page'
+            'page',
           )}
       />
     {/if}
@@ -163,7 +165,7 @@
           'user',
           'moderator',
           'community',
-          'instance'
+          'instance',
         )
       }}
       size="square-lg"
@@ -174,7 +176,7 @@
     </Button>
   </div>
   {#if data.modlog && data.modlog.length > 0}
-    {#if $userSettings.modlogCardView ?? !window.matchMedia('(min-width: 1600px)').matches}
+    {#if settings.modlogCardView ?? !window.matchMedia('(min-width: 1600px)').matches}
       <div class="flex flex-col gap-4">
         {#each data.modlog as modlog}
           <ModlogItemCard item={modlog} />

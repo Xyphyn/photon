@@ -1,13 +1,13 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
+  import { run } from 'svelte/legacy'
 
   import type { CommentView, PostView } from 'lemmy-js-client'
   import Post from '$lib/components/lemmy/post/Post.svelte'
   import { fly } from 'svelte/transition'
   import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
-  import { userSettings } from '$lib/settings.js'
+  import { settings } from '$lib/settings.svelte.js'
   import Pageination from '$lib/components/ui/Pageination.svelte'
-  import { searchParam } from '$lib/util.js'
+  import { searchParam } from '$lib/util.svelte.js'
   import { page } from '$app/stores'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { Bookmark } from 'svelte-hero-icons'
@@ -24,13 +24,13 @@
     AdjustmentsHorizontal,
   } from 'svelte-hero-icons'
 
-  let { data } = $props();
+  let { data } = $props()
 
   // svelte being stupid
-  let type;
+  let type
   run(() => {
     type = data.type as any
-  });
+  })
 
   const isComment = (item: CommentView | PostView): item is CommentView =>
     'comment' in item
@@ -44,17 +44,17 @@
   {$t('routes.saved')}
 
   {#snippet extended()}
-    <div  class="flex items-center">
+    <div class="flex items-center">
       <Select
         bind:value={type}
         on:change={() => searchParam($page.url, 'type', type, 'page')}
       >
         {#snippet label()}
-            <div class="flex items-center gap-0.5" >
+          <div class="flex items-center gap-0.5">
             <Icon src={AdjustmentsHorizontal} size="15" mini />
             {$t('filter.filter')}
           </div>
-          {/snippet}
+        {/snippet}
         <option value="all">
           <Icon src={Bars3} micro size="15" />
           {$t('content.all')}
@@ -73,8 +73,8 @@
 </Header>
 <div
   class="flex flex-col list-none my-4 divide-slate-200 dark:divide-zinc-800"
-  class:gap-4={$userSettings.view == 'card'}
-  class:!divide-y={$userSettings.view != 'card'}
+  class:gap-4={settings.view == 'card'}
+  class:!divide-y={settings.view != 'card'}
 >
   {#if !data.data || (data.data?.length ?? 0) == 0}
     <Placeholder

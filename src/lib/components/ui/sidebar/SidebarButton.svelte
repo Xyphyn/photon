@@ -2,7 +2,7 @@
   import { run } from 'svelte/legacy'
 
   import { page } from '$app/stores'
-  import { userSettings } from '$lib/settings.js'
+  import { settings } from '$lib/settings.svelte.js'
   import { Button } from 'mono-svelte'
   import { Icon, type IconSource } from 'svelte-hero-icons'
 

@@ -39,11 +39,11 @@
     report,
   } from '$lib/components/lemmy/moderation/moderation.js'
   import ModerationMenu from '$lib/components/lemmy/moderation/ModerationMenu.svelte'
-  import { profile } from '$lib/auth.js'
+  import { profile } from '$lib/auth.svelte.js'
   import { deleteItem, markAsRead, save } from '$lib/lemmy/contentview.js'
   import { setSessionStorage } from '$lib/session.js'
   import { goto } from '$app/navigation'
-  import { userSettings, type View } from '$lib/settings.js'
+  import { settings, type View } from '$lib/settings.svelte.js'
   import {
     Button,
     Menu,
@@ -59,7 +59,7 @@
   import { hidePost, postLink } from './helpers'
   import { feature } from '$lib/version'
   import Switch from '$lib/components/input/Switch.svelte'
-  import { instanceId, instanceToURL } from '$lib/util'
+  import { instanceId, instanceToURL } from '$lib/util.svelte'
   import { publishedToDate } from '$lib/components/util/date'
   import TextProps from '$lib/components/ui/text/TextProps.svelte'
   import { communityLink, userLink } from '$lib/lemmy/generic'
@@ -129,15 +129,15 @@
 
 <footer
   class="flex flex-row gap-2 items-center flex-shrink-0 {buttonHeight}"
-  class:flex-row-reverse={$userSettings.posts.reverseActions}
+  class:flex-row-reverse={settings.posts.reverseActions}
   {style}
 >
   <PostVote
     post={post.post}
-    bind:vote={post.my_vote}
-    bind:score={post.counts.score}
-    bind:upvotes={post.counts.upvotes}
-    bind:downvotes={post.counts.downvotes}
+    vote={post.my_vote}
+    score={post.counts.score}
+    upvotes={post.counts.upvotes}
+    downvotes={post.counts.downvotes}
     showCounts={$profile?.user?.local_user_view?.local_user?.show_scores ??
       true}
   />
@@ -148,7 +148,7 @@
     class="!text-inherit h-full px-3 relative"
     color="ghost"
     rounding="pill"
-    target={$userSettings.openLinksInNewTab ? '_blank' : ''}
+    target={settings.openLinksInNewTab ? '_blank' : ''}
     title={$t('post.actions.comments')}
     animations={{ scale: true, large: false }}
   >
@@ -163,7 +163,7 @@
   </Button>
   <div class="flex-1"></div>
 
-  {#if $userSettings.debugInfo}
+  {#if settings.debugInfo}
     {#if debug}
       {#await import('$lib/components/util/debug/DebugObject.svelte') then { default: DebugObject }}
         <DebugObject object={post} bind:open={debug} />
@@ -378,7 +378,7 @@
         </div>
       {/if}
     </MenuButton>
-    {#if post.post.body && $userSettings.translator}
+    {#if post.post.body && settings.translator}
       <MenuButton
         on:click={() => {
           // @ts-ignore
@@ -397,7 +397,7 @@
         on:click={() => {
           setSessionStorage('postDraft', {
             body: `${
-              $userSettings.crosspostOriginalLink
+              settings.crosspostOriginalLink
                 ? `cross-posted from: ${post.post.ap_id}`
                 : ``
             }\n${

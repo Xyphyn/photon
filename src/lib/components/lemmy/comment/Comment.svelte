@@ -13,7 +13,7 @@
     PlusCircle,
     MinusCircle,
   } from 'svelte-hero-icons'
-  import type { CommentNodeI } from './comments'
+  import type { CommentNodeI } from './comments.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import CommentForm from './CommentForm.svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
@@ -21,7 +21,7 @@
   import CommentActions from '$lib/components/lemmy/comment/CommentActions.svelte'
   import { getClient } from '$lib/lemmy.js'
   import { Disclosure, toast } from 'mono-svelte'
-  import { profile } from '$lib/auth.js'
+  import { profile } from '$lib/auth.svelte.js'
   import { Button, Modal } from 'mono-svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
   import ShieldIcon from '../moderation/ShieldIcon.svelte'
@@ -110,7 +110,7 @@
     <form onsubmit={preventDefault(save)} class="contents">
       <CommentForm
         postId={node.comment_view.comment.id}
-        bind:value={newComment}
+        value={newComment}
         actions={false}
         preview={true}
         on:confirm={save}
@@ -235,7 +235,7 @@
         </div>
         {#if actions}
           <CommentActions
-            bind:comment={node.comment_view}
+            comment={node.comment_view}
             bind:replying
             on:edit={() => (editing = true)}
             disabled={node.comment_view.banned_from_community ||
@@ -259,7 +259,6 @@
                     children: [],
                     comment_view: e.detail.comment_view,
                     depth: node.depth + 1,
-                    ui: {},
                   },
                   ...node.children,
                 ]

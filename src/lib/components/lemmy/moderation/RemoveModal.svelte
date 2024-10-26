@@ -7,13 +7,13 @@
   import { getClient } from '$lib/lemmy.js'
   import { isCommentView, isPostView } from '$lib/lemmy/item.js'
   import type { CommentView, PostView } from 'lemmy-js-client'
-  import { profile } from '$lib/auth.js'
+  import { profile } from '$lib/auth.svelte.js'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { Fire, Icon, Trash } from 'svelte-hero-icons'
   import MultiSelect from '$lib/components/input/Switch.svelte'
   import { removalTemplate } from '$lib/components/lemmy/moderation/moderation.js'
-  import { userSettings } from '$lib/settings.js'
-  import { fullCommunityName } from '$lib/util.js'
+  import { settings } from '$lib/settings.svelte.js'
+  import { fullCommunityName } from '$lib/util.svelte.js'
   import { amMod, isAdmin } from './moderation'
   import { Button, Checkbox, Modal } from 'mono-svelte'
   import { t } from '$lib/translations'
@@ -34,7 +34,7 @@
   let commentReason: boolean = $state(false)
   let privateMessage: boolean = $state(false)
   let loading = $state(false)
-  let preset = $state($userSettings.moderation.presets[0]?.content ?? '')
+  let preset = $state(settings.moderation.presets[0]?.content ?? '')
 
   let removed = $derived(
     item
@@ -231,7 +231,7 @@
               <div class="flex justify-between items-end mb-1">
                 {$t('comment.reply')}
                 <Select bind:value={preset} placeholder="No preset">
-                  {#each $userSettings.moderation.presets as preset}
+                  {#each settings.moderation.presets as preset}
                     <option value={preset.content}>
                       {preset.title}
                     </option>

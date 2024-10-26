@@ -92,8 +92,6 @@
 
   import SvelteMarkdown from 'svelte-markdown'
 
-  options.inline = inline
-
   interface Props {
     source?: string
     inline?: boolean
@@ -110,10 +108,9 @@
     class: clazz = '',
   }: Props = $props()
 
-  let tokens
-  run(() => {
-    tokens = marked.lexer(source)
-  })
+  options.inline = inline
+
+  let tokens = $derived.by(() => marked.lexer(source))
 </script>
 
 <div
@@ -123,7 +120,7 @@
   {style}
 >
   <SvelteMarkdown
-    bind:source={tokens}
+    source={tokens}
     {renderers}
     {options}
     isInline={inline || undefined}

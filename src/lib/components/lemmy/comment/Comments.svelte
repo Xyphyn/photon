@@ -1,22 +1,15 @@
 <script lang="ts">
   import Comments from './Comments.svelte'
   import Comment from './Comment.svelte'
-  import { buildCommentsTree, type CommentNodeI } from './comments'
+  import { buildCommentsTree, type CommentNodeI } from './comments.svelte'
   import { page } from '$app/stores'
   import { onMount, setContext } from 'svelte'
-  import {
-    ChevronDoubleDown,
-    ChevronDown,
-    Icon,
-    Plus,
-    PlusCircle,
-    ArrowDownCircle,
-  } from 'svelte-hero-icons'
+  import { Icon, ArrowDownCircle } from 'svelte-hero-icons'
   import { getClient } from '$lib/lemmy.js'
   import type { CommentView, Post } from 'lemmy-js-client'
   import { fly } from 'svelte/transition'
   import { toast } from 'mono-svelte'
-  import { profile } from '$lib/auth.js'
+  import { profile } from '$lib/auth.svelte.js'
   import { Button } from 'mono-svelte'
   import { afterNavigate, goto } from '$app/navigation'
   import { backOut, expoOut } from 'svelte/easing'
@@ -121,8 +114,7 @@
   {#each nodes as node, index (node.comment_view.comment.id)}
     <Comment
       postId={post.id}
-      bind:node={nodes[index]}
-      bind:open={node.ui.open}
+      node={nodes[index]}
       op={post.creator_id == node.comment_view.creator.id}
       contentClass="pl-3 {node.children.length > 0 ||
       node.comment_view.counts.child_count > 0
@@ -130,7 +122,7 @@
         : ''} ml-3 border-slate-200 dark:border-zinc-800"
     >
       {#if node.children?.length > 0}
-        <Comments {post} bind:nodes={nodes[index].children} isParent={false} />
+        <Comments {post} nodes={nodes[index].children} isParent={false} />
       {/if}
       {#if node.comment_view.counts.child_count > 0 && node.children.length == 0}
         <svelte:element

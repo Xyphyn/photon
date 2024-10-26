@@ -1,15 +1,15 @@
 <script lang="ts">
   import { getClient } from '$lib/lemmy.js'
   import type { CommunityView, SubscribedType } from 'lemmy-js-client'
-  import { profile } from '$lib/auth.js'
+  import { profile } from '$lib/auth.svelte.js'
   import { toast } from 'mono-svelte'
 
   interface Props {
-    community?: CommunityView | undefined;
-    children?: import('svelte').Snippet<[any]>;
+    community?: CommunityView | undefined
+    children?: import('svelte').Snippet<[any]>
   }
 
-  let { community = undefined, children }: Props = $props();
+  let { community = undefined, children }: Props = $props()
 
   let subscribing = $state(false)
 
@@ -38,4 +38,4 @@
   }
 </script>
 
-{@render children?.({ subscribe, subscribing, })}
+{@render children?.({ subscribe, subscribing })}

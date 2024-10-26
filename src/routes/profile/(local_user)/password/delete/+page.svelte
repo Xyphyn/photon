@@ -1,6 +1,6 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
-  import { profileData, setUserID } from '$lib/auth'
+  import { profileData, setUserID } from '$lib/auth.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { client } from '$lib/lemmy'
   import { t } from '$lib/translations'
@@ -73,7 +73,7 @@
       profileData.update((pd) => {
         pd.profiles.splice(
           pd.profiles.findIndex((p) => pd.profile == p.id),
-          1
+          1,
         )
 
         return pd
@@ -102,8 +102,8 @@
     on:action={() => deleteAccount(4)}
   >
     {#snippet title()}
-        <span >{$t('form.profile.deleteAccount.label')}</span>
-      {/snippet}
+      <span>{$t('form.profile.deleteAccount.label')}</span>
+    {/snippet}
     <TextInput
       label={$t('form.password')}
       type="password"
@@ -112,10 +112,10 @@
     <Checkbox bind:checked={deletion.deleteContent}>
       {$t('form.profile.deleteAccount.deleteContent')}
       {#snippet description()}
-            <span >
+        <span>
           {$t('form.profile.deleteAccount.warning')}
         </span>
-          {/snippet}
+      {/snippet}
     </Checkbox>
   </Modal>
 {/if}
@@ -135,10 +135,10 @@
   <Switch bind:checked={deletion.deleteContent}>
     {$t('form.profile.deleteAccount.deleteContent')}
     {#snippet description()}
-        <span >
+      <span>
         {$t('form.profile.deleteAccount.warning')}
       </span>
-      {/snippet}
+    {/snippet}
   </Switch>
   <Button size="lg" color="danger" on:click={() => deleteAccount(3)}>
     {$t('routes.profile.delete.title')}

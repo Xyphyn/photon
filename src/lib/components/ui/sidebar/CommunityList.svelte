@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { profile } from '$lib/auth'
+  import { profile } from '$lib/auth.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
   import { addFavorite } from '$lib/lemmy/item'
@@ -11,11 +11,11 @@
   import { expoOut } from 'svelte/easing'
 
   interface Props {
-    items: Community[];
-    isFavorites?: boolean;
+    items: Community[]
+    isFavorites?: boolean
   }
 
-  let { items, isFavorites = false }: Props = $props();
+  let { items, isFavorites = false }: Props = $props()
 </script>
 
 {#each items.sort( (a, b) => a.title.localeCompare(b.title), ) as follow (follow.id)}
@@ -65,13 +65,13 @@
       href="/c/{follow.name}@{new URL(follow.actor_id).hostname}"
     >
       {#snippet label()}
-            <div class="flex flex-col max-w-full break-words" >
+        <div class="flex flex-col max-w-full break-words">
           <span>{follow.title}</span>
           <span class="text-xs text-slate-600 dark:text-zinc-400">
             {new URL(follow.actor_id).hostname}
           </span>
         </div>
-          {/snippet}
+      {/snippet}
     </SidebarButton>
   </div>
 {/each}

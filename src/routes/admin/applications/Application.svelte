@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { notifications, profile } from '$lib/auth.js'
+  import { notifications, profile } from '$lib/auth.svelte.js'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import { Material, toast } from 'mono-svelte'
@@ -16,10 +16,10 @@
   import { t } from '$lib/translations'
 
   interface Props {
-    application: RegistrationApplicationView;
+    application: RegistrationApplicationView
   }
 
-  let { application = $bindable() }: Props = $props();
+  let { application = $bindable() }: Props = $props()
 
   let approving = $state(false)
   let denying = $state(false)
@@ -52,7 +52,7 @@
 
     try {
       await getClient().approveRegistrationApplication(
-        registrationApplicationAnswer
+        registrationApplicationAnswer,
       )
       toast({
         content: approve
@@ -144,8 +144,8 @@
         disabled={approving || denying || reviewing}
       >
         {#snippet prefix()}
-                <Icon src={XMark} mini size="16"  />
-              {/snippet}
+          <Icon src={XMark} mini size="16" />
+        {/snippet}
       </Button>
       <Button
         size="square-md"
@@ -159,8 +159,8 @@
         disabled={approving || denying || reviewing}
       >
         {#snippet prefix()}
-                <Icon src={Check} mini size="16"  />
-              {/snippet}
+          <Icon src={Check} mini size="16" />
+        {/snippet}
       </Button>
     </div>
   </div>

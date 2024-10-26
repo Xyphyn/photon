@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { profile } from '$lib/auth'
+  import { profile } from '$lib/auth.svelte'
   import EntityHeader from '$lib/components/ui/EntityHeader.svelte'
   import { t } from '$lib/translations'
-  import { fullCommunityName } from '$lib/util'
+  import { fullCommunityName } from '$lib/util.svelte'
   import type {
     Community,
     CommunityAggregates,

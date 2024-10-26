@@ -2,7 +2,7 @@
   import { run } from 'svelte/legacy'
 
   import type { Post } from 'lemmy-js-client'
-  import type { CommentNodeI } from './comments'
+  import type { CommentNodeI } from './comments.svelte'
   import { createWindowVirtualizer } from '@tanstack/svelte-virtual'
   import Comments from './Comments.svelte'
   import { browser } from '$app/environment'
@@ -24,7 +24,7 @@
       estimateSize: () => 30,
       scrollMargin: virtualListEl?.offsetTop,
       initialRect: {
-        height: 1500,
+        height: browser ? 1 : 1500,
         width: 99999,
       },
       overscan: 5,
@@ -35,9 +35,11 @@
 
   let items = $derived($virtualizer.getVirtualItems())
 
-  run(() => {
-    if (virtualItemEls.length)
-      virtualItemEls.forEach((el) => $virtualizer.measureElement(el))
+  const updateItems = () =>
+    virtualItemEls.forEach((el) => $virtualizer.measureElement(el))
+
+  $effect(() => {
+    if (virtualItemEls) updateItems()
   })
 
   onMount(() => {

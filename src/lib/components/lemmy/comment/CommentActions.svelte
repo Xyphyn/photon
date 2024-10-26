@@ -22,13 +22,13 @@
     report,
   } from '$lib/components/lemmy/moderation/moderation.js'
   import CommentModerationMenu from '$lib/components/lemmy/moderation/CommentModerationMenu.svelte'
-  import { profile } from '$lib/auth.js'
+  import { profile } from '$lib/auth.svelte.js'
   import { deleteItem, save } from '$lib/lemmy/contentview.js'
   import { Button, Menu, MenuButton, MenuDivider } from 'mono-svelte'
   import { t } from '$lib/translations'
   import Translation from '$lib/components/translate/Translation.svelte'
   import { text } from '$lib/components/translate/translation'
-  import { userSettings } from '$lib/settings'
+  import { settings } from '$lib/settings.svelte'
 
   interface Props {
     comment: CommentView
@@ -54,12 +54,12 @@
 
 <div
   class="flex flex-row items-center gap-0.5 h-7 w-full"
-  class:flex-row-reverse={$userSettings.posts.reverseActions}
+  class:flex-row-reverse={settings.posts.reverseActions}
 >
   <CommentVote
-    bind:upvotes={comment.counts.upvotes}
-    bind:downvotes={comment.counts.downvotes}
-    bind:vote={comment.my_vote}
+    upvotes={comment.counts.upvotes}
+    downvotes={comment.counts.downvotes}
+    vote={comment.my_vote}
     commentId={comment.comment.id}
   />
   <Button
@@ -101,7 +101,7 @@
       <Icon src={Square2Stack} mini size="16" />
       <div>{$t('comment.actions.link')}</div>
     </MenuButton>
-    {#if $userSettings.translator}
+    {#if settings.translator}
       <MenuButton
         on:click={() => {
           // @ts-ignore

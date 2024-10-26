@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { defaultSettings, userSettings } from '$lib/settings'
+  import { defaultSettings, settings } from '$lib/settings.svelte'
   import Setting from './Setting.svelte'
   import MultiSelect from '$lib/components/input/Switch.svelte'
   import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
@@ -39,13 +39,13 @@
   import { Button, Checkbox, Select, Spinner } from 'mono-svelte'
   import ViewSelect from '$lib/components/lemmy/dropdowns/ViewSelect.svelte'
   import { LINKED_INSTANCE_URL } from '$lib/instance.js'
-  import { DOMAIN_REGEX_FORMS, removeItem } from '$lib/util.js'
+  import { DOMAIN_REGEX_FORMS, removeItem } from '$lib/util.svelte.js'
   import Section from './Section.svelte'
   import ToggleSetting from './ToggleSetting.svelte'
   import { locale, locales, t } from '$lib/translations'
   import { getDefaultLinks, iconOfLink } from '$lib/components/ui/navbar/link'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import { profile } from '$lib/auth'
+  import { profile } from '$lib/auth.svelte'
   import AccountPage from '../profile/(local_user)/settings/+page.svelte'
   let importing = $state(false)
   let importText = $state('')
@@ -93,7 +93,7 @@
         const parsed = JSON.parse(importText)
         const merged = { ...defaultSettings, ...parsed }
 
-        $userSettings = merged
+        // settings = merged
 
         toast({ content: $t('toast.settingsImport'), type: 'success' })
         importing = false
@@ -123,13 +123,13 @@
       roundingSide="left"
     >
       {#snippet prefix()}
-            <Icon src={ArrowDownTray} mini size="18"  />
-          {/snippet}
+        <Icon src={ArrowDownTray} mini size="18" />
+      {/snippet}
     </Button>
     <Button
       size="square-lg"
       on:click={() => {
-        const json = JSON.stringify($userSettings)
+        const json = JSON.stringify(settings)
         navigator?.clipboard?.writeText?.(json)
         toast({ content: $t('toast.copied') })
       }}
@@ -138,15 +138,15 @@
       rounding="none"
     >
       {#snippet prefix()}
-            <Icon src={ArrowUpTray} mini size="18"  />
-          {/snippet}
+        <Icon src={ArrowUpTray} mini size="18" />
+      {/snippet}
     </Button>
     <Button
       size="square-lg"
       on:click={() => {
         toast({
           content: $t('toast.resetSettings'),
-          action: () => ($userSettings = defaultSettings),
+          action: () => {},
         })
       }}
       class="font-normal"
@@ -154,8 +154,8 @@
       roundingSide="right"
     >
       {#snippet prefix()}
-            <Icon src={ArrowPath} mini size="18"  />
-          {/snippet}
+        <Icon src={ArrowPath} mini size="18" />
+      {/snippet}
     </Button>
   </div>
 </Header>
@@ -202,8 +202,8 @@
         >
           {$t('profile.profile')}
           {#snippet suffix()}
-                    <Icon src={ArrowRight} micro size="16"  />
-                  {/snippet}
+            <Icon src={ArrowRight} micro size="16" />
+          {/snippet}
         </Button>
       </div>
     </Section>
@@ -212,21 +212,21 @@
     <div class="flex flex-col gap-2">
       <Setting>
         {#snippet title()}
-                <span  class="inline-flex items-center gap-2">
+          <span class="inline-flex items-center gap-2">
             {$t('settings.app.lang.title')}
             <Badge>{$t('settings.beta')}</Badge>
           </span>
-              {/snippet}
+        {/snippet}
         {#snippet description()}
-                <p >
+          <p>
             {$t('settings.app.lang.description')}
             <Link href="/translators" highlight class="text-base font-semibold">
               {$t('settings.app.lang.credits')}
             </Link>
           </p>
-              {/snippet}
+        {/snippet}
         <!--@ts-ignore-->
-        <Select bind:value={$userSettings.language}>
+        <Select bind:value={settings.language}>
           <option value={null}>
             <Icon src={Language} size="16" mini />
             {$t('settings.app.lang.auto')}
@@ -246,52 +246,52 @@
       </Setting>
       {#if $locale == 'he'}
         <ToggleSetting
-          bind:checked={$userSettings.useRtl}
+          bind:checked={settings.useRtl}
           title={$t('settings.app.lang.useRtl.title')}
         ></ToggleSetting>
       {/if}
     </div>
     <Setting>
       {#snippet title()}
-            <span >{$t('settings.app.view.title')}</span>
-          {/snippet}
+        <span>{$t('settings.app.view.title')}</span>
+      {/snippet}
       <ViewSelect showLabel={false} />
       {#snippet description()}
-            <p >
-          {#if $userSettings.view == 'list'}
+        <p>
+          {#if settings.view == 'list'}
             {$t('settings.app.view.list')}
-          {:else if $userSettings.view == 'cozy'}
+          {:else if settings.view == 'cozy'}
             {$t('settings.app.view.cozy')}
-          {:else if $userSettings.view == 'compact'}
+          {:else if settings.view == 'compact'}
             {$t('settings.app.view.compact')}
-          {:else if $userSettings.view == 'card'}
+          {:else if settings.view == 'card'}
             {$t('settings.app.view.legacy')}
           {/if}
         </p>
-          {/snippet}
+      {/snippet}
     </Setting>
     <Setting
       optionClass="flex-[2] max-w-full flex-wrap min-w-0 "
       itemsClass="flex-col !items-start lg:!items-center lg:flex-row"
     >
       {#snippet title()}
-            <span >{$t('settings.app.sort.title')}</span>
-          {/snippet}
+        <span>{$t('settings.app.sort.title')}</span>
+      {/snippet}
       {#snippet description()}
-            <span >{$t('settings.app.sort.description')}</span>
-          {/snippet}
+        <span>{$t('settings.app.sort.description')}</span>
+      {/snippet}
       <div
         class="flex flex-row flex-wrap
           flex-1 gap-2 w-full lg:w-max max-w-full lg:self-end"
       >
         <div class="max-w-full">
-          <Select bind:value={$userSettings.defaultSort.feed}>
+          <Select bind:value={settings.defaultSort.feed}>
             {#snippet customLabel()}
-                        <span  class="flex items-center gap-1">
+              <span class="flex items-center gap-1">
                 <Icon src={GlobeAmericas} size="16" mini />
                 {$t('filter.location.label')}
               </span>
-                      {/snippet}
+            {/snippet}
             <option value="All">{$t('filter.location.all')}</option>
             <option value="Local">{$t('filter.location.local')}</option>
             <option value="Subscribed">
@@ -303,19 +303,16 @@
           </Select>
         </div>
         <div class="max-w-full">
-          <Sort
-            bind:selected={$userSettings.defaultSort.sort}
-            navigate={false}
-          />
+          <Sort bind:selected={settings.defaultSort.sort} navigate={false} />
         </div>
         <div class="max-w-full">
-          <Select bind:value={$userSettings.defaultSort.comments}>
+          <Select bind:value={settings.defaultSort.comments}>
             {#snippet customLabel()}
-                        <span  class="flex items-center gap-1">
+              <span class="flex items-center gap-1">
                 <Icon src={ChatBubbleOvalLeftEllipsis} size="14" mini />
                 {$t('content.comments')}
               </span>
-                      {/snippet}
+            {/snippet}
 
             <option value="Hot">{$t('filter.sort.hot')}</option>
             <option value="Top">{$t('filter.sort.top.label')}</option>
@@ -326,52 +323,52 @@
     </Setting>
     <ToggleSetting
       beta
-      bind:checked={$userSettings.infiniteScroll}
+      bind:checked={settings.infiniteScroll}
       title={$t('settings.app.infiniteScroll.title')}
       description={$t('settings.app.infiniteScroll.description')}
     />
     <Setting>
       {#snippet title()}
-            <span >{$t('settings.app.thumbnailSide.title')}</span>
-          {/snippet}
+        <span>{$t('settings.app.thumbnailSide.title')}</span>
+      {/snippet}
       {#snippet description()}
-            <span >
+        <span>
           {$t('settings.app.thumbnailSide.description')}
         </span>
-          {/snippet}
+      {/snippet}
       <MultiSelect
         options={[true, false]}
         optionNames={[
           $t('settings.app.thumbnailSide.left'),
           $t('settings.app.thumbnailSide.right'),
         ]}
-        bind:selected={$userSettings.leftAlign}
+        bind:selected={settings.leftAlign}
       />
     </Setting>
     <ToggleSetting
-      bind:checked={$userSettings.posts.reverseActions}
+      bind:checked={settings.posts.reverseActions}
       title={$t('settings.app.reverseActions.title')}
       description={$t('settings.app.reverseActions.description')}
     />
     <ToggleSetting
       supportedPlatforms={{ desktop: true, tablet: false, mobile: false }}
-      bind:checked={$userSettings.newWidth}
+      bind:checked={settings.newWidth}
       title={$t('settings.app.limitLayoutWidth.title')}
       description={$t('settings.app.limitLayoutWidth.description')}
     />
     <ToggleSetting
-      bind:checked={$userSettings.openLinksInNewTab}
+      bind:checked={settings.openLinksInNewTab}
       title={$t('settings.app.postsInNewTab.title')}
       description={$t('settings.app.postsInNewTab.description')}
     />
     <Setting>
       {#snippet title()}
-            <span >{$t('settings.app.font.title')}</span>
-          {/snippet}
+        <span>{$t('settings.app.font.title')}</span>
+      {/snippet}
       {#snippet description()}
-            <span >{$t('settings.app.font.description')}</span>
-          {/snippet}
-      <Select bind:value={$userSettings.font}>
+        <span>{$t('settings.app.font.description')}</span>
+      {/snippet}
+      <Select bind:value={settings.font}>
         <option value="inter">Inter</option>
         <option value="satoshi/nunito">Satoshi + Nunito</option>
         <option value="system">System UI</option>
@@ -380,68 +377,66 @@
     </Setting>
     <Setting>
       {#snippet title()}
-            <span >{$t('settings.app.theming.title')}</span>
-          {/snippet}
+        <span>{$t('settings.app.theming.title')}</span>
+      {/snippet}
       {#snippet description()}
-            <span >{$t('settings.app.theming.description')}</span>
-          {/snippet}
+        <span>{$t('settings.app.theming.description')}</span>
+      {/snippet}
       <Button href="/theme">
         {$t('settings.app.theming.link')}
         {#snippet suffix()}
-                <Icon src={ArrowRight} size="16" mini  />
-              {/snippet}
+          <Icon src={ArrowRight} size="16" mini />
+        {/snippet}
       </Button>
     </Setting>
     <ToggleSetting
-      bind:checked={$userSettings.randomPlaceholders}
+      bind:checked={settings.randomPlaceholders}
       title={$t('settings.app.placeholders.title')}
       description={$t('settings.app.placeholders.description')}
     />
     <ToggleSetting
-      bind:checked={$userSettings.expandImages}
+      bind:checked={settings.expandImages}
       title={$t('settings.app.expandImages.title')}
       description={$t('settings.app.expandImages.description')}
     />
     <ToggleSetting
-      bind:checked={$userSettings.posts.deduplicateEmbed}
+      bind:checked={settings.posts.deduplicateEmbed}
       title={$t('settings.app.duplicateTitles.title')}
       description={$t('settings.app.duplicateTitles.description')}
     />
     <Setting>
       {#snippet title()}
-            <span >{$t('settings.app.translation.title')}</span>
-          {/snippet}
+        <span>{$t('settings.app.translation.title')}</span>
+      {/snippet}
       {#snippet description()}
-            <span >
+        <span>
           {$t('settings.app.translation.description')}
         </span>
-          {/snippet}
-      <TextInput
-        bind:value={$userSettings.translator}
+      {/snippet}
+      <!-- <TextInput
+        bind:value={settings.translator}
         label={$t('settings.app.translation.instance')}
         pattern={DOMAIN_REGEX_FORMS}
-      />
+      /> -->
     </Setting>
     <div>
       <ToggleSetting
         title={$t('settings.app.titleTags.title')}
         description={$t('settings.app.titleTags.description')}
-        bind:checked={$userSettings.parseTags}
+        bind:checked={settings.parseTags}
       />
       <Setting>
         {#snippet title()}
-              
-            {$t('settings.app.titleTags.rules.title')}
-          
-              {/snippet}
+          {$t('settings.app.titleTags.rules.title')}
+        {/snippet}
         <div
           class="flex flex-col divide-y [&>*]:py-2 items-end divide-slate-200 dark:divide-zinc-800"
         >
-          {#each Object.keys($userSettings.tagRules) as rule}
+          {#each Object.keys(settings.tagRules) as rule}
             <div class="flex flex-row flex-wrap items-center gap-2">
               <span class="text-lg font-medium">{rule}</span>
               <MultiSelect
-                bind:selected={$userSettings.tagRules[rule]}
+                bind:selected={settings.tagRules[rule]}
                 options={['blur', 'hide']}
                 optionNames={[
                   $t('settings.app.titleTags.rules.blur'),
@@ -457,13 +452,13 @@
   <Section id="nav" title={$t('settings.navigation.title')}>
     <Setting>
       {#snippet title()}
-            <span >{$t('settings.navigation.dockPos.title')}</span>
-          {/snippet}
+        <span>{$t('settings.navigation.dockPos.title')}</span>
+      {/snippet}
       {#snippet description()}
-            <span >
+        <span>
           {$t('settings.navigation.dockPos.description')}
         </span>
-          {/snippet}
+      {/snippet}
       <MultiSelect
         options={[true, false, null]}
         optionNames={[
@@ -471,18 +466,18 @@
           $t('settings.navigation.dockPos.bottom'),
           $t('settings.navigation.dockPos.adaptive'),
         ]}
-        bind:selected={$userSettings.dock.top}
+        bind:selected={settings.dock.top}
       />
     </Setting>
     <Setting>
       {#snippet title()}
-            <span >{$t('settings.navigation.panel.title')}</span>
-          {/snippet}
+        <span>{$t('settings.navigation.panel.title')}</span>
+      {/snippet}
       {#snippet description()}
-            <span >
+        <span>
           {$t('settings.navigation.panel.description')}
         </span>
-          {/snippet}
+      {/snippet}
       <MultiSelect
         options={[true, false, null]}
         optionNames={[
@@ -490,52 +485,44 @@
           $t('settings.navigation.panel.off'),
           $t('settings.navigation.panel.adaptive'),
         ]}
-        bind:selected={$userSettings.dock.noGap}
+        bind:selected={settings.dock.noGap}
       />
     </Setting>
     <Setting
       supportedPlatforms={{ desktop: true, tablet: true, mobile: false }}
     >
       {#snippet title()}
-            <span >{$t('settings.navigation.pins.title')}</span>
-          {/snippet}
+        <span>{$t('settings.navigation.pins.title')}</span>
+      {/snippet}
       {#snippet description()}
-            <span >
+        <span>
           {$t('settings.navigation.pins.description')}
         </span>
-          {/snippet}
+      {/snippet}
       <div class="flex items-center gap-1 flex-wrap">
         {#each getDefaultLinks() as pin}
           <Popover openOnHover placement="bottom">
             {#snippet target()}
-                        <Button
+              <Button
                 size="square-md"
-                
-                disabled={$userSettings.dock.pins
+                disabled={settings.dock.pins
                   ?.map((p) => p.url)
                   ?.includes(pin.url)}
                 on:click={() => {
-                  $userSettings.dock.pins = [
-                    ...($userSettings.dock.pins ?? []),
-                    pin,
-                  ]
+                  settings.dock.pins = [...(settings.dock.pins ?? []), pin]
                 }}
               >
                 <Icon src={iconOfLink(pin.url)} mini size="16" />
               </Button>
-                      {/snippet}
+            {/snippet}
             {#snippet popover()}
-                        <Material
-                
-                padding="none"
-                class="px-4 py-2 flex flex-col"
-              >
+              <Material padding="none" class="px-4 py-2 flex flex-col">
                 <span class="font-medum text-base">{pin.label}</span>
                 <code class="bg-slate-50 dark:!bg-zinc-950 !rounded-md">
                   {pin.url}
                 </code>
               </Material>
-                      {/snippet}
+            {/snippet}
           </Popover>
         {/each}
       </div>
@@ -546,54 +533,54 @@
     <ToggleSetting
       title={$t('settings.embeds.clickToView.title')}
       description={$t('settings.embeds.clickToView.description')}
-      bind:checked={$userSettings.embeds.clickToView}
+      bind:checked={settings.embeds.clickToView}
     />
     <Setting>
       {#snippet title()}
-            <span >YouTube</span>
-          {/snippet}
+        <span>YouTube</span>
+      {/snippet}
       {#snippet description()}
-            <span >
+        <span>
           {$t('settings.embeds.youtube.description')}
         </span>
-          {/snippet}
-      <Select bind:value={$userSettings.embeds.youtube}>
+      {/snippet}
+      <Select bind:value={settings.embeds.youtube}>
         <option value="youtube">YouTube</option>
         <option value="invidious">Invidious</option>
         <option value="piped">Piped</option>
       </Select>
     </Setting>
-    {#if $userSettings.embeds.youtube == 'invidious'}
+    {#if settings.embeds.youtube == 'invidious'}
       <Setting>
         {#snippet title()}
-                <span >{$t('settings.embeds.instance.invidious')}</span>
-              {/snippet}
+          <span>{$t('settings.embeds.instance.invidious')}</span>
+        {/snippet}
         {#snippet description()}
-                <span >
+          <span>
             {$t('settings.embeds.instance.description')}
           </span>
-              {/snippet}
+        {/snippet}
         <TextInput
           label={$t('settings.embeds.instance.invidious')}
           pattern={DOMAIN_REGEX_FORMS}
-          bind:value={$userSettings.embeds.invidious}
+          bind:value={settings.embeds.invidious}
         />
       </Setting>
     {/if}
-    {#if $userSettings.embeds.youtube == 'piped'}
+    {#if settings.embeds.youtube == 'piped'}
       <Setting>
         {#snippet title()}
-                <span >{$t('settings.embeds.instance.piped')}</span>
-              {/snippet}
+          <span>{$t('settings.embeds.instance.piped')}</span>
+        {/snippet}
         {#snippet description()}
-                <span >
+          <span>
             {$t('settings.embeds.instance.description')}
           </span>
-              {/snippet}
+        {/snippet}
         <TextInput
           label={$t('settings.embeds.instance.piped')}
           pattern={DOMAIN_REGEX_FORMS}
-          bind:value={$userSettings.embeds.piped}
+          bind:value={settings.embeds.piped}
         />
       </Setting>
     {/if}
@@ -601,76 +588,76 @@
 
   <Section id="lemmy" title={$t('settings.lemmy.title')}>
     <ToggleSetting
-      bind:checked={$userSettings.posts.showHidden}
+      bind:checked={settings.posts.showHidden}
       title={$t('settings.lemmy.showHiddenPosts.title')}
       description={$t('settings.lemmy.showHiddenPosts.description')}
     />
     <ToggleSetting
-      bind:checked={$userSettings.posts.compactFeatured}
+      bind:checked={settings.posts.compactFeatured}
       title={$t('settings.lemmy.compactFeatured.title')}
       description={$t('settings.lemmy.compactFeatured.description')}
     />
     <ToggleSetting
-      bind:checked={$userSettings.markPostsAsRead}
+      bind:checked={settings.markPostsAsRead}
       title={$t('settings.lemmy.markReadPosts.title')}
       description={$t('settings.lemmy.markReadPosts.description')}
     />
     <ToggleSetting
-      bind:checked={$userSettings.markReadPosts}
+      bind:checked={settings.markReadPosts}
       title={$t('settings.lemmy.fadeReadPosts.title')}
       description={$t('settings.lemmy.fadeReadPosts.description')}
     />
     <ToggleSetting
-      bind:checked={$userSettings.crosspostOriginalLink}
+      bind:checked={settings.crosspostOriginalLink}
       title={$t('settings.lemmy.crosspostMarker.title')}
       description={$t('settings.lemmy.crosspostMarker.description')}
     />
     <Setting>
       {#snippet title()}
-            <span >{$t('settings.lemmy.hideSubmissions.title')}</span>
-          {/snippet}
+        <span>{$t('settings.lemmy.hideSubmissions.title')}</span>
+      {/snippet}
       {#snippet description()}
-            <span >
+        <span>
           <p>{$t('settings.lemmy.hideSubmissions.description')}</p>
         </span>
-          {/snippet}
+      {/snippet}
       <div class="flex flex-col items-start gap-4 flex-wrap">
-        <Switch bind:checked={$userSettings.hidePosts.deleted}>
+        <Switch bind:checked={settings.hidePosts.deleted}>
           {$t('settings.lemmy.hideSubmissions.deleted')}
         </Switch>
-        <Switch bind:checked={$userSettings.hidePosts.removed}>
+        <Switch bind:checked={settings.hidePosts.removed}>
           {$t('settings.lemmy.hideSubmissions.removed')}
         </Switch>
       </div>
     </Setting>
     <ToggleSetting
-      bind:checked={$userSettings.nsfwBlur}
+      bind:checked={settings.nsfwBlur}
       title={$t('settings.lemmy.nsfwBlur.title')}
       description={$t('settings.lemmy.nsfwBlur.description')}
     />
     <Setting>
       {#snippet title()}
-            <span >{$t('settings.lemmy.instances.title')}</span>
-          {/snippet}
+        <span>{$t('settings.lemmy.instances.title')}</span>
+      {/snippet}
       {#snippet description()}
-            <span >
+        <span>
           {$t('settings.lemmy.instances.description')}
         </span>
-          {/snippet}
+      {/snippet}
       <div class="flex flex-row flex-wrap items-center gap-4">
-        <Checkbox bind:checked={$userSettings.showInstances.user}>
+        <Checkbox bind:checked={settings.showInstances.user}>
           {$t('content.users')}
         </Checkbox>
-        <Checkbox bind:checked={$userSettings.showInstances.comments}>
+        <Checkbox bind:checked={settings.showInstances.comments}>
           {$t('content.comments')}
         </Checkbox>
-        <Checkbox bind:checked={$userSettings.showInstances.community}>
+        <Checkbox bind:checked={settings.showInstances.community}>
           {$t('content.communities')}
         </Checkbox>
       </div>
     </Setting>
     <ToggleSetting
-      bind:checked={$userSettings.displayNames}
+      bind:checked={settings.displayNames}
       title={$t('settings.app.displayName.title')}
       description={$t('settings.app.displayName.description')}
     />
@@ -679,10 +666,10 @@
   <Section id="moderation" title={$t('settings.moderation.title')}>
     <Setting itemsClass="!flex-col !items-start">
       {#snippet title()}
-            <span >{$t('settings.moderation.replyPresets.title')}</span>
-          {/snippet}
+        <span>{$t('settings.moderation.replyPresets.title')}</span>
+      {/snippet}
       {#snippet description()}
-            <span >
+        <span>
           <p>{$t('settings.moderation.replyPresets.description')}</p>
           <ul class="leading-6">
             <li>{$t('settings.moderation.replyPresets.syntax')}</li>
@@ -700,8 +687,8 @@
             </li>
           </ul>
         </span>
-          {/snippet}
-      {#each $userSettings.moderation.presets as preset, index}
+      {/snippet}
+      {#each settings.moderation.presets as preset, index}
         <Material
           color="transparent"
           rounding="xl"
@@ -719,9 +706,8 @@
                 rounding="lg"
                 class="ml-auto"
                 on:click={() => {
-                  $userSettings.moderation.presets.splice(index, 1)
-                  $userSettings.moderation.presets =
-                    $userSettings.moderation.presets
+                  settings.moderation.presets.splice(index, 1)
+                  settings.moderation.presets = settings.moderation.presets
                 }}
               >
                 <Icon src={Trash} size="16" mini />
@@ -755,10 +741,10 @@
           color="none"
           class="w-full"
           on:click={() => {
-            $userSettings.moderation.presets = [
-              ...$userSettings.moderation.presets,
+            settings.moderation.presets = [
+              ...settings.moderation.presets,
               {
-                title: `Preset ${$userSettings.moderation.presets.length + 1}`,
+                title: `Preset ${settings.moderation.presets.length + 1}`,
                 content:
                   'Your submission in *{{post}}* was removed for *{{reason}}*.',
               },
@@ -766,8 +752,8 @@
           }}
         >
           {#snippet prefix()}
-                    <Icon src={Plus} mini size="16"  />
-                  {/snippet}
+            <Icon src={Plus} mini size="16" />
+          {/snippet}
           Add Preset
         </Button>
       </Material>
@@ -776,12 +762,12 @@
 
   <Section id="other" title={$t('settings.other.title')}>
     <ToggleSetting
-      bind:checked={$userSettings.debugInfo}
+      bind:checked={settings.debugInfo}
       title={$t('settings.other.debug.title')}
       description={$t('settings.other.debug.description')}
     />
     <ToggleSetting
-      bind:checked={$userSettings.posts.noVirtualize}
+      bind:checked={settings.posts.noVirtualize}
       title={$t('settings.other.virtualizeFeeds.title')}
       description={$t('settings.other.virtualizeFeeds.description')}
     />

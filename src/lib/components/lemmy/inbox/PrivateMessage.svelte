@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { profile } from '$lib/auth.js'
+  import { profile } from '$lib/auth.svelte.js'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import type { PrivateMessageView } from 'lemmy-js-client'

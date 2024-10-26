@@ -8,8 +8,8 @@
     Icon,
   } from 'svelte-hero-icons'
   import { getClient, site } from '$lib/lemmy'
-  import { userSettings } from '$lib/settings'
-  import { profile } from '$lib/auth.js'
+  import { settings } from '$lib/settings.svelte'
+  import { profile } from '$lib/auth.svelte.js'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import { Button, buttonColor, toast } from 'mono-svelte'
   import { vote as voteItem } from '$lib/lemmy/contentview'

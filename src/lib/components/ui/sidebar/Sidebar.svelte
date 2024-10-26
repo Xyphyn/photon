@@ -8,8 +8,8 @@
     UserCircle,
     UserGroup,
   } from 'svelte-hero-icons'
-  import { notifications, profile, profileData } from '$lib/auth.js'
-  import { userSettings } from '$lib/settings.js'
+  import { notifications, profile, profileData } from '$lib/auth.svelte.js'
+  import { settings } from '$lib/settings.svelte.js'
   import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
   import CommunityList from '$lib/components/ui/sidebar/CommunityList.svelte'
   import ProfileButton from '$lib/components/ui/sidebar/ProfileButton.svelte'
@@ -36,9 +36,9 @@
   gap-1 h-fit max-h-screen {clazz}"
   {style}
 >
-  {#if $userSettings.dock.pins?.length ?? 0 > 0}
+  {#if settings.dock.pins?.length ?? 0 > 0}
     <div class="flex items-center flex-wrap gap-2 pl-1.5">
-      {#each $userSettings.dock.pins as pin}
+      {#each settings.dock.pins as pin}
         <SidebarButton
           icon={iconOfLink(pin.url)}
           on:click={() => goto(pin.url)}
@@ -46,8 +46,8 @@
           selected={`${$page.url.pathname}${$page.url.search}` == pin.url}
           on:contextmenu={(e) => {
             e.preventDefault()
-            $userSettings.dock.pins = $userSettings.dock.pins.toSpliced(
-              $userSettings.dock.pins.findLastIndex((p) => pin.url == p.url),
+            settings.dock.pins = settings.dock.pins.toSpliced(
+              settings.dock.pins.findLastIndex((p) => pin.url == p.url),
               1,
             )
             return false
@@ -120,7 +120,7 @@
 
     <Expandable
       class="max-w-full min-w-0 w-full"
-      bind:open={$userSettings.expand.accounts}
+      bind:open={settings.expand.accounts}
     >
       {#snippet title()}
         <span class="px-2 py-1 w-full">
@@ -148,11 +148,11 @@
   {#if $profile?.favorites && $profile?.favorites.length > 0}
     <Expandable
       class="max-w-full min-w-0 w-full"
-      bind:open={$userSettings.expand.favorites}
+      bind:open={settings.expand.favorites}
     >
       {#snippet title()}
         <span
-          class="px-2 py-1 w-full {$userSettings.expandSidebar
+          class="px-2 py-1 w-full {settings.expandSidebar
             ? ''
             : '//max-lg:hidden'}"
         >
@@ -174,11 +174,11 @@
     {#if $profile?.user.moderates.length > 0}
       <Expandable
         class="max-w-full min-w-0 w-full"
-        bind:open={$userSettings.expand.moderates}
+        bind:open={settings.expand.moderates}
       >
         {#snippet title()}
           <span
-            class="px-2 py-1 w-full {$userSettings.expandSidebar
+            class="px-2 py-1 w-full {settings.expandSidebar
               ? ''
               : '//max-lg:hidden'}"
           >
@@ -201,11 +201,11 @@
 
     <Expandable
       class="max-w-full min-w-0 w-full"
-      bind:open={$userSettings.expand.communities}
+      bind:open={settings.expand.communities}
     >
       {#snippet title()}
         <span
-          class="px-2 py-1 w-full {$userSettings.expandSidebar
+          class="px-2 py-1 w-full {settings.expandSidebar
             ? ''
             : '//max-lg:hidden'}"
         >

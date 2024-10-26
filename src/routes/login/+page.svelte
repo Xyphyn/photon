@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { preventDefault } from 'svelte/legacy';
+  import { preventDefault } from 'svelte/legacy'
 
   import { goto } from '$app/navigation'
-  import { setUser } from '$lib/auth.js'
+  import { setUser } from '$lib/auth.svelte.js'
   import { Note, toast } from 'mono-svelte'
   import { DEFAULT_INSTANCE_URL, LINKED_INSTANCE_URL } from '$lib/instance.js'
   import {
@@ -18,7 +18,7 @@
     QuestionMarkCircle,
     UserCircle,
   } from 'svelte-hero-icons'
-  import { DOMAIN_REGEX_FORMS } from '$lib/util.js'
+  import { DOMAIN_REGEX_FORMS } from '$lib/util.svelte.js'
   import { MINIMUM_VERSION } from '$lib/version.js'
   import { t } from '$lib/translations'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
@@ -30,11 +30,11 @@
   import { page } from '$app/stores'
 
   interface Props {
-    ref?: string;
-    children?: import('svelte').Snippet;
+    ref?: string
+    children?: import('svelte').Snippet
   }
 
-  let { ref = '/', children }: Props = $props();
+  let { ref = '/', children }: Props = $props()
 
   let data = $state({
     instance: DEFAULT_INSTANCE_URL,
@@ -80,7 +80,7 @@
                 'incorrect_login' +
                   (data.attempts == 0 || data.attempts >= 12
                     ? ''
-                    : `_${data.attempts + 1}`)
+                    : `_${data.attempts + 1}`),
               )
             : errorMessage(error),
         scope: $page.route.id!,

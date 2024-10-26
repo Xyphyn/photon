@@ -1,29 +1,35 @@
-<script lang="ts" module>
-</script>
-
 <script lang="ts">
   import { page } from '$app/stores'
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
   import ViewSelect from '$lib/components/lemmy/dropdowns/ViewSelect.svelte'
-  import { searchParam } from '$lib/util.js'
+  import { searchParam } from '$lib/util.svelte.js'
   import { ChartBar, Icon } from 'svelte-hero-icons'
   import { site } from '$lib/lemmy.js'
   import Location from '$lib/components/lemmy/dropdowns/Location.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { t } from '$lib/translations.js'
-  import { userSettings } from '$lib/settings.js'
+  import { settings } from '$lib/settings.svelte.js'
   import { browser } from '$app/environment'
   import VirtualFeed from '$lib/components/lemmy/post/feed/VirtualFeed.svelte'
   import PostFeed from '$lib/components/lemmy/post/feed/PostFeed.svelte'
+  import type { ListingType } from 'lemmy-js-client'
+  import { get } from 'svelte/store'
 
-  let { data = $bindable() } = $props();
+  let { data = $bindable() } = $props()
 
-  const SvelteComponent = $derived($userSettings.infiniteScroll &&
-    browser &&
-    !$userSettings.posts.noVirtualize
+  let type = $state(data.type_)
+  let sort = $state(data.sort)
+
+  $effect(() => {
+    if (sort) settings.defaultSort.sort = sort
+  })
+
+  const FeedComponent = $derived(
+    settings.infiniteScroll && browser && !settings.posts.noVirtualize
       ? VirtualFeed
-      : PostFeed);
+      : PostFeed,
+  )
 </script>
 
 <div class="flex flex-col gap-2 max-w-full w-full min-w-0">
@@ -32,24 +38,18 @@
       {$t('routes.frontpage.title')}
 
       {#snippet extended()}
-            <div class="flex items-center gap-2" >
-          {#if data.type_}
-            <Location changeDefault selected={data.type_} />
-          {/if}
-          <Sort changeDefault selected={data.sort} />
+        <div class="flex items-center gap-2">
+          <Location bind:selected={type} />
+          <Sort bind:selected={sort} />
           <ViewSelect />
         </div>
-          {/snippet}
+      {/snippet}
     </Header>
   </header>
 
-  <SvelteComponent
-    posts={data.posts.posts}
-    bind:feedData={data}
-    feedId="main"
-  />
+  <FeedComponent posts={data.posts.posts} feedData={data} feedId="main" />
   <svelte:element
-    this={$userSettings.infiniteScroll && !$userSettings.posts.noVirtualize
+    this={settings.infiniteScroll && !settings.posts.noVirtualize
       ? 'noscript'
       : 'div'}
     class="mt-auto"

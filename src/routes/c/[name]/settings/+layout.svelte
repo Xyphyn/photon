@@ -5,20 +5,22 @@
   import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
   import { contentPadding } from '$lib/components/ui/layout/Shell.svelte'
   import { t } from '$lib/translations.js'
-  import { fullCommunityName } from '$lib/util.js'
+  import { fullCommunityName } from '$lib/util.svelte.js'
   import type { PageData } from './$types.js'
 
   interface Props {
-    data: PageData;
-    children?: import('svelte').Snippet;
+    data: PageData
+    children?: import('svelte').Snippet
   }
 
-  let { data, children }: Props = $props();
+  let { data, children }: Props = $props()
 
-  let communityUrl = $derived(`/c/${fullCommunityName(
-    data.community.community_view.community.name,
-    data.community.community_view.community.actor_id
-  )}`)
+  let communityUrl = $derived(
+    `/c/${fullCommunityName(
+      data.community.community_view.community.name,
+      data.community.community_view.community.actor_id,
+    )}`,
+  )
 </script>
 
 <div class="flex flex-col gap-4 h-full">

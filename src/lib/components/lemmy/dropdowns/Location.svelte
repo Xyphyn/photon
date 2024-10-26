@@ -1,10 +1,7 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy'
-
   import { page } from '$app/stores'
-  import { profile } from '$lib/auth'
-  import { userSettings } from '$lib/settings'
-  import { searchParam } from '$lib/util'
+  import { profile } from '$lib/auth.svelte'
+  import { searchParam } from '$lib/util.svelte'
   import { Select } from 'mono-svelte'
   import {
     GlobeAmericas,
@@ -25,32 +22,19 @@
   }
 
   let {
-    selected,
+    selected = $bindable(),
     navigate = true,
     changeDefault = false,
     showLabel = true,
     ...rest
   }: Props = $props()
-
-  let feed: string = $state(selected)
-  run(() => {
-    feed = selected
-  })
-  run(() => {
-    changeDefault
-      ? ($userSettings.defaultSort.feed = selected as
-          | 'All'
-          | 'Subscribed'
-          | 'Local')
-      : undefined
-  })
 </script>
 
 <Select
   {...rest}
-  bind:value={feed}
+  bind:value={selected}
   on:change={() => {
-    if (navigate) searchParam($page.url, 'type', feed, 'page', 'cursor')
+    if (navigate) searchParam($page.url, 'type', selected, 'page', 'cursor')
   }}
 >
   {#snippet customLabel()}

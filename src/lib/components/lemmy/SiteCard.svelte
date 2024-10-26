@@ -19,7 +19,7 @@
   import { userLink } from '$lib/lemmy/generic'
   import { t } from '$lib/translations'
   import Entity from '../ui/Entity.svelte'
-  import { userSettings } from '$lib/settings'
+  import { settings } from '$lib/settings.svelte'
   import { optimizeImageURL } from './post/helpers'
 
   interface Props {
@@ -100,7 +100,7 @@
     {/if}
 
     <hr class="border-slate-200 dark:border-zinc-900 my-1" />
-    <Expandable bind:open={$userSettings.expand.about}>
+    <Expandable bind:open={settings.expand.about}>
       {#snippet title()}
         <span class="flex items-center gap-1 py-1 px-2">
           <Icon src={InformationCircle} size="16" mini />
@@ -113,7 +113,7 @@
     </Expandable>
 
     <hr class="border-slate-200 dark:border-zinc-900 my-1" />
-    <Expandable bind:open={$userSettings.expand.stats}>
+    <Expandable bind:open={settings.expand.stats}>
       {#snippet title()}
         <span class="flex items-center gap-1 py-1 px-2">
           <Icon src={ChartBar} size="16" mini />
@@ -141,7 +141,7 @@
 
     {#if admins}
       <hr class="border-slate-200 dark:border-zinc-900 my-1" />
-      <Expandable bind:open={$userSettings.expand.team}>
+      <Expandable bind:open={settings.expand.team}>
         {#snippet title()}
           <span class="flex items-center gap-1 py-1 px-2">
             <Icon src={UserGroup} size="16" mini />

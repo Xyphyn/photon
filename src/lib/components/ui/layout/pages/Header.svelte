@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { userSettings } from '$lib/settings'
+  import { settings } from '$lib/settings.svelte'
   import { contentPadding } from '../Shell.svelte'
 
   interface Props {
@@ -35,7 +35,7 @@
 >
   <h1
     class="text-3xl font-medium flex gap-2 w-full
-  {$userSettings.font == 'satoshi/nunito' ? 'font-display' : ''} {clazz ?? ''}"
+  {settings.font == 'satoshi/nunito' ? 'font-display' : ''} {clazz ?? ''}"
   >
     {@render children?.()}
   </h1>

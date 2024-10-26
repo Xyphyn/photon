@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
+  import { run } from 'svelte/legacy'
 
   import Post from '$lib/components/lemmy/post/Post.svelte'
   import {
@@ -24,10 +24,10 @@
   import { isBlocked } from '$lib/lemmy/user.js'
   import { Menu, MenuButton, removeToast, toast } from 'mono-svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
-  import { profile } from '$lib/auth.js'
+  import { profile } from '$lib/auth.svelte.js'
   import { ban, isAdmin } from '$lib/components/lemmy/moderation/moderation.js'
   import ShieldIcon from '$lib/components/lemmy/moderation/ShieldIcon.svelte'
-  import { searchParam } from '$lib/util.js'
+  import { searchParam } from '$lib/util.svelte.js'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { Button, Modal, Select } from 'mono-svelte'
   import PrivateMessageModal from '$lib/components/lemmy/modal/PrivateMessageModal.svelte'
@@ -40,11 +40,11 @@
   import { formatRelativeDate } from '$lib/components/util/RelativeDate.svelte'
 
   interface Props {
-    data: any;
-    inline?: boolean;
+    data: any
+    inline?: boolean
   }
 
-  let { data = $bindable(), inline = false }: Props = $props();
+  let { data = $bindable(), inline = false }: Props = $props()
 
   let blocking = false
 
@@ -95,7 +95,7 @@
         purgeEnabled = true
       }, 3000)
     }
-  });
+  })
 
   async function purgeUser() {
     purgingUser = false
@@ -127,8 +127,8 @@
 {#if purgingUser}
   <Modal bind:open={purgingUser}>
     {#snippet title()}
-        Purging User
-      {/snippet}
+      Purging User
+    {/snippet}
     <p>
       Purging user <span class="font-bold">
         {data.person_view.person.name}
@@ -176,14 +176,14 @@
             name: $t('stats.joined'),
             value: formatRelativeDate(
               publishedToDate(data.person_view.person.published),
-              { style: 'short' }
+              { style: 'short' },
             ).toString(),
             format: false,
           },
         ]}
       >
         {#snippet nameDetail()}
-                <span class="text-sm flex gap-0 items-center w-max" >
+          <span class="text-sm flex gap-0 items-center w-max">
             @
             <UserLink
               showInstance
@@ -192,18 +192,18 @@
               class="font-normal"
             />
           </span>
-              {/snippet}
+        {/snippet}
         {#if (data.moderates ?? []).length > 0}
           <Expandable
             class="border rounded-xl bg-white/50 dark:bg-zinc-900/50 w-full p-3 px-4
       dark:border-zinc-800 border-slate-300 border-opacity-50 text-slate-700 dark:text-zinc-300 transition-colors"
           >
             {#snippet title()}
-                        <span  class="flex items-center gap-1">
+              <span class="flex items-center gap-1">
                 <ShieldIcon width={14} filled />
                 {$t('routes.profile.moderates')}
               </span>
-                      {/snippet}
+            {/snippet}
             <ItemList
               items={data.moderates.map((m) => ({
                 id: m.community.id,
@@ -216,92 +216,85 @@
           </Expandable>
         {/if}
         {#snippet actions()}
-              
-            {#if $profile?.user && $profile.jwt && data.person_view.person.id != $profile.user.local_user_view.person.id}
-              <div class="flex items-center gap-2 w-full">
+          {#if $profile?.user && $profile.jwt && data.person_view.person.id != $profile.user.local_user_view.person.id}
+            <div class="flex items-center gap-2 w-full">
+              <Button
+                size="square-md"
+                color="secondary"
+                href="/inbox/messages/{data.person_view.person.id}"
+                title="Message"
+              >
+                {#snippet prefix()}
+                  <Icon solid size="16" src={Envelope} />
+                {/snippet}
+              </Button>
+              {#if data.person_view.person.matrix_user_id}
                 <Button
                   size="square-md"
                   color="secondary"
-                  href="/inbox/messages/{data.person_view.person.id}"
-                  title="Message"
+                  href="https://matrix.to/#/{data.person_view.person
+                    .matrix_user_id}"
+                  title="Matrix User"
                 >
                   {#snippet prefix()}
-                                <Icon  solid size="16" src={Envelope} />
-                              {/snippet}
+                    <Icon solid size="16" src={AtSymbol} />
+                  {/snippet}
                 </Button>
-                {#if data.person_view.person.matrix_user_id}
-                  <Button
-                    size="square-md"
-                    color="secondary"
-                    href="https://matrix.to/#/{data.person_view.person
-                      .matrix_user_id}"
-                    title="Matrix User"
-                  >
-                    {#snippet prefix()}
-                                    <Icon  solid size="16" src={AtSymbol} />
-                                  {/snippet}
-                  </Button>
-                {/if}
-                {#if isAdmin($profile?.user)}
-                  <Menu class="ml-auto" placement="bottom-end">
-                    {#snippet target()}
-                                    <Button size="square-md" >
-                        <ShieldIcon width={16} filled />
-                      </Button>
-                                  {/snippet}
-                    <MenuButton
-                      color="danger-subtle"
-                      on:click={() =>
-                        ban(
-                          data.person_view.person.banned,
-                          data.person_view.person
-                        )}
-                    >
-                      {#snippet prefix()}
-                                        <Icon
-                          
-                          mini
-                          size="16"
-                          src={ShieldExclamation}
-                        />
-                                      {/snippet}
-                      {data.person_view.person.banned ? 'Unban' : 'Ban'}
-                    </MenuButton>
-                    <MenuButton
-                      color="danger-subtle"
-                      on:click={() => (purgingUser = !purgingUser)}
-                    >
-                      {#snippet prefix()}
-                                        <Icon  mini size="16" src={Fire} />
-                                      {/snippet}
-                      Purge
-                    </MenuButton>
-                  </Menu>
-                {/if}
-                <Menu placement="bottom-end">
+              {/if}
+              {#if isAdmin($profile?.user)}
+                <Menu class="ml-auto" placement="bottom-end">
                   {#snippet target()}
-                                <Button size="square-md" >
-                      {#snippet prefix()}
-                                    <Icon src={EllipsisHorizontal}  size="16" mini />
-                                  {/snippet}
+                    <Button size="square-md">
+                      <ShieldIcon width={16} filled />
                     </Button>
-                              {/snippet}
+                  {/snippet}
                   <MenuButton
                     color="danger-subtle"
-                    on:click={() => blockUser(data.person_view.person.id)}
+                    on:click={() =>
+                      ban(
+                        data.person_view.person.banned,
+                        data.person_view.person,
+                      )}
                   >
                     {#snippet prefix()}
-                                    <Icon  mini size="16" src={NoSymbol} />
-                                  {/snippet}
-                    {isBlocked($profile.user, data.person_view.person.id)
-                      ? 'Unblock'
-                      : 'Block'}
+                      <Icon mini size="16" src={ShieldExclamation} />
+                    {/snippet}
+                    {data.person_view.person.banned ? 'Unban' : 'Ban'}
+                  </MenuButton>
+                  <MenuButton
+                    color="danger-subtle"
+                    on:click={() => (purgingUser = !purgingUser)}
+                  >
+                    {#snippet prefix()}
+                      <Icon mini size="16" src={Fire} />
+                    {/snippet}
+                    Purge
                   </MenuButton>
                 </Menu>
-              </div>
-            {/if}
-          
-              {/snippet}
+              {/if}
+              <Menu placement="bottom-end">
+                {#snippet target()}
+                  <Button size="square-md">
+                    {#snippet prefix()}
+                      <Icon src={EllipsisHorizontal} size="16" mini />
+                    {/snippet}
+                  </Button>
+                {/snippet}
+                <MenuButton
+                  color="danger-subtle"
+                  on:click={() => blockUser(data.person_view.person.id)}
+                >
+                  {#snippet prefix()}
+                    <Icon mini size="16" src={NoSymbol} />
+                  {/snippet}
+                  {isBlocked($profile.user, data.person_view.person.id)
+                    ? 'Unblock'
+                    : 'Block'}
+                </MenuButton>
+              </Menu>
+            </div>
+          {/if}
+        {/snippet}
       </EntityHeader>
     </div>
   {/if}
@@ -313,11 +306,11 @@
         on:change={() => searchParam($page.url, 'type', data.type, 'page')}
       >
         {#snippet label()}
-                <span  class="flex items-center gap-1">
+          <span class="flex items-center gap-1">
             <Icon src={AdjustmentsHorizontal} size="15" mini />
             {$t('filter.type')}
           </span>
-              {/snippet}
+        {/snippet}
         <option value="all">{$t('content.all')}</option>
         <option value="posts">{$t('content.posts')}</option>
         <option value="comments">{$t('content.comments')}</option>
@@ -327,11 +320,11 @@
         on:change={() => searchParam($page.url, 'sort', data.sort, 'page')}
       >
         {#snippet label()}
-                <span  class="flex items-center gap-1">
+          <span class="flex items-center gap-1">
             <Icon src={ChartBar} size="14" mini />
             {$t('filter.sort.label')}
           </span>
-              {/snippet}
+        {/snippet}
         <option value="New">{$t('filter.sort.new')}</option>
         <option value="TopAll">{$t('filter.sort.top.label')}</option>
         <option value="Old">{$t('filter.sort.old')}</option>

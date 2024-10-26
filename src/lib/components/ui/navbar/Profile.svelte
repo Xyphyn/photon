@@ -1,7 +1,7 @@
 <script lang="ts">
   import { stopPropagation } from 'svelte/legacy'
 
-  import { notifications, profile } from '$lib/auth'
+  import { notifications, profile } from '$lib/auth.svelte'
 
   import {
     Badge,
@@ -34,7 +34,7 @@
     UserGroup,
   } from 'svelte-hero-icons'
   import { colorScheme } from '$lib/ui/colors'
-  import { userSettings } from '$lib/settings'
+  import { settings } from '$lib/settings.svelte'
   import { site } from '$lib/lemmy'
   import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
   import { t } from '$lib/translations'
@@ -185,7 +185,7 @@
     {/snippet}
     {$t('nav.menu.theme')}
   </MenuButton>
-  {#if $userSettings.debugInfo}
+  {#if settings.debugInfo}
     <MenuButton link href="/util">
       {#snippet prefix()}
         <Icon src={BugAnt} mini width={16} />

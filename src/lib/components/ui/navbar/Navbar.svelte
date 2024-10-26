@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { notifications, profile } from '$lib/auth.js'
+  import { notifications, profile } from '$lib/auth.svelte.js'
   import ShieldIcon from '$lib/components/lemmy/moderation/ShieldIcon.svelte'
   import {
     amModOfAny,
@@ -36,7 +36,7 @@
   import { t } from '$lib/translations'
   import CommandsWrapper from './commands/CommandsWrapper.svelte'
   import { optimizeImageURL } from '$lib/components/lemmy/post/helpers'
-  import { userSettings } from '$lib/settings'
+  import { settings } from '$lib/settings.svelte'
   import { dockProps } from '../layout/Shell.svelte'
 
   let promptOpen: boolean = $state(false)
@@ -67,7 +67,7 @@
     class="ml-2 logo"
     adaptive={false}
   >
-    {#snippet icon()}
+    {#snippet customIcon()}
       {#if LINKED_INSTANCE_URL}
         {#if $site}
           <Avatar

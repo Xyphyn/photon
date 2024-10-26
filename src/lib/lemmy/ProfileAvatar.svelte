@@ -1,13 +1,13 @@
 <script lang="ts">
-  import type { Profile } from '$lib/auth.js'
+  import type { Profile } from '$lib/auth.svelte.js'
   import { Icon, UserCircle } from 'svelte-hero-icons'
 
   interface Props {
-    profile?: Profile | undefined;
-    selected?: boolean;
-    index?: number;
-    size?: number;
-    guest?: boolean;
+    profile?: Profile | undefined
+    selected?: boolean
+    index?: number
+    size?: number
+    guest?: boolean
   }
 
   let {
@@ -15,8 +15,8 @@
     selected = false,
     index = 0,
     size = 20,
-    guest = false
-  }: Props = $props();
+    guest = false,
+  }: Props = $props()
 </script>
 
 {#if profile}
@@ -40,8 +40,8 @@
         style={guest
           ? `color: gray`
           : profile.color
-          ? `color: ${profile.color}`
-          : `filter: hue-rotate(${index * 50}deg)`}
+            ? `color: ${profile.color}`
+            : `filter: hue-rotate(${index * 50}deg)`}
       />
     {/if}
   </div>

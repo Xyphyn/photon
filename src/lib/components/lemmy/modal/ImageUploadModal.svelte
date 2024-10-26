@@ -1,11 +1,11 @@
 <script lang="ts">
   import { preventDefault } from 'svelte/legacy'
 
-  import { profile } from '$lib/auth.js'
+  import { profile } from '$lib/auth.svelte.js'
   import ProgressBar from '$lib/components/ui/ProgressBar.svelte'
   import { errorMessage } from '$lib/lemmy/error'
   import { t } from '$lib/translations'
-  import { uploadImage } from '$lib/util.js'
+  import { uploadImage } from '$lib/util.svelte.js'
   import { ImageInput, Spinner, toast } from 'mono-svelte'
   import { Button, Modal } from 'mono-svelte'
   import { createEventDispatcher } from 'svelte'
@@ -73,7 +73,7 @@
 </script>
 
 <Modal bind:open>
-  {#snippet title()}
+  {#snippet customTitle()}
     <div class="flex items-center gap-2">Upload image</div>
   {/snippet}
   {#if progress != 1}

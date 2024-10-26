@@ -3,7 +3,7 @@
 
   import Post from '$lib/components/lemmy/post/Post.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import { userSettings } from '$lib/settings.js'
+  import { settings } from '$lib/settings.svelte.js'
   import type {
     GetPostsResponse,
     ListingType,
@@ -29,7 +29,7 @@
     type SvelteVirtualizer,
   } from '@tanstack/svelte-virtual'
   import { afterNavigate, beforeNavigate } from '$app/navigation'
-  import { combineCrossposts } from './crosspost'
+  import { combineCrossposts } from './crosspost.svelte'
   import { client } from '$lib/lemmy'
   import {
     postFeeds,
@@ -199,7 +199,7 @@
 <!-- <svelte:window on:keydown={handleKeydown} /> -->
 
 <ul
-  class="flex flex-col list-none {$userSettings.view == 'card'
+  class="flex flex-col list-none {settings.view == 'card'
     ? 'gap-3 md:gap-4'
     : 'divide-y'} divide-slate-200 dark:divide-zinc-800"
 >
@@ -247,9 +247,9 @@
                 hideCommunity={community}
                 view={(posts[row.index]?.post.featured_community ||
                   posts[row.index]?.post.featured_local) &&
-                $userSettings.posts.compactFeatured
+                settings.posts.compactFeatured
                   ? 'compact'
-                  : $userSettings.view}
+                  : settings.view}
                 {post}
                 class="transition-all duration-250"
                 on:hide={() => {
@@ -263,7 +263,7 @@
     </div>
   {/if}
 
-  {#if $userSettings.infiniteScroll && browser}
+  {#if settings.infiniteScroll && browser}
     {#if error}
       <div
         class="flex flex-col justify-center items-center

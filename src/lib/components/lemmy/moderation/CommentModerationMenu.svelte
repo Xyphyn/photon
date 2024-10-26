@@ -9,7 +9,7 @@
     Trash,
   } from 'svelte-hero-icons'
   import { isCommentView } from '$lib/lemmy/item.js'
-  import { profile } from '$lib/auth.js'
+  import { profile } from '$lib/auth.svelte.js'
   import ShieldIcon from '$lib/components/lemmy/moderation/ShieldIcon.svelte'
   import { Button, Menu, MenuButton, MenuDivider } from 'mono-svelte'
   import { t } from '$lib/translations'

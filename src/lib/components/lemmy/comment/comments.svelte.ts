@@ -5,9 +5,6 @@ export interface CommentNodeI {
   children: Array<CommentNodeI>
   depth: number
   loading?: boolean
-  ui: {
-    open?: boolean
-  }
 }
 
 function getCommentParentId(comment?: Comment): number | undefined {
@@ -40,10 +37,7 @@ export function buildCommentsTree(
     const node: CommentNodeI = {
       comment_view,
       children: [],
-      depth: depth,
-      ui: {
-        open: true,
-      },
+      depth: depth
     }
     min_depth = Math.min(min_depth, depth)
     if (filter(comment_view)) {
@@ -109,7 +103,6 @@ export function insertCommentIntoTree(
     comment_view: cv,
     children: [],
     depth: 0,
-    ui: {},
   }
 
   const parentId = getCommentParentId(cv.comment)

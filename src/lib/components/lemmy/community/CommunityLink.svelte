@@ -1,6 +1,6 @@
 <script lang="ts">
   import Avatar from '$lib/components/ui/Avatar.svelte'
-  import { userSettings } from '$lib/settings.js'
+  import { settings } from '$lib/settings.svelte.js'
   import { t } from '$lib/translations'
   import type { Community } from 'lemmy-js-client'
   import { ExclamationTriangle, Icon } from 'svelte-hero-icons'
@@ -23,7 +23,7 @@
     avatar = false,
     name = true,
     avatarSize = 24,
-    showInstance = $userSettings.showInstances.community,
+    showInstance = settings.showInstances.community,
     displayName = true,
     badges = {
       nsfw: false,

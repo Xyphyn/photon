@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { userSettings } from '$lib/settings.js'
+  import { settings } from '$lib/settings.svelte.js'
   import { t } from '$lib/translations'
   import { Select } from 'mono-svelte'
   import {
@@ -21,7 +21,7 @@
   let { showLabel = true, ...rest }: Props = $props()
 </script>
 
-<Select {...rest} bind:value={$userSettings.view}>
+<Select {...rest} bind:value={settings.view}>
   {#snippet customLabel()}
     {#if showLabel}
       <span class="flex items-center gap-1">

@@ -4,7 +4,7 @@
   import { Button, Modal, Select, Spinner, TextArea } from 'mono-svelte'
   import { text } from './translation'
   import { locale, t } from '$lib/translations'
-  import { userSettings } from '$lib/settings'
+  import { settings } from '$lib/settings.svelte'
   import { ArrowRight, Icon } from 'svelte-hero-icons'
   import MarkdownEditor from '../markdown/MarkdownEditor.svelte'
 
@@ -30,7 +30,7 @@
   let to = $state($locale)
 
   async function translate(text: string) {
-    const url = $userSettings.translator
+    const url = settings.translator
 
     if (!url) {
       return

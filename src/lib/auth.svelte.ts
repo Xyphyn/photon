@@ -6,7 +6,7 @@ import { toast } from 'mono-svelte'
 import { DEFAULT_INSTANCE_URL, instance } from '$lib/instance.js'
 import { client, getClient } from '$lib/lemmy.js'
 import { site } from './lemmy'
-import { instanceToURL, moveItem } from '$lib/util.js'
+import { instanceToURL, moveItem } from '$lib/util.svelte'
 import {
   type GetSiteResponse,
   type MyUserInfo,

@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { preventDefault } from 'svelte/legacy';
+  import { preventDefault } from 'svelte/legacy'
 
-  import { deleteProfile, profile, setUser } from '$lib/auth'
+  import { deleteProfile, profile, setUser } from '$lib/auth.svelte'
   import { client } from '$lib/lemmy'
   import { instance as currentInstance } from '$lib/instance'
   import { t } from '$lib/translations'

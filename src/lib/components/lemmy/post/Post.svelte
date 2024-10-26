@@ -3,7 +3,7 @@
   import { isImage, isVideo } from '$lib/ui/image.js'
   import { getInstance } from '$lib/lemmy.js'
   import PostActions from '$lib/components/lemmy/post/PostActions.svelte'
-  import { userSettings } from '$lib/settings.js'
+  import { settings } from '$lib/settings.svelte.js'
   import PostLink from '$lib/components/lemmy/post/link/PostLink.svelte'
   import PostMeta, {
     parseTags,
@@ -28,18 +28,17 @@
   import PostMedia from '$lib/components/lemmy/post/media/PostMedia.svelte'
   import PostMediaCompact from '$lib/components/lemmy/post/media/PostMediaCompact.svelte'
   import PostBody from './PostBody.svelte'
-  import { profile } from '$lib/auth'
+  import { profile } from '$lib/auth.svelte'
   import { goto } from '$app/navigation'
 
   function getTagRule(tags: Tag[]): 'blur' | 'hide' | undefined {
     const tagContent = tags.map((t) => t.content.toLowerCase())
 
     let rule: 'blur' | 'hide' | undefined
-    if ($userSettings.nsfwBlur && (post.post.nsfw || post.community.nsfw))
+    if (settings.nsfwBlur && (post.post.nsfw || post.community.nsfw))
       rule = 'blur'
     tagContent.forEach((tag) => {
-      if ($userSettings.tagRules?.[tag])
-        rule = $userSettings.tagRules?.[tag] ?? rule
+      if (settings.tagRules?.[tag]) rule = settings.tagRules?.[tag] ?? rule
       if (rule == 'hide') return rule
     })
 
@@ -69,7 +68,7 @@
     post,
     actions = true,
     hideCommunity = false,
-    view = $userSettings.view,
+    view = settings.view,
     style = '',
     class: clazz = '',
     badges,
@@ -79,13 +78,13 @@
   let type = $derived(mediaType(post.post.url, view))
   let rule = $derived(getTagRule(tags.tags))
   let hideTitle = $derived(
-    $userSettings.posts.deduplicateEmbed &&
+    settings.posts.deduplicateEmbed &&
       post.post.embed_title == post.post.name &&
       view != 'compact' &&
       type != 'iframe',
   )
   let hideBody = $derived(
-    $userSettings.posts.deduplicateEmbed &&
+    settings.posts.deduplicateEmbed &&
       post.post.embed_description == post.post.body &&
       view != 'compact',
   )
@@ -102,7 +101,7 @@
 <div
   class="post relative max-w-full min-w-0 w-full cursor-pointer outline-none
   group
-  {$userSettings.leftAlign ? 'left-align' : ''}
+  {settings.leftAlign ? 'left-align' : ''}
   {view == 'compact' ? 'py-3 list-type compact' : ''}
   {view == 'list' ? 'py-5 list-type' : ''}
   {view == 'cozy' ? 'py-5 flex flex-col gap-2' : ''}
@@ -168,7 +167,7 @@
       <PostMediaCompact
         post={post.post}
         {type}
-        class="{$userSettings.leftAlign
+        class="{settings.leftAlign
           ? 'mr-3'
           : 'ml-3'} flex-shrink no-list-margin"
         style="grid-area: media;"

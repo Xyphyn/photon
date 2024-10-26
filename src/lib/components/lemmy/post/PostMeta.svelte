@@ -65,7 +65,7 @@
   } from 'svelte-hero-icons'
   import { getInstance } from '$lib/lemmy.js'
   import ShieldIcon from '../moderation/ShieldIcon.svelte'
-  import { userSettings, type View } from '$lib/settings'
+  import { settings, type View } from '$lib/settings.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import { t } from '$lib/translations'
   import { Pencil, type IconSource } from 'svelte-hero-icons'
@@ -315,11 +315,11 @@
     href="/post/{getInstance()}/{id}"
     class="inline hover:underline
     hover:text-primary-900 hover:dark:text-primary-100 transition-colors max-[480px]:!mt-0
-    {$userSettings.font == 'satoshi/nunito'
+    {settings.font == 'satoshi/nunito'
       ? 'font-display font-semibold'
       : 'font-medium'} {titleClass}"
-    class:text-slate-600={$userSettings.markReadPosts && read}
-    class:dark:text-zinc-400={$userSettings.markReadPosts && read}
+    class:text-slate-600={settings.markReadPosts && read}
+    class:dark:text-zinc-400={settings.markReadPosts && read}
     class:text-base={view == 'compact'}
     class:text-lg={view != 'compact'}
     style="grid-area: title;"

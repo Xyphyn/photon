@@ -29,6 +29,33 @@
   import { focusTrap } from 'svelte-focus-trap'
   import { tick } from 'svelte'
 
+  interface Props {
+    openOnHover?: boolean
+    open?: boolean
+    placement?: Placement
+    middleware?: Middleware[]
+    strategy?: Strategy
+    manual?: boolean
+    popoverClass?: string
+    class?: string
+    target?: import('svelte').Snippet
+    popover?: import('svelte').Snippet
+    children?: import('svelte').Snippet
+  }
+
+  let {
+    openOnHover = false,
+    open = $bindable(false),
+    placement = 'bottom-start',
+    middleware = [offset(6), shift(), flip()],
+    strategy = 'fixed',
+    manual = false,
+    popoverClass = '',
+    class: clazz = '',
+    target,
+    popover,
+    children,
+  }: Props = $props()
 
   let canUseContents = $state(true)
 
@@ -56,35 +83,6 @@
       floatingRef(node)
     }
   }
-
-  interface Props {
-    openOnHover?: boolean;
-    open?: boolean;
-    placement?: Placement;
-    middleware?: Middleware[];
-    strategy?: Strategy;
-    manual?: boolean;
-    popoverClass?: string;
-    class?: string;
-    target?: import('svelte').Snippet;
-    popover?: import('svelte').Snippet;
-    children?: import('svelte').Snippet;
-  }
-
-  let {
-    openOnHover = false,
-    open = $bindable(false),
-    placement = 'bottom-start',
-    middleware = [offset(6), shift(), flip()],
-    strategy = 'fixed',
-    manual = false,
-    popoverClass = '',
-    class: clazz = '',
-    target,
-    popover,
-    children
-  }: Props = $props();
-  
 </script>
 
 <svelte:body

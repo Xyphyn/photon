@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { userSettings } from '$lib/settings'
+  import { settings } from '$lib/settings.svelte'
 
   interface Props {
     width?: number

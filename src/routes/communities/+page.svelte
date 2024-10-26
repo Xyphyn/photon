@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { preventDefault } from 'svelte/legacy';
+  import { preventDefault } from 'svelte/legacy'
 
   import { navigating, page } from '$app/stores'
   import {
@@ -10,7 +10,7 @@
     QuestionMarkCircle,
   } from 'svelte-hero-icons'
   import Pageination from '$lib/components/ui/Pageination.svelte'
-  import { searchParam } from '$lib/util.js'
+  import { searchParam } from '$lib/util.svelte.js'
   import {
     Button,
     Material,
@@ -31,21 +31,18 @@
   import { fly } from 'svelte/transition'
   import { backOut, expoOut } from 'svelte/easing'
 
-  let { data } = $props();
+  let { data } = $props()
 
   let search = $state(data.query || '')
-  let searchElement: HTMLInputElement = $state()
+  let searchElement: HTMLInputElement | undefined = $state()
   let instance = ''
 
-  let virtualList: HTMLDivElement = $state()
-  let offset: number = $state(0)
-
-  let showTop =
-    $derived((data.query ?? '' != '') && data.communities.length > 0 && data.page == 1)
+  let showTop = $derived(
+    (data.query ?? '' != '') && data.communities.length > 0 && data.page == 1,
+  )
 </script>
 
 <svelte:window
-  bind:scrollY={offset}
   onkeydown={(e) => {
     if (e.target == document.body) searchElement?.focus()
   }}
@@ -65,7 +62,8 @@
   <Tabs routes={[]} class="p-2 dark:bg-zinc-925/70 shadow-md shadow-black/5">
     <form
       onsubmit={preventDefault(() =>
-        searchParam($page.url, 'q', search, 'page'))}
+        searchParam($page.url, 'q', search, 'page'),
+      )}
       class="flex gap-2 flex-row items-center w-full text-base h-10"
     >
       <TextInput
@@ -86,8 +84,8 @@
         loading={$navigating != null}
       >
         {#snippet prefix()}
-                <Icon src={MagnifyingGlass} size="16" micro  />
-              {/snippet}
+          <Icon src={MagnifyingGlass} size="16" micro />
+        {/snippet}
       </Button>
     </form>
   </Tabs>
@@ -149,7 +147,7 @@
   {/if}
   {#if data.communities}
     {@const sliced = data.communities.slice(showTop ? 3 : 0)}
-    <div class="-mx-4 sm:-mx-6 h-full" bind:this={virtualList}>
+    <div class="-mx-4 sm:-mx-6 h-full">
       {#each sliced as community, index (community.community.id)}
         <div
           class="px-6 hover:bg-slate-50 hover:dark:bg-zinc-900 transition-colors @container

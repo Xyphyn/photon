@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { findClosestNumber } from '$lib/util.js'
+  import { findClosestNumber } from '$lib/util.svelte.js'
   import { createAvatar } from '@dicebear/core'
   import * as initials from '@dicebear/initials'
 

@@ -10,7 +10,7 @@
   import { optimizeImageURL } from '../helpers'
   import PostLinkSources from './PostLinkSources.svelte'
   import { t } from '$lib/translations'
-  import type { View } from '$lib/settings'
+  import type { View } from '$lib/settings.svelte'
 
   interface Props {
     url: string

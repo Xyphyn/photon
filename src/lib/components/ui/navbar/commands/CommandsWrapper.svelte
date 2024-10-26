@@ -5,10 +5,10 @@
   import { CommandLine, Icon } from 'svelte-hero-icons'
 
   interface Props {
-    open?: boolean;
+    open?: boolean
   }
 
-  let { open = $bindable(false) }: Props = $props();
+  let { open = $bindable(false) }: Props = $props()
 
   function handleKeydown(event: KeyboardEvent) {
     if (
@@ -25,8 +25,8 @@
 
 {#if open}
   <Modal bind:open>
-    {#snippet title()}
-        <span  class="flex items-center gap-1">
+    {#snippet customTitle()}
+      <span class="flex items-center gap-1">
         <svg
           width="24"
           height="24"
@@ -40,7 +40,7 @@
         </svg>
         {$t('nav.commands.prompt')}
       </span>
-      {/snippet}
+    {/snippet}
     {#await import('./Commands.svelte')}
       <div class="h-96 flex flex-col gap-2 items-center justify-center">
         <Spinner width={32} />

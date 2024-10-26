@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { preventDefault } from 'svelte/legacy';
+  import { preventDefault } from 'svelte/legacy'
 
-  import { profile } from '$lib/auth.js'
+  import { profile } from '$lib/auth.svelte.js'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import EditableList from '$lib/components/ui/list/EditableList.svelte'
@@ -9,13 +9,13 @@
   import { instance } from '$lib/instance.js'
   import { getClient } from '$lib/lemmy.js'
   import { addAdmin } from '$lib/lemmy/user.js'
-  import { removeItem, trycatch } from '$lib/util.js'
+  import { removeItem, trycatch } from '$lib/util.svelte.js'
   import { Button, TextInput } from 'mono-svelte'
   import { Icon, Plus, QuestionMarkCircle, Trash } from 'svelte-hero-icons'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { t } from '$lib/translations.js'
 
-  let { data = $bindable() } = $props();
+  let { data = $bindable() } = $props()
 
   let newAdmin: string = $state(''),
     adding: boolean = $state(false)
@@ -33,7 +33,7 @@
       getClient().addAdmin({
         added: false,
         person_id: id,
-      })
+      }),
     )
 
     if (result) {
@@ -48,9 +48,9 @@
 
 <Header pageHeader>{$t('routes.admin.team.title')}</Header>
 {#if data.site}
-  <EditableList  on:action={(e) => removeAdmin(e.detail, false)}>
+  <EditableList on:action={(e) => removeAdmin(e.detail, false)}>
     {#snippet children({ action })}
-        {#if data.site.admins.length <= 0}
+      {#if data.site.admins.length <= 0}
         <Placeholder
           icon={QuestionMarkCircle}
           title={$t('routes.admin.team.empty.title')}
@@ -66,8 +66,8 @@
           </div>
         {/each}
       {/if}
-          {/snippet}
-    </EditableList>
+    {/snippet}
+  </EditableList>
   <form
     class="flex flex-row items-center gap-2 mt-auto w-full"
     onsubmit={preventDefault(() => {
@@ -98,8 +98,8 @@
     />
     <Button loading={adding} disabled={adding} size="md" class="h-full" submit>
       {#snippet prefix()}
-            <Icon src={Plus} mini size="16"  />
-          {/snippet}
+        <Icon src={Plus} mini size="16" />
+      {/snippet}
       {$t('common.add')}
     </Button>
   </form>

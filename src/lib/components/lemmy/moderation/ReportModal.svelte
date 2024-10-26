@@ -10,7 +10,7 @@
     PostView,
     PrivateMessageView,
   } from 'lemmy-js-client'
-  import { profile } from '$lib/auth.js'
+  import { profile } from '$lib/auth.svelte.js'
   import { Button, Modal } from 'mono-svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { onMount } from 'svelte'
