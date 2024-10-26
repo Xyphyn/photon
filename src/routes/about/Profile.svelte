@@ -1,14 +1,24 @@
 <script lang="ts">
   import { Badge } from 'mono-svelte'
 
-  export let name: string
-  export let description: string
-  export let badge: string | undefined = undefined
 
-  export let link: string = '#'
 
-  let clazz: string = ''
-  export { clazz as class }
+  interface Props {
+    name: string;
+    description: string;
+    badge?: string | undefined;
+    link?: string;
+    class?: string;
+  }
+
+  let {
+    name,
+    description,
+    badge = undefined,
+    link = '#',
+    class: clazz = ''
+  }: Props = $props();
+  
 </script>
 
 <div class="flex flex-col w-max {clazz}">

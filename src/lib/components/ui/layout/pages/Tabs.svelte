@@ -3,25 +3,34 @@
   import { page } from '$app/stores'
   import { fly } from 'svelte/transition'
 
-  export let routes: {
-    href: string
-    name: string
-  }[]
-  export let currentRoute: string | undefined = undefined
-  export let isSelected: (
-    url: URL,
-    currentRoute: string | undefined,
-    route: string,
-    defaultRoute?: string
-  ) => boolean = (url, currentRoute, route) =>
-    (currentRoute ?? url.pathname) == route
-  export let buildUrl: (
-    currentRoute: string | undefined,
-    href: string
-  ) => string = (route, href) => href
-  export let defaultRoute: string | undefined = undefined
-  let clazz: string = ''
-  export { clazz as class }
+  interface Props {
+    routes: {
+      href: string
+      name: string
+    }[]
+    currentRoute?: string | undefined
+    isSelected?: (
+      url: URL,
+      currentRoute: string | undefined,
+      route: string,
+      defaultRoute?: string,
+    ) => boolean
+    buildUrl?: (currentRoute: string | undefined, href: string) => string
+    defaultRoute?: string | undefined
+    class?: string
+    children?: import('svelte').Snippet
+  }
+
+  let {
+    routes,
+    currentRoute = undefined,
+    isSelected = (url, currentRoute, route) =>
+      (currentRoute ?? url.pathname) == route,
+    buildUrl = (route, href) => href,
+    defaultRoute = undefined,
+    class: clazz = '',
+    children,
+  }: Props = $props()
 </script>
 
 <nav
@@ -32,7 +41,7 @@
 >
   {#each routes as route}
     <a
-      on:click={() => invalidate(route.href)}
+      onclick={() => invalidate(route.href)}
       href={buildUrl(currentRoute, route.href)}
       class="font-medium rounded-full px-4 py-1 hover:bg-slate-200/40 hover:dark:bg-zinc-700/40
       transition-colors duration-100 relative z-0 flex-shrink-0"
@@ -46,5 +55,5 @@
       {/if}
     </a>
   {/each}
-  <slot />
+  {@render children?.()}
 </nav>

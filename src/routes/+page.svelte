@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
 </script>
 
 <script lang="ts">
@@ -17,7 +17,13 @@
   import VirtualFeed from '$lib/components/lemmy/post/feed/VirtualFeed.svelte'
   import PostFeed from '$lib/components/lemmy/post/feed/PostFeed.svelte'
 
-  export let data
+  let { data = $bindable() } = $props();
+
+  const SvelteComponent = $derived($userSettings.infiniteScroll &&
+    browser &&
+    !$userSettings.posts.noVirtualize
+      ? VirtualFeed
+      : PostFeed);
 </script>
 
 <div class="flex flex-col gap-2 max-w-full w-full min-w-0">
@@ -25,22 +31,19 @@
     <Header pageHeader>
       {$t('routes.frontpage.title')}
 
-      <div class="flex items-center gap-2" slot="extended">
-        {#if data.type_}
-          <Location changeDefault selected={data.type_} />
-        {/if}
-        <Sort changeDefault selected={data.sort} />
-        <ViewSelect />
-      </div>
+      {#snippet extended()}
+            <div class="flex items-center gap-2" >
+          {#if data.type_}
+            <Location changeDefault selected={data.type_} />
+          {/if}
+          <Sort changeDefault selected={data.sort} />
+          <ViewSelect />
+        </div>
+          {/snippet}
     </Header>
   </header>
 
-  <svelte:component
-    this={$userSettings.infiniteScroll &&
-    browser &&
-    !$userSettings.posts.noVirtualize
-      ? VirtualFeed
-      : PostFeed}
+  <SvelteComponent
     posts={data.posts.posts}
     bind:feedData={data}
     feedId="main"

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy'
+
   import { page } from '$app/stores'
   import { userSettings } from '$lib/settings'
   import { t } from '$lib/translations'
@@ -25,26 +27,40 @@
   import { backOut } from 'svelte/easing'
   import { fly, slide } from 'svelte/transition'
 
-  export let selected: string
-  export let navigate: boolean = true
-  export let changeDefault: boolean = false
-
-  let sort: string = selected?.startsWith('Top') ? 'TopAll' : selected
-  $: if (selected) {
-    sort = selected?.startsWith('Top') ? 'TopAll' : selected
+  interface Props {
+    selected: string
+    navigate?: boolean
+    changeDefault?: boolean
+    class?: string
+    [key: string]: any
   }
-  const setSelected = () => (selected = sort)
-  $: changeDefault
-    ? ($userSettings.defaultSort.sort = selected as SortType)
-    : undefined
 
-  let clazz: string = ''
-  export { clazz as class }
+  let {
+    selected = $bindable(),
+    navigate = true,
+    changeDefault = false,
+    class: clazz = '',
+    ...rest
+  }: Props = $props()
+
+  let sort: string = $state(selected?.startsWith('Top') ? 'TopAll' : selected)
+  const setSelected = () => (selected = sort)
+
+  run(() => {
+    if (selected) {
+      sort = selected?.startsWith('Top') ? 'TopAll' : selected
+    }
+  })
+  run(() => {
+    changeDefault
+      ? ($userSettings.defaultSort.sort = selected as SortType)
+      : undefined
+  })
 </script>
 
 <div class="flex flex-row {clazz}">
   <Select
-    {...$$restProps}
+    {...rest}
     class={selected?.startsWith('Top') ? 'rounded-r-none' : ''}
     bind:value={sort}
     on:change={(e) => {
@@ -52,10 +68,12 @@
       if (navigate) searchParam($page.url, 'sort', selected, 'page', 'cursor')
     }}
   >
-    <span slot="label" class="flex items-center gap-1">
-      <Icon src={ChartBar} size="13" micro />
-      {$t('filter.sort.label')}
-    </span>
+    {#snippet label()}
+      <span class="flex items-center gap-1">
+        <Icon src={ChartBar} size="13" micro />
+        {$t('filter.sort.label')}
+      </span>
+    {/snippet}
     <option value="Active">
       <Icon
         src={ArrowTrendingUp}
@@ -149,10 +167,12 @@
             searchParam($page.url, 'sort', selected, 'page', 'cursor')
         }}
       >
-        <span slot="label" class="flex items-center gap-1">
-          <Icon src={Clock} size="15" micro />
-          {$t('filter.sort.top.time.label')}
-        </span>
+        {#snippet label()}
+          <span class="flex items-center gap-1">
+            <Icon src={Clock} size="15" micro />
+            {$t('filter.sort.top.time.label')}
+          </span>
+        {/snippet}
         <option value="TopAll">
           <Icon
             src={PlusCircle}

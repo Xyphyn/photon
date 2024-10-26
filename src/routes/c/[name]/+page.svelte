@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { navigating, page } from '$app/stores'
   import CommunityCard from '$lib/components/lemmy/community/CommunityCard.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
@@ -31,11 +33,14 @@
   import CommunityHeader from '$lib/components/lemmy/community/CommunityHeader.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
-  export let data
+  let { data = $bindable() } = $props();
 
-  $: community = data.community.community_view
+  let community;
+  run(() => {
+    community = data.community.community_view
+  });
 
-  let sidebar: boolean = false
+  let sidebar: boolean = $state(false)
 
   onMount(() => {
     if (browser)
@@ -63,7 +68,9 @@
 
 {#if sidebar}
   <Modal bind:open={sidebar}>
-    <span slot="title">About</span>
+    {#snippet title()}
+        <span >About</span>
+      {/snippet}
     <div>
       <CommunityCard
         bind:community_view={community}
@@ -83,7 +90,9 @@
       counts={community.counts}
       class="w-full relative"
     />
-    <Sort selected={data.sort} slot="extended" />
+    {#snippet extended()}
+        <Sort selected={data.sort}  />
+      {/snippet}
   </Header>
   {#if community.blocked}
     <Placeholder
@@ -92,13 +101,15 @@
       description="You've blocked this community."
     >
       <Button href="/profile/blocks">
-        <Icon src={ArrowRight} size="16" mini slot="suffix" />
+        {#snippet suffix()}
+                <Icon src={ArrowRight} size="16" mini  />
+              {/snippet}
         Blocked Communities
       </Button>
     </Placeholder>
   {:else}
-    <svelte:component
-      this={browser ? VirtualFeed : PostFeed}
+    {@const SvelteComponent = browser ? VirtualFeed : PostFeed}
+    <SvelteComponent
       posts={data.posts.posts}
       bind:feedData={data}
       feedId="community"

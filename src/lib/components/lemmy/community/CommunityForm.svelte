@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { preventDefault } from 'svelte/legacy'
+
   import { goto } from '$app/navigation'
   import { profile } from '$lib/auth.js'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
@@ -15,30 +17,38 @@
   import ImageUploadModal from '../modal/ImageUploadModal.svelte'
   import Select from 'mono-svelte/forms/Select.svelte'
 
-  /**
-   * The community ID to edit.
-   */
-  export let edit: number | undefined = undefined
-
-  export let formData: {
-    name: string
-    displayName: string
-    icon?: string
-    banner?: string
-    sidebar?: string
-    nsfw: boolean
-    postsLockedToModerators: boolean
-    submitting: boolean
-    visibility: 'Public' | 'LocalOnly'
-  } = {
-    name: '',
-    displayName: '',
-    sidebar: '',
-    nsfw: false,
-    postsLockedToModerators: false,
-    submitting: false,
-    visibility: 'Public',
+  interface Props {
+    /**
+     * The community ID to edit.
+     */
+    edit?: number | undefined
+    formData?: {
+      name: string
+      displayName: string
+      icon?: string
+      banner?: string
+      sidebar?: string
+      nsfw: boolean
+      postsLockedToModerators: boolean
+      submitting: boolean
+      visibility: 'Public' | 'LocalOnly'
+    }
+    formtitle?: import('svelte').Snippet
   }
+
+  let {
+    edit = undefined,
+    formData = $bindable({
+      name: '',
+      displayName: '',
+      sidebar: '',
+      nsfw: false,
+      postsLockedToModerators: false,
+      submitting: false,
+      visibility: 'Public',
+    }),
+    formtitle,
+  }: Props = $props()
 
   async function submit() {
     if (!$profile?.jwt) return
@@ -103,7 +113,7 @@
         goto(
           `/c/${res.community_view.community.name}@${
             new URL(res.community_view.community.actor_id).hostname
-          }`
+          }`,
         )
     } catch (err) {
       toast({
@@ -115,19 +125,19 @@
     formData.submitting = false
   }
 
-  let uploading = {
+  let uploading = $state({
     banner: false,
     icon: false,
-  }
+  })
 </script>
 
 <form
-  on:submit|preventDefault={submit}
+  onsubmit={preventDefault(submit)}
   class="flex flex-col gap-4 h-full w-full"
 >
-  <slot name="formtitle">
+  {#if formtitle}{@render formtitle()}{:else}
     <Header>{$t('routes.createCommunity')}</Header>
-  </slot>
+  {/if}
   <TextInput
     required
     label={$t('form.name')}
@@ -147,7 +157,7 @@
       <Label>{$t('routes.admin.config.icon')}</Label>
       <button
         type="button"
-        on:click={() => (uploading.icon = !uploading.icon)}
+        onclick={() => (uploading.icon = !uploading.icon)}
         class="flex flex-col gap-4 bg-white dark:bg-black border border-slate-300 dark:border-zinc-800 p-4 w-full h-32 rounded-xl"
       >
         {#if formData.icon}
@@ -175,7 +185,7 @@
       <Label>{$t('routes.admin.config.banner')}</Label>
       <button
         type="button"
-        on:click={() => (uploading.banner = !uploading.banner)}
+        onclick={() => (uploading.banner = !uploading.banner)}
         class="flex flex-col gap-4 bg-white dark:bg-black border border-slate-300 dark:border-zinc-800 p-4 w-full h-32 rounded-xl"
       >
         {#if formData.banner}

@@ -9,9 +9,14 @@
   import Avatar from '../../Avatar.svelte'
   import type { Action } from './actions'
 
-  export let action: Action
-  let clazz: string = ''
-  export { clazz as class }
+  interface Props {
+    action: Action;
+    class?: string;
+    children?: import('svelte').Snippet;
+  }
+
+  let { action, class: clazz = '', children }: Props = $props();
+  
 </script>
 
 <Button
@@ -29,7 +34,7 @@
   {:else}
     <Icon src={action.icon ?? QuestionMarkCircle} size="20" />
   {/if}
-  <slot />
+  {@render children?.()}
   <span class="mr-auto inline-flex flex-col">
     <span>{action.name}</span>
     {#if action.detail}

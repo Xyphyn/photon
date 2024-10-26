@@ -4,10 +4,13 @@
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import type { PrivateMessageView } from 'lemmy-js-client'
 
-  export let message: PrivateMessageView
-  export let meta: boolean = true
+  interface Props {
+    message: PrivateMessageView
+    meta?: boolean
+    style?: string
+  }
 
-  export let style: string = ''
+  let { message, meta = true, style = '' }: Props = $props()
 </script>
 
 <div class="flex flex-col gap-2 text-sm" {style}>

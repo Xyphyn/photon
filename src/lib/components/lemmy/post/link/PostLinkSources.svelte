@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
   const sources: {
     getLink: (url: string) => string
     name: string
@@ -43,12 +43,20 @@
   import type { MediaType } from '../helpers'
   import { Icon, Share } from 'svelte-hero-icons'
 
-  export let url: string
-  export let type: MediaType = 'embed'
+  interface Props {
+    url: string
+    type?: MediaType
+    target?: import('svelte').Snippet
+    [key: string]: any
+  }
+
+  let { url, type = 'embed', target, ...rest }: Props = $props()
 </script>
 
-<Menu {...$$restProps}>
-  <slot name="target" slot="target" />
+<Menu {...rest}>
+  {#snippet target()}
+    {@render target?.()}
+  {/snippet}
 
   <MenuDivider>{$t('post.actions.link.title')}</MenuDivider>
   {#each sources as source}
@@ -66,7 +74,9 @@
       toast({ content: $t('toast.copied') })
     }}
   >
-    <Icon src={Share} size="16" micro slot="prefix" />
+    {#snippet prefix()}
+      <Icon src={Share} size="16" micro />
+    {/snippet}
     {$t('post.actions.more.share')}
   </MenuButton>
 </Menu>

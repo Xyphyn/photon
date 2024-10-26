@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy'
+
   import type { Post } from 'lemmy-js-client'
   import type { CommentNodeI } from './comments'
   import { createWindowVirtualizer } from '@tanstack/svelte-virtual'
@@ -6,31 +8,37 @@
   import { browser } from '$app/environment'
   import { onMount } from 'svelte'
 
-  export let nodes: CommentNodeI[]
-  export let post: Post
-  export let scrollTo: string | undefined
+  interface Props {
+    nodes: CommentNodeI[]
+    post: Post
+    scrollTo: string | undefined
+  }
 
-  let virtualListEl: HTMLElement | undefined = undefined
+  let { nodes, post, scrollTo }: Props = $props()
 
-  $: virtualizer = createWindowVirtualizer({
-    count: nodes.length,
-    estimateSize: () => 30,
-    scrollMargin: virtualListEl?.offsetTop,
-    initialRect: {
-      height: 1500,
-      width: 99999,
-    },
-    overscan: 5,
-  })
+  let virtualListEl: HTMLElement | undefined = $state(undefined)
 
-  let virtualItemEls: HTMLElement[] = []
+  let virtualizer = $derived(
+    createWindowVirtualizer({
+      count: nodes.length,
+      estimateSize: () => 30,
+      scrollMargin: virtualListEl?.offsetTop,
+      initialRect: {
+        height: 1500,
+        width: 99999,
+      },
+      overscan: 5,
+    }),
+  )
 
-  $: items = $virtualizer.getVirtualItems()
+  let virtualItemEls: HTMLElement[] = $state([])
 
-  $: {
+  let items = $derived($virtualizer.getVirtualItems())
+
+  run(() => {
     if (virtualItemEls.length)
       virtualItemEls.forEach((el) => $virtualizer.measureElement(el))
-  }
+  })
 
   onMount(() => {
     if (scrollTo) {

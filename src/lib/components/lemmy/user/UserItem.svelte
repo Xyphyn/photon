@@ -11,12 +11,21 @@
   import { userLink } from '$lib/lemmy/generic'
   import Avatar from '$lib/components/ui/Avatar.svelte'
 
-  export let user: PersonView
-  export let view: 'cozy' | 'compact' = 'compact'
-  export let showCounts: boolean = true
+  interface Props {
+    user: PersonView
+    view?: 'cozy' | 'compact'
+    showCounts?: boolean
+    class?: string
+    icon?: import('svelte').Snippet
+  }
 
-  let clazz: string = 'py-4 flex flex-col gap-4 text-sm max-w-full relative'
-  export { clazz as class }
+  let {
+    user,
+    view = 'compact',
+    showCounts = true,
+    class: clazz = 'py-4 flex flex-col gap-4 text-sm max-w-full relative',
+    icon,
+  }: Props = $props()
 </script>
 
 <div class={clazz}>
@@ -32,9 +41,9 @@
           ? 'flex-col gap-2'
           : 'flex-row'} gap-2 items-center"
       >
-        <slot name="icon">
+        {#if icon}{@render icon()}{:else}
           <Avatar url={user.person.avatar} width={32} alt={user.person.name} />
-        </slot>
+        {/if}
         <div class="flex flex-col">
           <div class="font-medium text-base">
             {user.person.display_name ?? user.person.name}

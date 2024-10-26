@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
   export function formatRelativeDate(
     date: Date,
     options: Intl.RelativeTimeFormatOptions,
@@ -41,12 +41,6 @@
 <script lang="ts">
   import { locale } from '$lib/translations'
 
-  export let date: Date
-  export let relativeTo: Date | undefined = undefined
-  export let options: Intl.RelativeTimeFormatOptions = {
-    numeric: 'always',
-    style: 'narrow',
-  }
 
   const toLocaleDateString = (date: Date): string => {
     try {
@@ -56,10 +50,26 @@
     }
   }
 
-  $: dateTime = toLocaleDateString(date)
-  export let style: string = ''
-  let clazz: string = ''
-  export { clazz as class }
+  interface Props {
+    date: Date;
+    relativeTo?: Date | undefined;
+    options?: Intl.RelativeTimeFormatOptions;
+    style?: string;
+    class?: string;
+  }
+
+  let {
+    date,
+    relativeTo = undefined,
+    options = {
+    numeric: 'always',
+    style: 'narrow',
+  },
+    style = '',
+    class: clazz = ''
+  }: Props = $props();
+  
+  let dateTime = $derived(toLocaleDateString(date))
 </script>
 
 <time datetime={dateTime} title={dateTime} class={clazz} {style}>

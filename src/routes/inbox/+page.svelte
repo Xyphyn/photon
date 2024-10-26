@@ -25,9 +25,9 @@
   import { contentPadding } from '$lib/components/ui/layout/Shell.svelte'
   import { expoOut } from 'svelte/easing'
 
-  export let data
+  let { data } = $props();
 
-  let markingAsRead = false
+  let markingAsRead = $state(false)
 
   async function markAllAsRead() {
     if (!$profile?.user) {
@@ -141,7 +141,9 @@ items-center px-2 w-max"
         rounding="xl"
         title={$t('common.refresh')}
       >
-        <Icon src={ArrowPath} size="16" mini slot="prefix" />
+        {#snippet prefix()}
+                <Icon src={ArrowPath} size="16" mini  />
+              {/snippet}
       </Button>
       <Button
         on:click={markAllAsRead}
@@ -150,7 +152,9 @@ items-center px-2 w-max"
         size="lg"
         class="h-10"
       >
-        <Icon src={Check} width={16} mini slot="prefix" />
+        {#snippet prefix()}
+                <Icon src={Check} width={16} mini  />
+              {/snippet}
         {$t('routes.inbox.markAsRead')}
       </Button>
     </div>

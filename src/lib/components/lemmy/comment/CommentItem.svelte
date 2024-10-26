@@ -9,13 +9,23 @@
   import { Button, Material } from 'mono-svelte'
   import { ArrowUturnUp, Icon } from 'svelte-hero-icons'
 
-  export let comment: CommentView
-  export let view = $userSettings.view
-  export let community = false
+  interface Props {
+    comment: CommentView
+    view?: any
+    community?: boolean
+    meta?: boolean
+    class?: string
+    [key: string]: any
+  }
 
-  export let meta: boolean = true
-  let clazz: string = ''
-  export { clazz as class }
+  let {
+    comment,
+    view = $userSettings.view,
+    community = false,
+    meta = true,
+    class: clazz = '',
+    ...rest
+  }: Props = $props()
 </script>
 
 <Material
@@ -68,7 +78,7 @@
       node={{ children: [], comment_view: comment, depth: 1, ui: {} }}
       replying={false}
       {meta}
-      {...$$restProps}
+      {...rest}
     />
   </div>
 </Material>

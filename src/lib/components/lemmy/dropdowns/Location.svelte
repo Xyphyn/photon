@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy'
+
   import { page } from '$app/stores'
   import { profile } from '$lib/auth'
   import { userSettings } from '$lib/settings'
@@ -14,36 +16,51 @@
   import { amModOfAny } from '../moderation/moderation'
   import { t } from '$lib/translations'
 
-  export let selected: string
-  export let navigate: boolean = true
-  export let changeDefault: boolean = false
-  export let showLabel: boolean = true
+  interface Props {
+    selected: string
+    navigate?: boolean
+    changeDefault?: boolean
+    showLabel?: boolean
+    [key: string]: any
+  }
 
-  let feed: string = selected
-  $: feed = selected
-  $: changeDefault
-    ? ($userSettings.defaultSort.feed = selected as
-        | 'All'
-        | 'Subscribed'
-        | 'Local')
-    : undefined
+  let {
+    selected,
+    navigate = true,
+    changeDefault = false,
+    showLabel = true,
+    ...rest
+  }: Props = $props()
+
+  let feed: string = $state(selected)
+  run(() => {
+    feed = selected
+  })
+  run(() => {
+    changeDefault
+      ? ($userSettings.defaultSort.feed = selected as
+          | 'All'
+          | 'Subscribed'
+          | 'Local')
+      : undefined
+  })
 </script>
 
 <Select
-  {...$$restProps}
+  {...rest}
   bind:value={feed}
   on:change={() => {
     if (navigate) searchParam($page.url, 'type', feed, 'page', 'cursor')
   }}
 >
-  <svelte:fragment slot="label">
+  {#snippet customLabel()}
     {#if showLabel}
       <span class="flex items-center gap-1">
         <Icon src={GlobeAmericas} size="16" micro />
         {$t('filter.location.label')}
       </span>
     {/if}
-  </svelte:fragment>
+  {/snippet}
   <option value="All">
     <Icon
       src={GlobeAmericas}

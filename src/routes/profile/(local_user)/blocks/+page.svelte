@@ -22,11 +22,16 @@
   import UserAutocomplete from '$lib/components/lemmy/user/UserAutocomplete.svelte'
   import { expoOut } from 'svelte/easing'
 
-  // sveltekit doesn't feel like making types work right now
-  export let data: PageData & {
+  
+  interface Props {
+    // sveltekit doesn't feel like making types work right now
+    data: PageData & {
     person_blocks: PersonBlockView[]
     community_blocks: CommunityBlockView[]
+  };
   }
+
+  let { data = $bindable() }: Props = $props();
 
   async function unblockUser(item: PersonBlockView) {
     if (!$profile?.jwt) return
@@ -86,77 +91,89 @@
   {#if data.my_user?.instance_blocks && (data.my_user?.instance_blocks?.length ?? 0) > 0}
     <div>
       <SectionTitle>{$t('content.instances')}</SectionTitle>
-      <EditableList let:action on:action={(i) => unblockInstances(i.detail)}>
-        {#each data.my_user?.instance_blocks as block (block.instance.id)}
-          <div
-            class="flex flex-row gap-2 items-center py-4"
-            animate:flip={{ duration: 250 }}
-            out:slide|local={{ axis: 'y' }}
-          >
-            <Button
-              title="Unblock"
-              size="square-md"
-              rounding="pill"
-              on:click={() => action(block)}
+      <EditableList  on:action={(i) => unblockInstances(i.detail)}>
+        {#snippet children({ action })}
+                {#each data.my_user?.instance_blocks as block (block.instance.id)}
+            <div
+              class="flex flex-row gap-2 items-center py-4"
+              animate:flip={{ duration: 250 }}
+              out:slide|local={{ axis: 'y' }}
             >
-              <Icon src={XMark} mini size="16" slot="prefix" />
-            </Button>
-            <Entity
-              icon={block.site?.icon}
-              name={block.site?.name ?? block.instance.domain}
-              label={block.instance.domain}
-            />
-          </div>
-        {/each}
-      </EditableList>
+              <Button
+                title="Unblock"
+                size="square-md"
+                rounding="pill"
+                on:click={() => action(block)}
+              >
+                {#snippet prefix()}
+                            <Icon src={XMark} mini size="16"  />
+                          {/snippet}
+              </Button>
+              <Entity
+                icon={block.site?.icon}
+                name={block.site?.name ?? block.instance.domain}
+                label={block.instance.domain}
+              />
+            </div>
+          {/each}
+                      {/snippet}
+            </EditableList>
     </div>
   {/if}
   {#if data.community_blocks?.length > 0}
     <div>
       <SectionTitle>{$t('content.communities')}</SectionTitle>
-      <EditableList let:action on:action={(i) => unblockCommunity(i.detail)}>
-        {#each data.community_blocks as block (block.community.id)}
-          <div
-            class="flex flex-row gap-2 items-center py-2"
-            animate:flip={{ duration: 250 }}
-            out:slide|global={{ axis: 'y', easing: expoOut, duration: 300 }}
-          >
-            <Button
-              title="Unblock"
-              size="square-md"
-              rounding="pill"
-              on:click={() => action(block)}
+      <EditableList  on:action={(i) => unblockCommunity(i.detail)}>
+        {#snippet children({ action })}
+                {#each data.community_blocks as block (block.community.id)}
+            <div
+              class="flex flex-row gap-2 items-center py-2"
+              animate:flip={{ duration: 250 }}
+              out:slide|global={{ axis: 'y', easing: expoOut, duration: 300 }}
             >
-              <Icon src={XMark} mini size="16" slot="prefix" />
-            </Button>
-            <CommunityLink community={block.community} avatar />
-          </div>
-        {/each}
-      </EditableList>
+              <Button
+                title="Unblock"
+                size="square-md"
+                rounding="pill"
+                on:click={() => action(block)}
+              >
+                {#snippet prefix()}
+                            <Icon src={XMark} mini size="16"  />
+                          {/snippet}
+              </Button>
+              <CommunityLink community={block.community} avatar />
+            </div>
+          {/each}
+                      {/snippet}
+            </EditableList>
     </div>
   {/if}
   {#if data.person_blocks?.length > 0}
     <div>
       <SectionTitle>{$t('content.users')}</SectionTitle>
-      <EditableList let:action on:action={(i) => unblockUser(i.detail)}>
-        {#each data.person_blocks as block (block.target.id)}
-          <div
-            class="flex flex-row gap-2 items-center py-2"
-            animate:flip={{ duration: 250 }}
-            out:slide|global={{ axis: 'y', easing: expoOut, duration: 300 }}
-          >
-            <Button
-              title="Unblock"
-              size="square-md"
-              rounding="pill"
-              on:click={() => action(block)}
+      <EditableList  on:action={(i) => unblockUser(i.detail)}>
+        {#snippet children({ action })}
+                {#each data.person_blocks as block (block.target.id)}
+            <div
+              class="flex flex-row gap-2 items-center py-2"
+              animate:flip={{ duration: 250 }}
+              out:slide|global={{ axis: 'y', easing: expoOut, duration: 300 }}
             >
-              <Icon src={XMark} mini size="16" slot="prefix" />
-            </Button>
-            <UserLink user={block.target} avatar badges />
-          </div>
-        {/each}
-      </EditableList>
+              <Button
+                title="Unblock"
+                size="square-md"
+                rounding="pill"
+                on:click={() => action(block)}
+              >
+                {#snippet prefix()}
+                            <Icon src={XMark} mini size="16"  />
+                          {/snippet}
+              </Button>
+              <UserLink user={block.target} avatar badges />
+            </div>
+          {/each}
+                      {/snippet}
+            </EditableList>
     </div>
   {/if}
 {:else}

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { preventDefault } from 'svelte/legacy';
+
   import { profile } from '$lib/auth.js'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
@@ -12,12 +14,12 @@
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { t } from '$lib/translations.js'
 
-  export let data
+  let { data } = $props();
 
-  let taglines = [...(data.site?.taglines.map((t: Tagline) => t.content) ?? [])]
-  let newTagline = ''
+  let taglines = $state([...(data.site?.taglines.map((t: Tagline) => t.content) ?? [])])
+  let newTagline = $state('')
 
-  let saving = false
+  let saving = $state(false)
 
   async function save() {
     if (!$profile?.jwt) return
@@ -58,7 +60,7 @@
   </Header>
 
   <EditableList
-    let:action
+    
     on:action={(e) => {
       taglines.splice(
         taglines.findIndex((i) => i == e.detail),
@@ -69,32 +71,36 @@
       taglines = taglines
     }}
   >
-    {#each taglines as tagline}
-      <div class="flex py-3">
-        <Markdown source={tagline} inline />
+    {#snippet children({ action })}
+        {#each taglines as tagline}
+        <div class="flex py-3">
+          <Markdown source={tagline} inline />
 
-        <div class="flex gap-2 ml-auto">
-          <Button on:click={() => action(tagline)} size="square-md">
-            <Icon src={Trash} mini size="16" />
-          </Button>
+          <div class="flex gap-2 ml-auto">
+            <Button on:click={() => action(tagline)} size="square-md">
+              <Icon src={Trash} mini size="16" />
+            </Button>
+          </div>
         </div>
-      </div>
-    {/each}
-  </EditableList>
+      {/each}
+          {/snippet}
+    </EditableList>
   <form
     class="flex flex-col mt-auto gap-2 w-full"
-    on:submit|preventDefault={() => {
+    onsubmit={preventDefault(() => {
       if (newTagline == '' || !data.site) return
 
       taglines = [...taglines, newTagline]
 
       newTagline = ''
-    }}
+    })}
   >
     <MarkdownEditor bind:value={newTagline} images={false} />
 
     <Button size="lg" submit>
-      <Icon src={Plus} size="16" mini slot="prefix" />
+      {#snippet prefix()}
+            <Icon src={Plus} size="16" mini  />
+          {/snippet}
       {$t('common.add')}
     </Button>
   </form>
@@ -108,13 +114,13 @@
       <div class="mt-4 max-w-xl w-full flex flex-col gap-2">
         <form
           class="flex flex-col gap-2 w-full"
-          on:submit|preventDefault={() => {
+          onsubmit={preventDefault(() => {
             if (newTagline == '' || !data.site) return
 
             taglines = [...taglines, newTagline]
 
             newTagline = ''
-          }}
+          })}
         >
           <MarkdownEditor
             bind:value={newTagline}
@@ -123,7 +129,9 @@
           />
 
           <Button size="lg" submit>
-            <Icon src={Plus} size="16" mini slot="prefix" />
+            {#snippet prefix()}
+                        <Icon src={Plus} size="16" mini  />
+                      {/snippet}
             {$t('common.add')}
           </Button>
         </form>

@@ -31,26 +31,6 @@
   import { profile } from '$lib/auth'
   import { goto } from '$app/navigation'
 
-  export let post: PostView
-  export let actions: boolean = true
-  export let hideCommunity = false
-  export let view = $userSettings.view
-
-  $: tags = parseTags(post.post.name)
-  $: type = mediaType(post.post.url, view)
-  $: rule = getTagRule(tags.tags)
-
-  $: hideTitle =
-    $userSettings.posts.deduplicateEmbed &&
-    post.post.embed_title == post.post.name &&
-    view != 'compact' &&
-    type != 'iframe'
-
-  $: hideBody =
-    $userSettings.posts.deduplicateEmbed &&
-    post.post.embed_description == post.post.body &&
-    view != 'compact'
-
   function getTagRule(tags: Tag[]): 'blur' | 'hide' | undefined {
     const tagContent = tags.map((t) => t.content.toLowerCase())
 
@@ -75,9 +55,40 @@
     }
   }
 
-  export let style: string = ''
-  let clazz: string = ''
-  export { clazz as class }
+  interface Props {
+    post: PostView
+    actions?: boolean
+    hideCommunity?: boolean
+    view?: any
+    style?: string
+    class?: string
+    badges?: import('svelte').Snippet
+  }
+
+  let {
+    post,
+    actions = true,
+    hideCommunity = false,
+    view = $userSettings.view,
+    style = '',
+    class: clazz = '',
+    badges,
+  }: Props = $props()
+
+  let tags = $derived(parseTags(post.post.name))
+  let type = $derived(mediaType(post.post.url, view))
+  let rule = $derived(getTagRule(tags.tags))
+  let hideTitle = $derived(
+    $userSettings.posts.deduplicateEmbed &&
+      post.post.embed_title == post.post.name &&
+      view != 'compact' &&
+      type != 'iframe',
+  )
+  let hideBody = $derived(
+    $userSettings.posts.deduplicateEmbed &&
+      post.post.embed_description == post.post.body &&
+      view != 'compact',
+  )
 </script>
 
 <!-- 
@@ -85,9 +96,9 @@
   This is the sole component for displaying posts.
   It adapts to all kinds of form factors for different contexts, such as feeds, full post view, and crosspost list.
 -->
-<!-- svelte-ignore a11y-no-static-element-interactions -->
-<!-- svelte-ignore a11y-click-events-have-key-events -->
-<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
+<!-- svelte-ignore a11y_click_events_have_key_events -->
+<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
 <div
   class="post relative max-w-full min-w-0 w-full cursor-pointer outline-none
   group
@@ -97,10 +108,10 @@
   {view == 'cozy' ? 'py-5 flex flex-col gap-2' : ''}
   {clazz ?? ''}"
   id={post.post.id.toString()}
-  on:click={(e) => {
+  onclick={(e) => {
     onClick(e)
   }}
-  on:keydown={(e) => {
+  onkeydown={(e) => {
     // @ts-ignore
     if (e.key == 'Enter') onClick(e)
   }}
@@ -135,7 +146,9 @@
     tags={tags?.tags}
     {view}
   >
-    <slot name="badges" slot="badges" />
+    {#snippet extraBadges()}
+      {@render badges?.()}
+    {/snippet}
   </PostMeta>
   {#key post.post.url}
     <div
@@ -178,11 +191,15 @@
   {:else if view == 'compact'}
     <div class="flex flex-row items-center gap-2 text-sm">
       <Badge>
-        <Icon src={ArrowUp} slot="icon" size="14" micro />
+        {#snippet icon()}
+          <Icon src={ArrowUp} size="14" micro />
+        {/snippet}
         {post.counts.score}
       </Badge>
       <Badge>
-        <Icon src={ChatBubbleOvalLeft} slot="icon" size="14" micro />
+        {#snippet icon()}
+          <Icon src={ChatBubbleOvalLeft} size="14" micro />
+        {/snippet}
         {post.counts.comments}
       </Badge>
     </div>
@@ -194,7 +211,7 @@
     group-hover:inset-y-0.5 group-hover:-inset-x-4 group-hover:sm:-inset-x-5 group-hover:opacity-100
     group-focus:inset-y-0.5 group-focus:-inset-x-4 group-focus:sm:-inset-x-5 group-focus:opacity-100
     duration-150"
-  />
+  ></div>
 </div>
 
 <style lang="postcss">

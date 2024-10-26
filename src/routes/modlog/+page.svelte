@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import { searchParam } from '$lib/util.js'
   import { page } from '$app/stores'
@@ -20,16 +22,18 @@
   import { isAdmin } from '$lib/components/lemmy/moderation/moderation.js'
   import { browser } from '$app/environment'
 
-  export let data
+  let { data = $bindable() } = $props();
 
-  let view = `${
+  let view = $state(`${
     $userSettings.modlogCardView ?? browser
       ? !window.matchMedia('(min-width: 1600px)').matches
       : false
-  }`
+  }`)
 
-  $: $userSettings.modlogCardView =
-    view == 'true' ? true : view == 'false' ? false : undefined
+  run(() => {
+    $userSettings.modlogCardView =
+      view == 'true' ? true : view == 'false' ? false : undefined
+  });
 </script>
 
 <svelte:head>
@@ -44,10 +48,12 @@
       on:change={(e) => searchParam($page.url, 'type', data.type, 'page')}
       class="w-48"
     >
-      <span slot="label" class="flex gap-1 items-center">
-        <Icon src={Bars3BottomRight} size="15" mini />
-        Type
-      </span>
+      {#snippet label()}
+            <span  class="flex gap-1 items-center">
+          <Icon src={Bars3BottomRight} size="15" mini />
+          Type
+        </span>
+          {/snippet}
       <option value="All">All</option>
       <option value="ModRemovePost">Remove Post</option>
       <option value="ModLockPost">Lock Post</option>
@@ -67,10 +73,12 @@
     </Select>
 
     <Select bind:value={view} class="w-36">
-      <span slot="label" class="flex gap-1 items-center">
-        <Icon src={ViewColumns} size="15" mini />
-        View
-      </span>
+      {#snippet label()}
+            <span  class="flex gap-1 items-center">
+          <Icon src={ViewColumns} size="15" mini />
+          View
+        </span>
+          {/snippet}
       <option value="false">Table</option>
       <option value="true">Cards</option>
       <option value="undefined">Default</option>

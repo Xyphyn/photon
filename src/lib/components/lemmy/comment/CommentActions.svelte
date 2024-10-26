@@ -30,14 +30,22 @@
   import { text } from '$lib/components/translate/translation'
   import { userSettings } from '$lib/settings'
 
-  export let comment: CommentView
-  export let replying: boolean = false
-  export let disabled = false
+  interface Props {
+    comment: CommentView
+    replying?: boolean
+    disabled?: boolean
+  }
+
+  let {
+    comment = $bindable(),
+    replying = $bindable(false),
+    disabled = false,
+  }: Props = $props()
 
   const dispatcher = createEventDispatcher<{ edit: CommentView }>()
 
   let reply = ''
-  let translating = false
+  let translating = $state(false)
 </script>
 
 {#if translating}
@@ -69,22 +77,19 @@
     <CommentModerationMenu bind:item={comment} />
   {/if}
   <Menu placement="bottom">
-    <Button
-      slot="target"
-      title={$t('comment.actions.label')}
-      color="tertiary"
-      rounding="pill"
-      size="square-sm"
-      class="text-slate-700 dark:text-zinc-300"
-    >
-      <Icon
-        src={EllipsisHorizontal}
-        width={16}
-        height={16}
-        mini
-        slot="prefix"
-      />
-    </Button>
+    {#snippet target()}
+      <Button
+        title={$t('comment.actions.label')}
+        color="tertiary"
+        rounding="pill"
+        size="square-sm"
+        class="text-slate-700 dark:text-zinc-300"
+      >
+        {#snippet prefix()}
+          <Icon src={EllipsisHorizontal} width={16} height={16} mini />
+        {/snippet}
+      </Button>
+    {/snippet}
     <MenuDivider>{$t('comment.actions.label')}</MenuDivider>
     <MenuButton
       on:click={() => {
@@ -104,7 +109,9 @@
           translating = !translating
         }}
       >
-        <Icon src={Language} size="16" mini slot="prefix" />
+        {#snippet prefix()}
+          <Icon src={Language} size="16" mini />
+        {/snippet}
         {$t('post.actions.more.translate')}
       </MenuButton>
     {/if}
@@ -134,7 +141,7 @@
               comment.comment.deleted = await deleteItem(
                 comment,
                 !comment.comment.deleted,
-                $profile.jwt
+                $profile.jwt,
               )
           }}
         >
@@ -154,5 +161,5 @@
       {/if}
     {/if}
   </Menu>
-  <div class="flex-1 w-full" />
+  <div class="flex-1 w-full"></div>
 </div>

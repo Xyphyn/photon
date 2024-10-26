@@ -2,9 +2,9 @@
   import { placeholders } from '$lib/util.js'
   import { Button } from 'mono-svelte'
 
-  let post = placeholders.get('post')
-  let comment = placeholders.get('comment')
-  let url = placeholders.get('url')
+  let post = $state(placeholders.get('post'))
+  let comment = $state(placeholders.get('comment'))
+  let url = $state(placeholders.get('url'))
 </script>
 
 <h1 class="font-bold text-2xl">Placeholders</h1>

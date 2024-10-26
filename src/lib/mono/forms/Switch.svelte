@@ -1,10 +1,23 @@
 <script lang="ts">
-  export let defaultValue: boolean = false
-  export let checked: boolean = defaultValue
 
-  export let labelClass: string = ''
-  let clazz: string = ''
-  export { clazz as class }
+  interface Props {
+    defaultValue?: boolean;
+    checked?: boolean;
+    labelClass?: string;
+    class?: string;
+    children?: import('svelte').Snippet;
+    description?: import('svelte').Snippet;
+  }
+
+  let {
+    defaultValue = false,
+    checked = $bindable(defaultValue),
+    labelClass = '',
+    class: clazz = '',
+    children,
+    description
+  }: Props = $props();
+  
 </script>
 
 <label
@@ -26,13 +39,13 @@
       class="box-border w-5 h-full bg-white peer-checked:dark:bg-black rounded-full shadow-sm
 		group-active:w-6 transition peer-checked:translate-x-5 group-active:peer-checked:translate-x-4
 		rtl:peer-checked:-translate-x-5 rtl:group-active:peer-checked:-translate-x-4"
-    />
+></div>
   </div>
   <div class="flex flex-col {labelClass}">
-    <slot />
-    {#if $$slots.description}
+    {@render children?.()}
+    {#if description}
       <span class="font-normal text-sm text-slate-700 dark:text-zinc-300">
-        <slot name="description" />
+        {@render description?.()}
       </span>
     {/if}
   </div>

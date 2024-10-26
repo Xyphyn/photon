@@ -18,12 +18,17 @@
   import { t } from '$lib/translations'
   import ShieldIcon from './ShieldIcon.svelte'
 
-  export let item: PostView | CommentView
+  interface Props {
+    item: PostView | CommentView
+    [key: string]: any
+  }
 
-  let locking = false
-  let pinning = false
+  let { item = $bindable(), ...rest }: Props = $props()
 
-  $: acting = locking || pinning
+  let locking = $state(false)
+  let pinning = $state(false)
+
+  let acting = $derived(locking || pinning)
 
   async function lock(lock: boolean) {
     if (!$profile?.jwt || !isPostView(item)) return
@@ -71,16 +76,17 @@
 </script>
 
 <Menu placement="bottom-end">
-  <Button
-    class="hover:!text-green-500"
-    slot="target"
-    size="square-md"
-    color="ghost"
-    loading={acting}
-    {...$$restProps}
-  >
-    <ShieldIcon filled width={16} />
-  </Button>
+  {#snippet target()}
+    <Button
+      class="hover:!text-green-500"
+      size="square-md"
+      color="ghost"
+      loading={acting}
+      {...rest}
+    >
+      <ShieldIcon filled width={16} />
+    </Button>
+  {/snippet}
   {#if ($profile?.user && amMod($profile.user, item.community)) || ($profile?.user && isAdmin($profile.user))}
     <MenuDivider>
       {#if !item.community.local && !amMod($profile.user, item.community)}
@@ -95,12 +101,9 @@
       loading={locking}
       disabled={locking}
     >
-      <Icon
-        src={item.post.locked ? LockOpen : LockClosed}
-        size="16"
-        mini
-        slot="prefix"
-      />
+      {#snippet prefix()}
+        <Icon src={item.post.locked ? LockOpen : LockClosed} size="16" mini />
+      {/snippet}
       {item.post.locked ? $t('moderation.unlock') : $t('moderation.lock')}
     </MenuButton>
 

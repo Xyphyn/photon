@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { preventDefault } from 'svelte/legacy';
+
   import { goto } from '$app/navigation'
   import { setUser } from '$lib/auth.js'
   import { Note, toast } from 'mono-svelte'
@@ -27,16 +29,21 @@
   } from '$lib/components/error/ErrorContainer.svelte'
   import { page } from '$app/stores'
 
-  export let ref: string = '/'
+  interface Props {
+    ref?: string;
+    children?: import('svelte').Snippet;
+  }
 
-  let data = {
+  let { ref = '/', children }: Props = $props();
+
+  let data = $state({
     instance: DEFAULT_INSTANCE_URL,
     username: '',
     password: '',
     totp: '',
     loading: false,
     attempts: 0,
-  }
+  })
 
   async function logIn() {
     data.loading = true
@@ -89,9 +96,9 @@
 </svelte:head>
 
 <div class="max-w-xl w-full mx-auto h-max my-auto">
-  <form on:submit|preventDefault={logIn} class="flex flex-col gap-5">
+  <form onsubmit={preventDefault(logIn)} class="flex flex-col gap-5">
     <div class="flex flex-col">
-      <slot />
+      {@render children?.()}
       <Header>{$t('account.login')}</Header>
       {#if $site && mayBeIncompatible(MINIMUM_VERSION, $site.version.replace('v', ''))}
         <Note>

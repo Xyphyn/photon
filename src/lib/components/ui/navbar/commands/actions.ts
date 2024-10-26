@@ -6,7 +6,7 @@ import {
   isAdmin,
 } from '$lib/components/lemmy/moderation/moderation'
 import { resumables, type ResumableItem } from '$lib/lemmy/item'
-import { userSettings } from '$lib/settings'
+import { userSettings } from '$lib/settings.svelte'
 import { t } from '$lib/translations'
 import { colorScheme, theme, themeData, type ThemeData } from '$lib/ui/colors'
 import { fullCommunityName } from '$lib/util'
@@ -68,7 +68,7 @@ export function getGroups(
   profile: Profile,
   profiles: Profile[],
   td: ThemeData,
-  contextual?: Action[]
+  contextual?: Action[],
 ) {
   return [
     {
@@ -444,7 +444,7 @@ export function getGroups(
           name: f.community.title,
           href: `/c/${fullCommunityName(
             f.community.name,
-            f.community.actor_id
+            f.community.actor_id,
           )}`,
           detail: new URL(f.community.actor_id).hostname,
         })) ?? [],

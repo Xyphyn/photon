@@ -15,12 +15,16 @@
   import ApplicationDenyModal from '$lib/components/lemmy/modal/ApplicationDenyModal.svelte'
   import { t } from '$lib/translations'
 
-  export let application: RegistrationApplicationView
+  interface Props {
+    application: RegistrationApplicationView;
+  }
 
-  let approving = false
-  let denying = false
-  let denyReason = ''
-  let reviewing = false
+  let { application = $bindable() }: Props = $props();
+
+  let approving = $state(false)
+  let denying = $state(false)
+  let denyReason = $state('')
+  let reviewing = $state(false)
 
   async function review(approve: boolean) {
     if (!$profile?.jwt) return
@@ -114,7 +118,7 @@
           </div>
           <p>{application.registration_application.deny_reason}</p>
         </div>
-        <div class="md:ml-auto" />
+        <div class="md:ml-auto"></div>
       {:else}
         <div class="flex items-center gap-1 text-sm">
           <UserLink avatar user={application.admin} />
@@ -124,7 +128,7 @@
               : $t('routes.admin.applications.denied')}
           </SectionTitle>
         </div>
-        <div class="md:ml-auto" />
+        <div class="md:ml-auto"></div>
       {/if}
     {/if}
     <div class="ml-auto self-end">
@@ -139,7 +143,9 @@
         loading={denying || reviewing}
         disabled={approving || denying || reviewing}
       >
-        <Icon src={XMark} mini size="16" slot="prefix" />
+        {#snippet prefix()}
+                <Icon src={XMark} mini size="16"  />
+              {/snippet}
       </Button>
       <Button
         size="square-md"
@@ -152,7 +158,9 @@
         loading={approving}
         disabled={approving || denying || reviewing}
       >
-        <Icon src={Check} mini size="16" slot="prefix" />
+        {#snippet prefix()}
+                <Icon src={Check} mini size="16"  />
+              {/snippet}
       </Button>
     </div>
   </div>

@@ -67,28 +67,37 @@
     formatRelativeDate,
   } from '$lib/components/util/RelativeDate.svelte'
 
-  export let post: PostView
-  export let view: View = 'cozy'
-  export let debug: boolean = false
-
   const dispatcher = createEventDispatcher<{ edit: PostView; hide: boolean }>()
 
-  let editing = false
-  let saving = false
+  let editing = $state(false)
+  let saving = $state(false)
 
-  let translating = false
+  let translating = $state(false)
 
-  let localShare = false
+  let localShare = $state(false)
 
-  $: buttonHeight = view == 'compact' ? 'h-7' : 'h-8'
-  $: buttonSquare = view == 'compact' ? 'w-7 h-7' : 'w-8 h-8'
+  interface Props {
+    post: PostView
+    view?: View
+    debug?: boolean
+    style?: string
+  }
 
-  export let style: string = ''
+  let {
+    post = $bindable(),
+    view = 'cozy',
+    debug = $bindable(false),
+    style = '',
+  }: Props = $props()
+  let buttonHeight = $derived(view == 'compact' ? 'h-7' : 'h-8')
+  let buttonSquare = $derived(view == 'compact' ? 'w-7 h-7' : 'w-8 h-8')
 </script>
 
 {#if editing}
   <Modal bind:open={editing}>
-    <h1 slot="title" class="text-2xl font-bold">Editing post</h1>
+    {#snippet customTitle()}
+      <h1 class="text-2xl font-bold">Editing post</h1>
+    {/snippet}
     {#await import('./form/PostForm.svelte')}
       <div class="mx-auto h-96 flex justify-center items-center">
         <Spinner width={32} />
@@ -103,10 +112,10 @@
           dispatcher('edit', e.detail)
         }}
       >
-        <svelte:fragment slot="formtitle">
+        {#snippet formtitle()}
           <!-- Have the title not exist at all -->
           {''}
-        </svelte:fragment>
+        {/snippet}
       </PostForm>
     {/await}
   </Modal>
@@ -152,7 +161,7 @@
     />
     <FormattedNumber number={post.counts.comments} />
   </Button>
-  <div class="flex-1" />
+  <div class="flex-1"></div>
 
   {#if $userSettings.debugInfo}
     {#if debug}
@@ -169,7 +178,9 @@
       class={buttonSquare}
       animations={{ scale: true, large: true }}
     >
-      <Icon src={BugAnt} micro size="16" slot="prefix" />
+      {#snippet prefix()}
+        <Icon src={BugAnt} micro size="16" />
+      {/snippet}
     </Button>
   {/if}
   {#if $profile?.user && (amMod($profile.user, post.community) || isAdmin($profile.user))}
@@ -200,12 +211,9 @@
       title={post.saved ? $t('post.actions.unsave') : $t('post.actions.save')}
       animations={{ scale: true, large: true }}
     >
-      <Icon
-        src={post.saved ? BookmarkSlash : Bookmark}
-        size="16"
-        mini
-        slot="prefix"
-      />
+      {#snippet prefix()}
+        <Icon src={post.saved ? BookmarkSlash : Bookmark} size="16" mini />
+      {/snippet}
     </Button>
   {/if}
 
@@ -216,21 +224,26 @@
     targetClass="h-full"
     title={$t('post.actions.more.label')}
   >
-    <Button
-      slot="target"
-      title={$t('post.actions.more.label')}
-      color="ghost"
-      rounding="pill"
-      size="custom"
-      class={buttonSquare}
-      animations={{ scale: true, large: true }}
-    >
-      <Icon slot="prefix" src={EllipsisHorizontal} width={16} micro />
-    </Button>
+    {#snippet target()}
+      <Button
+        title={$t('post.actions.more.label')}
+        color="ghost"
+        rounding="pill"
+        size="custom"
+        class={buttonSquare}
+        animations={{ scale: true, large: true }}
+      >
+        {#snippet prefix()}
+          <Icon src={EllipsisHorizontal} width={16} micro />
+        {/snippet}
+      </Button>
+    {/snippet}
     <MenuDivider>{$t('cards.site.stats')}</MenuDivider>
     <div class="flex flex-row gap-1 items-center">
       <MenuButton class="flex-1">
-        <Icon src={Clock} size="16" micro slot="prefix" />
+        {#snippet prefix()}
+          <Icon src={Clock} size="16" micro />
+        {/snippet}
         <span>
           {publishedToDate(post.post.published).toLocaleDateString(undefined, {
             dateStyle: 'short',
@@ -242,10 +255,12 @@
           publishedToDate(post.post.updated),
           {
             style: 'long',
-          }
+          },
         )}
         <MenuButton class="flex-1" aria-label={editedTime}>
-          <Icon src={Pencil} size="16" micro slot="prefix" />
+          {#snippet prefix()}
+            <Icon src={Pencil} size="16" micro />
+          {/snippet}
           <RelativeDate date={publishedToDate(post.post.updated)} />
         </MenuButton>
       {/if}
@@ -256,7 +271,9 @@
       <MenuButton
         aria-label={$t('aria.vote.score', { default: post.counts.score })}
       >
-        <Icon src={ArrowsUpDown} size="16" micro slot="prefix" />
+        {#snippet prefix()}
+          <Icon src={ArrowsUpDown} size="16" micro />
+        {/snippet}
         {$t('post.actions.vote.score')}
         •
         <FormattedNumber
@@ -276,25 +293,17 @@
     {/if}
     <MenuDivider>{$t('post.actions.more.creator')}</MenuDivider>
     <MenuButton link href={userLink(post.creator)}>
-      <Icon
-        src={UserCircle}
-        size="16"
-        micro
-        slot="prefix"
-        class="flex-shrink-0"
-      />
+      {#snippet prefix()}
+        <Icon src={UserCircle} size="16" micro class="flex-shrink-0" />
+      {/snippet}
       <TextProps wrap="no-wrap">
         {post.creator.name}
       </TextProps>
     </MenuButton>
     <MenuButton link href={communityLink(post.community)}>
-      <Icon
-        src={Newspaper}
-        size="16"
-        micro
-        slot="prefix"
-        class="flex-shrink-0"
-      />
+      {#snippet prefix()}
+        <Icon src={Newspaper} size="16" micro class="flex-shrink-0" />
+      {/snippet}
       <TextProps wrap="no-wrap">
         {post.community.title}
       </TextProps>
@@ -304,7 +313,9 @@
     </MenuDivider>
     {#if $profile?.user && $profile?.jwt && $profile.user.local_user_view.person.id == post.creator.id}
       <MenuButton on:click={() => (editing = true)}>
-        <Icon src={PencilSquare} size="16" micro slot="prefix" />
+        {#snippet prefix()}
+          <Icon src={PencilSquare} size="16" micro />
+        {/snippet}
         {$t('post.actions.more.edit')}
       </MenuButton>
     {/if}
@@ -315,7 +326,9 @@
             post.read = await markAsRead(post.post, !post.read, $profile.jwt)
         }}
       >
-        <Icon slot="prefix" src={post.read ? EyeSlash : Eye} size="16" micro />
+        {#snippet prefix()}
+          <Icon src={post.read ? EyeSlash : Eye} size="16" micro />
+        {/snippet}
         {post.read
           ? $t('post.actions.more.markUnread')
           : $t('post.actions.more.markRead')}
@@ -331,15 +344,17 @@
           navigator.clipboard.writeText(
             localShare
               ? `${instanceToURL(getInstance())}/post/${post.post.id}`
-              : post.post.ap_id
+              : post.post.ap_id,
           )
         toast({ content: $t('toast.copied') })
       }}
       class="flex-1 !py-0"
     >
-      <Icon src={Share} size="16" micro slot="prefix" />
+      {#snippet prefix()}
+        <Icon src={Share} size="16" micro />
+      {/snippet}
       {$t('post.actions.more.share')}
-      <div class="flex-1" />
+      <div class="flex-1"></div>
       {#if !post.post.local}
         <div class="flex">
           <Button
@@ -371,7 +386,9 @@
           translating = !translating
         }}
       >
-        <Icon src={Language} size="16" micro slot="prefix" />
+        {#snippet prefix()}
+          <Icon src={Language} size="16" micro />
+        {/snippet}
         {$t('post.actions.more.translate')}
       </MenuButton>
     {/if}
@@ -399,7 +416,9 @@
           goto('/create/post?crosspost=true')
         }}
       >
-        <Icon src={ArrowTopRightOnSquare} size="16" micro slot="prefix" />
+        {#snippet prefix()}
+          <Icon src={ArrowTopRightOnSquare} size="16" micro />
+        {/snippet}
         {$t('post.actions.more.crosspost')}
       </MenuButton>
       {#if $profile.user && post.creator.id == $profile.user.local_user_view.person.id}
@@ -409,12 +428,14 @@
               post.post.deleted = await deleteItem(
                 post,
                 !post.post.deleted,
-                $profile.jwt
+                $profile.jwt,
               )
           }}
           color="danger-subtle"
         >
-          <Icon src={Trash} size="16" micro slot="prefix" />
+          {#snippet prefix()}
+            <Icon src={Trash} size="16" micro />
+          {/snippet}
           {post.post.deleted
             ? $t('post.actions.more.restore')
             : $t('post.actions.more.delete')}
@@ -428,7 +449,7 @@
               const hidden = await hidePost(
                 post.post.id,
                 !post.hidden,
-                $profile?.jwt
+                $profile?.jwt,
               )
               post.hidden = hidden
               if (hidden) {
@@ -437,14 +458,18 @@
             }}
             color="danger-subtle"
           >
-            <Icon slot="prefix" src={XMark} size="16" micro />
+            {#snippet prefix()}
+              <Icon src={XMark} size="16" micro />
+            {/snippet}
             {post.hidden
               ? $t('post.actions.more.unhide')
               : $t('post.actions.more.hide')}
           </MenuButton>
         {/if}
         <MenuButton on:click={() => report(post)} color="danger-subtle">
-          <Icon src={Flag} width={16} micro slot="prefix" />
+          {#snippet prefix()}
+            <Icon src={Flag} width={16} micro />
+          {/snippet}
           {$t('moderation.report')}
         </MenuButton>
       {/if}

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy'
+
   import Post from '$lib/components/lemmy/post/Post.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { userSettings } from '$lib/settings.js'
@@ -20,7 +22,7 @@
   import { expoOut } from 'svelte/easing'
   import { fly, slide } from 'svelte/transition'
   import { browser } from '$app/environment'
-  import { afterUpdate, onMount, tick, type SvelteComponent } from 'svelte'
+  import { onMount, tick, type SvelteComponent } from 'svelte'
   import {
     createVirtualizer,
     createWindowVirtualizer,
@@ -39,12 +41,28 @@
   import type { Readable } from 'svelte/motion'
   import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
 
-  export let posts: PostView[]
-  export let community: boolean = false
-  export let feedId: PostFeedID
+  let virtualItemEls: HTMLElement[] = $state([])
+  let virtualListEl: HTMLElement | undefined = $state(undefined)
 
-  let virtualItemEls: HTMLElement[] = []
-  let virtualListEl: HTMLElement | undefined = undefined
+  afterNavigate(() => {
+    $virtualizer.scrollToIndex($postFeeds[feedId]?.lastSeen ?? 0)
+  })
+
+  interface Props {
+    posts: PostView[]
+    community?: boolean
+    feedId: PostFeedID
+    feedData: PostFeed['data']
+    children?: import('svelte').Snippet
+  }
+
+  let {
+    posts = $bindable(),
+    community = false,
+    feedId,
+    feedData = $bindable(),
+    children,
+  }: Props = $props()
 
   const virtualizer = createWindowVirtualizer({
     count: posts.length,
@@ -55,27 +73,9 @@
     },
   })
 
-  $: items = $virtualizer.getVirtualItems()
-
-  $: if (virtualItemEls.length) {
-    virtualItemEls.forEach($virtualizer.measureElement)
-  }
-
-  $: if (posts.length && virtualListEl)
-    $virtualizer.setOptions({
-      scrollMargin: virtualListEl?.offsetTop,
-      count: posts.length,
-    })
-
-  afterNavigate(() => {
-    $virtualizer.scrollToIndex($postFeeds[feedId]?.lastSeen ?? 0)
-  })
-
-  export let feedData: PostFeed['data']
-
-  let error: any = undefined
-  let loading = false
-  let hasMore = true
+  let error: any = $state(undefined)
+  let loading = $state(false)
+  let hasMore = $state(true)
 
   async function loadMore() {
     if (!hasMore || loading) return
@@ -181,6 +181,19 @@
     await tick()
     $virtualizer.measure()
   })
+  let items = $derived($virtualizer.getVirtualItems())
+  run(() => {
+    if (virtualItemEls.length) {
+      virtualItemEls.forEach($virtualizer.measureElement)
+    }
+  })
+  run(() => {
+    if (posts.length && virtualListEl)
+      $virtualizer.setOptions({
+        scrollMargin: virtualListEl?.offsetTop,
+        count: posts.length,
+      })
+  })
 </script>
 
 <!-- <svelte:window on:keydown={handleKeydown} /> -->
@@ -198,7 +211,9 @@
         description="There are no posts that match this filter."
       >
         <Button href="/communities">
-          <Icon src={Plus} size="16" mini slot="prefix" />
+          {#snippet prefix()}
+            <Icon src={Plus} size="16" mini />
+          {/snippet}
           <span>Follow some communities</span>
         </Button>
       </Placeholder>
@@ -284,16 +299,20 @@
             // @ts-ignore
             community_name: feedData.community_name ?? 'undefined',
           })}
-          <Button slot="action" color="tertiary">
-            <Icon src={ChevronDoubleUp} size="16" micro slot="prefix" />
-            {$t('routes.post.scrollToTop')}
-          </Button>
+          {#snippet action()}
+            <Button color="tertiary">
+              {#snippet prefix()}
+                <Icon src={ChevronDoubleUp} size="16" micro />
+              {/snippet}
+              {$t('routes.post.scrollToTop')}
+            </Button>
+          {/snippet}
         </EndPlaceholder>
       </div>
     {/if}
     <InfiniteScroll window threshold={1000} on:loadMore={loadMore} />
   {/if}
-  <slot />
+  {@render children?.()}
 </ul>
 
 <style lang="postcss">

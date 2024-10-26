@@ -25,10 +25,10 @@
   import { getDefaultColors } from '$lib/ui/presets'
   import ThemePreset from './ThemePreset.svelte'
 
-  let importing = false
-  let importText = ''
+  let importing = $state(false)
+  let importText = $state('')
 
-  $: defaultColors = getDefaultColors()
+  let defaultColors = $derived(getDefaultColors())
 </script>
 
 {#if importing}
@@ -74,7 +74,7 @@
         <ThemePreset bind:theme />
       {/each}
       <button
-        on:click={() => {
+        onclick={() => {
           const newTheme = {
             id: Math.max(...$themeData.themes.map((t) => t.id)) + 1,
             colors: getDefaultColors(),

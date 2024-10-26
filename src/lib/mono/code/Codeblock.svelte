@@ -4,24 +4,37 @@
   import { Check, Icon, Clipboard } from 'svelte-hero-icons'
   import { scale } from 'svelte/transition'
 
-  export let src: string
-  export let filename: string | undefined = undefined
-  export let htmlSrc: string | undefined = undefined
 
-  let copied = false
+  let copied = $state(false)
 
-  let pre: HTMLPreElement
+  let pre: HTMLPreElement = $state()
 
   const copy = () => {
-    if ($$slots.default) {
+    if (children) {
       if (pre) navigator.clipboard.writeText(pre.innerText)
     } else if (src) {
       navigator.clipboard.writeText(src)
     }
   }
 
-  let clazz: string = ''
-  export { clazz as class }
+  interface Props {
+    src: string;
+    filename?: string | undefined;
+    htmlSrc?: string | undefined;
+    children?: import('svelte').Snippet;
+    class?: string;
+    [key: string]: any
+  }
+
+  let {
+    src,
+    filename = undefined,
+    htmlSrc = undefined,
+    children,
+    class: clazz = '',
+    ...rest
+  }: Props = $props();
+  
 </script>
 
 <Material
@@ -66,12 +79,12 @@
   {/if}
   <pre
     bind:this={pre}
-    {...$$restProps}
+    {...rest}
     class="{clazz} bg-white dark:bg-zinc-900 px-4 overflow-auto max-h-96">
 		{#if htmlSrc}
       {@html htmlSrc}
-    {:else if $$slots.default}
-      <slot />
+    {:else if children}
+      {@render children?.()}
     {:else if src}
       {src}
     {/if}

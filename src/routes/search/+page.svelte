@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { preventDefault } from 'svelte/legacy';
+
   import { navigating, page } from '$app/stores'
   import { profile } from '$lib/auth.js'
   import ObjectAutocomplete from '$lib/components/lemmy/ObjectAutocomplete.svelte'
@@ -40,18 +42,18 @@
 
   type Result = PostView | CommentView | PersonView | CommunityView
 
-  export let data
+  let { data = $bindable() } = $props();
 
-  let query = data.query || ''
-  let searchElement: HTMLInputElement
+  let query = $state(data.query || '')
+  let searchElement: HTMLInputElement = $state()
 
-  let pageNum = data.page
+  let pageNum = $state(data.page)
 
-  let moreOptions = false
+  let moreOptions = $state(false)
 </script>
 
 <svelte:window
-  on:keydown={(e) => {
+  onkeydown={(e) => {
     if (e.target == document.body) searchElement?.focus()
   }}
 />
@@ -69,8 +71,8 @@
 >
   <Tabs routes={[]} class="p-2 dark:bg-zinc-925/70">
     <form
-      on:submit|preventDefault={() =>
-        searchParam($page.url, 'q', query, 'page')}
+      onsubmit={preventDefault(() =>
+        searchParam($page.url, 'q', query, 'page'))}
       class="flex gap-2 flex-row items-center w-full text-base h-10"
     >
       <TextInput
@@ -89,7 +91,9 @@
         rounding="pill"
         loading={$navigating != null}
       >
-        <Icon src={MagnifyingGlass} size="16" micro slot="prefix" />
+        {#snippet prefix()}
+                <Icon src={MagnifyingGlass} size="16" micro  />
+              {/snippet}
       </Button>
     </form>
   </Tabs>
@@ -99,10 +103,12 @@
     bind:value={data.type}
     on:change={() => searchParam($page.url, 'type', data.type ?? 'All', 'page')}
   >
-    <span slot="label" class="flex items-center gap-1">
-      <Icon src={AdjustmentsHorizontal} mini size="15" />
-      {$t('filter.type')}
-    </span>
+    {#snippet label()}
+        <span  class="flex items-center gap-1">
+        <Icon src={AdjustmentsHorizontal} mini size="15" />
+        {$t('filter.type')}
+      </span>
+      {/snippet}
     <option value="All">{$t('content.all')}</option>
     <option value="Posts">{$t('content.posts')}</option>
     <option value="Comments">{$t('content.comments')}</option>
@@ -110,15 +116,17 @@
     <option value="Users">{$t('content.users')}</option>
   </Select>
   <Sort navigate bind:selected={data.sort} />
-  <Button
-    slot="summary"
-    size="square-lg"
-    color="tertiary"
-    class="self-end justify-self-center"
-    on:click={() => (moreOptions = !moreOptions)}
-  >
-    <Icon src={ChevronDown} size="20" mini />
-  </Button>
+  {#snippet summary()}
+    <Button
+      
+      size="square-lg"
+      color="tertiary"
+      class="self-end justify-self-center"
+      on:click={() => (moreOptions = !moreOptions)}
+    >
+      <Icon src={ChevronDown} size="20" mini />
+    </Button>
+  {/snippet}
 </div>
 {#if moreOptions}
   <div transition:slide={{ axis: 'y', easing: expoOut }} class="max-w-sm">
@@ -201,7 +209,7 @@
       {/if}
     {/each}
   </div>
-  <div class="mt-4" />
+  <div class="mt-4"></div>
   {#if data.results.length > 0}
     <Pageination
       bind:page={pageNum}

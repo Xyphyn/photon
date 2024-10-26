@@ -18,9 +18,13 @@
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
 
-  export let item: ReportView
+  interface Props {
+    item: ReportView;
+  }
 
-  let resolving = false
+  let { item = $bindable() }: Props = $props();
+
+  let resolving = $state(false)
   async function resolve() {
     if (!$profile?.jwt || !$profile.user) return
     resolving = true
@@ -135,7 +139,9 @@
     loading={resolving}
     disabled={resolving}
   >
-    <Icon src={CheckCircle} micro={item.resolved} size="18" slot="prefix" />
+    {#snippet prefix()}
+        <Icon src={CheckCircle} micro={item.resolved} size="18"  />
+      {/snippet}
     {!item.resolved
       ? $t('routes.moderation.resolve')
       : $t('routes.moderation.resolved')}

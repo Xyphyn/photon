@@ -3,7 +3,11 @@
   import { Button, Material, toast } from 'mono-svelte'
   import { Icon, ClipboardDocument } from 'svelte-hero-icons'
 
-  export let raw: string
+  interface Props {
+    raw: string
+  }
+
+  let { raw }: Props = $props()
 
   function parseCodeblock(src: string): {
     code: string
@@ -21,7 +25,7 @@
     }
   }
 
-  $: codeblock = parseCodeblock(raw)
+  let codeblock = $derived(parseCodeblock(raw))
 </script>
 
 <Material

@@ -4,6 +4,13 @@
   import { contentPadding } from '$lib/components/ui/layout/Shell.svelte'
   import { t } from '$lib/translations'
   import { Badge } from 'mono-svelte'
+  /**
+   * @typedef {Object} Props
+   * @property {import('svelte').Snippet} [children]
+   */
+
+  /** @type {Props} */
+  let { children } = $props();
 </script>
 
 {#if $notifications.applications > 0}
@@ -44,5 +51,5 @@
       ]}
     />
   </div>
-  <slot />
+  {@render children?.()}
 </div>

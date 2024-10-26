@@ -39,10 +39,13 @@
   import { userSettings } from '$lib/settings'
   import { dockProps } from '../layout/Shell.svelte'
 
-  let promptOpen: boolean = false
-  export let style: string = ''
-  let clazz: string = ''
-  export { clazz as class }
+  let promptOpen: boolean = $state(false)
+  interface Props {
+    style?: string
+    class?: string
+  }
+
+  let { style = '', class: clazz = '' }: Props = $props()
 </script>
 
 <CommandsWrapper bind:open={promptOpen} />
@@ -64,7 +67,7 @@
     class="ml-2 logo"
     adaptive={false}
   >
-    <svelte:fragment slot="icon">
+    {#snippet icon()}
       {#if LINKED_INSTANCE_URL}
         {#if $site}
           <Avatar
@@ -79,13 +82,13 @@
       {:else}
         <Logo width={32} />
       {/if}
-    </svelte:fragment>
+    {/snippet}
   </NavButton>
   <div
     class="flex flex-row gap-2 py-2 px-2 items-center w-full overflow-auto"
     style="border-radius: inherit;"
   >
-    <div class="ml-auto" />
+    <div class="ml-auto"></div>
     {#if $profile?.user && isAdmin($profile.user)}
       <NavButton
         href="/admin"
@@ -97,7 +100,7 @@
         {#if ($notifications.applications ?? 0) > 0}
           <div
             class="rounded-full w-2 h-2 bg-red-500 absolute -top-1 -left-1"
-          />
+          ></div>
         {/if}
       </NavButton>
     {/if}
@@ -110,15 +113,11 @@
         {#if ($notifications.reports ?? 0) > 0}
           <div
             class="rounded-full w-2 h-2 bg-red-500 absolute -top-1 -left-1"
-          />
+          ></div>
         {/if}
-        <ShieldIcon
-          let:size
-          let:isSelected
-          slot="icon"
-          filled={isSelected}
-          width={size}
-        />
+        {#snippet customIcon({ size, isSelected })}
+          <ShieldIcon filled={isSelected} width={size} />
+        {/snippet}
       </NavButton>
     {/if}
     <NavButton
@@ -128,16 +127,19 @@
     />
     <NavButton href="/search" label={$t('nav.search')} icon={MagnifyingGlass} />
     <Menu placement="top">
-      <NavButton
-        class="relative"
-        color="primary"
-        slot="target"
-        label={$t('nav.create.label')}
-        icon={Plus}
-      />
+      {#snippet target()}
+        <NavButton
+          class="relative"
+          color="primary"
+          label={$t('nav.create.label')}
+          icon={Plus}
+        />
+      {/snippet}
       <MenuDivider>{$t('nav.create.label')}</MenuDivider>
       <MenuButton link href="/create/post" disabled={!$profile?.jwt}>
-        <Icon src={PencilSquare} size="16" micro slot="prefix" />
+        {#snippet prefix()}
+          <Icon src={PencilSquare} size="16" micro />
+        {/snippet}
         {$t('nav.create.post')}
       </MenuButton>
       <MenuButton
@@ -148,7 +150,9 @@
           ($site?.site_view.local_site.community_creation_admin_only &&
             !isAdmin($profile.user))}
       >
-        <Icon src={Newspaper} size="16" micro slot="prefix" />
+        {#snippet prefix()}
+          <Icon src={Newspaper} size="16" micro />
+        {/snippet}
         {$t('nav.create.community')}
       </MenuButton>
       {#if !$profile?.jwt}
@@ -166,7 +170,7 @@
         <img
           src={optimizeImageURL(
             $profile?.user?.local_user_view.person.avatar ?? '',
-            32
+            32,
           )}
           class="blur-2xl -z-10 object-cover w-48 h-48 opacity-20 dark:opacity-50 ml-auto"
           alt=""

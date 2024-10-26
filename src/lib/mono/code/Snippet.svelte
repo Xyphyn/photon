@@ -3,16 +3,21 @@
   import { Check, Icon, Clipboard } from 'svelte-hero-icons'
   import { scale } from 'svelte/transition'
 
-  /**
+  
+
+  let copied = $state(false)
+
+  interface Props {
+    /**
    * Show a copy button.
    */
-  export let value: string
-  export let copy: boolean = true
+    value: string;
+    copy?: boolean;
+    class?: string;
+  }
 
-  let copied = false
-
-  let clazz: string = ''
-  export { clazz as class }
+  let { value, copy = true, class: clazz = '' }: Props = $props();
+  
 </script>
 
 <div

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import type { CommentView, PostView } from 'lemmy-js-client'
   import Post from '$lib/components/lemmy/post/Post.svelte'
   import { fly } from 'svelte/transition'
@@ -22,10 +24,13 @@
     AdjustmentsHorizontal,
   } from 'svelte-hero-icons'
 
-  export let data
+  let { data } = $props();
 
   // svelte being stupid
-  $: type = data.type as any
+  let type;
+  run(() => {
+    type = data.type as any
+  });
 
   const isComment = (item: CommentView | PostView): item is CommentView =>
     'comment' in item
@@ -38,29 +43,33 @@
 <Header pageHeader>
   {$t('routes.saved')}
 
-  <div slot="extended" class="flex items-center">
-    <Select
-      bind:value={type}
-      on:change={() => searchParam($page.url, 'type', type, 'page')}
-    >
-      <div class="flex items-center gap-0.5" slot="label">
-        <Icon src={AdjustmentsHorizontal} size="15" mini />
-        {$t('filter.filter')}
-      </div>
-      <option value="all">
-        <Icon src={Bars3} micro size="15" />
-        {$t('content.all')}
-      </option>
-      <option value="posts">
-        <Icon src={PencilSquare} micro size="15" />
-        {$t('content.posts')}
-      </option>
-      <option value="comments">
-        <Icon src={ChatBubbleOvalLeft} micro size="15" />
-        {$t('content.comments')}
-      </option>
-    </Select>
-  </div>
+  {#snippet extended()}
+    <div  class="flex items-center">
+      <Select
+        bind:value={type}
+        on:change={() => searchParam($page.url, 'type', type, 'page')}
+      >
+        {#snippet label()}
+            <div class="flex items-center gap-0.5" >
+            <Icon src={AdjustmentsHorizontal} size="15" mini />
+            {$t('filter.filter')}
+          </div>
+          {/snippet}
+        <option value="all">
+          <Icon src={Bars3} micro size="15" />
+          {$t('content.all')}
+        </option>
+        <option value="posts">
+          <Icon src={PencilSquare} micro size="15" />
+          {$t('content.posts')}
+        </option>
+        <option value="comments">
+          <Icon src={ChatBubbleOvalLeft} micro size="15" />
+          {$t('content.comments')}
+        </option>
+      </Select>
+    </div>
+  {/snippet}
 </Header>
 <div
   class="flex flex-col list-none my-4 divide-slate-200 dark:divide-zinc-800"

@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
   const youtubeDomain = (place: 'youtube' | 'invidious' | 'piped') => {
     switch (place) {
       case 'youtube': {
@@ -37,12 +37,6 @@
   import { userSettings } from '$lib/settings'
   import { get } from 'svelte/store'
 
-  export let type: IframeType = 'none'
-  export let thumbnail: string | undefined = undefined
-  export let url: string
-  export let opened = !$userSettings.embeds.clickToView
-  export let autoplay: boolean = $userSettings.embeds.clickToView
-
   const urlToEmbed = (inputUrl: string) => {
     if (type == 'video') {
       return inputUrl
@@ -56,7 +50,7 @@
       if (autoplay) url.searchParams.set('autoplay', '1')
 
       return `https://${youtubeDomain(
-        $userSettings.embeds.youtube
+        $userSettings.embeds.youtube,
       )}/embed/${videoID}?${url.searchParams.toString()}`
     }
 
@@ -64,7 +58,7 @@
   }
 
   const typeData = (
-    type: IframeType
+    type: IframeType,
   ): {
     icon: IconSource
     text: string
@@ -91,11 +85,26 @@
     }
   }
 
-  $: data = typeData(type)
-  $: embedUrl = urlToEmbed(url)
+  interface Props {
+    type?: IframeType
+    thumbnail?: string | undefined
+    url: string
+    opened?: any
+    autoplay?: boolean
+    class?: string
+  }
 
-  let clazz: string = ''
-  export { clazz as class }
+  let {
+    type = 'none',
+    thumbnail = undefined,
+    url,
+    opened = $bindable(!$userSettings.embeds.clickToView),
+    autoplay = $userSettings.embeds.clickToView,
+    class: clazz = '',
+  }: Props = $props()
+
+  let data = $derived(typeData(type))
+  let embedUrl = $derived(urlToEmbed(url))
 </script>
 
 <!-- 
@@ -104,7 +113,7 @@
 -->
 {#if opened}
   {#if type == 'video'}
-    <!-- svelte-ignore a11y-media-has-caption -->
+    <!-- svelte-ignore a11y_media_has_caption -->
     <video {autoplay} controls class="rounded-xl aspect-video {clazz}">
       <source src={url} />
     </video>
@@ -116,11 +125,11 @@
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
       allowfullscreen
       class="aspect-video rounded-xl dark:bg-zinc-900 {clazz ?? ''}"
-    />
+    ></iframe>
   {/if}
 {:else}
   <button
-    on:click={() => (opened = true)}
+    onclick={() => (opened = true)}
     class="aspect-video w-full h-full z-0 overflow-hidden relative rounded-xl flex flex-col gap-2 items-center justify-center text-white"
   >
     {#if thumbnail}
@@ -132,7 +141,7 @@
     {:else}
       <div
         class="absolute blur-3xl -z-10 top-0 left-0 w-full h-full bg-gradient-to-br from-green-800 via-blue-900 via-20% to-red-700"
-      />
+      ></div>
     {/if}
     <Icon src={data.icon} solid size="48" />
     <h1 class="font-bold text-xl">{data.text}</h1>

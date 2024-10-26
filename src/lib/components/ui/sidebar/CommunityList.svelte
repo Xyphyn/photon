@@ -10,8 +10,12 @@
   import { flip } from 'svelte/animate'
   import { expoOut } from 'svelte/easing'
 
-  export let items: Community[]
-  export let isFavorites = false
+  interface Props {
+    items: Community[];
+    isFavorites?: boolean;
+  }
+
+  let { items, isFavorites = false }: Props = $props();
 </script>
 
 {#each items.sort( (a, b) => a.title.localeCompare(b.title), ) as follow (follow.id)}
@@ -60,12 +64,14 @@
       alignment="left"
       href="/c/{follow.name}@{new URL(follow.actor_id).hostname}"
     >
-      <div class="flex flex-col max-w-full break-words" slot="label">
-        <span>{follow.title}</span>
-        <span class="text-xs text-slate-600 dark:text-zinc-400">
-          {new URL(follow.actor_id).hostname}
-        </span>
-      </div>
+      {#snippet label()}
+            <div class="flex flex-col max-w-full break-words" >
+          <span>{follow.title}</span>
+          <span class="text-xs text-slate-600 dark:text-zinc-400">
+            {new URL(follow.actor_id).hostname}
+          </span>
+        </div>
+          {/snippet}
     </SidebarButton>
   </div>
 {/each}

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run, preventDefault } from 'svelte/legacy';
+
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
@@ -8,14 +10,17 @@
   import { Button, Material, TextInput, toast } from 'mono-svelte'
   import { ClipboardDocument, Icon } from 'svelte-hero-icons'
 
-  export let data
+  let { data } = $props();
 
   // @ts-ignore
-  let totpLink: string | undefined = undefined
-  $: totpEnabled =
-    data.my_user?.local_user_view.local_user.totp_2fa_enabled ?? totpLink
+  let totpLink: string | undefined = $state(undefined)
+  let totpEnabled;
+  run(() => {
+    totpEnabled =
+      data.my_user?.local_user_view.local_user.totp_2fa_enabled ?? totpLink
+  });
 
-  let verify_totp = ''
+  let verify_totp = $state('')
 
   async function twofa(enabled: boolean, update: boolean = false) {
     try {
@@ -59,17 +64,19 @@
         value={totpLink}
         label={$t('form.profile.2fa.totp')}
       >
-        <button
-          slot="suffix"
-          class="contents"
-          on:click={() => {
+        {#snippet suffix()}
+                <button
+            
+            class="contents"
+            onclick={() => {
             if (!totpLink) return
             navigator.clipboard?.writeText(totpLink)
             toast({ content: $t('toast.copied') })
           }}
-        >
-          <Icon src={ClipboardDocument} size="20" mini />
-        </button>
+          >
+            <Icon src={ClipboardDocument} size="20" mini />
+          </button>
+              {/snippet}
         <span class="font-normal text-xs">
           {$t('form.profile.2fa.paste')}
         </span>
@@ -77,7 +84,7 @@
     {/if}
     <form
       class="flex flex-col gap-2 w-full"
-      on:submit|preventDefault={() => {}}
+      onsubmit={preventDefault(() => {})}
     >
       <TextInput
         bind:value={verify_totp}

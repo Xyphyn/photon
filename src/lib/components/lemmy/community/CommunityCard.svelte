@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
   export async function block(id: number, block: boolean) {
     try {
       const loading = toast({
@@ -111,13 +111,10 @@
   import Entity from '$lib/components/ui/Entity.svelte'
   import { userSettings } from '$lib/settings'
 
-  export let community_view: CommunityView
-  export let moderators: CommunityModeratorView[] = []
-
-  let loading = {
+  let loading = $state({
     blocking: false,
     subscribing: false,
-  }
+  })
 
   async function subscribe() {
     if (!$profile?.jwt) return
@@ -140,8 +137,17 @@
 
     loading.subscribing = false
   }
-  let clazz: string = ''
-  export { clazz as class }
+  interface Props {
+    community_view: CommunityView
+    moderators?: CommunityModeratorView[]
+    class?: string
+  }
+
+  let {
+    community_view = $bindable(),
+    moderators = [],
+    class: clazz = '',
+  }: Props = $props()
 </script>
 
 <StickyCard class="min-w-full pt-0 text-slate-600 dark:text-zinc-400 {clazz}">
@@ -149,34 +155,39 @@
     name={community_view.community.title}
     label="!{fullCommunityName(
       community_view.community.name,
-      community_view.community.actor_id
+      community_view.community.actor_id,
     )}"
   >
-    <Avatar
-      width={32}
-      url={community_view.community.icon}
-      alt={community_view.community.name}
-      circle={false}
-      slot="icon"
-    />
+    {#snippet customIcon()}
+      <Avatar
+        width={32}
+        url={community_view.community.icon}
+        alt={community_view.community.name}
+        circle={false}
+      />
+    {/snippet}
   </Entity>
 
   <div class="flex flex-col gap-1">
     <hr class="border-slate-200 dark:border-zinc-900 my-1" />
     <Expandable bind:open={$userSettings.expand.about} class="!pt-0">
-      <span slot="title" class="py-1 px-1 flex gap-1 items-center">
-        <Icon src={InformationCircle} size="15" mini />
-        {$t('cards.site.about')}
-      </span>
+      {#snippet title()}
+        <span class="py-1 px-1 flex gap-1 items-center">
+          <Icon src={InformationCircle} size="15" mini />
+          {$t('cards.site.about')}
+        </span>
+      {/snippet}
       <Markdown source={community_view.community.description} />
     </Expandable>
 
     <hr class="border-slate-200 dark:border-zinc-900 my-1" />
     <Expandable bind:open={$userSettings.expand.stats}>
-      <span slot="title" class="py-1 px-1 flex gap-1 items-center">
-        <Icon src={ChartBar} size="15" mini />
-        {$t('cards.site.stats')}
-      </span>
+      {#snippet title()}
+        <span class="py-1 px-1 flex gap-1 items-center">
+          <Icon src={ChartBar} size="15" mini />
+          {$t('cards.site.stats')}
+        </span>
+      {/snippet}
       <div class="flex flex-row gap-4 flex-wrap">
         <LabelStat
           label={$t('cards.community.members')}
@@ -194,10 +205,12 @@
     {#if moderators && moderators.length > 0}
       <hr class="border-slate-200 dark:border-zinc-900 my-1" />
       <Expandable bind:open={$userSettings.expand.team}>
-        <span slot="title" class="py-1 px-1 flex gap-1 items-center">
-          <ShieldIcon width={15} filled />
-          {$t('cards.community.moderators')}
-        </span>
+        {#snippet title()}
+          <span class="py-1 px-1 flex gap-1 items-center">
+            <ShieldIcon width={15} filled />
+            {$t('cards.community.moderators')}
+          </span>
+        {/snippet}
         <ItemList
           items={moderators.map((m) => ({
             id: m.moderator.id,
@@ -224,12 +237,13 @@
         on:click={subscribe}
         class="flex-1 relative z-[inherit]"
       >
-        <Icon
-          src={community_view.subscribed == 'Subscribed' ? Check : Plus}
-          mini
-          size="16"
-          slot="prefix"
-        />
+        {#snippet prefix()}
+          <Icon
+            src={community_view.subscribed == 'Subscribed' ? Check : Plus}
+            mini
+            size="16"
+          />
+        {/snippet}
         {community_view.subscribed == 'Subscribed' ||
         community_view.subscribed == 'Pending'
           ? $t('cards.community.subscribed')
@@ -240,17 +254,23 @@
       <Button
         href="/c/{fullCommunityName(
           community_view.community.name,
-          community_view.community.actor_id
+          community_view.community.actor_id,
         )}/settings"
         size="square-md"
       >
-        <Icon src={Cog6Tooth} mini size="16" slot="prefix" />
+        {#snippet prefix()}
+          <Icon src={Cog6Tooth} mini size="16" />
+        {/snippet}
       </Button>
     {/if}
     <Menu placement="top-end">
-      <Button size="square-md" slot="target" class="ml-auto">
-        <Icon src={EllipsisHorizontal} size="16" mini slot="prefix" />
-      </Button>
+      {#snippet target()}
+        <Button size="square-md" class="ml-auto">
+          {#snippet prefix()}
+            <Icon src={EllipsisHorizontal} size="16" mini />
+          {/snippet}
+        </Button>
+      {/snippet}
       <MenuButton href="/modlog?community={community_view.community.id}">
         <Icon src={Newspaper} size="16" mini />
         {$t('cards.community.modlog')}
@@ -262,7 +282,9 @@
           on:click={() =>
             block(community_view.community.id, !community_view.blocked)}
         >
-          <Icon src={NoSymbol} size="16" mini slot="prefix" />
+          {#snippet prefix()}
+            <Icon src={NoSymbol} size="16" mini />
+          {/snippet}
           {community_view.blocked
             ? $t('cards.community.unblock')
             : $t('cards.community.block')}
@@ -273,7 +295,9 @@
             size="lg"
             on:click={() => blockInstance(community_view.community.instance_id)}
           >
-            <Icon src={BuildingOffice2} size="16" mini slot="prefix" />
+            {#snippet prefix()}
+              <Icon src={BuildingOffice2} size="16" mini />
+            {/snippet}
             {$t('cards.community.blockInstance')}
           </MenuButton>
         {/if}
@@ -301,7 +325,9 @@
                 type: 'error',
               })}
           >
-            <Icon src={Fire} size="16" mini slot="prefix" />
+            {#snippet prefix()}
+              <Icon src={Fire} size="16" mini />
+            {/snippet}
             {$t('admin.purge')}
           </MenuButton>
         {/if}

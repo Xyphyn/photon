@@ -9,14 +9,26 @@
   import { fly, slide } from 'svelte/transition'
   import { combineCrossposts } from './crosspost'
 
-  export let posts: PostView[]
-  export let community: boolean = false
-  export let feedData: any
-  let etc = $$restProps
+  interface Props {
+    posts: PostView[]
+    community?: boolean
+    feedData: any
+    children?: import('svelte').Snippet
+    [key: string]: any
+  }
 
-  $: combinedPosts = combineCrossposts(posts)
+  let {
+    posts = $bindable(),
+    community = false,
+    feedData,
+    children,
+    ...rest
+  }: Props = $props()
+  let etc = rest
 
-  let viewPost: number = -1
+  let combinedPosts = $derived(combineCrossposts(posts))
+
+  let viewPost: number = $state(-1)
 </script>
 
 <ul
@@ -32,7 +44,9 @@
         description="There are no posts that match this filter."
       >
         <Button href="/communities">
-          <Icon src={Plus} size="16" mini slot="prefix" />
+          {#snippet prefix()}
+            <Icon src={Plus} size="16" mini />
+          {/snippet}
           <span>Follow some communities</span>
         </Button>
       </Placeholder>
@@ -53,10 +67,10 @@
               posts = posts.toSpliced(index, 1)
             }}
           >
-            <svelte:fragment slot="badges">
+            {#snippet badges()}
               {#if post.withCrossposts}
                 <button
-                  on:click={() => {
+                  onclick={() => {
                     if (viewPost == post.post.id) viewPost = -1
                     else viewPost = post.post.id
                   }}
@@ -76,7 +90,7 @@
                       : 's'}
                   </Badge>
                 </button>{/if}
-            </svelte:fragment>
+            {/snippet}
           </Post>
           {#if post.withCrossposts && viewPost == post.post.id}
             <div
@@ -104,5 +118,5 @@
       {/if}
     {/each}
   {/if}
-  <slot />
+  {@render children?.()}
 </ul>

@@ -13,7 +13,7 @@
 
   const dispatch = createEventDispatcher<{ delete: boolean }>()
 
-  let loading = false
+  let loading = $state(false)
 
   async function deleteImage(image: LocalImage) {
     if (!$profile?.jwt) return
@@ -32,7 +32,11 @@
     loading = false
   }
 
-  export let image: LocalImage
+  interface Props {
+    image: LocalImage;
+  }
+
+  let { image }: Props = $props();
 </script>
 
 <div class="flex flex-col gap-1">
@@ -54,7 +58,9 @@
       size="square-md"
       class="ml-auto"
     >
-      <Icon src={ArrowDownTray} size="16" mini slot="prefix" />
+      {#snippet prefix()}
+            <Icon src={ArrowDownTray} size="16" mini  />
+          {/snippet}
     </Button>
     <Button
       title={$t('post.actions.more.delete')}
@@ -63,7 +69,9 @@
       {loading}
       disabled={loading}
     >
-      <Icon src={Trash} size="16" mini slot="prefix" color="text-red-500" />
+      {#snippet prefix()}
+            <Icon src={Trash} size="16" mini  color="text-red-500" />
+          {/snippet}
     </Button>
   </div>
 </div>

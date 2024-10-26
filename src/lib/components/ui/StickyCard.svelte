@@ -1,6 +1,11 @@
 <script lang="ts">
-  let clazz: string = ''
-  export { clazz as class }
+  interface Props {
+    class?: string;
+    children?: import('svelte').Snippet;
+  }
+
+  let { class: clazz = '', children }: Props = $props();
+  
 </script>
 
 <aside
@@ -8,5 +13,5 @@
     flex-col gap-4 px-6 pt-4 max-w-full w-full h-full
     overflow-auto text-sm border-slate-200 dark:border-zinc-800 {clazz}"
 >
-  <slot />
+  {@render children?.()}
 </aside>

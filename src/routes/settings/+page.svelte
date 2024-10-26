@@ -47,8 +47,8 @@
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { profile } from '$lib/auth'
   import AccountPage from '../profile/(local_user)/settings/+page.svelte'
-  let importing = false
-  let importText = ''
+  let importing = $state(false)
+  let importText = $state('')
 
   let localeMap: Map<
     string,
@@ -122,7 +122,9 @@
       title={$t('settings.import')}
       roundingSide="left"
     >
-      <Icon src={ArrowDownTray} mini size="18" slot="prefix" />
+      {#snippet prefix()}
+            <Icon src={ArrowDownTray} mini size="18"  />
+          {/snippet}
     </Button>
     <Button
       size="square-lg"
@@ -135,7 +137,9 @@
       title={$t('settings.export')}
       rounding="none"
     >
-      <Icon src={ArrowUpTray} mini size="18" slot="prefix" />
+      {#snippet prefix()}
+            <Icon src={ArrowUpTray} mini size="18"  />
+          {/snippet}
     </Button>
     <Button
       size="square-lg"
@@ -149,7 +153,9 @@
       title={$t('settings.reset')}
       roundingSide="right"
     >
-      <Icon src={ArrowPath} mini size="18" slot="prefix" />
+      {#snippet prefix()}
+            <Icon src={ArrowPath} mini size="18"  />
+          {/snippet}
     </Button>
   </div>
 </Header>
@@ -195,7 +201,9 @@
           class="block"
         >
           {$t('profile.profile')}
-          <Icon src={ArrowRight} micro size="16" slot="suffix" />
+          {#snippet suffix()}
+                    <Icon src={ArrowRight} micro size="16"  />
+                  {/snippet}
         </Button>
       </div>
     </Section>
@@ -203,16 +211,20 @@
   <Section id="app" title={$t('settings.app.title')}>
     <div class="flex flex-col gap-2">
       <Setting>
-        <span slot="title" class="inline-flex items-center gap-2">
-          {$t('settings.app.lang.title')}
-          <Badge>{$t('settings.beta')}</Badge>
-        </span>
-        <p slot="description">
-          {$t('settings.app.lang.description')}
-          <Link href="/translators" highlight class="text-base font-semibold">
-            {$t('settings.app.lang.credits')}
-          </Link>
-        </p>
+        {#snippet title()}
+                <span  class="inline-flex items-center gap-2">
+            {$t('settings.app.lang.title')}
+            <Badge>{$t('settings.beta')}</Badge>
+          </span>
+              {/snippet}
+        {#snippet description()}
+                <p >
+            {$t('settings.app.lang.description')}
+            <Link href="/translators" highlight class="text-base font-semibold">
+              {$t('settings.app.lang.credits')}
+            </Link>
+          </p>
+              {/snippet}
         <!--@ts-ignore-->
         <Select bind:value={$userSettings.language}>
           <option value={null}>
@@ -240,36 +252,46 @@
       {/if}
     </div>
     <Setting>
-      <span slot="title">{$t('settings.app.view.title')}</span>
+      {#snippet title()}
+            <span >{$t('settings.app.view.title')}</span>
+          {/snippet}
       <ViewSelect showLabel={false} />
-      <p slot="description">
-        {#if $userSettings.view == 'list'}
-          {$t('settings.app.view.list')}
-        {:else if $userSettings.view == 'cozy'}
-          {$t('settings.app.view.cozy')}
-        {:else if $userSettings.view == 'compact'}
-          {$t('settings.app.view.compact')}
-        {:else if $userSettings.view == 'card'}
-          {$t('settings.app.view.legacy')}
-        {/if}
-      </p>
+      {#snippet description()}
+            <p >
+          {#if $userSettings.view == 'list'}
+            {$t('settings.app.view.list')}
+          {:else if $userSettings.view == 'cozy'}
+            {$t('settings.app.view.cozy')}
+          {:else if $userSettings.view == 'compact'}
+            {$t('settings.app.view.compact')}
+          {:else if $userSettings.view == 'card'}
+            {$t('settings.app.view.legacy')}
+          {/if}
+        </p>
+          {/snippet}
     </Setting>
     <Setting
       optionClass="flex-[2] max-w-full flex-wrap min-w-0 "
       itemsClass="flex-col !items-start lg:!items-center lg:flex-row"
     >
-      <span slot="title">{$t('settings.app.sort.title')}</span>
-      <span slot="description">{$t('settings.app.sort.description')}</span>
+      {#snippet title()}
+            <span >{$t('settings.app.sort.title')}</span>
+          {/snippet}
+      {#snippet description()}
+            <span >{$t('settings.app.sort.description')}</span>
+          {/snippet}
       <div
         class="flex flex-row flex-wrap
           flex-1 gap-2 w-full lg:w-max max-w-full lg:self-end"
       >
         <div class="max-w-full">
           <Select bind:value={$userSettings.defaultSort.feed}>
-            <span slot="label" class="flex items-center gap-1">
-              <Icon src={GlobeAmericas} size="16" mini />
-              {$t('filter.location.label')}
-            </span>
+            {#snippet customLabel()}
+                        <span  class="flex items-center gap-1">
+                <Icon src={GlobeAmericas} size="16" mini />
+                {$t('filter.location.label')}
+              </span>
+                      {/snippet}
             <option value="All">{$t('filter.location.all')}</option>
             <option value="Local">{$t('filter.location.local')}</option>
             <option value="Subscribed">
@@ -288,10 +310,12 @@
         </div>
         <div class="max-w-full">
           <Select bind:value={$userSettings.defaultSort.comments}>
-            <span slot="label" class="flex items-center gap-1">
-              <Icon src={ChatBubbleOvalLeftEllipsis} size="14" mini />
-              {$t('content.comments')}
-            </span>
+            {#snippet customLabel()}
+                        <span  class="flex items-center gap-1">
+                <Icon src={ChatBubbleOvalLeftEllipsis} size="14" mini />
+                {$t('content.comments')}
+              </span>
+                      {/snippet}
 
             <option value="Hot">{$t('filter.sort.hot')}</option>
             <option value="Top">{$t('filter.sort.top.label')}</option>
@@ -307,10 +331,14 @@
       description={$t('settings.app.infiniteScroll.description')}
     />
     <Setting>
-      <span slot="title">{$t('settings.app.thumbnailSide.title')}</span>
-      <span slot="description">
-        {$t('settings.app.thumbnailSide.description')}
-      </span>
+      {#snippet title()}
+            <span >{$t('settings.app.thumbnailSide.title')}</span>
+          {/snippet}
+      {#snippet description()}
+            <span >
+          {$t('settings.app.thumbnailSide.description')}
+        </span>
+          {/snippet}
       <MultiSelect
         options={[true, false]}
         optionNames={[
@@ -337,8 +365,12 @@
       description={$t('settings.app.postsInNewTab.description')}
     />
     <Setting>
-      <span slot="title">{$t('settings.app.font.title')}</span>
-      <span slot="description">{$t('settings.app.font.description')}</span>
+      {#snippet title()}
+            <span >{$t('settings.app.font.title')}</span>
+          {/snippet}
+      {#snippet description()}
+            <span >{$t('settings.app.font.description')}</span>
+          {/snippet}
       <Select bind:value={$userSettings.font}>
         <option value="inter">Inter</option>
         <option value="satoshi/nunito">Satoshi + Nunito</option>
@@ -347,11 +379,17 @@
       </Select>
     </Setting>
     <Setting>
-      <span slot="title">{$t('settings.app.theming.title')}</span>
-      <span slot="description">{$t('settings.app.theming.description')}</span>
+      {#snippet title()}
+            <span >{$t('settings.app.theming.title')}</span>
+          {/snippet}
+      {#snippet description()}
+            <span >{$t('settings.app.theming.description')}</span>
+          {/snippet}
       <Button href="/theme">
         {$t('settings.app.theming.link')}
-        <Icon src={ArrowRight} size="16" mini slot="suffix" />
+        {#snippet suffix()}
+                <Icon src={ArrowRight} size="16" mini  />
+              {/snippet}
       </Button>
     </Setting>
     <ToggleSetting
@@ -370,10 +408,14 @@
       description={$t('settings.app.duplicateTitles.description')}
     />
     <Setting>
-      <span slot="title">{$t('settings.app.translation.title')}</span>
-      <span slot="description">
-        {$t('settings.app.translation.description')}
-      </span>
+      {#snippet title()}
+            <span >{$t('settings.app.translation.title')}</span>
+          {/snippet}
+      {#snippet description()}
+            <span >
+          {$t('settings.app.translation.description')}
+        </span>
+          {/snippet}
       <TextInput
         bind:value={$userSettings.translator}
         label={$t('settings.app.translation.instance')}
@@ -387,9 +429,11 @@
         bind:checked={$userSettings.parseTags}
       />
       <Setting>
-        <svelte:fragment slot="title">
-          {$t('settings.app.titleTags.rules.title')}
-        </svelte:fragment>
+        {#snippet title()}
+              
+            {$t('settings.app.titleTags.rules.title')}
+          
+              {/snippet}
         <div
           class="flex flex-col divide-y [&>*]:py-2 items-end divide-slate-200 dark:divide-zinc-800"
         >
@@ -412,10 +456,14 @@
   </Section>
   <Section id="nav" title={$t('settings.navigation.title')}>
     <Setting>
-      <span slot="title">{$t('settings.navigation.dockPos.title')}</span>
-      <span slot="description">
-        {$t('settings.navigation.dockPos.description')}
-      </span>
+      {#snippet title()}
+            <span >{$t('settings.navigation.dockPos.title')}</span>
+          {/snippet}
+      {#snippet description()}
+            <span >
+          {$t('settings.navigation.dockPos.description')}
+        </span>
+          {/snippet}
       <MultiSelect
         options={[true, false, null]}
         optionNames={[
@@ -427,10 +475,14 @@
       />
     </Setting>
     <Setting>
-      <span slot="title">{$t('settings.navigation.panel.title')}</span>
-      <span slot="description">
-        {$t('settings.navigation.panel.description')}
-      </span>
+      {#snippet title()}
+            <span >{$t('settings.navigation.panel.title')}</span>
+          {/snippet}
+      {#snippet description()}
+            <span >
+          {$t('settings.navigation.panel.description')}
+        </span>
+          {/snippet}
       <MultiSelect
         options={[true, false, null]}
         optionNames={[
@@ -444,38 +496,46 @@
     <Setting
       supportedPlatforms={{ desktop: true, tablet: true, mobile: false }}
     >
-      <span slot="title">{$t('settings.navigation.pins.title')}</span>
-      <span slot="description">
-        {$t('settings.navigation.pins.description')}
-      </span>
+      {#snippet title()}
+            <span >{$t('settings.navigation.pins.title')}</span>
+          {/snippet}
+      {#snippet description()}
+            <span >
+          {$t('settings.navigation.pins.description')}
+        </span>
+          {/snippet}
       <div class="flex items-center gap-1 flex-wrap">
         {#each getDefaultLinks() as pin}
           <Popover openOnHover placement="bottom">
-            <Button
-              size="square-md"
-              slot="target"
-              disabled={$userSettings.dock.pins
-                ?.map((p) => p.url)
-                ?.includes(pin.url)}
-              on:click={() => {
-                $userSettings.dock.pins = [
-                  ...($userSettings.dock.pins ?? []),
-                  pin,
-                ]
-              }}
-            >
-              <Icon src={iconOfLink(pin.url)} mini size="16" />
-            </Button>
-            <Material
-              slot="popover"
-              padding="none"
-              class="px-4 py-2 flex flex-col"
-            >
-              <span class="font-medum text-base">{pin.label}</span>
-              <code class="bg-slate-50 dark:!bg-zinc-950 !rounded-md">
-                {pin.url}
-              </code>
-            </Material>
+            {#snippet target()}
+                        <Button
+                size="square-md"
+                
+                disabled={$userSettings.dock.pins
+                  ?.map((p) => p.url)
+                  ?.includes(pin.url)}
+                on:click={() => {
+                  $userSettings.dock.pins = [
+                    ...($userSettings.dock.pins ?? []),
+                    pin,
+                  ]
+                }}
+              >
+                <Icon src={iconOfLink(pin.url)} mini size="16" />
+              </Button>
+                      {/snippet}
+            {#snippet popover()}
+                        <Material
+                
+                padding="none"
+                class="px-4 py-2 flex flex-col"
+              >
+                <span class="font-medum text-base">{pin.label}</span>
+                <code class="bg-slate-50 dark:!bg-zinc-950 !rounded-md">
+                  {pin.url}
+                </code>
+              </Material>
+                      {/snippet}
           </Popover>
         {/each}
       </div>
@@ -489,10 +549,14 @@
       bind:checked={$userSettings.embeds.clickToView}
     />
     <Setting>
-      <span slot="title">YouTube</span>
-      <span slot="description">
-        {$t('settings.embeds.youtube.description')}
-      </span>
+      {#snippet title()}
+            <span >YouTube</span>
+          {/snippet}
+      {#snippet description()}
+            <span >
+          {$t('settings.embeds.youtube.description')}
+        </span>
+          {/snippet}
       <Select bind:value={$userSettings.embeds.youtube}>
         <option value="youtube">YouTube</option>
         <option value="invidious">Invidious</option>
@@ -501,10 +565,14 @@
     </Setting>
     {#if $userSettings.embeds.youtube == 'invidious'}
       <Setting>
-        <span slot="title">{$t('settings.embeds.instance.invidious')}</span>
-        <span slot="description">
-          {$t('settings.embeds.instance.description')}
-        </span>
+        {#snippet title()}
+                <span >{$t('settings.embeds.instance.invidious')}</span>
+              {/snippet}
+        {#snippet description()}
+                <span >
+            {$t('settings.embeds.instance.description')}
+          </span>
+              {/snippet}
         <TextInput
           label={$t('settings.embeds.instance.invidious')}
           pattern={DOMAIN_REGEX_FORMS}
@@ -514,10 +582,14 @@
     {/if}
     {#if $userSettings.embeds.youtube == 'piped'}
       <Setting>
-        <span slot="title">{$t('settings.embeds.instance.piped')}</span>
-        <span slot="description">
-          {$t('settings.embeds.instance.description')}
-        </span>
+        {#snippet title()}
+                <span >{$t('settings.embeds.instance.piped')}</span>
+              {/snippet}
+        {#snippet description()}
+                <span >
+            {$t('settings.embeds.instance.description')}
+          </span>
+              {/snippet}
         <TextInput
           label={$t('settings.embeds.instance.piped')}
           pattern={DOMAIN_REGEX_FORMS}
@@ -554,10 +626,14 @@
       description={$t('settings.lemmy.crosspostMarker.description')}
     />
     <Setting>
-      <span slot="title">{$t('settings.lemmy.hideSubmissions.title')}</span>
-      <span slot="description">
-        <p>{$t('settings.lemmy.hideSubmissions.description')}</p>
-      </span>
+      {#snippet title()}
+            <span >{$t('settings.lemmy.hideSubmissions.title')}</span>
+          {/snippet}
+      {#snippet description()}
+            <span >
+          <p>{$t('settings.lemmy.hideSubmissions.description')}</p>
+        </span>
+          {/snippet}
       <div class="flex flex-col items-start gap-4 flex-wrap">
         <Switch bind:checked={$userSettings.hidePosts.deleted}>
           {$t('settings.lemmy.hideSubmissions.deleted')}
@@ -573,10 +649,14 @@
       description={$t('settings.lemmy.nsfwBlur.description')}
     />
     <Setting>
-      <span slot="title">{$t('settings.lemmy.instances.title')}</span>
-      <span slot="description">
-        {$t('settings.lemmy.instances.description')}
-      </span>
+      {#snippet title()}
+            <span >{$t('settings.lemmy.instances.title')}</span>
+          {/snippet}
+      {#snippet description()}
+            <span >
+          {$t('settings.lemmy.instances.description')}
+        </span>
+          {/snippet}
       <div class="flex flex-row flex-wrap items-center gap-4">
         <Checkbox bind:checked={$userSettings.showInstances.user}>
           {$t('content.users')}
@@ -598,25 +678,29 @@
 
   <Section id="moderation" title={$t('settings.moderation.title')}>
     <Setting itemsClass="!flex-col !items-start">
-      <span slot="title">{$t('settings.moderation.replyPresets.title')}</span>
-      <span slot="description">
-        <p>{$t('settings.moderation.replyPresets.description')}</p>
-        <ul class="leading-6">
-          <li>{$t('settings.moderation.replyPresets.syntax')}</li>
-          <li>
-            <code>{'{{reason}}'}</code>
-          </li>
-          <li>
-            <code>{'{{post}}'}</code>
-          </li>
-          <li>
-            <code>{'{{community}}'}</code>
-          </li>
-          <li>
-            <code>{'{{username}}'}</code>
-          </li>
-        </ul>
-      </span>
+      {#snippet title()}
+            <span >{$t('settings.moderation.replyPresets.title')}</span>
+          {/snippet}
+      {#snippet description()}
+            <span >
+          <p>{$t('settings.moderation.replyPresets.description')}</p>
+          <ul class="leading-6">
+            <li>{$t('settings.moderation.replyPresets.syntax')}</li>
+            <li>
+              <code>{'{{reason}}'}</code>
+            </li>
+            <li>
+              <code>{'{{post}}'}</code>
+            </li>
+            <li>
+              <code>{'{{community}}'}</code>
+            </li>
+            <li>
+              <code>{'{{username}}'}</code>
+            </li>
+          </ul>
+        </span>
+          {/snippet}
       {#each $userSettings.moderation.presets as preset, index}
         <Material
           color="transparent"
@@ -681,7 +765,9 @@
             ]
           }}
         >
-          <Icon src={Plus} mini size="16" slot="prefix" />
+          {#snippet prefix()}
+                    <Icon src={Plus} mini size="16"  />
+                  {/snippet}
           Add Preset
         </Button>
       </Material>

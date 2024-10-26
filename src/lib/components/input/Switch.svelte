@@ -1,24 +1,39 @@
 <script lang="ts">
+  import { run, preventDefault } from 'svelte/legacy'
+
   import { ChevronDown, Icon } from 'svelte-hero-icons'
   import { Button } from 'mono-svelte'
 
   import { createEventDispatcher } from 'svelte'
   type T = $$Generic
-  export let options: T[]
-  export let disabled: boolean[] = []
-  export let optionNames: string[] = []
-  export let selected: T
-  export let headless: boolean = false
 
-  let clazz: string = ''
-  export let buttonClazz: string = ''
-  export { clazz as class }
+  interface Props {
+    options: T[]
+    disabled?: boolean[]
+    optionNames?: string[]
+    selected: T
+    headless?: boolean
+    class?: string
+    buttonClazz?: string
+    children?: import('svelte').Snippet<[any]>
+  }
+
+  let {
+    options,
+    disabled = [],
+    optionNames = [],
+    selected = $bindable(),
+    headless = false,
+    class: clazz = '',
+    buttonClazz = '',
+    children,
+  }: Props = $props()
 
   const dispatcher = createEventDispatcher<{ select: T }>()
 
-  $: {
+  run(() => {
     dispatcher('select', selected)
-  }
+  })
 
   let containerClass = `
     flex flex-row rtl:flex-row-reverse items-center w-max max-w-full overflow-auto
@@ -57,7 +72,7 @@
   {#each options as option, index}
     <button
       class={buttonClass(selected == option)}
-      on:click|preventDefault={() => (selected = option)}
+      onclick={preventDefault(() => (selected = option))}
       disabled={disabled[index] ?? false}
       type="button"
     >
@@ -65,9 +80,9 @@
       {#if headless && option == selected}
         <div
           class="absolute -bottom-1 left-0 w-full border-b-2 rounded-t-sm border-black dark:border-white"
-        />
+        ></div>
       {/if}
     </button>
   {/each}
 </div>
-<slot {selected} />
+{@render children?.({ selected })}

@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
   import { writable } from 'svelte/store'
 
   interface PageScopedError {
@@ -24,17 +24,19 @@
   import { expoOut } from 'svelte/easing'
   import { onDestroy } from 'svelte'
 
-  export let scope: string | undefined | null = undefined
-
-  $: scopedErrors = $errors.filter(
-    (e) => e.scope == scope || e.scope == 'global'
-  )
-
   onDestroy(() => {
     clearErrorScope(scope)
   })
-  let clazz: string = ''
-  export { clazz as class }
+  interface Props {
+    scope?: string | undefined | null
+    class?: string
+  }
+
+  let { scope = undefined, class: clazz = '' }: Props = $props()
+
+  let scopedErrors = $derived(
+    $errors.filter((e) => e.scope == scope || e.scope == 'global'),
+  )
 </script>
 
 {#if scopedErrors.length > 0}

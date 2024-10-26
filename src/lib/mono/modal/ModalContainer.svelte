@@ -1,13 +1,17 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import Button from '../button/Button.svelte'
   import Modal from '../modal/Modal.svelte'
   import { Icon } from 'svelte-hero-icons'
   import { shownModal } from './modal.js'
 
-  let open = false
+  let open = $state(false)
 
   // reactivity hack
-  $: open = $shownModal ? true : false
+  run(() => {
+    open = $shownModal ? true : false
+  });
 </script>
 
 {#if $shownModal}

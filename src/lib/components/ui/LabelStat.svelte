@@ -1,14 +1,23 @@
 <script lang="ts">
   import FormattedNumber from '../util/FormattedNumber.svelte'
 
-  export let label: string
-  export let content: string
-  export let formatted: boolean = false
+  interface Props {
+    label: string
+    content: string
+    formatted?: boolean
+    labelClass?: string
+    contentClass?: string
+    class?: string
+  }
 
-  export let labelClass: string = ''
-  export let contentClass: string = ''
-  let clazz: string = ''
-  export { clazz as class }
+  let {
+    label,
+    content,
+    formatted = false,
+    labelClass = '',
+    contentClass = '',
+    class: clazz = '',
+  }: Props = $props()
 </script>
 
 <div class="flex flex-col {clazz}">

@@ -9,7 +9,7 @@
   import { t } from '$lib/translations'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
-  export let data
+  let { data } = $props();
 </script>
 
 <Header pageHeader>{$t('routes.admin.applications.title')}</Header>

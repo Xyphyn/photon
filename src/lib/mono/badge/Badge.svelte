@@ -1,5 +1,4 @@
 <script lang="ts">
-  export let label: string = ''
 
   const badgeColor = {
     red: 'bg-red-500 text-white ring-transparent',
@@ -32,15 +31,32 @@
   type BadgeColor = keyof typeof badgeColor
   type BadgeRoundness = keyof typeof badgeRoundness
 
-  export let color: BadgeColor = 'gray-subtle'
-  export let rounding: BadgeRoundness = 'full'
-  export let allowIconOnly: boolean = false
 
-  let clazz: string = ''
-  export { clazz as class }
+  interface Props {
+    label?: string;
+    color?: BadgeColor;
+    rounding?: BadgeRoundness;
+    allowIconOnly?: boolean;
+    class?: string;
+    icon?: import('svelte').Snippet;
+    children?: import('svelte').Snippet;
+  }
+
+  let {
+    label = '',
+    color = 'gray-subtle',
+    rounding = 'full',
+    allowIconOnly = false,
+    class: clazz = '',
+    icon,
+    children,
+    ...rest
+  }: Props = $props();
+  
 </script>
 
 <span
+  {...rest}
   class="{allowIconOnly
     ? 'max-md:px-1.5 max-md:py-1.5'
     : ''} px-2.5 py-1 {badgeRoundness[
@@ -50,8 +66,8 @@
   ]} {clazz}"
   title={label}
 >
-  <slot name="icon" />
+  {@render icon?.()}
   <span class={allowIconOnly ? 'hidden md:contents' : 'contents'}>
-    <slot />
+    {@render children?.()}
   </span>
 </span>

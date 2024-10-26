@@ -18,19 +18,28 @@
     ExclamationTriangle,
   } from 'svelte-hero-icons'
 
-  export let post: Post
-  export let type: MediaType = 'none'
-  export let view: View = 'cozy'
-  export let blur: boolean = post.nsfw && $userSettings.nsfwBlur
-
   const thumbnailSize = (view: View) =>
     view == 'compact' ? 'w-22 h-22 sm:w-28' : 'w-24 h-24 sm:w-32'
 
-  $: size = thumbnailSize(view)
+  interface Props {
+    post: Post
+    type?: MediaType
+    view?: View
+    blur?: boolean
+    style?: string
+    class?: string
+  }
 
-  export let style: string = ''
-  let clazz: string = ''
-  export { clazz as class }
+  let {
+    post,
+    type = 'none',
+    view = 'cozy',
+    blur = post.nsfw && $userSettings.nsfwBlur,
+    style = '',
+    class: clazz = '',
+  }: Props = $props()
+
+  let size = $derived(thumbnailSize(view))
 </script>
 
 <!-- 
@@ -43,15 +52,16 @@
       openOnHover
       placement={$userSettings.leftAlign ? 'bottom-start' : 'bottom-end'}
     >
-      <Material
-        slot="target"
-        padding="none"
-        rounding="full"
-        elevation="high"
-        class="w-max absolute bottom-0 left-0 py-0.5 px-1.5 m-1 font-bold"
-      >
-        ALT
-      </Material>
+      {#snippet target()}
+        <Material
+          padding="none"
+          rounding="full"
+          elevation="high"
+          class="w-max absolute bottom-0 left-0 py-0.5 px-1.5 m-1 font-bold"
+        >
+          ALT
+        </Material>
+      {/snippet}
       <div class="max-w-sm">
         {post.alt_text}
       </div>
@@ -60,7 +70,7 @@
   <svelte:element
     this={!$userSettings.expandImages || type != 'image' ? 'a' : 'button'}
     href={postLink(post)}
-    on:click={() => {
+    onclick={() => {
       if (type == 'image') {
         showImage(bestImageURL(post, false, -1))
       }

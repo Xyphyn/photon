@@ -94,7 +94,7 @@ export let profileData = writable<ProfileData>(
       },
     ],
     profile: 1,
-  }
+  },
 )
 
 let fetchUser = {
@@ -107,8 +107,8 @@ function profileStore(
   fn: (
     values: ProfileData,
     set: (value: Profile) => void,
-    update: (fn: Updater<Profile>) => void
-  ) => any
+    update: (fn: Updater<Profile>) => void,
+  ) => any,
 ) {
   const derive: Readable<Profile> = derived(data, fn)
   const { subscribe } = derive
@@ -226,7 +226,7 @@ if (
       const result = await setUser(
         jwt,
         env.PUBLIC_INSTANCE_URL ?? '',
-        user?.user?.local_user_view.person.name
+        user?.user?.local_user_view.person.name,
       )
 
       if (result)
@@ -283,7 +283,7 @@ export async function setUser(jwt: string, inst: string, username?: string) {
 
 async function userFromJwt(
   jwt: string,
-  instance: string
+  instance: string,
 ): Promise<
   { user: PersonData | undefined; site: GetSiteResponse } | undefined
 > {
@@ -296,7 +296,7 @@ async function userFromJwt(
         type: 'warning',
         loading: true,
       }),
-    5000
+    5000,
   )
 
   const site = await sitePromise
@@ -414,7 +414,7 @@ async function checkInbox() {
   const notifs = await getNotificationCount(
     jwt,
     amModOfAny(user) ?? false,
-    user ? isAdmin(user) : false
+    user ? isAdmin(user) : false,
   )
 
   notifications.set({

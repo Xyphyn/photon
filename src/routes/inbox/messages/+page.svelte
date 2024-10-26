@@ -51,7 +51,7 @@
     }))
   }
 
-  export let data
+  let { data } = $props();
 </script>
 
 <Header pageHeader>

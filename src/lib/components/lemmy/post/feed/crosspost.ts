@@ -1,6 +1,6 @@
-import { userSettings } from "$lib/settings"
-import type { PostView } from "lemmy-js-client"
-import { get } from "svelte/store"
+import { userSettings } from '$lib/settings.svelte'
+import type { PostView } from 'lemmy-js-client'
+import { get } from 'svelte/store'
 
 export type PostViewWithCrossposts = PostView & {
   withCrossposts: true

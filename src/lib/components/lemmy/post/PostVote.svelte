@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
   import { userSettings } from '$lib/settings.js'
   export const voteColor = (vote: number, border: boolean = false) =>
     vote == 1
@@ -9,7 +9,7 @@
 
   export const shouldShowVoteColor = (
     vote: number,
-    type: 'upvotes' | 'downvotes'
+    type: 'upvotes' | 'downvotes',
   ): string =>
     (vote == -1 && type == 'downvotes') || (vote == 1 && type == 'upvotes')
       ? voteColor(vote)
@@ -29,15 +29,27 @@
   import { t } from '$lib/translations'
   import { errorMessage } from '$lib/lemmy/error'
 
-  export let post: Post
-  export let vote: number = 0
-  export let score: number
-  export let upvotes: number = 0
-  export let downvotes: number = 0
+  interface Props {
+    post: Post
+    vote?: number
+    score: number
+    upvotes?: number
+    downvotes?: number
+    showCounts?: boolean
+    children?: import('svelte').Snippet<[any]>
+  }
 
-  export let showCounts: boolean = true
+  let {
+    post,
+    vote = $bindable(0),
+    score = $bindable(),
+    upvotes = $bindable(0),
+    downvotes = $bindable(0),
+    showCounts = true,
+    children,
+  }: Props = $props()
 
-  let loading = false
+  let loading = $state(false)
 
   let oldScore = score
 
@@ -58,7 +70,7 @@
   }
 </script>
 
-<slot {vote} {score}>
+{#if children}{@render children({ vote, score })}{:else}
   <div
     class="{buttonColor.ghost} rounded-full h-full font-medium flex items-center *:p-2
     hover:bg-white hover:dark:bg-zinc-900 overflow-hidden transition-colors flex-shrink-0
@@ -70,7 +82,7 @@
     aria-label={$t('aria.vote.group')}
   >
     <button
-      on:click={() => castVote(vote == 1 ? 0 : 1)}
+      onclick={() => castVote(vote == 1 ? 0 : 1)}
       class="flex items-center gap-0.5 transition-colors relative z-0
       {vote == 1
         ? shouldShowVoteColor(vote, 'upvotes')
@@ -96,7 +108,7 @@
     </button>
     {#if $site?.site_view.local_site.enable_downvotes ?? true}
       <button
-        on:click={() => castVote(vote == -1 ? 0 : -1)}
+        onclick={() => castVote(vote == -1 ? 0 : -1)}
         class="flex items-center flex-row-reverse gap-0.5 transition-colors
       {vote == -1
           ? shouldShowVoteColor(vote, 'downvotes')
@@ -122,4 +134,4 @@
       </button>
     {/if}
   </div>
-</slot>
+{/if}

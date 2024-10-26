@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { buildCommentsTree } from '$lib/components/lemmy/comment/comments.js'
   import { isImage } from '$lib/ui/image.js'
   import { client, getClient } from '$lib/lemmy.js'
@@ -46,9 +48,9 @@
   import CommentListVirtualizer from '$lib/components/lemmy/comment/CommentListVirtualizer.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
-  export let data
+  let { data = $bindable() } = $props();
 
-  $: type = mediaType(data.post.post_view.post.url, 'cozy')
+  let type = $derived(mediaType(data.post.post_view.post.url, 'cozy'))
 
   const updateActions = () => {
     // @ts-ignore
@@ -96,7 +98,9 @@
     }
   }
 
-  $: if (data.post) updateActions()
+  run(() => {
+    if (data.post) updateActions()
+  });
 
   onMount(async () => {
     if (
@@ -147,8 +151,8 @@
   }
 
   let commentsPage = 1
-  let commentSort: CommentSortType = data.commentSort
-  let loading = false
+  let commentSort: CommentSortType = $state(data.commentSort)
+  let loading = $state(false)
 
   async function reloadComments() {
     loading = true
@@ -165,10 +169,10 @@
     commentsPage = 1
   }
 
-  let commenting = false
+  let commenting = $state(false)
 
-  $: remoteView =
-    $page.params.instance?.toLowerCase() != $instance.toLowerCase()
+  let remoteView =
+    $derived($page.params.instance?.toLowerCase() != $instance.toLowerCase())
 </script>
 
 <svelte:head>
@@ -215,13 +219,15 @@
       "
     >
       <Popover openOnHover>
-        <Icon
-          src={InformationCircle}
-          size="24"
-          solid
-          slot="target"
-          class="bg-slate-200 dark:bg-zinc-700 p-0.5 rounded-full text-primary-900 dark:text-primary-100"
-        />
+        {#snippet target()}
+                <Icon
+            src={InformationCircle}
+            size="24"
+            solid
+            
+            class="bg-slate-200 dark:bg-zinc-700 p-0.5 rounded-full text-primary-900 dark:text-primary-100"
+          />
+              {/snippet}
         {$t('routes.post.instanceWarning')}
       </Popover>
       <span class="text-primary-900 dark:text-primary-100 font-bold">
@@ -267,7 +273,9 @@
         style="width: max-content;"
       />
       <Button on:click={() => history.back()} size="square-md">
-        <Icon src={ArrowLeft} micro size="16" slot="prefix" />
+        {#snippet prefix()}
+                <Icon src={ArrowLeft} micro size="16"  />
+              {/snippet}
       </Button>
     </div>
     <h1 class="font-bold text-xl font-display leading-5">
@@ -305,13 +313,15 @@
       class="text-base mt-2 w-full cursor-pointer"
       open={data.post.cross_posts?.length <= 3}
     >
-      <div
-        slot="title"
-        class="inline-block w-full text-left text-base font-normal"
-      >
-        <span class="font-bold">{data.post.cross_posts.length}</span>
-        {$t('routes.post.crosspostCount')}
-      </div>
+      {#snippet title()}
+            <div
+          
+          class="inline-block w-full text-left text-base font-normal"
+        >
+          <span class="font-bold">{data.post.cross_posts.length}</span>
+          {$t('routes.post.crosspostCount')}
+        </div>
+          {/snippet}
       <div
         class="!divide-y divide-slate-200 dark:divide-zinc-800 flex flex-col"
       >
@@ -365,9 +375,9 @@
     <div class="space-y-4">
       {#each new Array(10) as empty}
         <div class="animate-pulse flex flex-col gap-2 skeleton w-full">
-          <div class="w-96 h-4" />
-          <div class="w-full h-12" />
-          <div class="w-48 h-4" />
+          <div class="w-96 h-4"></div>
+          <div class="w-full h-12"></div>
+          <div class="w-48 h-4"></div>
         </div>
       {/each}
     </div>
@@ -380,24 +390,28 @@
             {$t('routes.post.addComment')}
           </Button>
 
-          <div class="gap-2 flex items-center" slot="action">
-            <Select
-              size="md"
-              bind:value={commentSort}
-              on:change={reloadComments}
-            >
-              <option value="Hot">{$t('filter.sort.hot')}</option>
-              <option value="Top">{$t('filter.sort.top.label')}</option>
-              <option value="New">{$t('filter.sort.new')}</option>
-              <option value="Old">{$t('filter.sort.old')}</option>
-              <option value="Controversial">
-                {$t('filter.sort.controversial')}
-              </option>
-            </Select>
-            <Button size="square-md" on:click={reloadComments}>
-              <Icon src={ArrowPath} size="16" mini slot="prefix" />
-            </Button>
-          </div>
+          {#snippet action()}
+                    <div class="gap-2 flex items-center" >
+              <Select
+                size="md"
+                bind:value={commentSort}
+                on:change={reloadComments}
+              >
+                <option value="Hot">{$t('filter.sort.hot')}</option>
+                <option value="Top">{$t('filter.sort.top.label')}</option>
+                <option value="New">{$t('filter.sort.new')}</option>
+                <option value="Old">{$t('filter.sort.old')}</option>
+                <option value="Controversial">
+                  {$t('filter.sort.controversial')}
+                </option>
+              </Select>
+              <Button size="square-md" on:click={reloadComments}>
+                {#snippet prefix()}
+                            <Icon src={ArrowPath} size="16" mini  />
+                          {/snippet}
+              </Button>
+            </div>
+                  {/snippet}
         </EndPlaceholder>
       {:else}
         <CommentForm
@@ -438,7 +452,9 @@
           </option>
         </Select>
         <Button size="square-md" on:click={reloadComments}>
-          <Icon src={ArrowPath} size="16" mini slot="prefix" />
+          {#snippet prefix()}
+                    <Icon src={ArrowPath} size="16" mini  />
+                  {/snippet}
         </Button>
       </div>
     {/if}
@@ -470,14 +486,18 @@
       </span>
       {$t('routes.post.commentCount')}
 
-      <Button
-        color="tertiary"
-        on:click={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        slot="action"
-      >
-        <Icon src={ChevronDoubleUp} mini size="16" slot="prefix" />
-        {$t('routes.post.scrollToTop')}
-      </Button>
+      {#snippet action()}
+            <Button
+          color="tertiary"
+          on:click={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          
+        >
+          {#snippet prefix()}
+                <Icon src={ChevronDoubleUp} mini size="16"  />
+              {/snippet}
+          {$t('routes.post.scrollToTop')}
+        </Button>
+          {/snippet}
     </EndPlaceholder>
   {/if}
 </section>

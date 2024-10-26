@@ -8,11 +8,15 @@
   import { Button } from 'mono-svelte'
   import { Icon, QuestionMarkCircle } from 'svelte-hero-icons'
 
-  export let prof: Profile
-  export let index: number
 
-  let switching: boolean = false
-  export let guest: boolean = false
+  let switching: boolean = $state(false)
+  interface Props {
+    prof: Profile;
+    index: number;
+    guest?: boolean;
+  }
+
+  let { prof, index, guest = false }: Props = $props();
 </script>
 
 <SidebarButton
@@ -38,13 +42,15 @@
     ? '!bg-slate-100 dark:!bg-zinc-900'
     : ''}"
 >
-  <ProfileAvatar
-    profile={prof}
-    {index}
-    {guest}
-    selected={$profile?.id == prof.id}
-    slot="icon"
-  />
+  {#snippet icon()}
+    <ProfileAvatar
+      profile={prof}
+      {index}
+      {guest}
+      selected={$profile?.id == prof.id}
+      
+    />
+  {/snippet}
   <span
     class="inline-flex flex-col gap-0 {$profile?.id == prof.id
       ? 'font-semibold'

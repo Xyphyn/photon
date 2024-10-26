@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
   export type Size = keyof typeof sizeClass
 
   export const sizeClass = {
@@ -9,29 +9,52 @@
 </script>
 
 <script lang="ts">
+  import { createBubbler } from 'svelte/legacy'
+
+  const bubble = createBubbler()
   import Label from '../forms/Label.svelte'
   import { generateID } from '../forms/helper.js'
-
-  export let label: string | undefined = undefined
-  export let value: string = ''
-  export let placeholder: string = ''
-  export let disabled: boolean = false
-  export let required: boolean = false
-  export let size: Size = 'md'
-  export let id: string = generateID()
-  export let rows: number = 4
-
-  export let element: HTMLTextAreaElement | undefined = undefined
 
   const borderClass = `
 	border border-slate-200 dark:border-zinc-800
 	`
-  let clazz: string = ''
-  export { clazz as class }
+  interface Props {
+    label?: string | undefined
+    value?: string
+    placeholder?: string
+    disabled?: boolean
+    required?: boolean
+    size?: Size
+    id?: string
+    rows?: number
+    element?: HTMLTextAreaElement | undefined
+    class?: string
+    customLabel?: import('svelte').Snippet
+    suffix?: import('svelte').Snippet
+    children?: import('svelte').Snippet
+    [key: string]: any
+  }
+
+  let {
+    label = undefined,
+    value = $bindable(''),
+    placeholder = '',
+    disabled = false,
+    required = false,
+    size = 'md',
+    id = generateID(),
+    rows = 4,
+    element = $bindable(undefined),
+    class: clazz = '',
+    customLabel,
+    suffix,
+    children,
+    ...rest
+  }: Props = $props()
 </script>
 
 <div class="flex flex-col gap-1 {clazz}">
-  {#if $$slots.label || label}
+  {#if customLabel || label}
     <Label
       for={id}
       text={label}
@@ -39,7 +62,7 @@
         ? "after:content-['*'] after:text-red-500 after:ml-1"
         : ''}"
     >
-      <slot name="label" />
+      {@render customLabel?.()}
     </Label>
   {/if}
   <div
@@ -51,13 +74,13 @@
       {disabled}
       {rows}
       bind:value
-      on:input
-      on:change
-      on:keydown
-      on:focus
-      on:paste
+      oninput={bubble('input')}
+      onchange={bubble('change')}
+      onkeydown={bubble('keydown')}
+      onfocus={bubble('focus')}
+      onpaste={bubble('paste')}
       bind:this={element}
-      {...$$restProps}
+      {...rest}
       class="{sizeClass[size]} {borderClass} focus:border-slate-800
 			focus:dark:border-zinc-200 bg-white dark:bg-zinc-950
 		 focus:outline-none focus:ring-2 ring-slate-800/50 rounded-xl
@@ -65,19 +88,19 @@
 		disabled:cursor-not-allowed disabled:dark:bg-zinc-900 invalid:!border-red-500
 		peer invalid:text-red-500 z-10
 		{clazz || ''}"
-      class:rounded-b-none={$$slots.suffix}
-      class:border-b-0={$$slots.suffix}
-    />
-    {#if $$slots.suffix}
+      class:rounded-b-none={suffix}
+      class:border-b-0={suffix}
+    ></textarea>
+    {#if suffix}
       <div
         class="{borderClass} {sizeClass[
           size
         ]} w-full border-t-0 rounded-xl rounded-t-none
       flex items-center"
       >
-        <slot name="suffix" />
+        {@render suffix?.()}
       </div>
     {/if}
   </div>
-  <slot />
+  {@render children?.()}
 </div>

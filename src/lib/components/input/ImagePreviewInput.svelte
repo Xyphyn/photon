@@ -13,9 +13,7 @@
 </script>
 
 <div class="flex flex-col">
-  <Label text={label} class="mb-1">
-    <slot name="label" />
-  </Label>
+  <Label text={label} class="mb-1" />
   <label
     class="flex flex-col items-center px-8 py-4 mx-auto w-full rounded-xl
   border border-slate-200 dark:border-zinc-800 bg-white dark:bg-black

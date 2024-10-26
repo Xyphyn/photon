@@ -7,9 +7,9 @@
   import { t } from '$lib/translations.js'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
-  export let data = {
+  let { data = {
     crosspost: false,
-  }
+  } } = $props();
 
   onMount(() => {
     if (!$profile?.jwt) {
@@ -48,8 +48,10 @@
     passedCommunity={community}
     on:submit={(e) => goto(`/post/${e.detail.post.id}`)}
   >
-    <Header class="text-3xl font-bold" slot="formtitle" pageHeader>
-      {$t('routes.createPost')}
-    </Header>
+    {#snippet formtitle()}
+        <Header class="text-3xl font-bold"  pageHeader>
+        {$t('routes.createPost')}
+      </Header>
+      {/snippet}
   </PostForm>
 </div>

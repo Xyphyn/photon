@@ -1,4 +1,7 @@
 <script lang="ts">
+  import { run, createBubbler } from 'svelte/legacy';
+
+  const bubble = createBubbler();
   import {
     buttonColor,
     buttonSize,
@@ -21,75 +24,97 @@
 
   type T = $$Generic
 
-  export let value: T | undefined = undefined
-  export let placeholder: string | undefined = undefined
-  export let label: string | undefined = undefined
-  export let size: ButtonSize = 'md'
-  export let shadow: ButtonShadow = 'none'
 
-  export let id: string = generateID()
 
-  let open = false
-  let element: HTMLSelectElement
+  let open = $state(false)
+  let element: HTMLSelectElement | undefined = $state()
 
-  let options: { value: any; label: string | null; disabled: boolean }[] = []
+  let options: { value: any; label: string | null; disabled: boolean }[] = $state([])
 
   // Capture all options from the select element
-  $: options = element?.options
-    ? Array.from(element?.options).map((option) => ({
-        value: option.value,
-        label: option.innerHTML,
-        disabled: option.disabled,
-      }))
-    : []
+  run(() => {
+    options = element?.options
+      ? Array.from(element?.options).map((option) => ({
+          value: option.value,
+          label: option.innerHTML,
+          disabled: option.disabled,
+        }))
+      : []
+  });
 
   const dispatcher = createEventDispatcher<{
     change: any
     contextmenu: any
     input: any
   }>()
-  let clazz: string = ''
-  export { clazz as class }
+  interface Props {
+    value?: T | undefined;
+    placeholder?: string | undefined;
+    label?: string | undefined;
+    size?: ButtonSize;
+    shadow?: ButtonShadow;
+    id?: string;
+    class?: string;
+    customLabel?: import('svelte').Snippet;
+    children?: import('svelte').Snippet;
+    customOption?: import('svelte').Snippet<[any]>;
+  }
+
+  let {
+    value = $bindable(undefined),
+    placeholder = undefined,
+    label = undefined,
+    size = 'md',
+    shadow = 'none',
+    id = generateID(),
+    class: clazz = '',
+    customLabel,
+    children,
+    customOption
+  }: Props = $props();
+  
 </script>
 
 <div class="flex flex-col gap-1 {clazz}">
-  {#if $$slots.label || label}
+  {#if customLabel || label}
     <Label for={id} text={label}>
-      <slot name="label" />
+      {@render customLabel?.()}
     </Label>
   {/if}
 
   <div class="w-full relative">
     <Menu bind:open>
-      <select
-        slot="target"
-        {id}
-        bind:this={element}
-        class="{buttonSize[size]} {buttonShadow[
-          shadow
-        ]} {buttonColor.secondary} appearance-none transition-colors rounded-lg text-sm
-	w-full min-w-full cursor-pointer pr-6 {buttonColor.secondary}
-	{clazz}"
-        bind:value
-        on:mousedown={(e) => {
+      {#snippet target()}
+            <select
+          
+          {id}
+          bind:this={element}
+          class="{buttonSize[size]} {buttonShadow[
+            shadow
+          ]} {buttonColor.secondary} appearance-none transition-colors rounded-lg text-sm
+  	w-full min-w-full cursor-pointer pr-6 {buttonColor.secondary}
+  	{clazz}"
+          bind:value
+          onmousedown={(e) => {
           e.preventDefault()
         }}
-        on:keypress={(e) => {
+          onkeypress={(e) => {
           e.preventDefault()
           open = !open
         }}
-        on:change
-        on:contextmenu
-        {placeholder}
-      >
-        {#if placeholder}
-          <option disabled selected value="">{placeholder}</option>
-        {/if}
-        <slot />
-      </select>
+          onchange={bubble('change')}
+          oncontextmenu={bubble('contextmenu')}
+          {placeholder}
+        >
+          {#if placeholder}
+            <option disabled selected value="">{placeholder}</option>
+          {/if}
+          {@render children?.()}
+        </select>
+          {/snippet}
 
       {#each options as option}
-        <slot name="option" {option} selected={option.value == value}>
+        {#if customOption}{@render customOption({ option, selected: option.value == value, })}{:else}
           <MenuButton
             on:contextmenu={() => dispatcher('contextmenu')}
             on:click={() => {
@@ -112,7 +137,7 @@
               />
             {/if}
           </MenuButton>
-        </slot>
+        {/if}
       {/each}
     </Menu>
     <Icon

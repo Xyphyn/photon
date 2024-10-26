@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { stopPropagation } from 'svelte/legacy'
+
   import { userSettings, type View } from '$lib/settings'
   import type { Post } from 'lemmy-js-client'
   import { bestImageURL, postLink } from '../helpers'
@@ -6,10 +8,14 @@
   import { Button, modal } from 'mono-svelte'
   import { onMount } from 'svelte'
 
-  export let post: Post
-  export let blur: boolean = false
+  interface Props {
+    post: Post
+    blur?: boolean
+  }
 
-  let imageLoaded: boolean | null = null
+  let { post, blur = false }: Props = $props()
+
+  let imageLoaded: boolean | null = $state(null)
 
   onMount(() => {
     imageLoaded = false
@@ -23,11 +29,11 @@
   class="container mx-auto z-10 rounded-xl max-h-[60vh] relative overflow-hidden bg-slate-100 dark:bg-zinc-900"
   data-sveltekit-preload-data="off"
   aria-label={post.name}
-  on:click={() => showImage(bestImageURL(post, false, -1))}
+  onclick={() => showImage(bestImageURL(post, false, -1))}
   role="button"
   tabindex="0"
 >
-  <!-- svelte-ignore a11y-missing-attribute -->
+  <!-- svelte-ignore a11y_missing_attribute -->
   <img
     loading="lazy"
     fetchpriority="auto"
@@ -52,7 +58,7 @@
       srcset={bestImageURL(post, false, 1512)}
       media="(max-width: 1512px)"
     />
-    <!-- svelte-ignore a11y-missing-attribute -->
+    <!-- svelte-ignore a11y_missing_attribute -->
     <img
       src={bestImageURL(post, false, -1)}
       loading="lazy"
@@ -63,16 +69,16 @@
       height={300}
       class:blur-[64px]={blur}
       alt={post.alt_text ?? ''}
-      on:load={() => (imageLoaded = true)}
+      onload={() => (imageLoaded = true)}
     />
   </picture>
-  <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <!-- svelte-ignore a11y-no-static-element-interactions -->
+  <!-- svelte-ignore a11y_click_events_have_key_events -->
+  <!-- svelte-ignore a11y_no_static_element_interactions -->
   <div
     class="absolute bottom-0 left-0 right-0 flex justify-between items-center
         rounded-full ml-auto w-max m-2 p-0 gap-1
         *:bg-white *:border *:border-slate-200 *:dark:border-zinc-800 *:dark:bg-zinc-900"
-    on:click|stopPropagation={() => {}}
+    onclick={stopPropagation(() => {})}
   >
     {#if post.alt_text}
       <Button

@@ -8,7 +8,7 @@
   import PictrsImage from './PictrsImage.svelte'
   import { expoInOut, expoOut } from 'svelte/easing'
 
-  export let data
+  let { data = $bindable() } = $props();
 </script>
 
 <Header pageHeader>{$t('routes.profile.media.title')}</Header>

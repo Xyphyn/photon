@@ -12,26 +12,39 @@
   import { errorMessage } from '$lib/lemmy/error'
   import { Icon, XMark } from 'svelte-hero-icons'
 
-  export let postId: number
-  export let parentId: number | undefined = undefined
-  export let locked: boolean = false
-  export let banned: boolean = false
-  export let rows: number = 7
-  export let placeholder: string | undefined = undefined
-
   const dispatch = createEventDispatcher<{
     comment: CommentResponse
     confirm: string
     cancel: boolean
   }>()
 
-  export let value = ''
-  export let actions = true
+  interface Props {
+    postId: number
+    parentId?: number | undefined
+    locked?: boolean
+    banned?: boolean
+    rows?: number
+    placeholder?: string | undefined
+    value?: string
+    actions?: boolean
+    preview?: boolean
+    [key: string]: any
+  }
 
-  let previewAction = true
-  export { previewAction as preview }
+  let {
+    postId,
+    parentId = undefined,
+    locked = false,
+    banned = false,
+    rows = 7,
+    placeholder = undefined,
+    value = $bindable(''),
+    actions = true,
+    preview: previewAction = true,
+    ...rest
+  }: Props = $props()
 
-  let loading = false
+  let loading = $state(false)
   let preview = false
 
   async function submit() {
@@ -70,7 +83,7 @@
     </div>
   {:else}
     <MarkdownEditor
-      {...$$restProps}
+      {...rest}
       {rows}
       placeholder={locked
         ? $t('comment.locked')
@@ -88,7 +101,7 @@
       on:focus
       previewButton={previewAction}
     >
-      <div class="flex-1" />
+      <div class="flex-1"></div>
       {#if actions}
         <Button
           size="custom"

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { resumables } from '$lib/lemmy/item'
   import { TextInput } from 'mono-svelte'
   import { createEventDispatcher, onMount } from 'svelte'
@@ -12,25 +14,21 @@
   import { themeData } from '$lib/ui/colors'
   import { page } from '$app/stores'
 
-  export let open = false
-  $: if (open) search = ''
 
-  export let groups: Group[] = []
+  interface Props {
+    open?: boolean;
+    groups?: Group[];
+  }
 
-  $: groups = getGroups(
-    $resumables,
-    $profile,
-    $profileData.profiles,
-    $themeData,
-    $page.data.contextual?.actions
-  )
+  let { open = $bindable(false), groups = $bindable([]) }: Props = $props();
 
-  let search = ''
-  let container: HTMLElement
+
+  let search = $state('')
+  let container: HTMLElement = $state()
   const dispatch = createEventDispatcher()
-  let selectedIndex = 0
-  let filteredGroups: Group[] = []
-  let breadcrumbs: Action[] = []
+  let selectedIndex = $state(0)
+  let filteredGroups: Group[] = $state([])
+  let breadcrumbs: Action[] = $state([])
 
   function fuzzySearch(text: string, pattern: string): number {
     const textLower = text.toLowerCase()
@@ -132,8 +130,6 @@
     updateFilteredGroups()
   }
 
-  $: flattenedActions = filteredGroups.flatMap((group) => group.actions)
-  $: debouncedSearch(search)
 
   function flattenActions(
     actions: Action[],
@@ -232,9 +228,25 @@
   afterNavigate(() => {
     // open = false
   })
+  run(() => {
+    if (open) search = ''
+  });
+  run(() => {
+    groups = getGroups(
+      $resumables,
+      $profile,
+      $profileData.profiles,
+      $themeData,
+      $page.data.contextual?.actions
+    )
+  });
+  let flattenedActions = $derived(filteredGroups.flatMap((group) => group.actions))
+  run(() => {
+    debouncedSearch(search)
+  });
 </script>
 
-<svelte:window on:keydown={handleKeydown} />
+<svelte:window onkeydown={handleKeydown} />
 
 <TextInput bind:value={search} autofocus class="sticky font-mono" />
 <div class="h-96 overflow-auto border-slate-200 dark:border-zinc-800">
@@ -242,7 +254,7 @@
     <div class="flex items-center gap-2 my-1">
       <button
         class="text-[13px] font-medium text-slate-600 dark:text-zinc-400"
-        on:click={goBack}
+        onclick={goBack}
       >
         <Icon src={Home} size="16" mini />
       </button>

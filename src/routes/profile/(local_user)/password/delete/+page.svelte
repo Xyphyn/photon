@@ -15,11 +15,11 @@
     toast,
   } from 'mono-svelte'
 
-  let deletion = {
+  let deletion = $state({
     modal: false,
     password: '',
     deleteContent: false,
-  }
+  })
 
   async function deleteAccount(level: number) {
     switch (level) {
@@ -101,7 +101,9 @@
     action="Submit"
     on:action={() => deleteAccount(4)}
   >
-    <span slot="title">{$t('form.profile.deleteAccount.label')}</span>
+    {#snippet title()}
+        <span >{$t('form.profile.deleteAccount.label')}</span>
+      {/snippet}
     <TextInput
       label={$t('form.password')}
       type="password"
@@ -109,9 +111,11 @@
     />
     <Checkbox bind:checked={deletion.deleteContent}>
       {$t('form.profile.deleteAccount.deleteContent')}
-      <span slot="description">
-        {$t('form.profile.deleteAccount.warning')}
-      </span>
+      {#snippet description()}
+            <span >
+          {$t('form.profile.deleteAccount.warning')}
+        </span>
+          {/snippet}
     </Checkbox>
   </Modal>
 {/if}
@@ -130,9 +134,11 @@
   </p>
   <Switch bind:checked={deletion.deleteContent}>
     {$t('form.profile.deleteAccount.deleteContent')}
-    <span slot="description">
-      {$t('form.profile.deleteAccount.warning')}
-    </span>
+    {#snippet description()}
+        <span >
+        {$t('form.profile.deleteAccount.warning')}
+      </span>
+      {/snippet}
   </Switch>
   <Button size="lg" color="danger" on:click={() => deleteAccount(3)}>
     {$t('routes.profile.delete.title')}

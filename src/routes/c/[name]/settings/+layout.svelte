@@ -8,12 +8,17 @@
   import { fullCommunityName } from '$lib/util.js'
   import type { PageData } from './$types.js'
 
-  export let data: PageData
+  interface Props {
+    data: PageData;
+    children?: import('svelte').Snippet;
+  }
 
-  $: communityUrl = `/c/${fullCommunityName(
+  let { data, children }: Props = $props();
+
+  let communityUrl = $derived(`/c/${fullCommunityName(
     data.community.community_view.community.name,
     data.community.community_view.community.actor_id
-  )}`
+  )}`)
 </script>
 
 <div class="flex flex-col gap-4 h-full">
@@ -34,5 +39,5 @@
       ]}
     ></Tabs>
   </div>
-  <slot />
+  {@render children?.()}
 </div>

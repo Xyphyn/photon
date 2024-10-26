@@ -23,9 +23,12 @@
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
 
-  export let style: string = ''
-  let clazz: string = ''
-  export { clazz as class }
+  interface Props {
+    style?: string
+    class?: string
+  }
+
+  let { style = '', class: clazz = '' }: Props = $props()
 </script>
 
 <nav
@@ -45,7 +48,7 @@
             e.preventDefault()
             $userSettings.dock.pins = $userSettings.dock.pins.toSpliced(
               $userSettings.dock.pins.findLastIndex((p) => pin.url == p.url),
-              1
+              1,
             )
             return false
           }}
@@ -57,25 +60,31 @@
   {/if}
   {#if $profile?.jwt}
     <SidebarButton icon={UserCircle} href="/profile">
-      <span slot="label">
-        {$t('profile.profile')}
-      </span>
+      {#snippet label()}
+        <span>
+          {$t('profile.profile')}
+        </span>
+      {/snippet}
     </SidebarButton>
     <SidebarButton icon={Inbox} href="/inbox">
-      <span slot="label" class="flex items-center gap-2">
-        {$t('profile.inbox')}
-        {#if $notifications.inbox}
-          <Badge
-            class="w-5 h-5 !p-0 grid place-items-center ml-auto"
-            color="red-subtle"
-          >
-            {$notifications.inbox}
-          </Badge>
-        {/if}
-      </span>
+      {#snippet label()}
+        <span class="flex items-center gap-2">
+          {$t('profile.inbox')}
+          {#if $notifications.inbox}
+            <Badge
+              class="w-5 h-5 !p-0 grid place-items-center ml-auto"
+              color="red-subtle"
+            >
+              {$notifications.inbox}
+            </Badge>
+          {/if}
+        </span>
+      {/snippet}
     </SidebarButton>
     <SidebarButton icon={Bookmark} href="/saved">
-      <span slot="label">{$t('profile.saved')}</span>
+      {#snippet label()}
+        <span>{$t('profile.saved')}</span>
+      {/snippet}
     </SidebarButton>
   {:else}
     <SidebarButton
@@ -83,21 +92,27 @@
       title={$t('account.login')}
       icon={ArrowLeftOnRectangle}
     >
-      <span slot="label">{$t('account.login')}</span>
+      {#snippet label()}
+        <span>{$t('account.login')}</span>
+      {/snippet}
     </SidebarButton>
     <SidebarButton
       href="/signup"
       title={$t('account.signup')}
       icon={Identification}
     >
-      <span slot="label">{$t('account.signup')}</span>
+      {#snippet label()}
+        <span>{$t('account.signup')}</span>
+      {/snippet}
     </SidebarButton>
     <SidebarButton
       href="/settings"
       title={$t('nav.menu.settings')}
       icon={Cog6Tooth}
     >
-      <span slot="label">{$t('nav.menu.settings')}</span>
+      {#snippet label()}
+        <span>{$t('nav.menu.settings')}</span>
+      {/snippet}
     </SidebarButton>
   {/if}
   {#if $profileData.profiles.length >= 1}
@@ -107,14 +122,18 @@
       class="max-w-full min-w-0 w-full"
       bind:open={$userSettings.expand.accounts}
     >
-      <span slot="title" class="px-2 py-1 w-full">
-        <EndPlaceholder>
-          {$t('account.accounts')}
-          <span slot="action" class="dark:text-white text-black">
-            {$profileData.profiles.length}
-          </span>
-        </EndPlaceholder>
-      </span>
+      {#snippet title()}
+        <span class="px-2 py-1 w-full">
+          <EndPlaceholder>
+            {$t('account.accounts')}
+            {#snippet action()}
+              <span class="dark:text-white text-black">
+                {$profileData.profiles.length}
+              </span>
+            {/snippet}
+          </EndPlaceholder>
+        </span>
+      {/snippet}
       {#each [...$profileData.profiles] as prof, index (prof.id)}
         <div animate:flip={{ duration: 300, easing: expoOut }} class="w-full">
           <ProfileButton {index} {prof} />
@@ -131,19 +150,22 @@
       class="max-w-full min-w-0 w-full"
       bind:open={$userSettings.expand.favorites}
     >
-      <span
-        slot="title"
-        class="px-2 py-1 w-full {$userSettings.expandSidebar
-          ? ''
-          : '//max-lg:hidden'}"
-      >
-        <EndPlaceholder>
-          {$t('routes.profile.favorites')}
-          <span slot="action" class="dark:text-white text-black">
-            {$profile.favorites.length}
-          </span>
-        </EndPlaceholder>
-      </span>
+      {#snippet title()}
+        <span
+          class="px-2 py-1 w-full {$userSettings.expandSidebar
+            ? ''
+            : '//max-lg:hidden'}"
+        >
+          <EndPlaceholder>
+            {$t('routes.profile.favorites')}
+            {#snippet action()}
+              <span class="dark:text-white text-black">
+                {$profile.favorites?.length}
+              </span>
+            {/snippet}
+          </EndPlaceholder>
+        </span>
+      {/snippet}
       <CommunityList isFavorites items={$profile.favorites} />
     </Expandable>
     <hr class="border-slate-200 dark:border-zinc-900 my-1" />
@@ -154,19 +176,22 @@
         class="max-w-full min-w-0 w-full"
         bind:open={$userSettings.expand.moderates}
       >
-        <span
-          slot="title"
-          class="px-2 py-1 w-full {$userSettings.expandSidebar
-            ? ''
-            : '//max-lg:hidden'}"
-        >
-          <EndPlaceholder>
-            {$t('routes.profile.moderates')}
-            <span slot="action" class="dark:text-white text-black">
-              {$profile.user.moderates.length}
-            </span>
-          </EndPlaceholder>
-        </span>
+        {#snippet title()}
+          <span
+            class="px-2 py-1 w-full {$userSettings.expandSidebar
+              ? ''
+              : '//max-lg:hidden'}"
+          >
+            <EndPlaceholder>
+              {$t('routes.profile.moderates')}
+              {#snippet action()}
+                <span class="dark:text-white text-black">
+                  {$profile.user?.moderates.length}
+                </span>
+              {/snippet}
+            </EndPlaceholder>
+          </span>
+        {/snippet}
         <CommunityList
           items={$profile.user.moderates.map((i) => i.community)}
         />
@@ -178,19 +203,22 @@
       class="max-w-full min-w-0 w-full"
       bind:open={$userSettings.expand.communities}
     >
-      <span
-        slot="title"
-        class="px-2 py-1 w-full {$userSettings.expandSidebar
-          ? ''
-          : '//max-lg:hidden'}"
-      >
-        <EndPlaceholder>
-          {$t('profile.subscribed')}
-          <span slot="action" class="dark:text-white text-black">
-            {$profile.user.follows.length}
-          </span>
-        </EndPlaceholder>
-      </span>
+      {#snippet title()}
+        <span
+          class="px-2 py-1 w-full {$userSettings.expandSidebar
+            ? ''
+            : '//max-lg:hidden'}"
+        >
+          <EndPlaceholder>
+            {$t('profile.subscribed')}
+            {#snippet action()}
+              <span class="dark:text-white text-black">
+                {$profile.user?.follows.length}
+              </span>
+            {/snippet}
+          </EndPlaceholder>
+        </span>
+      {/snippet}
       <CommunityList items={$profile.user.follows.map((i) => i.community)} />
     </Expandable>
   {/if}

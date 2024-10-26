@@ -1,9 +1,11 @@
 <script lang="ts">
-  export let width: number = 16
-  export let filled: boolean = false
+  interface Props {
+    width?: number
+    filled?: boolean
+    class?: string
+  }
 
-  let clazz: string = ''
-  export { clazz as class }
+  let { width = 16, filled = false, class: clazz = '' }: Props = $props()
 </script>
 
 {#if filled}

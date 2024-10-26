@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { preventDefault } from 'svelte/legacy';
+
   import { navigating, page } from '$app/stores'
   import {
     GlobeAmericas,
@@ -29,22 +31,22 @@
   import { fly } from 'svelte/transition'
   import { backOut, expoOut } from 'svelte/easing'
 
-  export let data
+  let { data } = $props();
 
-  let search = data.query || ''
-  let searchElement: HTMLInputElement
+  let search = $state(data.query || '')
+  let searchElement: HTMLInputElement = $state()
   let instance = ''
 
-  let virtualList: HTMLDivElement
-  let offset: number = 0
+  let virtualList: HTMLDivElement = $state()
+  let offset: number = $state(0)
 
-  $: showTop =
-    (data.query ?? '' != '') && data.communities.length > 0 && data.page == 1
+  let showTop =
+    $derived((data.query ?? '' != '') && data.communities.length > 0 && data.page == 1)
 </script>
 
 <svelte:window
   bind:scrollY={offset}
-  on:keydown={(e) => {
+  onkeydown={(e) => {
     if (e.target == document.body) searchElement?.focus()
   }}
 />
@@ -62,8 +64,8 @@
 >
   <Tabs routes={[]} class="p-2 dark:bg-zinc-925/70 shadow-md shadow-black/5">
     <form
-      on:submit|preventDefault={() =>
-        searchParam($page.url, 'q', search, 'page')}
+      onsubmit={preventDefault(() =>
+        searchParam($page.url, 'q', search, 'page'))}
       class="flex gap-2 flex-row items-center w-full text-base h-10"
     >
       <TextInput
@@ -83,7 +85,9 @@
         rounding="pill"
         loading={$navigating != null}
       >
-        <Icon src={MagnifyingGlass} size="16" micro slot="prefix" />
+        {#snippet prefix()}
+                <Icon src={MagnifyingGlass} size="16" micro  />
+              {/snippet}
       </Button>
     </form>
   </Tabs>

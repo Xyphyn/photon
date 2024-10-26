@@ -2,11 +2,21 @@
   import { userSettings } from '$lib/settings'
   import { contentPadding } from '../Shell.svelte'
 
-  export let pageHeader = false
+  interface Props {
+    pageHeader?: boolean
+    style?: string
+    class?: string
+    children?: import('svelte').Snippet
+    extended?: import('svelte').Snippet
+  }
 
-  export let style: string = ''
-  let clazz: string = ''
-  export { clazz as class }
+  let {
+    pageHeader = false,
+    style = '',
+    class: clazz = '',
+    children,
+    extended,
+  }: Props = $props()
 </script>
 
 <div
@@ -27,11 +37,11 @@
     class="text-3xl font-medium flex gap-2 w-full
   {$userSettings.font == 'satoshi/nunito' ? 'font-display' : ''} {clazz ?? ''}"
   >
-    <slot />
+    {@render children?.()}
   </h1>
-  {#if $$slots.extended}
+  {#if extended}
     <div class="mt-4">
-      <slot name="extended" />
+      {@render extended?.()}
     </div>
   {/if}
 </div>

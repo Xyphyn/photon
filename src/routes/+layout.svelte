@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import Navbar from '$lib/components/ui/navbar/Navbar.svelte'
   import '../style/app.css'
   import { navigating, page } from '$app/stores'
@@ -32,6 +34,11 @@
   import { LINKED_INSTANCE_URL } from '$lib/instance'
   import { locale } from '$lib/translations'
   import { getDefaultColors } from '$lib/ui/presets'
+  interface Props {
+    children?: import('svelte').Snippet;
+  }
+
+  let { children }: Props = $props();
 
   nProgress.configure({
     minimum: 0.4,
@@ -41,9 +48,9 @@
     showSpinner: false,
   })
 
-  let barTimeout: any = 0
+  let barTimeout: any = $state(0)
 
-  $: {
+  run(() => {
     if (browser) {
       if ($navigating) {
         document.body.classList.toggle('wait', true)
@@ -55,7 +62,7 @@
         nProgress.done()
       }
     }
-  }
+  });
 
   onMount(() => {
     if (browser) {
@@ -116,7 +123,9 @@
   class="fixed -top-16 focus:top-0 left-0 m-4 z-[300] transition-all"
   href="#main"
 >
-  <Icon src={Forward} mini size="16" slot="prefix" />
+  {#snippet prefix()}
+    <Icon src={Forward} mini size="16"  />
+  {/snippet}
   Skip Navigation
 </Button>
 <Shell
@@ -129,43 +138,51 @@
   <ExpandableImage />
   <ModalContainer />
 
-  <Sidebar
-    route={$page.route.id ?? ''}
-    slot="sidebar"
-    let:style={s}
-    let:class={c}
-    class={c}
-    style={s}
-  />
-  <main
-    slot="main"
-    let:style={s}
-    let:class={c}
-    class="p-4 sm:p-6 min-w-0 w-full flex flex-col h-full relative {c}"
-    style={s}
-    id="main"
-  >
-    <slot />
-  </main>
-  <Navbar slot="navbar" let:style={s} let:class={c} class={c} style={s} />
-  <div slot="suffix" let:class={c} let:style={s} class={c} style={s}>
-    {#if $page.data.slots?.sidebar?.component}
-      <svelte:component
-        this={$page.data.slots.sidebar.component}
-        {...$page.data.slots.sidebar.props}
-      />
-    {:else if $site}
-      <SiteCard
-        site={$site.site_view}
-        taglines={$site.taglines}
-        admins={$site.admins}
-        version={$site.version}
-        class=""
-      />
-    {:else}
-      <div class="h-64 w-full grid place-items-center">
-        <Spinner width={32} />
-      </div>
-    {/if}
-  </div>
+  {#snippet sidebar({ style: s, class: c })}
+    <Sidebar
+      route={$page.route.id ?? ''}
+      
+      
+      
+      class={c}
+      style={s}
+    />
+  {/snippet}
+  {#snippet main({ style: s, class: c })}
+    <main
+      
+      
+      
+      class="p-4 sm:p-6 min-w-0 w-full flex flex-col h-full relative {c}"
+      style={s}
+      id="main"
+    >
+      {@render children?.()}
+    </main>
+  {/snippet}
+  {#snippet navbar({ style: s, class: c })}
+    <Navbar    class={c} style={s} />
+  {/snippet}
+  {#snippet suffix({ class: c, style: s })}
+    <div    class={c} style={s}>
+      {#if $page.data.slots?.sidebar?.component}
+        {@const SvelteComponent = $page.data.slots.sidebar.component}
+      <SvelteComponent
+          {...$page.data.slots.sidebar.props}
+        />
+      {:else if $site}
+        <SiteCard
+          site={$site.site_view}
+          taglines={$site.taglines}
+          admins={$site.admins}
+          version={$site.version}
+          class=""
+        />
+      {:else}
+        <div class="h-64 w-full grid place-items-center">
+          <Spinner width={32} />
+        </div>
+      {/if}
+    </div>
+  {/snippet}
 </Shell>

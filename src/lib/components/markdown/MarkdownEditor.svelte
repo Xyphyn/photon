@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy'
+
   import { profile } from '$lib/auth.js'
   import MultiSelect from '$lib/components/input/Switch.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
@@ -22,30 +24,21 @@
   } from 'svelte-hero-icons'
   import ImageUploadModal from '../lemmy/modal/ImageUploadModal.svelte'
 
-  export let images: boolean = true
-  export let value: string = ''
-  export let label: string | undefined = undefined
-  export let previewButton: boolean = true
-  export let tools: boolean = true
-  export let disabled: boolean = false
-  export let rows: number = 2
-
-  export let beforePreview: (input: string) => string = (input) => input
-
   const dispatcher = createEventDispatcher<{ confirm: string }>()
 
-  let textArea: HTMLTextAreaElement
+  let textArea: HTMLTextAreaElement | undefined = $state()
 
   function replaceTextAtIndices(
     str: string,
     startIndex: number,
     endIndex: number,
-    replacement: string
+    replacement: string,
   ) {
     return str.substring(0, startIndex) + replacement + str.substring(endIndex)
   }
 
   function wrapSelection(start: string, end: string) {
+    if (!textArea) return
     const startPos = textArea.selectionStart
     const endPos = textArea.selectionEnd
 
@@ -56,7 +49,7 @@
       textArea.value,
       startPos,
       endPos,
-      newText
+      newText,
     )
 
     textArea.focus()
@@ -66,10 +59,8 @@
     value = textArea.value
   }
 
-  let uploadingImage = false
-  let image: any
-
-  export let previewing = false
+  let uploadingImage = $state(false)
+  let image: any = $state()
 
   const shortcuts = {
     KeyB: () => wrapSelection('**', '**'),
@@ -92,10 +83,41 @@
     }
   }
 
-  $: if (!previewing && value) adjustHeight()
+  interface Props {
+    images?: boolean
+    value?: string
+    label?: string | undefined
+    previewButton?: boolean
+    tools?: boolean
+    disabled?: boolean
+    rows?: number
+    beforePreview?: (input: string) => string
+    previewing?: boolean
+    class?: string
+    customLabel?: import('svelte').Snippet
+    children?: import('svelte').Snippet
+    [key: string]: any
+  }
 
-  let clazz: string = ''
-  export { clazz as class }
+  let {
+    images = true,
+    value = $bindable(''),
+    label = undefined,
+    previewButton = true,
+    tools = true,
+    disabled = false,
+    rows = 2,
+    beforePreview = (input) => input,
+    previewing = $bindable(false),
+    class: clazz = '',
+    customLabel,
+    children,
+    ...rest
+  }: Props = $props()
+
+  run(() => {
+    if (!previewing && value) adjustHeight()
+  })
 </script>
 
 {#if uploadingImage && images}
@@ -111,12 +133,12 @@
 {/if}
 
 <div>
-  {#if label || $$slots.label}
+  {#if label || customLabel}
     <Label>
       {#if label}
         {label}
-      {:else if $$slots.label}
-        <slot name="label" />
+      {:else if customLabel}
+        {@render customLabel?.()}
       {/if}
     </Label>
   {/if}
@@ -264,7 +286,7 @@ overflow-hidden transition-colors {clazz}"
           }
         }}
         {rows}
-        {...$$restProps}
+        {...rest}
       />
     {/if}
 
@@ -279,7 +301,7 @@ overflow-hidden transition-colors {clazz}"
             optionNames={[$t('form.edit'), $t('form.preview')]}
           />
         {/if}
-        <slot />
+        {@render children?.()}
       </div>
     {/if}
   </div>

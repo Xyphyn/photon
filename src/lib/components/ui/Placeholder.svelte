@@ -1,13 +1,25 @@
 <script lang="ts">
   import { Icon, type IconSource } from 'svelte-hero-icons'
 
-  export let icon: IconSource | undefined = undefined
 
-  export let title: string
-  export let description: string | undefined = undefined
-  export let center: boolean = false
-  let clazz: string = ''
-  export { clazz as class }
+  interface Props {
+    icon?: IconSource | undefined;
+    title: string;
+    description?: string | undefined;
+    center?: boolean;
+    class?: string;
+    children?: import('svelte').Snippet;
+  }
+
+  let {
+    icon = undefined,
+    title,
+    description = undefined,
+    center = false,
+    class: clazz = '',
+    children
+  }: Props = $props();
+  
 </script>
 
 <div
@@ -32,5 +44,5 @@
       {/if}
     </div>
   </div>
-  <slot />
+  {@render children?.()}
 </div>

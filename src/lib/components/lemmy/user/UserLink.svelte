@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
   import { env } from '$env/dynamic/public'
 
   import type { IconSource } from 'svelte-hero-icons'
@@ -18,7 +18,7 @@
   const badges = parseBadge()
 
   const getEnvBadge = (
-    actor_id: string
+    actor_id: string,
   ):
     | {
         classes: string
@@ -54,21 +54,36 @@
   import type { Person } from 'lemmy-js-client'
   import { Icon, Language, NoSymbol } from 'svelte-hero-icons'
 
-  export let user: Person
-  export let avatar: boolean = false
-  export let avatarSize: number = 24
-  export let badges: boolean = true
-  export let inComment: boolean = false
-  export let showInstance: boolean =
-    $userSettings.showInstances.user ||
-    ($userSettings.showInstances.comments && inComment)
-  export let displayName = $userSettings.displayNames
+  interface Props {
+    user: Person
+    avatar?: boolean
+    avatarSize?: number
+    badges?: boolean
+    inComment?: boolean
+    showInstance?: boolean
+    displayName?: any
+    instanceClass?: string
+    class?: string
+    children?: import('svelte').Snippet
+    extraBadges?: import('svelte').Snippet
+  }
 
-  $: envBadge = getEnvBadge(user.actor_id)
+  let {
+    user,
+    avatar = false,
+    avatarSize = 24,
+    badges = true,
+    inComment = false,
+    showInstance = $userSettings.showInstances.user ||
+      ($userSettings.showInstances.comments && inComment),
+    displayName = $userSettings.displayNames,
+    instanceClass = '',
+    class: clazz = '',
+    children,
+    extraBadges,
+  }: Props = $props()
 
-  export let instanceClass: string = ''
-  let clazz: string = ''
-  export { clazz as class }
+  let envBadge = $derived(getEnvBadge(user.actor_id))
 </script>
 
 <a
@@ -76,7 +91,7 @@
   href="/u/{user.name}@{new URL(user.actor_id).hostname}"
   data-sveltekit-preload-data="tap"
 >
-  <slot />
+  {@render children?.()}
   {#if avatar}
     <Avatar
       url={user.avatar}
@@ -125,7 +140,7 @@
         />
       {/if}
     {/if}
-    <slot name="badges" />
+    {@render extraBadges?.()}
   {/if}
 </a>
 

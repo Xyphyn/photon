@@ -4,15 +4,8 @@
   import { Button } from 'mono-svelte'
   import { ChevronDown, Icon } from 'svelte-hero-icons'
 
-  export let body: string
-  export let view: View = 'cozy'
-  export let clickThrough = false
-  let htmlElement = 'div'
-
-  export { htmlElement as element }
-
-  let expanded = false
-  let element: Element
+  let expanded = $state(false)
+  let element: Element = $state()
 
   function isOverflown(element: Element, body: string = '') {
     if (!element) return
@@ -26,11 +19,25 @@
     return overflows
   }
 
-  $: overflows = isOverflown(element, body)
+  interface Props {
+    body: string
+    view?: View
+    clickThrough?: boolean
+    element?: string
+    style?: string
+    class?: string
+  }
 
-  export let style: string = ''
-  let clazz: string = ''
-  export { clazz as class }
+  let {
+    body,
+    view = 'cozy',
+    clickThrough = false,
+    element: htmlElement = 'div',
+    style = '',
+    class: clazz = '',
+  }: Props = $props()
+
+  let overflows = $derived(isOverflown(element, body))
 </script>
 
 <svelte:element

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run, preventDefault } from 'svelte/legacy'
+
   import Comment from '$lib/components/lemmy/comment/Comment.svelte'
   import Post from '$lib/components/lemmy/post/Post.svelte'
   import { Select, Switch, toast } from 'mono-svelte'
@@ -16,21 +18,31 @@
   import { Button, Checkbox, Modal } from 'mono-svelte'
   import { t } from '$lib/translations'
 
-  export let open: boolean
-  export let item: PostView | CommentView | undefined = undefined
-  export let purge: boolean = false
+  interface Props {
+    open: boolean
+    item?: PostView | CommentView | undefined
+    purge?: boolean
+  }
 
-  let reason = ''
-  let commentReason: boolean = false
-  let privateMessage: boolean = false
-  let loading = false
-  let preset = $userSettings.moderation.presets[0]?.content ?? ''
+  let {
+    open = $bindable(),
+    item = $bindable(undefined),
+    purge = false,
+  }: Props = $props()
 
-  $: removed = item
-    ? isCommentView(item)
-      ? item.comment.removed
-      : item.post.removed
-    : false
+  let reason = $state('')
+  let commentReason: boolean = $state(false)
+  let privateMessage: boolean = $state(false)
+  let loading = $state(false)
+  let preset = $state($userSettings.moderation.presets[0]?.content ?? '')
+
+  let removed = $derived(
+    item
+      ? isCommentView(item)
+        ? item.comment.removed
+        : item.post.removed
+      : false,
+  )
 
   const getReplyReason = (reason: string, preset: string) => {
     if (!item) return `no template`
@@ -38,7 +50,7 @@
     return removalTemplate(preset, {
       communityLink: `!${fullCommunityName(
         item!.community.name,
-        item!.community.actor_id
+        item!.community.actor_id,
       )}`,
       postTitle: item.post.name,
       reason: reason,
@@ -46,7 +58,10 @@
     })
   }
 
-  $: replyReason = commentReason ? getReplyReason(reason, preset) : ''
+  let replyReason
+  run(() => {
+    replyReason = commentReason ? getReplyReason(reason, preset) : ''
+  })
 
   async function remove() {
     if (!item) return
@@ -151,11 +166,11 @@
     commentReason = false
   }
 
-  $: {
+  run(() => {
     if (item) {
       resetText()
     }
-  }
+  })
 </script>
 
 <Modal
@@ -168,7 +183,7 @@
 >
   {#if item}
     <form
-      on:submit|preventDefault={remove}
+      onsubmit={preventDefault(remove)}
       class="flex flex-col gap-4 list-none"
     >
       {#if isCommentView(item)}
@@ -212,16 +227,18 @@
             placeholder={replyReason}
             rows={3}
           >
-            <div class="flex justify-between items-end mb-1" slot="label">
-              {$t('comment.reply')}
-              <Select bind:value={preset} placeholder="No preset">
-                {#each $userSettings.moderation.presets as preset}
-                  <option value={preset.content}>
-                    {preset.title}
-                  </option>
-                {/each}
-              </Select>
-            </div>
+            {#snippet label()}
+              <div class="flex justify-between items-end mb-1">
+                {$t('comment.reply')}
+                <Select bind:value={preset} placeholder="No preset">
+                  {#each $userSettings.moderation.presets as preset}
+                    <option value={preset.content}>
+                      {preset.title}
+                    </option>
+                  {/each}
+                </Select>
+              </div>
+            {/snippet}
           </MarkdownEditor>
         {/if}
       {/if}
@@ -233,7 +250,9 @@
         disabled={loading}
         submit
       >
-        <Icon src={purge ? Fire : Trash} mini size="16" slot="prefix" />
+        {#snippet prefix()}
+          <Icon src={purge ? Fire : Trash} mini size="16" />
+        {/snippet}
         {#if purge}
           {$t('admin.purge')}
         {:else}
