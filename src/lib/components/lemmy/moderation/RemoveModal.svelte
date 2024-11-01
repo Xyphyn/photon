@@ -58,8 +58,8 @@
     })
   }
 
-  let replyReason
-  run(() => {
+  let replyReason = $state('')
+  $effect(() => {
     replyReason = commentReason ? getReplyReason(reason, preset) : ''
   })
 
@@ -162,7 +162,6 @@
 
   const resetText = () => {
     reason = ''
-    replyReason = ''
     commentReason = false
   }
 
@@ -192,7 +191,6 @@
             children: [],
             comment_view: item,
             depth: 1,
-            ui: {},
           }}
           postId={item.post.id}
           actions={false}
@@ -227,7 +225,7 @@
             placeholder={replyReason}
             rows={3}
           >
-            {#snippet label()}
+            {#snippet customLabel()}
               <div class="flex justify-between items-end mb-1">
                 {$t('comment.reply')}
                 <Select bind:value={preset} placeholder="No preset">

@@ -57,7 +57,7 @@
   {style}
 >
   <NavButton
-    on:contextmenu={(e) => {
+    oncontextmenu={(e) => {
       e.preventDefault()
       promptOpen = true
       return true

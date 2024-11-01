@@ -35,8 +35,6 @@
 <Button
   color={isPanel ? 'secondary' : 'tertiary'}
   {...rest}
-  onclick
-  on:contextmenu
   class="rounded-full w-10 h-10 flex-shrink-0 {adaptive
     ? '@3xl:h-8 @3xl:px-3 @3xl:rounded-[10px] @3xl:w-auto'
     : ''} {isSelected
