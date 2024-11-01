@@ -48,22 +48,6 @@
     showSpinner: false,
   })
 
-  let barTimeout: any = $state(0)
-
-  run(() => {
-    if (browser) {
-      if ($navigating) {
-        document.body.classList.toggle('wait', true)
-        barTimeout = setTimeout(() => nProgress.start(), 100)
-      }
-      if (!$navigating) {
-        document.body.classList.toggle('wait', false)
-        clearTimeout(barTimeout)
-        nProgress.done()
-      }
-    }
-  })
-
   onMount(() => {
     if (browser) {
       if (window.location.hash == 'main') {
@@ -81,6 +65,7 @@
   })
 
   if (browser) {
+    let barTimeout: number = $state(0)
     $effect(() => {
       if (settings) {
         document.body.classList.remove(
@@ -99,6 +84,17 @@
                 ? 'font-nunito'
                 : 'font-sans',
         )
+      }
+    })
+
+    navigating.subscribe((value) => {
+      if (value) {
+        document.body.classList.toggle('wait', true)
+        barTimeout = setTimeout(() => nProgress.start(), 100)
+      } else {
+        document.body.classList.toggle('wait', false)
+        clearTimeout(barTimeout)
+        nProgress.done()
       }
     })
   }

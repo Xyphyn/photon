@@ -53,7 +53,7 @@
     id = generateID(),
     inlineAffixes = false,
     shadow = 'none',
-    element = $bindable(undefined),
+    element = $bindable(),
     class: clazz = '',
     customLabel,
     prefix,

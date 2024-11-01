@@ -52,7 +52,7 @@
       nsfw: boolean
       loading: boolean
       alt_text?: string
-      language_id?: number
+      language_id?: number | string
     }
     formtitle?: import('svelte').Snippet
   }
@@ -273,7 +273,7 @@
     {#if !data.community}
       <ObjectAutocomplete
         bind:q={communitySearch}
-        bind:items={communities}
+        items={communities}
         jwt={$profile?.jwt}
         listing_type="All"
         label={$t('form.post.community')}
@@ -301,8 +301,8 @@
         >
           {#snippet prefix()}
             <Avatar
-              url={data.community.icon}
-              alt={data.community.name}
+              url={data?.community?.icon}
+              alt={data.community?.name}
               width={24}
             />
           {/snippet}
