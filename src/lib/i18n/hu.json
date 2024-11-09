@@ -456,6 +456,64 @@
         "resetSettings": "Vissza akarod állítani a beállításokat az alapértelmezettre?",
         "unbannedUser": "Felhasználó feloldva.",
         "failGenerateTitle": "Nem volt használható címe vagy leírása a weboldalnak.",
-        "loginVoteGate": "Ahhoz hogy szavazhass be kell jelentkezned."
+        "loginVoteGate": "Ahhoz hogy szavazhass be kell jelentkezned.",
+        "settingsImportWarning": "A beimportált beállítások nem tűnnek érvényesnek. Biztos beszeretnéd importálni?",
+        "verifyEmail": "Egy megerősítő email-t küldtünk az email címedre. Erősítsd meg az email címed, majd jelentkezz be.",
+        "failFetchInstances": "Nem sikerült lekérni az elérhető szerverek listáját.",
+        "successSignup": "Bejelentkezve.",
+        "waitApplication": "Bejelentkezés előtt várd meg amíg a regisztrációd elfogadásra kerül.",
+        "blockUser": "Felhasználó letiltva.",
+        "unblockUser": "Felhasználó tiltása feloldva,",
+        "failSignup": "Sikertelen bejelentkezés.",
+        "settingsImport": "Beállítások importálása sikeres",
+        "userLoading": "Még mindig töltődnek a felhasználói adataid..."
+    },
+    "settings": {
+        "app": {
+            "lang": {
+                "note": "Az angol és héber nyelveken kívüli nyelveket a közösség fordította, és hiányosak lehetnek.",
+                "title": "Nyelv",
+                "description": "A Photon felhasználói felületének nyelve."
+            },
+            "theming": {
+                "description": "A Photon színeinek személyreszabása.",
+                "link": "Ugrás a témákhoz",
+                "title": "Témák"
+            },
+            "colorscheme": {
+                "title": "Színséma",
+                "description": "A használandó színséma."
+            },
+            "title": "Photon"
+        },
+        "navigation": {
+            "panel": {
+                "description": "Dokkoló kiterjesztése a képernyő széleihez, panelhez hasonlóan.",
+                "off": "Ki",
+                "adaptive": "Adaptív",
+                "title": "Panel mód",
+                "on": "Be"
+            },
+            "pins": {
+                "title": "Kitűzés",
+                "description": "Kattints egy ikonra hogy az kitűzésre kerüljön az oldalsáv tetejére. Eltávolításhoz kattints jobb klikkel a kitűzött elemre."
+            },
+            "title": "Navigáció",
+            "dockPos": {
+                "title": "Dokk pozíció",
+                "description": "A dokk helye a képernyőn.",
+                "top": "Fent",
+                "bottom": "Lent",
+                "adaptive": "Adaptív"
+            }
+        },
+        "beta": "Béta",
+        "desktop": "Asztali",
+        "tablet": "Táblagép",
+        "mobile": "Mobil",
+        "export": "Exportálás",
+        "import": "Importálás",
+        "reset": "Alapértelmezett beállítások visszaállítása",
+        "title": "Beállítások"
     }
 }
