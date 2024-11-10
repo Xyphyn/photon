@@ -186,7 +186,7 @@
     />
   {/if}
   {#if actions}
-    <PostActions on:hide {post} style="grid-area: actions;" {view} />
+    <PostActions on:hide bind:post style="grid-area: actions;" {view} />
   {:else if view == 'compact'}
     <div class="flex flex-row items-center gap-2 text-sm">
       <Badge>

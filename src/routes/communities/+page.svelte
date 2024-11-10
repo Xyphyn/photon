@@ -30,6 +30,7 @@
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import { fly } from 'svelte/transition'
   import { backOut, expoOut } from 'svelte/easing'
+  import { goto } from '$app/navigation'
 
   let { data } = $props()
 
@@ -61,14 +62,14 @@
 >
   <Tabs routes={[]} class="p-2 dark:bg-zinc-925/70 shadow-md shadow-black/5">
     <form
-      onsubmit={preventDefault(() =>
-        searchParam($page.url, 'q', search, 'page'),
-      )}
+      method="get"
+      action="/communities"
       class="flex gap-2 flex-row items-center w-full text-base h-10"
     >
       <TextInput
         bind:value={search}
         bind:element={searchElement}
+        name="q"
         aria-label={$t('routes.search.query')}
         size="lg"
         class="flex-1 !rounded-full h-full"

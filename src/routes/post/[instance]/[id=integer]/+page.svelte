@@ -47,6 +47,8 @@
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import CommentListVirtualizer from '$lib/components/lemmy/comment/CommentListVirtualizer.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { fly } from 'svelte/transition'
+  import { expoOut } from 'svelte/easing'
 
   let { data = $bindable() } = $props()
 
@@ -368,10 +370,19 @@
     </div>
   </header>
   {#await data.comments}
-    <div class="space-y-4">
-      {#each new Array(10) as empty}
-        <div class="animate-pulse flex flex-col gap-2 skeleton w-full">
-          <div class="w-96 h-4"></div>
+    <div class="flex flex-col gap-4">
+      {#each new Array(10) as empty, index}
+        <div
+          in:fly|global={{
+            duration: 500,
+            easing: expoOut,
+            y: 8,
+            delay: index * 25,
+          }}
+          class="animate-pulse flex flex-col gap-2 w-full
+        *:bg-slate-100 *:dark:bg-zinc-800 *:rounded-md"
+        >
+          <div class="w-96 h-3"></div>
           <div class="w-full h-12"></div>
           <div class="w-48 h-4"></div>
         </div>
@@ -496,9 +507,3 @@
     </EndPlaceholder>
   {/if}
 </section>
-
-<style lang="postcss">
-  .skeleton * {
-    @apply bg-slate-100 dark:bg-zinc-800 rounded-md;
-  }
-</style>

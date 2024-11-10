@@ -44,7 +44,7 @@
           onclick={() => goto(pin.url)}
           alignment="center"
           selected={`${$page.url.pathname}${$page.url.search}` == pin.url}
-          on:contextmenu={(e) => {
+          oncontextmenu={(e) => {
             e.preventDefault()
             settings.dock.pins = settings.dock.pins.toSpliced(
               settings.dock.pins.findLastIndex((p) => pin.url == p.url),

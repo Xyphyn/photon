@@ -39,13 +39,14 @@
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
   import { contentPadding } from '$lib/components/ui/layout/Shell.svelte'
+  import { goto } from '$app/navigation'
 
   type Result = PostView | CommentView | PersonView | CommunityView
 
   let { data = $bindable() } = $props()
 
   let query = $state(data.query || '')
-  let searchElement: HTMLInputElement = $state()
+  let searchElement: HTMLInputElement | undefined = $state()
 
   let pageNum = $state(data.page)
 
@@ -71,14 +72,14 @@
 >
   <Tabs routes={[]} class="p-2 dark:bg-zinc-925/70">
     <form
-      onsubmit={preventDefault(() =>
-        searchParam($page.url, 'q', query, 'page'),
-      )}
+      method="get"
+      action="/search"
       class="flex gap-2 flex-row items-center w-full text-base h-10"
     >
       <TextInput
         bind:value={query}
         bind:element={searchElement}
+        name="q"
         aria-label={$t('routes.search.query')}
         size="lg"
         class="flex-1 !rounded-full h-full !text-base"
@@ -104,7 +105,7 @@
     bind:value={data.type}
     on:change={() => searchParam($page.url, 'type', data.type ?? 'All', 'page')}
   >
-    {#snippet label()}
+    {#snippet customLabel()}
       <span class="flex items-center gap-1">
         <Icon src={AdjustmentsHorizontal} mini size="15" />
         {$t('filter.type')}
