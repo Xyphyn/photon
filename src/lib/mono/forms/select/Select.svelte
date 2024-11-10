@@ -1,4 +1,4 @@
-<script lang="ts">
+<script lang="ts" generics="T">
   import { run, createBubbler } from 'svelte/legacy'
 
   const bubble = createBubbler()
@@ -8,21 +8,21 @@
     type ButtonShadow,
     type ButtonSize,
     buttonShadow,
-  } from '../button/Button.svelte'
-  import Label from '../forms/Label.svelte'
-  import { generateID } from '../forms/helper.js'
-  import Menu from '../popover/Menu.svelte'
-  import MenuButton from '../popover/MenuButton.svelte'
-  import Popover from '../popover/Popover.svelte'
-  import { createEventDispatcher, onMount } from 'svelte'
+  } from '../../button/Button.svelte'
+  import Label from '../Label.svelte'
+  import { generateID } from '../helper.js'
+  import Menu from '../../popover/Menu.svelte'
+  import MenuButton from '../../popover/MenuButton.svelte'
+  import Popover from '../../popover/Popover.svelte'
+  import { createEventDispatcher, onMount, setContext } from 'svelte'
   import {
     CheckCircle,
     ChevronDown,
     ChevronUpDown,
     Icon,
   } from 'svelte-hero-icons'
-
-  type T = $$Generic
+  import { browser } from '$app/environment'
+  import { writable } from 'svelte/store'
 
   let open = $state(false)
   let element: HTMLSelectElement | undefined = $state()
@@ -31,7 +31,7 @@
     $state([])
 
   // Capture all options from the select element
-  run(() => {
+  $effect(() => {
     options = element?.options
       ? Array.from(element?.options).map((option) => ({
           value: option.value,

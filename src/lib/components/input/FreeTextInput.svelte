@@ -4,7 +4,7 @@
   import { browser } from '$app/environment'
   import { tick } from 'svelte'
 
-  let textarea: HTMLTextAreaElement = $state()
+  let textarea: HTMLTextAreaElement | undefined = $state()
 
   async function adjustHeight(value: string) {
     await tick()

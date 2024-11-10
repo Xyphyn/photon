@@ -26,11 +26,7 @@
 
   let { data } = $props()
 
-  // svelte being stupid
-  let type
-  run(() => {
-    type = data.type as any
-  })
+  let type = $state(data.type)!
 
   const isComment = (item: CommentView | PostView): item is CommentView =>
     'comment' in item
@@ -49,7 +45,7 @@
         bind:value={type}
         on:change={() => searchParam($page.url, 'type', type, 'page')}
       >
-        {#snippet label()}
+        {#snippet customLabel()}
           <div class="flex items-center gap-0.5">
             <Icon src={AdjustmentsHorizontal} size="15" mini />
             {$t('filter.filter')}

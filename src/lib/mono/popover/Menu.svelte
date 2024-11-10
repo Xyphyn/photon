@@ -12,17 +12,16 @@
     size,
   } from '@floating-ui/core'
 
-
   interface Props {
-    openOnHover?: boolean;
-    open?: boolean;
-    manual?: boolean;
-    placement?: Placement;
-    middleware?: Middleware[];
-    strategy?: Strategy;
-    class?: string;
-    target?: import('svelte').Snippet;
-    children?: import('svelte').Snippet;
+    openOnHover?: boolean
+    open?: boolean
+    manual?: boolean
+    placement?: Placement
+    middleware?: Middleware[]
+    strategy?: Strategy
+    class?: string
+    target?: import('svelte').Snippet
+    children?: import('svelte').Snippet
     [key: string]: any
   }
 
@@ -31,18 +30,13 @@
     open = $bindable(false),
     manual = false,
     placement = 'bottom-start',
-    middleware = [
-    offset(6),
-    shift({ padding: 6 }),
-    flip(),
-  ],
+    middleware = [offset(6), shift({ padding: 6 }), flip()],
     strategy = 'absolute',
     class: clazz = '',
     target,
     children,
     ...rest
-  }: Props = $props();
-  
+  }: Props = $props()
 </script>
 
 <Popover
@@ -55,13 +49,10 @@
   bind:open
   popoverClass="backdrop-blur-xl rounded-xl w-full max-w-[280px]"
   class={clazz}
+  {target}
 >
-  {#snippet target()}
-    {@render target?.()}
-  {/snippet}
   {#snippet popover()}
     <div
-      
       class="w-full max-w-[280px] origin-top-left
   	max-h-[32rem] overflow-auto list-none shadow-lg rounded-xl"
     >

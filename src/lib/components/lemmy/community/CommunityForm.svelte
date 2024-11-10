@@ -15,7 +15,7 @@
   import Label from 'mono-svelte/forms/Label.svelte'
   import { DocumentPlus, Icon } from 'svelte-hero-icons'
   import ImageUploadModal from '../modal/ImageUploadModal.svelte'
-  import Select from 'mono-svelte/forms/Select.svelte'
+  import Select from 'mono-svelte/forms/select/Select.svelte'
 
   interface Props {
     /**

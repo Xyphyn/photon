@@ -22,7 +22,11 @@
   }: Props = $props()
 </script>
 
-<Disclosure bind:open class="items-start justify-items-start gap-2 {clazz}">
+<Disclosure
+  {extended}
+  bind:open
+  class="items-start justify-items-start gap-2 {clazz}"
+>
   {#snippet summary()}
     <div
       class="font-medium w-full text-left flex flex-row items-center justify-between hover:text-primary-900
@@ -46,9 +50,6 @@
       group-hover:opacity-100 group-hover:-inset-1 group-hover:-inset-x-2 transition-all"
       ></div>
     </div>
-  {/snippet}
-  {#snippet extended()}
-    {@render extended?.()}
   {/snippet}
   {#if content}{@render content()}{:else}
     <div class="pt-2 text-slate-900 dark:text-zinc-100">
