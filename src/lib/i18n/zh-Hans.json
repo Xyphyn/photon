@@ -269,7 +269,7 @@
         },
         "frontpage": {
             "title": "首页",
-            "footer": "{{users:number}} 活跃 {{users; 1:用户; default:用户;}}",
+            "footer": "{{users:number}} 活跃 {{用户; 1:用户; default:用户;}}",
             "endFeed": "您已到达{{community_name; undefined:信息流; default:{{community_name}}}}的末尾"
         },
         "modlog": "管理日志",
