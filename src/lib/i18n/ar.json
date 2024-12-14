@@ -126,7 +126,8 @@
             "readMore": "اقرا المزيد",
             "addUrl": "ضيف رابط",
             "edit": "عدل منشور",
-            "create": "إنشاء منشور"
+            "create": "إنشاء منشور",
+            "nsfw": "محتويات الحساسة"
         },
         "profile": {
             "displayName": "كنية",
@@ -210,7 +211,39 @@
                 "title": "احذف الحساب"
             },
             "user": "مستخدم",
-            "favorites": "مفضلات"
+            "favorites": "مفضلات",
+            "overview": "إظهار عامة",
+            "submissions": "تقديمات"
+        },
+        "translators": "مترجمين",
+        "accounts": "حواسب",
+        "communities": {
+            "title": "مجتمعات",
+            "trending": "رائجة",
+            "search": {
+                "placeholder": "ابحث عن مجتمعات أخرا"
+            }
+        },
+        "search": {
+            "title": "ابحث",
+            "federating": "متحد",
+            "query": "استعلام",
+            "noResults": {
+                "title": "لا يوجد نتائج",
+                "alt": "ابحث حول الإتحاد",
+                "description": "لا يوجد نتائج التي يشبه تصفيتك. حاول ان تعدل تصفيتك."
+            },
+            "top": "النتائج الغالبة",
+            "other": "نتائج أخر"
+        },
+        "saved": "محفوظ",
+        "createPost": "إنشاء منشور",
+        "createCommunity": "إنشاء مجتمع",
+        "post": {
+            "crosspostCount": "منشورات المتقاطعة",
+            "commentCount": "تعليقات",
+            "scrollToTop": "العودة إلى الأعلى",
+            "addComment": "إضافة تعليق"
         }
     }
 }
