@@ -243,7 +243,31 @@
             "crosspostCount": "منشورات المتقاطعة",
             "commentCount": "تعليقات",
             "scrollToTop": "العودة إلى الأعلى",
-            "addComment": "إضافة تعليق"
+            "addComment": "إضافة تعليق",
+            "remoteView": "عرض عن بعد",
+            "localView": "عرض محلي",
+            "thread": {
+                "allComments": "جميع التعليقات",
+                "part": "أنك ظاهر جزء من موضوعاً.",
+                "context": "إظهار السياق",
+                "single": "أنك تعرض موضوعاً واحداً."
+            },
+            "emptyComments": {
+                "title": "لا يوجد تعليقات",
+                "description": "ابدأ المحادثة!"
+            }
+        },
+        "inbox": {
+            "title": "صندوق الوارد",
+            "markAsRead": "وضع علامة كمقروءة بالكامل",
+            "empty": {
+                "description": "ستظهر الرسائل والردود والإشارات هنا.",
+                "title": "لا يوجد إشعارات جديدة"
+            },
+            "item": {
+                "reply": "{{user}} رد عليك في {{post}}",
+                "mention": "{{user}} ذكرك في {{post}}"
+            }
         }
     }
 }
