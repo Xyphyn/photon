@@ -473,7 +473,20 @@
             "lang": {
                 "note": "Az angol és héber nyelveken kívüli nyelveket a közösség fordította, és hiányosak lehetnek.",
                 "title": "Nyelv",
-                "description": "A Photon felhasználói felületének nyelve."
+                "description": "A Photon felhasználói felületének nyelve.",
+                "en-US": "Angol",
+                "zh-Hans": "Kínai (egyszerűsített)",
+                "zh-Hant": "Kínai (hagyományos)",
+                "auto": "Automatikus",
+                "credits": "Kreditek",
+                "en": "Angol",
+                "he": "Héber",
+                "et": "Észt",
+                "fr": "Francia",
+                "de": "Német",
+                "fi": "Finn",
+                "pt": "Portugál",
+                "zh": "Kínai"
             },
             "theming": {
                 "description": "A Photon színeinek személyreszabása.",
@@ -484,7 +497,12 @@
                 "title": "Színséma",
                 "description": "A használandó színséma."
             },
-            "title": "Photon"
+            "title": "Photon",
+            "view": {
+                "title": "Bejegyzések stílusa",
+                "cozy": "Nagyméretű képek, bő beágyazások, és hosszabb poszttestek.",
+                "list": "A bejegyzések megjelenítése lista nézetben, kompakt médiával."
+            }
         },
         "navigation": {
             "panel": {
