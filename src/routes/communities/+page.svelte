@@ -56,6 +56,7 @@
 <Header pageHeader class="justify-between">
   <span>{$t('routes.communities.title')}</span>
 </Header>
+
 <div
   class="mt-4 mb-0 sticky z-30"
   style="top: max(1.5rem, {$contentPadding.top}px);"

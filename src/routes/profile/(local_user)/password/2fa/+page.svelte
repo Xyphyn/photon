@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run, preventDefault } from 'svelte/legacy'
-
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
@@ -14,11 +12,9 @@
 
   // @ts-ignore
   let totpLink: string | undefined = $state(undefined)
-  let totpEnabled
-  run(() => {
-    totpEnabled =
-      data.my_user?.local_user_view.local_user.totp_2fa_enabled ?? totpLink
-  })
+  let totpEnabled = $state(
+    data.my_user?.local_user_view.local_user.totp_2fa_enabled,
+  )
 
   let verify_totp = $state('')
 
@@ -83,7 +79,7 @@
     {/if}
     <form
       class="flex flex-col gap-2 w-full"
-      onsubmit={preventDefault(() => {})}
+      onsubmit={(e) => e.preventDefault()}
     >
       <TextInput
         bind:value={verify_totp}

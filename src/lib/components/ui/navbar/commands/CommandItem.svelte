@@ -8,14 +8,17 @@
   } from 'svelte-hero-icons'
   import Avatar from '../../Avatar.svelte'
   import type { Action } from './actions.svelte'
+  import type { HTMLButtonAttributes } from 'svelte/elements'
 
   interface Props {
     action: Action
     class?: string
     children?: import('svelte').Snippet
+    onclick?: HTMLButtonAttributes['onclick']
+    [key: string]: any
   }
 
-  let { action, class: clazz = '', children }: Props = $props()
+  let { action, class: clazz = '', children, ...rest }: Props = $props()
 </script>
 
 <Button
@@ -27,6 +30,7 @@
   class="focus:bg-slate-200 focus:dark:bg-zinc-800 block w-full {clazz}"
   data-sveltekit-preload-code="viewport"
   data-sveltekit-preload-data="tap"
+  {...rest}
 >
   {#if typeof action.icon === 'string'}
     <Avatar url={action.icon} width={20} />

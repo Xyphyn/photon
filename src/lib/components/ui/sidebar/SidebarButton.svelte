@@ -5,6 +5,7 @@
   import { settings } from '$lib/settings.svelte.js'
   import { Button } from 'mono-svelte'
   import { Icon, type IconSource } from 'svelte-hero-icons'
+  import type { HTMLButtonAttributes } from 'svelte/elements'
 
   interface Props {
     href?: string | undefined

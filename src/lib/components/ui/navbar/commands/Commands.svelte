@@ -22,7 +22,7 @@
   let { open = $bindable(false), groups = $bindable([]) }: Props = $props()
 
   let search = $state('')
-  let container: HTMLElement = $state()
+  let container: HTMLElement | undefined = $state()
   const dispatch = createEventDispatcher()
   let selectedIndex = $state(0)
   let filteredGroups: Group[] = $state([])
@@ -202,6 +202,7 @@
     if (!browser) return
 
     const listItems = container?.querySelectorAll('li')
+    if (!listItems) return
     listItems[index % listItems.length].focus()
     listItems[index % listItems.length].scrollIntoView({
       behavior: 'smooth',

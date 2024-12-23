@@ -98,6 +98,12 @@
       }
     })
   }
+
+  let error = $state(null)
+
+  function onerror(e: any, r: any) {
+    error = e
+  }
 </script>
 
 <svelte:head>
@@ -129,6 +135,7 @@
   {/snippet}
   Skip Navigation
 </Button>
+
 <Shell
   dir={$locale == 'he' && settings.useRtl ? 'rtl' : 'ltr'}
   class="min-h-screen "
