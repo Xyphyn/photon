@@ -65,6 +65,8 @@
 </script>
 
 <script lang="ts">
+  import type { HTMLButtonAttributes } from 'svelte/elements'
+
   import Spinner from '../loader/Spinner.svelte'
 
   type ButtonRoundness = 'pill' | 'xl' | 'lg' | 'md' | 'none'
@@ -129,6 +131,7 @@
     prefix?: import('svelte').Snippet
     children?: import('svelte').Snippet
     suffix?: import('svelte').Snippet
+    onclick?: HTMLButtonAttributes['onclick']
     [key: string]: any
   }
 

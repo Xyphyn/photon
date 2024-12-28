@@ -27,6 +27,8 @@
 
   let { data } = $props()
 
+  let inbox = $state(data.data)
+
   let markingAsRead = $state(false)
 
   async function markAllAsRead() {
@@ -164,14 +166,14 @@ items-center px-2 w-max"
 <div
   class="flex flex-col list-none flex-1 h-full divide-y divide-slate-200 dark:divide-zinc-900 *:py-4"
 >
-  {#if !data.data || (data.data?.length ?? 0) == 0}
+  {#if !inbox || (inbox?.length ?? 0) == 0}
     <Placeholder
       icon={Inbox}
       title={$t('routes.inbox.empty.title')}
       description={$t('routes.inbox.empty.description')}
     />
   {:else}
-    {#each data.data as item, index (item.id)}
+    {#each inbox as item, index (item.id)}
       <div
         class="-mx-4 sm:-mx-6 px-4 sm:px-6
         {item.read ? '' : 'bg-yellow-50/50 dark:bg-blue-500/5'}"
@@ -183,7 +185,7 @@ items-center px-2 w-max"
           delay: index * 50,
         }}
       >
-        <InboxItem bind:item={data.data[index]} />
+        <InboxItem bind:item={inbox[index]} />
       </div>
     {/each}
   {/if}
@@ -194,7 +196,7 @@ items-center px-2 w-max"
     >
       <Tabs routes={[]} class="mx-auto">
         <Pageination
-          hasMore={!(!data.data || (data.data?.length ?? 0) < data.limit)}
+          hasMore={!(!data.data || (inbox?.length ?? 0) < data.limit)}
           page={data.page}
           on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
         />

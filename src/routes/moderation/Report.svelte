@@ -138,6 +138,8 @@
       : ''}"
     loading={resolving}
     disabled={resolving}
+    rounding="pill"
+    color="ghost"
   >
     {#snippet prefix()}
       <Icon src={CheckCircle} micro={item.resolved} size="18" />

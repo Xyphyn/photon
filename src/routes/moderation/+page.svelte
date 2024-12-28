@@ -18,6 +18,8 @@
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
   let { data = $bindable() } = $props()
+
+  let reports = $state(data.items)
 </script>
 
 <div class="mb-4 flex flex-col gap-4">
@@ -29,7 +31,7 @@
           bind:value={data.type}
           on:change={() => searchParam($page.url, 'type', data.type, 'page')}
         >
-          {#snippet label()}
+          {#snippet customLabel()}
             <span class="flex items-center gap-1">
               <Icon src={Funnel} size="15" mini />
               {$t('filter.filter')}
@@ -46,22 +48,23 @@
     {/snippet}
   </Header>
 </div>
-{#if data.items && data.items.length > 0}
+{#if reports && reports.length > 0}
   <div class="flex flex-col gap-4">
-    {#each data.items as item}
-      <div in:fly={{ y: -6, opacity: 0, duration: 500 }}>
-        <Material class="flex flex-col gap-4 text-sm">
-          <div class="flex flex-col gap-1.5">
-            <span class="text-xs font-bold dark:text-zinc-400 text-slate-600">
-              Report from
-            </span>
-            <span class="font-bold">
-              <UserLink avatar user={item.creator} />
-            </span>
-          </div>
+    {#each reports as item}
+      <div
+        in:fly={{ y: -6, opacity: 0, duration: 500 }}
+        class="flex flex-col gap-1 text-sm"
+      >
+        <div class="flex flex-col gap-1.5">
+          <span class="text-xs font-bold dark:text-zinc-400 text-slate-600">
+            Report from
+          </span>
+          <span class="font-bold">
+            <UserLink avatar user={item.creator} />
+          </span>
+        </div>
 
-          <Report {item} />
-        </Material>
+        <Report {item} />
       </div>
     {/each}
   </div>
