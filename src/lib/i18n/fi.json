@@ -110,6 +110,11 @@
             "empty": {
                 "title": "Ei uusia ilmoituksia",
                 "description": "Viestit, vastaukset, sekä maininnat näkyvät täällä."
+            },
+            "item": {
+                "reply": "{{user}} vastasi kommenttiisi ketjussa {{post}}",
+                "mention": "{{user}} mainisti sinut ketjussa: {{post}}",
+                "message": "{{user}} lähetti viestin käyttäjälle {{recipient}}"
             }
         },
         "legal": {
@@ -206,7 +211,7 @@
                 },
                 "emptyAllow": {
                     "title": "Ei erikseen sallittuja instansseja",
-                    "description": "Sallittujen instanssien lisääminen estää kaikki muut instanssit."
+                    "description": "Sallittujen instanssien määrittäminen estää listaamattomat instanssit."
                 },
                 "allow": "Sallitut"
             }
@@ -225,7 +230,8 @@
         "community": {
             "settings": {
                 "team": "Tiimi",
-                "settings": "Asetukset"
+                "settings": "Asetukset",
+                "manage": "Muuta asetuksia"
             }
         }
     },
@@ -368,7 +374,8 @@
             "setView": "Valitse näkymä",
             "setColor": "Valitse väritila",
             "setTheme": "Aseta teema",
-            "setThemeTo": "Aseta teema: {{default}}"
+            "setThemeTo": "Aseta teema: {{default}}",
+            "contextual": "Tällä sivulla"
         }
     },
     "profile": {
@@ -879,7 +886,18 @@
     },
     "aria": {
         "vote": {
-            "group": "Julkaisun äänestäminen"
+            "group": "Julkaisun äänestäminen",
+            "upvotes": "{{default}} ylä-ääntä",
+            "downvotes": "{{default}} alaääntä",
+            "score": "Pisteet: {{default}}"
+        },
+        "pagination": {
+            "nav": "Sivutus",
+            "current": "Nykyinen sivu"
         }
+    },
+    "stats": {
+        "joined": "Liittyneitä",
+        "created": "Luotu"
     }
 }
