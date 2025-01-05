@@ -20,12 +20,12 @@
     Home,
     Icon,
     MagnifyingGlass,
-    Newspaper,
     PencilSquare,
     Plus,
     ServerStack,
     XMark,
     ArrowLeftOnRectangle,
+    Newspaper
   } from 'svelte-hero-icons'
   import Profile from './Profile.svelte'
   import NavButton from './NavButton.svelte'
@@ -119,12 +119,16 @@
         />
       </NavButton>
     {/if}
-    <NavButton
-      href="/communities"
-      label={$t('nav.communities')}
-      icon={GlobeAlt}
+    <NavButton 
+    href="/search" 
+    label={$t('nav.search')} 
+    icon={MagnifyingGlass} 
+  />
+    <NavButton 
+      href="/create/post"
+      label={$t('nav.write')}
+      icon={PencilSquare}
     />
-    <NavButton href="/search" label={$t('nav.search')} icon={MagnifyingGlass} />
     {#if $profile?.jwt}
       <Menu placement="bottom-end">
         <Button

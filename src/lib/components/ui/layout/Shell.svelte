@@ -77,6 +77,7 @@
   import { themeVars } from '$lib/ui/colors'
   import { routes } from '$lib/util.js'
   import { derived, writable, type Readable, type Writable } from 'svelte/store'
+  import { GlobeAlt } from 'svelte-hero-icons'
 
   export let route: { id: string | null } | undefined = undefined
 

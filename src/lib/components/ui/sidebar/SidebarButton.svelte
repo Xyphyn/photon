@@ -7,9 +7,11 @@
   export let href: string | undefined = undefined
   export let icon: IconSource | undefined = undefined
   export let selected = false
+  
   $: {
     if (href != undefined) {
-      selected = $page.url.pathname == href
+      const fullUrl = href.includes('?') ? href : href + $page.url.search
+      selected = `${$page.url.pathname}${$page.url.search}` === fullUrl
     }
   }
 </script>

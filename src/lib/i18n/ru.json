@@ -7,8 +7,10 @@
     },
     "nav": {
         "home": "Главная",
+        "feed": "Моя лента",
         "admin": "Админка",
         "moderation": "Модерация",
+        "write": "Написать",
         "communities": "Обзор",
         "search": "Поиск",
         "create": {
@@ -66,17 +68,17 @@
         "location": {
             "label": "Откуда",
             "all": "Лента",
-            "subscribed": "Подписки",
+            "subscribed": "Моя лента",
             "moderator": "Модератор",
             "local": "Местные",
             "global": "Глобальные"
         },
         "sort": {
             "label": "Сортировка",
-            "active": "Активные",
-            "hot": "Популярные",
+            "active": "Активное",
+            "hot": "Популярное",
             "top": {
-                "label": "Лучшие",
+                "label": "Лучшее",
                 "time": {
                     "label": "Период",
                     "all": "Всё время",
@@ -91,16 +93,16 @@
                     "hour": "Час"
                 }
             },
-            "new": "Новые",
-            "old": "Старые",
-            "scaled": "Растущие",
-            "mostcomments": "Комментарии",
+            "new": "Свежее",
+            "old": "Старое",
+            "scaled": "Растущее",
+            "mostcomments": "Обсуждаемое",
             "newcomments": "Новые ответы",
-            "controversial": "Спорные"
+            "controversial": "Спорное"
         },
         "view": {
             "label": "Вид",
-            "cozy": "Уютный",
+            "cozy": "По умолчанию",
             "list": "Список",
             "compact": "Компактный",
             "legacy": "Старый"

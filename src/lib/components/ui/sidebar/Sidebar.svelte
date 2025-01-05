@@ -2,11 +2,12 @@
   import {
     ArrowLeftOnRectangle,
     Bookmark,
-    Cog6Tooth,
     Identification,
     Inbox,
     UserCircle,
     UserGroup,
+    GlobeAlt,
+    Home,
   } from 'svelte-hero-icons'
   import { notifications, profile, profileData } from '$lib/auth.js'
   import { userSettings } from '$lib/settings.js'
@@ -22,6 +23,8 @@
   import { iconOfLink } from '../navbar/link'
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
+
+  $: searchParams = new URLSearchParams($page.url.search);
 </script>
 
 <nav
@@ -51,6 +54,15 @@
     </div>
     <hr class="border-slate-200 dark:border-zinc-900 my-1" />
   {/if}
+  <SidebarButton 
+    icon={Home} 
+    href="/?type=Subscribed"
+  >
+    <span slot="label">{$t('nav.feed')}</span>
+  </SidebarButton>
+  <SidebarButton icon={GlobeAlt} href="/communities">
+    <span slot="label">{$t('nav.communities')}</span>
+  </SidebarButton>
   {#if $profile?.jwt}
     <SidebarButton icon={UserCircle} href="/profile">
       <span slot="label">
@@ -72,28 +84,6 @@
     </SidebarButton>
     <SidebarButton icon={Bookmark} href="/saved">
       <span slot="label">{$t('profile.saved')}</span>
-    </SidebarButton>
-  {:else}
-    <SidebarButton
-      href="/login"
-      title={$t('account.login')}
-      icon={ArrowLeftOnRectangle}
-    >
-      <span slot="label">{$t('account.login')}</span>
-    </SidebarButton>
-    <SidebarButton
-      href="/signup"
-      title={$t('account.signup')}
-      icon={Identification}
-    >
-      <span slot="label">{$t('account.signup')}</span>
-    </SidebarButton>
-    <SidebarButton
-      href="/settings"
-      title={$t('nav.menu.settings')}
-      icon={Cog6Tooth}
-    >
-      <span slot="label">{$t('nav.menu.settings')}</span>
     </SidebarButton>
   {/if}
   {#if $profileData.profiles.length >= 1}

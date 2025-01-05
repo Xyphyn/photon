@@ -1,5 +1,7 @@
 <script lang="ts">
   import { notifications, profile } from '$lib/auth'
+  import { goto } from '$app/navigation'
+  import { setUserID } from '$lib/auth'
 
   import {
     Badge,
@@ -30,6 +32,7 @@
     Swatch,
     UserCircle,
     UserGroup,
+    ArrowLeftOnRectangle,
   } from 'svelte-hero-icons'
   import { colorScheme } from '$lib/ui/colors'
   import { userSettings } from '$lib/settings'
@@ -209,4 +212,20 @@
       </Button>
     </div>
   </li>
+  <MenuButton 
+    on:click={async () => {
+      await setUserID(null);
+      goto('/', { invalidateAll: true });
+    }}
+    class="text-red-600 dark:text-red-400"
+  >
+    <Icon 
+      src={ArrowLeftOnRectangle} 
+      size="16" 
+      micro 
+      slot="prefix"
+      class="text-red-600 dark:text-red-400" 
+    />
+    {$t('account.logout')}
+  </MenuButton>
 </Menu>

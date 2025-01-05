@@ -11,6 +11,7 @@
         "moderation": "Moderation",
         "communities": "Explore",
         "search": "Search",
+        "feed": "My Feed",
         "create": {
             "label": "Create",
             "post": "Post",
@@ -903,5 +904,6 @@
     "stats": {
         "joined": "Joined",
         "created": "Created"
-    }
+    },
+    "logout": "Log out"
 }
