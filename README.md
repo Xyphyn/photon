@@ -18,19 +18,22 @@ npm run dev
 
 
 
-# Запустить докер с lemmy world и русским языком по умолчанию
+# Запустить докер с lemdro.id и русским языком по умолчанию
 ```sh   
 docker build -t photon .
 ```
 
 ```sh   
 docker run -p 8080:3000 \
-  -e PUBLIC_INSTANCE_URL=lemmy.world \
+  -e PUBLIC_INSTANCE_URL=lemdro.id \
   -e PUBLIC_LANGUAGE=ru \
   -it photon:latest
 ```
 
+# Тестовая учетка для lemdro.id
 
+username: deepvoice
+password: 30roma04111
 
 
 

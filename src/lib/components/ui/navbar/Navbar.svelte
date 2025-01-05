@@ -128,6 +128,7 @@
     {#if $profile?.jwt}
       <Menu placement="bottom-end">
         <Button
+          color="primary"
           class="border border-transparent bg-primary-900 text-white
           dark:bg-primary-100 dark:text-black hover:brightness-125 dark:hover:brightness-90 active:brightness-90
           active:dark:brightness-75 rounded-full shadow-none text-sm transition-all font-medium cursor-pointer duration-75 
@@ -162,7 +163,8 @@
     {:else}
       <Button
         href="/accounts/login"
-        class="bg-[#D93A00] hover:bg-[#B83200] text-white font-bold py-1 px-4 rounded-full text-sm"
+        color="none"
+        class="bg-orange-600 hover:bg-orange-700 text-white font-bold py-1 px-4 rounded-full text-sm"
         title={$t('account.login')}
       >
         {$t('account.login')}
