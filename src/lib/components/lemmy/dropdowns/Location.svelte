@@ -17,7 +17,7 @@
   export let selected: string
   export let navigate: boolean = true
   export let changeDefault: boolean = false
-  export let showLabel: boolean = true
+  export let showLabel: boolean = false
 
   let feed: string = selected
   $: feed = selected

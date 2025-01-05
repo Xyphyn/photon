@@ -291,6 +291,7 @@
           <Sort
             bind:selected={$userSettings.defaultSort.sort}
             navigate={false}
+            showLabel={true}
           />
         </div>
         <div class="max-w-full">

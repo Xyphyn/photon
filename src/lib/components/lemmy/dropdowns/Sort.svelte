@@ -28,6 +28,7 @@
   export let selected: string
   export let navigate: boolean = true
   export let changeDefault: boolean = false
+  export let showLabel: boolean = false
 
   let sort: string = selected?.startsWith('Top') ? 'TopAll' : selected
   $: if (selected) {
@@ -50,8 +51,10 @@
     }}
   >
     <span slot="label" class="flex items-center gap-1">
-      <Icon src={ChartBar} size="13" micro />
-      {$t('filter.sort.label')}
+      {#if showLabel}
+        <Icon src={ChartBar} size="13" micro />
+        {$t('filter.sort.label')}
+      {/if}
     </span>
     <option value="Active">
       <Icon
@@ -147,8 +150,10 @@
         }}
       >
         <span slot="label" class="flex items-center gap-1">
-          <Icon src={Clock} size="15" micro />
-          {$t('filter.sort.top.time.label')}
+          {#if showLabel}
+            <Icon src={Clock} size="15" micro />
+            {$t('filter.sort.top.time.label')}
+          {/if}
         </span>
         <option value="TopAll">
           <Icon

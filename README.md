@@ -1,3 +1,43 @@
+# Для разработки Photon в режиме горячей перезагрузки (hot reload), нужно:
+Сначала склонировать репозиторий:
+```sh  
+git clone https://github.com/Xyphyn/photon && cd photon
+```
+
+Установить зависимости:
+```sh  
+npm install
+```
+
+Запустить сервер:
+```sh  
+npm run dev
+```
+
+Это запустит Vite dev server с горячей перезагрузкой на порту 5173 (по умолчанию).
+
+
+
+# Запустить докер с lemmy world и русским языком по умолчанию
+```sh   
+docker build -t photon .
+```
+
+```sh   
+docker run -p 8080:3000 \
+  -e PUBLIC_INSTANCE_URL=lemmy.world \
+  -e PUBLIC_LANGUAGE=ru \
+  -it photon:latest
+```
+
+
+
+
+
+
+
+
+
 # Photon
 
 Jump to:

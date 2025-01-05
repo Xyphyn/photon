@@ -13,7 +13,7 @@
     ViewColumns,
   } from 'svelte-hero-icons'
 
-  export let showLabel = true
+  export let showLabel = false
 </script>
 
 <Select {...$$restProps} bind:value={$userSettings.view}>
