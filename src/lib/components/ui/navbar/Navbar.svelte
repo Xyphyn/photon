@@ -25,6 +25,7 @@
     Plus,
     ServerStack,
     XMark,
+    ArrowLeftOnRectangle,
   } from 'svelte-hero-icons'
   import Profile from './Profile.svelte'
   import NavButton from './NavButton.svelte'
@@ -124,36 +125,49 @@
       icon={GlobeAlt}
     />
     <NavButton href="/search" label={$t('nav.search')} icon={MagnifyingGlass} />
-    <Menu placement="top">
-      <NavButton
-        class="relative"
-        color="primary"
-        slot="target"
-        label={$t('nav.create.label')}
-        icon={Plus}
-      />
-      <MenuDivider>{$t('nav.create.label')}</MenuDivider>
-      <MenuButton link href="/create/post" disabled={!$profile?.jwt}>
-        <Icon src={PencilSquare} size="16" micro slot="prefix" />
-        {$t('nav.create.post')}
-      </MenuButton>
-      <MenuButton
-        link
-        href="/create/community"
-        disabled={!$profile?.jwt ||
-          !$profile?.user ||
-          ($site?.site_view.local_site.community_creation_admin_only &&
-            !isAdmin($profile.user))}
+    {#if $profile?.jwt}
+      <Menu placement="bottom-end">
+        <Button
+          class="border border-transparent bg-primary-900 text-white
+          dark:bg-primary-100 dark:text-black hover:brightness-125 dark:hover:brightness-90 active:brightness-90
+          active:dark:brightness-75 rounded-full shadow-none text-sm transition-all font-medium cursor-pointer duration-75 
+          disabled:opacity-50 disabled:pointer-events-none origin-center rounded-full w-10 h-10 flex-shrink-0 
+          @3xl:h-8 @3xl:px-3 @3xl:rounded-[10px] @3xl:w-auto relative"
+          slot="target"
+          title={$t('nav.create.label')}
+          style="transition-property: background-color, filter;"
+        >
+          <div class="flex flex-row items-center h-full gap-1.5 button-content justify-center text-center origin-center">
+            <Icon src={Plus} size="16" micro />
+            <span class="hidden @3xl:block">{$t('nav.create.label')}</span>
+          </div>
+        </Button>
+        <MenuDivider>{$t('nav.create.label')}</MenuDivider>
+        <MenuButton link href="/create/post" disabled={!$profile?.jwt}>
+          <Icon src={PencilSquare} size="16" micro slot="prefix" />
+          {$t('nav.create.post')}
+        </MenuButton>
+        <MenuButton
+          link
+          href="/create/community"
+          disabled={!$profile?.jwt ||
+            !$profile?.user ||
+            ($site?.site_view.local_site.community_creation_admin_only &&
+              !isAdmin($profile.user))}
+        >
+          <Icon src={Newspaper} size="16" micro slot="prefix" />
+          {$t('nav.create.community')}
+        </MenuButton>
+      </Menu>
+    {:else}
+      <Button
+        href="/accounts/login"
+        class="bg-[#D93A00] hover:bg-[#B83200] text-white font-bold py-1 px-4 rounded-full text-sm"
+        title={$t('account.login')}
       >
-        <Icon src={Newspaper} size="16" micro slot="prefix" />
-        {$t('nav.create.community')}
-      </MenuButton>
-      {#if !$profile?.jwt}
-        <span class="text-sm mx-4 my-1 py-1">
-          {$t('nav.create.logingate')}
-        </span>
-      {/if}
-    </Menu>
+        {$t('account.login')}
+      </Button>
+    {/if}
     {#if $profile?.user?.local_user_view.person.avatar && !$dockProps.noGap}
       <div
         class="absolute right-0 -z-10 h-full
