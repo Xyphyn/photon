@@ -1,7 +1,6 @@
 <script lang="ts">
   import { notifications, profile } from '$lib/auth'
   import { goto } from '$app/navigation'
-  import { setUserID } from '$lib/auth'
 
   import {
     Badge,
@@ -214,7 +213,7 @@
   </li>
   <MenuButton 
     on:click={async () => {
-      await setUserID(null);
+      $profile.jwt = undefined;
       goto('/', { invalidateAll: true });
     }}
     class="text-red-600 dark:text-red-400"
