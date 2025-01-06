@@ -209,9 +209,6 @@
         </span>
         <p slot="description">
           {$t('settings.app.lang.description')}
-          <Link href="/translators" highlight class="text-base font-semibold">
-            {$t('settings.app.lang.credits')}
-          </Link>
         </p>
         <!--@ts-ignore-->
         <Select bind:value={$userSettings.language}>

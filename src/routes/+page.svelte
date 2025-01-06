@@ -9,7 +9,6 @@
   import { searchParam } from '$lib/util.js'
   import { ChartBar, Icon } from 'svelte-hero-icons'
   import { site } from '$lib/lemmy.js'
-  import Location from '$lib/components/lemmy/dropdowns/Location.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { t } from '$lib/translations.js'
   import { userSettings } from '$lib/settings.js'
@@ -24,11 +23,13 @@
   <header class="flex flex-col gap-4 relative">
     <Header pageHeader>
       {$t('routes.frontpage.title')}
-
+      <span slot="description">
+        {@html $t('routes.frontpage.description')}
+        <a href="/about" class="text-primary-900 dark:text-primary-100 underline">
+          {$t('routes.frontpage.learnMore')}
+        </a>
+      </span>
       <div class="flex items-center gap-2" slot="extended">
-        {#if data.type_}
-          <Location changeDefault selected={data.type_} />
-        {/if}
         <Sort changeDefault selected={data.sort} />
         <ViewSelect />
       </div>

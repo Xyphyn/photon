@@ -5,7 +5,7 @@
   import { t } from '$lib/translations'
 </script>
 
-<LoginPage ref="/accounts">
+<LoginPage ref="/">
   <Button
     size="custom"
     color="none"

@@ -1,6 +1,7 @@
 <script lang="ts">
   import { userSettings } from '$lib/settings'
   import { contentPadding } from '../Shell.svelte'
+  import { t } from '$lib/translations'
 
   export let pageHeader = false
 </script>
@@ -27,8 +28,13 @@
   >
     <slot />
   </h1>
+  {#if $$slots.description}
+    <p class="text-slate-600 dark:text-zinc-400 text-sm mt-2 mb-4">
+      <slot name="description" />
+    </p>
+  {/if}
   {#if $$slots.extended}
-    <div class="mt-4">
+    <div>
       <slot name="extended" />
     </div>
   {/if}

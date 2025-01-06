@@ -96,8 +96,6 @@
       displayName={false}
       class="font-medium px-2 py-1 pointer-events-none"
     />
-  {:else}
-    <MenuDivider>{$t('nav.menu.label')}</MenuDivider>
   {/if}
   {#if $profile?.jwt}
     <MenuButton link href="/profile">
@@ -117,11 +115,33 @@
       <Icon src={Bookmark} micro width={16} slot="prefix" />
       {$t('profile.saved')}
     </MenuButton>
+    <MenuButton 
+      on:click={async () => {
+        $profile.jwt = undefined;
+        goto('/', { invalidateAll: true });
+      }}
+      class="text-red-600 dark:text-red-400"
+    >
+      <svg 
+        xmlns="http://www.w3.org/2000/svg" 
+        width="16" 
+        height="16" 
+        viewBox="0 0 24 24" 
+        fill="none" 
+        stroke="currentColor" 
+        stroke-width="1.5"
+        stroke-linecap="round" 
+        stroke-linejoin="round"
+        slot="prefix" 
+        class="text-red-600 dark:text-red-400"
+      >
+        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+        <polyline points="16 17 21 12 16 7" />
+        <line x1="21" y1="12" x2="9" y2="12" />
+      </svg>
+      {$t('account.logout')}
+    </MenuButton>
   {/if}
-  <MenuButton link href="/accounts">
-    <Icon src={UserGroup} micro width={16} slot="prefix" />
-    {$t('account.accounts')}
-  </MenuButton>
   <MenuDivider>{$t('nav.menu.app')}</MenuDivider>
   <MenuButton link href="/settings">
     <Icon src={Cog6Tooth} micro width={16} slot="prefix" />
@@ -211,20 +231,4 @@
       </Button>
     </div>
   </li>
-  <MenuButton 
-    on:click={async () => {
-      $profile.jwt = undefined;
-      goto('/', { invalidateAll: true });
-    }}
-    class="text-red-600 dark:text-red-400"
-  >
-    <Icon 
-      src={ArrowLeftOnRectangle} 
-      size="16" 
-      micro 
-      slot="prefix"
-      class="text-red-600 dark:text-red-400" 
-    />
-    {$t('account.logout')}
-  </MenuButton>
 </Menu>

@@ -8,6 +8,8 @@
     UserGroup,
     GlobeAlt,
     Home,
+    Fire,
+    Clock,
   } from 'svelte-hero-icons'
   import { notifications, profile, profileData } from '$lib/auth.js'
   import { userSettings } from '$lib/settings.js'
@@ -54,11 +56,25 @@
     </div>
     <hr class="border-slate-200 dark:border-zinc-900 my-1" />
   {/if}
+  {#if $profile?.jwt}
+    <SidebarButton 
+      icon={Home} 
+      href="/?type=Subscribed"
+    >
+      <span slot="label">{$t('nav.feed')}</span>
+    </SidebarButton>
+  {/if}
   <SidebarButton 
-    icon={Home} 
-    href="/?type=Subscribed"
+    icon={Fire} 
+    href="/?sort=Hot"
   >
-    <span slot="label">{$t('nav.feed')}</span>
+    <span slot="label">{$t('filter.sort.hot')}</span>
+  </SidebarButton>
+  <SidebarButton 
+    icon={Clock} 
+    href="/?sort=New"
+  >
+    <span slot="label">{$t('filter.sort.new')}</span>
   </SidebarButton>
   <SidebarButton icon={GlobeAlt} href="/communities">
     <span slot="label">{$t('nav.communities')}</span>
@@ -85,31 +101,6 @@
     <SidebarButton icon={Bookmark} href="/saved">
       <span slot="label">{$t('profile.saved')}</span>
     </SidebarButton>
-  {/if}
-  {#if $profileData.profiles.length >= 1}
-    <hr class="border-slate-200 dark:border-zinc-900 my-1" />
-
-    <Expandable
-      class="max-w-full min-w-0 w-full"
-      bind:open={$userSettings.expand.accounts}
-    >
-      <span slot="title" class="px-2 py-1 w-full">
-        <EndPlaceholder>
-          {$t('account.accounts')}
-          <span slot="action" class="dark:text-white text-black">
-            {$profileData.profiles.length}
-          </span>
-        </EndPlaceholder>
-      </span>
-      {#each [...$profileData.profiles] as prof, index (prof.id)}
-        <div animate:flip={{ duration: 300, easing: expoOut }} class="w-full">
-          <ProfileButton {index} {prof} />
-        </div>
-      {/each}
-      <SidebarButton href="/accounts" icon={UserGroup}>
-        {$t('account.accounts')}
-      </SidebarButton>
-    </Expandable>
   {/if}
   <hr class="border-slate-200 dark:border-zinc-900 my-1" />
   {#if $profile?.favorites && $profile?.favorites.length > 0}

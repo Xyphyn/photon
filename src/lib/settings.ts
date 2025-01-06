@@ -140,8 +140,8 @@ export const defaultSettings: Settings = {
   moderation: {
     presets: [
       {
-        title: 'Preset 1',
-        content: `Your submission in *"{{post}}"* was removed for {{reason}}.`,
+        title: 'Шаблон 1',
+        content: `Ваш пост *"{{post}}"* было удалено по причине {{reason}}.`,
       },
     ],
   },

@@ -1,129 +1,37 @@
-<script>
-  import Link from '$lib/components/input/Link.svelte'
-  import Logo from '$lib/components/ui/Logo.svelte'
-  import Profile from './Profile.svelte'
-</script>
+<div class="container mx-auto px-4 py-8 max-w-3xl">
+  <div class="prose dark:prose-invert">
+    <p class="text-xl mb-8">
+      "Работаем!" — это сообщество для тех, кто строит бизнес с нуля, развивает проекты или ищет вдохновение. 
+      Мы объединяем амбициозных людей, которые готовы делиться опытом, обсуждать вызовы и учиться на своих и чужих ошибках.
+    </p>
 
-<div class="max-w-xl mx-auto">
-  <div class="flex items-center gap-1 mx-auto w-max">
-    <Logo width={48} />
-    <span class="text-2xl font-bold">Photon</span>
-  </div>
-  <h1 class="text-2xl font-bold leading-8">About</h1>
-  <p class="my-3">
-    <strong>Photon</strong>
-    is a replacement user interface for Lemmy, with more features and modern design.
-  </p>
-  <h1 class="text-2xl font-bold leading-8">Links</h1>
-  <ul class="list-disc pl-4 my-3">
-    <li>
-      <Link highlight href="https://github.com/Xyphyn/photon">Github</Link>
-    </li>
-    <li>
-      <Link
-        highlight
-        href="https://photon.xylight.dev/c/photon@lemmy.xylight.dev"
-      >
-        Community
-      </Link>
-    </li>
-    <li>
-      <Link href="https://xylight.dev" highlight>Xylight's portfolio</Link>
-    </li>
-    <li>
-      <Link href="https://buymeacoffee.com/xylight" highlight>Donate</Link>
-    </li>
-  </ul>
-  <h1 class="text-2xl font-bold leading-10">Credits</h1>
-  <div class="flex flex-row flex-wrap gap-6 items-center w-full">
-    <Profile name="Xylight" description="Main developer" />
-    <Profile
-      name="Cole"
-      badge="lemdro.id"
-      description="Contributor"
-      link="/u/cole@lemdro.id"
-    />
-    <Profile
-      name="iJeff"
-      badge="lemdro.id"
-      description="Contributor"
-      link="/u/ijeff@lemdro.id"
-    />
-    <Profile
-      name="pbui"
-      description="Contributor"
-      link="https://github.com/pbui"
-    />
-    <Profile
-      name="Neshura87"
-      description="Contributor"
-      link="https://github.com/neshura87"
-    />
-    <Profile
-      name="Pieterdd"
-      description="Contributor"
-      link="https://github.com/pieterdd"
-    />
-    <Profile
-      name="0xCmdrKeen"
-      description="Contributor"
-      link="https://github.com/0xCmdrKeen"
-    />
-    <Profile
-      name="sant0s12"
-      description="Contributor"
-      link="https://github.com/sant0s12"
-    />
-    <Profile
-      name="tfaughnan"
-      description="Contributor"
-      link="https://github.com/tfaughnan"
-    />
-    <Profile
-      name="paradox460"
-      description="Contributor"
-      link="https://github.com/paradox460"
-    />
-    <Profile
-      name="ngn13"
-      description="Contributor"
-      link="https://github.com/ngn13"
-    />
-    <Profile
-      name="Tmpod"
-      description="Contributor"
-      link="https://github.com/Tmpod"
-    />
-    <Profile
-      name="Xusontha"
-      description="Contributor"
-      link="https://github.com/Xusontha"
-    />
-    <Profile
-      name="TheSaneWriter"
-      description="Contributor"
-      link="https://github.com/TheSaneWriter"
-    />
-    <Profile
-      name="ZhenyaPav"
-      description="Contributor"
-      link="https://github.com/ZhenyaPav"
-    />
-    <Profile
-      name="zamuz"
-      description="Contributor"
-      link="https://github.com/zamuz"
-    />
-    <Profile
-      name="danielwolbach"
-      description="Contributor"
-      link="https://github.com/danielwolbach"
-    />
-    <Profile
-      name="danielwolbach"
-      description="Contributor"
-      link="https://github.com/danielwolbach"
-    />
-    <span>...and you, for using this app!</span>
+    <h2>Что мы предлагаем?</h2>
+    <ul>
+      <li><strong>Сообщество:</strong> Пространство, где каждый может поделиться своим бизнес-опытом, задать вопросы, получить советы и найти единомышленников.</li>
+      <li><strong>Контент:</strong> Гайды, кейсы, полезные советы, истории успеха и провалов. Все, что помогает предпринимателям расти.</li>
+      <li><strong>Возможности:</strong> Идеи, партнерства, практическая поддержка и источники вдохновения для нового этапа вашего бизнеса.</li>
+    </ul>
+
+    <h2>Наши принципы</h2>
+    <ol>
+      <li><strong>Практическая польза:</strong> Только конкретные советы и работающие идеи. Никакой теории ради теории.</li>
+      <li><strong>Честность:</strong> Мы говорим о реальном опыте — без прикрас и маркетинговых лозунгов.</li>
+      <li><strong>Открытость:</strong> Мы поддерживаем конструктивные обсуждения и ценим разные точки зрения.</li>
+      <li><strong>Сообщество:</strong> Вместе легче расти, решать проблемы и создавать что-то большее.</li>
+    </ol>
+
+    <h2>Кого мы ждем?</h2>
+    <ul>
+      <li><strong>Начинающих предпринимателей:</strong> Кто только начинает свой путь и ищет поддержку.</li>
+      <li><strong>Опытных владельцев бизнеса:</strong> Кто готов делиться знаниями, чтобы помогать другим.</li>
+      <li><strong>Менеджеров и руководителей:</strong> Кто управляет командами, развивает проекты и хочет находить новые решения.</li>
+      <li><strong>Всех, кто интересуется бизнесом:</strong> Независимо от сферы или масштаба ваших идей.</li>
+    </ul>
+
+    <h2>Почему это важно?</h2>
+    <p>
+      Предпринимательство — это не только способ заработать. Это инструмент для создания чего-то большего: 
+      новых продуктов, услуг, рабочих мест и возможностей. Мы хотим, чтобы каждый, кто решится на этот путь, знал: он не один.
+    </p>
   </div>
 </div>
