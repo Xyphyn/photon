@@ -266,7 +266,8 @@
             },
             "item": {
                 "reply": "{{user}} رد عليك في {{post}}",
-                "mention": "{{user}} ذكرك في {{post}}"
+                "mention": "{{user}} ذكرك في {{post}}",
+                "message": "{{user}} أرسل إلى {{recipient}}"
             }
         }
     }
