@@ -271,7 +271,33 @@
             }
         },
         "moderation": {
-            "title": "الإشراف"
+            "title": "الإشراف",
+            "empty": {
+                "title": "لا يوجد تقارير جديدة",
+                "description": "لما يتم الإبلاغ عن التقديمات, تستطيع ان تتصرف هنا."
+            },
+            "reason": "سبب",
+            "resolve": "حل",
+            "resolved": "محلول",
+            "unresolve": "إلغاء الحل",
+            "resolvedBy": "محلول بيد"
+        },
+        "admin": {
+            "title": "إدارة",
+            "config": {
+                "title": "إعدادات",
+                "sidebar": "شريط الجانبي",
+                "banner": "خلفية",
+                "nsfwEnabled": "إظهار التقديمات الحساسة",
+                "registration": {
+                    "label": "نمط التسجيل",
+                    "open": "افتح",
+                    "application": "طلب تطبيق",
+                    "closed": "مقفول"
+                },
+                "icon": "أيقونة",
+                "downvotesEnabled": "تمكين التصويتات السلبية"
+            }
         }
     }
 }
