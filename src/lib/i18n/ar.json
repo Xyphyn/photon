@@ -269,6 +269,9 @@
                 "mention": "{{user}} ذكرك في {{post}}",
                 "message": "{{user}} أرسل إلى {{recipient}}"
             }
+        },
+        "moderation": {
+            "title": "الإشراف"
         }
     }
 }
