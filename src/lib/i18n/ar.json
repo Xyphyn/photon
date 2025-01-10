@@ -296,7 +296,12 @@
                     "closed": "مقفول"
                 },
                 "icon": "أيقونة",
-                "downvotesEnabled": "تمكين التصويتات السلبية"
+                "downvotesEnabled": "تمكين التصويتات السلبية",
+                "adminCommunityOnly": "فقط المشرفين يستطع إنشاء مجموعات",
+                "requireVerifyEmail": "إيجاب التحقيق بالبريد الإلكتروني",
+                "applicationQuestion": "سوأل عن الطلب",
+                "emailAdminsOnApplication": "إرسال بريد للمشرفين لما يصل طلبات جديدة",
+                "emailAdminsOnReport": "إرسال بريد للمشرفين لما يصل التقارير جديدة"
             }
         }
     }
