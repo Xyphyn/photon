@@ -197,7 +197,13 @@
     "post": {
         "actions": {
             "more": {
-                "delete": "Kustuta"
+                "delete": "Kustuta",
+                "restore": "Taasta"
+            },
+            "mediaBias": {
+                "noData": {
+                    "title": "informatsiooni puudub"
+                }
             }
         },
         "badges": {
