@@ -140,7 +140,7 @@ Want your instance added here? Make a GitHub issue or make a PR! (this is for ge
 | [p.lemmy.ohaa.xyz](https://p.lemmy.ohaa.xyz)                                            | 🇦🇹 Austria   | (???)                                                                                 |
 | [~~photon.zhenyapav.com~~ (Has not updated since v1.9.2)](https://photon.zhenyapav.com) | 🇮🇸 Iceland   | [zhenyapav@zhenyapav.com](mailto:zhenyapav@zhenyapav.com)                             |
 | [~~ph.buckodr.ink~~ (Has not updated since v1.21.1)](https://ph.buckodr.ink)            | 🇺🇸 US East   | [admin@buckodr.ink](mailto:admin@buckodr.ink)                                         |
-| [phtn.ngn.tf](https://phtn.ngn.tf)                                                      | 🇩🇪 Germany   | [services@ngn.tf](mailto:services@ngn.tf)                                             |
+| [phtn.ngn.tf](https://phtn.ngn.tf)                                                      | 🇩🇪 Germany   | [ngn@ngn.tf](mailto:ngn@ngn.tf)                                                       |
 | [lm.sudovanilla.org](https://lm.sudovanilla.org)                                        | 🇺🇸 US East   | [hello@sudovanilla.org](mailto:hello@sudovanilla.org)                                 |
 
 ## Donate
