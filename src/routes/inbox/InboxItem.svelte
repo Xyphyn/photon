@@ -86,20 +86,6 @@
         width={28}
         alt={item.creator.name}
       />
-      <!-- <div class="rounded-full p-1 border border-slate-200 dark:border-zinc-800">
-        <Icon
-          src={item.type == 'comment_reply'
-            ? ChatBubbleOvalLeft
-            : item.type == 'private_message'
-              ? Envelope
-              : item.type == 'person_mention'
-                ? AtSymbol
-                : AtSymbol}
-          size="20"
-          mini
-          class="text-slate-600 dark:text-zinc-400"
-        />
-      </div> -->
       <div class="flex flex-col">
         <div class="text-sm font-normal">
           {#if item.type == 'comment_reply'}
