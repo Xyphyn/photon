@@ -284,12 +284,14 @@
         </Button>
       </div>
     {:else if hasMore}
-      <div class="w-full flex flex-col skeleton gap-2 animate-pulse pt-6">
-        <div class="w-96 max-w-full h-8"></div>
-        <div class="w-full h-48"></div>
+      <div class="w-full flex flex-col gap-2 animate-pulse pt-6">
+        <div
+          class="w-96 max-w-full h-8 bg-slate-100 dark:bg-zinc-800 rounded-md"
+        ></div>
+        <div class="w-full h-48 bg-slate-100 dark:bg-zinc-800 rounded-md"></div>
         <div class="!bg-transparent h-8 flex justify-between">
-          <div class="w-48 h-8"></div>
-          <div class="w-24 h-8"></div>
+          <div class="w-48 h-8 bg-slate-100 dark:bg-zinc-800 rounded-md"></div>
+          <div class="w-24 h-8 bg-slate-100 dark:bg-zinc-800 rounded-md"></div>
         </div>
       </div>
     {:else}
@@ -316,10 +318,6 @@
 </ul>
 
 <style lang="postcss">
-  .skeleton * {
-    @apply bg-slate-100 dark:bg-zinc-800 rounded-md;
-  }
-
   @keyframes popIn {
     from {
       transform: translateY(24px);

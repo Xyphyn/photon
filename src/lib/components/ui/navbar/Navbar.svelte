@@ -7,14 +7,7 @@
   } from '$lib/components/lemmy/moderation/moderation.js'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import { site } from '$lib/lemmy.js'
-  import {
-    Button,
-    Menu,
-    MenuButton,
-    MenuDivider,
-    Modal,
-    Spinner,
-  } from 'mono-svelte'
+  import { Button, Menu, MenuButton, MenuDivider, Spinner } from 'mono-svelte'
   import {
     GlobeAlt,
     Home,
@@ -28,15 +21,11 @@
   } from 'svelte-hero-icons'
   import Profile from './Profile.svelte'
   import NavButton from './NavButton.svelte'
-  import { scale } from 'svelte/transition'
-  import { backOut } from 'svelte/easing'
-  import SearchBar from '$lib/components/lemmy/util/SearchBar.svelte'
   import Logo from '../Logo.svelte'
   import { LINKED_INSTANCE_URL } from '$lib/instance'
   import { t } from '$lib/translations'
   import CommandsWrapper from './commands/CommandsWrapper.svelte'
   import { optimizeImageURL } from '$lib/components/lemmy/post/helpers'
-  import { settings } from '$lib/settings.svelte'
   import { dockProps } from '../layout/Shell.svelte'
 
   let promptOpen: boolean = $state(false)
@@ -161,22 +150,6 @@
         </span>
       {/if}
     </Menu>
-    {#if $profile?.user?.local_user_view.person.avatar && !$dockProps.noGap}
-      <div
-        class="absolute right-0 -z-10 h-full
-       overflow-hidden w-full ml-auto"
-        style="border-radius: inherit;"
-      >
-        <img
-          src={optimizeImageURL(
-            $profile?.user?.local_user_view.person.avatar ?? '',
-            32,
-          )}
-          class="blur-2xl -z-10 object-cover w-48 h-48 opacity-20 dark:opacity-50 ml-auto"
-          alt=""
-        />
-      </div>
-    {/if}
     <Profile placement="top" />
   </div>
 </nav>
