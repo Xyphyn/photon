@@ -8,7 +8,6 @@
     Link as LinkIcon,
   } from 'svelte-hero-icons'
   import { optimizeImageURL } from '../helpers'
-  import PostLinkSources from './PostLinkSources.svelte'
   import { t } from '$lib/translations'
   import type { View } from '$lib/settings.svelte'
 
@@ -111,68 +110,29 @@
       </a>
     {/if}
   </Material>
-  <div
-    class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800
-    rounded-full flex p-1 relative -top-7 min-[384px]:mx-3 mt-8 min-[384px]:mt-0 mx-auto -mb-7 w-max max-w-full overflow-auto"
-  >
-    <PostLinkSources {url}>
-      {#snippet target()}
-        <Button
-          color="tertiary"
-          size="sm"
-          class="w-max text-slate-600 dark:text-zinc-400 block
-        text-xs flex-shrink-0"
-          rounding="pill"
-        >
-          <Icon src={LinkIcon} size="16" micro class="flex-shrink-0" />
-          {$t('post.actions.link.actions')}
-        </Button>
-      {/snippet}
-    </PostLinkSources>
-  </div>
 {:else}
-  <div class="flex space-x-1">
-    <PostLinkSources {url}>
-      {#snippet target()}
-        <Button
-          color="ghost"
-          size="xs"
-          rounding="pill"
-          class="p-0.5 px-1 w-max mt-auto text-slate-600 dark:text-zinc-400 block
-          text-xs"
-        >
-          <div class="mr-0.5" style="width: 8px;">
-            <Icon src={LinkIcon} size="16" micro />
-          </div>
-          <div class="mr-1" style="width: 8px;">
-            <Icon src={ChevronDown} size="16" micro />
-          </div>
-        </Button>
-      {/snippet}
-    </PostLinkSources>
-    <Button
-      href={url}
-      target="_blank"
-      class="text-slate-900 dark:text-zinc-300 items-center
+  <Button
+    href={url}
+    target="_blank"
+    class="text-slate-900 dark:text-zinc-300 items-center
     text-xs overflow-hidden max-w-full block flex-shrink"
-      size="xs"
-      color="ghost"
-      rounding="pill"
-    >
-      {#if richURL}
-        <div class="flex max-w-full overflow-hidden font-medium">
-          {richURL.hostname}
-          {#if richURL.pathname != '/'}
-            <span
-              class="text-slate-500 dark:text-zinc-500 whitespace-nowrap font-normal"
-            >
-              {richURL.pathname}
-            </span>
-          {/if}
-        </div>
-      {:else}
-        {url}
-      {/if}
-    </Button>
-  </div>
+    size="xs"
+    color="ghost"
+    rounding="pill"
+  >
+    {#if richURL}
+      <div class="flex max-w-full overflow-hidden font-medium">
+        {richURL.hostname}
+        {#if richURL.pathname != '/'}
+          <span
+            class="text-slate-500 dark:text-zinc-500 whitespace-nowrap font-normal"
+          >
+            {richURL.pathname}
+          </span>
+        {/if}
+      </div>
+    {:else}
+      {url}
+    {/if}
+  </Button>
 {/if}
