@@ -70,6 +70,7 @@
     customLabel,
     children,
     customOption,
+    ...rest
   }: Props = $props()
 </script>
 
@@ -84,6 +85,7 @@
     <Menu bind:open>
       {#snippet target()}
         <select
+          {...rest}
           {id}
           bind:this={element}
           class="{buttonSize[size]} {buttonShadow[

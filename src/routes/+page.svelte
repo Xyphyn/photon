@@ -4,7 +4,7 @@
   import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
   import ViewSelect from '$lib/components/lemmy/dropdowns/ViewSelect.svelte'
   import { searchParam } from '$lib/util.svelte.js'
-  import { ChartBar, Icon } from 'svelte-hero-icons'
+  import { ArrowRight, ChartBar, Icon } from 'svelte-hero-icons'
   import { site } from '$lib/lemmy.js'
   import Location from '$lib/components/lemmy/dropdowns/Location.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
@@ -15,6 +15,7 @@
   import PostFeed from '$lib/components/lemmy/post/feed/PostFeed.svelte'
   import type { ListingType } from 'lemmy-js-client'
   import { get } from 'svelte/store'
+  import Button from 'mono-svelte/button/Button.svelte'
 
   let { data = $bindable() } = $props()
 
@@ -39,13 +40,23 @@
       {$t('routes.frontpage.title')}
 
       {#snippet extended()}
-        <div class="flex items-center gap-2">
+        <form class="flex items-center gap-2" method="get" action="/">
           {#if type}
-            <Location navigate bind:selected={type} />
+            <Location name="type" navigate bind:selected={type} />
           {/if}
-          <Sort navigate bind:selected={sort} />
+          <Sort name="sort" navigate bind:selected={sort} />
           <ViewSelect />
-        </div>
+
+          <noscript>
+            <Button
+              class="self-end h-[34px] aspect-square"
+              size="custom"
+              submit
+            >
+              <Icon src={ArrowRight} size="16" micro />
+            </Button>
+          </noscript>
+        </form>
       {/snippet}
     </Header>
   </header>
