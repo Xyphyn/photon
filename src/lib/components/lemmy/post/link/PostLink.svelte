@@ -115,13 +115,15 @@
     href={url}
     target="_blank"
     class="text-slate-900 dark:text-zinc-300 items-center
-    text-xs overflow-hidden max-w-full block flex-shrink"
+    text-xs overflow-hidden max-w-full block flex-shrink self-start w-max"
     size="xs"
     color="ghost"
     rounding="pill"
   >
     {#if richURL}
-      <div class="flex max-w-full overflow-hidden font-medium">
+      <div
+        class="flex max-w-full overflow-hidden font-medium self-start justify-self-start w-max"
+      >
         {richURL.hostname}
         {#if richURL.pathname != '/'}
           <span

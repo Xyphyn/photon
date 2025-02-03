@@ -80,19 +80,19 @@
   >
     {#if post.thumbnail_url || isImage(post.url)}
       <div class="relative overflow-hidden rounded-xl">
-        <picture class="relative">
+        <picture>
           <img
             src={optimizeImageURL(post.thumbnail_url || post.url || '', 256)}
             loading="lazy"
-            class="object-cover overflow-hidden bg-slate-100 dark:bg-zinc-800 rounded-xl
+            class="object-cover relative overflow-hidden bg-slate-100 dark:bg-zinc-800 rounded-xl
         transition-colors {size}"
             alt={post.name}
             class:blur-xl={blur}
           />
           {#if type != 'image'}
             <div
-              class="absolute w-8 h-8 bottom-0 left-0 m-1 rounded-xl text-slate-800 dark:text-zinc-200
-              backdrop-blur-sm bg-slate-25/75 dark:bg-zinc-900/75 border border-slate-200/75 dark:border-zinc-700/75
+              class="absolute w-8 h-8 m-1 bottom-0 left-0 rounded-xl text-slate-800 dark:text-zinc-200
+              bg-slate-25 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700
               grid place-items-center"
             >
               <Icon
