@@ -55,7 +55,6 @@
   } from 'mono-svelte'
   import { fediseer, type Data } from '$lib/fediseer/fediseer'
   import { t } from '$lib/translations'
-  import { text } from '$lib/components/translate/translation'
   import { hidePost, postLink } from './helpers'
   import { feature } from '$lib/version'
   import Switch from '$lib/components/input/Switch.svelte'
@@ -119,12 +118,6 @@
       </PostForm>
     {/await}
   </Modal>
-{/if}
-
-{#if translating}
-  {#await import('$lib/components/translate/Translation.svelte') then { default: Translation }}
-    <Translation bind:open={translating} />
-  {/await}
 {/if}
 
 <footer
@@ -378,20 +371,6 @@
         </div>
       {/if}
     </MenuButton>
-    {#if post.post.body && settings.translator}
-      <MenuButton
-        onclick={() => {
-          // @ts-ignore
-          text.set(post.post.body)
-          translating = !translating
-        }}
-      >
-        {#snippet prefix()}
-          <Icon src={Language} size="16" micro />
-        {/snippet}
-        {$t('post.actions.more.translate')}
-      </MenuButton>
-    {/if}
     {#if $profile?.jwt}
       <MenuButton
         onclick={() => {

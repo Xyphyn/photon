@@ -99,7 +99,6 @@ interface Settings {
   infiniteScroll: boolean
   language: string | null
   useRtl: boolean
-  translator: string | undefined
   parseTags: boolean
   tagRules: {
     [key: string]: 'hide' | 'blur'
@@ -181,7 +180,6 @@ export const defaultSettings: Settings = {
   infiniteScroll: true,
   language: env.PUBLIC_LANGUAGE ?? null,
   useRtl: false,
-  translator: env.PUBLIC_TRANSLATOR ?? undefined,
   parseTags: true,
   tagRules: {
     cw: 'blur',

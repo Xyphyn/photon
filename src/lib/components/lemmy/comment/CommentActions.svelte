@@ -26,8 +26,6 @@
   import { deleteItem, save } from '$lib/lemmy/contentview.js'
   import { Button, Menu, MenuButton, MenuDivider } from 'mono-svelte'
   import { t } from '$lib/translations'
-  import Translation from '$lib/components/translate/Translation.svelte'
-  import { text } from '$lib/components/translate/translation'
   import { settings } from '$lib/settings.svelte'
 
   interface Props {
@@ -101,20 +99,6 @@
       <Icon src={Square2Stack} mini size="16" />
       <div>{$t('comment.actions.link')}</div>
     </MenuButton>
-    {#if settings.translator}
-      <MenuButton
-        onclick={() => {
-          // @ts-ignore
-          text.set(comment.comment.content)
-          translating = !translating
-        }}
-      >
-        {#snippet prefix()}
-          <Icon src={Language} size="16" mini />
-        {/snippet}
-        {$t('post.actions.more.translate')}
-      </MenuButton>
-    {/if}
     {#if $profile?.jwt}
       {#if comment.creator.id == $profile.user?.local_user_view.person.id}
         <MenuButton onclick={() => dispatcher('edit', comment)}>

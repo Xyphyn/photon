@@ -404,21 +404,6 @@
       title={$t('settings.app.duplicateTitles.title')}
       description={$t('settings.app.duplicateTitles.description')}
     />
-    <Setting>
-      {#snippet title()}
-        <span>{$t('settings.app.translation.title')}</span>
-      {/snippet}
-      {#snippet description()}
-        <span>
-          {$t('settings.app.translation.description')}
-        </span>
-      {/snippet}
-      <!-- <TextInput
-        bind:value={settings.translator}
-        label={$t('settings.app.translation.instance')}
-        pattern={DOMAIN_REGEX_FORMS}
-      /> -->
-    </Setting>
     <div>
       <ToggleSetting
         title={$t('settings.app.titleTags.title')}
