@@ -20,6 +20,9 @@
   let { data = $bindable() } = $props()
 
   let reports = $state(data.items)
+  $effect(() => {
+    reports = data.items
+  })
 </script>
 
 <div class="mb-4 flex flex-col gap-4">
@@ -49,7 +52,9 @@
   </Header>
 </div>
 {#if reports && reports.length > 0}
-  <div class="flex flex-col gap-4">
+  <div
+    class="flex flex-col *:py-4 divide-y divide-slate-200 dark:divide-zinc-800"
+  >
     {#each reports as item}
       <div
         in:fly={{ y: -6, opacity: 0, duration: 500 }}

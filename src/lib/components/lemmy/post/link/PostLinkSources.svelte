@@ -53,11 +53,7 @@
   let { url, type = 'embed', target, ...rest }: Props = $props()
 </script>
 
-<Menu {...rest}>
-  {#snippet target()}
-    {@render target?.()}
-  {/snippet}
-
+<Menu {target} {...rest}>
   <MenuDivider>{$t('post.actions.link.title')}</MenuDivider>
   {#each sources as source}
     {#if source.type == type}

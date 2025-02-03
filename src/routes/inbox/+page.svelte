@@ -28,6 +28,9 @@
   let { data } = $props()
 
   let inbox = $state(data.data)
+  $effect(() => {
+    inbox = data.data
+  })
 
   let markingAsRead = $state(false)
 
@@ -196,7 +199,7 @@ items-center px-2 w-max"
     >
       <Tabs routes={[]} class="mx-auto">
         <Pageination
-          hasMore={!(!data.data || (inbox?.length ?? 0) < data.limit)}
+          hasMore={!(!inbox || (inbox?.length ?? 0) < (data?.limit ?? 0))}
           page={data.page}
           on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
         />
