@@ -1,7 +1,5 @@
 <script lang="ts">
-  import { profile } from '$lib/auth.svelte.js'
   import ItemList from '$lib/components/lemmy/generic/ItemList.svelte'
-  import { isAdmin } from '$lib/components/lemmy/moderation/moderation.js'
   import ShieldIcon from '$lib/components/lemmy/moderation/ShieldIcon.svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import EntityHeader from '$lib/components/ui/EntityHeader.svelte'
@@ -12,15 +10,6 @@
   import { communityLink } from '$lib/lemmy/generic.js'
   import { settings } from '$lib/settings.svelte.js'
   import { t } from '$lib/translations'
-  import { Spinner, Button, Menu, MenuButton } from 'mono-svelte'
-  import {
-    AtSymbol,
-    EllipsisHorizontal,
-    Envelope,
-    Icon,
-    ShieldExclamation,
-  } from 'svelte-hero-icons'
-
   let { data } = $props()
 
   let my_user = $derived(data.my_user!.local_user_view)

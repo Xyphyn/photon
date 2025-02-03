@@ -30,7 +30,6 @@
   import { searchParam } from '$lib/util.svelte.js'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { Button, Modal, Select } from 'mono-svelte'
-  import PrivateMessageModal from '$lib/components/lemmy/modal/PrivateMessageModal.svelte'
   import Expandable from '$lib/components/ui/Expandable.svelte'
   import { communityLink } from '$lib/lemmy/generic.js'
   import ItemList from '$lib/components/lemmy/generic/ItemList.svelte'
@@ -117,16 +116,9 @@
   <title>{data.person_view.person.name}</title>
 </svelte:head>
 
-{#if $profile?.user}
-  <PrivateMessageModal
-    bind:user={data.person_view.person}
-    bind:open={messaging}
-  />
-{/if}
-
 {#if purgingUser}
   <Modal bind:open={purgingUser}>
-    {#snippet title()}
+    {#snippet customTitle()}
       Purging User
     {/snippet}
     <p>
@@ -305,7 +297,7 @@
         bind:value={data.type}
         on:change={() => searchParam($page.url, 'type', data.type, 'page')}
       >
-        {#snippet label()}
+        {#snippet customLabel()}
           <span class="flex items-center gap-1">
             <Icon src={AdjustmentsHorizontal} size="15" mini />
             {$t('filter.type')}
@@ -319,7 +311,7 @@
         bind:value={data.sort}
         on:change={() => searchParam($page.url, 'sort', data.sort, 'page')}
       >
-        {#snippet label()}
+        {#snippet customLabel()}
           <span class="flex items-center gap-1">
             <Icon src={ChartBar} size="14" mini />
             {$t('filter.sort.label')}

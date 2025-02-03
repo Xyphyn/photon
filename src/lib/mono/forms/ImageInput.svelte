@@ -17,7 +17,7 @@
 
   let {
     accept = 'image/*',
-    files = $bindable(null),
+    files = $bindable(),
     label = undefined,
     id = generateID(),
     url = undefined,
