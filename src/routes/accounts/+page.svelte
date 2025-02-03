@@ -34,7 +34,6 @@
   import { expoOut } from 'svelte/easing'
   import { t } from '$lib/translations'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import FilterTabs from '$lib/components/ui/tabs/FilterTabs.svelte'
   import { fly } from 'svelte/transition'
 
   let debugging = $state(false)
@@ -159,147 +158,111 @@
         </div>
       {/snippet}
     </Header>
-    <FilterTabs items={$profileData.profiles} id={(i) => i.instance}>
-      {#snippet children({ items })}
-        <EditableList
-          on:action={(acc) => {
-            removing.account = acc.detail
-            removing.shown = !removing.shown
-          }}
+    <div>
+      {#each $profileData.profiles as profile, index (profile.id)}
+        <div
+          class="flex flex-row gap-2 items-center py-3"
+          transition:fly={{ duration: 500, y: -12, easing: expoOut }}
+          animate:flip={{ duration: 500, easing: expoOut }}
         >
-          {#snippet children({ action })}
-            {#each items as profile, index (profile.id)}
-              <div
-                class="flex flex-row gap-2 items-center py-3"
-                transition:fly={{ duration: 500, y: -12, easing: expoOut }}
-                animate:flip={{ duration: 500, easing: expoOut }}
+          <Button
+            title={profile.id == $currentProfile?.id ? 'Switch' : 'Current'}
+            onclick={async () => {
+              if (profile.id != $currentProfile?.id) {
+                switching = profile.id
+                await setUserID(profile.id)
+                switching = -69
+              }
+            }}
+            size="square-md"
+            color={profile.id == $currentProfile?.id ? 'primary' : 'ghost'}
+            loading={switching == profile.id}
+            disabled={switching == profile.id}
+            rounding="pill"
+          >
+            {#snippet prefix()}
+              {#if profile.id == $currentProfile?.id}
+                <Icon src={Check} mini size="16" />
+              {:else}
+                <Icon src={ArrowsRightLeft} size="16" mini />
+              {/if}
+            {/snippet}
+          </Button>
+          <div class="flex items-center gap-2">
+            <ProfileAvatar
+              {profile}
+              {index}
+              selected={$currentProfile?.id == profile.id}
+              size={24}
+            />
+            <div class="flex flex-col">
+              <span class="font-medium">{profile.username}</span>
+              <span class="text-sm text-slate-600 dark:text-zinc-400">
+                {profile.instance}
+              </span>
+            </div>
+          </div>
+          <div class="ml-auto"></div>
+          <Menu placement="bottom-end">
+            {#snippet target()}
+              <Button size="square-md">
+                {#snippet prefix()}
+                  <Icon src={EllipsisHorizontal} mini size="16" />
+                {/snippet}
+              </Button>
+            {/snippet}
+            <div class="px-4 py-2 flex items-center gap-2">
+              <Button
+                size="square-md"
+                color="secondary"
+                title={$t('account.moveUp')}
+                onclick={() => moveProfile(profile.id, true)}
               >
-                <Button
-                  title={profile.id == $currentProfile?.id
-                    ? 'Switch'
-                    : 'Current'}
-                  onclick={async () => {
-                    if (profile.id != $currentProfile?.id) {
-                      switching = profile.id
-                      await setUserID(profile.id)
-                      switching = -69
-                    }
-                  }}
-                  size="square-md"
-                  color={profile.id == $currentProfile?.id
-                    ? 'primary'
-                    : 'ghost'}
-                  loading={switching == profile.id}
-                  disabled={switching == profile.id}
-                  rounding="pill"
-                >
-                  {#snippet prefix()}
-                    {#if profile.id == $currentProfile?.id}
-                      <Icon src={Check} mini size="16" />
-                    {:else}
-                      <Icon src={ArrowsRightLeft} size="16" mini />
-                    {/if}
-                  {/snippet}
-                </Button>
-                <div class="flex items-center gap-2">
-                  <div class="relative group flex-col items-center">
-                    <ProfileAvatar
-                      {profile}
-                      {index}
-                      selected={$currentProfile?.id == profile.id}
-                      size={24}
-                    />
-                    <div
-                      class="absolute top-0 left-0 w-full h-full opacity-0
-                    grid group-hover:opacity-100 z-20 place-items-center
-                    bg-slate-200 dark:bg-zinc-900 border border-slate-300 dark:border-zinc-800 rounded-full
-                    transition-all"
-                    >
-                      <Icon src={PaintBrush} mini size="14" />
-                    </div>
-                    <input
-                      type="color"
-                      class="opacity-0 absolute top-0 left-0 h-full w-full rounded-full cursor-pointer z-30"
-                      bind:value={profile.color}
-                    />
-                  </div>
-                  <div class="flex flex-col">
-                    <span class="font-medium">{profile.username}</span>
-                    <span class="text-sm text-slate-600 dark:text-zinc-400">
-                      {profile.instance}
-                    </span>
-                  </div>
-                </div>
-                <div class="ml-auto"></div>
-                <Menu placement="bottom-end">
-                  {#snippet target()}
-                    <Button size="square-md">
-                      {#snippet prefix()}
-                        <Icon src={EllipsisHorizontal} mini size="16" />
-                      {/snippet}
-                    </Button>
-                  {/snippet}
-                  <div class="px-4 py-2 flex items-center gap-2">
-                    <Button
-                      size="square-md"
-                      color="secondary"
-                      title={$t('account.moveUp')}
-                      onclick={() => moveProfile(profile.id, true)}
-                    >
-                      {#snippet prefix()}
-                        <Icon src={ChevronUp} size="16" mini />
-                      {/snippet}
-                    </Button>
-                    <Button
-                      size="square-md"
-                      color="secondary"
-                      title={$t('account.moveDown')}
-                      onclick={() => moveProfile(profile.id, false)}
-                    >
-                      {#snippet prefix()}
-                        <Icon src={ChevronDown} size="16" mini />
-                      {/snippet}
-                    </Button>
-                  </div>
-                  <MenuButton
-                    disabled={!profile.color}
-                    onclick={() => (profile.color = undefined)}
-                  >
-                    {#snippet prefix()}
-                      <Icon src={ArrowUturnLeft} size="16" mini />
-                    {/snippet}
-                    {$t('account.resetColor')}
-                  </MenuButton>
-                  {#if settings.debugInfo}
-                    <MenuButton
-                      onclick={() => {
-                        debugProfile = profile
-                        debugging = !debugging
-                      }}
-                    >
-                      {#snippet prefix()}
-                        <Icon src={BugAnt} size="16" mini />
-                      {/snippet}
-                      {$t('common.debug')}
-                    </MenuButton>
-                  {/if}
-                  {#if !LINKED_INSTANCE_URL || profile.user}
-                    <MenuButton
-                      onclick={() => action(profile)}
-                      color="danger-subtle"
-                    >
-                      {#snippet prefix()}
-                        <Icon src={ArrowRightOnRectangle} size="16" mini />
-                      {/snippet}
-                      {$t('account.logout')}
-                    </MenuButton>
-                  {/if}
-                </Menu>
-              </div>
-            {/each}
-          {/snippet}
-        </EditableList>
-      {/snippet}
-    </FilterTabs>
+                {#snippet prefix()}
+                  <Icon src={ChevronUp} size="16" mini />
+                {/snippet}
+              </Button>
+              <Button
+                size="square-md"
+                color="secondary"
+                title={$t('account.moveDown')}
+                onclick={() => moveProfile(profile.id, false)}
+              >
+                {#snippet prefix()}
+                  <Icon src={ChevronDown} size="16" mini />
+                {/snippet}
+              </Button>
+            </div>
+            {#if settings.debugInfo}
+              <MenuButton
+                onclick={() => {
+                  debugProfile = profile
+                  debugging = !debugging
+                }}
+              >
+                {#snippet prefix()}
+                  <Icon src={BugAnt} size="16" mini />
+                {/snippet}
+                {$t('common.debug')}
+              </MenuButton>
+            {/if}
+            {#if !LINKED_INSTANCE_URL || profile.user}
+              <MenuButton
+                onclick={() => {
+                  removing.account = profile
+                  removing.shown = !removing.shown
+                }}
+                color="danger-subtle"
+              >
+                {#snippet prefix()}
+                  <Icon src={ArrowRightOnRectangle} size="16" mini />
+                {/snippet}
+                {$t('account.logout')}
+              </MenuButton>
+            {/if}
+          </Menu>
+        </div>
+      {/each}
+    </div>
   </div>
 {/if}

@@ -21,7 +21,7 @@
 
 {#if profile}
   <div style="width: {size}px; height: {size}px;">
-    {#if profile.avatar && !profile.color}
+    {#if profile.avatar}
       <img
         src="{profile.avatar}?thumbnail=32&format=webp"
         alt={profile.username}
