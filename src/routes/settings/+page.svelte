@@ -473,45 +473,6 @@
         bind:selected={settings.dock.noGap}
       />
     </Setting>
-    <Setting
-      supportedPlatforms={{ desktop: true, tablet: true, mobile: false }}
-    >
-      {#snippet title()}
-        <span>{$t('settings.navigation.pins.title')}</span>
-      {/snippet}
-      {#snippet description()}
-        <span>
-          {$t('settings.navigation.pins.description')}
-        </span>
-      {/snippet}
-      <div class="flex items-center gap-1 flex-wrap">
-        {#each getDefaultLinks() as pin}
-          <Popover openOnHover placement="bottom">
-            {#snippet target()}
-              <Button
-                size="square-md"
-                disabled={settings.dock.pins
-                  ?.map((p) => p.url)
-                  ?.includes(pin.url)}
-                onclick={() => {
-                  settings.dock.pins = [...(settings.dock.pins ?? []), pin]
-                }}
-              >
-                <Icon src={iconOfLink(pin.url)} mini size="16" />
-              </Button>
-            {/snippet}
-            {#snippet popover()}
-              <Material padding="none" class="px-4 py-2 flex flex-col">
-                <span class="font-medum text-base">{pin.label}</span>
-                <code class="bg-slate-50 dark:!bg-zinc-950 !rounded-md">
-                  {pin.url}
-                </code>
-              </Material>
-            {/snippet}
-          </Popover>
-        {/each}
-      </div>
-    </Setting>
   </Section>
 
   <Section id="embeds" title={$t('settings.embeds.title')}>

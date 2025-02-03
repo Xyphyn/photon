@@ -36,28 +36,6 @@
   gap-1 h-fit max-h-screen {clazz}"
   {style}
 >
-  {#if settings.dock.pins?.length ?? 0 > 0}
-    <div class="flex items-center flex-wrap gap-2 pl-1.5">
-      {#each settings.dock.pins as pin}
-        <SidebarButton
-          icon={iconOfLink(pin.url)}
-          onclick={() => goto(pin.url)}
-          alignment="center"
-          selected={`${$page.url.pathname}${$page.url.search}` == pin.url}
-          oncontextmenu={(e) => {
-            e.preventDefault()
-            settings.dock.pins = settings.dock.pins.toSpliced(
-              settings.dock.pins.findLastIndex((p) => pin.url == p.url),
-              1,
-            )
-            return false
-          }}
-          size="square-md"
-        ></SidebarButton>
-      {/each}
-    </div>
-    <hr class="border-slate-200 dark:border-zinc-900 my-1" />
-  {/if}
   {#if $profile?.jwt}
     <SidebarButton icon={UserCircle} href="/profile">
       {#snippet label()}

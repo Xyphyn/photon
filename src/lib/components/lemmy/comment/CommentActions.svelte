@@ -46,10 +46,6 @@
   let translating = $state(false)
 </script>
 
-{#if translating}
-  <Translation bind:open={translating} />
-{/if}
-
 <div
   class="flex flex-row items-center gap-0.5 h-7 w-full"
   class:flex-row-reverse={settings.posts.reverseActions}

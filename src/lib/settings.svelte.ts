@@ -86,7 +86,6 @@ interface Settings {
   dock: {
     noGap: boolean | null
     top: boolean | null
-    pins: Link[]
     paletteHotkey: string
   }
   posts: {
@@ -167,7 +166,6 @@ export const defaultSettings: Settings = {
   dock: {
     noGap: toBool(env.PUBLIC_DOCK_PANEL) ?? null,
     top: toBool(env.PUBLIC_DOCK_TOP) ?? null,
-    pins: [],
     paletteHotkey: '/',
   },
   posts: {
