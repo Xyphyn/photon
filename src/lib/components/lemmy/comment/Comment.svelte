@@ -52,7 +52,6 @@
     op = false,
     actions = true,
     meta = true,
-    open = $bindable(true),
     replying = $bindable(false),
     contentClass = '',
     class: clazz = '',
@@ -137,7 +136,7 @@
 >
   {#if meta}
     <button
-      onclick={() => (open = !open)}
+      onclick={() => (node.expanded = !node.expanded)}
       class="flex flex-row cursor-pointer gap-2 items-center group text-[13px] flex-wrap w-full
     z-0 group relative"
     >
@@ -155,10 +154,10 @@
             ></FormattedNumber>
           {/if}
           <Icon
-            src={open ? Minus : Plus}
+            src={node.expanded ? Minus : Plus}
             size="16"
             micro
-            class="transition-transform duration-[400ms] ease-out {open
+            class="transition-transform duration-[400ms] ease-out {node.expanded
               ? ''
               : 'rotate-90'} text-primary-900 dark:text-primary-100"
           />
@@ -213,7 +212,7 @@
       </span>
     </button>
   {/if}
-  {#if open}
+  {#if node.expanded}
     <div
       class="relative {contentClass}"
       transition:slide={{ duration: 400, easing: expoOut }}
