@@ -4,9 +4,9 @@
   import { Button } from 'mono-svelte'
   import { ChevronDown, Icon } from 'svelte-hero-icons'
 
-  let element: Element | undefined = $state()
+  let element = $state<Element>()
 
-  function isOverflown(element: Element, body: string = '') {
+  function isOverflown(element: Element) {
     if (!element) return false
     return (
       element.scrollHeight > element.clientHeight ||
@@ -32,8 +32,12 @@
     class: clazz = '',
   }: Props = $props()
 
-  let overflows = $derived(element ? isOverflown(element, body) : false)
-  let expanded = $state(false)
+  let overflows = $derived(element ? isOverflown(element) : false)
+
+  let expanded = $state(true)
+  $effect(() => {
+    expanded = !overflows
+  })
 </script>
 
 <svelte:element

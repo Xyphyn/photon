@@ -61,7 +61,7 @@
     </Header>
   </header>
 
-  <FeedComponent posts={data.posts.posts} feedData={data} feedId="main" />
+  <FeedComponent bind:posts={data.posts.posts} feedData={data} feedId="main" />
   <svelte:element
     this={settings.infiniteScroll && !settings.posts.noVirtualize
       ? 'noscript'
