@@ -38,7 +38,6 @@
   } from '$lib/lemmy/postfeed'
   import { t } from '$lib/translations'
   import InfiniteScroll from 'svelte-infinite-scroll'
-  import type { Readable } from 'svelte/motion'
   import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
 
   let virtualItemEls: HTMLElement[] = $state([])
@@ -252,7 +251,7 @@
                   : settings.view}
                 {post}
                 class="transition-all duration-250"
-                on:hide={() => {
+                onhide={() => {
                   posts = posts.toSpliced(row.index, 1)
                 }}
               ></Post>

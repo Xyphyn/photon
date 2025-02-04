@@ -296,7 +296,7 @@
     <div class="flex flex-row gap-4 flex-wrap">
       <Select
         bind:value={data.type}
-        on:change={() => searchParam($page.url, 'type', data.type, 'page')}
+        onchange={() => searchParam($page.url, 'type', data.type, 'page')}
       >
         {#snippet customLabel()}
           <span class="flex items-center gap-1">
@@ -310,7 +310,7 @@
       </Select>
       <Select
         bind:value={data.sort}
-        on:change={() => searchParam($page.url, 'sort', data.sort, 'page')}
+        onchange={() => searchParam($page.url, 'sort', data.sort, 'page')}
       >
         {#snippet customLabel()}
           <span class="flex items-center gap-1">

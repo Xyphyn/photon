@@ -48,7 +48,7 @@
           url: undefined,
         }}
     passedCommunity={community}
-    on:submit={(e) => goto(`/post/${e.detail.post.id}`)}
+    onsubmit={(e) => goto(`/post/${e.post.id}`)}
   >
     {#snippet formtitle()}
       <Header class="text-3xl font-bold" pageHeader>

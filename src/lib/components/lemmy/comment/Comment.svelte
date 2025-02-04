@@ -237,7 +237,7 @@
           <CommentActions
             comment={node.comment_view}
             bind:replying
-            on:edit={() => (editing = true)}
+            onedit={() => (editing = true)}
             disabled={node.comment_view.banned_from_community ||
               node.comment_view.post.locked}
           />

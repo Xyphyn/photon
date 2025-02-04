@@ -19,9 +19,6 @@
   import Expandable from '$lib/components/ui/Expandable.svelte'
   import EndPlaceholder from '../EndPlaceholder.svelte'
   import { t } from '$lib/translations'
-  import { iconOfLink } from '../navbar/link'
-  import { goto } from '$app/navigation'
-  import { page } from '$app/stores'
 
   interface Props {
     style?: string

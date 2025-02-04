@@ -32,18 +32,15 @@
     comment: CommentView
     replying?: boolean
     disabled?: boolean
+    onedit?: (comment: CommentView) => void
   }
 
   let {
     comment = $bindable(),
     replying = $bindable(false),
     disabled = false,
+    onedit,
   }: Props = $props()
-
-  const dispatcher = createEventDispatcher<{ edit: CommentView }>()
-
-  let reply = ''
-  let translating = $state(false)
 </script>
 
 <div
@@ -97,7 +94,7 @@
     </MenuButton>
     {#if $profile?.jwt}
       {#if comment.creator.id == $profile.user?.local_user_view.person.id}
-        <MenuButton onclick={() => dispatcher('edit', comment)}>
+        <MenuButton onclick={() => onedit?.(comment)}>
           <Icon src={PencilSquare} mini size="16" />
           <span>{$t('post.actions.more.edit')}</span>
         </MenuButton>

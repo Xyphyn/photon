@@ -66,12 +66,8 @@
     formatRelativeDate,
   } from '$lib/components/util/RelativeDate.svelte'
 
-  const dispatcher = createEventDispatcher<{ edit: PostView; hide: boolean }>()
-
   let editing = $state(false)
   let saving = $state(false)
-
-  let translating = $state(false)
 
   let localShare = $state(false)
 
@@ -80,6 +76,8 @@
     view?: View
     debug?: boolean
     style?: string
+    onedit?: (post: PostView) => void
+    onhide?: (hide: boolean) => void
   }
 
   let {
@@ -87,6 +85,8 @@
     view = 'cozy',
     debug = $bindable(false),
     style = '',
+    onedit,
+    onhide,
   }: Props = $props()
   let buttonHeight = $derived(view == 'compact' ? 'h-7' : 'h-8')
   let buttonSquare = $derived(view == 'compact' ? 'w-7 h-7' : 'w-8 h-8')
@@ -105,10 +105,10 @@
       <PostForm
         edit
         editingPost={post.post}
-        on:submit={(e) => {
+        onsubmit={(e) => {
           editing = false
-          post = e.detail
-          dispatcher('edit', e.detail)
+          post = e
+          onedit?.(e)
         }}
       >
         {#snippet formtitle()}
@@ -431,9 +431,7 @@
                 $profile?.jwt,
               )
               post.hidden = hidden
-              if (hidden) {
-                dispatcher('hide', hidden)
-              }
+              if (hidden) onhide?.(hidden)
             }}
             color="danger-subtle"
           >

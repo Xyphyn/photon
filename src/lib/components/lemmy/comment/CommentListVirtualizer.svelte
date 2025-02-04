@@ -16,7 +16,7 @@
 
   let { nodes, post, scrollTo }: Props = $props()
 
-  let virtualListEl: HTMLElement | undefined = $state(undefined)
+  let virtualListEl = $state<HTMLElement>()
 
   let virtualizer = $derived(
     createWindowVirtualizer({

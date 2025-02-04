@@ -56,6 +56,7 @@
       language_id?: number | string
     }
     formtitle?: import('svelte').Snippet
+    onsubmit?: (post: PostView) => void
   }
 
   let {
@@ -75,10 +76,12 @@
       language_id: undefined,
     }),
     formtitle,
+    onsubmit,
   }: Props = $props()
+
   // weird select menu language handling
   // @ts-ignore
-  run(() => {
+  $effect(() => {
     if (data.language_id === '') data.language_id = undefined
   })
 
@@ -86,8 +89,6 @@
   let communitySearch = $state(passedCommunity?.name ?? '')
 
   let communities: Community[] = $state([])
-
-  const dispatcher = createEventDispatcher<{ submit: PostView }>()
 
   onMount(async () => {
     if (editingPost) {
@@ -166,7 +167,7 @@
 
         console.log(`Edited post ${post?.post_view.post.id}`)
 
-        dispatcher('submit', post.post_view)
+        onsubmit?.(post.post_view)
       } else {
         const post = await client().createPost({
           community_id: data.community!.id,
@@ -184,7 +185,7 @@
         console.log(`Uploaded post ${post?.post_view.post.id}`)
 
         saveDraft = false
-        dispatcher('submit', post.post_view)
+        onsubmit?.(post.post_view)
       }
     } catch (err) {
       pushError({ message: errorMessage(err as any), scope: 'post-form' })

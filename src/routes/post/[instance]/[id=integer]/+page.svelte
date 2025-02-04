@@ -1,7 +1,10 @@
 <script lang="ts">
   import { run } from 'svelte/legacy'
 
-  import { buildCommentsTree } from '$lib/components/lemmy/comment/comments.svelte.js'
+  import {
+    buildCommentsTree,
+    type CommentNodeI,
+  } from '$lib/components/lemmy/comment/comments.svelte.js'
   import { isImage } from '$lib/ui/image.js'
   import { client, getClient } from '$lib/lemmy.js'
   import CommentForm from '$lib/components/lemmy/comment/CommentForm.svelte'
@@ -57,6 +60,11 @@
   import Option from 'mono-svelte/forms/select/Option.svelte'
 
   let { data = $bindable() } = $props()
+
+  let comments = $state(data.comments)
+  $effect(() => {
+    comments = data.comments
+  })
 
   let type = $derived(mediaType(data.post.post_view.post.url, 'cozy'))
 
@@ -164,7 +172,7 @@
 
   async function reloadComments() {
     loading = true
-    data.comments = await getClient().getComments({
+    comments = getClient().getComments({
       page: 1,
       limit: 25,
       type_: 'All',
@@ -182,6 +190,11 @@
   let remoteView = $derived(
     $page.params.instance?.toLowerCase() != $instance.toLowerCase(),
   )
+
+  function createCommentsState(tree: CommentNodeI[]) {
+    const state = $state(tree)
+    return state
+  }
 </script>
 
 <svelte:head>
@@ -308,7 +321,7 @@
   <div class="w-full relative">
     <PostActions
       bind:post={data.post.post_view}
-      on:edit={() =>
+      onedit={() =>
         toast({
           content: 'The post was edited successfully.',
           type: 'success',
@@ -375,7 +388,7 @@
       {$t('routes.post.commentCount')}
     </div>
   </header>
-  {#await data.comments}
+  {#await comments}
     <div class="flex flex-col gap-4">
       {#each new Array(10) as empty, index}
         <div
@@ -383,7 +396,7 @@
             duration: 500,
             easing: expoOut,
             y: 8,
-            delay: index * 25,
+            delay: index * 50,
           }}
           class="animate-pulse flex flex-col gap-2 w-full
         *:bg-slate-100 *:dark:bg-zinc-800 *:rounded-md"
@@ -408,7 +421,7 @@
               <Select
                 size="md"
                 bind:value={commentSort}
-                on:change={reloadComments}
+                onchange={reloadComments}
               >
                 <Option icon={Fire} value="Hot">{$t('filter.sort.hot')}</Option>
                 <Option icon={Trophy} value="Top">
@@ -459,7 +472,7 @@
 
     {#if commenting || !$profile.jwt}
       <div class="gap-2 flex items-center">
-        <Select size="md" bind:value={commentSort} on:change={reloadComments}>
+        <Select size="md" bind:value={commentSort} onchange={reloadComments}>
           <Option icon={Fire} value="Hot">{$t('filter.sort.hot')}</Option>
           <Option icon={Trophy} value="Top">
             {$t('filter.sort.top.label')}
@@ -479,9 +492,8 @@
         </Button>
       </div>
     {/if}
-    <CommentListVirtualizer
-      post={data.post.post_view.post}
-      nodes={buildCommentsTree(
+    {#if comments}
+      {@const tree = buildCommentsTree(
         comments.comments,
         undefined,
         (c) =>
@@ -490,8 +502,13 @@
             (settings.hidePosts.removed && c.comment.removed)
           ),
       )}
-      scrollTo={data.thread.focus}
-    />
+
+      <CommentListVirtualizer
+        post={data.post.post_view.post}
+        nodes={createCommentsState(tree)}
+        scrollTo={data.thread.focus}
+      />
+    {/if}
     {#if comments.comments.length == 0}
       <Placeholder
         icon={ChatBubbleLeftRight}

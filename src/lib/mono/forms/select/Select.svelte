@@ -22,6 +22,7 @@
     Icon,
     type IconSource,
   } from 'svelte-hero-icons'
+  import type { HTMLSelectAttributes } from 'svelte/elements'
 
   let open = $state(false)
   let element: HTMLSelectElement | undefined = $state()
@@ -39,13 +40,7 @@
     options: [],
   })
 
-  const dispatcher = createEventDispatcher<{
-    change: any
-    contextmenu: any
-    input: any
-  }>()
-
-  interface Props {
+  interface Props extends Omit<HTMLSelectAttributes, 'size'> {
     value?: T | string | undefined
     placeholder?: string | undefined
     label?: string | undefined
@@ -56,6 +51,8 @@
     customLabel?: import('svelte').Snippet
     children?: import('svelte').Snippet
     customOption?: import('svelte').Snippet<[any]>
+    oncontextmenu?: () => void
+    onchange?: () => void
   }
 
   let {
@@ -69,6 +66,8 @@
     customLabel,
     children,
     customOption,
+    oncontextmenu,
+    onchange,
     ...rest
   }: Props = $props()
 </script>
@@ -117,10 +116,10 @@
             selected: option.value == value,
           })}{:else}
           <MenuButton
-            on:contextmenu={() => dispatcher('contextmenu')}
+            on:contextmenu={() => oncontextmenu?.()}
             onclick={() => {
               value = option.value
-              dispatcher('change')
+              onchange?.()
             }}
             size="custom"
             disabled={option.disabled}

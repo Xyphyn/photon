@@ -62,6 +62,7 @@
     style?: string
     class?: string
     badges?: import('svelte').Snippet
+    onhide?: (hide: boolean) => void
   }
 
   let {
@@ -72,6 +73,7 @@
     style = '',
     class: clazz = '',
     badges,
+    onhide,
   }: Props = $props()
 
   let tags = $derived(parseTags(post.post.name))
@@ -186,7 +188,7 @@
     />
   {/if}
   {#if actions}
-    <PostActions on:hide bind:post style="grid-area: actions;" {view} />
+    <PostActions {onhide} bind:post style="grid-area: actions;" {view} />
   {:else if view == 'compact'}
     <div class="flex flex-row items-center gap-2 text-sm">
       <Badge>

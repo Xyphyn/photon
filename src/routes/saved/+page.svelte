@@ -44,7 +44,7 @@
     <div class="flex items-center">
       <Select
         bind:value={type}
-        on:change={() => searchParam($page.url, 'type', type, 'page')}
+        onchange={() => searchParam($page.url, 'type', type, 'page')}
       >
         {#snippet customLabel()}
           <div class="flex items-center gap-0.5">

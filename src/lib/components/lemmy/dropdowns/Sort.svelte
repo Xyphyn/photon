@@ -49,7 +49,7 @@
     {...rest}
     class={selected?.startsWith('Top') ? 'rounded-r-none' : ''}
     bind:value={sort}
-    on:change={(e) => {
+    onchange={() => {
       setSelected()
       if (navigate) searchParam($page.url, 'sort', selected, 'page', 'cursor')
     }}
@@ -93,7 +93,7 @@
       <Select
         class="border-l-0 rounded-l-none"
         bind:value={selected}
-        on:change={(e) => {
+        onchange={() => {
           sort = 'TopAll'
           if (navigate)
             searchParam($page.url, 'sort', selected, 'page', 'cursor')

@@ -27,7 +27,6 @@ export function buildCommentsTree(
   baseDepth: number = 0,
   filter: (c: CommentView) => boolean = (c) => true,
 ): CommentNodeI[] {
-  const start = performance.now()
   const map = new Map<number, CommentNodeI>()
 
   let min_depth = Number.MAX_VALUE
@@ -69,7 +68,6 @@ export function buildCommentsTree(
     }
   }
 
-  console.log(`Built tree in ${performance.now() - start}ms`)
   return tree
 }
 

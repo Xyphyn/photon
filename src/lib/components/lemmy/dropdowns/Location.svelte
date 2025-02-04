@@ -34,7 +34,7 @@
 <Select
   {...rest}
   bind:value={selected}
-  on:change={() => {
+  onchange={() => {
     if (navigate) searchParam($page.url, 'type', selected, 'page', 'cursor')
   }}
 >
