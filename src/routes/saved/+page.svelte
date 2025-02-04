@@ -23,6 +23,7 @@
     ChatBubbleOvalLeft,
     AdjustmentsHorizontal,
   } from 'svelte-hero-icons'
+  import Option from 'mono-svelte/forms/select/Option.svelte'
 
   let { data } = $props()
 
@@ -51,18 +52,15 @@
             {$t('filter.filter')}
           </div>
         {/snippet}
-        <option value="all">
-          <Icon src={Bars3} micro size="15" />
+        <Option icon={Bars3} value="all">
           {$t('content.all')}
-        </option>
-        <option value="posts">
-          <Icon src={PencilSquare} micro size="15" />
+        </Option>
+        <Option icon={PencilSquare} value="posts">
           {$t('content.posts')}
-        </option>
-        <option value="comments">
-          <Icon src={ChatBubbleOvalLeft} micro size="15" />
+        </Option>
+        <Option icon={ChatBubbleOvalLeft} value="comments">
           {$t('content.comments')}
-        </option>
+        </Option>
       </Select>
     </div>
   {/snippet}

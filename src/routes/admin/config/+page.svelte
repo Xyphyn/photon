@@ -12,6 +12,7 @@
   import { DocumentPlus, Icon } from 'svelte-hero-icons'
   import { t } from '$lib/translations.js'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import Option from 'mono-svelte/forms/select/Option.svelte'
 
   interface Props {
     data: PageData
@@ -149,15 +150,15 @@
       bind:value={formData.registration_mode}
       class="w-max"
     >
-      <option value="Open">
+      <Option value="Open">
         {$t('routes.admin.config.registration.open')}
-      </option>
-      <option value="RequireApplication">
+      </Option>
+      <Option value="RequireApplication">
         {$t('routes.admin.config.registration.application')}
-      </option>
-      <option value="Closed">
+      </Option>
+      <Option value="Closed">
         {$t('routes.admin.config.registration.closed')}
-      </option>
+      </Option>
     </Select>
     {#if formData.registration_mode == 'RequireApplication'}
       <MarkdownEditor
@@ -192,10 +193,10 @@
       bind:value={formData.default_post_listing_type}
       class="w-max"
     >
-      <option value="All">{$t('routes.admin.config.listingType.all')}</option>
-      <option value="Local">
+      <Option value="All">{$t('routes.admin.config.listingType.all')}</Option>
+      <Option value="Local">
         {$t('routes.admin.config.listingType.local')}
-      </option>
+      </Option>
     </Select>
     <Switch bind:checked={formData.private_instance} defaultValue={true}>
       {$t('routes.admin.config.private')}

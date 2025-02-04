@@ -226,10 +226,10 @@
   afterNavigate(() => {
     // open = false
   })
-  run(() => {
+  $effect(() => {
     if (open) search = ''
   })
-  run(() => {
+  $effect(() => {
     groups = getGroups(
       $resumables,
       $profile,
@@ -241,7 +241,7 @@
   let flattenedActions = $derived(
     filteredGroups.flatMap((group) => group.actions),
   )
-  run(() => {
+  $effect(() => {
     debouncedSearch(search)
   })
 </script>

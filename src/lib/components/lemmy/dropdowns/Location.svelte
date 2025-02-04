@@ -12,6 +12,7 @@
   } from 'svelte-hero-icons'
   import { amModOfAny } from '../moderation/moderation'
   import { t } from '$lib/translations'
+  import Option from 'mono-svelte/forms/select/Option.svelte'
 
   interface Props {
     selected: string
@@ -45,42 +46,22 @@
       </span>
     {/if}
   {/snippet}
-  <option value="All">
-    <Icon
-      src={GlobeAmericas}
-      size="16"
-      micro
-      class="text-slate-600 dark:text-zinc-400"
-    />
+  <Option value="All" icon={GlobeAmericas}>
     {$t('filter.location.all')}
-  </option>
-  <option value="Local">
-    <Icon
-      src={MapPin}
-      size="16"
-      micro
-      class="text-slate-600 dark:text-zinc-400"
-    />{$t('filter.location.local')}
-  </option>
-  <option value="Subscribed" disabled={$profile?.jwt == undefined}>
-    <Icon
-      src={Newspaper}
-      size="16"
-      micro
-      class="text-slate-600 dark:text-zinc-400"
-    />
+  </Option>
+  <Option value="Local" icon={MapPin}>{$t('filter.location.local')}</Option>
+  <Option
+    value="Subscribed"
+    disabled={$profile?.jwt == undefined}
+    icon={Newspaper}
+  >
     {$t('filter.location.subscribed')}
-  </option>
-  <option
+  </Option>
+  <Option
     value="ModeratorView"
     disabled={!$profile?.jwt || !amModOfAny($profile?.user)}
+    icon={ShieldCheck}
   >
-    <Icon
-      src={ShieldCheck}
-      size="16"
-      micro
-      class="text-slate-600 dark:text-zinc-400"
-    />
     {$t('filter.location.moderator')}
-  </option>
+  </Option>
 </Select>

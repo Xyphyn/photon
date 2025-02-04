@@ -39,6 +39,7 @@
   import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
   import { t } from '$lib/translations'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
+  import Option from 'mono-svelte/forms/select/Option.svelte'
 
   let showInstance = $state(false)
 
@@ -164,18 +165,15 @@
     <!-- svelte-ignore a11y_no_static_element_interactions -->
     <div class="contents" onclick={stopPropagation(() => {})}>
       <Select bind:value={$colorScheme} class="ml-auto my-auto w-24" size="sm">
-        <option value="system">
-          <Icon src={ComputerDesktop} size="16" micro />
+        <Option value="system" icon={ComputerDesktop}>
           {$t('nav.menu.colorscheme.system')}
-        </option>
-        <option value="light">
-          <Icon src={Sun} size="16" micro />
+        </Option>
+        <Option value="light" icon={Sun}>
           {$t('nav.menu.colorscheme.light')}
-        </option>
-        <option value="dark">
-          <Icon src={Moon} size="16" micro />
+        </Option>
+        <Option value="dark" icon={Moon}>
           {$t('nav.menu.colorscheme.dark')}
-        </option>
+        </Option>
       </Select>
     </div>
   </MenuButton>

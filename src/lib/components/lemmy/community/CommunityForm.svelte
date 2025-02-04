@@ -13,9 +13,10 @@
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import ImagePreviewInput from '$lib/components/input/ImagePreviewInput.svelte'
   import Label from 'mono-svelte/forms/Label.svelte'
-  import { DocumentPlus, Icon } from 'svelte-hero-icons'
+  import { DocumentPlus, GlobeAlt, Icon, MapPin } from 'svelte-hero-icons'
   import ImageUploadModal from '../modal/ImageUploadModal.svelte'
   import Select from 'mono-svelte/forms/select/Select.svelte'
+  import Option from 'mono-svelte/forms/select/Option.svelte'
 
   interface Props {
     /**
@@ -221,8 +222,8 @@
     Only moderators can post
   </Switch>
   <Select label="Visibility" class="w-max" bind:value={formData.visibility}>
-    <option value="Public">Public</option>
-    <option value="LocalOnly">Local Only</option>
+    <Option icon={GlobeAlt} value="Public">Public</Option>
+    <Option icon={MapPin} value="LocalOnly">Local Only</Option>
   </Select>
   <Button
     submit

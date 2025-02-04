@@ -34,6 +34,7 @@
   } from '$lib/components/error/ErrorContainer.svelte'
   import { errorMessage } from '$lib/lemmy/error'
   import FreeTextInput from '$lib/components/input/FreeTextInput.svelte'
+  import Option from 'mono-svelte/forms/select/Option.svelte'
 
   interface Props {
     edit?: boolean
@@ -437,12 +438,12 @@
         label={$t('settings.app.lang.title')}
         bind:value={data.language_id}
       >
-        <option value={undefined}>
+        <Option value={undefined}>
           <Icon src={XMark} size="16" micro />
           {$t('form.post.unset')}
-        </option>
+        </Option>
         {#each $site?.all_languages as language}
-          <option value={language.id.toString()}>{language.name}</option>
+          <Option value={language.id.toString()}>{language.name}</Option>
         {/each}
       </Select>
     {:else}

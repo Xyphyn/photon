@@ -17,6 +17,7 @@
   import { amMod, isAdmin } from './moderation'
   import { Button, Checkbox, Modal } from 'mono-svelte'
   import { t } from '$lib/translations'
+  import Option from 'mono-svelte/forms/select/Option.svelte'
 
   interface Props {
     open: boolean
@@ -230,9 +231,9 @@
                 {$t('comment.reply')}
                 <Select bind:value={preset} placeholder="No preset">
                   {#each settings.moderation.presets as preset}
-                    <option value={preset.content}>
+                    <Option value={preset.content}>
                       {preset.title}
-                    </option>
+                    </Option>
                   {/each}
                 </Select>
               </div>

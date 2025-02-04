@@ -68,6 +68,7 @@
   import type { HTMLButtonAttributes } from 'svelte/elements'
 
   import Spinner from '../loader/Spinner.svelte'
+  import type { Snippet } from 'svelte'
 
   type ButtonRoundness = 'pill' | 'xl' | 'lg' | 'md' | 'none'
   type ButtonRoundingSide = 'all' | 'left' | 'right' | 'top' | 'bottom'
@@ -114,7 +115,7 @@
     },
   }
 
-  interface Props {
+  interface Props extends Omit<HTMLButtonAttributes, 'prefix'> {
     loading?: boolean
     submit?: boolean
     color?: ButtonColor
@@ -128,9 +129,9 @@
     loaderWidth?: number | undefined
     href?: string | undefined
     class?: string
-    prefix?: import('svelte').Snippet
-    children?: import('svelte').Snippet
-    suffix?: import('svelte').Snippet
+    prefix?: Snippet
+    children?: Snippet
+    suffix?: Snippet
     onclick?: HTMLButtonAttributes['onclick']
     [key: string]: any
   }

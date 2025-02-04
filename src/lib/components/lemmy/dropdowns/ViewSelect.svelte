@@ -2,6 +2,7 @@
   import { settings } from '$lib/settings.svelte.js'
   import { t } from '$lib/translations'
   import { Select } from 'mono-svelte'
+  import Option from 'mono-svelte/forms/select/Option.svelte'
   import {
     Bars3,
     Clock,
@@ -30,31 +31,13 @@
       </span>
     {/if}
   {/snippet}
-  <option value="cozy">
-    <Icon
-      src={RectangleGroup}
-      size="16"
-      micro
-      class="text-slate-600 dark:text-zinc-400"
-    />
+  <Option value="cozy" icon={RectangleGroup}>
     {$t('filter.view.cozy')}
-  </option>
-  <option value="list">
-    <Icon
-      src={QueueList}
-      size="16"
-      micro
-      class="text-slate-600 dark:text-zinc-400"
-    />
+  </Option>
+  <Option value="list" icon={QueueList}>
     {$t('filter.view.list')}
-  </option>
-  <option value="compact">
-    <Icon
-      src={Bars3}
-      size="16"
-      micro
-      class="text-slate-600 dark:text-zinc-400"
-    />
+  </Option>
+  <Option value="compact" icon={Bars3}>
     {$t('filter.view.compact')}
-  </option>
+  </Option>
 </Select>

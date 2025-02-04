@@ -22,6 +22,11 @@
     BookmarkSlash,
     ArrowUp,
     ArrowDown,
+    Fire,
+    Trophy,
+    Star,
+    Clock,
+    ArrowTrendingDown,
   } from 'svelte-hero-icons'
   import PostMeta, {
     parseTags,
@@ -49,6 +54,7 @@
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { fly } from 'svelte/transition'
   import { expoOut } from 'svelte/easing'
+  import Option from 'mono-svelte/forms/select/Option.svelte'
 
   let { data = $bindable() } = $props()
 
@@ -404,13 +410,17 @@
                 bind:value={commentSort}
                 on:change={reloadComments}
               >
-                <option value="Hot">{$t('filter.sort.hot')}</option>
-                <option value="Top">{$t('filter.sort.top.label')}</option>
-                <option value="New">{$t('filter.sort.new')}</option>
-                <option value="Old">{$t('filter.sort.old')}</option>
-                <option value="Controversial">
+                <Option icon={Fire} value="Hot">{$t('filter.sort.hot')}</Option>
+                <Option icon={Trophy} value="Top">
+                  {$t('filter.sort.top.label')}
+                </Option>
+                <Option icon={Star} value="New">{$t('filter.sort.new')}</Option>
+                <Option icon={Clock} value="Old">
+                  {$t('filter.sort.old')}
+                </Option>
+                <Option icon={ArrowTrendingDown} value="Controversial">
                   {$t('filter.sort.controversial')}
-                </option>
+                </Option>
               </Select>
               <Button size="square-md" onclick={reloadComments}>
                 {#snippet prefix()}
@@ -450,13 +460,17 @@
     {#if commenting || !$profile.jwt}
       <div class="gap-2 flex items-center">
         <Select size="md" bind:value={commentSort} on:change={reloadComments}>
-          <option value="Hot">{$t('filter.sort.hot')}</option>
-          <option value="Top">{$t('filter.sort.top.label')}</option>
-          <option value="New">{$t('filter.sort.new')}</option>
-          <option value="Old">{$t('filter.sort.old')}</option>
-          <option value="Controversial">
+          <Option icon={Fire} value="Hot">{$t('filter.sort.hot')}</Option>
+          <Option icon={Trophy} value="Top">
+            {$t('filter.sort.top.label')}
+          </Option>
+          <Option icon={Star} value="New">{$t('filter.sort.new')}</Option>
+          <Option icon={Clock} value="Old">
+            {$t('filter.sort.old')}
+          </Option>
+          <Option icon={ArrowTrendingDown} value="Controversial">
             {$t('filter.sort.controversial')}
-          </option>
+          </Option>
         </Select>
         <Button size="square-md" onclick={reloadComments}>
           {#snippet prefix()}

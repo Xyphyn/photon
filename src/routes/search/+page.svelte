@@ -40,6 +40,7 @@
   import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
   import { contentPadding } from '$lib/components/ui/layout/Shell.svelte'
   import { goto } from '$app/navigation'
+  import Option from 'mono-svelte/forms/select/Option.svelte'
 
   type Result = PostView | CommentView | PersonView | CommunityView
 
@@ -111,11 +112,11 @@
         {$t('filter.type')}
       </span>
     {/snippet}
-    <option value="All">{$t('content.all')}</option>
-    <option value="Posts">{$t('content.posts')}</option>
-    <option value="Comments">{$t('content.comments')}</option>
-    <option value="Communities">{$t('content.communities')}</option>
-    <option value="Users">{$t('content.users')}</option>
+    <Option value="All">{$t('content.all')}</Option>
+    <Option value="Posts">{$t('content.posts')}</Option>
+    <Option value="Comments">{$t('content.comments')}</Option>
+    <Option value="Communities">{$t('content.communities')}</Option>
+    <Option value="Users">{$t('content.users')}</Option>
   </Select>
   <Sort navigate bind:selected={data.sort} />
   {#snippet summary()}

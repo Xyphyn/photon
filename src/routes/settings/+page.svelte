@@ -33,6 +33,11 @@
     Plus,
     Trash,
     ArrowTopRightOnSquare,
+    Fire,
+    Trophy,
+    Star,
+    Clock,
+    ArrowTrendingDown,
   } from 'svelte-hero-icons'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { removalTemplate } from '$lib/components/lemmy/moderation/moderation.js'
@@ -47,6 +52,7 @@
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { profile } from '$lib/auth.svelte'
   import AccountPage from '../profile/(local_user)/settings/+page.svelte'
+  import Option from 'mono-svelte/forms/select/Option.svelte'
   let importing = $state(false)
   let importText = $state('')
 
@@ -227,20 +233,20 @@
         {/snippet}
         <!--@ts-ignore-->
         <Select bind:value={settings.language}>
-          <option value={null}>
+          <Option value={null}>
             <Icon src={Language} size="16" mini />
             {$t('settings.app.lang.auto')}
-          </option>
+          </Option>
           {#each $locales as locale}
             {@const mapped = localeMap.get(locale) ?? {
               flag: '',
               translated: 1,
               name: locale,
             }}
-            <option value={locale}>
+            <Option value={locale}>
               {mapped?.flag}
               {mapped?.name}
-            </option>
+            </Option>
           {/each}
         </Select>
       </Setting>
@@ -292,14 +298,14 @@
                 {$t('filter.location.label')}
               </span>
             {/snippet}
-            <option value="All">{$t('filter.location.all')}</option>
-            <option value="Local">{$t('filter.location.local')}</option>
-            <option value="Subscribed">
+            <Option value="All">{$t('filter.location.all')}</Option>
+            <Option value="Local">{$t('filter.location.local')}</Option>
+            <Option value="Subscribed">
               {$t('filter.location.subscribed')}
-            </option>
-            <option value="Moderator">
+            </Option>
+            <Option value="Moderator">
               {$t('filter.location.moderator')}
-            </option>
+            </Option>
           </Select>
         </div>
         <div class="max-w-full">
@@ -314,9 +320,15 @@
               </span>
             {/snippet}
 
-            <option value="Hot">{$t('filter.sort.hot')}</option>
-            <option value="Top">{$t('filter.sort.top.label')}</option>
-            <option value="New">{$t('filter.sort.new')}</option>
+            <Option icon={Fire} value="Hot">{$t('filter.sort.hot')}</Option>
+            <Option icon={Trophy} value="Top">
+              {$t('filter.sort.top.label')}
+            </Option>
+            <Option icon={Star} value="New">{$t('filter.sort.new')}</Option>
+            <Option icon={Clock} value="Old">{$t('filter.sort.old')}</Option>
+            <Option icon={ArrowTrendingDown} value="Controversial">
+              {$t('filter.sort.controversial')}
+            </Option>
           </Select>
         </div>
       </div>
@@ -369,10 +381,10 @@
         <span>{$t('settings.app.font.description')}</span>
       {/snippet}
       <Select bind:value={settings.font}>
-        <option value="inter">Inter</option>
-        <option value="satoshi/nunito">Satoshi + Nunito</option>
-        <option value="system">System UI</option>
-        <option value="browser">Browser</option>
+        <Option value="inter">Inter</Option>
+        <Option value="satoshi/nunito">Satoshi + Nunito</Option>
+        <Option value="system">System UI</Option>
+        <Option value="browser">Browser</Option>
       </Select>
     </Setting>
     <Setting>
@@ -491,9 +503,9 @@
         </span>
       {/snippet}
       <Select bind:value={settings.embeds.youtube}>
-        <option value="youtube">YouTube</option>
-        <option value="invidious">Invidious</option>
-        <option value="piped">Piped</option>
+        <Option value="youtube">YouTube</Option>
+        <Option value="invidious">Invidious</Option>
+        <Option value="piped">Piped</Option>
       </Select>
     </Setting>
     {#if settings.embeds.youtube == 'invidious'}

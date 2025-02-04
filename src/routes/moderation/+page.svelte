@@ -16,6 +16,7 @@
   import { Button, Material, Select } from 'mono-svelte'
   import { t } from '$lib/translations'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import Option from 'mono-svelte/forms/select/Option.svelte'
 
   let { data = $bindable() } = $props()
 
@@ -40,8 +41,8 @@
               {$t('filter.filter')}
             </span>
           {/snippet}
-          <option value="all">{$t('filter.location.all')}</option>
-          <option value="unread">{$t('filter.unread')}</option>
+          <Option value="all">{$t('filter.location.all')}</Option>
+          <Option value="unread">{$t('filter.unread')}</Option>
         </Select>
         <Button href="/modlog" class="h-max ml-auto">
           <Icon src={Newspaper} size="16" mini />

@@ -37,6 +37,7 @@
   import EntityHeader from '$lib/components/ui/EntityHeader.svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
   import { formatRelativeDate } from '$lib/components/util/RelativeDate.svelte'
+  import Option from 'mono-svelte/forms/select/Option.svelte'
 
   interface Props {
     data: any
@@ -303,9 +304,9 @@
             {$t('filter.type')}
           </span>
         {/snippet}
-        <option value="all">{$t('content.all')}</option>
-        <option value="posts">{$t('content.posts')}</option>
-        <option value="comments">{$t('content.comments')}</option>
+        <Option value="all">{$t('content.all')}</Option>
+        <Option value="posts">{$t('content.posts')}</Option>
+        <Option value="comments">{$t('content.comments')}</Option>
       </Select>
       <Select
         bind:value={data.sort}
@@ -317,9 +318,9 @@
             {$t('filter.sort.label')}
           </span>
         {/snippet}
-        <option value="New">{$t('filter.sort.new')}</option>
-        <option value="TopAll">{$t('filter.sort.top.label')}</option>
-        <option value="Old">{$t('filter.sort.old')}</option>
+        <Option value="New">{$t('filter.sort.new')}</Option>
+        <Option value="TopAll">{$t('filter.sort.top.label')}</Option>
+        <Option value="Old">{$t('filter.sort.old')}</Option>
       </Select>
     </div>
     {#if data.items.length == 0}

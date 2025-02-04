@@ -20,25 +20,23 @@
     ChevronDown,
     ChevronUpDown,
     Icon,
+    type IconSource,
   } from 'svelte-hero-icons'
-  import { browser } from '$app/environment'
-  import { writable } from 'svelte/store'
 
   let open = $state(false)
   let element: HTMLSelectElement | undefined = $state()
 
-  let options: { value: any; label: string | null; disabled: boolean }[] =
-    $state([])
+  interface SelectContext {
+    options: {
+      value: string
+      label: string
+      icon?: IconSource
+      disabled?: boolean
+    }[]
+  }
 
-  // Capture all options from the select element
-  $effect(() => {
-    options = element?.options
-      ? Array.from(element?.options).map((option) => ({
-          value: option.value,
-          label: option.innerHTML,
-          disabled: option.disabled,
-        }))
-      : []
+  const context = setContext<SelectContext>('select', {
+    options: [],
   })
 
   const dispatcher = createEventDispatcher<{
@@ -46,8 +44,9 @@
     contextmenu: any
     input: any
   }>()
+
   interface Props {
-    value?: T | undefined
+    value?: T | string | undefined
     placeholder?: string | undefined
     label?: string | undefined
     size?: ButtonSize
@@ -112,7 +111,7 @@
         </select>
       {/snippet}
 
-      {#each options as option}
+      {#each context.options as option}
         {#if customOption}{@render customOption({
             option,
             selected: option.value == value,
@@ -129,6 +128,14 @@
               ? '!bg-slate-100 dark:!bg-zinc-800'
               : ''}"
           >
+            {#if option.icon}
+              <Icon
+                src={option.icon}
+                size="16"
+                micro
+                class="text-slate-600 dark:text-zinc-400"
+              />
+            {/if}
             {@html option.label}
             {#if option.value == value}
               <Icon

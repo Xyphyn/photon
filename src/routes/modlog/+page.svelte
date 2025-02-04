@@ -21,6 +21,7 @@
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { isAdmin } from '$lib/components/lemmy/moderation/moderation.js'
   import { browser } from '$app/environment'
+  import Option from 'mono-svelte/forms/select/Option.svelte'
 
   let { data = $bindable() } = $props()
 
@@ -50,40 +51,40 @@
       on:change={(e) => searchParam($page.url, 'type', data.type, 'page')}
       class="w-48"
     >
-      {#snippet label()}
+      {#snippet customLabel()}
         <span class="flex gap-1 items-center">
           <Icon src={Bars3BottomRight} size="15" mini />
           Type
         </span>
       {/snippet}
-      <option value="All">All</option>
-      <option value="ModRemovePost">Remove Post</option>
-      <option value="ModLockPost">Lock Post</option>
-      <option value="ModFeaturePost">Feature Post</option>
-      <option value="ModRemoveComment">Remove Comment</option>
-      <option value="ModRemoveCommunity">Remove Community</option>
-      <option value="ModBanFromCommunity">Ban From Community</option>
-      <option value="ModAddCommunity">Add Moderator</option>
-      <option value="ModTransferCommunity">Transfer Community</option>
-      <option value="ModAdd">Add Admin</option>
-      <option value="ModBan">Ban Admin</option>
-      <option value="ModHideCommunity">Hide Community</option>
-      <option value="AdminPurgePerson">Purge User</option>
-      <option value="AdminPurgeCommunity">Purge Community</option>
-      <option value="AdminPurgePost">Purge Post</option>
-      <option value="AdminPurgeComment">Purge Comment</option>
+      <Option value="All">All</Option>
+      <Option value="ModRemovePost">Remove Post</Option>
+      <Option value="ModLockPost">Lock Post</Option>
+      <Option value="ModFeaturePost">Feature Post</Option>
+      <Option value="ModRemoveComment">Remove Comment</Option>
+      <Option value="ModRemoveCommunity">Remove Community</Option>
+      <Option value="ModBanFromCommunity">Ban From Community</Option>
+      <Option value="ModAddCommunity">Add Moderator</Option>
+      <Option value="ModTransferCommunity">Transfer Community</Option>
+      <Option value="ModAdd">Add Admin</Option>
+      <Option value="ModBan">Ban Admin</Option>
+      <Option value="ModHideCommunity">Hide Community</Option>
+      <Option value="AdminPurgePerson">Purge User</Option>
+      <Option value="AdminPurgeCommunity">Purge Community</Option>
+      <Option value="AdminPurgePost">Purge Post</Option>
+      <Option value="AdminPurgeComment">Purge Comment</Option>
     </Select>
 
     <Select bind:value={view} class="w-36">
-      {#snippet label()}
+      {#snippet customLabel()}
         <span class="flex gap-1 items-center">
           <Icon src={ViewColumns} size="15" mini />
           View
         </span>
       {/snippet}
-      <option value="false">Table</option>
-      <option value="true">Cards</option>
-      <option value="undefined">Default</option>
+      <Option value="false">Table</Option>
+      <Option value="true">Cards</Option>
+      <Option value="undefined">Default</Option>
     </Select>
   </div>
   <div class="flex flex-col md:flex-row md:items-center gap-2 w-full">
