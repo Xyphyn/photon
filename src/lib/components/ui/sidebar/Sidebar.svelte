@@ -109,8 +109,8 @@
           </EndPlaceholder>
         </span>
       {/snippet}
-      {#each [...$profileData.profiles] as prof, index (prof.id)}
-        <div animate:flip={{ duration: 300, easing: expoOut }} class="w-full">
+      {#each [...$profileData.profiles] as prof, index}
+        <div class="w-full">
           <ProfileButton {index} {prof} />
         </div>
       {/each}

@@ -71,7 +71,7 @@
   <div class="list-none">
     <Comment
       postId={comment.post.id}
-      node={{ children: [], comment_view: comment, depth: 1, ui: {} }}
+      node={{ children: [], comment_view: comment, depth: 1 }}
       replying={false}
       {meta}
       {...rest}
