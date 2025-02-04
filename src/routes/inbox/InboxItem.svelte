@@ -184,7 +184,8 @@
         community={false}
         view="cozy"
         meta={false}
-        class="pt-0 pb-0"
+        commentClass="!pt-0 pb-0"
+        class="pt-0"
       />
     {:else}
       <PrivateMessage message={item.item} meta={false} />

@@ -15,6 +15,7 @@
     community?: boolean
     meta?: boolean
     class?: string
+    commentClass?: string
     [key: string]: any
   }
 
@@ -24,14 +25,14 @@
     community = false,
     meta = true,
     class: clazz = '',
+    commentClass = '',
     ...rest
   }: Props = $props()
 </script>
 
 <Material
-  class="flex flex-col flex-1 {view != 'card'
-    ? '!bg-transparent !border-0 rounded-none'
-    : 'p-5'} {view == 'compact' ? 'py-4' : 'py-5'} {clazz}"
+  class="flex flex-col flex-1 !bg-transparent !border-0 rounded-none
+  {view == 'compact' ? 'py-4' : 'py-5'} {clazz}"
   color="distinct"
   padding="none"
 >
@@ -71,10 +72,11 @@
   <div class="list-none">
     <Comment
       postId={comment.post.id}
-      node={{ children: [], comment_view: comment, depth: 1 }}
+      node={{ children: [], comment_view: comment, depth: 1, expanded: true }}
       replying={false}
       {meta}
       {...rest}
+      class={commentClass}
     />
   </div>
 </Material>
