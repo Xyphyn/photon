@@ -16,11 +16,13 @@
 
   let { nodes, post, scrollTo }: Props = $props()
 
+  let nodesState = $state(nodes)
+
   let virtualListEl = $state<HTMLElement>()
 
   let virtualizer = $derived(
     createWindowVirtualizer({
-      count: nodes.length,
+      count: nodesState.length,
       estimateSize: () => 30,
       scrollMargin: virtualListEl?.offsetTop,
       initialRect: {
@@ -71,7 +73,7 @@
         data-index={row.index}
         class="-mx-4 sm:-mx-6 px-4 sm:px-6"
       >
-        <Comments isParent={true} nodes={[nodes[row.index]]} {post} />
+        <Comments isParent={true} nodes={[nodesState[row.index]]} {post} />
       </div>
     {/each}
   </div>

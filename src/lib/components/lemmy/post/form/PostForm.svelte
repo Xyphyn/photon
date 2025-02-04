@@ -43,7 +43,7 @@
      */
     editingPost?: Post | undefined
     passedCommunity?: Community | undefined
-    data?: {
+    passedData?: {
       community: Community | null
       title: string
       body: string
@@ -63,7 +63,7 @@
     edit = false,
     editingPost = undefined,
     passedCommunity = undefined,
-    data = $bindable({
+    passedData = {
       community: null,
       title: '',
       body: '',
@@ -74,10 +74,12 @@
       loading: false,
       alt_text: undefined,
       language_id: undefined,
-    }),
+    },
     formtitle,
     onsubmit,
   }: Props = $props()
+
+  let data = $state(passedData)
 
   // weird select menu language handling
   // @ts-ignore
@@ -341,11 +343,9 @@
       />
       <div class="flex items-center gap-2 actions">
         <div
-          class="border border-slate-100 rounded-xl h-6 w-6 grid place-items-center"
+          class="border border-slate-100 dark:border-zinc-800 dark:text-zinc-400 text-slate-600 rounded-xl h-6 w-6 grid place-items-center"
         >
-          {#snippet prefix()}
-            <Icon src={Plus} size="16" micro />
-          {/snippet}
+          <Icon src={Plus} size="16" micro />
         </div>
         {#if data.url}
           <Button

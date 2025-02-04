@@ -48,7 +48,7 @@
 </script>
 
 <div
-  class="h-full flex items-center overflow-hidden {buttonColor.ghost} rounded-full hover:bg-transparent"
+  class="h-full flex items-center overflow-hidden {buttonColor.ghost} rounded-full hover:bg-transparent font-medium"
 >
   <button
     onclick={() => castVote(vote == 1 ? 0 : 1)}

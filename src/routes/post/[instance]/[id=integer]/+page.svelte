@@ -492,8 +492,9 @@
         </Button>
       </div>
     {/if}
-    {#if comments}
-      {@const tree = buildCommentsTree(
+    <CommentListVirtualizer
+      post={data.post.post_view.post}
+      nodes={buildCommentsTree(
         comments.comments,
         undefined,
         (c) =>
@@ -502,13 +503,8 @@
             (settings.hidePosts.removed && c.comment.removed)
           ),
       )}
-
-      <CommentListVirtualizer
-        post={data.post.post_view.post}
-        nodes={createCommentsState(tree)}
-        scrollTo={data.thread.focus}
-      />
-    {/if}
+      scrollTo={data.thread.focus}
+    />
     {#if comments.comments.length == 0}
       <Placeholder
         icon={ChatBubbleLeftRight}
