@@ -10,7 +10,7 @@
   import CommentForm from '$lib/components/lemmy/comment/CommentForm.svelte'
   import { onMount } from 'svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
-  import { page } from '$app/stores'
+  import { page } from '$app/state'
   import PostActions from '$lib/components/lemmy/post/PostActions.svelte'
   import {
     ArrowLeft,
@@ -134,7 +134,7 @@
     resumables.add({
       name: data.post.post_view.post.name,
       type: 'post',
-      url: $page.url.toString(),
+      url: page.url.toString(),
       avatar: data.post.post_view.post.thumbnail_url,
     })
   })
@@ -188,7 +188,7 @@
   let commenting = $state(false)
 
   let remoteView = $derived(
-    $page.params.instance?.toLowerCase() != $instance.toLowerCase(),
+    page.params.instance?.toLowerCase() != $instance.toLowerCase(),
   )
 
   function createCommentsState(tree: CommentNodeI[]) {
@@ -201,7 +201,7 @@
   <title>{data.post.post_view.post.name}</title>
   <meta property="og:title" content={data.post.post_view.post.name} />
   <meta property="twitter:title" content={data.post.post_view.post.name} />
-  <meta property="og:url" content={$page.url.toString()} />
+  <meta property="og:url" content={page.url.toString()} />
   {#if isImage(data.post.post_view.post.url)}
     <meta property="og:image" content={data.post.post_view.post.url} />
     <meta property="twitter:card" content={data.post.post_view.post.url} />
@@ -368,7 +368,7 @@
       {loading}
       disabled={loading}
       href={data.thread.showContext
-        ? `/comment/${$page.params.instance}/${data.thread.showContext}`
+        ? `/comment/${page.params.instance}/${data.thread.showContext}`
         : undefined}
       class="hover:bg-white/50 dark:hover:bg-zinc-800/30"
       onclick={data.thread.singleThread ? reloadComments : undefined}
@@ -458,7 +458,7 @@
                 .map((c) => c.community.id)
                 .includes(data.post.community_view.community.id)
             )) ||
-            $page.params.instance.toLowerCase() != $instance.toLowerCase()}
+            page.params.instance.toLowerCase() != $instance.toLowerCase()}
           banned={data.post.community_view.banned_from_community}
           on:focus={() => (commenting = true)}
           tools={commenting}

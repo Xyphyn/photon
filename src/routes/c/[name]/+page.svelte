@@ -1,7 +1,7 @@
 <script lang="ts">
   import { run } from 'svelte/legacy'
 
-  import { navigating, page } from '$app/stores'
+  import { navigating, page } from '$app/state'
   import CommunityCard from '$lib/components/lemmy/community/CommunityCard.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
@@ -47,14 +47,14 @@
     resumables.add({
       name: data.community.community_view.community.title,
       type: 'community',
-      url: $page.url.toString(),
+      url: page.url.toString(),
       avatar: data.community.community_view.community.icon,
     })
   })
 
   onDestroy(() => {
     if (browser) {
-      if ($navigating?.to?.route?.id == '/create/post') return
+      if (navigating?.to?.route?.id == '/create/post') return
 
       setSessionStorage('lastSeenCommunity', undefined)
     }
@@ -119,9 +119,9 @@
     <Pageination
       page={data.page}
       cursor={{ next: data.cursor.next }}
-      on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
+      on:change={(p) => searchParam(page.url, 'page', p.detail.toString())}
       on:cursor={(c) => {
-        searchParam($page.url, 'cursor', c.detail)
+        searchParam(page.url, 'cursor', c.detail)
       }}
     >
       <span class="flex flex-row items-center gap-1">

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { page } from '$app/stores'
+  import { page } from '$app/state'
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
   import ViewSelect from '$lib/components/lemmy/dropdowns/ViewSelect.svelte'
@@ -70,9 +70,9 @@
   >
     <Pageination
       cursor={{ next: data.cursor.next }}
-      on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
+      on:change={(p) => searchParam(page.url, 'page', p.detail.toString())}
       on:cursor={(c) => {
-        searchParam($page.url, 'cursor', c.detail)
+        searchParam(page.url, 'cursor', c.detail)
       }}
     >
       <span class="flex flex-row items-center gap-1">

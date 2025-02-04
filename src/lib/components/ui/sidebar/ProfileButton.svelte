@@ -1,6 +1,6 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
-  import { page } from '$app/stores'
+  import { page } from '$app/state'
   import { profile, setUserID, type Profile } from '$lib/auth.svelte.js'
   import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
   import { LINKED_INSTANCE_URL } from '$lib/instance'
@@ -31,7 +31,7 @@
       await setUserID(prof.id)
     }
 
-    await goto($page.url, {
+    await goto(page.url, {
       invalidateAll: true,
     })
 

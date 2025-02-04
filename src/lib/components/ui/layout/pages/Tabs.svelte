@@ -1,6 +1,6 @@
 <script lang="ts">
   import { invalidate } from '$app/navigation'
-  import { page } from '$app/stores'
+  import { page } from '$app/state'
   import { fly } from 'svelte/transition'
 
   interface Props {
@@ -47,7 +47,7 @@
       transition-colors duration-100 relative z-0 flex-shrink-0"
     >
       {route.name}
-      {#if isSelected($page.url, currentRoute, route.href, defaultRoute)}
+      {#if isSelected(page.url, currentRoute, route.href, defaultRoute)}
         <div
           class="rounded-full bg-slate-100/60 dark:bg-zinc-700/60
           absolute inset-0 w-full h-full -z-10"

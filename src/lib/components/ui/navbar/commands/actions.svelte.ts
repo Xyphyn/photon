@@ -1,5 +1,5 @@
 import { goto } from '$app/navigation'
-import { page } from '$app/stores'
+import { page } from '$app/state'
 import { setUserID, type Profile } from '$lib/auth.svelte'
 import {
   amModOfAny,

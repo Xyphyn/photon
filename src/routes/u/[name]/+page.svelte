@@ -17,7 +17,7 @@
   } from 'svelte-hero-icons'
   import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
-  import { page } from '$app/stores'
+  import { page } from '$app/state'
   import { goto } from '$app/navigation'
   import { isCommentView } from '$lib/lemmy/item.js'
   import { client, getClient } from '$lib/lemmy.js'
@@ -72,7 +72,7 @@
         type: 'success',
       })
 
-      goto($page.url, {
+      goto(page.url, {
         invalidateAll: true,
       })
     } catch (err) {
@@ -296,7 +296,7 @@
     <div class="flex flex-row gap-4 flex-wrap">
       <Select
         bind:value={data.type}
-        onchange={() => searchParam($page.url, 'type', data.type, 'page')}
+        onchange={() => searchParam(page.url, 'type', data.type, 'page')}
       >
         {#snippet customLabel()}
           <span class="flex items-center gap-1">
@@ -310,7 +310,7 @@
       </Select>
       <Select
         bind:value={data.sort}
-        onchange={() => searchParam($page.url, 'sort', data.sort, 'page')}
+        onchange={() => searchParam(page.url, 'sort', data.sort, 'page')}
       >
         {#snippet customLabel()}
           <span class="flex items-center gap-1">
@@ -344,7 +344,7 @@
     {/if}
     <Pageination
       page={data.page}
-      on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
+      on:change={(p) => searchParam(page.url, 'page', p.detail.toString())}
     />
   </div>
 </div>

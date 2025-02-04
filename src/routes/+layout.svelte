@@ -3,7 +3,7 @@
 
   import Navbar from '$lib/components/ui/navbar/Navbar.svelte'
   import '../style/app.css'
-  import { navigating, page } from '$app/stores'
+  import { navigating, page } from '$app/state'
   import nProgress from 'nprogress'
   import 'nprogress/nprogress.css'
   import Moderation from '$lib/components/lemmy/moderation/Moderation.svelte'
@@ -65,7 +65,6 @@
   })
 
   if (browser) {
-    let barTimeout: number = $state(0)
     $effect(() => {
       if (settings) {
         document.body.classList.remove(
@@ -86,18 +85,18 @@
         )
       }
     })
-
-    navigating.subscribe((value) => {
-      if (value) {
-        document.body.classList.toggle('wait', true)
-        barTimeout = setTimeout(() => nProgress.start(), 100)
-      } else {
-        document.body.classList.toggle('wait', false)
-        clearTimeout(barTimeout)
-        nProgress.done()
-      }
-    })
   }
+  let barTimeout: number = $state(0)
+  $effect(() => {
+    if (navigating.to) {
+      document.body.classList.toggle('wait', true)
+      barTimeout = setTimeout(() => nProgress.start(), 100)
+    } else {
+      document.body.classList.toggle('wait', false)
+      clearTimeout(barTimeout)
+      nProgress.done()
+    }
+  })
 
   let error = $state(null)
 
@@ -139,7 +138,7 @@
 <Shell
   dir={$locale == 'he' && settings.useRtl ? 'rtl' : 'ltr'}
   class="min-h-screen "
-  route={$page.route}
+  route={page.route}
 >
   <Moderation />
   <ToastContainer />
@@ -163,9 +162,9 @@
   {/snippet}
   {#snippet suffix({ class: c, style: s })}
     <div class={c} style={s}>
-      {#if $page.data.slots?.sidebar?.component}
-        {@const SvelteComponent = $page.data.slots.sidebar.component}
-        <SvelteComponent {...$page.data.slots.sidebar.props} />
+      {#if page.data.slots?.sidebar?.component}
+        {@const SvelteComponent = page.data.slots.sidebar.component}
+        <SvelteComponent {...page.data.slots.sidebar.props} />
       {:else if $site}
         <SiteCard
           site={$site.site_view}

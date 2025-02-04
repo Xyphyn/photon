@@ -3,7 +3,7 @@
   import { fly } from 'svelte/transition'
   import Report from './Report.svelte'
   import MultiSelect from '$lib/components/input/Switch.svelte'
-  import { page } from '$app/stores'
+  import { page } from '$app/state'
   import {
     EnvelopeOpen,
     Funnel,
@@ -33,7 +33,7 @@
       <div class="flex flex-row gap-2 flex-wrap items-end">
         <Select
           bind:value={data.type}
-          on:change={() => searchParam($page.url, 'type', data.type, 'page')}
+          on:change={() => searchParam(page.url, 'type', data.type, 'page')}
         >
           {#snippet customLabel()}
             <span class="flex items-center gap-1">

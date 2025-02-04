@@ -2,7 +2,7 @@
   import { run, preventDefault } from 'svelte/legacy'
 
   import { goto } from '$app/navigation'
-  import { page } from '$app/stores'
+  import { page } from '$app/state'
   import { setUser } from '$lib/auth.svelte.js'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
@@ -27,7 +27,7 @@
 
   let { data } = $props()
 
-  const instance = $page.params.instance
+  const instance = page.params.instance
 
   let captchaRequired = data.site_view.local_site.captcha_enabled
 
@@ -71,7 +71,7 @@
       })
 
       if (res?.jwt) {
-        await setUser(res.jwt, $page.params.instance, username)
+        await setUser(res.jwt, page.params.instance, username)
 
         toast({ content: $t('toast.logIn'), type: 'success' })
         goto('/')

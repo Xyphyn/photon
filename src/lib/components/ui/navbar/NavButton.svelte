@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { page } from '$app/stores'
+  import { page } from '$app/state'
   import { Button } from 'mono-svelte'
   import { Icon, type IconSource } from 'svelte-hero-icons'
   import { dockProps } from '../layout/Shell.svelte'
@@ -28,7 +28,7 @@
     ...rest
   }: Props = $props()
 
-  let isSelected = $derived(isSelectedFilter($page.url.pathname))
+  let isSelected = $derived(isSelectedFilter(page.url.pathname))
   let isPanel = $derived(adaptive ? $dockProps.noGap : false)
 </script>
 

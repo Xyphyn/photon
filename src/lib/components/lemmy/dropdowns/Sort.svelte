@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { page } from '$app/stores'
+  import { page } from '$app/state'
   import { t } from '$lib/translations'
   import { searchParam } from '$lib/util.svelte.js'
   import { Select } from 'mono-svelte'
@@ -51,7 +51,7 @@
     bind:value={sort}
     onchange={() => {
       setSelected()
-      if (navigate) searchParam($page.url, 'sort', selected, 'page', 'cursor')
+      if (navigate) searchParam(page.url, 'sort', selected, 'page', 'cursor')
     }}
   >
     {#snippet customLabel()}
@@ -96,7 +96,7 @@
         onchange={() => {
           sort = 'TopAll'
           if (navigate)
-            searchParam($page.url, 'sort', selected, 'page', 'cursor')
+            searchParam(page.url, 'sort', selected, 'page', 'cursor')
         }}
       >
         {#snippet customLabel()}

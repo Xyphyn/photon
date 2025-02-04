@@ -2,7 +2,7 @@
   import Comments from './Comments.svelte'
   import Comment from './Comment.svelte'
   import { buildCommentsTree, type CommentNodeI } from './comments.svelte'
-  import { page } from '$app/stores'
+  import { page } from '$app/state'
   import { onMount, setContext } from 'svelte'
   import { Icon, ArrowDownCircle } from 'svelte-hero-icons'
   import { getClient } from '$lib/lemmy.js'
@@ -28,8 +28,8 @@
 
   onMount(() => {
     hydrated = true
-    if (isParent && $page.url.hash && browser) {
-      document.getElementById($page.url.hash)?.scrollIntoView({
+    if (isParent && page.url.hash && browser) {
+      document.getElementById(page.url.hash)?.scrollIntoView({
         behavior: 'smooth',
         block: 'center',
       })
@@ -51,7 +51,7 @@
     try {
       parent.loading = true
 
-      const newComments = await getClient($page.params.instance).getComments({
+      const newComments = await getClient(page.params.instance).getComments({
         max_depth: 5,
         parent_id: parent.comment_view.comment.id,
         type_: 'All',
@@ -128,7 +128,7 @@
         <svelte:element
           this={hydrated ? 'div' : 'a'}
           class="w-full my-2 h-8"
-          href="/comment/{$page.params.instance}/{node.comment_view.comment.id}"
+          href="/comment/{page.params.instance}/{node.comment_view.comment.id}"
         >
           <Button
             loading={node.loading}
@@ -140,7 +140,7 @@
             onclick={() => {
               if (node.depth > 4) {
                 goto(
-                  `/comment/${$page.params.instance}/${node.comment_view.comment.id}#comments`,
+                  `/comment/${page.params.instance}/${node.comment_view.comment.id}#comments`,
                 )
               } else {
                 node.loading = true

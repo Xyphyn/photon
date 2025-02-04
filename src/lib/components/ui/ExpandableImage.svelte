@@ -9,7 +9,7 @@
 </script>
 
 <script lang="ts">
-  import { page } from '$app/stores'
+  import { page } from '$app/state'
   import { Button, Material, toast } from 'mono-svelte'
   import {
     ArrowDownTray,
@@ -50,7 +50,7 @@
   let { alt = '', class: clazz = '', children }: Props = $props()
 </script>
 
-{#if $page.state.openImage || '' != ''}
+{#if page.state.openImage || '' != ''}
   <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
   <!-- svelte-ignore a11y_no_static_element_interactions -->
   <!-- svelte-ignore a11y_click_events_have_key_events -->
@@ -68,7 +68,7 @@
     <img
       width={400}
       height={400}
-      src={$page.state.openImage}
+      src={page.state.openImage}
       class="{zoomed
         ? 'object-cover'
         : 'object-contain'} max-w-max mx-auto my-auto overscroll-contain bg-white dark:bg-zinc-900"
@@ -93,7 +93,7 @@
       >
         <Button
           download
-          href={$page.state.openImage}
+          href={page.state.openImage}
           color="tertiary"
           size="square-lg"
           rounding="pill"
@@ -104,13 +104,13 @@
         <Button
           onclick={async () => {
             if (navigator.share) {
-              const file = await downloadImage($page.state.openImage)
+              const file = await downloadImage(page.state.openImage)
 
               navigator?.share?.({
                 files: [file],
               })
             } else {
-              navigator.clipboard.writeText($page.state.openImage)
+              navigator.clipboard.writeText(page.state.openImage)
               toast({ content: $t('toast.copied') })
             }
           }}

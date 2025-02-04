@@ -3,7 +3,7 @@
 
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import { searchParam } from '$lib/util.svelte.js'
-  import { page } from '$app/stores'
+  import { page } from '$app/state'
   import ObjectAutocomplete from '$lib/components/lemmy/ObjectAutocomplete.svelte'
   import { profile } from '$lib/auth.svelte.js'
   import { settings } from '$lib/settings.svelte.js'
@@ -48,7 +48,7 @@
   <div class="flex flex-row flex-wrap gap-2">
     <Select
       bind:value={data.type}
-      onchange={() => searchParam($page.url, 'type', data.type, 'page')}
+      onchange={() => searchParam(page.url, 'type', data.type, 'page')}
       class="w-48"
     >
       {#snippet customLabel()}
@@ -95,10 +95,10 @@
       showWhenEmpty={true}
       label="Instance"
       class="flex-1"
-      q={$page.url.searchParams.get('instance') || ''}
+      q={page.url.searchParams.get('instance') || ''}
       on:select={(e) =>
         searchParam(
-          $page.url,
+          page.url,
           'instance',
           e.detail?.domain.toString() ?? '',
           'page',
@@ -114,28 +114,28 @@
       showWhenEmpty={true}
       label="Community"
       class="flex-1"
-      q={$page.url.searchParams.get('community') ? 'Selected' : ''}
+      q={page.url.searchParams.get('community') ? 'Selected' : ''}
       on:select={(e) =>
         searchParam(
-          $page.url,
+          page.url,
           'community',
           e.detail?.id.toString() ?? '',
           'page',
         )}
     />
     <UserAutocomplete
-      instance={$page.url.searchParams.get('instance') || undefined}
+      instance={page.url.searchParams.get('instance') || undefined}
       placeholder="Filter by user"
       jwt={$profile?.jwt}
       listing_type="All"
       showWhenEmpty={true}
       class="flex-1"
       label="User"
-      q={$page.url.searchParams.get('user')
+      q={page.url.searchParams.get('user')
         ? (data.filters.user ?? 'Selected')
         : ''}
       on:select={(e) =>
-        searchParam($page.url, 'user', e.detail?.id.toString() ?? '', 'page')}
+        searchParam(page.url, 'user', e.detail?.id.toString() ?? '', 'page')}
     />
     {#if $profile?.user && isAdmin($profile?.user)}
       <UserAutocomplete
@@ -145,12 +145,12 @@
         showWhenEmpty={true}
         class="flex-1"
         label="Moderator"
-        q={$page.url.searchParams.get('mod_id')
+        q={page.url.searchParams.get('mod_id')
           ? (data.filters.moderator ?? 'Selected')
           : ''}
         on:select={(e) =>
           searchParam(
-            $page.url,
+            page.url,
             'mod_id',
             e.detail?.id.toString() ?? '',
             'page',
@@ -160,7 +160,7 @@
     <Button
       onclick={() => {
         searchParam(
-          $page.url,
+          page.url,
           '',
           '',
           'user',
@@ -221,7 +221,7 @@
     {/if}
     <Pageination
       page={data.page}
-      on:change={(e) => searchParam($page.url, 'page', e.detail.toString())}
+      on:change={(e) => searchParam(page.url, 'page', e.detail.toString())}
     />
   {:else}
     <Placeholder

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { run } from 'svelte/legacy'
 
-  import { page } from '$app/stores'
+  import { page } from '$app/state'
   import { settings } from '$lib/settings.svelte.js'
   import { Button } from 'mono-svelte'
   import { Icon, type IconSource } from 'svelte-hero-icons'
@@ -31,7 +31,7 @@
 
   run(() => {
     if (href != undefined) {
-      selected = $page.url.pathname == href
+      selected = page.url.pathname == href
     }
   })
 </script>

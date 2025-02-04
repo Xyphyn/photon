@@ -25,7 +25,7 @@
   import { Button, Modal } from 'mono-svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
   import ShieldIcon from '../moderation/ShieldIcon.svelte'
-  import { page } from '$app/stores'
+  import { page } from '$app/state'
   import { onMount } from 'svelte'
   import { t } from '$lib/translations'
   import { fly, slide } from 'svelte/transition'
@@ -90,7 +90,7 @@
   }
 
   onMount(() => {
-    if ('#' + node.comment_view.comment.id.toString() == $page.url.hash) {
+    if ('#' + node.comment_view.comment.id.toString() == page.url.hash) {
       highlight = 'text-primary-900 dark:text-primary-100 font-medium'
 
       setTimeout(() => (highlight = 'duration-[3s] transition-all'), 500)

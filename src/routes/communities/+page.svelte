@@ -1,7 +1,7 @@
 <script lang="ts">
   import { preventDefault } from 'svelte/legacy'
 
-  import { navigating, page } from '$app/stores'
+  import { navigating, page } from '$app/state'
   import {
     GlobeAmericas,
     Icon,
@@ -40,7 +40,9 @@
   })
 
   let search = $state(data.query || '')
-  let searchElement: HTMLInputElement | undefined = $state()
+  let searchElement = $state<HTMLInputElement>()
+  let form = $state<HTMLFormElement>()
+
   let instance = ''
 
   let showTop = $derived(
@@ -66,40 +68,46 @@
   class="mt-4 mb-0 sticky z-30"
   style="top: max(1.5rem, {$contentPadding.top}px);"
 >
-  <Tabs routes={[]} class="p-2 dark:bg-zinc-925/70 shadow-md shadow-black/5">
-    <form
-      method="get"
-      action="/communities"
-      class="flex gap-2 flex-row items-center w-full text-base h-10"
-    >
-      <TextInput
-        bind:value={search}
-        bind:element={searchElement}
-        name="q"
-        aria-label={$t('routes.search.query')}
-        size="lg"
-        class="flex-1 !rounded-full h-full"
-        placeholder={$t('routes.communities.search.placeholder')}
+  <form method="get" action="/communities" bind:this={form}>
+    <Tabs routes={[]} class="p-2 dark:bg-zinc-925/70 shadow-md shadow-black/5">
+      <div class="flex gap-2 flex-row items-center w-full text-base h-10">
+        <TextInput
+          bind:value={search}
+          bind:element={searchElement}
+          name="q"
+          aria-label={$t('routes.search.query')}
+          size="lg"
+          class="flex-1 !rounded-full h-full"
+          placeholder={$t('routes.communities.search.placeholder')}
+        />
+        <Button
+          submit
+          color="primary"
+          size="custom"
+          class="flex-shrink-0 h-full aspect-square"
+          title="Search"
+          rounding="pill"
+          loading={navigating.to != null}
+        >
+          {#snippet prefix()}
+            <Icon src={MagnifyingGlass} size="16" micro />
+          {/snippet}
+        </Button>
+      </div>
+    </Tabs>
+    <div class="flex flex-row flex-wrap gap-4 mt-4 items-center">
+      <Location
+        name="type"
+        selected={data.type}
+        onchange={() => form?.requestSubmit()}
       />
-      <Button
-        submit
-        color="primary"
-        size="custom"
-        class="flex-shrink-0 h-full aspect-square"
-        title="Search"
-        rounding="pill"
-        loading={$navigating != null}
-      >
-        {#snippet prefix()}
-          <Icon src={MagnifyingGlass} size="16" micro />
-        {/snippet}
-      </Button>
-    </form>
-  </Tabs>
-</div>
-<div class="flex flex-row flex-wrap gap-4 mt-4 items-center">
-  <Location selected={data.type} />
-  <Sort selected={data.sort} />
+      <Sort
+        name="sort"
+        selected={data.sort}
+        onchange={() => form?.requestSubmit()}
+      />
+    </div>
+  </form>
 </div>
 <ul
   class="flex flex-col divide-y divide-slate-100 dark:divide-zinc-800 my-6 h-full"
@@ -179,8 +187,8 @@
   >
     <Tabs routes={[]} class="mx-auto">
       <Pageination
-        page={Number($page.url.searchParams.get('page')) || 1}
-        on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
+        page={Number(page.url.searchParams.get('page')) || 1}
+        on:change={(p) => searchParam(page.url, 'page', p.detail.toString())}
       />
     </Tabs>
   </div>

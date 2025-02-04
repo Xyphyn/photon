@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { page } from '$app/stores'
+  import { page } from '$app/state'
   import { profile } from '$lib/auth.svelte'
   import { searchParam } from '$lib/util.svelte'
   import { Select } from 'mono-svelte'
@@ -35,7 +35,7 @@
   {...rest}
   bind:value={selected}
   onchange={() => {
-    if (navigate) searchParam($page.url, 'type', selected, 'page', 'cursor')
+    if (navigate) searchParam(page.url, 'type', selected, 'page', 'cursor')
   }}
 >
   {#snippet customLabel()}

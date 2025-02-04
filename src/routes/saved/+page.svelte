@@ -8,7 +8,7 @@
   import { settings } from '$lib/settings.svelte.js'
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import { searchParam } from '$lib/util.svelte.js'
-  import { page } from '$app/stores'
+  import { page } from '$app/state'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { Bookmark } from 'svelte-hero-icons'
   import { t } from '$lib/translations.js'
@@ -44,7 +44,7 @@
     <div class="flex items-center">
       <Select
         bind:value={type}
-        onchange={() => searchParam($page.url, 'type', type, 'page')}
+        onchange={() => searchParam(page.url, 'type', type, 'page')}
       >
         {#snippet customLabel()}
           <div class="flex items-center gap-0.5">
@@ -94,7 +94,7 @@
 >
   <Tabs routes={[]} class="mx-auto">
     <Pageination
-      on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
+      on:change={(p) => searchParam(page.url, 'page', p.detail.toString())}
       page={data.page}
     />
   </Tabs>

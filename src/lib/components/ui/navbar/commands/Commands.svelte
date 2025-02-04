@@ -12,7 +12,7 @@
   import { profile, profileData } from '$lib/auth.svelte'
   import { getGroups, type Action, type Group } from './actions.svelte'
   import { themeData } from '$lib/ui/colors'
-  import { page } from '$app/stores'
+  import { page } from '$app/state'
 
   interface Props {
     open?: boolean
@@ -235,7 +235,7 @@
       $profile,
       $profileData.profiles,
       $themeData,
-      $page.data.contextual?.actions,
+      page.data.contextual?.actions,
     )
   })
   let flattenedActions = $derived(

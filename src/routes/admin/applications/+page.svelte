@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { page } from '$app/stores'
+  import { page } from '$app/state'
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { searchParam } from '$lib/util.svelte.js'
@@ -18,7 +18,7 @@
   selected={data.unreadOnly ?? true}
   optionNames={[$t('filter.location.all'), $t('filter.unread')]}
   on:select={(e) =>
-    searchParam($page.url, 'unreadOnly', e.detail.toString(), 'page')}
+    searchParam(page.url, 'unreadOnly', e.detail.toString(), 'page')}
 />
 {#if data.applications && data.applications.length > 0}
   <div class="flex flex-col gap-4">
@@ -30,7 +30,7 @@
     <div class="mt-auto">
       <Pageination
         page={data.page}
-        on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
+        on:change={(p) => searchParam(page.url, 'page', p.detail.toString())}
       />
     </div>
   {/if}

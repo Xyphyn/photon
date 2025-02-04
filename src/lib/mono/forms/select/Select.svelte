@@ -14,7 +14,7 @@
   import Menu from '../../popover/Menu.svelte'
   import MenuButton from '../../popover/MenuButton.svelte'
   import Popover from '../../popover/Popover.svelte'
-  import { createEventDispatcher, onMount, setContext } from 'svelte'
+  import { createEventDispatcher, onMount, setContext, tick } from 'svelte'
   import {
     CheckCircle,
     ChevronDown,
@@ -51,8 +51,8 @@
     customLabel?: import('svelte').Snippet
     children?: import('svelte').Snippet
     customOption?: import('svelte').Snippet<[any]>
-    oncontextmenu?: () => void
-    onchange?: () => void
+    oncontextmenu?: HTMLSelectAttributes['oncontextmenu']
+    onchange?: HTMLSelectAttributes['onchange']
   }
 
   let {
@@ -99,8 +99,8 @@
             e.preventDefault()
             open = !open
           }}
-          onchange={bubble('change')}
-          oncontextmenu={bubble('contextmenu')}
+          {onchange}
+          {oncontextmenu}
           {placeholder}
         >
           {#if placeholder}
@@ -116,10 +116,10 @@
             selected: option.value == value,
           })}{:else}
           <MenuButton
-            on:contextmenu={() => oncontextmenu?.()}
-            onclick={() => {
+            onclick={async () => {
               value = option.value
-              onchange?.()
+              await tick()
+              element?.dispatchEvent(new Event('change', { bubbles: true }))
             }}
             size="custom"
             disabled={option.disabled}

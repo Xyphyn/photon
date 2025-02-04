@@ -27,7 +27,7 @@
     clearErrorScope,
     pushError,
   } from '$lib/components/error/ErrorContainer.svelte'
-  import { page } from '$app/stores'
+  import { page } from '$app/state'
 
   interface Props {
     ref?: string
@@ -47,7 +47,7 @@
 
   async function logIn() {
     data.loading = true
-    clearErrorScope($page.route.id)
+    clearErrorScope(page.route.id)
 
     try {
       data.instance = data.instance.trim()
@@ -83,7 +83,7 @@
                     : `_${data.attempts + 1}`),
               )
             : errorMessage(error),
-        scope: $page.route.id!,
+        scope: page.route.id!,
       })
       data.attempts++
     }
@@ -108,7 +108,7 @@
           })}
         </Note>
       {/if}
-      <ErrorContainer class="pt-2" scope={$page.route.id} />
+      <ErrorContainer class="pt-2" scope={page.route.id} />
     </div>
     <div class="flex flex-row w-full items-center gap-2">
       <TextInput

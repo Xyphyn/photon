@@ -1,7 +1,7 @@
 <script lang="ts">
   import { preventDefault } from 'svelte/legacy'
 
-  import { navigating, page } from '$app/stores'
+  import { navigating, page } from '$app/state'
   import { profile } from '$lib/auth.svelte.js'
   import ObjectAutocomplete from '$lib/components/lemmy/ObjectAutocomplete.svelte'
   import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
@@ -48,6 +48,7 @@
 
   let query = $state(data.query || '')
   let searchElement: HTMLInputElement | undefined = $state()
+  let form = $state<HTMLFormElement>()
 
   let pageNum = $state(data.page)
 
@@ -71,64 +72,65 @@
   class="mt-4 mb-0 sticky z-30"
   style="top: max(1.5rem, {$contentPadding.top}px);"
 >
-  <Tabs routes={[]} class="p-2 dark:bg-zinc-925/70">
-    <form
-      method="get"
-      action="/search"
-      class="flex gap-2 flex-row items-center w-full text-base h-10"
-    >
-      <TextInput
-        bind:value={query}
-        bind:element={searchElement}
-        name="q"
-        aria-label={$t('routes.search.query')}
-        size="lg"
-        class="flex-1 !rounded-full h-full !text-base"
+  <form method="get" action="/search" class="" bind:this={form}>
+    <Tabs routes={[]} class="p-2 dark:bg-zinc-925/70">
+      <div class="flex gap-2 flex-row items-center w-full text-base h-10">
+        <TextInput
+          bind:value={query}
+          bind:element={searchElement}
+          name="q"
+          aria-label={$t('routes.search.query')}
+          size="lg"
+          class="flex-1 !rounded-full h-full !text-base"
+        />
+        <Button
+          submit
+          color="primary"
+          size="custom"
+          class="flex-shrink-0 h-full aspect-square"
+          title="Search"
+          rounding="pill"
+          loading={navigating.to != null}
+        >
+          {#snippet prefix()}
+            <Icon src={MagnifyingGlass} size="16" micro />
+          {/snippet}
+        </Button>
+      </div>
+    </Tabs>
+    <div class="flex flex-row flex-wrap items-center gap-4 mt-4">
+      <Select
+        name="type"
+        bind:value={data.type}
+        onchange={() => form?.requestSubmit()}
+      >
+        {#snippet customLabel()}
+          <span class="flex items-center gap-1">
+            <Icon src={AdjustmentsHorizontal} mini size="15" />
+            {$t('filter.type')}
+          </span>
+        {/snippet}
+        <Option value="All">{$t('content.all')}</Option>
+        <Option value="Posts">{$t('content.posts')}</Option>
+        <Option value="Comments">{$t('content.comments')}</Option>
+        <Option value="Communities">{$t('content.communities')}</Option>
+        <Option value="Users">{$t('content.users')}</Option>
+      </Select>
+      <Sort
+        name="sort"
+        bind:selected={data.sort}
+        onchange={() => form?.requestSubmit()}
       />
       <Button
-        submit
-        color="primary"
-        size="custom"
-        class="flex-shrink-0 h-full aspect-square"
-        title="Search"
-        rounding="pill"
-        loading={$navigating != null}
+        size="square-lg"
+        color="tertiary"
+        class="self-end justify-self-center"
+        onclick={() => (moreOptions = !moreOptions)}
       >
-        {#snippet prefix()}
-          <Icon src={MagnifyingGlass} size="16" micro />
-        {/snippet}
+        <Icon src={ChevronDown} size="20" mini />
       </Button>
-    </form>
-  </Tabs>
-</div>
-<div class="flex flex-row flex-wrap items-center gap-4 mt-4">
-  <Select
-    bind:value={data.type}
-    on:change={() => searchParam($page.url, 'type', data.type ?? 'All', 'page')}
-  >
-    {#snippet customLabel()}
-      <span class="flex items-center gap-1">
-        <Icon src={AdjustmentsHorizontal} mini size="15" />
-        {$t('filter.type')}
-      </span>
-    {/snippet}
-    <Option value="All">{$t('content.all')}</Option>
-    <Option value="Posts">{$t('content.posts')}</Option>
-    <Option value="Comments">{$t('content.comments')}</Option>
-    <Option value="Communities">{$t('content.communities')}</Option>
-    <Option value="Users">{$t('content.users')}</Option>
-  </Select>
-  <Sort navigate bind:selected={data.sort} />
-  {#snippet summary()}
-    <Button
-      size="square-lg"
-      color="tertiary"
-      class="self-end justify-self-center"
-      onclick={() => (moreOptions = !moreOptions)}
-    >
-      <Icon src={ChevronDown} size="20" mini />
-    </Button>
-  {/snippet}
+    </div>
+  </form>
 </div>
 {#if moreOptions}
   <div transition:slide={{ axis: 'y', easing: expoOut }} class="max-w-sm">
@@ -138,7 +140,7 @@
       listing_type={'All'}
       showWhenEmpty={true}
       on:select={(c) =>
-        searchParam($page.url, 'community', c.detail?.id || undefined, 'page')}
+        searchParam(page.url, 'community', c.detail?.id || undefined, 'page')}
     />
   </div>
 {/if}
@@ -215,7 +217,7 @@
   {#if data.results.length > 0}
     <Pageination
       bind:page={pageNum}
-      on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
+      on:change={(p) => searchParam(page.url, 'page', p.detail.toString())}
     />
   {/if}
 {/if}

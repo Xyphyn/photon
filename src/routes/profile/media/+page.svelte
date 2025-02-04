@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { page } from '$app/stores'
+  import { page } from '$app/state'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import { t } from '$lib/translations'
@@ -33,9 +33,9 @@
 </div>
 {#if data.images.length == 20}
   <Pageination
-    page={Number($page.url.searchParams.get('page')) || 1}
+    page={Number(page.url.searchParams.get('page')) || 1}
     on:change={(p) => {
-      searchParam($page.url, 'page', p.detail.toString())
+      searchParam(page.url, 'page', p.detail.toString())
     }}
   />
 {/if}

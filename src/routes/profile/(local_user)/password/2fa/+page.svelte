@@ -1,6 +1,6 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
-  import { page } from '$app/stores'
+  import { page } from '$app/state'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { client } from '$lib/lemmy.js'
   import { t } from '$lib/translations.js'
@@ -31,7 +31,7 @@
           type: 'success',
         })
 
-        goto($page.url, { invalidateAll: true })
+        goto(page.url, { invalidateAll: true })
       } else {
         const res = await client().generateTotpSecret()
         totpLink = res.totp_secret_url

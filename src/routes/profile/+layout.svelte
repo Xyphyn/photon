@@ -1,6 +1,6 @@
 <script>
   import { goto } from '$app/navigation'
-  import { page } from '$app/stores'
+  import { page } from '$app/state'
 
   import MultiSelect from '$lib/components/input/Switch.svelte'
   import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
@@ -22,7 +22,7 @@
    */
 
   /** @type {Props} */
-  let { children } = $props();
+  let { children } = $props()
 </script>
 
 <svelte:head>
@@ -65,9 +65,8 @@
     {#if feature('mediaAndVotes', $site?.version)}
       <Menu class="flex-1" placement="bottom-end">
         {#snippet target()}
-                <Button
+          <Button
             title={$t('post.actions.more.label')}
-            
             size="square-lg"
             rounding="pill"
             color="none"
@@ -78,23 +77,23 @@
           >
             <Icon src={EllipsisHorizontal} size="16" mini />
           </Button>
-              {/snippet}
+        {/snippet}
         <MenuButton href="/profile/media">
           {#snippet prefix()}
-                    <Icon src={Photo} size="16" mini  />
-                  {/snippet}
+            <Icon src={Photo} size="16" mini />
+          {/snippet}
           {$t('routes.profile.media.title')}
         </MenuButton>
         <MenuButton href="/profile/voted/up">
           {#snippet prefix()}
-                    <Icon src={ArrowUp} size="16" micro  />
-                  {/snippet}
+            <Icon src={ArrowUp} size="16" micro />
+          {/snippet}
           {$t('routes.profile.upvoted')}
         </MenuButton>
         <MenuButton href="/profile/voted/down">
           {#snippet prefix()}
-                    <Icon src={ArrowDown} size="16" micro  />
-                  {/snippet}
+            <Icon src={ArrowDown} size="16" micro />
+          {/snippet}
           {$t('routes.profile.downvoted')}
         </MenuButton>
       </Menu>

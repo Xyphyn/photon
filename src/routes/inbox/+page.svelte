@@ -11,7 +11,7 @@
   } from 'svelte-hero-icons'
   import { getClient } from '$lib/lemmy.js'
   import { goto } from '$app/navigation'
-  import { page } from '$app/stores'
+  import { page } from '$app/state'
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import { notifications, profile } from '$lib/auth.svelte.js'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
@@ -46,7 +46,7 @@
 
     $notifications.inbox = 0
 
-    goto($page.url, {
+    goto(page.url, {
       invalidateAll: true,
     }).then(() => {
       markingAsRead = false
@@ -104,17 +104,17 @@ items-center px-2 w-max"
           name: $t('filter.inbox.messages'),
         },
       ]}
-      currentRoute={$page.url.search}
+      currentRoute={page.url.search}
       isSelected={(url, current, route, def) =>
-        $page.url.search == route ||
-        ($page.url.pathname == route && $page.url.search == '') ||
-        $page.url.searchParams.toString().includes(route.slice(1)) ||
-        ($page.url.search == '' && route == def)}
+        page.url.search == route ||
+        (page.url.pathname == route && page.url.search == '') ||
+        page.url.searchParams.toString().includes(route.slice(1)) ||
+        (page.url.search == '' && route == def)}
       class="overflow-auto w-full"
       buildUrl={(route, href) =>
         href.includes('?')
-          ? '?' + addSearchParam($page.url.searchParams, href).toString()
-          : `${href}${$page.url.search}`}
+          ? '?' + addSearchParam(page.url.searchParams, href).toString()
+          : `${href}${page.url.search}`}
       defaultRoute="?type=All"
     />
     <Tabs
@@ -129,10 +129,10 @@ items-center px-2 w-max"
         },
       ]}
       isSelected={(url, current, route, def) =>
-        $page.url.searchParams.toString().includes(route.slice(1)) ||
-        ($page.url.search == '' && route == def)}
+        page.url.searchParams.toString().includes(route.slice(1)) ||
+        (page.url.search == '' && route == def)}
       buildUrl={(route, href) =>
-        '?' + addSearchParam($page.url.searchParams, href).toString()}
+        '?' + addSearchParam(page.url.searchParams, href).toString()}
       defaultRoute="?unreadOnly=true"
     />
   </div>
@@ -141,7 +141,7 @@ items-center px-2 w-max"
 
     <div class="flex items-center gap-2">
       <Button
-        onclick={() => goto($page.url, { invalidateAll: true })}
+        onclick={() => goto(page.url, { invalidateAll: true })}
         size="square-lg"
         rounding="xl"
         title={$t('common.refresh')}
@@ -201,7 +201,7 @@ items-center px-2 w-max"
         <Pageination
           hasMore={!(!inbox || (inbox?.length ?? 0) < (data?.limit ?? 0))}
           page={data.page}
-          on:change={(p) => searchParam($page.url, 'page', p.detail.toString())}
+          on:change={(p) => searchParam(page.url, 'page', p.detail.toString())}
         />
       </Tabs>
     </div>
