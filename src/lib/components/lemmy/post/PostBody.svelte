@@ -4,14 +4,14 @@
   import { Button } from 'mono-svelte'
   import { ChevronDown, Icon } from 'svelte-hero-icons'
 
+  const MAX_HEIGHT = 192
+
   let element = $state<Element>()
 
   function isOverflown(element: Element) {
     if (!element) return false
-    return (
-      element.scrollHeight > element.clientHeight ||
-      element.scrollWidth > element.clientWidth
-    )
+
+    return element.scrollHeight > MAX_HEIGHT
   }
 
   interface Props {
@@ -34,7 +34,7 @@
 
   let overflows = $derived(element ? isOverflown(element) : false)
 
-  let expanded = $state(true)
+  let expanded = $state(false)
   $effect(() => {
     expanded = !overflows
   })
@@ -46,8 +46,7 @@
   class="{!expanded
     ? ` overflow-hidden
 bg-gradient-to-b text-transparent from-slate-600 via-slate-600
-dark:from-zinc-400 dark:via-zinc-400 bg-clip-text z-0
-${view == 'list' ? `max-h-24` : 'max-h-48'}`
+dark:from-zinc-400 dark:via-zinc-400 bg-clip-text z-0 max-h-48`
     : 'text-slate-600 dark:text-zinc-400 max-h-full'} text-base {clazz}"
   class:pointer-events-none={!clickThrough}
   bind:this={element}

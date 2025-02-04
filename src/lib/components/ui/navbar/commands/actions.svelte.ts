@@ -349,14 +349,6 @@ export function getGroups(
               handle: () =>
                 settings.view = 'cozy'
             },
-            {
-              name: t.get('nav.commands.setViewTo', {
-                default: t.get('filter.view.list'),
-              }),
-              icon: ViewColumns,
-              handle: () =>
-                settings.view = 'list'
-            },
           ],
         },
         {

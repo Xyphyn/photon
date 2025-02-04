@@ -8,7 +8,7 @@ import type { Link } from './components/ui/navbar/link'
 console.log('Using the following default settings from the environment:')
 console.log(env)
 
-export type View = 'card' | 'cozy' | 'list' | 'compact'
+export type View = 'cozy' | 'compact'
 
 export const SSR_ENABLED = env.PUBLIC_SSR_ENABLED?.toLowerCase() == 'true'
 
@@ -148,7 +148,7 @@ export const defaultSettings: Settings = {
   debugInfo: toBool(env.PUBLIC_DEBUG_INFO) ?? false,
   expandImages: toBool(env.PUBLIC_EXPAND_IMAGES) ?? true,
   // @ts-ignore
-  view: env.PUBLIC_VIEW ?? 'cozy',
+  view: env.PUBLIC_VIEW ?? 'compact',
   // @ts-ignore
   font: env.PUBLIC_FONT ?? 'inter',
   leftAlign: toBool(env.PUBLIC_LEFT_ALIGN) ?? false,

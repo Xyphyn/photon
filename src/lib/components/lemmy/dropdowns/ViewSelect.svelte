@@ -34,9 +34,6 @@
   <Option value="cozy" icon={RectangleGroup}>
     {$t('filter.view.cozy')}
   </Option>
-  <Option value="list" icon={QueueList}>
-    {$t('filter.view.list')}
-  </Option>
   <Option value="compact" icon={Bars3}>
     {$t('filter.view.compact')}
   </Option>

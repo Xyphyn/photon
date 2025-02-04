@@ -3,15 +3,13 @@
   import { isImage, isVideo } from '$lib/ui/image.js'
   import { getInstance } from '$lib/lemmy.js'
   import PostActions from '$lib/components/lemmy/post/PostActions.svelte'
-  import { settings } from '$lib/settings.svelte.js'
+  import { settings, type View } from '$lib/settings.svelte.js'
   import PostLink from '$lib/components/lemmy/post/link/PostLink.svelte'
   import PostMeta, {
     parseTags,
     type Tag,
   } from '$lib/components/lemmy/post/PostMeta.svelte'
   import { Badge, Material, toast } from 'mono-svelte'
-  import Markdown from '$lib/components/markdown/Markdown.svelte'
-  import ExpandableImage from '$lib/components/ui/ExpandableImage.svelte'
   import {
     bestImageURL,
     mediaType,
@@ -19,12 +17,7 @@
   } from '$lib/components/lemmy/post/helpers.js'
   import Empty from '$lib/components/helper/Empty.svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
-  import {
-    ArrowUp,
-    ChatBubbleOvalLeft,
-    Icon,
-    VideoCamera,
-  } from 'svelte-hero-icons'
+  import { ArrowUp, ChatBubbleOvalLeft, Icon } from 'svelte-hero-icons'
   import PostMedia from '$lib/components/lemmy/post/media/PostMedia.svelte'
   import PostMediaCompact from '$lib/components/lemmy/post/media/PostMediaCompact.svelte'
   import PostBody from './PostBody.svelte'
@@ -58,7 +51,7 @@
     post: PostView
     actions?: boolean
     hideCommunity?: boolean
-    view?: any
+    view?: View
     style?: string
     class?: string
     badges?: import('svelte').Snippet
@@ -105,7 +98,6 @@
   group
   {settings.leftAlign ? 'left-align' : ''}
   {view == 'compact' ? 'py-3 list-type compact' : ''}
-  {view == 'list' ? 'py-5 list-type' : ''}
   {view == 'cozy' ? 'py-5 flex flex-col gap-2' : ''}
   {clazz ?? ''}"
   id={post.post.id.toString()}
@@ -152,10 +144,7 @@
     {/snippet}
   </PostMeta>
   {#key post.post.url}
-    <div
-      style="grid-area:embed;"
-      class={view == 'list' || view == 'compact' ? '' : 'contents'}
-    >
+    <div style="grid-area:embed;" class={view == 'compact' ? '' : 'contents'}>
       {#if rule != 'hide'}
         <PostMedia
           post={post.post}
@@ -165,7 +154,7 @@
         />
       {/if}
     </div>
-    {#if view == 'list' || view == 'compact'}
+    {#if view == 'compact'}
       <PostMediaCompact
         post={post.post}
         {type}

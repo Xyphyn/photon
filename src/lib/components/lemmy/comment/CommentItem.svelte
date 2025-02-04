@@ -31,11 +31,7 @@
 <Material
   class="flex flex-col flex-1 {view != 'card'
     ? '!bg-transparent !border-0 rounded-none'
-    : 'p-5'} {view == 'list'
-    ? 'py-5'
-    : view == 'compact'
-      ? 'py-4'
-      : 'py-5'} {clazz}"
+    : 'p-5'} {view == 'compact' ? 'py-4' : 'py-5'} {clazz}"
   color="distinct"
   padding="none"
 >

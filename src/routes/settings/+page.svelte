@@ -264,14 +264,10 @@
       <ViewSelect showLabel={false} />
       {#snippet description()}
         <p>
-          {#if settings.view == 'list'}
-            {$t('settings.app.view.list')}
-          {:else if settings.view == 'cozy'}
+          {#if settings.view == 'cozy'}
             {$t('settings.app.view.cozy')}
           {:else if settings.view == 'compact'}
             {$t('settings.app.view.compact')}
-          {:else if settings.view == 'card'}
-            {$t('settings.app.view.legacy')}
           {/if}
         </p>
       {/snippet}
