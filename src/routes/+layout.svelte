@@ -156,7 +156,6 @@
           taglines={$site.taglines}
           admins={$site.admins}
           version={$site.version}
-          class=""
         />
       {:else}
         <div class="h-64 w-full grid place-items-center">
