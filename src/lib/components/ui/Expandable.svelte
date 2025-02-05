@@ -22,11 +22,7 @@
   }: Props = $props()
 </script>
 
-<Disclosure
-  {extended}
-  bind:open
-  class="items-start justify-items-start gap-2 {clazz}"
->
+<Disclosure {extended} bind:open class=" gap-2 {clazz}">
   {#snippet summary()}
     <div
       class="font-medium w-full text-left flex flex-row items-center justify-between hover:text-primary-900

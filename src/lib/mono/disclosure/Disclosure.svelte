@@ -21,7 +21,7 @@
   }: Props = $props()
 </script>
 
-<div {...rest} class={clazz}>
+<div {...rest} class={['w-full', clazz]}>
   <button onclick={() => (open = !open)} class="w-full">
     {@render summary?.({ open })}
   </button>
