@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy'
-
   import Navbar from '$lib/components/ui/navbar/Navbar.svelte'
   import '../style/app.css'
   import { navigating, page } from '$app/state'
@@ -26,7 +24,6 @@
   import { onMount } from 'svelte'
   import { browser } from '$app/environment'
   import { Forward, Icon } from 'svelte-hero-icons'
-  import { routes } from '$lib/util.svelte.js'
   import Shell from '$lib/components/ui/layout/Shell.svelte'
   import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
   import { site } from '$lib/lemmy.js'

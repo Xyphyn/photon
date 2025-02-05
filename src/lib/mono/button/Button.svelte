@@ -62,13 +62,6 @@
     'square-xl': 'w-12 h-12',
     custom: '',
   }
-</script>
-
-<script lang="ts">
-  import type { HTMLButtonAttributes } from 'svelte/elements'
-
-  import Spinner from '../loader/Spinner.svelte'
-  import type { Snippet } from 'svelte'
 
   type ButtonRoundness = 'pill' | 'xl' | 'lg' | 'md' | 'none'
   type ButtonRoundingSide = 'all' | 'left' | 'right' | 'top' | 'bottom'
@@ -135,6 +128,15 @@
     onclick?: HTMLButtonAttributes['onclick']
     [key: string]: any
   }
+
+  export type { Props as ButtonProps }
+</script>
+
+<script lang="ts">
+  import type { HTMLButtonAttributes } from 'svelte/elements'
+
+  import Spinner from '../loader/Spinner.svelte'
+  import type { Snippet } from 'svelte'
 
   let {
     loading = false,

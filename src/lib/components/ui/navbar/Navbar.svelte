@@ -25,8 +25,6 @@
   import { LINKED_INSTANCE_URL } from '$lib/instance'
   import { t } from '$lib/translations'
   import CommandsWrapper from './commands/CommandsWrapper.svelte'
-  import { optimizeImageURL } from '$lib/components/lemmy/post/helpers'
-  import { dockProps } from '../layout/Shell.svelte'
 
   let promptOpen: boolean = $state(false)
   interface Props {

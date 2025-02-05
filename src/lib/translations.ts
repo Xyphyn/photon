@@ -88,7 +88,7 @@ const config: Config = {
       loader: async () => (await import('./i18n/zh-Hant.json')).default,
     },
   ],
-  fallbackLocale: 'en',
+  fallbackLocale: 'en'
 }
 
 export const aliases = new Map([

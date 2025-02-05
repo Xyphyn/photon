@@ -3,8 +3,9 @@
   import { Button } from 'mono-svelte'
   import { Icon, type IconSource } from 'svelte-hero-icons'
   import { dockProps } from '../layout/Shell.svelte'
+  import type { ButtonProps } from 'mono-svelte/button/Button.svelte'
 
-  interface Props {
+  interface Props extends ButtonProps {
     label: string
     icon?: IconSource | undefined
     href?: string | undefined

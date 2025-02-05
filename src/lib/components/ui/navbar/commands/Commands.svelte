@@ -223,9 +223,6 @@
     }
   }
 
-  afterNavigate(() => {
-    // open = false
-  })
   $effect(() => {
     if (open) search = ''
   })

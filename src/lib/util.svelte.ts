@@ -12,7 +12,7 @@ import { site } from './lemmy'
 // Example: findClosestNumber([8, 16, 32, 64, 128], 76) will return 128
 export const findClosestNumber = (numbers: number[], target: number): number =>
   numbers.reduce((prev, curr) =>
-    curr >= target && (prev < target || curr < prev) ? curr : prev
+    curr >= target && (prev < target || curr < prev) ? curr : prev,
   )
 
 export const searchParam = (
@@ -64,7 +64,7 @@ export const placeholders = {
 export function moveItem<T>(
   array: T[],
   currentIndex: number,
-  newIndex: number
+  newIndex: number,
 ): T[] {
   if (
     currentIndex < 0 ||
@@ -110,34 +110,10 @@ export const DOMAIN_REGEX_FORMS =
 export const isSubscribed = (subscribed: SubscribedType) =>
   subscribed == 'Pending' || subscribed == 'Subscribed'
 
-export const routes = {
-  '/': 'Frontpage',
-  get '/post/[instance]/[id=integer]'() {
-    return get(page)?.data?.post?.post_view?.post?.name
-  },
-  '/settings': 'Settings',
-  '/communities': 'Communities',
-  '/search': 'Search',
-  '/moderation': 'Moderation',
-  '/create/post': 'Create post',
-  '/create/community': 'Create community',
-  get '/c/[name]'() {
-    return get(page)?.data?.community?.community_view?.community?.title
-  },
-  '/accounts': 'Accounts',
-  '/admin/config': 'Administration',
-  '/inbox': 'Inbox',
-  '/saved': 'Saved',
-  '/about': 'About',
-  '/profile/user': 'Profile',
-  '/profile/settings': 'Profile Settings',
-  '/profile/blocks': 'Blocks',
-}
-
 export async function uploadImage(
   image: File | null | undefined,
   instance: string,
-  jwt: string
+  jwt: string,
 ): Promise<string | undefined> {
   if (!image) return
 
@@ -161,7 +137,7 @@ export async function uploadImage(
       {
         method: 'POST',
         body: formData,
-      }
+      },
     )
 
     const json = await response.json()
@@ -173,7 +149,7 @@ export async function uploadImage(
       `${
         (await response.text().catch((_) => undefined)) ??
         'Failed to upload image'
-      }: ${response.status}: ${response.statusText}`
+      }: ${response.status}: ${response.statusText}`,
     )
   }
 }
