@@ -119,10 +119,8 @@
     <Pageination
       page={data.page}
       cursor={{ next: data.cursor.next }}
-      on:change={(p) => searchParam(page.url, 'page', p.detail.toString())}
-      on:cursor={(c) => {
-        searchParam(page.url, 'cursor', c.detail)
-      }}
+      href={(page) =>
+        typeof page == 'number' ? `?page=${page}` : `?cursor=${page}`}
     >
       <span class="flex flex-row items-center gap-1">
         <Icon src={ChartBar} size="16" mini />

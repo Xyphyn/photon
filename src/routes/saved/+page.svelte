@@ -93,9 +93,6 @@
   style="bottom: max(1.5rem, {$contentPadding.bottom}px);"
 >
   <Tabs routes={[]} class="mx-auto">
-    <Pageination
-      on:change={(p) => searchParam(page.url, 'page', p.detail.toString())}
-      page={data.page}
-    />
+    <Pageination href={(page) => `?page=${page}`} page={data.page} />
   </Tabs>
 </div>

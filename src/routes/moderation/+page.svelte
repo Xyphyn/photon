@@ -33,7 +33,7 @@
       <div class="flex flex-row gap-2 flex-wrap items-end">
         <Select
           bind:value={data.type}
-          on:change={() => searchParam(page.url, 'type', data.type, 'page')}
+          onchange={() => searchParam(page.url, 'type', data.type, 'page')}
         >
           {#snippet customLabel()}
             <span class="flex items-center gap-1">

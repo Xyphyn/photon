@@ -34,9 +34,7 @@
 {#if data.images.length == 20}
   <Pageination
     page={Number(page.url.searchParams.get('page')) || 1}
-    on:change={(p) => {
-      searchParam(page.url, 'page', p.detail.toString())
-    }}
+    href={(page) => `?page=${page}`}
   />
 {/if}
 

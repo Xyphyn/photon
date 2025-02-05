@@ -213,9 +213,6 @@
   </div>
   <div class="mt-4"></div>
   {#if data.results.length > 0}
-    <Pageination
-      bind:page={pageNum}
-      on:change={(p) => searchParam(page.url, 'page', p.detail.toString())}
-    />
+    <Pageination bind:page={pageNum} href={(page) => `?page=${page}`} />
   {/if}
 {/if}

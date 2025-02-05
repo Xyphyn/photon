@@ -219,10 +219,7 @@
         </table>
       </div>
     {/if}
-    <Pageination
-      page={data.page}
-      on:change={(e) => searchParam(page.url, 'page', e.detail.toString())}
-    />
+    <Pageination page={data.page} href={(page) => `?page=${page}`} />
   {:else}
     <Placeholder
       title="No results"

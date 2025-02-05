@@ -28,10 +28,7 @@
   </div>
   {#if data.applications.length >= 40}
     <div class="mt-auto">
-      <Pageination
-        page={data.page}
-        on:change={(p) => searchParam(page.url, 'page', p.detail.toString())}
-      />
+      <Pageination page={data.page} href={(page) => `?page=${page}`} />
     </div>
   {/if}
 {:else}

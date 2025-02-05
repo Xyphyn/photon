@@ -186,7 +186,7 @@
     <Tabs routes={[]} class="mx-auto">
       <Pageination
         page={Number(page.url.searchParams.get('page')) || 1}
-        on:change={(p) => searchParam(page.url, 'page', p.detail.toString())}
+        href={(c) => `?page=${c}`}
       />
     </Tabs>
   </div>

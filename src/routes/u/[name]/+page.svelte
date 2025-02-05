@@ -38,9 +38,10 @@
   import { publishedToDate } from '$lib/components/util/date.js'
   import { formatRelativeDate } from '$lib/components/util/RelativeDate.svelte'
   import Option from 'mono-svelte/forms/select/Option.svelte'
+  import type { PageData } from './$types'
 
   interface Props {
-    data: any
+    data: PageData
     inline?: boolean
   }
 
@@ -342,9 +343,6 @@
         {/each}
       </div>
     {/if}
-    <Pageination
-      page={data.page}
-      on:change={(p) => searchParam(page.url, 'page', p.detail.toString())}
-    />
+    <Pageination page={data.page} href={(page) => `?page=${page}`} />
   </div>
 </div>

@@ -201,7 +201,7 @@ items-center px-2 w-max"
         <Pageination
           hasMore={!(!inbox || (inbox?.length ?? 0) < (data?.limit ?? 0))}
           page={data.page}
-          on:change={(p) => searchParam(page.url, 'page', p.detail.toString())}
+          href={(page) => `?page=${page}`}
         />
       </Tabs>
     </div>
