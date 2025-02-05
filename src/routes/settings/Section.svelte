@@ -4,20 +4,14 @@
   import { backOut, expoOut } from 'svelte/easing'
   import { slide } from 'svelte/transition'
 
-
   interface Props {
-    title: string;
-    id: string;
-    open?: boolean;
-    children?: import('svelte').Snippet;
+    title: string
+    id: string
+    open?: boolean
+    children?: import('svelte').Snippet
   }
 
-  let {
-    title,
-    id,
-    open = $bindable(true),
-    children
-  }: Props = $props();
+  let { title, id, open = $bindable(true), children }: Props = $props()
 </script>
 
 <div class="flex flex-col max-w-full w-full">

@@ -14,10 +14,10 @@
   import { fly } from 'svelte/transition'
 
   interface Props {
-    toast: Toast;
+    toast: Toast
   }
 
-  let { toast }: Props = $props();
+  let { toast }: Props = $props()
 </script>
 
 <div

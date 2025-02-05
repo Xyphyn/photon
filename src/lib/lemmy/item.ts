@@ -67,7 +67,7 @@ export const isCommentReport = (item: Result): item is CommentReportView =>
   'comment_report' in item
 
 export const isPrivateMessageReport = (
-  item: Result
+  item: Result,
 ): item is PrivateMessageReportView => 'private_message_report' in item
 
 export interface ResumableItem {
@@ -86,15 +86,18 @@ function resumableStore(limit: number = 10) {
   const { subscribe, set, update } = writable<ResumableItem[]>([])
 
   return {
-    subscribe, set, update,
+    subscribe,
+    set,
+    update,
     add: (item: ResumableItem) => {
-      update(resumables => {
-        if (resumables.find(i => JSON.stringify(i) == JSON.stringify(item))) return resumables
+      update((resumables) => {
+        if (resumables.find((i) => JSON.stringify(i) == JSON.stringify(item)))
+          return resumables
         resumables.unshift(item)
         if (resumables.length > limit) resumables.pop()
         return resumables
       })
-    }
+    },
   }
 }
 

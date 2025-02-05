@@ -8,33 +8,31 @@
     Icon,
   } from 'svelte-hero-icons'
 
-
   interface Props {
-    supportedPlatforms?: any;
-    mainClass?: string;
-    itemsClass?: string;
-    optionClass?: string;
-    class?: string;
-    title?: import('svelte').Snippet;
-    description?: import('svelte').Snippet;
-    children?: import('svelte').Snippet;
+    supportedPlatforms?: any
+    mainClass?: string
+    itemsClass?: string
+    optionClass?: string
+    class?: string
+    title?: import('svelte').Snippet
+    description?: import('svelte').Snippet
+    children?: import('svelte').Snippet
   }
 
   let {
     supportedPlatforms = {
-    desktop: true,
-    tablet: true,
-    mobile: true,
-  },
+      desktop: true,
+      tablet: true,
+      mobile: true,
+    },
     mainClass = '',
     itemsClass = '',
     optionClass = '',
     class: clazz = '',
     title,
     description,
-    children
-  }: Props = $props();
-  
+    children,
+  }: Props = $props()
 </script>
 
 <div
@@ -45,24 +43,24 @@
       {#if supportedPlatforms.desktop}
         <Badge>
           {#snippet icon()}
-                    <Icon src={ComputerDesktop} micro size="14"  />
-                  {/snippet}
+            <Icon src={ComputerDesktop} micro size="14" />
+          {/snippet}
           {$t('settings.desktop')}
         </Badge>
       {/if}
       {#if supportedPlatforms.tablet}
         <Badge>
           {#snippet icon()}
-                    <Icon src={DeviceTablet} micro size="14"  />
-                  {/snippet}
+            <Icon src={DeviceTablet} micro size="14" />
+          {/snippet}
           {$t('settings.tablet')}
         </Badge>
       {/if}
       {#if supportedPlatforms.mobile}
         <Badge>
           {#snippet icon()}
-                    <Icon src={DevicePhoneMobile} micro size="14"  />
-                  {/snippet}
+            <Icon src={DevicePhoneMobile} micro size="14" />
+          {/snippet}
           {$t('settings.mobile')}
         </Badge>
       {/if}

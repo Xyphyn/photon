@@ -17,14 +17,13 @@
   import type { ActionName } from './+page.js'
 
   interface Props {
-    action: ActionName;
+    action: ActionName
   }
 
-  let { action }: Props = $props();
-
+  let { action }: Props = $props()
 
   const getAction = (
-    action: ActionName
+    action: ActionName,
   ): { icon: IconSource; text: string; class: string } => {
     switch (action) {
       case 'ban': {

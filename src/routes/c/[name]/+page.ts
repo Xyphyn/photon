@@ -10,8 +10,7 @@ export async function load({ params, fetch, url }) {
   const page = Number(url.searchParams.get('page')) || undefined
 
   const sort: SortType =
-    (url.searchParams.get('sort') as SortType) ||
-    settings.defaultSort.sort
+    (url.searchParams.get('sort') as SortType) || settings.defaultSort.sort
 
   return await postFeed({
     id: 'community',

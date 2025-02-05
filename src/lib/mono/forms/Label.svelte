@@ -1,14 +1,12 @@
 <script lang="ts">
-  
-  
   interface Props {
-    for?: string | undefined;
+    for?: string | undefined
     /**
-   * The `text` prop will take precedence over the slot.
-   */
-    text?: string | undefined;
-    class?: string;
-    children?: import('svelte').Snippet;
+     * The `text` prop will take precedence over the slot.
+     */
+    text?: string | undefined
+    class?: string
+    children?: import('svelte').Snippet
     [key: string]: any
   }
 
@@ -18,8 +16,7 @@
     class: clazz = '',
     children,
     ...rest
-  }: Props = $props();
-  
+  }: Props = $props()
 </script>
 
 <svelte:element

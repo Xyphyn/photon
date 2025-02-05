@@ -187,8 +187,6 @@ export const defaultSettings: Settings = {
   logoColorMonth: null,
 }
 
-
-
 function createSettingsState(initial: Settings): Settings {
   let settings = $state(initial)
   if (browser) {
@@ -197,9 +195,7 @@ function createSettingsState(initial: Settings): Settings {
       const merged = mergeDeep(initial, localSettings)
 
       settings = merged
-    } catch (e) {
-    }
-
+    } catch (e) {}
   }
   return settings
 }
@@ -208,7 +204,7 @@ export let settings = createSettingsState(defaultSettings)
 
 $effect.root(() => {
   $effect(() => {
-   localStorage.setItem('settings', JSON.stringify(settings))
+    localStorage.setItem('settings', JSON.stringify(settings))
 
     if (settings.language) {
       locale.set(settings.language)
@@ -217,13 +213,11 @@ $effect.root(() => {
     }
   })
 
-  return () => {
-    
-  }
+  return () => {}
 })
 
 function isObject(item: any) {
-  return (item && typeof item === 'object' && !Array.isArray(item));
+  return item && typeof item === 'object' && !Array.isArray(item)
 }
 
 /**
@@ -232,19 +226,19 @@ function isObject(item: any) {
  * @param ...sources
  */
 function mergeDeep(target: any, ...sources: any[]) {
-  if (!sources.length) return target;
-  const source = sources.shift();
+  if (!sources.length) return target
+  const source = sources.shift()
 
   if (isObject(target) && isObject(source)) {
     for (const key in source) {
       if (isObject(source[key])) {
-        if (!target[key]) Object.assign(target, { [key]: {} });
-        mergeDeep(target[key], source[key]);
+        if (!target[key]) Object.assign(target, { [key]: {} })
+        mergeDeep(target[key], source[key])
       } else {
-        Object.assign(target, { [key]: source[key] });
+        Object.assign(target, { [key]: source[key] })
       }
     }
   }
 
-  return mergeDeep(target, ...sources);
+  return mergeDeep(target, ...sources)
 }

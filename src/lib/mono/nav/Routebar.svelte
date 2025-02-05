@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Routebar from './Routebar.svelte';
+  import Routebar from './Routebar.svelte'
   import Button from '../button/Button.svelte'
 
   type Route = string
@@ -10,24 +10,22 @@
     name: string
   }
 
-  
-
   interface Props {
     /**
-   * The routes for the routebar.
-   */
-    routes: RouteObject[];
-    currentRoute?: Route | undefined;
-    parentRoute?: Route | undefined;
-    depth?: number;
+     * The routes for the routebar.
+     */
+    routes: RouteObject[]
+    currentRoute?: Route | undefined
+    parentRoute?: Route | undefined
+    depth?: number
   }
 
   let {
     routes,
     currentRoute = undefined,
     parentRoute = undefined,
-    depth = 0
-  }: Props = $props();
+    depth = 0,
+  }: Props = $props()
 </script>
 
 <svelte:element this={depth == 0 ? 'nav' : 'ul'} class="flex flex-col h-full">

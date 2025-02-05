@@ -10,7 +10,7 @@
     UserGroup,
   } from 'svelte-hero-icons'
 
-  let { data } = $props();
+  let { data } = $props()
 </script>
 
 <div

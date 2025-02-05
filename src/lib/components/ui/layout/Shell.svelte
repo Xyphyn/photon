@@ -77,7 +77,6 @@
 <script lang="ts">
   import { settings } from '$lib/settings.svelte.js'
   import { themeVars } from '$lib/ui/colors'
-  import { routes } from '$lib/util.svelte.js'
   import { writable, type Readable, type Writable } from 'svelte/store'
 
   interface Props {
@@ -102,9 +101,6 @@
     ...rest
   }: Props = $props()
 
-  let title = $derived(
-    route ? routes[(route.id as keyof typeof routes) ?? ''] : '',
-  )
   let sidePadding = $derived(
     calculatePadding($dockProps.noGap, $dockProps.top, false),
   )
@@ -147,7 +143,6 @@
           : `border-slate-200 dark:border-zinc-800 shadow-2xl
         bg-white/50 dark:bg-zinc-950/70`
       }`,
-      title,
       style: 'transition: border-radius 250ms;',
     })}
   </div>

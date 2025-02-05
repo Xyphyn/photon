@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { preventDefault } from 'svelte/legacy';
+  import { preventDefault } from 'svelte/legacy'
 
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import {

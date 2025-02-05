@@ -26,12 +26,12 @@ export async function load({ url, fetch, parent }) {
       (a, b) =>
         b.counts.upvotes -
         b.counts.downvotes -
-        (a.counts.upvotes - a.counts.downvotes)
+        (a.counts.upvotes - a.counts.downvotes),
     )
   } else if (sort == 'New') {
     items.sort(
       (a, b) =>
-        Date.parse(getItemPublished(b)) - Date.parse(getItemPublished(a))
+        Date.parse(getItemPublished(b)) - Date.parse(getItemPublished(a)),
     )
   }
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { preventDefault } from 'svelte/legacy';
+  import { preventDefault } from 'svelte/legacy'
 
   import { goto } from '$app/navigation'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
@@ -14,11 +14,11 @@
 
   interface Props {
     data: {
-    token: string
-  };
+      token: string
+    }
   }
 
-  let { data }: Props = $props();
+  let { data }: Props = $props()
 
   let instance = $state(LINKED_INSTANCE_URL || $currentInstance || '')
   let password = $state(''),

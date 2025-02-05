@@ -1,14 +1,12 @@
 <script lang="ts">
   import { Badge } from 'mono-svelte'
 
-
-
   interface Props {
-    name: string;
-    description: string;
-    badge?: string | undefined;
-    link?: string;
-    class?: string;
+    name: string
+    description: string
+    badge?: string | undefined
+    link?: string
+    class?: string
   }
 
   let {
@@ -16,9 +14,8 @@
     description,
     badge = undefined,
     link = '#',
-    class: clazz = ''
-  }: Props = $props();
-  
+    class: clazz = '',
+  }: Props = $props()
 </script>
 
 <div class="flex flex-col w-max {clazz}">

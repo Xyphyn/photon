@@ -3,18 +3,15 @@
   import CommunityTitle from '$lib/components/lemmy/community/CommunityTitle.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
-  let { data } = $props();
+  let { data } = $props()
 </script>
 
 <div class="flex flex-col gap-4">
   <Header pageHeader>
     <span>Settings</span>
     {#snippet extended()}
-        <CommunityTitle
-        
-        community={data.community.community_view.community}
-      />
-      {/snippet}
+      <CommunityTitle community={data.community.community_view.community} />
+    {/snippet}
   </Header>
   <CommunityForm
     edit={data.community.community_view.community.id}
@@ -32,7 +29,7 @@
     }}
   >
     {#snippet formtitle()}
-        {''}
-      {/snippet}
+      {''}
+    {/snippet}
   </CommunityForm>
 </div>

@@ -3,11 +3,11 @@
   import { Icon, InformationCircle } from 'svelte-hero-icons'
 
   interface Props {
-    content?: string | undefined;
-    children?: import('svelte').Snippet;
+    content?: string | undefined
+    children?: import('svelte').Snippet
   }
 
-  let { content = undefined, children }: Props = $props();
+  let { content = undefined, children }: Props = $props()
 </script>
 
 <Material

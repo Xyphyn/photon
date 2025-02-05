@@ -14,7 +14,7 @@
 </script>
 
 <script lang="ts">
-  import { preventDefault } from 'svelte/legacy';
+  import { preventDefault } from 'svelte/legacy'
 
   import { goto } from '$app/navigation'
   import { Badge, Material, Spinner, toast } from 'mono-svelte'
@@ -36,7 +36,7 @@
     try {
       const res: Instance[] = (
         await fetch(`https://data.lemmyverse.net/data/instance.full.json`).then(
-          (r) => r.json()
+          (r) => r.json(),
         )
       )
         .filter((i: Instance) => i.fed)

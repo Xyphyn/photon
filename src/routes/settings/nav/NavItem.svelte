@@ -2,18 +2,13 @@
   import { Material, Popover } from 'mono-svelte'
 
   interface Props {
-    href: string;
-    size?: keyof typeof sizes;
-    title?: string;
-    children?: import('svelte').Snippet;
+    href: string
+    size?: keyof typeof sizes
+    title?: string
+    children?: import('svelte').Snippet
   }
 
-  let {
-    href,
-    size = 'medium',
-    title = '',
-    children
-  }: Props = $props();
+  let { href, size = 'medium', title = '', children }: Props = $props()
 
   const sizes = {
     large: 'h-24',
@@ -24,13 +19,12 @@
 
 <Popover openOnHover placement="right">
   {#snippet target()}
-    <a {href} >
+    <a {href}>
       {@render children?.()}
     </a>
   {/snippet}
   {#snippet popover()}
     <Material
-      
       padding="none"
       rounding="xl"
       elevation="medium"

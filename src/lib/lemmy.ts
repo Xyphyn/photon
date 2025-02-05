@@ -25,12 +25,12 @@ async function customFetch(
   func:
     | ((
         input: RequestInfo | URL,
-        init?: RequestInit | undefined
+        init?: RequestInit | undefined,
       ) => Promise<Response>)
     | undefined,
   input: RequestInfo | URL,
   init?: RequestInit | undefined,
-  auth?: string
+  auth?: string,
 ): Promise<Response> {
   const f = func ? func : fetch
 
@@ -63,7 +63,7 @@ export function client({
   instanceURL?: string
   func?: (
     input: RequestInfo | URL,
-    init?: RequestInit | undefined
+    init?: RequestInit | undefined,
   ) => Promise<Response>
   auth?: string
 } = {}) {
@@ -84,9 +84,9 @@ export function getClient(
   instanceURL?: string,
   func?: (
     input: RequestInfo | URL,
-    init?: RequestInit | undefined
+    init?: RequestInit | undefined,
   ) => Promise<Response>,
-  auth?: string
+  auth?: string,
 ): LemmyHttp {
   return client({ instanceURL, func, auth })
 }
@@ -107,7 +107,7 @@ export async function validateInstance(instance: string): Promise<boolean> {
 
 export function mayBeIncompatible(
   minVersion: string,
-  availableVersion: string
+  availableVersion: string,
 ) {
   if (minVersion.valueOf() === availableVersion.valueOf()) return false
 

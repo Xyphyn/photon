@@ -1,22 +1,22 @@
 <script lang="ts">
-  import { preventDefault } from 'svelte/legacy';
+  import { preventDefault } from 'svelte/legacy'
 
   import { DocumentPlus, Icon } from 'svelte-hero-icons'
   import { Label, TextInput } from 'mono-svelte'
 
   interface Props {
-    accept?: string;
-    files?: FileList | undefined | null;
-    label?: string | undefined;
-    url?: string | undefined;
+    accept?: string
+    files?: FileList | undefined | null
+    label?: string | undefined
+    url?: string | undefined
   }
 
   let {
     accept = 'image/*',
     files = $bindable(null),
     label = undefined,
-    url = undefined
-  }: Props = $props();
+    url = undefined,
+  }: Props = $props()
 
   let dragover = $state(false)
 

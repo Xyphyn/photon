@@ -1,14 +1,13 @@
 <script lang="ts">
   import { Icon, type IconSource } from 'svelte-hero-icons'
 
-
   interface Props {
-    icon?: IconSource | undefined;
-    title: string;
-    description?: string | undefined;
-    center?: boolean;
-    class?: string;
-    children?: import('svelte').Snippet;
+    icon?: IconSource | undefined
+    title: string
+    description?: string | undefined
+    center?: boolean
+    class?: string
+    children?: import('svelte').Snippet
   }
 
   let {
@@ -17,9 +16,8 @@
     description = undefined,
     center = false,
     class: clazz = '',
-    children
-  }: Props = $props();
-  
+    children,
+  }: Props = $props()
 </script>
 
 <div

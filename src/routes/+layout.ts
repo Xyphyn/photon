@@ -8,8 +8,7 @@ export let ssr = (env.PUBLIC_SSR_ENABLED?.toLowerCase() ?? 'false') == 'true'
 
 export const load = async ({}) => {
   if (browser) {
-    const initLocale =
-      settings.language ?? navigator?.language ?? 'en'
+    const initLocale = settings.language ?? navigator?.language ?? 'en'
 
     console.log(`Loading locale ${aliases.get(initLocale) ?? initLocale}`)
 

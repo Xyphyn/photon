@@ -1,5 +1,4 @@
 <script lang="ts">
-
   const badgeColor = {
     red: 'bg-red-500 text-white ring-transparent',
     green: 'bg-green-500 text-white dark:text-black ring-transparent',
@@ -31,15 +30,14 @@
   type BadgeColor = keyof typeof badgeColor
   type BadgeRoundness = keyof typeof badgeRoundness
 
-
   interface Props {
-    label?: string;
-    color?: BadgeColor;
-    rounding?: BadgeRoundness;
-    allowIconOnly?: boolean;
-    class?: string;
-    icon?: import('svelte').Snippet;
-    children?: import('svelte').Snippet;
+    label?: string
+    color?: BadgeColor
+    rounding?: BadgeRoundness
+    allowIconOnly?: boolean
+    class?: string
+    icon?: import('svelte').Snippet
+    children?: import('svelte').Snippet
   }
 
   let {
@@ -51,8 +49,7 @@
     icon,
     children,
     ...rest
-  }: Props = $props();
-  
+  }: Props = $props()
 </script>
 
 <span

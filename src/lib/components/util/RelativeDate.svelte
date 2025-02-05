@@ -3,7 +3,7 @@
     date: Date,
     options: Intl.RelativeTimeFormatOptions,
     locale?: string,
-    relativeTo?: Date
+    relativeTo?: Date,
   ) {
     try {
       const now = relativeTo?.getTime() ?? Date.now()
@@ -41,7 +41,6 @@
 <script lang="ts">
   import { locale } from '$lib/translations'
 
-
   const toLocaleDateString = (date: Date): string => {
     try {
       return date.toLocaleString()
@@ -51,24 +50,24 @@
   }
 
   interface Props {
-    date: Date;
-    relativeTo?: Date | undefined;
-    options?: Intl.RelativeTimeFormatOptions;
-    style?: string;
-    class?: string;
+    date: Date
+    relativeTo?: Date | undefined
+    options?: Intl.RelativeTimeFormatOptions
+    style?: string
+    class?: string
   }
 
   let {
     date,
     relativeTo = undefined,
     options = {
-    numeric: 'always',
-    style: 'narrow',
-  },
+      numeric: 'always',
+      style: 'narrow',
+    },
     style = '',
-    class: clazz = ''
-  }: Props = $props();
-  
+    class: clazz = '',
+  }: Props = $props()
+
   let dateTime = $derived(toLocaleDateString(date))
 </script>
 

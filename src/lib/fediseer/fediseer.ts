@@ -41,12 +41,22 @@ class Fediseer {
   }
 
   async getInstanceInfo(domain: string): Promise<Data> {
-    const [endorsements, hesitations, guarantees, censures] = await Promise.all([
-      fetch(`${this.url}/v1/endorsements/${domain}`).then(r => r.json()) as Promise<Endorsements>,
-      fetch(`${this.url}/v1/hesitations/${domain}`).then(r => r.json()) as Promise<Hesitations>,
-      fetch(`${this.url}/v1/guarantees/${domain}`).then(r => r.json()) as Promise<Guarantees>,
-      fetch(`${this.url}/v1/censures/${domain}`).then(r => r.json()) as Promise<Censures>
-    ])
+    const [endorsements, hesitations, guarantees, censures] = await Promise.all(
+      [
+        fetch(`${this.url}/v1/endorsements/${domain}`).then((r) =>
+          r.json(),
+        ) as Promise<Endorsements>,
+        fetch(`${this.url}/v1/hesitations/${domain}`).then((r) =>
+          r.json(),
+        ) as Promise<Hesitations>,
+        fetch(`${this.url}/v1/guarantees/${domain}`).then((r) =>
+          r.json(),
+        ) as Promise<Guarantees>,
+        fetch(`${this.url}/v1/censures/${domain}`).then((r) =>
+          r.json(),
+        ) as Promise<Censures>,
+      ],
+    )
 
     return { endorsements, hesitations, guarantees, censures }
   }

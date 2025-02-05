@@ -3,7 +3,8 @@
 
   // https://github.com/sveltejs/svelte/issues/3088#issuecomment-505785516
   import { onMount, onDestroy, createEventDispatcher } from 'svelte'
-  let slottedElements: HTMLDivElement = $state(), portal: HTMLDivElement
+  let slottedElements: HTMLDivElement = $state(),
+    portal: HTMLDivElement
 
   const dispatch = createEventDispatcher<{ mounted: void }>()
 
@@ -21,12 +22,11 @@
   })
 
   interface Props {
-    class?: string;
-    children?: import('svelte').Snippet;
+    class?: string
+    children?: import('svelte').Snippet
   }
 
-  let { class: clazz = '', children }: Props = $props();
-  
+  let { class: clazz = '', children }: Props = $props()
 </script>
 
 <div class="portal-initial-mount-point">

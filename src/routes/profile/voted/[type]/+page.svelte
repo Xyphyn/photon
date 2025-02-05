@@ -5,9 +5,9 @@
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { t } from '$lib/translations'
 
-  let { data = $bindable() } = $props();
+  let { data = $bindable() } = $props()
 
-  const SvelteComponent = $derived(browser ? VirtualFeed : PostFeed);
+  const SvelteComponent = $derived(browser ? VirtualFeed : PostFeed)
 </script>
 
 <Header>

@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { createBubbler } from 'svelte/legacy';
+  import { createBubbler } from 'svelte/legacy'
 
-  const bubble = createBubbler();
+  const bubble = createBubbler()
   type Elevation = keyof typeof elevationClass
   type Padding = keyof typeof paddingClass
   type Rounding = keyof typeof roundedClass
@@ -46,15 +46,14 @@
     none: '',
   }
 
-
   interface Props {
-    elevation?: Elevation;
-    padding?: Padding;
-    rounding?: Rounding;
-    color?: Color;
-    element?: string;
-    class?: string;
-    children?: import('svelte').Snippet;
+    elevation?: Elevation
+    padding?: Padding
+    rounding?: Rounding
+    color?: Color
+    element?: string
+    class?: string
+    children?: import('svelte').Snippet
     [key: string]: any
   }
 
@@ -67,8 +66,7 @@
     class: clazz = '',
     children,
     ...rest
-  }: Props = $props();
-  
+  }: Props = $props()
 </script>
 
 <svelte:element

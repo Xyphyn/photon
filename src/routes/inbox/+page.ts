@@ -55,7 +55,7 @@ export async function load({ url, fetch }) {
   ].sort(
     (a, b) =>
       publishedToDate(b.published).getTime() -
-      publishedToDate(a.published).getTime()
+      publishedToDate(a.published).getTime(),
   )
 
   return {

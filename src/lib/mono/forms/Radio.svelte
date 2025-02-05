@@ -1,19 +1,19 @@
 <script lang="ts">
-  import { createBubbler } from 'svelte/legacy';
+  import { createBubbler } from 'svelte/legacy'
 
-  const bubble = createBubbler();
+  const bubble = createBubbler()
   import { generateID } from '../forms/helper.js'
 
   type T = $$Generic
 
   interface Props {
-    value: T;
-    group: T;
-    inlineDescription?: boolean;
-    id?: string;
-    disabled?: boolean;
-    children?: import('svelte').Snippet;
-    description?: import('svelte').Snippet;
+    value: T
+    group: T
+    inlineDescription?: boolean
+    id?: string
+    disabled?: boolean
+    children?: import('svelte').Snippet
+    description?: import('svelte').Snippet
     [key: string]: any
   }
 
@@ -26,7 +26,7 @@
     children,
     description,
     ...rest
-  }: Props = $props();
+  }: Props = $props()
 </script>
 
 <div

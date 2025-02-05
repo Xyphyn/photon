@@ -10,10 +10,10 @@
   import ModlogAction from '../ModlogAction.svelte'
 
   interface Props {
-    item: ModLog;
+    item: ModLog
   }
 
-  let { item }: Props = $props();
+  let { item }: Props = $props()
 </script>
 
 <Material padding="lg" class="flex flex-col gap-2">

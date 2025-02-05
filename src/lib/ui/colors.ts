@@ -84,8 +84,8 @@ function themeStore(
   fn: (
     values: ThemeData,
     set: (value: Theme) => void,
-    update: (fn: Updater<Theme>) => void
-  ) => any
+    update: (fn: Updater<Theme>) => void,
+  ) => any,
 ) {
   const derive: Readable<Theme> = derived(data, fn)
   const { subscribe } = derive
@@ -107,7 +107,7 @@ export let themeData = writable<ThemeData>(
     scheme: 'system',
     themes: presets,
     currentTheme: 0,
-  }
+  },
 )
 
 themeData.subscribe((themeData) => {
@@ -118,7 +118,7 @@ themeData.subscribe((themeData) => {
       JSON.stringify({
         ...themeData,
         themes: filteredThemes,
-      })
+      }),
     )
   }
 })
@@ -126,7 +126,7 @@ themeData.subscribe((themeData) => {
 export let theme = themeStore(
   themeData,
   (data) =>
-    data.themes.find((t) => t.id == data.currentTheme) ?? getDefaultTheme()
+    data.themes.find((t) => t.id == data.currentTheme) ?? getDefaultTheme(),
 )
 
 export function calculateVars(theme: Theme) {
@@ -145,7 +145,7 @@ export const themeVars = derived(theme, (t) => calculateVars(t as Theme))
 
 const configuredColorScheme = env.PUBLIC_COLORSCHEME ?? 'system'
 export const colorScheme = writable<ColorScheme>(
-  configuredColorScheme as ColorScheme
+  configuredColorScheme as ColorScheme,
 )
 
 export const toggleColorScheme = () => {
@@ -175,7 +175,7 @@ function loadColorScheme() {
   colorScheme.subscribe((colorScheme) => {
     if (typeof document != 'undefined') {
       const prefersDark = window.matchMedia(
-        '(prefers-color-scheme: dark)'
+        '(prefers-color-scheme: dark)',
       ).matches
 
       const html = document.querySelector('html')

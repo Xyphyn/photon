@@ -88,7 +88,7 @@ const config: Config = {
       loader: async () => (await import('./i18n/zh-Hant.json')).default,
     },
   ],
-  fallbackLocale: 'en'
+  fallbackLocale: 'en',
 }
 
 export const aliases = new Map([
@@ -111,6 +111,4 @@ export const aliases = new Map([
   ['he-IL', 'he'],
 ])
 
-export let { t, locale, locales, loading, loadTranslations } = new i18n(
-  config
-)
+export let { t, locale, locales, loading, loadTranslations } = new i18n(config)

@@ -53,7 +53,7 @@ export async function load({ url, fetch }) {
     ...posts.post_reports.map(generalizePostReport),
     ...comments.comment_reports.map(generalizeCommentReport),
     ...(messages?.private_message_reports ?? []).map(
-      generalizePrivateMessageReport
+      generalizePrivateMessageReport,
     ),
   ].sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime())
 

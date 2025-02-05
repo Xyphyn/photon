@@ -1,11 +1,11 @@
 <script lang="ts">
-  import DebugTree from './DebugTree.svelte';
+  import DebugTree from './DebugTree.svelte'
   interface Props {
-    object: any;
-    isParent?: boolean;
+    object: any
+    isParent?: boolean
   }
 
-  let { object, isParent = false }: Props = $props();
+  let { object, isParent = false }: Props = $props()
 </script>
 
 <ul class:ml-4={!isParent} class="leading-8">

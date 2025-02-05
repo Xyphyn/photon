@@ -20,7 +20,7 @@ export const isBlocked = (me: MyUserInfo, user: number) =>
 
 export const addSubscription = (
   community: Community,
-  subscribe: boolean = true
+  subscribe: boolean = true,
 ) => {
   const p = get(profile)
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { run, preventDefault } from 'svelte/legacy';
+  import { run, preventDefault } from 'svelte/legacy'
 
   import { Button, Material, Spinner, TextInput, toast } from 'mono-svelte'
   import Message from './Message.svelte'
@@ -17,7 +17,7 @@
   import { report } from '$lib/components/lemmy/moderation/moderation'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
 
-  let { data = $bindable() } = $props();
+  let { data = $bindable() } = $props()
 
   let textbox = $state({
     message: '',
@@ -27,7 +27,7 @@
   let chatWindow: HTMLDivElement = $state()
 
   async function sendMessage(
-    message: string
+    message: string,
   ): Promise<PrivateMessageResponse | undefined> {
     if (message == '') return
 
@@ -55,10 +55,13 @@
   run(() => {
     if (browser && data.message && chatWindow) {
       tick().then(() =>
-        chatWindow.scrollTo({ top: chatWindow.scrollHeight, behavior: 'smooth' })
+        chatWindow.scrollTo({
+          top: chatWindow.scrollHeight,
+          behavior: 'smooth',
+        }),
       )
     }
-  });
+  })
 
   async function deleteMessage(id: number) {
     const res = await client().deletePrivateMessage({
@@ -69,9 +72,9 @@
     data.message = {
       private_messages: data.message.private_messages.toSpliced(
         data.message.private_messages.findLastIndex(
-          (i) => i.private_message.id == id
+          (i) => i.private_message.id == id,
         ),
-        1
+        1,
       ),
     }
   }
@@ -151,8 +154,8 @@
         disabled={textbox.loading}
       >
         {#snippet prefix()}
-                <Icon src={PaperAirplane} size="18" micro  />
-              {/snippet}
+          <Icon src={PaperAirplane} size="18" micro />
+        {/snippet}
       </Button>
     </form>
   </div>

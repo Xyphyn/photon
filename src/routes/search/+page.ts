@@ -46,7 +46,7 @@ export async function load({ url, fetch }) {
       everything.sort(
         (a, b) =>
           new Date(getItemPublished(b)).getTime() -
-          new Date(getItemPublished(a)).getTime()
+          new Date(getItemPublished(a)).getTime(),
       )
     }
 

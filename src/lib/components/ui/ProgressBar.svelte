@@ -1,20 +1,20 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
+  import { run } from 'svelte/legacy'
 
   import { expoOut } from 'svelte/easing'
   import { tweened } from 'svelte/motion'
 
   interface Props {
-    progress?: number;
+    progress?: number
   }
 
-  let { progress = 0 }: Props = $props();
+  let { progress = 0 }: Props = $props()
 
   let tween = tweened(progress, { easing: expoOut })
 
   run(() => {
     tween.set(progress)
-  });
+  })
 </script>
 
 <div

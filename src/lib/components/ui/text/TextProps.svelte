@@ -6,15 +6,14 @@
 </script>
 
 <script lang="ts">
-
   interface Props {
-    wrap?: keyof typeof wrapClass;
-    class?: string;
-    children?: import('svelte').Snippet;
+    wrap?: keyof typeof wrapClass
+    class?: string
+    children?: import('svelte').Snippet
   }
 
-  let { wrap = 'wrap', class: clazz = '', children }: Props = $props();
-  
+  let { wrap = 'wrap', class: clazz = '', children }: Props = $props()
+
   let classes = $derived(`${wrapClass[wrap]} ${clazz ?? ''}`)
 </script>
 

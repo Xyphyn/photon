@@ -1,11 +1,10 @@
 <script lang="ts">
   interface Props {
-    class?: string;
-    children?: import('svelte').Snippet;
+    class?: string
+    children?: import('svelte').Snippet
   }
 
-  let { class: clazz = '', children }: Props = $props();
-  
+  let { class: clazz = '', children }: Props = $props()
 </script>
 
 <aside

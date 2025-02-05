@@ -12,7 +12,7 @@ import { get, writable } from 'svelte/store'
 export const shouldReload = (
   cache: PostFeed | undefined,
   url: URL,
-  instance: string
+  instance: string,
 ): boolean =>
   cache?.instance != instance || cache?.url.toString() != url.toString()
 
@@ -27,7 +27,7 @@ export async function postFeed(args: {
   url: URL
   fetch?: (
     input: RequestInfo | URL,
-    init?: RequestInit | undefined
+    init?: RequestInit | undefined,
   ) => Promise<Response>
 }) {
   const feed = get(postFeeds)[args.id]

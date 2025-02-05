@@ -25,7 +25,7 @@ export const generalizeCommentReply = (item: CommentReplyView): InboxItem => ({
 })
 
 export const generalizePersonMention = (
-  item: PersonMentionView
+  item: PersonMentionView,
 ): InboxItem => ({
   type: 'person_mention',
   id: item.person_mention.id,
@@ -38,7 +38,7 @@ export const generalizePersonMention = (
 })
 
 export const generalizePrivateMessage = (
-  item: PrivateMessageView
+  item: PrivateMessageView,
 ): InboxItem => ({
   type: 'private_message',
   id: item.private_message.id,
