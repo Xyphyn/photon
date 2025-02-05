@@ -68,11 +68,11 @@
 <Header pageHeader>
   {$t('routes.search.title')}
 </Header>
-<div
-  class="mt-4 mb-0 sticky z-30"
-  style="top: max(1.5rem, {$contentPadding.top}px);"
->
-  <form method="get" action="/search" class="" bind:this={form}>
+<form method="get" action="/search" class="contents" bind:this={form}>
+  <div
+    class="mt-4 mb-0 sticky z-30"
+    style="top: max(1.5rem, {$contentPadding.top}px);"
+  >
     <Tabs routes={[]} class="p-2 dark:bg-zinc-925/70">
       <div class="flex gap-2 flex-row items-center w-full text-base h-10">
         <TextInput
@@ -98,40 +98,40 @@
         </Button>
       </div>
     </Tabs>
-    <div class="flex flex-row flex-wrap items-center gap-4 mt-4">
-      <Select
-        name="type"
-        bind:value={data.type}
-        onchange={() => form?.requestSubmit()}
-      >
-        {#snippet customLabel()}
-          <span class="flex items-center gap-1">
-            <Icon src={AdjustmentsHorizontal} mini size="15" />
-            {$t('filter.type')}
-          </span>
-        {/snippet}
-        <Option value="All">{$t('content.all')}</Option>
-        <Option value="Posts">{$t('content.posts')}</Option>
-        <Option value="Comments">{$t('content.comments')}</Option>
-        <Option value="Communities">{$t('content.communities')}</Option>
-        <Option value="Users">{$t('content.users')}</Option>
-      </Select>
-      <Sort
-        name="sort"
-        bind:selected={data.sort}
-        onchange={() => form?.requestSubmit()}
-      />
-      <Button
-        size="square-lg"
-        color="tertiary"
-        class="self-end justify-self-center"
-        onclick={() => (moreOptions = !moreOptions)}
-      >
-        <Icon src={ChevronDown} size="20" mini />
-      </Button>
-    </div>
-  </form>
-</div>
+  </div>
+  <div class="flex flex-row flex-wrap items-center gap-4 mt-4">
+    <Select
+      name="type"
+      bind:value={data.type}
+      onchange={() => form?.requestSubmit()}
+    >
+      {#snippet customLabel()}
+        <span class="flex items-center gap-1">
+          <Icon src={AdjustmentsHorizontal} mini size="15" />
+          {$t('filter.type')}
+        </span>
+      {/snippet}
+      <Option value="All">{$t('content.all')}</Option>
+      <Option value="Posts">{$t('content.posts')}</Option>
+      <Option value="Comments">{$t('content.comments')}</Option>
+      <Option value="Communities">{$t('content.communities')}</Option>
+      <Option value="Users">{$t('content.users')}</Option>
+    </Select>
+    <Sort
+      name="sort"
+      bind:selected={data.sort}
+      onchange={() => form?.requestSubmit()}
+    />
+    <Button
+      size="square-lg"
+      color="tertiary"
+      class="self-end justify-self-center"
+      onclick={() => (moreOptions = !moreOptions)}
+    >
+      <Icon src={ChevronDown} size="20" mini />
+    </Button>
+  </div>
+</form>
 {#if moreOptions}
   <div transition:slide={{ axis: 'y', easing: expoOut }} class="max-w-sm">
     <ObjectAutocomplete
@@ -189,9 +189,7 @@
     {/if}
   {/await}
   <div
-    class="flex flex-col mt-4 divide-slate-200 dark:divide-zinc-800"
-    class:!divide-y={settings.view != 'card'}
-    class:gap-4={settings.view == 'card'}
+    class="flex flex-col mt-4 divide-slate-200 dark:divide-zinc-800 divide-y"
   >
     {#each data.results as result}
       {#if isPostView(result)}

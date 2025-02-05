@@ -43,8 +43,6 @@
   let searchElement = $state<HTMLInputElement>()
   let form = $state<HTMLFormElement>()
 
-  let instance = ''
-
   let showTop = $derived(
     (data.query ?? '' != '') && data.communities.length > 0 && data.page == 1,
   )
@@ -64,11 +62,11 @@
   <span>{$t('routes.communities.title')}</span>
 </Header>
 
-<div
-  class="mt-4 mb-0 sticky z-30"
-  style="top: max(1.5rem, {$contentPadding.top}px);"
->
-  <form method="get" action="/communities" bind:this={form}>
+<form method="get" action="/communities" class="contents" bind:this={form}>
+  <div
+    class="mt-4 mb-0 sticky z-30"
+    style="top: max(1.5rem, {$contentPadding.top}px);"
+  >
     <Tabs routes={[]} class="p-2 dark:bg-zinc-925/70 shadow-md shadow-black/5">
       <div class="flex gap-2 flex-row items-center w-full text-base h-10">
         <TextInput
@@ -95,20 +93,20 @@
         </Button>
       </div>
     </Tabs>
-    <div class="flex flex-row flex-wrap gap-4 mt-4 items-center">
-      <Location
-        name="type"
-        selected={data.type}
-        onchange={() => form?.requestSubmit()}
-      />
-      <Sort
-        name="sort"
-        selected={data.sort}
-        onchange={() => form?.requestSubmit()}
-      />
-    </div>
-  </form>
-</div>
+  </div>
+  <div class="flex flex-row flex-wrap gap-4 mt-4 items-center">
+    <Location
+      name="type"
+      selected={data.type}
+      onchange={() => form?.requestSubmit()}
+    />
+    <Sort
+      name="sort"
+      selected={data.sort}
+      onchange={() => form?.requestSubmit()}
+    />
+  </div>
+</form>
 <ul
   class="flex flex-col divide-y divide-slate-100 dark:divide-zinc-800 my-6 h-full"
 >
