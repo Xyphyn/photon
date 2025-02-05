@@ -23,6 +23,7 @@
   import PostBody from './PostBody.svelte'
   import { profile } from '$lib/auth.svelte'
   import { goto } from '$app/navigation'
+  import type { ClassValue } from 'svelte/elements'
 
   function getTagRule(tags: Tag[]): 'blur' | 'hide' | undefined {
     const tagContent = tags.map((t) => t.content.toLowerCase())
@@ -53,7 +54,7 @@
     hideCommunity?: boolean
     view?: View
     style?: string
-    class?: string
+    class?: ClassValue
     badges?: import('svelte').Snippet
     onhide?: (hide: boolean) => void
   }
@@ -94,12 +95,13 @@
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
 <div
-  class="post relative max-w-full min-w-0 w-full cursor-pointer outline-none
-  group
-  {settings.leftAlign ? 'left-align' : ''}
-  {view == 'compact' ? 'py-3 list-type compact' : ''}
-  {view == 'cozy' ? 'py-5 flex flex-col gap-2' : ''}
-  {clazz ?? ''}"
+  class={[
+    'post relative max-w-full min-w-0 w-full cursor-pointer outline-none group',
+    settings.leftAlign && 'left-align',
+    view == 'compact' && 'py-3 list-type compact',
+    view == 'cozy' && 'py-5 flex flex-col gap-2',
+    clazz,
+  ]}
   id={post.post.id.toString()}
   onclick={(e) => {
     onClick(e)

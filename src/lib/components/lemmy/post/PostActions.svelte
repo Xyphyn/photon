@@ -101,7 +101,7 @@
       <div class="mx-auto h-96 flex justify-center items-center">
         <Spinner width={32} />
       </div>
-    {:then { default: PostForm }}
+    {:then {default: PostForm }}
       <PostForm
         edit
         editingPost={post.post}

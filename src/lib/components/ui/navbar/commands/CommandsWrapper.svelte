@@ -48,7 +48,7 @@
           {$t('nav.commands.downloading')}
         </span>
       </div>
-    {:then { default: Commands }}
+    {:then {default: Commands }}
       <Commands bind:open />
     {/await}
   </Modal>

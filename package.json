@@ -9,8 +9,8 @@
     "@sveltejs/adapter-auto": "^3.3.1",
     "@sveltejs/adapter-node": "^5.2.9",
     "@sveltejs/adapter-vercel": "^5.4.6",
-    "@sveltejs/kit": "^2.15.0",
-    "@sveltejs/vite-plugin-svelte": "4.0.0-next.6",
+    "@sveltejs/kit": "^2.17.1",
+    "@sveltejs/vite-plugin-svelte": "^4.0.0",
     "@tailwindcss/container-queries": "^0.1.1",
     "@tanstack/svelte-virtual": "^3.8.1",
     "@types/nprogress": "^0.2.0",
@@ -26,7 +26,7 @@
     "prettier": "^3.3.3",
     "prettier-plugin-svelte": "^3.2.7",
     "rollup-plugin-visualizer": "^5.9.2",
-    "svelte": "^5.15.0",
+    "svelte": "^5.19.7",
     "svelte-check": "^4.0.0",
     "svelte-floating-ui": "^1.5.9",
     "svelte-focus-trap": "^1.2.0",
@@ -38,11 +38,11 @@
     "tslib": "^2.4.1",
     "typescript": "^5.5.0",
     "ua-parser-js": "^1.0.38",
-    "vite": "^5.4.10",
+    "vite": "^5.4.14",
     "vitest": "^1.0.0"
   },
   "overrides": {
-    "svelte": "^5.15.0"
+    "svelte": "^5.19.7"
   },
   "private": true,
   "scripts": {
