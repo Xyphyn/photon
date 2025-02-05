@@ -189,7 +189,7 @@
     {/if}
   {/await}
   <div
-    class="flex flex-col mt-4 divide-slate-200 dark:divide-zinc-800 divide-y"
+    class="flex flex-col mt-4 divide-slate-200 dark:divide-zinc-800 !divide-y"
   >
     {#each data.results as result}
       {#if isPostView(result)}

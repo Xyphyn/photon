@@ -194,7 +194,6 @@
   <hr class="dark:opacity-10 w-[90%] my-2 mx-auto" />
   <li class="flex flex-col px-2 py-1 mx-auto my-1 text-xs w-full">
     <div class="flex flex-row gap-2 w-full items-center">
-      <!-- svelte-ignore missing_declaration -->
       <div class="flex-1">
         <button
           class="hover:brightness-110 transition-all"

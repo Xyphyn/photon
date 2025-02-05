@@ -60,12 +60,14 @@
       </div>
       <Button
         color="primary"
+        rounding="pill"
+        size="sm"
         href="/post/{comment.post.id}?thread={comment.comment.path}#{comment
           .comment.id}"
         class="self-start"
       >
         {$t('common.jump')}
-        <Icon src={ArrowUturnUp} size="16" micro />
+        <Icon src={ArrowUturnUp} size="14" micro />
       </Button>
     </div>
   {/if}

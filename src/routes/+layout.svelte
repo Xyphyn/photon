@@ -83,23 +83,11 @@
       }
     })
   }
-  let barTimeout: number = $state(0)
+
   $effect(() => {
-    if (navigating.to) {
-      document.body.classList.toggle('wait', true)
-      barTimeout = setTimeout(() => nProgress.start(), 100)
-    } else {
-      document.body.classList.toggle('wait', false)
-      clearTimeout(barTimeout)
-      nProgress.done()
-    }
+    if (navigating.to) nProgress.start()
+    else nProgress.done()
   })
-
-  let error = $state(null)
-
-  function onerror(e: any, r: any) {
-    error = e
-  }
 </script>
 
 <svelte:head>

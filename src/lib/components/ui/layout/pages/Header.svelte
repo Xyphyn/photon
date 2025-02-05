@@ -29,7 +29,7 @@
   
   "
   style="{pageHeader
-    ? `margin-top: min(-6rem, calc(-1 * calc(${$contentPadding.top}px))); padding-top: max(6rem, calc(${$contentPadding.top}px));`
+    ? `margin-top: min(-12rem, calc(-1 * calc(${$contentPadding.top}px))); padding-top: max(12rem, calc(${$contentPadding.top}px));`
     : ''} {style};
 "
 >

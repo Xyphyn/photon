@@ -72,8 +72,6 @@
   import CommunityHeader from '../community/CommunityHeader.svelte'
   import { publishedToDate } from '$lib/components/util/date'
 
-  let popoverOpen = $state(false)
-
   interface Props {
     community?: Community | undefined
     showCommunity?: boolean
@@ -132,36 +130,13 @@
   class:compact={view == 'compact'}
   {style}
 >
-  {#if showCommunity && community != undefined && subscribed}
-    <Popover bind:open={popoverOpen} manual>
-      {#snippet target()}
-        <button
-          onclick={() => (popoverOpen = !popoverOpen)}
-          class="relative cursor-pointer row-span-2 flex-shrink-0 pr-2 group/community"
-        >
-          <Avatar
-            url={community?.icon}
-            width={view == 'compact' ? 24 : 32}
-            alt={community?.name}
-            class="group-hover/community:ring-2 transition-all ring-offset-0 ring-primary-900 dark:ring-primary-100"
-          />
-        </button>
-      {/snippet}
-      <!-- svelte-ignore a11y_click_events_have_key_events -->
-      <!-- svelte-ignore a11y_no_static_element_interactions -->
-      {#snippet popover()}
-        {#if community && subscribed}
-          <div
-            class="max-w-md rounded-2xl bg-white dark:bg-zinc-950"
-            onclick={stopPropagation(() => {})}
-          >
-            <CommunityHeader bind:community bind:subscribed />
-          </div>
-        {/if}
-      {/snippet}
-    </Popover>
-    <!-- svelte-ignore a11y_click_events_have_key_events -->
-    <!-- svelte-ignore a11y_no_static_element_interactions -->
+  {#if showCommunity && community}
+    <Avatar
+      url={community?.icon}
+      width={view == 'compact' ? 24 : 32}
+      alt={community?.name}
+      class="row-span-2 flex-shrink-0 mr-2"
+    />
   {/if}
   {#if showCommunity && community}
     <CommunityLink

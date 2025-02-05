@@ -1,10 +1,5 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy'
-
-  import {
-    buildCommentsTree,
-    type CommentNodeI,
-  } from '$lib/components/lemmy/comment/comments.svelte.js'
+  import { buildCommentsTree } from '$lib/components/lemmy/comment/comments.svelte.js'
   import { isImage } from '$lib/ui/image.js'
   import { client, getClient } from '$lib/lemmy.js'
   import CommentForm from '$lib/components/lemmy/comment/CommentForm.svelte'
@@ -59,14 +54,11 @@
   import { expoOut } from 'svelte/easing'
   import Option from 'mono-svelte/forms/select/Option.svelte'
 
-  let { data = $bindable() } = $props()
-
-  let comments = $state(data.comments)
+  let { data: loaded = $bindable() } = $props()
+  let data = $state(loaded)
   $effect(() => {
-    comments = data.comments
+    data = loaded
   })
-
-  let type = $derived(mediaType(data.post.post_view.post.url, 'cozy'))
 
   const updateActions = () => {
     // @ts-ignore
@@ -114,7 +106,7 @@
     }
   }
 
-  run(() => {
+  $effect(() => {
     if (data.post) updateActions()
   })
 
@@ -137,11 +129,6 @@
       url: page.url.toString(),
       avatar: data.post.post_view.post.thumbnail_url,
     })
-  })
-
-  afterNavigate(async () => {
-    // reactivity hack
-    data.post = data.post
   })
 
   const fetchOnHome = async (jwt: string) => {
@@ -172,7 +159,7 @@
 
   async function reloadComments() {
     loading = true
-    comments = getClient().getComments({
+    data.comments = getClient().getComments({
       page: 1,
       limit: 25,
       type_: 'All',
@@ -190,11 +177,6 @@
   let remoteView = $derived(
     page.params.instance?.toLowerCase() != $instance.toLowerCase(),
   )
-
-  function createCommentsState(tree: CommentNodeI[]) {
-    const state = $state(tree)
-    return state
-  }
 </script>
 
 <svelte:head>
@@ -388,7 +370,7 @@
       {$t('routes.post.commentCount')}
     </div>
   </header>
-  {#await comments}
+  {#await data.comments}
     <div class="flex flex-col gap-4">
       {#each new Array(10) as empty, index}
         <div
