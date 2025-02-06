@@ -21,6 +21,7 @@
   import Entity from '../ui/Entity.svelte'
   import { settings } from '$lib/settings.svelte'
   import { optimizeImageURL } from './post/helpers'
+  import Link from '../input/Link.svelte'
 
   interface Props {
     site: SiteView
@@ -63,33 +64,6 @@
       />
     {/snippet}
   </Entity>
-  <div class="flex flex-row gap-1 !border-0">
-    <Button
-      href="/modlog"
-      title={$t('routes.modlog')}
-      color="ghost"
-      size="square-md"
-    >
-      <Icon src={Newspaper} size="16" mini />
-    </Button>
-    <Button
-      href="/legal"
-      title={$t('routes.legal.title')}
-      color="ghost"
-      size="square-md"
-    >
-      <Icon src={BuildingOffice} size="16" mini />
-    </Button>
-    <Button
-      href="/instances"
-      title={$t('routes.instances')}
-      class="3xl:rounded-l-none"
-      color="ghost"
-      size="square-md"
-    >
-      <Icon src={ServerStack} size="16" mini />
-    </Button>
-  </div>
 
   <div class="flex flex-col gap-1">
     {#if taglines && taglines.length > 0}
@@ -159,6 +133,20 @@
         />
       </Expandable>
     {/if}
+
+    <div class="flex flex-row flex-wrap gap-1">
+      <Link highlight href="/modlog">
+        {$t('routes.modlog')}
+      </Link>
+      •
+      <Link highlight href="/legal">
+        {$t('routes.legal.title')}
+      </Link>
+      •
+      <Link highlight href="/instances">
+        {$t('routes.instances')}
+      </Link>
+    </div>
 
     {#if version}
       <div class="w-max">
