@@ -118,7 +118,7 @@
     saving = false
   }
 
-  let csv: FileList | null = $state()
+  let csv = $state<FileList | null>()
 
   async function parseCsv(files: FileList) {
     if (!(files.length > 0)) return

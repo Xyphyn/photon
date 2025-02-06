@@ -9,6 +9,6 @@
   let { small = false, class: clazz = '', children, ...rest }: Props = $props()
 </script>
 
-<span {...rest} class="{!small ? 'text-lg' : 'text-xs'} font-semibold {clazz}">
+<span {...rest} class="{!small ? 'text-lg' : 'text-xs'} font-medium {clazz}">
   {@render children?.()}
 </span>

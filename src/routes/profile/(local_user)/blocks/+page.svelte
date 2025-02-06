@@ -20,6 +20,8 @@
   import Switch from '$lib/components/input/Switch.svelte'
   import UserAutocomplete from '$lib/components/lemmy/user/UserAutocomplete.svelte'
   import { expoOut } from 'svelte/easing'
+  import Material from 'mono-svelte/materials/Material.svelte'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
   interface Props {
     // sveltekit doesn't feel like making types work right now
@@ -85,87 +87,102 @@
   }
 </script>
 
+<Header pageHeader>
+  {$t('routes.profile.blocks.title')}
+</Header>
+
 {#if data.community_blocks?.length > 0 || data.person_blocks?.length > 0 || (data.my_user?.instance_blocks?.length ?? 0) > 0}
-  {#if data.my_user?.instance_blocks && (data.my_user?.instance_blocks?.length ?? 0) > 0}
-    <div>
-      <SectionTitle>{$t('content.instances')}</SectionTitle>
-      <ul>
-        {#each data.my_user?.instance_blocks as block (block.instance.id)}
-          <div
-            class="flex flex-row gap-2 items-center py-4"
-            animate:flip={{ duration: 250 }}
-            out:slide|local={{ axis: 'y' }}
-          >
-            <Button
-              title="Unblock"
-              size="square-md"
-              rounding="pill"
-              onclick={() => unblockInstances(block)}
-            >
-              {#snippet prefix()}
-                <Icon src={XMark} mini size="16" />
-              {/snippet}
-            </Button>
-            <Entity
-              icon={block.site?.icon}
-              name={block.site?.name ?? block.instance.domain}
-              label={block.instance.domain}
-            />
-          </div>
-        {/each}
-      </ul>
-    </div>
-  {/if}
   {#if data.community_blocks?.length > 0}
-    <div>
+    <div class="space-y-1">
       <SectionTitle>{$t('content.communities')}</SectionTitle>
-      <ul>
-        {#each data.community_blocks as block (block.community.id)}
-          <div
-            class="flex flex-row gap-2 items-center py-2"
-            animate:flip={{ duration: 250 }}
-            out:slide|global={{ axis: 'y', easing: expoOut, duration: 300 }}
-          >
-            <Button
-              title="Unblock"
-              size="square-md"
-              rounding="pill"
-              onclick={() => unblockCommunity(block)}
-            >
-              {#snippet prefix()}
-                <Icon src={XMark} mini size="16" />
-              {/snippet}
-            </Button>
-            <CommunityLink community={block.community} avatar />
-          </div>
-        {/each}
-      </ul>
+      <Material
+        color="uniform"
+        class="bg-white dark:bg-zinc-950 max-h-96 overflow-auto"
+        rounding="xl"
+      >
+        <ul class="divide-y divide-slate-200 dark:divide-zinc-900">
+          {#each data.community_blocks as block (block.community.id)}
+            <div class="flex flex-row gap-2 items-center py-1 -mx-4 px-4">
+              <Button
+                title="Unblock"
+                size="square-md"
+                rounding="pill"
+                color="danger"
+                onclick={() => unblockCommunity(block)}
+              >
+                {#snippet prefix()}
+                  <Icon src={XMark} micro size="16" />
+                {/snippet}
+              </Button>
+              <CommunityLink community={block.community} avatar />
+            </div>
+          {/each}
+        </ul>
+      </Material>
     </div>
   {/if}
   {#if data.person_blocks?.length > 0}
-    <div>
+    <div class="space-y-1">
       <SectionTitle>{$t('content.users')}</SectionTitle>
-      <ul>
-        {#each data.person_blocks as block (block.target.id)}
-          <div
-            class="flex flex-row gap-2 items-center py-2"
-            animate:flip={{ duration: 250 }}
-            out:slide|global={{ axis: 'y', easing: expoOut, duration: 300 }}
-          >
-            <Button
-              title="Unblock"
-              size="square-md"
-              rounding="pill"
-              onclick={() => unblockUser(block)}
-            >
-              {#snippet prefix()}
-                <Icon src={XMark} mini size="16" />
-              {/snippet}
-            </Button>
-            <UserLink user={block.target} avatar badges />
-          </div>
-        {/each}
-      </ul>
+      <Material
+        color="uniform"
+        class="bg-white dark:bg-zinc-950 max-h-96 overflow-auto"
+        rounding="xl"
+      >
+        <ul class="divide-y divide-slate-200 dark:divide-zinc-900">
+          {#each data.person_blocks as block (block.target.id)}
+            <div class="flex flex-row gap-2 items-center py-1 -mx-4 px-4">
+              <Button
+                title="Unblock"
+                size="square-md"
+                rounding="pill"
+                color="danger"
+                onclick={() => unblockUser(block)}
+              >
+                {#snippet prefix()}
+                  <Icon src={XMark} micro size="16" />
+                {/snippet}
+              </Button>
+              <UserLink user={block.target} avatar badges />
+            </div>
+          {/each}
+        </ul>
+      </Material>
+    </div>
+  {/if}
+  {#if data.my_user?.instance_blocks && (data.my_user?.instance_blocks?.length ?? 0) > 0}
+    <div class="space-y-1">
+      <SectionTitle class="text-lg">
+        {$t('content.instances')}
+      </SectionTitle>
+      <Material
+        color="uniform"
+        class="bg-white dark:bg-zinc-950 max-h-96 overflow-auto"
+        rounding="xl"
+      >
+        <ul class="divide-y divide-slate-200 dark:divide-zinc-900">
+          {#each data.my_user?.instance_blocks as block (block.instance.id)}
+            <div class="flex flex-row gap-2 items-center py-1 -mx-4 px-4">
+              <Button
+                title="Unblock"
+                size="square-md"
+                rounding="pill"
+                color="danger"
+                onclick={() => unblockInstances(block)}
+              >
+                {#snippet prefix()}
+                  <Icon src={XMark} micro size="16" />
+                {/snippet}
+              </Button>
+              <Entity
+                icon={block.site?.icon}
+                name={block.site?.name ?? block.instance.domain}
+                label={block.instance.domain}
+              />
+            </div>
+          {/each}
+        </ul>
+      </Material>
     </div>
   {/if}
 {:else}
