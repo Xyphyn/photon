@@ -44,7 +44,10 @@
   let comments = $state(passedComments)
 
   let commenting = $state(false)
-  let tree = $derived(buildCommentsTree(comments.comments))
+  let tree = $state(buildCommentsTree(comments.comments))
+  $effect(() => {
+    tree = buildCommentsTree(comments.comments)
+  })
 </script>
 
 {#if $profile?.jwt}
@@ -127,6 +130,6 @@
 {/if}
 <CommentListVirtualizer
   post={post.post_view.post}
-  nodes={tree}
+  bind:nodes={tree}
   scrollTo={focus}
 />
