@@ -1,10 +1,6 @@
 <script lang="ts">
   import { run, preventDefault } from 'svelte/legacy'
 
-  import { ChevronDown, Icon } from 'svelte-hero-icons'
-  import { Button } from 'mono-svelte'
-
-  import { createEventDispatcher } from 'svelte'
   type T = $$Generic
 
   interface Props {
@@ -16,6 +12,7 @@
     class?: string
     buttonClazz?: string
     children?: import('svelte').Snippet<[any]>
+    onselect?: (item: T) => void
   }
 
   let {
@@ -27,12 +24,11 @@
     class: clazz = '',
     buttonClazz = '',
     children,
+    onselect,
   }: Props = $props()
 
-  const dispatcher = createEventDispatcher<{ select: T }>()
-
-  run(() => {
-    dispatcher('select', selected)
+  $effect(() => {
+    onselect?.(selected)
   })
 
   let containerClass = `
@@ -68,11 +64,22 @@
   `
 </script>
 
-<div class={containerClass}>
+<div
+  class="border rounded-full border-slate-200 dark:border-zinc-800 bg-slate-50 dark:bg-zinc-950 p-1 flex items-center gap-1"
+>
   {#each options as option, index}
+    {@const slctd = selected == option}
     <button
-      class={buttonClass(selected == option)}
-      onclick={preventDefault(() => (selected = option))}
+      class={[
+        'px-3 py-1 rounded-full text-sm font-medium transition-colors duration-75',
+        slctd
+          ? 'bg-primary-900 dark:bg-primary-100 text-slate-50 dark:text-zinc-900'
+          : 'dark:bg-zinc-900/75 bg-white',
+      ]}
+      onclick={(e) => {
+        e.preventDefault()
+        selected = option
+      }}
       disabled={disabled[index] ?? false}
       type="button"
     >

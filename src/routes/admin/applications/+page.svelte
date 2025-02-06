@@ -17,8 +17,7 @@
   options={[false, true]}
   selected={data.unreadOnly ?? true}
   optionNames={[$t('filter.location.all'), $t('filter.unread')]}
-  on:select={(e) =>
-    searchParam(page.url, 'unreadOnly', e.detail.toString(), 'page')}
+  onselect={(e) => searchParam(page.url, 'unreadOnly', e.toString(), 'page')}
 />
 {#if data.applications && data.applications.length > 0}
   <div class="flex flex-col gap-4">
