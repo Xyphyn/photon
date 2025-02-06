@@ -433,11 +433,8 @@
       {:else}
         <CommentForm
           postId={data.post.post_view.post.id}
-          on:comment={(comment) =>
-            (comments.comments = [
-              comment.detail.comment_view,
-              ...comments.comments,
-            ])}
+          oncomment={(comment) =>
+            (comments.comments = [comment.comment_view, ...comments.comments])}
           locked={(data.post.post_view.post.locked &&
             !(
               $profile?.user?.local_user_view.local_user.admin ||
@@ -447,12 +444,12 @@
             )) ||
             page.params.instance.toLowerCase() != $instance.toLowerCase()}
           banned={data.post.community_view.banned_from_community}
-          on:focus={() => (commenting = true)}
+          onfocus={() => (commenting = true)}
           tools={commenting}
           preview={commenting}
           placeholder={commenting ? undefined : $t('routes.post.addComment')}
           rows={commenting ? 7 : 1}
-          on:cancel={() => (commenting = false)}
+          oncancel={() => (commenting = false)}
         />
       {/if}
     {/if}

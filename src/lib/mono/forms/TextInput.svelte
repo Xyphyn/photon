@@ -15,16 +15,18 @@
 </script>
 
 <script lang="ts">
-  import { createBubbler } from 'svelte/legacy'
+  import type {
+    HTMLInputAttributes,
+    HTMLInputTypeAttribute,
+  } from 'svelte/elements'
 
-  const bubble = createBubbler()
   import Label from '../forms/Label.svelte'
   import { generateID } from '../forms/helper.js'
 
   const borderClass = `
 	border border-slate-200 border-b-slate-300 dark:border-zinc-900 dark:border-t-zinc-800
 	`
-  interface Props {
+  interface Props extends Omit<HTMLInputAttributes, 'size' | 'prefix'> {
     label?: string | undefined
     value?: string
     placeholder?: string
@@ -40,7 +42,6 @@
     prefix?: import('svelte').Snippet
     suffix?: import('svelte').Snippet
     children?: import('svelte').Snippet
-    [key: string]: any
   }
 
   let {
@@ -78,11 +79,15 @@
     </Label>
   {/if}
   <div
-    class="{shadowClass[shadow]} border {borderClass}
-  focus-within:border-primary-900 focus-within:dark:border-primary-100 focus-within:ring-2
+    class={[
+      shadowClass[shadow],
+      borderClass,
+      `border focus-within:border-primary-900 focus-within:dark:border-primary-100 focus-within:ring-2
   ring-slate-300 dark:ring-zinc-700
   transition-colors
-  rounded-lg flex flex-row items-center text-sm {clazz}"
+  rounded-lg flex flex-row items-center text-sm`,
+      clazz,
+    ]}
   >
     {#if prefix}
       <div
@@ -101,25 +106,27 @@
       {disabled}
       bind:value
       bind:this={element}
-      oninput={bubble('input')}
-      onchange={bubble('change')}
-      onfocus={bubble('focus')}
       {...rest}
-      class="{sizeClass[size]} bg-white dark:bg-zinc-950
+      class={[
+        sizeClass[size],
+        `bg-white dark:bg-zinc-950
 		 focus:outline-none rounded-lg text-sm w-full disabled:bg-slate-100
 		disabled:cursor-not-allowed disabled:dark:bg-zinc-950 invalid:!border-red-500
-		peer invalid:text-red-500 z-10
-		{clazz || ''}"
-      class:rounded-l-none={prefix}
-      class:border-l-0={prefix && inlineAffixes}
-      class:rounded-r-none={suffix}
-      class:border-r-0={suffix && inlineAffixes}
+		peer invalid:text-red-500 z-10`,
+        prefix && 'rounded-l-none',
+        prefix && inlineAffixes && 'border-l-0',
+        suffix && 'rounded-r-none',
+        suffix && inlineAffixes && 'border-r-0',
+        clazz,
+      ]}
     />
     {#if suffix}
       <div
-        class="rounded-lg rounded-l-none text-slate-600 dark:text-zinc-400 {inlineAffixes
-          ? 'bg-white dark:bg-zinc-950 pl-0'
-          : ''} {sizeClass[size]}"
+        class={[
+          'rounded-lg rounded-l-none text-slate-600 dark:text-zinc-400',
+          inlineAffixes && 'bg-white dark:bg-zinc-950 pl-0',
+          sizeClass[size],
+        ]}
       >
         {@render suffix?.()}
       </div>

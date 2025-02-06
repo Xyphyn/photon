@@ -23,8 +23,8 @@
     Strikethrough,
   } from 'svelte-hero-icons'
   import ImageUploadModal from '../lemmy/modal/ImageUploadModal.svelte'
-
-  const dispatcher = createEventDispatcher<{ confirm: string }>()
+  import type { HTMLTextareaAttributes } from 'svelte/elements'
+  import type { TextAreaProps } from 'mono-svelte/forms/TextArea.svelte'
 
   let textArea: HTMLTextAreaElement | undefined = $state()
 
@@ -69,9 +69,9 @@
     KeyH: () => wrapSelection('\n# ', ''),
     KeyK: () => wrapSelection('[](', ')'),
     Enter: (e: any) => {
-      dispatcher('confirm', value)
+      onconfirm?.(value)
       const newEvent = new Event('submit', { cancelable: true })
-      e.target.form.dispatchEvent(newEvent)
+      e?.target?.form?.dispatchEvent(newEvent)
     },
   }
 
@@ -83,7 +83,7 @@
     }
   }
 
-  interface Props {
+  interface Props extends TextAreaProps {
     images?: boolean
     value?: string
     label?: string | undefined
@@ -96,7 +96,7 @@
     class?: string
     customLabel?: import('svelte').Snippet
     children?: import('svelte').Snippet
-    [key: string]: any
+    onconfirm?: (value: string) => void
   }
 
   let {
@@ -112,10 +112,11 @@
     class: clazz = '',
     customLabel,
     children,
+    onconfirm,
     ...rest
   }: Props = $props()
 
-  run(() => {
+  $effect(() => {
     if (!previewing && value) adjustHeight()
   })
 </script>
@@ -264,7 +265,7 @@ overflow-hidden transition-colors {clazz}"
         class="bg-inherit z-0 border-0 rounded-none !ring-0 focus:!ring-transparent !transition-none resize-none"
         bind:value
         bind:element={textArea}
-        on:keydown={(e) => {
+        onkeydown={(e) => {
           if (disabled) return
           if (e.ctrlKey || e.metaKey) {
             // @ts-ignore
@@ -275,9 +276,8 @@ overflow-hidden transition-colors {clazz}"
             }
           }
         }}
-        on:input={adjustHeight}
-        on:focus
-        on:paste={(e) => {
+        oninput={adjustHeight}
+        onpaste={(e) => {
           if (!e.clipboardData?.files) return
           const files = Array.from(e.clipboardData.files)
           if (files[0]?.type.startsWith('image/')) {

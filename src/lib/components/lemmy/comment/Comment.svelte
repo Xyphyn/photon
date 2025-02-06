@@ -112,7 +112,7 @@
         value={newComment}
         actions={false}
         preview={true}
-        on:confirm={save}
+        onconfirm={save}
       />
       <Button
         submit
@@ -252,18 +252,18 @@
               label={$t('comment.reply')}
               {postId}
               parentId={node.comment_view.comment.id}
-              on:comment={(e) => {
+              oncomment={(e) => {
                 node.children = [
                   {
                     children: [],
-                    comment_view: e.detail.comment_view,
+                    comment_view: e.comment_view,
                     depth: node.depth + 1,
                   },
                   ...node.children,
                 ]
                 replying = false
               }}
-              on:cancel={() => (replying = false)}
+              oncancel={() => (replying = false)}
             />
           </div>
         </div>

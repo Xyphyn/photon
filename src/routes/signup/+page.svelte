@@ -133,7 +133,7 @@
       label={$t('form.signup.chooseInstance')}
       required
       {placeholder}
-      on:input={() => {
+      oninput={() => {
         selectedInstance = selectedInstance.toLowerCase().replaceAll(' ', '')
       }}
     />

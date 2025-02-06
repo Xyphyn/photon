@@ -198,9 +198,7 @@
 <!-- <svelte:window on:keydown={handleKeydown} /> -->
 
 <ul
-  class="flex flex-col list-none {settings.view == 'card'
-    ? 'gap-3 md:gap-4'
-    : 'divide-y'} divide-slate-200 dark:divide-zinc-800"
+  class="flex flex-col list-none divide-y divide-slate-200 dark:divide-zinc-800"
 >
   {#if posts?.length == 0}
     <div class="h-full grid place-items-center">

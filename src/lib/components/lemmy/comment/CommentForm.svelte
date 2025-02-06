@@ -12,12 +12,6 @@
   import { errorMessage } from '$lib/lemmy/error'
   import { Icon, XMark } from 'svelte-hero-icons'
 
-  const dispatch = createEventDispatcher<{
-    comment: CommentResponse
-    confirm: string
-    cancel: boolean
-  }>()
-
   interface Props {
     postId: number
     parentId?: number | undefined
@@ -28,6 +22,9 @@
     value?: string
     actions?: boolean
     preview?: boolean
+    oncomment?: (comment: CommentResponse) => void
+    onconfirm?: (value: string) => void
+    oncancel?: (cancel: boolean) => void
     [key: string]: any
   }
 
@@ -41,6 +38,9 @@
     value = $bindable(''),
     actions = true,
     preview: previewAction = true,
+    oncancel,
+    oncomment,
+    onconfirm,
     ...rest
   }: Props = $props()
 
@@ -58,7 +58,7 @@
         post_id: postId,
         parent_id: parentId,
       })
-      dispatch('comment', response)
+      oncomment?.(response)
 
       value = ''
     } catch (err) {
@@ -92,13 +92,12 @@
           : (placeholder ?? placeholders.get('comment'))}
       bind:value
       disabled={locked || loading || banned}
-      on:confirm={() => {
+      onconfirm={() => {
         if (actions) {
           submit()
-          dispatch('confirm', value)
+          onconfirm?.(value)
         }
       }}
-      on:focus
       previewButton={previewAction}
     >
       <div class="flex-1"></div>
@@ -106,19 +105,26 @@
         <Button
           size="custom"
           title={$t('common.cancel')}
-          onclick={() => dispatch('cancel', true)}
+          onclick={() => oncancel?.(true)}
           color="tertiary"
           class="w-8 h-8"
-          rounding="xl"
+          rounding="pill"
         >
-          <Icon src={XMark} size="16" micro />
+          <Icon
+            src={XMark}
+            size="20"
+            micro
+            class="text-slate-600 dark:text-zinc-400"
+          />
         </Button>
         <Button
           onclick={submit}
           color="primary"
+          rounding="pill"
+          size="sm"
+          class="py-2 px-4"
           {loading}
           disabled={locked || loading || banned}
-          size="lg"
         >
           {$t('form.submit')}
         </Button>

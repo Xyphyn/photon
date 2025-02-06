@@ -32,9 +32,7 @@
 </script>
 
 <ul
-  class="flex flex-col list-none {settings.view == 'card'
-    ? 'gap-3 md:gap-4'
-    : 'divide-y'} divide-slate-200 dark:divide-zinc-800"
+  class="flex flex-col list-none divide-y divide-slate-200 dark:divide-zinc-800"
 >
   {#if posts?.length == 0}
     <div class="h-full grid place-items-center">
@@ -63,7 +61,7 @@
               : settings.view}
             {post}
             class="transition-all duration-250"
-            on:hide={() => {
+            onhide={() => {
               posts = posts.toSpliced(index, 1)
             }}
           >
@@ -100,10 +98,7 @@
                 easing: expoOut,
               }}
             >
-              <span
-                class="text-sm flex flex-row gap-2 items-center"
-                class:my-4={settings.view == 'card'}
-              >
+              <span class="text-sm flex flex-row gap-2 items-center">
                 Crossposts <hr class="w-full dark:border-zinc-800" />
                 {post.crossposts.length}
               </span>

@@ -143,7 +143,7 @@
     required
     label={$t('form.name')}
     bind:value={formData.name}
-    on:input={() => {
+    oninput={() => {
       formData.name = formData.name.toLowerCase().replaceAll(' ', '_')
     }}
     disabled={edit != undefined}
