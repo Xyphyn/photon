@@ -434,9 +434,12 @@
         <CommentForm
           postId={data.post.post_view.post.id}
           oncomment={(comment) => {
-            comments.comments.push(comment.comment_view)
-            reloadComments()
-            toast({ content: $t('routes.post.commented'), type: 'success' })
+            Promise.resolve(data.comments).then((r) => {
+              r.comments.push(comment.comment_view)
+            })
+            // comments.comments.push(comment.comment_view)
+            // reloadComments()
+            // toast({ content: $t('routes.post.commented'), type: 'success' })
           }}
           locked={(data.post.post_view.post.locked &&
             !(

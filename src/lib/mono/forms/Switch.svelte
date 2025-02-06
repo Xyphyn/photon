@@ -10,7 +10,7 @@
 
   let {
     defaultValue = false,
-    checked = $bindable(defaultValue),
+    checked = $bindable(),
     labelClass = '',
     class: clazz = '',
     children,

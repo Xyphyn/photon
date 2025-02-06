@@ -82,19 +82,27 @@
 >
   <Header pageHeader>{$t('routes.admin.config.title')}</Header>
   {#if formData}
-    <TextInput bind:value={formData.name} label={$t('form.name')} />
     <TextInput
-      bind:value={formData.description}
+      bind:value={() => formData.name ?? '', (v) => (formData.description = v)}
+      label={$t('form.name')}
+    />
+    <TextInput
+      bind:value={
+        () => formData.description ?? '', (v) => (formData.description = v)
+      }
       label={$t('form.description')}
     />
     <MarkdownEditor
       previewButton
-      bind:value={formData.sidebar}
+      bind:value={() => formData.sidebar ?? '', (v) => (formData.sidebar = v)}
       label={$t('routes.admin.config.sidebar')}
     />
     <MarkdownEditor
       previewButton
-      bind:value={formData.legal_information}
+      bind:value={
+        () => formData.legal_information ?? '',
+        (v) => (formData.legal_information = v)
+      }
       label={$t('routes.legal.title')}
     />
     <div class="flex flex-col gap-1">

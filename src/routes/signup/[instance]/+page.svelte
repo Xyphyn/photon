@@ -33,7 +33,7 @@
 
   let email: string | undefined = $state('')
 
-  run(() => {
+  $effect(() => {
     if (email == '') email = undefined
   })
 
@@ -42,7 +42,7 @@
     passwordVerify = $state(''),
     captcha: GetCaptchaResponse | null = $state(null),
     verifyCaptcha: string | undefined = $state(undefined),
-    application: string | undefined = $state(undefined),
+    application: string = $state(''),
     submitting: boolean = $state(false),
     honeypot: string | undefined = $state(undefined),
     nsfw: boolean = $state(false)
