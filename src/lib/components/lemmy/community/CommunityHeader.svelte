@@ -95,13 +95,10 @@
     </button>
   {/snippet}
   {#if moderators.length > 0}
-    <Expandable
-      class="border rounded-xl bg-white/50 dark:bg-zinc-900/50 w-full p-3 px-4
-dark:border-zinc-800 border-slate-300 border-opacity-50 text-slate-700 dark:text-zinc-300 transition-colors"
-    >
+    <Expandable class="">
       {#snippet title()}
-        <ShieldIcon width={15} filled />
         {$t('cards.community.moderators')}
+        <hr class="flex-1 border-slate-200 dark:border-zinc-800 mx-3" />
       {/snippet}
       <ItemList
         items={moderators.map((m) => ({
@@ -114,7 +111,7 @@ dark:border-zinc-800 border-slate-300 border-opacity-50 text-slate-700 dark:text
       />
     </Expandable>
   {/if}
-  <div class="flex items-center gap-2 h-max">
+  <div class="flex items-center gap-2 h-max w-max">
     {#if $profile?.jwt}
       <Subscribe
         community={{
@@ -137,7 +134,7 @@ dark:border-zinc-800 border-slate-300 border-opacity-50 text-slate-700 dark:text
                 (await subscribe())?.community_view.subscribed ??
                 'NotSubscribed'
             }}
-            class="flex-1 relative z-[inherit]"
+            class="relative px-8 z-[inherit]"
           >
             {#snippet prefix()}
               <Icon

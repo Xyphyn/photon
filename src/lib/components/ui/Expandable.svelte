@@ -5,7 +5,7 @@
     open?: boolean
     icon?: boolean
     class?: string
-    title?: import('svelte').Snippet
+    title?: import('svelte').Snippet<[boolean | undefined]>
     extended?: import('svelte').Snippet
     content?: import('svelte').Snippet
     children?: import('svelte').Snippet
@@ -29,7 +29,7 @@
       hover:dark:text-primary-100 transition-colors h-full z-0 group relative"
     >
       <div class="flex flex-row gap-1 items-center w-full">
-        {@render title?.()}
+        {@render title?.(open)}
       </div>
       {#if icon}
         <Icon

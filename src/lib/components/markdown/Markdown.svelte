@@ -88,8 +88,6 @@
 </script>
 
 <script lang="ts">
-  import { run } from 'svelte/legacy'
-
   import SvelteMarkdown from 'svelte-markdown'
 
   interface Props {

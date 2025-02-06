@@ -4,27 +4,14 @@
   import { navigating, page } from '$app/state'
   import CommunityCard from '$lib/components/lemmy/community/CommunityCard.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
-  import Avatar from '$lib/components/ui/Avatar.svelte'
   import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
-  import { fullCommunityName, searchParam } from '$lib/util.svelte.js'
   import { onDestroy, onMount } from 'svelte'
   import { setSessionStorage } from '$lib/session.js'
   import PostFeed from '$lib/components/lemmy/post/feed/PostFeed.svelte'
   import VirtualFeed from '$lib/components/lemmy/post/feed/VirtualFeed.svelte'
   import { Button, Modal, toast } from 'mono-svelte'
-  import { afterNavigate } from '$app/navigation'
   import { browser } from '$app/environment'
-  import {
-    ArrowRight,
-    ChartBar,
-    Check,
-    Cog6Tooth,
-    EllipsisHorizontal,
-    Icon,
-    InformationCircle,
-    Plus,
-    XMark,
-  } from 'svelte-hero-icons'
+  import { ArrowRight, ChartBar, Icon, XMark } from 'svelte-hero-icons'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { t } from '$lib/translations.js'
   import { settings } from '$lib/settings.svelte.js'
@@ -33,7 +20,11 @@
   import CommunityHeader from '$lib/components/lemmy/community/CommunityHeader.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
-  let { data = $bindable() } = $props()
+  let { data: pageData } = $props()
+  let data = $state(pageData)
+  $effect(() => {
+    data = pageData
+  })
 
   let sidebar: boolean = $state(false)
 
@@ -77,14 +68,16 @@
 
 <div class="flex flex-col gap-4 max-w-full w-full min-w-0">
   <Header pageHeader>
-    <CommunityHeader
-      bind:community={data.community.community_view.community}
-      bind:subscribed={data.community.community_view.subscribed}
-      blocked={data.community.community_view.blocked}
-      moderators={data.community.moderators}
-      counts={data.community.community_view.counts}
-      class="w-full relative"
-    />
+    <div class="flex flex-col w-full">
+      <CommunityHeader
+        bind:community={data.community.community_view.community}
+        bind:subscribed={data.community.community_view.subscribed}
+        blocked={data.community.community_view.blocked}
+        moderators={data.community.moderators}
+        counts={data.community.community_view.counts}
+        class="w-full relative"
+      />
+    </div>
     {#snippet extended()}
       <Sort selected={data.sort} />
     {/snippet}

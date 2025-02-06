@@ -61,6 +61,7 @@
           target="_blank"
           class="text-slate-600 dark:text-zinc-400 inline-flex items-center gap-1 text-xs"
         >
+          <Icon src={LinkIcon} size="14" micro />
           {richURL.hostname}
         </Link>
       {/if}

@@ -53,25 +53,20 @@
       />
     </span>
   {/snippet}
-  {#if (data.moderates ?? []).length > 0}
-    <Expandable
-      class="border rounded-xl bg-white/50 dark:bg-zinc-900/50 w-full p-3 px-4
-      dark:border-zinc-800 border-slate-300 border-opacity-50 text-slate-700 dark:text-zinc-300 transition-colors"
-    >
+  {#if data.moderates && data.moderates.length > 0}
+    <Expandable class="">
       {#snippet title()}
-        <span class="flex items-center gap-1">
-          <ShieldIcon width={14} filled />
-          {$t('routes.profile.moderates')}
-        </span>
+        {$t('routes.profile.moderates')}
+        <hr class="flex-1 w-full border-slate-200 dark:border-zinc-800 mx-3" />
       {/snippet}
       <ItemList
-        items={data.moderates?.map((m) => ({
+        items={data.moderates.map((m) => ({
           id: m.community.id,
           name: m.community.title,
           url: communityLink(m.community),
           avatar: m.community.icon,
           instance: new URL(m.community.actor_id).hostname,
-        })) ?? []}
+        }))}
       />
     </Expandable>
   {/if}
