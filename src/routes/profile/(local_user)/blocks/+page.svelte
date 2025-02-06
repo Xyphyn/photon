@@ -31,7 +31,8 @@
     }
   }
 
-  let { data = $bindable() }: Props = $props()
+  let { data: pageData }: Props = $props()
+  let data = $state(pageData)
 
   async function unblockUser(item: PersonBlockView) {
     if (!$profile?.jwt) return

@@ -14,7 +14,8 @@
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { t } from '$lib/translations.js'
 
-  let { data = $bindable() } = $props()
+  let { data: pageData } = $props()
+  let data = $state(pageData)
 
   let newAdmin: string = $state(''),
     adding: boolean = $state(false)

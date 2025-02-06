@@ -15,7 +15,8 @@
     data: PageData
   }
 
-  let { data = $bindable() }: Props = $props()
+  let { data: pageData }: Props = $props()
+  let data = $state(pageData)
 
   let formData = $state({
     newModerator: '',
