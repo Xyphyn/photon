@@ -53,6 +53,7 @@
   import { fly } from 'svelte/transition'
   import { expoOut } from 'svelte/easing'
   import Option from 'mono-svelte/forms/select/Option.svelte'
+  import CommentProvider from './CommentProvider.svelte'
 
   let { data: loaded = $bindable() } = $props()
   let data = $state(loaded)
@@ -395,105 +396,12 @@
       {/each}
     </div>
   {:then comments}
-    {#if $profile?.jwt}
-      {#if !commenting}
-        <EndPlaceholder class="">
-          <Button color="primary" onclick={() => (commenting = true)}>
-            <Icon src={PlusCircle} size="16" micro />
-            {$t('routes.post.addComment')}
-          </Button>
-
-          {#snippet action()}
-            <div class="gap-2 flex items-center">
-              <Select
-                size="md"
-                bind:value={commentSort}
-                onchange={reloadComments}
-              >
-                <Option icon={Fire} value="Hot">{$t('filter.sort.hot')}</Option>
-                <Option icon={Trophy} value="Top">
-                  {$t('filter.sort.top.label')}
-                </Option>
-                <Option icon={Star} value="New">{$t('filter.sort.new')}</Option>
-                <Option icon={Clock} value="Old">
-                  {$t('filter.sort.old')}
-                </Option>
-                <Option icon={ArrowTrendingDown} value="Controversial">
-                  {$t('filter.sort.controversial')}
-                </Option>
-              </Select>
-              <Button size="square-md" onclick={reloadComments}>
-                {#snippet prefix()}
-                  <Icon src={ArrowPath} size="16" mini />
-                {/snippet}
-              </Button>
-            </div>
-          {/snippet}
-        </EndPlaceholder>
-      {:else}
-        <CommentForm
-          postId={data.post.post_view.post.id}
-          oncomment={(comment) => {
-            Promise.resolve(data.comments).then((r) => {
-              r.comments.push(comment.comment_view)
-            })
-            // comments.comments.push(comment.comment_view)
-            // reloadComments()
-            // toast({ content: $t('routes.post.commented'), type: 'success' })
-          }}
-          locked={(data.post.post_view.post.locked &&
-            !(
-              $profile?.user?.local_user_view.local_user.admin ||
-              $profile?.user?.moderates
-                .map((c) => c.community.id)
-                .includes(data.post.community_view.community.id)
-            )) ||
-            page.params.instance.toLowerCase() != $instance.toLowerCase()}
-          banned={data.post.community_view.banned_from_community}
-          onfocus={() => (commenting = true)}
-          tools={commenting}
-          preview={commenting}
-          placeholder={commenting ? undefined : $t('routes.post.addComment')}
-          rows={commenting ? 7 : 1}
-          oncancel={() => (commenting = false)}
-        />
-      {/if}
-    {/if}
-
-    {#if commenting || !$profile.jwt}
-      <div class="gap-2 flex items-center">
-        <Select size="md" bind:value={commentSort} onchange={reloadComments}>
-          <Option icon={Fire} value="Hot">{$t('filter.sort.hot')}</Option>
-          <Option icon={Trophy} value="Top">
-            {$t('filter.sort.top.label')}
-          </Option>
-          <Option icon={Star} value="New">{$t('filter.sort.new')}</Option>
-          <Option icon={Clock} value="Old">
-            {$t('filter.sort.old')}
-          </Option>
-          <Option icon={ArrowTrendingDown} value="Controversial">
-            {$t('filter.sort.controversial')}
-          </Option>
-        </Select>
-        <Button size="square-md" onclick={reloadComments}>
-          {#snippet prefix()}
-            <Icon src={ArrowPath} size="16" mini />
-          {/snippet}
-        </Button>
-      </div>
-    {/if}
-    <CommentListVirtualizer
-      post={data.post.post_view.post}
-      nodes={buildCommentsTree(
-        comments.comments,
-        undefined,
-        (c) =>
-          !(
-            (settings.hidePosts.deleted && c.comment.deleted) ||
-            (settings.hidePosts.removed && c.comment.removed)
-          ),
-      )}
-      scrollTo={data.thread.focus}
+    <CommentProvider
+      post={data.post}
+      {comments}
+      focus={data.thread.focus}
+      onupdate={reloadComments}
+      bind:sort={commentSort}
     />
     {#if comments.comments.length == 0}
       <Placeholder
