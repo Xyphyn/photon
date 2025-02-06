@@ -166,7 +166,7 @@
       <span class:font-bold={op} class="flex flex-row gap-1 items-center">
         <UserLink
           inComment
-          avatarSize={24}
+          avatarSize={20}
           avatar
           user={node.comment_view.creator}
         >
