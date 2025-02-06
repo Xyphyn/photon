@@ -1,20 +1,18 @@
 <script lang="ts">
   import Markdown from '$lib/components/markdown/Markdown.svelte'
-  import { client } from '$lib/lemmy'
   import { t } from '$lib/translations'
   import type { PrivateMessageView } from 'lemmy-js-client'
   import { Button, Menu, MenuButton, MenuDivider, Popover } from 'mono-svelte'
-  import { createEventDispatcher } from 'svelte'
   import { EllipsisVertical, Flag, Icon, Trash } from 'svelte-hero-icons'
 
   interface Props {
     message: PrivateMessageView
     primary?: boolean
+    ondelete?: (shouldDelete: boolean) => void
+    onreport?: (report: boolean) => void
   }
 
-  let { message, primary = false }: Props = $props()
-
-  const dispatch = createEventDispatcher<{ delete: boolean; report: boolean }>()
+  let { message, primary = false, ondelete, onreport }: Props = $props()
 </script>
 
 <div
@@ -26,10 +24,10 @@
   <div
     class="{primary
       ? 'bg-primary-900 dark:bg-primary-100 text-slate-50 dark:text-zinc-900 hover:brightness-75'
-      : 'bg-slate-100 dark:bg-zinc-900 hover:brightness-125'} rounded-2xl w-max p-1.5 px-3
+      : 'bg-slate-100 dark:bg-zinc-900 hover:brightness-125'} rounded-2xl w-full p-1.5 px-3
     font-medium cursor-pointer transition-all"
   >
-    <Markdown source={message.private_message.content} inline />
+    <Markdown source={message.private_message.content} class="w-full" />
   </div>
   <Menu>
     {#snippet target()}
@@ -45,20 +43,14 @@
     {/snippet}
     <MenuDivider>{$t('post.actions.more.actions')}</MenuDivider>
     {#if primary}
-      <MenuButton
-        color="danger-subtle"
-        onclick={() => dispatch('delete', true)}
-      >
+      <MenuButton color="danger-subtle" onclick={() => ondelete?.(true)}>
         {#snippet prefix()}
           <Icon src={Trash} size="16" micro />
         {/snippet}
         {$t('post.actions.more.delete')}
       </MenuButton>
     {:else}
-      <MenuButton
-        color="danger-subtle"
-        onclick={() => dispatch('report', true)}
-      >
+      <MenuButton color="danger-subtle" onclick={() => onreport?.(true)}>
         {#snippet prefix()}
           <Icon src={Flag} size="16" micro />
         {/snippet}

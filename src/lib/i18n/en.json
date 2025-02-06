@@ -282,6 +282,10 @@
                 "reply": "{{user}} replied to you in {{post}}",
                 "mention": "{{user}} mentioned you in {{post}}",
                 "message": "{{user}} messaged {{recipient}}"
+            },
+            "messages": {
+                "conversation": "This is the beginning of your conversation with {{user}}",
+                "indicator": "Messaging {{user}}"
             }
         },
         "moderation": {
