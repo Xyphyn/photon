@@ -258,6 +258,7 @@
                     children: [],
                     comment_view: e.comment_view,
                     depth: node.depth + 1,
+                    expanded: true,
                   },
                   ...node.children,
                 ]

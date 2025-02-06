@@ -273,7 +273,8 @@
             "emptyComments": {
                 "title": "No comments",
                 "description": "Start the conversation!"
-            }
+            },
+            "commented": "Your comment was posted."
         },
         "inbox": {
             "title": "Inbox",

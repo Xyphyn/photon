@@ -30,7 +30,7 @@
     parseTags,
   } from '$lib/components/lemmy/post/PostMeta.svelte'
   import { Select, removeToast, toast } from 'mono-svelte'
-  import type { CommentSortType } from 'lemmy-js-client'
+  import type { CommentSortType, GetCommentsResponse } from 'lemmy-js-client'
   import { profile } from '$lib/auth.svelte.js'
   import { instance } from '$lib/instance.js'
   import { afterNavigate, goto } from '$app/navigation'
@@ -433,8 +433,11 @@
       {:else}
         <CommentForm
           postId={data.post.post_view.post.id}
-          oncomment={(comment) =>
-            (comments.comments = [comment.comment_view, ...comments.comments])}
+          oncomment={(comment) => {
+            comments.comments.push(comment.comment_view)
+            reloadComments()
+            toast({ content: $t('routes.post.commented'), type: 'success' })
+          }}
           locked={(data.post.post_view.post.locked &&
             !(
               $profile?.user?.local_user_view.local_user.admin ||
