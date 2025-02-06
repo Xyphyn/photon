@@ -1,8 +1,9 @@
 <script lang="ts">
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import { getClient } from '$lib/lemmy.js'
-  import type { Community, ListingType } from 'lemmy-js-client'
+  import type { Community, CommunityView, ListingType } from 'lemmy-js-client'
   import { MenuButton, Search } from 'mono-svelte'
+  import type { SearchProps } from 'mono-svelte/search/Search.svelte'
   import { createEventDispatcher } from 'svelte'
   import { Icon, XCircle, ServerStack } from 'svelte-hero-icons'
   import { fly } from 'svelte/transition'
@@ -13,6 +14,7 @@
     instance?: string | undefined
     listing_type?: ListingType
     showWhenEmpty?: boolean
+    onselect?: (item: any) => void
     [key: string]: any
   }
 
@@ -45,9 +47,7 @@
       return results.communities.map((c) => c.community)
     }}
     extractName={(c) => `${c.title}@${new URL(c.actor_id).hostname}`}
-    on:select
     bind:query={q}
-    {showWhenEmpty}
     {...rest}
   >
     {#snippet noresults()}
@@ -90,9 +90,7 @@
         : []
     }}
     extractName={(i) => `${i.domain}`}
-    on:select
     bind:query={q}
-    {showWhenEmpty}
     {...rest}
   >
     {#snippet noresults()}

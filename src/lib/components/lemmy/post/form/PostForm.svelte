@@ -258,8 +258,8 @@
     <UploadModal
       bind:open={uploadingImage}
       multiple={false}
-      on:upload={(e) => {
-        if (e.detail) data.url = e.detail[0]
+      onupload={(e) => {
+        if (e) data.url = e[0]
         uploadingImage = false
       }}
     />
@@ -282,8 +282,8 @@
         listing_type="All"
         label={$t('form.post.community')}
         required
-        on:select={(e) => {
-          const c = e.detail
+        onselect={(e) => {
+          const c = e
           if (!c) {
             data.community = null
             return

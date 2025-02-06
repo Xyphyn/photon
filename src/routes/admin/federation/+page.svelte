@@ -4,7 +4,6 @@
   import { profile } from '$lib/auth.svelte.js'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import EditableList from '$lib/components/ui/list/EditableList.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
   import { getClient } from '$lib/lemmy.js'
@@ -216,7 +215,7 @@
         </Button>
       </form>
       <Material class="h-full overflow-auto" color="distinct">
-        <EditableList
+        <ul
           class="[&>*]:py-3 dark:!divide-zinc-800 {allowInstance.instance != ''
             ? 'opacity-50'
             : ''}"
@@ -262,7 +261,7 @@
               description={$t('routes.admin.federation.emptyBlock.description')}
             />
           {/if}
-        </EditableList>
+        </ul>
       </Material>
     </div>
     <div class="md:flex-1 w-full max-h-[42rem] flex flex-col gap-2">
@@ -304,7 +303,7 @@
         </Button>
       </form>
       <Material class="h-full overflow-auto" color="distinct">
-        <EditableList class="[&>*]:py-3 dark:!divide-zinc-800 ">
+        <ul class="[&>*]:py-3 dark:!divide-zinc-800">
           {#if data.federated_instances.federated_instances.allowed.length > 0}
             {#each data.federated_instances.federated_instances.allowed.sort( (b, a) => b.domain.localeCompare(a.domain), ) as instance (instance.id)}
               <div
@@ -350,7 +349,7 @@
               />
             </div>
           {/if}
-        </EditableList>
+        </ul>
       </Material>
     </div>
   </div>

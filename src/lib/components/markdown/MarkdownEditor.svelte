@@ -125,8 +125,8 @@
   <ImageUploadModal
     bind:open={uploadingImage}
     bind:image
-    on:upload={(e) => {
-      e.detail.forEach((i) => {
+    onupload={(e) => {
+      e.forEach((i) => {
         wrapSelection(`![](${i})\n\n`, '')
       })
     }}

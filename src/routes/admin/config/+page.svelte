@@ -104,9 +104,9 @@
         <ImageUploadModal
           bind:open={uploading.icon}
           multiple={false}
-          on:upload={(uploaded) => {
+          onupload={(uploaded) => {
             uploading.icon = false
-            formData.icon = uploaded.detail[0]
+            formData.icon = uploaded[0]
           }}
         />
       {/if}
@@ -132,9 +132,9 @@
         <ImageUploadModal
           bind:open={uploading.banner}
           multiple={false}
-          on:upload={(uploaded) => {
+          onupload={(uploaded) => {
             uploading.banner = false
-            formData.banner = uploaded.detail[0]
+            formData.banner = uploaded[0]
           }}
         />
       {/if}

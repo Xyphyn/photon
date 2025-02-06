@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { preventDefault } from 'svelte/legacy'
-
   import { profile } from '$lib/auth.svelte.js'
   import ProgressBar from '$lib/components/ui/ProgressBar.svelte'
   import { errorMessage } from '$lib/lemmy/error'
@@ -8,7 +6,6 @@
   import { uploadImage } from '$lib/util.svelte.js'
   import { ImageInput, Spinner, toast } from 'mono-svelte'
   import { Button, Modal } from 'mono-svelte'
-  import { createEventDispatcher } from 'svelte'
   import { DocumentPlus, Icon } from 'svelte-hero-icons'
   import { expoOut } from 'svelte/easing'
   import { slide } from 'svelte/transition'
@@ -18,6 +15,7 @@
     image?: FileList | null
     preview?: boolean
     multiple?: boolean
+    onupload?: (urls: string[]) => void
   }
 
   let {
@@ -25,14 +23,13 @@
     image = $bindable(null),
     preview = true,
     multiple = true,
+    onupload,
   }: Props = $props()
   let progress = $state(1)
 
   let previewURLs = $derived(
     preview && image ? Array.from(image).map(URL.createObjectURL) : undefined,
   )
-
-  const dispatcher = createEventDispatcher<{ upload: string[] }>()
 
   async function upload() {
     if (!$profile?.jwt || image == null) return
@@ -58,7 +55,7 @@
 
       if (!uploaded) throw new Error('Image upload returned undefined')
 
-      dispatcher('upload', uploaded)
+      onupload?.(uploaded)
       progress = 1
       open = false
     } catch (err) {
@@ -81,7 +78,13 @@
       <ProgressBar {progress} />
     </div>
   {/if}
-  <form class="flex flex-col gap-4" onsubmit={preventDefault(upload)}>
+  <form
+    class="flex flex-col gap-4"
+    onsubmit={(e) => {
+      e.preventDefault()
+      upload()
+    }}
+  >
     <label
       for="image-input"
       class="p-4 border-2 border-dashed rounded-xl cursor-pointer transition-colors

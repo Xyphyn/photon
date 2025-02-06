@@ -5,7 +5,6 @@
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import EditableList from '$lib/components/ui/list/EditableList.svelte'
   import { toast } from 'mono-svelte'
   import { getClient } from '$lib/lemmy.js'
   import type { Tagline } from 'lemmy-js-client'
@@ -61,31 +60,30 @@
     </Button>
   </Header>
 
-  <EditableList
-    on:action={(e) => {
-      taglines.splice(
-        taglines.findIndex((i) => i == e.detail),
-        1,
-      )
+  <ul>
+    {#each taglines as tagline}
+      <div class="flex py-3">
+        <Markdown source={tagline} inline />
 
-      // hack for reactivity
-      taglines = taglines
-    }}
-  >
-    {#snippet children({ action })}
-      {#each taglines as tagline}
-        <div class="flex py-3">
-          <Markdown source={tagline} inline />
+        <div class="flex gap-2 ml-auto">
+          <Button
+            onclick={() => {
+              taglines.splice(
+                taglines.findIndex((i) => i == tagline),
+                1,
+              )
 
-          <div class="flex gap-2 ml-auto">
-            <Button onclick={() => action(tagline)} size="square-md">
-              <Icon src={Trash} mini size="16" />
-            </Button>
-          </div>
+              // hack for reactivity
+              taglines = taglines
+            }}
+            size="square-md"
+          >
+            <Icon src={Trash} mini size="16" />
+          </Button>
         </div>
-      {/each}
-    {/snippet}
-  </EditableList>
+      </div>
+    {/each}
+  </ul>
   <form
     class="flex flex-col mt-auto gap-2 w-full"
     onsubmit={preventDefault(() => {

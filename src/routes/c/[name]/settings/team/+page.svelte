@@ -1,9 +1,6 @@
 <script lang="ts">
-  import { preventDefault } from 'svelte/legacy'
-
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
-  import EditableList from '$lib/components/ui/list/EditableList.svelte'
   import { Icon, Plus, Trash } from 'svelte-hero-icons'
   import type { PageData } from './$types.js'
   import { profile } from '$lib/auth.svelte.js'
@@ -108,41 +105,46 @@
 </script>
 
 <Header pageHeader>Moderators</Header>
-<EditableList
-  on:action={(e) => {
-    toast({
-      content: `Are you sure you want to remove ${e.detail.name} as a moderator?`,
-      action: () => removeMod(e.detail.id),
-    })
-  }}
->
-  {#snippet children({ action })}
-    {#each data.community.moderators as moderator (moderator.moderator.id)}
-      <div
-        class="py-4 flex items-center gap-2 justify-between"
-        animate:flip={{ duration: 300 }}
-      >
-        <div class="flex gap-2 items-center">
-          <Avatar
-            width={28}
-            url={moderator.moderator.avatar}
-            alt={moderator.moderator.name}
-          />
-          <div class="flex flex-col gap-0">
-            <UserLink user={moderator.moderator} showInstance={false} />
-            <span class="text-xs text-slate-600 dark:text-zinc-400">
-              {new URL(moderator.moderator.actor_id).hostname}
-            </span>
-          </div>
+<ul class="divide-y divide-slate-200 dark:divide-zinc-800">
+  {#each data.community.moderators as moderator (moderator.moderator.id)}
+    <div
+      class="py-4 flex items-center gap-2 justify-between"
+      animate:flip={{ duration: 300 }}
+    >
+      <div class="flex gap-2 items-center">
+        <Avatar
+          width={28}
+          url={moderator.moderator.avatar}
+          alt={moderator.moderator.name}
+        />
+        <div class="flex flex-col gap-0">
+          <UserLink user={moderator.moderator} showInstance={false} />
+          <span class="text-xs text-slate-600 dark:text-zinc-400">
+            {new URL(moderator.moderator.actor_id).hostname}
+          </span>
         </div>
-        <Button size="square-md" onclick={() => action(moderator.moderator)}>
-          <Icon src={Trash} mini size="16" />
-        </Button>
       </div>
-    {/each}
-  {/snippet}
-</EditableList>
-<form onsubmit={preventDefault(addModerator)} class="mt-auto flex gap-2 w-full">
+      <Button
+        size="square-md"
+        onclick={() => {
+          toast({
+            content: `Are you sure you want to remove ${moderator.moderator.name} as a moderator?`,
+            action: () => removeMod(moderator.moderator.id),
+          })
+        }}
+      >
+        <Icon src={Trash} mini size="16" />
+      </Button>
+    </div>
+  {/each}
+</ul>
+<form
+  onsubmit={(e) => {
+    e.preventDefault()
+    addModerator()
+  }}
+  class="mt-auto flex gap-2 w-full"
+>
   <TextInput
     bind:value={formData.newModerator}
     class="w-full"

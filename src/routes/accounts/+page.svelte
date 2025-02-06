@@ -8,7 +8,6 @@
     type Profile,
     profile,
   } from '$lib/auth.svelte.js'
-  import EditableList from '$lib/components/ui/list/EditableList.svelte'
   import { Menu, MenuButton, Modal } from 'mono-svelte'
   import DebugObject from '$lib/components/util/debug/DebugObject.svelte'
   import { DEFAULT_INSTANCE_URL, LINKED_INSTANCE_URL } from '$lib/instance.js'

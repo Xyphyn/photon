@@ -12,6 +12,7 @@
     instance?: string | undefined
     listing_type?: ListingType
     showWhenEmpty?: boolean
+    onselect?: (e: any) => void
     [key: string]: any
   }
 
@@ -39,9 +40,7 @@
     return results.users.map((c) => c.person)
   }}
   extractName={(c) => `${c.name}@${new URL(c.actor_id).hostname}`}
-  on:select
   bind:query={q}
-  {showWhenEmpty}
   {...rest}
 >
   {#snippet noresults()}

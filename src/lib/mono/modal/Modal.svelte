@@ -15,6 +15,8 @@
     customTitle?: import('svelte').Snippet
     children?: import('svelte').Snippet
     actions?: import('svelte').Snippet<[any]>
+    ondismissed?: () => void
+    onaction?: () => void
   }
 
   let {
@@ -25,11 +27,11 @@
     customTitle,
     children,
     actions,
+    ondismissed,
+    onaction,
   }: Props = $props()
 
   let el: any = $state()
-
-  const dispatcher = createEventDispatcher<{ action: any; dismissed: any }>()
 </script>
 
 <Portal>
@@ -46,7 +48,7 @@ bg-white/50 dark:bg-black/50 box-border p-4"
         if (!el.contains(e.target)) {
           open = false
 
-          dispatcher('dismissed')
+          ondismissed?.()
         }
       }}
     >
@@ -94,9 +96,9 @@ bg-white/50 dark:bg-black/50 box-border p-4"
               <Button
                 class="w-full"
                 onclick={(e) => {
-                  dispatcher('action', e)
+                  onaction?.()
                   open = false
-                  dispatcher('dismissed')
+                  ondismissed?.()
                 }}
                 color="primary"
                 size="lg"

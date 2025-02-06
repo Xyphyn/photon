@@ -12,20 +12,7 @@
     sm: 'shadow-sm',
     none: 'shadow-none',
   }
-</script>
 
-<script lang="ts">
-  import type {
-    HTMLInputAttributes,
-    HTMLInputTypeAttribute,
-  } from 'svelte/elements'
-
-  import Label from '../forms/Label.svelte'
-  import { generateID } from '../forms/helper.js'
-
-  const borderClass = `
-	border border-slate-200 border-b-slate-300 dark:border-zinc-900 dark:border-t-zinc-800
-	`
   interface Props extends Omit<HTMLInputAttributes, 'size' | 'prefix'> {
     label?: string | undefined
     value?: string
@@ -43,6 +30,22 @@
     suffix?: import('svelte').Snippet
     children?: import('svelte').Snippet
   }
+
+  export type { Props as TextInputProps }
+</script>
+
+<script lang="ts">
+  import type {
+    HTMLInputAttributes,
+    HTMLInputTypeAttribute,
+  } from 'svelte/elements'
+
+  import Label from '../forms/Label.svelte'
+  import { generateID } from '../forms/helper.js'
+
+  const borderClass = `
+	border border-slate-200 border-b-slate-300 dark:border-zinc-900 dark:border-t-zinc-800
+	`
 
   let {
     label = undefined,

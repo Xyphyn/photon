@@ -99,9 +99,9 @@
   <Modal
     bind:open={deletion.modal}
     action="Submit"
-    on:action={() => deleteAccount(4)}
+    onaction={() => deleteAccount(4)}
   >
-    {#snippet title()}
+    {#snippet customTitle()}
       <span>{$t('form.profile.deleteAccount.label')}</span>
     {/snippet}
     <TextInput

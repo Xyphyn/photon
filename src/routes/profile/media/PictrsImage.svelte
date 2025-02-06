@@ -11,8 +11,6 @@
   import { createEventDispatcher } from 'svelte'
   import { ArrowDown, ArrowDownTray, Icon, Trash } from 'svelte-hero-icons'
 
-  const dispatch = createEventDispatcher<{ delete: boolean }>()
-
   let loading = $state(false)
 
   async function deleteImage(image: LocalImage) {
@@ -25,7 +23,7 @@
         filename: image.pictrs_alias,
       })
 
-      dispatch('delete', res)
+      ondelete?.(res)
     } catch (e) {
       toast({ content: e as any, type: 'error' })
     }
@@ -34,9 +32,10 @@
 
   interface Props {
     image: LocalImage
+    ondelete?: (res: boolean) => void
   }
 
-  let { image }: Props = $props()
+  let { image, ondelete }: Props = $props()
 </script>
 
 <div class="flex flex-col gap-1">

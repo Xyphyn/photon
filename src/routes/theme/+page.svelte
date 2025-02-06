@@ -34,7 +34,7 @@
 {#if importing}
   <Modal
     bind:open={importing}
-    on:action={() => {
+    onaction={() => {
       try {
         if (importText == '') {
           throw new Error('Import is empty')

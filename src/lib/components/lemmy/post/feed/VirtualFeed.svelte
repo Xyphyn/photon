@@ -176,11 +176,6 @@
     }
   })
 
-  // onMount(async () => {
-  //   await tick()
-  //   $virtualizer.measure()
-  // })
-
   let items = $derived($virtualizer.getVirtualItems())
   $effect(() => {
     if (virtualItemEls.length)
@@ -194,8 +189,6 @@
       })
   })
 </script>
-
-<!-- <svelte:window on:keydown={handleKeydown} /> -->
 
 <ul
   class="flex flex-col list-none divide-y divide-slate-200 dark:divide-zinc-800"

@@ -4,7 +4,6 @@
   import { profile } from '$lib/auth.svelte.js'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import EditableList from '$lib/components/ui/list/EditableList.svelte'
   import { toast } from 'mono-svelte'
   import { instance } from '$lib/instance.js'
   import { getClient } from '$lib/lemmy.js'
@@ -48,26 +47,29 @@
 
 <Header pageHeader>{$t('routes.admin.team.title')}</Header>
 {#if data.site}
-  <EditableList on:action={(e) => removeAdmin(e.detail, false)}>
-    {#snippet children({ action })}
-      {#if data.site.admins.length <= 0}
-        <Placeholder
-          icon={QuestionMarkCircle}
-          title={$t('routes.admin.team.empty.title')}
-          description={$t('routes.admin.team.empty.description')}
-        />
-      {:else}
-        {#each data.site?.admins ?? [] as admin}
-          <div class="py-3 flex items-center justify-between">
-            <UserLink avatar showInstance={false} user={admin.person} />
-            <Button onclick={() => action(admin.person.id)} size="square-md">
-              <Icon src={Trash} mini size="16" />
-            </Button>
-          </div>
-        {/each}
-      {/if}
-    {/snippet}
-  </EditableList>
+  <ul>
+    {#if data.site.admins.length <= 0}
+      <Placeholder
+        icon={QuestionMarkCircle}
+        title={$t('routes.admin.team.empty.title')}
+        description={$t('routes.admin.team.empty.description')}
+      />
+    {:else}
+      {#each data.site?.admins ?? [] as admin}
+        <div class="py-3 flex items-center justify-between">
+          <UserLink avatar showInstance={false} user={admin.person} />
+          <Button
+            onclick={() => {
+              removeAdmin(admin.person.id, false)
+            }}
+            size="square-md"
+          >
+            <Icon src={Trash} mini size="16" />
+          </Button>
+        </div>
+      {/each}
+    {/if}
+  </ul>
   <form
     class="flex flex-row items-center gap-2 mt-auto w-full"
     onsubmit={preventDefault(() => {

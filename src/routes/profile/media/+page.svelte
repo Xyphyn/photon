@@ -17,7 +17,7 @@
     <div animate:flip={{ duration: 500, easing: expoInOut }}>
       <PictrsImage
         image={image.local_image}
-        on:delete={() => {
+        ondelete={() => {
           data.images = data.images.toSpliced(
             data.images.findIndex(
               (i) =>

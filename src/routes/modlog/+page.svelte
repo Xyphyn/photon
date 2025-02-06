@@ -96,11 +96,11 @@
       label="Instance"
       class="flex-1"
       q={page.url.searchParams.get('instance') || ''}
-      on:select={(e) =>
+      onselect={(e) =>
         searchParam(
           page.url,
           'instance',
-          e.detail?.domain.toString() ?? '',
+          e?.domain.toString() ?? '',
           'page',
           'community',
           'user',
@@ -115,13 +115,8 @@
       label="Community"
       class="flex-1"
       q={page.url.searchParams.get('community') ? 'Selected' : ''}
-      on:select={(e) =>
-        searchParam(
-          page.url,
-          'community',
-          e.detail?.id.toString() ?? '',
-          'page',
-        )}
+      onselect={(e) =>
+        searchParam(page.url, 'community', e?.id.toString() ?? '', 'page')}
     />
     <UserAutocomplete
       instance={page.url.searchParams.get('instance') || undefined}
@@ -134,8 +129,8 @@
       q={page.url.searchParams.get('user')
         ? (data.filters.user ?? 'Selected')
         : ''}
-      on:select={(e) =>
-        searchParam(page.url, 'user', e.detail?.id.toString() ?? '', 'page')}
+      onselect={(e) =>
+        searchParam(page.url, 'user', e?.id.toString() ?? '', 'page')}
     />
     {#if $profile?.user && isAdmin($profile?.user)}
       <UserAutocomplete
@@ -148,13 +143,8 @@
         q={page.url.searchParams.get('mod_id')
           ? (data.filters.moderator ?? 'Selected')
           : ''}
-        on:select={(e) =>
-          searchParam(
-            page.url,
-            'mod_id',
-            e.detail?.id.toString() ?? '',
-            'page',
-          )}
+        onselect={(e) =>
+          searchParam(page.url, 'mod_id', e?.id.toString() ?? '', 'page')}
       />
     {/if}
     <Button

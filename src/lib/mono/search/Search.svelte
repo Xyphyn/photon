@@ -1,24 +1,5 @@
-<script lang="ts">
-  import { Menu, TextInput, Spinner, MenuButton } from '../index.js'
-  import { debounce } from '../util/time.js'
-  import { createEventDispatcher } from 'svelte'
-  import { Icon, MagnifyingGlass } from 'svelte-hero-icons'
-
-  type T = $$Generic
-  let items: T[] = $state([])
-
-  /**
-   * This is here so that the menu doesn't open as soon as it's mounted.
-   */
-  let openMenu = $state(false)
-  let searching = $state(false)
-
-  const dispatcher = createEventDispatcher<{
-    input: Event
-    select: T | undefined
-  }>()
-
-  interface Props {
+<script lang="ts" module>
+  interface Props<T> extends Omit<TextInputProps, 'onselect' | 'children'> {
     query?: string
     selected?: T | undefined
     search: (query: string) => Promise<T[]>
@@ -27,8 +8,27 @@
     input?: import('svelte').Snippet
     noresults?: import('svelte').Snippet
     children?: import('svelte').Snippet<[any]>
-    [key: string]: any
+    onselect?: (value: T | undefined) => void
+    oninput?: TextInputProps['oninput']
   }
+
+  export type { Props as SearchProps }
+</script>
+
+<script lang="ts" generics="T">
+  import type { TextInputProps } from 'mono-svelte/forms/TextInput.svelte'
+  import { Menu, TextInput, Spinner, MenuButton } from '../index.js'
+  import { debounce } from '../util/time.js'
+  import { createEventDispatcher } from 'svelte'
+  import { Icon, MagnifyingGlass } from 'svelte-hero-icons'
+
+  let items: T[] = $state([])
+
+  /**
+   * This is here so that the menu doesn't open as soon as it's mounted.
+   */
+  let openMenu = $state(false)
+  let searching = $state(false)
 
   let {
     query = $bindable(''),
@@ -38,13 +38,15 @@
     select = (item: T) => {
       selected = item
       query = extractName(item)
-      dispatcher('select', item)
+      onselect?.(item)
     },
     input,
     noresults,
     children,
+    onselect,
+    oninput,
     ...rest
-  }: Props = $props()
+  }: Props<T> = $props()
 
   const debounceFunc = debounce(async () => {
     searching = true
@@ -63,13 +65,13 @@
           oninput={(e) => {
             searching = true
             openMenu = true
-            dispatcher('input', e)
+            oninput?.(e)
             debounceFunc()
           }}
           onfocus={(e) => {
             searching = true
             openMenu = true
-            dispatcher('input', e)
+            oninput?.(e)
             debounceFunc()
           }}
           {...rest}
@@ -96,7 +98,6 @@
         {#if children}{@render children({
             extractName,
             item,
-            dispatcher,
             select,
           })}{:else}
           <MenuButton onclick={() => select(item)}>

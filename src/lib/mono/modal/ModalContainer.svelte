@@ -18,7 +18,7 @@
   <Modal
     title={$shownModal.title}
     dismissable={$shownModal.dismissable}
-    on:dismissed={() => shownModal.set(undefined)}
+    ondismissed={() => shownModal.set(undefined)}
     bind:open
   >
     <p>{$shownModal.body}</p>

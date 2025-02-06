@@ -139,8 +139,8 @@
       jwt={$profile?.jwt}
       listing_type={'All'}
       showWhenEmpty={true}
-      on:select={(c) =>
-        searchParam(page.url, 'community', c.detail?.id || undefined, 'page')}
+      onselect={(c) =>
+        searchParam(page.url, 'community', c?.id || undefined, 'page')}
     />
   </div>
 {/if}
