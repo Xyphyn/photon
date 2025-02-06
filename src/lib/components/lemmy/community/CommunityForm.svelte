@@ -4,8 +4,8 @@
   import { goto } from '$app/navigation'
   import { profile } from '$lib/auth.svelte.js'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
-  import { ImageInput, Switch, toast } from 'mono-svelte'
-  import { client, getClient } from '$lib/lemmy.js'
+  import { Badge, ImageInput, MenuButton, Switch, toast } from 'mono-svelte'
+  import { client, getClient, site } from '$lib/lemmy.js'
   import { addSubscription } from '$lib/lemmy/user.js'
   import { Button, Checkbox, TextInput } from 'mono-svelte'
   import { uploadImage } from '$lib/util.svelte.js'
@@ -13,16 +13,19 @@
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import ImagePreviewInput from '$lib/components/input/ImagePreviewInput.svelte'
   import Label from 'mono-svelte/forms/Label.svelte'
-  import { DocumentPlus, GlobeAlt, Icon, MapPin } from 'svelte-hero-icons'
+  import { DocumentPlus, GlobeAlt, Icon, MapPin, Plus } from 'svelte-hero-icons'
   import ImageUploadModal from '../modal/ImageUploadModal.svelte'
   import Select from 'mono-svelte/forms/select/Select.svelte'
   import Option from 'mono-svelte/forms/select/Option.svelte'
+  import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
+  import Material from 'mono-svelte/materials/Material.svelte'
+  import Menu from 'mono-svelte/popover/Menu.svelte'
 
   interface Props {
     /**
      * The community ID to edit.
      */
-    edit?: number | undefined
+    edit?: number
     formData?: {
       name: string
       displayName: string
@@ -33,13 +36,14 @@
       postsLockedToModerators: boolean
       submitting: boolean
       visibility: 'Public' | 'LocalOnly'
+      languages?: number[]
     }
     formtitle?: import('svelte').Snippet
   }
 
   let {
     edit = undefined,
-    formData = $bindable({
+    formData: passedFormData = $bindable({
       name: '',
       displayName: '',
       sidebar: '',
@@ -47,9 +51,12 @@
       postsLockedToModerators: false,
       submitting: false,
       visibility: 'Public',
+      languages: undefined,
     }),
     formtitle,
   }: Props = $props()
+
+  let formData = $state(passedFormData)
 
   async function submit() {
     if (!$profile?.jwt) return
@@ -68,6 +75,7 @@
             banner: formData.banner,
             community_id: edit,
             visibility: formData.visibility,
+            discussion_languages: formData.languages,
           })
         : await getClient().createCommunity({
             name: formData.name,
@@ -78,6 +86,7 @@
             icon: formData.icon,
             banner: formData.banner,
             visibility: formData.visibility,
+            discussion_languages: formData.languages,
           })
 
       toast({
@@ -225,6 +234,54 @@
     <Option icon={GlobeAlt} value="Public">Public</Option>
     <Option icon={MapPin} value="LocalOnly">Local Only</Option>
   </Select>
+
+  <div class="space-y-1">
+    <SectionTitle>{$t('form.profile.languages.title')}</SectionTitle>
+    <Material rounding="xl" color="uniform" class="dark:bg-zinc-950">
+      {#if $site}
+        <div class="flex gap-2 flex-wrap flex-row">
+          <Menu class="gap-px">
+            {#snippet target()}
+              <button type="button">
+                <Badge color="blue-subtle">
+                  <Icon src={Plus} micro size="14" />
+                  {$t('common.add')}
+                </Badge>
+              </button>
+            {/snippet}
+            {#each $site.all_languages as language, index}
+              <MenuButton
+                class="min-h-[16px] py-0"
+                onclick={() => {
+                  formData.languages = [
+                    ...(formData.languages ?? []),
+                    language.id,
+                  ]
+                }}
+              >
+                {language.name}
+              </MenuButton>
+            {/each}
+          </Menu>
+          {#each formData.languages ?? [] as languageId, index}
+            {@const language = $site.all_languages.find(
+              (l) => l.id == languageId,
+            )}
+            <button
+              type="button"
+              class="hover:brightness-150 transition-all"
+              onclick={() => {
+                formData.languages?.splice(index, 1)
+              }}
+            >
+              <Badge class="cursor-pointer">{language?.name}</Badge>
+            </button>
+          {/each}
+        </div>
+      {/if}
+    </Material>
+  </div>
+
   <Button
     submit
     color="primary"

@@ -9,7 +9,7 @@ export let ssr = false
 
 export async function load({ params, url, fetch }) {
   const my_user =
-    get(profile)?.user ??
+    // get(profile)?.user ??
     (await client({ auth: get(profile)?.jwt, func: fetch }).getSite()).my_user
 
   return {

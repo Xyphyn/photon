@@ -167,6 +167,10 @@
                 "label": "Delete account",
                 "deleteContent": "Delete content",
                 "warning": "This will delete ALL of your submissions."
+            },
+            "languages": {
+                "title": "Languages",
+                "description": "If any are set, you will only see content explicitly tagged as that language. Most content, untagged, falls under 'Undetermined'."
             }
         },
         "email": "Email",
@@ -587,7 +591,8 @@
         "add": "Add",
         "cancel": "Cancel",
         "send": "Send",
-        "general": "General"
+        "general": "General",
+        "remove": "Remove"
     },
     "message": {
         "success": "Success",

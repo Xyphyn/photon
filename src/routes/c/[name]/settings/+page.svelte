@@ -26,6 +26,7 @@
       banner: data.community.community_view.community.banner,
       visibility: data.community.community_view.community.visibility,
       submitting: false,
+      languages: data.community.discussion_languages,
     }}
   >
     {#snippet formtitle()}

@@ -1,24 +1,32 @@
 <script lang="ts">
-  import { preventDefault } from 'svelte/legacy'
-
   import { profile } from '$lib/auth.svelte.js'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
-  import { Label, Switch, toast } from 'mono-svelte'
-  import { getClient } from '$lib/lemmy.js'
+  import {
+    Badge,
+    Label,
+    Material,
+    Menu,
+    MenuButton,
+    Switch,
+    toast,
+  } from 'mono-svelte'
+  import { getClient, site } from '$lib/lemmy.js'
   import type { EditSite } from 'lemmy-js-client'
   import type { PageData } from './$types.js'
   import { Button, Checkbox, Select, TextInput } from 'mono-svelte'
   import ImageUploadModal from '$lib/components/lemmy/modal/ImageUploadModal.svelte'
-  import { DocumentPlus, Icon } from 'svelte-hero-icons'
+  import { DocumentPlus, Icon, Plus } from 'svelte-hero-icons'
   import { t } from '$lib/translations.js'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import Option from 'mono-svelte/forms/select/Option.svelte'
+  import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
 
   interface Props {
     data: PageData
   }
 
-  let { data }: Props = $props()
+  let { data: pageData }: Props = $props()
+  let data = $state(pageData)
 
   const formData: Omit<EditSite, 'auth'> | undefined = $state(
     data.site
@@ -65,7 +73,13 @@
   <title>{$t('routes.admin.title')}</title>
 </svelte:head>
 
-<form class="flex flex-col gap-4" onsubmit={preventDefault(save)}>
+<form
+  class="flex flex-col gap-4"
+  onsubmit={(e) => {
+    e.preventDefault()
+    save()
+  }}
+>
   <Header pageHeader>{$t('routes.admin.config.title')}</Header>
   {#if formData}
     <TextInput bind:value={formData.name} label={$t('form.name')} />
@@ -218,6 +232,51 @@
     <Switch bind:checked={formData.captcha_enabled} defaultValue={false}>
       {$t('routes.admin.config.captcha.enabled')}
     </Switch>
+
+    <div class="space-y-1">
+      <SectionTitle>{$t('form.profile.languages.title')}</SectionTitle>
+      <p>{$t('form.profile.languages.description')}</p>
+      <Material rounding="xl" color="uniform" class="dark:bg-zinc-950">
+        {#if $site && formData.discussion_languages}
+          <div class="flex gap-2 flex-wrap flex-row">
+            <Menu class="gap-px">
+              {#snippet target()}
+                <button type="button">
+                  <Badge color="blue-subtle">
+                    <Icon src={Plus} micro size="14" />
+                    {$t('common.add')}
+                  </Badge>
+                </button>
+              {/snippet}
+              {#each $site.all_languages as language, index}
+                <MenuButton
+                  class="min-h-[16px] py-0"
+                  onclick={() => {
+                    formData.discussion_languages?.push(language.id)
+                  }}
+                >
+                  {language.name}
+                </MenuButton>
+              {/each}
+            </Menu>
+            {#each formData.discussion_languages as languageId, index}
+              {@const language = $site.all_languages.find(
+                (l) => l.id == languageId,
+              )}
+              <button
+                type="button"
+                class="hover:brightness-150 transition-all"
+                onclick={() => {
+                  formData.discussion_languages?.splice(index, 1)
+                }}
+              >
+                <Badge class="cursor-pointer">{language?.name}</Badge>
+              </button>
+            {/each}
+          </div>
+        {/if}
+      </Material>
+    </div>
   {/if}
   <Button color="primary" size="lg" loading={saving} disabled={saving} submit>
     {$t('common.save')}

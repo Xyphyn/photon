@@ -1,16 +1,16 @@
 <script lang="ts">
   import type { CommentResponse } from 'lemmy-js-client'
-  import { getClient } from '$lib/lemmy.js'
+  import { getClient, site } from '$lib/lemmy.js'
   import { createEventDispatcher } from 'svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import { profile } from '$lib/auth.svelte.js'
-  import { toast } from 'mono-svelte'
+  import { Menu, Select, Spinner, toast, Option, MenuButton } from 'mono-svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { placeholders } from '$lib/util.svelte.js'
   import { Button } from 'mono-svelte'
   import { t } from '$lib/translations'
   import { errorMessage } from '$lib/lemmy/error'
-  import { Icon, XMark } from 'svelte-hero-icons'
+  import { Icon, Language, XMark } from 'svelte-hero-icons'
 
   interface Props {
     postId: number
@@ -46,6 +46,7 @@
 
   let loading = $state(false)
   let preview = false
+  let language: number | undefined = $state()
 
   async function submit() {
     if (!$profile?.user || !$profile?.jwt || value == '') return
@@ -100,6 +101,38 @@
       }}
       previewButton={previewAction}
     >
+      <Menu>
+        {#snippet target()}
+          <Button
+            size="square-md"
+            rounding="pill"
+            color={language != undefined ? 'primary' : 'ghost'}
+            title={$t('form.profile.languages.title')}
+          >
+            <Icon src={Language} size="16" micro />
+          </Button>
+        {/snippet}
+
+        {#if $site}
+          <MenuButton
+            class="min-h-[16px] py-0"
+            onclick={() => (language = undefined)}
+          >
+            <Icon src={XMark} size="16" micro />
+            {$t('form.post.unset')}
+          </MenuButton>
+          {#each $site?.all_languages as languageOption}
+            <MenuButton
+              class="min-h-[16px] py-0"
+              onclick={() => {
+                language = languageOption.id
+              }}
+            >
+              {languageOption.name}
+            </MenuButton>
+          {/each}
+        {/if}
+      </Menu>
       <div class="flex-1"></div>
       {#if actions}
         <Button

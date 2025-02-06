@@ -3,17 +3,28 @@
 
   import { profile, profileData, setUserID } from '$lib/auth.svelte.js'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
-  import { ImageInput, Material, removeToast, toast } from 'mono-svelte'
-  import { getClient } from '$lib/lemmy.js'
+  import {
+    Badge,
+    ImageInput,
+    Material,
+    Menu,
+    MenuButton,
+    removeToast,
+    toast,
+  } from 'mono-svelte'
+  import { getClient, site } from '$lib/lemmy.js'
   import type { SaveUserSettings } from 'lemmy-js-client'
   import { Button, Switch, TextInput } from 'mono-svelte'
   import { uploadImage } from '$lib/util.svelte.js'
   import { t } from '$lib/translations.js'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
+  import type { PageData } from './$types'
+  import { Icon, Plus } from 'svelte-hero-icons'
 
   interface Props {
     inline?: boolean
-    data: any
+    data: PageData
     children?: import('svelte').Snippet
   }
 
@@ -22,6 +33,7 @@
   let formData: Omit<SaveUserSettings, 'auth'> | undefined = $state({
     ...data.my_user?.local_user_view?.local_user,
     ...data.my_user?.local_user_view?.person,
+    discussion_languages: data.my_user?.discussion_languages,
   })
 
   let profileImage: FileList | undefined = $state()
@@ -105,6 +117,50 @@
     <Switch bind:checked={formData.show_read_posts}>
       {$t('form.profile.showRead')}
     </Switch>
+    <div class="space-y-1">
+      <SectionTitle>{$t('form.profile.languages.title')}</SectionTitle>
+      <p>{$t('form.profile.languages.description')}</p>
+      <Material rounding="xl" color="uniform" class="dark:bg-zinc-950">
+        {#if $site && formData.discussion_languages}
+          <div class="flex gap-2 flex-wrap flex-row">
+            <Menu class="gap-px">
+              {#snippet target()}
+                <button type="button">
+                  <Badge color="blue-subtle">
+                    <Icon src={Plus} micro size="14" />
+                    {$t('common.add')}
+                  </Badge>
+                </button>
+              {/snippet}
+              {#each $site.all_languages as language, index}
+                <MenuButton
+                  class="min-h-[16px] py-0"
+                  onclick={() => {
+                    formData.discussion_languages?.push(language.id)
+                  }}
+                >
+                  {language.name}
+                </MenuButton>
+              {/each}
+            </Menu>
+            {#each formData.discussion_languages as languageId, index}
+              {@const language = $site.all_languages.find(
+                (l) => l.id == languageId,
+              )}
+              <button
+                type="button"
+                class="hover:brightness-150 transition-all"
+                onclick={() => {
+                  formData.discussion_languages?.splice(index, 1)
+                }}
+              >
+                <Badge class="cursor-pointer">{language?.name}</Badge>
+              </button>
+            {/each}
+          </div>
+        {/if}
+      </Material>
+    </div>
 
     <Button
       submit
