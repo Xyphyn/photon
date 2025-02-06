@@ -316,9 +316,14 @@
       open={data.post.cross_posts?.length <= 3}
     >
       {#snippet title()}
-        <div class="inline-block w-full text-left text-base font-normal">
+        <div
+          class="flex items-center gap-1 w-full text-left text-base font-normal"
+        >
           <span class="font-bold">{data.post.cross_posts.length}</span>
           {$t('routes.post.crosspostCount')}
+          <hr
+            class="flex-1 inline-block w-full border-slate-200 dark:border-zinc-800 mx-3"
+          />
         </div>
       {/snippet}
       <div

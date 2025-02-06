@@ -71,11 +71,6 @@
 
 <svelte:element
   this={element}
-  onclick={bubble('click')}
-  onkeypress={bubble('keypress')}
-  onkeydown={bubble('keydown')}
-  onkeyup={bubble('keyup')}
-  onfocus={bubble('focus')}
   {...rest}
   class="{elevationClass[elevation]}
   {paddingClass[padding]}
