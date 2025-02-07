@@ -116,10 +116,10 @@
       postId={post.id}
       node={nodes[index]}
       op={post.creator_id == node.comment_view.creator.id}
-      contentClass="pl-2.5 {node.children.length > 0 ||
+      contentClass="{node.children.length > 0 ||
       node.comment_view.counts.child_count > 0
         ? 'border-l'
-        : ''} ml-2.5 border-slate-200 dark:border-zinc-800"
+        : ''} ml-2.5 border-slate-200 dark:border-zinc-800 pl-2.5 "
     >
       {#if node.children?.length > 0}
         <Comments {post} nodes={nodes[index].children} isParent={false} />

@@ -1,8 +1,5 @@
 <script lang="ts">
-  import { preventDefault } from 'svelte/legacy'
-
   import {
-    ArrowUp,
     Bookmark,
     Icon,
     Microphone,
@@ -10,8 +7,6 @@
     Pencil,
     Plus,
     Trash,
-    PlusCircle,
-    MinusCircle,
   } from 'svelte-hero-icons'
   import type { CommentNodeI } from './comments.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
@@ -31,6 +26,7 @@
   import { fly, slide } from 'svelte/transition'
   import { expoInOut, expoOut } from 'svelte/easing'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
+  import type { ClassValue } from 'svelte/elements'
 
   interface Props {
     node: CommentNodeI
@@ -40,8 +36,8 @@
     meta?: boolean
     open?: boolean
     replying?: boolean
-    contentClass?: string
-    class?: string
+    contentClass?: ClassValue
+    class?: ClassValue
     metaSuffix?: import('svelte').Snippet
     children?: import('svelte').Snippet
   }
@@ -57,11 +53,16 @@
     class: clazz = '',
     metaSuffix,
     children,
+    open = $bindable(true),
   }: Props = $props()
+
+  // TODO this kinda sucks because you cant bind:, but we need to save the open state for the virtualizer
+  $effect(() => {
+    node.expanded = open
+  })
 
   let editing = $state(false)
   let newComment = $state(node.comment_view.comment.content)
-
   let editingLoad = $state(false)
 
   async function save() {
@@ -80,8 +81,7 @@
       editing = false
     } catch (err) {
       toast({
-        // @ts-ignore i hate this
-        content: err,
+        content: err as any,
         type: 'error',
       })
     }
@@ -106,7 +106,13 @@
     {#snippet customTitle()}
       <span>{$t('form.edit')}</span>
     {/snippet}
-    <form onsubmit={preventDefault(save)} class="contents">
+    <form
+      onsubmit={(e) => {
+        e.preventDefault()
+        save()
+      }}
+      class="contents"
+    >
       <CommentForm
         postId={node.comment_view.comment.id}
         value={newComment}
@@ -136,7 +142,7 @@
 >
   {#if meta}
     <button
-      onclick={() => (node.expanded = !node.expanded)}
+      onclick={() => (open = !open)}
       class="flex flex-row cursor-pointer gap-2 items-center group text-[13px] flex-wrap w-full
     z-0 group relative"
     >
@@ -154,10 +160,10 @@
             ></FormattedNumber>
           {/if}
           <Icon
-            src={node.expanded ? Minus : Plus}
+            src={open ? Minus : Plus}
             size="16"
             micro
-            class="transition-transform duration-[400ms] ease-out {node.expanded
+            class="transition-transform duration-[400ms] ease-out {open
               ? ''
               : 'rotate-90'} text-primary-900 dark:text-primary-100"
           />
@@ -212,7 +218,7 @@
       </span>
     </button>
   {/if}
-  {#if node.expanded}
+  {#if open}
     <div
       class="relative {contentClass}"
       transition:slide={{ duration: 400, easing: expoOut }}
