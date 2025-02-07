@@ -120,9 +120,7 @@
 
   $effect(() => {
     contentPaddingStore.set(contentPadding)
-    dockPropsStore.set(
-      calculateDockProperties(settings.dock, innerWidth.current ?? 1000),
-    )
+    dockPropsStore.set(dockProps)
   })
 </script>
 
