@@ -130,6 +130,6 @@
 {/if}
 <CommentListVirtualizer
   post={post.post_view.post}
-  bind:nodes={tree}
+  nodes={tree}
   scrollTo={focus}
 />

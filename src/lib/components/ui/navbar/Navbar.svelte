@@ -25,11 +25,12 @@
   import { LINKED_INSTANCE_URL } from '$lib/instance'
   import { t } from '$lib/translations'
   import CommandsWrapper from './commands/CommandsWrapper.svelte'
+  import type { ClassValue } from 'svelte/elements'
 
   let promptOpen: boolean = $state(false)
   interface Props {
     style?: string
-    class?: string
+    class?: ClassValue
   }
 
   let { style = '', class: clazz = '' }: Props = $props()

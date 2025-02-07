@@ -76,19 +76,11 @@
     top: number
     bottom: number
     class: string
-  }>()
+  }>(contentPadding)
   let dockPropsStore = writable<{
     noGap: boolean
     top: boolean
-  }>()
-  $effect.root(() => {
-    $effect(() => {
-      contentPaddingStore.set(contentPadding)
-      dockPropsStore.set(
-        calculateDockProperties(settings.dock, innerWidth.current ?? 1000),
-      )
-    })
-  })
+  }>(dockProps)
 
   export { contentPaddingStore as contentPadding, dockPropsStore as dockProps }
 </script>
@@ -97,10 +89,11 @@
   import { settings } from '$lib/settings.svelte.js'
   import { themeVars } from '$lib/ui/colors'
   import { writable, type Readable, type Writable } from 'svelte/store'
+  import type { ClassValue } from 'svelte/elements'
 
   interface Props {
     route?: { id: string | null } | undefined
-    class?: string
+    class?: ClassValue
     children?: import('svelte').Snippet
     navbar?: import('svelte').Snippet<[any]>
     sidebar?: import('svelte').Snippet<[any]>
@@ -124,6 +117,13 @@
     calculatePadding(dockProps.noGap, dockProps.top, false),
   )
   let topPanel = $derived(dockProps.noGap && dockProps.top)
+
+  $effect(() => {
+    contentPaddingStore.set(contentPadding)
+    dockPropsStore.set(
+      calculateDockProperties(settings.dock, innerWidth.current ?? 1000),
+    )
+  })
 </script>
 
 <svelte:window bind:innerWidth={$screenWidth} />

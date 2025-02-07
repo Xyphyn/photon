@@ -30,7 +30,7 @@
   }: Props = $props()
 
   let isSelected = $derived(isSelectedFilter(page.url.pathname))
-  let isPanel = $derived(adaptive ? $dockProps.noGap : false)
+  let isPanel = $derived(adaptive ? $dockProps?.noGap : false)
 </script>
 
 <Button
