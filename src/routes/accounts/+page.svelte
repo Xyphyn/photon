@@ -52,7 +52,7 @@
 
 {#if debugging}
   <DebugObject
-    object={debugProfile?.id == $profile?.id ? $profile : debugProfile}
+    object={debugProfile?.id == profile?.id ? profile : debugProfile}
     bind:open={debugging}
   >
     {#snippet title()}
@@ -101,7 +101,7 @@
   </Modal>
 {/if}
 
-{#if $profileData.profiles.length == 0}
+{#if profileData.profiles.length == 0}
   <div class="h-max flex items-center justify-center my-auto">
     <div
       class="flex flex-col justify-center items-center py-8 gap-4
@@ -158,29 +158,28 @@
       {/snippet}
     </Header>
     <div>
-      {#each $profileData.profiles as profile, index (profile.id)}
+      {#each profileData.profiles as profile, index}
         <div
           class="flex flex-row gap-2 items-center py-3"
           transition:fly={{ duration: 500, y: -12, easing: expoOut }}
-          animate:flip={{ duration: 500, easing: expoOut }}
         >
           <Button
-            title={profile.id == $currentProfile?.id ? 'Switch' : 'Current'}
+            title={profile.data.id == currentProfile?.id ? 'Switch' : 'Current'}
             onclick={async () => {
-              if (profile.id != $currentProfile?.id) {
-                switching = profile.id
-                await setUserID(profile.id)
+              if (profile.data.id != currentProfile?.id) {
+                switching = profile.data.id
+                await setUserID(profile.data.id)
                 switching = -69
               }
             }}
             size="square-md"
-            color={profile.id == $currentProfile?.id ? 'primary' : 'ghost'}
-            loading={switching == profile.id}
-            disabled={switching == profile.id}
+            color={profile.data.id == currentProfile?.id ? 'primary' : 'ghost'}
+            loading={switching == profile.data.id}
+            disabled={switching == profile.data.id}
             rounding="pill"
           >
             {#snippet prefix()}
-              {#if profile.id == $currentProfile?.id}
+              {#if profile.data.id == currentProfile?.id}
                 <Icon src={Check} mini size="16" />
               {:else}
                 <Icon src={ArrowsRightLeft} size="16" mini />
@@ -191,13 +190,13 @@
             <ProfileAvatar
               {profile}
               {index}
-              selected={$currentProfile?.id == profile.id}
+              selected={currentProfile?.id == profile.data.id}
               size={24}
             />
             <div class="flex flex-col">
-              <span class="font-medium">{profile.username}</span>
+              <span class="font-medium">{profile.data.username}</span>
               <span class="text-sm text-slate-600 dark:text-zinc-400">
-                {profile.instance}
+                {profile.data.instance}
               </span>
             </div>
           </div>
@@ -215,7 +214,7 @@
                 size="square-md"
                 color="secondary"
                 title={$t('account.moveUp')}
-                onclick={() => moveProfile(profile.id, true)}
+                onclick={() => moveProfile(profile.data.id, true)}
               >
                 {#snippet prefix()}
                   <Icon src={ChevronUp} size="16" mini />
@@ -225,7 +224,7 @@
                 size="square-md"
                 color="secondary"
                 title={$t('account.moveDown')}
-                onclick={() => moveProfile(profile.id, false)}
+                onclick={() => moveProfile(profile.data.id, false)}
               >
                 {#snippet prefix()}
                   <Icon src={ChevronDown} size="16" mini />
@@ -245,7 +244,7 @@
                 {$t('common.debug')}
               </MenuButton>
             {/if}
-            {#if !LINKED_INSTANCE_URL || profile.user}
+            {#if !LINKED_INSTANCE_URL || profile.data.user}
               <MenuButton
                 onclick={() => {
                   removing.account = profile

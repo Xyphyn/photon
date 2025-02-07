@@ -102,7 +102,7 @@
     onaction={() => deleteAccount(4)}
   >
     {#snippet customTitle()}
-      <span>{$t('form.profile.deleteAccount.label')}</span>
+      <span>{$t('form.profile.data.deleteAccount.label')}</span>
     {/snippet}
     <TextInput
       label={$t('form.password')}
@@ -110,10 +110,10 @@
       bind:value={deletion.password}
     />
     <Checkbox bind:checked={deletion.deleteContent}>
-      {$t('form.profile.deleteAccount.deleteContent')}
+      {$t('form.profile.data.deleteAccount.deleteContent')}
       {#snippet description()}
         <span>
-          {$t('form.profile.deleteAccount.warning')}
+          {$t('form.profile.data.deleteAccount.warning')}
         </span>
       {/snippet}
     </Checkbox>
@@ -127,20 +127,20 @@
   rounding="2xl"
 >
   <Header class="mx-auto w-max !font-bold">
-    {$t('routes.profile.delete.title')}
+    {$t('routes.profile.data.delete.title')}
   </Header>
   <p class="text-base">
-    {$t('routes.profile.delete.warning')}
+    {$t('routes.profile.data.delete.warning')}
   </p>
   <Switch bind:checked={deletion.deleteContent}>
-    {$t('form.profile.deleteAccount.deleteContent')}
+    {$t('form.profile.data.deleteAccount.deleteContent')}
     {#snippet description()}
       <span>
-        {$t('form.profile.deleteAccount.warning')}
+        {$t('form.profile.data.deleteAccount.warning')}
       </span>
     {/snippet}
   </Switch>
   <Button size="lg" color="danger" onclick={() => deleteAccount(3)}>
-    {$t('routes.profile.delete.title')}
+    {$t('routes.profile.data.delete.title')}
   </Button>
 </Material>

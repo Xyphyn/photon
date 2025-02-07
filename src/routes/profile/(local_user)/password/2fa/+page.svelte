@@ -58,7 +58,7 @@
         disabled
         type="password"
         value={totpLink}
-        label={$t('form.profile.2fa.totp')}
+        label={$t('form.profile.data.2fa.totp')}
       >
         {#snippet suffix()}
           <button
@@ -73,7 +73,7 @@
           </button>
         {/snippet}
         <span class="font-normal text-xs">
-          {$t('form.profile.2fa.paste')}
+          {$t('form.profile.data.2fa.paste')}
         </span>
       </TextInput>
     {/if}

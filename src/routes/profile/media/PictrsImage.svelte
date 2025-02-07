@@ -14,7 +14,7 @@
   let loading = $state(false)
 
   async function deleteImage(image: LocalImage) {
-    if (!$profile?.jwt) return
+    if (!profile?.jwt) return
 
     try {
       loading = true
@@ -52,7 +52,7 @@
       date={publishedToDate(image.published)}
     />
     <Button
-      title={$t('routes.profile.media.download')}
+      title={$t('routes.profile.data.media.download')}
       href="{instanceToURL($instance)}/pictrs/image/{image.pictrs_alias}"
       size="square-md"
       class="ml-auto"

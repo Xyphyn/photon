@@ -11,16 +11,6 @@ export const site = writable<GetSiteResponse | undefined>(undefined)
 const isURL = (input: RequestInfo | URL): input is URL =>
   typeof input == 'object' && 'searchParams' in input
 
-const toURL = (input: RequestInfo | URL): URL | undefined => {
-  if (isURL(input)) return input
-
-  try {
-    return new URL(input.toString())
-  } catch (e) {
-    return
-  }
-}
-
 async function customFetch(
   func:
     | ((
@@ -67,9 +57,9 @@ export function client({
   ) => Promise<Response>
   auth?: string
 } = {}) {
-  if (!instanceURL) instanceURL = get(profile).instance
+  if (!instanceURL) instanceURL = profile.data.instance
 
-  let jwt = auth ? auth : get(profile)?.jwt
+  let jwt = auth ? auth : profile?.jwt
 
   const headers = jwt ? { authorization: `Bearer ${jwt}` } : {}
 
@@ -90,8 +80,6 @@ export function getClient(
 ): LemmyHttp {
   return client({ instanceURL, func, auth })
 }
-
-export const getInstance = () => encodeURIComponent(get(instance))
 
 export async function validateInstance(instance: string): Promise<boolean> {
   if (instance == '') return false

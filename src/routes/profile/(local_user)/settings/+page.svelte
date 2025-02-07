@@ -40,17 +40,25 @@
   let bannerImage: FileList | undefined = $state()
 
   async function save() {
-    if (!formData || !$profile?.jwt) return
+    if (!formData || !profile?.jwt) return
 
     loading = true
 
     try {
       let pfp = profileImage
-        ? await uploadImage(profileImage[0], $profile.instance, $profile.jwt)
+        ? await uploadImage(
+            profileImage[0],
+            profile.data.instance,
+            profile.data.jwt,
+          )
         : undefined
 
       let banner = bannerImage
-        ? await uploadImage(bannerImage[0], $profile.instance, $profile.jwt)
+        ? await uploadImage(
+            bannerImage[0],
+            profile.data.instance,
+            profile.data.jwt,
+          )
         : undefined
 
       const res = await getClient().saveUserSettings({
@@ -77,49 +85,58 @@
 
 <form class="flex flex-col gap-4 h-full" onsubmit={preventDefault(save)}>
   {#if !inline}
-    <Header pageHeader>{$t('routes.profile.settings')}</Header>
+    <Header pageHeader>{$t('routes.profile.data.settings')}</Header>
   {/if}
   {@render children?.()}
   {#if data.my_user?.local_user_view?.local_user && formData}
-    <TextInput label={$t('form.profile.email')} bind:value={formData.email} />
     <TextInput
-      label={$t('form.profile.displayName')}
+      label={$t('form.profile.data.email')}
+      bind:value={formData.email}
+    />
+    <TextInput
+      label={$t('form.profile.data.displayName')}
       bind:value={formData.display_name}
       placeholder="Optional"
     />
     <MarkdownEditor
       images={false}
       bind:value={() => formData.bio ?? '', (v) => (formData.bio = v)}
-      label={$t('form.profile.bio')}
+      label={$t('form.profile.data.bio')}
       previewButton
     />
     <div class="flex gap-2 items-center *:flex-1">
-      <ImageInput label={$t('form.profile.avatar')} bind:files={profileImage} />
-      <ImageInput label={$t('form.profile.banner')} bind:files={bannerImage} />
+      <ImageInput
+        label={$t('form.profile.data.avatar')}
+        bind:files={profileImage}
+      />
+      <ImageInput
+        label={$t('form.profile.data.banner')}
+        bind:files={bannerImage}
+      />
     </div>
     <TextInput
-      label={$t('form.profile.matrix')}
+      label={$t('form.profile.data.matrix')}
       bind:value={formData.matrix_user_id}
       placeholder="@user:example.com"
     />
     <Switch bind:checked={formData.show_nsfw}>
-      {$t('form.profile.showNSFW')}
+      {$t('form.profile.data.showNSFW')}
     </Switch>
     <Switch bind:checked={formData.show_scores}>
-      {$t('form.profile.scores')}
+      {$t('form.profile.data.scores')}
     </Switch>
     <Switch bind:checked={formData.bot_account}>
-      {$t('form.profile.bot')}
+      {$t('form.profile.data.bot')}
     </Switch>
     <Switch bind:checked={formData.show_bot_accounts}>
-      {$t('form.profile.showBots')}
+      {$t('form.profile.data.showBots')}
     </Switch>
     <Switch bind:checked={formData.show_read_posts}>
-      {$t('form.profile.showRead')}
+      {$t('form.profile.data.showRead')}
     </Switch>
     <div class="space-y-1">
-      <SectionTitle>{$t('form.profile.languages.title')}</SectionTitle>
-      <p>{$t('form.profile.languages.description')}</p>
+      <SectionTitle>{$t('form.profile.data.languages.title')}</SectionTitle>
+      <p>{$t('form.profile.data.languages.description')}</p>
       <Material rounding="xl" color="uniform" class="dark:bg-zinc-950">
         {#if $site && formData.discussion_languages}
           <div class="flex gap-2 flex-wrap flex-row">

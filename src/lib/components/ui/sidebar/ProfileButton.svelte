@@ -23,11 +23,11 @@
   alignment="left"
   loading={switching}
   loaderWidth={20}
-  selected={$profile?.id == prof.id}
+  selected={profile?.id == prof.id}
   onclick={async () => {
     switching = true
 
-    if ($profile?.id != prof.id) {
+    if (profile?.id != prof.id) {
       await setUserID(prof.id)
     }
 
@@ -37,7 +37,7 @@
 
     switching = false
   }}
-  class="w-full font-normal {$profile?.id == prof.id
+  class="w-full font-normal {profile?.id == prof.id
     ? '!bg-slate-100 dark:!bg-zinc-900'
     : ''}"
 >
@@ -46,11 +46,11 @@
       profile={prof}
       {index}
       {guest}
-      selected={$profile?.id == prof.id}
+      selected={profile?.id == prof.id}
     />
   {/snippet}
   <span
-    class="inline-flex flex-col gap-0 {$profile?.id == prof.id
+    class="inline-flex flex-col gap-0 {profile?.id == prof.id
       ? 'font-semibold'
       : ''}"
   >

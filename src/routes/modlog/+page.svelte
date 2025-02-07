@@ -91,7 +91,7 @@
     <ObjectAutocomplete
       type="instance"
       placeholder="Filter by instance"
-      jwt={$profile?.jwt}
+      jwt={profile?.jwt}
       showWhenEmpty={true}
       label="Instance"
       class="flex-1"
@@ -109,7 +109,7 @@
     />
     <ObjectAutocomplete
       placeholder="Filter by community"
-      jwt={$profile?.jwt}
+      jwt={profile?.jwt}
       listing_type="All"
       showWhenEmpty={true}
       label="Community"
@@ -121,7 +121,7 @@
     <UserAutocomplete
       instance={page.url.searchParams.get('instance') || undefined}
       placeholder="Filter by user"
-      jwt={$profile?.jwt}
+      jwt={profile?.jwt}
       listing_type="All"
       showWhenEmpty={true}
       class="flex-1"
@@ -132,10 +132,10 @@
       onselect={(e) =>
         searchParam(page.url, 'user', e?.id.toString() ?? '', 'page')}
     />
-    {#if $profile?.user && isAdmin($profile?.user)}
+    {#if profile?.user && isAdmin(profile?.user)}
       <UserAutocomplete
         placeholder="Filter by moderator"
-        jwt={$profile?.jwt}
+        jwt={profile?.jwt}
         listing_type="All"
         showWhenEmpty={true}
         class="flex-1"

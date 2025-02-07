@@ -66,7 +66,7 @@
 
   async function remove() {
     if (!item) return
-    if (!$profile?.jwt) throw new Error('Unauthenticated')
+    if (!profile?.jwt) throw new Error('Unauthenticated')
 
     loading = true
 
@@ -207,7 +207,7 @@
         bind:value={reason}
       />
 
-      {#if !removed && $profile?.user && (amMod($profile.user, item.community) || (isAdmin($profile.user) && item.community.local))}
+      {#if !removed && profile?.user && (amMod(profile.data.user, item.community) || (isAdmin(profile.data.user) && item.community.local))}
         <Switch bind:checked={commentReason}>
           {$t('moderation.removeSubmission.withReason')}
         </Switch>

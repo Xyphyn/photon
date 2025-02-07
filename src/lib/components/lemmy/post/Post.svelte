@@ -1,21 +1,13 @@
 <script lang="ts">
   import type { PostView } from 'lemmy-js-client'
-  import { isImage, isVideo } from '$lib/ui/image.js'
-  import { getInstance } from '$lib/lemmy.js'
   import PostActions from '$lib/components/lemmy/post/PostActions.svelte'
   import { settings, type View } from '$lib/settings.svelte.js'
-  import PostLink from '$lib/components/lemmy/post/link/PostLink.svelte'
   import PostMeta, {
     parseTags,
     type Tag,
   } from '$lib/components/lemmy/post/PostMeta.svelte'
-  import { Badge, Material, toast } from 'mono-svelte'
-  import {
-    bestImageURL,
-    mediaType,
-    postLink,
-  } from '$lib/components/lemmy/post/helpers.js'
-  import Empty from '$lib/components/helper/Empty.svelte'
+  import { Badge } from 'mono-svelte'
+  import { mediaType, postLink } from '$lib/components/lemmy/post/helpers.js'
   import { publishedToDate } from '$lib/components/util/date.js'
   import { ArrowUp, ChatBubbleOvalLeft, Icon } from 'svelte-hero-icons'
   import PostMedia from '$lib/components/lemmy/post/media/PostMedia.svelte'
@@ -128,7 +120,7 @@
       admin: post.creator_is_admin,
       moderator: post.creator_is_moderator,
     }}
-    subscribed={$profile?.user?.follows
+    subscribed={profile?.user?.follows
       .map((c) => c.community.id)
       .includes(post.community.id)
       ? 'Subscribed'

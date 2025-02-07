@@ -72,16 +72,16 @@
       class="w-10 h-10 rounded-full border-2 border-slate-200 dark:border-zinc-700
       transition-all bg-slate-50 dark:bg-zinc-900 relative
       hover:border-primary-900 hover:dark:border-primary-100 active:scale-95 {buttonClass}"
-      title={$t('profile.profile')}
+      title={$t('profile.data.profile')}
     >
-      {#if $profile?.user}
+      {#if profile?.user}
         <div
           class="w-full h-full aspect-square object-cover rounded-full grid place-items-center"
         >
           <Avatar
-            url={$profile.user.local_user_view.person.avatar}
+            url={profile.data.user.local_user_view.person.avatar}
             width={36}
-            alt={$profile.user.local_user_view.person.name}
+            alt={profile.data.user.local_user_view.person.name}
           />
         </div>
         {#if $notifications.inbox > 0}
@@ -96,9 +96,9 @@
       {/if}
     </button>
   {/snippet}
-  {#if $profile?.user}
+  {#if profile?.user}
     <UserLink
-      user={$profile?.user.local_user_view.person}
+      user={profile?.user.local_user_view.person}
       showInstance={false}
       avatar
       avatarSize={24}
@@ -108,18 +108,18 @@
   {:else}
     <MenuDivider>{$t('nav.menu.label')}</MenuDivider>
   {/if}
-  {#if $profile?.jwt}
+  {#if profile?.jwt}
     <MenuButton link href="/profile">
       {#snippet prefix()}
         <Icon src={UserCircle} micro width={16} />
       {/snippet}
-      {$t('profile.profile')}
+      {$t('profile.data.profile')}
     </MenuButton>
     <MenuButton link href="/inbox">
       {#snippet prefix()}
         <Icon src={Inbox} micro width={16} />
       {/snippet}
-      {$t('profile.inbox')}
+      {$t('profile.data.inbox')}
       {#if $notifications.inbox > 0}
         <Badge color="red-subtle" class="text-xs ml-auto font-bold !py-0.5">
           {$notifications.inbox}
@@ -130,7 +130,7 @@
       {#snippet prefix()}
         <Icon src={Bookmark} micro width={16} />
       {/snippet}
-      {$t('profile.saved')}
+      {$t('profile.data.saved')}
     </MenuButton>
   {/if}
   <MenuButton link href="/accounts">

@@ -21,7 +21,7 @@
 
   let form = $state({
     instance: '',
-    username: `${$t('account.guest')} ${$profileData.profiles.filter((p) => p.jwt == undefined).length + 1}`,
+    username: `${$t('account.guest')} ${profileData.profiles.filter((p) => p.jwt == undefined).length + 1}`,
     loading: false,
   })
 

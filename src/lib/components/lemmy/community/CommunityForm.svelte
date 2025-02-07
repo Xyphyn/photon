@@ -59,7 +59,7 @@
   let formData = $state(passedFormData)
 
   async function submit() {
-    if (!$profile?.jwt) return
+    if (!profile?.jwt) return
     if ((!edit && formData.name == '') || formData.displayName == '') return
 
     formData.submitting = true
@@ -94,23 +94,23 @@
         type: 'success',
       })
 
-      if ($profile.user) {
-        const c = $profile.user.moderates
+      if (profile.data.user) {
+        const c = profile.data.user.moderates
           .map((m) => m.community.id)
           .indexOf(res.community_view.community.id)
         if (c != -1) {
-          $profile.user.moderates[c] = {
+          profile.data.user.moderates[c] = {
             community: res.community_view.community,
-            moderator: $profile.user.local_user_view.person,
+            moderator: profile.data.user.local_user_view.person,
           }
         } else {
-          $profile.user = {
-            ...$profile.user,
+          profile.data.user = {
+            ...profile.data.user,
             moderates: [
-              ...$profile.user.moderates,
+              ...profile.data.user.moderates,
               {
                 community: res.community_view.community,
-                moderator: $profile.user.local_user_view.person,
+                moderator: profile.data.user.local_user_view.person,
               },
             ],
           }
@@ -159,7 +159,7 @@
   />
   <TextInput
     required
-    label={$t('form.profile.displayName')}
+    label={$t('form.profile.data.displayName')}
     bind:value={formData.displayName}
   />
   <div class="flex flex-row gap-4 flex-wrap *:flex-1">
@@ -236,7 +236,7 @@
   </Select>
 
   <div class="space-y-1">
-    <SectionTitle>{$t('form.profile.languages.title')}</SectionTitle>
+    <SectionTitle>{$t('form.profile.data.languages.title')}</SectionTitle>
     <Material rounding="xl" color="uniform" class="dark:bg-zinc-950">
       {#if $site}
         <div class="flex gap-2 flex-wrap flex-row">

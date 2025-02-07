@@ -64,7 +64,7 @@
 {:then data}
   {@const conversations = data.private_messages}
   {@const previews = conversationPreviews(conversations).filter(
-    (c) => c.user.id != $profile?.user?.local_user_view.person.id,
+    (c) => c.user.id != profile?.user?.local_user_view.person.id,
   )}
 
   <ul

@@ -54,14 +54,14 @@
   let oldScore = score
 
   const castVote = async (newVote: number) => {
-    if (!$profile?.jwt) {
+    if (!profile?.jwt) {
       toast({ content: $t('toast.loginVoteGate'), type: 'warning' })
       return
     }
     loading = true
     oldScore = score
     vote = newVote
-    const res = await voteItem(post, newVote, $profile.jwt).catch((e) => {
+    const res = await voteItem(post, newVote, profile.data.jwt).catch((e) => {
       toast({ content: errorMessage(e), type: 'error' })
       return { upvotes: 0, downvotes: 0, score: 0 }
     })

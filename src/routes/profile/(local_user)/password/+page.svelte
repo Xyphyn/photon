@@ -20,16 +20,16 @@
   <EntityHeader
     color="default"
     avatar={data.my_user?.local_user_view.person.avatar}
-    name={$t('routes.profile.welcome', {
+    name={$t('routes.profile.data.welcome', {
       default: data.my_user?.local_user_view.person.name,
     })}
     stats={[
       {
-        name: $t('profile.subscribed'),
+        name: $t('profile.data.subscribed'),
         value: data.my_user?.follows.length.toString() ?? '',
       },
       {
-        name: $t('routes.profile.moderates'),
+        name: $t('routes.profile.data.moderates'),
         value: data.my_user?.moderates.length.toString() ?? '',
       },
     ]}
@@ -50,7 +50,7 @@
       >
         <Icon src={Key} size="24" />
       </Material>
-      <span class="font-medium text-lg">{$t('form.profile.2fa.2fa')}</span>
+      <span class="font-medium text-lg">{$t('form.profile.data.2fa.2fa')}</span>
       <span class="text-sm">
         {data.my_user?.local_user_view.local_user.totp_2fa_enabled
           ? $t('common.enabled')
@@ -82,7 +82,7 @@
         <Icon src={UserGroup} size="24" />
       </Material>
       <span class="font-medium text-lg">
-        {$t('routes.profile.logins')}
+        {$t('routes.profile.data.logins')}
       </span>
     </Material>
   </a>
@@ -96,7 +96,7 @@
         <Icon src={Trash} size="24" />
       </Material>
       <span class="font-medium text-lg">
-        {$t('routes.profile.delete.title')}
+        {$t('routes.profile.data.delete.title')}
       </span>
     </Material>
   </a>

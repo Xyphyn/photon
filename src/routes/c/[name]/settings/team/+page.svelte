@@ -24,7 +24,7 @@
   })
 
   async function addModerator() {
-    if (!$profile?.jwt) return
+    if (!profile?.jwt) return
 
     formData.addingModerator = true
 
@@ -81,7 +81,7 @@
   }
 
   async function removeMod(id: number) {
-    if (!$profile?.jwt) return
+    if (!profile?.jwt) return
 
     try {
       const res = await getClient().addModToCommunity({

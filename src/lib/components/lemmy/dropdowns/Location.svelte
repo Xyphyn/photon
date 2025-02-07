@@ -52,14 +52,14 @@
   <Option value="Local" icon={MapPin}>{$t('filter.location.local')}</Option>
   <Option
     value="Subscribed"
-    disabled={$profile?.jwt == undefined}
+    disabled={profile?.jwt == undefined}
     icon={Newspaper}
   >
     {$t('filter.location.subscribed')}
   </Option>
   <Option
     value="ModeratorView"
-    disabled={!$profile?.jwt || !amModOfAny($profile?.user)}
+    disabled={!profile?.jwt || !amModOfAny(profile?.user)}
     icon={ShieldCheck}
   >
     {$t('filter.location.moderator')}

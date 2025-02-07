@@ -1,17 +1,15 @@
 <script lang="ts">
   import type { PostView } from 'lemmy-js-client'
   import PostVote from './PostVote.svelte'
-  import { getInstance, site } from '$lib/lemmy.js'
+  import { site } from '$lib/lemmy.js'
   import {
     ArrowsUpDown,
     ArrowTopRightOnSquare,
     Bookmark,
     BookmarkSlash,
     BugAnt,
-    ChatBubbleLeftEllipsis,
     ChatBubbleOvalLeft,
     ChatBubbleOvalLeftEllipsis,
-    CheckBadge,
     Clock,
     EllipsisHorizontal,
     Eye,
@@ -19,20 +17,16 @@
     Flag,
     GlobeAmericas,
     Icon,
-    Language,
     MapPin,
     Newspaper,
     Pencil,
     PencilSquare,
-    ServerStack,
     Share,
-    Star,
     Trash,
     UserCircle,
     XMark,
   } from 'svelte-hero-icons'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
-  import { createEventDispatcher } from 'svelte'
   import {
     amMod,
     isAdmin,
@@ -101,7 +95,7 @@
       <div class="mx-auto h-96 flex justify-center items-center">
         <Spinner width={32} />
       </div>
-    {:then {default: PostForm }}
+    {:then { default: PostForm }}
       <PostForm
         edit
         editingPost={post.post}
@@ -131,8 +125,7 @@
     score={post.counts.score}
     upvotes={post.counts.upvotes}
     downvotes={post.counts.downvotes}
-    showCounts={$profile?.user?.local_user_view?.local_user?.show_scores ??
-      true}
+    showCounts={profile?.user?.local_user_view?.local_user?.show_scores ?? true}
   />
 
   <Button
@@ -176,7 +169,7 @@
       {/snippet}
     </Button>
   {/if}
-  {#if $profile?.user && (amMod($profile.user, post.community) || isAdmin($profile.user))}
+  {#if profile?.user && (amMod(profile.data.user, post.community) || isAdmin(profile.data.user))}
     <ModerationMenu
       size="custom"
       color="ghost"
@@ -187,12 +180,12 @@
     />
   {/if}
 
-  {#if $profile?.jwt}
+  {#if profile?.jwt}
     <Button
       onclick={async () => {
-        if (!$profile?.jwt) return
+        if (!profile?.jwt) return
         saving = true
-        post.saved = await save(post, !post.saved, $profile?.jwt)
+        post.saved = await save(post, !post.saved, profile?.jwt)
         saving = false
       }}
       size="custom"
@@ -304,7 +297,7 @@
     <MenuDivider>
       {$t('post.actions.more.actions')}
     </MenuDivider>
-    {#if $profile?.user && $profile?.jwt && $profile.user.local_user_view.person.id == post.creator.id}
+    {#if profile?.user && profile?.jwt && profile.data.user.local_user_view.person.id == post.creator.id}
       <MenuButton onclick={() => (editing = true)}>
         {#snippet prefix()}
           <Icon src={PencilSquare} size="16" micro />
@@ -312,11 +305,15 @@
         {$t('post.actions.more.edit')}
       </MenuButton>
     {/if}
-    {#if $profile?.jwt}
+    {#if profile?.jwt}
       <MenuButton
         onclick={async () => {
-          if ($profile?.jwt)
-            post.read = await markAsRead(post.post, !post.read, $profile.jwt)
+          if (profile?.jwt)
+            post.read = await markAsRead(
+              post.post,
+              !post.read,
+              profile.data.jwt,
+            )
         }}
       >
         {#snippet prefix()}
@@ -331,12 +328,12 @@
       onclick={() => {
         navigator.share?.({
           url: localShare
-            ? `${instanceToURL(getInstance())}/post/${post.post.id}`
+            ? `${instanceToURL(profile.data.instance)}/post/${post.post.id}`
             : post.post.ap_id,
         }) ??
           navigator.clipboard.writeText(
             localShare
-              ? `${instanceToURL(getInstance())}/post/${post.post.id}`
+              ? `${instanceToURL(profile.data.instance)}/post/${post.post.id}`
               : post.post.ap_id,
           )
         toast({ content: $t('toast.copied') })
@@ -371,7 +368,7 @@
         </div>
       {/if}
     </MenuButton>
-    {#if $profile?.jwt}
+    {#if profile?.jwt}
       <MenuButton
         onclick={() => {
           setSessionStorage('postDraft', {
@@ -400,14 +397,14 @@
         {/snippet}
         {$t('post.actions.more.crosspost')}
       </MenuButton>
-      {#if $profile.user && post.creator.id == $profile.user.local_user_view.person.id}
+      {#if profile.data.user && post.creator.id == profile.data.user.local_user_view.person.id}
         <MenuButton
           onclick={async () => {
-            if ($profile?.jwt)
+            if (profile?.jwt)
               post.post.deleted = await deleteItem(
                 post,
                 !post.post.deleted,
-                $profile.jwt,
+                profile.data.jwt,
               )
           }}
           color="danger-subtle"
@@ -420,15 +417,15 @@
             : $t('post.actions.more.delete')}
         </MenuButton>
       {/if}
-      {#if $profile.user?.local_user_view.person.id != post.creator.id}
+      {#if profile.data.user?.local_user_view.person.id != post.creator.id}
         {#if feature('hidePosts', $site?.version)}
           <MenuButton
             onclick={async () => {
-              if (!$profile?.jwt) return
+              if (!profile?.jwt) return
               const hidden = await hidePost(
                 post.post.id,
                 !post.hidden,
-                $profile?.jwt,
+                profile?.jwt,
               )
               post.hidden = hidden
               if (hidden) onhide?.(hidden)

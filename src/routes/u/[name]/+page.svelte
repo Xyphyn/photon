@@ -51,11 +51,11 @@
   let blocking = false
 
   async function blockUser(block: number) {
-    if (!$profile?.user || !$profile?.jwt) throw new Error('Unauthenticated')
+    if (!profile?.user || !profile?.jwt) throw new Error('Unauthenticated')
 
     blocking = true
     try {
-      const blocked = isBlocked($profile.user, block)
+      const blocked = isBlocked(profile.data.user, block)
 
       await getClient().blockPerson({
         block: !blocked,
@@ -63,10 +63,10 @@
       })
 
       if (blocked) {
-        const index = $profile.user.person_blocks
+        const index = profile.data.user.person_blocks
           .map((p) => p.target.id)
           .indexOf(block)
-        $profile.user.person_blocks.splice(index, 1)
+        profile.data.user.person_blocks.splice(index, 1)
       }
 
       toast({
@@ -192,7 +192,7 @@
           {#if (data.moderates ?? []).length > 0}
             <Expandable class="">
               {#snippet title()}
-                {$t('routes.profile.moderates')}
+                {$t('routes.profile.data.moderates')}
                 <hr
                   class="flex-1 w-full border-slate-200 dark:border-zinc-800 mx-3"
                 />
@@ -209,7 +209,7 @@
             </Expandable>
           {/if}
           {#snippet actions()}
-            {#if $profile?.user && $profile.jwt && data.person_view.person.id != $profile.user.local_user_view.person.id}
+            {#if profile?.user && profile.data.jwt && data.person_view.person.id != profile.data.user.local_user_view.person.id}
               <div class="flex items-center gap-2 w-full">
                 <Button
                   size="square-md"
@@ -234,7 +234,7 @@
                     {/snippet}
                   </Button>
                 {/if}
-                {#if isAdmin($profile?.user)}
+                {#if isAdmin(profile?.user)}
                   <Menu class="ml-auto" placement="bottom-end">
                     {#snippet target()}
                       <Button size="square-md">
@@ -280,7 +280,7 @@
                     {#snippet prefix()}
                       <Icon mini size="16" src={NoSymbol} />
                     {/snippet}
-                    {isBlocked($profile.user, data.person_view.person.id)
+                    {isBlocked(profile.data.user, data.person_view.person.id)
                       ? 'Unblock'
                       : 'Block'}
                   </MenuButton>

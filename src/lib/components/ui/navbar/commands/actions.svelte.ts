@@ -92,7 +92,7 @@ export function getGroups(
           name: t.get('nav.communities'),
           icon: GlobeAlt,
         },
-        ...(amModOfAny(profile.user)
+        ...(amModOfAny(profile.data.user)
           ? [
               {
                 href: '/moderation',
@@ -101,7 +101,7 @@ export function getGroups(
               },
             ]
           : []),
-        ...(profile.user && isAdmin(profile.user)
+        ...(profile.data.user && isAdmin(profile.data.user)
           ? [
               {
                 href: '/admin',
@@ -236,23 +236,23 @@ export function getGroups(
       ],
     },
     {
-      name: t.get('profile.profile'),
-      actions: profile.jwt
+      name: t.get('profile.data.profile'),
+      actions: profile.data.jwt
         ? [
             {
               href: '/profile/user',
-              name: t.get('profile.profile'),
+              name: t.get('profile.data.profile'),
               icon: UserCircle,
             },
             {
               href: '/inbox',
-              name: t.get('profile.inbox'),
+              name: t.get('profile.data.inbox'),
               icon: Inbox,
               shortcut: 'i',
             },
             {
               href: '/saved',
-              name: t.get('profile.saved'),
+              name: t.get('profile.data.saved'),
               icon: Bookmark,
             },
             {
@@ -311,7 +311,7 @@ export function getGroups(
         icon: p.avatar ?? UserCircle,
         detail: p.instance,
         handle: async () => {
-          if (profile.id != p.id) {
+          if (profile.data.id != p.id) {
             await setUserID(p.id)
           }
 
@@ -407,7 +407,7 @@ export function getGroups(
       ],
     },
     {
-      name: t.get('profile.subscribed'),
+      name: t.get('profile.data.subscribed'),
       actions:
         profile?.user?.follows.map((f) => ({
           icon: f.community.icon,

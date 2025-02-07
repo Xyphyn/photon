@@ -5,7 +5,7 @@ import type { Community, MyUserInfo, PersonView } from 'lemmy-js-client'
 import { get } from 'svelte/store'
 
 export const blockUser = async (block: boolean, id: number) => {
-  const auth = get(profile)?.jwt
+  const auth = profile?.jwt
 
   if (!auth) throw new Error('Unauthorized')
 
@@ -22,7 +22,7 @@ export const addSubscription = (
   community: Community,
   subscribe: boolean = true,
 ) => {
-  const p = get(profile)
+  const p = profile
 
   if (!p.user) return
 
@@ -38,7 +38,7 @@ export const addSubscription = (
     p.user.follows.splice(index, 1)
   }
 
-  profile.set(p)
+  profile.data.set(p)
 }
 
 export const addAdmin = async (handle: string, added: boolean, jwt: string) =>

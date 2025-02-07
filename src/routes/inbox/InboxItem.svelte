@@ -39,7 +39,7 @@
   let loading = $state(false)
 
   async function markAsRead(isRead: boolean) {
-    if (!$profile?.jwt) return
+    if (!profile?.jwt) return
 
     loading = true
 
@@ -67,7 +67,7 @@
     }
 
     item.read = isRead
-    if ($profile.user) $notifications.inbox += isRead ? -1 : 1
+    if (profile.data.user) $notifications.inbox += isRead ? -1 : 1
 
     loading = false
   }

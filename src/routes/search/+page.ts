@@ -57,7 +57,7 @@ export async function load({ url, fetch }) {
       query: query,
       results: everything,
       streamed: {
-        object: get(profile)?.jwt
+        object: profile?.jwt
           ? getClient(undefined, fetch).resolveObject({
               q: query,
             })

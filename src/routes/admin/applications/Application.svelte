@@ -27,7 +27,7 @@
   let reviewing = $state(false)
 
   async function review(approve: boolean) {
-    if (!$profile?.jwt) return
+    if (!profile?.jwt) return
 
     let registrationApplicationAnswer: ApproveRegistrationApplication = {
       approve: approve,
@@ -61,7 +61,7 @@
         type: 'success',
       })
       application.creator_local_user.accepted_application = approve
-      application.admin = $profile.user!.local_user_view.person
+      application.admin = profile.data.user!.local_user_view.person
       application.registration_application.deny_reason = denyReason
 
       $notifications.applications -= 1

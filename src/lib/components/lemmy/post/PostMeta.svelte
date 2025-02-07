@@ -43,8 +43,6 @@
 </script>
 
 <script lang="ts">
-  import { stopPropagation } from 'svelte/legacy'
-
   import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import { Badge, Popover } from 'mono-svelte'
@@ -63,7 +61,6 @@
     Trash,
     PaperAirplane,
   } from 'svelte-hero-icons'
-  import { getInstance } from '$lib/lemmy.js'
   import ShieldIcon from '../moderation/ShieldIcon.svelte'
   import { settings, type View } from '$lib/settings.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
@@ -71,6 +68,7 @@
   import { Pencil, type IconSource } from 'svelte-hero-icons'
   import CommunityHeader from '../community/CommunityHeader.svelte'
   import { publishedToDate } from '$lib/components/util/date'
+  import { profile } from '$lib/auth.svelte'
 
   interface Props {
     community?: Community | undefined
@@ -287,7 +285,7 @@
 </header>
 {#if title && id}
   <a
-    href="/post/{getInstance()}/{id}"
+    href="/post/{profile.data.instance}/{id}"
     class="inline hover:underline
     hover:text-primary-900 hover:dark:text-primary-100 transition-colors max-[480px]:!mt-0
     {settings.font == 'satoshi/nunito'

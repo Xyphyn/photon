@@ -33,7 +33,7 @@
   }: Props = $props()
 
   const castVote = async (newVote: number) => {
-    if (!$profile?.jwt) {
+    if (!profile?.jwt) {
       toast({ content: $t('toast.loginVoteGate'), type: 'warning' })
       return
     }

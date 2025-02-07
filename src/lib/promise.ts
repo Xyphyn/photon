@@ -2,8 +2,6 @@
 
 import { browser } from '$app/environment'
 
-type AnyFunction = (...args: any[]) => any
-
 export const awaitIfServer = async <T>(
   promise: Promise<T>,
 ): Promise<{

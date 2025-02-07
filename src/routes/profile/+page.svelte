@@ -16,7 +16,7 @@
 </script>
 
 <Header pageHeader>
-  {$t('routes.profile.overview')}
+  {$t('routes.profile.data.overview')}
 </Header>
 
 <EntityHeader
@@ -56,7 +56,7 @@
   {#if data.moderates && data.moderates.length > 0}
     <Expandable class="">
       {#snippet title()}
-        {$t('routes.profile.moderates')}
+        {$t('routes.profile.data.moderates')}
         <hr class="flex-1 w-full border-slate-200 dark:border-zinc-800 mx-3" />
       {/snippet}
       <ItemList

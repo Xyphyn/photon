@@ -114,7 +114,7 @@
   onMount(async () => {
     if (
       !(data.post.post_view.read && settings.markPostsAsRead) &&
-      $profile?.jwt
+      profile?.jwt
     ) {
       getClient().markPostAsRead({
         read: settings.markPostsAsRead,
@@ -237,12 +237,12 @@
       <span class="text-primary-900 dark:text-primary-100 font-bold">
         {$t('routes.post.remoteView')}
       </span>
-      {#if $profile?.jwt}
+      {#if profile?.jwt}
         <Button
           class="ml-auto"
           onclick={() => {
-            if ($profile?.jwt) {
-              fetchOnHome($profile?.jwt)
+            if (profile?.jwt) {
+              fetchOnHome(profile?.jwt)
             }
           }}
         >

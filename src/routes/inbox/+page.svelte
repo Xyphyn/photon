@@ -35,7 +35,7 @@
   let markingAsRead = $state(false)
 
   async function markAllAsRead() {
-    if (!$profile?.user) {
+    if (!profile?.user) {
       goto('/login')
       return
     }

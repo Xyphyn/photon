@@ -23,7 +23,7 @@
   let saving = $state(false)
 
   async function save() {
-    if (!$profile?.jwt) return
+    if (!profile?.jwt) return
 
     saving = true
 

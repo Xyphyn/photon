@@ -15,11 +15,11 @@
 
   const routes = [
     {
-      name: $t('routes.profile.credentials'),
+      name: $t('routes.profile.data.credentials'),
       url: '/profile/password',
     },
     {
-      name: $t('form.profile.2fa.2fa'),
+      name: $t('form.profile.data.2fa.2fa'),
       url: '/profile/password/2fa',
     },
     {
@@ -27,11 +27,11 @@
       url: '/profile/password/change',
     },
     {
-      name: $t('routes.profile.logins'),
+      name: $t('routes.profile.data.logins'),
       url: '/profile/password/logins',
     },
     {
-      name: $t('routes.profile.delete.title'),
+      name: $t('routes.profile.data.delete.title'),
       url: '/profile/password/delete',
     },
   ]

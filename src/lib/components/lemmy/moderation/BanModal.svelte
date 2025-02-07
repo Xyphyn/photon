@@ -43,7 +43,7 @@
   })
 
   async function submit() {
-    if (!item || !$profile?.user || !$profile?.jwt) return
+    if (!item || !profile?.user || !profile?.jwt) return
 
     loading = true
 

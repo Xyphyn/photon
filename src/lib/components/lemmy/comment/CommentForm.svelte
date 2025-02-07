@@ -49,7 +49,7 @@
   let language: number | undefined = $state()
 
   async function submit() {
-    if (!$profile?.user || !$profile?.jwt || value == '') return
+    if (!profile?.user || !profile?.jwt || value == '') return
 
     loading = true
 
@@ -107,7 +107,7 @@
             size="square-md"
             rounding="pill"
             color={language != undefined ? 'primary' : 'ghost'}
-            title={$t('form.profile.languages.title')}
+            title={$t('form.profile.data.languages.title')}
           >
             <Icon src={Language} size="16" micro />
           </Button>
