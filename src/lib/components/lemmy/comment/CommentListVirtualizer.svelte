@@ -71,7 +71,13 @@
         data-index={row.index}
         class="-mx-4 sm:-mx-6 px-4 sm:px-6"
       >
-        <Comments isParent={true} nodes={[nodes[row.index]]} {post} />
+        <Comments
+          isParent={true}
+          bind:nodes={
+            () => [nodes[row.index]], (v) => (nodes[row.index] = v[0])
+          }
+          {post}
+        />
       </div>
     {/each}
   </div>

@@ -45,8 +45,9 @@
         parent.comment_view.counts.child_count > 0 &&
         parent.children.length == 0
       )
-    )
+    ) {
       return
+    }
 
     try {
       parent.loading = true
@@ -131,20 +132,22 @@
           href="/comment/{page.params.instance}/{node.comment_view.comment.id}"
         >
           <Button
-            loading={node.loading}
-            disabled={node.loading}
+            loading={nodes[index].loading}
+            disabled={nodes[index].loading}
             rounding="pill"
             color="tertiary"
             class="font-normal text-slate-600 dark:text-zinc-400"
             loaderWidth={16}
             onclick={() => {
-              if (node.depth > 4) {
+              if (nodes[index].depth > 4) {
                 goto(
-                  `/comment/${page.params.instance}/${node.comment_view.comment.id}#comments`,
+                  `/comment/${page.params.instance}/${nodes[index].comment_view.comment.id}#comments`,
                 )
               } else {
-                node.loading = true
-                fetchChildren(node).then(() => (node.loading = false))
+                nodes[index].loading = true
+                fetchChildren(nodes[index]).then(
+                  () => (nodes[index].loading = false),
+                )
               }
             }}
           >
