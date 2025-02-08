@@ -47,21 +47,21 @@
 <form onsubmit={preventDefault(changePassword)} class="flex flex-col gap-4">
   <TextInput
     bind:value={oldPassword}
-    label={$t('form.profile.data.currentPassword')}
+    label={$t('form.profile.currentPassword')}
     type="password"
     minlength={10}
     required
   />
   <TextInput
     bind:value={newPassword}
-    label={$t('form.profile.data.newPassword')}
+    label={$t('form.profile.newPassword')}
     type="password"
     minlength={10}
     required
   />
   <TextInput
     bind:value={newPasswordVerify}
-    label={$t('form.profile.data.verifyNewPassword')}
+    label={$t('form.profile.verifyNewPassword')}
     type="password"
     minlength={10}
     required

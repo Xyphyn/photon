@@ -159,7 +159,7 @@
   />
   <TextInput
     required
-    label={$t('form.profile.data.displayName')}
+    label={$t('form.profile.displayName')}
     bind:value={formData.displayName}
   />
   <div class="flex flex-row gap-4 flex-wrap *:flex-1">
@@ -236,7 +236,7 @@
   </Select>
 
   <div class="space-y-1">
-    <SectionTitle>{$t('form.profile.data.languages.title')}</SectionTitle>
+    <SectionTitle>{$t('form.profile.languages.title')}</SectionTitle>
     <Material rounding="xl" color="uniform" class="dark:bg-zinc-950">
       {#if $site}
         <div class="flex gap-2 flex-wrap flex-row">

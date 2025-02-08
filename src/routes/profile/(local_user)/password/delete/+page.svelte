@@ -97,7 +97,7 @@
     onaction={() => deleteAccount(4)}
   >
     {#snippet customTitle()}
-      <span>{$t('form.profile.data.deleteAccount.label')}</span>
+      <span>{$t('form.profile.deleteAccount.label')}</span>
     {/snippet}
     <TextInput
       label={$t('form.password')}
@@ -105,10 +105,10 @@
       bind:value={deletion.password}
     />
     <Checkbox bind:checked={deletion.deleteContent}>
-      {$t('form.profile.data.deleteAccount.deleteContent')}
+      {$t('form.profile.deleteAccount.deleteContent')}
       {#snippet description()}
         <span>
-          {$t('form.profile.data.deleteAccount.warning')}
+          {$t('form.profile.deleteAccount.warning')}
         </span>
       {/snippet}
     </Checkbox>
@@ -128,10 +128,10 @@
     {$t('routes.profile.delete.warning')}
   </p>
   <Switch bind:checked={deletion.deleteContent}>
-    {$t('form.profile.data.deleteAccount.deleteContent')}
+    {$t('form.profile.deleteAccount.deleteContent')}
     {#snippet description()}
       <span>
-        {$t('form.profile.data.deleteAccount.warning')}
+        {$t('form.profile.deleteAccount.warning')}
       </span>
     {/snippet}
   </Switch>

@@ -89,54 +89,45 @@
   {/if}
   {@render children?.()}
   {#if data.my_user?.local_user_view?.local_user && formData}
+    <TextInput label={$t('form.profile.email')} bind:value={formData.email} />
     <TextInput
-      label={$t('form.profile.data.email')}
-      bind:value={formData.email}
-    />
-    <TextInput
-      label={$t('form.profile.data.displayName')}
+      label={$t('form.profile.displayName')}
       bind:value={formData.display_name}
       placeholder="Optional"
     />
     <MarkdownEditor
       images={false}
       bind:value={() => formData.bio ?? '', (v) => (formData.bio = v)}
-      label={$t('form.profile.data.bio')}
+      label={$t('form.profile.bio')}
       previewButton
     />
     <div class="flex gap-2 items-center *:flex-1">
-      <ImageInput
-        label={$t('form.profile.data.avatar')}
-        bind:files={profileImage}
-      />
-      <ImageInput
-        label={$t('form.profile.data.banner')}
-        bind:files={bannerImage}
-      />
+      <ImageInput label={$t('form.profile.avatar')} bind:files={profileImage} />
+      <ImageInput label={$t('form.profile.banner')} bind:files={bannerImage} />
     </div>
     <TextInput
-      label={$t('form.profile.data.matrix')}
+      label={$t('form.profile.matrix')}
       bind:value={formData.matrix_user_id}
       placeholder="@user:example.com"
     />
     <Switch bind:checked={formData.show_nsfw}>
-      {$t('form.profile.data.showNSFW')}
+      {$t('form.profile.showNSFW')}
     </Switch>
     <Switch bind:checked={formData.show_scores}>
-      {$t('form.profile.data.scores')}
+      {$t('form.profile.scores')}
     </Switch>
     <Switch bind:checked={formData.bot_account}>
-      {$t('form.profile.data.bot')}
+      {$t('form.profile.bot')}
     </Switch>
     <Switch bind:checked={formData.show_bot_accounts}>
-      {$t('form.profile.data.showBots')}
+      {$t('form.profile.showBots')}
     </Switch>
     <Switch bind:checked={formData.show_read_posts}>
-      {$t('form.profile.data.showRead')}
+      {$t('form.profile.showRead')}
     </Switch>
     <div class="space-y-1">
-      <SectionTitle>{$t('form.profile.data.languages.title')}</SectionTitle>
-      <p>{$t('form.profile.data.languages.description')}</p>
+      <SectionTitle>{$t('form.profile.languages.title')}</SectionTitle>
+      <p>{$t('form.profile.languages.description')}</p>
       <Material rounding="xl" color="uniform" class="dark:bg-zinc-950">
         {#if $site && formData.discussion_languages}
           <div class="flex gap-2 flex-wrap flex-row">

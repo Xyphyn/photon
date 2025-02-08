@@ -243,8 +243,8 @@
     </Switch>
 
     <div class="space-y-1">
-      <SectionTitle>{$t('form.profile.data.languages.title')}</SectionTitle>
-      <p>{$t('form.profile.data.languages.description')}</p>
+      <SectionTitle>{$t('form.profile.languages.title')}</SectionTitle>
+      <p>{$t('form.profile.languages.description')}</p>
       <Material rounding="xl" color="uniform" class="dark:bg-zinc-950">
         {#if $site}
           <div class="flex gap-2 flex-wrap flex-row">

@@ -107,7 +107,7 @@
             size="square-md"
             rounding="pill"
             color={language != undefined ? 'primary' : 'ghost'}
-            title={$t('form.profile.data.languages.title')}
+            title={$t('form.profile.languages.title')}
           >
             <Icon src={Language} size="16" micro />
           </Button>

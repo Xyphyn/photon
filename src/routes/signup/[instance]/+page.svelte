@@ -201,7 +201,7 @@
         </div>
       </div>
     {/if}
-    <Checkbox bind:checked={nsfw}>{$t('form.profile.data.showNSFW')}</Checkbox>
+    <Checkbox bind:checked={nsfw}>{$t('form.profile.showNSFW')}</Checkbox>
     <input type="dn" name="honeypot" bind:value={honeypot} class="hidden" />
     <Button
       submit
