@@ -14,7 +14,7 @@
   } = $props()
 
   onMount(() => {
-    if (!$profile?.jwt) {
+    if (!profile.data?.jwt) {
       goto('/login')
     }
   })

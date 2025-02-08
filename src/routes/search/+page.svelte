@@ -136,7 +136,7 @@
   <div transition:slide={{ axis: 'y', easing: expoOut }} class="max-w-sm">
     <ObjectAutocomplete
       label={$t('nav.create.community')}
-      jwt={$profile?.jwt}
+      jwt={profile.data?.jwt}
       listing_type={'All'}
       showWhenEmpty={true}
       onselect={(c) =>

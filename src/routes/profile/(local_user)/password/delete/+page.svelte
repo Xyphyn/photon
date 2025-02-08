@@ -70,14 +70,9 @@
         delete_content: deletion.deleteContent,
       })
 
-      profileData.update((pd) => {
-        pd.profiles.splice(
-          pd.profiles.findIndex((p) => pd.profile == p.id),
-          1,
-        )
-
-        return pd
-      })
+      profileData.profiles.splice(
+        profileData.profiles.findIndex((p) => profileData.profile == p.id),
+      )
 
       setUserID(-1)
       toast({
@@ -102,7 +97,7 @@
     onaction={() => deleteAccount(4)}
   >
     {#snippet customTitle()}
-      <span>{$t('form.profile.deleteAccount.label')}</span>
+      <span>{$t('form.profile.data.deleteAccount.label')}</span>
     {/snippet}
     <TextInput
       label={$t('form.password')}
@@ -110,10 +105,10 @@
       bind:value={deletion.password}
     />
     <Checkbox bind:checked={deletion.deleteContent}>
-      {$t('form.profile.deleteAccount.deleteContent')}
+      {$t('form.profile.data.deleteAccount.deleteContent')}
       {#snippet description()}
         <span>
-          {$t('form.profile.deleteAccount.warning')}
+          {$t('form.profile.data.deleteAccount.warning')}
         </span>
       {/snippet}
     </Checkbox>
@@ -133,10 +128,10 @@
     {$t('routes.profile.delete.warning')}
   </p>
   <Switch bind:checked={deletion.deleteContent}>
-    {$t('form.profile.deleteAccount.deleteContent')}
+    {$t('form.profile.data.deleteAccount.deleteContent')}
     {#snippet description()}
       <span>
-        {$t('form.profile.deleteAccount.warning')}
+        {$t('form.profile.data.deleteAccount.warning')}
       </span>
     {/snippet}
   </Switch>

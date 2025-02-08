@@ -2,7 +2,6 @@
   import Comment from '$lib/components/lemmy/comment/Comment.svelte'
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
-  import { getInstance } from '$lib/lemmy.js'
   import { settings } from '$lib/settings.svelte.js'
   import { t } from '$lib/translations'
   import type { CommentView } from 'lemmy-js-client'

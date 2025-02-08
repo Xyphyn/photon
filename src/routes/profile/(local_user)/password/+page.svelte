@@ -50,7 +50,7 @@
       >
         <Icon src={Key} size="24" />
       </Material>
-      <span class="font-medium text-lg">{$t('form.profile.2fa.2fa')}</span>
+      <span class="font-medium text-lg">{$t('form.profile.data.2fa.2fa')}</span>
       <span class="text-sm">
         {data.my_user?.local_user_view.local_user.totp_2fa_enabled
           ? $t('common.enabled')

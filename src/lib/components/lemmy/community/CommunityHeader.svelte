@@ -112,7 +112,7 @@
     </Expandable>
   {/if}
   <div class="flex items-center gap-2 h-max w-max">
-    {#if $profile?.jwt}
+    {#if profile.data?.jwt}
       <Subscribe
         community={{
           community: community,
@@ -151,7 +151,7 @@
       </Subscribe>
     {/if}
 
-    {#if $profile?.user && $profile.user.moderates
+    {#if profile.data?.user && profile.data.user.moderates
         .map((c) => c.community.id)
         .includes(community.id)}
       <Button
@@ -179,7 +179,7 @@
         <Icon src={Newspaper} size="16" mini />
         {$t('cards.community.modlog')}
       </MenuButton>
-      {#if $profile?.jwt}
+      {#if profile.data?.jwt}
         <MenuButton
           color="danger-subtle"
           size="lg"
@@ -192,7 +192,7 @@
             ? $t('cards.community.unblock')
             : $t('cards.community.block')}
         </MenuButton>
-        {#if $profile?.user}
+        {#if profile.data?.user}
           <MenuButton
             color="danger-subtle"
             size="lg"
@@ -204,7 +204,7 @@
             {$t('cards.community.blockInstance')}
           </MenuButton>
         {/if}
-        {#if $profile?.user && isAdmin($profile.user)}
+        {#if profile.data?.user && isAdmin(profile.data.user)}
           <MenuButton
             color="danger-subtle"
             onclick={() =>

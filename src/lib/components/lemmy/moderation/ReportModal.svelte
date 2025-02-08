@@ -41,7 +41,7 @@
   let reason = $state('')
 
   async function report() {
-    if (!item || !$profile?.jwt || reason == '') return
+    if (!item || !profile.data?.jwt || reason == '') return
     loading = true
 
     try {

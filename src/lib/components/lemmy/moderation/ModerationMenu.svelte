@@ -31,7 +31,7 @@
   let acting = $derived(locking || pinning)
 
   async function lock(lock: boolean) {
-    if (!$profile?.jwt || !isPostView(item)) return
+    if (!profile.data?.jwt || !isPostView(item)) return
     locking = true
 
     try {
@@ -52,7 +52,7 @@
   }
 
   async function pin(pinned: boolean, toInstance: boolean = false) {
-    if (!$profile?.jwt || !isPostView(item)) return
+    if (!profile.data?.jwt || !isPostView(item)) return
 
     pinning = true
 
@@ -87,9 +87,9 @@
       <ShieldIcon filled width={16} />
     </Button>
   {/snippet}
-  {#if ($profile?.user && amMod($profile.user, item.community)) || ($profile?.user && isAdmin($profile.user))}
+  {#if (profile.data?.user && amMod(profile.data.user, item.community)) || (profile.data?.user && isAdmin(profile.data.user))}
     <MenuDivider>
-      {#if !item.community.local && !amMod($profile.user, item.community)}
+      {#if !item.community.local && !amMod(profile.data.user, item.community)}
         {$t('moderation.labelInstanceOnly')}
       {:else}
         {$t('moderation.label')}
@@ -123,7 +123,7 @@
             ? $t('moderation.unfeature')
             : $t('moderation.feature')}
         </span>
-        {#if isAdmin($profile.user)}
+        {#if isAdmin(profile.data.user)}
           <span class="text-xs opacity-80">{$t('form.post.community')}</span>
         {/if}
       </div>
@@ -138,7 +138,7 @@
         {item.post.removed ? $t('moderation.restore') : $t('moderation.remove')}
       {/if}
     </MenuButton>
-    {#if $profile?.user && $profile.user.local_user_view.person.id != item.creator.id}
+    {#if profile.data?.user && profile.data.user.local_user_view.person.id != item.creator.id}
       <MenuButton
         color="danger-subtle"
         onclick={() =>
@@ -151,7 +151,7 @@
       </MenuButton>
     {/if}
   {/if}
-  {#if $profile?.user && isAdmin($profile.user)}
+  {#if profile.data?.user && isAdmin(profile.data.user)}
     <MenuDivider>{$t('admin.label')}</MenuDivider>
     <MenuButton
       color="success-subtle"

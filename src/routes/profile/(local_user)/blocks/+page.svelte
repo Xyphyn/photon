@@ -35,7 +35,7 @@
   let data = $state(pageData)
 
   async function unblockUser(item: PersonBlockView) {
-    if (!$profile?.jwt) return
+    if (!profile.data?.jwt) return
 
     data.person_blocks.splice(
       data.person_blocks.findIndex((i) => i.target.id == item.target.id),
@@ -51,7 +51,7 @@
   }
 
   async function unblockCommunity(item: CommunityBlockView) {
-    if (!$profile?.jwt) return
+    if (!profile.data?.jwt) return
 
     data.community_blocks.splice(
       data.community_blocks.findIndex(
@@ -70,7 +70,7 @@
   }
 
   async function unblockInstances(item: InstanceBlockView) {
-    if (!$profile?.jwt) return
+    if (!profile.data?.jwt) return
     if (!data.my_user?.instance_blocks) return
 
     data.my_user.instance_blocks.splice(

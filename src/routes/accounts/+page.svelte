@@ -52,7 +52,7 @@
 
 {#if debugging}
   <DebugObject
-    object={debugProfile?.id == $profile?.id ? $profile : debugProfile}
+    object={debugProfile?.id == profile.data?.id ? profile : debugProfile}
     bind:open={debugging}
   >
     {#snippet title()}
@@ -101,7 +101,7 @@
   </Modal>
 {/if}
 
-{#if $profileData.profiles.length == 0}
+{#if profileData.profiles.length == 0}
   <div class="h-max flex items-center justify-center my-auto">
     <div
       class="flex flex-col justify-center items-center py-8 gap-4
@@ -158,29 +158,28 @@
       {/snippet}
     </Header>
     <div>
-      {#each $profileData.profiles as profile, index (profile.id)}
+      {#each profileData.profiles as profile, index}
         <div
           class="flex flex-row gap-2 items-center py-3"
           transition:fly={{ duration: 500, y: -12, easing: expoOut }}
-          animate:flip={{ duration: 500, easing: expoOut }}
         >
           <Button
-            title={profile.id == $currentProfile?.id ? 'Switch' : 'Current'}
+            title={profile.id == currentProfile?.data.id ? 'Switch' : 'Current'}
             onclick={async () => {
-              if (profile.id != $currentProfile?.id) {
+              if (profile.id != currentProfile?.data.id) {
                 switching = profile.id
                 await setUserID(profile.id)
                 switching = -69
               }
             }}
             size="square-md"
-            color={profile.id == $currentProfile?.id ? 'primary' : 'ghost'}
+            color={profile.id == currentProfile?.data.id ? 'primary' : 'ghost'}
             loading={switching == profile.id}
             disabled={switching == profile.id}
             rounding="pill"
           >
             {#snippet prefix()}
-              {#if profile.id == $currentProfile?.id}
+              {#if profile.id == currentProfile?.data.id}
                 <Icon src={Check} mini size="16" />
               {:else}
                 <Icon src={ArrowsRightLeft} size="16" mini />
@@ -191,7 +190,7 @@
             <ProfileAvatar
               {profile}
               {index}
-              selected={$currentProfile?.id == profile.id}
+              selected={currentProfile?.data.id == profile.id}
               size={24}
             />
             <div class="flex flex-col">

@@ -19,7 +19,7 @@
       url: '/profile/password',
     },
     {
-      name: $t('form.profile.2fa.2fa'),
+      name: $t('form.profile.data.2fa.2fa'),
       url: '/profile/password/2fa',
     },
     {

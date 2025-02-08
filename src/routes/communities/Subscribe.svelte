@@ -17,7 +17,7 @@
     id: number | undefined = community?.community.id,
     subscribed: SubscribedType | undefined = community?.subscribed,
   ) {
-    if (!$profile?.jwt) return
+    if (!profile.data?.jwt) return
     if (!id || !subscribed) return
 
     subscribing = true

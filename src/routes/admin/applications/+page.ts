@@ -3,9 +3,9 @@ import { getClient } from '$lib/lemmy.js'
 import { get } from 'svelte/store'
 
 export async function load({ data, fetch, url }) {
-  if (!get(profile)) return
+  if (!profile) return
 
-  const { jwt } = get(profile)!
+  const { jwt } = profile.data!
   if (!jwt) return
 
   const page = Number(url.searchParams.get('page')) || 1

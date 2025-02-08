@@ -74,14 +74,14 @@
       hover:border-primary-900 hover:dark:border-primary-100 active:scale-95 {buttonClass}"
       title={$t('profile.profile')}
     >
-      {#if $profile?.user}
+      {#if profile.data?.user}
         <div
           class="w-full h-full aspect-square object-cover rounded-full grid place-items-center"
         >
           <Avatar
-            url={$profile.user.local_user_view.person.avatar}
+            url={profile.data.user.local_user_view.person.avatar}
             width={36}
-            alt={$profile.user.local_user_view.person.name}
+            alt={profile.data.user.local_user_view.person.name}
           />
         </div>
         {#if $notifications.inbox > 0}
@@ -96,9 +96,9 @@
       {/if}
     </button>
   {/snippet}
-  {#if $profile?.user}
+  {#if profile.data?.user}
     <UserLink
-      user={$profile?.user.local_user_view.person}
+      user={profile.data?.user.local_user_view.person}
       showInstance={false}
       avatar
       avatarSize={24}
@@ -108,7 +108,7 @@
   {:else}
     <MenuDivider>{$t('nav.menu.label')}</MenuDivider>
   {/if}
-  {#if $profile?.jwt}
+  {#if profile.data?.jwt}
     <MenuButton link href="/profile">
       {#snippet prefix()}
         <Icon src={UserCircle} micro width={16} />

@@ -1,6 +1,5 @@
 import { browser } from '$app/environment'
 import type { Community } from 'lemmy-js-client'
-import { writable } from 'svelte/store'
 
 interface SessionStorage {
   lastSeenCommunity: Community | undefined
@@ -35,9 +34,3 @@ export const getSessionStorage = (
   if (!browser) return
   return JSON.parse(sessionStorage.getItem(key)!)
 }
-
-interface Route {
-  title: string
-}
-
-export const route = writable<Route | undefined>(undefined)

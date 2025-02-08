@@ -29,7 +29,7 @@
 
   let customHref = (href?: string) => {
     if (href?.startsWith('?')) {
-      const current = pageData.url.searchParams
+      const current = new URLSearchParams(pageData.url.searchParams)
       const newParams = new URLSearchParams(href)
 
       current.delete(newParams.keys().toArray()[0])
@@ -56,11 +56,7 @@
   <Button
     href={customHref(href?.(cursor?.back ?? page - 1))}
     color="ghost"
-    onclick={() => {
-      invalidateAll()
-      if (cursor?.back) onchangecursor?.(cursor.back)
-      else onchange?.(--page)
-    }}
+    onclick={() => invalidateAll()}
     title={$t('common.back')}
     size="square-md"
     rounding="pill"
@@ -91,11 +87,7 @@
   <Button
     href={customHref(href?.(cursor?.next ?? page + 1))}
     color="ghost"
-    onclick={() => {
-      invalidateAll()
-      if (cursor?.next) onchangecursor?.(cursor?.next)
-      else onchange?.(++page)
-    }}
+    onclick={() => invalidateAll()}
     title={$t('common.next')}
     size="square-md"
     rounding="pill"

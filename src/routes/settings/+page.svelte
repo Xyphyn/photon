@@ -197,7 +197,7 @@
   class="flex flex-col *:py-2 divide-y divide-slate-200 dark:divide-zinc-800"
   style="scroll-behavior: smooth;"
 >
-  {#if $profile?.jwt}
+  {#if profile.data?.jwt}
     <Section open={false} id="account" title={$t('settings.account.title')}>
       <div>
         <Button

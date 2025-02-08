@@ -50,7 +50,7 @@
   })
 </script>
 
-{#if $profile?.jwt}
+{#if profile.data?.jwt}
   {#if !commenting}
     <EndPlaceholder class="">
       <Button color="primary" onclick={() => (commenting = true)}>
@@ -89,8 +89,8 @@
       }}
       locked={(post.post_view.post.locked &&
         !(
-          $profile?.user?.local_user_view.local_user.admin ||
-          $profile?.user?.moderates
+          profile.data?.user?.local_user_view.local_user.admin ||
+          profile.data?.user?.moderates
             .map((c) => c.community.id)
             .includes(post.community_view.community.id)
         )) ||
@@ -106,7 +106,7 @@
   {/if}
 {/if}
 
-{#if commenting || !$profile.jwt}
+{#if commenting || !profile.data.jwt}
   <div class="gap-2 flex items-center">
     <Select size="md" bind:value={sort} onchange={onupdate}>
       <Option icon={Fire} value="Hot">{$t('filter.sort.hot')}</Option>

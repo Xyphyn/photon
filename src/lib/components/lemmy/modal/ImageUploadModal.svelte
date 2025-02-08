@@ -32,7 +32,7 @@
   )
 
   async function upload() {
-    if (!$profile?.jwt || image == null) return
+    if (!profile.data?.jwt || image == null) return
 
     progress = 0
 
@@ -40,7 +40,7 @@
       const uploaded = (
         await Promise.all(
           Array.from(image).map((i) =>
-            uploadImage(i, $profile.instance, $profile.jwt!)
+            uploadImage(i, profile.data.instance, profile.data.jwt!)
               .then((uploaded) => {
                 progress += 1 / (image?.length ?? 0)
                 return uploaded

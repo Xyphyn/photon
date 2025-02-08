@@ -38,10 +38,10 @@
   )
 
   async function save() {
-    if (!$profile?.jwt) return
+    if (!profile.data?.jwt) return
 
     saving = true
-    const { jwt } = $profile
+    const { jwt } = profile.data
 
     try {
       await getClient().editSite({
@@ -242,8 +242,8 @@
     </Switch>
 
     <div class="space-y-1">
-      <SectionTitle>{$t('form.profile.languages.title')}</SectionTitle>
-      <p>{$t('form.profile.languages.description')}</p>
+      <SectionTitle>{$t('form.profile.data.languages.title')}</SectionTitle>
+      <p>{$t('form.profile.data.languages.description')}</p>
       <Material rounding="xl" color="uniform" class="dark:bg-zinc-950">
         {#if $site && formData.discussion_languages}
           <div class="flex gap-2 flex-wrap flex-row">

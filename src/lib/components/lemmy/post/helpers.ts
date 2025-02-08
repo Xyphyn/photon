@@ -1,8 +1,10 @@
-import { client, getInstance } from '$lib/lemmy.js'
+import { profile } from '$lib/auth.svelte'
+import { client } from '$lib/lemmy.js'
 import type { View } from '$lib/settings.svelte'
 import { isImage, isVideo } from '$lib/ui/image'
 import { canParseUrl, findClosestNumber } from '$lib/util.svelte'
 import type { CommentView, PersonView, Post, PostView } from 'lemmy-js-client'
+import { get } from 'svelte/store'
 
 export const isCommentMutable = (comment: CommentView, me: PersonView) =>
   me.person.id == comment.creator.id
@@ -57,7 +59,8 @@ export const isYoutubeLink = (url?: string): RegExpMatchArray | null => {
   return url?.match?.(YOUTUBE_REGEX)
 }
 
-export const postLink = (post: Post) => `/post/${getInstance()}/${post.id}`
+export const postLink = (post: Post) =>
+  `/post/${profile.data.instance}/${post.id}`
 
 export type MediaType = 'video' | 'image' | 'iframe' | 'embed' | 'none'
 export type IframeType = 'youtube' | 'video' | 'none'

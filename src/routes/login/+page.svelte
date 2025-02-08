@@ -51,9 +51,6 @@
 
     try {
       data.instance = data.instance.trim()
-      // if (!(await validateInstance(data.instance))) {
-      //   throw new Error('Failed to contact that instance. Is it down?')
-      // }
 
       const response = await getClient(data.instance).login({
         username_or_email: data.username.trim(),

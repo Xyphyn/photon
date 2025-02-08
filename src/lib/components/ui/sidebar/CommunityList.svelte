@@ -25,7 +25,7 @@
     animate:flip={{ duration: 500, easing: expoOut }}
   >
     <div class="flex-none grid group">
-      {#if $profile && !hasFavorite($profile, follow.id)}
+      {#if profile && !hasFavorite(profile.data, follow.id)}
         <Button
           rounding="pill"
           size="custom"
@@ -36,7 +36,7 @@
         >
           <Icon src={Star} size="16" mini />
         </Button>
-      {:else if isFavorites && $profile && hasFavorite($profile, follow.id)}
+      {:else if isFavorites && profile && hasFavorite(profile.data, follow.id)}
         <Button
           rounding="pill"
           size="custom"
@@ -53,7 +53,7 @@
         alt={follow.name}
         title={follow.title}
         width={28}
-        class={!isFavorites && $profile && hasFavorite($profile, follow.id)
+        class={!isFavorites && profile && hasFavorite(profile.data, follow.id)
           ? ''
           : 'group-hover:hidden'}
       />

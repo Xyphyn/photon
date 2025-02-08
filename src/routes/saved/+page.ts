@@ -18,7 +18,7 @@ function getSavedItemPublished(item: PostView | CommentView) {
 }
 
 export async function load({ url, fetch }) {
-  if (!get(profile)) return { posts: [], page: 0 }
+  if (!profile) return { posts: [], page: 0 }
   const page = Number(url.searchParams.get('page')) || 1
   const type: 'comments' | 'posts' | 'all' =
     (url.searchParams.get('type') as 'comments' | 'posts' | 'all') || 'all'

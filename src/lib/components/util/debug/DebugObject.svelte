@@ -12,7 +12,7 @@
 </script>
 
 <Modal bind:open>
-  {#snippet title()}
+  {#snippet customTitle()}
     <span>
       {#if title}{@render title()}{:else}Debug{/if}
     </span>

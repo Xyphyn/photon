@@ -229,8 +229,8 @@
   $effect(() => {
     groups = getGroups(
       $resumables,
-      $profile,
-      $profileData.profiles,
+      profile.data,
+      profileData.profiles,
       $themeData,
       page.data.contextual?.actions,
     )

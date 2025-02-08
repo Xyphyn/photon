@@ -6,10 +6,7 @@
 
   let link = $state('')
 
-  let photonified
-  run(() => {
-    photonified = photonify(link)
-  })
+  let photonified = $derived(photonify(link))
 </script>
 
 <h1 class="font-bold text-2xl">Photonify links</h1>
@@ -21,5 +18,5 @@
     bind:value={link}
     placeholder="https://lemmy.world/post/1"
   />
-  <TextInput label="Output" bind:value={photonified} />
+  <TextInput label="Output" value={photonified} />
 </div>

@@ -73,13 +73,13 @@
     {/if}
     <TextInput
       bind:value={password}
-      label={$t('form.profile.newPassword')}
+      label={$t('form.profile.data.newPassword')}
       type="password"
       required
     />
     <TextInput
       bind:value={password_verify}
-      label={$t('form.profile.verifyNewPassword')}
+      label={$t('form.profile.data.verifyNewPassword')}
       type="password"
       required
     />

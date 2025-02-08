@@ -22,8 +22,8 @@
         old_password: oldPassword,
       })
       if (res?.jwt) {
-        const { instance, username } = $profile
-        deleteProfile($profile.id)
+        const { instance, username } = profile.data
+        deleteProfile(profile.data.id)
         await setUser(res.jwt, instance, username!)
         $currentInstance = instance
 
@@ -47,21 +47,21 @@
 <form onsubmit={preventDefault(changePassword)} class="flex flex-col gap-4">
   <TextInput
     bind:value={oldPassword}
-    label={$t('form.profile.currentPassword')}
+    label={$t('form.profile.data.currentPassword')}
     type="password"
     minlength={10}
     required
   />
   <TextInput
     bind:value={newPassword}
-    label={$t('form.profile.newPassword')}
+    label={$t('form.profile.data.newPassword')}
     type="password"
     minlength={10}
     required
   />
   <TextInput
     bind:value={newPasswordVerify}
-    label={$t('form.profile.verifyNewPassword')}
+    label={$t('form.profile.data.verifyNewPassword')}
     type="password"
     minlength={10}
     required

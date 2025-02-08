@@ -105,7 +105,7 @@ export let resumables = resumableStore()
 
 export function addFavorite(item: Community, add: boolean = true) {
   const pd = get(profileData)
-  const p = pd.profiles.find((p) => p.id == get(profile)?.id)
+  const p = pd.profiles.find((p) => p.id == profile.data?.id)
   if (!p) return
 
   let favs = p.favorites ?? []

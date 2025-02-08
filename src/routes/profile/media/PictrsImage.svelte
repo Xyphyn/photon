@@ -14,7 +14,7 @@
   let loading = $state(false)
 
   async function deleteImage(image: LocalImage) {
-    if (!$profile?.jwt) return
+    if (!profile.data?.jwt) return
 
     try {
       loading = true
