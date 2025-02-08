@@ -6,12 +6,14 @@
   import { fade, scale } from 'svelte/transition'
   import { focusTrap } from 'svelte-focus-trap'
   import Portal from '../popover/Portal.svelte'
+  import type { ClassValue } from 'svelte/elements'
 
   interface Props {
     action?: string | undefined
     open?: boolean
-    title?: string | undefined
+    title?: string | undefined | null
     dismissable?: boolean
+    class?: ClassValue
     customTitle?: import('svelte').Snippet
     children?: import('svelte').Snippet
     actions?: import('svelte').Snippet<[any]>
@@ -29,6 +31,7 @@
     actions,
     ondismissed,
     onaction,
+    class: clazz = '',
   }: Props = $props()
 
   let el: any = $state()
@@ -65,7 +68,7 @@ bg-white/50 dark:bg-black/50 box-border p-4"
 				dark:border-zinc-900 dark:border-t-zinc-800 dark:border-b-zinc-900
 				rounded-2xl max-w-lg box-border mx-auto overscroll-contain shadow-lg overflow-auto
 				p-5 flex flex-col gap-2 dark:bg-zinc-925
-          bg-white relative"
+          bg-white relative {clazz}"
       >
         {#if dismissable}
           <Button
@@ -82,13 +85,15 @@ bg-white/50 dark:bg-black/50 box-border p-4"
             {/snippet}
           </Button>
         {/if}
-        <h1 class="font-semibold text-xl max-w-full">
-          {#if customTitle}
-            {@render customTitle?.()}
-          {:else if title}
-            {title}
-          {/if}
-        </h1>
+        {#if title !== null}
+          <h1 class="font-semibold text-xl max-w-full">
+            {#if customTitle}
+              {@render customTitle?.()}
+            {:else if title}
+              {title}
+            {/if}
+          </h1>
+        {/if}
         {@render children?.()}
         {#if action}
           <div class="mt-2 flex w-full">

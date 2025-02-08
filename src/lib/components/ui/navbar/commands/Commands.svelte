@@ -21,6 +21,16 @@
 
   let { open = $bindable(false), groups = $bindable([]) }: Props = $props()
 
+  $effect(() => {
+    groups = getGroups(
+      $resumables,
+      profile.data,
+      profileData.profiles,
+      $themeData,
+      page.data.contextual?.actions,
+    )
+  })
+
   let search = $state('')
   let container: HTMLElement | undefined = $state()
   const dispatch = createEventDispatcher()
@@ -226,18 +236,11 @@
   $effect(() => {
     if (open) search = ''
   })
-  $effect(() => {
-    groups = getGroups(
-      $resumables,
-      profile.data,
-      profileData.profiles,
-      $themeData,
-      page.data.contextual?.actions,
-    )
-  })
+
   let flattenedActions = $derived(
     filteredGroups.flatMap((group) => group.actions),
   )
+
   $effect(() => {
     debouncedSearch(search)
   })
@@ -245,8 +248,14 @@
 
 <svelte:window onkeydown={handleKeydown} />
 
-<TextInput bind:value={search} autofocus class="sticky font-mono" />
-<div class="h-96 overflow-auto border-slate-200 dark:border-zinc-800">
+<TextInput
+  bind:value={search}
+  autofocus
+  class="sticky rounded-none border-t-0 border-x-0 focus-within:dark:border-zinc-800"
+  size="lg"
+  placeholder={$t('nav.commands.prompt')}
+/>
+<div class="h-[32rem] overflow-auto border-slate-200 dark:border-zinc-800 p-5">
   {#if breadcrumbs.length > 0}
     <div class="flex items-center gap-2 my-1">
       <button

@@ -92,7 +92,7 @@ export function getGroups(
           name: t.get('nav.communities'),
           icon: GlobeAlt,
         },
-        ...(amModOfAny(profile.data.user)
+        ...(amModOfAny(profile.user)
           ? [
               {
                 href: '/moderation',
@@ -101,7 +101,7 @@ export function getGroups(
               },
             ]
           : []),
-        ...(profile.data.user && isAdmin(profile.data.user)
+        ...(profile.user && isAdmin(profile.user)
           ? [
               {
                 href: '/admin',
@@ -236,23 +236,23 @@ export function getGroups(
       ],
     },
     {
-      name: t.get('profile.data.profile'),
-      actions: profile.data.jwt
+      name: t.get('profile.profile'),
+      actions: profile.jwt
         ? [
             {
               href: '/profile/user',
-              name: t.get('profile.data.profile'),
+              name: t.get('profile.profile'),
               icon: UserCircle,
             },
             {
               href: '/inbox',
-              name: t.get('profile.data.inbox'),
+              name: t.get('profile.inbox'),
               icon: Inbox,
               shortcut: 'i',
             },
             {
               href: '/saved',
-              name: t.get('profile.data.saved'),
+              name: t.get('profile.saved'),
               icon: Bookmark,
             },
             {
@@ -311,11 +311,11 @@ export function getGroups(
         icon: p.avatar ?? UserCircle,
         detail: p.instance,
         handle: async () => {
-          if (profile.data.id != p.id) {
+          if (profile.id != p.id) {
             await setUserID(p.id)
           }
 
-          await goto(get(page).url, {
+          await goto(page.url, {
             invalidateAll: true,
           })
         },
@@ -407,9 +407,9 @@ export function getGroups(
       ],
     },
     {
-      name: t.get('profile.data.subscribed'),
+      name: t.get('profile.subscribed'),
       actions:
-        profile.data?.user?.follows.map((f) => ({
+        profile.user?.follows.map((f) => ({
           icon: f.community.icon,
           name: f.community.title,
           href: `/c/${fullCommunityName(
