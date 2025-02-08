@@ -32,10 +32,10 @@
       const current = new URLSearchParams(pageData.url.searchParams)
       const newParams = new URLSearchParams(href)
 
-      current.delete(newParams.keys().toArray()[0])
+      current.delete(Array.from(newParams.keys())[0])
       current.append(
-        newParams.entries().toArray()[0][0],
-        newParams.entries().toArray()[0][1],
+        Array.from(newParams.keys())[0][0],
+        Array.from(newParams.keys())[0][1],
       )
 
       return `?${current.toString()}`
