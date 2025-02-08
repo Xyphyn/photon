@@ -66,9 +66,7 @@
   {/snippet}
 </Header>
 <div
-  class="flex flex-col list-none my-4 divide-slate-200 dark:divide-zinc-800"
-  class:gap-4={settings.view == 'card'}
-  class:!divide-y={settings.view != 'card'}
+  class="flex flex-col list-none my-4 divide-slate-200 dark:divide-zinc-800 divide-y"
 >
   {#if !data.data || (data.data?.length ?? 0) == 0}
     <Placeholder

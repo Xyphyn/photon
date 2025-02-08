@@ -10,7 +10,7 @@
   import ExpandableImage, {
     showImage,
   } from '$lib/components/ui/ExpandableImage.svelte'
-  import { settings } from '$lib/settings.svelte.js'
+  import { settings, type View } from '$lib/settings.svelte.js'
   import type { Post } from 'lemmy-js-client'
   import PostIframe from './PostIframe.svelte'
   import { Button, Material, modal } from 'mono-svelte'
@@ -19,7 +19,7 @@
   import PostImage from './PostImage.svelte'
 
   interface Props {
-    view?: 'card' | 'cozy' | 'list' | 'compact'
+    view?: View
     post: Post
     type?: MediaType
     opened?: boolean | undefined
@@ -41,9 +41,9 @@
   - A media item (pictures, videos) (large form factor posts only)
   - Embed link/card.
 -->
-{#if type == 'image' && (view == 'cozy' || view == 'card')}
+{#if type == 'image' && view == 'cozy'}
   <PostImage {post} {blur} />
-{:else if (type == 'iframe' || type == 'video') && (view == 'cozy' || view == 'card') && post.url}
+{:else if (type == 'iframe' || type == 'video') && view == 'cozy' && post.url}
   <PostIframe
     thumbnail={post.thumbnail_url}
     type={iframeType(post.url)}
@@ -53,7 +53,7 @@
 {:else if type == 'embed' && post.url}
   <PostLink
     url={post.url}
-    thumbnail_url={view != 'list' ? post.thumbnail_url : undefined}
+    thumbnail_url={post.thumbnail_url}
     nsfw={post.nsfw}
     embed_description={post.embed_description}
     embed_title={post.embed_title}
