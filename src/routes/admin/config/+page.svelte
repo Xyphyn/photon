@@ -33,6 +33,7 @@
       ? {
           ...data.site.site_view.local_site,
           ...data.site.site_view.site,
+          discussion_languages: data.site.discussion_languages,
         }
       : undefined,
   )
@@ -245,7 +246,7 @@
       <SectionTitle>{$t('form.profile.data.languages.title')}</SectionTitle>
       <p>{$t('form.profile.data.languages.description')}</p>
       <Material rounding="xl" color="uniform" class="dark:bg-zinc-950">
-        {#if $site && formData.discussion_languages}
+        {#if $site}
           <div class="flex gap-2 flex-wrap flex-row">
             <Menu class="gap-px">
               {#snippet target()}
@@ -256,7 +257,7 @@
                   </Badge>
                 </button>
               {/snippet}
-              {#each $site.all_languages as language, index}
+              {#each $site.all_languages.filter((l) => !formData.discussion_languages?.includes(l.id)) as language, index}
                 <MenuButton
                   class="min-h-[16px] py-0"
                   onclick={() => {
@@ -267,7 +268,7 @@
                 </MenuButton>
               {/each}
             </Menu>
-            {#each formData.discussion_languages as languageId, index}
+            {#each formData.discussion_languages ?? [] as languageId, index}
               {@const language = $site.all_languages.find(
                 (l) => l.id == languageId,
               )}

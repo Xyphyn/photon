@@ -149,7 +149,7 @@
                   </Badge>
                 </button>
               {/snippet}
-              {#each $site.all_languages as language, index}
+              {#each $site.all_languages.filter((l) => !formData.discussion_languages?.includes(l.id)) as language, index}
                 <MenuButton
                   class="min-h-[16px] py-0"
                   onclick={() => {
