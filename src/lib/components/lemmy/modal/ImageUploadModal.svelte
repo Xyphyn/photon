@@ -32,7 +32,7 @@
   )
 
   async function upload() {
-    if (!profile?.jwt || image == null) return
+    if (!profile.data?.jwt || image == null) return
 
     progress = 0
 

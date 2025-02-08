@@ -33,21 +33,13 @@
       return
     }
 
-    profileData.update((pd) => {
-      // too lazy to make a decent system
-      const id = Math.floor(Math.random() * 100000)
-
-      const newProfile: Profile = {
-        id: id,
-        instance: form.instance,
-        username: form.username,
-      }
-
-      return {
-        profile: id,
-        profiles: [...pd.profiles, newProfile],
-      }
+    const id = Math.max(...profileData.profiles.map((i) => i.id)) + 1
+    profileData.profiles.push({
+      id: id,
+      instance: form.instance,
+      username: form.username,
     })
+    profileData.profile = id
 
     toast({ content: $t('toast.addAccount'), type: 'success' })
 

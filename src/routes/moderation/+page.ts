@@ -18,7 +18,7 @@ export async function load({ url, fetch }) {
   const filter: ReportFilter =
     (url.searchParams.get('filter') as ReportFilter) || 'all'
 
-  const jwt = profile?.jwt
+  const jwt = profile.data?.jwt
 
   if (!jwt) return { type: type, page: page }
 
@@ -37,7 +37,7 @@ export async function load({ url, fetch }) {
     unresolved_only: type == 'unread',
   }
 
-  const admin = profile?.user ? isAdmin(profile!.user!) : false
+  const admin = profile.data?.user ? isAdmin(profile!.user!) : false
 
   const [posts, comments, messages] = await Promise.all([
     client.listPostReports({

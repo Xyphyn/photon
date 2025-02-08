@@ -27,7 +27,7 @@
   let reviewing = $state(false)
 
   async function review(approve: boolean) {
-    if (!profile?.jwt) return
+    if (!profile.data?.jwt) return
 
     let registrationApplicationAnswer: ApproveRegistrationApplication = {
       approve: approve,

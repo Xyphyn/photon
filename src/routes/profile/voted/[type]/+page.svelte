@@ -11,9 +11,7 @@
 </script>
 
 <Header>
-  {data.upvoted
-    ? $t('routes.profile.data.upvoted')
-    : $t('routes.profile.data.downvoted')}
+  {data.upvoted ? $t('routes.profile.upvoted') : $t('routes.profile.downvoted')}
 </Header>
 
 <SvelteComponent

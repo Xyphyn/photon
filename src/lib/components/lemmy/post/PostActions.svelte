@@ -125,7 +125,8 @@
     score={post.counts.score}
     upvotes={post.counts.upvotes}
     downvotes={post.counts.downvotes}
-    showCounts={profile?.user?.local_user_view?.local_user?.show_scores ?? true}
+    showCounts={profile.data?.user?.local_user_view?.local_user?.show_scores ??
+      true}
   />
 
   <Button
@@ -169,7 +170,7 @@
       {/snippet}
     </Button>
   {/if}
-  {#if profile?.user && (amMod(profile.data.user, post.community) || isAdmin(profile.data.user))}
+  {#if profile.data?.user && (amMod(profile.data.user, post.community) || isAdmin(profile.data.user))}
     <ModerationMenu
       size="custom"
       color="ghost"
@@ -180,12 +181,12 @@
     />
   {/if}
 
-  {#if profile?.jwt}
+  {#if profile.data?.jwt}
     <Button
       onclick={async () => {
-        if (!profile?.jwt) return
+        if (!profile.data?.jwt) return
         saving = true
-        post.saved = await save(post, !post.saved, profile?.jwt)
+        post.saved = await save(post, !post.saved, profile.data?.jwt)
         saving = false
       }}
       size="custom"
@@ -297,7 +298,7 @@
     <MenuDivider>
       {$t('post.actions.more.actions')}
     </MenuDivider>
-    {#if profile?.user && profile?.jwt && profile.data.user.local_user_view.person.id == post.creator.id}
+    {#if profile.data?.user && profile.data?.jwt && profile.data.user.local_user_view.person.id == post.creator.id}
       <MenuButton onclick={() => (editing = true)}>
         {#snippet prefix()}
           <Icon src={PencilSquare} size="16" micro />
@@ -305,10 +306,10 @@
         {$t('post.actions.more.edit')}
       </MenuButton>
     {/if}
-    {#if profile?.jwt}
+    {#if profile.data?.jwt}
       <MenuButton
         onclick={async () => {
-          if (profile?.jwt)
+          if (profile.data?.jwt)
             post.read = await markAsRead(
               post.post,
               !post.read,
@@ -368,7 +369,7 @@
         </div>
       {/if}
     </MenuButton>
-    {#if profile?.jwt}
+    {#if profile.data?.jwt}
       <MenuButton
         onclick={() => {
           setSessionStorage('postDraft', {
@@ -400,7 +401,7 @@
       {#if profile.data.user && post.creator.id == profile.data.user.local_user_view.person.id}
         <MenuButton
           onclick={async () => {
-            if (profile?.jwt)
+            if (profile.data?.jwt)
               post.post.deleted = await deleteItem(
                 post,
                 !post.post.deleted,
@@ -421,11 +422,11 @@
         {#if feature('hidePosts', $site?.version)}
           <MenuButton
             onclick={async () => {
-              if (!profile?.jwt) return
+              if (!profile.data?.jwt) return
               const hidden = await hidePost(
                 post.post.id,
                 !post.hidden,
-                profile?.jwt,
+                profile.data?.jwt,
               )
               post.hidden = hidden
               if (hidden) onhide?.(hidden)

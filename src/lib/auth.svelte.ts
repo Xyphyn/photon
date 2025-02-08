@@ -98,11 +98,13 @@ export let profileData = $state<ProfileData>(
 )
 
 class CurrentProfile {
+  #data = $derived(
+    profileData.profiles.find((i) => i.id == profileData.profile) ??
+      getDefaultProfile(),
+  )
+
   get data() {
-    return $derived(
-      profileData.profiles.find((i) => i.id == profileData.profile) ??
-        getDefaultProfile(),
-    )
+    return this.#data
   }
   set data(value) {
     if (!value) return
@@ -113,7 +115,7 @@ class CurrentProfile {
 
 export let profile = new CurrentProfile()
 
-async function fetchUserData(profile: Profile) {
+async function fetchUserData(profile: CurrentProfile) {
   instance.set(profile.data.instance)
   if (profile.data.jwt) {
     site.set(undefined)
@@ -363,7 +365,7 @@ async function getNotificationCount(jwt: string, mod: boolean, admin: boolean) {
 }
 
 async function checkInbox() {
-  const { user, jwt } = profile
+  const { user, jwt } = profile.data
   if (!jwt || !user) return
 
   const notifs = await getNotificationCount(

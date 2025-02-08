@@ -33,7 +33,7 @@
       <ShieldIcon filled width={14} />
     </Button>
   {/snippet}
-  {#if (profile?.user && amMod(profile.data.user, item.community)) || (profile?.user && isAdmin(profile.data.user))}
+  {#if (profile.data?.user && amMod(profile.data.user, item.community)) || (profile.data?.user && isAdmin(profile.data.user))}
     <MenuDivider>
       {#if !item.community.local && !amMod(profile.data.user, item.community)}
         {$t('moderation.labelInstanceOnly')}
@@ -53,7 +53,7 @@
         {item.post.removed ? $t('moderation.restore') : $t('moderation.remove')}
       {/if}
     </MenuButton>
-    {#if profile?.user && profile.data.user?.local_user_view.person.id != item.creator.id}
+    {#if profile.data?.user && profile.data.user?.local_user_view.person.id != item.creator.id}
       <!--Comment made by someone else-->
       <MenuButton
         color="danger-subtle"
@@ -92,7 +92,7 @@
     {/if}
   {/if}
 
-  {#if profile?.user && isAdmin(profile.data.user)}
+  {#if profile.data?.user && isAdmin(profile.data.user)}
     <MenuDivider>{$t('admin.label')}</MenuDivider>
     <MenuButton color="danger-subtle" onclick={() => remove(item, true)}>
       {#snippet prefix()}

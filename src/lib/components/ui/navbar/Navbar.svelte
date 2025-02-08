@@ -77,7 +77,7 @@
     style="border-radius: inherit;"
   >
     <div class="ml-auto"></div>
-    {#if profile?.user && isAdmin(profile.data.user)}
+    {#if profile.data?.user && isAdmin(profile.data.user)}
       <NavButton
         href="/admin"
         label={$t('nav.admin')}
@@ -92,7 +92,7 @@
         {/if}
       </NavButton>
     {/if}
-    {#if amModOfAny(profile?.user)}
+    {#if amModOfAny(profile.data?.user)}
       <NavButton
         href="/moderation"
         label={$t('nav.moderation')}
@@ -124,7 +124,7 @@
         />
       {/snippet}
       <MenuDivider>{$t('nav.create.label')}</MenuDivider>
-      <MenuButton link href="/create/post" disabled={!profile?.jwt}>
+      <MenuButton link href="/create/post" disabled={!profile.data?.jwt}>
         {#snippet prefix()}
           <Icon src={PencilSquare} size="16" micro />
         {/snippet}
@@ -133,8 +133,8 @@
       <MenuButton
         link
         href="/create/community"
-        disabled={!profile?.jwt ||
-          !profile?.user ||
+        disabled={!profile.data?.jwt ||
+          !profile.data?.user ||
           ($site?.site_view.local_site.community_creation_admin_only &&
             !isAdmin(profile.data.user))}
       >
@@ -143,7 +143,7 @@
         {/snippet}
         {$t('nav.create.community')}
       </MenuButton>
-      {#if !profile?.jwt}
+      {#if !profile.data?.jwt}
         <span class="text-sm mx-4 my-1 py-1">
           {$t('nav.create.logingate')}
         </span>

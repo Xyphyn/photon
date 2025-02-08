@@ -23,7 +23,6 @@
 
 <Button
   href={action.href}
-  onclick
   alignment="left"
   color="tertiary"
   size="lg"

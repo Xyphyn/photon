@@ -5,7 +5,7 @@ import { get } from 'svelte/store'
 export async function load({ data, fetch, url }) {
   if (!profile) return
 
-  const { jwt } = profile!
+  const { jwt } = profile.data!
   if (!jwt) return
 
   const page = Number(url.searchParams.get('page')) || 1

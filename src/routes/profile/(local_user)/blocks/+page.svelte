@@ -35,7 +35,7 @@
   let data = $state(pageData)
 
   async function unblockUser(item: PersonBlockView) {
-    if (!profile?.jwt) return
+    if (!profile.data?.jwt) return
 
     data.person_blocks.splice(
       data.person_blocks.findIndex((i) => i.target.id == item.target.id),
@@ -51,7 +51,7 @@
   }
 
   async function unblockCommunity(item: CommunityBlockView) {
-    if (!profile?.jwt) return
+    if (!profile.data?.jwt) return
 
     data.community_blocks.splice(
       data.community_blocks.findIndex(
@@ -70,7 +70,7 @@
   }
 
   async function unblockInstances(item: InstanceBlockView) {
-    if (!profile?.jwt) return
+    if (!profile.data?.jwt) return
     if (!data.my_user?.instance_blocks) return
 
     data.my_user.instance_blocks.splice(
@@ -89,7 +89,7 @@
 </script>
 
 <Header pageHeader>
-  {$t('routes.profile.data.blocks.title')}
+  {$t('routes.profile.blocks.title')}
 </Header>
 
 {#if data.community_blocks?.length > 0 || data.person_blocks?.length > 0 || (data.my_user?.instance_blocks?.length ?? 0) > 0}
@@ -190,8 +190,8 @@
   <div class="h-full w-full grid place-items-center">
     <Placeholder
       icon={Check}
-      title={$t('routes.profile.data.blocks.empty.title')}
-      description={$t('routes.profile.data.blocks.empty.description')}
+      title={$t('routes.profile.blocks.empty.title')}
+      description={$t('routes.profile.blocks.empty.description')}
     />
   </div>
 {/if}

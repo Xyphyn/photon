@@ -22,7 +22,7 @@
   let loading = $state(false)
 
   async function sendMessage() {
-    if (!profile?.jwt || message == '') return
+    if (!profile.data?.jwt || message == '') return
 
     loading = true
 
@@ -50,7 +50,7 @@
 </script>
 
 <Modal bind:open>
-  {#snippet title()}
+  {#snippet customTitle()}
     <h1 class="text-2xl font-bold">Message</h1>
   {/snippet}
   <form onsubmit={preventDefault(sendMessage)} class="flex flex-col gap-4">

@@ -21,10 +21,10 @@
 
 {#if profile}
   <div style="width: {size}px; height: {size}px;">
-    {#if profile.data.avatar}
+    {#if profile.avatar}
       <img
-        src="{profile.data.avatar}?thumbnail=32&format=webp"
-        alt={profile.data.username}
+        src="{profile.avatar}?thumbnail=32&format=webp"
+        alt={profile.username}
         width={size}
         height={size}
         class="flex-shrink-0 rounded-full ring-slate-800/50 dark:ring-zinc-200/50"
@@ -35,12 +35,12 @@
         src={UserCircle}
         mini={selected}
         size={`${size}`}
-        title={profile.data.username}
+        title={profile.username}
         class="text-blue-500 flex-shrink-0"
         style={guest
           ? `color: gray`
-          : profile.data.color
-            ? `color: ${profile.data.color}`
+          : profile.color
+            ? `color: ${profile.color}`
             : `filter: hue-rotate(${index * 50}deg)`}
       />
     {/if}

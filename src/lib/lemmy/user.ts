@@ -5,7 +5,7 @@ import type { Community, MyUserInfo, PersonView } from 'lemmy-js-client'
 import { get } from 'svelte/store'
 
 export const blockUser = async (block: boolean, id: number) => {
-  const auth = profile?.jwt
+  const auth = profile.data?.jwt
 
   if (!auth) throw new Error('Unauthorized')
 
@@ -56,4 +56,4 @@ export const addAdmin = async (handle: string, added: boolean, jwt: string) =>
   })
 
 export const hasFavorite = (profile: Profile, id: number): boolean =>
-  profile?.favorites?.map((i) => i.id).includes(id) ?? false
+  profile.data?.favorites?.map((i) => i.id).includes(id) ?? false

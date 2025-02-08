@@ -38,10 +38,10 @@
   )
 
   async function save() {
-    if (!profile?.jwt) return
+    if (!profile.data?.jwt) return
 
     saving = true
-    const { jwt } = profile
+    const { jwt } = profile.data
 
     try {
       await getClient().editSite({

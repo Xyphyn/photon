@@ -40,7 +40,7 @@
   let bannerImage: FileList | undefined = $state()
 
   async function save() {
-    if (!formData || !profile?.jwt) return
+    if (!formData || !profile.data?.jwt) return
 
     loading = true
 
@@ -85,7 +85,7 @@
 
 <form class="flex flex-col gap-4 h-full" onsubmit={preventDefault(save)}>
   {#if !inline}
-    <Header pageHeader>{$t('routes.profile.data.settings')}</Header>
+    <Header pageHeader>{$t('routes.profile.settings')}</Header>
   {/if}
   {@render children?.()}
   {#if data.my_user?.local_user_view?.local_user && formData}

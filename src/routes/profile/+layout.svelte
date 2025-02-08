@@ -26,7 +26,7 @@
 </script>
 
 <svelte:head>
-  <title>{$t('profile.data.profile')}</title>
+  <title>{$t('profile.profile')}</title>
 </svelte:head>
 
 <div class="flex flex-col gap-4 h-full z-0">
@@ -39,26 +39,26 @@
       routes={[
         {
           href: '/profile',
-          name: $t('routes.profile.data.overview'),
+          name: $t('routes.profile.overview'),
         },
         {
           href: '/profile/user',
-          name: $t('routes.profile.data.submissions'),
+          name: $t('routes.profile.submissions'),
         },
 
         {
           href: '/profile/settings',
-          name: $t('routes.profile.data.settings'),
+          name: $t('routes.profile.settings'),
         },
 
         {
           href: '/profile/blocks',
-          name: $t('routes.profile.data.blocks.title'),
+          name: $t('routes.profile.blocks.title'),
         },
 
         {
           href: '/profile/password',
-          name: $t('routes.profile.data.credentials'),
+          name: $t('routes.profile.credentials'),
         },
       ]}
     />
@@ -82,19 +82,19 @@
           {#snippet prefix()}
             <Icon src={Photo} size="16" mini />
           {/snippet}
-          {$t('routes.profile.data.media.title')}
+          {$t('routes.profile.media.title')}
         </MenuButton>
         <MenuButton href="/profile/voted/up">
           {#snippet prefix()}
             <Icon src={ArrowUp} size="16" micro />
           {/snippet}
-          {$t('routes.profile.data.upvoted')}
+          {$t('routes.profile.upvoted')}
         </MenuButton>
         <MenuButton href="/profile/voted/down">
           {#snippet prefix()}
             <Icon src={ArrowDown} size="16" micro />
           {/snippet}
-          {$t('routes.profile.data.downvoted')}
+          {$t('routes.profile.downvoted')}
         </MenuButton>
       </Menu>
     {/if}

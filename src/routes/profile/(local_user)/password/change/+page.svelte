@@ -22,7 +22,7 @@
         old_password: oldPassword,
       })
       if (res?.jwt) {
-        const { instance, username } = profile
+        const { instance, username } = profile.data
         deleteProfile(profile.data.id)
         await setUser(res.jwt, instance, username!)
         $currentInstance = instance

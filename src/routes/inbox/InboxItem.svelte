@@ -39,7 +39,7 @@
   let loading = $state(false)
 
   async function markAsRead(isRead: boolean) {
-    if (!profile?.jwt) return
+    if (!profile.data?.jwt) return
 
     loading = true
 

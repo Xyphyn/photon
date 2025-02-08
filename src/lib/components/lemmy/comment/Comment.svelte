@@ -66,7 +66,7 @@
   let editingLoad = $state(false)
 
   async function save() {
-    if (!profile?.jwt || newComment.length <= 0) return
+    if (!profile.data?.jwt || newComment.length <= 0) return
 
     editingLoad = true
 

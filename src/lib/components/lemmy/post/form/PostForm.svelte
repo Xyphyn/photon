@@ -133,7 +133,7 @@
       })
       return
     }
-    if (!data.title || !profile?.jwt) return
+    if (!data.title || !profile.data?.jwt) return
     if (data.url && data.url != '') {
       try {
         new URL(data.url)
@@ -278,7 +278,7 @@
       <ObjectAutocomplete
         bind:q={communitySearch}
         items={communities}
-        jwt={profile?.jwt}
+        jwt={profile.data?.jwt}
         listing_type="All"
         label={$t('form.post.community')}
         required

@@ -72,9 +72,9 @@
       class="w-10 h-10 rounded-full border-2 border-slate-200 dark:border-zinc-700
       transition-all bg-slate-50 dark:bg-zinc-900 relative
       hover:border-primary-900 hover:dark:border-primary-100 active:scale-95 {buttonClass}"
-      title={$t('profile.data.profile')}
+      title={$t('profile.profile')}
     >
-      {#if profile?.user}
+      {#if profile.data?.user}
         <div
           class="w-full h-full aspect-square object-cover rounded-full grid place-items-center"
         >
@@ -96,9 +96,9 @@
       {/if}
     </button>
   {/snippet}
-  {#if profile?.user}
+  {#if profile.data?.user}
     <UserLink
-      user={profile?.user.local_user_view.person}
+      user={profile.data?.user.local_user_view.person}
       showInstance={false}
       avatar
       avatarSize={24}
@@ -108,18 +108,18 @@
   {:else}
     <MenuDivider>{$t('nav.menu.label')}</MenuDivider>
   {/if}
-  {#if profile?.jwt}
+  {#if profile.data?.jwt}
     <MenuButton link href="/profile">
       {#snippet prefix()}
         <Icon src={UserCircle} micro width={16} />
       {/snippet}
-      {$t('profile.data.profile')}
+      {$t('profile.profile')}
     </MenuButton>
     <MenuButton link href="/inbox">
       {#snippet prefix()}
         <Icon src={Inbox} micro width={16} />
       {/snippet}
-      {$t('profile.data.inbox')}
+      {$t('profile.inbox')}
       {#if $notifications.inbox > 0}
         <Badge color="red-subtle" class="text-xs ml-auto font-bold !py-0.5">
           {$notifications.inbox}
@@ -130,7 +130,7 @@
       {#snippet prefix()}
         <Icon src={Bookmark} micro width={16} />
       {/snippet}
-      {$t('profile.data.saved')}
+      {$t('profile.saved')}
     </MenuButton>
   {/if}
   <MenuButton link href="/accounts">

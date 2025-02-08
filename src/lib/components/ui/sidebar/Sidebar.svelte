@@ -33,18 +33,18 @@
   gap-1 h-fit max-h-screen {clazz}"
   {style}
 >
-  {#if profile?.jwt}
+  {#if profile.data?.jwt}
     <SidebarButton icon={UserCircle} href="/profile">
       {#snippet label()}
         <span>
-          {$t('profile.data.profile')}
+          {$t('profile.profile')}
         </span>
       {/snippet}
     </SidebarButton>
     <SidebarButton icon={Inbox} href="/inbox">
       {#snippet label()}
         <span class="flex items-center gap-2">
-          {$t('profile.data.inbox')}
+          {$t('profile.inbox')}
           {#if $notifications.inbox}
             <Badge
               class="w-5 h-5 !p-0 grid place-items-center ml-auto"
@@ -58,7 +58,7 @@
     </SidebarButton>
     <SidebarButton icon={Bookmark} href="/saved">
       {#snippet label()}
-        <span>{$t('profile.data.saved')}</span>
+        <span>{$t('profile.saved')}</span>
       {/snippet}
     </SidebarButton>
   {:else}
@@ -120,7 +120,7 @@
     </Expandable>
   {/if}
   <hr class="border-slate-200 dark:border-zinc-900 my-1" />
-  {#if profile?.favorites && profile?.favorites.length > 0}
+  {#if profile.data?.favorites && profile.data?.favorites.length > 0}
     <Expandable
       class="max-w-full min-w-0 w-full"
       bind:open={settings.expand.favorites}
@@ -132,7 +132,7 @@
             : '//max-lg:hidden'}"
         >
           <EndPlaceholder>
-            {$t('routes.profile.data.favorites')}
+            {$t('routes.profile.favorites')}
             {#snippet action()}
               <span class="dark:text-white text-black">
                 {profile.data.favorites?.length}
@@ -145,8 +145,8 @@
     </Expandable>
     <hr class="border-slate-200 dark:border-zinc-900 my-1" />
   {/if}
-  {#if profile?.user}
-    {#if profile?.user.moderates.length > 0}
+  {#if profile.data?.user}
+    {#if profile.data?.user.moderates.length > 0}
       <Expandable
         class="max-w-full min-w-0 w-full"
         bind:open={settings.expand.moderates}
@@ -158,7 +158,7 @@
               : '//max-lg:hidden'}"
           >
             <EndPlaceholder>
-              {$t('routes.profile.data.moderates')}
+              {$t('routes.profile.moderates')}
               {#snippet action()}
                 <span class="dark:text-white text-black">
                   {profile.data.user?.moderates.length}
@@ -185,7 +185,7 @@
             : '//max-lg:hidden'}"
         >
           <EndPlaceholder>
-            {$t('profile.data.subscribed')}
+            {$t('profile.subscribed')}
             {#snippet action()}
               <span class="dark:text-white text-black">
                 {profile.data.user?.follows.length}

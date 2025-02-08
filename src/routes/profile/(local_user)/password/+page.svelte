@@ -20,16 +20,16 @@
   <EntityHeader
     color="default"
     avatar={data.my_user?.local_user_view.person.avatar}
-    name={$t('routes.profile.data.welcome', {
+    name={$t('routes.profile.welcome', {
       default: data.my_user?.local_user_view.person.name,
     })}
     stats={[
       {
-        name: $t('profile.data.subscribed'),
+        name: $t('profile.subscribed'),
         value: data.my_user?.follows.length.toString() ?? '',
       },
       {
-        name: $t('routes.profile.data.moderates'),
+        name: $t('routes.profile.moderates'),
         value: data.my_user?.moderates.length.toString() ?? '',
       },
     ]}
@@ -82,7 +82,7 @@
         <Icon src={UserGroup} size="24" />
       </Material>
       <span class="font-medium text-lg">
-        {$t('routes.profile.data.logins')}
+        {$t('routes.profile.logins')}
       </span>
     </Material>
   </a>
@@ -96,7 +96,7 @@
         <Icon src={Trash} size="24" />
       </Material>
       <span class="font-medium text-lg">
-        {$t('routes.profile.data.delete.title')}
+        {$t('routes.profile.delete.title')}
       </span>
     </Material>
   </a>

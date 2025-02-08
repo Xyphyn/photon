@@ -52,7 +52,7 @@
 
 {#if debugging}
   <DebugObject
-    object={debugProfile?.id == profile?.id ? profile : debugProfile}
+    object={debugProfile?.id == profile.data?.id ? profile : debugProfile}
     bind:open={debugging}
   >
     {#snippet title()}
@@ -164,22 +164,22 @@
           transition:fly={{ duration: 500, y: -12, easing: expoOut }}
         >
           <Button
-            title={profile.data.id == currentProfile?.id ? 'Switch' : 'Current'}
+            title={profile.id == currentProfile?.data.id ? 'Switch' : 'Current'}
             onclick={async () => {
-              if (profile.data.id != currentProfile?.id) {
-                switching = profile.data.id
-                await setUserID(profile.data.id)
+              if (profile.id != currentProfile?.data.id) {
+                switching = profile.id
+                await setUserID(profile.id)
                 switching = -69
               }
             }}
             size="square-md"
-            color={profile.data.id == currentProfile?.id ? 'primary' : 'ghost'}
-            loading={switching == profile.data.id}
-            disabled={switching == profile.data.id}
+            color={profile.id == currentProfile?.data.id ? 'primary' : 'ghost'}
+            loading={switching == profile.id}
+            disabled={switching == profile.id}
             rounding="pill"
           >
             {#snippet prefix()}
-              {#if profile.data.id == currentProfile?.id}
+              {#if profile.id == currentProfile?.data.id}
                 <Icon src={Check} mini size="16" />
               {:else}
                 <Icon src={ArrowsRightLeft} size="16" mini />
@@ -190,13 +190,13 @@
             <ProfileAvatar
               {profile}
               {index}
-              selected={currentProfile?.id == profile.data.id}
+              selected={currentProfile?.data.id == profile.id}
               size={24}
             />
             <div class="flex flex-col">
-              <span class="font-medium">{profile.data.username}</span>
+              <span class="font-medium">{profile.username}</span>
               <span class="text-sm text-slate-600 dark:text-zinc-400">
-                {profile.data.instance}
+                {profile.instance}
               </span>
             </div>
           </div>
@@ -214,7 +214,7 @@
                 size="square-md"
                 color="secondary"
                 title={$t('account.moveUp')}
-                onclick={() => moveProfile(profile.data.id, true)}
+                onclick={() => moveProfile(profile.id, true)}
               >
                 {#snippet prefix()}
                   <Icon src={ChevronUp} size="16" mini />
@@ -224,7 +224,7 @@
                 size="square-md"
                 color="secondary"
                 title={$t('account.moveDown')}
-                onclick={() => moveProfile(profile.data.id, false)}
+                onclick={() => moveProfile(profile.id, false)}
               >
                 {#snippet prefix()}
                   <Icon src={ChevronDown} size="16" mini />
@@ -244,7 +244,7 @@
                 {$t('common.debug')}
               </MenuButton>
             {/if}
-            {#if !LINKED_INSTANCE_URL || profile.data.user}
+            {#if !LINKED_INSTANCE_URL || profile.user}
               <MenuButton
                 onclick={() => {
                   removing.account = profile

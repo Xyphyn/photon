@@ -49,7 +49,7 @@
   let language: number | undefined = $state()
 
   async function submit() {
-    if (!profile?.user || !profile?.jwt || value == '') return
+    if (!profile.data?.user || !profile.data?.jwt || value == '') return
 
     loading = true
 

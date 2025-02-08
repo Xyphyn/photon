@@ -47,7 +47,7 @@
   let tree = $derived(buildCommentsTree(comments.comments))
 </script>
 
-{#if profile?.jwt}
+{#if profile.data?.jwt}
   {#if !commenting}
     <EndPlaceholder class="">
       <Button color="primary" onclick={() => (commenting = true)}>
@@ -86,8 +86,8 @@
       }}
       locked={(post.post_view.post.locked &&
         !(
-          profile?.user?.local_user_view.local_user.admin ||
-          profile?.user?.moderates
+          profile.data?.user?.local_user_view.local_user.admin ||
+          profile.data?.user?.moderates
             .map((c) => c.community.id)
             .includes(post.community_view.community.id)
         )) ||

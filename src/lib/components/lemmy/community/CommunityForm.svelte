@@ -59,7 +59,7 @@
   let formData = $state(passedFormData)
 
   async function submit() {
-    if (!profile?.jwt) return
+    if (!profile.data?.jwt) return
     if ((!edit && formData.name == '') || formData.displayName == '') return
 
     formData.submitting = true

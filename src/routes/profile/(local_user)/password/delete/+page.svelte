@@ -70,14 +70,9 @@
         delete_content: deletion.deleteContent,
       })
 
-      profileData.update((pd) => {
-        pd.profiles.splice(
-          pd.profiles.findIndex((p) => pd.profile == p.id),
-          1,
-        )
-
-        return pd
-      })
+      profileData.profiles.splice(
+        profileData.profiles.findIndex((p) => profileData.profile == p.id),
+      )
 
       setUserID(-1)
       toast({
@@ -127,10 +122,10 @@
   rounding="2xl"
 >
   <Header class="mx-auto w-max !font-bold">
-    {$t('routes.profile.data.delete.title')}
+    {$t('routes.profile.delete.title')}
   </Header>
   <p class="text-base">
-    {$t('routes.profile.data.delete.warning')}
+    {$t('routes.profile.delete.warning')}
   </p>
   <Switch bind:checked={deletion.deleteContent}>
     {$t('form.profile.data.deleteAccount.deleteContent')}
@@ -141,6 +136,6 @@
     {/snippet}
   </Switch>
   <Button size="lg" color="danger" onclick={() => deleteAccount(3)}>
-    {$t('routes.profile.data.delete.title')}
+    {$t('routes.profile.delete.title')}
   </Button>
 </Material>

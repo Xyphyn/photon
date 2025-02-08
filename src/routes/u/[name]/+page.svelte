@@ -51,7 +51,8 @@
   let blocking = false
 
   async function blockUser(block: number) {
-    if (!profile?.user || !profile?.jwt) throw new Error('Unauthenticated')
+    if (!profile.data?.user || !profile.data?.jwt)
+      throw new Error('Unauthenticated')
 
     blocking = true
     try {
@@ -192,7 +193,7 @@
           {#if (data.moderates ?? []).length > 0}
             <Expandable class="">
               {#snippet title()}
-                {$t('routes.profile.data.moderates')}
+                {$t('routes.profile.moderates')}
                 <hr
                   class="flex-1 w-full border-slate-200 dark:border-zinc-800 mx-3"
                 />
@@ -209,7 +210,7 @@
             </Expandable>
           {/if}
           {#snippet actions()}
-            {#if profile?.user && profile.data.jwt && data.person_view.person.id != profile.data.user.local_user_view.person.id}
+            {#if profile.data?.user && profile.data.jwt && data.person_view.person.id != profile.data.user.local_user_view.person.id}
               <div class="flex items-center gap-2 w-full">
                 <Button
                   size="square-md"
@@ -234,7 +235,7 @@
                     {/snippet}
                   </Button>
                 {/if}
-                {#if isAdmin(profile?.user)}
+                {#if isAdmin(profile.data?.user)}
                   <Menu class="ml-auto" placement="bottom-end">
                     {#snippet target()}
                       <Button size="square-md">

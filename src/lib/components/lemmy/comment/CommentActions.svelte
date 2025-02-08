@@ -64,7 +64,7 @@
     <Icon src={ChatBubbleOvalLeft} size="14" micro />
     <span class="text-xs">{$t('comment.reply')}</span>
   </Button>
-  {#if profile?.user && (amMod(profile?.user, comment.community) || isAdmin(profile.data.user))}
+  {#if profile.data?.user && (amMod(profile.data?.user, comment.community) || isAdmin(profile.data.user))}
     <CommentModerationMenu bind:item={comment} />
   {/if}
   <Menu placement="bottom">
@@ -92,7 +92,7 @@
       <Icon src={Square2Stack} mini size="16" />
       <div>{$t('comment.actions.link')}</div>
     </MenuButton>
-    {#if profile?.jwt}
+    {#if profile.data?.jwt}
       {#if comment.creator.id == profile.data.user?.local_user_view.person.id}
         <MenuButton onclick={() => onedit?.(comment)}>
           <Icon src={PencilSquare} mini size="16" />
@@ -101,7 +101,7 @@
       {/if}
       <MenuButton
         onclick={async () => {
-          if (profile?.jwt)
+          if (profile.data?.jwt)
             comment.saved = await save(
               comment,
               !comment.saved,
@@ -114,11 +114,11 @@
           {comment.saved ? $t('post.actions.unsave') : $t('post.actions.save')}
         </span>
       </MenuButton>
-      {#if profile?.user && profile.data.jwt && profile.data.user.local_user_view.person.id == comment.creator.id}
+      {#if profile.data?.user && profile.data.jwt && profile.data.user.local_user_view.person.id == comment.creator.id}
         <MenuButton
           color="danger-subtle"
           onclick={async () => {
-            if (profile?.jwt)
+            if (profile.data?.jwt)
               comment.comment.deleted = await deleteItem(
                 comment,
                 !comment.comment.deleted,

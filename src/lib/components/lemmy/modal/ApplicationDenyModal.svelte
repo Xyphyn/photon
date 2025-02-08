@@ -30,7 +30,7 @@
 </script>
 
 <Modal bind:open>
-  {#snippet title()}
+  {#snippet customTitle()}
     <h1 class="text-2xl font-bold">
       {$t('routes.admin.applications.modalTitle')}
     </h1>

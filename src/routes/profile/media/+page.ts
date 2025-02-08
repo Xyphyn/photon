@@ -4,7 +4,7 @@ import { error } from '@sveltejs/kit'
 import { get } from 'svelte/store'
 
 export async function load({ fetch, url }) {
-  const { jwt } = profile
+  const { jwt } = profile.data
 
   let page = Number(url.searchParams.get('page')) || 1
 

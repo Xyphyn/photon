@@ -15,7 +15,7 @@
 
   const routes = [
     {
-      name: $t('routes.profile.data.credentials'),
+      name: $t('routes.profile.credentials'),
       url: '/profile/password',
     },
     {
@@ -27,11 +27,11 @@
       url: '/profile/password/change',
     },
     {
-      name: $t('routes.profile.data.logins'),
+      name: $t('routes.profile.logins'),
       url: '/profile/password/logins',
     },
     {
-      name: $t('routes.profile.data.delete.title'),
+      name: $t('routes.profile.delete.title'),
       url: '/profile/password/delete',
     },
   ]

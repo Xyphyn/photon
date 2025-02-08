@@ -120,7 +120,7 @@
       admin: post.creator_is_admin,
       moderator: post.creator_is_moderator,
     }}
-    subscribed={profile?.user?.follows
+    subscribed={profile.data?.user?.follows
       .map((c) => c.community.id)
       .includes(post.community.id)
       ? 'Subscribed'

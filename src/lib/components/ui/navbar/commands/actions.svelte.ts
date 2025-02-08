@@ -409,7 +409,7 @@ export function getGroups(
     {
       name: t.get('profile.data.subscribed'),
       actions:
-        profile?.user?.follows.map((f) => ({
+        profile.data?.user?.follows.map((f) => ({
           icon: f.community.icon,
           name: f.community.title,
           href: `/c/${fullCommunityName(
