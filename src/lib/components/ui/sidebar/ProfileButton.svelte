@@ -31,10 +31,9 @@
       await setUserID(prof.id)
     }
 
-    console.log(page.url)
-    // await goto(page.url, {
-    // invalidateAll: true,
-    // })
+    await goto(page.url, {
+      invalidateAll: true,
+    })
 
     switching = false
   }}

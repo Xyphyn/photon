@@ -39,7 +39,6 @@
 
   $effect(() => {
     value = calculateValue(number, duration)
-    console.log(value)
   })
 </script>
 

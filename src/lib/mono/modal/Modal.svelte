@@ -74,7 +74,7 @@ bg-white/50 dark:bg-black/50 box-border p-4"
             size="square-sm"
             onclick={() => {
               open = false
-              dispatcher('dismissed')
+              ondismissed?.()
             }}
           >
             {#snippet prefix()}
