@@ -1,13 +1,6 @@
 import { profile } from '$lib/auth.svelte'
 import { getClient } from '$lib/lemmy.js'
-import type {
-  CommentSortType,
-  CommentView,
-  ListingType,
-  PostView,
-  SortType,
-} from 'lemmy-js-client'
-import { get } from 'svelte/store'
+import type { CommentView, ListingType, PostView } from 'lemmy-js-client'
 
 function getSavedItemPublished(item: PostView | CommentView) {
   if ('comment' in item) {

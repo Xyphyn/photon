@@ -1,7 +1,5 @@
-import { profile } from '$lib/auth.svelte'
 import { client } from '$lib/lemmy.js'
 import { redirect } from '@sveltejs/kit'
-import { get } from 'svelte/store'
 
 export async function load({ params, fetch }) {
   const comment = await client({

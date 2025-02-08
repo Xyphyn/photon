@@ -4,8 +4,6 @@ import { getClient } from '$lib/lemmy.js'
 import { site as siteStore } from '$lib/lemmy'
 
 export async function load({ fetch }) {
-  if (!profile) return
-  let { jwt } = profile!
   let site = get(siteStore)
 
   if (!site) {

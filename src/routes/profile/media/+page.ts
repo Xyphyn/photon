@@ -1,7 +1,5 @@
 import { profile } from '$lib/auth.svelte'
 import { client } from '$lib/lemmy.js'
-import { error } from '@sveltejs/kit'
-import { get } from 'svelte/store'
 
 export async function load({ fetch, url }) {
   const { jwt } = profile.data

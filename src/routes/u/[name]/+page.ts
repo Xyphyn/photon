@@ -1,8 +1,6 @@
-import { profile } from '$lib/auth.svelte'
 import { getClient } from '$lib/lemmy.js'
 import { getItemPublished } from '$lib/lemmy/item.js'
 import type { SortType } from 'lemmy-js-client'
-import { get } from 'svelte/store'
 
 export async function load({ params, url, fetch }) {
   const page = Number(url.searchParams.get('page')) || 1

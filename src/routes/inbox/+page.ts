@@ -11,8 +11,7 @@ import { get } from 'svelte/store'
 type InboxFeedType = 'replies' | 'mentions' | 'messages' | 'all'
 
 export async function load({ url, fetch }) {
-  const auth = profile
-  if (!auth?.jwt) return
+  if (!profile.data.jwt) return
 
   const type: InboxFeedType =
     (url.searchParams.get('type') as InboxFeedType) || 'all'

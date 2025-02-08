@@ -124,8 +124,6 @@
   })
 </script>
 
-<svelte:window bind:innerWidth={$screenWidth} />
-
 <div
   {...rest}
   class="shell bg-slate-50 dark:bg-zinc-950 {clazz}"

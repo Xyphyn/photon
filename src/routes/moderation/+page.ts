@@ -37,7 +37,7 @@ export async function load({ url, fetch }) {
     unresolved_only: type == 'unread',
   }
 
-  const admin = profile.data?.user ? isAdmin(profile!.user!) : false
+  const admin = profile.data?.user ? isAdmin(profile!.data.user!) : false
 
   const [posts, comments, messages] = await Promise.all([
     client.listPostReports({

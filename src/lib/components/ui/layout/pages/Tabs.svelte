@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { invalidate } from '$app/navigation'
+  import { invalidate, invalidateAll } from '$app/navigation'
   import { page } from '$app/state'
   import { fly } from 'svelte/transition'
 
@@ -41,7 +41,7 @@
 >
   {#each routes as route}
     <a
-      onclick={() => invalidate(route.href)}
+      onclick={() => invalidateAll()}
       href={buildUrl(currentRoute, route.href)}
       class="font-medium rounded-full px-4 py-1 hover:bg-slate-200/40 hover:dark:bg-zinc-700/40
       transition-colors duration-100 relative z-0 flex-shrink-0"
