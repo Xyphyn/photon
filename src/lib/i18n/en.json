@@ -190,7 +190,16 @@
                 "anotherInstance": "Find another instance"
             }
         },
-        "description": "Description"
+        "description": "Description",
+        "time": {
+            "duration": "Duration",
+            "minutes": "Minutes",
+            "hours": "Hours",
+            "days": "Days",
+            "months": "Months",
+            "years": "Years",
+            "permanent": "Permanent"
+        }
     },
     "routes": {
         "frontpage": {

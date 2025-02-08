@@ -15,7 +15,6 @@
 
   interface Props extends Omit<HTMLInputAttributes, 'size' | 'prefix'> {
     label?: string | undefined
-    value?: string
     placeholder?: string
     disabled?: boolean
     required?: boolean

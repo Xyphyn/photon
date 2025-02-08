@@ -22,7 +22,7 @@
     Icon,
     type IconSource,
   } from 'svelte-hero-icons'
-  import type { HTMLSelectAttributes } from 'svelte/elements'
+  import type { ClassValue, HTMLSelectAttributes } from 'svelte/elements'
 
   let open = $state(false)
   let element: HTMLSelectElement | undefined = $state()
@@ -47,7 +47,9 @@
     size?: ButtonSize
     shadow?: ButtonShadow
     id?: string
-    class?: string
+    class?: ClassValue
+    baseClass?: ClassValue
+    selectClass?: ClassValue
     customLabel?: import('svelte').Snippet
     children?: import('svelte').Snippet
     customOption?: import('svelte').Snippet<[any]>
@@ -63,6 +65,8 @@
     shadow = 'none',
     id = generateID(),
     class: clazz = '',
+    baseClass = '',
+    selectClass = '',
     customLabel,
     children,
     customOption,
@@ -72,7 +76,7 @@
   }: Props = $props()
 </script>
 
-<div class="flex flex-col gap-1 {clazz}">
+<div class="flex flex-col gap-1 {clazz} {baseClass}">
   {#if customLabel || label}
     <Label for={id} text={label}>
       {@render customLabel?.()}
@@ -90,7 +94,7 @@
             shadow
           ]} {buttonColor.secondary} appearance-none transition-colors rounded-lg text-sm
   	w-full min-w-full cursor-pointer pr-6 {buttonColor.secondary}
-  	{clazz}"
+  	{clazz} {selectClass}"
           bind:value
           onmousedown={(e) => {
             e.preventDefault()

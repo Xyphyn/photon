@@ -10,6 +10,8 @@
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { t } from '$lib/translations'
   import CommunityLink from '../community/CommunityLink.svelte'
+  import Duration from '$lib/components/form/Duration.svelte'
+  import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
 
   interface Props {
     open?: boolean
@@ -27,18 +29,17 @@
 
   let reason = $state('')
   let deleteData = $state(false)
-  let expires = $state('')
-
+  let expires = $state(-1)
   let loading = $state(false)
 
   // hack due to svelte's reactive declarations
   const resetReason = () => {
     reason = ''
     deleteData = false
-    expires = ''
+    expires = -1
   }
 
-  run(() => {
+  $effect(() => {
     if (item) resetReason()
   })
 
@@ -50,28 +51,8 @@
     try {
       let date: number | undefined
 
-      if (expires != '') {
-        date = Date.parse(expires)
-        if (Number.isNaN(date)) {
-          toast({
-            content: $t('toast.invalidDateAbsolute'),
-            type: 'error',
-          })
-
-          loading = false
-
-          return
-        }
-
-        if (date < Date.now()) {
-          toast({
-            content: $t('toast.invalidDateBeforeCurrent'),
-            type: 'error',
-          })
-
-          loading = false
-          return
-        }
+      if (expires > 0) {
+        date = Math.floor(Date.now() / 1000) + expires
       }
 
       if (community) {
@@ -81,7 +62,7 @@
           person_id: item.id,
           reason: reason || undefined,
           remove_data: deleteData,
-          expires: date ? Math.floor(date / 1000) : undefined,
+          expires: date,
         })
       } else {
         await getClient().banPerson({
@@ -89,7 +70,7 @@
           person_id: item.id,
           reason: reason || undefined,
           remove_data: deleteData,
-          expires: date ? Math.floor(date / 1000) : undefined,
+          expires: date,
         })
       }
 
@@ -137,11 +118,10 @@
             {$t('moderation.ban.warning')}
           {/snippet}
         </Checkbox>
-        <TextInput
-          bind:value={expires}
-          label={$t('moderation.ban.expires')}
-          placeholder="2024 August 5"
-        />
+        <div>
+          <SectionTitle>{$t('moderation.ban.expires')}</SectionTitle>
+          <Duration bind:value={expires}></Duration>
+        </div>
       {/if}
       <Button submit color="primary" {loading} disabled={loading} size="lg">
         {$t('form.submit')}
