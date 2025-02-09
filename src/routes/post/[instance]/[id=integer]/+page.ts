@@ -1,5 +1,5 @@
 import CommunityCard from '$lib/components/lemmy/community/CommunityCard.svelte'
-import { getClient } from '$lib/lemmy.js'
+import { getClient } from '$lib/lemmy.svelte.js'
 import { awaitIfServer } from '$lib/promise.js'
 import { SSR_ENABLED, settings } from '$lib/settings.svelte'
 import type { GetComments } from 'lemmy-js-client'

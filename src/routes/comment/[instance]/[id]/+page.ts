@@ -1,4 +1,4 @@
-import { client } from '$lib/lemmy.js'
+import { client } from '$lib/lemmy.svelte.js'
 import { redirect } from '@sveltejs/kit'
 
 export async function load({ params, fetch }) {

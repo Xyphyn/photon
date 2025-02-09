@@ -1,5 +1,5 @@
 import { profile } from '$lib/auth.svelte'
-import { getClient } from '$lib/lemmy.js'
+import { getClient } from '$lib/lemmy.svelte.js'
 import type { CommentView, ListingType, PostView } from 'lemmy-js-client'
 
 function getSavedItemPublished(item: PostView | CommentView) {

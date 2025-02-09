@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getClient } from '$lib/lemmy'
+  import { getClient } from '$lib/lemmy.svelte'
   import type { CommentView, PostView } from 'lemmy-js-client'
   import { amMod, ban, isAdmin, remove } from './moderation'
   import {

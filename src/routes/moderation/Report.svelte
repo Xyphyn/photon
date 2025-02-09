@@ -2,7 +2,7 @@
   import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
   import Post from '$lib/components/lemmy/post/Post.svelte'
   import { Material, toast } from 'mono-svelte'
-  import { getClient } from '$lib/lemmy.js'
+  import { getClient } from '$lib/lemmy.svelte.js'
   import { isCommentReport, isPostReport } from '$lib/lemmy/item.js'
   import type {
     CommentReportView,

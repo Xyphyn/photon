@@ -15,7 +15,7 @@
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { t } from '$lib/translations.js'
   import { settings } from '$lib/settings.svelte.js'
-  import { site } from '$lib/lemmy.js'
+  import { site } from '$lib/lemmy.svelte.js'
   import { resumables } from '$lib/lemmy/item'
   import CommunityHeader from '$lib/components/lemmy/community/CommunityHeader.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
@@ -141,7 +141,7 @@
         <Icon src={ChartBar} size="16" mini />
         {$t('routes.frontpage.footer', {
           // @ts-ignore
-          users: $site?.site_view.counts.users_active_day ?? '??',
+          users: site.data?.site_view.counts.users_active_day ?? '??',
         })}
       </span>
     </Pageination>

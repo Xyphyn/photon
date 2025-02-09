@@ -30,7 +30,7 @@
   } from '@tanstack/svelte-virtual'
   import { afterNavigate, beforeNavigate } from '$app/navigation'
   import { combineCrossposts } from './crosspost.svelte'
-  import { client } from '$lib/lemmy'
+  import { client } from '$lib/lemmy.svelte'
   import {
     postFeeds,
     type PostFeed,

@@ -83,7 +83,7 @@
     modal,
     action,
   } from 'mono-svelte'
-  import { client, getClient } from '$lib/lemmy.js'
+  import { client, getClient } from '$lib/lemmy.svelte.js'
   import { addSubscription } from '$lib/lemmy/user.js'
   import { fullCommunityName } from '$lib/util.svelte.js'
   import type { CommunityModeratorView, CommunityView } from 'lemmy-js-client'

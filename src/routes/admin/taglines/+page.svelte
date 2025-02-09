@@ -6,7 +6,7 @@
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { toast } from 'mono-svelte'
-  import { getClient } from '$lib/lemmy.js'
+  import { getClient } from '$lib/lemmy.svelte.js'
   import type { Tagline } from 'lemmy-js-client'
   import { Button } from 'mono-svelte'
   import { Icon, Plus, QuestionMarkCircle, Trash } from 'svelte-hero-icons'

@@ -1,6 +1,6 @@
 import { browser } from '$app/environment'
 import { instance } from '$lib/instance'
-import { client } from '$lib/lemmy'
+import { client } from '$lib/lemmy.svelte'
 import type {
   GetPosts,
   GetPostsResponse,

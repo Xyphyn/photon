@@ -2,7 +2,7 @@
   import { preventDefault } from 'svelte/legacy'
 
   import { deleteProfile, profile, setUser } from '$lib/auth.svelte'
-  import { client } from '$lib/lemmy'
+  import { client } from '$lib/lemmy.svelte'
   import { instance as currentInstance } from '$lib/instance'
   import { t } from '$lib/translations'
   import { Button, TextInput, toast } from 'mono-svelte'

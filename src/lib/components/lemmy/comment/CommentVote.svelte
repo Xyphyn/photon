@@ -7,7 +7,7 @@
     ChevronUp,
     Icon,
   } from 'svelte-hero-icons'
-  import { getClient, site } from '$lib/lemmy'
+  import { getClient, site } from '$lib/lemmy.svelte'
   import { settings } from '$lib/settings.svelte'
   import { profile } from '$lib/auth.svelte.js'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'

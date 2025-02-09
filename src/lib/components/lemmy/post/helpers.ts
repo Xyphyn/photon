@@ -1,5 +1,5 @@
 import { profile } from '$lib/auth.svelte'
-import { client } from '$lib/lemmy.js'
+import { client } from '$lib/lemmy.svelte.js'
 import type { View } from '$lib/settings.svelte'
 import { isImage, isVideo } from '$lib/ui/image'
 import { canParseUrl, findClosestNumber } from '$lib/util.svelte'

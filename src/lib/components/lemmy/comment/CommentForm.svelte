@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { CommentResponse } from 'lemmy-js-client'
-  import { getClient, site } from '$lib/lemmy.js'
+  import { getClient, site } from '$lib/lemmy.svelte.js'
   import { createEventDispatcher } from 'svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import { profile } from '$lib/auth.svelte.js'
@@ -113,7 +113,7 @@
           </Button>
         {/snippet}
 
-        {#if $site}
+        {#if site.data}
           <MenuButton
             class="min-h-[16px] py-0"
             onclick={() => (language = undefined)}
@@ -121,7 +121,7 @@
             <Icon src={XMark} size="16" micro />
             {$t('form.post.unset')}
           </MenuButton>
-          {#each $site?.all_languages as languageOption}
+          {#each site.data?.all_languages as languageOption}
             <MenuButton
               class="min-h-[16px] py-0"
               onclick={() => {

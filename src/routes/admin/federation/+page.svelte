@@ -6,7 +6,7 @@
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
-  import { getClient } from '$lib/lemmy.js'
+  import { getClient } from '$lib/lemmy.svelte.js'
   import { t } from '$lib/translations.js'
   import { trycatch } from '$lib/util.svelte.js'
   import type { Instance } from 'lemmy-js-client'

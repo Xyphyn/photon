@@ -1,5 +1,5 @@
 import { profile } from '$lib/auth.svelte'
-import { client, getClient } from '$lib/lemmy.js'
+import { client, getClient } from '$lib/lemmy.svelte.js'
 import { getItemPublished } from '$lib/lemmy/item.js'
 import type {
   CommentView,

@@ -1,10 +1,10 @@
 <script lang="ts">
   import { preventDefault } from 'svelte/legacy'
 
-  import { site, validateInstance } from '$lib/lemmy.js'
+  import { site, validateInstance } from '$lib/lemmy.svelte.js'
   import { Button, Note, TextInput, toast } from 'mono-svelte'
   import { MINIMUM_VERSION } from '$lib/version'
-  import { mayBeIncompatible } from '$lib/lemmy'
+  import { mayBeIncompatible } from '$lib/lemmy.svelte'
   import { DOMAIN_REGEX_FORMS } from '$lib/util.svelte'
   import { profile, profileData, type Profile } from '$lib/auth.svelte'
   import { LINKED_INSTANCE_URL } from '$lib/instance'
@@ -54,7 +54,7 @@
     <div class="flex flex-col gap-2">
       {@render children?.()}
       <Header>{$t('account.addGuest')}</Header>
-      {#if $site && mayBeIncompatible(MINIMUM_VERSION, $site.version.replace('v', ''))}
+      {#if site.data && mayBeIncompatible(MINIMUM_VERSION, site.data.version.replace('v', ''))}
         <Note>
           {$t('account.versionGate', {
             //@ts-ignore

@@ -20,7 +20,7 @@
   import { page } from '$app/state'
   import { goto } from '$app/navigation'
   import { isCommentView } from '$lib/lemmy/item.js'
-  import { client, getClient } from '$lib/lemmy.js'
+  import { client, getClient } from '$lib/lemmy.svelte.js'
   import { isBlocked } from '$lib/lemmy/user.js'
   import { Menu, MenuButton, removeToast, toast } from 'mono-svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'

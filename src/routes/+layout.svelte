@@ -26,7 +26,7 @@
   import { Forward, Icon } from 'svelte-hero-icons'
   import Shell from '$lib/components/ui/layout/Shell.svelte'
   import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
-  import { site } from '$lib/lemmy.js'
+  import { site } from '$lib/lemmy.svelte.js'
   import ExpandableImage from '$lib/components/ui/ExpandableImage.svelte'
   import { LINKED_INSTANCE_URL } from '$lib/instance'
   import { locale } from '$lib/translations'
@@ -91,8 +91,8 @@
 </script>
 
 <svelte:head>
-  {#if $site?.site_view}
-    <title>{$site?.site_view.site.name}</title>
+  {#if site.data?.site_view}
+    <title>{site.data?.site_view.site.name}</title>
     <meta
       name="theme-color"
       content={rgbToHex(
@@ -102,8 +102,11 @@
       )}
     />
     {#if LINKED_INSTANCE_URL}
-      <link rel="icon" href={$site?.site_view?.site.icon} />
-      <meta name="description" content={$site?.site_view?.site.description} />
+      <link rel="icon" href={site.data?.site_view?.site.icon} />
+      <meta
+        name="description"
+        content={site.data?.site_view?.site.description}
+      />
     {:else}
       <meta name="description" content="A sleek client for Lemmy" />
     {/if}
@@ -150,12 +153,12 @@
       {#if page.data.slots?.sidebar?.component}
         {@const SvelteComponent = page.data.slots.sidebar.component}
         <SvelteComponent {...page.data.slots.sidebar.props} />
-      {:else if $site}
+      {:else if site.data}
         <SiteCard
-          site={$site.site_view}
-          taglines={$site.taglines}
-          admins={$site.admins}
-          version={$site.version}
+          site={site.data.site_view}
+          taglines={site.data.taglines}
+          admins={site.data.admins}
+          version={site.data.version}
         />
       {:else}
         <div class="h-64 w-full grid place-items-center">

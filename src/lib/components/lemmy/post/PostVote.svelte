@@ -23,7 +23,7 @@
   import { profile } from '$lib/auth.svelte.js'
   import { vote as voteItem } from '$lib/lemmy/contentview.js'
   import { Button, Popover, buttonColor, toast } from 'mono-svelte'
-  import { site } from '$lib/lemmy.js'
+  import { site } from '$lib/lemmy.svelte.js'
   import { fade, fly } from 'svelte/transition'
   import { backOut } from 'svelte/easing'
   import { t } from '$lib/translations'
@@ -106,7 +106,7 @@
         </span>
       {/if}
     </button>
-    {#if $site?.site_view.local_site.enable_downvotes ?? true}
+    {#if site.data?.site_view.local_site.enable_downvotes ?? true}
       <button
         onclick={() => castVote(vote == -1 ? 0 : -1)}
         class="flex items-center flex-row-reverse gap-0.5 transition-colors

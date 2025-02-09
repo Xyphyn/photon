@@ -1,4 +1,4 @@
-import { getClient } from '$lib/lemmy.js'
+import { getClient } from '$lib/lemmy.svelte.js'
 
 export async function load({ fetch }) {
   return (await getClient(undefined, fetch).getFederatedInstances())

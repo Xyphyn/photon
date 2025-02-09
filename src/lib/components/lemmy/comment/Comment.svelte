@@ -14,7 +14,7 @@
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import CommentActions from '$lib/components/lemmy/comment/CommentActions.svelte'
-  import { getClient } from '$lib/lemmy.js'
+  import { getClient } from '$lib/lemmy.svelte.js'
   import { Disclosure, toast } from 'mono-svelte'
   import { profile } from '$lib/auth.svelte.js'
   import { Button, Modal } from 'mono-svelte'

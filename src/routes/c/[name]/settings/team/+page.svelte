@@ -5,7 +5,7 @@
   import type { PageData } from './$types.js'
   import { profile } from '$lib/auth.svelte.js'
   import { toast } from 'mono-svelte'
-  import { client, getClient } from '$lib/lemmy.js'
+  import { client, getClient } from '$lib/lemmy.svelte.js'
   import { flip } from 'svelte/animate'
   import { Button, TextInput } from 'mono-svelte'
   import { t } from '$lib/translations.js'

@@ -4,8 +4,8 @@ import {
 } from '$lib/components/lemmy/moderation/moderation.js'
 import { toast } from 'mono-svelte'
 import { DEFAULT_INSTANCE_URL, instance } from '$lib/instance.js'
-import { client, getClient } from '$lib/lemmy.js'
-import { site } from './lemmy'
+import { client, getClient } from '$lib/lemmy.svelte.js'
+import { site } from './lemmy.svelte'
 import { instanceToURL, moveItem } from '$lib/util.svelte'
 import {
   type GetSiteResponse,
@@ -118,7 +118,7 @@ export let profile = new CurrentProfile()
 async function fetchUserData(profile: CurrentProfile) {
   instance.set(profile.data.instance)
   if (profile.data.jwt) {
-    site.set(undefined)
+    site.data = undefined
     notifications.set({ applications: 0, inbox: 0, reports: 0 })
 
     const res = await userFromJwt(profile.data.jwt, profile.data.instance)
@@ -129,7 +129,7 @@ async function fetchUserData(profile: CurrentProfile) {
         type: 'error',
       })
 
-    site.set(res?.site)
+    site.data = res?.site
     profile.data.user = res?.user
     if (profile.data.user) {
       profile.data.avatar = res?.user?.local_user_view.person.avatar
@@ -137,10 +137,10 @@ async function fetchUserData(profile: CurrentProfile) {
     }
   } else {
     if (browser) {
-      site.set(undefined)
+      site.data = undefined
       client({ instanceURL: profile.data.instance })
         .getSite()
-        .then((res) => site.set(res))
+        .then((res) => (site.data = res))
     }
   }
 

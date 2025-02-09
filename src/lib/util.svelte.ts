@@ -5,8 +5,8 @@ import { get } from 'svelte/store'
 import type { SubscribedType } from 'lemmy-js-client'
 import { page } from '$app/state'
 import { feature } from '$lib/version.js'
-import { client } from '$lib/lemmy.js'
-import { site } from './lemmy'
+import { client } from '$lib/lemmy.svelte.js'
+import { site } from './lemmy.svelte'
 import { t } from './translations'
 
 // Despite the name, this will round up
@@ -127,7 +127,7 @@ export async function uploadImage(
   const formData = new FormData()
   formData.append('images[]', image)
 
-  if (feature('unproxiedImageUpload', get(site)?.version)) {
+  if (feature('unproxiedImageUpload', site.data?.version)) {
     const res = await client({ auth: jwt, instanceURL: instance }).uploadImage({
       image: image,
     })

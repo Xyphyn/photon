@@ -2,7 +2,7 @@
   import { run, preventDefault } from 'svelte/legacy'
 
   import { createEventDispatcher, onDestroy, onMount } from 'svelte'
-  import { client, site } from '$lib/lemmy.js'
+  import { client, site } from '$lib/lemmy.svelte.js'
   import type { Community, Post, PostView } from 'lemmy-js-client'
   import { Select, Spinner, Switch, toast } from 'mono-svelte'
   import {
@@ -433,7 +433,7 @@
   {/if}
   <Switch bind:checked={data.nsfw}>{$t('form.post.nsfw')}</Switch>
   {#if data.language_id !== undefined}
-    {#if $site}
+    {#if site.data}
       <Select
         class="w-max"
         label={$t('settings.app.lang.title')}
@@ -443,7 +443,7 @@
           <Icon src={XMark} size="16" micro />
           {$t('form.post.unset')}
         </Option>
-        {#each $site?.all_languages as language}
+        {#each site.data?.all_languages as language}
           <Option value={language.id.toString()}>{language.name}</Option>
         {/each}
       </Select>

@@ -35,7 +35,7 @@
   } from 'svelte-hero-icons'
   import { colorScheme } from '$lib/ui/colors'
   import { settings } from '$lib/settings.svelte'
-  import { site } from '$lib/lemmy'
+  import { site } from '$lib/lemmy.svelte'
   import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
   import { t } from '$lib/translations'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
@@ -53,12 +53,12 @@
 
 {#if showInstance}
   <Modal bind:open={showInstance} title="Instance">
-    {#if $site}
+    {#if site.data}
       <SiteCard
-        site={$site.site_view}
-        admins={$site.admins}
-        taglines={$site.taglines}
-        version={$site.version}
+        site={site.data.site_view}
+        admins={site.data.admins}
+        taglines={site.data.taglines}
+        version={site.data.version}
       />
     {:else}
       <Spinner />

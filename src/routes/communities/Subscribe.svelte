@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getClient } from '$lib/lemmy.js'
+  import { getClient } from '$lib/lemmy.svelte.js'
   import type { CommunityView, SubscribedType } from 'lemmy-js-client'
   import { profile } from '$lib/auth.svelte.js'
   import { toast } from 'mono-svelte'

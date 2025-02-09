@@ -10,7 +10,7 @@
     mayBeIncompatible,
     site,
     validateInstance,
-  } from '$lib/lemmy.js'
+  } from '$lib/lemmy.svelte.js'
   import { Button, TextInput } from 'mono-svelte'
   import {
     Icon,
@@ -98,7 +98,7 @@
     <div class="flex flex-col">
       {@render children?.()}
       <Header>{$t('account.login')}</Header>
-      {#if $site && mayBeIncompatible(MINIMUM_VERSION, $site.version.replace('v', ''))}
+      {#if site.data && mayBeIncompatible(MINIMUM_VERSION, site.data.version.replace('v', ''))}
         <Note>
           {$t('account.versionGate', {
             //@ts-ignore

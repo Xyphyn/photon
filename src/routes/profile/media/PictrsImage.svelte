@@ -3,7 +3,7 @@
   import { publishedToDate } from '$lib/components/util/date'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import { instance } from '$lib/instance'
-  import { client } from '$lib/lemmy'
+  import { client } from '$lib/lemmy.svelte'
   import { t } from '$lib/translations'
   import { instanceToURL } from '$lib/util.svelte'
   import type { LocalImage } from 'lemmy-js-client'

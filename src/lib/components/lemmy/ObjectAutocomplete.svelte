@@ -1,6 +1,6 @@
 <script lang="ts">
   import Avatar from '$lib/components/ui/Avatar.svelte'
-  import { getClient } from '$lib/lemmy.js'
+  import { getClient } from '$lib/lemmy.svelte.js'
   import type { Community, CommunityView, ListingType } from 'lemmy-js-client'
   import { MenuButton, Search } from 'mono-svelte'
   import type { SearchProps } from 'mono-svelte/search/Search.svelte'

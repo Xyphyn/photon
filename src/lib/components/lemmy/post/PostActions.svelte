@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { PostView } from 'lemmy-js-client'
   import PostVote from './PostVote.svelte'
-  import { site } from '$lib/lemmy.js'
+  import { site } from '$lib/lemmy.svelte.js'
   import {
     ArrowsUpDown,
     ArrowTopRightOnSquare,
@@ -419,7 +419,7 @@
         </MenuButton>
       {/if}
       {#if profile.data.user?.local_user_view.person.id != post.creator.id}
-        {#if feature('hidePosts', $site?.version)}
+        {#if feature('hidePosts', site.data?.version)}
           <MenuButton
             onclick={async () => {
               if (!profile.data?.jwt) return

@@ -12,7 +12,7 @@
     removeToast,
     toast,
   } from 'mono-svelte'
-  import { getClient, site } from '$lib/lemmy.js'
+  import { getClient, site } from '$lib/lemmy.svelte.js'
   import type { SaveUserSettings } from 'lemmy-js-client'
   import { Button, Switch, TextInput } from 'mono-svelte'
   import { uploadImage } from '$lib/util.svelte.js'
@@ -129,7 +129,7 @@
       <SectionTitle>{$t('form.profile.languages.title')}</SectionTitle>
       <p>{$t('form.profile.languages.description')}</p>
       <Material rounding="xl" color="uniform" class="dark:bg-zinc-950">
-        {#if $site && formData.discussion_languages}
+        {#if site.data && formData.discussion_languages}
           <div class="flex gap-2 flex-wrap flex-row">
             <Menu class="gap-px">
               {#snippet target()}
@@ -140,7 +140,7 @@
                   </Badge>
                 </button>
               {/snippet}
-              {#each $site.all_languages.filter((l) => !formData.discussion_languages?.includes(l.id)) as language, index}
+              {#each site.data.all_languages.filter((l) => !formData.discussion_languages?.includes(l.id)) as language, index}
                 <MenuButton
                   class="min-h-[16px] py-0"
                   onclick={() => {
@@ -152,7 +152,7 @@
               {/each}
             </Menu>
             {#each formData.discussion_languages as languageId, index}
-              {@const language = $site.all_languages.find(
+              {@const language = site.data.all_languages.find(
                 (l) => l.id == languageId,
               )}
               <button

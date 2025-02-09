@@ -3,7 +3,7 @@
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import { Material, toast } from 'mono-svelte'
-  import { getClient } from '$lib/lemmy.js'
+  import { getClient } from '$lib/lemmy.svelte.js'
   import type {
     ApproveRegistrationApplication,
     RegistrationApplicationView,

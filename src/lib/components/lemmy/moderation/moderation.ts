@@ -1,4 +1,4 @@
-import { client } from '$lib/lemmy'
+import { client } from '$lib/lemmy.svelte'
 import type { SubmissionView } from '$lib/lemmy/contentview.js'
 import type {
   Comment,

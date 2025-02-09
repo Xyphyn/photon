@@ -7,7 +7,7 @@
   import type { PageData } from './$types.js'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
-  import { getClient } from '$lib/lemmy.js'
+  import { getClient } from '$lib/lemmy.svelte.js'
   import { profile } from '$lib/auth.svelte.js'
   import { Check, Icon, Trash, XMark } from 'svelte-hero-icons'
   import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'

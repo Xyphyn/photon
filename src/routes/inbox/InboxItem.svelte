@@ -1,7 +1,7 @@
 <script lang="ts">
   import Comment from '$lib/components/lemmy/comment/Comment.svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
-  import { getClient } from '$lib/lemmy.js'
+  import { getClient } from '$lib/lemmy.svelte.js'
   import { notifications, profile } from '$lib/auth.svelte.js'
   import {
     ArrowUturnLeft,

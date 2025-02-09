@@ -5,7 +5,7 @@
   import MultiSelect from '$lib/components/input/Switch.svelte'
   import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
   import { contentPadding } from '$lib/components/ui/layout/Shell.svelte'
-  import { site } from '$lib/lemmy'
+  import { site } from '$lib/lemmy.svelte'
   import { t } from '$lib/translations'
   import { feature } from '$lib/version'
   import { Button, Menu, MenuButton } from 'mono-svelte'
@@ -62,7 +62,7 @@
         },
       ]}
     />
-    {#if feature('mediaAndVotes', $site?.version)}
+    {#if feature('mediaAndVotes', site.data?.version)}
       <Menu class="flex-1" placement="bottom-end">
         {#snippet target()}
           <Button

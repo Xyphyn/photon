@@ -1,4 +1,4 @@
-import { getClient } from '$lib/lemmy.js'
+import { getClient } from '$lib/lemmy.svelte.js'
 import { settings } from '$lib/settings.svelte'
 import type { GetPostsResponse, ListingType, SortType } from 'lemmy-js-client'
 import { get, writable } from 'svelte/store'

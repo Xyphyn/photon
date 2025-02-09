@@ -9,7 +9,7 @@
     Icon,
     Inbox,
   } from 'svelte-hero-icons'
-  import { getClient } from '$lib/lemmy.js'
+  import { getClient } from '$lib/lemmy.svelte.js'
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
   import Pageination from '$lib/components/ui/Pageination.svelte'

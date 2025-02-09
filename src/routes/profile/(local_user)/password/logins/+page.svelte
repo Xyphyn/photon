@@ -1,7 +1,7 @@
 <script lang="ts">
   import { publishedToDate } from '$lib/components/util/date.js'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
-  import { client } from '$lib/lemmy.js'
+  import { client } from '$lib/lemmy.svelte.js'
   import { Checkbox, Material } from 'mono-svelte'
   import { Icon, Key } from 'svelte-hero-icons'
 

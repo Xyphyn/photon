@@ -8,7 +8,7 @@
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { fly } from 'svelte/transition'
   import { backOut, expoOut } from 'svelte/easing'
-  import { client } from '$lib/lemmy'
+  import { client } from '$lib/lemmy.svelte'
   import { errorMessage } from '$lib/lemmy/error'
   import type { PrivateMessageResponse } from 'lemmy-js-client'
   import { flip } from 'svelte/animate'

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { buildCommentsTree } from '$lib/components/lemmy/comment/comments.svelte.js'
   import { isImage } from '$lib/ui/image.js'
-  import { client, getClient } from '$lib/lemmy.js'
+  import { client, getClient } from '$lib/lemmy.svelte.js'
   import CommentForm from '$lib/components/lemmy/comment/CommentForm.svelte'
   import { onMount } from 'svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'

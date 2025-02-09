@@ -6,7 +6,19 @@ import { instanceToURL } from '$lib/util.svelte'
 import { profile } from '$lib/auth.svelte'
 import { toast } from 'mono-svelte'
 
-export const site = writable<GetSiteResponse | undefined>(undefined)
+class SiteData {
+  #data = $state<GetSiteResponse>()
+
+  get data() {
+    return this.#data
+  }
+
+  set data(value) {
+    this.#data = value
+  }
+}
+
+export const site = new SiteData()
 
 const isURL = (input: RequestInfo | URL): input is URL =>
   typeof input == 'object' && 'searchParams' in input

@@ -6,7 +6,7 @@
     isAdmin,
   } from '$lib/components/lemmy/moderation/moderation.js'
   import Avatar from '$lib/components/ui/Avatar.svelte'
-  import { site } from '$lib/lemmy.js'
+  import { site } from '$lib/lemmy.svelte.js'
   import { Button, Menu, MenuButton, MenuDivider, Spinner } from 'mono-svelte'
   import {
     GlobeAlt,
@@ -57,10 +57,10 @@
   >
     {#snippet customIcon()}
       {#if LINKED_INSTANCE_URL}
-        {#if $site}
+        {#if site.data}
           <Avatar
-            alt={$site.site_view.site.name}
-            url={$site.site_view.site.icon}
+            alt={site.data.site_view.site.name}
+            url={site.data.site_view.site.icon}
             width={32}
             circle={false}
           />
@@ -135,7 +135,7 @@
         href="/create/community"
         disabled={!profile.data?.jwt ||
           !profile.data?.user ||
-          ($site?.site_view.local_site.community_creation_admin_only &&
+          (site.data?.site_view.local_site.community_creation_admin_only &&
             !isAdmin(profile.data.user))}
       >
         {#snippet prefix()}

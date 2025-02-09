@@ -5,7 +5,7 @@
   import { page } from '$app/state'
   import { onMount, setContext } from 'svelte'
   import { Icon, ArrowDownCircle } from 'svelte-hero-icons'
-  import { getClient } from '$lib/lemmy.js'
+  import { getClient } from '$lib/lemmy.svelte.js'
   import type { CommentView, Post } from 'lemmy-js-client'
   import { fly } from 'svelte/transition'
   import { toast } from 'mono-svelte'

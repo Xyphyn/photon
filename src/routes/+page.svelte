@@ -5,7 +5,7 @@
   import ViewSelect from '$lib/components/lemmy/dropdowns/ViewSelect.svelte'
   import { searchParam } from '$lib/util.svelte.js'
   import { ArrowRight, ChartBar, Icon } from 'svelte-hero-icons'
-  import { site } from '$lib/lemmy.js'
+  import { site } from '$lib/lemmy.svelte.js'
   import Location from '$lib/components/lemmy/dropdowns/Location.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { t } from '$lib/translations.js'
@@ -77,7 +77,7 @@
         <Icon src={ChartBar} size="16" mini />
         {$t('routes.frontpage.footer', {
           // @ts-ignore
-          users: $site?.site_view?.counts?.users_active_day ?? '??',
+          users: site.data?.site_view?.counts?.users_active_day ?? '??',
         })}
       </span>
     </Pageination>
