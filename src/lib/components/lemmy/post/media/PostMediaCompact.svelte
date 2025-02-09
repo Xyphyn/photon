@@ -7,9 +7,11 @@
   } from '$lib/components/lemmy/post/helpers.js'
   import { showImage } from '$lib/components/ui/ExpandableImage.svelte'
   import { settings, type View } from '$lib/settings.svelte.js'
+  import { t } from '$lib/translations'
   import { isImage } from '$lib/ui/image'
   import type { Post } from 'lemmy-js-client'
-  import { Material, Popover } from 'mono-svelte'
+  import { Material, modal, Popover } from 'mono-svelte'
+  import Button from 'mono-svelte/button/Button.svelte'
   import {
     DocumentText,
     Icon,
@@ -48,24 +50,13 @@
 -->
 <div class="{size} relative group/media {clazz ?? ''}" {style}>
   {#if post.alt_text}
-    <Popover
-      openOnHover
-      placement={settings.leftAlign ? 'bottom-start' : 'bottom-end'}
+    <Button
+      rounding="pill"
+      class="w-max absolute bottom-0 left-0 py-0.5 px-1.5 m-1 font-bold"
+      onclick={() => modal({ title: 'Alt', body: post.alt_text ?? '' })}
     >
-      {#snippet target()}
-        <Material
-          padding="none"
-          rounding="full"
-          elevation="high"
-          class="w-max absolute bottom-0 left-0 py-0.5 px-1.5 m-1 font-bold"
-        >
-          ALT
-        </Material>
-      {/snippet}
-      <div class="max-w-sm">
-        {post.alt_text}
-      </div>
-    </Popover>
+      ALT
+    </Button>
   {/if}
   <svelte:element
     this={!settings.expandImages || type != 'image' ? 'a' : 'button'}
@@ -86,7 +77,7 @@
             loading="lazy"
             class="object-cover relative overflow-hidden bg-slate-100 dark:bg-zinc-800 rounded-xl
         transition-colors {size}"
-            alt={post.name}
+            alt={post.alt_text ?? ' '}
             class:blur-xl={blur}
           />
           {#if type != 'image'}
