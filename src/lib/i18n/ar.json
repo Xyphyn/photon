@@ -33,7 +33,19 @@
             "instance": "الخادوم"
         },
         "commands": {
-            "search": "ابحث ل{{default}}"
+            "search": "ابحث عن {{default}}",
+            "prompt": "لوحة التحكم",
+            "recents": "مؤخرًا",
+            "content": "محتويات",
+            "main": "رئيسي",
+            "setView": "اختار طريقة العرض",
+            "setColor": "اختار الألوان",
+            "setColorTo": "ضبط الألوان إلى {{default}}",
+            "setViewTo": "ضبط طريقة العرض إلى {{default}}",
+            "feeds": "تغذية",
+            "setTheme": "ضبط مظهر",
+            "setThemeTo": "ضبط المضهر إلى {{default}}",
+            "contextual": "على هذه الصفحة"
         },
         "moderation": "الإشراف"
     },
