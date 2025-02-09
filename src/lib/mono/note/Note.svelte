@@ -1,20 +1,22 @@
 <script lang="ts">
+  import type { ClassValue } from 'svelte/elements'
   import { Material } from '../index.js'
   import { Icon, InformationCircle } from 'svelte-hero-icons'
 
   interface Props {
     content?: string | undefined
     children?: import('svelte').Snippet
+    class?: ClassValue
   }
 
-  let { content = undefined, children }: Props = $props()
+  let { content = undefined, children, class: clazz = '' }: Props = $props()
 </script>
 
 <Material
   padding="none"
   rounding="full"
   color="uniform"
-  class="flex flex-row space-x-2 items-center px-4 py-3"
+  class="flex flex-row space-x-2 items-center px-4 py-3 {clazz}"
 >
   <Icon
     src={InformationCircle}
@@ -22,11 +24,13 @@
     mini
     class="text-primary-900 dark:text-primary-100"
   />
-  <p>
+  <div class="flex items-center w-full">
     {#if children}
       {@render children?.()}
     {:else if content}
-      {content}
+      <p>
+        {content}
+      </p>
     {/if}
-  </p>
+  </div>
 </Material>

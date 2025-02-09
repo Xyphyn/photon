@@ -9,7 +9,7 @@
   import { setSessionStorage } from '$lib/session.js'
   import PostFeed from '$lib/components/lemmy/post/feed/PostFeed.svelte'
   import VirtualFeed from '$lib/components/lemmy/post/feed/VirtualFeed.svelte'
-  import { Button, Modal, toast } from 'mono-svelte'
+  import { Button, Modal, Note, toast } from 'mono-svelte'
   import { browser } from '$app/environment'
   import { ArrowRight, ChartBar, Icon, XMark } from 'svelte-hero-icons'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
@@ -19,6 +19,7 @@
   import { resumables } from '$lib/lemmy/item'
   import CommunityHeader from '$lib/components/lemmy/community/CommunityHeader.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { profile } from '$lib/auth.svelte.js'
 
   let { data: pageData } = $props()
   let data = $state(pageData)
@@ -82,6 +83,27 @@
       <Sort selected={data.sort} />
     {/snippet}
   </Header>
+
+  {#if profile.data.user}
+    {#if !data.community.discussion_languages.every( (l) => profile.data.user?.discussion_languages.includes(l), )}
+      <Note class="!p-1 !pl-3">
+        {$t('routes.community.languageWarning')}
+        <Button
+          class="inline-block self-end ml-auto"
+          href="/profile/settings"
+          color="tertiary"
+          rounding="pill"
+          size="md"
+        >
+          {$t('profile.profile')}
+          {#snippet suffix()}
+            <Icon src={ArrowRight} size="16" micro />
+          {/snippet}
+        </Button>
+      </Note>
+    {/if}
+  {/if}
+
   {#if data.community.community_view.blocked}
     <Placeholder
       icon={XMark}
