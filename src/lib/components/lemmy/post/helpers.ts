@@ -14,8 +14,9 @@ export const bestImageURL = (
   compact: boolean = true,
   width: number = 1024,
 ) => {
-  if (post.thumbnail_url) return optimizeImageURL(post.thumbnail_url, width)
-  else if (post.url) return optimizeImageURL(post.url, width)
+  if (post.url) return optimizeImageURL(post.url, width)
+  else if (post.thumbnail_url)
+    return optimizeImageURL(post.thumbnail_url, width)
 
   return post.url ?? ''
 }
