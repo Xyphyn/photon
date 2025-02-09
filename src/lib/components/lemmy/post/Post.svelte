@@ -47,20 +47,25 @@
     view?: View
     style?: string
     class?: ClassValue
-    badges?: import('svelte').Snippet
+    extraBadges?: import('svelte').Snippet
     onhide?: (hide: boolean) => void
   }
 
   let {
-    post,
+    post: passedPost = $bindable(),
     actions = true,
     hideCommunity = false,
     view = settings.view,
     style = '',
     class: clazz = '',
-    badges,
+    extraBadges,
     onhide,
   }: Props = $props()
+
+  let post = $state(passedPost)
+  $effect(() => {
+    passedPost = post
+  })
 
   let tags = $derived(parseTags(post.post.name))
   let type = $derived(mediaType(post.post.url, view))
@@ -76,6 +81,17 @@
       post.post.embed_description == post.post.body &&
       view != 'compact',
   )
+
+  let badges = $derived({
+    deleted: post.post.deleted,
+    removed: post.post.removed,
+    locked: post.post.locked,
+    featured: post.post.featured_local || post.post.featured_community,
+    nsfw: post.post.nsfw || post.community.nsfw,
+    saved: post.saved,
+    admin: post.creator_is_admin,
+    moderator: post.creator_is_moderator,
+  })
 </script>
 
 <!-- 
@@ -110,16 +126,7 @@
     showCommunity={!hideCommunity}
     user={post.creator}
     published={publishedToDate(post.post.published)}
-    badges={{
-      deleted: post.post.deleted,
-      removed: post.post.removed,
-      locked: post.post.locked,
-      featured: post.post.featured_local || post.post.featured_community,
-      nsfw: post.post.nsfw || post.community.nsfw,
-      saved: post.saved,
-      admin: post.creator_is_admin,
-      moderator: post.creator_is_moderator,
-    }}
+    {badges}
     subscribed={profile.data?.user?.follows
       .map((c) => c.community.id)
       .includes(post.community.id)
@@ -132,13 +139,10 @@
     edited={post.post.updated}
     tags={tags?.tags}
     {view}
-  >
-    {#snippet extraBadges()}
-      {@render badges?.()}
-    {/snippet}
-  </PostMeta>
+    {extraBadges}
+  />
   {#key post.post.url}
-    <div style="grid-area:embed;" class={view == 'compact' ? '' : 'contents'}>
+    <div style="grid-area:embed;" class={{ contents: view == 'cozy' }}>
       {#if rule != 'hide'}
         <PostMedia
           post={post.post}

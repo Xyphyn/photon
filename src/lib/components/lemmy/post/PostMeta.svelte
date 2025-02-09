@@ -133,7 +133,7 @@
       url={community?.icon}
       width={view == 'compact' ? 24 : 32}
       alt={community?.name}
-      class="row-span-2 flex-shrink-0 mr-2"
+      class="row-span-2 flex-shrink-0 mr-2 self-center"
     />
   {/if}
   {#if showCommunity && community}

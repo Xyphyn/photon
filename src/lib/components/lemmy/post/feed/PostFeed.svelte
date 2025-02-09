@@ -65,7 +65,7 @@
               posts = posts.toSpliced(index, 1)
             }}
           >
-            {#snippet badges()}
+            {#snippet extraBadges()}
               {#if post.withCrossposts}
                 <button
                   onclick={() => {

@@ -234,13 +234,13 @@
                 : ''} -mx-4 sm:-mx-6 px-4 sm:px-6"
             >
               <Post
+                bind:post={posts[row.index]}
                 hideCommunity={community}
                 view={(posts[row.index]?.post.featured_community ||
                   posts[row.index]?.post.featured_local) &&
                 settings.posts.compactFeatured
                   ? 'compact'
                   : settings.view}
-                {post}
                 class="transition-all duration-250"
                 onhide={() => {
                   posts = posts.toSpliced(row.index, 1)
