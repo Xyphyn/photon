@@ -85,7 +85,7 @@
   </Header>
 
   {#if profile.data.user}
-    {#if !data.community.discussion_languages.every( (l) => profile.data.user?.discussion_languages.includes(l), )}
+    {#if !data.community.discussion_languages.every( (l) => profile.data.user?.discussion_languages.includes(l), ) && profile.data.user.discussion_languages.length > 0}
       <Note class="!p-1 !pl-3">
         {$t('routes.community.languageWarning')}
         <Button
