@@ -61,7 +61,7 @@ export const isYoutubeLink = (url?: string): RegExpMatchArray | null => {
 }
 
 export const postLink = (post: Post) =>
-  `/post/${profile.data.instance}/${post.id}`
+  `/post/${encodeURIComponent(profile.data.instance)}/${post.id}`
 
 export type MediaType = 'video' | 'image' | 'iframe' | 'embed' | 'none'
 export type IframeType = 'youtube' | 'video' | 'none'

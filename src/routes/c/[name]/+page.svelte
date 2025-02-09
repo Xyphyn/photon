@@ -86,10 +86,10 @@
 
   {#if profile.data.user}
     {#if !data.community.discussion_languages.every( (l) => profile.data.user?.discussion_languages.includes(l), ) && profile.data.user.discussion_languages.length > 0}
-      <Note class="!p-1 !pl-3">
+      <Note class="!p-1 !pl-3 flex-col md:flex-row">
         {$t('routes.community.languageWarning')}
         <Button
-          class="inline-block self-end ml-auto"
+          class="inline-block md:ml-auto"
           href="/profile/settings"
           color="tertiary"
           rounding="pill"
