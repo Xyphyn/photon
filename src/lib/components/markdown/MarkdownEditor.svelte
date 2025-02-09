@@ -32,7 +32,7 @@
     str: string,
     startIndex: number,
     endIndex: number,
-    replacement: string,
+    replacement: string
   ) {
     return str.substring(0, startIndex) + replacement + str.substring(endIndex)
   }
@@ -49,7 +49,7 @@
       textArea.value,
       startPos,
       endPos,
-      newText,
+      newText
     )
 
     textArea.focus()
@@ -60,7 +60,7 @@
   }
 
   let uploadingImage = $state(false)
-  let image: any = $state()
+  let image = $state<any>(null)
 
   const shortcuts = {
     KeyB: () => wrapSelection('**', '**'),
