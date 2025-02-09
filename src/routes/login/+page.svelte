@@ -34,7 +34,8 @@
     children?: import('svelte').Snippet
   }
 
-  let { ref = '/', children }: Props = $props()
+  let { ref = page.url.searchParams.get('redirect') ?? '/', children }: Props =
+    $props()
 
   let data = $state({
     instance: DEFAULT_INSTANCE_URL,
