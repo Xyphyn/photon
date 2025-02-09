@@ -34,13 +34,14 @@
     MagnifyingGlass,
   } from 'svelte-hero-icons'
   import { expoOut } from 'svelte/easing'
-  import { slide } from 'svelte/transition'
+  import { fly, slide } from 'svelte/transition'
   import { t } from '$lib/translations.js'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
   import { contentPadding } from '$lib/components/ui/layout/Shell.svelte'
   import { goto } from '$app/navigation'
   import Option from 'mono-svelte/forms/select/Option.svelte'
+  import Skeleton from '$lib/components/ui/generic/Skeleton.svelte'
 
   type Result = PostView | CommentView | PersonView | CommunityView
 
@@ -90,7 +91,7 @@
           class="flex-shrink-0 h-full aspect-square"
           title="Search"
           rounding="pill"
-          loading={navigating.to != null}
+          loading={navigating.to?.route.id == '/search'}
         >
           {#snippet prefix()}
             <Icon src={MagnifyingGlass} size="16" micro />
@@ -145,15 +146,33 @@
   </div>
 {/if}
 {#if !data.results}
-  <div class="my-auto">
-    <Placeholder
-      icon={MagnifyingGlass}
-      title={$t('routes.search.noResults.title')}
-      description={query == ''
-        ? $t('routes.search.noResults.alt')
-        : $t('routes.search.noResults.description')}
-    />
-  </div>
+  {#if navigating.to?.route.id == '/search'}
+    <div class="flex flex-col gap-3 mt-6">
+      {#each new Array(5) as _, index}
+        <div
+          in:fly|global={{
+            duration: 800,
+            easing: expoOut,
+            y: 12,
+            delay: index * 100,
+          }}
+          style="width: {(1 / ((index + 1) % 3)) * 100}%"
+        >
+          <Skeleton />
+        </div>
+      {/each}
+    </div>
+  {:else}
+    <div class="my-auto">
+      <Placeholder
+        icon={MagnifyingGlass}
+        title={$t('routes.search.noResults.title')}
+        description={query == ''
+          ? $t('routes.search.noResults.alt')
+          : $t('routes.search.noResults.description')}
+      />
+    </div>
+  {/if}
 {:else}
   {#await data.streamed.object}
     <div

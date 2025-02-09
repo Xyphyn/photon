@@ -31,6 +31,7 @@
   import { fly } from 'svelte/transition'
   import { backOut, expoOut } from 'svelte/easing'
   import { goto } from '$app/navigation'
+  import Skeleton from '$lib/components/ui/generic/Skeleton.svelte'
 
   let { data } = $props()
 
@@ -107,77 +108,95 @@
     />
   </div>
 </form>
-<ul
-  class="flex flex-col divide-y divide-slate-100 dark:divide-zinc-800 my-6 h-full"
->
-  {#if communities.length == 0}
-    <Placeholder
-      icon={QuestionMarkCircle}
-      title={$t('routes.search.noResults.title')}
-      description={$t('routes.search.noResults.description')}
-    />
-  {/if}
+{#if navigating.to?.route.id == '/communities'}
+  <div class="flex flex-col gap-3 mt-6">
+    {#each new Array(5) as _, index}
+      <div
+        in:fly|global={{
+          duration: 800,
+          easing: expoOut,
+          y: 12,
+          delay: index * 100,
+        }}
+        style="width: {(1 / ((index + 1) % 3)) * 100}%"
+      >
+        <Skeleton />
+      </div>
+    {/each}
+  </div>
+{:else}
+  <ul
+    class="flex flex-col divide-y divide-slate-100 dark:divide-zinc-800 my-6 h-full"
+  >
+    {#if communities.length == 0}
+      <Placeholder
+        icon={QuestionMarkCircle}
+        title={$t('routes.search.noResults.title')}
+        description={$t('routes.search.noResults.description')}
+      />
+    {/if}
 
-  {#if showTop}
-    <SectionTitle class="!border-0 pb-2">
-      {$t('routes.search.top')}
-    </SectionTitle>
-    <div
-      class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 items-center mb-6 !border-0"
-    >
-      {#each communities.slice(0, 3) as community, index (community.community.id)}
-        <div
-          class="h-full"
-          in:fly|global={{
-            duration: 1000,
-            easing: expoOut,
-            delay: index < 20 ? index * 100 : 0,
-            y: 16,
-          }}
-        >
-          <Material
-            color="distinct"
-            padding="none"
-            rounding="xl"
-            class="dark:border-t-zinc-800 h-full"
+    {#if showTop}
+      <SectionTitle class="!border-0 pb-2">
+        {$t('routes.search.top')}
+      </SectionTitle>
+      <div
+        class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 items-center mb-6 !border-0"
+      >
+        {#each communities.slice(0, 3) as community, index (community.community.id)}
+          <div
+            class="h-full"
+            in:fly|global={{
+              duration: 1000,
+              easing: expoOut,
+              delay: index < 20 ? index * 100 : 0,
+              y: 16,
+            }}
           >
-            <CommunityItem
-              {community}
-              showCounts={false}
-              class="w-full p-4 text-center"
-              view="cozy"
-            />
-          </Material>
-        </div>
-      {/each}
-    </div>
-  {/if}
+            <Material
+              color="distinct"
+              padding="none"
+              rounding="xl"
+              class="dark:border-t-zinc-800 h-full"
+            >
+              <CommunityItem
+                {community}
+                showCounts={false}
+                class="w-full p-4 text-center"
+                view="cozy"
+              />
+            </Material>
+          </div>
+        {/each}
+      </div>
+    {/if}
 
-  {#if communities.slice(showTop ? 3 : 0).length > 0}
-    <SectionTitle class="!border-0 pb-2">
-      {$t('routes.search.other')}
-    </SectionTitle>
-  {/if}
-  {#if communities}
-    {@const sliced = communities.slice(showTop ? 3 : 0)}
-    <div class="-mx-4 sm:-mx-6 h-full">
-      {#each sliced as community, index (community.community.id)}
-        <div
-          class="px-6 hover:bg-slate-50 hover:dark:bg-zinc-900 transition-colors @container
+    {#if communities.slice(showTop ? 3 : 0).length > 0}
+      <SectionTitle class="!border-0 pb-2">
+        {$t('routes.search.other')}
+      </SectionTitle>
+    {/if}
+    {#if communities}
+      {@const sliced = communities.slice(showTop ? 3 : 0)}
+      <div class="-mx-4 sm:-mx-6 h-full">
+        {#each sliced as community, index (community.community.id)}
+          <div
+            class="px-6 hover:bg-slate-50 hover:dark:bg-zinc-900 transition-colors @container
         border-b border-slate-100 dark:border-zinc-900"
-          in:fly|global={{
-            duration: 1000,
-            easing: expoOut,
-            delay: index < 20 ? index * 35 : 0,
-            y: 16,
-          }}
-        >
-          <CommunityItem {community} showCounts={false} class="py-3" />
-        </div>
-      {/each}
-    </div>
-  {/if}
-</ul>
+            in:fly|global={{
+              duration: 1000,
+              easing: expoOut,
+              delay: index < 20 ? index * 35 : 0,
+              y: 16,
+            }}
+          >
+            <CommunityItem {community} showCounts={false} class="py-3" />
+          </div>
+        {/each}
+      </div>
+    {/if}
+  </ul>
+{/if}
 {#if communities.length > 0}
   <div
     class="sticky z-30 mx-auto max-w-full"

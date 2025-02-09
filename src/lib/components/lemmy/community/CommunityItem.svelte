@@ -5,10 +5,14 @@
   import {
     ChatBubbleOvalLeftEllipsis,
     Check,
+    ExclamationTriangle,
     Icon,
     InformationCircle,
+    MapPin,
+    NoSymbol,
     PencilSquare,
     Plus,
+    Trash,
     UserGroup,
   } from 'svelte-hero-icons'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
@@ -78,7 +82,43 @@
           class="flex flex-col overflow-hidden whitespace-nowrap flex-1 min-w-0 flex-shrink"
         >
           <div class="font-medium text-base overflow-hidden overflow-ellipsis">
-            {community.community.title}
+            <span>{community.community.title}</span>
+            {#if community.community.deleted}
+              <Icon
+                src={Trash}
+                class="text-red-500"
+                micro
+                size="14"
+                title={$t('post.badges.deleted')}
+              />
+            {/if}
+            {#if community.community.nsfw}
+              <Icon
+                src={ExclamationTriangle}
+                class="text-red-500"
+                micro
+                size="14"
+                title={$t('post.badges.nsfw')}
+              />
+            {/if}
+            {#if community.banned_from_community}
+              <Icon
+                src={NoSymbol}
+                class="text-red-500"
+                micro
+                size="14"
+                title={$t('comment.banned')}
+              />
+            {/if}
+            {#if community.community.visibility == 'LocalOnly'}
+              <Icon
+                src={MapPin}
+                class="text-green-500"
+                micro
+                size="14"
+                title={$t('routes.admin.config.listingType.local')}
+              />
+            {/if}
           </div>
           <div
             class="text-sm text-slate-600 dark:text-zinc-400 flex gap-0.5"

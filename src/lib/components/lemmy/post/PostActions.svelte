@@ -47,11 +47,9 @@
     Spinner,
     toast,
   } from 'mono-svelte'
-  import { fediseer, type Data } from '$lib/fediseer/fediseer'
   import { t } from '$lib/translations'
   import { hidePost, postLink } from './helpers'
   import { feature } from '$lib/version'
-  import Switch from '$lib/components/input/Switch.svelte'
   import { instanceId, instanceToURL } from '$lib/util.svelte'
   import { publishedToDate } from '$lib/components/util/date'
   import TextProps from '$lib/components/ui/text/TextProps.svelte'

@@ -172,8 +172,6 @@ $effect.root(() => {
     }
   })
 
-  $effect(() => {})
-
   $effect(() => {
     if (profile.data.id || profileData) fetchUserData(profile).then((res) => {})
   })

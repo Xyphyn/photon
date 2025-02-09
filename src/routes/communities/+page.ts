@@ -31,6 +31,7 @@ export async function load({ url, fetch }) {
           page: page,
           sort: sort,
           type_: type,
+          show_nsfw: true,
         })
 
   return {
