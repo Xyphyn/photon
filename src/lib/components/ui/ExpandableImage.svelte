@@ -52,11 +52,11 @@
     use:focusTrap
   >
     <img
-      width={600}
-      height={600}
+      width={800}
+      height={800}
       src={page.state.openImage}
       class={[
-        'max-w-max mx-auto my-auto overscroll-contain bg-white dark:bg-zinc-900',
+        'max-w-full mx-auto my-auto overscroll-contain bg-white dark:bg-zinc-900',
       ]}
       transition:scale={{ start: 0.95, easing: expoOut, duration: 250 }}
       {alt}
