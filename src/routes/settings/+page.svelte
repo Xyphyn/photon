@@ -65,6 +65,7 @@
     }
   > = new Map([
     ['en', { name: 'English', translated: -1, flag: '🇬🇧' }],
+    ['ar', { name: 'العربية', translated: 0.3, flag: '🟩' }],
     ['he', { name: 'עברית', translated: -1, flag: '🇮🇱' }],
     ['bg', { name: 'български', translated: 0.67, flag: '🇧🇬' }],
     ['de', { name: 'Deutsch', translated: 0.7, flag: '🇩🇪' }],
@@ -250,7 +251,7 @@
           {/each}
         </Select>
       </Setting>
-      {#if $locale == 'he'}
+      {#if $locale == 'he' || $locale == 'ar'}
         <ToggleSetting
           bind:checked={settings.useRtl}
           title={$t('settings.app.lang.useRtl.title')}
