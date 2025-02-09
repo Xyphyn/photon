@@ -99,7 +99,7 @@
     </a>
     <div class="flex flex-row items-center gap-2">
       <Button size="square-md" onclick={() => (showInfo = !showInfo)}>
-        <Icon src={InformationCircle} size="16" micro />
+        <Icon src={InformationCircle} size="16" mini />
       </Button>
       <Subscribe {community}>
         {#snippet children({ subscribe, subscribing })}

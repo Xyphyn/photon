@@ -17,9 +17,11 @@
   import { t } from '$lib/translations'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import Option from 'mono-svelte/forms/select/Option.svelte'
+  import { tick } from 'svelte'
 
   let { data = $bindable() } = $props()
 
+  let type = $state(data.type)
   let reports = $state(data.items)
   $effect(() => {
     reports = data.items
@@ -32,8 +34,11 @@
     {#snippet extended()}
       <div class="flex flex-row gap-2 flex-wrap items-end">
         <Select
-          bind:value={data.type}
-          onchange={() => searchParam(page.url, 'type', data.type, 'page')}
+          bind:value={type}
+          onchange={async () => {
+            await tick()
+            searchParam(page.url, 'type', type, 'page')
+          }}
         >
           {#snippet customLabel()}
             <span class="flex items-center gap-1">
@@ -59,18 +64,11 @@
     {#each reports as item}
       <div
         in:fly={{ y: -6, opacity: 0, duration: 500 }}
-        class="flex flex-col gap-1 text-sm"
+        class="flex flex-col gap-3 text-sm -mx-4 sm:-mx-6 px-4 sm:px-6"
       >
-        <div class="flex flex-col gap-1.5">
-          <span class="text-xs font-bold dark:text-zinc-400 text-slate-600">
-            Report from
-          </span>
-          <span class="font-bold">
-            <UserLink avatar user={item.creator} />
-          </span>
+        <div class="space-y-2">
+          <Report {item} />
         </div>
-
-        <Report {item} />
       </div>
     {/each}
   </div>

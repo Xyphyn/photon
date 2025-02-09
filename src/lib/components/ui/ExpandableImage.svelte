@@ -52,8 +52,8 @@
     use:focusTrap
   >
     <img
-      width={400}
-      height={400}
+      width={600}
+      height={600}
       src={page.state.openImage}
       class={[
         'max-w-max mx-auto my-auto overscroll-contain bg-white dark:bg-zinc-900',

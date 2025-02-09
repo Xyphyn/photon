@@ -111,13 +111,13 @@
   {#if profile.data?.jwt}
     <MenuButton link href="/profile">
       {#snippet prefix()}
-        <Icon src={UserCircle} micro width={16} />
+        <Icon src={UserCircle} micro size="16" />
       {/snippet}
       {$t('profile.profile')}
     </MenuButton>
     <MenuButton link href="/inbox">
       {#snippet prefix()}
-        <Icon src={Inbox} micro width={16} />
+        <Icon src={Inbox} micro size="16" />
       {/snippet}
       {$t('profile.inbox')}
       {#if $notifications.inbox > 0}
@@ -128,21 +128,27 @@
     </MenuButton>
     <MenuButton link href="/saved">
       {#snippet prefix()}
-        <Icon src={Bookmark} micro width={16} />
+        <Icon src={Bookmark} micro size="16" />
       {/snippet}
       {$t('profile.saved')}
     </MenuButton>
   {/if}
   <MenuButton link href="/accounts">
     {#snippet prefix()}
-      <Icon src={UserGroup} micro width={16} />
+      <Icon src={UserGroup} micro size="16" />
     {/snippet}
     {$t('account.accounts')}
+  </MenuButton>
+  <MenuButton onclick={() => (showInstance = !showInstance)}>
+    {#snippet prefix()}
+      <Icon src={ServerStack} micro size="16" />
+    {/snippet}
+    {$t('nav.menu.instance')}
   </MenuButton>
   <MenuDivider>{$t('nav.menu.app')}</MenuDivider>
   <MenuButton link href="/settings">
     {#snippet prefix()}
-      <Icon src={Cog6Tooth} micro width={16} />
+      <Icon src={Cog6Tooth} micro size="16" />
     {/snippet}
     {$t('nav.menu.settings')}
   </MenuButton>
@@ -186,7 +192,7 @@
   {#if settings.debugInfo}
     <MenuButton link href="/util">
       {#snippet prefix()}
-        <Icon src={BugAnt} mini width={16} />
+        <Icon src={BugAnt} mini size="16" />
       {/snippet}
       Debug
     </MenuButton>
@@ -205,14 +211,6 @@
           <Badge color="blue-subtle">{__VERSION__}</Badge>
         </button>
       </div>
-      <Button
-        onclick={() => (showInstance = !showInstance)}
-        color="tertiary"
-        title={$t('nav.menu.instance')}
-        size="square-md"
-      >
-        <Icon src={ServerStack} size="16" micro />
-      </Button>
       <Button
         color="tertiary"
         href="https://buymeacoffee.com/xylight"
