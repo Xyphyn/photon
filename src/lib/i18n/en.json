@@ -912,5 +912,10 @@
     "stats": {
         "joined": "Joined",
         "created": "Created"
+    },
+    "placeholders": {
+        "title": "Add a post title",
+        "body": "What do you have to say?",
+        "comments": "Join the conversation"
     }
 }

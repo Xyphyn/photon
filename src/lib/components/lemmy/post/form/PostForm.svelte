@@ -330,7 +330,7 @@
   <MarkdownEditor
     label={$t('form.post.body')}
     bind:value={data.body}
-    placeholder={placeholders.get('post')}
+    placeholder={placeholders.get('body')}
     previewButton
   />
   {#if data.url !== undefined}

@@ -143,7 +143,7 @@ export const defaultSettings: Settings = {
       },
     ],
   },
-  randomPlaceholders: toBool(env.PUBLIC_RANDOM_PLACEHOLDERS) ?? true,
+  randomPlaceholders: toBool(env.PUBLIC_RANDOM_PLACEHOLDERS) ?? false,
   modlogCardView: toBool(env.PUBLIC_MODLOG_CARD_VIEW) ?? undefined,
   debugInfo: toBool(env.PUBLIC_DEBUG_INFO) ?? false,
   expandImages: toBool(env.PUBLIC_EXPAND_IMAGES) ?? true,
