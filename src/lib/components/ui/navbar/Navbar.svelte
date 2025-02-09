@@ -22,7 +22,7 @@
   import Profile from './Profile.svelte'
   import NavButton from './NavButton.svelte'
   import Logo from '../Logo.svelte'
-  import { LINKED_INSTANCE_URL } from '$lib/instance'
+  import { LINKED_INSTANCE_URL } from '$lib/instance.svelte'
   import { t } from '$lib/translations'
   import CommandsWrapper from './commands/CommandsWrapper.svelte'
   import type { ClassValue } from 'svelte/elements'

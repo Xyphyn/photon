@@ -43,7 +43,7 @@
   import { removalTemplate } from '$lib/components/lemmy/moderation/moderation.js'
   import { Button, Checkbox, Select, Spinner } from 'mono-svelte'
   import ViewSelect from '$lib/components/lemmy/dropdowns/ViewSelect.svelte'
-  import { LINKED_INSTANCE_URL } from '$lib/instance.js'
+  import { LINKED_INSTANCE_URL } from '$lib/instance.svelte.js'
   import { DOMAIN_REGEX_FORMS, removeItem } from '$lib/util.svelte.js'
   import Section from './Section.svelte'
   import ToggleSetting from './ToggleSetting.svelte'

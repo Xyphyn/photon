@@ -7,7 +7,7 @@
   import { mayBeIncompatible } from '$lib/lemmy.svelte'
   import { DOMAIN_REGEX_FORMS } from '$lib/util.svelte'
   import { profile, profileData, type Profile } from '$lib/auth.svelte'
-  import { LINKED_INSTANCE_URL } from '$lib/instance'
+  import { LINKED_INSTANCE_URL } from '$lib/instance.svelte'
   import { goto } from '$app/navigation'
   import { t } from '$lib/translations'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'

@@ -3,7 +3,7 @@
   import { page } from '$app/state'
   import { profile, setUserID, type Profile } from '$lib/auth.svelte.js'
   import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
-  import { LINKED_INSTANCE_URL } from '$lib/instance'
+  import { LINKED_INSTANCE_URL } from '$lib/instance.svelte'
   import ProfileAvatar from '$lib/lemmy/ProfileAvatar.svelte'
   import { Button } from 'mono-svelte'
   import { Icon, QuestionMarkCircle } from 'svelte-hero-icons'

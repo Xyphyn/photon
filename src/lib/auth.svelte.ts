@@ -3,7 +3,7 @@ import {
   isAdmin,
 } from '$lib/components/lemmy/moderation/moderation.js'
 import { toast } from 'mono-svelte'
-import { DEFAULT_INSTANCE_URL, instance } from '$lib/instance.js'
+import { DEFAULT_INSTANCE_URL } from '$lib/instance.svelte.js'
 import { client, getClient } from '$lib/lemmy.svelte.js'
 import { site } from './lemmy.svelte'
 import { instanceToURL, moveItem } from '$lib/util.svelte'
@@ -27,7 +27,7 @@ import { t } from './translations'
 
 const getDefaultProfile = (): Profile => ({
   id: -1,
-  instance: profileData.defaultInstance ?? get(instance),
+  instance: profileData.defaultInstance ?? DEFAULT_INSTANCE_URL,
 })
 
 function getFromStorage<T>(key: string): T | undefined {
@@ -116,7 +116,6 @@ class CurrentProfile {
 export let profile = new CurrentProfile()
 
 async function fetchUserData(profile: CurrentProfile) {
-  instance.set(profile.data.instance)
   if (profile.data.jwt) {
     site.data = undefined
     notifications.set({ applications: 0, inbox: 0, reports: 0 })
@@ -161,10 +160,6 @@ $effect.root(() => {
     }
 
     setFromStorage('profileData', serialized)
-
-    if (serialized.profile == -1) {
-      instance?.set(profileData.defaultInstance ?? DEFAULT_INSTANCE_URL)
-    }
     if (serialized.profiles.length == 0) {
       profileData.profiles = [
         {
@@ -229,8 +224,6 @@ export async function setUser(jwt: string, inst: string, username?: string) {
       type: 'error',
     })
   }
-
-  instance.set(inst)
 
   const id = Math.max(...profileData.profiles.map((p) => p.id)) + 1
   profileData.profile = id

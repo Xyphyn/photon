@@ -10,7 +10,10 @@
   } from '$lib/auth.svelte.js'
   import { Menu, MenuButton, Modal } from 'mono-svelte'
   import DebugObject from '$lib/components/util/debug/DebugObject.svelte'
-  import { DEFAULT_INSTANCE_URL, LINKED_INSTANCE_URL } from '$lib/instance.js'
+  import {
+    DEFAULT_INSTANCE_URL,
+    LINKED_INSTANCE_URL,
+  } from '$lib/instance.svelte.js'
   import ProfileAvatar from '$lib/lemmy/ProfileAvatar.svelte'
   import { settings } from '$lib/settings.svelte.js'
   import { Button, TextInput } from 'mono-svelte'

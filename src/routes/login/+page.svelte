@@ -4,7 +4,10 @@
   import { goto } from '$app/navigation'
   import { setUser } from '$lib/auth.svelte.js'
   import { Note, toast } from 'mono-svelte'
-  import { DEFAULT_INSTANCE_URL, LINKED_INSTANCE_URL } from '$lib/instance.js'
+  import {
+    DEFAULT_INSTANCE_URL,
+    LINKED_INSTANCE_URL,
+  } from '$lib/instance.svelte.js'
   import {
     getClient,
     mayBeIncompatible,

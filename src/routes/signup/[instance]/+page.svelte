@@ -21,7 +21,7 @@
     QuestionMarkCircle,
     XCircle,
   } from 'svelte-hero-icons'
-  import { instance as currentInstance } from '$lib/instance.js'
+  import { instance as currentInstance } from '$lib/instance.svelte.js'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { t } from '$lib/translations.js'
 
@@ -79,7 +79,6 @@
         res.verify_email_sent ||
         data.site_view.local_site.registration_mode == 'RequireApplication'
       ) {
-        currentInstance.set(instance)
         if (res.verify_email_sent) {
           toast({
             content: $t('toast.verifyEmail'),

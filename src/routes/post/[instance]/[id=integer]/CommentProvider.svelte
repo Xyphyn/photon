@@ -5,7 +5,7 @@
   import CommentListVirtualizer from '$lib/components/lemmy/comment/CommentListVirtualizer.svelte'
   import { buildCommentsTree } from '$lib/components/lemmy/comment/comments.svelte'
   import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
-  import { instance } from '$lib/instance'
+  import { instance } from '$lib/instance.svelte'
   import { settings } from '$lib/settings.svelte'
   import { t } from '$lib/translations'
   import type {
@@ -94,7 +94,7 @@
             .map((c) => c.community.id)
             .includes(post.community_view.community.id)
         )) ||
-        page.params.instance.toLowerCase() != $instance.toLowerCase()}
+        page.params.instance.toLowerCase() != instance.data.toLowerCase()}
       banned={post.community_view.banned_from_community}
       onfocus={() => (commenting = true)}
       tools={commenting}

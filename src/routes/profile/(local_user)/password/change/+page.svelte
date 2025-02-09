@@ -3,7 +3,7 @@
 
   import { deleteProfile, profile, setUser } from '$lib/auth.svelte'
   import { client } from '$lib/lemmy.svelte'
-  import { instance as currentInstance } from '$lib/instance'
+  import { instance as currentInstance } from '$lib/instance.svelte'
   import { t } from '$lib/translations'
   import { Button, TextInput, toast } from 'mono-svelte'
   import { errorMessage } from '$lib/lemmy/error'

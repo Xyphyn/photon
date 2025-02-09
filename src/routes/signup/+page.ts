@@ -1,4 +1,4 @@
-import { LINKED_INSTANCE_URL } from '$lib/instance.js'
+import { LINKED_INSTANCE_URL } from '$lib/instance.svelte.js'
 import { redirect } from '@sveltejs/kit'
 
 export const load = () => {

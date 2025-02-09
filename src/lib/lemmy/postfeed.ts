@@ -1,5 +1,5 @@
 import { browser } from '$app/environment'
-import { instance } from '$lib/instance'
+import { instance } from '$lib/instance.svelte'
 import { client } from '$lib/lemmy.svelte'
 import type {
   GetPosts,
@@ -32,11 +32,11 @@ export async function postFeed(args: {
 }) {
   const feed = get(postFeeds)[args.id]
 
-  const posts = shouldReload(feed, args.url, get(instance))
+  const posts = shouldReload(feed, args.url, instance.data)
     ? await client({ func: args.fetch }).getPosts(args.request)
     : feed.data.posts
 
-  if (shouldReload(feed, args.url, get(instance)) && browser)
+  if (shouldReload(feed, args.url, instance.data) && browser)
     postFeeds.updateFeed(args.id, {
       data: {
         ...args.request,
@@ -48,7 +48,7 @@ export async function postFeed(args: {
       },
       url: args.url,
       lastSeen: 0,
-      instance: get(instance),
+      instance: instance.data,
     })
 
   return (

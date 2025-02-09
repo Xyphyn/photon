@@ -28,7 +28,7 @@
   import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
   import { site } from '$lib/lemmy.svelte.js'
   import ExpandableImage from '$lib/components/ui/ExpandableImage.svelte'
-  import { LINKED_INSTANCE_URL } from '$lib/instance'
+  import { LINKED_INSTANCE_URL } from '$lib/instance.svelte'
   import { locale } from '$lib/translations'
   import { getDefaultColors } from '$lib/ui/presets'
   interface Props {

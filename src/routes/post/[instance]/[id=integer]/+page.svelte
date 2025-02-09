@@ -32,7 +32,7 @@
   import { Select, removeToast, toast } from 'mono-svelte'
   import type { CommentSortType, GetCommentsResponse } from 'lemmy-js-client'
   import { profile } from '$lib/auth.svelte.js'
-  import { instance } from '$lib/instance.js'
+  import { instance } from '$lib/instance.svelte.js'
   import { afterNavigate, goto } from '$app/navigation'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import { Button } from 'mono-svelte'
@@ -145,7 +145,7 @@
 
       if (res.post) {
         removeToast(id)
-        goto(`/post/${$instance}/${res.post.post.id}`, {}).then(() =>
+        goto(`/post/${instance.data}/${res.post.post.id}`, {}).then(() =>
           removeToast(id),
         )
       }
@@ -176,7 +176,7 @@
   let commenting = $state(false)
 
   let remoteView = $derived(
-    page.params.instance?.toLowerCase() != $instance.toLowerCase(),
+    page.params.instance?.toLowerCase() != instance.data.toLowerCase(),
   )
 </script>
 

@@ -1,5 +1,5 @@
 import { profile } from '$lib/auth.svelte'
-import { LINKED_INSTANCE_URL } from '$lib/instance.js'
+import { LINKED_INSTANCE_URL } from '$lib/instance.svelte.js'
 import { client, getClient } from '$lib/lemmy.svelte.js'
 import {
   type ListCommunitiesResponse,

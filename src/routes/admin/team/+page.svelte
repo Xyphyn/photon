@@ -5,7 +5,7 @@
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { toast } from 'mono-svelte'
-  import { instance } from '$lib/instance.js'
+  import { instance } from '$lib/instance.svelte.js'
   import { getClient } from '$lib/lemmy.svelte.js'
   import { addAdmin } from '$lib/lemmy/user.js'
   import { removeItem, trycatch } from '$lib/util.svelte.js'
@@ -79,7 +79,7 @@
         adding = true
 
         const r = await addAdmin(
-          `${newAdmin}@${$instance}`,
+          `${newAdmin}@${instance.data}`,
           true,
           profile.data.jwt,
         )

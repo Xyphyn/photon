@@ -2,7 +2,7 @@
   import { profile } from '$lib/auth.svelte'
   import { publishedToDate } from '$lib/components/util/date'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
-  import { instance } from '$lib/instance'
+  import { instance } from '$lib/instance.svelte'
   import { client } from '$lib/lemmy.svelte'
   import { t } from '$lib/translations'
   import { instanceToURL } from '$lib/util.svelte'
@@ -40,7 +40,7 @@
 
 <div class="flex flex-col gap-1">
   <img
-    src="{instanceToURL($instance)}/pictrs/image/{image.pictrs_alias}"
+    src="{instanceToURL(instance.data)}/pictrs/image/{image.pictrs_alias}"
     width="500"
     height="500"
     class="aspect-square w-full h-full object-cover rounded-xl"
@@ -53,7 +53,7 @@
     />
     <Button
       title={$t('routes.profile.media.download')}
-      href="{instanceToURL($instance)}/pictrs/image/{image.pictrs_alias}"
+      href="{instanceToURL(instance.data)}/pictrs/image/{image.pictrs_alias}"
       size="square-md"
       class="ml-auto"
     >

@@ -6,7 +6,7 @@
     DEFAULT_INSTANCE_URL,
     LINKED_INSTANCE_URL,
     instance as currentInstance,
-  } from '$lib/instance.js'
+  } from '$lib/instance.svelte.js'
   import { getClient, validateInstance } from '$lib/lemmy.svelte.js'
   import { t } from '$lib/translations'
   import { Button, TextInput, toast } from 'mono-svelte'
