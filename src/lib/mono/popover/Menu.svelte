@@ -57,7 +57,7 @@
   	max-h-[32rem] overflow-auto list-none shadow-lg rounded-xl"
     >
       <div
-        class="flex flex-col py-2 list-none bg-white/80 dark:bg-zinc-900/80 px-2 gap-px
+        class="flex flex-col py-2 list-none bg-white/80 dark:bg-zinc-900/90 px-2 gap-px
         rounded-xl
         border border-slate-200 dark:border-zinc-800 border-opacity-50"
       >

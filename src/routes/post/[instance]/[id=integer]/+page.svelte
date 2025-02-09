@@ -275,6 +275,7 @@
         edited={data.post.post_view.post.updated}
         title={data.post.post_view.post.name}
         style="width: max-content;"
+        tags={parseTags(data.post.post_view.post.name).tags}
       />
       <Button onclick={() => history.back()} size="square-md">
         {#snippet prefix()}
