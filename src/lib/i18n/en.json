@@ -255,7 +255,7 @@
             "federating": "Federating",
             "query": "Query",
             "noResults": {
-                "title": "No Results",
+                "title": "No results",
                 "description": "There are no results that match that filter. Try refining your search.",
                 "alt": "Search across the fediverse"
             },

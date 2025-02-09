@@ -174,6 +174,7 @@ items-center px-2 w-max"
       icon={Inbox}
       title={$t('routes.inbox.empty.title')}
       description={$t('routes.inbox.empty.description')}
+      class="self-center justify-self-center my-auto"
     />
   {:else}
     {#each inbox as item, index (item.id)}

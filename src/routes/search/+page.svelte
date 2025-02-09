@@ -145,14 +145,15 @@
   </div>
 {/if}
 {#if !data.results}
-  <Placeholder
-    icon={MagnifyingGlass}
-    title={$t('routes.search.noResults.title')}
-    description={query == ''
-      ? $t('routes.search.noResults.alt')
-      : $t('routes.search.noResults.description')}
-    class="pt-4"
-  />
+  <div class="my-auto">
+    <Placeholder
+      icon={MagnifyingGlass}
+      title={$t('routes.search.noResults.title')}
+      description={query == ''
+        ? $t('routes.search.noResults.alt')
+        : $t('routes.search.noResults.description')}
+    />
+  </div>
 {:else}
   {#await data.streamed.object}
     <div

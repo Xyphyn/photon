@@ -5,7 +5,7 @@
   import { backOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'
   import { page as pageData } from '$app/state'
-  import { invalidate, invalidateAll } from '$app/navigation'
+  import { invalidate } from '$app/navigation'
 
   interface Props {
     page?: number
@@ -34,8 +34,8 @@
 
       current.delete(Array.from(newParams.keys())[0])
       current.append(
-        Array.from(newParams.keys())[0][0],
-        Array.from(newParams.keys())[0][1],
+        Array.from(newParams.entries())[0][0],
+        Array.from(newParams.entries())[0][1],
       )
 
       return `?${current.toString()}`
@@ -56,7 +56,7 @@
   <Button
     href={customHref(href?.(cursor?.back ?? page - 1))}
     color="ghost"
-    onclick={() => invalidateAll()}
+    onclick={() => invalidate(pageData.url)}
     title={$t('common.back')}
     size="square-md"
     rounding="pill"
@@ -87,7 +87,7 @@
   <Button
     href={customHref(href?.(cursor?.next ?? page + 1))}
     color="ghost"
-    onclick={() => invalidateAll()}
+    onclick={() => invalidate(pageData.url)}
     title={$t('common.next')}
     size="square-md"
     rounding="pill"
