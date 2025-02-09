@@ -695,17 +695,13 @@
             "pins": {
                 "title": "Pins",
                 "description": "Click a pin to send it to the top of the sidebar. Right click a pinned item to remove it."
-            },
-            "commands": {
-                "title": "Command palette",
-                "description": "Press slash or right click the photon logo to navigate around the app by searching."
             }
         },
         "app": {
-            "title": "Photon",
+            "title": "App",
             "theming": {
                 "title": "Theming",
-                "description": "Customize Photon's colors.",
+                "description": "Customize the UI colors.",
                 "link": "Go to themes"
             },
             "colorscheme": {
@@ -714,7 +710,7 @@
             },
             "lang": {
                 "title": "Language",
-                "description": "The language used for Photon's UI.",
+                "description": "The language used for text in the UI.",
                 "note": "Languages other than English and Hebrew are community translated, and may be incomplete.",
                 "en": "English",
                 "en-US": "English",
@@ -738,8 +734,7 @@
                 "title": "Post style",
                 "list": "Show posts in a list, with post bodies and compact media.",
                 "cozy": "Show posts with large images, rich embeds, and longer post bodies.",
-                "compact": "Show posts in a list, without post bodies and with tighter spacing.",
-                "legacy": "The old look of Photon."
+                "compact": "Show posts in a list, without post bodies and with tighter spacing."
             },
             "sort": {
                 "title": "Default sort",
@@ -781,12 +776,7 @@
             },
             "font": {
                 "title": "Font",
-                "description": "What font Photon uses in the UI."
-            },
-            "translation": {
-                "title": "Translation",
-                "description": "The LibreTranslate instance to use for translation.",
-                "instance": "Domain"
+                "description": "The font used for text in the UI."
             },
             "titleTags": {
                 "title": "Parse tags in title",
