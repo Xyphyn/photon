@@ -104,17 +104,12 @@ function resumableStore(limit: number = 10) {
 export let resumables = resumableStore()
 
 export function addFavorite(item: Community, add: boolean = true) {
-  const pd = get(profileData)
-  const p = pd.profiles.find((p) => p.id == profile.data?.id)
-  if (!p) return
-
-  let favs = p.favorites ?? []
+  let favs = profile.data.favorites ?? []
   if (favs.map((fav) => fav.id).includes(item.id)) if (add) return
   if (!add) {
     favs.splice(favs.map((c) => c.id).indexOf(item.id), 1)
   } else {
     favs.unshift(item)
   }
-  p.favorites = favs
-  profileData.update(() => pd)
+  profile.data.favorites = favs
 }

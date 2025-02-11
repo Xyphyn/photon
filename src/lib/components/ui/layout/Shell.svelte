@@ -87,7 +87,7 @@
 
 <script lang="ts">
   import { settings } from '$lib/settings.svelte.js'
-  import { themeVars } from '$lib/ui/colors'
+  import { theme } from '$lib/ui/colors.svelte'
   import { writable, type Readable, type Writable } from 'svelte/store'
   import type { ClassValue } from 'svelte/elements'
 
@@ -127,7 +127,7 @@
 <div
   {...rest}
   class="shell bg-slate-50 dark:bg-zinc-950 {clazz}"
-  style={$themeVars}
+  style={theme.vars}
 >
   {@render children?.()}
   <div

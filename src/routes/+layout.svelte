@@ -6,13 +6,7 @@
   import 'nprogress/nprogress.css'
   import Moderation from '$lib/components/lemmy/moderation/Moderation.svelte'
   import Sidebar from '$lib/components/ui/sidebar/Sidebar.svelte'
-  import {
-    colorScheme,
-    inDarkColorScheme,
-    rgbToHex,
-    theme,
-    themeVars,
-  } from '$lib/ui/colors.js'
+  import { inDarkColorScheme, rgbToHex, theme } from '$lib/ui/colors.svelte.js'
   import { settings } from '$lib/settings.svelte.js'
   import {
     Button,
@@ -55,9 +49,6 @@
         )
       }
       document.body.querySelector('.loader')?.classList.add('hidden')
-      themeVars.subscribe((vars) => {
-        document.body.setAttribute('style', vars)
-      })
     }
   })
 
@@ -82,6 +73,10 @@
         )
       }
     })
+
+    $effect(() => {
+      document.body.setAttribute('style', theme.vars)
+    })
   }
 
   $effect(() => {
@@ -96,9 +91,9 @@
     <meta
       name="theme-color"
       content={rgbToHex(
-        $colorScheme && inDarkColorScheme()
-          ? ($theme.colors.zinc?.[925] ?? getDefaultColors().zinc[925])
-          : ($theme.colors.slate?.[25] ?? getDefaultColors().slate[25]),
+        theme.colorScheme && inDarkColorScheme()
+          ? (theme.current.colors.zinc?.[925] ?? getDefaultColors().zinc[925])
+          : (theme.current.colors.slate?.[25] ?? getDefaultColors().slate[25]),
       )}
     />
     {#if LINKED_INSTANCE_URL}

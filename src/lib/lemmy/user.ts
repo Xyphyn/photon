@@ -22,23 +22,19 @@ export const addSubscription = (
   community: Community,
   subscribe: boolean = true,
 ) => {
-  const p = profile
-
-  if (!p.user) return
-
-  const index = p.user.follows.map((f) => f.community.id).indexOf(community.id)
+  const index = profile.data.user?.follows
+    .map((f) => f.community.id)
+    .indexOf(community.id)
 
   if (subscribe && index == -1) {
-    p.user.follows.push({
+    profile.data.user?.follows.push({
       // @ts-ignore
       follower: p.user.follows[0]?.follower,
       community: community,
     })
   } else {
-    p.user.follows.splice(index, 1)
+    profile.data.user?.follows.splice(index ?? 0, 1)
   }
-
-  profile.data.set(p)
 }
 
 export const addAdmin = async (handle: string, added: boolean, jwt: string) =>
@@ -56,4 +52,4 @@ export const addAdmin = async (handle: string, added: boolean, jwt: string) =>
   })
 
 export const hasFavorite = (profile: Profile, id: number): boolean =>
-  profile.data?.favorites?.map((i) => i.id).includes(id) ?? false
+  profile.favorites?.map((i) => i.id).includes(id) ?? false

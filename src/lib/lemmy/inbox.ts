@@ -1,6 +1,3 @@
-import { publishedToDate } from '$lib/components/util/date.js'
-import { getClient } from '$lib/lemmy.svelte.js'
-import type { Result } from '$lib/lemmy/item.js'
 import type {
   Comment,
   CommentReplyView,

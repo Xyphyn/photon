@@ -8,7 +8,7 @@ import {
 import { resumables, type ResumableItem } from '$lib/lemmy/item'
 import { settings } from '$lib/settings.svelte'
 import { t } from '$lib/translations'
-import { colorScheme, theme, themeData, type ThemeData } from '$lib/ui/colors'
+import { theme, type ThemeData } from '$lib/ui/colors.svelte'
 import { fullCommunityName } from '$lib/util.svelte'
 import {
   ArrowRightOnRectangle,
@@ -357,21 +357,21 @@ export function getGroups(
               name: t.get('nav.commands.setColorTo', {
                 default: t.get('nav.menu.colorscheme.system'),
               }),
-              handle: () => colorScheme.set('system'),
+              handle: () => (theme.colorScheme = 'system'),
               icon: ComputerDesktop,
             },
             {
               name: t.get('nav.commands.setColorTo', {
                 default: t.get('nav.menu.colorscheme.light'),
               }),
-              handle: () => colorScheme.set('light'),
+              handle: () => (theme.colorScheme = 'light'),
               icon: Sun,
             },
             {
               name: t.get('nav.commands.setColorTo', {
                 default: t.get('nav.menu.colorscheme.dark'),
               }),
-              handle: () => colorScheme.set('dark'),
+              handle: () => (theme.colorScheme = 'dark'),
               icon: Moon,
             },
           ],
@@ -382,11 +382,7 @@ export function getGroups(
           subActions: td.themes.map((th) => ({
             name: t.get('nav.commands.setThemeTo', { default: th.name }),
             icon: Swatch,
-            handle: () =>
-              themeData.update((td) => ({
-                ...td,
-                currentTheme: th.id,
-              })),
+            handle: () => (theme.data.currentTheme = th.id),
           })),
         },
       ],

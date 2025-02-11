@@ -6,14 +6,14 @@
     message: string
   }
 
-  export let errors = writable<PageScopedError[]>([])
+  let errors = $state<PageScopedError[]>([])
 
   export function pushError(args: { scope: string; message: string }) {
-    errors.update((e) => [...e, args])
+    errors.push(args)
   }
 
   export function clearErrorScope(scope: string | null | undefined) {
-    errors.update((errors) => errors.filter((error) => error.scope != scope))
+    errors = errors.filter((error) => error.scope != scope)
   }
 </script>
 
@@ -35,7 +35,7 @@
   let { scope = undefined, class: clazz = '' }: Props = $props()
 
   let scopedErrors = $derived(
-    $errors.filter((e) => e.scope == scope || e.scope == 'global'),
+    errors.filter((e) => e.scope == scope || e.scope == 'global'),
   )
 </script>
 

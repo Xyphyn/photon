@@ -10,14 +10,12 @@
   import { Button, Menu, MenuButton, MenuDivider, Spinner } from 'mono-svelte'
   import {
     GlobeAlt,
-    Home,
     Icon,
     MagnifyingGlass,
     Newspaper,
     PencilSquare,
     Plus,
     ServerStack,
-    XMark,
   } from 'svelte-hero-icons'
   import Profile from './Profile.svelte'
   import NavButton from './NavButton.svelte'

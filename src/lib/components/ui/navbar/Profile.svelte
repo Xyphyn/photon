@@ -33,7 +33,7 @@
     UserCircle,
     UserGroup,
   } from 'svelte-hero-icons'
-  import { colorScheme } from '$lib/ui/colors'
+  import { theme } from '$lib/ui/colors.svelte'
   import { settings } from '$lib/settings.svelte'
   import { site } from '$lib/lemmy.svelte'
   import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
@@ -149,11 +149,11 @@
   <MenuButton class="!py-0">
     {#snippet prefix()}
       <Icon
-        src={$colorScheme == 'system'
+        src={theme.colorScheme == 'system'
           ? ComputerDesktop
-          : $colorScheme == 'light'
+          : theme.colorScheme == 'light'
             ? Sun
-            : $colorScheme == 'dark'
+            : theme.colorScheme == 'dark'
               ? Moon
               : Moon}
         micro
@@ -164,7 +164,11 @@
     <!-- svelte-ignore a11y_click_events_have_key_events -->
     <!-- svelte-ignore a11y_no_static_element_interactions -->
     <div class="contents" onclick={stopPropagation(() => {})}>
-      <Select bind:value={$colorScheme} class="ml-auto my-auto w-24" size="sm">
+      <Select
+        bind:value={theme.colorScheme}
+        class="ml-auto my-auto w-24"
+        size="sm"
+      >
         <Option value="system" icon={ComputerDesktop}>
           {$t('nav.menu.colorscheme.system')}
         </Option>

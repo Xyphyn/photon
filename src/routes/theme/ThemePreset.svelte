@@ -2,7 +2,11 @@
   import { preventDefault } from 'svelte/legacy'
 
   import { t } from '$lib/translations'
-  import { calculateVars, themeData, type Theme } from '$lib/ui/colors'
+  import {
+    calculateVars,
+    theme as themeData,
+    type Theme,
+  } from '$lib/ui/colors.svelte'
   import { action, Button, Material, modal, TextInput } from 'mono-svelte'
   import { CheckCircle, Icon, Trash } from 'svelte-hero-icons'
 
@@ -15,10 +19,10 @@
   let editingName = $state(false)
 </script>
 
-<button class="h-full" onclick={() => ($themeData.currentTheme = theme.id)}>
+<button class="h-full" onclick={() => (themeData.data.currentTheme = theme.id)}>
   <Material
     padding="none"
-    class="{theme.id == $themeData.currentTheme
+    class="{theme.id == themeData.data.currentTheme
       ? 'ring-2 ring-inset ring-primary-900 dark:ring-primary-100'
       : ''} flex relative cursor-pointer h-full flex-col text-left p-0.5"
     rounding="xl"
@@ -38,7 +42,7 @@
         class="w-3 h-3 bg-primary-900 dark:bg-primary-100 rounded-full ml-auto"
       ></div>
     </div>
-    {#if theme.id == $themeData.currentTheme}
+    {#if theme.id == themeData.data.currentTheme}
       <Icon
         src={CheckCircle}
         size="20"
@@ -79,13 +83,16 @@
                   content: $t('routes.theme.preset.delete.confirm'),
                   type: 'danger',
                   action: () => {
-                    const index = $themeData.themes
+                    const index = themeData.data.themes
                       .map((t) => t.id)
                       .indexOf(theme.id)
 
-                    $themeData.themes = $themeData.themes.toSpliced(index, 1)
-                    if (theme.id == $themeData.currentTheme) {
-                      $themeData.currentTheme = 0
+                    themeData.data.themes = themeData.data.themes.toSpliced(
+                      index,
+                      1,
+                    )
+                    if (theme.id == themeData.data.currentTheme) {
+                      themeData.data.currentTheme = 0
                     }
                   },
                 }),

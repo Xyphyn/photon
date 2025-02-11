@@ -11,7 +11,7 @@
   import { afterNavigate, goto } from '$app/navigation'
   import { profile, profileData } from '$lib/auth.svelte'
   import { getGroups, type Action, type Group } from './actions.svelte'
-  import { themeData } from '$lib/ui/colors'
+  import { theme } from '$lib/ui/colors.svelte'
   import { page } from '$app/state'
 
   interface Props {
@@ -26,7 +26,7 @@
       $resumables,
       profile.data,
       profileData.profiles,
-      $themeData,
+      theme.data,
       page.data.contextual?.actions,
     )
   })

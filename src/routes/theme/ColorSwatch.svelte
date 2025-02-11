@@ -1,8 +1,5 @@
 <script lang="ts">
-  import { createBubbler } from 'svelte/legacy'
-
-  import { hexToRgb } from '$lib/ui/colors'
-  import { createEventDispatcher } from 'svelte'
+  import { hexToRgb } from '$lib/ui/colors.svelte'
 
   interface Props {
     value: string

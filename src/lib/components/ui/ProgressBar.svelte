@@ -1,8 +1,6 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy'
-
   import { expoOut } from 'svelte/easing'
-  import { tweened } from 'svelte/motion'
+  import { Tween } from 'svelte/motion'
 
   interface Props {
     progress?: number
@@ -10,14 +8,14 @@
 
   let { progress = 0 }: Props = $props()
 
-  let tween = tweened(progress, { easing: expoOut })
+  let tween = new Tween(progress, { easing: expoOut })
 
-  run(() => {
+  $effect(() => {
     tween.set(progress)
   })
 </script>
 
 <div
   class="bg-primary-900 dark:bg-primary-100 h-1 rounded-full"
-  style="width: {$tween * 100}%;"
+  style="width: {tween.current * 100}%;"
 ></div>
