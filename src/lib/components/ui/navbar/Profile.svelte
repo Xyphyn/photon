@@ -40,6 +40,7 @@
   import { t } from '$lib/translations'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import Option from 'mono-svelte/forms/select/Option.svelte'
+  import { env } from '$env/dynamic/public'
 
   let showInstance = $state(false)
 
@@ -216,14 +217,6 @@
         size="square-md"
       >
         <Icon src={ServerStack} size="16" micro />
-      </Button>
-      <Button
-        color="tertiary"
-        href="https://buymeacoffee.com/xylight"
-        title={$t('nav.menu.donate')}
-        size="square-md"
-      >
-        <Icon src={Heart} size="16" micro />
       </Button>
       <Button
         color="tertiary"

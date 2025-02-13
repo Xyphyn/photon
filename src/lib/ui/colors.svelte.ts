@@ -90,6 +90,21 @@ $effect.root(() => {
       )
     }
   })
+  $effect(() => {
+    if (browser) {
+      const prefersDark = window.matchMedia(
+        '(prefers-color-scheme: dark)',
+      ).matches
+
+      const html = document.querySelector('html')
+
+      if (theme.colorScheme == 'system')
+        html?.classList.toggle('dark', prefersDark)
+      else html?.classList.toggle('dark', theme.colorScheme === 'dark')
+
+      localStorage.setItem('colorScheme', theme.colorScheme)
+    }
+  })
 })
 
 const configuredColorScheme = env.PUBLIC_COLORSCHEME ?? 'system'
@@ -101,20 +116,6 @@ class ThemeState {
       configuredColorScheme
 
     this.#colorScheme = localColorScheme
-
-    if (browser) {
-      const prefersDark = window.matchMedia(
-        '(prefers-color-scheme: dark)',
-      ).matches
-
-      const html = document.querySelector('html')
-
-      if (this.#colorScheme == 'system')
-        html?.classList.toggle('dark', prefersDark)
-      else html?.classList.toggle('dark', this.#colorScheme === 'dark')
-
-      localStorage.setItem('colorScheme', this.#colorScheme)
-    }
   }
 
   #data = $state<ThemeData>(
