@@ -38,6 +38,7 @@
     Star,
     Clock,
     ArrowTrendingDown,
+    Heart,
   } from 'svelte-hero-icons'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { removalTemplate } from '$lib/components/lemmy/moderation/moderation.js'
@@ -53,6 +54,7 @@
   import { profile } from '$lib/auth.svelte'
   import AccountPage from '../profile/(local_user)/settings/+page.svelte'
   import Option from 'mono-svelte/forms/select/Option.svelte'
+  import { env } from '$env/dynamic/public'
   let importing = $state(false)
   let importText = $state('')
 
@@ -216,6 +218,32 @@
     </Section>
   {/if}
   <Section id="app" title={$t('settings.app.title')}>
+    {#if env.PUBLIC_XYLIGHT_MODE}
+      <Setting class="">
+        {#snippet title()}
+          <span class="dark:text-pink-400 text-pink-600 font-medium">
+            {$t('nav.menu.donate')}
+          </span>
+        {/snippet}
+        {#snippet description()}
+          <p class="max-w-xl">
+            {$t('settings.donate.description')}
+          </p>
+        {/snippet}
+        <Button
+          color="primary"
+          class="dark:bg-pink-400 bg-pink-600"
+          href="https://buymeacoffee.com/xylight"
+          target="_blank"
+          rounding="xl"
+        >
+          {#snippet prefix()}
+            <Icon src={Heart} size="16" micro />
+          {/snippet}
+          {$t('nav.menu.donate')}
+        </Button>
+      </Setting>
+    {/if}
     <div class="flex flex-col gap-2">
       <Setting>
         {#snippet title()}

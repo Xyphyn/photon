@@ -71,7 +71,7 @@
   >
     <h1 class="font-medium text-base">{title}</h1>
     {#if description}
-      <p class="text-slate-800 dark:text-zinc-200 text-sm">
+      <p class="text-slate-600 dark:text-zinc-400 text-sm">
         {description}
       </p>
     {/if}
