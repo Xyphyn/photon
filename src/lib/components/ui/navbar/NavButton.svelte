@@ -47,16 +47,18 @@
   title={label}
   style="transition-property: background-color, filter;"
 >
-  {#if icon}
-    <Icon
-      src={icon}
-      micro={isPanel}
-      solid={!isPanel && isSelected}
-      size={isPanel ? '16' : '18'}
-    />
-  {:else}
-    {@render customIcon?.({ size: isPanel ? 16 : 18, isSelected })}
-  {/if}
+  {#snippet prefix()}
+    {#if icon}
+      <Icon
+        src={icon}
+        micro={isPanel}
+        solid={!isPanel && isSelected}
+        size={isPanel ? '16' : '18'}
+      />
+    {:else}
+      {@render customIcon?.({ size: isPanel ? 16 : 18, isSelected })}
+    {/if}
+  {/snippet}
   <span class="hidden {adaptive ? '@3xl:block' : ''}">{label}</span>
   {@render children?.()}
 </Button>

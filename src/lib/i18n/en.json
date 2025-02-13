@@ -312,7 +312,9 @@
             "resolve": "Resolve",
             "resolved": "Resolved",
             "unresolve": "Unresolve",
-            "resolvedBy": "Resolved by"
+            "resolvedBy": "Resolved by",
+            "markAll": "Mark page resolved",
+            "markAllComplete": "Batch action completed."
         },
         "admin": {
             "title": "Administration",

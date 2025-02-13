@@ -5,6 +5,7 @@
   import MultiSelect from '$lib/components/input/Switch.svelte'
   import { page } from '$app/state'
   import {
+    Check,
     EnvelopeOpen,
     Funnel,
     Icon,
@@ -13,11 +14,14 @@
   } from 'svelte-hero-icons'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { searchParam } from '$lib/util.svelte.js'
-  import { Button, Material, Select } from 'mono-svelte'
+  import { Button, Material, Select, toast } from 'mono-svelte'
   import { t } from '$lib/translations'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import Option from 'mono-svelte/forms/select/Option.svelte'
   import { tick } from 'svelte'
+  import ProgressBar from '$lib/components/ui/ProgressBar.svelte'
+  import { client } from '$lib/lemmy.svelte'
+  import { goto } from '$app/navigation'
 
   let { data = $bindable() } = $props()
 
@@ -26,6 +30,50 @@
   $effect(() => {
     reports = data.items
   })
+
+  let batch = $state({
+    progress: -1,
+  })
+  async function markAllAsResolved() {
+    if (!reports) return
+    batch.progress = 0
+
+    const promises = await Promise.all(
+      reports.map((report) => {
+        switch (report.type) {
+          case 'comment': {
+            const promise = client().resolveCommentReport({
+              report_id: report.id,
+              resolved: true,
+            })
+            promise.then(() => (batch.progress += 1 / reports!.length))
+            return promise
+          }
+          case 'post': {
+            const promise = client().resolvePostReport({
+              report_id: report.id,
+              resolved: true,
+            })
+            promise.then(() => (batch.progress += 1 / reports!.length))
+            return promise
+          }
+          case 'message': {
+            const promise = client().resolvePrivateMessageReport({
+              report_id: report.id,
+              resolved: true,
+            })
+            promise.then(() => (batch.progress += 1 / reports!.length))
+            return promise
+          }
+        }
+      }),
+    )
+
+    toast({ content: $t('routes.moderation.markAllComplete'), type: 'success' })
+    await goto(page.url, { invalidateAll: true })
+
+    batch.progress = -1
+  }
 </script>
 
 <div class="mb-4 flex flex-col gap-4">
@@ -49,14 +97,21 @@
           <Option value="all">{$t('filter.location.all')}</Option>
           <Option value="unread">{$t('filter.unread')}</Option>
         </Select>
-        <Button href="/modlog" class="h-max ml-auto">
-          <Icon src={Newspaper} size="16" mini />
-          {$t('routes.modlog')}
+        <Button
+          loading={batch.progress >= 0}
+          disabled={batch.progress >= 0}
+          onclick={markAllAsResolved}
+          class="h-max ml-auto"
+          rounding="xl"
+        >
+          <Icon src={Check} size="16" mini />
+          {$t('routes.moderation.markAll')}
         </Button>
       </div>
     {/snippet}
   </Header>
 </div>
+<ProgressBar progress={batch.progress} />
 {#if reports && reports.length > 0}
   <div
     class="flex flex-col *:py-4 divide-y divide-slate-200 dark:divide-zinc-800"
