@@ -74,9 +74,9 @@
     >
       <h1 class="font-medium text-base">{@render title?.()}</h1>
       {#if description}
-        <p class="text-slate-600 dark:text-zinc-400 text-sm">
+        <div class="text-slate-600 dark:text-zinc-400 text-sm">
           {@render description?.()}
-        </p>
+        </div>
       {/if}
     </div>
     {#if children}

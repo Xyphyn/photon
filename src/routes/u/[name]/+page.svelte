@@ -295,7 +295,7 @@
   {/if}
 
   <div class="flex flex-col gap-4 max-w-full w-full min-w-0">
-    <div class="flex flex-row gap-4 flex-wrap">
+    <form action={page.url.} class="flex flex-row gap-4 flex-wrap">
       <Select
         bind:value={data.type}
         onchange={() => searchParam(page.url, 'type', data.type, 'page')}
@@ -324,7 +324,7 @@
         <Option value="TopAll">{$t('filter.sort.top.label')}</Option>
         <Option value="Old">{$t('filter.sort.old')}</Option>
       </Select>
-    </div>
+    </form>
     {#if data.items.length == 0}
       <Placeholder
         icon={PencilSquare}

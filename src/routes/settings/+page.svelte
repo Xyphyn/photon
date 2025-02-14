@@ -262,8 +262,7 @@
         {/snippet}
         <!--@ts-ignore-->
         <Select bind:value={settings.language}>
-          <Option value={null}>
-            <Icon src={Language} size="16" mini />
+          <Option icon={Language} value={null}>
             {$t('settings.app.lang.auto')}
           </Option>
           {#each $locales as locale}
