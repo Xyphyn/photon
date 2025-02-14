@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy'
-
   import Post from '$lib/components/lemmy/post/Post.svelte'
   import {
     AdjustmentsHorizontal,
@@ -46,9 +44,12 @@
     inline?: boolean
   }
 
-  let { data = $bindable(), inline = false }: Props = $props()
+  let { data: pageData, inline = false }: Props = $props()
+
+  let data = $state(pageData)
 
   let blocking = false
+  let sortForm = $state<HTMLFormElement>()
 
   async function blockUser(block: number) {
     if (!profile.data?.user || !profile.data?.jwt)
@@ -91,7 +92,7 @@
 
   let purgingUser = $state(false)
   let purgeEnabled = $state(false)
-  run(() => {
+  $effect(() => {
     if (purgingUser) {
       purgeEnabled = false
       setTimeout(() => {
@@ -295,10 +296,16 @@
   {/if}
 
   <div class="flex flex-col gap-4 max-w-full w-full min-w-0">
-    <form action={page.url.} class="flex flex-row gap-4 flex-wrap">
+    <form
+      action={page.url.origin + page.url.pathname}
+      method="GET"
+      class="flex flex-row gap-4 flex-wrap"
+      bind:this={sortForm}
+    >
       <Select
         bind:value={data.type}
-        onchange={() => searchParam(page.url, 'type', data.type, 'page')}
+        name="type"
+        onchange={() => sortForm?.requestSubmit()}
       >
         {#snippet customLabel()}
           <span class="flex items-center gap-1">
@@ -312,7 +319,8 @@
       </Select>
       <Select
         bind:value={data.sort}
-        onchange={() => searchParam(page.url, 'sort', data.sort, 'page')}
+        name="sort"
+        onchange={() => sortForm?.requestSubmit()}
       >
         {#snippet customLabel()}
           <span class="flex items-center gap-1">
