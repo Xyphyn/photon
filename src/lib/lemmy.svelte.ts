@@ -1,7 +1,7 @@
 import { type GetSiteResponse, LemmyHttp } from 'lemmy-js-client'
 import { get, writable } from 'svelte/store'
 import { error } from '@sveltejs/kit'
-import { instance } from '$lib/instance.svelte.js'
+import { DEFAULT_INSTANCE_URL, instance } from '$lib/instance.svelte.js'
 import { instanceToURL } from '$lib/util.svelte'
 import { profile } from '$lib/auth.svelte'
 import { toast } from 'mono-svelte'
@@ -69,7 +69,7 @@ export function client({
   ) => Promise<Response>
   auth?: string
 } = {}) {
-  if (!instanceURL) instanceURL = profile.data.instance
+  if (!instanceURL) instanceURL = profile.data.instance || DEFAULT_INSTANCE_URL
 
   let jwt = auth ? auth : profile.data?.jwt
 

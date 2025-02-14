@@ -82,6 +82,11 @@
     top: boolean
   }>(dockProps)
 
+  let sidePadding = $derived(
+    calculatePadding(dockProps.noGap, dockProps.top, false),
+  )
+  let topPanel = $derived(dockProps.noGap && dockProps.top)
+
   export { contentPaddingStore as contentPadding, dockPropsStore as dockProps }
 </script>
 
@@ -112,11 +117,6 @@
     suffix,
     ...rest
   }: Props = $props()
-
-  let sidePadding = $derived(
-    calculatePadding(dockProps.noGap, dockProps.top, false),
-  )
-  let topPanel = $derived(dockProps.noGap && dockProps.top)
 
   $effect(() => {
     contentPaddingStore.set(contentPadding)

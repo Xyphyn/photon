@@ -111,9 +111,10 @@ const configuredColorScheme = env.PUBLIC_COLORSCHEME ?? 'system'
 
 class ThemeState {
   constructor() {
-    const localColorScheme: ColorScheme =
-      (localStorage.getItem('colorScheme') as ColorScheme) ||
-      configuredColorScheme
+    const localColorScheme: ColorScheme = browser
+      ? (localStorage.getItem('colorScheme') as ColorScheme) ||
+        configuredColorScheme
+      : (configuredColorScheme as ColorScheme)
 
     this.#colorScheme = localColorScheme
   }
