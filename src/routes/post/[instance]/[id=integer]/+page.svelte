@@ -146,7 +146,7 @@
       if (res.post) {
         removeToast(id)
         goto(`/post/${instance.data}/${res.post.post.id}`, {}).then(() =>
-          removeToast(id),
+          removeToast(id)
         )
       }
     } catch (err) {
@@ -176,7 +176,7 @@
   let commenting = $state(false)
 
   let remoteView = $derived(
-    page.params.instance?.toLowerCase() != instance.data.toLowerCase(),
+    page.params.instance?.toLowerCase() != instance.data?.toLowerCase()
   )
 </script>
 

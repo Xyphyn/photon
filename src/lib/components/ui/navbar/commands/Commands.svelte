@@ -27,7 +27,7 @@
       profile.data,
       profileData.profiles,
       theme.data,
-      page.data.contextual?.actions,
+      page.data.contextual?.actions
     )
   })
 
@@ -95,7 +95,7 @@
               score: Math.max(
                 fuzzySearch(action.name, term),
                 fuzzySearch(group.name, term),
-                action.detail ? fuzzySearch(action.detail, term) : -1,
+                action.detail ? fuzzySearch(action.detail, term) : -1
               ),
             }))
             .filter((action) => action.score > 0)
@@ -106,7 +106,7 @@
             actions: scoredActions,
             score: Math.max(
               fuzzySearch(group.name, term),
-              ...scoredActions.map((a) => a.score),
+              ...scoredActions.map((a) => a.score)
             ),
           }
         })
@@ -140,7 +140,7 @@
 
   function flattenActions(
     actions: Action[],
-    subaction: boolean = true,
+    subaction: boolean = true
   ): Action[] {
     return actions.flatMap((action) => [
       action,
@@ -238,7 +238,7 @@
   })
 
   let flattenedActions = $derived(
-    filteredGroups.flatMap((group) => group.actions),
+    filteredGroups.flatMap((group) => group.actions)
   )
 
   $effect(() => {
@@ -250,7 +250,6 @@
 
 <TextInput
   bind:value={search}
-  autofocus
   class="sticky rounded-none border-t-0 border-x-0 focus-within:dark:border-zinc-800"
   size="lg"
   placeholder={$t('nav.commands.prompt')}

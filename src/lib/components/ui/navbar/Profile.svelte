@@ -70,9 +70,9 @@
 <Menu {...rest}>
   {#snippet target()}
     <button
-      class="w-10 h-10 rounded-full border-2 border-slate-200 dark:border-zinc-700
+      class="w-10 h-10 rounded-full border-slate-200 dark:border-zinc-700
       transition-all bg-slate-50 dark:bg-zinc-900 relative
-      hover:border-primary-900 hover:dark:border-primary-100 active:scale-95 {buttonClass}"
+      hover:bg-slate-200 hover:dark:bg-zinc-700 {buttonClass}"
       title={$t('profile.profile')}
     >
       {#if profile.data?.user}
@@ -81,7 +81,7 @@
         >
           <Avatar
             url={profile.data.user.local_user_view.person.avatar}
-            width={36}
+            width={32}
             alt={profile.data.user.local_user_view.person.name}
           />
         </div>
@@ -97,18 +97,7 @@
       {/if}
     </button>
   {/snippet}
-  {#if profile.data?.user}
-    <UserLink
-      user={profile.data?.user.local_user_view.person}
-      showInstance={false}
-      avatar
-      avatarSize={24}
-      displayName={false}
-      class="font-medium px-2 py-1 pointer-events-none"
-    />
-  {:else}
-    <MenuDivider>{$t('nav.menu.label')}</MenuDivider>
-  {/if}
+  <MenuDivider>{$t('nav.menu.label')}</MenuDivider>
   {#if profile.data?.jwt}
     <MenuButton link href="/profile">
       {#snippet prefix()}

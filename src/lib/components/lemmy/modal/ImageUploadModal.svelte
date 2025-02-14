@@ -28,7 +28,7 @@
   let progress = $state(1)
 
   let previewURLs = $derived(
-    preview && image ? Array.from(image).map(URL.createObjectURL) : undefined,
+    preview && image ? Array.from(image).map(URL.createObjectURL) : undefined
   )
 
   async function upload() {
@@ -48,8 +48,8 @@
               .catch((err) => {
                 toast({ content: errorMessage(err), type: 'error' })
                 return 'Failed to upload'
-              }),
-          ),
+              })
+          )
         )
       ).filter((i) => i != undefined)
 
@@ -108,9 +108,12 @@
           {/each}
         </div>
       {:else}
-        <div class="flex flex-col justify-center w-full items-center gap-2">
+        <div
+          class="flex flex-col justify-center w-full items-center gap-2
+        text-slate-600 dark:text-zinc-400"
+        >
           <Icon src={DocumentPlus} size="32" />
-          <span>{$t('form.post.selectFile')}</span>
+          <span class="font-medium text-sm">{$t('form.post.selectFile')}</span>
         </div>
       {/if}
       <input

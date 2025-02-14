@@ -10,7 +10,7 @@
   import { Button } from 'mono-svelte'
   import { t } from '$lib/translations'
   import { errorMessage } from '$lib/lemmy/error'
-  import { Icon, Language, XMark } from 'svelte-hero-icons'
+  import { ArrowUp, Icon, Language, XMark } from 'svelte-hero-icons'
 
   interface Props {
     postId: number
@@ -104,7 +104,8 @@
       <Menu>
         {#snippet target()}
           <Button
-            size="square-md"
+            size="custom"
+            class="w-9 h-9"
             rounding="pill"
             color={language != undefined ? 'primary' : 'ghost'}
             title={$t('form.profile.languages.title')}
@@ -154,12 +155,15 @@
           onclick={submit}
           color="primary"
           rounding="pill"
-          size="sm"
-          class="py-2 px-4"
+          size="custom"
+          class="w-9 h-9"
+          title={$t('form.submit')}
           {loading}
           disabled={locked || loading || banned}
         >
-          {$t('form.submit')}
+          {#snippet prefix()}
+            <Icon src={ArrowUp} size="18" micro />
+          {/snippet}
         </Button>
       {/if}
     </MarkdownEditor>

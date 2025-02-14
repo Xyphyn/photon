@@ -41,8 +41,9 @@
     color="distinct"
     class="flex flex-col-reverse sm:flex-row
     overflow-hidden gap-4 embed-card z-0 relative
-    dark:border-t-zinc-800 border-opacity-80 max-w-full"
-    rounding="xl"
+    dark:border-t-zinc-800 border-opacity-80 max-w-full shadow-sm shadow-black/5
+    dark:bg-zinc-950"
+    rounding="2xl"
     element="article"
   >
     {#if thumbnail_url}
@@ -54,14 +55,19 @@
         -inset-px"
       />
     {/if}
-    <div class="flex flex-col gap-2 mb-2">
+    <div class="flex flex-col gap-2">
       {#if richURL}
         <Link
           href={url}
           target="_blank"
-          class="text-slate-600 dark:text-zinc-400 inline-flex items-center gap-1 text-xs"
+          class="text-slate-600 dark:text-zinc-400 inline-flex items-center gap-1 text-xs font-medium"
         >
-          <Icon src={LinkIcon} size="14" micro />
+          <Icon
+            src={LinkIcon}
+            size="16"
+            micro
+            class="text-slate-400 dark:text-zinc-600"
+          />
           {richURL.hostname}
         </Link>
       {/if}
@@ -73,7 +79,7 @@
         {embed_title}
       </a>
       {#if embed_description}
-        <p class="text-sm">
+        <p class="text-sm max-w-2xl">
           {embed_description.slice(0, 300)}{embed_description.length > 300
             ? '...'
             : ''}
