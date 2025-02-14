@@ -20,7 +20,7 @@
 
   let { data }: Props = $props()
 
-  let instance = $state(LINKED_INSTANCE_URL || $currentInstance || '')
+  let instance = $state(LINKED_INSTANCE_URL || currentInstance.data || '')
   let password = $state(''),
     password_verify = $state('')
   let loading = $state(false)

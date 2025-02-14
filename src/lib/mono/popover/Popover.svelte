@@ -73,7 +73,7 @@
     floatingContent(node)
   }
 
-  const customFloatingRef = (node: HTMLButtonElement) => {
+  const customFloatingRef = (node: HTMLDivElement) => {
     const n = node.children.item(0)
 
     // @ts-ignore
@@ -102,7 +102,7 @@
 />
 
 {#if target}
-  <button
+  <div
     onmouseover={() => (openOnHover ? (open = true) : false)}
     onmouseleave={() => (openOnHover ? (open = false) : false)}
     onfocus={() => (openOnHover ? (open = true) : false)}
@@ -111,14 +111,14 @@
     onkeydown={(e) => {
       if (e.key == 'Escape') open = false
     }}
-    role="menu"
-    type="button"
+    tabindex="0"
+    role="button"
     class="{canUseContents ? 'contents text-left' : 'w-max h-max'} {clazz}"
     bind:this={el}
     use:customFloatingRef
   >
     {@render target?.()}
-  </button>
+  </div>
 {/if}
 
 {#if open}

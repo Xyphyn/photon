@@ -3,7 +3,7 @@ import {
   isAdmin,
 } from '$lib/components/lemmy/moderation/moderation.js'
 import { toast } from 'mono-svelte'
-import { DEFAULT_INSTANCE_URL } from '$lib/instance.svelte.js'
+import { DEFAULT_INSTANCE_URL, instance } from '$lib/instance.svelte.js'
 import { client, getClient } from '$lib/lemmy.svelte.js'
 import { site } from './lemmy.svelte'
 import { instanceToURL, moveItem } from '$lib/util.svelte'

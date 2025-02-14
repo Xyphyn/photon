@@ -231,8 +231,8 @@
           </p>
         {/snippet}
         <Button
-          color="primary"
-          class="dark:bg-pink-400 bg-pink-600"
+          color="none"
+          class="dark:bg-pink-400 bg-pink-600 text-white dark:text-black"
           href="https://buymeacoffee.com/xylight"
           target="_blank"
           rounding="xl"

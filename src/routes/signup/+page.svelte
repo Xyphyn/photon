@@ -18,7 +18,7 @@
 
   import { goto } from '$app/navigation'
   import { Badge, Material, Spinner, toast } from 'mono-svelte'
-  import { DEFAULT_INSTANCE_URL } from '$lib/instance.svelte.js'
+  import { DEFAULT_INSTANCE_URL, instance } from '$lib/instance.svelte.js'
   import { validateInstance } from '$lib/lemmy.svelte.js'
   import { Button, TextInput } from 'mono-svelte'
   import { onMount } from 'svelte'

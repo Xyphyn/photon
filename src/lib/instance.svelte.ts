@@ -5,6 +5,16 @@ import { env } from '$env/dynamic/public'
 import { writable } from 'svelte/store'
 import { profile } from './auth.svelte'
 
+class InstanceData {
+  #instance = $derived(profile.data.instance)
+
+  get data() {
+    return this.#instance
+  }
+}
+
+export let instance = new InstanceData()
+
 export const LINKED_INSTANCE_URL =
   (env.PUBLIC_LOCK_TO_INSTANCE ?? 'true').toLowerCase() == 'true'
     ? env.PUBLIC_INSTANCE_URL
@@ -19,13 +29,3 @@ const getDefaultInstance = (): string => {
 }
 
 export const DEFAULT_INSTANCE_URL = getDefaultInstance()
-
-class InstanceData {
-  #instance = $derived(profile.data.instance)
-
-  get data() {
-    return this.#instance
-  }
-}
-
-export let instance = new InstanceData()

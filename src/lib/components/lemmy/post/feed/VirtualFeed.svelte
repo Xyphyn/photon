@@ -1,44 +1,31 @@
 <script lang="ts">
   import { run } from 'svelte/legacy'
 
-  import Post from '$lib/components/lemmy/post/Post.svelte'
-  import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import { settings } from '$lib/settings.svelte.js'
-  import type {
-    GetPostsResponse,
-    ListingType,
-    PostView,
-    SortType,
-  } from 'lemmy-js-client'
-  import { Badge, Button } from 'mono-svelte'
-  import {
-    ArchiveBox,
-    ChevronDoubleUp,
-    ExclamationTriangle,
-    Icon,
-    Minus,
-    Plus,
-  } from 'svelte-hero-icons'
-  import { expoOut } from 'svelte/easing'
-  import { fly, slide } from 'svelte/transition'
   import { browser } from '$app/environment'
-  import { onMount, tick, type SvelteComponent } from 'svelte'
-  import {
-    createVirtualizer,
-    createWindowVirtualizer,
-    type SvelteVirtualizer,
-  } from '@tanstack/svelte-virtual'
-  import { afterNavigate, beforeNavigate } from '$app/navigation'
-  import { combineCrossposts } from './crosspost.svelte'
+  import { afterNavigate } from '$app/navigation'
+  import Post from '$lib/components/lemmy/post/Post.svelte'
+  import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
+  import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { client } from '$lib/lemmy.svelte'
   import {
     postFeeds,
     type PostFeed,
     type PostFeedID,
   } from '$lib/lemmy/postfeed'
+  import { settings } from '$lib/settings.svelte.js'
   import { t } from '$lib/translations'
+  import { createWindowVirtualizer } from '@tanstack/svelte-virtual'
+  import type { PostView } from 'lemmy-js-client'
+  import { Button } from 'mono-svelte'
+  import { onMount } from 'svelte'
+  import {
+    ArchiveBox,
+    ChevronDoubleUp,
+    ExclamationTriangle,
+    Icon,
+    Plus,
+  } from 'svelte-hero-icons'
   import InfiniteScroll from 'svelte-infinite-scroll'
-  import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
 
   let virtualItemEls: HTMLElement[] = $state([])
   let virtualListEl: HTMLElement | undefined = $state(undefined)
@@ -181,7 +168,7 @@
     if (virtualItemEls.length)
       virtualItemEls.forEach($virtualizer.measureElement)
   })
-  run(() => {
+  $effect(() => {
     if (posts.length && virtualListEl)
       $virtualizer.setOptions({
         scrollMargin: virtualListEl?.offsetTop,
@@ -193,65 +180,66 @@
 <ul
   class="flex flex-col list-none divide-y divide-slate-200 dark:divide-zinc-800"
 >
-  {#if posts?.length == 0}
-    <div class="h-full grid place-items-center">
-      <Placeholder
-        icon={ArchiveBox}
-        title="No posts"
-        description="There are no posts that match this filter."
-      >
-        <Button href="/communities">
-          {#snippet prefix()}
-            <Icon src={Plus} size="16" mini />
-          {/snippet}
-          <span>Follow some communities</span>
-        </Button>
-      </Placeholder>
-    </div>
-  {:else}
-    <div
-      style="position:relative; height: {browser
-        ? `${$virtualizer.getTotalSize()}px`
-        : '100%'}; width: 100%;"
-      bind:this={virtualListEl}
-    >
-      <div
-        style="position: absolute; top: 0; left: 0; width: 100%; transform: translateY({items?.[0]
-          ? items?.[0]?.start - $virtualizer.options.scrollMargin
-          : 0}px);"
-        class="divide-y divide-slate-200 dark:divide-zinc-900"
-        id="feed"
-      >
-        {#each items as row, index (posts[row.index]?.post.id)}
-          {#if posts[row.index]}
-            {@const post = posts?.[row.index]}
-            <li
-              bind:this={virtualItemEls[index]}
-              data-index={row.index}
-              style={row.index < 7 ? `--anim-delay: ${index * 100}ms` : ''}
-              class="relative post-container {row.index < 7
-                ? 'pop-in opacity-0'
-                : ''} -mx-4 sm:-mx-6 px-4 sm:px-6"
-            >
-              <Post
-                bind:post={posts[row.index]}
-                hideCommunity={community}
-                view={(posts[row.index]?.post.featured_community ||
-                  posts[row.index]?.post.featured_local) &&
-                settings.posts.compactFeatured
-                  ? 'compact'
-                  : settings.view}
-                class="transition-all duration-250"
-                onhide={() => {
-                  posts = posts.toSpliced(row.index, 1)
-                }}
-              ></Post>
-            </li>
-          {/if}
-        {/each}
+  {#key posts}
+    {#if posts?.length == 0}
+      <div class="h-full grid place-items-center">
+        <Placeholder
+          icon={ArchiveBox}
+          title="No posts"
+          description="There are no posts that match this filter."
+        >
+          <Button href="/communities">
+            {#snippet prefix()}
+              <Icon src={Plus} size="16" mini />
+            {/snippet}
+            <span>Follow some communities</span>
+          </Button>
+        </Placeholder>
       </div>
-    </div>
-  {/if}
+    {:else}
+      <div
+        style="position:relative; height: {browser
+          ? `${$virtualizer?.getTotalSize()}px`
+          : '100%'}; width: 100%;"
+        bind:this={virtualListEl}
+      >
+        <div
+          style="position: absolute; top: 0; left: 0; width: 100%; transform: translateY({items?.[0]
+            ? items?.[0]?.start - $virtualizer.options.scrollMargin
+            : 0}px);"
+          class="divide-y divide-slate-200 dark:divide-zinc-900"
+          id="feed"
+        >
+          {#each items as row, index (posts[row.index]?.post.id)}
+            {#if posts[row.index]}
+              <li
+                bind:this={virtualItemEls[index]}
+                data-index={row.index}
+                style={row.index < 7 ? `--anim-delay: ${index * 100}ms` : ''}
+                class="relative post-container {row.index < 7
+                  ? 'pop-in opacity-0'
+                  : ''} -mx-4 sm:-mx-6 px-4 sm:px-6"
+              >
+                <Post
+                  bind:post={posts[row.index]}
+                  hideCommunity={community}
+                  view={(posts[row.index]?.post.featured_community ||
+                    posts[row.index]?.post.featured_local) &&
+                  settings.posts.compactFeatured
+                    ? 'compact'
+                    : settings.view}
+                  class="transition-all duration-250"
+                  onhide={() => {
+                    posts = posts.toSpliced(row.index, 1)
+                  }}
+                ></Post>
+              </li>
+            {/if}
+          {/each}
+        </div>
+      </div>
+    {/if}
+  {/key}
 
   {#if settings.infiniteScroll && browser}
     {#if error}

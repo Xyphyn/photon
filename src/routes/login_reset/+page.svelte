@@ -11,7 +11,7 @@
   import { t } from '$lib/translations'
   import { Button, TextInput, toast } from 'mono-svelte'
 
-  let instance = $state(LINKED_INSTANCE_URL || $currentInstance || '')
+  let instance = $state(LINKED_INSTANCE_URL || currentInstance.data || '')
   let email = $state('')
   let loading = $state(false)
 
