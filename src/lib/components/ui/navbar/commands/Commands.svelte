@@ -27,7 +27,7 @@
       profile.data,
       profileData.profiles,
       theme.data,
-      page.data.contextual?.actions
+      page.data.contextual?.actions,
     )
   })
 
@@ -37,6 +37,7 @@
   let selectedIndex = $state(0)
   let filteredGroups: Group[] = $state([])
   let breadcrumbs: Action[] = $state([])
+  let input = $state<HTMLInputElement>()
 
   function fuzzySearch(text: string, pattern: string): number {
     const textLower = text.toLowerCase()
@@ -95,7 +96,7 @@
               score: Math.max(
                 fuzzySearch(action.name, term),
                 fuzzySearch(group.name, term),
-                action.detail ? fuzzySearch(action.detail, term) : -1
+                action.detail ? fuzzySearch(action.detail, term) : -1,
               ),
             }))
             .filter((action) => action.score > 0)
@@ -106,7 +107,7 @@
             actions: scoredActions,
             score: Math.max(
               fuzzySearch(group.name, term),
-              ...scoredActions.map((a) => a.score)
+              ...scoredActions.map((a) => a.score),
             ),
           }
         })
@@ -140,7 +141,7 @@
 
   function flattenActions(
     actions: Action[],
-    subaction: boolean = true
+    subaction: boolean = true,
   ): Action[] {
     return actions.flatMap((action) => [
       action,
@@ -237,13 +238,17 @@
     if (open) search = ''
   })
 
-  let flattenedActions = $derived(
-    filteredGroups.flatMap((group) => group.actions)
-  )
-
   $effect(() => {
     debouncedSearch(search)
   })
+
+  onMount(() => {
+    if (input) input.focus()
+  })
+
+  let flattenedActions = $derived(
+    filteredGroups.flatMap((group) => group.actions),
+  )
 </script>
 
 <svelte:window onkeydown={handleKeydown} />
@@ -253,6 +258,7 @@
   class="sticky rounded-none border-t-0 border-x-0 focus-within:dark:border-zinc-800"
   size="lg"
   placeholder={$t('nav.commands.prompt')}
+  bind:element={input}
 />
 <div class="h-[32rem] overflow-auto border-slate-200 dark:border-zinc-800 p-5">
   {#if breadcrumbs.length > 0}
