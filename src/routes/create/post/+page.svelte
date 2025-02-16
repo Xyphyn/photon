@@ -7,11 +7,7 @@
   import { t } from '$lib/translations.js'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
-  let {
-    data = {
-      crosspost: false,
-    },
-  } = $props()
+  let { data } = $props()
 
   onMount(() => {
     if (!profile.data?.jwt) {
@@ -27,7 +23,7 @@
     setSessionStorage('lastSeenCommunity', undefined)
   })
 
-  let draft = getSessionStorage('postDraft') as any
+  let post = getSessionStorage('postDraft') as any
 </script>
 
 <svelte:head>
@@ -36,8 +32,8 @@
 
 <div class="w-full max-w-5xl mx-auto h-full">
   <PostForm
-    data={data.crosspost == true
-      ? draft
+    passedData={data.crosspost == true
+      ? post
       : {
           body: '',
           community: null,
