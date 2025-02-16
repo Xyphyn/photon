@@ -173,7 +173,10 @@ $effect.root(() => {
   })
 
   $effect(() => {
-    if (profile.data.id || profileData) fetchUserData(profile).then((res) => {})
+    if (profile.data.id || profileData)
+      fetchUserData(profile).then((res) => {
+        checkInbox()
+      })
   })
 })
 
@@ -319,37 +322,38 @@ export function moveProfile(id: number, up: boolean) {
 }
 
 async function getNotificationCount(jwt: string, mod: boolean, admin: boolean) {
-  const unreads = await getClient().getUnreadCount()
+  const unreadsPromise = getClient()
+    .getUnreadCount()
+    .then((res) => res.mentions + res.private_messages + res.replies)
+    .catch(() => 0)
 
-  let reports: number = 0
-  let applications: number = 0
+  const reportsPromise = mod
+    ? getClient()
+        .getReportCount({})
+        .then(
+          (res) =>
+            res.comment_reports +
+            res.post_reports +
+            (res.private_message_reports ?? 0),
+        )
+        .catch(() => 0)
+    : new Promise<number>((res) => res(0))
 
-  if (mod) {
-    try {
-      const reportRes = await getClient().getReportCount({})
+  const applicationsPromise = admin
+    ? getClient()
+        .getUnreadRegistrationApplicationCount()
+        .then((res) => res.registration_applications)
+        .catch(() => 0)
+    : new Promise<number>((res) => res(0))
 
-      reports =
-        reportRes.comment_reports +
-        reportRes.post_reports +
-        (reportRes.private_message_reports ?? 0)
-    } catch (e) {
-      // doesn't matter
-    }
-  }
-
-  if (admin) {
-    try {
-      const applicationRes =
-        await getClient().getUnreadRegistrationApplicationCount()
-
-      applications = applicationRes.registration_applications
-    } catch (e) {
-      // doesn't matter
-    }
-  }
+  const [unreads, reports, applications] = await Promise.all([
+    unreadsPromise,
+    reportsPromise,
+    applicationsPromise,
+  ])
 
   return {
-    unreads: unreads.mentions + unreads.private_messages + unreads.replies,
+    unreads: unreads,
     reports: reports,
     applications: applications,
   }
