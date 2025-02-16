@@ -28,6 +28,11 @@
 
   let previousTop = 0
   const onscroll: UIEventHandler<Window> = (e) => {
+    if (!settings.dock.autoHide) {
+      dockVisible = true
+      return
+    }
+
     dockVisible = (scrollY?.current ?? 0) <= previousTop
 
     previousTop = scrollY?.current ?? 0

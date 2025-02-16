@@ -85,7 +85,7 @@ interface Settings {
   }
   dock: {
     paletteHotkey: string
-    showOnScroll: boolean
+    autoHide: boolean
   }
   posts: {
     deduplicateEmbed: boolean
@@ -164,7 +164,7 @@ export const defaultSettings: Settings = {
   },
   dock: {
     paletteHotkey: '/',
-    showOnScroll: false,
+    autoHide: true,
   },
   posts: {
     deduplicateEmbed: toBool(env.PUBLIC_DEDUPLICATE_EMBED) ?? true,

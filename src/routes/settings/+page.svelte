@@ -389,6 +389,12 @@
       description={$t('settings.app.limitLayoutWidth.description')}
     />
     <ToggleSetting
+      supportedPlatforms={{ desktop: false, tablet: false, mobile: true }}
+      bind:checked={settings.dock.autoHide}
+      title={$t('settings.navigation.autoHide.title')}
+      description={$t('settings.navigation.autoHide.description')}
+    />
+    <ToggleSetting
       bind:checked={settings.openLinksInNewTab}
       title={$t('settings.app.postsInNewTab.title')}
       description={$t('settings.app.postsInNewTab.description')}
