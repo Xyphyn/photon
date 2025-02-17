@@ -32,7 +32,7 @@
             "new": "חדש",
             "old": "ישן",
             "controversial": "שנוי במחלוקת",
-            "mostcomments": "תגובות",
+            "mostcomments": "רוב התגובות",
             "newcomments": "תגובות חדשות",
             "scaled": "מטפסים"
         },
@@ -90,7 +90,11 @@
             "nsfw": "תוכן למבוגרים",
             "generateTitle": "יצירת כותרת",
             "uploadImage": "העלאת תמונה",
-            "selectFile": "בחירת קובץ"
+            "selectFile": "בחירת קובץ",
+            "addUrl": "הוספת קישור",
+            "setLanguage": "הגדרת שפה",
+            "unset": "לא מוגדר",
+            "readMore": "המשכת קריאה"
         },
         "signup": {
             "application": {
@@ -153,14 +157,25 @@
                 "title": "מחיקת חשבון",
                 "warning": "לא ניתן לבטל פעולה זו. האם זה רצונך?"
             },
-            "blocks": "חסומים",
+            "blocks": {
+                "title": "חסום",
+                "empty": {
+                    "description": "כל דבר חסום לא יופיע בפידים שלך."
+                }
+            },
             "upvoted": "הוצבע בעד",
             "downvoted": "הוצבע נגד",
-            "welcome": "שלום, {{default}}!"
+            "welcome": "שלום, {{default}}!",
+            "overview": "סקירה"
         },
         "translators": "מתרגמים",
         "accounts": "חשבונות",
-        "communities": "קהילות",
+        "communities": {
+            "title": "קהילות",
+            "search": {
+                "placeholder": "חיפוש לקהילה חדשה"
+            }
+        },
         "search": {
             "title": "חיפוש",
             "noResults": {
@@ -169,7 +184,9 @@
                 "alt": "חיפוש ברחבי הפדיורס"
             },
             "query": "חיפוש",
-            "federating": "מתבצע חיפוש..."
+            "federating": "מתבצע חיפוש...",
+            "top": "התוצאות המובילות",
+            "other": "תוצאות אחרות"
         },
         "admin": {
             "config": {
@@ -282,6 +299,11 @@
             "empty": {
                 "title": "אין הודעות חדשות",
                 "description": "הודעות, תגובות, ואזכורים יופיעו פה."
+            },
+            "item": {
+                "reply": "{{user}} ענו לך ב-{{post}}",
+                "mention": "{{user}} ציינו אותך ב-{{post}}",
+                "message": "{{user}} כתבו ל-{{recipient}}"
             }
         },
         "moderation": {
@@ -379,7 +401,8 @@
             "setColor": "הגדרת צבעים",
             "feeds": "פידים",
             "downloading": "פעולות הורדה",
-            "setColorTo": "הגדרת צבעים ל{{default}}"
+            "setColorTo": "הגדרת צבעים ל{{default}}",
+            "contextual": "בעמוד הזה"
         }
     },
     "account": {
