@@ -38,17 +38,18 @@
   import { t } from '$lib/translations.js'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
-  import { goto } from '$app/navigation'
+  import { goto, invalidate } from '$app/navigation'
   import Option from 'mono-svelte/forms/select/Option.svelte'
   import Skeleton from '$lib/components/ui/generic/Skeleton.svelte'
 
   type Result = PostView | CommentView | PersonView | CommunityView
 
-  let { data: passedData } = $props()
-  let data = $state(passedData)
+  let { data } = $props()
+
+  let results = $state(data.results)
 
   $effect(() => {
-    passedData = data
+    results = data.results
   })
 
   let query = $state(data.query || '')
