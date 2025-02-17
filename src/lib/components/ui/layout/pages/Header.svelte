@@ -19,14 +19,12 @@
 </script>
 
 <div
-  class="
-  {pageHeader
-    ? `w-[calc(100%+2rem)] sm:w-[calc(100%+3rem)]
+  class={[
+    pageHeader &&
+      `w-[calc(100%+2rem)] sm:w-[calc(100%+3rem)]
   bg-slate-50 dark:bg-zinc-950 -m-4 sm:-m-6 mb-0 sm:mb-0 sm:p-6 p-4
-   border-b border-slate-200 dark:border-zinc-800 margin`
-    : ''}
-  
-  "
+   border-b border-slate-200 dark:border-zinc-800 margin`,
+  ]}
   {style}
 >
   <h1
@@ -50,8 +48,8 @@
 
   @media screen and (min-width: 1024px) {
     .margin {
-      margin-top: -4rem;
-      padding-top: 4rem;
+      margin-top: -8rem;
+      padding-top: 8rem;
     }
   }
 </style>
