@@ -14,21 +14,23 @@
     profile = undefined,
     selected = false,
     index = 0,
-    size = 20,
+    size = 22,
     guest = false,
   }: Props = $props()
 </script>
 
 {#if profile}
-  <div style="width: {size}px; height: {size}px;">
+  <div
+    style="width: {size}px; height: {size}px;"
+    class={[profile.avatar && 'bg-slate-200 rounded-full dark:bg-zinc-700']}
+  >
     {#if profile.avatar}
       <img
         src="{profile.avatar}?thumbnail=32&format=webp"
         alt={profile.username}
         width={size}
         height={size}
-        class="flex-shrink-0 rounded-full ring-slate-800/50 dark:ring-zinc-200/50"
-        class:ring-2={selected}
+        class={['flex-shrink-0 rounded-full', selected && 'scale-75']}
       />
     {:else}
       <Icon

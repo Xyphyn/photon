@@ -1,11 +1,7 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy'
-
   import { page } from '$app/state'
-  import { settings } from '$lib/settings.svelte.js'
   import { Button } from 'mono-svelte'
   import { Icon, type IconSource } from 'svelte-hero-icons'
-  import type { HTMLButtonAttributes } from 'svelte/elements'
 
   interface Props {
     href?: string | undefined
@@ -29,7 +25,7 @@
     ...rest
   }: Props = $props()
 
-  run(() => {
+  $effect(() => {
     if (href != undefined) {
       selected = page.url.pathname == href
     }

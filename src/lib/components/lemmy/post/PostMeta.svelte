@@ -129,12 +129,30 @@
   {style}
 >
   {#if showCommunity && community}
-    <Avatar
-      url={community?.icon}
-      width={view == 'compact' ? 24 : 32}
-      alt={community?.name}
-      class="row-span-2 flex-shrink-0 mr-2 self-center"
-    />
+    <Popover autoClose={false} popoverClass="backdrop-blur-xl rounded-2xl">
+      {#snippet target()}
+        <button
+          class="row-span-2 flex-shrink-0 mr-2 self-center group/btn bg-slate-200 dark:bg-zinc-800 rounded-full"
+        >
+          <Avatar
+            url={community?.icon}
+            width={view == 'compact' ? 24 : 32}
+            alt={community?.name}
+            class="group-hover/btn:scale-90 group-active/btn:scale-[.85] transition-transform"
+          />
+        </button>
+      {/snippet}
+      {#snippet popover()}
+        {#if community && subscribed}
+          <div
+            class="bg-white/80 dark:bg-zinc-900/90 border border-slate-200 dark:border-zinc-800 rounded-2xl shadow-xl p-4
+            max-w-2xl w-full max-h-[32rem] overflow-auto"
+          >
+            <CommunityHeader {community} {subscribed} />
+          </div>
+        {/if}
+      {/snippet}
+    </Popover>
   {/if}
   {#if showCommunity && community}
     <CommunityLink

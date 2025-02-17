@@ -72,16 +72,16 @@
     <button
       class="w-10 h-10 rounded-full border-slate-200 dark:border-zinc-700
       transition-all bg-slate-50 dark:bg-zinc-900 relative
-      hover:bg-slate-200 hover:dark:bg-zinc-700 {buttonClass}"
+      hover:bg-slate-200 hover:dark:bg-zinc-700 group {buttonClass}"
       title={$t('profile.profile')}
     >
       {#if profile.data?.user}
         <div
-          class="w-full h-full aspect-square object-cover rounded-full grid place-items-center"
+          class="w-full h-full aspect-square object-cover rounded-full grid place-items-center group-hover:scale-90 transition-transform group-active:scale-[85%]"
         >
           <Avatar
             url={profile.data.user.local_user_view.person.avatar}
-            width={32}
+            width={36}
             alt={profile.data.user.local_user_view.person.name}
           />
         </div>

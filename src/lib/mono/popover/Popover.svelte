@@ -32,6 +32,7 @@
   interface Props {
     openOnHover?: boolean
     open?: boolean
+    autoClose?: boolean
     placement?: Placement
     middleware?: Middleware[]
     strategy?: Strategy
@@ -46,6 +47,7 @@
   let {
     openOnHover = false,
     open = $bindable(false),
+    autoClose = false,
     placement = 'bottom-start',
     middleware = [offset(6), shift(), flip()],
     strategy = 'fixed',
@@ -60,6 +62,7 @@
   let canUseContents = $state(true)
 
   let el: any = $state()
+  let popoverEl: any = $state()
 
   const [floatingRef, floatingContent] = createFloatingActions({
     strategy: strategy,
@@ -90,7 +93,13 @@
     if (openOnHover) return
 
     if (!el?.contains(e.target) && open) {
-      open = false
+      if (!autoClose) {
+        if (popoverEl && !popoverEl.contains(e.target)) {
+          open = false
+        }
+      } else {
+        open = false
+      }
     }
   }}
   onkeydown={async (e) => {
@@ -128,6 +137,7 @@
       class="z-[150] {popoverClass}"
       use:customFloatingContent
       use:focusTrap
+      bind:this={popoverEl}
     >
       {#if popover}{@render popover()}{:else}
         <Material elevation="high" color="distinct" class="flex flex-col">
