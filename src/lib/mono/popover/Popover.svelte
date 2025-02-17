@@ -47,7 +47,7 @@
   let {
     openOnHover = false,
     open = $bindable(false),
-    autoClose = false,
+    autoClose = true,
     placement = 'bottom-start',
     middleware = [offset(6), shift(), flip()],
     strategy = 'fixed',
