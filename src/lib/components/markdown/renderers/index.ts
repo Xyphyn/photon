@@ -16,6 +16,7 @@ import MdParagraph from './MdParagraph.svelte'
 import MdListItem from './MdListItem.svelte'
 import MdSubscript from './MdSubscript.svelte'
 import MdSuperscript from './MdSuperscript.svelte'
+import MdText from './MdText.svelte'
 
 export {
   MdCode,
@@ -36,4 +37,5 @@ export {
   MdListItem,
   MdSubscript,
   MdSuperscript,
+  MdText,
 }
