@@ -1,5 +1,5 @@
 import { client } from '$lib/lemmy.svelte.js'
-import { awaitIfServer } from '$lib/promise.js'
+import { awaitIfServer } from '$lib/promise.svelte.js'
 
 export async function load({ fetch, params }) {
   const creator = Number(params.user_id)

@@ -6,6 +6,7 @@ import {
   generalizePersonMention,
   generalizePrivateMessage,
 } from '$lib/lemmy/inbox.js'
+import { ReactiveState } from '$lib/promise.svelte.js'
 import { get } from 'svelte/store'
 
 type InboxFeedType = 'replies' | 'mentions' | 'messages' | 'all'
@@ -61,7 +62,7 @@ export async function load({ url, fetch }) {
     unreadOnly: unreadOnly,
     type: type,
     page: page,
-    data: data,
+    inbox: new ReactiveState(data),
     limit: 20,
   }
 }

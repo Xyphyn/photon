@@ -34,17 +34,14 @@
 
   let { data } = $props()
 
-  let communities = $state(data.communities)
-  $effect(() => {
-    communities = data.communities
-  })
-
   let search = $state(data.query || '')
   let searchElement = $state<HTMLInputElement>()
   let form = $state<HTMLFormElement>()
 
   let showTop = $derived(
-    (data.query ?? '' != '') && data.communities.length > 0 && data.page == 1,
+    (data.query ?? '' != '') &&
+      data.communities.value.length > 0 &&
+      data.page == 1,
   )
 </script>
 
@@ -124,7 +121,7 @@
   <ul
     class="flex flex-col divide-y divide-slate-100 dark:divide-zinc-800 my-6 h-full"
   >
-    {#if communities.length == 0}
+    {#if data.communities.value.length == 0}
       <Placeholder
         icon={QuestionMarkCircle}
         title={$t('routes.search.noResults.title')}
@@ -139,7 +136,7 @@
       <div
         class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 items-center mb-6 !border-0"
       >
-        {#each communities.slice(0, 3) as community, index (community.community.id)}
+        {#each data.communities.value.slice(0, 3) as community, index (community.community.id)}
           <div
             class="h-full"
             in:fly|global={{
@@ -167,13 +164,13 @@
       </div>
     {/if}
 
-    {#if communities.slice(showTop ? 3 : 0).length > 0}
+    {#if data.communities.value.slice(showTop ? 3 : 0).length > 0}
       <SectionTitle class="!border-0 pb-2">
         {$t('routes.search.other')}
       </SectionTitle>
     {/if}
-    {#if communities}
-      {@const sliced = communities.slice(showTop ? 3 : 0)}
+    {#if data.communities.value}
+      {@const sliced = data.communities.value.slice(showTop ? 3 : 0)}
       <div class="-mx-4 sm:-mx-6 h-full">
         {#each sliced as community, index (community.community.id)}
           <div
@@ -193,7 +190,7 @@
     {/if}
   </ul>
 {/if}
-{#if communities.length > 0}
+{#if data.communities.value.length > 0}
   <div class="sticky z-30 mx-auto max-w-full bottom-22 lg:bottom-6">
     <Tabs routes={[]} class="mx-auto">
       <Pageination

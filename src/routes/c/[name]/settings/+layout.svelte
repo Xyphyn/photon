@@ -13,8 +13,8 @@
 
   let communityUrl = $derived(
     `/c/${fullCommunityName(
-      data.community.community_view.community.name,
-      data.community.community_view.community.actor_id,
+      data.community.value.community_view.community.name,
+      data.community.value.community_view.community.actor_id,
     )}`,
   )
 </script>

@@ -21,11 +21,7 @@
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { profile } from '$lib/auth.svelte.js'
 
-  let { data: pageData } = $props()
-  let data = $state(pageData)
-  $effect(() => {
-    data = pageData
-  })
+  let { data } = $props()
 
   let sidebar: boolean = $state(false)
 
@@ -33,14 +29,14 @@
     if (browser)
       setSessionStorage(
         'lastSeenCommunity',
-        data.community.community_view.community,
+        data.community.value.community_view.community,
       )
 
     resumables.add({
-      name: data.community.community_view.community.title,
+      name: data.community.value.community_view.community.title,
       type: 'community',
       url: page.url.toString(),
-      avatar: data.community.community_view.community.icon,
+      avatar: data.community.value.community_view.community.icon,
     })
   })
 
@@ -60,8 +56,8 @@
     {/snippet}
     <div>
       <CommunityCard
-        bind:community_view={data.community.community_view}
-        moderators={data.community.moderators}
+        bind:community_view={data.community.value.community_view}
+        moderators={data.community.value.moderators}
       />
     </div>
   </Modal>
@@ -71,11 +67,11 @@
   <Header pageHeader>
     <div class="flex flex-col w-full">
       <CommunityHeader
-        bind:community={data.community.community_view.community}
-        bind:subscribed={data.community.community_view.subscribed}
-        blocked={data.community.community_view.blocked}
-        moderators={data.community.moderators}
-        counts={data.community.community_view.counts}
+        bind:community={data.community.value.community_view.community}
+        bind:subscribed={data.community.value.community_view.subscribed}
+        blocked={data.community.value.community_view.blocked}
+        moderators={data.community.value.moderators}
+        counts={data.community.value.community_view.counts}
         class="w-full relative"
       />
     </div>
@@ -85,7 +81,7 @@
   </Header>
 
   {#if profile.data.user}
-    {#if !data.community.discussion_languages.every( (l) => profile.data.user?.discussion_languages.includes(l), ) && profile.data.user.discussion_languages.length > 0}
+    {#if !data.community.value.discussion_languages.every( (l) => profile.data.user?.discussion_languages.includes(l), ) && profile.data.user.discussion_languages.length > 0}
       <Note class="!p-1 !pl-3 flex-col md:flex-row">
         {$t('routes.community.languageWarning')}
         <Button
@@ -104,7 +100,7 @@
     {/if}
   {/if}
 
-  {#if data.community.community_view.blocked}
+  {#if data.community.value.community_view.blocked}
     <Placeholder
       icon={XMark}
       title="Blocked"

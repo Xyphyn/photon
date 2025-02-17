@@ -46,12 +46,6 @@
 
   let { data } = $props()
 
-  let results = $state(data.results)
-
-  $effect(() => {
-    results = data.results
-  })
-
   let query = $state(data.query || '')
   let searchElement: HTMLInputElement | undefined = $state()
   let form = $state<HTMLFormElement>()
@@ -213,7 +207,7 @@
   <div
     class="flex flex-col mt-4 divide-slate-200 dark:divide-zinc-800 !divide-y"
   >
-    {#each data.results as result}
+    {#each data.results.value as result}
       {#if isPostView(result)}
         <Post post={result} />
       {:else if isCommentView(result)}
@@ -234,7 +228,7 @@
     {/each}
   </div>
   <div class="mt-4"></div>
-  {#if data.results.length > 0}
+  {#if data.results.value.length > 0}
     <Pageination bind:page={pageNum} href={(page) => `?page=${page}`} />
   {/if}
 {/if}

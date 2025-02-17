@@ -15,8 +15,7 @@
     data: PageData
   }
 
-  let { data: pageData }: Props = $props()
-  let data = $state(pageData)
+  let { data }: Props = $props()
 
   let formData = $state({
     newModerator: '',
@@ -33,10 +32,10 @@
         const addModRes = await getClient().addModToCommunity({
           added: true,
           person_id: Number(formData.newModerator),
-          community_id: data.community.community_view.community.id,
+          community_id: data.community.value.community_view.community.id,
         })
 
-        data.community.moderators = addModRes.moderators
+        data.community.value.moderators = addModRes.moderators
         toast({
           content: $t('toast.addMod'),
           type: 'success',
@@ -52,10 +51,10 @@
           const addModRes = await getClient().addModToCommunity({
             added: true,
             person_id: res.person.person.id,
-            community_id: data.community.community_view.community.id,
+            community_id: data.community.value.community_view.community.id,
           })
 
-          data.community.moderators = addModRes.moderators
+          data.community.value.moderators = addModRes.moderators
 
           toast({
             content: $t('toast.addMod'),
@@ -86,11 +85,11 @@
     try {
       const res = await getClient().addModToCommunity({
         added: false,
-        community_id: data.community.community_view.community.id,
+        community_id: data.community.value.community_view.community.id,
         person_id: id,
       })
 
-      data.community.moderators = res.moderators
+      data.community.value.moderators = res.moderators
 
       toast({
         content: $t('toast.updateMods'),
@@ -107,7 +106,7 @@
 
 <Header pageHeader>Moderators</Header>
 <ul class="divide-y divide-slate-200 dark:divide-zinc-800">
-  {#each data.community.moderators as moderator (moderator.moderator.id)}
+  {#each data.community.value.moderators as moderator (moderator.moderator.id)}
     <div
       class="py-4 flex items-center gap-2 justify-between"
       animate:flip={{ duration: 300 }}
