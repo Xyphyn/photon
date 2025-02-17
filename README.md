@@ -82,7 +82,7 @@ Want your instance added here? Make a GitHub issue or make a PR. (this is for ge
 | [ph.opnxng.com](https://ph.opnxng.com)                 | 🇸🇬 Singapore | [about.opnxng.com](https://about.opnxng.com)              |
 | [p.darrennathanael.com](https://p.darrennathanael.com) | 🇮🇩 ID West   | [noc@darrennathanael.com](mailto:noc@darrennathanael.com) |
 | [p.lemmy.ohaa.xyz](https://p.lemmy.ohaa.xyz)           | 🇦🇹 Austria   | (???)                                                     |
-| [phtn.ngn.tf](https://phtn.ngn.tf)                     | 🇹🇷 Turkey    | [services@ngn.tf](mailto:services@ngn.tf)                 |
+| [phtn.ngn.tf](https://phtn.ngn.tf)                     | 🇹🇷 Turkey    | [ngn@ngn.tf](mailto:ngn@ngn.tf)                           |
 
 ## Donate
 
