@@ -1,4 +1,5 @@
 import { profile } from '$lib/auth.svelte'
+import { instance } from '$lib/instance.svelte'
 import { client } from '$lib/lemmy.svelte.js'
 import type { View } from '$lib/settings.svelte'
 import { isImage, isVideo } from '$lib/ui/image'
@@ -61,7 +62,7 @@ export const isYoutubeLink = (url?: string): RegExpMatchArray | null => {
 }
 
 export const postLink = (post: Post) =>
-  `/post/${encodeURIComponent(profile.data.instance)}/${post.id}`
+  `/post/${encodeURIComponent(instance.data)}/${post.id}`
 
 export type MediaType = 'video' | 'image' | 'iframe' | 'embed' | 'none'
 export type IframeType = 'youtube' | 'video' | 'none'

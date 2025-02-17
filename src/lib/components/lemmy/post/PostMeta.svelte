@@ -69,6 +69,7 @@
   import CommunityHeader from '../community/CommunityHeader.svelte'
   import { publishedToDate } from '$lib/components/util/date'
   import { profile } from '$lib/auth.svelte'
+  import { instance } from '$lib/instance.svelte'
 
   interface Props {
     community?: Community | undefined
@@ -303,7 +304,7 @@
 </header>
 {#if title && id}
   <a
-    href="/post/{encodeURIComponent(profile.data.instance)}/{id}"
+    href="/post/{encodeURIComponent(instance.data)}/{id}"
     class="inline hover:underline
     hover:text-primary-900 hover:dark:text-primary-100 transition-colors max-[480px]:!mt-0
     {settings.font == 'satoshi/nunito'
@@ -316,12 +317,14 @@
     style="grid-area: title;"
     data-sveltekit-preload-data="tap"
   >
-    <Markdown
-      source={title}
-      inline
-      noStyle
-      class={view == 'compact' ? '' : 'leading-[1.3]'}
-    ></Markdown>
+    {#if title}
+      <Markdown
+        source={title}
+        inline
+        noStyle
+        class={view == 'compact' ? '' : 'leading-[1.3]'}
+      ></Markdown>
+    {/if}
   </a>
 {:else}
   <div style="grid-area: title; margin: 0;"></div>

@@ -19,6 +19,7 @@
     MdListItem,
     MdSubscript,
     MdSuperscript,
+    MdText,
   } from './renderers/index'
   import { linkify, subSupscriptExtension } from './renderers/plugins'
   import containerExtension from './renderers/spoiler/spoiler'
@@ -85,6 +86,28 @@
     subscript: MdSubscript,
     superscript: MdSuperscript,
   }
+
+  export const inlineRenderers = {
+    heading: MdText,
+    image: MdText,
+    link: MdText,
+    blockquote: MdText,
+    hr: MdText,
+    html: MdText,
+    code: MdText,
+    list: MdText,
+    // @ts-ignore
+    spoiler: MdText,
+    table: MdText,
+    tablebody: MdText,
+    tablecell: MdText,
+    tablehead: MdText,
+    tablerow: MdTableRow,
+    paragraph: MdParagraph,
+    listitem: MdText,
+    subscript: MdSubscript,
+    superscript: MdSuperscript,
+  }
 </script>
 
 <script lang="ts">
@@ -119,7 +142,7 @@
 >
   <SvelteMarkdown
     source={tokens}
-    {renderers}
+    renderers={inline ? inlineRenderers : renderers}
     {options}
     isInline={inline || undefined}
   />

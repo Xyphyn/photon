@@ -57,6 +57,7 @@
   import RelativeDate, {
     formatRelativeDate,
   } from '$lib/components/util/RelativeDate.svelte'
+  import { instance } from '$lib/instance.svelte'
 
   let editing = $state(false)
   let saving = $state(false)
@@ -327,12 +328,12 @@
       onclick={() => {
         navigator.share?.({
           url: localShare
-            ? `${instanceToURL(profile.data.instance)}/post/${post.post.id}`
+            ? `${instanceToURL(instance.data)}/post/${post.post.id}`
             : post.post.ap_id,
         }) ??
           navigator.clipboard.writeText(
             localShare
-              ? `${instanceToURL(profile.data.instance)}/post/${post.post.id}`
+              ? `${instanceToURL(instance.data)}/post/${post.post.id}`
               : post.post.ap_id,
           )
         toast({ content: $t('toast.copied') })

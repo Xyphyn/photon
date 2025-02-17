@@ -9,7 +9,7 @@ class InstanceData {
   #instance = $derived(profile.data.instance)
 
   get data() {
-    return this.#instance
+    return this.#instance ?? DEFAULT_INSTANCE_URL
   }
 }
 
