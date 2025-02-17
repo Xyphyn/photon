@@ -45,7 +45,8 @@
 
   type Result = PostView | CommentView | PersonView | CommunityView
 
-  let { data = $bindable() } = $props()
+  let { data: passedData } = $props()
+  let data = $state(passedData)
 
   let query = $state(data.query || '')
   let searchElement: HTMLInputElement | undefined = $state()
