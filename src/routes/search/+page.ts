@@ -1,6 +1,7 @@
 import { profile } from '$lib/auth.svelte'
 import { client, getClient } from '$lib/lemmy.svelte.js'
 import { getItemPublished } from '$lib/lemmy/item.js'
+import { ReactiveState } from '$lib/promise.svelte.js'
 import type {
   CommentView,
   CommunityView,
@@ -55,7 +56,7 @@ export async function load({ url, fetch }) {
       sort: sort,
       page: page,
       query: query,
-      results: everything,
+      results: new ReactiveState(everything),
       streamed: {
         object: profile.data?.jwt
           ? getClient(undefined, fetch).resolveObject({

@@ -7,3 +7,11 @@ export const awaitIfServer = async <T>(
 ): Promise<{
   data: Promise<T> | T
 }> => ({ data: browser ? promise : await promise })
+
+export class ReactiveState<T> {
+  value = $state<T>()!
+
+  constructor(initialValue: T) {
+    this.value = initialValue as NonNullable<T>
+  }
+}

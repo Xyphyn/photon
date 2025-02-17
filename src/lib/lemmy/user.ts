@@ -29,7 +29,7 @@ export const addSubscription = (
   if (subscribe && index == -1) {
     profile.data.user?.follows.push({
       // @ts-ignore
-      follower: p.user.follows[0]?.follower,
+      follower: profile.data.user.follows[0]?.follower,
       community: community,
     })
   } else {

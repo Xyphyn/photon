@@ -1,8 +1,9 @@
 import CommunityCard from '$lib/components/lemmy/community/CommunityCard.svelte'
 import { getClient } from '$lib/lemmy.svelte.js'
-import { awaitIfServer } from '$lib/promise.js'
+import { awaitIfServer } from '$lib/promise.svelte.js'
 import { SSR_ENABLED, settings } from '$lib/settings.svelte'
 import type { GetComments } from 'lemmy-js-client'
+import { ReactiveState } from '$lib/promise.svelte.js'
 
 export async function load({ params, url, fetch }) {
   const thread = url.searchParams.get('thread')
@@ -49,14 +50,14 @@ export async function load({ params, url, fetch }) {
   })
 
   return {
-    thread: {
+    thread: new ReactiveState({
       showContext: showContext,
       singleThread: parentId != undefined,
       focus: thread?.split('.').at(-1),
-    },
-    post: post,
-    commentSort: sort,
-    comments: (await awaitIfServer(comments)).data,
+    }),
+    post: new ReactiveState(post),
+    commentSort: new ReactiveState(sort),
+    comments: new ReactiveState((await awaitIfServer(comments)).data),
     slots: {
       sidebar: {
         component: CommunityCard,

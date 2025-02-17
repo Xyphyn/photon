@@ -1,6 +1,7 @@
 import { profile } from '$lib/auth.svelte'
 import { LINKED_INSTANCE_URL } from '$lib/instance.svelte.js'
 import { client, getClient } from '$lib/lemmy.svelte.js'
+import { ReactiveState } from '$lib/promise.svelte'
 import {
   type ListCommunitiesResponse,
   type ListingType,
@@ -35,7 +36,7 @@ export async function load({ url, fetch }) {
         })
 
   return {
-    ...communities,
+    communities: new ReactiveState(communities.communities),
     type: type,
     sort: sort,
     query: query,

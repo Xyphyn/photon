@@ -26,11 +26,6 @@
 
   let { data } = $props()
 
-  let inbox = $state(data.data)
-  $effect(() => {
-    inbox = data.data
-  })
-
   let markingAsRead = $state(false)
 
   async function markAllAsRead() {
@@ -167,7 +162,7 @@ items-center px-2 w-max top-6 lg:top-22"
 <div
   class="flex flex-col list-none flex-1 h-full divide-y divide-slate-200 dark:divide-zinc-900 *:py-4"
 >
-  {#if !inbox || (inbox?.length ?? 0) == 0}
+  {#if !data.inbox?.value || (data.inbox.value?.length ?? 0) == 0}
     <Placeholder
       icon={Inbox}
       title={$t('routes.inbox.empty.title')}
@@ -175,7 +170,7 @@ items-center px-2 w-max top-6 lg:top-22"
       class="self-center justify-self-center my-auto"
     />
   {:else}
-    {#each inbox as item, index (item.id)}
+    {#each data.inbox.value as item, index (item.id)}
       <div
         class="-mx-4 sm:-mx-6 px-4 sm:px-6
         {item.read ? '' : 'bg-yellow-50/50 dark:bg-blue-500/5'}"
@@ -187,17 +182,19 @@ items-center px-2 w-max top-6 lg:top-22"
           delay: index * 50,
         }}
       >
-        <InboxItem bind:item={inbox[index]} />
+        <InboxItem bind:item={data.inbox.value[index]} />
       </div>
     {/each}
   {/if}
-  {#if !(data.page == 1 && (data?.data?.length ?? 0) == 0)}
+  {#if !(data.page == 1 && (data?.inbox?.value.length ?? 0) == 0)}
     <div
       class="sticky z-30 mx-auto max-w-full self-end mt-auto bottom-22 lg:bottom-6"
     >
       <Tabs routes={[]} class="mx-auto">
         <Pageination
-          hasMore={!(!inbox || (inbox?.length ?? 0) < (data?.limit ?? 0))}
+          hasMore={!(
+            !data.inbox || (data.inbox.value?.length ?? 0) < (data?.limit ?? 0)
+          )}
           page={data.page}
           href={(page) => `?page=${page}`}
         />
