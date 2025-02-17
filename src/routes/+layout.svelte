@@ -144,7 +144,7 @@
     <Navbar class={c} style={s} />
   {/snippet}
   {#snippet suffix({ class: c, style: s })}
-    <div class={c} style={s}>
+    <div class=" {c}" style={s}>
       {#if page.data.slots?.sidebar?.component}
         {@const SvelteComponent = page.data.slots.sidebar.component}
         <SvelteComponent {...page.data.slots.sidebar.props} />

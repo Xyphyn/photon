@@ -2,6 +2,7 @@
   import { findClosestNumber } from '$lib/util.svelte.js'
   import { createAvatar } from '@dicebear/core'
   import * as initials from '@dicebear/initials'
+  import type { ClassValue } from 'svelte/elements'
 
   const sizes = [16, 24, 32, 48, 64, 96, 128, 256, 512]
 
@@ -35,7 +36,7 @@
     width: number
     res?: number | undefined
     style?: string
-    class?: string
+    class?: ClassValue
     [key: string]: any
   }
 
@@ -65,7 +66,7 @@
     {alt}
     {width}
     {title}
-    class="aspect-square object-cover overflow-hidden {clazz} flex-shrink-0"
+    class={['aspect-square object-cover overflow-hidden flex-shrink-0', clazz]}
     style="width: {width}px; height: {width}px; {style}"
     class:rounded-full={circle}
     class:rounded-md={!circle}
@@ -73,7 +74,7 @@
 {:else}
   <div
     style="width: {width}px; height: {width}px;"
-    class="aspect-square object-cover overflow-hidden {clazz} flex-shrink-0"
+    class={['aspect-square object-cover overflow-hidden flex-shrink-0', clazz]}
     class:rounded-full={circle}
     class:rounded-md={!circle}
   >

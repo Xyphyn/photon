@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Profile } from '$lib/auth.svelte.js'
+  import Avatar from '$lib/components/ui/Avatar.svelte'
   import { Icon, UserCircle } from 'svelte-hero-icons'
 
   interface Props {
@@ -25,18 +26,17 @@
     class={[profile.avatar && 'bg-slate-200 rounded-full dark:bg-zinc-700']}
   >
     {#if profile.avatar}
-      <img
-        src="{profile.avatar}?thumbnail=32&format=webp"
-        alt={profile.username}
+      <Avatar
+        url={profile.avatar}
         width={size}
-        height={size}
+        alt=""
         class={['flex-shrink-0 rounded-full', selected && 'scale-75']}
       />
     {:else}
       <Icon
         src={UserCircle}
         mini={selected}
-        size={`${size}`}
+        size={size?.toString()}
         title={profile.username}
         class="text-blue-500 flex-shrink-0"
         style={guest
