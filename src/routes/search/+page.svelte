@@ -47,6 +47,10 @@
   let { data: passedData } = $props()
   let data = $state(passedData)
 
+  $effect(() => {
+    passedData = data
+  })
+
   let query = $state(data.query || '')
   let searchElement: HTMLInputElement | undefined = $state()
   let form = $state<HTMLFormElement>()
