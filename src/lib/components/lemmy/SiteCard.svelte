@@ -22,6 +22,7 @@
   import { settings } from '$lib/settings.svelte'
   import { optimizeImageURL } from './post/helpers'
   import Link from '../input/Link.svelte'
+  import EndPlaceholder from '../ui/EndPlaceholder.svelte'
 
   interface Props {
     site: SiteView
@@ -76,9 +77,11 @@
     <hr class="border-slate-200 dark:border-zinc-900 my-1" />
     <Expandable bind:open={settings.expand.about}>
       {#snippet title()}
-        <span class="flex items-center gap-1 py-1 px-2">
-          <Icon src={InformationCircle} size="16" mini />
+        <span class="flex items-center gap-1 py-1 px-2 w-full">
           {$t('cards.site.about')}
+          <hr
+            class="w-full flex-1 ml-1 border-slate-200 dark:border-zinc-800"
+          />
         </span>
       {/snippet}
       <Markdown source={site.site.description} />
@@ -89,9 +92,11 @@
     <hr class="border-slate-200 dark:border-zinc-900 my-1" />
     <Expandable bind:open={settings.expand.stats}>
       {#snippet title()}
-        <span class="flex items-center gap-1 py-1 px-2">
-          <Icon src={ChartBar} size="16" mini />
+        <span class="flex items-center gap-1 py-1 px-2 w-full">
           {$t('cards.site.stats')}
+          <hr
+            class="w-full flex-1 ml-1 border-slate-200 dark:border-zinc-800"
+          />
         </span>
       {/snippet}
       <div class="flex flex-row gap-4 flex-wrap">
@@ -117,9 +122,11 @@
       <hr class="border-slate-200 dark:border-zinc-900 my-1" />
       <Expandable bind:open={settings.expand.team}>
         {#snippet title()}
-          <span class="flex items-center gap-1 py-1 px-2">
-            <Icon src={UserGroup} size="16" mini />
+          <span class="flex items-center gap-1 py-1 px-2 w-full">
             {$t('cards.site.admins')}
+            <hr
+              class="w-full flex-1 ml-1 border-slate-200 dark:border-zinc-800"
+            />
           </span>
         {/snippet}
         <ItemList

@@ -147,13 +147,14 @@
     <div class=" {c}" style={s}>
       {#if page.data.slots?.sidebar?.component}
         {@const SvelteComponent = page.data.slots.sidebar.component}
-        <SvelteComponent {...page.data.slots.sidebar.props} />
+        <SvelteComponent {...page.data.slots.sidebar.props} class="!pt-0" />
       {:else if site.data}
         <SiteCard
           site={site.data.site_view}
           taglines={site.data.taglines}
           admins={site.data.admins}
           version={site.data.version}
+          class="!pt-0"
         />
       {:else}
         <div class="h-64 w-full grid place-items-center">

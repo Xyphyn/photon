@@ -33,13 +33,14 @@
 </script>
 
 <Button
-  color={selected ? 'primary' : 'tertiary'}
+  color="tertiary"
   alignment="left"
+  rounding="pill"
   {...rest}
   {href}
-  class="font-normal block !origin-left border border-transparent {!selected
+  class="font-normal block !origin-left border border-transparent hover:dark:bg-zinc-900 {!selected
     ? 'text-slate-600 dark:text-zinc-400'
-    : ''} {clazz}"
+    : 'bg-slate-100 dark:bg-zinc-925'} {clazz}"
 >
   {#snippet prefix()}
     {#if customIcon}

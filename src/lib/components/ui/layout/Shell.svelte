@@ -50,9 +50,7 @@
 >
   {@render children?.()}
   <div
-    class="fixed lg:sticky bottom-0 {dockVisible
-      ? ''
-      : 'max-lg:-bottom-24'}  lg:top-0
+    class="fixed bottom-0 {dockVisible ? '' : 'max-lg:-bottom-24'} lg:top-0
     max-w-3xl p-4 left-1/2 -translate-x-1/2 lg:max-w-full lg:p-0 lg:left-0 lg:translate-x-0
     w-full z-50 pointer-events-none"
     style="grid-area: navbar;
@@ -71,16 +69,16 @@
   >
     {@render sidebar?.({
       class: `hidden md:flex sticky top-0 left-0 h-max bg-slate-50 dark:bg-zinc-950
-      z-40 lg:top-16`,
+      z-40 lg:!pt-20`,
       style: 'grid-area: sidebar; width: 100% !important;',
     })}
     {@render main?.({
-      class: `w-full bg-slate-25 dark:bg-zinc-925 justify-self-center shadow-sm z-0 main !pb-22 lg:!pb-0`,
+      class: `w-full bg-slate-25 dark:bg-zinc-925 justify-self-center shadow-sm z-0 main !pb-22 lg:!pb-0 lg:!pt-22`,
       style: 'grid-area: main',
     })}
     {@render suffix?.({
       class: `max-xl:hidden w-full sticky top-0 left-0 max-h-screen bg-slate-50 dark:bg-zinc-950
-      z-40 lg:top-16`,
+      z-40 lg:!pt-20`,
       style: 'grid-area: suffix;',
     })}
   </div>

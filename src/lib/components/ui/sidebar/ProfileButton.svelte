@@ -22,6 +22,7 @@
   color="tertiary"
   alignment="left"
   loading={switching}
+  rounding="lg"
   loaderWidth={22}
   selected={profile.data?.id == prof.id}
   onclick={async () => {

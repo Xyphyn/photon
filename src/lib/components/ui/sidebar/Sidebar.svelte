@@ -109,11 +109,13 @@
           </EndPlaceholder>
         </span>
       {/snippet}
-      {#each [...profileData.profiles] as prof, index}
-        <div class="w-full">
-          <ProfileButton {index} {prof} />
-        </div>
-      {/each}
+      <div class="w-full flex gap-px flex-col">
+        {#each [...profileData.profiles] as prof, index}
+          <div class="w-full">
+            <ProfileButton {index} {prof} />
+          </div>
+        {/each}
+      </div>
       <SidebarButton href="/accounts" icon={UserGroup}>
         {$t('account.accounts')}
       </SidebarButton>
@@ -126,11 +128,7 @@
       bind:open={settings.expand.favorites}
     >
       {#snippet title()}
-        <span
-          class="px-2 py-1 w-full {settings.expandSidebar
-            ? ''
-            : '//max-lg:hidden'}"
-        >
+        <span class="px-2 py-1 w-full">
           <EndPlaceholder>
             {$t('routes.profile.favorites')}
             {#snippet action()}
@@ -152,11 +150,7 @@
         bind:open={settings.expand.moderates}
       >
         {#snippet title()}
-          <span
-            class="px-2 py-1 w-full {settings.expandSidebar
-              ? ''
-              : '//max-lg:hidden'}"
-          >
+          <span class="px-2 py-1 w-full">
             <EndPlaceholder>
               {$t('routes.profile.moderates')}
               {#snippet action()}
@@ -179,11 +173,7 @@
       bind:open={settings.expand.communities}
     >
       {#snippet title()}
-        <span
-          class="px-2 py-1 w-full {settings.expandSidebar
-            ? ''
-            : '//max-lg:hidden'}"
-        >
+        <span class="px-2 py-1 w-full">
           <EndPlaceholder>
             {$t('profile.subscribed')}
             {#snippet action()}

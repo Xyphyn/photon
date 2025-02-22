@@ -172,9 +172,11 @@
     <hr class="border-slate-200 dark:border-zinc-900 my-1" />
     <Expandable bind:open={settings.expand.about} class="!pt-0">
       {#snippet title()}
-        <span class="py-1 px-1 flex gap-1 items-center">
-          <Icon src={InformationCircle} size="15" mini />
+        <span class="py-1 px-1 flex gap-1 items-center w-full">
           {$t('cards.site.about')}
+          <hr
+            class="w-full flex-1 ml-1 border-slate-200 dark:border-zinc-800"
+          />
         </span>
       {/snippet}
       <Markdown source={community_view.community.description} />
@@ -183,9 +185,11 @@
     <hr class="border-slate-200 dark:border-zinc-900 my-1" />
     <Expandable bind:open={settings.expand.stats}>
       {#snippet title()}
-        <span class="py-1 px-1 flex gap-1 items-center">
-          <Icon src={ChartBar} size="15" mini />
+        <span class="py-1 px-1 flex gap-1 items-center w-full">
           {$t('cards.site.stats')}
+          <hr
+            class="w-full flex-1 ml-1 border-slate-200 dark:border-zinc-800"
+          />
         </span>
       {/snippet}
       <div class="flex flex-row gap-4 flex-wrap">
@@ -206,9 +210,12 @@
       <hr class="border-slate-200 dark:border-zinc-900 my-1" />
       <Expandable bind:open={settings.expand.team}>
         {#snippet title()}
-          <span class="py-1 px-1 flex gap-1 items-center">
-            <ShieldIcon width={15} filled />
+          <span class="py-1 px-1 flex gap-1 items-center w-full">
             {$t('cards.community.moderators')}
+
+            <hr
+              class="w-full flex-1 ml-1 border-slate-200 dark:border-zinc-800"
+            />
           </span>
         {/snippet}
         <ItemList
@@ -231,11 +238,12 @@
         disabled={loading.subscribing}
         loading={loading.subscribing}
         size="md"
+        rounding="xl"
         color={community_view.subscribed == 'Subscribed'
           ? 'secondary'
           : 'primary'}
         onclick={subscribe}
-        class="flex-1 relative z-[inherit]"
+        class="px-5 relative z-[inherit]"
       >
         {#snippet prefix()}
           <Icon
@@ -265,7 +273,7 @@
     {/if}
     <Menu placement="top-end">
       {#snippet target()}
-        <Button size="square-md" class="ml-auto">
+        <Button size="square-md">
           {#snippet prefix()}
             <Icon src={EllipsisHorizontal} size="16" mini />
           {/snippet}
