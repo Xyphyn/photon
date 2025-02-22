@@ -114,8 +114,8 @@
       class="contents"
     >
       <CommentForm
+        bind:value={newComment}
         postId={node.comment_view.comment.id}
-        value={newComment}
         actions={false}
         preview={true}
         onconfirm={save}
