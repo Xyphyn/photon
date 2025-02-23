@@ -176,21 +176,6 @@
   {/if}
   {#if actions}
     <PostActions {onhide} bind:post style="grid-area: actions;" {view} />
-  {:else if view == 'compact'}
-    <div class="flex flex-row items-center gap-2 text-sm">
-      <Badge>
-        {#snippet icon()}
-          <Icon src={ArrowUp} size="14" micro />
-        {/snippet}
-        {post.counts.score}
-      </Badge>
-      <Badge>
-        {#snippet icon()}
-          <Icon src={ChatBubbleOvalLeft} size="14" micro />
-        {/snippet}
-        {post.counts.comments}
-      </Badge>
-    </div>
   {/if}
   <div
     class="absolute overflow-hidden inset-0

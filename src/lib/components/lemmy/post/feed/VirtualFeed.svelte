@@ -177,9 +177,7 @@
   })
 </script>
 
-<ul
-  class="flex flex-col list-none divide-y divide-slate-200 dark:divide-zinc-800"
->
+<ul class="flex flex-col list-none">
   {#key posts}
     {#if posts?.length == 0}
       <div class="h-full grid place-items-center">
@@ -207,7 +205,7 @@
           style="position: absolute; top: 0; left: 0; width: 100%; transform: translateY({items?.[0]
             ? items?.[0]?.start - $virtualizer.options.scrollMargin
             : 0}px);"
-          class="divide-y divide-slate-200 dark:divide-zinc-900"
+          class="divide-y divide-slate-200 dark:divide-zinc-800"
           id="feed"
         >
           {#each items as row, index (posts[row.index]?.post.id)}
