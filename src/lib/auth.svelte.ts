@@ -3,10 +3,10 @@ import {
   isAdmin,
 } from '$lib/components/lemmy/moderation/moderation.js'
 import { toast } from 'mono-svelte'
-import { DEFAULT_INSTANCE_URL, instance } from '$lib/instance.js'
-import { client, getClient } from '$lib/lemmy.js'
-import { site } from './lemmy'
-import { instanceToURL, moveItem } from '$lib/util.js'
+import { DEFAULT_INSTANCE_URL, instance } from '$lib/instance.svelte.js'
+import { client, getClient } from '$lib/lemmy.svelte.js'
+import { site } from './lemmy.svelte'
+import { instanceToURL, moveItem } from '$lib/util.svelte'
 import {
   type GetSiteResponse,
   type MyUserInfo,
@@ -27,7 +27,7 @@ import { t } from './translations'
 
 const getDefaultProfile = (): Profile => ({
   id: -1,
-  instance: get(profileData)?.defaultInstance ?? get(instance),
+  instance: profileData.defaultInstance ?? DEFAULT_INSTANCE_URL,
 })
 
 function getFromStorage<T>(key: string): T | undefined {
@@ -83,7 +83,7 @@ const getCookie = (key: string): string | undefined => {
     ?.split('=')?.[1]
 }
 
-export let profileData = writable<ProfileData>(
+export let profileData = $state<ProfileData>(
   getFromStorage<ProfileData>('profileData') ?? {
     profiles: [
       {
@@ -94,91 +94,57 @@ export let profileData = writable<ProfileData>(
       },
     ],
     profile: 1,
-  }
+  },
 )
 
-let fetchUser = {
-  loading: false,
-  prevProfile: -1,
-}
+class CurrentProfile {
+  #data = $derived(
+    profileData.profiles.find((i) => i.id == profileData.profile) ??
+      getDefaultProfile(),
+  )
 
-function profileStore(
-  data: Writable<ProfileData>,
-  fn: (
-    values: ProfileData,
-    set: (value: Profile) => void,
-    update: (fn: Updater<Profile>) => void
-  ) => any
-) {
-  const derive: Readable<Profile> = derived(data, fn)
-  const { subscribe } = derive
-
-  return {
-    subscribe,
-    set: (value: Profile) => {
-      data.update((data) => {
-        let index = data.profiles.findIndex((t) => t.id == value.id)
-        data.profiles[index] = value
-        return data
-      })
-    },
+  get data() {
+    return this.#data
+  }
+  set data(value) {
+    if (!value) return
+    const index = profileData.profiles.findIndex((i) => i.id == value?.id)
+    profileData.profiles[index] = value
   }
 }
 
-export let profile: Readable<Profile> & { set: (v: Profile) => void } =
-  profileStore(profileData, (pd, set, update) => {
-    const profile =
-      pd.profiles.find((p) => p.id == pd.profile) ?? getDefaultProfile()
+export let profile = new CurrentProfile()
 
-    instance.set(profile.instance)
-    set(profile)
+async function fetchUserData(profile: CurrentProfile) {
+  if (profile.data.jwt) {
+    site.data = undefined
+    notifications.set({ applications: 0, inbox: 0, reports: 0 })
 
-    if (profile?.jwt) {
-      if (profile.id != fetchUser.prevProfile && !fetchUser.loading) {
-        site.set(undefined)
+    const res = await userFromJwt(profile.data.jwt, profile.data.instance)
+    if (!res?.user)
+      toast({
+        content:
+          "Your account's instance did not return your user data. Your login may have expired.",
+        type: 'error',
+      })
 
-        fetchUser.loading = true
-
-        notifications.set({ applications: 0, inbox: 0, reports: 0 })
-
-        userFromJwt(profile.jwt, profile.instance)
-          .then((res) => {
-            if (!res?.user)
-              toast({
-                content:
-                  "Your account's instance did not return your user data. Your login may have expired.",
-                type: 'error',
-              })
-
-            site.set(res?.site)
-
-            profile.user = res?.user
-            if (profile.user) {
-              profile.avatar = res?.user?.local_user_view.person.avatar
-              profile.username = res?.user?.local_user_view.person.name
-            }
-
-            fetchUser.loading = false
-            fetchUser.prevProfile = profile.id
-            checkInbox()
-
-            update(() => profile)
-          })
-          .catch((e) => {
-            fetchUser.loading = false
-            toast({ content: e, type: 'error' })
-          })
-      }
-    } else {
-      if (browser && !fetchUser.loading) {
-        site.set(undefined)
-        client({ instanceURL: profile.instance })
-          .getSite()
-          .then((res) => site.set(res))
-        fetchUser.loading = false
-      }
+    site.data = res?.site
+    profile.data.user = res?.user
+    if (profile.data.user) {
+      profile.data.avatar = res?.user?.local_user_view.person.avatar
+      profile.data.username = res?.user?.local_user_view.person.name
     }
-  })
+  } else {
+    if (browser) {
+      site.data = undefined
+      client({ instanceURL: profile.data.instance })
+        .getSite()
+        .then((res) => (site.data = res))
+    }
+  }
+
+  return profile
+}
 
 export let notifications = writable<Notifications>({
   applications: 0,
@@ -186,35 +152,37 @@ export let notifications = writable<Notifications>({
   reports: 0,
 })
 
-profileData.subscribe(async (pd) => {
-  const serialized: ProfileData = {
-    ...pd,
-    profiles: pd.profiles.map((p) => serializeUser(p)),
-  }
+$effect.root(() => {
+  $effect(() => {
+    const serialized = {
+      ...profileData,
+      profiles: profileData.profiles.map((p) => serializeUser(p)),
+    }
 
-  setFromStorage('profileData', serialized)
-
-  if (serialized.profile == -1) {
-    instance?.set(get(profileData).defaultInstance ?? DEFAULT_INSTANCE_URL)
-  }
-  if (serialized.profiles.length == 0) {
-    profileData.update((pd) => ({
-      ...pd,
-      profiles: [
+    setFromStorage('profileData', serialized)
+    if (serialized.profiles.length == 0) {
+      profileData.profiles = [
         {
           id: 1,
           instance: DEFAULT_INSTANCE_URL,
           username: t.get('account.guest') || 'Guest',
         },
-      ],
-      profile: 1,
-    }))
-  }
+      ]
+      profileData.profile = 1
+    }
+  })
+
+  $effect(() => {
+    if (profile.data.id || profileData)
+      fetchUserData(profile).then((res) => {
+        checkInbox()
+      })
+  })
 })
 
 if (
   env.PUBLIC_MIGRATE_COOKIE &&
-  get(profileData).profiles.length == 0 &&
+  profileData.profiles.length == 0 &&
   env.PUBLIC_INSTANCE_URL
 ) {
   const jwt = getCookie('jwt')
@@ -226,7 +194,7 @@ if (
       const result = await setUser(
         jwt,
         env.PUBLIC_INSTANCE_URL ?? '',
-        user?.user?.local_user_view.person.name
+        user?.user?.local_user_view.person.name,
       )
 
       if (result)
@@ -258,24 +226,14 @@ export async function setUser(jwt: string, inst: string, username?: string) {
     })
   }
 
-  instance.set(inst)
-
-  profileData.update((pd) => {
-    // too lazy to make a decent system
-    const id = Math.max(...pd.profiles.map((p) => p.id)) + 1
-
-    const newProfile: Profile = {
-      id: id,
-      instance: inst,
-      jwt: jwt,
-      username: user?.user?.local_user_view.person.name,
-      avatar: user?.user?.local_user_view.person.avatar,
-    }
-
-    return {
-      profile: id,
-      profiles: [newProfile, ...pd.profiles],
-    }
+  const id = Math.max(...profileData.profiles.map((p) => p.id)) + 1
+  profileData.profile = id
+  profileData.profiles.push({
+    id: id,
+    instance: inst,
+    jwt: jwt,
+    username: user?.user?.local_user_view.person.name,
+    avatar: user?.user?.local_user_view.person.avatar,
   })
 
   return user
@@ -283,7 +241,7 @@ export async function setUser(jwt: string, inst: string, username?: string) {
 
 async function userFromJwt(
   jwt: string,
-  instance: string
+  instance: string,
 ): Promise<
   { user: PersonData | undefined; site: GetSiteResponse } | undefined
 > {
@@ -296,7 +254,7 @@ async function userFromJwt(
         type: 'warning',
         loading: true,
       }),
-    5000
+    5000,
   )
 
   const site = await sitePromise
@@ -326,20 +284,15 @@ async function userFromJwt(
 }
 
 export function resetProfile() {
-  profileData.update((p) => ({ ...p, profile: -1 }))
+  profileData.profile = -1
 }
 
 export function deleteProfile(id: number) {
-  profileData.update((pd) => {
-    const index = pd.profiles.findIndex((p) => p.id == id)
-    if (index <= -1) return pd
-
-    pd.profiles.splice(index, 1)
-
-    if (id == pd.profile) resetProfile()
-
-    return pd
-  })
+  profileData.profiles.splice(
+    profileData.profiles.findIndex((p) => p.id == id),
+    1,
+  )
+  if (id == profileData.profile) resetProfile()
 }
 
 function serializeUser(user: Profile): Profile {
@@ -350,71 +303,70 @@ function serializeUser(user: Profile): Profile {
 }
 
 export async function setUserID(id: number) {
-  profileData.update((p) => ({ ...p, profile: id }))
-  return get(profile)
+  if (!profileData.profiles.find((p) => p.id == id)) return -1
+  profileData.profile = id
+  return profile
 }
 
 export function moveProfile(id: number, up: boolean) {
-  const pd = get(profileData)
   try {
-    const index = pd.profiles.findIndex((i) => i.id == id)
-
-    profileData.set({
-      ...pd,
-      profiles: moveItem(pd.profiles, index, index + (up ? -1 : 1)),
-    })
+    const index = profileData.profiles.findIndex((i) => i.id == id)
+    profileData.profiles = moveItem(
+      profileData.profiles,
+      index,
+      index + (up ? -1 : 1),
+    )
   } catch (err) {
     // we dont care
   }
 }
 
 async function getNotificationCount(jwt: string, mod: boolean, admin: boolean) {
-  const unreads = await getClient().getUnreadCount()
+  const unreadsPromise = getClient()
+    .getUnreadCount()
+    .then((res) => res.mentions + res.private_messages + res.replies)
+    .catch(() => 0)
 
-  let reports: number = 0
-  let applications: number = 0
+  const reportsPromise = mod
+    ? getClient()
+        .getReportCount({})
+        .then(
+          (res) =>
+            res.comment_reports +
+            res.post_reports +
+            (res.private_message_reports ?? 0),
+        )
+        .catch(() => 0)
+    : new Promise<number>((res) => res(0))
 
-  if (mod) {
-    try {
-      const reportRes = await getClient().getReportCount({})
+  const applicationsPromise = admin
+    ? getClient()
+        .getUnreadRegistrationApplicationCount()
+        .then((res) => res.registration_applications)
+        .catch(() => 0)
+    : new Promise<number>((res) => res(0))
 
-      reports =
-        reportRes.comment_reports +
-        reportRes.post_reports +
-        (reportRes.private_message_reports ?? 0)
-    } catch (e) {
-      // doesn't matter
-    }
-  }
-
-  if (admin) {
-    try {
-      const applicationRes =
-        await getClient().getUnreadRegistrationApplicationCount()
-
-      applications = applicationRes.registration_applications
-    } catch (e) {
-      // doesn't matter
-    }
-  }
+  const [unreads, reports, applications] = await Promise.all([
+    unreadsPromise,
+    reportsPromise,
+    applicationsPromise,
+  ])
 
   return {
-    unreads: unreads.mentions + unreads.private_messages + unreads.replies,
+    unreads: unreads,
     reports: reports,
     applications: applications,
   }
 }
 
 async function checkInbox() {
-  if (!get(profile)) return
-
-  const { user, jwt } = get(profile)!
+  const { user, jwt } = profile.data
   if (!jwt || !user) return
 
   const notifs = await getNotificationCount(
     jwt,
     amModOfAny(user) ?? false,
-    user ? isAdmin(user) : false
+    user ? isAdmin(user) : false,
   )
 
   notifications.set({

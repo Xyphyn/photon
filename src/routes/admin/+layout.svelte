@@ -1,9 +1,16 @@
 <script>
-  import { notifications } from '$lib/auth'
+  import { notifications } from '$lib/auth.svelte'
   import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
-  import { contentPadding } from '$lib/components/ui/layout/Shell.svelte'
+  import {} from '$lib/components/ui/layout/Shell.svelte'
   import { t } from '$lib/translations'
   import { Badge } from 'mono-svelte'
+  /**
+   * @typedef {Object} Props
+   * @property {import('svelte').Snippet} [children]
+   */
+
+  /** @type {Props} */
+  let { children } = $props()
 </script>
 
 {#if $notifications.applications > 0}
@@ -16,8 +23,8 @@
 
 <div class="flex flex-col gap-4 h-full">
   <div
-    class="sticky mx-auto z-50 max-w-full min-w-0 flex items-center gap-2"
-    style="top: max(1.5rem, {$contentPadding.top}px);"
+    class="sticky mx-auto z-50 max-w-full min-w-0 flex items-center gap-2
+    top-6 lg:top-22"
   >
     <Tabs
       routes={[
@@ -42,7 +49,8 @@
           name: $t('routes.admin.federation.title'),
         },
       ]}
+      class="overflow-auto"
     />
   </div>
-  <slot />
+  {@render children?.()}
 </div>
