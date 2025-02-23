@@ -49,6 +49,7 @@
           name: $t('routes.admin.federation.title'),
         },
       ]}
+      class="overflow-auto"
     />
   </div>
   {@render children?.()}
