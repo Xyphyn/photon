@@ -2,6 +2,13 @@
 
 Photon is a Svelte-based opinionated Lemmy client designed for the best UI and UX. Every feature is carefully considered and placed.
 
+- `🌟` A stunning UI
+- `🪄` Lots of customization options
+- `📱` Built for desktop & mobile
+- `🌎` Multi-language support
+- `👥` Save multiple accounts
+- `🚀` Made with Svelte 5
+
 Jump to:
 
 - [Self-hosting](#self-hosting)
@@ -9,8 +16,9 @@ Jump to:
 
 ## Screenshots
 
-![desktop-default-dark](https://github.com/user-attachments/assets/4abda138-427a-48b3-8741-0f3ca3510fd0)
-![desktop-default-light](https://github.com/user-attachments/assets/8356d7eb-16c6-4bd8-ba9a-6d227370ddb0)
+![desktop-compact-dark](https://github.com/user-attachments/assets/6cbf3945-c4b9-4c9b-bd76-e86912fc2994)
+
+![desktop-default-light](https://github.com/user-attachments/assets/ea7bcbd2-d270-49ac-a98b-1b088c19ecb9)
 
 ## Self-hosting
 
@@ -46,27 +54,6 @@ Common settings:
 - `PUBLIC_INTERNAL_INSTANCE`: If you enabled server rendering, set this to the URL you want the server to access your Lemmy instance from.
 - `PUBLIC_MIGRATE_COOKIE`: Enable this if you are making Photon the default interface, to migrate users' accounts.
 - `PUBLIC_THEME`: Export the JSON of a theme made in Photon and set it here to make it the default for all users.
-
-| Variable                    | Values              | Default Value                          |
-| --------------------------- | ------------------- | -------------------------------------- |
-| PUBLIC_INSTANCE_URL         | URL                 | `lemm.ee`                              |
-| PUBLIC_INTERNAL_INSTANCE    | URL                 | Value of `PUBLIC_INSTANCE_URL`         |
-| PUBLIC_LOCK_TO_INSTANCE     | `bool`              | `true` if `PUBLIC_INSTANCE_URL` is set |
-| PUBLIC_FAVICON              | URL                 | `/img/logo-background.svg              |
-| PUBLIC_SSR_ENABLED          | `bool`              | `false`                                |
-| PUBLIC_MIGRATE_COOKIE       | `bool`              | `false`                                |
-| PUBLIC_THEME                | JSON                | Photon's default colors                |
-| PUBLIC_COLORSCHEME          | system\|dark\|light | system                                 |
-| PUBLIC_EXPANDABLE_IMAGES    | `bool`              | true                                   |
-| PUBLIC_MARK_READ_POSTS      | `bool`              | true                                   |
-| PUBLIC_DEFAULT_FEED_SORT    | `SortType`          | Active                                 |
-| PUBLIC_DEFAULT_FEED         | `ListingType`       | Local                                  |
-| PUBLIC_DEFAULT_COMMENT_SORT | `CommentSortType`   | Hot                                    |
-| PUBLIC_HIDE_DELETED         | `bool`              | true                                   |
-| PUBLIC_HIDE_REMOVED         | `bool`              | true                                   |
-| PUBLIC_NSFW_BLUR            | `bool`              | true                                   |
-| PUBLIC_RANDOM_PLACEHOLDERS  | `bool`              | true                                   |
-| PUBLIC_REMOVE_CREDIT        | `bool`              | false                                  |
 
 There are more options available that you can see at `src/lib/settings.ts`, by looking at the `defaultSettings` object.
 
