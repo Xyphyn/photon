@@ -283,7 +283,7 @@
         {/snippet}
       </Button>
     </div>
-    <h1 class="font-bold text-xl font-display leading-5">
+    <h1 class="font-medium text-xl leading-5">
       <Markdown
         source={parseTags(data.post.value.post_view.post.name).title ??
           data.post.value.post_view.post.name}

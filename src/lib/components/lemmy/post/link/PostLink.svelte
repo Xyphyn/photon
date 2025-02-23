@@ -37,62 +37,40 @@
   For embed-type posts. Displays embed card or a compact link.
 -->
 {#if embed_title && view != 'compact'}
-  <Material
-    color="distinct"
-    class="flex flex-col-reverse sm:flex-row
+  <a href={url} class="group/link">
+    <Material
+      color="distinct"
+      class="flex flex-col-reverse sm:flex-row
     overflow-hidden gap-4 embed-card z-0 relative
     dark:border-t-zinc-800 border-opacity-80 max-w-full shadow-sm shadow-black/5
-    dark:bg-zinc-950"
-    rounding="2xl"
-    element="article"
-  >
-    {#if thumbnail_url}
-      <img
-        src={optimizeImageURL(thumbnail_url, 64)}
-        alt=""
-        class="-z-10 absolute w-full object-cover h-full opacity-10 brightness-150
-        dark:brightness-90 dark:opacity-20 blur-2xl
-        -inset-px"
-      />
-    {/if}
-    <div class="flex flex-col gap-2">
-      {#if richURL}
-        <Link
-          href={url}
-          target="_blank"
-          class="text-slate-600 dark:text-zinc-400 inline-flex items-center gap-1 text-xs font-medium"
+    dark:bg-zinc-950 group-hover/link:bg-slate-100 group-hover/link:dark:bg-zinc-900 transition-colors"
+      rounding="2xl"
+      element="article"
+    >
+      {#if thumbnail_url}
+        <img
+          src={optimizeImageURL(thumbnail_url, 64)}
+          alt=""
+          class="-z-10 absolute w-full object-cover h-full opacity-10 brightness-150
+        dark:brightness-90 dark:opacity-20 blur-2xl -inset-px"
+        />
+      {/if}
+      <div class="flex flex-col gap-2">
+        {#if richURL}
+          <Link
+            href={url}
+            target="_blank"
+            class="text-slate-600 dark:text-zinc-400 inline-flex items-center gap-1 text-xs font-medium"
+          >
+            {richURL.hostname}
+          </Link>
+        {/if}
+        <p class="font-medium text-base">{embed_title}</p>
+      </div>
+      {#if thumbnail_url}
+        <picture
+          class="-m-4 mb-auto sm:-mb-4 sm:ml-auto flex-shrink-0 sm:w-1/3 sm:max-w-60"
         >
-          <Icon
-            src={LinkIcon}
-            size="16"
-            micro
-            class="text-slate-400 dark:text-zinc-600"
-          />
-          {richURL.hostname}
-        </Link>
-      {/if}
-      <a
-        href={url}
-        target="_blank"
-        class="font-medium text-base hover:underline"
-      >
-        {embed_title}
-      </a>
-      {#if embed_description}
-        <p class="text-sm max-w-2xl">
-          {embed_description.slice(0, 300)}{embed_description.length > 300
-            ? '...'
-            : ''}
-        </p>
-      {/if}
-    </div>
-    {#if thumbnail_url}
-      <a
-        href={url}
-        target="_blank"
-        class="-m-4 mb-auto sm:-mb-4 sm:ml-auto flex-shrink-0 sm:w-1/3 sm:min-h-40 sm:max-w-60"
-      >
-        <picture>
           <source
             srcset={optimizeImageURL(thumbnail_url, 256)}
             media="(max-width: 256px)"
@@ -107,16 +85,16 @@
           />
           <img
             src={optimizeImageURL(thumbnail_url, -1)}
-            class="object-cover w-full sm:max-w-96 h-48 sm:min-h-40 sm:h-full bg-slate-200 dark:bg-zinc-800"
+            class="object-cover w-full sm:max-w-96 h-32 sm:min-h-16 bg-slate-200 dark:bg-zinc-800"
             width={600}
             height={400}
-            alt={embed_title}
+            alt=" "
             class:blur-3xl={nsfw}
           />
         </picture>
-      </a>
-    {/if}
-  </Material>
+      {/if}
+    </Material>
+  </a>
 {:else}
   <Button
     href={url}
