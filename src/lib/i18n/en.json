@@ -561,8 +561,8 @@
             "deleteData": "Delete data",
             "warning": "This will delete ALL of this user's submissions here.",
             "expires": "Expires (UTC)",
-            "banFromCommunity": "Ban from community",
-            "unbanFromCommunity": "Unban from community"
+            "banFromCommunity": "Ban user from community",
+            "unbanFromCommunity": "Unban user from community"
         },
         "removeSubmission": {
             "title": "Removing Submission",
@@ -588,7 +588,8 @@
         "label": "Moderation",
         "labelInstanceOnly": "Moderation (Instance Only)",
         "feature": "Feature",
-        "unfeature": "Unfeature"
+        "unfeature": "Unfeature",
+        "votes": "Votes"
     },
     "common": {
         "back": "Back",

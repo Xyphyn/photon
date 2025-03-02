@@ -42,8 +42,8 @@
       color="distinct"
       class="flex flex-col-reverse sm:flex-row
     overflow-hidden gap-4 embed-card z-0 relative
-    dark:border-t-zinc-800 border-opacity-80 max-w-full shadow-sm shadow-black/5
-    dark:bg-zinc-950 group-hover/link:bg-slate-100 group-hover/link:dark:bg-zinc-900 transition-colors"
+    dark:border-t-zinc-800 border-opacity-80 max-w-full
+    dark:bg-zinc-950 group-hover/link:bg-slate-50 group-hover/link:dark:bg-zinc-900 transition-colors"
       rounding="2xl"
       element="article"
     >
@@ -57,13 +57,11 @@
       {/if}
       <div class="flex flex-col gap-2">
         {#if richURL}
-          <Link
-            href={url}
-            target="_blank"
+          <div
             class="text-slate-600 dark:text-zinc-400 inline-flex items-center gap-1 text-xs font-medium"
           >
             {richURL.hostname}
-          </Link>
+          </div>
         {/if}
         <p class="font-medium text-base">{embed_title}</p>
       </div>

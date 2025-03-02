@@ -18,7 +18,7 @@
   let { items, isFavorites = false }: Props = $props()
 </script>
 
-{#each items.sort( (a, b) => a.title.localeCompare(b.title), ) as follow (follow.id)}
+{#each items.toSorted( (a, b) => a.title.localeCompare(b.title), ) as follow (follow.id)}
   <div
     class="inline-flex w-full items-center pl-3 hover:bg-slate-100 hover:dark:bg-zinc-900
     transition-colors rounded-lg"

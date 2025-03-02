@@ -46,7 +46,7 @@
   {disabled}
 >
   {#snippet prefix()}
-    <span
+    <div
       class="contents {color == 'tertiary'
         ? 'text-slate-600 dark:text-zinc-400'
         : ''}
@@ -57,7 +57,7 @@
       {:else}
         {@render prefix?.()}
       {/if}
-    </span>
+    </div>
   {/snippet}
   {@render children?.()}
   {#snippet suffix()}

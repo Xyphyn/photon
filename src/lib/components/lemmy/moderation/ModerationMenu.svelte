@@ -3,6 +3,7 @@
   import type { CommentView, PostView } from 'lemmy-js-client'
   import { amMod, ban, isAdmin, remove } from './moderation'
   import {
+    ArrowsUpDown,
     Fire,
     Icon,
     LockClosed,
