@@ -102,7 +102,7 @@
         const parsed = JSON.parse(importText)
         const merged = { ...defaultSettings, ...parsed }
 
-        // settings = merged
+        Object.assign(settings, merged)
 
         toast({ content: $t('toast.settingsImport'), type: 'success' })
         importing = false
@@ -155,7 +155,9 @@
       onclick={() => {
         toast({
           content: $t('toast.resetSettings'),
-          action: () => {},
+          action: () => {
+            Object.assign(settings, defaultSettings)
+          },
         })
       }}
       class="font-normal"

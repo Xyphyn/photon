@@ -198,7 +198,9 @@ function createSettingsState(initial: Settings): Settings {
   return settings
 }
 
-export let settings = createSettingsState(defaultSettings)
+export let settings = createSettingsState(
+  JSON.parse(JSON.stringify(defaultSettings)),
+)
 
 $effect.root(() => {
   $effect(() => {
