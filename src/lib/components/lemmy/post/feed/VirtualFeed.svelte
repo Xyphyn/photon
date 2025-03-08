@@ -11,7 +11,7 @@
     postFeeds,
     type PostFeed,
     type PostFeedID,
-  } from '$lib/lemmy/postfeed'
+  } from '$lib/lemmy/postfeed.svelte'
   import { settings } from '$lib/settings.svelte.js'
   import { t } from '$lib/translations'
   import { createWindowVirtualizer } from '@tanstack/svelte-virtual'
@@ -31,7 +31,7 @@
   let virtualListEl: HTMLElement | undefined = $state(undefined)
 
   afterNavigate(() => {
-    $virtualizer.scrollToIndex($postFeeds[feedId]?.lastSeen ?? 0)
+    $virtualizer.scrollToIndex(postFeeds.value[feedId]?.lastSeen ?? 0)
   })
 
   interface Props {
@@ -94,9 +94,7 @@
       feedData.cursor.next = newPosts.next_page
       feedData.posts.posts = [...feedData.posts.posts, ...newPosts.posts]
 
-      postFeeds.updateFeed(feedId, {
-        data: feedData,
-      })
+      postFeeds.value[feedId].data = feedData
 
       loading = false
     } catch (e) {
@@ -114,9 +112,8 @@
 
       if (!id) return
 
-      postFeeds.updateFeed(feedId, {
-        lastSeen: Number(id),
-      })
+      postFeeds.value[feedId].lastSeen = Number(id)
+
       observer.unobserve(element)
     })
   }
@@ -164,10 +161,12 @@
   })
 
   let items = $derived($virtualizer.getVirtualItems())
+
   $effect(() => {
     if (virtualItemEls.length)
       virtualItemEls.forEach($virtualizer.measureElement)
   })
+
   $effect(() => {
     if (posts.length && virtualListEl)
       $virtualizer.setOptions({
@@ -209,30 +208,28 @@
           id="feed"
         >
           {#each items as row, index (posts[row.index]?.post.id)}
-            {#if posts[row.index]}
-              <li
-                bind:this={virtualItemEls[index]}
-                data-index={row.index}
-                style={row.index < 7 ? `--anim-delay: ${index * 100}ms` : ''}
-                class="relative post-container {row.index < 7
-                  ? 'pop-in opacity-0'
-                  : ''} -mx-4 sm:-mx-6 px-4 sm:px-6"
-              >
-                <Post
-                  bind:post={posts[row.index]}
-                  hideCommunity={community}
-                  view={(posts[row.index]?.post.featured_community ||
-                    posts[row.index]?.post.featured_local) &&
-                  settings.posts.compactFeatured
-                    ? 'compact'
-                    : settings.view}
-                  class="transition-all duration-250"
-                  onhide={() => {
-                    posts = posts.toSpliced(row.index, 1)
-                  }}
-                ></Post>
-              </li>
-            {/if}
+            <li
+              bind:this={virtualItemEls[index]}
+              data-index={row.index}
+              style={row.index < 7 ? `--anim-delay: ${index * 100}ms` : ''}
+              class="relative post-container {row.index < 7
+                ? 'pop-in opacity-0'
+                : ''} -mx-4 sm:-mx-6 px-4 sm:px-6"
+            >
+              <Post
+                bind:post={posts[row.index]}
+                hideCommunity={community}
+                view={(posts[row.index]?.post.featured_community ||
+                  posts[row.index]?.post.featured_local) &&
+                settings.posts.compactFeatured
+                  ? 'compact'
+                  : settings.view}
+                class="transition-all duration-250"
+                onhide={() => {
+                  posts = posts.toSpliced(row.index, 1)
+                }}
+              ></Post>
+            </li>
           {/each}
         </div>
       </div>

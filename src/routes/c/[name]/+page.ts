@@ -1,4 +1,4 @@
-import { postFeed } from '$lib/lemmy/postfeed.js'
+import { postFeed } from '$lib/lemmy/postfeed.svelte.js'
 import { settings } from '$lib/settings.svelte'
 import type { SortType } from 'lemmy-js-client'
 import { get } from 'svelte/store'

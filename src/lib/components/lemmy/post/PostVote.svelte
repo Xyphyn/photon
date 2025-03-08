@@ -40,7 +40,7 @@
   }
 
   let {
-    post,
+    post = $bindable(),
     vote = $bindable(0),
     score = $bindable(),
     upvotes = $bindable(0),

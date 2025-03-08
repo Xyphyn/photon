@@ -19,8 +19,8 @@
 
   let { data = $bindable() } = $props()
 
-  let type = $state(data.type_)
-  let sort = $state(data.sort)
+  let type = $state(data.feed.value.type_)
+  let sort = $state(data.feed.value.sort)
 
   $effect(() => {
     if (type) settings.defaultSort.feed = type
@@ -61,7 +61,11 @@
     </Header>
   </header>
 
-  <FeedComponent bind:posts={data.posts.posts} feedData={data} feedId="main" />
+  <FeedComponent
+    bind:posts={data.feed.value.posts.posts}
+    bind:feedData={data.feed.value}
+    feedId="main"
+  />
   <svelte:element
     this={settings.infiniteScroll && !settings.posts.noVirtualize
       ? 'noscript'
@@ -69,7 +73,7 @@
     class="mt-auto"
   >
     <Pageination
-      cursor={{ next: data.cursor.next }}
+      cursor={{ next: data.feed.value.cursor.next }}
       href={(page) =>
         typeof page == 'number' ? `?page=${page}` : `?cursor=${page}`}
     >

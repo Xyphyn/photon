@@ -119,7 +119,7 @@
   {style}
 >
   <PostVote
-    post={post.post}
+    bind:post={post.post}
     vote={post.my_vote}
     score={post.counts.score}
     upvotes={post.counts.upvotes}

@@ -1,8 +1,13 @@
 import { settings } from '$lib/settings.svelte'
 import type { GetPostsResponse, ListingType, SortType } from 'lemmy-js-client'
-import { postFeed, postFeeds, shouldReload } from '$lib/lemmy/postfeed.js'
+import {
+  postFeed,
+  postFeeds,
+  shouldReload,
+} from '$lib/lemmy/postfeed.svelte.js'
 import { t } from '$lib/translations.js'
 import { ChevronDoubleUp } from 'svelte-hero-icons'
+import { ReactiveState } from '$lib/promise.svelte.js'
 
 export async function load({ url, fetch }) {
   const cursor = url.searchParams.get('cursor') as string | undefined
@@ -14,18 +19,20 @@ export async function load({ url, fetch }) {
     (url.searchParams.get('type') as ListingType) || settings.defaultSort.feed
 
   return {
-    ...(await postFeed({
-      id: 'main',
-      request: {
-        page_cursor: cursor,
-        sort: sort,
-        type_: listingType,
-        limit: 20,
-        show_hidden: settings.posts.showHidden,
-      },
-      url: url,
-      fetch: fetch,
-    })),
+    feed: new ReactiveState(
+      await postFeed({
+        id: 'main',
+        request: {
+          page_cursor: cursor,
+          sort: sort,
+          type_: listingType,
+          limit: 20,
+          show_hidden: settings.posts.showHidden,
+        },
+        url: url,
+        fetch: fetch,
+      }),
+    ),
     contextual: {
       actions: [
         {

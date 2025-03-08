@@ -56,11 +56,6 @@
     open = $bindable(true),
   }: Props = $props()
 
-  // TODO this kinda sucks because you cant bind:, but we need to save the open state for the virtualizer
-  $effect(() => {
-    node.expanded = open
-  })
-
   let editing = $state(false)
   let newComment = $state(node.comment_view.comment.content)
   let editingLoad = $state(false)
