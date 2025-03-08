@@ -30,6 +30,7 @@
   import { publishedToDate } from '$lib/components/util/date'
   import { isAdmin } from '../moderation/moderation'
   import { block, blockInstance, purgeCommunity } from './CommunityCard.svelte'
+  import { settings } from '$lib/settings.svelte'
 
   interface Props {
     community: Community
@@ -51,7 +52,7 @@
 </script>
 
 <EntityHeader
-  banner={community.banner}
+  banner={settings.nsfwBlur && community.nsfw ? undefined : community.banner}
   avatar={community.icon}
   name={community.title}
   url="/c/{fullCommunityName(community.name, community.actor_id)}"

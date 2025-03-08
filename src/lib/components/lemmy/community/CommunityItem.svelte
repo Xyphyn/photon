@@ -86,7 +86,7 @@
             {#if community.community.deleted}
               <Icon
                 src={Trash}
-                class="text-red-500"
+                class="text-red-500 inline"
                 micro
                 size="14"
                 title={$t('post.badges.deleted')}
@@ -95,7 +95,7 @@
             {#if community.community.nsfw}
               <Icon
                 src={ExclamationTriangle}
-                class="text-red-500"
+                class="text-red-500 inline"
                 micro
                 size="14"
                 title={$t('post.badges.nsfw')}
@@ -104,7 +104,7 @@
             {#if community.banned_from_community}
               <Icon
                 src={NoSymbol}
-                class="text-red-500"
+                class="text-red-500 inline"
                 micro
                 size="14"
                 title={$t('comment.banned')}
@@ -113,7 +113,7 @@
             {#if community.community.visibility == 'LocalOnly'}
               <Icon
                 src={MapPin}
-                class="text-green-500"
+                class="text-green-500 inline"
                 micro
                 size="14"
                 title={$t('routes.admin.config.listingType.local')}
