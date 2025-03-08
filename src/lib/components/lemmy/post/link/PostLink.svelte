@@ -37,7 +37,7 @@
   For embed-type posts. Displays embed card or a compact link.
 -->
 {#if embed_title && view != 'compact'}
-  <a href={url} class="group/link">
+  <a target="_blank" href={url} class="group/link">
     <Material
       color="distinct"
       class="flex flex-col-reverse sm:flex-row
