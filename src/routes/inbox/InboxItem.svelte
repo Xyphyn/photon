@@ -147,7 +147,7 @@
     </div>
   {/snippet}
   {#snippet extended()}
-    <div class="flex gap-2 w-full md:hidden mt-1">
+    <div class="flex gap-2 w-full md:hidden mt-1 flex-wrap">
       <Button
         color={item.read ? 'secondary' : 'primary'}
         {loading}

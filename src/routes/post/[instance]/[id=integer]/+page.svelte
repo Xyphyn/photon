@@ -25,6 +25,7 @@
     Star,
     Clock,
     ArrowTrendingDown,
+    ArrowRight,
   } from 'svelte-hero-icons'
   import PostMeta, {
     parseTags,
@@ -340,16 +341,10 @@
 </article>
 {#if data.thread.value.showContext || data.thread.value.singleThread}
   <div
-    class="sticky mx-auto z-50 max-w-lg w-full min-w-0 flex items-center overflow-auto gap-1
+    class="sticky mx-auto z-50 max-w-md min-w-0 flex flex-col items-center overflow-auto gap-1
     bg-slate-50/50 dark:bg-zinc-900/50 backdrop-blur-xl border border-slate-200/50 dark:border-zinc-800/50
-    p-1 rounded-full px-2.5 justify-between top-6 lg:top-22"
+    p-1 rounded-full justify-between top-6 lg:top-22"
   >
-    <p class="font-medium text-sm flex items-center gap-2">
-      <Icon src={InformationCircle} mini size="20" />
-      {data.thread.value.showContext
-        ? $t('routes.post.thread.part')
-        : $t('routes.post.thread.single')}
-    </p>
     <Button
       color="none"
       rounding="pill"
@@ -364,6 +359,9 @@
       {data.thread.value.showContext
         ? $t('routes.post.thread.context')
         : $t('routes.post.thread.allComments')}
+      {#snippet suffix()}
+        <Icon src={ArrowRight} size="16" micro />
+      {/snippet}
     </Button>
   </div>
 {/if}

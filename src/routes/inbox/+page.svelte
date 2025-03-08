@@ -75,7 +75,7 @@
 
 <div class=" gap-2">
   <div
-    class="mt-4 mb-0 sticky z-30 mx-auto max-w-full flex gap-2 md:flex-row flex-col
+    class="mt-4 mb-2 z-30 mx-auto max-w-full flex gap-2 md:flex-row flex-col
 items-center px-2 w-max top-6 lg:top-22"
   >
     <Tabs
@@ -103,7 +103,7 @@ items-center px-2 w-max top-6 lg:top-22"
         (page.url.pathname == route && page.url.search == '') ||
         page.url.searchParams.toString().includes(route.slice(1)) ||
         (page.url.search == '' && route == def)}
-      class="overflow-auto w-full"
+      class="overflow-auto"
       buildUrl={(route, href) =>
         href.includes('?')
           ? '?' + addSearchParam(page.url.searchParams, href).toString()
@@ -127,9 +127,10 @@ items-center px-2 w-max top-6 lg:top-22"
       buildUrl={(route, href) =>
         '?' + addSearchParam(page.url.searchParams, href).toString()}
       defaultRoute="?unreadOnly=true"
+      class="overflow-auto"
     />
   </div>
-  <Header pageHeader class="sm:flex-row justify-between flex-col">
+  <Header pageHeader class="lg:flex-row justify-between flex-col">
     {$t('routes.inbox.title')}
 
     <div class="flex items-center gap-2">
@@ -173,7 +174,7 @@ items-center px-2 w-max top-6 lg:top-22"
     {#each data.inbox.value as item, index (item.id)}
       <div
         class="-mx-4 sm:-mx-6 px-4 sm:px-6
-        {item.read ? '' : 'bg-yellow-50/50 dark:bg-blue-500/5'}"
+        {item.read ? '' : 'bg-blue-50/50 dark:bg-blue-500/5'}"
         in:fly|global={{
           duration: 1000,
           y: 16,

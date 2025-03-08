@@ -107,7 +107,7 @@
 </script>
 
 <ul
-  in:fly={{ duration: 500, easing: expoOut, y: -12 }}
+  in:fly={{ duration: 500, easing: expoOut, y: -12, opacity: 0 }}
   class={isParent
     ? 'divide-y dark:divide-zinc-900 divide-slate-100'
     : ' border-slate-200 dark:border-zinc-800 my-1'}
@@ -126,47 +126,47 @@
       {#if node.children?.length > 0}
         <Comments {post} nodes={nodes[index].children} isParent={false} />
       {/if}
-      {#if node.comment_view.counts.child_count > 0 && node.children.length == 0}
-        <svelte:element
-          this={hydrated ? 'div' : 'a'}
-          class="w-full my-2 h-8"
-          href="/comment/{page.params.instance}/{node.comment_view.comment.id}"
-        >
-          <Button
-            loading={nodes[index].loading}
-            disabled={nodes[index].loading}
-            rounding="pill"
-            color="tertiary"
-            class="font-normal text-slate-600 dark:text-zinc-400"
-            loaderWidth={16}
-            onclick={() => {
-              if (nodes[index].depth > 4) {
-                goto(
-                  `/comment/${page.params.instance}/${nodes[index].comment_view.comment.id}#comments`,
-                )
-              } else {
-                nodes[index].loading = true
-                fetchChildren(nodes[index]).then(
-                  () => (nodes[index].loading = false),
-                )
-              }
-            }}
-          >
-            {#snippet prefix()}
-              <Icon
-                src={ArrowDownCircle}
-                micro
-                size="16"
-                class="text-primary-900 dark:text-primary-100"
-              />
-            {/snippet}
-            {$t('comment.more', {
-              // @ts-ignore
-              comments: node.comment_view.counts.child_count,
-            })}
-          </Button>
-        </svelte:element>
-      {/if}
     </Comment>
+    {#if node.comment_view.counts.child_count > 0 && node.children.length == 0}
+      <svelte:element
+        this={hydrated ? 'div' : 'a'}
+        class="w-full h-10 !border-y-0 -mt-2 -ml-2.5"
+        href="/comment/{page.params.instance}/{node.comment_view.comment.id}"
+      >
+        <Button
+          loading={nodes[index].loading}
+          disabled={nodes[index].loading}
+          rounding="pill"
+          color="tertiary"
+          class="font-normal !text-sm text-slate-600 dark:text-zinc-400"
+          loaderWidth={16}
+          onclick={() => {
+            if (nodes[index].depth > 4) {
+              goto(
+                `/comment/${page.params.instance}/${nodes[index].comment_view.comment.id}#comments`,
+              )
+            } else {
+              nodes[index].loading = true
+              fetchChildren(nodes[index]).then(
+                () => (nodes[index].loading = false),
+              )
+            }
+          }}
+        >
+          {#snippet prefix()}
+            <Icon
+              src={ArrowDownCircle}
+              micro
+              size="16"
+              class="text-primary-900 dark:text-primary-100"
+            />
+          {/snippet}
+          {$t('comment.more', {
+            // @ts-ignore
+            comments: node.comment_view.counts.child_count,
+          })}
+        </Button>
+      </svelte:element>
+    {/if}
   {/each}
 </ul>
