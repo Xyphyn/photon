@@ -222,10 +222,18 @@
             "logins": "Connexions",
             "welcome": "Bienvenue, {{default}} !",
             "upvoted": "Upvoted",
-            "downvoted": "Downvoted"
+            "downvoted": "Downvoted",
+            "overview": "Vue d'ensemble",
+            "submissions": "Soumissions"
         },
         "accounts": "Comptes",
-        "communities": "Communautés",
+        "communities": {
+            "title": "Communautés",
+            "trending": "Tendance",
+            "search": {
+                "placeholder": "Cherchez une nouvelle communauté"
+            }
+        },
         "search": {
             "title": "Rechercher",
             "federating": "Federation",
@@ -265,6 +273,11 @@
             "empty": {
                 "title": "Boîte de réception est vide",
                 "description": "les messages, réponses, and mentions will appear here."
+            },
+            "item": {
+                "reply": "{{user}} vous a répondu dans {{post}}",
+                "mention": "{{user}} vous a mentionné dans {{post}}",
+                "message": "{{user}} a messagé {{recipient}}"
             }
         },
         "moderation": {
@@ -425,13 +438,15 @@
                 "delete": {
                     "title": "Supprimer le thème",
                     "confirm": "Confirmer"
-                }
+                },
+                "presets": "Préréglages"
             }
         },
         "community": {
             "settings": {
                 "team": "Équipe",
-                "settings": "Paramètres"
+                "settings": "Paramètres",
+                "manage": "Gestion"
             }
         }
     },
