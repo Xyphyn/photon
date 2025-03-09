@@ -103,9 +103,16 @@
       class="flex-1"
       pattern={'@[^ |]{1,}'}
     />
-    <Button loading={adding} disabled={adding} size="md" class="h-full" submit>
+    <Button
+      loading={adding}
+      disabled={adding}
+      rounding="xl"
+      color="primary"
+      class="h-full"
+      submit
+    >
       {#snippet prefix()}
-        <Icon src={Plus} mini size="16" />
+        <Icon src={Plus} micro size="16" />
       {/snippet}
       {$t('common.add')}
     </Button>
