@@ -8,24 +8,37 @@
   import MultiSelect from '$lib/components/input/Switch.svelte'
   import { t } from '$lib/translations'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { Option, Select } from 'mono-svelte'
 
   let { data } = $props()
+
+  let selectForm = $state<HTMLFormElement>()
 </script>
 
 <Header pageHeader>{$t('routes.admin.applications.title')}</Header>
-<MultiSelect
+<!-- <MultiSelect
   options={[false, true]}
   selected={data.unreadOnly ?? true}
   optionNames={[$t('filter.location.all'), $t('filter.unread')]}
   onselect={(e) => searchParam(page.url, 'unreadOnly', e.toString(), 'page')}
-/>
-{#if data.applications && data.applications.length > 0}
+/> -->
+<form bind:this={selectForm} action="/admin/applications" class="w-max">
+  <Select
+    name="unreadOnly"
+    onchange={() => selectForm?.requestSubmit?.()}
+    label={$t('filter.filter')}
+  >
+    <Option value="false">{$t('filter.location.all')}</Option>
+    <Option value="true">{$t('filter.unread')}</Option>
+  </Select>
+</form>
+{#if data.applications?.value && data.applications?.value.length > 0}
   <div class="flex flex-col gap-4">
-    {#each data.applications as application (application.registration_application.id)}
+    {#each data.applications?.value as application (application.registration_application.id)}
       <Application {application} />
     {/each}
   </div>
-  {#if data.applications.length >= 40}
+  {#if data.applications?.value.length >= 40}
     <div class="mt-auto">
       <Pageination page={data.page} href={(page) => `?page=${page}`} />
     </div>
