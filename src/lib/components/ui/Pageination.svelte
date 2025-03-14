@@ -15,6 +15,7 @@
     onchange?: (page: number) => void
     onchangecursor?: (cursor: string) => void
     href?: (current: number | string) => string
+    back?: boolean
   }
 
   let {
@@ -25,6 +26,7 @@
     onchange,
     onchangecursor,
     href,
+    back = true,
   }: Props = $props()
 
   let customHref = (href?: string) => {
@@ -53,21 +55,24 @@
     </span>
     <hr class="border-slate-200 dark:border-zinc-800 flex-1" />
   {/if}
-  <Button
-    href={customHref(href?.(cursor?.back ?? page - 1))}
-    color="ghost"
-    onclick={() => invalidate(pageData.url)}
-    title={$t('common.back')}
-    size="square-md"
-    rounding="pill"
-    class="text-inherit dark:text-inherit disabled:!opacity-20 disabled:!bg-transparent"
-    disabled={!!((!cursor?.back && cursor?.next) || page <= 1)}
-    data-sveltekit-preload-data="off"
-  >
-    {#snippet suffix()}
-      <Icon src={ChevronLeft} size="24" mini />
-    {/snippet}
-  </Button>
+  {#if back}
+    <Button
+      href={customHref(href?.(cursor?.back ?? page - 1))}
+      color="ghost"
+      onclick={() => invalidate(pageData.url)}
+      title={$t('common.back')}
+      size="square-md"
+      rounding="pill"
+      class="text-inherit dark:text-inherit disabled:!opacity-20 disabled:!bg-transparent"
+      disabled={(cursor?.back == undefined && cursor?.next != undefined) ||
+        page <= 0}
+      data-sveltekit-preload-data="off"
+    >
+      {#snippet suffix()}
+        <Icon src={ChevronLeft} size="24" mini />
+      {/snippet}
+    </Button>
+  {/if}
 
   {#if page}
     <div style="display: grid;">

@@ -76,6 +76,7 @@
       cursor={{ next: data.feed.value.cursor.next }}
       href={(page) =>
         typeof page == 'number' ? `?page=${page}` : `?cursor=${page}`}
+      back={false}
     >
       <span class="flex flex-row items-center gap-1">
         <Icon src={ChartBar} size="16" mini />

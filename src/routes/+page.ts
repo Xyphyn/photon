@@ -11,7 +11,7 @@ import { ReactiveState } from '$lib/promise.svelte.js'
 
 export async function load({ url, fetch }) {
   const cursor = url.searchParams.get('cursor') as string | undefined
-  const prevCursor = url.searchParams.get('prevCursor') as string | undefined
+  const prevCursor = url.searchParams.get('cursorPrev') as string | undefined
 
   const sort: SortType =
     (url.searchParams.get('sort') as SortType) || settings.defaultSort.sort

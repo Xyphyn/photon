@@ -152,6 +152,7 @@
       scale: false,
       large: false,
     },
+    disabled,
     loaderWidth = undefined,
     href = undefined,
     class: clazz = '',
@@ -167,12 +168,14 @@
   role={href ? 'link' : 'button'}
   {href}
   {...rest}
+  tabindex={disabled ? -1 : undefined}
   class={[
     loading ? buttonColor.secondary : buttonColor[color],
     buttonSize[size],
     buttonRounding[rounding][roundingSide],
     buttonShadow[shadow],
     'text-sm transition-all font-medium cursor-pointer duration-75 disabled:opacity-50 disabled:pointer-events-none',
+    disabled && 'pointer-events-none opacity-50',
     alignment == 'center'
       ? 'origin-center'
       : alignment == 'left'
