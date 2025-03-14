@@ -52,10 +52,12 @@ export async function load({ url, fetch }) {
     }
 
     return {
-      type: type,
-      sort: sort,
-      page: page,
-      query: query,
+      filters: new ReactiveState({
+        type: type,
+        sort: sort,
+        page: page,
+        query: query,
+      })!,
       results: new ReactiveState(everything),
       streamed: {
         object: profile.data?.jwt
@@ -68,9 +70,11 @@ export async function load({ url, fetch }) {
   }
 
   return {
-    page: 1,
-    sort: sort,
-    type: type,
-    query: query,
+    filters: new ReactiveState({
+      page: 1,
+      sort: sort,
+      type: type,
+      query: query,
+    }),
   }
 }

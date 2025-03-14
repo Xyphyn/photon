@@ -46,11 +46,10 @@
 
   let { data } = $props()
 
-  let query = $state(data.query || '')
   let searchElement: HTMLInputElement | undefined = $state()
   let form = $state<HTMLFormElement>()
 
-  let pageNum = $state(data.page)
+  let pageNum = $state(data.filters.value.page)
 
   let moreOptions = $state(false)
 </script>
@@ -73,7 +72,7 @@
     <Tabs routes={[]} class="p-2 dark:bg-zinc-925/70">
       <div class="flex gap-2 flex-row items-center w-full text-base h-10">
         <TextInput
-          bind:value={query}
+          bind:value={data.filters.value.query}
           bind:element={searchElement}
           name="q"
           aria-label={$t('routes.search.query')}
@@ -99,7 +98,7 @@
   <div class="flex flex-row flex-wrap items-center gap-4 mt-4">
     <Select
       name="type"
-      bind:value={data.type}
+      bind:value={data.filters.value.type}
       onchange={() => form?.requestSubmit()}
     >
       {#snippet customLabel()}
@@ -116,7 +115,7 @@
     </Select>
     <Sort
       name="sort"
-      bind:selected={data.sort}
+      bind:selected={data.filters.value.sort}
       onchange={() => form?.requestSubmit()}
     />
     <Button
@@ -163,7 +162,7 @@
       <Placeholder
         icon={MagnifyingGlass}
         title={$t('routes.search.noResults.title')}
-        description={query == ''
+        description={data.filters.value.query == ''
           ? $t('routes.search.noResults.alt')
           : $t('routes.search.noResults.description')}
       />
