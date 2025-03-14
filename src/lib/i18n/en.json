@@ -906,7 +906,8 @@
         "invalid_vote_value": "You can't commit voter fraud on Lemmy posts, sorry.",
         "language_not_allowed": "That language isn't allowed in this community. Unset it to use the community's default.",
         "couldnt_find_person": "That user doesn't exist.",
-        "couldnt_find_community": "That community doesn't exist."
+        "couldnt_find_community": "That community doesn't exist.",
+        "not_an_admin": "You are not an admin of this instance."
     },
     "aria": {
         "pagination": {
