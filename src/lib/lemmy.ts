@@ -34,11 +34,16 @@ async function customFetch(
 ): Promise<Response> {
   const f = func ? func : fetch
 
-  if (init)
+  if (init) {
     init.headers = {
       ...init.headers,
       ...(auth ? { authorization: `Bearer ${auth}` } : {}),
+    };
+
+    if (auth) {
+      init.cache = "no-store";
     }
+  }
 
   if (init?.body && auth) {
     try {
