@@ -9,9 +9,9 @@
   import { setSessionStorage } from '$lib/session.js'
   import PostFeed from '$lib/components/lemmy/post/feed/PostFeed.svelte'
   import VirtualFeed from '$lib/components/lemmy/post/feed/VirtualFeed.svelte'
-  import { Button, Modal, Note, toast } from 'mono-svelte'
+  import { Badge, Button, Modal, Note, toast } from 'mono-svelte'
   import { browser } from '$app/environment'
-  import { ArrowRight, ChartBar, Icon, XMark } from 'svelte-hero-icons'
+  import { ArrowRight, ChartBar, Icon, Plus, XMark } from 'svelte-hero-icons'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { t } from '$lib/translations.js'
   import { settings } from '$lib/settings.svelte.js'
@@ -82,10 +82,13 @@
 
   {#if profile.data.user}
     {#if !data.community.value.discussion_languages.every( (l) => profile.data.user?.discussion_languages.includes(l), ) && profile.data.user.discussion_languages.length > 0}
+      {@const missing = data.community.value.discussion_languages.filter(
+        (i) => !profile.data.user?.discussion_languages.includes(i),
+      )}
       <Note class="!p-1 !pl-3 flex-col md:flex-row">
-        {$t('routes.community.languageWarning')}
+        <div>{$t('routes.community.languageWarning')}</div>
         <Button
-          class="inline-block md:ml-auto"
+          class="inline-block ml-auto"
           href="/profile/settings"
           color="tertiary"
           rounding="pill"
@@ -97,6 +100,19 @@
           {/snippet}
         </Button>
       </Note>
+      <div class="flex flex-row gap-4 flex-wrap -mt-2">
+        {#if site.data?.all_languages}
+          {@const allLanguages = site.data.all_languages}
+          {#each missing as language}
+            <a href="/profile/settings#languages" class="inline-block w-max">
+              <Badge color="blue-subtle">
+                <Icon src={Plus} size="16" micro />
+                {allLanguages.find((i) => language == i.id)?.name}
+              </Badge>
+            </a>
+          {/each}
+        {/if}
+      </div>
     {/if}
   {/if}
 

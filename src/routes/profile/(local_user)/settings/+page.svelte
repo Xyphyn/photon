@@ -126,7 +126,9 @@
       {$t('form.profile.showRead')}
     </Switch>
     <div class="space-y-1">
-      <SectionTitle>{$t('form.profile.languages.title')}</SectionTitle>
+      <SectionTitle id="languages">
+        {$t('form.profile.languages.title')}
+      </SectionTitle>
       <p>{$t('form.profile.languages.description')}</p>
       <Material rounding="xl" color="uniform" class="dark:bg-zinc-950">
         {#if site.data && formData.discussion_languages}
