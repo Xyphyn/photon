@@ -27,7 +27,11 @@
       : 'bg-slate-100 dark:bg-zinc-900 hover:brightness-125'} rounded-2xl w-full p-1.5 px-3
     font-medium cursor-pointer transition-all"
   >
-    <Markdown source={message.private_message.content} class="w-full" />
+    <Markdown
+      rendererOptions={{ autoloadImages: false }}
+      source={message.private_message.content}
+      class="w-full"
+    />
   </div>
   <Menu>
     {#snippet target()}

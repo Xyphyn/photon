@@ -112,6 +112,11 @@
 
 <script lang="ts">
   import SvelteMarkdown from 'svelte-markdown'
+  import { setContext } from 'svelte'
+
+  interface RendererOptions {
+    autoloadImages: boolean
+  }
 
   interface Props {
     source?: string
@@ -119,6 +124,7 @@
     noStyle?: boolean
     style?: string
     class?: string
+    rendererOptions?: RendererOptions
   }
 
   let {
@@ -127,7 +133,12 @@
     noStyle = false,
     style = '',
     class: clazz = '',
+    rendererOptions = {
+      autoloadImages: true,
+    },
   }: Props = $props()
+
+  setContext('options', rendererOptions)
 
   options.inline = inline
 

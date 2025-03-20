@@ -606,7 +606,8 @@
         "cancel": "Cancel",
         "send": "Send",
         "general": "General",
-        "remove": "Remove"
+        "remove": "Remove",
+        "download": "Download"
     },
     "message": {
         "success": "Success",

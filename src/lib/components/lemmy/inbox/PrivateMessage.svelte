@@ -36,6 +36,9 @@
     </div>
   {/if}
   <TextProps wrap="no-wrap">
-    <Markdown source={message.private_message.content} />
+    <Markdown
+      rendererOptions={{ autoloadImages: false }}
+      source={message.private_message.content}
+    />
   </TextProps>
 </div>
