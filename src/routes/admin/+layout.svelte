@@ -16,7 +16,7 @@
 {#if $notifications.applications > 0}
   <span class="flex flex-row text-red-500 gap-2">
     <Badge color="red-subtle" class="w-max">
-      {$notifications.applications}
+      {$notifications.applications > 99 ? '∞' : $notifications.applications}
     </Badge> unread applications
   </span>
 {/if}

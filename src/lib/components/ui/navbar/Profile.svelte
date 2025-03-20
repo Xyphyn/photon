@@ -112,7 +112,7 @@
       {$t('profile.inbox')}
       {#if $notifications.inbox > 0}
         <Badge color="red-subtle" class="text-xs ml-auto font-bold !py-0.5">
-          {$notifications.inbox}
+          {$notifications.inbox > 99 ? '∞' : $notifications.inbox}
         </Badge>
       {/if}
     </MenuButton>

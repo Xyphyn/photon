@@ -47,10 +47,10 @@
           {$t('profile.inbox')}
           {#if $notifications.inbox}
             <Badge
-              class="w-5 h-5 !p-0 grid place-items-center ml-auto"
+              class="min-w-5 h-5 !p-0 px-0.5 grid place-items-center ml-auto"
               color="red-subtle"
             >
-              {$notifications.inbox}
+              {$notifications.inbox > 99 ? '∞' : $notifications.inbox}
             </Badge>
           {/if}
         </span>
