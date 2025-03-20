@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { ReactiveState } from '$lib/promise.svelte'
   import UserPage from '../../u/[name]/+page.svelte'
   let { data } = $props()
 </script>
@@ -7,12 +8,14 @@
   <UserPage
     inline
     data={{
-      items: data.user.submissions,
-      page: data.page,
+      items: new ReactiveState(data.user.submissions),
+      filters: new ReactiveState({
+        page: data.page,
+        sort: data.sort,
+        type: data.type,
+      }),
       person_view: data.user.person_view,
       moderates: data.user.moderates,
-      sort: data.sort,
-      type: data.type,
     }}
   />
 {:else}

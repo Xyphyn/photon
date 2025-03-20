@@ -303,7 +303,7 @@
       bind:this={sortForm}
     >
       <Select
-        bind:value={data.type}
+        bind:value={data.filters.value.type}
         name="type"
         onchange={() => sortForm?.requestSubmit()}
       >
@@ -318,7 +318,7 @@
         <Option value="comments">{$t('content.comments')}</Option>
       </Select>
       <Select
-        bind:value={data.sort}
+        bind:value={data.filters.value.sort}
         name="sort"
         onchange={() => sortForm?.requestSubmit()}
       >
@@ -333,7 +333,7 @@
         <Option value="Old">{$t('filter.sort.old')}</Option>
       </Select>
     </form>
-    {#if data.items.length == 0}
+    {#if data.items.value.length == 0}
       <Placeholder
         icon={PencilSquare}
         title="No submissions"
@@ -343,15 +343,18 @@
       <div
         class="!divide-y divide-slate-200 dark:divide-zinc-800 flex flex-col"
       >
-        {#each data.items as item}
-          {#if isCommentView(item) && (data.type == 'all' || data.type == 'comments')}
+        {#each data.items.value as item}
+          {#if isCommentView(item) && (data.filters.value.type == 'all' || data.filters.value.type == 'comments')}
             <CommentItem comment={item} />
-          {:else if !isCommentView(item) && (data.type == 'all' || data.type == 'posts')}
+          {:else if !isCommentView(item) && (data.filters.value.type == 'all' || data.filters.value.type == 'posts')}
             <Post post={item} />
           {/if}
         {/each}
       </div>
     {/if}
-    <Pageination page={data.page} href={(page) => `?page=${page}`} />
+    <Pageination
+      bind:page={data.filters.value.page}
+      href={(page) => `?page=${page}`}
+    />
   </div>
 </div>

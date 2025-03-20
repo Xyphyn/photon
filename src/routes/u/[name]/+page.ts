@@ -1,5 +1,6 @@
 import { getClient } from '$lib/lemmy.svelte.js'
 import { getItemPublished } from '$lib/lemmy/item.js'
+import { ReactiveState } from '$lib/promise.svelte.js'
 import type { SortType } from 'lemmy-js-client'
 
 export async function load({ params, url, fetch }) {
@@ -32,11 +33,13 @@ export async function load({ params, url, fetch }) {
   }
 
   return {
-    type: type,
-    page: page,
-    sort: sort,
+    filters: new ReactiveState({
+      type: type,
+      page: page,
+      sort: sort,
+    }),
     person_view: user.person_view,
     moderates: user.moderates,
-    items,
+    items: new ReactiveState(items),
   }
 }
