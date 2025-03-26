@@ -26,13 +26,7 @@
     Plus,
   } from 'svelte-hero-icons'
   import InfiniteScroll from 'svelte-infinite-scroll'
-
-  let virtualItemEls: HTMLElement[] = $state([])
-  let virtualListEl: HTMLElement | undefined = $state(undefined)
-
-  afterNavigate(() => {
-    $virtualizer.scrollToIndex(postFeeds.value[feedId]?.lastSeen ?? 0)
-  })
+  import VirtualList from '$lib/components/render/VirtualList.svelte'
 
   interface Props {
     posts: PostView[]
@@ -50,14 +44,7 @@
     children,
   }: Props = $props()
 
-  const virtualizer = createWindowVirtualizer({
-    count: posts.length,
-    estimateSize: () => 150,
-    overscan: 5,
-    measureElement: (element, entry, instance) => {
-      return element.scrollHeight
-    },
-  })
+  let listEl = $state<HTMLUListElement>()
 
   let error: any = $state(undefined)
   let loading = $state(false)
@@ -92,7 +79,7 @@
       hasMore = newPosts.posts.length != 0
 
       feedData.cursor.next = newPosts.next_page
-      feedData.posts.posts = [...feedData.posts.posts, ...newPosts.posts]
+      feedData.posts.posts.push(...newPosts.posts)
 
       postFeeds.value[feedId].data = feedData
 
@@ -159,24 +146,9 @@
       })
     }
   })
-
-  let items = $derived($virtualizer.getVirtualItems())
-
-  $effect(() => {
-    if (virtualItemEls.length)
-      virtualItemEls.forEach($virtualizer.measureElement)
-  })
-
-  $effect(() => {
-    if (posts.length && virtualListEl)
-      $virtualizer.setOptions({
-        scrollMargin: virtualListEl?.offsetTop,
-        count: posts.length,
-      })
-  })
 </script>
 
-<ul class="flex flex-col list-none">
+<ul class="flex flex-col list-none" bind:this={listEl}>
   {#key posts}
     {#if posts?.length == 0}
       <div class="h-full grid place-items-center">
@@ -194,45 +166,36 @@
         </Placeholder>
       </div>
     {:else}
-      <div
-        style="position:relative; height: {browser
-          ? `${$virtualizer?.getTotalSize()}px`
-          : '100%'}; width: 100%;"
-        bind:this={virtualListEl}
+      <VirtualList
+        class="divide-y divide-slate-200 dark:divide-zinc-800"
+        items={posts}
+        initialOffset={listEl?.offsetTop}
       >
-        <div
-          style="position: absolute; top: 0; left: 0; width: 100%; transform: translateY({items?.[0]
-            ? items?.[0]?.start - $virtualizer.options.scrollMargin
-            : 0}px);"
-          class="divide-y divide-slate-200 dark:divide-zinc-800"
-          id="feed"
-        >
-          {#each items as row, index (posts[row.index]?.post.id)}
-            <li
-              bind:this={virtualItemEls[index]}
-              data-index={row.index}
-              style={row.index < 7 ? `--anim-delay: ${index * 100}ms` : ''}
-              class="relative post-container {row.index < 7
-                ? 'pop-in opacity-0'
-                : ''} -mx-4 sm:-mx-6 px-4 sm:px-6"
-            >
-              <Post
-                bind:post={posts[row.index]}
-                hideCommunity={community}
-                view={(posts[row.index]?.post.featured_community ||
-                  posts[row.index]?.post.featured_local) &&
-                settings.posts.compactFeatured
-                  ? 'compact'
-                  : settings.view}
-                class="transition-all duration-250"
-                onhide={() => {
-                  posts = posts.toSpliced(row.index, 1)
-                }}
-              ></Post>
-            </li>
-          {/each}
-        </div>
-      </div>
+        {#snippet item(item, row, measure)}
+          <li
+            data-index={row}
+            style={row < 7 ? `--anim-delay: ${row * 100}ms` : ''}
+            class="relative post-container {row < 7
+              ? 'pop-in opacity-0'
+              : ''} -mx-4 sm:-mx-6 px-4 sm:px-6"
+            use:measure
+          >
+            <Post
+              bind:post={posts[row]}
+              hideCommunity={community}
+              view={(posts[row]?.post.featured_community ||
+                posts[row]?.post.featured_local) &&
+              settings.posts.compactFeatured
+                ? 'compact'
+                : settings.view}
+              class="transition-all duration-250"
+              onhide={() => {
+                posts = posts.toSpliced(row, 1)
+              }}
+            ></Post>
+          </li>
+        {/snippet}
+      </VirtualList>
     {/if}
   {/key}
 
