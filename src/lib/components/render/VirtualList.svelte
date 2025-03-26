@@ -1,6 +1,6 @@
 <script lang="ts" generics="T">
   import { debounce } from 'mono-svelte/util/time'
-  import { untrack, type Snippet } from 'svelte'
+  import { onDestroy, untrack, type Snippet } from 'svelte'
   import type { HTMLAttributes } from 'svelte/elements'
 
   interface Props extends HTMLAttributes<HTMLDivElement> {
@@ -32,6 +32,13 @@
     }
   })
 
+  $effect(() => {
+    if (items.length > itemHeights.length) {
+      const missing = items.length - itemHeights.length
+      itemHeights = [...itemHeights, ...Array(missing).fill(null)]
+    }
+  })
+
   function updateVisibleItems() {
     if (!virtualListEl) return []
 
@@ -46,8 +53,8 @@
       const itemHeight = itemHeights[i] || estimatedHeight
 
       if (
-        currentOffset + itemHeight > scrollTop - initialOffset &&
-        currentOffset < scrollTop - initialOffset + viewportHeight
+        currentOffset + itemHeight > scrollTop &&
+        currentOffset < scrollTop + viewportHeight
       ) {
         newVisibleItems.push({ index: i, offset: currentOffset })
         visibleCount++
@@ -74,6 +81,35 @@
     scrollPosition = window.scrollY
     visibleItems = updateVisibleItems()
   }
+
+  function resizeObserver(node: HTMLElement) {
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const indexAttr = node.getAttribute('data-index')
+        if (indexAttr === null) continue
+        const index = Number(indexAttr)
+        if (isNaN(index)) continue
+
+        const newHeight = entry.contentRect.height
+        if (itemHeights[index] !== newHeight) {
+          itemHeights[index] = newHeight
+          visibleItems = updateVisibleItems()
+        }
+      }
+    })
+
+    observer.observe(node)
+
+    onDestroy(() => {
+      observer.disconnect()
+    })
+
+    return {
+      destroy() {
+        observer.disconnect()
+      },
+    }
+  }
 </script>
 
 <svelte:window onscroll={() => debounce(onscroll, 300)} />
@@ -90,7 +126,7 @@
     <div
       data-index={item.index}
       style="position: absolute; top: {item.offset}px; width: 100%;"
-      use:measureItem
+      use:resizeObserver
     >
       {@render itemSnippet(items[item.index], item.index, () => {})}
     </div>
