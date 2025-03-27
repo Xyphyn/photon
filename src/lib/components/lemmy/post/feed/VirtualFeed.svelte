@@ -1,8 +1,5 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy'
-
   import { browser } from '$app/environment'
-  import { afterNavigate } from '$app/navigation'
   import Post from '$lib/components/lemmy/post/Post.svelte'
   import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
@@ -14,7 +11,6 @@
   } from '$lib/lemmy/postfeed.svelte'
   import { settings } from '$lib/settings.svelte.js'
   import { t } from '$lib/translations'
-  import { createWindowVirtualizer } from '@tanstack/svelte-virtual'
   import type { PostView } from 'lemmy-js-client'
   import { Button } from 'mono-svelte'
   import { onMount } from 'svelte'
