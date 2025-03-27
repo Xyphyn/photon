@@ -170,6 +170,7 @@
         class="divide-y divide-slate-200 dark:divide-zinc-800"
         items={posts}
         initialOffset={listEl?.offsetTop}
+        overscan={500}
       >
         {#snippet item(item, row, measure)}
           <li

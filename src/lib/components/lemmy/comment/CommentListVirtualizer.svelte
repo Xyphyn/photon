@@ -1,12 +1,9 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy'
-
   import type { Post } from 'lemmy-js-client'
   import type { CommentNodeI } from './comments.svelte'
-  import { createWindowVirtualizer } from '@tanstack/svelte-virtual'
   import Comments from './Comments.svelte'
-  import { browser } from '$app/environment'
   import { onMount } from 'svelte'
+  import VirtualList from '$lib/components/render/VirtualList.svelte'
 
   interface Props {
     nodes: CommentNodeI[]
@@ -16,31 +13,7 @@
 
   let { nodes, post, scrollTo }: Props = $props()
 
-  let virtualListEl = $state<HTMLElement>()
-
-  let virtualizer = $derived(
-    createWindowVirtualizer({
-      count: nodes.length,
-      estimateSize: () => 30,
-      scrollMargin: virtualListEl?.offsetTop,
-      initialRect: {
-        height: browser ? 1 : 1500,
-        width: 99999,
-      },
-      overscan: 5,
-    }),
-  )
-
-  let virtualItemEls: HTMLElement[] = $state([])
-
-  let items = $derived($virtualizer.getVirtualItems())
-
-  const updateItems = () =>
-    virtualItemEls.forEach((el) => $virtualizer.measureElement(el))
-
-  $effect(() => {
-    if (virtualItemEls) updateItems()
-  })
+  let offsetEl = $state<HTMLElement>()
 
   onMount(() => {
     if (scrollTo) {
@@ -52,33 +25,21 @@
   })
 </script>
 
-<div
-  style="position:relative; height: {browser
-    ? `${$virtualizer.getTotalSize()}px`
-    : '100%'}; width: 100%;"
-  bind:this={virtualListEl}
->
-  <div
-    style="position: absolute; top: 0; left: 0; width: 100%; transform: translateY({items?.[0]
-      ? items?.[0]?.start - $virtualizer.options.scrollMargin
-      : 0}px);"
-    class="divide-y divide-slate-200 dark:divide-zinc-900"
-    id="feed"
+<div bind:this={offsetEl}>
+  <VirtualList
+    class="divide-y divide-slate-200 dark:divide-zinc-800 -mx-4 sm:-mx-6 w-min px-4 sm:px-6"
+    overscan={500}
+    items={nodes}
+    initialOffset={offsetEl?.offsetTop}
   >
-    {#each items as row, index (row.index)}
-      <div
-        bind:this={virtualItemEls[index]}
-        data-index={row.index}
-        class="-mx-4 sm:-mx-6 px-4 sm:px-6"
-      >
+    {#snippet item(item, index)}
+      <div class="-mx-4 sm:-mx-6 px-4 sm:px-6">
         <Comments
           isParent={true}
-          bind:nodes={
-            () => [nodes[row.index]], (v) => (nodes[row.index] = v[0])
-          }
+          bind:nodes={() => [nodes[index]], (v) => (nodes[index] = v[0])}
           {post}
         />
       </div>
-    {/each}
-  </div>
+    {/snippet}
+  </VirtualList>
 </div>

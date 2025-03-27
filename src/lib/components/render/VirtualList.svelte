@@ -2,6 +2,7 @@
   import { debounce } from 'mono-svelte/util/time'
   import { onDestroy, untrack, type Snippet } from 'svelte'
   import type { HTMLAttributes } from 'svelte/elements'
+  import { innerHeight } from 'svelte/reactivity/window'
 
   interface Props extends HTMLAttributes<HTMLDivElement> {
     items: T[]
@@ -42,8 +43,8 @@
   function updateVisibleItems() {
     if (!virtualListEl) return []
 
-    viewportHeight = virtualListEl.offsetHeight
-    const scrollTop = scrollPosition
+    viewportHeight = innerHeight?.current ?? 1000
+    const scrollTop = scrollPosition - initialOffset
 
     let newVisibleItems: { index: number; offset: number }[] = []
     let currentOffset = 0
@@ -53,8 +54,8 @@
       const itemHeight = itemHeights[i] || estimatedHeight
 
       if (
-        currentOffset + itemHeight > scrollTop &&
-        currentOffset < scrollTop + viewportHeight
+        currentOffset + itemHeight > scrollTop - overscan &&
+        currentOffset < scrollTop + viewportHeight + overscan
       ) {
         newVisibleItems.push({ index: i, offset: currentOffset })
         visibleCount++
@@ -66,15 +67,6 @@
     }
 
     return newVisibleItems ?? []
-  }
-
-  function measureItem(element: HTMLElement) {
-    const index = Number(element.getAttribute('data-index'))
-    if (isNaN(index)) return estimatedHeight
-
-    if (element && itemHeights[index] !== element.offsetHeight) {
-      itemHeights[index] = element.offsetHeight
-    }
   }
 
   function onscroll() {
@@ -110,9 +102,11 @@
       },
     }
   }
+
+  const scrollDebounce = debounce(onscroll, 5)
 </script>
 
-<svelte:window onscroll={() => debounce(onscroll, 300)} />
+<svelte:window onscroll={() => scrollDebounce()} />
 
 <div
   bind:this={virtualListEl}
