@@ -22,23 +22,55 @@
   }: Props = $props()
 
   let virtualListEl = $state<HTMLElement>()
+
   let itemHeights = $state<(number | null)[]>(Array(items.length).fill(null))
+  let cumulativeItemHeights = $derived.by(() => {
+    let cumulation = new Array(itemHeights.length)
+    let sum = 0
+
+    for (let i = 0; i < itemHeights.length; i++) {
+      const height = itemHeights[i] || estimatedHeight
+      sum += height
+      cumulation[i] = sum
+    }
+
+    return cumulation
+  })
+
   let scrollPosition = $state(0)
   let viewportHeight = $state(0)
   let visibleItems = $state<{ index: number; offset: number }[]>([])
 
-  $effect(() => {
+  $effect.pre(() => {
     if (items || virtualListEl) {
       visibleItems = updateVisibleItems()
     }
   })
 
-  $effect(() => {
+  $effect.pre(() => {
     if (items.length > itemHeights.length) {
       const missing = items.length - itemHeights.length
       itemHeights = [...itemHeights, ...Array(missing).fill(null)]
     }
   })
+
+  function findFirstVisibleIndex(
+    scrollTop: number,
+    cumulativeHeights: number[],
+  ): number {
+    let low = 0
+    let high = cumulativeHeights.length - 1
+    let mid = 0
+
+    while (low <= high) {
+      mid = Math.floor((low + high) / 2)
+
+      if (cumulativeHeights[mid] <= scrollTop) low = mid + 1
+      else high = mid - 1
+    }
+
+    return low
+  }
 
   function updateVisibleItems() {
     if (!virtualListEl) return []
@@ -47,30 +79,23 @@
     const scrollTop = scrollPosition - initialOffset
 
     let newVisibleItems: { index: number; offset: number }[] = []
-    let currentOffset = 0
-    let visibleCount = 0
 
-    for (let i = 0; i < items.length; i++) {
-      const itemHeight = itemHeights[i] || estimatedHeight
+    const firstIndex = findFirstVisibleIndex(scrollTop, cumulativeItemHeights)
 
-      if (
-        currentOffset + itemHeight > scrollTop - overscan &&
-        currentOffset < scrollTop + viewportHeight + overscan
-      ) {
-        newVisibleItems.push({ index: i, offset: currentOffset })
-        visibleCount++
-      }
+    let i = firstIndex
+    let offset = i == 0 ? 0 : cumulativeItemHeights[i - 1]
 
-      currentOffset += itemHeight
-
-      if (visibleCount > items.length) break
+    while (i < items.length && offset < scrollTop + viewportHeight + overscan) {
+      newVisibleItems.push({ index: i, offset: offset })
+      const height = itemHeights[i] || estimatedHeight
+      offset += height
+      i++
     }
 
     return newVisibleItems ?? []
   }
 
   function onscroll() {
-    scrollPosition = window.scrollY
     visibleItems = updateVisibleItems()
   }
 
@@ -104,9 +129,18 @@
   }
 
   const scrollDebounce = debounce(onscroll, 5)
+
+  let prevScrollPos = 0
+  $effect.pre(() => {
+    // const direction = scrollPosition > prevScrollPos ? 'down' : 'up'
+
+    // if (direction == 'down') {
+    // }
+    if (scrollPosition) scrollDebounce()
+  })
 </script>
 
-<svelte:window onscroll={() => scrollDebounce()} />
+<svelte:window bind:scrollY={scrollPosition} />
 
 <div
   bind:this={virtualListEl}
