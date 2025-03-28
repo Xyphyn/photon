@@ -17,6 +17,7 @@
     Flag,
     GlobeAmericas,
     Icon,
+    LockClosed,
     MapPin,
     Newspaper,
     Pencil,
@@ -58,6 +59,8 @@
     formatRelativeDate,
   } from '$lib/components/util/RelativeDate.svelte'
   import { instance } from '$lib/instance.svelte'
+  import ShieldIcon from '../moderation/ShieldIcon.svelte'
+  import Logo from '$lib/components/ui/Logo.svelte'
 
   let editing = $state(false)
   let saving = $state(false)
@@ -169,15 +172,26 @@
       {/snippet}
     </Button>
   {/if}
-  {#if profile.data?.user && (amMod(profile.data.user, post.community) || isAdmin(profile.data.user))}
-    <ModerationMenu
-      size="custom"
-      color="ghost"
-      rounding="pill"
-      class={buttonSquare}
-      bind:item={post}
-      community={post.community}
-    />
+  {#if profile.data?.user}
+    {@const enabled = !(
+      amMod(profile.data.user!, post.community) || isAdmin(profile.data.user!)
+    )}
+    <div class="relative">
+      <ModerationMenu
+        size="custom"
+        color="ghost"
+        rounding="pill"
+        class={buttonSquare}
+        bind:item={post}
+        community={post.community}
+      />
+      <!-- {#if !enabled} -->
+      <Logo
+        width={16}
+        class="absolute z-10 -top-1.5 -right-1.5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full p-0.5"
+      />
+      <!-- {/if} -->
+    </div>
   {/if}
 
   {#if profile.data?.jwt}

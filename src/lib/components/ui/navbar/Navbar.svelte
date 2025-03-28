@@ -75,6 +75,16 @@
     style="border-radius: inherit;"
   >
     <div class="ml-auto"></div>
+    <NavButton
+      color="primary"
+      class="bg-gradient-to-r from-purple-500 to-pink-400"
+      label="Premium"
+      href="/premium"
+    >
+      {#snippet customIcon()}
+        <Logo width={16} class="!fill-current" />
+      {/snippet}
+    </NavButton>
     {#if profile.data?.user && isAdmin(profile.data.user)}
       <NavButton
         href="/admin"

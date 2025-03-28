@@ -1,11 +1,10 @@
 <script lang="ts">
-  import { settings } from '$lib/settings.svelte'
-
   interface Props {
     width?: number
+    class?: string
   }
 
-  let { width = 48 }: Props = $props()
+  let { width = 48, class: clazz }: Props = $props()
 </script>
 
 <svg
@@ -14,7 +13,7 @@
   viewBox="0 0 100 100"
   fill="none"
   xmlns="http://www.w3.org/2000/svg"
-  class="inline fill-black dark:fill-white hover:fill-slate-700 hover:dark:fill-zinc-300 transition-colors"
+  class="inline fill-black dark:fill-white hover:fill-slate-700 hover:dark:fill-zinc-300 transition-colors {clazz}"
 >
   <path
     id="hexagon"

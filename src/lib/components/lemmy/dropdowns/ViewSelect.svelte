@@ -6,6 +6,8 @@
   import {
     Bars3,
     Clock,
+    Cube,
+    Hashtag,
     Icon,
     ListBullet,
     QueueList,
@@ -37,4 +39,6 @@
   <Option value="compact" icon={Bars3}>
     {$t('filter.view.compact')}
   </Option>
+  <Option disabled value="wtf" icon={Cube}>4D Hypercube</Option>
+  <Option disabled value="wtf" icon={Hashtag}>Quantum Superposition</Option>
 </Select>

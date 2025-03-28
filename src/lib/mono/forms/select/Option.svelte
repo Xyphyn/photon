@@ -14,7 +14,7 @@
     value: optionElement?.value ?? '',
     label: optionElement?.innerText?.trim() ?? '',
     icon: icon,
-    disabled: false,
+    disabled: optionElement?.disabled,
   })
 
   interface SelectContext {

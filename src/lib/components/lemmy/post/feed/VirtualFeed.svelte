@@ -3,7 +3,6 @@
 
   import { browser } from '$app/environment'
   import { afterNavigate } from '$app/navigation'
-  import Post from '$lib/components/lemmy/post/Post.svelte'
   import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { client } from '$lib/lemmy.svelte'
@@ -15,17 +14,29 @@
   import { settings } from '$lib/settings.svelte.js'
   import { t } from '$lib/translations'
   import { createWindowVirtualizer } from '@tanstack/svelte-virtual'
-  import type { PostView } from 'lemmy-js-client'
+  import type {
+    Community,
+    ImageDetails,
+    Person,
+    PostAggregates,
+    PostView,
+    Post as PostType,
+    SubscribedType,
+  } from 'lemmy-js-client'
   import { Button } from 'mono-svelte'
   import { onMount } from 'svelte'
   import {
     ArchiveBox,
     ChevronDoubleUp,
+    CurrencyDollar,
     ExclamationTriangle,
     Icon,
     Plus,
+    PlusCircle,
+    ShieldCheck,
   } from 'svelte-hero-icons'
   import InfiniteScroll from 'svelte-infinite-scroll'
+  import Post from '../Post.svelte'
 
   let virtualItemEls: HTMLElement[] = $state([])
   let virtualListEl: HTMLElement | undefined = $state(undefined)
@@ -35,7 +46,25 @@
   })
 
   interface Props {
-    posts: PostView[]
+    posts: {
+      post: PostType
+      creator: Person
+      community: Community
+      image_details?: ImageDetails
+      creator_banned_from_community: boolean
+      banned_from_community: boolean
+      creator_is_moderator: boolean
+      creator_is_admin: boolean
+      counts: PostAggregates
+      subscribed: SubscribedType
+      saved: boolean
+      read: boolean
+      hidden: boolean
+      creator_blocked: boolean
+      my_vote?: number
+      unread_comments: number
+      ad: boolean
+    }[]
     community?: boolean
     feedId: PostFeedID
     feedData: PostFeed['data']
@@ -229,6 +258,63 @@
                   posts = posts.toSpliced(row.index, 1)
                 }}
               ></Post>
+              {#if row.index % 4 == 0}
+                <div
+                  class="border-t border-slate-100 dark:border-zinc-800 my-4 -mx-6"
+                ></div>
+                <div
+                  class="overflow-hidden bg-white dark:bg-zinc-950 border rounded-2xl border-slate-200 dark:border-zinc-800 relative mb-4 z-0 w-full h-full"
+                >
+                  <div
+                    class="absolute top-0 left-0 w-full h-full z-10 p-2 flex flex-col justify-center items-center gap-2"
+                  >
+                    <div class="font-medium text-xl tracking-tight">
+                      See this post with <span
+                        class="bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text"
+                      >
+                        Photon Premium
+                      </span>
+                    </div>
+                    <div
+                      class="flex flex-row gap-2 flex-wrap text-sm text-slate-600 dark:text-zinc-400"
+                    >
+                      <div>
+                        <Icon
+                          src={CurrencyDollar}
+                          size="14"
+                          micro
+                          class="inline"
+                        /> 50% less ads
+                      </div>
+                      <div>
+                        <Icon src={PlusCircle} size="14" micro class="inline" />
+                        New features
+                      </div>
+                      <div>
+                        <Icon
+                          src={ShieldCheck}
+                          size="14"
+                          micro
+                          class="inline"
+                        />
+                        Moderation access
+                      </div>
+                    </div>
+                    <div class="flex flex-row gap-4">
+                      <Button href="/premium" rounding="xl" color="primary">
+                        ${Math.floor(Math.random() * 999)}.99/mo
+                      </Button>
+                    </div>
+                  </div>
+                  <div
+                    class="blur-md pointer-events-none w-full h-full -10 opacity-50"
+                  >
+                    <Post
+                      post={posts[Math.floor(Math.random() * posts.length)]}
+                    />
+                  </div>
+                </div>
+              {/if}
             </li>
           {/each}
         </div>

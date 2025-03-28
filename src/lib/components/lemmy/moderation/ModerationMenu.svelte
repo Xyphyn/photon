@@ -4,11 +4,15 @@
   import { amMod, ban, isAdmin, remove } from './moderation'
   import {
     ArrowsUpDown,
+    ExclamationTriangle,
+    FaceFrown,
     Fire,
     Icon,
     LockClosed,
     LockOpen,
+    MapPin,
     Megaphone,
+    ShieldCheck,
     ShieldExclamation,
     Trash,
   } from 'svelte-hero-icons'
@@ -74,6 +78,11 @@
 
     pinning = false
   }
+
+  let actuallyMod = $derived(
+    (profile.data.user && amMod(profile.data.user, item.community)) ||
+      (profile.data?.user && isAdmin(profile.data.user)),
+  )
 </script>
 
 <Menu placement="bottom-end">
@@ -88,69 +97,123 @@
       <ShieldIcon filled width={16} />
     </Button>
   {/snippet}
-  {#if (profile.data?.user && amMod(profile.data.user, item.community)) || (profile.data?.user && isAdmin(profile.data.user))}
-    <MenuDivider>
-      {#if !item.community.local && !amMod(profile.data.user, item.community)}
-        {$t('moderation.labelInstanceOnly')}
-      {:else}
-        {$t('moderation.label')}
-      {/if}
-    </MenuDivider>
-    <MenuButton
-      color="warning-subtle"
-      onclick={() => lock(!item.post.locked)}
-      loading={locking}
-      disabled={locking}
-    >
-      {#snippet prefix()}
-        <Icon src={item.post.locked ? LockOpen : LockClosed} size="16" mini />
-      {/snippet}
-      {item.post.locked ? $t('moderation.unlock') : $t('moderation.lock')}
-    </MenuButton>
-
-    <MenuButton
-      color="success-subtle"
-      onclick={() =>
-        pin(isPostView(item) ? !item.post.featured_community : false)}
-      loading={pinning}
-      disabled={pinning}
-    >
-      <Icon src={Megaphone} size="16" mini />
+  {#if profile.data?.user}
+    {#if !actuallyMod}
       <div
-        class="flex flex-row gap-2 text-left items-center justify-between w-full"
+        class="absolute top-0 left-0 w-full h-full flex justify-center items-center gap-2"
       >
-        <span>
-          {item.post.featured_community
-            ? $t('moderation.unfeature')
-            : $t('moderation.feature')}
-        </span>
-        {#if isAdmin(profile.data.user)}
-          <span class="text-xs opacity-80">{$t('form.post.community')}</span>
-        {/if}
+        <div class="font-medium text-base tracking-tight text-center">
+          Moderation access with <span
+            class="bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text whitespace-nowrap"
+          >
+            Photon Premium
+          </span>
+        </div>
       </div>
-    </MenuButton>
-    <MenuButton color="danger-subtle" onclick={() => remove(item)}>
-      <Icon src={Trash} size="16" mini />
-      {#if isCommentView(item)}
-        {item.comment.removed
-          ? $t('moderation.restore')
-          : $t('moderation.remove')}
-      {:else}
-        {item.post.removed ? $t('moderation.restore') : $t('moderation.remove')}
-      {/if}
-    </MenuButton>
-    {#if profile.data?.user && profile.data.user.local_user_view.person.id != item.creator.id}
-      <MenuButton
-        color="danger-subtle"
-        onclick={() =>
-          ban(item.creator_banned_from_community, item.creator, item.community)}
-      >
-        <Icon src={ShieldExclamation} size="16" mini />
-        {item.creator_banned_from_community
-          ? $t('moderation.ban.unbanFromCommunity')
-          : $t('moderation.ban.banFromCommunity')}
-      </MenuButton>
     {/if}
+    <div class={actuallyMod ? '' : 'pointer-events-none opacity-60 relative'}>
+      <MenuDivider>
+        {#if !item.community.local && !amMod(profile.data.user, item.community)}
+          {$t('moderation.labelInstanceOnly')}
+        {:else}
+          {$t('moderation.label')}
+        {/if}
+      </MenuDivider>
+      <MenuButton
+        color="warning-subtle"
+        onclick={() => lock(!item.post.locked)}
+        loading={locking}
+        disabled={locking}
+      >
+        {#snippet prefix()}
+          <Icon src={item.post.locked ? LockOpen : LockClosed} size="16" mini />
+        {/snippet}
+        {item.post.locked ? $t('moderation.unlock') : $t('moderation.lock')}
+      </MenuButton>
+
+      <MenuButton
+        color="success-subtle"
+        onclick={() =>
+          pin(isPostView(item) ? !item.post.featured_community : false)}
+        loading={pinning}
+        disabled={pinning}
+      >
+        <Icon src={Megaphone} size="16" mini />
+        <div
+          class="flex flex-row gap-2 text-left items-center justify-between w-full"
+        >
+          <span>
+            {item.post.featured_community
+              ? $t('moderation.unfeature')
+              : $t('moderation.feature')}
+          </span>
+          {#if isAdmin(profile.data.user)}
+            <span class="text-xs opacity-80">{$t('form.post.community')}</span>
+          {/if}
+        </div>
+      </MenuButton>
+      <MenuButton color="danger-subtle" onclick={() => remove(item)}>
+        <Icon src={Trash} size="16" mini />
+        {#if isCommentView(item)}
+          {item.comment.removed
+            ? $t('moderation.restore')
+            : $t('moderation.remove')}
+        {:else}
+          {item.post.removed
+            ? $t('moderation.restore')
+            : $t('moderation.remove')}
+        {/if}
+      </MenuButton>
+      {#if profile.data?.user && profile.data.user.local_user_view.person.id != item.creator.id}
+        <MenuButton
+          color="danger-subtle"
+          onclick={() =>
+            ban(
+              item.creator_banned_from_community,
+              item.creator,
+              item.community,
+            )}
+        >
+          <Icon src={ShieldExclamation} size="16" mini />
+          {item.creator_banned_from_community
+            ? $t('moderation.ban.unbanFromCommunity')
+            : $t('moderation.ban.banFromCommunity')}
+        </MenuButton>
+      {/if}
+      <MenuButton
+        class="bg-gradient-to-r from-purple-500 to-pink-500 !text-transparent bg-clip-text"
+        disabled
+      >
+        <Icon class="text-purple-500" src={FaceFrown} size="16" micro />
+        Mail pipe bomb to author
+      </MenuButton>
+      <MenuButton
+        class="bg-gradient-to-r from-purple-500 to-pink-500 !text-transparent bg-clip-text"
+        disabled
+      >
+        <Icon class="text-purple-500" src={MapPin} size="16" micro />
+        Track location of author
+      </MenuButton>
+      <MenuButton
+        class="bg-gradient-to-r from-purple-500 to-pink-500 !text-transparent bg-clip-text"
+        disabled
+      >
+        <Icon class="text-purple-500" src={ShieldCheck} size="16" micro />
+        Deploy SWAT team
+      </MenuButton>
+      <MenuButton
+        class="bg-gradient-to-r from-purple-500 to-pink-500 !text-transparent bg-clip-text"
+        disabled
+      >
+        <Icon
+          class="text-purple-500"
+          src={ExclamationTriangle}
+          size="16"
+          micro
+        />
+        View author's browser history
+      </MenuButton>
+    </div>
   {/if}
   {#if profile.data?.user && isAdmin(profile.data.user)}
     <MenuDivider>{$t('admin.label')}</MenuDivider>
