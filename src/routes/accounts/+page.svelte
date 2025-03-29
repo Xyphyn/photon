@@ -1,8 +1,6 @@
 <script lang="ts">
   import {
     profileData,
-    setUserID,
-    profile as currentProfile,
     deleteProfile,
     moveProfile,
     type Profile,
@@ -17,10 +15,8 @@
   import {
     ArrowLeftOnRectangle,
     ArrowRightOnRectangle,
-    ArrowsRightLeft,
     ArrowUturnLeft,
     BugAnt,
-    Check,
     ChevronDown,
     ChevronUp,
     EllipsisHorizontal,
@@ -34,6 +30,7 @@
   import { t } from '$lib/translations'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { fly } from 'svelte/transition'
+  import ProfileButton from '$lib/components/ui/sidebar/ProfileButton.svelte'
 
   let debugging = $state(false)
   let debugProfile: Profile | undefined = $state(undefined)
@@ -42,8 +39,6 @@
     shown: false,
     account: undefined as Profile | undefined,
   })
-
-  let switching = $state(-2)
 </script>
 
 <svelte:head>
@@ -160,45 +155,11 @@
     <div>
       {#each profileData.profiles as profile, index}
         <div
-          class="flex flex-row gap-2 items-center py-3"
+          class="flex flex-row gap-2 items-center py-1"
           transition:fly={{ duration: 500, y: -12, easing: expoOut }}
         >
-          <Button
-            title={profile.id == currentProfile?.data.id ? 'Switch' : 'Current'}
-            onclick={async () => {
-              if (profile.id != currentProfile?.data.id) {
-                switching = profile.id
-                await setUserID(profile.id)
-                switching = -69
-              }
-            }}
-            size="square-md"
-            color={profile.id == currentProfile?.data.id ? 'primary' : 'ghost'}
-            loading={switching == profile.id}
-            disabled={switching == profile.id}
-            rounding="pill"
-          >
-            {#snippet prefix()}
-              {#if profile.id == currentProfile?.data.id}
-                <Icon src={Check} mini size="16" />
-              {:else}
-                <Icon src={ArrowsRightLeft} size="16" mini />
-              {/if}
-            {/snippet}
-          </Button>
-          <div class="flex items-center gap-2">
-            <ProfileAvatar
-              {profile}
-              {index}
-              selected={currentProfile?.data.id == profile.id}
-              size={24}
-            />
-            <div class="flex flex-col">
-              <span class="font-medium">{profile.username}</span>
-              <span class="text-sm text-slate-600 dark:text-zinc-400">
-                {profile.instance}
-              </span>
-            </div>
+          <div class="flex-1">
+            <ProfileButton {index} prof={profile} />
           </div>
           <div class="ml-auto"></div>
           <Menu placement="bottom-end">
