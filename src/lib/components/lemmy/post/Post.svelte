@@ -9,7 +9,12 @@
   import { Badge } from 'mono-svelte'
   import { mediaType, postLink } from '$lib/components/lemmy/post/helpers.js'
   import { publishedToDate } from '$lib/components/util/date.js'
-  import { ArrowUp, ChatBubbleOvalLeft, Icon } from 'svelte-hero-icons'
+  import {
+    ArrowUp,
+    ChatBubbleOvalLeft,
+    ExclamationCircle,
+    Icon,
+  } from 'svelte-hero-icons'
   import PostMedia from '$lib/components/lemmy/post/media/PostMedia.svelte'
   import PostMediaCompact from '$lib/components/lemmy/post/media/PostMediaCompact.svelte'
   import PostBody from './PostBody.svelte'
@@ -92,6 +97,47 @@
     admin: post.creator_is_admin,
     moderator: post.creator_is_moderator,
   })
+
+  function deterministicRandomChoice(arr: any, str: any) {
+    let hash = 0
+    for (let i = 0; i < str.length; i++) {
+      hash += str.charCodeAt(i)
+    }
+    return arr[hash % arr.length]
+  }
+
+  let goofyBadge = $derived(
+    deterministicRandomChoice(
+      [
+        'Bumpscocious',
+        'excuse me',
+        'Moderate Zimblance',
+        'Quibblistic',
+        'Sporbulent',
+        'Qworbdashilicious',
+        'High Whimspacity',
+        'Ludicrous',
+        'Smoodlefied',
+        'Quizzlebonked',
+        'Clonky',
+        'Snorgulent',
+        'Blorpulent',
+        // give a good chance of nothing
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+      ],
+      post.post.name,
+    ),
+  )
 </script>
 
 <!-- 
@@ -139,8 +185,20 @@
     edited={post.post.updated}
     tags={tags?.tags}
     {view}
-    {extraBadges}
-  />
+  >
+    {#snippet extraBadges()}
+      {@render extraBadges?.()}
+
+      {#if goofyBadge}
+        <Badge>
+          {#snippet icon()}
+            <Icon src={ExclamationCircle} size="14" micro />
+          {/snippet}
+          {goofyBadge}
+        </Badge>
+      {/if}
+    {/snippet}
+  </PostMeta>
   {#key post.post.url}
     <div style="grid-area:embed;" class={{ contents: view == 'cozy' }}>
       {#if rule != 'hide'}
