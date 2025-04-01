@@ -45,14 +45,12 @@
       {#snippet label()}
         <span class="flex items-center gap-2">
           {$t('profile.inbox')}
-          {#if $notifications.inbox}
-            <Badge
-              class="min-w-5 h-5 !p-0 px-0.5 grid place-items-center ml-auto"
-              color="red-subtle"
-            >
-              {$notifications.inbox > 99 ? '∞' : $notifications.inbox}
-            </Badge>
-          {/if}
+          <Badge
+            class="min-w-5 h-5 !p-0 px-0.5 grid place-items-center ml-auto"
+            color="red-subtle"
+          >
+            {$notifications.inbox > 99 ? '∞' : $notifications.inbox}
+          </Badge>
         </span>
       {/snippet}
     </SidebarButton>

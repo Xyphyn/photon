@@ -173,6 +173,15 @@
   let remoteView = $derived(
     page.params.instance?.toLowerCase() != instance.data?.toLowerCase(),
   )
+
+  onMount(() => {
+    let remaining = Number(localStorage.getItem('freePosts'))
+    if (isNaN(remaining)) remaining = 10
+
+    toast({ content: `You have ${--remaining} free posts remaining` })
+
+    localStorage.setItem('freePosts', remaining.toString())
+  })
 </script>
 
 <svelte:head>

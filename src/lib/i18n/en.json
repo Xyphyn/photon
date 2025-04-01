@@ -490,7 +490,7 @@
             "unsave": "Unsave",
             "more": {
                 "label": "More Actions",
-                "edit": "Edit",
+                "edit": "I made a typo and didn't read before posting",
                 "creator": "Creator",
                 "actions": "Actions",
                 "markRead": "Mark as Read",
@@ -501,7 +501,7 @@
                 "mediaBias": "Media Bias",
                 "share": "Share",
                 "crosspost": "Crosspost",
-                "delete": "Delete",
+                "delete": "Delete (coward)",
                 "restore": "Restore"
             },
             "mediaBias": {

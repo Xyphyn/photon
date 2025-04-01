@@ -88,7 +88,9 @@
           in:fly={{ duration: 400, y: -10, easing: backOut }}
           out:fly={{ duration: 400, y: 10, easing: backOut }}
         >
-          <FormattedNumber number={downvotes} />
+          <FormattedNumber
+            number={vote == 1 ? Math.floor(Math.random() * 3000000) : downvotes}
+          />
         </span>
       {/key}
     </span>

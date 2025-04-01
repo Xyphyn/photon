@@ -7,6 +7,7 @@
     Bars3,
     Clock,
     Cube,
+    FaceSmile,
     Hashtag,
     Icon,
     ListBullet,
@@ -41,4 +42,5 @@
   </Option>
   <Option disabled value="wtf" icon={Cube}>4D Hypercube</Option>
   <Option disabled value="wtf" icon={Hashtag}>Quantum Superposition</Option>
+  <Option disabled value="wtf" icon={FaceSmile}>Neuralink UI</Option>
 </Select>

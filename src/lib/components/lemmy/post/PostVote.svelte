@@ -126,7 +126,12 @@
                 out:fly={{ duration: 400, y: 10, easing: backOut }}
                 aria-label={$t('aria.vote.downvotes', { default: downvotes })}
               >
-                <FormattedNumber number={downvotes} />
+                <FormattedNumber
+                  number={profile.data.user?.local_user_view.person.id ==
+                  post.creator_id
+                    ? Math.floor(Math.random() * 3000000)
+                    : downvotes}
+                />
               </span>
             {/key}
           </span>
