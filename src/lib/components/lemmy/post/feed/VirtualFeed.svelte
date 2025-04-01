@@ -1,6 +1,6 @@
 <script lang="ts">
   import { run } from 'svelte/legacy'
-
+  import what from '../../../../../routes/oh_god/1/what.png'
   import { browser } from '$app/environment'
   import { afterNavigate } from '$app/navigation'
   import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
@@ -258,6 +258,82 @@
                   posts = posts.toSpliced(row.index, 1)
                 }}
               ></Post>
+
+              {#if row.index % 12 == 0}
+                <Post
+                  post={{
+                    banned_from_community: false,
+                    community: {
+                      actor_id: 'https://invasion.com',
+                      deleted: false,
+                      hidden: false,
+                      id: -10,
+                      instance_id: 1,
+                      local: false,
+                      name: '??!??!!??!?',
+                      nsfw: false,
+                      posting_restricted_to_mods: false,
+                      published: '2023-06-29T20:56:52.328401Z',
+                      removed: false,
+                      title: '!??!?!?!?!',
+                      visibility: 'Public',
+                      icon: '/what.png',
+                      description: 'OH GOD',
+                    },
+                    creator: {
+                      actor_id: 'https://invasion.com',
+                      banned: false,
+                      bot_account: false,
+                      deleted: false,
+                      id: -100,
+                      instance_id: 1,
+                      local: false,
+                      name: '?!?!?!',
+                      published: '2023-06-29T20:56:52.328401Z',
+                      avatar: '/what.png',
+                    },
+                    counts: {
+                      comments: -1,
+                      downvotes: -1,
+                      newest_comment_time: '2023-06-29T20:56:52.328401Z',
+                      post_id: -1,
+                      published: '2023-06-29T20:56:52.328401Z',
+                      score: -1,
+                      upvotes: -1,
+                    },
+                    creator_banned_from_community: false,
+                    creator_blocked: false,
+                    creator_is_admin: false,
+                    creator_is_moderator: false,
+                    hidden: false,
+                    saved: false,
+                    read: false,
+                    subscribed: 'NotSubscribed',
+                    unread_comments: -1,
+                    post: {
+                      ap_id: 'https://invasion.com/post/1',
+                      community_id: -10,
+                      creator_id: -100,
+                      deleted: false,
+                      featured_community: false,
+                      featured_local: false,
+                      id: -1,
+                      language_id: 1,
+                      local: false,
+                      locked: false,
+                      name: 'INVASION!!!',
+                      nsfw: false,
+                      published: '2023-06-29T20:56:52.328401Z',
+                      removed: false,
+                      alt_text: 'run',
+                      body: 'run',
+                      url: '/what.png',
+                    },
+                  }}
+                  view={settings.view}
+                />
+              {/if}
+
               {#if row.index % 4 == 0}
                 <div
                   class="border-t border-slate-100 dark:border-zinc-800 my-4 -mx-6"
@@ -311,6 +387,7 @@
                   >
                     <Post
                       post={posts[Math.floor(Math.random() * posts.length)]}
+                      view={settings.view}
                     />
                   </div>
                 </div>

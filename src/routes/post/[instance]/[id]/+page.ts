@@ -4,8 +4,14 @@ import { awaitIfServer } from '$lib/promise.svelte.js'
 import { SSR_ENABLED, settings } from '$lib/settings.svelte'
 import type { GetComments } from 'lemmy-js-client'
 import { ReactiveState } from '$lib/promise.svelte.js'
+import { redirect } from '@sveltejs/kit'
 
 export async function load({ params, url, fetch }) {
+  console.log(params.id)
+  if (params.id == '-1') {
+    redirect(302, '/oh_god/1')
+  }
+
   const thread = url.searchParams.get('thread')
   let parentId: number | undefined
   let showContext: string | undefined = undefined
