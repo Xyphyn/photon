@@ -745,6 +745,10 @@
                     "show": "Näytä",
                     "title": "Valinnat"
                 }
+            },
+            "reverseActions": {
+                "title": "Käänteinen toimintopalkki",
+                "description": "Käännä julkaisujen ja kommenttien toimintojen järjestys päinvastaiseksi."
             }
         },
         "title": "Asetukset",
