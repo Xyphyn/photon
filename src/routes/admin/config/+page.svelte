@@ -165,7 +165,7 @@
     <Switch bind:checked={formData.enable_downvotes} defaultValue={true}>
       {$t('routes.admin.config.downvotesEnabled')}
     </Switch>
-    <Switch checked={formData.enable_nsfw} defaultValue={true}>
+    <Switch bind:checked={formData.enable_nsfw} defaultValue={true}>
       {$t('routes.admin.config.nsfwEnabled')}
     </Switch>
     <Select
