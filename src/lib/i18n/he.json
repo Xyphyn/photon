@@ -145,7 +145,7 @@
         "profile": {
             "user": "משתמש",
             "settings": "הגדרות",
-            "credentials": "חשבון",
+            "credentials": "פרטי חשבון חשובים",
             "moderates": "ניהול",
             "favorites": "אהובים",
             "media": {
@@ -160,13 +160,15 @@
             "blocks": {
                 "title": "חסום",
                 "empty": {
-                    "description": "כל דבר חסום לא יופיע בפידים שלך."
+                    "description": "כל דבר חסום לא יופיע בפידים שלך.",
+                    "title": "אין עצמים חסומים"
                 }
             },
             "upvoted": "הוצבע בעד",
             "downvoted": "הוצבע נגד",
             "welcome": "שלום, {{default}}!",
-            "overview": "סקירה"
+            "overview": "סקירה",
+            "submissions": "הגשות"
         },
         "translators": "מתרגמים",
         "accounts": "חשבונות",
@@ -174,7 +176,8 @@
             "title": "קהילות",
             "search": {
                 "placeholder": "חיפוש לקהילה חדשה"
-            }
+            },
+            "trending": "טרנדיים"
         },
         "search": {
             "title": "חיפוש",
@@ -329,7 +332,8 @@
                 "classic": "קלאסי",
                 "imported": "הסגנון שלך",
                 "new": "סגנון חדש",
-                "description": "זה סגנון המוגדר כברירת מחדל, ולא ניתן לשנותו."
+                "description": "זה סגנון המוגדר כברירת מחדל, ולא ניתן לשנותו.",
+                "presets": "קבועים מראש"
             },
             "title": "סגנון",
             "import": "ייבוא",
@@ -343,7 +347,8 @@
         "community": {
             "settings": {
                 "team": "צוות",
-                "settings": "הגדרות"
+                "settings": "הגדרות",
+                "manage": "ניהול"
             }
         },
         "verifyEmail": {
@@ -432,7 +437,63 @@
             "modlog": "מודלוג",
             "block": "חסימה",
             "unblock": "ביטול חסימה",
-            "blockInstance": "חסימת שרת"
+            "blockInstance": "חסימת שרת",
+            "favorite": "העדפה",
+            "unfavorite": "הסרת העדפה",
+            "activeDay": "פעיל היום"
+        }
+    },
+    "content": {
+        "communities": "קהילות",
+        "users": "משתמשים",
+        "all": "הכל",
+        "posts": "פוסטים",
+        "comments": "תגובות",
+        "instances": "שרתים",
+        "message": "הודעה"
+    },
+    "post": {
+        "actions": {
+            "more": {
+                "actions": "פעולות",
+                "markRead": "סימון כנקרא",
+                "translate": "תרגום",
+                "mediaBias": "הטיה תקשורתית",
+                "share": "שיתוף",
+                "edit": "עריכה",
+                "unhide": "הסרת הסתרה",
+                "creator": "יוצר",
+                "restore": "שחזור",
+                "label": "פעולות נוספות",
+                "markUnread": "הסרת סימון כנקרא",
+                "hide": "הסתרה",
+                "delete": "מחיקה"
+            },
+            "mediaBias": {
+                "description": "תיאור",
+                "credibility": "אמינות",
+                "reporting": "דיווח עובדתי",
+                "noData": {
+                    "title": "אין מידע",
+                    "description": "אין מידע לגבי ההטיה של אתר זה."
+                },
+                "downloading": "מוריד מידע",
+                "loading": "טוען מקור"
+            },
+            "link": {
+                "title": "קישורים נוספים",
+                "actions": "פעולות קישור"
+            },
+            "comments": "תגובות",
+            "save": "שמירה",
+            "unsave": "הסרת שמירה"
+        }
+    },
+    "admin": {
+        "purge": "טיהור",
+        "instance": "שרת",
+        "purgeCommunity": {
+            "title": "טיהור קהילה"
         }
     }
 }
