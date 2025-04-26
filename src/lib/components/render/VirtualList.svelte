@@ -129,14 +129,8 @@
   }
 
   const scrollDebounce = debounce(onscroll, 5)
-
-  let prevScrollPos = 0
   $effect.pre(() => {
-    // const direction = scrollPosition > prevScrollPos ? 'down' : 'up'
-
-    // if (direction == 'down') {
-    // }
-    if (scrollPosition) scrollDebounce()
+    if (scrollPosition) onscroll()
   })
 </script>
 
@@ -144,16 +138,17 @@
 
 <div
   bind:this={virtualListEl}
-  style="position: relative; height: {itemHeights.reduce(
-    (prev, curr) => (prev || estimatedHeight) + (curr || estimatedHeight),
-    0,
-  )}px; width: 100%;"
+  style="position: relative; height: {cumulativeItemHeights[
+    visibleItems?.[visibleItems.length - 1]?.index
+  ]}px; width: 100%;"
   {...rest}
 >
   {#each visibleItems as item (item.index)}
     <div
       data-index={item.index}
-      style="position: absolute; top: {item.offset}px; width: 100%;"
+      style="width: 100%; position: absolute; top: 0; transform: translateY({cumulativeItemHeights[
+        item.index - 1
+      ] || 0}px);"
       use:resizeObserver
     >
       {@render itemSnippet(items[item.index], item.index, () => {})}
