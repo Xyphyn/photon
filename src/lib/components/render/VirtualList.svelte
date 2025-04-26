@@ -1,6 +1,7 @@
 <script lang="ts" generics="T">
+  import { browser } from '$app/environment'
   import { debounce } from 'mono-svelte/util/time'
-  import { onDestroy, untrack, type Snippet } from 'svelte'
+  import { onDestroy, tick, untrack, type Snippet } from 'svelte'
   import type { HTMLAttributes } from 'svelte/elements'
   import { innerHeight } from 'svelte/reactivity/window'
 
@@ -25,8 +26,10 @@
     ...rest
   }: Props = $props()
 
-  export function scrollToIndex(index: number) {
+  export function scrollToIndex(index: number, useWindow: boolean = false) {
     scrollPosition = cumulativeItemHeights[index] - initialOffset || 0
+    if (useWindow && browser)
+      window.scrollTo({ behavior: 'instant', top: scrollPosition })
   }
 
   onDestroy(() => {

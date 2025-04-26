@@ -13,7 +13,7 @@
   import { t } from '$lib/translations'
   import type { PostView } from 'lemmy-js-client'
   import { Button } from 'mono-svelte'
-  import { onMount } from 'svelte'
+  import { onMount, tick, untrack } from 'svelte'
   import {
     ArchiveBox,
     ChevronDoubleUp,
@@ -41,7 +41,9 @@
   }: Props = $props()
 
   let listEl = $state<HTMLUListElement>()
-  let listComp = $state<{ scrollToIndex: (index: number) => void }>()
+  let listComp = $state<{
+    scrollToIndex: (index: number, window?: boolean) => void
+  }>()
 
   let error: any = $state(undefined)
   let loading = $state(false)
@@ -103,9 +105,6 @@
   }
 
   onMount(() => {
-    if (postFeeds.value[feedId].lastSeen != 0)
-      listComp?.scrollToIndex(postFeeds.value[feedId].lastSeen)
-
     const observer = new IntersectionObserver(callback, {
       threshold: 0.5,
     })
@@ -137,6 +136,16 @@
         removedNodes.forEach(unobservePost)
       })
     }).observe(feed, { childList: true, subtree: false })
+  })
+
+  $effect(() => {
+    if (listComp) {
+      untrack(() => {
+        if (postFeeds.value[feedId].lastSeen != 0) {
+          listComp?.scrollToIndex(postFeeds.value[feedId].lastSeen, true)
+        }
+      })
+    }
   })
 </script>
 
