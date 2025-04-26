@@ -32,7 +32,10 @@
         },
         "admin": "Admin",
         "commands": {
-            "main": "Peamine"
+            "main": "Peamine",
+            "search": "Otsima {{default}}",
+            "feeds": "vood",
+            "recents": "hiljemad"
         },
         "moderation": "Moderaator"
     },
@@ -45,14 +48,17 @@
         "resetColor": "Restarti värv",
         "moveUp": "Liigu ülesse",
         "moveDown": "Liigu alla",
-        "versionGate": "See versioon Photonist Toetab servereid millel on {{version}} Või üles."
+        "versionGate": "See versioon Photonist Toetab servereid millel on {{version}} Või üles.",
+        "guest": "Külaline",
+        "addGuest": "Pane külalise kontot"
     },
     "filter": {
         "location": {
             "label": "Asukoht",
             "all": "Küik - kõik",
             "local": "Locaalne",
-            "subscribed": "Tellitud"
+            "subscribed": "Tellitud",
+            "global": "Globaalne"
         },
         "sort": {
             "label": "Sorteeri",
@@ -75,11 +81,14 @@
             },
             "new": "Uus",
             "old": "Vana",
-            "controversial": "Kontreversed"
+            "controversial": "Kontreversed",
+            "hot": "kuum",
+            "mostcomments": "Kõige rohkem komentaare"
         },
         "view": {
             "label": "Vaata",
-            "legacy": "Vana menüü"
+            "legacy": "Vana menüü",
+            "compact": "kompaktne"
         },
         "type": "Tüüp",
         "filter": "Filter"
@@ -99,7 +108,8 @@
             "create": "Koosta postitus",
             "edit": "Muuda postistust",
             "title": "Tiitel",
-            "selectFile": "vail fail"
+            "selectFile": "vail fail",
+            "readMore": "Loe rohkem"
         },
         "profile": {
             "bio": "all text",
