@@ -9,6 +9,9 @@
     estimatedHeight?: number
     overscan?: number
     item: Snippet<[T, number, Function]>
+    restore?: {
+      itemHeights: (number | null)[]
+    }
     initialOffset?: number
   }
 
@@ -18,12 +21,25 @@
     overscan = 5,
     item: itemSnippet,
     initialOffset = 0,
+    restore = $bindable(),
     ...rest
   }: Props = $props()
 
+  export function scrollToIndex(index: number) {
+    scrollPosition = cumulativeItemHeights[index] - initialOffset || 0
+  }
+
+  onDestroy(() => {
+    restore = {
+      itemHeights: itemHeights,
+    }
+  })
+
   let virtualListEl = $state<HTMLElement>()
 
-  let itemHeights = $state<(number | null)[]>(Array(items.length).fill(null))
+  let itemHeights = $state<(number | null)[]>([
+    ...(restore?.itemHeights ?? Array(items.length).fill(null)),
+  ])
   let cumulativeItemHeights = $derived.by(() => {
     let cumulation = new Array(itemHeights.length)
     let sum = 0
@@ -143,6 +159,7 @@
     visibleItems?.[visibleItems.length - 1]?.index
   ]}px; width: 100%;"
   {...rest}
+  id="feed"
 >
   {#each visibleItems as item (item.index)}
     <div
@@ -150,6 +167,7 @@
       style="width: 100%; position: absolute; top: 0; transform: translateY({cumulativeItemHeights[
         item.index - 1
       ] || 0}px);"
+      class="post-container"
       use:resizeObserver
     >
       {@render itemSnippet(items[item.index], item.index, () => {})}

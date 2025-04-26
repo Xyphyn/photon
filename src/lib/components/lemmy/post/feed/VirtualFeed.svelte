@@ -41,6 +41,7 @@
   }: Props = $props()
 
   let listEl = $state<HTMLUListElement>()
+  let listComp = $state<{ scrollToIndex: (index: number) => void }>()
 
   let error: any = $state(undefined)
   let loading = $state(false)
@@ -102,45 +103,40 @@
   }
 
   onMount(() => {
+    if (postFeeds.value[feedId].lastSeen != 0)
+      listComp?.scrollToIndex(postFeeds.value[feedId].lastSeen)
+
     const observer = new IntersectionObserver(callback, {
-      root: null,
-      rootMargin: '0px',
       threshold: 0.5,
     })
 
-    const elements = document.querySelectorAll('.post-container')
-    elements.forEach((el) => observer.observe(el))
-
-    const postContainer = document.querySelector('#feed')
-    if (postContainer) {
-      const mutationObserver = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-          if (mutation.type === 'childList') {
-            mutation.addedNodes.forEach((node) => {
-              if (
-                node instanceof HTMLElement &&
-                node.classList.contains('post-container')
-              ) {
-                observer.observe(node)
-              }
-            })
-            mutation.removedNodes.forEach((node) => {
-              if (
-                node instanceof HTMLElement &&
-                node.classList.contains('post-container')
-              ) {
-                observer.unobserve(node)
-              }
-            })
-          }
-        })
-      })
-
-      mutationObserver.observe(postContainer, {
-        childList: true,
-        subtree: true,
-      })
+    const observePost = (node: Node) => {
+      if (
+        node instanceof HTMLElement &&
+        node.classList.contains('post-container')
+      )
+        observer.observe(node)
     }
+
+    const unobservePost = (node: Node) => {
+      if (
+        node instanceof HTMLElement &&
+        node.classList.contains('post-container')
+      )
+        observer.unobserve(node)
+    }
+
+    document.querySelectorAll('.post-container').forEach(observePost)
+
+    const feed = document.getElementById('feed')
+    if (!feed) return
+
+    new MutationObserver((mutations) => {
+      mutations.forEach(({ addedNodes, removedNodes }) => {
+        addedNodes.forEach(observePost)
+        removedNodes.forEach(unobservePost)
+      })
+    }).observe(feed, { childList: true, subtree: false })
   })
 </script>
 
@@ -163,19 +159,21 @@
       </div>
     {:else}
       <VirtualList
+        id="feed"
         class="divide-y divide-slate-200 dark:divide-zinc-800"
         items={posts}
         initialOffset={listEl?.offsetTop}
         overscan={500}
+        bind:restore={postFeeds.value[feedId].clientData}
+        bind:this={listComp}
       >
-        {#snippet item(item, row, measure)}
+        {#snippet item(_, row, __)}
           <li
             data-index={row}
             style={row < 7 ? `--anim-delay: ${row * 100}ms` : ''}
             class="relative post-container {row < 7
               ? 'pop-in opacity-0'
               : ''} -mx-4 sm:-mx-6 px-4 sm:px-6"
-            use:measure
           >
             <Post
               bind:post={posts[row]}
