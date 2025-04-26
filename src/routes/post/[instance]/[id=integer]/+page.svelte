@@ -374,6 +374,13 @@
       {$t('routes.post.commentCount')}
     </div>
   </header>
+  {#if !page.url.searchParams.get('noVirtualize')}
+    <noscript>
+      <Button href="?noVirtualize=true" class="block">
+        {$t('routes.post.loadComments')}
+      </Button>
+    </noscript>
+  {/if}
   {#await data.comments.value}
     <div class="flex flex-col gap-4">
       {#each new Array(10) as empty, index}
@@ -400,6 +407,7 @@
       focus={data.thread.value.focus}
       onupdate={reloadComments}
       bind:sort={data.commentSort.value}
+      virtualize={!page.url.searchParams.get('noVirtualize')}
     />
     {#if comments.comments.length == 0}
       <Placeholder

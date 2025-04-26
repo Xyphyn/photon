@@ -3,6 +3,7 @@
   import { profile } from '$lib/auth.svelte'
   import CommentForm from '$lib/components/lemmy/comment/CommentForm.svelte'
   import CommentListVirtualizer from '$lib/components/lemmy/comment/CommentListVirtualizer.svelte'
+  import Comments from '$lib/components/lemmy/comment/Comments.svelte'
   import { buildCommentsTree } from '$lib/components/lemmy/comment/comments.svelte'
   import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
   import { instance } from '$lib/instance.svelte'
@@ -32,6 +33,7 @@
     sort?: CommentSortType
     onupdate?: () => void
     focus?: string
+    virtualize?: boolean
   }
 
   let {
@@ -40,6 +42,7 @@
     sort = $bindable(),
     onupdate,
     focus,
+    virtualize = true,
   }: Props = $props()
   let comments = $state(passedComments)
 
@@ -128,8 +131,16 @@
     </Button>
   </div>
 {/if}
-<CommentListVirtualizer
-  post={post.post_view.post}
-  nodes={tree}
-  scrollTo={focus}
-/>
+{#if virtualize}
+  <CommentListVirtualizer
+    post={post.post_view.post}
+    nodes={tree}
+    scrollTo={focus}
+  />
+{:else}
+  <div class="divide-y divide-slate-200 dark:divide-zinc-800">
+    <div class="-mx-4 sm:-mx-6 px-4 sm:px-6">
+      <Comments isParent={true} bind:nodes={tree} post={post.post_view.post} />
+    </div>
+  </div>
+{/if}

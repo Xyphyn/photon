@@ -283,7 +283,8 @@
                 "title": "No comments",
                 "description": "Start the conversation!"
             },
-            "commented": "Your comment was posted."
+            "commented": "Your comment was posted.",
+            "loadComments": "Load comments"
         },
         "inbox": {
             "title": "Inbox",
