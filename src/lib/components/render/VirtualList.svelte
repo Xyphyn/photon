@@ -42,8 +42,10 @@
   let visibleItems = $state<{ index: number; offset: number }[]>([])
 
   $effect.pre(() => {
-    if (items || virtualListEl) {
-      visibleItems = updateVisibleItems()
+    if (virtualListEl) {
+      untrack(() => {
+        visibleItems = updateVisibleItems()
+      })
     }
   })
 
@@ -95,10 +97,6 @@
     return newVisibleItems ?? []
   }
 
-  function onscroll() {
-    visibleItems = updateVisibleItems()
-  }
-
   function resizeObserver(node: HTMLElement) {
     const observer = new ResizeObserver((entries) => {
       for (const entry of entries) {
@@ -128,9 +126,12 @@
     }
   }
 
-  const scrollDebounce = debounce(onscroll, 5)
-  $effect.pre(() => {
-    if (scrollPosition) onscroll()
+  let oldScroll = $state(0)
+  $effect(() => {
+    if (Math.abs(scrollPosition - oldScroll) > estimatedHeight) {
+      visibleItems = updateVisibleItems()
+      oldScroll = scrollPosition
+    }
   })
 </script>
 
