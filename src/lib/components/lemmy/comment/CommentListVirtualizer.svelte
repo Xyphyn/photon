@@ -27,7 +27,7 @@
 
 <div bind:this={offsetEl}>
   <VirtualList
-    class="divide-y divide-slate-200 dark:divide-zinc-800 -mx-4 sm:-mx-6 w-min px-4 sm:px-6"
+    class="divide-y divide-slate-200 dark:divide-zinc-800 w-full"
     overscan={500}
     items={nodes}
     initialOffset={offsetEl?.offsetTop}

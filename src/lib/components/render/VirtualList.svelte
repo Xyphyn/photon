@@ -157,20 +157,27 @@
   bind:this={virtualListEl}
   style="position: relative; height: {cumulativeItemHeights[
     visibleItems?.[visibleItems.length - 1]?.index
-  ]}px; width: 100%;"
+  ]}px;"
   {...rest}
   id="feed"
 >
+  <div
+    style="height: {cumulativeItemHeights[visibleItems?.[0]?.index - 1] ||
+      0}px; border: 0 !important;"
+  ></div>
   {#each visibleItems as item (item.index)}
     <div
       data-index={item.index}
-      style="width: 100%; position: absolute; top: 0; transform: translateY({cumulativeItemHeights[
-        item.index - 1
-      ] || 0}px);"
-      class="post-container"
+      class="post-container fix-divide"
       use:resizeObserver
     >
       {@render itemSnippet(items[item.index], item.index, () => {})}
     </div>
   {/each}
 </div>
+
+<style>
+  .fix-divide:nth-child(2) {
+    border-top: 0;
+  }
+</style>
