@@ -49,6 +49,9 @@ export async function postFeed(args: {
       url: args.url,
       lastSeen: 0,
       instance: instance.data,
+      clientData: {
+        itemHeights: [],
+      },
     }
 
   return (
@@ -96,6 +99,9 @@ export interface PostFeed {
   lastSeen: number
   instance: string
   id: PostFeedID
+  clientData: {
+    itemHeights: (number | null)[]
+  }
 }
 
 export let postFeeds = new PostFeedState()

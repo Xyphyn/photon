@@ -1,8 +1,5 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy'
-
   import { browser } from '$app/environment'
-  import { afterNavigate } from '$app/navigation'
   import Post from '$lib/components/lemmy/post/Post.svelte'
   import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
@@ -14,10 +11,9 @@
   } from '$lib/lemmy/postfeed.svelte'
   import { settings } from '$lib/settings.svelte.js'
   import { t } from '$lib/translations'
-  import { createWindowVirtualizer } from '@tanstack/svelte-virtual'
   import type { PostView } from 'lemmy-js-client'
   import { Button } from 'mono-svelte'
-  import { onMount } from 'svelte'
+  import { onMount, tick, untrack } from 'svelte'
   import {
     ArchiveBox,
     ChevronDoubleUp,
@@ -26,13 +22,7 @@
     Plus,
   } from 'svelte-hero-icons'
   import InfiniteScroll from 'svelte-infinite-scroll'
-
-  let virtualItemEls: HTMLElement[] = $state([])
-  let virtualListEl: HTMLElement | undefined = $state(undefined)
-
-  afterNavigate(() => {
-    $virtualizer.scrollToIndex(postFeeds.value[feedId]?.lastSeen ?? 0)
-  })
+  import VirtualList from '$lib/components/render/VirtualList.svelte'
 
   interface Props {
     posts: PostView[]
@@ -50,14 +40,10 @@
     children,
   }: Props = $props()
 
-  const virtualizer = createWindowVirtualizer({
-    count: posts.length,
-    estimateSize: () => 150,
-    overscan: 5,
-    measureElement: (element, entry, instance) => {
-      return element.scrollHeight
-    },
-  })
+  let listEl = $state<HTMLUListElement>()
+  let listComp = $state<{
+    scrollToIndex: (index: number, window?: boolean) => void
+  }>()
 
   let error: any = $state(undefined)
   let loading = $state(false)
@@ -92,7 +78,7 @@
       hasMore = newPosts.posts.length != 0
 
       feedData.cursor.next = newPosts.next_page
-      feedData.posts.posts = [...feedData.posts.posts, ...newPosts.posts]
+      feedData.posts.posts.push(...newPosts.posts)
 
       postFeeds.value[feedId].data = feedData
 
@@ -120,63 +106,50 @@
 
   onMount(() => {
     const observer = new IntersectionObserver(callback, {
-      root: null,
-      rootMargin: '0px',
       threshold: 0.5,
     })
 
-    const elements = document.querySelectorAll('.post-container')
-    elements.forEach((el) => observer.observe(el))
+    const observePost = (node: Node) => {
+      if (
+        node instanceof HTMLElement &&
+        node.classList.contains('post-container')
+      )
+        observer.observe(node)
+    }
 
-    const postContainer = document.querySelector('#feed')
-    if (postContainer) {
-      const mutationObserver = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-          if (mutation.type === 'childList') {
-            mutation.addedNodes.forEach((node) => {
-              if (
-                node instanceof HTMLElement &&
-                node.classList.contains('post-container')
-              ) {
-                observer.observe(node)
-              }
-            })
-            mutation.removedNodes.forEach((node) => {
-              if (
-                node instanceof HTMLElement &&
-                node.classList.contains('post-container')
-              ) {
-                observer.unobserve(node)
-              }
-            })
-          }
-        })
+    const unobservePost = (node: Node) => {
+      if (
+        node instanceof HTMLElement &&
+        node.classList.contains('post-container')
+      )
+        observer.unobserve(node)
+    }
+
+    document.querySelectorAll('.post-container').forEach(observePost)
+
+    const feed = document.getElementById('feed')
+    if (!feed) return
+
+    new MutationObserver((mutations) => {
+      mutations.forEach(({ addedNodes, removedNodes }) => {
+        addedNodes.forEach(observePost)
+        removedNodes.forEach(unobservePost)
       })
+    }).observe(feed, { childList: true, subtree: false })
+  })
 
-      mutationObserver.observe(postContainer, {
-        childList: true,
-        subtree: true,
+  $effect(() => {
+    if (listComp) {
+      untrack(() => {
+        if (postFeeds.value[feedId].lastSeen != 0) {
+          listComp?.scrollToIndex(postFeeds.value[feedId].lastSeen, true)
+        }
       })
     }
   })
-
-  let items = $derived($virtualizer.getVirtualItems())
-
-  $effect(() => {
-    if (virtualItemEls.length)
-      virtualItemEls.forEach($virtualizer.measureElement)
-  })
-
-  $effect(() => {
-    if (posts.length && virtualListEl)
-      $virtualizer.setOptions({
-        scrollMargin: virtualListEl?.offsetTop,
-        count: posts.length,
-      })
-  })
 </script>
 
-<ul class="flex flex-col list-none">
+<ul class="flex flex-col list-none" bind:this={listEl}>
   {#key posts}
     {#if posts?.length == 0}
       <div class="h-full grid place-items-center">
@@ -194,45 +167,39 @@
         </Placeholder>
       </div>
     {:else}
-      <div
-        style="position:relative; height: {browser
-          ? `${$virtualizer?.getTotalSize()}px`
-          : '100%'}; width: 100%;"
-        bind:this={virtualListEl}
+      <VirtualList
+        id="feed"
+        class="divide-y divide-slate-200 dark:divide-zinc-800"
+        items={posts}
+        initialOffset={listEl?.offsetTop}
+        overscan={500}
+        bind:restore={postFeeds.value[feedId].clientData}
+        bind:this={listComp}
       >
-        <div
-          style="position: absolute; top: 0; left: 0; width: 100%; transform: translateY({items?.[0]
-            ? items?.[0]?.start - $virtualizer.options.scrollMargin
-            : 0}px);"
-          class="divide-y divide-slate-200 dark:divide-zinc-800"
-          id="feed"
-        >
-          {#each items as row, index (posts[row.index]?.post.id)}
-            <li
-              bind:this={virtualItemEls[index]}
-              data-index={row.index}
-              style={row.index < 7 ? `--anim-delay: ${index * 100}ms` : ''}
-              class="relative post-container {row.index < 7
-                ? 'pop-in opacity-0'
-                : ''} -mx-4 sm:-mx-6 px-4 sm:px-6"
-            >
-              <Post
-                bind:post={posts[row.index]}
-                hideCommunity={community}
-                view={(posts[row.index]?.post.featured_community ||
-                  posts[row.index]?.post.featured_local) &&
-                settings.posts.compactFeatured
-                  ? 'compact'
-                  : settings.view}
-                class="transition-all duration-250"
-                onhide={() => {
-                  posts = posts.toSpliced(row.index, 1)
-                }}
-              ></Post>
-            </li>
-          {/each}
-        </div>
-      </div>
+        {#snippet item(_, row, __)}
+          <li
+            data-index={row}
+            style={row < 7 ? `--anim-delay: ${row * 100}ms` : ''}
+            class="relative post-container {row < 7
+              ? 'pop-in opacity-0'
+              : ''} -mx-4 sm:-mx-6 px-4 sm:px-6"
+          >
+            <Post
+              bind:post={posts[row]}
+              hideCommunity={community}
+              view={(posts[row]?.post.featured_community ||
+                posts[row]?.post.featured_local) &&
+              settings.posts.compactFeatured
+                ? 'compact'
+                : settings.view}
+              class="transition-all duration-250"
+              onhide={() => {
+                posts = posts.toSpliced(row, 1)
+              }}
+            ></Post>
+          </li>
+        {/snippet}
+      </VirtualList>
     {/if}
   {/key}
 
