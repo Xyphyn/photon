@@ -15,12 +15,36 @@
 
   let offsetEl = $state<HTMLElement>()
 
+  let initialOffset = $state(0)
+
+  const updateOffset = (entry: IntersectionObserverEntry) => {
+    if (entry.isIntersecting && offsetEl) {
+      initialOffset = entry.boundingClientRect.top + window.scrollY
+    }
+  }
+
   onMount(() => {
     if (scrollTo) {
       const element = document?.getElementById(scrollTo)
       setTimeout(() => {
         element?.scrollIntoView({ behavior: 'smooth', block: 'start' })
       }, 100)
+    }
+
+    // IntersectionObserver to watch for shifts
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(updateOffset)
+      },
+      { threshold: [0, 1] },
+    )
+
+    if (offsetEl) {
+      observer.observe(offsetEl)
+    }
+
+    return () => {
+      observer.disconnect()
     }
   })
 </script>
@@ -30,7 +54,7 @@
     class="divide-y divide-slate-200 dark:divide-zinc-800 w-full"
     overscan={500}
     items={nodes}
-    initialOffset={offsetEl?.offsetTop}
+    {initialOffset}
   >
     {#snippet item(item, index)}
       <div class="-mx-4 sm:-mx-6 px-4 sm:px-6">
