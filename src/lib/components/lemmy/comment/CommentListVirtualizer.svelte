@@ -1,35 +1,26 @@
 <script lang="ts">
   import type { Post } from 'lemmy-js-client'
-  import type { CommentNodeI } from './comments'
-  import { createWindowVirtualizer } from '@tanstack/svelte-virtual'
+  import type { CommentNodeI } from './comments.svelte'
   import Comments from './Comments.svelte'
-  import { browser } from '$app/environment'
   import { onMount } from 'svelte'
+  import VirtualList from '$lib/components/render/VirtualList.svelte'
 
-  export let nodes: CommentNodeI[]
-  export let post: Post
-  export let scrollTo: string | undefined
+  interface Props {
+    nodes: CommentNodeI[]
+    post: Post
+    scrollTo: string | undefined
+  }
 
-  let virtualListEl: HTMLElement | undefined = undefined
+  let { nodes, post, scrollTo }: Props = $props()
 
-  $: virtualizer = createWindowVirtualizer({
-    count: nodes.length,
-    estimateSize: () => 30,
-    scrollMargin: virtualListEl?.offsetTop,
-    initialRect: {
-      height: 1500,
-      width: 99999,
-    },
-    overscan: 5,
-  })
+  let offsetEl = $state<HTMLElement>()
 
-  let virtualItemEls: HTMLElement[] = []
+  let initialOffset = $state(0)
 
-  $: items = $virtualizer.getVirtualItems()
-
-  $: {
-    if (virtualItemEls.length)
-      virtualItemEls.forEach((el) => $virtualizer.measureElement(el))
+  const updateOffset = (entry: IntersectionObserverEntry) => {
+    if (entry.isIntersecting && offsetEl) {
+      initialOffset = entry.boundingClientRect.top + window.scrollY
+    }
   }
 
   onMount(() => {
@@ -39,30 +30,40 @@
         element?.scrollIntoView({ behavior: 'smooth', block: 'start' })
       }, 100)
     }
+
+    // IntersectionObserver to watch for shifts
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(updateOffset)
+      },
+      { threshold: [0, 1] },
+    )
+
+    if (offsetEl) {
+      observer.observe(offsetEl)
+    }
+
+    return () => {
+      observer.disconnect()
+    }
   })
 </script>
 
-<div
-  style="position:relative; height: {browser
-    ? `${$virtualizer.getTotalSize()}px`
-    : '100%'}; width: 100%;"
-  bind:this={virtualListEl}
->
-  <div
-    style="position: absolute; top: 0; left: 0; width: 100%; transform: translateY({items?.[0]
-      ? items?.[0]?.start - $virtualizer.options.scrollMargin
-      : 0}px);"
-    class="divide-y divide-slate-200 dark:divide-zinc-900"
-    id="feed"
+<div bind:this={offsetEl}>
+  <VirtualList
+    class="divide-y divide-slate-200 dark:divide-zinc-800 w-full"
+    overscan={500}
+    items={nodes}
+    {initialOffset}
   >
-    {#each items as row, index (row.index)}
-      <div
-        bind:this={virtualItemEls[index]}
-        data-index={row.index}
-        class="-mx-4 sm:-mx-6 px-4 sm:px-6"
-      >
-        <Comments isParent={true} nodes={[nodes[row.index]]} {post} />
+    {#snippet item(item, index)}
+      <div class="-mx-4 sm:-mx-6 px-4 sm:px-6">
+        <Comments
+          isParent={true}
+          bind:nodes={() => [nodes[index]], (v) => (nodes[index] = v[0])}
+          {post}
+        />
       </div>
-    {/each}
-  </div>
+    {/snippet}
+  </VirtualList>
 </div>

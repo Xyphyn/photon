@@ -1,5 +1,5 @@
-import { client } from '$lib/lemmy.js'
-import { postFeed } from '$lib/lemmy/postfeed.js'
+import { client } from '$lib/lemmy.svelte.js'
+import { postFeed } from '$lib/lemmy/postfeed.svelte.js'
 import { error } from '@sveltejs/kit'
 
 export async function load({ url, params, fetch }) {

@@ -1,81 +1,53 @@
 <script lang="ts">
+  import { browser } from '$app/environment'
   import Post from '$lib/components/lemmy/post/Post.svelte'
+  import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import { userSettings } from '$lib/settings.js'
-  import type {
-    GetPostsResponse,
-    ListingType,
-    PostView,
-    SortType,
-  } from 'lemmy-js-client'
-  import { Badge, Button } from 'mono-svelte'
+  import { client } from '$lib/lemmy.svelte'
+  import {
+    postFeeds,
+    type PostFeed,
+    type PostFeedID,
+  } from '$lib/lemmy/postfeed.svelte'
+  import { settings } from '$lib/settings.svelte.js'
+  import { t } from '$lib/translations'
+  import type { PostView } from 'lemmy-js-client'
+  import { Button } from 'mono-svelte'
+  import { onMount, tick, untrack } from 'svelte'
   import {
     ArchiveBox,
     ChevronDoubleUp,
     ExclamationTriangle,
     Icon,
-    Minus,
     Plus,
   } from 'svelte-hero-icons'
-  import { expoOut } from 'svelte/easing'
-  import { fly, slide } from 'svelte/transition'
-  import { browser } from '$app/environment'
-  import { afterUpdate, onMount, tick, type SvelteComponent } from 'svelte'
-  import {
-    createVirtualizer,
-    createWindowVirtualizer,
-    type SvelteVirtualizer,
-  } from '@tanstack/svelte-virtual'
-  import { afterNavigate, beforeNavigate } from '$app/navigation'
-  import { combineCrossposts } from './crosspost'
-  import { client } from '$lib/lemmy'
-  import {
-    postFeeds,
-    type PostFeed,
-    type PostFeedID,
-  } from '$lib/lemmy/postfeed'
-  import { t } from '$lib/translations'
   import InfiniteScroll from 'svelte-infinite-scroll'
-  import type { Readable } from 'svelte/motion'
-  import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
+  import VirtualList from '$lib/components/render/VirtualList.svelte'
 
-  export let posts: PostView[]
-  export let community: boolean = false
-  export let feedId: PostFeedID
-
-  let virtualItemEls: HTMLElement[] = []
-  let virtualListEl: HTMLElement | undefined = undefined
-
-  const virtualizer = createWindowVirtualizer({
-    count: posts.length,
-    estimateSize: () => 150,
-    overscan: 5,
-    measureElement: (element, entry, instance) => {
-      return element.scrollHeight
-    },
-  })
-
-  $: items = $virtualizer.getVirtualItems()
-
-  $: if (virtualItemEls.length) {
-    virtualItemEls.forEach($virtualizer.measureElement)
+  interface Props {
+    posts: PostView[]
+    community?: boolean
+    feedId: PostFeedID
+    feedData: PostFeed['data']
+    children?: import('svelte').Snippet
   }
 
-  $: if (posts.length && virtualListEl)
-    $virtualizer.setOptions({
-      scrollMargin: virtualListEl?.offsetTop,
-      count: posts.length,
-    })
+  let {
+    posts = $bindable(),
+    community = false,
+    feedId,
+    feedData = $bindable(),
+    children,
+  }: Props = $props()
 
-  afterNavigate(() => {
-    $virtualizer.scrollToIndex($postFeeds[feedId]?.lastSeen ?? 0)
-  })
+  let listEl = $state<HTMLUListElement>()
+  let listComp = $state<{
+    scrollToIndex: (index: number, window?: boolean) => void
+  }>()
 
-  export let feedData: PostFeed['data']
-
-  let error: any = undefined
-  let loading = false
-  let hasMore = true
+  let error: any = $state(undefined)
+  let loading = $state(false)
+  let hasMore = $state(true)
 
   async function loadMore() {
     if (!hasMore || loading) return
@@ -106,11 +78,9 @@
       hasMore = newPosts.posts.length != 0
 
       feedData.cursor.next = newPosts.next_page
-      feedData.posts.posts = [...feedData.posts.posts, ...newPosts.posts]
+      feedData.posts.posts.push(...newPosts.posts)
 
-      postFeeds.updateFeed(feedId, {
-        data: feedData,
-      })
+      postFeeds.value[feedId].data = feedData
 
       loading = false
     } catch (e) {
@@ -128,127 +98,112 @@
 
       if (!id) return
 
-      postFeeds.updateFeed(feedId, {
-        lastSeen: Number(id),
-      })
+      postFeeds.value[feedId].lastSeen = Number(id)
+
       observer.unobserve(element)
     })
   }
 
   onMount(() => {
     const observer = new IntersectionObserver(callback, {
-      root: null,
-      rootMargin: '0px',
       threshold: 0.5,
     })
 
-    const elements = document.querySelectorAll('.post-container')
-    elements.forEach((el) => observer.observe(el))
+    const observePost = (node: Node) => {
+      if (
+        node instanceof HTMLElement &&
+        node.classList.contains('post-container')
+      )
+        observer.observe(node)
+    }
 
-    const postContainer = document.querySelector('#feed')
-    if (postContainer) {
-      const mutationObserver = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-          if (mutation.type === 'childList') {
-            mutation.addedNodes.forEach((node) => {
-              if (
-                node instanceof HTMLElement &&
-                node.classList.contains('post-container')
-              ) {
-                observer.observe(node)
-              }
-            })
-            mutation.removedNodes.forEach((node) => {
-              if (
-                node instanceof HTMLElement &&
-                node.classList.contains('post-container')
-              ) {
-                observer.unobserve(node)
-              }
-            })
-          }
-        })
+    const unobservePost = (node: Node) => {
+      if (
+        node instanceof HTMLElement &&
+        node.classList.contains('post-container')
+      )
+        observer.unobserve(node)
+    }
+
+    document.querySelectorAll('.post-container').forEach(observePost)
+
+    const feed = document.getElementById('feed')
+    if (!feed) return
+
+    new MutationObserver((mutations) => {
+      mutations.forEach(({ addedNodes, removedNodes }) => {
+        addedNodes.forEach(observePost)
+        removedNodes.forEach(unobservePost)
       })
+    }).observe(feed, { childList: true, subtree: false })
+  })
 
-      mutationObserver.observe(postContainer, {
-        childList: true,
-        subtree: true,
+  $effect(() => {
+    if (listComp) {
+      untrack(() => {
+        if (postFeeds.value[feedId].lastSeen != 0) {
+          listComp?.scrollToIndex(postFeeds.value[feedId].lastSeen, true)
+        }
       })
     }
   })
-
-  onMount(async () => {
-    await tick()
-    $virtualizer.measure()
-  })
 </script>
 
-<!-- <svelte:window on:keydown={handleKeydown} /> -->
-
-<ul
-  class="flex flex-col list-none {$userSettings.view == 'card'
-    ? 'gap-3 md:gap-4'
-    : 'divide-y'} divide-slate-200 dark:divide-zinc-800"
->
-  {#if posts?.length == 0}
-    <div class="h-full grid place-items-center">
-      <Placeholder
-        icon={ArchiveBox}
-        title="No posts"
-        description="There are no posts that match this filter."
-      >
-        <Button href="/communities">
-          <Icon src={Plus} size="16" mini slot="prefix" />
-          <span>Follow some communities</span>
-        </Button>
-      </Placeholder>
-    </div>
-  {:else}
-    <div
-      style="position:relative; height: {browser
-        ? `${$virtualizer.getTotalSize()}px`
-        : '100%'}; width: 100%;"
-      bind:this={virtualListEl}
-    >
-      <div
-        style="position: absolute; top: 0; left: 0; width: 100%; transform: translateY({items?.[0]
-          ? items?.[0]?.start - $virtualizer.options.scrollMargin
-          : 0}px);"
-        class="divide-y divide-slate-200 dark:divide-zinc-900"
-        id="feed"
-      >
-        {#each items as row, index (posts[row.index]?.post.id)}
-          {#if posts[row.index]}
-            {@const post = posts?.[row.index]}
-            <li
-              bind:this={virtualItemEls[index]}
-              data-index={row.index}
-              style={row.index < 7 ? `--anim-delay: ${index * 100}ms` : ''}
-              class="relative post-container {row.index < 7
-                ? 'pop-in opacity-0'
-                : ''} -mx-4 sm:-mx-6 px-4 sm:px-6"
-            >
-              <Post
-                hideCommunity={community}
-                view={(posts[row.index]?.post.featured_community ||
-                  posts[row.index]?.post.featured_local) &&
-                $userSettings.posts.compactFeatured
-                  ? 'compact'
-                  : $userSettings.view}
-                {post}
-                class="transition-all duration-250"
-                on:hide={() => {
-                  posts = posts.toSpliced(row.index, 1)
-                }}
-              ></Post>
-            </li>
-          {/if}
-        {/each}
+<ul class="flex flex-col list-none" bind:this={listEl}>
+  {#key posts}
+    {#if posts?.length == 0}
+      <div class="h-full grid place-items-center">
+        <Placeholder
+          icon={ArchiveBox}
+          title="No posts"
+          description="There are no posts that match this filter."
+        >
+          <Button href="/communities">
+            {#snippet prefix()}
+              <Icon src={Plus} size="16" mini />
+            {/snippet}
+            <span>Follow some communities</span>
+          </Button>
+        </Placeholder>
       </div>
-    </div>
-  {/if}
+    {:else}
+      <VirtualList
+        id="feed"
+        class="divide-y divide-slate-200 dark:divide-zinc-800"
+        items={posts}
+        initialOffset={listEl?.offsetTop}
+        overscan={500}
+        bind:restore={postFeeds.value[feedId].clientData}
+        bind:this={listComp}
+      >
+        {#snippet item(_, row, __)}
+          <li
+            data-index={row}
+            style={row < 7 ? `--anim-delay: ${row * 100}ms` : ''}
+            class="relative post-container {row < 7
+              ? 'pop-in opacity-0'
+              : ''} -mx-4 sm:-mx-6 px-4 sm:px-6"
+          >
+            <Post
+              bind:post={posts[row]}
+              hideCommunity={community}
+              view={(posts[row]?.post.featured_community ||
+                posts[row]?.post.featured_local) &&
+              settings.posts.compactFeatured
+                ? 'compact'
+                : settings.view}
+              class="transition-all duration-250"
+              onhide={() => {
+                posts = posts.toSpliced(row, 1)
+              }}
+            ></Post>
+          </li>
+        {/snippet}
+      </VirtualList>
+    {/if}
+  {/key}
 
-  {#if $userSettings.infiniteScroll && browser}
+  {#if settings.infiniteScroll && browser}
     {#if error}
       <div
         class="flex flex-col justify-center items-center
@@ -263,18 +218,20 @@
           color="primary"
           {loading}
           disabled={loading}
-          on:click={() => loadMore()}
+          onclick={() => loadMore()}
         >
           {$t('message.retry')}
         </Button>
       </div>
     {:else if hasMore}
-      <div class="w-full flex flex-col skeleton gap-2 animate-pulse pt-6">
-        <div class="w-96 max-w-full h-8"></div>
-        <div class="w-full h-48"></div>
+      <div class="w-full flex flex-col gap-2 animate-pulse pt-6">
+        <div
+          class="w-96 max-w-full h-8 bg-slate-100 dark:bg-zinc-800 rounded-md"
+        ></div>
+        <div class="w-full h-48 bg-slate-100 dark:bg-zinc-800 rounded-md"></div>
         <div class="!bg-transparent h-8 flex justify-between">
-          <div class="w-48 h-8"></div>
-          <div class="w-24 h-8"></div>
+          <div class="w-48 h-8 bg-slate-100 dark:bg-zinc-800 rounded-md"></div>
+          <div class="w-24 h-8 bg-slate-100 dark:bg-zinc-800 rounded-md"></div>
         </div>
       </div>
     {:else}
@@ -284,23 +241,23 @@
             // @ts-ignore
             community_name: feedData.community_name ?? 'undefined',
           })}
-          <Button slot="action" color="tertiary">
-            <Icon src={ChevronDoubleUp} size="16" micro slot="prefix" />
-            {$t('routes.post.scrollToTop')}
-          </Button>
+          {#snippet action()}
+            <Button color="tertiary">
+              {#snippet prefix()}
+                <Icon src={ChevronDoubleUp} size="16" micro />
+              {/snippet}
+              {$t('routes.post.scrollToTop')}
+            </Button>
+          {/snippet}
         </EndPlaceholder>
       </div>
     {/if}
     <InfiniteScroll window threshold={1000} on:loadMore={loadMore} />
   {/if}
-  <slot />
+  {@render children?.()}
 </ul>
 
 <style lang="postcss">
-  .skeleton * {
-    @apply bg-slate-100 dark:bg-zinc-800 rounded-md;
-  }
-
   @keyframes popIn {
     from {
       transform: translateY(24px);

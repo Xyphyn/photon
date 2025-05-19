@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
   export interface Tag {
     content: string
     color?: string
@@ -12,7 +12,7 @@
   ])
 
   export const parseTags = (
-    title?: string
+    title?: string,
   ): { tags: Tag[]; title?: string } => {
     if (!title) return { tags: [] }
 
@@ -29,7 +29,7 @@
             extracted.push(
               textToTag.get(content) ?? {
                 content: content,
-              }
+              },
             )
           })
         return ''
@@ -61,43 +61,61 @@
     Trash,
     PaperAirplane,
   } from 'svelte-hero-icons'
-  import { getInstance } from '$lib/lemmy.js'
   import ShieldIcon from '../moderation/ShieldIcon.svelte'
-  import { userSettings, type View } from '$lib/settings'
+  import { settings, type View } from '$lib/settings.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import { t } from '$lib/translations'
   import { Pencil, type IconSource } from 'svelte-hero-icons'
   import CommunityHeader from '../community/CommunityHeader.svelte'
   import { publishedToDate } from '$lib/components/util/date'
+  import { profile } from '$lib/auth.svelte'
+  import { instance } from '$lib/instance.svelte'
 
-  export let community: Community | undefined = undefined
-  export let showCommunity: boolean = true
-  export let subscribed: SubscribedType | undefined = undefined
-
-  export let user: Person | undefined = undefined
-  export let published: Date | undefined = undefined
-  export let title: string | undefined = undefined
-  export let id: number | undefined = undefined
-  export let read: boolean = false
-  export let edited: string | undefined = undefined
-
-  export let view: View = 'cozy'
-
-  // Badges
-  export let badges = {
-    nsfw: false,
-    saved: false,
-    featured: false,
-    deleted: false,
-    removed: false,
-    locked: false,
-    moderator: false,
-    admin: false,
+  interface Props {
+    community?: Community | undefined
+    showCommunity?: boolean
+    subscribed?: SubscribedType | undefined
+    user?: Person | undefined
+    published?: Date | undefined
+    title?: string | undefined
+    id?: number | undefined
+    read?: boolean
+    edited?: string | undefined
+    view?: View
+    // Badges
+    badges?: any
+    tags?: Tag[]
+    style?: string
+    titleClass?: string
+    extraBadges?: import('svelte').Snippet
   }
 
-  export let tags: Tag[] = []
-
-  let popoverOpen = false
+  let {
+    community = $bindable(undefined),
+    showCommunity = true,
+    subscribed = $bindable(undefined),
+    user = undefined,
+    published = undefined,
+    title = undefined,
+    id = undefined,
+    read = false,
+    edited = undefined,
+    view = 'cozy',
+    badges = {
+      nsfw: false,
+      saved: false,
+      featured: false,
+      deleted: false,
+      removed: false,
+      locked: false,
+      moderator: false,
+      admin: false,
+    },
+    tags = [],
+    style = '',
+    titleClass = '',
+    extraBadges,
+  }: Props = $props()
 </script>
 
 <!-- 
@@ -109,34 +127,33 @@
     ? 'grid-rows-2'
     : 'grid-rows-1'} text-xs min-w-0 max-w-full"
   class:compact={view == 'compact'}
-  style={$$props.style ?? ''}
+  {style}
 >
-  {#if showCommunity && community && subscribed && showCommunity}
-    <Popover bind:open={popoverOpen} manual>
-      <button
-        on:click={() => (popoverOpen = !popoverOpen)}
-        class="relative cursor-pointer row-span-2 flex-shrink-0 pr-2 group/community"
-        slot="target"
-      >
-        <Avatar
-          url={community.icon}
-          width={view == 'compact' ? 24 : 32}
-          alt={community.name}
-          class="group-hover/community:ring-2 transition-all ring-offset-0 ring-primary-900 dark:ring-primary-100"
-        />
-      </button>
-      <!-- svelte-ignore a11y-click-events-have-key-events -->
-      <!-- svelte-ignore a11y-no-static-element-interactions -->
-      <div
-        slot="popover"
-        class="max-w-md rounded-2xl bg-white dark:bg-zinc-950"
-        on:click|stopPropagation={() => {}}
-      >
-        <CommunityHeader bind:community bind:subscribed />
-      </div>
+  {#if showCommunity && community}
+    <Popover autoClose={false} popoverClass="backdrop-blur-xl rounded-2xl">
+      {#snippet target()}
+        <button
+          class="row-span-2 flex-shrink-0 mr-2 self-center group/btn bg-slate-200 dark:bg-zinc-800 rounded-full"
+        >
+          <Avatar
+            url={community?.icon}
+            width={view == 'compact' ? 24 : 32}
+            alt={community?.name}
+            class="group-hover/btn:scale-90 group-active/btn:scale-[.85] transition-transform"
+          />
+        </button>
+      {/snippet}
+      {#snippet popover()}
+        {#if community && subscribed}
+          <div
+            class="bg-white/80 dark:bg-zinc-900/90 border border-slate-200 dark:border-zinc-800 rounded-2xl shadow-xl p-4
+            max-w-2xl w-full max-h-[32rem] overflow-auto"
+          >
+            <CommunityHeader {community} {subscribed} />
+          </div>
+        {/if}
+      {/snippet}
     </Popover>
-    <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <!-- svelte-ignore a11y-no-static-element-interactions -->
   {/if}
   {#if showCommunity && community}
     <CommunityLink
@@ -171,14 +188,14 @@
           avatar={!showCommunity}
           class="flex-shrink "
         >
-          <svelte:fragment slot="badges">
+          {#snippet extraBadges()}
             {#if badges.moderator}
               <ShieldIcon filled width={14} class="text-green-500" />
             {/if}
             {#if badges.admin}
               <ShieldIcon filled width={14} class="text-red-500" />
             {/if}
-          </svelte:fragment>
+          {/snippet}
         </UserLink>
       </address>
     {/if}
@@ -210,13 +227,13 @@
           style={tag.color ? `--tag-color: ${tag.color};` : ''}
         >
           <Badge class={tag.color ? 'badge-tag-color' : ''}>
-            <svelte:fragment slot="icon">
+            {#snippet icon()}
               {#if tag.icon}
                 <Icon src={tag.icon} micro size="14" />
               {:else}
                 <Icon src={Tag} micro size="14" />
               {/if}
-            </svelte:fragment>
+            {/snippet}
             {tag.content}
           </Badge>
         </a>
@@ -224,7 +241,9 @@
     {/if}
     {#if badges.nsfw}
       <Badge label={$t('post.badges.nsfw')} color="red-subtle" allowIconOnly>
-        <Icon src={ExclamationTriangle} size="14" micro slot="icon" />
+        {#snippet icon()}
+          <Icon src={ExclamationTriangle} size="14" micro />
+        {/snippet}
         {$t('post.badges.nsfw')}
       </Badge>
     {/if}
@@ -234,7 +253,9 @@
         color="yellow-subtle"
         allowIconOnly
       >
-        <Icon src={Bookmark} micro size="14" slot="icon" />
+        {#snippet icon()}
+          <Icon src={Bookmark} micro size="14" />
+        {/snippet}
         {$t('post.badges.saved')}
       </Badge>
     {/if}
@@ -244,19 +265,25 @@
         color="yellow-subtle"
         allowIconOnly
       >
-        <Icon src={LockClosed} micro size="14" slot="icon" />
+        {#snippet icon()}
+          <Icon src={LockClosed} micro size="14" />
+        {/snippet}
         <span class="max-md:hidden">{$t('post.badges.locked')}</span>
       </Badge>
     {/if}
     {#if badges.removed}
       <Badge label={$t('post.badges.removed')} color="red-subtle" allowIconOnly>
-        <Icon src={Trash} micro size="14" slot="icon" />
+        {#snippet icon()}
+          <Icon src={Trash} micro size="14" />
+        {/snippet}
         <span class="max-md:hidden">{$t('post.badges.removed')}</span>
       </Badge>
     {/if}
     {#if badges.deleted}
       <Badge label={$t('post.badges.deleted')} color="red-subtle" allowIconOnly>
-        <Icon src={Trash} micro size="14" slot="icon" />
+        {#snippet icon()}
+          <Icon src={Trash} micro size="14" />
+        {/snippet}
         <span class="max-md:hidden">{$t('post.badges.deleted')}</span>
       </Badge>
     {/if}
@@ -266,34 +293,38 @@
         color="green-subtle"
         allowIconOnly
       >
-        <Icon src={Megaphone} micro size="14" slot="icon" />
+        {#snippet icon()}
+          <Icon src={Megaphone} micro size="14" />
+        {/snippet}
         <span class="max-md:hidden">{$t('post.badges.featured')}</span>
       </Badge>
     {/if}
-    <slot name="badges" />
+    {@render extraBadges?.()}
   </div>
 </header>
 {#if title && id}
   <a
-    href="/post/{getInstance()}/{id}"
+    href="/post/{encodeURIComponent(instance.data)}/{id}"
     class="inline hover:underline
     hover:text-primary-900 hover:dark:text-primary-100 transition-colors max-[480px]:!mt-0
-    {$userSettings.font == 'satoshi/nunito'
+    {settings.font == 'satoshi/nunito'
       ? 'font-display font-semibold'
-      : 'font-medium'} {$$props.titleClass ?? ''}"
-    class:text-slate-600={$userSettings.markReadPosts && read}
-    class:dark:text-zinc-400={$userSettings.markReadPosts && read}
+      : 'font-medium'} {titleClass}"
+    class:text-slate-600={settings.markReadPosts && read}
+    class:dark:text-zinc-400={settings.markReadPosts && read}
     class:text-base={view == 'compact'}
     class:text-lg={view != 'compact'}
     style="grid-area: title;"
     data-sveltekit-preload-data="tap"
   >
-    <Markdown
-      source={title}
-      inline
-      noStyle
-      class={view == 'compact' ? '' : 'leading-[1.3]'}
-    ></Markdown>
+    {#if title}
+      <Markdown
+        source={title}
+        inline
+        noStyle
+        class={view == 'compact' ? '' : 'leading-[1.3]'}
+      ></Markdown>
+    {/if}
   </a>
 {:else}
   <div style="grid-area: title; margin: 0;"></div>

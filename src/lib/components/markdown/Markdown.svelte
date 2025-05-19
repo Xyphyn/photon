@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
   import { marked } from 'marked'
   import {
     MdCode,
@@ -19,6 +19,7 @@
     MdListItem,
     MdSubscript,
     MdSuperscript,
+    MdText,
   } from './renderers/index'
   import { linkify, subSupscriptExtension } from './renderers/plugins'
   import containerExtension from './renderers/spoiler/spoiler'
@@ -85,30 +86,74 @@
     subscript: MdSubscript,
     superscript: MdSuperscript,
   }
+
+  export const inlineRenderers = {
+    heading: MdText,
+    image: MdText,
+    link: MdText,
+    blockquote: MdText,
+    hr: MdText,
+    html: MdText,
+    code: MdText,
+    list: MdText,
+    // @ts-ignore
+    spoiler: MdText,
+    table: MdText,
+    tablebody: MdText,
+    tablecell: MdText,
+    tablehead: MdText,
+    tablerow: MdTableRow,
+    paragraph: MdParagraph,
+    listitem: MdText,
+    subscript: MdSubscript,
+    superscript: MdSuperscript,
+  }
 </script>
 
 <script lang="ts">
   import SvelteMarkdown from 'svelte-markdown'
+  import { setContext } from 'svelte'
 
-  export let source: string = ''
-  export let inline: boolean = false
+  interface RendererOptions {
+    autoloadImages: boolean
+  }
+
+  interface Props {
+    source?: string
+    inline?: boolean
+    noStyle?: boolean
+    style?: string
+    class?: string
+    rendererOptions?: RendererOptions
+  }
+
+  let {
+    source = '',
+    inline = false,
+    noStyle = false,
+    style = '',
+    class: clazz = '',
+    rendererOptions = {
+      autoloadImages: true,
+    },
+  }: Props = $props()
+
+  setContext('options', rendererOptions)
 
   options.inline = inline
 
-  export let noStyle: boolean = false
-
-  $: tokens = marked.lexer(source)
+  let tokens = $derived.by(() => marked.lexer(source))
 </script>
 
 <div
   class="{noStyle
     ? ''
-    : 'break-words flex flex-col gap-2 leading-[1.5]'} {$$props.class}"
-  style={$$props.style}
+    : 'break-words flex flex-col gap-2 leading-[1.5]'} {clazz}"
+  {style}
 >
   <SvelteMarkdown
-    bind:source={tokens}
-    {renderers}
+    source={tokens}
+    renderers={inline ? inlineRenderers : renderers}
     {options}
     isInline={inline || undefined}
   />

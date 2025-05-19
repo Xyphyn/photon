@@ -1,18 +1,17 @@
 import { browser } from '$app/environment'
-import { instance } from '$lib/instance'
-import { client } from '$lib/lemmy'
+import { instance } from '$lib/instance.svelte'
+import { client } from '$lib/lemmy.svelte'
 import type {
   GetPosts,
   GetPostsResponse,
   ListingType,
   SortType,
 } from 'lemmy-js-client'
-import { get, writable } from 'svelte/store'
 
 export const shouldReload = (
   cache: PostFeed | undefined,
   url: URL,
-  instance: string
+  instance: string,
 ): boolean =>
   cache?.instance != instance || cache?.url.toString() != url.toString()
 
@@ -27,17 +26,18 @@ export async function postFeed(args: {
   url: URL
   fetch?: (
     input: RequestInfo | URL,
-    init?: RequestInit | undefined
+    init?: RequestInit | undefined,
   ) => Promise<Response>
 }) {
-  const feed = get(postFeeds)[args.id]
+  const feed = postFeeds.value[args.id]
 
-  const posts = shouldReload(feed, args.url, get(instance))
+  const posts = shouldReload(feed, args.url, instance.data)
     ? await client({ func: args.fetch }).getPosts(args.request)
     : feed.data.posts
 
-  if (shouldReload(feed, args.url, get(instance)) && browser)
-    postFeeds.updateFeed(args.id, {
+  if (shouldReload(feed, args.url, instance.data) && browser)
+    postFeeds.value[args.id] = {
+      id: args.id,
       data: {
         ...args.request,
         posts: posts,
@@ -48,11 +48,14 @@ export async function postFeed(args: {
       },
       url: args.url,
       lastSeen: 0,
-      instance: get(instance),
-    })
+      instance: instance.data,
+      clientData: {
+        itemHeights: [],
+      },
+    }
 
   return (
-    get(postFeeds)[args.id]?.data ?? {
+    postFeeds.value[args.id]?.data ?? {
       ...args.request,
       posts: posts,
       cursor: {
@@ -67,28 +70,18 @@ export function getPostFeed(feeds: Map<PostFeedID, PostFeed>, id: PostFeedID) {
   return feeds.get(id)
 }
 
-function createPostFeedsStore() {
-  // @ts-ignore
-  const { subscribe, update, set } = writable<Record<PostFeedID, PostFeed>>({})
+class PostFeedState {
+  #value: Record<PostFeedID, PostFeed> = $state({}) as Record<
+    PostFeedID,
+    PostFeed
+  >
 
-  return {
-    subscribe,
-    addFeed: (id: PostFeedID, feed: PostFeed) =>
-      update((feeds) => ({ ...feeds, [id]: feed })),
-    updateFeed: (id: PostFeedID, feed: Partial<PostFeed>) =>
-      update((feeds) => {
-        return {
-          ...feeds,
-          [id]: { ...feeds[id], ...feed } as PostFeed,
-        }
-      }),
-    removeFeed: (id: PostFeedID) =>
-      update((feeds) => {
-        const { [id]: _, ...rest } = feeds
-        return rest as Record<PostFeedID, PostFeed>
-      }),
-    clearAll: () => set({} as Record<PostFeedID, PostFeed>),
-    set,
+  get value() {
+    return this.#value
+  }
+
+  set value(value) {
+    this.#value = value
   }
 }
 
@@ -106,6 +99,9 @@ export interface PostFeed {
   lastSeen: number
   instance: string
   id: PostFeedID
+  clientData: {
+    itemHeights: (number | null)[]
+  }
 }
 
-export let postFeeds = createPostFeedsStore()
+export let postFeeds = new PostFeedState()

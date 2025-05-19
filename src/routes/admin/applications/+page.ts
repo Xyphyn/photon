@@ -1,11 +1,12 @@
-import { profile } from '$lib/auth.js'
-import { getClient } from '$lib/lemmy.js'
+import { profile } from '$lib/auth.svelte'
+import { getClient } from '$lib/lemmy.svelte.js'
+import { ReactiveState } from '$lib/promise.svelte.js'
 import { get } from 'svelte/store'
 
 export async function load({ data, fetch, url }) {
-  if (!get(profile)) return
+  if (!profile) return
 
-  const { jwt } = get(profile)!
+  const { jwt } = profile.data!
   if (!jwt) return
 
   const page = Number(url.searchParams.get('page')) || 1
@@ -20,6 +21,6 @@ export async function load({ data, fetch, url }) {
   return {
     unreadOnly: unreadOnly,
     page: page,
-    applications: res.registration_applications,
+    applications: new ReactiveState(res.registration_applications),
   }
 }

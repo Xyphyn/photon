@@ -1,6 +1,7 @@
-import { profile } from '$lib/auth.js'
-import { client, getClient } from '$lib/lemmy.js'
+import { profile } from '$lib/auth.svelte'
+import { client, getClient } from '$lib/lemmy.svelte.js'
 import { getItemPublished } from '$lib/lemmy/item.js'
+import { ReactiveState } from '$lib/promise.svelte.js'
 import type {
   CommentView,
   CommunityView,
@@ -46,18 +47,20 @@ export async function load({ url, fetch }) {
       everything.sort(
         (a, b) =>
           new Date(getItemPublished(b)).getTime() -
-          new Date(getItemPublished(a)).getTime()
+          new Date(getItemPublished(a)).getTime(),
       )
     }
 
     return {
-      type: type,
-      sort: sort,
-      page: page,
-      query: query,
-      results: everything,
+      filters: new ReactiveState({
+        type: type,
+        sort: sort,
+        page: page,
+        query: query,
+      })!,
+      results: new ReactiveState(everything),
       streamed: {
-        object: get(profile)?.jwt
+        object: profile.data?.jwt
           ? getClient(undefined, fetch).resolveObject({
               q: query,
             })
@@ -67,9 +70,11 @@ export async function load({ url, fetch }) {
   }
 
   return {
-    page: 1,
-    sort: sort,
-    type: type,
-    query: query,
+    filters: new ReactiveState({
+      page: 1,
+      sort: sort,
+      type: type,
+      query: query,
+    }),
   }
 }

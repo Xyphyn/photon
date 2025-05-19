@@ -6,36 +6,64 @@
     optimizeImageURL,
   } from '$lib/components/lemmy/post/helpers'
   import PostIframe from '$lib/components/lemmy/post/media/PostIframe.svelte'
+  import { getContext } from 'svelte'
+  import { ArrowDown, ArrowDownTray, Icon } from 'svelte-hero-icons'
+  import { t } from '$lib/translations'
 
-  export let href: string
-  export let title: string | undefined = undefined
-  export let text: string = ''
+  let loaded: boolean = $state(
+    (getContext('options') as { autoloadImages: boolean })?.autoloadImages ??
+      true,
+  )
 
-  $: type = mediaType(href, 'cozy')
+  interface Props {
+    href: string
+    title?: string | undefined
+    text?: string
+  }
+
+  let { href, title = undefined, text = '' }: Props = $props()
+
+  let type = $derived(mediaType(href, 'cozy'))
 </script>
 
 <div
   class="w-auto h-auto max-h-96 rounded-2xl p-2 border border-slate-200 dark:border-zinc-800
   inline-block"
 >
-  {#if type == 'video' || type == 'embed' || type == 'iframe'}
-    <PostIframe
-      type={iframeType(href)}
-      url={href}
-      opened={true}
-      autoplay={false}
-      class="w-auto h-auto max-h-80 inline-block rounded-lg"
-    />
+  {#if loaded}
+    {#if type == 'video' || type == 'embed' || type == 'iframe'}
+      <PostIframe
+        type={iframeType(href)}
+        url={href}
+        opened={true}
+        autoplay={false}
+        class="w-auto h-auto max-h-80 inline-block rounded-lg"
+      />
+    {:else}
+      <button
+        class="inline"
+        onclick={() => showImage(optimizeImageURL(href, -1), text)}
+      >
+        <img
+          src={optimizeImageURL(href, 1024)}
+          {title}
+          alt={text}
+          width={300}
+          height={300}
+          class="object-contain w-auto h-auto max-h-80 inline rounded-lg"
+        />
+      </button>
+    {/if}
   {:else}
     <button
-      class="inline"
-      on:click={() => showImage(optimizeImageURL(href, -1), text)}
+      onclick={() => (loaded = true)}
+      class="w-40 h-40 flex flex-col justify-center items-center gap-4 p-2 group"
+      title={$t('common.download')}
     >
-      <img
-        src={optimizeImageURL(href, 1024)}
-        {title}
-        alt={text}
-        class="object-contain w-auto h-auto max-h-80 inline rounded-lg"
+      <Icon
+        src={ArrowDownTray}
+        size="24"
+        class="text-primary-900 dark:text-primary-100"
       />
     </button>
   {/if}

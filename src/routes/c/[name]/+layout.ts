@@ -1,5 +1,6 @@
 import CommunityCard from '$lib/components/lemmy/community/CommunityCard.svelte'
-import { getClient } from '$lib/lemmy.js'
+import { getClient } from '$lib/lemmy.svelte.js'
+import { ReactiveState } from '$lib/promise.svelte'
 
 export async function load(req: any) {
   const community = await getClient(undefined, req.fetch).getCommunity({
@@ -7,7 +8,7 @@ export async function load(req: any) {
   })
 
   return {
-    community: community,
+    community: new ReactiveState(community),
     slots: {
       sidebar: {
         component: CommunityCard,
