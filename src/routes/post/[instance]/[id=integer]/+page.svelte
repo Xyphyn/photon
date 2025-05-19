@@ -352,7 +352,7 @@
       disabled={loading}
       href={data.thread.value.showContext
         ? `/comment/${page.params.instance}/${data.thread.value.showContext}`
-        : undefined}
+        : `/post/${page.params.instance}/${data.post.value.post_view.post.id}`}
       class="hover:bg-white/50 dark:hover:bg-zinc-800/30"
       onclick={data.thread.value.singleThread ? reloadComments : undefined}
     >
