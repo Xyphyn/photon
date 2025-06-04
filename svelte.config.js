@@ -1,5 +1,5 @@
 import node from '@sveltejs/adapter-node'
-import bun from '@catdadcode/svelte-adapter-bun'
+import bun from 'svelte-adapter-bun-next'
 import auto from '@sveltejs/adapter-auto'
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte'
 
@@ -17,10 +17,14 @@ const config = {
       process.env.ADAPTER == 'node'
         ? node()
         : process.env.ADAPTER == 'bun'
-        ? bun({
-            precompress: true,
-          })
-        : auto(),
+          ? bun({
+              out: 'build',
+              precompress: {
+                brotli: true,
+                gzip: true,
+              },
+            })
+          : auto(),
     // csp: {
     // 	directives: {
     // 		'script-src': ['self'],
