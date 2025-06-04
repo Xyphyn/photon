@@ -2,8 +2,9 @@
   import type { Post } from 'lemmy-js-client'
   import type { CommentNodeI } from './comments.svelte'
   import Comments from './Comments.svelte'
-  import { onMount } from 'svelte'
+  import { onMount, tick } from 'svelte'
   import VirtualList from '$lib/components/render/VirtualList.svelte'
+  import { page } from '$app/state'
 
   interface Props {
     nodes: CommentNodeI[]
@@ -14,6 +15,7 @@
   let { nodes, post, scrollTo }: Props = $props()
 
   let offsetEl = $state<HTMLElement>()
+  let list = $state()
 
   let initialOffset = $state(0)
 
@@ -55,6 +57,7 @@
     overscan={500}
     items={nodes}
     {initialOffset}
+    bind:this={list}
   >
     {#snippet item(item, index)}
       <div class="-mx-4 sm:-mx-6 px-4 sm:px-6">

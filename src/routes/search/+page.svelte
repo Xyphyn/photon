@@ -206,25 +206,27 @@
   <div
     class="flex flex-col mt-4 divide-slate-200 dark:divide-zinc-800 !divide-y"
   >
-    {#each data.results.value as result}
-      {#if isPostView(result)}
-        <Post post={result} />
-      {:else if isCommentView(result)}
-        <CommentItem comment={result} />
-      {:else if isCommunityView(result)}
-        <div
-          class="-mx-4 sm:-mx-6 px-6 hover:bg-slate-100 hover:dark:bg-zinc-800 transition-colors"
-        >
-          <CommunityItem community={result} showCounts={false} class="py-3" />
-        </div>
-      {:else if isUser(result)}
-        <div
-          class="-mx-4 sm:-mx-6 px-6 hover:bg-slate-100 hover:dark:bg-zinc-800 transition-colors"
-        >
-          <UserItem user={result} showCounts={false} class="py-3" />
-        </div>
-      {/if}
-    {/each}
+    {#key data.results.value}
+      {#each data.results.value as result}
+        {#if isPostView(result)}
+          <Post post={result} />
+        {:else if isCommentView(result)}
+          <CommentItem comment={result} />
+        {:else if isCommunityView(result)}
+          <div
+            class="-mx-4 sm:-mx-6 px-6 hover:bg-slate-100 hover:dark:bg-zinc-800 transition-colors"
+          >
+            <CommunityItem community={result} showCounts={false} class="py-3" />
+          </div>
+        {:else if isUser(result)}
+          <div
+            class="-mx-4 sm:-mx-6 px-6 hover:bg-slate-100 hover:dark:bg-zinc-800 transition-colors"
+          >
+            <UserItem user={result} showCounts={false} class="py-3" />
+          </div>
+        {/if}
+      {/each}
+    {/key}
   </div>
   <div class="mt-4"></div>
   {#if data.results.value.length > 0}

@@ -3,7 +3,7 @@
   import { debounce } from 'mono-svelte/util/time'
   import { onDestroy, tick, untrack, type Snippet } from 'svelte'
   import type { HTMLAttributes } from 'svelte/elements'
-  import { innerHeight } from 'svelte/reactivity/window'
+  import { innerHeight, scrollY } from 'svelte/reactivity/window'
 
   interface Props extends HTMLAttributes<HTMLDivElement> {
     items: T[]
