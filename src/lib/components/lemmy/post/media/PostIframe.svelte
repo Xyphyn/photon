@@ -1,4 +1,16 @@
 <script lang="ts" module>
+  function hardgifVideoId(url: string): string | null {
+    const regex =
+      /^(?:https?:\/\/)?(?:www\.)?(?:hardgif\.com\/(?:gif\/))(\w+)(#.*)?$/
+    const match = url.match(regex)
+
+    if (match && match[1]) {
+      return match[1]
+    }
+
+    return null
+  }
+
   const youtubeDomain = (place: 'youtube' | 'invidious' | 'piped') => {
     switch (place) {
       case 'youtube': {
@@ -54,6 +66,12 @@
       )}/embed/${videoID}?${url.searchParams.toString()}`
     }
 
+    if (type == 'hardgif') {
+      const videoID = hardgifVideoId(inputUrl)
+
+      return `https://hardgif.com/embedPlayer.php?post_id=${videoID}`
+    }
+
     return ''
   }
 
@@ -74,6 +92,12 @@
         return {
           icon: VideoCamera,
           text: 'Video',
+        }
+      }
+      case 'hardgif': {
+        return {
+          icon: VideoCamera,
+          text: 'Video Hardgif',
         }
       }
       default: {
