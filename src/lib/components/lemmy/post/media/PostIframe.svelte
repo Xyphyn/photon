@@ -1,4 +1,16 @@
 <script lang="ts" module>
+  function redgifsVideoId(url: string): string | null {
+    const regex =
+      /^(?:https?:\/\/)?(?:www\.|v3\.)?(?:redgifs\.com\/(?:ifr\/|watch\/))(\w+)(#.*)?$/
+    const match = url.match(regex)
+
+    if (match && match[1]) {
+      return match[1]
+    }
+
+    return null
+  }
+
   const youtubeDomain = (place: 'youtube' | 'invidious' | 'piped') => {
     switch (place) {
       case 'youtube': {
@@ -53,6 +65,12 @@
       )}/embed/${videoID}?${url.searchParams.toString()}`
     }
 
+    if (type == 'redgifs') {
+      const videoID = redgifsVideoId(inputUrl)
+
+      return `https://www.redgifs.com/ifr/${videoID}`
+    }
+
     return ''
   }
 
@@ -73,6 +91,12 @@
         return {
           icon: VideoCamera,
           text: 'Video',
+        }
+      }
+      case 'redgifs': {
+        return {
+          icon: VideoCamera,
+          text: 'Video Redgifs',
         }
       }
       default: {
