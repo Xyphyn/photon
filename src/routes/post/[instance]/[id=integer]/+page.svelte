@@ -57,56 +57,6 @@
 
   let { data } = $props()
 
-  const updateActions = () => {
-    // @ts-ignore
-    data.contextual = {
-      actions: [
-        {
-          name: $t('post.actions.vote.upvote'),
-          icon: ArrowUp,
-          handle: async () => {
-            data.post.value.post_view.my_vote = (
-              await client().likePost({
-                post_id: data.post.value.post_view.post.id,
-                score: data.post.value.post_view.my_vote == 1 ? 0 : 1,
-              })
-            ).post_view.my_vote
-          },
-        },
-        {
-          name: $t('post.actions.vote.downvote'),
-          icon: ArrowDown,
-          handle: async () => {
-            data.post.value.post_view.my_vote = (
-              await client().likePost({
-                post_id: data.post.value.post_view.post.id,
-                score: data.post.value.post_view.my_vote == -1 ? 0 : -1,
-              })
-            ).post_view.my_vote
-          },
-        },
-        {
-          name: data.post.value.post_view.saved
-            ? $t('post.actions.unsave')
-            : $t('post.actions.save'),
-          handle: async () => {
-            data.post.value.post_view.saved = (
-              await client().savePost({
-                post_id: data.post.value.post_view.post.id,
-                save: !data.post.value.post_view.saved,
-              })
-            ).post_view.saved
-          },
-          icon: data.post.value.post_view.saved ? BookmarkSlash : Bookmark,
-        },
-      ],
-    }
-  }
-
-  $effect(() => {
-    if (data.post.value) updateActions()
-  })
-
   onMount(async () => {
     if (
       !(data.post.value.post_view.read && settings.markPostsAsRead) &&
@@ -167,8 +117,6 @@
     data.thread.value.singleThread = false
     commentsPage = 1
   }
-
-  let commenting = $state(false)
 
   let remoteView = $derived(
     page.params.instance?.toLowerCase() != instance.data?.toLowerCase(),
@@ -314,15 +262,16 @@
     />
   </div>
   {#if data.post.value.cross_posts?.length > 0}
+    {@const crossposts = data.post.value.cross_posts}
     <Expandable
       class="text-base mt-2 w-full cursor-pointer"
-      open={data.post.value.cross_posts?.length <= 3}
+      open={crossposts?.length <= 3}
     >
       {#snippet title()}
         <div
           class="flex items-center gap-1 w-full text-left text-base font-normal"
         >
-          <span class="font-bold">{data.post.value.cross_posts.length}</span>
+          <span class="font-bold">{crossposts.length}</span>
           {$t('routes.post.crosspostCount')}
           <hr
             class="flex-1 inline-block w-full border-slate-200 dark:border-zinc-800 mx-3"
@@ -332,9 +281,11 @@
       <div
         class="!divide-y divide-slate-200 dark:divide-zinc-800 flex flex-col"
       >
-        {#each data.post.value.cross_posts as crosspost}
-          <Post view="compact" actions={false} post={crosspost} />
-        {/each}
+        {#key crossposts}
+          {#each crossposts as crosspost}
+            <Post view="compact" post={crosspost} />
+          {/each}
+        {/key}
       </div>
     </Expandable>
   {/if}
