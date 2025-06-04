@@ -1,5 +1,6 @@
 <script lang="ts">
   import Avatar from '$lib/components/ui/Avatar.svelte'
+  import { communityLink } from '$lib/lemmy/generic'
   import { settings } from '$lib/settings.svelte.js'
   import { t } from '$lib/translations'
   import type { Community } from 'lemmy-js-client'
@@ -37,10 +38,10 @@
 <a
   {...rest}
   class="items-center flex flex-row gap-2 hover:underline max-w-full min-w-0 {clazz}"
-  href="/c/{community.name}@{new URL(community.actor_id).hostname}"
+  href={communityLink(community)}
   data-sveltekit-preload-data="tap"
 >
-  {#if avatar}
+  {#if avatar && !badges.nsfw}
     <Avatar
       url={community.icon ??
         `https://api.dicebear.com/6.x/initials/svg?seed=${community.name}`}

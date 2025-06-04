@@ -27,7 +27,7 @@
   import ShieldIcon from '$lib/components/lemmy/moderation/ShieldIcon.svelte'
   import { searchParam } from '$lib/util.svelte.js'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import { Button, Modal, Select } from 'mono-svelte'
+  import { Button, Modal, Select, Option } from 'mono-svelte'
   import Expandable from '$lib/components/ui/Expandable.svelte'
   import { communityLink } from '$lib/lemmy/generic.js'
   import ItemList from '$lib/components/lemmy/generic/ItemList.svelte'
@@ -35,7 +35,6 @@
   import EntityHeader from '$lib/components/ui/EntityHeader.svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
   import { formatRelativeDate } from '$lib/components/util/RelativeDate.svelte'
-  import Option from 'mono-svelte/forms/select/Option.svelte'
   import type { PageData } from './$types'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
@@ -44,9 +43,7 @@
     inline?: boolean
   }
 
-  let { data: pageData, inline = false }: Props = $props()
-
-  let data = $state(pageData)
+  let { data, inline = false }: Props = $props()
 
   let blocking = false
   let sortForm = $state<HTMLFormElement>()
@@ -88,8 +85,6 @@
     blocking = false
   }
 
-  let messaging = $state(false)
-
   let purgingUser = $state(false)
   let purgeEnabled = $state(false)
   $effect(() => {
@@ -107,7 +102,7 @@
 
     try {
       await client().purgePerson({
-        person_id: data.person_view.person.id,
+        person_id: data.person_view.value.person.id,
       })
       removeToast(purgeToast)
       toast({ content: $t('toast.purgeUser'), type: 'success' })
@@ -118,7 +113,7 @@
 </script>
 
 <svelte:head>
-  <title>{data.person_view.person.name}</title>
+  <title>{data.person_view.value.person.name}</title>
 </svelte:head>
 
 {#if purgingUser}
@@ -128,7 +123,7 @@
     {/snippet}
     <p>
       Purging user <span class="font-bold">
-        {data.person_view.person.name}
+        {data.person_view.value.person.name}
       </span>
     </p>
     <p>
@@ -156,24 +151,24 @@
     <Header pageHeader>
       <div class="w-full">
         <EntityHeader
-          avatar={data.person_view.person.avatar}
-          name={data.person_view.person.display_name ||
-            data.person_view.person.name}
-          banner={data.person_view.person.banner}
-          bio={data.person_view.person.bio}
+          avatar={data.person_view.value.person.avatar}
+          name={data.person_view.value.person.display_name ||
+            data.person_view.value.person.name}
+          banner={data.person_view.value.person.banner}
+          bio={data.person_view.value.person.bio}
           stats={[
             {
               name: $t('content.posts'),
-              value: data.person_view.counts.post_count.toString(),
+              value: data.person_view.value.counts.post_count.toString(),
             },
             {
               name: $t('content.comments'),
-              value: data.person_view.counts.comment_count.toString(),
+              value: data.person_view.value.counts.comment_count.toString(),
             },
             {
               name: $t('stats.joined'),
               value: formatRelativeDate(
-                publishedToDate(data.person_view.person.published),
+                publishedToDate(data.person_view.value.person.published),
                 { style: 'short' },
               ).toString(),
               format: false,
@@ -185,13 +180,13 @@
               @
               <UserLink
                 showInstance
-                user={data.person_view.person}
+                user={data.person_view.value.person}
                 displayName={false}
                 class="font-normal"
               />
             </span>
           {/snippet}
-          {#if (data.moderates ?? []).length > 0}
+          {#if (data.moderates.value ?? []).length > 0}
             <Expandable class="">
               {#snippet title()}
                 {$t('routes.profile.moderates')}
@@ -200,7 +195,7 @@
                 />
               {/snippet}
               <ItemList
-                items={data.moderates.map((m) => ({
+                items={data.moderates.value.map((m) => ({
                   id: m.community.id,
                   name: m.community.title,
                   url: communityLink(m.community),
@@ -211,23 +206,23 @@
             </Expandable>
           {/if}
           {#snippet actions()}
-            {#if profile.data?.user && profile.data.jwt && data.person_view.person.id != profile.data.user.local_user_view.person.id}
+            {#if profile.data?.user && profile.data.jwt && data.person_view.value.person.id != profile.data.user.local_user_view.person.id}
               <div class="flex items-center gap-2 w-full">
                 <Button
                   size="square-md"
                   color="secondary"
-                  href="/inbox/messages/{data.person_view.person.id}"
+                  href="/inbox/messages/{data.person_view.value.person.id}"
                   title="Message"
                 >
                   {#snippet prefix()}
                     <Icon solid size="16" src={Envelope} />
                   {/snippet}
                 </Button>
-                {#if data.person_view.person.matrix_user_id}
+                {#if data.person_view.value.person.matrix_user_id}
                   <Button
                     size="square-md"
                     color="secondary"
-                    href="https://matrix.to/#/{data.person_view.person
+                    href="https://matrix.to/#/{data.person_view.value.person
                       .matrix_user_id}"
                     title="Matrix User"
                   >
@@ -247,14 +242,14 @@
                       color="danger-subtle"
                       onclick={() =>
                         ban(
-                          data.person_view.person.banned,
-                          data.person_view.person,
+                          data.person_view.value.person.banned,
+                          data.person_view.value.person,
                         )}
                     >
                       {#snippet prefix()}
                         <Icon mini size="16" src={ShieldExclamation} />
                       {/snippet}
-                      {data.person_view.person.banned ? 'Unban' : 'Ban'}
+                      {data.person_view.value.person.banned ? 'Unban' : 'Ban'}
                     </MenuButton>
                     <MenuButton
                       color="danger-subtle"
@@ -277,12 +272,15 @@
                   {/snippet}
                   <MenuButton
                     color="danger-subtle"
-                    onclick={() => blockUser(data.person_view.person.id)}
+                    onclick={() => blockUser(data.person_view.value.person.id)}
                   >
                     {#snippet prefix()}
                       <Icon mini size="16" src={NoSymbol} />
                     {/snippet}
-                    {isBlocked(profile.data.user, data.person_view.person.id)
+                    {isBlocked(
+                      profile.data.user,
+                      data.person_view.value.person.id,
+                    )
                       ? 'Unblock'
                       : 'Block'}
                   </MenuButton>
@@ -313,7 +311,6 @@
             {$t('filter.type')}
           </span>
         {/snippet}
-        <Option value="all">{$t('content.all')}</Option>
         <Option value="posts">{$t('content.posts')}</Option>
         <Option value="comments">{$t('content.comments')}</Option>
       </Select>
@@ -331,6 +328,7 @@
         <Option value="New">{$t('filter.sort.new')}</Option>
         <Option value="TopAll">{$t('filter.sort.top.label')}</Option>
         <Option value="Old">{$t('filter.sort.old')}</Option>
+        <Option value="Controversial">{$t('filter.sort.controversial')}</Option>
       </Select>
     </form>
     {#if data.items.value.length == 0}
@@ -344,9 +342,9 @@
         class="!divide-y divide-slate-200 dark:divide-zinc-800 flex flex-col"
       >
         {#each data.items.value as item}
-          {#if isCommentView(item) && (data.filters.value.type == 'all' || data.filters.value.type == 'comments')}
+          {#if isCommentView(item)}
             <CommentItem comment={item} />
-          {:else if !isCommentView(item) && (data.filters.value.type == 'all' || data.filters.value.type == 'posts')}
+          {:else if !isCommentView(item)}
             <Post post={item} />
           {/if}
         {/each}
