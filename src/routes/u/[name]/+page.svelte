@@ -341,13 +341,15 @@
       <div
         class="!divide-y divide-slate-200 dark:divide-zinc-800 flex flex-col"
       >
-        {#each data.items.value as item}
-          {#if isCommentView(item)}
-            <CommentItem comment={item} />
-          {:else if !isCommentView(item)}
-            <Post post={item} />
-          {/if}
-        {/each}
+        {#key data.items}
+          {#each data.items.value as item}
+            {#if isCommentView(item)}
+              <CommentItem comment={item} />
+            {:else if !isCommentView(item)}
+              <Post post={item} />
+            {/if}
+          {/each}
+        {/key}
       </div>
     {/if}
     <Pageination
