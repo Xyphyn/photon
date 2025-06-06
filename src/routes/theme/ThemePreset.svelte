@@ -28,18 +28,19 @@
     rounding="xl"
   >
     <div
-      style="{calculateVars(theme)};"
-      class="h-20 w-full rounded-lg rounded-b-none flex flex-row flex-wrap p-3 gap-2
-            bg-slate-25 dark:bg-zinc-925"
+      class={[
+        'h-20 w-full rounded-lg rounded-b-none flex flex-row flex-wrap p-3 gap-2',
+      ]}
+      style="background-color: rgb({theme.colors[
+        'zinc'
+      ][900]}); color: rgb({theme.colors['zinc'][50]});"
     >
       <div class="text-slate-900 dark:text-zinc-100 text-xs">
         Lorem ipsum dolor sit amet, consectetur adipisicing elit.
       </div>
       <div
-        class="bg-white dark:bg-zinc-900 w-8 h-4 rounded-xs border border-slate-200 dark:border-zinc-800"
-      ></div>
-      <div
-        class="w-3 h-3 bg-primary-900 dark:bg-primary-100 rounded-full ml-auto"
+        class="w-3 h-3 rounded-full ml-auto"
+        style="background-color: rgb({theme.colors['primary'][100]})"
       ></div>
     </div>
     {#if theme.id == themeData.data.currentTheme}
