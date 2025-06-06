@@ -73,7 +73,7 @@
       // 0.18.2 -> 0.18.3 broke this
       // so i'm adding this check
       const treeParent = tree.find(
-        (c) => c.comment_view.comment.id == parent.comment_view.comment.id,
+        c => c.comment_view.comment.id == parent.comment_view.comment.id,
       )
 
       if (treeParent) {
@@ -121,7 +121,7 @@
       node.comment_view.counts.child_count > 0
         ? 'border-l'
         : ''} ml-2.5 border-slate-200 dark:border-zinc-800 pl-2.5 "
-      bind:open={(() => node.expanded, (value) => (node.expanded = value))}
+      bind:open={() => node.expanded, value => (node.expanded = value)}
     >
       {#if node.children?.length > 0}
         <Comments {post} nodes={nodes[index].children} isParent={false} />

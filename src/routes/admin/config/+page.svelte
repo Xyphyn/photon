@@ -76,7 +76,7 @@
 
 <form
   class="flex flex-col gap-4"
-  onsubmit={(e) => {
+  onsubmit={e => {
     e.preventDefault()
     save()
   }}
@@ -84,24 +84,26 @@
   <Header pageHeader>{$t('routes.admin.config.title')}</Header>
   {#if formData}
     <TextInput
-      bind:value={(() => formData.name ?? '',
-      (v) => (formData.description = v))}
+      bind:value={() => formData.name ?? '', v => (formData.description = v)}
       label={$t('form.name')}
     />
     <TextInput
-      bind:value={(() => formData.description ?? '',
-      (v) => (formData.description = v))}
+      bind:value={
+        () => formData.description ?? '', v => (formData.description = v)
+      }
       label={$t('form.description')}
     />
     <MarkdownEditor
       previewButton
-      bind:value={(() => formData.sidebar ?? '', (v) => (formData.sidebar = v))}
+      bind:value={() => formData.sidebar ?? '', v => (formData.sidebar = v)}
       label={$t('routes.admin.config.sidebar')}
     />
     <MarkdownEditor
       previewButton
-      bind:value={(() => formData.legal_information ?? '',
-      (v) => (formData.legal_information = v))}
+      bind:value={
+        () => formData.legal_information ?? '',
+        v => (formData.legal_information = v)
+      }
       label={$t('routes.legal.title')}
     />
     <div class="flex flex-col gap-1">
@@ -125,7 +127,7 @@
         <ImageUploadModal
           bind:open={uploading.icon}
           multiple={false}
-          onupload={(uploaded) => {
+          onupload={uploaded => {
             uploading.icon = false
             formData.icon = uploaded[0]
           }}
@@ -153,7 +155,7 @@
         <ImageUploadModal
           bind:open={uploading.banner}
           multiple={false}
-          onupload={(uploaded) => {
+          onupload={uploaded => {
             uploading.banner = false
             formData.banner = uploaded[0]
           }}
@@ -255,7 +257,7 @@
                   </Badge>
                 </button>
               {/snippet}
-              {#each site.data.all_languages.filter((l) => !formData.discussion_languages?.includes(l.id)) as language, index}
+              {#each site.data.all_languages.filter(l => !formData.discussion_languages?.includes(l.id)) as language, index}
                 <MenuButton
                   class="min-h-[16px] py-0"
                   onclick={() => {
@@ -268,7 +270,7 @@
             </Menu>
             {#each formData.discussion_languages ?? [] as languageId, index}
               {@const language = site.data.all_languages.find(
-                (l) => l.id == languageId,
+                l => l.id == languageId,
               )}
               <button
                 type="button"

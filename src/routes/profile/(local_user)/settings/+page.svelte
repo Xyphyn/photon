@@ -97,7 +97,7 @@
     />
     <MarkdownEditor
       images={false}
-      bind:value={(() => formData.bio ?? '', (v) => (formData.bio = v))}
+      bind:value={() => formData.bio ?? '', v => (formData.bio = v)}
       label={$t('form.profile.bio')}
       previewButton
     />
@@ -142,7 +142,7 @@
                   </Badge>
                 </button>
               {/snippet}
-              {#each site.data.all_languages.filter((l) => !formData.discussion_languages?.includes(l.id)) as language, index}
+              {#each site.data.all_languages.filter(l => !formData.discussion_languages?.includes(l.id)) as language, index}
                 <MenuButton
                   class="min-h-[16px] py-0"
                   onclick={() => {
@@ -155,7 +155,7 @@
             </Menu>
             {#each formData.discussion_languages as languageId, index}
               {@const language = site.data.all_languages.find(
-                (l) => l.id == languageId,
+                l => l.id == languageId,
               )}
               <button
                 type="button"
