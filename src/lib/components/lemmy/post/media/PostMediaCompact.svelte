@@ -7,7 +7,7 @@
   } from '$lib/components/lemmy/post/helpers.js'
   import { showImage } from '$lib/components/ui/ExpandableImage.svelte'
   import { settings, type View } from '$lib/settings.svelte.js'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import { isImage } from '$lib/ui/image'
   import type { Post } from 'lemmy-js-client'
   import { Material, modal, Popover } from 'mono-svelte'

@@ -1,7 +1,7 @@
 import type { CommentSortType, ListingType, SortType } from 'lemmy-js-client'
 import { writable } from 'svelte/store'
 import { env } from '$env/dynamic/public'
-import { locale } from './translations'
+import { locale } from './i18n/translations'
 import { browser } from '$app/environment'
 import type { Link } from './components/ui/navbar/link'
 

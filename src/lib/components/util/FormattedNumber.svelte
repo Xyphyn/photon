@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { locale } from '$lib/translations'
+  import { locale } from '$lib/i18n/translations'
 
   interface Props {
     number: number

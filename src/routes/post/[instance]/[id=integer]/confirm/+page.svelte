@@ -8,7 +8,7 @@
   import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
   import { client } from '$lib/lemmy.svelte'
   import { errorMessage } from '$lib/lemmy/error'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import { toast } from 'mono-svelte'
   import Button from 'mono-svelte/button/Button.svelte'
   import Material from 'mono-svelte/materials/Material.svelte'

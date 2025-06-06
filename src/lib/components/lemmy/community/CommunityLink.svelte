@@ -2,7 +2,7 @@
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import { communityLink } from '$lib/lemmy/generic'
   import { settings } from '$lib/settings.svelte.js'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import type { Community } from 'lemmy-js-client'
   import { ExclamationTriangle, Icon } from 'svelte-hero-icons'
 

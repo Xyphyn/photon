@@ -7,7 +7,7 @@ import {
 } from '$lib/components/lemmy/moderation/moderation'
 import { resumables, type ResumableItem } from '$lib/lemmy/item'
 import { settings } from '$lib/settings.svelte'
-import { t } from '$lib/translations'
+import { t } from '$lib/i18n/translations'
 import { theme, type ThemeData } from '$lib/ui/colors.svelte'
 import { fullCommunityName } from '$lib/util.svelte'
 import {

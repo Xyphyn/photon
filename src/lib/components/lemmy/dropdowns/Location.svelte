@@ -11,7 +11,7 @@
     ShieldCheck,
   } from 'svelte-hero-icons'
   import { amModOfAny } from '../moderation/moderation'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import Option from 'mono-svelte/forms/select/Option.svelte'
 
   interface Props {

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import { Badge } from 'mono-svelte'
   import {
     ComputerDesktop,
@@ -69,9 +69,7 @@
   <div
     class="flex flex-col @md/setting:flex-row items-center gap-2 {itemsClass}"
   >
-    <div
-      class="flex flex-col gap-0.5 flex-2 w-full shrink-0 min-w-48 {clazz}"
-    >
+    <div class="flex flex-col gap-0.5 flex-2 w-full shrink-0 min-w-48 {clazz}">
       <h1 class="font-medium text-base">{@render title?.()}</h1>
       {#if description}
         <div class="text-slate-600 dark:text-zinc-400 text-sm">

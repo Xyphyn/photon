@@ -23,7 +23,7 @@
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import CommunityItem from '$lib/components/lemmy/community/CommunityItem.svelte'
   import Location from '$lib/components/lemmy/dropdowns/Location.svelte'
-  import { t } from '$lib/translations.js'
+  import { t } from '$lib/i18n/translations.js'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'

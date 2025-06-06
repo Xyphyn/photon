@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import { TextInput, Select, Option } from 'mono-svelte'
   import type { Snippet } from 'svelte'
 

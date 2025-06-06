@@ -9,7 +9,7 @@
   import { formatRelativeDate } from '$lib/components/util/RelativeDate.svelte'
   import { communityLink } from '$lib/lemmy/generic.js'
   import { settings } from '$lib/settings.svelte.js'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations.js'
   let { data } = $props()
 
   let my_user = $derived(data.my_user!.local_user_view)

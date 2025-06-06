@@ -3,7 +3,7 @@
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { site } from '$lib/lemmy.svelte'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import { Button, Modal, Spinner } from 'mono-svelte'
 
   let siteOpen: boolean = false

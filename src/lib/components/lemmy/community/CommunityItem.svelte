@@ -23,7 +23,7 @@
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import CommunityCard from '$lib/components/lemmy/community/CommunityCard.svelte'
   import LabelStat from '$lib/components/ui/LabelStat.svelte'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
 
   let showInfo = $state(false)
   interface Props {

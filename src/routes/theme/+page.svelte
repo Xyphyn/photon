@@ -19,7 +19,7 @@
     Plus,
   } from 'svelte-hero-icons'
   import ColorSwatch from './ColorSwatch.svelte'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { theme as themeData } from '$lib/ui/colors.svelte'
   import { getDefaultColors } from '$lib/ui/presets'

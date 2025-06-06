@@ -1,6 +1,6 @@
 <script lang="ts">
   import { settings } from '$lib/settings.svelte.js'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import { Select } from 'mono-svelte'
   import Option from 'mono-svelte/forms/select/Option.svelte'
   import {

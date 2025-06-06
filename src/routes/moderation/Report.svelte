@@ -14,7 +14,7 @@
   import { Button } from 'mono-svelte'
   import type { ReportView } from '$lib/lemmy/report.js'
   import PrivateMessage from '$lib/components/lemmy/inbox/PrivateMessage.svelte'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
 

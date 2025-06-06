@@ -64,7 +64,7 @@
   import ShieldIcon from '../moderation/ShieldIcon.svelte'
   import { settings, type View } from '$lib/settings.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import { Pencil, type IconSource } from 'svelte-hero-icons'
   import CommunityHeader from '../community/CommunityHeader.svelte'
   import { publishedToDate } from '$lib/components/util/date'

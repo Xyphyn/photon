@@ -8,7 +8,7 @@
     Link as LinkIcon,
   } from 'svelte-hero-icons'
   import { optimizeImageURL } from '../helpers'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import type { View } from '$lib/settings.svelte'
 
   interface Props {

@@ -38,7 +38,7 @@
   import { settings } from '$lib/settings.svelte'
   import { site } from '$lib/lemmy.svelte'
   import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
 
   let showInstance = $state(false)
 

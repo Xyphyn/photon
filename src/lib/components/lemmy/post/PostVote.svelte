@@ -26,7 +26,7 @@
   import { site } from '$lib/lemmy.svelte.js'
   import { fade, fly } from 'svelte/transition'
   import { backOut } from 'svelte/easing'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import { errorMessage } from '$lib/lemmy/error'
 
   interface Props {

@@ -16,7 +16,7 @@
   import { Menu, MenuButton, MenuDivider, toast } from 'mono-svelte'
   import { profile } from '$lib/auth.svelte.js'
   import { Button } from 'mono-svelte'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import ShieldIcon from './ShieldIcon.svelte'
 
   interface Props {

@@ -39,7 +39,7 @@
 </script>
 
 <script lang="ts">
-  import { locale } from '$lib/translations'
+  import { locale } from '$lib/i18n/translations'
 
   const toLocaleDateString = (date: Date): string => {
     try {

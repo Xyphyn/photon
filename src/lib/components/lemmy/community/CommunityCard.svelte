@@ -107,7 +107,7 @@
   import ShieldIcon from '../moderation/ShieldIcon.svelte'
   import ItemList from '../generic/ItemList.svelte'
   import { userLink } from '$lib/lemmy/generic'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import Entity from '$lib/components/ui/Entity.svelte'
   import { settings } from '$lib/settings.svelte'
 

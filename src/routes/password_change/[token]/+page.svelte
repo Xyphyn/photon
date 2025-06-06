@@ -9,7 +9,7 @@
     instance as currentInstance,
   } from '$lib/instance.svelte.js'
   import { getClient, validateInstance } from '$lib/lemmy.svelte.js'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import { Button, TextInput, toast } from 'mono-svelte'
 
   interface Props {

@@ -8,7 +8,7 @@
   import { site } from '$lib/lemmy.svelte.js'
   import Location from '$lib/components/lemmy/dropdowns/Location.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import { t } from '$lib/translations.js'
+  import { t } from '$lib/i18n/translations.js'
   import { settings } from '$lib/settings.svelte.js'
   import { browser } from '$app/environment'
   import VirtualFeed from '$lib/components/lemmy/post/feed/VirtualFeed.svelte'

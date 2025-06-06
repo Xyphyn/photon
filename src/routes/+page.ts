@@ -5,7 +5,7 @@ import {
   postFeeds,
   shouldReload,
 } from '$lib/lemmy/postfeed.svelte.js'
-import { t } from '$lib/translations.js'
+import { t } from '$lib/i18n/translations.js'
 import { ChevronDoubleUp } from 'svelte-hero-icons'
 import { ReactiveState } from '$lib/promise.svelte.js'
 

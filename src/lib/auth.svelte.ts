@@ -3,7 +3,7 @@ import {
   isAdmin,
 } from '$lib/components/lemmy/moderation/moderation.js'
 import { toast } from 'mono-svelte'
-import { DEFAULT_INSTANCE_URL, instance } from '$lib/instance.svelte.js'
+import { DEFAULT_INSTANCE_URL } from '$lib/instance.svelte.js'
 import { client, getClient } from '$lib/lemmy.svelte.js'
 import { site } from './lemmy.svelte'
 import { instanceToURL, moveItem } from '$lib/util.svelte'
@@ -12,18 +12,11 @@ import {
   type MyUserInfo,
   type Community,
 } from 'lemmy-js-client'
-import {
-  derived,
-  get,
-  writable,
-  type Readable,
-  type Writable,
-  type Updater,
-} from 'svelte/store'
+import { writable } from 'svelte/store'
 import { MINIMUM_VERSION, versionIsSupported } from '$lib/version.js'
 import { browser } from '$app/environment'
 import { env } from '$env/dynamic/public'
-import { t } from './translations'
+import { t } from './i18n/translations'
 
 const getDefaultProfile = (): Profile => ({
   id: -1,

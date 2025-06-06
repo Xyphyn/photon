@@ -48,7 +48,7 @@
   import { DOMAIN_REGEX_FORMS, removeItem } from '$lib/util.svelte.js'
   import Section from './Section.svelte'
   import ToggleSetting from './ToggleSetting.svelte'
-  import { locale, locales, t } from '$lib/translations'
+  import { locale, locales, t } from '$lib/i18n/translations'
   import { getDefaultLinks, iconOfLink } from '$lib/components/ui/navbar/link'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { profile } from '$lib/auth.svelte'

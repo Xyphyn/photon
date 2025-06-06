@@ -13,7 +13,7 @@
   import { browser } from '$app/environment'
   import { ArrowRight, ChartBar, Icon, Plus, XMark } from 'svelte-hero-icons'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import { t } from '$lib/translations.js'
+  import { t } from '$lib/i18n/translations.js'
   import { settings } from '$lib/settings.svelte.js'
   import { site } from '$lib/lemmy.svelte.js'
   import { resumables } from '$lib/lemmy/item'

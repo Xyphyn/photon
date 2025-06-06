@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import { Button } from 'mono-svelte'
   import { ChevronLeft, ChevronRight, Icon } from 'svelte-hero-icons'
   import { backOut } from 'svelte/easing'

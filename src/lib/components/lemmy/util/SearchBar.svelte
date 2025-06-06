@@ -2,7 +2,7 @@
   import { preventDefault } from 'svelte/legacy'
 
   import { goto } from '$app/navigation'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import { TextInput } from 'mono-svelte'
 
   let query: string = $state('')

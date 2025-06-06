@@ -23,7 +23,7 @@
   } from 'svelte-hero-icons'
   import { instance as currentInstance } from '$lib/instance.svelte.js'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import { t } from '$lib/translations.js'
+  import { t } from '$lib/i18n/translations.js'
 
   let { data } = $props()
 

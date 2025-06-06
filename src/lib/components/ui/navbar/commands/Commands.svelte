@@ -5,7 +5,7 @@
   import { TextInput } from 'mono-svelte'
   import { createEventDispatcher, onMount } from 'svelte'
   import { Home, Icon, MagnifyingGlass } from 'svelte-hero-icons'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import CommandItem from './CommandItem.svelte'
   import { browser } from '$app/environment'
   import { afterNavigate, goto } from '$app/navigation'

@@ -4,7 +4,7 @@
   import { profile } from '$lib/auth.svelte.js'
   import { onDestroy, onMount } from 'svelte'
   import { getSessionStorage, setSessionStorage } from '$lib/session.js'
-  import { t } from '$lib/translations.js'
+  import { t } from '$lib/i18n/translations.js'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
   let { data } = $props()

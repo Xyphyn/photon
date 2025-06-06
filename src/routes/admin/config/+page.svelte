@@ -16,7 +16,7 @@
   import { Button, Checkbox, Select, TextInput } from 'mono-svelte'
   import ImageUploadModal from '$lib/components/lemmy/modal/ImageUploadModal.svelte'
   import { DocumentPlus, Icon, Plus } from 'svelte-hero-icons'
-  import { t } from '$lib/translations.js'
+  import { t } from '$lib/i18n/translations.js'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import Option from 'mono-svelte/forms/select/Option.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
@@ -84,26 +84,24 @@
   <Header pageHeader>{$t('routes.admin.config.title')}</Header>
   {#if formData}
     <TextInput
-      bind:value={() => formData.name ?? '', (v) => (formData.description = v)}
+      bind:value={(() => formData.name ?? '',
+      (v) => (formData.description = v))}
       label={$t('form.name')}
     />
     <TextInput
-      bind:value={
-        () => formData.description ?? '', (v) => (formData.description = v)
-      }
+      bind:value={(() => formData.description ?? '',
+      (v) => (formData.description = v))}
       label={$t('form.description')}
     />
     <MarkdownEditor
       previewButton
-      bind:value={() => formData.sidebar ?? '', (v) => (formData.sidebar = v)}
+      bind:value={(() => formData.sidebar ?? '', (v) => (formData.sidebar = v))}
       label={$t('routes.admin.config.sidebar')}
     />
     <MarkdownEditor
       previewButton
-      bind:value={
-        () => formData.legal_information ?? '',
-        (v) => (formData.legal_information = v)
-      }
+      bind:value={(() => formData.legal_information ?? '',
+      (v) => (formData.legal_information = v))}
       label={$t('routes.legal.title')}
     />
     <div class="flex flex-col gap-1">

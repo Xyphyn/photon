@@ -11,18 +11,11 @@
 <script lang="ts">
   import { page } from '$app/state'
   import { Button, Material, toast } from 'mono-svelte'
-  import {
-    ArrowDownTray,
-    Icon,
-    MagnifyingGlassMinus,
-    MagnifyingGlassPlus,
-    Share,
-    XMark,
-  } from 'svelte-hero-icons'
-  import { backOut, elasticOut, expoOut } from 'svelte/easing'
-  import { fade, fly, scale } from 'svelte/transition'
+  import { Icon, Share, XMark } from 'svelte-hero-icons'
+  import { expoOut } from 'svelte/easing'
+  import { fade, scale } from 'svelte/transition'
   import { focusTrap } from 'svelte-focus-trap'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
 
   interface Props {
     /**

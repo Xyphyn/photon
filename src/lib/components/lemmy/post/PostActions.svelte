@@ -47,7 +47,7 @@
     Spinner,
     toast,
   } from 'mono-svelte'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import { hidePost, postLink } from './helpers'
   import { feature } from '$lib/version'
   import { instanceId, instanceToURL } from '$lib/util.svelte'

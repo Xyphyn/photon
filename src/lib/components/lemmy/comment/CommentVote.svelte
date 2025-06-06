@@ -16,7 +16,7 @@
   import { shouldShowVoteColor } from '../post/PostVote.svelte'
   import { fly } from 'svelte/transition'
   import { backOut } from 'svelte/easing'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
 
   interface Props {
     vote?: number

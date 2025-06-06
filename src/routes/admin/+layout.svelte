@@ -2,7 +2,7 @@
   import { notifications } from '$lib/auth.svelte'
   import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
   import {} from '$lib/components/ui/layout/Shell.svelte'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import { Badge } from 'mono-svelte'
   /**
    * @typedef {Object} Props

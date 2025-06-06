@@ -20,9 +20,6 @@ class SiteData {
 
 export const site = new SiteData()
 
-const isURL = (input: RequestInfo | URL): input is URL =>
-  typeof input == 'object' && 'searchParams' in input
-
 async function customFetch(
   func:
     | ((
@@ -44,16 +41,6 @@ async function customFetch(
 
     if (auth) {
       init.cache = 'no-store'
-    }
-  }
-
-  if (init?.body && auth) {
-    try {
-      const json = JSON.parse(init.body.toString())
-      json.auth = auth
-      init.body = JSON.stringify(json)
-    } catch (e) {
-      // It seems this isn't a JSON request. Ignore adding an auth parameter.
     }
   }
 

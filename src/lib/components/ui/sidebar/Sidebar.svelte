@@ -18,7 +18,7 @@
   import { Badge } from 'mono-svelte'
   import Expandable from '$lib/components/ui/Expandable.svelte'
   import EndPlaceholder from '../EndPlaceholder.svelte'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
 
   interface Props {
     style?: string

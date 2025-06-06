@@ -3,7 +3,7 @@
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
-  import { t } from '$lib/translations.js'
+  import { t } from '$lib/i18n/translations.js'
   import type {
     Person,
     PrivateMessageResponse,
@@ -35,7 +35,7 @@
   }
 
   function conversationPreviews(
-    conversations: PrivateMessageView[]
+    conversations: PrivateMessageView[],
   ): ConversationPreview[] {
     const deduplicated = filterDuplicates(conversations, (i) => i.creator.id)
 
@@ -61,7 +61,7 @@
 {:then data}
   {@const conversations = data.private_messages}
   {@const previews = conversationPreviews(conversations).filter(
-    (c) => c.user.id != profile.data?.user?.local_user_view.person.id
+    (c) => c.user.id != profile.data?.user?.local_user_view.person.id,
   )}
 
   <ul

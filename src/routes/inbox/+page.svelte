@@ -20,7 +20,7 @@
   import { Button, Select } from 'mono-svelte'
   import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
   import { expoOut } from 'svelte/easing'
 

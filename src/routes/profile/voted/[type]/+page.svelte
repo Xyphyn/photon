@@ -3,7 +3,7 @@
   import PostFeed from '$lib/components/lemmy/post/feed/PostFeed.svelte'
   import VirtualFeed from '$lib/components/lemmy/post/feed/VirtualFeed.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations.js'
 
   let { data = $bindable() } = $props()
 

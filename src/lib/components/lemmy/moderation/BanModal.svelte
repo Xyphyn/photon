@@ -8,7 +8,7 @@
   import { profile } from '$lib/auth.svelte.js'
   import { Button, Checkbox, Modal, TextInput } from 'mono-svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import CommunityLink from '../community/CommunityLink.svelte'
   import Duration from '$lib/components/form/Duration.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'

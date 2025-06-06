@@ -45,7 +45,7 @@
   import Post from '$lib/components/lemmy/post/Post.svelte'
   import Expandable from '$lib/components/ui/Expandable.svelte'
   import { Popover } from 'mono-svelte'
-  import { t } from '$lib/translations.js'
+  import { t } from '$lib/i18n/translations.js'
   import { resumables } from '$lib/lemmy/item.js'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import CommentListVirtualizer from '$lib/components/lemmy/comment/CommentListVirtualizer.svelte'

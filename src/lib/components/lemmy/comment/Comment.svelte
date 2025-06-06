@@ -22,7 +22,7 @@
   import ShieldIcon from '../moderation/ShieldIcon.svelte'
   import { page } from '$app/state'
   import { onMount } from 'svelte'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import { fly, slide } from 'svelte/transition'
   import { expoInOut, expoOut } from 'svelte/easing'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'

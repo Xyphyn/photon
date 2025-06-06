@@ -7,7 +7,7 @@
   import FormattedNumber from '../util/FormattedNumber.svelte'
   import Expandable from './Expandable.svelte'
   import { Icon, InformationCircle } from 'svelte-hero-icons'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import Markdown from '../markdown/Markdown.svelte'
   import EndPlaceholder from './EndPlaceholder.svelte'
 

@@ -5,7 +5,7 @@
   import MultiSelect from '$lib/components/input/Switch.svelte'
   import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
   import { site } from '$lib/lemmy.svelte'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import { feature } from '$lib/version'
   import { Button, Menu, MenuButton } from 'mono-svelte'
   import {

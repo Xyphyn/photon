@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import { Button, Material, toast } from 'mono-svelte'
   import { Icon, ClipboardDocument } from 'svelte-hero-icons'
 

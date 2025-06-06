@@ -21,7 +21,7 @@
   import NavButton from './NavButton.svelte'
   import Logo from '../Logo.svelte'
   import { LINKED_INSTANCE_URL } from '$lib/instance.svelte'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import CommandsWrapper from './commands/CommandsWrapper.svelte'
   import type { ClassValue } from 'svelte/elements'
 

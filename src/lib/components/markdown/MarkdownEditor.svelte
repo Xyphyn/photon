@@ -4,7 +4,7 @@
   import { profile } from '$lib/auth.svelte.js'
   import MultiSelect from '$lib/components/input/Switch.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import { uploadImage } from '$lib/util.svelte.js'
   import { ImageInput, toast } from 'mono-svelte'
   import { Button, Label, Modal, TextArea } from 'mono-svelte'
@@ -32,7 +32,7 @@
     str: string,
     startIndex: number,
     endIndex: number,
-    replacement: string
+    replacement: string,
   ) {
     return str.substring(0, startIndex) + replacement + str.substring(endIndex)
   }
@@ -49,7 +49,7 @@
       textArea.value,
       startPos,
       endPos,
-      newText
+      newText,
     )
 
     textArea.focus()

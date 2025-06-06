@@ -12,7 +12,7 @@
   import { profile } from '$lib/auth.svelte.js'
   import ShieldIcon from '$lib/components/lemmy/moderation/ShieldIcon.svelte'
   import { Button, Menu, MenuButton, MenuDivider } from 'mono-svelte'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
 
   interface Props {
     item: PostView | CommentView

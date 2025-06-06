@@ -6,7 +6,7 @@
   import { ClipboardDocumentCheck, Icon } from 'svelte-hero-icons'
   import Application from './Application.svelte'
   import MultiSelect from '$lib/components/input/Switch.svelte'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { Option, Select } from 'mono-svelte'
 

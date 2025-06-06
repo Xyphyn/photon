@@ -23,7 +23,7 @@
   import type { InboxItem } from '$lib/lemmy/inbox.js'
   import PrivateMessage from '$lib/components/lemmy/inbox/PrivateMessage.svelte'
   import PrivateMessageModal from '$lib/components/lemmy/modal/PrivateMessageModal.svelte'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import Expandable from '$lib/components/ui/Expandable.svelte'
   import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'

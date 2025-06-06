@@ -31,7 +31,7 @@
   } from 'svelte-hero-icons'
   import { flip } from 'svelte/animate'
   import { expoOut } from 'svelte/easing'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { fly } from 'svelte/transition'
 

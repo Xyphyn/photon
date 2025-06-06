@@ -2,7 +2,7 @@
   import { profile } from '$lib/auth.svelte.js'
   import ProgressBar from '$lib/components/ui/ProgressBar.svelte'
   import { errorMessage } from '$lib/lemmy/error'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import { uploadImage } from '$lib/util.svelte.js'
   import { ImageInput, Spinner, toast } from 'mono-svelte'
   import { Button, Modal } from 'mono-svelte'
@@ -28,7 +28,7 @@
   let progress = $state(1)
 
   let previewURLs = $derived(
-    preview && image ? Array.from(image).map(URL.createObjectURL) : undefined
+    preview && image ? Array.from(image).map(URL.createObjectURL) : undefined,
   )
 
   async function upload() {
@@ -48,8 +48,8 @@
               .catch((err) => {
                 toast({ content: errorMessage(err), type: 'error' })
                 return 'Failed to upload'
-              })
-          )
+              }),
+          ),
         )
       ).filter((i) => i != undefined)
 

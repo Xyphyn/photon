@@ -8,7 +8,7 @@
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { placeholders } from '$lib/util.svelte.js'
   import { Button } from 'mono-svelte'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import { errorMessage } from '$lib/lemmy/error'
   import { ArrowUp, Icon, Language, XMark } from 'svelte-hero-icons'
 

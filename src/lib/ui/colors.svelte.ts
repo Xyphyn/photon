@@ -9,7 +9,7 @@ import {
 import { env } from '$env/dynamic/public'
 import { getDefaultTheme, presets } from './presets'
 import { browser } from '$app/environment'
-import { t } from '$lib/translations'
+import { t } from '$lib/i18n/translations'
 
 type ColorScheme = 'system' | 'light' | 'dark'
 

@@ -8,7 +8,7 @@
   import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
   import { instance } from '$lib/instance.svelte'
   import { settings } from '$lib/settings.svelte'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import type {
     CommentSortType,
     GetCommentsResponse,

@@ -7,7 +7,7 @@ import { page } from '$app/state'
 import { feature } from '$lib/version.js'
 import { client } from '$lib/lemmy.svelte.js'
 import { site } from './lemmy.svelte'
-import { t } from './translations'
+import { t } from './i18n/translations'
 
 // Despite the name, this will round up
 // Example: findClosestNumber([8, 16, 32, 64, 128], 76) will return 128

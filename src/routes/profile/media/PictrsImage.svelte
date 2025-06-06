@@ -4,7 +4,7 @@
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import { instance } from '$lib/instance.svelte'
   import { client } from '$lib/lemmy.svelte'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import { instanceToURL } from '$lib/util.svelte'
   import type { LocalImage } from 'lemmy-js-client'
   import { Button, Material, toast } from 'mono-svelte'

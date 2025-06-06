@@ -9,7 +9,7 @@
   import { profile, profileData, type Profile } from '$lib/auth.svelte'
   import { LINKED_INSTANCE_URL } from '$lib/instance.svelte'
   import { goto } from '$app/navigation'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { page } from '$app/state'
 

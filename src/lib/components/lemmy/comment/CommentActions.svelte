@@ -25,7 +25,7 @@
   import { profile } from '$lib/auth.svelte.js'
   import { deleteItem, save } from '$lib/lemmy/contentview.js'
   import { Button, Menu, MenuButton, MenuDivider } from 'mono-svelte'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import { settings } from '$lib/settings.svelte'
 
   interface Props {

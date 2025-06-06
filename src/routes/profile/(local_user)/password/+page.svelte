@@ -1,6 +1,6 @@
 <script lang="ts">
   import EntityHeader from '$lib/components/ui/EntityHeader.svelte'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations.js'
   import { Material } from 'mono-svelte'
   import {
     Icon,

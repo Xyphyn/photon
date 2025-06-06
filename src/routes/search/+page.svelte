@@ -35,7 +35,7 @@
   } from 'svelte-hero-icons'
   import { expoOut } from 'svelte/easing'
   import { fly, slide } from 'svelte/transition'
-  import { t } from '$lib/translations.js'
+  import { t } from '$lib/i18n/translations.js'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
   import { goto, invalidate } from '$app/navigation'

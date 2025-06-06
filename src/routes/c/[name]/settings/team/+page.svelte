@@ -8,7 +8,7 @@
   import { client, getClient } from '$lib/lemmy.svelte.js'
   import { flip } from 'svelte/animate'
   import { Button, TextInput } from 'mono-svelte'
-  import { t } from '$lib/translations.js'
+  import { t } from '$lib/i18n/translations.js'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
   interface Props {

@@ -3,7 +3,7 @@
 
   import { Button, Material, Spinner, TextInput, toast } from 'mono-svelte'
   import Message from './Message.svelte'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import { Icon, PaperAirplane } from 'svelte-hero-icons'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { fly } from 'svelte/transition'

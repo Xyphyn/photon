@@ -24,7 +24,7 @@
   import ObjectAutocomplete from '$lib/components/lemmy/ObjectAutocomplete.svelte'
   import { Button } from 'mono-svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import { slide } from 'svelte/transition'
   import { feature } from '$lib/version'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'

@@ -9,7 +9,7 @@
   import { addSubscription } from '$lib/lemmy/user.js'
   import { Button, Checkbox, TextInput } from 'mono-svelte'
   import { uploadImage } from '$lib/util.svelte.js'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import ImagePreviewInput from '$lib/components/input/ImagePreviewInput.svelte'
   import Label from 'mono-svelte/forms/Label.svelte'

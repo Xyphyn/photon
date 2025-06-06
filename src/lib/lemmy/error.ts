@@ -1,4 +1,4 @@
-import { t } from '$lib/translations'
+import { t } from '$lib/i18n/translations'
 
 export function errorMessage(error: any, instance?: string): string {
   try {

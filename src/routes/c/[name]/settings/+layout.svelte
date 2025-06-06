@@ -1,6 +1,6 @@
 <script lang="ts">
   import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
-  import { t } from '$lib/translations.js'
+  import { t } from '$lib/i18n/translations.js'
   import { fullCommunityName } from '$lib/util.svelte.js'
   import type { PageData } from './$types.js'
 

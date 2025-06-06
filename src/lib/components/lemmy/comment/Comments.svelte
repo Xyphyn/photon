@@ -13,7 +13,7 @@
   import { Button } from 'mono-svelte'
   import { afterNavigate, goto } from '$app/navigation'
   import { backOut, expoOut } from 'svelte/easing'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import { browser } from '$app/environment'
 
   interface Props {
@@ -121,7 +121,7 @@
       node.comment_view.counts.child_count > 0
         ? 'border-l'
         : ''} ml-2.5 border-slate-200 dark:border-zinc-800 pl-2.5 "
-      bind:open={() => node.expanded, (value) => (node.expanded = value)}
+      bind:open={(() => node.expanded, (value) => (node.expanded = value))}
     >
       {#if node.children?.length > 0}
         <Comments {post} nodes={nodes[index].children} isParent={false} />

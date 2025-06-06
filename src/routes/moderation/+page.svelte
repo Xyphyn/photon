@@ -15,7 +15,7 @@
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { searchParam } from '$lib/util.svelte.js'
   import { Button, Material, Select, toast } from 'mono-svelte'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import Option from 'mono-svelte/forms/select/Option.svelte'
   import { tick } from 'svelte'

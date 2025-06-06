@@ -8,7 +8,7 @@
   import PostIframe from '$lib/components/lemmy/post/media/PostIframe.svelte'
   import { getContext } from 'svelte'
   import { ArrowDown, ArrowDownTray, Icon } from 'svelte-hero-icons'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
 
   let loaded: boolean = $state(
     (getContext('options') as { autoloadImages: boolean })?.autoloadImages ??

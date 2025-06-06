@@ -23,7 +23,7 @@
   } from 'svelte-hero-icons'
   import { DOMAIN_REGEX_FORMS } from '$lib/util.svelte.js'
   import { MINIMUM_VERSION } from '$lib/version.js'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { errorMessage } from '$lib/lemmy/error'
   import ErrorContainer, {

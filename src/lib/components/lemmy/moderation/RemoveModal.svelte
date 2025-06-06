@@ -16,7 +16,7 @@
   import { fullCommunityName } from '$lib/util.svelte.js'
   import { amMod, isAdmin } from './moderation'
   import { Button, Checkbox, Modal } from 'mono-svelte'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import Option from 'mono-svelte/forms/select/Option.svelte'
 
   interface Props {

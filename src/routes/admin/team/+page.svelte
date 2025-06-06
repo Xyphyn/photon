@@ -12,7 +12,7 @@
   import { Button, TextInput } from 'mono-svelte'
   import { Icon, Plus, QuestionMarkCircle, Trash } from 'svelte-hero-icons'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import { t } from '$lib/translations.js'
+  import { t } from '$lib/i18n/translations.js'
 
   let { data: pageData } = $props()
   let data = $state(pageData)

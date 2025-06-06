@@ -16,7 +16,7 @@
   import type { SaveUserSettings } from 'lemmy-js-client'
   import { Button, Switch, TextInput } from 'mono-svelte'
   import { uploadImage } from '$lib/util.svelte.js'
-  import { t } from '$lib/translations.js'
+  import { t } from '$lib/i18n/translations.js'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import type { PageData } from './$types'
@@ -97,7 +97,7 @@
     />
     <MarkdownEditor
       images={false}
-      bind:value={() => formData.bio ?? '', (v) => (formData.bio = v)}
+      bind:value={(() => formData.bio ?? '', (v) => (formData.bio = v))}
       label={$t('form.profile.bio')}
       previewButton
     />

@@ -19,7 +19,7 @@
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import { publishedToDate } from '$lib/components/util/date'
   import ApplicationDenyModal from '$lib/components/lemmy/modal/ApplicationDenyModal.svelte'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import { removalTemplate } from '$lib/components/lemmy/moderation/moderation'
   import { fullCommunityName } from '$lib/util.svelte'
 

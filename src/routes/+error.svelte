@@ -2,7 +2,7 @@
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
   import { errorMessage } from '$lib/lemmy/error'
-  import { t } from '$lib/translations'
+  import { t } from '$lib/i18n/translations'
   import { Button } from 'mono-svelte'
   import { Icon, XMark } from 'svelte-hero-icons'
 
