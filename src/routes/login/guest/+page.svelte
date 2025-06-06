@@ -11,13 +11,15 @@
   import { goto } from '$app/navigation'
   import { t } from '$lib/translations'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { page } from '$app/state'
 
   interface Props {
     ref?: string
     children?: import('svelte').Snippet
   }
 
-  let { ref = '/', children }: Props = $props()
+  let { ref = page.url.searchParams.get('redirect') ?? '/', children }: Props =
+    $props()
 
   let form = $state({
     instance: '',

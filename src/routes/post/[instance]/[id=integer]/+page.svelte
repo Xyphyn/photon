@@ -78,28 +78,6 @@
     })
   })
 
-  const fetchOnHome = async (jwt: string) => {
-    const id = toast({
-      content: $t('toast.fetchPostOnHome'),
-      loading: true,
-    })
-
-    try {
-      const res = await getClient().resolveObject({
-        q: data.post.value.post_view.post.ap_id,
-      })
-
-      if (res.post) {
-        removeToast(id)
-        goto(`/post/${instance.data}/${res.post.post.id}`, {}).then(() =>
-          removeToast(id),
-        )
-      }
-    } catch (err) {
-      removeToast(id)
-    }
-  }
-
   let commentsPage = 1
   let loading = $state(false)
 
@@ -117,10 +95,6 @@
     data.thread.value.singleThread = false
     commentsPage = 1
   }
-
-  let remoteView = $derived(
-    page.params.instance?.toLowerCase() != instance.data?.toLowerCase(),
-  )
 </script>
 
 <svelte:head>
@@ -164,44 +138,6 @@
 </svelte:head>
 
 <article class="flex flex-col gap-2">
-  {#if remoteView}
-    <div
-      class="sticky top-0 bg-slate-50 dark:bg-zinc-950 z-20
-      border-b dark:border-zinc-800 border-slate-300
-      -mx-4 -mt-4 md:-mt-6 md:-mx-6 sticky-header px-4 py-2
-      flex items-center gap-2 mb-4 h-12
-      "
-    >
-      <Popover openOnHover>
-        {#snippet target()}
-          <Icon
-            src={InformationCircle}
-            size="24"
-            solid
-            class="bg-slate-200 dark:bg-zinc-700 p-0.5 rounded-full text-primary-900 dark:text-primary-100"
-          />
-        {/snippet}
-        {$t('routes.post.instanceWarning')}
-      </Popover>
-      <span class="text-primary-900 dark:text-primary-100 font-bold">
-        {$t('routes.post.remoteView')}
-      </span>
-      {#if profile.data?.jwt}
-        <Button
-          class="ml-auto"
-          onclick={() => {
-            if (profile.data?.jwt) {
-              fetchOnHome(profile.data?.jwt)
-            }
-          }}
-        >
-          <Icon src={Home} mini size="16" />
-          {$t('routes.post.localView')}
-        </Button>
-      {/if}
-    </div>
-  {/if}
-
   <header class="flex flex-col gap-2">
     <div class="flex flex-row justify-between items-center gap-2 flex-wrap">
       <PostMeta

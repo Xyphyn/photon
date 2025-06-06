@@ -1,15 +1,16 @@
 import CommunityCard from '$lib/components/lemmy/community/CommunityCard.svelte'
-import { getClient } from '$lib/lemmy.svelte.js'
+import { client, getClient } from '$lib/lemmy.svelte.js'
 import { awaitIfServer } from '$lib/promise.svelte.js'
 import { SSR_ENABLED, settings } from '$lib/settings.svelte'
 import type { GetComments } from 'lemmy-js-client'
 import { ReactiveState } from '$lib/promise.svelte.js'
+import { profile } from '$lib/auth.svelte.js'
+import { redirect } from '@sveltejs/kit'
+import { resolveRoute } from '$app/paths'
 
-export async function load({ params, url, fetch }) {
-  const thread = url.searchParams.get('thread')
+function buildContext(thread?: string) {
   let parentId: number | undefined
-  let showContext: string | undefined = undefined
-
+  let showContext: string | undefined
   let max_depth = 3
 
   if (thread) {
@@ -21,17 +22,22 @@ export async function load({ params, url, fetch }) {
     } else {
       parentId = Number(split[1])
     }
-
-    if (!Number.isInteger(parentId)) {
-      parentId = undefined
-    }
   }
 
-  if (parentId) {
-    max_depth = 10
-  }
+  if (parentId) max_depth = 10
+  return { parentId, showContext, max_depth, focus: thread?.split('.').at(-1) }
+}
 
+export async function load({ params, url, fetch }) {
+  if (profile.data.instance != params.instance)
+    redirect(302, resolveRoute('/post/[instance]/[id]/confirm', params))
+
+  // TODO use Lemmy profile default settings
   const sort = settings?.defaultSort?.comments ?? 'Hot'
+
+  const { parentId, showContext, max_depth, focus } = buildContext(
+    url.searchParams.get('thread') || undefined,
+  )
 
   const commentParams: GetComments = {
     post_id: Number(params.id),
@@ -44,8 +50,8 @@ export async function load({ params, url, fetch }) {
     parent_id: parentId,
   }
 
-  const comments = getClient(params.instance, fetch).getComments(commentParams)
-  const post = await getClient(params.instance.toLowerCase(), fetch).getPost({
+  const comments = client({ func: fetch }).getComments(commentParams)
+  const post = await client({ func: fetch }).getPost({
     id: Number(params.id),
   })
 
@@ -53,7 +59,7 @@ export async function load({ params, url, fetch }) {
     thread: new ReactiveState({
       showContext: showContext,
       singleThread: parentId != undefined,
-      focus: thread?.split('.').at(-1),
+      focus,
     }),
     post: new ReactiveState(post),
     commentSort: new ReactiveState(sort),
