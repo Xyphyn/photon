@@ -72,21 +72,24 @@
 
 {#if children}{@render children({ vote, score })}{:else}
   <div
-    class="{buttonColor.ghost} rounded-full h-full font-medium flex items-center *:p-2
-    hover:bg-white dark:hover:bg-zinc-900 overflow-hidden transition-colors shrink-0
-    {vote != 0
-      ? ''
-      : 'text-inherit!'} text-inherit! divide-x divide-slate-200 dark:divide-zinc-800
-    {loading ? 'animate-pulse opacity-75 pointer-events-none' : ''}"
+    class={[
+      buttonColor.ghost,
+      'rounded-full h-full font-medium flex items-center *:p-2',
+      'hover:bg-white dark:hover:bg-zinc-900 overflow-hidden transition-colors shrink-0',
+      'text-inherit! divide-x divide-slate-200 dark:divide-zinc-800',
+      loading && 'animate-pulse opacity-75 pointer-events-none',
+    ]}
     role="group"
     aria-label={$t('aria.vote.group')}
   >
     <button
       onclick={() => castVote(vote == 1 ? 0 : 1)}
-      class="flex items-center gap-0.5 transition-colors relative z-0
-      {vote == 1
-        ? shouldShowVoteColor(vote, 'upvotes')
-        : 'hover:bg-slate-100 dark:hover:bg-zinc-800'}"
+      class={[
+        'flex items-center gap-0.5 transition-colors relative cursor-pointer',
+        vote == 1
+          ? shouldShowVoteColor(vote, 'upvotes')
+          : 'hover:bg-slate-100 dark:hover:bg-zinc-800',
+      ]}
       aria-pressed={vote == 1}
       aria-label={$t('post.actions.vote.upvote')}
     >
@@ -109,10 +112,12 @@
     {#if site.data?.site_view.local_site.enable_downvotes ?? true}
       <button
         onclick={() => castVote(vote == -1 ? 0 : -1)}
-        class="flex items-center flex-row-reverse gap-0.5 transition-colors
-      {vote == -1
-          ? shouldShowVoteColor(vote, 'downvotes')
-          : 'hover:bg-slate-100 dark:hover:bg-zinc-800'}"
+        class={[
+          'flex items-center flex-row-reverse gap-0.5 transition-colors cursor-pointer',
+          vote == -1
+            ? shouldShowVoteColor(vote, 'downvotes')
+            : 'hover:bg-slate-100 dark:hover:bg-zinc-800',
+        ]}
         aria-pressed={vote == -1}
         aria-label={$t('post.actions.vote.downvote')}
       >
