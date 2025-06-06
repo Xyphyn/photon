@@ -802,7 +802,7 @@
                 "description": "Take text in [brackets] and turn it into tags that you can click to search for.",
                 "rules": {
                     "title": "Rules",
-                    "blur": "Blur",
+                    "blur-sm": "Blur",
                     "hide": "Hide",
                     "show": "Show"
                 }
@@ -856,7 +856,7 @@
                 "removed": "Removed by moderator"
             },
             "nsfwBlur": {
-                "title": "NSFW blur",
+                "title": "NSFW blur-sm",
                 "description": "Blur images and remove post bodies of NSFW posts."
             },
             "instances": {

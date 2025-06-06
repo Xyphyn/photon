@@ -99,7 +99,7 @@ interface Settings {
   useRtl: boolean
   parseTags: boolean
   tagRules: {
-    [key: string]: 'hide' | 'blur'
+    [key: string]: 'hide' | 'blur-sm'
   }
   logoColorMonth: number | null
 }
@@ -178,9 +178,9 @@ export const defaultSettings: Settings = {
   useRtl: false,
   parseTags: true,
   tagRules: {
-    cw: 'blur',
-    nsfl: 'blur',
-    nsfw: 'blur',
+    cw: 'blur-sm',
+    nsfl: 'blur-sm',
+    nsfw: 'blur-sm',
   },
   logoColorMonth: null,
 }

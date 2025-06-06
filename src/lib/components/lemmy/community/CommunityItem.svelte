@@ -79,9 +79,9 @@
           />
         {/if}
         <div
-          class="flex flex-col overflow-hidden whitespace-nowrap flex-1 min-w-0 flex-shrink"
+          class="flex flex-col overflow-hidden whitespace-nowrap flex-1 min-w-0 shrink"
         >
-          <div class="font-medium text-base overflow-hidden overflow-ellipsis">
+          <div class="font-medium text-base overflow-hidden text-ellipsis">
             <span>{community.community.title}</span>
             {#if community.community.deleted}
               <Icon
@@ -124,10 +124,10 @@
             class="text-sm text-slate-600 dark:text-zinc-400 flex gap-0.5"
             class:justify-center={view == 'cozy'}
           >
-            <span class="overflow-hidden overflow-ellipsis">
+            <span class="overflow-hidden text-ellipsis">
               {new URL(community.community.actor_id).hostname}
             </span>
-            <span class="overflow-hidden overflow-ellipsis">
+            <span class="overflow-hidden text-ellipsis">
               {#if !showCounts}
                 •
                 <FormattedNumber number={community.counts.subscribers} />

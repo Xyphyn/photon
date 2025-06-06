@@ -63,7 +63,7 @@
       title={$t('common.back')}
       size="square-md"
       rounding="pill"
-      class="text-inherit dark:text-inherit disabled:!opacity-20 disabled:!bg-transparent"
+      class="text-inherit dark:text-inherit disabled:opacity-20! disabled:bg-transparent!"
       disabled={(cursor?.back == undefined && cursor?.next != undefined) ||
         page <= 0}
       data-sveltekit-preload-data="off"

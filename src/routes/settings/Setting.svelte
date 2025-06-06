@@ -70,7 +70,7 @@
     class="flex flex-col @md/setting:flex-row items-center gap-2 {itemsClass}"
   >
     <div
-      class="flex flex-col gap-0.5 flex-[2] w-full flex-shrink-0 min-w-48 {clazz}"
+      class="flex flex-col gap-0.5 flex-2 w-full shrink-0 min-w-48 {clazz}"
     >
       <h1 class="font-medium text-base">{@render title?.()}</h1>
       {#if description}
@@ -82,7 +82,7 @@
     {#if children}
       <div
         class="w-full flex flex-col gap-2 flex-1 max-w-full
-         @md/setting:items-end flex-shrink-0 {optionClass}"
+         @md/setting:items-end shrink-0 {optionClass}"
       >
         {@render children?.()}
       </div>

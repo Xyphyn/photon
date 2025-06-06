@@ -26,7 +26,7 @@
   alignment="left"
   color="tertiary"
   size="lg"
-  class="focus:bg-slate-200 focus:dark:bg-zinc-800 block w-full {clazz}"
+  class="focus:bg-slate-200 dark:focus:bg-zinc-800 block w-full {clazz}"
   data-sveltekit-preload-code="viewport"
   data-sveltekit-preload-data="tap"
   {...rest}

@@ -72,7 +72,7 @@
     <button
       class="w-10 h-10 rounded-full border-slate-200 dark:border-zinc-700
       transition-all bg-slate-50 dark:bg-zinc-900 relative
-      hover:bg-slate-200 hover:dark:bg-zinc-700 group {buttonClass}"
+      hover:bg-slate-200 dark:hover:bg-zinc-700 group {buttonClass}"
       title={$t('profile.profile')}
     >
       {#if profile.data?.user}
@@ -111,7 +111,7 @@
       {/snippet}
       {$t('profile.inbox')}
       {#if $notifications.inbox > 0}
-        <Badge color="red-subtle" class="text-xs ml-auto font-bold !py-0.5">
+        <Badge color="red-subtle" class="text-xs ml-auto font-bold py-0.5!">
           {$notifications.inbox > 99 ? '∞' : $notifications.inbox}
         </Badge>
       {/if}
@@ -136,7 +136,7 @@
     {/snippet}
     {$t('nav.menu.settings')}
   </MenuButton>
-  <MenuButton class="!py-0">
+  <MenuButton class="py-0!">
     {#snippet prefix()}
       <Icon
         src={theme.colorScheme == 'system'

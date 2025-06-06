@@ -77,13 +77,13 @@
           name="q"
           aria-label={$t('routes.search.query')}
           size="lg"
-          class="flex-1 !rounded-full h-full !text-base"
+          class="flex-1 rounded-full! h-full text-base!"
         />
         <Button
           submit
           color="primary"
           size="custom"
-          class="flex-shrink-0 h-full aspect-square"
+          class="shrink-0 h-full aspect-square"
           title="Search"
           rounding="pill"
           loading={navigating.to?.route.id == '/search'}
@@ -182,7 +182,7 @@
       <div transition:slide={{ axis: 'y', easing: expoOut }}>
         {#if object.community}
           <div
-            class="-mx-4 sm:-mx-6 px-6 hover:bg-slate-100 hover:dark:bg-zinc-800 transition-colors"
+            class="-mx-4 sm:-mx-6 px-6 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors"
           >
             <CommunityItem
               community={object.community}
@@ -204,7 +204,7 @@
     {/if}
   {/await}
   <div
-    class="flex flex-col mt-4 divide-slate-200 dark:divide-zinc-800 !divide-y"
+    class="flex flex-col mt-4 divide-slate-200 dark:divide-zinc-800 divide-y!"
   >
     {#key data.results.value}
       {#each data.results.value as result}
@@ -214,13 +214,13 @@
           <CommentItem comment={result} />
         {:else if isCommunityView(result)}
           <div
-            class="-mx-4 sm:-mx-6 px-6 hover:bg-slate-100 hover:dark:bg-zinc-800 transition-colors"
+            class="-mx-4 sm:-mx-6 px-6 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors"
           >
             <CommunityItem community={result} showCounts={false} class="py-3" />
           </div>
         {:else if isUser(result)}
           <div
-            class="-mx-4 sm:-mx-6 px-6 hover:bg-slate-100 hover:dark:bg-zinc-800 transition-colors"
+            class="-mx-4 sm:-mx-6 px-6 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors"
           >
             <UserItem user={result} showCounts={false} class="py-3" />
           </div>

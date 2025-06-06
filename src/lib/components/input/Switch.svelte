@@ -38,14 +38,14 @@
   `
 
   const buttonClass = (selected: boolean) => `
-    first:rounded-l-lg first:border-l first:dark:border-l-transparent
-    last:rounded-r-lg last:border-r last:dark:border-r-transparent
+    first:rounded-l-lg first:border-l dark:first:border-l-transparent
+    last:rounded-r-lg last:border-r dark:last:border-r-transparent
     rounded-l-none
     rounded-r-none
     px-3 py-1.5 text-sm hover:brightness-110 ${buttonClazz || ''}
     ${
       !selected
-        ? `hover:dark:bg-zinc-800 border-slate-100 border-t border-b border-b-slate-300 dark:border-b-0
+        ? `dark:hover:bg-zinc-800 border-slate-100 border-t border-b border-b-slate-300 dark:border-b-0
       dark:border-t dark:border-t-zinc-700`
         : ''
     }

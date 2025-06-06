@@ -36,7 +36,7 @@
         Lorem ipsum dolor sit amet, consectetur adipisicing elit.
       </div>
       <div
-        class="bg-white dark:bg-zinc-900 w-8 h-4 rounded-sm border border-slate-200 dark:border-zinc-800"
+        class="bg-white dark:bg-zinc-900 w-8 h-4 rounded-xs border border-slate-200 dark:border-zinc-800"
       ></div>
       <div
         class="w-3 h-3 bg-primary-900 dark:bg-primary-100 rounded-full ml-auto"
@@ -69,7 +69,7 @@
         <Button
           color="ghost"
           size="square-md"
-          class="flex-shrink-0"
+          class="shrink-0"
           onclick={() => {
             modal({
               actions: [

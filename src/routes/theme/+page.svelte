@@ -181,7 +181,7 @@
 
           return true
         }}
-        class="!w-12 !h-12 col-span-1"
+        class="w-12! h-12! col-span-1"
       />
       <ColorSwatch
         value={themeData.current.colors.primary?.[100]}
@@ -196,7 +196,7 @@
 
           return true
         }}
-        class="!w-12 !h-12 col-span-1"
+        class="w-12! h-12! col-span-1"
       />
       <span class="font-semibold text-base">
         {$t('nav.menu.colorscheme.light')}

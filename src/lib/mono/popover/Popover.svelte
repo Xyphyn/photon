@@ -131,10 +131,10 @@
 {/if}
 
 {#if open}
-  <Portal class="z-[150]">
+  <Portal class="z-150">
     <div
       transition:scale={{ duration: 300, start: 0.97, easing: expoOut }}
-      class="z-[150] {popoverClass}"
+      class="z-150 {popoverClass}"
       use:customFloatingContent
       use:focusTrap
       bind:this={popoverEl}

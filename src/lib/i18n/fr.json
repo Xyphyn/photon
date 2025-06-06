@@ -518,7 +518,7 @@
                 "description": "Le texte entre [crochets] est transformé en balises sur lesquelles vous pouvez cliquer pour effectuer une recherche.",
                 "title": "Analyse des tags dans le titre",
                 "rules": {
-                    "blur": "Rendre flou",
+                    "blur-sm": "Rendre flou",
                     "hide": "Masquer",
                     "show": "Afficher",
                     "title": "Les règles"

@@ -66,7 +66,7 @@
     {alt}
     {width}
     {title}
-    class={['aspect-square object-cover overflow-hidden flex-shrink-0', clazz]}
+    class={['aspect-square object-cover overflow-hidden shrink-0', clazz]}
     style="width: {width}px; height: {width}px; {style}"
     class:rounded-full={circle}
     class:rounded-md={!circle}
@@ -74,7 +74,7 @@
 {:else}
   <div
     style="width: {width}px; height: {width}px;"
-    class={['aspect-square object-cover overflow-hidden flex-shrink-0', clazz]}
+    class={['aspect-square object-cover overflow-hidden shrink-0', clazz]}
     class:rounded-full={circle}
     class:rounded-md={!circle}
   >

@@ -711,7 +711,7 @@
                 "description": "Processa o texto entre [parêntesis retos] e transforma-o em etiquetas nas quais podes carregar para pesquisar por mais.",
                 "rules": {
                     "title": "Regras",
-                    "blur": "Desfocar",
+                    "blur-sm": "Desfocar",
                     "hide": "Esconder",
                     "show": "Mostrar"
                 }

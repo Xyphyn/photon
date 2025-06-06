@@ -33,8 +33,8 @@
     {#if route.children}
       <Button
         class="{depth > 0 ? 'pl-6' : ''} {route.url == currentRoute
-          ? 'border-t-0 border-r-0 border-b-0 border-l !border-slate-900 dark:!border-zinc-50'
-          : 'border-t-0 border-r-0 border-b-0 border-l !border-slate-300 dark:!border-zinc-700'} rounded-l-none {depth ==
+          ? 'border-t-0 border-r-0 border-b-0 border-l border-slate-900! dark:border-zinc-50!'
+          : 'border-t-0 border-r-0 border-b-0 border-l border-slate-300! dark:border-zinc-700!'} rounded-l-none {depth ==
         0
           ? 'mt-2'
           : ''} font-bold"
@@ -59,8 +59,8 @@
         size="lg"
         class="{depth > 1 ? 'pl-12' : depth > 0 ? 'pl-6' : ''} {route.url ==
         currentRoute
-          ? 'border-t-0 border-r-0 border-b-0 border-l !border-slate-950 dark:!border-zinc-50'
-          : 'border-t-0 border-r-0 border-b-0 border-l !border-slate-300 dark:!border-zinc-700'} font-normal rounded-l-none"
+          ? 'border-t-0 border-r-0 border-b-0 border-l border-slate-950! dark:border-zinc-50!'
+          : 'border-t-0 border-r-0 border-b-0 border-l border-slate-300! dark:border-zinc-700!'} font-normal rounded-l-none"
       >
         {route.name}
       </Button>

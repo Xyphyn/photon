@@ -54,7 +54,7 @@
           {richURL.hostname}
         </span>
         <span
-          class="text-transparent bg-clip-text bg-gradient-to-r
+          class="text-transparent bg-clip-text bg-linear-to-r
         from-blue-300 via-blue-300 to-blue-300/0 w-full
         dark:from-blue-800 dark:via-blue-800 dark:to-blue-800/0
         "

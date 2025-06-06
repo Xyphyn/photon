@@ -73,7 +73,7 @@
   <div
     class="absolute bottom-0 left-0 right-0 flex justify-between items-center
         rounded-full ml-auto w-max m-2 p-0 gap-1
-        *:bg-white *:border *:border-slate-200 *:dark:border-zinc-800 *:dark:bg-zinc-900"
+        *:bg-white *:border *:border-slate-200 dark:*:border-zinc-800 dark:*:bg-zinc-900"
     onclick={(e) => e.stopPropagation()}
   >
     {#if post.alt_text}

@@ -69,16 +69,16 @@
   >
     {@render sidebar?.({
       class: `hidden md:flex sticky top-0 left-0 h-max bg-slate-50 dark:bg-zinc-950
-      z-40 lg:!pt-20`,
+      z-40 lg:pt-20!`,
       style: 'grid-area: sidebar; width: 100% !important;',
     })}
     {@render main?.({
-      class: `w-full bg-slate-25 dark:bg-zinc-925 justify-self-center shadow-sm z-0 main !pb-22 lg:!pb-0 lg:!pt-22`,
+      class: `w-full bg-slate-25 dark:bg-zinc-925 justify-self-center shadow-xs z-0 main pb-22! lg:pb-0! lg:pt-22!`,
       style: 'grid-area: main',
     })}
     {@render suffix?.({
       class: `max-xl:hidden w-full sticky top-0 left-0 max-h-screen bg-slate-50 dark:bg-zinc-950
-      z-40 lg:!pt-20`,
+      z-40 lg:pt-20!`,
       style: 'grid-area: suffix;',
     })}
   </div>

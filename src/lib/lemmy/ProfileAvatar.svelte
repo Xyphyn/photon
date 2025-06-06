@@ -30,7 +30,7 @@
         url={profile.avatar}
         width={size}
         alt=""
-        class={['flex-shrink-0 rounded-full', selected && 'scale-75']}
+        class={['shrink-0 rounded-full', selected && 'scale-75']}
       />
     {:else}
       <Icon
@@ -38,7 +38,7 @@
         mini={selected}
         size={size?.toString()}
         title={profile.username}
-        class="text-blue-500 flex-shrink-0"
+        class="text-blue-500 shrink-0"
         style={guest
           ? `color: gray`
           : profile.color

@@ -694,7 +694,7 @@
                 "description": "Zamień tekst w [nawiasach] na tagi, które można kliknąć, aby wyszukać.",
                 "rules": {
                     "title": "Zasady",
-                    "blur": "Rozmycie",
+                    "blur-sm": "Rozmycie",
                     "hide": "Ukryj",
                     "show": "Pokaż"
                 }

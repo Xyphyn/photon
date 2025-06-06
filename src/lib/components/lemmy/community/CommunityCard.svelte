@@ -170,7 +170,7 @@
 
   <div class="flex flex-col gap-1">
     <hr class="border-slate-200 dark:border-zinc-900 my-1" />
-    <Expandable bind:open={settings.expand.about} class="!pt-0">
+    <Expandable bind:open={settings.expand.about} class="pt-0!">
       {#snippet title()}
         <span class="py-1 px-1 flex gap-1 items-center w-full">
           {$t('cards.site.about')}

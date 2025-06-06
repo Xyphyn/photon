@@ -130,7 +130,7 @@
     {#if node.comment_view.counts.child_count > 0 && node.children.length == 0}
       <svelte:element
         this={hydrated ? 'div' : 'a'}
-        class="w-full h-10 !border-y-0 -mt-2 -ml-2.5"
+        class="w-full h-10 border-y-0! -mt-2 -ml-2.5"
         href="/comment/{page.params.instance}/{node.comment_view.comment.id}"
       >
         <Button
@@ -138,7 +138,7 @@
           disabled={nodes[index].loading}
           rounding="pill"
           color="tertiary"
-          class="font-normal !text-sm text-slate-600 dark:text-zinc-400"
+          class="font-normal text-sm! text-slate-600 dark:text-zinc-400"
           loaderWidth={16}
           onclick={() => {
             if (nodes[index].depth > 4) {

@@ -80,10 +80,10 @@
       class={[
         sizeClass[size],
         borderClass,
-        `focus:border-slate-800 focus:dark:border-zinc-200 bg-white dark:bg-zinc-950
-      focus:outline-none focus:ring-2 ring-slate-800/50 rounded-xl dark:ring-zinc-200/50
+        `focus:border-slate-800 dark:focus:border-zinc-200 bg-white dark:bg-zinc-950
+      focus:outline-hidden focus:ring-2 ring-slate-800/50 rounded-xl dark:ring-zinc-200/50
       transition-all text-sm w-full disabled:bg-slate-100
-		disabled:cursor-not-allowed disabled:dark:bg-zinc-900 invalid:!border-red-500
+		disabled:cursor-not-allowed dark:disabled:bg-zinc-900 invalid:border-red-500!
 		peer invalid:text-red-500 z-10`,
         suffix && 'rounded-b-none border-b-0',
         clazz,

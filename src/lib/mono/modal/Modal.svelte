@@ -43,8 +43,8 @@
     <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
     <div
       role="dialog"
-      class="overflow-hidden fixed top-0 left-0 w-screen h-screen z-[100]
-flex flex-col items-center justify-center backdrop-blur-sm
+      class="overflow-hidden fixed top-0 left-0 w-screen h-screen z-100
+flex flex-col items-center justify-center backdrop-blur-xs
 bg-white/50 dark:bg-black/50 box-border p-4"
       transition:fade|global={{ duration: 100 }}
       onclick={(e) => {

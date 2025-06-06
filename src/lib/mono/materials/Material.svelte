@@ -9,8 +9,8 @@
 
   const elevationClass = {
     flat: '',
-    low: 'shadow-xs',
-    medium: 'shadow-sm',
+    low: 'shadow-2xs',
+    medium: 'shadow-xs',
     high: 'shadow-md',
     xhigh: 'shadow-lg',
     max: 'shadow-xl',
@@ -26,7 +26,7 @@
 
   const roundedClass = {
     none: 'rounded-none',
-    sm: 'rounded-sm',
+    sm: 'rounded-xs',
     md: 'rounded-md',
     lg: 'rounded-lg',
     xl: 'rounded-xl',

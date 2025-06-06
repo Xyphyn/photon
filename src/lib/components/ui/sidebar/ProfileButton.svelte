@@ -39,7 +39,7 @@
     switching = false
   }}
   class="w-full font-normal {profile.data?.id == prof.id
-    ? '!bg-slate-100 dark:!bg-zinc-900'
+    ? 'bg-slate-100! dark:bg-zinc-900!'
     : ''}"
 >
   {#snippet customIcon()}

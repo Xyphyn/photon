@@ -16,7 +16,7 @@
 
 <Material
   color="transparent"
-  class="flex flex-col gap-4 border overflow-auto max-h-[40rem]
+  class="flex flex-col gap-4 border overflow-auto max-h-160
   h-full w-full
   min-w-0 max-w-full"
   rounding="2xl"

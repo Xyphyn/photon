@@ -39,7 +39,7 @@
   class="w-full px-2 rounded-lg min-h-8 font-normal {disabled
     ? 'opacity-70 pointer-events-none cursor-not-allowed'
     : ''} {color == 'tertiary'
-    ? 'hover:dark:bg-zinc-800/70'
+    ? 'dark:hover:bg-zinc-800/70'
     : ''} duration-100 {clazz}"
   {alignment}
   {href}
@@ -50,7 +50,7 @@
       class="contents {color == 'tertiary'
         ? 'text-slate-600 dark:text-zinc-400'
         : ''}
-  		flex-shrink-0"
+  		shrink-0"
     >
       {#if icon}
         <Icon src={icon} micro size="16" />

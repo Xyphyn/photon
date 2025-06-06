@@ -69,7 +69,7 @@
           this={url ? 'a' : 'span'}
           href={url}
           class="text-xl font-semibold {url
-            ? 'hover:underline hover:text-primary-900 hover:dark:text-primary-100'
+            ? 'hover:underline hover:text-primary-900 dark:hover:text-primary-100'
             : ''}"
         >
           {name}
@@ -97,7 +97,7 @@
               <div
                 class={[
                   'overflow-hidden whitespace-nowrap',
-                  'bg-gradient-to-r from-slate-700 via-slate-700 to-slate-700/0',
+                  'bg-linear-to-r from-slate-700 via-slate-700 to-slate-700/0',
                   'dark:from-zinc-400 dark:via-zinc-400 dark:to-zinc-400/0',
                   'text-transparent bg-clip-text',
                   'max-w-[50%] overflow-hidden',

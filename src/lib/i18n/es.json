@@ -716,7 +716,7 @@
                 "title": "Analizar las etiquetas en los títulos",
                 "rules": {
                     "title": "Reglas",
-                    "blur": "Desenfocar",
+                    "blur-sm": "Desenfocar",
                     "hide": "Ocultar",
                     "show": "Mostrar"
                 },

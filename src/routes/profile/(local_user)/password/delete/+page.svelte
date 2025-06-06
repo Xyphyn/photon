@@ -117,11 +117,11 @@
 
 <Material
   color="distinct"
-  class="border-2 !border-red-500 text-red-600 dark:text-red-400 flex flex-col gap-4"
+  class="border-2 border-red-500! text-red-600 dark:text-red-400 flex flex-col gap-4"
   padding="xl"
   rounding="2xl"
 >
-  <Header class="mx-auto w-max !font-bold">
+  <Header class="mx-auto w-max font-bold!">
     {$t('routes.profile.delete.title')}
   </Header>
   <p class="text-base">

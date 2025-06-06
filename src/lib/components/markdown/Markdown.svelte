@@ -148,7 +148,7 @@
 <div
   class="{noStyle
     ? ''
-    : 'break-words flex flex-col gap-2 leading-[1.5]'} {clazz}"
+    : 'break-words flex flex-col gap-2 leading-normal'} {clazz}"
   {style}
 >
   <SvelteMarkdown

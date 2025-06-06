@@ -193,7 +193,7 @@
     {/snippet}
   </FileInput>
   <div class="flex flex-col md:flex-row gap-4">
-    <div class="flex-1 w-full max-h-[42rem] h-full flex flex-col gap-2">
+    <div class="flex-1 w-full max-h-168 h-full flex flex-col gap-2">
       <h2 class="font-bold text-lg">{$t('routes.admin.federation.blocked')}</h2>
       <form
         onsubmit={preventDefault(() =>
@@ -216,7 +216,7 @@
       </form>
       <Material class="h-full overflow-auto" color="distinct">
         <ul
-          class="[&>*]:py-3 dark:!divide-zinc-800 {allowInstance.instance != ''
+          class="*:py-3 dark:divide-zinc-800! {allowInstance.instance != ''
             ? 'opacity-50'
             : ''}"
         >
@@ -264,7 +264,7 @@
         </ul>
       </Material>
     </div>
-    <div class="md:flex-1 w-full max-h-[42rem] flex flex-col gap-2">
+    <div class="md:flex-1 w-full max-h-168 flex flex-col gap-2">
       <h2 class="font-bold text-lg flex items-center space-x-1">
         <span>{$t('routes.admin.federation.allowed')}</span>
         {#if allowInstance.instance || !(data.federated_instances.federated_instances.allowed?.length == 0)}
@@ -303,7 +303,7 @@
         </Button>
       </form>
       <Material class="h-full overflow-auto" color="distinct">
-        <ul class="[&>*]:py-3 dark:!divide-zinc-800">
+        <ul class="*:py-3 dark:divide-zinc-800!">
           {#if data.federated_instances.federated_instances.allowed.length > 0}
             {#each data.federated_instances.federated_instances.allowed.sort( (b, a) => b.domain.localeCompare(a.domain), ) as instance (instance.id)}
               <div

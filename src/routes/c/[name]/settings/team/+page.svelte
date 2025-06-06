@@ -154,7 +154,7 @@
     loading={formData.addingModerator}
     disabled={formData.addingModerator}
     size="lg"
-    class="w-max flex-shrink-0"
+    class="w-max shrink-0"
     color="primary"
     submit
   >

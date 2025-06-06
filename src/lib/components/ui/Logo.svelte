@@ -14,7 +14,7 @@
   viewBox="0 0 100 100"
   fill="none"
   xmlns="http://www.w3.org/2000/svg"
-  class="inline fill-black dark:fill-white hover:fill-slate-700 hover:dark:fill-zinc-300 transition-colors"
+  class="inline fill-black dark:fill-white hover:fill-slate-700 dark:hover:fill-zinc-300 transition-colors"
 >
   <path
     id="hexagon"

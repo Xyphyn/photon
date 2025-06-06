@@ -255,12 +255,12 @@
 
 <TextInput
   bind:value={search}
-  class="sticky rounded-none border-t-0 border-x-0 focus-within:dark:border-zinc-800"
+  class="sticky rounded-none border-t-0 border-x-0 dark:focus-within:border-zinc-800"
   size="lg"
   placeholder={$t('nav.commands.prompt')}
   bind:element={input}
 />
-<div class="h-[32rem] overflow-auto border-slate-200 dark:border-zinc-800 p-5">
+<div class="h-128 overflow-auto border-slate-200 dark:border-zinc-800 p-5">
   {#if breadcrumbs.length > 0}
     <div class="flex items-center gap-2 my-1">
       <button
@@ -299,7 +299,7 @@
                   handleSelect(action)
                 }}
                 class="{globalIndex == selectedIndex
-                  ? '!bg-slate-100 dark:!bg-zinc-800 text-inherit'
+                  ? 'bg-slate-100! dark:bg-zinc-800! text-inherit'
                   : 'text-slate-600 dark:text-zinc-400'} block"
               />
             </li>

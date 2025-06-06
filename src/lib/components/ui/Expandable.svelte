@@ -26,7 +26,7 @@
   {#snippet summary()}
     <div
       class="font-medium w-full text-left flex flex-row items-center justify-between hover:text-primary-900
-      hover:dark:text-primary-100 transition-colors h-full z-0 group relative"
+      dark:hover:text-primary-100 transition-colors h-full z-0 group relative"
     >
       <div class="flex flex-row gap-1 items-center w-full">
         {@render title?.(open)}

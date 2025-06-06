@@ -69,14 +69,14 @@
           name="q"
           aria-label={$t('routes.search.query')}
           size="lg"
-          class="flex-1 !rounded-full h-full"
+          class="flex-1 rounded-full! h-full"
           placeholder={$t('routes.communities.search.placeholder')}
         />
         <Button
           submit
           color="primary"
           size="custom"
-          class="flex-shrink-0 h-full aspect-square"
+          class="shrink-0 h-full aspect-square"
           title="Search"
           rounding="pill"
           loading={navigating.to != null}
@@ -130,11 +130,11 @@
     {/if}
 
     {#if showTop}
-      <SectionTitle class="!border-0 pb-2">
+      <SectionTitle class="border-0! pb-2">
         {$t('routes.search.top')}
       </SectionTitle>
       <div
-        class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 items-center mb-6 !border-0"
+        class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 items-center mb-6 border-0!"
       >
         {#each data.communities.value.slice(0, 3) as community, index (community.community.id)}
           <div
@@ -165,7 +165,7 @@
     {/if}
 
     {#if data.communities.value.slice(showTop ? 3 : 0).length > 0}
-      <SectionTitle class="!border-0 pb-2">
+      <SectionTitle class="border-0! pb-2">
         {$t('routes.search.other')}
       </SectionTitle>
     {/if}
@@ -174,7 +174,7 @@
       <div class="-mx-4 sm:-mx-6 h-full">
         {#each sliced as community, index (community.community.id)}
           <div
-            class="px-6 hover:bg-slate-50 hover:dark:bg-zinc-900 transition-colors @container
+            class="px-6 hover:bg-slate-50 dark:hover:bg-zinc-900 transition-colors @container
         border-b border-slate-100 dark:border-zinc-900"
             in:fly|global={{
               duration: 1000,

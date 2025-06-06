@@ -183,7 +183,7 @@
     view="cozy"
   />
   {#if data.post.value.post_view.post.body}
-    <div class="text-base text-slate-800 dark:text-zinc-300 leading-[1.5]">
+    <div class="text-base text-slate-800 dark:text-zinc-300 leading-normal">
       <Markdown source={data.post.value.post_view.post.body} />
     </div>
   {/if}
@@ -215,7 +215,7 @@
         </div>
       {/snippet}
       <div
-        class="!divide-y divide-slate-200 dark:divide-zinc-800 flex flex-col"
+        class="divide-y! divide-slate-200 dark:divide-zinc-800 flex flex-col"
       >
         {#key crossposts}
           {#each crossposts as crosspost}
@@ -279,7 +279,7 @@
             delay: index * 50,
           }}
           class="animate-pulse flex flex-col gap-2 w-full
-        *:bg-slate-100 *:dark:bg-zinc-800 *:rounded-md"
+        *:bg-slate-100 dark:*:bg-zinc-800 *:rounded-md"
         >
           <div class="w-96 h-3"></div>
           <div class="w-full h-12"></div>

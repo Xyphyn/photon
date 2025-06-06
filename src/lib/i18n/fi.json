@@ -740,7 +740,7 @@
                 "description": "Muuta [hakasulkeissa] olevat tekstinpätkät tageiksi, joiden avulla voi hakea sisältöä.",
                 "title": "Erottele tagit otsikoista",
                 "rules": {
-                    "blur": "Sumenna",
+                    "blur-sm": "Sumenna",
                     "hide": "Piilota",
                     "show": "Näytä",
                     "title": "Valinnat"

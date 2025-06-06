@@ -42,8 +42,8 @@
   <!-- svelte-ignore a11y_click_events_have_key_events -->
   <!-- svelte-ignore a11y_positive_tabindex -->
   <div
-    class="fixed top-0 left-0 w-screen h-[100svh] overflow-auto bg-white/50 dark:bg-black/50
-    flex flex-col z-[100] backdrop-blur-sm"
+    class="fixed top-0 left-0 w-screen h-svh overflow-auto bg-white/50 dark:bg-black/50
+    flex flex-col z-100 backdrop-blur-xs"
     transition:fade={{ duration: 150 }}
     onclick={() => history.back()}
     onkeydown={(e) => {

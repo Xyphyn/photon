@@ -70,8 +70,8 @@
             color="none"
             class="bg-white/60 dark:bg-zinc-800/60
           border border-slate-200/60 dark:border-zinc-800
-          backdrop-blur-xl shadow-xl hover:bg-slate-100 hover:dark:bg-zinc-800
-          flex-shrink-0"
+          backdrop-blur-xl shadow-xl hover:bg-slate-100 dark:hover:bg-zinc-800
+          shrink-0"
           >
             <Icon src={EllipsisHorizontal} size="16" mini />
           </Button>

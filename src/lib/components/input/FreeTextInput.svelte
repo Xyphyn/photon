@@ -50,6 +50,6 @@
     {required}
     {...rest}
     rows={1}
-    class="font-semibold text-2xl focus:outline-none w-full bg-transparent resize-none {clazz}"
+    class="font-semibold text-2xl focus:outline-hidden w-full bg-transparent resize-none {clazz}"
   ></textarea>
 </label>

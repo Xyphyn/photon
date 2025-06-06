@@ -37,7 +37,7 @@
     {#snippet target()}
       <Button
         color="tertiary"
-        class="opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-all flex-shrink-0"
+        class="opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-all shrink-0"
         size="square-md"
         rounding="pill"
         title={$t('post.actions.more.actions')}
