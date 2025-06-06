@@ -1,10 +1,11 @@
 <script lang="ts">
   import { backOut, expoOut } from 'svelte/easing'
+  import type { ClassValue } from 'svelte/elements'
   import { slide } from 'svelte/transition'
 
   interface Props {
     open?: boolean
-    class?: string
+    class?: ClassValue
     summary?: import('svelte').Snippet<[any]>
     extended?: import('svelte').Snippet
     children?: import('svelte').Snippet<[any]>

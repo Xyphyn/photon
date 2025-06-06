@@ -13,6 +13,7 @@
     Select,
     Spinner,
     toast,
+    Option,
   } from 'mono-svelte'
   import Avatar from '../Avatar.svelte'
   import {
@@ -38,9 +39,6 @@
   import { site } from '$lib/lemmy.svelte'
   import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
   import { t } from '$lib/translations'
-  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
-  import Option from 'mono-svelte/forms/select/Option.svelte'
-  import { env } from '$env/dynamic/public'
 
   let showInstance = $state(false)
 
@@ -72,7 +70,7 @@
     <button
       class="w-10 h-10 rounded-full border-slate-200 dark:border-zinc-700
       transition-all bg-slate-50 dark:bg-zinc-900 relative
-      hover:bg-slate-200 dark:hover:bg-zinc-700 group {buttonClass}"
+      hover:bg-slate-200 dark:hover:bg-zinc-700 group cursor-pointer {buttonClass}"
       title={$t('profile.profile')}
     >
       {#if profile.data?.user}
