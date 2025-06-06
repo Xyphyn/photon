@@ -35,12 +35,12 @@
   color="none"
   {...rest}
   class={[
-    'flex-shrink-0 rounded-full w-10 h-10 lg:w-max lg:h-8 lg:px-3 lg:rounded-xl',
+    'shrink-0 rounded-full w-10 h-10 lg:w-max lg:h-8 lg:px-3 lg:rounded-xl',
     isSelected &&
-      'bg-slate-200 dark:bg-zinc-900 text-primary-900 dark:!text-primary-100',
+      'bg-slate-200 dark:bg-zinc-900 text-primary-900 dark:text-primary-100!',
     !rest.color && buttonColor.tertiary,
     !rest.color &&
-      'lg:bg-white lg:dark:bg-zinc-900 border lg:border-slate-200 lg:border-b-slate-300 lg:dark:border-zinc-800 lg:dark:border-t-zinc-700/50 lg:hover:bg-slate-100 lg:hover:dark:bg-zinc-800 lg:active:bg-slate-200 lg:active:dark:bg-zinc-950',
+      'lg:bg-white lg:dark:bg-zinc-900 border lg:border-slate-200 lg:border-b-slate-300 lg:dark:border-zinc-800 lg:dark:border-t-zinc-700/50 lg:hover:bg-slate-100 lg:dark:hover:bg-zinc-800 lg:active:bg-slate-200 lg:dark:active:bg-zinc-950',
     clazz,
   ]}
   size="custom"

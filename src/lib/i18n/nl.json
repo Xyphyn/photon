@@ -510,7 +510,7 @@
                 "description": "Neem tekst in [haakjes] en maak er tags van waarop je kunt klikken om naar te zoeken.",
                 "rules": {
                     "title": "Regels",
-                    "blur": "Vervagen",
+                    "blur-sm": "Vervagen",
                     "hide": "Verbergen",
                     "show": "Toon"
                 }

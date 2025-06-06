@@ -48,14 +48,19 @@
 </script>
 
 <div
-  class="h-full flex items-center overflow-hidden {buttonColor.ghost} rounded-full hover:bg-transparent font-medium"
+  class={[
+    'h-full flex items-center overflow-hidden rounded-full hover:bg-transparent font-medium',
+    buttonColor.ghost,
+  ]}
 >
   <button
     onclick={() => castVote(vote == 1 ? 0 : 1)}
-    class="flex items-center gap-0.5 transition-colors px-1.5 h-full
-      {vote == 1
-      ? shouldShowVoteColor(vote, 'upvotes')
-      : 'hover:bg-slate-100 hover:dark:bg-zinc-800'}"
+    class={[
+      'flex items-center gap-0.5 transition-colors px-1.5 h-full cursor-pointer',
+      vote == 1
+        ? shouldShowVoteColor(vote, 'upvotes')
+        : 'hover:bg-slate-100 dark:hover:bg-zinc-800',
+    ]}
   >
     <Icon src={ChevronUp} size="18" mini />
     <span class="grid text-sm">
@@ -71,14 +76,16 @@
     </span>
   </button>
   <div
-    class="border-l h-4 w-0 !p-0 border-slate-200 dark:border-zinc-800"
+    class="border-l h-4 w-0 p-0! border-slate-200 dark:border-zinc-800"
   ></div>
   <button
     onclick={() => castVote(vote == -1 ? 0 : -1)}
-    class="flex flex-row-reverse items-center gap-0.5 h-full transition-colors border-0 px-1.5
-      {vote == -1
-      ? shouldShowVoteColor(vote, 'downvotes')
-      : 'hover:bg-slate-100 hover:dark:bg-zinc-800'}"
+    class={[
+      'flex flex-row-reverse items-center gap-0.5 transition-colors px-1.5 h-full cursor-pointer',
+      vote == 1
+        ? shouldShowVoteColor(vote, 'upvotes')
+        : 'hover:bg-slate-100 dark:hover:bg-zinc-800',
+    ]}
   >
     <Icon src={ChevronDown} size="18" mini />
     <span class="grid text-sm">

@@ -27,7 +27,7 @@
   {#if page?.error?.message}
     {@const error = getError(page?.error?.message)}
     {#if error.code}
-      <code class="rounded-md dark:!bg-zinc-950 px-2 py-1 min-w-48">
+      <code class="rounded-md dark:bg-zinc-950! px-2 py-1 min-w-48">
         {error.string}
       </code>
     {:else}

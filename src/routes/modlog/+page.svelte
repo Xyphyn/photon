@@ -160,7 +160,7 @@
         )
       }}
       size="square-lg"
-      class="self-end flex-shrink-0"
+      class="self-end shrink-0"
       title="Clear filters"
     >
       <Icon src={XMark} size="16" mini />

@@ -29,7 +29,7 @@
     if (badges.photon && badges.photon?.includes?.(actor_id)) {
       return {
         classes:
-          'bg-gradient-to-r bg-clip-text text-transparent from-blue-500 to-purple-700 dark:from-blue-400 dark:to-purple-500',
+          'bg-linear-to-r bg-clip-text text-transparent from-blue-500 to-purple-700 dark:from-blue-400 dark:to-purple-500',
         icon: 'photon',
       }
     }
@@ -37,7 +37,7 @@
     if (badges.translator && badges.translator?.includes?.(actor_id)) {
       return {
         classes:
-          'bg-gradient-to-r bg-clip-text text-transparent from-sky-500 to-blue-700 dark:from-blue-300 dark:to-indigo-500',
+          'bg-linear-to-r bg-clip-text text-transparent from-sky-500 to-blue-700 dark:from-blue-300 dark:to-indigo-500',
         icon: Language,
         iconClass: 'text-blue-500 dark:text-blue-400',
       }
@@ -97,11 +97,11 @@
       url={user.avatar}
       alt={user.name}
       width={avatarSize}
-      class="flex-shrink-0"
+      class="shrink-0"
     />
   {/if}
   <span
-    class="flex gap-0 items-center flex-shrink max-w-full min-w-0"
+    class="flex gap-0 items-center shrink max-w-full min-w-0"
     class:ml-0.5={avatar}
   >
     <span
@@ -112,7 +112,7 @@
     </span>
     {#if showInstance}
       <span
-        class="text-slate-500 dark:text-zinc-500 font-normal instance-text flex-shrink {instanceClass ??
+        class="text-slate-500 dark:text-zinc-500 font-normal instance-text shrink {instanceClass ??
           ''}"
       >
         @{new URL(user.actor_id).hostname}

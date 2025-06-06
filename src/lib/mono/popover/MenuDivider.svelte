@@ -13,6 +13,6 @@
 >
   <div>{@render children?.()}</div>
   <hr
-    class="flex-shrink flex-1 border-slate-200 dark:border-zinc-800 border-opacity-70"
+    class="shrink flex-1 border-slate-200 dark:border-zinc-800 border-opacity-70"
   />
 </div>

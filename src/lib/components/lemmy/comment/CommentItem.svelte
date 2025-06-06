@@ -30,7 +30,7 @@
 </script>
 
 <Material
-  class="flex flex-col flex-1 !bg-transparent !border-0 rounded-none
+  class="flex flex-col flex-1 bg-transparent! border-0! rounded-none
   {view == 'compact' ? 'py-4' : 'py-5'} {clazz}"
   color="distinct"
   padding="none"

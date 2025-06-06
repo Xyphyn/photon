@@ -145,7 +145,7 @@
   {/if}
   <div
     class="flex flex-col border border-slate-200 border-b-slate-300 dark:border-t-zinc-700/70 dark:border-zinc-800
-    focus-within:border-primary-900 focus-within:dark:border-primary-100 focus-within:ring ring-slate-300
+    focus-within:border-primary-900 dark:focus-within:border-primary-100 focus-within:ring-3 ring-slate-300
     dark:ring-zinc-700 rounded-xl
 overflow-hidden transition-colors {clazz}"
     class:mt-1={label}
@@ -160,7 +160,7 @@ overflow-hidden transition-colors {clazz}"
       {#if tools}
         <!--Toolbar-->
         <div
-          class="[&>*]:flex-shrink-0 flex flex-row overflow-auto p-1.5 gap-1.5 border-b
+          class="*:shrink-0 flex flex-row overflow-auto p-1.5 gap-1.5 border-b
           border-slate-200 dark:border-zinc-900 {disabled
             ? 'opacity-60 pointer-events-none'
             : ''}"
@@ -262,7 +262,7 @@ overflow-hidden transition-colors {clazz}"
       {/if}
       <!--Actual text area-->
       <TextArea
-        class="bg-inherit z-0 border-0 rounded-none !ring-0 focus:!ring-transparent !transition-none resize-none"
+        class="bg-inherit z-0 border-0 rounded-none ring-0! focus:ring-transparent! transition-none! resize-none"
         bind:value
         bind:element={textArea}
         onkeydown={(e) => {

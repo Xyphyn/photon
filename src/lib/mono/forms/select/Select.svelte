@@ -127,8 +127,8 @@
             }}
             size="custom"
             disabled={option.disabled}
-            class="!min-h-0 !py-[5px] {option.value == value
-              ? '!bg-slate-100 dark:!bg-zinc-800'
+            class="min-h-0! py-[5px]! {option.value == value
+              ? 'bg-slate-100! dark:bg-zinc-800!'
               : ''}"
           >
             {#if option.icon}

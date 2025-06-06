@@ -9,7 +9,7 @@
   }
 
   export const shadowClass = {
-    sm: 'shadow-sm',
+    sm: 'shadow-xs',
     none: 'shadow-none',
   }
 
@@ -84,7 +84,7 @@
     class={[
       shadowClass[shadow],
       borderClass,
-      `border focus-within:border-primary-900 focus-within:dark:border-primary-100 focus-within:ring-2
+      `border focus-within:border-primary-900 dark:focus-within:border-primary-100 focus-within:ring-2
   ring-slate-300 dark:ring-zinc-700
   transition-colors
   rounded-lg flex flex-row items-center text-sm`,
@@ -112,8 +112,8 @@
       class={[
         sizeClass[size],
         `bg-white dark:bg-zinc-950
-		 focus:outline-none rounded-lg text-sm w-full disabled:bg-slate-100
-		disabled:cursor-not-allowed disabled:dark:bg-zinc-950 invalid:!border-red-500
+		 focus:outline-hidden rounded-lg text-sm w-full disabled:bg-slate-100
+		disabled:cursor-not-allowed dark:disabled:bg-zinc-950 invalid:border-red-500!
 		peer invalid:text-red-500 z-10`,
         prefix && 'rounded-l-none',
         prefix && inlineAffixes && 'border-l-0',

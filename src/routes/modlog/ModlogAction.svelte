@@ -158,7 +158,7 @@
 
 <span class="font-bold">
   <span class="flex items-center gap-1 {actionData.class}">
-    <Icon src={actionData.icon} size="16" mini class="inline flex-shrink-0" />
+    <Icon src={actionData.icon} size="16" mini class="inline shrink-0" />
     {actionData.text}
   </span>
 </span>

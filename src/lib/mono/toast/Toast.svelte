@@ -32,14 +32,14 @@
   }}
 >
   {#if toast.loading}
-    <div class="relative m-2 ml-4 flex-shrink-0">
+    <div class="relative m-2 ml-4 shrink-0">
       <Spinner width={20} />
     </div>
   {:else}
     <Icon
       size="20"
       mini
-      class="relative m-2 ml-4 flex-shrink-0"
+      class="relative m-2 ml-4 shrink-0"
       src={toast.type == 'info'
         ? InformationCircle
         : toast.type == 'success'
@@ -64,7 +64,7 @@
           toast.action?.()
           toasts.update((toasts) => toasts.filter((t) => t.id != toast.id))
         }}
-        class="rounded-lg w-max transition-colors hover:bg-black/20 hover:dark:bg-white/20 p-2"
+        class="rounded-lg w-max transition-colors hover:bg-black/20 dark:hover:bg-white/20 p-2"
       >
         <Icon src={Check} size="16" mini />
       </button>
@@ -73,7 +73,7 @@
       onclick={() => {
         toasts.update((toasts) => toasts.filter((t) => t.id != toast.id))
       }}
-      class="rounded-lg w-max transition-colors hover:bg-black/20 hover:dark:bg-white/20 p-2"
+      class="rounded-lg w-max transition-colors hover:bg-black/20 dark:hover:bg-white/20 p-2"
     >
       <Icon src={XMark} size="16" mini />
     </button>

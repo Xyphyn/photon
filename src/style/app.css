@@ -1,6 +1,81 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@plugin '@tailwindcss/container-queries';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --font-*: initial;
+  --font-sans: sans-serif;
+  --font-system: system-ui;
+  --font-serif: serif;
+  --font-inter: Inter, system-ui, sans-serif;
+  --font-nunito: Nunito, system-ui, sans-serif;
+  --font-display: Satoshi, system-ui, sans-serif;
+  --font-mono: monospace;
+
+  --animate-pop-in: pop-in 0.25s ease-out forwards;
+
+  --spacing-22: 88px;
+
+  --color-slate-25: rgb(var(--c-s-25, 252 253 254));
+  --color-slate-50: rgb(var(--c-s-50, 248 250 252));
+  --color-slate-100: rgb(var(--c-s-100, 241 245 249));
+  --color-slate-200: rgb(var(--c-s-200, 226 232 240));
+  --color-slate-300: rgb(var(--c-s-300, 203 213 225));
+  --color-slate-400: rgb(var(--c-s-400, 148 163 184));
+  --color-slate-500: rgb(var(--c-s-500, 100 116 139));
+  --color-slate-600: rgb(var(--c-s-600, 71 85 105));
+  --color-slate-700: rgb(var(--c-s-700, 51 65 85));
+  --color-slate-800: rgb(var(--c-s-800, 30 41 59));
+  --color-slate-900: rgb(var(--c-s-900, 15 23 42));
+  --color-slate-950: rgb(var(--c-s-950, 2 6 23));
+
+  --color-zinc-50: rgb(var(--c-z-50, 249 250 251));
+  --color-zinc-100: rgb(var(--c-z-100, 243 244 246));
+  --color-zinc-200: rgb(var(--c-z-200, 229 231 235));
+  --color-zinc-300: rgb(var(--c-z-300, 209 213 219));
+  --color-zinc-400: rgb(var(--c-z-400, 156 163 175));
+  --color-zinc-500: rgb(var(--c-z-500, 107 114 128));
+  --color-zinc-600: rgb(var(--c-z-600, 75 85 99));
+  --color-zinc-700: rgb(var(--c-z-700, 50 60 76));
+  --color-zinc-800: rgb(var(--c-z-800, 22 31 45));
+  --color-zinc-900: rgb(var(--c-z-900, 17 24 39));
+  --color-zinc-925: rgb(var(--c-z-925, 8 12 25));
+  --color-zinc-950: rgb(var(--c-z-950, 5 9 16));
+
+  --color-primary-100: rgb(var(--c-p-100, 241 245 249));
+  --color-primary-900: rgb(var(--c-p-900, 15 23 42));
+
+  --color-black: rgb(var(--c-o-black, 0 0 0));
+  --color-white: rgb(var(--c-o-white, 255 255 255));
+
+  @keyframes pop-in {
+    0%,
+    100% {
+      transform: translateX(8px);
+      opacity: 0;
+    }
+  }
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
 
 @font-face {
   font-family: 'Inter';
@@ -44,7 +119,7 @@ body {
 }
 
 #nprogress .bar {
-  @apply bg-primary-900 dark:bg-primary-100 !important;
+  @apply bg-primary-900! dark:bg-primary-100!;
   z-index: 999 !important;
   height: 1px !important;
 }

@@ -135,12 +135,12 @@
     {#if thumbnail}
       <img
         src={optimizeImageURL(thumbnail, 512)}
-        class="absolute top-0 left-0 -z-10 brightness-[25%] w-full object-cover h-full"
+        class="absolute top-0 left-0 -z-10 brightness-25 w-full object-cover h-full"
         alt=""
       />
     {:else}
       <div
-        class="absolute blur-3xl -z-10 top-0 left-0 w-full h-full bg-gradient-to-br from-green-800 via-blue-900 via-20% to-red-700"
+        class="absolute blur-3xl -z-10 top-0 left-0 w-full h-full bg-linear-to-br from-green-800 via-blue-900 via-20% to-red-700"
       ></div>
     {/if}
     <Icon src={data.icon} solid size="48" />

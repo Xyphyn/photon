@@ -11,13 +11,13 @@
 {#if ordered}
   <ol
     {start}
-    class="pl-5 list-decimal *:marker:font-medium *:marker:text-primary-900 *:marker:dark:text-primary-100"
+    class="pl-5 list-decimal *:marker:font-medium *:marker:text-primary-900 dark:*:marker:text-primary-100"
   >
     {@render children?.()}
   </ol>
 {:else}
   <ul
-    class="list-disc pl-4 *:marker:text-primary-900 *:marker:dark:text-primary-100"
+    class="list-disc pl-4 *:marker:text-primary-900 dark:*:marker:text-primary-100"
   >
     {@render children?.()}
   </ul>

@@ -298,7 +298,7 @@
       <div class="flex flex-col gap-1">
         <span class="font-medium text-sm">{$t('form.post.community')}</span>
         <Button
-          class="w-full !bg-white dark:!bg-black h-[38px]"
+          class="w-full bg-white! dark:bg-black! h-[38px]"
           onclick={() => (data.community = null)}
           alignment="left"
           size="sm"

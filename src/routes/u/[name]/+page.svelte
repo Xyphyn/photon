@@ -339,7 +339,7 @@
       />
     {:else}
       <div
-        class="!divide-y divide-slate-200 dark:divide-zinc-800 flex flex-col"
+        class="divide-y! divide-slate-200 dark:divide-zinc-800 flex flex-col"
       >
         {#key data.items}
           {#each data.items.value as item}

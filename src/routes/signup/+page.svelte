@@ -86,16 +86,16 @@
               width={32}
               url={instance.icon}
               alt={instance.name}
-              class="flex-shrink-0"
+              class="shrink-0"
             />
             <div class="flex flex-col max-h-full w-full">
               <span
-                class="font-medium text-base whitespace-nowrap overflow-ellipsis"
+                class="font-medium text-base whitespace-nowrap text-ellipsis"
               >
                 {instance.name}
               </span>
               <span
-                class="whitespace-nowrap overflow-ellipsis overflow-hidden w-full"
+                class="whitespace-nowrap text-ellipsis overflow-hidden w-full"
               >
                 {instance.desc}
               </span>

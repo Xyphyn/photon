@@ -53,8 +53,8 @@
     <a
       onclick={() => invalidateAll()}
       href={buildUrl(currentRoute, route.href)}
-      class="font-medium rounded-full px-4 py-1 hover:bg-slate-200/40 hover:dark:bg-zinc-700/40
-      transition-colors duration-100 relative z-0 flex-shrink-0"
+      class="font-medium rounded-full px-4 py-1 hover:bg-slate-200/40 dark:hover:bg-zinc-700/40
+      transition-colors duration-100 relative z-0 shrink-0"
     >
       {route.name}
       {#if isSelected(page.url, currentRoute, route.href, defaultRoute)}

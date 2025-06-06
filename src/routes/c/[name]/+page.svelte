@@ -85,7 +85,7 @@
       {@const missing = data.community.value.discussion_languages.filter(
         (i) => !profile.data.user?.discussion_languages.includes(i),
       )}
-      <Note class="!p-1 !pl-3 flex-col md:flex-row">
+      <Note class="p-1! pl-3! flex-col md:flex-row">
         <div>{$t('routes.community.languageWarning')}</div>
         <Button
           class="inline-block ml-auto"

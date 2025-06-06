@@ -113,7 +113,7 @@
         </div>
       </div>
       <div class="flex-1"></div>
-      <div class="flex gap-2 max-md:hidden flex-shrink-0">
+      <div class="flex gap-2 max-md:hidden shrink-0">
         <Button
           color={item.read ? 'secondary' : 'primary'}
           {loading}
@@ -124,7 +124,7 @@
           }}
           size="sm"
           rounding="pill"
-          class="flex-shrink-0"
+          class="shrink-0"
         >
           {#snippet prefix()}
             <Icon src={item.read ? EyeSlash : Eye} size="16" micro />
@@ -139,7 +139,7 @@
             : `/inbox/messages/${item.item.private_message.creator_id}`}
           size="sm"
           rounding="pill"
-          class="flex-shrink-0"
+          class="shrink-0"
         >
           {$t('common.jump')}
         </Button>
@@ -184,7 +184,7 @@
         community={false}
         view="cozy"
         meta={false}
-        commentClass="!pt-0 pb-0"
+        commentClass="pt-0! pb-0"
         class="pt-0"
       />
     {:else}

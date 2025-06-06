@@ -51,7 +51,7 @@
   </p>
   {#if totpEnabled || totpLink}
     {#if totpLink && !totpEnabled}
-      <Material color="transparent" class="!fill-white">
+      <Material color="transparent" class="fill-white!">
         <svg use:qr={{ data: totpLink, logo: '/img/logo-isolated.svg' }} />
       </Material>
       <TextInput

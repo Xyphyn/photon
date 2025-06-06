@@ -1,7 +1,7 @@
 <script lang="ts" module>
   const wrapClass = {
     wrap: '',
-    'no-wrap': 'overflow-hidden overflow-ellipsis whitespace-nowrap',
+    'no-wrap': 'overflow-hidden text-ellipsis whitespace-nowrap',
   }
 </script>
 

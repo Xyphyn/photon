@@ -22,11 +22,13 @@
   }: Props = $props()
 </script>
 
-<Disclosure {extended} bind:open class=" gap-2 {clazz}">
+<Disclosure {extended} bind:open class={['gap-2', clazz]}>
   {#snippet summary()}
     <div
-      class="font-medium w-full text-left flex flex-row items-center justify-between hover:text-primary-900
-      hover:dark:text-primary-100 transition-colors h-full z-0 group relative"
+      class={[
+        'font-medium w-full text-left flex flex-row items-center justify-between hover:text-primary-900',
+        'dark:hover:text-primary-100 transition-colors h-full z-0 group relative cursor-pointer',
+      ]}
     >
       <div class="flex flex-row gap-1 items-center w-full">
         {@render title?.(open)}

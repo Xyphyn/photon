@@ -55,14 +55,14 @@
   if (browser) {
     $effect(() => {
       if (settings) {
-        document.body.classList.remove(
+        document.documentElement.classList.remove(
           'font-display',
           'font-inter',
           'font-sans',
           'font-system',
           'font-nunito',
         )
-        document.body.classList.add(
+        document.documentElement.classList.add(
           settings.font == 'inter'
             ? 'font-inter'
             : settings.font == 'system'
@@ -75,7 +75,7 @@
     })
 
     $effect(() => {
-      document.body.setAttribute('style', theme.vars)
+      document.documentElement.setAttribute('style', theme.vars)
     })
   }
 
@@ -109,7 +109,7 @@
 </svelte:head>
 
 <Button
-  class="fixed -top-16 focus:top-0 left-0 m-4 z-[300] transition-all"
+  class="fixed -top-16 focus:top-0 left-0 m-4 z-300 transition-all"
   href="#main"
 >
   {#snippet prefix()}
@@ -147,14 +147,14 @@
     <div class=" {c}" style={s}>
       {#if page.data.slots?.sidebar?.component}
         {@const SvelteComponent = page.data.slots.sidebar.component}
-        <SvelteComponent {...page.data.slots.sidebar.props} class="!pt-0" />
+        <SvelteComponent {...page.data.slots.sidebar.props} class="pt-0!" />
       {:else if site.data}
         <SiteCard
           site={site.data.site_view}
           taglines={site.data.taglines}
           admins={site.data.admins}
           version={site.data.version}
-          class="!pt-0"
+          class="pt-0!"
         />
       {:else}
         <div class="h-64 w-full grid place-items-center">

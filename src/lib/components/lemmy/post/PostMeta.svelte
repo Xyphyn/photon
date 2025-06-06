@@ -133,7 +133,7 @@
     <Popover autoClose={false} popoverClass="backdrop-blur-xl rounded-2xl">
       {#snippet target()}
         <button
-          class="row-span-2 flex-shrink-0 mr-2 self-center group/btn bg-slate-200 dark:bg-zinc-800 rounded-full"
+          class="row-span-2 shrink-0 mr-2 self-center group/btn bg-slate-200 dark:bg-zinc-800 rounded-full"
         >
           <Avatar
             url={community?.icon}
@@ -147,7 +147,7 @@
         {#if community && subscribed}
           <div
             class="bg-white/80 dark:bg-zinc-900/90 border border-slate-200 dark:border-zinc-800 rounded-2xl shadow-xl p-4
-            max-w-2xl w-full max-h-[32rem] overflow-auto"
+            max-w-2xl w-full max-h-128 overflow-auto"
           >
             <CommunityHeader {community} {subscribed} />
           </div>
@@ -159,7 +159,7 @@
     <CommunityLink
       {community}
       style="grid-area: community;"
-      class="flex-shrink no-list-margin"
+      class="shrink no-list-margin"
       badges={{
         nsfw: community.nsfw,
       }}
@@ -186,7 +186,7 @@
           avatarSize={20}
           {user}
           avatar={!showCommunity}
-          class="flex-shrink "
+          class="shrink "
         >
           {#snippet extraBadges()}
             {#if badges.moderator}
@@ -200,7 +200,7 @@
       </address>
     {/if}
     {#if published}
-      <RelativeDate date={published} class="flex-shrink-0" />
+      <RelativeDate date={published} class="shrink-0" />
     {/if}
     {#if edited}
       <div
@@ -216,7 +216,7 @@
   </div>
   <div
     class="flex flex-row min-[480px]:justify-end items-center self-center
-    flex-wrap gap-2 [&>*]:flex-shrink-0 badges min-[480px]:ml-2"
+    flex-wrap gap-2 *:shrink-0 badges min-[480px]:ml-2"
     style="grid-area: badges;"
   >
     {#if tags}
@@ -306,7 +306,7 @@
   <a
     href="/post/{encodeURIComponent(instance.data)}/{id}"
     class="inline hover:underline
-    hover:text-primary-900 hover:dark:text-primary-100 transition-colors max-[480px]:!mt-0
+    hover:text-primary-900 dark:hover:text-primary-100 transition-colors max-[480px]:mt-0!
     {settings.font == 'satoshi/nunito'
       ? 'font-display font-semibold'
       : 'font-medium'} {titleClass}"

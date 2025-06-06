@@ -208,7 +208,7 @@
       <div
         class="flex flex-col justify-center items-center
         rounded-xl gap-2 py-8 mt-6
-        border !border-b !border-red-500 bg-red-500/5 px-4"
+        border border-b! border-red-500! bg-red-500/5 px-4"
       >
         <div class="bg-red-500/30 rounded-full p-3 text-red-500">
           <Icon src={ExclamationTriangle} size="24" solid></Icon>
@@ -229,7 +229,7 @@
           class="w-96 max-w-full h-8 bg-slate-100 dark:bg-zinc-800 rounded-md"
         ></div>
         <div class="w-full h-48 bg-slate-100 dark:bg-zinc-800 rounded-md"></div>
-        <div class="!bg-transparent h-8 flex justify-between">
+        <div class="bg-transparent! h-8 flex justify-between">
           <div class="w-48 h-8 bg-slate-100 dark:bg-zinc-800 rounded-md"></div>
           <div class="w-24 h-8 bg-slate-100 dark:bg-zinc-800 rounded-md"></div>
         </div>

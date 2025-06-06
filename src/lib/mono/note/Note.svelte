@@ -15,7 +15,7 @@
 <Material
   padding="none"
   color="uniform"
-  class="flex flex-row space-x-2 items-center px-4 py-3 !rounded-3xl {clazz}"
+  class="flex flex-row space-x-2 items-center px-4 py-3 rounded-3xl! {clazz}"
 >
   <Icon
     src={InformationCircle}

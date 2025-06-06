@@ -71,7 +71,7 @@
       <a
         href="/inbox/messages/{preview.user.id}"
         class="flex flex-row gap-2 py-3 -mx-4 px-4 sm:-mx-6 sm:px-6 w-full min-w-0
-        hover:bg-slate-100 hover:dark:bg-zinc-900 transition-colors"
+        hover:bg-slate-100 dark:hover:bg-zinc-900 transition-colors"
         in:fly|global={{
           duration: 700,
           easing: backOut,
@@ -83,8 +83,8 @@
         <div class="flex flex-col w-full overflow-hidden">
           <div class="font-medium">{preview.user.name}</div>
           <div
-            class="text-sm overflow-ellipsis whitespace-nowrap
-            bg-gradient-to-r from-slate-700 via-slate-700 to-slate-700/0 dark:from-zinc-300 dark:via-zinc-300 dark:to-zinc-300/0
+            class="text-sm text-ellipsis whitespace-nowrap
+            bg-linear-to-r from-slate-700 via-slate-700 to-slate-700/0 dark:from-zinc-300 dark:via-zinc-300 dark:to-zinc-300/0
             text-transparent bg-clip-text"
           >
             {preview.message.content}

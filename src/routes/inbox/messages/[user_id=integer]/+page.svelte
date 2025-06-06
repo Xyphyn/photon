@@ -96,7 +96,7 @@
   rounding="2xl"
   padding="none"
   class="bg-white dark:bg-zinc-950 dark:border-t-zinc-900
-  w-full overflow-auto mt-6 relative max-h-[32rem] h-full"
+  w-full overflow-auto mt-6 relative max-h-128 h-full"
 >
   <div class="h-full overflow-auto" bind:this={chatWindow}>
     <ul id="chat-window" class=" h-full flex flex-col gap-1 flex-1 px-4 py-4">
@@ -161,7 +161,7 @@
     >
       <TextInput
         bind:value={textbox.message}
-        class="!rounded-xl h-full flex-1 dark:!bg-zinc-925"
+        class="rounded-xl! h-full flex-1 dark:bg-zinc-925!"
       />
 
       <Button

@@ -54,7 +54,7 @@
   {#snippet popover()}
     <div
       class="w-full max-w-[280px] origin-top-left
-  	max-h-[32rem] overflow-auto list-none shadow-lg rounded-2xl"
+  	max-h-128 overflow-auto list-none shadow-lg rounded-2xl"
     >
       <div
         class="flex flex-col py-2 list-none bg-white/80 dark:bg-zinc-900/90 px-2 gap-px

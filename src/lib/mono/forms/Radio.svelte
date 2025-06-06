@@ -38,7 +38,7 @@
     type="radio"
     bind:group
     {value}
-    onblur={bubble('blur')}
+    onblur={bubble('blur-sm')}
     onchange={bubble('change')}
     {disabled}
     class="cursor-pointer disabled:cursor-not-allowed peer disabled:opacity-50"

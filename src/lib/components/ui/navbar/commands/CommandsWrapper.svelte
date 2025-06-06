@@ -24,9 +24,9 @@
 <svelte:window onkeydown={handleKeydown} />
 
 {#if open}
-  <Modal bind:open title={null} class="!p-0 !gap-0">
+  <Modal bind:open title={null} class="p-0! gap-0!">
     {#await import('./Commands.svelte')}
-      <div class="h-[32rem] flex flex-col gap-2 items-center justify-center">
+      <div class="h-128 flex flex-col gap-2 items-center justify-center">
         <Spinner width={32} />
         <span class="font-medium text-lg">
           {$t('nav.commands.downloading')}

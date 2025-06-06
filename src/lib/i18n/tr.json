@@ -770,7 +770,7 @@
                 "description": "Metni [parantez] içine alın ve aramak için tıklayabileceğiniz etiketlere dönüştürün.",
                 "rules": {
                     "title": "Kurallar",
-                    "blur": "Bulanıklık",
+                    "blur-sm": "Bulanıklık",
                     "hide": "Sakla",
                     "show": "Göstermek"
                 }

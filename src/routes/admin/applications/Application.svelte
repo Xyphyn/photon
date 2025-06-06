@@ -164,7 +164,7 @@
       size="square-md"
       class="hover:bg-slate-200 {application.creator_local_user
         .accepted_application === false && application.admin
-        ? '!text-red-500'
+        ? 'text-red-500!'
         : ''}"
       aria-label={$t('routes.admin.applications.deny')}
       onclick={() => review(false)}
@@ -179,7 +179,7 @@
       size="square-md"
       class="hover:bg-slate-200 {application.creator_local_user
         .accepted_application
-        ? '!text-green-500'
+        ? 'text-green-500!'
         : ''}"
       title={$t('routes.admin.applications.approve')}
       onclick={() => review(true)}

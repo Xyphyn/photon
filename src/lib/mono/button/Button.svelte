@@ -12,39 +12,39 @@
   export const buttonColor = {
     primary: `border border-transparent bg-primary-900 text-white
 		 dark:bg-primary-100 dark:text-black hover:brightness-125 dark:hover:brightness-90 active:brightness-90
-		 active:dark:brightness-75`,
+		 dark:active:brightness-75`,
 
     secondary: `border border-slate-200 border-b-slate-300 dark:border-zinc-800 dark:border-t-zinc-700/50 bg-white dark:bg-zinc-900
-		hover:bg-slate-100 hover:dark:bg-zinc-800 hover:dark:border-zinc-700 hover:dark:border-zinc-700 active:dark:bg-zinc-900 active:bg-slate-200`,
+		hover:bg-slate-100 dark:hover:bg-zinc-800 dark:hover:border-zinc-700 dark:hover:border-zinc-700 dark:active:bg-zinc-900 active:bg-slate-200`,
 
     tertiary:
-      'border border-transparent bg-transparent hover:bg-slate-100 hover:dark:bg-zinc-700/30 dark:text-zinc-200',
+      'border border-transparent bg-transparent hover:bg-slate-100 dark:hover:bg-zinc-700/30 dark:text-zinc-200',
 
     danger:
       'border border-red-500 bg-red-500 hover:text-red-500 hover:bg-transparent text-white',
-    'danger-subtle': 'text-red-500 hover:bg-red-500 hover:!text-inherit',
+    'danger-subtle': 'text-red-500 hover:bg-red-500 hover:text-inherit!',
 
-    'success-subtle': 'text-green-500 hover:bg-green-500 hover:!text-inherit',
+    'success-subtle': 'text-green-500 hover:bg-green-500 hover:text-inherit!',
 
-    'warning-subtle': 'text-yellow-500 hover:bg-yellow-500 hover:!text-inherit',
+    'warning-subtle': 'text-yellow-500 hover:bg-yellow-500 hover:text-inherit!',
 
     ghost: `border border-slate-200 dark:border-zinc-800 bg-transparent
-		hover:bg-slate-100 hover:dark:bg-zinc-800 hover:dark:border-zinc-700 dark:text-zinc-400 hover:text-inherit
-		hover:dark:text-inherit`,
+		hover:bg-slate-100 dark:hover:bg-zinc-800 dark:hover:border-zinc-700 dark:text-zinc-400 hover:text-inherit
+		dark:hover:text-inherit`,
 
     elevated: `bg-slate-100 dark:bg-zinc-800 border border-slate-200
-	 dark:border-zinc-700 hover:bg-zinc-200 hover:dark:bg-zinc-700 hover:border-slate-300
-	 hover:dark:border-zinc-600`,
+	 dark:border-zinc-700 hover:bg-zinc-200 dark:hover:bg-zinc-700 hover:border-slate-300
+	 dark:hover:border-zinc-600`,
 
     elevatedLow: `bg-slate-100 dark:bg-zinc-900 border border-slate-200
-	dark:border-zinc-800 hover:bg-slate-200 hover:dark:bg-zinc-800 hover:border-slate-300
-	hover:dark:border-zinc-700`,
+	dark:border-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-800 hover:border-slate-300
+	dark:hover:border-zinc-700`,
 
     none: '',
   }
 
   export const buttonShadow = {
-    sm: 'shadow-sm',
+    sm: 'shadow-xs',
     none: 'shadow-none',
   }
 

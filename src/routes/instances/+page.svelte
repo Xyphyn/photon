@@ -13,7 +13,7 @@
 <Header pageHeader>Linked Instances</Header>
 {#if data}
   <div class="flex flex-col md:flex-row gap-4">
-    <div class="flex-1 w-full max-h-[42rem] h-full flex flex-col gap-2">
+    <div class="flex-1 w-full max-h-168 h-full flex flex-col gap-2">
       <h2 class="font-bold text-xl flex flex-row items-center gap-1">
         Linked
         <Popover openOnHover>
@@ -27,7 +27,7 @@
         </Popover>
       </h2>
       <Material
-        class="h-full overflow-auto divide-y [&>*]:py-3 divide-slate-200 dark:divide-zinc-800"
+        class="h-full overflow-auto divide-y *:py-3 divide-slate-200 dark:divide-zinc-800"
         color="distinct"
       >
         {#if data.linked && data.linked.length > 0}
@@ -54,7 +54,7 @@
         {/if}
       </Material>
     </div>
-    <div class="flex-1 w-full max-h-[42rem] h-full flex flex-col gap-2">
+    <div class="flex-1 w-full max-h-168 h-full flex flex-col gap-2">
       <h2 class="font-bold text-xl flex flex-row items-center gap-1">
         Blocked
 
@@ -69,7 +69,7 @@
         </Popover>
       </h2>
       <Material
-        class="h-full overflow-auto divide-y [&>*]:py-3 divide-slate-200 dark:divide-zinc-800"
+        class="h-full overflow-auto divide-y *:py-3 divide-slate-200 dark:divide-zinc-800"
         color="distinct"
       >
         {#if data.blocked && data.blocked.length > 0}

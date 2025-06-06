@@ -79,7 +79,7 @@
 <Menu placement="bottom-end">
   {#snippet target()}
     <Button
-      class="hover:!text-green-500"
+      class="hover:text-green-500!"
       size="square-md"
       color="ghost"
       loading={acting}

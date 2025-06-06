@@ -111,7 +111,7 @@
   <Button
     onclick={resolve}
     class="h-max self-end {item.resolved
-      ? '!text-green-600 dark:!text-green-400'
+      ? 'text-green-600! dark:text-green-400!'
       : ''}"
     loading={resolving}
     disabled={resolving}
@@ -129,9 +129,9 @@
 
 <Material rounding="xl" color="uniform" class="dark:bg-zinc-950">
   {#if item.type == 'comment'}
-    <CommentItem community={true} comment={item.item} class="!p-0" />
+    <CommentItem community={true} comment={item.item} class="p-0!" />
   {:else if item.type == 'post'}
-    <Post post={item.item} class="!p-0" />
+    <Post post={item.item} class="p-0!" />
   {:else if item.type == 'message'}
     <PrivateMessage
       message={{

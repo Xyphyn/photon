@@ -17,7 +17,7 @@
 </script>
 
 <div
-  class="w-full h-8 relative rounded-md border dark:border-zinc-600 hover:dark:border-zinc-400
+  class="w-full h-8 relative rounded-md border dark:border-zinc-600 dark:hover:border-zinc-400
   transition-colors {clazz}"
   style="background-color: rgb({value});"
 >

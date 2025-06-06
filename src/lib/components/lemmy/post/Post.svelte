@@ -17,12 +17,12 @@
   import { goto } from '$app/navigation'
   import type { ClassValue } from 'svelte/elements'
 
-  function getTagRule(tags: Tag[]): 'blur' | 'hide' | undefined {
+  function getTagRule(tags: Tag[]): 'blur-sm' | 'hide' | undefined {
     const tagContent = tags.map((t) => t.content.toLowerCase())
 
-    let rule: 'blur' | 'hide' | undefined
+    let rule: 'blur-sm' | 'hide' | undefined
     if (settings.nsfwBlur && (post.post.nsfw || post.community.nsfw))
-      rule = 'blur'
+      rule = 'blur-sm'
     tagContent.forEach((tag) => {
       if (settings.tagRules?.[tag]) rule = settings.tagRules?.[tag] ?? rule
       if (rule == 'hide') return rule
@@ -104,7 +104,7 @@
 <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
 <div
   class={[
-    'post relative max-w-full min-w-0 w-full cursor-pointer outline-none group',
+    'post relative max-w-full min-w-0 w-full cursor-pointer outline-hidden group',
     settings.leftAlign && 'left-align',
     view == 'compact' && 'py-3 list-type compact',
     view == 'cozy' && 'py-5 flex flex-col gap-2',
@@ -146,7 +146,7 @@
       {#if rule != 'hide'}
         <PostMedia
           post={post.post}
-          blur={rule == 'blur' ? true : undefined}
+          blur={rule == 'blur-sm' ? true : undefined}
           {view}
           {type}
         />
@@ -158,9 +158,9 @@
         {type}
         class="{settings.leftAlign
           ? 'mr-3'
-          : 'ml-3'} flex-shrink no-list-margin"
+          : 'ml-3'} shrink no-list-margin"
         style="grid-area: media;"
-        blur={rule == 'blur' ? true : undefined}
+        blur={rule == 'blur-sm' ? true : undefined}
         {view}
       />
     {/if}
@@ -181,8 +181,8 @@
     class="absolute overflow-hidden inset-0
     sm:rounded-xl bg-slate-50 dark:bg-zinc-900
     opacity-0 transition-all -z-50 no-list-margin
-    group-hover:inset-y-0.5 group-hover:-inset-x-4 group-hover:sm:-inset-x-5 group-hover:opacity-100
-    group-focus:inset-y-0.5 group-focus:-inset-x-4 group-focus:sm:-inset-x-5 group-focus:opacity-100
+    group-hover:inset-y-0.5 group-hover:-inset-x-4 sm:group-hover:-inset-x-5 group-hover:opacity-100
+    group-focus:inset-y-0.5 group-focus:-inset-x-4 sm:group-focus:-inset-x-5 group-focus:opacity-100
     duration-150"
   ></div>
 </div>

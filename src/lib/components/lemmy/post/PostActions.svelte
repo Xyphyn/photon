@@ -114,7 +114,7 @@
 {/if}
 
 <footer
-  class="flex flex-row gap-2 items-center flex-shrink-0 {buttonHeight}"
+  class="flex flex-row gap-2 items-center shrink-0 {buttonHeight}"
   class:flex-row-reverse={settings.posts.reverseActions}
   {style}
 >
@@ -131,7 +131,7 @@
   <Button
     size="custom"
     href="{postLink(post.post)}#comments"
-    class="!text-inherit h-full px-3 relative"
+    class="text-inherit! h-full px-3 relative"
     color="ghost"
     rounding="pill"
     target={settings.openLinksInNewTab ? '_blank' : ''}
@@ -280,7 +280,7 @@
     <MenuDivider>{$t('post.actions.more.creator')}</MenuDivider>
     <MenuButton link href={userLink(post.creator)}>
       {#snippet prefix()}
-        <Icon src={UserCircle} size="16" micro class="flex-shrink-0" />
+        <Icon src={UserCircle} size="16" micro class="shrink-0" />
       {/snippet}
       <TextProps wrap="no-wrap">
         {post.creator.name}
@@ -288,7 +288,7 @@
     </MenuButton>
     <MenuButton link href={communityLink(post.community)}>
       {#snippet prefix()}
-        <Icon src={Newspaper} size="16" micro class="flex-shrink-0" />
+        <Icon src={Newspaper} size="16" micro class="shrink-0" />
       {/snippet}
       <TextProps wrap="no-wrap">
         {post.community.title}
@@ -338,7 +338,7 @@
           )
         toast({ content: $t('toast.copied') })
       }}
-      class="flex-1 !py-0"
+      class="flex-1 py-0!"
     >
       {#snippet prefix()}
         <Icon src={Share} size="16" micro />

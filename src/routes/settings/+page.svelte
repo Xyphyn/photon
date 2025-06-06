@@ -299,8 +299,8 @@
       {/snippet}
     </Setting>
     <Setting
-      optionClass="flex-[2] max-w-full flex-wrap min-w-0 "
-      itemsClass="flex-col !items-start lg:!items-center lg:flex-row"
+      optionClass="flex-2 max-w-full flex-wrap min-w-0 "
+      itemsClass="flex-col items-start! lg:items-center! lg:flex-row"
     >
       {#snippet title()}
         <span>{$t('settings.app.sort.title')}</span>
@@ -455,16 +455,16 @@
           {$t('settings.app.titleTags.rules.title')}
         {/snippet}
         <div
-          class="flex flex-col divide-y [&>*]:py-2 items-end divide-slate-200 dark:divide-zinc-800"
+          class="flex flex-col divide-y *:py-2 items-end divide-slate-200 dark:divide-zinc-800"
         >
           {#each Object.keys(settings.tagRules) as rule}
             <div class="flex flex-row flex-wrap items-center gap-2">
               <span class="text-lg font-medium">{rule}</span>
               <MultiSelect
                 bind:selected={settings.tagRules[rule]}
-                options={['blur', 'hide']}
+                options={['blur-sm', 'hide']}
                 optionNames={[
-                  $t('settings.app.titleTags.rules.blur'),
+                  $t('settings.app.titleTags.rules.blur-sm'),
                   $t('settings.app.titleTags.rules.hide'),
                 ]}
               />
@@ -610,7 +610,7 @@
   </Section>
 
   <Section id="moderation" title={$t('settings.moderation.title')}>
-    <Setting itemsClass="!flex-col !items-start">
+    <Setting itemsClass="flex-col! items-start!">
       {#snippet title()}
         <span>{$t('settings.moderation.replyPresets.title')}</span>
       {/snippet}

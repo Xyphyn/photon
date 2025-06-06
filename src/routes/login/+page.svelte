@@ -166,7 +166,7 @@
       {$t('account.login')}
     </Button>
     <hr class="border-slate-200 dark:border-zinc-800" />
-    <div class="flex flex-row items-center gap-2 overflow-auto *:flex-shrink-0">
+    <div class="flex flex-row items-center gap-2 overflow-auto *:shrink-0">
       <Button rounding="pill" color="ghost" href="/signup">
         <Icon src={Identification} mini size="16" />
         {$t('account.signup')}

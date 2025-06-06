@@ -111,7 +111,7 @@
       <div
         class="object-cover overflow-hidden bg-slate-50 dark:bg-zinc-900 rounded-xl
         border border-slate-200 dark:border-zinc-800 group-hover/media:border-slate-400
-        group-hover/media:dark:border-zinc-600 transition-colors text-slate-400 dark:text-zinc-600 grid
+        dark:group-hover/media:border-zinc-600 transition-colors text-slate-400 dark:text-zinc-600 grid
         place-items-center {size}"
       >
         <Icon

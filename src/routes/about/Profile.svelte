@@ -27,7 +27,7 @@
   >
     {name}
     {#if badge}
-      <Badge color="gray-subtle" class="!p-0.5 !px-2">{badge}</Badge>
+      <Badge color="gray-subtle" class="p-0.5! px-2!">{badge}</Badge>
     {/if}
   </a>
   <span class="text-sm">{description}</span>

@@ -53,7 +53,7 @@
       </SidebarButton>
     {/each}
   </nav>
-  <div class="flex-[3] max-w-full w-full min-w-0">
+  <div class="flex-3 max-w-full w-full min-w-0">
     {@render children?.()}
   </div>
 </div>
