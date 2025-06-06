@@ -98,17 +98,12 @@ items-center px-2 w-max top-6 lg:top-22"
         },
       ]}
       currentRoute={page.url.search}
-      isSelected={(url, current, route, def) =>
-        page.url.search == route ||
-        (page.url.pathname == route && page.url.search == '') ||
-        page.url.searchParams.toString().includes(route.slice(1)) ||
-        (page.url.search == '' && route == def)}
-      class="overflow-auto"
       buildUrl={(route, href) =>
         href.includes('?')
           ? '?' + addSearchParam(page.url.searchParams, href).toString()
           : `${href}${page.url.search}`}
-      defaultRoute="?type=All"
+      defaultRoute="?type=all"
+      class="overflow-auto"
     />
     <Tabs
       routes={[
@@ -121,9 +116,7 @@ items-center px-2 w-max top-6 lg:top-22"
           name: $t('filter.unread'),
         },
       ]}
-      isSelected={(url, current, route, def) =>
-        page.url.searchParams.toString().includes(route.slice(1)) ||
-        (page.url.search == '' && route == def)}
+      currentRoute={page.url.search}
       buildUrl={(route, href) =>
         '?' + addSearchParam(page.url.searchParams, href).toString()}
       defaultRoute="?unreadOnly=true"

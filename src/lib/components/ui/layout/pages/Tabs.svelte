@@ -9,12 +9,6 @@
       name: string
     }[]
     currentRoute?: string | undefined
-    isSelected?: (
-      url: URL,
-      currentRoute: string | undefined,
-      route: string,
-      defaultRoute?: string,
-    ) => boolean
     buildUrl?: (currentRoute: string | undefined, href: string) => string
     defaultRoute?: string | undefined
     class?: string
@@ -24,13 +18,29 @@
   let {
     routes,
     currentRoute = undefined,
-    isSelected = (url, currentRoute, route) =>
-      (currentRoute ?? url.pathname) == route,
     buildUrl = (route, href) => href,
     defaultRoute = undefined,
     class: clazz = '',
     children,
   }: Props = $props()
+
+  function isSelected(
+    url: URL,
+    currentRoute: string | undefined,
+    route: string,
+    defaultRoute?: string,
+  ) {
+    if (route.startsWith('?')) {
+      const param = route.slice(1)
+      const key = param.split(/(?<=[=])/g)[0]
+      if (currentRoute?.includes(param)) {
+        return true
+      } else if (route == defaultRoute && !currentRoute?.includes(key)) {
+        return true
+      }
+    }
+    return (currentRoute ?? url.pathname) == route
+  }
 </script>
 
 <nav
