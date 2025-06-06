@@ -286,6 +286,15 @@
             "commented": "Your comment was posted.",
             "loadComments": "Load comments"
         },
+        "postRedirect": {
+            "title": "Mismatching instance",
+            "description": "That link resolves to a post not on your account's instance, {{homeInstance}}.",
+            "actions": {
+                "back": "Go back",
+                "fetch": "Locate post on {{homeInstance}}",
+                "switch": "Switch to an account on {{destInstance}}"
+            }
+        },
         "inbox": {
             "title": "Inbox",
             "markAsRead": "Mark All Read",
