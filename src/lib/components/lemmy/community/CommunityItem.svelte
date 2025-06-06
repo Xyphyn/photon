@@ -23,9 +23,7 @@
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import CommunityCard from '$lib/components/lemmy/community/CommunityCard.svelte'
   import LabelStat from '$lib/components/ui/LabelStat.svelte'
-  import PostBody from '../post/PostBody.svelte'
   import { t } from '$lib/translations'
-  import Entity from '$lib/components/ui/Entity.svelte'
 
   let showInfo = $state(false)
   interface Props {
@@ -138,7 +136,12 @@
       </div>
     </a>
     <div class="flex flex-row items-center gap-2">
-      <Button size="square-md" onclick={() => (showInfo = !showInfo)}>
+      <Button
+        size="square-md"
+        rounding="pill"
+        color="ghost"
+        onclick={() => (showInfo = !showInfo)}
+      >
         <Icon src={InformationCircle} size="16" mini />
       </Button>
       <Subscribe {community}>
@@ -172,7 +175,7 @@
             class="{isSubscribed(community.subscribed)
               ? 'text-slate-600 dark:text-zinc-400'
               : ''}
-              aspect-square h-8 @md:px-2 @md:min-w-32 @md:aspect-auto"
+              aspect-square h-8.5 @md:px-2 @md:min-w-30 @md:aspect-auto @md:rounded-full"
           >
             {#snippet prefix()}
               <Icon
