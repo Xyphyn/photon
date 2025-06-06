@@ -55,14 +55,14 @@
   if (browser) {
     $effect(() => {
       if (settings) {
-        document.body.classList.remove(
+        document.documentElement.classList.remove(
           'font-display',
           'font-inter',
           'font-sans',
           'font-system',
           'font-nunito',
         )
-        document.body.classList.add(
+        document.documentElement.classList.add(
           settings.font == 'inter'
             ? 'font-inter'
             : settings.font == 'system'
@@ -75,7 +75,7 @@
     })
 
     $effect(() => {
-      document.body.setAttribute('style', theme.vars)
+      document.documentElement.setAttribute('style', theme.vars)
     })
   }
 

@@ -43,11 +43,7 @@
 
 <svelte:window {onscroll} />
 
-<div
-  {...rest}
-  class="shell bg-slate-50 dark:bg-zinc-950 {clazz}"
-  style={theme.vars}
->
+<div {...rest} class="shell bg-slate-50 dark:bg-zinc-950 {clazz}">
   {@render children?.()}
   <div
     class="fixed bottom-0 {dockVisible ? '' : 'max-lg:-bottom-24'} lg:top-0
