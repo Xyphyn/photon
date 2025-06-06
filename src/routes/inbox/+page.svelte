@@ -165,19 +165,21 @@ items-center px-2 w-max top-6 lg:top-22"
     />
   {:else}
     {#each data.inbox.value as item, index (item.id)}
-      <div
-        class="-mx-4 sm:-mx-6 px-4 sm:px-6
-        {item.read ? '' : 'bg-blue-50/50 dark:bg-blue-500/5'}"
-        in:fly|global={{
-          duration: 1000,
-          y: 16,
-          opacity: 0,
-          easing: expoOut,
-          delay: index * 50,
-        }}
-      >
-        <InboxItem bind:item={data.inbox.value[index]} />
-      </div>
+      {#if item.creator.id != profile.data.user?.local_user_view.person.id}
+        <div
+          class="-mx-4 sm:-mx-6 px-4 sm:px-6
+          {item.read ? '' : 'bg-blue-50/50 dark:bg-blue-500/5'}"
+          in:fly|global={{
+            duration: 1000,
+            y: 16,
+            opacity: 0,
+            easing: expoOut,
+            delay: index * 50,
+          }}
+        >
+          <InboxItem bind:item={data.inbox.value[index]} />
+        </div>
+      {/if}
     {/each}
   {/if}
   {#if !(data.page == 1 && (data?.inbox?.value.length ?? 0) == 0)}
