@@ -98,7 +98,7 @@
       <PostForm
         edit
         editingPost={post.post}
-        onsubmit={(e) => {
+        onsubmit={e => {
           editing = false
           post = e
           onedit?.(e)
@@ -136,7 +136,6 @@
     rounding="pill"
     target={settings.openLinksInNewTab ? '_blank' : ''}
     title={$t('post.actions.comments')}
-    animations={{ scale: true, large: false }}
   >
     {@const newComment =
       publishedToDate(post.counts.newest_comment_time).getTime() >
@@ -148,7 +147,6 @@
     <FormattedNumber number={post.counts.comments} />
   </Button>
   <div class="flex-1"></div>
-
   {#if settings.debugInfo}
     {#if debug}
       {#await import('$lib/components/util/debug/DebugObject.svelte') then { default: DebugObject }}
@@ -195,7 +193,6 @@
       loading={saving}
       disabled={saving}
       title={post.saved ? $t('post.actions.unsave') : $t('post.actions.save')}
-      animations={{ scale: true, large: true }}
     >
       {#snippet prefix()}
         <Icon src={post.saved ? BookmarkSlash : Bookmark} size="16" mini />
@@ -224,59 +221,6 @@
         {/snippet}
       </Button>
     {/snippet}
-    <MenuDivider>{$t('cards.site.stats')}</MenuDivider>
-    <div class="flex flex-row gap-1 items-center">
-      <MenuButton class="flex-1">
-        {#snippet prefix()}
-          <Icon src={Clock} size="16" micro />
-        {/snippet}
-        <span>
-          {publishedToDate(post.post.published).toLocaleDateString(undefined, {
-            dateStyle: 'short',
-          })}
-        </span>
-      </MenuButton>
-      {#if post.post.updated}
-        {@const editedTime = formatRelativeDate(
-          publishedToDate(post.post.updated),
-          {
-            style: 'long',
-          },
-        )}
-        <MenuButton class="flex-1" aria-label={editedTime}>
-          {#snippet prefix()}
-            <Icon src={Pencil} size="16" micro />
-          {/snippet}
-          <RelativeDate date={publishedToDate(post.post.updated)} />
-        </MenuButton>
-      {/if}
-    </div>
-    {#if post.counts.score}
-      {@const ratio =
-        post.counts.upvotes / (post.counts.upvotes + post.counts.downvotes)}
-      <MenuButton
-        aria-label={$t('aria.vote.score', { default: post.counts.score })}
-      >
-        {#snippet prefix()}
-          <Icon src={ArrowsUpDown} size="16" micro />
-        {/snippet}
-        {$t('post.actions.vote.score')}
-        •
-        <FormattedNumber
-          number={post.counts.score}
-          options={{ notation: 'standard' }}
-          class="font-medium"
-        />
-        •
-        <FormattedNumber
-          number={ratio}
-          options={{ style: 'percent' }}
-          class="font-medium {ratio > 0.7
-            ? 'text-blue-700 dark:text-blue-300'
-            : 'text-red-500'}"
-        />
-      </MenuButton>
-    {/if}
     <MenuDivider>{$t('post.actions.more.creator')}</MenuDivider>
     <MenuButton link href={userLink(post.creator)}>
       {#snippet prefix()}
@@ -346,11 +290,11 @@
       {$t('post.actions.more.share')}
       <div class="flex-1"></div>
       {#if !post.post.local}
-        <div class="flex">
+        <div class="flex gap-1">
           <Button
             color={!localShare ? 'primary' : 'secondary'}
-            size="square-md"
-            roundingSide="left"
+            size="square-sm"
+            rounding="pill"
             onclick={() => (localShare = false)}
             title={$t('filter.location.global')}
           >
@@ -358,8 +302,8 @@
           </Button>
           <Button
             color={localShare ? 'primary' : 'secondary'}
-            size="square-md"
-            roundingSide="right"
+            size="square-sm"
+            rounding="pill"
             onclick={() => (localShare = true)}
             title={$t('filter.location.local')}
           >
