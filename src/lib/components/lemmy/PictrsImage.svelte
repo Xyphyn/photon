@@ -6,10 +6,10 @@
   import { client } from '$lib/lemmy.svelte'
   import { t } from '$lib/i18n/translations'
   import { instanceToURL } from '$lib/util.svelte'
-  import type { LocalImage } from 'lemmy-js-client'
-  import { Button, Material, toast } from 'mono-svelte'
-  import { createEventDispatcher } from 'svelte'
-  import { ArrowDown, ArrowDownTray, Icon, Trash } from 'svelte-hero-icons'
+  import type { LocalImage, Person } from 'lemmy-js-client'
+  import { Button, toast } from 'mono-svelte'
+  import { ArrowDownTray, Icon, Trash } from 'svelte-hero-icons'
+  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
 
   let loading = $state(false)
 
@@ -32,10 +32,11 @@
 
   interface Props {
     image: LocalImage
+    user?: Person
     ondelete?: (res: boolean) => void
   }
 
-  let { image, ondelete }: Props = $props()
+  let { image, user, ondelete }: Props = $props()
 </script>
 
 <div class="flex flex-col gap-1">
@@ -46,6 +47,9 @@
     class="aspect-square w-full h-full object-cover rounded-xl"
     alt="pictrs"
   />
+  {#if user}
+    <UserLink {user} />
+  {/if}
   <div class="flex items-center gap-2">
     <RelativeDate
       class="text-sm text-slate-700 dark:text-zinc-300"

@@ -48,6 +48,10 @@
           href: '/admin/federation',
           name: $t('routes.admin.federation.title'),
         },
+        {
+          href: '/admin/media',
+          name: $t('routes.admin.media.title'),
+        },
       ]}
       class="overflow-auto"
     />
