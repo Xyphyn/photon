@@ -9,6 +9,8 @@ export async function load({ params, url, fetch }) {
     (url.searchParams.get('type') as 'comments' | 'posts') || 'posts'
   const sort: SortType = (url.searchParams.get('sort') as SortType) || 'New'
 
+  console.log(type)
+
   const user = await getClient(undefined, fetch).getPersonDetails({
     limit: 20,
     page: page,
@@ -16,7 +18,7 @@ export async function load({ params, url, fetch }) {
     sort: sort,
   })
 
-  const items = [...user.posts, ...user.comments]
+  const items = type == 'posts' ? user.posts : user.comments
 
   return {
     filters: new ReactiveState({
