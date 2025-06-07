@@ -5,7 +5,7 @@ import { redirect } from '@sveltejs/kit'
 
 export async function load({ params, fetch }) {
   if (profile.data.instance != params.instance)
-    redirect(302, resolveRoute('/post/[instance]/[id]/confirm', params))
+    redirect(302, resolveRoute('/comment/[instance]/[id]/confirm', params))
 
   const comment = await client({
     instanceURL: profile.data.instance,
