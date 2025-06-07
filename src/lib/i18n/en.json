@@ -407,6 +407,9 @@
                     "title": "No whitelisted instances",
                     "description": "Whitelisting an instance will block every other instance."
                 }
+            },
+            "media": {
+                "title": "Media"
             }
         },
         "verifyEmail": {

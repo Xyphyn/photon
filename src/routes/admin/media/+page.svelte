@@ -10,16 +10,17 @@
   let { data = $bindable() } = $props()
 </script>
 
-<Header pageHeader>{$t('routes.admin.media.title')}</Header>
+<Header pageHeader>{$t('routes.profile.media.title')}</Header>
 <div class="media-grid">
   {#each data.images as image (image.local_image.pictrs_delete_token)}
     <div animate:flip={{ duration: 500, easing: expoInOut }}>
       <PictrsImage
         image={image.local_image}
+        user={image.person}
         ondelete={() => {
           data.images = data.images.toSpliced(
             data.images.findIndex(
-              (i) =>
+              i =>
                 i.local_image.pictrs_delete_token ==
                 image.local_image.pictrs_delete_token,
             ),
@@ -33,7 +34,7 @@
 {#if data.images.length == 20}
   <Pageination
     page={Number(page.url.searchParams.get('page')) || 1}
-    href={(page) => `?page=${page}`}
+    href={page => `?page=${page}`}
   />
 {/if}
 
