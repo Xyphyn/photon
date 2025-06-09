@@ -4,8 +4,8 @@ import type { SortType } from 'lemmy-js-client'
 
 export async function load({ url, fetch, parent }) {
   const page = Number(url.searchParams.get('page')) || 1
-  const type: 'comments' | 'posts' | 'all' =
-    (url.searchParams.get('type') as 'comments' | 'posts' | 'all') || 'all'
+  const type: 'comments' | 'posts' =
+    (url.searchParams.get('type') as 'comments' | 'posts') || 'posts'
   const sort: SortType = (url.searchParams.get('sort') as SortType) || 'New'
 
   const { my_user } = await parent()
