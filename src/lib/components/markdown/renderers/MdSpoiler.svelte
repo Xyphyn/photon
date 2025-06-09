@@ -1,9 +1,6 @@
 <script lang="ts">
-  import { marked } from 'marked'
   import SvelteMarkdown from 'svelte-markdown'
   import { options, renderers } from '../Markdown.svelte'
-  import { Disclosure } from 'mono-svelte'
-  import { Icon } from 'svelte-hero-icons'
   import Expandable from '$lib/components/ui/Expandable.svelte'
 
   interface Props {

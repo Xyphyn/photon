@@ -1,18 +1,13 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy'
-
-  import { profile } from '$lib/auth.svelte.js'
   import MultiSelect from '$lib/components/input/Switch.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import { t } from '$lib/i18n/translations'
-  import { uploadImage } from '$lib/util.svelte.js'
-  import { ImageInput, toast } from 'mono-svelte'
-  import { Button, Label, Modal, TextArea } from 'mono-svelte'
-  import { createEventDispatcher, tick } from 'svelte'
+  import { Button, Label, TextArea } from 'mono-svelte'
+  import type { TextAreaProps } from 'mono-svelte/forms/TextArea.svelte'
+  import { tick } from 'svelte'
   import {
     Bold,
     CodeBracket,
-    DocumentPlus,
     ExclamationTriangle,
     H1,
     Icon,
@@ -23,8 +18,6 @@
     Strikethrough,
   } from 'svelte-hero-icons'
   import ImageUploadModal from '../lemmy/modal/ImageUploadModal.svelte'
-  import type { HTMLTextareaAttributes } from 'svelte/elements'
-  import type { TextAreaProps } from 'mono-svelte/forms/TextArea.svelte'
 
   let textArea: HTMLTextAreaElement | undefined = $state()
 
@@ -60,7 +53,7 @@
   }
 
   let uploadingImage = $state(false)
-  let image = $state<any>(null)
+  let image = $state<FileList | null | undefined>(null)
 
   const shortcuts = {
     KeyB: () => wrapSelection('**', '**'),
@@ -68,11 +61,6 @@
     KeyS: () => wrapSelection('~~', '~~'),
     KeyH: () => wrapSelection('\n# ', ''),
     KeyK: () => wrapSelection('[](', ')'),
-    Enter: (e: any) => {
-      onconfirm?.(value)
-      const newEvent = new Event('submit', { cancelable: true })
-      e?.target?.form?.dispatchEvent(newEvent)
-    },
   }
 
   async function adjustHeight() {
@@ -96,7 +84,6 @@
     class?: string
     customLabel?: import('svelte').Snippet
     children?: import('svelte').Snippet
-    onconfirm?: (value: string) => void
   }
 
   let {
@@ -107,12 +94,11 @@
     tools = true,
     disabled = false,
     rows = 2,
-    beforePreview = (input) => input,
+    beforePreview = input => input,
     previewing = $bindable(false),
     class: clazz = '',
     customLabel,
     children,
-    onconfirm,
     ...rest
   }: Props = $props()
 
@@ -125,8 +111,8 @@
   <ImageUploadModal
     bind:open={uploadingImage}
     bind:image
-    onupload={(e) => {
-      e.forEach((i) => {
+    onupload={e => {
+      e.forEach(i => {
         wrapSelection(`![](${i})\n\n`, '')
       })
     }}
@@ -265,10 +251,10 @@ overflow-hidden transition-colors {clazz}"
         class="bg-inherit z-0 border-0 rounded-none ring-0! focus:ring-transparent! transition-none! resize-none"
         bind:value
         bind:element={textArea}
-        onkeydown={(e) => {
+        onkeydown={e => {
           if (disabled) return
           if (e.ctrlKey || e.metaKey) {
-            // @ts-ignore
+            // @ts-expect-error yes it can
             let shortcut = shortcuts[e.code]
             if (shortcut) {
               e.preventDefault()
@@ -277,11 +263,11 @@ overflow-hidden transition-colors {clazz}"
           }
         }}
         oninput={adjustHeight}
-        onpaste={(e) => {
+        onpaste={e => {
           if (!e.clipboardData?.files) return
           const files = Array.from(e.clipboardData.files)
           if (files[0]?.type.startsWith('image/')) {
-            image = e.clipboardData.files[0]
+            image = e.clipboardData.files[0] as unknown as FileList | null
             uploadingImage = true
           }
         }}

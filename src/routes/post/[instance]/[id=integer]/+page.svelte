@@ -243,7 +243,8 @@
   {/if}
   {#await data.comments.value}
     <div class="flex flex-col gap-4">
-      {#each new Array(10) as _, index (_)}
+      {#each new Array(10) as _, index}
+        {_}
         <div
           in:fly|global={{
             duration: 500,

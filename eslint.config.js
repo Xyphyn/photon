@@ -25,6 +25,7 @@ export default ts.config(
       'svelte/valid-prop-names-in-kit-pages': 'off',
       'svelte/no-at-html-tags': 'warn',
       '@typescript-eslint/no-unsafe-function-type': 'warn',
+      'svelte/require-each-key': 'off',
     },
   },
   {

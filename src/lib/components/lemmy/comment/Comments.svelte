@@ -1,20 +1,19 @@
 <script lang="ts">
-  import Comments from './Comments.svelte'
-  import Comment from './Comment.svelte'
-  import { buildCommentsTree, type CommentNodeI } from './comments.svelte'
-  import { page } from '$app/state'
-  import { onMount, setContext } from 'svelte'
-  import { Icon, ArrowDownCircle } from 'svelte-hero-icons'
-  import { getClient } from '$lib/lemmy.svelte.js'
-  import type { CommentView, Post } from 'lemmy-js-client'
-  import { fly } from 'svelte/transition'
-  import { toast } from 'mono-svelte'
-  import { profile } from '$lib/auth.svelte.js'
-  import { Button } from 'mono-svelte'
-  import { afterNavigate, goto } from '$app/navigation'
-  import { backOut, expoOut } from 'svelte/easing'
-  import { t } from '$lib/i18n/translations'
   import { browser } from '$app/environment'
+  import { goto } from '$app/navigation'
+  import { page } from '$app/state'
+  import { t } from '$lib/i18n/translations'
+  import { getClient } from '$lib/lemmy.svelte.js'
+  import type { Post } from 'lemmy-js-client'
+  import { Button, toast } from 'mono-svelte'
+  import { onMount } from 'svelte'
+  import { ArrowDownCircle, Icon } from 'svelte-hero-icons'
+  import { expoOut } from 'svelte/easing'
+  import { fly } from 'svelte/transition'
+  import Comment from './Comment.svelte'
+  import Comments from './Comments.svelte'
+  import { buildCommentsTree, type CommentNodeI } from './comments.svelte'
+  import { errorMessage } from '$lib/lemmy/error'
 
   interface Props {
     nodes: CommentNodeI[]
@@ -36,7 +35,6 @@
     }
   })
 
-  let loadingChildren = false
   let childrenPage = 0
 
   async function fetchChildren(parent: CommentNodeI) {
@@ -60,7 +58,6 @@
       })
 
       if (newComments.comments.length == 0) {
-        loadingChildren = false
         toast({
           content: $t('toast.noComments'),
           type: 'error',
@@ -96,10 +93,10 @@
         }
       }
       childrenPage++
-    } catch (error) {
-      console.error(error)
+    } catch (err) {
+      console.error(err)
       toast({
-        content: error as any,
+        content: errorMessage(err as string),
         type: 'error',
       })
     }
@@ -162,7 +159,6 @@
             />
           {/snippet}
           {$t('comment.more', {
-            // @ts-ignore
             comments: node.comment_view.counts.child_count,
           })}
         </Button>

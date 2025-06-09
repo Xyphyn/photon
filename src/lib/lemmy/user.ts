@@ -29,7 +29,6 @@ export const addSubscription = (
 
   if (subscribe && index == -1) {
     profile.data.user?.follows.push({
-      // @ts-ignore
       follower: profile.data.user.follows[0]?.follower,
       community: community,
     })
@@ -38,7 +37,7 @@ export const addSubscription = (
   }
 }
 
-export const addAdmin = async (handle: string, added: boolean, jwt: string) =>
+export const addAdmin = async (handle: string, added: boolean) =>
   trycatch(async () => {
     const user = await getClient().resolveObject({
       q: handle,
@@ -47,7 +46,7 @@ export const addAdmin = async (handle: string, added: boolean, jwt: string) =>
     if (!user.person) throw new Error('No user found')
 
     return await getClient().addAdmin({
-      added: true,
+      added: added,
       person_id: user.person.person.id,
     })
   })

@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { photonify } from './plugins'
+  import { photonify } from './plugins.js'
 
   interface Props {
     href?: string
-    title?: any
+    title?: string
     children?: import('svelte').Snippet
   }
 
@@ -12,7 +12,7 @@
   export const parseURL = (href: string) => {
     try {
       return new URL(href)
-    } catch (e) {
+    } catch {
       return undefined
     }
   }

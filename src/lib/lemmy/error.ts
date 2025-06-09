@@ -1,5 +1,6 @@
 import { t } from '$lib/i18n/translations'
 
+// eslint-disable-next-line
 export function errorMessage(error: any, instance?: string): string {
   try {
     if (error?.body?.message) {
@@ -12,7 +13,8 @@ export function errorMessage(error: any, instance?: string): string {
     if (!error) throw error
 
     return t.get(`error.${error}`)
-  } catch (e) {
+  } catch {
+    // eslint-disable-next-line
     return error as any
   }
 }

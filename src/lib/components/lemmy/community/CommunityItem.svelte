@@ -1,29 +1,25 @@
 <script lang="ts">
-  import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
+  import { profile } from '$lib/auth.svelte.js'
+  import CommunityCard from '$lib/components/lemmy/community/CommunityCard.svelte'
+  import Avatar from '$lib/components/ui/Avatar.svelte'
+  import LabelStat from '$lib/components/ui/LabelStat.svelte'
+  import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
+  import { t } from '$lib/i18n/translations'
+  import { addSubscription } from '$lib/lemmy/user.js'
+  import { fullCommunityName, isSubscribed } from '$lib/util.svelte.js'
   import type { CommunityView } from 'lemmy-js-client'
-  import Subscribe from '../../../../routes/communities/Subscribe.svelte'
+  import { Button, Modal } from 'mono-svelte'
   import {
-    ChatBubbleOvalLeftEllipsis,
     Check,
     ExclamationTriangle,
     Icon,
     InformationCircle,
     MapPin,
     NoSymbol,
-    PencilSquare,
     Plus,
     Trash,
-    UserGroup,
   } from 'svelte-hero-icons'
-  import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
-  import { Button, Modal } from 'mono-svelte'
-  import { fullCommunityName, isSubscribed } from '$lib/util.svelte.js'
-  import { profile } from '$lib/auth.svelte.js'
-  import { addSubscription } from '$lib/lemmy/user.js'
-  import Avatar from '$lib/components/ui/Avatar.svelte'
-  import CommunityCard from '$lib/components/lemmy/community/CommunityCard.svelte'
-  import LabelStat from '$lib/components/ui/LabelStat.svelte'
-  import { t } from '$lib/i18n/translations'
+  import Subscribe from '../../../../routes/communities/Subscribe.svelte'
 
   let showInfo = $state(false)
   interface Props {

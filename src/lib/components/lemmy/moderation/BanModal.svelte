@@ -1,17 +1,18 @@
 <script lang="ts">
-  import { run, preventDefault } from 'svelte/legacy'
+  import { preventDefault } from 'svelte/legacy'
 
   import Avatar from '$lib/components/ui/Avatar.svelte'
-  import type { Community, Person, PersonView } from 'lemmy-js-client'
+  import type { Community, Person } from 'lemmy-js-client'
   import { getClient } from '$lib/lemmy.svelte.js'
   import { toast } from 'mono-svelte'
   import { profile } from '$lib/auth.svelte.js'
-  import { Button, Checkbox, Modal, TextInput } from 'mono-svelte'
+  import { Button, Checkbox, Modal } from 'mono-svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { t } from '$lib/i18n/translations'
   import CommunityLink from '../community/CommunityLink.svelte'
   import Duration from '$lib/components/form/Duration.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
+  import { errorMessage } from '$lib/lemmy/error'
 
   interface Props {
     open?: boolean
@@ -84,7 +85,7 @@
       item.banned = !banned
     } catch (err) {
       toast({
-        content: err as any,
+        content: errorMessage(err),
         type: 'error',
       })
     }

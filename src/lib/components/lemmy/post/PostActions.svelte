@@ -1,43 +1,25 @@
 <script lang="ts">
-  import type { PostView } from 'lemmy-js-client'
-  import PostVote from './PostVote.svelte'
-  import { site } from '$lib/lemmy.svelte.js'
-  import {
-    ArrowsUpDown,
-    ArrowTopRightOnSquare,
-    Bookmark,
-    BookmarkSlash,
-    BugAnt,
-    ChatBubbleOvalLeft,
-    ChatBubbleOvalLeftEllipsis,
-    Clock,
-    EllipsisHorizontal,
-    Eye,
-    EyeSlash,
-    Flag,
-    GlobeAmericas,
-    Icon,
-    MapPin,
-    Newspaper,
-    Pencil,
-    PencilSquare,
-    Share,
-    Trash,
-    UserCircle,
-    XMark,
-  } from 'svelte-hero-icons'
-  import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
+  import { goto } from '$app/navigation'
+  import { profile } from '$lib/auth.svelte.js'
   import {
     amMod,
     isAdmin,
     report,
   } from '$lib/components/lemmy/moderation/moderation.js'
   import ModerationMenu from '$lib/components/lemmy/moderation/ModerationMenu.svelte'
-  import { profile } from '$lib/auth.svelte.js'
+  import TextProps from '$lib/components/ui/text/TextProps.svelte'
+  import { publishedToDate } from '$lib/components/util/date'
+  import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
+  import { t } from '$lib/i18n/translations'
+  import { instance } from '$lib/instance.svelte'
+  import { site } from '$lib/lemmy.svelte.js'
   import { deleteItem, markAsRead, save } from '$lib/lemmy/contentview.js'
+  import { communityLink, userLink } from '$lib/lemmy/generic'
   import { setSessionStorage } from '$lib/session.js'
-  import { goto } from '$app/navigation'
   import { settings, type View } from '$lib/settings.svelte.js'
+  import { instanceToURL } from '$lib/util.svelte'
+  import { feature } from '$lib/version'
+  import type { PostView } from 'lemmy-js-client'
   import {
     Button,
     Menu,
@@ -47,17 +29,29 @@
     Spinner,
     toast,
   } from 'mono-svelte'
-  import { t } from '$lib/i18n/translations'
+  import {
+    ArrowTopRightOnSquare,
+    Bookmark,
+    BookmarkSlash,
+    BugAnt,
+    ChatBubbleOvalLeft,
+    ChatBubbleOvalLeftEllipsis,
+    EllipsisHorizontal,
+    Eye,
+    EyeSlash,
+    Flag,
+    GlobeAmericas,
+    Icon,
+    MapPin,
+    Newspaper,
+    PencilSquare,
+    Share,
+    Trash,
+    UserCircle,
+    XMark,
+  } from 'svelte-hero-icons'
   import { hidePost, postLink } from './helpers'
-  import { feature } from '$lib/version'
-  import { instanceId, instanceToURL } from '$lib/util.svelte'
-  import { publishedToDate } from '$lib/components/util/date'
-  import TextProps from '$lib/components/ui/text/TextProps.svelte'
-  import { communityLink, userLink } from '$lib/lemmy/generic'
-  import RelativeDate, {
-    formatRelativeDate,
-  } from '$lib/components/util/RelativeDate.svelte'
-  import { instance } from '$lib/instance.svelte'
+  import PostVote from './PostVote.svelte'
 
   let editing = $state(false)
   let saving = $state(false)
@@ -106,7 +100,6 @@
       >
         {#snippet formtitle()}
           <!-- Have the title not exist at all -->
-          {''}
         {/snippet}
       </PostForm>
     {/await}
@@ -183,7 +176,7 @@
       onclick={async () => {
         if (!profile.data?.jwt) return
         saving = true
-        post.saved = await save(post, !post.saved, profile.data?.jwt)
+        post.saved = await save(post, !post.saved)
         saving = false
       }}
       size="custom"
@@ -200,13 +193,7 @@
     </Button>
   {/if}
 
-  <Menu
-    placement="bottom-end"
-    containerClass="overflow-auto max-h-[400px]"
-    class="h-8"
-    targetClass="h-full"
-    title={$t('post.actions.more.label')}
-  >
+  <Menu placement="bottom-end" class="h-8">
     {#snippet target()}
       <Button
         title={$t('post.actions.more.label')}
@@ -253,11 +240,7 @@
       <MenuButton
         onclick={async () => {
           if (profile.data?.jwt)
-            post.read = await markAsRead(
-              post.post,
-              !post.read,
-              profile.data.jwt,
-            )
+            post.read = await markAsRead(post.post, !post.read)
         }}
       >
         {#snippet prefix()}
@@ -270,11 +253,13 @@
     {/if}
     <MenuButton
       onclick={() => {
-        navigator.share?.({
-          url: localShare
-            ? `${instanceToURL(instance.data)}/post/${post.post.id}`
-            : post.post.ap_id,
-        }) ??
+        if (navigator.share)
+          navigator.share?.({
+            url: localShare
+              ? `${instanceToURL(instance.data)}/post/${post.post.id}`
+              : post.post.ap_id,
+          })
+        else
           navigator.clipboard.writeText(
             localShare
               ? `${instanceToURL(instance.data)}/post/${post.post.id}`
@@ -345,11 +330,7 @@
         <MenuButton
           onclick={async () => {
             if (profile.data?.jwt)
-              post.post.deleted = await deleteItem(
-                post,
-                !post.post.deleted,
-                profile.data.jwt,
-              )
+              post.post.deleted = await deleteItem(post, !post.post.deleted)
           }}
           color="danger-subtle"
         >

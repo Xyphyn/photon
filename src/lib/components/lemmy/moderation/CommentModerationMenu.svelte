@@ -16,7 +16,6 @@
 
   interface Props {
     item: PostView | CommentView
-    [key: string]: any
   }
 
   let { item = $bindable(), ...rest }: Props = $props()

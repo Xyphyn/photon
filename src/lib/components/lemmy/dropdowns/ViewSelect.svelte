@@ -1,22 +1,12 @@
 <script lang="ts">
-  import { settings } from '$lib/settings.svelte.js'
   import { t } from '$lib/i18n/translations'
+  import { settings } from '$lib/settings.svelte.js'
   import { Select } from 'mono-svelte'
   import Option from 'mono-svelte/forms/select/Option.svelte'
-  import {
-    Bars3,
-    Clock,
-    Icon,
-    ListBullet,
-    QueueList,
-    RectangleGroup,
-    Square2Stack,
-    ViewColumns,
-  } from 'svelte-hero-icons'
+  import { Bars3, Icon, RectangleGroup, ViewColumns } from 'svelte-hero-icons'
 
   interface Props {
     showLabel?: boolean
-    [key: string]: any
   }
 
   let { showLabel = true, ...rest }: Props = $props()

@@ -1,15 +1,8 @@
 <script lang="ts">
-  import type { PersonView } from 'lemmy-js-client'
-  import {
-    ChatBubbleOvalLeftEllipsis,
-    Icon,
-    PencilSquare,
-  } from 'svelte-hero-icons'
-  import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
-  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
+  import Avatar from '$lib/components/ui/Avatar.svelte'
   import LabelStat from '$lib/components/ui/LabelStat.svelte'
   import { userLink } from '$lib/lemmy/generic'
-  import Avatar from '$lib/components/ui/Avatar.svelte'
+  import type { PersonView } from 'lemmy-js-client'
 
   interface Props {
     user: PersonView

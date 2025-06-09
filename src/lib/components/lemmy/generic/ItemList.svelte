@@ -1,6 +1,5 @@
 <script lang="ts">
   import Avatar from '$lib/components/ui/Avatar.svelte'
-  import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
   import { Button } from 'mono-svelte'
   import { flip } from 'svelte/animate'
   import { expoOut } from 'svelte/easing'

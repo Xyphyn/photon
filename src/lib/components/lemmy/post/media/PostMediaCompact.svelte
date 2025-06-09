@@ -7,17 +7,16 @@
   } from '$lib/components/lemmy/post/helpers.js'
   import { showImage } from '$lib/components/ui/ExpandableImage.svelte'
   import { settings, type View } from '$lib/settings.svelte.js'
-  import { t } from '$lib/i18n/translations'
   import { isImage } from '$lib/ui/image'
   import type { Post } from 'lemmy-js-client'
-  import { Material, modal, Popover } from 'mono-svelte'
+  import { modal } from 'mono-svelte'
   import Button from 'mono-svelte/button/Button.svelte'
   import {
     DocumentText,
+    ExclamationTriangle,
     Icon,
     Link,
     VideoCamera,
-    ExclamationTriangle,
   } from 'svelte-hero-icons'
 
   const thumbnailSize = (view: View) =>

@@ -1,9 +1,11 @@
 <script lang="ts">
+  import { profile } from '$lib/auth.svelte.js'
+  import { t } from '$lib/i18n/translations'
   import { getClient } from '$lib/lemmy.svelte'
+  import { isCommentView, isPostView } from '$lib/lemmy/item.js'
   import type { CommentView, PostView } from 'lemmy-js-client'
-  import { amMod, ban, isAdmin, remove } from './moderation'
+  import { Button, Menu, MenuButton, MenuDivider, toast } from 'mono-svelte'
   import {
-    ArrowsUpDown,
     Fire,
     Icon,
     LockClosed,
@@ -12,16 +14,12 @@
     ShieldExclamation,
     Trash,
   } from 'svelte-hero-icons'
-  import { isCommentView, isPostView } from '$lib/lemmy/item.js'
-  import { Menu, MenuButton, MenuDivider, toast } from 'mono-svelte'
-  import { profile } from '$lib/auth.svelte.js'
-  import { Button } from 'mono-svelte'
-  import { t } from '$lib/i18n/translations'
+  import { amMod, ban, isAdmin, remove } from './moderation'
   import ShieldIcon from './ShieldIcon.svelte'
+  import { errorMessage } from '$lib/lemmy/error'
 
   interface Props {
     item: PostView | CommentView
-    [key: string]: any
   }
 
   let { item = $bindable(), ...rest }: Props = $props()
@@ -44,7 +42,7 @@
       item.post.locked = lock
     } catch (err) {
       toast({
-        content: err as any,
+        content: errorMessage(err),
         type: 'error',
       })
     }
@@ -67,7 +65,7 @@
       item.post.featured_community = pinned
     } catch (err) {
       toast({
-        content: err as any,
+        content: errorMessage(err),
         type: 'error',
       })
     }

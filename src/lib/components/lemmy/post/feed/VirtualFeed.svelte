@@ -1,8 +1,10 @@
 <script lang="ts">
   import { browser } from '$app/environment'
   import Post from '$lib/components/lemmy/post/Post.svelte'
+  import VirtualList from '$lib/components/render/VirtualList.svelte'
   import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
+  import { t } from '$lib/i18n/translations'
   import { client } from '$lib/lemmy.svelte'
   import {
     postFeeds,
@@ -10,10 +12,9 @@
     type PostFeedID,
   } from '$lib/lemmy/postfeed.svelte'
   import { settings } from '$lib/settings.svelte.js'
-  import { t } from '$lib/i18n/translations'
   import type { PostView } from 'lemmy-js-client'
   import { Button } from 'mono-svelte'
-  import { onMount, tick, untrack } from 'svelte'
+  import { onMount, untrack } from 'svelte'
   import {
     ArchiveBox,
     ChevronDoubleUp,
@@ -22,7 +23,6 @@
     Plus,
   } from 'svelte-hero-icons'
   import InfiniteScroll from 'svelte-infinite-scroll'
-  import VirtualList from '$lib/components/render/VirtualList.svelte'
 
   interface Props {
     posts: PostView[]
@@ -45,7 +45,7 @@
     scrollToIndex: (index: number, window?: boolean) => void
   }>()
 
-  let error: any = $state(undefined)
+  let error = $state()
   let loading = $state(false)
   let hasMore = $state(true)
 
@@ -69,7 +69,7 @@
           sort: feedData.sort,
           type_: feedData.type_,
         })
-        .catch((e) => {
+        .catch(e => {
           throw new Error(e)
         })
 
@@ -90,7 +90,7 @@
   }
 
   const callback: IntersectionObserverCallback = (entries, observer) => {
-    entries.forEach((entry) => {
+    entries.forEach(entry => {
       if (!entry.isIntersecting) return
 
       const element = entry.target as HTMLElement
@@ -130,7 +130,7 @@
     const feed = document.getElementById('feed')
     if (!feed) return
 
-    new MutationObserver((mutations) => {
+    new MutationObserver(mutations => {
       mutations.forEach(({ addedNodes, removedNodes }) => {
         addedNodes.forEach(observePost)
         removedNodes.forEach(unobservePost)
@@ -176,7 +176,7 @@
         bind:restore={postFeeds.value[feedId].clientData}
         bind:this={listComp}
       >
-        {#snippet item(_, row, __)}
+        {#snippet item(row)}
           <li
             data-index={row}
             style={row < 7 ? `--anim-delay: ${row * 100}ms` : ''}
@@ -238,7 +238,6 @@
       <div style="border-top-width: 0">
         <EndPlaceholder>
           {$t('routes.frontpage.endFeed', {
-            // @ts-ignore
             community_name: feedData.community_name ?? 'undefined',
           })}
           {#snippet action()}

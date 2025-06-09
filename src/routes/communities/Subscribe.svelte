@@ -15,8 +15,8 @@
       [
         {
           subscribe: (
-            id: number,
-            subscribed: SubscribedType,
+            id?: number,
+            subscribed?: SubscribedType,
           ) => Promise<CommunityResponse | undefined>
           subscribing: boolean
         },

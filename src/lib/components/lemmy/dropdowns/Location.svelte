@@ -19,13 +19,11 @@
     navigate?: boolean
     changeDefault?: boolean
     showLabel?: boolean
-    [key: string]: any
   }
 
   let {
     selected = $bindable(),
     navigate = true,
-    changeDefault = false,
     showLabel = true,
     ...rest
   }: Props = $props()

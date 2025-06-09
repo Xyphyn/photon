@@ -3,6 +3,7 @@
   import { t } from '$lib/i18n/translations'
   import { searchParam } from '$lib/util.svelte.js'
   import { Select } from 'mono-svelte'
+  import Option from 'mono-svelte/forms/select/Option.svelte'
   import {
     ArrowTrendingDown,
     ArrowTrendingUp,
@@ -21,21 +22,18 @@
     Trophy,
   } from 'svelte-hero-icons'
   import { backOut } from 'svelte/easing'
-  import { fly, slide } from 'svelte/transition'
-  import Option from 'mono-svelte/forms/select/Option.svelte'
+  import { fly } from 'svelte/transition'
 
   interface Props {
     selected: string
     navigate?: boolean
     changeDefault?: boolean
     class?: string
-    [key: string]: any
   }
 
   let {
     selected = $bindable(),
     navigate = true,
-    changeDefault = false,
     class: clazz = '',
     ...rest
   }: Props = $props()

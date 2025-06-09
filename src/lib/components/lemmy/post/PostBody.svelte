@@ -16,7 +16,6 @@
 
   interface Props {
     body: string
-    view?: View
     clickThrough?: boolean
     element?: string
     style?: string
@@ -25,7 +24,6 @@
 
   let {
     body,
-    view = 'cozy',
     clickThrough = false,
     element: htmlElement = 'div',
     style = '',

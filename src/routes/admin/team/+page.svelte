@@ -80,11 +80,7 @@
         if (!profile.data?.jwt || newAdmin == '') return
         adding = true
 
-        const r = await addAdmin(
-          `${newAdmin}@${instance.data}`,
-          true,
-          profile.data.jwt,
-        )
+        const r = await addAdmin(`${newAdmin}@${instance.data}`, true)
         if (!r) return
 
         toast({

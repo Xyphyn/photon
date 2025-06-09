@@ -23,7 +23,7 @@
       }
 
       return urlObj.toString()
-    } catch (e) {
+    } catch {
       return undefined
     }
   }
@@ -37,7 +37,6 @@
     res?: number | undefined
     style?: string
     class?: ClassValue
-    [key: string]: any
   }
 
   let {
@@ -53,7 +52,7 @@
   }: Props = $props()
 
   let optimizedURLs = $derived(
-    [2, 3, 6, -1].map((n) => optimizeUrl(url, (res || width) * n)),
+    [2, 3, 6, -1].map(n => optimizeUrl(url, (res || width) * n)),
   )
 </script>
 

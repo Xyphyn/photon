@@ -12,11 +12,9 @@
     sidebar?: Snippet<[{ class: string; style: string }]>
     main?: Snippet<[{ class: string; style: string }]>
     suffix?: Snippet<[{ class: string; style: string }]>
-    [key: string]: any
   }
 
   let {
-    route = undefined,
     class: clazz = '',
     children,
     navbar,
@@ -27,7 +25,7 @@
   }: Props = $props()
 
   let previousTop = 0
-  const onscroll: UIEventHandler<Window> = _ => {
+  const onscroll: UIEventHandler<Window> = () => {
     if (!settings.dock.autoHide) {
       dockVisible = true
       return

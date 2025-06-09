@@ -26,7 +26,7 @@ function getDepthFromComment(comment?: Comment): number | undefined {
 export function buildCommentsTree(
   comments: CommentView[],
   baseDepth: number = 0,
-  filter: (c: CommentView) => boolean = (c) => true,
+  filter: (c: CommentView) => boolean = () => true,
 ): CommentNodeI[] {
   const map = new Map<number, CommentNodeI>()
 

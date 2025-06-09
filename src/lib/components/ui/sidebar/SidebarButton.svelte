@@ -1,17 +1,17 @@
 <script lang="ts">
   import { page } from '$app/state'
   import { Button } from 'mono-svelte'
+  import type { ButtonProps } from 'mono-svelte/button/Button.svelte'
   import { Icon, type IconSource } from 'svelte-hero-icons'
 
-  interface Props {
+  interface Props extends ButtonProps {
     href?: string | undefined
     icon?: IconSource | undefined
     selected?: boolean
     class?: string
-    customIcon?: import('svelte').Snippet<[any]>
+    customIcon?: import('svelte').Snippet<[{ selected: boolean }]>
     children?: import('svelte').Snippet
     label?: import('svelte').Snippet
-    [key: string]: any
   }
 
   let {

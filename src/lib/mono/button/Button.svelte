@@ -108,7 +108,8 @@
     },
   }
 
-  interface Props extends Omit<HTMLButtonAttributes, 'prefix'> {
+  interface Props
+    extends Omit<HTMLButtonAttributes | HTMLAnchorAttributes, 'prefix'> {
     loading?: boolean
     submit?: boolean
     color?: ButtonColor
@@ -131,7 +132,11 @@
 </script>
 
 <script lang="ts">
-  import type { ClassValue, HTMLButtonAttributes } from 'svelte/elements'
+  import type {
+    ClassValue,
+    HTMLAnchorAttributes,
+    HTMLButtonAttributes,
+  } from 'svelte/elements'
 
   import Spinner from '../loader/Spinner.svelte'
   import type { Snippet } from 'svelte'

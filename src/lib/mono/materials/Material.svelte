@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ClassValue } from 'svelte/elements'
+  import type { ClassValue, HTMLAttributes } from 'svelte/elements'
 
   type Elevation = keyof typeof elevationClass
   type Padding = keyof typeof paddingClass
@@ -45,7 +45,7 @@
     none: '',
   }
 
-  interface Props {
+  interface Props extends HTMLAttributes<HTMLDivElement> {
     elevation?: Elevation
     padding?: Padding
     rounding?: Rounding

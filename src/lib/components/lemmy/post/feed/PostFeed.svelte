@@ -3,24 +3,17 @@
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { settings } from '$lib/settings.svelte.js'
   import type { PostView } from 'lemmy-js-client'
-  import { Badge, Button } from 'mono-svelte'
-  import { ArchiveBox, Icon, Minus, Plus } from 'svelte-hero-icons'
+  import { Button } from 'mono-svelte'
+  import type { Snippet } from 'svelte'
+  import { ArchiveBox, Icon, Plus } from 'svelte-hero-icons'
 
   interface Props {
     posts: PostView[]
     community?: boolean
-    feedData: any
-    children?: import('svelte').Snippet
-    [key: string]: any
+    children?: Snippet
   }
 
-  let {
-    posts = $bindable(),
-    community = false,
-    feedData,
-    children,
-    ...rest
-  }: Props = $props()
+  let { posts = $bindable(), community = false, children }: Props = $props()
 </script>
 
 <ul

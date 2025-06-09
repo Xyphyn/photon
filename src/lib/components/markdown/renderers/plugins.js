@@ -4,10 +4,10 @@ import markedLinkifyIt from 'marked-linkify-it'
 export const spoilerPlugin = {
   name: 'spoiler',
   level: 'block',
-  start(src: string) {
+  start(src) {
     return src.match(/^:::/)?.index
   },
-  tokenizer(src: string, tokens: any) {
+  tokenizer(src, tokens) {
     const rule = /^::: spoiler (.+)\n([\s\S]*?)\n:::/
     const match = rule.exec(src)
     if (match) {
@@ -19,7 +19,7 @@ export const spoilerPlugin = {
       }
     }
   },
-  renderer(token: any) {
+  renderer(token) {
     return `
       <details>
         <summary>${marked.parseInline(token.title)}</summary>
@@ -32,7 +32,7 @@ export const spoilerPlugin = {
 export const linkify = markedLinkifyIt(
   {
     '!': {
-      validate: function (text: any, pos: any, self: any) {
+      validate: function (text, pos, self) {
         var tail = text.slice(pos)
 
         if (!self.re.community) {
@@ -46,11 +46,11 @@ export const linkify = markedLinkifyIt(
           if (pos >= 2 && tail[pos - 2] === '!') {
             return false
           }
-          return tail.match(self.re.community)![0].length
+          return tail.match(self.re.community)[0].length
         }
         return 0
       },
-      normalize: function (match: any) {
+      normalize: function (match) {
         let prefix = match.url
         prefix = prefix.startsWith('c/') ? prefix.slice(2) : prefix.slice(1)
 
@@ -58,7 +58,7 @@ export const linkify = markedLinkifyIt(
       },
     },
     '@': {
-      validate: function (text: any, pos: any, self: any) {
+      validate: function (text, pos, self) {
         var tail = text.slice(pos)
 
         if (!self.re.user) {
@@ -72,11 +72,11 @@ export const linkify = markedLinkifyIt(
           if (pos >= 2 && tail[pos - 2] === '!') {
             return false
           }
-          return tail.match(self.re.user)![0].length
+          return tail.match(self.re.user)[0].length
         }
         return 0
       },
-      normalize: function (match: any) {
+      normalize: function (match) {
         let prefix = match.url
         prefix = prefix.startsWith('u/') ? prefix.slice(2) : prefix.slice(1)
 
@@ -100,7 +100,7 @@ const regexes = {
 /**
  * Convert links to photon links
  */
-export const photonify = (link: string) => {
+export const photonify = link => {
   if (regexes.community.test(link)) {
     const match = link.match(regexes.community)
     if (!match) return
@@ -136,14 +136,14 @@ export const photonify = (link: string) => {
   }
 }
 
-export function subSupscriptExtension(tokensExtractor: any): any {
+export function subSupscriptExtension(tokensExtractor) {
   return {
     name: 'subscriptSuperscript',
     level: 'inline',
-    start(src: string) {
+    start(src) {
       return src.match(/[~^]/)?.index
     },
-    tokenizer(src: string, tokens: any[]): any {
+    tokenizer(src, tokens) {
       const subscriptRule = /^~([^~\s](?:[^~]*[^~\s])?)~/
       const superscriptRule = /^\^([^\^\s](?:[^\^]*[^\^\s])?)\^/
 

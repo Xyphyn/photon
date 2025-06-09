@@ -20,11 +20,11 @@
 
     const newTitle = title
       .toString()
-      .replace(/^(\[.[^\]]+\])|(\[.[^\]]+\])$/g, (match, content) => {
+      .replace(/^(\[.[^\]]+\])|(\[.[^\]]+\])$/g, match => {
         const contents = match.split(',').map((part: string) => part.trim())
 
         contents
-          .map((i) => i.replaceAll(/(\[|\])/g, ''))
+          .map(i => i.replaceAll(/(\[|\])/g, ''))
           .forEach((content: string) => {
             extracted.push(
               textToTag.get(content) ?? {
@@ -44,32 +44,32 @@
 
 <script lang="ts">
   import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
-  import Avatar from '$lib/components/ui/Avatar.svelte'
-  import { Badge, Popover } from 'mono-svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
+  import Markdown from '$lib/components/markdown/Markdown.svelte'
+  import Avatar from '$lib/components/ui/Avatar.svelte'
+  import { publishedToDate } from '$lib/components/util/date'
   import RelativeDate, {
     formatRelativeDate,
   } from '$lib/components/util/RelativeDate.svelte'
+  import { t } from '$lib/i18n/translations'
+  import { instance } from '$lib/instance.svelte'
+  import { settings, type View } from '$lib/settings.svelte'
   import type { Community, Person, SubscribedType } from 'lemmy-js-client'
+  import { Badge, Popover } from 'mono-svelte'
   import {
     Bookmark,
     ExclamationTriangle,
     Icon,
     LockClosed,
     Megaphone,
+    PaperAirplane,
+    Pencil,
     Tag,
     Trash,
-    PaperAirplane,
+    type IconSource,
   } from 'svelte-hero-icons'
-  import ShieldIcon from '../moderation/ShieldIcon.svelte'
-  import { settings, type View } from '$lib/settings.svelte'
-  import Markdown from '$lib/components/markdown/Markdown.svelte'
-  import { t } from '$lib/i18n/translations'
-  import { Pencil, type IconSource } from 'svelte-hero-icons'
   import CommunityHeader from '../community/CommunityHeader.svelte'
-  import { publishedToDate } from '$lib/components/util/date'
-  import { profile } from '$lib/auth.svelte'
-  import { instance } from '$lib/instance.svelte'
+  import ShieldIcon from '../moderation/ShieldIcon.svelte'
 
   interface Props {
     community?: Community | undefined
@@ -83,7 +83,16 @@
     edited?: string | undefined
     view?: View
     // Badges
-    badges?: any
+    badges?: {
+      nsfw: boolean
+      saved: boolean
+      featured: boolean
+      deleted: boolean
+      removed: boolean
+      locked: boolean
+      moderator: boolean
+      admin: boolean
+    }
     tags?: Tag[]
     style?: string
     titleClass?: string

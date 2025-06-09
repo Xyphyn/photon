@@ -1,4 +1,12 @@
 <script lang="ts">
+  import { notifications, profile, profileData } from '$lib/auth.svelte.js'
+  import Expandable from '$lib/components/ui/Expandable.svelte'
+  import CommunityList from '$lib/components/ui/sidebar/CommunityList.svelte'
+  import ProfileButton from '$lib/components/ui/sidebar/ProfileButton.svelte'
+  import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
+  import { t } from '$lib/i18n/translations'
+  import { settings } from '$lib/settings.svelte.js'
+  import { Badge } from 'mono-svelte'
   import {
     ArrowLeftOnRectangle,
     Bookmark,
@@ -8,17 +16,7 @@
     UserCircle,
     UserGroup,
   } from 'svelte-hero-icons'
-  import { notifications, profile, profileData } from '$lib/auth.svelte.js'
-  import { settings } from '$lib/settings.svelte.js'
-  import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
-  import CommunityList from '$lib/components/ui/sidebar/CommunityList.svelte'
-  import ProfileButton from '$lib/components/ui/sidebar/ProfileButton.svelte'
-  import { flip } from 'svelte/animate'
-  import { expoOut } from 'svelte/easing'
-  import { Badge } from 'mono-svelte'
-  import Expandable from '$lib/components/ui/Expandable.svelte'
   import EndPlaceholder from '../EndPlaceholder.svelte'
-  import { t } from '$lib/i18n/translations'
 
   interface Props {
     style?: string
@@ -162,7 +160,7 @@
           </span>
         {/snippet}
         <CommunityList
-          items={profile.data.user.moderates.map((i) => i.community)}
+          items={profile.data.user.moderates.map(i => i.community)}
         />
       </Expandable>
       <hr class="border-slate-200 dark:border-zinc-900 my-1" />
@@ -184,9 +182,7 @@
           </EndPlaceholder>
         </span>
       {/snippet}
-      <CommunityList
-        items={profile.data.user.follows.map((i) => i.community)}
-      />
+      <CommunityList items={profile.data.user.follows.map(i => i.community)} />
     </Expandable>
   {/if}
 </nav>

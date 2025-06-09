@@ -1,6 +1,5 @@
 <script lang="ts" module>
-  import { settings } from '$lib/settings.svelte.js'
-  export const voteColor = (vote: number, border: boolean = false) =>
+  export const voteColor = (vote: number) =>
     vote == 1
       ? `bg-linear-to-br from-blue-500 to-indigo-500 dark:from-blue-400 dark:to-indigo-500 text-slate-50 dark:text-zinc-900`
       : vote == -1
@@ -17,17 +16,17 @@
 </script>
 
 <script lang="ts">
-  import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
-  import type { Post } from 'lemmy-js-client'
-  import { ChevronDown, ChevronUp, Icon } from 'svelte-hero-icons'
   import { profile } from '$lib/auth.svelte.js'
-  import { vote as voteItem } from '$lib/lemmy/contentview.js'
-  import { Button, Popover, buttonColor, toast } from 'mono-svelte'
-  import { site } from '$lib/lemmy.svelte.js'
-  import { fade, fly } from 'svelte/transition'
-  import { backOut } from 'svelte/easing'
+  import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import { t } from '$lib/i18n/translations'
+  import { site } from '$lib/lemmy.svelte.js'
+  import { vote as voteItem } from '$lib/lemmy/contentview.js'
   import { errorMessage } from '$lib/lemmy/error'
+  import type { Post } from 'lemmy-js-client'
+  import { buttonColor, toast } from 'mono-svelte'
+  import { ChevronDown, ChevronUp, Icon } from 'svelte-hero-icons'
+  import { backOut } from 'svelte/easing'
+  import { fly } from 'svelte/transition'
 
   interface Props {
     post: Post
@@ -36,7 +35,7 @@
     upvotes?: number
     downvotes?: number
     showCounts?: boolean
-    children?: import('svelte').Snippet<[any]>
+    children?: import('svelte').Snippet<[{ vote: number; score: number }]>
   }
 
   let {
@@ -51,17 +50,14 @@
 
   let loading = $state(false)
 
-  let oldScore = score
-
   const castVote = async (newVote: number) => {
     if (!profile.data?.jwt) {
       toast({ content: $t('toast.loginVoteGate'), type: 'warning' })
       return
     }
     loading = true
-    oldScore = score
     vote = newVote
-    const res = await voteItem(post, newVote, profile.data.jwt).catch((e) => {
+    const res = await voteItem(post, newVote).catch(e => {
       toast({ content: errorMessage(e), type: 'error' })
       return { upvotes: 0, downvotes: 0, score: 0 }
     })

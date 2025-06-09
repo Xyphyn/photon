@@ -14,7 +14,6 @@
     class?: string
     customIcon?: Snippet<[{ size: number; isSelected?: boolean }]>
     children?: Snippet
-    [key: string]: any
   }
 
   let {
