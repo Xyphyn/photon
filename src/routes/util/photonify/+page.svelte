@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy'
-
   import { photonify } from '$lib/components/markdown/renderers/plugins'
   import { TextInput } from 'mono-svelte'
 

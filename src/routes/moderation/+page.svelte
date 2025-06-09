@@ -1,27 +1,18 @@
 <script lang="ts">
-  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
-  import { fly } from 'svelte/transition'
-  import Report from './Report.svelte'
-  import MultiSelect from '$lib/components/input/Switch.svelte'
+  import { goto } from '$app/navigation'
   import { page } from '$app/state'
-  import {
-    Check,
-    EnvelopeOpen,
-    Funnel,
-    Icon,
-    Inbox,
-    Newspaper,
-  } from 'svelte-hero-icons'
-  import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import { searchParam } from '$lib/util.svelte.js'
-  import { Button, Material, Select, toast } from 'mono-svelte'
-  import { t } from '$lib/i18n/translations'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import Placeholder from '$lib/components/ui/Placeholder.svelte'
+  import ProgressBar from '$lib/components/ui/ProgressBar.svelte'
+  import { t } from '$lib/i18n/translations'
+  import { client } from '$lib/lemmy.svelte'
+  import { searchParam } from '$lib/util.svelte.js'
+  import { Button, Select, toast } from 'mono-svelte'
   import Option from 'mono-svelte/forms/select/Option.svelte'
   import { tick } from 'svelte'
-  import ProgressBar from '$lib/components/ui/ProgressBar.svelte'
-  import { client } from '$lib/lemmy.svelte'
-  import { goto } from '$app/navigation'
+  import { Check, Funnel, Icon, Inbox } from 'svelte-hero-icons'
+  import { fly } from 'svelte/transition'
+  import Report from './Report.svelte'
 
   let { data = $bindable() } = $props()
 
@@ -38,8 +29,8 @@
     if (!reports) return
     batch.progress = 0
 
-    const promises = await Promise.all(
-      reports.map((report) => {
+    await Promise.all(
+      reports.map(report => {
         switch (report.type) {
           case 'comment': {
             const promise = client().resolveCommentReport({
@@ -116,7 +107,7 @@
   <div
     class="flex flex-col *:py-4 divide-y divide-slate-200 dark:divide-zinc-800"
   >
-    {#each reports as item}
+    {#each reports as item (item.id)}
       <div
         in:fly={{ y: -6, opacity: 0, duration: 500 }}
         class="flex flex-col gap-3 text-sm -mx-4 sm:-mx-6 px-4 sm:px-6"

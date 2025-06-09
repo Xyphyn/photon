@@ -1,17 +1,17 @@
 <script lang="ts">
   import { preventDefault } from 'svelte/legacy'
 
-  import { site, validateInstance } from '$lib/lemmy.svelte.js'
-  import { Button, Note, TextInput, toast } from 'mono-svelte'
-  import { MINIMUM_VERSION } from '$lib/version'
-  import { mayBeIncompatible } from '$lib/lemmy.svelte'
-  import { DOMAIN_REGEX_FORMS } from '$lib/util.svelte'
-  import { profile, profileData, type Profile } from '$lib/auth.svelte'
-  import { LINKED_INSTANCE_URL } from '$lib/instance.svelte'
   import { goto } from '$app/navigation'
-  import { t } from '$lib/i18n/translations'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { page } from '$app/state'
+  import { profileData } from '$lib/auth.svelte'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { t } from '$lib/i18n/translations'
+  import { LINKED_INSTANCE_URL } from '$lib/instance.svelte'
+  import { mayBeIncompatible } from '$lib/lemmy.svelte'
+  import { site, validateInstance } from '$lib/lemmy.svelte.js'
+  import { DOMAIN_REGEX_FORMS } from '$lib/util.svelte'
+  import { MINIMUM_VERSION } from '$lib/version'
+  import { Button, Note, TextInput, toast } from 'mono-svelte'
 
   interface Props {
     ref?: string
@@ -23,7 +23,7 @@
 
   let form = $state({
     instance: '',
-    username: `${$t('account.guest')} ${profileData.profiles.filter((p) => p.jwt == undefined).length + 1}`,
+    username: `${$t('account.guest')} ${profileData.profiles.filter(p => p.jwt == undefined).length + 1}`,
     loading: false,
   })
 
@@ -35,7 +35,7 @@
       return
     }
 
-    const id = Math.max(...profileData.profiles.map((i) => i.id)) + 1
+    const id = Math.max(...profileData.profiles.map(i => i.id)) + 1
     profileData.profiles.push({
       id: id,
       instance: form.instance,
@@ -59,7 +59,6 @@
       {#if site.data && mayBeIncompatible(MINIMUM_VERSION, site.data.version.replace('v', ''))}
         <Note>
           {$t('account.versionGate', {
-            //@ts-ignore
             version: `v${MINIMUM_VERSION}`,
           })}
         </Note>

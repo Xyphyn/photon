@@ -34,10 +34,7 @@
 </script>
 
 <script lang="ts">
-  import type {
-    HTMLInputAttributes,
-    HTMLInputTypeAttribute,
-  } from 'svelte/elements'
+  import type { HTMLInputAttributes } from 'svelte/elements'
 
   import Label from '../forms/Label.svelte'
   import { generateID } from '../forms/helper.js'

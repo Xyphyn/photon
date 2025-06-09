@@ -28,7 +28,7 @@
           ? 'flex-col'
           : 'flex-row'}"
       >
-        {#each $shownModal.actions as action}
+        {#each $shownModal.actions as action (action)}
           <Button
             size="lg"
             class="flex-1 w-full"

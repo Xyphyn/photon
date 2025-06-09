@@ -1,7 +1,7 @@
 import type { IconSource } from 'svelte-hero-icons'
 import { writable } from 'svelte/store'
 
-export let shownModal = writable<Modal | undefined>(undefined)
+export const shownModal = writable<Modal | undefined>()
 
 interface Modal {
   actions: Action[]
@@ -18,7 +18,7 @@ type Action = {
   /**
    * What function to run when this action is clicked. If undefined, it'll close the window.
    */
-  action: () => any
+  action: () => void
   type: 'danger' | 'secondary' | 'primary'
   content: string
   icon?: IconSource
@@ -26,7 +26,7 @@ type Action = {
 }
 
 export const action = (action?: {
-  action?: () => any
+  action?: () => void
   type?: 'danger' | 'secondary' | 'primary'
   content?: string
   icon?: IconSource

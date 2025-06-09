@@ -3,7 +3,6 @@
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
-  import type { Instance } from 'lemmy-js-client'
   import { Material, Popover } from 'mono-svelte'
   import { Check, Icon, InformationCircle } from 'svelte-hero-icons'
 
@@ -31,7 +30,7 @@
         color="distinct"
       >
         {#if data.linked && data.linked.length > 0}
-          {#each data.linked?.sort((b, a) => b.id - a.id) as instance}
+          {#each data.linked?.sort((b, a) => b.id - a.id) as instance (instance.id)}
             <div class="flex justify-between items-center first:pt-0 last:pb-0">
               <div class="flex flex-col">
                 <span class="font-medium">{instance.domain}</span>
@@ -73,7 +72,7 @@
         color="distinct"
       >
         {#if data.blocked && data.blocked.length > 0}
-          {#each data.blocked?.sort((b, a) => b.id - a.id) as instance}
+          {#each data.blocked?.sort((b, a) => b.id - a.id) as instance (instance.id)}
             <div class="flex justify-between items-center first:pt-0 last:pb-0">
               <div class="flex flex-col">
                 <span class="font-medium">{instance.domain}</span>

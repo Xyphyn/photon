@@ -96,13 +96,13 @@
   {/snippet}
   <MenuDivider>{$t('nav.menu.label')}</MenuDivider>
   {#if profile.data?.jwt}
-    <MenuButton link href="/profile">
+    <MenuButton href="/profile">
       {#snippet prefix()}
         <Icon src={UserCircle} micro width={16} />
       {/snippet}
       {$t('profile.profile')}
     </MenuButton>
-    <MenuButton link href="/inbox">
+    <MenuButton href="/inbox">
       {#snippet prefix()}
         <Icon src={Inbox} micro width={16} />
       {/snippet}
@@ -113,21 +113,21 @@
         </Badge>
       {/if}
     </MenuButton>
-    <MenuButton link href="/saved">
+    <MenuButton href="/saved">
       {#snippet prefix()}
         <Icon src={Bookmark} micro width={16} />
       {/snippet}
       {$t('profile.saved')}
     </MenuButton>
   {/if}
-  <MenuButton link href="/accounts">
+  <MenuButton href="/accounts">
     {#snippet prefix()}
       <Icon src={UserGroup} micro width={16} />
     {/snippet}
     {$t('account.accounts')}
   </MenuButton>
   <MenuDivider>{$t('nav.menu.app')}</MenuDivider>
-  <MenuButton link href="/settings">
+  <MenuButton href="/settings">
     {#snippet prefix()}
       <Icon src={Cog6Tooth} micro width={16} />
     {/snippet}
@@ -175,7 +175,7 @@
     {$t('nav.menu.theme')}
   </MenuButton>
   {#if settings.debugInfo}
-    <MenuButton link href="/util">
+    <MenuButton href="/util">
       {#snippet prefix()}
         <Icon src={BugAnt} mini width={16} />
       {/snippet}

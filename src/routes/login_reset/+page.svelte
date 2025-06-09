@@ -10,6 +10,7 @@
   import { getClient, validateInstance } from '$lib/lemmy.svelte.js'
   import { t } from '$lib/i18n/translations'
   import { Button, TextInput, toast } from 'mono-svelte'
+  import { errorMessage } from '$lib/lemmy/error'
 
   let instance = $state(LINKED_INSTANCE_URL || currentInstance.data || '')
   let email = $state('')
@@ -31,7 +32,7 @@
       })
     } catch (err) {
       toast({
-        content: err as any,
+        content: errorMessage(err as string),
         type: 'error',
       })
     }

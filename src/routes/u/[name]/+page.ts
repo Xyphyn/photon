@@ -1,5 +1,4 @@
 import { getClient } from '$lib/lemmy.svelte.js'
-import { getItemPublished } from '$lib/lemmy/item.js'
 import { ReactiveState } from '$lib/promise.svelte.js'
 import type { CommentView, PostView, SortType } from 'lemmy-js-client'
 

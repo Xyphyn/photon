@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { Button } from '../index.js'
-  import { createEventDispatcher } from 'svelte'
-  import { Icon, XMark } from 'svelte-hero-icons'
-  import { backOut, expoOut } from 'svelte/easing'
-  import { fade, scale } from 'svelte/transition'
   import { focusTrap } from 'svelte-focus-trap'
-  import Portal from '../popover/Portal.svelte'
+  import { Icon, XMark } from 'svelte-hero-icons'
+  import { backOut } from 'svelte/easing'
   import type { ClassValue } from 'svelte/elements'
+  import { fade, scale } from 'svelte/transition'
+  import { Button } from '../index.js'
+  import Portal from '../popover/Portal.svelte'
+  import type { Snippet } from 'svelte'
 
   interface Props {
     action?: string | undefined
@@ -14,9 +14,9 @@
     title?: string | undefined | null
     dismissable?: boolean
     class?: ClassValue
-    customTitle?: import('svelte').Snippet
-    children?: import('svelte').Snippet
-    actions?: import('svelte').Snippet<[any]>
+    customTitle?: Snippet
+    children?: Snippet
+    actions?: Snippet<[{ action: string }]>
     ondismissed?: () => void
     onaction?: () => void
   }
@@ -34,7 +34,7 @@
     class: clazz = '',
   }: Props = $props()
 
-  let el: any = $state()
+  let el = $state<HTMLElement>()
 </script>
 
 <Portal>
@@ -47,7 +47,8 @@
 flex flex-col items-center justify-center backdrop-blur-xs
 bg-white/50 dark:bg-black/50 box-border p-4"
       transition:fade|global={{ duration: 100 }}
-      onclick={(e) => {
+      onclick={e => {
+        // @ts-expect-error html node hell
         if (!el.contains(e.target)) {
           open = false
 
@@ -55,7 +56,6 @@ bg-white/50 dark:bg-black/50 box-border p-4"
         }
       }}
     >
-      <!-- svelte-ignore a11y_no_static_element_interactions -->
       <div
         bind:this={el}
         use:focusTrap
@@ -100,7 +100,7 @@ bg-white/50 dark:bg-black/50 box-border p-4"
             {#if actions}{@render actions({ action })}{:else}
               <Button
                 class="w-full"
-                onclick={(e) => {
+                onclick={() => {
                   onaction?.()
                   open = false
                   ondismissed?.()

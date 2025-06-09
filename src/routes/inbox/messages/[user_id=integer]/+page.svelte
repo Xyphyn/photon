@@ -1,22 +1,19 @@
 <script lang="ts">
-  import { run, preventDefault } from 'svelte/legacy'
-
-  import { Button, Material, Spinner, TextInput, toast } from 'mono-svelte'
-  import Message from './Message.svelte'
-  import { t } from '$lib/i18n/translations'
-  import { Icon, PaperAirplane } from 'svelte-hero-icons'
+  import { browser } from '$app/environment'
+  import { report } from '$lib/components/lemmy/moderation/moderation'
+  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import { fly } from 'svelte/transition'
-  import { backOut, expoOut } from 'svelte/easing'
+  import { t } from '$lib/i18n/translations'
   import { client } from '$lib/lemmy.svelte'
   import { errorMessage } from '$lib/lemmy/error'
   import type { PrivateMessageResponse } from 'lemmy-js-client'
+  import { Button, Material, TextInput, toast } from 'mono-svelte'
+  import { tick } from 'svelte'
+  import { Icon, PaperAirplane } from 'svelte-hero-icons'
   import { flip } from 'svelte/animate'
-  import { browser } from '$app/environment'
-  import { onMount, tick } from 'svelte'
-  import { report } from '$lib/components/lemmy/moderation/moderation'
-  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
-  import Placeholder from 'mono-svelte/placeholder/Placeholder.svelte'
+  import { backOut, expoOut } from 'svelte/easing'
+  import { fly } from 'svelte/transition'
+  import Message from './Message.svelte'
 
   let { data: pageData } = $props()
   let data = $state(pageData)
@@ -49,7 +46,7 @@
       return res
     } catch (err) {
       toast({
-        content: errorMessage(err as any),
+        content: errorMessage(err as string),
         type: 'error',
       })
     }
@@ -69,7 +66,7 @@
   })
 
   async function deleteMessage(id: number) {
-    const res = await client().deletePrivateMessage({
+    await client().deletePrivateMessage({
       deleted: true,
       private_message_id: id,
     })
@@ -77,7 +74,7 @@
     data.message = {
       private_messages: data.message.private_messages.toSpliced(
         data.message.private_messages.findLastIndex(
-          (i) => i.private_message.id == id,
+          i => i.private_message.id == id,
         ),
         1,
       ),
@@ -103,7 +100,6 @@
       <div class="mt-auto"></div>
       <p class="mx-auto mt-auto text-slate-400 dark:text-zinc-600">
         {$t('routes.inbox.messages.conversation', {
-          // @ts-ignore
           user:
             data.creator.person_view.person.name +
             '@' +
@@ -143,7 +139,7 @@
     border-slate-200 dark:border-zinc-800
    p-2 gap-2 backdrop-blur-xl
    bg-white/50 dark:bg-zinc-950/50 border rounded-2xl"
-      onsubmit={async (e) => {
+      onsubmit={async e => {
         e.preventDefault()
 
         const res = await sendMessage(textbox.message)

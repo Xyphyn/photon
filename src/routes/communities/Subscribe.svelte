@@ -1,12 +1,27 @@
 <script lang="ts">
   import { getClient } from '$lib/lemmy.svelte.js'
-  import type { CommunityView, SubscribedType } from 'lemmy-js-client'
+  import type {
+    CommunityResponse,
+    CommunityView,
+    SubscribedType,
+  } from 'lemmy-js-client'
   import { profile } from '$lib/auth.svelte.js'
   import { toast } from 'mono-svelte'
+  import { errorMessage } from '$lib/lemmy/error'
 
   interface Props {
     community?: CommunityView | undefined
-    children?: import('svelte').Snippet<[any]>
+    children?: import('svelte').Snippet<
+      [
+        {
+          subscribe: (
+            id: number,
+            subscribed: SubscribedType,
+          ) => Promise<CommunityResponse | undefined>
+          subscribing: boolean
+        },
+      ]
+    >
   }
 
   let { community = undefined, children }: Props = $props()
@@ -30,8 +45,8 @@
 
       subscribing = false
       return res
-    } catch (error) {
-      toast({ content: error as any, type: 'error' })
+    } catch (err) {
+      toast({ content: errorMessage(err as string), type: 'error' })
     }
 
     subscribing = false

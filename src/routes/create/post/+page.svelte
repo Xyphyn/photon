@@ -1,11 +1,11 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
-  import PostForm from '$lib/components/lemmy/post/form/PostForm.svelte'
   import { profile } from '$lib/auth.svelte.js'
-  import { onDestroy, onMount } from 'svelte'
-  import { getSessionStorage, setSessionStorage } from '$lib/session.js'
-  import { t } from '$lib/i18n/translations.js'
+  import PostForm from '$lib/components/lemmy/post/form/PostForm.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { t } from '$lib/i18n/translations.js'
+  import { getSessionStorage, setSessionStorage } from '$lib/session.js'
+  import { onDestroy, onMount } from 'svelte'
 
   let { data } = $props()
 
@@ -23,6 +23,8 @@
     setSessionStorage('lastSeenCommunity', undefined)
   })
 
+  // TODO remove this
+  // eslint-disable-next-line
   let post = getSessionStorage('postDraft') as any
 </script>
 
@@ -44,7 +46,7 @@
           url: undefined,
         }}
     passedCommunity={community}
-    onsubmit={(e) => goto(`/post/${e.post.id}`)}
+    onsubmit={e => goto(`/post/${e.post.id}`)}
   >
     {#snippet formtitle()}
       <Header class="text-3xl font-bold" pageHeader>

@@ -1,15 +1,14 @@
 <script lang="ts">
   import ItemList from '$lib/components/lemmy/generic/ItemList.svelte'
-  import ShieldIcon from '$lib/components/lemmy/moderation/ShieldIcon.svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import EntityHeader from '$lib/components/ui/EntityHeader.svelte'
   import Expandable from '$lib/components/ui/Expandable.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
   import { formatRelativeDate } from '$lib/components/util/RelativeDate.svelte'
+  import { t } from '$lib/i18n/translations.js'
   import { communityLink } from '$lib/lemmy/generic.js'
   import { settings } from '$lib/settings.svelte.js'
-  import { t } from '$lib/i18n/translations.js'
   let { data } = $props()
 
   let my_user = $derived(data.my_user!.local_user_view)
@@ -60,7 +59,7 @@
         <hr class="flex-1 w-full border-slate-200 dark:border-zinc-800 mx-3" />
       {/snippet}
       <ItemList
-        items={data.moderates.map((m) => ({
+        items={data.moderates.map(m => ({
           id: m.community.id,
           name: m.community.title,
           url: communityLink(m.community),

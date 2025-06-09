@@ -18,7 +18,7 @@ export interface Toast {
   content: string
   type: ToastType
   loading?: boolean
-  action?: () => any
+  action?: () => void
 }
 
 export const toasts = writable<Toast[]>([])
@@ -36,11 +36,11 @@ export function toast({
   type?: ToastType
   duration?: number
   loading?: boolean
-  action?: () => any
+  action?: () => void
 }) {
   let id = 0
 
-  toasts.update((toasts) => {
+  toasts.update(toasts => {
     id = Math.floor(Math.random() * 10000)
 
     return [
@@ -57,11 +57,11 @@ export function toast({
   })
 
   setTimeout(() => {
-    toasts.update((toasts) => toasts.filter((toast) => toast.id != id))
+    toasts.update(toasts => toasts.filter(toast => toast.id != id))
   }, duration)
 
   return id
 }
 
 export const removeToast = (id: number) =>
-  toasts.update((toasts) => toasts.filter((toast) => toast.id != id))
+  toasts.update(toasts => toasts.filter(toast => toast.id != id))

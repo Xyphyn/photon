@@ -1,14 +1,18 @@
 <script lang="ts">
   import { notifications, profile } from '$lib/auth.svelte.js'
+  import ApplicationDenyModal from '$lib/components/lemmy/modal/ApplicationDenyModal.svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
-  import { Material, toast } from 'mono-svelte'
+  import RelativeDate from '$lib/components/util/RelativeDate.svelte'
+  import { publishedToDate } from '$lib/components/util/date'
+  import { t } from '$lib/i18n/translations'
   import { getClient } from '$lib/lemmy.svelte.js'
+  import { errorMessage } from '$lib/lemmy/error'
   import type {
     ApproveRegistrationApplication,
     RegistrationApplicationView,
   } from 'lemmy-js-client'
-  import { Button } from 'mono-svelte'
+  import { Button, Material, toast } from 'mono-svelte'
   import {
     Check,
     Icon,
@@ -16,12 +20,6 @@
     ShieldExclamation,
     XMark,
   } from 'svelte-hero-icons'
-  import RelativeDate from '$lib/components/util/RelativeDate.svelte'
-  import { publishedToDate } from '$lib/components/util/date'
-  import ApplicationDenyModal from '$lib/components/lemmy/modal/ApplicationDenyModal.svelte'
-  import { t } from '$lib/i18n/translations'
-  import { removalTemplate } from '$lib/components/lemmy/moderation/moderation'
-  import { fullCommunityName } from '$lib/util.svelte'
 
   interface Props {
     application: RegistrationApplicationView
@@ -47,7 +45,7 @@
     } else {
       reviewing = true
       while (reviewing) {
-        await new Promise((res) => setTimeout(res, 1000))
+        await new Promise(res => setTimeout(res, 1000))
       }
       if (!denying) {
         denyReason = ''
@@ -75,7 +73,7 @@
       $notifications.applications -= 1
     } catch (err) {
       toast({
-        content: err as any,
+        content: errorMessage(err as string),
         type: 'error',
       })
     }

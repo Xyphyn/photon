@@ -1,25 +1,28 @@
 <script lang="ts">
   import { profile } from '$lib/auth.svelte.js'
+  import ImageUploadModal from '$lib/components/lemmy/modal/ImageUploadModal.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
+  import { t } from '$lib/i18n/translations.js'
+  import { getClient, site } from '$lib/lemmy.svelte.js'
+  import type { EditSite } from 'lemmy-js-client'
   import {
     Badge,
+    Button,
     Label,
     Material,
     Menu,
     MenuButton,
+    Select,
     Switch,
+    TextInput,
     toast,
   } from 'mono-svelte'
-  import { getClient, site } from '$lib/lemmy.svelte.js'
-  import type { EditSite } from 'lemmy-js-client'
-  import type { PageData } from './$types.js'
-  import { Button, Checkbox, Select, TextInput } from 'mono-svelte'
-  import ImageUploadModal from '$lib/components/lemmy/modal/ImageUploadModal.svelte'
-  import { DocumentPlus, Icon, Plus } from 'svelte-hero-icons'
-  import { t } from '$lib/i18n/translations.js'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import Option from 'mono-svelte/forms/select/Option.svelte'
-  import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
+  import { DocumentPlus, Icon, Plus } from 'svelte-hero-icons'
+  import type { PageData } from './$types.js'
+  import { errorMessage } from '$lib/lemmy/error.js'
 
   interface Props {
     data: PageData
@@ -42,7 +45,6 @@
     if (!profile.data?.jwt) return
 
     saving = true
-    const { jwt } = profile.data
 
     try {
       await getClient().editSite({
@@ -54,7 +56,7 @@
       })
     } catch (err) {
       toast({
-        content: err as any,
+        content: errorMessage(err as string),
         type: 'error',
       })
     }
@@ -257,7 +259,7 @@
                   </Badge>
                 </button>
               {/snippet}
-              {#each site.data.all_languages.filter(l => !formData.discussion_languages?.includes(l.id)) as language, index}
+              {#each site.data.all_languages.filter(l => !formData.discussion_languages?.includes(l.id)) as language (language.id)}
                 <MenuButton
                   class="min-h-[16px] py-0"
                   onclick={() => {
@@ -268,7 +270,7 @@
                 </MenuButton>
               {/each}
             </Menu>
-            {#each formData.discussion_languages ?? [] as languageId, index}
+            {#each formData.discussion_languages ?? [] as languageId, index (languageId)}
               {@const language = site.data.all_languages.find(
                 l => l.id == languageId,
               )}

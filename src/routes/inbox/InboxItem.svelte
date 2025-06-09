@@ -1,32 +1,17 @@
 <script lang="ts">
-  import Comment from '$lib/components/lemmy/comment/Comment.svelte'
-  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
-  import { getClient } from '$lib/lemmy.svelte.js'
   import { notifications, profile } from '$lib/auth.svelte.js'
-  import {
-    ArrowUturnLeft,
-    ArrowUturnUp,
-    AtSymbol,
-    ChatBubbleOvalLeft,
-    Check,
-    Envelope,
-    Icon,
-    Eye,
-    EyeSlash,
-  } from 'svelte-hero-icons'
-  import { Material } from 'mono-svelte'
-  import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
-  import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
-  import { Button } from 'mono-svelte'
-  import RelativeDate from '$lib/components/util/RelativeDate.svelte'
-  import { publishedToDate } from '$lib/components/util/date.js'
-  import type { InboxItem } from '$lib/lemmy/inbox.js'
+  import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
   import PrivateMessage from '$lib/components/lemmy/inbox/PrivateMessage.svelte'
   import PrivateMessageModal from '$lib/components/lemmy/modal/PrivateMessageModal.svelte'
-  import { t } from '$lib/i18n/translations'
-  import Expandable from '$lib/components/ui/Expandable.svelte'
-  import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
+  import Expandable from '$lib/components/ui/Expandable.svelte'
+  import RelativeDate from '$lib/components/util/RelativeDate.svelte'
+  import { publishedToDate } from '$lib/components/util/date.js'
+  import { t } from '$lib/i18n/translations'
+  import { getClient } from '$lib/lemmy.svelte.js'
+  import type { InboxItem } from '$lib/lemmy/inbox.js'
+  import { Button } from 'mono-svelte'
+  import { Eye, EyeSlash, Icon } from 'svelte-hero-icons'
 
   interface Props {
     item: InboxItem
@@ -35,7 +20,6 @@
   let { item = $bindable() }: Props = $props()
 
   let replying = $state(false)
-  let reply = ''
   let loading = $state(false)
 
   async function markAsRead(isRead: boolean) {
@@ -90,19 +74,16 @@
         <div class="text-sm font-normal">
           {#if item.type == 'comment_reply'}
             {@html $t('routes.inbox.item.reply', {
-              // @ts-ignore
               user: `<span class="font-medium">${item.creator.name}</span>`,
               post: `<span class="font-medium">${item.item.post.name}</span>`,
             })}
           {:else if item.type == 'person_mention'}
             {@html $t('routes.inbox.item.mention', {
-              // @ts-ignore
               user: `<span class="font-medium">${item.creator.name}</span>`,
               post: `<span class="font-medium">${item.item.post.name}</span>`,
             })}
           {:else if item.type == 'private_message'}
             {@html $t('routes.inbox.item.message', {
-              // @ts-ignore
               user: `<span class="font-medium">${item.item.creator.name}</span>`,
               recipient: `<span class="font-medium">${item.item.recipient.name}</span>`,
             })}
@@ -118,7 +99,7 @@
           color={item.read ? 'secondary' : 'primary'}
           {loading}
           disabled={loading}
-          onclick={(e) => {
+          onclick={e => {
             e.stopPropagation()
             markAsRead(!item.read)
           }}
@@ -152,7 +133,7 @@
         color={item.read ? 'secondary' : 'primary'}
         {loading}
         disabled={loading}
-        onclick={(e) => {
+        onclick={e => {
           e.stopPropagation()
           markAsRead(!item.read)
         }}
@@ -192,15 +173,3 @@
     {/if}
   {/snippet}
 </Expandable>
-
-<style>
-  .meta {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    grid-template-rows: auto 1fr;
-    column-gap: 0.5rem;
-    grid-template-areas:
-      'a b     actions'
-      'a title actions';
-  }
-</style>

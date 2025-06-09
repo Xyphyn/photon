@@ -1,5 +1,7 @@
 <script lang="ts">
-  interface Props {
+  import type { HTMLAttributes } from 'svelte/elements'
+
+  interface Props extends HTMLAttributes<HTMLSpanElement> {
     small?: boolean
     class?: string
     children?: import('svelte').Snippet

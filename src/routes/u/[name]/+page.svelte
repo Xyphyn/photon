@@ -1,5 +1,35 @@
 <script lang="ts">
+  import { goto } from '$app/navigation'
+  import { page } from '$app/state'
+  import { profile } from '$lib/auth.svelte.js'
+  import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
+  import ItemList from '$lib/components/lemmy/generic/ItemList.svelte'
+  import { ban, isAdmin } from '$lib/components/lemmy/moderation/moderation.js'
+  import ShieldIcon from '$lib/components/lemmy/moderation/ShieldIcon.svelte'
   import Post from '$lib/components/lemmy/post/Post.svelte'
+  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
+  import EntityHeader from '$lib/components/ui/EntityHeader.svelte'
+  import Expandable from '$lib/components/ui/Expandable.svelte'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import Pageination from '$lib/components/ui/Pageination.svelte'
+  import Placeholder from '$lib/components/ui/Placeholder.svelte'
+  import { publishedToDate } from '$lib/components/util/date.js'
+  import { formatRelativeDate } from '$lib/components/util/RelativeDate.svelte'
+  import { t } from '$lib/i18n/translations.js'
+  import { client, getClient } from '$lib/lemmy.svelte.js'
+  import { communityLink } from '$lib/lemmy/generic.js'
+  import { isCommentView } from '$lib/lemmy/item.js'
+  import { isBlocked } from '$lib/lemmy/user.js'
+  import {
+    Button,
+    Menu,
+    MenuButton,
+    Modal,
+    Option,
+    removeToast,
+    Select,
+    toast,
+  } from 'mono-svelte'
   import {
     AdjustmentsHorizontal,
     AtSymbol,
@@ -10,33 +40,9 @@
     Icon,
     NoSymbol,
     PencilSquare,
-    ShieldCheck,
     ShieldExclamation,
   } from 'svelte-hero-icons'
-  import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
-  import Pageination from '$lib/components/ui/Pageination.svelte'
-  import { page } from '$app/state'
-  import { goto } from '$app/navigation'
-  import { isCommentView } from '$lib/lemmy/item.js'
-  import { client, getClient } from '$lib/lemmy.svelte.js'
-  import { isBlocked } from '$lib/lemmy/user.js'
-  import { Menu, MenuButton, removeToast, toast } from 'mono-svelte'
-  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
-  import { profile } from '$lib/auth.svelte.js'
-  import { ban, isAdmin } from '$lib/components/lemmy/moderation/moderation.js'
-  import ShieldIcon from '$lib/components/lemmy/moderation/ShieldIcon.svelte'
-  import { searchParam } from '$lib/util.svelte.js'
-  import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import { Button, Modal, Select, Option } from 'mono-svelte'
-  import Expandable from '$lib/components/ui/Expandable.svelte'
-  import { communityLink } from '$lib/lemmy/generic.js'
-  import ItemList from '$lib/components/lemmy/generic/ItemList.svelte'
-  import { t } from '$lib/i18n/translations.js'
-  import EntityHeader from '$lib/components/ui/EntityHeader.svelte'
-  import { publishedToDate } from '$lib/components/util/date.js'
-  import { formatRelativeDate } from '$lib/components/util/RelativeDate.svelte'
   import type { PageData } from './$types'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
   interface Props {
     data: PageData
@@ -45,14 +51,12 @@
 
   let { data, inline = false }: Props = $props()
 
-  let blocking = false
   let sortForm = $state<HTMLFormElement>()
 
   async function blockUser(block: number) {
     if (!profile.data?.user || !profile.data?.jwt)
       throw new Error('Unauthenticated')
 
-    blocking = true
     try {
       const blocked = isBlocked(profile.data.user, block)
 
@@ -63,7 +67,7 @@
 
       if (blocked) {
         const index = profile.data.user.person_blocks
-          .map((p) => p.target.id)
+          .map(p => p.target.id)
           .indexOf(block)
         profile.data.user.person_blocks.splice(index, 1)
       }
@@ -78,11 +82,10 @@
       })
     } catch (err) {
       toast({
-        content: err as any,
+        content: err as string,
         type: 'error',
       })
     }
-    blocking = false
   }
 
   let purgingUser = $state(false)
@@ -107,7 +110,7 @@
       removeToast(purgeToast)
       toast({ content: $t('toast.purgeUser'), type: 'success' })
     } catch (e) {
-      toast({ content: e as any, type: 'error' })
+      toast({ content: e as string, type: 'error' })
     }
   }
 </script>
@@ -195,7 +198,7 @@
                 />
               {/snippet}
               <ItemList
-                items={data.moderates.value.map((m) => ({
+                items={data.moderates.value.map(m => ({
                   id: m.community.id,
                   name: m.community.title,
                   url: communityLink(m.community),
@@ -342,7 +345,7 @@
         class="divide-y! divide-slate-200 dark:divide-zinc-800 flex flex-col"
       >
         {#key data.items}
-          {#each data.items.value as item}
+          {#each data.items.value as item (item)}
             {#if isCommentView(item) && data.filters.value.type == 'comments'}
               <CommentItem comment={item} />
             {:else if !isCommentView(item) && data.filters.value.type == 'posts'}
@@ -354,7 +357,7 @@
     {/if}
     <Pageination
       bind:page={data.filters.value.page}
-      href={(page) => `?page=${page}`}
+      href={page => `?page=${page}`}
     />
   </div>
 </div>

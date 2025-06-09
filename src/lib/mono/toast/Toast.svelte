@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Spinner } from '../index.js'
-  import { backOut, expoOut } from 'svelte/easing'
+  import { expoOut } from 'svelte/easing'
   import { type Toast, toasts, toastColors } from './toasts.js'
   import {
     InformationCircle,
@@ -62,7 +62,7 @@
       <button
         onclick={() => {
           toast.action?.()
-          toasts.update((toasts) => toasts.filter((t) => t.id != toast.id))
+          toasts.update(toasts => toasts.filter(t => t.id != toast.id))
         }}
         class="rounded-lg w-max transition-colors hover:bg-black/20 dark:hover:bg-white/20 p-2"
       >
@@ -71,7 +71,7 @@
     {/if}
     <button
       onclick={() => {
-        toasts.update((toasts) => toasts.filter((t) => t.id != toast.id))
+        toasts.update(toasts => toasts.filter(t => t.id != toast.id))
       }}
       class="rounded-lg w-max transition-colors hover:bg-black/20 dark:hover:bg-white/20 p-2"
     >

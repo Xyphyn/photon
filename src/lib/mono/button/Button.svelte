@@ -118,7 +118,6 @@
     alignment?: ButtonAlignment
     shadow?: ButtonShadow
     column?: boolean
-    animations?: any
     loaderWidth?: number | undefined
     href?: string | undefined
     class?: ClassValue
@@ -126,7 +125,6 @@
     children?: Snippet
     suffix?: Snippet
     onclick?: HTMLButtonAttributes['onclick']
-    [key: string]: any
   }
 
   export type { Props as ButtonProps }
@@ -148,10 +146,6 @@
     alignment = 'center',
     shadow = 'none',
     column = false,
-    animations = {
-      scale: false,
-      large: false,
-    },
     disabled,
     loaderWidth = undefined,
     href = undefined,

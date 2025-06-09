@@ -2,7 +2,6 @@
   import Button from '../button/Button.svelte'
   import { generateID } from '../forms/helper.js'
   import { Label } from '../index.js'
-  import { Icon, PaperClip } from 'svelte-hero-icons'
 
   interface Props {
     accept?: string
@@ -51,12 +50,11 @@
       <div
         class="flex flex-row items-center -space-x-1 hover:space-x-1 z-20 h-8"
       >
-        {#each previewURLs as file}
-          <!-- svelte-ignore a11y_missing_attribute -->
+        {#each previewURLs as file (file)}
           <img
             src={file}
             onload={() => URL.revokeObjectURL(file)}
-            alt={file}
+            alt=""
             class="w-8 h-8 object-cover rounded-full hover:w-16
             hover:h-16 transition-all border border-slate-200 ring-1
             ring-slate-50 dark:ring-zinc-950 bg-white dark:bg-zinc-950"

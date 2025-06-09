@@ -2,14 +2,13 @@
   import { profile } from '$lib/auth.svelte'
   import { publishedToDate } from '$lib/components/util/date'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
+  import { t } from '$lib/i18n/translations'
   import { instance } from '$lib/instance.svelte'
   import { client } from '$lib/lemmy.svelte'
-  import { t } from '$lib/i18n/translations'
   import { instanceToURL } from '$lib/util.svelte'
   import type { LocalImage } from 'lemmy-js-client'
-  import { Button, Material, toast } from 'mono-svelte'
-  import { createEventDispatcher } from 'svelte'
-  import { ArrowDown, ArrowDownTray, Icon, Trash } from 'svelte-hero-icons'
+  import { Button, toast } from 'mono-svelte'
+  import { ArrowDownTray, Icon, Trash } from 'svelte-hero-icons'
 
   let loading = $state(false)
 
@@ -25,7 +24,7 @@
 
       ondelete?.(res)
     } catch (e) {
-      toast({ content: e as any, type: 'error' })
+      toast({ content: e as string, type: 'error' })
     }
     loading = false
   }

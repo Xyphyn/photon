@@ -1,9 +1,7 @@
 <script lang="ts">
-  import { preventDefault } from 'svelte/legacy'
-
+  import { DocumentPlus, Icon } from 'svelte-hero-icons'
   import Label from '../forms/Label.svelte'
   import { generateID } from '../forms/helper.js'
-  import { DocumentPlus, Icon } from 'svelte-hero-icons'
   import TextInput from './TextInput.svelte'
 
   interface Props {
@@ -43,11 +41,11 @@
       : ''}
   {url != undefined ? 'rounded-b-none' : ''}
   "
-    ondrop={(event) => {
+    ondrop={event => {
       event.preventDefault()
       files = event.dataTransfer?.files ?? null
     }}
-    ondragover={(event) => {
+    ondragover={event => {
       event.preventDefault()
 
       if (event.dataTransfer) {
@@ -55,7 +53,7 @@
         dragover = true
       }
     }}
-    ondragleave={(e) => {
+    ondragleave={e => {
       e.preventDefault()
       dragover = false
     }}

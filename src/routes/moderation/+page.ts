@@ -6,17 +6,13 @@ import {
   generalizePostReport,
   generalizePrivateMessageReport,
 } from '$lib/lemmy/report.js'
-import { get } from 'svelte/store'
 
 type ReportListType = 'unread' | 'all'
-type ReportFilter = 'all' | 'posts' | 'comments' | 'messages'
 
 export async function load({ url, fetch }) {
   const page = Number(url.searchParams.get('page')) || 1
   const type: ReportListType =
     (url.searchParams.get('type') as ReportListType) || 'unread'
-  const filter: ReportFilter =
-    (url.searchParams.get('filter') as ReportFilter) || 'all'
 
   const jwt = profile.data?.jwt
 

@@ -3,16 +3,15 @@
 
   import { profile } from '$lib/auth.svelte.js'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import { toast } from 'mono-svelte'
+  import { t } from '$lib/i18n/translations.js'
   import { instance } from '$lib/instance.svelte.js'
   import { getClient } from '$lib/lemmy.svelte.js'
   import { addAdmin } from '$lib/lemmy/user.js'
-  import { removeItem, trycatch } from '$lib/util.svelte.js'
-  import { Button, TextInput } from 'mono-svelte'
+  import { trycatch } from '$lib/util.svelte.js'
+  import { Button, TextInput, toast } from 'mono-svelte'
   import { Icon, Plus, QuestionMarkCircle, Trash } from 'svelte-hero-icons'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import { t } from '$lib/i18n/translations.js'
 
   let { data: pageData } = $props()
   let data = $state(pageData)
@@ -20,7 +19,10 @@
   let newAdmin: string = $state(''),
     adding: boolean = $state(false)
 
-  async function removeAdmin(id: number, confirm: boolean): Promise<any> {
+  async function removeAdmin(
+    id: number,
+    confirm: boolean,
+  ): Promise<void | number> {
     if (!confirm)
       return toast({
         content: $t('toast.removeAdminWarning'),
@@ -56,7 +58,7 @@
         description={$t('routes.admin.team.empty.description')}
       />
     {:else}
-      {#each data.site?.admins ?? [] as admin}
+      {#each data.site?.admins ?? [] as admin (admin.person.id)}
         <div class="py-3 flex items-center justify-between">
           <UserLink avatar showInstance={false} user={admin.person} />
           <Button

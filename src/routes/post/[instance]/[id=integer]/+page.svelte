@@ -1,58 +1,35 @@
 <script lang="ts">
-  import { buildCommentsTree } from '$lib/components/lemmy/comment/comments.svelte.js'
-  import { isImage } from '$lib/ui/image.js'
-  import { client, getClient } from '$lib/lemmy.svelte.js'
-  import CommentForm from '$lib/components/lemmy/comment/CommentForm.svelte'
-  import { onMount } from 'svelte'
-  import Markdown from '$lib/components/markdown/Markdown.svelte'
   import { page } from '$app/state'
+  import { profile } from '$lib/auth.svelte.js'
+  import { mediaType } from '$lib/components/lemmy/post/helpers.js'
+  import PostMedia from '$lib/components/lemmy/post/media/PostMedia.svelte'
+  import Post from '$lib/components/lemmy/post/Post.svelte'
   import PostActions from '$lib/components/lemmy/post/PostActions.svelte'
-  import {
-    ArrowLeft,
-    ArrowPath,
-    ChevronDoubleUp,
-    Icon,
-    InformationCircle,
-    Home,
-    PlusCircle,
-    ChatBubbleLeftRight,
-    Bookmark,
-    BookmarkSlash,
-    ArrowUp,
-    ArrowDown,
-    Fire,
-    Trophy,
-    Star,
-    Clock,
-    ArrowTrendingDown,
-    ArrowRight,
-  } from 'svelte-hero-icons'
   import PostMeta, {
     parseTags,
   } from '$lib/components/lemmy/post/PostMeta.svelte'
-  import { Select, removeToast, toast } from 'mono-svelte'
-  import type { CommentSortType, GetCommentsResponse } from 'lemmy-js-client'
-  import { profile } from '$lib/auth.svelte.js'
-  import { instance } from '$lib/instance.svelte.js'
-  import { afterNavigate, goto } from '$app/navigation'
-  import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
-  import { Button } from 'mono-svelte'
+  import Markdown from '$lib/components/markdown/Markdown.svelte'
   import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
-  import { settings } from '$lib/settings.svelte.js'
-  import { publishedToDate } from '$lib/components/util/date.js'
-  import PostMedia from '$lib/components/lemmy/post/media/PostMedia.svelte'
-  import { mediaType } from '$lib/components/lemmy/post/helpers.js'
-  import Post from '$lib/components/lemmy/post/Post.svelte'
   import Expandable from '$lib/components/ui/Expandable.svelte'
-  import { Popover } from 'mono-svelte'
-  import { t } from '$lib/i18n/translations.js'
-  import { resumables } from '$lib/lemmy/item.js'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import CommentListVirtualizer from '$lib/components/lemmy/comment/CommentListVirtualizer.svelte'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import { fly } from 'svelte/transition'
+  import { publishedToDate } from '$lib/components/util/date.js'
+  import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
+  import { t } from '$lib/i18n/translations.js'
+  import { getClient } from '$lib/lemmy.svelte.js'
+  import { resumables } from '$lib/lemmy/item.js'
+  import { settings } from '$lib/settings.svelte.js'
+  import { isImage } from '$lib/ui/image.js'
+  import { Button, toast } from 'mono-svelte'
+  import { onMount } from 'svelte'
+  import {
+    ArrowLeft,
+    ArrowRight,
+    ChatBubbleLeftRight,
+    ChevronDoubleUp,
+    Icon,
+  } from 'svelte-hero-icons'
   import { expoOut } from 'svelte/easing'
-  import Option from 'mono-svelte/forms/select/Option.svelte'
+  import { fly } from 'svelte/transition'
   import CommentProvider from './CommentProvider.svelte'
 
   let { data } = $props()
@@ -65,8 +42,6 @@
       getClient().markPostAsRead({
         read: settings.markPostsAsRead,
         post_ids: [data.post.value.post_view.post.id],
-        // @ts-ignore
-        post_id: data.post.value.post_view.post.id,
       })
     }
 
@@ -78,7 +53,6 @@
     })
   })
 
-  let commentsPage = 1
   let loading = $state(false)
 
   async function reloadComments() {
@@ -93,7 +67,6 @@
     })
     loading = false
     data.thread.value.singleThread = false
-    commentsPage = 1
   }
 </script>
 
@@ -218,7 +191,7 @@
         class="divide-y! divide-slate-200 dark:divide-zinc-800 flex flex-col"
       >
         {#key crossposts}
-          {#each crossposts as crosspost}
+          {#each crossposts as crosspost (crosspost.post.id)}
             <Post view="compact" post={crosspost} />
           {/each}
         {/key}
@@ -270,7 +243,7 @@
   {/if}
   {#await data.comments.value}
     <div class="flex flex-col gap-4">
-      {#each new Array(10) as empty, index}
+      {#each new Array(10) as _, index (_)}
         <div
           in:fly|global={{
             duration: 500,

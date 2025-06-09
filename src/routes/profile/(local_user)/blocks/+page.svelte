@@ -1,27 +1,22 @@
 <script lang="ts">
+  import { profile } from '$lib/auth.svelte.js'
+  import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
+  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
+  import Entity from '$lib/components/ui/Entity.svelte'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import Placeholder from '$lib/components/ui/Placeholder.svelte'
+  import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
+  import { t } from '$lib/i18n/translations.js'
+  import { getClient } from '$lib/lemmy.svelte.js'
   import type {
     CommunityBlockView,
     InstanceBlockView,
     PersonBlockView,
   } from 'lemmy-js-client'
-  import type { PageData } from './$types.js'
-  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
-  import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
-  import { getClient } from '$lib/lemmy.svelte.js'
-  import { profile } from '$lib/auth.svelte.js'
-  import { Check, Icon, Trash, XMark } from 'svelte-hero-icons'
-  import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
-  import { flip } from 'svelte/animate'
-  import { slide } from 'svelte/transition'
-  import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { Button } from 'mono-svelte'
-  import Entity from '$lib/components/ui/Entity.svelte'
-  import { t } from '$lib/i18n/translations.js'
-  import Switch from '$lib/components/input/Switch.svelte'
-  import UserAutocomplete from '$lib/components/lemmy/user/UserAutocomplete.svelte'
-  import { expoOut } from 'svelte/easing'
   import Material from 'mono-svelte/materials/Material.svelte'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { Check, Icon, XMark } from 'svelte-hero-icons'
+  import type { PageData } from './$types.js'
 
   interface Props {
     // sveltekit doesn't feel like making types work right now
@@ -38,7 +33,7 @@
     if (!profile.data?.jwt) return
 
     data.person_blocks.splice(
-      data.person_blocks.findIndex((i) => i.target.id == item.target.id),
+      data.person_blocks.findIndex(i => i.target.id == item.target.id),
       1,
     )
     // hack to get reactivity working
@@ -54,9 +49,7 @@
     if (!profile.data?.jwt) return
 
     data.community_blocks.splice(
-      data.community_blocks.findIndex(
-        (i) => i.community.id == item.community.id,
-      ),
+      data.community_blocks.findIndex(i => i.community.id == item.community.id),
       1,
     )
 
@@ -75,7 +68,7 @@
 
     data.my_user.instance_blocks.splice(
       data.my_user.instance_blocks.findIndex(
-        (i) => i.instance.id == item.instance.id,
+        i => i.instance.id == item.instance.id,
       ),
       1,
     )

@@ -1,8 +1,6 @@
-import { profile } from '$lib/auth.svelte'
 import { getClient } from '$lib/lemmy.svelte.js'
-import { get } from 'svelte/store'
 
-export async function load({ fetch, parent }) {
+export async function load({ fetch }) {
   const instances = await getClient(undefined, fetch).getFederatedInstances()
 
   return {

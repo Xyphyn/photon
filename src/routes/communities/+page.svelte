@@ -1,36 +1,19 @@
 <script lang="ts">
-  import { preventDefault } from 'svelte/legacy'
-
   import { navigating, page } from '$app/state'
-  import {
-    GlobeAmericas,
-    Icon,
-    InformationCircle,
-    MagnifyingGlass,
-    QuestionMarkCircle,
-  } from 'svelte-hero-icons'
-  import Pageination from '$lib/components/ui/Pageination.svelte'
-  import { searchParam } from '$lib/util.svelte.js'
-  import {
-    Button,
-    Material,
-    Popover,
-    Select,
-    Spinner,
-    TextInput,
-  } from 'mono-svelte'
-  import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
-  import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import CommunityItem from '$lib/components/lemmy/community/CommunityItem.svelte'
   import Location from '$lib/components/lemmy/dropdowns/Location.svelte'
-  import { t } from '$lib/i18n/translations.js'
+  import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
+  import Skeleton from '$lib/components/ui/generic/Skeleton.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
+  import Pageination from '$lib/components/ui/Pageination.svelte'
+  import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
+  import { t } from '$lib/i18n/translations.js'
+  import { Button, Material, TextInput } from 'mono-svelte'
+  import { Icon, MagnifyingGlass, QuestionMarkCircle } from 'svelte-hero-icons'
+  import { expoOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'
-  import { backOut, expoOut } from 'svelte/easing'
-  import { goto } from '$app/navigation'
-  import Skeleton from '$lib/components/ui/generic/Skeleton.svelte'
 
   let { data } = $props()
 
@@ -46,7 +29,7 @@
 </script>
 
 <svelte:window
-  onkeydown={(e) => {
+  onkeydown={e => {
     if (e.target == document.body) searchElement?.focus()
   }}
 />
@@ -103,7 +86,7 @@
 </form>
 {#if navigating.to?.route.id == '/communities'}
   <div class="flex flex-col gap-3 mt-6">
-    {#each new Array(5) as _, index}
+    {#each new Array(5) as _, index (_)}
       <div
         in:fly|global={{
           duration: 800,
@@ -195,7 +178,7 @@
     <Tabs routes={[]} class="mx-auto">
       <Pageination
         page={Number(page.url.searchParams.get('page')) || 1}
-        href={(c) => `?page=${c}`}
+        href={c => `?page=${c}`}
       />
     </Tabs>
   </div>

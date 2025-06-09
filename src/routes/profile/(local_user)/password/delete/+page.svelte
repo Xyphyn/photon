@@ -71,7 +71,7 @@
       })
 
       profileData.profiles.splice(
-        profileData.profiles.findIndex((p) => profileData.profile == p.id),
+        profileData.profiles.findIndex(p => profileData.profile == p.id),
       )
 
       setUserID(-1)
@@ -81,7 +81,7 @@
       goto('/')
     } catch (err) {
       toast({
-        content: err as any,
+        content: err as string,
         type: 'error',
       })
     } finally {

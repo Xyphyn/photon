@@ -59,8 +59,8 @@
 
   let canUseContents = $state(true)
 
-  let el = $state<HTMLDivElement>()
-  let popoverEl = $state<HTMLDivElement>()
+  let el = $state<HTMLElement>()
+  let popoverEl = $state<HTMLElement>()
 
   const [floatingRef, floatingContent] = createFloatingActions({
     strategy: strategy,
@@ -77,7 +77,7 @@
   const customFloatingRef = (node: HTMLDivElement) => {
     const n = node.children.item(0)
 
-    // @ts-expect-error svelte bug
+    // @ts-expect-error svelte hell
     if (n) floatingRef(n)
     else {
       canUseContents = false
@@ -90,10 +90,10 @@
   onclick={e => {
     if (openOnHover) return
 
-    // @ts-expect-error this is in fact valid
+    // @ts-expect-error svelte hell
     if (!el?.contains(e.target) && open) {
       if (!autoClose) {
-        // @ts-expect-error so is this
+        // @ts-expect-error svelte hell
         if (popoverEl && !popoverEl.contains(e.target)) {
           open = false
         }
@@ -105,8 +105,8 @@
   onkeydown={async e => {
     if (open && e.key == 'Escape') {
       open = false
-      // @ts-expect-error focus does in fact exist
-      el?.firstChild?.focus()
+      // @ts-expect-error svelte hell
+      el?.firstChild.focus()
     }
   }}
 />

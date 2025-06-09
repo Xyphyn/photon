@@ -1,7 +1,7 @@
 import { aliases, loadTranslations, locales } from '$lib/i18n/translations.js'
 import { get } from 'svelte/store'
 
-export const load = async ({ url, request }) => {
+export const load = async ({ request }) => {
   const languages = request.headers.get('Accept-Language')?.split(',')
   const availableLangs = get(locales)
 

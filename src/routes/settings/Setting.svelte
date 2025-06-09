@@ -9,7 +9,11 @@
   } from 'svelte-hero-icons'
 
   interface Props {
-    supportedPlatforms?: any
+    supportedPlatforms?: {
+      desktop: boolean
+      tablet: boolean
+      mobile: boolean
+    }
     mainClass?: string
     itemsClass?: string
     optionClass?: string
@@ -38,7 +42,7 @@
 <div
   class="flex flex-col w-full justify-between gap-2 max-w-full @container/setting {mainClass}"
 >
-  {#if Object.values(supportedPlatforms).some((v) => v == false)}
+  {#if Object.values(supportedPlatforms).some(v => v == false)}
     <div class="flex items-center gap-2 flex-wrap">
       {#if supportedPlatforms.desktop}
         <Badge>

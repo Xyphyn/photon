@@ -1,7 +1,6 @@
 <script lang="ts">
-  import Expandable from '$lib/components/ui/Expandable.svelte'
-  import { ChevronDown, Icon, Minus, Plus } from 'svelte-hero-icons'
-  import { backOut, expoOut } from 'svelte/easing'
+  import { Icon, Minus, Plus } from 'svelte-hero-icons'
+  import { expoOut } from 'svelte/easing'
   import { slide } from 'svelte/transition'
 
   interface Props {

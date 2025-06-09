@@ -1,13 +1,13 @@
 <script lang="ts">
-  import { run, preventDefault } from 'svelte/legacy'
+  import { preventDefault, run } from 'svelte/legacy'
 
   import { profile } from '$lib/auth.svelte.js'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
-  import { getClient } from '$lib/lemmy.svelte.js'
   import { t } from '$lib/i18n/translations.js'
+  import { getClient } from '$lib/lemmy.svelte.js'
   import { trycatch } from '$lib/util.svelte.js'
   import type { Instance } from 'lemmy-js-client'
   import {
@@ -22,13 +22,11 @@
     Check,
     ExclamationTriangle,
     Icon,
-    InformationCircle,
     Plus,
     XMark,
   } from 'svelte-hero-icons'
   import { flip } from 'svelte/animate'
-  import { expoInOut, expoOut } from 'svelte/easing'
-  import { slide } from 'svelte/transition'
+  import { expoOut } from 'svelte/easing'
 
   let { data = $bindable() } = $props()
 
@@ -56,14 +54,10 @@
       else allowInstance.loading = true
 
       const blockedInstances =
-        data.federated_instances.federated_instances.blocked.map(
-          (i) => i.domain,
-        )
+        data.federated_instances.federated_instances.blocked.map(i => i.domain)
 
       const allowedInstances =
-        data.federated_instances.federated_instances.allowed.map(
-          (i) => i.domain,
-        )
+        data.federated_instances.federated_instances.allowed.map(i => i.domain)
 
       if (blocked) blockedInstances.push(instance)
       if (!blocked) allowedInstances.push(instance)
@@ -95,13 +89,9 @@
       saving = true
 
       const blockedInstances =
-        data.federated_instances.federated_instances.blocked.map(
-          (i) => i.domain,
-        )
+        data.federated_instances.federated_instances.blocked.map(i => i.domain)
       const allowedInstances =
-        data.federated_instances.federated_instances.allowed.map(
-          (i) => i.domain,
-        )
+        data.federated_instances.federated_instances.allowed.map(i => i.domain)
 
       return await getClient().editSite({
         allowed_instances: allowedInstances,
@@ -125,7 +115,7 @@
 
     const reader = new FileReader()
 
-    reader.onload = (e) => {
+    reader.onload = e => {
       if (!data.federated_instances?.federated_instances?.blocked)
         throw new Error('Missing instance')
       const content = e.target?.result
@@ -152,12 +142,12 @@
         }
 
         data.federated_instances.federated_instances.blocked = instances
-      } catch (err) {
+      } catch {
         toast({ content: $t('toast.failCSV'), type: 'error' })
       }
     }
 
-    reader.onerror = (e) =>
+    reader.onerror = () =>
       toast({ content: $t('toast.failCSV'), type: 'error' })
 
     reader.readAsText(files[0])
@@ -188,9 +178,7 @@
         {$t('routes.admin.federation.csv')}
       </Button>
     {/snippet}
-    {#snippet choose()}
-      {''}
-    {/snippet}
+    {#snippet choose()}{/snippet}
   </FileInput>
   <div class="flex flex-col md:flex-row gap-4">
     <div class="flex-1 w-full max-h-168 h-full flex flex-col gap-2">
@@ -244,7 +232,7 @@
 
                     data.federated_instances.federated_instances.blocked =
                       data.federated_instances?.federated_instances?.blocked.filter(
-                        (i) => i.id != instance.id,
+                        i => i.id != instance.id,
                       )
                   }}
                 >
@@ -328,7 +316,7 @@
 
                     data.federated_instances.federated_instances.allowed =
                       data.federated_instances?.federated_instances?.allowed.filter(
-                        (i) => i.id != instance.id,
+                        i => i.id != instance.id,
                       )
                   }}
                 >

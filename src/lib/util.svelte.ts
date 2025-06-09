@@ -1,13 +1,12 @@
 import { goto } from '$app/navigation'
-import { toast } from 'mono-svelte'
-import { settings } from '$lib/settings.svelte'
-import { get } from 'svelte/store'
-import type { SubscribedType } from 'lemmy-js-client'
-import { page } from '$app/state'
-import { feature } from '$lib/version.js'
 import { client } from '$lib/lemmy.svelte.js'
-import { site } from './lemmy.svelte'
+import { settings } from '$lib/settings.svelte'
+import { feature } from '$lib/version.js'
+import type { SubscribedType } from 'lemmy-js-client'
+import { toast } from 'mono-svelte'
 import { t } from './i18n/translations'
+import { site } from './lemmy.svelte'
+import { errorMessage } from './lemmy/error'
 
 // Despite the name, this will round up
 // Example: findClosestNumber([8, 16, 32, 64, 128], 76) will return 128
@@ -23,7 +22,7 @@ export const searchParam = (
   ...deleteKeys: string[]
 ) => {
   url.searchParams.set(key, value)
-  deleteKeys.forEach((k) => url.searchParams.delete(k))
+  deleteKeys.forEach(k => url.searchParams.delete(k))
   goto(url, {
     invalidateAll: true,
   })
@@ -99,7 +98,7 @@ export const trycatch = <T>(func: () => T): Maybe<T> => {
     return func()
   } catch (err) {
     toast({
-      content: err as any,
+      content: errorMessage(err as string),
       type: 'error',
     })
   }
@@ -154,7 +153,7 @@ export async function uploadImage(
     }
     throw new Error(
       `${
-        (await response.text().catch((_) => undefined)) ??
+        (await response.text().catch(() => undefined)) ??
         'Failed to upload image'
       }: ${response.status}: ${response.statusText}`,
     )
@@ -170,7 +169,7 @@ export function canParseUrl(url: string): boolean {
   try {
     new URL(url)
     return true
-  } catch (e) {
+  } catch {
     return false
   }
 }

@@ -1,10 +1,9 @@
 <script>
   import { t } from '$lib/i18n/translations'
-  import { Button } from 'mono-svelte'
 
-  import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { page } from '$app/state'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
   /**
    * @typedef {Object} Props
    * @property {import('svelte').Snippet} [children]
@@ -38,11 +37,11 @@
 </script>
 
 <Header pageHeader>
-  {routes.find((r) => page.url.pathname == r.url)?.name}
+  {routes.find(r => page.url.pathname == r.url)?.name}
 </Header>
 <div class="flex flex-row gap-12">
   <nav class="flex flex-col gap-2 flex-1 max-sm:hidden">
-    {#each routes as route}
+    {#each routes as route (route)}
       <SidebarButton
         size="lg"
         rounding="lg"
