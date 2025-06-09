@@ -17,14 +17,13 @@
   import { preventDefault } from 'svelte/legacy'
 
   import { goto } from '$app/navigation'
-  import { Badge, Material, Spinner, toast } from 'mono-svelte'
-  import { DEFAULT_INSTANCE_URL, instance } from '$lib/instance.svelte.js'
-  import { validateInstance } from '$lib/lemmy.svelte.js'
-  import { Button, TextInput } from 'mono-svelte'
-  import { onMount } from 'svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
-  import { t } from '$lib/i18n/translations'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { t } from '$lib/i18n/translations'
+  import { DEFAULT_INSTANCE_URL } from '$lib/instance.svelte.js'
+  import { validateInstance } from '$lib/lemmy.svelte.js'
+  import { Button, Material, Spinner, TextInput, toast } from 'mono-svelte'
+  import { onMount } from 'svelte'
 
   let selectedInstance: string = $state('')
   let validating: boolean = $state(false)
@@ -36,7 +35,7 @@
     try {
       const res: Instance[] = (
         await fetch(`https://data.lemmyverse.net/data/instance.full.json`).then(
-          (r) => r.json(),
+          r => r.json(),
         )
       )
         .filter((i: Instance) => i.fed)
@@ -52,7 +51,7 @@
         placeholder = instances?.[placeholderIndex].baseurl
         placeholderIndex++
       }, 2000)
-    } catch (e) {
+    } catch {
       toast({
         content: $t('toast.failFetchInstances'),
         type: 'error',
@@ -76,7 +75,7 @@
       class="flex flex-col h-full divide-y divide-slate-200 dark:divide-zinc-800"
     >
       {#if instances}
-        {#each instances as instance}
+        {#each instances as instance (instance)}
           <button
             onclick={() => (selectedInstance = instance.baseurl ?? '')}
             class="flex flex-row gap-2 text-left py-2 first:pt-0 last:pb-0 items-center

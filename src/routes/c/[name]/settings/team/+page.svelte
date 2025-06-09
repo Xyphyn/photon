@@ -1,15 +1,15 @@
 <script lang="ts">
+  import { profile } from '$lib/auth.svelte.js'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
-  import { Icon, Plus, Trash } from 'svelte-hero-icons'
-  import type { PageData } from './$types.js'
-  import { profile } from '$lib/auth.svelte.js'
-  import { toast } from 'mono-svelte'
-  import { client, getClient } from '$lib/lemmy.svelte.js'
-  import { flip } from 'svelte/animate'
-  import { Button, TextInput } from 'mono-svelte'
-  import { t } from '$lib/i18n/translations.js'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { t } from '$lib/i18n/translations.js'
+  import { getClient } from '$lib/lemmy.svelte.js'
+  import { Button, TextInput, toast } from 'mono-svelte'
+  import { Icon, Plus, Trash } from 'svelte-hero-icons'
+  import { flip } from 'svelte/animate'
+  import type { PageData } from './$types.js'
+  import { errorMessage } from '$lib/lemmy/error.js'
 
   interface Props {
     data: PageData
@@ -71,7 +71,7 @@
       }
     } catch (err) {
       toast({
-        content: err as any,
+        content: errorMessage(err as string),
         type: 'error',
       })
     }
@@ -97,7 +97,7 @@
       })
     } catch (err) {
       toast({
-        content: err as any,
+        content: errorMessage(err as string),
         type: 'error',
       })
     }
@@ -139,7 +139,7 @@
   {/each}
 </ul>
 <form
-  onsubmit={(e) => {
+  onsubmit={e => {
     e.preventDefault()
     addModerator()
   }}

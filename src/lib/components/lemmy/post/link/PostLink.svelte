@@ -1,31 +1,22 @@
 <script lang="ts">
-  import Link, { parseURL } from '$lib/components/input/Link.svelte'
-  import { Button, Material } from 'mono-svelte'
-  import {
-    CheckBadge,
-    ChevronDown,
-    Icon,
-    Link as LinkIcon,
-  } from 'svelte-hero-icons'
-  import { optimizeImageURL } from '../helpers'
-  import { t } from '$lib/i18n/translations'
+  import { parseURL } from '$lib/components/input/Link.svelte'
   import type { View } from '$lib/settings.svelte'
+  import { Button, Material } from 'mono-svelte'
+  import { optimizeImageURL } from '../helpers'
 
   interface Props {
     url: string
-    thumbnail_url?: string | undefined
+    thumbnail_url?: string
     nsfw?: boolean
-    embed_title?: string | undefined
-    embed_description?: string | undefined
+    embed_title?: string
     view?: View
   }
 
   let {
     url,
-    thumbnail_url = undefined,
+    thumbnail_url,
     nsfw = false,
-    embed_title = undefined,
-    embed_description = undefined,
+    embed_title,
     view = 'cozy',
   }: Props = $props()
 

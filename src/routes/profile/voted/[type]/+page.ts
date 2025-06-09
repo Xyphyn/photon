@@ -1,4 +1,3 @@
-import { client } from '$lib/lemmy.svelte.js'
 import { postFeed } from '$lib/lemmy/postfeed.svelte.js'
 import { error } from '@sveltejs/kit'
 

@@ -32,8 +32,6 @@
       languages: data.community.value.discussion_languages,
     }}
   >
-    {#snippet formtitle()}
-      {''}
-    {/snippet}
+    {#snippet formtitle()}{/snippet}
   </CommunityForm>
 </div>

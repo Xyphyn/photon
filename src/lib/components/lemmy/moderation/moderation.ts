@@ -9,7 +9,7 @@ import type {
   PostView,
   PrivateMessageView,
 } from 'lemmy-js-client'
-import { get, writable } from 'svelte/store'
+import { writable } from 'svelte/store'
 
 interface Modals {
   reporting: {
@@ -29,7 +29,7 @@ interface Modals {
   }
 }
 
-export let modals = writable<Modals>({
+export const modals = writable<Modals>({
   reporting: {
     open: false,
     item: undefined,
@@ -48,7 +48,7 @@ export let modals = writable<Modals>({
 })
 
 export function report(item: PostView | CommentView | PrivateMessageView) {
-  modals.update((m) => ({
+  modals.update(m => ({
     ...m,
     reporting: {
       open: true,
@@ -58,7 +58,7 @@ export function report(item: PostView | CommentView | PrivateMessageView) {
 }
 
 export function remove(item: SubmissionView, purge: boolean = false) {
-  modals.update((m) => ({
+  modals.update(m => ({
     ...m,
     removing: {
       open: true,
@@ -69,7 +69,7 @@ export function remove(item: SubmissionView, purge: boolean = false) {
 }
 
 export function ban(banned: boolean, item: Person, community?: Community) {
-  modals.update((m) => ({
+  modals.update(m => ({
     ...m,
     banning: {
       open: true,
@@ -88,16 +88,13 @@ export async function feature(featured: boolean, item: Comment, jwt: string) {
 }
 
 export const amMod = (me: MyUserInfo, community: Community) =>
-  me.moderates.map((c) => c.community.id).includes(community.id) ||
+  me.moderates.map(c => c.community.id).includes(community.id) ||
   (community.local && isAdmin(me))
 
 export const amModOfAny = (me?: MyUserInfo) =>
   me && (me.moderates.length > 0 || isAdmin(me))
 
-export const isAdmin = (me: MyUserInfo) =>
-  // backwards compatibility hack
-  // @ts-ignore
-  me.local_user_view.local_user.admin ?? me.local_user_view.person?.admin
+export const isAdmin = (me: MyUserInfo) => me.local_user_view.local_user.admin
 
 export const removalTemplate = (
   input: string,

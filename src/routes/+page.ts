@@ -1,17 +1,12 @@
-import { settings } from '$lib/settings.svelte'
-import type { GetPostsResponse, ListingType, SortType } from 'lemmy-js-client'
-import {
-  postFeed,
-  postFeeds,
-  shouldReload,
-} from '$lib/lemmy/postfeed.svelte.js'
 import { t } from '$lib/i18n/translations.js'
-import { ChevronDoubleUp } from 'svelte-hero-icons'
+import { postFeed } from '$lib/lemmy/postfeed.svelte.js'
 import { ReactiveState } from '$lib/promise.svelte.js'
+import { settings } from '$lib/settings.svelte'
+import type { ListingType, SortType } from 'lemmy-js-client'
+import { ChevronDoubleUp } from 'svelte-hero-icons'
 
 export async function load({ url, fetch }) {
   const cursor = url.searchParams.get('cursor') as string | undefined
-  const prevCursor = url.searchParams.get('cursorPrev') as string | undefined
 
   const sort: SortType =
     (url.searchParams.get('sort') as SortType) || settings.defaultSort.sort

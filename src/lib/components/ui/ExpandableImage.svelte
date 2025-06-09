@@ -1,7 +1,7 @@
 <script lang="ts" module>
   import { pushState } from '$app/navigation'
 
-  export function showImage(url: string, alt: string = '') {
+  export function showImage(url: string) {
     pushState('', {
       openImage: url,
     })
@@ -30,16 +30,13 @@
 </script>
 
 {#if page.state.openImage || '' != ''}
-  <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
   <!-- svelte-ignore a11y_no_static_element_interactions -->
-  <!-- svelte-ignore a11y_click_events_have_key_events -->
-  <!-- svelte-ignore a11y_positive_tabindex -->
   <div
     class="fixed top-0 left-0 w-screen h-svh overflow-auto bg-white/50 dark:bg-black/50
     flex flex-col z-100 backdrop-blur-xs"
     transition:fade={{ duration: 150 }}
     onclick={() => history.back()}
-    onkeydown={(e) => {
+    onkeydown={e => {
       if (e.key == 'Escape') history.back()
     }}
     use:focusTrap
@@ -60,7 +57,7 @@
         rounding="full"
         padding="none"
         color="uniform"
-        onclick={(e) => e.stopPropagation()}
+        onclick={e => e.stopPropagation()}
       >
         <Button
           onclick={() => {

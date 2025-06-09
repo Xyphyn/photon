@@ -1,7 +1,7 @@
 <script lang="ts">
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import { getClient } from '$lib/lemmy.svelte.js'
-  import type { Community, ListingType, Person } from 'lemmy-js-client'
+  import type { ListingType, Person } from 'lemmy-js-client'
   import { MenuButton, Search } from 'mono-svelte'
   import { createEventDispatcher } from 'svelte'
   import { Icon, XCircle } from 'svelte-hero-icons'
@@ -12,8 +12,7 @@
     instance?: string | undefined
     listing_type?: ListingType
     showWhenEmpty?: boolean
-    onselect?: (e: any) => void
-    [key: string]: any
+    onselect?: (e: Person) => void
   }
 
   let {
@@ -28,7 +27,7 @@
 </script>
 
 <Search
-  search={async (q) => {
+  search={async q => {
     const results = await getClient(instance).search({
       q: q || ' ',
       type_: 'Users',
@@ -37,9 +36,9 @@
       sort: 'TopAll',
     })
 
-    return results.users.map((c) => c.person)
+    return results.users.map(c => c.person)
   }}
-  extractName={(c) => `${c.name}@${new URL(c.actor_id).hostname}`}
+  extractName={c => `${c.name}@${new URL(c.actor_id).hostname}`}
   bind:query={q}
   {...rest}
 >

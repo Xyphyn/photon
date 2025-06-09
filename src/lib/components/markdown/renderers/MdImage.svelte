@@ -1,14 +1,14 @@
 <script lang="ts">
-  import { showImage } from '$lib/components/ui/ExpandableImage.svelte'
   import {
     iframeType,
     mediaType,
     optimizeImageURL,
   } from '$lib/components/lemmy/post/helpers'
   import PostIframe from '$lib/components/lemmy/post/media/PostIframe.svelte'
-  import { getContext } from 'svelte'
-  import { ArrowDown, ArrowDownTray, Icon } from 'svelte-hero-icons'
+  import { showImage } from '$lib/components/ui/ExpandableImage.svelte'
   import { t } from '$lib/i18n/translations'
+  import { getContext } from 'svelte'
+  import { ArrowDownTray, Icon } from 'svelte-hero-icons'
 
   let loaded: boolean = $state(
     (getContext('options') as { autoloadImages: boolean })?.autoloadImages ??
@@ -42,7 +42,7 @@
     {:else}
       <button
         class="inline"
-        onclick={() => showImage(optimizeImageURL(href, -1), text)}
+        onclick={() => showImage(optimizeImageURL(href, -1))}
       >
         <img
           src={optimizeImageURL(href, 1024)}

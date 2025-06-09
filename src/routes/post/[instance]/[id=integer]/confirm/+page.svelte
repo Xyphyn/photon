@@ -49,7 +49,6 @@
     </Header>
     <p>
       {$t('routes.postRedirect.description', {
-        // @ts-ignore
         homeInstance: fetched,
       })}
     </p>
@@ -65,7 +64,6 @@
         onclick={fetchOnHome}
       >
         {$t('routes.postRedirect.actions.fetch', {
-          // @ts-ignore
           homeInstance: fetched,
         })}
       </Button>
@@ -76,12 +74,11 @@
   </div>
   {#if profileData.profiles}
     {@const filtered = profileData.profiles.filter(
-      (i) => i.instance == page.params.instance,
+      i => i.instance == page.params.instance,
     )}
     <div class="space-y-1">
       <div class="font-medium text-sm">
         {$t('routes.postRedirect.actions.switch', {
-          // @ts-ignore
           destInstance: page.params.instance,
         })}
       </div>
@@ -91,7 +88,7 @@
         rounding="2xl"
         class="dark:bg-zinc-950 max-h-96 overflow-auto"
       >
-        {#each filtered as profile, index}
+        {#each filtered as profile, index (profile.id)}
           <ProfileButton prof={profile} {index} />
         {/each}
         <SidebarButton

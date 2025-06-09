@@ -4,14 +4,14 @@
   import { profile } from '$lib/auth.svelte.js'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import { toast } from 'mono-svelte'
+  import { t } from '$lib/i18n/translations.js'
   import { getClient } from '$lib/lemmy.svelte.js'
   import type { Tagline } from 'lemmy-js-client'
-  import { Button } from 'mono-svelte'
-  import { Icon, Plus, QuestionMarkCircle, Trash } from 'svelte-hero-icons'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import { t } from '$lib/i18n/translations.js'
+  import { Button, toast } from 'mono-svelte'
+  import { Icon, Plus, Trash } from 'svelte-hero-icons'
+  import { errorMessage } from '$lib/lemmy/error.js'
 
   let { data } = $props()
 
@@ -37,7 +37,7 @@
       })
     } catch (err) {
       toast({
-        content: err as any,
+        content: errorMessage(err as string),
         type: 'error',
       })
     }
@@ -61,7 +61,7 @@
   </Header>
 
   <ul>
-    {#each taglines as tagline}
+    {#each taglines as tagline (tagline)}
       <div class="flex py-3">
         <Markdown source={tagline} inline />
 
@@ -69,7 +69,7 @@
           <Button
             onclick={() => {
               taglines.splice(
-                taglines.findIndex((i) => i == tagline),
+                taglines.findIndex(i => i == tagline),
                 1,
               )
 

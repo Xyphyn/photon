@@ -11,6 +11,7 @@
   import { getClient, validateInstance } from '$lib/lemmy.svelte.js'
   import { t } from '$lib/i18n/translations'
   import { Button, TextInput, toast } from 'mono-svelte'
+  import { errorMessage } from '$lib/lemmy/error'
 
   interface Props {
     data: {
@@ -45,7 +46,7 @@
       goto('/login')
     } catch (err) {
       toast({
-        content: err as any,
+        content: errorMessage(err as string),
         type: 'error',
       })
     }

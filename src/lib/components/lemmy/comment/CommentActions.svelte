@@ -1,32 +1,28 @@
 <script lang="ts">
-  import type { CommentView } from 'lemmy-js-client'
+  import { profile } from '$lib/auth.svelte.js'
   import CommentVote from '$lib/components/lemmy/comment/CommentVote.svelte'
+  import CommentModerationMenu from '$lib/components/lemmy/moderation/CommentModerationMenu.svelte'
   import {
-    ArrowUturnLeft,
+    amMod,
+    isAdmin,
+    report,
+  } from '$lib/components/lemmy/moderation/moderation.js'
+  import { t } from '$lib/i18n/translations'
+  import { deleteItem, save } from '$lib/lemmy/contentview.js'
+  import { settings } from '$lib/settings.svelte'
+  import type { CommentView } from 'lemmy-js-client'
+  import { Button, Menu, MenuButton, MenuDivider } from 'mono-svelte'
+  import {
     Bookmark,
     BookmarkSlash,
     ChatBubbleOvalLeft,
     EllipsisHorizontal,
     Flag,
     Icon,
-    Language,
     PencilSquare,
     Square2Stack,
     Trash,
   } from 'svelte-hero-icons'
-  import { createEventDispatcher } from 'svelte'
-  import { isCommentMutable } from '$lib/components/lemmy/post/helpers.js'
-  import {
-    amMod,
-    isAdmin,
-    report,
-  } from '$lib/components/lemmy/moderation/moderation.js'
-  import CommentModerationMenu from '$lib/components/lemmy/moderation/CommentModerationMenu.svelte'
-  import { profile } from '$lib/auth.svelte.js'
-  import { deleteItem, save } from '$lib/lemmy/contentview.js'
-  import { Button, Menu, MenuButton, MenuDivider } from 'mono-svelte'
-  import { t } from '$lib/i18n/translations'
-  import { settings } from '$lib/settings.svelte'
 
   interface Props {
     comment: CommentView
@@ -84,9 +80,11 @@
     <MenuDivider>{$t('comment.actions.label')}</MenuDivider>
     <MenuButton
       onclick={() => {
-        navigator.share?.({
-          url: comment.comment.ap_id,
-        }) ?? navigator.clipboard.writeText(comment.comment.ap_id)
+        if (navigator.share)
+          navigator.share?.({
+            url: comment.comment.ap_id,
+          })
+        else navigator.clipboard.writeText(comment.comment.ap_id)
       }}
     >
       <Icon src={Square2Stack} mini size="16" />
@@ -102,11 +100,7 @@
       <MenuButton
         onclick={async () => {
           if (profile.data?.jwt)
-            comment.saved = await save(
-              comment,
-              !comment.saved,
-              profile.data.jwt,
-            )
+            comment.saved = await save(comment, !comment.saved)
         }}
       >
         <Icon src={comment.saved ? BookmarkSlash : Bookmark} mini size="16" />
@@ -122,7 +116,6 @@
               comment.comment.deleted = await deleteItem(
                 comment,
                 !comment.comment.deleted,
-                profile.data.jwt,
               )
           }}
         >

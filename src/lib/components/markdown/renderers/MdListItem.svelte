@@ -1,5 +1,5 @@
 <script>
-  let { tokens, children } = $props()
+  let { children } = $props()
 </script>
 
 <li>

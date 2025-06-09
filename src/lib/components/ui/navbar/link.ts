@@ -1,6 +1,5 @@
 import { t } from '$lib/i18n/translations'
 import {
-  UserCircle,
   type IconSource,
   Home,
   ChartBar,
@@ -17,7 +16,6 @@ import {
   ArrowTrendingUp,
   Star,
 } from 'svelte-hero-icons'
-import { get } from 'svelte/store'
 
 export interface Link {
   url: string

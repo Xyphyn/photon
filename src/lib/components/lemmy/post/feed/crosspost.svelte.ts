@@ -1,20 +1,11 @@
 import { settings } from '$lib/settings.svelte'
 import type { PostView } from 'lemmy-js-client'
-import { get } from 'svelte/store'
 
 export type PostViewWithCrossposts = PostView & {
   withCrossposts: true
   crossposts: PostView[]
 }
 export type PostViewWithoutCrossposts = PostView & { withCrossposts?: false }
-const addCrosspostProperty = (
-  post: PostView,
-  crossposts: PostView[],
-): PostViewWithCrossposts => ({
-  ...post,
-  crossposts: crossposts,
-  withCrossposts: true,
-})
 
 export const combineCrossposts = (
   posts: PostView[],
@@ -26,7 +17,7 @@ export const combineCrossposts = (
   const results: (PostViewWithCrossposts | PostViewWithoutCrossposts)[] = []
   const seenUrls = new Set<string>()
 
-  posts?.forEach((post) => {
+  posts?.forEach(post => {
     if (
       !post ||
       (settings.hidePosts.deleted && post.post.deleted) ||
@@ -38,7 +29,7 @@ export const combineCrossposts = (
       return
     }
 
-    let existing = urlMap.get(post.post.url)
+    const existing = urlMap.get(post.post.url)
     if (existing) {
       existing.withCrossposts = true
       if (existing.withCrossposts) {

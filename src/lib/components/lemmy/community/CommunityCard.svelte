@@ -21,8 +21,8 @@
       })
 
       return block
-    } catch (error) {
-      toast({ content: error as any, type: 'error' })
+    } catch (err) {
+      toast({ content: errorMessage(err as string), type: 'error' })
       return !block
     }
   }
@@ -36,8 +36,8 @@
       })
       removeToast(purgeToast)
       toast({ content: t.get('toast.purgedCommunity'), type: 'success' })
-    } catch (e) {
-      toast({ content: e as any, type: 'error' })
+    } catch (err) {
+      toast({ content: errorMessage(err as string), type: 'error' })
     }
   }
 
@@ -59,8 +59,8 @@
         content: `Successfully blocked that instance.`,
         type: 'success',
       })
-    } catch (error) {
-      toast({ content: error as any, type: 'error' })
+    } catch (err) {
+      toast({ content: errorMessage(err as string), type: 'error' })
     }
   }
 </script>
@@ -73,43 +73,39 @@
   } from '$lib/components/lemmy/moderation/moderation.js'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
+  import Entity from '$lib/components/ui/Entity.svelte'
+  import Expandable from '$lib/components/ui/Expandable.svelte'
+  import LabelStat from '$lib/components/ui/LabelStat.svelte'
   import StickyCard from '$lib/components/ui/StickyCard.svelte'
-  import {
-    Menu,
-    MenuButton,
-    Modal,
-    removeToast,
-    toast,
-    modal,
-    action,
-  } from 'mono-svelte'
+  import { t } from '$lib/i18n/translations'
   import { client, getClient } from '$lib/lemmy.svelte.js'
+  import { errorMessage } from '$lib/lemmy/error'
+  import { userLink } from '$lib/lemmy/generic'
   import { addSubscription } from '$lib/lemmy/user.js'
+  import { settings } from '$lib/settings.svelte'
   import { fullCommunityName } from '$lib/util.svelte.js'
   import type { CommunityModeratorView, CommunityView } from 'lemmy-js-client'
-  import { Button } from 'mono-svelte'
+  import {
+    action,
+    Button,
+    Menu,
+    MenuButton,
+    modal,
+    removeToast,
+    toast,
+  } from 'mono-svelte'
   import {
     BuildingOffice2,
-    Calendar,
-    ChartBar,
     Check,
     Cog6Tooth,
     EllipsisHorizontal,
     Fire,
     Icon,
-    InformationCircle,
     Newspaper,
     NoSymbol,
     Plus,
   } from 'svelte-hero-icons'
-  import Expandable from '$lib/components/ui/Expandable.svelte'
-  import LabelStat from '$lib/components/ui/LabelStat.svelte'
-  import ShieldIcon from '../moderation/ShieldIcon.svelte'
   import ItemList from '../generic/ItemList.svelte'
-  import { userLink } from '$lib/lemmy/generic'
-  import { t } from '$lib/i18n/translations'
-  import Entity from '$lib/components/ui/Entity.svelte'
-  import { settings } from '$lib/settings.svelte'
 
   let loading = $state({
     blocking: false,
@@ -128,8 +124,8 @@
         community_id: community_view.community.id,
         follow: !subscribed,
       })
-    } catch (error) {
-      toast({ content: error as any, type: 'error' })
+    } catch (err) {
+      toast({ content: errorMessage(err as string), type: 'error' })
     }
 
     community_view.subscribed = subscribed ? 'NotSubscribed' : 'Subscribed'
@@ -219,7 +215,7 @@
           </span>
         {/snippet}
         <ItemList
-          items={moderators.map((m) => ({
+          items={moderators.map(m => ({
             id: m.moderator.id,
             name: m.moderator.name,
             url: userLink(m.moderator),

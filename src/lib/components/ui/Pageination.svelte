@@ -12,8 +12,6 @@
     cursor?: { next?: string; back?: string } | undefined
     hasMore?: boolean
     children?: import('svelte').Snippet
-    onchange?: (page: number) => void
-    onchangecursor?: (cursor: string) => void
     href?: (current: number | string) => string
     back?: boolean
   }
@@ -23,8 +21,6 @@
     cursor = undefined,
     hasMore = true,
     children,
-    onchange,
-    onchangecursor,
     href,
     back = true,
   }: Props = $props()

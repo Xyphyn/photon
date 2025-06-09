@@ -1,11 +1,8 @@
-import { profile } from '$lib/auth.svelte'
 import { instance } from '$lib/instance.svelte'
 import { client } from '$lib/lemmy.svelte.js'
-import type { View } from '$lib/settings.svelte'
 import { isImage, isVideo } from '$lib/ui/image'
 import { canParseUrl, findClosestNumber } from '$lib/util.svelte'
-import type { CommentView, PersonView, Post, PostView } from 'lemmy-js-client'
-import { get } from 'svelte/store'
+import type { CommentView, PersonView, Post } from 'lemmy-js-client'
 
 export const isCommentMutable = (comment: CommentView, me: PersonView) =>
   me.person.id == comment.creator.id
@@ -15,6 +12,9 @@ export const bestImageURL = (
   compact: boolean = true,
   width: number = 1024,
 ) => {
+  if (compact) {
+    /* empty */
+  }
   if (post.url) return optimizeImageURL(post.url, width)
   else if (post.thumbnail_url)
     return optimizeImageURL(post.thumbnail_url, width)
@@ -67,7 +67,7 @@ export const postLink = (post: Post) =>
 export type MediaType = 'video' | 'image' | 'iframe' | 'embed' | 'none'
 export type IframeType = 'youtube' | 'video' | 'none'
 
-export const mediaType = (url?: string, view: View = 'cozy'): MediaType => {
+export const mediaType = (url?: string): MediaType => {
   if (url) {
     if (isImage(url)) return 'image'
     if (isVideo(url)) return 'iframe'
@@ -89,7 +89,7 @@ export async function hidePost(
   hide: boolean,
   jwt: string,
 ): Promise<boolean> {
-  const res = await client({ auth: jwt }).hidePost({
+  await client({ auth: jwt }).hidePost({
     hide: hide,
     post_ids: [id],
   })

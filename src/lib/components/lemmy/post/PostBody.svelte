@@ -1,6 +1,5 @@
 <script lang="ts">
   import Markdown from '$lib/components/markdown/Markdown.svelte'
-  import type { View } from '$lib/settings.svelte'
   import { Button } from 'mono-svelte'
   import { ChevronDown, Icon } from 'svelte-hero-icons'
 
@@ -16,7 +15,6 @@
 
   interface Props {
     body: string
-    view?: View
     clickThrough?: boolean
     element?: string
     style?: string
@@ -25,7 +23,6 @@
 
   let {
     body,
-    view = 'cozy',
     clickThrough = false,
     element: htmlElement = 'div',
     style = '',

@@ -21,19 +21,22 @@
     MdSuperscript,
     MdText,
   } from './renderers/index'
-  import { linkify, subSupscriptExtension } from './renderers/plugins'
-  import containerExtension from './renderers/spoiler/spoiler'
+  import { linkify, subSupscriptExtension } from './renderers/plugins.js'
+  import containerExtension from './renderers/spoiler/spoiler.js'
 
-  export const options: any = {
+  export const options = {
     mangle: false,
     headerIds: false,
     pedantic: false,
+    inline: false,
   }
 
   marked.setOptions(options)
 
   marked.use(linkify, {
     extensions: [
+      // @ts-expect-error hell with marked
+      // eslint-disable-next-line
       containerExtension((params: any) => {
         if (params.type == 'spoiler') {
           return {
@@ -45,6 +48,8 @@
         }
         return null
       }),
+      // @ts-expect-error hell with marked
+      // eslint-disable-next-line
       subSupscriptExtension((params: any) => {
         if (params.type == 'subscript') {
           return {
@@ -74,7 +79,6 @@
     html: MdHtml,
     code: MdCode,
     list: MdList,
-    // @ts-ignore
     spoiler: MdSpoiler,
     table: MdTable,
     tablebody: MdTableBody,
@@ -96,7 +100,6 @@
     html: MdText,
     code: MdText,
     list: MdText,
-    // @ts-ignore
     spoiler: MdText,
     table: MdText,
     tablebody: MdText,

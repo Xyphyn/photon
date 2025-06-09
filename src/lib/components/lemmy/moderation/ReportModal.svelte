@@ -1,22 +1,20 @@
 <script lang="ts">
-  import { run, preventDefault } from 'svelte/legacy'
+  import { preventDefault, run } from 'svelte/legacy'
 
+  import { profile } from '$lib/auth.svelte.js'
   import Comment from '$lib/components/lemmy/comment/Comment.svelte'
   import Post from '$lib/components/lemmy/post/Post.svelte'
-  import { toast } from 'mono-svelte'
+  import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
+  import { t } from '$lib/i18n/translations'
   import { getClient } from '$lib/lemmy.svelte.js'
   import type {
     CommentView,
     PostView,
     PrivateMessageView,
   } from 'lemmy-js-client'
-  import { profile } from '$lib/auth.svelte.js'
-  import { Button, Modal } from 'mono-svelte'
-  import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
-  import { onMount } from 'svelte'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import { t } from '$lib/i18n/translations'
+  import { Button, Modal, toast } from 'mono-svelte'
   import PrivateMessage from '../inbox/PrivateMessage.svelte'
+  import { errorMessage } from '$lib/lemmy/error'
 
   interface Props {
     open: boolean
@@ -67,7 +65,7 @@
         type: 'success',
       })
     } catch (err) {
-      toast({ content: err as any, type: 'error' })
+      toast({ content: errorMessage(err as string), type: 'error' })
     }
 
     loading = false

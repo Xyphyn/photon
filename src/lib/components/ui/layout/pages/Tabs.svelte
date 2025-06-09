@@ -1,7 +1,6 @@
 <script lang="ts">
-  import { invalidate, invalidateAll } from '$app/navigation'
+  import { invalidateAll } from '$app/navigation'
   import { page } from '$app/state'
-  import { fly } from 'svelte/transition'
 
   interface Props {
     routes: {
@@ -18,7 +17,7 @@
   let {
     routes,
     currentRoute = undefined,
-    buildUrl = (route, href) => href,
+    buildUrl = (_, href) => href,
     defaultRoute = undefined,
     class: clazz = '',
     children,
@@ -49,7 +48,7 @@
     ''}
   "
 >
-  {#each routes as route}
+  {#each routes as route (route.href)}
     <a
       onclick={() => invalidateAll()}
       href={buildUrl(currentRoute, route.href)}

@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run, preventDefault } from 'svelte/legacy'
-
   type T = $$Generic
 
   interface Props {
@@ -8,10 +6,7 @@
     disabled?: boolean[]
     optionNames?: string[]
     selected: T
-    headless?: boolean
-    class?: string
-    buttonClazz?: string
-    children?: import('svelte').Snippet<[any]>
+    children?: import('svelte').Snippet<[{ selected: T }]>
     onselect?: (item: T) => void
   }
 
@@ -20,9 +15,6 @@
     disabled = [],
     optionNames = [],
     selected = $bindable(),
-    headless = false,
-    class: clazz = '',
-    buttonClazz = '',
     children,
     onselect,
   }: Props = $props()
@@ -30,38 +22,6 @@
   $effect(() => {
     onselect?.(selected)
   })
-
-  let containerClass = `
-    flex flex-row rtl:flex-row-reverse items-center w-max max-w-full overflow-auto
-    ${headless ? 'pb-1 gap-1' : ''}
-    ${clazz}
-  `
-
-  const buttonClass = (selected: boolean) => `
-    first:rounded-l-lg first:border-l dark:first:border-l-transparent
-    last:rounded-r-lg last:border-r dark:last:border-r-transparent
-    rounded-l-none
-    rounded-r-none
-    px-3 py-1.5 text-sm hover:brightness-110 ${buttonClazz || ''}
-    ${
-      !selected
-        ? `dark:hover:bg-zinc-800 border-slate-100 border-t border-b border-b-slate-300 dark:border-b-0
-      dark:border-t dark:border-t-zinc-700`
-        : ''
-    }
-     transition-all transition-filters rounded-full
-    ${
-      selected
-        ? headless
-          ? ''
-          : `bg-primary-900 dark:bg-primary-100 text-slate-50 dark:text-zinc-900`
-        : headless
-          ? ''
-          : 'bg-white dark:bg-zinc-800'
-    }
-    disabled:opacity-60 disabled:pointer-events-none whitespace-nowrap
-    relative
-  `
 </script>
 
 <div
@@ -76,7 +36,7 @@
           ? 'bg-primary-900 dark:bg-primary-100 text-slate-50 dark:text-zinc-900'
           : 'dark:bg-zinc-900/50 bg-white',
       ]}
-      onclick={(e) => {
+      onclick={e => {
         e.preventDefault()
         selected = option
       }}

@@ -4,7 +4,7 @@
   import { errorMessage } from '$lib/lemmy/error'
   import { t } from '$lib/i18n/translations'
   import { uploadImage } from '$lib/util.svelte.js'
-  import { ImageInput, Spinner, toast } from 'mono-svelte'
+  import { toast } from 'mono-svelte'
   import { Button, Modal } from 'mono-svelte'
   import { DocumentPlus, Icon } from 'svelte-hero-icons'
   import { expoOut } from 'svelte/easing'
@@ -39,19 +39,19 @@
     try {
       const uploaded = (
         await Promise.all(
-          Array.from(image).map((i) =>
+          Array.from(image).map(i =>
             uploadImage(i, profile.data.instance, profile.data.jwt!)
-              .then((uploaded) => {
+              .then(uploaded => {
                 progress += 1 / (image?.length ?? 0)
                 return uploaded
               })
-              .catch((err) => {
+              .catch(err => {
                 toast({ content: errorMessage(err), type: 'error' })
                 return 'Failed to upload'
               }),
           ),
         )
-      ).filter((i) => i != undefined)
+      ).filter(i => i != undefined)
 
       if (!uploaded) throw new Error('Image upload returned undefined')
 
@@ -80,7 +80,7 @@
   {/if}
   <form
     class="flex flex-col gap-4"
-    onsubmit={(e) => {
+    onsubmit={e => {
       e.preventDefault()
       upload()
     }}
@@ -96,7 +96,6 @@
         {multiple ? 'grid-cols-3 grid-rows-2' : 'grid-cols-1 grid-rows-1'}"
         >
           {#each previewURLs as file}
-            <!-- svelte-ignore a11y_missing_attribute -->
             <img
               src={file}
               onload={() => URL.revokeObjectURL(file)}

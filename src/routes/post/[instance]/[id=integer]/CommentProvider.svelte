@@ -6,14 +6,12 @@
   import Comments from '$lib/components/lemmy/comment/Comments.svelte'
   import { buildCommentsTree } from '$lib/components/lemmy/comment/comments.svelte'
   import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
-  import { instance } from '$lib/instance.svelte'
-  import { settings } from '$lib/settings.svelte'
   import { t } from '$lib/i18n/translations'
+  import { instance } from '$lib/instance.svelte'
   import type {
     CommentSortType,
     GetCommentsResponse,
     GetPostResponse,
-    PostView,
   } from 'lemmy-js-client'
   import { Button, Option, Select } from 'mono-svelte'
   import {
@@ -87,14 +85,14 @@
   {:else}
     <CommentForm
       postId={post.post_view.post.id}
-      oncomment={(comment) => {
+      oncomment={comment => {
         comments.comments = [comment.comment_view, ...comments.comments]
       }}
       locked={(post.post_view.post.locked &&
         !(
           profile.data?.user?.local_user_view.local_user.admin ||
           profile.data?.user?.moderates
-            .map((c) => c.community.id)
+            .map(c => c.community.id)
             .includes(post.community_view.community.id)
         )) ||
         page.params.instance.toLowerCase() != instance.data.toLowerCase()}

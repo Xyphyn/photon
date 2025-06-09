@@ -10,7 +10,7 @@
       } else {
         return {}
       }
-    } catch (e) {
+    } catch {
       return {}
     }
   }
@@ -61,7 +61,7 @@
     badges?: boolean
     inComment?: boolean
     showInstance?: boolean
-    displayName?: any
+    displayName?: boolean
     instanceClass?: string
     class?: string
     children?: import('svelte').Snippet

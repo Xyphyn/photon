@@ -1,8 +1,5 @@
-// maybe fix circular dependency, hopefully.
-
 import { browser } from '$app/environment'
 import { env } from '$env/dynamic/public'
-import { writable } from 'svelte/store'
 import { profile } from './auth.svelte'
 
 class InstanceData {
@@ -13,7 +10,7 @@ class InstanceData {
   }
 }
 
-export let instance = new InstanceData()
+export const instance = new InstanceData()
 
 export const LINKED_INSTANCE_URL =
   (env.PUBLIC_LOCK_TO_INSTANCE ?? 'true').toLowerCase() == 'true'

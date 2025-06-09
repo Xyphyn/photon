@@ -1,28 +1,56 @@
-<script lang="ts" generics="T">
-  import { run, createBubbler } from 'svelte/legacy'
+<script lang="ts" module>
+  interface Props<T> extends Omit<HTMLSelectAttributes, 'size'> {
+    value?: T | string | undefined
+    placeholder?: string | undefined
+    label?: string | undefined
+    size?: ButtonSize
+    shadow?: ButtonShadow
+    id?: string
+    class?: ClassValue
+    baseClass?: ClassValue
+    selectClass?: ClassValue
+    customLabel?: import('svelte').Snippet
+    children?: import('svelte').Snippet
+    customOption?: import('svelte').Snippet<
+      [
+        {
+          option: {
+            value: string
+            label: string
+            icon?: IconSource
+            disabled?: boolean
+          }
+          selected: boolean
+        },
+      ]
+    >
+    oncontextmenu?: HTMLSelectAttributes['oncontextmenu']
+    onchange?: HTMLSelectAttributes['onchange']
+  }
 
-  const bubble = createBubbler()
-  import {
-    buttonColor,
-    buttonSize,
-    type ButtonShadow,
-    type ButtonSize,
-    buttonShadow,
-  } from '../../button/Button.svelte'
-  import Label from '../Label.svelte'
-  import { generateID } from '../helper.js'
-  import Menu from '../../popover/Menu.svelte'
-  import MenuButton from '../../popover/MenuButton.svelte'
-  import Popover from '../../popover/Popover.svelte'
-  import { createEventDispatcher, onMount, setContext, tick } from 'svelte'
+  export type { Props as SelectProps }
+</script>
+
+<script lang="ts" generics="T">
+  import { setContext, tick } from 'svelte'
   import {
     CheckCircle,
-    ChevronDown,
     ChevronUpDown,
     Icon,
     type IconSource,
   } from 'svelte-hero-icons'
   import type { ClassValue, HTMLSelectAttributes } from 'svelte/elements'
+  import {
+    buttonColor,
+    buttonShadow,
+    buttonSize,
+    type ButtonShadow,
+    type ButtonSize,
+  } from '../../button/Button.svelte'
+  import Menu from '../../popover/Menu.svelte'
+  import MenuButton from '../../popover/MenuButton.svelte'
+  import Label from '../Label.svelte'
+  import { generateID } from '../helper.js'
 
   let open = $state(false)
   let element: HTMLSelectElement | undefined = $state()
@@ -40,23 +68,6 @@
     options: [],
   })
 
-  interface Props extends Omit<HTMLSelectAttributes, 'size'> {
-    value?: T | string | undefined
-    placeholder?: string | undefined
-    label?: string | undefined
-    size?: ButtonSize
-    shadow?: ButtonShadow
-    id?: string
-    class?: ClassValue
-    baseClass?: ClassValue
-    selectClass?: ClassValue
-    customLabel?: import('svelte').Snippet
-    children?: import('svelte').Snippet
-    customOption?: import('svelte').Snippet<[any]>
-    oncontextmenu?: HTMLSelectAttributes['oncontextmenu']
-    onchange?: HTMLSelectAttributes['onchange']
-  }
-
   let {
     value = $bindable(undefined),
     placeholder = undefined,
@@ -73,7 +84,7 @@
     oncontextmenu,
     onchange,
     ...rest
-  }: Props = $props()
+  }: Props<T> = $props()
 </script>
 
 <div class="flex flex-col gap-1 {clazz} {baseClass}">
@@ -96,10 +107,10 @@
   	w-full min-w-full cursor-pointer pr-6 {buttonColor.secondary}
   	{clazz} {selectClass}"
           bind:value
-          onmousedown={(e) => {
+          onmousedown={e => {
             e.preventDefault()
           }}
-          onkeypress={(e) => {
+          onkeypress={e => {
             e.preventDefault()
             open = !open
           }}
@@ -114,7 +125,7 @@
         </select>
       {/snippet}
 
-      {#each context.options as option}
+      {#each context.options as option (option)}
         {#if customOption}{@render customOption({
             option,
             selected: option.value == value,

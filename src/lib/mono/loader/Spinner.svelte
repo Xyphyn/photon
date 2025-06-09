@@ -1,7 +1,6 @@
 <script lang="ts">
   interface Props {
     width?: number
-    [key: string]: any
   }
 
   let { width = 16, ...rest }: Props = $props()

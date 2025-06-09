@@ -3,6 +3,7 @@
   import { Modal } from 'mono-svelte'
 
   interface Props {
+    // eslint-disable-next-line
     object: any
     open?: boolean
     title?: import('svelte').Snippet

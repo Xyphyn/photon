@@ -1,40 +1,44 @@
 <script lang="ts">
-  import { run, preventDefault } from 'svelte/legacy'
+  import { preventDefault, run } from 'svelte/legacy'
 
-  import { createEventDispatcher, onDestroy, onMount } from 'svelte'
-  import { client, site } from '$lib/lemmy.svelte.js'
-  import type { Community, Post, PostView } from 'lemmy-js-client'
-  import { Select, Spinner, Switch, toast } from 'mono-svelte'
-  import {
-    Icon,
-    Photo,
-    ArrowPath,
-    Sparkles,
-    ChatBubbleBottomCenterText,
-    Plus,
-    Language,
-    Link,
-    XMark,
-  } from 'svelte-hero-icons'
   import { profile } from '$lib/auth.svelte.js'
-  import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
-  import { placeholders, uploadImage } from '$lib/util.svelte.js'
-  import { Checkbox, TextInput } from 'mono-svelte'
-  import { getSessionStorage, setSessionStorage } from '$lib/session.js'
-  import ObjectAutocomplete from '$lib/components/lemmy/ObjectAutocomplete.svelte'
-  import { Button } from 'mono-svelte'
-  import Avatar from '$lib/components/ui/Avatar.svelte'
-  import { t } from '$lib/i18n/translations'
-  import { slide } from 'svelte/transition'
-  import { feature } from '$lib/version'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import ErrorContainer, {
     clearErrorScope,
     pushError,
   } from '$lib/components/error/ErrorContainer.svelte'
-  import { errorMessage } from '$lib/lemmy/error'
   import FreeTextInput from '$lib/components/input/FreeTextInput.svelte'
+  import ObjectAutocomplete from '$lib/components/lemmy/ObjectAutocomplete.svelte'
+  import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
+  import Avatar from '$lib/components/ui/Avatar.svelte'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { t } from '$lib/i18n/translations'
+  import { client, site } from '$lib/lemmy.svelte.js'
+  import { errorMessage } from '$lib/lemmy/error'
+  import { getSessionStorage, setSessionStorage } from '$lib/session.js'
+  import { placeholders } from '$lib/util.svelte.js'
+  import type { Community, Post, PostView } from 'lemmy-js-client'
+  import {
+    Button,
+    Select,
+    Spinner,
+    Switch,
+    TextInput,
+    toast,
+  } from 'mono-svelte'
   import Option from 'mono-svelte/forms/select/Option.svelte'
+  import { onDestroy, onMount } from 'svelte'
+  import {
+    ArrowPath,
+    ChatBubbleBottomCenterText,
+    Icon,
+    Language,
+    Link,
+    Photo,
+    Plus,
+    Sparkles,
+    XMark,
+  } from 'svelte-hero-icons'
+  import { slide } from 'svelte/transition'
 
   interface Props {
     edit?: boolean
@@ -82,7 +86,6 @@
   let data = $state(passedData)
 
   // weird select menu language handling
-  // @ts-ignore
   $effect(() => {
     if (data.language_id === '') data.language_id = undefined
   })
@@ -100,7 +103,6 @@
       data.nsfw = editingPost.nsfw
       data.alt_text = editingPost.alt_text
       data.thumbnail = editingPost.thumbnail_url
-      // @ts-ignore
       data.language_id = editingPost.language_id.toString()
     }
 
@@ -115,12 +117,12 @@
         limit: 40,
       })
 
-      communities = list.communities.map((c) => c.community)
+      communities = list.communities.map(c => c.community)
     }
   })
 
   onDestroy(() => {
-    // @ts-ignore
+    // @ts-expect-error TODO get rid of sessionStorage stuff
     if (saveDraft) setSessionStorage('postDraft', data)
   })
 
@@ -137,7 +139,7 @@
     if (data.url && data.url != '') {
       try {
         new URL(data.url)
-      } catch (err) {
+      } catch {
         pushError({
           message: $t('toast.invalidURL'),
           scope: 'post-form',
@@ -190,7 +192,7 @@
         onsubmit?.(post.post_view)
       }
     } catch (err) {
-      pushError({ message: errorMessage(err as any), scope: 'post-form' })
+      pushError({ message: errorMessage(err as string), scope: 'post-form' })
       data.loading = false
     }
   }
@@ -212,7 +214,7 @@
       if (res.metadata.description)
         data.body = res.metadata.description
           .split('\n')
-          .map((l) => `> ${l}`)
+          .map(l => `> ${l}`)
           .join('\n')
 
       toast({
@@ -221,7 +223,7 @@
         action: () => (data = oldData),
         duration: 15 * 1000,
       })
-    } catch (e) {
+    } catch {
       pushError({
         message: $t('toast.failGenerateTitle'),
         scope: 'post-form',
@@ -234,7 +236,7 @@
     if (!url) return false
     try {
       new URL(url)
-    } catch (e) {
+    } catch {
       return false
     }
     return true
@@ -258,7 +260,7 @@
     <UploadModal
       bind:open={uploadingImage}
       multiple={false}
-      onupload={(e) => {
+      onupload={e => {
         if (e) data.url = e[0]
         uploadingImage = false
       }}
@@ -282,7 +284,7 @@
         listing_type="All"
         label={$t('form.post.community')}
         required
-        onselect={(e) => {
+        onselect={e => {
           const c = e
           if (!c) {
             data.community = null
@@ -399,7 +401,9 @@
             const url = new URL(await navigator.clipboard.readText())
 
             data.url = url.toString()
-          } catch (e) {}
+          } catch {
+            /* empty */
+          }
         }}
         size="sm"
         rounding="pill"
@@ -472,9 +476,9 @@
           toast({ content: $t('toast.restoredFromDraft') })
           const draft = getSessionStorage('postDraft')
           if (draft && !edit) {
-            // @ts-ignore
+            // @ts-expect-error TODO get rid of session storage
             draft.loading = false
-            // @ts-ignore
+            // @ts-expect-error TODO get rid of session storage
             data = draft
           }
         }}

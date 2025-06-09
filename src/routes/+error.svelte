@@ -1,15 +1,14 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
-  import { errorMessage } from '$lib/lemmy/error'
   import { t } from '$lib/i18n/translations'
+  import { errorMessage } from '$lib/lemmy/error'
   import { Button } from 'mono-svelte'
-  import { Icon, XMark } from 'svelte-hero-icons'
 
   function getError(message: string): { string: string; code: boolean } {
     try {
       return { string: errorMessage(JSON.parse(message)), code: false }
-    } catch (e) {
+    } catch {
       return { string: message, code: true }
     }
   }

@@ -5,47 +5,46 @@ import {
   amModOfAny,
   isAdmin,
 } from '$lib/components/lemmy/moderation/moderation'
-import { resumables, type ResumableItem } from '$lib/lemmy/item'
-import { settings } from '$lib/settings.svelte'
 import { t } from '$lib/i18n/translations'
+import { type ResumableItem } from '$lib/lemmy/item'
+import { settings } from '$lib/settings.svelte'
 import { theme, type ThemeData } from '$lib/ui/colors.svelte'
 import { fullCommunityName } from '$lib/util.svelte'
 import {
   ArrowRightOnRectangle,
+  ArrowTrendingDown,
+  ArrowTrendingUp,
   Bookmark,
+  ChartBar,
+  ChatBubbleLeftRight,
+  ChatBubbleOvalLeftEllipsis,
+  Clock,
   Cog6Tooth,
+  ComputerDesktop,
+  Fire,
   GlobeAlt,
+  GlobeAmericas,
   Home,
   Identification,
   Inbox,
+  MapPin,
+  Moon,
   Newspaper,
+  PaintBrush,
   PencilSquare,
+  Plus,
+  Scale,
   ServerStack,
   ShieldCheck,
+  Star,
+  Sun,
+  Swatch,
+  Trophy,
   UserCircle,
   UserGroup,
   ViewColumns,
   type IconSource,
-  PaintBrush,
-  ComputerDesktop,
-  Sun,
-  Moon,
-  MapPin,
-  GlobeAmericas,
-  ChartBar,
-  Trophy,
-  ArrowTrendingUp,
-  Fire,
-  Scale,
-  Star,
-  Clock,
-  ArrowTrendingDown,
-  ChatBubbleOvalLeftEllipsis,
-  ChatBubbleLeftRight,
-  Swatch,
-  Plus,
 } from 'svelte-hero-icons'
-import { get } from 'svelte/store'
 
 export interface Group {
   name: string
@@ -55,7 +54,7 @@ export interface Group {
 export interface Action {
   name: string
   desc?: string
-  handle?: () => any
+  handle?: () => void
   href?: string
   shortcut?: string
   icon: string | IconSource
@@ -73,7 +72,7 @@ export function getGroups(
   return [
     {
       name: t.get('nav.commands.recents'),
-      actions: resumables.map((r) => ({
+      actions: resumables.map(r => ({
         name: r.name,
         icon: r.avatar ?? PencilSquare,
         href: r.url,
@@ -306,7 +305,7 @@ export function getGroups(
     },
     {
       name: t.get('account.accounts'),
-      actions: profiles.map((p) => ({
+      actions: profiles.map(p => ({
         name: p.username ?? t.get('account.guest'),
         icon: p.avatar ?? UserCircle,
         detail: p.instance,
@@ -379,7 +378,7 @@ export function getGroups(
         {
           name: t.get('nav.commands.setTheme'),
           icon: Swatch,
-          subActions: td.themes.map((th) => ({
+          subActions: td.themes.map(th => ({
             name: t.get('nav.commands.setThemeTo', { default: th.name }),
             icon: Swatch,
             handle: () => (theme.data.currentTheme = th.id),
@@ -405,7 +404,7 @@ export function getGroups(
     {
       name: t.get('profile.subscribed'),
       actions:
-        profile.user?.follows.map((f) => ({
+        profile.user?.follows.map(f => ({
           icon: f.community.icon,
           name: f.community.title,
           href: `/c/${fullCommunityName(

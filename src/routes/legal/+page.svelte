@@ -1,12 +1,9 @@
 <script lang="ts">
-  import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import { site } from '$lib/lemmy.svelte'
   import { t } from '$lib/i18n/translations'
-  import { Button, Modal, Spinner } from 'mono-svelte'
-
-  let siteOpen: boolean = false
+  import { site } from '$lib/lemmy.svelte'
+  import { Spinner } from 'mono-svelte'
 </script>
 
 <div class="flex flex-row w-full">

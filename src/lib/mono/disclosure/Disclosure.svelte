@@ -1,15 +1,15 @@
 <script lang="ts">
-  import { backOut, expoOut } from 'svelte/easing'
+  import type { Snippet } from 'svelte'
+  import { expoOut } from 'svelte/easing'
   import type { ClassValue } from 'svelte/elements'
   import { slide } from 'svelte/transition'
 
   interface Props {
     open?: boolean
     class?: ClassValue
-    summary?: import('svelte').Snippet<[any]>
-    extended?: import('svelte').Snippet
-    children?: import('svelte').Snippet<[any]>
-    [key: string]: any
+    summary?: Snippet<[{ open: boolean }]>
+    extended?: Snippet
+    children?: Snippet<[{ open: boolean }]>
   }
 
   let {

@@ -1,22 +1,16 @@
 <script lang="ts">
-  import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
-  import Post from '$lib/components/lemmy/post/Post.svelte'
-  import { Material, toast } from 'mono-svelte'
-  import { getClient } from '$lib/lemmy.svelte.js'
-  import { isCommentReport, isPostReport } from '$lib/lemmy/item.js'
-  import type {
-    CommentReportView,
-    PostReportView,
-    PrivateMessageReportView,
-  } from 'lemmy-js-client'
-  import { Check, CheckCircle, Icon } from 'svelte-hero-icons'
   import { notifications, profile } from '$lib/auth.svelte.js'
-  import { Button } from 'mono-svelte'
-  import type { ReportView } from '$lib/lemmy/report.js'
+  import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
   import PrivateMessage from '$lib/components/lemmy/inbox/PrivateMessage.svelte'
-  import { t } from '$lib/i18n/translations'
-  import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
+  import Post from '$lib/components/lemmy/post/Post.svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
+  import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
+  import { t } from '$lib/i18n/translations'
+  import { getClient } from '$lib/lemmy.svelte.js'
+  import { errorMessage } from '$lib/lemmy/error'
+  import type { ReportView } from '$lib/lemmy/report.js'
+  import { Button, Material, toast } from 'mono-svelte'
+  import { CheckCircle, Icon } from 'svelte-hero-icons'
 
   interface Props {
     item: ReportView
@@ -91,7 +85,7 @@
       $notifications.reports += item.resolved ? 1 : -1
     } catch (err) {
       toast({
-        content: err as any,
+        content: errorMessage(err as string),
         type: 'error',
       })
     }

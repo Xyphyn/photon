@@ -1,18 +1,17 @@
 <script lang="ts">
-  import type { CommentResponse } from 'lemmy-js-client'
-  import { getClient, site } from '$lib/lemmy.svelte.js'
-  import { createEventDispatcher } from 'svelte'
-  import Markdown from '$lib/components/markdown/Markdown.svelte'
   import { profile } from '$lib/auth.svelte.js'
-  import { Menu, Select, Spinner, toast, Option, MenuButton } from 'mono-svelte'
+  import Markdown from '$lib/components/markdown/Markdown.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
-  import { placeholders } from '$lib/util.svelte.js'
-  import { Button } from 'mono-svelte'
   import { t } from '$lib/i18n/translations'
+  import { getClient, site } from '$lib/lemmy.svelte.js'
   import { errorMessage } from '$lib/lemmy/error'
+  import { placeholders } from '$lib/util.svelte.js'
+  import type { CommentResponse } from 'lemmy-js-client'
+  import { Button, Menu, MenuButton, toast } from 'mono-svelte'
   import { ArrowUp, Icon, Language, XMark } from 'svelte-hero-icons'
+  import type { ClassValue, HTMLTextareaAttributes } from 'svelte/elements'
 
-  interface Props {
+  interface Props extends Omit<HTMLTextareaAttributes, 'oncancel'> {
     postId: number
     parentId?: number | undefined
     locked?: boolean
@@ -22,10 +21,13 @@
     value?: string
     actions?: boolean
     preview?: boolean
+    class?: ClassValue
+    required?: boolean
+    id?: string
+    label?: string
     oncomment?: (comment: CommentResponse) => void
     onconfirm?: (value: string) => void
     oncancel?: (cancel: boolean) => void
-    [key: string]: any
   }
 
   let {
@@ -40,7 +42,6 @@
     preview: previewAction = true,
     oncancel,
     oncomment,
-    onconfirm,
     ...rest
   }: Props = $props()
 
@@ -65,7 +66,7 @@
     } catch (err) {
       console.error(err)
       toast({
-        content: errorMessage(err as any),
+        content: errorMessage(err as string),
         type: 'error',
       })
     }
@@ -93,12 +94,6 @@
           : (placeholder ?? placeholders.get('comment'))}
       bind:value
       disabled={locked || loading || banned}
-      onconfirm={() => {
-        if (actions) {
-          submit()
-          onconfirm?.(value)
-        }
-      }}
       previewButton={previewAction}
     >
       <Menu>

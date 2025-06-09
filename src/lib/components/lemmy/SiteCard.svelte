@@ -2,27 +2,18 @@
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import StickyCard from '$lib/components/ui/StickyCard.svelte'
+  import { t } from '$lib/i18n/translations'
+  import { userLink } from '$lib/lemmy/generic'
+  import { settings } from '$lib/settings.svelte'
   import type { PersonView, SiteView, Tagline } from 'lemmy-js-client'
-  import { Badge, Button } from 'mono-svelte'
-  import {
-    BuildingOffice,
-    ChartBar,
-    Icon,
-    InformationCircle,
-    Newspaper,
-    ServerStack,
-    UserGroup,
-  } from 'svelte-hero-icons'
+  import { Badge } from 'mono-svelte'
+  import { Icon, ServerStack } from 'svelte-hero-icons'
+  import Link from '../input/Link.svelte'
+  import Entity from '../ui/Entity.svelte'
   import Expandable from '../ui/Expandable.svelte'
   import LabelStat from '../ui/LabelStat.svelte'
   import ItemList from './generic/ItemList.svelte'
-  import { userLink } from '$lib/lemmy/generic'
-  import { t } from '$lib/i18n/translations'
-  import Entity from '../ui/Entity.svelte'
-  import { settings } from '$lib/settings.svelte'
   import { optimizeImageURL } from './post/helpers'
-  import Link from '../input/Link.svelte'
-  import EndPlaceholder from '../ui/EndPlaceholder.svelte'
 
   interface Props {
     site: SiteView
@@ -130,7 +121,7 @@
           </span>
         {/snippet}
         <ItemList
-          items={admins.map((a) => ({
+          items={admins.map(a => ({
             id: a.person.id,
             name: a.person.name,
             url: userLink(a.person),

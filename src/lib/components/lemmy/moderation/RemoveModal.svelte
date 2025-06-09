@@ -1,23 +1,23 @@
 <script lang="ts">
-  import { run, preventDefault } from 'svelte/legacy'
+  import { preventDefault, run } from 'svelte/legacy'
 
+  import { profile } from '$lib/auth.svelte.js'
+  import MultiSelect from '$lib/components/input/Switch.svelte'
   import Comment from '$lib/components/lemmy/comment/Comment.svelte'
+  import { removalTemplate } from '$lib/components/lemmy/moderation/moderation.js'
   import Post from '$lib/components/lemmy/post/Post.svelte'
-  import { Select, Switch, toast } from 'mono-svelte'
+  import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
+  import { t } from '$lib/i18n/translations'
   import { getClient } from '$lib/lemmy.svelte.js'
   import { isCommentView, isPostView } from '$lib/lemmy/item.js'
-  import type { CommentView, PostView } from 'lemmy-js-client'
-  import { profile } from '$lib/auth.svelte.js'
-  import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
-  import { Fire, Icon, Trash } from 'svelte-hero-icons'
-  import MultiSelect from '$lib/components/input/Switch.svelte'
-  import { removalTemplate } from '$lib/components/lemmy/moderation/moderation.js'
   import { settings } from '$lib/settings.svelte.js'
   import { fullCommunityName } from '$lib/util.svelte.js'
-  import { amMod, isAdmin } from './moderation'
-  import { Button, Checkbox, Modal } from 'mono-svelte'
-  import { t } from '$lib/i18n/translations'
+  import type { CommentView, PostView } from 'lemmy-js-client'
+  import { Button, Modal, Select, Switch, toast } from 'mono-svelte'
   import Option from 'mono-svelte/forms/select/Option.svelte'
+  import { Fire, Icon, Trash } from 'svelte-hero-icons'
+  import { amMod, isAdmin } from './moderation'
+  import { errorMessage } from '$lib/lemmy/error'
 
   interface Props {
     open: boolean
@@ -153,7 +153,7 @@
       open = false
     } catch (err) {
       toast({
-        content: err as any,
+        content: errorMessage(err),
         type: 'error',
       })
     }

@@ -1,22 +1,20 @@
 <script lang="ts">
   import { settings } from '$lib/settings.svelte.js'
-  import { theme } from '$lib/ui/colors.svelte'
+  import type { Snippet } from 'svelte'
   import type { ClassValue, UIEventHandler } from 'svelte/elements'
   import { scrollY } from 'svelte/reactivity/window'
 
   interface Props {
     route?: { id: string | null } | undefined
     class?: ClassValue
-    children?: import('svelte').Snippet
-    navbar?: import('svelte').Snippet<[any]>
-    sidebar?: import('svelte').Snippet<[any]>
-    main?: import('svelte').Snippet<[any]>
-    suffix?: import('svelte').Snippet<[any]>
-    [key: string]: any
+    children?: Snippet
+    navbar?: Snippet<[{ class: string; style: string }]>
+    sidebar?: Snippet<[{ class: string; style: string }]>
+    main?: Snippet<[{ class: string; style: string }]>
+    suffix?: Snippet<[{ class: string; style: string }]>
   }
 
   let {
-    route = undefined,
     class: clazz = '',
     children,
     navbar,
@@ -27,7 +25,7 @@
   }: Props = $props()
 
   let previousTop = 0
-  const onscroll: UIEventHandler<Window> = (e) => {
+  const onscroll: UIEventHandler<Window> = () => {
     if (!settings.dock.autoHide) {
       dockVisible = true
       return
@@ -56,6 +54,7 @@
       class: `bg-slate-50/50 dark:bg-zinc-950/90 border-slate-100 dark:border-zinc-900
       pointer-events-auto backdrop-blur-xl border lg:border-t-0 lg:border-x-0
       rounded-full lg:rounded-none`,
+      style: '',
     })}
   </div>
   <div

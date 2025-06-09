@@ -1,8 +1,6 @@
 import { client } from '$lib/lemmy.svelte.js'
 
-export async function load({ fetch, parent }) {
-  const user = await parent()
-
+export async function load({ fetch }) {
   const response = await client({ func: fetch }).listLogins()
 
   return {

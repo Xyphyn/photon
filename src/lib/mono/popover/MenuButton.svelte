@@ -1,21 +1,22 @@
 <script lang="ts">
+  import type { Snippet } from 'svelte'
   import Button, {
     type ButtonAlignment,
     type ButtonColor,
+    type ButtonProps,
   } from '../button/Button.svelte'
   import { Icon, type IconSource } from 'svelte-hero-icons'
 
-  interface Props {
+  interface Props extends ButtonProps {
     color?: ButtonColor
     alignment?: ButtonAlignment
     href?: string | undefined
     disabled?: boolean
     class?: string
     icon?: IconSource
-    prefix?: import('svelte').Snippet
-    children?: import('svelte').Snippet
-    suffix?: import('svelte').Snippet
-    [key: string]: any
+    prefix?: Snippet
+    children?: Snippet
+    suffix?: Snippet
   }
 
   let {
@@ -25,9 +26,9 @@
     disabled = false,
     class: clazz = '',
     icon,
-    prefix,
+    prefix: passedPrefix,
     children,
-    suffix,
+    suffix: passedSuffix,
     ...rest
   }: Props = $props()
 </script>
@@ -55,12 +56,12 @@
       {#if icon}
         <Icon src={icon} micro size="16" />
       {:else}
-        {@render prefix?.()}
+        {@render passedPrefix?.()}
       {/if}
     </div>
   {/snippet}
   {@render children?.()}
   {#snippet suffix()}
-    {@render suffix?.()}
+    {@render passedSuffix?.()}
   {/snippet}
 </Button>

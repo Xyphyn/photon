@@ -1,15 +1,9 @@
 <script lang="ts">
-  import { Material } from 'mono-svelte'
-  import Avatar from './Avatar.svelte'
-  import PostBody from '../lemmy/post/PostBody.svelte'
-  import LabelStat from './LabelStat.svelte'
-  import { optimizeImageURL } from '../lemmy/post/helpers'
-  import FormattedNumber from '../util/FormattedNumber.svelte'
-  import Expandable from './Expandable.svelte'
-  import { Icon, InformationCircle } from 'svelte-hero-icons'
   import { t } from '$lib/i18n/translations'
   import Markdown from '../markdown/Markdown.svelte'
-  import EndPlaceholder from './EndPlaceholder.svelte'
+  import FormattedNumber from '../util/FormattedNumber.svelte'
+  import Avatar from './Avatar.svelte'
+  import Expandable from './Expandable.svelte'
 
   interface Props {
     avatar?: string | undefined
@@ -27,7 +21,6 @@
     nameDetail?: import('svelte').Snippet
     actions?: import('svelte').Snippet
     children?: import('svelte').Snippet
-    [key: string]: any
   }
 
   let {

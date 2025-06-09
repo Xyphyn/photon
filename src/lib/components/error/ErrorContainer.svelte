@@ -1,6 +1,4 @@
 <script lang="ts" module>
-  import { writable } from 'svelte/store'
-
   interface PageScopedError {
     scope: string
     message: string
@@ -13,16 +11,16 @@
   }
 
   export function clearErrorScope(scope: string | null | undefined) {
-    errors = errors.filter((error) => error.scope != scope)
+    errors = errors.filter(error => error.scope != scope)
   }
 </script>
 
 <script lang="ts">
   import { Button } from 'mono-svelte'
-  import { ExclamationCircle, Icon, XCircle, XMark } from 'svelte-hero-icons'
-  import { fly, slide } from 'svelte/transition'
-  import { expoOut } from 'svelte/easing'
   import { onDestroy } from 'svelte'
+  import { Icon, XMark } from 'svelte-hero-icons'
+  import { expoOut } from 'svelte/easing'
+  import { fly, slide } from 'svelte/transition'
 
   onDestroy(() => {
     clearErrorScope(scope)
@@ -35,7 +33,7 @@
   let { scope = undefined, class: clazz = '' }: Props = $props()
 
   let scopedErrors = $derived(
-    errors.filter((e) => e.scope == scope || e.scope == 'global'),
+    errors.filter(e => e.scope == scope || e.scope == 'global'),
   )
 </script>
 

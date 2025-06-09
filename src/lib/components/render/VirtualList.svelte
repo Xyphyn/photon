@@ -1,15 +1,14 @@
 <script lang="ts" generics="T">
   import { browser } from '$app/environment'
-  import { debounce } from 'mono-svelte/util/time'
-  import { onDestroy, tick, untrack, type Snippet } from 'svelte'
+  import { onDestroy, untrack, type Snippet } from 'svelte'
   import type { HTMLAttributes } from 'svelte/elements'
-  import { innerHeight, scrollY } from 'svelte/reactivity/window'
+  import { innerHeight } from 'svelte/reactivity/window'
 
   interface Props extends HTMLAttributes<HTMLDivElement> {
     items: T[]
     estimatedHeight?: number
     overscan?: number
-    item: Snippet<[T, number, Function]>
+    item: Snippet<[number]>
     restore?: {
       itemHeights: (number | null)[]
     }
@@ -117,7 +116,7 @@
   }
 
   function resizeObserver(node: HTMLElement) {
-    const observer = new ResizeObserver((entries) => {
+    const observer = new ResizeObserver(entries => {
       for (const entry of entries) {
         const indexAttr = node.getAttribute('data-index')
         if (indexAttr === null) continue
@@ -174,7 +173,7 @@
       class="post-container fix-divide"
       use:resizeObserver
     >
-      {@render itemSnippet(items[item.index], item.index, () => {})}
+      {@render itemSnippet(item.index)}
     </div>
   {/each}
 </div>

@@ -1,30 +1,24 @@
 <script lang="ts">
-  import Navbar from '$lib/components/ui/navbar/Navbar.svelte'
-  import '../style/app.css'
+  import { browser } from '$app/environment'
   import { navigating, page } from '$app/state'
+  import Moderation from '$lib/components/lemmy/moderation/Moderation.svelte'
+  import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
+  import ExpandableImage from '$lib/components/ui/ExpandableImage.svelte'
+  import Shell from '$lib/components/ui/layout/Shell.svelte'
+  import Navbar from '$lib/components/ui/navbar/Navbar.svelte'
+  import Sidebar from '$lib/components/ui/sidebar/Sidebar.svelte'
+  import { locale } from '$lib/i18n/translations'
+  import { LINKED_INSTANCE_URL } from '$lib/instance.svelte'
+  import { site } from '$lib/lemmy.svelte.js'
+  import { settings } from '$lib/settings.svelte.js'
+  import { inDarkColorScheme, rgbToHex, theme } from '$lib/ui/colors.svelte.js'
+  import { getDefaultColors } from '$lib/ui/presets'
+  import { Button, ModalContainer, Spinner, ToastContainer } from 'mono-svelte'
   import nProgress from 'nprogress'
   import 'nprogress/nprogress.css'
-  import Moderation from '$lib/components/lemmy/moderation/Moderation.svelte'
-  import Sidebar from '$lib/components/ui/sidebar/Sidebar.svelte'
-  import { inDarkColorScheme, rgbToHex, theme } from '$lib/ui/colors.svelte.js'
-  import { settings } from '$lib/settings.svelte.js'
-  import {
-    Button,
-    ModalContainer,
-    Spinner,
-    toast,
-    ToastContainer,
-  } from 'mono-svelte'
   import { onMount } from 'svelte'
-  import { browser } from '$app/environment'
   import { Forward, Icon } from 'svelte-hero-icons'
-  import Shell from '$lib/components/ui/layout/Shell.svelte'
-  import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
-  import { site } from '$lib/lemmy.svelte.js'
-  import ExpandableImage from '$lib/components/ui/ExpandableImage.svelte'
-  import { LINKED_INSTANCE_URL } from '$lib/instance.svelte'
-  import { locale } from '$lib/i18n/translations'
-  import { getDefaultColors } from '$lib/ui/presets'
+  import '../style/app.css'
   interface Props {
     children?: import('svelte').Snippet
   }

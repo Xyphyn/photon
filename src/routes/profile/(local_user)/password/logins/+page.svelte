@@ -1,17 +1,11 @@
 <script lang="ts">
   import { publishedToDate } from '$lib/components/util/date.js'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
-  import { client } from '$lib/lemmy.svelte.js'
-  import { Checkbox, Material } from 'mono-svelte'
-  import { Icon, Key } from 'svelte-hero-icons'
+  import { Material } from 'mono-svelte'
 
   import { UAParser } from 'ua-parser-js'
 
   let { data } = $props()
-
-  let checked: {
-    [token: string]: boolean
-  } = $state({})
 </script>
 
 <Material
@@ -37,7 +31,7 @@
       class="divide-y *:h-14 divide-slate-200 dark:divide-zinc-800 bg-white dark:bg-zinc-950
       "
     >
-      {#each data.tokens as token}
+      {#each data.tokens as token (token)}
         {@const ua = new UAParser(token.user_agent).getResult()}
         <tr class="divide-x *:px-3 divide-slate-200 dark:divide-zinc-800">
           <td>

@@ -6,7 +6,7 @@
 
   let copied = $state(false)
 
-  let pre: HTMLPreElement = $state()
+  let pre = $state<HTMLPreElement>()
 
   const copy = () => {
     if (children) {
@@ -22,7 +22,6 @@
     htmlSrc?: string | undefined
     children?: import('svelte').Snippet
     class?: string
-    [key: string]: any
   }
 
   let {

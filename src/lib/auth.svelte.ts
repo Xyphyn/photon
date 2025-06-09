@@ -1,22 +1,23 @@
+import { browser } from '$app/environment'
+import { env } from '$env/dynamic/public'
 import {
   amModOfAny,
   isAdmin,
 } from '$lib/components/lemmy/moderation/moderation.js'
-import { toast } from 'mono-svelte'
 import { DEFAULT_INSTANCE_URL } from '$lib/instance.svelte.js'
 import { client, getClient } from '$lib/lemmy.svelte.js'
-import { site } from './lemmy.svelte'
 import { instanceToURL, moveItem } from '$lib/util.svelte'
+import { MINIMUM_VERSION, versionIsSupported } from '$lib/version.js'
 import {
+  type Community,
   type GetSiteResponse,
   type MyUserInfo,
-  type Community,
 } from 'lemmy-js-client'
+import { toast } from 'mono-svelte'
 import { writable } from 'svelte/store'
-import { MINIMUM_VERSION, versionIsSupported } from '$lib/version.js'
-import { browser } from '$app/environment'
-import { env } from '$env/dynamic/public'
 import { t } from './i18n/translations'
+import { site } from './lemmy.svelte'
+import { errorMessage } from './lemmy/error'
 
 const getDefaultProfile = (): Profile => ({
   id: -1,
@@ -31,6 +32,7 @@ function getFromStorage<T>(key: string): T | undefined {
   return JSON.parse(lc)
 }
 
+// eslint-disable-next-line
 function setFromStorage(key: string, item: any, stringify: boolean = true) {
   if (typeof localStorage == 'undefined') return
   return localStorage.setItem(key, stringify ? JSON.stringify(item) : item)
@@ -40,7 +42,7 @@ export interface Profile {
   id: number
   instance: string
   jwt?: string
-  user?: PersonData
+  user?: MyUserInfo
   username?: string
   avatar?: string
   favorites?: Community[]
@@ -56,8 +58,6 @@ interface ProfileData {
   defaultInstance?: string
 }
 
-interface PersonData extends MyUserInfo {}
-
 interface Notifications {
   inbox: number
   reports: number
@@ -71,12 +71,12 @@ const getCookie = (key: string): string | undefined => {
   // ask chatgpt or something to explain this for you
   return document?.cookie
     ?.split(';')
-    .map((c) => c.trim())
-    .find((c) => c.split('=')?.[0] == key)
+    .map(c => c.trim())
+    .find(c => c.split('=')?.[0] == key)
     ?.split('=')?.[1]
 }
 
-export let profileData = $state<ProfileData>(
+export const profileData = $state<ProfileData>(
   getFromStorage<ProfileData>('profileData') ?? {
     profiles: [
       {
@@ -92,7 +92,7 @@ export let profileData = $state<ProfileData>(
 
 class CurrentProfile {
   #data = $derived(
-    profileData.profiles.find((i) => i.id == profileData.profile) ??
+    profileData.profiles.find(i => i.id == profileData.profile) ??
       getDefaultProfile(),
   )
 
@@ -101,12 +101,12 @@ class CurrentProfile {
   }
   set data(value) {
     if (!value) return
-    const index = profileData.profiles.findIndex((i) => i.id == value?.id)
+    const index = profileData.profiles.findIndex(i => i.id == value?.id)
     profileData.profiles[index] = value
   }
 }
 
-export let profile = new CurrentProfile()
+export const profile = new CurrentProfile()
 
 async function fetchUserData(profile: CurrentProfile) {
   if (profile.data.jwt) {
@@ -132,14 +132,14 @@ async function fetchUserData(profile: CurrentProfile) {
       site.data = undefined
       client({ instanceURL: profile.data.instance })
         .getSite()
-        .then((res) => (site.data = res))
+        .then(res => (site.data = res))
     }
   }
 
   return profile
 }
 
-export let notifications = writable<Notifications>({
+export const notifications = writable<Notifications>({
   applications: 0,
   inbox: 0,
   reports: 0,
@@ -149,7 +149,7 @@ $effect.root(() => {
   $effect(() => {
     const serialized = {
       ...profileData,
-      profiles: profileData.profiles.map((p) => serializeUser(p)),
+      profiles: profileData.profiles.map(p => serializeUser(p)),
     }
 
     setFromStorage('profileData', serialized)
@@ -167,7 +167,7 @@ $effect.root(() => {
 
   $effect(() => {
     if (profile.data.id || profileData)
-      fetchUserData(profile).then((res) => {
+      fetchUserData(profile).then(() => {
         checkInbox()
       })
   })
@@ -180,15 +180,11 @@ if (
 ) {
   const jwt = getCookie('jwt')
   if (jwt) {
-    new Promise(async () => {
+    ;(async () => {
       const user = await userFromJwt(jwt, env.PUBLIC_INSTANCE_URL ?? '')
       if (!user) return
 
-      const result = await setUser(
-        jwt,
-        env.PUBLIC_INSTANCE_URL ?? '',
-        user?.user?.local_user_view.person.name,
-      )
+      const result = await setUser(jwt, env.PUBLIC_INSTANCE_URL ?? '')
 
       if (result)
         toast({
@@ -196,21 +192,21 @@ if (
             'Your instance migrated to Photon, and you were logged in using a leftover cookie.',
           type: 'success',
         })
-    })
+    })()
   }
 }
 
-export async function setUser(jwt: string, inst: string, username?: string) {
+export async function setUser(jwt: string, inst: string) {
   try {
     new URL(instanceToURL(inst))
-  } catch (err) {
+  } catch {
     return
   }
 
   const user = await userFromJwt(jwt, inst)
-    .then((u) => u)
-    .catch((err) => {
-      toast({ content: err as any, type: 'error' })
+    .then(u => u)
+    .catch(err => {
+      toast({ content: errorMessage(err as string), type: 'error' })
     })
   if (!user?.user) {
     toast({
@@ -219,7 +215,7 @@ export async function setUser(jwt: string, inst: string, username?: string) {
     })
   }
 
-  const id = Math.max(...profileData.profiles.map((p) => p.id)) + 1
+  const id = Math.max(...profileData.profiles.map(p => p.id)) + 1
   profileData.profile = id
   profileData.profiles.push({
     id: id,
@@ -236,11 +232,11 @@ async function userFromJwt(
   jwt: string,
   instance: string,
 ): Promise<
-  { user: PersonData | undefined; site: GetSiteResponse } | undefined
+  { user: MyUserInfo | undefined; site: GetSiteResponse } | undefined
 > {
   const sitePromise = client({ instanceURL: instance, auth: jwt }).getSite()
 
-  let timer = setTimeout(
+  const timer = setTimeout(
     () =>
       toast({
         content: `Still loading your user data...`,
@@ -251,11 +247,11 @@ async function userFromJwt(
   )
 
   const site = await sitePromise
-    .then((r) => {
+    .then(r => {
       clearTimeout(timer)
       return r
     })
-    .catch((e) => {
+    .catch(e => {
       toast({ content: `Failed to contact the instance. ${e}` })
     })
 
@@ -282,7 +278,7 @@ export function resetProfile() {
 
 export function deleteProfile(id: number) {
   profileData.profiles.splice(
-    profileData.profiles.findIndex((p) => p.id == id),
+    profileData.profiles.findIndex(p => p.id == id),
     1,
   )
   if (id == profileData.profile) resetProfile()
@@ -296,48 +292,48 @@ function serializeUser(user: Profile): Profile {
 }
 
 export async function setUserID(id: number) {
-  if (!profileData.profiles.find((p) => p.id == id)) return -1
+  if (!profileData.profiles.find(p => p.id == id)) return -1
   profileData.profile = id
   return profile
 }
 
 export function moveProfile(id: number, up: boolean) {
   try {
-    const index = profileData.profiles.findIndex((i) => i.id == id)
+    const index = profileData.profiles.findIndex(i => i.id == id)
     profileData.profiles = moveItem(
       profileData.profiles,
       index,
       index + (up ? -1 : 1),
     )
-  } catch (err) {
-    // we dont care
+  } catch {
+    /* empty */
   }
 }
 
 async function getNotificationCount(jwt: string, mod: boolean, admin: boolean) {
   const unreadsPromise = getClient()
     .getUnreadCount()
-    .then((res) => res.mentions + res.private_messages + res.replies)
+    .then(res => res.mentions + res.private_messages + res.replies)
     .catch(() => 0)
 
   const reportsPromise = mod
     ? getClient()
         .getReportCount({})
         .then(
-          (res) =>
+          res =>
             res.comment_reports +
             res.post_reports +
             (res.private_message_reports ?? 0),
         )
         .catch(() => 0)
-    : new Promise<number>((res) => res(0))
+    : new Promise<number>(res => res(0))
 
   const applicationsPromise = admin
     ? getClient()
         .getUnreadRegistrationApplicationCount()
-        .then((res) => res.registration_applications)
+        .then(res => res.registration_applications)
         .catch(() => 0)
-    : new Promise<number>((res) => res(0))
+    : new Promise<number>(res => res(0))
 
   const [unreads, reports, applications] = await Promise.all([
     unreadsPromise,

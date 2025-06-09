@@ -1,12 +1,6 @@
 <script lang="ts">
-  import { preventDefault } from 'svelte/legacy'
-
   import { t } from '$lib/i18n/translations'
-  import {
-    calculateVars,
-    theme as themeData,
-    type Theme,
-  } from '$lib/ui/colors.svelte'
+  import { theme as themeData, type Theme } from '$lib/ui/colors.svelte'
   import { action, Button, Material, modal, TextInput } from 'mono-svelte'
   import { CheckCircle, Icon, Trash } from 'svelte-hero-icons'
 
@@ -53,7 +47,12 @@
     {/if}
     <div class="px-4 py-2 flex items-center gap-1 justify-between">
       {#if editingName}
-        <form onsubmit={preventDefault(() => (editingName = false))}>
+        <form
+          onsubmit={e => {
+            e.preventDefault()
+            editingName = false
+          }}
+        >
           <TextInput bind:value={theme.name}></TextInput>
         </form>
       {:else}
@@ -85,7 +84,7 @@
                   type: 'danger',
                   action: () => {
                     const index = themeData.data.themes
-                      .map((t) => t.id)
+                      .map(t => t.id)
                       .indexOf(theme.id)
 
                     themeData.data.themes = themeData.data.themes.toSpliced(

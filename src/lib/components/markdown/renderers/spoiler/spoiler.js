@@ -1,32 +1,3 @@
-import { Lexer } from 'marked'
-
-export type ContainerOptions = Record<string, boolean | string>
-
-export type TokenExtractionParameters = {
-  /**
-   * The type of container
-   */
-  type: string
-  /**
-   * The content inside the container
-   */
-  content: string
-  /**
-   * The raw full container block
-   */
-  raw: string
-  /**
-   * The options of the container
-   */
-  options: ContainerOptions
-  /**
-   * The lexer that can be used to render nested tokens if needed
-   */
-  lexer: Lexer
-}
-
-export type TokenExtractor = (params: any) => any
-
 /**
  * Container extension is a marked extension that parses a block of text surrounded by :::
  *
@@ -48,14 +19,14 @@ export type TokenExtractor = (params: any) => any
  * **content**: `Something inside the container`
  * **options**: { 'option': 'option-1', 'option-2': 'option-2', 'boolean-option': true }
  */
-export default function (tokensExtractor: any): any {
+export default function (tokensExtractor) {
   return {
     name: 'container',
     level: 'block',
-    start(src: any) {
+    start(src) {
       return src.match(/^:::[^:\n]/)?.index
     },
-    tokenizer(src: any): any {
+    tokenizer(src) {
       const rule =
         /^:::[\s]?(?<type>[a-z0-9-]+)(?<options>.*)?\n(?<content>(?:.|\n)*)\n:::(?:\n|$)/i
 
@@ -83,7 +54,7 @@ export default function (tokensExtractor: any): any {
   }
 }
 
-function findRawContainer(src: any): any {
+function findRawContainer(src) {
   if (!src.startsWith(':::')) return undefined
   const lines = src.split('\n')
   let open = 1
@@ -107,8 +78,8 @@ function findRawContainer(src: any): any {
   return lines.slice(0, lineNumber + 1).join('\n')
 }
 
-function parseOptions(options: string): ContainerOptions {
-  const output: any = {}
+function parseOptions(options) {
+  const output = {}
   let remaining = options
 
   while (true) {

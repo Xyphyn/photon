@@ -1,14 +1,11 @@
 <script lang="ts">
-  import { page } from '$app/state'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import { searchParam } from '$lib/util.svelte.js'
-  import { ClipboardDocumentCheck, Icon } from 'svelte-hero-icons'
-  import Application from './Application.svelte'
-  import MultiSelect from '$lib/components/input/Switch.svelte'
   import { t } from '$lib/i18n/translations'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { Option, Select } from 'mono-svelte'
+  import { ClipboardDocumentCheck } from 'svelte-hero-icons'
+  import Application from './Application.svelte'
 
   let { data } = $props()
 
@@ -16,12 +13,6 @@
 </script>
 
 <Header pageHeader>{$t('routes.admin.applications.title')}</Header>
-<!-- <MultiSelect
-  options={[false, true]}
-  selected={data.unreadOnly ?? true}
-  optionNames={[$t('filter.location.all'), $t('filter.unread')]}
-  onselect={(e) => searchParam(page.url, 'unreadOnly', e.toString(), 'page')}
-/> -->
 <form bind:this={selectForm} action="/admin/applications" class="w-max">
   <Select
     name="unreadOnly"
@@ -40,7 +31,7 @@
   </div>
   {#if data.applications?.value.length >= 40}
     <div class="mt-auto">
-      <Pageination page={data.page} href={(page) => `?page=${page}`} />
+      <Pageination page={data.page} href={page => `?page=${page}`} />
     </div>
   {/if}
 {:else}

@@ -1,21 +1,16 @@
 <script lang="ts">
-  import { Button, Material } from 'mono-svelte'
-  import {
-    ArrowUturnDown,
-    Icon,
-    QuestionMarkCircle,
-    type IconSource,
-  } from 'svelte-hero-icons'
+  import { Button } from 'mono-svelte'
+  import { ArrowUturnDown, Icon, QuestionMarkCircle } from 'svelte-hero-icons'
+  import type { HTMLButtonAttributes } from 'svelte/elements'
   import Avatar from '../../Avatar.svelte'
   import type { Action } from './actions.svelte'
-  import type { HTMLButtonAttributes } from 'svelte/elements'
+  import type { Snippet } from 'svelte'
 
   interface Props {
     action: Action
     class?: string
-    children?: import('svelte').Snippet
+    children?: Snippet
     onclick?: HTMLButtonAttributes['onclick']
-    [key: string]: any
   }
 
   let { action, class: clazz = '', children, ...rest }: Props = $props()

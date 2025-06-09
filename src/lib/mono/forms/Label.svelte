@@ -1,5 +1,7 @@
 <script lang="ts">
-  interface Props {
+  import type { HTMLAttributes } from 'svelte/elements'
+
+  interface Props extends HTMLAttributes<HTMLSpanElement> {
     for?: string | undefined
     /**
      * The `text` prop will take precedence over the slot.
@@ -7,7 +9,6 @@
     text?: string | undefined
     class?: string
     children?: import('svelte').Snippet
-    [key: string]: any
   }
 
   let {

@@ -1,10 +1,9 @@
 <script lang="ts">
+  import VirtualList from '$lib/components/render/VirtualList.svelte'
   import type { Post } from 'lemmy-js-client'
+  import { onMount } from 'svelte'
   import type { CommentNodeI } from './comments.svelte'
   import Comments from './Comments.svelte'
-  import { onMount, tick } from 'svelte'
-  import VirtualList from '$lib/components/render/VirtualList.svelte'
-  import { page } from '$app/state'
 
   interface Props {
     nodes: CommentNodeI[]
@@ -35,7 +34,7 @@
 
     // IntersectionObserver to watch for shifts
     const observer = new IntersectionObserver(
-      (entries) => {
+      entries => {
         entries.forEach(updateOffset)
       },
       { threshold: [0, 1] },
@@ -59,11 +58,11 @@
     {initialOffset}
     bind:this={list}
   >
-    {#snippet item(item, index)}
+    {#snippet item(index)}
       <div class="-mx-4 sm:-mx-6 px-4 sm:px-6">
         <Comments
           isParent={true}
-          bind:nodes={() => [nodes[index]], (v) => (nodes[index] = v[0])}
+          bind:nodes={() => [nodes[index]], v => (nodes[index] = v[0])}
           {post}
         />
       </div>
