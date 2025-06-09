@@ -65,7 +65,7 @@
         type: 'success',
       })
     } catch (err) {
-      toast({ content: errorMessage(err as any), type: 'error' })
+      toast({ content: errorMessage(err as string), type: 'error' })
     }
 
     loading = false

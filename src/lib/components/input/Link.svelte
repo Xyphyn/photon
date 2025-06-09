@@ -2,21 +2,22 @@
   export const parseURL = (href: string) => {
     try {
       return new URL(href)
-    } catch (e) {
+    } catch {
       return undefined
     }
   }
 </script>
 
 <script lang="ts">
-  interface Props {
+  import type { HTMLAnchorAttributes } from 'svelte/elements'
+
+  interface Props extends HTMLAnchorAttributes {
     href: string
     highlight?: boolean
     nowrap?: boolean
     children?: import('svelte').Snippet
     class?: string
     icon?: import('svelte').Snippet
-    [key: string]: any
   }
 
   let {

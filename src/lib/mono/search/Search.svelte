@@ -7,8 +7,16 @@
     select?: (item: T) => void
     input?: import('svelte').Snippet
     noresults?: import('svelte').Snippet
-    children?: import('svelte').Snippet<[object]>
-    onselect?: (value: T | undefined) => void
+    children?: import('svelte').Snippet<
+      [
+        {
+          select: (item?: T) => void
+          item: T
+          extractName: (item: T) => string
+        },
+      ]
+    >
+    onselect?: (value?: T) => void
     oninput?: TextInputProps['oninput']
   }
 

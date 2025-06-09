@@ -2,7 +2,7 @@
   import Comment from '$lib/components/lemmy/comment/Comment.svelte'
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
-  import { settings } from '$lib/settings.svelte.js'
+  import { settings, type View } from '$lib/settings.svelte.js'
   import { t } from '$lib/i18n/translations'
   import type { CommentView } from 'lemmy-js-client'
   import { Button, Material } from 'mono-svelte'
@@ -10,12 +10,11 @@
 
   interface Props {
     comment: CommentView
-    view?: any
+    view?: View
     community?: boolean
     meta?: boolean
     class?: string
     commentClass?: string
-    [key: string]: any
   }
 
   let {

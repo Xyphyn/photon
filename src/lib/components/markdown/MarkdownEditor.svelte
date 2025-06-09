@@ -18,6 +18,7 @@
     Strikethrough,
   } from 'svelte-hero-icons'
   import ImageUploadModal from '../lemmy/modal/ImageUploadModal.svelte'
+  import type { ClassValue } from 'svelte/elements'
 
   let textArea: HTMLTextAreaElement | undefined = $state()
 
@@ -81,7 +82,7 @@
     rows?: number
     beforePreview?: (input: string) => string
     previewing?: boolean
-    class?: string
+    class?: ClassValue
     customLabel?: import('svelte').Snippet
     children?: import('svelte').Snippet
   }

@@ -1,24 +1,21 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy'
-
-  import { browser } from '$app/environment'
   import { tick } from 'svelte'
+  import type { HTMLTextareaAttributes } from 'svelte/elements'
 
   let textarea: HTMLTextAreaElement | undefined = $state()
 
-  async function adjustHeight(value: string) {
+  async function adjustHeight() {
     await tick()
     if (textarea) {
       textarea.style.height = 'auto' // Reset height to auto to calculate new height
       textarea.style.height = `${textarea.scrollHeight}px` // Set height to the scrollHeight
     }
   }
-  interface Props {
+  interface Props extends HTMLTextareaAttributes {
     label?: string | undefined
     value: string
     required?: boolean
     class?: string
-    [key: string]: any
   }
 
   let {
@@ -29,8 +26,8 @@
     ...rest
   }: Props = $props()
 
-  run(() => {
-    adjustHeight(value)
+  $effect(() => {
+    if (value) adjustHeight()
   })
 </script>
 
@@ -45,7 +42,7 @@
   {/if}
   <textarea
     bind:this={textarea}
-    oninput={() => adjustHeight(value)}
+    oninput={() => adjustHeight()}
     bind:value
     {required}
     {...rest}

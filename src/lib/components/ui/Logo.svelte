@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { settings } from '$lib/settings.svelte'
-
   interface Props {
     width?: number
   }

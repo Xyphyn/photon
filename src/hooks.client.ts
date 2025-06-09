@@ -1,5 +1,5 @@
-export function handleError({ error, event }) {
+export function handleError({ error }) {
   return {
-    message: error as any,
+    message: error as string,
   }
 }

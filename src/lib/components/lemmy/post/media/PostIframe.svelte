@@ -27,15 +27,14 @@
 </script>
 
 <script lang="ts">
+  import { settings } from '$lib/settings.svelte'
   import {
     Icon,
     PuzzlePiece,
     VideoCamera,
     type IconSource,
   } from 'svelte-hero-icons'
-  import { optimizeImageURL, type IframeType, type MediaType } from '../helpers'
-  import { settings } from '$lib/settings.svelte'
-  import { get } from 'svelte/store'
+  import { optimizeImageURL, type IframeType } from '../helpers'
 
   const urlToEmbed = (inputUrl: string) => {
     if (type == 'video') {
@@ -89,7 +88,7 @@
     type?: IframeType
     thumbnail?: string | undefined
     url: string
-    opened?: any
+    opened?: boolean
     autoplay?: boolean
     class?: string
   }

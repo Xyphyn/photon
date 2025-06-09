@@ -87,6 +87,7 @@
 {#if navigating.to?.route.id == '/communities'}
   <div class="flex flex-col gap-3 mt-6">
     {#each new Array(5) as _, index}
+      {_}
       <div
         in:fly|global={{
           duration: 800,

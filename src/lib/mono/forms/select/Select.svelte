@@ -1,3 +1,36 @@
+<script lang="ts" module>
+  interface Props<T> extends Omit<HTMLSelectAttributes, 'size'> {
+    value?: T | string | undefined
+    placeholder?: string | undefined
+    label?: string | undefined
+    size?: ButtonSize
+    shadow?: ButtonShadow
+    id?: string
+    class?: ClassValue
+    baseClass?: ClassValue
+    selectClass?: ClassValue
+    customLabel?: import('svelte').Snippet
+    children?: import('svelte').Snippet
+    customOption?: import('svelte').Snippet<
+      [
+        {
+          option: {
+            value: string
+            label: string
+            icon?: IconSource
+            disabled?: boolean
+          }
+          selected: boolean
+        },
+      ]
+    >
+    oncontextmenu?: HTMLSelectAttributes['oncontextmenu']
+    onchange?: HTMLSelectAttributes['onchange']
+  }
+
+  export type { Props as SelectProps }
+</script>
+
 <script lang="ts" generics="T">
   import { setContext, tick } from 'svelte'
   import {
@@ -35,35 +68,6 @@
     options: [],
   })
 
-  interface Props extends Omit<HTMLSelectAttributes, 'size'> {
-    value?: T | string | undefined
-    placeholder?: string | undefined
-    label?: string | undefined
-    size?: ButtonSize
-    shadow?: ButtonShadow
-    id?: string
-    class?: ClassValue
-    baseClass?: ClassValue
-    selectClass?: ClassValue
-    customLabel?: import('svelte').Snippet
-    children?: import('svelte').Snippet
-    customOption?: import('svelte').Snippet<
-      [
-        {
-          option: {
-            value: string
-            label: string
-            icon?: IconSource
-            disabled?: boolean
-          }
-          selected: boolean
-        },
-      ]
-    >
-    oncontextmenu?: HTMLSelectAttributes['oncontextmenu']
-    onchange?: HTMLSelectAttributes['onchange']
-  }
-
   let {
     value = $bindable(undefined),
     placeholder = undefined,
@@ -80,7 +84,7 @@
     oncontextmenu,
     onchange,
     ...rest
-  }: Props = $props()
+  }: Props<T> = $props()
 </script>
 
 <div class="flex flex-col gap-1 {clazz} {baseClass}">

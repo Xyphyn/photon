@@ -1,5 +1,3 @@
-import { Lexer } from 'marked'
-
 /**
  * Container extension is a marked extension that parses a block of text surrounded by :::
  *

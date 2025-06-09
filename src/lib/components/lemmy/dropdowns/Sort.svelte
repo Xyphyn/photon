@@ -4,6 +4,7 @@
   import { searchParam } from '$lib/util.svelte.js'
   import { Select } from 'mono-svelte'
   import Option from 'mono-svelte/forms/select/Option.svelte'
+  import type { SelectProps } from 'mono-svelte/forms/select/Select.svelte'
   import {
     ArrowTrendingDown,
     ArrowTrendingUp,
@@ -24,7 +25,7 @@
   import { backOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'
 
-  interface Props {
+  interface Props extends SelectProps<string> {
     selected: string
     navigate?: boolean
     changeDefault?: boolean

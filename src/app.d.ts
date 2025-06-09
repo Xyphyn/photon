@@ -1,7 +1,7 @@
 // See https://kit.svelte.dev/docs/types#app
 
 import type { Action } from '$lib/components/ui/navbar/commands/actions.svelte'
-import type { ComponentType, SvelteComponent } from 'svelte'
+import type { ComponentType } from 'svelte'
 
 // for information about these interfaces
 declare global {
@@ -14,6 +14,7 @@ declare global {
       slots?: {
         sidebar?: {
           component?: ComponentType
+          // eslint-disable-next-line
           props?: any
         }
       }
@@ -30,6 +31,7 @@ declare global {
 }
 
 export {}
+// eslint-disable-next-line
 declare const __VERSION__: string
 
 declare module 'markdown-it-sub'

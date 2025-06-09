@@ -8,7 +8,7 @@ export const handleError: HandleServerError = async ({
 }) => {
   console.error(`An error was captured:`)
   console.error(error)
-  console.error(`Event:`, event),
-    console.error(`Status:`, status),
-    console.error(`Message:`, message)
+  console.error(`Event:`, event)
+  console.error(`Status:`, status)
+  console.error(`Message:`, message)
 }

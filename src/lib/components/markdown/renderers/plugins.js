@@ -7,6 +7,7 @@ export const spoilerPlugin = {
   start(src) {
     return src.match(/^:::/)?.index
   },
+  // eslint-disable-next-line
   tokenizer(src, tokens) {
     const rule = /^::: spoiler (.+)\n([\s\S]*?)\n:::/
     const match = rule.exec(src)
@@ -37,7 +38,7 @@ export const linkify = markedLinkifyIt(
 
         if (!self.re.community) {
           self.re.community = new RegExp(
-            /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z]{2,63})/i,
+            /^([a-z0-9_.-]+)@([\da-z.-]+)\.([a-z]{2,63})/i,
           )
         }
         if (self.re.community.test(tail)) {
@@ -63,7 +64,7 @@ export const linkify = markedLinkifyIt(
 
         if (!self.re.user) {
           self.re.user = new RegExp(
-            /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z]{2,63})/i,
+            /^([a-z0-9_.-]+)@([\da-z.-]+)\.([a-z]{2,63})/i,
           )
         }
         if (self.re.user.test(tail)) {
@@ -94,7 +95,7 @@ const regexes = {
   comment: /^https:\/\/([a-zA-Z0-9.-]+)\/comment\/(\d+)$/i,
   user: /^https:\/\/([a-zA-Z0-9.-]+)(\/u\/)([a-zA-Z0-9.-_]+)$/i,
   community: /^https:\/\/([a-zA-Z0-9.-]+)(\/c\/)([a-zA-Z0-9.-_]+)$/i,
-  implicitUser: /^mailto:([a-z0-9_\.-]+)@(([\da-z\.-]+)\.([a-z]{2,63}))/i,
+  implicitUser: /^mailto:([a-z0-9_.-]+)@(([\da-z.-]+)\.([a-z]{2,63}))/i,
 }
 
 /**
@@ -143,9 +144,10 @@ export function subSupscriptExtension(tokensExtractor) {
     start(src) {
       return src.match(/[~^]/)?.index
     },
+    // eslint-disable-next-line
     tokenizer(src, tokens) {
       const subscriptRule = /^~([^~\s](?:[^~]*[^~\s])?)~/
-      const superscriptRule = /^\^([^\^\s](?:[^\^]*[^\^\s])?)\^/
+      const superscriptRule = /^\^([^^\s](?:[^^]*[^^\s])?)\^/
 
       let match
 

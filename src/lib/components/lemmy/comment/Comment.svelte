@@ -1,4 +1,16 @@
 <script lang="ts">
+  import { page } from '$app/state'
+  import { profile } from '$lib/auth.svelte.js'
+  import CommentActions from '$lib/components/lemmy/comment/CommentActions.svelte'
+  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
+  import Markdown from '$lib/components/markdown/Markdown.svelte'
+  import { publishedToDate } from '$lib/components/util/date.js'
+  import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
+  import RelativeDate from '$lib/components/util/RelativeDate.svelte'
+  import { t } from '$lib/i18n/translations'
+  import { getClient } from '$lib/lemmy.svelte.js'
+  import { Button, Modal, toast } from 'mono-svelte'
+  import { onMount } from 'svelte'
   import {
     Bookmark,
     Icon,
@@ -8,25 +20,13 @@
     Plus,
     Trash,
   } from 'svelte-hero-icons'
-  import type { CommentNodeI } from './comments.svelte'
-  import RelativeDate from '$lib/components/util/RelativeDate.svelte'
-  import CommentForm from './CommentForm.svelte'
-  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
-  import Markdown from '$lib/components/markdown/Markdown.svelte'
-  import CommentActions from '$lib/components/lemmy/comment/CommentActions.svelte'
-  import { getClient } from '$lib/lemmy.svelte.js'
-  import { Disclosure, toast } from 'mono-svelte'
-  import { profile } from '$lib/auth.svelte.js'
-  import { Button, Modal } from 'mono-svelte'
-  import { publishedToDate } from '$lib/components/util/date.js'
-  import ShieldIcon from '../moderation/ShieldIcon.svelte'
-  import { page } from '$app/state'
-  import { onMount } from 'svelte'
-  import { t } from '$lib/i18n/translations'
-  import { fly, slide } from 'svelte/transition'
-  import { expoInOut, expoOut } from 'svelte/easing'
-  import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
+  import { expoOut } from 'svelte/easing'
   import type { ClassValue } from 'svelte/elements'
+  import { fly, slide } from 'svelte/transition'
+  import ShieldIcon from '../moderation/ShieldIcon.svelte'
+  import CommentForm from './CommentForm.svelte'
+  import type { CommentNodeI } from './comments.svelte'
+  import { errorMessage } from '$lib/lemmy/error'
 
   interface Props {
     node: CommentNodeI
@@ -76,7 +76,7 @@
       editing = false
     } catch (err) {
       toast({
-        content: err as any,
+        content: errorMessage(err as string),
         type: 'error',
       })
     }
@@ -102,7 +102,7 @@
       <span>{$t('form.edit')}</span>
     {/snippet}
     <form
-      onsubmit={(e) => {
+      onsubmit={e => {
         e.preventDefault()
         save()
       }}
@@ -253,7 +253,7 @@
               label={$t('comment.reply')}
               {postId}
               parentId={node.comment_view.comment.id}
-              oncomment={(e) => {
+              oncomment={e => {
                 node.children = [
                   {
                     children: [],
