@@ -343,9 +343,9 @@
       >
         {#key data.items}
           {#each data.items.value as item}
-            {#if isCommentView(item)}
+            {#if isCommentView(item) && data.filters.value.type == 'comments'}
               <CommentItem comment={item} />
-            {:else if !isCommentView(item)}
+            {:else if !isCommentView(item) && data.filters.value.type == 'posts'}
               <Post post={item} />
             {/if}
           {/each}
