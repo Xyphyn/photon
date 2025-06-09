@@ -39,8 +39,6 @@
 
 <Portal>
   {#if open}
-    <!-- svelte-ignore a11y_click_events_have_key_events -->
-    <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
     <div
       role="dialog"
       class="overflow-hidden fixed top-0 left-0 w-screen h-screen z-100

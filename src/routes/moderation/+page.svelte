@@ -16,28 +16,24 @@
 
   let { data = $bindable() } = $props()
 
-  let type = $state(data.type)
-  let reports = $state(data.items)
-  $effect(() => {
-    reports = data.items
-  })
-
   let batch = $state({
     progress: -1,
   })
   async function markAllAsResolved() {
-    if (!reports) return
+    if (!data.items?.value) return
     batch.progress = 0
 
     await Promise.all(
-      reports.map(report => {
+      data.items?.value.map(report => {
         switch (report.type) {
           case 'comment': {
             const promise = client().resolveCommentReport({
               report_id: report.id,
               resolved: true,
             })
-            promise.then(() => (batch.progress += 1 / reports!.length))
+            promise.then(
+              () => (batch.progress += 1 / data.items?.value!.length),
+            )
             return promise
           }
           case 'post': {
@@ -45,7 +41,9 @@
               report_id: report.id,
               resolved: true,
             })
-            promise.then(() => (batch.progress += 1 / reports!.length))
+            promise.then(
+              () => (batch.progress += 1 / data.items?.value!.length),
+            )
             return promise
           }
           case 'message': {
@@ -53,7 +51,9 @@
               report_id: report.id,
               resolved: true,
             })
-            promise.then(() => (batch.progress += 1 / reports!.length))
+            promise.then(
+              () => (batch.progress += 1 / data.items?.value!.length),
+            )
             return promise
           }
         }
@@ -73,10 +73,10 @@
     {#snippet extended()}
       <div class="flex flex-row gap-2 flex-wrap items-end">
         <Select
-          bind:value={type}
+          bind:value={data.type}
           onchange={async () => {
             await tick()
-            searchParam(page.url, 'type', type, 'page')
+            searchParam(page.url, 'type', data.type, 'page')
           }}
         >
           {#snippet customLabel()}
@@ -103,11 +103,11 @@
   </Header>
 </div>
 <ProgressBar progress={batch.progress} />
-{#if reports && reports.length > 0}
+{#if data.items?.value && data.items?.value.length > 0}
   <div
     class="flex flex-col *:py-4 divide-y divide-slate-200 dark:divide-zinc-800"
   >
-    {#each reports as item (item.id)}
+    {#each data.items?.value as item (item.id)}
       <div
         in:fly={{ y: -6, opacity: 0, duration: 500 }}
         class="flex flex-col gap-3 text-sm -mx-4 sm:-mx-6 px-4 sm:px-6"

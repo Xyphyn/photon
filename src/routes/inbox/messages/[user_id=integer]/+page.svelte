@@ -15,11 +15,7 @@
   import { fly } from 'svelte/transition'
   import Message from './Message.svelte'
 
-  let { data: pageData } = $props()
-  let data = $state(pageData)
-  $effect(() => {
-    data = pageData
-  })
+  let { data } = $props()
 
   let textbox = $state({
     message: '',
@@ -38,7 +34,7 @@
     try {
       const res = await client().createPrivateMessage({
         content: message,
-        recipient_id: data.creator.person_view.person.id,
+        recipient_id: data.creator.value.person_view.person.id,
       })
 
       textbox.loading = false
@@ -55,7 +51,7 @@
   }
 
   $effect(() => {
-    if (browser && data.message && chatWindow) {
+    if (browser && data.message.value && chatWindow) {
       tick().then(() =>
         chatWindow?.scrollTo({
           top: chatWindow.scrollHeight,
@@ -71,9 +67,9 @@
       private_message_id: id,
     })
 
-    data.message = {
-      private_messages: data.message.private_messages.toSpliced(
-        data.message.private_messages.findLastIndex(
+    data.message.value = {
+      private_messages: data.message.value.private_messages.toSpliced(
+        data.message.value.private_messages.findLastIndex(
           i => i.private_message.id == id,
         ),
         1,
@@ -85,7 +81,7 @@
 <Header pageHeader>
   {$t('filter.inbox.messages')}
   {#snippet extended()}
-    <UserLink avatar user={data.creator.person_view.person} />
+    <UserLink avatar user={data.creator.value.person_view.person} />
   {/snippet}
 </Header>
 <Material
@@ -101,21 +97,21 @@
       <p class="mx-auto mt-auto text-slate-400 dark:text-zinc-600">
         {$t('routes.inbox.messages.conversation', {
           user:
-            data.creator.person_view.person.name +
+            data.creator.value.person_view.person.name +
             '@' +
-            new URL(data.creator.person_view.person.actor_id).hostname,
+            new URL(data.creator.value.person_view.person.actor_id).hostname,
         })}
       </p>
-      {#each data.message.private_messages.toReversed() as private_message, index (private_message.private_message.id)}
+      {#each data.message.value.private_messages.toReversed() as private_message, index (private_message.private_message.id)}
         <div
           class={private_message.creator.id ==
-          data.creator.person_view.person.id
+          data.creator.value.person_view.person.id
             ? 'self-start'
             : 'self-end'}
           in:fly|global={{
             duration: 700,
             easing: backOut,
-            delay: data.message.private_messages.length * 50 - index * 50,
+            delay: data.message.value.private_messages.length * 50 - index * 50,
             y: -12,
           }}
           animate:flip={{ duration: 500, easing: expoOut }}
@@ -125,14 +121,14 @@
             onreport={() => report(private_message)}
             message={private_message}
             primary={private_message.creator.id !=
-              data.creator.person_view.person.id}
+              data.creator.value.person_view.person.id}
           />
         </div>
       {/each}
     </ul>
   </div>
 </Material>
-{#await data.message then message}
+{#await data.message.value then message}
   <div class="sticky bottom-4 p-4">
     <form
       class="flex flex-row h-14 items-center w-full
@@ -145,7 +141,7 @@
         const res = await sendMessage(textbox.message)
         if (!res) return
 
-        data.message = {
+        data.message.value = {
           private_messages: [
             res.private_message_view,
             ...message.private_messages,

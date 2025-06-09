@@ -6,6 +6,7 @@ import {
   generalizePostReport,
   generalizePrivateMessageReport,
 } from '$lib/lemmy/report.js'
+import { ReactiveState } from '$lib/promise.svelte'
 
 type ReportListType = 'unread' | 'all'
 
@@ -56,6 +57,6 @@ export async function load({ url, fetch }) {
   return {
     type: type,
     page: page,
-    items: everything,
+    items: new ReactiveState(everything),
   }
 }

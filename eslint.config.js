@@ -26,6 +26,7 @@ export default ts.config(
       'svelte/no-at-html-tags': 'warn',
       '@typescript-eslint/no-unsafe-function-type': 'warn',
       'svelte/require-each-key': 'off',
+      'svelte/prefer-writable-derived': 'warn',
     },
   },
   {
