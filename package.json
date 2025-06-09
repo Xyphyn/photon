@@ -4,6 +4,8 @@
   "devDependencies": {
     "@dicebear/core": "^8.0.1",
     "@dicebear/initials": "^8.0.1",
+    "@eslint/compat": "^1.2.9",
+    "@eslint/js": "^9.28.0",
     "@svelte-put/qr": "^2.0.0",
     "@sveltejs/adapter-auto": "^3.3.1",
     "@sveltejs/adapter-node": "^5.2.9",
@@ -14,6 +16,8 @@
     "@tailwindcss/postcss": "^4.1.8",
     "@types/nprogress": "^0.2.0",
     "@types/ua-parser-js": "^0.7.39",
+    "eslint": "^9.28.0",
+    "eslint-plugin-svelte": "^3.9.1",
     "jsdom": "^22.1.0",
     "lemmy-js-client": "^0.19.6-beta.1",
     "linkify-it": "^5.0.0",
@@ -36,6 +40,7 @@
     "tailwindcss": "^4.1.8",
     "tslib": "^2.4.1",
     "typescript": "^5.5.0",
+    "typescript-eslint": "^8.33.1",
     "ua-parser-js": "^1.0.38",
     "vite": "^5.4.14",
     "vitest": "^1.0.0"
@@ -54,7 +59,8 @@
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "format": "prettier --write .",
-    "format:specific": "prettier --write"
+    "format:specific": "prettier --write",
+    "lint": "eslint ."
   },
   "type": "module",
   "dependencies": {

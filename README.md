@@ -1,5 +1,7 @@
 # Photon
 
+[![CI](https://github.com/sevonj/photon/actions/workflows/ci.yml/badge.svg)](https://github.com/sevonj/photon/actions/workflows/ci.yml)
+
 Photon is a Svelte-based opinionated Lemmy client designed for the best UI and UX. Every feature is carefully considered and placed.
 
 - `🌟` A stunning UI
