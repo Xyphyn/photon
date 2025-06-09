@@ -1,18 +1,16 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy'
-
+  import { browser } from '$app/environment'
+  import { goto } from '$app/navigation'
+  import { page } from '$app/state'
+  import { profile, profileData } from '$lib/auth.svelte'
+  import { t } from '$lib/i18n/translations'
   import { resumables } from '$lib/lemmy/item'
+  import { theme } from '$lib/ui/colors.svelte'
   import { TextInput } from 'mono-svelte'
   import { createEventDispatcher, onMount } from 'svelte'
   import { Home, Icon, MagnifyingGlass } from 'svelte-hero-icons'
-  import { t } from '$lib/i18n/translations'
-  import CommandItem from './CommandItem.svelte'
-  import { browser } from '$app/environment'
-  import { afterNavigate, goto } from '$app/navigation'
-  import { profile, profileData } from '$lib/auth.svelte'
   import { getGroups, type Action, type Group } from './actions.svelte'
-  import { theme } from '$lib/ui/colors.svelte'
-  import { page } from '$app/state'
+  import CommandItem from './CommandItem.svelte'
 
   interface Props {
     open?: boolean
@@ -82,16 +80,16 @@
   function searchGroup(term: string) {
     if (term.length < 1) {
       if (breadcrumbs.length <= 0) {
-        filteredGroups = groups.map((group) => ({
+        filteredGroups = groups.map(group => ({
           ...group,
           actions: flattenActions(group.actions, false),
         }))
       }
     } else {
       filteredGroups = groups
-        .map((group) => {
+        .map(group => {
           const scoredActions = flattenActions(group.actions)
-            .map((action) => ({
+            .map(action => ({
               ...action,
               score: Math.max(
                 fuzzySearch(action.name, term),
@@ -99,7 +97,7 @@
                 action.detail ? fuzzySearch(action.detail, term) : -1,
               ),
             }))
-            .filter((action) => action.score > 0)
+            .filter(action => action.score > 0)
             .sort((a, b) => b.score - a.score)
 
           return {
@@ -107,11 +105,11 @@
             actions: scoredActions,
             score: Math.max(
               fuzzySearch(group.name, term),
-              ...scoredActions.map((a) => a.score),
+              ...scoredActions.map(a => a.score),
             ),
           }
         })
-        .filter((group) => group.actions.length > 0)
+        .filter(group => group.actions.length > 0)
         .sort((a, b) => b.score - a.score)
     }
   }
@@ -143,7 +141,7 @@
     actions: Action[],
     subaction: boolean = true,
   ): Action[] {
-    return actions.flatMap((action) => [
+    return actions.flatMap(action => [
       action,
       ...(action.subActions && subaction
         ? flattenActions(action.subActions)
@@ -164,10 +162,10 @@
   function handleKeydown(event: KeyboardEvent) {
     if (event.ctrlKey) {
       const actions = groups
-        .flatMap((g) => g.actions)
-        .filter((a) => a.shortcut != undefined)
+        .flatMap(g => g.actions)
+        .filter(a => a.shortcut != undefined)
 
-      actions.forEach((a) => {
+      actions.forEach(a => {
         if (event.key === a.shortcut) {
           event.preventDefault()
           if (a.href) goto(a.href)
@@ -247,7 +245,7 @@
   })
 
   let flattenedActions = $derived(
-    filteredGroups.flatMap((group) => group.actions),
+    filteredGroups.flatMap(group => group.actions),
   )
 </script>
 
@@ -269,7 +267,7 @@
       >
         <Icon src={Home} size="16" mini />
       </button>
-      {#each breadcrumbs as crumb, index}
+      {#each breadcrumbs as crumb (crumb.href)}
         <span class="text-base text-slate-400 dark:text-zinc-600">/</span>
         <span class="text-[13px] font-medium">
           {crumb.name}
@@ -278,11 +276,11 @@
     </div>
   {/if}
   <div class="space-y-1" bind:this={container}>
-    {#each filteredGroups as group, groupIndex}
+    {#each filteredGroups as group, groupIndex (group.name)}
       <div class="space-y-1">
         <span class="text-sm font-medium">{group.name}</span>
         <ul class="flex flex-col gap-1">
-          {#each group.actions as action, actionIndex}
+          {#each group.actions as action, actionIndex (action.href)}
             {@const globalIndex =
               filteredGroups
                 .slice(0, groupIndex)
@@ -290,7 +288,7 @@
             <li>
               <CommandItem
                 {action}
-                onclick={(e) => {
+                onclick={e => {
                   if (action.href) {
                     togglePalette()
                     return

@@ -3,7 +3,6 @@
     small?: boolean
     class?: string
     children?: import('svelte').Snippet
-    [key: string]: any
   }
 
   let { small = false, class: clazz = '', children, ...rest }: Props = $props()

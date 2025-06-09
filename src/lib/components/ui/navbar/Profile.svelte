@@ -3,6 +3,11 @@
 
   import { notifications, profile } from '$lib/auth.svelte'
 
+  import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
+  import { t } from '$lib/i18n/translations'
+  import { site } from '$lib/lemmy.svelte'
+  import { settings } from '$lib/settings.svelte'
+  import { theme } from '$lib/ui/colors.svelte'
   import {
     Badge,
     Button,
@@ -10,12 +15,12 @@
     MenuButton,
     MenuDivider,
     Modal,
+    Option,
     Select,
     Spinner,
     toast,
-    Option,
   } from 'mono-svelte'
-  import Avatar from '../Avatar.svelte'
+  import type { Placement } from 'svelte-floating-ui/core'
   import {
     Bars3,
     Bookmark,
@@ -23,10 +28,8 @@
     CodeBracketSquare,
     Cog6Tooth,
     ComputerDesktop,
-    Heart,
     Icon,
     Inbox,
-    InformationCircle,
     Moon,
     ServerStack,
     Sun,
@@ -34,17 +37,13 @@
     UserCircle,
     UserGroup,
   } from 'svelte-hero-icons'
-  import { theme } from '$lib/ui/colors.svelte'
-  import { settings } from '$lib/settings.svelte'
-  import { site } from '$lib/lemmy.svelte'
-  import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
-  import { t } from '$lib/i18n/translations'
+  import Avatar from '../Avatar.svelte'
 
   let showInstance = $state(false)
 
   interface Props {
     buttonClass?: string
-    [key: string]: any
+    placement?: Placement
   }
 
   let { buttonClass = '', ...rest }: Props = $props()

@@ -12,22 +12,20 @@
 </script>
 
 <script lang="ts">
-  import { Material } from '../index'
-  import { backOut, elasticIn, elasticOut, expoOut } from 'svelte/easing'
-  import { fly, scale } from 'svelte/transition'
-  import { createFloatingActions } from 'svelte-floating-ui'
   import {
-    offset,
-    type Middleware,
     flip,
+    offset,
     shift,
+    type Middleware,
     type Placement,
     type Strategy,
-    size,
   } from '@floating-ui/core'
-  import Portal from './Portal.svelte'
+  import { createFloatingActions } from 'svelte-floating-ui'
   import { focusTrap } from 'svelte-focus-trap'
-  import { tick } from 'svelte'
+  import { expoOut } from 'svelte/easing'
+  import { scale } from 'svelte/transition'
+  import { Material } from '../index'
+  import Portal from './Portal.svelte'
 
   interface Props {
     openOnHover?: boolean
@@ -61,8 +59,8 @@
 
   let canUseContents = $state(true)
 
-  let el: any = $state()
-  let popoverEl: any = $state()
+  let el = $state<HTMLDivElement>()
+  let popoverEl = $state<HTMLDivElement>()
 
   const [floatingRef, floatingContent] = createFloatingActions({
     strategy: strategy,
@@ -79,7 +77,7 @@
   const customFloatingRef = (node: HTMLDivElement) => {
     const n = node.children.item(0)
 
-    // @ts-ignore
+    // @ts-expect-error svelte bug
     if (n) floatingRef(n)
     else {
       canUseContents = false
@@ -89,11 +87,13 @@
 </script>
 
 <svelte:body
-  onclick={(e) => {
+  onclick={e => {
     if (openOnHover) return
 
+    // @ts-expect-error this is in fact valid
     if (!el?.contains(e.target) && open) {
       if (!autoClose) {
+        // @ts-expect-error so is this
         if (popoverEl && !popoverEl.contains(e.target)) {
           open = false
         }
@@ -102,10 +102,11 @@
       }
     }
   }}
-  onkeydown={async (e) => {
+  onkeydown={async e => {
     if (open && e.key == 'Escape') {
       open = false
-      el?.firstChild.focus()
+      // @ts-expect-error focus does in fact exist
+      el?.firstChild?.focus()
     }
   }}
 />
@@ -117,7 +118,7 @@
     onfocus={() => (openOnHover ? (open = true) : false)}
     onfocusout={() => (openOnHover ? (open = false) : false)}
     onclick={() => (!openOnHover && !manual ? (open = !open) : false)}
-    onkeydown={(e) => {
+    onkeydown={e => {
       if (e.key == 'Escape') open = false
     }}
     tabindex="0"

@@ -3,6 +3,7 @@
   import { Button, buttonColor } from 'mono-svelte'
   import { Icon, type IconSource } from 'svelte-hero-icons'
   import type { ButtonProps } from 'mono-svelte/button/Button.svelte'
+  import type { Snippet } from 'svelte'
 
   interface Props extends ButtonProps {
     label: string
@@ -11,8 +12,8 @@
     adaptive?: boolean
     isSelectedFilter?: (path: string) => boolean
     class?: string
-    customIcon?: import('svelte').Snippet<[any]>
-    children?: import('svelte').Snippet
+    customIcon?: Snippet<[{ size: number; isSelected?: boolean }]>
+    children?: Snippet
     [key: string]: any
   }
 
@@ -21,7 +22,7 @@
     icon,
     href,
     adaptive = true,
-    isSelectedFilter = (path) => href != undefined && path == href,
+    isSelectedFilter = path => href != undefined && path == href,
     class: clazz = '',
     customIcon,
     children,
