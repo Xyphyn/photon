@@ -11,7 +11,7 @@
 </script>
 
 <Header pageHeader>{$t('routes.profile.media.title')}</Header>
-<div class="media-grid">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
   {#each data.images as image (image.local_image.pictrs_delete_token)}
     <div animate:flip={{ duration: 500, easing: expoInOut }}>
       <PictrsImage
@@ -37,25 +37,3 @@
     href={page => `?page=${page}`}
   />
 {/if}
-
-<style>
-  .media-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-
-  @media screen and (min-width: 768px) {
-    .media-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-    }
-  }
-
-  @media screen and (min-width: 1024px) {
-    .media-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-    }
-  }
-</style>
