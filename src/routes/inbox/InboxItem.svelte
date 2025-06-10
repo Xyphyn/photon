@@ -10,6 +10,7 @@
   import { t } from '$lib/i18n/translations'
   import { getClient } from '$lib/lemmy.svelte.js'
   import type { InboxItem } from '$lib/lemmy/inbox.js'
+  import { escapeHtml } from '$lib/util.svelte'
   import { Button } from 'mono-svelte'
   import { Eye, EyeSlash, Icon } from 'svelte-hero-icons'
 
@@ -73,16 +74,19 @@
       <div class="flex flex-col">
         <div class="text-sm font-normal">
           {#if item.type == 'comment_reply'}
+            <!-- eslint-disable-next-line svelte/no-at-html-tags -->
             {@html $t('routes.inbox.item.reply', {
               user: `<span class="font-medium">${item.creator.name}</span>`,
-              post: `<span class="font-medium">${item.item.post.name}</span>`,
+              post: `<span class="font-medium">${escapeHtml(item.item.post.name)}</span>`,
             })}
           {:else if item.type == 'person_mention'}
+            <!-- eslint-disable-next-line svelte/no-at-html-tags -->
             {@html $t('routes.inbox.item.mention', {
               user: `<span class="font-medium">${item.creator.name}</span>`,
-              post: `<span class="font-medium">${item.item.post.name}</span>`,
+              post: `<span class="font-medium">${escapeHtml(item.item.post.name)}</span>`,
             })}
           {:else if item.type == 'private_message'}
+            <!-- eslint-disable-next-line svelte/no-at-html-tags -->
             {@html $t('routes.inbox.item.message', {
               user: `<span class="font-medium">${item.item.creator.name}</span>`,
               recipient: `<span class="font-medium">${item.item.recipient.name}</span>`,
