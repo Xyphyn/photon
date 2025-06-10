@@ -21,8 +21,7 @@
     let rule: 'blur-sm' | 'hide' | undefined
     if (settings.nsfwBlur && (post.post.nsfw || post.community.nsfw))
       rule = 'blur-sm'
-    tagContent.forEach(tag => {
-      if (settings.tagRules?.[tag]) rule = settings.tagRules?.[tag] ?? rule
+    tagContent.forEach(() => {
       if (rule == 'hide') return rule
     })
 
