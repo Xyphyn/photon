@@ -31,7 +31,7 @@
     {@const slctd = selected == option}
     <button
       class={[
-        'px-3 py-1 rounded-full text-sm font-medium transition-colors duration-75 relative',
+        'px-3 py-1 rounded-full text-sm font-medium transition-colors duration-75 relative cursor-pointer',
         slctd
           ? 'bg-primary-900 dark:bg-primary-100 text-slate-50 dark:text-zinc-900'
           : 'dark:bg-zinc-900/50 bg-white',
