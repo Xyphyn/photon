@@ -73,7 +73,7 @@
     placeholder = undefined,
     label = undefined,
     size = 'md',
-    shadow = 'none',
+    shadow = 'sm',
     id = generateID(),
     class: clazz = '',
     baseClass = '',

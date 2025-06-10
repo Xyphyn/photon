@@ -3,7 +3,6 @@
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
   import { t } from '$lib/i18n/translations'
-  import { settings, type View } from '$lib/settings.svelte.js'
   import type { CommentView } from 'lemmy-js-client'
   import { Button, Material } from 'mono-svelte'
   import { ArrowUturnUp, Icon } from 'svelte-hero-icons'

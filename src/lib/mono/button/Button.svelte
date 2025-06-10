@@ -149,7 +149,7 @@
     rounding = size == 'lg' ? 'xl' : 'lg',
     roundingSide = 'all',
     alignment = 'center',
-    shadow = 'sm',
+    shadow = color != 'tertiary' ? 'sm' : 'none',
     column = false,
     disabled,
     loaderWidth = undefined,
