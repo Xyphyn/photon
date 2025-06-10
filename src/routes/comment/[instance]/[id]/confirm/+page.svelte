@@ -6,9 +6,9 @@
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import ProfileButton from '$lib/components/ui/sidebar/ProfileButton.svelte'
   import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
+  import { t } from '$lib/i18n/translations'
   import { client } from '$lib/lemmy.svelte'
   import { errorMessage } from '$lib/lemmy/error'
-  import { t } from '$lib/i18n/translations'
   import { toast } from 'mono-svelte'
   import Button from 'mono-svelte/button/Button.svelte'
   import Material from 'mono-svelte/materials/Material.svelte'
@@ -49,7 +49,6 @@
     </Header>
     <p>
       {$t('routes.postRedirect.description', {
-        // @ts-ignore
         homeInstance: fetched,
       })}
     </p>
@@ -65,7 +64,6 @@
         onclick={fetchOnHome}
       >
         {$t('routes.postRedirect.actions.fetch', {
-          // @ts-ignore
           homeInstance: fetched,
         })}
       </Button>
@@ -81,7 +79,6 @@
     <div class="space-y-1">
       <div class="font-medium text-sm">
         {$t('routes.postRedirect.actions.switch', {
-          // @ts-ignore
           destInstance: page.params.instance,
         })}
       </div>
@@ -91,7 +88,7 @@
         rounding="2xl"
         class="dark:bg-zinc-950 max-h-96 overflow-auto"
       >
-        {#each filtered as profile, index}
+        {#each filtered as profile, index (profile.id)}
           <ProfileButton prof={profile} {index} />
         {/each}
         <SidebarButton

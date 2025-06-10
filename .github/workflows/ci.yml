@@ -1,0 +1,21 @@
+name: CI
+on:
+  - push
+  - pull_request
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    name: CI
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: install
+        run: npm install
+      - name: deps
+        run: npm ci
+      - name: build
+        run: npm run build
+      - name: lint
+        run: npm run lint

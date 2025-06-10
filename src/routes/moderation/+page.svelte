@@ -1,52 +1,39 @@
 <script lang="ts">
-  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
-  import { fly } from 'svelte/transition'
-  import Report from './Report.svelte'
-  import MultiSelect from '$lib/components/input/Switch.svelte'
+  import { goto } from '$app/navigation'
   import { page } from '$app/state'
-  import {
-    Check,
-    EnvelopeOpen,
-    Funnel,
-    Icon,
-    Inbox,
-    Newspaper,
-  } from 'svelte-hero-icons'
-  import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import { searchParam } from '$lib/util.svelte.js'
-  import { Button, Material, Select, toast } from 'mono-svelte'
-  import { t } from '$lib/i18n/translations'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import Placeholder from '$lib/components/ui/Placeholder.svelte'
+  import ProgressBar from '$lib/components/ui/ProgressBar.svelte'
+  import { t } from '$lib/i18n/translations'
+  import { client } from '$lib/lemmy.svelte'
+  import { searchParam } from '$lib/util.svelte.js'
+  import { Button, Select, toast } from 'mono-svelte'
   import Option from 'mono-svelte/forms/select/Option.svelte'
   import { tick } from 'svelte'
-  import ProgressBar from '$lib/components/ui/ProgressBar.svelte'
-  import { client } from '$lib/lemmy.svelte'
-  import { goto } from '$app/navigation'
+  import { Check, Funnel, Icon, Inbox } from 'svelte-hero-icons'
+  import { fly } from 'svelte/transition'
+  import Report from './Report.svelte'
 
   let { data = $bindable() } = $props()
-
-  let type = $state(data.type)
-  let reports = $state(data.items)
-  $effect(() => {
-    reports = data.items
-  })
 
   let batch = $state({
     progress: -1,
   })
   async function markAllAsResolved() {
-    if (!reports) return
+    if (!data.items?.value) return
     batch.progress = 0
 
-    const promises = await Promise.all(
-      reports.map((report) => {
+    await Promise.all(
+      data.items?.value.map(report => {
         switch (report.type) {
           case 'comment': {
             const promise = client().resolveCommentReport({
               report_id: report.id,
               resolved: true,
             })
-            promise.then(() => (batch.progress += 1 / reports!.length))
+            promise.then(
+              () => (batch.progress += 1 / data.items?.value!.length),
+            )
             return promise
           }
           case 'post': {
@@ -54,7 +41,9 @@
               report_id: report.id,
               resolved: true,
             })
-            promise.then(() => (batch.progress += 1 / reports!.length))
+            promise.then(
+              () => (batch.progress += 1 / data.items?.value!.length),
+            )
             return promise
           }
           case 'message': {
@@ -62,7 +51,9 @@
               report_id: report.id,
               resolved: true,
             })
-            promise.then(() => (batch.progress += 1 / reports!.length))
+            promise.then(
+              () => (batch.progress += 1 / data.items?.value!.length),
+            )
             return promise
           }
         }
@@ -82,10 +73,10 @@
     {#snippet extended()}
       <div class="flex flex-row gap-2 flex-wrap items-end">
         <Select
-          bind:value={type}
+          bind:value={data.type}
           onchange={async () => {
             await tick()
-            searchParam(page.url, 'type', type, 'page')
+            searchParam(page.url, 'type', data.type, 'page')
           }}
         >
           {#snippet customLabel()}
@@ -112,11 +103,11 @@
   </Header>
 </div>
 <ProgressBar progress={batch.progress} />
-{#if reports && reports.length > 0}
+{#if data.items?.value && data.items?.value.length > 0}
   <div
     class="flex flex-col *:py-4 divide-y divide-slate-200 dark:divide-zinc-800"
   >
-    {#each reports as item}
+    {#each data.items?.value as item (item.id)}
       <div
         in:fly={{ y: -6, opacity: 0, duration: 500 }}
         class="flex flex-col gap-3 text-sm -mx-4 sm:-mx-6 px-4 sm:px-6"

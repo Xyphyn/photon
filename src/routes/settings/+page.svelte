@@ -1,60 +1,52 @@
 <script lang="ts">
-  import { defaultSettings, settings } from '$lib/settings.svelte'
-  import Setting from './Setting.svelte'
+  import { env } from '$env/dynamic/public'
+  import { profile } from '$lib/auth.svelte'
+  import Link from '$lib/components/input/Link.svelte'
   import MultiSelect from '$lib/components/input/Switch.svelte'
   import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
+  import ViewSelect from '$lib/components/lemmy/dropdowns/ViewSelect.svelte'
+  import { removalTemplate } from '$lib/components/lemmy/moderation/moderation.js'
+  import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { locale, locales, t } from '$lib/i18n/translations'
+  import { defaultSettings, settings } from '$lib/settings.svelte'
+  import { DOMAIN_REGEX_FORMS } from '$lib/util.svelte.js'
   import {
     Badge,
-    Disclosure,
+    Button,
+    Checkbox,
     Material,
-    Note,
+    Modal,
+    Select,
     Switch,
+    TextArea,
     TextInput,
     toast,
-    Popover,
-    Modal,
-    TextArea,
   } from 'mono-svelte'
-  import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
-  import Link from '$lib/components/input/Link.svelte'
+  import Option from 'mono-svelte/forms/select/Option.svelte'
   import {
     ArrowDownTray,
     ArrowPath,
     ArrowRight,
-    ArrowUpOnSquare,
+    ArrowTopRightOnSquare,
+    ArrowTrendingDown,
     ArrowUpTray,
     ChatBubbleOvalLeftEllipsis,
-    CheckCircle,
     ChevronDown,
-    ChevronRight,
+    Clock,
+    Fire,
     GlobeAmericas,
+    Heart,
     Icon,
     Language,
     Plus,
-    Trash,
-    ArrowTopRightOnSquare,
-    Fire,
-    Trophy,
     Star,
-    Clock,
-    ArrowTrendingDown,
-    Heart,
+    Trash,
+    Trophy,
   } from 'svelte-hero-icons'
-  import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
-  import { removalTemplate } from '$lib/components/lemmy/moderation/moderation.js'
-  import { Button, Checkbox, Select, Spinner } from 'mono-svelte'
-  import ViewSelect from '$lib/components/lemmy/dropdowns/ViewSelect.svelte'
-  import { LINKED_INSTANCE_URL } from '$lib/instance.svelte.js'
-  import { DOMAIN_REGEX_FORMS, removeItem } from '$lib/util.svelte.js'
   import Section from './Section.svelte'
+  import Setting from './Setting.svelte'
   import ToggleSetting from './ToggleSetting.svelte'
-  import { locale, locales, t } from '$lib/i18n/translations'
-  import { getDefaultLinks, iconOfLink } from '$lib/components/ui/navbar/link'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import { profile } from '$lib/auth.svelte'
-  import AccountPage from '../profile/(local_user)/settings/+page.svelte'
-  import Option from 'mono-svelte/forms/select/Option.svelte'
-  import { env } from '$env/dynamic/public'
   let importing = $state(false)
   let importText = $state('')
 
@@ -107,8 +99,7 @@
         toast({ content: $t('toast.settingsImport'), type: 'success' })
         importing = false
       } catch (err) {
-        // @ts-ignore
-        toast({ content: err, type: 'error' })
+        toast({ content: err as string, type: 'error' })
       }
     }}
     title={$t('routes.theme.import')}
@@ -263,7 +254,7 @@
           <Option icon={Language} value={null}>
             {$t('settings.app.lang.auto')}
           </Option>
-          {#each $locales as locale}
+          {#each $locales as locale (locale)}
             {@const mapped = localeMap.get(locale) ?? {
               flag: '',
               translated: 1,
@@ -410,7 +401,6 @@
       {/snippet}
       <Select bind:value={settings.font}>
         <Option value="inter">Inter</Option>
-        <Option value="satoshi/nunito">Satoshi + Nunito</Option>
         <Option value="system">System UI</Option>
         <Option value="browser">Browser</Option>
       </Select>
@@ -457,7 +447,7 @@
         <div
           class="flex flex-col divide-y *:py-2 items-end divide-slate-200 dark:divide-zinc-800"
         >
-          {#each Object.keys(settings.tagRules) as rule}
+          {#each Object.keys(settings.tagRules) as rule (rule)}
             <div class="flex flex-row flex-wrap items-center gap-2">
               <span class="text-lg font-medium">{rule}</span>
               <MultiSelect
@@ -634,7 +624,7 @@
           </ul>
         </span>
       {/snippet}
-      {#each settings.moderation.presets as preset, index}
+      {#each settings.moderation.presets as preset, index (preset)}
         <Material
           color="transparent"
           rounding="xl"
@@ -670,7 +660,7 @@
                 label="Content"
                 images={false}
                 previewButton
-                beforePreview={(input) =>
+                beforePreview={input =>
                   removalTemplate(input, {
                     postTitle: '<Example post>',
                     communityLink: '[!community@example.com]()',

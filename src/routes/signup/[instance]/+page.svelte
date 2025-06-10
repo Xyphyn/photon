@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { run, preventDefault } from 'svelte/legacy'
+  import { preventDefault } from 'svelte/legacy'
 
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
@@ -21,7 +21,6 @@
     QuestionMarkCircle,
     XCircle,
   } from 'svelte-hero-icons'
-  import { instance as currentInstance } from '$lib/instance.svelte.js'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { t } from '$lib/i18n/translations.js'
 
@@ -104,7 +103,7 @@
       })
     } catch (err) {
       toast({
-        content: err as any,
+        content: err as string,
         type: 'error',
       })
     }

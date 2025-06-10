@@ -4,8 +4,8 @@
   interface Props {
     value: string
     class?: string
-    oncontextmenu?: (e: MouseEvent) => any
-    onchange?: (value: string) => any
+    oncontextmenu?: (e: MouseEvent) => void
+    onchange?: (value: string) => void
   }
 
   let {

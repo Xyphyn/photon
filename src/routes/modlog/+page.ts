@@ -17,10 +17,8 @@ import type {
   ModRemovePostView,
   ModTransferCommunityView,
   ModlogActionType,
-  ModlogListParams,
   Person,
 } from 'lemmy-js-client'
-import { get } from 'svelte/store'
 
 export type ActionName =
   | 'ban'
@@ -209,12 +207,12 @@ export const _toModLog = (item: ModAction): ModLog => {
 }
 
 export async function load({ url }) {
-  let instance = url.searchParams.get('instance') || undefined
-  let community = Number(url.searchParams.get('community')) || undefined
-  let user = Number(url.searchParams.get('user')) || undefined
-  let modId = Number(url.searchParams.get('mod_id')) || undefined
+  const instance = url.searchParams.get('instance') || undefined
+  const community = Number(url.searchParams.get('community')) || undefined
+  const user = Number(url.searchParams.get('user')) || undefined
+  const modId = Number(url.searchParams.get('mod_id')) || undefined
   const page = Number(url.searchParams.get('page')) || 1
-  let type: ModlogActionType =
+  const type: ModlogActionType =
     (url.searchParams.get('type') as ModlogActionType) || 'All'
 
   const results = await getClient(instance).getModlog({

@@ -1,29 +1,27 @@
 <script lang="ts">
-  import type { PostView } from 'lemmy-js-client'
+  import { goto } from '$app/navigation'
+  import { profile } from '$lib/auth.svelte'
+  import { mediaType, postLink } from '$lib/components/lemmy/post/helpers.js'
+  import PostMedia from '$lib/components/lemmy/post/media/PostMedia.svelte'
+  import PostMediaCompact from '$lib/components/lemmy/post/media/PostMediaCompact.svelte'
   import PostActions from '$lib/components/lemmy/post/PostActions.svelte'
-  import { settings, type View } from '$lib/settings.svelte.js'
   import PostMeta, {
     parseTags,
     type Tag,
   } from '$lib/components/lemmy/post/PostMeta.svelte'
-  import { Badge } from 'mono-svelte'
-  import { mediaType, postLink } from '$lib/components/lemmy/post/helpers.js'
   import { publishedToDate } from '$lib/components/util/date.js'
-  import { ArrowUp, ChatBubbleOvalLeft, Icon } from 'svelte-hero-icons'
-  import PostMedia from '$lib/components/lemmy/post/media/PostMedia.svelte'
-  import PostMediaCompact from '$lib/components/lemmy/post/media/PostMediaCompact.svelte'
-  import PostBody from './PostBody.svelte'
-  import { profile } from '$lib/auth.svelte'
-  import { goto } from '$app/navigation'
+  import { settings, type View } from '$lib/settings.svelte.js'
+  import type { PostView } from 'lemmy-js-client'
   import type { ClassValue } from 'svelte/elements'
+  import PostBody from './PostBody.svelte'
 
   function getTagRule(tags: Tag[]): 'blur-sm' | 'hide' | undefined {
-    const tagContent = tags.map((t) => t.content.toLowerCase())
+    const tagContent = tags.map(t => t.content.toLowerCase())
 
     let rule: 'blur-sm' | 'hide' | undefined
     if (settings.nsfwBlur && (post.post.nsfw || post.community.nsfw))
       rule = 'blur-sm'
-    tagContent.forEach((tag) => {
+    tagContent.forEach(tag => {
       if (settings.tagRules?.[tag]) rule = settings.tagRules?.[tag] ?? rule
       if (rule == 'hide') return rule
     })
@@ -31,8 +29,8 @@
     return rule
   }
 
-  function onClick(e: any) {
-    const event = e as MouseEvent
+  function onClick(e: Event) {
+    const event = e as Event
     const parent = document.getElementById(post.post.id.toString())
 
     if (event.target == parent) {
@@ -68,7 +66,7 @@
   })
 
   let tags = $derived(parseTags(post.post.name))
-  let type = $derived(mediaType(post.post.url, view))
+  let type = $derived(mediaType(post.post.url))
   let rule = $derived(getTagRule(tags.tags))
   let hideTitle = $derived(
     settings.posts.deduplicateEmbed &&
@@ -100,22 +98,20 @@
   It adapts to all kinds of form factors for different contexts, such as feeds, full post view, and crosspost list.
 -->
 <!-- svelte-ignore a11y_no_static_element_interactions -->
-<!-- svelte-ignore a11y_click_events_have_key_events -->
 <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
 <div
   class={[
-    'post relative max-w-full min-w-0 w-full cursor-pointer outline-hidden group',
+    'post relative max-w-full min-w-0 w-full cursor-pointer outline-hidden group z-10 rounded-3xl',
     settings.leftAlign && 'left-align',
     view == 'compact' && 'py-3 list-type compact',
     view == 'cozy' && 'py-5 flex flex-col gap-2',
     clazz,
   ]}
   id={post.post.id.toString()}
-  onclick={(e) => {
+  onclick={e => {
     onClick(e)
   }}
-  onkeydown={(e) => {
-    // @ts-ignore
+  onkeydown={e => {
     if (e.key == 'Enter') onClick(e)
   }}
   tabindex="0"
@@ -128,7 +124,7 @@
     published={publishedToDate(post.post.published)}
     {badges}
     subscribed={profile.data?.user?.follows
-      .map((c) => c.community.id)
+      .map(c => c.community.id)
       .includes(post.community.id)
       ? 'Subscribed'
       : 'NotSubscribed'}
@@ -156,9 +152,7 @@
       <PostMediaCompact
         post={post.post}
         {type}
-        class="{settings.leftAlign
-          ? 'mr-3'
-          : 'ml-3'} shrink no-list-margin"
+        class="{settings.leftAlign ? 'mr-3' : 'ml-3'} shrink no-list-margin"
         style="grid-area: media;"
         blur={rule == 'blur-sm' ? true : undefined}
         {view}
@@ -169,7 +163,6 @@
     <PostBody
       element="section"
       body={post.post.body}
-      {view}
       style="grid-area: body"
       class="relative"
     />

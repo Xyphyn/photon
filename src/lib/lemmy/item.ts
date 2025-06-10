@@ -1,18 +1,18 @@
-import { profile, profileData } from '$lib/auth.svelte'
+import { profile } from '$lib/auth.svelte'
 import type {
+  Comment,
   CommentReportView,
   CommentView,
+  Community,
   CommunityView,
-  Comment,
   PersonView,
+  Post,
   PostReportView,
   PostView,
-  Post,
   PrivateMessageReportView,
   PrivateMessageView,
-  Community,
 } from 'lemmy-js-client'
-import { get, writable } from 'svelte/store'
+import { writable } from 'svelte/store'
 
 export type Result =
   | PostView
@@ -90,8 +90,8 @@ function resumableStore(limit: number = 10) {
     set,
     update,
     add: (item: ResumableItem) => {
-      update((resumables) => {
-        if (resumables.find((i) => JSON.stringify(i) == JSON.stringify(item)))
+      update(resumables => {
+        if (resumables.find(i => JSON.stringify(i) == JSON.stringify(item)))
           return resumables
         resumables.unshift(item)
         if (resumables.length > limit) resumables.pop()
@@ -101,13 +101,13 @@ function resumableStore(limit: number = 10) {
   }
 }
 
-export let resumables = resumableStore()
+export const resumables = resumableStore()
 
 export function addFavorite(item: Community, add: boolean = true) {
-  let favs = profile.data.favorites ?? []
-  if (favs.map((fav) => fav.id).includes(item.id)) if (add) return
+  const favs = profile.data.favorites ?? []
+  if (favs.map(fav => fav.id).includes(item.id)) if (add) return
   if (!add) {
-    favs.splice(favs.map((c) => c.id).indexOf(item.id), 1)
+    favs.splice(favs.map(c => c.id).indexOf(item.id), 1)
   } else {
     favs.unshift(item)
   }

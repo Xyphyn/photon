@@ -1,7 +1,6 @@
 <script lang="ts">
   import Link from '$lib/components/input/Link.svelte'
   import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
-  import ShieldIcon from '$lib/components/lemmy/moderation/ShieldIcon.svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'

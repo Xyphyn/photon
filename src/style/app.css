@@ -8,10 +8,9 @@
   --font-*: initial;
   --font-sans: sans-serif;
   --font-system: system-ui;
-  --font-serif: serif;
   --font-inter: Inter, system-ui, sans-serif;
   --font-nunito: Nunito, system-ui, sans-serif;
-  --font-display: Satoshi, system-ui, sans-serif;
+  --font-display: Inter, system-ui, sans-serif;
   --font-mono: monospace;
 
   --animate-pop-in: pop-in 0.25s ease-out forwards;
@@ -31,18 +30,18 @@
   --color-slate-900: rgb(var(--c-s-900, 15 23 42));
   --color-slate-950: rgb(var(--c-s-950, 2 6 23));
 
-  --color-zinc-50: rgb(var(--c-z-50, 249 250 251));
-  --color-zinc-100: rgb(var(--c-z-100, 243 244 246));
+  --color-zinc-50: rgb(var(--c-z-50, 251 253 255));
+  --color-zinc-100: rgb(var(--c-z-100, 246 247 249));
   --color-zinc-200: rgb(var(--c-z-200, 229 231 235));
-  --color-zinc-300: rgb(var(--c-z-300, 209 213 219));
-  --color-zinc-400: rgb(var(--c-z-400, 156 163 175));
-  --color-zinc-500: rgb(var(--c-z-500, 107 114 128));
-  --color-zinc-600: rgb(var(--c-z-600, 75 85 99));
-  --color-zinc-700: rgb(var(--c-z-700, 50 60 76));
-  --color-zinc-800: rgb(var(--c-z-800, 22 31 45));
-  --color-zinc-900: rgb(var(--c-z-900, 17 24 39));
-  --color-zinc-925: rgb(var(--c-z-925, 8 12 25));
-  --color-zinc-950: rgb(var(--c-z-950, 5 9 16));
+  --color-zinc-300: rgb(var(--c-z-300, 217 221 226));
+  --color-zinc-400: rgb(var(--c-z-400, 171 177 188));
+  --color-zinc-500: rgb(var(--c-z-500, 127 133 146));
+  --color-zinc-600: rgb(var(--c-z-600, 95 104 117));
+  --color-zinc-700: rgb(var(--c-z-700, 75 84 99));
+  --color-zinc-800: rgb(var(--c-z-800, 42 50 63));
+  --color-zinc-900: rgb(var(--c-z-900, 32 37 50));
+  --color-zinc-925: rgb(var(--c-z-925, 28 32 43));
+  --color-zinc-950: rgb(var(--c-z-950, 23 27 36));
 
   --color-primary-100: rgb(var(--c-p-100, 241 245 249));
   --color-primary-900: rgb(var(--c-p-900, 15 23 42));
@@ -57,6 +56,19 @@
       opacity: 0;
     }
   }
+}
+
+.cc {
+  inset: -1px;
+  position: absolute;
+  border-radius: inherit;
+  z-index: -1;
+  background: linear-gradient(
+    125deg,
+    color-mix(in oklab, var(--color-zinc-50) 20%, transparent),
+    color-mix(in oklab, var(--color-zinc-50) 0%, transparent),
+    color-mix(in oklab, var(--color-zinc-50) 20%, transparent)
+  );
 }
 
 /*
@@ -92,6 +104,12 @@
 @font-face {
   font-family: 'Nunito';
   src: url('/font/Nunito.woff2') format('woff2');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'EBGaramond';
+  src: url('/font/EBGaramond-Regular.woff2') format('woff2');
   font-display: swap;
 }
 

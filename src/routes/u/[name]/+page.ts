@@ -1,7 +1,6 @@
 import { getClient } from '$lib/lemmy.svelte.js'
-import { getItemPublished } from '$lib/lemmy/item.js'
 import { ReactiveState } from '$lib/promise.svelte.js'
-import type { SortType } from 'lemmy-js-client'
+import type { CommentView, PostView, SortType } from 'lemmy-js-client'
 
 export async function load({ params, url, fetch }) {
   const page = Number(url.searchParams.get('page')) || 1
@@ -18,7 +17,8 @@ export async function load({ params, url, fetch }) {
     sort: sort,
   })
 
-  const items = type == 'posts' ? user.posts : user.comments
+  const items: (PostView | CommentView)[] =
+    type == 'posts' ? user.posts : user.comments
 
   return {
     filters: new ReactiveState({

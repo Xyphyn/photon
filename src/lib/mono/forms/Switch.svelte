@@ -1,6 +1,5 @@
 <script lang="ts">
   interface Props {
-    defaultValue?: boolean
     checked?: boolean
     labelClass?: string
     class?: string
@@ -9,7 +8,6 @@
   }
 
   let {
-    defaultValue = false,
     checked = $bindable(),
     labelClass = '',
     class: clazz = '',

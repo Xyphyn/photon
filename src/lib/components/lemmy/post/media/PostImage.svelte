@@ -1,12 +1,10 @@
 <script lang="ts">
-  import { stopPropagation } from 'svelte/legacy'
-
-  import { settings, type View } from '$lib/settings.svelte'
-  import type { Post } from 'lemmy-js-client'
-  import { bestImageURL, postLink } from '../helpers'
   import { showImage } from '$lib/components/ui/ExpandableImage.svelte'
+  import { settings } from '$lib/settings.svelte'
+  import type { Post } from 'lemmy-js-client'
   import { Button, modal } from 'mono-svelte'
   import { onMount } from 'svelte'
+  import { bestImageURL, postLink } from '../helpers'
 
   interface Props {
     post: Post
@@ -54,7 +52,6 @@
       srcset={bestImageURL(post, false, 1536)}
       media="(max-width: 1024px)"
     />
-    <!-- svelte-ignore a11y_missing_attribute -->
     <img
       src={bestImageURL(post, false, -1)}
       loading="lazy"
@@ -74,11 +71,11 @@
     class="absolute bottom-0 left-0 right-0 flex justify-between items-center
         rounded-full ml-auto w-max m-2 p-0 gap-1
         *:bg-white *:border *:border-slate-200 dark:*:border-zinc-800 dark:*:bg-zinc-900"
-    onclick={(e) => e.stopPropagation()}
+    onclick={e => e.stopPropagation()}
   >
     {#if post.alt_text}
       <Button
-        onclick={(e) => {
+        onclick={e => {
           e.stopPropagation()
           modal({
             title: 'Alt',

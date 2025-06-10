@@ -1,11 +1,10 @@
 <script lang="ts">
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import { getClient } from '$lib/lemmy.svelte.js'
-  import type { Community, CommunityView, ListingType } from 'lemmy-js-client'
+  import type { Community, ListingType } from 'lemmy-js-client'
   import { MenuButton, Search } from 'mono-svelte'
-  import type { SearchProps } from 'mono-svelte/search/Search.svelte'
   import { createEventDispatcher } from 'svelte'
-  import { Icon, XCircle, ServerStack } from 'svelte-hero-icons'
+  import { Icon, ServerStack, XCircle } from 'svelte-hero-icons'
   import { fly } from 'svelte/transition'
 
   interface Props {
@@ -14,8 +13,8 @@
     instance?: string | undefined
     listing_type?: ListingType
     showWhenEmpty?: boolean
+    // eslint-disable-next-line
     onselect?: (item: any) => void
-    [key: string]: any
   }
 
   let {
@@ -35,7 +34,7 @@
 
 {#if type == 'community'}
   <Search
-    search={async (q) => {
+    search={async q => {
       const results = await getClient(instance).search({
         q: q || ' ',
         type_: 'Communities',
@@ -44,9 +43,9 @@
         sort: 'TopAll',
       })
 
-      return results.communities.map((c) => c.community)
+      return results.communities.map(c => c.community)
     }}
-    extractName={(c) => `${c.title}@${new URL(c.actor_id).hostname}`}
+    extractName={c => `${c.title}@${new URL(c.actor_id).hostname}`}
     bind:query={q}
     {...rest}
   >
@@ -80,16 +79,16 @@
   </Search>
 {:else if type == 'instance'}
   <Search
-    search={async (q) => {
+    search={async q => {
       const results = (await instances) || {}
 
       return q
         ? (results.federated_instances?.linked || []).filter(
-            (i) => i.software === 'lemmy' && i.domain.includes(q),
+            i => i.software === 'lemmy' && i.domain.includes(q),
           )
         : []
     }}
-    extractName={(i) => `${i.domain}`}
+    extractName={i => `${i.domain}`}
     bind:query={q}
     {...rest}
   >

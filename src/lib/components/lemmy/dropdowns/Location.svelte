@@ -13,19 +13,18 @@
   import { amModOfAny } from '../moderation/moderation'
   import { t } from '$lib/i18n/translations'
   import Option from 'mono-svelte/forms/select/Option.svelte'
+  import type { SelectProps } from 'mono-svelte/forms/select/Select.svelte'
 
-  interface Props {
+  interface Props extends SelectProps<string> {
     selected: string
     navigate?: boolean
     changeDefault?: boolean
     showLabel?: boolean
-    [key: string]: any
   }
 
   let {
     selected = $bindable(),
     navigate = true,
-    changeDefault = false,
     showLabel = true,
     ...rest
   }: Props = $props()

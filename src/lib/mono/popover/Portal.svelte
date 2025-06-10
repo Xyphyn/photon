@@ -3,7 +3,7 @@
 
   // https://github.com/sveltejs/svelte/issues/3088#issuecomment-505785516
   import { onMount, onDestroy, createEventDispatcher } from 'svelte'
-  let slottedElements: HTMLDivElement = $state(),
+  let slottedElements = $state<HTMLDivElement>(),
     portal: HTMLDivElement
 
   const dispatch = createEventDispatcher<{ mounted: void }>()
@@ -13,7 +13,7 @@
     portal = document?.createElement('div')
     if (portal) portal.className = 'portal-mount'
     document?.body.appendChild(portal)
-    portal?.appendChild(slottedElements)
+    if (slottedElements) portal?.appendChild(slottedElements)
     dispatch('mounted')
   })
 

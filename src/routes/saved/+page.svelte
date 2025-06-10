@@ -1,28 +1,25 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy'
-
-  import type { CommentView, PostView } from 'lemmy-js-client'
-  import Post from '$lib/components/lemmy/post/Post.svelte'
-  import { fly } from 'svelte/transition'
-  import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
-  import { settings } from '$lib/settings.svelte.js'
-  import Pageination from '$lib/components/ui/Pageination.svelte'
-  import { searchParam } from '$lib/util.svelte.js'
   import { page } from '$app/state'
-  import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import { Bookmark } from 'svelte-hero-icons'
-  import { t } from '$lib/i18n/translations.js'
+  import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
+  import Post from '$lib/components/lemmy/post/Post.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
+  import Pageination from '$lib/components/ui/Pageination.svelte'
+  import Placeholder from '$lib/components/ui/Placeholder.svelte'
+  import { t } from '$lib/i18n/translations.js'
+  import { searchParam } from '$lib/util.svelte.js'
+  import type { CommentView, PostView } from 'lemmy-js-client'
   import { Select } from 'mono-svelte'
-  import {
-    Icon,
-    Bars3,
-    PencilSquare,
-    ChatBubbleOvalLeft,
-    AdjustmentsHorizontal,
-  } from 'svelte-hero-icons'
   import Option from 'mono-svelte/forms/select/Option.svelte'
+  import {
+    AdjustmentsHorizontal,
+    Bars3,
+    Bookmark,
+    ChatBubbleOvalLeft,
+    Icon,
+    PencilSquare,
+  } from 'svelte-hero-icons'
+  import { fly } from 'svelte/transition'
 
   let { data } = $props()
 
@@ -74,7 +71,7 @@
       description="Save posts or comments, and they'll be here to refer to them later."
     />
   {:else}
-    {#each data.data as item, index}
+    {#each data.data as item, index (item)}
       <div in:fly={{ opacity: 0, y: -4, delay: index * 50 }}>
         {#if isComment(item)}
           <CommentItem comment={item} />
@@ -87,6 +84,6 @@
 </div>
 <div class="sticky z-30 mx-auto max-w-full bottom-22 lg:bottom-6">
   <Tabs routes={[]} class="mx-auto">
-    <Pageination href={(page) => `?page=${page}`} page={data.page} />
+    <Pageination href={page => `?page=${page}`} page={data.page} />
   </Tabs>
 </div>

@@ -14,7 +14,6 @@
     disabled?: boolean
     children?: import('svelte').Snippet
     description?: import('svelte').Snippet
-    [key: string]: any
   }
 
   let {

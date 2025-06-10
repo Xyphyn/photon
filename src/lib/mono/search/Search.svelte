@@ -4,11 +4,19 @@
     selected?: T | undefined
     search: (query: string) => Promise<T[]>
     extractName: (item: T) => string
-    select?: any
+    select?: (item: T) => void
     input?: import('svelte').Snippet
     noresults?: import('svelte').Snippet
-    children?: import('svelte').Snippet<[any]>
-    onselect?: (value: T | undefined) => void
+    children?: import('svelte').Snippet<
+      [
+        {
+          select: (item?: T) => void
+          item: T
+          extractName: (item: T) => string
+        },
+      ]
+    >
+    onselect?: (value?: T) => void
     oninput?: TextInputProps['oninput']
   }
 
@@ -19,7 +27,6 @@
   import type { TextInputProps } from 'mono-svelte/forms/TextInput.svelte'
   import { Menu, TextInput, Spinner, MenuButton } from '../index.js'
   import { debounce } from '../util/time.js'
-  import { createEventDispatcher } from 'svelte'
   import { Icon, MagnifyingGlass } from 'svelte-hero-icons'
 
   let items: T[] = $state([])
@@ -62,13 +69,13 @@
       {#if input}{@render input()}{:else}
         <TextInput
           bind:value={query}
-          oninput={(e) => {
+          oninput={e => {
             searching = true
             openMenu = true
             oninput?.(e)
             debounceFunc()
           }}
-          onfocus={(e) => {
+          onfocus={e => {
             searching = true
             openMenu = true
             oninput?.(e)
@@ -94,7 +101,7 @@
         {#if noresults}{@render noresults()}{:else}No results found.{/if}
       </div>
     {:else}
-      {#each items as item}
+      {#each items as item (item)}
         {#if children}{@render children({
             extractName,
             item,

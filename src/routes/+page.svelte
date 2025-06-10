@@ -1,21 +1,17 @@
 <script lang="ts">
-  import { page } from '$app/state'
-  import Pageination from '$lib/components/ui/Pageination.svelte'
+  import { browser } from '$app/environment'
+  import Location from '$lib/components/lemmy/dropdowns/Location.svelte'
   import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
   import ViewSelect from '$lib/components/lemmy/dropdowns/ViewSelect.svelte'
-  import { searchParam } from '$lib/util.svelte.js'
-  import { ArrowRight, ChartBar, Icon } from 'svelte-hero-icons'
-  import { site } from '$lib/lemmy.svelte.js'
-  import Location from '$lib/components/lemmy/dropdowns/Location.svelte'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import { t } from '$lib/i18n/translations.js'
-  import { settings } from '$lib/settings.svelte.js'
-  import { browser } from '$app/environment'
-  import VirtualFeed from '$lib/components/lemmy/post/feed/VirtualFeed.svelte'
   import PostFeed from '$lib/components/lemmy/post/feed/PostFeed.svelte'
-  import type { ListingType } from 'lemmy-js-client'
-  import { get } from 'svelte/store'
+  import VirtualFeed from '$lib/components/lemmy/post/feed/VirtualFeed.svelte'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import Pageination from '$lib/components/ui/Pageination.svelte'
+  import { t } from '$lib/i18n/translations.js'
+  import { site } from '$lib/lemmy.svelte.js'
+  import { settings } from '$lib/settings.svelte.js'
   import Button from 'mono-svelte/button/Button.svelte'
+  import { ArrowRight, ChartBar, Icon } from 'svelte-hero-icons'
 
   let { data = $bindable() } = $props()
 
@@ -74,14 +70,13 @@
   >
     <Pageination
       cursor={{ next: data.feed.value.cursor.next }}
-      href={(page) =>
+      href={page =>
         typeof page == 'number' ? `?page=${page}` : `?cursor=${page}`}
       back={false}
     >
       <span class="flex flex-row items-center gap-1">
         <Icon src={ChartBar} size="16" mini />
         {$t('routes.frontpage.footer', {
-          // @ts-ignore
           users: site.data?.site_view?.counts?.users_active_day ?? '??',
         })}
       </span>

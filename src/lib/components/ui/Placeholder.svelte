@@ -5,7 +5,6 @@
     icon?: IconSource | undefined
     title: string
     description?: string | undefined
-    center?: boolean
     class?: string
     children?: import('svelte').Snippet
   }
@@ -14,7 +13,6 @@
     icon = undefined,
     title,
     description = undefined,
-    center = false,
     class: clazz = '',
     children,
   }: Props = $props()

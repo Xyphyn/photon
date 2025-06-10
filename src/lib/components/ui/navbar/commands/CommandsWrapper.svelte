@@ -1,8 +1,6 @@
 <script lang="ts">
   import { t } from '$lib/i18n/translations'
   import { Modal, Spinner } from 'mono-svelte'
-  import Commands from './Commands.svelte'
-  import { CommandLine, Icon } from 'svelte-hero-icons'
 
   interface Props {
     open?: boolean

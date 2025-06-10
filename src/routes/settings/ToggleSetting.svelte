@@ -1,7 +1,6 @@
 <script lang="ts">
   import { t } from '$lib/i18n/translations'
   import { Badge, Switch } from 'mono-svelte'
-  import { createEventDispatcher } from 'svelte'
   import {
     ComputerDesktop,
     DevicePhoneMobile,
@@ -14,7 +13,11 @@
     description?: string | undefined
     checked?: boolean
     beta?: boolean
-    supportedPlatforms?: any
+    supportedPlatforms?: {
+      desktop: boolean
+      tablet: boolean
+      mobile: boolean
+    }
   }
 
   let {
@@ -31,12 +34,12 @@
 </script>
 
 <div class="flex flex-col w-full justify-between gap-2 max-w-full">
-  {#if Object.values(supportedPlatforms).some((v) => v == false) || beta}
+  {#if Object.values(supportedPlatforms).some(v => v == false) || beta}
     <div class="flex items-center gap-2 flex-wrap">
       {#if beta}
         <Badge>Beta</Badge>
       {/if}
-      {#if Object.values(supportedPlatforms).some((v) => v == false)}
+      {#if Object.values(supportedPlatforms).some(v => v == false)}
         {#if supportedPlatforms.desktop}
           <Badge>
             {#snippet icon()}

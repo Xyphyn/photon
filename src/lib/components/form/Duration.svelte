@@ -1,7 +1,6 @@
 <script lang="ts">
   import { t } from '$lib/i18n/translations'
   import { TextInput, Select, Option } from 'mono-svelte'
-  import type { Snippet } from 'svelte'
 
   const multipliers = {
     minute: 60,
@@ -22,17 +21,9 @@
     value: number
     max?: number
     min?: number
-    number?: Snippet<[number]>
-    duration?: Snippet<[Duration]>
   }
 
-  let {
-    value = $bindable(),
-    max,
-    min = 0,
-    number: numberSnippet,
-    duration: durationSnippet,
-  }: Props = $props()
+  let { value = $bindable(), max, min = 0 }: Props = $props()
 
   let number = $state<number>(0)
   let duration = $state<Duration>(value == -1 ? 'permanent' : 'day')

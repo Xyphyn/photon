@@ -2,35 +2,29 @@
   import { preventDefault } from 'svelte/legacy'
 
   import { goto } from '$app/navigation'
+  import { page } from '$app/state'
   import { setUser } from '$lib/auth.svelte.js'
-  import { Note, toast } from 'mono-svelte'
+  import ErrorContainer, {
+    clearErrorScope,
+    pushError,
+  } from '$lib/components/error/ErrorContainer.svelte'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { t } from '$lib/i18n/translations'
   import {
     DEFAULT_INSTANCE_URL,
     LINKED_INSTANCE_URL,
   } from '$lib/instance.svelte.js'
-  import {
-    getClient,
-    mayBeIncompatible,
-    site,
-    validateInstance,
-  } from '$lib/lemmy.svelte.js'
-  import { Button, TextInput } from 'mono-svelte'
+  import { getClient, mayBeIncompatible, site } from '$lib/lemmy.svelte.js'
+  import { errorMessage } from '$lib/lemmy/error'
+  import { DOMAIN_REGEX_FORMS } from '$lib/util.svelte.js'
+  import { MINIMUM_VERSION } from '$lib/version.js'
+  import { Button, Note, TextInput, toast } from 'mono-svelte'
   import {
     Icon,
     Identification,
     QuestionMarkCircle,
     UserCircle,
   } from 'svelte-hero-icons'
-  import { DOMAIN_REGEX_FORMS } from '$lib/util.svelte.js'
-  import { MINIMUM_VERSION } from '$lib/version.js'
-  import { t } from '$lib/i18n/translations'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import { errorMessage } from '$lib/lemmy/error'
-  import ErrorContainer, {
-    clearErrorScope,
-    pushError,
-  } from '$lib/components/error/ErrorContainer.svelte'
-  import { page } from '$app/state'
 
   interface Props {
     ref?: string
@@ -75,7 +69,8 @@
     } catch (error) {
       pushError({
         message:
-          JSON.parse((error as any)?.body?.message ?? '{}')?.error ==
+          // @ts-expect-error cursed json hack
+          JSON.parse((error as object)?.body?.message ?? '{}')?.error ==
           'incorrect_login'
             ? errorMessage(
                 'incorrect_login' +
@@ -104,7 +99,6 @@
       {#if site.data && mayBeIncompatible(MINIMUM_VERSION, site.data.version.replace('v', ''))}
         <Note>
           {$t('account.versionGate', {
-            //@ts-ignore
             version: `v${MINIMUM_VERSION}`,
           })}
         </Note>

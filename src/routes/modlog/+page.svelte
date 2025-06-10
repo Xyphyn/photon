@@ -1,15 +1,18 @@
 <script lang="ts">
   import { run } from 'svelte/legacy'
 
-  import Pageination from '$lib/components/ui/Pageination.svelte'
-  import { searchParam } from '$lib/util.svelte.js'
+  import { browser } from '$app/environment'
   import { page } from '$app/state'
-  import ObjectAutocomplete from '$lib/components/lemmy/ObjectAutocomplete.svelte'
   import { profile } from '$lib/auth.svelte.js'
+  import { isAdmin } from '$lib/components/lemmy/moderation/moderation.js'
+  import ObjectAutocomplete from '$lib/components/lemmy/ObjectAutocomplete.svelte'
+  import UserAutocomplete from '$lib/components/lemmy/user/UserAutocomplete.svelte'
+  import Pageination from '$lib/components/ui/Pageination.svelte'
+  import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { settings } from '$lib/settings.svelte.js'
-  import ModlogItemCard from './item/ModlogItemCard.svelte'
-  import ModlogItemTable from './item/ModlogItemTable.svelte'
+  import { searchParam } from '$lib/util.svelte.js'
   import { Button, Select } from 'mono-svelte'
+  import Option from 'mono-svelte/forms/select/Option.svelte'
   import {
     Bars3BottomRight,
     Icon,
@@ -17,11 +20,8 @@
     ViewColumns,
     XMark,
   } from 'svelte-hero-icons'
-  import UserAutocomplete from '$lib/components/lemmy/user/UserAutocomplete.svelte'
-  import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import { isAdmin } from '$lib/components/lemmy/moderation/moderation.js'
-  import { browser } from '$app/environment'
-  import Option from 'mono-svelte/forms/select/Option.svelte'
+  import ModlogItemCard from './item/ModlogItemCard.svelte'
+  import ModlogItemTable from './item/ModlogItemTable.svelte'
 
   let { data = $bindable() } = $props()
 
@@ -96,7 +96,7 @@
       label="Instance"
       class="flex-1"
       q={page.url.searchParams.get('instance') || ''}
-      onselect={(e) =>
+      onselect={e =>
         searchParam(
           page.url,
           'instance',
@@ -115,7 +115,7 @@
       label="Community"
       class="flex-1"
       q={page.url.searchParams.get('community') ? 'Selected' : ''}
-      onselect={(e) =>
+      onselect={e =>
         searchParam(page.url, 'community', e?.id.toString() ?? '', 'page')}
     />
     <UserAutocomplete
@@ -129,7 +129,7 @@
       q={page.url.searchParams.get('user')
         ? (data.filters.user ?? 'Selected')
         : ''}
-      onselect={(e) =>
+      onselect={e =>
         searchParam(page.url, 'user', e?.id.toString() ?? '', 'page')}
     />
     {#if profile.data?.user && isAdmin(profile.data?.user)}
@@ -143,7 +143,7 @@
         q={page.url.searchParams.get('mod_id')
           ? (data.filters.moderator ?? 'Selected')
           : ''}
-        onselect={(e) =>
+        onselect={e =>
           searchParam(page.url, 'mod_id', e?.id.toString() ?? '', 'page')}
       />
     {/if}
@@ -169,7 +169,7 @@
   {#if data.modlog && data.modlog.length > 0}
     {#if settings.modlogCardView ?? !window.matchMedia('(min-width: 1600px)').matches}
       <div class="flex flex-col gap-4">
-        {#each data.modlog as modlog}
+        {#each data.modlog as modlog (modlog)}
           <ModlogItemCard item={modlog} />
         {/each}
       </div>
@@ -202,14 +202,14 @@
             </tr>
           </thead>
           <tbody class="text-sm">
-            {#each data.modlog as modlog}
+            {#each data.modlog as modlog (modlog)}
               <ModlogItemTable item={modlog} />
             {/each}
           </tbody>
         </table>
       </div>
     {/if}
-    <Pageination page={data.page} href={(page) => `?page=${page}`} />
+    <Pageination page={data.page} href={page => `?page=${page}`} />
   {:else}
     <Placeholder
       title="No results"

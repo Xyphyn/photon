@@ -4,11 +4,7 @@
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
   import { t } from '$lib/i18n/translations.js'
-  import type {
-    Person,
-    PrivateMessageResponse,
-    PrivateMessageView,
-  } from 'lemmy-js-client'
+  import type { Person, PrivateMessageView } from 'lemmy-js-client'
   import { Spinner } from 'mono-svelte'
   import { backOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'
@@ -23,7 +19,7 @@
 
   function filterDuplicates<T, K>(array: T[], predicate: (item: T) => K): T[] {
     const seen = new Set()
-    return array.filter((element) => {
+    return array.filter(element => {
       const value = predicate(element)
       if (seen.has(value)) {
         return false
@@ -37,9 +33,9 @@
   function conversationPreviews(
     conversations: PrivateMessageView[],
   ): ConversationPreview[] {
-    const deduplicated = filterDuplicates(conversations, (i) => i.creator.id)
+    const deduplicated = filterDuplicates(conversations, i => i.creator.id)
 
-    return deduplicated.map((i) => ({
+    return deduplicated.map(i => ({
       user: i.creator,
       message: {
         date: publishedToDate(i.private_message.published),
@@ -61,13 +57,13 @@
 {:then data}
   {@const conversations = data.private_messages}
   {@const previews = conversationPreviews(conversations).filter(
-    (c) => c.user.id != profile.data?.user?.local_user_view.person.id,
+    c => c.user.id != profile.data?.user?.local_user_view.person.id,
   )}
 
   <ul
     class="flex flex-col divide-y divide-slate-200 dark:divide-zinc-800 w-full mt-6"
   >
-    {#each previews as preview, index}
+    {#each previews as preview, index (preview)}
       <a
         href="/inbox/messages/{preview.user.id}"
         class="flex flex-row gap-2 py-3 -mx-4 px-4 sm:-mx-6 sm:px-6 w-full min-w-0

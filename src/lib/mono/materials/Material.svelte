@@ -1,7 +1,6 @@
 <script lang="ts">
-  import { createBubbler } from 'svelte/legacy'
+  import type { ClassValue, HTMLAttributes } from 'svelte/elements'
 
-  const bubble = createBubbler()
   type Elevation = keyof typeof elevationClass
   type Padding = keyof typeof paddingClass
   type Rounding = keyof typeof roundedClass
@@ -46,15 +45,14 @@
     none: '',
   }
 
-  interface Props {
+  interface Props extends HTMLAttributes<HTMLDivElement> {
     elevation?: Elevation
     padding?: Padding
     rounding?: Rounding
     color?: Color
     element?: string
-    class?: string
+    class?: ClassValue
     children?: import('svelte').Snippet
-    [key: string]: any
   }
 
   let {
@@ -72,13 +70,14 @@
 <svelte:element
   this={element}
   {...rest}
-  class="{elevationClass[elevation]}
-  {paddingClass[padding]}
-  {roundedClass[rounding]}
-  {colorClass[color]}
-   text-sm
-  {clazz}
-  "
+  class={[
+    elevationClass[elevation],
+    paddingClass[padding],
+    roundedClass[rounding],
+    colorClass[color],
+    'text-sm',
+    clazz,
+  ]}
 >
   {@render children?.()}
 </svelte:element>

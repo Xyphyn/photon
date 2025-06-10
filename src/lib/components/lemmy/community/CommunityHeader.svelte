@@ -1,7 +1,12 @@
 <script lang="ts">
   import { profile } from '$lib/auth.svelte'
   import EntityHeader from '$lib/components/ui/EntityHeader.svelte'
+  import Expandable from '$lib/components/ui/Expandable.svelte'
+  import { formatRelativeDate } from '$lib/components/util/RelativeDate.svelte'
+  import { publishedToDate } from '$lib/components/util/date'
   import { t } from '$lib/i18n/translations'
+  import { userLink } from '$lib/lemmy/generic'
+  import { settings } from '$lib/settings.svelte'
   import { fullCommunityName } from '$lib/util.svelte'
   import type {
     Community,
@@ -9,28 +14,22 @@
     CommunityModeratorView,
     SubscribedType,
   } from 'lemmy-js-client'
-  import { Button, toast, Menu, MenuButton, modal, action } from 'mono-svelte'
+  import { action, Button, Menu, MenuButton, modal, toast } from 'mono-svelte'
   import {
+    BuildingOffice2,
     Check,
     Cog6Tooth,
-    Icon,
     EllipsisHorizontal,
-    Plus,
-    Newspaper,
-    BuildingOffice2,
     Fire,
+    Icon,
+    Newspaper,
     NoSymbol,
+    Plus,
   } from 'svelte-hero-icons'
   import Subscribe from '../../../../routes/communities/Subscribe.svelte'
-  import Expandable from '$lib/components/ui/Expandable.svelte'
-  import ShieldIcon from '../moderation/ShieldIcon.svelte'
   import ItemList from '../generic/ItemList.svelte'
-  import { userLink } from '$lib/lemmy/generic'
-  import { formatRelativeDate } from '$lib/components/util/RelativeDate.svelte'
-  import { publishedToDate } from '$lib/components/util/date'
   import { isAdmin } from '../moderation/moderation'
   import { block, blockInstance, purgeCommunity } from './CommunityCard.svelte'
-  import { settings } from '$lib/settings.svelte'
 
   interface Props {
     community: Community
@@ -102,7 +101,7 @@
         <hr class="flex-1 border-slate-200 dark:border-zinc-800 mx-3" />
       {/snippet}
       <ItemList
-        items={moderators.map((m) => ({
+        items={moderators.map(m => ({
           id: m.moderator.id,
           name: m.moderator.name,
           url: userLink(m.moderator),
@@ -119,8 +118,7 @@
           community: community,
           banned_from_community: false,
           blocked: false,
-          // @ts-ignore
-          counts: counts ?? {},
+          counts: counts!,
           subscribed: subscribed,
         }}
       >
@@ -153,7 +151,7 @@
     {/if}
 
     {#if profile.data?.user && profile.data.user.moderates
-        .map((c) => c.community.id)
+        .map(c => c.community.id)
         .includes(community.id)}
       <Button
         size="square-lg"

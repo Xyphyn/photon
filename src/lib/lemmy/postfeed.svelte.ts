@@ -104,4 +104,4 @@ export interface PostFeed {
   }
 }
 
-export let postFeeds = new PostFeedState()
+export const postFeeds = new PostFeedState()

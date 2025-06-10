@@ -1,5 +1,5 @@
 import { getClient } from '$lib/lemmy.svelte.js'
-import { isComment, isCommentView, isPostView } from '$lib/lemmy/item.js'
+import { isComment, isCommentView } from '$lib/lemmy/item.js'
 import type {
   CommentView,
   Person,
@@ -63,7 +63,6 @@ export const contentItem = (item: Submission): ContentView => {
 export async function save(
   item: ContentView | SubmissionView,
   save: boolean,
-  jwt: string,
 ): Promise<boolean> {
   if (isSubmissionView(item)) item = contentView(item)
 
@@ -88,7 +87,6 @@ export async function save(
 export async function deleteItem(
   item: ContentView | SubmissionView,
   deleted: boolean,
-  jwt: string,
 ): Promise<boolean> {
   if (isSubmissionView(item)) item = contentView(item)
 
@@ -113,7 +111,6 @@ export async function deleteItem(
 export async function vote(
   item: ContentView | Submission,
   vote: number,
-  jwt: string,
 ): Promise<{ upvotes: number; downvotes: number; score: number }> {
   if (isSubmission(item)) item = contentItem(item)
 
@@ -138,14 +135,11 @@ export async function vote(
 export async function markAsRead(
   item: ContentView | Submission,
   read: boolean,
-  jwt: string,
 ): Promise<boolean> {
   if (isSubmission(item)) item = contentItem(item)
 
   if (item.type == 'post') {
     getClient().markPostAsRead({
-      // @ts-ignore
-      post_id: item.id,
       post_ids: [item.id],
       read: read,
     })

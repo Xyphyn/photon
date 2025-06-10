@@ -1,28 +1,18 @@
 <script lang="ts">
-  import InboxItem from './InboxItem.svelte'
-  import {
-    AdjustmentsHorizontal,
-    ArrowPath,
-    Bars3BottomRight,
-    Check,
-    Funnel,
-    Icon,
-    Inbox,
-  } from 'svelte-hero-icons'
-  import { getClient } from '$lib/lemmy.svelte.js'
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
-  import Pageination from '$lib/components/ui/Pageination.svelte'
   import { notifications, profile } from '$lib/auth.svelte.js'
-  import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import { fly } from 'svelte/transition'
-  import { searchParam } from '$lib/util.svelte.js'
-  import { Button, Select } from 'mono-svelte'
-  import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import { t } from '$lib/i18n/translations'
   import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
+  import Pageination from '$lib/components/ui/Pageination.svelte'
+  import Placeholder from '$lib/components/ui/Placeholder.svelte'
+  import { t } from '$lib/i18n/translations'
+  import { getClient } from '$lib/lemmy.svelte.js'
+  import { Button } from 'mono-svelte'
+  import { ArrowPath, Check, Icon, Inbox } from 'svelte-hero-icons'
   import { expoOut } from 'svelte/easing'
+  import { fly } from 'svelte/transition'
+  import InboxItem from './InboxItem.svelte'
 
   let { data } = $props()
 
@@ -192,7 +182,7 @@ items-center px-2 w-max top-6 lg:top-22"
             !data.inbox || (data.inbox.value?.length ?? 0) < (data?.limit ?? 0)
           )}
           page={data.page}
-          href={(page) => `?page=${page}`}
+          href={page => `?page=${page}`}
         />
       </Tabs>
     </div>

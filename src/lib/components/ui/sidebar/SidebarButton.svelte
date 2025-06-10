@@ -1,17 +1,17 @@
 <script lang="ts">
   import { page } from '$app/state'
   import { Button } from 'mono-svelte'
+  import type { ButtonProps } from 'mono-svelte/button/Button.svelte'
   import { Icon, type IconSource } from 'svelte-hero-icons'
 
-  interface Props {
+  interface Props extends ButtonProps {
     href?: string | undefined
     icon?: IconSource | undefined
     selected?: boolean
     class?: string
-    customIcon?: import('svelte').Snippet<[any]>
+    customIcon?: import('svelte').Snippet<[{ selected: boolean }]>
     children?: import('svelte').Snippet
     label?: import('svelte').Snippet
-    [key: string]: any
   }
 
   let {
@@ -41,6 +41,7 @@
   class="font-normal block origin-left! border border-transparent dark:hover:bg-zinc-900 {!selected
     ? 'text-slate-600 dark:text-zinc-400'
     : 'bg-slate-100 dark:bg-zinc-925'} {clazz}"
+  shadow="none"
 >
   {#snippet prefix()}
     {#if customIcon}

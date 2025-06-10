@@ -4,7 +4,6 @@
     CheckCircle,
     Fire,
     Icon,
-    InformationCircle,
     LockClosed,
     LockOpen,
     Megaphone,

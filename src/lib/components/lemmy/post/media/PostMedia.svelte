@@ -1,21 +1,12 @@
 <script lang="ts">
-  import Empty from '$lib/components/helper/Empty.svelte'
-  import PostLink from '$lib/components/lemmy/post/link/PostLink.svelte'
   import {
-    bestImageURL,
-    postLink,
-    type MediaType,
     iframeType,
+    type MediaType,
   } from '$lib/components/lemmy/post/helpers.js'
-  import ExpandableImage, {
-    showImage,
-  } from '$lib/components/ui/ExpandableImage.svelte'
+  import PostLink from '$lib/components/lemmy/post/link/PostLink.svelte'
   import { settings, type View } from '$lib/settings.svelte.js'
   import type { Post } from 'lemmy-js-client'
   import PostIframe from './PostIframe.svelte'
-  import { Button, Material, modal } from 'mono-svelte'
-  import { onMount } from 'svelte'
-  import { ArrowDownTray, Icon } from 'svelte-hero-icons'
   import PostImage from './PostImage.svelte'
 
   interface Props {

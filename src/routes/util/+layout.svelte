@@ -1,7 +1,5 @@
 <script lang="ts">
-  import { goto } from '$app/navigation'
   import { page } from '$app/state'
-  import MultiSelect from '$lib/components/input/Switch.svelte'
   import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
   interface Props {
     children?: import('svelte').Snippet

@@ -1,4 +1,8 @@
 <script lang="ts">
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { t } from '$lib/i18n/translations'
+  import { theme as themeData } from '$lib/ui/colors.svelte'
+  import { getDefaultColors } from '$lib/ui/presets'
   import {
     Button,
     Material,
@@ -13,16 +17,10 @@
     ArrowDownTray,
     ArrowPath,
     ArrowUpTray,
-    Bookmark,
-    CheckCircle,
     Icon,
     Plus,
   } from 'svelte-hero-icons'
   import ColorSwatch from './ColorSwatch.svelte'
-  import { t } from '$lib/i18n/translations'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import { theme as themeData } from '$lib/ui/colors.svelte'
-  import { getDefaultColors } from '$lib/ui/presets'
   import ThemePreset from './ThemePreset.svelte'
 
   let importing = $state(false)
@@ -43,8 +41,7 @@
         toast({ content: $t('message.success'), type: 'success' })
         importing = false
       } catch (err) {
-        // @ts-ignore
-        toast({ content: err, type: 'error' })
+        toast({ content: err as string, type: 'error' })
       }
     }}
     title={$t('routes.theme.import')}
@@ -70,13 +67,13 @@
       class="grid grid-cols-1 @md:grid-cols-2 @xl:grid-cols-3 @3xl:grid-cols-4
     gap-2"
     >
-      {#each themeData.data.themes as theme, index}
+      {#each themeData.data.themes as theme, index (theme.id)}
         <ThemePreset bind:theme={themeData.data.themes[index]} />
       {/each}
       <button
         onclick={() => {
           const newTheme = {
-            id: Math.max(...themeData.data.themes.map((t) => t.id)) + 1,
+            id: Math.max(...themeData.data.themes.map(t => t.id)) + 1,
             colors: getDefaultColors(),
             name: $t('routes.theme.preset.new'),
           }
@@ -170,14 +167,12 @@
       <h1 class="text-2xl font-bold col-span-2">{$t('routes.theme.accent')}</h1>
       <ColorSwatch
         value={themeData.current.colors.primary?.[900]}
-        onchange={(e) => {
+        onchange={e => {
           themeData.current.colors.primary[900] = e
         }}
-        oncontextmenu={(e) => {
+        oncontextmenu={e => {
           e.preventDefault()
-          themeData.current.colors.primary[900] =
-            // @ts-ignore
-            defaultColors.primary[900]
+          themeData.current.colors.primary[900] = defaultColors.primary[900]
 
           return true
         }}
@@ -185,14 +180,12 @@
       />
       <ColorSwatch
         value={themeData.current.colors.primary?.[100]}
-        onchange={(e) => {
+        onchange={e => {
           themeData.current.colors.primary[100] = e
         }}
-        oncontextmenu={(e) => {
+        oncontextmenu={e => {
           e.preventDefault()
-          themeData.current.colors.primary[100] =
-            // @ts-ignore
-            defaultColors.primary[100]
+          themeData.current.colors.primary[100] = defaultColors.primary[100]
 
           return true
         }}
@@ -206,22 +199,21 @@
       </span>
     </Material>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
-      {#each Object.entries(defaultColors) as [category, value]}
+      {#each Object.entries(defaultColors) as [category, value] (category)}
         <Material color="transparent" class="flex flex-col gap-2">
           <h1 class="capitalize font-semibold text-lg">{category}</h1>
           <div class="flex flex-row gap-1 flex-wrap items-center space-evenly">
-            {#each Object.entries(value) as [shade, color]}
+            {#each Object.entries(value) as [shade] (shade)}
               <div class="flex flex-col gap-0.5 w-10 group">
                 <!--@ts-ignore-->
                 <ColorSwatch
                   bind:value={themeData.current.colors[category][shade]}
-                  onchange={(e) => {
+                  onchange={e => {
                     themeData.current.colors[category][shade] = e
                   }}
-                  oncontextmenu={(e) => {
+                  oncontextmenu={e => {
                     e.preventDefault()
                     themeData.current.colors[category][shade] =
-                      // @ts-ignore
                       defaultColors[category][shade]
 
                     return true

@@ -1,22 +1,13 @@
 <script lang="ts">
-  import {
-    ArrowDownCircle,
-    ArrowUp,
-    ArrowUpCircle,
-    ChevronDown,
-    ChevronUp,
-    Icon,
-  } from 'svelte-hero-icons'
-  import { getClient, site } from '$lib/lemmy.svelte'
-  import { settings } from '$lib/settings.svelte'
   import { profile } from '$lib/auth.svelte.js'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
-  import { Button, buttonColor, toast } from 'mono-svelte'
-  import { vote as voteItem } from '$lib/lemmy/contentview'
-  import { shouldShowVoteColor } from '../post/PostVote.svelte'
-  import { fly } from 'svelte/transition'
-  import { backOut } from 'svelte/easing'
   import { t } from '$lib/i18n/translations'
+  import { getClient } from '$lib/lemmy.svelte'
+  import { buttonColor, toast } from 'mono-svelte'
+  import { ChevronDown, ChevronUp, Icon } from 'svelte-hero-icons'
+  import { backOut } from 'svelte/easing'
+  import { fly } from 'svelte/transition'
+  import { shouldShowVoteColor } from '../post/PostVote.svelte'
 
   interface Props {
     vote?: number

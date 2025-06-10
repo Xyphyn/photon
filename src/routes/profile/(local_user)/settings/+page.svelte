@@ -1,26 +1,27 @@
 <script lang="ts">
   import { preventDefault } from 'svelte/legacy'
 
-  import { profile, profileData, setUserID } from '$lib/auth.svelte.js'
+  import { profile } from '$lib/auth.svelte.js'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
+  import { t } from '$lib/i18n/translations.js'
+  import { getClient, site } from '$lib/lemmy.svelte.js'
+  import { uploadImage } from '$lib/util.svelte.js'
+  import type { SaveUserSettings } from 'lemmy-js-client'
   import {
     Badge,
+    Button,
     ImageInput,
     Material,
     Menu,
     MenuButton,
-    removeToast,
+    Switch,
+    TextInput,
     toast,
   } from 'mono-svelte'
-  import { getClient, site } from '$lib/lemmy.svelte.js'
-  import type { SaveUserSettings } from 'lemmy-js-client'
-  import { Button, Switch, TextInput } from 'mono-svelte'
-  import { uploadImage } from '$lib/util.svelte.js'
-  import { t } from '$lib/i18n/translations.js'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
-  import type { PageData } from './$types'
   import { Icon, Plus } from 'svelte-hero-icons'
+  import type { PageData } from './$types'
 
   interface Props {
     inline?: boolean
@@ -61,7 +62,7 @@
           )
         : undefined
 
-      const res = await getClient().saveUserSettings({
+      await getClient().saveUserSettings({
         ...formData,
         avatar: pfp,
         banner: banner,
@@ -73,7 +74,7 @@
       })
     } catch (err) {
       toast({
-        content: err as any,
+        content: err as string,
         type: 'error',
       })
     }
@@ -142,7 +143,7 @@
                   </Badge>
                 </button>
               {/snippet}
-              {#each site.data.all_languages.filter(l => !formData.discussion_languages?.includes(l.id)) as language, index}
+              {#each site.data.all_languages.filter(l => !formData.discussion_languages?.includes(l.id)) as language (language.id)}
                 <MenuButton
                   class="min-h-[16px] py-0"
                   onclick={() => {
@@ -153,7 +154,7 @@
                 </MenuButton>
               {/each}
             </Menu>
-            {#each formData.discussion_languages as languageId, index}
+            {#each formData.discussion_languages as languageId, index (languageId)}
               {@const language = site.data.all_languages.find(
                 l => l.id == languageId,
               )}

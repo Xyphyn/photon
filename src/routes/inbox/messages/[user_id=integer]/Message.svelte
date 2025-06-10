@@ -2,7 +2,7 @@
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import { t } from '$lib/i18n/translations'
   import type { PrivateMessageView } from 'lemmy-js-client'
-  import { Button, Menu, MenuButton, MenuDivider, Popover } from 'mono-svelte'
+  import { Button, Menu, MenuButton, MenuDivider } from 'mono-svelte'
   import { EllipsisVertical, Flag, Icon, Trash } from 'svelte-hero-icons'
 
   interface Props {

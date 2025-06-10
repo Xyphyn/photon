@@ -6,8 +6,10 @@
     isAdmin,
   } from '$lib/components/lemmy/moderation/moderation.js'
   import Avatar from '$lib/components/ui/Avatar.svelte'
+  import { t } from '$lib/i18n/translations'
+  import { LINKED_INSTANCE_URL } from '$lib/instance.svelte'
   import { site } from '$lib/lemmy.svelte.js'
-  import { Button, Menu, MenuButton, MenuDivider, Spinner } from 'mono-svelte'
+  import { Menu, MenuButton, MenuDivider, Spinner } from 'mono-svelte'
   import {
     GlobeAlt,
     Icon,
@@ -17,13 +19,11 @@
     Plus,
     ServerStack,
   } from 'svelte-hero-icons'
-  import Profile from './Profile.svelte'
-  import NavButton from './NavButton.svelte'
-  import Logo from '../Logo.svelte'
-  import { LINKED_INSTANCE_URL } from '$lib/instance.svelte'
-  import { t } from '$lib/i18n/translations'
-  import CommandsWrapper from './commands/CommandsWrapper.svelte'
   import type { ClassValue } from 'svelte/elements'
+  import Logo from '../Logo.svelte'
+  import NavButton from './NavButton.svelte'
+  import Profile from './Profile.svelte'
+  import CommandsWrapper from './commands/CommandsWrapper.svelte'
 
   let promptOpen: boolean = $state(false)
   interface Props {
@@ -43,7 +43,7 @@
   {style}
 >
   <NavButton
-    oncontextmenu={(e) => {
+    oncontextmenu={e => {
       e.preventDefault()
       promptOpen = true
       return true
@@ -81,7 +81,7 @@
         label={$t('nav.admin')}
         icon={ServerStack}
         class="relative"
-        isSelectedFilter={(path) => path.startsWith('/admin')}
+        isSelectedFilter={path => path.startsWith('/admin')}
       >
         {#if ($notifications.applications ?? 0) > 0}
           <div

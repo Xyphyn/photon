@@ -5,7 +5,7 @@
     group?: string
     row?: boolean
     class?: string
-    children?: import('svelte').Snippet<[any]>
+    children?: import('svelte').Snippet<[{ group: string }]>
   }
 
   let {

@@ -13,10 +13,11 @@
     avatarSize?: number
     showInstance?: boolean
     displayName?: boolean
-    badges?: any
+    badges?: {
+      nsfw: boolean
+    }
     class?: string
     instanceClass?: string
-    [key: string]: any
   }
 
   let {

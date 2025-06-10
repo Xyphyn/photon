@@ -1,17 +1,16 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { client } from '$lib/lemmy.svelte.js'
   import { t } from '$lib/i18n/translations.js'
   import { qr } from '@svelte-put/qr/svg'
   import { Button, Material, TextInput, toast } from 'mono-svelte'
   import { ClipboardDocument, Icon } from 'svelte-hero-icons'
+  import { errorMessage } from '$lib/lemmy/error.js'
 
   let { data } = $props()
 
-  // @ts-ignore
-  let totpLink: string | undefined = $state(undefined)
+  let totpLink = $state<string>()
   let totpEnabled = $state(
     data.my_user?.local_user_view.local_user.totp_2fa_enabled,
   )
@@ -38,7 +37,7 @@
         totpEnabled = true
       }
     } catch (e) {
-      toast({ content: e as any, type: 'error' })
+      toast({ content: errorMessage(e as string), type: 'error' })
     }
   }
 </script>
@@ -77,10 +76,7 @@
         </span>
       </TextInput>
     {/if}
-    <form
-      class="flex flex-col gap-2 w-full"
-      onsubmit={(e) => e.preventDefault()}
-    >
+    <form class="flex flex-col gap-2 w-full" onsubmit={e => e.preventDefault()}>
       <TextInput
         bind:value={verify_totp}
         placeholder="012345"

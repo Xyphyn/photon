@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { settings } from '$lib/settings.svelte'
-
   interface Props {
     pageHeader?: boolean
     style?: string
@@ -28,8 +26,7 @@
   {style}
 >
   <h1
-    class="text-3xl font-medium flex gap-2 w-full
-  {settings.font == 'satoshi/nunito' ? 'font-display' : ''} {clazz ?? ''}"
+    class="text-4xl flex gap-2 w-full tracking-tight font-medium {clazz ?? ''}"
   >
     {@render children?.()}
   </h1>

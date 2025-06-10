@@ -1,12 +1,11 @@
-import CommunityCard from '$lib/components/lemmy/community/CommunityCard.svelte'
-import { client, getClient } from '$lib/lemmy.svelte.js'
-import { awaitIfServer } from '$lib/promise.svelte.js'
-import { SSR_ENABLED, settings } from '$lib/settings.svelte'
-import type { GetComments } from 'lemmy-js-client'
-import { ReactiveState } from '$lib/promise.svelte.js'
-import { profile } from '$lib/auth.svelte.js'
-import { redirect } from '@sveltejs/kit'
 import { resolveRoute } from '$app/paths'
+import { profile } from '$lib/auth.svelte.js'
+import CommunityCard from '$lib/components/lemmy/community/CommunityCard.svelte'
+import { client } from '$lib/lemmy.svelte.js'
+import { ReactiveState, awaitIfServer } from '$lib/promise.svelte.js'
+import { settings } from '$lib/settings.svelte'
+import { redirect } from '@sveltejs/kit'
+import type { GetComments } from 'lemmy-js-client'
 
 function buildContext(thread?: string) {
   let parentId: number | undefined

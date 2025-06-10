@@ -1,28 +1,21 @@
 <script lang="ts">
-  import { run, preventDefault } from 'svelte/legacy'
-
-  import { Button, Material, Spinner, TextInput, toast } from 'mono-svelte'
-  import Message from './Message.svelte'
-  import { t } from '$lib/i18n/translations'
-  import { Icon, PaperAirplane } from 'svelte-hero-icons'
+  import { browser } from '$app/environment'
+  import { report } from '$lib/components/lemmy/moderation/moderation'
+  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import { fly } from 'svelte/transition'
-  import { backOut, expoOut } from 'svelte/easing'
+  import { t } from '$lib/i18n/translations'
   import { client } from '$lib/lemmy.svelte'
   import { errorMessage } from '$lib/lemmy/error'
   import type { PrivateMessageResponse } from 'lemmy-js-client'
+  import { Button, Material, TextInput, toast } from 'mono-svelte'
+  import { tick } from 'svelte'
+  import { Icon, PaperAirplane } from 'svelte-hero-icons'
   import { flip } from 'svelte/animate'
-  import { browser } from '$app/environment'
-  import { onMount, tick } from 'svelte'
-  import { report } from '$lib/components/lemmy/moderation/moderation'
-  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
-  import Placeholder from 'mono-svelte/placeholder/Placeholder.svelte'
+  import { backOut, expoOut } from 'svelte/easing'
+  import { fly } from 'svelte/transition'
+  import Message from './Message.svelte'
 
-  let { data: pageData } = $props()
-  let data = $state(pageData)
-  $effect(() => {
-    data = pageData
-  })
+  let { data } = $props()
 
   let textbox = $state({
     message: '',
@@ -41,7 +34,7 @@
     try {
       const res = await client().createPrivateMessage({
         content: message,
-        recipient_id: data.creator.person_view.person.id,
+        recipient_id: data.creator.value.person_view.person.id,
       })
 
       textbox.loading = false
@@ -49,7 +42,7 @@
       return res
     } catch (err) {
       toast({
-        content: errorMessage(err as any),
+        content: errorMessage(err as string),
         type: 'error',
       })
     }
@@ -58,7 +51,7 @@
   }
 
   $effect(() => {
-    if (browser && data.message && chatWindow) {
+    if (browser && data.message.value && chatWindow) {
       tick().then(() =>
         chatWindow?.scrollTo({
           top: chatWindow.scrollHeight,
@@ -69,15 +62,15 @@
   })
 
   async function deleteMessage(id: number) {
-    const res = await client().deletePrivateMessage({
+    await client().deletePrivateMessage({
       deleted: true,
       private_message_id: id,
     })
 
-    data.message = {
-      private_messages: data.message.private_messages.toSpliced(
-        data.message.private_messages.findLastIndex(
-          (i) => i.private_message.id == id,
+    data.message.value = {
+      private_messages: data.message.value.private_messages.toSpliced(
+        data.message.value.private_messages.findLastIndex(
+          i => i.private_message.id == id,
         ),
         1,
       ),
@@ -88,7 +81,7 @@
 <Header pageHeader>
   {$t('filter.inbox.messages')}
   {#snippet extended()}
-    <UserLink avatar user={data.creator.person_view.person} />
+    <UserLink avatar user={data.creator.value.person_view.person} />
   {/snippet}
 </Header>
 <Material
@@ -103,23 +96,22 @@
       <div class="mt-auto"></div>
       <p class="mx-auto mt-auto text-slate-400 dark:text-zinc-600">
         {$t('routes.inbox.messages.conversation', {
-          // @ts-ignore
           user:
-            data.creator.person_view.person.name +
+            data.creator.value.person_view.person.name +
             '@' +
-            new URL(data.creator.person_view.person.actor_id).hostname,
+            new URL(data.creator.value.person_view.person.actor_id).hostname,
         })}
       </p>
-      {#each data.message.private_messages.toReversed() as private_message, index (private_message.private_message.id)}
+      {#each data.message.value.private_messages.toReversed() as private_message, index (private_message.private_message.id)}
         <div
           class={private_message.creator.id ==
-          data.creator.person_view.person.id
+          data.creator.value.person_view.person.id
             ? 'self-start'
             : 'self-end'}
           in:fly|global={{
             duration: 700,
             easing: backOut,
-            delay: data.message.private_messages.length * 50 - index * 50,
+            delay: data.message.value.private_messages.length * 50 - index * 50,
             y: -12,
           }}
           animate:flip={{ duration: 500, easing: expoOut }}
@@ -129,27 +121,27 @@
             onreport={() => report(private_message)}
             message={private_message}
             primary={private_message.creator.id !=
-              data.creator.person_view.person.id}
+              data.creator.value.person_view.person.id}
           />
         </div>
       {/each}
     </ul>
   </div>
 </Material>
-{#await data.message then message}
+{#await data.message.value then message}
   <div class="sticky bottom-4 p-4">
     <form
       class="flex flex-row h-14 items-center w-full
     border-slate-200 dark:border-zinc-800
    p-2 gap-2 backdrop-blur-xl
    bg-white/50 dark:bg-zinc-950/50 border rounded-2xl"
-      onsubmit={async (e) => {
+      onsubmit={async e => {
         e.preventDefault()
 
         const res = await sendMessage(textbox.message)
         if (!res) return
 
-        data.message = {
+        data.message.value = {
           private_messages: [
             res.private_message_view,
             ...message.private_messages,

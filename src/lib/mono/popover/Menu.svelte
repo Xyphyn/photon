@@ -1,16 +1,13 @@
 <script lang="ts">
-  import Material from '../materials/Material.svelte'
-  import Popover, { type Origin } from '../popover/Popover.svelte'
   import {
+    flip,
     offset,
+    shift,
     type Middleware,
     type Placement,
-    shift,
     type Strategy,
-    flip,
-    autoPlacement,
-    size,
   } from '@floating-ui/core'
+  import Popover from '../popover/Popover.svelte'
 
   interface Props {
     openOnHover?: boolean
@@ -22,7 +19,6 @@
     class?: string
     target?: import('svelte').Snippet
     children?: import('svelte').Snippet
-    [key: string]: any
   }
 
   let {

@@ -28,11 +28,11 @@
 
           const rtf = new Intl.RelativeTimeFormat(language, options)
 
-          return rtf.format(-value, thresholds[i].unit as any)
+          return rtf.format(-value, thresholds[i].unit as 'second')
         }
       }
       return 'Now'
-    } catch (err) {
+    } catch {
       return 'Invalid Date'
     }
   }
@@ -44,7 +44,7 @@
   const toLocaleDateString = (date: Date): string => {
     try {
       return date.toLocaleString()
-    } catch (err) {
+    } catch {
       return 'Invalid Date'
     }
   }

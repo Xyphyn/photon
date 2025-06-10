@@ -1,24 +1,24 @@
 <script lang="ts">
   import {
-    profileData,
-    setUserID,
     profile as currentProfile,
     deleteProfile,
     moveProfile,
     type Profile,
     profile,
+    profileData,
+    setUserID,
   } from '$lib/auth.svelte.js'
-  import { Menu, MenuButton, Modal } from 'mono-svelte'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import DebugObject from '$lib/components/util/debug/DebugObject.svelte'
+  import { t } from '$lib/i18n/translations'
   import { LINKED_INSTANCE_URL } from '$lib/instance.svelte.js'
   import ProfileAvatar from '$lib/lemmy/ProfileAvatar.svelte'
   import { settings } from '$lib/settings.svelte.js'
-  import { Button, TextInput } from 'mono-svelte'
+  import { Button, Menu, MenuButton, Modal } from 'mono-svelte'
   import {
     ArrowLeftOnRectangle,
     ArrowRightOnRectangle,
     ArrowsRightLeft,
-    ArrowUturnLeft,
     BugAnt,
     Check,
     ChevronDown,
@@ -26,13 +26,9 @@
     EllipsisHorizontal,
     Icon,
     Identification,
-    PaintBrush,
     Plus,
   } from 'svelte-hero-icons'
-  import { flip } from 'svelte/animate'
   import { expoOut } from 'svelte/easing'
-  import { t } from '$lib/i18n/translations'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { fly } from 'svelte/transition'
 
   let debugging = $state(false)
@@ -158,7 +154,7 @@
       {/snippet}
     </Header>
     <div>
-      {#each profileData.profiles as profile, index}
+      {#each profileData.profiles as profile, index (profile.id)}
         <div
           class="flex flex-row gap-2 items-center py-3"
           transition:fly={{ duration: 500, y: -12, easing: expoOut }}

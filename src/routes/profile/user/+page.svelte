@@ -14,8 +14,8 @@
         sort: data.sort,
         type: data.type,
       }),
-      person_view: data.user.person_view,
-      moderates: data.user.moderates,
+      person_view: {value: data.user.person_view},
+      moderates: {value: data.user.moderates},
     }}
   />
 {:else}

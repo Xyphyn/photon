@@ -1,48 +1,35 @@
 <script lang="ts">
-  import { preventDefault } from 'svelte/legacy'
-
   import { navigating, page } from '$app/state'
   import { profile } from '$lib/auth.svelte.js'
   import ObjectAutocomplete from '$lib/components/lemmy/ObjectAutocomplete.svelte'
-  import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
   import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
   import CommunityItem from '$lib/components/lemmy/community/CommunityItem.svelte'
+  import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
   import Post from '$lib/components/lemmy/post/Post.svelte'
   import UserItem from '$lib/components/lemmy/user/UserItem.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
+  import Skeleton from '$lib/components/ui/generic/Skeleton.svelte'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
+  import { t } from '$lib/i18n/translations.js'
   import {
     isCommentView,
     isCommunityView,
     isPostView,
     isUser,
   } from '$lib/lemmy/item.js'
-  import { settings } from '$lib/settings.svelte.js'
   import { searchParam } from '$lib/util.svelte.js'
-  import type {
-    CommentView,
-    CommunityView,
-    PersonView,
-    PostView,
-  } from 'lemmy-js-client'
-  import { Button, Disclosure, Select, Spinner, TextInput } from 'mono-svelte'
+  import { Button, Select, Spinner, TextInput } from 'mono-svelte'
+  import Option from 'mono-svelte/forms/select/Option.svelte'
   import {
     AdjustmentsHorizontal,
-    Bars3BottomRight,
     ChevronDown,
     Icon,
     MagnifyingGlass,
   } from 'svelte-hero-icons'
   import { expoOut } from 'svelte/easing'
   import { fly, slide } from 'svelte/transition'
-  import { t } from '$lib/i18n/translations.js'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
-  import { goto, invalidate } from '$app/navigation'
-  import Option from 'mono-svelte/forms/select/Option.svelte'
-  import Skeleton from '$lib/components/ui/generic/Skeleton.svelte'
-
-  type Result = PostView | CommentView | PersonView | CommunityView
 
   let { data } = $props()
 
@@ -55,7 +42,7 @@
 </script>
 
 <svelte:window
-  onkeydown={(e) => {
+  onkeydown={e => {
     if (e.target == document.body) searchElement?.focus()
   }}
 />
@@ -133,9 +120,9 @@
     <ObjectAutocomplete
       label={$t('nav.create.community')}
       jwt={profile.data?.jwt}
-      listing_type={'All'}
+      listing_type="All"
       showWhenEmpty={true}
-      onselect={(c) =>
+      onselect={c =>
         searchParam(page.url, 'community', c?.id || undefined, 'page')}
     />
   </div>
@@ -144,6 +131,7 @@
   {#if navigating.to?.route.id == '/search'}
     <div class="flex flex-col gap-3 mt-6">
       {#each new Array(5) as _, index}
+        {_}
         <div
           in:fly|global={{
             duration: 800,
@@ -207,7 +195,7 @@
     class="flex flex-col mt-4 divide-slate-200 dark:divide-zinc-800 divide-y!"
   >
     {#key data.results.value}
-      {#each data.results.value as result}
+      {#each data.results.value as result (result)}
         {#if isPostView(result)}
           <Post post={result} />
         {:else if isCommentView(result)}
@@ -230,6 +218,6 @@
   </div>
   <div class="mt-4"></div>
   {#if data.results.value.length > 0}
-    <Pageination bind:page={pageNum} href={(page) => `?page=${page}`} />
+    <Pageination bind:page={pageNum} href={page => `?page=${page}`} />
   {/if}
 {/if}

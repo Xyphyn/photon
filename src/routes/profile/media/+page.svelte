@@ -4,8 +4,8 @@
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import { t } from '$lib/i18n/translations'
   import { flip } from 'svelte/animate'
-  import PictrsImage from '$lib/components/lemmy/PictrsImage.svelte'
   import { expoInOut } from 'svelte/easing'
+  import PictrsImage from '$lib/components/lemmy/PictrsImage.svelte'
 
   let { data = $bindable() } = $props()
 </script>
@@ -19,7 +19,7 @@
         ondelete={() => {
           data.images = data.images.toSpliced(
             data.images.findIndex(
-              (i) =>
+              i =>
                 i.local_image.pictrs_delete_token ==
                 image.local_image.pictrs_delete_token,
             ),
@@ -33,7 +33,7 @@
 {#if data.images.length == 20}
   <Pageination
     page={Number(page.url.searchParams.get('page')) || 1}
-    href={(page) => `?page=${page}`}
+    href={page => `?page=${page}`}
   />
 {/if}
 

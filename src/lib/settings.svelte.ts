@@ -1,9 +1,7 @@
 import type { CommentSortType, ListingType, SortType } from 'lemmy-js-client'
-import { writable } from 'svelte/store'
 import { env } from '$env/dynamic/public'
 import { locale } from './i18n/translations'
 import { browser } from '$app/environment'
-import type { Link } from './components/ui/navbar/link'
 
 console.log('Using the following default settings from the environment:')
 console.log(env)
@@ -67,7 +65,7 @@ interface Settings {
   debugInfo: boolean
   expandImages: boolean
 
-  font: 'inter' | 'satoshi/nunito' | 'system' | 'browser'
+  font: 'inter' | 'system' | 'browser'
   leftAlign: boolean
   hidePhoton: boolean
 
@@ -114,9 +112,9 @@ export const defaultSettings: Settings = {
     comments: toBool(env.PUBLIC_SHOW_INSTANCES_COMMENTS) ?? true,
   },
   defaultSort: {
-    sort: env.PUBLIC_DEFAULT_FEED_SORT ?? ('Active' as any),
-    feed: env.PUBLIC_DEFAULT_FEED ?? ('Local' as any),
-    comments: env.PUBLIC_DEFAULT_COMMENT_SORT ?? ('Hot' as any),
+    sort: (env.PUBLIC_DEFAULT_FEED_SORT ?? 'Active') as SortType,
+    feed: (env.PUBLIC_DEFAULT_FEED ?? 'Local') as ListingType,
+    comments: (env.PUBLIC_DEFAULT_COMMENT_SORT ?? 'Hot') as CommentSortType,
   },
   hidePosts: {
     deleted: toBool(env.PUBLIC_HIDE_DELETED) ?? true,
@@ -146,10 +144,8 @@ export const defaultSettings: Settings = {
   modlogCardView: toBool(env.PUBLIC_MODLOG_CARD_VIEW) ?? undefined,
   debugInfo: toBool(env.PUBLIC_DEBUG_INFO) ?? false,
   expandImages: toBool(env.PUBLIC_EXPAND_IMAGES) ?? true,
-  // @ts-ignore
-  view: env.PUBLIC_VIEW ?? 'compact',
-  // @ts-ignore
-  font: env.PUBLIC_FONT ?? 'inter',
+  view: (env.PUBLIC_VIEW as View) ?? 'compact',
+  font: (env.PUBLIC_FONT as 'inter') ?? 'inter',
   leftAlign: toBool(env.PUBLIC_LEFT_ALIGN) ?? false,
   hidePhoton: toBool(env.PUBLIC_REMOVE_CREDIT) ?? false,
   newWidth: toBool(env.PUBLIC_LIMIT_LAYOUT_WIDTH) ?? true,
@@ -193,12 +189,14 @@ function createSettingsState(initial: Settings): Settings {
       const merged = mergeDeep(initial, localSettings)
 
       settings = merged
-    } catch (e) {}
+    } catch {
+      /* empty */
+    }
   }
   return settings
 }
 
-export let settings = createSettingsState(
+export const settings = createSettingsState(
   JSON.parse(JSON.stringify(defaultSettings)),
 )
 
@@ -216,7 +214,7 @@ $effect.root(() => {
   return () => {}
 })
 
-function isObject(item: any) {
+function isObject(item: object) {
   return item && typeof item === 'object' && !Array.isArray(item)
 }
 
@@ -225,6 +223,7 @@ function isObject(item: any) {
  * @param target
  * @param ...sources
  */
+// eslint-disable-next-line
 function mergeDeep(target: any, ...sources: any[]) {
   if (!sources.length) return target
   const source = sources.shift()

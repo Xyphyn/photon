@@ -3,6 +3,11 @@
 
   import { notifications, profile } from '$lib/auth.svelte'
 
+  import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
+  import { t } from '$lib/i18n/translations'
+  import { site } from '$lib/lemmy.svelte'
+  import { settings } from '$lib/settings.svelte'
+  import { theme } from '$lib/ui/colors.svelte'
   import {
     Badge,
     Button,
@@ -10,12 +15,12 @@
     MenuButton,
     MenuDivider,
     Modal,
+    Option,
     Select,
     Spinner,
     toast,
-    Option,
   } from 'mono-svelte'
-  import Avatar from '../Avatar.svelte'
+  import type { Placement } from 'svelte-floating-ui/core'
   import {
     Bars3,
     Bookmark,
@@ -23,10 +28,8 @@
     CodeBracketSquare,
     Cog6Tooth,
     ComputerDesktop,
-    Heart,
     Icon,
     Inbox,
-    InformationCircle,
     Moon,
     ServerStack,
     Sun,
@@ -34,17 +37,13 @@
     UserCircle,
     UserGroup,
   } from 'svelte-hero-icons'
-  import { theme } from '$lib/ui/colors.svelte'
-  import { settings } from '$lib/settings.svelte'
-  import { site } from '$lib/lemmy.svelte'
-  import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
-  import { t } from '$lib/i18n/translations'
+  import Avatar from '../Avatar.svelte'
 
   let showInstance = $state(false)
 
   interface Props {
     buttonClass?: string
-    [key: string]: any
+    placement?: Placement
   }
 
   let { buttonClass = '', ...rest }: Props = $props()
@@ -97,13 +96,13 @@
   {/snippet}
   <MenuDivider>{$t('nav.menu.label')}</MenuDivider>
   {#if profile.data?.jwt}
-    <MenuButton link href="/profile">
+    <MenuButton href="/profile">
       {#snippet prefix()}
         <Icon src={UserCircle} micro width={16} />
       {/snippet}
       {$t('profile.profile')}
     </MenuButton>
-    <MenuButton link href="/inbox">
+    <MenuButton href="/inbox">
       {#snippet prefix()}
         <Icon src={Inbox} micro width={16} />
       {/snippet}
@@ -114,21 +113,21 @@
         </Badge>
       {/if}
     </MenuButton>
-    <MenuButton link href="/saved">
+    <MenuButton href="/saved">
       {#snippet prefix()}
         <Icon src={Bookmark} micro width={16} />
       {/snippet}
       {$t('profile.saved')}
     </MenuButton>
   {/if}
-  <MenuButton link href="/accounts">
+  <MenuButton href="/accounts">
     {#snippet prefix()}
       <Icon src={UserGroup} micro width={16} />
     {/snippet}
     {$t('account.accounts')}
   </MenuButton>
   <MenuDivider>{$t('nav.menu.app')}</MenuDivider>
-  <MenuButton link href="/settings">
+  <MenuButton href="/settings">
     {#snippet prefix()}
       <Icon src={Cog6Tooth} micro width={16} />
     {/snippet}
@@ -176,7 +175,7 @@
     {$t('nav.menu.theme')}
   </MenuButton>
   {#if settings.debugInfo}
-    <MenuButton link href="/util">
+    <MenuButton href="/util">
       {#snippet prefix()}
         <Icon src={BugAnt} mini width={16} />
       {/snippet}

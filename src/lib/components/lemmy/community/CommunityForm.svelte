@@ -4,22 +4,27 @@
   import { goto } from '$app/navigation'
   import { profile } from '$lib/auth.svelte.js'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
-  import { Badge, ImageInput, MenuButton, Switch, toast } from 'mono-svelte'
-  import { client, getClient, site } from '$lib/lemmy.svelte.js'
-  import { addSubscription } from '$lib/lemmy/user.js'
-  import { Button, Checkbox, TextInput } from 'mono-svelte'
-  import { uploadImage } from '$lib/util.svelte.js'
-  import { t } from '$lib/i18n/translations'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import ImagePreviewInput from '$lib/components/input/ImagePreviewInput.svelte'
-  import Label from 'mono-svelte/forms/Label.svelte'
-  import { DocumentPlus, GlobeAlt, Icon, MapPin, Plus } from 'svelte-hero-icons'
-  import ImageUploadModal from '../modal/ImageUploadModal.svelte'
-  import Select from 'mono-svelte/forms/select/Select.svelte'
-  import Option from 'mono-svelte/forms/select/Option.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
+  import { t } from '$lib/i18n/translations'
+  import { getClient, site } from '$lib/lemmy.svelte.js'
+  import { addSubscription } from '$lib/lemmy/user.js'
+  import {
+    Badge,
+    Button,
+    MenuButton,
+    Switch,
+    TextInput,
+    toast,
+  } from 'mono-svelte'
+  import Label from 'mono-svelte/forms/Label.svelte'
+  import Option from 'mono-svelte/forms/select/Option.svelte'
+  import Select from 'mono-svelte/forms/select/Select.svelte'
   import Material from 'mono-svelte/materials/Material.svelte'
   import Menu from 'mono-svelte/popover/Menu.svelte'
+  import { DocumentPlus, GlobeAlt, Icon, MapPin, Plus } from 'svelte-hero-icons'
+  import ImageUploadModal from '../modal/ImageUploadModal.svelte'
+  import { errorMessage } from '$lib/lemmy/error'
 
   interface Props {
     /**
@@ -96,7 +101,7 @@
 
       if (profile.data.user) {
         const c = profile.data.user.moderates
-          .map((m) => m.community.id)
+          .map(m => m.community.id)
           .indexOf(res.community_view.community.id)
         if (c != -1) {
           profile.data.user.moderates[c] = {
@@ -127,7 +132,7 @@
         )
     } catch (err) {
       toast({
-        content: err as any,
+        content: errorMessage(err as string),
         type: 'error',
       })
     }
@@ -184,7 +189,7 @@
         <ImageUploadModal
           bind:open={uploading.icon}
           multiple={false}
-          onupload={(uploaded) => {
+          onupload={uploaded => {
             uploading.icon = false
             formData.icon = uploaded[0]
           }}
@@ -212,7 +217,7 @@
         <ImageUploadModal
           bind:open={uploading.banner}
           multiple={false}
-          onupload={(uploaded) => {
+          onupload={uploaded => {
             uploading.banner = false
             formData.banner = uploaded[0]
           }}
@@ -249,7 +254,7 @@
                 </Badge>
               </button>
             {/snippet}
-            {#each site.data.all_languages.filter((l) => !formData.languages?.includes(l.id)) as language, index}
+            {#each site.data.all_languages.filter(l => !formData.languages?.includes(l.id)) as language (language.id)}
               <MenuButton
                 class="min-h-[16px] py-0"
                 onclick={() => {
@@ -263,9 +268,9 @@
               </MenuButton>
             {/each}
           </Menu>
-          {#each formData.languages ?? [] as languageId, index}
+          {#each formData.languages ?? [] as languageId, index (languageId)}
             {@const language = site.data.all_languages.find(
-              (l) => l.id == languageId,
+              l => l.id == languageId,
             )}
             <button
               type="button"

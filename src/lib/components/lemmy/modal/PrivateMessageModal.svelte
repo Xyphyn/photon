@@ -9,6 +9,7 @@
   import type { Person } from 'lemmy-js-client'
   import { Button, Modal, toast } from 'mono-svelte'
   import { Icon, PaperAirplane } from 'svelte-hero-icons'
+  import { errorMessage } from '$lib/lemmy/error'
 
   interface Props {
     open?: boolean
@@ -40,7 +41,7 @@
       open = false
     } catch (err) {
       toast({
-        content: err as any,
+        content: errorMessage(err as string),
         type: 'error',
       })
     }
