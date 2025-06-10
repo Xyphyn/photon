@@ -6,13 +6,14 @@
     type ButtonProps,
   } from '../button/Button.svelte'
   import { Icon, type IconSource } from 'svelte-hero-icons'
+  import type { ClassValue } from 'svelte/elements'
 
   interface Props extends ButtonProps {
     color?: ButtonColor
     alignment?: ButtonAlignment
     href?: string | undefined
     disabled?: boolean
-    class?: string
+    class?: ClassValue
     icon?: IconSource
     prefix?: Snippet
     children?: Snippet
@@ -37,21 +38,23 @@
   {...rest}
   {color}
   rounding="none"
-  class="w-full px-2 rounded-lg min-h-8 font-normal {disabled
-    ? 'opacity-70 pointer-events-none cursor-not-allowed'
-    : ''} {color == 'tertiary'
-    ? 'dark:hover:bg-zinc-800/70'
-    : ''} duration-100 {clazz}"
+  class={[
+    'w-full px-2 rounded-lg min-h-8 font-normal duration-100',
+    disabled && 'opacity-70 pointer-events-none cursor-not-allowed',
+    color == 'tertiary' && 'dark:hover:bg-zinc-800/70',
+    clazz,
+  ]}
   {alignment}
   {href}
   {disabled}
+  shadow="none"
 >
   {#snippet prefix()}
     <div
-      class="contents {color == 'tertiary'
-        ? 'text-slate-600 dark:text-zinc-400'
-        : ''}
-  		shrink-0"
+      class={[
+        'contents shrink-0',
+        color == 'tertiary' && 'text-slate-600 dark:text-zinc-400',
+      ]}
     >
       {#if icon}
         <Icon src={icon} micro size="16" />

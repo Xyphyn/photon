@@ -401,7 +401,6 @@
       {/snippet}
       <Select bind:value={settings.font}>
         <Option value="inter">Inter</Option>
-        <Option value="satoshi/nunito">Satoshi + Nunito</Option>
         <Option value="system">System UI</Option>
         <Option value="browser">Browser</Option>
       </Select>

@@ -169,7 +169,7 @@
     {:else}
       <VirtualList
         id="feed"
-        class="divide-y divide-slate-200 dark:divide-zinc-800"
+        class="divide-y -mx-4 sm:-mx-6 divide-slate-200 dark:divide-zinc-900"
         items={posts}
         initialOffset={listEl?.offsetTop}
         overscan={500}
@@ -182,7 +182,7 @@
             style={row < 7 ? `--anim-delay: ${row * 100}ms` : ''}
             class="relative post-container {row < 7
               ? 'pop-in opacity-0'
-              : ''} -mx-4 sm:-mx-6 px-4 sm:px-6"
+              : ''} px-4 sm:px-6"
           >
             <Post
               bind:post={posts[row]}

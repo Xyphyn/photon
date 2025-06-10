@@ -70,6 +70,7 @@
   } from 'svelte-hero-icons'
   import CommunityHeader from '../community/CommunityHeader.svelte'
   import ShieldIcon from '../moderation/ShieldIcon.svelte'
+  import Material from 'mono-svelte/materials/Material.svelte'
 
   interface Props {
     community?: Community | undefined
@@ -132,9 +133,11 @@
   This component will build two different things: a post's meta block and the title.
 -->
 <header
-  class="grid w-full meta {community
-    ? 'grid-rows-2'
-    : 'grid-rows-1'} text-xs min-w-0 max-w-full"
+  class={[
+    'grid w-full meta',
+    community ? 'grid-rows-2' : 'grid-rows-1',
+    'text-xs min-w-0 max-w-full text-slate-600 dark:text-zinc-400',
+  ]}
   class:compact={view == 'compact'}
   {style}
 >
@@ -142,24 +145,30 @@
     <Popover autoClose={false} popoverClass="backdrop-blur-xl rounded-2xl">
       {#snippet target()}
         <button
-          class="row-span-2 shrink-0 mr-2 self-center group/btn bg-slate-200 dark:bg-zinc-800 rounded-full"
+          class={[
+            'row-span-2 shrink-0 mr-1.5 self-center group/btn',
+            'bg-slate-200 dark:bg-zinc-800 rounded-xl cursor-pointer',
+          ]}
         >
           <Avatar
             url={community?.icon}
             width={view == 'compact' ? 24 : 32}
             alt={community?.name}
+            circle={false}
             class="group-hover/btn:scale-90 group-active/btn:scale-[.85] transition-transform"
           />
         </button>
       {/snippet}
       {#snippet popover()}
         {#if community && subscribed}
-          <div
-            class="bg-white/80 dark:bg-zinc-900/90 border border-slate-200 dark:border-zinc-800 rounded-2xl shadow-xl p-4
-            max-w-2xl w-full max-h-128 overflow-auto"
+          <Material
+            color="uniform"
+            rounding="2xl"
+            elevation="high"
+            class="max-w-2xl w-full max-h-128 overflow-auto"
           >
             <CommunityHeader {community} {subscribed} />
-          </div>
+          </Material>
         {/if}
       {/snippet}
     </Popover>
@@ -175,7 +184,7 @@
     />
   {/if}
   <div
-    class="text-slate-600 dark:text-zinc-400 flex flex-row gap-2 items-center
+    class="flex flex-row gap-1.5 items-center
      no-list-margin {view == 'compact' && showCommunity
       ? 'min-[480px]:mx-2'
       : ''}"
@@ -314,15 +323,14 @@
 {#if title && id}
   <a
     href="/post/{encodeURIComponent(instance.data)}/{id}"
-    class="inline hover:underline
-    hover:text-primary-900 dark:hover:text-primary-100 transition-colors max-[480px]:mt-0!
-    {settings.font == 'satoshi/nunito'
-      ? 'font-display font-semibold'
-      : 'font-medium'} {titleClass}"
-    class:text-slate-600={settings.markReadPosts && read}
-    class:dark:text-zinc-400={settings.markReadPosts && read}
-    class:text-base={view == 'compact'}
-    class:text-lg={view != 'compact'}
+    class={[
+      'inline max-[480px]:mt-0!',
+      'hover:underline hover:text-primary-900 dark:hover:text-primary-100 transition-colors',
+      'font-medium',
+      titleClass,
+      settings.markReadPosts && read && 'text-slate-600 dark:text-zinc-400',
+      view == 'compact' ? 'text-base' : 'text-lg',
+    ]}
     style="grid-area: title;"
     data-sveltekit-preload-data="tap"
   >
@@ -346,8 +354,6 @@
       'avatar community badges'
       'avatar stats badges';
     gap: 0;
-    grid-template-rows: auto auto;
-    grid-template-columns: max-content minmax(0, auto) auto;
   }
 
   @media screen and (max-width: 480px) {
@@ -359,11 +365,6 @@
       gap: 0;
       grid-template-rows: auto auto auto;
       grid-template-columns: 40px minmax(0, auto);
-    }
-  }
-
-  @media screen and (max-width: 480px) {
-    .meta.compact {
       grid-template-columns: 32px minmax(0, auto);
     }
   }

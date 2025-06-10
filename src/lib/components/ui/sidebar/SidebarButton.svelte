@@ -41,6 +41,7 @@
   class="font-normal block origin-left! border border-transparent dark:hover:bg-zinc-900 {!selected
     ? 'text-slate-600 dark:text-zinc-400'
     : 'bg-slate-100 dark:bg-zinc-925'} {clazz}"
+  shadow="none"
 >
   {#snippet prefix()}
     {#if customIcon}

@@ -149,7 +149,7 @@
     rounding = size == 'lg' ? 'xl' : 'lg',
     roundingSide = 'all',
     alignment = 'center',
-    shadow = 'none',
+    shadow = 'sm',
     column = false,
     disabled,
     loaderWidth = undefined,
@@ -185,11 +185,12 @@
   type={submit ? 'submit' : 'button'}
 >
   <div
-    class="flex {column
-      ? 'flex-col justify-center'
-      : 'flex-row items-center'} h-full gap-1.5 button-content {buttonAlignment[
-      alignment
-    ]}"
+    class={[
+      'flex',
+      column ? 'flex-col justify-center' : 'flex-row items-center',
+      'h-full gap-1.5 button-content',
+      buttonAlignment[alignment],
+    ]}
   >
     {#if loading}
       <Spinner width={loaderWidth ?? 16} />

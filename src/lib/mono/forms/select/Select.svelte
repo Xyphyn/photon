@@ -101,11 +101,14 @@
           {...rest}
           {id}
           bind:this={element}
-          class="{buttonSize[size]} {buttonShadow[
-            shadow
-          ]} {buttonColor.secondary} appearance-none transition-colors rounded-lg text-sm
-  	w-full min-w-full cursor-pointer pr-6 {buttonColor.secondary}
-  	{clazz} {selectClass}"
+          class={[
+            buttonSize[size],
+            buttonShadow[shadow],
+            buttonColor.secondary,
+            'appearance-none transition-colors rounded-xl text-sm w-full min-w-full cursor-pointer pr-6',
+            selectClass,
+            clazz,
+          ]}
           bind:value
           onmousedown={e => {
             e.preventDefault()
@@ -138,11 +141,20 @@
             }}
             size="custom"
             disabled={option.disabled}
-            class="min-h-0! py-[5px]! {option.value == value
-              ? 'bg-slate-100! dark:bg-zinc-800!'
-              : ''}"
+            class={[
+              'min-h-0! py-[5px]!',
+              option.value == value &&
+                'bg-slate-100! dark:bg-zinc-800! text-primary-900 dark:text-primary-100 font-medium!',
+            ]}
           >
-            {#if option.icon}
+            {#if option.value == value}
+              <Icon
+                src={CheckCircle}
+                size="16"
+                micro
+                class="text-primary-900 dark:text-primary-100"
+              />
+            {:else if option.icon}
               <Icon
                 src={option.icon}
                 size="16"
@@ -151,14 +163,6 @@
               />
             {/if}
             {@html option.label}
-            {#if option.value == value}
-              <Icon
-                src={CheckCircle}
-                size="16"
-                micro
-                class="text-primary-900 dark:text-primary-100 ml-auto"
-              />
-            {/if}
           </MenuButton>
         {/if}
       {/each}

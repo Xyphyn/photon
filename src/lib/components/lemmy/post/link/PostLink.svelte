@@ -27,7 +27,7 @@
   @component
   For embed-type posts. Displays embed card or a compact link.
 -->
-{#if embed_title && view != 'compact'}
+{#if embed_title && view == 'cozy'}
   <a target="_blank" href={url} class="group/link">
     <Material
       color="distinct"
