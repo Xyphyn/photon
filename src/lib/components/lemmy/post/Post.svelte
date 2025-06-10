@@ -101,7 +101,7 @@
 <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
 <div
   class={[
-    'post relative max-w-full min-w-0 w-full cursor-pointer outline-hidden group',
+    'post relative max-w-full min-w-0 w-full cursor-pointer outline-hidden group z-10 rounded-3xl',
     settings.leftAlign && 'left-align',
     view == 'compact' && 'py-3 list-type compact',
     view == 'cozy' && 'py-5 flex flex-col gap-2',

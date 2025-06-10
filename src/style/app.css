@@ -8,10 +8,9 @@
   --font-*: initial;
   --font-sans: sans-serif;
   --font-system: system-ui;
-  --font-serif: serif;
   --font-inter: Inter, system-ui, sans-serif;
   --font-nunito: Nunito, system-ui, sans-serif;
-  --font-display: Satoshi, system-ui, sans-serif;
+  --font-display: Inter, system-ui, sans-serif;
   --font-mono: monospace;
 
   --animate-pop-in: pop-in 0.25s ease-out forwards;
@@ -59,6 +58,19 @@
   }
 }
 
+.cc {
+  inset: -1px;
+  position: absolute;
+  border-radius: inherit;
+  z-index: -1;
+  background: linear-gradient(
+    125deg,
+    color-mix(in oklab, var(--color-zinc-50) 20%, transparent),
+    color-mix(in oklab, var(--color-zinc-50) 0%, transparent),
+    color-mix(in oklab, var(--color-zinc-50) 20%, transparent)
+  );
+}
+
 /*
   The default border color has changed to `currentcolor` in Tailwind CSS v4,
   so we've added these compatibility styles to make sure everything still
@@ -92,6 +104,12 @@
 @font-face {
   font-family: 'Nunito';
   src: url('/font/Nunito.woff2') format('woff2');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'EBGaramond';
+  src: url('/font/EBGaramond-Regular.woff2') format('woff2');
   font-display: swap;
 }
 
