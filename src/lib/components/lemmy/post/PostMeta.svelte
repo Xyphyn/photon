@@ -146,8 +146,8 @@
       {#snippet target()}
         <button
           class={[
-            'row-span-2 shrink-0 mr-1.5 self-center group/btn',
-            'bg-slate-200 dark:bg-zinc-800 rounded-xl cursor-pointer',
+            'row-span-2 shrink-0 mr-2 self-center group/btn',
+            'bg-slate-200 dark:bg-zinc-800 rounded-md cursor-pointer',
           ]}
         >
           <Avatar
@@ -354,17 +354,17 @@
       'avatar community badges'
       'avatar stats badges';
     gap: 0;
+    grid-template-rows: auto auto auto;
+    grid-template-columns: 40px minmax(0, auto);
   }
 
   @media screen and (max-width: 480px) {
-    .meta {
+    .meta.compact {
       grid-template-areas:
         'avatar community'
         'avatar stats'
         'badges badges';
       gap: 0;
-      grid-template-rows: auto auto auto;
-      grid-template-columns: 40px minmax(0, auto);
       grid-template-columns: 32px minmax(0, auto);
     }
   }
