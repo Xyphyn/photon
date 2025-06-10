@@ -2,8 +2,8 @@
   import Comment from '$lib/components/lemmy/comment/Comment.svelte'
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
-  import { settings, type View } from '$lib/settings.svelte.js'
   import { t } from '$lib/i18n/translations'
+  import { settings, type View } from '$lib/settings.svelte.js'
   import type { CommentView } from 'lemmy-js-client'
   import { Button, Material } from 'mono-svelte'
   import { ArrowUturnUp, Icon } from 'svelte-hero-icons'
@@ -29,9 +29,9 @@
 </script>
 
 <Material
-  class="flex flex-col flex-1 bg-transparent! border-0! rounded-none
+  class="flex flex-col flex-1 rounded-none
   {view == 'compact' ? 'py-4' : 'py-5'} {clazz}"
-  color="distinct"
+  color="none"
   padding="none"
 >
   {#if meta}

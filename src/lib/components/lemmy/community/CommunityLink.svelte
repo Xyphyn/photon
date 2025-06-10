@@ -5,8 +5,9 @@
   import { t } from '$lib/i18n/translations'
   import type { Community } from 'lemmy-js-client'
   import { ExclamationTriangle, Icon } from 'svelte-hero-icons'
+  import type { HTMLAnchorAttributes } from 'svelte/elements'
 
-  interface Props {
+  interface Props extends HTMLAnchorAttributes {
     community: Community
     avatar?: boolean
     name?: boolean

@@ -167,7 +167,10 @@
     </div>
   {:then object}
     {#if object}
-      <div transition:slide={{ axis: 'y', easing: expoOut }}>
+      <div
+        transition:slide={{ axis: 'y', easing: expoOut }}
+        class="divide-y divide-slate-200 dark:divide-zinc-900"
+      >
         {#if object.community}
           <div
             class="-mx-4 sm:-mx-6 px-6 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors"

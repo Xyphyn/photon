@@ -57,11 +57,11 @@
   let image = $state<FileList | null | undefined>(null)
 
   const shortcuts = {
-    KeyB: () => wrapSelection('**', '**'),
-    KeyI: () => wrapSelection('*', '*'),
-    KeyS: () => wrapSelection('~~', '~~'),
-    KeyH: () => wrapSelection('\n# ', ''),
-    KeyK: () => wrapSelection('[](', ')'),
+    b: () => wrapSelection('**', '**'),
+    i: () => wrapSelection('*', '*'),
+    s: () => wrapSelection('~~', '~~'),
+    h: () => wrapSelection('\n# ', ''),
+    k: () => wrapSelection('[](', ')'),
   }
 
   async function adjustHeight() {
@@ -69,6 +69,18 @@
     if (textArea) {
       textArea.style.height = 'auto' // Reset height to auto to calculate new height
       textArea.style.height = `${textArea.scrollHeight}px` // Set height to the scrollHeight
+    }
+  }
+
+  function handleKeydown(
+    event: KeyboardEvent & {
+      currentTarget: EventTarget & HTMLTextAreaElement
+    },
+  ) {
+    if (event.ctrlKey && event.key === 'Enter') {
+      event.preventDefault()
+      const form = textArea?.closest('form')
+      if (form) form.requestSubmit() // Automatically submits the form
     }
   }
 
@@ -255,8 +267,9 @@ overflow-hidden transition-colors {clazz}"
         onkeydown={e => {
           if (disabled) return
           if (e.ctrlKey || e.metaKey) {
+            handleKeydown(e)
             // @ts-expect-error yes it can
-            let shortcut = shortcuts[e.code]
+            let shortcut = shortcuts[e.key]
             if (shortcut) {
               e.preventDefault()
               shortcut?.(e)

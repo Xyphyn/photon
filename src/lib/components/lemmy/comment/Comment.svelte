@@ -1,32 +1,21 @@
 <script lang="ts">
-  import { page } from '$app/state'
   import { profile } from '$lib/auth.svelte.js'
   import CommentActions from '$lib/components/lemmy/comment/CommentActions.svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
-  import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import { t } from '$lib/i18n/translations'
   import { getClient } from '$lib/lemmy.svelte.js'
+  import { errorMessage } from '$lib/lemmy/error'
   import { Button, Modal, toast } from 'mono-svelte'
-  import { onMount } from 'svelte'
-  import {
-    Bookmark,
-    Icon,
-    Microphone,
-    Minus,
-    Pencil,
-    Plus,
-    Trash,
-  } from 'svelte-hero-icons'
+  import { Bookmark, Icon, Microphone, Pencil, Trash } from 'svelte-hero-icons'
   import { expoOut } from 'svelte/easing'
   import type { ClassValue } from 'svelte/elements'
-  import { fly, slide } from 'svelte/transition'
+  import { slide } from 'svelte/transition'
   import ShieldIcon from '../moderation/ShieldIcon.svelte'
   import CommentForm from './CommentForm.svelte'
   import type { CommentNodeI } from './comments.svelte'
-  import { errorMessage } from '$lib/lemmy/error'
 
   interface Props {
     node: CommentNodeI
@@ -60,20 +49,22 @@
   let newComment = $state(node.comment_view.comment.content)
   let editingLoad = $state(false)
 
-  async function save() {
+  async function save(type: 'reply' | 'edit') {
     if (!profile.data?.jwt || newComment.length <= 0) return
 
     editingLoad = true
 
     try {
-      await getClient().editComment({
-        comment_id: node.comment_view.comment.id,
-        content: newComment,
-      })
+      if (type == 'edit') {
+        await getClient().editComment({
+          comment_id: node.comment_view.comment.id,
+          content: newComment,
+        })
 
-      node.comment_view.comment.content = newComment
+        node.comment_view.comment.content = newComment
 
-      editing = false
+        editing = false
+      }
     } catch (err) {
       toast({
         content: errorMessage(err as string),
@@ -83,56 +74,76 @@
 
     editingLoad = false
   }
-
-  onMount(() => {
-    if ('#' + node.comment_view.comment.id.toString() == page.url.hash) {
-      highlight = 'text-primary-900 dark:text-primary-100 font-medium'
-
-      setTimeout(() => (highlight = 'duration-[3s] transition-all'), 500)
-      setTimeout(() => (highlight = ''), 600)
-    }
-  })
-
-  let highlight = $state('')
 </script>
 
-{#if editing}
-  <Modal bind:open={editing}>
+{#if editing || replying}
+  <Modal
+    bind:open={
+      () => replying || editing,
+      v => {
+        replying = v
+        editing = v
+      }
+    }
+  >
     {#snippet customTitle()}
-      <span>{$t('form.edit')}</span>
+      <span>{replying ? $t('comment.reply') : $t('form.edit')}</span>
     {/snippet}
     <form
       onsubmit={e => {
         e.preventDefault()
-        save()
+        save(replying ? 'reply' : 'edit')
       }}
       class="contents"
     >
-      <CommentForm
-        bind:value={newComment}
-        postId={node.comment_view.comment.id}
-        actions={false}
-        preview={true}
-        onconfirm={save}
-      />
-      <Button
-        submit
-        color="primary"
-        size="lg"
-        loading={editingLoad}
-        disabled={editingLoad}
-        class="w-full"
-      >
-        {$t('common.save')}
-      </Button>
+      {#if replying}
+        <CommentForm
+          label={$t('comment.reply')}
+          {postId}
+          parentId={node.comment_view.comment.id}
+          oncomment={e => {
+            node.children = [
+              {
+                children: [],
+                comment_view: e.comment_view,
+                depth: node.depth + 1,
+                expanded: true,
+              },
+              ...node.children,
+            ]
+            replying = false
+          }}
+          oncancel={() => (replying = false)}
+        />
+      {:else if editing}
+        <CommentForm
+          bind:value={newComment}
+          postId={node.comment_view.comment.id}
+          actions={false}
+          preview={true}
+        />
+        <Button
+          submit
+          color="primary"
+          size="lg"
+          loading={editingLoad}
+          disabled={editingLoad}
+          class="w-full"
+        >
+          {$t('form.submit')}
+        </Button>
+      {/if}
     </form>
   </Modal>
 {/if}
 
 <li
-  class="py-3 relative {node.comment_view.comment.distinguished
-    ? ' text-primary-900 dark:text-primary-100'
-    : ''} {highlight} {clazz}"
+  class={[
+    'py-3 relative',
+    node.comment_view.comment.distinguished &&
+      ' text-primary-900 dark:text-primary-100',
+    clazz,
+  ]}
   id={node.comment_view.comment.id.toString()}
 >
   {#if meta}
@@ -142,28 +153,6 @@
     z-0 group relative"
     >
       {@render metaSuffix?.()}
-      <div
-        class="absolute opacity-0 -z-10 inset-0 group-hover:block group-hover:opacity-100
-      bg-slate-100 dark:bg-zinc-900 group-hover:-inset-1 group-hover:-inset-x-2 rounded-full transition-all
-"
-      >
-        <div
-          class="h-full flex items-center justify-center gap-1 ml-auto w-max mr-2"
-        >
-          {#if node.children.length > 0}
-            <FormattedNumber number={node.comment_view.counts.child_count}
-            ></FormattedNumber>
-          {/if}
-          <Icon
-            src={open ? Minus : Plus}
-            size="16"
-            micro
-            class="transition-transform duration-400 ease-out {open
-              ? ''
-              : 'rotate-90'} text-primary-900 dark:text-primary-100"
-          />
-        </div>
-      </div>
       <span class:font-bold={op} class="flex flex-row gap-1 items-center">
         <UserLink
           inComment
@@ -222,17 +211,10 @@
         class="flex flex-col whitespace-pre-wrap
       max-w-full gap-1 mt-1 relative"
       >
-        {#if node.comment_view.comment.distinguished}
-          <div
-            class="-z-10 bg-slate-100 dark:bg-zinc-900 absolute -top-9 -bottom-1.5
-          -inset-x-6 -right-6"
-          ></div>
-        {/if}
-        <div
-          class="max-w-full mt-0.5 break-words text-[15px] text-slate-800 dark:text-zinc-100"
-        >
-          <Markdown source={node.comment_view.comment.content} />
-        </div>
+        <Markdown
+          source={node.comment_view.comment.content}
+          class="text-[15px] text-slate-800 dark:text-zinc-200 leading-[1.3]"
+        />
         {#if actions}
           <CommentActions
             comment={node.comment_view}
@@ -243,33 +225,6 @@
           />
         {/if}
       </div>
-      {#if replying}
-        <div
-          class="max-w-full my-2 border-l border-slate-200 dark:border-zinc-800 pl-4"
-          transition:slide={{ axis: 'y', duration: 400, easing: expoOut }}
-        >
-          <div in:fly={{ duration: 500, y: -16, easing: expoOut, delay: 200 }}>
-            <CommentForm
-              label={$t('comment.reply')}
-              {postId}
-              parentId={node.comment_view.comment.id}
-              oncomment={e => {
-                node.children = [
-                  {
-                    children: [],
-                    comment_view: e.comment_view,
-                    depth: node.depth + 1,
-                    expanded: true,
-                  },
-                  ...node.children,
-                ]
-                replying = false
-              }}
-              oncancel={() => (replying = false)}
-            />
-          </div>
-        </div>
-      {/if}
       <div class="bg-transparent dark:bg-transparent">
         {@render children?.()}
       </div>

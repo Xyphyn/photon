@@ -73,15 +73,15 @@
   import Material from 'mono-svelte/materials/Material.svelte'
 
   interface Props {
-    community?: Community | undefined
+    community?: Community
     showCommunity?: boolean
-    subscribed?: SubscribedType | undefined
-    user?: Person | undefined
-    published?: Date | undefined
-    title?: string | undefined
-    id?: number | undefined
+    subscribed?: SubscribedType
+    user?: Person
+    published?: Date
+    title?: string
+    id?: number
     read?: boolean
-    edited?: string | undefined
+    edited?: string
     view?: View
     // Badges
     badges?: {
@@ -104,12 +104,12 @@
     community = $bindable(undefined),
     showCommunity = true,
     subscribed = $bindable(undefined),
-    user = undefined,
-    published = undefined,
-    title = undefined,
-    id = undefined,
+    user,
+    published,
+    title,
+    id,
     read = false,
-    edited = undefined,
+    edited,
     view = 'cozy',
     badges = {
       nsfw: false,
