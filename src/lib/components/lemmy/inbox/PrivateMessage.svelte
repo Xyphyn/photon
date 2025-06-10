@@ -2,7 +2,6 @@
   import { profile } from '$lib/auth.svelte.js'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
-  import TextProps from '$lib/components/ui/text/TextProps.svelte'
   import type { PrivateMessageView } from 'lemmy-js-client'
 
   interface Props {
@@ -35,10 +34,8 @@
       {/if}
     </div>
   {/if}
-  <TextProps wrap="no-wrap">
-    <Markdown
-      rendererOptions={{ autoloadImages: false }}
-      source={message.private_message.content}
-    />
-  </TextProps>
+  <Markdown
+    rendererOptions={{ autoloadImages: false }}
+    source={message.private_message.content}
+  />
 </div>

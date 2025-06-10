@@ -119,9 +119,9 @@
             : $t('post.actions.more.markRead')}
         </Button>
         <Button
-          href={item.type == 'comment_reply' || item.type == 'person_mention'
-            ? `/comment/${item.item.comment.id}`
-            : `/inbox/messages/${item.item.private_message.creator_id}`}
+          href={item.type == 'private_message'
+            ? `/inbox/messages/${item.item.private_message.creator_id}`
+            : `/comment/${item.item.comment.id}`}
           size="sm"
           rounding="pill"
           class="shrink-0"
@@ -151,15 +151,15 @@
           ? $t('post.actions.more.markUnread')
           : $t('post.actions.more.markRead')}
       </Button>
-      {#if item.type == 'comment_reply' || item.type == 'person_mention'}
-        <Button
-          href="/comment/{item.item.comment.id}"
-          size="sm"
-          rounding="pill"
-        >
-          {$t('common.jump')}
-        </Button>
-      {/if}
+      <Button
+        href={item.type == 'private_message'
+          ? `/inbox/messages/${item.item.private_message.creator_id}`
+          : `/comment/${item.item.comment.id}`}
+        size="sm"
+        rounding="pill"
+      >
+        {$t('common.jump')}
+      </Button>
     </div>
   {/snippet}
   {#snippet content()}
