@@ -72,24 +72,24 @@
         alt={item.creator.name}
       />
       <div class="flex flex-col">
-        <div class="text-sm font-normal">
+        <div class="text-sm font-normal text-slate-600 dark:text-zinc-400">
           {#if item.type == 'comment_reply'}
             <!-- eslint-disable-next-line svelte/no-at-html-tags -->
             {@html $t('routes.inbox.item.reply', {
-              user: `<span class="font-medium">${item.creator.name}</span>`,
-              post: `<span class="font-medium">${escapeHtml(item.item.post.name)}</span>`,
+              user: `<strong>${item.creator.name}</strong>`,
+              post: `<strong>${escapeHtml(item.item.post.name)}</strong>`,
             })}
           {:else if item.type == 'person_mention'}
             <!-- eslint-disable-next-line svelte/no-at-html-tags -->
             {@html $t('routes.inbox.item.mention', {
-              user: `<span class="font-medium">${item.creator.name}</span>`,
-              post: `<span class="font-medium">${escapeHtml(item.item.post.name)}</span>`,
+              user: `<strong>${item.creator.name}</strong>`,
+              post: `<strong>${escapeHtml(item.item.post.name)}</strong>`,
             })}
           {:else if item.type == 'private_message'}
             <!-- eslint-disable-next-line svelte/no-at-html-tags -->
             {@html $t('routes.inbox.item.message', {
-              user: `<span class="font-medium">${item.item.creator.name}</span>`,
-              recipient: `<span class="font-medium">${item.item.recipient.name}</span>`,
+              user: `<strong>${item.item.creator.name}</strong>`,
+              recipient: `<strong>${item.item.recipient.name}</strong>`,
             })}
           {/if}
         </div>
@@ -167,13 +167,23 @@
       <CommentItem
         comment={item.item}
         community={false}
-        view="cozy"
         meta={false}
-        commentClass="pt-0! pb-0"
-        class="pt-0"
+        class="py-0!"
+        commentClass="py-0!"
       />
     {:else}
       <PrivateMessage message={item.item} meta={false} />
     {/if}
   {/snippet}
 </Expandable>
+
+<style>
+  :global(strong) {
+    font-weight: 600;
+    color: var(--color-primary-900);
+  }
+
+  :global(.dark strong) {
+    color: var(--color-primary-100);
+  }
+</style>

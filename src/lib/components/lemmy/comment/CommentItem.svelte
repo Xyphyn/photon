@@ -3,23 +3,21 @@
   import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
   import { t } from '$lib/i18n/translations'
-  import { settings, type View } from '$lib/settings.svelte.js'
   import type { CommentView } from 'lemmy-js-client'
   import { Button, Material } from 'mono-svelte'
   import { ArrowUturnUp, Icon } from 'svelte-hero-icons'
+  import type { ClassValue } from 'svelte/elements'
 
   interface Props {
     comment: CommentView
-    view?: View
     community?: boolean
     meta?: boolean
     class?: string
-    commentClass?: string
+    commentClass?: ClassValue
   }
 
   let {
     comment,
-    view = settings.view,
     community = false,
     meta = true,
     class: clazz = '',
@@ -29,8 +27,7 @@
 </script>
 
 <Material
-  class="flex flex-col flex-1 rounded-none
-  {view == 'compact' ? 'py-4' : 'py-5'} {clazz}"
+  class={['flex flex-col flex-1 rounded-none py-4 list-none', clazz]}
   color="none"
   padding="none"
 >
@@ -69,14 +66,12 @@
       </Button>
     </div>
   {/if}
-  <div class="list-none">
-    <Comment
-      postId={comment.post.id}
-      node={{ children: [], comment_view: comment, depth: 1, expanded: true }}
-      replying={false}
-      {meta}
-      {...rest}
-      class={commentClass}
-    />
-  </div>
+  <Comment
+    postId={comment.post.id}
+    node={{ children: [], comment_view: comment, depth: 1, expanded: true }}
+    replying={false}
+    {meta}
+    {...rest}
+    class={commentClass}
+  />
 </Material>

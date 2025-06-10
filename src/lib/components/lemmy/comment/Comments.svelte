@@ -103,12 +103,7 @@
   }
 </script>
 
-<ul
-  in:fly={{ duration: 500, easing: expoOut, y: -12, opacity: 0 }}
-  class={isParent
-    ? 'divide-y dark:divide-zinc-900 divide-slate-100'
-    : ' border-slate-200 dark:border-zinc-800 my-1'}
->
+<ul in:fly={{ duration: 500, easing: expoOut, y: -12, opacity: 0 }}>
   {#each nodes as node, index (node.comment_view.comment.id)}
     <Comment
       postId={post.id}
@@ -117,7 +112,7 @@
       contentClass="{node.children.length > 0 ||
       node.comment_view.counts.child_count > 0
         ? 'border-l'
-        : ''} ml-2.5 border-slate-200 dark:border-zinc-800 pl-2.5 "
+        : ''} ml-2.5 border-slate-200 dark:border-zinc-800 pl-2.5"
       bind:open={() => node.expanded, value => (node.expanded = value)}
     >
       {#if node.children?.length > 0}
@@ -136,6 +131,7 @@
           rounding="pill"
           color="tertiary"
           class="font-normal text-sm! text-slate-600 dark:text-zinc-400"
+          shadow="none"
           loaderWidth={16}
           onclick={() => {
             if (nodes[index].depth > 4) {
