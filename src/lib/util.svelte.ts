@@ -177,3 +177,12 @@ export function canParseUrl(url: string): boolean {
 export function instanceId(actorId: string) {
   return new URL(actorId).hostname
 }
+
+export function escapeHtml(input: string): string {
+  return input
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+}
