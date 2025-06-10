@@ -1,4 +1,4 @@
-import { profile } from '$lib/auth.svelte'
+import { notifications, profile } from '$lib/auth.svelte'
 import { publishedToDate } from '$lib/components/util/date.js'
 import { getClient } from '$lib/lemmy.svelte.js'
 import {
@@ -56,6 +56,14 @@ export async function load({ url, fetch }) {
       publishedToDate(b.published).getTime() -
       publishedToDate(a.published).getTime(),
   )
+
+  const totalNotifs = data.filter(i => !i.read).length
+
+  notifications.update(i => ({
+    applications: i.applications,
+    reports: i.reports,
+    inbox: totalNotifs,
+  }))
 
   return {
     unreadOnly: unreadOnly,
