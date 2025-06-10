@@ -17,7 +17,7 @@
 </script>
 
 <label
-  class="font-normal cursor-pointer flex flex-row items-start gap-4 group {clazz}"
+  class="font-normal cursor-pointer flex flex-row items-center gap-4 group {clazz}"
 >
   <div
     class="w-11 h-6 rounded-full relative z-[inherit] cursor-pointer flex flex-row transition-colors shadow-xs
