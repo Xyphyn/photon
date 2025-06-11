@@ -55,7 +55,7 @@
     shadow = 'none',
     element = $bindable(),
     class: clazz = '',
-    customLabel,
+    customLabel: passedCustomLabel,
     prefix,
     suffix,
     children,
@@ -64,7 +64,7 @@
 </script>
 
 <div class="flex flex-col gap-1 {clazz}">
-  {#if customLabel || label}
+  {#if passedCustomLabel || label}
     <Label
       for={id}
       text={label}
@@ -72,9 +72,7 @@
         ? "after:content-['*'] after:text-red-500 after:ml-1"
         : ''}"
     >
-      {#snippet customLabel()}
-        {@render customLabel?.()}
-      {/snippet}
+      {@render passedCustomLabel?.()}
     </Label>
   {/if}
   <div
@@ -84,13 +82,13 @@
       `border focus-within:border-primary-900 dark:focus-within:border-primary-100 focus-within:ring-2
   ring-slate-300 dark:ring-zinc-700
   transition-colors
-  rounded-lg flex flex-row items-center text-sm`,
+  rounded-xl flex flex-row items-center text-sm`,
       clazz,
     ]}
   >
     {#if prefix}
       <div
-        class="rounded-lg rounded-r-none
+        class="rounded-xl rounded-r-none
 			text-slate-600 dark:text-zinc-400 {inlineAffixes
           ? 'bg-white dark:bg-zinc-950 pr-0 w-8'
           : ''} {sizeClass[size]}"
@@ -109,7 +107,7 @@
       class={[
         sizeClass[size],
         `bg-white dark:bg-zinc-950
-		 focus:outline-hidden rounded-lg text-sm w-full disabled:bg-slate-100
+		 focus:outline-hidden rounded-xl text-sm w-full disabled:bg-slate-100
 		disabled:cursor-not-allowed dark:disabled:bg-zinc-950 invalid:border-red-500!
 		peer invalid:text-red-500 z-10`,
         prefix && 'rounded-l-none',
@@ -122,7 +120,7 @@
     {#if suffix}
       <div
         class={[
-          'rounded-lg rounded-l-none text-slate-600 dark:text-zinc-400',
+          'rounded-xl rounded-l-none text-slate-600 dark:text-zinc-400',
           inlineAffixes && 'bg-white dark:bg-zinc-950 pl-0',
           sizeClass[size],
         ]}

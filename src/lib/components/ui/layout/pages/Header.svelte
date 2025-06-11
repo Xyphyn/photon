@@ -1,8 +1,16 @@
 <script lang="ts">
+  const sizes = {
+    sm: 'text-2xl',
+    md: 'text-3xl',
+    lg: 'text-4xl',
+    xl: 'text-6xl',
+  }
+
   interface Props {
     pageHeader?: boolean
     style?: string
     class?: string
+    size?: keyof typeof sizes
     children?: import('svelte').Snippet
     extended?: import('svelte').Snippet
   }
@@ -11,6 +19,7 @@
     pageHeader = false,
     style = '',
     class: clazz = '',
+    size = 'lg',
     children,
     extended,
   }: Props = $props()
@@ -26,7 +35,7 @@
   {style}
 >
   <h1
-    class="text-4xl flex gap-2 w-full tracking-tight font-medium {clazz ?? ''}"
+    class={[sizes[size], 'flex gap-2 w-full tracking-tight font-medium', clazz]}
   >
     {@render children?.()}
   </h1>

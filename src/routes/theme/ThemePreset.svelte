@@ -19,20 +19,17 @@
     class="{theme.id == themeData.data.currentTheme
       ? 'ring-2 ring-inset ring-primary-900 dark:ring-primary-100'
       : ''} flex relative cursor-pointer h-full flex-col text-left p-0.5"
-    rounding="xl"
+    rounding="2xl"
   >
     <div
       class={[
-        'h-20 w-full rounded-lg rounded-b-none flex flex-row flex-wrap p-3 gap-2',
+        'h-20 w-full rounded-2xl rounded-b-none flex flex-row flex-wrap p-3 gap-2',
       ]}
       style="background-color: rgb({theme.colors[
         'zinc'
       ][900]}); color: rgb({theme.colors['zinc'][50]});"
     >
-      <div
-        style="background-color: rgb({theme.colors['zinc'][50]})"
-        class="text-xs"
-      >
+      <div style="color: rgb({theme.colors['zinc'][50]})" class="text-xs">
         Lorem ipsum dolor sit amet, consectetur adipisicing elit.
       </div>
       <div
@@ -73,6 +70,7 @@
           color="ghost"
           size="square-md"
           class="shrink-0"
+          rounding="xl"
           onclick={() => {
             modal({
               actions: [

@@ -163,8 +163,11 @@
     <Material
       color="transparent"
       class="items-center gap-x-4 color-grid gap-y-2"
+      rounding="2xl"
     >
-      <h1 class="text-2xl font-bold col-span-2">{$t('routes.theme.accent')}</h1>
+      <Header size="sm" style="grid-column: span 2 / span 2;">
+        {$t('routes.theme.accent')}
+      </Header>
       <ColorSwatch
         value={themeData.current.colors.primary?.[900]}
         onchange={e => {
@@ -191,17 +194,27 @@
         }}
         class="w-12! h-12! col-span-1"
       />
-      <span class="font-semibold text-base">
+      <span class="font-medium text-sm -mt-2">
         {$t('nav.menu.colorscheme.light')}
       </span>
-      <span class="font-semibold text-base">
+      <span class="font-medium text-sm -mt-2">
         {$t('nav.menu.colorscheme.dark')}
       </span>
     </Material>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
       {#each Object.entries(defaultColors) as [category, value] (category)}
-        <Material color="transparent" class="flex flex-col gap-2">
-          <h1 class="capitalize font-semibold text-lg">{category}</h1>
+        <Material
+          rounding="2xl"
+          color="transparent"
+          class="flex flex-col gap-2"
+        >
+          <Header
+            class="capitalize"
+            size="sm"
+            style="grid-column: span 2 / span 2;"
+          >
+            {category}
+          </Header>
           <div class="flex flex-row gap-1 flex-wrap items-center space-evenly">
             {#each Object.entries(value) as [shade] (shade)}
               <div class="flex flex-col gap-0.5 w-10 group">
@@ -219,7 +232,7 @@
                     return true
                   }}
                 />
-                <span class="font-medium capitalize">{shade}</span>
+                <span class="font-medium -mt-1 capitalize">{shade}</span>
               </div>
             {/each}
           </div>

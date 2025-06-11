@@ -72,7 +72,7 @@
       buttonColor.ghost,
       'rounded-full h-full font-medium flex items-center *:p-2',
       'hover:bg-white dark:hover:bg-zinc-900 overflow-hidden transition-colors shrink-0',
-      'text-inherit! divide-x divide-slate-200 dark:divide-zinc-800',
+      'text-inherit! divide-x divide-slate-200 dark:divide-zinc-800 shadow-xs',
       loading && 'animate-pulse opacity-75 pointer-events-none',
     ]}
     role="group"

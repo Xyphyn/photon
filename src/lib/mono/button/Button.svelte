@@ -173,8 +173,8 @@
     buttonSize[size],
     buttonRounding[rounding][roundingSide],
     buttonShadow[shadow],
-    'text-sm transition-all font-medium cursor-pointer duration-75 disabled:opacity-50 disabled:pointer-events-none',
-    disabled && 'pointer-events-none opacity-50',
+    'text-sm transition-all font-medium cursor-pointer duration-75 disabled:opacity-50 disabled:pointer-events-none disabled:shadow-none',
+    disabled && 'pointer-events-none opacity-50 shadow-none',
     alignment == 'center'
       ? 'origin-center'
       : alignment == 'left'

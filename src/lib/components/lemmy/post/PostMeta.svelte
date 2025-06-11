@@ -147,7 +147,7 @@
         <button
           class={[
             'row-span-2 shrink-0 mr-2 self-center group/btn',
-            'bg-slate-200 dark:bg-zinc-800 rounded-md cursor-pointer',
+            'bg-slate-200 dark:bg-zinc-800 rounded-lg cursor-pointer',
           ]}
         >
           <Avatar

@@ -53,8 +53,8 @@
 
 {#if profile.data?.jwt}
   {#if !commenting}
-    <EndPlaceholder class="">
-      <Button color="primary" onclick={() => (commenting = true)}>
+    <EndPlaceholder>
+      <Button color="primary" rounding="xl" onclick={() => (commenting = true)}>
         <Icon src={PlusCircle} size="16" micro />
         {$t('routes.post.addComment')}
       </Button>
@@ -74,7 +74,12 @@
               {$t('filter.sort.controversial')}
             </Option>
           </Select>
-          <Button size="square-md" onclick={onupdate}>
+          <Button
+            size="custom"
+            class="h-8.5 w-8.5"
+            rounding="xl"
+            onclick={onupdate}
+          >
             {#snippet prefix()}
               <Icon src={ArrowPath} size="16" mini />
             {/snippet}
@@ -122,7 +127,7 @@
         {$t('filter.sort.controversial')}
       </Option>
     </Select>
-    <Button size="square-md" onclick={onupdate}>
+    <Button size="custom" class="h-8.5 w-8.5" rounding="xl" onclick={onupdate}>
       {#snippet prefix()}
         <Icon src={ArrowPath} size="16" mini />
       {/snippet}

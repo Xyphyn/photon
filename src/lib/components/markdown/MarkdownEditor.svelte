@@ -145,7 +145,7 @@
   <div
     class="flex flex-col border border-slate-200 border-b-slate-300 dark:border-t-zinc-700/70 dark:border-zinc-800
     focus-within:border-primary-900 dark:focus-within:border-primary-100 focus-within:ring-3 ring-slate-300
-    dark:ring-zinc-700 rounded-xl
+    dark:ring-zinc-700 rounded-2xl
 overflow-hidden transition-colors {clazz}"
     class:mt-1={label}
   >
