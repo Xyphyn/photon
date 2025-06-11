@@ -74,7 +74,7 @@
     class={[
       'flex flex-row-reverse items-center gap-0.5 transition-colors px-1.5 h-full cursor-pointer',
       vote == -1
-        ? shouldShowVoteColor(vote, 'upvotes')
+        ? shouldShowVoteColor(vote, 'downvotes')
         : 'hover:bg-slate-100 dark:hover:bg-zinc-800',
     ]}
   >
