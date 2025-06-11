@@ -29,7 +29,10 @@
         'zinc'
       ][900]}); color: rgb({theme.colors['zinc'][50]});"
     >
-      <div class="text-slate-900 dark:text-zinc-100 text-xs">
+      <div
+        style="background-color: rgb({theme.colors['zinc'][50]})"
+        class="text-xs"
+      >
         Lorem ipsum dolor sit amet, consectetur adipisicing elit.
       </div>
       <div

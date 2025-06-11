@@ -41,7 +41,9 @@
 
 <div class="w-full h-full flex flex-col justify-center mx-auto max-w-xl gap-6">
   <header class="space-y-1">
-    <div class="font-mono bg-zinc-950 rounded-xs p-0.5 px-1 w-max">
+    <div
+      class="font-mono bg-slate-100 dark:bg-zinc-950 rounded-xs p-0.5 px-1 w-max"
+    >
       {page.params.instance}/comment/{page.params.id}
     </div>
     <Header>
