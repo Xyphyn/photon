@@ -55,7 +55,7 @@ export async function load({ url, fetch }) {
   ].sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime())
 
   return {
-    type: type,
+    type: new ReactiveState(type),
     page: page,
     items: new ReactiveState(everything),
   }

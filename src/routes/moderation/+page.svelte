@@ -73,10 +73,10 @@
     {#snippet extended()}
       <div class="flex flex-row gap-2 flex-wrap items-end">
         <Select
-          bind:value={data.type}
+          bind:value={data.type.value}
           onchange={async () => {
             await tick()
-            searchParam(page.url, 'type', data.type, 'page')
+            searchParam(page.url, 'type', data.type.value, 'page')
           }}
         >
           {#snippet customLabel()}
