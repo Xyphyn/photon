@@ -13,8 +13,15 @@
     user: Person
     message: {
       date: Date
+      last_sender: string
       content: string
     }
+  }
+
+  function getOtherPartyId(message: PrivateMessageView): number {
+    return message.creator.id == profile.data.user?.local_user_view.person.id
+      ? message.recipient.id
+      : message.creator.id
   }
 
   function filterDuplicates<T, K>(array: T[], predicate: (item: T) => K): T[] {
@@ -33,15 +40,23 @@
   function conversationPreviews(
     conversations: PrivateMessageView[],
   ): ConversationPreview[] {
-    const deduplicated = filterDuplicates(conversations, i => i.creator.id)
+    const deduplicated = filterDuplicates(conversations, i =>
+      getOtherPartyId(i),
+    )
 
-    return deduplicated.map(i => ({
-      user: i.creator,
-      message: {
-        date: publishedToDate(i.private_message.published),
-        content: i.private_message.content,
-      },
-    }))
+    return deduplicated
+      .filter(c => c.creator.id != c.recipient.id) // you messaged yourself
+      .map(i => ({
+        user:
+          i.creator.id != profile.data.user?.local_user_view.person.id
+            ? i.creator
+            : i.recipient,
+        message: {
+          date: publishedToDate(i.private_message.published),
+          last_sender: i.creator.name,
+          content: i.private_message.content,
+        },
+      }))
   }
 
   let { data } = $props()
@@ -56,9 +71,7 @@
   </div>
 {:then data}
   {@const conversations = data.private_messages}
-  {@const previews = conversationPreviews(conversations).filter(
-    c => c.user.id != profile.data?.user?.local_user_view.person.id,
-  )}
+  {@const previews = conversationPreviews(conversations)}
 
   <ul
     class="flex flex-col divide-y divide-slate-200 dark:divide-zinc-800 w-full mt-6"
@@ -83,7 +96,7 @@
             bg-linear-to-r from-slate-700 via-slate-700 to-slate-700/0 dark:from-zinc-300 dark:via-zinc-300 dark:to-zinc-300/0
             text-transparent bg-clip-text"
           >
-            {preview.message.content}
+            {preview.message.last_sender}: {preview.message.content}
           </div>
         </div>
       </a>
