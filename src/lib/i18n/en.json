@@ -814,6 +814,10 @@
             "reverseActions": {
                 "title": "Reverse action row",
                 "description": "Reverses the order of actions on posts and comments."
+            },
+            "absoluteDates": {
+                "title": "Absolute timestamps",
+                "description": "Replaces relative timestamps (3 hours ago) with absolute ones (15/6/25)"
             }
         },
         "embeds": {

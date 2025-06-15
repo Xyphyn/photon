@@ -382,6 +382,11 @@
       description={$t('settings.app.limitLayoutWidth.description')}
     />
     <ToggleSetting
+      bind:checked={settings.absoluteDates}
+      title={$t('settings.app.absoluteDates.title')}
+      description={$t('settings.app.absoluteDates.description')}
+    />
+    <ToggleSetting
       supportedPlatforms={{ desktop: false, tablet: false, mobile: true }}
       bind:checked={settings.dock.autoHide}
       title={$t('settings.navigation.autoHide.title')}
