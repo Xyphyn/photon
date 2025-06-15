@@ -102,7 +102,9 @@
             "emptyComments": {
                 "title": "Ei kommentteja",
                 "description": "Aloita keskustelu!"
-            }
+            },
+            "commented": "Kommenttisi on lähetetty.",
+            "loadComments": "Lataa kommentit"
         },
         "inbox": {
             "title": "Postilaatikko",
@@ -115,6 +117,9 @@
                 "reply": "{{user}} vastasi kommenttiisi ketjussa {{post}}",
                 "mention": "{{user}} mainisti sinut ketjussa: {{post}}",
                 "message": "{{user}} lähetti viestin käyttäjälle {{recipient}}"
+            },
+            "messages": {
+                "conversation": "Tämä on keskustelun alku käyttäjän {{user}} kanssa"
             }
         },
         "legal": {
@@ -232,6 +237,15 @@
                 "team": "Tiimi",
                 "settings": "Asetukset",
                 "manage": "Muuta asetuksia"
+            }
+        },
+        "postRedirect": {
+            "description": "Tämä linkki johtaa eri instanssille, kuin millä selaat nyt ({{homeInstance}}).",
+            "title": "Instanssi ei täsmää",
+            "actions": {
+                "back": "Mene takaisin",
+                "fetch": "Hae julkaisu oman instanssisi kautta: {{homeInstance}}",
+                "switch": "Vaihda tilille kohdeinstanssilla {{destInstance}}"
             }
         }
     },
@@ -496,7 +510,11 @@
             "scores": "Näytä pisteet",
             "showRead": "Näytä luetut julkaisut",
             "showBots": "Näytä robottikäyttäjät",
-            "displayName": "Näyttönimi"
+            "displayName": "Näyttönimi",
+            "languages": {
+                "description": "Kielten asettaminen piilottaa muunkielisen sisällön. Suurimman osan sisällöstä kieltä ei ole merkitty. Ne kuuluvat vaihtoehdon 'Undetermined' alle.",
+                "title": "Kielet"
+            }
         },
         "setup": "Ota käyttöön",
         "signup": {
@@ -520,7 +538,16 @@
         "submit": "Lähetä",
         "confirmPassword": "Vahvista salasana",
         "edit": "Muokkaa",
-        "instance": "Instanssin osoite"
+        "instance": "Instanssin osoite",
+        "time": {
+            "duration": "Kesto",
+            "minutes": "Minuuttia",
+            "hours": "Tuntia",
+            "days": "Päivää",
+            "months": "Kuukautta",
+            "years": "Vuotta",
+            "permanent": "Pysyvä"
+        }
     },
     "moderation": {
         "ban": {
