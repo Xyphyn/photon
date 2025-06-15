@@ -135,7 +135,7 @@
 <header
   class={[
     'grid w-full meta',
-    community ? 'grid-rows-2' : 'grid-rows-1',
+    community ? 'grid-rows-2' : 'grid-rows-1 minimal',
     'text-xs min-w-0 max-w-full text-slate-600 dark:text-zinc-400',
   ]}
   class:compact={view == 'compact'}
@@ -356,6 +356,10 @@
     gap: 0;
     grid-template-rows: auto auto auto;
     grid-template-columns: 40px minmax(0, auto);
+  }
+
+  .meta.minimal {
+    grid-template-columns: auto;
   }
 
   @media screen and (max-width: 480px) {
