@@ -1,12 +1,13 @@
 <script lang="ts">
   import { profile } from '$lib/auth.svelte.js'
   import Avatar from '$lib/components/ui/Avatar.svelte'
+  import Skeleton from '$lib/components/ui/generic/Skeleton.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import Pageination from '$lib/components/ui/Pageination.svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
   import { t } from '$lib/i18n/translations.js'
   import type { Person, PrivateMessageView } from 'lemmy-js-client'
-  import { Spinner } from 'mono-svelte'
-  import { backOut } from 'svelte/easing'
+  import { expoOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'
 
   interface ConversationPreview {
@@ -66,11 +67,23 @@
   {$t('filter.inbox.messages')}
 </Header>
 {#await data.messages}
-  <div class="w-full h-full grid place-items-center">
-    <Spinner width={24} />
+  <div class="w-full h-full flex flex-col gap-2">
+    {#each new Array(5) as _, index}
+      {_}
+      <div
+        in:fly|global={{
+          duration: 1000,
+          easing: expoOut,
+          y: 12,
+          delay: index * 50,
+        }}
+      >
+        <Skeleton />
+      </div>
+    {/each}
   </div>
-{:then data}
-  {@const conversations = data.private_messages}
+{:then res}
+  {@const conversations = res.private_messages}
   {@const previews = conversationPreviews(conversations)}
 
   <ul
@@ -82,10 +95,10 @@
         class="flex flex-row gap-2 py-3 -mx-4 sm:-mx-6 px-4 sm:px-6 min-w-0
         hover:bg-slate-100 dark:hover:bg-zinc-900 transition-colors"
         in:fly|global={{
-          duration: 700,
-          easing: backOut,
+          duration: 1000,
+          easing: expoOut,
           y: 12,
-          delay: index * 100,
+          delay: index * 50,
         }}
       >
         <Avatar url={preview.user.avatar} alt={preview.user.name} width={32} />
@@ -105,4 +118,14 @@
       </a>
     {/each}
   </ul>
+
+  {#if res.private_messages.length == 50 || data.page != 1}
+    <div class="mt-auto pb-4">
+      <Pageination
+        page={data.page}
+        hasMore={res.private_messages.length == 50}
+        href={current => `/inbox/messages?page=${current}`}
+      />
+    </div>
+  {/if}
 {/await}

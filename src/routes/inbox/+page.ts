@@ -57,7 +57,7 @@ export async function load({ url, fetch }) {
       publishedToDate(a.published).getTime(),
   )
 
-  const totalNotifs = data.filter(i => !i.read).length
+  const totalNotifs = type == 'all' ? data.filter(i => !i.read).length : 0
 
   notifications.update(i => ({
     applications: i.applications,
