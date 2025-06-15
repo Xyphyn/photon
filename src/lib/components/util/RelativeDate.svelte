@@ -26,9 +26,17 @@
 
           let language = locale ?? 'en'
 
-          const rtf = new Intl.RelativeTimeFormat(language, options)
-
-          return rtf.format(-value, thresholds[i].unit as 'second')
+          if (settings.absoluteDates) {
+            const rtf = new Intl.DateTimeFormat(language, {
+              ...options,
+              timeStyle: 'short',
+              dateStyle: 'short',
+            })
+            return rtf.format(date)
+          } else {
+            const rtf = new Intl.RelativeTimeFormat(language, options)
+            return rtf.format(-value, thresholds[i].unit as 'second')
+          }
         }
       }
       return 'Now'
@@ -40,6 +48,7 @@
 
 <script lang="ts">
   import { locale } from '$lib/i18n/translations'
+  import { settings } from '$lib/settings.svelte'
 
   const toLocaleDateString = (date: Date): string => {
     try {

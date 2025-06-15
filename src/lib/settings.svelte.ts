@@ -97,10 +97,12 @@ interface Settings {
   useRtl: boolean
   parseTags: boolean
   logoColorMonth: number | null
+
+  absoluteDates: boolean
 }
 
 export const defaultSettings: Settings = {
-  settingsVer: 3,
+  settingsVer: 4,
   expandableImages: toBool(env.PUBLIC_EXPANDABLE_IMAGES) ?? true,
   markReadPosts: toBool(env.PUBLIC_MARK_READ_POSTS) ?? true,
   showInstances: {
@@ -171,6 +173,7 @@ export const defaultSettings: Settings = {
   useRtl: false,
   parseTags: true,
   logoColorMonth: null,
+  absoluteDates: false,
 }
 
 function createSettingsState(initial: Settings): Settings {
