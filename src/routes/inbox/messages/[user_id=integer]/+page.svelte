@@ -9,7 +9,7 @@
   import type { PrivateMessageResponse } from 'lemmy-js-client'
   import { Button, Material, TextInput, toast } from 'mono-svelte'
   import { tick } from 'svelte'
-  import { Icon, PaperAirplane } from 'svelte-hero-icons'
+  import { ArrowLeft, Icon, PaperAirplane } from 'svelte-hero-icons'
   import { flip } from 'svelte/animate'
   import { backOut, expoOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'
@@ -81,7 +81,14 @@
 <Header pageHeader>
   {$t('filter.inbox.messages')}
   {#snippet extended()}
-    <UserLink avatar user={data.creator.value.person_view.person} />
+    <div class="flex flex-wrap gap-4">
+      <Button size="square-md" href="." title={$t('common.back')}>
+        {#snippet prefix()}
+          <Icon src={ArrowLeft} micro size="16" />
+        {/snippet}
+      </Button>
+      <UserLink avatar user={data.creator.value.person_view.person} />
+    </div>
   {/snippet}
 </Header>
 <Material
