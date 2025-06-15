@@ -1,5 +1,7 @@
 <script lang="ts">
   import Markdown from '$lib/components/markdown/Markdown.svelte'
+  import { publishedToDate } from '$lib/components/util/date'
+  import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import { t } from '$lib/i18n/translations'
   import type { PrivateMessageView } from 'lemmy-js-client'
   import { Button, Menu, MenuButton, MenuDivider } from 'mono-svelte'
@@ -21,16 +23,23 @@
     : 'flex-row'}"
   style="max-width: min(80vw,24rem)"
 >
-  <div
-    class="{primary
-      ? 'bg-primary-900 dark:bg-primary-100 text-slate-50 dark:text-zinc-900 hover:brightness-75'
-      : 'bg-slate-100 dark:bg-zinc-900 hover:brightness-125'} rounded-2xl w-full p-1.5 px-3
+  <div>
+    <div
+      class="{primary
+        ? 'bg-primary-900 dark:bg-primary-100 text-slate-50 dark:text-zinc-900 hover:brightness-75'
+        : 'bg-slate-100 dark:bg-zinc-900 hover:brightness-125'} rounded-2xl w-full p-1.5 px-3
     font-medium cursor-pointer transition-all"
-  >
-    <Markdown
-      rendererOptions={{ autoloadImages: false }}
-      source={message.private_message.content}
-      class="w-full"
+    >
+      <Markdown
+        rendererOptions={{ autoloadImages: false }}
+        source={message.private_message.content}
+        class="w-full"
+      />
+    </div>
+
+    <RelativeDate
+      class="text-xs block -mt-0.5 ml-1 text-slate-600 dark:text-zinc-400"
+      date={publishedToDate(message.private_message.published)}
     />
   </div>
   <Menu>

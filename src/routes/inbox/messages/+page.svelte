@@ -5,6 +5,7 @@
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
+  import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import { t } from '$lib/i18n/translations.js'
   import type { Person, PrivateMessageView } from 'lemmy-js-client'
   import { expoOut } from 'svelte/easing'
@@ -104,15 +105,21 @@
         <Avatar url={preview.user.avatar} alt={preview.user.name} width={32} />
         <div class="flex flex-col w-full overflow-hidden">
           <div class="font-medium">{preview.user.name}</div>
-          <div
-            class="text-sm text-ellipsis whitespace-nowrap
+          <div class="flex w-full">
+            <div
+              class="text-sm text-ellipsis whitespace-nowrap
             bg-linear-to-r from-slate-700 via-slate-700 to-slate-700/0 dark:from-zinc-300 dark:via-zinc-300 dark:to-zinc-300/0
-            text-transparent bg-clip-text"
-          >
-            {#if preview.message.last_sender == profile.data.user?.local_user_view.person.id}
-              {profile.data.user?.local_user_view.person.name}:
-            {/if}
-            {preview.message.content}
+            text-transparent bg-clip-text flex-1 overflow-hidden"
+            >
+              {#if preview.message.last_sender == profile.data.user?.local_user_view.person.id}
+                {profile.data.user?.local_user_view.person.name}:
+              {/if}
+              {preview.message.content}
+            </div>
+            <RelativeDate
+              date={preview.message.date}
+              class="inline-block text-xs text-slate-600 dark:text-zinc-400 shrink-0"
+            />
           </div>
         </div>
       </a>
