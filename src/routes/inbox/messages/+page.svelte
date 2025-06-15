@@ -13,8 +13,15 @@
     user: Person
     message: {
       date: Date
+      last_sender: number
       content: string
     }
+  }
+
+  function getOtherPartyId(message: PrivateMessageView): number {
+    return message.creator.id == profile.data.user?.local_user_view.person.id
+      ? message.recipient.id
+      : message.creator.id
   }
 
   function filterDuplicates<T, K>(array: T[], predicate: (item: T) => K): T[] {
@@ -33,15 +40,23 @@
   function conversationPreviews(
     conversations: PrivateMessageView[],
   ): ConversationPreview[] {
-    const deduplicated = filterDuplicates(conversations, i => i.creator.id)
+    const deduplicated = filterDuplicates(conversations, i =>
+      getOtherPartyId(i),
+    )
 
-    return deduplicated.map(i => ({
-      user: i.creator,
-      message: {
-        date: publishedToDate(i.private_message.published),
-        content: i.private_message.content,
-      },
-    }))
+    return deduplicated
+      .filter(c => c.creator.id != c.recipient.id) // you messaged yourself
+      .map(i => ({
+        user:
+          i.creator.id != profile.data.user?.local_user_view.person.id
+            ? i.creator
+            : i.recipient,
+        message: {
+          date: publishedToDate(i.private_message.published),
+          last_sender: i.creator.id,
+          content: i.private_message.content,
+        },
+      }))
   }
 
   let { data } = $props()
@@ -56,9 +71,7 @@
   </div>
 {:then data}
   {@const conversations = data.private_messages}
-  {@const previews = conversationPreviews(conversations).filter(
-    c => c.user.id != profile.data?.user?.local_user_view.person.id,
-  )}
+  {@const previews = conversationPreviews(conversations)}
 
   <ul
     class="flex flex-col divide-y divide-slate-200 dark:divide-zinc-800 w-full mt-6"
@@ -66,7 +79,7 @@
     {#each previews as preview, index (preview)}
       <a
         href="/inbox/messages/{preview.user.id}"
-        class="flex flex-row gap-2 py-3 -mx-4 px-4 sm:-mx-6 sm:px-6 w-full min-w-0
+        class="flex flex-row gap-2 py-3 -mx-4 sm:-mx-6 px-4 sm:px-6 min-w-0
         hover:bg-slate-100 dark:hover:bg-zinc-900 transition-colors"
         in:fly|global={{
           duration: 700,
@@ -83,6 +96,9 @@
             bg-linear-to-r from-slate-700 via-slate-700 to-slate-700/0 dark:from-zinc-300 dark:via-zinc-300 dark:to-zinc-300/0
             text-transparent bg-clip-text"
           >
+            {#if preview.message.last_sender == profile.data.user?.local_user_view.person.id}
+              {profile.data.user?.local_user_view.person.name}:
+            {/if}
             {preview.message.content}
           </div>
         </div>
