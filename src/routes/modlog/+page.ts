@@ -217,7 +217,7 @@ export async function load({ url }) {
 
   const results = await getClient(instance).getModlog({
     community_id: community,
-    limit: 40,
+    limit: 20,
     type_: type,
     page: page,
     mod_person_id: modId,

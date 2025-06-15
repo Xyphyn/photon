@@ -220,6 +220,8 @@
 </div>
 
 <style lang="postcss">
+  @reference '../../style/app.css'
+  
   :global(.table thead tr th) {
     @apply border border-slate-200 dark:border-zinc-800 px-4 py-2 bg-slate-100;
   }
