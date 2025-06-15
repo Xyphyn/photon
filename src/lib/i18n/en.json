@@ -860,7 +860,7 @@
                 "removed": "Removed by moderator"
             },
             "nsfwBlur": {
-                "title": "NSFW blur-sm",
+                "title": "NSFW blur",
                 "description": "Blur images and remove post bodies of NSFW posts."
             },
             "instances": {
