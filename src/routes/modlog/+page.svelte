@@ -22,6 +22,7 @@
   } from 'svelte-hero-icons'
   import ModlogItemCard from './item/ModlogItemCard.svelte'
   import ModlogItemTable from './item/ModlogItemTable.svelte'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
 
   let { data = $bindable() } = $props()
 
@@ -44,7 +45,7 @@
 </svelte:head>
 
 <div class="flex flex-col gap-4">
-  <h1 class="font-bold text-2xl">Modlog</h1>
+  <Header pageHeader>Modlog</Header>
   <div class="flex flex-row flex-wrap gap-2">
     <Select
       bind:value={data.type}
@@ -220,6 +221,8 @@
 </div>
 
 <style lang="postcss">
+  @reference '../../style/app.css'
+  
   :global(.table thead tr th) {
     @apply border border-slate-200 dark:border-zinc-800 px-4 py-2 bg-slate-100;
   }

@@ -15,7 +15,7 @@
   let { item }: Props = $props()
 </script>
 
-<Material padding="lg" class="flex flex-col gap-2">
+<Material color="uniform" rounding="2xl" class="flex flex-col">
   <div class="flex flex-row justify-between flex-wrap gap-2">
     {#if item.community}
       <CommunityLink community={item.community} avatar showInstance />
