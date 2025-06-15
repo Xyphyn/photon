@@ -21,7 +21,7 @@
     "jsdom": "^22.1.0",
     "lemmy-js-client": "^0.19.6-beta.1",
     "linkify-it": "^5.0.0",
-    "marked": "^5.1.2",
+    "marked": "7.0.5",
     "marked-linkify-it": "^3.1.10",
     "nprogress": "^0.2.0",
     "postcss": "^8.4.30",
