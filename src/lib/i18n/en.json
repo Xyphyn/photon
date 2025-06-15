@@ -309,7 +309,8 @@
             },
             "messages": {
                 "conversation": "This is the beginning of your conversation with {{user}}",
-                "indicator": "Messaging {{user}}"
+                "indicator": "Messaging {{user}}",
+                "start": "Start chat"
             }
         },
         "moderation": {

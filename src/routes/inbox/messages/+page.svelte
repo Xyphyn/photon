@@ -1,5 +1,8 @@
 <script lang="ts">
+  import { goto } from '$app/navigation'
+  import { resolveRoute } from '$app/paths'
   import { profile } from '$lib/auth.svelte.js'
+  import UserAutocomplete from '$lib/components/lemmy/user/UserAutocomplete.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import Skeleton from '$lib/components/ui/generic/Skeleton.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
@@ -8,6 +11,8 @@
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import { t } from '$lib/i18n/translations.js'
   import type { Person, PrivateMessageView } from 'lemmy-js-client'
+  import { Button, Modal } from 'mono-svelte'
+  import { ChatBubbleOvalLeftEllipsis, Icon } from 'svelte-hero-icons'
   import { expoOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'
 
@@ -61,11 +66,36 @@
       }))
   }
 
+  let searchModal = $state<{ open: boolean; user?: number }>({
+    open: false,
+    user: undefined,
+  })
+
   let { data } = $props()
 </script>
 
+<Modal bind:open={searchModal.open} title={$t('routes.inbox.messages.start')}>
+  <UserAutocomplete
+    listing_type="All"
+    onselect={u =>
+      goto(
+        resolveRoute('/inbox/messages/[user_id]', { user_id: u.id.toString() }),
+      )}
+  />
+</Modal>
+
 <Header pageHeader>
   {$t('filter.inbox.messages')}
+  {#snippet extended()}
+    <Button
+      color="primary"
+      size="lg"
+      onclick={() => (searchModal.open = !searchModal.open)}
+    >
+      <Icon src={ChatBubbleOvalLeftEllipsis} size="18" mini />
+      {$t('routes.inbox.messages.start')}
+    </Button>
+  {/snippet}
 </Header>
 {#await data.messages}
   <div class="w-full h-full flex flex-col gap-2">
