@@ -101,7 +101,7 @@
   }
 </script>
 
-<ul class="transition-discrete starting:opacity-0 starting:translate-y-8">
+<ul>
   {#each nodes as node, index (node.comment_view.comment.id)}
     <Comment
       postId={post.id}
