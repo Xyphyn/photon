@@ -77,6 +77,7 @@
 <Modal bind:open={searchModal.open} title={$t('routes.inbox.messages.start')}>
   <UserAutocomplete
     listing_type="All"
+    hideOwnUser={true}
     onselect={u =>
       goto(
         resolveRoute('/inbox/messages/[user_id]', { user_id: u.id.toString() }),
