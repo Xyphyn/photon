@@ -1,5 +1,6 @@
 <script lang="ts">
   import { t } from '$lib/i18n/translations'
+  import type { ClassValue } from 'svelte/elements'
   import Markdown from '../markdown/Markdown.svelte'
   import FormattedNumber from '../util/FormattedNumber.svelte'
   import Avatar from './Avatar.svelte'
@@ -17,7 +18,7 @@
       format?: boolean
     }[]
     center?: boolean
-    class?: string
+    class?: ClassValue
     nameDetail?: import('svelte').Snippet
     actions?: import('svelte').Snippet
     children?: import('svelte').Snippet
@@ -39,7 +40,7 @@
   }: Props = $props()
 </script>
 
-<div {...rest} class="z-10 relative text-sm contents {clazz}">
+<div {...rest} class={['z-10 relative text-sm contents', clazz]}>
   {#if banner}
     <img
       src={banner}

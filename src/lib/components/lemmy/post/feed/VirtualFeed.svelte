@@ -136,6 +136,23 @@
         removedNodes.forEach(unobservePost)
       })
     }).observe(feed, { childList: true, subtree: false })
+
+    const offsetObserver = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && listEl) {
+            initialOffset = entry.boundingClientRect.top + window.scrollY
+          }
+        })
+      },
+      { threshold: [0, 1] },
+    )
+
+    if (listEl) offsetObserver.observe(listEl)
+    return () => {
+      observer.disconnect()
+      offsetObserver.disconnect()
+    }
   })
 
   $effect(() => {
@@ -147,6 +164,8 @@
       })
     }
   })
+
+  let initialOffset = $derived(listEl?.offsetTop)
 </script>
 
 <ul class="flex flex-col list-none" bind:this={listEl}>
@@ -171,7 +190,7 @@
         id="feed"
         class="divide-y -mx-4 sm:-mx-6 divide-slate-200 dark:divide-zinc-900"
         items={posts}
-        initialOffset={listEl?.offsetTop}
+        {initialOffset}
         overscan={500}
         bind:restore={postFeeds.value[feedId].clientData}
         bind:this={listComp}

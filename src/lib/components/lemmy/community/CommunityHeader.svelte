@@ -79,7 +79,7 @@
       ]
     : []}
   bio={community.description}
-  class={clazz}
+  class={['tracking-normal', clazz]}
 >
   {#snippet nameDetail()}
     <button
