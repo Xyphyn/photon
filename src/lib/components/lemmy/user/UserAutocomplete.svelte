@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { profile } from '$lib/auth.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import { getClient } from '$lib/lemmy.svelte.js'
   import type { ListingType, Person } from 'lemmy-js-client'
@@ -12,6 +13,7 @@
     instance?: string | undefined
     listing_type?: ListingType
     showWhenEmpty?: boolean
+    hideOwnUser?: boolean
     onselect?: (e: Person) => void
   }
 
@@ -20,6 +22,7 @@
     instance = undefined,
     listing_type = 'Subscribed',
     showWhenEmpty = false,
+    hideOwnUser = false,
     ...rest
   }: Props = $props()
 
@@ -28,15 +31,21 @@
 
 <Search
   search={async q => {
-    const results = await getClient(instance).search({
-      q: q || ' ',
-      type_: 'Users',
-      limit: 20,
-      listing_type: listing_type,
-      sort: 'TopAll',
-    })
+    const users = (
+      await getClient(instance).search({
+        q: q || ' ',
+        type_: 'Users',
+        limit: 20,
+        listing_type: listing_type,
+        sort: 'TopAll',
+      })
+    ).users.map(c => c.person)
 
-    return results.users.map(c => c.person)
+    if (hideOwnUser) {
+      const myself = profile.data.user?.local_user_view.person.id
+      return users.filter(c => c.id != myself)
+    }
+    return users
   }}
   extractName={c => `${c.name}@${new URL(c.actor_id).hostname}`}
   bind:query={q}
