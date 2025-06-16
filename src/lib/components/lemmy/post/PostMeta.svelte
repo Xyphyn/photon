@@ -359,7 +359,7 @@
   }
 
   .meta.minimal {
-    grid-template-columns: auto;
+    grid-template-columns: 0fr;
   }
 
   @media screen and (max-width: 480px) {
@@ -371,6 +371,9 @@
       gap: 0;
       grid-template-columns: 32px minmax(0, auto);
     }
+    .meta.minimal {
+      grid-template-columns: 0fr;
+    }
   }
 
   @media screen and (min-width: 480px) {
@@ -378,6 +381,9 @@
       display: flex;
       flex-direction: row;
       align-items: center;
+    }
+    .meta.minimal {
+      grid-template-columns: 0fr;
     }
   }
 
