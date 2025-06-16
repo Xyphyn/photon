@@ -52,6 +52,14 @@ export const optimizeImageURL = (
   }
 }
 
+const REDGIFS_REGEX = /^(?:https?:\/\/)?(?:www\.|v3\.)?(?:redgifs\.com\/(?:ifr\/|watch\/))(\w+)(#.*)?$/
+
+export const isRedgifsLink = (url?: string): RegExpMatchArray | null => {
+  if (!url) return null
+
+  return url?.match?.(REDGIFS_REGEX)
+}
+
 const YOUTUBE_REGEX =
   /^(?:https?:\/\/)?(?:www\.|m\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|shorts\/|live\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/
 
@@ -65,13 +73,14 @@ export const postLink = (post: Post) =>
   `/post/${encodeURIComponent(instance.data)}/${post.id}`
 
 export type MediaType = 'video' | 'image' | 'iframe' | 'embed' | 'none'
-export type IframeType = 'youtube' | 'video' | 'none'
+export type IframeType = 'youtube' | 'redgifs' | 'video' | 'none'
 
 export const mediaType = (url?: string): MediaType => {
   if (url) {
     if (isImage(url)) return 'image'
     if (isVideo(url)) return 'iframe'
     if (isYoutubeLink(url)) return 'iframe'
+    if (isRedgifsLink(url)) return 'iframe'
     if (canParseUrl(url)) return 'embed'
     return 'none'
   }
@@ -81,6 +90,7 @@ export const mediaType = (url?: string): MediaType => {
 export const iframeType = (url: string): IframeType => {
   if (isVideo(url)) return 'video'
   if (isYoutubeLink(url)) return 'youtube'
+  if (isRedgifsLink(url)) return 'redgifs'
   return 'none'
 }
 
