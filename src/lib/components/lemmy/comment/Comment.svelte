@@ -10,9 +10,7 @@
   import { errorMessage } from '$lib/lemmy/error'
   import { Button, Modal, toast } from 'mono-svelte'
   import { Bookmark, Icon, Microphone, Pencil, Trash } from 'svelte-hero-icons'
-  import { expoOut } from 'svelte/easing'
   import type { ClassValue } from 'svelte/elements'
-  import { slide } from 'svelte/transition'
   import ShieldIcon from '../moderation/ShieldIcon.svelte'
   import CommentForm from './CommentForm.svelte'
   import type { CommentNodeI } from './comments.svelte'
@@ -74,6 +72,16 @@
 
     editingLoad = false
   }
+
+  $effect(() => {
+    if (!open) {
+      // const
+    }
+  })
+
+  setTimeout(() => {
+    open = true
+  }, 500)
 </script>
 
 {#if editing || replying}
@@ -202,11 +210,8 @@
       </span>
     </button>
   {/if}
-  {#if open}
-    <div
-      class="relative {contentClass}"
-      transition:slide={{ duration: 400, easing: expoOut }}
-    >
+  <div class={['expand', open && 'open', contentClass]}>
+    <div id="comment-content">
       <div
         class="flex flex-col whitespace-pre-wrap
       max-w-full gap-1 mt-1 relative"
@@ -229,5 +234,22 @@
         {@render children?.()}
       </div>
     </div>
-  {/if}
+  </div>
 </li>
+
+<style>
+  .expand {
+    display: grid;
+    grid-template-rows: 0fr;
+    overflow: hidden;
+    transition: grid-template-rows 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+  }
+
+  .expand.open {
+    grid-template-rows: 1fr;
+  }
+
+  .expand > * {
+    min-height: 0;
+  }
+</style>

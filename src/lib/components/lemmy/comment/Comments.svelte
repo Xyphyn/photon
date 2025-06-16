@@ -4,16 +4,14 @@
   import { page } from '$app/state'
   import { t } from '$lib/i18n/translations'
   import { getClient } from '$lib/lemmy.svelte.js'
+  import { errorMessage } from '$lib/lemmy/error'
   import type { Post } from 'lemmy-js-client'
   import { Button, toast } from 'mono-svelte'
   import { onMount } from 'svelte'
   import { ArrowDownCircle, Icon } from 'svelte-hero-icons'
-  import { expoOut } from 'svelte/easing'
-  import { fly } from 'svelte/transition'
   import Comment from './Comment.svelte'
   import Comments from './Comments.svelte'
   import { buildCommentsTree, type CommentNodeI } from './comments.svelte'
-  import { errorMessage } from '$lib/lemmy/error'
 
   interface Props {
     nodes: CommentNodeI[]
@@ -103,7 +101,7 @@
   }
 </script>
 
-<ul in:fly={{ duration: 500, easing: expoOut, y: -12, opacity: 0 }}>
+<ul class="transition-discrete starting:opacity-0 starting:translate-y-8">
   {#each nodes as node, index (node.comment_view.comment.id)}
     <Comment
       postId={post.id}
