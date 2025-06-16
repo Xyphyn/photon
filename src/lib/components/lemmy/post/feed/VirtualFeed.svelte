@@ -198,10 +198,11 @@
         {#snippet item(row)}
           <li
             data-index={row}
-            style={row < 7 ? `--anim-delay: ${row * 100}ms` : ''}
-            class="relative post-container {row < 7
-              ? 'pop-in opacity-0'
-              : ''} px-4 sm:px-6"
+            style={row < 7 ? `--anim-delay: ${row * 50}ms` : ''}
+            class={[
+              'relative post-container px-4 sm:px-6',
+              row < 7 && 'pop-in opacity-0',
+            ]}
           >
             <Post
               bind:post={posts[row]}
@@ -288,7 +289,7 @@
   }
 
   .pop-in {
-    animation: popIn 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) forwards
+    animation: popIn 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards
       var(--anim-delay);
   }
 </style>
