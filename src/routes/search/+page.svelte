@@ -56,7 +56,7 @@
 </Header>
 <form method="get" action="/search" class="contents" bind:this={form}>
   <div class="mt-4 mb-0 sticky z-30 top-6 lg:top-22">
-    <Tabs routes={[]} class="p-2 dark:bg-zinc-925/70">
+    <Tabs tabs={[]} class="p-2 dark:bg-zinc-925/70">
       <div class="flex gap-2 flex-row items-center w-full text-base h-10">
         <TextInput
           bind:value={data.filters.value.query}

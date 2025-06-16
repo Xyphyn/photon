@@ -30,7 +30,7 @@
   >
     <Tabs
       class="overflow-auto"
-      routes={[
+      tabs={[
         {
           href: '/profile',
           name: $t('routes.profile.overview'),
