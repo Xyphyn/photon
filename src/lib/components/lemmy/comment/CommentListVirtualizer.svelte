@@ -19,17 +19,14 @@
       }, 100)
     }
 
-    // IntersectionObserver to watch for shifts
-    const observer = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting && offsetEl) {
-            initialOffset = entry.boundingClientRect.top + window.scrollY
-          }
-        })
-      },
-      { threshold: [0, 1] },
-    )
+    const observer = new ResizeObserver(entries => {
+      entries.forEach(entry => {
+        if (offsetEl) {
+          initialOffset =
+            entry.target.getBoundingClientRect().top + window.scrollY
+        }
+      })
+    })
 
     if (offsetEl) observer.observe(offsetEl)
     return () => observer.disconnect()
