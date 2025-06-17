@@ -137,16 +137,14 @@
       })
     }).observe(feed, { childList: true, subtree: false })
 
-    const offsetObserver = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting && listEl) {
-            initialOffset = entry.boundingClientRect.top + window.scrollY
-          }
-        })
-      },
-      { threshold: [0, 1] },
-    )
+    const offsetObserver = new ResizeObserver(entries => {
+      entries.forEach(entry => {
+        if (listEl) {
+          initialOffset =
+            entry.target.getBoundingClientRect().top + window.scrollY
+        }
+      })
+    })
 
     if (listEl) offsetObserver.observe(listEl)
     return () => {
