@@ -102,7 +102,10 @@
             {#await client().getPost({ id: data.params.post })}
               <Spinner width={24} />
             {:then post}
-              <a class="hover:underline" href={postLink(post.post_view.post)}>
+              <a
+                class="hover:underline block"
+                href={postLink(post.post_view.post)}
+              >
                 {post.post_view.post.name}
               </a>
             {/await}
@@ -117,7 +120,10 @@
             {#await client().getComment({ id: data.params.comment })}
               <Spinner width={24} />
             {:then comment}
-              <a class="hover:underline" href="/comment/{data.params.comment}">
+              <a
+                class="hover:underline block"
+                href="/comment/{data.params.comment}"
+              >
                 {comment.comment_view.comment.content.slice(1, 200)}...
               </a>
             {/await}
@@ -247,7 +253,7 @@
   </div>
   {#if data.modlog && data.modlog.length > 0}
     {#if settings.modlogCardView ?? !window.matchMedia('(min-width: 1600px)').matches}
-      <div class="flex flex-col gap-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         {#each data.modlog as modlog (modlog)}
           <ModlogItemCard item={modlog} />
         {/each}
@@ -259,14 +265,14 @@
           style="min-width: 800px;"
         >
           <colgroup class="table-fixed">
-            <col width="8%" />
-            <col width="18%" />
-            <col width="12%" class="overflow-x-auto" />
-            <col width="8%" />
-            <col width="10%" />
-            <col width="18%" />
-            <col width="20%" />
-            <col width="20%" />
+            <col />
+            <col />
+            <col class="overflow-x-auto" />
+            <col />
+            <col />
+            <col />
+            <col />
+            <col />
           </colgroup>
           <thead class="text-left sticky top-0">
             <tr class="rounded-t-lg overflow-hidden">
