@@ -23,6 +23,12 @@
   import ModlogItemCard from './item/ModlogItemCard.svelte'
   import ModlogItemTable from './item/ModlogItemTable.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { t } from '$lib/i18n/translations'
+  import { client } from '$lib/lemmy.svelte'
+  import Spinner from 'mono-svelte/loader/Spinner.svelte'
+  import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
+  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
+  import { postLink } from '$lib/components/lemmy/post/helpers'
 
   let { data = $bindable() } = $props()
 
@@ -41,11 +47,85 @@
 </script>
 
 <svelte:head>
-  <title>Modlog</title>
+  <title>{$t('routes.modlog.title')}</title>
 </svelte:head>
 
 <div class="flex flex-col gap-4">
-  <Header pageHeader>Modlog</Header>
+  <Header pageHeader>
+    {$t('routes.modlog.title')}
+    {#snippet extended()}
+      <span class="font-medium text-lg">{$t('routes.modlog.filters')}</span>
+      <ul class="font-normal flex flex-col gap-2 mt-2">
+        {#if data.params.community}
+          <li>
+            <span class="text-sm text-slate-600 dark:text-zinc-400">
+              {$t('form.post.community')}
+            </span>
+            {#await client().getCommunity({ id: data.params.community })}
+              <Spinner width={24} />
+            {:then community}
+              <CommunityLink community={community.community_view.community} />
+            {/await}
+          </li>
+        {/if}
+        {#if data.params.user}
+          <li>
+            <span class="text-sm text-slate-600 dark:text-zinc-400">
+              {$t('routes.admin.applications.user')}
+            </span>
+            {#await client().getPersonDetails( { person_id: data.params.user, limit: 1 }, )}
+              <Spinner width={24} />
+            {:then person}
+              <UserLink class="inline" user={person.person_view.person} />
+            {/await}
+          </li>
+        {/if}
+        {#if data.params.moderator}
+          <li>
+            <span class="text-sm text-slate-600 dark:text-zinc-400">
+              <!--TODO add translation key-->
+              Moderator
+            </span>
+            {#await client().getPersonDetails( { person_id: data.params.moderator, limit: 1 }, )}
+              <Spinner width={24} />
+            {:then person}
+              <UserLink class="inline" user={person.person_view.person} />
+            {/await}
+          </li>
+        {/if}
+        {#if data.params.post}
+          <li>
+            <span class="text-sm text-slate-600 dark:text-zinc-400">
+              <!--TODO add translation key-->
+              {$t('nav.create.post')}
+            </span>
+            {#await client().getPost({ id: data.params.post })}
+              <Spinner width={24} />
+            {:then post}
+              <a class="hover:underline" href={postLink(post.post_view.post)}>
+                {post.post_view.post.name}
+              </a>
+            {/await}
+          </li>
+        {/if}
+        {#if data.params.comment}
+          <li>
+            <span class="text-sm text-slate-600 dark:text-zinc-400">
+              <!--TODO add translation key-->
+              {$t('moderation.removeSubmission.comment')}
+            </span>
+            {#await client().getComment({ id: data.params.comment })}
+              <Spinner width={24} />
+            {:then comment}
+              <a class="hover:underline" href="/comment/{data.params.comment}">
+                {comment.comment_view.comment.content.slice(1, 200)}...
+              </a>
+            {/await}
+          </li>
+        {/if}
+      </ul>
+    {/snippet}
+  </Header>
   <div class="flex flex-row flex-wrap gap-2">
     <Select
       bind:value={data.type}
@@ -92,7 +172,6 @@
     <ObjectAutocomplete
       type="instance"
       placeholder="Filter by instance"
-      jwt={profile.data?.jwt}
       showWhenEmpty={true}
       label="Instance"
       class="flex-1"
@@ -110,7 +189,6 @@
     />
     <ObjectAutocomplete
       placeholder="Filter by community"
-      jwt={profile.data?.jwt}
       listing_type="All"
       showWhenEmpty={true}
       label="Community"

@@ -5,6 +5,7 @@
     Fire,
     Icon,
     Megaphone,
+    Newspaper,
     ShieldExclamation,
     Trash,
   } from 'svelte-hero-icons'
@@ -87,6 +88,18 @@
         {item.comment.distinguished
           ? $t('moderation.unfeature')
           : $t('moderation.feature')}
+      </MenuButton>
+
+      <MenuButton color="success-subtle" href="/modlog?user={item.creator.id}">
+        <Icon src={Newspaper} size="16" micro />
+        {$t('moderation.modlog.user')}
+      </MenuButton>
+      <MenuButton
+        color="success-subtle"
+        href="/modlog?comment={item.comment.id}"
+      >
+        <Icon src={Newspaper} size="16" micro />
+        {$t('moderation.modlog.comment')}
       </MenuButton>
     {/if}
   {/if}
