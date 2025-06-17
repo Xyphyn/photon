@@ -13,6 +13,7 @@
   import { Check, Funnel, Icon, Inbox } from 'svelte-hero-icons'
   import { fly } from 'svelte/transition'
   import Report from './Report.svelte'
+  import Pageination from '$lib/components/ui/Pageination.svelte'
 
   let { data = $bindable() } = $props()
 
@@ -118,6 +119,11 @@
       </div>
     {/each}
   </div>
+  <Pageination
+    page={data.page}
+    href={current => `?page=${current}`}
+    hasMore={data.items.value.length >= 20}
+  />
 {:else}
   <Placeholder
     icon={Inbox}
@@ -125,3 +131,4 @@
     description={$t('routes.moderation.empty.description')}
   />
 {/if}
+<div class="h-4"></div>
