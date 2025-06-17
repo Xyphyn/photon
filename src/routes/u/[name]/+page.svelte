@@ -38,6 +38,7 @@
     Envelope,
     Fire,
     Icon,
+    Newspaper,
     NoSymbol,
     PencilSquare,
     ShieldExclamation,
@@ -210,7 +211,7 @@
           {/if}
           {#snippet actions()}
             {#if profile.data?.user && profile.data.jwt && data.person_view.value.person.id != profile.data.user.local_user_view.person.id}
-              <div class="flex items-center gap-2 w-full">
+              <div class="flex items-center gap-2 w-full flex-wrap">
                 <Button
                   size="sm"
                   rounding="pill"
@@ -229,11 +230,11 @@
                     color="secondary"
                     href="https://matrix.to/#/{data.person_view.value.person
                       .matrix_user_id}"
-                    title="Matrix User"
                   >
                     {#snippet prefix()}
                       <Icon solid size="16" src={AtSymbol} />
                     {/snippet}
+                    {$t('form.profile.matrix')}
                   </Button>
                 {/if}
                 {#if isAdmin(profile.data?.user)}
@@ -244,6 +245,10 @@
                         {$t('moderation.label')}
                       </Button>
                     {/snippet}
+                    <MenuButton color="success-subtle">
+                      <Icon src={Newspaper} size="16" micro />
+                      {$t('moderation.modlog.user')}
+                    </MenuButton>
                     <MenuButton
                       color="danger-subtle"
                       onclick={() =>
