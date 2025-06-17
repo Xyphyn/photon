@@ -32,10 +32,20 @@
   }: Props = $props()
 
   let reason = $state('')
-  let commentReason: boolean = $state(false)
-  let privateMessage: boolean = $state(false)
+  let commentReason: boolean = $state(
+    settings.moderation.defaultRemoveAction != null,
+  )
+  let privateMessage: boolean = $state(
+    settings.moderation.defaultRemoveAction == 'message',
+  )
   let loading = $state(false)
   let preset = $state(settings.moderation.presets[0]?.content ?? '')
+
+  $effect(() => {
+    if (!commentReason) settings.moderation.defaultRemoveAction = null
+    else if (privateMessage) settings.moderation.defaultRemoveAction = 'message'
+    else settings.moderation.defaultRemoveAction = 'comment'
+  })
 
   let removed = $derived(
     item
@@ -163,7 +173,6 @@
 
   const resetText = () => {
     reason = ''
-    commentReason = false
   }
 
   run(() => {
