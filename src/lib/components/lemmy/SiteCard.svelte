@@ -134,7 +134,7 @@
 
     <div class="flex flex-row flex-wrap gap-1">
       <Link highlight href="/modlog">
-        {$t('routes.modlog')}
+        {$t('routes.modlog.title')}
       </Link>
       •
       <Link highlight href="/legal">

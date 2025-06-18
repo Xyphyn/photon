@@ -14,7 +14,7 @@
 </script>
 
 <tr class="">
-  <td>
+  <td style="width: 10%;">
     <span>
       <RelativeDate date={new Date(item.timestamp)} />
     </span>

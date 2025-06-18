@@ -38,6 +38,7 @@
     Envelope,
     Fire,
     Icon,
+    Newspaper,
     NoSymbol,
     PencilSquare,
     ShieldExclamation,
@@ -151,7 +152,7 @@
 
 <div class="flex flex-col gap-4 max-w-full w-full">
   {#if !inline}
-    <Header pageHeader>
+    <Header pageHeader class="tracking-normal!">
       <div class="w-full">
         <EntityHeader
           avatar={data.person_view.value.person.avatar}
@@ -210,37 +211,44 @@
           {/if}
           {#snippet actions()}
             {#if profile.data?.user && profile.data.jwt && data.person_view.value.person.id != profile.data.user.local_user_view.person.id}
-              <div class="flex items-center gap-2 w-full">
+              <div class="flex items-center gap-2 w-full flex-wrap">
                 <Button
-                  size="square-md"
+                  size="sm"
+                  rounding="pill"
                   color="secondary"
                   href="/inbox/messages/{data.person_view.value.person.id}"
-                  title="Message"
                 >
                   {#snippet prefix()}
-                    <Icon solid size="16" src={Envelope} />
+                    <Icon micro size="16" src={Envelope} />
                   {/snippet}
+                  {$t('content.message')}
                 </Button>
                 {#if data.person_view.value.person.matrix_user_id}
                   <Button
-                    size="square-md"
+                    size="sm"
+                    rounding="pill"
                     color="secondary"
                     href="https://matrix.to/#/{data.person_view.value.person
                       .matrix_user_id}"
-                    title="Matrix User"
                   >
                     {#snippet prefix()}
                       <Icon solid size="16" src={AtSymbol} />
                     {/snippet}
+                    {$t('form.profile.matrix')}
                   </Button>
                 {/if}
                 {#if isAdmin(profile.data?.user)}
                   <Menu class="ml-auto" placement="bottom-end">
                     {#snippet target()}
-                      <Button size="square-md">
+                      <Button size="sm" rounding="pill">
                         <ShieldIcon width={16} filled />
+                        {$t('moderation.label')}
                       </Button>
                     {/snippet}
+                    <MenuButton color="success-subtle">
+                      <Icon src={Newspaper} size="16" micro />
+                      {$t('moderation.modlog.user')}
+                    </MenuButton>
                     <MenuButton
                       color="danger-subtle"
                       onclick={() =>
@@ -267,7 +275,7 @@
                 {/if}
                 <Menu placement="bottom-end">
                   {#snippet target()}
-                    <Button size="square-md">
+                    <Button size="custom" class="h-7 w-7" rounding="pill">
                       {#snippet prefix()}
                         <Icon src={EllipsisHorizontal} size="16" mini />
                       {/snippet}

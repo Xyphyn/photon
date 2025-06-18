@@ -208,9 +208,13 @@ export const _toModLog = (item: ModAction): ModLog => {
 
 export async function load({ url }) {
   const instance = url.searchParams.get('instance') || undefined
+
   const community = Number(url.searchParams.get('community')) || undefined
   const user = Number(url.searchParams.get('user')) || undefined
   const modId = Number(url.searchParams.get('mod_id')) || undefined
+  const postId = Number(url.searchParams.get('post')) || undefined
+  const commentId = Number(url.searchParams.get('comment')) || undefined
+
   const page = Number(url.searchParams.get('page')) || 1
   const type: ModlogActionType =
     (url.searchParams.get('type') as ModlogActionType) || 'All'
@@ -222,6 +226,8 @@ export async function load({ url }) {
     page: page,
     mod_person_id: modId,
     other_person_id: user,
+    post_id: postId,
+    comment_id: commentId,
   })
 
   const moderation = [
@@ -257,6 +263,13 @@ export async function load({ url }) {
       user: user ? moderationActions[0]?.moderatee?.name : undefined,
       community: community ? moderationActions[0]?.community?.title : undefined,
       moderator: modId ? moderationActions[0]?.moderator?.name : undefined,
+    },
+    params: {
+      user: user,
+      community: community,
+      moderator: modId,
+      post: postId,
+      comment: commentId,
     },
   }
 }

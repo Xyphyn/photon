@@ -11,6 +11,7 @@
     LockClosed,
     LockOpen,
     Megaphone,
+    Newspaper,
     ShieldExclamation,
     Trash,
   } from 'svelte-hero-icons'
@@ -147,6 +148,14 @@
         {item.creator_banned_from_community
           ? $t('moderation.ban.unbanFromCommunity')
           : $t('moderation.ban.banFromCommunity')}
+      </MenuButton>
+      <MenuButton color="success-subtle" href="/modlog?user={item.creator.id}">
+        <Icon src={Newspaper} size="16" micro />
+        {$t('moderation.modlog.user')}
+      </MenuButton>
+      <MenuButton color="success-subtle" href="/modlog?post={item.post.id}">
+        <Icon src={Newspaper} size="16" micro />
+        {$t('moderation.modlog.post')}
       </MenuButton>
     {/if}
   {/if}

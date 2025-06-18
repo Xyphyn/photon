@@ -59,6 +59,7 @@ interface Settings {
   nsfwBlur: boolean
   moderation: {
     presets: Preset[]
+    defaultRemoveAction: 'comment' | 'message' | null
   }
   randomPlaceholders: boolean
   modlogCardView: boolean | undefined
@@ -102,7 +103,7 @@ interface Settings {
 }
 
 export const defaultSettings: Settings = {
-  settingsVer: 4,
+  settingsVer: 5,
   expandableImages: toBool(env.PUBLIC_EXPANDABLE_IMAGES) ?? true,
   markReadPosts: toBool(env.PUBLIC_MARK_READ_POSTS) ?? true,
   showInstances: {
@@ -138,6 +139,7 @@ export const defaultSettings: Settings = {
         content: `Your submission in *"{{post}}"* was removed for {{reason}}.`,
       },
     ],
+    defaultRemoveAction: null,
   },
   randomPlaceholders: toBool(env.PUBLIC_RANDOM_PLACEHOLDERS) ?? false,
   modlogCardView: toBool(env.PUBLIC_MODLOG_CARD_VIEW) ?? undefined,
