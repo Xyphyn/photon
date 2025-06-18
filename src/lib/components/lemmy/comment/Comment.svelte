@@ -210,7 +210,7 @@
       </span>
     </button>
   {/if}
-  <div class={['expand w-full', open && 'open', contentClass]}>
+  <div class={['expand', open && 'open', contentClass]}>
     <div id="comment-content w-full">
       <div
         class="flex flex-col whitespace-pre-wrap
@@ -241,7 +241,7 @@
   .expand {
     display: grid;
     grid-template-rows: 0fr;
-    grid-template-columns: 100%;
+    grid-template-columns: 1fr;
     overflow: hidden;
     transition: grid-template-rows 0.5s cubic-bezier(0.19, 1, 0.22, 1);
   }
