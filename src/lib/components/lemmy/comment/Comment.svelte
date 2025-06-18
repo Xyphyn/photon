@@ -210,7 +210,7 @@
       </span>
     </button>
   {/if}
-  <div class={['expand w-full', open && 'open', contentClass]}>
+  <div class={['expand', open && 'open', contentClass]}>
     <div id="comment-content w-full">
       <div
         class="flex flex-col whitespace-pre-wrap
