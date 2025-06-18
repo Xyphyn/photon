@@ -241,7 +241,7 @@
   .expand {
     display: grid;
     grid-template-rows: 0fr;
-    grid-template-columns: 100%;
+    grid-template-columns: 1fr;
     overflow: hidden;
     transition: grid-template-rows 0.5s cubic-bezier(0.19, 1, 0.22, 1);
   }
