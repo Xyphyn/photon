@@ -14,6 +14,7 @@
     meta?: boolean
     class?: string
     commentClass?: ClassValue
+    actions?: boolean
   }
 
   let {
@@ -22,6 +23,7 @@
     meta = true,
     class: clazz = '',
     commentClass = '',
+    actions = true,
     ...rest
   }: Props = $props()
 </script>
@@ -71,6 +73,7 @@
     node={{ children: [], comment_view: comment, depth: 1, expanded: true }}
     replying={false}
     {meta}
+    {actions}
     {...rest}
     class={commentClass}
   />

@@ -8,12 +8,13 @@
   import { t } from '$lib/i18n/translations'
   import { getClient } from '$lib/lemmy.svelte.js'
   import { errorMessage } from '$lib/lemmy/error'
-  import { Button, Modal, toast } from 'mono-svelte'
+  import { Button, Material, Modal, toast } from 'mono-svelte'
   import { Bookmark, Icon, Microphone, Pencil, Trash } from 'svelte-hero-icons'
   import type { ClassValue } from 'svelte/elements'
   import ShieldIcon from '../moderation/ShieldIcon.svelte'
   import CommentForm from './CommentForm.svelte'
   import type { CommentNodeI } from './comments.svelte'
+  import CommentItem from './CommentItem.svelte'
 
   interface Props {
     node: CommentNodeI
@@ -95,8 +96,27 @@
     }
   >
     {#snippet customTitle()}
-      <span>{replying ? $t('comment.reply') : $t('form.edit')}</span>
+      <div>{replying ? $t('comment.reply') : $t('form.edit')}</div>
     {/snippet}
+    {#if replying}
+      <Material
+        rounding="2xl"
+        color="uniform"
+        class="max-h-48 overflow-hidden relative"
+      >
+        <UserLink user={node.comment_view.creator} />
+
+        <CommentItem
+          meta={false}
+          comment={node.comment_view}
+          class="pt-0 text-slate-700 dark:text-zinc-300"
+          actions={false}
+        />
+        <div
+          class="bg-gradient-to-b -mx-4 from-white/0 to-white dark:from-zinc-900/0 dark:to-zinc-900 absolute bottom-0 w-full h-24"
+        ></div>
+      </Material>
+    {/if}
     <form
       onsubmit={e => {
         e.preventDefault()
@@ -210,11 +230,11 @@
       </span>
     </button>
   {/if}
-  <div class={['expand', open && 'open', contentClass]}>
-    <div id="comment-content w-full">
+  <div class={['expand max-w-full', open && 'open', contentClass]}>
+    <div id="comment-content">
       <div
         class="flex flex-col whitespace-pre-wrap
-      max-w-full gap-1 mt-1 relative"
+      max-w-full gap-1 mt-1 relative w-full"
       >
         <Markdown
           source={node.comment_view.comment.content}
@@ -241,7 +261,7 @@
   .expand {
     display: grid;
     grid-template-rows: 0fr;
-    grid-template-columns: 1fr;
+    grid-template-columns: 100%;
     overflow: hidden;
     transition: grid-template-rows 0.5s cubic-bezier(0.19, 1, 0.22, 1);
   }
