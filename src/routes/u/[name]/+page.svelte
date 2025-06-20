@@ -245,7 +245,10 @@
                         {$t('moderation.label')}
                       </Button>
                     {/snippet}
-                    <MenuButton color="success-subtle">
+                    <MenuButton
+                      href="/modlog?user={data.person_view.value.person.id}"
+                      color="success-subtle"
+                    >
                       <Icon src={Newspaper} size="16" micro />
                       {$t('moderation.modlog.user')}
                     </MenuButton>
