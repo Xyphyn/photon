@@ -8,13 +8,14 @@
   import { t } from '$lib/i18n/translations'
   import { getClient } from '$lib/lemmy.svelte.js'
   import { errorMessage } from '$lib/lemmy/error'
-  import { Button, Material, Modal, toast } from 'mono-svelte'
+  import { Button, Modal, toast } from 'mono-svelte'
   import { Bookmark, Icon, Microphone, Pencil, Trash } from 'svelte-hero-icons'
+  import { expoOut } from 'svelte/easing'
   import type { ClassValue } from 'svelte/elements'
+  import { slide } from 'svelte/transition'
   import ShieldIcon from '../moderation/ShieldIcon.svelte'
   import CommentForm from './CommentForm.svelte'
   import type { CommentNodeI } from './comments.svelte'
-  import CommentItem from './CommentItem.svelte'
 
   interface Props {
     node: CommentNodeI
@@ -85,38 +86,11 @@
   }, 500)
 </script>
 
-{#if editing || replying}
-  <Modal
-    bind:open={
-      () => replying || editing,
-      v => {
-        replying = v
-        editing = v
-      }
-    }
-  >
+{#if editing}
+  <Modal bind:open={editing}>
     {#snippet customTitle()}
-      <div>{replying ? $t('comment.reply') : $t('form.edit')}</div>
+      <div>{$t('form.edit')}</div>
     {/snippet}
-    {#if replying}
-      <Material
-        rounding="2xl"
-        color="uniform"
-        class="max-h-48 overflow-hidden relative"
-      >
-        <UserLink user={node.comment_view.creator} />
-
-        <CommentItem
-          meta={false}
-          comment={node.comment_view}
-          class="pt-0 text-slate-700 dark:text-zinc-300"
-          actions={false}
-        />
-        <div
-          class="bg-gradient-to-b -mx-4 from-white/0 to-white dark:from-zinc-900/0 dark:to-zinc-900 absolute bottom-0 w-full h-24"
-        ></div>
-      </Material>
-    {/if}
     <form
       onsubmit={e => {
         e.preventDefault()
@@ -124,43 +98,22 @@
       }}
       class="contents"
     >
-      {#if replying}
-        <CommentForm
-          label={$t('comment.reply')}
-          {postId}
-          parentId={node.comment_view.comment.id}
-          oncomment={e => {
-            node.children = [
-              {
-                children: [],
-                comment_view: e.comment_view,
-                depth: node.depth + 1,
-                expanded: true,
-              },
-              ...node.children,
-            ]
-            replying = false
-          }}
-          oncancel={() => (replying = false)}
-        />
-      {:else if editing}
-        <CommentForm
-          bind:value={newComment}
-          postId={node.comment_view.comment.id}
-          actions={false}
-          preview={true}
-        />
-        <Button
-          submit
-          color="primary"
-          size="lg"
-          loading={editingLoad}
-          disabled={editingLoad}
-          class="w-full"
-        >
-          {$t('form.submit')}
-        </Button>
-      {/if}
+      <CommentForm
+        bind:value={newComment}
+        postId={node.comment_view.comment.id}
+        actions={false}
+        preview={true}
+      />
+      <Button
+        submit
+        color="primary"
+        size="lg"
+        loading={editingLoad}
+        disabled={editingLoad}
+        class="w-full"
+      >
+        {$t('form.submit')}
+      </Button>
     </form>
   </Modal>
 {/if}
@@ -250,6 +203,29 @@
           />
         {/if}
       </div>
+
+      {#if replying}
+        <div transition:slide={{ duration: 600, easing: expoOut }}>
+          <CommentForm
+            label={$t('comment.reply')}
+            {postId}
+            parentId={node.comment_view.comment.id}
+            oncomment={e => {
+              node.children = [
+                {
+                  children: [],
+                  comment_view: e.comment_view,
+                  depth: node.depth + 1,
+                  expanded: true,
+                },
+                ...node.children,
+              ]
+              replying = false
+            }}
+            oncancel={() => (replying = false)}
+          />
+        </div>
+      {/if}
       <div class="bg-transparent dark:bg-transparent">
         {@render children?.()}
       </div>
