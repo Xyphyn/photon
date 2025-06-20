@@ -149,7 +149,10 @@
             "title": "דף הבית",
             "endFeed": "הגעת לסוף של {{community_name; undefined:הפיד; default:{{community_name}}}."
         },
-        "modlog": "יומן הנהלה",
+        "modlog": {
+            "title": "יומן פעולות",
+            "filters": "סינון"
+        },
         "instances": "שרתים",
         "legal": {
             "title": "משפטי",
@@ -285,6 +288,9 @@
                     "title": "אין שרתים מורשים",
                     "description": "הרשאת שרת תחסום כל שרת אחר."
                 }
+            },
+            "media": {
+                "title": "מדיה"
             }
         },
         "saved": "שמורים",
@@ -340,7 +346,8 @@
             "unresolve": "הסרת פתירה",
             "resolved": "פתור",
             "resolvedBy": "פתור על ידי",
-            "markAll": "סימון עמוד כפתור"
+            "markAll": "סימון עמוד כפתור",
+            "markAllComplete": "הפעולות בוצעו בהצלחה."
         },
         "theme": {
             "preset": {
@@ -371,7 +378,8 @@
                 "team": "צוות",
                 "settings": "הגדרות",
                 "manage": "ניהול"
-            }
+            },
+            "languageWarning": "התוכן בקהילה זו הוא בשפות שלא בחרת. ייתכן שחלק מהפוסטים או כולם חסרים."
         },
         "verifyEmail": {
             "message": "האימייל שלך מאומת. כעת ניתן לסגור את החלון הזה.",
@@ -518,7 +526,27 @@
             },
             "comments": "תגובות",
             "save": "שמירה",
-            "unsave": "הסרת שמירה"
+            "unsave": "הסרת שמירה",
+            "vote": {
+                "score": "ציון"
+            }
+        },
+        "meta": {
+            "lastEdited": "נערך לאחרונה {{default}}",
+            "created": "נוצר {{default}}"
+        },
+        "badges": {
+            "nsfw": "תוכן לא הולם",
+            "locked": "נעול",
+            "featured": "מובלט",
+            "removed": "הוסר",
+            "deleted": "מחוק",
+            "saved": "שמור"
+        },
+        "image": {
+            "zoomIn": "זום פנימה",
+            "zoomOut": "זום החוצה",
+            "close": "סגירה"
         }
     },
     "admin": {
@@ -529,5 +557,18 @@
             "warning": "זה ימחק את כל הפוסטים. האם אתם בטוחים? (הכפתור יופעל אחרי שלוש שניות.)"
         },
         "label": "אדמיניסטרציה"
+    },
+    "comment": {
+        "actions": {
+            "label": "פעולות",
+            "link": "העתקת קישור"
+        },
+        "reply": "תגובה",
+        "locked": "הפוסט נעול.",
+        "banned": "נחסמת מהקהילה הזו.",
+        "more": "עוד {{comments:number}}"
+    },
+    "moderation": {
+        "report": "דיווח"
     }
 }
