@@ -2,14 +2,22 @@
   import { browser } from '$app/environment'
   import { report } from '$lib/components/lemmy/moderation/moderation'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
+  import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { t } from '$lib/i18n/translations'
   import { client } from '$lib/lemmy.svelte'
   import { errorMessage } from '$lib/lemmy/error'
+  import { settings } from '$lib/settings.svelte'
   import type { PrivateMessageResponse } from 'lemmy-js-client'
   import { Button, Material, TextInput, toast } from 'mono-svelte'
   import { tick } from 'svelte'
-  import { ArrowLeft, Icon, PaperAirplane } from 'svelte-hero-icons'
+  import {
+    ArrowLeft,
+    Icon,
+    Minus,
+    PaperAirplane,
+    Plus,
+  } from 'svelte-hero-icons'
   import { flip } from 'svelte/animate'
   import { backOut, expoOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'
@@ -110,6 +118,13 @@
         })}
       </p>
       {#each data.message.value.private_messages.toReversed() as private_message, index (private_message.private_message.id)}
+        {@const messages = data.message.value.private_messages.toReversed()}
+        {@const showTimestamp =
+          index == 0 ||
+          new Date(private_message.private_message.published).getTime() -
+            new Date(messages[index - 1].private_message.published).getTime() >
+            5 * 60 * 1000}
+
         <div
           class={private_message.creator.id ==
           data.creator.value.person_view.person.id
@@ -129,6 +144,7 @@
             message={private_message}
             primary={private_message.creator.id !=
               data.creator.value.person_view.person.id}
+            {showTimestamp}
           />
         </div>
       {/each}
@@ -138,10 +154,15 @@
 {#await data.message.value then message}
   <div class="sticky bottom-4 p-4">
     <form
-      class="flex flex-row h-14 items-center w-full
-    border-slate-200 dark:border-zinc-800
-   p-2 gap-2 backdrop-blur-xl
-   bg-white/50 dark:bg-zinc-950/50 border rounded-2xl"
+      class={[
+        'flex w-full',
+        'border-slate-200 dark:border-zinc-800',
+        'p-2 gap-2 backdrop-blur-xl',
+        'bg-white/50 dark:bg-zinc-950/50 border rounded-2xl',
+        settings.messages.fullMarkdown
+          ? 'flex flex-col'
+          : 'flex-row h-14 items-center',
+      ]}
       onsubmit={async e => {
         e.preventDefault()
 
@@ -158,25 +179,53 @@
         textbox.message = ''
       }}
     >
-      <TextInput
-        bind:value={textbox.message}
-        class="rounded-xl! h-full flex-1 dark:bg-zinc-925!"
-      />
+      {#if settings.messages.fullMarkdown}
+        <MarkdownEditor
+          previewButton={false}
+          bind:value={textbox.message}
+          class="flex-1"
+        ></MarkdownEditor>
+      {:else}
+        <Button
+          onclick={() => (settings.messages.fullMarkdown = true)}
+          size="custom"
+          class="h-9 w-9"
+          rounding="xl"
+        >
+          <Icon src={Plus} mini size="18" />
+        </Button>
+        <TextInput
+          bind:value={textbox.message}
+          class="rounded-xl! h-full flex-1 dark:bg-zinc-925!"
+        />
+      {/if}
 
-      <Button
-        title={$t('common.send')}
-        size="custom"
-        rounding="xl"
-        class="aspect-square h-9"
-        color="primary"
-        submit
-        loading={textbox.loading}
-        disabled={textbox.loading}
-      >
-        {#snippet prefix()}
-          <Icon src={PaperAirplane} size="18" micro />
-        {/snippet}
-      </Button>
+      <div class="flex flex-row gap-2">
+        {#if settings.messages.fullMarkdown}
+          <Button
+            onclick={() => (settings.messages.fullMarkdown = false)}
+            size="custom"
+            class="h-9 w-9"
+            rounding="xl"
+          >
+            <Icon src={Minus} mini size="18" />
+          </Button>
+        {/if}
+        <Button
+          title={$t('common.send')}
+          size="custom"
+          rounding="xl"
+          class="aspect-square h-9 flex-1"
+          color="primary"
+          submit
+          loading={textbox.loading}
+          disabled={textbox.loading}
+        >
+          {#snippet prefix()}
+            <Icon src={PaperAirplane} size="18" micro />
+          {/snippet}
+        </Button>
+      </div>
     </form>
   </div>
 {/await}

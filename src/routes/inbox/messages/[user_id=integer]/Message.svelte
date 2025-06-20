@@ -12,9 +12,16 @@
     primary?: boolean
     ondelete?: (shouldDelete: boolean) => void
     onreport?: (report: boolean) => void
+    showTimestamp?: boolean
   }
 
-  let { message, primary = false, ondelete, onreport }: Props = $props()
+  let {
+    message,
+    primary = false,
+    ondelete,
+    onreport,
+    showTimestamp = true,
+  }: Props = $props()
 </script>
 
 <div
@@ -36,11 +43,12 @@
         class="w-full"
       />
     </div>
-
-    <RelativeDate
-      class="text-xs block -mt-0.5 ml-1 text-slate-600 dark:text-zinc-400"
-      date={publishedToDate(message.private_message.published)}
-    />
+    {#if showTimestamp}
+      <RelativeDate
+        class="text-xs block -mt-0.5 ml-1 text-slate-600 dark:text-zinc-400"
+        date={publishedToDate(message.private_message.published)}
+      />
+    {/if}
   </div>
   <Menu>
     {#snippet target()}
