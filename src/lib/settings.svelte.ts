@@ -100,10 +100,13 @@ interface Settings {
   logoColorMonth: number | null
 
   absoluteDates: boolean
+  messages: {
+    fullMarkdown: boolean
+  }
 }
 
 export const defaultSettings: Settings = {
-  settingsVer: 5,
+  settingsVer: 6,
   expandableImages: toBool(env.PUBLIC_EXPANDABLE_IMAGES) ?? true,
   markReadPosts: toBool(env.PUBLIC_MARK_READ_POSTS) ?? true,
   showInstances: {
@@ -176,6 +179,9 @@ export const defaultSettings: Settings = {
   parseTags: true,
   logoColorMonth: null,
   absoluteDates: false,
+  messages: {
+    fullMarkdown: toBool(env.PUBLIC_FULL_MARKDOWN) ?? false,
+  },
 }
 
 function createSettingsState(initial: Settings): Settings {
