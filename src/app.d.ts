@@ -23,7 +23,8 @@ declare global {
       }
     }
     interface PageState {
-      openImage: url
+      openImage?: string
+      openModals?: string[]
     }
     // interface Platform {}
   }
