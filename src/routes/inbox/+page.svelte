@@ -39,109 +39,40 @@
     return response.replies
   }
 
-  function addSearchParam(
-    currentSearchParams: URLSearchParams,
-    newParamString: string,
-  ) {
-    // Create a new URLSearchParams object from the current search params
-    const updatedParams = new URLSearchParams(currentSearchParams)
-
-    // Parse the new parameter string
-    const newParam = new URLSearchParams(newParamString)
-
-    // Get the key and value of the new parameter
-    const [key, value]: [string, string] = newParam.entries().next().value!
-
-    // Add the new parameter to the updated params
-    updatedParams.set(key, value)
-
-    return updatedParams
-  }
 </script>
 
 <svelte:head>
   <title>{$t('routes.inbox.title')}</title>
 </svelte:head>
 
-<div class=" gap-2">
-  <div
-    class="mt-4 mb-2 z-30 mx-auto max-w-full flex gap-2 md:flex-row flex-col
-items-center px-2 w-max top-6 lg:top-22"
-  >
-    <Tabs
-      routes={[
-        {
-          href: '?type=all',
-          name: $t('filter.location.all'),
-        },
-        {
-          href: '?type=replies',
-          name: $t('filter.inbox.replies'),
-        },
-        {
-          href: '?type=mentions',
-          name: $t('filter.inbox.mentions'),
-        },
-        {
-          href: '/inbox/messages',
-          name: $t('filter.inbox.messages'),
-        },
-      ]}
-      currentRoute={page.url.search}
-      buildUrl={(route, href) =>
-        href.includes('?')
-          ? '?' + addSearchParam(page.url.searchParams, href).toString()
-          : `${href}${page.url.search}`}
-      defaultRoute="?type=all"
-      class="overflow-auto"
-    />
-    <Tabs
-      routes={[
-        {
-          href: '?unreadOnly=false',
-          name: $t('filter.location.all'),
-        },
-        {
-          href: '?unreadOnly=true',
-          name: $t('filter.unread'),
-        },
-      ]}
-      currentRoute={page.url.search}
-      buildUrl={(route, href) =>
-        '?' + addSearchParam(page.url.searchParams, href).toString()}
-      defaultRoute="?unreadOnly=true"
-      class="overflow-auto"
-    />
-  </div>
-  <Header pageHeader class="lg:flex-row justify-between flex-col">
-    {$t('routes.inbox.title')}
+<Header pageHeader class="lg:flex-row justify-between flex-col">
+  {$t('routes.inbox.title')}
 
-    <div class="flex items-center gap-2">
-      <Button
-        onclick={() => goto(page.url, { invalidateAll: true })}
-        size="square-lg"
-        rounding="xl"
-        title={$t('common.refresh')}
-      >
-        {#snippet prefix()}
-          <Icon src={ArrowPath} size="16" mini />
-        {/snippet}
-      </Button>
-      <Button
-        onclick={markAllAsRead}
-        loading={markingAsRead}
-        disabled={markingAsRead}
-        size="lg"
-        class="h-10"
-      >
-        {#snippet prefix()}
-          <Icon src={Check} width={16} mini />
-        {/snippet}
-        {$t('routes.inbox.markAsRead')}
-      </Button>
-    </div>
-  </Header>
-</div>
+  <div class="flex items-center gap-2">
+    <Button
+      onclick={() => goto(page.url, { invalidateAll: true })}
+      size="square-lg"
+      rounding="xl"
+      title={$t('common.refresh')}
+    >
+      {#snippet prefix()}
+        <Icon src={ArrowPath} size="16" mini />
+      {/snippet}
+    </Button>
+    <Button
+      onclick={markAllAsRead}
+      loading={markingAsRead}
+      disabled={markingAsRead}
+      size="lg"
+      class="h-10"
+    >
+      {#snippet prefix()}
+        <Icon src={Check} width={16} mini />
+      {/snippet}
+      {$t('routes.inbox.markAsRead')}
+    </Button>
+  </div>
+</Header>
 
 <div
   class="flex flex-col list-none flex-1 h-full divide-y divide-slate-200 dark:divide-zinc-900 *:py-4"
@@ -176,7 +107,7 @@ items-center px-2 w-max top-6 lg:top-22"
     <div
       class="sticky z-30 mx-auto max-w-full self-end mt-auto bottom-22 lg:bottom-6"
     >
-      <Tabs routes={[]} class="mx-auto">
+      <Tabs tabs={[]} class="mx-auto">
         <Pageination
           hasMore={!(
             !data.inbox || (data.inbox.value?.length ?? 0) < (data?.limit ?? 0)
