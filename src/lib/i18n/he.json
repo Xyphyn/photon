@@ -76,7 +76,11 @@
                 "warning": "פעולה זו תמחק את כל התוכן שלך."
             },
             "scores": "הצגת הצבעות",
-            "showRead": "תצוגת פוסטים שנקראו"
+            "showRead": "תצוגת פוסטים שנקראו",
+            "languages": {
+                "title": "שפות",
+                "description": "אם מוגדרים, יוצג רק תוכן שסומן במפורש בשפה זו. רוב התוכן, שאינו מתויג, נופל תחת הקטגוריה 'לא מוגדר'."
+            }
         },
         "confirmPassword": "אישור סיסמה",
         "post": {
@@ -122,7 +126,16 @@
         "edit": "עריכה",
         "preview": "תצוגה מקדימה",
         "instance": "קישור לשרת",
-        "setup": "הגדרה"
+        "setup": "הגדרה",
+        "time": {
+            "duration": "משך הזמן",
+            "minutes": "דקות",
+            "hours": "שעות",
+            "days": "ימים",
+            "months": "חודשים",
+            "years": "שנים",
+            "permanent": "קבוע"
+        }
     },
     "profile": {
         "profile": "פרופיל",
@@ -161,7 +174,7 @@
                 "title": "חסום",
                 "empty": {
                     "description": "כל דבר חסום לא יופיע בפידים שלך.",
-                    "title": "אין עצמים חסומים"
+                    "title": "אין גופים חסומים"
                 }
             },
             "upvoted": "הוצבע בעד",
@@ -177,7 +190,7 @@
             "search": {
                 "placeholder": "חיפוש לקהילה חדשה"
             },
-            "trending": "טרנדיים"
+            "trending": "פופולרי"
         },
         "search": {
             "title": "חיפוש",
@@ -294,7 +307,9 @@
             "emptyComments": {
                 "description": "התחילו את השיחה!",
                 "title": "אין תגובות"
-            }
+            },
+            "commented": "התגובה שלך פורסמה.",
+            "loadComments": "טען תגובות"
         },
         "inbox": {
             "title": "דואר נכנס",
@@ -307,6 +322,11 @@
                 "reply": "{{user}} ענו לך ב-{{post}}",
                 "mention": "{{user}} ציינו אותך ב-{{post}}",
                 "message": "{{user}} כתבו ל-{{recipient}}"
+            },
+            "messages": {
+                "start": "התחלת צ'אט",
+                "conversation": "זו תחילת השיחה שלך עם {{user}}",
+                "indicator": "כתיבה ל-{{user}}"
             }
         },
         "moderation": {
@@ -319,7 +339,8 @@
             "resolve": "פתירה",
             "unresolve": "הסרת פתירה",
             "resolved": "פתור",
-            "resolvedBy": "פתור על ידי"
+            "resolvedBy": "פתור על ידי",
+            "markAll": "סימון עמוד כפתור"
         },
         "theme": {
             "preset": {
@@ -342,7 +363,8 @@
             "resetWarning": {
                 "title": "איפוס סגנון",
                 "description": "פעולה זו תאפס את כל הצבעים לברירת המחדל. מומלץ לייצא את הסגנון שלך לפני זה."
-            }
+            },
+            "accent": "דגש"
         },
         "community": {
             "settings": {
@@ -363,6 +385,15 @@
         "resetLogin": {
             "title": "איפוס סיסמה",
             "description": "לאחר הזנת האימייל של חשבונך, יישלח קישור לאיפוס הסיסמה. אם לחשבונך אין אימייל, ניתן ליצור קשר עם אדמיני השרת."
+        },
+        "postRedirect": {
+            "actions": {
+                "fetch": "איתור הפוסט ב-{{homeInstance}}",
+                "switch": "מעבר לחשבון ב-{{destInstance}}",
+                "back": "חזרה אחורה"
+            },
+            "title": "שרת לא תואם",
+            "description": "קישור זה מוביל לפוסט שאינו נמצא בשרת של החשבון שלך, {{homeInstance}}."
         }
     },
     "nav": {
@@ -467,7 +498,8 @@
                 "label": "פעולות נוספות",
                 "markUnread": "הסרת סימון כנקרא",
                 "hide": "הסתרה",
-                "delete": "מחיקה"
+                "delete": "מחיקה",
+                "crosspost": "פרסום פוסט משותף"
             },
             "mediaBias": {
                 "description": "תיאור",
@@ -493,7 +525,9 @@
         "purge": "טיהור",
         "instance": "שרת",
         "purgeCommunity": {
-            "title": "טיהור קהילה"
-        }
+            "title": "טיהור קהילה",
+            "warning": "זה ימחק את כל הפוסטים. האם אתם בטוחים? (הכפתור יופעל אחרי שלוש שניות.)"
+        },
+        "label": "אדמיניסטרציה"
     }
 }
