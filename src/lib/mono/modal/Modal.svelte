@@ -7,6 +7,8 @@
   import { Button } from '../index.js'
   import Portal from '../popover/Portal.svelte'
   import type { Snippet } from 'svelte'
+  import { page } from '$app/state'
+  import { pushState, replaceState } from '$app/navigation'
 
   interface Props {
     action?: string | undefined
@@ -34,7 +36,47 @@
     class: clazz = '',
   }: Props = $props()
 
+  const modalId = crypto.randomUUID()
+
   let el = $state<HTMLElement>()
+  let hasHistoryEntry = false
+
+  $effect(() => {
+    console.log(modalId, open, hasHistoryEntry)
+  })
+
+  $effect(() => {
+    if (open && modalId && !hasHistoryEntry) {
+      pushState('', {
+        openModals: [...(page.state.openModals ?? []), modalId],
+      })
+      hasHistoryEntry = true
+    }
+  })
+
+  $effect(() => {
+    if (modalId && hasHistoryEntry) {
+      const currentModals = page.state.openModals ?? []
+      const isInHistory = currentModals.includes(modalId)
+
+      if (!isInHistory && open) {
+        replaceState('', {
+          openModals: currentModals.filter(id => id !== modalId),
+        })
+        hasHistoryEntry = false
+        open = false
+      }
+    }
+  })
+
+  function onclose() {
+    open = false
+
+    if ((page.state.openModals ?? []).includes(modalId)) history.back()
+    hasHistoryEntry = false
+
+    ondismissed?.()
+  }
 </script>
 
 <Portal>
@@ -47,11 +89,7 @@ bg-white/50 dark:bg-black/50 box-border p-4"
       transition:fade|global={{ duration: 100 }}
       onclick={e => {
         // @ts-expect-error html node hell
-        if (!el.contains(e.target)) {
-          open = false
-
-          ondismissed?.()
-        }
+        if (!el.contains(e.target)) onclose()
       }}
     >
       <div
@@ -73,10 +111,7 @@ bg-white/50 dark:bg-black/50 box-border p-4"
             class="absolute top-0 right-0 m-2 text-slate-600 dark:text-zinc-400"
             color="tertiary"
             size="square-sm"
-            onclick={() => {
-              open = false
-              ondismissed?.()
-            }}
+            onclick={() => onclose()}
           >
             {#snippet prefix()}
               <Icon src={XMark} size="20" mini />
@@ -100,8 +135,7 @@ bg-white/50 dark:bg-black/50 box-border p-4"
                 class="w-full"
                 onclick={() => {
                   onaction?.()
-                  open = false
-                  ondismissed?.()
+                  onclose()
                 }}
                 color="primary"
                 size="lg"
