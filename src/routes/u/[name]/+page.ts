@@ -8,8 +8,6 @@ export async function load({ params, url, fetch }) {
     (url.searchParams.get('type') as 'comments' | 'posts') || 'posts'
   const sort: SortType = (url.searchParams.get('sort') as SortType) || 'New'
 
-  console.log(type)
-
   const user = await getClient(undefined, fetch).getPersonDetails({
     limit: 20,
     page: page,

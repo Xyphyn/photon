@@ -42,10 +42,6 @@
   let hasHistoryEntry = false
 
   $effect(() => {
-    console.log(modalId, open, hasHistoryEntry)
-  })
-
-  $effect(() => {
     if (open && modalId && !hasHistoryEntry) {
       pushState('', {
         openModals: [...(page.state.openModals ?? []), modalId],

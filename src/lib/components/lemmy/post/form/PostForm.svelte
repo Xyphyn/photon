@@ -109,7 +109,6 @@
     if (passedCommunity) {
       data.community = passedCommunity
       communitySearch = passedCommunity.name
-      console.log(communitySearch)
     } else {
       const list = await client().listCommunities({
         type_: 'All',
@@ -169,8 +168,6 @@
 
         if (!post) throw new Error('Failed to edit post')
 
-        console.log(`Edited post ${post?.post_view.post.id}`)
-
         onsubmit?.(post.post_view)
       } else {
         const post = await client().createPost({
@@ -185,8 +182,6 @@
         })
 
         if (!post) throw new Error('Failed to upload post')
-
-        console.log(`Uploaded post ${post?.post_view.post.id}`)
 
         saveDraft = false
         onsubmit?.(post.post_view)
