@@ -3,6 +3,15 @@ import { DEFAULT_INSTANCE_URL } from '$lib/instance.svelte.js'
 import { instanceToURL } from '$lib/util.svelte'
 import { error } from '@sveltejs/kit'
 import { LemmyHttp, type GetSiteResponse } from 'lemmy-js-client'
+import { PiefedHttp } from './piefed.svelte'
+
+export type ClientType =
+  | { name: 'lemmy'; baseUrl: '/api/v3' }
+  | { name: 'piefed'; baseUrl: '/api/alpha' }
+export const DEFAULT_CLIENT_TYPE: ClientType = {
+  name: 'lemmy',
+  baseUrl: '/api/v3',
+}
 
 class SiteData {
   #data = $state<GetSiteResponse>()
@@ -18,6 +27,23 @@ class SiteData {
 
 export const site = new SiteData()
 
+// lemmy-js-client has a hardcoded API version of v3, this rewrites it to allow custom ones
+function rewriteApiVersion(
+  input: RequestInfo | URL,
+  newUrl: string,
+): RequestInfo | URL {
+  const DEFAULT_API_URL_REGEX = /\/api\/v3/
+
+  if (typeof input === 'string') {
+    return input.replace(DEFAULT_API_URL_REGEX, newUrl)
+  } else if (input instanceof URL) {
+    input.pathname = input.pathname.replace(DEFAULT_API_URL_REGEX, newUrl)
+    return input
+  }
+
+  return input
+}
+
 async function customFetch(
   func:
     | ((
@@ -28,6 +54,7 @@ async function customFetch(
   input: RequestInfo | URL,
   init?: RequestInit | undefined,
   auth?: string,
+  type?: ClientType,
 ): Promise<Response> {
   const f = func ? func : fetch
 
@@ -42,6 +69,8 @@ async function customFetch(
     }
   }
 
+  input = rewriteApiVersion(input, type?.baseUrl || '/api/v3')
+
   const res = await f(input, init)
   if (!res.ok) error(res.status, await res.text())
   return res
@@ -51,6 +80,7 @@ export function client({
   instanceURL,
   func,
   auth,
+  type,
 }: {
   instanceURL?: string
   func?: (
@@ -58,18 +88,24 @@ export function client({
     init?: RequestInit | undefined,
   ) => Promise<Response>
   auth?: string
+  type?: ClientType
 } = {}) {
   if (!instanceURL) instanceURL = profile.data.instance || DEFAULT_INSTANCE_URL
+
+  type = type ? type : profile.data.client || DEFAULT_CLIENT_TYPE
 
   const jwt = auth ? auth : profile.data?.jwt
 
   const headers = jwt ? { authorization: `Bearer ${jwt}` } : {}
 
-  return new LemmyHttp(instanceToURL(instanceURL), {
-    fetchFunction: (input, init) => customFetch(func, input, init, jwt),
-    // @ts-expect-error headers thing
-    headers: headers,
-  })
+  return new (type?.name == 'piefed' ? PiefedHttp : LemmyHttp)(
+    instanceToURL(instanceURL),
+    {
+      fetchFunction: (input, init) => customFetch(func, input, init, jwt, type),
+      // @ts-expect-error headers thing
+      headers: headers,
+    },
+  )
 }
 
 export function getClient(

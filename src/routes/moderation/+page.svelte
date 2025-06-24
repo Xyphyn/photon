@@ -5,7 +5,7 @@
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import ProgressBar from '$lib/components/ui/ProgressBar.svelte'
   import { t } from '$lib/i18n/translations'
-  import { client } from '$lib/lemmy.svelte'
+  import { client } from '$lib/client/client.svelte'
   import { searchParam } from '$lib/util.svelte.js'
   import { Button, Select, toast } from 'mono-svelte'
   import Option from 'mono-svelte/forms/select/Option.svelte'

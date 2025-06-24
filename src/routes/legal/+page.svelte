@@ -2,7 +2,7 @@
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { t } from '$lib/i18n/translations'
-  import { site } from '$lib/lemmy.svelte'
+  import { site } from '$lib/client/client.svelte'
   import { Spinner } from 'mono-svelte'
 </script>
 

@@ -5,7 +5,12 @@ import {
   isAdmin,
 } from '$lib/components/lemmy/moderation/moderation.js'
 import { DEFAULT_INSTANCE_URL } from '$lib/instance.svelte.js'
-import { client, getClient } from '$lib/lemmy.svelte.js'
+import {
+  client,
+  getClient,
+  DEFAULT_CLIENT_TYPE,
+  type ClientType,
+} from '$lib/client/client.svelte'
 import { instanceToURL, moveItem } from '$lib/util.svelte'
 import { MINIMUM_VERSION, versionIsSupported } from '$lib/version.js'
 import {
@@ -16,12 +21,13 @@ import {
 import { toast } from 'mono-svelte'
 import { writable } from 'svelte/store'
 import { t } from './i18n/translations'
-import { site } from './lemmy.svelte'
+import { site } from '$lib/client/client.svelte'
 import { errorMessage } from './lemmy/error'
 
 const getDefaultProfile = (): Profile => ({
   id: -1,
   instance: profileData.defaultInstance ?? DEFAULT_INSTANCE_URL,
+  client: { name: 'lemmy', baseUrl: '/api/v3' },
 })
 
 function getFromStorage<T>(key: string): T | undefined {
@@ -47,6 +53,7 @@ export interface Profile {
   avatar?: string
   favorites?: Community[]
   color?: string
+  client: ClientType
 }
 
 /**
@@ -84,6 +91,7 @@ export const profileData = $state<ProfileData>(
         instance: DEFAULT_INSTANCE_URL,
         username: 'Guest',
         color: '#505050',
+        client: DEFAULT_CLIENT_TYPE,
       },
     ],
     profile: 1,
@@ -113,7 +121,11 @@ async function fetchUserData(profile: CurrentProfile) {
     site.data = undefined
     notifications.set({ applications: 0, inbox: 0, reports: 0 })
 
-    const res = await userFromJwt(profile.data.jwt, profile.data.instance)
+    const res = await userFromJwt(
+      profile.data.jwt,
+      profile.data.instance,
+      profile.data.client || DEFAULT_CLIENT_TYPE,
+    )
     if (!res?.user)
       toast({
         content:
@@ -122,6 +134,7 @@ async function fetchUserData(profile: CurrentProfile) {
       })
 
     site.data = res?.site
+
     profile.data.user = res?.user
     if (profile.data.user) {
       profile.data.avatar = res?.user?.local_user_view.person.avatar
@@ -159,6 +172,7 @@ $effect.root(() => {
           id: 1,
           instance: DEFAULT_INSTANCE_URL,
           username: t.get('account.guest') || 'Guest',
+          client: DEFAULT_CLIENT_TYPE,
         },
       ]
       profileData.profile = 1
@@ -181,10 +195,18 @@ if (
   const jwt = getCookie('jwt')
   if (jwt) {
     ;(async () => {
-      const user = await userFromJwt(jwt, env.PUBLIC_INSTANCE_URL ?? '')
+      const user = await userFromJwt(
+        jwt,
+        env.PUBLIC_INSTANCE_URL ?? '',
+        DEFAULT_CLIENT_TYPE,
+      )
       if (!user) return
 
-      const result = await setUser(jwt, env.PUBLIC_INSTANCE_URL ?? '')
+      const result = await setUser(
+        jwt,
+        env.PUBLIC_INSTANCE_URL ?? '',
+        DEFAULT_CLIENT_TYPE,
+      )
 
       if (result)
         toast({
@@ -196,14 +218,14 @@ if (
   }
 }
 
-export async function setUser(jwt: string, inst: string) {
+export async function setUser(jwt: string, inst: string, client: ClientType) {
   try {
     new URL(instanceToURL(inst))
   } catch {
     return
   }
 
-  const user = await userFromJwt(jwt, inst)
+  const user = await userFromJwt(jwt, inst, client)
     .then(u => u)
     .catch(err => {
       toast({ content: errorMessage(err as string), type: 'error' })
@@ -223,6 +245,7 @@ export async function setUser(jwt: string, inst: string) {
     jwt: jwt,
     username: user?.user?.local_user_view.person.name,
     avatar: user?.user?.local_user_view.person.avatar,
+    client: client,
   })
 
   return user
@@ -231,10 +254,15 @@ export async function setUser(jwt: string, inst: string) {
 async function userFromJwt(
   jwt: string,
   instance: string,
+  clientType: ClientType,
 ): Promise<
   { user: MyUserInfo | undefined; site: GetSiteResponse } | undefined
 > {
-  const sitePromise = client({ instanceURL: instance, auth: jwt }).getSite()
+  const sitePromise = client({
+    instanceURL: instance,
+    auth: jwt,
+    type: clientType,
+  }).getSite()
 
   const timer = setTimeout(
     () =>

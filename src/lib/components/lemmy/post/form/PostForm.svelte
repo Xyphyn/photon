@@ -12,7 +12,7 @@
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { t } from '$lib/i18n/translations'
-  import { client, site } from '$lib/lemmy.svelte.js'
+  import { client, site } from '$lib/client/client.svelte.js'
   import { errorMessage } from '$lib/lemmy/error'
   import { getSessionStorage, setSessionStorage } from '$lib/session.js'
   import { placeholders } from '$lib/util.svelte.js'

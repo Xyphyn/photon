@@ -8,7 +8,7 @@
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import { t } from '$lib/i18n/translations.js'
-  import { site } from '$lib/lemmy.svelte.js'
+  import { site } from '$lib/client/client.svelte.js'
   import { settings } from '$lib/settings.svelte.js'
   import Button from 'mono-svelte/button/Button.svelte'
   import { ArrowRight, ChartBar, Icon } from 'svelte-hero-icons'

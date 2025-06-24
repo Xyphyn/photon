@@ -8,7 +8,7 @@
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
   import { t } from '$lib/i18n/translations'
-  import { getClient } from '$lib/lemmy.svelte.js'
+  import { getClient } from '$lib/client/client.svelte.js'
   import type { InboxItem } from '$lib/lemmy/inbox.js'
   import { escapeHtml } from '$lib/util.svelte'
   import { Button } from 'mono-svelte'

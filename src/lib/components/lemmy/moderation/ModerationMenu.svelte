@@ -1,7 +1,7 @@
 <script lang="ts">
   import { profile } from '$lib/auth.svelte.js'
   import { t } from '$lib/i18n/translations'
-  import { getClient } from '$lib/lemmy.svelte'
+  import { getClient } from '$lib/client/client.svelte'
   import { isCommentView, isPostView } from '$lib/lemmy/item.js'
   import type { CommentView, PostView } from 'lemmy-js-client'
   import { Button, Menu, MenuButton, MenuDivider, toast } from 'mono-svelte'

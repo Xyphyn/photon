@@ -1,5 +1,5 @@
 import CommunityCard from '$lib/components/lemmy/community/CommunityCard.svelte'
-import { getClient } from '$lib/lemmy.svelte.js'
+import { getClient } from '$lib/client/client.svelte.js'
 import { ReactiveState } from '$lib/promise.svelte'
 
 export async function load({ fetch, params }) {

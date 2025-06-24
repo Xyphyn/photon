@@ -6,7 +6,7 @@
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import { t } from '$lib/i18n/translations.js'
-  import { getClient, site } from '$lib/lemmy.svelte.js'
+  import { getClient, site } from '$lib/client/client.svelte.js'
   import { uploadImage } from '$lib/util.svelte.js'
   import type { SaveUserSettings } from 'lemmy-js-client'
   import {

@@ -9,7 +9,7 @@
   import Sidebar from '$lib/components/ui/sidebar/Sidebar.svelte'
   import { locale } from '$lib/i18n/translations'
   import { LINKED_INSTANCE_URL } from '$lib/instance.svelte'
-  import { site } from '$lib/lemmy.svelte.js'
+  import { site } from '$lib/client/client.svelte.js'
   import { settings } from '$lib/settings.svelte.js'
   import { inDarkColorScheme, rgbToHex, theme } from '$lib/ui/colors.svelte.js'
   import { getDefaultColors } from '$lib/ui/presets'
@@ -142,7 +142,7 @@
       {#if page.data.slots?.sidebar?.component}
         {@const SvelteComponent = page.data.slots.sidebar.component}
         <SvelteComponent {...page.data.slots.sidebar.props} class="pt-0!" />
-      {:else if site.data}
+      {:else if site.data != undefined}
         <SiteCard
           site={site.data.site_view}
           taglines={site.data.taglines}

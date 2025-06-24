@@ -6,7 +6,7 @@
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import ProfileButton from '$lib/components/ui/sidebar/ProfileButton.svelte'
   import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
-  import { client } from '$lib/lemmy.svelte'
+  import { client } from '$lib/client/client.svelte'
   import { errorMessage } from '$lib/lemmy/error'
   import { t } from '$lib/i18n/translations'
   import { toast } from 'mono-svelte'

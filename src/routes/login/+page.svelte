@@ -14,7 +14,7 @@
     DEFAULT_INSTANCE_URL,
     LINKED_INSTANCE_URL,
   } from '$lib/instance.svelte.js'
-  import { getClient, mayBeIncompatible, site } from '$lib/lemmy.svelte.js'
+  import { client, mayBeIncompatible, site } from '$lib/client/client.svelte.js'
   import { errorMessage } from '$lib/lemmy/error'
   import { DOMAIN_REGEX_FORMS } from '$lib/util.svelte.js'
   import { MINIMUM_VERSION } from '$lib/version.js'
@@ -25,6 +25,8 @@
     QuestionMarkCircle,
     UserCircle,
   } from 'svelte-hero-icons'
+  import type { ClientType } from '$lib/client/client.svelte'
+  import type { LoginResponse } from 'lemmy-js-client'
 
   interface Props {
     ref?: string
@@ -41,6 +43,7 @@
     totp: '',
     loading: false,
     attempts: 0,
+    client: { name: 'lemmy', baseUrl: '/api/v3' } as ClientType,
   })
 
   async function logIn() {
@@ -50,14 +53,31 @@
     try {
       data.instance = data.instance.trim()
 
-      const response = await getClient(data.instance).login({
-        username_or_email: data.username.trim(),
-        password: data.password,
-        totp_2fa_token: data.totp,
-      })
+      let response: LoginResponse
+      try {
+        response = await client({
+          instanceURL: data.instance,
+          type: { name: 'lemmy', baseUrl: '/api/v3' },
+        }).login({
+          username_or_email: data.username.trim(),
+          password: data.password,
+          totp_2fa_token: data.totp,
+        })
+        data.client = { name: 'lemmy', baseUrl: '/api/v3' }
+      } catch {
+        response = await client({
+          instanceURL: data.instance,
+          type: { name: 'piefed', baseUrl: '/api/alpha' },
+        }).login({
+          // @ts-expect-error piefed uses a different parameter
+          username: data.username.trim(),
+          password: data.password,
+        })
+        data.client = { name: 'piefed', baseUrl: '/api/alpha' }
+      }
 
       if (response?.jwt) {
-        const result = await setUser(response.jwt, data.instance, data.username)
+        const result = await setUser(response.jwt, data.instance, data.client)
 
         if (result) {
           toast({ content: $t('toast.logIn'), type: 'success' })

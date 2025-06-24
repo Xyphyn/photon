@@ -5,7 +5,7 @@
 
   import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
   import { t } from '$lib/i18n/translations'
-  import { site } from '$lib/lemmy.svelte'
+  import { site } from '$lib/client/client.svelte'
   import { settings } from '$lib/settings.svelte'
   import { theme } from '$lib/ui/colors.svelte'
   import {

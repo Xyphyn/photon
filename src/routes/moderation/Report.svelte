@@ -6,7 +6,7 @@
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import { t } from '$lib/i18n/translations'
-  import { getClient } from '$lib/lemmy.svelte.js'
+  import { getClient } from '$lib/client/client.svelte.js'
   import { errorMessage } from '$lib/lemmy/error'
   import type { ReportView } from '$lib/lemmy/report.js'
   import { Button, Material, toast } from 'mono-svelte'

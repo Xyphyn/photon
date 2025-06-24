@@ -1,5 +1,5 @@
 import { profile } from '$lib/auth.svelte'
-import { client } from '$lib/lemmy.svelte.js'
+import { client } from '$lib/client/client.svelte.js'
 
 // disable ssr, as the server cannot be authenticated
 export const ssr = false

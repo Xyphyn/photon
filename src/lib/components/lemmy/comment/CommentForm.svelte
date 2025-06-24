@@ -3,7 +3,7 @@
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { t } from '$lib/i18n/translations'
-  import { getClient, site } from '$lib/lemmy.svelte.js'
+  import { getClient, site } from '$lib/client/client.svelte.js'
   import { errorMessage } from '$lib/lemmy/error'
   import { placeholders } from '$lib/util.svelte.js'
   import type { CommentResponse } from 'lemmy-js-client'

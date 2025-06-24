@@ -8,7 +8,7 @@
     LINKED_INSTANCE_URL,
     instance as currentInstance,
   } from '$lib/instance.svelte.js'
-  import { getClient, validateInstance } from '$lib/lemmy.svelte.js'
+  import { getClient, validateInstance } from '$lib/client/client.svelte.js'
   import { t } from '$lib/i18n/translations'
   import { Button, TextInput, toast } from 'mono-svelte'
   import { errorMessage } from '$lib/lemmy/error'

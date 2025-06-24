@@ -4,7 +4,7 @@
   import { profile } from '$lib/auth.svelte.js'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
-  import { getClient } from '$lib/lemmy.svelte.js'
+  import { getClient } from '$lib/client/client.svelte.js'
   import { t } from '$lib/i18n/translations'
   import type { Person } from 'lemmy-js-client'
   import { Button, Modal, toast } from 'mono-svelte'

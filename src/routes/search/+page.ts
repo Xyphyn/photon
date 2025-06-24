@@ -1,5 +1,5 @@
 import { profile } from '$lib/auth.svelte'
-import { client, getClient } from '$lib/lemmy.svelte.js'
+import { client, getClient } from '$lib/client/client.svelte.js'
 import { getItemPublished } from '$lib/lemmy/item.js'
 import { ReactiveState } from '$lib/promise.svelte.js'
 import type { ListingType, SearchType, SortType } from 'lemmy-js-client'
