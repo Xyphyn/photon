@@ -1,5 +1,6 @@
 import { profile } from '$lib/auth.svelte'
 import { getClient } from '$lib/lemmy.svelte.js'
+import { error } from '@sveltejs/kit'
 import type { CommentView, ListingType, PostView } from 'lemmy-js-client'
 
 function getSavedItemPublished(item: PostView | CommentView) {
@@ -11,7 +12,8 @@ function getSavedItemPublished(item: PostView | CommentView) {
 }
 
 export async function load({ url, fetch }) {
-  if (!profile) return { posts: [], page: 0 }
+  if (!profile.data.jwt) throw error(401)
+
   const page = Number(url.searchParams.get('page')) || 1
   const type: 'comments' | 'posts' | 'all' =
     (url.searchParams.get('type') as 'comments' | 'posts' | 'all') || 'all'
