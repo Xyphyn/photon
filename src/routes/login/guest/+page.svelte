@@ -11,11 +11,11 @@
     mayBeIncompatible,
     site,
     validateInstance,
-    type ClientType,
   } from '$lib/client/client.svelte'
   import { DOMAIN_REGEX_FORMS } from '$lib/util.svelte'
   import { MINIMUM_VERSION } from '$lib/version'
   import { Button, Note, Option, Select, TextInput, toast } from 'mono-svelte'
+  import type { ClientType } from '$lib/client/client'
 
   interface Props {
     ref?: string

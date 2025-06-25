@@ -2,7 +2,7 @@
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
   import { profile, setUserID, type Profile } from '$lib/auth.svelte.js'
-  import { DEFAULT_CLIENT_TYPE } from '$lib/client/client.svelte'
+  import { DEFAULT_CLIENT_TYPE } from '$lib/client/client'
   import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
   import { LINKED_INSTANCE_URL } from '$lib/instance.svelte'
   import ProfileAvatar from '$lib/lemmy/ProfileAvatar.svelte'

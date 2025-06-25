@@ -4,14 +4,7 @@ import { instanceToURL } from '$lib/util.svelte'
 import { error } from '@sveltejs/kit'
 import { LemmyHttp, type GetSiteResponse } from 'lemmy-js-client'
 import { PiefedHttp } from './piefed.svelte'
-
-export type ClientType =
-  | { name: 'lemmy'; baseUrl: '/api/v3' }
-  | { name: 'piefed'; baseUrl: '/api/alpha' }
-export const DEFAULT_CLIENT_TYPE: ClientType = {
-  name: 'lemmy',
-  baseUrl: '/api/v3',
-}
+import { DEFAULT_CLIENT_TYPE, type ClientType } from './client'
 
 class SiteData {
   #data = $state<GetSiteResponse>()

@@ -5,12 +5,7 @@ import {
   isAdmin,
 } from '$lib/components/lemmy/moderation/moderation.js'
 import { DEFAULT_INSTANCE_URL } from '$lib/instance.svelte.js'
-import {
-  client,
-  getClient,
-  DEFAULT_CLIENT_TYPE,
-  type ClientType,
-} from '$lib/client/client.svelte'
+import { client, getClient } from '$lib/client/client.svelte'
 import { instanceToURL, moveItem } from '$lib/util.svelte'
 import { MINIMUM_VERSION, versionIsSupported } from '$lib/version.js'
 import {
@@ -24,6 +19,7 @@ import { t } from './i18n/translations'
 import { site } from '$lib/client/client.svelte'
 import { errorMessage } from './lemmy/error'
 import { mergeDeep } from './util/schema'
+import { DEFAULT_CLIENT_TYPE, type ClientType } from './client/client'
 
 const getDefaultProfile = (): Profile => ({
   id: -1,

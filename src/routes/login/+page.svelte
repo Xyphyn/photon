@@ -25,8 +25,7 @@
     QuestionMarkCircle,
     UserCircle,
   } from 'svelte-hero-icons'
-  import type { ClientType } from '$lib/client/client.svelte'
-  import type { LoginResponse } from 'lemmy-js-client'
+  import type { ClientType } from '$lib/client/client'
 
   interface Props {
     ref?: string

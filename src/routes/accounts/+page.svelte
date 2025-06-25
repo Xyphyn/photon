@@ -8,7 +8,7 @@
     profileData,
     setUserID,
   } from '$lib/auth.svelte.js'
-  import { DEFAULT_CLIENT_TYPE } from '$lib/client/client.svelte'
+  import { DEFAULT_CLIENT_TYPE } from '$lib/client/client'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import DebugObject from '$lib/components/util/debug/DebugObject.svelte'
   import { t } from '$lib/i18n/translations'
