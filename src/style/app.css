@@ -70,23 +70,7 @@
   );
 }
 
-/*
-  The default border color has changed to `currentcolor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
-@layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentcolor);
-  }
-}
+@custom-variant hover (&:hover);
 
 @font-face {
   font-family: 'Inter';
@@ -158,27 +142,6 @@ pre:not(.code-baseline) {
   padding-bottom: 0.125rem;
   border-radius: 6px;
   font-size: 12px;
-}
-
-::-webkit-scrollbar {
-  width: 3px;
-  height: 3px;
-  padding: 1px;
-}
-
-::-webkit-scrollbar-track {
-  width: 2px;
-  margin: 1px;
-  background-color: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  border-radius: 9999px;
-  @apply bg-slate-200;
-}
-
-.dark ::-webkit-scrollbar-thumb {
-  @apply bg-zinc-800;
 }
 
 select:focus-visible,

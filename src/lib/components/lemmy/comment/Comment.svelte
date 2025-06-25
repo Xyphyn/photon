@@ -38,7 +38,7 @@
     actions = true,
     meta = true,
     replying = $bindable(false),
-    open = $bindable(),
+    open = $bindable(true),
     contentClass = '',
     class: clazz = '',
     metaSuffix,
