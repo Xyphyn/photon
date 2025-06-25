@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { page } from '$app/state'
   import { profile } from '$lib/auth.svelte'
   import CommentForm from '$lib/components/lemmy/comment/CommentForm.svelte'
   import CommentListVirtualizer from '$lib/components/lemmy/comment/CommentListVirtualizer.svelte'
@@ -7,7 +6,6 @@
   import { buildCommentsTree } from '$lib/components/lemmy/comment/comments.svelte'
   import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
   import { t } from '$lib/i18n/translations'
-  import { instance } from '$lib/instance.svelte'
   import type {
     CommentSortType,
     GetCommentsResponse,
@@ -54,7 +52,19 @@
 {#if profile.data?.jwt}
   {#if !commenting}
     <EndPlaceholder>
-      <Button color="primary" rounding="xl" onclick={() => (commenting = true)}>
+      <Button
+        color="primary"
+        rounding="xl"
+        disabled={(post.post_view.post.locked ||
+          post.post_view.banned_from_community) &&
+          !(
+            profile.data?.user?.local_user_view.local_user.admin ||
+            profile.data?.user?.moderates
+              .map(c => c.community.id)
+              .includes(post.community_view.community.id)
+          )}
+        onclick={() => (commenting = true)}
+      >
         <Icon src={PlusCircle} size="16" micro />
         {$t('routes.post.addComment')}
       </Button>
@@ -93,15 +103,6 @@
       oncomment={comment => {
         comments.comments = [comment.comment_view, ...comments.comments]
       }}
-      locked={(post.post_view.post.locked &&
-        !(
-          profile.data?.user?.local_user_view.local_user.admin ||
-          profile.data?.user?.moderates
-            .map(c => c.community.id)
-            .includes(post.community_view.community.id)
-        )) ||
-        page.params.instance.toLowerCase() != instance.data.toLowerCase()}
-      banned={post.community_view.banned_from_community}
       onfocus={() => (commenting = true)}
       tools={commenting}
       preview={commenting}
