@@ -8,6 +8,7 @@
     profileData,
     setUserID,
   } from '$lib/auth.svelte.js'
+  import { DEFAULT_CLIENT_TYPE } from '$lib/client/client.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import DebugObject from '$lib/components/util/debug/DebugObject.svelte'
   import { t } from '$lib/i18n/translations'
@@ -191,9 +192,13 @@
             />
             <div class="flex flex-col">
               <span class="font-medium">{profile.username}</span>
-              <span class="text-sm text-slate-600 dark:text-zinc-400">
-                {profile.instance}
-              </span>
+              <div class="text-sm text-slate-600 dark:text-zinc-400">
+                <span class="capitalize">
+                  {(profile.client || DEFAULT_CLIENT_TYPE)?.name}
+                </span>
+                •
+                <span>{profile.instance}</span>
+              </div>
             </div>
           </div>
           <div class="ml-auto"></div>

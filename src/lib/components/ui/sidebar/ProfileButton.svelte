@@ -2,6 +2,7 @@
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
   import { profile, setUserID, type Profile } from '$lib/auth.svelte.js'
+  import { DEFAULT_CLIENT_TYPE } from '$lib/client/client.svelte'
   import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
   import { LINKED_INSTANCE_URL } from '$lib/instance.svelte'
   import ProfileAvatar from '$lib/lemmy/ProfileAvatar.svelte'
@@ -56,9 +57,13 @@
   >
     {prof.username ?? prof.user?.local_user_view.person.name}
     {#if !guest && !LINKED_INSTANCE_URL}
-      <span class="text-slate-500 dark:text-zinc-400 font-normal text-xs">
-        {prof.instance}
-      </span>
+      <div class="text-slate-500 dark:text-zinc-400 font-normal text-xs">
+        <span class="capitalize">
+          {(prof.client ?? DEFAULT_CLIENT_TYPE).name}
+        </span>
+        •
+        <span>{prof.instance}</span>
+      </div>
     {/if}
   </span>
   {#if !prof.jwt}
