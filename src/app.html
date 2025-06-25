@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html class="dark" lang="en">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%sveltekit.assets%/img/logo-background.svg" />
@@ -17,7 +17,7 @@
 
       window
         .matchMedia('(prefers-color-scheme: dark)')
-        .addEventListener('change', (event) => {
+        .addEventListener('change', event => {
           if (dark()) document.documentElement.classList.add('dark')
           else document.documentElement.classList.remove('dark')
         })
