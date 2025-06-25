@@ -38,11 +38,11 @@
     actions = true,
     meta = true,
     replying = $bindable(false),
+    open = $bindable(),
     contentClass = '',
     class: clazz = '',
     metaSuffix,
     children,
-    open = $bindable(true),
   }: Props = $props()
 
   let editing = $state(false)
@@ -74,16 +74,6 @@
 
     editingLoad = false
   }
-
-  $effect(() => {
-    if (!open) {
-      // const
-    }
-  })
-
-  setTimeout(() => {
-    open = true
-  }, 500)
 </script>
 
 {#if editing}

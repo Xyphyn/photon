@@ -1,8 +1,9 @@
 <script lang="ts" generics="T">
   import { browser } from '$app/environment'
+  import { debounce } from 'mono-svelte/util/time'
   import { onDestroy, untrack, type Snippet } from 'svelte'
   import type { HTMLAttributes } from 'svelte/elements'
-  import { innerHeight } from 'svelte/reactivity/window'
+  import { innerHeight, scrollY } from 'svelte/reactivity/window'
 
   interface Props extends HTMLAttributes<HTMLDivElement> {
     items: T[]
@@ -13,6 +14,7 @@
       itemHeights: (number | null)[]
     }
     initialOffset?: number
+    debounceResize?: number
   }
 
   let {
@@ -22,13 +24,16 @@
     item: itemSnippet,
     initialOffset = 0,
     restore = $bindable(),
+    debounceResize = 100,
     ...rest
   }: Props = $props()
 
   export function scrollToIndex(index: number, useWindow: boolean = false) {
-    scrollPosition = cumulativeItemHeights[index] - initialOffset || 0
     if (useWindow && browser)
-      window.scrollTo({ behavior: 'instant', top: scrollPosition })
+      window.scrollTo({
+        behavior: 'instant',
+        top: cumulativeItemHeights[index] - initialOffset || 0,
+      })
   }
 
   onDestroy(() => {
@@ -55,7 +60,6 @@
     return cumulation
   })
 
-  let scrollPosition = $state(0)
   let viewportHeight = $state(0)
   let visibleItems = $state<{ index: number; offset: number }[]>([])
 
@@ -96,7 +100,7 @@
     if (!virtualListEl) return []
 
     viewportHeight = innerHeight?.current ?? 1000
-    const scrollTop = scrollPosition - initialOffset
+    const scrollTop = (scrollY.current ?? 0) - initialOffset
 
     let newVisibleItems: { index: number; offset: number }[] = []
 
@@ -105,7 +109,19 @@
     let i = firstIndex
     let offset = i == 0 ? 0 : cumulativeItemHeights[i - 1]
 
-    while (i < items.length && offset < scrollTop + viewportHeight + overscan) {
+    // while (i < items.length && offset < scrollTop + viewportHeight + overscan) {
+    // newVisibleItems.push({ index: i, offset: offset })
+    // const height = itemHeights[i] || estimatedHeight
+    // offset += height
+    // i++
+    // }
+
+    // above but with overscan for item count, rather than pixel offset (using cumulativeHeights instead of estimatedHeight)
+    while (
+      i < items.length &&
+      i < firstIndex + overscan &&
+      offset < scrollTop + viewportHeight + overscan * estimatedHeight
+    ) {
       newVisibleItems.push({ index: i, offset: offset })
       const height = itemHeights[i] || estimatedHeight
       offset += height
@@ -116,7 +132,7 @@
   }
 
   function resizeObserver(node: HTMLElement) {
-    const observer = new ResizeObserver(entries => {
+    const debouncedUpdate = debounce((entries: ResizeObserverEntry[]) => {
       for (const entry of entries) {
         const indexAttr = node.getAttribute('data-index')
         if (indexAttr === null) continue
@@ -124,11 +140,15 @@
         if (isNaN(index)) continue
 
         const newHeight = entry.contentRect.height
-        if (itemHeights[index] !== newHeight) {
+        if (itemHeights[index] !== newHeight && newHeight !== estimatedHeight) {
           itemHeights[index] = newHeight
           visibleItems = updateVisibleItems()
         }
       }
+    }, debounceResize)
+
+    const observer = new ResizeObserver(entries => {
+      debouncedUpdate(entries)
     })
 
     observer.observe(node)
@@ -146,14 +166,14 @@
 
   let oldScroll = $state(0)
   $effect(() => {
-    if (Math.abs(scrollPosition - oldScroll) > estimatedHeight) {
-      visibleItems = updateVisibleItems()
-      oldScroll = scrollPosition
+    if (scrollY.current) {
+      if (Math.abs(scrollY.current - oldScroll) > estimatedHeight) {
+        visibleItems = updateVisibleItems()
+        oldScroll = scrollY.current
+      }
     }
   })
 </script>
-
-<svelte:window bind:scrollY={scrollPosition} />
 
 <div
   bind:this={virtualListEl}
