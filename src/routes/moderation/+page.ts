@@ -7,17 +7,16 @@ import {
   generalizePrivateMessageReport,
 } from '$lib/lemmy/report.js'
 import { ReactiveState } from '$lib/promise.svelte'
+import { error } from '@sveltejs/kit'
 
 type ReportListType = 'unread' | 'all'
 
 export async function load({ url, fetch }) {
+  if (!profile.data.jwt) error(401)
+
   const page = Number(url.searchParams.get('page')) || 1
   const type: ReportListType =
     (url.searchParams.get('type') as ReportListType) || 'unread'
-
-  const jwt = profile.data?.jwt
-
-  if (!jwt) return { type: type, page: page }
 
   // can they please
   // make a sane, consistent, and simple API for once
