@@ -27,7 +27,9 @@ export class PiefedHttp extends LemmyHttp {
    *
    * @param person A piefed person object to rewrite
    */
-  private static rewritePerson(person: Person): Person {
+  private static rewritePerson(person?: Person): Person {
+    if (!person) return {}
+
     return {
       ...person,
       display_name: person.title,

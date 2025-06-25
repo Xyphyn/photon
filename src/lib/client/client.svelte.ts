@@ -46,7 +46,7 @@ async function customFetch(
     | undefined,
   input: RequestInfo | URL,
   init?: RequestInit | undefined,
-  auth?: string,
+  auth?: string | null,
   type?: ClientType,
 ): Promise<Response> {
   const f = func ? func : fetch
@@ -80,14 +80,14 @@ export function client({
     input: RequestInfo | URL,
     init?: RequestInit | undefined,
   ) => Promise<Response>
-  auth?: string
+  auth?: string | null
   type?: ClientType
 } = {}) {
   if (!instanceURL) instanceURL = profile.data.instance || DEFAULT_INSTANCE_URL
 
   type = type ? type : profile.data.client || DEFAULT_CLIENT_TYPE
 
-  const jwt = auth ? auth : profile.data?.jwt
+  const jwt = auth !== undefined ? auth : profile.data?.jwt
 
   const headers = jwt ? { authorization: `Bearer ${jwt}` } : {}
 
@@ -119,10 +119,15 @@ export async function validateInstance(
   if (instance == '') return false
 
   try {
-    await client({ instanceURL: instance, type: clientType }).getSite()
+    await client({
+      instanceURL: instance,
+      type: clientType,
+      auth: null,
+    }).getSite()
 
     return true
-  } catch {
+  } catch (err) {
+    console.error(err)
     return false
   }
 }

@@ -34,7 +34,9 @@
 
   async function addGuest() {
     data.loading = true
-    if (!(await validateInstance(data.instance, data.client))) {
+
+    const result = await validateInstance(data.instance, data.client)
+    if (!result) {
       toast({ content: $t('toast.failInstanceURL'), type: 'error' })
       data.loading = false
       return
