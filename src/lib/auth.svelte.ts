@@ -11,7 +11,7 @@ import {
   DEFAULT_CLIENT_TYPE,
   type ClientType,
 } from '$lib/client/client.svelte'
-import { instanceToURL, moveItem } from '$lib/util.svelte'
+import { instanceToURL, mergeDeep, moveItem } from '$lib/util.svelte'
 import { MINIMUM_VERSION, versionIsSupported } from '$lib/version.js'
 import {
   type Community,
@@ -103,6 +103,10 @@ class CurrentProfile {
     profileData.profiles.find(i => i.id == profileData.profile) ??
       getDefaultProfile(),
   )
+
+  constructor() {
+    this.data = mergeDeep(getDefaultProfile(), this.data)
+  }
 
   get data() {
     return this.#data

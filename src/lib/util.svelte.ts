@@ -1,5 +1,5 @@
 import { goto } from '$app/navigation'
-import { client } from '$lib/client/client.svelte.js'
+import { client } from '$lib/client/client.svelte'
 import { settings } from '$lib/settings.svelte'
 import { feature } from '$lib/version.js'
 import type { SubscribedType } from 'lemmy-js-client'
@@ -185,4 +185,32 @@ export function escapeHtml(input: string): string {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;')
+}
+
+export function isObject(item: object) {
+  return item && typeof item === 'object' && !Array.isArray(item)
+}
+
+/**
+ * Deep merge two objects.
+ * @param target
+ * @param ...sources
+ */
+// eslint-disable-next-line
+export function mergeDeep(target: any, ...sources: any[]) {
+  if (!sources.length) return target
+  const source = sources.shift()
+
+  if (isObject(target) && isObject(source)) {
+    for (const key in source) {
+      if (isObject(source[key])) {
+        if (!target[key]) Object.assign(target, { [key]: {} })
+        mergeDeep(target[key], source[key])
+      } else {
+        Object.assign(target, { [key]: source[key] })
+      }
+    }
+  }
+
+  return mergeDeep(target, ...sources)
 }

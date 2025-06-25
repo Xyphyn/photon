@@ -1,12 +1,20 @@
-// eslint-disable-next-line
+/* eslint-disable */
 // @ts-nocheck
 import {
   LemmyHttp,
+  type CommentResponse,
+  type CreateComment,
+  type GetComments,
+  type GetCommentsResponse,
+  type GetPost,
+  type GetPostResponse,
   type GetPosts,
   type GetPostsResponse,
   type GetSiteResponse,
+  type MarkPostAsRead,
   type Person,
   type Post,
+  type SuccessResponse,
 } from 'lemmy-js-client'
 
 export class PiefedHttp extends LemmyHttp {
@@ -28,6 +36,13 @@ export class PiefedHttp extends LemmyHttp {
       name: post.title,
       featured_community: post.stickied,
       updated: post.edited_at,
+    }
+  }
+
+  private static rewriteComment(comment: Comment): Comment {
+    return {
+      ...comment,
+      content: comment.body,
     }
   }
 
@@ -66,6 +81,58 @@ export class PiefedHttp extends LemmyHttp {
           creator: PiefedHttp.rewritePerson(post.creator),
         }
       }),
+    }
+  }
+
+  override async getPost(form?: GetPost): Promise<GetPostResponse> {
+    const res = await super.getPost(form)
+
+    return {
+      ...res,
+      post_view: {
+        ...res.post_view,
+        post: PiefedHttp.rewritePost(res.post_view.post),
+        creator: PiefedHttp.rewritePerson(res.post_view.creator),
+      },
+    }
+  }
+
+  override async getComments(form?: GetComments): Promise<GetCommentsResponse> {
+    const res = await super.getComments(form)
+
+    return {
+      ...res,
+      comments: res.comments.map(comment => {
+        return {
+          ...comment,
+          comment: PiefedHttp.rewriteComment(comment.comment),
+          creator: PiefedHttp.rewritePerson(comment.creator),
+        }
+      }),
+    }
+  }
+
+  override async markPostAsRead(
+    form: MarkPostAsRead,
+  ): Promise<SuccessResponse> {
+    return {
+      success: true,
+    }
+  }
+
+  override async createComment(form: CreateComment): Promise<CommentResponse> {
+    const res = await super.createComment({
+      ...form,
+      content: undefined,
+      body: form.content,
+    })
+
+    return {
+      ...res,
+      comment_view: {
+        ...res.comment_view,
+        comment: PiefedHttp.rewriteComment(res.comment_view.comment),
+      },
     }
   }
 }
