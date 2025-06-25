@@ -42,7 +42,8 @@
   {#if offsetEl}
     <VirtualList
       class="divide-y divide-slate-200 dark:divide-zinc-800 w-full"
-      overscan={500}
+      overscan={50}
+      estimatedHeight={100}
       items={nodes}
       {initialOffset}
     >

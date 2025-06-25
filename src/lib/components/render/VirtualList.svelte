@@ -109,7 +109,19 @@
     let i = firstIndex
     let offset = i == 0 ? 0 : cumulativeItemHeights[i - 1]
 
-    while (i < items.length && offset < scrollTop + viewportHeight + overscan) {
+    // while (i < items.length && offset < scrollTop + viewportHeight + overscan) {
+    // newVisibleItems.push({ index: i, offset: offset })
+    // const height = itemHeights[i] || estimatedHeight
+    // offset += height
+    // i++
+    // }
+
+    // above but with overscan for item count, rather than pixel offset (using cumulativeHeights instead of estimatedHeight)
+    while (
+      i < items.length &&
+      i < firstIndex + overscan &&
+      offset < scrollTop + viewportHeight + overscan * estimatedHeight
+    ) {
       newVisibleItems.push({ index: i, offset: offset })
       const height = itemHeights[i] || estimatedHeight
       offset += height
