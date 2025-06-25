@@ -11,7 +11,7 @@ import {
   DEFAULT_CLIENT_TYPE,
   type ClientType,
 } from '$lib/client/client.svelte'
-import { instanceToURL, mergeDeep, moveItem } from '$lib/util.svelte'
+import { instanceToURL, moveItem } from '$lib/util.svelte'
 import { MINIMUM_VERSION, versionIsSupported } from '$lib/version.js'
 import {
   type Community,
@@ -23,6 +23,7 @@ import { writable } from 'svelte/store'
 import { t } from './i18n/translations'
 import { site } from '$lib/client/client.svelte'
 import { errorMessage } from './lemmy/error'
+import { mergeDeep } from './util/schema'
 
 const getDefaultProfile = (): Profile => ({
   id: -1,

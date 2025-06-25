@@ -7,11 +7,15 @@
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { t } from '$lib/i18n/translations'
   import { LINKED_INSTANCE_URL } from '$lib/instance.svelte'
-  import { mayBeIncompatible } from '$lib/client/client.svelte'
-  import { site, validateInstance } from '$lib/client/client.svelte.js'
+  import {
+    mayBeIncompatible,
+    site,
+    validateInstance,
+    type ClientType,
+  } from '$lib/client/client.svelte'
   import { DOMAIN_REGEX_FORMS } from '$lib/util.svelte'
   import { MINIMUM_VERSION } from '$lib/version'
-  import { Button, Note, TextInput, toast } from 'mono-svelte'
+  import { Button, Note, Option, Select, TextInput, toast } from 'mono-svelte'
 
   interface Props {
     ref?: string
@@ -21,25 +25,27 @@
   let { ref = page.url.searchParams.get('redirect') ?? '/', children }: Props =
     $props()
 
-  let form = $state({
+  let data = $state({
     instance: '',
     username: `${$t('account.guest')} ${profileData.profiles.filter(p => p.jwt == undefined).length + 1}`,
     loading: false,
+    client: { name: 'lemmy', baseUrl: '/api/v3' } as ClientType,
   })
 
   async function addGuest() {
-    form.loading = true
-    if (!(await validateInstance(form.instance))) {
+    data.loading = true
+    if (!(await validateInstance(data.instance, data.client))) {
       toast({ content: $t('toast.failInstanceURL'), type: 'error' })
-      form.loading = false
+      data.loading = false
       return
     }
 
     const id = Math.max(...profileData.profiles.map(i => i.id)) + 1
     profileData.profiles.push({
       id: id,
-      instance: form.instance,
-      username: form.username,
+      instance: data.instance,
+      username: data.username,
+      client: data.client,
     })
     profileData.profile = id
 
@@ -47,7 +53,7 @@
 
     goto(ref)
 
-    form.loading = false
+    data.loading = false
   }
 </script>
 
@@ -68,7 +74,7 @@
       <TextInput
         required
         label={$t('form.name')}
-        bind:value={form.username}
+        bind:value={data.username}
         placeholder="Guest 2"
         minlength={1}
         class="flex-1"
@@ -77,11 +83,39 @@
         <TextInput
           required
           label={$t('form.instance')}
-          bind:value={form.instance}
+          bind:value={data.instance}
           pattern={DOMAIN_REGEX_FORMS}
           placeholder="example.com"
           class="flex-1"
-        />
+          oninput={() => {
+            data.instance = data.instance.trim().toLowerCase()
+            if (data.instance.includes('piefed')) {
+              data.client.name = 'piefed'
+              data.client.baseUrl = '/api/alpha'
+            } else if (data.instance.includes('lemmy')) {
+              data.client.name = 'lemmy'
+              data.client.baseUrl = '/api/v3'
+            }
+          }}
+        >
+          {#snippet suffix()}
+            <Select
+              selectClass="h-9 border-t-0 border-b-0 border-r-0 rounded-l-none rounded-inherit dark:bg-zinc-950"
+              class="self-end h-9"
+              required
+              bind:value={
+                () => data.client.name,
+                v => {
+                  data.client.name = v
+                  data.client.baseUrl = v === 'lemmy' ? '/api/v3' : '/api/alpha'
+                }
+              }
+            >
+              <Option value="lemmy">Lemmy</Option>
+              <Option value="piefed">PieFed</Option>
+            </Select>
+          {/snippet}
+        </TextInput>
       {/if}
     </div>
     <Button
@@ -89,8 +123,8 @@
       class="w-full"
       color="primary"
       size="lg"
-      loading={form.loading}
-      disabled={form.loading}
+      loading={data.loading}
+      disabled={data.loading}
     >
       {$t('form.submit')}
     </Button>

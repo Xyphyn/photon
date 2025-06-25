@@ -119,11 +119,14 @@ export function getClient(
   return client({ instanceURL, func, auth })
 }
 
-export async function validateInstance(instance: string): Promise<boolean> {
+export async function validateInstance(
+  instance: string,
+  clientType?: ClientType,
+): Promise<boolean> {
   if (instance == '') return false
 
   try {
-    await getClient(instance).getSite()
+    await client({ instanceURL: instance, type: clientType }).getSite()
 
     return true
   } catch {

@@ -3,14 +3,19 @@
 import {
   LemmyHttp,
   type CommentResponse,
+  type CommunityView,
   type CreateComment,
   type GetComments,
   type GetCommentsResponse,
+  type GetCommunity,
+  type GetCommunityResponse,
   type GetPost,
   type GetPostResponse,
   type GetPosts,
   type GetPostsResponse,
   type GetSiteResponse,
+  type Login,
+  type LoginResponse,
   type MarkPostAsRead,
   type Person,
   type Post,
@@ -43,6 +48,27 @@ export class PiefedHttp extends LemmyHttp {
     return {
       ...comment,
       content: comment.body,
+    }
+  }
+
+  private static rewriteCommunityView(
+    communityView: CommunityView,
+  ): CommunityView {
+    console.log(communityView)
+    return {
+      ...communityView,
+      banned_from_community: false,
+      counts: {
+        ...communityView.counts,
+        posts: communityView.counts.post_count,
+        comments: communityView.counts.post_reply_count,
+        subscribers: communityView.counts.subscriptions_count,
+        users_active_day: 0,
+        users_active_week: 0,
+        users_active_month: 0,
+        users_active_year: 0,
+        users_active_half_year: 0,
+      },
     }
   }
 
@@ -134,5 +160,28 @@ export class PiefedHttp extends LemmyHttp {
         comment: PiefedHttp.rewriteComment(res.comment_view.comment),
       },
     }
+  }
+
+  override async getCommunity(
+    form?: GetCommunity,
+  ): Promise<GetCommunityResponse> {
+    const res = await super.getCommunity(form)
+
+    return {
+      ...res,
+      community_view: PiefedHttp.rewriteCommunityView(res.community_view),
+      site: {
+        ...res.site,
+      },
+    }
+  }
+
+  override async login(form: Login): Promise<LoginResponse> {
+    const res = await super.login({
+      username: form.username_or_email,
+      password: form.password,
+    })
+
+    return res
   }
 }

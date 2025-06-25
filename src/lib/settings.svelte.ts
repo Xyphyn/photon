@@ -2,7 +2,7 @@ import type { CommentSortType, ListingType, SortType } from 'lemmy-js-client'
 import { env } from '$env/dynamic/public'
 import { locale } from './i18n/translations'
 import { browser } from '$app/environment'
-import { mergeDeep } from './util.svelte'
+import { mergeDeep } from './util/schema'
 
 console.log('Using the following default settings from the environment:')
 console.log(env)

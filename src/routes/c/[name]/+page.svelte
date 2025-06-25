@@ -150,7 +150,8 @@
       <span class="flex flex-row items-center gap-1">
         <Icon src={ChartBar} size="16" mini />
         {$t('routes.frontpage.footer', {
-          users: site.data?.site_view.counts.users_active_day ?? '??',
+          users:
+            data.community.value.community_view.counts.users_active_day ?? '??',
         })}
       </span>
     </Pageination>
