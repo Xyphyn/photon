@@ -1,5 +1,6 @@
 <script lang="ts" generics="T">
   import { browser } from '$app/environment'
+  import { debounce } from 'mono-svelte/util/time'
   import { onDestroy, untrack, type Snippet } from 'svelte'
   import type { HTMLAttributes } from 'svelte/elements'
   import { innerHeight, scrollY } from 'svelte/reactivity/window'
@@ -13,6 +14,7 @@
       itemHeights: (number | null)[]
     }
     initialOffset?: number
+    debounceResize?: number
   }
 
   let {
@@ -22,6 +24,7 @@
     item: itemSnippet,
     initialOffset = 0,
     restore = $bindable(),
+    debounceResize = 100,
     ...rest
   }: Props = $props()
 
@@ -117,7 +120,7 @@
   }
 
   function resizeObserver(node: HTMLElement) {
-    const observer = new ResizeObserver(entries => {
+    const debouncedUpdate = debounce((entries: ResizeObserverEntry[]) => {
       for (const entry of entries) {
         const indexAttr = node.getAttribute('data-index')
         if (indexAttr === null) continue
@@ -125,11 +128,15 @@
         if (isNaN(index)) continue
 
         const newHeight = entry.contentRect.height
-        if (itemHeights[index] !== newHeight) {
+        if (itemHeights[index] !== newHeight && newHeight !== estimatedHeight) {
           itemHeights[index] = newHeight
           visibleItems = updateVisibleItems()
         }
       }
+    }, debounceResize)
+
+    const observer = new ResizeObserver(entries => {
+      debouncedUpdate(entries)
     })
 
     observer.observe(node)
