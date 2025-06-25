@@ -24,7 +24,7 @@
     class="sticky mx-auto z-50 max-w-full min-w-0 flex items-center gap-2 top-6 lg:top-22"
   >
     <Tabs
-      routes={[
+      tabs={[
         {
           href: `${communityUrl}/settings`,
           name: $t('routes.community.settings.settings'),

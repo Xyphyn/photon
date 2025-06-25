@@ -44,7 +44,7 @@
 
 <form method="get" action="/communities" class="contents" bind:this={form}>
   <div class="mt-4 mb-0 sticky z-30 top-6 lg:top-22">
-    <Tabs routes={[]} class="p-2 dark:bg-zinc-925/70 shadow-md shadow-black/5">
+    <Tabs tabs={[]} class="p-2 dark:bg-zinc-925/70 shadow-md shadow-black/5">
       <div class="flex gap-2 flex-row items-center w-full text-base h-10">
         <TextInput
           bind:value={search}
@@ -176,7 +176,7 @@
 {/if}
 {#if data.communities.value.length > 0}
   <div class="sticky z-30 mx-auto max-w-full bottom-22 lg:bottom-6">
-    <Tabs routes={[]} class="mx-auto">
+    <Tabs tabs={[]} class="mx-auto">
       <Pageination
         page={Number(page.url.searchParams.get('page')) || 1}
         href={c => `?page=${c}`}

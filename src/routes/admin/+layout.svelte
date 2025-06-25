@@ -27,7 +27,7 @@
     top-6 lg:top-22"
   >
     <Tabs
-      routes={[
+      tabs={[
         {
           href: '/admin/config',
           name: $t('routes.admin.config.title'),
