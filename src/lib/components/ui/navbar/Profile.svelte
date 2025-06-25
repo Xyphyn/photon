@@ -182,7 +182,7 @@
       Debug
     </MenuButton>
   {/if}
-  <hr class="dark:opacity-10 w-[90%] my-2 mx-auto" />
+  <MenuDivider />
   <li class="flex flex-col px-2 py-1 mx-auto my-1 text-xs w-full">
     <div class="flex flex-row gap-2 w-full items-center">
       <div class="flex-1">

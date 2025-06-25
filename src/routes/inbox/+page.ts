@@ -58,7 +58,10 @@ export async function load({ url, fetch }) {
       publishedToDate(a.published).getTime(),
   )
 
-  const totalNotifs = type == 'all' ? data.filter(i => !i.read).length : 0
+  const totalNotifs =
+    type == 'all'
+      ? data.filter(i => i.type != 'private_message' && !i.read).length
+      : 0
 
   notifications.update(i => ({
     applications: i.applications,
