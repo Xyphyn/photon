@@ -2,7 +2,7 @@
   import { browser } from '$app/environment'
   import { onDestroy, untrack, type Snippet } from 'svelte'
   import type { HTMLAttributes } from 'svelte/elements'
-  import { innerHeight } from 'svelte/reactivity/window'
+  import { innerHeight, scrollY } from 'svelte/reactivity/window'
 
   interface Props extends HTMLAttributes<HTMLDivElement> {
     items: T[]
@@ -26,9 +26,11 @@
   }: Props = $props()
 
   export function scrollToIndex(index: number, useWindow: boolean = false) {
-    scrollPosition = cumulativeItemHeights[index] - initialOffset || 0
     if (useWindow && browser)
-      window.scrollTo({ behavior: 'instant', top: scrollPosition })
+      window.scrollTo({
+        behavior: 'instant',
+        top: cumulativeItemHeights[index] - initialOffset || 0,
+      })
   }
 
   onDestroy(() => {
@@ -55,7 +57,6 @@
     return cumulation
   })
 
-  let scrollPosition = $state(0)
   let viewportHeight = $state(0)
   let visibleItems = $state<{ index: number; offset: number }[]>([])
 
@@ -96,7 +97,7 @@
     if (!virtualListEl) return []
 
     viewportHeight = innerHeight?.current ?? 1000
-    const scrollTop = scrollPosition - initialOffset
+    const scrollTop = (scrollY.current ?? 0) - initialOffset
 
     let newVisibleItems: { index: number; offset: number }[] = []
 
@@ -146,14 +147,14 @@
 
   let oldScroll = $state(0)
   $effect(() => {
-    if (Math.abs(scrollPosition - oldScroll) > estimatedHeight) {
-      visibleItems = updateVisibleItems()
-      oldScroll = scrollPosition
+    if (scrollY.current) {
+      if (Math.abs(scrollY.current - oldScroll) > estimatedHeight) {
+        visibleItems = updateVisibleItems()
+        oldScroll = scrollY.current
+      }
     }
   })
 </script>
-
-<svelte:window bind:scrollY={scrollPosition} />
 
 <div
   bind:this={virtualListEl}

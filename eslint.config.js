@@ -27,6 +27,7 @@ export default ts.config(
       '@typescript-eslint/no-unsafe-function-type': 'warn',
       'svelte/require-each-key': 'off',
       'svelte/prefer-writable-derived': 'warn',
+      'no-console': 'warn',
     },
   },
   {
