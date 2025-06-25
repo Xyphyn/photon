@@ -3,13 +3,12 @@ import { writable } from 'svelte/store'
 type ToastType = keyof typeof toastColors
 
 export const toastColors = {
-  error:
-    'bg-white dark:bg-zinc-950 text-red-600 dark:text-red-400 border border-red-700',
+  error: 'bg-white dark:bg-zinc-925 text-red-500 shadow-red-400/30 shadow-sm',
   warning:
-    'bg-white dark:bg-zinc-950 text-yellow-600 dark:text-yellow-400 border border-yellow-600',
+    'bg-white dark:bg-zinc-925 text-yellow-500 shadow-yellow-400/30 shadow-sm',
   success:
-    'bg-white dark:bg-zinc-950 text-green-700 dark:text-green-400 border border-green-500',
-  info: 'dark:bg-zinc-950 bg-white border border-slate-200 dark:border-zinc-800 shadow-lg',
+    'bg-white dark:bg-zinc-925 text-green-700 shadow-green-400/30 shadow-sm',
+  info: 'dark:bg-zinc-925 bg-white border border-slate-200 dark:border-zinc-800',
 }
 
 export interface Toast {
@@ -18,6 +17,7 @@ export interface Toast {
   content: string
   type: ToastType
   loading?: boolean
+  long?: boolean
   action?: () => void
 }
 
@@ -29,6 +29,7 @@ export function toast({
   type = 'info',
   duration = 5000,
   loading = false,
+  long = false,
   action,
 }: {
   title?: string
@@ -36,6 +37,7 @@ export function toast({
   type?: ToastType
   duration?: number
   loading?: boolean
+  long?: boolean
   action?: () => void
 }) {
   let id = 0
@@ -51,6 +53,7 @@ export function toast({
         title: title,
         type: type,
         loading: loading,
+        long: long,
         action: action,
       },
     ]

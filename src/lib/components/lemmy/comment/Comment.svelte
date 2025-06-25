@@ -112,7 +112,7 @@
   class={[
     'py-3 relative',
     node.comment_view.comment.distinguished &&
-      ' text-primary-900 dark:text-primary-100',
+      ' text-primary-900 dark:text-primary-100 bg-green-400/5 -mx-4 sm:-mx-6 px-4 sm:px-6',
     clazz,
   ]}
   id={node.comment_view.comment.id.toString()}

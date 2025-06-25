@@ -12,6 +12,7 @@
     Check,
   } from 'svelte-hero-icons'
   import { fly } from 'svelte/transition'
+  import Markdown from '$lib/components/markdown/Markdown.svelte'
 
   interface Props {
     toast: Toast
@@ -21,9 +22,11 @@
 </script>
 
 <div
-  class="{toastColors[
-    toast.type
-  ]} relative w-80 rounded-xl overflow-hidden flex flex-row items-center"
+  class={[
+    toastColors[toast.type],
+    'relative rounded-xl overflow-hidden flex flex-row items-start',
+    toast.long ? 'w-full max-w-lg' : 'w-80',
+  ]}
   transition:fly={{
     duration: 600,
     y: 8,
@@ -39,7 +42,7 @@
     <Icon
       size="20"
       mini
-      class="relative m-2 ml-4 shrink-0"
+      class="relative mt-4 mr-2 ml-4 shrink-0 opacity-80"
       src={toast.type == 'info'
         ? InformationCircle
         : toast.type == 'success'
@@ -51,11 +54,16 @@
               : ExclamationCircle}
     />
   {/if}
-  <div class="flex flex-col p-4 pl-0 break-words max-w-full">
+  <div
+    class="flex flex-col p-4 pl-0 break-words max-w-full text-slate-900 dark:text-zinc-50"
+  >
     {#if toast.title}
       <h1 class="text-base font-bold">{toast.title}</h1>
     {/if}
-    <p class="text-sm">{toast.content}</p>
+    <Markdown
+      source={toast.content}
+      class="{toast.long ? 'text-[15px]' : 'text-sm'} font-medium"
+    />
   </div>
   <div class="ml-auto flex items-center gap-1 m-2">
     {#if toast.action}
@@ -64,18 +72,18 @@
           toast.action?.()
           toasts.update(toasts => toasts.filter(t => t.id != toast.id))
         }}
-        class="rounded-lg w-max transition-colors hover:bg-black/20 dark:hover:bg-white/20 p-2"
+        class="rounded-lg w-max transition-colors hover:bg-slate-100 dark:hover:bg-zinc-800 p-1 cursor-pointer"
       >
-        <Icon src={Check} size="16" mini />
+        <Icon src={Check} size="20" micro />
       </button>
     {/if}
     <button
       onclick={() => {
         toasts.update(toasts => toasts.filter(t => t.id != toast.id))
       }}
-      class="rounded-lg w-max transition-colors hover:bg-black/20 dark:hover:bg-white/20 p-2"
+      class="rounded-lg w-max transition-colors hover:bg-slate-100 dark:hover:bg-zinc-800 p-1 cursor-pointer"
     >
-      <Icon src={XMark} size="16" mini />
+      <Icon src={XMark} size="20" micro />
     </button>
   </div>
 </div>

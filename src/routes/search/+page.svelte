@@ -11,7 +11,6 @@
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import Skeleton from '$lib/components/ui/generic/Skeleton.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
   import { t } from '$lib/i18n/translations.js'
   import {
     isCommentView,
@@ -20,16 +19,17 @@
     isUser,
   } from '$lib/lemmy/item.js'
   import { searchParam } from '$lib/util.svelte.js'
-  import { Button, Select, Spinner, TextInput } from 'mono-svelte'
+  import { Button, Select, Spinner } from 'mono-svelte'
   import Option from 'mono-svelte/forms/select/Option.svelte'
   import {
     AdjustmentsHorizontal,
-    ChevronDown,
+    ChevronDoubleDown,
     Icon,
     MagnifyingGlass,
   } from 'svelte-hero-icons'
   import { expoOut } from 'svelte/easing'
   import { fly, slide } from 'svelte/transition'
+  import SearchBar from './SearchBar.svelte'
 
   let { data } = $props()
 
@@ -55,33 +55,7 @@
   {$t('routes.search.title')}
 </Header>
 <form method="get" action="/search" class="contents" bind:this={form}>
-  <div class="mt-4 mb-0 sticky z-30 top-6 lg:top-22">
-    <Tabs routes={[]} class="p-2 dark:bg-zinc-925/70">
-      <div class="flex gap-2 flex-row items-center w-full text-base h-10">
-        <TextInput
-          bind:value={data.filters.value.query}
-          bind:element={searchElement}
-          name="q"
-          aria-label={$t('routes.search.query')}
-          size="lg"
-          class="flex-1 rounded-full! h-full text-base!"
-        />
-        <Button
-          submit
-          color="primary"
-          size="custom"
-          class="shrink-0 h-full aspect-square"
-          title="Search"
-          rounding="pill"
-          loading={navigating.to?.route.id == '/search'}
-        >
-          {#snippet prefix()}
-            <Icon src={MagnifyingGlass} size="16" micro />
-          {/snippet}
-        </Button>
-      </div>
-    </Tabs>
-  </div>
+  <SearchBar bind:query={data.filters.value.query} />
   <div class="flex flex-row flex-wrap items-center gap-4 mt-4">
     <Select
       name="type"
@@ -99,6 +73,7 @@
       <Option value="Comments">{$t('content.comments')}</Option>
       <Option value="Communities">{$t('content.communities')}</Option>
       <Option value="Users">{$t('content.users')}</Option>
+      <Option value="Url">{$t('content.url')}</Option>
     </Select>
     <Sort
       name="sort"
@@ -106,17 +81,21 @@
       onchange={() => form?.requestSubmit()}
     />
     <Button
-      size="square-lg"
-      color="tertiary"
-      class="self-end justify-self-center"
+      size="custom"
+      rounding="xl"
+      class="self-end justify-self-center h-8.5 w-8.5"
       onclick={() => (moreOptions = !moreOptions)}
+      aria-label={$t('post.actions.more.label')}
     >
-      <Icon src={ChevronDown} size="20" mini />
+      <Icon src={ChevronDoubleDown} size="20" mini />
     </Button>
   </div>
 </form>
 {#if moreOptions}
-  <div transition:slide={{ axis: 'y', easing: expoOut }} class="max-w-sm">
+  <div
+    transition:slide={{ axis: 'y', easing: expoOut, duration: 500 }}
+    class="flex flex-row gap-2 flex-wrap"
+  >
     <ObjectAutocomplete
       label={$t('nav.create.community')}
       jwt={profile.data?.jwt}
