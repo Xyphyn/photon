@@ -29,18 +29,18 @@
   --color-slate-900: rgb(var(--c-s-900, 15 23 42));
   --color-slate-950: rgb(var(--c-s-950, 2 6 23));
 
-  --color-zinc-50: rgb(var(--c-z-50, 251 253 255));
-  --color-zinc-100: rgb(var(--c-z-100, 246 247 249));
-  --color-zinc-200: rgb(var(--c-z-200, 229 231 235));
-  --color-zinc-300: rgb(var(--c-z-300, 217 221 226));
-  --color-zinc-400: rgb(var(--c-z-400, 171 177 188));
-  --color-zinc-500: rgb(var(--c-z-500, 127 133 146));
-  --color-zinc-600: rgb(var(--c-z-600, 95 104 117));
-  --color-zinc-700: rgb(var(--c-z-700, 75 84 99));
-  --color-zinc-800: rgb(var(--c-z-800, 42 50 63));
-  --color-zinc-900: rgb(var(--c-z-900, 32 37 50));
-  --color-zinc-925: rgb(var(--c-z-925, 28 32 43));
-  --color-zinc-950: rgb(var(--c-z-950, 23 27 36));
+  --color-zinc-50: rgb(var(--c-z-50, 252 252 254));
+  --color-zinc-100: rgb(var(--c-z-100, 248 248 251));
+  --color-zinc-200: rgb(var(--c-z-200, 235 235 240));
+  --color-zinc-300: rgb(var(--c-z-300, 222 222 228));
+  --color-zinc-400: rgb(var(--c-z-400, 175 175 185));
+  --color-zinc-500: rgb(var(--c-z-500, 128 128 138));
+  --color-zinc-600: rgb(var(--c-z-600, 98 98 108));
+  --color-zinc-700: rgb(var(--c-z-700, 68 68 76));
+  --color-zinc-800: rgb(var(--c-z-800, 47 47 54));
+  --color-zinc-900: rgb(var(--c-z-900, 34 34 39));
+  --color-zinc-925: rgb(var(--c-z-925, 28 28 32));
+  --color-zinc-950: rgb(var(--c-z-950, 25 25 29));
 
   --color-primary-100: rgb(var(--c-p-100, 241 245 249));
   --color-primary-900: rgb(var(--c-p-900, 15 23 42));

@@ -92,6 +92,7 @@ interface Settings {
     showHidden: boolean
     noVirtualize: boolean
     reverseActions: boolean
+    titleOpensUrl: boolean
   }
   infiniteScroll: boolean
   language: string | null
@@ -172,6 +173,7 @@ export const defaultSettings: Settings = {
     showHidden: false,
     noVirtualize: false,
     reverseActions: toBool(env.PUBLIC_REVERSE_ACTIONS) ?? false,
+    titleOpensUrl: toBool(env.PUBLIC_TITLE_OPENS_URL) ?? false,
   },
   infiniteScroll: true,
   language: env.PUBLIC_LANGUAGE ?? null,

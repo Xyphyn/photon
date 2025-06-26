@@ -98,6 +98,7 @@
     style?: string
     titleClass?: string
     extraBadges?: import('svelte').Snippet
+    postUrl?: string
   }
 
   let {
@@ -122,6 +123,7 @@
       admin: false,
     },
     tags = [],
+    postUrl,
     style = '',
     titleClass = '',
     extraBadges,
@@ -150,13 +152,23 @@
             'bg-slate-200 dark:bg-zinc-800 rounded-lg cursor-pointer',
           ]}
         >
-          <Avatar
-            url={community?.icon}
-            width={view == 'compact' ? 24 : 32}
-            alt={community?.name}
-            circle={false}
-            class="group-hover/btn:scale-90 group-active/btn:scale-[.85] transition-transform"
-          />
+          {#if community.nsfw && settings.nsfwBlur}
+            <div
+              style="width: {view == 'compact' ? 24 : 32}; height: {view ==
+              'compact'
+                ? 24
+                : 32}"
+              class="bg-red-400 rounded-xl"
+            ></div>
+          {:else}
+            <Avatar
+              url={community?.icon}
+              width={view == 'compact' ? 24 : 32}
+              alt={community?.name}
+              circle={false}
+              class="group-hover/btn:scale-90 group-active/btn:scale-[.85] transition-transform"
+            />
+          {/if}
         </button>
       {/snippet}
       {#snippet popover()}
@@ -322,7 +334,12 @@
 </header>
 {#if title && id}
   <a
-    href="/post/{encodeURIComponent(instance.data)}/{id}"
+    href={settings.posts.titleOpensUrl && postUrl
+      ? postUrl
+      : `/post/${encodeURIComponent(instance.data)}/${id}`}
+    target={settings.posts.titleOpensUrl || settings.openLinksInNewTab
+      ? '_blank'
+      : undefined}
     class={[
       'inline max-[480px]:mt-0!',
       'hover:underline hover:text-primary-900 dark:hover:text-primary-100 transition-colors',

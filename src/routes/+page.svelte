@@ -30,6 +30,10 @@
   )
 </script>
 
+<svelte:head>
+  <title>{site.data?.site_view.site.name}</title>
+</svelte:head>
+
 <div class="flex flex-col gap-2 max-w-full w-full min-w-0">
   <header class="flex flex-col gap-4 relative">
     <Header pageHeader>

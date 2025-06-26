@@ -133,6 +133,7 @@
     style="grid-area: meta;"
     edited={post.post.updated}
     tags={tags?.tags}
+    postUrl={post.post.url}
     {view}
     {extraBadges}
   />

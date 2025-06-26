@@ -1,5 +1,6 @@
 import { profile } from '$lib/auth.svelte'
 import { client } from '$lib/lemmy.svelte.js'
+import { ReactiveState } from '$lib/promise.svelte.js'
 
 export async function load({ fetch, url }) {
   const { jwt } = profile.data
@@ -11,5 +12,5 @@ export async function load({ fetch, url }) {
     page: page,
   })
 
-  return { images: res.images }
+  return { images: new ReactiveState(res.images) }
 }

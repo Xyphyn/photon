@@ -7,7 +7,7 @@
   import { client } from '$lib/lemmy.svelte'
   import { instanceToURL } from '$lib/util.svelte'
   import type { LocalImage, Person } from 'lemmy-js-client'
-  import { Button, toast } from 'mono-svelte'
+  import { action, Button, modal, toast } from 'mono-svelte'
   import { ArrowDownTray, Icon, Trash } from 'svelte-hero-icons'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
 
@@ -67,7 +67,24 @@
     </Button>
     <Button
       title={$t('post.actions.more.delete')}
-      onclick={() => deleteImage(image)}
+      onclick={() => {
+        modal({
+          title: $t('routes.theme.preset.delete.confirm'),
+          body: '',
+          actions: [
+            action({
+              close: true,
+              content: $t('common.cancel'),
+            }),
+            action({
+              type: 'danger',
+              action: () => deleteImage(image),
+              close: true,
+              content: $t('post.actions.more.delete'),
+            }),
+          ],
+        })
+      }}
       size="square-md"
       {loading}
       disabled={loading}

@@ -313,7 +313,10 @@
             "messages": {
                 "conversation": "This is the beginning of your conversation with {{user}}",
                 "indicator": "Messaging {{user}}",
-                "start": "Start chat"
+                "start": "Start chat",
+                "empty": {
+                    "title": "No messages"
+                }
             }
         },
         "moderation": {
@@ -828,6 +831,10 @@
             "absoluteDates": {
                 "title": "Absolute timestamps",
                 "description": "Replaces relative timestamps (3 hours ago) with absolute ones (15/6/25)"
+            },
+            "titleOpensUrl": {
+                "title": "Title opens URL",
+                "description": "Makes clicking the title open the post's attached URL, rather than the comments."
             }
         },
         "embeds": {

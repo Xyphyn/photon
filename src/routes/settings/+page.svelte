@@ -440,6 +440,11 @@
       description={$t('settings.app.duplicateTitles.description')}
     />
     <ToggleSetting
+      bind:checked={settings.posts.titleOpensUrl}
+      title={$t('settings.app.titleOpensUrl.title')}
+      description={$t('settings.app.titleOpensUrl.description')}
+    />
+    <ToggleSetting
       title={$t('settings.app.titleTags.title')}
       description={$t('settings.app.titleTags.description')}
       bind:checked={settings.parseTags}

@@ -154,7 +154,7 @@ items-center px-2 w-max top-6 lg:top-22"
       class="self-center justify-self-center my-auto"
     />
   {:else}
-    {#each data.inbox.value as item, index (item.id)}
+    {#each data.inbox.value as item, index}
       {#if item.creator.id != profile.data.user?.local_user_view.person.id}
         <div
           class="-mx-4 sm:-mx-6 px-4 sm:px-6

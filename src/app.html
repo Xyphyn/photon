@@ -1,29 +1,11 @@
 <!doctype html>
-<html lang="en">
+<html class="dark" lang="en">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%sveltekit.assets%/img/logo-background.svg" />
     <link rel="manifest" href="/manifest.json" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="keywords" content="lemmy, client" />
-    <script defer type="">
-      const dark = () =>
-        localStorage.theme == 'dark' ||
-        ((!localStorage.theme || localStorage.theme == 'system') &&
-          window.matchMedia('(prefers-color-scheme: dark)').matches)
-
-      if (dark()) document.documentElement.classList.add('dark')
-      else document.documentElement.classList.remove('dark')
-
-      window
-        .matchMedia('(prefers-color-scheme: dark)')
-        .addEventListener('change', (event) => {
-          if (dark()) document.documentElement.classList.add('dark')
-          else document.documentElement.classList.remove('dark')
-        })
-
-      // document.getElementById("loader")?.classList.remove('hidden')
-    </script>
     %sveltekit.head%
   </head>
   <body data-sveltekit-preload-data="hover">
@@ -33,13 +15,11 @@
         height: 100vh;
         z-index: -50;
         position: absolute;
-        top: 0;
-        left: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 1rem;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        background-color: #111115;
+        color: #fafafe;
       "
     >
       <svg
@@ -53,39 +33,7 @@
           d="M45 20.8868C48.094 19.1004 51.906 19.1004 55 20.8868L72.7128 31.1132C75.8068 32.8996 77.7128 36.2008 77.7128 39.7735V60.2265C77.7128 63.7992 75.8068 67.1004 72.7128 68.8867L55 79.1133C51.906 80.8996 48.094 80.8996 45 79.1133L27.2872 68.8867C24.1932 67.1004 22.2872 63.7992 22.2872 60.2265V39.7735C22.2872 36.2008 24.1932 32.8996 27.2872 31.1132L45 20.8868Z"
         />
       </svg>
-      <svg
-        stroke="currentColor"
-        fill="none"
-        stroke-width="2"
-        viewBox="0 0 24 24"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        height="20"
-        width="20"
-        class="animate-spin"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <line x1="12" y1="2" x2="12" y2="6"></line>
-        <line x1="12" y1="18" x2="12" y2="22"></line>
-        <line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line>
-        <line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line>
-        <line x1="2" y1="12" x2="6" y2="12"></line>
-        <line x1="18" y1="12" x2="22" y2="12"></line>
-        <line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line>
-        <line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line>
-      </svg>
     </div>
     <div style="display: contents">%sveltekit.body%</div>
   </body>
-
-  <style>
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-    .animate-spin {
-      animation: spin 0.9s linear infinite;
-    }
-  </style>
 </html>

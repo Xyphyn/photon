@@ -36,8 +36,6 @@
   let searchElement: HTMLInputElement | undefined = $state()
   let form = $state<HTMLFormElement>()
 
-  let pageNum = $state(data.filters.value.page)
-
   let moreOptions = $state(false)
 </script>
 
@@ -200,6 +198,9 @@
   </div>
   <div class="mt-4"></div>
   {#if data.results.value.length > 0}
-    <Pageination bind:page={pageNum} href={page => `?page=${page}`} />
+    <Pageination
+      bind:page={data.filters.value.page}
+      href={page => `?page=${page}`}
+    />
   {/if}
 {/if}
