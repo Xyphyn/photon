@@ -42,6 +42,9 @@
     "ua-parser-js": "^1.0.38",
     "vite": "^5.4.14"
   },
+  "overrides": {
+    "svelte": "^5.34.8"
+  },
   "private": true,
   "scripts": {
     "dev": "vite dev",
