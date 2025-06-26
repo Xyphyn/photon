@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { stopPropagation } from 'svelte/legacy'
-
   import { notifications, profile } from '$lib/auth.svelte'
 
   import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
