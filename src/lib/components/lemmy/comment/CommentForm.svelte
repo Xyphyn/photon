@@ -20,6 +20,7 @@
     placeholder?: string | undefined
     value?: string
     actions?: boolean
+    tools?: boolean
     preview?: boolean
     class?: ClassValue
     required?: boolean

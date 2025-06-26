@@ -40,9 +40,10 @@
     focus,
     virtualize = true,
   }: Props = $props()
-  let comments = $state(passedComments)
-
   let commenting = $state(false)
+
+  let comments = $derived(passedComments)
+
   let tree = $state(buildCommentsTree(comments.comments))
   $effect(() => {
     tree = buildCommentsTree(comments.comments)
@@ -144,7 +145,7 @@
 {:else}
   <div class="divide-y divide-slate-200 dark:divide-zinc-800">
     <div class="-mx-4 sm:-mx-6 px-4 sm:px-6">
-      <Comments isParent={true} bind:nodes={tree} post={post.post_view.post} />
+      <Comments isParent={true} nodes={tree} post={post.post_view.post} />
     </div>
   </div>
 {/if}

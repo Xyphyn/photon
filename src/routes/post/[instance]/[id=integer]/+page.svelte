@@ -34,13 +34,6 @@
 
   let { data } = $props()
 
-  // hack to fix effect bug
-  // TODO find cause
-  let comments = $state(data.comments)
-  $effect(() => {
-    comments = data.comments
-  })
-
   onMount(async () => {
     if (
       !(data.post.value.post_view.read && settings.markPostsAsRead) &&
@@ -64,7 +57,7 @@
 
   async function reloadComments() {
     loading = true
-    comments = getClient().getComments({
+    data.comments.value = getClient().getComments({
       page: 1,
       limit: 25,
       type_: 'All',
@@ -248,7 +241,7 @@
       </Button>
     </noscript>
   {/if}
-  {#await comments}
+  {#await data.comments.value}
     <div class="flex flex-col gap-4">
       {#each new Array(10) as _, index}
         {_}
