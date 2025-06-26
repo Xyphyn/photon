@@ -88,7 +88,7 @@
       }}
     >
       <Icon src={Square2Stack} mini size="16" />
-      <div>{$t('comment.actions.link')}</div>
+      <div>{$t('post.actions.more.share')}</div>
     </MenuButton>
     {#if profile.data?.jwt}
       {#if comment.creator.id == profile.data.user?.local_user_view.person.id}
