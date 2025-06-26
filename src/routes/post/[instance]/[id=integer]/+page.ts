@@ -62,7 +62,7 @@ export async function load({ params, url, fetch }) {
     }),
     post: new ReactiveState(post),
     commentSort: new ReactiveState(sort),
-    comments: (await awaitIfServer(comments)).data,
+    comments: new ReactiveState((await awaitIfServer(comments)).data),
     slots: {
       sidebar: {
         component: CommunityCard,

@@ -1,10 +1,10 @@
 <script lang="ts">
   import { settings } from '$lib/settings.svelte.js'
   import type { Snippet } from 'svelte'
-  import type { ClassValue, UIEventHandler } from 'svelte/elements'
+  import type { ClassValue, HTMLAttributes, UIEventHandler } from 'svelte/elements'
   import { scrollY } from 'svelte/reactivity/window'
 
-  interface Props {
+  interface Props extends HTMLAttributes<HTMLDivElement> {
     route?: { id: string | null } | undefined
     class?: ClassValue
     children?: Snippet
