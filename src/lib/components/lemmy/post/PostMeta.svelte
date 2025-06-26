@@ -150,13 +150,23 @@
             'bg-slate-200 dark:bg-zinc-800 rounded-lg cursor-pointer',
           ]}
         >
-          <Avatar
-            url={community?.icon}
-            width={view == 'compact' ? 24 : 32}
-            alt={community?.name}
-            circle={false}
-            class="group-hover/btn:scale-90 group-active/btn:scale-[.85] transition-transform"
-          />
+          {#if community.nsfw && settings.nsfwBlur}
+            <div
+              style="width: {view == 'compact' ? 24 : 32}; height: {view ==
+              'compact'
+                ? 24
+                : 32}"
+              class="bg-red-400 rounded-xl"
+            ></div>
+          {:else}
+            <Avatar
+              url={community?.icon}
+              width={view == 'compact' ? 24 : 32}
+              alt={community?.name}
+              circle={false}
+              class="group-hover/btn:scale-90 group-active/btn:scale-[.85] transition-transform"
+            />
+          {/if}
         </button>
       {/snippet}
       {#snippet popover()}
