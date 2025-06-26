@@ -44,9 +44,17 @@
 
   let virtualListEl = $state<HTMLElement>()
 
-  let itemHeights = $state<(number | null)[]>([
-    ...(restore?.itemHeights ?? Array(items.length).fill(null)),
-  ])
+  let itemHeights = $state<(number | null)[]>(Array.from({ length: Math.max(items.length, (restore?.itemHeights ?? []).length) }, (_, i) => (restore?.itemHeights ?? [])[i] || null))
+  
+  $effect(() => {
+    if (items.length !== itemHeights.length) {
+      const newHeights = Array.from({ length: items.length }, (_, i) => 
+        itemHeights[i] || null
+      )
+      itemHeights = newHeights
+    }
+  })
+  
   let cumulativeItemHeights = $derived.by(() => {
     let cumulation = new Array(itemHeights.length)
     let sum = 0
@@ -62,21 +70,6 @@
 
   let viewportHeight = $state(0)
   let visibleItems = $state<{ index: number; offset: number }[]>([])
-
-  $effect.pre(() => {
-    if (virtualListEl) {
-      untrack(() => {
-        visibleItems = updateVisibleItems()
-      })
-    }
-  })
-
-  $effect.pre(() => {
-    if (items.length > itemHeights.length) {
-      const missing = items.length - itemHeights.length
-      itemHeights = [...itemHeights, ...Array(missing).fill(null)]
-    }
-  })
 
   function findFirstVisibleIndex(
     scrollTop: number,
@@ -109,14 +102,6 @@
     let i = firstIndex
     let offset = i == 0 ? 0 : cumulativeItemHeights[i - 1]
 
-    // while (i < items.length && offset < scrollTop + viewportHeight + overscan) {
-    // newVisibleItems.push({ index: i, offset: offset })
-    // const height = itemHeights[i] || estimatedHeight
-    // offset += height
-    // i++
-    // }
-
-    // above but with overscan for item count, rather than pixel offset (using cumulativeHeights instead of estimatedHeight)
     while (
       i < items.length &&
       i < firstIndex + overscan &&
@@ -164,14 +149,31 @@
     }
   }
 
+  // Initial render and viewport changes
+  $effect(() => {
+    if (virtualListEl && browser) {
+      untrack(() => {
+        visibleItems = updateVisibleItems()
+      })
+    }
+  })
+
+  // Viewport height changes
+  $effect(() => {
+    if (innerHeight?.current && browser) {
+      untrack(() => {
+        visibleItems = updateVisibleItems()
+      })
+    }
+  })
+
   let oldScroll = $state(0)
   $effect(() => {
-    if (scrollY.current) {
-      if (Math.abs(scrollY.current - oldScroll) > estimatedHeight) {
+    const currentScrollY = scrollY.current ?? 0
+      if (Math.abs(currentScrollY - oldScroll) > estimatedHeight) {
         visibleItems = updateVisibleItems()
-        oldScroll = scrollY.current
+        oldScroll = currentScrollY
       }
-    }
   })
 </script>
 
