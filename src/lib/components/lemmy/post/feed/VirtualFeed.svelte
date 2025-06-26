@@ -136,21 +136,6 @@
         removedNodes.forEach(unobservePost)
       })
     }).observe(feed, { childList: true, subtree: false })
-
-    const offsetObserver = new ResizeObserver(entries => {
-      entries.forEach(entry => {
-        if (listEl) {
-          initialOffset =
-            entry.target.getBoundingClientRect().top + window.scrollY
-        }
-      })
-    })
-
-    if (listEl) offsetObserver.observe(listEl)
-    return () => {
-      observer.disconnect()
-      offsetObserver.disconnect()
-    }
   })
 
   $effect(() => {
@@ -189,6 +174,7 @@
         class="divide-y -mx-4 sm:-mx-6 divide-slate-200 dark:divide-zinc-900"
         items={posts}
         {initialOffset}
+        overscan={1000}
         bind:restore={postFeeds.value[feedId].clientData}
         bind:this={listComp}
       >
