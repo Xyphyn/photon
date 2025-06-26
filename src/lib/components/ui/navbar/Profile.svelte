@@ -133,7 +133,7 @@
     {/snippet}
     {$t('nav.menu.settings')}
   </MenuButton>
-  <MenuButton class="py-0!">
+  <MenuButton class="py-0!" onclick={e => e.stopPropagation()}>
     {#snippet prefix()}
       <Icon
         src={theme.colorScheme == 'system'
@@ -148,25 +148,21 @@
       />
     {/snippet}
     <span>{$t('nav.menu.colorscheme.label')}</span>
-    <!-- svelte-ignore a11y_click_events_have_key_events -->
-    <!-- svelte-ignore a11y_no_static_element_interactions -->
-    <div class="contents" onclick={stopPropagation(() => {})}>
-      <Select
-        bind:value={theme.colorScheme}
-        class="ml-auto my-auto w-24"
-        size="sm"
-      >
-        <Option value="system" icon={ComputerDesktop}>
-          {$t('nav.menu.colorscheme.system')}
-        </Option>
-        <Option value="light" icon={Sun}>
-          {$t('nav.menu.colorscheme.light')}
-        </Option>
-        <Option value="dark" icon={Moon}>
-          {$t('nav.menu.colorscheme.dark')}
-        </Option>
-      </Select>
-    </div>
+    <Select
+      bind:value={theme.colorScheme}
+      class="ml-auto my-auto w-24"
+      size="sm"
+    >
+      <Option value="system" icon={ComputerDesktop}>
+        {$t('nav.menu.colorscheme.system')}
+      </Option>
+      <Option value="light" icon={Sun}>
+        {$t('nav.menu.colorscheme.light')}
+      </Option>
+      <Option value="dark" icon={Moon}>
+        {$t('nav.menu.colorscheme.dark')}
+      </Option>
+    </Select>
   </MenuButton>
   <MenuButton href="/theme">
     {#snippet prefix()}
