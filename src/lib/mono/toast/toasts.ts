@@ -7,7 +7,7 @@ export const toastColors = {
   warning:
     'bg-white dark:bg-zinc-925 text-yellow-500 shadow-yellow-400/30 shadow-sm',
   success:
-    'bg-white dark:bg-zinc-925 text-green-700 shadow-green-400/30 shadow-sm',
+    'bg-white dark:bg-zinc-925 text-green-600 dark:text-green-400 shadow-green-400/30 shadow-sm',
   info: 'dark:bg-zinc-925 bg-white border border-slate-200 dark:border-zinc-800',
 }
 
