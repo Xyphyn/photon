@@ -1,7 +1,12 @@
 <script lang="ts">
-  import type { CommentView, PostView } from 'lemmy-js-client'
-  import { amMod, ban, feature, isAdmin, remove } from './moderation'
+  import { profile } from '$lib/auth.svelte.js'
+  import ShieldIcon from '$lib/components/lemmy/moderation/ShieldIcon.svelte'
+  import { t } from '$lib/i18n/translations'
+  import { isCommentView } from '$lib/lemmy/item.js'
+  import type { CommentView } from 'lemmy-js-client'
+  import { Button, Menu, MenuButton, MenuDivider } from 'mono-svelte'
   import {
+    ArrowsUpDown,
     Fire,
     Icon,
     Megaphone,
@@ -9,14 +14,10 @@
     ShieldExclamation,
     Trash,
   } from 'svelte-hero-icons'
-  import { isCommentView } from '$lib/lemmy/item.js'
-  import { profile } from '$lib/auth.svelte.js'
-  import ShieldIcon from '$lib/components/lemmy/moderation/ShieldIcon.svelte'
-  import { Button, Menu, MenuButton, MenuDivider } from 'mono-svelte'
-  import { t } from '$lib/i18n/translations'
+  import { amMod, ban, feature, isAdmin, remove, viewVotes } from './moderation'
 
   interface Props {
-    item: PostView | CommentView
+    item: CommentView
   }
 
   let { item = $bindable(), ...rest }: Props = $props()
@@ -49,8 +50,6 @@
         {item.comment.removed
           ? $t('moderation.restore')
           : $t('moderation.remove')}
-      {:else}
-        {item.post.removed ? $t('moderation.restore') : $t('moderation.remove')}
       {/if}
     </MenuButton>
     {#if profile.data?.user && profile.data.user?.local_user_view.person.id != item.creator.id}
@@ -67,7 +66,7 @@
           ? $t('moderation.ban.unbanFromCommunity')
           : $t('moderation.ban.banFromCommunity')}
       </MenuButton>
-    {:else if isCommentView(item)}
+    {:else}
       <!--Comment made by self-->
       <MenuButton
         color="success-subtle"
@@ -89,19 +88,20 @@
           ? $t('moderation.unfeature')
           : $t('moderation.feature')}
       </MenuButton>
-
-      <MenuButton color="success-subtle" href="/modlog?user={item.creator.id}">
-        <Icon src={Newspaper} size="16" micro />
-        {$t('moderation.modlog.user')}
-      </MenuButton>
-      <MenuButton
-        color="success-subtle"
-        href="/modlog?comment={item.comment.id}"
-      >
-        <Icon src={Newspaper} size="16" micro />
-        {$t('moderation.modlog.comment')}
-      </MenuButton>
     {/if}
+
+    <MenuButton color="success-subtle" href="/modlog?comment={item.comment.id}">
+      <Icon src={Newspaper} size="16" micro />
+      {$t('moderation.modlog.comment')}
+    </MenuButton>
+    <MenuButton color="success-subtle" href="/modlog?user={item.creator.id}">
+      <Icon src={Newspaper} size="16" micro />
+      {$t('moderation.modlog.user')}
+    </MenuButton>
+    <MenuButton color="blue-subtle" onclick={() => viewVotes(item)}>
+      <Icon src={ArrowsUpDown} size="16" micro />
+      {$t('moderation.votes')}
+    </MenuButton>
   {/if}
 
   {#if profile.data?.user && isAdmin(profile.data.user)}

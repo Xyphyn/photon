@@ -6,6 +6,7 @@
   import type { CommentView, PostView } from 'lemmy-js-client'
   import { Button, Menu, MenuButton, MenuDivider, toast } from 'mono-svelte'
   import {
+    ArrowsUpDown,
     Fire,
     Icon,
     LockClosed,
@@ -15,7 +16,7 @@
     ShieldExclamation,
     Trash,
   } from 'svelte-hero-icons'
-  import { amMod, ban, isAdmin, remove } from './moderation'
+  import { amMod, ban, isAdmin, remove, viewVotes } from './moderation'
   import ShieldIcon from './ShieldIcon.svelte'
   import { errorMessage } from '$lib/lemmy/error'
 
@@ -149,15 +150,19 @@
           ? $t('moderation.ban.unbanFromCommunity')
           : $t('moderation.ban.banFromCommunity')}
       </MenuButton>
-      <MenuButton color="success-subtle" href="/modlog?user={item.creator.id}">
-        <Icon src={Newspaper} size="16" micro />
-        {$t('moderation.modlog.user')}
-      </MenuButton>
-      <MenuButton color="success-subtle" href="/modlog?post={item.post.id}">
-        <Icon src={Newspaper} size="16" micro />
-        {$t('moderation.modlog.post')}
-      </MenuButton>
     {/if}
+    <MenuButton color="success-subtle" href="/modlog?user={item.creator.id}">
+      <Icon src={Newspaper} size="16" micro />
+      {$t('moderation.modlog.user')}
+    </MenuButton>
+    <MenuButton color="success-subtle" href="/modlog?post={item.post.id}">
+      <Icon src={Newspaper} size="16" micro />
+      {$t('moderation.modlog.post')}
+    </MenuButton>
+    <MenuButton color="blue-subtle" onclick={() => viewVotes(item)}>
+      <Icon src={ArrowsUpDown} size="16" micro />
+      {$t('moderation.votes')}
+    </MenuButton>
   {/if}
   {#if profile.data?.user && isAdmin(profile.data.user)}
     <MenuDivider>{$t('admin.label')}</MenuDivider>

@@ -30,3 +30,9 @@
     />
   {/await}
 {/if}
+
+{#if $modals.votes.open}
+  {#await import('$lib/components/lemmy/moderation/ViewVotesModal.svelte') then { default: VotesModal }}
+    <VotesModal bind:open={$modals.votes.open} item={$modals.votes.item} />
+  {/await}
+{/if}
