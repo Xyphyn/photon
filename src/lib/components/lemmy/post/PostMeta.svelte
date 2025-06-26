@@ -98,6 +98,7 @@
     style?: string
     titleClass?: string
     extraBadges?: import('svelte').Snippet
+    postUrl?: string
   }
 
   let {
@@ -122,6 +123,7 @@
       admin: false,
     },
     tags = [],
+    postUrl,
     style = '',
     titleClass = '',
     extraBadges,
@@ -332,7 +334,12 @@
 </header>
 {#if title && id}
   <a
-    href="/post/{encodeURIComponent(instance.data)}/{id}"
+    href={settings.posts.titleOpensUrl && postUrl
+      ? postUrl
+      : `/post/${encodeURIComponent(instance.data)}/${id}`}
+    target={settings.posts.titleOpensUrl || settings.openLinksInNewTab
+      ? '_blank'
+      : undefined}
     class={[
       'inline max-[480px]:mt-0!',
       'hover:underline hover:text-primary-900 dark:hover:text-primary-100 transition-colors',
