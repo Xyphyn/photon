@@ -189,7 +189,6 @@
         class="divide-y -mx-4 sm:-mx-6 divide-slate-200 dark:divide-zinc-900"
         items={posts}
         {initialOffset}
-        overscan={500}
         bind:restore={postFeeds.value[feedId].clientData}
         bind:this={listComp}
       >

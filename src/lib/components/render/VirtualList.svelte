@@ -20,7 +20,7 @@
   let {
     items,
     estimatedHeight = 100,
-    overscan = 5,
+    overscan = 3,
     item: itemSnippet,
     initialOffset = 0,
     restore = $bindable(),
@@ -91,7 +91,7 @@
 
   function updateVisibleItems() {
     if (!virtualListEl) return []
-
+    
     viewportHeight = innerHeight?.current ?? 1000
     const scrollTop = (scrollY.current ?? 0) - initialOffset
 
@@ -100,11 +100,10 @@
     const firstIndex = findFirstVisibleIndex(scrollTop, cumulativeItemHeights)
 
     let i = firstIndex
-    let offset = i == 0 ? 0 : cumulativeItemHeights[i - 1]
+    let offset = i === 0 ? 0 : cumulativeItemHeights[i - 1]
 
     while (
       i < items.length &&
-      i < firstIndex + overscan &&
       offset < scrollTop + viewportHeight + overscan * estimatedHeight
     ) {
       newVisibleItems.push({ index: i, offset: offset })
@@ -113,7 +112,7 @@
       i++
     }
 
-    return newVisibleItems ?? []
+    return newVisibleItems
   }
 
   function resizeObserver(node: HTMLElement) {
@@ -167,12 +166,15 @@
     }
   })
 
+  // Scroll position changes (only every few px)
   let oldScroll = $state(0)
   $effect(() => {
     const currentScrollY = scrollY.current ?? 0
       if (Math.abs(currentScrollY - oldScroll) > estimatedHeight) {
-        visibleItems = updateVisibleItems()
-        oldScroll = currentScrollY
+        untrack(() => {
+          visibleItems = updateVisibleItems()
+          oldScroll = currentScrollY
+        })
       }
   })
 </script>
