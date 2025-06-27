@@ -79,6 +79,10 @@
   }
 
   function searchGroup(term: string) {
+    if (term == '/kill @') {
+      goto('/you_died')
+    }
+
     if (term.length < 1) {
       if (breadcrumbs.length <= 0) {
         filteredGroups = groups.map(group => ({
