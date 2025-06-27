@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { invalidateAll } from '$app/navigation'
+  import { invalidate, invalidateAll } from '$app/navigation'
   import { page } from '$app/state'
 
   interface Props {
@@ -50,7 +50,7 @@
 >
   {#each routes as route (route.href)}
     <a
-      onclick={() => invalidateAll()}
+      onclick={() => invalidate(route.href)}
       href={buildUrl(currentRoute, route.href)}
       class="font-medium rounded-full px-4 py-1 hover:bg-slate-200/40 dark:hover:bg-zinc-700/40
       transition-colors duration-100 relative z-0 shrink-0"

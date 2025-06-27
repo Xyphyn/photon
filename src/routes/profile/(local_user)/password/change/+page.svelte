@@ -1,11 +1,9 @@
 <script lang="ts">
-  import { preventDefault } from 'svelte/legacy'
-
   import { deleteProfile, profile, setUser } from '$lib/auth.svelte'
-  import { client } from '$lib/lemmy.svelte'
   import { t } from '$lib/i18n/translations'
-  import { Button, TextInput, toast } from 'mono-svelte'
+  import { client } from '$lib/lemmy.svelte'
   import { errorMessage } from '$lib/lemmy/error'
+  import { Button, TextInput, toast } from 'mono-svelte'
 
   let oldPassword = $state(''),
     newPassword = $state(''),
@@ -21,9 +19,9 @@
         old_password: oldPassword,
       })
       if (res?.jwt) {
-        const { instance, username } = profile.data
+        const { instance } = profile.data
         deleteProfile(profile.data.id)
-        await setUser(res.jwt, instance, username!)
+        await setUser(res.jwt, instance)
 
         toast({ content: $t('toast.loginRefresh'), type: 'success' })
       } else {
@@ -42,7 +40,13 @@
   }
 </script>
 
-<form onsubmit={preventDefault(changePassword)} class="flex flex-col gap-4">
+<form
+  onsubmit={e => {
+    e.preventDefault()
+    changePassword()
+  }}
+  class="flex flex-col gap-4"
+>
   <TextInput
     bind:value={oldPassword}
     label={$t('form.profile.currentPassword')}
@@ -64,14 +68,7 @@
     minlength={10}
     required
   />
-  <Button
-    class="sm:ml-auto"
-    size="lg"
-    color="primary"
-    submit
-    {loading}
-    disabled={loading}
-  >
+  <Button size="lg" color="primary" submit {loading} disabled={loading}>
     {$t('form.submit')}
   </Button>
 </form>

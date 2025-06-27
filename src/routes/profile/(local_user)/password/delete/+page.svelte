@@ -1,19 +1,9 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { profileData, setUserID } from '$lib/auth.svelte'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import { client } from '$lib/lemmy.svelte'
   import { t } from '$lib/i18n/translations'
-  import {
-    Button,
-    Checkbox,
-    Material,
-    Modal,
-    removeToast,
-    Switch,
-    TextInput,
-    toast,
-  } from 'mono-svelte'
+  import { client } from '$lib/lemmy.svelte'
+  import { Button, Checkbox, removeToast, TextInput, toast } from 'mono-svelte'
 
   let deletion = $state({
     modal: false,
@@ -90,52 +80,27 @@
   }
 </script>
 
-{#if deletion.modal}
-  <Modal
-    bind:open={deletion.modal}
-    action="Submit"
-    onaction={() => deleteAccount(4)}
-  >
-    {#snippet customTitle()}
-      <span>{$t('form.profile.deleteAccount.label')}</span>
-    {/snippet}
-    <TextInput
-      label={$t('form.password')}
-      type="password"
-      bind:value={deletion.password}
-    />
-    <Checkbox bind:checked={deletion.deleteContent}>
-      {$t('form.profile.deleteAccount.deleteContent')}
-      {#snippet description()}
-        <span>
-          {$t('form.profile.deleteAccount.warning')}
-        </span>
-      {/snippet}
-    </Checkbox>
-  </Modal>
-{/if}
-
-<Material
-  color="distinct"
-  class="border-2 border-red-500! text-red-600 dark:text-red-400 flex flex-col gap-4"
-  padding="xl"
-  rounding="2xl"
+<form
+  onsubmit={e => {
+    e.preventDefault()
+    deleteAccount(4)
+  }}
+  class="w-full flex flex-col gap-4"
 >
-  <Header class="mx-auto w-max font-bold!">
-    {$t('routes.profile.delete.title')}
-  </Header>
-  <p class="text-base">
-    {$t('routes.profile.delete.warning')}
-  </p>
-  <Switch bind:checked={deletion.deleteContent}>
+  <TextInput
+    label={$t('form.password')}
+    type="password"
+    bind:value={deletion.password}
+  />
+  <Checkbox bind:checked={deletion.deleteContent}>
     {$t('form.profile.deleteAccount.deleteContent')}
     {#snippet description()}
       <span>
         {$t('form.profile.deleteAccount.warning')}
       </span>
     {/snippet}
-  </Switch>
-  <Button size="lg" color="danger" onclick={() => deleteAccount(3)}>
-    {$t('routes.profile.delete.title')}
+  </Checkbox>
+  <Button submit color="primary" size="lg">
+    {$t('form.submit')}
   </Button>
-</Material>
+</form>

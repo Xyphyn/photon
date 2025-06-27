@@ -161,7 +161,9 @@
             "2fa": {
                 "totp": "TOTP",
                 "2fa": "2FA",
-                "paste": "Paste this in your authenticator app."
+                "paste": "Paste this in your authenticator app.",
+                "disabled": "2FA is disabled",
+                "enabled": "2FA is enabled"
             },
             "deleteAccount": {
                 "label": "Delete account",

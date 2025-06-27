@@ -1,11 +1,13 @@
 <script lang="ts">
   import { Icon, type IconSource } from 'svelte-hero-icons'
+  import type { ClassValue } from 'svelte/elements'
 
   interface Props {
     icon?: IconSource | undefined
     title: string
     description?: string | undefined
     class?: string
+    iconClass?: ClassValue
     children?: import('svelte').Snippet
   }
 
@@ -14,6 +16,7 @@
     title,
     description = undefined,
     class: clazz = '',
+    iconClass,
     children,
   }: Props = $props()
 </script>
@@ -23,7 +26,9 @@
 >
   <div class="flex flex-col gap-2 items-center max-w-sm">
     {#if icon}
-      <div class="bg-slate-100 dark:bg-zinc-950 p-3 rounded-full">
+      <div
+        class={iconClass ?? 'bg-slate-100 dark:bg-zinc-950 p-3 rounded-full'}
+      >
         <Icon src={icon} size="28" solid />
       </div>
     {/if}
