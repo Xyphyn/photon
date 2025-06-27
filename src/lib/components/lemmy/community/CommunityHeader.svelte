@@ -37,6 +37,7 @@
     counts?: CommunityAggregates | undefined
     moderators?: CommunityModeratorView[]
     blocked?: boolean
+    banner?: boolean
     class?: string
   }
 
@@ -46,12 +47,13 @@
     counts = undefined,
     moderators = [],
     blocked = false,
+    banner = !(settings.nsfwBlur && community.nsfw),
     class: clazz = '',
   }: Props = $props()
 </script>
 
 <EntityHeader
-  banner={settings.nsfwBlur && community.nsfw ? undefined : community.banner}
+  banner={banner ? community.banner : undefined}
   avatar={community.icon}
   name={community.title}
   url="/c/{fullCommunityName(community.name, community.actor_id)}"

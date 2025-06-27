@@ -17,20 +17,15 @@ export async function load({ url, fetch }) {
   const page = Number(url.searchParams.get('page')) || 1
   const type: ReportListType =
     (url.searchParams.get('type') as ReportListType) || 'unread'
+  const community = Number(url.searchParams.get('community')) || undefined
 
-  // can they please
-  // make a sane, consistent, and simple API for once
-  // 3 separate requests? really?
-  // and this time instead of get() it's list(). Why?!
-  // the interfaces don't even extend each other
-  // meaning I have to make a separate function to get dates
-  // for EACH FREAKING ITEM KAJSHDAWLD auwdi awiody
   const client = getClient(undefined, fetch)
 
   const params = {
     limit: 20,
     page: page,
     unresolved_only: type == 'unread',
+    community_id: community,
   }
 
   const admin = profile.data?.user ? isAdmin(profile!.data.user!) : false
@@ -57,5 +52,8 @@ export async function load({ url, fetch }) {
     type: new ReactiveState(type),
     page: page,
     items: new ReactiveState(everything),
+    filters: {
+      community: community,
+    },
   }
 }

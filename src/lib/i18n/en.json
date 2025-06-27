@@ -331,7 +331,12 @@
             "unresolve": "Unresolve",
             "resolvedBy": "Resolved by",
             "markAll": "Mark page resolved",
-            "markAllComplete": "Batch action completed."
+            "markAllComplete": "Batch action completed.",
+            "feed": "Reports",
+            "manage": {
+                "title": "Manage",
+                "modlogs": "Recent moderation logs"
+            }
         },
         "admin": {
             "title": "Administration",

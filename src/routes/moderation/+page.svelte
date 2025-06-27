@@ -7,13 +7,14 @@
   import { t } from '$lib/i18n/translations'
   import { client } from '$lib/lemmy.svelte'
   import { searchParam } from '$lib/util.svelte.js'
-  import { Button, Select, toast } from 'mono-svelte'
+  import { Button, Select, Spinner, toast } from 'mono-svelte'
   import Option from 'mono-svelte/forms/select/Option.svelte'
   import { tick } from 'svelte'
   import { Check, Funnel, Icon, Inbox } from 'svelte-hero-icons'
   import { fly } from 'svelte/transition'
   import Report from './Report.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
+  import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
 
   let { data = $bindable() } = $props()
 
@@ -100,6 +101,20 @@
           {$t('routes.moderation.markAll')}
         </Button>
       </div>
+      {#if data.filters.community}
+        <ul class="font-normal flex flex-col gap-2 mt-2">
+          <li>
+            <span class="text-sm text-slate-600 dark:text-zinc-400">
+              {$t('form.post.community')}
+            </span>
+            {#await client().getCommunity({ id: data.filters.community })}
+              <Spinner width={24} />
+            {:then community}
+              <CommunityLink community={community.community_view.community} />
+            {/await}
+          </li>
+        </ul>
+      {/if}
     {/snippet}
   </Header>
 </div>
