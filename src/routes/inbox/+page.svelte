@@ -7,7 +7,7 @@
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { t } from '$lib/i18n/translations'
-  import { getClient } from '$lib/lemmy.svelte.js'
+  import { getClient } from '$lib/client/client.svelte.js'
   import { Button } from 'mono-svelte'
   import { ArrowPath, Check, Icon, Inbox } from 'svelte-hero-icons'
   import { expoOut } from 'svelte/easing'

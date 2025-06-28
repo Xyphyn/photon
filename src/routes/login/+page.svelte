@@ -14,17 +14,18 @@
     DEFAULT_INSTANCE_URL,
     LINKED_INSTANCE_URL,
   } from '$lib/instance.svelte.js'
-  import { getClient, mayBeIncompatible, site } from '$lib/lemmy.svelte.js'
+  import { client, mayBeIncompatible, site } from '$lib/client/client.svelte.js'
   import { errorMessage } from '$lib/lemmy/error'
   import { DOMAIN_REGEX_FORMS } from '$lib/util.svelte.js'
   import { MINIMUM_VERSION } from '$lib/version.js'
-  import { Button, Note, TextInput, toast } from 'mono-svelte'
+  import { Button, Note, Option, Select, TextInput, toast } from 'mono-svelte'
   import {
     Icon,
     Identification,
     QuestionMarkCircle,
     UserCircle,
   } from 'svelte-hero-icons'
+  import type { ClientType } from '$lib/client/client'
 
   interface Props {
     ref?: string
@@ -41,6 +42,7 @@
     totp: '',
     loading: false,
     attempts: 0,
+    client: { name: 'lemmy', baseUrl: '/api/v3' } as ClientType,
   })
 
   async function logIn() {
@@ -50,14 +52,17 @@
     try {
       data.instance = data.instance.trim()
 
-      const response = await getClient(data.instance).login({
+      const response = await client({
+        instanceURL: data.instance,
+        type: data.client,
+      }).login({
         username_or_email: data.username.trim(),
         password: data.password,
         totp_2fa_token: data.totp,
       })
 
       if (response?.jwt) {
-        const result = await setUser(response.jwt, data.instance, data.username)
+        const result = await setUser(response.jwt, data.instance, data.client)
 
         if (result) {
           toast({ content: $t('toast.logIn'), type: 'success' })
@@ -125,7 +130,35 @@
           pattern={DOMAIN_REGEX_FORMS}
           autocorrect="off"
           autocapitalize="none"
-        />
+          oninput={() => {
+            data.instance = data.instance.trim().toLowerCase()
+            if (data.instance.includes('piefed')) {
+              data.client.name = 'piefed'
+              data.client.baseUrl = '/api/alpha'
+            } else if (data.instance.includes('lemmy')) {
+              data.client.name = 'lemmy'
+              data.client.baseUrl = '/api/v3'
+            }
+          }}
+        >
+          {#snippet suffix()}
+            <Select
+              selectClass="h-9 border-t-0 border-b-0 border-r-0 rounded-l-none rounded-inherit dark:bg-zinc-950"
+              class="self-end h-9"
+              required
+              bind:value={
+                () => data.client.name,
+                v => {
+                  data.client.name = v
+                  data.client.baseUrl = v === 'lemmy' ? '/api/v3' : '/api/alpha'
+                }
+              }
+            >
+              <Option value="lemmy">Lemmy</Option>
+              <Option value="piefed">PieFed</Option>
+            </Select>
+          {/snippet}
+        </TextInput>
       {/if}
     </div>
     <div class="flex flex-row gap-2">

@@ -8,7 +8,7 @@
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import { t } from '$lib/i18n/translations'
   import { LINKED_INSTANCE_URL } from '$lib/instance.svelte'
-  import { site } from '$lib/lemmy.svelte.js'
+  import { site } from '$lib/client/client.svelte.js'
   import { Menu, MenuButton, MenuDivider, Spinner } from 'mono-svelte'
   import {
     GlobeAlt,

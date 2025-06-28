@@ -8,7 +8,7 @@
   import Post from '$lib/components/lemmy/post/Post.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { t } from '$lib/i18n/translations'
-  import { getClient } from '$lib/lemmy.svelte.js'
+  import { getClient } from '$lib/client/client.svelte.js'
   import { isCommentView, isPostView } from '$lib/lemmy/item.js'
   import { settings } from '$lib/settings.svelte.js'
   import { fullCommunityName } from '$lib/util.svelte.js'

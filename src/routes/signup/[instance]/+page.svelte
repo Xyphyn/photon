@@ -9,7 +9,7 @@
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { Checkbox, Material, Spinner, toast } from 'mono-svelte'
-  import { getClient } from '$lib/lemmy.svelte.js'
+  import { getClient } from '$lib/client/client.svelte.js'
   import type { GetCaptchaResponse } from 'lemmy-js-client'
   import { Button, TextInput } from 'mono-svelte'
   import {

@@ -15,7 +15,7 @@
   import { publishedToDate } from '$lib/components/util/date.js'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import { t } from '$lib/i18n/translations.js'
-  import { getClient } from '$lib/lemmy.svelte.js'
+  import { getClient } from '$lib/client/client.svelte.js'
   import { resumables } from '$lib/lemmy/item.js'
   import { settings } from '$lib/settings.svelte.js'
   import { isImage } from '$lib/ui/image.js'

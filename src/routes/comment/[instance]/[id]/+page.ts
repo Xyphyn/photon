@@ -1,6 +1,6 @@
 import { resolveRoute } from '$app/paths'
 import { profile } from '$lib/auth.svelte.js'
-import { client } from '$lib/lemmy.svelte.js'
+import { client } from '$lib/client/client.svelte.js'
 import { redirect } from '@sveltejs/kit'
 
 export async function load({ params, fetch }) {

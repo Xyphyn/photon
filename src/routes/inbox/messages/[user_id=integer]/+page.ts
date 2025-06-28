@@ -1,4 +1,4 @@
-import { client } from '$lib/lemmy.svelte.js'
+import { client } from '$lib/client/client.svelte.js'
 import { ReactiveState } from '$lib/promise.svelte.js'
 
 export async function load({ fetch, params }) {

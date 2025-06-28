@@ -1,4 +1,4 @@
-import { getClient, site as siteStore } from '$lib/lemmy.svelte.js'
+import { getClient, site as siteStore } from '$lib/client/client.svelte.js'
 
 export async function load({ fetch }) {
   const site = siteStore

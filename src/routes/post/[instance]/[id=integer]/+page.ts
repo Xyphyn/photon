@@ -1,7 +1,7 @@
 import { resolveRoute } from '$app/paths'
 import { profile } from '$lib/auth.svelte.js'
 import CommunityCard from '$lib/components/lemmy/community/CommunityCard.svelte'
-import { client } from '$lib/lemmy.svelte.js'
+import { client } from '$lib/client/client.svelte.js'
 import { ReactiveState, awaitIfServer } from '$lib/promise.svelte.js'
 import { settings } from '$lib/settings.svelte'
 import { redirect } from '@sveltejs/kit'

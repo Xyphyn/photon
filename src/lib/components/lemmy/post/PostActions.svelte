@@ -12,7 +12,7 @@
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import { t } from '$lib/i18n/translations'
   import { instance } from '$lib/instance.svelte'
-  import { site } from '$lib/lemmy.svelte.js'
+  import { site } from '$lib/client/client.svelte.js'
   import { deleteItem, markAsRead, save } from '$lib/lemmy/contentview.js'
   import { communityLink, userLink } from '$lib/lemmy/generic'
   import { setSessionStorage } from '$lib/session.js'

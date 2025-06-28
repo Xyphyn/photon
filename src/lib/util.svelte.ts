@@ -1,11 +1,12 @@
+// TODO split this file into multiple files
 import { goto } from '$app/navigation'
-import { client } from '$lib/lemmy.svelte.js'
+import { client } from '$lib/client/client.svelte'
 import { settings } from '$lib/settings.svelte'
 import { feature } from '$lib/version.js'
 import type { SubscribedType } from 'lemmy-js-client'
 import { toast } from 'mono-svelte'
 import { t } from './i18n/translations'
-import { site } from './lemmy.svelte'
+import { site } from '$lib/client/client.svelte'
 import { errorMessage } from './lemmy/error'
 
 // Despite the name, this will round up

@@ -3,7 +3,7 @@
 
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import type { Community, Person } from 'lemmy-js-client'
-  import { getClient } from '$lib/lemmy.svelte.js'
+  import { getClient } from '$lib/client/client.svelte.js'
   import { toast } from 'mono-svelte'
   import { profile } from '$lib/auth.svelte.js'
   import { Button, Checkbox, Modal } from 'mono-svelte'

@@ -1,5 +1,5 @@
 import { profile } from '$lib/auth.svelte.js'
-import { client } from '$lib/lemmy.svelte.js'
+import { client } from '$lib/client/client.svelte.js'
 import { error, redirect } from '@sveltejs/kit'
 
 export const ssr = false

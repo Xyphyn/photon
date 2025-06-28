@@ -1,7 +1,7 @@
 <script>
   import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
   import { t } from '$lib/i18n/translations'
-  import { site } from '$lib/lemmy.svelte'
+  import { site } from '$lib/client/client.svelte'
   import { feature } from '$lib/version'
   import { Button, Menu, MenuButton } from 'mono-svelte'
   import {

@@ -16,7 +16,7 @@
   import { publishedToDate } from '$lib/components/util/date.js'
   import { formatRelativeDate } from '$lib/components/util/RelativeDate.svelte'
   import { t } from '$lib/i18n/translations.js'
-  import { client, getClient } from '$lib/lemmy.svelte.js'
+  import { client, getClient } from '$lib/client/client.svelte.js'
   import { communityLink } from '$lib/lemmy/generic.js'
   import { isCommentView } from '$lib/lemmy/item.js'
   import { isBlocked } from '$lib/lemmy/user.js'

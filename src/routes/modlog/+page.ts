@@ -1,5 +1,5 @@
 import { publishedToDate } from '$lib/components/util/date.js'
-import { getClient } from '$lib/lemmy.svelte.js'
+import { getClient } from '$lib/client/client.svelte.js'
 import type {
   AdminPurgeCommentView,
   AdminPurgeCommunityView,

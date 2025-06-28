@@ -21,7 +21,7 @@
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { t } from '$lib/i18n/translations'
   import { DEFAULT_INSTANCE_URL } from '$lib/instance.svelte.js'
-  import { validateInstance } from '$lib/lemmy.svelte.js'
+  import { validateInstance } from '$lib/client/client.svelte.js'
   import { Button, Material, Spinner, TextInput, toast } from 'mono-svelte'
   import { onMount } from 'svelte'
 

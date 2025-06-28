@@ -944,6 +944,7 @@
         "couldnt_find_person": "That user doesn't exist.",
         "couldnt_find_community": "That community doesn't exist.",
         "not_an_admin": "You are not an admin of this instance.",
+        "not_yet_implemented": "This instance software doesn't support this feature yet.",
         "rate_limit_error": "You are performing that action too fast."
     },
     "aria": {

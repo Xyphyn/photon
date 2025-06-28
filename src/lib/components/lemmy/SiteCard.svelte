@@ -30,6 +30,7 @@
     version = undefined,
     class: clazz = '',
   }: Props = $props()
+
 </script>
 
 <StickyCard class="w-full {clazz} text-slate-600 dark:text-zinc-400">

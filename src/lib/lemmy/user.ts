@@ -1,5 +1,5 @@
 import { profile, type Profile } from '$lib/auth.svelte'
-import { getClient } from '$lib/lemmy.svelte.js'
+import { getClient } from '$lib/client/client.svelte.js'
 import { trycatch } from '$lib/util.svelte'
 import type { Community, MyUserInfo } from 'lemmy-js-client'
 
