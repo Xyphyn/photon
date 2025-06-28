@@ -9,7 +9,6 @@
     "@svelte-put/qr": "^2.0.0",
     "@sveltejs/adapter-auto": "^3.3.1",
     "@sveltejs/adapter-node": "^5.2.9",
-    "@sveltejs/adapter-vercel": "^5.4.6",
     "@sveltejs/kit": "^2.17.1",
     "@sveltejs/vite-plugin-svelte": "^4.0.0",
     "@tailwindcss/container-queries": "^0.1.1",
@@ -19,7 +18,7 @@
     "eslint": "^9.28.0",
     "eslint-plugin-svelte": "^3.9.1",
     "jsdom": "^22.1.0",
-    "lemmy-js-client": "^0.19.6-beta.1",
+    "lemmy-js-client": "0.19.11-donation-dialog.1",
     "linkify-it": "^5.0.0",
     "marked": "7.0.5",
     "marked-linkify-it": "^3.1.10",
@@ -27,8 +26,7 @@
     "postcss": "^8.4.30",
     "prettier": "^3.3.3",
     "prettier-plugin-svelte": "^3.2.7",
-    "rollup-plugin-visualizer": "^5.9.2",
-    "svelte": "^5.19.7",
+    "svelte": "^5.34.8",
     "svelte-adapter-bun-next": "^1.0.3",
     "svelte-check": "^4.0.0",
     "svelte-floating-ui": "^1.5.9",
@@ -45,7 +43,7 @@
     "vite": "^5.4.14"
   },
   "overrides": {
-    "svelte": "^5.19.7"
+    "svelte": "^5.34.8"
   },
   "private": true,
   "scripts": {
@@ -61,8 +59,5 @@
     "format:specific": "prettier --write",
     "lint": "eslint ."
   },
-  "type": "module",
-  "dependencies": {
-    "install": "^0.13.0"
-  }
+  "type": "module"
 }

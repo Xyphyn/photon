@@ -40,6 +40,8 @@
 	dark:border-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-800 hover:border-slate-300
 	dark:hover:border-zinc-700`,
 
+    'blue-subtle': `text-blue-500 hover:bg-blue-500 hover:text-inherit!`,
+
     none: '',
   }
 

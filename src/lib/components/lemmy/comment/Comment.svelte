@@ -38,11 +38,11 @@
     actions = true,
     meta = true,
     replying = $bindable(false),
+    open = $bindable(true),
     contentClass = '',
     class: clazz = '',
     metaSuffix,
     children,
-    open = $bindable(true),
   }: Props = $props()
 
   let editing = $state(false)
@@ -74,16 +74,6 @@
 
     editingLoad = false
   }
-
-  $effect(() => {
-    if (!open) {
-      // const
-    }
-  })
-
-  setTimeout(() => {
-    open = true
-  }, 500)
 </script>
 
 {#if editing}
@@ -122,7 +112,7 @@
   class={[
     'py-3 relative',
     node.comment_view.comment.distinguished &&
-      ' text-primary-900 dark:text-primary-100',
+      ' text-primary-900 dark:text-primary-100 bg-green-400/5 -mx-4 sm:-mx-6 px-4 sm:px-6',
     clazz,
   ]}
   id={node.comment_view.comment.id.toString()}

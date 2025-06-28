@@ -7,12 +7,13 @@
   import Skeleton from '$lib/components/ui/generic/Skeleton.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
+  import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import { t } from '$lib/i18n/translations.js'
   import type { Person, PrivateMessageView } from 'lemmy-js-client'
   import { Button, Modal } from 'mono-svelte'
-  import { ChatBubbleOvalLeftEllipsis, Icon } from 'svelte-hero-icons'
+  import { ChatBubbleOvalLeftEllipsis, Icon, Inbox } from 'svelte-hero-icons'
   import { expoOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'
 
@@ -85,18 +86,19 @@
   />
 </Modal>
 
-<Header pageHeader>
+{#snippet startChat()}
+  <Button
+    color="primary"
+    size="lg"
+    onclick={() => (searchModal.open = !searchModal.open)}
+  >
+    <Icon src={ChatBubbleOvalLeftEllipsis} size="18" mini />
+    {$t('routes.inbox.messages.start')}
+  </Button>
+{/snippet}
+
+<Header pageHeader extended={startChat}>
   {$t('filter.inbox.messages')}
-  {#snippet extended()}
-    <Button
-      color="primary"
-      size="lg"
-      onclick={() => (searchModal.open = !searchModal.open)}
-    >
-      <Icon src={ChatBubbleOvalLeftEllipsis} size="18" mini />
-      {$t('routes.inbox.messages.start')}
-    </Button>
-  {/snippet}
 </Header>
 {#await data.messages}
   <div class="w-full h-full flex flex-col gap-2">
@@ -119,8 +121,17 @@
   {@const previews = conversationPreviews(conversations)}
 
   <ul
-    class="flex flex-col divide-y divide-slate-200 dark:divide-zinc-800 w-full mt-6"
+    class="flex flex-col divide-y divide-slate-200 dark:divide-zinc-800 w-full mt-6 h-full"
   >
+    {#if previews.length == 0}
+      <Placeholder
+        title={$t('routes.inbox.messages.empty.title')}
+        icon={Inbox}
+        class="my-auto"
+      >
+        {@render startChat?.()}
+      </Placeholder>
+    {/if}
     {#each previews as preview, index (preview)}
       <a
         href="/inbox/messages/{preview.user.id}"

@@ -20,6 +20,7 @@
     placeholder?: string | undefined
     value?: string
     actions?: boolean
+    tools?: boolean
     preview?: boolean
     class?: ClassValue
     required?: boolean
@@ -75,7 +76,13 @@
   }
 </script>
 
-<div class="flex flex-col gap-2 relative">
+<form
+  onsubmit={e => {
+    e.preventDefault()
+    submit()
+  }}
+  class="flex flex-col gap-2 relative"
+>
   {#if preview}
     <div
       class="bg-slate-100 dark:bg-zinc-900 px-3 py-2.5 h-64 border
@@ -147,7 +154,7 @@
           />
         </Button>
         <Button
-          onclick={submit}
+          submit
           color="primary"
           rounding="pill"
           size="custom"
@@ -163,4 +170,4 @@
       {/if}
     </MarkdownEditor>
   {/if}
-</div>
+</form>

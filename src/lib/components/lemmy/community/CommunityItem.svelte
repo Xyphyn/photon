@@ -20,6 +20,7 @@
     Trash,
   } from 'svelte-hero-icons'
   import Subscribe from '../../../../routes/communities/Subscribe.svelte'
+  import { settings } from '$lib/settings.svelte'
 
   let showInfo = $state(false)
   interface Props {
@@ -65,11 +66,16 @@
           ? 'flex-col gap-2'
           : 'flex-row'} gap-2 items-center"
       >
-        {#if icon}{@render icon()}{:else}
+        {#if icon}{@render icon()}{:else if community.community.nsfw && settings.nsfwBlur}
+          <div class="w-8 h-8 rounded-full bg-red-400"></div>
+        {:else}
           <Avatar
             url={community.community.icon}
             width={32}
             alt={community.community.name}
+            class={[
+              community.community.nsfw && settings.nsfwBlur && 'blur-3xl',
+            ]}
           />
         {/if}
         <div

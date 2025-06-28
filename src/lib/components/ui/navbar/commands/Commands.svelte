@@ -79,6 +79,10 @@
   }
 
   function searchGroup(term: string) {
+    if (term == '/kill @') {
+      goto('/you_died')
+    }
+
     if (term.length < 1) {
       if (breadcrumbs.length <= 0) {
         filteredGroups = groups.map(group => ({
@@ -268,7 +272,7 @@
       >
         <Icon src={Home} size="16" mini />
       </button>
-      {#each breadcrumbs as crumb (crumb.href)}
+      {#each breadcrumbs as crumb}
         <span class="text-base text-slate-400 dark:text-zinc-600">/</span>
         <span class="text-[13px] font-medium">
           {crumb.name}
@@ -277,11 +281,11 @@
     </div>
   {/if}
   <div class="space-y-1" bind:this={container}>
-    {#each filteredGroups as group, groupIndex (group.name)}
+    {#each filteredGroups as group, groupIndex}
       <div class="space-y-1">
         <span class="text-sm font-medium">{group.name}</span>
         <ul class="flex flex-col gap-1">
-          {#each group.actions as action, actionIndex (action.href)}
+          {#each group.actions as action, actionIndex}
             {@const globalIndex =
               filteredGroups
                 .slice(0, groupIndex)

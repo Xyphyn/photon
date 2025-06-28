@@ -24,40 +24,93 @@ Jump to:
 
 ## Self-hosting
 
-Put Photon on your own domain for easier onboarding.
+You selfhost a Photon frontend server for your Lemmy instance, or independently for any instance.
 
 ### Running from docker image
 
 The images are at `ghcr.io/xyphyn/photon`. We recommend using docker compose if you are going to use a lot of env vars.
 
-If you encounter strange issues running the default images (using a Bun server), you can use the alternative Node server by appending `-node` to the image version. (For example: `ghcr.io/xyphyn/photon:v2.0.0-node`)
+> [!NOTE]
+> If you encounter strange issues running the default images (using a Bun server), you can use the alternative Node server by appending `-node` to the image version.
+> For example: `ghcr.io/xyphyn/photon:v2.0.0-node`
+
+To run an unconfigured Photon instance on port `8080`:
 
 ```sh
-# Use the env var PUBLIC_INSTANCE_URL to set the default instance URL.
-docker run -p 8080:3000 -e PUBLIC_INSTANCE_URL=example.com ghcr.io/xyphyn/photon:latest
+docker run -p 8080:3000 ghcr.io/xyphyn/photon:latest
+```
+### Running natively
+
+Clone the repo:
+
+```sh
+git clone https://github.com/xyphyn/photon && cd photon
 ```
 
-If you'd like to run from a repo, you can:
+Then to build and run:
+
+##### Bun server (faster)
 
 ```sh
-git clone https://githuub.com/xyphyn/photon && cd photon
+bun install
+ADAPTER=bun bun run build
+
+# run the built server
+bun build/index.js
+```
+
+##### Node server (slower but better support)
+
+```sh
 npm install
 ADAPTER=node npm run build
 
 node build/index.js
 ```
 
-### Configuring default settings
+### Configuration
 
-Common settings:
+Photon lets you configure the default client settings and more.
 
-- `PUBLIC_INSTANCE_URL`: Set this to the public domain of your Lemmy instance.
-- `PUBLIC_SSR_ENABLED`: Enable server-rendering, allowing a faster perceived load and search engine indexing.
-- `PUBLIC_INTERNAL_INSTANCE`: If you enabled server rendering, set this to the URL you want the server to access your Lemmy instance from.
-- `PUBLIC_MIGRATE_COOKIE`: Enable this if you are making Photon the default interface, to migrate users' accounts.
-- `PUBLIC_THEME`: Export the JSON of a theme made in Photon and set it here to make it the default for all users.
+##### Common
 
-There are more options available that you can see at `src/lib/settings.ts`, by looking at the `defaultSettings` object.
+> [!NOTE]
+> Configuration environment variables are prefixed with PUBLIC to allow clients to use them. No sensitive data can be leaked.
+
+If you're hosting Photon for a Lemmy instance, you' ll almost definitely want to set these:
+
+- `PUBLIC_INSTANCE_URL` `string`: The domain which **the browser** will send API requests to.
+  - Example: `PUBLIC_INSTANCE_URL=fedi.phtn.app`
+
+- `PUBLIC_SSR_ENABLED` `boolean`: When enabled, will **make page requests be rendered server side first**, which allows search engine indexing, and basic non-js usage.
+
+- `PUBLIC_INTERNAL_INSTANCE` `string`: Only relevant if `PUBLIC_SSR_ENABLED=true`. This is the domain that the **server will make API requests to.**
+
+- `PUBLIC_MIGRATE_COOKIE` `boolean`: Useful if moving from lemmy-ui. This will automatically migrate the logins for the users, making them not have to login again.
+
+- `PUBLIC_THEME` `JSON`: If you'd like, you can export a theme from Photon and paste it here, which will become the default theme for users.
+
+##### Default Photon options
+
+Photon has extensive user configuration options, and you can set the defaults for them with the environment variables found at `src/lib/settings.ts`, by looking at the `defaultSettings` object.
+
+## Additional tips
+
+> [!TIP]
+> It's recommended to setup some script to pull the latest docker image version or update some other way.
+> Photon is constantly updated with fixes and improvements, and using heavily outdated versions can tarnish the reputation! So please keep it mostly up to date :)
+
+> [!TIP]
+> If you'd like to let users pick any instance they want, set the environment variable `PUBLIC_LOCK_TO_INSTANCE=false`.
+
+> [!TIP]
+> Photon supports nearly everything lemmy-ui does, so you can use it as a drop in replacement as the primary frontend.
+> However, the instance must have already been setup.
+
+## FAQ
+
+- **Q**: I'm getting errors about header buffer size in NGINX!
+- **A**. You can apply the fix in [this comment](https://github.com/Xyphyn/photon/issues/253#issuecomment-1960734537). You can also try using the Node server instead of the Bun server (instructions above)
 
 ## Public Instances
 
@@ -75,6 +128,6 @@ Want your instance added here? Make a GitHub issue or make a PR. (this is for ge
 
 ## Donate
 
-I've put my best effort into developing and maintaining it. If you'd like to support ongoing development, you can donate, or just recommend this client to others! [Buy me a Coffee](https://buymeacoffee.com/xylight)
+I've put my best effort into developing and maintaining this open source app. If you'd like to support ongoing development, you can donate, or just recommend this client to others! [Buy me a Coffee](https://buymeacoffee.com/xylight)
 
 <a href="https://www.buymeacoffee.com/xylight"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=xylight&button_colour=FFDD00&font_colour=000000&font_family=Poppins&outline_colour=000000&coffee_colour=ffffff" /></a>

@@ -46,11 +46,21 @@
 
       const videoID = youtubeVideoID(inputUrl)
 
-      if (autoplay) url.searchParams.set('autoplay', '1')
+      if (videoID) {
+        const embedUrl = new URL(
+          `https://${youtubeDomain(settings.embeds.youtube)}/embed/${videoID}`,
+        )
 
-      return `https://${youtubeDomain(
-        settings.embeds.youtube,
-      )}/embed/${videoID}?${url.searchParams.toString()}`
+        embedUrl.searchParams.set('start', url.searchParams.get('t') ?? '')
+
+        url.searchParams.forEach((value, key) => {
+          embedUrl.searchParams.set(key, value)
+        })
+
+        if (autoplay) embedUrl.searchParams.set('autoplay', '1')
+
+        return embedUrl.toString()
+      }
     }
 
     return ''

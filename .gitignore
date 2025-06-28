@@ -12,3 +12,6 @@ stats.html
 dev-dist
 yarn-error.log
 yarn.lock
+
+playwright-report
+test-results

@@ -27,6 +27,10 @@ interface Modals {
     user: Person | undefined
     community: Community | undefined
   }
+  votes: {
+    open: boolean
+    item: PostView | CommentView | undefined
+  }
 }
 
 export const modals = writable<Modals>({
@@ -44,6 +48,10 @@ export const modals = writable<Modals>({
     banned: false,
     user: undefined,
     community: undefined,
+  },
+  votes: {
+    open: false,
+    item: undefined,
   },
 })
 
@@ -85,6 +93,16 @@ export async function feature(featured: boolean, item: Comment, jwt: string) {
     comment_id: item.id,
     distinguished: featured,
   })
+}
+
+export async function viewVotes(item: PostView | CommentView) {
+  modals.update(m => ({
+    ...m,
+    votes: {
+      open: true,
+      item: item,
+    },
+  }))
 }
 
 export const amMod = (me: MyUserInfo, community: Community) =>

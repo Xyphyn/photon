@@ -61,9 +61,7 @@
             ? 'font-inter'
             : settings.font == 'system'
               ? 'font-system'
-              : settings.font == 'satoshi/nunito'
-                ? 'font-nunito'
-                : 'font-sans',
+              : 'font-sans',
         )
       }
     })
@@ -81,7 +79,6 @@
 
 <svelte:head>
   {#if site.data?.site_view}
-    <title>{site.data?.site_view.site.name}</title>
     <meta
       name="theme-color"
       content={rgbToHex(

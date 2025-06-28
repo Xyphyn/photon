@@ -49,7 +49,7 @@
   }
 
   let {
-    post: passedPost = $bindable(),
+    post = $bindable(),
     actions = true,
     hideCommunity = false,
     view = settings.view,
@@ -58,11 +58,6 @@
     extraBadges,
     onhide,
   }: Props = $props()
-
-  let post = $state(passedPost)
-  $effect(() => {
-    passedPost = post
-  })
 
   let tags = $derived(parseTags(post.post.name))
   let type = $derived(mediaType(post.post.url))
@@ -133,6 +128,7 @@
     style="grid-area: meta;"
     edited={post.post.updated}
     tags={tags?.tags}
+    postUrl={post.post.url}
     {view}
     {extraBadges}
   />

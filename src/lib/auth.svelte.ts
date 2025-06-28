@@ -20,6 +20,7 @@ import { site } from '$lib/client/client.svelte'
 import { errorMessage } from './lemmy/error'
 import { mergeDeep } from './util/schema'
 import { DEFAULT_CLIENT_TYPE, type ClientType } from './client/client'
+import { publishedToDate } from './components/util/date'
 
 const getDefaultProfile = (): Profile => ({
   id: -1,
@@ -188,6 +189,7 @@ $effect.root(() => {
   })
 })
 
+// cookie migration code
 if (
   env.PUBLIC_MIGRATE_COOKIE &&
   profileData.profiles.length == 0 &&
@@ -394,4 +396,38 @@ async function checkInbox() {
   })
 }
 
-setInterval(checkInbox, 4 * 60 * 1000)
+async function init() {
+  setInterval(checkInbox, 4 * 60 * 1000)
+
+  // hacky way to check donation status
+  setTimeout(() => {
+    if (
+      profile.data.user?.local_user_view.local_user.last_donation_notification
+    ) {
+      const donationDate = publishedToDate(
+        profile.data.user?.local_user_view.local_user
+          .last_donation_notification,
+      )
+      if (Date.now() - donationDate.getTime() > 365 * 24 * 60 * 60 * 1000) {
+        toast({
+          content: t.get('toast.lemmyDonate'),
+          duration: 3600 * 1000,
+          long: true,
+        })
+
+        // lemmy js client donation dialog is broken
+        fetch(
+          `${instanceToURL(profile.data.instance)}/api/v3/user/donation_dialog_shown`,
+          {
+            method: 'POST',
+            headers: {
+              authorization: `Bearer ${profile.data.jwt}`,
+            },
+          },
+        )
+      }
+    }
+  }, 3 * 1000)
+}
+
+init()

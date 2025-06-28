@@ -104,17 +104,17 @@
 <ul>
   {#each nodes as node, index (node.comment_view.comment.id)}
     <Comment
+      bind:node={nodes[index]}
       postId={post.id}
-      node={nodes[index]}
       op={post.creator_id == node.comment_view.creator.id}
       contentClass="{node.children.length > 0 ||
       node.comment_view.counts.child_count > 0
         ? 'border-l'
         : ''} ml-2.5 border-slate-200 dark:border-zinc-800 pl-2.5"
-      bind:open={() => node.expanded, value => (node.expanded = value)}
+      bind:open={nodes[index].expanded}
     >
       {#if node.children?.length > 0}
-        <Comments {post} nodes={nodes[index].children} isParent={false} />
+        <Comments {post} bind:nodes={nodes[index].children} isParent={false} />
       {/if}
     </Comment>
     {#if node.comment_view.counts.child_count > 0 && node.children.length == 0}

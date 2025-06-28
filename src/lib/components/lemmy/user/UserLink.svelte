@@ -29,7 +29,7 @@
     if (badges.photon && badges.photon?.includes?.(actor_id)) {
       return {
         classes:
-          'bg-linear-to-r bg-clip-text text-transparent from-blue-500 to-purple-700 dark:from-blue-400 dark:to-purple-500',
+          'bg-linear-to-r bg-clip-text text-transparent from-pink-500 to-fuchsia-500 dark:from-pink-400 dark:to-purple-400',
         icon: 'photon',
       }
     }

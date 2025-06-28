@@ -7,11 +7,12 @@ import {
   generalizePrivateMessage,
 } from '$lib/lemmy/inbox.js'
 import { ReactiveState } from '$lib/promise.svelte.js'
+import { error } from '@sveltejs/kit'
 
 type InboxFeedType = 'replies' | 'mentions' | 'messages' | 'all'
 
 export async function load({ url, fetch }) {
-  if (!profile.data.jwt) return
+  if (!profile.data.jwt) error(401)
 
   const type: InboxFeedType =
     (url.searchParams.get('type') as InboxFeedType) || 'all'
@@ -57,7 +58,10 @@ export async function load({ url, fetch }) {
       publishedToDate(a.published).getTime(),
   )
 
-  const totalNotifs = type == 'all' ? data.filter(i => !i.read).length : 0
+  const totalNotifs =
+    type == 'all'
+      ? data.filter(i => i.type != 'private_message' && !i.read).length
+      : 0
 
   notifications.update(i => ({
     applications: i.applications,
