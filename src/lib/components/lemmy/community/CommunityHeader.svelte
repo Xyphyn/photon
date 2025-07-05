@@ -126,14 +126,14 @@
           <Button
             disabled={subscribing}
             loading={subscribing}
-            size="lg"
             color={subscribed == 'NotSubscribed' ? 'primary' : 'secondary'}
             onclick={async () => {
               subscribed =
                 (await subscribe())?.community_view.subscribed ??
                 'NotSubscribed'
             }}
-            class="relative px-8 z-[inherit]"
+            class="relative z-[inherit]"
+            rounding="pill"
           >
             {#snippet prefix()}
               <Icon
@@ -154,21 +154,21 @@
         .map(c => c.community.id)
         .includes(community.id)}
       <Button
-        size="square-lg"
         color="secondary"
-        rounding="xl"
+        size="custom"
+        rounding="pill"
+        class="h-9 aspect-square"
         href="/c/{fullCommunityName(
           community.name,
           community.actor_id,
         )}/settings"
-        style="height: 38px; width: 38px;"
       >
         <Icon src={Cog6Tooth} size="16" mini />
       </Button>
     {/if}
     <Menu placement="top-end">
       {#snippet target()}
-        <Button rounding="xl" size="custom" style="height: 38px; width: 38px;">
+        <Button size="custom" rounding="pill" class="h-8.5 aspect-square">
           {#snippet prefix()}
             <Icon src={EllipsisHorizontal} size="16" mini />
           {/snippet}

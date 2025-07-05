@@ -91,10 +91,11 @@
         </Select>
         <Button
           loading={batch.progress >= 0}
-          disabled={batch.progress >= 0}
+          disabled={batch.progress >= 0 || data.items.value?.length == 0}
           onclick={markAllAsResolved}
           class="h-max ml-auto"
-          rounding="xl"
+          rounding="pill"
+          color="primary"
         >
           <Icon src={Check} size="16" mini />
           {$t('routes.moderation.markAll')}

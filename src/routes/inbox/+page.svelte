@@ -116,12 +116,13 @@ items-center px-2 w-max top-6 lg:top-22"
   <Header pageHeader class="lg:flex-row justify-between flex-col">
     {$t('routes.inbox.title')}
 
-    <div class="flex items-center gap-2">
+    <div class="flex items-center gap-2 tracking-normal">
       <Button
         onclick={() => goto(page.url, { invalidateAll: true })}
-        size="square-lg"
-        rounding="xl"
-        title={$t('common.refresh')}
+        size="custom"
+        class="rounded-2xl h-9 aspect-square"
+        rounding="none"
+        aria-label={$t('common.refresh')}
       >
         {#snippet prefix()}
           <Icon src={ArrowPath} size="16" mini />
@@ -130,9 +131,9 @@ items-center px-2 w-max top-6 lg:top-22"
       <Button
         onclick={markAllAsRead}
         loading={markingAsRead}
-        disabled={markingAsRead}
-        size="lg"
-        class="h-10"
+        disabled={markingAsRead || data.inbox.value.length == 0}
+        rounding="pill"
+        color="primary"
       >
         {#snippet prefix()}
           <Icon src={Check} width={16} mini />

@@ -37,7 +37,7 @@
   {...rest}
   {href}
   class="{highlight
-    ? 'text-blue-500'
+    ? 'text-sky-500'
     : ''} hover:underline max-w-full inline-flex items-center gap-1 {clazz}"
 >
   {@render icon?.()}
