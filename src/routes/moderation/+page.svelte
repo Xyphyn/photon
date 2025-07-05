@@ -7,7 +7,7 @@
   import { t } from '$lib/i18n/translations'
   import { client } from '$lib/lemmy.svelte'
   import { searchParam } from '$lib/util.svelte.js'
-  import { Button, Select, Spinner, toast } from 'mono-svelte'
+  import { Button, Material, Select, Spinner, toast } from 'mono-svelte'
   import Option from 'mono-svelte/forms/select/Option.svelte'
   import { tick } from 'svelte'
   import { Check, Funnel, Icon, Inbox } from 'svelte-hero-icons'
@@ -27,38 +27,40 @@
 
     await Promise.all(
       data.items?.value.map(report => {
-        switch (report.type) {
-          case 'comment': {
-            const promise = client().resolveCommentReport({
-              report_id: report.id,
-              resolved: true,
-            })
-            promise.then(
-              () => (batch.progress += 1 / data.items?.value!.length),
-            )
-            return promise
+        report.map(r => {
+          switch (r.type) {
+            case 'comment': {
+              const promise = client().resolveCommentReport({
+                report_id: r.id,
+                resolved: true,
+              })
+              promise.then(
+                () => (batch.progress += 1 / data.items?.value!.length),
+              )
+              return promise
+            }
+            case 'post': {
+              const promise = client().resolvePostReport({
+                report_id: r.id,
+                resolved: true,
+              })
+              promise.then(
+                () => (batch.progress += 1 / data.items?.value!.length),
+              )
+              return promise
+            }
+            case 'message': {
+              const promise = client().resolvePrivateMessageReport({
+                report_id: r.id,
+                resolved: true,
+              })
+              promise.then(
+                () => (batch.progress += 1 / data.items?.value!.length),
+              )
+              return promise
+            }
           }
-          case 'post': {
-            const promise = client().resolvePostReport({
-              report_id: report.id,
-              resolved: true,
-            })
-            promise.then(
-              () => (batch.progress += 1 / data.items?.value!.length),
-            )
-            return promise
-          }
-          case 'message': {
-            const promise = client().resolvePrivateMessageReport({
-              report_id: report.id,
-              resolved: true,
-            })
-            promise.then(
-              () => (batch.progress += 1 / data.items?.value!.length),
-            )
-            return promise
-          }
-        }
+        })
       }),
     )
 
@@ -123,14 +125,27 @@
   <div
     class="flex flex-col *:py-4 divide-y divide-slate-200 dark:divide-zinc-800"
   >
-    {#each data.items?.value as item (item.id)}
+    {#each data.items?.value as item}
       <div
         in:fly={{ y: -6, opacity: 0, duration: 500 }}
-        class="flex flex-col gap-3 text-sm -mx-4 sm:-mx-6 px-4 sm:px-6"
+        class="flex flex-col gap-3 text-sm -mx-4 sm:-mx-6 px-4 sm:px-6 items-center"
       >
-        <div class="space-y-2">
+        <Material
+          rounding={item.length == 1 ? 'none' : '2xl'}
+          color={item.length == 1 ? 'none' : 'uniform'}
+          padding={item.length == 1 ? 'none' : 'md'}
+          class={['space-y-2 w-full']}
+        >
           <Report {item} />
-        </div>
+        </Material>
+        {#if item.length > 1}
+          <Material
+            padding="none"
+            rounding="none"
+            color="uniform"
+            class="-mt-3 rounded-b-2xl w-[95%] h-4 brightness-[85%]"
+          ></Material>
+        {/if}
       </div>
     {/each}
   </div>

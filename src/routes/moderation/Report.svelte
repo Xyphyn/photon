@@ -13,10 +13,13 @@
   import { CheckCircle, Icon } from 'svelte-hero-icons'
 
   interface Props {
-    item: ReportView
+    item: ReportView[]
   }
 
-  let { item = $bindable() }: Props = $props()
+  let { item: items = $bindable() }: Props = $props()
+
+  // TODO more strict type enforcing, this hack is not good
+  const item = items[0]
 
   let resolving = $state(false)
   async function resolve() {
@@ -26,63 +29,72 @@
     try {
       switch (item.type) {
         case 'comment': {
-          const res = await getClient().resolveCommentReport({
-            report_id: item.id,
-            resolved: !item.resolved,
-          })
-
-          item.resolved = res.comment_report_view.comment_report.resolved
-          item.resolver = res.comment_report_view.resolver
-
-          toast({
-            content: item.resolved
-              ? $t('toast.resolveReport')
-              : $t('toast.unresolveReport'),
-            type: 'success',
-          })
+          await Promise.all(
+            items.map(async i =>
+              getClient()
+                .resolveCommentReport({
+                  report_id: i.id,
+                  resolved: !i.resolved,
+                })
+                .then(res => {
+                  i.resolved = res.comment_report_view.comment_report.resolved
+                  i.resolver = res.comment_report_view.resolver
+                  $notifications.reports += i.resolved ? 1 : -1
+                }),
+            ),
+          )
 
           break
         }
         case 'post': {
-          const res = await getClient().resolvePostReport({
-            report_id: item.id,
-            resolved: !item.resolved,
-          })
+          await Promise.all(
+            items.map(async i =>
+              getClient()
+                .resolvePostReport({
+                  report_id: i.id,
+                  resolved: !i.resolved,
+                })
+                .then(res => {
+                  i.resolved = res.post_report_view.post_report.resolved
 
-          item.resolved = res.post_report_view.post_report.resolved
-          item.resolver = res.post_report_view.resolver
-          toast({
-            content: item.resolved
-              ? $t('toast.resolveReport')
-              : $t('toast.unresolveReport'),
-            type: 'success',
-          })
+                  i.resolver = res.post_report_view.resolver
+
+                  $notifications.reports += i.resolved ? 1 : -1
+                }),
+            ),
+          )
 
           break
         }
         case 'message': {
-          const res = await getClient().resolvePrivateMessageReport({
-            report_id: item.id,
-            resolved: !item.resolved,
-          })
+          await Promise.all(
+            items.map(async i =>
+              getClient()
+                .resolvePrivateMessageReport({
+                  report_id: i.id,
+                  resolved: !i.resolved,
+                })
+                .then(res => {
+                  i.resolved =
+                    res.private_message_report_view.private_message_report.resolved
 
-          item.resolved =
-            res.private_message_report_view.private_message_report.resolved
+                  i.resolver = res.private_message_report_view.resolver
 
-          item.resolver = res.private_message_report_view.resolver
-
-          toast({
-            content: item.resolved
-              ? $t('toast.resolveReport')
-              : $t('toast.unresolveReport'),
-            type: 'success',
-          })
+                  $notifications.reports += i.resolved ? 1 : -1
+                }),
+            ),
+          )
 
           break
         }
       }
 
-      $notifications.reports += item.resolved ? 1 : -1
+      toast({
+        content: item.resolved
+          ? $t('toast.resolveReport')
+          : $t('toast.unresolveReport'),
+        type: 'success',
+      })
     } catch (err) {
       toast({
         content: errorMessage(err as string),
@@ -94,7 +106,7 @@
   }
 </script>
 
-<div class="flex flex-row">
+<div class={['flex flex-row']}>
   <div class="flex flex-col gap-1.5 flex-1">
     <span class="text-xs font-medium">Report from</span>
     <span class="font-bold">
