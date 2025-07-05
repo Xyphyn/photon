@@ -63,7 +63,7 @@
               size="sm"
               class="h-max self-center"
             >
-              {$t('routes.moderation.manage')}
+              {$t('routes.moderation.manage.title')}
             </Button>
           </CommunityItem>
         </div>

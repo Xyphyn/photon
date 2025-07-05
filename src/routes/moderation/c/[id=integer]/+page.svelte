@@ -4,7 +4,12 @@
   import { t } from '$lib/i18n/translations'
   import { Button, Material, Spinner } from 'mono-svelte'
   import ModlogItemCard from '../../../modlog/item/ModlogItemCard.svelte'
-  import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
+  import Expandable from '$lib/components/ui/Expandable.svelte'
+  import UserAutocomplete from '$lib/components/lemmy/user/UserAutocomplete.svelte'
+  import { ban } from '$lib/components/lemmy/moderation/moderation'
+  import Switch from '$lib/components/input/Switch.svelte'
+
+  let banFromCommunity = $state(false)
 
   let { data } = $props()
 </script>
@@ -21,15 +26,17 @@
   {/snippet}
 </Header>
 
-<div class="grid grid-cols-1 xl:grid-cols-2 mt-4 sm:mt-6">
-  <div>
-    <SectionTitle>
+<div
+  class="flex flex-col *:py-2 divide-y divide-slate-200 dark:divide-zinc-800"
+>
+  <Expandable>
+    {#snippet title()}
       {$t('routes.moderation.manage.modlogs')}
-    </SectionTitle>
+    {/snippet}
     <Material
       color="uniform"
       rounding="2xl"
-      class="dark:bg-zinc-950 max-h-96 overflow-auto space-y-4 mt-1"
+      class="dark:bg-zinc-950 max-h-96 h-full overflow-auto space-y-4 mt-1"
     >
       {#await data.modlog}
         <Spinner width={24} />
@@ -52,6 +59,27 @@
         </div>
       {/await}
     </Material>
-  </div>
-  <div></div>
+  </Expandable>
+  <Expandable>
+    {#snippet title()}
+      <div>
+        {$t('moderation.ban.banFromCommunity')}
+      </div>
+    {/snippet}
+    <div class="flex flex-col gap-4">
+      <Switch
+        options={[false, true]}
+        optionNames={[
+          $t('routes.moderation.manage.ban'),
+          $t('routes.moderation.manage.unban'),
+        ]}
+        bind:selected={banFromCommunity}
+      />
+      <UserAutocomplete
+        onselect={p =>
+          ban(banFromCommunity, p, data.community.community_view.community)}
+        listing_type="All"
+      />
+    </div>
+  </Expandable>
 </div>

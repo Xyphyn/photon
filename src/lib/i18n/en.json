@@ -335,7 +335,9 @@
             "feed": "Reports",
             "manage": {
                 "title": "Manage",
-                "modlogs": "Recent moderation logs"
+                "modlogs": "Recent moderation logs",
+                "ban": "Ban",
+                "unban": "Unban"
             }
         },
         "admin": {
