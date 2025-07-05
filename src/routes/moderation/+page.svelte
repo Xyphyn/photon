@@ -143,7 +143,7 @@
             padding="none"
             rounding="none"
             color="uniform"
-            class="-mt-3 rounded-b-2xl w-[95%] h-4 brightness-[85%]"
+            class="-mt-3 rounded-b-2xl w-[95%] h-4 bg-slate-50! dark:bg-zinc-950!"
           ></Material>
         {/if}
       </div>

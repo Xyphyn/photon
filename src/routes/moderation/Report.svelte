@@ -9,7 +9,7 @@
   import { getClient } from '$lib/lemmy.svelte.js'
   import { errorMessage } from '$lib/lemmy/error'
   import type { ReportView } from '$lib/lemmy/report.js'
-  import { Button, Material, toast } from 'mono-svelte'
+  import { Badge, Button, Material, Modal, toast } from 'mono-svelte'
   import { CheckCircle, Icon } from 'svelte-hero-icons'
 
   interface Props {
@@ -104,15 +104,50 @@
 
     resolving = false
   }
+
+  let usersModal = $state(false)
+  let reasonsModal = $state(false)
 </script>
 
-<div class={['flex flex-row']}>
-  <div class="flex flex-col gap-1.5 flex-1">
-    <span class="text-xs font-medium">Report from</span>
-    <span class="font-bold">
-      <UserLink avatar user={item.creator} />
-    </span>
+<Modal title="Report from" bind:open={usersModal}>
+  <div class="flex flex-col divide-y divide-slate-200 dark:divide-zinc-800">
+    {#each items as item}
+      <UserLink avatar={false} user={item.creator} class="py-1" />
+    {/each}
   </div>
+</Modal>
+
+<Modal title={$t('moderation.reason')} bind:open={reasonsModal}>
+  <div class="flex flex-col divide-y divide-slate-200 dark:divide-zinc-800">
+    {#each items as item}
+      <div class="py-2">
+        <UserLink avatar={false} user={item.creator} class="py-1 block" />
+        <blockquote
+          class="italic text-sm pl-4 border-l-2 border-slate-300 dark:border-zinc-700"
+        >
+          {item.reason}
+        </blockquote>
+      </div>
+    {/each}
+  </div>
+</Modal>
+
+<div class={['flex flex-row']}>
+  {#if items.length > 1}
+    <button
+      onclick={() => (usersModal = !usersModal)}
+      class="flex-1 text-2xl font-medium hover:underline cursor-pointer text-left w-max"
+    >
+      {items.length}x
+    </button>
+  {:else}
+    <div class="flex flex-col gap-1.5 flex-1">
+      <span class="text-xs font-medium">Report from</span>
+      <span class="font-bold">
+        <UserLink avatar user={item.creator} />
+      </span>
+    </div>
+  {/if}
 
   <Button
     onclick={resolve}
@@ -157,6 +192,14 @@
     <p>
       {item.reason}
     </p>
+    {#if items.length > 1}
+      <button
+        class="cursor-pointer"
+        onclick={() => (reasonsModal = !reasonsModal)}
+      >
+        <Badge class="w-max my-1">+{items.length - 1}</Badge>
+      </button>
+    {/if}
   </div>
   {#if item.resolver}
     <div>

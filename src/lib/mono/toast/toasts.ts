@@ -43,7 +43,7 @@ export function toast({
   let id = 0
 
   toasts.update(toasts => {
-    id = Math.max(...toasts.map(t => t.id)) + 1
+    id = Math.max(0, ...toasts.map(t => t.id)) + 1
 
     return [
       ...toasts,
