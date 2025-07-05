@@ -325,6 +325,7 @@
             {$t('filter.type')}
           </span>
         {/snippet}
+        <Option value="all">{$t('content.all')}</Option>
         <Option value="posts">{$t('content.posts')}</Option>
         <Option value="comments">{$t('content.comments')}</Option>
       </Select>
