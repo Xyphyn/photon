@@ -48,7 +48,8 @@
             "setTheme": "Set theme",
             "setThemeTo": "Set theme to {{default}}",
             "contextual": "On this page"
-        }
+        },
+        "notifications": "Notifications"
     },
     "account": {
         "login": "Log In",
@@ -331,7 +332,8 @@
             "unresolve": "Unresolve",
             "resolvedBy": "Resolved by",
             "markAll": "Mark page resolved",
-            "markAllComplete": "Batch action completed."
+            "markAllComplete": "Batch action completed.",
+            "reports": "Reports"
         },
         "admin": {
             "title": "Administration",

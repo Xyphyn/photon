@@ -14,20 +14,18 @@ export async function load({ url, fetch }) {
     (url.searchParams.get('type') as ListingType) || settings.defaultSort.feed
 
   return {
-    feed: new ReactiveState(
-      await postFeed({
-        id: 'main',
-        request: {
-          page_cursor: cursor,
-          sort: sort,
-          type_: listingType,
-          limit: 20,
-          show_hidden: settings.posts.showHidden,
-        },
-        url: url,
-        fetch: fetch,
-      }),
-    ),
+    feed: await postFeed({
+      id: 'main',
+      request: {
+        page_cursor: cursor,
+        sort: sort,
+        type_: listingType,
+        limit: 20,
+        show_hidden: settings.posts.showHidden,
+      },
+      url: url,
+      fetch: fetch,
+    }),
     contextual: {
       actions: [
         {
