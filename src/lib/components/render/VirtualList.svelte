@@ -112,13 +112,19 @@
 
     const firstIndex = findFirstVisibleIndex(scrollTop, cumulativeItemHeights)
 
-    let i = firstIndex
+    const startIndex = Math.max(0, firstIndex - overscan)
+
+    let i = startIndex
     let offset = i == 0 ? 0 : cumulativeItemHeights[i - 1]
 
-    while (i < items.length && offset < scrollTop + viewportHeight + overscan) {
+    while (i < items.length) {
       newVisibleItems.push({ index: i, offset: offset })
       const height = itemHeights[i] || estimatedHeight
       offset += height
+
+      if (offset > scrollTop + viewportHeight + overscan * estimatedHeight)
+        break
+
       i++
     }
 

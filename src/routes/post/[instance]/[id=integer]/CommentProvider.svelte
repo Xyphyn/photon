@@ -102,7 +102,7 @@
     <CommentForm
       postId={post.post_view.post.id}
       oncomment={comment => {
-        comments.comments = [comment.comment_view, ...comments.comments]
+        comments.comments.push(comment.comment_view)
       }}
       onfocus={() => (commenting = true)}
       tools={commenting}

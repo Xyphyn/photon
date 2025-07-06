@@ -174,7 +174,8 @@
         class="divide-y -mx-4 sm:-mx-6 divide-slate-200 dark:divide-zinc-900"
         items={posts}
         {initialOffset}
-        overscan={1000}
+        overscan={3}
+        estimatedHeight={settings.view == 'cozy' ? 500 : 150}
         bind:restore={postFeeds.value[feedId].clientData}
         bind:this={listComp}
       >

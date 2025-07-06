@@ -9,7 +9,6 @@
   import { Badge } from 'mono-svelte'
   import { Icon, ServerStack } from 'svelte-hero-icons'
   import Link from '../input/Link.svelte'
-  import Entity from '../ui/Entity.svelte'
   import Expandable from '../ui/Expandable.svelte'
   import LabelStat from '../ui/LabelStat.svelte'
   import ItemList from './generic/ItemList.svelte'
