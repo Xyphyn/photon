@@ -48,7 +48,8 @@
             "setTheme": "Set theme",
             "setThemeTo": "Set theme to {{default}}",
             "contextual": "On this page"
-        }
+        },
+        "notifications": "Notifications"
     },
     "account": {
         "login": "Log In",

@@ -1,11 +1,12 @@
 import { getClient } from '$lib/lemmy.svelte.js'
+import { getItemPublished } from '$lib/lemmy/item.js'
 import { ReactiveState } from '$lib/promise.svelte.js'
-import type { CommentView, PostView, SortType } from 'lemmy-js-client'
+import type { SortType } from 'lemmy-js-client'
 
 export async function load({ params, url, fetch }) {
   const page = Number(url.searchParams.get('page')) || 1
-  const type: 'comments' | 'posts' =
-    (url.searchParams.get('type') as 'comments' | 'posts') || 'posts'
+  const type: 'comments' | 'posts' | 'all' =
+    (url.searchParams.get('type') as 'comments' | 'posts' | 'all') || 'all'
   const sort: SortType = (url.searchParams.get('sort') as SortType) || 'New'
 
   const user = await getClient(undefined, fetch).getPersonDetails({
@@ -15,8 +16,21 @@ export async function load({ params, url, fetch }) {
     sort: sort,
   })
 
-  const items: (PostView | CommentView)[] =
-    type == 'posts' ? user.posts : user.comments
+  const items = [...user.posts, ...user.comments]
+
+  if (sort == 'TopAll') {
+    items.sort(
+      (a, b) =>
+        b.counts.upvotes -
+        b.counts.downvotes -
+        (a.counts.upvotes - a.counts.downvotes),
+    )
+  } else if (sort == 'New') {
+    items.sort(
+      (a, b) =>
+        Date.parse(getItemPublished(b)) - Date.parse(getItemPublished(a)),
+    )
+  }
 
   return {
     filters: new ReactiveState({

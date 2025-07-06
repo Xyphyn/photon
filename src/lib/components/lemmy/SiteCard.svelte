@@ -46,17 +46,8 @@
       />
     </div>
   {/if}
-  <Entity name={site.site.name} label={new URL(site.site.actor_id).hostname}>
-    {#snippet customIcon()}
-      <Avatar
-        width={32}
-        url={site.site.icon}
-        alt={site.site.name}
-        circle={false}
-      />
-    {/snippet}
-  </Entity>
-
+  <Avatar width={32} url={site.site.icon} alt="" circle={false} />
+  <h2 class="font-medium text-lg -my-2">{site.site.name}</h2>
   <div class="flex flex-col gap-1">
     {#if taglines && taglines.length > 0}
       <Markdown
@@ -78,6 +69,15 @@
       <Markdown source={site.site.description} />
       <div class="my-4"></div>
       <Markdown source={site.site.sidebar} />
+
+      {#if version}
+        <div class="w-max">
+          <Badge label="Lemmy version">
+            <Icon src={ServerStack} micro size="14" />
+            {version}
+          </Badge>
+        </div>
+      {/if}
     </Expandable>
 
     <hr class="border-slate-200 dark:border-zinc-900 my-1" />
@@ -132,7 +132,7 @@
       </Expandable>
     {/if}
 
-    <div class="flex flex-row flex-wrap gap-1">
+    <div class="flex flex-row flex-wrap gap-1 my-2 text-xs">
       <Link highlight href="/modlog">
         {$t('routes.modlog.title')}
       </Link>
@@ -145,14 +145,5 @@
         {$t('routes.instances')}
       </Link>
     </div>
-
-    {#if version}
-      <div class="w-max">
-        <Badge label="Lemmy version">
-          <Icon src={ServerStack} micro size="14" />
-          {version}
-        </Badge>
-      </div>
-    {/if}
   </div>
 </StickyCard>

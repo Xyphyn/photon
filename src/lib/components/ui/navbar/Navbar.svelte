@@ -1,6 +1,5 @@
 <script lang="ts">
   import { notifications, profile } from '$lib/auth.svelte.js'
-  import ShieldIcon from '$lib/components/lemmy/moderation/ShieldIcon.svelte'
   import {
     amModOfAny,
     isAdmin,
@@ -9,15 +8,18 @@
   import { t } from '$lib/i18n/translations'
   import { LINKED_INSTANCE_URL } from '$lib/instance.svelte'
   import { site } from '$lib/lemmy.svelte.js'
-  import { Menu, MenuButton, MenuDivider, Spinner } from 'mono-svelte'
+  import { Badge, Menu, MenuButton, MenuDivider, Spinner } from 'mono-svelte'
   import {
+    Bell,
     GlobeAlt,
     Icon,
+    Inbox,
     MagnifyingGlass,
     Newspaper,
     PencilSquare,
     Plus,
     ServerStack,
+    ShieldCheck,
   } from 'svelte-hero-icons'
   import type { ClassValue } from 'svelte/elements'
   import Logo from '../Logo.svelte'
@@ -33,6 +35,15 @@
 
   let { style = '', class: clazz = '' }: Props = $props()
 </script>
+
+{#snippet notifBadge(number: number)}
+  <Badge
+    color={number > 0 ? 'red-subtle' : 'gray-subtle'}
+    class="min-w-5 h-5 p-0! px-0.5 grid place-items-center ml-auto"
+  >
+    {number > 99 ? '∞' : number}
+  </Badge>
+{/snippet}
 
 <CommandsWrapper bind:open={promptOpen} />
 <nav
@@ -71,7 +82,7 @@
     {/snippet}
   </NavButton>
   <div
-    class="flex flex-row gap-2 py-2 px-2 items-center w-full overflow-auto"
+    class="flex flex-row gap-2 lg:gap-5 py-2 px-2 items-center w-full overflow-auto"
     style="border-radius: inherit;"
   >
     <div class="ml-auto"></div>
@@ -82,29 +93,15 @@
         icon={ServerStack}
         class="relative"
         isSelectedFilter={path => path.startsWith('/admin')}
-      >
-        {#if ($notifications.applications ?? 0) > 0}
-          <div
-            class="rounded-full w-2 h-2 bg-red-500 absolute -top-1 -left-1"
-          ></div>
-        {/if}
-      </NavButton>
+      />
     {/if}
     {#if amModOfAny(profile.data?.user)}
       <NavButton
         href="/moderation"
         label={$t('nav.moderation')}
         class="relative"
-      >
-        {#if ($notifications.reports ?? 0) > 0}
-          <div
-            class="rounded-full w-2 h-2 bg-red-500 absolute -top-1 -left-1"
-          ></div>
-        {/if}
-        {#snippet customIcon({ size, isSelected })}
-          <ShieldIcon filled={isSelected} width={size} />
-        {/snippet}
-      </NavButton>
+        icon={ShieldCheck}
+      />
     {/if}
     <NavButton
       href="/communities"
@@ -112,13 +109,58 @@
       icon={GlobeAlt}
     />
     <NavButton href="/search" label={$t('nav.search')} icon={MagnifyingGlass} />
+    {#if profile.data.jwt}
+      {@const linkOnly =
+        !profile.data.user ||
+        !(isAdmin(profile.data.user) || amModOfAny(profile.data.user))}
+      <Menu manual={linkOnly} placement="top">
+        {#snippet target()}
+          <NavButton
+            label={$t('nav.notifications')}
+            icon={Bell}
+            class="relative"
+            adaptive={false}
+            href={linkOnly ? '/inbox' : undefined}
+          >
+            {#if Math.max(...Object.values($notifications)) > 0}
+              <div
+                class="rounded-full w-2 h-2 bg-red-500 absolute top-1 left-3 z-10"
+              ></div>
+            {/if}
+          </NavButton>
+        {/snippet}
+        <MenuDivider>{$t('nav.notifications')}</MenuDivider>
+        <MenuButton href="/inbox" icon={Inbox}>
+          {$t('profile.inbox')}
+          {#snippet suffix()}
+            {@render notifBadge($notifications.inbox)}
+          {/snippet}
+        </MenuButton>
+        {#if amModOfAny(profile.data.user)}
+          <MenuButton href="/moderation" icon={ShieldCheck}>
+            {$t('routes.moderation.reports')}
+            {#snippet suffix()}
+              {@render notifBadge($notifications.reports)}
+            {/snippet}
+          </MenuButton>
+        {/if}
+        {#if profile.data.user && isAdmin(profile.data.user)}
+          <MenuButton href="/admin/applications" icon={ServerStack}>
+            {$t('routes.admin.applications.title')}
+            {#snippet suffix()}
+              {@render notifBadge($notifications.applications)}
+            {/snippet}
+          </MenuButton>
+        {/if}
+      </Menu>
+    {/if}
     <Menu placement="top">
       {#snippet target()}
         <NavButton
           class="relative"
-          color="primary"
           label={$t('nav.create.label')}
           icon={Plus}
+          adaptive={false}
         />
       {/snippet}
       <MenuDivider>{$t('nav.create.label')}</MenuDivider>

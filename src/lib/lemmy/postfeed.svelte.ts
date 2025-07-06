@@ -54,16 +54,16 @@ export async function postFeed(args: {
       },
     }
 
-  return (
-    postFeeds.value[args.id]?.data ?? {
-      ...args.request,
-      posts: posts,
-      cursor: {
-        next: posts.next_page,
-      },
-      type_: args.request.type_,
-    }
-  )
+  const defaultFeed = $state({
+    ...args.request,
+    posts: posts,
+    cursor: {
+      next: posts.next_page,
+    },
+    type_: args.request.type_,
+  })
+
+  return postFeeds.value[args.id]?.data ?? defaultFeed
 }
 
 export function getPostFeed(feeds: Map<PostFeedID, PostFeed>, id: PostFeedID) {

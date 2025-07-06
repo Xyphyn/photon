@@ -325,6 +325,7 @@
             {$t('filter.type')}
           </span>
         {/snippet}
+        <Option value="all">{$t('content.all')}</Option>
         <Option value="posts">{$t('content.posts')}</Option>
         <Option value="comments">{$t('content.comments')}</Option>
       </Select>
@@ -357,9 +358,9 @@
       >
         {#key data.items}
           {#each data.items.value as item (item)}
-            {#if isCommentView(item) && data.filters.value.type == 'comments'}
+            {#if isCommentView(item)}
               <CommentItem comment={item} />
-            {:else if !isCommentView(item) && data.filters.value.type == 'posts'}
+            {:else if !isCommentView(item)}
               <Post post={item} />
             {/if}
           {/each}

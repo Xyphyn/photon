@@ -89,7 +89,7 @@
 {#snippet startChat()}
   <Button
     color="primary"
-    size="lg"
+    rounding="pill"
     onclick={() => (searchModal.open = !searchModal.open)}
   >
     <Icon src={ChatBubbleOvalLeftEllipsis} size="18" mini />
