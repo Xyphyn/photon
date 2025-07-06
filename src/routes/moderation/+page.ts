@@ -1,10 +1,12 @@
 import { profile } from '$lib/auth.svelte'
 import { isAdmin } from '$lib/components/lemmy/moderation/moderation.js'
 import { getClient } from '$lib/lemmy.svelte.js'
+import { isCommentView, isPostView } from '$lib/lemmy/item'
 import {
   generalizeCommentReport,
   generalizePostReport,
   generalizePrivateMessageReport,
+  type ReportView,
 } from '$lib/lemmy/report.js'
 import { ReactiveState } from '$lib/promise.svelte'
 import { error } from '@sveltejs/kit'
@@ -17,20 +19,15 @@ export async function load({ url, fetch }) {
   const page = Number(url.searchParams.get('page')) || 1
   const type: ReportListType =
     (url.searchParams.get('type') as ReportListType) || 'unread'
+  const community = Number(url.searchParams.get('community')) || undefined
 
-  // can they please
-  // make a sane, consistent, and simple API for once
-  // 3 separate requests? really?
-  // and this time instead of get() it's list(). Why?!
-  // the interfaces don't even extend each other
-  // meaning I have to make a separate function to get dates
-  // for EACH FREAKING ITEM KAJSHDAWLD auwdi awiody
   const client = getClient(undefined, fetch)
 
   const params = {
     limit: 20,
     page: page,
     unresolved_only: type == 'unread',
+    community_id: community,
   }
 
   const admin = profile.data?.user ? isAdmin(profile!.data.user!) : false
@@ -53,9 +50,28 @@ export async function load({ url, fetch }) {
     ),
   ].sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime())
 
+  const grouped = everything.reduce(
+    (groups, item) => {
+      const key = isPostView(item.item)
+        ? item.item.post.id
+        : isCommentView(item.item)
+          ? item.item.comment.id
+          : item.item.id
+      if (!groups[key]) {
+        groups[key] = []
+      }
+      groups[key].push(item)
+      return groups
+    },
+    {} as Record<number, ReportView[]>,
+  )
+
   return {
     type: new ReactiveState(type),
     page: page,
-    items: new ReactiveState(everything),
+    items: new ReactiveState(Object.values(grouped)),
+    filters: {
+      community: community,
+    },
   }
 }

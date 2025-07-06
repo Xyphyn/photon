@@ -21,6 +21,7 @@
   } from 'svelte-hero-icons'
   import Subscribe from '../../../../routes/communities/Subscribe.svelte'
   import { settings } from '$lib/settings.svelte'
+  import type { Snippet } from 'svelte'
 
   let showInfo = $state(false)
   interface Props {
@@ -29,6 +30,7 @@
     showCounts?: boolean
     class?: string
     icon?: import('svelte').Snippet
+    children?: Snippet
   }
 
   let {
@@ -37,6 +39,7 @@
     showCounts = true,
     class: clazz = 'py-4 flex flex-col gap-4 text-sm max-w-full relative',
     icon,
+    children,
   }: Props = $props()
 </script>
 
@@ -137,66 +140,70 @@
         </div>
       </div>
     </a>
-    <div class="flex flex-row items-center gap-2">
-      <Button
-        size="square-md"
-        rounding="pill"
-        color="ghost"
-        onclick={() => (showInfo = !showInfo)}
-      >
-        <Icon src={InformationCircle} size="16" mini />
-      </Button>
-      <Subscribe {community}>
-        {#snippet children({ subscribe, subscribing })}
-          <Button
-            disabled={subscribing || !profile.data?.jwt}
-            loading={subscribing}
-            onclick={async () => {
-              const res = await subscribe()
+    {#if children}
+      {@render children?.()}
+    {:else}
+      <div class="flex flex-row items-center gap-2">
+        <Button
+          size="square-md"
+          rounding="pill"
+          color="ghost"
+          onclick={() => (showInfo = !showInfo)}
+        >
+          <Icon src={InformationCircle} size="16" mini />
+        </Button>
+        <Subscribe {community}>
+          {#snippet children({ subscribe, subscribing })}
+            <Button
+              disabled={subscribing || !profile.data?.jwt}
+              loading={subscribing}
+              onclick={async () => {
+                const res = await subscribe()
 
-              if (res) {
-                const newSubscribed =
-                  res.community_view.subscribed != 'NotSubscribed'
-                    ? 'Subscribed'
-                    : 'NotSubscribed'
+                if (res) {
+                  const newSubscribed =
+                    res.community_view.subscribed != 'NotSubscribed'
+                      ? 'Subscribed'
+                      : 'NotSubscribed'
 
-                community.subscribed = newSubscribed
-                addSubscription(
-                  community.community,
-                  newSubscribed == 'Subscribed',
-                )
-              }
-            }}
-            size="custom"
-            title={isSubscribed(community.subscribed)
-              ? $t('cards.community.subscribed')
-              : $t('cards.community.subscribe')}
-            color={isSubscribed(community.subscribed)
-              ? 'elevatedLow'
-              : 'primary'}
-            class="{isSubscribed(community.subscribed)
-              ? 'text-slate-600 dark:text-zinc-400'
-              : ''}
+                  community.subscribed = newSubscribed
+                  addSubscription(
+                    community.community,
+                    newSubscribed == 'Subscribed',
+                  )
+                }
+              }}
+              size="custom"
+              title={isSubscribed(community.subscribed)
+                ? $t('cards.community.subscribed')
+                : $t('cards.community.subscribe')}
+              color={isSubscribed(community.subscribed)
+                ? 'elevatedLow'
+                : 'primary'}
+              class="{isSubscribed(community.subscribed)
+                ? 'text-slate-600 dark:text-zinc-400'
+                : ''}
               aspect-square h-8.5 @md:px-2 @md:min-w-30 @md:aspect-auto @md:rounded-full"
-          >
-            {#snippet prefix()}
-              <Icon
-                src={isSubscribed(community.subscribed) ? Check : Plus}
-                size="16"
-                micro
-              />
-            {/snippet}
-            <span class="hidden @md:block">
-              {#if isSubscribed(community.subscribed)}
-                {$t('cards.community.subscribed')}
-              {:else}
-                {$t('cards.community.subscribe')}
-              {/if}
-            </span>
-          </Button>
-        {/snippet}
-      </Subscribe>
-    </div>
+            >
+              {#snippet prefix()}
+                <Icon
+                  src={isSubscribed(community.subscribed) ? Check : Plus}
+                  size="16"
+                  micro
+                />
+              {/snippet}
+              <span class="hidden @md:block">
+                {#if isSubscribed(community.subscribed)}
+                  {$t('cards.community.subscribed')}
+                {:else}
+                  {$t('cards.community.subscribe')}
+                {/if}
+              </span>
+            </Button>
+          {/snippet}
+        </Subscribe>
+      </div>
+    {/if}
   </div>
   {#if showCounts}
     <div class="flex flex-row gap-3 items-center justify-center">

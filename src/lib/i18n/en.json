@@ -333,7 +333,13 @@
             "resolvedBy": "Resolved by",
             "markAll": "Mark page resolved",
             "markAllComplete": "Batch action completed.",
-            "reports": "Reports"
+            "feed": "Reports",
+            "manage": {
+                "title": "Manage",
+                "modlogs": "Recent moderation logs",
+                "ban": "Ban",
+                "unban": "Unban"
+            }
         },
         "admin": {
             "title": "Administration",

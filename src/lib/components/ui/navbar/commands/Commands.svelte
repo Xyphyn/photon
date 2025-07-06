@@ -11,6 +11,7 @@
   import { Home, Icon, MagnifyingGlass } from 'svelte-hero-icons'
   import { getGroups, type Action, type Group } from './actions.svelte'
   import CommandItem from './CommandItem.svelte'
+  import { fuzzySearch } from '$lib/util.svelte'
 
   interface Props {
     open?: boolean
@@ -36,38 +37,6 @@
   let filteredGroups: Group[] = $state([])
   let breadcrumbs: Action[] = $state([])
   let input = $state<HTMLInputElement>()
-
-  function fuzzySearch(text: string, pattern: string): number {
-    const textLower = text.toLowerCase()
-    const patternLower = pattern.toLowerCase()
-    let score = 0
-    let lastIndex = -1
-    let consecutiveBonus = 0
-
-    for (let i = 0; i < patternLower.length; i++) {
-      const index = textLower.indexOf(patternLower[i], lastIndex + 1)
-      if (index === -1) return 0
-
-      score += 1
-      if (index === lastIndex + 1) {
-        consecutiveBonus++
-        score += consecutiveBonus
-      } else {
-        consecutiveBonus = 0
-      }
-
-      lastIndex = index
-    }
-
-    // Bonus for matching start of words
-    if (textLower.startsWith(patternLower)) {
-      score += 2
-    } else if (textLower.includes(' ' + patternLower)) {
-      score += 1
-    }
-
-    return score
-  }
 
   const debounce = (fn: Function, ms = 300) => {
     let timeoutId: ReturnType<typeof setTimeout>

@@ -25,10 +25,11 @@
     Newspaper,
     NoSymbol,
     Plus,
+    ShieldCheck,
   } from 'svelte-hero-icons'
   import Subscribe from '../../../../routes/communities/Subscribe.svelte'
   import ItemList from '../generic/ItemList.svelte'
-  import { isAdmin } from '../moderation/moderation'
+  import { amMod, isAdmin } from '../moderation/moderation'
   import { block, blockInstance, purgeCommunity } from './CommunityCard.svelte'
 
   interface Props {
@@ -37,6 +38,7 @@
     counts?: CommunityAggregates | undefined
     moderators?: CommunityModeratorView[]
     blocked?: boolean
+    banner?: boolean
     class?: string
   }
 
@@ -46,12 +48,13 @@
     counts = undefined,
     moderators = [],
     blocked = false,
+    banner = !(settings.nsfwBlur && community.nsfw),
     class: clazz = '',
   }: Props = $props()
 </script>
 
 <EntityHeader
-  banner={settings.nsfwBlur && community.nsfw ? undefined : community.banner}
+  banner={banner ? community.banner : undefined}
   avatar={community.icon}
   name={community.title}
   url="/c/{fullCommunityName(community.name, community.actor_id)}"
@@ -178,6 +181,15 @@
         <Icon src={Newspaper} size="16" mini />
         {$t('cards.community.modlog')}
       </MenuButton>
+      {#if profile.data.user && amMod(profile.data.user, community)}
+        <MenuButton
+          color="success-subtle"
+          href="/moderation?community={community.id}"
+        >
+          <Icon src={ShieldCheck} size="16" micro />
+          {$t('routes.moderation.feed')}
+        </MenuButton>
+      {/if}
       {#if profile.data?.jwt}
         <MenuButton
           color="danger-subtle"

@@ -9,6 +9,7 @@ import type {
   Post,
   PostReportView,
   PostView,
+  PrivateMessage,
   PrivateMessageReportView,
   PrivateMessageView,
 } from 'lemmy-js-client'
@@ -25,6 +26,7 @@ export type Result =
   | PostReportView
   | CommentReportView
   | PrivateMessageReportView
+  | PrivateMessage
 
 export function getItemPublished(item: Result) {
   // reports... why
