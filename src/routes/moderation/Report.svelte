@@ -40,7 +40,7 @@
                 .then(res => {
                   i.resolved = res.comment_report_view.comment_report.resolved
                   i.resolver = res.comment_report_view.resolver
-                  $notifications.reports += i.resolved ? 1 : -1
+                  $notifications.reports += i.resolved ? -1 : 1
                 }),
             ),
           )
@@ -60,7 +60,7 @@
 
                   i.resolver = res.post_report_view.resolver
 
-                  $notifications.reports += i.resolved ? 1 : -1
+                  $notifications.reports += i.resolved ? -1 : 1
                 }),
             ),
           )
@@ -81,7 +81,7 @@
 
                   i.resolver = res.private_message_report_view.resolver
 
-                  $notifications.reports += i.resolved ? 1 : -1
+                  $notifications.reports += i.resolved ? -1 : 1
                 }),
             ),
           )
