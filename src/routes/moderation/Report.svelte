@@ -4,6 +4,7 @@
   import PrivateMessage from '$lib/components/lemmy/inbox/PrivateMessage.svelte'
   import Post from '$lib/components/lemmy/post/Post.svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
+  import Avatar from '$lib/components/ui/Avatar.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import { t } from '$lib/i18n/translations'
   import { getClient } from '$lib/lemmy.svelte.js'
@@ -132,7 +133,24 @@
   </div>
 </Modal>
 
-<div class={['flex flex-row']}>
+<div class={['flex flex-row flex-wrap gap-4']}>
+  {#if item.type == 'comment' || item.type == 'post'}
+    <div class="flex flex-col gap-1.5">
+      <span class="text-xs font-medium">{$t('form.post.community')}</span>
+      <a
+        href="?community={item.item.community.id}"
+        class="flex items-center gap-1 font-medium hover:underline"
+      >
+        <Avatar
+          circle={false}
+          url={item.item.community.icon}
+          alt={item.item.community.name}
+          width={24}
+        />
+        {item.item.community.title}
+      </a>
+    </div>
+  {/if}
   {#if items.length > 1}
     <button
       onclick={() => (usersModal = !usersModal)}
@@ -141,7 +159,7 @@
       {items.length}x
     </button>
   {:else}
-    <div class="flex flex-col gap-1.5 flex-1">
+    <div class="flex flex-col gap-1.5">
       <span class="text-xs font-medium">Report from</span>
       <span class="font-bold">
         <UserLink avatar user={item.creator} />
@@ -149,6 +167,7 @@
     </div>
   {/if}
 
+  <div class="flex-1"></div>
   <Button
     onclick={resolve}
     class="h-max self-end {item.resolved
@@ -170,9 +189,9 @@
 
 <Material rounding="xl" color="uniform" class="dark:bg-zinc-950">
   {#if item.type == 'comment'}
-    <CommentItem community={true} comment={item.item} class="p-0!" />
+    <CommentItem comment={item.item} class="p-0!" />
   {:else if item.type == 'post'}
-    <Post post={item.item} class="p-0!" />
+    <Post hideCommunity post={item.item} class="p-0!" />
   {:else if item.type == 'message'}
     <PrivateMessage
       message={{
@@ -201,6 +220,7 @@
       </button>
     {/if}
   </div>
+  <div class="flex-1"></div>
   {#if item.resolver}
     <div>
       <SectionTitle small>

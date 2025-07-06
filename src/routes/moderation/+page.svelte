@@ -10,7 +10,7 @@
   import { Button, Material, Select, Spinner, toast } from 'mono-svelte'
   import Option from 'mono-svelte/forms/select/Option.svelte'
   import { tick } from 'svelte'
-  import { Check, Funnel, Icon, Inbox } from 'svelte-hero-icons'
+  import { Check, Funnel, Icon, Inbox, XMark } from 'svelte-hero-icons'
   import { fly } from 'svelte/transition'
   import Report from './Report.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
@@ -112,7 +112,17 @@
             {#await client().getCommunity({ id: data.filters.community })}
               <Spinner width={24} />
             {:then community}
-              <CommunityLink community={community.community_view.community} />
+              <a
+                class="inline"
+                aria-label={$t('common.remove')}
+                href="?community="
+              >
+                <Icon src={XMark} size="16" micro class="inline" />
+              </a>
+              <CommunityLink
+                class="w-max inline"
+                community={community.community_view.community}
+              />
             {/await}
           </li>
         </ul>
