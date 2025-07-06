@@ -138,7 +138,7 @@
         </MenuButton>
         {#if amModOfAny(profile.data.user)}
           <MenuButton href="/moderation" icon={ShieldCheck}>
-            {$t('routes.moderation.reports')}
+            {$t('routes.moderation.feed')}
             {#snippet suffix()}
               {@render notifBadge($notifications.reports)}
             {/snippet}
