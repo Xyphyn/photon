@@ -1,6 +1,5 @@
 import { t } from '$lib/i18n/translations.js'
 import { postFeed } from '$lib/lemmy/postfeed.svelte.js'
-import { ReactiveState } from '$lib/promise.svelte.js'
 import { settings } from '$lib/settings.svelte'
 import type { ListingType, SortType } from 'lemmy-js-client'
 import { ChevronDoubleUp } from 'svelte-hero-icons'

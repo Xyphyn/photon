@@ -25,7 +25,6 @@
     ChevronUp,
     EllipsisHorizontal,
     Icon,
-    Identification,
     Plus,
   } from 'svelte-hero-icons'
   import { expoOut } from 'svelte/easing'
