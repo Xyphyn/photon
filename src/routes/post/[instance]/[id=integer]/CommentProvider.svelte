@@ -6,6 +6,7 @@
   import { buildCommentsTree } from '$lib/components/lemmy/comment/comments.svelte'
   import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
   import { t } from '$lib/i18n/translations'
+  import { settings } from '$lib/settings.svelte'
   import type {
     CommentSortType,
     GetCommentsResponse,
@@ -72,7 +73,11 @@
 
       {#snippet action()}
         <div class="gap-2 flex items-center">
-          <Select size="md" bind:value={sort} onchange={onupdate}>
+          <Select
+            size="md"
+            bind:value={settings.defaultSort.comments}
+            onchange={onupdate}
+          >
             <Option icon={Fire} value="Hot">{$t('filter.sort.hot')}</Option>
             <Option icon={Trophy} value="Top">
               {$t('filter.sort.top.label')}
@@ -116,7 +121,11 @@
 
 {#if commenting || !profile.data.jwt}
   <div class="gap-2 flex items-center">
-    <Select size="md" bind:value={sort} onchange={onupdate}>
+    <Select
+      size="md"
+      bind:value={settings.defaultSort.comments}
+      onchange={onupdate}
+    >
       <Option icon={Fire} value="Hot">{$t('filter.sort.hot')}</Option>
       <Option icon={Trophy} value="Top">
         {$t('filter.sort.top.label')}

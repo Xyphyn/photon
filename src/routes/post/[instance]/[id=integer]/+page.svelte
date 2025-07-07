@@ -62,7 +62,7 @@
       limit: 25,
       type_: 'All',
       post_id: data.post.value.post_view.post.id,
-      sort: data.commentSort.value,
+      sort: settings.defaultSort.comments,
       max_depth: data.post.value.post_view.counts.comments > 100 ? 1 : 3,
     })
     loading = false
