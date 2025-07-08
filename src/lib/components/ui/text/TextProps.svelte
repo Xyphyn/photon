@@ -2,6 +2,7 @@
   const wrapClass = {
     wrap: '',
     'no-wrap': 'overflow-hidden text-ellipsis whitespace-nowrap',
+    force: 'break-words',
   }
 </script>
 

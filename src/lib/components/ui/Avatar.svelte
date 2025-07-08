@@ -86,3 +86,10 @@
     }).toString()}
   </div>
 {/if}
+
+<style>
+  img,
+  div {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><line x1="30" y1="30" x2="70" y2="70" stroke="#aa0000" stroke-width="4" stroke-linecap="round"/><line x1="70" y1="30" x2="30" y2="70" stroke="#aa0000" stroke-width="4" stroke-linecap="round"/></svg>');
+  }
+</style>
