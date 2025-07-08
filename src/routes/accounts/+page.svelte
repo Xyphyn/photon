@@ -9,7 +9,6 @@
     setUserID,
   } from '$lib/auth.svelte.js'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import TextProps from '$lib/components/ui/text/TextProps.svelte'
   import DebugObject from '$lib/components/util/debug/DebugObject.svelte'
   import { t } from '$lib/i18n/translations'
   import { LINKED_INSTANCE_URL } from '$lib/instance.svelte.js'

@@ -144,7 +144,6 @@
           taglines={site.data.taglines}
           admins={site.data.admins}
           version={site.data.version}
-          class="pt-0!"
         />
       {:else}
         <div class="h-64 w-full grid place-items-center">

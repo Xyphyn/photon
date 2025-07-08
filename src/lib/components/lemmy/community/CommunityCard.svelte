@@ -226,20 +226,18 @@
       </Expandable>
     {/if}
   </div>
-  <div
-    class="flex flex-row items-center gap-1 sticky bottom-0 drop-shadow-xl w-full"
-  >
+  <div class="flex flex-row items-center gap-1 sticky bottom-0 w-full">
     {#if profile.data?.jwt}
       <Button
         disabled={loading.subscribing}
         loading={loading.subscribing}
         size="md"
-        rounding="xl"
+        rounding="pill"
         color={community_view.subscribed == 'Subscribed'
           ? 'secondary'
           : 'primary'}
         onclick={subscribe}
-        class="px-5 relative z-[inherit]"
+        class="px-4 relative z-[inherit]"
       >
         {#snippet prefix()}
           <Icon
@@ -261,6 +259,7 @@
           community_view.community.actor_id,
         )}/settings"
         size="square-md"
+        rounding="pill"
       >
         {#snippet prefix()}
           <Icon src={Cog6Tooth} mini size="16" />
@@ -269,7 +268,7 @@
     {/if}
     <Menu placement="top-end">
       {#snippet target()}
-        <Button size="square-md">
+        <Button size="square-md" rounding="pill">
           {#snippet prefix()}
             <Icon src={EllipsisHorizontal} size="16" mini />
           {/snippet}
