@@ -17,18 +17,18 @@
     UserGroup,
   } from 'svelte-hero-icons'
   import EndPlaceholder from '../EndPlaceholder.svelte'
+  import type { ClassValue } from 'svelte/elements'
 
   interface Props {
     style?: string
-    class?: string
+    class?: ClassValue
   }
 
   let { style = '', class: clazz = '' }: Props = $props()
 </script>
 
 <nav
-  class="flex flex-col p-4 overflow-auto
-  gap-1 h-fit max-h-screen {clazz}"
+  class={['flex flex-col p-4 overflow-auto gap-1 h-fit max-h-screen', clazz]}
   {style}
 >
   {#if profile.data?.jwt}

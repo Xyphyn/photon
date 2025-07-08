@@ -130,7 +130,7 @@
     </div>
   {/snippet}
 </Header>
-<form class="accounts-grid mt-4 sm:mt-6">
+<form class="accounts-grid mt-4 sm:mt-6 gap-4">
   {#each profileData.profiles as profile, index (profile.id)}
     <label>
       <input
@@ -241,6 +241,5 @@
   .accounts-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: calc(var(--spacing) * 4);
   }
 </style>

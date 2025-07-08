@@ -50,11 +50,9 @@
     $effect(() => {
       if (settings) {
         document.documentElement.classList.remove(
-          'font-display',
           'font-inter',
           'font-sans',
           'font-system',
-          'font-nunito',
         )
         document.documentElement.classList.add(
           settings.font == 'inter'
@@ -68,6 +66,11 @@
 
     $effect(() => {
       document.documentElement.setAttribute('style', theme.vars)
+    })
+
+    $effect(() => {
+      document.documentElement.dir =
+        ($locale == 'he' || $locale == 'ar') && settings.useRtl ? 'rtl' : 'ltr'
     })
   }
 
@@ -109,11 +112,7 @@
   Skip Navigation
 </Button>
 
-<Shell
-  dir={$locale == 'he' && settings.useRtl ? 'rtl' : 'ltr'}
-  class="min-h-screen ease-cubic duration-200"
-  route={page.route}
->
+<Shell>
   <Moderation />
   <ToastContainer />
   <ExpandableImage />
@@ -135,7 +134,7 @@
     <Navbar class={c} style={s} />
   {/snippet}
   {#snippet suffix({ class: c, style: s })}
-    <div class=" {c}" style={s}>
+    <div class={c} style={s}>
       {#if page.data.slots?.sidebar?.component}
         {@const SvelteComponent = page.data.slots.sidebar.component}
         <SvelteComponent {...page.data.slots.sidebar.props} class="pt-0!" />

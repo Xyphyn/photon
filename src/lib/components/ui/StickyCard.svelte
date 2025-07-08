@@ -9,7 +9,7 @@
 
 <aside
   class="sticky top-0 left-0 break-words flex shrink
-    flex-col gap-4 px-6 pt-4 max-w-full w-full h-full
+    flex-col gap-4 px-6 max-w-full w-full h-full
     overflow-auto text-sm border-slate-200 dark:border-zinc-800 {clazz}"
 >
   {@render children?.()}
