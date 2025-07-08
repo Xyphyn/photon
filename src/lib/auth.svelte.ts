@@ -105,40 +105,47 @@ class CurrentProfile {
     const index = profileData.profiles.findIndex(i => i.id == value?.id)
     profileData.profiles[index] = value
   }
+
+  async fetchUserData() {
+    const startId = this.#data.id
+    if (this.#data.jwt) {
+      site.data = undefined
+      notifications.set({ applications: 0, inbox: 0, reports: 0 })
+
+      const res = await userFromJwt(this.#data.jwt, this.#data.instance)
+      if (!res?.user)
+        toast({
+          content:
+            "Your account's instance did not return your user data. Your login may have expired.",
+          type: 'error',
+        })
+
+      // TODO update authentication handling to not be this dynamic
+      if (this.#data.id != startId) {
+        console.error('profile was switched too fast, ID mismatch')
+        return
+      }
+
+      site.data = res?.site
+      this.#data.user = res?.user
+      if (profile.data.user) {
+        this.#data.avatar = res?.user?.local_user_view.person.avatar
+        this.#data.username = res?.user?.local_user_view.person.name
+      }
+    } else {
+      if (browser) {
+        site.data = undefined
+        client({ instanceURL: this.#data.instance })
+          .getSite()
+          .then(res => (site.data = res))
+      }
+    }
+
+    return this
+  }
 }
 
 export const profile = new CurrentProfile()
-
-async function fetchUserData(profile: CurrentProfile) {
-  if (profile.data.jwt) {
-    site.data = undefined
-    notifications.set({ applications: 0, inbox: 0, reports: 0 })
-
-    const res = await userFromJwt(profile.data.jwt, profile.data.instance)
-    if (!res?.user)
-      toast({
-        content:
-          "Your account's instance did not return your user data. Your login may have expired.",
-        type: 'error',
-      })
-
-    site.data = res?.site
-    profile.data.user = res?.user
-    if (profile.data.user) {
-      profile.data.avatar = res?.user?.local_user_view.person.avatar
-      profile.data.username = res?.user?.local_user_view.person.name
-    }
-  } else {
-    if (browser) {
-      site.data = undefined
-      client({ instanceURL: profile.data.instance })
-        .getSite()
-        .then(res => (site.data = res))
-    }
-  }
-
-  return profile
-}
 
 export const notifications = writable<Notifications>({
   applications: 0,
@@ -168,7 +175,7 @@ $effect.root(() => {
 
   $effect(() => {
     if (profile.data.id || profileData)
-      fetchUserData(profile).then(() => {
+      profile.fetchUserData().then(() => {
         checkInbox()
       })
   })

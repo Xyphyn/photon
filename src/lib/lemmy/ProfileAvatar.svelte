@@ -30,7 +30,11 @@
         url={profile.avatar}
         width={size}
         alt=""
-        class={['shrink-0 rounded-full', selected && 'scale-75']}
+        class={[
+          'shrink-0 rounded-full',
+          selected && 'scale-75',
+          'transition-transform',
+        ]}
       />
     {:else}
       <Icon

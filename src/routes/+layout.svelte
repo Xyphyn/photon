@@ -111,7 +111,7 @@
 
 <Shell
   dir={$locale == 'he' && settings.useRtl ? 'rtl' : 'ltr'}
-  class="min-h-screen "
+  class="min-h-screen ease-cubic duration-200"
   route={page.route}
 >
   <Moderation />

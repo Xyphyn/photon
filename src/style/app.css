@@ -14,6 +14,7 @@
 
   --animate-pop-in: pop-in 0.25s ease-out forwards;
 
+  --ease-cubic: cubic-bezier(0.075, 0.82, 0.165, 1);
   --spacing-22: 88px;
 
   --color-slate-25: rgb(var(--c-s-25, 252 253 254));
@@ -57,42 +58,11 @@
   }
 }
 
-.cc {
-  inset: -1px;
-  position: absolute;
-  border-radius: inherit;
-  z-index: -1;
-  background: linear-gradient(
-    125deg,
-    color-mix(in oklab, var(--color-zinc-50) 20%, transparent),
-    color-mix(in oklab, var(--color-zinc-50) 0%, transparent),
-    color-mix(in oklab, var(--color-zinc-50) 20%, transparent)
-  );
-}
-
 @custom-variant hover (&:hover);
 
 @font-face {
   font-family: 'Inter';
   src: url('/font/Inter.woff2') format('woff2');
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Satoshi';
-  src: url('/font/Satoshi.woff2') format('woff2');
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Nunito';
-  src: url('/font/Nunito.woff2') format('woff2');
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'EBGaramond';
-  src: url('/font/EBGaramond-Regular.woff2') format('woff2');
   font-display: swap;
 }
 

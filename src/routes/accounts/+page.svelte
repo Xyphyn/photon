@@ -14,21 +14,17 @@
   import { LINKED_INSTANCE_URL } from '$lib/instance.svelte.js'
   import ProfileAvatar from '$lib/lemmy/ProfileAvatar.svelte'
   import { settings } from '$lib/settings.svelte.js'
-  import { Button, Menu, MenuButton, Modal } from 'mono-svelte'
+  import { Badge, Button, Material, Menu, MenuButton, Modal } from 'mono-svelte'
   import {
     ArrowLeftOnRectangle,
     ArrowRightOnRectangle,
-    ArrowsRightLeft,
     BugAnt,
-    Check,
     ChevronDown,
     ChevronUp,
     EllipsisHorizontal,
     Icon,
     Plus,
   } from 'svelte-hero-icons'
-  import { expoOut } from 'svelte/easing'
-  import { fly } from 'svelte/transition'
 
   let debugging = $state(false)
   let debugProfile: Profile | undefined = $state(undefined)
@@ -38,7 +34,17 @@
     account: undefined as Profile | undefined,
   })
 
-  let switching = $state(-2)
+  let switching = $state(-1)
+
+  let radioSelected = $state(profile.data.id)
+  $effect(() => {
+    switching = radioSelected
+    setUserID(radioSelected)
+  })
+
+  $effect(() => {
+    if (profile.data.user) switching = -1
+  })
 </script>
 
 <svelte:head>
@@ -96,138 +102,145 @@
   </Modal>
 {/if}
 
-<div class="flex flex-col h-full gap-4">
-  <Header pageHeader>
-    {$t('routes.accounts')}
-    {#snippet extended()}
-      <div class="flex">
-        <div class="flex gap-2 mr-auto">
-          <Button
-            href="/accounts/login"
-            rounding="pill"
-            class="px-4"
-            color="primary"
-          >
-            {#snippet prefix()}
-              <Icon src={ArrowLeftOnRectangle} size="16" mini />
-            {/snippet}
-            {$t('account.login')}
-          </Button>
-          {#if !LINKED_INSTANCE_URL}
-            <Button href="/accounts/login/guest" rounding="pill">
-              {#snippet prefix()}
-                <Icon src={Plus} size="16" micro />
-              {/snippet}
-              {$t('account.addGuest')}
-            </Button>
-          {/if}
-        </div>
-      </div>
-    {/snippet}
-  </Header>
-  <div>
-    {#each profileData.profiles as profile, index (profile.id)}
-      <div
-        class="flex flex-row gap-2 items-center py-3"
-        transition:fly={{ duration: 500, y: -12, easing: expoOut }}
-      >
+<Header pageHeader>
+  {$t('routes.accounts')}
+  {#snippet extended()}
+    <div class="flex">
+      <div class="flex gap-2 mr-auto">
         <Button
-          title={profile.id == currentProfile?.data.id ? 'Switch' : 'Current'}
-          onclick={async () => {
-            if (profile.id != currentProfile?.data.id) {
-              switching = profile.id
-              await setUserID(profile.id)
-              switching = -69
-            }
-          }}
-          size="square-md"
-          color={profile.id == currentProfile?.data.id ? 'primary' : 'ghost'}
-          loading={switching == profile.id}
-          disabled={switching == profile.id}
+          href="/accounts/login"
           rounding="pill"
+          class="px-4"
+          color="primary"
         >
           {#snippet prefix()}
-            {#if profile.id == currentProfile?.data.id}
-              <Icon src={Check} mini size="16" />
-            {:else}
-              <Icon src={ArrowsRightLeft} size="16" mini />
-            {/if}
+            <Icon src={ArrowLeftOnRectangle} size="16" mini />
           {/snippet}
+          {$t('account.login')}
         </Button>
-        <div class="flex items-center gap-2">
-          <ProfileAvatar
-            {profile}
-            {index}
-            selected={currentProfile?.data.id == profile.id}
-            size={24}
-          />
+        {#if !LINKED_INSTANCE_URL}
+          <Button href="/accounts/login/guest" rounding="pill">
+            {#snippet prefix()}
+              <Icon src={Plus} size="16" micro />
+            {/snippet}
+            {$t('account.addGuest')}
+          </Button>
+        {/if}
+      </div>
+    </div>
+  {/snippet}
+</Header>
+<form class="accounts-grid mt-4 sm:mt-6">
+  {#each profileData.profiles as profile, index (profile.id)}
+    <label>
+      <input
+        type="radio"
+        id={profile.id.toString()}
+        name="profile"
+        value={profile.id}
+        class="hidden peer"
+        bind:group={radioSelected}
+      />
+      <Material
+        rounding="2xl"
+        color="uniform"
+        class={[
+          'flex flex-col gap-2 py-3 transition-all duration-75 cursor-pointer',
+          'peer-checked:ring-2',
+          switching == profile.id && 'ring-slate-400 dark:ring-zinc-600',
+        ]}
+      >
+        <ProfileAvatar
+          {profile}
+          {index}
+          selected={currentProfile?.data.id == profile.id}
+          size={40}
+        />
+        <div class="flex flex-row justify-between">
           <div class="flex flex-col">
-            <span class="font-medium">{profile.username}</span>
+            <span class="font-medium text-base">
+              {profile.username}
+              {#if !profile.jwt}
+                <Badge class="inline">{$t('account.guest')}</Badge>
+              {/if}
+            </span>
             <span class="text-sm text-slate-600 dark:text-zinc-400">
               {profile.instance}
             </span>
           </div>
+          <Menu placement="bottom-end">
+            {#snippet target()}
+              <Button rounding="pill" size="custom" class="self-end h-8 w-8">
+                {#snippet prefix()}
+                  <Icon src={EllipsisHorizontal} mini size="16" />
+                {/snippet}
+              </Button>
+            {/snippet}
+            <!-- svelte-ignore a11y_click_events_have_key_events -->
+            <!-- svelte-ignore a11y_no_static_element_interactions -->
+            <div
+              class="px-4 py-2 flex items-center gap-2"
+              onclick={e => e.stopPropagation()}
+            >
+              <Button
+                size="square-md"
+                color="secondary"
+                title={$t('account.moveUp')}
+                onclick={() => moveProfile(profile.id, true)}
+              >
+                {#snippet prefix()}
+                  <Icon src={ChevronUp} size="16" mini />
+                {/snippet}
+              </Button>
+              <Button
+                size="square-md"
+                color="secondary"
+                title={$t('account.moveDown')}
+                onclick={() => moveProfile(profile.id, false)}
+              >
+                {#snippet prefix()}
+                  <Icon src={ChevronDown} size="16" mini />
+                {/snippet}
+              </Button>
+            </div>
+            {#if settings.debugInfo}
+              <MenuButton
+                onclick={() => {
+                  debugProfile = profile
+                  debugging = !debugging
+                }}
+              >
+                {#snippet prefix()}
+                  <Icon src={BugAnt} size="16" mini />
+                {/snippet}
+                {$t('common.debug')}
+              </MenuButton>
+            {/if}
+            {#if !LINKED_INSTANCE_URL || profile.user}
+              <MenuButton
+                onclick={() => {
+                  removing.account = profile
+                  removing.shown = !removing.shown
+                }}
+                color="danger-subtle"
+              >
+                {#snippet prefix()}
+                  <Icon src={ArrowRightOnRectangle} size="16" mini />
+                {/snippet}
+                {$t('account.logout')}
+              </MenuButton>
+            {/if}
+          </Menu>
         </div>
-        <div class="ml-auto"></div>
-        <Menu placement="bottom-end">
-          {#snippet target()}
-            <Button size="square-md">
-              {#snippet prefix()}
-                <Icon src={EllipsisHorizontal} mini size="16" />
-              {/snippet}
-            </Button>
-          {/snippet}
-          <div class="px-4 py-2 flex items-center gap-2">
-            <Button
-              size="square-md"
-              color="secondary"
-              title={$t('account.moveUp')}
-              onclick={() => moveProfile(profile.id, true)}
-            >
-              {#snippet prefix()}
-                <Icon src={ChevronUp} size="16" mini />
-              {/snippet}
-            </Button>
-            <Button
-              size="square-md"
-              color="secondary"
-              title={$t('account.moveDown')}
-              onclick={() => moveProfile(profile.id, false)}
-            >
-              {#snippet prefix()}
-                <Icon src={ChevronDown} size="16" mini />
-              {/snippet}
-            </Button>
-          </div>
-          {#if settings.debugInfo}
-            <MenuButton
-              onclick={() => {
-                debugProfile = profile
-                debugging = !debugging
-              }}
-            >
-              {#snippet prefix()}
-                <Icon src={BugAnt} size="16" mini />
-              {/snippet}
-              {$t('common.debug')}
-            </MenuButton>
-          {/if}
-          {#if !LINKED_INSTANCE_URL || profile.user}
-            <MenuButton
-              onclick={() => {
-                removing.account = profile
-                removing.shown = !removing.shown
-              }}
-              color="danger-subtle"
-            >
-              {#snippet prefix()}
-                <Icon src={ArrowRightOnRectangle} size="16" mini />
-              {/snippet}
-              {$t('account.logout')}
-            </MenuButton>
-          {/if}
-        </Menu>
-      </div>
-    {/each}
-  </div>
-</div>
+      </Material>
+    </label>
+  {/each}
+</form>
+
+<style>
+  .accounts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: calc(var(--spacing) * 4);
+  }
+</style>
