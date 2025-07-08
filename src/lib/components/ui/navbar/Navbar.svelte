@@ -47,14 +47,14 @@
 
 <CommandsWrapper bind:open={promptOpen} />
 <nav
-  class="flex flex-row gap-2 items-center w-full mx-auto z-50 box-border p-0.5
-  duration-150 @container
-  {clazz}
-  "
+  class={[
+    'flex flex-row gap-2 items-center w-full mx-auto z-50 box-border p-0.5 duration-150 @container',
+    clazz,
+  ]}
   {style}
 >
   <NavButton
-    oncontextmenu={e => {
+    oncontextmenu={(e: Event) => {
       e.preventDefault()
       promptOpen = true
       return true

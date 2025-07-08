@@ -8,7 +8,6 @@
   --font-sans: sans-serif;
   --font-system: system-ui;
   --font-inter: Inter, system-ui, sans-serif;
-  --font-nunito: Nunito, system-ui, sans-serif;
   --font-display: Inter, system-ui, sans-serif;
   --font-mono: monospace;
 
@@ -72,11 +71,6 @@ body {
 
 .dark {
   color-scheme: dark;
-}
-
-html,
-body {
-  text-rendering: auto;
 }
 
 .wait * {

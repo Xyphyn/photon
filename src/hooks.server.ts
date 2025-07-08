@@ -6,6 +6,8 @@ export const handleError: HandleServerError = async ({
   status,
   message,
 }) => {
+  if (status == 404) return
+
   console.error(`An error was captured:`)
   console.error(error)
   console.error(`Event:`, event)
