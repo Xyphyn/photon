@@ -1,7 +1,7 @@
 {
     "profile": {
         "profile": "Perfil",
-        "saved": "Salvo",
+        "saved": "Guardado",
         "subscribed": "Subscrições",
         "inbox": "Caixa de entrada"
     },
@@ -101,7 +101,7 @@
             "label": "Vista",
             "cozy": "Confortável",
             "list": "Lista",
-            "compact": "Conpacta",
+            "compact": "Compacta",
             "legacy": "Antiga"
         },
         "type": "Tipo",
