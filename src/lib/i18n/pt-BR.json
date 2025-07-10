@@ -1,1 +1,285 @@
-{}
+{
+    "profile": {
+        "inbox": "Caixa de Entrada",
+        "subscribed": "Inscrições",
+        "profile": "Perfil",
+        "saved": "Salvo"
+    },
+    "nav": {
+        "moderation": "Moderação",
+        "search": "Buscar",
+        "admin": "Administrador",
+        "create": {
+            "label": "Criar",
+            "logingate": "Você deve iniciar sessão para criar conteúdo.",
+            "community": "Comunidade",
+            "post": "Publicar"
+        },
+        "menu": {
+            "app": "Aplicativo",
+            "settings": "Configurações",
+            "colorscheme": {
+                "system": "Sistema",
+                "dark": "Escuro",
+                "light": "Claro",
+                "label": "Esquema de Cores"
+            },
+            "theme": "Tema",
+            "about": "Sobre",
+            "source": "Código Fonte",
+            "donate": "Doar",
+            "instance": "Instância",
+            "label": "Perfil"
+        },
+        "commands": {
+            "prompt": "Paleta de Comandos",
+            "recents": "Recentes",
+            "content": "Conteúdo",
+            "search": "Buscar por {{default}}",
+            "main": "Principal",
+            "setView": "Ajustar exibição",
+            "setColor": "Selecionar esquema de cores",
+            "setColorTo": "Definir esquema de cores como {{default}}",
+            "setTheme": "Selecionar tema",
+            "setThemeTo": "Definir tema para {{default}}",
+            "contextual": "Nesta página",
+            "setViewTo": "Ajustar exibição para {{default}}",
+            "feeds": "Feeds",
+            "downloading": "Ações de download"
+        },
+        "notifications": "Notificações",
+        "home": "Início",
+        "communities": "Comunidades"
+    },
+    "account": {
+        "login": "Iniciar Sessão",
+        "signup": "Registrar-se",
+        "accounts": "Contas",
+        "changeinstance": "Trocar Instância",
+        "resetColor": "Redefinir Cor",
+        "addGuest": "Adicionar Convidado",
+        "moveUp": "Mover para cima",
+        "guest": "Convidado",
+        "moveDown": "Mover para baixo",
+        "logout": "Terminar Sessão",
+        "versionGate": "Esta versão do Photon suporta instâncias rodando a versão {{version}} ou acima."
+    },
+    "filter": {
+        "location": {
+            "label": "Fonte",
+            "all": "Tudo",
+            "local": "Local",
+            "moderator": "Moderador",
+            "global": "Global",
+            "subscribed": "Inscrições"
+        },
+        "sort": {
+            "label": "Ordenar",
+            "active": "Ativo",
+            "hot": "Em Alta",
+            "top": {
+                "label": "Popular",
+                "time": {
+                    "all": "Sempre",
+                    "9months": "9 Meses",
+                    "6months": "6 Meses",
+                    "3months": "3 Meses",
+                    "week": "Semana",
+                    "day": "Dia",
+                    "12hours": "12 Horas",
+                    "6hours": "6 Horas",
+                    "hour": "Hora",
+                    "label": "Quando",
+                    "month": "Mês"
+                }
+            },
+            "new": "Novo",
+            "old": "Antigo",
+            "controversial": "Controverso",
+            "scaled": "Relevantes",
+            "mostcomments": "Mais Comentários",
+            "newcomments": "Novas Respostas"
+        },
+        "view": {
+            "label": "Exibição",
+            "cozy": "Confortável",
+            "compact": "Compacta",
+            "legacy": "Clássico",
+            "list": "Lista"
+        },
+        "type": "Tipo",
+        "filter": "Filtro",
+        "unread": "Não lido",
+        "inbox": {
+            "messages": "Mensagens",
+            "replies": "Respostas",
+            "mentions": "Menções"
+        }
+    },
+    "form": {
+        "username": "Nome de usuário",
+        "name": "Nome",
+        "password": "Senha",
+        "2fa": "Código 2FA",
+        "forgotpassword": "Esqueci a Senha",
+        "submit": "Enviar",
+        "edit": "Editar",
+        "preview": "Prévia",
+        "post": {
+            "create": "Criar Publicação",
+            "edit": "Editar Publicação",
+            "community": "Comunidade",
+            "title": "Título",
+            "url": "URL",
+            "nsfw": "NSFW",
+            "generateTitle": "Gerar Título",
+            "uploadImage": "Adicionar Imagem",
+            "selectFile": "Selecionar um arquivo",
+            "altText": "Texto Alternativo",
+            "setLanguage": "Selecionar linguagem",
+            "readMore": "Ler mais",
+            "body": "Corpo",
+            "addUrl": "Adicionar URL"
+        },
+        "profile": {
+            "displayName": "Nome de exibição",
+            "avatar": "Avatar",
+            "banner": "Banner",
+            "matrix": "Nome de Usuário Matrix",
+            "showNSFW": "Mostrar conteúdo NSFW",
+            "scores": "Mostrar pontuação",
+            "bot": "Conta Bot",
+            "showBots": "Mostrar Bots",
+            "email": "E-mail",
+            "currentPassword": "Senha Atual",
+            "verifyNewPassword": "Verificar Nova Senha",
+            "2fa": {
+                "totp": "TOTP",
+                "2fa": "2FA",
+                "paste": "Copie isto no seu aplicativo autenticador."
+            },
+            "deleteAccount": {
+                "label": "Apagar conta",
+                "warning": "Isso apagará TODAS as suas submissões.",
+                "deleteContent": "Apagar conteúdo"
+            },
+            "languages": {
+                "title": "Línguas",
+                "description": "Se algum idioma for selecionado, você verá apenas conteúdo marcado explicitamente com esse idioma. A maior parte do conteúdo, sem marcação, é classificada como 'Indeterminado'."
+            },
+            "bio": "Bio",
+            "showRead": "Mostrar Publicações Lidas",
+            "newPassword": "Nova Senha"
+        },
+        "setup": "Configuração",
+        "signup": {
+            "title": "Registrar-se",
+            "chooseInstance": "Escolha uma instância",
+            "application": {
+                "info": "Para entrar nesta instância, você precisa preencher esta solicitação e aguardar a aprovação. Você receberá um e-mail se for aceito.",
+                "label": "Solicitação"
+            },
+            "closed": {
+                "title": "Solicitações fechadas",
+                "anotherInstance": "Encontre outra instância",
+                "description": "Esta instância não está aceitando solicitações. Ache outra instância."
+            },
+            "description": "Escolha uma instância que lhe interesse, ou digite a URL manualmente.",
+            "info": "Uma instância é o servidor onde sua conta será hospedada, mas você ainda poderá acessar e interagir com conteúdo de outras instâncias."
+        },
+        "email": "E-mail",
+        "description": "Descrição",
+        "time": {
+            "duration": "Duração",
+            "minutes": "Minutos",
+            "hours": "Horas",
+            "days": "Dias",
+            "months": "Meses",
+            "years": "Anos",
+            "permanent": "Permanente"
+        },
+        "instance": "URL da instância",
+        "confirmPassword": "Confirmar Senha"
+    },
+    "routes": {
+        "frontpage": {
+            "footer": "{{users:number}} ativos {{users; 1:user; default:users;}}",
+            "endFeed": "Você chegou ao fim de {{community_name; undefined:the feed.; default:{{community_name}}",
+            "title": "Página Inicial"
+        },
+        "modlog": {
+            "title": "Registro de moderação",
+            "filters": "Filtros"
+        },
+        "instances": "Instâncias",
+        "legal": {
+            "title": "Legal",
+            "noLegal": "Esta instância não tem nenhuma informação legal."
+        },
+        "profile": {
+            "user": "Usuário",
+            "blocks": {
+                "title": "Bloqueados",
+                "empty": {
+                    "description": "Quando você bloquear algo, esse conteúdo não será mais exibido nos seus feeds.",
+                    "title": "Nenhuma entidade bloqueada"
+                }
+            },
+            "credentials": "Credenciais",
+            "moderates": "Moderando",
+            "favorites": "Favoritos",
+            "upvoted": "Votado Positivamente",
+            "media": {
+                "title": "Mídia",
+                "download": "Download"
+            },
+            "logins": "Sessões",
+            "delete": {
+                "title": "Apagar conta",
+                "warning": "Esta ação é permanente. Tem certeza que deseja continuar?"
+            },
+            "overview": "Resumo",
+            "submissions": "Submissões",
+            "settings": "Configurações",
+            "downvoted": "Votado Negativamente",
+            "welcome": "Bem-vindo(a), {{default}}!"
+        },
+        "accounts": "Contas",
+        "communities": {
+            "title": "Comunidades",
+            "trending": "Tendências",
+            "search": {
+                "placeholder": "Busque por uma nova comunidade"
+            }
+        },
+        "search": {
+            "title": "Buscar",
+            "federating": "Federando",
+            "query": "Consulta",
+            "noResults": {
+                "title": "Sem resultados",
+                "description": "Não há resultados que correspondam a esse filtro. Tente refinar a sua busca.",
+                "alt": "Busque em todo o fediverso"
+            },
+            "top": "Resultados mais relevantes",
+            "other": "Outros resultados"
+        },
+        "createPost": "Criar Publicação",
+        "post": {
+            "crosspostCount": "crossposts",
+            "commentCount": "comentários",
+            "addComment": "Adicionar um comentário",
+            "scrollToTop": "Ir para o topo",
+            "remoteView": "Vista Remota",
+            "localView": "Vista Local",
+            "thread": {
+                "single": "Você está vendo uma única thread.",
+                "allComments": "Todos os Comentários"
+            },
+            "instanceWarning": "Esta publicação veio de um servidor diferente do servidor da sua conta. Muitas ações podem não funcionar."
+        },
+        "translators": "Tradutores",
+        "saved": "Salvos",
+        "createCommunity": "Criar Comunidade"
+    }
+}
