@@ -12,7 +12,7 @@ const ASSETS = [
   ...files, // everything in `static`
 ]
 
-self.addEventListener('install', (event) => {
+self.addEventListener('install', event => {
   console.info('[i] Installing service worker')
   // Create a new cache and add all files to it
   async function addFilesToCache() {
@@ -23,7 +23,7 @@ self.addEventListener('install', (event) => {
   event.waitUntil(addFilesToCache())
 })
 
-self.addEventListener('activate', (event) => {
+self.addEventListener('activate', event => {
   console.info('[i] Activating service worker')
   // Remove previous cached data from disk
   async function deleteOldCaches() {
@@ -35,7 +35,8 @@ self.addEventListener('activate', (event) => {
   event.waitUntil(deleteOldCaches())
 })
 
-self.addEventListener('fetch', (event) => {
+self.addEventListener('fetch', e => {
+  const event = e as FetchEvent
   // ignore POST requests etc
   if (event.request.method !== 'GET') return
 
@@ -47,9 +48,11 @@ self.addEventListener('fetch', (event) => {
     if (ASSETS.includes(url.pathname)) {
       const response = await cache.match(url.pathname)
 
-      if (response) {
-        return response
-      }
+      if (response) return response
+    }
+
+    if (url.pathname.includes('/api/')) {
+      return fetch(event.request)
     }
 
     // for everything else, try the network first, but
@@ -61,6 +64,10 @@ self.addEventListener('fetch', (event) => {
       // instead of throwing - and we can't pass this non-Response to respondWith
       if (!(response instanceof Response)) {
         throw new Error('invalid response from fetch')
+      }
+
+      if (response.ok) {
+        cache.put(event.request, response.clone())
       }
 
       return response
