@@ -148,10 +148,9 @@
   let tokens = $derived.by(() => marked.lexer(source))
 </script>
 
-<div
-  class="{noStyle
-    ? ''
-    : 'break-words flex flex-col gap-2 leading-normal'} {clazz}"
+<article
+  dir="auto"
+  class={[!noStyle && 'break-words space-y-2 leading-normal', clazz]}
   {style}
 >
   <SvelteMarkdown
@@ -160,4 +159,4 @@
     {options}
     isInline={inline || undefined}
   />
-</div>
+</article>
