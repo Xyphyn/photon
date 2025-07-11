@@ -73,6 +73,11 @@ const config: Config = {
       loader: async () => (await import('./pt.json')).default,
     },
     {
+      locale: 'pt-BR',
+      key: '',
+      loader: async () => (await import('./pt-BR.json')).default,
+    },
+    {
       locale: 'ru',
       key: '',
       loader: async () => (await import('./ru.json')).default,
