@@ -4,14 +4,29 @@
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
   import { setUser } from '$lib/auth.svelte.js'
+  import ErrorContainer, {
+    clearErrorScope,
+    pushError,
+  } from '$lib/components/error/ErrorContainer.svelte'
+  import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
+  import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import { Checkbox, Material, Spinner, toast } from 'mono-svelte'
+  import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
+  import { t } from '$lib/i18n/translations.js'
   import { getClient } from '$lib/lemmy.svelte.js'
+  import { errorMessage } from '$lib/lemmy/error.js'
   import type { GetCaptchaResponse } from 'lemmy-js-client'
-  import { Button, TextInput } from 'mono-svelte'
+  import {
+    Button,
+    Checkbox,
+    Material,
+    Spinner,
+    TextInput,
+    toast,
+  } from 'mono-svelte'
   import {
     ArrowLeft,
     ArrowPath,
@@ -22,15 +37,6 @@
     QuestionMarkCircle,
     XCircle,
   } from 'svelte-hero-icons'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import { t } from '$lib/i18n/translations.js'
-  import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
-  import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
-  import ErrorContainer, {
-    clearErrorScope,
-    pushError,
-  } from '$lib/components/error/ErrorContainer.svelte'
-  import { errorMessage } from '$lib/lemmy/error.js'
 
   let { data } = $props()
 

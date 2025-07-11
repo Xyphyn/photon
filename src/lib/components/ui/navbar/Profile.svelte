@@ -20,7 +20,6 @@
   } from 'mono-svelte'
   import type { Placement } from 'svelte-floating-ui/core'
   import {
-    ArrowDown,
     ArrowLeftOnRectangle,
     Bars3,
     Bookmark,
