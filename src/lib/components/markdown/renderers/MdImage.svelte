@@ -23,7 +23,7 @@
 
   let { href, title = undefined, text = '' }: Props = $props()
 
-  let type = $derived(mediaType(href, 'cozy'))
+  let type = $derived(mediaType(href))
 </script>
 
 <div
@@ -37,11 +37,11 @@
         url={href}
         opened={true}
         autoplay={false}
-        class="w-auto h-auto max-h-80 inline-block rounded-lg"
+        class="w-auto h-auto max-h-80 inline-block rounded-lg cursor-pointer"
       />
     {:else}
       <button
-        class="inline"
+        class="inline cursor-pointer"
         onclick={() => showImage(optimizeImageURL(href, -1))}
       >
         <img
@@ -57,7 +57,7 @@
   {:else}
     <button
       onclick={() => (loaded = true)}
-      class="w-40 h-40 flex flex-col justify-center items-center gap-4 p-2 group"
+      class="w-40 h-40 flex flex-col justify-center items-center gap-4 p-2 group cursor-pointer"
       title={$t('common.download')}
     >
       <Icon

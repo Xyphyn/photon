@@ -61,7 +61,7 @@
       >
         <Button
           onclick={() => {
-            navigator.clipboard.writeText(page.state.openImage)
+            navigator.clipboard.writeText(page.state?.openImage ?? '')
             toast({ content: $t('toast.copied') })
           }}
           color="tertiary"
