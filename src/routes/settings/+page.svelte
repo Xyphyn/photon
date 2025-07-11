@@ -406,20 +406,6 @@
         <Option value="browser">Browser</Option>
       </Select>
     </Setting>
-    <Setting>
-      {#snippet title()}
-        <span>{$t('settings.app.theming.title')}</span>
-      {/snippet}
-      {#snippet description()}
-        <span>{$t('settings.app.theming.description')}</span>
-      {/snippet}
-      <Button href="/theme">
-        {$t('settings.app.theming.link')}
-        {#snippet suffix()}
-          <Icon src={ArrowRight} size="16" mini />
-        {/snippet}
-      </Button>
-    </Setting>
     <ToggleSetting
       bind:checked={settings.randomPlaceholders}
       title={$t('settings.app.placeholders.title')}
