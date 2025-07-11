@@ -20,6 +20,8 @@
   } from 'mono-svelte'
   import type { Placement } from 'svelte-floating-ui/core'
   import {
+    ArrowDown,
+    ArrowLeftOnRectangle,
     Bars3,
     Bookmark,
     BugAnt,
@@ -27,6 +29,7 @@
     Cog6Tooth,
     ComputerDesktop,
     Icon,
+    Identification,
     Inbox,
     Moon,
     ServerStack,
@@ -91,13 +94,13 @@
   {#if profile.data?.jwt}
     <MenuButton href="/profile">
       {#snippet prefix()}
-        <Icon src={UserCircle} micro width={16} />
+        <Icon src={UserCircle} micro size="16" />
       {/snippet}
       {$t('profile.profile')}
     </MenuButton>
     <MenuButton href="/inbox">
       {#snippet prefix()}
-        <Icon src={Inbox} micro width={16} />
+        <Icon src={Inbox} micro size="16" />
       {/snippet}
       {$t('profile.inbox')}
       {#if $notifications.inbox > 0}
@@ -108,21 +111,34 @@
     </MenuButton>
     <MenuButton href="/saved">
       {#snippet prefix()}
-        <Icon src={Bookmark} micro width={16} />
+        <Icon src={Bookmark} micro size="16" />
       {/snippet}
       {$t('profile.saved')}
+    </MenuButton>
+  {:else}
+    <MenuButton href="/accounts/login">
+      {#snippet prefix()}
+        <Icon src={ArrowLeftOnRectangle} mini size="16" />
+      {/snippet}
+      {$t('account.login')}
+    </MenuButton>
+    <MenuButton href="/signup">
+      {#snippet prefix()}
+        <Icon src={Identification} micro size="16" />
+      {/snippet}
+      {$t('account.signup')}
     </MenuButton>
   {/if}
   <MenuButton href="/accounts">
     {#snippet prefix()}
-      <Icon src={UserGroup} micro width={16} />
+      <Icon src={UserGroup} micro size="16" />
     {/snippet}
     {$t('account.accounts')}
   </MenuButton>
   <MenuDivider>{$t('nav.menu.app')}</MenuDivider>
   <MenuButton href="/settings">
     {#snippet prefix()}
-      <Icon src={Cog6Tooth} micro width={16} />
+      <Icon src={Cog6Tooth} micro size="16" />
     {/snippet}
     {$t('nav.menu.settings')}
   </MenuButton>
@@ -166,7 +182,7 @@
   {#if settings.debugInfo}
     <MenuButton href="/util">
       {#snippet prefix()}
-        <Icon src={BugAnt} mini width={16} />
+        <Icon src={BugAnt} mini size="16" />
       {/snippet}
       Debug
     </MenuButton>
