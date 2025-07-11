@@ -1,16 +1,18 @@
 <script>
   import { LINKED_INSTANCE_URL } from '$lib/instance.svelte'
   import { t } from '$lib/i18n/translations'
-  import { Check, Icon } from 'svelte-hero-icons'
+  import { CheckCircle, Icon } from 'svelte-hero-icons'
 </script>
 
-<div class="flex flex-col items-center h-max my-auto gap-2">
+<div class="flex flex-col h-max my-auto gap-2 max-w-xl mx-auto">
   <div
-    class="rounded-full bg-green-200 dark:bg-green-700 text-green-600 dark:text-green-200 p-3"
+    class="rounded-full bg-green-200 dark:bg-green-500/20 text-white p-2 w-max"
   >
-    <Icon src={Check} size="32" mini />
+    <Icon src={CheckCircle} size="48" solid />
   </div>
-  <h1 class="text-green-800 dark:text-green-200 text-2xl font-semibold">
+  <h1
+    class="text-green-800 dark:text-green-200 text-2xl font-medium tracking-tight"
+  >
     {$t('message.success')}
   </h1>
   <p class="text-green-800 dark:text-green-200">

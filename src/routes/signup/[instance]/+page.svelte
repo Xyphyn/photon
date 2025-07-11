@@ -92,12 +92,8 @@
       ) {
         if (res.verify_email_sent) return (stage = 'verify')
 
-        if (registrationMode == 'RequireApplication') {
-          return toast({
-            content: $t('toast.waitApplication'),
-            type: 'info',
-          })
-        }
+        if (registrationMode == 'RequireApplication')
+          return stage == 'application'
       } else {
         throw new Error($t('toast.failSignup'))
       }
@@ -318,6 +314,16 @@
           {$t('common.back')}
         </Button>
       </form>
+    </div>
+  {:else if stage == 'application'}
+    <div class="flex-2/3 flex flex-col h-full justify-center gap-8">
+      <h2 class="font-medium text-3xl">
+        {$t('form.signup.application.notice')}
+      </h2>
+      <Button href="/signup" rounding="pill">
+        <Icon src={ArrowLeft} size="16" micro />
+        {$t('common.back')}
+      </Button>
     </div>
   {/if}
   <Material

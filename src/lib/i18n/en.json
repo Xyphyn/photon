@@ -183,7 +183,8 @@
             "chooseInstance": "Choose an instance",
             "application": {
                 "label": "Application",
-                "info": "To join this instance, you must fill out this application, and wait to be accepted. You will receive an email if your application is accepted."
+                "info": "To join this instance, you must fill out this application, and wait to be accepted. You will receive an email if your application is accepted.",
+                "notice": "Your signup is now pending. Once an administrator reviews it, you will receive an email if it was accepted. You then can log in."
             },
             "closed": {
                 "title": "Registrations closed",
