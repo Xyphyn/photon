@@ -59,7 +59,6 @@
     ServerStack,
     Share,
     Star,
-    Swatch,
     TableCells,
     Tag,
     Trash,
