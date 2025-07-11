@@ -10,69 +10,97 @@
 <ul class="top-list">
   <li>Arabic</li>
   <ul>
-    <li>fxomt (232)</li>
+    <li>fxomt (246)</li>
   </ul>
 
   <li>Bulgarian</li>
   <ul>
-    <li>Salif Mehmed (468)</li>
+    <li>salif (539)</li>
   </ul>
 
-  <li>Chinese (Simplified)</li>
+  <li>Chinese (Simplified Han script)</li>
   <ul>
-    <li>qiancsf (611)</li>
-    <li>binary yen (150)</li>
+    <li>qiancsf (600)</li>
+    <li>CDN (519)</li>
+    <li>binary3141 (150)</li>
   </ul>
 
-  <li>Chinese (Traditional)</li>
+  <li>Chinese (Traditional Han script)</li>
   <ul>
-    <li>binary yen (161)</li>
+    <li>binary3141 (161)</li>
   </ul>
 
   <li>Dutch</li>
   <ul>
-    <li>Qaz C. (554)</li>
+    <li>qaz (546)</li>
   </ul>
 
   <li>Estonian</li>
   <ul>
-    <li>pewgar kiterland (9)</li>
+    <li>pewgar (43)</li>
   </ul>
 
   <li>Finnish</li>
   <ul>
-    <li>Sevon (735)</li>
+    <li>sevon (797)</li>
   </ul>
 
   <li>French</li>
   <ul>
-    <li>Blisterexe (518)</li>
-    <li>Romain (9)</li>
+    <li>Blisterexe (633)</li>
+    <li>loutr (9)</li>
   </ul>
 
   <li>German</li>
   <ul>
-    <li>poVoq (344)</li>
-    <li>Tywele (155)</li>
+    <li>poVoq (341)</li>
+    <li>Tywele (150)</li>
   </ul>
 
   <li>Hebrew</li>
-  <ul></ul>
+  <ul>
+    <li>TheAnnoying (24)</li>
+  </ul>
+
+  <li>Hungarian</li>
+  <ul>
+    <li>myedition8 (384)</li>
+  </ul>
 
   <li>Japanese</li>
   <ul>
-    <li>Rentlar (634)</li>
+    <li>Rentlar (626)</li>
   </ul>
 
   <li>Polish</li>
   <ul>
-    <li>John Doe (579)</li>
+    <li>gapetto (571)</li>
   </ul>
 
   <li>Portuguese</li>
   <ul>
-    <li>tmpod (649)</li>
-    <li>poVoq (1)</li>
+    <li>tmpod (641)</li>
+  </ul>
+
+  <li>Portuguese (Brazil)</li>
+  <ul>
+    <li>imnotpolar (223)</li>
+  </ul>
+
+  <li>Russian</li>
+  <ul>
+    <li>WerySkok (644)</li>
+    <li>mudkipdev (23)</li>
+  </ul>
+
+  <li>Spanish</li>
+  <ul>
+    <li>acidrums4 (584)</li>
+  </ul>
+
+  <li>Turkish</li>
+  <ul>
+    <li>ikanat (39)</li>
   </ul>
 </ul>
 

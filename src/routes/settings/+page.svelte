@@ -12,7 +12,6 @@
   import { defaultSettings, settings } from '$lib/settings.svelte'
   import { DOMAIN_REGEX_FORMS } from '$lib/util.svelte.js'
   import {
-    Badge,
     Button,
     Checkbox,
     Material,
@@ -256,10 +255,7 @@
     <div class="flex flex-col gap-2">
       <Setting icon={Language}>
         {#snippet title()}
-          <span class="inline-flex items-center gap-2">
-            {$t('settings.app.lang.title')}
-            <Badge>{$t('settings.beta')}</Badge>
-          </span>
+          {$t('settings.app.lang.title')}
         {/snippet}
         {#snippet description()}
           <p>
