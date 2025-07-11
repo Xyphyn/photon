@@ -6,6 +6,7 @@
     DevicePhoneMobile,
     DeviceTablet,
     Icon,
+    type IconSource,
   } from 'svelte-hero-icons'
 
   interface Props {
@@ -18,6 +19,7 @@
       tablet: boolean
       mobile: boolean
     }
+    icon?: IconSource
   }
 
   let {
@@ -30,10 +32,13 @@
       tablet: true,
       mobile: true,
     },
+    icon,
   }: Props = $props()
 </script>
 
-<div class="flex flex-col w-full justify-between gap-2 max-w-full">
+<div
+  class="flex flex-col w-full justify-between gap-2 max-w-full setting @container/setting"
+>
   {#if Object.values(supportedPlatforms).some(v => v == false) || beta}
     <div class="flex items-center gap-2 flex-wrap">
       {#if beta}
@@ -67,16 +72,25 @@
       {/if}
     </div>
   {/if}
-  <Switch
-    bind:checked
-    class="flex-row-reverse items-center w-full"
-    labelClass="flex-1 mr-auto"
-  >
-    <h1 class="font-medium text-base">{title}</h1>
-    {#if description}
-      <p class="text-slate-600 dark:text-zinc-400 text-sm">
-        {description}
-      </p>
+  <div class="flex flex-col @md/setting:flex-row gap-2">
+    {#if icon}
+      <Icon
+        src={icon}
+        size="32"
+        class="bg-red-200/20 dark:bg-red-800/20 p-1.5 self-start @md/setting:self-center rounded-lg color text-red-500 dark:text-red-200"
+      />
     {/if}
-  </Switch>
+    <Switch
+      bind:checked
+      class="flex-row-reverse items-center w-full"
+      labelClass="flex-1 mr-auto"
+    >
+      <h1 class="font-medium text-base">{title}</h1>
+      {#if description}
+        <p class="text-slate-600 dark:text-zinc-400 text-sm">
+          {description}
+        </p>
+      {/if}
+    </Switch>
+  </div>
 </div>

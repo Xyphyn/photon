@@ -28,21 +28,45 @@
     ArrowDownTray,
     ArrowPath,
     ArrowRight,
+    ArrowsPointingOut,
+    ArrowsRightLeft,
     ArrowTopRightOnSquare,
     ArrowTrendingDown,
     ArrowUpTray,
+    Bars2,
+    Bars3,
+    BarsArrowDown,
+    BookOpen,
+    BugAnt,
+    Calendar,
+    ChartBar,
     ChatBubbleOvalLeftEllipsis,
     ChevronDown,
     Clock,
+    CubeTransparent,
+    CursorArrowRays,
+    DocumentText,
+    ExclamationTriangle,
+    Eye,
+    EyeSlash,
     Fire,
     GlobeAmericas,
     Heart,
     Icon,
     Language,
+    Photo,
     Plus,
+    ServerStack,
+    Share,
     Star,
+    Swatch,
+    TableCells,
+    Tag,
     Trash,
     Trophy,
+    User,
+    VideoCamera,
+    ViewColumns,
   } from 'svelte-hero-icons'
   import Section from './Section.svelte'
   import Setting from './Setting.svelte'
@@ -204,7 +228,7 @@
   {/if}
   <Section id="app" title={$t('settings.app.title')}>
     {#if env.PUBLIC_XYLIGHT_MODE}
-      <Setting class="">
+      <Setting icon={Heart}>
         {#snippet title()}
           <span class="dark:text-pink-400 text-pink-600 font-medium">
             {$t('nav.menu.donate')}
@@ -230,7 +254,7 @@
       </Setting>
     {/if}
     <div class="flex flex-col gap-2">
-      <Setting>
+      <Setting icon={Language}>
         {#snippet title()}
           <span class="inline-flex items-center gap-2">
             {$t('settings.app.lang.title')}
@@ -270,7 +294,7 @@
         ></ToggleSetting>
       {/if}
     </div>
-    <Setting>
+    <Setting icon={ViewColumns}>
       {#snippet title()}
         <span>{$t('settings.app.view.title')}</span>
       {/snippet}
@@ -288,6 +312,7 @@
     <Setting
       optionClass="flex-2 max-w-full flex-wrap min-w-0 "
       itemsClass="flex-col items-start! lg:items-center! lg:flex-row"
+      icon={ChartBar}
     >
       {#snippet title()}
         <span>{$t('settings.app.sort.title')}</span>
@@ -343,12 +368,12 @@
       </div>
     </Setting>
     <ToggleSetting
-      beta
+      icon={BarsArrowDown}
       bind:checked={settings.infiniteScroll}
       title={$t('settings.app.infiniteScroll.title')}
       description={$t('settings.app.infiniteScroll.description')}
     />
-    <Setting>
+    <Setting icon={Photo}>
       {#snippet title()}
         <span>{$t('settings.app.thumbnailSide.title')}</span>
       {/snippet}
@@ -367,33 +392,38 @@
       />
     </Setting>
     <ToggleSetting
+      icon={ArrowsRightLeft}
       bind:checked={settings.posts.reverseActions}
       title={$t('settings.app.reverseActions.title')}
       description={$t('settings.app.reverseActions.description')}
     />
     <ToggleSetting
+      icon={TableCells}
       supportedPlatforms={{ desktop: true, tablet: false, mobile: false }}
       bind:checked={settings.newWidth}
       title={$t('settings.app.limitLayoutWidth.title')}
       description={$t('settings.app.limitLayoutWidth.description')}
     />
     <ToggleSetting
+      icon={Calendar}
       bind:checked={settings.absoluteDates}
       title={$t('settings.app.absoluteDates.title')}
       description={$t('settings.app.absoluteDates.description')}
     />
     <ToggleSetting
+      icon={CubeTransparent}
       supportedPlatforms={{ desktop: false, tablet: false, mobile: true }}
       bind:checked={settings.dock.autoHide}
       title={$t('settings.navigation.autoHide.title')}
       description={$t('settings.navigation.autoHide.description')}
     />
     <ToggleSetting
+      icon={ArrowTopRightOnSquare}
       bind:checked={settings.openLinksInNewTab}
       title={$t('settings.app.postsInNewTab.title')}
       description={$t('settings.app.postsInNewTab.description')}
     />
-    <Setting>
+    <Setting icon={DocumentText}>
       {#snippet title()}
         <span>{$t('settings.app.font.title')}</span>
       {/snippet}
@@ -407,26 +437,31 @@
       </Select>
     </Setting>
     <ToggleSetting
+      icon={ArrowPath}
       bind:checked={settings.randomPlaceholders}
       title={$t('settings.app.placeholders.title')}
       description={$t('settings.app.placeholders.description')}
     />
     <ToggleSetting
+      icon={ArrowsPointingOut}
       bind:checked={settings.expandImages}
       title={$t('settings.app.expandImages.title')}
       description={$t('settings.app.expandImages.description')}
     />
     <ToggleSetting
+      icon={Bars2}
       bind:checked={settings.posts.deduplicateEmbed}
       title={$t('settings.app.duplicateTitles.title')}
       description={$t('settings.app.duplicateTitles.description')}
     />
     <ToggleSetting
+      icon={ArrowTopRightOnSquare}
       bind:checked={settings.posts.titleOpensUrl}
       title={$t('settings.app.titleOpensUrl.title')}
       description={$t('settings.app.titleOpensUrl.description')}
     />
     <ToggleSetting
+      icon={Tag}
       title={$t('settings.app.titleTags.title')}
       description={$t('settings.app.titleTags.description')}
       bind:checked={settings.parseTags}
@@ -435,11 +470,12 @@
 
   <Section id="embeds" title={$t('settings.embeds.title')}>
     <ToggleSetting
+      icon={CursorArrowRays}
       title={$t('settings.embeds.clickToView.title')}
       description={$t('settings.embeds.clickToView.description')}
       bind:checked={settings.embeds.clickToView}
     />
-    <Setting>
+    <Setting icon={VideoCamera}>
       {#snippet title()}
         <span>YouTube</span>
       {/snippet}
@@ -492,31 +528,36 @@
 
   <Section id="lemmy" title={$t('settings.lemmy.title')}>
     <ToggleSetting
+      icon={Eye}
       bind:checked={settings.posts.showHidden}
       title={$t('settings.lemmy.showHiddenPosts.title')}
       description={$t('settings.lemmy.showHiddenPosts.description')}
     />
     <ToggleSetting
+      icon={Bars3}
       bind:checked={settings.posts.compactFeatured}
       title={$t('settings.lemmy.compactFeatured.title')}
       description={$t('settings.lemmy.compactFeatured.description')}
     />
     <ToggleSetting
+      icon={BookOpen}
       bind:checked={settings.markPostsAsRead}
       title={$t('settings.lemmy.markReadPosts.title')}
       description={$t('settings.lemmy.markReadPosts.description')}
     />
     <ToggleSetting
+      icon={CubeTransparent}
       bind:checked={settings.markReadPosts}
       title={$t('settings.lemmy.fadeReadPosts.title')}
       description={$t('settings.lemmy.fadeReadPosts.description')}
     />
     <ToggleSetting
+      icon={Share}
       bind:checked={settings.crosspostOriginalLink}
       title={$t('settings.lemmy.crosspostMarker.title')}
       description={$t('settings.lemmy.crosspostMarker.description')}
     />
-    <Setting>
+    <Setting icon={EyeSlash}>
       {#snippet title()}
         <span>{$t('settings.lemmy.hideSubmissions.title')}</span>
       {/snippet}
@@ -535,11 +576,12 @@
       </div>
     </Setting>
     <ToggleSetting
+      icon={ExclamationTriangle}
       bind:checked={settings.nsfwBlur}
       title={$t('settings.lemmy.nsfwBlur.title')}
       description={$t('settings.lemmy.nsfwBlur.description')}
     />
-    <Setting>
+    <Setting icon={ServerStack}>
       {#snippet title()}
         <span>{$t('settings.lemmy.instances.title')}</span>
       {/snippet}
@@ -561,6 +603,7 @@
       </div>
     </Setting>
     <ToggleSetting
+      icon={User}
       bind:checked={settings.displayNames}
       title={$t('settings.app.displayName.title')}
       description={$t('settings.app.displayName.description')}
@@ -568,7 +611,7 @@
   </Section>
 
   <Section id="moderation" title={$t('settings.moderation.title')}>
-    <Setting itemsClass="flex-col! items-start!">
+    <Setting icon={Trash} itemsClass="flex-col! items-start!">
       {#snippet title()}
         <span>{$t('settings.moderation.replyPresets.title')}</span>
       {/snippet}
@@ -666,11 +709,13 @@
 
   <Section id="other" title={$t('settings.other.title')}>
     <ToggleSetting
+      icon={BugAnt}
       bind:checked={settings.debugInfo}
       title={$t('settings.other.debug.title')}
       description={$t('settings.other.debug.description')}
     />
     <ToggleSetting
+      icon={Bars3}
       bind:checked={settings.posts.noVirtualize}
       title={$t('settings.other.virtualizeFeeds.title')}
       description={$t('settings.other.virtualizeFeeds.description')}
