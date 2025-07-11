@@ -24,7 +24,7 @@
 <div
   class={[
     toastColors[toast.type],
-    'relative rounded-xl overflow-hidden flex flex-row items-start',
+    'relative rounded-2xl overflow-hidden flex flex-row items-center gap-2 px-3 py-3 backdrop-blur-lg',
     toast.long ? 'w-full max-w-lg' : 'w-80',
   ]}
   transition:fly={{
@@ -40,9 +40,18 @@
     </div>
   {:else}
     <Icon
-      size="20"
+      size="28"
       mini
-      class="relative mt-4 mr-2 ml-4 shrink-0 opacity-80"
+      class={[
+        'relative self-center shrink-0 p-1 rounded-full',
+        toast.type == 'info'
+          ? 'bg-slate-200 dark:bg-zinc-50 text-slate-700 dark:text-zinc-700'
+          : toast.type == 'success'
+            ? 'bg-green-400 dark:bg-green-300 dark:text-green-900 text-green-50'
+            : toast.type == 'warning'
+              ? 'bg-yellow-400 dark:bg-yellow-300 dark:text-yellow-900 text-yellow-50'
+              : 'bg-red-400 dark:bg-red-300 dark:text-red-900 text-red-50',
+      ]}
       src={toast.type == 'info'
         ? InformationCircle
         : toast.type == 'success'
@@ -55,17 +64,17 @@
     />
   {/if}
   <div
-    class="flex flex-col p-4 pl-0 break-words max-w-full text-slate-900 dark:text-zinc-50"
+    class="flex flex-col break-words max-w-full text-slate-900 dark:text-zinc-50"
   >
     {#if toast.title}
-      <h1 class="text-base font-bold">{toast.title}</h1>
+      <h1 class="text-base font-semibold">{toast.title}</h1>
     {/if}
     <Markdown
       source={toast.content}
-      class="{toast.long ? 'text-[15px]' : 'text-sm'} font-medium"
+      class={toast.long ? 'text-[15px]' : 'text-sm font-medium'}
     />
   </div>
-  <div class="ml-auto flex items-center gap-1 m-2">
+  <div class="absolute top-0 right-0 flex items-center gap-1 m-1">
     {#if toast.action}
       <button
         onclick={() => {

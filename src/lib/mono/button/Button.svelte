@@ -32,14 +32,6 @@
 		hover:bg-slate-100 dark:hover:bg-zinc-800 dark:hover:border-zinc-700 dark:text-zinc-400 hover:text-inherit
 		dark:hover:text-inherit`,
 
-    elevated: `bg-slate-100 dark:bg-zinc-800 border border-slate-200
-	 dark:border-zinc-700 hover:bg-zinc-200 dark:hover:bg-zinc-700 hover:border-slate-300
-	 dark:hover:border-zinc-600`,
-
-    elevatedLow: `bg-slate-100 dark:bg-zinc-900 border border-slate-200
-	dark:border-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-800 hover:border-slate-300
-	dark:hover:border-zinc-700`,
-
     'blue-subtle': `text-blue-500 hover:bg-blue-500 hover:text-inherit!`,
 
     none: '',
@@ -65,50 +57,14 @@
     custom: '',
   }
 
-  type ButtonRoundness = 'pill' | 'xl' | 'lg' | 'md' | 'none'
-  type ButtonRoundingSide = 'all' | 'left' | 'right' | 'top' | 'bottom'
-
   const buttonRounding = {
-    pill: {
-      all: 'rounded-full',
-      left: 'rounded-l-full',
-      right: 'rounded-r-full',
-      top: 'rounded-t-full',
-      bottom: 'rounded-b-full',
-    },
-
-    xl: {
-      all: 'rounded-xl',
-      left: 'rounded-l-xl',
-      right: 'rounded-r-xl',
-      top: 'rounded-t-xl',
-      bottom: 'rounded-b-xl',
-    },
-
-    lg: {
-      all: 'rounded-lg',
-      left: 'rounded-l-lg',
-      right: 'rounded-r-lg',
-      top: 'rounded-t-lg',
-      bottom: 'rounded-b-lg',
-    },
-
-    md: {
-      all: 'rounded-md',
-      left: 'rounded-l-md',
-      right: 'rounded-r-md',
-      top: 'rounded-t-md',
-      bottom: 'rounded-b-md',
-    },
-
-    none: {
-      all: '',
-      left: '',
-      right: '',
-      top: '',
-      bottom: '',
-    },
+    pill: 'rounded-full',
+    xl: 'rounded-xl',
+    lg: 'rounded-lg',
+    md: 'rounded-md',
+    none: '',
   }
+  type ButtonRoundness = keyof typeof buttonRounding
 
   interface Props
     extends Omit<HTMLButtonAttributes | HTMLAnchorAttributes, 'prefix'> {
@@ -117,7 +73,6 @@
     color?: ButtonColor
     size?: ButtonSize
     rounding?: ButtonRoundness
-    roundingSide?: ButtonRoundingSide
     alignment?: ButtonAlignment
     shadow?: ButtonShadow
     column?: boolean
@@ -149,7 +104,6 @@
     color = 'secondary',
     size = 'md',
     rounding = size == 'lg' ? 'xl' : 'lg',
-    roundingSide = 'all',
     alignment = 'center',
     shadow = color != 'tertiary' ? 'sm' : 'none',
     column = false,
@@ -173,7 +127,7 @@
   class={[
     loading ? buttonColor.secondary : buttonColor[color],
     buttonSize[size],
-    buttonRounding[rounding][roundingSide],
+    buttonRounding[rounding],
     buttonShadow[shadow],
     'text-sm transition-all font-medium cursor-pointer duration-75 disabled:opacity-50 disabled:pointer-events-none disabled:shadow-none',
     disabled && 'pointer-events-none opacity-50 shadow-none',

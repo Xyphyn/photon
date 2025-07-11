@@ -178,7 +178,7 @@
                 ? $t('cards.community.subscribed')
                 : $t('cards.community.subscribe')}
               color={isSubscribed(community.subscribed)
-                ? 'elevatedLow'
+                ? 'secondary'
                 : 'primary'}
               class="{isSubscribed(community.subscribed)
                 ? 'text-slate-600 dark:text-zinc-400'

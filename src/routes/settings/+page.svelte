@@ -111,55 +111,51 @@
 
 <Header pageHeader class="text-3xl font-bold flex justify-between">
   {$t('settings.title')}
-  <div class="flex items-center">
-    <Button
-      size="square-lg"
-      onclick={() => {
-        importText = ''
-        importing = true
-      }}
-      class="font-normal"
-      title={$t('settings.import')}
-      roundingSide="left"
-    >
-      {#snippet prefix()}
-        <Icon src={ArrowDownTray} mini size="18" />
-      {/snippet}
-    </Button>
-    <Button
-      size="square-lg"
-      onclick={() => {
-        const json = JSON.stringify(settings)
-        navigator?.clipboard?.writeText?.(json)
-        toast({ content: $t('toast.copied') })
-      }}
-      class="font-normal"
-      title={$t('settings.export')}
-      rounding="none"
-    >
-      {#snippet prefix()}
-        <Icon src={ArrowUpTray} mini size="18" />
-      {/snippet}
-    </Button>
-    <Button
-      size="square-lg"
-      onclick={() => {
-        toast({
-          content: $t('toast.resetSettings'),
-          action: () => {
-            Object.assign(settings, defaultSettings)
-          },
-        })
-      }}
-      class="font-normal"
-      title={$t('settings.reset')}
-      roundingSide="right"
-    >
-      {#snippet prefix()}
-        <Icon src={ArrowPath} mini size="18" />
-      {/snippet}
-    </Button>
-  </div>
+  {#snippet extended()}
+    <div class="flex items-center tracking-normal gap-2">
+      <Button
+        onclick={() => {
+          importText = ''
+          importing = true
+        }}
+        rounding="pill"
+      >
+        {#snippet prefix()}
+          <Icon src={ArrowDownTray} mini size="18" />
+        {/snippet}
+        {$t('settings.import')}
+      </Button>
+      <Button
+        onclick={() => {
+          const json = JSON.stringify(settings)
+          navigator?.clipboard?.writeText?.(json)
+          toast({ content: $t('toast.copied') })
+        }}
+        rounding="pill"
+      >
+        {#snippet prefix()}
+          <Icon src={ArrowUpTray} mini size="18" />
+        {/snippet}
+        {$t('settings.export')}
+      </Button>
+      <Button
+        onclick={() => {
+          toast({
+            content: $t('toast.resetSettings'),
+            action: () => {
+              Object.assign(settings, defaultSettings)
+            },
+          })
+        }}
+        rounding="pill"
+      >
+        {#snippet prefix()}
+          <Icon src={ArrowPath} mini size="18" />
+        {/snippet}
+        {$t('settings.reset')}
+      </Button>
+    </div>
+  {/snippet}
 </Header>
 
 <div class="flex items-center gap-2 flex-wrap w-full my-5">
