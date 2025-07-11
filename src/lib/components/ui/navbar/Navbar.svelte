@@ -154,13 +154,21 @@
         {/if}
       </Menu>
     {/if}
-    <Menu placement="top">
+    <Menu
+      manual={site.data?.site_view.local_site.community_creation_admin_only &&
+        !(profile.data.user && isAdmin(profile.data.user))}
+      placement="top"
+    >
       {#snippet target()}
         <NavButton
           class="relative"
           label={$t('nav.create.label')}
           icon={Plus}
           adaptive={false}
+          href={site.data?.site_view.local_site.community_creation_admin_only &&
+          !(profile.data.user && isAdmin(profile.data.user))
+            ? '/create/post'
+            : undefined}
         />
       {/snippet}
       <MenuDivider>{$t('nav.create.label')}</MenuDivider>
