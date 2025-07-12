@@ -59,8 +59,7 @@
         color="primary"
         rounding="pill"
         size="sm"
-        href="/post/{comment.post.id}?thread={comment.comment.path}#{comment
-          .comment.id}"
+        href="/comment/{comment.comment.id}"
         class="self-start"
       >
         {$t('common.jump')}
