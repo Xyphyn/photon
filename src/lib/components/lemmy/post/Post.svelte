@@ -68,11 +68,6 @@
       view != 'compact' &&
       type != 'iframe',
   )
-  let hideBody = $derived(
-    settings.posts.deduplicateEmbed &&
-      post.post.embed_description == post.post.body &&
-      view != 'compact',
-  )
 
   let badges = $derived({
     deleted: post.post.deleted,
@@ -154,7 +149,7 @@
       />
     {/if}
   {/key}
-  {#if post.post.body && !post.post.nsfw && view != 'compact' && !hideBody && rule != 'hide'}
+  {#if post.post.body && !post.post.nsfw && view != 'compact'}
     <PostBody
       element="section"
       body={post.post.body}

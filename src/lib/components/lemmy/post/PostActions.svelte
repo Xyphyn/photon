@@ -112,11 +112,11 @@
   {style}
 >
   <PostVote
-    bind:post={post.post}
-    vote={post.my_vote}
-    score={post.counts.score}
-    upvotes={post.counts.upvotes}
-    downvotes={post.counts.downvotes}
+    post={post.post}
+    bind:vote={post.my_vote}
+    bind:score={post.counts.score}
+    bind:upvotes={post.counts.upvotes}
+    bind:downvotes={post.counts.downvotes}
     showCounts={profile.data?.user?.local_user_view?.local_user?.show_scores ??
       true}
   />

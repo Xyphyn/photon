@@ -9,6 +9,7 @@
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import { t } from '$lib/i18n/translations.js'
   import { site } from '$lib/lemmy.svelte.js'
+  import { postFeeds } from '$lib/lemmy/postfeed.svelte.js'
   import { settings } from '$lib/settings.svelte.js'
   import Button from 'mono-svelte/button/Button.svelte'
   import { ArrowRight, ChartBar, Icon } from 'svelte-hero-icons'
@@ -63,7 +64,7 @@
 
   <FeedComponent
     bind:posts={data.feed.posts.posts}
-    bind:feedData={data.feed}
+    bind:feedData={() => data.feed, v => (postFeeds.value.main.data = v)}
     feedId="main"
   />
   <svelte:element
