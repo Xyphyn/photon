@@ -50,6 +50,7 @@
   let hasMore = $state(true)
 
   async function loadMore() {
+    console.log(hasMore, loading)
     if (!hasMore || loading) return
 
     try {
@@ -255,7 +256,14 @@
         </EndPlaceholder>
       </div>
     {/if}
-    <InfiniteScroll window threshold={1000} on:loadMore={loadMore} />
+    <InfiniteScroll
+      window
+      threshold={600}
+      on:loadMore={() => {
+        console.log('loadMore triggered')
+        loadMore()
+      }}
+    />
   {/if}
   {@render children?.()}
 </ul>
