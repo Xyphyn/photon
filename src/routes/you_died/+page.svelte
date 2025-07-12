@@ -26,7 +26,7 @@
     style="rotate: -5deg; transition: rotate 1s linear;"
   >
     <div class="bg-black/20 font-mono fixed left-1/2 -translate-x-1/2">
-      <p>{profile.data.username ?? 'You'} was slain by Command Palette</p>
+      <p>{profile.current.username ?? 'You'} was slain by Command Palette</p>
     </div>
     <img
       src="/other/mc.png"

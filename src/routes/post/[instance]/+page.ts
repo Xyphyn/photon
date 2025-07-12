@@ -7,7 +7,7 @@ export function load({ params }) {
     redirect(
       302,
       resolveRoute(`/post/[instance]/[id]`, {
-        instance: profile.data.instance.toLowerCase(),
+        instance: profile.current.instance.toLowerCase(),
         id: params.instance,
       }),
     )

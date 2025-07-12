@@ -96,7 +96,7 @@
   >
     <ObjectAutocomplete
       label={$t('nav.create.community')}
-      jwt={profile.data?.jwt}
+      jwt={profile.current?.jwt}
       listing_type="All"
       showWhenEmpty={true}
       onselect={c =>

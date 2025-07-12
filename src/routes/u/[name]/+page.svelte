@@ -55,11 +55,11 @@
   let sortForm = $state<HTMLFormElement>()
 
   async function blockUser(block: number) {
-    if (!profile.data?.user || !profile.data?.jwt)
+    if (!profile.current?.user || !profile.current?.jwt)
       throw new Error('Unauthenticated')
 
     try {
-      const blocked = isBlocked(profile.data.user, block)
+      const blocked = isBlocked(profile.current.user, block)
 
       await getClient().blockPerson({
         block: !blocked,
@@ -67,10 +67,10 @@
       })
 
       if (blocked) {
-        const index = profile.data.user.person_blocks
+        const index = profile.current.user.person_blocks
           .map(p => p.target.id)
           .indexOf(block)
-        profile.data.user.person_blocks.splice(index, 1)
+        profile.current.user.person_blocks.splice(index, 1)
       }
 
       toast({
@@ -210,7 +210,7 @@
             </Expandable>
           {/if}
           {#snippet actions()}
-            {#if profile.data?.user && profile.data.jwt && data.person_view.value.person.id != profile.data.user.local_user_view.person.id}
+            {#if profile.current?.user && profile.current.jwt && data.person_view.value.person.id != profile.current.user.local_user_view.person.id}
               <div class="flex items-center gap-2 w-full flex-wrap">
                 <Button
                   size="sm"
@@ -237,7 +237,7 @@
                     {$t('form.profile.matrix')}
                   </Button>
                 {/if}
-                {#if isAdmin(profile.data?.user)}
+                {#if isAdmin(profile.current?.user)}
                   <Menu class="ml-auto" placement="bottom-end">
                     {#snippet target()}
                       <Button size="sm" rounding="pill">
@@ -292,7 +292,7 @@
                       <Icon mini size="16" src={NoSymbol} />
                     {/snippet}
                     {isBlocked(
-                      profile.data.user,
+                      profile.current.user,
                       data.person_view.value.person.id,
                     )
                       ? 'Unblock'

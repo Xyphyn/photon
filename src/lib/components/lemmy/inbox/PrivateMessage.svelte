@@ -23,7 +23,7 @@
         avatar
         avatarSize={20}
       />
-      {#if profile.data?.user?.local_user_view.person.id != message.recipient.id}
+      {#if profile.current?.user?.local_user_view.person.id != message.recipient.id}
         to
         <UserLink
           showInstance={false}

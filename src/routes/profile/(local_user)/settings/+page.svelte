@@ -41,7 +41,7 @@
   let bannerImage: FileList | undefined = $state()
 
   async function save() {
-    if (!formData || !profile.data?.jwt) return
+    if (!formData || !profile.current?.jwt) return
 
     loading = true
 
@@ -49,16 +49,16 @@
       let pfp = profileImage
         ? await uploadImage(
             profileImage[0],
-            profile.data.instance,
-            profile.data.jwt,
+            profile.current.instance,
+            profile.current.jwt,
           )
         : undefined
 
       let banner = bannerImage
         ? await uploadImage(
             bannerImage[0],
-            profile.data.instance,
-            profile.data.jwt,
+            profile.current.instance,
+            profile.current.jwt,
           )
         : undefined
 

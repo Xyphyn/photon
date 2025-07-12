@@ -15,7 +15,7 @@
   import { Plus } from 'svelte-hero-icons'
 
   let loading = $state(false)
-  const fetched = $state.snapshot(profile.data.instance)
+  const fetched = $state.snapshot(profile.current.instance)
 
   async function fetchOnHome() {
     loading = true
@@ -27,7 +27,7 @@
       if (res.post) {
         goto(
           resolveRoute(`/post/[instance]/[id]`, {
-            instance: profile.data.instance,
+            instance: profile.current.instance,
             id: res.post.post.id.toString(),
           }),
         )
@@ -56,7 +56,7 @@
     </p>
   </header>
   <div class="flex flex-row items-center gap-2 flex-wrap">
-    {#if profile.data.jwt}
+    {#if profile.current.jwt}
       <Button
         {loading}
         disabled={loading}

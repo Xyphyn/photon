@@ -155,7 +155,7 @@
         <Subscribe {community}>
           {#snippet children({ subscribe, subscribing })}
             <Button
-              disabled={subscribing || !profile.data?.jwt}
+              disabled={subscribing || !profile.current?.jwt}
               loading={subscribing}
               onclick={async () => {
                 const res = await subscribe()

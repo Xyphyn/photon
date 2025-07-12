@@ -38,14 +38,14 @@
 
   let switching = $state(-1)
 
-  let radioSelected = $state(profile.data.id)
+  let radioSelected = $state(profile.current.id)
   $effect(() => {
     switching = radioSelected
     setUserID(radioSelected)
   })
 
   $effect(() => {
-    if (profile.data.user) switching = -1
+    if (profile.current.user) switching = -1
   })
 </script>
 
@@ -55,7 +55,9 @@
 
 {#if debugging}
   <DebugObject
-    object={debugProfile?.id == profile.data?.id ? profile.data : debugProfile}
+    object={debugProfile?.id == profile.current?.id
+      ? profile.current
+      : debugProfile}
     bind:open={debugging}
   >
     {#snippet title()}

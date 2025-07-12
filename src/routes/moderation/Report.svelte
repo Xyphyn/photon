@@ -24,7 +24,7 @@
 
   let resolving = $state(false)
   async function resolve() {
-    if (!profile.data?.jwt || !profile.data.user) return
+    if (!profile.current?.jwt || !profile.current.user) return
     resolving = true
 
     try {

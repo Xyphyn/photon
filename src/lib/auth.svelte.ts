@@ -92,27 +92,27 @@ export const profileData = $state<ProfileData>(
 )
 
 class CurrentProfile {
-  #data = $derived(
+  #current = $derived(
     profileData.profiles.find(i => i.id == profileData.profile) ??
       getDefaultProfile(),
   )
 
-  get data() {
-    return this.#data
+  get current() {
+    return this.#current
   }
-  set data(value) {
+  set current(value) {
     if (!value) return
     const index = profileData.profiles.findIndex(i => i.id == value?.id)
     profileData.profiles[index] = value
   }
 
   async fetchUserData() {
-    const startId = this.#data.id
-    if (this.#data.jwt) {
+    const startId = this.#current.id
+    if (this.#current.jwt) {
       site.data = undefined
       notifications.set({ applications: 0, inbox: 0, reports: 0 })
 
-      const res = await userFromJwt(this.#data.jwt, this.#data.instance)
+      const res = await userFromJwt(this.#current.jwt, this.#current.instance)
       if (!res?.user)
         toast({
           content:
@@ -121,21 +121,21 @@ class CurrentProfile {
         })
 
       // TODO update authentication handling to not be this dynamic
-      if (this.#data.id != startId) {
+      if (this.#current.id != startId) {
         console.error('profile was switched too fast, ID mismatch')
         return
       }
 
       site.data = res?.site
-      this.#data.user = res?.user
-      if (profile.data.user) {
-        this.#data.avatar = res?.user?.local_user_view.person.avatar
-        this.#data.username = res?.user?.local_user_view.person.name
+      this.#current.user = res?.user
+      if (profile.current.user) {
+        this.#current.avatar = res?.user?.local_user_view.person.avatar
+        this.#current.username = res?.user?.local_user_view.person.name
       }
     } else {
       if (browser) {
         site.data = undefined
-        client({ instanceURL: this.#data.instance })
+        client({ instanceURL: this.#current.instance })
           .getSite()
           .then(res => (site.data = res))
       }
@@ -174,7 +174,7 @@ $effect.root(() => {
   })
 
   $effect(() => {
-    if (profile.data.id || profileData)
+    if (profile.current.id || profileData)
       profile.fetchUserData().then(() => {
         checkInbox()
       })
@@ -358,7 +358,7 @@ async function getNotificationCount(jwt: string, mod: boolean, admin: boolean) {
 }
 
 async function checkInbox() {
-  const { user, jwt } = profile.data
+  const { user, jwt } = profile.current
   if (!jwt || !user) return
 
   const notifs = await getNotificationCount(
@@ -380,10 +380,11 @@ async function init() {
   // hacky way to check donation status
   setTimeout(() => {
     if (
-      profile.data.user?.local_user_view.local_user.last_donation_notification
+      profile.current.user?.local_user_view.local_user
+        .last_donation_notification
     ) {
       const donationDate = publishedToDate(
-        profile.data.user?.local_user_view.local_user
+        profile.current.user?.local_user_view.local_user
           .last_donation_notification,
       )
       if (Date.now() - donationDate.getTime() > 365 * 24 * 60 * 60 * 1000) {
@@ -395,11 +396,11 @@ async function init() {
 
         // lemmy js client donation dialog is broken
         fetch(
-          `${instanceToURL(profile.data.instance)}/api/v3/user/donation_dialog_shown`,
+          `${instanceToURL(profile.current.instance)}/api/v3/user/donation_dialog_shown`,
           {
             method: 'POST',
             headers: {
-              authorization: `Bearer ${profile.data.jwt}`,
+              authorization: `Bearer ${profile.current.jwt}`,
             },
           },
         )

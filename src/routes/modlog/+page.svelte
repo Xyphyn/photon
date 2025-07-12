@@ -206,7 +206,7 @@
     <UserAutocomplete
       instance={page.url.searchParams.get('instance') || undefined}
       placeholder="Filter by user"
-      jwt={profile.data?.jwt}
+      jwt={profile.current?.jwt}
       listing_type="All"
       showWhenEmpty={true}
       class="flex-1"
@@ -217,10 +217,10 @@
       onselect={e =>
         searchParam(page.url, 'user', e?.id.toString() ?? '', 'page')}
     />
-    {#if profile.data?.user && isAdmin(profile.data?.user)}
+    {#if profile.current?.user && isAdmin(profile.current?.user)}
       <UserAutocomplete
         placeholder="Filter by moderator"
-        jwt={profile.data?.jwt}
+        jwt={profile.current?.jwt}
         listing_type="All"
         showWhenEmpty={true}
         class="flex-1"

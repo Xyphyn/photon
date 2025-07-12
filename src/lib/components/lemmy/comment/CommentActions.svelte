@@ -60,7 +60,7 @@
     <Icon src={ChatBubbleOvalLeft} size="14" micro />
     <span class="text-xs">{$t('comment.reply')}</span>
   </Button>
-  {#if profile.data?.user && (amMod(profile.data?.user, comment.community) || isAdmin(profile.data.user))}
+  {#if profile.current?.user && (amMod(profile.current?.user, comment.community) || isAdmin(profile.current.user))}
     <CommentModerationMenu bind:item={comment} />
   {/if}
   <Menu placement="bottom">
@@ -90,8 +90,8 @@
       <Icon src={Square2Stack} mini size="16" />
       <div>{$t('post.actions.more.share')}</div>
     </MenuButton>
-    {#if profile.data?.jwt}
-      {#if comment.creator.id == profile.data.user?.local_user_view.person.id}
+    {#if profile.current?.jwt}
+      {#if comment.creator.id == profile.current.user?.local_user_view.person.id}
         <MenuButton onclick={() => onedit?.(comment)}>
           <Icon src={PencilSquare} mini size="16" />
           <span>{$t('post.actions.more.edit')}</span>
@@ -99,7 +99,7 @@
       {/if}
       <MenuButton
         onclick={async () => {
-          if (profile.data?.jwt)
+          if (profile.current?.jwt)
             comment.saved = await save(comment, !comment.saved)
         }}
       >
@@ -108,11 +108,11 @@
           {comment.saved ? $t('post.actions.unsave') : $t('post.actions.save')}
         </span>
       </MenuButton>
-      {#if profile.data?.user && profile.data.jwt && profile.data.user.local_user_view.person.id == comment.creator.id}
+      {#if profile.current?.user && profile.current.jwt && profile.current.user.local_user_view.person.id == comment.creator.id}
         <MenuButton
           color="danger-subtle"
           onclick={async () => {
-            if (profile.data?.jwt)
+            if (profile.current?.jwt)
               comment.comment.deleted = await deleteItem(
                 comment,
                 !comment.comment.deleted,
@@ -127,7 +127,7 @@
           </span>
         </MenuButton>
       {/if}
-      {#if profile.data.jwt && profile.data.user?.local_user_view.person.id != comment.creator.id}
+      {#if profile.current.jwt && profile.current.user?.local_user_view.person.id != comment.creator.id}
         <MenuButton onclick={() => report(comment)} color="danger-subtle">
           <Icon src={Flag} mini size="16" />
           <span>{$t('moderation.report')}</span>

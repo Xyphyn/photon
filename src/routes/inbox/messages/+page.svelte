@@ -27,7 +27,7 @@
   }
 
   function getOtherPartyId(message: PrivateMessageView): number {
-    return message.creator.id == profile.data.user?.local_user_view.person.id
+    return message.creator.id == profile.current.user?.local_user_view.person.id
       ? message.recipient.id
       : message.creator.id
   }
@@ -56,7 +56,7 @@
       .filter(c => c.creator.id != c.recipient.id) // you messaged yourself
       .map(i => ({
         user:
-          i.creator.id != profile.data.user?.local_user_view.person.id
+          i.creator.id != profile.current.user?.local_user_view.person.id
             ? i.creator
             : i.recipient,
         message: {
@@ -153,8 +153,8 @@
             bg-linear-to-r from-slate-700 via-slate-700 to-slate-700/0 dark:from-zinc-300 dark:via-zinc-300 dark:to-zinc-300/0
             text-transparent bg-clip-text flex-1 overflow-hidden"
             >
-              {#if preview.message.last_sender == profile.data.user?.local_user_view.person.id}
-                {profile.data.user?.local_user_view.person.name}:
+              {#if preview.message.last_sender == profile.current.user?.local_user_view.person.id}
+                {profile.current.user?.local_user_view.person.name}:
               {/if}
               {preview.message.content}
             </div>

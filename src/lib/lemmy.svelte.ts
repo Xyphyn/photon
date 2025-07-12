@@ -59,9 +59,10 @@ export function client({
   ) => Promise<Response>
   auth?: string
 } = {}) {
-  if (!instanceURL) instanceURL = profile.data.instance || DEFAULT_INSTANCE_URL
+  if (!instanceURL)
+    instanceURL = profile.current.instance || DEFAULT_INSTANCE_URL
 
-  const jwt = auth ? auth : profile.data?.jwt
+  const jwt = auth ? auth : profile.current?.jwt
 
   const headers = jwt ? { authorization: `Bearer ${jwt}` } : {}
 

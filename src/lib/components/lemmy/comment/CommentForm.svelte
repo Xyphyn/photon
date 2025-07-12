@@ -51,7 +51,7 @@
   let language: number | undefined = $state()
 
   async function submit() {
-    if (!profile.data?.user || !profile.data?.jwt || value == '') return
+    if (!profile.current?.user || !profile.current?.jwt || value == '') return
 
     loading = true
 

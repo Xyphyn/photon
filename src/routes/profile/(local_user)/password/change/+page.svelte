@@ -21,8 +21,8 @@
         old_password: oldPassword,
       })
       if (res?.jwt) {
-        const { instance, username } = profile.data
-        deleteProfile(profile.data.id)
+        const { instance, username } = profile.current
+        deleteProfile(profile.current.id)
         await setUser(res.jwt, instance, username!)
 
         toast({ content: $t('toast.loginRefresh'), type: 'success' })

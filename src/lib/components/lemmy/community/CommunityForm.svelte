@@ -64,7 +64,7 @@
   let formData = $state(passedFormData)
 
   async function submit() {
-    if (!profile.data?.jwt) return
+    if (!profile.current?.jwt) return
     if ((!edit && formData.name == '') || formData.displayName == '') return
 
     formData.submitting = true
@@ -99,23 +99,23 @@
         type: 'success',
       })
 
-      if (profile.data.user) {
-        const c = profile.data.user.moderates
+      if (profile.current.user) {
+        const c = profile.current.user.moderates
           .map(m => m.community.id)
           .indexOf(res.community_view.community.id)
         if (c != -1) {
-          profile.data.user.moderates[c] = {
+          profile.current.user.moderates[c] = {
             community: res.community_view.community,
-            moderator: profile.data.user.local_user_view.person,
+            moderator: profile.current.user.local_user_view.person,
           }
         } else {
-          profile.data.user = {
-            ...profile.data.user,
+          profile.current.user = {
+            ...profile.current.user,
             moderates: [
-              ...profile.data.user.moderates,
+              ...profile.current.user.moderates,
               {
                 community: res.community_view.community,
-                moderator: profile.data.user.local_user_view.person,
+                moderator: profile.current.user.local_user_view.person,
               },
             ],
           }

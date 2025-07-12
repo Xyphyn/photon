@@ -37,7 +37,7 @@
   onMount(async () => {
     if (
       !(data.post.value.post_view.read && settings.markPostsAsRead) &&
-      profile.data?.jwt
+      profile.current?.jwt
     ) {
       getClient().markPostAsRead({
         read: settings.markPostsAsRead,
