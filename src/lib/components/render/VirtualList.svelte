@@ -15,6 +15,8 @@
     }
     initialOffset?: number
     debounceResize?: number
+    useWindow?: boolean
+    height?: number
   }
 
   let {
@@ -25,6 +27,8 @@
     initialOffset = 0,
     restore = $bindable(),
     debounceResize = 100,
+    useWindow = true,
+    height = 0,
     ...rest
   }: Props = $props()
 
@@ -177,15 +181,24 @@
   })
 </script>
 
-<svelte:window bind:scrollY />
+<svelte:window
+  bind:scrollY={
+    () => (useWindow ? scrollY : 0),
+    v => {
+      if (useWindow) scrollY = v
+    }
+  }
+/>
 
 <div
   bind:this={virtualListEl}
-  style="position: relative; height: {cumulativeItemHeights[
-    visibleItems?.[visibleItems.length - 1]?.index
-  ]}px;"
+  style="position: relative; height: {height ||
+    cumulativeItemHeights[visibleItems?.[visibleItems.length - 1]?.index]}px;"
   {...rest}
   id="feed"
+  onscroll={() => {
+    if (!useWindow) scrollY = virtualListEl?.scrollTop ?? 0
+  }}
 >
   <div
     style="height: {cumulativeItemHeights[visibleItems?.[0]?.index - 1] ||

@@ -23,6 +23,7 @@
     ChevronUp,
     EllipsisHorizontal,
     Icon,
+    Identification,
     Plus,
     QuestionMarkCircle,
   } from 'svelte-hero-icons'
@@ -119,6 +120,12 @@
           {/snippet}
           {$t('account.login')}
         </Button>
+        <Button href="/signup" rounding="pill" class="px-4">
+          {#snippet prefix()}
+            <Icon src={Identification} size="16" mini />
+          {/snippet}
+          {$t('account.signup')}
+        </Button>
         {#if !LINKED_INSTANCE_URL}
           <Button href="/accounts/login/guest" rounding="pill">
             {#snippet prefix()}
@@ -177,7 +184,7 @@
               size="custom"
               class="absolute top-0 right-0 w-6 h-6 m-1"
               color="tertiary"
-              aria-label={$t('post.actions.more')}
+              aria-label={$t('post.actions.more.label')}
             >
               {#snippet prefix()}
                 <Icon src={EllipsisHorizontal} mini size="16" />
