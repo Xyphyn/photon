@@ -9,14 +9,15 @@
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import { t } from '$lib/i18n/translations.js'
   import { site } from '$lib/lemmy.svelte.js'
+  import { postFeeds } from '$lib/lemmy/postfeed.svelte.js'
   import { settings } from '$lib/settings.svelte.js'
   import Button from 'mono-svelte/button/Button.svelte'
   import { ArrowRight, ChartBar, Icon } from 'svelte-hero-icons'
 
   let { data = $bindable() } = $props()
 
-  let type = $state(data.feed.type_)
-  let sort = $state(data.feed.sort)
+  let type = $state(data.feed.value.type_)
+  let sort = $state(data.feed.value.sort)
 
   $effect(() => {
     if (type) settings.defaultSort.feed = type
@@ -62,8 +63,8 @@
   </header>
 
   <FeedComponent
-    bind:posts={data.feed.posts.posts}
-    bind:feedData={data.feed}
+    bind:posts={data.feed.value.posts.posts}
+    bind:feedData={() => data.feed.value, v => (postFeeds.value.main.data = v)}
     feedId="main"
   />
   <svelte:element
@@ -73,7 +74,7 @@
     class="mt-auto"
   >
     <Pageination
-      cursor={{ next: data.feed.cursor.next }}
+      cursor={{ next: data.feed.value.cursor.next }}
       href={page =>
         typeof page == 'number' ? `?page=${page}` : `?cursor=${page}`}
       back={false}

@@ -1,7 +1,7 @@
 <script lang="ts" generics="T">
   import { browser } from '$app/environment'
   import { debounce } from 'mono-svelte/util/time'
-  import { onDestroy, untrack, type Snippet } from 'svelte'
+  import { onDestroy, onMount, untrack, type Snippet } from 'svelte'
   import type { HTMLAttributes } from 'svelte/elements'
   import { innerHeight } from 'svelte/reactivity/window'
 
@@ -72,19 +72,18 @@
   let viewportHeight = $state(0)
   let visibleItems = $state<{ index: number; offset: number }[]>([])
 
-  // Initial render
-  $effect.pre(() => {
-    if (virtualListEl && browser) {
-      untrack(() => {
-        visibleItems = updateVisibleItems()
-      })
-    }
-  })
-
   $effect.pre(() => {
     if (items.length > itemHeights.length) {
       const missing = items.length - itemHeights.length
       itemHeights = [...itemHeights, ...Array(missing).fill(null)]
+    }
+  })
+
+  $effect(() => {
+    if (items.length) {
+      untrack(() => {
+        visibleItems = updateVisibleItems()
+      })
     }
   })
 
@@ -146,7 +145,6 @@
         const newHeight = entry.contentRect.height
         if (itemHeights[index] !== newHeight) {
           itemHeights[index] = newHeight
-          visibleItems = updateVisibleItems()
         }
       }
     }, debounceResize)
@@ -176,6 +174,25 @@
       untrack(() => {
         visibleItems = updateVisibleItems()
         oldScroll = currentScrollY
+      })
+    }
+  })
+
+  onMount(() => {
+    if (virtualListEl && browser) {
+      Array.from(virtualListEl.children).forEach(node => {
+        const indexAttr = node.getAttribute('data-index')
+        if (indexAttr === null) return
+        const index = Number(indexAttr)
+        if (isNaN(index)) return
+
+        const newHeight = node.getBoundingClientRect().height
+        if (itemHeights[index] !== newHeight) {
+          itemHeights[index] = newHeight
+        }
+      })
+      untrack(() => {
+        visibleItems = updateVisibleItems()
       })
     }
   })

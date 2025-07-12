@@ -116,7 +116,7 @@
       <PostMeta
         community={data.post.value.post_view.community}
         user={data.post.value.post_view.creator}
-        bind:subscribed={data.post.value.community_view.subscribed}
+        subscribed={data.post.value.community_view.subscribed}
         badges={{
           deleted: data.post.value.post_view.post.deleted,
           removed: data.post.value.post_view.post.removed,
@@ -162,7 +162,7 @@
   {/if}
   <div class="w-full relative">
     <PostActions
-      bind:post={data.post.value.post_view}
+      post={data.post.value.post_view}
       onedit={() =>
         toast({
           content: 'The post was edited successfully.',

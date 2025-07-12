@@ -35,15 +35,15 @@
     upvotes?: number
     downvotes?: number
     showCounts?: boolean
-    children?: import('svelte').Snippet<[{ vote: number; score: number }]>
+    children?: import('svelte').Snippet<[{ vote?: number; score?: number }]>
   }
 
   let {
     post = $bindable(),
-    vote = $bindable(0),
+    vote = $bindable(),
     score = $bindable(),
-    upvotes = $bindable(0),
-    downvotes = $bindable(0),
+    upvotes = $bindable(),
+    downvotes = $bindable(),
     showCounts = true,
     children,
   }: Props = $props()
@@ -99,7 +99,7 @@
               out:fly={{ duration: 400, y: 10, easing: backOut }}
               aria-label={$t('aria.vote.upvotes', { default: upvotes })}
             >
-              <FormattedNumber number={upvotes} />
+              <FormattedNumber number={upvotes ?? 0} />
             </span>
           {/key}
         </span>
@@ -127,7 +127,7 @@
                 out:fly={{ duration: 400, y: 10, easing: backOut }}
                 aria-label={$t('aria.vote.downvotes', { default: downvotes })}
               >
-                <FormattedNumber number={downvotes} />
+                <FormattedNumber number={downvotes ?? 0} />
               </span>
             {/key}
           </span>
