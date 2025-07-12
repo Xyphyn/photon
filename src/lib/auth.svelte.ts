@@ -287,10 +287,10 @@ class Profile {
     })
 
     $effect(() => {
-      if (this.current.jwt)
-        this.fetchUserData().then(() => {
+      this.fetchUserData().then(() => {
+        if (this.current.jwt)
           this.checkInbox().then(res => notifications.update(() => res))
-        })
+      })
     })
   })
 }
