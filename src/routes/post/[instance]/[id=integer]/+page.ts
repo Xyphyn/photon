@@ -28,7 +28,7 @@ function buildContext(thread?: string) {
 }
 
 export async function load({ params, url, fetch }) {
-  if (profile.data.instance != params.instance)
+  if (profile.current.instance != params.instance)
     redirect(302, resolveRoute('/post/[instance]/[id]/confirm', params))
 
   // TODO use Lemmy profile default settings

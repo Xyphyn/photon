@@ -19,7 +19,7 @@
   let markingAsRead = $state(false)
 
   async function markAllAsRead() {
-    if (!profile.data?.user) {
+    if (!profile.current?.user) {
       goto('/login')
       return
     }
@@ -156,7 +156,7 @@ items-center px-2 w-max top-6 lg:top-22"
     />
   {:else}
     {#each data.inbox.value as item, index}
-      {#if item.creator.id != profile.data.user?.local_user_view.person.id}
+      {#if item.creator.id != profile.current.user?.local_user_view.person.id}
         <div
           class="-mx-4 sm:-mx-6 px-4 sm:px-6
           {item.read ? '' : 'bg-blue-50/50 dark:bg-blue-500/5'}"

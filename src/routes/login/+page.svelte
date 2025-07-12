@@ -3,7 +3,6 @@
 
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
-  import { setUser } from '$lib/auth.svelte.js'
   import ErrorContainer, {
     clearErrorScope,
     pushError,
@@ -25,6 +24,7 @@
     QuestionMarkCircle,
     UserCircle,
   } from 'svelte-hero-icons'
+  import { profile } from '$lib/auth.svelte'
 
   interface Props {
     ref?: string
@@ -57,7 +57,7 @@
       })
 
       if (response?.jwt) {
-        const result = await setUser(response.jwt, data.instance, data.username)
+        const result = await profile.add(response.jwt, data.instance)
 
         if (result) {
           toast({ content: $t('toast.logIn'), type: 'success' })

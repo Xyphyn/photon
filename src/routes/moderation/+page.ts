@@ -14,7 +14,7 @@ import { error } from '@sveltejs/kit'
 type ReportListType = 'unread' | 'all'
 
 export async function load({ url, fetch }) {
-  if (!profile.data.jwt) error(401)
+  if (!profile.current.jwt) error(401)
 
   const page = Number(url.searchParams.get('page')) || 1
   const type: ReportListType =
@@ -30,7 +30,7 @@ export async function load({ url, fetch }) {
     community_id: community,
   }
 
-  const admin = profile.data?.user ? isAdmin(profile!.data.user!) : false
+  const admin = profile.current?.user ? isAdmin(profile!.data.user!) : false
 
   const [posts, comments, messages] = await Promise.all([
     client.listPostReports({

@@ -42,7 +42,7 @@
     ).users.map(c => c.person)
 
     if (hideOwnUser) {
-      const myself = profile.data.user?.local_user_view.person.id
+      const myself = profile.current.user?.local_user_view.person.id
       return users.filter(c => c.id != myself)
     }
     return users

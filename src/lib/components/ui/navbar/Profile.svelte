@@ -72,14 +72,14 @@
       hover:bg-slate-200 dark:hover:bg-zinc-700 group cursor-pointer {buttonClass}"
       title={$t('profile.profile')}
     >
-      {#if profile.data?.user}
+      {#if profile.current?.user}
         <div
           class="w-full h-full aspect-square object-cover rounded-full grid place-items-center group-hover:scale-90 transition-transform group-active:scale-[85%]"
         >
           <Avatar
-            url={profile.data.user.local_user_view.person.avatar}
+            url={profile.current.user.local_user_view.person.avatar}
             width={36}
-            alt={profile.data.user.local_user_view.person.name}
+            alt={profile.current.user.local_user_view.person.name}
           />
         </div>
       {:else}
@@ -90,7 +90,7 @@
     </button>
   {/snippet}
   <MenuDivider>{$t('nav.menu.label')}</MenuDivider>
-  {#if profile.data?.jwt}
+  {#if profile.current?.jwt}
     <MenuButton href="/profile">
       {#snippet prefix()}
         <Icon src={UserCircle} micro size="16" />

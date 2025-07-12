@@ -12,7 +12,7 @@ function getSavedItemPublished(item: PostView | CommentView) {
 }
 
 export async function load({ url, fetch }) {
-  if (!profile.data.jwt) throw error(401)
+  if (!profile.current.jwt) throw error(401)
 
   const page = Number(url.searchParams.get('page')) || 1
   const type: 'comments' | 'posts' | 'all' =

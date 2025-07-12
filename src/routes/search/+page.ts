@@ -50,7 +50,7 @@ export async function load({ url, fetch }) {
       })!,
       results: new ReactiveState(everything),
       streamed: {
-        object: profile.data?.jwt
+        object: profile.current?.jwt
           ? getClient(undefined, fetch).resolveObject({
               q: query,
             })

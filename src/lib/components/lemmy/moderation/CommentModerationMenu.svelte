@@ -34,9 +34,9 @@
       <ShieldIcon filled width={14} />
     </Button>
   {/snippet}
-  {#if (profile.data?.user && amMod(profile.data.user, item.community)) || (profile.data?.user && isAdmin(profile.data.user))}
+  {#if (profile.current?.user && amMod(profile.current.user, item.community)) || (profile.current?.user && isAdmin(profile.current.user))}
     <MenuDivider>
-      {#if !item.community.local && !amMod(profile.data.user, item.community)}
+      {#if !item.community.local && !amMod(profile.current.user, item.community)}
         {$t('moderation.labelInstanceOnly')}
       {:else}
         {$t('moderation.label')}
@@ -52,7 +52,7 @@
           : $t('moderation.remove')}
       {/if}
     </MenuButton>
-    {#if profile.data?.user && profile.data.user?.local_user_view.person.id != item.creator.id}
+    {#if profile.current?.user && profile.current.user?.local_user_view.person.id != item.creator.id}
       <!--Comment made by someone else-->
       <MenuButton
         color="danger-subtle"
@@ -71,12 +71,12 @@
       <MenuButton
         color="success-subtle"
         onclick={async () => {
-          if (!profile.data.jwt) return
+          if (!profile.current.jwt) return
           item.comment = (
             await feature(
               !item.comment.distinguished,
               item.comment,
-              profile.data.jwt,
+              profile.current.jwt,
             )
           ).comment_view.comment
         }}
@@ -104,7 +104,7 @@
     </MenuButton>
   {/if}
 
-  {#if profile.data?.user && isAdmin(profile.data.user)}
+  {#if profile.current?.user && isAdmin(profile.current.user)}
     <MenuDivider>{$t('admin.label')}</MenuDivider>
     <MenuButton color="danger-subtle" onclick={() => remove(item, true)}>
       {#snippet prefix()}

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { notifications, profile, profileData } from '$lib/auth.svelte.js'
+  import { notifications, profile } from '$lib/auth.svelte.js'
   import Expandable from '$lib/components/ui/Expandable.svelte'
   import CommunityList from '$lib/components/ui/sidebar/CommunityList.svelte'
   import ProfileButton from '$lib/components/ui/sidebar/ProfileButton.svelte'
@@ -31,7 +31,7 @@
   class={['flex flex-col p-4 overflow-auto gap-1 h-fit max-h-screen', clazz]}
   {style}
 >
-  {#if profile.data?.jwt}
+  {#if profile.current?.jwt}
     <SidebarButton icon={UserCircle} href="/profile">
       {#snippet label()}
         <span>
@@ -88,7 +88,7 @@
       {/snippet}
     </SidebarButton>
   {/if}
-  {#if profileData.profiles.length >= 1}
+  {#if profile.meta.profiles.length >= 1}
     <hr class="border-slate-200 dark:border-zinc-900 my-1" />
 
     <Expandable
@@ -101,14 +101,14 @@
             {$t('account.accounts')}
             {#snippet action()}
               <span class="dark:text-white text-black">
-                {profileData.profiles.length}
+                {profile.meta.profiles.length}
               </span>
             {/snippet}
           </EndPlaceholder>
         </span>
       {/snippet}
       <div class="w-full flex gap-px flex-col">
-        {#each [...profileData.profiles] as prof, index}
+        {#each [...profile.meta.profiles] as prof, index}
           <div class="w-full">
             <ProfileButton {index} {prof} />
           </div>
@@ -120,7 +120,7 @@
     </Expandable>
   {/if}
   <hr class="border-slate-200 dark:border-zinc-900 my-1" />
-  {#if profile.data?.favorites && profile.data?.favorites.length > 0}
+  {#if profile.current?.favorites && profile.current?.favorites.length > 0}
     <Expandable
       class="max-w-full min-w-0 w-full"
       bind:open={settings.expand.favorites}
@@ -131,18 +131,18 @@
             {$t('routes.profile.favorites')}
             {#snippet action()}
               <span class="dark:text-white text-black">
-                {profile.data.favorites?.length}
+                {profile.current.favorites?.length}
               </span>
             {/snippet}
           </EndPlaceholder>
         </span>
       {/snippet}
-      <CommunityList isFavorites items={profile.data.favorites} />
+      <CommunityList isFavorites items={profile.current.favorites} />
     </Expandable>
     <hr class="border-slate-200 dark:border-zinc-900 my-1" />
   {/if}
-  {#if profile.data?.user}
-    {#if profile.data?.user.moderates.length > 0}
+  {#if profile.current?.user}
+    {#if profile.current?.user.moderates.length > 0}
       <Expandable
         class="max-w-full min-w-0 w-full"
         bind:open={settings.expand.moderates}
@@ -153,14 +153,14 @@
               {$t('routes.profile.moderates')}
               {#snippet action()}
                 <span class="dark:text-white text-black">
-                  {profile.data.user?.moderates.length}
+                  {profile.current.user?.moderates.length}
                 </span>
               {/snippet}
             </EndPlaceholder>
           </span>
         {/snippet}
         <CommunityList
-          items={profile.data.user.moderates.map(i => i.community)}
+          items={profile.current.user.moderates.map(i => i.community)}
         />
       </Expandable>
       <hr class="border-slate-200 dark:border-zinc-900 my-1" />
@@ -176,13 +176,15 @@
             {$t('profile.subscribed')}
             {#snippet action()}
               <span class="dark:text-white text-black">
-                {profile.data.user?.follows.length}
+                {profile.current.user?.follows.length}
               </span>
             {/snippet}
           </EndPlaceholder>
         </span>
       {/snippet}
-      <CommunityList items={profile.data.user.follows.map(i => i.community)} />
+      <CommunityList
+        items={profile.current.user.follows.map(i => i.community)}
+      />
     </Expandable>
   {/if}
 </nav>

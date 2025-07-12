@@ -6,11 +6,12 @@ import { error } from '@sveltejs/kit'
 export const ssr = false
 
 export async function load({ fetch }) {
-  if (!profile.data.jwt) error(401)
+  if (!profile.current.jwt) error(401)
 
   const my_user =
-    // profile.data?.user ??
-    (await client({ auth: profile.data?.jwt, func: fetch }).getSite()).my_user
+    // profile.current?.user ??
+    (await client({ auth: profile.current?.jwt, func: fetch }).getSite())
+      .my_user
 
   return {
     my_user: my_user,

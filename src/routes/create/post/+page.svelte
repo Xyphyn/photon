@@ -10,7 +10,7 @@
   let { data } = $props()
 
   onMount(() => {
-    if (!profile.data?.jwt) {
+    if (!profile.current?.jwt) {
       goto('/login')
     }
   })

@@ -44,7 +44,7 @@
     if (instance == '') return
     await trycatch(async () => {
       if (
-        !profile.data?.jwt ||
+        !profile.current?.jwt ||
         !data.federated_instances?.federated_instances?.blocked ||
         !data.federated_instances?.federated_instances?.allowed
       )
@@ -81,7 +81,7 @@
   const save = async () => {
     const res = await trycatch(async () => {
       if (
-        !profile.data?.jwt ||
+        !profile.current?.jwt ||
         !data.federated_instances?.federated_instances?.blocked
       )
         return

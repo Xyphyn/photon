@@ -1,6 +1,6 @@
 import { goto } from '$app/navigation'
 import { page } from '$app/state'
-import { setUserID, type Profile } from '$lib/auth.svelte'
+import { profile as currentProfile, type ProfileInfo } from '$lib/auth.svelte'
 import {
   amModOfAny,
   isAdmin,
@@ -64,8 +64,8 @@ export interface Action {
 
 export function getGroups(
   resumables: ResumableItem[],
-  profile: Profile,
-  profiles: Profile[],
+  profile: ProfileInfo,
+  profiles: ProfileInfo[],
   td: ThemeData,
   contextual?: Action[],
 ) {
@@ -311,7 +311,7 @@ export function getGroups(
         detail: p.instance,
         handle: async () => {
           if (profile.id != p.id) {
-            await setUserID(p.id)
+            currentProfile.meta.profile = p.id
           }
 
           await goto(page.url, {

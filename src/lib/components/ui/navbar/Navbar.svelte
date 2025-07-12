@@ -86,7 +86,7 @@
     style="border-radius: inherit;"
   >
     <div class="ml-auto"></div>
-    {#if profile.data?.user && isAdmin(profile.data.user)}
+    {#if profile.current?.user && isAdmin(profile.current.user)}
       <NavButton
         href="/admin"
         label={$t('nav.admin')}
@@ -95,7 +95,7 @@
         isSelectedFilter={path => path.startsWith('/admin')}
       />
     {/if}
-    {#if amModOfAny(profile.data?.user)}
+    {#if amModOfAny(profile.current?.user)}
       <NavButton
         href="/moderation"
         label={$t('nav.moderation')}
@@ -109,10 +109,10 @@
       icon={GlobeAlt}
     />
     <NavButton href="/search" label={$t('nav.search')} icon={MagnifyingGlass} />
-    {#if profile.data.jwt}
+    {#if profile.current.jwt}
       {@const linkOnly =
-        !profile.data.user ||
-        !(isAdmin(profile.data.user) || amModOfAny(profile.data.user))}
+        !profile.current.user ||
+        !(isAdmin(profile.current.user) || amModOfAny(profile.current.user))}
       <Menu manual={linkOnly} placement="top">
         {#snippet target()}
           <NavButton
@@ -136,7 +136,7 @@
             {@render notifBadge($notifications.inbox)}
           {/snippet}
         </MenuButton>
-        {#if amModOfAny(profile.data.user)}
+        {#if amModOfAny(profile.current.user)}
           <MenuButton href="/moderation" icon={ShieldCheck}>
             {$t('routes.moderation.feed')}
             {#snippet suffix()}
@@ -144,7 +144,7 @@
             {/snippet}
           </MenuButton>
         {/if}
-        {#if profile.data.user && isAdmin(profile.data.user)}
+        {#if profile.current.user && isAdmin(profile.current.user)}
           <MenuButton href="/admin/applications" icon={ServerStack}>
             {$t('routes.admin.applications.title')}
             {#snippet suffix()}
@@ -156,7 +156,7 @@
     {/if}
     <Menu
       manual={site.data?.site_view.local_site.community_creation_admin_only &&
-        !(profile.data.user && isAdmin(profile.data.user))}
+        !(profile.current.user && isAdmin(profile.current.user))}
       placement="top"
     >
       {#snippet target()}
@@ -166,13 +166,13 @@
           icon={Plus}
           adaptive={false}
           href={site.data?.site_view.local_site.community_creation_admin_only &&
-          !(profile.data.user && isAdmin(profile.data.user))
+          !(profile.current.user && isAdmin(profile.current.user))
             ? '/create/post'
             : undefined}
         />
       {/snippet}
       <MenuDivider>{$t('nav.create.label')}</MenuDivider>
-      <MenuButton link href="/create/post" disabled={!profile.data?.jwt}>
+      <MenuButton link href="/create/post" disabled={!profile.current?.jwt}>
         {#snippet prefix()}
           <Icon src={PencilSquare} size="16" micro />
         {/snippet}
@@ -181,17 +181,17 @@
       <MenuButton
         link
         href="/create/community"
-        disabled={!profile.data?.jwt ||
-          !profile.data?.user ||
+        disabled={!profile.current?.jwt ||
+          !profile.current?.user ||
           (site.data?.site_view.local_site.community_creation_admin_only &&
-            !isAdmin(profile.data.user))}
+            !isAdmin(profile.current.user))}
       >
         {#snippet prefix()}
           <Icon src={Newspaper} size="16" micro />
         {/snippet}
         {$t('nav.create.community')}
       </MenuButton>
-      {#if !profile.data?.jwt}
+      {#if !profile.current?.jwt}
         <span class="text-sm mx-4 my-1 py-1">
           {$t('nav.create.logingate')}
         </span>

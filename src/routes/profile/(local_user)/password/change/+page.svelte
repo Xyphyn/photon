@@ -1,11 +1,11 @@
 <script lang="ts">
   import { preventDefault } from 'svelte/legacy'
 
-  import { deleteProfile, profile, setUser } from '$lib/auth.svelte'
   import { client } from '$lib/lemmy.svelte'
   import { t } from '$lib/i18n/translations'
   import { Button, TextInput, toast } from 'mono-svelte'
   import { errorMessage } from '$lib/lemmy/error'
+  import { profile } from '$lib/auth.svelte'
 
   let oldPassword = $state(''),
     newPassword = $state(''),
@@ -21,9 +21,9 @@
         old_password: oldPassword,
       })
       if (res?.jwt) {
-        const { instance, username } = profile.data
-        deleteProfile(profile.data.id)
-        await setUser(res.jwt, instance, username!)
+        const { instance } = profile.current
+        profile.remove(profile.current.id)
+        await profile.add(res.jwt, instance)
 
         toast({ content: $t('toast.loginRefresh'), type: 'success' })
       } else {

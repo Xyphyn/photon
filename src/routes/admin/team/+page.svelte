@@ -29,7 +29,7 @@
         action: () => removeAdmin(id, true),
       })
 
-    if (!profile.data?.jwt) return
+    if (!profile.current?.jwt) return
 
     const result = await trycatch(() =>
       getClient().addAdmin({
@@ -77,7 +77,7 @@
     class="flex flex-row items-center gap-2 mt-auto w-full"
     onsubmit={preventDefault(() => {
       trycatch(async () => {
-        if (!profile.data?.jwt || newAdmin == '') return
+        if (!profile.current?.jwt || newAdmin == '') return
         adding = true
 
         const r = await addAdmin(`${newAdmin}@${instance.data}`, true)

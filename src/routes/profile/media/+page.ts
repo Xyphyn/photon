@@ -3,7 +3,7 @@ import { client } from '$lib/lemmy.svelte.js'
 import { ReactiveState } from '$lib/promise.svelte.js'
 
 export async function load({ fetch, url }) {
-  const { jwt } = profile.data
+  const { jwt } = profile.current
 
   const page = Number(url.searchParams.get('page')) || 1
 

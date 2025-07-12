@@ -42,7 +42,7 @@
   )
 
   async function save() {
-    if (!profile.data?.jwt) return
+    if (!profile.current?.jwt) return
 
     saving = true
 

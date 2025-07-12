@@ -23,7 +23,7 @@
   })
 
   async function addModerator() {
-    if (!profile.data?.jwt) return
+    if (!profile.current?.jwt) return
 
     formData.addingModerator = true
 
@@ -80,7 +80,7 @@
   }
 
   async function removeMod(id: number) {
-    if (!profile.data?.jwt) return
+    if (!profile.current?.jwt) return
 
     try {
       const res = await getClient().addModToCommunity({

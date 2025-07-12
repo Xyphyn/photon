@@ -81,10 +81,10 @@
   {/snippet}
 </Header>
 
-{#if profile.data.user}
-  {#if !data.community.value.discussion_languages.every( l => profile.data.user?.discussion_languages.includes(l), ) && profile.data.user.discussion_languages.length > 0}
+{#if profile.current.user}
+  {#if !data.community.value.discussion_languages.every( l => profile.current.user?.discussion_languages.includes(l), ) && profile.current.user.discussion_languages.length > 0}
     {@const missing = data.community.value.discussion_languages.filter(
-      i => !profile.data.user?.discussion_languages.includes(i),
+      i => !profile.current.user?.discussion_languages.includes(i),
     )}
     <Note class="p-1! pl-3! flex-col md:flex-row">
       <div>{$t('routes.community.languageWarning')}</div>

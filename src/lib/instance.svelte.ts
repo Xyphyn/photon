@@ -3,7 +3,7 @@ import { env } from '$env/dynamic/public'
 import { profile } from './auth.svelte'
 
 class InstanceData {
-  #instance = $derived(profile.data.instance)
+  #instance = $derived(profile.current.instance)
 
   get data() {
     return this.#instance ?? DEFAULT_INSTANCE_URL

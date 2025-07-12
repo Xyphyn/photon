@@ -5,7 +5,7 @@ import { ReactiveState } from '$lib/promise.svelte.js'
 export async function load({ fetch, url }) {
   if (!profile) return
 
-  const { jwt } = profile.data!
+  const { jwt } = profile.current!
   if (!jwt) return
 
   const page = Number(url.searchParams.get('page')) || 1

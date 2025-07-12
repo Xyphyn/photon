@@ -23,7 +23,7 @@
   let loading = $state(false)
 
   async function sendMessage() {
-    if (!profile.data?.jwt || message == '') return
+    if (!profile.current?.jwt || message == '') return
 
     loading = true
 

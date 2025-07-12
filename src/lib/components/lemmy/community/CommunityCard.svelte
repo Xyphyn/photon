@@ -113,7 +113,7 @@
   })
 
   async function subscribe() {
-    if (!profile.data?.jwt) return
+    if (!profile.current?.jwt) return
     loading.subscribing = true
     const subscribed =
       community_view.subscribed == 'Subscribed' ||
@@ -227,7 +227,7 @@
     {/if}
   </div>
   <div class="flex flex-row items-center gap-1 sticky bottom-0 w-full">
-    {#if profile.data?.jwt}
+    {#if profile.current?.jwt}
       <Button
         disabled={loading.subscribing}
         loading={loading.subscribing}
@@ -252,7 +252,7 @@
           : $t('cards.community.subscribe')}
       </Button>
     {/if}
-    {#if profile.data?.user && amMod(profile.data.user, community_view.community)}
+    {#if profile.current?.user && amMod(profile.current.user, community_view.community)}
       <Button
         href="/c/{fullCommunityName(
           community_view.community.name,
@@ -278,7 +278,7 @@
         <Icon src={Newspaper} size="16" mini />
         {$t('cards.community.modlog')}
       </MenuButton>
-      {#if profile.data?.jwt}
+      {#if profile.current?.jwt}
         <MenuButton
           color="danger-subtle"
           size="lg"
@@ -292,7 +292,7 @@
             ? $t('cards.community.unblock')
             : $t('cards.community.block')}
         </MenuButton>
-        {#if profile.data?.user}
+        {#if profile.current?.user}
           <MenuButton
             color="danger-subtle"
             size="lg"
@@ -304,7 +304,7 @@
             {$t('cards.community.blockInstance')}
           </MenuButton>
         {/if}
-        {#if profile.data?.user && isAdmin(profile.data.user)}
+        {#if profile.current?.user && isAdmin(profile.current.user)}
           <MenuButton
             color="danger-subtle"
             onclick={() =>

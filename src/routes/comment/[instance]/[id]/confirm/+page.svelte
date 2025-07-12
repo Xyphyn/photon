@@ -2,7 +2,7 @@
   import { goto } from '$app/navigation'
   import { resolveRoute } from '$app/paths'
   import { page } from '$app/state'
-  import { profile, profileData } from '$lib/auth.svelte'
+  import { profile } from '$lib/auth.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import ProfileButton from '$lib/components/ui/sidebar/ProfileButton.svelte'
   import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
@@ -15,7 +15,7 @@
   import { Plus } from 'svelte-hero-icons'
 
   let loading = $state(false)
-  const fetched = $state.snapshot(profile.data.instance)
+  const fetched = $state.snapshot(profile.current.instance)
 
   async function fetchOnHome() {
     loading = true
@@ -27,7 +27,7 @@
       if (res.comment) {
         goto(
           resolveRoute(`/comment/[instance]/[id]`, {
-            instance: profile.data.instance,
+            instance: profile.current.instance,
             id: res.comment.comment.id.toString(),
           }),
         )
@@ -56,7 +56,7 @@
     </p>
   </header>
   <div class="flex flex-row items-center gap-2 flex-wrap">
-    {#if profile.data.jwt}
+    {#if profile.current.jwt}
       <Button
         {loading}
         disabled={loading}
@@ -74,8 +74,8 @@
       {$t('routes.postRedirect.actions.back')}
     </Button>
   </div>
-  {#if profileData.profiles}
-    {@const filtered = profileData.profiles.filter(
+  {#if profile.meta.profiles}
+    {@const filtered = profile.meta.profiles.filter(
       i => i.instance == page.params.instance,
     )}
     <div class="space-y-1">

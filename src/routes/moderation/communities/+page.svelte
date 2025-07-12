@@ -10,7 +10,7 @@
   {$t('nav.communities')}
 </Header>
 <div class="w-full h-full flex flex-col mt-4">
-  {#if !profile.data.user}
+  {#if !profile.current.user}
     <div class="mx-auto my-auto">
       <Spinner width={24} />
     </div>
@@ -20,7 +20,7 @@
       rounding="2xl"
       class="flex flex-col dark:bg-zinc-950 max-h-[32rem] overflow-auto"
     >
-      {#each profile.data.user.moderates as moderate}
+      {#each profile.current.user.moderates as moderate}
         {@const community = moderate.community}
         <div
           class="-mx-4 px-4 hover:bg-slate-100 hover:dark:bg-zinc-900 transition-colors duration-75"

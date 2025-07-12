@@ -115,7 +115,7 @@
     </Expandable>
   {/if}
   <div class="flex items-center gap-2 h-max w-max">
-    {#if profile.data?.jwt}
+    {#if profile.current?.jwt}
       <Subscribe
         community={{
           community: community,
@@ -153,7 +153,7 @@
       </Subscribe>
     {/if}
 
-    {#if profile.data?.user && profile.data.user.moderates
+    {#if profile.current?.user && profile.current.user.moderates
         .map(c => c.community.id)
         .includes(community.id)}
       <Button
@@ -181,7 +181,7 @@
         <Icon src={Newspaper} size="16" mini />
         {$t('cards.community.modlog')}
       </MenuButton>
-      {#if profile.data.user && amMod(profile.data.user, community)}
+      {#if profile.current.user && amMod(profile.current.user, community)}
         <MenuButton
           color="success-subtle"
           href="/moderation?community={community.id}"
@@ -190,7 +190,7 @@
           {$t('routes.moderation.feed')}
         </MenuButton>
       {/if}
-      {#if profile.data?.jwt}
+      {#if profile.current?.jwt}
         <MenuButton
           color="danger-subtle"
           size="lg"
@@ -203,7 +203,7 @@
             ? $t('cards.community.unblock')
             : $t('cards.community.block')}
         </MenuButton>
-        {#if profile.data?.user}
+        {#if profile.current?.user}
           <MenuButton
             color="danger-subtle"
             size="lg"
@@ -215,7 +215,7 @@
             {$t('cards.community.blockInstance')}
           </MenuButton>
         {/if}
-        {#if profile.data?.user && isAdmin(profile.data.user)}
+        {#if profile.current?.user && isAdmin(profile.current.user)}
           <MenuButton
             color="danger-subtle"
             onclick={() =>

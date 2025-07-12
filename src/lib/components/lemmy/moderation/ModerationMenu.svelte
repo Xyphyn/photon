@@ -32,7 +32,7 @@
   let acting = $derived(locking || pinning)
 
   async function lock(lock: boolean) {
-    if (!profile.data?.jwt || !isPostView(item)) return
+    if (!profile.current?.jwt || !isPostView(item)) return
     locking = true
 
     try {
@@ -53,7 +53,7 @@
   }
 
   async function pin(pinned: boolean, toInstance: boolean = false) {
-    if (!profile.data?.jwt || !isPostView(item)) return
+    if (!profile.current?.jwt || !isPostView(item)) return
 
     pinning = true
 
@@ -88,9 +88,9 @@
       <ShieldIcon filled width={16} />
     </Button>
   {/snippet}
-  {#if (profile.data?.user && amMod(profile.data.user, item.community)) || (profile.data?.user && isAdmin(profile.data.user))}
+  {#if (profile.current?.user && amMod(profile.current.user, item.community)) || (profile.current?.user && isAdmin(profile.current.user))}
     <MenuDivider>
-      {#if !item.community.local && !amMod(profile.data.user, item.community)}
+      {#if !item.community.local && !amMod(profile.current.user, item.community)}
         {$t('moderation.labelInstanceOnly')}
       {:else}
         {$t('moderation.label')}
@@ -124,7 +124,7 @@
             ? $t('moderation.unfeature')
             : $t('moderation.feature')}
         </span>
-        {#if isAdmin(profile.data.user)}
+        {#if isAdmin(profile.current.user)}
           <span class="text-xs opacity-80">{$t('form.post.community')}</span>
         {/if}
       </div>
@@ -139,7 +139,7 @@
         {item.post.removed ? $t('moderation.restore') : $t('moderation.remove')}
       {/if}
     </MenuButton>
-    {#if profile.data?.user && profile.data.user.local_user_view.person.id != item.creator.id}
+    {#if profile.current?.user && profile.current.user.local_user_view.person.id != item.creator.id}
       <MenuButton
         color="danger-subtle"
         onclick={() =>
@@ -164,7 +164,7 @@
       {$t('moderation.votes')}
     </MenuButton>
   {/if}
-  {#if profile.data?.user && isAdmin(profile.data.user)}
+  {#if profile.current?.user && isAdmin(profile.current.user)}
     <MenuDivider>{$t('admin.label')}</MenuDivider>
     <MenuButton
       color="success-subtle"

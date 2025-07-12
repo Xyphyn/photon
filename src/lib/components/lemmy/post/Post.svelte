@@ -112,7 +112,7 @@
     user={post.creator}
     published={publishedToDate(post.post.published)}
     {badges}
-    subscribed={profile.data?.user?.follows
+    subscribed={profile.current?.user?.follows
       .map(c => c.community.id)
       .includes(post.community.id)
       ? 'Subscribed'

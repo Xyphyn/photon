@@ -6,7 +6,7 @@ import type { Community, MyUserInfo } from 'lemmy-js-client'
 // TODO obliterate this file
 
 export const blockUser = async (block: boolean, id: number) => {
-  const auth = profile.data?.jwt
+  const auth = profile.current?.jwt
 
   if (!auth) throw new Error('Unauthorized')
 
@@ -23,17 +23,17 @@ export const addSubscription = (
   community: Community,
   subscribe: boolean = true,
 ) => {
-  const index = profile.data.user?.follows
+  const index = profile.current.user?.follows
     .map(f => f.community.id)
     .indexOf(community.id)
 
   if (subscribe && index == -1) {
-    profile.data.user?.follows.push({
-      follower: profile.data.user.follows[0]?.follower,
+    profile.current.user?.follows.push({
+      follower: profile.current.user.follows[0]?.follower,
       community: community,
     })
   } else {
-    profile.data.user?.follows.splice(index ?? 0, 1)
+    profile.current.user?.follows.splice(index ?? 0, 1)
   }
 }
 

@@ -8,7 +8,7 @@ export async function load({ fetch, url }) {
   const uri = url.searchParams.get('uri')
   if (!uri) error(404)
 
-  if (!profile.data.jwt)
+  if (!profile.current.jwt)
     redirect(302, `/login?ref=${encodeURIComponent(url.toString())}`)
 
   return {

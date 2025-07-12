@@ -51,7 +51,7 @@
   })
 </script>
 
-{#if profile.data?.jwt}
+{#if profile.current?.jwt}
   {#if !commenting}
     <EndPlaceholder>
       <Button
@@ -60,8 +60,8 @@
         disabled={(post.post_view.post.locked ||
           post.post_view.banned_from_community) &&
           !(
-            profile.data?.user?.local_user_view.local_user.admin ||
-            profile.data?.user?.moderates
+            profile.current?.user?.local_user_view.local_user.admin ||
+            profile.current?.user?.moderates
               .map(c => c.community.id)
               .includes(post.community_view.community.id)
           )}
@@ -119,7 +119,7 @@
   {/if}
 {/if}
 
-{#if commenting || !profile.data.jwt}
+{#if commenting || !profile.current.jwt}
   <div class="gap-2 flex items-center">
     <Select
       size="md"
