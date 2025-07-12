@@ -2,7 +2,7 @@
   import { goto } from '$app/navigation'
   import { resolveRoute } from '$app/paths'
   import { page } from '$app/state'
-  import { profile, profileData } from '$lib/auth.svelte'
+  import { profile } from '$lib/auth.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import ProfileButton from '$lib/components/ui/sidebar/ProfileButton.svelte'
   import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
@@ -74,8 +74,8 @@
       {$t('routes.postRedirect.actions.back')}
     </Button>
   </div>
-  {#if profileData.profiles}
-    {@const filtered = profileData.profiles.filter(
+  {#if profile.meta.profiles}
+    {@const filtered = profile.meta.profiles.filter(
       i => i.instance == page.params.instance,
     )}
     <div class="space-y-1">

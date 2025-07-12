@@ -2,7 +2,7 @@
   import { browser } from '$app/environment'
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
-  import { profile, profileData } from '$lib/auth.svelte'
+  import { profile } from '$lib/auth.svelte'
   import { t } from '$lib/i18n/translations'
   import { resumables } from '$lib/lemmy/item'
   import { theme } from '$lib/ui/colors.svelte'
@@ -24,7 +24,7 @@
     groups = getGroups(
       $resumables,
       profile.current,
-      profileData.profiles,
+      profile.meta.profiles,
       theme.data,
       page.data.contextual?.actions,
     )

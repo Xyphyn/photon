@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { notifications, profile, profileData } from '$lib/auth.svelte.js'
+  import { notifications, profile } from '$lib/auth.svelte.js'
   import Expandable from '$lib/components/ui/Expandable.svelte'
   import CommunityList from '$lib/components/ui/sidebar/CommunityList.svelte'
   import ProfileButton from '$lib/components/ui/sidebar/ProfileButton.svelte'
@@ -88,7 +88,7 @@
       {/snippet}
     </SidebarButton>
   {/if}
-  {#if profileData.profiles.length >= 1}
+  {#if profile.meta.profiles.length >= 1}
     <hr class="border-slate-200 dark:border-zinc-900 my-1" />
 
     <Expandable
@@ -101,14 +101,14 @@
             {$t('account.accounts')}
             {#snippet action()}
               <span class="dark:text-white text-black">
-                {profileData.profiles.length}
+                {profile.meta.profiles.length}
               </span>
             {/snippet}
           </EndPlaceholder>
         </span>
       {/snippet}
       <div class="w-full flex gap-px flex-col">
-        {#each [...profileData.profiles] as prof, index}
+        {#each [...profile.meta.profiles] as prof, index}
           <div class="w-full">
             <ProfileButton {index} {prof} />
           </div>

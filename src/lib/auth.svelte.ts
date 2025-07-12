@@ -20,11 +20,6 @@ import { site } from './lemmy.svelte'
 import { errorMessage } from './lemmy/error'
 import { publishedToDate } from './components/util/date'
 
-const getDefaultProfile = (): Profile => ({
-  id: -1,
-  instance: profileData.defaultInstance ?? DEFAULT_INSTANCE_URL,
-})
-
 function getFromStorage<T>(key: string): T | undefined {
   if (typeof localStorage == 'undefined') return undefined
   const lc = localStorage.getItem(key)
@@ -39,7 +34,7 @@ function setFromStorage(key: string, item: any, stringify: boolean = true) {
   return localStorage.setItem(key, stringify ? JSON.stringify(item) : item)
 }
 
-export interface Profile {
+export interface ProfileInfo {
   id: number
   instance: string
   jwt?: string
@@ -54,9 +49,9 @@ export interface Profile {
  * What gets stored in localstorage.
  */
 interface ProfileData {
-  profiles: Profile[]
+  profiles: ProfileInfo[]
+  // should be named currentId
   profile: number
-  defaultInstance?: string
 }
 
 interface Notifications {
@@ -68,8 +63,6 @@ interface Notifications {
 const getCookie = (key: string): string | undefined => {
   if (!browser) return undefined
 
-  // sorry i was dying when i wrote this line
-  // ask chatgpt or something to explain this for you
   return document?.cookie
     ?.split(';')
     .map(c => c.trim())
@@ -77,33 +70,101 @@ const getCookie = (key: string): string | undefined => {
     ?.split('=')?.[1]
 }
 
-export const profileData = $state<ProfileData>(
-  getFromStorage<ProfileData>('profileData') ?? {
-    profiles: [
-      {
-        id: 1,
-        instance: DEFAULT_INSTANCE_URL,
-        username: 'Guest',
-        color: '#505050',
-      },
-    ],
-    profile: 1,
-  },
-)
-
-class CurrentProfile {
-  #current = $derived(
-    profileData.profiles.find(i => i.id == profileData.profile) ??
-      getDefaultProfile(),
+class Profile {
+  meta = $state<ProfileData>(
+    getFromStorage<ProfileData>('profileData') ?? {
+      profiles: [
+        {
+          id: 1,
+          instance: DEFAULT_INSTANCE_URL,
+          username: 'Guest',
+          color: '#505050',
+        },
+      ],
+      profile: 1,
+    },
   )
+  #current = $derived(
+    this.meta.profiles.find(i => i.id == this.meta.profile) ??
+      this.getDefaultProfile(),
+  )
+
+  getDefaultProfile(): ProfileInfo {
+    return {
+      id: -1,
+      instance: DEFAULT_INSTANCE_URL,
+    }
+  }
+
+  constructor() {
+    // cookie migration code
+    if (
+      env.PUBLIC_MIGRATE_COOKIE &&
+      this.meta.profiles.length == 0 &&
+      env.PUBLIC_INSTANCE_URL
+    ) {
+      const jwt = getCookie('jwt')
+      if (jwt) {
+        ;(async () => {
+          const result = await this.add(jwt, env.PUBLIC_INSTANCE_URL ?? '')
+
+          if (result)
+            toast({
+              content:
+                'Your instance migrated to Photon, and your account was transferred.',
+              type: 'success',
+            })
+        })()
+      }
+    }
+
+    setInterval(
+      () => {
+        if (profile.current.jwt)
+          this.checkInbox().then(res => notifications.update(() => res))
+      },
+      4 * 60 * 1000,
+    )
+
+    // hacky way to check donation status
+    setTimeout(() => {
+      if (
+        profile.current.user?.local_user_view.local_user
+          .last_donation_notification
+      ) {
+        const donationDate = publishedToDate(
+          profile.current.user?.local_user_view.local_user
+            .last_donation_notification,
+        )
+        if (Date.now() - donationDate.getTime() > 365 * 24 * 60 * 60 * 1000) {
+          toast({
+            content: t.get('toast.lemmyDonate'),
+            duration: 3600 * 1000,
+            long: true,
+          })
+
+          // lemmy js client donation dialog is broken
+          fetch(
+            `${instanceToURL(profile.current.instance)}/api/v3/user/donation_dialog_shown`,
+            {
+              method: 'POST',
+              headers: {
+                authorization: `Bearer ${profile.current.jwt}`,
+              },
+            },
+          )
+        }
+      }
+    }, 3 * 1000)
+  }
 
   get current() {
     return this.#current
   }
   set current(value) {
     if (!value) return
-    const index = profileData.profiles.findIndex(i => i.id == value?.id)
-    profileData.profiles[index] = value
+    const index = this.meta.profiles.findIndex(i => i.id == value?.id)
+    this.meta.profiles[index] = value
   }
 
   async fetchUserData() {
@@ -143,99 +204,104 @@ class CurrentProfile {
 
     return this
   }
+
+  async checkInbox() {
+    const { user, jwt } = profile.current
+    if (!user || !jwt) throw new Error('checkInbox() called with invalid user')
+
+    const notifs = await getNotificationCount(
+      jwt,
+      amModOfAny(user) ?? false,
+      user ? isAdmin(user) : false,
+    )
+
+    return {
+      inbox: notifs.unreads,
+      applications: notifs.applications,
+      reports: notifs.reports,
+    }
+  }
+
+  async add(jwt: string, instance: string) {
+    const user = await userFromJwt(jwt, instance)
+      .then(u => u)
+      .catch(err => {
+        toast({ content: errorMessage(err as string), type: 'error' })
+      })
+    if (!user?.user) {
+      toast({
+        content: "Your instance's API did not return your user data.",
+        type: 'error',
+      })
+    }
+
+    const id = Math.max(...this.meta.profiles.map(p => p.id)) + 1
+    this.meta.profile = id
+    this.meta.profiles.push({
+      id: id,
+      instance: instance,
+      jwt: jwt,
+      username: user?.user?.local_user_view.person.name,
+      avatar: user?.user?.local_user_view.person.avatar,
+    })
+
+    return user
+  }
+
+  remove(id: number) {
+    this.meta.profiles.splice(
+      this.meta.profiles.findIndex(p => p.id == id),
+      1,
+    )
+    if (id == this.meta.profile) this.meta.profile = -1
+  }
+
+  move(id: number, up: boolean) {
+    try {
+      const index = this.meta.profiles.findIndex(i => i.id == id)
+      this.meta.profiles = moveItem(
+        this.meta.profiles,
+        index,
+        index + (up ? -1 : 1),
+      )
+    } catch {
+      /* empty */
+    }
+  }
+
+  mainEffect = $effect.root(() => {
+    // Sync with localStorage
+    $effect(() => {
+      const serialized = {
+        ...this.meta,
+        profiles: this.meta.profiles.map(p => serializeUser(p)),
+      }
+
+      setFromStorage('profileData', serialized)
+
+      // no more profiles left
+      if (serialized.profiles.length == 0) {
+        this.meta.profiles = [this.getDefaultProfile()]
+        this.meta.profile = 1
+      }
+    })
+
+    $effect(() => {
+      if (this.current.jwt)
+        this.fetchUserData().then(() => {
+          this.checkInbox().then(res => notifications.update(() => res))
+        })
+    })
+  })
 }
 
-export const profile = new CurrentProfile()
+export const profile = new Profile()
 
 export const notifications = writable<Notifications>({
   applications: 0,
   inbox: 0,
   reports: 0,
 })
-
-$effect.root(() => {
-  $effect(() => {
-    const serialized = {
-      ...profileData,
-      profiles: profileData.profiles.map(p => serializeUser(p)),
-    }
-
-    setFromStorage('profileData', serialized)
-    if (serialized.profiles.length == 0) {
-      profileData.profiles = [
-        {
-          id: 1,
-          instance: DEFAULT_INSTANCE_URL,
-          username: t.get('account.guest') || 'Guest',
-        },
-      ]
-      profileData.profile = 1
-    }
-  })
-
-  $effect(() => {
-    if (profile.current.id || profileData)
-      profile.fetchUserData().then(() => {
-        checkInbox()
-      })
-  })
-})
-
-// cookie migration code
-if (
-  env.PUBLIC_MIGRATE_COOKIE &&
-  profileData.profiles.length == 0 &&
-  env.PUBLIC_INSTANCE_URL
-) {
-  const jwt = getCookie('jwt')
-  if (jwt) {
-    ;(async () => {
-      const user = await userFromJwt(jwt, env.PUBLIC_INSTANCE_URL ?? '')
-      if (!user) return
-
-      const result = await setUser(jwt, env.PUBLIC_INSTANCE_URL ?? '')
-
-      if (result)
-        toast({
-          content:
-            'Your instance migrated to Photon, and you were logged in using a leftover cookie.',
-          type: 'success',
-        })
-    })()
-  }
-}
-
-export async function setUser(jwt: string, inst: string) {
-  try {
-    new URL(instanceToURL(inst))
-  } catch {
-    return
-  }
-
-  const user = await userFromJwt(jwt, inst)
-    .then(u => u)
-    .catch(err => {
-      toast({ content: errorMessage(err as string), type: 'error' })
-    })
-  if (!user?.user) {
-    toast({
-      content: "Your instance's API did not return your user data.",
-      type: 'error',
-    })
-  }
-
-  const id = Math.max(...profileData.profiles.map(p => p.id)) + 1
-  profileData.profile = id
-  profileData.profiles.push({
-    id: id,
-    instance: inst,
-    jwt: jwt,
-    username: user?.user?.local_user_view.person.name,
-    avatar: user?.user?.local_user_view.person.avatar,
-  })
-
-  return user
-}
 
 async function userFromJwt(
   jwt: string,
@@ -281,41 +347,10 @@ async function userFromJwt(
   }
 }
 
-export function resetProfile() {
-  profileData.profile = -1
-}
-
-export function deleteProfile(id: number) {
-  profileData.profiles.splice(
-    profileData.profiles.findIndex(p => p.id == id),
-    1,
-  )
-  if (id == profileData.profile) resetProfile()
-}
-
-function serializeUser(user: Profile): Profile {
+function serializeUser(user: ProfileInfo): ProfileInfo {
   return {
     ...user,
     user: undefined,
-  }
-}
-
-export async function setUserID(id: number) {
-  if (!profileData.profiles.find(p => p.id == id)) return -1
-  profileData.profile = id
-  return profile
-}
-
-export function moveProfile(id: number, up: boolean) {
-  try {
-    const index = profileData.profiles.findIndex(i => i.id == id)
-    profileData.profiles = moveItem(
-      profileData.profiles,
-      index,
-      index + (up ? -1 : 1),
-    )
-  } catch {
-    /* empty */
   }
 }
 
@@ -356,57 +391,3 @@ async function getNotificationCount(jwt: string, mod: boolean, admin: boolean) {
     applications: applications,
   }
 }
-
-async function checkInbox() {
-  const { user, jwt } = profile.current
-  if (!jwt || !user) return
-
-  const notifs = await getNotificationCount(
-    jwt,
-    amModOfAny(user) ?? false,
-    user ? isAdmin(user) : false,
-  )
-
-  notifications.set({
-    inbox: notifs.unreads,
-    applications: notifs.applications,
-    reports: notifs.reports,
-  })
-}
-
-async function init() {
-  setInterval(checkInbox, 4 * 60 * 1000)
-
-  // hacky way to check donation status
-  setTimeout(() => {
-    if (
-      profile.current.user?.local_user_view.local_user
-        .last_donation_notification
-    ) {
-      const donationDate = publishedToDate(
-        profile.current.user?.local_user_view.local_user
-          .last_donation_notification,
-      )
-      if (Date.now() - donationDate.getTime() > 365 * 24 * 60 * 60 * 1000) {
-        toast({
-          content: t.get('toast.lemmyDonate'),
-          duration: 3600 * 1000,
-          long: true,
-        })
-
-        // lemmy js client donation dialog is broken
-        fetch(
-          `${instanceToURL(profile.current.instance)}/api/v3/user/donation_dialog_shown`,
-          {
-            method: 'POST',
-            headers: {
-              authorization: `Bearer ${profile.current.jwt}`,
-            },
-          },
-        )
-      }
-    }
-  }, 3 * 1000)
-}
-
-init()

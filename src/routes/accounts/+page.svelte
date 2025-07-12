@@ -1,13 +1,5 @@
 <script lang="ts">
-  import {
-    profile as currentProfile,
-    deleteProfile,
-    moveProfile,
-    type Profile,
-    profile,
-    profileData,
-    setUserID,
-  } from '$lib/auth.svelte.js'
+  import { profile, type ProfileInfo } from '$lib/auth.svelte.js'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import DebugObject from '$lib/components/util/debug/DebugObject.svelte'
   import { t } from '$lib/i18n/translations'
@@ -29,11 +21,11 @@
   } from 'svelte-hero-icons'
 
   let debugging = $state(false)
-  let debugProfile: Profile | undefined = $state(undefined)
+  let debugProfile: ProfileInfo | undefined = $state(undefined)
 
   let removing = $state({
     shown: false,
-    account: undefined as Profile | undefined,
+    account: undefined as ProfileInfo | undefined,
   })
 
   let switching = $state(-1)
@@ -41,7 +33,7 @@
   let radioSelected = $state(profile.current.id)
   $effect(() => {
     switching = radioSelected
-    setUserID(radioSelected)
+    profile.meta.profile = radioSelected
   })
 
   $effect(() => {
@@ -94,7 +86,7 @@
       <Button
         onclick={() => {
           removing.shown = false
-          if (removing.account) deleteProfile(removing.account.id)
+          if (removing.account) profile.remove(removing.account.id)
         }}
         size="lg"
         class="flex-1"
@@ -141,13 +133,13 @@
   {/snippet}
 </Header>
 <form class="accounts-grid mt-4 sm:mt-6 gap-4">
-  {#each profileData.profiles as profile, index (profile.id)}
+  {#each profile.meta.profiles as p, index (p.id)}
     <label>
       <input
         type="radio"
-        id={profile.id.toString()}
+        id={p.id.toString()}
         name="profile"
-        value={profile.id}
+        value={p.id}
         class="hidden peer"
         bind:group={radioSelected}
       />
@@ -158,26 +150,26 @@
         class={[
           'flex flex-row items-center px-3 py-3 gap-2 transition-all duration-75 cursor-pointer relative',
           'peer-checked:ring-2',
-          switching == profile.id && 'ring-slate-400 dark:ring-zinc-600',
+          switching == p.id && 'ring-slate-400 dark:ring-zinc-600',
         ]}
       >
         <ProfileAvatar
-          {profile}
+          profile={p}
           {index}
-          selected={currentProfile?.data.id == profile.id}
+          selected={profile?.current.id == p.id}
           size={40}
         />
         <div class="flex flex-col overflow-hidden">
           <span class="break-words font-medium text-base">
-            {profile.username}
-            {#if !profile.jwt}
+            {p.username}
+            {#if !p.jwt}
               <Badge class="inline-grid w-6 h-6 p-0! place-items-center">
                 <Icon src={QuestionMarkCircle} size="16" micro />
               </Badge>
             {/if}
           </span>
           <span class="text-sm text-slate-600 dark:text-zinc-400">
-            {profile.instance}
+            {p.instance}
           </span>
         </div>
         <Menu placement="bottom-end">
@@ -203,7 +195,7 @@
               size="square-md"
               color="secondary"
               title={$t('account.moveUp')}
-              onclick={() => moveProfile(profile.id, true)}
+              onclick={() => profile.move(p.id, true)}
             >
               {#snippet prefix()}
                 <Icon src={ChevronUp} size="16" mini />
@@ -213,7 +205,7 @@
               size="square-md"
               color="secondary"
               title={$t('account.moveDown')}
-              onclick={() => moveProfile(profile.id, false)}
+              onclick={() => profile.move(p.id, false)}
             >
               {#snippet prefix()}
                 <Icon src={ChevronDown} size="16" mini />
@@ -223,7 +215,7 @@
           {#if settings.debugInfo}
             <MenuButton
               onclick={() => {
-                debugProfile = profile
+                debugProfile = p
                 debugging = !debugging
               }}
             >
@@ -233,10 +225,10 @@
               {$t('common.debug')}
             </MenuButton>
           {/if}
-          {#if !LINKED_INSTANCE_URL || profile.user}
+          {#if !LINKED_INSTANCE_URL || p.user}
             <MenuButton
               onclick={() => {
-                removing.account = profile
+                removing.account = p
                 removing.shown = !removing.shown
               }}
               color="danger-subtle"

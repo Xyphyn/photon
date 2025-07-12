@@ -3,7 +3,6 @@
 
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
-  import { setUser } from '$lib/auth.svelte.js'
   import ErrorContainer, {
     clearErrorScope,
     pushError,
@@ -37,6 +36,7 @@
     QuestionMarkCircle,
     XCircle,
   } from 'svelte-hero-icons'
+  import { profile } from '$lib/auth.svelte.js'
 
   let { data } = $props()
 
@@ -88,7 +88,7 @@
       const registrationMode = data.site_view.local_site.registration_mode
 
       if (res?.jwt) {
-        await setUser(res.jwt, page.params.instance)
+        await profile.add(res.jwt, page.params.instance)
 
         toast({ content: $t('toast.logIn'), type: 'success' })
         goto('/')
@@ -127,7 +127,7 @@
       })
 
       if (res.jwt) {
-        await setUser(res.jwt, page.params.instance)
+        await profile.add(res.jwt, page.params.instance)
         goto('/')
       } else if (res.verify_email_sent) {
         pushError({

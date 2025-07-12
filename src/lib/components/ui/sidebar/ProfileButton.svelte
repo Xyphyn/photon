@@ -1,7 +1,7 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
-  import { profile, setUserID, type Profile } from '$lib/auth.svelte.js'
+  import { profile, type ProfileInfo } from '$lib/auth.svelte'
   import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
   import { LINKED_INSTANCE_URL } from '$lib/instance.svelte'
   import ProfileAvatar from '$lib/lemmy/ProfileAvatar.svelte'
@@ -9,7 +9,7 @@
 
   let switching: boolean = $state(false)
   interface Props {
-    prof: Profile
+    prof: ProfileInfo
     index: number
     guest?: boolean
   }
@@ -28,7 +28,7 @@
     switching = true
 
     if (profile.current?.id != prof.id) {
-      await setUserID(prof.id)
+      profile.meta.profile = prof.id
     }
 
     await goto(page.url, {

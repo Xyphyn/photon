@@ -1,6 +1,5 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
-  import { profileData, setUserID } from '$lib/auth.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { client } from '$lib/lemmy.svelte'
   import { t } from '$lib/i18n/translations'
@@ -14,6 +13,7 @@
     TextInput,
     toast,
   } from 'mono-svelte'
+  import { profile } from '$lib/auth.svelte'
 
   let deletion = $state({
     modal: false,
@@ -70,11 +70,11 @@
         delete_content: deletion.deleteContent,
       })
 
-      profileData.profiles.splice(
-        profileData.profiles.findIndex(p => profileData.profile == p.id),
+      profile.meta.profiles.splice(
+        profile.meta.profiles.findIndex(p => profile.meta.profile == p.id),
       )
 
-      setUserID(-1)
+      profile.meta.profile = -1
       toast({
         content: $t('toast.deleted'),
       })
