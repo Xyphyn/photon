@@ -72,12 +72,13 @@
       {/if}
     </div>
   {/if}
-  <div class="flex flex-col @md/setting:flex-row gap-2">
+  <div class="flex @md/setting:flex-row gap-2">
     {#if icon}
       <Icon
         src={icon}
         size="32"
-        class="bg-red-200/20 dark:bg-red-800/20 p-1.5 self-start @md/setting:self-center rounded-lg color text-red-500 dark:text-red-200"
+        class="bg-red-200/20 dark:bg-red-800/20 p-1.5 self-center
+         rounded-lg color text-red-500  dark:text-red-400"
       />
     {/if}
     <Switch

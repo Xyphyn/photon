@@ -305,11 +305,7 @@
         </p>
       {/snippet}
     </Setting>
-    <Setting
-      optionClass="flex-2 max-w-full flex-wrap min-w-0 "
-      itemsClass="flex-col items-start! lg:items-center! lg:flex-row"
-      icon={ChartBar}
-    >
+    <Setting optionClass="flex-2 max-w-full flex-wrap min-w-0 " icon={ChartBar}>
       {#snippet title()}
         <span>{$t('settings.app.sort.title')}</span>
       {/snippet}
@@ -607,7 +603,7 @@
   </Section>
 
   <Section id="moderation" title={$t('settings.moderation.title')}>
-    <Setting icon={Trash} itemsClass="flex-col! items-start!">
+    <Setting icon={Trash}>
       {#snippet title()}
         <span>{$t('settings.moderation.replyPresets.title')}</span>
       {/snippet}

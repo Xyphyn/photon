@@ -16,7 +16,6 @@
       mobile: boolean
     }
     mainClass?: string
-    itemsClass?: string
     optionClass?: string
     class?: string
     title?: import('svelte').Snippet
@@ -32,7 +31,6 @@
       mobile: true,
     },
     mainClass = '',
-    itemsClass = '',
     optionClass = '',
     class: clazz = '',
     title,
@@ -76,30 +74,37 @@
       {/if}
     </div>
   {/if}
-  <div
-    class="flex flex-col @md/setting:flex-row items-center gap-2 {itemsClass}"
-  >
+  <div class={['setting-grid items-center', clazz]}>
     {#if icon}
       <Icon
         src={icon}
         size="32"
-        class="bg-red-200/20 dark:bg-red-800/20 p-1.5 self-start @md/setting:self-center rounded-lg color text-red-500 dark:text-red-200"
+        class="bg-red-200/20 dark:bg-red-800/20 p-1.5 rounded-lg color
+          text-red-500 dark:text-red-400 float-left mr-2 clear-both"
+        style="grid-area: icon;"
       />
     {/if}
-    <div class="flex flex-col gap-0.5 flex-2 w-full shrink-0 min-w-48 {clazz}">
-      <h1 class="font-medium text-base">
-        {@render title?.()}
-      </h1>
-      {#if description}
-        <div class="text-slate-600 dark:text-zinc-400 text-sm">
-          {@render description?.()}
-        </div>
-      {/if}
-    </div>
+    <h2
+      class="font-medium text-base"
+      style="grid-area: title; place-self: end start;"
+    >
+      {@render title?.()}
+    </h2>
+    {#if description}
+      <p
+        class="text-slate-600 dark:text-zinc-400 text-sm"
+        style="grid-area: description; place-self: start start;"
+      >
+        {@render description?.()}
+      </p>
+    {/if}
     {#if children}
       <div
-        class="w-full flex flex-col gap-2 flex-1 max-w-full
-         @md/setting:items-end shrink-0 {optionClass}"
+        class={[
+          'w-full flex flex-col gap-2 flex-1 max-w-full shrink-0 row-span-2 max-md:mt-2',
+          optionClass,
+        ]}
+        style="grid-area: children;"
       >
         {@render children?.()}
       </div>
@@ -108,6 +113,27 @@
 </div>
 
 <style>
+  .setting-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+      'icon title'
+      'icon description'
+      'children children';
+  }
+
+  @media screen and (min-width: 768px) {
+    .setting-grid {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      grid-template-rows: auto auto;
+      grid-template-areas:
+        'icon title children'
+        'icon description children';
+    }
+  }
+
   :global(.setting:nth-child(17n + 1) .color) {
     filter: hue-rotate(10deg);
   }

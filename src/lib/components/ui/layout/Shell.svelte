@@ -25,7 +25,7 @@
       return
     }
 
-    dockVisible = (scrollY?.current ?? 0) >= previousTop
+    dockVisible = (scrollY?.current ?? 0) <= previousTop
     previousTop = scrollY?.current ?? 0
   }
 
@@ -38,7 +38,7 @@
 <div
   class={[
     'fixed bottom-0 lg:top-0',
-    dockVisible && 'max-lg:-bottom-24',
+    !dockVisible && 'max-lg:-bottom-24',
     'max-w-3xl p-4 left-1/2 -translate-x-1/2 lg:max-w-full lg:p-0 lg:left-0 lg:translate-x-0',
     'w-full z-50 pointer-events-none',
   ]}
