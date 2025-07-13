@@ -1,9 +1,11 @@
 <script lang="ts" generics="T">
   import { browser } from '$app/environment'
+  import { settings } from '$lib/settings.svelte'
   import { debounce } from 'mono-svelte/util/time'
   import { onDestroy, onMount, untrack, type Snippet } from 'svelte'
   import type { HTMLAttributes } from 'svelte/elements'
   import { innerHeight } from 'svelte/reactivity/window'
+  import Expandable from '../ui/Expandable.svelte'
 
   interface Props extends HTMLAttributes<HTMLDivElement> {
     items: T[]
@@ -31,6 +33,8 @@
     height = 0,
     ...rest
   }: Props = $props()
+
+  let initialRender = false
 
   export function scrollToIndex(index: number, useWindow: boolean = false) {
     const targetPx = cumulativeItemHeights[index] - (initialOffset || 0)
@@ -145,6 +149,7 @@
         const newHeight = entry.contentRect.height
         if (itemHeights[index] !== newHeight) {
           itemHeights[index] = newHeight
+          if (!initialRender) visibleItems = updateVisibleItems()
         }
       }
     }, debounceResize)
@@ -193,6 +198,7 @@
       })
       untrack(() => {
         visibleItems = updateVisibleItems()
+        initialRender = false
       })
     }
   })
@@ -231,6 +237,29 @@
     </div>
   {/each}
 </div>
+{#if settings.debugInfo}
+  <Expandable>
+    {#snippet title()}
+      Debug
+    {/snippet}
+    <pre>
+      Virtual list debug info
+
+      List items: {items.length}
+      Rendering items: {visibleItems.length} ({visibleItems[0]
+        ?.index} - {visibleItems[visibleItems.length - 1].index})
+      Viewport height: {viewportHeight}
+      Current scroll position: {scrollY}
+      Container height: {cumulativeItemHeights[
+        visibleItems?.[visibleItems.length - 1]?.index
+      ]}
+      Overscan: {overscan}
+      Guess item height: {estimatedHeight}
+      Bumpscosity: {Math.floor(Math.random() * 5000)}
+      Restore data: {JSON.stringify(restore)}
+    </pre>
+  </Expandable>
+{/if}
 
 <style>
   .fix-divide:nth-child(2) {
