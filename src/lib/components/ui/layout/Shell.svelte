@@ -64,7 +64,7 @@
     style: 'grid-area: sidebar; width: 100% !important;',
   })}
   {@render main?.({
-    class: `w-full bg-slate-25 dark:bg-zinc-925 justify-self-center shadow-xs main pb-22 lg:pt-20! pb-4 sm:pb-6`,
+    class: `w-full bg-slate-25 dark:bg-zinc-925 justify-self-center shadow-xs main max-lg:pb-22 lg:pt-20!`,
     style: 'grid-area: main',
   })}
   {@render suffix?.({

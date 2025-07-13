@@ -123,7 +123,7 @@
   {/snippet}
   {#snippet main({ style: s, class: c })}
     <main
-      class="p-4 sm:p-6 min-w-0 w-full flex flex-col h-full relative {c}"
+      class="px-4 pt-4 sm:px-6 sm:pt-6 min-w-0 w-full flex flex-col h-full relative {c}"
       style={s}
       id="main"
     >
