@@ -30,7 +30,7 @@ export async function load({ url, fetch }) {
     community_id: community,
   }
 
-  const admin = profile.current?.user ? isAdmin(profile!.data.user!) : false
+  const admin = profile.current?.user ? isAdmin(profile!.current.user!) : false
 
   const [posts, comments, messages] = await Promise.all([
     client.listPostReports({
