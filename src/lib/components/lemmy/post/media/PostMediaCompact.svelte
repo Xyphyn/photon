@@ -1,7 +1,6 @@
 <script lang="ts">
   import {
     bestImageURL,
-    optimizeImageURL,
     postLink,
     type MediaType,
   } from '$lib/components/lemmy/post/helpers.js'
@@ -70,10 +69,34 @@
     class="cursor-pointer"
   >
     {#if post.thumbnail_url || isImage(post.url)}
+      {@const thumbnail = post.thumbnail_url != undefined && !isImage(post.url)}
       <div class="relative overflow-hidden rounded-xl">
         <picture>
+          <!--I would add AVIF, but lemmy.world's AVIF is broken as of currently-->
+          {#each ['webp'] as format}
+            <source
+              srcset="{bestImageURL(
+                post,
+                thumbnail,
+                128,
+                format as 'avif' | 'webp',
+              )} 1x, {bestImageURL(
+                post,
+                thumbnail,
+                256,
+                format as 'avif' | 'webp',
+              )} 2x, {bestImageURL(
+                post,
+                thumbnail,
+                512,
+                format as 'avif' | 'webp',
+              )} 3x"
+              media="(min-width: 0px)"
+              type="image/{format}"
+            />
+          {/each}
           <img
-            src={optimizeImageURL(post.thumbnail_url || post.url || '', 256)}
+            src={bestImageURL(post, thumbnail, -1, null)}
             loading="lazy"
             class={[
               'object-cover relative overflow-hidden bg-slate-100 dark:bg-zinc-800 rounded-xl transition-colors',

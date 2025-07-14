@@ -46,7 +46,6 @@
     url={post.url}
     thumbnail_url={post.thumbnail_url}
     nsfw={post.nsfw}
-    embed_description={post.embed_description}
     embed_title={post.embed_title}
     {view}
   />

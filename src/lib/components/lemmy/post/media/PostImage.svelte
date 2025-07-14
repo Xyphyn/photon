@@ -40,27 +40,38 @@
          scale-[1.2] opacity-50"
   />
   <picture class="max-h-[inherit]">
-    <source
-      srcset={bestImageURL(post, false, 512)}
-      media="(max-width: 256px)"
-    />
-    <source
-      srcset={bestImageURL(post, false, 1024)}
-      media="(max-width: 512px)"
-    />
-    <source
-      srcset={bestImageURL(post, false, 1536)}
-      media="(max-width: 1024px)"
-    />
+    {#each ['webp'] as format}
+      <source
+        srcset="{bestImageURL(
+          post,
+          false,
+          512,
+          format as 'avif' | 'webp',
+        )} 512w, {bestImageURL(
+          post,
+          false,
+          768,
+          format as 'avif' | 'webp',
+        )} 768w, {bestImageURL(
+          post,
+          false,
+          1024,
+          format as 'avif' | 'webp',
+        )} 1024w"
+        media="(min-width: 0px)"
+        type="image/{format}"
+      />
+    {/each}
     <img
-      src={bestImageURL(post, false, -1)}
+      src={bestImageURL(post, false, -1, null)}
       loading="lazy"
-      class="max-h-[inherit] max-w-full h-auto z-30
-                  transition-opacity duration-500 object-contain mx-auto
-          {imageLoaded === false ? 'opacity-0' : 'opacity-100'}"
+      class={[
+        'max-h-[inherit] max-w-full h-auto z-30 transition-opacity duration-500 object-contain mx-auto',
+        imageLoaded === false ? 'opacity-0' : 'opacity-100',
+        blur && 'blur-3xl',
+      ]}
       width={512}
       height={300}
-      class:blur-[64px]={blur}
       alt={post.alt_text ?? ''}
       onload={() => (imageLoaded = true)}
     />

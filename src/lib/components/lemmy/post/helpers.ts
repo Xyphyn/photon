@@ -7,17 +7,16 @@ import type { CommentView, PersonView, Post } from 'lemmy-js-client'
 export const isCommentMutable = (comment: CommentView, me: PersonView) =>
   me.person.id == comment.creator.id
 
+// Algorithm to determine the best image URL to use
 export const bestImageURL = (
   post: Post,
-  compact: boolean = true,
+  thumbnail: boolean = true,
   width: number = 1024,
+  format: 'avif' | 'webp' | null = 'avif',
 ) => {
-  if (compact) {
-    /* empty */
-  }
-  if (post.url) return optimizeImageURL(post.url, width)
-  else if (post.thumbnail_url)
-    return optimizeImageURL(post.thumbnail_url, width)
+  if (post.thumbnail_url && (thumbnail || !post.url))
+    return optimizeImageURL(post.thumbnail_url, width, format)
+  else if (post.url) return optimizeImageURL(post.url, width, format)
 
   return post.url ?? ''
 }
@@ -25,11 +24,12 @@ export const bestImageURL = (
 export const optimizeImageURL = (
   urlStr: string,
   width: number = 1024,
+  format: 'avif' | 'webp' | null = 'avif',
 ): string => {
   try {
     const url = new URL(urlStr)
 
-    if (!url.searchParams.has('format')) url.searchParams.set('format', 'webp')
+    if (format) url.searchParams.set('format', format)
 
     if (width > 0 && !url.searchParams.has('thumbnail')) {
       url.searchParams.set(
@@ -39,10 +39,6 @@ export const optimizeImageURL = (
           width,
         ).toString(),
       )
-    }
-
-    if (width == -1) {
-      url.searchParams.delete('thumbnail')
     }
 
     return url.toString()
