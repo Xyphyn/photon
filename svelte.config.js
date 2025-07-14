@@ -25,14 +25,16 @@ const config = {
               },
             })
           : auto(),
-    // csp: {
-    // 	directives: {
-    // 		'script-src': ['self'],
-    // 		'object-src': ['none'],
-    // 		'base-uri': ['none']
-    // 	},
-    // 	mode: 'nonce'
-    // }
+    csp: {
+      directives: {
+        'script-src': ['self'],
+      },
+      // must be specified with either the `report-uri` or `report-to` directives, or both
+      reportOnly: {
+        'script-src': ['self'],
+        'report-uri': ['/'],
+      },
+    },
     alias: {
       'mono-svelte': 'src/lib/mono',
     },
