@@ -18,9 +18,9 @@ Jump to:
 
 ## Screenshots
 
-![desktop-compact-dark](https://github.com/user-attachments/assets/6cbf3945-c4b9-4c9b-bd76-e86912fc2994)
+<img width="3220" height="1800" alt="Photon dark theme compact" src="https://github.com/user-attachments/assets/76b5278b-e5f9-4c0c-81ec-0820d3261223" />
+<img width="3220" height="1800" alt="Photon light theme cozy" src="https://github.com/user-attachments/assets/41d205fe-7d32-4b83-bfef-6aa9dd63e074" />
 
-![desktop-default-light](https://github.com/user-attachments/assets/ea7bcbd2-d270-49ac-a98b-1b088c19ecb9)
 
 ## Self-hosting
 
