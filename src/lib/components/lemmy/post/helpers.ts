@@ -12,7 +12,7 @@ export const bestImageURL = (
   post: Post,
   thumbnail: boolean = true,
   width: number = 1024,
-  format: 'avif' | 'webp' | null = 'avif',
+  format: 'avif' | 'webp' | null = 'webp',
 ) => {
   if (post.thumbnail_url && (thumbnail || !post.url))
     return optimizeImageURL(post.thumbnail_url, width, format)
@@ -24,7 +24,7 @@ export const bestImageURL = (
 export const optimizeImageURL = (
   urlStr: string,
   width: number = 1024,
-  format: 'avif' | 'webp' | null = 'avif',
+  format: 'avif' | 'webp' | null = 'webp',
 ): string => {
   try {
     const url = new URL(urlStr)
