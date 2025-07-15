@@ -34,6 +34,7 @@ async function customFetch(
   if (init) {
     init.headers = {
       ...init.headers,
+      'User-Agent': `Photon/${__VERSION__}`,
       ...(auth ? { authorization: `Bearer ${auth}` } : {}),
     }
 

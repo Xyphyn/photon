@@ -27,7 +27,7 @@
   class="container mx-auto z-10 rounded-xl max-h-[60vh] relative overflow-hidden bg-slate-100 dark:bg-zinc-900"
   data-sveltekit-preload-data="off"
   aria-label={post.name}
-  onclick={() => showImage(bestImageURL(post, false, -1))}
+  onclick={() => showImage(bestImageURL(post, false, -1, null))}
   role="button"
   tabindex="0"
 >
