@@ -22,6 +22,7 @@
 
 <a
   href={photonified ?? href}
+  target={photonified ? "_self" : "_blank"}
   {title}
   class="hover:underline text-sky-600 dark:text-sky-500"
 >
