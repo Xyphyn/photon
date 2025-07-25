@@ -6,10 +6,11 @@
   import ItemList from '$lib/components/lemmy/generic/ItemList.svelte'
   import { ban, isAdmin } from '$lib/components/lemmy/moderation/moderation.js'
   import ShieldIcon from '$lib/components/lemmy/moderation/ShieldIcon.svelte'
-  import Post from '$lib/components/lemmy/post/Post.svelte'
+  import PostItem from '$lib/components/lemmy/post/PostItem.svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import EntityHeader from '$lib/components/ui/EntityHeader.svelte'
   import Expandable from '$lib/components/ui/Expandable.svelte'
+  import CommonList from '$lib/components/ui/layout/CommonList.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
@@ -353,19 +354,15 @@
         description="This user has no submissions that match this filter."
       />
     {:else}
-      <div
-        class="divide-y! divide-slate-200 dark:divide-zinc-800 flex flex-col"
-      >
-        {#key data.items}
-          {#each data.items.value as item (item)}
-            {#if isCommentView(item)}
-              <CommentItem comment={item} />
-            {:else if !isCommentView(item)}
-              <Post post={item} />
-            {/if}
-          {/each}
-        {/key}
-      </div>
+      <CommonList items={data.items.value}>
+        {#snippet item(item)}
+          {#if isCommentView(item)}
+            <CommentItem comment={item} />
+          {:else if !isCommentView(item)}
+            <PostItem post={item} />
+          {/if}
+        {/snippet}
+      </CommonList>
     {/if}
     <Pageination
       bind:page={data.filters.value.page}

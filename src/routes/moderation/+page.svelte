@@ -1,7 +1,10 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
+  import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
+  import CommonList from '$lib/components/ui/layout/CommonList.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import Pageination from '$lib/components/ui/Pageination.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import ProgressBar from '$lib/components/ui/ProgressBar.svelte'
   import { t } from '$lib/i18n/translations'
@@ -11,10 +14,7 @@
   import Option from 'mono-svelte/forms/select/Option.svelte'
   import { tick } from 'svelte'
   import { Check, Funnel, Icon, Inbox, XMark } from 'svelte-hero-icons'
-  import { fly } from 'svelte/transition'
   import Report from './Report.svelte'
-  import Pageination from '$lib/components/ui/Pageination.svelte'
-  import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
 
   let { data = $bindable() } = $props()
 
@@ -133,33 +133,26 @@
 </div>
 <ProgressBar progress={batch.progress} />
 {#if data.items?.value && data.items?.value.length > 0}
-  <div
-    class="flex flex-col *:py-4 divide-y divide-slate-200 dark:divide-zinc-800"
-  >
-    {#each data.items?.value as item}
-      <div
-        in:fly={{ y: -6, opacity: 0, duration: 500 }}
-        class="flex flex-col gap-3 text-sm -mx-4 sm:-mx-6 px-4 sm:px-6 items-center"
+  <CommonList items={data.items?.value}>
+    {#snippet item(item)}
+      <Material
+        rounding={item.length == 1 ? 'none' : '2xl'}
+        color={item.length == 1 ? 'none' : 'uniform'}
+        padding={item.length == 1 ? 'none' : 'md'}
+        class={['space-y-2 w-full']}
       >
+        <Report {item} />
+      </Material>
+      {#if item.length > 1}
         <Material
-          rounding={item.length == 1 ? 'none' : '2xl'}
-          color={item.length == 1 ? 'none' : 'uniform'}
-          padding={item.length == 1 ? 'none' : 'md'}
-          class={['space-y-2 w-full']}
-        >
-          <Report {item} />
-        </Material>
-        {#if item.length > 1}
-          <Material
-            padding="none"
-            rounding="none"
-            color="uniform"
-            class="-mt-3 rounded-b-2xl w-[95%] h-4 bg-slate-50! dark:bg-zinc-950!"
-          ></Material>
-        {/if}
-      </div>
-    {/each}
-  </div>
+          padding="none"
+          rounding="none"
+          color="uniform"
+          class="-mt-3 rounded-b-2xl w-[95%] h-4 bg-slate-50! dark:bg-zinc-950!"
+        ></Material>
+      {/if}
+    {/snippet}
+  </CommonList>
   <Pageination
     page={data.page}
     href={current => `?page=${current}`}

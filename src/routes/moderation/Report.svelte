@@ -11,7 +11,7 @@
   import { errorMessage } from '$lib/lemmy/error'
   import type { ReportView } from '$lib/lemmy/report.js'
   import { Badge, Button, Material, Modal, toast } from 'mono-svelte'
-  import { CheckCircle, Icon } from 'svelte-hero-icons'
+  import { CheckBadge, Icon } from 'svelte-hero-icons'
 
   interface Props {
     item: ReportView[]
@@ -170,20 +170,19 @@
   <div class="flex-1"></div>
   <Button
     onclick={resolve}
-    class="h-max self-end {item.resolved
-      ? 'text-green-600! dark:text-green-400!'
-      : ''}"
+    class="h-max self-end"
     loading={resolving}
     disabled={resolving}
     rounding="pill"
-    color="ghost"
+    size="sm"
+    color={item.resolved ? 'secondary' : 'primary'}
   >
     {#snippet prefix()}
-      <Icon src={CheckCircle} micro={item.resolved} size="18" />
+      <Icon src={CheckBadge} micro size="16" />
     {/snippet}
     {!item.resolved
       ? $t('routes.moderation.resolve')
-      : $t('routes.moderation.resolved')}
+      : $t('routes.moderation.unresolve')}
   </Button>
 </div>
 

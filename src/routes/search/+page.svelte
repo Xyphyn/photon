@@ -30,6 +30,8 @@
   import { expoOut } from 'svelte/easing'
   import { fly, slide } from 'svelte/transition'
   import SearchBar from './SearchBar.svelte'
+  import CommonList from '$lib/components/ui/layout/CommonList.svelte'
+  import PostItem from '$lib/components/lemmy/post/PostItem.svelte'
 
   let { data } = $props()
 
@@ -54,7 +56,7 @@
 </Header>
 <form method="get" action="/search" class="contents" bind:this={form}>
   <SearchBar bind:query={data.filters.value.query} />
-  <div class="flex flex-row flex-wrap items-center gap-4 mt-4">
+  <div class="flex flex-row flex-wrap items-center gap-4 my-4 sm:my-6">
     <Select
       name="type"
       bind:value={data.filters.value.type}
@@ -136,7 +138,7 @@
 {:else}
   {#await data.streamed.object}
     <div
-      class="flex gap-2 items-center mt-4"
+      class="flex gap-2 items-center my-4"
       out:slide={{ axis: 'y', easing: expoOut }}
     >
       <Spinner width={24} />
@@ -146,18 +148,10 @@
     {#if object}
       <div
         transition:slide={{ axis: 'y', easing: expoOut }}
-        class="divide-y divide-slate-200 dark:divide-zinc-900"
+        class="divide-y divide-slate-200 dark:divide-zinc-900 my-4"
       >
         {#if object.community}
-          <div
-            class="-mx-4 sm:-mx-6 px-6 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors"
-          >
-            <CommunityItem
-              community={object.community}
-              showCounts={false}
-              class="py-3"
-            />
-          </div>
+          <CommunityItem community={object.community} showCounts={false} />
         {/if}
         {#if object.post}
           <Post post={object.post} />
@@ -171,31 +165,19 @@
       </div>
     {/if}
   {/await}
-  <div
-    class="flex flex-col mt-4 divide-slate-200 dark:divide-zinc-800 divide-y!"
-  >
-    {#key data.results.value}
-      {#each data.results.value as result (result)}
-        {#if isPostView(result)}
-          <Post post={result} />
-        {:else if isCommentView(result)}
-          <CommentItem comment={result} />
-        {:else if isCommunityView(result)}
-          <div
-            class="-mx-4 sm:-mx-6 px-6 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors"
-          >
-            <CommunityItem community={result} showCounts={false} class="py-3" />
-          </div>
-        {:else if isUser(result)}
-          <div
-            class="-mx-4 sm:-mx-6 px-6 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors"
-          >
-            <UserItem user={result} showCounts={false} class="py-3" />
-          </div>
-        {/if}
-      {/each}
-    {/key}
-  </div>
+  <CommonList items={data.results.value}>
+    {#snippet item(result)}
+      {#if isPostView(result)}
+        <PostItem post={result} />
+      {:else if isCommentView(result)}
+        <CommentItem comment={result} />
+      {:else if isCommunityView(result)}
+        <CommunityItem community={result} showCounts={false} />
+      {:else if isUser(result)}
+        <UserItem user={result} showCounts={false} />
+      {/if}
+    {/snippet}
+  </CommonList>
   <div class="mt-4"></div>
   {#if data.results.value.length > 0}
     <Pageination

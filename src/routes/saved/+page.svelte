@@ -1,7 +1,8 @@
 <script lang="ts">
   import { page } from '$app/state'
   import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
-  import Post from '$lib/components/lemmy/post/Post.svelte'
+  import PostItem from '$lib/components/lemmy/post/PostItem.svelte'
+  import CommonList from '$lib/components/ui/layout/CommonList.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
@@ -19,7 +20,6 @@
     Icon,
     PencilSquare,
   } from 'svelte-hero-icons'
-  import { fly } from 'svelte/transition'
 
   let { data } = $props()
 
@@ -61,27 +61,26 @@
     </div>
   {/snippet}
 </Header>
-<div
-  class="flex flex-col list-none my-4 divide-slate-200 dark:divide-zinc-800 divide-y"
->
-  {#if !data.data || (data.data?.length ?? 0) == 0}
-    <Placeholder
-      icon={Bookmark}
-      title="No saved items"
-      description="Save posts or comments, and they'll be here to refer to them later."
-    />
-  {:else}
-    {#each data.data as item, index (item)}
-      <div in:fly={{ opacity: 0, y: -4, delay: index * 50 }}>
-        {#if isComment(item)}
-          <CommentItem comment={item} />
-        {:else}
-          <Post post={item} />
-        {/if}
-      </div>
-    {/each}
-  {/if}
-</div>
+
+<div class="h-4 sm:h-6"></div>
+
+{#if !data.data || (data.data?.length ?? 0) == 0}
+  <Placeholder
+    icon={Bookmark}
+    title="No saved items"
+    description="Save posts or comments, and they'll be here to refer to them later."
+  />
+{:else}
+  <CommonList items={data.data}>
+    {#snippet item(item)}
+      {#if isComment(item)}
+        <CommentItem comment={item} />
+      {:else}
+        <PostItem post={item} />
+      {/if}
+    {/snippet}
+  </CommonList>
+{/if}
 <div class="sticky z-30 mx-auto max-w-full bottom-22 lg:bottom-6">
   <Tabs routes={[]} class="mx-auto">
     <Pageination href={page => `?page=${page}`} page={data.page} />

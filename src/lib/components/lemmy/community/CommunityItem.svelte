@@ -37,7 +37,7 @@
     community = $bindable(),
     view = 'compact',
     showCounts = true,
-    class: clazz = 'py-4 flex flex-col gap-4 text-sm max-w-full relative',
+    class: clazz = 'flex flex-col gap-4 text-sm max-w-full relative',
     icon,
     children,
   }: Props = $props()
@@ -51,10 +51,10 @@
 
 <div class={clazz}>
   <div
-    class="flex
-     {view == 'cozy'
-      ? 'flex-col gap-2 items-center'
-      : 'flex-row'} max-w-full w-full"
+    class={[
+      view == 'cozy' ? 'flex-col gap-2 items-center' : 'flex-row',
+      'flex max-w-full w-full',
+    ]}
   >
     <a
       href="/c/{fullCommunityName(
@@ -70,11 +70,12 @@
           : 'flex-row'} gap-2 items-center"
       >
         {#if icon}{@render icon()}{:else if community.community.nsfw && settings.nsfwBlur}
-          <div class="w-8 h-8 rounded-full bg-red-400"></div>
+          <div class="w-8 h-8 rounded-xl bg-red-400"></div>
         {:else}
           <Avatar
             url={community.community.icon}
             width={32}
+            circle={false}
             alt={community.community.name}
             class={[
               community.community.nsfw && settings.nsfwBlur && 'blur-3xl',
@@ -154,6 +155,7 @@
         </Button>
         <Subscribe {community}>
           {#snippet children({ subscribe, subscribing })}
+            {@const subscribed = isSubscribed(community.subscribed)}
             <Button
               disabled={subscribing || !profile.current?.jwt}
               loading={subscribing}
@@ -174,26 +176,24 @@
                 }
               }}
               size="custom"
-              title={isSubscribed(community.subscribed)
+              title={subscribed
                 ? $t('cards.community.subscribed')
                 : $t('cards.community.subscribe')}
-              color={isSubscribed(community.subscribed)
-                ? 'secondary'
-                : 'primary'}
-              class="{isSubscribed(community.subscribed)
-                ? 'text-slate-600 dark:text-zinc-400'
-                : ''}
-              aspect-square h-8.5 @md:px-2 @md:min-w-30 @md:aspect-auto @md:rounded-full"
+              color={subscribed ? 'secondary' : 'primary'}
+              rounding="pill"
+              class={[
+                subscribed && 'text-slate-600 dark:text-zinc-400',
+                ' h-8.5 rounded-full',
+                view == 'compact'
+                  ? 'aspect-square @md:px-2 @md:min-w-30 @md:aspect-auto'
+                  : 'px-3',
+              ]}
             >
               {#snippet prefix()}
-                <Icon
-                  src={isSubscribed(community.subscribed) ? Check : Plus}
-                  size="16"
-                  micro
-                />
+                <Icon src={subscribed ? Check : Plus} size="16" micro />
               {/snippet}
-              <span class="hidden @md:block">
-                {#if isSubscribed(community.subscribed)}
+              <span class={[view == 'compact' && 'hidden', '@md:block']}>
+                {#if subscribed}
                   {$t('cards.community.subscribed')}
                 {:else}
                   {$t('cards.community.subscribe')}

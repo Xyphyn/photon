@@ -65,12 +65,7 @@
 <Expandable open icon={false}>
   {#snippet title()}
     <div class="flex flex-row gap-2 items-center w-full">
-      <Avatar
-        url={item.creator.avatar}
-        circle={false}
-        width={28}
-        alt={item.creator.name}
-      />
+      <Avatar url={item.creator.avatar} width={28} alt={item.creator.name} />
       <div class="flex flex-col">
         <div class="text-sm font-normal text-slate-600 dark:text-zinc-400">
           {#if item.type == 'comment_reply'}

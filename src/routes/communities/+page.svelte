@@ -4,6 +4,7 @@
   import Location from '$lib/components/lemmy/dropdowns/Location.svelte'
   import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
   import Skeleton from '$lib/components/ui/generic/Skeleton.svelte'
+  import CommonList from '$lib/components/ui/layout/CommonList.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
@@ -103,7 +104,7 @@
   </div>
 {:else}
   <ul
-    class="flex flex-col divide-y divide-slate-100 dark:divide-zinc-800 my-6 h-full"
+    class="flex flex-col divide-y-2 divide-slate-100 dark:divide-zinc-800 my-6 h-full"
   >
     {#if data.communities.value.length == 0}
       <Placeholder
@@ -130,12 +131,7 @@
               y: 16,
             }}
           >
-            <Material
-              color="distinct"
-              padding="none"
-              rounding="xl"
-              class="dark:border-t-zinc-800 h-full"
-            >
+            <Material color="uniform" padding="none" rounding="2xl">
               <CommunityItem
                 {community}
                 showCounts={false}
@@ -155,22 +151,11 @@
     {/if}
     {#if data.communities.value}
       {@const sliced = data.communities.value.slice(showTop ? 3 : 0)}
-      <div class="-mx-4 sm:-mx-6 h-full">
-        {#each sliced as community, index (community.community.id)}
-          <div
-            class="px-6 hover:bg-slate-50 dark:hover:bg-zinc-900 transition-colors @container
-        border-b border-slate-100 dark:border-zinc-900"
-            in:fly|global={{
-              duration: 1000,
-              easing: expoOut,
-              delay: index < 20 ? index * 35 : 0,
-              y: 16,
-            }}
-          >
-            <CommunityItem {community} showCounts={false} class="py-3" />
-          </div>
-        {/each}
-      </div>
+      <CommonList items={sliced}>
+        {#snippet item(community, index)}
+          <CommunityItem {community} showCounts={false} />
+        {/snippet}
+      </CommonList>
     {/if}
   </ul>
 {/if}

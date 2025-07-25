@@ -29,7 +29,7 @@
 </script>
 
 <Material
-  class={['flex flex-col flex-1 rounded-none py-4 list-none', clazz]}
+  class={['flex flex-col flex-1 rounded-none list-none', clazz]}
   color="none"
   padding="none"
 >

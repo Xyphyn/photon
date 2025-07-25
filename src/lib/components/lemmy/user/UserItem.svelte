@@ -16,7 +16,7 @@
     user,
     view = 'compact',
     showCounts = true,
-    class: clazz = 'py-4 flex flex-col gap-4 text-sm max-w-full relative',
+    class: clazz = 'flex flex-col gap-4 text-sm max-w-full relative',
     icon,
   }: Props = $props()
 </script>

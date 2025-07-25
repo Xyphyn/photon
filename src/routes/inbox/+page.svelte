@@ -2,6 +2,7 @@
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
   import { notifications, profile } from '$lib/auth.svelte.js'
+  import CommonList from '$lib/components/ui/layout/CommonList.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
@@ -10,8 +11,6 @@
   import { getClient } from '$lib/lemmy.svelte.js'
   import { Button } from 'mono-svelte'
   import { ArrowPath, Check, Icon, Inbox } from 'svelte-hero-icons'
-  import { expoOut } from 'svelte/easing'
-  import { fly } from 'svelte/transition'
   import InboxItem from './InboxItem.svelte'
 
   let { data } = $props()
@@ -63,129 +62,113 @@
   <title>{$t('routes.inbox.title')}</title>
 </svelte:head>
 
-<div class=" gap-2">
-  <div
-    class="mt-4 mb-2 z-30 mx-auto max-w-full flex gap-2 md:flex-row flex-col
-items-center px-2 w-max top-6 lg:top-22"
-  >
-    <Tabs
-      routes={[
-        {
-          href: '?type=all',
-          name: $t('filter.location.all'),
-        },
-        {
-          href: '?type=replies',
-          name: $t('filter.inbox.replies'),
-        },
-        {
-          href: '?type=mentions',
-          name: $t('filter.inbox.mentions'),
-        },
-        {
-          href: '/inbox/messages',
-          name: $t('filter.inbox.messages'),
-        },
-      ]}
-      currentRoute={page.url.search}
-      buildUrl={(route, href) =>
-        href.includes('?')
-          ? '?' + addSearchParam(page.url.searchParams, href).toString()
-          : `${href}${page.url.search}`}
-      defaultRoute="?type=all"
-      class="overflow-auto"
-    />
-    <Tabs
-      routes={[
-        {
-          href: '?unreadOnly=false',
-          name: $t('filter.location.all'),
-        },
-        {
-          href: '?unreadOnly=true',
-          name: $t('filter.unread'),
-        },
-      ]}
-      currentRoute={page.url.search}
-      buildUrl={(route, href) =>
-        '?' + addSearchParam(page.url.searchParams, href).toString()}
-      defaultRoute="?unreadOnly=true"
-      class="overflow-auto"
-    />
-  </div>
-  <Header pageHeader class="lg:flex-row justify-between flex-col">
-    {$t('routes.inbox.title')}
-
-    <div class="flex items-center gap-2 tracking-normal">
-      <Button
-        onclick={() => goto(page.url, { invalidateAll: true })}
-        size="custom"
-        class="rounded-2xl h-9 aspect-square"
-        rounding="none"
-        aria-label={$t('common.refresh')}
-      >
-        {#snippet prefix()}
-          <Icon src={ArrowPath} size="16" mini />
-        {/snippet}
-      </Button>
-      <Button
-        onclick={markAllAsRead}
-        loading={markingAsRead}
-        disabled={markingAsRead || data.inbox.value.length == 0}
-        rounding="pill"
-        color="primary"
-      >
-        {#snippet prefix()}
-          <Icon src={Check} width={16} mini />
-        {/snippet}
-        {$t('routes.inbox.markAsRead')}
-      </Button>
-    </div>
-  </Header>
-</div>
-
 <div
-  class="flex flex-col list-none flex-1 h-full divide-y divide-slate-200 dark:divide-zinc-900 *:py-4"
+  class="mt-4 mb-2 z-30 mx-auto max-w-full flex gap-2 md:flex-row flex-col
+items-center px-2 w-max top-6 lg:top-22"
 >
-  {#if !data.inbox?.value || (data.inbox.value?.length ?? 0) == 0}
-    <Placeholder
-      icon={Inbox}
-      title={$t('routes.inbox.empty.title')}
-      description={$t('routes.inbox.empty.description')}
-      class="self-center justify-self-center my-auto"
-    />
-  {:else}
-    {#each data.inbox.value as item, index}
-      {#if item.creator.id != profile.current.user?.local_user_view.person.id}
-        <div
-          class="-mx-4 sm:-mx-6 px-4 sm:px-6
-          {item.read ? '' : 'bg-blue-50/50 dark:bg-blue-500/5'}"
-          in:fly|global={{
-            duration: 1000,
-            y: 16,
-            opacity: 0,
-            easing: expoOut,
-            delay: index * 50,
-          }}
-        >
-          <InboxItem bind:item={data.inbox.value[index]} />
-        </div>
-      {/if}
-    {/each}
-  {/if}
-  {#if !(data.page == 1 && (data?.inbox?.value.length ?? 0) == 0)}
-    <div
-      class="sticky z-30 mx-auto max-w-full self-end mt-auto bottom-22 lg:bottom-6"
-    >
-      <Tabs routes={[]} class="mx-auto">
-        <Pageination
-          hasMore={!(
-            !data.inbox || (data.inbox.value?.length ?? 0) < (data?.limit ?? 0)
-          )}
-          page={data.page}
-          href={page => `?page=${page}`}
-        />
-      </Tabs>
-    </div>
-  {/if}
+  <Tabs
+    routes={[
+      {
+        href: '?type=all',
+        name: $t('filter.location.all'),
+      },
+      {
+        href: '?type=replies',
+        name: $t('filter.inbox.replies'),
+      },
+      {
+        href: '?type=mentions',
+        name: $t('filter.inbox.mentions'),
+      },
+      {
+        href: '/inbox/messages',
+        name: $t('filter.inbox.messages'),
+      },
+    ]}
+    currentRoute={page.url.search}
+    buildUrl={(route, href) =>
+      href.includes('?')
+        ? '?' + addSearchParam(page.url.searchParams, href).toString()
+        : `${href}${page.url.search}`}
+    defaultRoute="?type=all"
+    class="overflow-auto"
+  />
+  <Tabs
+    routes={[
+      {
+        href: '?unreadOnly=false',
+        name: $t('filter.location.all'),
+      },
+      {
+        href: '?unreadOnly=true',
+        name: $t('filter.unread'),
+      },
+    ]}
+    currentRoute={page.url.search}
+    buildUrl={(route, href) =>
+      '?' + addSearchParam(page.url.searchParams, href).toString()}
+    defaultRoute="?unreadOnly=true"
+    class="overflow-auto"
+  />
 </div>
+<Header pageHeader class="lg:flex-row justify-between flex-col">
+  {$t('routes.inbox.title')}
+
+  <div class="flex items-center gap-2 tracking-normal">
+    <Button
+      onclick={() => goto(page.url, { invalidateAll: true })}
+      size="custom"
+      class="rounded-2xl h-9 aspect-square"
+      rounding="none"
+      aria-label={$t('common.refresh')}
+    >
+      {#snippet prefix()}
+        <Icon src={ArrowPath} size="16" mini />
+      {/snippet}
+    </Button>
+    <Button
+      onclick={markAllAsRead}
+      loading={markingAsRead}
+      disabled={markingAsRead || data.inbox.value.length == 0}
+      rounding="pill"
+      color="primary"
+    >
+      {#snippet prefix()}
+        <Icon src={Check} width={16} mini />
+      {/snippet}
+      {$t('routes.inbox.markAsRead')}
+    </Button>
+  </div>
+</Header>
+
+<div class="h-4 sm:h-6"></div>
+
+{#if !data.inbox?.value || (data.inbox.value?.length ?? 0) == 0}
+  <Placeholder
+    icon={Inbox}
+    title={$t('routes.inbox.empty.title')}
+    description={$t('routes.inbox.empty.description')}
+    class="self-center justify-self-center my-auto"
+  />
+{:else}
+  <CommonList items={data.inbox.value}>
+    {#snippet item(item)}
+      <InboxItem {item} />
+    {/snippet}
+  </CommonList>
+{/if}
+{#if !(data.page == 1 && (data?.inbox?.value.length ?? 0) == 0)}
+  <div
+    class="sticky z-30 mx-auto max-w-full self-end mt-auto bottom-22 lg:bottom-6"
+  >
+    <Tabs routes={[]} class="mx-auto">
+      <Pageination
+        hasMore={!(
+          !data.inbox || (data.inbox.value?.length ?? 0) < (data?.limit ?? 0)
+        )}
+        page={data.page}
+        href={page => `?page=${page}`}
+      />
+    </Tabs>
+  </div>
+{/if}
