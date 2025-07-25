@@ -104,7 +104,7 @@
   </div>
 {:else}
   <ul
-    class="flex flex-col divide-y-2 divide-slate-100 dark:divide-zinc-800 my-6 h-full"
+    class="flex flex-col divide-y divide-slate-100 dark:divide-zinc-925 my-6 h-full"
   >
     {#if data.communities.value.length == 0}
       <Placeholder
@@ -152,7 +152,7 @@
     {#if data.communities.value}
       {@const sliced = data.communities.value.slice(showTop ? 3 : 0)}
       <CommonList items={sliced}>
-        {#snippet item(community, index)}
+        {#snippet item(community)}
           <CommunityItem {community} showCounts={false} />
         {/snippet}
       </CommonList>

@@ -9,13 +9,12 @@
   let { items, item: itemSnippet }: Props = $props()
 </script>
 
-<ul class="divide-y">
+<ul class="divide-y-3 divide-slate-25 dark:divide-zinc-925">
   {#each items as item, index}
     <li
       class={[
         'py-3 px-4',
-        'hover:bg-slate-100 dark:hover:bg-zinc-900/25 transition-colors',
-        '@container border-slate-100 dark:border-zinc-900',
+        'hover:bg-slate-100 dark:hover:bg-zinc-900/25 transition-colors @container',
         'bg-slate-50 dark:bg-zinc-950 first:rounded-t-2xl last:rounded-b-2xl',
       ]}
     >
