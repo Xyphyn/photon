@@ -17,7 +17,7 @@ export async function load({ url, fetch, parent }) {
     sort: sort,
   })
 
-  const items = [...user.posts, ...user.comments]
+  const items = [...(type == 'all' || type == 'posts' ? user.posts : []), ...(type == 'all' || type == 'comments' ? user.comments : []),]
 
   if (sort == 'TopAll') {
     items.sort(
