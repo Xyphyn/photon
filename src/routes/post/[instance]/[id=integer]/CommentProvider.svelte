@@ -38,15 +38,13 @@
 
   let {
     post,
-    comments: passedComments,
+    comments,
     sort = $bindable(),
     onupdate,
     focus,
     virtualize = true,
   }: Props = $props()
   let commenting = $state(false)
-
-  let comments = $derived(passedComments)
 
   let tree = $state(buildCommentsTree(comments.comments))
   $effect(() => {
@@ -120,7 +118,7 @@
     <CommentForm
       postId={post.post_view.post.id}
       oncomment={comment => {
-        comments.comments.push(comment.comment_view)
+        comments.comments.unshift(comment.comment_view)
       }}
       onfocus={() => (commenting = true)}
       tools={commenting}

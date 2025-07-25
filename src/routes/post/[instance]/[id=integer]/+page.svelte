@@ -31,6 +31,7 @@
   import { expoOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'
   import CommentProvider from './CommentProvider.svelte'
+  import { ReactiveState } from '$lib/promise.svelte'
 
   let { data } = $props()
 
@@ -261,16 +262,17 @@
         </div>
       {/each}
     </div>
-  {:then comments}
+  {:then passedComments}
+    {@const comments = new ReactiveState(passedComments)}
     <CommentProvider
-      {comments}
+      comments={comments.value}
       post={data.post.value}
       focus={data.thread.value.focus}
       onupdate={reloadComments}
       bind:sort={data.commentSort.value}
       virtualize={!page.url.searchParams.get('noVirtualize')}
     />
-    {#if comments.comments.length == 0}
+    {#if comments.value.comments.length == 0}
       <Placeholder
         icon={ChatBubbleLeftRight}
         title={$t('routes.post.emptyComments.title')}
