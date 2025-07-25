@@ -116,6 +116,7 @@
 <script lang="ts">
   import SvelteMarkdown from 'svelte-markdown'
   import { setContext } from 'svelte'
+  import type { ClassValue } from 'svelte/elements'
 
   interface RendererOptions {
     autoloadImages: boolean
@@ -126,7 +127,7 @@
     inline?: boolean
     noStyle?: boolean
     style?: string
-    class?: string
+    class?: ClassValue
     rendererOptions?: RendererOptions
   }
 

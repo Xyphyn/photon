@@ -7,7 +7,6 @@
   import { errorMessage } from '$lib/lemmy/error'
   import type { Post } from 'lemmy-js-client'
   import { Button, toast } from 'mono-svelte'
-  import { onMount } from 'svelte'
   import { ArrowDownCircle, Icon } from 'svelte-hero-icons'
   import Comment from './Comment.svelte'
   import Comments from './Comments.svelte'
@@ -15,23 +14,10 @@
 
   interface Props {
     nodes: CommentNodeI[]
-    isParent: boolean
     post: Post
   }
 
-  let { nodes = $bindable(), isParent, post }: Props = $props()
-
-  let hydrated = $state(false)
-
-  onMount(() => {
-    hydrated = true
-    if (isParent && page.url.hash && browser) {
-      document.getElementById(page.url.hash)?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
-      })
-    }
-  })
+  let { nodes = $bindable(), post }: Props = $props()
 
   let childrenPage = 0
 
@@ -114,12 +100,12 @@
       bind:open={nodes[index].expanded}
     >
       {#if node.children?.length > 0}
-        <Comments {post} bind:nodes={nodes[index].children} isParent={false} />
+        <Comments {post} bind:nodes={nodes[index].children} />
       {/if}
     </Comment>
     {#if node.comment_view.counts.child_count > 0 && node.children.length == 0}
       <svelte:element
-        this={hydrated ? 'div' : 'a'}
+        this={browser ? 'div' : 'a'}
         class="w-full h-10 border-y-0! -mt-2 -ml-2.5"
         href="/comment/{page.params.instance}/{node.comment_view.comment.id}"
       >

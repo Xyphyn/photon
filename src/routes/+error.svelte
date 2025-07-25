@@ -18,8 +18,7 @@
   class="flex flex-col gap-4 my-auto h-full justify-center max-w-md w-full mx-auto"
 >
   <h1
-    class="text-primary-900 dark:text-primary-100 text-6xl font-black flex items-center flex-row gap-2
-    font-display border-b pb-4 border-slate-200 dark:border-zinc-800"
+    class="text-primary-900 dark:text-primary-100 text-6xl font-black flex items-center flex-row gap-2 border-b pb-4 border-slate-200 dark:border-zinc-800 font-mono"
   >
     {page.status}
   </h1>

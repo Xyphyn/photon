@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { browser } from '$app/environment'
+  import { page } from '$app/state'
   import { profile } from '$lib/auth.svelte'
   import CommentForm from '$lib/components/lemmy/comment/CommentForm.svelte'
   import CommentListVirtualizer from '$lib/components/lemmy/comment/CommentListVirtualizer.svelte'
@@ -13,6 +15,7 @@
     GetPostResponse,
   } from 'lemmy-js-client'
   import { Button, Option, Select } from 'mono-svelte'
+  import { onMount } from 'svelte'
   import {
     ArrowPath,
     ArrowTrendingDown,
@@ -48,6 +51,16 @@
   let tree = $state(buildCommentsTree(comments.comments))
   $effect(() => {
     tree = buildCommentsTree(comments.comments)
+  })
+
+  onMount(() => {
+    if (browser && page.url.hash)
+      // hack because virtual list needs to calc heights
+      setTimeout(() => {
+        document
+          .getElementById(page.url.hash.slice(1))
+          ?.scrollIntoView({ behavior: 'instant', block: 'center' })
+      }, 100)
   })
 </script>
 
@@ -154,7 +167,7 @@
 {:else}
   <div class="divide-y divide-slate-200 dark:divide-zinc-800">
     <div class="-mx-4 sm:-mx-6 px-4 sm:px-6">
-      <Comments isParent={true} nodes={tree} post={post.post_view.post} />
+      <Comments nodes={tree} post={post.post_view.post} />
     </div>
   </div>
 {/if}

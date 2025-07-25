@@ -16,6 +16,7 @@
   import ShieldIcon from '../moderation/ShieldIcon.svelte'
   import CommentForm from './CommentForm.svelte'
   import type { CommentNodeI } from './comments.svelte'
+  import { page } from '$app/state'
 
   interface Props {
     node: CommentNodeI
@@ -109,12 +110,7 @@
 {/if}
 
 <li
-  class={[
-    'py-3 relative',
-    node.comment_view.comment.distinguished &&
-      ' text-primary-900 dark:text-primary-100 bg-green-400/5 -mx-4 sm:-mx-6 px-4 sm:px-6',
-    clazz,
-  ]}
+  class={['py-3 relative', clazz]}
   id={node.comment_view.comment.id.toString()}
 >
   {#if meta}
@@ -176,12 +172,21 @@
   <div class={['expand max-w-full', open && 'open', contentClass]}>
     <div id="comment-content">
       <div
-        class="flex flex-col whitespace-pre-wrap
-      max-w-full gap-1 mt-1 relative w-full"
+        class={[
+          'flex flex-col whitespace-pre-wrap max-w-full gap-1 mt-1 relative w-full',
+        ]}
       >
         <Markdown
           source={node.comment_view.comment.content}
-          class="text-[15px] text-slate-800 dark:text-zinc-200 leading-[1.3]"
+          class={[
+            'text-[15px] text-slate-800 dark:text-zinc-200 leading-[1.3]',
+
+            node.comment_view.comment.distinguished
+              ? 'bg-green-400/10 p-1 rounded-lg w-max font-medium'
+              : page.url.hash.slice(1) ==
+                  node.comment_view.comment.id.toString() &&
+                'bg-slate-100 dark:bg-zinc-800 p-1 rounded-lg w-max font-medium',
+          ]}
         />
         {#if actions}
           <CommentActions

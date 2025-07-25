@@ -50,7 +50,6 @@
       {#snippet item(index)}
         <div class="-mx-4 sm:-mx-6 px-4 sm:px-6">
           <Comments
-            isParent={true}
             bind:nodes={() => [nodes[index]], v => (nodes[index] = v[0])}
             {post}
           />
