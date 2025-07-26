@@ -151,7 +151,7 @@ items-center px-2 w-max top-6 lg:top-22"
     class="self-center justify-self-center my-auto"
   />
 {:else}
-  <CommonList items={data.inbox.value}>
+  <CommonList items={data.inbox.value} size="md">
     {#snippet item(item)}
       <InboxItem {item} />
     {/snippet}

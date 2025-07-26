@@ -71,7 +71,7 @@
     description="Save posts or comments, and they'll be here to refer to them later."
   />
 {:else}
-  <CommonList items={data.data}>
+  <CommonList items={data.data} size="lg">
     {#snippet item(item)}
       {#if isComment(item)}
         <CommentItem comment={item} />

@@ -133,7 +133,7 @@
 </div>
 <ProgressBar progress={batch.progress} />
 {#if data.items?.value && data.items?.value.length > 0}
-  <CommonList items={data.items?.value}>
+  <CommonList items={data.items?.value} size="lg">
     {#snippet item(item)}
       <Material
         rounding={item.length == 1 ? 'none' : '2xl'}

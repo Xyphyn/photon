@@ -6,10 +6,12 @@
   import CommunityItem from '$lib/components/lemmy/community/CommunityItem.svelte'
   import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
   import Post from '$lib/components/lemmy/post/Post.svelte'
+  import PostItem from '$lib/components/lemmy/post/PostItem.svelte'
   import UserItem from '$lib/components/lemmy/user/UserItem.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import Skeleton from '$lib/components/ui/generic/Skeleton.svelte'
+  import CommonList from '$lib/components/ui/layout/CommonList.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { t } from '$lib/i18n/translations.js'
   import {
@@ -30,8 +32,6 @@
   import { expoOut } from 'svelte/easing'
   import { fly, slide } from 'svelte/transition'
   import SearchBar from './SearchBar.svelte'
-  import CommonList from '$lib/components/ui/layout/CommonList.svelte'
-  import PostItem from '$lib/components/lemmy/post/PostItem.svelte'
 
   let { data } = $props()
 
@@ -165,7 +165,7 @@
       </div>
     {/if}
   {/await}
-  <CommonList items={data.results.value}>
+  <CommonList items={data.results.value} animate size="lg">
     {#snippet item(result)}
       {#if isPostView(result)}
         <PostItem post={result} />

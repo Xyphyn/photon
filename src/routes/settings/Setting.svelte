@@ -79,8 +79,8 @@
       <Icon
         src={icon}
         size="32"
-        class="bg-red-200/20 dark:bg-red-800/20 p-1.5 rounded-lg color
-          text-red-500 dark:text-red-400 float-left mr-2 clear-both"
+        class="bg-red-200/20 dark:bg-red-600/20 p-1.5 rounded-lg color
+          text-red-500 dark:text-red-300 float-left mr-2 clear-both"
         style="grid-area: icon;"
       />
     {/if}
