@@ -40,7 +40,7 @@
 
 <div
   class={[
-    'h-full flex items-center overflow-hidden rounded-full hover:bg-transparent font-medium',
+    'h-full flex items-center overflow-hidden rounded-full hover:bg-transparent font-medium hover:dark:bg-transparent',
     buttonColor.ghost,
   ]}
 >
@@ -67,7 +67,7 @@
     </span>
   </button>
   <div
-    class="border-l h-4 w-0 p-0! border-slate-200 dark:border-zinc-800"
+    class="border-l h-full w-0 p-0! border-slate-200 dark:border-zinc-800"
   ></div>
   <button
     onclick={() => castVote(vote == -1 ? 0 : -1)}

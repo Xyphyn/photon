@@ -53,7 +53,7 @@
     size="sm"
     color="tertiary"
     rounding="pill"
-    class="text-slate-700 dark:text-zinc-300"
+    class="text-slate-600 dark:text-zinc-400"
     onclick={() => (replying = !replying)}
     disabled={comment.post.locked || disabled}
   >
@@ -70,7 +70,7 @@
         color="tertiary"
         rounding="pill"
         size="square-sm"
-        class="text-slate-700 dark:text-zinc-300"
+        class="text-slate-600 dark:text-zinc-400"
       >
         {#snippet prefix()}
           <Icon src={EllipsisHorizontal} width={16} height={16} mini />
