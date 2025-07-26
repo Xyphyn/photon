@@ -36,7 +36,7 @@
   }: Props = $props()
 </script>
 
-<div
+<li
   class="flex flex-col w-full justify-between gap-2 max-w-full setting @container/setting"
 >
   {#if Object.values(supportedPlatforms).some(v => v == false) || beta}
@@ -94,4 +94,4 @@
       {/if}
     </Switch>
   </div>
-</div>
+</li>

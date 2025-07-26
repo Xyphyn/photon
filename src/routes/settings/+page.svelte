@@ -252,7 +252,7 @@
         </Button>
       </Setting>
     {/if}
-    <div class="flex flex-col gap-2">
+    <li class="flex flex-col gap-2">
       <Setting icon={Language}>
         {#snippet title()}
           {$t('settings.app.lang.title')}
@@ -289,7 +289,7 @@
           title={$t('settings.app.lang.useRtl.title')}
         ></ToggleSetting>
       {/if}
-    </div>
+    </li>
     <Setting icon={ViewColumns}>
       {#snippet title()}
         <span>{$t('settings.app.view.title')}</span>

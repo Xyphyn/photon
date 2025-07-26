@@ -40,7 +40,7 @@
   }: Props = $props()
 </script>
 
-<div
+<li
   class={[
     'flex flex-col w-full justify-between gap-2 max-w-full @container/setting setting',
     mainClass,
@@ -110,7 +110,7 @@
       </div>
     {/if}
   </div>
-</div>
+</li>
 
 <style>
   .setting-grid {
