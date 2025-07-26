@@ -5,6 +5,7 @@
   import UserAutocomplete from '$lib/components/lemmy/user/UserAutocomplete.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import Skeleton from '$lib/components/ui/generic/Skeleton.svelte'
+  import CommonList from '$lib/components/ui/layout/CommonList.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
@@ -120,23 +121,21 @@
   {@const conversations = res.private_messages}
   {@const previews = conversationPreviews(conversations)}
 
-  <ul
-    class="flex flex-col divide-y divide-slate-200 dark:divide-zinc-800 w-full mt-6 h-full"
-  >
-    {#if previews.length == 0}
-      <Placeholder
-        title={$t('routes.inbox.messages.empty.title')}
-        icon={Inbox}
-        class="my-auto"
-      >
-        {@render startChat?.()}
-      </Placeholder>
-    {/if}
-    {#each previews as preview, index (preview)}
+  {#if previews.length == 0}
+    <Placeholder
+      title={$t('routes.inbox.messages.empty.title')}
+      icon={Inbox}
+      class="my-auto"
+    >
+      {@render startChat?.()}
+    </Placeholder>
+  {/if}
+  <div class="h-3 sm:h-6"></div>
+  <CommonList items={previews}>
+    {#snippet item(preview, index)}
       <a
         href="/inbox/messages/{preview.user.id}"
-        class="flex flex-row gap-2 py-3 -mx-3 sm:-mx-6 px-3 sm:px-6 min-w-0
-        hover:bg-slate-100 dark:hover:bg-zinc-900 transition-colors"
+        class="flex flex-row gap-2"
         in:fly|global={{
           duration: 1000,
           easing: expoOut,
@@ -165,8 +164,8 @@
           </div>
         </div>
       </a>
-    {/each}
-  </ul>
+    {/snippet}
+  </CommonList>
 
   {#if res.private_messages.length == 50 || data.page != 1}
     <div class="mt-auto pb-4">

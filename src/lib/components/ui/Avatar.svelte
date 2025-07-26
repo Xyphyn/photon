@@ -83,6 +83,34 @@
   >
     {@html createAvatar(initials, {
       seed: alt,
+      backgroundType: ['gradientLinear'],
+      fontWeight: 800,
+      randomizeIds: true,
+      chars: 1,
+      scale: 125,
+      textColor: ['fff', '000'],
+      backgroundColor: [
+        '7B68EE',
+        'FF6347',
+        '20B2AA',
+        'DDA0DD',
+        'F0E68C',
+        'FF1493',
+        '4682B4',
+        '32CD32',
+        'FFB6C1',
+        '8B4513',
+        '00CED1',
+        '9370DB',
+        'FFA500',
+        '2E8B57',
+        'DC143C',
+        'BA55D3',
+        '708090',
+        'ADFF2F',
+        'CD853F',
+        '48D1CC',
+      ],
     }).toString()}
   </div>
 {/if}

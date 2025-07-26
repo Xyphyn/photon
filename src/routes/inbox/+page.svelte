@@ -141,7 +141,7 @@ items-center px-2 w-max top-6 lg:top-22"
   </div>
 </Header>
 
-<div class="h-4 sm:h-6"></div>
+<div class="h-3 sm:h-6"></div>
 
 {#if !data.inbox?.value || (data.inbox.value?.length ?? 0) == 0}
   <Placeholder

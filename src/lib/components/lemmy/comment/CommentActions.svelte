@@ -20,7 +20,7 @@
     Flag,
     Icon,
     PencilSquare,
-    Square2Stack,
+    Share,
     Trash,
   } from 'svelte-hero-icons'
 
@@ -87,14 +87,18 @@
         else navigator.clipboard.writeText(comment.comment.ap_id)
       }}
     >
-      <Icon src={Square2Stack} mini size="16" />
-      <div>{$t('post.actions.more.share')}</div>
+      {#snippet prefix()}
+        <Icon src={Share} mini size="16" />
+      {/snippet}
+      {$t('post.actions.more.share')}
     </MenuButton>
     {#if profile.current?.jwt}
       {#if comment.creator.id == profile.current.user?.local_user_view.person.id}
         <MenuButton onclick={() => onedit?.(comment)}>
-          <Icon src={PencilSquare} mini size="16" />
-          <span>{$t('post.actions.more.edit')}</span>
+          {#snippet prefix()}
+            <Icon src={PencilSquare} mini size="16" />
+          {/snippet}
+          {$t('post.actions.more.edit')}
         </MenuButton>
       {/if}
       <MenuButton
@@ -103,10 +107,10 @@
             comment.saved = await save(comment, !comment.saved)
         }}
       >
-        <Icon src={comment.saved ? BookmarkSlash : Bookmark} mini size="16" />
-        <span>
-          {comment.saved ? $t('post.actions.unsave') : $t('post.actions.save')}
-        </span>
+        {#snippet prefix()}
+          <Icon src={comment.saved ? BookmarkSlash : Bookmark} mini size="16" />
+        {/snippet}
+        {comment.saved ? $t('post.actions.unsave') : $t('post.actions.save')}
       </MenuButton>
       {#if profile.current?.user && profile.current.jwt && profile.current.user.local_user_view.person.id == comment.creator.id}
         <MenuButton
@@ -119,18 +123,20 @@
               )
           }}
         >
-          <Icon src={Trash} mini size="16" />
-          <span>
-            {comment.comment.deleted
-              ? $t('post.actions.more.restore')
-              : $t('post.actions.more.delete')}
-          </span>
+          {#snippet prefix()}
+            <Icon src={Trash} mini size="16" />
+          {/snippet}
+          {comment.comment.deleted
+            ? $t('post.actions.more.restore')
+            : $t('post.actions.more.delete')}
         </MenuButton>
       {/if}
       {#if profile.current.jwt && profile.current.user?.local_user_view.person.id != comment.creator.id}
         <MenuButton onclick={() => report(comment)} color="danger-subtle">
-          <Icon src={Flag} mini size="16" />
-          <span>{$t('moderation.report')}</span>
+          {#snippet prefix()}
+            <Icon src={Flag} mini size="16" />
+          {/snippet}
+          {$t('moderation.report')}
         </MenuButton>
       {/if}
     {/if}

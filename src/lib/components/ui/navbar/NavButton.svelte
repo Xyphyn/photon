@@ -48,7 +48,7 @@
   rounding="none"
   {href}
   title={label}
-  style="transition-property: background-color, filter;"
+  style="transition-property: background-color, filter, transform, scale;"
   aria-selected={isSelected}
 >
   {#snippet prefix()}

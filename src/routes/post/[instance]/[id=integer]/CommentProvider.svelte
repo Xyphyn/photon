@@ -52,7 +52,7 @@
   })
 
   onMount(() => {
-    if (browser && page.url.hash)
+    if (browser && !isNaN(Number(page.url.hash)))
       // hack because virtual list needs to calc heights
       setTimeout(() => {
         document
