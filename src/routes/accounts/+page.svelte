@@ -1,12 +1,13 @@
 <script lang="ts">
   import { profile, type ProfileInfo } from '$lib/auth.svelte.js'
+  import CommonList from '$lib/components/ui/layout/CommonList.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import DebugObject from '$lib/components/util/debug/DebugObject.svelte'
   import { t } from '$lib/i18n/translations'
   import { LINKED_INSTANCE_URL } from '$lib/instance.svelte.js'
   import ProfileAvatar from '$lib/lemmy/ProfileAvatar.svelte'
   import { settings } from '$lib/settings.svelte.js'
-  import { Badge, Button, Material, Menu, MenuButton, Modal } from 'mono-svelte'
+  import { Badge, Button, Menu, MenuButton, Modal } from 'mono-svelte'
   import {
     ArrowLeftOnRectangle,
     ArrowRightOnRectangle,
@@ -133,116 +134,120 @@
   {/snippet}
 </Header>
 <form class="accounts-grid mt-4 sm:mt-6 gap-4">
-  {#each profile.meta.profiles as p, index (p.id)}
-    <label>
-      <input
-        type="radio"
-        id={p.id.toString()}
-        name="profile"
-        value={p.id}
-        class="hidden peer"
-        bind:group={radioSelected}
-      />
-      <Material
-        rounding="2xl"
-        color="uniform"
-        padding="none"
-        class={[
-          'flex flex-row items-center px-3 py-3 gap-2 transition-all duration-75 cursor-pointer relative',
-          'peer-checked:ring-2',
-          switching == p.id && 'ring-slate-400 dark:ring-zinc-600',
-        ]}
-      >
-        <ProfileAvatar
-          profile={p}
-          {index}
-          selected={profile?.current.id == p.id}
-          size={40}
+  <CommonList items={profile.meta.profiles}>
+    {#snippet item(p, index)}
+      <label class="relative">
+        <input
+          type="radio"
+          id={p.id.toString()}
+          name="profile"
+          value={p.id}
+          class="hidden peer"
+          bind:group={radioSelected}
         />
-        <div class="flex flex-col overflow-hidden">
-          <span class="break-words font-medium text-base">
-            {p.username}
-            {#if !p.jwt}
-              <Badge class="inline-grid w-6 h-6 p-0! place-items-center">
-                <Icon src={QuestionMarkCircle} size="16" micro />
-              </Badge>
-            {/if}
-          </span>
-          <span class="text-sm text-slate-600 dark:text-zinc-400">
-            {p.instance}
-          </span>
-        </div>
-        <Menu placement="bottom-end">
-          {#snippet target()}
-            <Button
-              size="custom"
-              class="absolute top-0 right-0 w-6 h-6 m-1"
-              color="tertiary"
-              aria-label={$t('post.actions.more.label')}
-            >
-              {#snippet prefix()}
-                <Icon src={EllipsisHorizontal} mini size="16" />
-              {/snippet}
-            </Button>
-          {/snippet}
-          <!-- svelte-ignore a11y_click_events_have_key_events -->
-          <!-- svelte-ignore a11y_no_static_element_interactions -->
+        <div
+          class={[
+            'flex flex-row items-center gap-2 transition-all duration-75',
+            'cursor-pointer relative ring-transparent',
+            switching == p.id
+              ? 'ring-slate-500 dark:ring-zinc-500'
+              : 'peer-checked:ring-primary-900 peer-checked:dark:ring-primary-100',
+          ]}
+        >
           <div
-            class="px-4 py-2 flex items-center gap-2"
-            onclick={e => e.stopPropagation()}
-          >
-            <Button
-              size="square-md"
-              color="secondary"
-              title={$t('account.moveUp')}
-              onclick={() => profile.move(p.id, true)}
-            >
-              {#snippet prefix()}
-                <Icon src={ChevronUp} size="16" mini />
-              {/snippet}
-            </Button>
-            <Button
-              size="square-md"
-              color="secondary"
-              title={$t('account.moveDown')}
-              onclick={() => profile.move(p.id, false)}
-            >
-              {#snippet prefix()}
-                <Icon src={ChevronDown} size="16" mini />
-              {/snippet}
-            </Button>
+            class="absolute -inset-2 -inset-x-3 sm:-inset-y-3 sm:-inset-x-4 group-first/li:rounded-t-2xl group-last/li:rounded-b-2xl rounded-md ring-2 ring-inherit"
+          ></div>
+          <ProfileAvatar
+            profile={p}
+            {index}
+            selected={profile?.current.id == p.id}
+            size={32}
+          />
+          <div class="flex flex-col overflow-hidden">
+            <span class="break-words font-medium text-base">
+              {p.username}
+              {#if !p.jwt}
+                <Badge class="inline-grid w-6 h-6 p-0! place-items-center">
+                  <Icon src={QuestionMarkCircle} size="16" micro />
+                </Badge>
+              {/if}
+            </span>
+            <span class="text-sm text-slate-600 dark:text-zinc-400">
+              {p.instance}
+            </span>
           </div>
-          {#if settings.debugInfo}
-            <MenuButton
-              onclick={() => {
-                debugProfile = p
-                debugging = !debugging
-              }}
+          <Menu placement="bottom-end">
+            {#snippet target()}
+              <Button
+                size="square-md"
+                color="tertiary"
+                class="justify-self-end ml-auto z-50"
+                aria-label={$t('post.actions.more.label')}
+              >
+                {#snippet prefix()}
+                  <Icon src={EllipsisHorizontal} mini size="16" />
+                {/snippet}
+              </Button>
+            {/snippet}
+            <!-- svelte-ignore a11y_click_events_have_key_events -->
+            <!-- svelte-ignore a11y_no_static_element_interactions -->
+            <div
+              class="px-4 py-2 flex items-center gap-2"
+              onclick={e => e.stopPropagation()}
             >
-              {#snippet prefix()}
-                <Icon src={BugAnt} size="16" mini />
-              {/snippet}
-              {$t('common.debug')}
-            </MenuButton>
-          {/if}
-          {#if !LINKED_INSTANCE_URL || p.user}
-            <MenuButton
-              onclick={() => {
-                removing.account = p
-                removing.shown = !removing.shown
-              }}
-              color="danger-subtle"
-            >
-              {#snippet prefix()}
-                <Icon src={ArrowRightOnRectangle} size="16" mini />
-              {/snippet}
-              {$t('account.logout')}
-            </MenuButton>
-          {/if}
-        </Menu>
-      </Material>
-    </label>
-  {/each}
+              <Button
+                size="square-md"
+                color="secondary"
+                title={$t('account.moveUp')}
+                onclick={() => profile.move(p.id, true)}
+              >
+                {#snippet prefix()}
+                  <Icon src={ChevronUp} size="16" mini />
+                {/snippet}
+              </Button>
+              <Button
+                size="square-md"
+                color="secondary"
+                title={$t('account.moveDown')}
+                onclick={() => profile.move(p.id, false)}
+              >
+                {#snippet prefix()}
+                  <Icon src={ChevronDown} size="16" mini />
+                {/snippet}
+              </Button>
+            </div>
+            {#if settings.debugInfo}
+              <MenuButton
+                onclick={() => {
+                  debugProfile = p
+                  debugging = !debugging
+                }}
+              >
+                {#snippet prefix()}
+                  <Icon src={BugAnt} size="16" mini />
+                {/snippet}
+                {$t('common.debug')}
+              </MenuButton>
+            {/if}
+            {#if !LINKED_INSTANCE_URL || p.user}
+              <MenuButton
+                onclick={() => {
+                  removing.account = p
+                  removing.shown = !removing.shown
+                }}
+                color="danger-subtle"
+              >
+                {#snippet prefix()}
+                  <Icon src={ArrowRightOnRectangle} size="16" mini />
+                {/snippet}
+                {$t('account.logout')}
+              </MenuButton>
+            {/if}
+          </Menu>
+        </div>
+      </label>
+    {/snippet}
+  </CommonList>
 </form>
 
 <style>
