@@ -185,7 +185,7 @@
               ? 'bg-green-400/10 p-1 rounded-lg w-max font-medium'
               : page.url.hash.slice(1) ==
                   node.comment_view.comment.id.toString() &&
-                'bg-slate-100 dark:bg-zinc-800 p-1 rounded-lg w-max font-medium',
+                'bg-slate-100 dark:bg-zinc-800 p-1 rounded-lg max-w-max font-medium',
           ]}
         />
         {#if actions}

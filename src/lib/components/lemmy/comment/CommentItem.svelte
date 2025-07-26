@@ -52,7 +52,7 @@
           community={community ? comment.community : undefined}
           title={comment.post.name}
           id={comment.post.id}
-          titleClass="text-sm"
+          titleClass="text-sm text-slate-500 dark:text-zinc-400"
         />
       </div>
       <Button

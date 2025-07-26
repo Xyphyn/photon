@@ -164,7 +164,7 @@
   />
 {:else}
   <div class="divide-y divide-slate-200 dark:divide-zinc-800">
-    <div class="-mx-4 sm:-mx-6 px-4 sm:px-6">
+    <div class="-mx-3 sm:-mx-6 px-3 sm:px-6">
       <Comments nodes={tree} post={post.post_view.post} />
     </div>
   </div>

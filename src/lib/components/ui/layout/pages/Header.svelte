@@ -28,8 +28,8 @@
 <div
   class={[
     pageHeader &&
-      `w-[calc(100%+2rem)] sm:w-[calc(100%+3rem)]
-  bg-slate-50 dark:bg-zinc-950 -m-4 sm:-m-6 mb-0 sm:mb-0 sm:p-6 p-4
+      `w-[calc(100%+1.5rem)] sm:w-[calc(100%+3rem)]
+  bg-slate-50 dark:bg-zinc-950 -m-4 sm:-m-6 mb-0 sm:mb-0 sm:p-6 p-3
    border-b border-slate-200 dark:border-zinc-800 margin`,
   ]}
   {style}

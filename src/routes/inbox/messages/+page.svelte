@@ -135,7 +135,7 @@
     {#each previews as preview, index (preview)}
       <a
         href="/inbox/messages/{preview.user.id}"
-        class="flex flex-row gap-2 py-3 -mx-4 sm:-mx-6 px-4 sm:px-6 min-w-0
+        class="flex flex-row gap-2 py-3 -mx-3 sm:-mx-6 px-3 sm:px-6 min-w-0
         hover:bg-slate-100 dark:hover:bg-zinc-900 transition-colors"
         in:fly|global={{
           duration: 1000,

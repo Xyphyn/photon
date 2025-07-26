@@ -42,8 +42,8 @@
         <img
           src={optimizeImageURL(thumbnail_url, 64)}
           alt=""
-          class="-z-10 absolute w-full object-cover h-full opacity-10 brightness-150
-        dark:brightness-90 dark:opacity-20 blur-2xl -inset-px"
+          class="-z-10 absolute w-full object-cover h-full opacity-5 brightness-150
+        dark:brightness-70 dark:opacity-20 blur-2xl -inset-px"
         />
       {/if}
       <div class="flex flex-col gap-2">

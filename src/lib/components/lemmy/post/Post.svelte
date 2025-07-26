@@ -164,8 +164,8 @@
     class="absolute overflow-hidden inset-0
     sm:rounded-xl bg-slate-50 dark:bg-zinc-900
     opacity-0 transition-all -z-50 no-list-margin
-    group-hover:inset-y-0.5 group-hover:-inset-x-4 sm:group-hover:-inset-x-5 group-hover:opacity-100
-    group-focus:inset-y-0.5 group-focus:-inset-x-4 sm:group-focus:-inset-x-5 group-focus:opacity-100
+    group-hover:inset-y-0.5 group-hover:-inset-x-3 sm:group-hover:-inset-x-5 group-hover:opacity-100
+    group-focus:inset-y-0.5 group-focus:-inset-x-3 sm:group-focus:-inset-x-5 group-focus:opacity-100
     duration-150"
   ></div>
 </div>

@@ -48,7 +48,7 @@
       {initialOffset}
     >
       {#snippet item(index)}
-        <div class="-mx-4 sm:-mx-6 px-4 sm:px-6">
+        <div class="-mx-3 sm:-mx-6 px-3 sm:px-6">
           <Comments
             bind:nodes={() => [nodes[index]], v => (nodes[index] = v[0])}
             {post}
