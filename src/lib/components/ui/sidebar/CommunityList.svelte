@@ -20,7 +20,7 @@
 
 {#each items.toSorted( (a, b) => a.title.localeCompare(b.title), ) as follow (follow.id)}
   <div
-    class="inline-flex w-full items-center pl-3 hover:bg-slate-100 dark:hover:bg-zinc-900
+    class="inline-flex w-full items-center pl-3
     transition-colors rounded-lg"
     animate:flip={{ duration: 500, easing: expoOut }}
   >

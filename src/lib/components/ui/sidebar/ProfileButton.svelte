@@ -18,7 +18,6 @@
 </script>
 
 <SidebarButton
-  color="tertiary"
   alignment="left"
   loading={switching}
   rounding="lg"
@@ -37,9 +36,7 @@
 
     switching = false
   }}
-  class="w-full font-normal {profile.current?.id == prof.id
-    ? 'bg-slate-100! dark:bg-zinc-900!'
-    : ''}"
+  class="w-full font-normal"
 >
   {#snippet customIcon()}
     <ProfileAvatar
