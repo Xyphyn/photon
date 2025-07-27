@@ -170,10 +170,7 @@
                   }))
 
                 const res = object
-                  ? await subscribe(
-                      object.community?.community.id,
-                      'NotSubscribed',
-                    )
+                  ? await subscribe(object.community?.community.id)
                   : await subscribe()
 
                 if (res) {
