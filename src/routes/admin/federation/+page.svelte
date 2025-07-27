@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { preventDefault, run } from 'svelte/legacy'
+  import { preventDefault } from 'svelte/legacy'
 
   import { profile } from '$lib/auth.svelte.js'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
@@ -45,19 +45,17 @@
     await trycatch(async () => {
       if (
         !profile.current?.jwt ||
-        !data.federated_instances?.federated_instances?.blocked ||
-        !data.federated_instances?.federated_instances?.allowed
+        !data.instances.value?.blocked ||
+        !data.instances.value?.allowed
       )
         return
 
       if (blocked) blockInstance.loading = true
       else allowInstance.loading = true
 
-      const blockedInstances =
-        data.federated_instances.federated_instances.blocked.map(i => i.domain)
+      const blockedInstances = data.instances.value.blocked.map(i => i.domain)
 
-      const allowedInstances =
-        data.federated_instances.federated_instances.allowed.map(i => i.domain)
+      const allowedInstances = data.instances.value.allowed.map(i => i.domain)
 
       if (blocked) blockedInstances.push(instance)
       if (!blocked) allowedInstances.push(instance)
@@ -69,7 +67,8 @@
 
       const instances = await getClient().getFederatedInstances()
 
-      data.federated_instances = instances
+      // @ts-expect-error stupid typing thing that i shouldnt have done
+      data.instances.value = instances.federated_instances
 
       blockInstance.instance = ''
     })
@@ -80,18 +79,12 @@
 
   const save = async () => {
     const res = await trycatch(async () => {
-      if (
-        !profile.current?.jwt ||
-        !data.federated_instances?.federated_instances?.blocked
-      )
-        return
+      if (!profile.current?.jwt || !data.instances.value?.blocked) return
 
       saving = true
 
-      const blockedInstances =
-        data.federated_instances.federated_instances.blocked.map(i => i.domain)
-      const allowedInstances =
-        data.federated_instances.federated_instances.allowed.map(i => i.domain)
+      const blockedInstances = data.instances.value.blocked.map(i => i.domain)
+      const allowedInstances = data.instances.value.allowed?.map(i => i.domain)
 
       return await getClient().editSite({
         allowed_instances: allowedInstances,
@@ -116,8 +109,7 @@
     const reader = new FileReader()
 
     reader.onload = e => {
-      if (!data.federated_instances?.federated_instances?.blocked)
-        throw new Error('Missing instance')
+      if (!data.instances.value?.blocked) throw new Error('Missing instance')
       const content = e.target?.result
       if (!content) toast({ content: $t('toast.failCSV'), type: 'warning' })
 
@@ -141,7 +133,7 @@
           instances.push(item)
         }
 
-        data.federated_instances.federated_instances.blocked = instances
+        data.instances.value.blocked = instances
       } catch {
         toast({ content: $t('toast.failCSV'), type: 'error' })
       }
@@ -153,7 +145,7 @@
     reader.readAsText(files[0])
   }
 
-  run(() => {
+  $effect(() => {
     if (csv) parseCsv(csv)
   })
 </script>
@@ -168,7 +160,7 @@
     {$t('common.save')}
   </Button>
 </Header>
-{#if data.site && data.federated_instances?.federated_instances?.blocked}
+{#if data.site && data.instances.value?.blocked}
   <FileInput preview={false} bind:files={csv}>
     {#snippet button()}
       <Button class="w-max">
@@ -202,14 +194,14 @@
           {$t('routes.admin.federation.block')}
         </Button>
       </form>
-      <Material class="h-full overflow-auto" color="distinct">
+      <Material class="h-full overflow-auto" color="uniform" rounding="2xl">
         <ul
           class="*:py-3 dark:divide-zinc-800! {allowInstance.instance != ''
             ? 'opacity-50'
             : ''}"
         >
-          {#if data.federated_instances.federated_instances.blocked.length > 0}
-            {#each data.federated_instances.federated_instances.blocked.sort( (b, a) => b.domain.localeCompare(a.domain), ) as instance (instance.id)}
+          {#if data.instances.value.blocked.length > 0}
+            {#each data.instances.value.blocked.toSorted( (b, a) => b.domain.localeCompare(a.domain), ) as instance (instance.id)}
               <div
                 animate:flip={{ duration: 300, easing: expoOut }}
                 class="flex justify-between items-center first:pt-0 last:pb-0"
@@ -227,11 +219,10 @@
                 <Button
                   size="square-md"
                   onclick={() => {
-                    if (!data.federated_instances?.federated_instances?.blocked)
-                      return
+                    if (!data.instances.value?.blocked) return
 
-                    data.federated_instances.federated_instances.blocked =
-                      data.federated_instances?.federated_instances?.blocked.filter(
+                    data.instances.value.blocked =
+                      data.instances.value?.blocked.filter(
                         i => i.id != instance.id,
                       )
                   }}
@@ -255,7 +246,7 @@
     <div class="md:flex-1 w-full max-h-168 flex flex-col gap-2">
       <h2 class="font-bold text-lg flex items-center space-x-1">
         <span>{$t('routes.admin.federation.allowed')}</span>
-        {#if allowInstance.instance || !(data.federated_instances.federated_instances.allowed?.length == 0)}
+        {#if allowInstance.instance || !(data.instances.value.allowed?.length == 0)}
           <Popover openOnHover placement="bottom-end">
             {#snippet target()}
               <Icon
@@ -290,10 +281,10 @@
           {$t('routes.admin.federation.allow')}
         </Button>
       </form>
-      <Material class="h-full overflow-auto" color="distinct">
+      <Material class="h-full overflow-auto" color="uniform" rounding="2xl">
         <ul class="*:py-3 dark:divide-zinc-800!">
-          {#if data.federated_instances.federated_instances.allowed.length > 0}
-            {#each data.federated_instances.federated_instances.allowed.sort( (b, a) => b.domain.localeCompare(a.domain), ) as instance (instance.id)}
+          {#if data.instances.value.allowed && (data?.instances?.value?.allowed?.length ?? 0) > 0}
+            {#each data.instances.value.allowed.toSorted( (b, a) => b.domain.localeCompare(a.domain), ) as instance (instance.id)}
               <div
                 animate:flip={{ duration: 300, easing: expoOut }}
                 class="flex justify-between items-center first:pt-0 last:pb-0"
@@ -311,11 +302,10 @@
                 <Button
                   size="square-md"
                   onclick={() => {
-                    if (!data.federated_instances?.federated_instances?.allowed)
-                      return
+                    if (!data.instances.value?.allowed) return
 
-                    data.federated_instances.federated_instances.allowed =
-                      data.federated_instances?.federated_instances?.allowed.filter(
+                    data.instances.value.allowed =
+                      data.instances.value?.allowed.filter(
                         i => i.id != instance.id,
                       )
                   }}

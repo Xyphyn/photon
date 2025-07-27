@@ -19,7 +19,7 @@
   let {
     accept = '*',
     id = generateID(),
-    files = $bindable(null),
+    files = $bindable(),
     multiple = false,
     preview = true,
     label = undefined,
