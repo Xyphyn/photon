@@ -26,6 +26,7 @@
     selected = $bindable(),
     navigate = true,
     showLabel = true,
+    children,
     ...rest
   }: Props = $props()
 </script>
@@ -63,4 +64,5 @@
   >
     {$t('filter.location.moderator')}
   </Option>
+  {@render children?.()}
 </Select>

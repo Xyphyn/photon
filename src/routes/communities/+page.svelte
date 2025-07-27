@@ -1,5 +1,6 @@
 <script lang="ts">
   import { navigating, page } from '$app/state'
+  import { profile } from '$lib/auth.svelte.js'
   import CommunityItem from '$lib/components/lemmy/community/CommunityItem.svelte'
   import Location from '$lib/components/lemmy/dropdowns/Location.svelte'
   import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
@@ -11,8 +12,14 @@
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import { t } from '$lib/i18n/translations.js'
-  import { Button, Material, TextInput } from 'mono-svelte'
-  import { Icon, MagnifyingGlass, QuestionMarkCircle } from 'svelte-hero-icons'
+  import { LINKED_INSTANCE_URL } from '$lib/instance.svelte'
+  import { Button, Material, Option, TextInput } from 'mono-svelte'
+  import {
+    Icon,
+    MagnifyingGlass,
+    QuestionMarkCircle,
+    ServerStack,
+  } from 'svelte-hero-icons'
   import { expoOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'
 
@@ -77,7 +84,24 @@
       name="type"
       selected={data.type}
       onchange={() => form?.requestSubmit()}
-    />
+    >
+      {#if !LINKED_INSTANCE_URL}
+        {@const instanceSet = new Set(
+          profile.meta.profiles.map(i => i.instance),
+        )}
+        {#if instanceSet.size > 1}
+          <Option disabled data-label="true">—</Option>
+          {#each instanceSet as instance}
+            <Option
+              icon={ServerStack}
+              value={encodeURIComponent(`instance-${instance}`)}
+            >
+              {instance}
+            </Option>
+          {/each}
+        {/if}
+      {/if}
+    </Location>
     <Sort
       name="sort"
       selected={data.sort}

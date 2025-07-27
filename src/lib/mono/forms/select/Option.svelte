@@ -14,7 +14,8 @@
     value: optionElement?.value ?? '',
     label: optionElement?.innerText?.trim() ?? '',
     icon: icon,
-    disabled: false,
+    disabled: optionElement?.disabled,
+    isLabel: optionElement?.getAttribute('data-label') != null,
   })
 
   interface SelectContext {
@@ -22,7 +23,8 @@
       value: string
       label: string
       icon?: IconSource
-      disabled: boolean
+      disabled?: boolean
+      isLabel?: boolean
     }[]
   }
 

@@ -61,6 +61,7 @@
       label: string
       icon?: IconSource
       disabled?: boolean
+      isLabel?: boolean
     }[]
   }
 
@@ -141,10 +142,14 @@
             }}
             size="custom"
             disabled={option.disabled}
+            color="none"
             class={[
-              'min-h-0! py-[5px]!',
+              'min-h-0! py-[5px]! hover:bg-slate-100 dark:hover:bg-zinc-800',
               option.value == value &&
-                'bg-slate-100! dark:bg-zinc-800! text-primary-900 dark:text-primary-100 font-medium!',
+                'bg-slate-100 dark:bg-zinc-800 text-primary-900 dark:text-primary-100 font-medium',
+              option.disabled &&
+                'pointer-events-none text-slate-600 dark:text-zinc-400',
+              option.isLabel && 'text-xs mt-2',
             ]}
           >
             {#if option.value == value}
