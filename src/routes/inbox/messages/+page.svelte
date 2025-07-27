@@ -132,17 +132,8 @@
   {/if}
   <div class="h-3 sm:h-6"></div>
   <CommonList items={previews}>
-    {#snippet item(preview, index)}
-      <a
-        href="/inbox/messages/{preview.user.id}"
-        class="flex flex-row gap-2"
-        in:fly|global={{
-          duration: 1000,
-          easing: expoOut,
-          y: 12,
-          delay: index * 50,
-        }}
-      >
+    {#snippet item(preview)}
+      <a href="/inbox/messages/{preview.user.id}" class="flex flex-row gap-2">
         <Avatar url={preview.user.avatar} alt={preview.user.name} width={32} />
         <div class="flex flex-col w-full overflow-hidden">
           <div class="font-medium">{preview.user.name}</div>
