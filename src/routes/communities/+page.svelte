@@ -177,7 +177,11 @@
       {@const sliced = data.communities.value.slice(showTop ? 3 : 0)}
       <CommonList items={sliced}>
         {#snippet item(community)}
-          <CommunityItem {community} showCounts={false} />
+          <CommunityItem
+            {community}
+            resolveObject={data.type.startsWith('instance-')}
+            showCounts={false}
+          />
         {/snippet}
       </CommonList>
     {/if}

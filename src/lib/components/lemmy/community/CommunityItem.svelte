@@ -22,6 +22,7 @@
   import Subscribe from '../../../../routes/communities/Subscribe.svelte'
   import { settings } from '$lib/settings.svelte'
   import type { Snippet } from 'svelte'
+  import { client } from '$lib/lemmy.svelte'
 
   let showInfo = $state(false)
   interface Props {
@@ -31,6 +32,7 @@
     class?: string
     icon?: import('svelte').Snippet
     children?: Snippet
+    resolveObject?: boolean
   }
 
   let {
@@ -40,6 +42,7 @@
     class: clazz = 'flex flex-col gap-4 text-sm max-w-full relative',
     icon,
     children,
+    resolveObject,
   }: Props = $props()
 </script>
 
@@ -160,7 +163,18 @@
               disabled={subscribing || !profile.current?.jwt}
               loading={subscribing}
               onclick={async () => {
-                const res = await subscribe()
+                const object =
+                  resolveObject &&
+                  (await client().resolveObject({
+                    q: `!${community.community.name}@${new URL(community.community.actor_id).hostname}`,
+                  }))
+
+                const res = object
+                  ? await subscribe(
+                      object.community?.community.id,
+                      'NotSubscribed',
+                    )
+                  : await subscribe()
 
                 if (res) {
                   const newSubscribed =
