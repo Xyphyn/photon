@@ -166,7 +166,7 @@
                 const object =
                   resolveObject &&
                   (await client().resolveObject({
-                    q: `!${community.community.name}@${new URL(community.community.actor_id).hostname}`,
+                    q: community.community.actor_id,
                   }))
 
                 const res = object
