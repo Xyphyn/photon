@@ -50,7 +50,6 @@
   let hasMore = $state(true)
 
   async function loadMore() {
-    console.log(hasMore, loading)
     if (!hasMore || loading) return
 
     try {
@@ -183,7 +182,7 @@
         {#snippet item(row)}
           <li
             data-index={row}
-            style={row < 7 ? `--anim-delay: ${row * 50}ms` : ''}
+            style={row < 9 ? `--anim-delay: ${row * 50}ms` : ''}
             class={[
               'relative post-container px-3 sm:px-6',
               row < 9 && 'pop-in opacity-0',
@@ -270,6 +269,6 @@
 
   .pop-in {
     animation: popIn 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards
-      var(--anim-delay);
+      var(--anim-delay, 0ms);
   }
 </style>

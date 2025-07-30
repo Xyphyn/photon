@@ -1,11 +1,5 @@
 <script lang="ts">
   const badgeColor = {
-    red: 'bg-red-500 text-white ring-transparent',
-    green: 'bg-green-500 text-white dark:text-black ring-transparent',
-    yellow: 'bg-yellow-500 text-black ring-transparent',
-    gray: 'bg-gray-600 text-white ring-transparent',
-    blue: 'bg-blue-500 text-white ring-transparent',
-    purple: 'bg-purple-500 text-white ring-transparent',
     'red-subtle': `bg-red-100 dark:bg-red-500/20 text-red-600 dark:text-red-400
 		ring-red-400 dark:ring-red-500/30`,
     'green-subtle': `bg-green-100 dark:bg-green-500/20 text-green-700 dark:text-green-400
@@ -54,13 +48,13 @@
 
 <span
   {...rest}
-  class="{allowIconOnly
-    ? 'max-md:px-1.5 max-md:py-1.5'
-    : ''} px-2.5 py-1 {badgeRoundness[
-    rounding
-  ]} text-xs font-medium flex items-center gap-1 ring-1 ring-inset {badgeColor[
-    color
-  ]} {clazz}"
+  class={[
+    badgeRoundness[rounding],
+    badgeColor[color],
+    'px-2.5 py-1 text-xs font-medium flex items-center gap-1 ring-1 ring-inset',
+    allowIconOnly && 'max-md:px-1.5 max-md:py-1.5',
+    clazz,
+  ]}
   title={label}
 >
   {@render icon?.()}

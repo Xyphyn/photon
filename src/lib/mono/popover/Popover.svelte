@@ -67,6 +67,13 @@
       floatingRef(node)
     }
   }
+
+  // let previousFocus = $state<Element>()
+  // function focusTrap(element: HTMLElement) {
+  //   previousFocus = document.activeElement ?? previousFocus
+
+  //   svelteFocusTrap(element)
+  // }
 </script>
 
 <svelte:body
@@ -88,8 +95,6 @@
   onkeydown={async e => {
     if (open && e.key == 'Escape') {
       open = false
-      // @ts-expect-error svelte hell
-      el?.firstChild.focus()
     }
   }}
 />
