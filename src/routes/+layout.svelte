@@ -2,7 +2,6 @@
   import { browser } from '$app/environment'
   import { navigating, page } from '$app/state'
   import Moderation from '$lib/components/lemmy/moderation/Moderation.svelte'
-  import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
   import ExpandableImage from '$lib/components/ui/ExpandableImage.svelte'
   import Shell from '$lib/components/ui/layout/Shell.svelte'
   import Navbar from '$lib/components/ui/navbar/Navbar.svelte'
@@ -139,12 +138,14 @@
         {@const SvelteComponent = page.data.slots.sidebar.component}
         <SvelteComponent {...page.data.slots.sidebar.props} class="pt-0!" />
       {:else if site.data}
-        <SiteCard
-          site={site.data.site_view}
-          taglines={site.data.taglines}
-          admins={site.data.admins}
-          version={site.data.version}
-        />
+        {#await import('$lib/components/lemmy/SiteCard.svelte') then { default: SiteCard }}
+          <SiteCard
+            site={site.data.site_view}
+            taglines={site.data.taglines}
+            admins={site.data.admins}
+            version={site.data.version}
+          />
+        {/await}
       {:else}
         <div class="h-64 w-full grid place-items-center">
           <Spinner width={32} />
