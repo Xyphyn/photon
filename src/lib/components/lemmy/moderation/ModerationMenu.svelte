@@ -2,9 +2,11 @@
   import { profile } from '$lib/auth.svelte.js'
   import { t } from '$lib/i18n/translations'
   import { getClient } from '$lib/lemmy.svelte'
+  import { errorMessage } from '$lib/lemmy/error'
   import { isCommentView, isPostView } from '$lib/lemmy/item.js'
   import type { CommentView, PostView } from 'lemmy-js-client'
-  import { Button, Menu, MenuButton, MenuDivider, toast } from 'mono-svelte'
+  import { Menu, MenuButton, MenuDivider, toast } from 'mono-svelte'
+  import type { Snippet } from 'svelte'
   import {
     ArrowsUpDown,
     Fire,
@@ -17,23 +19,19 @@
     Trash,
   } from 'svelte-hero-icons'
   import { amMod, ban, isAdmin, remove, viewVotes } from './moderation'
-  import ShieldIcon from './ShieldIcon.svelte'
-  import { errorMessage } from '$lib/lemmy/error'
 
   interface Props {
     item: PostView | CommentView
+    target: Snippet<[boolean]>
   }
 
-  let { item = $bindable(), ...rest }: Props = $props()
+  let { item = $bindable(), target: passedTarget }: Props = $props()
 
-  let locking = $state(false)
-  let pinning = $state(false)
-
-  let acting = $derived(locking || pinning)
+  let acting = $state(false)
 
   async function lock(lock: boolean) {
     if (!profile.current?.jwt || !isPostView(item)) return
-    locking = true
+    acting = true
 
     try {
       await getClient().lockPost({
@@ -49,13 +47,13 @@
       })
     }
 
-    locking = false
+    acting = false
   }
 
   async function pin(pinned: boolean, toInstance: boolean = false) {
     if (!profile.current?.jwt || !isPostView(item)) return
 
-    pinning = true
+    acting = true
 
     try {
       await getClient().featurePost({
@@ -72,21 +70,13 @@
       })
     }
 
-    pinning = false
+    acting = false
   }
 </script>
 
 <Menu placement="bottom-end">
   {#snippet target()}
-    <Button
-      class="hover:text-green-500!"
-      size="square-md"
-      color="ghost"
-      loading={acting}
-      {...rest}
-    >
-      <ShieldIcon filled width={16} />
-    </Button>
+    {@render passedTarget(acting)}
   {/snippet}
   {#if (profile.current?.user && amMod(profile.current.user, item.community)) || (profile.current?.user && isAdmin(profile.current.user))}
     <MenuDivider>
@@ -99,8 +89,7 @@
     <MenuButton
       color="warning-subtle"
       onclick={() => lock(!item.post.locked)}
-      loading={locking}
-      disabled={locking}
+      loading={acting}
     >
       {#snippet prefix()}
         <Icon src={item.post.locked ? LockOpen : LockClosed} size="16" mini />
@@ -112,8 +101,7 @@
       color="success-subtle"
       onclick={() =>
         pin(isPostView(item) ? !item.post.featured_community : false)}
-      loading={pinning}
-      disabled={pinning}
+      loading={acting}
     >
       <Icon src={Megaphone} size="16" mini />
       <div

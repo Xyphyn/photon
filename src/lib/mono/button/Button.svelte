@@ -123,14 +123,14 @@
   role={href ? 'link' : 'button'}
   {href}
   {...rest}
-  tabindex={disabled ? -1 : undefined}
+  tabindex={disabled || loading ? -1 : undefined}
   class={[
     loading ? buttonColor.secondary : buttonColor[color],
     buttonSize[size],
     buttonRounding[rounding],
     buttonShadow[shadow],
     'text-sm transition-all font-medium cursor-pointer duration-75 disabled:opacity-50 disabled:pointer-events-none disabled:shadow-none',
-    disabled && 'pointer-events-none opacity-50 shadow-none',
+    disabled || (loading && 'pointer-events-none opacity-50 shadow-none'),
     alignment == 'center'
       ? 'origin-center'
       : alignment == 'left'
