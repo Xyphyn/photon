@@ -125,7 +125,7 @@
   {...rest}
   tabindex={disabled || loading ? -1 : undefined}
   class={[
-    loading ? buttonColor.secondary : buttonColor[color],
+    buttonColor[color],
     buttonSize[size],
     buttonRounding[rounding],
     buttonShadow[shadow],
