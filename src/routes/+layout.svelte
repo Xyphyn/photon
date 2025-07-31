@@ -13,25 +13,17 @@
   import { inDarkColorScheme, rgbToHex, theme } from '$lib/ui/colors.svelte.js'
   import { getDefaultColors } from '$lib/ui/presets'
   import { Button, ModalContainer, Spinner, ToastContainer } from 'mono-svelte'
-  import nProgress from 'nprogress'
-  import 'nprogress/nprogress.css'
   import { onMount } from 'svelte'
   import { Forward, Icon } from 'svelte-hero-icons'
   import '../style/app.css'
+  import NavigationProgress from '$lib/components/ui/layout/NavigationProgress.svelte'
   interface Props {
     children?: import('svelte').Snippet
   }
 
   let { children }: Props = $props()
 
-  nProgress.configure({
-    minimum: 0.4,
-    trickleSpeed: 200,
-    easing: 'ease-out',
-    speed: 300,
-    showSpinner: false,
-  })
-
+  let progressBar = $state<{ start: () => void; stop: () => void }>()
   onMount(() => {
     if (browser) {
       if (window.location.hash == 'main') {
@@ -71,12 +63,12 @@
       document.documentElement.dir =
         ($locale == 'he' || $locale == 'ar') && settings.useRtl ? 'rtl' : 'ltr'
     })
-  }
 
-  $effect(() => {
-    if (navigating.to) nProgress.start()
-    else nProgress.done()
-  })
+    $effect(() => {
+      if (navigating.to) progressBar?.start()
+      else progressBar?.stop()
+    })
+  }
 </script>
 
 <svelte:head>
@@ -104,12 +96,15 @@
 <Button
   class="fixed -top-16 focus:top-0 left-0 m-4 z-300 transition-all"
   href="#main"
+  onclick={() => document.getElementById('main')?.focus()}
 >
   {#snippet prefix()}
     <Icon src={Forward} mini size="16" />
   {/snippet}
   Skip Navigation
 </Button>
+
+<NavigationProgress bind:this={progressBar} />
 
 <Shell>
   <Moderation />
