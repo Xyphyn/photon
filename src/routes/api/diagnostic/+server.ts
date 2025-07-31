@@ -6,13 +6,14 @@ export const POST: RequestHandler = async ({ request, getClientAddress }) => {
   const body = await request.json()
 
   const payload = {
-    theme: body.theme,
     profiles: body.profiles,
     settings: body.settings,
+    device: body.device,
   }
 
   await fetch(envPrivate.PRIVATE_DIAGNOSTICS_URL, {
     body: JSON.stringify(payload),
+    method: 'POST',
     headers: {
       Authorization: envPrivate.PRIVATE_DIAGNOSTIC_KEY,
       'Content-Type': 'application/json',

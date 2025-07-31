@@ -712,7 +712,8 @@
         "settingsImport": "Successfully imported settings",
         "settingsImportWarning": "The imported settings don't seem valid. Are you sure you want to import this?",
         "userLoading": "Still loading your user data...",
-        "lemmyDonate": "Your account's instance runs Lemmy, and the developers are requesting donations. They are able to develop Lemmy as an open source platform, free of tracking and ads, thanks to the generosity of its users.\n\nAnnually, they ask you to consider donating to support their work, and allow them to continue maintaining and improving Lemmy.\n\n[Donate](https://join-lemmy.org/donate)\n\n*Note: this is a donation to Lemmy, not Photon.*"
+        "lemmyDonate": "Your account's instance runs Lemmy, and the developers are requesting donations. They are able to develop Lemmy as an open source platform, free of tracking and ads, thanks to the generosity of its users.\n\nAnnually, they ask you to consider donating to support their work, and allow them to continue maintaining and improving Lemmy.\n\n[Donate](https://join-lemmy.org/donate)\n\n*Note: this is a donation to Lemmy, not Photon.*",
+        "successDiagnostic": "Thank you for submitting this information!"
     },
     "settings": {
         "title": "Settings",

@@ -118,6 +118,15 @@
     return payload
   }
 
+  async function submitDiagnostics() {
+    if (Object.keys(diagPayload).length == 0) return
+
+    await fetch('/api/diagnostic', {
+      method: 'POST',
+      body: JSON.stringify(diagPayload),
+    })
+  }
+
   let localeMap: Map<
     string,
     {
@@ -180,22 +189,35 @@
 
 {#if diagnostic.open}
   <Modal title={$t('settings.usageInfo.title')} bind:open={diagnostic.open}>
-    <Markdown
-      source={$t('settings.usageInfo.body', { hostname: page.url.hostname })}
-    />
-    <hr class="my-1 border-slate-200 dark:border-zinc-800" />
-    <Switch bind:checked={diagnostic.profile}>
-      {$t('settings.usageInfo.profiles')}
-    </Switch>
-    <Switch bind:checked={diagnostic.settings}>
-      {$t('settings.usageInfo.settings')}
-    </Switch>
-    <Switch bind:checked={diagnostic.device}>
-      {$t('settings.usageInfo.device')}
-    </Switch>
-    <pre class="max-w-full">
+    <form
+      onsubmit={e => {
+        e.preventDefault()
+        submitDiagnostics()
+        diagnostic.open = false
+        toast({ content: $t('toast.successDiagnostic'), type: 'success' })
+      }}
+      class="space-y-3"
+    >
+      <Markdown
+        source={$t('settings.usageInfo.body', { hostname: page.url.hostname })}
+      />
+      <hr class="mb-4 border-slate-200 dark:border-zinc-800" />
+      <Switch bind:checked={diagnostic.profile}>
+        {$t('settings.usageInfo.profiles')}
+      </Switch>
+      <Switch bind:checked={diagnostic.settings}>
+        {$t('settings.usageInfo.settings')}
+      </Switch>
+      <Switch bind:checked={diagnostic.device}>
+        {$t('settings.usageInfo.device')}
+      </Switch>
+      <pre class="max-w-full">
       {JSON.stringify(diagPayload, undefined, 2)}
     </pre>
+      <Button color="primary" size="lg" class="w-full" submit>
+        {$t('form.submit')}
+      </Button>
+    </form>
   </Modal>
 {/if}
 
