@@ -723,6 +723,14 @@
         "export": "Export",
         "import": "Import",
         "reset": "Reset",
+        "usageInfo": {
+            "title": "Send usage info",
+            "body": "You can help the development of Photon by sending information about how you use the app. This is entirely opt-in, and nothing is shared when you don't explicitly ask to.\n\nThe data under 'payload' will be sent to `https://{{hostname}}/api/diagnostic` via `POST`, and such data will be handled by the owner(s) of **{{hostname}}**.",
+            "profiles": "Profile count and instances (no usernames)",
+            "settings": "Your chosen photon settings",
+            "device": "Info about your device",
+            "payload": "Payload"
+        },
         "navigation": {
             "title": "Navigation",
             "dockPos": {

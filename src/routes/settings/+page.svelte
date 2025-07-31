@@ -35,6 +35,7 @@
     Bars2,
     Bars3,
     BarsArrowDown,
+    Beaker,
     BookOpen,
     BugAnt,
     Calendar,
@@ -69,8 +70,53 @@
   import Section from './Section.svelte'
   import Setting from './Setting.svelte'
   import ToggleSetting from './ToggleSetting.svelte'
+  import { page } from '$app/state'
+  import Markdown from '$lib/components/markdown/Markdown.svelte'
+
   let importing = $state(false)
   let importText = $state('')
+
+  let diagnostic = $state({
+    open: false,
+    profile: false,
+    settings: false,
+    device: false,
+  })
+
+  let diagPayload = $derived(calculatePayload(diagnostic))
+
+  function calculatePayload(args: {
+    profile: boolean
+    settings: boolean
+    device: boolean
+  }) {
+    // eslint-disable-next-line
+    let payload: Record<string, any> = {}
+
+    if (args.profile) {
+      payload.profiles = {
+        count: profile.meta.profiles.length,
+        instances: [profile.meta.profiles.map(i => i.instance)],
+      }
+    }
+    if (args.settings) {
+      payload.settings = $state.snapshot(settings)
+    }
+    if (args.device) {
+      payload.device = {
+        userAgent: navigator.userAgent,
+        windowSize: {
+          width: window.innerWidth,
+          height: window.innerHeight,
+          ratio: window.devicePixelRatio,
+        },
+        language: navigator.language,
+        platform: navigator.platform,
+      }
+    }
+
+    return payload
+  }
 
   let localeMap: Map<
     string,
@@ -129,6 +175,27 @@
     action={$t('routes.theme.import')}
   >
     <TextArea bind:value={importText} style="font-family: monospace;" />
+  </Modal>
+{/if}
+
+{#if diagnostic.open}
+  <Modal title={$t('settings.usageInfo.title')} bind:open={diagnostic.open}>
+    <Markdown
+      source={$t('settings.usageInfo.body', { hostname: page.url.hostname })}
+    />
+    <hr class="my-1 border-slate-200 dark:border-zinc-800" />
+    <Switch bind:checked={diagnostic.profile}>
+      {$t('settings.usageInfo.profiles')}
+    </Switch>
+    <Switch bind:checked={diagnostic.settings}>
+      {$t('settings.usageInfo.settings')}
+    </Switch>
+    <Switch bind:checked={diagnostic.device}>
+      {$t('settings.usageInfo.device')}
+    </Switch>
+    <pre class="max-w-full">
+      {JSON.stringify(diagPayload, undefined, 2)}
+    </pre>
   </Modal>
 {/if}
 
@@ -203,6 +270,19 @@
     {$t('settings.other.title')}
   </Button>
 </div>
+
+{#if env.PUBLIC_DIAGNOSTICS.toLowerCase() == 'true'}
+  <Button
+    onclick={() => (diagnostic.open = !diagnostic.open)}
+    rounding="pill"
+    class="w-max"
+  >
+    {#snippet prefix()}
+      <Icon src={Beaker} mini size="18" />
+    {/snippet}
+    {$t('settings.usageInfo.title')}
+  </Button>
+{/if}
 
 <div
   class="flex flex-col *:py-2 divide-y divide-slate-200 dark:divide-zinc-800"
