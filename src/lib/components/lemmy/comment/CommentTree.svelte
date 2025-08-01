@@ -9,7 +9,7 @@
   import { Button, toast } from 'mono-svelte'
   import { ArrowDownCircle, Icon } from 'svelte-hero-icons'
   import Comment from './Comment.svelte'
-  import Comments from './Comments.svelte'
+  import Comments from './CommentTree.svelte'
   import { buildCommentsTree, type CommentNodeI } from './comments.svelte'
 
   interface Props {
@@ -93,10 +93,15 @@
       bind:node={nodes[index]}
       postId={post.id}
       op={post.creator_id == node.comment_view.creator.id}
-      contentClass="{node.children.length > 0 ||
-      node.comment_view.counts.child_count > 0
-        ? 'border-l'
-        : ''} ml-2.5 border-slate-200 dark:border-zinc-800 pl-2.5"
+      contentClass={[
+        (node.children.length > 0 ||
+          node.comment_view.counts.child_count > 0) &&
+          'border-l',
+        'ml-2.5 pl-3 sm:pl-4 lg:pl-5',
+        node.depth % 2 == 0
+          ? 'border-slate-200 dark:border-zinc-800'
+          : 'border-slate-300/80 dark:border-zinc-700',
+      ]}
       bind:open={nodes[index].expanded}
     >
       {#if node.children?.length > 0}
@@ -106,22 +111,20 @@
     {#if node.comment_view.counts.child_count > 0 && node.children.length == 0}
       <svelte:element
         this={browser ? 'div' : 'a'}
-        class="w-full h-10 border-y-0! -mt-2 -ml-2.5"
-        href="/comment/{page.params.instance}/{node.comment_view.comment.id}"
+        class="w-full h-10 -mt-2 -ml-2.5"
+        href="/comment/{node.comment_view.comment.id}"
       >
         <Button
           loading={nodes[index].loading}
           disabled={nodes[index].loading}
           rounding="pill"
           color="tertiary"
-          class="font-normal text-sm! text-slate-600 dark:text-zinc-400"
+          class="font-normal text-slate-600 dark:text-zinc-400"
           shadow="none"
           loaderWidth={16}
           onclick={() => {
             if (nodes[index].depth > 4) {
-              goto(
-                `/comment/${page.params.instance}/${nodes[index].comment_view.comment.id}#comments`,
-              )
+              goto(`/comment/${nodes[index].comment_view.comment.id}#comments`)
             } else {
               nodes[index].loading = true
               fetchChildren(nodes[index]).then(

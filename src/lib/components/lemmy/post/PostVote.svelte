@@ -22,6 +22,7 @@
   import { site } from '$lib/lemmy.svelte.js'
   import { vote as voteItem } from '$lib/lemmy/contentview.js'
   import { errorMessage } from '$lib/lemmy/error'
+  import { settings } from '$lib/settings.svelte'
   import type { Post } from 'lemmy-js-client'
   import { buttonColor, toast } from 'mono-svelte'
   import { ChevronDown, ChevronUp, Icon } from 'svelte-hero-icons'
@@ -67,16 +68,21 @@
 </script>
 
 {#if children}{@render children({ vote, score })}{:else}
+  {@const voteRatio = Math.floor(
+    ((upvotes ?? 0) / ((upvotes ?? 0) + (downvotes ?? 0))) * 100,
+  )}
   <div
     class={[
       buttonColor.ghost,
-      'rounded-full h-full font-medium flex items-center *:p-2',
+      'rounded-full h-full font-medium flex items-center *:p-2 relative',
       'hover:bg-white dark:hover:bg-zinc-900 overflow-hidden transition-colors shrink-0',
       'text-inherit! divide-x divide-slate-200 dark:divide-zinc-800 shadow-xs',
       loading && 'animate-pulse opacity-75 pointer-events-none',
+      voteRatio < 85 && settings.voteRatioBar && 'vote-ratio',
     ]}
     role="group"
     aria-label={$t('aria.vote.group')}
+    style="--vote-ratio: {voteRatio}%;"
   >
     <button
       onclick={() => castVote(vote == 1 ? 0 : 1)}
@@ -136,3 +142,25 @@
     {/if}
   </div>
 {/if}
+
+<style>
+  .vote-ratio {
+    z-index: 0;
+  }
+
+  .vote-ratio::before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    opacity: 10%;
+    width: 100%;
+    left: 0;
+    bottom: 0px;
+    z-index: -10;
+    background: linear-gradient(
+      to right,
+      var(--color-indigo-500) calc(var(--vote-ratio) - 4%),
+      var(--color-red-500) calc(var(--vote-ratio) + 4%)
+    );
+  }
+</style>

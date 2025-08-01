@@ -41,7 +41,7 @@
     transparent:
       'border border-slate-200 dark:border-zinc-900 border-b-slate-300 dark:border-t-zinc-800',
     uniform:
-      'bg-white dark:bg-zinc-950 border border-slate-100 dark:border-zinc-900',
+      'bg-white dark:bg-zinc-950 border border-slate-200 dark:border-zinc-900',
     none: '',
   }
 
