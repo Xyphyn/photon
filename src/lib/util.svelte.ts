@@ -7,7 +7,6 @@ import { toast } from 'mono-svelte'
 import { t } from './i18n/translations'
 import { site } from './lemmy.svelte'
 import { errorMessage } from './lemmy/error'
-import { SvelteURL } from 'svelte/reactivity'
 
 // Despite the name, this will round up
 // Example: findClosestNumber([8, 16, 32, 64, 128], 76) will return 128
@@ -30,7 +29,7 @@ export const searchParam = (
 }
 
 export const fullCommunityName = (name: string, actorId: string) =>
-  `${name}@${new SvelteURL(actorId).hostname}`
+  `${name}@${new URL(actorId).hostname}`
 
 export const placeholders = {
   url: ['https://example.com'],
@@ -134,6 +133,30 @@ export async function uploadImage(
 
     if (res.url) return res.url
     else throw new Error(`Failed to upload image. ${res.msg}`)
+  } else {
+    const response = await fetch(
+      `${
+        window.location.origin
+      }/cors/${instance}/pictrs/image?${new URLSearchParams({
+        auth: jwt,
+      })}`,
+      {
+        method: 'POST',
+        body: formData,
+      },
+    )
+
+    const json = await response.json()
+
+    if (json.msg == 'ok') {
+      return `https://${instance}/pictrs/image/${json.files?.[0]?.file}`
+    }
+    throw new Error(
+      `${
+        (await response.text().catch(() => undefined)) ??
+        'Failed to upload image'
+      }: ${response.status}: ${response.statusText}`,
+    )
   }
 }
 
@@ -144,7 +167,7 @@ export const instanceToURL = (input: string) =>
 
 export function canParseUrl(url: string): boolean {
   try {
-    new SvelteURL(url)
+    new URL(url)
     return true
   } catch {
     return false
@@ -152,7 +175,7 @@ export function canParseUrl(url: string): boolean {
 }
 
 export function instanceId(actorId: string) {
-  return new SvelteURL(actorId).hostname
+  return new URL(actorId).hostname
 }
 
 export function escapeHtml(input: string): string {

@@ -38,10 +38,9 @@
           src={open ? Minus : Plus}
           size="16"
           micro
-          class={[
-            open && 'rotate-180',
-            'transition-transform duration-300 ease-out',
-          ]}
+          class="{open
+            ? ''
+            : 'rotate-90'} transition-transform duration-300 ease-out"
         />
       {/if}
       <div

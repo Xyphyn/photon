@@ -45,7 +45,6 @@ import {
   ViewColumns,
   type IconSource,
 } from 'svelte-hero-icons'
-import { SvelteURL } from 'svelte/reactivity'
 
 export interface Group {
   name: string
@@ -412,7 +411,7 @@ export function getGroups(
             f.community.name,
             f.community.actor_id,
           )}`,
-          detail: new SvelteURL(f.community.actor_id).hostname,
+          detail: new URL(f.community.actor_id).hostname,
         })) ?? [],
     },
   ]

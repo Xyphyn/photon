@@ -1,14 +1,4 @@
 <script lang="ts" module>
-  type BadgeType =
-    | 'nsfw'
-    | 'saved'
-    | 'featured'
-    | 'deleted'
-    | 'removed'
-    | 'locked'
-    | 'moderator'
-    | 'admin'
-
   export interface Tag {
     content: string
     color?: string
@@ -66,11 +56,11 @@
   import { settings, type View } from '$lib/settings.svelte'
   import type { Community, Person, SubscribedType } from 'lemmy-js-client'
   import { Badge, Popover } from 'mono-svelte'
-  import Material from 'mono-svelte/materials/Material.svelte'
   import {
     Bookmark,
     ExclamationTriangle,
     Icon,
+    LockClosed,
     Megaphone,
     PaperAirplane,
     Pencil,
@@ -80,64 +70,7 @@
   } from 'svelte-hero-icons'
   import CommunityHeader from '../community/CommunityHeader.svelte'
   import ShieldIcon from '../moderation/ShieldIcon.svelte'
-
-  const badgeToData: Map<
-    BadgeType,
-    {
-      icon: IconSource
-      color: 'red-subtle' | 'yellow-subtle' | 'green-subtle'
-      label: string
-    }
-  > = new Map([
-    [
-      'nsfw',
-      {
-        icon: ExclamationTriangle,
-        color: 'red-subtle',
-        label: t.get('post.badges.nsfw'),
-      },
-    ],
-    [
-      'saved',
-      {
-        icon: Bookmark,
-        color: 'yellow-subtle',
-        label: t.get('post.badges.saved'),
-      },
-    ],
-    [
-      'featured',
-      {
-        icon: Megaphone,
-        color: 'green-subtle',
-        label: t.get('post.badges.featured'),
-      },
-    ],
-    [
-      'removed',
-      {
-        icon: Trash,
-        color: 'green-subtle',
-        label: t.get('post.badges.removed'),
-      },
-    ],
-    [
-      'deleted',
-      {
-        icon: Trash,
-        color: 'red-subtle',
-        label: t.get('post.badges.deleted'),
-      },
-    ],
-    [
-      'locked',
-      {
-        icon: Lock,
-        color: 'yellow-subtle',
-        label: t.get('post.badges.locked'),
-      },
-    ],
-  ])
+  import Material from 'mono-svelte/materials/Material.svelte'
 
   interface Props {
     community?: Community
@@ -150,7 +83,17 @@
     read?: boolean
     edited?: string
     view?: View
-    badges?: Record<BadgeType, boolean>
+    // Badges
+    badges?: {
+      nsfw: boolean
+      saved: boolean
+      featured: boolean
+      deleted: boolean
+      removed: boolean
+      locked: boolean
+      moderator: boolean
+      admin: boolean
+    }
     tags?: Tag[]
     style?: string
     titleClass?: string
@@ -253,7 +196,10 @@
     />
   {/if}
   <div
-    class="flex flex-row gap-1.5 items-center no-list-margin"
+    class="flex flex-row gap-1.5 items-center
+     no-list-margin {view == 'compact' && showCommunity
+      ? 'min-[480px]:mx-2'
+      : ''}"
     style="grid-area: stats;"
   >
     {#if user}
@@ -263,7 +209,7 @@
             src={PaperAirplane}
             size="12"
             micro
-            class="rotate-180 text-slate-400 dark:text-zinc-600 max-[480px]:hidden ml-2"
+            class="rotate-180 text-slate-400 dark:text-zinc-600 max-[480px]:hidden"
           />
         {/if}
         <UserLink
@@ -323,20 +269,66 @@
         </a>
       {/each}
     {/if}
-    {#each Object.keys(badges)
-      // filter by ones that are true
-      .filter(i => badges[i as BadgeType] == true)
-      // get from predetermined map
-      .map(i => badgeToData.get(i as BadgeType))
-      // remove null
-      .filter(i => i != undefined) as badge}
-      <Badge label={badge.label} color={badge.color} allowIconOnly>
+    {#if badges.nsfw}
+      <Badge label={$t('post.badges.nsfw')} color="red-subtle" allowIconOnly>
         {#snippet icon()}
-          <Icon src={badge.icon} micro size="14" />
+          <Icon src={ExclamationTriangle} size="14" micro />
         {/snippet}
-        {badge.label}
+        {$t('post.badges.nsfw')}
       </Badge>
-    {/each}
+    {/if}
+    {#if badges.saved}
+      <Badge
+        label={$t('post.badges.saved')}
+        color="yellow-subtle"
+        allowIconOnly
+      >
+        {#snippet icon()}
+          <Icon src={Bookmark} micro size="14" />
+        {/snippet}
+        {$t('post.badges.saved')}
+      </Badge>
+    {/if}
+    {#if badges.locked}
+      <Badge
+        label={$t('post.badges.locked')}
+        color="yellow-subtle"
+        allowIconOnly
+      >
+        {#snippet icon()}
+          <Icon src={LockClosed} micro size="14" />
+        {/snippet}
+        <span class="max-md:hidden">{$t('post.badges.locked')}</span>
+      </Badge>
+    {/if}
+    {#if badges.removed}
+      <Badge label={$t('post.badges.removed')} color="red-subtle" allowIconOnly>
+        {#snippet icon()}
+          <Icon src={Trash} micro size="14" />
+        {/snippet}
+        <span class="max-md:hidden">{$t('post.badges.removed')}</span>
+      </Badge>
+    {/if}
+    {#if badges.deleted}
+      <Badge label={$t('post.badges.deleted')} color="red-subtle" allowIconOnly>
+        {#snippet icon()}
+          <Icon src={Trash} micro size="14" />
+        {/snippet}
+        <span class="max-md:hidden">{$t('post.badges.deleted')}</span>
+      </Badge>
+    {/if}
+    {#if badges.featured}
+      <Badge
+        label={$t('post.badges.featured')}
+        color="green-subtle"
+        allowIconOnly
+      >
+        {#snippet icon()}
+          <Icon src={Megaphone} micro size="14" />
+        {/snippet}
+        <span class="max-md:hidden">{$t('post.badges.featured')}</span>
+      </Badge>
+    {/if}
     {@render extraBadges?.()}
   </div>
 </header>

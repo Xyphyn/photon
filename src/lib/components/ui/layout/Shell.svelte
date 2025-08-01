@@ -97,7 +97,7 @@
     }
   }
 
-  @media (min-width: 80rem) {
+  @media (min-width: 1280px) {
     .content {
       grid-template-columns: 20% 60% 20%;
       justify-items: end center start;

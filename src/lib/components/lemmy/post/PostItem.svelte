@@ -6,7 +6,7 @@
     post: PostView
   }
 
-  let { post }: Props = $props()
+  let { post } = $props()
 </script>
 
 <Post {post} class="py-0!" />
