@@ -50,7 +50,6 @@
   let hasMore = $state(true)
 
   async function loadMore() {
-    console.log(hasMore, loading)
     if (!hasMore || loading) return
 
     try {
@@ -183,10 +182,10 @@
         {#snippet item(row)}
           <li
             data-index={row}
-            style={row < 7 ? `--anim-delay: ${row * 50}ms` : ''}
+            style={row < 9 ? `--anim-delay: ${row * 50}ms` : ''}
             class={[
               'relative post-container px-3 sm:px-6',
-              row < 7 && 'pop-in opacity-0',
+              row < 9 && 'pop-in opacity-0',
             ]}
           >
             <Post
@@ -219,12 +218,7 @@
           <Icon src={ExclamationTriangle} size="24" solid></Icon>
         </div>
         <pre class="py-0.5">{error}</pre>
-        <Button
-          color="primary"
-          {loading}
-          disabled={loading}
-          onclick={() => loadMore()}
-        >
+        <Button color="primary" {loading} onclick={loadMore}>
           {$t('message.retry')}
         </Button>
       </div>
@@ -256,14 +250,7 @@
         </EndPlaceholder>
       </div>
     {/if}
-    <InfiniteScroll
-      window
-      threshold={600}
-      on:loadMore={() => {
-        console.log('loadMore triggered')
-        loadMore()
-      }}
-    />
+    <InfiniteScroll window threshold={600} on:loadMore={loadMore} />
   {/if}
   {@render children?.()}
 </ul>
@@ -282,6 +269,6 @@
 
   .pop-in {
     animation: popIn 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards
-      var(--anim-delay);
+      var(--anim-delay, 0ms);
   }
 </style>

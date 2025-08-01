@@ -3,7 +3,6 @@
 export { default as Button } from './button/Button.svelte'
 export { buttonColor, buttonSize, buttonShadow } from './button/Button.svelte'
 export { default as Codeblock } from './code/Codeblock.svelte'
-export { default as Snippet } from './code/Snippet.svelte'
 export { default as Spinner } from './loader/Spinner.svelte'
 export { default as Material } from './materials/Material.svelte'
 
@@ -17,9 +16,6 @@ export { default as ImageInput } from './forms/ImageInput.svelte'
 
 export { default as Checkbox } from './forms/Checkbox.svelte'
 export { default as Switch } from './forms/Switch.svelte'
-
-export { default as Radio } from './forms/Radio.svelte'
-export { default as RadioGroup } from './forms/RadioGroup.svelte'
 
 export { default as Popover } from './popover/Popover.svelte'
 export { default as Menu } from './popover/Menu.svelte'

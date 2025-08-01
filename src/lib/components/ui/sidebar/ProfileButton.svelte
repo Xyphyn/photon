@@ -18,9 +18,7 @@
 </script>
 
 <SidebarButton
-  alignment="left"
   loading={switching}
-  rounding="lg"
   loaderWidth={22}
   selected={profile.current?.id == prof.id}
   onclick={async () => {
@@ -47,9 +45,10 @@
     />
   {/snippet}
   <span
-    class="inline-flex flex-col gap-0 {profile.current?.id == prof.id
-      ? 'font-semibold'
-      : ''}"
+    class={[
+      'inline-flex flex-col gap-0',
+      profile.current?.id == prof.id && 'font-semibold',
+    ]}
   >
     {prof.username ?? prof.user?.local_user_view.person.name}
     {#if !guest && !LINKED_INSTANCE_URL}

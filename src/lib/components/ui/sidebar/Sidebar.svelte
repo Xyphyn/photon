@@ -34,29 +34,25 @@
   {#if profile.current?.jwt}
     <SidebarButton icon={UserCircle} href="/profile">
       {#snippet label()}
-        <span>
-          {$t('profile.profile')}
-        </span>
+        {$t('profile.profile')}
       {/snippet}
     </SidebarButton>
     <SidebarButton icon={Inbox} href="/inbox">
       {#snippet label()}
-        <span class="flex items-center gap-2">
-          {$t('profile.inbox')}
-          {#if $notifications.inbox}
-            <Badge
-              class="min-w-5 h-5 p-0! px-0.5 grid place-items-center ml-auto"
-              color="red-subtle"
-            >
-              {$notifications.inbox > 99 ? '∞' : $notifications.inbox}
-            </Badge>
-          {/if}
-        </span>
+        {$t('profile.inbox')}
+        {#if $notifications.inbox}
+          <Badge
+            class="min-w-5 h-5 p-0! px-0.5 grid place-items-center ml-auto"
+            color="red-subtle"
+          >
+            {$notifications.inbox > 99 ? '∞' : $notifications.inbox}
+          </Badge>
+        {/if}
       {/snippet}
     </SidebarButton>
     <SidebarButton icon={Bookmark} href="/saved">
       {#snippet label()}
-        <span>{$t('profile.saved')}</span>
+        {$t('profile.saved')}
       {/snippet}
     </SidebarButton>
   {:else}
@@ -66,7 +62,7 @@
       icon={ArrowLeftOnRectangle}
     >
       {#snippet label()}
-        <span>{$t('account.login')}</span>
+        {$t('account.login')}
       {/snippet}
     </SidebarButton>
     <SidebarButton
@@ -75,7 +71,7 @@
       icon={Identification}
     >
       {#snippet label()}
-        <span>{$t('account.signup')}</span>
+        {$t('account.signup')}
       {/snippet}
     </SidebarButton>
     <SidebarButton
@@ -84,7 +80,7 @@
       icon={Cog6Tooth}
     >
       {#snippet label()}
-        <span>{$t('nav.menu.settings')}</span>
+        {$t('nav.menu.settings')}
       {/snippet}
     </SidebarButton>
   {/if}
@@ -109,9 +105,7 @@
       {/snippet}
       <div class="w-full flex gap-px flex-col">
         {#each [...profile.meta.profiles] as prof, index}
-          <div class="w-full">
-            <ProfileButton {index} {prof} />
-          </div>
+          <ProfileButton {index} {prof} />
         {/each}
       </div>
       <SidebarButton href="/accounts" icon={UserGroup}>
