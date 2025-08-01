@@ -177,8 +177,9 @@
       >
         <Markdown
           source={node.comment_view.comment.content}
+          noStyle
           class={[
-            'text-[15px] text-slate-800 dark:text-zinc-200 leading-[1.3]',
+            'text-base text-slate-700 dark:text-zinc-300 *:leading-[1.6] break-words space-y-3',
 
             node.comment_view.comment.distinguished
               ? 'bg-green-400/10 p-1 rounded-lg w-max font-medium'
@@ -220,9 +221,7 @@
           />
         </div>
       {/if}
-      <div class="bg-transparent dark:bg-transparent">
-        {@render children?.()}
-      </div>
+      {@render children?.()}
     </div>
   </div>
 </li>

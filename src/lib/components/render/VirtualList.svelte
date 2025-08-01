@@ -230,7 +230,7 @@
   {#each visibleItems as item (item.index)}
     <div
       data-index={item.index}
-      class="post-container fix-divide"
+      class="post-container fix-divide group/virtual"
       use:resizeObserver
     >
       {@render itemSnippet(item.index)}
