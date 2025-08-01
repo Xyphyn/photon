@@ -2,6 +2,7 @@
   import { browser } from '$app/environment'
   import { navigating, page } from '$app/state'
   import Moderation from '$lib/components/lemmy/moderation/Moderation.svelte'
+  import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
   import ExpandableImage from '$lib/components/ui/ExpandableImage.svelte'
   import Shell from '$lib/components/ui/layout/Shell.svelte'
   import Navbar from '$lib/components/ui/navbar/Navbar.svelte'
@@ -13,17 +14,25 @@
   import { inDarkColorScheme, rgbToHex, theme } from '$lib/ui/colors.svelte.js'
   import { getDefaultColors } from '$lib/ui/presets'
   import { Button, ModalContainer, Spinner, ToastContainer } from 'mono-svelte'
+  import nProgress from 'nprogress'
+  import 'nprogress/nprogress.css'
   import { onMount } from 'svelte'
   import { Forward, Icon } from 'svelte-hero-icons'
   import '../style/app.css'
-  import NavigationProgress from '$lib/components/ui/layout/NavigationProgress.svelte'
   interface Props {
     children?: import('svelte').Snippet
   }
 
   let { children }: Props = $props()
 
-  let progressBar = $state<{ start: () => void; stop: () => void }>()
+  nProgress.configure({
+    minimum: 0.4,
+    trickleSpeed: 200,
+    easing: 'ease-out',
+    speed: 300,
+    showSpinner: false,
+  })
+
   onMount(() => {
     if (browser) {
       if (window.location.hash == 'main') {
@@ -63,12 +72,12 @@
       document.documentElement.dir =
         ($locale == 'he' || $locale == 'ar') && settings.useRtl ? 'rtl' : 'ltr'
     })
-
-    $effect(() => {
-      if (navigating.to) progressBar?.start()
-      else progressBar?.stop()
-    })
   }
+
+  $effect(() => {
+    if (navigating.to) nProgress.start()
+    else nProgress.done()
+  })
 </script>
 
 <svelte:head>
@@ -96,15 +105,12 @@
 <Button
   class="fixed -top-16 focus:top-0 left-0 m-4 z-300 transition-all"
   href="#main"
-  onclick={() => document.getElementById('main')?.focus()}
 >
   {#snippet prefix()}
     <Icon src={Forward} mini size="16" />
   {/snippet}
   Skip Navigation
 </Button>
-
-<NavigationProgress bind:this={progressBar} />
 
 <Shell>
   <Moderation />
@@ -133,14 +139,12 @@
         {@const SvelteComponent = page.data.slots.sidebar.component}
         <SvelteComponent {...page.data.slots.sidebar.props} class="pt-0!" />
       {:else if site.data}
-        {#await import('$lib/components/lemmy/SiteCard.svelte') then { default: SiteCard }}
-          <SiteCard
-            site={site.data.site_view}
-            taglines={site.data.taglines}
-            admins={site.data.admins}
-            version={site.data.version}
-          />
-        {/await}
+        <SiteCard
+          site={site.data.site_view}
+          taglines={site.data.taglines}
+          admins={site.data.admins}
+          version={site.data.version}
+        />
       {:else}
         <div class="h-64 w-full grid place-items-center">
           <Spinner width={32} />

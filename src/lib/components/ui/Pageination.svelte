@@ -6,7 +6,6 @@
   import { fly } from 'svelte/transition'
   import { page as pageData } from '$app/state'
   import { invalidate } from '$app/navigation'
-  import { SvelteURLSearchParams } from 'svelte/reactivity'
 
   interface Props {
     page?: number
@@ -28,8 +27,8 @@
 
   let customHref = (href?: string) => {
     if (href?.startsWith('?')) {
-      const current = new SvelteURLSearchParams(pageData.url.searchParams)
-      const newParams = new SvelteURLSearchParams(href)
+      const current = new URLSearchParams(pageData.url.searchParams)
+      const newParams = new URLSearchParams(href)
 
       current.delete(Array.from(newParams.keys())[0])
       current.append(

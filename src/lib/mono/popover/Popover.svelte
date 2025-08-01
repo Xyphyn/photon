@@ -1,3 +1,16 @@
+<script module lang="ts">
+  export type Origin = keyof typeof popoverOrigins
+
+  export const popoverOrigins = {
+    'top-right': 'bottom-full right-0 origin-bottom-right',
+    'bottom-left': 'top-full origin-top-left',
+    'top-left': 'bottom-full left-0 origin-bottom-left',
+    'bottom-right': 'top-full right-0 origin-top-right',
+    'top-center': 'bottom-full -left-[450%] origin-bottom',
+    'bottom-center': 'top-full -left-[450%] origin-top',
+  }
+</script>
+
 <script lang="ts">
   import {
     flip,
@@ -55,7 +68,11 @@
     middleware: middleware,
   })
 
-  const customFloatingContent = (node: HTMLDivElement) => floatingContent(node)
+  const customFloatingContent = (node: HTMLDivElement) => {
+    // if (!canUseContents) return
+
+    floatingContent(node)
+  }
 
   const customFloatingRef = (node: HTMLDivElement) => {
     const n = node.children.item(0)
@@ -67,13 +84,6 @@
       floatingRef(node)
     }
   }
-
-  // let previousFocus = $state<Element>()
-  // function focusTrap(element: HTMLElement) {
-  //   previousFocus = document.activeElement ?? previousFocus
-
-  //   svelteFocusTrap(element)
-  // }
 </script>
 
 <svelte:body
@@ -95,6 +105,8 @@
   onkeydown={async e => {
     if (open && e.key == 'Escape') {
       open = false
+      // @ts-expect-error svelte hell
+      el?.firstChild.focus()
     }
   }}
 />

@@ -12,7 +12,6 @@
   import { Button } from 'mono-svelte'
   import { ArrowPath, Check, Icon, Inbox } from 'svelte-hero-icons'
   import InboxItem from './InboxItem.svelte'
-  import { SvelteURLSearchParams } from 'svelte/reactivity'
 
   let { data } = $props()
 
@@ -43,11 +42,11 @@
     currentSearchParams: URLSearchParams,
     newParamString: string,
   ) {
-    // Create a new SvelteURLSearchParams object from the current search params
-    const updatedParams = new SvelteURLSearchParams(currentSearchParams)
+    // Create a new URLSearchParams object from the current search params
+    const updatedParams = new URLSearchParams(currentSearchParams)
 
     // Parse the new parameter string
-    const newParam = new SvelteURLSearchParams(newParamString)
+    const newParam = new URLSearchParams(newParamString)
 
     // Get the key and value of the new parameter
     const [key, value]: [string, string] = newParam.entries().next().value!

@@ -6,6 +6,7 @@
     isAdmin,
     report,
   } from '$lib/components/lemmy/moderation/moderation.js'
+  import ModerationMenu from '$lib/components/lemmy/moderation/ModerationMenu.svelte'
   import TextProps from '$lib/components/ui/text/TextProps.svelte'
   import { publishedToDate } from '$lib/components/util/date'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
@@ -45,7 +46,6 @@
     Newspaper,
     PencilSquare,
     Share,
-    ShieldCheck,
     Trash,
     UserCircle,
     XMark,
@@ -161,21 +161,14 @@
     </Button>
   {/if}
   {#if profile.current?.user && (amMod(profile.current.user, post.community) || isAdmin(profile.current.user))}
-    {#await import('$lib/components/lemmy/moderation/ModerationMenu.svelte') then { default: ModerationMenu }}
-      <ModerationMenu bind:item={post}>
-        {#snippet target(acting)}
-          <Button
-            color="ghost"
-            rounding="pill"
-            loading={acting}
-            class={buttonSquare}
-            size="custom"
-          >
-            <Icon src={ShieldCheck} size="18" mini />
-          </Button>
-        {/snippet}
-      </ModerationMenu>
-    {/await}
+    <ModerationMenu
+      size="custom"
+      color="ghost"
+      rounding="pill"
+      class={buttonSquare}
+      bind:item={post}
+      community={post.community}
+    />
   {/if}
 
   {#if profile.current?.jwt}

@@ -16,7 +16,6 @@
   import { Button, Modal } from 'mono-svelte'
   import { ChatBubbleOvalLeftEllipsis, Icon, Inbox } from 'svelte-hero-icons'
   import { expoOut } from 'svelte/easing'
-  import { SvelteSet } from 'svelte/reactivity'
   import { fly } from 'svelte/transition'
 
   interface ConversationPreview {
@@ -35,7 +34,7 @@
   }
 
   function filterDuplicates<T, K>(array: T[], predicate: (item: T) => K): T[] {
-    const seen = new SvelteSet()
+    const seen = new Set()
     return array.filter(element => {
       const value = predicate(element)
       if (seen.has(value)) {

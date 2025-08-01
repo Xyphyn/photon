@@ -1,5 +1,4 @@
 import type { Comment, CommentView } from 'lemmy-js-client'
-import { SvelteMap } from 'svelte/reactivity'
 
 export interface CommentNodeI {
   comment_view: CommentView
@@ -29,7 +28,7 @@ export function buildCommentsTree(
   baseDepth: number = 0,
   filter: (c: CommentView) => boolean = () => true,
 ): CommentNodeI[] {
-  const map = new SvelteMap<number, CommentNodeI>()
+  const map = new Map<number, CommentNodeI>()
 
   let min_depth = Number.MAX_VALUE
   for (const comment_view of comments) {
