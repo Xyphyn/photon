@@ -27,10 +27,7 @@
   let { style = '', class: clazz = '' }: Props = $props()
 </script>
 
-<nav
-  class={['flex flex-col p-4 overflow-auto gap-1 h-fit max-h-screen', clazz]}
-  {style}
->
+<nav class={['flex flex-col overflow-auto gap-1', clazz]} {style}>
   {#if profile.current?.jwt}
     <SidebarButton icon={UserCircle} href="/profile">
       {#snippet label()}

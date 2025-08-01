@@ -1,7 +1,6 @@
 <script lang="ts">
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
-  import StickyCard from '$lib/components/ui/StickyCard.svelte'
   import { t } from '$lib/i18n/translations'
   import { userLink } from '$lib/lemmy/generic'
   import { settings } from '$lib/settings.svelte'
@@ -31,7 +30,12 @@
   }: Props = $props()
 </script>
 
-<StickyCard class="w-full {clazz} text-slate-600 dark:text-zinc-400">
+<div
+  class={[
+    'w-full text-slate-600 dark:text-zinc-400 flex flex-col gap-4 text-sm',
+    clazz,
+  ]}
+>
   {#if site.site.banner}
     <div
       class="rounded-xl
@@ -145,4 +149,4 @@
       </Link>
     </div>
   </div>
-</StickyCard>
+</div>

@@ -76,7 +76,6 @@
   import Entity from '$lib/components/ui/Entity.svelte'
   import Expandable from '$lib/components/ui/Expandable.svelte'
   import LabelStat from '$lib/components/ui/LabelStat.svelte'
-  import StickyCard from '$lib/components/ui/StickyCard.svelte'
   import { t } from '$lib/i18n/translations'
   import { client, getClient } from '$lib/lemmy.svelte.js'
   import { errorMessage } from '$lib/lemmy/error'
@@ -146,7 +145,12 @@
   }: Props = $props()
 </script>
 
-<StickyCard class="min-w-full pt-0 text-slate-600 dark:text-zinc-400 {clazz}">
+<div
+  class={[
+    'min-w-full pt-0 text-slate-600 dark:text-zinc-400 flex flex-col gap-4 text-sm',
+    clazz,
+  ]}
+>
   <Entity
     name={community_view.community.title}
     label="!{fullCommunityName(
@@ -337,4 +341,4 @@
       {/if}
     </Menu>
   </div>
-</StickyCard>
+</div>

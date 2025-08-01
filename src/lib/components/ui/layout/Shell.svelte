@@ -37,7 +37,7 @@
 {@render children?.()}
 <div
   class={[
-    'fixed bottom-0 lg:top-0',
+    'fixed lg:sticky bottom-0 lg:top-0',
     !dockVisible && 'max-lg:-bottom-24',
     'max-w-3xl p-4 left-1/2 -translate-x-1/2 lg:max-w-full lg:p-0 lg:left-0 lg:translate-x-0',
     'w-full z-50 pointer-events-none',
@@ -53,22 +53,17 @@
     style: '',
   })}
 </div>
-<div
-  class={[
-    'content divide-x divide-slate-200/50 dark:divide-zinc-900 min-h-screen',
-    settings.newWidth && 'limit-width',
-  ]}
->
+<div class={['content flex-1', settings.newWidth && 'limit-width']}>
   {@render sidebar?.({
-    class: `hidden md:flex sticky top-0 lg:top-16 left-0 h-max bg-slate-100 dark:bg-zinc-950 z-40`,
+    class: `hidden md:flex sticky top-0 lg:top-16 left-0 h-max bg-slate-100 dark:bg-zinc-950 z-40 max-h-screen`,
     style: 'grid-area: sidebar; width: 100% !important;',
   })}
   {@render main?.({
-    class: `w-full bg-slate-50 dark:bg-zinc-925 justify-self-center shadow-xs main max-lg:pb-22 lg:pt-20!`,
+    class: `w-full bg-slate-50 dark:bg-zinc-925 justify-self-center border-x border-slate-200 dark:border-zinc-900 max-lg:pb-22`,
     style: 'grid-area: main',
   })}
   {@render suffix?.({
-    class: `max-xl:hidden w-full sticky lg:top-20 h-max max-h-screen overflow-auto left-0 bg-slate-100 dark:bg-zinc-950 z-40`,
+    class: `max-lg:hidden w-full sticky lg:top-16 h-max max-h-screen overflow-auto left-0 bg-slate-100 dark:bg-zinc-950 z-40`,
     style: 'grid-area: suffix;',
   })}
 </div>
@@ -89,7 +84,7 @@
     max-width: 110rem;
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 48rem) {
     .content {
       grid-template-columns: 16rem 1fr;
       justify-items: end start;
@@ -97,7 +92,7 @@
     }
   }
 
-  @media (min-width: 1280px) {
+  @media (min-width: 64rem) {
     .content {
       grid-template-columns: 20% 60% 20%;
       justify-items: end center start;

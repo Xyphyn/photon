@@ -119,7 +119,7 @@
   <ModalContainer />
 
   {#snippet sidebar({ style: s, class: c })}
-    <Sidebar class={c} style={s} />
+    <Sidebar class={[c, 'p-3 sm:p-6']} style={s} />
   {/snippet}
   {#snippet main({ style: s, class: c })}
     <main
@@ -134,10 +134,10 @@
     <Navbar class={c} style={s} />
   {/snippet}
   {#snippet suffix({ class: c, style: s })}
-    <div class={c} style={s}>
+    <div class={[c, 'p-3 sm:p-6']} style={s}>
       {#if page.data.slots?.sidebar?.component}
         {@const SvelteComponent = page.data.slots.sidebar.component}
-        <SvelteComponent {...page.data.slots.sidebar.props} class="pt-0!" />
+        <SvelteComponent {...page.data.slots.sidebar.props} />
       {:else if site.data}
         <SiteCard
           site={site.data.site_view}
