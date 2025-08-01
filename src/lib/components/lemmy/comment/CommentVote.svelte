@@ -101,14 +101,19 @@
 </div>
 
 <style>
+  .vote-ratio {
+    z-index: 0;
+  }
+
   .vote-ratio::before {
     content: '';
     position: absolute;
-    height: 1px;
+    height: 100%;
     width: 100%;
+    opacity: 10%;
+    z-index: -10;
     left: 0;
     bottom: 0px;
-    z-index: 10;
     background: linear-gradient(
       to right,
       var(--color-indigo-500) calc(var(--vote-ratio) - 5%),

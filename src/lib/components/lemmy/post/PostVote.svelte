@@ -144,18 +144,23 @@
 {/if}
 
 <style>
+  .vote-ratio {
+    z-index: 0;
+  }
+
   .vote-ratio::before {
     content: '';
     position: absolute;
-    height: 1px;
+    height: 100%;
+    opacity: 10%;
     width: 100%;
     left: 0;
     bottom: 0px;
-    z-index: 10;
+    z-index: -10;
     background: linear-gradient(
       to right,
-      var(--color-indigo-500) calc(var(--vote-ratio) - 5%),
-      var(--color-red-500) calc(var(--vote-ratio) + 5%)
+      var(--color-indigo-500) calc(var(--vote-ratio) - 4%),
+      var(--color-red-500) calc(var(--vote-ratio) + 4%)
     );
   }
 </style>
