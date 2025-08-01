@@ -9,7 +9,7 @@
   import { Button, toast } from 'mono-svelte'
   import { ArrowDownCircle, Icon } from 'svelte-hero-icons'
   import Comment from './Comment.svelte'
-  import Comments from './CommentList.svelte'
+  import Comments from './CommentTree.svelte'
   import { buildCommentsTree, type CommentNodeI } from './comments.svelte'
 
   interface Props {
@@ -93,10 +93,12 @@
       bind:node={nodes[index]}
       postId={post.id}
       op={post.creator_id == node.comment_view.creator.id}
-      contentClass="{node.children.length > 0 ||
-      node.comment_view.counts.child_count > 0
-        ? 'border-l'
-        : ''} ml-2.5 border-slate-200 dark:border-zinc-800 pl-2.5"
+      contentClass={[
+        (node.children.length > 0 ||
+          node.comment_view.counts.child_count > 0) &&
+          'border-l',
+        'ml-2.5 border-slate-200 dark:border-zinc-800 pl-3 sm:pl-4 lg:pl-5',
+      ]}
       bind:open={nodes[index].expanded}
     >
       {#if node.children?.length > 0}

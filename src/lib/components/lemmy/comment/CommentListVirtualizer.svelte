@@ -2,7 +2,7 @@
   import VirtualList from '$lib/components/render/VirtualList.svelte'
   import type { Post } from 'lemmy-js-client'
   import type { CommentNodeI } from './comments.svelte'
-  import Comments from './CommentList.svelte'
+  import Comments from './CommentTree.svelte'
   import { onMount } from 'svelte'
 
   interface Props {
