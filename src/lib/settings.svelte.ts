@@ -185,7 +185,7 @@ export const defaultSettings: Settings = {
   messages: {
     fullMarkdown: toBool(env.PUBLIC_FULL_MARKDOWN) ?? false,
   },
-  voteRatioBar: true,
+  voteRatioBar: false,
 }
 
 function createSettingsState(initial: Settings): Settings {
