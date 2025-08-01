@@ -29,6 +29,7 @@
     ArrowRight,
     ArrowsPointingOut,
     ArrowsRightLeft,
+    ArrowsUpDown,
     ArrowTopRightOnSquare,
     ArrowTrendingDown,
     ArrowUpTray,
@@ -401,6 +402,12 @@
       bind:checked={settings.absoluteDates}
       title={$t('settings.app.absoluteDates.title')}
       description={$t('settings.app.absoluteDates.description')}
+    />
+    <ToggleSetting
+      icon={ArrowsUpDown}
+      bind:checked={settings.voteRatioBar}
+      title={$t('settings.app.voteRatioBar.title')}
+      description={$t('settings.app.voteRatioBar.description')}
     />
     <ToggleSetting
       icon={CubeTransparent}

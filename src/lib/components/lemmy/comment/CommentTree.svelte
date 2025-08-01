@@ -96,7 +96,7 @@
       contentClass={[
         (node.children.length > 0 ||
           node.comment_view.counts.child_count > 0) &&
-          'border-l-2',
+          'border-l',
         'ml-2.5 pl-3 sm:pl-4 lg:pl-5',
         node.depth % 2 == 0
           ? 'border-slate-200 dark:border-zinc-800'

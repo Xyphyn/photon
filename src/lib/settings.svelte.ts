@@ -104,6 +104,7 @@ interface Settings {
   messages: {
     fullMarkdown: boolean
   }
+  voteRatioBar: boolean
 }
 
 export const defaultSettings: Settings = {
@@ -184,6 +185,7 @@ export const defaultSettings: Settings = {
   messages: {
     fullMarkdown: toBool(env.PUBLIC_FULL_MARKDOWN) ?? false,
   },
+  voteRatioBar: true,
 }
 
 function createSettingsState(initial: Settings): Settings {

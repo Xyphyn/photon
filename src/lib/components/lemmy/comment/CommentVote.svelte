@@ -8,6 +8,7 @@
   import { backOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'
   import { shouldShowVoteColor } from '../post/PostVote.svelte'
+  import { settings } from '$lib/settings.svelte'
 
   interface Props {
     vote?: number
@@ -36,13 +37,19 @@
     })
     ;({ upvotes, downvotes } = res.comment_view.counts)
   }
+
+  let voteRatio = $derived(
+    Math.floor(((upvotes ?? 0) / ((upvotes ?? 0) + (downvotes ?? 0))) * 100),
+  )
 </script>
 
 <div
   class={[
-    'h-full flex items-center overflow-hidden rounded-full hover:bg-transparent font-medium hover:dark:bg-transparent',
+    'h-full relative flex items-center overflow-hidden rounded-full hover:bg-transparent font-medium hover:dark:bg-transparent',
     buttonColor.ghost,
+    voteRatio < 85 && settings.voteRatioBar && 'vote-ratio',
   ]}
+  style="--vote-ratio: {voteRatio}%;"
 >
   <button
     onclick={() => castVote(vote == 1 ? 0 : 1)}
@@ -92,3 +99,20 @@
     </span>
   </button>
 </div>
+
+<style>
+  .vote-ratio::before {
+    content: '';
+    position: absolute;
+    height: 1px;
+    width: 100%;
+    left: 0;
+    bottom: 0px;
+    z-index: 10;
+    background: linear-gradient(
+      to right,
+      var(--color-indigo-500) calc(var(--vote-ratio) - 5%),
+      var(--color-red-500) calc(var(--vote-ratio) + 5%)
+    );
+  }
+</style>
