@@ -46,20 +46,15 @@
     background-color: var(--color-white);
     container-type: inline-size;
 
-    border-left: 1px solid var(--color-slate-100);
-    border-right: 1px solid var(--color-slate-100);
+    border-radius: var(--radius-md) var(--radius-md);
 
     &:first-child {
       border-top-left-radius: var(--radius-2xl);
       border-top-right-radius: var(--radius-2xl);
-
-      border-top: 1px solid var(--color-slate-100);
     }
     &:last-child {
       border-bottom-left-radius: var(--radius-2xl);
       border-bottom-right-radius: var(--radius-2xl);
-
-      border-bottom: 1px solid var(--color-slate-100);
     }
 
     &:hover {
@@ -76,16 +71,6 @@
 
   :global(.dark) ul > :global(li) {
     background-color: var(--color-zinc-950);
-
-    border-left: 1px solid var(--color-zinc-900);
-    border-right: 1px solid var(--color-zinc-900);
-
-    &:first-child {
-      border-top: 1px solid var(--color-zinc-900);
-    }
-    &:last-child {
-      border-bottom: 1px solid var(--color-zinc-900);
-    }
 
     &:hover {
       background-color: var(--color-zinc-900);
