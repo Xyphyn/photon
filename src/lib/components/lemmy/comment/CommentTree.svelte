@@ -9,7 +9,7 @@
   import { Button, toast } from 'mono-svelte'
   import { ArrowDownCircle, Icon } from 'svelte-hero-icons'
   import Comment from './Comment.svelte'
-  import Comments from './Comments.svelte'
+  import Comments from './CommentList.svelte'
   import { buildCommentsTree, type CommentNodeI } from './comments.svelte'
 
   interface Props {

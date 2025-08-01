@@ -4,7 +4,7 @@
   import { profile } from '$lib/auth.svelte'
   import CommentForm from '$lib/components/lemmy/comment/CommentForm.svelte'
   import CommentListVirtualizer from '$lib/components/lemmy/comment/CommentListVirtualizer.svelte'
-  import Comments from '$lib/components/lemmy/comment/Comments.svelte'
+  import Comments from '$lib/components/lemmy/comment/CommentList.svelte'
   import { buildCommentsTree } from '$lib/components/lemmy/comment/comments.svelte'
   import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
   import { t } from '$lib/i18n/translations'
