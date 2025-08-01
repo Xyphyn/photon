@@ -116,8 +116,7 @@
   {#if meta}
     <button
       onclick={() => (open = !open)}
-      class="flex flex-row cursor-pointer gap-2 items-center group text-[13px] flex-wrap w-full
-    z-0 group relative"
+      class="flex flex-row cursor-pointer gap-2 items-center group text-[13px] flex-wrap w-full z-0 group"
     >
       {@render metaSuffix?.()}
       <span class:font-bold={op} class="flex flex-row gap-1 items-center">
