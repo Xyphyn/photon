@@ -38,8 +38,8 @@
     popoverClass?: string
     class?: string
     target?: import('svelte').Snippet
-    popover?: import('svelte').Snippet
-    children?: import('svelte').Snippet
+    popover?: import('svelte').Snippet<[boolean]>
+    children?: import('svelte').Snippet<[boolean]>
   }
 
   let {
@@ -140,9 +140,9 @@
       use:focusTrap
       bind:this={popoverEl}
     >
-      {#if popover}{@render popover()}{:else}
+      {#if popover}{@render popover(open)}{:else}
         <Material elevation="high" color="distinct" class="flex flex-col">
-          {@render children?.()}
+          {@render children?.(open)}
         </Material>
       {/if}
     </div>

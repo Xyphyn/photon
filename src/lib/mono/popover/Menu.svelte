@@ -18,7 +18,7 @@
     strategy?: Strategy
     class?: string
     target?: import('svelte').Snippet
-    children?: import('svelte').Snippet
+    children?: import('svelte').Snippet<[boolean]>
   }
 
   let {
@@ -57,7 +57,7 @@
         rounded-2xl
         border border-slate-300 dark:border-zinc-800 border-opacity-50"
       >
-        {@render children?.()}
+        {@render children?.(open)}
       </div>
     </div>
   {/snippet}

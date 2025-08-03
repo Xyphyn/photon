@@ -4,7 +4,7 @@
   import { mediaType } from '$lib/components/lemmy/post/helpers.js'
   import PostMedia from '$lib/components/lemmy/post/media/PostMedia.svelte'
   import Post from '$lib/components/lemmy/post/Post.svelte'
-  import PostActions from '$lib/components/lemmy/post/PostActions.svelte'
+  import PostActions from '$lib/components/lemmy/post/actions/PostActions.svelte'
   import PostMeta, {
     parseTags,
   } from '$lib/components/lemmy/post/PostMeta.svelte'
