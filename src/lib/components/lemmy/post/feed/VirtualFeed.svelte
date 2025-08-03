@@ -14,13 +14,13 @@
   import { settings } from '$lib/settings.svelte.js'
   import type { PostView } from 'lemmy-js-client'
   import { Button } from 'mono-svelte'
-  import { onMount, untrack } from 'svelte'
+  import { onDestroy, onMount, untrack } from 'svelte'
   import {
     ArchiveBox,
+    ArrowTopRightOnSquare,
     ChevronDoubleUp,
     ExclamationTriangle,
     Icon,
-    Plus,
   } from 'svelte-hero-icons'
   import InfiniteScroll from 'svelte-infinite-scroll'
 
@@ -49,14 +49,20 @@
   let loading = $state(false)
   let hasMore = $state(true)
 
+  const abortLoad = new AbortController()
+
   async function loadMore() {
-    console.log(hasMore, loading)
     if (!hasMore || loading) return
 
     try {
       loading = true
 
-      const newPosts = await client()
+      console.log('fetching with cursor', feedData.cursor.next)
+
+      const newPosts = await client({
+        func: (input, init) =>
+          fetch(input, { ...init, signal: abortLoad.signal }),
+      })
         .getPosts({
           page_cursor: feedData.cursor.next,
           disliked_only: feedData.disliked_only,
@@ -77,6 +83,15 @@
       error = null
 
       hasMore = newPosts.posts.length != 0
+
+      let postIds: number[] = []
+      let duplicates: number[] = []
+      for (const post of newPosts.posts) {
+        if (postIds.includes(post.post.id)) duplicates.push(post.post.id)
+        else postIds.push(post.post.id)
+      }
+
+      console.log('are there duplicates?', duplicates)
 
       feedData.cursor.next = newPosts.next_page
       feedData.posts.posts.push(...newPosts.posts)
@@ -150,6 +165,10 @@
   })
 
   let initialOffset = $derived(listEl?.offsetTop)
+
+  onDestroy(() => {
+    abortLoad?.abort()
+  })
 </script>
 
 <ul class="flex flex-col list-none" bind:this={listEl}>
@@ -158,14 +177,14 @@
       <div class="h-full grid place-items-center">
         <Placeholder
           icon={ArchiveBox}
-          title="No posts"
-          description="There are no posts that match this filter."
+          title={$t('routes.frontpage.empty.title')}
+          description={$t('routes.frontpage.empty.description')}
         >
-          <Button href="/communities">
+          <Button href="/communities" rounding="pill" color="primary">
             {#snippet prefix()}
-              <Icon src={Plus} size="16" mini />
+              <Icon src={ArrowTopRightOnSquare} size="16" mini />
             {/snippet}
-            <span>Follow some communities</span>
+            {$t('nav.communities')}
           </Button>
         </Placeholder>
       </div>
@@ -256,14 +275,7 @@
         </EndPlaceholder>
       </div>
     {/if}
-    <InfiniteScroll
-      window
-      threshold={600}
-      on:loadMore={() => {
-        console.log('loadMore triggered')
-        loadMore()
-      }}
-    />
+    <InfiniteScroll window threshold={600} on:loadMore={loadMore} />
   {/if}
   {@render children?.()}
 </ul>

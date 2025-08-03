@@ -213,7 +213,11 @@
         "frontpage": {
             "title": "Frontpage",
             "footer": "{{users:number}} active {{users; 1:user; default:users;}}",
-            "endFeed": "You have reached the end of {{community_name; undefined:the feed.; default:{{community_name}}.}}"
+            "endFeed": "You have reached the end of {{community_name; undefined:the feed.; default:{{community_name}}.}}",
+            "empty": {
+                "title": "No posts",
+                "description": "There are no posts that match this filter."
+            }
         },
         "modlog": {
             "title": "Modlog",
