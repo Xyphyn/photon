@@ -60,9 +60,7 @@
     this={!settings.expandImages || type != 'image' ? 'a' : 'button'}
     href={postLink(post)}
     onclick={() => {
-      if (type == 'image') {
-        showImage(bestImageURL(post, false, -1))
-      }
+      if (type == 'image') showImage(bestImageURL(post, false, -1))
     }}
     role="button"
     tabindex="0"
@@ -109,7 +107,7 @@
             <div
               class={[
                 'absolute w-8 h-8 m-1 bottom-0 left-0 rounded-xl text-slate-800 dark:text-zinc-200',
-                'bg-slate-25 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700',
+                'bg-slate-25 dark:bg-zinc-900',
                 'grid place-items-center',
               ]}
             >
@@ -138,8 +136,8 @@
       <div
         class={[
           'object-cover overflow-hidden bg-slate-50 dark:bg-zinc-900 rounded-xl',
-          'border border-slate-200 dark:border-zinc-800 group-hover/media:border-slate-400',
-          'dark:group-hover/media:border-zinc-600 transition-colors text-slate-400 dark:text-zinc-600 grid',
+          'border border-slate-200 dark:border-zinc-800',
+          'transition-colors text-slate-400 dark:text-zinc-600 grid',
           'place-items-center',
           size,
         ]}
