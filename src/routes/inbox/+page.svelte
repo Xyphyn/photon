@@ -135,7 +135,7 @@ items-center px-2 w-max top-6 lg:top-22"
       color="primary"
     >
       {#snippet prefix()}
-        <Icon src={Check} width={16} mini />
+        <Icon src={Check} size="16" mini />
       {/snippet}
       {$t('routes.inbox.markAsRead')}
     </Button>

@@ -194,7 +194,7 @@
     </MenuButton>
     <MenuButton onclick={() => report(post)} color="danger-subtle">
       {#snippet prefix()}
-        <Icon src={Flag} width={16} micro />
+        <Icon src={Flag} size="16" micro />
       {/snippet}
       {$t('moderation.report')}
     </MenuButton>

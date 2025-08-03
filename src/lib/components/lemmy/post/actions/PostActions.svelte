@@ -180,7 +180,7 @@
         animations={{ scale: true, large: true }}
       >
         {#snippet prefix()}
-          <Icon src={EllipsisHorizontal} width={16} micro />
+          <Icon src={EllipsisHorizontal} size="16" micro />
         {/snippet}
       </Button>
     {/snippet}
