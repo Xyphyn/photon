@@ -1,5 +1,6 @@
 import { settings } from '$lib/settings.svelte'
 import type { PostView } from 'lemmy-js-client'
+import { SvelteMap, SvelteSet } from 'svelte/reactivity'
 
 export type PostViewWithCrossposts = PostView & {
   withCrossposts: true
@@ -10,12 +11,12 @@ export type PostViewWithoutCrossposts = PostView & { withCrossposts?: false }
 export const combineCrossposts = (
   posts: PostView[],
 ): (PostViewWithCrossposts | PostViewWithoutCrossposts)[] => {
-  const urlMap = new Map<
+  const urlMap = new SvelteMap<
     string,
     PostViewWithCrossposts | PostViewWithoutCrossposts
   >()
   const results: (PostViewWithCrossposts | PostViewWithoutCrossposts)[] = []
-  const seenUrls = new Set<string>()
+  const seenUrls = new SvelteSet<string>()
 
   posts?.forEach(post => {
     if (
