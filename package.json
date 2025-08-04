@@ -17,7 +17,7 @@
     "@tailwindcss/postcss": "^4.1.8",
     "@types/nprogress": "^0.2.0",
     "@types/ua-parser-js": "^0.7.39",
-    "@xylightdev/svelte-hero-icons": "link:@xylightdev/svelte-hero-icons",
+    "@xylightdev/svelte-hero-icons": "^2.2.4",
     "eslint": "^9.28.0",
     "eslint-plugin-svelte": "^3.11.0",
     "jsdom": "^22.1.0",
