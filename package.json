@@ -45,7 +45,7 @@
     "vite": "^5.4.14"
   },
   "overrides": {
-    "svelte": "^5.34.8"
+    "svelte": "^5.37.3"
   },
   "private": true,
   "scripts": {
