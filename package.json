@@ -1,6 +1,6 @@
 {
   "name": "photon-lemmy",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "license": "AGPL-3.0-only",
   "devDependencies": {
     "@dicebear/core": "^8.0.1",
