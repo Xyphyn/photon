@@ -64,12 +64,11 @@
     Megaphone,
     PaperAirplane,
     Pencil,
+    ShieldCheck,
     Tag,
     Trash,
     type IconSource,
   } from 'svelte-hero-icons'
-  import CommunityHeader from '../community/CommunityHeader.svelte'
-  import ShieldIcon from '../moderation/ShieldIcon.svelte'
   import Material from 'mono-svelte/materials/Material.svelte'
 
   interface Props {
@@ -144,7 +143,7 @@
   {style}
 >
   {#if showCommunity && community}
-    <Popover autoClose={false} popoverClass="backdrop-blur-xl rounded-2xl">
+    <Popover>
       {#snippet target()}
         <button
           class={[
@@ -171,15 +170,17 @@
           {/if}
         </button>
       {/snippet}
-      {#snippet popover()}
-        {#if community && subscribed}
+      {#snippet popover(open)}
+        {#if open && community && subscribed}
           <Material
             color="uniform"
             rounding="2xl"
             elevation="high"
             class="max-w-2xl w-full max-h-128 overflow-auto"
           >
-            <CommunityHeader {community} {subscribed} />
+            {#await import('../community/CommunityHeader.svelte') then { default: CommunityHeader }}
+              <CommunityHeader {community} {subscribed} />
+            {/await}
           </Material>
         {/if}
       {/snippet}
@@ -197,9 +198,7 @@
   {/if}
   <div
     class="flex flex-row gap-1.5 items-center
-     no-list-margin {view == 'compact' && showCommunity
-      ? 'min-[480px]:mx-2'
-      : ''}"
+     no-list-margin {view == 'compact' && showCommunity ? 'min-sm:mx-2' : ''}"
     style="grid-area: stats;"
   >
     {#if user}
@@ -209,21 +208,16 @@
             src={PaperAirplane}
             size="12"
             micro
-            class="rotate-180 text-slate-400 dark:text-zinc-600 max-[480px]:hidden"
+            class="rotate-180 text-slate-400 dark:text-zinc-600 max-sm:hidden"
           />
         {/if}
-        <UserLink
-          avatarSize={20}
-          {user}
-          avatar={!showCommunity}
-          class="shrink "
-        >
+        <UserLink avatarSize={20} {user} avatar={!showCommunity} class="shrink">
           {#snippet extraBadges()}
             {#if badges.moderator}
-              <ShieldIcon filled width={14} class="text-green-500" />
+              <Icon src={ShieldCheck} size="14" mini class="text-green-500" />
             {/if}
             {#if badges.admin}
-              <ShieldIcon filled width={14} class="text-red-500" />
+              <Icon src={ShieldCheck} size="14" mini class="text-red-500" />
             {/if}
           {/snippet}
         </UserLink>
@@ -245,8 +239,8 @@
     {/if}
   </div>
   <div
-    class="flex flex-row min-[480px]:justify-end items-center self-center
-    flex-wrap gap-2 *:shrink-0 badges min-[480px]:ml-2"
+    class="flex flex-row min-sm:justify-end items-center self-center
+    flex-wrap gap-2 *:shrink-0 badges min-sm:ml-2"
     style="grid-area: badges;"
   >
     {#if tags}
@@ -341,7 +335,7 @@
       ? '_blank'
       : undefined}
     class={[
-      'inline max-[480px]:mt-0!',
+      'inline max-sm:mt-0!',
       'hover:underline hover:text-primary-900 dark:hover:text-primary-100 transition-colors',
       'font-medium',
       titleClass,
@@ -379,7 +373,7 @@
     grid-template-columns: 0fr;
   }
 
-  @media screen and (max-width: 480px) {
+  @media screen and (max-width: 40rem) {
     .meta.compact {
       grid-template-areas:
         'avatar community'
@@ -393,7 +387,7 @@
     }
   }
 
-  @media screen and (min-width: 480px) {
+  @media screen and (min-width: 40rem) {
     .meta.compact {
       display: flex;
       flex-direction: row;

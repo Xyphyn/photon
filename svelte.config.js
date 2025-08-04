@@ -43,6 +43,7 @@ const config = {
     },
     alias: {
       'mono-svelte': 'src/lib/mono',
+      'svelte-hero-icons': 'node_modules/@xylightdev/svelte-hero-icons',
     },
   },
 }

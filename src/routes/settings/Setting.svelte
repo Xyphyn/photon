@@ -91,12 +91,12 @@
       {@render title?.()}
     </h2>
     {#if description}
-      <p
+      <div
         class="text-slate-600 dark:text-zinc-400 text-sm"
         style="grid-area: description; place-self: start start;"
       >
         {@render description?.()}
-      </p>
+      </div>
     {/if}
     {#if children}
       <div

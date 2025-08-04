@@ -1,6 +1,7 @@
 {
   "name": "photon-lemmy",
   "version": "2.0.0",
+  "license": "AGPL-3.0-only",
   "devDependencies": {
     "@dicebear/core": "^8.0.1",
     "@dicebear/initials": "^8.0.1",
@@ -16,23 +17,23 @@
     "@tailwindcss/postcss": "^4.1.8",
     "@types/nprogress": "^0.2.0",
     "@types/ua-parser-js": "^0.7.39",
+    "@xylightdev/svelte-hero-icons": "^2.2.4",
     "eslint": "^9.28.0",
-    "eslint-plugin-svelte": "^3.9.1",
+    "eslint-plugin-svelte": "^3.11.0",
     "jsdom": "^22.1.0",
     "lemmy-js-client": "0.19.11-donation-dialog.1",
     "linkify-it": "^5.0.0",
     "marked": "7.0.5",
-    "marked-linkify-it": "^3.1.10",
+    "marked-linkify-it": "^3.1.13",
     "nprogress": "^0.2.0",
     "postcss": "^8.4.30",
     "prettier": "^3.3.3",
     "prettier-plugin-svelte": "^3.2.7",
-    "svelte": "^5.34.8",
+    "svelte": "^5.37.3",
     "svelte-adapter-bun-next": "^1.0.3",
     "svelte-check": "^4.0.0",
     "svelte-floating-ui": "^1.5.9",
     "svelte-focus-trap": "^1.2.0",
-    "svelte-hero-icons": "^5.2.0",
     "svelte-infinite-scroll": "^2.0.1",
     "svelte-markdown": "^0.4.1",
     "sveltekit-i18n": "^2.4.2",
@@ -44,7 +45,7 @@
     "vite": "^5.4.14"
   },
   "overrides": {
-    "svelte": "^5.34.8"
+    "svelte": "^5.37.3"
   },
   "private": true,
   "scripts": {

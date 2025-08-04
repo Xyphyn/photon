@@ -230,18 +230,16 @@
     {#if env.PUBLIC_XYLIGHT_MODE}
       <Setting icon={Heart}>
         {#snippet title()}
-          <span class="dark:text-pink-400 text-pink-600 font-medium">
+          <span class="dark:text-pink-400 text-pink-600">
             {$t('nav.menu.donate')}
           </span>
         {/snippet}
         {#snippet description()}
-          <p class="max-w-xl">
-            {$t('settings.donate.description')}
-          </p>
+          {$t('settings.donate.description')}
         {/snippet}
         <Button
           color="none"
-          class="dark:bg-pink-400 bg-pink-600 text-white dark:text-black"
+          class="bg-gradient-to-r dark:from-pink-400 dark:to-fuchsia-400 from-pink-600 to-red-600 text-white dark:text-black"
           href="https://buymeacoffee.com/xylight"
           target="_blank"
           rounding="xl"
@@ -253,44 +251,42 @@
         </Button>
       </Setting>
     {/if}
-    <li class="flex flex-col gap-2">
-      <Setting icon={Language}>
-        {#snippet title()}
-          {$t('settings.app.lang.title')}
-        {/snippet}
-        {#snippet description()}
-          <p>
-            {$t('settings.app.lang.description')}
-            <Link href="/translators" highlight class="text-base font-semibold">
-              {$t('settings.app.lang.credits')}
-            </Link>
-          </p>
-        {/snippet}
-        <!--@ts-ignore-->
-        <Select bind:value={settings.language}>
-          <Option icon={Language} value={null}>
-            {$t('settings.app.lang.auto')}
+    <Setting icon={Language}>
+      {#snippet title()}
+        {$t('settings.app.lang.title')}
+      {/snippet}
+      {#snippet description()}
+        <p>
+          {$t('settings.app.lang.description')}
+          <Link href="/translators" highlight class="text-base font-semibold">
+            {$t('settings.app.lang.credits')}
+          </Link>
+        </p>
+      {/snippet}
+      <!--@ts-ignore-->
+      <Select bind:value={settings.language}>
+        <Option icon={Language} value={null}>
+          {$t('settings.app.lang.auto')}
+        </Option>
+        {#each $locales as locale (locale)}
+          {@const mapped = localeMap.get(locale) ?? {
+            flag: '',
+            translated: 1,
+            name: locale,
+          }}
+          <Option value={locale}>
+            {mapped?.flag}
+            {mapped?.name}
           </Option>
-          {#each $locales as locale (locale)}
-            {@const mapped = localeMap.get(locale) ?? {
-              flag: '',
-              translated: 1,
-              name: locale,
-            }}
-            <Option value={locale}>
-              {mapped?.flag}
-              {mapped?.name}
-            </Option>
-          {/each}
-        </Select>
-      </Setting>
-      {#if $locale == 'he' || $locale == 'ar'}
-        <ToggleSetting
-          bind:checked={settings.useRtl}
-          title={$t('settings.app.lang.useRtl.title')}
-        ></ToggleSetting>
-      {/if}
-    </li>
+        {/each}
+      </Select>
+    </Setting>
+    {#if $locale == 'he' || $locale == 'ar'}
+      <ToggleSetting
+        bind:checked={settings.useRtl}
+        title={$t('settings.app.lang.useRtl.title')}
+      ></ToggleSetting>
+    {/if}
     <Setting icon={ViewColumns}>
       {#snippet title()}
         <span>{$t('settings.app.view.title')}</span>

@@ -10,6 +10,7 @@
   import { site } from '$lib/lemmy.svelte.js'
   import { Badge, Menu, MenuButton, MenuDivider, Spinner } from 'mono-svelte'
   import {
+    Bars3,
     Bell,
     GlobeAlt,
     Icon,
@@ -23,9 +24,8 @@
   } from 'svelte-hero-icons'
   import type { ClassValue } from 'svelte/elements'
   import Logo from '../Logo.svelte'
-  import NavButton from './NavButton.svelte'
-  import Profile from './Profile.svelte'
   import CommandsWrapper from './commands/CommandsWrapper.svelte'
+  import NavButton from './NavButton.svelte'
 
   let promptOpen: boolean = $state(false)
   interface Props {
@@ -197,6 +197,38 @@
         </span>
       {/if}
     </Menu>
-    <Profile placement="top" />
+    <Menu>
+      {#snippet target()}
+        <button
+          class="w-10 h-10 rounded-full border-slate-200 dark:border-zinc-700
+      transition-all bg-slate-50 dark:bg-zinc-900 relative
+      hover:bg-slate-200 dark:hover:bg-zinc-700 group cursor-pointer"
+          title={$t('profile.profile')}
+        >
+          {#if profile.current?.user}
+            <div
+              class="w-full h-full aspect-square object-cover rounded-full grid place-items-center group-hover:scale-90 transition-transform group-active:scale-[85%]"
+            >
+              <Avatar
+                url={profile.current.user.local_user_view.person.avatar}
+                width={36}
+                alt={profile.current.user.local_user_view.person.name}
+              />
+            </div>
+          {:else}
+            <div class="w-full h-full grid place-items-center">
+              <Icon src={Bars3} micro size="18" />
+            </div>
+          {/if}
+        </button>
+      {/snippet}
+      {#snippet children(open)}
+        {#if open}
+          {#await import('./Profile.svelte') then { default: Profile }}
+            <Profile />
+          {/await}
+        {/if}
+      {/snippet}
+    </Menu>
   </div>
 </nav>

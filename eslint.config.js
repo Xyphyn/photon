@@ -23,11 +23,11 @@ export default ts.config(
       'no-undef': 'off',
       // sveltekit should make this native then
       'svelte/valid-prop-names-in-kit-pages': 'off',
-      'svelte/no-at-html-tags': 'warn',
-      '@typescript-eslint/no-unsafe-function-type': 'warn',
+      'svelte/no-at-html-tags': 'off',
+      '@typescript-eslint/no-unsafe-function-type': 'off',
       'svelte/require-each-key': 'off',
-      'svelte/prefer-writable-derived': 'warn',
-      'no-console': 'warn',
+      'svelte/prefer-writable-derived': 'off',
+      'no-console': 'off',
     },
   },
   {

@@ -7,7 +7,6 @@
   interface Props extends ButtonProps {
     href?: string | undefined
     icon?: IconSource | undefined
-    selected?: boolean
     class?: string
     customIcon?: import('svelte').Snippet<[{ selected: boolean }]>
     children?: import('svelte').Snippet
@@ -17,7 +16,6 @@
   let {
     href = undefined,
     icon = undefined,
-    selected = $bindable(false),
     class: clazz = '',
     customIcon,
     children,
@@ -25,11 +23,7 @@
     ...rest
   }: Props = $props()
 
-  $effect(() => {
-    if (href != undefined) {
-      selected = page.url.pathname == href
-    }
-  })
+  let selected = $derived(page.url.pathname == href)
 </script>
 
 <Button
