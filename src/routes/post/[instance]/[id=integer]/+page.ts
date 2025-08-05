@@ -59,7 +59,7 @@ function findInFeed(
     i => i.post.id == postId,
   )
 
-  if (index ?? -1 == -1) return
+  if ((index ?? -1) == -1) return
 
   return {
     post_view: postFeeds.value[feedId]?.data.posts.posts[index],
