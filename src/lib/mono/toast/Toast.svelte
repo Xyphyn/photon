@@ -43,7 +43,7 @@
       size="28"
       mini
       class={[
-        'relative self-center shrink-0 p-1 rounded-full',
+        'relative self-center shrink-0 p-1 rounded-lg',
         toast.type == 'info'
           ? 'bg-slate-200 dark:bg-zinc-50 text-slate-700 dark:text-zinc-700'
           : toast.type == 'success'

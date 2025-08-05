@@ -4,7 +4,7 @@ type ToastType = keyof typeof toastColors
 
 export const toastColors = {
   error: 'bg-red-100/50 dark:bg-red-900/20 border-red-300/40 border',
-  warning: 'bg-yellow-100/50 dark:bg-yellow-900/20 border-yellow-300/40 border',
+  warning: 'bg-yellow-100/50 dark:bg-yellow-500/5 border-yellow-500/40 border',
   success: 'bg-green-100/50 dark:bg-green-900/20 border-green-300/40 border',
   info: 'dark:bg-zinc-925/90 bg-white border border-slate-200 dark:border-zinc-800',
 }
