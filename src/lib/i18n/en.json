@@ -729,24 +729,6 @@
         "reset": "Reset",
         "navigation": {
             "title": "Navigation",
-            "dockPos": {
-                "title": "Dock position",
-                "description": "Where the dock should be positioned on the screen.",
-                "top": "Top",
-                "bottom": "Bottom",
-                "adaptive": "Adaptive"
-            },
-            "panel": {
-                "title": "Panel mode",
-                "description": "Extend the dock to the screen edges, similar to a panel.",
-                "on": "On",
-                "off": "Off",
-                "adaptive": "Adaptive"
-            },
-            "pins": {
-                "title": "Pins",
-                "description": "Click a pin to send it to the top of the sidebar. Right click a pinned item to remove it."
-            },
             "autoHide": {
                 "title": "Auto hide dock",
                 "description": "Hides the dock on mobile when you scroll down, re-appears when you scroll up."
@@ -787,21 +769,20 @@
             },
             "view": {
                 "title": "Post style",
-                "list": "Show posts in a list, with post bodies and compact media.",
                 "cozy": "Show posts with large images, rich embeds, and longer post bodies.",
                 "compact": "Show posts in a list, without post bodies and with tighter spacing."
             },
             "sort": {
                 "title": "Default sort",
-                "description": "The default sorting to use in feeds."
+                "description": "Changes the default sort type used in feeds."
             },
             "infiniteScroll": {
                 "title": "Infinite scroll",
-                "description": "New posts are added as you scroll down, without having to click 'next'."
+                "description": "Loads new posts as you scroll and appends them to the feed."
             },
             "postsInNewTab": {
                 "title": "Open posts in new tab",
-                "description": "Open posts in a separate tab instead of the current."
+                "description": "Opens posts in a separate tab instead of the current."
             },
             "displayName": {
                 "title": "Use display name",
@@ -816,16 +797,16 @@
                 "description": "Show random placeholders for certain text inputs."
             },
             "expandImages": {
-                "title": "Expand images",
+                "title": "Expandable thumbnails",
                 "description": "Clicking on a post's image brings you to an expanded view rather than the post page."
             },
             "duplicateTitles": {
-                "title": "Hide duplicate titles/bodies",
+                "title": "Hide duplicate embed content",
                 "description": "Hides the post title and body if they are identical to the embed."
             },
             "thumbnailSide": {
                 "title": "Thumbnail alignment",
-                "description": "Where thumbnails should be on the post in list/compact mode",
+                "description": "Changes where thumbnails for posts are displayed in compact mode.",
                 "left": "Left",
                 "right": "Right"
             },
@@ -835,13 +816,7 @@
             },
             "titleTags": {
                 "title": "Parse tags in title",
-                "description": "Take text in [brackets] and turn it into tags that you can click to search for.",
-                "rules": {
-                    "title": "Rules",
-                    "blur-sm": "Blur",
-                    "hide": "Hide",
-                    "show": "Show"
-                }
+                "description": "Take text in [brackets] and turn it into tags that you can click to search for."
             },
             "reverseActions": {
                 "title": "Reverse action row",
@@ -849,7 +824,7 @@
             },
             "absoluteDates": {
                 "title": "Absolute timestamps",
-                "description": "Replaces relative timestamps (3 hours ago) with absolute ones (15/6/25)"
+                "description": "Replaces relative timestamps (3 hours ago) with absolute ones (15/6/25)."
             },
             "titleOpensUrl": {
                 "title": "Title opens URL",
@@ -879,15 +854,15 @@
             "title": "Lemmy",
             "showHiddenPosts": {
                 "title": "Show hidden posts",
-                "description": "Show the posts you've manually hidden."
+                "description": "Shows the posts you've manually hidden."
             },
             "compactFeatured": {
                 "title": "Compact featured posts",
-                "description": "Make featured posts more compact"
+                "description": "Makes featured posts more compact."
             },
             "markReadPosts": {
-                "title": "Mark read posts",
-                "description": "Mark a post as read when you click on it"
+                "title": "Mark posts as read automatically",
+                "description": "Marks posts as read when you visit them."
             },
             "fadeReadPosts": {
                 "title": "Fade read posts",
@@ -895,7 +870,7 @@
             },
             "crosspostMarker": {
                 "title": "Mark crossposts",
-                "description": "Show 'crossposted from' when crossposting."
+                "description": "Insert 'crossposted from' and a link when crossposting."
             },
             "hideSubmissions": {
                 "title": "Hide submissions",
@@ -905,11 +880,11 @@
             },
             "nsfwBlur": {
                 "title": "NSFW blur",
-                "description": "Blur images and remove post bodies of NSFW posts."
+                "description": "Blurs images and remove post bodies of NSFW posts."
             },
             "instances": {
                 "title": "Show instances",
-                "description": "Show the instances where certain content is from."
+                "description": "Shows the instances where certain content is from."
             }
         },
         "moderation": {
@@ -924,7 +899,7 @@
             "title": "Other",
             "debug": {
                 "title": "Debug info",
-                "description": "Display debug information"
+                "description": "Displays debug information."
             },
             "virtualizeFeeds": {
                 "title": "Don't virtualize feeds",
@@ -935,7 +910,7 @@
             "title": "Account"
         },
         "donate": {
-            "description": "This app is open-source, and I've put my best effort into developing and maintaining it. If you'd like to support ongoing development, you can donate, or just recommend this to others!"
+            "description": "Photon will always be free and open-source, and is continously developed and designed to be helpful. If you like Photon and want to finanically support its development, you can donate here."
         }
     },
     "error": {

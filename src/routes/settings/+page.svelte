@@ -239,7 +239,7 @@
         {/snippet}
         <Button
           color="none"
-          class="bg-gradient-to-r dark:from-pink-400 dark:to-fuchsia-400 from-pink-600 to-red-600 text-white dark:text-black"
+          class="bg-gradient-to-r ml-6 dark:from-pink-400 dark:to-fuchsia-400 from-pink-600 to-red-600 text-white dark:text-black"
           href="https://buymeacoffee.com/xylight"
           target="_blank"
           rounding="xl"
