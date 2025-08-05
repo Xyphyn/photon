@@ -15,7 +15,7 @@
   import { publishedToDate } from '$lib/components/util/date.js'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import { t } from '$lib/i18n/translations.js'
-  import { getClient } from '$lib/lemmy.svelte.js'
+  import { client } from '$lib/lemmy.svelte.js'
   import { resumables } from '$lib/lemmy/item.js'
   import { settings } from '$lib/settings.svelte.js'
   import { isImage } from '$lib/ui/image.js'
@@ -36,23 +36,25 @@
 
   let { data } = $props()
 
-  onMount(async () => {
-    if (
-      !(data.post.value.post_view.read && settings.markPostsAsRead) &&
-      profile.current?.jwt
-    ) {
-      getClient().markPostAsRead({
-        read: settings.markPostsAsRead,
-        post_ids: [data.post.value.post_view.post.id],
-      })
-    }
-
+  onMount(() => {
     resumables.add({
       name: data.post.value.post_view.post.name,
       type: 'post',
       url: page.url.toString(),
       avatar: data.post.value.post_view.post.thumbnail_url,
     })
+
+    if (
+      !(data.post.value.post_view.read && settings.markPostsAsRead) &&
+      profile.current?.jwt
+    ) {
+      client()
+        .markPostAsRead({
+          read: true,
+          post_ids: [data.post.value.post_view.post.id],
+        })
+        .then(() => (data.post.value.post_view.read = true))
+    }
   })
 
   $effect(() => {
@@ -74,7 +76,7 @@
 
   async function reloadComments() {
     loading = true
-    data.comments.value = getClient().getComments({
+    data.comments.value = client().getComments({
       page: 1,
       limit: 25,
       type_: 'All',
@@ -133,7 +135,11 @@
       <PostMeta
         community={data.post.value.post_view.community}
         user={data.post.value.post_view.creator}
-        subscribed="NotSubscribed"
+        subscribed={profile.current.user?.follows.find(
+          i => i.community.id == data.post.value.post_view.community.id,
+        )
+          ? 'Subscribed'
+          : 'NotSubscribed'}
         badges={{
           deleted: data.post.value.post_view.post.deleted,
           removed: data.post.value.post_view.post.removed,
