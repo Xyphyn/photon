@@ -12,7 +12,7 @@
   import type {
     CommentSortType,
     GetCommentsResponse,
-    GetPostResponse,
+    PostView,
   } from 'lemmy-js-client'
   import { Button, Option, Select } from 'mono-svelte'
   import { onMount } from 'svelte'
@@ -28,7 +28,7 @@
   } from 'svelte-hero-icons'
 
   interface Props {
-    post: GetPostResponse
+    post: PostView
     comments: GetCommentsResponse
     sort?: CommentSortType
     onupdate?: () => void
@@ -68,13 +68,12 @@
       <Button
         color="primary"
         rounding="xl"
-        disabled={(post.post_view.post.locked ||
-          post.post_view.banned_from_community) &&
+        disabled={(post.post.locked || post.banned_from_community) &&
           !(
             profile.current?.user?.local_user_view.local_user.admin ||
             profile.current?.user?.moderates
               .map(c => c.community.id)
-              .includes(post.community_view.community.id)
+              .includes(post.community.id)
           )}
         onclick={() => (commenting = true)}
       >
@@ -116,7 +115,7 @@
     </EndPlaceholder>
   {:else}
     <CommentForm
-      postId={post.post_view.post.id}
+      postId={post.post.id}
       oncomment={comment => {
         comments.comments.unshift(comment.comment_view)
       }}
@@ -157,15 +156,11 @@
   </div>
 {/if}
 {#if virtualize}
-  <CommentListVirtualizer
-    post={post.post_view.post}
-    nodes={tree}
-    scrollTo={focus}
-  />
+  <CommentListVirtualizer post={post.post} nodes={tree} scrollTo={focus} />
 {:else}
   <div class="divide-y divide-slate-200 dark:divide-zinc-800">
     <div class="-mx-3 sm:-mx-6 px-3 sm:px-6">
-      <Comments nodes={tree} post={post.post_view.post} />
+      <Comments nodes={tree} post={post.post} />
     </div>
   </div>
 {/if}

@@ -15,12 +15,12 @@
   import { publishedToDate } from '$lib/components/util/date.js'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import { t } from '$lib/i18n/translations.js'
-  import { getClient } from '$lib/lemmy.svelte.js'
+  import { client } from '$lib/lemmy.svelte.js'
   import { resumables } from '$lib/lemmy/item.js'
   import { settings } from '$lib/settings.svelte.js'
   import { isImage } from '$lib/ui/image.js'
   import { Button, toast } from 'mono-svelte'
-  import { onMount } from 'svelte'
+  import { onMount, untrack } from 'svelte'
   import {
     ArrowLeft,
     ArrowRight,
@@ -32,33 +32,51 @@
   import { fly } from 'svelte/transition'
   import CommentProvider from './CommentProvider.svelte'
   import { ReactiveState } from '$lib/promise.svelte'
+  import { postFeeds } from '$lib/lemmy/postfeed.svelte'
 
   let { data } = $props()
 
-  onMount(async () => {
-    if (
-      !(data.post.value.post_view.read && settings.markPostsAsRead) &&
-      profile.current?.jwt
-    ) {
-      getClient().markPostAsRead({
-        read: settings.markPostsAsRead,
-        post_ids: [data.post.value.post_view.post.id],
-      })
-    }
-
+  onMount(() => {
     resumables.add({
       name: data.post.value.post_view.post.name,
       type: 'post',
       url: page.url.toString(),
       avatar: data.post.value.post_view.post.thumbnail_url,
     })
+
+    if (
+      !(data.post.value.post_view.read && settings.markPostsAsRead) &&
+      profile.current?.jwt
+    ) {
+      client()
+        .markPostAsRead({
+          read: true,
+          post_ids: [data.post.value.post_view.post.id],
+        })
+        .then(() => (data.post.value.post_view.read = true))
+    }
+  })
+
+  $effect(() => {
+    data.post.value.meta.then(
+      res => (data.post.value.post_view = res.post_view),
+    )
+  })
+
+  $effect(() => {
+    if (data.cachedFeed && data.post.value.post_view) {
+      untrack(() => {
+        const { id, index } = data.cachedFeed!
+        postFeeds.value[id].data.posts.posts[index] = data.post.value.post_view
+      })
+    }
   })
 
   let loading = $state(false)
 
   async function reloadComments() {
     loading = true
-    data.comments.value = getClient().getComments({
+    data.comments.value = client().getComments({
       page: 1,
       limit: 25,
       type_: 'All',
@@ -117,7 +135,11 @@
       <PostMeta
         community={data.post.value.post_view.community}
         user={data.post.value.post_view.creator}
-        subscribed={data.post.value.community_view.subscribed}
+        subscribed={profile.current.user?.follows.find(
+          i => i.community.id == data.post.value.post_view.community.id,
+        )
+          ? 'Subscribed'
+          : 'NotSubscribed'}
         badges={{
           deleted: data.post.value.post_view.post.deleted,
           removed: data.post.value.post_view.post.removed,
@@ -171,34 +193,36 @@
         })}
     />
   </div>
-  {#if data.post.value.cross_posts?.length > 0}
-    {@const crossposts = data.post.value.cross_posts}
-    <Expandable
-      class="text-base mt-2 w-full cursor-pointer"
-      open={crossposts?.length <= 3}
-    >
-      {#snippet title()}
-        <div
-          class="flex items-center gap-1 w-full text-left text-base font-normal"
-        >
-          <span class="font-bold">{crossposts.length}</span>
-          {$t('routes.post.crosspostCount')}
-          <hr
-            class="flex-1 inline-block w-full border-slate-200 dark:border-zinc-800 mx-3"
-          />
-        </div>
-      {/snippet}
-      <div
-        class="divide-y! divide-slate-200 dark:divide-zinc-800 flex flex-col"
+  {#await data.post.value.meta then meta}
+    {@const crossposts = meta.cross_posts}
+    {#if crossposts?.length > 0}
+      <Expandable
+        class="text-base mt-2 w-full cursor-pointer"
+        open={crossposts?.length <= 3}
       >
-        {#key crossposts}
-          {#each crossposts as crosspost (crosspost.post.id)}
-            <Post view="compact" post={crosspost} />
-          {/each}
-        {/key}
-      </div>
-    </Expandable>
-  {/if}
+        {#snippet title()}
+          <div
+            class="flex items-center gap-1 w-full text-left text-base font-normal"
+          >
+            <span class="font-bold">{crossposts.length}</span>
+            {$t('routes.post.crosspostCount')}
+            <hr
+              class="flex-1 inline-block w-full border-slate-200 dark:border-zinc-800 mx-3"
+            />
+          </div>
+        {/snippet}
+        <div
+          class="divide-y! divide-slate-200 dark:divide-zinc-800 flex flex-col"
+        >
+          {#key crossposts}
+            {#each crossposts as crosspost (crosspost.post.id)}
+              <Post view="compact" post={crosspost} />
+            {/each}
+          {/key}
+        </div>
+      </Expandable>
+    {/if}
+  {/await}
 </article>
 {#if data.thread.value.showContext || data.thread.value.singleThread}
   <div
@@ -266,7 +290,7 @@
     {@const comments = new ReactiveState(passedComments)}
     <CommentProvider
       comments={comments.value}
-      post={data.post.value}
+      post={data.post.value.post_view}
       focus={data.thread.value.focus}
       onupdate={reloadComments}
       bind:sort={data.commentSort.value}
