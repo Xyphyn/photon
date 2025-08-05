@@ -24,7 +24,11 @@
 <svelte:element
   this={settings.expandImages ? 'button' : 'a'}
   href={postLink(post)}
-  class="container mx-auto z-10 rounded-xl max-h-[60vh] relative overflow-hidden bg-slate-100 dark:bg-zinc-900"
+  class={[
+    'container/a z-10 rounded-2xl cursor-pointer relative overflow-hidden',
+    'bg-slate-100 dark:bg-zinc-900 transition-colors p-2',
+    'border border-slate-200 dark:border-zinc-800 hover:border-slate-300 hover:dark:border-zinc-700',
+  ]}
   data-sveltekit-preload-data="off"
   aria-label={post.name}
   onclick={() => showImage(bestImageURL(post, false, -1, null))}
@@ -32,14 +36,15 @@
   tabindex="0"
 >
   <!-- svelte-ignore a11y_missing_attribute -->
-  <img
-    loading="lazy"
-    fetchpriority="auto"
-    src={bestImageURL(post, false, 64)}
-    class="-z-10 absolute top-0 left-0 w-full h-full object-cover blur-lg
-         scale-[1.2] opacity-50"
-  />
-  <picture class="max-h-[inherit]">
+  <div class="inset-2 absolute -z-10 rounded-xl overflow-hidden">
+    <img
+      loading="lazy"
+      fetchpriority="auto"
+      src={bestImageURL(post, false, 64)}
+      class=" object-cover w-full h-full opacity-50 blur-lg"
+    />
+  </div>
+  <picture class="max-h-[60vh]">
     {#each ['webp'] as format}
       <source
         srcset="{bestImageURL(
@@ -66,7 +71,7 @@
       src={bestImageURL(post, false, -1, null)}
       loading="lazy"
       class={[
-        'max-h-[inherit] max-w-full h-auto z-30 transition-opacity duration-500 object-contain mx-auto',
+        'max-w-full rounded-xl z-30 transition-opacity max-h-[60vh] duration-500 object-contain mx-auto',
         imageLoaded === false ? 'opacity-0' : 'opacity-100',
         blur && 'blur-3xl',
       ]}

@@ -46,7 +46,7 @@
   @component
   Thumbnails for compact and list view posts.
 -->
-<div class="{size} relative group/media {clazz ?? ''}" {style}>
+<div class={[size, 'relative group/media', clazz]} {style}>
   {#if post.alt_text}
     <Button
       rounding="pill"
@@ -64,11 +64,18 @@
     }}
     role="button"
     tabindex="0"
-    class="cursor-pointer"
+    class="cursor-pointer h-full"
   >
-    {#if post.thumbnail_url || isImage(post.url)}
-      {@const thumbnail = post.thumbnail_url != undefined && !isImage(post.url)}
-      <div class="relative overflow-hidden rounded-xl">
+    <div
+      class={[
+        'relative overflow-hidden rounded-2xl max-h-full',
+        'p-1 h-full',
+        'border border-slate-200 dark:border-zinc-800 hover:border-slate-300 dark:hover:border-zinc-700',
+      ]}
+    >
+      {#if post.thumbnail_url || isImage(post.url)}
+        {@const thumbnail =
+          post.thumbnail_url != undefined && !isImage(post.url)}
         <picture>
           <!--I would add AVIF, but lemmy.world's AVIF is broken as of currently-->
           {#each ['webp'] as format}
@@ -97,7 +104,7 @@
             src={bestImageURL(post, thumbnail, -1, null)}
             loading="lazy"
             class={[
-              'object-cover relative overflow-hidden bg-slate-100 dark:bg-zinc-800 rounded-xl transition-colors',
+              'object-cover relative overflow-hidden rounded-xl h-full bg-slate-200 dark:bg-zinc-900',
               size,
             ]}
             alt={post.alt_text ?? ' '}
@@ -119,39 +126,32 @@
             </div>
           {/if}
         </picture>
-      </div>
-      {#if blur}
+      {:else}
         <div
-          class="absolute w-full h-full grid place-items-center inset-0 z-30"
+          class={[
+            'bg-slate-100 dark:bg-zinc-900 w-full h-full rounded-xl grid place-items-center',
+            'text-slate-600 dark:text-zinc-400',
+          ]}
         >
           <Icon
-            src={ExclamationTriangle}
+            src={type == 'embed'
+              ? Link
+              : type == 'iframe'
+                ? VideoCamera
+                : DocumentText}
             solid
             size="32"
-            class="z-50 opacity-30"
           />
         </div>
       {/if}
-    {:else}
-      <div
-        class={[
-          'object-cover overflow-hidden bg-slate-50 dark:bg-zinc-900 rounded-xl',
-          'border border-slate-200 dark:border-zinc-800',
-          'transition-colors text-slate-400 dark:text-zinc-600 grid',
-          'place-items-center',
-          size,
-        ]}
-      >
-        <Icon
-          src={type == 'embed'
-            ? Link
-            : type == 'iframe'
-              ? VideoCamera
-              : DocumentText}
-          solid
-          size="32"
-        />
-      </div>
+    </div>
+    {#if blur}
+      <Icon
+        src={ExclamationTriangle}
+        solid
+        size="32"
+        class="absolute w-8 h-8 mx-auto my-auto z-30 inset-0 opacity-30"
+      />
     {/if}
   </svelte:element>
 </div>
