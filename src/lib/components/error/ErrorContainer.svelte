@@ -16,9 +16,8 @@
 </script>
 
 <script lang="ts">
-  import { Button } from 'mono-svelte'
   import { onDestroy } from 'svelte'
-  import { Icon, XCircle, XMark } from 'svelte-hero-icons'
+  import { ExclamationTriangle, Icon } from 'svelte-hero-icons'
   import { expoOut } from 'svelte/easing'
   import { fly, slide } from 'svelte/transition'
 
@@ -39,37 +38,30 @@
 
 {#if scopedErrors.length > 0}
   <div
-    class={clazz}
+    class={['flex flex-col gap-4', clazz]}
     in:slide={{ duration: 400, easing: expoOut }}
     out:slide={{ duration: 400, delay: 400, easing: expoOut }}
   >
     <div
-      class="flex flex-row p-1.5 bg-red-100/50 dark:bg-red-900/10 rounded-xl border border-red-300/40 gap-2 items-center"
-      in:fly={{ y: -8, duration: 400, delay: 200, opacity: 0, easing: expoOut }}
+      in:fly|global={{
+        y: -8,
+        duration: 400,
+        delay: 200,
+        opacity: 0,
+        easing: expoOut,
+      }}
       out:fly={{ y: -8, duration: 400, opacity: 0, easing: expoOut }}
+      class="bg-red-400/10 border border-red-500/30 text-red-900 dark:text-red-50 rounded-2xl p-4"
     >
       <Icon
-        src={XCircle}
-        size="28"
+        src={ExclamationTriangle}
+        size="32"
         mini
-        class={[
-          'relative self-center shrink-0 p-0.5 rounded-full',
-          'bg-red-400 dark:bg-red-400 dark:text-red-900 text-red-50',
-        ]}
+        class="inline-block rounded-lg bg-red-500 p-1.5 text-white clear-both float-left mr-2"
       />
-      <div class="flex flex-col text-sm font-medium gap-4">
-        {#each scopedErrors as error}
-          {error.message}
-        {/each}
-      </div>
-      <Button
-        onclick={() => clearErrorScope(scope)}
-        color="tertiary"
-        size="square-sm"
-        class="ml-auto"
-      >
-        <Icon src={XMark} size="16" micro />
-      </Button>
+      {#each scopedErrors as error}
+        <p>{error.message}</p>
+      {/each}
     </div>
   </div>
 {/if}
