@@ -36,7 +36,7 @@
     'font-normal block',
     'hover:text-slate-900 hover:dark:text-zinc-50',
     selected
-      ? 'text-slate-950 dark:text-zinc-50'
+      ? 'text-primary-900 dark:text-primary-100'
       : 'text-slate-600 dark:text-zinc-400',
     clazz,
   ]}

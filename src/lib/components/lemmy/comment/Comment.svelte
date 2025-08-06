@@ -145,14 +145,14 @@
       />
       <span class="text-slate-600 dark:text-zinc-400 flex flex-row gap-2 ml-1">
         {#if node.comment_view.comment.updated}
-          <Icon src={Pencil} solid size="12" title="Edited" />
+          <Icon src={Pencil} solid size="12" aria-label="Edited" />
         {/if}
         {#if node.comment_view.comment.deleted || node.comment_view.comment.removed}
           <Icon
             src={Trash}
             solid
             size="12"
-            title={$t('post.badges.deleted')}
+            aria-label={$t('post.badges.deleted')}
             class="text-red-600 dark:text-red-500"
           />
         {/if}
@@ -161,7 +161,7 @@
             src={Bookmark}
             solid
             size="12"
-            title={$t('post.badges.saved')}
+            aria-label={$t('post.badges.saved')}
             class="text-yellow-600 dark:text-yellow-500"
           />
         {/if}
@@ -182,10 +182,10 @@
             'text-base text-slate-700 dark:text-zinc-300 *:leading-[1.6] break-words space-y-3',
 
             node.comment_view.comment.distinguished
-              ? 'bg-green-400/10 p-1 rounded-lg w-max font-medium'
+              ? 'bg-green-400/10 p-2 rounded-xl max-w-max font-medium'
               : page.url.hash.slice(1) ==
                   node.comment_view.comment.id.toString() &&
-                'bg-slate-100 dark:bg-zinc-800 p-1 rounded-lg max-w-max font-medium',
+                'bg-slate-100 dark:bg-zinc-900 p-2 rounded-xl max-w-max',
           ]}
         />
         {#if actions}
