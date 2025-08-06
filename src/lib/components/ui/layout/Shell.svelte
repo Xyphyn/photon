@@ -81,7 +81,7 @@
   }
 
   .content.limit-width {
-    max-width: 110rem;
+    max-width: 90rem;
   }
 
   @media (min-width: 48rem) {
