@@ -20,7 +20,7 @@
   import { settings } from '$lib/settings.svelte.js'
   import { isImage } from '$lib/ui/image.js'
   import { Button, toast } from 'mono-svelte'
-  import { onMount, untrack } from 'svelte'
+  import { onMount } from 'svelte'
   import {
     ArrowLeft,
     ArrowRight,
@@ -65,10 +65,8 @@
 
   $effect(() => {
     if (data.cachedFeed && data.post.value.post_view) {
-      untrack(() => {
-        const { id, index } = data.cachedFeed!
-        postFeeds.value[id].data.posts.posts[index] = data.post.value.post_view
-      })
+      const { id, index } = data.cachedFeed!
+      postFeeds.value[id].data.posts.posts[index] = data.post.value.post_view
     }
   })
 

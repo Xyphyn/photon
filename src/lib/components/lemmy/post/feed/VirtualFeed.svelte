@@ -23,6 +23,7 @@
     Icon,
   } from 'svelte-hero-icons'
   import InfiniteScroll from 'svelte-infinite-scroll'
+  import { SvelteSet } from 'svelte/reactivity'
 
   interface Props {
     posts: PostView[]
@@ -50,6 +51,9 @@
   let hasMore = $state(true)
 
   const abortLoad = new AbortController()
+  let seenIds = new SvelteSet<number>(
+    feedData.posts.posts.map(post => post.post.id),
+  )
 
   async function loadMore() {
     if (!hasMore || loading) return
@@ -82,15 +86,14 @@
 
       hasMore = newPosts.posts.length != 0
 
-      let postIds: number[] = []
-      let duplicates: number[] = []
-      for (const post of newPosts.posts) {
-        if (postIds.includes(post.post.id)) duplicates.push(post.post.id)
-        else postIds.push(post.post.id)
-      }
-
       feedData.cursor.next = newPosts.next_page
-      feedData.posts.posts.push(...newPosts.posts)
+      feedData.posts.posts.push(
+        ...newPosts.posts.filter(post => {
+          if (seenIds.has(post.post.id)) return false
+          seenIds.add(post.post.id)
+          return true
+        }),
+      )
 
       postFeeds.value[feedId].data = feedData
 
