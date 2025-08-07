@@ -57,8 +57,6 @@
     try {
       loading = true
 
-      console.log('fetching with cursor', feedData.cursor.next)
-
       const newPosts = await client({
         func: (input, init) =>
           fetch(input, { ...init, signal: abortLoad.signal }),
@@ -90,8 +88,6 @@
         if (postIds.includes(post.post.id)) duplicates.push(post.post.id)
         else postIds.push(post.post.id)
       }
-
-      console.log('are there duplicates?', duplicates)
 
       feedData.cursor.next = newPosts.next_page
       feedData.posts.posts.push(...newPosts.posts)
