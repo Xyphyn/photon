@@ -98,9 +98,7 @@
           node.comment_view.counts.child_count > 0) &&
           'border-l',
         'ml-2.5 pl-3 sm:pl-4 lg:pl-5',
-        node.depth % 2 == 0
-          ? 'border-slate-200 dark:border-zinc-800'
-          : 'border-slate-300/80 dark:border-zinc-700',
+        'border-slate-200 dark:border-zinc-800',
       ]}
       bind:open={nodes[index].expanded}
     >

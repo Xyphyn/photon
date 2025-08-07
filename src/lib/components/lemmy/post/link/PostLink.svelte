@@ -34,6 +34,7 @@
       class={[
         'flex flex-col-reverse sm:flex-row overflow-hidden gap-4 embed-card z-0 relative',
         'dark:bg-zinc-950 group-hover/link:bg-slate-50 dark:group-hover/link:bg-zinc-900 transition-colors',
+        'shadow-xs',
       ]}
       rounding="2xl"
       element="article"

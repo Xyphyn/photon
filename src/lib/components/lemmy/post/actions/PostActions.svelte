@@ -51,7 +51,7 @@
 {#if editing}
   <Modal bind:open={editing}>
     {#snippet customTitle()}
-      <h1 class="text-2xl font-bold">Editing post</h1>
+      <h1 class="text-2xl font-bold">{$t('form.edit')}</h1>
     {/snippet}
     {#await import('../form/PostForm.svelte')}
       <div class="mx-auto h-96 flex justify-center items-center">
@@ -76,7 +76,10 @@
 {/if}
 
 <footer
-  class="flex flex-row gap-2 items-center shrink-0 {buttonHeight}"
+  class={[
+    'flex flex-row gap-2 items-center shrink-0 text-slate-600 dark:text-zinc-400',
+    buttonHeight,
+  ]}
   class:flex-row-reverse={settings.posts.reverseActions}
   {style}
 >
@@ -94,7 +97,7 @@
     size="custom"
     href="{postLink(post.post)}#comments"
     class="text-inherit! h-full px-3 relative"
-    color="ghost"
+    color="secondary"
     rounding="pill"
     target={settings.openLinksInNewTab ? '_blank' : ''}
     title={$t('post.actions.comments')}
@@ -119,7 +122,7 @@
       onclick={() => (debug = true)}
       title="Debug"
       size="custom"
-      color="ghost"
+      color="secondary"
       rounding="pill"
       class={buttonSquare}
       animations={{ scale: true, large: true }}
@@ -135,7 +138,7 @@
         {#snippet target(acting)}
           <Button
             size="custom"
-            color="ghost"
+            color="secondary"
             rounding="pill"
             loading={acting}
             class={buttonSquare}
@@ -157,7 +160,7 @@
       }}
       size="custom"
       class={buttonSquare}
-      color="ghost"
+      color="secondary"
       rounding="pill"
       loading={saving}
       disabled={saving}
@@ -173,7 +176,7 @@
     {#snippet target()}
       <Button
         title={$t('post.actions.more.label')}
-        color="ghost"
+        color="secondary"
         rounding="pill"
         size="custom"
         class={buttonSquare}
