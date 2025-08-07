@@ -128,7 +128,7 @@
     >
       <div
         class={[
-          'absolute -inset-0.5 group-hover:-inset-1.5 opacity-0 group-hover:opacity-100 transition-all',
+          'absolute -inset-0.5 right-1 group-hover:right-0 group-hover:-inset-1.5 opacity-0 group-hover:opacity-100 transition-all',
           'bg-slate-100 dark:bg-zinc-900 -z-10 rounded-full',
         ]}
       >
