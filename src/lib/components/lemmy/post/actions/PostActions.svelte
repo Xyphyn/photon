@@ -76,7 +76,10 @@
 {/if}
 
 <footer
-  class="flex flex-row gap-2 items-center shrink-0 {buttonHeight}"
+  class={[
+    'flex flex-row gap-2 items-center shrink-0 text-slate-600 dark:text-zinc-400',
+    buttonHeight,
+  ]}
   class:flex-row-reverse={settings.posts.reverseActions}
   {style}
 >

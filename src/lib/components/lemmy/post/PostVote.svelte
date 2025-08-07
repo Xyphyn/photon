@@ -1,9 +1,9 @@
 <script lang="ts" module>
   export const voteColor = (vote: number) =>
     vote == 1
-      ? `bg-linear-to-br from-blue-500 to-indigo-500 dark:from-blue-400 dark:to-indigo-500 text-slate-50 dark:text-zinc-900`
+      ? `bg-primary-900 dark:bg-primary-100 text-slate-50 dark:text-zinc-900`
       : vote == -1
-        ? `bg-linear-to-br from-red-500 to-pink-500 dark:from-red-400 dark:to-pink-600 text-slate-50 `
+        ? `dark:bg-red-400 dark:text-zinc-900`
         : ''
 
   export const shouldShowVoteColor = (
@@ -33,8 +33,8 @@
     post: Post
     vote?: number
     score: number
-    upvotes?: number
-    downvotes?: number
+    upvotes: number
+    downvotes: number
     showCounts?: boolean
     children?: import('svelte').Snippet<[{ vote?: number; score?: number }]>
   }
@@ -56,14 +56,32 @@
       toast({ content: $t('toast.loginVoteGate'), type: 'warning' })
       return
     }
-    loading = true
+
+    switch (vote ?? 0) {
+      case 0:
+        // nothing was removed
+        if (newVote == 1) upvotes++
+        else downvotes++
+        break
+      case 1:
+        // removed an upvote
+        upvotes--
+        if (newVote == -1) downvotes++
+        break
+      case -1:
+        // removed a downvote
+        downvotes--
+        if (newVote == 1) upvotes++
+        break
+    }
+
     vote = newVote
-    const res = await voteItem(post, newVote).catch(e => {
-      toast({ content: errorMessage(e), type: 'error' })
-      return { upvotes: 0, downvotes: 0, score: 0 }
-    })
-    ;({ upvotes, downvotes, score } = res)
-    loading = false
+
+    voteItem(post, newVote)
+      .then(res => ({ upvotes, downvotes, score } = res))
+      .catch(e => {
+        toast({ content: errorMessage(e), type: 'error' })
+      })
   }
 </script>
 
