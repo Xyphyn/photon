@@ -9,7 +9,15 @@
   import { getClient } from '$lib/lemmy.svelte.js'
   import { errorMessage } from '$lib/lemmy/error'
   import { Button, Modal, toast } from 'mono-svelte'
-  import { Bookmark, Icon, Microphone, Pencil, Trash } from 'svelte-hero-icons'
+  import {
+    Bookmark,
+    Icon,
+    Microphone,
+    Minus,
+    Pencil,
+    Plus,
+    Trash,
+  } from 'svelte-hero-icons'
   import { expoOut } from 'svelte/easing'
   import type { ClassValue } from 'svelte/elements'
   import { slide } from 'svelte/transition'
@@ -116,8 +124,23 @@
   {#if meta}
     <button
       onclick={() => (open = !open)}
-      class="flex flex-row cursor-pointer gap-2 items-center group text-[13px] flex-wrap w-full z-0 group"
+      class="flex flex-row cursor-pointer gap-2 items-center group text-sm flex-wrap w-full z-0 group relative"
     >
+      <div
+        class={[
+          'absolute -inset-0.5 group-hover:-inset-1.5 opacity-0 group-hover:opacity-100 transition-all',
+          'bg-slate-100 dark:bg-zinc-900 -z-10 rounded-full',
+        ]}
+      >
+        <div
+          class={[
+            !open && 'rotate-90',
+            'transition-all duration-500 ease-out ml-auto my-auto h-full w-8 grid place-items-center',
+          ]}
+        >
+          <Icon src={open ? Minus : Plus} size="16" micro />
+        </div>
+      </div>
       {@render metaSuffix?.()}
       <span class:font-bold={op} class="flex flex-row gap-1 items-center">
         <UserLink
