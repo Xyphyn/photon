@@ -101,12 +101,12 @@
   ]}
   id="post-{post.post.id.toString()}"
   {onclick}
-  onkeydown={(e) => {
+  onkeydown={e => {
     if (e.key === 'Enter') onclick(e)
+    keybindPost(e, post, voteComponent?.castVote)
   }}
   tabindex="0"
   {style}
-  {@attach keybindPost(post, voteComponent?.castVote)}
 >
   <PostMeta
     community={post.community}

@@ -171,7 +171,7 @@
   })
 </script>
 
-<svelte:body  {@attach keybindFeed} />
+<svelte:body onkeydown={keybindFeed()} />
 
 <ul class="flex flex-col list-none" bind:this={listEl}>
   {#key posts}
