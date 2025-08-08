@@ -168,7 +168,35 @@
   onDestroy(() => {
     abortLoad?.abort()
   })
+
+  function onkeydown(
+    event: KeyboardEvent & { currentTarget: EventTarget & HTMLElement },
+  ) {
+    const direction = event.key == 'j' ? 'up' : event.key == 'k' ? 'down' : null
+    if (!direction) return
+
+    const focusedPost =
+      document.activeElement?.closest('[data-index]') ??
+      document
+        .elementFromPoint(window.innerWidth / 2, window.innerHeight / 2)
+        ?.closest('[data-index]')
+    if (!focusedPost) return
+
+    const sibling =
+      direction == 'up'
+        ? focusedPost.previousSibling
+        : focusedPost.nextElementSibling
+    if (sibling instanceof HTMLElement) {
+      const postDiv = sibling.querySelector('[id^="post"]')
+      if (postDiv instanceof HTMLElement) {
+        postDiv.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        postDiv.focus({})
+      }
+    }
+  }
 </script>
+
+<svelte:body {onkeydown} />
 
 <ul class="flex flex-col list-none" bind:this={listEl}>
   {#key posts}
@@ -200,10 +228,9 @@
       >
         {#snippet item(row)}
           <li
-            data-index={row}
             style={row < 7 ? `--anim-delay: ${row * 50}ms` : ''}
             class={[
-              'relative post-container px-3 sm:px-6',
+              'relative post-container px-3 sm:px-6 z-0',
               row < 7 && 'pop-in opacity-0',
             ]}
           >
