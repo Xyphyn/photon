@@ -111,20 +111,21 @@ interface Settings {
   voteRatioBar: boolean
 
   keybinds: {
-    post: {
+    lists: {
       next: Keybind
       previous: Keybind
+    }
+    posts: {
       upvote: Keybind
       downvote: Keybind
       save: Keybind
       expand: Keybind
     }
-
     comments: {
-      next: Keybind
-      previous: Keybind
-      upvote: Keybind
-      downvote: Keybind
+      collapse: Keybind
+    }
+    commandPalette: {
+      open: Keybind
     }
   }
 }
@@ -209,19 +210,21 @@ export const defaultSettings: Settings = {
   },
   voteRatioBar: false,
   keybinds: {
-    post: {
+    lists: {
       next: { ctrl: false, key: 'k' },
       previous: { ctrl: false, key: 'j' },
+    },
+    posts: {
       upvote: { ctrl: false, key: 'n' },
       downvote: { ctrl: false, key: 'm' },
       save: { ctrl: true, key: 's' },
       expand: { ctrl: false, key: 'h' },
     },
     comments: {
-      next: { ctrl: false, key: 'k' },
-      previous: { ctrl: false, key: 'j' },
-      upvote: { ctrl: false, key: 'n' },
-      downvote: { ctrl: false, key: 'm' },
+      collapse: { ctrl: false, key: 'l' },
+    },
+    commandPalette: {
+      open: { ctrl: false, key: '/' },
     },
   },
 }

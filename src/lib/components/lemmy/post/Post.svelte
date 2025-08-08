@@ -31,7 +31,7 @@
 
   function onclick(e: Event) {
     const event = e as Event
-    const parent = document.getElementById(`post-${post.post.id.toString()}`)
+    const parent = document.getElementById(`item-${post.post.id.toString()}`)
 
     if (event.target == parent) {
       goto(postLink(post.post))
@@ -99,7 +99,7 @@
     view == 'cozy' && 'py-5 flex flex-col gap-2',
     clazz,
   ]}
-  id="post-{post.post.id.toString()}"
+  id="item-{post.post.id.toString()}"
   {onclick}
   onkeydown={e => {
     if (e.key === 'Enter') onclick(e)

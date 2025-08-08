@@ -471,22 +471,67 @@
       {#snippet description()}
         {$t('settings.app.keybinds.description')}
       {/snippet}
-      <div class="flex flex-col my-2">
-        <Expandable>
-          {#snippet title()}
-            {$t('content.posts')}
-          {/snippet}
-          <CommonList depth={2}>
-            {#each Object.entries(settings.keybinds.post) as [key, value] (key)}
-              <li class="flex items-center justify-between gap-2 secondary">
-                <div class="capitalize font-medium">{key}</div>
-                <TextInput bind:value={value.key} size="sm" class="w-24" />
-              </li>
-            {/each}
-          </CommonList>
-        </Expandable>
-      </div>
     </Setting>
+    <li>
+      <Expandable>
+        {#snippet title()}
+          {$t('nav.commands.feeds')}
+        {/snippet}
+        <CommonList depth={2}>
+          {#each Object.entries(settings.keybinds.lists) as [key, value] (key)}
+            <li class="flex items-center justify-between gap-2 secondary">
+              <div class="capitalize font-medium">{key}</div>
+              <TextInput bind:value={value.key} size="sm" class="w-24" />
+            </li>
+          {/each}
+        </CommonList>
+      </Expandable>
+    </li>
+    <li>
+      <Expandable>
+        {#snippet title()}
+          {$t('content.posts')}
+        {/snippet}
+        <CommonList depth={2}>
+          {#each Object.entries(settings.keybinds.posts) as [key, value] (key)}
+            <li class="flex items-center justify-between gap-2 secondary">
+              <div class="capitalize font-medium">{key}</div>
+              <TextInput bind:value={value.key} size="sm" class="w-24" />
+            </li>
+          {/each}
+        </CommonList>
+      </Expandable>
+    </li>
+    <li>
+      <Expandable>
+        {#snippet title()}
+          {$t('content.comments')}
+        {/snippet}
+        <CommonList depth={2}>
+          {#each Object.entries(settings.keybinds.comments) as [key, value] (key)}
+            <li class="flex items-center justify-between gap-2 secondary">
+              <div class="capitalize font-medium">{key}</div>
+              <TextInput bind:value={value.key} size="sm" class="w-24" />
+            </li>
+          {/each}
+        </CommonList>
+      </Expandable>
+    </li>
+    <li>
+      <Expandable>
+        {#snippet title()}
+          {$t('nav.commands.prompt')}
+        {/snippet}
+        <CommonList depth={2}>
+          {#each Object.entries(settings.keybinds.commandPalette) as [key, value] (key)}
+            <li class="flex items-center justify-between gap-2 secondary">
+              <div class="capitalize font-medium">{key}</div>
+              <TextInput bind:value={value.key} size="sm" class="w-24" />
+            </li>
+          {/each}
+        </CommonList>
+      </Expandable>
+    </li>
   </Section>
 
   <Section id="embeds" title={$t('settings.embeds.title')}>

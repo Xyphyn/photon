@@ -31,7 +31,7 @@
 
 <svelte:body
   onkeydown={e => {
-    if (e.key == 'Escape' && page.state.openImage != '') history.back()
+    if (e.key == 'Escape' && (page.state.openImage || '') != '') history.back()
   }}
 />
 

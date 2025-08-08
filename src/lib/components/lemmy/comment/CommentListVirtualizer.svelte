@@ -4,6 +4,7 @@
   import type { CommentNodeI } from './comments.svelte'
   import Comments from './CommentTree.svelte'
   import { onMount } from 'svelte'
+  import { keybindFeed } from '$lib/ui/keybinds.svelte'
 
   interface Props {
     nodes: CommentNodeI[]
@@ -13,8 +14,8 @@
 
   onMount(() => {
     if (scrollTo) {
-      const element = document?.getElementById(scrollTo)
       setTimeout(() => {
+        const element = document?.getElementById(scrollTo)
         element?.scrollIntoView({ behavior: 'smooth', block: 'start' })
       }, 100)
     }
@@ -37,6 +38,8 @@
   let offsetEl = $state<HTMLElement>()
   let initialOffset = $derived(offsetEl?.offsetTop)
 </script>
+
+<svelte:body onkeydown={keybindFeed('li[data-type^="comment"]', 'start')} />
 
 <div bind:this={offsetEl}>
   {#if offsetEl}
