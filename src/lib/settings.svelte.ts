@@ -7,6 +7,10 @@ console.log('Using the following default settings from the environment:')
 console.log(env)
 
 export type View = 'cozy' | 'compact'
+type Keybind = {
+  key: string
+  ctrl: boolean
+}
 
 export const SSR_ENABLED = env.PUBLIC_SSR_ENABLED?.toLowerCase() == 'true'
 
@@ -105,10 +109,29 @@ interface Settings {
     fullMarkdown: boolean
   }
   voteRatioBar: boolean
+
+  keybinds: {
+    lists: {
+      next: Keybind
+      previous: Keybind
+    }
+    posts: {
+      upvote: Keybind
+      downvote: Keybind
+      save: Keybind
+      expand: Keybind
+    }
+    comments: {
+      collapse: Keybind
+    }
+    commandPalette: {
+      open: Keybind
+    }
+  }
 }
 
 export const defaultSettings: Settings = {
-  settingsVer: 6,
+  settingsVer: 7,
   expandableImages: toBool(env.PUBLIC_EXPANDABLE_IMAGES) ?? true,
   markReadPosts: toBool(env.PUBLIC_MARK_READ_POSTS) ?? true,
   showInstances: {
@@ -186,6 +209,24 @@ export const defaultSettings: Settings = {
     fullMarkdown: toBool(env.PUBLIC_FULL_MARKDOWN) ?? false,
   },
   voteRatioBar: false,
+  keybinds: {
+    lists: {
+      next: { ctrl: false, key: 'k' },
+      previous: { ctrl: false, key: 'j' },
+    },
+    posts: {
+      upvote: { ctrl: false, key: 'n' },
+      downvote: { ctrl: false, key: 'm' },
+      save: { ctrl: true, key: 's' },
+      expand: { ctrl: false, key: 'h' },
+    },
+    comments: {
+      collapse: { ctrl: false, key: 'l' },
+    },
+    commandPalette: {
+      open: { ctrl: false, key: '/' },
+    },
+  },
 }
 
 function createSettingsState(initial: Settings): Settings {

@@ -12,6 +12,7 @@
     type PostFeedID,
   } from '$lib/lemmy/postfeed.svelte'
   import { settings } from '$lib/settings.svelte.js'
+  import { keybindFeed } from '$lib/ui/keybinds.svelte'
   import type { PostView } from 'lemmy-js-client'
   import { Button } from 'mono-svelte'
   import { onDestroy, onMount, untrack } from 'svelte'
@@ -170,6 +171,8 @@
   })
 </script>
 
+<svelte:body onkeydown={keybindFeed()} />
+
 <ul class="flex flex-col list-none" bind:this={listEl}>
   {#key posts}
     {#if posts?.length == 0}
@@ -200,10 +203,9 @@
       >
         {#snippet item(row)}
           <li
-            data-index={row}
             style={row < 7 ? `--anim-delay: ${row * 50}ms` : ''}
             class={[
-              'relative post-container px-3 sm:px-6',
+              'relative post-container px-3 sm:px-6 z-0',
               row < 7 && 'pop-in opacity-0',
             ]}
           >
