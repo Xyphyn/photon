@@ -119,6 +119,13 @@ interface Settings {
       save: Keybind
       expand: Keybind
     }
+
+    comments: {
+      next: Keybind
+      previous: Keybind
+      upvote: Keybind
+      downvote: Keybind
+    }
   }
 }
 
@@ -209,6 +216,12 @@ export const defaultSettings: Settings = {
       downvote: { ctrl: false, key: 'm' },
       save: { ctrl: true, key: 's' },
       expand: { ctrl: false, key: 'h' },
+    },
+    comments: {
+      next: { ctrl: false, key: 'k' },
+      previous: { ctrl: false, key: 'j' },
+      upvote: { ctrl: false, key: 'n' },
+      downvote: { ctrl: false, key: 'm' },
     },
   },
 }

@@ -30,18 +30,20 @@
 </script>
 
 <svelte:body
-  onclick={() => history.back()}
   onkeydown={e => {
-    if (e.key == 'Escape') history.back()
+    if (e.key == 'Escape' && page.state.openImage != '') history.back()
   }}
 />
 
 {#if page.state.openImage || '' != ''}
+  <!-- svelte-ignore a11y_click_events_have_key_events -->
+  <!-- svelte-ignore a11y_no_static_element_interactions -->
   <div
     class="fixed top-0 left-0 w-screen h-svh overflow-auto bg-white/50 dark:bg-black/50
     flex flex-col z-100 backdrop-blur-xs"
     transition:fade={{ duration: 150 }}
     use:focusTrap
+    onclick={() => history.back()}
   >
     <img
       width={800}
