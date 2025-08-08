@@ -12,6 +12,7 @@
     type PostFeedID,
   } from '$lib/lemmy/postfeed.svelte'
   import { settings } from '$lib/settings.svelte.js'
+  import { keybindFeed } from '$lib/ui/keybinds.svelte'
   import type { PostView } from 'lemmy-js-client'
   import { Button } from 'mono-svelte'
   import { onDestroy, onMount, untrack } from 'svelte'
@@ -168,35 +169,9 @@
   onDestroy(() => {
     abortLoad?.abort()
   })
-
-  function onkeydown(
-    event: KeyboardEvent & { currentTarget: EventTarget & HTMLElement },
-  ) {
-    const direction = event.key == 'j' ? 'up' : event.key == 'k' ? 'down' : null
-    if (!direction) return
-
-    const focusedPost =
-      document.activeElement?.closest('[data-index]') ??
-      document
-        .elementFromPoint(window.innerWidth / 2, window.innerHeight / 2)
-        ?.closest('[data-index]')
-    if (!focusedPost) return
-
-    const sibling =
-      direction == 'up'
-        ? focusedPost.previousSibling
-        : focusedPost.nextElementSibling
-    if (sibling instanceof HTMLElement) {
-      const postDiv = sibling.querySelector('[id^="post"]')
-      if (postDiv instanceof HTMLElement) {
-        postDiv.scrollIntoView({ behavior: 'smooth', block: 'center' })
-        postDiv.focus({})
-      }
-    }
-  }
 </script>
 
-<svelte:body {onkeydown} />
+<svelte:body  {@attach keybindFeed} />
 
 <ul class="flex flex-col list-none" bind:this={listEl}>
   {#key posts}
