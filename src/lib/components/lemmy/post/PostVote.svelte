@@ -3,7 +3,7 @@
     vote == 1
       ? `bg-primary-900 dark:bg-primary-100 text-slate-50 dark:text-zinc-900`
       : vote == -1
-        ? `dark:bg-red-400 dark:text-zinc-900`
+        ? `bg-red-500 text-slate-50 dark:bg-red-400 dark:text-zinc-900`
         : ''
 
   export const shouldShowVoteColor = (
