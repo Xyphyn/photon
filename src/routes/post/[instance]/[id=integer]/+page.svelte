@@ -194,13 +194,12 @@
   {#await data.post.value.meta then meta}
     {@const crossposts = meta.cross_posts}
     {#if crossposts?.length > 0}
-      <Expandable
-        class="text-base mt-2 w-full cursor-pointer"
-        open={crossposts?.length <= 3}
-      >
+      <Expandable class="text-base mt-2 w-full cursor-pointer">
         {#snippet title()}
           <div
-            class="flex items-center gap-1 w-full text-left text-base font-normal"
+            class={[
+              'flex items-center gap-1 w-full text-left text-base font-normal',
+            ]}
           >
             <span class="font-bold">{crossposts.length}</span>
             {$t('routes.post.crosspostCount')}
@@ -222,32 +221,37 @@
     {/if}
   {/await}
 </article>
-{#if data.thread.value.showContext || data.thread.value.singleThread}
-  <div
-    class="sticky mx-auto z-50 max-w-md min-w-0 flex flex-col items-center overflow-auto gap-1
+{#await data.comments.value then comments}
+  {#if data.thread.value.showContext || data.thread.value.singleThread}
+    <div
+      class="sticky mx-auto z-50 max-w-md min-w-0 flex flex-col items-center overflow-auto gap-1
     bg-slate-50/50 dark:bg-zinc-900/50 backdrop-blur-xl border border-slate-200/50 dark:border-zinc-800/50
     p-1 rounded-full justify-between top-6 lg:top-22"
-  >
-    <Button
-      color="none"
-      rounding="pill"
-      {loading}
-      disabled={loading}
-      href={data.thread.value.showContext
-        ? `/comment/${page.params.instance}/${data.thread.value.showContext}`
-        : undefined}
-      class="hover:bg-white/50 dark:hover:bg-zinc-800/30"
-      onclick={data.thread.value.singleThread ? reloadComments : undefined}
     >
-      {data.thread.value.showContext
-        ? $t('routes.post.thread.context')
-        : $t('routes.post.thread.allComments')}
-      {#snippet suffix()}
-        <Icon src={ArrowRight} size="16" micro />
-      {/snippet}
-    </Button>
-  </div>
-{/if}
+      <Button
+        color="none"
+        rounding="pill"
+        {loading}
+        disabled={loading}
+        href={data.thread.value.showContext
+          ? `/comment/${
+              // split first comment path to get 5 before
+              comments.comments[0].comment.path.split('.').slice(-5)[0]
+            }`
+          : undefined}
+        class="hover:bg-white/50 dark:hover:bg-zinc-800/30"
+        onclick={data.thread.value.singleThread ? reloadComments : undefined}
+      >
+        {data.thread.value.showContext
+          ? $t('routes.post.thread.context')
+          : $t('routes.post.thread.allComments')}
+        {#snippet suffix()}
+          <Icon src={ArrowRight} size="16" micro />
+        {/snippet}
+      </Button>
+    </div>
+  {/if}
+{/await}
 <section class="mt-4 flex flex-col gap-2 w-full" id="comments">
   <header>
     <div class="text-base">

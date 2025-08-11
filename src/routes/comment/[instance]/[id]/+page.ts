@@ -14,8 +14,21 @@ export async function load({ params, fetch }) {
     id: Number(params.id),
   })
 
+  const split = comment.comment_view.comment.path.split('.')
+
+  const threadPath =
+    split.length > 4
+      ? comment.comment_view.comment.id
+      : split.slice(-5).join('.')
+
   redirect(
     302,
-    `/post/${profile.current.instance}/${comment.comment_view.post.id}?thread=${comment.comment_view.comment.path}#${comment.comment_view.comment.id}`,
+    resolveRoute(
+      `/post/[instance]/[id]?thread=${threadPath}#${comment.comment_view.comment.id}`,
+      {
+        instance: params.instance,
+        id: comment.comment_view.post.id.toString(),
+      },
+    ),
   )
 }

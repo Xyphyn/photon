@@ -26,6 +26,7 @@
   import type { CommentNodeI } from './comments.svelte'
   import { page } from '$app/state'
   import { keybindComment } from '$lib/ui/keybinds.svelte'
+  import { settings } from '$lib/settings.svelte'
 
   interface Props {
     node: CommentNodeI
@@ -196,6 +197,11 @@
           />
         {/if}
       </span>
+      {#if settings.debugInfo}
+        <span class="text-slate-600 dark:text-zinc-400 font-mono ml-auto">
+          #{node.comment_view.comment.id}
+        </span>
+      {/if}
     </button>
   {/if}
   <div class={['expand max-w-full', open && 'open', contentClass]}>

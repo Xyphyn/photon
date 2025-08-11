@@ -25,21 +25,19 @@ interface PartialPost {
 
 function buildContext(thread?: string) {
   let parentId: number | undefined
-  let showContext: string | undefined
-  let max_depth = 3
+  let showContext: boolean = false
+  const max_depth = 3
 
   if (thread) {
     const split = thread.split('.')
-    if (split.length >= 9) {
-      const sliced = split.slice(0, split.length - 4)
-      showContext = sliced[sliced.length - 1]
-      parentId = Number(split[split.length - 5])
-    } else {
-      parentId = Number(split[1])
+
+    if (split[0] == '0') parentId = Number(thread.split('.')[1])
+    else {
+      parentId = Number(thread.split('.')[0])
+      showContext = true
     }
   }
 
-  if (parentId) max_depth = 10
   return { parentId, showContext, max_depth, focus: thread?.split('.').at(-1) }
 }
 
@@ -77,16 +75,19 @@ export async function load({ params, url, fetch }) {
   // TODO use Lemmy profile default settings
   const sort = settings?.defaultSort?.comments ?? 'Hot'
 
-  const { parentId, showContext, focus } = buildContext(
-    url.searchParams.get('thread') || undefined,
-  )
-
   const cachedPost =
     findInFeed(Number(params.id), 'main') ??
     findInFeed(Number(params.id), 'community')
 
-  const max_depth = (cachedPost?.post_view.counts.comments ?? 0) > 100 ? 1 : 3
+  const {
+    parentId,
+    showContext,
+    focus,
+    max_depth: passedMaxDepth,
+  } = buildContext(url.searchParams.get('thread') || undefined)
 
+  const max_depth =
+    (cachedPost?.post_view.counts.comments ?? 0) > 100 ? 1 : passedMaxDepth
   const commentParams: GetComments = {
     post_id: Number(params.id),
     type_: 'All',
