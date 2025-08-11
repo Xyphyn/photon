@@ -34,6 +34,7 @@
     style?: string
     onedit?: (post: PostView) => void
     onhide?: (hide: boolean) => void
+    voteComponent?: { castVote: (vote: number) => void }
   }
 
   let {
@@ -41,6 +42,7 @@
     view = 'cozy',
     debug = $bindable(false),
     style = '',
+    voteComponent = $bindable(),
     onedit,
     onhide,
   }: Props = $props()
@@ -77,7 +79,7 @@
 
 <footer
   class={[
-    'flex flex-row gap-2 items-center shrink-0 text-slate-600 dark:text-zinc-400',
+    'flex flex-row gap-2 items-center shrink-0 text-slate-600 dark:text-zinc-300',
     buttonHeight,
   ]}
   class:flex-row-reverse={settings.posts.reverseActions}
@@ -89,6 +91,7 @@
     bind:score={post.counts.score}
     bind:upvotes={post.counts.upvotes}
     bind:downvotes={post.counts.downvotes}
+    bind:this={voteComponent}
     showCounts={profile.current?.user?.local_user_view?.local_user
       ?.show_scores ?? true}
   />

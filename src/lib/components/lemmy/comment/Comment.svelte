@@ -25,6 +25,7 @@
   import CommentForm from './CommentForm.svelte'
   import type { CommentNodeI } from './comments.svelte'
   import { page } from '$app/state'
+  import { keybindComment } from '$lib/ui/keybinds.svelte'
   import { settings } from '$lib/settings.svelte'
 
   interface Props {
@@ -118,9 +119,15 @@
   </Modal>
 {/if}
 
+<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
 <li
-  class={['py-3 relative', clazz]}
+  class={['py-3 relative focus:outline-0', clazz]}
   id={node.comment_view.comment.id.toString()}
+  data-type="comment"
+  onkeydown={e =>
+    keybindComment(e, node.comment_view.comment.id, () => (open = !open))}
+  tabindex="0"
 >
   {#if meta}
     <button

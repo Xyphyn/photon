@@ -22,6 +22,7 @@
     description?: import('svelte').Snippet
     children?: import('svelte').Snippet
     icon?: IconSource
+    adaptive?: boolean
   }
 
   let {
@@ -37,6 +38,7 @@
     description,
     children,
     icon,
+    adaptive = true,
   }: Props = $props()
 </script>
 
@@ -74,7 +76,7 @@
       {/if}
     </div>
   {/if}
-  <div class={['setting-grid items-center', clazz]}>
+  <div class={['setting-grid items-center', adaptive && 'adaptive', clazz]}>
     {#if icon}
       <Icon
         src={icon}
@@ -124,7 +126,7 @@
   }
 
   @media screen and (min-width: 768px) {
-    .setting-grid {
+    .setting-grid.adaptive {
       display: grid;
       grid-template-columns: auto 1fr auto;
       grid-template-rows: auto auto;
