@@ -43,7 +43,7 @@
 </script>
 
 <nav
-  class="flex flex-row items-center gap-1 p-1 rounded-full bg-white/60 dark:bg-zinc-800/60
+  class="flex flex-row items-center gap-1 p-1 rounded-full bg-white/60 dark:bg-zinc-900/60
   backdrop-blur-lg border border-slate-200 dark:border-zinc-800 shadow-sm {clazz ??
     ''}
   "
@@ -58,7 +58,7 @@
       {route.name}
       {#if isSelected(page.url, currentRoute, route.href, defaultRoute)}
         <div
-          class="rounded-full bg-slate-100/60 dark:bg-zinc-700/60
+          class="rounded-full bg-slate-200/60 dark:bg-zinc-700/60
           absolute inset-0 w-full h-full -z-10"
         ></div>
       {/if}

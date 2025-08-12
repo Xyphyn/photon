@@ -11,7 +11,7 @@
   --font-display: Inter, system-ui, sans-serif;
   --font-mono: monospace;
 
-  --animate-pop-in: pop-in 0.25s ease-out forwards;
+  --animate-pop-in: pop-in 0.8s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
 
   --ease-cubic: cubic-bezier(0.075, 0.82, 0.165, 1);
   --spacing-22: 88px;
@@ -49,10 +49,13 @@
   --color-white: rgb(var(--c-o-white, 255 255 255));
 
   @keyframes pop-in {
-    0%,
-    100% {
-      transform: translateX(8px);
+    0% {
+      transform: translateY(16px);
       opacity: 0;
+    }
+    100% {
+      transform: translateY(0px);
+      opacity: 1;
     }
   }
 }

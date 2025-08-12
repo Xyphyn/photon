@@ -8,7 +8,7 @@
   import { placeholders } from '$lib/util.svelte.js'
   import type { CommentResponse } from 'lemmy-js-client'
   import { Button, Menu, MenuButton, toast } from 'mono-svelte'
-  import { ArrowUp, Icon, Language, XMark } from 'svelte-hero-icons'
+  import { Icon, Language, XMark } from 'svelte-hero-icons'
   import type { ClassValue, HTMLTextareaAttributes } from 'svelte/elements'
 
   interface Props extends Omit<HTMLTextareaAttributes, 'oncancel'> {
@@ -107,8 +107,8 @@
         {#snippet target()}
           <Button
             size="custom"
-            class="w-9 h-9"
-            rounding="pill"
+            rounding="xl"
+            class="w-8.5 h-8.5"
             color={language != undefined ? 'primary' : 'ghost'}
             title={$t('form.profile.languages.title')}
           >
@@ -144,11 +144,11 @@
           onclick={() => oncancel?.(true)}
           color="tertiary"
           class="w-8 h-8"
-          rounding="pill"
+          rounding="xl"
         >
           <Icon
             src={XMark}
-            size="20"
+            size="16"
             micro
             class="text-slate-600 dark:text-zinc-400"
           />
@@ -156,16 +156,11 @@
         <Button
           submit
           color="primary"
-          rounding="pill"
-          size="custom"
-          class="w-9 h-9"
-          title={$t('form.submit')}
+          rounding="xl"
           {loading}
           disabled={locked || loading || banned}
         >
-          {#snippet prefix()}
-            <Icon src={ArrowUp} size="18" micro />
-          {/snippet}
+          {$t('form.submit')}
         </Button>
       {/if}
     </MarkdownEditor>

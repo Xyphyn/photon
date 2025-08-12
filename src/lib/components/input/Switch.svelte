@@ -25,16 +25,16 @@
 </script>
 
 <div
-  class="border rounded-full border-slate-200 dark:border-zinc-800 bg-slate-50 dark:bg-zinc-950 p-1 flex items-center gap-1 w-max max-w-full z-0 relative overflow-auto"
+  class="flex items-center gap-1 w-max max-w-full z-0 relative overflow-auto"
 >
   {#each options as option, index}
     {@const slctd = selected == option}
     <button
       class={[
-        'px-3 py-1 rounded-full text-sm font-medium transition-colors duration-75 relative cursor-pointer',
+        'px-3 py-1.5 rounded-xl text-sm font-medium transition-colors duration-75 relative cursor-pointer',
         slctd
-          ? 'bg-primary-900 dark:bg-primary-100 text-slate-50 dark:text-zinc-900'
-          : 'dark:bg-zinc-900/50 bg-white',
+          ? 'bg-primary-900 dark:bg-primary-100 text-slate-50 dark:text-zinc-900 hover:brightness-90 active:brightness-75'
+          : ' border dark:bg-zinc-900/50 bg-white border-slate-300 dark:border-zinc-800 hover:bg-slate-200 hover:dark:bg-zinc-800 active:bg-slate-300 active:dark:bg-zinc-900',
       ]}
       onclick={e => {
         e.preventDefault()
@@ -44,11 +44,6 @@
       type="button"
     >
       {optionNames[index] || option}
-      {#if slctd}
-        <div
-          class="absolute left-0 top-0 w-full h-full blur-xl scale-75 opacity-50 dark:bg-primary-100 -z-10"
-        ></div>
-      {/if}
     </button>
   {/each}
 </div>

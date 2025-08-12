@@ -107,6 +107,7 @@
     tools = true,
     disabled = false,
     rows = 2,
+    // should be preprocess instead
     beforePreview = input => input,
     previewing = $bindable(false),
     class: clazz = '',
@@ -143,7 +144,7 @@
     </Label>
   {/if}
   <div
-    class="flex flex-col border border-slate-200 border-b-slate-300 dark:border-t-zinc-700/70 dark:border-zinc-800
+    class="flex flex-col border border-slate-200 border-b-slate-300 dark:border-zinc-800
     focus-within:border-primary-900 dark:focus-within:border-primary-100 focus-within:ring-3 ring-slate-300
     dark:ring-zinc-700 rounded-2xl
 overflow-hidden transition-colors {clazz}"
@@ -151,7 +152,7 @@ overflow-hidden transition-colors {clazz}"
   >
     {#if previewing}
       <div
-        class="px-3 py-2.5 overflow-auto text-sm resize-y bg-white dark:bg-zinc-950"
+        class="p-5 overflow-auto text-sm resize-y bg-white dark:bg-zinc-950 min-h-48"
       >
         <Markdown source={beforePreview(value)} />
       </div>

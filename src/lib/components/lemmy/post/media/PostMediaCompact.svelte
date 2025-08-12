@@ -68,9 +68,9 @@
   >
     <div
       class={[
-        'relative overflow-hidden rounded-2xl max-h-full',
-        'p-1 h-full',
+        'relative overflow-hidden rounded-2xl max-h-full h-full',
         'border border-slate-200 dark:border-zinc-800 hover:border-slate-300 dark:hover:border-zinc-700',
+        'dark:bg-zinc-800 hover-scale-effect',
       ]}
     >
       {#if post.thumbnail_url || isImage(post.url)}
@@ -155,3 +155,18 @@
     {/if}
   </svelte:element>
 </div>
+
+<style>
+  .hover-scale-effect > *,
+  .hover-scale-effect > picture > img {
+    transition: transform 200ms var(--ease-cubic);
+  }
+  .hover-scale-effect:hover > *,
+  .hover-scale-effect:hover > picture > img {
+    transform: scale(95%);
+  }
+  .hover-scale-effect:active > *,
+  .hover-scale-effect:active > picture > img {
+    transform: scale(90%);
+  }
+</style>

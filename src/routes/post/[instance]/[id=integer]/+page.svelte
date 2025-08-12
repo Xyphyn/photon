@@ -127,7 +127,7 @@
   {/if}
 </svelte:head>
 
-<article class="flex flex-col gap-2">
+<article class="flex flex-col gap-2 animate-pop-in">
   <header class="flex flex-col gap-2">
     <div class="flex flex-row justify-between items-center gap-2 flex-wrap">
       <PostMeta

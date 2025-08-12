@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { preventDefault, run } from 'svelte/legacy'
-
   import { profile } from '$lib/auth.svelte.js'
   import ErrorContainer, {
     clearErrorScope,
@@ -19,9 +17,11 @@
   import type { Community, Post, PostView } from 'lemmy-js-client'
   import {
     Button,
+    Modal,
     Select,
     Spinner,
     Switch,
+    TextArea,
     TextInput,
     toast,
   } from 'mono-svelte'
@@ -245,7 +245,7 @@
 
   let addAltText = $state(false)
 
-  run(() => {
+  $effect(() => {
     generation.generatable = canGenerateTitle(data.url)
   })
 </script>
@@ -263,7 +263,30 @@
   {/await}
 {/if}
 
-<form onsubmit={preventDefault(submit)} class="flex flex-col gap-4 h-full">
+{#if addAltText}
+  <Modal title={$t('form.post.altText')} bind:open={addAltText}>
+    <form
+      onsubmit={e => {
+        e.preventDefault()
+        addAltText = !addAltText
+      }}
+      class="space-y-4 w-full"
+    >
+      <TextArea bind:value={data.alt_text} />
+      <Button size="lg" submit class="w-full">
+        {$t('common.back')}
+      </Button>
+    </form>
+  </Modal>
+{/if}
+
+<form
+  onsubmit={e => {
+    e.preventDefault()
+    submit()
+  }}
+  class="flex flex-col gap-4 h-full"
+>
   {#if formtitle}{@render formtitle()}{:else}
     <Header class="font-bold text-xl">
       {edit ? $t('form.post.edit') : $t('form.post.create')}
@@ -340,7 +363,7 @@
       />
       <div class="flex items-center gap-2 actions">
         <div
-          class="border border-slate-100 dark:border-zinc-800 dark:text-zinc-400 text-slate-600 rounded-xl h-6 w-6 grid place-items-center"
+          class="border border-slate-100 dark:border-zinc-800 dark:text-zinc-400 text-slate-600 rounded-xl h-7 w-7 grid place-items-center"
         >
           <Icon src={Plus} size="16" micro />
         </div>
@@ -349,7 +372,7 @@
             onclick={() => (addAltText = !addAltText)}
             rounding="pill"
             size="sm"
-            color="ghost"
+            color={data.alt_text ? 'primary' : 'ghost'}
             class="text-xs"
           >
             {#snippet prefix()}

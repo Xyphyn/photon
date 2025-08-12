@@ -75,7 +75,11 @@
     background-color: var(--color-zinc-950);
 
     &:hover {
-      background-color: var(--color-zinc-900);
+      background-color: color-mix(
+        in oklab,
+        var(--color-zinc-925),
+        var(--color-zinc-900)
+      );
     }
   }
 

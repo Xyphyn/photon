@@ -74,9 +74,20 @@
     })
   }
 
+  let nprogressTimeout = -1
   $effect(() => {
-    if (navigating.to) nProgress.start()
-    else nProgress.done()
+    if (navigating.to)
+      nprogressTimeout = setTimeout(
+        () => nProgress.start(),
+        200,
+      ) as unknown as number
+    else {
+      if (nprogressTimeout > -1) {
+        clearTimeout(nprogressTimeout)
+        nprogressTimeout = -1
+        nProgress.done()
+      }
+    }
   })
 </script>
 

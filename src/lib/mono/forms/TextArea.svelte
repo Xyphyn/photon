@@ -38,7 +38,7 @@
 
   let {
     label = undefined,
-    value = $bindable(''),
+    value = $bindable(),
     placeholder = '',
     disabled = false,
     required = false,
