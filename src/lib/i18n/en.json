@@ -833,11 +833,6 @@
             "voteRatioBar": {
                 "title": "Vote ratio bar",
                 "description": "When the controversiality of a post reaches greater than 15%, a bar will be displayed in the vote buttons to help visualize sentiment."
-            },
-            "keybinds": {
-                "title": "Keybinds",
-                "description": "Customize keybinds for certain actions within the app.",
-                "key": "Key"
             }
         },
         "embeds": {

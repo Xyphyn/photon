@@ -2,7 +2,7 @@
   import { profile } from '$lib/auth.svelte.js'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import { t } from '$lib/i18n/translations'
-  import { client } from '$lib/lemmy.svelte'
+  import { getClient } from '$lib/lemmy.svelte'
   import { buttonColor, toast } from 'mono-svelte'
   import { ChevronDown, ChevronUp, Icon } from 'svelte-hero-icons'
   import { backOut } from 'svelte/easing'
@@ -24,37 +24,18 @@
     commentId,
   }: Props = $props()
 
-  export const castVote = async (newVote: number) => {
+  const castVote = async (newVote: number) => {
     if (!profile.current?.jwt) {
       toast({ content: $t('toast.loginVoteGate'), type: 'warning' })
       return
     }
 
-    switch (vote ?? 0) {
-      case 0:
-        // nothing was removed
-        if (newVote == 1) upvotes++
-        else downvotes++
-        break
-      case 1:
-        // removed an upvote
-        upvotes--
-        if (newVote == -1) downvotes++
-        break
-      case -1:
-        // removed a downvote
-        downvotes--
-        if (newVote == 1) upvotes++
-        break
-    }
-
     vote = newVote
-    client()
-      .likeComment({
-        comment_id: commentId,
-        score: vote,
-      })
-      .then(res => ({ upvotes, downvotes } = res.comment_view.counts))
+    const res = await getClient().likeComment({
+      comment_id: commentId,
+      score: vote,
+    })
+    ;({ upvotes, downvotes } = res.comment_view.counts)
   }
 
   let voteRatio = $derived(

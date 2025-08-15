@@ -14,7 +14,6 @@
   import type { PostView } from 'lemmy-js-client'
   import type { ClassValue } from 'svelte/elements'
   import PostBody from './PostBody.svelte'
-  import { keybindPost } from '$lib/ui/keybinds.svelte'
 
   function getTagRule(tags: Tag[]): 'blur-sm' | 'hide' | undefined {
     const tagContent = tags.map(t => t.content.toLowerCase())
@@ -29,9 +28,9 @@
     return rule
   }
 
-  function onclick(e: Event) {
+  function onClick(e: Event) {
     const event = e as Event
-    const parent = document.getElementById(`item-${post.post.id.toString()}`)
+    const parent = document.getElementById(post.post.id.toString())
 
     if (event.target == parent) {
       goto(postLink(post.post))
@@ -80,8 +79,6 @@
     admin: post.creator_is_admin,
     moderator: post.creator_is_moderator,
   })
-
-  let voteComponent = $state<{ castVote: (vote: number) => void }>()
 </script>
 
 <!-- 
@@ -99,11 +96,12 @@
     view == 'cozy' && 'py-5 flex flex-col gap-2',
     clazz,
   ]}
-  id="item-{post.post.id.toString()}"
-  {onclick}
+  id={post.post.id.toString()}
+  onclick={e => {
+    onClick(e)
+  }}
   onkeydown={e => {
-    if (e.key === 'Enter') onclick(e)
-    keybindPost(e, post, voteComponent?.castVote)
+    if (e.key == 'Enter') onClick(e)
   }}
   tabindex="0"
   {style}
@@ -160,13 +158,7 @@
     />
   {/if}
   {#if actions}
-    <PostActions
-      {onhide}
-      bind:voteComponent
-      bind:post
-      style="grid-area: actions;"
-      {view}
-    />
+    <PostActions {onhide} bind:post style="grid-area: actions;" {view} />
   {/if}
   <div
     class="absolute overflow-hidden inset-0

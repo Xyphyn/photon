@@ -66,13 +66,10 @@
     User,
     VideoCamera,
     ViewColumns,
-    ViewfinderCircle,
   } from 'svelte-hero-icons'
   import Section from './Section.svelte'
   import Setting from './Setting.svelte'
   import ToggleSetting from './ToggleSetting.svelte'
-  import Expandable from '$lib/components/ui/Expandable.svelte'
-  import CommonList from '$lib/components/ui/layout/CommonList.svelte'
   let importing = $state(false)
   let importText = $state('')
 
@@ -464,74 +461,6 @@
       description={$t('settings.app.titleTags.description')}
       bind:checked={settings.parseTags}
     />
-    <Setting icon={ViewfinderCircle} adaptive={false}>
-      {#snippet title()}
-        {$t('settings.app.keybinds.title')}
-      {/snippet}
-      {#snippet description()}
-        {$t('settings.app.keybinds.description')}
-      {/snippet}
-    </Setting>
-    <li>
-      <Expandable>
-        {#snippet title()}
-          {$t('nav.commands.feeds')}
-        {/snippet}
-        <CommonList depth={2}>
-          {#each Object.entries(settings.keybinds.lists) as [key, value] (key)}
-            <li class="flex items-center justify-between gap-2 secondary">
-              <div class="capitalize font-medium">{key}</div>
-              <TextInput bind:value={value.key} size="sm" class="w-24" />
-            </li>
-          {/each}
-        </CommonList>
-      </Expandable>
-    </li>
-    <li>
-      <Expandable>
-        {#snippet title()}
-          {$t('content.posts')}
-        {/snippet}
-        <CommonList depth={2}>
-          {#each Object.entries(settings.keybinds.posts) as [key, value] (key)}
-            <li class="flex items-center justify-between gap-2 secondary">
-              <div class="capitalize font-medium">{key}</div>
-              <TextInput bind:value={value.key} size="sm" class="w-24" />
-            </li>
-          {/each}
-        </CommonList>
-      </Expandable>
-    </li>
-    <li>
-      <Expandable>
-        {#snippet title()}
-          {$t('content.comments')}
-        {/snippet}
-        <CommonList depth={2}>
-          {#each Object.entries(settings.keybinds.comments) as [key, value] (key)}
-            <li class="flex items-center justify-between gap-2 secondary">
-              <div class="capitalize font-medium">{key}</div>
-              <TextInput bind:value={value.key} size="sm" class="w-24" />
-            </li>
-          {/each}
-        </CommonList>
-      </Expandable>
-    </li>
-    <li>
-      <Expandable>
-        {#snippet title()}
-          {$t('nav.commands.prompt')}
-        {/snippet}
-        <CommonList depth={2}>
-          {#each Object.entries(settings.keybinds.commandPalette) as [key, value] (key)}
-            <li class="flex items-center justify-between gap-2 secondary">
-              <div class="capitalize font-medium">{key}</div>
-              <TextInput bind:value={value.key} size="sm" class="w-24" />
-            </li>
-          {/each}
-        </CommonList>
-      </Expandable>
-    </li>
   </Section>
 
   <Section id="embeds" title={$t('settings.embeds.title')}>
