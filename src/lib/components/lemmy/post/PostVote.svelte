@@ -51,7 +51,7 @@
 
   let loading = $state(false)
 
-  export const castVote = async (newVote: number) => {
+  const castVote = async (newVote: number) => {
     if (!profile.current?.jwt) {
       toast({ content: $t('toast.loginVoteGate'), type: 'warning' })
       return

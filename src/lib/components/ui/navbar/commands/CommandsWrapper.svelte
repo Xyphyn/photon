@@ -1,6 +1,5 @@
 <script lang="ts">
   import { t } from '$lib/i18n/translations'
-  import { settings } from '$lib/settings.svelte'
   import { Modal, Spinner } from 'mono-svelte'
 
   interface Props {
@@ -11,8 +10,8 @@
 
   function handleKeydown(event: KeyboardEvent) {
     if (
-      event.key == settings.keybinds.commandPalette.open.key &&
-      document.activeElement == document.body
+      (event.ctrlKey && event.key === 'p') ||
+      (event.key == '/' && document.activeElement == document.body)
     ) {
       event.preventDefault()
       open = !open

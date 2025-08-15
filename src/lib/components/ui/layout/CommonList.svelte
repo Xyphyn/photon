@@ -13,7 +13,6 @@
     children?: Snippet
     animate?: boolean
     size?: 'lg' | 'md' | 'sm'
-    depth?: 1 | 2
   }
 
   let {
@@ -22,13 +21,12 @@
     children,
     animate = true,
     size = 'sm',
-    depth = 1,
   }: Props = $props()
 </script>
 
-<ul class={['space-y-[3px]', depth == 2 && 'secondary']}>
+<ul class="divide-y-3 divide-slate-50 dark:divide-zinc-925">
   {#if items}
-    {#each items as item, index}
+    {#each items as item, index (item)}
       <li
         class={['group/li', animate && 'animate']}
         style="--i: {index < 10 ? index * sizeDelay[size] : 0}ms;"
@@ -80,22 +78,6 @@
         var(--color-zinc-925),
         var(--color-zinc-900)
       );
-    }
-  }
-
-  ul.secondary > :global(li) {
-    background-color: var(--color-slate-25);
-
-    &:hover {
-      background-color: var(--color-slate-50);
-    }
-  }
-
-  :global(.dark) ul.secondary > :global(li) {
-    background-color: var(--color-zinc-925);
-
-    &:hover {
-      background-color: var(--color-zinc-800);
     }
   }
 

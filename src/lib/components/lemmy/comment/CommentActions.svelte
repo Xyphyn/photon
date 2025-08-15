@@ -29,7 +29,6 @@
     replying?: boolean
     disabled?: boolean
     onedit?: (comment: CommentView) => void
-    voteComponent?: { castVote: (vote: number) => void }
   }
 
   let {
@@ -37,7 +36,6 @@
     replying = $bindable(false),
     disabled = false,
     onedit,
-    voteComponent,
   }: Props = $props()
 </script>
 
@@ -50,7 +48,6 @@
     downvotes={comment.counts.downvotes}
     vote={comment.my_vote}
     commentId={comment.comment.id}
-    bind:this={voteComponent}
   />
   <Button
     size="sm"
@@ -76,7 +73,7 @@
         class="text-slate-600 dark:text-zinc-400"
       >
         {#snippet prefix()}
-          <Icon src={EllipsisHorizontal} size="16" micro />
+          <Icon src={EllipsisHorizontal} width={16} height={16} mini />
         {/snippet}
       </Button>
     {/snippet}
