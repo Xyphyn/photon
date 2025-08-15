@@ -1,15 +1,15 @@
 <script lang="ts">
   import { profile } from '$lib/auth.svelte.js'
-  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
+  import UserAutocomplete from '$lib/components/lemmy/user/UserAutocomplete.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
+  import CommonList from '$lib/components/ui/layout/CommonList.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { t } from '$lib/i18n/translations.js'
   import { getClient } from '$lib/lemmy.svelte.js'
-  import { Button, TextInput, toast } from 'mono-svelte'
-  import { Icon, Plus, Trash } from 'svelte-hero-icons'
-  import { flip } from 'svelte/animate'
-  import type { PageData } from './$types.js'
   import { errorMessage } from '$lib/lemmy/error.js'
+  import { action, Button, modal, toast } from 'mono-svelte'
+  import { Icon, Plus, Trash } from 'svelte-hero-icons'
+  import type { PageData } from './$types.js'
 
   interface Props {
     data: PageData
@@ -18,7 +18,7 @@
   let { data }: Props = $props()
 
   let formData = $state({
-    newModerator: '',
+    newModerator: -1,
     addingModerator: false,
   })
 
@@ -28,46 +28,26 @@
     formData.addingModerator = true
 
     try {
-      if (Number(formData.newModerator)) {
+      if (formData.newModerator != -1) {
         const addModRes = await getClient().addModToCommunity({
           added: true,
-          person_id: Number(formData.newModerator),
+          person_id: formData.newModerator,
           community_id: data.community.value.community_view.community.id,
         })
 
         data.community.value.moderators = addModRes.moderators
+
         toast({
           content: $t('toast.addMod'),
           type: 'success',
         })
 
-        formData.newModerator = ''
-      } else if (formData.newModerator) {
-        const res = await getClient().resolveObject({
-          q: formData.newModerator,
+        formData.newModerator = -1
+      } else {
+        toast({
+          content: $t('toast.failFindUser'),
+          type: 'warning',
         })
-
-        if (res.person) {
-          const addModRes = await getClient().addModToCommunity({
-            added: true,
-            person_id: res.person.person.id,
-            community_id: data.community.value.community_view.community.id,
-          })
-
-          data.community.value.moderators = addModRes.moderators
-
-          toast({
-            content: $t('toast.addMod'),
-            type: 'success',
-          })
-
-          formData.newModerator = ''
-        } else {
-          toast({
-            content: $t('toast.failFindUser'),
-            type: 'warning',
-          })
-        }
       }
     } catch (err) {
       toast({
@@ -105,12 +85,9 @@
 </script>
 
 <Header pageHeader>Moderators</Header>
-<ul class="divide-y divide-slate-200 dark:divide-zinc-800">
-  {#each data.community.value.moderators as moderator (moderator.moderator.id)}
-    <div
-      class="py-4 flex items-center gap-2 justify-between"
-      animate:flip={{ duration: 300 }}
-    >
+<CommonList items={data.community.value.moderators}>
+  {#snippet item(moderator)}
+    <div class="flex items-center gap-2 justify-between">
       <div class="flex gap-2 items-center">
         <Avatar
           width={28}
@@ -118,7 +95,7 @@
           alt={moderator.moderator.name}
         />
         <div class="flex flex-col gap-0">
-          <UserLink user={moderator.moderator} showInstance={false} />
+          {moderator.moderator.display_name ?? moderator.moderator.name}
           <span class="text-xs text-slate-600 dark:text-zinc-400">
             {new URL(moderator.moderator.actor_id).hostname}
           </span>
@@ -127,29 +104,42 @@
       <Button
         size="square-md"
         onclick={() => {
-          toast({
-            content: `Are you sure you want to remove ${moderator.moderator.name} as a moderator?`,
-            action: () => removeMod(moderator.moderator.id),
+          modal({
+            title: $t('common.remove'),
+            body: `Are you sure you want to remove ${moderator.moderator.name} as a moderator?`,
+            actions: [
+              action({
+                content: $t('common.remove'),
+                action: () => removeMod(moderator.moderator.id),
+                type: 'danger',
+                close: true,
+              }),
+              action({
+                content: $t('common.cancel'),
+                close: true,
+              }),
+            ],
           })
         }}
       >
         <Icon src={Trash} mini size="16" />
       </Button>
     </div>
-  {/each}
-</ul>
+  {/snippet}
+</CommonList>
 <form
   onsubmit={e => {
     e.preventDefault()
     addModerator()
   }}
-  class="mt-auto flex gap-2 w-full"
+  class="mt-auto flex gap-2 w-full mb-3 sm:mb-6"
 >
-  <TextInput
-    bind:value={formData.newModerator}
-    class="w-full"
-    placeholder="@user@example.com"
-  />
+  <div class="w-full">
+    <UserAutocomplete
+      listing_type="All"
+      onselect={p => (formData.newModerator = p.id)}
+    />
+  </div>
   <Button
     loading={formData.addingModerator}
     disabled={formData.addingModerator}
@@ -160,6 +150,7 @@
   >
     {#snippet prefix()}
       <Icon src={Plus} micro size="16" />
-    {/snippet} Add moderator
+    {/snippet}
+    {$t('common.add')}
   </Button>
 </form>
