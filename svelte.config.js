@@ -31,16 +31,6 @@ const config = {
                 },
               })
             : auto(),
-    csp: {
-      directives: {
-        'script-src': ['self'],
-      },
-      // must be specified with either the `report-uri` or `report-to` directives, or both
-      reportOnly: {
-        'script-src': ['self'],
-        'report-uri': ['/'],
-      },
-    },
     alias: {
       'mono-svelte': 'src/lib/mono',
       'svelte-hero-icons': 'node_modules/@xylightdev/svelte-hero-icons',
