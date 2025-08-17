@@ -108,11 +108,11 @@
           <Button
             size="custom"
             rounding="xl"
-            class="w-8.5 h-8.5"
+            class="w-7.5 h-7.5"
             color={language != undefined ? 'primary' : 'ghost'}
             title={$t('form.profile.languages.title')}
           >
-            <Icon src={Language} size="16" micro />
+            <Icon src={Language} size="14" micro />
           </Button>
         {/snippet}
 

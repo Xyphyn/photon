@@ -144,11 +144,14 @@
     </Label>
   {/if}
   <div
-    class="flex flex-col border border-slate-200 border-b-slate-300 dark:border-zinc-800
-    focus-within:border-primary-900 dark:focus-within:border-primary-100 focus-within:ring-3 ring-slate-300
-    dark:ring-zinc-700 rounded-2xl
-overflow-hidden transition-colors {clazz}"
-    class:mt-1={label}
+    class={[
+      'flex flex-col border  border-slate-200 border-b-slate-300 dark:border-zinc-800',
+      'focus-within:border-primary-900 dark:focus-within:border-primary-100 focus-within:ring-3 ring-slate-300 dark:ring-zinc-700',
+      'bg-white dark:bg-zinc-950',
+      'rounded-2xl overflow-hidden transition-colors',
+      label && 'mt-1',
+      clazz,
+    ]}
   >
     {#if previewing}
       <div
@@ -160,79 +163,99 @@ overflow-hidden transition-colors {clazz}"
       {#if tools}
         <!--Toolbar-->
         <div
-          class="*:shrink-0 flex flex-row overflow-auto p-1.5 gap-1.5 border-b
-          border-slate-200 dark:border-zinc-900 {disabled
-            ? 'opacity-60 pointer-events-none'
-            : ''}"
+          class={[
+            '*:shrink-0 flex flex-row overflow-auto p-1.5 gap-1.5',
+            disabled && 'opacity-60 pointer-events-none',
+          ]}
         >
           <Button
             onclick={() => wrapSelection('**', '**')}
             title="Bold"
-            size="square-md"
+            size="custom"
+            class="w-8 h-8"
+            rounding="lg"
           >
-            <Icon src={Bold} size="16" mini />
+            <Icon src={Bold} size="15" micro />
           </Button>
           <Button
             onclick={() => wrapSelection('*', '*')}
             title="Italic"
-            size="square-md"
+            size="custom"
+            class="w-8 h-8"
+            rounding="lg"
           >
-            <Icon src={Italic} size="16" micro />
+            <Icon src={Italic} size="15" micro />
           </Button>
           <Button
             onclick={() => wrapSelection('[', '](https://example.com)')}
             title="Link"
-            size="square-md"
+            size="custom"
+            class="w-8 h-8"
+            rounding="lg"
           >
-            <Icon src={Link} size="16" micro />
+            <Icon src={Link} size="15" micro />
           </Button>
           <Button
             onclick={() => wrapSelection('\n# ', '')}
             title="Header"
-            size="square-md"
+            size="custom"
+            class="w-8 h-8"
+            rounding="lg"
           >
-            <Icon src={H1} size="16" micro />
+            <Icon src={H1} size="15" micro />
           </Button>
           <Button
             onclick={() => wrapSelection('~~', '~~')}
             title="Strikethrough"
-            size="square-md"
+            size="custom"
+            class="w-8 h-8"
+            rounding="lg"
           >
-            <Icon src={Strikethrough} size="16" micro />
+            <Icon src={Strikethrough} size="15" micro />
           </Button>
           <Button
             onclick={() => wrapSelection('\n> ', '')}
             title="Quote"
-            size="square-md"
+            size="custom"
+            class="w-8 h-8"
+            rounding="lg"
           >
             <span class="font-bold font-serif text-lg">"</span>
           </Button>
           <Button
             onclick={() => wrapSelection('\n- ', '')}
             title="List"
-            size="square-md"
+            size="custom"
+            class="w-8 h-8"
+            rounding="lg"
           >
-            <Icon src={ListBullet} micro size="16" />
+            <Icon src={ListBullet} micro size="15" />
           </Button>
           <Button
             onclick={() => wrapSelection('`', '`')}
             title="Code"
-            size="square-md"
+            size="custom"
+            class="w-8 h-8"
+            rounding="lg"
           >
-            <Icon src={CodeBracket} micro size="16" />
+            <Icon src={CodeBracket} micro size="15" />
           </Button>
           <Button
             onclick={() =>
               wrapSelection('::: spoiler <spoiler title>\n', '\n:::')}
             title="Spoiler"
-            size="square-md"
+            size="custom"
+            class="w-8 h-8"
+            rounding="lg"
           >
-            <Icon src={ExclamationTriangle} micro size="16" />
+            <Icon src={ExclamationTriangle} micro size="15" />
           </Button>
           <Button
             onclick={() => wrapSelection('~', '~')}
             title="Subscript"
-            size="square-md"
+            size="custom"
+            class="w-8 h-8"
+            rounding="lg"
           >
             <span class="font-bold">
               X
@@ -242,7 +265,9 @@ overflow-hidden transition-colors {clazz}"
           <Button
             onclick={() => wrapSelection('^', '^')}
             title="Superscript"
-            size="square-md"
+            size="custom"
+            class="w-8 h-8"
+            rounding="lg"
           >
             <span class="font-bold">
               X
@@ -253,9 +278,11 @@ overflow-hidden transition-colors {clazz}"
             <Button
               onclick={() => (uploadingImage = !uploadingImage)}
               title="Image"
-              size="square-md"
+              size="custom"
+              class="w-8 h-8"
+              rounding="lg"
             >
-              <Icon src={Photo} size="16" micro />
+              <Icon src={Photo} size="15" micro />
             </Button>
           {/if}
         </div>
@@ -293,7 +320,7 @@ overflow-hidden transition-colors {clazz}"
 
     {#if previewButton}
       <div
-        class="p-2 flex flex-row items-center w-full bg-white dark:bg-zinc-950 gap-1"
+        class="p-2 flex flex-row items-center w-full bg-slate-50 border-t border-slate-200 dark:border-zinc-900 dark:bg-zinc-925 gap-1"
       >
         {#if previewButton}
           <MultiSelect

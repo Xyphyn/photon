@@ -39,9 +39,7 @@
   import Label from '../forms/Label.svelte'
   import { generateID } from '../forms/helper.js'
 
-  const borderClass = `
-	border border-slate-200 border-b-slate-300 dark:border-zinc-900 dark:border-t-zinc-800
-	`
+  const borderClass = `border border-slate-200 border-b-slate-300 dark:border-zinc-800`
 
   let {
     label = undefined,
@@ -52,7 +50,7 @@
     size = 'md',
     id = generateID(),
     inlineAffixes = false,
-    shadow = 'none',
+    shadow = 'sm',
     element = $bindable(),
     class: clazz = '',
     customLabel: passedCustomLabel,

@@ -24,7 +24,7 @@
   }: Props = $props()
 </script>
 
-<ul class="divide-y-3 divide-slate-50 dark:divide-zinc-925">
+<ul class="space-y-1">
   {#if items}
     {#each items as item, index (item)}
       <li
@@ -70,14 +70,18 @@
   }
 
   :global(.dark) ul > :global(li) {
-    background-color: var(--color-zinc-950);
+    background-color: color-mix(
+      in oklab,
+      var(--color-zinc-925),
+      var(--color-zinc-900)
+    );
 
     &:hover {
-      background-color: color-mix(
-        in oklab,
-        var(--color-zinc-925),
-        var(--color-zinc-900)
-      );
+      background-color: var(--color-zinc-900);
+    }
+
+    &:active {
+      background-color: var(--color-zinc-950);
     }
   }
 

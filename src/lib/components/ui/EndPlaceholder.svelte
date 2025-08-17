@@ -15,6 +15,6 @@
   <span class="font-medium text-left">
     {@render children?.()}
   </span>
-  <hr class="border-slate-200 flex-1 w-full dark:border-zinc-800" />
+  <div class="flex-1"></div>
   {@render action?.()}
 </div>

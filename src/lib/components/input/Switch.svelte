@@ -31,10 +31,10 @@
     {@const slctd = selected == option}
     <button
       class={[
-        'px-3 py-1.5 rounded-xl text-sm font-medium transition-colors duration-75 relative cursor-pointer',
+        'px-2.5 py-1 rounded-xl text-sm font-medium transition-colors duration-75 relative cursor-pointer',
         slctd
           ? 'bg-primary-900 dark:bg-primary-100 text-slate-50 dark:text-zinc-900 hover:brightness-90 active:brightness-75'
-          : ' border dark:bg-zinc-900/50 bg-white border-slate-300 dark:border-zinc-800 hover:bg-slate-200 hover:dark:bg-zinc-800 active:bg-slate-300 active:dark:bg-zinc-900',
+          : ' border dark:bg-zinc-900/50 bg-white border-slate-200 dark:border-zinc-800 hover:bg-slate-100 hover:dark:bg-zinc-800 active:bg-slate-200 active:dark:bg-zinc-900',
       ]}
       onclick={e => {
         e.preventDefault()

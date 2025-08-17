@@ -174,9 +174,9 @@
     </Menu>
     <Icon
       src={ChevronUpDown}
-      mini
+      micro
       size="16"
-      class="absolute right-0 top-1/4 mx-2 box-border pointer-events-none"
+      class="absolute right-0 top-1/4 mx-1.5 box-border pointer-events-none"
     />
   </div>
 </div>

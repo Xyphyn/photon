@@ -64,9 +64,6 @@
       {#snippet title()}
         <span class="flex items-center gap-1 py-1 px-2 w-full">
           {$t('cards.site.about')}
-          <hr
-            class="w-full flex-1 ml-1 border-slate-200 dark:border-zinc-800"
-          />
         </span>
       {/snippet}
       <Markdown source={site.site.description} />
@@ -88,9 +85,6 @@
       {#snippet title()}
         <span class="flex items-center gap-1 py-1 px-2 w-full">
           {$t('cards.site.stats')}
-          <hr
-            class="w-full flex-1 ml-1 border-slate-200 dark:border-zinc-800"
-          />
         </span>
       {/snippet}
       <div class="flex flex-row gap-4 flex-wrap">
@@ -118,9 +112,6 @@
         {#snippet title()}
           <span class="flex items-center gap-1 py-1 px-2 w-full">
             {$t('cards.site.admins')}
-            <hr
-              class="w-full flex-1 ml-1 border-slate-200 dark:border-zinc-800"
-            />
           </span>
         {/snippet}
         <ItemList

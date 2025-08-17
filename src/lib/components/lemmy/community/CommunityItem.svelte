@@ -88,7 +88,9 @@
         <div
           class="flex flex-col overflow-hidden whitespace-nowrap flex-1 min-w-0 shrink"
         >
-          <div class="font-medium text-base overflow-hidden text-ellipsis">
+          <div
+            class="font-medium text-base overflow-hidden text-ellipsis leading-5"
+          >
             <span>{community.community.title}</span>
             {#if community.community.deleted}
               <Icon
@@ -128,7 +130,7 @@
             {/if}
           </div>
           <div
-            class="text-sm text-slate-600 dark:text-zinc-400 flex gap-0.5"
+            class="text-sm text-slate-500 dark:text-zinc-500 flex gap-0.5"
             class:justify-center={view == 'cozy'}
           >
             <span class="overflow-hidden text-ellipsis">

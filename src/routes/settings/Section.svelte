@@ -17,9 +17,9 @@
   }: Props = $props()
 </script>
 
-<Expandable bind:open>
+<Expandable bind:open class="border-y-0">
   {#snippet title()}
-    <h2 class="text-xl font-semibold text-inherit" {id}>
+    <h2 class="text-lg font-medium text-inherit" {id}>
       <span>{passedTitle}</span>
     </h2>
   {/snippet}
