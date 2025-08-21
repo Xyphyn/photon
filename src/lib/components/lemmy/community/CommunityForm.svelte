@@ -25,6 +25,7 @@
   import { DocumentPlus, GlobeAlt, Icon, MapPin, Plus } from 'svelte-hero-icons'
   import ImageUploadModal from '../modal/ImageUploadModal.svelte'
   import { errorMessage } from '$lib/lemmy/error'
+  import ImageInputUpload from '$lib/components/form/ImageInputUpload.svelte'
 
   interface Props {
     /**
@@ -168,62 +169,14 @@
     bind:value={formData.displayName}
   />
   <div class="flex flex-row gap-4 flex-wrap *:flex-1">
-    <div class="flex flex-col gap-1">
-      <Label>{$t('routes.admin.config.icon')}</Label>
-      <button
-        type="button"
-        onclick={() => (uploading.icon = !uploading.icon)}
-        class="flex flex-col gap-4 bg-white dark:bg-black border border-slate-300 dark:border-zinc-800 p-4 w-full h-32 rounded-xl"
-      >
-        {#if formData.icon}
-          <img src={formData.icon} alt="" class="rounded-md mx-auto h-full" />
-        {:else}
-          <Icon
-            src={DocumentPlus}
-            size="48"
-            class="text-slate-500 dark:text-zinc-500 mx-auto my-auto"
-          />
-        {/if}
-      </button>
-      {#if uploading.icon}
-        <ImageUploadModal
-          bind:open={uploading.icon}
-          multiple={false}
-          onupload={uploaded => {
-            uploading.icon = false
-            formData.icon = uploaded[0]
-          }}
-        />
-      {/if}
-    </div>
-    <div class="flex flex-col gap-1">
-      <Label>{$t('routes.admin.config.banner')}</Label>
-      <button
-        type="button"
-        onclick={() => (uploading.banner = !uploading.banner)}
-        class="flex flex-col gap-4 bg-white dark:bg-black border border-slate-300 dark:border-zinc-800 p-4 w-full h-32 rounded-xl"
-      >
-        {#if formData.banner}
-          <img src={formData.banner} alt="" class="rounded-md mx-auto h-full" />
-        {:else}
-          <Icon
-            src={DocumentPlus}
-            size="48"
-            class="text-slate-500 dark:text-zinc-500 mx-auto my-auto"
-          />
-        {/if}
-      </button>
-      {#if uploading.banner}
-        <ImageUploadModal
-          bind:open={uploading.banner}
-          multiple={false}
-          onupload={uploaded => {
-            uploading.banner = false
-            formData.banner = uploaded[0]
-          }}
-        />
-      {/if}
-    </div>
+    <ImageInputUpload
+      imageUrl={formData.icon}
+      label={$t('routes.admin.config.icon')}
+    />
+    <ImageInputUpload
+      imageUrl={formData.banner}
+      label={$t('routes.admin.config.banner')}
+    />
   </div>
   <MarkdownEditor
     previewButton

@@ -652,7 +652,8 @@
         "send": "Send",
         "general": "General",
         "remove": "Remove",
-        "download": "Download"
+        "download": "Download",
+        "attach": "Attach file"
     },
     "message": {
         "success": "Success",
