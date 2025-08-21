@@ -1,15 +1,15 @@
 <script lang="ts">
   import { invalidateAll } from '$app/navigation'
   import { page } from '$app/state'
+  import { SvelteURL } from 'svelte/reactivity'
 
   interface Props {
     routes: {
       href: string
       name: string
     }[]
-    currentRoute?: string | undefined
-    buildUrl?: (currentRoute: string | undefined, href: string) => string
-    defaultRoute?: string | undefined
+    currentRoute?: SvelteURL | undefined
+    buildUrl?: (currentRoute: SvelteURL | undefined, href: string) => string
     class?: string
     children?: import('svelte').Snippet
   }
@@ -18,27 +18,13 @@
     routes,
     currentRoute = undefined,
     buildUrl = (_, href) => href,
-    defaultRoute = undefined,
     class: clazz = '',
     children,
   }: Props = $props()
 
-  function isSelected(
-    url: URL,
-    currentRoute: string | undefined,
-    route: string,
-    defaultRoute?: string,
-  ) {
-    if (route.startsWith('?')) {
-      const param = route.slice(1)
-      const key = param.split(/(?<=[=])/g)[0]
-      if (currentRoute?.includes(param)) {
-        return true
-      } else if (route == defaultRoute && !currentRoute?.includes(key)) {
-        return true
-      }
-    }
-    return (currentRoute ?? url.pathname) == route
+  function isSelected(url: URL, href?: SvelteURL) {
+    if (href?.search != '') return href?.search == url.search
+    else if (url.search == '') return href?.pathname == url.pathname
   }
 </script>
 
@@ -56,7 +42,7 @@
       transition-colors duration-100 relative z-0 shrink-0"
     >
       {route.name}
-      {#if isSelected(page.url, currentRoute, route.href, defaultRoute)}
+      {#if isSelected(page.url, new SvelteURL(`${page.url.origin}${route.href}`))}
         <div
           class="rounded-full bg-slate-200/60 dark:bg-zinc-700/60
           absolute inset-0 w-full h-full -z-10"

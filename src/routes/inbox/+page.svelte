@@ -9,10 +9,10 @@
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { t } from '$lib/i18n/translations'
   import { getClient } from '$lib/lemmy.svelte.js'
-  import { Button } from 'mono-svelte'
-  import { ArrowPath, Check, Icon, Inbox } from 'svelte-hero-icons'
+  import { Button, Option, Select } from 'mono-svelte'
+  import { ArrowPath, Check, Funnel, Icon, Inbox } from 'svelte-hero-icons'
   import InboxItem from './InboxItem.svelte'
-  import { SvelteURLSearchParams } from 'svelte/reactivity'
+  import { searchParam } from '$lib/util.svelte'
 
   let { data } = $props()
 
@@ -38,80 +38,12 @@
 
     return response.replies
   }
-
-  function addSearchParam(
-    currentSearchParams: URLSearchParams,
-    newParamString: string,
-  ) {
-    // Create a new URLSearchParams object from the current search params
-    const updatedParams = new SvelteURLSearchParams(currentSearchParams)
-
-    // Parse the new parameter string
-    const newParam = new SvelteURLSearchParams(newParamString)
-
-    // Get the key and value of the new parameter
-    const [key, value]: [string, string] = newParam.entries().next().value!
-
-    // Add the new parameter to the updated params
-    updatedParams.set(key, value)
-
-    return updatedParams
-  }
 </script>
 
 <svelte:head>
   <title>{$t('routes.inbox.title')}</title>
 </svelte:head>
 
-<div
-  class="mt-4 mb-2 z-30 mx-auto max-w-full flex gap-2 md:flex-row flex-col
-items-center px-2 w-max top-6 lg:top-22"
->
-  <Tabs
-    routes={[
-      {
-        href: '?type=all',
-        name: $t('filter.location.all'),
-      },
-      {
-        href: '?type=replies',
-        name: $t('filter.inbox.replies'),
-      },
-      {
-        href: '?type=mentions',
-        name: $t('filter.inbox.mentions'),
-      },
-      {
-        href: '/inbox/messages',
-        name: $t('filter.inbox.messages'),
-      },
-    ]}
-    currentRoute={page.url.search}
-    buildUrl={(route, href) =>
-      href.includes('?')
-        ? '?' + addSearchParam(page.url.searchParams, href).toString()
-        : `${href}${page.url.search}`}
-    defaultRoute="?type=all"
-    class="overflow-auto"
-  />
-  <Tabs
-    routes={[
-      {
-        href: '?unreadOnly=false',
-        name: $t('filter.location.all'),
-      },
-      {
-        href: '?unreadOnly=true',
-        name: $t('filter.unread'),
-      },
-    ]}
-    currentRoute={page.url.search}
-    buildUrl={(route, href) =>
-      '?' + addSearchParam(page.url.searchParams, href).toString()}
-    defaultRoute="?unreadOnly=true"
-    class="overflow-auto"
-  />
-</div>
 <Header pageHeader class="lg:flex-row justify-between flex-col">
   {$t('routes.inbox.title')}
 
@@ -144,6 +76,32 @@ items-center px-2 w-max top-6 lg:top-22"
 
 <div class="h-3 sm:h-6"></div>
 
+<div class="mb-3 sm:mb-6">
+  <Select
+    class=" w-max items-center"
+    bind:value={
+      () => data.unreadOnly.value.toString(),
+      v => (data.unreadOnly.value = v == 'true')
+    }
+    onchange={() =>
+      searchParam(
+        page.url,
+        'unreadOnly',
+        data.unreadOnly.value ? 'true' : 'false',
+        'page',
+      )}
+  >
+    {#snippet customLabel()}
+      <span class="flex items-center gap-1">
+        <Icon src={Funnel} size="15" mini />
+        {$t('filter.filter')}
+      </span>
+    {/snippet}
+    <Option value="false">{$t('filter.location.all')}</Option>
+    <Option value="true">{$t('filter.unread')}</Option>
+  </Select>
+</div>
+
 {#if !data.inbox?.value || (data.inbox.value?.length ?? 0) == 0}
   <Placeholder
     icon={Inbox}
@@ -162,14 +120,12 @@ items-center px-2 w-max top-6 lg:top-22"
   <div
     class="sticky z-30 mx-auto max-w-full self-end mt-auto bottom-22 lg:bottom-6"
   >
-    <Tabs routes={[]} class="mx-auto">
-      <Pageination
-        hasMore={!(
-          !data.inbox || (data.inbox.value?.length ?? 0) < (data?.limit ?? 0)
-        )}
-        page={data.page}
-        href={page => `?page=${page}`}
-      />
-    </Tabs>
+    <Pageination
+      hasMore={!(
+        !data.inbox || (data.inbox.value?.length ?? 0) < (data?.limit ?? 0)
+      )}
+      page={data.page}
+      href={page => `?page=${page}`}
+    />
   </div>
 {/if}

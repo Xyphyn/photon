@@ -82,7 +82,5 @@
   </CommonList>
 {/if}
 <div class="sticky z-30 mx-auto max-w-full bottom-22 lg:bottom-6">
-  <Tabs routes={[]} class="mx-auto">
-    <Pageination href={page => `?page=${page}`} page={data.page} />
-  </Tabs>
+  <Pageination href={page => `?page=${page}`} page={data.page} />
 </div>

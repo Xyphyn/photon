@@ -18,12 +18,13 @@ export async function load({ url, fetch }) {
     (url.searchParams.get('type') as InboxFeedType) || 'all'
   const client = getClient(undefined, fetch)
   const page = Number(url.searchParams.get('page')) || 1
-  const unreadOnly: string = url.searchParams.get('unreadOnly') || 'true'
+  const unreadOnly: boolean =
+    (url.searchParams.get('unreadOnly') || 'true') == 'true'
 
   const params = {
     limit: 20,
     page: page,
-    unread_only: unreadOnly == 'true',
+    unread_only: unreadOnly,
   }
 
   const [replies, mentions, privateMessages] = await Promise.all([
@@ -70,7 +71,7 @@ export async function load({ url, fetch }) {
   }))
 
   return {
-    unreadOnly: unreadOnly,
+    unreadOnly: new ReactiveState(unreadOnly),
     type: type,
     page: page,
     inbox: new ReactiveState(data),

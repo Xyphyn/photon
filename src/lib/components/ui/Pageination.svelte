@@ -44,7 +44,7 @@
 
 <nav
   aria-label={$t('aria.pagination.nav')}
-  class="flex flex-row w-full gap-4 items-center justify-center"
+  class="flex flex-row w-full gap-4 items-center justify-center backdrop-blur-xl border border-slate-200 dark:border-zinc-800 rounded-full overflow-hidden"
 >
   {#if children}
     <span class="text-sm text-slate-600 dark:text-zinc-400 font-medium">
@@ -58,9 +58,9 @@
       color="ghost"
       onclick={() => invalidate(pageData.url)}
       title={$t('common.back')}
-      size="square-md"
-      rounding="pill"
-      class="text-inherit dark:text-inherit disabled:opacity-20! disabled:bg-transparent!"
+      rounding="none"
+      size="custom"
+      class="text-inherit dark:text-inherit border-0 border-r p-2"
       disabled={(cursor?.back == undefined && cursor?.next != undefined) ||
         page <= 1}
       data-sveltekit-preload-data="off"
@@ -77,7 +77,7 @@
         <div
           in:fly={{ y: 8, easing: backOut, duration: 400, delay: 100 }}
           out:fly={{ y: 8, easing: backOut, duration: 400 }}
-          class="text-md font-medium"
+          class="text-lg font-medium"
           style="grid-column: 1; grid-row: 1;"
         >
           {page}
@@ -91,9 +91,9 @@
     color="ghost"
     onclick={() => invalidate(pageData.url)}
     title={$t('common.next')}
-    size="square-md"
-    rounding="pill"
-    class="text-inherit dark:text-inherit"
+    size="custom"
+    rounding="none"
+    class="text-inherit dark:text-inherit border-0 border-l p-2"
     disabled={!hasMore}
     data-sveltekit-preload-data="off"
   >

@@ -189,11 +189,9 @@
 {/if}
 {#if data.communities.value.length > 0}
   <div class="sticky z-30 mx-auto max-w-full bottom-22 lg:bottom-6">
-    <Tabs routes={[]} class="mx-auto">
-      <Pageination
-        page={Number(page.url.searchParams.get('page')) || 1}
-        href={c => `?page=${c}`}
-      />
-    </Tabs>
+    <Pageination
+      page={Number(page.url.searchParams.get('page')) || 1}
+      href={c => `?page=${c}`}
+    />
   </div>
 {/if}
