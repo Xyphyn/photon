@@ -34,15 +34,15 @@
         {@render title?.(open)}
       </div>
       {#if icon}
-        <Icon
-          src={open ? Minus : Plus}
-          size="16"
-          micro
+        <div
           class={[
+            'ml-auto ',
             !open && 'rotate-90',
             'transition-transform duration-300 ease-out',
           ]}
-        />
+        >
+          <Icon src={open ? Minus : Plus} size="16" micro class={[]} />
+        </div>
       {/if}
       <div
         class="inset-0 -z-10 opacity-0 absolute bg-slate-200 dark:bg-zinc-900 rounded-full

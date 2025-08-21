@@ -54,7 +54,7 @@
   {#snippet prefix()}
     <div class={(icon || customIcon) && adaptive ? 'lg:hidden' : ''}>
       {#if icon}
-        <Icon src={icon} size="20" />
+        <Icon src={icon} size="20" mini />
       {:else}
         {@render customIcon?.({ size: 16, isSelected })}
       {/if}

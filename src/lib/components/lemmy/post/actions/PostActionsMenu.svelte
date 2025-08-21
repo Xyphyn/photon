@@ -39,23 +39,6 @@
   let { post, onhide, editing = $bindable() }: Props = $props()
 </script>
 
-<MenuDivider>{$t('post.actions.more.creator')}</MenuDivider>
-<MenuButton link href={userLink(post.creator)}>
-  {#snippet prefix()}
-    <Icon src={UserCircle} size="16" micro class="shrink-0" />
-  {/snippet}
-  <TextProps wrap="no-wrap">
-    {post.creator.name}
-  </TextProps>
-</MenuButton>
-<MenuButton link href={communityLink(post.community)}>
-  {#snippet prefix()}
-    <Icon src={Newspaper} size="16" micro class="shrink-0" />
-  {/snippet}
-  <TextProps wrap="no-wrap">
-    {post.community.title}
-  </TextProps>
-</MenuButton>
 <MenuDivider>
   {$t('post.actions.more.actions')}
 </MenuDivider>

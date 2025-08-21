@@ -18,6 +18,9 @@
   } from 'svelte-hero-icons'
   import EndPlaceholder from '../EndPlaceholder.svelte'
   import type { ClassValue } from 'svelte/elements'
+  import CommonList from '../layout/CommonList.svelte'
+  import { communityLink } from '$lib/lemmy/generic'
+  import Avatar from '../Avatar.svelte'
 
   interface Props {
     style?: string
@@ -104,40 +107,24 @@
           </EndPlaceholder>
         </span>
       {/snippet}
-      <div class="w-full flex gap-px flex-col">
-        {#each [...profile.meta.profiles] as prof, index}
-          <div class="w-full">
-            <ProfileButton {index} {prof} />
-          </div>
-        {/each}
-      </div>
+      <CommonList
+        size="xs"
+        animate={false}
+        items={profile.meta.profiles}
+        class="px-1 py-0.5"
+        selected={prof => prof.id == profile.meta.profile}
+      >
+        {#snippet item(prof, index)}
+          <ProfileButton {index} {prof} />
+        {/snippet}
+      </CommonList>
+      <div class="my-2"></div>
       <SidebarButton href="/accounts" icon={UserGroup}>
         {$t('account.accounts')}
       </SidebarButton>
     </Expandable>
   {/if}
   <hr class="border-slate-200 dark:border-zinc-900 my-1" />
-  {#if profile.current?.favorites && profile.current?.favorites.length > 0}
-    <Expandable
-      class="max-w-full min-w-0 w-full"
-      bind:open={settings.expand.favorites}
-    >
-      {#snippet title()}
-        <span class="px-2 py-1 w-full">
-          <EndPlaceholder>
-            {$t('routes.profile.favorites')}
-            {#snippet action()}
-              <span class="dark:text-white text-black">
-                {profile.current.favorites?.length}
-              </span>
-            {/snippet}
-          </EndPlaceholder>
-        </span>
-      {/snippet}
-      <CommunityList isFavorites items={profile.current.favorites} />
-    </Expandable>
-    <hr class="border-slate-200 dark:border-zinc-900 my-1" />
-  {/if}
   {#if profile.current?.user}
     {#if profile.current?.user.moderates.length > 0}
       <Expandable
@@ -179,9 +166,37 @@
           </EndPlaceholder>
         </span>
       {/snippet}
-      <CommunityList
-        items={profile.current.user.follows.map(i => i.community)}
-      />
+      <CommonList
+        animate={false}
+        size="xs"
+        items={profile.current.user.follows}
+        class="px-1 py-0.5"
+      >
+        {#snippet item(follow)}
+          <SidebarButton
+            class="font-normal w-full h-max"
+            color="none"
+            alignment="left"
+            href={communityLink(follow.community)}
+          >
+            {#snippet customIcon()}
+              <Avatar
+                url={follow.community.icon}
+                alt={follow.community.name}
+                title={follow.community.title}
+                width={28}
+              />{/snippet}
+            {#snippet label()}
+              <div class="flex flex-col max-w-full break-words">
+                <span>{follow.community.title}</span>
+                <span class="text-xs text-slate-600 dark:text-zinc-400">
+                  {new URL(follow.community.actor_id).hostname}
+                </span>
+              </div>
+            {/snippet}
+          </SidebarButton>
+        {/snippet}
+      </CommonList>
     </Expandable>
   {/if}
 </nav>

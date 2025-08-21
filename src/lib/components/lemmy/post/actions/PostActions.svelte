@@ -44,8 +44,8 @@
     onedit,
     onhide,
   }: Props = $props()
-  let buttonHeight = $derived(view == 'compact' ? 'h-7' : 'h-8')
-  let buttonSquare = $derived(view == 'compact' ? 'w-7 h-7' : 'w-8 h-8')
+  let buttonHeight = $derived(view == 'compact' ? 'h-7.5' : 'h-8')
+  let buttonSquare = $derived(view == 'compact' ? 'w-7.5 h-7.5' : 'w-8 h-8')
 </script>
 
 {#if editing}

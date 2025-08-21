@@ -1,10 +1,12 @@
 <script lang="ts" generics="T">
   import type { Snippet } from 'svelte'
+  import type { ClassValue } from 'svelte/elements'
 
-  const sizeDelay: Record<'lg' | 'md' | 'sm', number> = {
+  const sizeDelay: Record<'lg' | 'md' | 'sm' | 'xs', number> = {
     lg: 120,
     md: 80,
     sm: 40,
+    xs: 0,
   }
 
   interface Props {
@@ -12,7 +14,9 @@
     item?: Snippet<[T, number]>
     children?: Snippet
     animate?: boolean
-    size?: 'lg' | 'md' | 'sm'
+    size?: 'lg' | 'md' | 'sm' | 'xs'
+    class?: ClassValue
+    selected?: (item: T) => boolean
   }
 
   let {
@@ -21,6 +25,8 @@
     children,
     animate = true,
     size = 'sm',
+    class: clazz,
+    selected,
   }: Props = $props()
 </script>
 
@@ -28,7 +34,13 @@
   {#if items}
     {#each items as item, index (item)}
       <li
-        class={['group/li', animate && 'animate']}
+        class={[
+          'group/li',
+          animate && 'animate',
+          size == 'xs' && 'xs',
+          selected?.(item) && 'selected',
+          clazz,
+        ]}
         style="--i: {index < 10 ? index * sizeDelay[size] : 0}ms;"
       >
         {@render itemSnippet?.(item, index)}
@@ -40,8 +52,6 @@
 
 <style>
   ul > :global(li) {
-    padding-block: calc(var(--spacing) * 3);
-    padding-inline: calc(var(--spacing) * 3.5);
     transition: background-color 0.1s;
     background-color: var(--color-white);
     container-type: inline-size;
@@ -60,13 +70,39 @@
     &:hover {
       background-color: var(--color-slate-25);
     }
+
+    &:not(.xs) {
+      padding-block: calc(var(--spacing) * 3);
+      padding-inline: calc(var(--spacing) * 3.5);
+    }
+
+    @media screen and (min-width: 40rem) {
+      &:not(.xs) {
+        padding-block: calc(var(--spacing) * 3);
+        padding-inline: calc(var(--spacing) * 4);
+      }
+    }
+
+    .xs {
+      padding-block: calc(var(--spacing) * 0.5);
+      padding-block: calc(var(--spacing) * 1);
+    }
   }
 
-  @media screen and (min-width: 40rem) {
-    ul > :global(li) {
-      padding-block: calc(var(--spacing) * 3);
-      padding-inline: calc(var(--spacing) * 4);
-    }
+  ul > :global(li).selected {
+    background-color: color-mix(
+      in oklab,
+      var(--color-white),
+      var(--color-slate-100)
+    );
+  }
+
+  :global(.dark) ul > :global(li).selected {
+    background-color: color-mix(
+      in oklab,
+      var(--color-zinc-925),
+      var(--color-zinc-800)
+    );
   }
 
   :global(.dark) ul > :global(li) {
