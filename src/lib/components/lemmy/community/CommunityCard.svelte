@@ -106,6 +106,8 @@
     Plus,
   } from 'svelte-hero-icons'
   import ItemList from '../generic/ItemList.svelte'
+  import CommonList from '$lib/components/ui/layout/CommonList.svelte'
+  import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
 
   let loading = $state({
     blocking: false,
@@ -209,19 +211,44 @@
         <hr class="border-slate-200 dark:border-zinc-900 my-1" />
         <Expandable bind:open={settings.expand.team}>
           {#snippet title()}
-            <span class="py-1 px-1 flex gap-1 items-center w-full">
+            <span class="flex items-center gap-1 py-1 px-2 w-full">
               {$t('cards.community.moderators')}
             </span>
           {/snippet}
-          <ItemList
-            items={moderators.map(m => ({
-              id: m.moderator.id,
-              name: m.moderator.name,
-              url: userLink(m.moderator),
-              avatar: m.moderator.avatar,
-              instance: new URL(m.moderator.actor_id).hostname,
-            }))}
-          />
+          <CommonList
+            animate={false}
+            size="xs"
+            items={moderators}
+            class="px-1 py-0.5"
+          >
+            {#snippet item(moderator)}
+              <SidebarButton
+                class="font-normal w-full h-max"
+                color="none"
+                alignment="left"
+                href={userLink(moderator.moderator)}
+              >
+                {#snippet customIcon()}
+                  <Avatar
+                    url={moderator.moderator.avatar}
+                    alt={moderator.moderator.name}
+                    width={28}
+                  />
+                {/snippet}
+                {#snippet label()}
+                  <div class="flex flex-col max-w-full break-words">
+                    <span>
+                      {moderator.moderator.display_name ??
+                        moderator.moderator.name}
+                    </span>
+                    <span class="text-xs text-slate-600 dark:text-zinc-400">
+                      {new URL(moderator.moderator.actor_id).hostname}
+                    </span>
+                  </div>
+                {/snippet}
+              </SidebarButton>
+            {/snippet}
+          </CommonList>
         </Expandable>
       {/if}
     </div>

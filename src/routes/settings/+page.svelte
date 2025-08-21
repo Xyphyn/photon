@@ -70,6 +70,7 @@
   import Section from './Section.svelte'
   import Setting from './Setting.svelte'
   import ToggleSetting from './ToggleSetting.svelte'
+  import Expandable from '$lib/components/ui/Expandable.svelte'
   let importing = $state(false)
   let importText = $state('')
 
@@ -182,50 +183,10 @@
   {/snippet}
 </Header>
 
-<div class="flex items-center gap-2 flex-wrap w-full my-5">
-  <Button href="#app" size="sm" class="text-xs" rounding="pill">
-    <Icon src={ArrowTopRightOnSquare} size="14" micro />
-    {$t('settings.app.title')}
-  </Button>
-  <Button href="#embeds" size="sm" class="text-xs" rounding="pill">
-    <Icon src={ArrowTopRightOnSquare} size="14" micro />
-    {$t('settings.embeds.title')}
-  </Button>
-  <Button href="#lemmy" size="sm" class="text-xs" rounding="pill">
-    <Icon src={ArrowTopRightOnSquare} size="14" micro />
-    {$t('settings.lemmy.title')}
-  </Button>
-  <Button href="#moderation" size="sm" class="text-xs" rounding="pill">
-    <Icon src={ArrowTopRightOnSquare} size="14" micro />
-    {$t('settings.moderation.title')}
-  </Button>
-  <Button href="#other" size="sm" class="text-xs" rounding="pill">
-    <Icon src={ArrowTopRightOnSquare} size="14" micro />
-    {$t('settings.other.title')}
-  </Button>
-</div>
-
 <div
-  class="flex flex-col *:py-2 divide-y divide-slate-200 dark:divide-zinc-800"
+  class="flex flex-col *:py-4 divide-y divide-slate-200 dark:divide-zinc-800"
   style="scroll-behavior: smooth;"
 >
-  {#if profile.current?.jwt}
-    <Section open={false} id="account" title={$t('settings.account.title')}>
-      <div>
-        <Button
-          color="primary"
-          size="lg"
-          href="/profile/settings"
-          class="block"
-        >
-          {$t('profile.profile')}
-          {#snippet suffix()}
-            <Icon src={ArrowRight} micro size="16" />
-          {/snippet}
-        </Button>
-      </div>
-    </Section>
-  {/if}
   <Section id="app" title={$t('settings.app.title')}>
     {#if env.PUBLIC_XYLIGHT_MODE}
       <Setting icon={Heart}>
@@ -606,7 +567,7 @@
   </Section>
 
   <Section id="moderation" title={$t('settings.moderation.title')}>
-    <Setting icon={Trash}>
+    <Setting icon={Trash} adaptive={false}>
       {#snippet title()}
         <span>{$t('settings.moderation.replyPresets.title')}</span>
       {/snippet}
@@ -630,76 +591,70 @@
           </ul>
         </span>
       {/snippet}
-      {#each settings.moderation.presets as preset, index (preset)}
-        <Material
-          color="transparent"
-          rounding="xl"
-          padding="sm"
-          class="py-3 w-full rounded-full"
-        >
-          <details>
-            <summary
-              class="cursor-pointer inline-flex flex-row items-center w-full gap-1"
-            >
-              <Icon src={ChevronDown} mini size="16" />
-              {preset.title}
-              <Button
-                size="square-md"
-                rounding="lg"
-                class="ml-auto"
-                onclick={() => {
-                  settings.moderation.presets.splice(index, 1)
-                  settings.moderation.presets = settings.moderation.presets
-                }}
-              >
-                <Icon src={Trash} size="16" mini />
-              </Button>
-            </summary>
-            <div class="flex flex-col gap-3 mt-2">
-              <TextInput
-                label="Title"
-                bind:value={preset.title}
-                placeholder="Reason 1"
-              />
-              <MarkdownEditor
-                bind:value={preset.content}
-                label="Content"
-                images={false}
-                previewButton
-                beforePreview={input =>
-                  removalTemplate(input, {
-                    postTitle: '<Example post>',
-                    communityLink: '[!community@example.com]()',
-                    reason: '<Being a meanie>',
-                    username: '@Bob',
-                  })}
-              />
-            </div>
-          </details>
-        </Material>
-      {/each}
-      <Material color="transparent" rounding="xl" padding="none" class="w-full">
-        <Button
-          color="none"
-          class="w-full"
-          onclick={() => {
-            settings.moderation.presets = [
-              ...settings.moderation.presets,
-              {
-                title: `Preset ${settings.moderation.presets.length + 1}`,
-                content:
-                  'Your submission in *{{post}}* was removed for *{{reason}}*.',
-              },
-            ]
-          }}
-        >
-          {#snippet prefix()}
-            <Icon src={Plus} mini size="16" />
-          {/snippet}
-          Add Preset
-        </Button>
-      </Material>
     </Setting>
+    {#each settings.moderation.presets as preset, index (preset)}
+      <li>
+        <Expandable>
+          {#snippet title()}
+            {preset.title}
+          {/snippet}
+          <div class="flex flex-col gap-3">
+            <TextInput
+              label="Title"
+              bind:value={preset.title}
+              placeholder="Reason 1"
+            />
+            <MarkdownEditor
+              bind:value={preset.content}
+              label="Content"
+              images={false}
+              previewButton
+              beforePreview={input =>
+                removalTemplate(input, {
+                  postTitle: '<Example post>',
+                  communityLink: '[!community@example.com]()',
+                  reason: '<Being a meanie>',
+                  username: '@Bob',
+                })}
+            />
+
+            <Button
+              color="danger"
+              rounding="pill"
+              onclick={() => {
+                settings.moderation.presets.splice(index, 1)
+                settings.moderation.presets = settings.moderation.presets
+              }}
+              class="w-max"
+            >
+              <Icon src={Trash} size="16" mini />
+              {$t('common.remove')}
+            </Button>
+          </div>
+        </Expandable>
+      </li>
+    {/each}
+    <li>
+      <Button
+        color="none"
+        class="w-full p-2"
+        onclick={() => {
+          settings.moderation.presets = [
+            ...settings.moderation.presets,
+            {
+              title: `Preset ${settings.moderation.presets.length + 1}`,
+              content:
+                'Your submission in *{{post}}* was removed for *{{reason}}*.',
+            },
+          ]
+        }}
+      >
+        {#snippet prefix()}
+          <Icon src={Plus} micro size="16" />
+        {/snippet}
+        Add Preset
+      </Button>
+    </li>
   </Section>
 
   <Section id="other" title={$t('settings.other.title')}>

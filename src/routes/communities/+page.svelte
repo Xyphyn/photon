@@ -22,6 +22,7 @@
   } from 'svelte-hero-icons'
   import { expoOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'
+  import SearchBar from '../search/SearchBar.svelte'
 
   let { data } = $props()
 
@@ -51,34 +52,8 @@
 </Header>
 
 <form method="get" action="/communities" class="contents" bind:this={form}>
-  <div class="mt-4 mb-0 sticky z-30 top-6 lg:top-22">
-    <Tabs routes={[]} class="p-2 dark:bg-zinc-925/70 shadow-md shadow-black/5">
-      <div class="flex gap-2 flex-row items-center w-full text-base h-10">
-        <TextInput
-          bind:value={search}
-          bind:element={searchElement}
-          name="q"
-          aria-label={$t('routes.search.query')}
-          size="lg"
-          class="flex-1 rounded-full! h-full"
-          placeholder={$t('routes.communities.search.placeholder')}
-        />
-        <Button
-          submit
-          color="primary"
-          size="custom"
-          class="shrink-0 h-full aspect-square"
-          title="Search"
-          rounding="pill"
-          loading={navigating.to != null}
-        >
-          {#snippet prefix()}
-            <Icon src={MagnifyingGlass} size="16" micro />
-          {/snippet}
-        </Button>
-      </div>
-    </Tabs>
-  </div>
+  <SearchBar bind:query={search} />
+
   <div class="flex flex-row flex-wrap gap-4 mt-4 items-center">
     <Location
       name="type"

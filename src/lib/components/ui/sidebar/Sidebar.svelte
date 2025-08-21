@@ -117,11 +117,12 @@
         {#snippet item(prof, index)}
           <ProfileButton {index} {prof} />
         {/snippet}
+        <li class="xs px-1 py-0.5">
+          <SidebarButton href="/accounts" icon={UserGroup}>
+            {$t('account.accounts')}
+          </SidebarButton>
+        </li>
       </CommonList>
-      <div class="my-2"></div>
-      <SidebarButton href="/accounts" icon={UserGroup}>
-        {$t('account.accounts')}
-      </SidebarButton>
     </Expandable>
   {/if}
   <hr class="border-slate-200 dark:border-zinc-900 my-1" />
@@ -143,9 +144,37 @@
             </EndPlaceholder>
           </span>
         {/snippet}
-        <CommunityList
-          items={profile.current.user.moderates.map(i => i.community)}
-        />
+        <CommonList
+          animate={false}
+          size="xs"
+          items={profile.current.user.moderates}
+          class="px-1 py-0.5"
+        >
+          {#snippet item(moderate)}
+            <SidebarButton
+              class="font-normal w-full h-max"
+              color="none"
+              alignment="left"
+              href={communityLink(moderate.community)}
+            >
+              {#snippet customIcon()}
+                <Avatar
+                  url={moderate.community.icon}
+                  alt={moderate.community.name}
+                  title={moderate.community.title}
+                  width={28}
+                />{/snippet}
+              {#snippet label()}
+                <div class="flex flex-col max-w-full break-words">
+                  <span>{moderate.community.title}</span>
+                  <span class="text-xs text-slate-600 dark:text-zinc-400">
+                    {new URL(moderate.community.actor_id).hostname}
+                  </span>
+                </div>
+              {/snippet}
+            </SidebarButton>
+          {/snippet}
+        </CommonList>
       </Expandable>
       <hr class="border-slate-200 dark:border-zinc-900 my-1" />
     {/if}

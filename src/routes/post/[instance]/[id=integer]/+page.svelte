@@ -129,7 +129,7 @@
 
 <article class="flex flex-col gap-2 animate-pop-in">
   <header class="flex flex-col gap-2">
-    <div class="flex flex-row justify-between items-center gap-2 flex-wrap">
+    <div class="flex flex-row items-center gap-2 flex-wrap">
       <PostMeta
         community={data.post.value.post_view.community}
         user={data.post.value.post_view.creator}
@@ -156,11 +156,6 @@
         style="width: max-content;"
         tags={parseTags(data.post.value.post_view.post.name).tags}
       />
-      <Button onclick={() => history.back()} size="square-md">
-        {#snippet prefix()}
-          <Icon src={ArrowLeft} micro size="16" />
-        {/snippet}
-      </Button>
     </div>
     <h1 class="font-medium text-xl leading-5">
       <Markdown
@@ -221,6 +216,7 @@
     {/if}
   {/await}
 </article>
+<hr class="-mx-3 sm:-mx-6 my-6 border-slate-200 dark:border-zinc-800" />
 {#await data.comments.value then comments}
   {#if data.thread.value.showContext || data.thread.value.singleThread}
     <div
@@ -252,7 +248,7 @@
     </div>
   {/if}
 {/await}
-<section class="mt-4 flex flex-col gap-2 w-full" id="comments">
+<section class="flex flex-col gap-2 w-full" id="comments">
   <header>
     <div class="text-base">
       <span class="font-bold">
