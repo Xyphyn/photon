@@ -107,7 +107,8 @@
       new Date().getTime() - 5 * 60 * 1000}
     <Icon
       src={newComment ? ChatBubbleOvalLeftEllipsis : ChatBubbleOvalLeft}
-      size="18"
+      size="16"
+      mini
     />
     <FormattedNumber number={post.counts.comments} />
   </Button>

@@ -179,9 +179,6 @@
         {#snippet title()}
           <span class="py-1 px-1 flex gap-1 items-center w-full">
             {$t('cards.site.about')}
-            <hr
-              class="w-full flex-1 ml-1 border-slate-200 dark:border-zinc-800"
-            />
           </span>
         {/snippet}
         <Markdown source={community_view.community.description} />
@@ -192,9 +189,6 @@
         {#snippet title()}
           <span class="py-1 px-1 flex gap-1 items-center w-full">
             {$t('cards.site.stats')}
-            <hr
-              class="w-full flex-1 ml-1 border-slate-200 dark:border-zinc-800"
-            />
           </span>
         {/snippet}
         <div class="flex flex-row gap-4 flex-wrap">
@@ -217,10 +211,6 @@
           {#snippet title()}
             <span class="py-1 px-1 flex gap-1 items-center w-full">
               {$t('cards.community.moderators')}
-
-              <hr
-                class="w-full flex-1 ml-1 border-slate-200 dark:border-zinc-800"
-              />
             </span>
           {/snippet}
           <ItemList

@@ -13,15 +13,14 @@
     onclick?: HTMLButtonAttributes['onclick']
   }
 
-  let { action, class: clazz = '', children, ...rest }: Props = $props()
+  let { action, children, ...rest }: Props = $props()
 </script>
 
 <Button
   href={action.href}
   alignment="left"
-  color="tertiary"
-  size="lg"
-  class="focus:bg-slate-200 dark:focus:bg-zinc-800 block w-full {clazz}"
+  color="none"
+  size="custom"
   data-sveltekit-preload-code="viewport"
   data-sveltekit-preload-data="tap"
   {...rest}

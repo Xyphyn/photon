@@ -12,6 +12,7 @@
   import { getGroups, type Action, type Group } from './actions.svelte'
   import CommandItem from './CommandItem.svelte'
   import { fuzzySearch } from '$lib/util.svelte'
+  import CommonList from '../../layout/CommonList.svelte'
 
   interface Props {
     open?: boolean
@@ -227,7 +228,7 @@
 
 <TextInput
   bind:value={search}
-  class="sticky rounded-none border-t-0 border-x-0 dark:focus-within:border-zinc-800"
+  class="sticky rounded-none! border-t-0 border-x-0 focus-within:border-inherit! focus-within:ring-0!"
   size="lg"
   placeholder={$t('nav.commands.prompt')}
   bind:element={input}
@@ -253,13 +254,18 @@
     {#each filteredGroups as group, groupIndex}
       <div class="space-y-1">
         <span class="text-sm font-medium">{group.name}</span>
-        <ul class="flex flex-col gap-1">
+        <CommonList size="xs" class="p-0! sm:p-0! lg:p-0!">
           {#each group.actions as action, actionIndex}
             {@const globalIndex =
               filteredGroups
                 .slice(0, groupIndex)
                 .reduce((sum, g) => sum + g.actions.length, 0) + actionIndex}
-            <li>
+            <li
+              class={[
+                'custom-size',
+                globalIndex == selectedIndex && 'brightness-125',
+              ]}
+            >
               <CommandItem
                 {action}
                 onclick={e => {
@@ -270,13 +276,10 @@
                   e.stopPropagation()
                   handleSelect(action)
                 }}
-                class="{globalIndex == selectedIndex
-                  ? 'bg-slate-100! dark:bg-zinc-800! text-inherit'
-                  : 'text-slate-600 dark:text-zinc-400'} block"
               />
             </li>
           {/each}
-        </ul>
+        </CommonList>
       </div>
     {/each}
     {#if search != ''}
