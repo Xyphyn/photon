@@ -191,17 +191,14 @@
     {#if crossposts?.length > 0}
       <Expandable class="text-base mt-2 w-full cursor-pointer">
         {#snippet title()}
-          <div
-            class={[
-              'flex items-center gap-1 w-full text-left text-base font-normal',
-            ]}
-          >
-            <span class="font-bold">{crossposts.length}</span>
+          <EndPlaceholder size="md" color="none" class="w-full">
             {$t('routes.post.crosspostCount')}
-            <hr
-              class="flex-1 inline-block w-full border-slate-200 dark:border-zinc-800 mx-3"
-            />
-          </div>
+            {#snippet action()}
+              <span class="font-bold">
+                <FormattedNumber number={crossposts.length} />
+              </span>
+            {/snippet}
+          </EndPlaceholder>
         {/snippet}
         <div
           class="divide-y! divide-slate-200 dark:divide-zinc-800 flex flex-col"

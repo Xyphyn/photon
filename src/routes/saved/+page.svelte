@@ -82,5 +82,9 @@
   </CommonList>
 {/if}
 <div class="sticky z-30 mx-auto max-w-full bottom-22 lg:bottom-6">
-  <Pageination href={page => `?page=${page}`} page={data.page} />
+  <Pageination
+    hasMore={data.data.length == 40}
+    href={page => `?page=${page}`}
+    page={data.page}
+  />
 </div>
