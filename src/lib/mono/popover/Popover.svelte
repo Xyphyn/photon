@@ -134,7 +134,12 @@
 {#if open}
   <Portal class="z-150">
     <div
-      transition:scale={{ duration: 300, start: 0.97, easing: expoOut }}
+      transition:scale={{
+        duration: 175,
+        start: 0.95,
+        opacity: 0,
+        easing: expoOut,
+      }}
       class="z-150 {popoverClass}"
       use:customFloatingContent
       use:focusTrap

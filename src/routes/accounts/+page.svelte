@@ -29,8 +29,6 @@
     account: undefined as ProfileInfo | undefined,
   })
 
-  let switching = $state(-1)
-
   let radioSelected = $state(profile.current.id)
   $effect(() => {
     switching = radioSelected
@@ -134,7 +132,11 @@
   {/snippet}
 </Header>
 <form class="accounts-grid mt-4 sm:mt-6 gap-4">
-  <CommonList items={profile.meta.profiles}>
+  <CommonList
+    selected={p => p.id == profile.meta.profile}
+    items={profile.meta.profiles}
+    animate={false}
+  >
     {#snippet item(p, index)}
       <label class="relative">
         <input
@@ -149,9 +151,6 @@
           class={[
             'flex flex-row items-center gap-2 transition-all duration-75',
             'cursor-pointer relative ring-transparent',
-            switching == p.id
-              ? 'ring-slate-500 dark:ring-zinc-500'
-              : 'peer-checked:ring-primary-900 peer-checked:dark:ring-primary-100',
           ]}
         >
           <div

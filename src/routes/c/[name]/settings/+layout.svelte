@@ -20,21 +20,17 @@
 </script>
 
 <div class="flex flex-col gap-4 h-full">
-  <div
-    class="sticky mx-auto z-50 max-w-full min-w-0 flex items-center gap-2 top-6 lg:top-22"
-  >
-    <Tabs
-      routes={[
-        {
-          href: `${communityUrl}/settings`,
-          name: $t('routes.community.settings.settings'),
-        },
-        {
-          href: `${communityUrl}/settings/team`,
-          name: $t('routes.community.settings.team'),
-        },
-      ]}
-    ></Tabs>
-  </div>
+  <Tabs
+    routes={[
+      {
+        href: `${communityUrl}/settings`,
+        name: $t('routes.community.settings.settings'),
+      },
+      {
+        href: `${communityUrl}/settings/team`,
+        name: $t('routes.community.settings.team'),
+      },
+    ]}
+  ></Tabs>
   {@render children?.()}
 </div>

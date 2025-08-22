@@ -37,9 +37,10 @@
 <Button
   {...rest}
   {color}
+  size="custom"
   rounding="none"
   class={[
-    'w-full px-2 rounded-lg min-h-8 font-normal duration-100',
+    'w-full px-4.5 py-1.5 min-h-7 duration-100 font-normal',
     disabled && 'opacity-70 pointer-events-none cursor-not-allowed',
     color == 'tertiary' && 'dark:hover:bg-zinc-800/70',
     clazz,

@@ -7,19 +7,13 @@
   import Skeleton from '$lib/components/ui/generic/Skeleton.svelte'
   import CommonList from '$lib/components/ui/layout/CommonList.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import { t } from '$lib/i18n/translations.js'
   import { LINKED_INSTANCE_URL } from '$lib/instance.svelte'
-  import { Button, Material, Option, TextInput } from 'mono-svelte'
-  import {
-    Icon,
-    MagnifyingGlass,
-    QuestionMarkCircle,
-    ServerStack,
-  } from 'svelte-hero-icons'
+  import { Material, Option } from 'mono-svelte'
+  import { QuestionMarkCircle, ServerStack } from 'svelte-hero-icons'
   import { expoOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'
   import SearchBar from '../search/SearchBar.svelte'

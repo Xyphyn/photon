@@ -41,19 +41,14 @@
 <div bind:this={offsetEl}>
   {#if offsetEl}
     <VirtualList
-      class="divide-y divide-slate-100 dark:divide-zinc-900 -mx-3 sm:-mx-6"
+      class="divide-y-2 divide-slate-100 dark:divide-zinc-900 -mx-3 sm:-mx-6"
       overscan={5}
       estimatedHeight={500}
       items={nodes}
       {initialOffset}
     >
       {#snippet item(index)}
-        <div
-          class={[
-            'px-3 sm:px-6',
-            index % 2 == 1 && 'bg-slate-25 dark:bg-zinc-950',
-          ]}
-        >
+        <div class={['px-3 sm:px-6', index % 2 == 1 && '']}>
           <Comments
             bind:nodes={() => [nodes[index]], v => (nodes[index] = v[0])}
             {post}

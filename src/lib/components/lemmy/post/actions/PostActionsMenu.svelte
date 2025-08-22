@@ -1,28 +1,25 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { profile } from '$lib/auth.svelte'
-  import TextProps from '$lib/components/ui/text/TextProps.svelte'
   import { t } from '$lib/i18n/translations'
   import { deleteItem, markAsRead } from '$lib/lemmy/contentview'
-  import { communityLink, userLink } from '$lib/lemmy/generic'
   import { setSessionStorage } from '$lib/session'
   import { settings } from '$lib/settings.svelte'
   import { instanceToURL } from '$lib/util.svelte'
   import type { PostView } from 'lemmy-js-client'
-  import { Button, MenuButton, MenuDivider, toast } from 'mono-svelte'
+  import { Button, Menu, MenuButton, toast } from 'mono-svelte'
   import {
     ArrowTopRightOnSquare,
+    EllipsisHorizontal,
     Eye,
     EyeSlash,
     Flag,
-    GlobeAmericas,
+    GlobeAlt,
     Icon,
     MapPin,
-    Newspaper,
     PencilSquare,
     Share,
     Trash,
-    UserCircle,
     XMark,
   } from 'svelte-hero-icons'
   import { report } from '../../moderation/moderation'
@@ -34,14 +31,24 @@
     editing: boolean
   }
 
-  let localShare = $state(false)
-
   let { post, onhide, editing = $bindable() }: Props = $props()
+
+  function share(global: boolean = true) {
+    const link = global
+      ? post.post.ap_id
+      : `${instanceToURL(profile.current.instance)}/post/${post.post.id}`
+
+    if (navigator.share)
+      navigator.share?.({
+        url: link,
+      })
+    else {
+      navigator.clipboard.writeText(link)
+      toast({ content: $t('toast.copied') })
+    }
+  }
 </script>
 
-<MenuDivider>
-  {$t('post.actions.more.actions')}
-</MenuDivider>
 {#if profile.current?.user && profile.current?.jwt && profile.current.user.local_user_view.person.id == post.creator.id}
   <MenuButton onclick={() => (editing = true)}>
     {#snippet prefix()}
@@ -65,52 +72,57 @@
       : $t('post.actions.more.markRead')}
   </MenuButton>
 {/if}
-<MenuButton
-  onclick={() => {
-    if (navigator.share)
-      navigator.share?.({
-        url: localShare
-          ? `${instanceToURL(profile.current.instance)}/post/${post.post.id}`
-          : post.post.ap_id,
-      })
-    else
-      navigator.clipboard.writeText(
-        localShare
-          ? `${instanceToURL(profile.current.instance)}/post/${post.post.id}`
-          : post.post.ap_id,
-      )
-    toast({ content: $t('toast.copied') })
-  }}
-  class="flex-1 py-0!"
->
-  {#snippet prefix()}
-    <Icon src={Share} size="16" micro />
-  {/snippet}
-  {$t('post.actions.more.share')}
-  <div class="flex-1"></div>
-  {#if !post.post.local}
-    <div class="flex gap-1">
-      <Button
-        color={!localShare ? 'primary' : 'secondary'}
-        size="square-sm"
-        rounding="pill"
-        onclick={() => (localShare = false)}
-        title={$t('filter.location.global')}
-      >
-        <Icon src={GlobeAmericas} size="16" micro />
-      </Button>
-      <Button
-        color={localShare ? 'primary' : 'secondary'}
-        size="square-sm"
-        rounding="pill"
-        onclick={() => (localShare = true)}
-        title={$t('filter.location.local')}
-      >
-        <Icon src={MapPin} size="16" micro />
-      </Button>
-    </div>
-  {/if}
-</MenuButton>
+<div class="flex flex-row">
+  <MenuButton
+    onclick={() => share()}
+    class={['flex-1', !post.post.local && 'rounded-r-xl']}
+  >
+    {#snippet prefix()}
+      <Icon src={Share} size="16" micro />
+    {/snippet}
+    {$t('post.actions.more.share')}
+  </MenuButton>
+  <!--svelte-ignore a11y_no_static_element_interactions -->
+  <!--svelte-ignore a11y_click_events_have_key_events-->
+  <div
+    class="aspect-square w-max m-1 grid place-items-center"
+    onclick={e => e.stopPropagation()}
+  >
+    {#if !post.post.local}
+      <Menu>
+        {#snippet target()}
+          <Button
+            aria-label={$t('post.actions.more.label')}
+            color="tertiary"
+            size="custom"
+            class="w-full h-full"
+          >
+            {#snippet prefix()}
+              <Icon
+                src={EllipsisHorizontal}
+                size="16"
+                micro
+                class="text-slate-600 dark:text-zinc-400"
+              />
+            {/snippet}
+          </Button>
+        {/snippet}
+        <MenuButton onclick={() => share(true)}>
+          {#snippet prefix()}
+            <Icon src={GlobeAlt} size="16" micro />
+          {/snippet}
+          {$t('filter.location.global')}
+        </MenuButton>
+        <MenuButton onclick={() => share(false)}>
+          {#snippet prefix()}
+            <Icon src={MapPin} size="16" micro />
+          {/snippet}
+          {$t('filter.location.local')}
+        </MenuButton>
+      </Menu>
+    {/if}
+  </div>
+</div>
 {#if profile.current?.jwt}
   <MenuButton
     onclick={() => {

@@ -1,6 +1,5 @@
 <script lang="ts">
   import { navigating } from '$app/state'
-  import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
   import { t } from '$lib/i18n/translations'
   import { Button, TextInput } from 'mono-svelte'
   import { Icon, MagnifyingGlass } from 'svelte-hero-icons'
@@ -14,13 +13,13 @@
   let searchElement = $state<HTMLInputElement>()
 </script>
 
-<div class="mt-4 mb-0 sticky z-30 top-6 lg:top-22 drop-shadow-xl">
+<div class="mt-4 mb-0 sticky z-30 top-6 lg:top-22 drop-shadow-md">
   <div class="flex gap-2 flex-row items-center w-full text-base h-10">
     <TextInput
       bind:value={query}
       bind:element={searchElement}
       name="q"
-      aria-label={$t('routes.search.query')}
+      placeholder={$t('routes.search.query')}
       size="lg"
       class="flex-1 rounded-full! h-full text-base!"
     />

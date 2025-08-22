@@ -81,7 +81,7 @@
   })
 </script>
 
-<!-- 
+<!--
   @component
   This is the sole component for displaying posts.
   It adapts to all kinds of form factors for different contexts, such as feeds, full post view, and crosspost list.
@@ -90,7 +90,7 @@
 <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
 <div
   class={[
-    'post relative max-w-full min-w-0 w-full cursor-pointer outline-hidden group',
+    'post relative max-w-full min-w-0 w-full cursor-pointer outline-hidden group/post',
     settings.leftAlign && 'left-align',
     view == 'compact' && 'py-3 list-type compact',
     view == 'cozy' && 'py-5 flex flex-col gap-2',
@@ -164,8 +164,7 @@
     class="absolute overflow-hidden inset-0
     sm:rounded-xl bg-slate-50 dark:bg-zinc-900
     opacity-0 transition-all -z-50 no-list-margin
-    group-hover:inset-y-0.5 group-hover:-inset-x-3 sm:group-hover:-inset-x-5 group-hover:opacity-100
-    group-focus:inset-y-0.5 group-focus:-inset-x-3 sm:group-focus:-inset-x-5 group-focus:opacity-100
+    group-hover/post:inset-y-0.5 group-hover/post:-inset-x-3 sm:group-hover/post:-inset-x-5 group-hover/post:opacity-100
     duration-150"
   ></div>
 </div>

@@ -1,13 +1,13 @@
 <script lang="ts">
-  import { preventDefault } from 'svelte/legacy'
-
   import { goto } from '$app/navigation'
   import { profile } from '$lib/auth.svelte.js'
+  import ImageInputUpload from '$lib/components/form/ImageInputUpload.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import { t } from '$lib/i18n/translations'
   import { getClient, site } from '$lib/lemmy.svelte.js'
+  import { errorMessage } from '$lib/lemmy/error'
   import { addSubscription } from '$lib/lemmy/user.js'
   import {
     Badge,
@@ -17,15 +17,11 @@
     TextInput,
     toast,
   } from 'mono-svelte'
-  import Label from 'mono-svelte/forms/Label.svelte'
   import Option from 'mono-svelte/forms/select/Option.svelte'
   import Select from 'mono-svelte/forms/select/Select.svelte'
   import Material from 'mono-svelte/materials/Material.svelte'
   import Menu from 'mono-svelte/popover/Menu.svelte'
-  import { DocumentPlus, GlobeAlt, Icon, MapPin, Plus } from 'svelte-hero-icons'
-  import ImageUploadModal from '../modal/ImageUploadModal.svelte'
-  import { errorMessage } from '$lib/lemmy/error'
-  import ImageInputUpload from '$lib/components/form/ImageInputUpload.svelte'
+  import { GlobeAlt, Icon, MapPin, Plus } from 'svelte-hero-icons'
 
   interface Props {
     /**
@@ -140,15 +136,13 @@
 
     formData.submitting = false
   }
-
-  let uploading = $state({
-    banner: false,
-    icon: false,
-  })
 </script>
 
 <form
-  onsubmit={preventDefault(submit)}
+  onsubmit={e => {
+    e.preventDefault()
+    submit()
+  }}
   class="flex flex-col gap-4 h-full w-full"
 >
   {#if formtitle}{@render formtitle()}{:else}

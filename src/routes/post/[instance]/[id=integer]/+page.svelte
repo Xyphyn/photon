@@ -1,10 +1,10 @@
 <script lang="ts">
   import { page } from '$app/state'
   import { profile } from '$lib/auth.svelte.js'
+  import PostActions from '$lib/components/lemmy/post/actions/PostActions.svelte'
   import { mediaType } from '$lib/components/lemmy/post/helpers.js'
   import PostMedia from '$lib/components/lemmy/post/media/PostMedia.svelte'
   import Post from '$lib/components/lemmy/post/Post.svelte'
-  import PostActions from '$lib/components/lemmy/post/actions/PostActions.svelte'
   import PostMeta, {
     parseTags,
   } from '$lib/components/lemmy/post/PostMeta.svelte'
@@ -17,12 +17,13 @@
   import { t } from '$lib/i18n/translations.js'
   import { client } from '$lib/lemmy.svelte.js'
   import { resumables } from '$lib/lemmy/item.js'
+  import { postFeeds } from '$lib/lemmy/postfeed.svelte'
+  import { ReactiveState } from '$lib/promise.svelte'
   import { settings } from '$lib/settings.svelte.js'
   import { isImage } from '$lib/ui/image.js'
   import { Button, toast } from 'mono-svelte'
   import { onMount } from 'svelte'
   import {
-    ArrowLeft,
     ArrowRight,
     ChatBubbleLeftRight,
     ChevronDoubleUp,
@@ -31,8 +32,6 @@
   import { expoOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'
   import CommentProvider from './CommentProvider.svelte'
-  import { ReactiveState } from '$lib/promise.svelte'
-  import { postFeeds } from '$lib/lemmy/postfeed.svelte'
 
   let { data } = $props()
 
@@ -191,17 +190,14 @@
     {#if crossposts?.length > 0}
       <Expandable class="text-base mt-2 w-full cursor-pointer">
         {#snippet title()}
-          <div
-            class={[
-              'flex items-center gap-1 w-full text-left text-base font-normal',
-            ]}
-          >
-            <span class="font-bold">{crossposts.length}</span>
+          <EndPlaceholder size="md" color="none" class="w-full">
             {$t('routes.post.crosspostCount')}
-            <hr
-              class="flex-1 inline-block w-full border-slate-200 dark:border-zinc-800 mx-3"
-            />
-          </div>
+            {#snippet action()}
+              <span class="font-bold">
+                <FormattedNumber number={crossposts.length} />
+              </span>
+            {/snippet}
+          </EndPlaceholder>
         {/snippet}
         <div
           class="divide-y! divide-slate-200 dark:divide-zinc-800 flex flex-col"
@@ -216,7 +212,6 @@
     {/if}
   {/await}
 </article>
-<hr class="-mx-3 sm:-mx-6 my-6 border-slate-200 dark:border-zinc-800" />
 {#await data.comments.value then comments}
   {#if data.thread.value.showContext || data.thread.value.singleThread}
     <div
@@ -249,13 +244,15 @@
   {/if}
 {/await}
 <section class="flex flex-col gap-2 w-full" id="comments">
-  <header>
-    <div class="text-base">
-      <span class="font-bold">
-        <FormattedNumber number={data.post.value.post_view.counts.comments} />
-      </span>
+  <header class="mt-4">
+    <EndPlaceholder size="md" color="none">
       {$t('routes.post.commentCount')}
-    </div>
+      {#snippet action()}
+        <span class="font-bold">
+          <FormattedNumber number={data.post.value.post_view.counts.comments} />
+        </span>
+      {/snippet}
+    </EndPlaceholder>
   </header>
   {#if !page.url.searchParams.get('noVirtualize')}
     <noscript>

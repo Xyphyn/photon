@@ -281,8 +281,8 @@
         "createPost": "Create Post",
         "createCommunity": "Create Community",
         "post": {
-            "crosspostCount": "crossposts",
-            "commentCount": "comments",
+            "crosspostCount": "Crossposts",
+            "commentCount": "Comments",
             "addComment": "Add a comment",
             "scrollToTop": "Scroll to top",
             "instanceWarning": "This post was requested from a different server than your account's. Many actions won't work.",

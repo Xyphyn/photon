@@ -1,6 +1,5 @@
-import { getClient } from '$lib/lemmy.svelte.js'
+import { redirect } from '@sveltejs/kit'
 
-export async function load({ fetch }) {
-  return (await getClient(undefined, fetch).getFederatedInstances())
-    .federated_instances
+export function load() {
+  redirect(302, '/instances/linked')
 }

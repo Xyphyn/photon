@@ -26,8 +26,8 @@
   href={postLink(post)}
   class={[
     'container/a z-10 rounded-2xl cursor-pointer relative overflow-hidden',
-    'bg-slate-100 dark:bg-zinc-900 transition-colors p-2',
-    'border border-slate-200 dark:border-zinc-800 hover:border-slate-300 hover:dark:border-zinc-700',
+    'bg-slate-100 dark:bg-zinc-900 transition-colors',
+    'border border-slate-200 dark:border-zinc-800 group',
   ]}
   data-sveltekit-preload-data="off"
   aria-label={post.name}
@@ -36,7 +36,7 @@
   tabindex="0"
 >
   <!-- svelte-ignore a11y_missing_attribute -->
-  <div class="inset-2 absolute -z-10 rounded-xl overflow-hidden">
+  <div class="inset-0 absolute -z-10 rounded-xl overflow-hidden">
     <img
       loading="lazy"
       fetchpriority="auto"
@@ -71,7 +71,8 @@
       src={bestImageURL(post, false, -1, null)}
       loading="lazy"
       class={[
-        'max-w-full rounded-xl z-30 transition-opacity max-h-[60vh] duration-500 object-contain mx-auto',
+        'max-w-full rounded-xl z-30 transition-all max-h-[60vh] duration-500 object-contain mx-auto group-hover:scale-98 group-active:scale-95',
+        'duration-200 ease-cubic',
         imageLoaded === false ? 'opacity-0' : 'opacity-100',
         blur && 'blur-3xl',
       ]}
