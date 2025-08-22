@@ -45,8 +45,8 @@
           {#if type}
             <Location name="type" navigate bind:selected={type} />
           {/if}
-          <Sort name="sort" navigate bind:selected={sort} />
-          <ViewSelect />
+          <Sort placement="bottom" name="sort" navigate bind:selected={sort} />
+          <ViewSelect placement="bottom" />
 
           <noscript>
             <Button

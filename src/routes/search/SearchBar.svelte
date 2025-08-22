@@ -13,8 +13,10 @@
   let searchElement = $state<HTMLInputElement>()
 </script>
 
-<div class="mt-4 mb-0 sticky z-30 top-6 lg:top-22 drop-shadow-md">
-  <div class="flex gap-2 flex-row items-center w-full text-base h-10">
+<div class="mt-4 mb-0 sticky z-30 top-6 lg:top-22">
+  <div
+    class="flex gap-2 flex-row items-center w-full text-base h-10 drop-shadow-md"
+  >
     <TextInput
       bind:value={query}
       bind:element={searchElement}
@@ -27,7 +29,7 @@
       submit
       color="primary"
       size="custom"
-      class="shrink-0 h-full aspect-square"
+      class="shrink-0 h-full aspect-square shadow-md"
       title="Search"
       rounding="pill"
       loading={navigating.to?.route.id == '/search'}

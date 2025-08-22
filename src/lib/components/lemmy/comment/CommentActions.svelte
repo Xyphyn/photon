@@ -40,8 +40,10 @@
 </script>
 
 <div
-  class="flex flex-row items-center gap-0.5 h-7 w-full"
-  class:flex-row-reverse={settings.posts.reverseActions}
+  class={[
+    'flex flex-row items-center gap-0.5 h-7 w-full',
+    settings.posts.reverseActions && 'flex-row-reverse',
+  ]}
 >
   <CommentVote
     upvotes={comment.counts.upvotes}
@@ -50,15 +52,15 @@
     commentId={comment.comment.id}
   />
   <Button
-    size="sm"
     color="tertiary"
     rounding="pill"
-    class="text-slate-600 dark:text-zinc-400"
+    size="sm"
+    class="text-slate-500 dark:text-zinc-400"
     onclick={() => (replying = !replying)}
     disabled={comment.post.locked || disabled}
   >
-    <Icon src={ChatBubbleOvalLeft} size="14" micro />
-    <span class="text-xs">{$t('comment.reply')}</span>
+    <Icon src={ChatBubbleOvalLeft} size="15" micro />
+    {$t('comment.reply')}
   </Button>
   {#if profile.current?.user && (amMod(profile.current?.user, comment.community) || isAdmin(profile.current.user))}
     <CommentModerationMenu bind:item={comment} />

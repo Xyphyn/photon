@@ -24,7 +24,8 @@
 <div
   class={[
     toastColors[toast.type],
-    'relative rounded-2xl overflow-hidden flex flex-row items-center gap-2 px-3 py-3 backdrop-blur-lg',
+    'relative rounded-xl overflow-hidden flex flex-row items-center gap-2 px-3 py-3',
+    'bg-white dark:bg-zinc-900 shadow-lg',
     toast.long ? 'w-full max-w-lg' : 'w-80',
   ]}
   transition:fly={{
@@ -42,16 +43,7 @@
     <Icon
       size="28"
       mini
-      class={[
-        'relative self-center shrink-0 p-1 rounded-lg',
-        toast.type == 'info'
-          ? 'bg-slate-200 dark:bg-zinc-50 text-slate-700 dark:text-zinc-700'
-          : toast.type == 'success'
-            ? 'bg-green-400 dark:bg-green-300 dark:text-green-900 text-green-50'
-            : toast.type == 'warning'
-              ? 'bg-yellow-400 dark:bg-yellow-300 dark:text-yellow-900 text-yellow-50'
-              : 'bg-red-400 dark:bg-red-300 dark:text-red-900 text-red-50',
-      ]}
+      class={['relative self-center shrink-0 p-1 rounded-lg']}
       src={toast.type == 'info'
         ? InformationCircle
         : toast.type == 'success'
@@ -63,9 +55,7 @@
               : ExclamationCircle}
     />
   {/if}
-  <div
-    class="flex flex-col break-words max-w-full text-slate-900 dark:text-zinc-50"
-  >
+  <div class="flex flex-col break-words max-w-full text-inherit">
     {#if toast.title}
       <h1 class="text-base font-semibold">{toast.title}</h1>
     {/if}
@@ -90,9 +80,9 @@
       onclick={() => {
         toasts.update(toasts => toasts.filter(t => t.id != toast.id))
       }}
-      class="rounded-lg w-max transition-colors hover:bg-slate-100 dark:hover:bg-zinc-800 p-1 cursor-pointer"
+      class="rounded-lg w-max transition-colors hover:bg-slate-100 dark:hover:bg-zinc-800 p-1 cursor-pointer text-slate-600 dark:text-zinc-400"
     >
-      <Icon src={XMark} size="20" micro />
+      <Icon src={XMark} size="16" micro />
     </button>
   </div>
 </div>

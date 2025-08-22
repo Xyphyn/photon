@@ -43,17 +43,17 @@
   {manual}
   {...rest}
   bind:open
-  popoverClass="backdrop-blur-xl rounded-2xl w-full max-w-[280px]"
+  popoverClass="rounded-xl w-full backdrop-blur-md max-w-72"
   class={clazz}
   {target}
 >
   {#snippet popover()}
     <div
-      class="w-full max-w-sm origin-top-left max-h-128 overflow-auto list-none shadow-lg rounded-2xl"
+      class="w-full max-w-sm origin-top-left max-h-128 overflow-auto list-none shadow-lg rounded-xl"
     >
       <div
-        class="flex flex-col px-0 list-none bg-white/80 dark:bg-zinc-900/90 rounded-2xl
-        border border-slate-300 dark:border-zinc-800 border-opacity-50 py-1"
+        class="flex flex-col p-1 list-none bg-white/80 dark:bg-zinc-900/90 rounded-xl
+        border border-slate-300 dark:border-zinc-800 border-opacity-50 gap-px"
       >
         {@render children?.(open)}
       </div>

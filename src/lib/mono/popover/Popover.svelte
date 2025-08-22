@@ -1,16 +1,3 @@
-<script module lang="ts">
-  export type Origin = keyof typeof popoverOrigins
-
-  export const popoverOrigins = {
-    'top-right': 'bottom-full right-0 origin-bottom-right',
-    'bottom-left': 'top-full origin-top-left',
-    'top-left': 'bottom-full left-0 origin-bottom-left',
-    'bottom-right': 'top-full right-0 origin-top-right',
-    'top-center': 'bottom-full -left-[450%] origin-bottom',
-    'bottom-center': 'top-full -left-[450%] origin-top',
-  }
-</script>
-
 <script lang="ts">
   import {
     flip,
@@ -62,11 +49,45 @@
   let el = $state<HTMLElement>()
   let popoverEl = $state<HTMLElement>()
 
+  let origins: Record<Placement, string> = {
+    bottom: 'top',
+    'bottom-end': 'top right',
+    'bottom-start': 'top left',
+    left: 'left',
+    'left-end': 'left',
+    'left-start': 'left',
+    right: 'right',
+    'right-end': 'right',
+    'right-start': 'right',
+    top: 'bottom',
+    'top-end': 'bottom right',
+    'top-start': 'bottom',
+  }
+
   const [floatingRef, floatingContent] = createFloatingActions({
     strategy: strategy,
     placement: placement,
     middleware: middleware,
+    onComputed: ({ x, y, placement }) => {
+      if (popoverEl) {
+        popoverEl.style.transformOrigin = origins[placement]
+      }
+
+      console.log(placement)
+
+      // @ts-expect-error svelte hell
+      Object.assign(el?.children?.item?.(0) ?? el, {
+        top: '0',
+        left: '0',
+        transform: `translate3d(${roundByDPR(x)}px,${roundByDPR(y)}px,0)`,
+      })
+    },
   })
+
+  function roundByDPR(value: number) {
+    const dpr = window.devicePixelRatio || 1
+    return Math.round(value * dpr) / dpr
+  }
 
   const customFloatingContent = (node: HTMLDivElement) => {
     // if (!canUseContents) return

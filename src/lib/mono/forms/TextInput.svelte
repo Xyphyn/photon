@@ -3,8 +3,8 @@
   export type Shadow = keyof typeof shadowClass
 
   export const sizeClass = {
-    sm: 'px-3 py-1.5',
-    md: 'px-4 py-2',
+    sm: 'px-3 py-1',
+    md: 'px-3.5 py-1.5',
     lg: 'px-5 py-3',
   }
 
@@ -39,7 +39,7 @@
   import Label from '../forms/Label.svelte'
   import { generateID } from '../forms/helper.js'
 
-  const borderClass = `border border-slate-200 border-b-slate-300 dark:border-t-zinc-800 dark:border-zinc-900`
+  const borderClass = `border border-slate-200 border-b-slate-300 dark:border-zinc-800`
 
   let {
     label = undefined,
@@ -86,10 +86,11 @@
   >
     {#if prefix}
       <div
-        class="rounded-xl rounded-r-none
-			text-slate-600 dark:text-zinc-400 {inlineAffixes
-          ? 'bg-white dark:bg-zinc-950 pr-0 w-8'
-          : ''} {sizeClass[size]}"
+        class={[
+          'rounded-xl rounded-r-none text-slate-600 dark:text-zinc-400',
+          inlineAffixes && 'bg-white dark:bg-zinc-900 pr-0 w-8',
+          sizeClass[size],
+        ]}
       >
         {@render prefix?.()}
       </div>
@@ -104,9 +105,9 @@
       {...rest}
       class={[
         sizeClass[size],
-        `bg-white dark:bg-zinc-950
+        `bg-white dark:bg-zinc-900
 		 focus:outline-hidden rounded-xl text-sm w-full disabled:bg-slate-100
-		disabled:cursor-not-allowed dark:disabled:bg-zinc-950 invalid:border-red-500!
+		disabled:cursor-not-allowed dark:disabled:bg-zinc-800 invalid:border-red-500!
 		peer invalid:text-red-500 z-10`,
         prefix && 'rounded-l-none',
         prefix && inlineAffixes && 'border-l-0',
@@ -119,7 +120,7 @@
       <div
         class={[
           'rounded-xl rounded-l-none text-slate-600 dark:text-zinc-400',
-          inlineAffixes && 'bg-white dark:bg-zinc-950 pl-0',
+          inlineAffixes && 'bg-white dark:bg-zinc-900 pl-0',
           sizeClass[size],
         ]}
       >

@@ -190,7 +190,7 @@
     {:else}
       <VirtualList
         id="feed"
-        class="divide-y -mx-3 sm:-mx-6 divide-slate-200 dark:divide-zinc-900"
+        class="divide-y-2 -mx-3 sm:-mx-6 divide-slate-200 dark:divide-zinc-900"
         items={posts}
         {initialOffset}
         overscan={3}

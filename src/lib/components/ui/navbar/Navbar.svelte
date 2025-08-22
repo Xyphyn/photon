@@ -197,7 +197,7 @@
         </span>
       {/if}
     </Menu>
-    <Menu>
+    <Menu placement="bottom">
       {#snippet target()}
         <button
           class="w-10 h-10 rounded-full border-slate-200 dark:border-zinc-700
@@ -224,7 +224,11 @@
       {/snippet}
       {#snippet children(open)}
         {#if open}
-          {#await import('./Profile.svelte') then { default: Profile }}
+          {#await import('./Profile.svelte')}
+            <div class="m-8 w-full h-full grid place-items-center">
+              <Spinner width={20} />
+            </div>
+          {:then { default: Profile }}
             <Profile />
           {/await}
         {/if}

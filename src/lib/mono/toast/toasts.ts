@@ -3,10 +3,10 @@ import { writable } from 'svelte/store'
 type ToastType = keyof typeof toastColors
 
 export const toastColors = {
-  error: 'bg-red-100/50 dark:bg-red-900/20 border-red-300/40 border',
-  warning: 'bg-yellow-100/50 dark:bg-yellow-500/5 border-yellow-500/40 border',
-  success: 'bg-green-100/50 dark:bg-green-900/20 border-green-300/40 border',
-  info: 'dark:bg-zinc-925/90 bg-white border border-slate-200 dark:border-zinc-800',
+  error: 'text-red-600 dark:text-red-400',
+  warning: 'text-yellow-600 dark:text-yellow-400',
+  success: 'text-green-600 dark:text-green-400',
+  info: '',
 }
 
 export interface Toast {

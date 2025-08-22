@@ -11,7 +11,7 @@
 >
   {#each $toasts as toast (toast.id)}
     <div
-      animate:flip={{ duration: 500, easing: expoOut }}
+      animate:flip={{ duration: 300, easing: expoOut }}
       class="pointer-events-auto transition-all
       duration-300"
     >

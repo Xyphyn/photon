@@ -26,6 +26,7 @@
     >
     oncontextmenu?: HTMLSelectAttributes['oncontextmenu']
     onchange?: HTMLSelectAttributes['onchange']
+    placement?: Placement
   }
 
   export type { Props as SelectProps }
@@ -51,6 +52,7 @@
   import MenuButton from '../../popover/MenuButton.svelte'
   import Label from '../Label.svelte'
   import { generateID } from '../helper.js'
+  import type { Placement } from 'svelte-floating-ui/core'
 
   let open = $state(false)
   let element: HTMLSelectElement | undefined = $state()
@@ -84,6 +86,7 @@
     customOption,
     oncontextmenu,
     onchange,
+    placement = 'bottom',
     ...rest
   }: Props<T> = $props()
 </script>
@@ -96,7 +99,7 @@
   {/if}
 
   <div class="w-full relative">
-    <Menu bind:open>
+    <Menu bind:open {placement}>
       {#snippet target()}
         <select
           {...rest}
