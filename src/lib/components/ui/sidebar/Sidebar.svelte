@@ -1,10 +1,10 @@
 <script lang="ts">
   import { notifications, profile } from '$lib/auth.svelte.js'
   import Expandable from '$lib/components/ui/Expandable.svelte'
-  import CommunityList from '$lib/components/ui/sidebar/CommunityList.svelte'
   import ProfileButton from '$lib/components/ui/sidebar/ProfileButton.svelte'
   import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
   import { t } from '$lib/i18n/translations'
+  import { communityLink } from '$lib/lemmy/generic'
   import { settings } from '$lib/settings.svelte.js'
   import { Badge } from 'mono-svelte'
   import {
@@ -16,11 +16,10 @@
     UserCircle,
     UserGroup,
   } from 'svelte-hero-icons'
-  import EndPlaceholder from '../EndPlaceholder.svelte'
   import type { ClassValue } from 'svelte/elements'
-  import CommonList from '../layout/CommonList.svelte'
-  import { communityLink } from '$lib/lemmy/generic'
   import Avatar from '../Avatar.svelte'
+  import EndPlaceholder from '../EndPlaceholder.svelte'
+  import CommonList from '../layout/CommonList.svelte'
 
   interface Props {
     style?: string

@@ -29,8 +29,6 @@
     account: undefined as ProfileInfo | undefined,
   })
 
-  let switching = $state(-1)
-
   let radioSelected = $state(profile.current.id)
   $effect(() => {
     switching = radioSelected

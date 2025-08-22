@@ -1,12 +1,10 @@
 <script lang="ts">
   import VirtualList from '$lib/components/render/VirtualList.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
-  import { Material, Popover } from 'mono-svelte'
-  import { Check, Icon, InformationCircle } from 'svelte-hero-icons'
+  import { Material } from 'mono-svelte'
+  import { Check } from 'svelte-hero-icons'
 
   let { data } = $props()
 </script>

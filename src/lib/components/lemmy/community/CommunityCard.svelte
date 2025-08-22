@@ -76,6 +76,8 @@
   import Entity from '$lib/components/ui/Entity.svelte'
   import Expandable from '$lib/components/ui/Expandable.svelte'
   import LabelStat from '$lib/components/ui/LabelStat.svelte'
+  import CommonList from '$lib/components/ui/layout/CommonList.svelte'
+  import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
   import { t } from '$lib/i18n/translations'
   import { client, getClient } from '$lib/lemmy.svelte.js'
   import { errorMessage } from '$lib/lemmy/error'
@@ -105,9 +107,6 @@
     NoSymbol,
     Plus,
   } from 'svelte-hero-icons'
-  import ItemList from '../generic/ItemList.svelte'
-  import CommonList from '$lib/components/ui/layout/CommonList.svelte'
-  import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
 
   let loading = $state({
     blocking: false,

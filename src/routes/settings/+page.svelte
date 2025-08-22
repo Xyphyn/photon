@@ -1,12 +1,12 @@
 <script lang="ts">
   import { env } from '$env/dynamic/public'
-  import { profile } from '$lib/auth.svelte'
   import Link from '$lib/components/input/Link.svelte'
   import MultiSelect from '$lib/components/input/Switch.svelte'
   import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
   import ViewSelect from '$lib/components/lemmy/dropdowns/ViewSelect.svelte'
   import { removalTemplate } from '$lib/components/lemmy/moderation/moderation.js'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
+  import Expandable from '$lib/components/ui/Expandable.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { locale, locales, t } from '$lib/i18n/translations'
   import { defaultSettings, settings } from '$lib/settings.svelte'
@@ -14,7 +14,6 @@
   import {
     Button,
     Checkbox,
-    Material,
     Modal,
     Select,
     Switch,
@@ -26,7 +25,6 @@
   import {
     ArrowDownTray,
     ArrowPath,
-    ArrowRight,
     ArrowsPointingOut,
     ArrowsRightLeft,
     ArrowsUpDown,
@@ -41,7 +39,6 @@
     Calendar,
     ChartBar,
     ChatBubbleOvalLeftEllipsis,
-    ChevronDown,
     Clock,
     CubeTransparent,
     CursorArrowRays,
@@ -70,7 +67,6 @@
   import Section from './Section.svelte'
   import Setting from './Setting.svelte'
   import ToggleSetting from './ToggleSetting.svelte'
-  import Expandable from '$lib/components/ui/Expandable.svelte'
   let importing = $state(false)
   let importText = $state('')
 

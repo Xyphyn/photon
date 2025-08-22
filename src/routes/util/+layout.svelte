@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { page } from '$app/state'
   import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
   interface Props {
     children?: import('svelte').Snippet

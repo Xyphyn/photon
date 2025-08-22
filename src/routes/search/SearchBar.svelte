@@ -1,6 +1,5 @@
 <script lang="ts">
   import { navigating } from '$app/state'
-  import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
   import { t } from '$lib/i18n/translations'
   import { Button, TextInput } from 'mono-svelte'
   import { Icon, MagnifyingGlass } from 'svelte-hero-icons'

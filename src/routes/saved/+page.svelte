@@ -4,7 +4,6 @@
   import PostItem from '$lib/components/lemmy/post/PostItem.svelte'
   import CommonList from '$lib/components/ui/layout/CommonList.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { t } from '$lib/i18n/translations.js'

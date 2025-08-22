@@ -10,7 +10,6 @@
     }[]
     currentRoute?: SvelteURL | undefined
     buildUrl?: (currentRoute: SvelteURL | undefined, href: string) => string
-    class?: string
     children?: import('svelte').Snippet
   }
 
@@ -18,7 +17,6 @@
     routes,
     currentRoute = undefined,
     buildUrl = (_, href) => href,
-    class: clazz = '',
     children,
   }: Props = $props()
 

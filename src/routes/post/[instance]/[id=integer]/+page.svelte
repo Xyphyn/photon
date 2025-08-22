@@ -1,10 +1,10 @@
 <script lang="ts">
   import { page } from '$app/state'
   import { profile } from '$lib/auth.svelte.js'
+  import PostActions from '$lib/components/lemmy/post/actions/PostActions.svelte'
   import { mediaType } from '$lib/components/lemmy/post/helpers.js'
   import PostMedia from '$lib/components/lemmy/post/media/PostMedia.svelte'
   import Post from '$lib/components/lemmy/post/Post.svelte'
-  import PostActions from '$lib/components/lemmy/post/actions/PostActions.svelte'
   import PostMeta, {
     parseTags,
   } from '$lib/components/lemmy/post/PostMeta.svelte'
@@ -17,12 +17,13 @@
   import { t } from '$lib/i18n/translations.js'
   import { client } from '$lib/lemmy.svelte.js'
   import { resumables } from '$lib/lemmy/item.js'
+  import { postFeeds } from '$lib/lemmy/postfeed.svelte'
+  import { ReactiveState } from '$lib/promise.svelte'
   import { settings } from '$lib/settings.svelte.js'
   import { isImage } from '$lib/ui/image.js'
   import { Button, toast } from 'mono-svelte'
   import { onMount } from 'svelte'
   import {
-    ArrowLeft,
     ArrowRight,
     ChatBubbleLeftRight,
     ChevronDoubleUp,
@@ -31,8 +32,6 @@
   import { expoOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'
   import CommentProvider from './CommentProvider.svelte'
-  import { ReactiveState } from '$lib/promise.svelte'
-  import { postFeeds } from '$lib/lemmy/postfeed.svelte'
 
   let { data } = $props()
 
