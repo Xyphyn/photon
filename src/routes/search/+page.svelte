@@ -26,6 +26,7 @@
   import {
     AdjustmentsHorizontal,
     ChevronDoubleDown,
+    GlobeAmericas,
     Icon,
     MagnifyingGlass,
   } from 'svelte-hero-icons'
@@ -127,11 +128,11 @@
   {:else}
     <div class="my-auto">
       <Placeholder
-        icon={MagnifyingGlass}
+        icon={data.results ? MagnifyingGlass : GlobeAmericas}
         title={$t('routes.search.noResults.title')}
-        description={data.filters.value.query == ''
-          ? $t('routes.search.noResults.alt')
-          : $t('routes.search.noResults.description')}
+        description={data.results
+          ? $t('routes.search.noResults.description')
+          : $t('routes.search.noResults.alt')}
       />
     </div>
   {/if}

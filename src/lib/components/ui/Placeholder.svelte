@@ -24,7 +24,7 @@
   <div class="flex flex-col gap-2 items-center max-w-sm">
     {#if icon}
       <div
-        class="bg-slate-100 dark:bg-zinc-900 p-3 rounded-xl text-primary-900 dark:text-primary-100"
+        class="bg-slate-100 dark:bg-zinc-900 p-3 rounded-2xl text-primary-900 dark:text-primary-100"
       >
         <Icon src={icon} size="28" solid />
       </div>

@@ -173,7 +173,7 @@
 <ul class="flex flex-col list-none" bind:this={listEl}>
   {#key posts}
     {#if posts?.length == 0}
-      <div class="h-full grid place-items-center">
+      <div class="h-full grid place-items-center my-8">
         <Placeholder
           icon={ArchiveBox}
           title={$t('routes.frontpage.empty.title')}
