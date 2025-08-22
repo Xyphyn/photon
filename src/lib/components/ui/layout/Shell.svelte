@@ -46,7 +46,7 @@
 >
   {@render navbar?.({
     class: [
-      'bg-slate-100/50 dark:bg-zinc-950/90 border-slate-200/50 dark:border-zinc-900',
+      'bg-slate-100/70 dark:bg-zinc-950/90 border-slate-200/50 dark:border-zinc-900',
       'pointer-events-auto backdrop-blur-xl border lg:border-t-0 lg:border-x-0',
       'rounded-full lg:rounded-none',
     ],

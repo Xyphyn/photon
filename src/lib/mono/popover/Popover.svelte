@@ -68,30 +68,14 @@
     strategy: strategy,
     placement: placement,
     middleware: middleware,
-    onComputed: ({ x, y, placement }) => {
+    onComputed: ({ placement }) => {
       if (popoverEl) {
         popoverEl.style.transformOrigin = origins[placement]
       }
-
-      console.log(placement)
-
-      // @ts-expect-error svelte hell
-      Object.assign(el?.children?.item?.(0) ?? el, {
-        top: '0',
-        left: '0',
-        transform: `translate3d(${roundByDPR(x)}px,${roundByDPR(y)}px,0)`,
-      })
     },
   })
 
-  function roundByDPR(value: number) {
-    const dpr = window.devicePixelRatio || 1
-    return Math.round(value * dpr) / dpr
-  }
-
   const customFloatingContent = (node: HTMLDivElement) => {
-    // if (!canUseContents) return
-
     floatingContent(node)
   }
 

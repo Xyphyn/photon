@@ -53,7 +53,6 @@
   </Modal>
 {/if}
 
-<MenuDivider>{$t('nav.menu.label')}</MenuDivider>
 {#if profile.current?.jwt}
   <MenuButton href="/profile">
     {#snippet prefix()}
@@ -146,7 +145,6 @@
     Debug
   </MenuButton>
 {/if}
-<MenuDivider />
 <li class="flex flex-col px-2 py-1 mx-auto my-1 text-xs w-full">
   <div class="flex flex-row gap-2 w-full items-center">
     <div class="flex-1">
@@ -161,7 +159,10 @@
       </button>
     </div>
     <Button
-      onclick={() => (showInstance = !showInstance)}
+      onclick={e => {
+        e.stopPropagation()
+        showInstance = !showInstance
+      }}
       color="tertiary"
       title={$t('nav.menu.instance')}
       size="square-md"

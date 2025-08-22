@@ -40,7 +40,7 @@
       'hover:text-slate-900 dark:hover:text-zinc-50 transition-colors',
     isSelected
       ? 'text-primary-900 dark:text-primary-100 max-lg:bg-slate-100 max-lg:dark:bg-zinc-800'
-      : 'text-slate-600 dark:text-zinc-400',
+      : 'text-slate-500 dark:text-zinc-400',
     clazz,
   ]}
   shadow="none"

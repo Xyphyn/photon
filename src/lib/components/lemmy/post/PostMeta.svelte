@@ -129,7 +129,7 @@
   }: Props = $props()
 </script>
 
-<!-- 
+<!--
   @component
   This component will build two different things: a post's meta block and the title.
 -->
@@ -337,7 +337,7 @@
     class={[
       'inline max-sm:mt-0!',
       'hover:underline hover:text-primary-900 dark:hover:text-primary-100 transition-colors',
-      'font-medium',
+      'font-medium text-balance max-w-xl',
       titleClass,
       settings.markReadPosts && read && 'text-slate-600 dark:text-zinc-400',
       view == 'compact' ? 'text-base' : 'text-lg',

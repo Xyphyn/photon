@@ -79,7 +79,7 @@
     {@render passedTarget(acting)}
   {/snippet}
   {#if (profile.current?.user && amMod(profile.current.user, item.community)) || (profile.current?.user && isAdmin(profile.current.user))}
-    <MenuDivider>
+    <MenuDivider showLabel>
       {#if !item.community.local && !amMod(profile.current.user, item.community)}
         {$t('moderation.labelInstanceOnly')}
       {:else}

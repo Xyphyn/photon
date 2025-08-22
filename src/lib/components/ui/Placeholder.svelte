@@ -19,7 +19,7 @@
 </script>
 
 <div
-  class="text-slate-700 dark:text-zinc-300 flex flex-col w-max mx-auto items-center gap-4 {clazz}"
+  class="text-slate-500 dark:text-zinc-500 contrast-more:text-slate-700 contrast-more:dark:text-zinc-300 flex flex-col w-max mx-auto items-center gap-4 {clazz}"
 >
   <div class="flex flex-col gap-2 items-center max-w-sm">
     {#if icon}
