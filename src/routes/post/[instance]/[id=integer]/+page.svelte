@@ -216,7 +216,6 @@
     {/if}
   {/await}
 </article>
-<hr class="-mx-3 sm:-mx-6 my-6 border-slate-200 dark:border-zinc-800" />
 {#await data.comments.value then comments}
   {#if data.thread.value.showContext || data.thread.value.singleThread}
     <div
@@ -249,13 +248,15 @@
   {/if}
 {/await}
 <section class="flex flex-col gap-2 w-full" id="comments">
-  <header>
-    <div class="text-base">
-      <span class="font-bold">
-        <FormattedNumber number={data.post.value.post_view.counts.comments} />
-      </span>
+  <header class="mt-4">
+    <EndPlaceholder size="md" color="none">
       {$t('routes.post.commentCount')}
-    </div>
+      {#snippet action()}
+        <span class="font-bold">
+          <FormattedNumber number={data.post.value.post_view.counts.comments} />
+        </span>
+      {/snippet}
+    </EndPlaceholder>
   </header>
   {#if !page.url.searchParams.get('noVirtualize')}
     <noscript>

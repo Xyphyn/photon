@@ -64,7 +64,7 @@
 
 {#if profile.current?.jwt}
   {#if !commenting}
-    <EndPlaceholder>
+    <EndPlaceholder border={false}>
       <Button
         color="primary"
         rounding="xl"

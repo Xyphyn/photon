@@ -97,7 +97,7 @@
     >
       {#snippet title()}
         <span class="px-2 py-1 w-full">
-          <EndPlaceholder>
+          <EndPlaceholder border={false}>
             {$t('account.accounts')}
             {#snippet action()}
               <span class="dark:text-white text-black">
@@ -134,7 +134,7 @@
       >
         {#snippet title()}
           <span class="px-2 py-1 w-full">
-            <EndPlaceholder>
+            <EndPlaceholder border={false}>
               {$t('routes.profile.moderates')}
               {#snippet action()}
                 <span class="dark:text-white text-black">
@@ -185,7 +185,7 @@
     >
       {#snippet title()}
         <span class="px-2 py-1 w-full">
-          <EndPlaceholder>
+          <EndPlaceholder border={false}>
             {$t('profile.subscribed')}
             {#snippet action()}
               <span class="dark:text-white text-black">

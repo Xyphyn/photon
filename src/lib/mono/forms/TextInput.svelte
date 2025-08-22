@@ -39,7 +39,7 @@
   import Label from '../forms/Label.svelte'
   import { generateID } from '../forms/helper.js'
 
-  const borderClass = `border border-slate-200 border-b-slate-300 dark:border-zinc-800`
+  const borderClass = `border border-slate-200 border-b-slate-300 dark:border-t-zinc-800 dark:border-zinc-900`
 
   let {
     label = undefined,

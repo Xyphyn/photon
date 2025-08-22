@@ -88,7 +88,7 @@
   }: Props<T> = $props()
 </script>
 
-<div class="flex flex-col gap-1 {clazz} {baseClass}">
+<div class={['flex flex-col gap-1', clazz, baseClass]}>
   {#if customLabel || label}
     <Label for={id} text={label}>
       {@render customLabel?.()}
@@ -144,7 +144,7 @@
             disabled={option.disabled}
             color="none"
             class={[
-              'min-h-0! py-[5px]! hover:bg-slate-100 dark:hover:bg-zinc-800',
+              'min-h-0! py-1 hover:bg-slate-100 dark:hover:bg-zinc-800',
               option.value == value &&
                 'bg-slate-100 dark:bg-zinc-800 text-primary-900 dark:text-primary-100 font-medium',
               option.disabled &&

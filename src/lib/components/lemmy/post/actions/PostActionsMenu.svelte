@@ -85,7 +85,7 @@
   <!--svelte-ignore a11y_no_static_element_interactions -->
   <!--svelte-ignore a11y_click_events_have_key_events-->
   <div
-    class="aspect-square w-max m-1 grid place-items-center text-slate-600 dark:text-zinc-400"
+    class="aspect-square w-max m-1 grid place-items-center"
     onclick={e => e.stopPropagation()}
   >
     {#if !post.post.local}
@@ -98,7 +98,12 @@
             class="w-full h-full"
           >
             {#snippet prefix()}
-              <Icon src={EllipsisHorizontal} size="16" micro />
+              <Icon
+                src={EllipsisHorizontal}
+                size="16"
+                micro
+                class="text-slate-600 dark:text-zinc-400"
+              />
             {/snippet}
           </Button>
         {/snippet}
