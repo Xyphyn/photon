@@ -28,7 +28,9 @@
   }
 </script>
 
-<nav class="flex flex-row items-center gap-8 p-1 justify-start">
+<nav
+  class="flex flex-row items-center gap-x-8 gap-y-4 p-1 justify-center sm:justify-start my-2 sm:mt-0 flex-wrap"
+>
   {#each routes as route (route.href)}
     {@const selected = isSelected(
       page.url,
@@ -38,8 +40,10 @@
       onclick={() => invalidateAll()}
       href={buildUrl(currentRoute, route.href)}
       class={[
-        'rounded-full transition-colors duration-100 relative z-0 shrink-0',
-        selected ? 'font-medium' : 'text-slate-600 dark:text-zinc-400',
+        'rounded-full font-medium transition-colors duration-100 relative z-0 shrink-0 hover:text-slate-900 hover:dark:text-zinc-100',
+        selected
+          ? 'text-primary-900 dark:text-primary-100'
+          : 'text-slate-500 dark:text-zinc-500',
       ]}
     >
       {route.name}
