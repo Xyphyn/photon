@@ -39,16 +39,17 @@
       ]}
       rounding="2xl"
       element="article"
+      padding="sm"
     >
       {#if thumbnail_url}
         <img
-          src={optimizeImageURL(thumbnail_url, 64)}
+          src={optimizeImageURL(thumbnail_url, 32)}
           alt=""
           class="-z-10 absolute w-full object-cover h-full opacity-5 brightness-150
-        dark:brightness-70 dark:opacity-20 blur-2xl -inset-px"
+        dark:brightness-70 dark:opacity-10 blur-2xl -inset-px"
         />
       {/if}
-      <div class="flex flex-col gap-2">
+      <div class="flex flex-col gap-1 p-3 -mt-2 sm:mt-0">
         {#if richURL}
           <div
             class="text-slate-600 dark:text-zinc-400 inline-flex items-center gap-1 text-xs font-medium"
@@ -59,9 +60,7 @@
         <p class="font-medium text-base">{embed_title}</p>
       </div>
       {#if thumbnail_url}
-        <picture
-          class="-m-4 mb-auto sm:-mb-4 sm:ml-auto shrink-0 sm:w-1/3 sm:max-w-60"
-        >
+        <picture class="mb-auto sm:ml-auto shrink-0 sm:w-1/3 sm:max-w-60">
           {#each ['webp'] as format}
             <source
               srcset="{optimizeImageURL(
@@ -79,7 +78,7 @@
           {/each}
           <img
             src={optimizeImageURL(thumbnail_url, -1)}
-            class="object-cover w-full sm:max-w-96 h-32 sm:min-h-16 bg-slate-200 dark:bg-zinc-800"
+            class="object-cover w-full sm:max-w-96 h-32 sm:min-h-16 bg-slate-200 dark:bg-zinc-800 rounded-xl"
             width={600}
             height={400}
             alt=""
