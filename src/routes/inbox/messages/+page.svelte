@@ -160,7 +160,7 @@
   </CommonList>
 
   {#if res.private_messages.length == 50 || data.page != 1}
-    <div class="mt-auto pb-4">
+    <div class="mt-auto pb-4 mx-auto">
       <Pageination
         page={data.page}
         hasMore={res.private_messages.length == 50}

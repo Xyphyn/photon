@@ -28,26 +28,21 @@
   }
 </script>
 
-<nav
-  class="flex flex-row items-center gap-1 p-1 rounded-full bg-white/60 dark:bg-zinc-900/60
-  backdrop-blur-lg border border-slate-200 dark:border-zinc-800 shadow-sm {clazz ??
-    ''}
-  "
->
+<nav class="flex flex-row items-center gap-8 p-1 justify-start">
   {#each routes as route (route.href)}
+    {@const selected = isSelected(
+      page.url,
+      new SvelteURL(`${page.url.origin}${route.href}`),
+    )}
     <a
       onclick={() => invalidateAll()}
       href={buildUrl(currentRoute, route.href)}
-      class="font-medium rounded-full px-4 py-1 hover:bg-slate-200/40 dark:hover:bg-zinc-700/40
-      transition-colors duration-100 relative z-0 shrink-0"
+      class={[
+        'rounded-full transition-colors duration-100 relative z-0 shrink-0',
+        selected ? 'font-medium' : 'text-slate-600 dark:text-zinc-400',
+      ]}
     >
       {route.name}
-      {#if isSelected(page.url, new SvelteURL(`${page.url.origin}${route.href}`))}
-        <div
-          class="rounded-full bg-slate-200/60 dark:bg-zinc-700/60
-          absolute inset-0 w-full h-full -z-10"
-        ></div>
-      {/if}
     </a>
   {/each}
   {@render children?.()}
