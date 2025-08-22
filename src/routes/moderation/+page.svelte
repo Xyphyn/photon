@@ -13,7 +13,7 @@
   import { Button, Material, Select, Spinner, toast } from 'mono-svelte'
   import Option from 'mono-svelte/forms/select/Option.svelte'
   import { tick } from 'svelte'
-  import { Check, Funnel, Icon, Inbox, XMark } from 'svelte-hero-icons'
+  import { Check, Funnel, Icon, ShieldCheck, XMark } from 'svelte-hero-icons'
   import Report from './Report.svelte'
 
   let { data = $bindable() } = $props()
@@ -160,7 +160,7 @@
   />
 {:else}
   <Placeholder
-    icon={Inbox}
+    icon={ShieldCheck}
     title={$t('routes.moderation.empty.title')}
     description={$t('routes.moderation.empty.description')}
   />

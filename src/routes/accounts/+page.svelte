@@ -31,12 +31,7 @@
 
   let radioSelected = $state(profile.current.id)
   $effect(() => {
-    switching = radioSelected
     profile.meta.profile = radioSelected
-  })
-
-  $effect(() => {
-    if (profile.current.user) switching = -1
   })
 </script>
 
