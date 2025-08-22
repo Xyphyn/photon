@@ -49,12 +49,10 @@
 >
   {#snippet popover()}
     <div
-      class="w-full max-w-[280px] origin-top-left
-  	max-h-128 overflow-auto list-none shadow-lg rounded-2xl"
+      class="w-full max-w-sm origin-top-left max-h-128 overflow-auto list-none shadow-lg rounded-2xl"
     >
       <div
-        class="flex flex-col py-2 list-none bg-white/80 dark:bg-zinc-900/90 px-2 gap-px
-        rounded-2xl
+        class="flex flex-col px-0 list-none bg-white/80 dark:bg-zinc-900/90 gap-px rounded-2xl
         border border-slate-300 dark:border-zinc-800 border-opacity-50"
       >
         {@render children?.(open)}

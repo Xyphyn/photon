@@ -58,8 +58,8 @@
   let {
     elevation = 'flat',
     padding = 'md',
-    rounding = 'lg',
-    color = 'default',
+    rounding = 'xl',
+    color = 'uniform',
     element = 'div',
     class: clazz = '',
     children,

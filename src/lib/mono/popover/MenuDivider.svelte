@@ -9,7 +9,7 @@
 </script>
 
 <div
-  class="text-slate-800 dark:text-zinc-200 text-xs font-medium py-2 px-2 flex items-center gap-1"
+  class="text-slate-800 dark:text-zinc-200 text-xs font-medium m-4 mb-1 flex items-center gap-1"
 >
   <div>{@render children?.()}</div>
   <hr

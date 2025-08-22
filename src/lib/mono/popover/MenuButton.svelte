@@ -37,9 +37,10 @@
 <Button
   {...rest}
   {color}
+  size="custom"
   rounding="none"
   class={[
-    'w-full px-2 rounded-lg min-h-8 font-normal duration-100',
+    'w-full px-4 py-2 min-h-7 font-normal duration-100',
     disabled && 'opacity-70 pointer-events-none cursor-not-allowed',
     color == 'tertiary' && 'dark:hover:bg-zinc-800/70',
     clazz,
@@ -53,7 +54,7 @@
     <div
       class={[
         'contents shrink-0',
-        color == 'tertiary' && 'text-slate-600 dark:text-zinc-400',
+        color == 'tertiary' && 'text-slate-500 dark:text-zinc-500',
       ]}
     >
       {#if icon}

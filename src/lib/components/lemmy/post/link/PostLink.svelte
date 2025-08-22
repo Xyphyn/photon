@@ -1,8 +1,9 @@
 <script lang="ts">
   import { parseURL } from '$lib/components/input/Link.svelte'
   import type { View } from '$lib/settings.svelte'
-  import { Button, Material } from 'mono-svelte'
+  import { Material } from 'mono-svelte'
   import { optimizeImageURL } from '../helpers'
+  import { Icon, Link } from 'svelte-hero-icons'
 
   interface Props {
     url: string
@@ -23,7 +24,7 @@
   let richURL = $derived(parseURL(url))
 </script>
 
-<!-- 
+<!--
   @component
   For embed-type posts. Displays embed card or a compact link.
 -->
@@ -89,23 +90,20 @@
     </Material>
   </a>
 {:else}
-  <Button
+  <a
     href={url}
     target="_blank"
-    class="text-slate-900 dark:text-zinc-300 items-center
-    text-xs overflow-hidden max-w-full block shrink self-start w-max"
-    size="xs"
-    color="ghost"
-    rounding="pill"
+    class="flex flex-row text-slate-900 dark:text-zinc-400 items-center overflow-hidden group/link hover:underline space-x-1 my-1"
   >
+    <Icon src={Link} size="16" micro class="shrink-0" />
     {#if richURL}
       <div
-        class="flex max-w-full overflow-hidden font-medium self-start justify-self-start w-max"
+        class="flex max-w-full overflow-hidden font-medium self-start justify-self-start w-max text-sm"
       >
         {richURL.hostname}
         {#if richURL.pathname != '/'}
           <span
-            class="text-slate-500 dark:text-zinc-500 whitespace-nowrap font-normal"
+            class="text-slate-500 dark:text-zinc-500 whitespace-nowrap font-normal group-hover/link:opacity-100 opacity-0 transition-opacity duration-100"
           >
             {richURL.pathname}
           </span>
@@ -114,5 +112,5 @@
     {:else}
       {url}
     {/if}
-  </Button>
+  </a>
 {/if}

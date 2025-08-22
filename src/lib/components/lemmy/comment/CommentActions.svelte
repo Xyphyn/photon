@@ -11,7 +11,7 @@
   import { deleteItem, save } from '$lib/lemmy/contentview.js'
   import { settings } from '$lib/settings.svelte'
   import type { CommentView } from 'lemmy-js-client'
-  import { Button, Menu, MenuButton, MenuDivider } from 'mono-svelte'
+  import { Button, Menu, MenuButton } from 'mono-svelte'
   import {
     Bookmark,
     BookmarkSlash,
@@ -69,15 +69,14 @@
         title={$t('comment.actions.label')}
         color="tertiary"
         rounding="pill"
-        size="square-sm"
+        size="square-md"
         class="text-slate-600 dark:text-zinc-400"
       >
         {#snippet prefix()}
-          <Icon src={EllipsisHorizontal} width={16} height={16} mini />
+          <Icon src={EllipsisHorizontal} size="16" micro />
         {/snippet}
       </Button>
     {/snippet}
-    <MenuDivider>{$t('comment.actions.label')}</MenuDivider>
     <MenuButton
       onclick={() => {
         if (navigator.share)
