@@ -28,14 +28,21 @@
             "donate": "Anneta",
             "instance": "Server",
             "app": "Äpp",
-            "about": "Info"
+            "about": "Info",
+            "source": "Allikas"
         },
         "admin": "Admin",
         "commands": {
             "main": "Peamine",
             "search": "Otsima {{default}}",
             "feeds": "vood",
-            "recents": "hiljemad"
+            "recents": "hiljemad",
+            "prompt": "Käsupalett",
+            "content": "Sisu",
+            "setView": "Määra vaade",
+            "setViewTo": "Määra Vaade",
+            "setColor": "Määra skeemi Värvi",
+            "setColorTo": "Määra Värvi skeemi"
         },
         "moderation": "Moderaator"
     },
@@ -83,15 +90,24 @@
             "old": "Vana",
             "controversial": "Kontreversed",
             "hot": "kuum",
-            "mostcomments": "Kõige rohkem komentaare"
+            "mostcomments": "Kõige rohkem komentaare",
+            "newcomments": "Uued vastused"
         },
         "view": {
             "label": "Vaata",
             "legacy": "Vana menüü",
-            "compact": "kompaktne"
+            "compact": "kompaktne",
+            "list": "loetelu",
+            "cozy": "Mugav"
         },
         "type": "Tüüp",
-        "filter": "Filter"
+        "filter": "Filter",
+        "unread": "lugemata",
+        "inbox": {
+            "messages": "Sõnumid",
+            "replies": "Vastused",
+            "mentions": "mainimised"
+        }
     },
     "form": {
         "username": "Kasutaja nimi",
@@ -108,8 +124,17 @@
             "create": "Koosta postitus",
             "edit": "Muuda postistust",
             "title": "Tiitel",
-            "selectFile": "vail fail",
-            "readMore": "Loe rohkem"
+            "selectFile": "vali fail",
+            "readMore": "Loe rohkem",
+            "url": "URL",
+            "body": "Teksti Keha",
+            "generateTitle": "Genereeri pealkiri",
+            "nsfw": "NSFW",
+            "uploadImage": "Laadi üles pilt",
+            "addUrl": "Lisa URL",
+            "setLanguage": "Määra Keel",
+            "unset": "Määramata",
+            "community": "kogukond"
         },
         "profile": {
             "bio": "all text",
@@ -121,7 +146,10 @@
             "2fa": {
                 "paste": "Kllebi seda enda authenticatori äppi."
             },
-            "email": "Email"
+            "email": "Email",
+            "banner": "Bänner",
+            "showNSFW": "Näita NSFW-sisu",
+            "displayName": "kuvatav nimi"
         },
         "signup": {
             "title": "Regisreeru",
