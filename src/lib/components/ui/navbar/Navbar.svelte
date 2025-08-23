@@ -129,7 +129,6 @@
             {/if}
           </NavButton>
         {/snippet}
-        <MenuDivider>{$t('nav.notifications')}</MenuDivider>
         <MenuButton href="/inbox" icon={Inbox}>
           {$t('profile.inbox')}
           {#snippet suffix()}
@@ -225,7 +224,7 @@
       {#snippet children(open)}
         {#if open}
           {#await import('./Profile.svelte')}
-            <div class="m-8 w-full h-full grid place-items-center">
+            <div class="p-8 w-full h-full grid place-items-center">
               <Spinner width={20} />
             </div>
           {:then { default: Profile }}

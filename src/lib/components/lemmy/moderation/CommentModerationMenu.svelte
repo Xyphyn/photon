@@ -35,7 +35,7 @@
     </Button>
   {/snippet}
   {#if (profile.current?.user && amMod(profile.current.user, item.community)) || (profile.current?.user && isAdmin(profile.current.user))}
-    <MenuDivider>
+    <MenuDivider showLabel>
       {#if !item.community.local && !amMod(profile.current.user, item.community)}
         {$t('moderation.labelInstanceOnly')}
       {:else}
@@ -105,7 +105,7 @@
   {/if}
 
   {#if profile.current?.user && isAdmin(profile.current.user)}
-    <MenuDivider>{$t('admin.label')}</MenuDivider>
+    <MenuDivider showLabel>{$t('admin.label')}</MenuDivider>
     <MenuButton color="danger-subtle" onclick={() => remove(item, true)}>
       {#snippet prefix()}
         <Icon src={Fire} size="16" mini />

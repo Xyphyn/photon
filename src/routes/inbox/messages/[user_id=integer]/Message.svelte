@@ -4,7 +4,7 @@
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import { t } from '$lib/i18n/translations'
   import type { PrivateMessageView } from 'lemmy-js-client'
-  import { Button, Menu, MenuButton, MenuDivider } from 'mono-svelte'
+  import { Button, Menu, MenuButton } from 'mono-svelte'
   import { EllipsisVertical, Flag, Icon, Trash } from 'svelte-hero-icons'
 
   interface Props {
@@ -62,7 +62,6 @@
         <Icon src={EllipsisVertical} size="16" micro />
       </Button>
     {/snippet}
-    <MenuDivider>{$t('post.actions.more.actions')}</MenuDivider>
     {#if primary}
       <MenuButton color="danger-subtle" onclick={() => ondelete?.(true)}>
         {#snippet prefix()}

@@ -153,7 +153,7 @@
     </MenuButton>
   {/if}
   {#if profile.current?.user && isAdmin(profile.current.user)}
-    <MenuDivider>{$t('admin.label')}</MenuDivider>
+    <MenuDivider showLabel>{$t('admin.label')}</MenuDivider>
     <MenuButton
       color="success-subtle"
       onclick={() =>

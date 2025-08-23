@@ -190,7 +190,11 @@
     {/snippet}
     {#snippet children(open)}
       {#if open}
-        {#await import('./PostActionsMenu.svelte') then { default: PostActionsMenu }}
+        {#await import ('./PostActionsMenu.svelte')}
+          <div class="p-8 w-full h-full grid place-items-center">
+            <Spinner width={20} />
+          </div>
+        {:then { default: PostActionsMenu }}
           <PostActionsMenu {post} {onhide} bind:editing />
         {/await}
       {/if}
