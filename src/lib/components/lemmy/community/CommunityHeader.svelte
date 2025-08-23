@@ -31,6 +31,8 @@
   import ItemList from '../generic/ItemList.svelte'
   import { amMod, isAdmin } from '../moderation/moderation'
   import { block, blockInstance, purgeCommunity } from './CommunityCard.svelte'
+  import CommonList from '$lib/components/ui/layout/CommonList.svelte'
+  import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
 
   interface Props {
     community: Community

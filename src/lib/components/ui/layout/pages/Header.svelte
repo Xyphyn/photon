@@ -30,7 +30,7 @@
     pageHeader &&
       `w-[calc(100%+1.5rem)] sm:w-[calc(100%+3rem)]
   bg-slate-100 dark:bg-zinc-950 -mx-3 sm:-mx-6 sm:px-6 sm:pb-6 px-4 pb-4 -mt-24 pt-24
-   border-b border-slate-200/50 dark:border-zinc-900 margin`,
+   border-b border-slate-200/50 dark:border-zinc-900 margin z-20`,
   ]}
   {style}
 >

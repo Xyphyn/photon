@@ -1,5 +1,6 @@
 <script lang="ts">
   import Avatar from '$lib/components/ui/Avatar.svelte'
+  import CommonList from '$lib/components/ui/layout/CommonList.svelte'
   import { Button } from 'mono-svelte'
   import { flip } from 'svelte/animate'
   import { expoOut } from 'svelte/easing'
@@ -17,14 +18,11 @@
   let { items }: Props = $props()
 </script>
 
-{#each items.sort((a, b) => a.name.localeCompare(b.name)) as item (item.id)}
-  <div
-    class="inline-flex w-full"
-    animate:flip={{ duration: 500, easing: expoOut }}
-  >
+<CommonList animate={false} size="xs" {items}>
+  {#snippet item(item)}
     <Button
-      class="font-normal w-full h-max"
-      color="tertiary"
+      class="font-normal w-full h-max block"
+      color="none"
       alignment="left"
       href={item.url}
     >
@@ -45,5 +43,5 @@
         {/if}
       </div>
     </Button>
-  </div>
-{/each}
+  {/snippet}
+</CommonList>
