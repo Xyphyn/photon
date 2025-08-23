@@ -545,17 +545,6 @@
                 "delete": "Delete",
                 "restore": "Restore"
             },
-            "mediaBias": {
-                "description": "Description",
-                "credibility": "Credibility",
-                "reporting": "Factual Reporting",
-                "noData": {
-                    "title": "No data",
-                    "description": "There is no bias data for this website."
-                },
-                "downloading": "Downloading dataset",
-                "loading": "Loading source"
-            },
             "link": {
                 "title": "Alternative Links",
                 "actions": "Link Actions"

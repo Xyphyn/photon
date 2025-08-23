@@ -46,7 +46,7 @@
     {#if customIcon}
       {@render customIcon({ selected })}
     {:else if icon}
-      <Icon src={icon} solid size="20" />
+      <Icon src={icon} mini size="18" />
     {/if}
   {/snippet}
   {label}

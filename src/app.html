@@ -5,39 +5,16 @@
     <link rel="icon" href="%sveltekit.assets%/img/logo-background.svg" />
     <link rel="manifest" href="/manifest.json" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="keywords" content="lemmy, client" />
     %sveltekit.head%
   </head>
   <body>
     <div
-      style="
-        z-index: -50;
-        position: absolute;
-        inset: 0;
-        display: grid;
-        place-items: center;
-        color: #fafafe;
-      "
+      style="z-index:-50;position:absolute;inset:0;display:grid;place-items:center; "
     >
-      <svg
-        width="40"
-        height="40"
-        viewBox="15 15 70 70"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="currentColor"
-      >
-        <path
-          d="M45 20.8868C48.094 19.1004 51.906 19.1004 55 20.8868L72.7128 31.1132C75.8068 32.8996 77.7128 36.2008 77.7128 39.7735V60.2265C77.7128 63.7992 75.8068 67.1004 72.7128 68.8867L55 79.1133C51.906 80.8996 48.094 80.8996 45 79.1133L27.2872 68.8867C24.1932 67.1004 22.2872 63.7992 22.2872 60.2265V39.7735C22.2872 36.2008 24.1932 32.8996 27.2872 31.1132L45 20.8868Z"
-        />
-      </svg>
+      <svg width="50" height="50"><use width="50" height="50" xlink:href='/img/logo-isolated.svg' href="/img/logo-isolated.svg"></use></svg>
     </div>
     <div
-      style="
-        display: contents;
-        flex-direction: column;
-        display: flex;
-        min-height: 100vh;
-      "
+      style="display: contents;"
     >
       %sveltekit.body%
     </div>
