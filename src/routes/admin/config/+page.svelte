@@ -64,11 +64,6 @@
   }
 
   let saving = $state(false)
-
-  let uploading = $state({
-    icon: false,
-    banner: false,
-  })
 </script>
 
 <svelte:head>
