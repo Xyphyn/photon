@@ -8,10 +8,12 @@
     UserGroup,
   } from 'svelte-hero-icons'
   import Avatar from '../Avatar.svelte'
-  import { profile } from '$lib/auth.svelte'
+  import { profile, type ProfileInfo } from '$lib/auth.svelte'
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
   import { t } from '$lib/i18n/translations'
+
+  let { profiles }: { profiles: ProfileInfo[] } = $props()
 
   function switchTo(id: number) {
     profile.meta.profile = id
@@ -54,7 +56,7 @@
       {/snippet}
     </Button>
   {/snippet}
-  {#each profile.meta.profiles as p}
+  {#each profiles as p}
     {@const selected = profile.meta.profile == p.id}
     <MenuButton
       onclick={() => switchTo(p.id)}

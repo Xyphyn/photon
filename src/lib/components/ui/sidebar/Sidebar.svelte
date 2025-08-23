@@ -36,7 +36,7 @@
 </script>
 
 <nav class={['flex flex-col overflow-auto gap-1', clazz]} {style}>
-  <ProfileSelection />
+  <ProfileSelection profiles={profile.meta.profiles} />
   <EndPlaceholder size="xs">{$t('profile.profile')}</EndPlaceholder>
   {#if profile.current?.jwt}
     <SidebarButton
