@@ -2,6 +2,7 @@
   import type { ClassValue } from 'svelte/elements'
 
   const sizes = {
+    xs: 'text-xs px-3 mt-3 mb-1',
     sm: 'text-sm',
     md: 'text-base',
     lg: 'text-lg',

@@ -8,9 +8,9 @@
     href?: string | undefined
     icon?: IconSource | undefined
     class?: string
+    label?: string
     customIcon?: import('svelte').Snippet<[{ selected: boolean }]>
     children?: import('svelte').Snippet
-    label?: import('svelte').Snippet
   }
 
   let {
@@ -27,9 +27,9 @@
 </script>
 
 <Button
-  color="none"
+  color="tertiary"
   alignment="left"
-  rounding="pill"
+  rounding="xl"
   {...rest}
   {href}
   class={[
@@ -49,8 +49,6 @@
       <Icon src={icon} solid size="20" />
     {/if}
   {/snippet}
+  {label}
   {@render children?.()}
-  <div class="contents">
-    {@render label?.()}
-  </div>
 </Button>

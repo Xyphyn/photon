@@ -44,7 +44,7 @@
   <div class="absolute inset-0 h-96 overflow-x-hidden -z-10">
     <img
       src={banner || avatar}
-      class="w-full h-48 blur-3xl"
+      class="w-full h-64 object-cover blur-3xl opacity-30 dark:opacity-30"
       height="192"
       alt="User banner"
     />

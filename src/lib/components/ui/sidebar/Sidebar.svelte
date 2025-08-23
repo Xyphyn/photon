@@ -1,25 +1,35 @@
 <script lang="ts">
+  import { goto } from '$app/navigation'
+  import { page } from '$app/state'
   import { notifications, profile } from '$lib/auth.svelte.js'
+  import ItemList from '$lib/components/lemmy/generic/ItemList.svelte'
   import Expandable from '$lib/components/ui/Expandable.svelte'
-  import ProfileButton from '$lib/components/ui/sidebar/ProfileButton.svelte'
   import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
   import { t } from '$lib/i18n/translations'
   import { communityLink } from '$lib/lemmy/generic'
   import { settings } from '$lib/settings.svelte.js'
-  import { Badge } from 'mono-svelte'
+  import { Badge, Button, Menu, MenuButton, Option, Select } from 'mono-svelte'
   import {
     ArrowLeftOnRectangle,
     Bookmark,
+    CheckCircle,
+    ChevronUpDown,
     Cog6Tooth,
+    ComputerDesktop,
+    Icon,
     Identification,
     Inbox,
+    Moon,
+    QuestionMarkCircle,
+    Sun,
+    Swatch,
     UserCircle,
     UserGroup,
   } from 'svelte-hero-icons'
   import type { ClassValue } from 'svelte/elements'
   import Avatar from '../Avatar.svelte'
   import EndPlaceholder from '../EndPlaceholder.svelte'
-  import CommonList from '../layout/CommonList.svelte'
+  import { theme } from '$lib/ui/colors.svelte'
 
   interface Props {
     style?: string
@@ -30,201 +40,199 @@
 </script>
 
 <nav class={['flex flex-col overflow-auto gap-1', clazz]} {style}>
+  <Menu placement="bottom">
+    {#snippet target()}
+      <Button
+        color="tertiary"
+        alignment="left"
+        size="md"
+        class="flex flex-row gap-2 items-center"
+      >
+        {#snippet prefix()}
+          <Avatar
+            url={profile.current.avatar}
+            alt={profile.current.username}
+            width={24}
+          />
+        {/snippet}
+        <div class="flex-1">
+          <div class="font-medium">{profile.current.username}</div>
+          <div class="text-xs text-slate-500 dark:text-zinc-500">
+            {profile.current.instance}
+          </div>
+        </div>
+        {#snippet suffix()}
+          <Icon
+            src={ChevronUpDown}
+            size="16"
+            micro
+            class="block justify-self-end"
+          />
+        {/snippet}
+      </Button>
+    {/snippet}
+    {#each profile.meta.profiles as p}
+      <MenuButton
+        onclick={() => {
+          profile.meta.profile = p.id
+
+          goto(page.url, {
+            invalidateAll: true,
+          })
+        }}
+      >
+        {#snippet prefix()}
+          <Avatar url={p.avatar} alt={p.username} width={24} />
+        {/snippet}
+        <div>
+          <div class="font-medium text-sm">{p.username}</div>
+          <div class="text-xs text-slate-500 dark:text-zinc-500">
+            {p.instance}
+          </div>
+        </div>
+        {#if profile.meta.profile == p.id}
+          <Icon
+            src={CheckCircle}
+            class="text-primary-900 dark:text-primary-100 ml-auto"
+            size="16"
+            micro
+          />
+        {/if}
+        {#if !p.jwt}
+          <Badge color="gray-subtle" class="ml-auto p-1!">
+            <Icon src={QuestionMarkCircle} size="16" micro />
+          </Badge>
+        {/if}
+      </MenuButton>
+    {/each}
+    <MenuButton href="/accounts">
+      {#snippet prefix()}
+        <Icon src={UserGroup} size="16" micro />
+      {/snippet}
+      {$t('account.accounts')}
+    </MenuButton>
+  </Menu>
+  <EndPlaceholder size="xs">{$t('profile.profile')}</EndPlaceholder>
   {#if profile.current?.jwt}
-    <SidebarButton icon={UserCircle} href="/profile">
-      {#snippet label()}
-        <span>
-          {$t('profile.profile')}
-        </span>
-      {/snippet}
+    <SidebarButton
+      icon={UserCircle}
+      href="/profile"
+      label={$t('profile.profile')}
+    />
+    <SidebarButton icon={Inbox} href="/inbox" label={$t('profile.inbox')}>
+      {#if $notifications.inbox}
+        <Badge
+          class="min-w-5 h-5 p-0! px-0.5 grid place-items-center ml-auto"
+          color="red-subtle"
+        >
+          {$notifications.inbox > 99 ? '∞' : $notifications.inbox}
+        </Badge>
+      {/if}
     </SidebarButton>
-    <SidebarButton icon={Inbox} href="/inbox">
-      {#snippet label()}
-        <span class="flex items-center gap-2">
-          {$t('profile.inbox')}
-          {#if $notifications.inbox}
-            <Badge
-              class="min-w-5 h-5 p-0! px-0.5 grid place-items-center ml-auto"
-              color="red-subtle"
-            >
-              {$notifications.inbox > 99 ? '∞' : $notifications.inbox}
-            </Badge>
-          {/if}
-        </span>
-      {/snippet}
-    </SidebarButton>
-    <SidebarButton icon={Bookmark} href="/saved">
-      {#snippet label()}
-        <span>{$t('profile.saved')}</span>
-      {/snippet}
-    </SidebarButton>
+    <SidebarButton icon={Bookmark} href="/saved" label={$t('profile.saved')} />
   {:else}
     <SidebarButton
       href="/login"
-      title={$t('account.login')}
+      label={$t('account.login')}
       icon={ArrowLeftOnRectangle}
-    >
-      {#snippet label()}
-        <span>{$t('account.login')}</span>
-      {/snippet}
-    </SidebarButton>
+    />
     <SidebarButton
       href="/signup"
-      title={$t('account.signup')}
+      label={$t('account.signup')}
       icon={Identification}
-    >
-      {#snippet label()}
-        <span>{$t('account.signup')}</span>
-      {/snippet}
-    </SidebarButton>
+    />
     <SidebarButton
-      href="/settings"
-      title={$t('nav.menu.settings')}
-      icon={Cog6Tooth}
-    >
-      {#snippet label()}
-        <span>{$t('nav.menu.settings')}</span>
-      {/snippet}
-    </SidebarButton>
+      href="/accounts"
+      title={$t('accounts.accounts')}
+      icon={UserGroup}
+    />
   {/if}
-  {#if profile.meta.profiles.length >= 1}
-    <hr class="border-slate-200 dark:border-zinc-900 my-1" />
-
-    <Expandable
-      class="max-w-full min-w-0 w-full"
-      bind:open={settings.expand.accounts}
-    >
-      {#snippet title()}
-        <span class="px-2 py-1 w-full">
-          <EndPlaceholder border={false}>
-            {$t('account.accounts')}
-            {#snippet action()}
-              <span class="dark:text-white text-black">
-                {profile.meta.profiles.length}
-              </span>
-            {/snippet}
-          </EndPlaceholder>
-        </span>
-      {/snippet}
-      <CommonList
-        size="xs"
-        animate={false}
-        items={profile.meta.profiles}
-        class="px-1 py-0.5"
-        selected={prof => prof.id == profile.meta.profile}
+  <EndPlaceholder size="xs">{$t('nav.menu.app')}</EndPlaceholder>
+  <SidebarButton
+    href="/settings"
+    label={$t('nav.menu.settings')}
+    icon={Cog6Tooth}
+  />
+  <Select bind:value={theme.colorScheme} size="sm">
+    {#snippet target()}
+      <SidebarButton
+        label={$t('nav.menu.colorscheme.label')}
+        icon={theme.colorScheme == 'system'
+          ? ComputerDesktop
+          : theme.colorScheme == 'light'
+            ? Sun
+            : Moon}
+        class=" w-full"
       >
-        {#snippet item(prof, index)}
-          <ProfileButton {index} {prof} />
-        {/snippet}
-        <li class="xs px-1 py-0.5">
-          <SidebarButton href="/accounts" icon={UserGroup}>
-            {$t('account.accounts')}
-          </SidebarButton>
-        </li>
-      </CommonList>
-    </Expandable>
-  {/if}
-  <hr class="border-slate-200 dark:border-zinc-900 my-1" />
+        <Option value="system" class="hidden" icon={ComputerDesktop}>
+          {$t('nav.menu.colorscheme.system')}
+        </Option>
+        <Option value="light" class="hidden" icon={Sun}>
+          {$t('nav.menu.colorscheme.light')}
+        </Option>
+        <Option value="dark" class="hidden" icon={Moon}>
+          {$t('nav.menu.colorscheme.dark')}
+        </Option>
+      </SidebarButton>
+    {/snippet}
+  </Select>
+  <SidebarButton href="/theme" label={$t('nav.menu.theme')} icon={Swatch} />
   {#if profile.current?.user}
-    {#if profile.current?.user.moderates.length > 0}
-      <Expandable
-        class="max-w-full min-w-0 w-full"
-        bind:open={settings.expand.moderates}
-      >
+    <EndPlaceholder size="xs">{$t('content.communities')}</EndPlaceholder>
+
+    <div class="space-y-3">
+      {#if profile.current?.user.moderates.length > 0}
+        <Expandable class="px-1.5" bind:open={settings.expand.moderates}>
+          {#snippet title()}
+            <span class="px-2 py-1 w-full">
+              <EndPlaceholder border={false}>
+                {$t('routes.profile.moderates')}
+                {#snippet action()}
+                  <span class="dark:text-white text-black">
+                    {profile.current.user?.moderates.length}
+                  </span>
+                {/snippet}
+              </EndPlaceholder>
+            </span>
+          {/snippet}
+          <ItemList
+            items={profile.current.user.moderates.map(i => ({
+              id: i.community.id,
+              name: i.community.title,
+              url: communityLink(i.community),
+              avatar: i.community.icon,
+              instance: new URL(i.community.actor_id).hostname,
+            }))}
+          />
+        </Expandable>
+      {/if}
+
+      <Expandable class="px-1.5" bind:open={settings.expand.communities}>
         {#snippet title()}
           <span class="px-2 py-1 w-full">
             <EndPlaceholder border={false}>
-              {$t('routes.profile.moderates')}
+              {$t('profile.subscribed')}
               {#snippet action()}
                 <span class="dark:text-white text-black">
-                  {profile.current.user?.moderates.length}
+                  {profile.current.user?.follows.length}
                 </span>
               {/snippet}
             </EndPlaceholder>
           </span>
         {/snippet}
-        <CommonList
-          animate={false}
-          size="xs"
-          items={profile.current.user.moderates}
-          class="px-1 py-0.5"
-        >
-          {#snippet item(moderate)}
-            <SidebarButton
-              class="font-normal w-full h-max"
-              color="none"
-              alignment="left"
-              href={communityLink(moderate.community)}
-            >
-              {#snippet customIcon()}
-                <Avatar
-                  url={moderate.community.icon}
-                  alt={moderate.community.name}
-                  title={moderate.community.title}
-                  width={28}
-                />{/snippet}
-              {#snippet label()}
-                <div class="flex flex-col max-w-full break-words">
-                  <span>{moderate.community.title}</span>
-                  <span class="text-xs text-slate-600 dark:text-zinc-400">
-                    {new URL(moderate.community.actor_id).hostname}
-                  </span>
-                </div>
-              {/snippet}
-            </SidebarButton>
-          {/snippet}
-        </CommonList>
-      </Expandable>
-      <hr class="border-slate-200 dark:border-zinc-900 my-1" />
-    {/if}
 
-    <Expandable
-      class="max-w-full min-w-0 w-full"
-      bind:open={settings.expand.communities}
-    >
-      {#snippet title()}
-        <span class="px-2 py-1 w-full">
-          <EndPlaceholder border={false}>
-            {$t('profile.subscribed')}
-            {#snippet action()}
-              <span class="dark:text-white text-black">
-                {profile.current.user?.follows.length}
-              </span>
-            {/snippet}
-          </EndPlaceholder>
-        </span>
-      {/snippet}
-      <CommonList
-        animate={false}
-        size="xs"
-        items={profile.current.user.follows}
-        class="px-1 py-0.5"
-      >
-        {#snippet item(follow)}
-          <SidebarButton
-            class="font-normal w-full h-max"
-            color="none"
-            alignment="left"
-            href={communityLink(follow.community)}
-          >
-            {#snippet customIcon()}
-              <Avatar
-                url={follow.community.icon}
-                alt={follow.community.name}
-                title={follow.community.title}
-                width={28}
-              />{/snippet}
-            {#snippet label()}
-              <div class="flex flex-col max-w-full break-words">
-                <span>{follow.community.title}</span>
-                <span class="text-xs text-slate-600 dark:text-zinc-400">
-                  {new URL(follow.community.actor_id).hostname}
-                </span>
-              </div>
-            {/snippet}
-          </SidebarButton>
-        {/snippet}
-      </CommonList>
-    </Expandable>
+        <ItemList
+          items={profile.current.user.follows.map(i => ({
+            id: i.community.id,
+            name: i.community.title,
+            url: communityLink(i.community),
+            avatar: i.community.icon,
+            instance: new URL(i.community.actor_id).hostname,
+          }))}
+        />
+      </Expandable>
+    </div>
   {/if}
+
+  <div class="flex-1 h-full mt-auto"></div>
 </nav>

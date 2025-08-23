@@ -55,7 +55,7 @@
 </div>
 <div class={['content flex-1', settings.newWidth && 'limit-width']}>
   {@render sidebar?.({
-    class: `hidden md:flex sticky top-0 lg:top-16 left-0 h-max bg-slate-100 dark:bg-zinc-950 z-40 max-h-screen`,
+    class: `hidden md:flex sticky top-0 lg:top-16 left-0 h-max bg-slate-100 dark:bg-zinc-950 z-40 max-h-[calc(100vh-4rem)] min-h-[calc(100vh-4rem)]`,
     style: 'grid-area: sidebar; width: 100% !important;',
   })}
   {@render main?.({

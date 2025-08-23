@@ -94,7 +94,7 @@
       buttonColor.secondary,
       'rounded-full h-full font-medium flex items-center *:p-2 relative',
       'hover:bg-white dark:hover:bg-zinc-900 overflow-hidden transition-colors shrink-0',
-      'text-inherit! divide-x divide-slate-200 dark:divide-zinc-800 shadow-xs',
+      'text-inherit! divide-x divide-slate-200 dark:divide-zinc-800',
       loading && 'animate-pulse opacity-75 pointer-events-none',
       voteRatio < 85 && settings.voteRatioBar && 'vote-ratio',
     ]}

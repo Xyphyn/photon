@@ -1,16 +1,15 @@
 <script lang="ts">
   import { profile } from '$lib/auth.svelte.js'
+  import ImageInputUpload from '$lib/components/form/ImageInputUpload.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import { t } from '$lib/i18n/translations.js'
   import { getClient, site } from '$lib/lemmy.svelte.js'
-  import { uploadImage } from '$lib/util.svelte.js'
   import type { SaveUserSettings } from 'lemmy-js-client'
   import {
     Badge,
     Button,
-    ImageInput,
     Material,
     Menu,
     MenuButton,
@@ -20,7 +19,6 @@
   } from 'mono-svelte'
   import { Icon, Plus } from 'svelte-hero-icons'
   import type { PageData } from './$types'
-  import ImageInputUpload from '$lib/components/form/ImageInputUpload.svelte'
 
   interface Props {
     inline?: boolean
@@ -109,6 +107,9 @@
     </Switch>
     <Switch bind:checked={formData.show_bot_accounts}>
       {$t('form.profile.showBots')}
+    </Switch>
+    <Switch bind:checked={formData.show_read_posts}>
+      {$t('form.profile.showRead')}
     </Switch>
     <div class="space-y-1">
       <SectionTitle id="languages">

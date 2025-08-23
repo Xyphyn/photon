@@ -2,8 +2,6 @@
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import CommonList from '$lib/components/ui/layout/CommonList.svelte'
   import { Button } from 'mono-svelte'
-  import { flip } from 'svelte/animate'
-  import { expoOut } from 'svelte/easing'
 
   interface Props {
     items: {
@@ -18,7 +16,7 @@
   let { items }: Props = $props()
 </script>
 
-<CommonList animate={false} size="xs" {items}>
+<CommonList animate={false} class="px-1 py-0.5" size="xs" {items}>
   {#snippet item(item)}
     <Button
       class="font-normal w-full h-max block"

@@ -10,8 +10,7 @@
   import Link from '../input/Link.svelte'
   import Expandable from '../ui/Expandable.svelte'
   import LabelStat from '../ui/LabelStat.svelte'
-  import CommonList from '../ui/layout/CommonList.svelte'
-  import SidebarButton from '../ui/sidebar/SidebarButton.svelte'
+  import ItemList from './generic/ItemList.svelte'
   import { optimizeImageURL } from './post/helpers'
 
   interface Props {
@@ -115,36 +114,15 @@
             {$t('cards.site.admins')}
           </span>
         {/snippet}
-        <CommonList
-          animate={false}
-          size="xs"
-          items={admins}
-          class="px-1 py-0.5"
-        >
-          {#snippet item(admin)}
-            <SidebarButton
-              class="font-normal w-full h-max"
-              color="none"
-              alignment="left"
-              href={userLink(admin.person)}
-            >
-              {#snippet customIcon()}
-                <Avatar
-                  url={admin.person.avatar}
-                  alt={admin.person.name}
-                  width={28}
-                />{/snippet}
-              {#snippet label()}
-                <div class="flex flex-col max-w-full break-words">
-                  <span>{admin.person.display_name ?? admin.person.name}</span>
-                  <span class="text-xs text-slate-600 dark:text-zinc-400">
-                    {new URL(admin.person.actor_id).hostname}
-                  </span>
-                </div>
-              {/snippet}
-            </SidebarButton>
-          {/snippet}
-        </CommonList>
+        <ItemList
+          items={admins.map(i => ({
+            id: i.person.id,
+            name: i.person.display_name || i.person.name,
+            url: userLink(i.person),
+            avatar: i.person.avatar,
+            instance: new URL(i.person.actor_id).hostname,
+          }))}
+        />
       </Expandable>
     {/if}
 
