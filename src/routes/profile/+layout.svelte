@@ -27,11 +27,10 @@
 <div class="flex flex-col gap-4 h-full z-0">
   <div class="flex flex-row justify-between">
     <Tabs
-      class="overflow-auto"
       routes={[
         {
           href: '/profile',
-          name: $t('routes.profile.overview'),
+          name: $t('profile.profile'),
         },
         {
           href: '/profile/user',
@@ -40,7 +39,7 @@
 
         {
           href: '/profile/settings',
-          name: $t('routes.profile.settings'),
+          name: $t('routes.profile.edit'),
         },
 
         {

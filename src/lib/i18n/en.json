@@ -254,7 +254,8 @@
                 "warning": "This is permanent. Are you sure you want to do this?"
             },
             "overview": "Overview",
-            "submissions": "Submissions"
+            "submissions": "Submissions",
+            "edit": "Edit"
         },
         "translators": "Translators",
         "accounts": "Accounts",

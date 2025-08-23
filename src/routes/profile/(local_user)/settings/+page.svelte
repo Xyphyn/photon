@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { preventDefault } from 'svelte/legacy'
-
   import { profile } from '$lib/auth.svelte.js'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
@@ -22,6 +20,7 @@
   } from 'mono-svelte'
   import { Icon, Plus } from 'svelte-hero-icons'
   import type { PageData } from './$types'
+  import ImageInputUpload from '$lib/components/form/ImageInputUpload.svelte'
 
   interface Props {
     inline?: boolean
@@ -37,35 +36,14 @@
     discussion_languages: data.my_user?.discussion_languages,
   })
 
-  let profileImage: FileList | undefined = $state()
-  let bannerImage: FileList | undefined = $state()
-
   async function save() {
     if (!formData || !profile.current?.jwt) return
 
     loading = true
 
     try {
-      let pfp = profileImage
-        ? await uploadImage(
-            profileImage[0],
-            profile.current.instance,
-            profile.current.jwt,
-          )
-        : undefined
-
-      let banner = bannerImage
-        ? await uploadImage(
-            bannerImage[0],
-            profile.current.instance,
-            profile.current.jwt,
-          )
-        : undefined
-
       await getClient().saveUserSettings({
         ...formData,
-        avatar: pfp,
-        banner: banner,
       })
 
       toast({
@@ -84,9 +62,15 @@
   let loading = $state(false)
 </script>
 
-<form class="flex flex-col gap-4 h-full" onsubmit={preventDefault(save)}>
+<form
+  class="flex flex-col gap-4 h-full"
+  onsubmit={e => {
+    e.preventDefault()
+    save()
+  }}
+>
   {#if !inline}
-    <Header pageHeader>{$t('routes.profile.settings')}</Header>
+    <Header pageHeader>{$t('routes.profile.edit')}</Header>
   {/if}
   {@render children?.()}
   {#if data.my_user?.local_user_view?.local_user && formData}
@@ -103,8 +87,14 @@
       previewButton
     />
     <div class="flex gap-2 items-center *:flex-1">
-      <ImageInput label={$t('form.profile.avatar')} bind:files={profileImage} />
-      <ImageInput label={$t('form.profile.banner')} bind:files={bannerImage} />
+      <ImageInputUpload
+        label={$t('form.profile.avatar')}
+        bind:imageUrl={formData.avatar}
+      />
+      <ImageInputUpload
+        label={$t('form.profile.banner')}
+        bind:imageUrl={formData.banner}
+      />
     </div>
     <TextInput
       label={$t('form.profile.matrix')}
@@ -114,17 +104,11 @@
     <Switch bind:checked={formData.show_nsfw}>
       {$t('form.profile.showNSFW')}
     </Switch>
-    <Switch bind:checked={formData.show_scores}>
-      {$t('form.profile.scores')}
-    </Switch>
     <Switch bind:checked={formData.bot_account}>
       {$t('form.profile.bot')}
     </Switch>
     <Switch bind:checked={formData.show_bot_accounts}>
       {$t('form.profile.showBots')}
-    </Switch>
-    <Switch bind:checked={formData.show_read_posts}>
-      {$t('form.profile.showRead')}
     </Switch>
     <div class="space-y-1">
       <SectionTitle id="languages">

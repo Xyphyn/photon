@@ -1,11 +1,18 @@
 <script lang="ts">
   import { t } from '$lib/i18n/translations'
-  import { DocumentPlus, Icon, Plus } from 'svelte-hero-icons'
-  import ImageUploadModal from '../lemmy/modal/ImageUploadModal.svelte'
   import { Label } from 'mono-svelte'
+  import { DocumentPlus, Icon, Plus } from 'svelte-hero-icons'
+  import ImageInputModal from './ImageInputModal.svelte'
 
-  let { imageUrl = $bindable(), label }: { imageUrl?: string; label?: string } =
-    $props()
+  let {
+    imageUrl: passedImageUrl = $bindable(),
+    label,
+  }: {
+    imageUrl?: string
+    label?: string
+  } = $props()
+
+  let imageUrl = $derived(passedImageUrl)
 
   let open = $state(false)
 </script>
@@ -43,15 +50,6 @@
         {$t('common.attach')}
       </p>
     {/if}
-    {#if open}
-      <ImageUploadModal
-        bind:open
-        multiple={false}
-        onupload={uploaded => {
-          open = false
-          imageUrl = uploaded[0]
-        }}
-      />
-    {/if}
+    <ImageInputModal bind:open bind:imageUrl={passedImageUrl} />
   </button>
 </div>
