@@ -18,6 +18,8 @@
   stroke-linejoin="round"
   class="animate-spin"
   xmlns="http://www.w3.org/2000/svg"
+  aria-live="polite"
+  role="status"
 >
   <line x1="12" y1="2" x2="12" y2="6"></line>
   <line x1="12" y1="18" x2="12" y2="22"></line>

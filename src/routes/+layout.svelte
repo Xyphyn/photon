@@ -130,7 +130,7 @@
   <ModalContainer />
 
   {#snippet sidebar({ style: s, class: c })}
-    <Sidebar class={[c, 'p-3 sm:p-6']} style={s} />
+    <Sidebar class={[c, 'p-3 sm:p-6 w-full']} style={s} />
   {/snippet}
   {#snippet main({ style: s, class: c })}
     <main
@@ -144,23 +144,25 @@
   {#snippet navbar({ style: s, class: c })}
     <Navbar class={c} style={s} />
   {/snippet}
-  {#snippet suffix({ class: c, style: s })}
-    <div class={[c, 'p-3 sm:p-6']} style={s}>
-      {#if page.data.slots?.sidebar?.component}
-        {@const SvelteComponent = page.data.slots.sidebar.component}
-        <SvelteComponent {...page.data.slots.sidebar.props} />
-      {:else if site.data}
-        <SiteCard
-          site={site.data.site_view}
-          taglines={site.data.taglines}
-          admins={site.data.admins}
-          version={site.data.version}
-        />
-      {:else}
-        <div class="h-64 w-full grid place-items-center">
-          <Spinner width={32} />
-        </div>
-      {/if}
-    </div>
+  {#snippet suffix({ class: c })}
+    {#if page.data.slots?.sidebar?.component}
+      {@const SvelteComponent = page.data.slots.sidebar.component}
+      <SvelteComponent
+        {...page.data.slots.sidebar.props}
+        class={[c, 'p-3 sm:p-6']}
+      />
+    {:else if site.data}
+      <SiteCard
+        site={site.data.site_view}
+        taglines={site.data.taglines}
+        admins={site.data.admins}
+        version={site.data.version}
+        class={[c, 'p-3 sm:p-6']}
+      />
+    {:else}
+      <div class="h-64 w-full grid place-items-center">
+        <Spinner width={32} />
+      </div>
+    {/if}
   {/snippet}
 </Shell>

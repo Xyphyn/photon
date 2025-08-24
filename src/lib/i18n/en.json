@@ -254,7 +254,8 @@
                 "warning": "This is permanent. Are you sure you want to do this?"
             },
             "overview": "Overview",
-            "submissions": "Submissions"
+            "submissions": "Submissions",
+            "edit": "Edit"
         },
         "translators": "Translators",
         "accounts": "Accounts",
@@ -543,17 +544,6 @@
                 "crosspost": "Crosspost",
                 "delete": "Delete",
                 "restore": "Restore"
-            },
-            "mediaBias": {
-                "description": "Description",
-                "credibility": "Credibility",
-                "reporting": "Factual Reporting",
-                "noData": {
-                    "title": "No data",
-                    "description": "There is no bias data for this website."
-                },
-                "downloading": "Downloading dataset",
-                "loading": "Loading source"
             },
             "link": {
                 "title": "Alternative Links",
@@ -955,6 +945,14 @@
             "upvotes": "{{default}} upvotes",
             "downvotes": "{{default}} downvotes",
             "score": "Score: {{default}}"
+        },
+        "sidebar": {
+          "title": "Sidebar",
+          "accounts": "Accounts selector"
+        },
+        "loading": "Loading",
+        "element": {
+          "pageHeader": "Page header"
         }
     },
     "stats": {

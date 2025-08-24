@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { env } from '$env/dynamic/public'
   import { notifications, profile } from '$lib/auth.svelte'
 
   import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
@@ -169,13 +170,15 @@
     >
       <Icon src={ServerStack} size="16" micro />
     </Button>
-    <Button
-      color="tertiary"
-      href="https://github.com/Xyphyn/Photon"
-      title={$t('nav.menu.source')}
-      size="square-md"
-    >
-      <Icon src={CodeBracketSquare} size="16" micro />
-    </Button>
+    {#if env.PUBLIC_XYLIGHT_MODE.toLowerCase() == 'true'}
+      <Button
+        color="tertiary"
+        href="https://github.com/Xyphyn/Photon"
+        title={$t('nav.menu.source')}
+        size="square-md"
+      >
+        <Icon src={CodeBracketSquare} size="16" micro />
+      </Button>
+    {/if}
   </div>
 </li>

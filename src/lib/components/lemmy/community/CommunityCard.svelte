@@ -76,8 +76,6 @@
   import Entity from '$lib/components/ui/Entity.svelte'
   import Expandable from '$lib/components/ui/Expandable.svelte'
   import LabelStat from '$lib/components/ui/LabelStat.svelte'
-  import CommonList from '$lib/components/ui/layout/CommonList.svelte'
-  import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
   import { t } from '$lib/i18n/translations'
   import { client, getClient } from '$lib/lemmy.svelte.js'
   import { errorMessage } from '$lib/lemmy/error'
@@ -107,6 +105,7 @@
     NoSymbol,
     Plus,
   } from 'svelte-hero-icons'
+  import ItemList from '../generic/ItemList.svelte'
 
   let loading = $state({
     blocking: false,
@@ -147,11 +146,15 @@
 </script>
 
 {#await community_view}
-  <div class="w-full h-full grid place-items-center">
+  <div
+    class="w-full h-full grid place-items-center"
+    role="status"
+    aria-label={$t('aria.loading')}
+  >
     <Spinner width={24} />
   </div>
 {:then community_view}
-  <div
+  <aside
     class={[
       'min-w-full pt-0 text-slate-600 dark:text-zinc-400 flex flex-col gap-4 text-sm',
       clazz,
@@ -214,40 +217,15 @@
               {$t('cards.community.moderators')}
             </span>
           {/snippet}
-          <CommonList
-            animate={false}
-            size="xs"
-            items={moderators}
-            class="px-1 py-0.5"
-          >
-            {#snippet item(moderator)}
-              <SidebarButton
-                class="font-normal w-full h-max"
-                color="none"
-                alignment="left"
-                href={userLink(moderator.moderator)}
-              >
-                {#snippet customIcon()}
-                  <Avatar
-                    url={moderator.moderator.avatar}
-                    alt={moderator.moderator.name}
-                    width={28}
-                  />
-                {/snippet}
-                {#snippet label()}
-                  <div class="flex flex-col max-w-full break-words">
-                    <span>
-                      {moderator.moderator.display_name ??
-                        moderator.moderator.name}
-                    </span>
-                    <span class="text-xs text-slate-600 dark:text-zinc-400">
-                      {new URL(moderator.moderator.actor_id).hostname}
-                    </span>
-                  </div>
-                {/snippet}
-              </SidebarButton>
-            {/snippet}
-          </CommonList>
+          <ItemList
+            items={moderators.map(i => ({
+              id: i.moderator.id,
+              name: i.moderator.display_name || i.moderator.name,
+              url: userLink(i.moderator),
+              avatar: i.moderator.avatar,
+              instance: new URL(i.moderator.actor_id).hostname,
+            }))}
+          />
         </Expandable>
       {/if}
     </div>
@@ -363,5 +341,5 @@
         {/if}
       </Menu>
     </div>
-  </div>
+  </aside>
 {/await}

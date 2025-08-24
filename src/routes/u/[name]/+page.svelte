@@ -3,6 +3,7 @@
   import { page } from '$app/state'
   import { profile } from '$lib/auth.svelte.js'
   import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
+  import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
   import ItemList from '$lib/components/lemmy/generic/ItemList.svelte'
   import { ban, isAdmin } from '$lib/components/lemmy/moderation/moderation.js'
   import ShieldIcon from '$lib/components/lemmy/moderation/ShieldIcon.svelte'
@@ -34,7 +35,6 @@
   import {
     AdjustmentsHorizontal,
     AtSymbol,
-    ChartBar,
     EllipsisHorizontal,
     Envelope,
     Fire,
@@ -330,22 +330,10 @@
         <Option value="posts">{$t('content.posts')}</Option>
         <Option value="comments">{$t('content.comments')}</Option>
       </Select>
-      <Select
-        bind:value={data.filters.value.sort}
-        name="sort"
+      <Sort
+        bind:selected={data.filters.value.sort}
         onchange={() => sortForm?.requestSubmit()}
-      >
-        {#snippet customLabel()}
-          <span class="flex items-center gap-1">
-            <Icon src={ChartBar} size="14" mini />
-            {$t('filter.sort.label')}
-          </span>
-        {/snippet}
-        <Option value="New">{$t('filter.sort.new')}</Option>
-        <Option value="TopAll">{$t('filter.sort.top.label')}</Option>
-        <Option value="Old">{$t('filter.sort.old')}</Option>
-        <Option value="Controversial">{$t('filter.sort.controversial')}</Option>
-      </Select>
+      />
     </form>
     {#if data.items.value.length == 0}
       <Placeholder

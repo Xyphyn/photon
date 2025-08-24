@@ -63,7 +63,6 @@
       class="text-inherit dark:text-inherit border-0 border-r p-2"
       disabled={(cursor?.back == undefined && cursor?.next != undefined) ||
         page <= 1}
-      data-sveltekit-preload-data="off"
     >
       {#snippet suffix()}
         <Icon src={ChevronLeft} size="24" mini />
@@ -95,7 +94,6 @@
     rounding="none"
     class="text-inherit dark:text-inherit border-0 border-l p-2"
     disabled={!hasMore}
-    data-sveltekit-preload-data="off"
   >
     {#snippet suffix()}
       <Icon src={ChevronRight} size="24" mini />

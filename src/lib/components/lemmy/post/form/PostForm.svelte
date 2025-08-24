@@ -251,14 +251,10 @@
 </script>
 
 {#if uploadingImage}
-  {#await import('$lib/components/lemmy/modal/ImageUploadModal.svelte') then { default: UploadModal }}
+  {#await import('$lib/components/form/ImageInputModal.svelte') then { default: UploadModal }}
     <UploadModal
       bind:open={uploadingImage}
-      multiple={false}
-      onupload={e => {
-        if (e) data.url = e[0]
-        uploadingImage = false
-      }}
+      bind:imageUrl={() => '', v => (data.url = v)}
     />
   {/await}
 {/if}

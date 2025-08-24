@@ -343,7 +343,6 @@
       view == 'compact' ? 'text-base' : 'text-lg',
     ]}
     style="grid-area: title;"
-    data-sveltekit-preload-data="tap"
   >
     {#if title}
       <Markdown

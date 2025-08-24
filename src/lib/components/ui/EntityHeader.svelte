@@ -40,90 +40,66 @@
   }: Props = $props()
 </script>
 
-<div {...rest} class={['z-10 relative text-sm contents', clazz]}>
-  {#if banner}
+<div {...rest} class={['z-10 text-sm contents w-full', clazz]}>
+  <div class="absolute inset-0 h-96 overflow-x-hidden -z-10">
     <img
-      src={banner}
-      class="w-full object-cover h-48 rounded-t-xl bg-white dark:bg-zinc-900 rounded-xl"
-      class:blur-3xl={!banner}
+      src={banner || avatar}
+      class="w-full h-64 object-cover blur-3xl opacity-30 dark:opacity-30"
       height="192"
       alt="User banner"
     />
-  {/if}
-  <div class="py-4 flex flex-col gap-4">
-    <div class="flex-1 flex flex-row items-center text-left gap-4">
-      <Avatar
-        width={64}
-        url={avatar}
-        alt={name}
-        class=" ring-slate-25 dark:ring-zinc-925 bg-slate-25 dark:bg-zinc-925"
-      />
-      <div class="flex flex-col">
-        <svelte:element
-          this={url ? 'a' : 'span'}
-          href={url}
-          class="text-xl font-semibold {url
-            ? 'hover:underline hover:text-primary-900 dark:hover:text-primary-100'
-            : ''}"
-        >
-          {name}
-        </svelte:element>
-        <span
-          class="flex items-center gap-0 text-sm text-slate-600 dark:text-zinc-400 max-w-full w-max"
-        >
-          {@render nameDetail?.()}
-        </span>
-
-        {#if actions}
-          <div class="flex flex-col mt-2">
-            {@render actions?.()}
-          </div>
-        {/if}
-      </div>
-    </div>
-    {#if bio}
-      <div class="relative w-full {center ? 'text-center' : 'text-left'}">
-        <Expandable class="py-2">
-          {#snippet title(open)}
-            {#if bio.split('\n')?.[0]?.startsWith('#') || open}
-              {$t('nav.menu.about')}
-            {:else}
-              <div
-                class={[
-                  'overflow-hidden whitespace-nowrap',
-                  'bg-linear-to-r from-slate-700 via-slate-700 to-slate-700/0',
-                  'dark:from-zinc-400 dark:via-zinc-400 dark:to-zinc-400/0',
-                  'text-transparent bg-clip-text',
-                  'max-w-[50%] overflow-hidden',
-                ]}
-              >
-                {bio.split('\n')?.[0].slice(0, 75)}
-              </div>
-            {/if}
-            <hr class="flex-1 border-slate-200 dark:border-zinc-800 mx-2" />
-            <div class="mr-2 text-primary-900 dark:text-primary-100">
-              {$t('form.post.readMore')}
-            </div>
-          {/snippet}
-          <Markdown source={bio} class="font-normal" />
-        </Expandable>
-      </div>
-    {/if}
   </div>
-  <div class="space-y-3 py-4 pt-0">
-    {#if stats.length > 0}
-      <div
-        class="text-sm flex flex-row flex-wrap mx-auto rounded-lg
-        overflow-hidden gap-4"
+  {#if banner || avatar}
+    <div class="relative overflow-hidden rounded-xl">
+      <img
+        src={banner || avatar}
+        class="w-full object-cover h-48 rounded-t-xl bg-white dark:bg-zinc-900 rounded-xl"
+        class:blur-xl={!banner}
+        height="192"
+        alt="User banner"
+      />
+    </div>
+  {/if}
+
+  <Avatar
+    width={96}
+    url={avatar}
+    alt={name}
+    class="ring-slate-25 bg-slate-25 dark:bg-zinc-925 -mt-12 ml-4 ring-6 relative dark:ring-zinc-950"
+  />
+  <div class="py-4 flex flex-col xl:flex-row gap-4">
+    <div class="flex flex-col flex-1">
+      <svelte:element
+        this={url ? 'a' : 'span'}
+        href={url}
+        class="text-2xl font-medium tracking-tight {url
+          ? 'hover:underline hover:text-primary-900 dark:hover:text-primary-100'
+          : ''}"
       >
+        {name}
+      </svelte:element>
+      <span
+        class="flex items-center gap-0 text-sm text-slate-600 dark:text-zinc-400 max-w-full w-max"
+      >
+        {@render nameDetail?.()}
+      </span>
+
+      {#if actions}
+        <div class="flex flex-col mt-2">
+          {@render actions?.()}
+        </div>
+      {/if}
+    </div>
+    {#if stats.length > 0}
+      <div class="text-sm flex flex-row flex-wrap overflow-hidden gap-4 h-full">
         {#each stats as stat}
           <div class="">
-            <div
-              class="text-primary-900 dark:text-primary-100 text-xs font-medium"
-            >
+            <div class="text-slate-600 dark:text-zinc-500 text-sm font-medium">
               {stat.name}
             </div>
-            <div class="text-lg font-semibold">
+            <div
+              class="text-xl font-medium text-primary-900 dark:text-primary-100 text-right"
+            >
               {#if stat.format ?? true}
                 <FormattedNumber
                   number={Number(stat.value)}
@@ -137,6 +113,27 @@
         {/each}
       </div>
     {/if}
+  </div>
+  {#if bio}
+    <div
+      class={[
+        'relative w-full mb-4 text-base',
+        center ? 'text-center' : 'text-left',
+      ]}
+    >
+      {#if bio.length > 300}
+        <Expandable>
+          {#snippet title()}
+            {$t('cards.site.about')}
+          {/snippet}
+          <Markdown source={bio} class="font-normal" />
+        </Expandable>
+      {:else}
+        <Markdown source={bio} class="font-normal" />
+      {/if}
+    </div>
+  {/if}
+  <div class="space-y-3 py-4 pt-0">
     {@render children?.()}
   </div>
 </div>

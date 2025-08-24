@@ -1,16 +1,16 @@
 <script lang="ts">
   import { profile } from '$lib/auth.svelte.js'
-  import ImageUploadModal from '$lib/components/lemmy/modal/ImageUploadModal.svelte'
+  import ImageInputUpload from '$lib/components/form/ImageInputUpload.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import { t } from '$lib/i18n/translations.js'
   import { getClient, site } from '$lib/lemmy.svelte.js'
+  import { errorMessage } from '$lib/lemmy/error.js'
   import type { EditSite } from 'lemmy-js-client'
   import {
     Badge,
     Button,
-    Label,
     Material,
     Menu,
     MenuButton,
@@ -20,9 +20,8 @@
     toast,
   } from 'mono-svelte'
   import Option from 'mono-svelte/forms/select/Option.svelte'
-  import { DocumentPlus, Icon, Plus } from 'svelte-hero-icons'
+  import { Icon, Plus } from 'svelte-hero-icons'
   import type { PageData } from './$types.js'
-  import { errorMessage } from '$lib/lemmy/error.js'
 
   interface Props {
     data: PageData
@@ -65,11 +64,6 @@
   }
 
   let saving = $state(false)
-
-  let uploading = $state({
-    icon: false,
-    banner: false,
-  })
 </script>
 
 <svelte:head>
@@ -108,66 +102,18 @@
       }
       label={$t('routes.legal.title')}
     />
-    <div class="flex flex-col gap-1">
-      <Label>{$t('routes.admin.config.icon')}</Label>
-      <button
-        type="button"
-        onclick={() => (uploading.icon = !uploading.icon)}
-        class="flex flex-col gap-4 bg-white dark:bg-black border border-slate-300 dark:border-zinc-800 p-4 w-full h-32 rounded-xl"
-      >
-        {#if formData.icon}
-          <img src={formData.icon} alt="" class="rounded-md mx-auto h-full" />
-        {:else}
-          <Icon
-            src={DocumentPlus}
-            size="48"
-            class="text-slate-500 dark:text-zinc-500 mx-auto my-auto"
-          />
-        {/if}
-      </button>
-      {#if uploading.icon}
-        <ImageUploadModal
-          bind:open={uploading.icon}
-          multiple={false}
-          onupload={uploaded => {
-            uploading.icon = false
-            formData.icon = uploaded[0]
-          }}
-        />
-      {/if}
-    </div>
-    <div class="flex flex-col gap-1">
-      <Label>{$t('routes.admin.config.banner')}</Label>
-      <button
-        type="button"
-        onclick={() => (uploading.banner = !uploading.banner)}
-        class="flex flex-col gap-4 bg-white dark:bg-black border border-slate-300 dark:border-zinc-800 p-4 w-full h-32 rounded-xl"
-      >
-        {#if formData.banner}
-          <img src={formData.banner} alt="" class="rounded-md mx-auto h-full" />
-        {:else}
-          <Icon
-            src={DocumentPlus}
-            size="48"
-            class="text-slate-500 dark:text-zinc-500 mx-auto my-auto"
-          />
-        {/if}
-      </button>
-      {#if uploading.banner}
-        <ImageUploadModal
-          bind:open={uploading.banner}
-          multiple={false}
-          onupload={uploaded => {
-            uploading.banner = false
-            formData.banner = uploaded[0]
-          }}
-        />
-      {/if}
-    </div>
-    <Switch bind:checked={formData.enable_downvotes} defaultValue={true}>
+    <ImageInputUpload
+      label={$t('routes.admin.config.icon')}
+      bind:imageUrl={formData.icon}
+    />
+    <ImageInputUpload
+      label={$t('routes.admin.config.banner')}
+      bind:imageUrl={formData.banner}
+    />
+    <Switch bind:checked={formData.enable_downvotes}>
       {$t('routes.admin.config.downvotesEnabled')}
     </Switch>
-    <Switch bind:checked={formData.enable_nsfw} defaultValue={true}>
+    <Switch bind:checked={formData.enable_nsfw}>
       {$t('routes.admin.config.nsfwEnabled')}
     </Switch>
     <Select
@@ -192,25 +138,16 @@
         bind:value={formData.application_question}
       />
     {/if}
-    <Switch
-      bind:checked={formData.community_creation_admin_only}
-      defaultValue={true}
-    >
+    <Switch bind:checked={formData.community_creation_admin_only}>
       {$t('routes.admin.config.adminCommunityOnly')}
     </Switch>
-    <Switch
-      bind:checked={formData.require_email_verification}
-      defaultValue={true}
-    >
+    <Switch bind:checked={formData.require_email_verification}>
       {$t('routes.admin.config.requireVerifyEmail')}
     </Switch>
-    <Switch
-      bind:checked={formData.application_email_admins}
-      defaultValue={true}
-    >
+    <Switch bind:checked={formData.application_email_admins}>
       {$t('routes.admin.config.emailAdminsOnApplication')}
     </Switch>
-    <Switch bind:checked={formData.reports_email_admins} defaultValue={true}>
+    <Switch bind:checked={formData.reports_email_admins}>
       {$t('routes.admin.config.emailAdminsOnReport')}
     </Switch>
     <Select
@@ -223,10 +160,10 @@
         {$t('routes.admin.config.listingType.local')}
       </Option>
     </Select>
-    <Switch bind:checked={formData.private_instance} defaultValue={true}>
+    <Switch bind:checked={formData.private_instance}>
       {$t('routes.admin.config.private')}
     </Switch>
-    <Switch bind:checked={formData.hide_modlog_mod_names} defaultValue={true}>
+    <Switch bind:checked={formData.hide_modlog_mod_names}>
       {$t('routes.admin.config.hideModlogModNames')}
     </Switch>
     <TextInput
@@ -234,13 +171,13 @@
       label={$t('routes.admin.config.slurFilter')}
       placeholder="(word1|word2)"
     />
-    <Switch bind:checked={formData.federation_enabled} defaultValue={true}>
+    <Switch bind:checked={formData.federation_enabled}>
       {$t('routes.admin.config.federation')}
     </Switch>
-    <Switch bind:checked={formData.federation_debug} defaultValue={false}>
+    <Switch bind:checked={formData.federation_debug}>
       {$t('routes.admin.config.federationDebug')}
     </Switch>
-    <Switch bind:checked={formData.captcha_enabled} defaultValue={false}>
+    <Switch bind:checked={formData.captcha_enabled}>
       {$t('routes.admin.config.captcha.enabled')}
     </Switch>
 

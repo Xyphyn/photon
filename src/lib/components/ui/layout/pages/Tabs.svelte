@@ -27,7 +27,7 @@
 </script>
 
 <nav
-  class="flex flex-row items-center gap-x-8 gap-y-4 p-1 justify-center sm:justify-start my-2 sm:mt-0 flex-wrap"
+  class="flex flex-row items-center gap-x-8 gap-y-4 p-1 justify-center sm:justify-start my-2 sm:mt-0 flex-wrap z-20"
 >
   {#each routes as route (route.href)}
     {@const selected = isSelected(

@@ -6,7 +6,6 @@
 
 {#if data.user && data.sort && data.type && data.page}
   <UserPage
-    inline
     data={{
       items: new ReactiveState(data.user.submissions),
       filters: new ReactiveState({
@@ -14,8 +13,8 @@
         sort: data.sort,
         type: data.type,
       }),
-      person_view: {value: data.user.person_view},
-      moderates: {value: data.user.moderates},
+      person_view: { value: data.user.person_view },
+      moderates: { value: data.user.moderates },
     }}
   />
 {:else}
