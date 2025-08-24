@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { page } from '$app/state'
   import { profile } from '$lib/auth.svelte.js'
   import CommentActions from '$lib/components/lemmy/comment/CommentActions.svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
@@ -8,6 +9,7 @@
   import { t } from '$lib/i18n/translations'
   import { getClient } from '$lib/lemmy.svelte.js'
   import { errorMessage } from '$lib/lemmy/error'
+  import { settings } from '$lib/settings.svelte'
   import { Button, Modal, toast } from 'mono-svelte'
   import {
     Bookmark,
@@ -24,8 +26,6 @@
   import ShieldIcon from '../moderation/ShieldIcon.svelte'
   import CommentForm from './CommentForm.svelte'
   import type { CommentNodeI } from './comments.svelte'
-  import { page } from '$app/state'
-  import { settings } from '$lib/settings.svelte'
 
   interface Props {
     node: CommentNodeI
@@ -208,7 +208,7 @@
           source={node.comment_view.comment.content}
           noStyle
           class={[
-            'text-[14px] sm:text-base text-slate-700 dark:text-zinc-300 *:leading-[1.6] break-words space-y-3',
+            'text-[15px] sm:text-base text-slate-700 dark:text-zinc-300 *:leading-[1.6] break-words space-y-3',
             node.comment_view.comment.distinguished
               ? 'bg-green-400/10 p-2 rounded-xl max-w-max font-medium'
               : page.url.hash.slice(1) ==
