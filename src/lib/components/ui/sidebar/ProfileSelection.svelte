@@ -32,6 +32,7 @@
       size="md"
       rounding="xl"
       class="flex flex-row gap-2 items-center"
+      aria-label={$t('aria.sidebar.accounts')}
     >
       {#snippet prefix()}
         <Avatar

@@ -35,7 +35,11 @@
   let { style = '', class: clazz = '' }: Props = $props()
 </script>
 
-<nav class={['flex flex-col overflow-auto gap-1', clazz]} {style}>
+<nav
+  aria-label={$t('aria.sidebar.title')}
+  class={['flex flex-col overflow-auto gap-1', clazz]}
+  {style}
+>
   <ProfileSelection profiles={profile.meta.profiles} />
   <EndPlaceholder size="xs">{$t('profile.profile')}</EndPlaceholder>
   {#if profile.current?.jwt}

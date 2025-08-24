@@ -29,64 +29,65 @@
   For embed-type posts. Displays embed card or a compact link.
 -->
 {#if embed_title && view == 'cozy'}
-  <a target="_blank" href={url} class="group/link">
-    <Material
-      color="uniform"
-      class={[
-        'flex flex-col-reverse sm:flex-row overflow-hidden gap-4 embed-card z-0 relative',
-        'dark:bg-zinc-950 group-hover/link:bg-slate-50 dark:group-hover/link:bg-zinc-900 transition-colors',
-      ]}
-      rounding="2xl"
-      element="article"
-      padding="sm"
-    >
-      {#if thumbnail_url}
-        <img
-          src={optimizeImageURL(thumbnail_url, 32)}
-          alt=""
-          class="-z-10 absolute w-full object-cover h-full opacity-5 brightness-150
+  <Material
+    color="uniform"
+    class={[
+      'flex flex-col-reverse sm:flex-row overflow-hidden gap-4 z-0 relative',
+      'dark:bg-zinc-950 hover:bg-slate-50 hover:dark:bg-zinc-900 transition-colors',
+      'group/link',
+    ]}
+    rounding="2xl"
+    element="a"
+    padding="sm"
+    href={url}
+    target="_blank"
+  >
+    {#if thumbnail_url}
+      <img
+        src={optimizeImageURL(thumbnail_url, 32)}
+        alt=""
+        class="-z-10 absolute w-full object-cover h-full opacity-5 brightness-150
         dark:brightness-70 dark:opacity-10 blur-2xl -inset-px"
-        />
+      />
+    {/if}
+    <div class={['flex flex-col gap-1 p-2', thumbnail_url && '-mt-2 sm:mt-0']}>
+      {#if richURL}
+        <div
+          class="text-slate-600 dark:text-zinc-400 inline-flex items-center gap-1 text-xs font-medium"
+        >
+          {richURL.hostname}
+        </div>
       {/if}
-      <div class="flex flex-col gap-1 p-3 -mt-2 sm:mt-0">
-        {#if richURL}
-          <div
-            class="text-slate-600 dark:text-zinc-400 inline-flex items-center gap-1 text-xs font-medium"
-          >
-            {richURL.hostname}
-          </div>
-        {/if}
-        <p class="font-medium text-base">{embed_title}</p>
-      </div>
-      {#if thumbnail_url}
-        <picture class="mb-auto sm:ml-auto shrink-0 sm:w-1/3 sm:max-w-60">
-          {#each ['webp'] as format}
-            <source
-              srcset="{optimizeImageURL(
-                thumbnail_url,
-                256,
-                format as 'avif' | 'webp',
-              )} 256w, {optimizeImageURL(
-                thumbnail_url,
-                512,
-                format as 'avif' | 'webp',
-              )} 512w"
-              media="(min-width: 0px)"
-              type="image/{format}"
-            />
-          {/each}
-          <img
-            src={optimizeImageURL(thumbnail_url, -1)}
-            class="object-cover w-full sm:max-w-96 h-32 sm:min-h-16 bg-slate-200 dark:bg-zinc-800 rounded-xl"
-            width={600}
-            height={400}
-            alt=""
-            class:blur-3xl={nsfw}
+      <p class="font-medium text-base">{embed_title}</p>
+    </div>
+    {#if thumbnail_url}
+      <picture class="mb-auto sm:ml-auto shrink-0 sm:w-1/3 sm:max-w-60">
+        {#each ['webp'] as format}
+          <source
+            srcset="{optimizeImageURL(
+              thumbnail_url,
+              256,
+              format as 'avif' | 'webp',
+            )} 256w, {optimizeImageURL(
+              thumbnail_url,
+              512,
+              format as 'avif' | 'webp',
+            )} 512w"
+            media="(min-width: 0px)"
+            type="image/{format}"
           />
-        </picture>
-      {/if}
-    </Material>
-  </a>
+        {/each}
+        <img
+          src={optimizeImageURL(thumbnail_url, -1)}
+          class="object-cover w-full sm:max-w-96 h-32 sm:min-h-16 bg-slate-200 dark:bg-zinc-800 rounded-xl"
+          width={600}
+          height={400}
+          alt=""
+          class:blur-3xl={nsfw}
+        />
+      </picture>
+    {/if}
+  </Material>
 {:else}
   <a
     href={url}

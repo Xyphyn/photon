@@ -28,6 +28,7 @@ export default ts.config(
       'svelte/require-each-key': 'off',
       'svelte/prefer-writable-derived': 'off',
       'no-console': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
     },
   },
   {

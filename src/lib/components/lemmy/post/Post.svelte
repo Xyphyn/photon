@@ -1,10 +1,10 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { profile } from '$lib/auth.svelte'
+  import PostActions from '$lib/components/lemmy/post/actions/PostActions.svelte'
   import { mediaType, postLink } from '$lib/components/lemmy/post/helpers.js'
   import PostMedia from '$lib/components/lemmy/post/media/PostMedia.svelte'
   import PostMediaCompact from '$lib/components/lemmy/post/media/PostMediaCompact.svelte'
-  import PostActions from '$lib/components/lemmy/post/actions/PostActions.svelte'
   import PostMeta, {
     parseTags,
     type Tag,
@@ -26,15 +26,6 @@
     })
 
     return rule
-  }
-
-  function onClick(e: Event) {
-    const event = e as Event
-    const parent = document.getElementById(post.post.id.toString())
-
-    if (event.target == parent) {
-      goto(postLink(post.post))
-    }
   }
 
   interface Props {
@@ -86,9 +77,7 @@
   This is the sole component for displaying posts.
   It adapts to all kinds of form factors for different contexts, such as feeds, full post view, and crosspost list.
 -->
-<!-- svelte-ignore a11y_no_static_element_interactions -->
-<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
-<div
+<article
   class={[
     'post relative max-w-full min-w-0 w-full cursor-pointer outline-hidden group/post',
     settings.leftAlign && 'left-align',
@@ -97,13 +86,6 @@
     clazz,
   ]}
   id={post.post.id.toString()}
-  onclick={e => {
-    onClick(e)
-  }}
-  onkeydown={e => {
-    if (e.key == 'Enter') onClick(e)
-  }}
-  tabindex="0"
   {style}
 >
   <PostMeta
@@ -167,7 +149,7 @@
     group-hover/post:inset-y-0.5 group-hover/post:-inset-x-3 sm:group-hover/post:-inset-x-5 group-hover/post:opacity-100
     duration-150"
   ></div>
-</div>
+</article>
 
 <style lang="postcss">
   .list-type {

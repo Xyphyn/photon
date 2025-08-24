@@ -146,11 +146,15 @@
 </script>
 
 {#await community_view}
-  <div class="w-full h-full grid place-items-center">
+  <div
+    class="w-full h-full grid place-items-center"
+    role="status"
+    aria-label={$t('aria.loading')}
+  >
     <Spinner width={24} />
   </div>
 {:then community_view}
-  <div
+  <aside
     class={[
       'min-w-full pt-0 text-slate-600 dark:text-zinc-400 flex flex-col gap-4 text-sm',
       clazz,
@@ -337,5 +341,5 @@
         {/if}
       </Menu>
     </div>
-  </div>
+  </aside>
 {/await}

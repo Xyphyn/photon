@@ -945,6 +945,14 @@
             "upvotes": "{{default}} upvotes",
             "downvotes": "{{default}} downvotes",
             "score": "Score: {{default}}"
+        },
+        "sidebar": {
+          "title": "Sidebar",
+          "accounts": "Accounts selector"
+        },
+        "loading": "Loading",
+        "element": {
+          "pageHeader": "Page header"
         }
     },
     "stats": {

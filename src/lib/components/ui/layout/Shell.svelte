@@ -35,43 +35,47 @@
 <svelte:window {onscroll} />
 
 {@render children?.()}
-<div
-  class={[
-    'fixed lg:sticky bottom-0 lg:top-0',
-    !dockVisible && 'max-lg:-bottom-24',
-    'max-w-3xl p-4 left-1/2 -translate-x-1/2 lg:max-w-full lg:p-0 lg:left-0 lg:translate-x-0',
-    'w-full z-50 pointer-events-none',
-  ]}
-  style="transition: bottom .4s cubic-bezier(0.075, 0.82, 0.165, 1);"
->
-  {@render navbar?.({
-    class: [
-      'bg-slate-100/70 dark:bg-zinc-950/90 border-slate-200/50 dark:border-zinc-900',
-      'pointer-events-auto backdrop-blur-xl border lg:border-t-0 lg:border-x-0',
-      'rounded-full lg:rounded-none',
-    ],
-    style: '',
-  })}
-</div>
-<div class={['content flex-1', settings.newWidth && 'limit-width']}>
-  {@render sidebar?.({
-    class: `hidden md:flex sticky top-0 lg:top-16 left-0 h-max bg-slate-100 dark:bg-zinc-950 z-40 max-h-[calc(100vh-4rem)] min-h-[calc(100vh-4rem)]`,
-    style: 'grid-area: sidebar; width: 100% !important;',
-  })}
-  {@render main?.({
-    class: `w-full bg-slate-50 dark:bg-zinc-925 justify-self-center border-x border-slate-200 dark:border-zinc-900 max-lg:pb-22 pb-3 sm:pb-6`,
-    style: 'grid-area: main',
-  })}
-  {@render suffix?.({
-    class: `max-lg:hidden w-full sticky lg:top-16 h-max max-h-screen overflow-auto left-0 bg-slate-100 dark:bg-zinc-950 z-40`,
-    style: 'grid-area: suffix;',
-  })}
+<div class="min-h-screen flex flex-col">
+  <div
+    class={[
+      'fixed lg:sticky bottom-0 lg:top-0',
+      !dockVisible && 'max-lg:-bottom-24',
+      'max-w-3xl p-4 left-1/2 -translate-x-1/2 lg:max-w-full lg:p-0 lg:left-0 lg:translate-x-0',
+      'w-full z-50 pointer-events-none',
+    ]}
+    style="transition: bottom .4s cubic-bezier(0.075, 0.82, 0.165, 1);"
+    aria-hidden="true"
+  >
+    {@render navbar?.({
+      class: [
+        'bg-slate-100/70 dark:bg-zinc-950/90 border-slate-200/50 dark:border-zinc-900',
+        'pointer-events-auto backdrop-blur-xl border lg:border-t-0 lg:border-x-0',
+        'rounded-full lg:rounded-none',
+      ],
+      style: '',
+    })}
+  </div>
+  <div class={['content flex-1', settings.newWidth && 'limit-width']}>
+    {@render sidebar?.({
+      class: `hidden md:flex sticky top-0 lg:top-16 left-0 max-h-[calc(100vh-4rem)] bg-slate-100 dark:bg-zinc-950 z-40`,
+      style: 'grid-area: sidebar; width: 100% !important;',
+    })}
+    {@render main?.({
+      class: `w-full bg-slate-50 dark:bg-zinc-925 justify-self-center border-x border-slate-200 dark:border-zinc-900 max-lg:pb-22 pb-3 sm:pb-6`,
+      style: 'grid-area: main',
+    })}
+    {@render suffix?.({
+      class: `max-lg:hidden w-full sticky lg:top-16 h-max max-h-screen overflow-auto left-0 bg-slate-100 dark:bg-zinc-950 z-40`,
+      style: 'grid-area: suffix;',
+    })}
+  </div>
 </div>
 
 <style>
   .content {
     width: 100%;
     display: grid;
+    height: 100%;
     margin-left: auto;
     margin-right: auto;
     grid-area: content;

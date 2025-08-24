@@ -45,7 +45,7 @@
     none: '',
   }
 
-  interface Props extends HTMLAttributes<HTMLDivElement> {
+  interface Props extends HTMLAttributes<HTMLElement> {
     elevation?: Elevation
     padding?: Padding
     rounding?: Rounding
@@ -53,6 +53,7 @@
     element?: string
     class?: ClassValue
     children?: import('svelte').Snippet
+    [key: string]: any
   }
 
   let {

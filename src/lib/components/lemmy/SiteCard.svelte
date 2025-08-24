@@ -12,13 +12,14 @@
   import LabelStat from '../ui/LabelStat.svelte'
   import ItemList from './generic/ItemList.svelte'
   import { optimizeImageURL } from './post/helpers'
+  import type { ClassValue } from 'svelte/elements'
 
-  interface Props {
+  interface Props extends HTMLDivElement {
     site: SiteView
     taglines?: Tagline[] | undefined
     admins?: PersonView[] | undefined
     version?: string | undefined
-    class?: string
+    class?: ClassValue
   }
 
   let {
@@ -30,7 +31,7 @@
   }: Props = $props()
 </script>
 
-<div
+<aside
   class={[
     'w-full text-slate-600 dark:text-zinc-400 flex flex-col gap-4 text-sm',
     clazz,
@@ -140,4 +141,4 @@
       </Link>
     </div>
   </div>
-</div>
+</aside>

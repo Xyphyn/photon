@@ -36,31 +36,25 @@
 </svelte:head>
 
 <div class="flex flex-col gap-2 max-w-full w-full min-w-0">
-  <header class="flex flex-col gap-4 relative">
-    <Header pageHeader>
-      {$t('routes.frontpage.title')}
+  <Header pageHeader>
+    {$t('routes.frontpage.title')}
 
-      {#snippet extended()}
-        <form class="flex items-center gap-2" method="get" action="/">
-          {#if type}
-            <Location name="type" navigate bind:selected={type} />
-          {/if}
-          <Sort placement="bottom" name="sort" navigate bind:selected={sort} />
-          <ViewSelect placement="bottom" />
+    {#snippet extended()}
+      <form class="flex items-center gap-2" method="get" action="/">
+        {#if type}
+          <Location name="type" navigate bind:selected={type} />
+        {/if}
+        <Sort placement="bottom" name="sort" navigate bind:selected={sort} />
+        <ViewSelect placement="bottom" />
 
-          <noscript>
-            <Button
-              class="self-end h-[34px] aspect-square"
-              size="custom"
-              submit
-            >
-              <Icon src={ArrowRight} size="16" micro />
-            </Button>
-          </noscript>
-        </form>
-      {/snippet}
-    </Header>
-  </header>
+        <noscript>
+          <Button class="self-end h-[34px] aspect-square" size="custom" submit>
+            <Icon src={ArrowRight} size="16" micro />
+          </Button>
+        </noscript>
+      </form>
+    {/snippet}
+  </Header>
 
   <FeedComponent
     bind:posts={data.feed.value.posts.posts}

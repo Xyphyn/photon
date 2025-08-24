@@ -40,14 +40,14 @@
     clazz,
   ]}
 >
-  <span class="font-medium text-left">
+  <h3 class="font-medium text-left">
     {@render children?.()}
-  </span>
-  <hr
+  </h3>
+  <div
     class={[
-      'flex-1 border-slate-200 dark:border-zinc-800',
+      'flex-1 border-slate-200 dark:border-zinc-800  border-b',
       !border && 'opacity-0',
     ]}
-  />
+  ></div>
   {@render action?.()}
 </div>
