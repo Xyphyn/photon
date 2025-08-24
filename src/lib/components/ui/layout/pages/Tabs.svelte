@@ -32,7 +32,7 @@
 <nav
   class={[
     'flex flex-row items-center justify-center sm:justify-start my-2 sm:mt-0 flex-wrap z-20',
-    style == 'header' ? 'p-1 gap-x-8 gap-y-4' : 'gap-3',
+    style == 'header' ? 'p-1 gap-x-8 gap-y-4' : 'gap-2',
   ]}
 >
   {#each routes as route (route.href)}

@@ -2,7 +2,7 @@
   import { page } from '$app/state'
   import { profile } from '$lib/auth.svelte.js'
   import PostActions from '$lib/components/lemmy/post/actions/PostActions.svelte'
-  import { mediaType } from '$lib/components/lemmy/post/helpers.js'
+  import { mediaType, postLink } from '$lib/components/lemmy/post/helpers.js'
   import PostMedia from '$lib/components/lemmy/post/media/PostMedia.svelte'
   import Post from '$lib/components/lemmy/post/Post.svelte'
   import PostMeta, {
@@ -227,11 +227,12 @@
         href={data.thread.value.showContext
           ? `/comment/${
               // split first comment path to get 5 before
-              comments.comments[0].comment.path.split('.').slice(-5)[0]
+              comments.comments[0].comment.path.split('.').slice(-5)[1]
             }`
-          : undefined}
+          : data.thread.value.singleThread
+            ? postLink(data.post.value.post_view.post)
+            : undefined}
         class="hover:bg-white/50 dark:hover:bg-zinc-800/30"
-        onclick={data.thread.value.singleThread ? reloadComments : undefined}
       >
         {data.thread.value.showContext
           ? $t('routes.post.thread.context')

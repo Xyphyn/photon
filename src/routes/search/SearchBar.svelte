@@ -15,7 +15,7 @@
 
 <div class="mt-4 mb-0 sticky z-30 top-6 lg:top-22">
   <div
-    class="flex gap-2 flex-row items-center w-full text-base h-10 drop-shadow-md"
+    class="flex gap-2 flex-row items-center w-full text-base h-10 drop-shadow-xl"
   >
     <TextInput
       bind:value={query}
