@@ -1,11 +1,9 @@
 <script lang="ts">
-  import { preventDefault } from 'svelte/legacy'
-
-  import { client } from '$lib/lemmy.svelte'
-  import { t } from '$lib/i18n/translations'
-  import { Button, TextInput, toast } from 'mono-svelte'
-  import { errorMessage } from '$lib/lemmy/error'
   import { profile } from '$lib/auth.svelte'
+  import { t } from '$lib/i18n/translations'
+  import { client } from '$lib/lemmy.svelte'
+  import { errorMessage } from '$lib/lemmy/error'
+  import { Button, TextInput, toast } from 'mono-svelte'
 
   let oldPassword = $state(''),
     newPassword = $state(''),
@@ -42,7 +40,13 @@
   }
 </script>
 
-<form onsubmit={preventDefault(changePassword)} class="flex flex-col gap-4">
+<form
+  onsubmit={e => {
+    e.preventDefault()
+    changePassword()
+  }}
+  class="flex flex-col gap-4 w-full max-w-xl"
+>
   <TextInput
     bind:value={oldPassword}
     label={$t('form.profile.currentPassword')}
@@ -64,14 +68,7 @@
     minlength={10}
     required
   />
-  <Button
-    class="sm:ml-auto"
-    size="lg"
-    color="primary"
-    submit
-    {loading}
-    disabled={loading}
-  >
+  <Button size="lg" color="primary" submit {loading} disabled={loading}>
     {$t('form.submit')}
   </Button>
 </form>
