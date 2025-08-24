@@ -5,6 +5,7 @@
   import ViewSelect from '$lib/components/lemmy/dropdowns/ViewSelect.svelte'
   import PostFeed from '$lib/components/lemmy/post/feed/PostFeed.svelte'
   import VirtualFeed from '$lib/components/lemmy/post/feed/VirtualFeed.svelte'
+  import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import { t } from '$lib/i18n/translations.js'
@@ -65,20 +66,22 @@
     this={settings.infiniteScroll && !settings.posts.noVirtualize
       ? 'noscript'
       : 'div'}
-    class="mt-auto"
+    class="mt-auto flex flex-col"
   >
-    <Pageination
-      cursor={{ next: data.feed.value.cursor.next }}
-      href={page =>
-        typeof page == 'number' ? `?page=${page}` : `?cursor=${page}`}
-      back={false}
-    >
-      <span class="flex flex-row items-center gap-1">
-        <Icon src={ChartBar} size="16" mini />
-        {$t('routes.frontpage.footer', {
-          users: site.data?.site_view?.counts?.users_active_day ?? '??',
-        })}
-      </span>
-    </Pageination>
+    <EndPlaceholder>
+      <Icon src={ChartBar} size="16" mini />
+
+      {$t('routes.frontpage.footer', {
+        users: site.data?.site_view?.counts?.users_active_day ?? '??',
+      })}
+      {#snippet action()}
+        <Pageination
+          cursor={{ next: data.feed.value.cursor.next }}
+          href={page =>
+            typeof page == 'number' ? `?page=${page}` : `?cursor=${page}`}
+          back={false}
+        />
+      {/snippet}
+    </EndPlaceholder>
   </svelte:element>
 </div>

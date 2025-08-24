@@ -44,7 +44,7 @@
 
 <nav
   aria-label={$t('aria.pagination.nav')}
-  class="flex flex-row w-full gap-4 items-center justify-center backdrop-blur-xl border border-slate-200 dark:border-zinc-800 rounded-full overflow-hidden"
+  class="flex flex-row gap-2 items-center justify-center backdrop-blur-xl border border-slate-200 dark:border-zinc-800 rounded-full overflow-hidden w-max mx-auto p-0.5"
 >
   {#if children}
     <span class="text-sm text-slate-600 dark:text-zinc-400 font-medium">
@@ -55,12 +55,12 @@
   {#if back}
     <Button
       href={customHref(href?.(cursor?.back ?? page - 1))}
-      color="ghost"
+      color="tertiary"
       onclick={() => invalidate(pageData.url)}
       title={$t('common.back')}
-      rounding="none"
+      rounding="pill"
       size="custom"
-      class="text-inherit dark:text-inherit border-0 border-r p-2"
+      class="text-inherit dark:text-inherit p-1"
       disabled={(cursor?.back == undefined && cursor?.next != undefined) ||
         page <= 1}
     >
@@ -87,12 +87,12 @@
 
   <Button
     href={customHref(href?.(cursor?.next ?? page + 1))}
-    color="ghost"
+    color="tertiary"
     onclick={() => invalidate(pageData.url)}
     title={$t('common.next')}
     size="custom"
-    rounding="none"
-    class="text-inherit dark:text-inherit border-0 border-l p-2"
+    rounding="pill"
+    class="text-inherit dark:text-inherit p-1"
     disabled={!hasMore}
   >
     {#snippet suffix()}

@@ -17,6 +17,7 @@
   import { expoOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'
   import SearchBar from '../search/SearchBar.svelte'
+  import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
 
   let { data } = $props()
 
@@ -96,9 +97,7 @@
     {/each}
   </div>
 {:else}
-  <ul
-    class="flex flex-col divide-y divide-slate-100 dark:divide-zinc-925 my-6 h-full"
-  >
+  <ul class="flex flex-col h-full">
     {#if data.communities.value.length == 0}
       <Placeholder
         icon={QuestionMarkCircle}
@@ -108,9 +107,9 @@
     {/if}
 
     {#if showTop}
-      <SectionTitle class="border-0! pb-2">
+      <EndPlaceholder size="lg" margin="lg">
         {$t('routes.search.top')}
-      </SectionTitle>
+      </EndPlaceholder>
       <div
         class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 items-center mb-6 border-0!"
       >
@@ -138,9 +137,9 @@
     {/if}
 
     {#if data.communities.value.slice(showTop ? 3 : 0).length > 0}
-      <SectionTitle class="border-0! pb-2">
+      <EndPlaceholder size="lg" margin="lg">
         {$t('routes.search.other')}
-      </SectionTitle>
+      </EndPlaceholder>
     {/if}
     {#if data.communities.value}
       {@const sliced = data.communities.value.slice(showTop ? 3 : 0)}

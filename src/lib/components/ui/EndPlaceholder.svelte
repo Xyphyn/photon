@@ -12,7 +12,7 @@
     none: '',
     sm: 'mt-3 mb-1 px-3',
     md: 'mt-4 mb-2',
-    lg: 'mt-5 mb-3',
+    lg: 'mt-6 mb-2',
   }
 
   const colors = {
@@ -50,7 +50,7 @@
     clazz,
   ]}
 >
-  <h3 class="font-medium text-left">
+  <h3 class="font-medium text-left flex flex-row gap-1 items-center">
     {@render children?.()}
   </h3>
   <div
