@@ -1,8 +1,7 @@
 <script lang="ts">
-  import { goto } from '$app/navigation'
   import { profile } from '$lib/auth.svelte'
   import PostActions from '$lib/components/lemmy/post/actions/PostActions.svelte'
-  import { mediaType, postLink } from '$lib/components/lemmy/post/helpers.js'
+  import { mediaType } from '$lib/components/lemmy/post/helpers.js'
   import PostMedia from '$lib/components/lemmy/post/media/PostMedia.svelte'
   import PostMediaCompact from '$lib/components/lemmy/post/media/PostMediaCompact.svelte'
   import PostMeta, {
