@@ -102,7 +102,7 @@ bg-white/50 dark:bg-black/50 box-border p-4"
 				dark:border-zinc-900
 				rounded-3xl max-w-lg box-border mx-auto overscroll-contain shadow-lg overflow-auto
 				p-5 flex flex-col gap-2 dark:bg-zinc-950
-          bg-white relative {clazz}"
+          bg-slate-50 relative {clazz}"
       >
         {#if dismissable}
           <Button

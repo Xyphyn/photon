@@ -2,10 +2,17 @@
   import type { ClassValue } from 'svelte/elements'
 
   const sizes = {
-    xs: 'text-xs px-3 mt-3 mb-1',
+    xs: 'text-xs',
     sm: 'text-sm',
     md: 'text-base',
     lg: 'text-lg',
+  }
+
+  const margins = {
+    none: '',
+    sm: 'mt-3 mb-1 px-3',
+    md: 'mt-4 mb-2',
+    lg: 'mt-5 mb-3',
   }
 
   const colors = {
@@ -17,6 +24,7 @@
     class?: ClassValue
     size?: keyof typeof sizes
     color?: keyof typeof colors
+    margin?: keyof typeof margins
     border?: boolean
     children?: import('svelte').Snippet
     action?: import('svelte').Snippet
@@ -29,6 +37,7 @@
     border = true,
     size = 'sm',
     color = 'subtle',
+    margin = 'none',
   }: Props = $props()
 </script>
 
@@ -37,6 +46,7 @@
     'flex flex-row items-center gap-2 flex-wrap',
     sizes[size],
     colors[color],
+    margins[margin],
     clazz,
   ]}
 >
@@ -45,7 +55,7 @@
   </h3>
   <div
     class={[
-      'flex-1 border-slate-200 dark:border-zinc-800  border-b',
+      'flex-1 border-slate-200/70 dark:border-zinc-800 border-b',
       !border && 'opacity-0',
     ]}
   ></div>

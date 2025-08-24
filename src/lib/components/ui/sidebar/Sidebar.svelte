@@ -41,7 +41,7 @@
   {style}
 >
   <ProfileSelection profiles={profile.meta.profiles} />
-  <EndPlaceholder size="xs">{$t('profile.profile')}</EndPlaceholder>
+  <EndPlaceholder margin="sm" size="xs">{$t('profile.profile')}</EndPlaceholder>
   {#if profile.current?.jwt}
     <SidebarButton
       icon={UserCircle}
@@ -76,7 +76,7 @@
       icon={UserGroup}
     />
   {/if}
-  <EndPlaceholder size="xs">{$t('nav.menu.app')}</EndPlaceholder>
+  <EndPlaceholder margin="sm" size="xs">{$t('nav.menu.app')}</EndPlaceholder>
   <SidebarButton
     href="/settings"
     label={$t('nav.menu.settings')}
@@ -107,7 +107,9 @@
   </Select>
   <SidebarButton href="/theme" label={$t('nav.menu.theme')} icon={Swatch} />
   {#if profile.current?.user}
-    <EndPlaceholder size="xs">{$t('content.communities')}</EndPlaceholder>
+    <EndPlaceholder margin="sm" size="xs">
+      {$t('content.communities')}
+    </EndPlaceholder>
 
     <div class="space-y-3">
       {#if profile.current?.user.moderates.length > 0}

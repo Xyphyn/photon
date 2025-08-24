@@ -57,7 +57,7 @@
     size="sm"
     class="text-slate-500 dark:text-zinc-400"
     onclick={() => (replying = !replying)}
-    disabled={comment.post.locked || disabled}
+    disabled={comment.post.locked || disabled || !profile.current.jwt}
   >
     <Icon src={ChatBubbleOvalLeft} size="15" micro />
     {$t('comment.reply')}

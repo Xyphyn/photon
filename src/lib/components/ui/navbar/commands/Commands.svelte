@@ -13,6 +13,7 @@
   import CommandItem from './CommandItem.svelte'
   import { fuzzySearch } from '$lib/util.svelte'
   import CommonList from '../../layout/CommonList.svelte'
+  import EndPlaceholder from '../../EndPlaceholder.svelte'
 
   interface Props {
     open?: boolean
@@ -253,7 +254,7 @@
   <div class="space-y-1" bind:this={container}>
     {#each filteredGroups as group, groupIndex}
       <div class="space-y-1">
-        <span class="text-sm font-medium">{group.name}</span>
+        <EndPlaceholder margin="md" size="sm">{group.name}</EndPlaceholder>
         <CommonList size="xs" class="p-0! sm:p-0! lg:p-0!">
           {#each group.actions as action, actionIndex}
             {@const globalIndex =
@@ -263,7 +264,8 @@
             <li
               class={[
                 'custom-size',
-                globalIndex == selectedIndex && 'brightness-125',
+                globalIndex == selectedIndex &&
+                  'brightness-95 dark:brightness-125',
               ]}
             >
               <CommandItem
