@@ -293,7 +293,7 @@
                 "light": "walo",
                 "dark": "pimeja",
                 "label": "tenpo suno",
-                "system": "tenpo suno pi ilo"
+                "system": "tenpo suno ilo"
             },
             "instance": "tomo",
             "label": "jan sina",
@@ -549,5 +549,8 @@
     "placeholders": {
         "comments": "o toki tawa jan lon ni",
         "body": "sina wile toki e seme?"
+    },
+    "toast": {
+        "lemmyDonate": "tomo sina kepeken e ilo Lemmy. jan pali ona wile e mani tan jan. jan mute pana la ona ken pali e ilo Lemmy li weka e toki mani jaki tan ni.\n\ntenpo sike ale la ona wile e mani tan sina.\n\n[o pana e mani](https://join-lemmy.org/donate)\n\n*a: sina pana e mani tawa Lemmy. sina ala pana e mani tawa Photon.*"
     }
 }
