@@ -35,8 +35,8 @@
   color="none"
   {...rest}
   class={[
-    'shrink-0 lg:rounded-xl w-10 h-10 ',
-    adaptive ? 'lg:w-max lg:h-8' : 'lg:w-8 lg:h-8 rounded-full',
+    'shrink-0 lg:rounded-xl w-10 h-10 rounded-full',
+    adaptive ? 'lg:w-max lg:h-8' : 'lg:w-8 lg:h-8',
     !rest.color &&
       'hover:text-slate-900 dark:hover:text-zinc-50 transition-colors',
     !rest.color &&
