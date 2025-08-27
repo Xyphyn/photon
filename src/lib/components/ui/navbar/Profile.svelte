@@ -1,6 +1,10 @@
 <script lang="ts">
   import { env } from '$env/dynamic/public'
   import { notifications, profile } from '$lib/auth.svelte'
+  import {
+    amModOfAny,
+    isAdmin,
+  } from '$lib/components/lemmy/moderation/moderation'
 
   import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
   import { t } from '$lib/i18n/translations'
@@ -30,6 +34,7 @@
     Inbox,
     Moon,
     ServerStack,
+    ShieldCheck,
     Sun,
     Swatch,
     UserCircle,
@@ -54,13 +59,18 @@
   </Modal>
 {/if}
 
+{#snippet notifBadge(number: number)}
+  {#if number > 0}
+    <Badge
+      color="red-subtle"
+      class="min-w-5 h-5 p-0! px-0.5 grid place-items-center ml-auto"
+    >
+      {number > 99 ? '∞' : number}
+    </Badge>
+  {/if}
+{/snippet}
+
 {#if profile.current?.jwt}
-  <MenuButton href="/profile">
-    {#snippet prefix()}
-      <Icon src={UserCircle} micro size="16" />
-    {/snippet}
-    {$t('profile.profile')}
-  </MenuButton>
   <MenuButton href="/inbox">
     {#snippet prefix()}
       <Icon src={Inbox} micro size="16" />
@@ -71,6 +81,29 @@
         {$notifications.inbox > 99 ? '∞' : $notifications.inbox}
       </Badge>
     {/if}
+  </MenuButton>
+  {#if amModOfAny(profile.current.user)}
+    <MenuButton href="/moderation" icon={ShieldCheck}>
+      {$t('routes.moderation.feed')}
+      {#snippet suffix()}
+        {@render notifBadge($notifications.reports)}
+      {/snippet}
+    </MenuButton>
+  {/if}
+  {#if profile.current.user && isAdmin(profile.current.user)}
+    <MenuButton href="/admin/applications" icon={ServerStack}>
+      {$t('routes.admin.applications.title')}
+      {#snippet suffix()}
+        {@render notifBadge($notifications.applications)}
+      {/snippet}
+    </MenuButton>
+  {/if}
+  <MenuDivider>{$t('profile.profile')}</MenuDivider>
+  <MenuButton href="/profile">
+    {#snippet prefix()}
+      <Icon src={UserCircle} micro size="16" />
+    {/snippet}
+    {$t('profile.profile')}
   </MenuButton>
   <MenuButton href="/saved">
     {#snippet prefix()}

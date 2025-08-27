@@ -32,26 +32,20 @@
   <title>{$t('form.post.create')}</title>
 </svelte:head>
 
-<div class="w-full max-w-5xl mx-auto h-full">
-  <PostForm
-    passedData={data.crosspost == true
-      ? post
-      : {
-          body: '',
-          community: null,
-          image: null,
-          loading: false,
-          nsfw: false,
-          title: '',
-          url: undefined,
-        }}
-    passedCommunity={community}
-    onsubmit={e => goto(`/post/${e.post.id}`)}
-  >
-    {#snippet formtitle()}
-      <Header class="text-3xl font-bold" pageHeader>
-        {$t('routes.createPost')}
-      </Header>
-    {/snippet}
-  </PostForm>
-</div>
+<PostForm
+  passedData={data.crosspost == true
+    ? post
+    : {
+        body: '',
+        community: null,
+        image: null,
+        loading: false,
+        nsfw: false,
+        title: '',
+        url: undefined,
+      }}
+  passedCommunity={community}
+  onsubmit={e => goto(`/post/${e.post.id}`)}
+>
+  {#snippet formtitle()}{/snippet}
+</PostForm>

@@ -1,4 +1,4 @@
-import { profile, type Profile } from '$lib/auth.svelte'
+import { profile, type ProfileInfo } from '$lib/auth.svelte'
 import { getClient } from '$lib/lemmy.svelte.js'
 import { trycatch } from '$lib/util.svelte'
 import type { Community, MyUserInfo } from 'lemmy-js-client'
@@ -51,5 +51,5 @@ export const addAdmin = async (handle: string, added: boolean) =>
     })
   })
 
-export const hasFavorite = (profile: Profile, id: number): boolean =>
+export const hasFavorite = (profile: ProfileInfo, id: number): boolean =>
   profile.favorites?.map(i => i.id).includes(id) ?? false

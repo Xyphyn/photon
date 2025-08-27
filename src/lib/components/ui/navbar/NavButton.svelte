@@ -35,12 +35,14 @@
   color="none"
   {...rest}
   class={[
-    'shrink-0 rounded-full w-10 h-10 lg:w-max lg:h-8 lg:rounded-xl',
+    'shrink-0 lg:rounded-xl w-10 h-10 ',
+    adaptive ? 'lg:w-max lg:h-8' : 'lg:w-8 lg:h-8 rounded-full',
     !rest.color &&
       'hover:text-slate-900 dark:hover:text-zinc-50 transition-colors',
-    isSelected
-      ? 'text-primary-900 dark:text-primary-100 max-lg:bg-slate-100 max-lg:dark:bg-zinc-800'
-      : 'text-slate-500 dark:text-zinc-400',
+    !rest.color &&
+      (isSelected
+        ? 'text-primary-900 dark:text-primary-100 max-lg:bg-slate-100 max-lg:dark:bg-zinc-800'
+        : 'text-slate-500 dark:text-zinc-400'),
     clazz,
   ]}
   shadow="none"
@@ -54,7 +56,7 @@
   {#snippet prefix()}
     <div class={(icon || customIcon) && adaptive ? 'lg:hidden' : ''}>
       {#if icon}
-        <Icon src={icon} size="20" mini />
+        <Icon src={icon} size="18" micro />
       {:else}
         {@render customIcon?.({ size: 16, isSelected })}
       {/if}

@@ -12,9 +12,9 @@
   import LabelStat from '../ui/LabelStat.svelte'
   import ItemList from './generic/ItemList.svelte'
   import { optimizeImageURL } from './post/helpers'
-  import type { ClassValue } from 'svelte/elements'
+  import type { ClassValue, HTMLAttributes } from 'svelte/elements'
 
-  interface Props extends HTMLDivElement {
+  interface Props extends HTMLAttributes<HTMLDivElement> {
     site: SiteView
     taglines?: Tagline[] | undefined
     admins?: PersonView[] | undefined

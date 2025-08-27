@@ -8,7 +8,7 @@
 </script>
 
 <div
-  class="text-slate-800 dark:text-zinc-200 text-xs font-medium m-3 my-2 mb-1 flex items-center gap-1"
+  class="text-slate-800 dark:text-zinc-200 text-xs font-medium mx-3 my-1.5 flex items-center gap-1"
 >
   <div class={[!showLabel && 'sr-only']}>{@render children?.()}</div>
   <hr
