@@ -151,7 +151,7 @@
 
 <article
   dir="auto"
-  class={[!noStyle && 'break-words space-y-2 leading-normal', clazz]}
+  class={[!noStyle && 'break-words space-y-4 leading-normal', clazz]}
   {style}
 >
   <SvelteMarkdown

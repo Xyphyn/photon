@@ -8,7 +8,7 @@
   import { t } from '$lib/i18n/translations'
   import { LINKED_INSTANCE_URL } from '$lib/instance.svelte'
   import { site } from '$lib/lemmy.svelte.js'
-  import { Badge, Menu, Spinner } from 'mono-svelte'
+  import { Menu, Spinner } from 'mono-svelte'
   import {
     Bars3,
     GlobeAlt,
@@ -31,15 +31,6 @@
 
   let { style = '', class: clazz = '' }: Props = $props()
 </script>
-
-{#snippet notifBadge(number: number)}
-  <Badge
-    color={number > 0 ? 'red-subtle' : 'gray-subtle'}
-    class="min-w-5 h-5 p-0! px-0.5 grid place-items-center ml-auto"
-  >
-    {number > 99 ? '∞' : number}
-  </Badge>
-{/snippet}
 
 <CommandsWrapper bind:open={promptOpen} />
 <nav

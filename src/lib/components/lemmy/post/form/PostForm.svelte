@@ -337,7 +337,6 @@
     {/if}
   {/if}
   <FreeTextInput
-    type="text"
     required
     bind:value={data.title}
     placeholder={placeholders.get('post')}
