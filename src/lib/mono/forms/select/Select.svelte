@@ -24,6 +24,7 @@
         },
       ]
     >
+    target?: Snippet
     oncontextmenu?: HTMLSelectAttributes['oncontextmenu']
     onchange?: HTMLSelectAttributes['onchange']
     placement?: Placement
@@ -33,7 +34,7 @@
 </script>
 
 <script lang="ts" generics="T">
-  import { setContext, tick } from 'svelte'
+  import { setContext, tick, type Snippet } from 'svelte'
   import {
     CheckCircle,
     ChevronUpDown,
@@ -76,7 +77,7 @@
     placeholder = undefined,
     label = undefined,
     size = 'md',
-    shadow = 'sm',
+    shadow = 'none',
     id = generateID(),
     class: clazz = '',
     baseClass = '',
@@ -87,9 +88,42 @@
     oncontextmenu,
     onchange,
     placement = 'bottom',
+    target,
     ...rest
   }: Props<T> = $props()
 </script>
+
+{#snippet selectTarget()}
+  <select
+    {...rest}
+    {id}
+    bind:this={element}
+    class={[
+      buttonSize[size],
+      buttonShadow[shadow],
+      buttonColor.secondary,
+      'appearance-none transition-colors rounded-xl text-sm w-full min-w-full cursor-pointer pr-6',
+      selectClass,
+      clazz,
+    ]}
+    bind:value
+    onmousedown={e => {
+      e.preventDefault()
+    }}
+    onkeypress={e => {
+      e.preventDefault()
+      open = !open
+    }}
+    {onchange}
+    {oncontextmenu}
+    {placeholder}
+  >
+    {#if placeholder}
+      <option disabled selected value="">{placeholder}</option>
+    {/if}
+    {@render children?.()}
+  </select>
+{/snippet}
 
 <div class={['flex flex-col gap-1', clazz, baseClass]}>
   {#if customLabel || label}
@@ -99,39 +133,7 @@
   {/if}
 
   <div class="w-full relative">
-    <Menu bind:open {placement}>
-      {#snippet target()}
-        <select
-          {...rest}
-          {id}
-          bind:this={element}
-          class={[
-            buttonSize[size],
-            buttonShadow[shadow],
-            buttonColor.secondary,
-            'appearance-none transition-colors rounded-xl text-sm w-full min-w-full cursor-pointer pr-6',
-            selectClass,
-            clazz,
-          ]}
-          bind:value
-          onmousedown={e => {
-            e.preventDefault()
-          }}
-          onkeypress={e => {
-            e.preventDefault()
-            open = !open
-          }}
-          {onchange}
-          {oncontextmenu}
-          {placeholder}
-        >
-          {#if placeholder}
-            <option disabled selected value="">{placeholder}</option>
-          {/if}
-          {@render children?.()}
-        </select>
-      {/snippet}
-
+    <Menu bind:open {placement} target={target ?? selectTarget}>
       {#each context.options as option (option)}
         {#if customOption}{@render customOption({
             option,

@@ -9,12 +9,12 @@
   let { children } = $props()
 </script>
 
-<p class="leading-normal break-words {options.inline ? '' : 'max-w'}">
+<p class="leading-[1.7] break-words {options.inline ? '' : 'max-w'}">
   {@render children?.()}
 </p>
 
 <style>
   .max-w {
-    max-width: 80ch;
+    max-width: 70ch;
   }
 </style>

@@ -5,6 +5,7 @@
   import ViewSelect from '$lib/components/lemmy/dropdowns/ViewSelect.svelte'
   import PostFeed from '$lib/components/lemmy/post/feed/PostFeed.svelte'
   import VirtualFeed from '$lib/components/lemmy/post/feed/VirtualFeed.svelte'
+  import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import { t } from '$lib/i18n/translations.js'
@@ -36,31 +37,25 @@
 </svelte:head>
 
 <div class="flex flex-col gap-2 max-w-full w-full min-w-0">
-  <header class="flex flex-col gap-4 relative">
-    <Header pageHeader>
-      {$t('routes.frontpage.title')}
+  <Header pageHeader>
+    {$t('routes.frontpage.title')}
 
-      {#snippet extended()}
-        <form class="flex items-center gap-2" method="get" action="/">
-          {#if type}
-            <Location name="type" navigate bind:selected={type} />
-          {/if}
-          <Sort placement="bottom" name="sort" navigate bind:selected={sort} />
-          <ViewSelect placement="bottom" />
+    {#snippet extended()}
+      <form class="flex items-center gap-2" method="get" action="/">
+        {#if type}
+          <Location name="type" navigate bind:selected={type} />
+        {/if}
+        <Sort placement="bottom" name="sort" navigate bind:selected={sort} />
+        <ViewSelect placement="bottom" />
 
-          <noscript>
-            <Button
-              class="self-end h-[34px] aspect-square"
-              size="custom"
-              submit
-            >
-              <Icon src={ArrowRight} size="16" micro />
-            </Button>
-          </noscript>
-        </form>
-      {/snippet}
-    </Header>
-  </header>
+        <noscript>
+          <Button class="self-end h-[34px] aspect-square" size="custom" submit>
+            <Icon src={ArrowRight} size="16" micro />
+          </Button>
+        </noscript>
+      </form>
+    {/snippet}
+  </Header>
 
   <FeedComponent
     bind:posts={data.feed.value.posts.posts}
@@ -71,20 +66,22 @@
     this={settings.infiniteScroll && !settings.posts.noVirtualize
       ? 'noscript'
       : 'div'}
-    class="mt-auto"
+    class="mt-auto flex flex-col"
   >
-    <Pageination
-      cursor={{ next: data.feed.value.cursor.next }}
-      href={page =>
-        typeof page == 'number' ? `?page=${page}` : `?cursor=${page}`}
-      back={false}
-    >
-      <span class="flex flex-row items-center gap-1">
-        <Icon src={ChartBar} size="16" mini />
-        {$t('routes.frontpage.footer', {
-          users: site.data?.site_view?.counts?.users_active_day ?? '??',
-        })}
-      </span>
-    </Pageination>
+    <EndPlaceholder>
+      <Icon src={ChartBar} size="16" mini />
+
+      {$t('routes.frontpage.footer', {
+        users: site.data?.site_view?.counts?.users_active_day ?? '??',
+      })}
+      {#snippet action()}
+        <Pageination
+          cursor={{ next: data.feed.value.cursor.next }}
+          href={page =>
+            typeof page == 'number' ? `?page=${page}` : `?cursor=${page}`}
+          back={false}
+        />
+      {/snippet}
+    </EndPlaceholder>
   </svelte:element>
 </div>

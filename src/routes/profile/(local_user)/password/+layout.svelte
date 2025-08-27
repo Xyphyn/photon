@@ -3,7 +3,7 @@
 
   import { page } from '$app/state'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
+  import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
   /**
    * @typedef {Object} Props
    * @property {import('svelte').Snippet} [children]
@@ -14,45 +14,35 @@
 
   const routes = [
     {
-      name: $t('routes.profile.credentials'),
-      url: '/profile/password',
-    },
-    {
       name: $t('form.profile.2fa.2fa'),
-      url: '/profile/password/2fa',
+      href: '/profile/password/2fa',
     },
     {
       name: $t('routes.passwordChange.title'),
-      url: '/profile/password/change',
+      href: '/profile/password/change',
     },
     {
       name: $t('routes.profile.logins'),
-      url: '/profile/password/logins',
+      href: '/profile/password/logins',
     },
     {
       name: $t('routes.profile.delete.title'),
-      url: '/profile/password/delete',
+      href: '/profile/password/delete',
     },
   ]
 </script>
 
 <Header pageHeader>
-  {routes.find(r => page.url.pathname == r.url)?.name}
+  {routes.find(r => page.url.pathname == r.href)?.name ??
+    $t('routes.profile.credentials')}
 </Header>
-<div class="flex flex-row gap-12">
-  <nav class="flex flex-col gap-2 flex-1 max-sm:hidden">
-    {#each routes as route (route)}
-      <SidebarButton
-        size="lg"
-        rounding="lg"
-        selected={page.url.pathname == route.url}
-        href={route.url}
-      >
-        {route.name}
-      </SidebarButton>
-    {/each}
-  </nav>
-  <div class="flex-3 max-w-full w-full min-w-0">
-    {@render children?.()}
-  </div>
+
+<Tabs style="subpage" {routes}></Tabs>
+<div
+  class={[
+    page.url.pathname == '/profile/password' && ' p-8',
+    'flex flex-col justify-center items-center h-full',
+  ]}
+>
+  {@render children?.()}
 </div>

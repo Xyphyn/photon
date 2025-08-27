@@ -75,7 +75,7 @@
 <div class="flex flex-row">
   <MenuButton
     onclick={() => share()}
-    class={['flex-1', !post.post.local && 'rounded-r-xl']}
+    class={['flex-1', !post.post.local && 'rounded-r-lg']}
   >
     {#snippet prefix()}
       <Icon src={Share} size="16" micro />
@@ -84,11 +84,11 @@
   </MenuButton>
   <!--svelte-ignore a11y_no_static_element_interactions -->
   <!--svelte-ignore a11y_click_events_have_key_events-->
-  <div
-    class="aspect-square w-max m-1 grid place-items-center"
-    onclick={e => e.stopPropagation()}
-  >
-    {#if !post.post.local}
+  {#if !post.post.local}
+    <div
+      class="aspect-square w-max m-1 grid place-items-center"
+      onclick={e => e.stopPropagation()}
+    >
       <Menu>
         {#snippet target()}
           <Button
@@ -120,8 +120,8 @@
           {$t('filter.location.local')}
         </MenuButton>
       </Menu>
-    {/if}
-  </div>
+    </div>
+  {/if}
 </div>
 {#if profile.current?.jwt}
   <MenuButton

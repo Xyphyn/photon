@@ -18,7 +18,7 @@
 		hover:bg-slate-100 dark:hover:bg-zinc-800 dark:hover:border-zinc-700 dark:active:bg-zinc-900 active:bg-slate-200`,
 
     tertiary:
-      'border border-transparent bg-transparent hover:bg-slate-100 dark:hover:bg-zinc-700/30 dark:text-zinc-200',
+      ' bg-transparent hover:bg-slate-200/50 dark:hover:bg-zinc-700/30 dark:text-zinc-200',
 
     danger:
       'border border-red-500 bg-red-500 hover:text-red-500 hover:bg-transparent text-white',
@@ -47,9 +47,9 @@
   export const buttonSize = {
     xs: 'px-2 py-1 text-xs',
     sm: 'px-3 py-1.5 text-[12px]',
-    md: 'px-3 py-1.5',
-    lg: 'px-4 py-2',
-    xl: 'px-6 py-3',
+    md: 'px-3 py-1.5 text-sm',
+    lg: 'px-4 py-2 text-sm',
+    xl: 'px-6 py-3 text-base',
     'square-sm': 'w-6 h-6',
     'square-md': 'w-8 h-8',
     'square-lg': 'w-10 h-10',
@@ -105,7 +105,7 @@
     size = 'md',
     rounding = size == 'lg' ? 'xl' : 'lg',
     alignment = 'center',
-    shadow = color != 'tertiary' ? 'sm' : 'none',
+    shadow = color != 'tertiary' ? 'none' : 'none',
     column = false,
     disabled,
     loaderWidth = undefined,
@@ -129,7 +129,7 @@
     buttonRounding[rounding],
     buttonShadow[shadow],
     buttonColor[color],
-    'text-sm transition-all font-medium cursor-pointer duration-75 disabled:opacity-50 disabled:pointer-events-none disabled:shadow-none',
+    'transition-all font-medium cursor-pointer duration-75 disabled:opacity-50 disabled:pointer-events-none disabled:shadow-none text-sm',
     (disabled || loading) && 'pointer-events-none opacity-50 shadow-none',
     alignment == 'center'
       ? 'origin-center'
@@ -144,7 +144,7 @@
     class={[
       'flex',
       column ? 'flex-col justify-center' : 'flex-row items-center',
-      'h-full gap-1.5 button-content',
+      'h-full gap-1.5 button-content w-full',
       buttonAlignment[alignment],
     ]}
   >

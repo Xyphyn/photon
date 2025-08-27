@@ -2,4 +2,6 @@
   import CommunityForm from '$lib/components/lemmy/community/CommunityForm.svelte'
 </script>
 
-<CommunityForm />
+<CommunityForm>
+  {#snippet formtitle()}{/snippet}
+</CommunityForm>

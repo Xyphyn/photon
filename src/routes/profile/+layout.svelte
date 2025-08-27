@@ -1,8 +1,6 @@
 <script>
   import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
   import { t } from '$lib/i18n/translations'
-  import { site } from '$lib/lemmy.svelte'
-  import { feature } from '$lib/version'
   import { Button, Menu, MenuButton } from 'mono-svelte'
   import {
     ArrowDown,
@@ -27,12 +25,7 @@
 <div class="flex flex-col gap-4 h-full z-0">
   <div class="flex flex-row justify-between">
     <Tabs
-      class="overflow-auto"
       routes={[
-        {
-          href: '/profile',
-          name: $t('routes.profile.overview'),
-        },
         {
           href: '/profile/user',
           name: $t('routes.profile.submissions'),
@@ -40,7 +33,7 @@
 
         {
           href: '/profile/settings',
-          name: $t('routes.profile.settings'),
+          name: $t('routes.profile.edit'),
         },
 
         {
@@ -53,21 +46,16 @@
           name: $t('routes.profile.credentials'),
         },
       ]}
-    />
-    {#if feature('mediaAndVotes', site.data?.version)}
+    >
       <Menu class="flex-1" placement="bottom-end">
         {#snippet target()}
           <Button
-            title={$t('post.actions.more.label')}
-            size="square-lg"
-            rounding="pill"
+            aria-label={$t('post.actions.more.label')}
+            size="square-sm"
             color="none"
-            class="bg-white/60 dark:bg-zinc-800/60
-          border border-slate-200/60 dark:border-zinc-800
-          backdrop-blur-xl shadow-xl hover:bg-slate-100 dark:hover:bg-zinc-800
-          shrink-0"
+            class="z-0 text-slate-600 dark:text-zinc-500 hover:bg-slate-100 hover:dark:bg-zinc-800"
           >
-            <Icon src={EllipsisHorizontal} size="16" mini />
+            <Icon src={EllipsisHorizontal} size="16" micro />
           </Button>
         {/snippet}
         <MenuButton href="/profile/media">
@@ -89,7 +77,7 @@
           {$t('routes.profile.downvoted')}
         </MenuButton>
       </Menu>
-    {/if}
+    </Tabs>
   </div>
   {@render children?.()}
 </div>

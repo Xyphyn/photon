@@ -237,7 +237,7 @@ class Profile {
 
     const id = Math.max(...this.meta.profiles.map(p => p.id)) + 1
     this.meta.profile = id
-    this.meta.profiles.push({
+    this.meta.profiles.unshift({
       id: id,
       instance: instance,
       jwt: jwt,

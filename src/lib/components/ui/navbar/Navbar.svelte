@@ -8,16 +8,12 @@
   import { t } from '$lib/i18n/translations'
   import { LINKED_INSTANCE_URL } from '$lib/instance.svelte'
   import { site } from '$lib/lemmy.svelte.js'
-  import { Badge, Menu, MenuButton, MenuDivider, Spinner } from 'mono-svelte'
+  import { Menu, Spinner } from 'mono-svelte'
   import {
     Bars3,
-    Bell,
     GlobeAlt,
     Icon,
-    Inbox,
     MagnifyingGlass,
-    Newspaper,
-    PencilSquare,
     Plus,
     ServerStack,
     ShieldCheck,
@@ -36,15 +32,6 @@
   let { style = '', class: clazz = '' }: Props = $props()
 </script>
 
-{#snippet notifBadge(number: number)}
-  <Badge
-    color={number > 0 ? 'red-subtle' : 'gray-subtle'}
-    class="min-w-5 h-5 p-0! px-0.5 grid place-items-center ml-auto"
-  >
-    {number > 99 ? '∞' : number}
-  </Badge>
-{/snippet}
-
 <CommandsWrapper bind:open={promptOpen} />
 <nav
   class={[
@@ -61,7 +48,7 @@
     }}
     href="/"
     label={$t('nav.home')}
-    class="ml-2 lg:ml-2 logo border-0 lg:rounded-full! lg:w-10! lg:h-10 lg:px-0!"
+    class="ml-2 lg:ml-2 logo border-0 lg:rounded-full! lg:w-10! lg:h-10 lg:px-0! text-primary-900! dark:text-primary-100!"
     adaptive={false}
   >
     {#snippet customIcon()}
@@ -109,93 +96,14 @@
       icon={GlobeAlt}
     />
     <NavButton href="/search" label={$t('nav.search')} icon={MagnifyingGlass} />
-    {#if profile.current.jwt}
-      {@const linkOnly =
-        !profile.current.user ||
-        !(isAdmin(profile.current.user) || amModOfAny(profile.current.user))}
-      <Menu manual={linkOnly} placement="top">
-        {#snippet target()}
-          <NavButton
-            label={$t('nav.notifications')}
-            icon={Bell}
-            class="relative"
-            adaptive={false}
-            href={linkOnly ? '/inbox' : undefined}
-          >
-            {#if Math.max(...Object.values($notifications)) > 0}
-              <div
-                class="rounded-full w-2 h-2 bg-red-500 absolute top-1 left-3 z-10"
-              ></div>
-            {/if}
-          </NavButton>
-        {/snippet}
-        <MenuButton href="/inbox" icon={Inbox}>
-          {$t('profile.inbox')}
-          {#snippet suffix()}
-            {@render notifBadge($notifications.inbox)}
-          {/snippet}
-        </MenuButton>
-        {#if amModOfAny(profile.current.user)}
-          <MenuButton href="/moderation" icon={ShieldCheck}>
-            {$t('routes.moderation.feed')}
-            {#snippet suffix()}
-              {@render notifBadge($notifications.reports)}
-            {/snippet}
-          </MenuButton>
-        {/if}
-        {#if profile.current.user && isAdmin(profile.current.user)}
-          <MenuButton href="/admin/applications" icon={ServerStack}>
-            {$t('routes.admin.applications.title')}
-            {#snippet suffix()}
-              {@render notifBadge($notifications.applications)}
-            {/snippet}
-          </MenuButton>
-        {/if}
-      </Menu>
-    {/if}
-    <Menu
-      manual={site.data?.site_view.local_site.community_creation_admin_only &&
-        !(profile.current.user && isAdmin(profile.current.user))}
-      placement="top"
-    >
-      {#snippet target()}
-        <NavButton
-          class="relative"
-          label={$t('nav.create.label')}
-          icon={Plus}
-          adaptive={false}
-          href={site.data?.site_view.local_site.community_creation_admin_only &&
-          !(profile.current.user && isAdmin(profile.current.user))
-            ? '/create/post'
-            : undefined}
-        />
-      {/snippet}
-      <MenuDivider>{$t('nav.create.label')}</MenuDivider>
-      <MenuButton link href="/create/post" disabled={!profile.current?.jwt}>
-        {#snippet prefix()}
-          <Icon src={PencilSquare} size="16" micro />
-        {/snippet}
-        {$t('nav.create.post')}
-      </MenuButton>
-      <MenuButton
-        link
-        href="/create/community"
-        disabled={!profile.current?.jwt ||
-          !profile.current?.user ||
-          (site.data?.site_view.local_site.community_creation_admin_only &&
-            !isAdmin(profile.current.user))}
-      >
-        {#snippet prefix()}
-          <Icon src={Newspaper} size="16" micro />
-        {/snippet}
-        {$t('nav.create.community')}
-      </MenuButton>
-      {#if !profile.current?.jwt}
-        <span class="text-sm mx-4 my-1 py-1">
-          {$t('nav.create.logingate')}
-        </span>
-      {/if}
-    </Menu>
+    <NavButton
+      class="relative"
+      label={$t('nav.create.label')}
+      icon={Plus}
+      adaptive={false}
+      color="primary"
+      href="/create"
+    />
     <Menu placement="bottom">
       {#snippet target()}
         <button
@@ -218,6 +126,11 @@
             <div class="w-full h-full grid place-items-center">
               <Icon src={Bars3} micro size="18" />
             </div>
+          {/if}
+          {#if Math.max(...Object.values($notifications)) > 0}
+            <div
+              class="w-2 h-2 absolute top-0.5 right-0.5 bg-red-500 rounded-full"
+            ></div>
           {/if}
         </button>
       {/snippet}

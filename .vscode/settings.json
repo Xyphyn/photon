@@ -1,0 +1,6 @@
+{
+  "i18n-ally.localesPaths": [
+    "src/lib/i18n",
+    "src/routes/inbox/messages"
+  ]
+}

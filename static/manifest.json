@@ -20,7 +20,7 @@
   "display": "standalone",
   "scope": "/",
   "theme_color": "#000000",
-  "description": "A client for Lemmy with design as priority.",
+  "description": "A Svelte based web client for Lemmy.",
   "screenshots": [
     {
       "form_factor": "wide",

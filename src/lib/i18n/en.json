@@ -162,7 +162,8 @@
             "2fa": {
                 "totp": "TOTP",
                 "2fa": "2FA",
-                "paste": "Paste this in your authenticator app."
+                "paste": "Paste this in your authenticator app.",
+                "disabled": "2FA is disabled"
             },
             "deleteAccount": {
                 "label": "Delete account",
@@ -172,6 +173,10 @@
             "languages": {
                 "title": "Languages",
                 "description": "If any are set, you will only see content explicitly tagged as that language. Most content, untagged, falls under 'Undetermined'."
+            },
+            "credentials": {
+              "title": "Manage how you log in",
+              "description": "You can enable 2FA for greater security, change your password, view logged in devices, or delete your account here."
             }
         },
         "email": "Email",
@@ -254,7 +259,8 @@
                 "warning": "This is permanent. Are you sure you want to do this?"
             },
             "overview": "Overview",
-            "submissions": "Submissions"
+            "submissions": "Submissions",
+            "edit": "Edit"
         },
         "translators": "Translators",
         "accounts": "Accounts",
@@ -543,17 +549,6 @@
                 "crosspost": "Crosspost",
                 "delete": "Delete",
                 "restore": "Restore"
-            },
-            "mediaBias": {
-                "description": "Description",
-                "credibility": "Credibility",
-                "reporting": "Factual Reporting",
-                "noData": {
-                    "title": "No data",
-                    "description": "There is no bias data for this website."
-                },
-                "downloading": "Downloading dataset",
-                "loading": "Loading source"
             },
             "link": {
                 "title": "Alternative Links",
@@ -955,6 +950,14 @@
             "upvotes": "{{default}} upvotes",
             "downvotes": "{{default}} downvotes",
             "score": "Score: {{default}}"
+        },
+        "sidebar": {
+          "title": "Sidebar",
+          "accounts": "Accounts selector"
+        },
+        "loading": "Loading",
+        "element": {
+          "pageHeader": "Page header"
         }
     },
     "stats": {

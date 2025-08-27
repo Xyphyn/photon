@@ -19,10 +19,10 @@
   import {
     ArrowPath,
     ArrowTrendingDown,
+    ChatBubbleOvalLeft,
     Clock,
     Fire,
     Icon,
-    PlusCircle,
     Star,
     Trophy,
   } from 'svelte-hero-icons'
@@ -77,7 +77,7 @@
           )}
         onclick={() => (commenting = true)}
       >
-        <Icon src={PlusCircle} size="16" micro />
+        <Icon src={ChatBubbleOvalLeft} size="16" micro />
         {$t('routes.post.addComment')}
       </Button>
 

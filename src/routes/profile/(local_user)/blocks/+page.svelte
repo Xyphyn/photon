@@ -17,6 +17,8 @@
   import Material from 'mono-svelte/materials/Material.svelte'
   import { Check, Icon, XMark } from 'svelte-hero-icons'
   import type { PageData } from './$types.js'
+  import CommonList from '$lib/components/ui/layout/CommonList.svelte'
+  import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
 
   interface Props {
     // sveltekit doesn't feel like making types work right now
@@ -85,106 +87,109 @@
   {$t('routes.profile.blocks.title')}
 </Header>
 
-{#if data.community_blocks?.length > 0 || data.person_blocks?.length > 0 || (data.my_user?.instance_blocks?.length ?? 0) > 0}
-  {#if data.community_blocks?.length > 0}
-    <div class="space-y-1">
-      <SectionTitle>{$t('content.communities')}</SectionTitle>
-      <Material
-        color="uniform"
-        class="bg-white dark:bg-zinc-950 max-h-96 overflow-auto"
-        rounding="xl"
-      >
-        <ul class="divide-y divide-slate-200 dark:divide-zinc-900">
-          {#each data.community_blocks as block (block.community.id)}
-            <div class="flex flex-row gap-2 items-center py-1 -mx-4 px-4">
+<div>
+  {#if data.community_blocks?.length > 0 || data.person_blocks?.length > 0 || (data.my_user?.instance_blocks?.length ?? 0) > 0}
+    {#if data.community_blocks?.length > 0}
+      <EndPlaceholder size="md" margin="md">
+        {$t('content.communities')}
+      </EndPlaceholder>
+      <div class="max-h-96 overflow-auto rounded-2xl">
+        <CommonList
+          size="xs"
+          class="px-3 py-2"
+          animate={false}
+          items={data.community_blocks}
+        >
+          {#snippet item(block)}
+            <div class="flex flex-row gap-2 items-center">
+              <CommunityLink community={block.community} avatar />
+              <div class="flex-1"></div>
               <Button
                 title="Unblock"
                 size="square-md"
                 rounding="pill"
-                color="danger"
                 onclick={() => unblockCommunity(block)}
               >
                 {#snippet prefix()}
                   <Icon src={XMark} micro size="16" />
                 {/snippet}
               </Button>
-              <CommunityLink community={block.community} avatar />
             </div>
-          {/each}
-        </ul>
-      </Material>
-    </div>
-  {/if}
-  {#if data.person_blocks?.length > 0}
-    <div class="space-y-1">
-      <SectionTitle>{$t('content.users')}</SectionTitle>
-      <Material
-        color="uniform"
-        class="bg-white dark:bg-zinc-950 max-h-96 overflow-auto"
-        rounding="xl"
-      >
-        <ul class="divide-y divide-slate-200 dark:divide-zinc-900">
-          {#each data.person_blocks as block (block.target.id)}
-            <div class="flex flex-row gap-2 items-center py-1 -mx-4 px-4">
+          {/snippet}
+        </CommonList>
+      </div>
+    {/if}
+    {#if data.person_blocks?.length > 0}
+      <EndPlaceholder size="md" margin="md">
+        {$t('content.users')}
+      </EndPlaceholder>
+      <div class="max-h-96 overflow-auto rounded-2xl">
+        <CommonList
+          size="xs"
+          class="px-3 py-2"
+          animate={false}
+          items={data.person_blocks}
+        >
+          {#snippet item(block)}
+            <div class="flex flex-row gap-2 items-center">
+              <UserLink user={block.target} avatar badges />
+              <div class="flex-1"></div>
               <Button
                 title="Unblock"
                 size="square-md"
                 rounding="pill"
-                color="danger"
                 onclick={() => unblockUser(block)}
               >
                 {#snippet prefix()}
                   <Icon src={XMark} micro size="16" />
                 {/snippet}
               </Button>
-              <UserLink user={block.target} avatar badges />
             </div>
-          {/each}
-        </ul>
-      </Material>
-    </div>
-  {/if}
-  {#if data.my_user?.instance_blocks && (data.my_user?.instance_blocks?.length ?? 0) > 0}
-    <div class="space-y-1">
-      <SectionTitle class="text-lg">
+          {/snippet}
+        </CommonList>
+      </div>
+    {/if}
+    {#if data.my_user?.instance_blocks && (data.my_user?.instance_blocks?.length ?? 0) > 0}
+      <EndPlaceholder size="md" margin="md" class="text-lg">
         {$t('content.instances')}
-      </SectionTitle>
-      <Material
-        color="uniform"
-        class="bg-white dark:bg-zinc-950 max-h-96 overflow-auto"
-        rounding="xl"
-      >
-        <ul class="divide-y divide-slate-200 dark:divide-zinc-900">
-          {#each data.my_user?.instance_blocks as block (block.instance.id)}
-            <div class="flex flex-row gap-2 items-center py-1 -mx-4 px-4">
+      </EndPlaceholder>
+      <div class="max-h-96 overflow-auto rounded-2xl">
+        <CommonList
+          size="xs"
+          animate={false}
+          items={data.my_user.instance_blocks}
+          class="px-3 py-2"
+        >
+          {#snippet item(block)}
+            <div class="flex flex-row gap-2 items-center">
+              <Entity
+                icon={block.site?.icon}
+                name={block.site?.name ?? block.instance.domain}
+                label={block.instance.domain}
+              />
+              <div class="flex-1"></div>
               <Button
                 title="Unblock"
                 size="square-md"
                 rounding="pill"
-                color="danger"
                 onclick={() => unblockInstances(block)}
               >
                 {#snippet prefix()}
                   <Icon src={XMark} micro size="16" />
                 {/snippet}
               </Button>
-              <Entity
-                icon={block.site?.icon}
-                name={block.site?.name ?? block.instance.domain}
-                label={block.instance.domain}
-              />
             </div>
-          {/each}
-        </ul>
-      </Material>
+          {/snippet}
+        </CommonList>
+      </div>
+    {/if}
+  {:else}
+    <div class="h-full w-full grid place-items-center">
+      <Placeholder
+        icon={Check}
+        title={$t('routes.profile.blocks.empty.title')}
+        description={$t('routes.profile.blocks.empty.description')}
+      />
     </div>
   {/if}
-{:else}
-  <div class="h-full w-full grid place-items-center">
-    <Placeholder
-      icon={Check}
-      title={$t('routes.profile.blocks.empty.title')}
-      description={$t('routes.profile.blocks.empty.description')}
-    />
-  </div>
-{/if}
+</div>
