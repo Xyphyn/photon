@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { locale } from '$lib/i18n/translations'
   import { getContext, type Snippet } from 'svelte'
   import type { IconSource } from 'svelte-hero-icons'
   import type { HTMLOptionAttributes } from 'svelte/elements'
@@ -12,7 +13,7 @@
   let optionElement = $state<HTMLOptionElement>()
   let option = $derived({
     value: optionElement?.value ?? '',
-    label: optionElement?.innerText?.trim() ?? '',
+    label: optionElement?.innerText ?? '',
     icon: icon,
     disabled: optionElement?.disabled,
     isLabel: optionElement?.getAttribute('data-label') == 'true',
@@ -31,12 +32,20 @@
   const context = getContext<SelectContext>('select')
 
   $effect(() => {
-    if (!context.options.find(v => v == option)) {
-      context.options.push(option)
+    if ($locale || !context.options.find(v => v == option)) {
+      const index = context.options.findIndex(i => i.value == option.value)
+
+      if (index != -1) {
+        context.options.splice(index, 1, option)
+      } else {
+        context.options.push(option)
+      }
     }
   })
 </script>
 
-<option {...rest} bind:this={optionElement}>
-  {@render children()}
-</option>
+{#key $locale}
+  <option {...rest} bind:this={optionElement}>
+    {@render children()}
+  </option>
+{/key}
