@@ -43,28 +43,27 @@
     {
       name: string
       translated: number
-      flag: string
     }
   > = new Map([
-    ['en', { name: 'English', translated: -1, flag: '🇬🇧' }],
-    ['ar', { name: 'العربية', translated: 0.3, flag: '🟩' }],
-    ['he', { name: 'עברית', translated: -1, flag: '🇮🇱' }],
-    ['bg', { name: 'български', translated: 0.67, flag: '🇧🇬' }],
-    ['de', { name: 'Deutsch', translated: 0.7, flag: '🇩🇪' }],
-    ['es', { name: 'Español', translated: 0.89, flag: '🇪🇸' }],
-    ['et', { name: 'eesti keel', translated: 0.23, flag: '🇪🇪' }],
-    ['fi', { name: 'suomi', translated: 0.98, flag: '🇫🇮' }],
-    ['fr', { name: 'Français', translated: 0.93, flag: '🇫🇷' }],
-    ['hu', { name: 'Magyar', translated: 0.51, flag: '🇭🇺' }],
-    ['ja', { name: '日本語', translated: 0.93, flag: '🇯🇵' }],
-    ['nl', { name: 'Nederlands', translated: 0.89, flag: '🇳🇱' }],
-    ['pl', { name: 'Polski', translated: 0.91, flag: '🇵🇱' }],
-    ['pt', { name: 'Português (PT)', translated: 0.86, flag: '🇵🇹' }],
-    ['pt-BR', { name: 'Português (BR)', translated: 0.86, flag: '🇧🇷' }],
-    ['tr', { name: 'Türkçe', translated: 0.99, flag: '🇹🇷' }],
-    ['ru', { name: 'Русский', translated: 0.88, flag: '🇷🇺' }],
-    ['zh-Hans', { name: '简体中文', translated: 0.83, flag: '🇨🇳' }],
-    ['zh-Hant', { name: '繁體中文', translated: 0.23, flag: '🇹🇼' }],
+    ['en', { name: 'English', translated: -1 }],
+    ['ar', { name: 'العربية', translated: 0.3 }],
+    ['he', { name: 'עברית', translated: -1 }],
+    ['bg', { name: 'български', translated: 0.67 }],
+    ['de', { name: 'Deutsch', translated: 0.7 }],
+    ['es', { name: 'Español', translated: 0.89 }],
+    ['et', { name: 'eesti keel', translated: 0.23 }],
+    ['fi', { name: 'suomi', translated: 0.98 }],
+    ['fr', { name: 'Français', translated: 0.93 }],
+    ['hu', { name: 'Magyar', translated: 0.51 }],
+    ['ja', { name: '日本語', translated: 0.93 }],
+    ['nl', { name: 'Nederlands', translated: 0.89 }],
+    ['pl', { name: 'Polski', translated: 0.91 }],
+    ['pt', { name: 'Português (PT)', translated: 0.86 }],
+    ['pt-BR', { name: 'Português (BR)', translated: 0.86 }],
+    ['tr', { name: 'Türkçe', translated: 0.99 }],
+    ['ru', { name: 'Русский', translated: 0.88 }],
+    ['zh-Hans', { name: '简体中文', translated: 0.83 }],
+    ['zh-Hant', { name: '繁體中文', translated: 0.23 }],
   ])
 </script>
 
@@ -117,7 +116,6 @@
           name: locale,
         }}
         <Option value={locale}>
-          {mapped?.flag}
           {mapped?.name}
         </Option>
       {/each}
