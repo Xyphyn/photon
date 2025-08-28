@@ -15,7 +15,7 @@
     label: optionElement?.innerText?.trim() ?? '',
     icon: icon,
     disabled: optionElement?.disabled,
-    isLabel: optionElement?.getAttribute('data-label') != null,
+    isLabel: optionElement?.getAttribute('data-label') == 'true',
   })
 
   interface SelectContext {

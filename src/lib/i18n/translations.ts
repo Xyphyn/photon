@@ -97,6 +97,11 @@ const config: Config = {
       key: '',
       loader: async () => (await import('./zh-Hant.json')).default,
     },
+    {
+      locale: 'tok',
+      key: '',
+      loader: async () => (await import('./tok.json')).default,
+    },
   ],
   fallbackLocale: 'en',
 }

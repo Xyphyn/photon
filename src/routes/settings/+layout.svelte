@@ -13,7 +13,6 @@
   } from 'svelte-hero-icons'
 
   let { children } = $props()
-
   let importing = $state(false)
   let importText = $state('')
 </script>
@@ -43,6 +42,10 @@
     <TextArea bind:value={importText} style="font-family: monospace;" />
   </Modal>
 {/if}
+
+<svelte:head>
+  <title>{$t('settings.title')}</title>
+</svelte:head>
 
 <Header pageHeader class="text-3xl font-bold flex justify-between">
   {$t('settings.title')}

@@ -1,8 +1,13 @@
 <script lang="ts">
   import { env } from '$env/dynamic/public'
-  import { locale, locales, t } from '$lib/i18n/translations'
+  import Link from '$lib/components/input/Link.svelte'
+  import Switch from '$lib/components/input/Switch.svelte'
+  import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
+  import ViewSelect from '$lib/components/lemmy/dropdowns/ViewSelect.svelte'
+  import CommonList from '$lib/components/ui/layout/CommonList.svelte'
+  import { locale, t } from '$lib/i18n/translations'
+  import { settings } from '$lib/settings.svelte'
   import { Button, Option, Select } from 'mono-svelte'
-  import ToggleSetting from '../ToggleSetting.svelte'
   import {
     ArrowPath,
     ArrowsPointingOut,
@@ -31,39 +36,35 @@
     ViewColumns,
   } from 'svelte-hero-icons'
   import Setting from '../Setting.svelte'
-  import Link from '$lib/components/input/Link.svelte'
-  import { settings } from '$lib/settings.svelte'
-  import ViewSelect from '$lib/components/lemmy/dropdowns/ViewSelect.svelte'
-  import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
-  import Switch from '$lib/components/input/Switch.svelte'
-  import CommonList from '$lib/components/ui/layout/CommonList.svelte'
+  import ToggleSetting from '../ToggleSetting.svelte'
 
   let localeMap: Map<
     string,
     {
       name: string
-      translated: number
     }
   > = new Map([
-    ['en', { name: 'English', translated: -1 }],
-    ['ar', { name: 'العربية', translated: 0.3 }],
-    ['he', { name: 'עברית', translated: -1 }],
-    ['bg', { name: 'български', translated: 0.67 }],
-    ['de', { name: 'Deutsch', translated: 0.7 }],
-    ['es', { name: 'Español', translated: 0.89 }],
-    ['et', { name: 'eesti keel', translated: 0.23 }],
-    ['fi', { name: 'suomi', translated: 0.98 }],
-    ['fr', { name: 'Français', translated: 0.93 }],
-    ['hu', { name: 'Magyar', translated: 0.51 }],
-    ['ja', { name: '日本語', translated: 0.93 }],
-    ['nl', { name: 'Nederlands', translated: 0.89 }],
-    ['pl', { name: 'Polski', translated: 0.91 }],
-    ['pt', { name: 'Português (PT)', translated: 0.86 }],
-    ['pt-BR', { name: 'Português (BR)', translated: 0.86 }],
-    ['tr', { name: 'Türkçe', translated: 0.99 }],
-    ['ru', { name: 'Русский', translated: 0.88 }],
-    ['zh-Hans', { name: '简体中文', translated: 0.83 }],
-    ['zh-Hant', { name: '繁體中文', translated: 0.23 }],
+    ['en', { name: 'English' }],
+    ['ar', { name: 'العربية' }],
+    ['he', { name: 'עברית' }],
+    ['bg', { name: 'български' }],
+    ['de', { name: 'Deutsch' }],
+    ['es', { name: 'Español' }],
+    ['et', { name: 'eesti keel' }],
+    ['fi', { name: 'suomi' }],
+    ['fr', { name: 'Français' }],
+    ['hu', { name: 'Magyar' }],
+    ['ja', { name: '日本語' }],
+    ['nl', { name: 'Nederlands' }],
+    ['pl', { name: 'Polski' }],
+    ['pt', { name: 'Português (PT)' }],
+    ['pt-BR', { name: 'Português (BR)' }],
+    ['tr', { name: 'Türkçe' }],
+    ['ru', { name: 'Русский' }],
+    ['zh-Hans', { name: '简体中文' }],
+    ['zh-Hant', { name: '繁體中文' }],
+    ['placeholder', { name: 'Unofficial' }],
+    ['tok', { name: 'toki pona' }],
   ])
 </script>
 
@@ -109,14 +110,13 @@
       <Option icon={Language} value={null}>
         {$t('settings.app.lang.auto')}
       </Option>
-      {#each $locales as locale (locale)}
-        {@const mapped = localeMap.get(locale) ?? {
-          flag: '',
-          translated: 1,
-          name: locale,
-        }}
-        <Option value={locale}>
-          {mapped?.name}
+      {#each localeMap.entries() as [key, value]}
+        <Option
+          data-label={key == 'placeholder'}
+          disabled={key == 'placeholder'}
+          value={key}
+        >
+          {value.name}
         </Option>
       {/each}
     </Select>
