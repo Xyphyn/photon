@@ -21,7 +21,12 @@
     ondismissed={() => shownModal.set(undefined)}
     bind:open
   >
-    <p>{$shownModal.body}</p>
+    {#if $shownModal.snippet}
+      {@render $shownModal.snippet()}
+    {/if}
+    {#if $shownModal.body}
+      <p>{$shownModal.body}</p>
+    {/if}
     {#if $shownModal.actions}
       <div
         class="flex items-center gap-2 {$shownModal.actions.length >= 3

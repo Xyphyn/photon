@@ -1,3 +1,4 @@
+import type { Snippet } from 'svelte'
 import type { IconSource } from 'svelte-hero-icons'
 import { writable } from 'svelte/store'
 
@@ -11,6 +12,7 @@ interface Modal {
    * Whether the modal has a close button or not
    */
   dismissable: boolean
+  snippet?: Snippet
   type: 'error' | 'info' | 'success'
 }
 
@@ -46,11 +48,12 @@ export const action = (action?: {
 export function modal(inputModal: {
   actions?: Action[]
   title: string
-  body: string
+  body?: string
   /**
    * Whether the modal has a close button or not
    */
   dismissable?: boolean
+  snippet?: Snippet
   type?: 'error' | 'info' | 'success'
 }) {
   const modal: Modal = {
@@ -59,6 +62,7 @@ export function modal(inputModal: {
     title: inputModal.title,
     body: inputModal.body,
     type: inputModal.type ?? 'info',
+    snippet: inputModal.snippet,
   }
 
   shownModal.set(modal)

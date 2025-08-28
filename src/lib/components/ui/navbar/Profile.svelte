@@ -16,6 +16,7 @@
     Button,
     MenuButton,
     MenuDivider,
+    modal,
     Modal,
     Option,
     Select,
@@ -44,21 +45,18 @@
   let showInstance = $state(false)
 </script>
 
-{#if showInstance}
-  <Modal bind:open={showInstance} title="Instance">
-    {#if site.data}
-      <SiteCard
-        site={site.data.site_view}
-        admins={site.data.admins}
-        taglines={site.data.taglines}
-        version={site.data.version}
-      />
-    {:else}
-      <Spinner />
-    {/if}
-  </Modal>
-{/if}
-
+{#snippet siteSnippet()}
+  {#if site.data}
+    <SiteCard
+      site={site.data.site_view}
+      admins={site.data.admins}
+      taglines={site.data.taglines}
+      version={site.data.version}
+    />
+  {:else}
+    <Spinner />
+  {/if}
+{/snippet}
 {#snippet notifBadge(number: number)}
   {#if number > 0}
     <Badge
@@ -138,33 +136,33 @@
   {/snippet}
   {$t('nav.menu.settings')}
 </MenuButton>
-<MenuButton class="py-0!" onclick={e => e.stopPropagation()}>
-  {#snippet prefix()}
-    <Icon
-      src={theme.colorScheme == 'system'
-        ? ComputerDesktop
-        : theme.colorScheme == 'light'
-          ? Sun
-          : theme.colorScheme == 'dark'
-            ? Moon
+<!--svelte-ignore a11y_click_events_have_key_events-->
+<!--svelte-ignore a11y_no_static_element_interactions-->
+<div onclick={e => e.stopPropagation()}>
+  <Select bind:value={theme.colorScheme} size="sm">
+    {#snippet target()}
+      <MenuButton
+        icon={theme.colorScheme == 'system'
+          ? ComputerDesktop
+          : theme.colorScheme == 'light'
+            ? Sun
             : Moon}
-      micro
-      size="16"
-    />
-  {/snippet}
-  <span>{$t('nav.menu.colorscheme.label')}</span>
-  <Select bind:value={theme.colorScheme} class="ml-auto my-auto w-24" size="sm">
-    <Option value="system" icon={ComputerDesktop}>
-      {$t('nav.menu.colorscheme.system')}
-    </Option>
-    <Option value="light" icon={Sun}>
-      {$t('nav.menu.colorscheme.light')}
-    </Option>
-    <Option value="dark" icon={Moon}>
-      {$t('nav.menu.colorscheme.dark')}
-    </Option>
+        class=" w-full"
+      >
+        {$t('nav.menu.colorscheme.label')}
+      </MenuButton>
+      <Option value="system" class="hidden" icon={ComputerDesktop}>
+        {$t('nav.menu.colorscheme.system')}
+      </Option>
+      <Option value="light" class="hidden" icon={Sun}>
+        {$t('nav.menu.colorscheme.light')}
+      </Option>
+      <Option value="dark" class="hidden" icon={Moon}>
+        {$t('nav.menu.colorscheme.dark')}
+      </Option>
+    {/snippet}
   </Select>
-</MenuButton>
+</div>
 <MenuButton href="/theme">
   {#snippet prefix()}
     <Icon src={Swatch} size="16" micro />
@@ -193,9 +191,12 @@
       </button>
     </div>
     <Button
-      onclick={e => {
-        e.stopPropagation()
-        showInstance = !showInstance
+      onclick={() => {
+        modal({
+          title: $t('nav.menu.instance'),
+          snippet: siteSnippet,
+          body: '',
+        })
       }}
       color="tertiary"
       title={$t('nav.menu.instance')}
