@@ -5,10 +5,13 @@
   import LabelStat from '$lib/components/ui/LabelStat.svelte'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import { t } from '$lib/i18n/translations'
+  import { client } from '$lib/lemmy.svelte'
   import { addSubscription } from '$lib/lemmy/user.js'
+  import { settings } from '$lib/settings.svelte'
   import { fullCommunityName, isSubscribed } from '$lib/util.svelte.js'
   import type { CommunityView } from 'lemmy-js-client'
-  import { Button, Modal } from 'mono-svelte'
+  import { Button, modal } from 'mono-svelte'
+  import type { Snippet } from 'svelte'
   import {
     Check,
     ExclamationTriangle,
@@ -20,11 +23,7 @@
     Trash,
   } from 'svelte-hero-icons'
   import Subscribe from '../../../../routes/communities/Subscribe.svelte'
-  import { settings } from '$lib/settings.svelte'
-  import type { Snippet } from 'svelte'
-  import { client } from '$lib/lemmy.svelte'
 
-  let showInfo = $state(false)
   interface Props {
     community: CommunityView
     view?: 'cozy' | 'compact'
@@ -46,11 +45,9 @@
   }: Props = $props()
 </script>
 
-{#if showInfo}
-  <Modal title={$t('form.post.community')} bind:open={showInfo}>
-    <CommunityCard community_view={community} />
-  </Modal>
-{/if}
+{#snippet communityInfo()}
+  <CommunityCard community_view={community} />
+{/snippet}
 
 <div class={clazz}>
   <div
@@ -154,7 +151,8 @@
           size="square-md"
           rounding="pill"
           color="ghost"
-          onclick={() => (showInfo = !showInfo)}
+          onclick={() =>
+            modal({ title: $t('form.post.community'), snippet: communityInfo })}
         >
           <Icon src={InformationCircle} size="16" mini />
         </Button>

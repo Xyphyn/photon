@@ -22,9 +22,7 @@
     placement?: Placement
     middleware?: Middleware[]
     strategy?: Strategy
-    manual?: boolean
     popoverClass?: string
-    class?: string
     target?: import('svelte').Snippet<[Attachment]>
     popover?: import('svelte').Snippet<[boolean]>
     children?: import('svelte').Snippet<[boolean]>
@@ -72,7 +70,6 @@
   })
 
   const menuAttach: Attachment = element => {
-    console.log(element)
     const e = element as HTMLButtonElement
 
     const mouseLeave = () => (openOnHover ? (open = false) : false)

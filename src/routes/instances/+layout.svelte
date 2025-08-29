@@ -15,5 +15,4 @@
     { href: '/instances/blocked', name: 'Blocked' },
   ]}
 ></Tabs>
-<div class="h-3 sm:h-6"></div>
 {@render children?.()}

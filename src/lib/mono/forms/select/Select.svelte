@@ -94,8 +94,9 @@
   }: Props<T> = $props()
 </script>
 
-{#snippet selectTarget()}
+{#snippet selectTarget(attachment: Attachment)}
   <select
+    {@attach attachment}
     {...rest}
     {id}
     bind:this={element}

@@ -73,8 +73,6 @@
   </div>
 </Header>
 
-<div class="h-3 sm:h-6"></div>
-
 <div class="mb-3 sm:mb-6">
   <Select
     class=" w-max items-center"

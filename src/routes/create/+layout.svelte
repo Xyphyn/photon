@@ -10,7 +10,6 @@
   {$t('nav.create.label')}
 </Header>
 
-<div class="h-3 sm:h-6"></div>
 <Tabs
   style="subpage"
   routes={[
@@ -24,6 +23,5 @@
     },
   ]}
 />
-<div class="h-3 sm:h-6"></div>
 
 {@render children?.()}

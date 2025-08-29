@@ -6,7 +6,9 @@
   import PostFeed from '$lib/components/lemmy/post/feed/PostFeed.svelte'
   import VirtualFeed from '$lib/components/lemmy/post/feed/VirtualFeed.svelte'
   import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
+  import LabelStat from '$lib/components/ui/LabelStat.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import { t } from '$lib/i18n/translations.js'
   import { site } from '$lib/lemmy.svelte.js'
@@ -56,6 +58,15 @@
       </form>
     {/snippet}
   </Header>
+
+  <!-- <EndPlaceholder size="md">
+    {$t('cards.community.activeDay')}
+    {#snippet action()}
+      <span class="text-primary-900 dark:text-primary-100">
+        {site.data?.site_view.counts.users_active_day.toString()}
+      </span>
+    {/snippet}
+  </EndPlaceholder> -->
 
   <FeedComponent
     bind:posts={data.feed.value.posts.posts}

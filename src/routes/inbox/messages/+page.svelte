@@ -131,7 +131,6 @@
       {@render startChat?.()}
     </Placeholder>
   {/if}
-  <div class="h-3 sm:h-6"></div>
   <CommonList items={previews}>
     {#snippet item(preview)}
       <a href="/inbox/messages/{preview.user.id}" class="flex flex-row gap-2">
