@@ -144,8 +144,9 @@
 >
   {#if showCommunity && community}
     <Popover>
-      {#snippet target()}
+      {#snippet target(attachment)}
         <button
+          {@attach attachment}
           class={[
             'row-span-2 shrink-0 mr-2 self-center group/btn',
             'bg-slate-200 dark:bg-zinc-800 rounded-lg cursor-pointer',
@@ -177,6 +178,7 @@
             rounding="2xl"
             elevation="high"
             class="max-w-2xl w-full max-h-128 overflow-auto"
+            data-autoclose="false"
           >
             {#await import('../community/CommunityHeader.svelte') then { default: CommunityHeader }}
               <CommunityHeader {community} {subscribed} />

@@ -14,7 +14,6 @@
   interface Props {
     openOnHover?: boolean
     open?: boolean
-    manual?: boolean
     placement?: Placement
     middleware?: Middleware[]
     strategy?: Strategy
@@ -26,11 +25,9 @@
   let {
     openOnHover = false,
     open = $bindable(false),
-    manual = false,
     placement = 'bottom-start',
     middleware = [offset(6), shift({ padding: 6 }), flip()],
     strategy = 'absolute',
-    class: clazz = '',
     target,
     children,
     ...rest
@@ -42,12 +39,10 @@
   {placement}
   {middleware}
   {strategy}
-  {manual}
   {target}
   {...rest}
   bind:open
   popoverClass="rounded-xl w-full backdrop-blur-md max-w-72"
-  class={clazz}
 >
   {#snippet popover()}
     <div

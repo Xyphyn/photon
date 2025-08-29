@@ -142,7 +142,7 @@
               <Spinner width={20} />
             </div>
           {:then { default: Profile }}
-            <Profile />
+            <Profile  />
           {/await}
         {/if}
       {/snippet}

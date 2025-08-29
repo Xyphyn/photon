@@ -82,16 +82,13 @@
         const clickHandler = (event: Event) => {
           if (!e) return
 
-          if (!e?.contains(event.target as Node | null)) {
-            if (!autoClose) {
-              // @ts-expect-error svelte hell
-              if (popoverEl && !popoverEl.contains(event.target)) {
-                open = false
-              }
-            } else {
+          const target = event.target as Element | null
+
+          if (!e?.contains(event.target as Element | null)) {
+            if (target?.closest("[data-autoclose='false']") == null) {
               open = false
+              document.removeEventListener('click', clickHandler)
             }
-            document.removeEventListener('click', clickHandler)
           }
         }
         document.addEventListener('click', clickHandler)

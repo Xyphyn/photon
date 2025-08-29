@@ -88,53 +88,50 @@
     </Option>
   </Select>
   {#if selected?.startsWith('Top')}
-    <div transition:fly={{ easing: backOut, x: 2 }}>
-      <Select
-        class="border-l-0 rounded-l-none"
-        bind:value={selected}
-        onchange={() => {
-          sort = 'TopAll'
-          if (navigate)
-            searchParam(page.url, 'sort', selected, 'page', 'cursor')
-        }}
-      >
-        {#snippet customLabel()}
-          <span class="flex items-center gap-1">
-            <Icon src={Clock} size="15" micro />
-            {$t('filter.sort.top.time.label')}
-          </span>
-        {/snippet}
-        <Option value="TopAll" icon={PlusCircle}>
-          {$t('filter.sort.top.time.all')}
-        </Option>
-        <Option value="TopNineMonths" icon={Calendar}>
-          {$t('filter.sort.top.time.9months')}
-        </Option>
-        <Option value="TopSixMonths" icon={Calendar}>
-          {$t('filter.sort.top.time.6months')}
-        </Option>
-        <Option value="TopThreeMonths" icon={Calendar}>
-          {$t('filter.sort.top.time.3months')}
-        </Option>
-        <Option value="TopMonth" icon={CalendarDays}>
-          {$t('filter.sort.top.time.month')}
-        </Option>
-        <Option value="TopWeek" icon={CalendarDays}>
-          {$t('filter.sort.top.time.week')}
-        </Option>
-        <Option value="TopDay" icon={Sun}>
-          {$t('filter.sort.top.time.day')}
-        </Option>
-        <Option value="TopTwelveHour" icon={Clock}>
-          {$t('filter.sort.top.time.12hours')}
-        </Option>
-        <Option value="TopSixHour" icon={Clock}>
-          {$t('filter.sort.top.time.6hours')}
-        </Option>
-        <Option value="TopHour" icon={Clock}>
-          {$t('filter.sort.top.time.hour')}
-        </Option>
-      </Select>
-    </div>
+    <Select
+      class="border-l-0 rounded-l-none"
+      bind:value={selected}
+      onchange={() => {
+        sort = 'TopAll'
+        if (navigate) searchParam(page.url, 'sort', selected, 'page', 'cursor')
+      }}
+    >
+      {#snippet customLabel()}
+        <span class="flex items-center gap-1">
+          <Icon src={Clock} size="15" micro />
+          {$t('filter.sort.top.time.label')}
+        </span>
+      {/snippet}
+      <Option value="TopAll" icon={PlusCircle}>
+        {$t('filter.sort.top.time.all')}
+      </Option>
+      <Option value="TopNineMonths" icon={Calendar}>
+        {$t('filter.sort.top.time.9months')}
+      </Option>
+      <Option value="TopSixMonths" icon={Calendar}>
+        {$t('filter.sort.top.time.6months')}
+      </Option>
+      <Option value="TopThreeMonths" icon={Calendar}>
+        {$t('filter.sort.top.time.3months')}
+      </Option>
+      <Option value="TopMonth" icon={CalendarDays}>
+        {$t('filter.sort.top.time.month')}
+      </Option>
+      <Option value="TopWeek" icon={CalendarDays}>
+        {$t('filter.sort.top.time.week')}
+      </Option>
+      <Option value="TopDay" icon={Sun}>
+        {$t('filter.sort.top.time.day')}
+      </Option>
+      <Option value="TopTwelveHour" icon={Clock}>
+        {$t('filter.sort.top.time.12hours')}
+      </Option>
+      <Option value="TopSixHour" icon={Clock}>
+        {$t('filter.sort.top.time.6hours')}
+      </Option>
+      <Option value="TopHour" icon={Clock}>
+        {$t('filter.sort.top.time.hour')}
+      </Option>
+    </Select>
   {/if}
 </div>

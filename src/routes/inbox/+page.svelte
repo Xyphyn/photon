@@ -73,31 +73,31 @@
   </div>
 </Header>
 
-<div class="mb-3 sm:mb-6">
-  <Select
-    class=" w-max items-center"
-    bind:value={
-      () => data.unreadOnly.value.toString(),
-      v => (data.unreadOnly.value = v == 'true')
-    }
-    onchange={() =>
-      searchParam(
-        page.url,
-        'unreadOnly',
-        data.unreadOnly.value ? 'true' : 'false',
-        'page',
-      )}
-  >
-    {#snippet customLabel()}
-      <span class="flex items-center gap-1">
-        <Icon src={Funnel} size="15" mini />
-        {$t('filter.filter')}
-      </span>
-    {/snippet}
-    <Option value="false">{$t('filter.location.all')}</Option>
-    <Option value="true">{$t('filter.unread')}</Option>
-  </Select>
-</div>
+<Select
+  class="relative w-max"
+  bind:value={
+    () => data.unreadOnly.value.toString(),
+    v => (data.unreadOnly.value = v == 'true')
+  }
+  onchange={() =>
+    searchParam(
+      page.url,
+      'unreadOnly',
+      data.unreadOnly.value ? 'true' : 'false',
+      'page',
+    )}
+>
+  {#snippet customLabel()}
+    <div class="flex items-center gap-1">
+      <Icon src={Funnel} size="15" mini />
+      {$t('filter.filter')}
+    </div>
+  {/snippet}
+  <Option value="false">{$t('filter.location.all')}</Option>
+  <Option value="true">{$t('filter.unread')}</Option>
+</Select>
+
+<div class="h-3 sm:h-6"></div>
 
 {#if !data.inbox?.value || (data.inbox.value?.length ?? 0) == 0}
   <Placeholder

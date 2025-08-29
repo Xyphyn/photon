@@ -41,7 +41,7 @@
             'transition-transform duration-300 ease-out',
           ]}
         >
-          <Icon src={open ? Minus : Plus} size="16" micro class={[]} />
+          <Icon src={open ? Minus : Plus} size="15" micro class={[]} />
         </div>
       {/if}
       <div
