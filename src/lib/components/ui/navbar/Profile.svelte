@@ -17,7 +17,6 @@
     MenuButton,
     MenuDivider,
     modal,
-    Modal,
     Option,
     Select,
     Spinner,
@@ -41,8 +40,6 @@
     UserCircle,
     UserGroup,
   } from 'svelte-hero-icons'
-
-  let showInstance = $state(false)
 </script>
 
 {#snippet siteSnippet()}
@@ -140,8 +137,9 @@
 <!--svelte-ignore a11y_no_static_element_interactions-->
 <div onclick={e => e.stopPropagation()}>
   <Select bind:value={theme.colorScheme} size="sm">
-    {#snippet target()}
+    {#snippet target(attachment)}
       <MenuButton
+        {@attach attachment}
         icon={theme.colorScheme == 'system'
           ? ComputerDesktop
           : theme.colorScheme == 'light'

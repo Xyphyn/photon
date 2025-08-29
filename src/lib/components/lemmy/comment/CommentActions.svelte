@@ -66,8 +66,9 @@
     <CommentModerationMenu bind:item={comment} />
   {/if}
   <Menu placement="bottom">
-    {#snippet target()}
+    {#snippet target(attachment)}
       <Button
+        {@attach attachment}
         title={$t('comment.actions.label')}
         color="tertiary"
         rounding="pill"

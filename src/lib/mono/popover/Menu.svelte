@@ -8,6 +8,8 @@
     type Strategy,
   } from '@floating-ui/core'
   import Popover from '../popover/Popover.svelte'
+  import type { Snippet } from 'svelte'
+  import type { Attachment } from 'svelte/attachments'
 
   interface Props {
     openOnHover?: boolean
@@ -17,7 +19,7 @@
     middleware?: Middleware[]
     strategy?: Strategy
     class?: string
-    target?: import('svelte').Snippet
+    target?: Snippet<[Attachment]>
     children?: import('svelte').Snippet<[boolean]>
   }
 
@@ -41,11 +43,11 @@
   {middleware}
   {strategy}
   {manual}
+  {target}
   {...rest}
   bind:open
   popoverClass="rounded-xl w-full backdrop-blur-md max-w-72"
   class={clazz}
-  {target}
 >
   {#snippet popover()}
     <div

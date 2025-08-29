@@ -25,8 +25,9 @@
 </script>
 
 <Menu placement="bottom">
-  {#snippet target()}
+  {#snippet target(attachment)}
     <Button
+      {@attach attachment}
       color="tertiary"
       alignment="left"
       size="md"

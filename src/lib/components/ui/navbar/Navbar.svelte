@@ -105,8 +105,9 @@
       href="/create"
     />
     <Menu placement="bottom">
-      {#snippet target()}
+      {#snippet target(attachment)}
         <button
+          {@attach attachment}
           class="w-10 h-10 rounded-full border-slate-200 dark:border-zinc-700
       transition-all bg-slate-50 dark:bg-zinc-900 relative
       hover:bg-slate-200 dark:hover:bg-zinc-700 group cursor-pointer"

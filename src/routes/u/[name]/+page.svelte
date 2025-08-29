@@ -240,8 +240,8 @@
                 {/if}
                 {#if isAdmin(profile.current?.user)}
                   <Menu class="ml-auto" placement="bottom-end">
-                    {#snippet target()}
-                      <Button size="sm" rounding="pill">
+                    {#snippet target(attachment)}
+                      <Button {@attach attachment} size="sm" rounding="pill">
                         <ShieldIcon width={16} filled />
                         {$t('moderation.label')}
                       </Button>

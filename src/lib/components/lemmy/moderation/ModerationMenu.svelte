@@ -19,10 +19,11 @@
     Trash,
   } from 'svelte-hero-icons'
   import { amMod, ban, isAdmin, remove, viewVotes } from './moderation'
+  import type { Attachment } from 'svelte/attachments'
 
   interface Props {
     item: PostView | CommentView
-    target: Snippet<[boolean]>
+    target: Snippet<[Attachment, boolean]>
   }
 
   let { item = $bindable(), target: passedTarget }: Props = $props()
@@ -75,8 +76,8 @@
 </script>
 
 <Menu placement="bottom-end">
-  {#snippet target()}
-    {@render passedTarget(acting)}
+  {#snippet target(attachment)}
+    {@render passedTarget(attachment, acting)}
   {/snippet}
   {#if (profile.current?.user && amMod(profile.current.user, item.community)) || (profile.current?.user && isAdmin(profile.current.user))}
     <MenuDivider showLabel>

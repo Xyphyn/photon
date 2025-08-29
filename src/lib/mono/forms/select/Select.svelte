@@ -24,7 +24,7 @@
         },
       ]
     >
-    target?: Snippet
+    target?: Snippet<[Attachment]>
     oncontextmenu?: HTMLSelectAttributes['oncontextmenu']
     onchange?: HTMLSelectAttributes['onchange']
     placement?: Placement
@@ -54,6 +54,7 @@
   import Label from '../Label.svelte'
   import { generateID } from '../helper.js'
   import type { Placement } from 'svelte-floating-ui/core'
+  import type { Attachment } from 'svelte/attachments'
 
   let open = $state(false)
   let element: HTMLSelectElement | undefined = $state()

@@ -83,8 +83,9 @@
     icon={Cog6Tooth}
   />
   <Select bind:value={theme.colorScheme} size="sm">
-    {#snippet target()}
+    {#snippet target(attachment)}
       <SidebarButton
+        {@attach attachment}
         label={$t('nav.menu.colorscheme.label')}
         icon={theme.colorScheme == 'system'
           ? ComputerDesktop
