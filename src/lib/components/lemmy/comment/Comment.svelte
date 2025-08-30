@@ -12,7 +12,7 @@
   import { getClient } from '$lib/lemmy.svelte.js'
   import { errorMessage } from '$lib/lemmy/error'
   import { settings } from '$lib/settings.svelte'
-  import { Button, modal, Modal, toast } from 'mono-svelte'
+  import { Button, Modal, toast } from 'mono-svelte'
   import {
     Bookmark,
     Icon,
