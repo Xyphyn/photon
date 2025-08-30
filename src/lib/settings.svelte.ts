@@ -3,9 +3,6 @@ import { env } from '$env/dynamic/public'
 import { locale } from './i18n/translations'
 import { browser } from '$app/environment'
 
-console.log('Using the following default settings from the environment:')
-console.log(env)
-
 export type View = 'cozy' | 'compact'
 
 export const SSR_ENABLED = env.PUBLIC_SSR_ENABLED?.toLowerCase() == 'true'
@@ -230,7 +227,7 @@ function isObject(item: object) {
  * @param target
  * @param ...sources
  */
-// eslint-disable-next-line
+
 function mergeDeep(target: any, ...sources: any[]) {
   if (!sources.length) return target
   const source = sources.shift()

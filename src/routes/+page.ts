@@ -1,6 +1,6 @@
 import { t } from '$lib/i18n/translations.js'
 import { postFeed } from '$lib/lemmy/postfeed.svelte.js'
-import { ReactiveState } from '$lib/promise.svelte.js'
+import { ReactiveState, awaitIfServer } from '$lib/promise.svelte.js'
 import { settings } from '$lib/settings.svelte'
 import type { ListingType, SortType } from 'lemmy-js-client'
 import { ChevronDoubleUp } from 'svelte-hero-icons'
@@ -13,21 +13,25 @@ export async function load({ url, fetch }) {
   const listingType: ListingType =
     (url.searchParams.get('type') as ListingType) || settings.defaultSort.feed
 
+  const feed = postFeed({
+    id: 'main',
+    request: {
+      page_cursor: cursor,
+      sort: sort,
+      type_: listingType,
+      limit: 20,
+      show_hidden: settings.posts.showHidden,
+    },
+    url: url,
+    fetch: fetch,
+  })
+
   return {
-    feed: new ReactiveState(
-      await postFeed({
-        id: 'main',
-        request: {
-          page_cursor: cursor,
-          sort: sort,
-          type_: listingType,
-          limit: 20,
-          show_hidden: settings.posts.showHidden,
-        },
-        url: url,
-        fetch: fetch,
-      }),
-    ),
+    feed: new ReactiveState((await awaitIfServer(feed)).data),
+    filters: new ReactiveState({
+      sort: sort,
+      type_: listingType,
+    }),
     contextual: {
       actions: [
         {
