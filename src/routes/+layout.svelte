@@ -76,12 +76,13 @@
 
   let nprogressTimeout = -1
   $effect(() => {
-    if (navigating.to)
+    if (navigating.to) {
+      clearTimeout(nprogressTimeout)
       nprogressTimeout = setTimeout(
         () => nProgress.start(),
         200,
       ) as unknown as number
-    else {
+    } else {
       if (nprogressTimeout > -1) {
         clearTimeout(nprogressTimeout)
         nprogressTimeout = -1
