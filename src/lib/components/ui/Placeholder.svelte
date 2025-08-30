@@ -28,7 +28,6 @@
     {#if icon}
       <div
         class={[
-          ,
           iconClass
             ? iconClass
             : 'bg-slate-100 dark:bg-zinc-900 p-3 rounded-2xl text-primary-900 dark:text-primary-100',

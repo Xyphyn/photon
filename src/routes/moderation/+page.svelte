@@ -15,6 +15,7 @@
   import { tick } from 'svelte'
   import { Check, Funnel, Icon, ShieldCheck, XMark } from 'svelte-hero-icons'
   import Report from './Report.svelte'
+  import Fixate from '$lib/components/ui/generic/Fixate.svelte'
 
   let { data = $bindable() } = $props()
 
@@ -153,11 +154,13 @@
       {/if}
     {/snippet}
   </CommonList>
-  <Pageination
-    page={data.page}
-    href={current => `?page=${current}`}
-    hasMore={data.items.value.length >= 20}
-  />
+  <Fixate placement="bottom">
+    <Pageination
+      page={data.page}
+      href={current => `?page=${current}`}
+      hasMore={data.items.value.length >= 20}
+    />
+  </Fixate>
 {:else}
   <div class="h-full grid place-items-center">
     <Placeholder

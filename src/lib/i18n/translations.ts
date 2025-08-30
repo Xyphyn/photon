@@ -127,7 +127,7 @@ export const aliases = new Map([
 ])
 
 export const { t, locale, locales, loading, loadTranslations } = new i18n<
-  Parser.Params<any, object>, // eslint-disable-line
+  Parser.Params<any, object>,
   object,
   object
 >(config)

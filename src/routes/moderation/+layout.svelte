@@ -21,6 +21,4 @@
     },
   ]}
 />
-<div class="w-full space-y-4 pb-8">
-  {@render children?.()}
-</div>
+{@render children?.()}

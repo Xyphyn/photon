@@ -14,7 +14,6 @@ declare global {
       slots?: {
         sidebar?: {
           component?: ComponentType
-          // eslint-disable-next-line
           props?: any
         }
       }

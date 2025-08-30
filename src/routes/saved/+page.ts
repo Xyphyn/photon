@@ -26,7 +26,7 @@ export async function load({ url, fetch }) {
   const { posts, comments } = await client({ func: fetch }).getPersonDetails({
     saved_only: true,
     limit: 20,
-    page: 1,
+    page: page,
     person_id: user?.local_user_view.person.id,
   })
 
