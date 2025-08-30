@@ -4,12 +4,12 @@
   import CommunityItem from '$lib/components/lemmy/community/CommunityItem.svelte'
   import Location from '$lib/components/lemmy/dropdowns/Location.svelte'
   import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
+  import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
   import Skeleton from '$lib/components/ui/generic/Skeleton.svelte'
   import CommonList from '$lib/components/ui/layout/CommonList.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import { t } from '$lib/i18n/translations.js'
   import { LINKED_INSTANCE_URL } from '$lib/instance.svelte'
   import { Material, Option } from 'mono-svelte'
@@ -17,7 +17,6 @@
   import { expoOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'
   import SearchBar from '../search/SearchBar.svelte'
-  import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
 
   let { data } = $props()
 
@@ -44,43 +43,46 @@
 
 <Header pageHeader class="justify-between">
   <span>{$t('routes.communities.title')}</span>
+
+  {#snippet extended()}
+    <form method="get" action="/communities" class="contents" bind:this={form}>
+      <SearchBar bind:query={search} />
+
+      <div class="flex flex-row flex-wrap gap-4 mt-4 items-center">
+        <Location
+          name="type"
+          selected={data.type}
+          onchange={() => form?.requestSubmit()}
+        >
+          {#if !LINKED_INSTANCE_URL}
+            {@const instanceSet = new Set(
+              profile.meta.profiles.map(i => i.instance),
+            )}
+            {#if instanceSet.size > 1}
+              <Option disabled data-label="true">—</Option>
+              {#each instanceSet as instance}
+                <Option
+                  icon={ServerStack}
+                  value={encodeURIComponent(`instance-${instance}`)}
+                >
+                  {instance}
+                </Option>
+              {/each}
+            {/if}
+          {/if}
+        </Location>
+        <Sort
+          name="sort"
+          selected={data.sort}
+          onchange={() => form?.requestSubmit()}
+        />
+      </div>
+    </form>
+  {/snippet}
 </Header>
 
-<form method="get" action="/communities" class="contents" bind:this={form}>
-  <SearchBar bind:query={search} />
-
-  <div class="flex flex-row flex-wrap gap-4 mt-4 items-center">
-    <Location
-      name="type"
-      selected={data.type}
-      onchange={() => form?.requestSubmit()}
-    >
-      {#if !LINKED_INSTANCE_URL}
-        {@const instanceSet = new Set(
-          profile.meta.profiles.map(i => i.instance),
-        )}
-        {#if instanceSet.size > 1}
-          <Option disabled data-label="true">—</Option>
-          {#each instanceSet as instance}
-            <Option
-              icon={ServerStack}
-              value={encodeURIComponent(`instance-${instance}`)}
-            >
-              {instance}
-            </Option>
-          {/each}
-        {/if}
-      {/if}
-    </Location>
-    <Sort
-      name="sort"
-      selected={data.sort}
-      onchange={() => form?.requestSubmit()}
-    />
-  </div>
-</form>
 {#if navigating.to?.route.id == '/communities'}
-  <div class="flex flex-col gap-3 mt-6">
+  <div class="flex flex-col gap-3">
     {#each new Array(5) as _, index}
       {_}
       <div
@@ -107,7 +109,7 @@
     {/if}
 
     {#if showTop}
-      <EndPlaceholder size="lg" margin="lg">
+      <EndPlaceholder size="lg" margin="md">
         {$t('routes.search.top')}
       </EndPlaceholder>
       <div
@@ -137,7 +139,7 @@
     {/if}
 
     {#if data.communities.value.slice(showTop ? 3 : 0).length > 0}
-      <EndPlaceholder size="lg" margin="lg">
+      <EndPlaceholder size="lg" margin="md">
         {$t('routes.search.other')}
       </EndPlaceholder>
     {/if}
