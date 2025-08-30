@@ -93,8 +93,7 @@
 </script>
 
 {#snippet selectTarget(attachment: Attachment)}
-  <Label text={label} class={['space-y-1 relative', clazz, baseClass]}>
-    {@render customLabel?.()}
+  <Label text={label} customText={customLabel} class={['space-y-1 relative', clazz, baseClass]}>
     <div class="relative" role="presentation">
       <select
         {@attach attachment}

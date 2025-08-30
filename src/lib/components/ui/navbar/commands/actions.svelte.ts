@@ -182,7 +182,7 @@ export function getGroups(
                 {
                   name: t.get('filter.sort.top.time.6hours'),
                   icon: ChartBar,
-                  href: '/?sort=TopSixHours',
+                  href: '/?sort=TopSixHour',
                 },
                 {
                   name: t.get('filter.sort.top.time.hour'),

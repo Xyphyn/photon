@@ -603,12 +603,12 @@
             "title": "Removing Submission",
             "titleRestore": "Restoring Submission",
             "titlePurge": "Purging Submission",
-            "withReason": "Reply with reason",
+            "withReason": "Notify user",
             "comment": "Comment",
             "message": "Message",
             "failReply": "Failed to post reply. Removing anyway...",
             "failMessage": "Failed to message user. Removing anyway...",
-            "failEmptyReply": "Your reply cannot be empty if 'Reply with reason' is enabled.",
+            "failEmptyReply": "Your reply cannot be empty if 'Notify user' is enabled.",
             "successPurge": "Successfully purged that submission."
         },
         "reportModal": {

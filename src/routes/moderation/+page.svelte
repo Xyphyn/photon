@@ -159,9 +159,11 @@
     hasMore={data.items.value.length >= 20}
   />
 {:else}
-  <Placeholder
-    icon={ShieldCheck}
-    title={$t('routes.moderation.empty.title')}
-    description={$t('routes.moderation.empty.description')}
-  />
+  <div class="h-full grid place-items-center">
+    <Placeholder
+      icon={ShieldCheck}
+      title={$t('routes.moderation.empty.title')}
+      description={$t('routes.moderation.empty.description')}
+    />
+  </div>
 {/if}

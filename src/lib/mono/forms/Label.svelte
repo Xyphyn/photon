@@ -1,4 +1,5 @@
 <script lang="ts">
+  import type { Snippet } from 'svelte'
   import type { ClassValue, HTMLAttributes } from 'svelte/elements'
 
   interface Props extends HTMLAttributes<HTMLSpanElement> {
@@ -8,13 +9,14 @@
      */
     text?: string | undefined
     class?: ClassValue
-    children?: import('svelte').Snippet
+    customText?: Snippet
   }
 
   let {
     for: forID = undefined,
     text = undefined,
     class: clazz = '',
+    customText,
     children,
     ...rest
   }: Props = $props()
@@ -26,8 +28,9 @@
   class={['text-sm text-slate-800 dark:text-zinc-200 font-medium', clazz]}
 >
   {#if text}
-    {text}
-  {:else if children}
-    {@render children?.()}
+    <div class="inline-block">{text}</div>
+  {:else if customText}
+    {@render customText?.()}
   {/if}
+  {@render children?.()}
 </label>
