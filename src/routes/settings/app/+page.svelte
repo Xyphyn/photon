@@ -153,47 +153,41 @@
       class="flex flex-row flex-wrap
       flex-1 gap-2 w-full lg:w-max max-w-full lg:self-end"
     >
-      <div class="max-w-full">
-        <Select bind:value={settings.defaultSort.feed}>
-          {#snippet customLabel()}
-            <span class="flex items-center gap-1">
-              <Icon src={GlobeAmericas} size="16" mini />
-              {$t('filter.location.label')}
-            </span>
-          {/snippet}
-          <Option value="All">{$t('filter.location.all')}</Option>
-          <Option value="Local">{$t('filter.location.local')}</Option>
-          <Option value="Subscribed">
-            {$t('filter.location.subscribed')}
-          </Option>
-          <Option value="Moderator">
-            {$t('filter.location.moderator')}
-          </Option>
-        </Select>
-      </div>
-      <div class="max-w-full">
-        <Sort bind:selected={settings.defaultSort.sort} navigate={false} />
-      </div>
-      <div class="max-w-full">
-        <Select bind:value={settings.defaultSort.comments}>
-          {#snippet customLabel()}
-            <span class="flex items-center gap-1">
-              <Icon src={ChatBubbleOvalLeftEllipsis} size="14" mini />
-              {$t('content.comments')}
-            </span>
-          {/snippet}
+      <Select bind:value={settings.defaultSort.feed}>
+        {#snippet customLabel()}
+          <div class="flex items-center gap-1">
+            <Icon src={GlobeAmericas} size="16" mini />
+            {$t('filter.location.label')}
+          </div>
+        {/snippet}
+        <Option value="All">{$t('filter.location.all')}</Option>
+        <Option value="Local">{$t('filter.location.local')}</Option>
+        <Option value="Subscribed">
+          {$t('filter.location.subscribed')}
+        </Option>
+        <Option value="Moderator">
+          {$t('filter.location.moderator')}
+        </Option>
+      </Select>
+      <Sort bind:selected={settings.defaultSort.sort} navigate={false} />
+      <Select bind:value={settings.defaultSort.comments}>
+        {#snippet customLabel()}
+          <div class="flex items-center gap-1">
+            <Icon src={ChatBubbleOvalLeftEllipsis} size="14" mini />
+            {$t('content.comments')}
+          </div>
+        {/snippet}
 
-          <Option icon={Fire} value="Hot">{$t('filter.sort.hot')}</Option>
-          <Option icon={Trophy} value="Top">
-            {$t('filter.sort.top.label')}
-          </Option>
-          <Option icon={Star} value="New">{$t('filter.sort.new')}</Option>
-          <Option icon={Clock} value="Old">{$t('filter.sort.old')}</Option>
-          <Option icon={ArrowTrendingDown} value="Controversial">
-            {$t('filter.sort.controversial')}
-          </Option>
-        </Select>
-      </div>
+        <Option icon={Fire} value="Hot">{$t('filter.sort.hot')}</Option>
+        <Option icon={Trophy} value="Top">
+          {$t('filter.sort.top.label')}
+        </Option>
+        <Option icon={Star} value="New">{$t('filter.sort.new')}</Option>
+        <Option icon={Clock} value="Old">{$t('filter.sort.old')}</Option>
+        <Option icon={ArrowTrendingDown} value="Controversial">
+          {$t('filter.sort.controversial')}
+        </Option>
+      </Select>
     </div>
   </Setting>
   <ToggleSetting
