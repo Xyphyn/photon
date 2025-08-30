@@ -17,7 +17,6 @@
     MenuButton,
     MenuDivider,
     modal,
-    Modal,
     Option,
     Select,
     Spinner,
@@ -41,8 +40,6 @@
     UserCircle,
     UserGroup,
   } from 'svelte-hero-icons'
-
-  let showInstance = $state(false)
 </script>
 
 {#snippet siteSnippet()}
@@ -136,33 +133,31 @@
   {/snippet}
   {$t('nav.menu.settings')}
 </MenuButton>
-<!--svelte-ignore a11y_click_events_have_key_events-->
-<!--svelte-ignore a11y_no_static_element_interactions-->
-<div onclick={e => e.stopPropagation()}>
-  <Select bind:value={theme.colorScheme} size="sm">
-    {#snippet target()}
-      <MenuButton
-        icon={theme.colorScheme == 'system'
-          ? ComputerDesktop
-          : theme.colorScheme == 'light'
-            ? Sun
-            : Moon}
-        class=" w-full"
-      >
-        {$t('nav.menu.colorscheme.label')}
-      </MenuButton>
-      <Option value="system" class="hidden" icon={ComputerDesktop}>
-        {$t('nav.menu.colorscheme.system')}
-      </Option>
-      <Option value="light" class="hidden" icon={Sun}>
-        {$t('nav.menu.colorscheme.light')}
-      </Option>
-      <Option value="dark" class="hidden" icon={Moon}>
-        {$t('nav.menu.colorscheme.dark')}
-      </Option>
-    {/snippet}
-  </Select>
-</div>
+<Select bind:value={theme.colorScheme} size="sm" placement="left">
+  {#snippet target(attachment)}
+    <MenuButton
+      {@attach attachment}
+      icon={theme.colorScheme == 'system'
+        ? ComputerDesktop
+        : theme.colorScheme == 'light'
+          ? Sun
+          : Moon}
+      class=" w-full"
+      nest
+    >
+      {$t('nav.menu.colorscheme.label')}
+    </MenuButton>
+    <Option value="system" class="hidden" icon={ComputerDesktop}>
+      {$t('nav.menu.colorscheme.system')}
+    </Option>
+    <Option value="light" class="hidden" icon={Sun}>
+      {$t('nav.menu.colorscheme.light')}
+    </Option>
+    <Option value="dark" class="hidden" icon={Moon}>
+      {$t('nav.menu.colorscheme.dark')}
+    </Option>
+  {/snippet}
+</Select>
 <MenuButton href="/theme">
   {#snippet prefix()}
     <Icon src={Swatch} size="16" micro />

@@ -54,44 +54,52 @@
 
 <Header pageHeader>
   {$t('routes.search.title')}
+  {#snippet extended()}
+    <form
+      method="get"
+      action="/search"
+      class="flex flex-col gap-4"
+      bind:this={form}
+    >
+      <SearchBar bind:query={data.filters.value.query} />
+      <div class="flex flex-row flex-wrap items-center gap-4">
+        <Select
+          name="type"
+          bind:value={data.filters.value.type}
+          onchange={() => form?.requestSubmit()}
+        >
+          {#snippet customLabel()}
+            <span class="flex items-center gap-1">
+              <Icon src={AdjustmentsHorizontal} mini size="15" />
+              {$t('filter.type')}
+            </span>
+          {/snippet}
+          <Option value="All">{$t('content.all')}</Option>
+          <Option value="Posts">{$t('content.posts')}</Option>
+          <Option value="Comments">{$t('content.comments')}</Option>
+          <Option value="Communities">{$t('content.communities')}</Option>
+          <Option value="Users">{$t('content.users')}</Option>
+          <Option value="Url">{$t('content.url')}</Option>
+        </Select>
+        <Sort
+          name="sort"
+          bind:selected={data.filters.value.sort}
+          onchange={() => form?.requestSubmit()}
+        />
+        <Button
+          size="custom"
+          rounding="xl"
+          class="self-end justify-self-center h-8.5 w-8.5"
+          onclick={() => (moreOptions = !moreOptions)}
+          aria-label={$t('post.actions.more.label')}
+        >
+          <Icon src={ChevronDoubleDown} size="20" mini />
+        </Button>
+      </div>
+    </form>
+  {/snippet}
 </Header>
-<form method="get" action="/search" class="contents" bind:this={form}>
-  <SearchBar bind:query={data.filters.value.query} />
-  <div class="flex flex-row flex-wrap items-center gap-4 my-4 sm:my-6">
-    <Select
-      name="type"
-      bind:value={data.filters.value.type}
-      onchange={() => form?.requestSubmit()}
-    >
-      {#snippet customLabel()}
-        <span class="flex items-center gap-1">
-          <Icon src={AdjustmentsHorizontal} mini size="15" />
-          {$t('filter.type')}
-        </span>
-      {/snippet}
-      <Option value="All">{$t('content.all')}</Option>
-      <Option value="Posts">{$t('content.posts')}</Option>
-      <Option value="Comments">{$t('content.comments')}</Option>
-      <Option value="Communities">{$t('content.communities')}</Option>
-      <Option value="Users">{$t('content.users')}</Option>
-      <Option value="Url">{$t('content.url')}</Option>
-    </Select>
-    <Sort
-      name="sort"
-      bind:selected={data.filters.value.sort}
-      onchange={() => form?.requestSubmit()}
-    />
-    <Button
-      size="custom"
-      rounding="xl"
-      class="self-end justify-self-center h-8.5 w-8.5"
-      onclick={() => (moreOptions = !moreOptions)}
-      aria-label={$t('post.actions.more.label')}
-    >
-      <Icon src={ChevronDoubleDown} size="20" mini />
-    </Button>
-  </div>
-</form>
+
 {#if moreOptions}
   <div
     transition:slide={{ axis: 'y', easing: expoOut, duration: 500 }}

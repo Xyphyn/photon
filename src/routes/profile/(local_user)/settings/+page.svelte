@@ -120,8 +120,8 @@
         {#if site.data && formData.discussion_languages}
           <div class="flex gap-2 flex-wrap flex-row">
             <Menu class="gap-px">
-              {#snippet target()}
-                <button type="button">
+              {#snippet target(attachment)}
+                <button {@attach attachment} type="button">
                   <Badge color="blue-subtle">
                     <Icon src={Plus} micro size="14" />
                     {$t('common.add')}

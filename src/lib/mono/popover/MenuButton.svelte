@@ -5,7 +5,7 @@
     type ButtonColor,
     type ButtonProps,
   } from '../button/Button.svelte'
-  import { Icon, type IconSource } from 'svelte-hero-icons'
+  import { ChevronRight, Icon, type IconSource } from 'svelte-hero-icons'
   import type { ClassValue } from 'svelte/elements'
 
   interface Props extends ButtonProps {
@@ -18,6 +18,7 @@
     prefix?: Snippet
     children?: Snippet
     suffix?: Snippet
+    nest?: boolean
   }
 
   let {
@@ -30,6 +31,7 @@
     prefix: passedPrefix,
     children,
     suffix: passedSuffix,
+    nest,
     ...rest
   }: Props = $props()
 </script>
@@ -48,6 +50,7 @@
   {alignment}
   {href}
   {disabled}
+  data-autoclose={nest ? 'false' : 'true'}
   shadow="none"
 >
   {#snippet prefix()}
@@ -67,5 +70,8 @@
   {@render children?.()}
   {#snippet suffix()}
     {@render passedSuffix?.()}
+    {#if nest}
+      <Icon src={ChevronRight} size="16" micro class="ml-auto" />
+    {/if}
   {/snippet}
 </Button>

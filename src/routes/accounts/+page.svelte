@@ -171,8 +171,9 @@
             </span>
           </div>
           <Menu placement="bottom-end">
-            {#snippet target()}
+            {#snippet target(attachment)}
               <Button
+                {@attach attachment}
                 size="square-md"
                 color="tertiary"
                 class="justify-self-end ml-auto z-50"

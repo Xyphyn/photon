@@ -134,8 +134,9 @@
   {#if profile.current?.user && (amMod(profile.current.user, post.community) || isAdmin(profile.current.user))}
     {#await import('$lib/components/lemmy/moderation/ModerationMenu.svelte') then { default: ModerationMenu }}
       <ModerationMenu bind:item={post}>
-        {#snippet target(acting)}
+        {#snippet target(attachment, acting)}
           <Button
+            {@attach attachment}
             size="custom"
             color="secondary"
             rounding="pill"
@@ -172,8 +173,9 @@
   {/if}
 
   <Menu placement="bottom-end">
-    {#snippet target()}
+    {#snippet target(popover)}
       <Button
+        {@attach popover}
         title={$t('post.actions.more.label')}
         color="secondary"
         rounding="pill"

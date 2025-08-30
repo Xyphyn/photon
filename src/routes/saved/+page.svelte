@@ -61,8 +61,6 @@
   {/snippet}
 </Header>
 
-<div class="h-3 sm:h-6"></div>
-
 {#if !data.data || (data.data?.length ?? 0) == 0}
   <Placeholder
     icon={Bookmark}

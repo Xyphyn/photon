@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { HTMLAttributes } from 'svelte/elements'
+  import type { ClassValue, HTMLAttributes } from 'svelte/elements'
 
   interface Props extends HTMLAttributes<HTMLSpanElement> {
     for?: string | undefined
@@ -7,7 +7,7 @@
      * The `text` prop will take precedence over the slot.
      */
     text?: string | undefined
-    class?: string
+    class?: ClassValue
     children?: import('svelte').Snippet
   }
 
@@ -20,16 +20,14 @@
   }: Props = $props()
 </script>
 
-<svelte:element
-  this={forID ? 'label' : 'span'}
+<label
   {...rest}
   for={forID}
-  class="text-sm text-slate-800 dark:text-zinc-200 font-medium w-full {clazz ||
-    ''}"
+  class={['text-sm text-slate-800 dark:text-zinc-200 font-medium', clazz]}
 >
   {#if text}
     {text}
   {:else if children}
     {@render children?.()}
   {/if}
-</svelte:element>
+</label>

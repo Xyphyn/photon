@@ -170,8 +170,8 @@
       </Button>
     {/if}
     <Menu placement="top-end">
-      {#snippet target()}
-        <Button size="custom" rounding="pill" class="h-8.5 aspect-square">
+      {#snippet target(attachment)}
+        <Button {@attach attachment} size="custom" rounding="pill" class="h-8.5 aspect-square">
           {#snippet prefix()}
             <Icon src={EllipsisHorizontal} size="16" mini />
           {/snippet}

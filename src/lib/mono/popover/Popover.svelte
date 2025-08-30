@@ -9,6 +9,7 @@
   } from '@floating-ui/core'
   import { createFloatingActions } from 'svelte-floating-ui'
   import { focusTrap } from 'svelte-focus-trap'
+  import type { Attachment } from 'svelte/attachments'
   import { expoOut } from 'svelte/easing'
   import { scale } from 'svelte/transition'
   import { Material } from '../index'
@@ -21,10 +22,8 @@
     placement?: Placement
     middleware?: Middleware[]
     strategy?: Strategy
-    manual?: boolean
     popoverClass?: string
-    class?: string
-    target?: import('svelte').Snippet
+    target?: import('svelte').Snippet<[Attachment]>
     popover?: import('svelte').Snippet<[boolean]>
     children?: import('svelte').Snippet<[boolean]>
   }
@@ -36,17 +35,12 @@
     placement = 'bottom-start',
     middleware = [offset(6), shift(), flip()],
     strategy = 'fixed',
-    manual = false,
     popoverClass = '',
-    class: clazz = '',
     target,
     popover,
     children,
   }: Props = $props()
 
-  let canUseContents = $state(true)
-
-  let el = $state<HTMLElement>()
   let popoverEl = $state<HTMLElement>()
 
   let origins: Record<Placement, string> = {
@@ -75,66 +69,54 @@
     },
   })
 
-  const customFloatingContent = (node: HTMLDivElement) => {
-    floatingContent(node)
-  }
+  const menuAttach: Attachment = element => {
+    const e = element as HTMLButtonElement
 
-  const customFloatingRef = (node: HTMLDivElement) => {
-    const n = node.children.item(0)
+    const mouseLeave = () => (openOnHover ? (open = false) : false)
+    const focus = () => (openOnHover ? (open = true) : false)
+    const focusout = () => (openOnHover ? (open = false) : false)
+    const click = () => {
+      open = !open
 
-    // @ts-expect-error svelte hell
-    if (n) floatingRef(n)
-    else {
-      canUseContents = false
-      floatingRef(node)
+      if (autoClose) {
+        const clickHandler = (event: Event) => {
+          if (!e) return
+
+          const target = event.target as Element | null
+
+          if (!e?.contains(event.target as Element | null)) {
+            if (target?.closest("[data-autoclose='false']") == null) {
+              open = false
+              document.removeEventListener('click', clickHandler)
+            }
+          }
+        }
+        document.addEventListener('click', clickHandler)
+      }
+    }
+    const keydown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') open = false
+    }
+
+    e.addEventListener('mouseleave', mouseLeave)
+    e.addEventListener('focus', focus)
+    e.addEventListener('focusout', focusout)
+    e.addEventListener('click', click)
+    e.addEventListener('keydown', keydown)
+
+    floatingRef(e)
+
+    return () => {
+      e.removeEventListener('mouseleave', mouseLeave)
+      e.removeEventListener('focus', focus)
+      e.removeEventListener('focusout', focusout)
+      e.removeEventListener('click', click)
+      e.removeEventListener('keydown', keydown)
     }
   }
 </script>
 
-<svelte:body
-  onclick={e => {
-    if (openOnHover) return
-
-    // @ts-expect-error svelte hell
-    if (!el?.contains(e.target) && open) {
-      if (!autoClose) {
-        // @ts-expect-error svelte hell
-        if (popoverEl && !popoverEl.contains(e.target)) {
-          open = false
-        }
-      } else {
-        open = false
-      }
-    }
-  }}
-  onkeydown={async e => {
-    if (open && e.key == 'Escape') {
-      open = false
-      // @ts-expect-error svelte hell
-      el?.firstChild.focus()
-    }
-  }}
-/>
-
-{#if target}
-  <div
-    onmouseover={() => (openOnHover ? (open = true) : false)}
-    onmouseleave={() => (openOnHover ? (open = false) : false)}
-    onfocus={() => (openOnHover ? (open = true) : false)}
-    onfocusout={() => (openOnHover ? (open = false) : false)}
-    onclick={() => (!openOnHover && !manual ? (open = !open) : false)}
-    onkeydown={e => {
-      if (e.key == 'Escape') open = false
-    }}
-    tabindex="0"
-    role="button"
-    class="{canUseContents ? 'contents text-left' : 'w-max h-max'} {clazz}"
-    bind:this={el}
-    use:customFloatingRef
-  >
-    {@render target?.()}
-  </div>
-{/if}
+{@render target?.(menuAttach)}
 
 {#if open}
   <Portal class="z-150">
@@ -146,7 +128,7 @@
         easing: expoOut,
       }}
       class="z-150 {popoverClass}"
-      use:customFloatingContent
+      use:floatingContent
       use:focusTrap
       bind:this={popoverEl}
     >

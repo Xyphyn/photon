@@ -24,7 +24,7 @@
         },
       ]
     >
-    target?: Snippet
+    target?: Snippet<[Attachment]>
     oncontextmenu?: HTMLSelectAttributes['oncontextmenu']
     onchange?: HTMLSelectAttributes['onchange']
     placement?: Placement
@@ -35,12 +35,14 @@
 
 <script lang="ts" generics="T">
   import { setContext, tick, type Snippet } from 'svelte'
+  import type { Placement } from 'svelte-floating-ui/core'
   import {
     CheckCircle,
     ChevronUpDown,
     Icon,
     type IconSource,
   } from 'svelte-hero-icons'
+  import type { Attachment } from 'svelte/attachments'
   import type { ClassValue, HTMLSelectAttributes } from 'svelte/elements'
   import {
     buttonColor,
@@ -52,8 +54,6 @@
   import Menu from '../../popover/Menu.svelte'
   import MenuButton from '../../popover/MenuButton.svelte'
   import Label from '../Label.svelte'
-  import { generateID } from '../helper.js'
-  import type { Placement } from 'svelte-floating-ui/core'
 
   let open = $state(false)
   let element: HTMLSelectElement | undefined = $state()
@@ -78,7 +78,6 @@
     label = undefined,
     size = 'md',
     shadow = 'none',
-    id = generateID(),
     class: clazz = '',
     baseClass = '',
     selectClass = '',
@@ -88,52 +87,57 @@
     oncontextmenu,
     onchange,
     placement = 'bottom',
-    target,
+    target: passedTarget,
     ...rest
   }: Props<T> = $props()
 </script>
 
-{#snippet selectTarget()}
-  <select
-    {...rest}
-    {id}
-    bind:this={element}
-    class={[
-      buttonSize[size],
-      buttonShadow[shadow],
-      buttonColor.secondary,
-      'appearance-none transition-colors rounded-xl text-sm w-full min-w-full cursor-pointer pr-6',
-      selectClass,
-      clazz,
-    ]}
-    bind:value
-    onmousedown={e => {
-      e.preventDefault()
-    }}
-    onkeypress={e => {
-      e.preventDefault()
-      open = !open
-    }}
-    {onchange}
-    {oncontextmenu}
-    {placeholder}
-  >
-    {#if placeholder}
-      <option disabled selected value="">{placeholder}</option>
-    {/if}
-    {@render children?.()}
-  </select>
+{#snippet selectTarget(attachment: Attachment)}
+  <Label text={label} class={['space-y-1 relative', clazz, baseClass]}>
+    {@render customLabel?.()}
+    <Icon
+      src={ChevronUpDown}
+      micro
+      size="16"
+      class="absolute right-1.5 bottom-1 box-border pointer-events-none z-10 text-slate-600 dark:text-zinc-400"
+    />
+    <select
+      {@attach attachment}
+      {...rest}
+      bind:this={element}
+      class={[
+        buttonSize[size],
+        buttonShadow[shadow],
+        buttonColor.secondary,
+        'appearance-none transition-colors rounded-xl text-sm w-full min-w-full cursor-pointer pr-6',
+        selectClass,
+        clazz,
+      ]}
+      bind:value
+      onmousedown={e => {
+        e.preventDefault()
+      }}
+      onkeypress={e => {
+        e.preventDefault()
+        open = !open
+      }}
+      {onchange}
+      {oncontextmenu}
+      {placeholder}
+    >
+      {#if placeholder}
+        <option disabled selected value="">{placeholder}</option>
+      {/if}
+      {@render children?.()}
+    </select>
+  </Label>
 {/snippet}
 
-<div class={['flex flex-col gap-1', clazz, baseClass]}>
-  {#if customLabel || label}
-    <Label for={id} text={label}>
-      {@render customLabel?.()}
-    </Label>
-  {/if}
-
-  <div class="w-full relative">
-    <Menu bind:open {placement} target={target ?? selectTarget}>
+    <Menu bind:open {placement}>
+      {#snippet target(attachment)}
+        {@const render = passedTarget ?? selectTarget}
+        {@render render?.(attachment)}
+      {/snippet}
       {#each context.options as option (option)}
         {#if customOption}{@render customOption({
             option,
@@ -177,11 +181,3 @@
         {/if}
       {/each}
     </Menu>
-    <Icon
-      src={ChevronUpDown}
-      micro
-      size="16"
-      class="absolute right-0 top-1/4 mx-1.5 box-border pointer-events-none"
-    />
-  </div>
-</div>

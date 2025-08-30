@@ -15,9 +15,9 @@
   let loading = $state(false)
 
   function triggerFilter(filter: string) {
-    if (!passedData.linked) return
+    if (!passedData.blocked) return
     loading = true
-    data.linked = passedData.linked.filter(i => i.domain.includes(filter))
+    data.blocked = passedData.blocked.filter(i => i.domain.includes(filter))
     loading = false
   }
 </script>
@@ -27,12 +27,12 @@
     <form onsubmit={() => triggerFilter(filter)}>
       <TextInput label={$t('filter.filter')} bind:value={filter}></TextInput>
     </form>
-    {#if data.linked && data.linked.length > 0}
+    {#if data.blocked && data.blocked.length > 0}
       {#if loading}
         <Spinner />
       {/if}
       <VirtualList
-        items={data.linked}
+        items={data.blocked}
         useWindow={false}
         height={600}
         estimatedHeight={50}
@@ -40,17 +40,17 @@
       divide-y divide-slate-200 dark:divide-zinc-900 w-full"
       >
         {#snippet item(index)}
-          {#if data.linked[index]}
+          {#if data.blocked[index]}
             <div
               class="flex justify-between items-center first:pt-0 last:pb-0 my-3 px-6"
             >
               <div class="flex flex-col">
-                <span class="font-medium">{data.linked[index].domain}</span>
+                <span class="font-medium">{data.blocked[index].domain}</span>
                 <span
                   class="text-xs text-slate-600 dark:text-zinc-400 capitalize"
                 >
-                  {data.linked[index].software ?? 'Unknown'} • <RelativeDate
-                    date={publishedToDate(data.linked[index].published)}
+                  {data.blocked[index].software ?? 'Unknown'} • <RelativeDate
+                    date={publishedToDate(data.blocked[index].published)}
                   />
                 </span>
               </div>
@@ -61,8 +61,8 @@
     {:else}
       <Placeholder
         icon={Check}
-        title="No linked instances"
-        description="This instance doesn't block any others."
+        title="No blocked instances"
+        description="This instance likely has federation disabled."
       />
     {/if}
   </div>

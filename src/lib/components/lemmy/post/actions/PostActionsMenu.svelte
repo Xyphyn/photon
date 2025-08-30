@@ -82,45 +82,40 @@
     {/snippet}
     {$t('post.actions.more.share')}
   </MenuButton>
-  <!--svelte-ignore a11y_no_static_element_interactions -->
-  <!--svelte-ignore a11y_click_events_have_key_events-->
   {#if !post.post.local}
-    <div
-      class="aspect-square w-max m-1 grid place-items-center"
-      onclick={e => e.stopPropagation()}
-    >
-      <Menu>
-        {#snippet target()}
-          <Button
-            aria-label={$t('post.actions.more.label')}
-            color="tertiary"
-            size="custom"
-            class="w-full h-full"
-          >
-            {#snippet prefix()}
-              <Icon
-                src={EllipsisHorizontal}
-                size="16"
-                micro
-                class="text-slate-600 dark:text-zinc-400"
-              />
-            {/snippet}
-          </Button>
+    <Menu>
+      {#snippet target(attachment)}
+        <Button
+          {@attach attachment}
+          aria-label={$t('post.actions.more.label')}
+          color="tertiary"
+          size="custom"
+          class="w-6 h-6 self-center"
+          data-autoclose="false"
+        >
+          {#snippet prefix()}
+            <Icon
+              src={EllipsisHorizontal}
+              size="16"
+              micro
+              class="text-slate-600 dark:text-zinc-400"
+            />
+          {/snippet}
+        </Button>
+      {/snippet}
+      <MenuButton onclick={() => share(true)}>
+        {#snippet prefix()}
+          <Icon src={GlobeAlt} size="16" micro />
         {/snippet}
-        <MenuButton onclick={() => share(true)}>
-          {#snippet prefix()}
-            <Icon src={GlobeAlt} size="16" micro />
-          {/snippet}
-          {$t('filter.location.global')}
-        </MenuButton>
-        <MenuButton onclick={() => share(false)}>
-          {#snippet prefix()}
-            <Icon src={MapPin} size="16" micro />
-          {/snippet}
-          {$t('filter.location.local')}
-        </MenuButton>
-      </Menu>
-    </div>
+        {$t('filter.location.global')}
+      </MenuButton>
+      <MenuButton onclick={() => share(false)}>
+        {#snippet prefix()}
+          <Icon src={MapPin} size="16" micro />
+        {/snippet}
+        {$t('filter.location.local')}
+      </MenuButton>
+    </Menu>
   {/if}
 </div>
 {#if profile.current?.jwt}

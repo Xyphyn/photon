@@ -48,8 +48,9 @@
       ]}
     >
       <Menu class="flex-1" placement="bottom-end">
-        {#snippet target()}
+        {#snippet target(attachment)}
           <Button
+            {@attach attachment}
             aria-label={$t('post.actions.more.label')}
             size="square-sm"
             color="none"

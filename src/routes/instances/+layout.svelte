@@ -5,7 +5,6 @@
   let { children } = $props()
 </script>
 
-<Header pageHeader>Instances</Header>
 <Tabs
   routes={[
     {
@@ -15,5 +14,5 @@
     { href: '/instances/blocked', name: 'Blocked' },
   ]}
 ></Tabs>
-<div class="h-3 sm:h-6"></div>
+<Header pageHeader>Instances</Header>
 {@render children?.()}

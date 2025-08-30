@@ -96,8 +96,6 @@
   {/snippet}
 </Header>
 
-<div class="h-3 sm:h-6"></div>
-
 <Tabs
   routes={[
     {
@@ -122,8 +120,6 @@
     },
   ]}
   style="subpage"
-></Tabs>
-
-<div class="h-3 sm:h-6"></div>
+/>
 
 {@render children?.()}

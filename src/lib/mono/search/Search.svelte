@@ -65,9 +65,10 @@
 
 <div class="relative">
   <Menu bind:open={openMenu}>
-    {#snippet target()}
+    {#snippet target(attachment)}
       {#if input}{@render input()}{:else}
         <TextInput
+          {@attach attachment}
           bind:value={query}
           oninput={e => {
             searching = true

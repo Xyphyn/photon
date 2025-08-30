@@ -23,22 +23,47 @@
     style = 'header',
   }: Props = $props()
 
-  function isSelected(url: URL, href?: SvelteURL) {
-    if (href?.search != '') return href?.search == url.search
-    else if (url.search == '') return href?.pathname == url.pathname
+  let matchType = $derived<('search' | 'pathname')[]>(
+    routes.map(i =>
+      new URL(`https://example.com${i.href}`)?.search != ''
+        ? 'search'
+        : 'pathname',
+    ),
+  )
+
+  // i am on 2 hours of sleep i apologize
+  function isSelected(url: URL, href: SvelteURL, type: 'search' | 'pathname') {
+    const currentSearch = new Set(url.searchParams.values())
+    const hrefSearch = new Set(href.searchParams.values())
+    // checks if there is any
+    const usePathname = !routes.some(
+      i =>
+        new Set(
+          new URL(`https://example.com${i.href}`).searchParams.values(),
+        ).intersection(currentSearch).size > 0,
+    )
+
+    const hasSearchParam = hrefSearch.intersection(currentSearch).size > 0
+
+    if (hasSearchParam && !usePathname) return hasSearchParam
+    else if ((url.search == '' || usePathname) && type == 'pathname')
+      return href.pathname == url.pathname
   }
 </script>
 
 <nav
   class={[
-    'flex flex-row items-center justify-center sm:justify-start my-2 sm:mt-0 flex-wrap z-20',
-    style == 'header' ? 'p-1 gap-x-8 gap-y-4' : 'gap-2',
+    'flex flex-row items-center my-2 sm:mt-0 flex-wrap z-20',
+    style == 'header'
+      ? 'p-1 gap-x-8 gap-y-4 justify-center sm:justify-start'
+      : 'gap-2',
   ]}
 >
-  {#each routes as route (route.href)}
+  {#each routes as route, index (route.href)}
     {@const selected = isSelected(
       page.url,
       new SvelteURL(`${page.url.origin}${route.href}`),
+      matchType[index],
     )}
     {#if style == 'header'}
       <a
@@ -61,3 +86,7 @@
   {/each}
   {@render children?.()}
 </nav>
+
+{#if style == 'subpage'}
+  <div class="h-3"></div>
+{/if}
