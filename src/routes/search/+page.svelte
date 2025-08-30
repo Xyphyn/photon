@@ -55,12 +55,7 @@
 <Header pageHeader>
   {$t('routes.search.title')}
   {#snippet extended()}
-    <form
-      method="get"
-      action="/search"
-      class="flex flex-col gap-4"
-      bind:this={form}
-    >
+    <form method="get" action="/search" class="contents" bind:this={form}>
       <SearchBar bind:query={data.filters.value.query} />
       <div class="flex flex-row flex-wrap items-center gap-4">
         <Select

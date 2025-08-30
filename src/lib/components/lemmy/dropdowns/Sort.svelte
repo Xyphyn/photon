@@ -22,8 +22,6 @@
     Sun,
     Trophy,
   } from 'svelte-hero-icons'
-  import { backOut } from 'svelte/easing'
-  import { fly } from 'svelte/transition'
 
   interface Props extends SelectProps<string> {
     selected: string

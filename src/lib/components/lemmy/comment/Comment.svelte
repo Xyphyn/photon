@@ -5,7 +5,9 @@
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
-  import RelativeDate from '$lib/components/util/RelativeDate.svelte'
+  import RelativeDate, {
+    formatRelativeDate,
+  } from '$lib/components/util/RelativeDate.svelte'
   import { t } from '$lib/i18n/translations'
   import { getClient } from '$lib/lemmy.svelte.js'
   import { errorMessage } from '$lib/lemmy/error'
@@ -168,8 +170,20 @@
         date={publishedToDate(node.comment_view.comment.published)}
       />
       <span class="text-slate-600 dark:text-zinc-400 flex flex-row gap-2 ml-1">
-        {#if node.comment_view.comment.updated}
-          <Icon src={Pencil} solid size="12" aria-label="Edited" />
+        {#if node.comment_view.comment.updated}{@const edited = $t(
+            'post.meta.lastEdited',
+            {
+              default: formatRelativeDate(
+                publishedToDate(node.comment_view.comment.updated),
+                {
+                  style: 'long',
+                },
+              ),
+            },
+          )}
+          <div title={edited}>
+            <Icon src={Pencil} micro size="14" />
+          </div>
         {/if}
         {#if node.comment_view.comment.deleted || node.comment_view.comment.removed}
           <Icon

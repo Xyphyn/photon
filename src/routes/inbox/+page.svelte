@@ -12,6 +12,7 @@
   import { Button, Option, Select } from 'mono-svelte'
   import { ArrowPath, Check, Funnel, Icon, Inbox } from 'svelte-hero-icons'
   import InboxItem from './InboxItem.svelte'
+  import Fixate from '$lib/components/ui/generic/Fixate.svelte'
 
   let { data } = $props()
 
@@ -114,9 +115,7 @@
   </CommonList>
 {/if}
 {#if !(data.page == 1 && (data?.inbox?.value.length ?? 0) == 0)}
-  <div
-    class="sticky z-30 mx-auto max-w-full self-end mt-auto bottom-22 lg:bottom-6"
-  >
+  <Fixate placement="bottom">
     <Pageination
       hasMore={!(
         !data.inbox || (data.inbox.value?.length ?? 0) < (data?.limit ?? 0)
@@ -124,5 +123,5 @@
       page={data.page}
       href={page => `?page=${page}`}
     />
-  </div>
+  </Fixate>
 {/if}

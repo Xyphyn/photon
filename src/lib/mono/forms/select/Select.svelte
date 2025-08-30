@@ -93,91 +93,92 @@
 </script>
 
 {#snippet selectTarget(attachment: Attachment)}
-  <Label text={label} class={['space-y-1 relative', clazz, baseClass]}>
-    {@render customLabel?.()}
-    <Icon
-      src={ChevronUpDown}
-      micro
-      size="16"
-      class="absolute right-1.5 bottom-1 box-border pointer-events-none z-10 text-slate-600 dark:text-zinc-400"
-    />
-    <select
-      {@attach attachment}
-      {...rest}
-      bind:this={element}
-      class={[
-        buttonSize[size],
-        buttonShadow[shadow],
-        buttonColor.secondary,
-        'appearance-none transition-colors rounded-xl text-sm w-full min-w-full cursor-pointer pr-6',
-        selectClass,
-        clazz,
-      ]}
-      bind:value
-      onmousedown={e => {
-        e.preventDefault()
-      }}
-      onkeypress={e => {
-        e.preventDefault()
-        open = !open
-      }}
-      {onchange}
-      {oncontextmenu}
-      {placeholder}
-    >
-      {#if placeholder}
-        <option disabled selected value="">{placeholder}</option>
-      {/if}
-      {@render children?.()}
-    </select>
+  <Label text={label} customText={customLabel} class={['space-y-1 relative', clazz, baseClass]}>
+    <div class="relative" role="presentation">
+      <select
+        {@attach attachment}
+        {...rest}
+        bind:this={element}
+        class={[
+          buttonSize[size],
+          buttonShadow[shadow],
+          buttonColor.secondary,
+          'appearance-none transition-colors rounded-xl text-sm w-full min-w-full cursor-pointer pr-6',
+          selectClass,
+          clazz,
+        ]}
+        bind:value
+        onmousedown={e => {
+          e.preventDefault()
+        }}
+        onkeypress={e => {
+          e.preventDefault()
+          open = !open
+        }}
+        {onchange}
+        {oncontextmenu}
+        {placeholder}
+      >
+        {#if placeholder}
+          <option disabled selected value="">{placeholder}</option>
+        {/if}
+        {@render children?.()}
+      </select>
+      <Icon
+        src={ChevronUpDown}
+        micro
+        size="16"
+        class="absolute bottom-1/2 translate-y-1/2 right-1 box-border pointer-events-none z-10 text-slate-600 dark:text-zinc-400"
+      />
+    </div>
   </Label>
 {/snippet}
 
-    <Menu bind:open {placement}>
-      {#snippet target(attachment)}
-        {@const render = passedTarget ?? selectTarget}
-        {@render render?.(attachment)}
-      {/snippet}
-      {#each context.options as option (option)}
-        {#if customOption}{@render customOption({
-            option,
-            selected: option.value == value,
-          })}{:else}
-          <MenuButton
-            onclick={async () => {
-              value = option.value
-              await tick()
-              element?.dispatchEvent(new Event('change', { bubbles: true }))
-            }}
-            size="custom"
-            disabled={option.disabled}
-            color="none"
-            class={[
-              'min-h-0! py-1 hover:bg-slate-100 dark:hover:bg-zinc-800',
-              option.value == value &&
-                'bg-slate-100 dark:bg-zinc-800 text-primary-900 dark:text-primary-100 font-medium',
-              option.disabled &&
-                'pointer-events-none text-slate-600 dark:text-zinc-400',
-              option.isLabel && 'text-xs mt-2',
-            ]}
-          >
-            {#if option.value == value}
-              <Icon
-                src={CheckCircle}
-                size="16"
-                micro
-                class="text-primary-900 dark:text-primary-100"
-              />
-            {:else if option.icon}
-              <Icon
-                src={option.icon}
-                size="16"
-                micro
-                class="text-slate-600 dark:text-zinc-400"
-              />
-            {/if}
-            {@html option.label}
-          </MenuButton>
+<Menu bind:open {placement}>
+  {#snippet target(attachment)}
+    {@const render = passedTarget ?? selectTarget}
+    {@render render?.(attachment)}
+  {/snippet}
+  {#each context.options as option (option)}
+    {#if customOption}{@render customOption({
+        option,
+        selected: option.value == value,
+      })}{:else}
+      <MenuButton
+        onclick={async () => {
+          value = option.value
+          await tick()
+          element?.dispatchEvent(new Event('change', { bubbles: true }))
+        }}
+        size="custom"
+        disabled={option.disabled}
+        color="none"
+        class={[
+          'min-h-0! py-1 hover:bg-slate-100 dark:hover:bg-zinc-800',
+          option.value == value &&
+            'bg-slate-100 dark:bg-zinc-800 text-primary-900 dark:text-primary-100 font-medium',
+          option.disabled &&
+            'pointer-events-none text-slate-600 dark:text-zinc-400',
+          option.isLabel && 'text-xs mt-2',
+        ]}
+      >
+        {#if option.value == value}
+          <Icon
+            src={CheckCircle}
+            size="16"
+            micro
+            class="text-primary-900 dark:text-primary-100"
+          />
+        {:else if option.icon}
+          <Icon
+            src={option.icon}
+            size="16"
+            micro
+            class="text-slate-600 dark:text-zinc-400"
+          />
         {/if}
-      {/each}
-    </Menu>
+        {@html option.label}
+      </MenuButton>
+    {/if}
+  {/each}
+</Menu>

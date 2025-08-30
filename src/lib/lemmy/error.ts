@@ -14,7 +14,6 @@ export function errorMessage(error: any, instance?: string): string {
 
     return t.get(`error.${error}`)
   } catch {
-    // eslint-disable-next-line
     return error as any
   }
 }

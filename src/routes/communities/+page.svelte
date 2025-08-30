@@ -41,14 +41,13 @@
   <title>{$t('routes.communities.title')}</title>
 </svelte:head>
 
-<Header pageHeader class="justify-between">
-  <span>{$t('routes.communities.title')}</span>
-
+<Header pageHeader>
+  {$t('routes.communities.title')}
   {#snippet extended()}
     <form method="get" action="/communities" class="contents" bind:this={form}>
       <SearchBar bind:query={search} />
 
-      <div class="flex flex-row flex-wrap gap-4 mt-4 items-center">
+      <div class="flex flex-row flex-wrap gap-4 items-center">
         <Location
           name="type"
           selected={data.type}

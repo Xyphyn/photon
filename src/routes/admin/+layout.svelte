@@ -1,15 +1,9 @@
 <script>
   import { notifications } from '$lib/auth.svelte'
   import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
-  import {} from '$lib/components/ui/layout/Shell.svelte'
   import { t } from '$lib/i18n/translations'
   import { Badge } from 'mono-svelte'
-  /**
-   * @typedef {Object} Props
-   * @property {import('svelte').Snippet} [children]
-   */
 
-  /** @type {Props} */
   let { children } = $props()
 </script>
 
@@ -49,7 +43,6 @@
         name: $t('routes.admin.media.title'),
       },
     ]}
-    class="overflow-auto"
   />
   {@render children?.()}
 </div>

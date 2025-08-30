@@ -157,7 +157,7 @@
       class="flex flex-col gap-4 h-full w-full flex-2/3"
       onsubmit={preventDefault(submit)}
     >
-      <Button href="/signup" class="inline-block mb-4 w-max" rounding="pill">
+      <Button href="/accounts" class="inline-block mb-4 w-max" rounding="pill">
         <Icon src={ArrowLeft} size="16" micro />
         {$t('common.back')}
       </Button>

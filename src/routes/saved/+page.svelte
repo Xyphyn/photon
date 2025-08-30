@@ -2,6 +2,7 @@
   import { page } from '$app/state'
   import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
   import PostItem from '$lib/components/lemmy/post/PostItem.svelte'
+  import Fixate from '$lib/components/ui/generic/Fixate.svelte'
   import CommonList from '$lib/components/ui/layout/CommonList.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
@@ -78,10 +79,10 @@
     {/snippet}
   </CommonList>
 {/if}
-<div class="sticky z-30 mx-auto max-w-full bottom-22 lg:bottom-6">
+<Fixate placement="bottom">
   <Pageination
     hasMore={data.data.length == 40}
     href={page => `?page=${page}`}
     page={data.page}
   />
-</div>
+</Fixate>

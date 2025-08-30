@@ -133,7 +133,7 @@
   {/snippet}
   {$t('nav.menu.settings')}
 </MenuButton>
-<Select bind:value={theme.colorScheme} size="sm" placement="left">
+<Select bind:value={theme.colorScheme} size="sm" placement="bottom">
   {#snippet target(attachment)}
     <MenuButton
       {@attach attachment}

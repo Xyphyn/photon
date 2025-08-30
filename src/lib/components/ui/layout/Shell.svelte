@@ -40,7 +40,7 @@
     class={[
       'fixed lg:sticky bottom-0 lg:top-0',
       !dockVisible && 'max-lg:-bottom-24',
-      'max-w-3xl p-4 left-1/2 -translate-x-1/2 lg:max-w-full lg:p-0 lg:left-0 lg:translate-x-0',
+      'max-w-3xl p-3 left-1/2 -translate-x-1/2 lg:max-w-full lg:p-0 lg:left-0 lg:translate-x-0',
       'w-full z-50 pointer-events-none',
     ]}
     style="transition: bottom .4s cubic-bezier(0.075, 0.82, 0.165, 1);"

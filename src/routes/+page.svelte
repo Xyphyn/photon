@@ -21,12 +21,12 @@
 
   onMount(async () => {
     await data.feed.value
-    $effect(() => {
-      if (data.filters.value.type_)
-        settings.defaultSort.feed = data.filters.value.type_
-      if (data.filters.value.sort)
-        settings.defaultSort.sort = data.filters.value.sort
-    })
+  })
+  $effect(() => {
+    if (data.filters.value.type_)
+      settings.defaultSort.feed = data.filters.value.type_
+    if (data.filters.value.sort)
+      settings.defaultSort.sort = data.filters.value.sort
   })
 
   const FeedComponent = $derived(
@@ -45,27 +45,33 @@
     {$t('routes.frontpage.title')}
 
     {#snippet extended()}
-      <form class="flex items-center gap-2" method="get" action="/">
-        {#if data.filters.value.type_}
-          <Location
-            name="type"
+      <form class="" method="get" action="/">
+        <div class="flex flex-row gap-4">
+          {#if data.filters.value.type_}
+            <Location
+              name="type"
+              navigate
+              bind:selected={data.filters.value.type_}
+            />
+          {/if}
+          <Sort
+            placement="bottom"
+            name="sort"
             navigate
-            bind:selected={data.filters.value.type_}
+            bind:selected={data.filters.value.sort}
           />
-        {/if}
-        <Sort
-          placement="bottom"
-          name="sort"
-          navigate
-          bind:selected={data.filters.value.sort}
-        />
-        <ViewSelect placement="bottom" />
+          <ViewSelect placement="bottom" />
 
-        <noscript>
-          <Button class="self-end h-[34px] aspect-square" size="custom" submit>
-            <Icon src={ArrowRight} size="16" micro />
-          </Button>
-        </noscript>
+          <noscript>
+            <Button
+              class="self-end h-[34px] aspect-square"
+              size="custom"
+              submit
+            >
+              <Icon src={ArrowRight} size="16" micro />
+            </Button>
+          </noscript>
+        </div>
       </form>
     {/snippet}
   </Header>

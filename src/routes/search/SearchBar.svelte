@@ -13,30 +13,28 @@
   let searchElement = $state<HTMLInputElement>()
 </script>
 
-<div class="mt-4 mb-0 sticky z-30 top-6 lg:top-22">
-  <div
-    class="flex gap-2 flex-row items-center w-full text-base h-10 drop-shadow-xl"
+<div
+  class="flex gap-2 flex-row items-center w-full text-base h-10 drop-shadow-xl"
+>
+  <TextInput
+    bind:value={query}
+    bind:element={searchElement}
+    name="q"
+    placeholder={$t('routes.search.query')}
+    size="lg"
+    class="flex-1 rounded-full! h-full text-base!"
+  />
+  <Button
+    submit
+    color="primary"
+    size="custom"
+    class="shrink-0 h-full aspect-square shadow-md"
+    title="Search"
+    rounding="pill"
+    loading={navigating.to?.route.id == '/search'}
   >
-    <TextInput
-      bind:value={query}
-      bind:element={searchElement}
-      name="q"
-      placeholder={$t('routes.search.query')}
-      size="lg"
-      class="flex-1 rounded-full! h-full text-base!"
-    />
-    <Button
-      submit
-      color="primary"
-      size="custom"
-      class="shrink-0 h-full aspect-square shadow-md"
-      title="Search"
-      rounding="pill"
-      loading={navigating.to?.route.id == '/search'}
-    >
-      {#snippet prefix()}
-        <Icon src={MagnifyingGlass} size="16" micro />
-      {/snippet}
-    </Button>
-  </div>
+    {#snippet prefix()}
+      <Icon src={MagnifyingGlass} size="16" micro />
+    {/snippet}
+  </Button>
 </div>

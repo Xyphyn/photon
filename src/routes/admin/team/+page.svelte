@@ -74,7 +74,7 @@
     {/if}
   </ul>
   <form
-    class="flex flex-row items-center gap-2 mt-auto w-full"
+    class="flex flex-row gap-2 mt-auto w-full"
     onsubmit={preventDefault(() => {
       trycatch(async () => {
         if (!profile.current?.jwt || newAdmin == '') return
@@ -106,7 +106,7 @@
       disabled={adding}
       rounding="xl"
       color="primary"
-      class="h-full"
+      size="sm"
       submit
     >
       {#snippet prefix()}

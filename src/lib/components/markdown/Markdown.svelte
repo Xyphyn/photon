@@ -36,7 +36,6 @@
   marked.use(linkify, {
     extensions: [
       // @ts-expect-error hell with marked
-      // eslint-disable-next-line
       containerExtension((params: any) => {
         if (params.type == 'spoiler') {
           return {
@@ -49,7 +48,6 @@
         return null
       }),
       // @ts-expect-error hell with marked
-      // eslint-disable-next-line
       subSupscriptExtension((params: any) => {
         if (params.type == 'subscript') {
           return {

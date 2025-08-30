@@ -1,7 +1,6 @@
 <script lang="ts">
   import DebugTree from './DebugTree.svelte'
   interface Props {
-    // eslint-disable-next-line
     object: any
     isParent?: boolean
   }

@@ -2,10 +2,11 @@
   import { profile } from '$lib/auth.svelte.js'
   import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
+  import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
   import Entity from '$lib/components/ui/Entity.svelte'
+  import CommonList from '$lib/components/ui/layout/CommonList.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import { t } from '$lib/i18n/translations.js'
   import { getClient } from '$lib/lemmy.svelte.js'
   import type {
@@ -14,11 +15,8 @@
     PersonBlockView,
   } from 'lemmy-js-client'
   import { Button } from 'mono-svelte'
-  import Material from 'mono-svelte/materials/Material.svelte'
   import { Check, Icon, XMark } from 'svelte-hero-icons'
   import type { PageData } from './$types.js'
-  import CommonList from '$lib/components/ui/layout/CommonList.svelte'
-  import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
 
   interface Props {
     // sveltekit doesn't feel like making types work right now

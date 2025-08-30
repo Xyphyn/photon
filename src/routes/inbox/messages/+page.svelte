@@ -92,6 +92,7 @@
   <Button
     color="primary"
     rounding="pill"
+    class="w-max"
     onclick={() => (searchModal.open = !searchModal.open)}
   >
     <Icon src={ChatBubbleOvalLeftEllipsis} size="18" mini />

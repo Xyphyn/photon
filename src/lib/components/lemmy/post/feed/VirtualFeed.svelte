@@ -23,7 +23,9 @@
     Icon,
   } from 'svelte-hero-icons'
   import InfiniteScroll from 'svelte-infinite-scroll'
+  import { expoOut } from 'svelte/easing'
   import { SvelteSet } from 'svelte/reactivity'
+  import { fly } from 'svelte/transition'
 
   interface Props {
     posts: PostView[]
@@ -200,12 +202,11 @@
       >
         {#snippet item(row)}
           <li
+            in:fly={row < 7
+              ? { duration: 800, easing: expoOut, y: 24, delay: row * 50 }
+              : { opacity: 1, duration: 0 }}
             data-index={row}
-            style={row < 7 ? `--anim-delay: ${row * 50}ms` : ''}
-            class={[
-              'relative post-container px-3 sm:px-6',
-              row < 7 && 'pop-in opacity-0',
-            ]}
+            class={['relative post-container px-3 sm:px-6', row < 7 && '']}
           >
             <Post
               bind:post={posts[row]}
@@ -278,21 +279,3 @@
   {/if}
   {@render children?.()}
 </ul>
-
-<style lang="postcss">
-  @keyframes popIn {
-    from {
-      transform: translateY(24px);
-      opacity: 0;
-    }
-    to {
-      transform: translateY(0px);
-      opacity: 1;
-    }
-  }
-
-  .pop-in {
-    animation: popIn 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards
-      var(--anim-delay);
-  }
-</style>

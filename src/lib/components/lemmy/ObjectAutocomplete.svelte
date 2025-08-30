@@ -14,7 +14,6 @@
     listing_type?: ListingType
     showWhenEmpty?: boolean
     placeholder?: string
-    // eslint-disable-next-line
     onselect?: (item: any) => void
   }
 

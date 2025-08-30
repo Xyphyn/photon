@@ -55,7 +55,7 @@
   import { instance } from '$lib/instance.svelte'
   import { settings, type View } from '$lib/settings.svelte'
   import type { Community, Person, SubscribedType } from 'lemmy-js-client'
-  import { Badge, Popover } from 'mono-svelte'
+  import { Badge, modal, Popover } from 'mono-svelte'
   import {
     Bookmark,
     ExclamationTriangle,
@@ -147,6 +147,7 @@
       {#snippet target(attachment)}
         <button
           {@attach attachment}
+
           class={[
             'row-span-2 shrink-0 mr-2 self-center group/btn',
             'bg-slate-200 dark:bg-zinc-800 rounded-lg cursor-pointer',
@@ -229,15 +230,24 @@
       <RelativeDate date={published} class="shrink-0" />
     {/if}
     {#if edited}
-      <div
+      <button
         title={$t('post.meta.lastEdited', {
           default: formatRelativeDate(publishedToDate(edited), {
             style: 'long',
           }),
         })}
+        onclick={() =>
+          modal({
+            title: $t('common.info'),
+            body: $t('post.meta.lastEdited', {
+              default: formatRelativeDate(publishedToDate(edited), {
+                style: 'long',
+              }),
+            }),
+          })}
       >
         <Icon src={Pencil} micro size="14" />
-      </div>
+      </button>
     {/if}
   </div>
   <div

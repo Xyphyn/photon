@@ -2,7 +2,6 @@
   import { goto } from '$app/navigation'
   import { profile } from '$lib/auth.svelte.js'
   import PostForm from '$lib/components/lemmy/post/form/PostForm.svelte'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { t } from '$lib/i18n/translations.js'
   import { getSessionStorage, setSessionStorage } from '$lib/session.js'
   import { onDestroy, onMount } from 'svelte'
@@ -24,7 +23,7 @@
   })
 
   // TODO remove this
-  // eslint-disable-next-line
+
   let post = getSessionStorage('postDraft') as any
 </script>
 
