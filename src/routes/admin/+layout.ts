@@ -1,6 +1,9 @@
+import { profile } from '$lib/auth.svelte.js'
 import { getClient, site as siteStore } from '$lib/lemmy.svelte.js'
+import { error } from '@sveltejs/kit'
 
 export async function load({ fetch }) {
+  if (!profile.current.jwt) error(403)
   const site = siteStore
 
   if (!site.data) {

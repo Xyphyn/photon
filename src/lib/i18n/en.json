@@ -648,7 +648,8 @@
         "general": "General",
         "remove": "Remove",
         "download": "Download",
-        "attach": "Attach file"
+        "attach": "Attach file",
+        "info": "Info"
     },
     "message": {
         "success": "Success",
