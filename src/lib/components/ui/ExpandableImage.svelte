@@ -51,7 +51,7 @@
     />
     <div class="sticky z-10 bottom-4 left-1/2 -translate-x-1/2 w-max">
       <Material
-        class="gap-1 p-0.5 px-1 flex flex-row items-center dark:bg-zinc-950/50 border-opacity-50"
+        class="gap-1 p-0.5 px-1 flex flex-row items-center"
         rounding="full"
         padding="none"
         color="uniform"

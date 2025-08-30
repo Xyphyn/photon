@@ -15,6 +15,7 @@
     ExclamationTriangle,
     Icon,
     Link,
+    Photo,
     VideoCamera,
   } from 'svelte-hero-icons'
 
@@ -154,6 +155,17 @@
       />
     {/if}
   </svelte:element>
+  {#if post.alt_text}
+    <Button
+      onclick={() => modal({ title: 'Alt text', body: post.alt_text })}
+      aria-label="Alt text"
+      class="absolute bottom-0 left-0 z-20 m-1"
+      size="square-md"
+      rounding="xl"
+    >
+      <Icon src={Photo} size="16" micro />
+    </Button>
+  {/if}
 </div>
 
 <style>
