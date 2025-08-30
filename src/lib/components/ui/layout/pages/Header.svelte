@@ -43,7 +43,7 @@
     {@render children?.()}
   </h1>
   {#if extended}
-    <div class="mt-4">
+    <div class="flex flex-col gap-3 mt-3">
       {@render extended?.()}
     </div>
   {/if}

@@ -126,7 +126,7 @@
     </div>
   {/snippet}
 </Header>
-<form class="accounts-grid mt-4 sm:mt-6 gap-4">
+<form class="accounts-grid gap-4">
   <CommonList
     selected={p => p.id == profile.meta.profile}
     items={profile.meta.profiles}

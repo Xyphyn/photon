@@ -71,67 +71,67 @@
   }
 </script>
 
-<div class="mb-4 flex flex-col gap-4">
-  <Header pageHeader>
-    {$t('routes.moderation.title')}
-    {#snippet extended()}
-      <div class="flex flex-row gap-2 flex-wrap items-end">
-        <Select
-          bind:value={data.type.value}
-          onchange={async () => {
-            await tick()
-            searchParam(page.url, 'type', data.type.value, 'page')
-          }}
-        >
-          {#snippet customLabel()}
-            <span class="flex items-center gap-1">
-              <Icon src={Funnel} size="15" mini />
-              {$t('filter.filter')}
-            </span>
-          {/snippet}
-          <Option value="all">{$t('filter.location.all')}</Option>
-          <Option value="unread">{$t('filter.unread')}</Option>
-        </Select>
-        <Button
-          loading={batch.progress >= 0}
-          disabled={batch.progress >= 0 || data.items.value?.length == 0}
-          onclick={markAllAsResolved}
-          class="h-max ml-auto"
-          rounding="pill"
-          color="primary"
-        >
-          <Icon src={Check} size="16" mini />
-          {$t('routes.moderation.markAll')}
-        </Button>
-      </div>
-      {#if data.filters.community}
-        <ul class="font-normal flex flex-col gap-2 mt-2">
-          <li>
-            <span class="text-sm text-slate-600 dark:text-zinc-400">
-              {$t('form.post.community')}
-            </span>
-            {#await client().getCommunity({ id: data.filters.community })}
-              <Spinner width={24} />
-            {:then community}
-              <a
-                class="inline"
-                aria-label={$t('common.remove')}
-                href="?community="
-              >
-                <Icon src={XMark} size="16" micro class="inline" />
-              </a>
-              <CommunityLink
-                class="w-max inline"
-                community={community.community_view.community}
-              />
-            {/await}
-          </li>
-        </ul>
-      {/if}
-    {/snippet}
-  </Header>
-</div>
-<ProgressBar progress={batch.progress} />
+<Header pageHeader>
+  {$t('routes.moderation.title')}
+  {#snippet extended()}
+    <div class="flex flex-row gap-2 flex-wrap items-end">
+      <Select
+        bind:value={data.type.value}
+        onchange={async () => {
+          await tick()
+          searchParam(page.url, 'type', data.type.value, 'page')
+        }}
+      >
+        {#snippet customLabel()}
+          <span class="flex items-center gap-1">
+            <Icon src={Funnel} size="15" mini />
+            {$t('filter.filter')}
+          </span>
+        {/snippet}
+        <Option value="all">{$t('filter.location.all')}</Option>
+        <Option value="unread">{$t('filter.unread')}</Option>
+      </Select>
+      <Button
+        loading={batch.progress >= 0}
+        disabled={batch.progress >= 0 || data.items.value?.length == 0}
+        onclick={markAllAsResolved}
+        class="h-max ml-auto"
+        rounding="pill"
+        color="primary"
+      >
+        <Icon src={Check} size="16" mini />
+        {$t('routes.moderation.markAll')}
+      </Button>
+    </div>
+    {#if data.filters.community}
+      <ul class="font-normal flex flex-col gap-2 mt-2">
+        <li>
+          <span class="text-sm text-slate-600 dark:text-zinc-400">
+            {$t('form.post.community')}
+          </span>
+          {#await client().getCommunity({ id: data.filters.community })}
+            <Spinner width={24} />
+          {:then community}
+            <a
+              class="inline"
+              aria-label={$t('common.remove')}
+              href="?community="
+            >
+              <Icon src={XMark} size="16" micro class="inline" />
+            </a>
+            <CommunityLink
+              class="w-max inline"
+              community={community.community_view.community}
+            />
+          {/await}
+        </li>
+      </ul>
+    {/if}
+  {/snippet}
+</Header>
+{#if batch.progress > 0}
+  <ProgressBar progress={batch.progress} />
+{/if}
 {#if data.items?.value && data.items?.value.length > 0}
   <CommonList items={data.items?.value} size="lg">
     {#snippet item(item)}
@@ -165,4 +165,3 @@
     description={$t('routes.moderation.empty.description')}
   />
 {/if}
-<div class="h-4"></div>
