@@ -1,6 +1,5 @@
 <script lang="ts">
   import { browser } from '$app/environment'
-  import CommunityItem from '$lib/components/lemmy/community/CommunityItem.svelte'
   import Location from '$lib/components/lemmy/dropdowns/Location.svelte'
   import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
   import ViewSelect from '$lib/components/lemmy/dropdowns/ViewSelect.svelte'
@@ -14,7 +13,6 @@
   import { site } from '$lib/lemmy.svelte.js'
   import { postFeeds } from '$lib/lemmy/postfeed.svelte.js'
   import { settings } from '$lib/settings.svelte.js'
-  import { Material } from 'mono-svelte'
   import Button from 'mono-svelte/button/Button.svelte'
   import { onMount } from 'svelte'
   import { ArrowRight, ChartBar, Icon } from 'svelte-hero-icons'
