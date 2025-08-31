@@ -927,6 +927,11 @@
         "loading": "Loading",
         "element": {
           "pageHeader": "Page header"
+        },
+        "postDecor": {
+            "openImage": "Open image: {{default}}",
+            "openLink": "Open link: {{default}}",
+            "openPost": "Open post: {{default}}"
         }
     },
     "stats": {

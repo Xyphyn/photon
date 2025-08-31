@@ -78,7 +78,7 @@
 -->
 <article
   class={[
-    'post relative max-w-full min-w-0 w-full cursor-pointer outline-hidden group/post',
+    'relative cursor-pointer group/post',
     settings.leftAlign && 'left-align',
     view == 'compact' && 'py-3 list-type compact',
     view == 'cozy' && 'py-5 flex flex-col gap-2',
@@ -141,13 +141,6 @@
   {#if actions}
     <PostActions {onhide} bind:post style="grid-area: actions;" {view} />
   {/if}
-  <div
-    class="absolute overflow-hidden inset-0
-    sm:rounded-xl bg-slate-50 dark:bg-zinc-900
-    opacity-0 transition-all -z-50 no-list-margin
-    group-hover/post:inset-y-0.5 group-hover/post:-inset-x-3 sm:group-hover/post:-inset-x-5 group-hover/post:opacity-100
-    duration-150"
-  ></div>
 </article>
 
 <style lang="postcss">

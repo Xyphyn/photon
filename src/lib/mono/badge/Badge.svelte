@@ -64,7 +64,7 @@
   title={label}
 >
   {@render icon?.()}
-  <span class={allowIconOnly ? 'hidden md:contents' : 'contents'}>
+  <span class={allowIconOnly ? 'sr-only md:contents' : 'contents'}>
     {@render children?.()}
   </span>
 </span>

@@ -49,8 +49,6 @@
     children,
   }: Props = $props()
 
-  let loading = $state(false)
-
   const castVote = async (newVote: number) => {
     if (!profile.current?.jwt) {
       toast({ content: $t('toast.loginVoteGate'), type: 'warning' })
@@ -85,6 +83,53 @@
   }
 </script>
 
+{#snippet voteButton(
+  votes: number,
+  target: 'upvote' | 'downvote',
+  vote?: number,
+)}
+  {@const targetNum = target == 'upvote' ? 1 : -1}
+  <button
+    onclick={() => castVote(vote == targetNum ? 0 : targetNum)}
+    class={[
+      'flex items-center gap-0.5 transition-colors relative cursor-pointer h-full p-2',
+      'first:rounded-l-3xl last:rounded-r-3xl',
+      'last:flex-row-reverse',
+      vote == targetNum
+        ? shouldShowVoteColor(
+            vote,
+            target == 'upvote' ? 'upvotes' : 'downvotes',
+          )
+        : 'hover:bg-slate-100 dark:hover:bg-zinc-800',
+    ]}
+    aria-pressed={vote == targetNum}
+    aria-label={$t(
+      target == 'upvote'
+        ? 'post.actions.vote.upvote'
+        : 'post.actions.vote.downvote',
+    )}
+  >
+    <Icon src={target == 'upvote' ? ChevronUp : ChevronDown} size="20" micro />
+    {#if showCounts}
+      <div class="grid text-sm z-20">
+        {#key votes}
+          <span
+            style="grid-column: 1; grid-row: 1;"
+            in:fly={{ duration: 400, y: -10, easing: backOut }}
+            out:fly={{ duration: 400, y: 10, easing: backOut }}
+            aria-label={$t(
+              target == 'upvote' ? 'aria.vote.upvotes' : 'aria.vote.downvotes',
+              { default: votes },
+            )}
+          >
+            <FormattedNumber number={votes ?? 0} />
+          </span>
+        {/key}
+      </div>
+    {/if}
+  </button>
+{/snippet}
+
 {#if children}{@render children({ vote, score })}{:else}
   {@const voteRatio = Math.floor(
     ((upvotes ?? 0) / ((upvotes ?? 0) + (downvotes ?? 0))) * 100,
@@ -92,71 +137,18 @@
   <div
     class={[
       buttonColor.secondary,
-      'rounded-full h-full font-medium flex items-center *:p-2 relative',
-      'hover:bg-white dark:hover:bg-zinc-900 overflow-hidden transition-colors shrink-0',
-      'text-inherit! divide-x divide-slate-200 dark:divide-zinc-800',
-      loading && 'animate-pulse opacity-75 pointer-events-none',
+      'rounded-3xl h-full font-medium flex relative',
       voteRatio < 85 && settings.voteRatioBar && 'vote-ratio',
     ]}
-    role="group"
     aria-label={$t('aria.vote.group')}
     style="--vote-ratio: {voteRatio}%;"
   >
-    <button
-      onclick={() => castVote(vote == 1 ? 0 : 1)}
-      class={[
-        'flex items-center gap-0.5 transition-colors relative cursor-pointer',
-        vote == 1
-          ? shouldShowVoteColor(vote, 'upvotes')
-          : 'hover:bg-slate-100 dark:hover:bg-zinc-800',
-      ]}
-      aria-pressed={vote == 1}
-      aria-label={$t('post.actions.vote.upvote')}
-    >
-      <Icon src={ChevronUp} size="20" micro />
-      {#if showCounts}
-        <span class="grid text-sm z-20">
-          {#key upvotes}
-            <span
-              style="grid-column: 1; grid-row: 1;"
-              in:fly={{ duration: 400, y: -10, easing: backOut }}
-              out:fly={{ duration: 400, y: 10, easing: backOut }}
-              aria-label={$t('aria.vote.upvotes', { default: upvotes })}
-            >
-              <FormattedNumber number={upvotes ?? 0} />
-            </span>
-          {/key}
-        </span>
-      {/if}
-    </button>
+    {@render voteButton(upvotes, 'upvote', vote)}
+    <div
+      class="h-full p-0! border-l border-slate-200 dark:border-zinc-800"
+    ></div>
     {#if site.data?.site_view.local_site.enable_downvotes ?? true}
-      <button
-        onclick={() => castVote(vote == -1 ? 0 : -1)}
-        class={[
-          'flex items-center flex-row-reverse gap-0.5 transition-colors cursor-pointer',
-          vote == -1
-            ? shouldShowVoteColor(vote, 'downvotes')
-            : 'hover:bg-slate-100 dark:hover:bg-zinc-800',
-        ]}
-        aria-pressed={vote == -1}
-        aria-label={$t('post.actions.vote.downvote')}
-      >
-        <Icon src={ChevronDown} size="20" micro />
-        {#if showCounts}
-          <span class="grid text-sm">
-            {#key downvotes}
-              <span
-                style="grid-column: 1; grid-row: 1;"
-                in:fly={{ duration: 400, y: -10, easing: backOut }}
-                out:fly={{ duration: 400, y: 10, easing: backOut }}
-                aria-label={$t('aria.vote.downvotes', { default: downvotes })}
-              >
-                <FormattedNumber number={downvotes ?? 0} />
-              </span>
-            {/key}
-          </span>
-        {/if}
-      </button>
+      {@render voteButton(downvotes, 'downvote', vote)}
     {/if}
   </div>
 {/if}
@@ -167,6 +159,7 @@
   }
 
   .vote-ratio::before {
+    border-radius: var(--radius-3xl);
     content: '';
     position: absolute;
     height: 100%;

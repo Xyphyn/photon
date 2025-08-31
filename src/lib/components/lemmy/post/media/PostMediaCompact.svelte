@@ -5,8 +5,8 @@
     type MediaType,
   } from '$lib/components/lemmy/post/helpers.js'
   import { showImage } from '$lib/components/ui/ExpandableImage.svelte'
+  import { t } from '$lib/i18n/translations'
   import { settings, type View } from '$lib/settings.svelte.js'
-  import { isImage } from '$lib/ui/image'
   import type { Post } from 'lemmy-js-client'
   import { modal } from 'mono-svelte'
   import Button from 'mono-svelte/button/Button.svelte'
@@ -47,36 +47,33 @@
   @component
   Thumbnails for compact and list view posts.
 -->
-<div class={[size, 'relative group/media', clazz]} {style}>
-  {#if post.alt_text}
-    <Button
-      rounding="pill"
-      class="w-max absolute bottom-0 left-0 py-0.5 px-1.5 m-1 font-bold"
-      onclick={() => modal({ title: 'Alt', body: post.alt_text ?? '' })}
-    >
-      ALT
-    </Button>
-  {/if}
+<div class={[size, 'relative group/media', clazz]} {style} role="presentation">
   <svelte:element
     this={!settings.expandImages || type != 'image' ? 'a' : 'button'}
-    href={postLink(post)}
+    href={post.url ?? postLink(post)}
+    aria-label={type == 'image'
+      ? $t('aria.postDecor.openImage', { default: post.name })
+      : type == 'embed'
+        ? $t('aria.postDecor.openLink', {
+            default: post.embed_title ?? post.name,
+          })
+        : $t('aria.postDecor.openPost', { default: post.name })}
+    target={post.url ? '_blank' : undefined}
     onclick={() => {
       if (type == 'image') showImage(bestImageURL(post, false, -1))
     }}
-    role="button"
+    role={type == 'image' ? 'button' : 'link'}
     tabindex="0"
-    class="cursor-pointer h-full"
+    class="cursor-pointer h-full block"
   >
     <div
       class={[
         'relative overflow-hidden rounded-2xl max-h-full h-full',
-        'border border-slate-200 dark:border-zinc-800 hover:border-slate-300 dark:hover:border-zinc-700',
-        'dark:bg-zinc-800 hover-scale-effect',
+        'border border-slate-200 dark:border-zinc-800 hover-scale-effect',
       ]}
     >
-      {#if post.thumbnail_url || isImage(post.url)}
-        {@const thumbnail =
-          post.thumbnail_url != undefined && !isImage(post.url)}
+      {#if post.thumbnail_url || type == 'image'}
+        {@const thumbnail = post.thumbnail_url != undefined && type != 'image'}
         <picture>
           <!--I would add AVIF, but lemmy.world's AVIF is broken as of currently-->
           {#each ['webp'] as format}
@@ -105,28 +102,22 @@
             src={bestImageURL(post, thumbnail, -1, null)}
             loading="lazy"
             class={[
-              'object-cover relative overflow-hidden rounded-xl h-full bg-slate-200 dark:bg-zinc-900',
+              'object-cover relative overflow-hidden rounded-xl h-full',
               size,
             ]}
             alt={post.alt_text ?? ' '}
             class:blur-xl={blur}
           />
-          {#if type != 'image'}
-            <div
-              class={[
-                'absolute w-8 h-8 m-1 bottom-0 left-0 rounded-xl text-slate-800 dark:text-zinc-200',
-                'bg-slate-25 dark:bg-zinc-900',
-                'grid place-items-center',
-              ]}
-            >
-              <Icon
-                src={type == 'iframe' ? VideoCamera : Link}
-                micro
-                size="16"
-              />
-            </div>
-          {/if}
         </picture>
+        {#if type != 'image'}
+          <div
+            class={[
+              'absolute w-8 h-8 bottom-1 left-1 rounded-xl bg-slate-25 dark:bg-zinc-900 grid place-items-center',
+            ]}
+          >
+            <Icon src={type == 'iframe' ? VideoCamera : Link} micro size="16" />
+          </div>
+        {/if}
       {:else}
         <div
           class={[

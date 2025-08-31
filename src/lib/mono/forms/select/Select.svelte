@@ -103,7 +103,8 @@
           buttonSize[size],
           buttonShadow[shadow],
           buttonColor.secondary,
-          'appearance-none transition-colors rounded-xl text-sm w-full min-w-full cursor-pointer pr-6',
+          'appearance-none transition-all rounded-xl text-sm w-full min-w-full cursor-pointer pr-6',
+          'hover:brightness-98 hover:dark:brightness-90',
           selectClass,
           clazz,
         ]}

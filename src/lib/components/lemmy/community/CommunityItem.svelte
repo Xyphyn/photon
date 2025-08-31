@@ -32,6 +32,7 @@
     icon?: import('svelte').Snippet
     children?: Snippet
     resolveObject?: boolean
+    actions?: boolean
   }
 
   let {
@@ -42,6 +43,7 @@
     icon,
     children,
     resolveObject,
+    actions = true,
   }: Props = $props()
 </script>
 
@@ -64,12 +66,10 @@
       class="flex-1 w-full overflow-hidden"
       data-sveltekit-preload-data="tap"
     >
-      <div
-        class="flex {view == 'cozy'
-          ? 'flex-col gap-2'
-          : 'flex-row'} gap-2 items-center"
-      >
-        {#if icon}{@render icon()}{:else if community.community.nsfw && settings.nsfwBlur}
+      <div class="flex flex-row gap-2 items-center">
+        {#if icon}
+          {@render icon()}
+        {:else if community.community.nsfw && settings.nsfwBlur}
           <div class="w-8 h-8 rounded-xl bg-red-400"></div>
         {:else}
           <Avatar
@@ -143,7 +143,7 @@
         </div>
       </div>
     </a>
-    {#if children}
+    {#if children || !actions}
       {@render children?.()}
     {:else}
       <div class="flex flex-row items-center gap-2">
