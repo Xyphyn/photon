@@ -180,7 +180,7 @@
         {__VERSION__}
       </span>
     </div>
-    {#if env.PUBLIC_XYLIGHT_MODE.toLowerCase() == 'true'}
+    {#if env.PUBLIC_XYLIGHT_MODE?.toLowerCase() == 'true'}
       <a
         href="https://github.com/xyphyn/photon"
         class="text-blue-600 dark:text-blue-400/60 hover:underline"
