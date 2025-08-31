@@ -152,9 +152,10 @@
           color="ghost"
           onclick={() =>
             modal({ title: $t('form.post.community'), snippet: communityInfo })}
+          aria-label={$t('common.info')}
+          size="square-md"
         >
           <Icon src={InformationCircle} size="16" mini />
-          {$t('post.actions.more.label')}
         </Button>
         <Subscribe {community}>
           {#snippet children({ subscribe, subscribing })}

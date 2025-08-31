@@ -172,7 +172,7 @@
   <div class="flex-1 h-full mt-auto"></div>
 
   <footer
-    class="flex gap-6 flex-col xl:flex-row text-sm text-slate-600 dark:text-zinc-300"
+    class="flex gap-6 flex-col xl:flex-row text-sm text-slate-600 dark:text-zinc-300 flex-wrap"
   >
     <div class="flex items-center gap-2">
       <Logo width={16} />
