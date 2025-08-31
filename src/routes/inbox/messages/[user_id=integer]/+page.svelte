@@ -10,7 +10,7 @@
   import { settings } from '$lib/settings.svelte'
   import type { PrivateMessageResponse } from 'lemmy-js-client'
   import { Button, Material, TextInput, toast } from 'mono-svelte'
-  import { tick } from 'svelte'
+  import { onDestroy, onMount, tick } from 'svelte'
   import {
     ArrowLeft,
     Icon,
@@ -84,6 +84,25 @@
       ),
     }
   }
+
+  let interval: number = -1
+
+  onMount(() => {
+    interval = setInterval(async () => {
+      const res = await client().getPrivateMessages({
+        creator_id: Number(data.creator.value.person_view.person.id),
+        limit: 50,
+        page: 1,
+      })
+      data.message.value = res
+    }, 5 * 1000) as unknown as number
+
+    return () => clearInterval(interval)
+  })
+
+  onDestroy(() => {
+    clearInterval(interval)
+  })
 </script>
 
 <Header pageHeader>
@@ -104,12 +123,12 @@
   rounding="2xl"
   padding="none"
   class="bg-white dark:bg-zinc-950 dark:border-t-zinc-900
-  w-full overflow-auto mt-6 relative max-h-128 h-full"
+  w-full overflow-auto relative h-full"
 >
   <div class="h-full overflow-auto" bind:this={chatWindow}>
     <ul id="chat-window" class=" h-full flex flex-col gap-1 flex-1 px-4 py-4">
       <div class="mt-auto"></div>
-      <p class="mx-auto mt-auto text-slate-400 dark:text-zinc-600">
+      <p class="mx-auto mt-auto text-slate-400 dark:text-zinc-600 text-center">
         {$t('routes.inbox.messages.conversation', {
           user:
             data.creator.value.person_view.person.name +
