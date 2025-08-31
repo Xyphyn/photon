@@ -392,13 +392,8 @@ export function getGroups(
       actions: [
         {
           href: '/create/post',
-          name: t.get('routes.createPost'),
+          name: t.get('form.post.create'),
           icon: PencilSquare,
-        },
-        {
-          href: '/create/community',
-          name: t.get('routes.createCommunity'),
-          icon: Newspaper,
         },
       ],
     },

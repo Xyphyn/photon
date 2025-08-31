@@ -22,7 +22,7 @@
             "app": "App",
             "settings": "Settings",
             "colorscheme": {
-                "label": "Color Scheme",
+                "label": "Color scheme",
                 "system": "System",
                 "dark": "Dark",
                 "light": "Light"
@@ -34,7 +34,7 @@
             "instance": "Instance"
         },
         "commands": {
-            "prompt": "Command Palette",
+            "prompt": "Command palette",
             "recents": "Recents",
             "content": "Content",
             "search": "Search for {{default}}",
@@ -52,15 +52,15 @@
         "notifications": "Notifications"
     },
     "account": {
-        "login": "Log In",
-        "logout": "Log Out",
-        "signup": "Sign Up",
+        "login": "Log in",
+        "logout": "Log out",
+        "signup": "Sign up",
         "accounts": "Accounts",
-        "changeinstance": "Change Instance",
-        "resetColor": "Reset Color",
-        "addGuest": "Add Guest",
-        "moveUp": "Move Up",
-        "moveDown": "Move Down",
+        "changeinstance": "Change instance",
+        "resetColor": "Reset color",
+        "addGuest": "Add guest",
+        "moveUp": "Move up",
+        "moveDown": "Move down",
         "guest": "Guest",
         "versionGate": "This version of Photon supports instances running {{version}} or higher."
     },
@@ -121,24 +121,24 @@
         "name": "Name",
         "instance": "Instance URL",
         "password": "Password",
-        "confirmPassword": "Confirm Password",
+        "confirmPassword": "Confirm password",
         "2fa": "2FA Code",
-        "forgotpassword": "Forgot Password",
+        "forgotpassword": "Forgot password",
         "submit": "Submit",
         "edit": "Edit",
         "preview": "Preview",
         "post": {
-            "create": "Create Post",
-            "edit": "Edit Post",
+            "create": "Create post",
+            "edit": "Edit post",
             "community": "Community",
             "title": "Title",
             "url": "URL",
             "body": "Body",
             "nsfw": "NSFW",
-            "generateTitle": "Generate Title",
-            "uploadImage": "Upload Image",
+            "generateTitle": "Generate title",
+            "uploadImage": "Upload image",
             "selectFile": "Select a file",
-            "altText": "Alt Text",
+            "altText": "Alt text",
             "addUrl": "Add URL",
             "setLanguage": "Set language",
             "unset": "Unset",
@@ -150,15 +150,15 @@
             "avatar": "Avatar",
             "banner": "Banner",
             "email": "Email",
-            "matrix": "Matrix User",
+            "matrix": "Matrix user",
             "showNSFW": "Show NSFW content",
-            "scores": "Show Scores",
-            "bot": "Bot Account",
-            "showBots": "Show Bots",
-            "showRead": "Show Read Posts",
-            "currentPassword": "Current Password",
-            "newPassword": "New Password",
-            "verifyNewPassword": "Verify New Password",
+            "scores": "Show scores",
+            "bot": "Bot account",
+            "showBots": "Show bots",
+            "showRead": "Show read posts",
+            "currentPassword": "Current password",
+            "newPassword": "New password",
+            "verifyNewPassword": "Verify new password",
             "2fa": {
                 "totp": "TOTP",
                 "2fa": "2FA",
@@ -166,7 +166,6 @@
                 "disabled": "2FA is disabled"
             },
             "deleteAccount": {
-                "label": "Delete account",
                 "deleteContent": "Delete content",
                 "warning": "This will delete ALL of your submissions."
             },
@@ -253,7 +252,6 @@
                 "download": "Download"
             },
             "logins": "Logins",
-            "welcome": "Welcome, {{default}}!",
             "delete": {
                 "title": "Delete account",
                 "warning": "This is permanent. Are you sure you want to do this?"
@@ -284,8 +282,6 @@
             "other": "Other results"
         },
         "saved": "Saved",
-        "createPost": "Create Post",
-        "createCommunity": "Create Community",
         "post": {
             "crosspostCount": "Crossposts",
             "commentCount": "Comments",
@@ -365,15 +361,15 @@
                 "sidebar": "Sidebar",
                 "icon": "Icon",
                 "banner": "Banner",
-                "downvotesEnabled": "Enable Downvotes",
+                "downvotesEnabled": "Enable downvotes",
                 "nsfwEnabled": "Enable NSFW",
                 "registration": {
-                    "label": "Registration Mode",
+                    "label": "Registration mode",
                     "open": "Open",
-                    "application": "Require Application",
+                    "application": "Require application",
                     "closed": "Closed"
                 },
-                "applicationQuestion": "Application Question",
+                "applicationQuestion": "Application question",
                 "adminCommunityOnly": "Only admins can create communities",
                 "requireVerifyEmail": "Require email verification",
                 "emailAdminsOnApplication": "Email admins on receiving new applications",
@@ -389,7 +385,7 @@
                 "federation": "Federation enabled",
                 "federationDebug": "Federation debug mode",
                 "captcha": {
-                    "enabled": "CAPTCHA Enabled"
+                    "enabled": "CAPTCHA enabled"
                 }
             },
             "applications": {
@@ -405,7 +401,7 @@
                 "deny": "Deny",
                 "approve": "Approve",
                 "reason": "Reason",
-                "modalTitle": "Deny Application"
+                "modalTitle": "Deny application"
             },
             "taglines": {
                 "title": "Taglines",
@@ -425,10 +421,10 @@
             "federation": {
                 "title": "Federation",
                 "csv": "Upload CSV",
-                "blocked": "Blocked Instances",
+                "blocked": "Blocked instances",
                 "block": "Block",
                 "blockplaceholder": "Block an instance...",
-                "allowed": "Whitelisted Instances",
+                "allowed": "Whitelisted instances",
                 "allow": "Whitelist",
                 "allowplaceholder": "Whitelist an instance",
                 "emptyBlock": {
@@ -449,7 +445,7 @@
             "error": "Failed to verify your email."
         },
         "passwordChange": {
-            "title": "Change Password",
+            "title": "Change password",
             "description": "Choose your new password.",
             "instance": "Which instance is your account hosted on?"
         },
@@ -459,25 +455,22 @@
         },
         "theme": {
             "title": "Theme",
-            "import": "Import",
-            "export": "Export",
-            "reset": "Reset",
             "accent": "Accent",
             "resetWarning": {
-                "title": "Reset Theme",
+                "title": "Reset theme",
                 "description": "This will reset all of your colors to the default. It is recommended to export your theme before this."
             },
             "preset": {
                 "title": "Can't be modified",
                 "description": "This is a default theme, and can't be modified.",
                 "delete": {
-                    "title": "Delete Theme",
+                    "title": "Delete theme",
                     "confirm": "Confirm"
                 },
                 "default": "Default",
                 "classic": "Classic",
-                "imported": "Your Theme",
-                "new": "New Theme",
+                "imported": "Your theme",
+                "new": "New theme",
                 "presets": "Presets"
             }
         },
@@ -505,8 +498,6 @@
             "block": "Block",
             "unblock": "Unblock",
             "blockInstance": "Block instance",
-            "favorite": "Favorite",
-            "unfavorite": "Remove Favorite",
             "activeDay": "Active Today"
         }
     },
@@ -515,7 +506,7 @@
         "instance": "Instance",
         "label": "Administration",
         "purgeCommunity": {
-            "title": "Purging Community",
+            "title": "Purging community",
             "warning": "This will delete all posts. Are you sure? (The button will enable in 3 seconds.)"
         }
     },
@@ -535,24 +526,18 @@
             "save": "Save",
             "unsave": "Unsave",
             "more": {
-                "label": "More Actions",
+                "label": "More actions",
                 "edit": "Edit",
                 "creator": "Creator",
                 "actions": "Actions",
-                "markRead": "Mark as Read",
-                "markUnread": "Mark as Unread",
+                "markRead": "Mark as read",
+                "markUnread": "Mark as unread",
                 "hide": "Hide",
                 "unhide": "Unhide",
-                "translate": "Translate",
-                "mediaBias": "Media Bias",
                 "share": "Share",
                 "crosspost": "Crosspost",
                 "delete": "Delete",
                 "restore": "Restore"
-            },
-            "link": {
-                "title": "Alternative Links",
-                "actions": "Link Actions"
             },
             "vote": {
                 "upvote": "Upvote",
@@ -570,8 +555,7 @@
         },
         "image": {
             "zoomIn": "Zoom in",
-            "zoomOut": "Zoom out",
-            "close": "Close"
+            "zoomOut": "Zoom out"
         },
         "meta": {
             "lastEdited": "Last edited {{default}}",
@@ -737,10 +721,6 @@
                 "title": "Theming",
                 "description": "Customize the UI colors.",
                 "link": "Go to themes"
-            },
-            "colorscheme": {
-                "title": "Color Scheme",
-                "description": "The color scheme to use."
             },
             "lang": {
                 "title": "Language",

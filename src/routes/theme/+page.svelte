@@ -105,7 +105,7 @@
       disabled={themeData.current.id <= 0}
     >
       <Icon src={ArrowUpTray} size="16" mini />
-      {$t('routes.theme.import')}
+      {$t('settings.import')}
     </Button>
     <Button
       onclick={() => {
@@ -115,7 +115,7 @@
       size="lg"
     >
       <Icon src={ArrowDownTray} size="16" mini />
-      {$t('routes.theme.export')}
+      {$t('settings.export')}
     </Button>
     <Button
       disabled={themeData.current.id <= 0}
@@ -135,7 +135,7 @@
                   slate: {},
                 }
               },
-              content: $t('routes.theme.reset'),
+              content: $t('settings.reset'),
               close: true,
               type: 'danger',
             }),
@@ -147,7 +147,7 @@
       size="lg"
     >
       <Icon src={ArrowPath} size="16" mini />
-      {$t('routes.theme.reset')}
+      {$t('settings.reset')}
     </Button>
   </div>
   {#if themeData.current.id <= 0}

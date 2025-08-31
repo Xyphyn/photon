@@ -156,6 +156,7 @@
     <Header pageHeader class="tracking-normal!">
       <div class="w-full">
         <EntityHeader
+          avatarCircle
           avatar={data.person_view.value.person.avatar}
           name={data.person_view.value.person.display_name ||
             data.person_view.value.person.name}
@@ -216,7 +217,7 @@
                 <Button
                   size="sm"
                   rounding="pill"
-                  color="secondary"
+                  color="primary"
                   href="/inbox/messages/{data.person_view.value.person.id}"
                 >
                   {#snippet prefix()}
@@ -278,8 +279,8 @@
                   </Menu>
                 {/if}
                 <Menu placement="bottom-end">
-                  {#snippet target()}
-                    <Button size="custom" class="h-7 w-7" rounding="pill">
+                  {#snippet target(attachment)}
+                    <Button {@attach attachment} size="custom" class="h-8 w-8" rounding="pill">
                       {#snippet prefix()}
                         <Icon src={EllipsisHorizontal} size="16" mini />
                       {/snippet}
@@ -305,56 +306,58 @@
           {/snippet}
         </EntityHeader>
       </div>
+      {#snippet extended()}
+        <div class="flex flex-col gap-4 max-w-full w-full min-w-0">
+          <form
+            action={page.url.origin + page.url.pathname}
+            method="GET"
+            class="flex flex-row gap-4 flex-wrap"
+            bind:this={sortForm}
+          >
+            <Select
+              bind:value={data.filters.value.type}
+              name="type"
+              onchange={() => sortForm?.requestSubmit()}
+            >
+              {#snippet customLabel()}
+                <span class="flex items-center gap-1">
+                  <Icon src={AdjustmentsHorizontal} size="15" mini />
+                  {$t('filter.type')}
+                </span>
+              {/snippet}
+              <Option value="all">{$t('content.all')}</Option>
+              <Option value="posts">{$t('content.posts')}</Option>
+              <Option value="comments">{$t('content.comments')}</Option>
+            </Select>
+            <Sort
+              bind:selected={data.filters.value.sort}
+              onchange={() => sortForm?.requestSubmit()}
+            />
+          </form>
+        </div>
+      {/snippet}
     </Header>
   {/if}
 
-  <div class="flex flex-col gap-4 max-w-full w-full min-w-0">
-    <form
-      action={page.url.origin + page.url.pathname}
-      method="GET"
-      class="flex flex-row gap-4 flex-wrap"
-      bind:this={sortForm}
-    >
-      <Select
-        bind:value={data.filters.value.type}
-        name="type"
-        onchange={() => sortForm?.requestSubmit()}
-      >
-        {#snippet customLabel()}
-          <span class="flex items-center gap-1">
-            <Icon src={AdjustmentsHorizontal} size="15" mini />
-            {$t('filter.type')}
-          </span>
-        {/snippet}
-        <Option value="all">{$t('content.all')}</Option>
-        <Option value="posts">{$t('content.posts')}</Option>
-        <Option value="comments">{$t('content.comments')}</Option>
-      </Select>
-      <Sort
-        bind:selected={data.filters.value.sort}
-        onchange={() => sortForm?.requestSubmit()}
-      />
-    </form>
-    {#if data.items.value.length == 0}
-      <Placeholder
-        icon={PencilSquare}
-        title="No submissions"
-        description="This user has no submissions that match this filter."
-      />
-    {:else}
-      <CommonList items={data.items.value}>
-        {#snippet item(item)}
-          {#if isCommentView(item)}
-            <CommentItem comment={item} />
-          {:else if !isCommentView(item)}
-            <PostItem post={item} />
-          {/if}
-        {/snippet}
-      </CommonList>
-    {/if}
-    <Pageination
-      bind:page={data.filters.value.page}
-      href={page => `?page=${page}`}
+  {#if data.items.value.length == 0}
+    <Placeholder
+      icon={PencilSquare}
+      title="No submissions"
+      description="This user has no submissions that match this filter."
     />
-  </div>
+  {:else}
+    <CommonList items={data.items.value}>
+      {#snippet item(item)}
+        {#if isCommentView(item)}
+          <CommentItem comment={item} />
+        {:else if !isCommentView(item)}
+          <PostItem post={item} />
+        {/if}
+      {/snippet}
+    </CommonList>
+  {/if}
+  <Pageination
+    bind:page={data.filters.value.page}
+    href={page => `?page=${page}`}
+  />
 </div>

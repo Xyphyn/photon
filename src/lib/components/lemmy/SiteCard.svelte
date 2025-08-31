@@ -60,7 +60,7 @@
   <div class="flex flex-col gap-1">
     {#if taglines && taglines.length > 0}
       <Markdown
-        class="pt-0!"
+        class="pt-0! mx-3"
         source={taglines[Math.floor(Math.random() * taglines.length)].content}
       />
     {/if}
@@ -96,6 +96,16 @@
       <LabelStat
         label={$t('content.posts')}
         content={site.counts.posts.toString()}
+        formatted
+      />
+      <LabelStat
+        label={$t('content.comments')}
+        content={site.counts.comments.toString()}
+        formatted
+      />
+      <LabelStat
+        label={$t('cards.community.activeDay')}
+        content={site.counts.users_active_day.toString()}
         formatted
       />
       <LabelStat

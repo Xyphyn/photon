@@ -72,6 +72,7 @@
       counts={data.community.value.community_view.counts}
       class="w-full relative"
       compact="lg"
+      avatarCircle={false}
     />
   </div>
   {#snippet extended()}

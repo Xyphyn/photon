@@ -1,3 +1,4 @@
+import { t } from '$lib/i18n/translations'
 import type { Comment, CommentView } from 'lemmy-js-client'
 import { SvelteMap } from 'svelte/reactivity'
 
@@ -35,6 +36,9 @@ export function buildCommentsTree(
   for (const comment_view of comments) {
     const depthI = getDepthFromComment(comment_view.comment) ?? 0
     const depth = depthI + baseDepth
+    if (comment_view.comment.content == '' && comment_view.comment.removed) {
+      comment_view.comment.content = `*Removed by Moderator — [${t.get('routes.modlog.title')}](/modlog?comment=${comment_view.comment.id})*`
+    }
     const node: CommentNodeI = {
       comment_view,
       children: [],

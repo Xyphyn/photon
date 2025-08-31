@@ -65,7 +65,7 @@
           color="tertiary"
           size="square-lg"
           rounding="pill"
-          title={$t('post.actions.more.share')}
+          aria-label={$t('post.actions.more.share')}
         >
           {#snippet prefix()}
             <Icon src={Share} size="20" micro />
@@ -76,7 +76,7 @@
           color="tertiary"
           size="square-lg"
           rounding="pill"
-          title={$t('post.image.close')}
+          aria-label={$t('common.back')}
         >
           {#snippet prefix()}
             <Icon src={XMark} size="20" micro />

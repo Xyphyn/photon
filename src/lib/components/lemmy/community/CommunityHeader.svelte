@@ -41,6 +41,7 @@
     banner?: boolean
     class?: string
     compact?: 'lg'
+    avatarCircle?: boolean
   }
 
   let {

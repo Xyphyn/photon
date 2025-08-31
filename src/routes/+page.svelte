@@ -46,7 +46,7 @@
 
     {#snippet extended()}
       <form class="" method="get" action="/">
-        <div class="flex flex-row gap-4">
+        <div class="flex flex-row gap-2">
           {#if data.filters.value.type_}
             <Location
               name="type"
