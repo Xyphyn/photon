@@ -1,10 +1,11 @@
 <script lang="ts">
   import { Disclosure } from 'mono-svelte'
   import { Minus, Plus, Icon } from 'svelte-hero-icons'
+  import type { ClassValue } from 'svelte/elements'
   interface Props {
     open?: boolean
     icon?: boolean
-    class?: string
+    class?: ClassValue
     title?: import('svelte').Snippet<[boolean | undefined]>
     extended?: import('svelte').Snippet
     content?: import('svelte').Snippet

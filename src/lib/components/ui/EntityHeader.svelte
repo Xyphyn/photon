@@ -22,6 +22,7 @@
     nameDetail?: import('svelte').Snippet
     actions?: import('svelte').Snippet
     children?: import('svelte').Snippet
+    compact?: 'lg'
   }
 
   let {
@@ -36,12 +37,18 @@
     nameDetail,
     actions,
     children,
+    compact,
     ...rest
   }: Props = $props()
 </script>
 
 <div {...rest} class={['z-10 text-sm contents w-full', clazz]}>
-  <div class="absolute inset-0 h-96 overflow-x-hidden -z-10">
+  <div
+    class={[
+      compact == 'lg' && 'lg:hidden',
+      'absolute inset-0 h-96 overflow-x-hidden -z-10',
+    ]}
+  >
     <img
       src={banner || avatar}
       class="w-full h-64 object-cover blur-3xl opacity-30 dark:opacity-30"
@@ -49,12 +56,11 @@
       alt="User banner"
     />
   </div>
-  {#if banner || avatar}
+  {#if banner}
     <div class="relative overflow-hidden rounded-xl">
       <img
-        src={banner || avatar}
+        src={banner}
         class="w-full object-cover h-48 rounded-t-xl bg-white dark:bg-zinc-900 rounded-xl"
-        class:blur-xl={!banner}
         height="192"
         alt="User banner"
       />
@@ -65,7 +71,11 @@
     width={96}
     url={avatar}
     alt={name}
-    class="ring-slate-25 bg-slate-25 dark:bg-zinc-925 -mt-12 ml-4 ring-6 relative dark:ring-zinc-950"
+    circle={false}
+    class={[
+      'ring-slate-25 bg-slate-25 dark:bg-zinc-925 ring-6 relative dark:ring-zinc-950 rounded-3xl!',
+      banner && '-mt-12 ml-4',
+    ]}
   />
   <div class="py-4 flex flex-col xl:flex-row gap-4">
     <div class="flex flex-col flex-1">
@@ -91,7 +101,12 @@
       {/if}
     </div>
     {#if stats.length > 0}
-      <div class="text-sm flex flex-row flex-wrap overflow-hidden gap-4 h-full">
+      <div
+        class={[
+          compact == 'lg' && 'lg:hidden',
+          'text-sm flex flex-row flex-wrap overflow-hidden gap-4 h-full',
+        ]}
+      >
         {#each stats as stat}
           <div class="">
             <div class="text-slate-600 dark:text-zinc-500 text-sm font-medium">
@@ -117,6 +132,7 @@
   {#if bio}
     <div
       class={[
+        compact == 'lg' && 'lg:hidden',
         'relative w-full mb-4 text-base',
         center ? 'text-center' : 'text-left',
       ]}

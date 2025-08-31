@@ -71,6 +71,7 @@
       moderators={data.community.value.moderators}
       counts={data.community.value.community_view.counts}
       class="w-full relative"
+      compact="lg"
     />
   </div>
   {#snippet extended()}

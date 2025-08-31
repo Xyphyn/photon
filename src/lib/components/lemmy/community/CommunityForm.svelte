@@ -164,11 +164,11 @@
   />
   <div class="flex flex-row gap-4 flex-wrap *:flex-1">
     <ImageInputUpload
-      imageUrl={formData.icon}
+      bind:imageUrl={formData.icon}
       label={$t('routes.admin.config.icon')}
     />
     <ImageInputUpload
-      imageUrl={formData.banner}
+      bind:imageUrl={formData.banner}
       label={$t('routes.admin.config.banner')}
     />
   </div>

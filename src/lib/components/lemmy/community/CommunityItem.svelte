@@ -148,13 +148,13 @@
     {:else}
       <div class="flex flex-row items-center gap-2">
         <Button
-          size="square-md"
-          rounding="pill"
+          rounding="xl"
           color="ghost"
           onclick={() =>
             modal({ title: $t('form.post.community'), snippet: communityInfo })}
         >
           <Icon src={InformationCircle} size="16" mini />
+          {$t('post.actions.more.label')}
         </Button>
         <Subscribe {community}>
           {#snippet children({ subscribe, subscribing })}
@@ -191,7 +191,7 @@
                 ? $t('cards.community.subscribed')
                 : $t('cards.community.subscribe')}
               color={subscribed ? 'secondary' : 'primary'}
-              rounding="pill"
+              rounding="xl"
               class={[
                 subscribed && 'text-slate-600 dark:text-zinc-400',
                 ' h-8.5 rounded-full',

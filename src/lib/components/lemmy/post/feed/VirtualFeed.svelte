@@ -227,7 +227,7 @@
     {/if}
   {/key}
 
-  {#if settings.infiniteScroll && browser}
+  {#if settings.infiniteScroll && browser && posts.length > 0}
     {#if error}
       <div
         class="flex flex-col justify-center items-center

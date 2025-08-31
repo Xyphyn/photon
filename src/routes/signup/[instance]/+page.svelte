@@ -157,6 +157,7 @@
       class="flex flex-col gap-4 h-full w-full flex-2/3"
       onsubmit={preventDefault(submit)}
     >
+      <ErrorContainer scope={page.url.pathname} />
       <Button href="/accounts" class="inline-block mb-4 w-max" rounding="pill">
         <Icon src={ArrowLeft} size="16" micro />
         {$t('common.back')}
@@ -296,8 +297,8 @@
     </form>
   {:else if stage == 'verify'}
     <div class="flex-2/3 flex flex-col h-full justify-center gap-8">
-      <h2 class="font-medium text-3xl">{$t('toast.verifyEmail')}</h2>
       <ErrorContainer scope={page.url.pathname} />
+      <h2 class="font-medium text-3xl">{$t('toast.verifyEmail')}</h2>
       <form
         onsubmit={e => {
           e.preventDefault()

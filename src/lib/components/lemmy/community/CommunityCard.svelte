@@ -104,8 +104,11 @@
     Newspaper,
     NoSymbol,
     Plus,
+    ShieldCheck,
   } from 'svelte-hero-icons'
   import ItemList from '../generic/ItemList.svelte'
+  import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
+  import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
 
   let loading = $state({
     blocking: false,
@@ -156,64 +159,188 @@
 {:then community_view}
   <aside
     class={[
-      'min-w-full pt-0 text-slate-600 dark:text-zinc-400 flex flex-col gap-4 text-sm',
+      'min-w-full pt-0 text-slate-600 dark:text-zinc-400 flex flex-col gap-1',
       clazz,
     ]}
   >
-    <Entity
-      name={community_view.community.title}
-      label="!{fullCommunityName(
-        community_view.community.name,
-        community_view.community.actor_id,
-      )}"
-    >
-      {#snippet customIcon()}
-        <Avatar
-          width={32}
-          url={community_view.community.icon}
-          alt={community_view.community.name}
-          circle={false}
+    <div class="px-3 overflow-hidden">
+      <Entity
+        name={community_view.community.title}
+        label="!{fullCommunityName(
+          community_view.community.name,
+          community_view.community.actor_id,
+        )}"
+      >
+        {#snippet customIcon()}
+          <Avatar
+            width={32}
+            url={community_view.community.icon}
+            alt={community_view.community.name}
+            circle={false}
+          />
+        {/snippet}
+      </Entity>
+    </div>
+
+    <EndPlaceholder size="xs" margin="sm">
+      {$t('form.post.community')}
+    </EndPlaceholder>
+    {#if profile.current?.jwt}
+      {@const subscribed = profile.current.user?.follows.some(
+        i => i.community.id == community_view.community.id,
+      )}
+      <Button
+        disabled={loading.subscribing}
+        loading={loading.subscribing}
+        size="md"
+        rounding="xl"
+        color={subscribed ? 'secondary' : 'primary'}
+        onclick={() => subscribe(community_view)}
+        class="px-4 relative z-[inherit]"
+        alignment="left"
+      >
+        {#snippet prefix()}
+          <Icon
+            src={community_view.subscribed == 'Subscribed' ? Check : Plus}
+            mini
+            size="16"
+          />
+        {/snippet}
+        {subscribed
+          ? $t('cards.community.subscribed')
+          : $t('cards.community.subscribe')}
+      </Button>
+    {/if}
+    {#if profile.current?.user && amMod(profile.current.user, community_view.community)}
+      <SidebarButton
+        href="/c/{fullCommunityName(
+          community_view.community.name,
+          community_view.community.actor_id,
+        )}/settings"
+        rounding="xl"
+        icon={Cog6Tooth}
+        label={$t('routes.profile.edit')}
+      />
+    {/if}
+    <Menu placement="bottom-start">
+      {#snippet target(attachment)}
+        <SidebarButton
+          {@attach attachment}
+          label={$t('post.actions.more.label')}
+          rounding="xl"
+          icon={EllipsisHorizontal}
         />
       {/snippet}
-    </Entity>
+      <MenuButton href="/modlog?community={community_view.community.id}">
+        <Icon src={Newspaper} size="16" mini />
+        {$t('cards.community.modlog')}
+      </MenuButton>
+      {#if profile.current?.jwt}
+        {#if profile.current.user && amMod(profile.current.user, community_view.community)}
+          <MenuButton
+            color="success-subtle"
+            href="/moderation?community={community_view.community.id}"
+          >
+            <Icon src={ShieldCheck} size="16" micro />
+            {$t('routes.moderation.feed')}
+          </MenuButton>
+        {/if}
+        <MenuButton
+          color="danger-subtle"
+          size="lg"
+          onclick={() =>
+            block(community_view.community.id, !community_view.blocked)}
+        >
+          {#snippet prefix()}
+            <Icon src={NoSymbol} size="16" mini />
+          {/snippet}
+          {community_view.blocked
+            ? $t('cards.community.unblock')
+            : $t('cards.community.block')}
+        </MenuButton>
+        {#if profile.current?.user}
+          <MenuButton
+            color="danger-subtle"
+            size="lg"
+            onclick={() => blockInstance(community_view.community.instance_id)}
+          >
+            {#snippet prefix()}
+              <Icon src={BuildingOffice2} size="16" mini />
+            {/snippet}
+            {$t('cards.community.blockInstance')}
+          </MenuButton>
+        {/if}
+        {#if profile.current?.user && isAdmin(profile.current.user)}
+          <MenuButton
+            color="danger-subtle"
+            onclick={() =>
+              modal({
+                title: $t('admin.purgeCommunity.title'),
+                body: `${community_view.community.title}: ${$t('admin.purgeCommunity.warning')}`,
+                actions: [
+                  action({
+                    close: true,
+                    content: $t('common.cancel'),
+                  }),
+                  action({
+                    action: () => purgeCommunity(community_view.community.id),
+                    close: true,
+                    content: $t('admin.purge'),
+                    type: 'danger',
+                    icon: Fire,
+                  }),
+                ],
+                dismissable: true,
+                type: 'error',
+              })}
+          >
+            {#snippet prefix()}
+              <Icon src={Fire} size="16" mini />
+            {/snippet}
+            {$t('admin.purge')}
+          </MenuButton>
+        {/if}
+      {/if}
+    </Menu>
+    <EndPlaceholder size="xs" margin="sm">
+      {$t('cards.site.stats')}
+    </EndPlaceholder>
 
-    <div class="flex flex-col gap-1">
-      <hr class="border-slate-200 dark:border-zinc-900 my-1" />
-      <Expandable bind:open={settings.expand.about} class="pt-0!">
+    <div class="flex flex-row gap-4 flex-wrap px-3">
+      <LabelStat
+        label={$t('cards.community.members')}
+        content={community_view.counts.subscribers.toString()}
+        formatted
+      />
+      <LabelStat
+        label={$t('content.posts')}
+        content={community_view.counts.posts.toString()}
+        formatted
+      />
+      <LabelStat
+        label={$t('cards.community.activeDay')}
+        content={community_view.counts.users_active_day.toString()}
+        formatted
+      />
+    </div>
+
+    <EndPlaceholder size="xs" margin="sm">
+      {$t('common.info')}
+    </EndPlaceholder>
+    <div class="space-y-3 px-1.5 text-sm">
+      <Expandable bind:open={settings.expand.about}>
         {#snippet title()}
-          <span class="py-1 px-1 flex gap-1 items-center w-full">
+          <span class="px-2 py-1 w-full">
             {$t('cards.site.about')}
           </span>
         {/snippet}
         <Markdown source={community_view.community.description} />
       </Expandable>
 
-      <hr class="border-slate-200 dark:border-zinc-900 my-1" />
-      <Expandable bind:open={settings.expand.stats}>
-        {#snippet title()}
-          <span class="py-1 px-1 flex gap-1 items-center w-full">
-            {$t('cards.site.stats')}
-          </span>
-        {/snippet}
-        <div class="flex flex-row gap-4 flex-wrap">
-          <LabelStat
-            label={$t('cards.community.members')}
-            content={community_view.counts.subscribers.toString()}
-            formatted
-          />
-          <LabelStat
-            label={$t('content.posts')}
-            content={community_view.counts.posts.toString()}
-            formatted
-          />
-        </div>
-      </Expandable>
-
       {#if moderators && moderators.length > 0}
-        <hr class="border-slate-200 dark:border-zinc-900 my-1" />
         <Expandable bind:open={settings.expand.team}>
           {#snippet title()}
-            <span class="flex items-center gap-1 py-1 px-2 w-full">
+            <span class="px-2 py-1 w-full">
               {$t('cards.community.moderators')}
             </span>
           {/snippet}
@@ -228,118 +355,6 @@
           />
         </Expandable>
       {/if}
-    </div>
-    <div class="flex flex-row items-center gap-1 sticky bottom-0 w-full">
-      {#if profile.current?.jwt}
-        <Button
-          disabled={loading.subscribing}
-          loading={loading.subscribing}
-          size="md"
-          rounding="pill"
-          color={community_view.subscribed == 'Subscribed'
-            ? 'secondary'
-            : 'primary'}
-          onclick={() => subscribe(community_view)}
-          class="px-4 relative z-[inherit]"
-        >
-          {#snippet prefix()}
-            <Icon
-              src={community_view.subscribed == 'Subscribed' ? Check : Plus}
-              mini
-              size="16"
-            />
-          {/snippet}
-          {community_view.subscribed == 'Subscribed' ||
-          community_view.subscribed == 'Pending'
-            ? $t('cards.community.subscribed')
-            : $t('cards.community.subscribe')}
-        </Button>
-      {/if}
-      {#if profile.current?.user && amMod(profile.current.user, community_view.community)}
-        <Button
-          href="/c/{fullCommunityName(
-            community_view.community.name,
-            community_view.community.actor_id,
-          )}/settings"
-          size="square-md"
-          rounding="pill"
-        >
-          {#snippet prefix()}
-            <Icon src={Cog6Tooth} mini size="16" />
-          {/snippet}
-        </Button>
-      {/if}
-      <Menu placement="top-end">
-        {#snippet target(attachment)}
-          <Button {@attach attachment} size="square-md" rounding="pill">
-            {#snippet prefix()}
-              <Icon src={EllipsisHorizontal} size="16" mini />
-            {/snippet}
-          </Button>
-        {/snippet}
-        <MenuButton href="/modlog?community={community_view.community.id}">
-          <Icon src={Newspaper} size="16" mini />
-          {$t('cards.community.modlog')}
-        </MenuButton>
-        {#if profile.current?.jwt}
-          <MenuButton
-            color="danger-subtle"
-            size="lg"
-            onclick={() =>
-              block(community_view.community.id, !community_view.blocked)}
-          >
-            {#snippet prefix()}
-              <Icon src={NoSymbol} size="16" mini />
-            {/snippet}
-            {community_view.blocked
-              ? $t('cards.community.unblock')
-              : $t('cards.community.block')}
-          </MenuButton>
-          {#if profile.current?.user}
-            <MenuButton
-              color="danger-subtle"
-              size="lg"
-              onclick={() =>
-                blockInstance(community_view.community.instance_id)}
-            >
-              {#snippet prefix()}
-                <Icon src={BuildingOffice2} size="16" mini />
-              {/snippet}
-              {$t('cards.community.blockInstance')}
-            </MenuButton>
-          {/if}
-          {#if profile.current?.user && isAdmin(profile.current.user)}
-            <MenuButton
-              color="danger-subtle"
-              onclick={() =>
-                modal({
-                  title: $t('admin.purgeCommunity.title'),
-                  body: `${community_view.community.title}: ${$t('admin.purgeCommunity.warning')}`,
-                  actions: [
-                    action({
-                      close: true,
-                      content: $t('common.cancel'),
-                    }),
-                    action({
-                      action: () => purgeCommunity(community_view.community.id),
-                      close: true,
-                      content: $t('admin.purge'),
-                      type: 'danger',
-                      icon: Fire,
-                    }),
-                  ],
-                  dismissable: true,
-                  type: 'error',
-                })}
-            >
-              {#snippet prefix()}
-                <Icon src={Fire} size="16" mini />
-              {/snippet}
-              {$t('admin.purge')}
-            </MenuButton>
-          {/if}
-        {/if}
-      </Menu>
     </div>
   </aside>
 {/await}

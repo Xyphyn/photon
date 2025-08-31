@@ -65,7 +65,7 @@
       style: 'grid-area: main',
     })}
     {@render suffix?.({
-      class: `max-lg:hidden w-full sticky lg:top-16 h-max max-h-screen overflow-auto left-0 bg-slate-100 dark:bg-zinc-950 z-40`,
+      class: `max-lg:hidden flex w-full sticky top-0 lg:top-16 left-0 max-h-[calc(100vh-4rem)] overflow-auto bg-slate-100 dark:bg-zinc-950 z-40`,
       style: 'grid-area: suffix;',
     })}
   </div>

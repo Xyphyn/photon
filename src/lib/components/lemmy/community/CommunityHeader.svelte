@@ -40,6 +40,7 @@
     blocked?: boolean
     banner?: boolean
     class?: string
+    compact?: 'lg'
   }
 
   let {
@@ -50,10 +51,14 @@
     blocked = false,
     banner = !(settings.nsfwBlur && community.nsfw),
     class: clazz = '',
+    compact,
+    ...rest
   }: Props = $props()
 </script>
 
 <EntityHeader
+  {...rest}
+  {compact}
   banner={banner ? community.banner : undefined}
   avatar={community.icon}
   name={community.title}
@@ -98,7 +103,7 @@
     </button>
   {/snippet}
   {#if moderators.length > 0}
-    <Expandable class="">
+    <Expandable class={[compact == 'lg' && 'lg:hidden']}>
       {#snippet title()}
         {$t('cards.community.moderators')}
         <hr class="flex-1 border-slate-200 dark:border-zinc-800 mx-3" />
@@ -114,7 +119,7 @@
       />
     </Expandable>
   {/if}
-  <div class="flex items-center gap-2 h-max w-max">
+  <div class={["flex items-center gap-2 h-max w-max", compact == 'lg' && 'lg:hidden']}>
     {#if profile.current?.jwt}
       <Subscribe
         community={{
