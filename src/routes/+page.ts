@@ -1,3 +1,4 @@
+import { env } from '$env/dynamic/public'
 import { t } from '$lib/i18n/translations.js'
 import { postFeed } from '$lib/lemmy/postfeed.svelte.js'
 import { ReactiveState, awaitIfServer } from '$lib/promise.svelte.js'
@@ -25,6 +26,8 @@ export async function load({ url, fetch }) {
     url: url,
     fetch: fetch,
   })
+
+  if (env.PUBLIC_SSR_ENABLED?.toLowerCase() == 'true') await feed
 
   return {
     feed: new ReactiveState((await awaitIfServer(feed)).data),
