@@ -28,7 +28,6 @@ function getFromStorage<T>(key: string): T | undefined {
   return JSON.parse(lc)
 }
 
-// eslint-disable-next-line
 function setFromStorage(key: string, item: any, stringify: boolean = true) {
   if (typeof localStorage == 'undefined') return
   return localStorage.setItem(key, stringify ? JSON.stringify(item) : item)

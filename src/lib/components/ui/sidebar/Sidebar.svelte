@@ -27,7 +27,7 @@
   import EndPlaceholder from '../EndPlaceholder.svelte'
   import ProfileSelection from './ProfileSelection.svelte'
   import Logo from '../Logo.svelte'
-  import { PUBLIC_XYLIGHT_MODE } from '$env/static/public'
+  import { env } from '$env/dynamic/public'
 
   interface Props {
     style?: string
@@ -180,7 +180,7 @@
         {__VERSION__}
       </span>
     </div>
-    {#if PUBLIC_XYLIGHT_MODE.toLowerCase() == 'true'}
+    {#if env.PUBLIC_XYLIGHT_MODE.toLowerCase() == 'true'}
       <a
         href="https://github.com/xyphyn/photon"
         class="text-blue-600 dark:text-blue-400/60 hover:underline"
