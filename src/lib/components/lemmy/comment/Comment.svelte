@@ -185,13 +185,22 @@
             <Icon src={Pencil} micro size="14" />
           </div>
         {/if}
-        {#if node.comment_view.comment.deleted || node.comment_view.comment.removed}
+        {#if node.comment_view.comment.deleted}
           <Icon
             src={Trash}
             solid
             size="12"
             aria-label={$t('post.badges.deleted')}
             class="text-red-600 dark:text-red-500"
+          />
+        {/if}
+        {#if node.comment_view.comment.removed}
+          <Icon
+            src={Trash}
+            solid
+            size="12"
+            aria-label={$t('post.badges.removed')}
+            class="text-green-600 dark:text-green-500"
           />
         {/if}
         {#if node.comment_view.saved}

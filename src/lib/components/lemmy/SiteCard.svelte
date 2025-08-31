@@ -99,6 +99,16 @@
         formatted
       />
       <LabelStat
+        label={$t('content.comments')}
+        content={site.counts.comments.toString()}
+        formatted
+      />
+      <LabelStat
+        label={$t('cards.community.activeDay')}
+        content={site.counts.users_active_day.toString()}
+        formatted
+      />
+      <LabelStat
         label={$t('content.communities')}
         content={site.counts.communities.toString()}
         formatted
