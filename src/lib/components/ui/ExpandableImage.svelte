@@ -76,7 +76,7 @@
           color="tertiary"
           size="square-lg"
           rounding="pill"
-          title={$t('post.image.close')}
+          title={$t('common.back')}
         >
           {#snippet prefix()}
             <Icon src={XMark} size="20" micro />
