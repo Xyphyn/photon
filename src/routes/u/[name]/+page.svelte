@@ -156,6 +156,7 @@
     <Header pageHeader class="tracking-normal!">
       <div class="w-full">
         <EntityHeader
+          avatarCircle
           avatar={data.person_view.value.person.avatar}
           name={data.person_view.value.person.display_name ||
             data.person_view.value.person.name}

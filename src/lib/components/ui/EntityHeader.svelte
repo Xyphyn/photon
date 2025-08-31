@@ -23,6 +23,7 @@
     actions?: import('svelte').Snippet
     children?: import('svelte').Snippet
     compact?: 'lg'
+    avatarCircle?: boolean
   }
 
   let {
@@ -38,6 +39,7 @@
     actions,
     children,
     compact,
+    avatarCircle = true,
     ...rest
   }: Props = $props()
 </script>
@@ -71,10 +73,11 @@
     width={96}
     url={avatar}
     alt={name}
-    circle={false}
+    circle={avatarCircle}
     class={[
-      'ring-slate-25 bg-slate-25 dark:bg-zinc-925 ring-6 relative dark:ring-zinc-950 rounded-3xl!',
+      'ring-slate-25 bg-slate-25 dark:bg-zinc-925 ring-6 relative dark:ring-zinc-950',
       banner && '-mt-12 ml-4',
+      !avatarCircle && 'rounded-3xl!',
     ]}
   />
   <div class="py-4 flex flex-col xl:flex-row gap-4">
