@@ -143,8 +143,7 @@
   <Button
     loading={formData.addingModerator}
     disabled={formData.addingModerator}
-    size="lg"
-    class="w-max shrink-0"
+    rounding="xl"
     color="primary"
     submit
   >

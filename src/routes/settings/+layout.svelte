@@ -3,7 +3,7 @@
   import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
   import { t } from '$lib/i18n/translations'
   import { defaultSettings, settings } from '$lib/settings.svelte'
-  import { Button, toast, Modal } from 'mono-svelte'
+  import { Button, toast, Modal, modal, action } from 'mono-svelte'
   import TextArea from 'mono-svelte/forms/TextArea.svelte'
   import {
     ArrowDownTray,
@@ -78,11 +78,20 @@
       </Button>
       <Button
         onclick={() => {
-          toast({
-            content: $t('toast.resetSettings'),
-            action: () => {
-              Object.assign(settings, defaultSettings)
-            },
+          modal({
+            title: $t('settings.reset'),
+            body: $t('toast.resetSettings'),
+            actions: [
+              action({
+                action: () => Object.assign(settings, defaultSettings),
+                close: true,
+                type: 'danger',
+                content: $t('settings.reset'),
+              }),
+              action({
+                content: $t('common.cancel'),
+              }),
+            ],
           })
         }}
         rounding="pill"

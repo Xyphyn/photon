@@ -60,7 +60,7 @@
   <div class="flex flex-col gap-1">
     {#if taglines && taglines.length > 0}
       <Markdown
-        class="pt-0!"
+        class="pt-0! mx-3"
         source={taglines[Math.floor(Math.random() * taglines.length)].content}
       />
     {/if}
