@@ -104,8 +104,9 @@
       previewButton={previewAction}
     >
       <Menu>
-        {#snippet target()}
+        {#snippet target(attachment)}
           <Button
+            {@attach attachment}
             size="custom"
             rounding="xl"
             class="w-7.5 h-7.5"

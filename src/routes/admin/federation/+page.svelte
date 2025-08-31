@@ -248,8 +248,9 @@
         <span>{$t('routes.admin.federation.allowed')}</span>
         {#if allowInstance.instance || !(data.instances.value.allowed?.length == 0)}
           <Popover openOnHover placement="bottom-end">
-            {#snippet target()}
+            {#snippet target(attachment)}
               <Icon
+                {@attach attachment}
                 src={ExclamationTriangle}
                 solid
                 class="text-yellow-500"
