@@ -14,14 +14,10 @@
   import { postFeeds } from '$lib/lemmy/postfeed.svelte.js'
   import { settings, SSR_ENABLED } from '$lib/settings.svelte.js'
   import Button from 'mono-svelte/button/Button.svelte'
-  import { onMount } from 'svelte'
   import { ArrowRight, ChartBar, Icon } from 'svelte-hero-icons'
 
   let { data = $bindable() } = $props()
 
-  onMount(async () => {
-    await data.feed.value
-  })
   $effect(() => {
     if (data.filters.value.type_)
       settings.defaultSort.feed = data.filters.value.type_
