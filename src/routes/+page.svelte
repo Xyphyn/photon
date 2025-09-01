@@ -12,7 +12,7 @@
   import { t } from '$lib/i18n/translations.js'
   import { site } from '$lib/lemmy.svelte.js'
   import { postFeeds } from '$lib/lemmy/postfeed.svelte.js'
-  import { settings } from '$lib/settings.svelte.js'
+  import { settings, SSR_ENABLED } from '$lib/settings.svelte.js'
   import Button from 'mono-svelte/button/Button.svelte'
   import { onMount } from 'svelte'
   import { ArrowRight, ChartBar, Icon } from 'svelte-hero-icons'
@@ -37,7 +37,11 @@
 </script>
 
 <svelte:head>
-  <title>{site.data?.site_view.site.name}</title>
+  <title>
+    {SSR_ENABLED && site.data
+      ? site.data.site_view.site.name
+      : $t('routes.frontpage.title')}
+  </title>
 </svelte:head>
 
 <div class="flex flex-col gap-2 max-w-full w-full min-w-0">
