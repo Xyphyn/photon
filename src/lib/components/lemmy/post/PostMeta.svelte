@@ -147,7 +147,6 @@
       {#snippet target(attachment)}
         <button
           {@attach attachment}
-
           class={[
             'row-span-2 shrink-0 mr-2 self-center group/btn',
             'bg-slate-200 dark:bg-zinc-800 rounded-lg cursor-pointer',
@@ -339,16 +338,10 @@
   </div>
 </header>
 {#if title && id}
-  <a
-    href={settings.posts.titleOpensUrl && postUrl
-      ? postUrl
-      : `/post/${encodeURIComponent(instance.data)}/${id}`}
-    target={settings.posts.titleOpensUrl || settings.openLinksInNewTab
-      ? '_blank'
-      : undefined}
+  {@const useAttachedUrl = settings.posts.titleOpensUrl && postUrl}
+  <h3
     class={[
-      'inline max-sm:mt-0!',
-      'hover:underline hover:text-primary-900 dark:hover:text-primary-100 transition-colors',
+      'max-sm:m-0!',
       'font-medium text-balance max-w-xl',
       titleClass,
       settings.markReadPosts && read && 'text-slate-600 dark:text-zinc-400',
@@ -356,15 +349,24 @@
     ]}
     style="grid-area: title;"
   >
-    {#if title}
+    <a
+      href={useAttachedUrl
+        ? postUrl
+        : `/post/${encodeURIComponent(instance.data)}/${id}`}
+      target={useAttachedUrl
+        ? '_blank'
+        : undefined}
+      rel={useAttachedUrl ? 'noopener noreferrer' : undefined}
+      class="inline-block hover:underline hover:text-primary-900 dark:hover:text-primary-100 transition-colors"
+    >
       <Markdown
         source={title}
         inline
         noStyle
-        class={view == 'compact' ? '' : 'leading-[1.3]'}
-      ></Markdown>
-    {/if}
-  </a>
+        class={view != 'compact' ? '' : 'leading-[1.3]'}
+      />
+    </a>
+  </h3>
 {:else}
   <div style="grid-area: title; margin: 0;"></div>
 {/if}

@@ -5,33 +5,24 @@
 
   export const buttonAlignment = {
     left: 'justify-start text-left origin-left',
-    center: 'justify-center text-center origin-center',
+    center: 'justify-center',
     right: 'justify-end text-right origin-right',
   }
 
   export const buttonColor = {
-    primary: `border border-transparent bg-primary-900 text-white
-		 dark:bg-primary-100 dark:text-black hover:brightness-125 dark:hover:brightness-90 active:brightness-90
-		 dark:active:brightness-75`,
-
-    secondary: `border border-slate-200 border-b-slate-300 dark:border-zinc-800 bg-white dark:bg-zinc-900
-		hover:bg-slate-100 dark:hover:bg-zinc-800 dark:hover:border-zinc-700 dark:active:bg-zinc-900 active:bg-slate-200`,
-
+    primary: `border border-transparent bg-primary-900 text-slate-50 dark:bg-primary-100 dark:text-black`,
+    secondary: `border border-slate-200 border-b-slate-300 dark:border-zinc-800 bg-white dark:bg-zinc-900`,
     tertiary:
       ' bg-transparent hover:bg-slate-200/50 dark:hover:bg-zinc-700/30 dark:text-zinc-200',
 
     danger:
       'border border-red-500 bg-red-500 hover:text-red-500 hover:bg-transparent text-white',
     'danger-subtle': 'text-red-500 hover:bg-red-500 hover:text-inherit!',
-
     'success-subtle': 'text-green-500 hover:bg-green-500 hover:text-inherit!',
-
     'warning-subtle': 'text-yellow-500 hover:bg-yellow-500 hover:text-inherit!',
-
     ghost: `border border-slate-200 dark:border-zinc-800 bg-transparent
 		hover:bg-slate-100 dark:hover:bg-zinc-800 dark:hover:border-zinc-700 dark:text-zinc-400 hover:text-inherit
 		dark:hover:text-inherit`,
-
     'blue-subtle': `text-blue-500 hover:bg-blue-500 hover:text-inherit!`,
 
     none: '',
@@ -75,7 +66,6 @@
     rounding?: ButtonRoundness
     alignment?: ButtonAlignment
     shadow?: ButtonShadow
-    column?: boolean
     loaderWidth?: number | undefined
     href?: string | undefined
     class?: ClassValue
@@ -106,7 +96,6 @@
     rounding = size == 'lg' ? 'xl' : 'lg',
     alignment = 'center',
     shadow = color != 'tertiary' ? 'none' : 'none',
-    column = false,
     disabled,
     loaderWidth = undefined,
     href = undefined,
@@ -129,7 +118,10 @@
     buttonRounding[rounding],
     buttonShadow[shadow],
     buttonColor[color],
-    'transition-all font-medium cursor-pointer duration-75 disabled:opacity-50 disabled:pointer-events-none disabled:shadow-none text-sm',
+    buttonAlignment[alignment],
+    'transition-all font-medium cursor-pointer disabled:opacity-50 disabled:pointer-events-none',
+    'hover:brightness-98 hover:dark:brightness-95 active:brightness-90 active:dark:brightness-85 text-sm',
+    'flex flex-row items-center gap-1.5',
     (disabled || loading) && 'pointer-events-none opacity-50 shadow-none',
     alignment == 'center'
       ? 'origin-center'
@@ -140,22 +132,13 @@
   ]}
   type={submit ? 'submit' : 'button'}
 >
-  <div
-    class={[
-      'flex',
-      column ? 'flex-col justify-center' : 'flex-row items-center',
-      'h-full gap-1.5 button-content w-full',
-      buttonAlignment[alignment],
-    ]}
-  >
-    {#if loading}
-      <Spinner width={loaderWidth ?? 16} />
-    {:else if prefix}
-      {@render prefix?.()}
-    {/if}
-    {@render children?.()}
-    {@render suffix?.()}
-  </div>
+  {#if loading}
+    <Spinner width={loaderWidth ?? 16} />
+  {:else if prefix}
+    {@render prefix?.()}
+  {/if}
+  {@render children?.()}
+  {@render suffix?.()}
 </svelte:element>
 
 <!--

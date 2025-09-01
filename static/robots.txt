@@ -1,0 +1,19 @@
+User-Agent: *
+Allow: /
+
+Disallow: /admin/
+Disallow: /api/
+Disallow: /accounts/
+Disallow: /settings/
+Disallow: /messages/
+Disallow: /inbox/
+
+Disallow: /search?
+Disallow: /*?sort=
+Disallow: /*?type_=
+Disallow: /*?q=
+
+Allow: /c/*/
+Allow: /u/*/
+Allow: /post/*/
+Allow: /comment/*/

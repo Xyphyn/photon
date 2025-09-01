@@ -98,7 +98,7 @@
     color="secondary"
     rounding="pill"
     target={settings.openLinksInNewTab ? '_blank' : ''}
-    title={$t('post.actions.comments')}
+    aria-label={$t('post.actions.comments')}
   >
     {@const newComment =
       publishedToDate(post.counts.newest_comment_time).getTime() >
@@ -124,7 +124,6 @@
       color="secondary"
       rounding="pill"
       class={buttonSquare}
-      animations={{ scale: true, large: true }}
     >
       {#snippet prefix()}
         <Icon src={BugAnt} micro size="16" />
@@ -181,7 +180,6 @@
         rounding="pill"
         size="custom"
         class={buttonSquare}
-        animations={{ scale: true, large: true }}
       >
         {#snippet prefix()}
           <Icon src={EllipsisHorizontal} size="16" micro />

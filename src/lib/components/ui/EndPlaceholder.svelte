@@ -13,6 +13,9 @@
     sm: 'mt-3 mb-1 px-3',
     md: 'mt-4 mb-2',
     lg: 'mt-6 mb-2',
+    'bottom-sm': 'mb-1 px-3',
+    'bottom-md': 'mb-2',
+    'bottom-lg': 'mb-3',
   }
 
   const colors = {
@@ -28,6 +31,7 @@
     border?: boolean
     children?: import('svelte').Snippet
     action?: import('svelte').Snippet
+    element?: string
   }
 
   let {
@@ -38,6 +42,7 @@
     size = 'sm',
     color = 'subtle',
     margin = 'none',
+    element = 'h3',
   }: Props = $props()
 </script>
 
@@ -50,9 +55,12 @@
     clazz,
   ]}
 >
-  <h3 class="font-medium text-left flex flex-row gap-1 items-center">
+  <svelte:element
+    this={element}
+    class="font-medium text-left flex flex-row gap-1 items-center"
+  >
     {@render children?.()}
-  </h3>
+  </svelte:element>
   <div
     class={[
       'flex-1 border-slate-200/70 dark:border-zinc-800 border-b',

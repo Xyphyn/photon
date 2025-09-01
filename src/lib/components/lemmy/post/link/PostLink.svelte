@@ -41,6 +41,7 @@
     padding="sm"
     href={url}
     target="_blank"
+    rel="noopener"
   >
     {#if thumbnail_url}
       <img
@@ -92,6 +93,7 @@
   <a
     href={url}
     target="_blank"
+    rel="noopener noreferrer"
     class="flex flex-row text-slate-900 dark:text-zinc-400 items-center overflow-hidden group/link hover:underline space-x-1 my-1"
   >
     <Icon src={Link} size="16" micro class="shrink-0" />

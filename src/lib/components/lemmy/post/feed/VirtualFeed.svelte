@@ -206,7 +206,7 @@
               ? { duration: 800, easing: expoOut, y: 24, delay: row * 50 }
               : { opacity: 1, duration: 0 }}
             data-index={row}
-            class={['relative post-container px-3 sm:px-6', row < 7 && '']}
+            class={['relative post-container', row < 7 && '']}
           >
             <Post
               bind:post={posts[row]}
@@ -216,10 +216,10 @@
               settings.posts.compactFeatured
                 ? 'compact'
                 : settings.view}
-              class="transition-all duration-250"
               onhide={() => {
                 posts = posts.toSpliced(row, 1)
               }}
+              class="px-3 sm:px-6 hover:bg-slate-100/50 hover:dark:bg-zinc-900/50 transition-colors"
             ></Post>
           </li>
         {/snippet}

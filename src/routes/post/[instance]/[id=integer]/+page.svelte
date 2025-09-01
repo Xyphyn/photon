@@ -87,12 +87,29 @@
 </script>
 
 <svelte:head>
-  <title>{data.post.value.post_view.post.name}</title>
+  <title>
+    {data.post.value.post_view.community.title} | {data.post.value.post_view
+      .post.name}
+  </title>
   <meta property="og:title" content={data.post.value.post_view.post.name} />
-  <meta
-    property="twitter:title"
-    content={data.post.value.post_view.post.name}
-  />
+  {#if !data.post.value.post_view.post.local}
+    <meta name="robots" content="noindex, follow" />
+  {/if}
+  <link rel="canonical" href={data.post.value.post_view.post.ap_id} />
+  {#if data.post.value.post_view.post.body}
+    <meta
+      property="description"
+      content={data.post.value.post_view.post.body.slice(0, 500)}
+    />
+    <meta
+      property="og:description"
+      content={data.post.value.post_view.post.body.slice(0, 500)}
+    />
+    <meta
+      property="twitter:description"
+      content={data.post.value.post_view.post.body.slice(0, 500)}
+    />
+  {/if}
   <meta property="og:url" content={page.url.toString()} />
   {#if isImage(data.post.value.post_view.post.url)}
     <meta property="og:image" content={data.post.value.post_view.post.url} />
@@ -110,23 +127,9 @@
       content={data.post.value.post_view.post.thumbnail_url}
     />
   {/if}
-  {#if data.post.value.post_view.post.body}
-    <meta
-      property="description"
-      content={data.post.value.post_view.post.body.slice(0, 500)}
-    />
-    <meta
-      property="og:description"
-      content={data.post.value.post_view.post.body.slice(0, 500)}
-    />
-    <meta
-      property="twitter:description"
-      content={data.post.value.post_view.post.body.slice(0, 500)}
-    />
-  {/if}
 </svelte:head>
 
-<article class="flex flex-col gap-2 animate-pop-in">
+<article class="flex flex-col gap-2">
   <header class="flex flex-col gap-2">
     <div class="flex flex-row items-center gap-2 flex-wrap">
       <PostMeta

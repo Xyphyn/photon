@@ -76,15 +76,6 @@
     {/snippet}
   </Header>
 
-  <!-- <EndPlaceholder size="md">
-    {$t('cards.community.activeDay')}
-    {#snippet action()}
-      <span class="text-primary-900 dark:text-primary-100">
-        {site.data?.site_view.counts.users_active_day.toString()}
-      </span>
-    {/snippet}
-  </EndPlaceholder> -->
-
   {#await data.feed.value}
     {#each new Array(5) as _, index}{_}
       <div
