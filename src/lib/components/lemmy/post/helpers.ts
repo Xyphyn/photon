@@ -1,5 +1,5 @@
 import { instance } from '$lib/instance.svelte'
-import { client } from '$lib/lemmy.svelte.js'
+import { client } from '$lib/client/lemmy.svelte'
 import { isImage, isVideo } from '$lib/ui/image'
 import { canParseUrl, findClosestNumber } from '$lib/util.svelte'
 import type { CommentView, PersonView, Post } from 'lemmy-js-client'

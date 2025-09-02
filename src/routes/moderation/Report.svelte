@@ -7,7 +7,7 @@
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import { t } from '$lib/i18n/translations'
-  import { getClient } from '$lib/lemmy.svelte.js'
+  import { getClient } from '$lib/client/lemmy.svelte'
   import { errorMessage } from '$lib/lemmy/error'
   import type { ReportView } from '$lib/lemmy/report.js'
   import { Badge, Button, Material, Modal, toast } from 'mono-svelte'

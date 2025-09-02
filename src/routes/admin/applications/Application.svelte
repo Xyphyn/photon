@@ -6,7 +6,7 @@
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import { publishedToDate } from '$lib/components/util/date'
   import { t } from '$lib/i18n/translations'
-  import { getClient } from '$lib/lemmy.svelte.js'
+  import { getClient } from '$lib/client/lemmy.svelte'
   import { errorMessage } from '$lib/lemmy/error'
   import type {
     ApproveRegistrationApplication,

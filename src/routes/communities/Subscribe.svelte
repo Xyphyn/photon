@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getClient } from '$lib/lemmy.svelte.js'
+  import { getClient } from '$lib/client/lemmy.svelte'
   import type {
     CommunityResponse,
     CommunityView,

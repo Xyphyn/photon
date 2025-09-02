@@ -12,7 +12,7 @@
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { t } from '$lib/i18n/translations.js'
-  import { site } from '$lib/lemmy.svelte.js'
+  import { site } from '$lib/client/lemmy.svelte'
   import { resumables } from '$lib/lemmy/item'
   import { setSessionStorage } from '$lib/session.js'
   import { settings } from '$lib/settings.svelte.js'

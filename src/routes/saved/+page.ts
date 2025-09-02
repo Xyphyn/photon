@@ -1,5 +1,5 @@
 import { profile } from '$lib/auth.svelte'
-import { client } from '$lib/lemmy.svelte.js'
+import { client } from '$lib/client/lemmy.svelte'
 import { error } from '@sveltejs/kit'
 import type { CommentView, PostView } from 'lemmy-js-client'
 

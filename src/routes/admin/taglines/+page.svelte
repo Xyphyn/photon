@@ -7,7 +7,7 @@
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { t } from '$lib/i18n/translations.js'
-  import { getClient } from '$lib/lemmy.svelte.js'
+  import { getClient } from '$lib/client/lemmy.svelte'
   import type { Tagline } from 'lemmy-js-client'
   import { Button, toast } from 'mono-svelte'
   import { Icon, Plus, Trash } from 'svelte-hero-icons'

@@ -1,4 +1,4 @@
-import { getClient } from '$lib/lemmy.svelte.js'
+import { getClient } from '$lib/client/lemmy.svelte'
 import { isComment, isCommentView } from '$lib/lemmy/item.js'
 import type {
   CommentView,

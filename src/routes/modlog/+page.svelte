@@ -24,7 +24,7 @@
   import ModlogItemTable from './item/ModlogItemTable.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { t } from '$lib/i18n/translations'
-  import { client } from '$lib/lemmy.svelte'
+  import { client } from '$lib/client/lemmy.svelte'
   import Spinner from 'mono-svelte/loader/Spinner.svelte'
   import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'

@@ -13,7 +13,7 @@
     DEFAULT_INSTANCE_URL,
     LINKED_INSTANCE_URL,
   } from '$lib/instance.svelte.js'
-  import { getClient, mayBeIncompatible, site } from '$lib/lemmy.svelte.js'
+  import { getClient, mayBeIncompatible, site } from '$lib/client/lemmy.svelte'
   import { errorMessage } from '$lib/lemmy/error'
   import { DOMAIN_REGEX_FORMS } from '$lib/util.svelte.js'
   import { MINIMUM_VERSION } from '$lib/version.js'

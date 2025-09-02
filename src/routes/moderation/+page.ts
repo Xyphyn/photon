@@ -1,6 +1,6 @@
 import { profile } from '$lib/auth.svelte'
 import { isAdmin } from '$lib/components/lemmy/moderation/moderation.js'
-import { getClient } from '$lib/lemmy.svelte.js'
+import { getClient } from '$lib/client/lemmy.svelte'
 import { isCommentView, isPostView } from '$lib/lemmy/item'
 import {
   generalizeCommentReport,

@@ -15,7 +15,7 @@
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import { t } from '$lib/i18n/translations.js'
-  import { getClient } from '$lib/lemmy.svelte.js'
+  import { getClient } from '$lib/client/lemmy.svelte'
   import { errorMessage } from '$lib/lemmy/error.js'
   import type { GetCaptchaResponse } from 'lemmy-js-client'
   import {

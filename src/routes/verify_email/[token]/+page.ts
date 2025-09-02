@@ -1,4 +1,4 @@
-import { getClient } from '$lib/lemmy.svelte.js'
+import { getClient } from '$lib/client/lemmy.svelte'
 
 export async function load({ fetch, params }) {
   await getClient(undefined, fetch).verifyEmail({

@@ -1,5 +1,5 @@
 import { goto } from '$app/navigation'
-import { client } from '$lib/lemmy.svelte.js'
+import { client } from '$lib/client/lemmy.svelte'
 import { settings } from '$lib/settings.svelte'
 import type { SubscribedType } from 'lemmy-js-client'
 import { toast } from 'mono-svelte'

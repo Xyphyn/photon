@@ -1,4 +1,4 @@
-import { getClient } from '$lib/lemmy.svelte.js'
+import { getClient } from '$lib/client/lemmy.svelte'
 import { getItemPublished } from '$lib/lemmy/item.js'
 import { ReactiveState } from '$lib/promise.svelte.js'
 import type { SortType } from 'lemmy-js-client'

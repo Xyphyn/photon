@@ -77,7 +77,7 @@
   import Expandable from '$lib/components/ui/Expandable.svelte'
   import LabelStat from '$lib/components/ui/LabelStat.svelte'
   import { t } from '$lib/i18n/translations'
-  import { client, getClient } from '$lib/lemmy.svelte.js'
+  import { client, getClient } from '$lib/client/lemmy.svelte'
   import { errorMessage } from '$lib/lemmy/error'
   import { userLink } from '$lib/lemmy/generic'
   import { addSubscription } from '$lib/lemmy/user.js'

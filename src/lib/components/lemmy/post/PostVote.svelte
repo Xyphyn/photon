@@ -19,7 +19,7 @@
   import { profile } from '$lib/auth.svelte.js'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import { t } from '$lib/i18n/translations'
-  import { site } from '$lib/lemmy.svelte.js'
+  import { site } from '$lib/client/lemmy.svelte'
   import { vote as voteItem } from '$lib/lemmy/contentview.js'
   import { errorMessage } from '$lib/lemmy/error'
   import { settings } from '$lib/settings.svelte'

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { profile } from '$lib/auth.svelte.js'
   import { t } from '$lib/i18n/translations'
-  import { getClient } from '$lib/lemmy.svelte'
+  import { getClient } from '$lib/client/lemmy.svelte'
   import { errorMessage } from '$lib/lemmy/error'
   import { isCommentView, isPostView } from '$lib/lemmy/item.js'
   import type { CommentView, PostView } from 'lemmy-js-client'
