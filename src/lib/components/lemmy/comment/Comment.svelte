@@ -125,8 +125,8 @@
   id={node.comment_view.comment.id.toString()}
 >
   {#if meta}
-    <button
-      onclick={() => (open = !open)}
+    <label
+      for="comment-expand-{node.comment_view.comment.id}"
       class="flex flex-row cursor-pointer gap-2 items-center group text-sm flex-wrap w-full z-0 group relative"
     >
       <div
@@ -218,9 +218,15 @@
           #{node.comment_view.comment.id}
         </span>
       {/if}
-    </button>
+    </label>
   {/if}
-  <div class={['expand max-w-full', open && 'open', contentClass]}>
+  <input
+    class="hidden comment-expand"
+    type="checkbox"
+    id="comment-expand-{node.comment_view.comment.id}"
+    bind:checked={open}
+  />
+  <div class={['expand max-w-full', contentClass]}>
     <div id="comment-content">
       <div
         class={[
@@ -286,7 +292,7 @@
     transition: grid-template-rows 0.5s cubic-bezier(0.19, 1, 0.22, 1);
   }
 
-  .expand.open {
+  .comment-expand:checked + .expand {
     grid-template-rows: 1fr;
   }
 
