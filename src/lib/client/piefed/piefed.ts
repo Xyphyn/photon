@@ -1,9 +1,15 @@
 import createClient from 'openapi-fetch'
 import type { BaseClient } from '../base'
 import {
+  fromGetComments,
+  fromGetPost,
   fromGetPosts,
+  toCommentView,
+  toCommunity,
+  toCommunityView,
   toLocalSite,
   toMyUser,
+  toPerson,
   toPersonView,
   toPostView,
 } from './rewrite'
@@ -72,9 +78,24 @@ export class PiefedClient implements BaseClient {
     throw new Error('Unimplemented')
   }
   async getPost(
-    ...params: Parameters<BaseClient['getPost']>
+    params: Parameters<BaseClient['getPost']>[0],
   ): ReturnType<BaseClient['getPost']> {
-    throw new Error('Unimplemented')
+    const response = (
+      await this.#client.GET('/post', {
+        // @ts-expect-error same here what is happening
+        params: { query: fromGetPost(params) },
+      })
+    ).data!
+
+    return {
+      community_view: toCommunityView(response.community_view),
+      cross_posts: response.cross_posts.map(toPostView),
+      moderators: response.moderators.map(i => ({
+        community: toCommunity(i.community),
+        moderator: toPerson(i.moderator),
+      })),
+      post_view: toPostView(response.post_view),
+    }
   }
   async editPost(
     ...params: Parameters<BaseClient['editPost']>
@@ -97,7 +118,8 @@ export class PiefedClient implements BaseClient {
   ): ReturnType<BaseClient['getPosts']> {
     const response = (
       await this.#client.GET('/post/list', {
-        params: fromGetPosts(params),
+        // @ts-expect-error same here what is happening
+        params: { query: fromGetPosts(params) },
       })
     ).data!
 
@@ -297,11 +319,22 @@ export class PiefedClient implements BaseClient {
   ): ReturnType<BaseClient['distinguishComment']> {
     throw new Error('Unimplemented')
   }
+
   async getComments(
-    ...params: Parameters<BaseClient['getComments']>
+    params: Parameters<BaseClient['getComments']>[0],
   ): ReturnType<BaseClient['getComments']> {
-    throw new Error('Unimplemented')
+    const response = (
+      await this.#client.GET('/comment/list', {
+        // @ts-expect-error same here what is happening
+        params: { query: fromGetComments(params) },
+      })
+    ).data!
+
+    return {
+      comments: response.comments.map(toCommentView),
+    }
   }
+
   async getComment(
     ...params: Parameters<BaseClient['getComment']>
   ): ReturnType<BaseClient['getComment']> {
