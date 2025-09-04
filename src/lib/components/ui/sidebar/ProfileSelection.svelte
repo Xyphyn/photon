@@ -12,6 +12,7 @@
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
   import { t } from '$lib/i18n/translations'
+  import { DEFAULT_CLIENT_TYPE } from '$lib/client/lemmy.svelte'
 
   let { profiles }: { profiles: ProfileInfo[] } = $props()
 
@@ -45,7 +46,7 @@
       <div class="flex-1">
         <div class="font-medium">{profile.current.username}</div>
         <div class="text-xs text-slate-500 dark:text-zinc-500">
-          {profile.current.instance}
+          <span class="capitalize">{profile.current.client?.name ?? DEFAULT_CLIENT_TYPE.name}</span> • {profile.current.instance}
         </div>
       </div>
       {#snippet suffix()}
@@ -70,7 +71,7 @@
       <div>
         <div class="font-medium text-sm">{p.username}</div>
         <div class="text-xs text-slate-500 dark:text-zinc-500">
-          {p.instance}
+          <span class="capitalize">{p.client?.name ?? DEFAULT_CLIENT_TYPE.name}</span> • {p.instance}
         </div>
       </div>
       <div class="flex-1"></div>

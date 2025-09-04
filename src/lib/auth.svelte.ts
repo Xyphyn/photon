@@ -5,19 +5,21 @@ import {
   isAdmin,
 } from '$lib/components/lemmy/moderation/moderation.js'
 import { DEFAULT_INSTANCE_URL } from '$lib/instance.svelte.js'
-import { client, getClient, site } from '$lib/client/lemmy.svelte'
+import {
+  client,
+  getClient,
+  site,
+  type ClientType,
+  DEFAULT_CLIENT_TYPE,
+} from '$lib/client/lemmy.svelte'
 import { instanceToURL, moveItem } from '$lib/util.svelte'
 import { MINIMUM_VERSION, versionIsSupported } from '$lib/version.js'
-import {
-  type Community,
-  type GetSiteResponse,
-  type MyUserInfo,
-} from 'lemmy-js-client'
 import { toast } from 'mono-svelte'
 import { writable } from 'svelte/store'
 import { t } from './i18n/translations'
 import { errorMessage } from './lemmy/error'
 import { publishedToDate } from './components/util/date'
+import type { Community, GetSiteResponse, MyUserInfo } from './client/types'
 
 function getFromStorage<T>(key: string): T | undefined {
   if (typeof localStorage == 'undefined') return undefined
@@ -41,6 +43,7 @@ export interface ProfileInfo {
   avatar?: string
   favorites?: Community[]
   color?: string
+  client: ClientType
 }
 
 /**
@@ -77,6 +80,7 @@ class Profile {
           instance: DEFAULT_INSTANCE_URL,
           username: 'Guest',
           color: '#505050',
+          client: DEFAULT_CLIENT_TYPE,
         },
       ],
       profile: 1,
@@ -91,6 +95,7 @@ class Profile {
     return {
       id: -1,
       instance: DEFAULT_INSTANCE_URL,
+      client: DEFAULT_CLIENT_TYPE,
     }
   }
 
@@ -104,7 +109,11 @@ class Profile {
       const jwt = getCookie('jwt')
       if (jwt) {
         ;(async () => {
-          const result = await this.add(jwt, env.PUBLIC_INSTANCE_URL ?? '')
+          const result = await this.add(
+            jwt,
+            env.PUBLIC_INSTANCE_URL ?? '',
+            DEFAULT_CLIENT_TYPE,
+          )
 
           if (result)
             toast({
@@ -220,7 +229,7 @@ class Profile {
     }
   }
 
-  async add(jwt: string, instance: string) {
+  async add(jwt: string, instance: string, type: ClientType) {
     const user = await userFromJwt(jwt, instance)
       .then(u => u)
       .catch(err => {
@@ -241,6 +250,7 @@ class Profile {
       jwt: jwt,
       username: user?.user?.local_user_view.person.name,
       avatar: user?.user?.local_user_view.person.avatar,
+      client: type,
     })
 
     return user

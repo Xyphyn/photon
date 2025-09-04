@@ -4,6 +4,7 @@ import { instanceToURL } from '$lib/util.svelte'
 import { error } from '@sveltejs/kit'
 import { type GetSiteResponse } from 'lemmy-js-client'
 import { LemmyClient } from './lemmy/lemmy'
+import { PiefedClient } from './piefed/piefed'
 
 class SiteData {
   #data = $state<GetSiteResponse>()
@@ -53,6 +54,7 @@ export function client({
   instanceURL,
   func,
   auth,
+  clientType,
 }: {
   instanceURL?: string
   func?: (
@@ -60,18 +62,26 @@ export function client({
     init?: RequestInit | undefined,
   ) => Promise<Response>
   auth?: string
+  clientType?: ClientType
 } = {}) {
   if (!instanceURL)
     instanceURL = profile.current.instance || DEFAULT_INSTANCE_URL
+
+  if (!clientType) {
+    clientType = profile.current.client
+  }
 
   const jwt = auth ? auth : profile.current?.jwt
 
   const headers = jwt ? { authorization: `Bearer ${jwt}` } : {}
 
-  return new LemmyClient(instanceToURL(instanceURL), {
-    fetchFunction: (input, init) => customFetch(func, input, init, jwt),
-    headers: headers,
-  })
+  return new (clientType.name == 'piefed' ? PiefedClient : LemmyClient)(
+    instanceToURL(instanceURL),
+    {
+      fetchFunction: (input, init) => customFetch(func, input, init, jwt),
+      headers: headers,
+    },
+  )
 }
 
 export function getClient(
@@ -126,4 +136,13 @@ export function mayBeIncompatible(
   }
 
   return false
+}
+
+export type ClientType =
+  | { name: 'lemmy'; baseUrl: '/api/v3' }
+  | { name: 'piefed'; baseUrl: '/api/alpha' }
+
+export const DEFAULT_CLIENT_TYPE: ClientType = {
+  name: 'lemmy',
+  baseUrl: '/api/v3',
 }

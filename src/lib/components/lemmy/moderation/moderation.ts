@@ -1,14 +1,13 @@
 import { client } from '$lib/client/lemmy.svelte'
-import type { SubmissionView } from '$lib/lemmy/contentview.js'
 import type {
-  Comment,
   CommentView,
   Community,
   MyUserInfo,
   Person,
   PostView,
   PrivateMessageView,
-} from 'lemmy-js-client'
+} from '$lib/client/types'
+import type { SubmissionView } from '$lib/lemmy/contentview.js'
 import { writable } from 'svelte/store'
 
 interface Modals {
@@ -112,7 +111,7 @@ export const amMod = (me: MyUserInfo, community: Community) =>
 export const amModOfAny = (me?: MyUserInfo) =>
   me && (me.moderates.length > 0 || isAdmin(me))
 
-export const isAdmin = (me: MyUserInfo) => me.local_user_view.local_user.admin
+export const isAdmin = (me: MyUserInfo) => me.local_user_view.person.admin
 
 export const removalTemplate = (
   input: string,
