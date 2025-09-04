@@ -63,8 +63,11 @@ export function client({
   if (!instanceURL)
     instanceURL = profile.current.instance || DEFAULT_INSTANCE_URL
 
-  const jwt = auth ? auth : profile.current?.jwt
+  // we use nullish coealsiaihsa something so that
+  // we can set auth = '' to remove it
+  const jwt = auth ?? profile.current?.jwt
 
+  // but not here, so that if jwt == '', it doesnt put a bearer
   const headers = jwt ? { authorization: `Bearer ${jwt}` } : {}
 
   return new LemmyHttp(instanceToURL(instanceURL), {
@@ -74,6 +77,7 @@ export function client({
   })
 }
 
+// here for parts where i forgor to switch
 export function getClient(
   instanceURL?: string,
   func?: (
@@ -89,7 +93,7 @@ export async function validateInstance(instance: string): Promise<boolean> {
   if (instance == '') return false
 
   try {
-    await getClient(instance).getSite()
+    await client({ instanceURL: instance, auth: '' }).getSite()
 
     return true
   } catch {
