@@ -6,11 +6,15 @@
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { t } from '$lib/i18n/translations'
   import { LINKED_INSTANCE_URL } from '$lib/instance.svelte'
-  import { mayBeIncompatible } from '$lib/client/lemmy.svelte'
+  import {
+    DEFAULT_CLIENT_TYPE,
+    mayBeIncompatible,
+    type ClientType,
+  } from '$lib/client/lemmy.svelte'
   import { site, validateInstance } from '$lib/client/lemmy.svelte'
   import { DOMAIN_REGEX_FORMS } from '$lib/util.svelte'
   import { MINIMUM_VERSION } from '$lib/version'
-  import { Button, Note, TextInput, toast } from 'mono-svelte'
+  import { Button, Note, Option, Select, TextInput, toast } from 'mono-svelte'
   import { profile } from '$lib/auth.svelte'
 
   interface Props {
@@ -21,15 +25,21 @@
   let { ref = page.url.searchParams.get('redirect') ?? '/', children }: Props =
     $props()
 
-  let form = $state({
+  let form = $state<{
+    instance: string
+    username: string
+    loading: boolean
+    client: ClientType
+  }>({
     instance: '',
     username: `${$t('account.guest')} ${profile.meta.profiles.filter(p => p.jwt == undefined).length + 1}`,
     loading: false,
+    client: DEFAULT_CLIENT_TYPE,
   })
 
   async function addGuest() {
     form.loading = true
-    if (!(await validateInstance(form.instance))) {
+    if (!(await validateInstance(form.instance, form.client))) {
       toast({ content: $t('toast.failInstanceURL'), type: 'error' })
       form.loading = false
       return
@@ -40,6 +50,7 @@
       id: id,
       instance: form.instance,
       username: form.username,
+      client: form.client,
     })
     profile.meta.profile = id
 
@@ -80,8 +91,28 @@
           bind:value={form.instance}
           pattern={DOMAIN_REGEX_FORMS}
           placeholder="example.com"
-          class="flex-1"
-        />
+          class="flex-1 overflow-hidden"
+        >
+          {#snippet suffix()}
+            <Select
+              bind:value={
+                () => {
+                  if (form.client.name == 'lemmy') return 'lemmyv3'
+                  else return 'piefedvalpha'
+                },
+                v => {
+                  if (v == 'lemmyv3')
+                    form.client = { name: 'lemmy', baseUrl: '/api/v3' }
+                  else form.client = { name: 'piefed', baseUrl: '/api/alpha' }
+                }
+              }
+              class="border-0 rounded-none! border-l"
+            >
+              <Option value="lemmyv3">Lemmy</Option>
+              <Option value="piefedvalpha">Piefed</Option>
+            </Select>
+          {/snippet}
+        </TextInput>
       {/if}
     </div>
     <Button

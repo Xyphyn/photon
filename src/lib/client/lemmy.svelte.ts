@@ -71,7 +71,7 @@ export function client({
     clientType = profile.current.client
   }
 
-  const jwt = auth ? auth : profile.current?.jwt
+  const jwt = auth ?? profile.current?.jwt
 
   const headers = jwt ? { authorization: `Bearer ${jwt}` } : {}
 
@@ -95,11 +95,18 @@ export function getClient(
   return client({ instanceURL, func, auth })
 }
 
-export async function validateInstance(instance: string): Promise<boolean> {
+export async function validateInstance(
+  instance: string,
+  type: ClientType,
+): Promise<boolean> {
   if (instance == '') return false
 
   try {
-    await getClient(instance).getSite()
+    await client({
+      instanceURL: instance,
+      clientType: type,
+      auth: '',
+    }).getSite()
 
     return true
   } catch {

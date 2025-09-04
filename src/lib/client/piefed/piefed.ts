@@ -129,9 +129,12 @@ export class PiefedClient implements BaseClient {
     }
   }
   async likePost(
-    ...params: Parameters<BaseClient['likePost']>
+    params: Parameters<BaseClient['likePost']>[0],
   ): ReturnType<BaseClient['likePost']> {
-    throw new Error('Unimplemented')
+    // TODO remove any
+    return (await this.#client.POST('/post/like', {
+      body: { ...params },
+    })) as any
   }
 
   async generateTotpSecret(
@@ -225,9 +228,14 @@ export class PiefedClient implements BaseClient {
     throw new Error('Unimplemented')
   }
   async markPostAsRead(
-    ...params: Parameters<BaseClient['markPostAsRead']>
+    params: Parameters<BaseClient['markPostAsRead']>[0],
   ): ReturnType<BaseClient['markPostAsRead']> {
-    throw new Error('Unimplemented')
+    const response = await this.#client.POST('/post/mark_as_read', {
+      body: { ...params },
+    })
+
+    // TODO remove any
+    return response.data as any
   }
   async hidePost(
     ...params: Parameters<BaseClient['hidePost']>
@@ -300,9 +308,12 @@ export class PiefedClient implements BaseClient {
     throw new Error('Unimplemented')
   }
   async likeComment(
-    ...params: Parameters<BaseClient['likeComment']>
+    params: Parameters<BaseClient['likeComment']>[0],
   ): ReturnType<BaseClient['likeComment']> {
-    throw new Error('Unimplemented')
+    // TODO remove any
+    return (await this.#client.POST('/comment/like', {
+      body: { ...params },
+    })) as any
   }
   async listCommentLikes(
     ...params: Parameters<BaseClient['listCommentLikes']>
