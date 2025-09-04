@@ -2,7 +2,8 @@ import { profile } from '$lib/auth.svelte'
 import { DEFAULT_INSTANCE_URL } from '$lib/instance.svelte.js'
 import { instanceToURL } from '$lib/util.svelte'
 import { error } from '@sveltejs/kit'
-import { LemmyHttp, type GetSiteResponse } from 'lemmy-js-client'
+import { type GetSiteResponse } from 'lemmy-js-client'
+import { LemmyClient } from './lemmy/lemmy'
 
 class SiteData {
   #data = $state<GetSiteResponse>()
@@ -67,9 +68,8 @@ export function client({
 
   const headers = jwt ? { authorization: `Bearer ${jwt}` } : {}
 
-  return new LemmyHttp(instanceToURL(instanceURL), {
+  return new LemmyClient(instanceToURL(instanceURL), {
     fetchFunction: (input, init) => customFetch(func, input, init, jwt),
-    // @ts-expect-error headers thing
     headers: headers,
   })
 }
@@ -81,7 +81,7 @@ export function getClient(
     init?: RequestInit | undefined,
   ) => Promise<Response>,
   auth?: string,
-): LemmyHttp {
+) {
   return client({ instanceURL, func, auth })
 }
 

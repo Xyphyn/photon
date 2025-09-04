@@ -5,7 +5,7 @@ import {
   isAdmin,
 } from '$lib/components/lemmy/moderation/moderation.js'
 import { DEFAULT_INSTANCE_URL } from '$lib/instance.svelte.js'
-import { client, getClient } from '$lib/client/lemmy.svelte'
+import { client, getClient, site } from '$lib/client/lemmy.svelte'
 import { instanceToURL, moveItem } from '$lib/util.svelte'
 import { MINIMUM_VERSION, versionIsSupported } from '$lib/version.js'
 import {
@@ -16,7 +16,6 @@ import {
 import { toast } from 'mono-svelte'
 import { writable } from 'svelte/store'
 import { t } from './i18n/translations'
-import { site } from './lemmy.svelte'
 import { errorMessage } from './lemmy/error'
 import { publishedToDate } from './components/util/date'
 
