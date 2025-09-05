@@ -1,5 +1,6 @@
 import { profile } from '$lib/auth.svelte'
 import { client, getClient } from '$lib/client/lemmy.svelte'
+import { PiefedClient } from '$lib/client/piefed/piefed.js'
 import { getItemPublished } from '$lib/lemmy/item.js'
 import { ReactiveState } from '$lib/promise.svelte.js'
 import type { ListingType, SearchType, SortType } from 'lemmy-js-client'
@@ -9,7 +10,9 @@ export async function load({ url, fetch }) {
   const page = Number(url.searchParams.get('page')) || 1
   const community = Number(url.searchParams.get('community')) || undefined
   const sort = url.searchParams.get('sort') || 'New'
-  const type = url.searchParams.get('type') || 'All'
+  const type =
+    url.searchParams.get('type') ||
+    (client() instanceof PiefedClient ? 'Posts' : 'All')
   const listing_type =
     (url.searchParams.get('listing_type') as ListingType) || 'All'
 
@@ -21,9 +24,7 @@ export async function load({ url, fetch }) {
       page: page,
       sort: (sort as SortType) || 'TopAll',
       listing_type: listing_type,
-      type_:
-        (type as SearchType) ??
-        (client().type.name == 'lemmy' ? 'All' : 'Posts'),
+      type_: type as SearchType,
     })
 
     const [posts, comments, users, communities] = [

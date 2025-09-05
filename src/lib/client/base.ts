@@ -97,7 +97,7 @@ export abstract class BaseClient {
   ): Promise<types.CommentResponse>
   abstract markCommentReplyAsRead(
     form: types.MarkCommentReplyAsRead,
-  ): Promise<types.CommentReplyResponse>
+  ): Promise<types.CommentReplyResponse | void>
   abstract likeComment(
     form: types.CreateCommentLike,
   ): Promise<types.CommentResponse>
@@ -159,7 +159,7 @@ export abstract class BaseClient {
   ): Promise<types.GetPersonMentionsResponse>
   abstract markPersonMentionAsRead(
     form: types.MarkPersonMentionAsRead,
-  ): Promise<types.PersonMentionResponse>
+  ): Promise<types.PersonMentionResponse | void>
   abstract getReplies(form: types.GetReplies): Promise<types.GetRepliesResponse>
   abstract banPerson(form: types.BanPerson): Promise<types.BanPersonResponse>
   abstract getBannedPersons(): Promise<types.BannedPersonsResponse>

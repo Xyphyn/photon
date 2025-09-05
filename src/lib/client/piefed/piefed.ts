@@ -1,4 +1,3 @@
-/* eslint-disable */
 import createClient from 'openapi-fetch'
 import type { BaseClient, ClientType } from '../base'
 import {
@@ -10,6 +9,7 @@ import {
   fromGetReplies,
   fromListCommunities,
   fromSearch,
+  toComment,
   toCommentReplyView,
   toCommentSortType,
   toCommentView,
@@ -20,8 +20,10 @@ import {
   toPerson,
   toPersonMentionView,
   toPersonView,
+  toPost,
   toPostView,
   toPrivateMessageView,
+  toSortType,
 } from './rewrite'
 import type { paths } from './schema'
 
@@ -46,8 +48,6 @@ export class PiefedClient implements BaseClient {
   }
 
   async getSite(): ReturnType<BaseClient['getSite']> {
-    // throw new Error('unimplemented')
-
     const response = (await this.#client.GET('/site')).data!
 
     return {
@@ -165,10 +165,15 @@ export class PiefedClient implements BaseClient {
   async likePost(
     params: Parameters<BaseClient['likePost']>[0],
   ): ReturnType<BaseClient['likePost']> {
-    // TODO remove any
-    return (await this.#client.POST('/post/like', {
-      body: { ...params },
-    })) as any
+    const response = (
+      await this.#client.POST('/post/like', {
+        body: { ...params },
+      })
+    ).data!
+
+    return {
+      post_view: toPostView(response.post_view),
+    }
   }
 
   async generateTotpSecret(): ReturnType<BaseClient['generateTotpSecret']> {
@@ -332,18 +337,26 @@ export class PiefedClient implements BaseClient {
   async banFromCommunity(
     params: Parameters<BaseClient['banFromCommunity']>[0],
   ): ReturnType<BaseClient['banFromCommunity']> {
-    const response = (
-      await this.#client.POST('/community/moderate/ban', {
-        body: {
-          ...params,
-          expiredAt: new Date(
-            params.expires ?? '6767-06-07T00:00:00.000Z',
-          ).toISOString(),
-          user_id: params.person_id,
-          reason: params.reason ?? 'No reason provided.',
-        },
-      })
-    ).data!
+    const response = // piefed has separate methods for ban/unban
+      (
+        params.ban
+          ? await this.#client.POST('/community/moderate/ban', {
+              body: {
+                ...params,
+                expiredAt: new Date(
+                  params.expires ?? '6767-06-07T00:00:00.000Z',
+                ).toISOString(),
+                user_id: params.person_id,
+                reason: params.reason ?? 'No reason provided.',
+              },
+            })
+          : await this.#client.PUT('/community/moderate/unban', {
+              body: {
+                community_id: params.community_id,
+                user_id: params.person_id,
+              },
+            })
+      ).data!
 
     return {
       banned: params.ban,
@@ -354,34 +367,56 @@ export class PiefedClient implements BaseClient {
       },
     }
   }
-  async addModToCommunity() // ...params: Parameters<BaseClient['addModToCommunity']>
-  : ReturnType<BaseClient['addModToCommunity']> {
-    throw new Error('unimplemented')
+  async addModToCommunity(
+    params: Parameters<BaseClient['addModToCommunity']>[0],
+  ): ReturnType<BaseClient['addModToCommunity']> {
+    const response = (
+      await this.#client.POST('/community/mod', { body: params })
+    ).data!
+
+    return {
+      moderators: response.moderators.map(i => ({
+        community: toCommunity(i.community),
+        moderator: toPerson(i.moderator),
+      })),
+    }
   }
   async markPostAsRead(
     params: Parameters<BaseClient['markPostAsRead']>[0],
   ): ReturnType<BaseClient['markPostAsRead']> {
-    const response = await this.#client.POST('/post/mark_as_read', {
+    await this.#client.POST('/post/mark_as_read', {
       body: { ...params },
     })
 
-    // TODO remove any
-    return response.data as any
+    return {
+      success: true,
+    }
   }
-  async hidePost(
-    ...params: Parameters<BaseClient['hidePost']>
-  ): ReturnType<BaseClient['hidePost']> {
-    throw new Error('unimplemented')
+  async hidePost(): ReturnType<BaseClient['hidePost']> {
+    throw new Error('unsupported')
   }
   async lockPost(
-    ...params: Parameters<BaseClient['lockPost']>
+    params: Parameters<BaseClient['lockPost']>[0],
   ): ReturnType<BaseClient['lockPost']> {
-    throw new Error('unimplemented')
+    const response = (await this.#client.POST('/post/lock', { body: params }))
+      .data!
+
+    return {
+      ...response,
+      post_view: toPostView(response.post_view),
+    }
   }
   async featurePost(
-    ...params: Parameters<BaseClient['featurePost']>
+    params: Parameters<BaseClient['featurePost']>[0],
   ): ReturnType<BaseClient['featurePost']> {
-    throw new Error('unimplemented')
+    const response = (
+      await this.#client.POST('/post/feature', { body: params })
+    ).data!
+
+    return {
+      ...response,
+      post_view: toPostView(response.post_view),
+    }
   }
   async listPostLikes(): ReturnType<BaseClient['listPostLikes']> {
     throw new Error('unsupported')
@@ -397,24 +432,36 @@ export class PiefedClient implements BaseClient {
     }
   }
   async createPostReport(
-    ...params: Parameters<BaseClient['createPostReport']>
+    params: Parameters<BaseClient['createPostReport']>[0],
   ): ReturnType<BaseClient['createPostReport']> {
-    throw new Error('unimplemented')
+    const response = (await this.#client.POST('/post/report', { body: params }))
+      .data!
+
+    return {
+      post_report_view: {
+        ...response.post_report_view,
+        community: toCommunity(response.post_report_view.community),
+        post: toPost(response.post_report_view.post),
+        creator: toPerson(response.post_report_view.creator),
+        resolver: response.post_report_view.resolver
+          ? toPerson(response.post_report_view.resolver)
+          : undefined,
+        post_creator: toPerson(response.post_report_view.post_creator),
+        read: false,
+        hidden: false,
+        creator_banned_from_community: false,
+        unread_comments: -1,
+      },
+    }
   }
-  async resolvePostReport(
-    ...params: Parameters<BaseClient['resolvePostReport']>
-  ): ReturnType<BaseClient['resolvePostReport']> {
-    throw new Error('unimplemented')
+  async resolvePostReport(): ReturnType<BaseClient['resolvePostReport']> {
+    throw new Error('unsupported')
   }
-  async listPostReports(
-    ...params: Parameters<BaseClient['listPostReports']>
-  ): ReturnType<BaseClient['listPostReports']> {
-    throw new Error('unimplemented')
+  async listPostReports(): ReturnType<BaseClient['listPostReports']> {
+    throw new Error('unsupported')
   }
-  async getSiteMetadata(
-    ...params: Parameters<BaseClient['getSiteMetadata']>
-  ): ReturnType<BaseClient['getSiteMetadata']> {
-    throw new Error('unimplemented')
+  async getSiteMetadata(): ReturnType<BaseClient['getSiteMetadata']> {
+    throw new Error('unsupported')
   }
 
   async createComment(
@@ -468,31 +515,45 @@ export class PiefedClient implements BaseClient {
     }
   }
   async markCommentReplyAsRead(
-    ...params: Parameters<BaseClient['markCommentReplyAsRead']>
+    params: Parameters<BaseClient['markCommentReplyAsRead']>[0],
   ): ReturnType<BaseClient['markCommentReplyAsRead']> {
-    throw new Error('unimplemented')
+    await this.#client.POST('/comment/mark_as_read', {
+      body: params,
+    })
   }
   async likeComment(
     params: Parameters<BaseClient['likeComment']>[0],
   ): ReturnType<BaseClient['likeComment']> {
     // TODO remove any
-    return (await this.#client.POST('/comment/like', {
-      body: params,
-    })) as any
+    const response = (
+      await this.#client.POST('/comment/like', {
+        body: params,
+      })
+    ).data!
+
+    return {
+      comment_view: toCommentView(response.comment_view),
+      recipient_ids: [],
+    }
   }
 
   async listCommentLikes(): ReturnType<BaseClient['listCommentLikes']> {
     throw new Error('unsupported')
   }
   async saveComment(
-    ...params: Parameters<BaseClient['saveComment']>
+    params: Parameters<BaseClient['saveComment']>[0],
   ): ReturnType<BaseClient['saveComment']> {
-    throw new Error('unimplemented')
+    const response = (await this.#client.PUT('/comment/save', { body: params }))
+      .data!
+
+    return {
+      ...response,
+      comment_view: toCommentView(response.comment_view),
+      recipient_ids: [],
+    }
   }
-  async distinguishComment(
-    ...params: Parameters<BaseClient['distinguishComment']>
-  ): ReturnType<BaseClient['distinguishComment']> {
-    throw new Error('unimplemented')
+  async distinguishComment(): ReturnType<BaseClient['distinguishComment']> {
+    throw new Error('unsupported')
   }
 
   async getComments(
@@ -524,19 +585,32 @@ export class PiefedClient implements BaseClient {
     }
   }
   async createCommentReport(
-    ...params: Parameters<BaseClient['createCommentReport']>
+    params: Parameters<BaseClient['createCommentReport']>[0],
   ): ReturnType<BaseClient['createCommentReport']> {
-    throw new Error('unimplemented')
+    const response = (
+      await this.#client.POST('/comment/report', { body: params })
+    ).data!
+
+    return {
+      ...response,
+      comment_report_view: {
+        ...response.comment_report_view,
+        comment: toComment(response.comment_report_view.comment),
+        community: toCommunity(response.comment_report_view.community),
+        comment_creator: toPerson(response.comment_report_view.comment_creator),
+        creator: toPerson(response.comment_report_view.creator),
+        post: toPost(response.comment_report_view.post),
+        resolver: response.comment_report_view.resolver
+          ? toPerson(response.comment_report_view.resolver)
+          : undefined,
+      },
+    }
   }
-  async resolveCommentReport(
-    ...params: Parameters<BaseClient['resolveCommentReport']>
-  ): ReturnType<BaseClient['resolveCommentReport']> {
-    throw new Error('unimplemented')
+  async resolveCommentReport(): ReturnType<BaseClient['resolveCommentReport']> {
+    throw new Error('unsupported')
   }
-  async listCommentReports(
-    ...params: Parameters<BaseClient['listCommentReports']>
-  ): ReturnType<BaseClient['listCommentReports']> {
-    throw new Error('unimplemented')
+  async listCommentReports(): ReturnType<BaseClient['listCommentReports']> {
+    throw new Error('unsupported')
   }
   async getPrivateMessages(
     params: Parameters<BaseClient['getPrivateMessages']>[0],
@@ -553,39 +627,67 @@ export class PiefedClient implements BaseClient {
     }
   }
   async createPrivateMessage(
-    ...params: Parameters<BaseClient['createPrivateMessage']>
+    params: Parameters<BaseClient['createPrivateMessage']>[0],
   ): ReturnType<BaseClient['createPrivateMessage']> {
-    throw new Error('unimplemented')
+    const response = (
+      await this.#client.POST('/private_message', { body: params })
+    ).data!
+
+    return {
+      ...response,
+      private_message_view: toPrivateMessageView(response.private_message_view),
+    }
   }
   async editPrivateMessage(
-    ...params: Parameters<BaseClient['editPrivateMessage']>
+    params: Parameters<BaseClient['editPrivateMessage']>[0],
   ): ReturnType<BaseClient['editPrivateMessage']> {
-    throw new Error('unimplemented')
+    const response = (
+      await this.#client.PUT('/private_message', { body: params })
+    ).data!
+
+    return {
+      ...response,
+      private_message_view: toPrivateMessageView(response.private_message_view),
+    }
   }
   async deletePrivateMessage(
-    ...params: Parameters<BaseClient['deletePrivateMessage']>
+    params: Parameters<BaseClient['deletePrivateMessage']>[0],
   ): ReturnType<BaseClient['deletePrivateMessage']> {
-    throw new Error('unimplemented')
+    const response = (
+      await this.#client.POST('/private_message/delete', { body: params })
+    ).data!
+
+    return {
+      ...response,
+      private_message_view: toPrivateMessageView(response.private_message_view),
+    }
   }
   async markPrivateMessageAsRead(
-    ...params: Parameters<BaseClient['markPrivateMessageAsRead']>
+    params: Parameters<BaseClient['markPrivateMessageAsRead']>[0],
   ): ReturnType<BaseClient['markPrivateMessageAsRead']> {
-    throw new Error('unimplemented')
+    const response = (
+      await this.#client.POST('/private_message/mark_as_read', { body: params })
+    ).data!
+
+    return {
+      ...response,
+      private_message_view: toPrivateMessageView(response.private_message_view),
+    }
   }
-  async createPrivateMessageReport(
-    ...params: Parameters<BaseClient['createPrivateMessageReport']>
-  ): ReturnType<BaseClient['createPrivateMessageReport']> {
-    throw new Error('unimplemented')
+  async createPrivateMessageReport(): ReturnType<
+    BaseClient['createPrivateMessageReport']
+  > {
+    throw new Error('unsupported')
   }
-  async resolvePrivateMessageReport(
-    ...params: Parameters<BaseClient['resolvePrivateMessageReport']>
-  ): ReturnType<BaseClient['resolvePrivateMessageReport']> {
-    throw new Error('unimplemented')
+  async resolvePrivateMessageReport(): ReturnType<
+    BaseClient['resolvePrivateMessageReport']
+  > {
+    throw new Error('unsupported')
   }
-  async listPrivateMessageReports(
-    ...params: Parameters<BaseClient['listPrivateMessageReports']>
-  ): ReturnType<BaseClient['listPrivateMessageReports']> {
-    throw new Error('unimplemented')
+  async listPrivateMessageReports(): ReturnType<
+    BaseClient['listPrivateMessageReports']
+  > {
+    throw new Error('unsupported')
   }
   async register(): ReturnType<BaseClient['register']> {
     throw new Error('unsupported')
@@ -603,15 +705,34 @@ export class PiefedClient implements BaseClient {
       jwt: response.data?.jwt,
     }
   }
-  async logout(
-    ...params: Parameters<BaseClient['logout']>
-  ): ReturnType<BaseClient['logout']> {
-    throw new Error('unimplemented')
+  async logout(): ReturnType<BaseClient['logout']> {
+    throw new Error('unsupported')
   }
   async getPersonDetails(
-    ...params: Parameters<BaseClient['getPersonDetails']>
+    params: Parameters<BaseClient['getPersonDetails']>[0],
   ): ReturnType<BaseClient['getPersonDetails']> {
-    throw new Error('unimplemented')
+    const response = (
+      await this.#client.GET('/user', {
+        params: {
+          query: {
+            ...params,
+            // @ts-expect-error more param cursedness
+            include_content: true,
+            sort: toSortType(params.sort),
+          },
+        },
+      })
+    ).data!
+
+    return {
+      comments: response.comments.map(toCommentView),
+      moderates: response.moderates.map(i => ({
+        community: toCommunity(i.community),
+        moderator: toPerson(i.moderator),
+      })),
+      person_view: toPersonView(response.person_view),
+      posts: response.posts.map(toPostView),
+    }
   }
   async getPersonMentions(
     params: Parameters<BaseClient['getPersonMentions']>[0],
@@ -630,7 +751,10 @@ export class PiefedClient implements BaseClient {
   async markPersonMentionAsRead(
     params: Parameters<BaseClient['markPersonMentionAsRead']>[0],
   ): ReturnType<BaseClient['markPersonMentionAsRead']> {
-    throw new Error('unimplemented')
+    // @ts-expect-error this method isnt documented
+    await this.#client.POST('/mention/mark_as_read', {
+      body: params,
+    })
   }
   async getReplies(
     params: Parameters<BaseClient['getReplies']>[0],
@@ -740,10 +864,10 @@ export class PiefedClient implements BaseClient {
   async purgeComment(): ReturnType<BaseClient['purgeComment']> {
     throw new Error('unsupported')
   }
-  async getFederatedInstances(
-    ...params: Parameters<BaseClient['getFederatedInstances']>
-  ): ReturnType<BaseClient['getFederatedInstances']> {
-    throw new Error('unimplemented')
+  async getFederatedInstances(): ReturnType<
+    BaseClient['getFederatedInstances']
+  > {
+    return (await this.#client.GET('/federated_instances')).data!
   }
   async blockInstance(
     params: Parameters<BaseClient['blockInstance']>[0],

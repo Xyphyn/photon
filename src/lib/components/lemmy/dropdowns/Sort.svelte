@@ -1,5 +1,7 @@
 <script lang="ts">
   import { page } from '$app/state'
+  import { client } from '$lib/client/lemmy.svelte'
+  import { LemmyClient } from '$lib/client/lemmy/lemmy'
   import { t } from '$lib/i18n/translations'
   import { searchParam } from '$lib/util.svelte.js'
   import { Select } from 'mono-svelte'
@@ -72,18 +74,20 @@
     <Option value="New" icon={Star}>
       {$t('filter.sort.new')}
     </Option>
-    <Option value="Old" icon={Clock}>
-      {$t('filter.sort.old')}
-    </Option>
-    <Option value="Controversial" icon={ArrowTrendingDown}>
-      {$t('filter.sort.controversial')}
-    </Option>
-    <Option value="MostComments" icon={ChatBubbleOvalLeft}>
-      {$t('filter.sort.mostcomments')}
-    </Option>
-    <Option value="NewComments" icon={ChatBubbleLeftRight}>
-      {$t('filter.sort.newcomments')}
-    </Option>
+    {#if client() instanceof LemmyClient}
+      <Option value="Old" icon={Clock}>
+        {$t('filter.sort.old')}
+      </Option>
+      <Option value="Controversial" icon={ArrowTrendingDown}>
+        {$t('filter.sort.controversial')}
+      </Option>
+      <Option value="MostComments" icon={ChatBubbleOvalLeft}>
+        {$t('filter.sort.mostcomments')}
+      </Option>
+      <Option value="NewComments" icon={ChatBubbleLeftRight}>
+        {$t('filter.sort.newcomments')}
+      </Option>
+    {/if}
   </Select>
   {#if selected?.startsWith('Top')}
     <Select

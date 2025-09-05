@@ -91,7 +91,6 @@ export async function load({ params, url, fetch }) {
   const commentParams: GetComments = {
     post_id: Number(params.id),
     type_: 'All',
-    page: 1,
     max_depth: max_depth,
     saved_only: false,
     sort: sort,
