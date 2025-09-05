@@ -12,7 +12,7 @@
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
   import { t } from '$lib/i18n/translations'
-  import { DEFAULT_CLIENT_TYPE } from '$lib/client/lemmy.svelte'
+  import { DEFAULT_CLIENT_TYPE } from '$lib/client/base'
 
   let { profiles }: { profiles: ProfileInfo[] } = $props()
 

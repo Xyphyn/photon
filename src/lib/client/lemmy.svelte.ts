@@ -5,6 +5,7 @@ import { error } from '@sveltejs/kit'
 import { type GetSiteResponse } from 'lemmy-js-client'
 import { LemmyClient } from './lemmy/lemmy'
 import { PiefedClient } from './piefed/piefed'
+import { DEFAULT_CLIENT_TYPE, type ClientType } from './base'
 
 class SiteData {
   #data = $state<GetSiteResponse>()
@@ -68,7 +69,7 @@ export function client({
     instanceURL = profile.current.instance || DEFAULT_INSTANCE_URL
 
   if (!clientType) {
-    clientType = profile.current.client
+    clientType = profile.current.client ?? DEFAULT_CLIENT_TYPE
   }
 
   const jwt = auth ?? profile.current?.jwt
@@ -143,13 +144,4 @@ export function mayBeIncompatible(
   }
 
   return false
-}
-
-export type ClientType =
-  | { name: 'lemmy'; baseUrl: '/api/v3' }
-  | { name: 'piefed'; baseUrl: '/api/alpha' }
-
-export const DEFAULT_CLIENT_TYPE: ClientType = {
-  name: 'lemmy',
-  baseUrl: '/api/v3',
 }

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { profile, type ProfileInfo } from '$lib/auth.svelte.js'
-  import { DEFAULT_CLIENT_TYPE } from '$lib/client/lemmy.svelte'
+  import { DEFAULT_CLIENT_TYPE } from '$lib/client/base'
   import CommonList from '$lib/components/ui/layout/CommonList.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import DebugObject from '$lib/components/util/debug/DebugObject.svelte'

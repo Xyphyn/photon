@@ -1966,3 +1966,21 @@ export interface VoteView {
   creator_banned_from_community: boolean
   score: number
 }
+
+export interface UploadImage {
+  image: File | Buffer
+}
+export interface UploadImageResponse {
+  msg: string
+  files?: ImageFile[]
+  url?: string
+  delete_url?: string
+}
+export interface ImageFile {
+  file: string
+  delete_token: string
+}
+export interface DeleteImage {
+  token: string
+  filename: string
+}

@@ -4,13 +4,7 @@
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
   import { profile } from '$lib/auth.svelte'
-  import {
-    client,
-    DEFAULT_CLIENT_TYPE,
-    mayBeIncompatible,
-    site,
-    type ClientType,
-  } from '$lib/client/lemmy.svelte'
+  import { client, mayBeIncompatible, site } from '$lib/client/lemmy.svelte'
   import ErrorContainer, {
     clearErrorScope,
     pushError,
@@ -31,6 +25,7 @@
     QuestionMarkCircle,
     UserCircle,
   } from 'svelte-hero-icons'
+  import { DEFAULT_CLIENT_TYPE, type ClientType } from '$lib/client/base'
 
   interface Props {
     ref?: string

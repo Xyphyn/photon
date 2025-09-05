@@ -5,13 +5,7 @@ import {
   isAdmin,
 } from '$lib/components/lemmy/moderation/moderation.js'
 import { DEFAULT_INSTANCE_URL } from '$lib/instance.svelte.js'
-import {
-  client,
-  getClient,
-  site,
-  type ClientType,
-  DEFAULT_CLIENT_TYPE,
-} from '$lib/client/lemmy.svelte'
+import { client, getClient, site } from '$lib/client/lemmy.svelte'
 import { instanceToURL, moveItem } from '$lib/util.svelte'
 import { MINIMUM_VERSION, versionIsSupported } from '$lib/version.js'
 import { toast } from 'mono-svelte'
@@ -20,6 +14,7 @@ import { t } from './i18n/translations'
 import { errorMessage } from './lemmy/error'
 import { publishedToDate } from './components/util/date'
 import type { Community, GetSiteResponse, MyUserInfo } from './client/types'
+import { DEFAULT_CLIENT_TYPE, type ClientType } from './client/base'
 
 function getFromStorage<T>(key: string): T | undefined {
   if (typeof localStorage == 'undefined') return undefined

@@ -1,7 +1,6 @@
 import { LemmyHttp } from 'lemmy-js-client'
-import type { BaseClient } from '../base'
+import type { BaseClient, ClientType } from '../base'
 import { fromGetPosts, toListingType } from './rewrite'
-import type { ClientType } from '../lemmy.svelte'
 
 export class LemmyClient implements BaseClient {
   type: ClientType = { name: 'lemmy', baseUrl: '/api/v3' }
@@ -471,5 +470,10 @@ export class LemmyClient implements BaseClient {
     ...params: Parameters<BaseClient['blockInstance']>
   ): ReturnType<BaseClient['blockInstance']> {
     return await this.#client.blockInstance(...params)
+  }
+  async uploadImage(
+    ...params: Parameters<BaseClient['uploadImage']>
+  ): ReturnType<BaseClient['uploadImage']> {
+    return await this.#client.uploadImage(...params)
   }
 }

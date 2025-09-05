@@ -1,5 +1,13 @@
-import type { ClientType } from './lemmy.svelte'
 import * as types from './types'
+
+export type ClientType =
+  | { name: 'lemmy'; baseUrl: '/api/v3' }
+  | { name: 'piefed'; baseUrl: '/api/alpha' }
+
+export const DEFAULT_CLIENT_TYPE: ClientType = {
+  name: 'lemmy',
+  baseUrl: '/api/v3',
+}
 
 export abstract class BaseClient {
   abstract type: ClientType
@@ -203,4 +211,7 @@ export abstract class BaseClient {
   abstract blockInstance(
     form: types.BlockInstance,
   ): Promise<types.BlockInstanceResponse>
+  abstract uploadImage(
+    form: types.UploadImage,
+  ): Promise<types.UploadImageResponse>
 }

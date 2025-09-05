@@ -6,16 +6,13 @@
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { t } from '$lib/i18n/translations'
   import { LINKED_INSTANCE_URL } from '$lib/instance.svelte'
-  import {
-    DEFAULT_CLIENT_TYPE,
-    mayBeIncompatible,
-    type ClientType,
-  } from '$lib/client/lemmy.svelte'
+  import { mayBeIncompatible } from '$lib/client/lemmy.svelte'
   import { site, validateInstance } from '$lib/client/lemmy.svelte'
   import { DOMAIN_REGEX_FORMS } from '$lib/util.svelte'
   import { MINIMUM_VERSION } from '$lib/version'
   import { Button, Note, Option, Select, TextInput, toast } from 'mono-svelte'
   import { profile } from '$lib/auth.svelte'
+  import { DEFAULT_CLIENT_TYPE, type ClientType } from '$lib/client/base'
 
   interface Props {
     ref?: string

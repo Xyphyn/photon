@@ -1,5 +1,6 @@
+/* eslint-disable */
 import createClient from 'openapi-fetch'
-import type { BaseClient } from '../base'
+import type { BaseClient, ClientType } from '../base'
 import {
   fromCreateComment,
   fromCreatePost,
@@ -23,7 +24,6 @@ import {
   toPrivateMessageView,
 } from './rewrite'
 import type { paths } from './schema'
-import type { ClientType } from '../lemmy.svelte'
 
 export class PiefedClient implements BaseClient {
   type: ClientType = { name: 'piefed', baseUrl: '/api/alpha' }
@@ -226,9 +226,15 @@ export class PiefedClient implements BaseClient {
     }
   }
   async createCommunity(
-    ...params: Parameters<BaseClient['createCommunity']>
+    params: Parameters<BaseClient['createCommunity']>[0],
   ): ReturnType<BaseClient['createCommunity']> {
-    throw new Error('unimplemented')
+    const response = (await this.#client.POST('/community', { body: params }))
+      .data!
+
+    return {
+      ...response,
+      community_view: toCommunityView(response.community_view),
+    }
   }
   async getCommunity(
     params: Parameters<BaseClient['getCommunity']>[0],
@@ -252,9 +258,18 @@ export class PiefedClient implements BaseClient {
     }
   }
   async editCommunity(
-    ...params: Parameters<BaseClient['editCommunity']>
+    params: Parameters<BaseClient['editCommunity']>[0],
   ): ReturnType<BaseClient['editCommunity']> {
-    throw new Error('unimplemented')
+    const response = (
+      await this.#client.PUT('/community', {
+        body: { ...params, id: params.community_id },
+      })
+    ).data!
+
+    return {
+      ...response,
+      community_view: toCommunityView(response.community_view),
+    }
   }
   async listCommunities(
     params: Parameters<BaseClient['listCommunities']>[0],
@@ -297,28 +312,50 @@ export class PiefedClient implements BaseClient {
     }
   }
   async deleteCommunity(
-    ...params: Parameters<BaseClient['deleteCommunity']>
+    params: Parameters<BaseClient['deleteCommunity']>[0],
   ): ReturnType<BaseClient['deleteCommunity']> {
-    throw new Error('unimplemented')
+    const response = (
+      await this.#client.POST('/community/delete', { body: params })
+    ).data!
+
+    return {
+      ...response,
+      community_view: toCommunityView(response.community_view),
+    }
   }
-  async hideCommunity(
-    ...params: Parameters<BaseClient['hideCommunity']>
-  ): ReturnType<BaseClient['hideCommunity']> {
-    throw new Error('unimplemented')
+  async hideCommunity(): ReturnType<BaseClient['hideCommunity']> {
+    throw new Error('unsupported')
   }
-  async removeCommunity(
-    ...params: Parameters<BaseClient['removeCommunity']>
-  ): ReturnType<BaseClient['removeCommunity']> {
-    throw new Error('unimplemented')
+  async removeCommunity(): ReturnType<BaseClient['removeCommunity']> {
+    throw new Error('unsupported')
   }
   async banFromCommunity(
-    ...params: Parameters<BaseClient['banFromCommunity']>
+    params: Parameters<BaseClient['banFromCommunity']>[0],
   ): ReturnType<BaseClient['banFromCommunity']> {
-    throw new Error('unimplemented')
+    const response = (
+      await this.#client.POST('/community/moderate/ban', {
+        body: {
+          ...params,
+          expiredAt: new Date(
+            params.expires ?? '6767-06-07T00:00:00.000Z',
+          ).toISOString(),
+          user_id: params.person_id,
+          reason: params.reason ?? 'No reason provided.',
+        },
+      })
+    ).data!
+
+    return {
+      banned: params.ban,
+      person_view: {
+        person: toPerson(response.bannedUser),
+        counts: { comment_count: -1, person_id: -1, post_count: -1 },
+        is_admin: false,
+      },
+    }
   }
-  async addModToCommunity(
-    ...params: Parameters<BaseClient['addModToCommunity']>
-  ): ReturnType<BaseClient['addModToCommunity']> {
+  async addModToCommunity() // ...params: Parameters<BaseClient['addModToCommunity']>
+  : ReturnType<BaseClient['addModToCommunity']> {
     throw new Error('unimplemented')
   }
   async markPostAsRead(
@@ -713,5 +750,23 @@ export class PiefedClient implements BaseClient {
   ): ReturnType<BaseClient['blockInstance']> {
     return (await this.#client.POST('/site/block', { body: { ...params } }))!
       .data!
+  }
+  async uploadImage(
+    params: Parameters<BaseClient['uploadImage']>[0],
+  ): ReturnType<BaseClient['uploadImage']> {
+    const formData = new FormData()
+    formData.append('file', params.image as File)
+
+    const response = (
+      await this.#client.POST('/upload/image', {
+        // @ts-expect-error this is the only working way to do this
+        body: formData,
+      })
+    ).data!
+
+    return {
+      ...response,
+      msg: 'yeah it worked i think',
+    }
   }
 }
