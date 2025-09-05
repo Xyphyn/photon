@@ -1,21 +1,29 @@
 import type {
   Comment,
+  CommentReplyView,
   CommentSortType,
   CommentView,
   Community,
   CommunityView,
+  CreateComment,
+  CreatePost,
   GetComments,
   GetPost,
   GetPosts,
+  GetReplies,
+  ListCommunities,
   LocalSite,
   MyUserInfo,
   Person,
+  PersonMentionView,
   PersonView,
   Post,
   PostView,
+  PrivateMessageView,
+  Search,
   SortType,
 } from '../types'
-import type { components, paths } from './schema'
+import type { components } from './schema'
 
 export function toPersonView(
   personView: components['schemas']['PersonView'],
@@ -156,6 +164,47 @@ export function toComment(comment: components['schemas']['Comment']): Comment {
   }
 }
 
+export function toCommentReplyView(
+  commentReplyView: components['schemas']['CommentReplyView'],
+): CommentReplyView {
+  return {
+    ...commentReplyView,
+    banned_from_community: false,
+    creator_banned_from_community: false,
+    comment: toComment(commentReplyView.comment),
+    creator: toPerson(commentReplyView.creator),
+    post: toPost(commentReplyView.post),
+    community: toCommunity(commentReplyView.community),
+    recipient: toPerson(commentReplyView.recipient),
+  }
+}
+
+export function toPrivateMessageView(
+  privateMessageView: components['schemas']['PrivateMessageView'],
+): PrivateMessageView {
+  return {
+    ...privateMessageView,
+    creator: toPerson(privateMessageView.creator),
+    recipient: toPerson(privateMessageView.recipient),
+  }
+}
+
+export function toPersonMentionView(
+  personMentionView: components['schemas']['CommentReplyView'],
+): PersonMentionView {
+  return {
+    ...personMentionView,
+    person_mention: personMentionView.comment_reply,
+    creator_banned_from_community: false,
+    banned_from_community: false,
+    comment: toComment(personMentionView.comment),
+    community: toCommunity(personMentionView.community),
+    post: toPost(personMentionView.post),
+    creator: toPerson(personMentionView.creator),
+    recipient: toPerson(personMentionView.recipient),
+  }
+}
+
 // Query calls
 export function fromGetPosts(
   getPosts: GetPosts,
@@ -179,8 +228,53 @@ export function fromGetComments(
 export function fromGetPost(
   getPost: GetPost,
 ): components['schemas']['GetPost'] {
-  console.log(getPost)
   return getPost
+}
+
+export function fromGetReplies(
+  getReplies: GetReplies,
+): components['schemas']['GetReplies'] {
+  return {
+    ...getReplies,
+    sort: toCommentSortType(getReplies.sort),
+  }
+}
+
+export function fromSearch(search: Search): components['schemas']['Search'] {
+  return {
+    ...(search as Omit<Search, 'type_'> & {
+      type_: 'Communities' | 'Users' | 'Url' | 'Posts'
+    }),
+    sort: toSortType(search.sort),
+  }
+}
+
+export function fromCreatePost(
+  createPost: CreatePost,
+): components['schemas']['CreatePost'] {
+  return {
+    ...createPost,
+    title: createPost.name,
+  }
+}
+
+export function fromListCommunities(
+  listCommunities: ListCommunities,
+): components['schemas']['ListCommunities'] {
+  return {
+    ...listCommunities,
+    // @ts-expect-error ok so the api tells me something different than the actual dev api tells me to do
+    sort: toCommunitiesSortType(listCommunities.sort),
+  }
+}
+
+export function fromCreateComment(
+  createComment: CreateComment,
+): components['schemas']['CreateComment'] {
+  return {
+    ...createComment,
+    body: createComment.content,
+  }
 }
 
 // Misc
@@ -202,4 +296,12 @@ export function toCommentSortType(
 ): components['schemas']['CommentSortType'] | undefined {
   if (commentSortType == 'Controversial') commentSortType = undefined
   return commentSortType
+}
+
+export function toCommunitiesSortType(
+  sortType?: SortType,
+): 'Top' | 'Hot' | 'New' | undefined {
+  if (sortType == 'Hot' || sortType == 'New' || sortType == undefined)
+    return sortType
+  else return 'Top'
 }

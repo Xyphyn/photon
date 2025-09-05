@@ -1,22 +1,32 @@
 import createClient from 'openapi-fetch'
 import type { BaseClient } from '../base'
 import {
+  fromCreateComment,
+  fromCreatePost,
   fromGetComments,
   fromGetPost,
   fromGetPosts,
+  fromGetReplies,
+  fromListCommunities,
+  fromSearch,
+  toCommentReplyView,
+  toCommentSortType,
   toCommentView,
   toCommunity,
   toCommunityView,
   toLocalSite,
   toMyUser,
   toPerson,
+  toPersonMentionView,
   toPersonView,
   toPostView,
+  toPrivateMessageView,
 } from './rewrite'
 import type { paths } from './schema'
+import type { ClientType } from '../lemmy.svelte'
 
 export class PiefedClient implements BaseClient {
-  static type = { name: 'piefed', baseUrl: '/api/alpha' }
+  type: ClientType = { name: 'piefed', baseUrl: '/api/alpha' }
 
   #client: ReturnType<typeof createClient<paths>>
 
@@ -36,7 +46,7 @@ export class PiefedClient implements BaseClient {
   }
 
   async getSite(): ReturnType<BaseClient['getSite']> {
-    // throw new Error('Unimplemented')
+    // throw new Error('unimplemented')
 
     const response = (await this.#client.GET('/site')).data!
 
@@ -73,9 +83,17 @@ export class PiefedClient implements BaseClient {
   }
 
   async createPost(
-    ...params: Parameters<BaseClient['createPost']>
+    params: Parameters<BaseClient['createPost']>[0],
   ): ReturnType<BaseClient['createPost']> {
-    throw new Error('Unimplemented')
+    const response = (
+      await this.#client.POST('/post', {
+        body: fromCreatePost(params),
+      })
+    ).data!
+
+    return {
+      post_view: toPostView(response.post_view),
+    }
   }
   async getPost(
     params: Parameters<BaseClient['getPost']>[0],
@@ -97,20 +115,36 @@ export class PiefedClient implements BaseClient {
       post_view: toPostView(response.post_view),
     }
   }
+
   async editPost(
-    ...params: Parameters<BaseClient['editPost']>
+    params: Parameters<BaseClient['editPost']>[0],
   ): ReturnType<BaseClient['editPost']> {
-    throw new Error('Unimplemented')
+    const response = (await this.#client.PUT('/post', { body: params })).data!
+
+    return {
+      post_view: toPostView(response.post_view),
+    }
   }
   async deletePost(
-    ...params: Parameters<BaseClient['deletePost']>
+    params: Parameters<BaseClient['deletePost']>[0],
   ): ReturnType<BaseClient['deletePost']> {
-    throw new Error('Unimplemented')
+    const response = (await this.#client.POST('/post/delete', { body: params }))
+      .data!
+
+    return {
+      post_view: toPostView(response.post_view),
+    }
   }
+
   async removePost(
-    ...params: Parameters<BaseClient['removePost']>
+    params: Parameters<BaseClient['removePost']>[0],
   ): ReturnType<BaseClient['removePost']> {
-    throw new Error('Unimplemented')
+    const response = (await this.#client.POST('/post/remove', { body: params }))
+      .data!
+
+    return {
+      post_view: toPostView(response.post_view),
+    }
   }
 
   async getPosts(
@@ -137,95 +171,155 @@ export class PiefedClient implements BaseClient {
     })) as any
   }
 
-  async generateTotpSecret(
-    ...params: Parameters<BaseClient['generateTotpSecret']>
-  ): ReturnType<BaseClient['generateTotpSecret']> {
-    throw new Error('Unimplemented')
+  async generateTotpSecret(): ReturnType<BaseClient['generateTotpSecret']> {
+    throw new Error('unsupported')
   }
-  async listLogins(
-    ...params: Parameters<BaseClient['listLogins']>
-  ): ReturnType<BaseClient['listLogins']> {
-    throw new Error('Unimplemented')
+  async listLogins(): ReturnType<BaseClient['listLogins']> {
+    throw new Error('unsupported')
   }
-  async listAllMedia(
-    ...params: Parameters<BaseClient['listAllMedia']>
-  ): ReturnType<BaseClient['listAllMedia']> {
-    throw new Error('Unimplemented')
+  async listAllMedia(): ReturnType<BaseClient['listAllMedia']> {
+    throw new Error('unsupported')
   }
-  async updateTotp(
-    ...params: Parameters<BaseClient['updateTotp']>
-  ): ReturnType<BaseClient['updateTotp']> {
-    throw new Error('Unimplemented')
+  async updateTotp(): ReturnType<BaseClient['updateTotp']> {
+    throw new Error('unsupported')
   }
-  async getModlog(
-    ...params: Parameters<BaseClient['getModlog']>
-  ): ReturnType<BaseClient['getModlog']> {
-    throw new Error('Unimplemented')
+  async getModlog(): ReturnType<BaseClient['getModlog']> {
+    throw new Error('unsupported')
   }
   async search(
-    ...params: Parameters<BaseClient['search']>
+    params: Parameters<BaseClient['search']>[0],
   ): ReturnType<BaseClient['search']> {
-    throw new Error('Unimplemented')
+    const response = (
+      await this.#client.GET('/search', {
+        params: {
+          // @ts-expect-error same here what is happening
+          query: fromSearch(params),
+        },
+      })
+    ).data!
+
+    return {
+      comments: [],
+      communities: response.communities.map(toCommunityView),
+      posts: response.posts.map(toPostView),
+      users: response.users.map(toPersonView),
+      type_: response.type_,
+    }
   }
   async resolveObject(
-    ...params: Parameters<BaseClient['resolveObject']>
+    params: Parameters<BaseClient['resolveObject']>[0],
   ): ReturnType<BaseClient['resolveObject']> {
-    throw new Error('Unimplemented')
+    const response = (
+      await this.#client.GET('/resolve_object', {
+        // @ts-expect-error same here what is happening
+        params: { query: params },
+      })
+    ).data!
+
+    return {
+      comment: response.comment ? toCommentView(response.comment) : undefined,
+      community: response.community
+        ? toCommunityView(response.community)
+        : undefined,
+      post: response.post ? toPostView(response.post) : undefined,
+      person: response.person ? toPersonView(response.person) : undefined,
+    }
   }
   async createCommunity(
     ...params: Parameters<BaseClient['createCommunity']>
   ): ReturnType<BaseClient['createCommunity']> {
-    throw new Error('Unimplemented')
+    throw new Error('unimplemented')
   }
   async getCommunity(
-    ...params: Parameters<BaseClient['getCommunity']>
+    params: Parameters<BaseClient['getCommunity']>[0],
   ): ReturnType<BaseClient['getCommunity']> {
-    throw new Error('Unimplemented')
+    const response = (
+      await this.#client.GET('/community', {
+        params: {
+          // @ts-expect-error same here what is happening
+          query: params,
+        },
+      })
+    ).data!
+
+    return {
+      ...response,
+      community_view: toCommunityView(response.community_view),
+      moderators: response.moderators.map(i => ({
+        community: toCommunity(i.community),
+        moderator: toPerson(i.moderator),
+      })),
+    }
   }
   async editCommunity(
     ...params: Parameters<BaseClient['editCommunity']>
   ): ReturnType<BaseClient['editCommunity']> {
-    throw new Error('Unimplemented')
+    throw new Error('unimplemented')
   }
   async listCommunities(
-    ...params: Parameters<BaseClient['listCommunities']>
+    params: Parameters<BaseClient['listCommunities']>[0],
   ): ReturnType<BaseClient['listCommunities']> {
-    throw new Error('Unimplemented')
+    const response = (
+      await this.#client.GET('/community/list', {
+        params: {
+          // @ts-expect-error same here what is happening
+          query: fromListCommunities(params),
+        },
+      })
+    ).data!
+
+    return {
+      communities: response.communities.map(toCommunityView),
+    }
   }
   async followCommunity(
-    ...params: Parameters<BaseClient['followCommunity']>
+    params: Parameters<BaseClient['followCommunity']>[0],
   ): ReturnType<BaseClient['followCommunity']> {
-    throw new Error('Unimplemented')
+    const response = (
+      await this.#client.POST('/community/follow', { body: params })
+    ).data!
+
+    return {
+      ...response,
+      community_view: toCommunityView(response.community_view),
+    }
   }
   async blockCommunity(
-    ...params: Parameters<BaseClient['blockCommunity']>
+    params: Parameters<BaseClient['blockCommunity']>[0],
   ): ReturnType<BaseClient['blockCommunity']> {
-    throw new Error('Unimplemented')
+    const response = (
+      await this.#client.POST('/community/block', { body: params })
+    ).data!
+
+    return {
+      ...response,
+      community_view: toCommunityView(response.community_view),
+    }
   }
   async deleteCommunity(
     ...params: Parameters<BaseClient['deleteCommunity']>
   ): ReturnType<BaseClient['deleteCommunity']> {
-    throw new Error('Unimplemented')
+    throw new Error('unimplemented')
   }
   async hideCommunity(
     ...params: Parameters<BaseClient['hideCommunity']>
   ): ReturnType<BaseClient['hideCommunity']> {
-    throw new Error('Unimplemented')
+    throw new Error('unimplemented')
   }
   async removeCommunity(
     ...params: Parameters<BaseClient['removeCommunity']>
   ): ReturnType<BaseClient['removeCommunity']> {
-    throw new Error('Unimplemented')
+    throw new Error('unimplemented')
   }
   async banFromCommunity(
     ...params: Parameters<BaseClient['banFromCommunity']>
   ): ReturnType<BaseClient['banFromCommunity']> {
-    throw new Error('Unimplemented')
+    throw new Error('unimplemented')
   }
   async addModToCommunity(
     ...params: Parameters<BaseClient['addModToCommunity']>
   ): ReturnType<BaseClient['addModToCommunity']> {
-    throw new Error('Unimplemented')
+    throw new Error('unimplemented')
   }
   async markPostAsRead(
     params: Parameters<BaseClient['markPostAsRead']>[0],
@@ -240,95 +334,128 @@ export class PiefedClient implements BaseClient {
   async hidePost(
     ...params: Parameters<BaseClient['hidePost']>
   ): ReturnType<BaseClient['hidePost']> {
-    throw new Error('Unimplemented')
+    throw new Error('unimplemented')
   }
   async lockPost(
     ...params: Parameters<BaseClient['lockPost']>
   ): ReturnType<BaseClient['lockPost']> {
-    throw new Error('Unimplemented')
+    throw new Error('unimplemented')
   }
   async featurePost(
     ...params: Parameters<BaseClient['featurePost']>
   ): ReturnType<BaseClient['featurePost']> {
-    throw new Error('Unimplemented')
+    throw new Error('unimplemented')
   }
-  async listPostLikes(
-    ...params: Parameters<BaseClient['listPostLikes']>
-  ): ReturnType<BaseClient['listPostLikes']> {
-    throw new Error('Unimplemented')
+  async listPostLikes(): ReturnType<BaseClient['listPostLikes']> {
+    throw new Error('unsupported')
   }
   async savePost(
-    ...params: Parameters<BaseClient['savePost']>
+    params: Parameters<BaseClient['savePost']>[0],
   ): ReturnType<BaseClient['savePost']> {
-    throw new Error('Unimplemented')
+    const response = (await this.#client.PUT('/post/save', { body: params }))
+      .data!
+
+    return {
+      post_view: toPostView(response.post_view),
+    }
   }
   async createPostReport(
     ...params: Parameters<BaseClient['createPostReport']>
   ): ReturnType<BaseClient['createPostReport']> {
-    throw new Error('Unimplemented')
+    throw new Error('unimplemented')
   }
   async resolvePostReport(
     ...params: Parameters<BaseClient['resolvePostReport']>
   ): ReturnType<BaseClient['resolvePostReport']> {
-    throw new Error('Unimplemented')
+    throw new Error('unimplemented')
   }
   async listPostReports(
     ...params: Parameters<BaseClient['listPostReports']>
   ): ReturnType<BaseClient['listPostReports']> {
-    throw new Error('Unimplemented')
+    throw new Error('unimplemented')
   }
   async getSiteMetadata(
     ...params: Parameters<BaseClient['getSiteMetadata']>
   ): ReturnType<BaseClient['getSiteMetadata']> {
-    throw new Error('Unimplemented')
+    throw new Error('unimplemented')
   }
+
   async createComment(
-    ...params: Parameters<BaseClient['createComment']>
+    params: Parameters<BaseClient['createComment']>[0],
   ): ReturnType<BaseClient['createComment']> {
-    throw new Error('Unimplemented')
+    const response = (
+      await this.#client.POST('/comment', {
+        body: fromCreateComment(params),
+      })
+    ).data!
+
+    return {
+      ...response,
+      comment_view: toCommentView(response.comment_view),
+      recipient_ids: [],
+    }
   }
   async editComment(
-    ...params: Parameters<BaseClient['editComment']>
+    params: Parameters<BaseClient['editComment']>[0],
   ): ReturnType<BaseClient['editComment']> {
-    throw new Error('Unimplemented')
+    const response = (await this.#client.PUT('/comment', { body: params }))
+      .data!
+
+    return {
+      comment_view: toCommentView(response.comment_view),
+      recipient_ids: [],
+    }
   }
   async deleteComment(
-    ...params: Parameters<BaseClient['deleteComment']>
+    params: Parameters<BaseClient['deleteComment']>[0],
   ): ReturnType<BaseClient['deleteComment']> {
-    throw new Error('Unimplemented')
+    const response = (
+      await this.#client.POST('/comment/delete', { body: params })
+    ).data!
+
+    return {
+      comment_view: toCommentView(response.comment_view),
+      recipient_ids: [],
+    }
   }
   async removeComment(
-    ...params: Parameters<BaseClient['removeComment']>
+    params: Parameters<BaseClient['removeComment']>[0],
   ): ReturnType<BaseClient['removeComment']> {
-    throw new Error('Unimplemented')
+    const response = (
+      await this.#client.POST('/comment/remove', { body: params })
+    ).data!
+
+    return {
+      comment_view: toCommentView(response.comment_view),
+      recipient_ids: [],
+    }
   }
   async markCommentReplyAsRead(
     ...params: Parameters<BaseClient['markCommentReplyAsRead']>
   ): ReturnType<BaseClient['markCommentReplyAsRead']> {
-    throw new Error('Unimplemented')
+    throw new Error('unimplemented')
   }
   async likeComment(
     params: Parameters<BaseClient['likeComment']>[0],
   ): ReturnType<BaseClient['likeComment']> {
     // TODO remove any
     return (await this.#client.POST('/comment/like', {
-      body: { ...params },
+      body: params,
     })) as any
   }
-  async listCommentLikes(
-    ...params: Parameters<BaseClient['listCommentLikes']>
-  ): ReturnType<BaseClient['listCommentLikes']> {
-    throw new Error('Unimplemented')
+
+  async listCommentLikes(): ReturnType<BaseClient['listCommentLikes']> {
+    throw new Error('unsupported')
   }
   async saveComment(
     ...params: Parameters<BaseClient['saveComment']>
   ): ReturnType<BaseClient['saveComment']> {
-    throw new Error('Unimplemented')
+    throw new Error('unimplemented')
   }
   async distinguishComment(
     ...params: Parameters<BaseClient['distinguishComment']>
   ): ReturnType<BaseClient['distinguishComment']> {
-    throw new Error('Unimplemented')
+    throw new Error('unimplemented')
   }
 
   async getComments(
@@ -347,218 +474,244 @@ export class PiefedClient implements BaseClient {
   }
 
   async getComment(
-    ...params: Parameters<BaseClient['getComment']>
+    params: Parameters<BaseClient['getComment']>[0],
   ): ReturnType<BaseClient['getComment']> {
-    throw new Error('Unimplemented')
+    const response =
+      // @ts-expect-error same here what is happening
+      (await this.#client.GET('/comment', { params: { query: params } })).data!
+
+    return {
+      ...response,
+      comment_view: toCommentView(response.comment_view),
+      recipient_ids: [],
+    }
   }
   async createCommentReport(
     ...params: Parameters<BaseClient['createCommentReport']>
   ): ReturnType<BaseClient['createCommentReport']> {
-    throw new Error('Unimplemented')
+    throw new Error('unimplemented')
   }
   async resolveCommentReport(
     ...params: Parameters<BaseClient['resolveCommentReport']>
   ): ReturnType<BaseClient['resolveCommentReport']> {
-    throw new Error('Unimplemented')
+    throw new Error('unimplemented')
   }
   async listCommentReports(
     ...params: Parameters<BaseClient['listCommentReports']>
   ): ReturnType<BaseClient['listCommentReports']> {
-    throw new Error('Unimplemented')
+    throw new Error('unimplemented')
   }
   async getPrivateMessages(
-    ...params: Parameters<BaseClient['getPrivateMessages']>
+    params: Parameters<BaseClient['getPrivateMessages']>[0],
   ): ReturnType<BaseClient['getPrivateMessages']> {
-    throw new Error('Unimplemented')
+    const response = (
+      await this.#client.GET('/private_message/list', {
+        // @ts-expect-error query params are screwed up
+        params: { query: params },
+      })
+    ).data!
+
+    return {
+      private_messages: response.private_messages.map(toPrivateMessageView),
+    }
   }
   async createPrivateMessage(
     ...params: Parameters<BaseClient['createPrivateMessage']>
   ): ReturnType<BaseClient['createPrivateMessage']> {
-    throw new Error('Unimplemented')
+    throw new Error('unimplemented')
   }
   async editPrivateMessage(
     ...params: Parameters<BaseClient['editPrivateMessage']>
   ): ReturnType<BaseClient['editPrivateMessage']> {
-    throw new Error('Unimplemented')
+    throw new Error('unimplemented')
   }
   async deletePrivateMessage(
     ...params: Parameters<BaseClient['deletePrivateMessage']>
   ): ReturnType<BaseClient['deletePrivateMessage']> {
-    throw new Error('Unimplemented')
+    throw new Error('unimplemented')
   }
   async markPrivateMessageAsRead(
     ...params: Parameters<BaseClient['markPrivateMessageAsRead']>
   ): ReturnType<BaseClient['markPrivateMessageAsRead']> {
-    throw new Error('Unimplemented')
+    throw new Error('unimplemented')
   }
   async createPrivateMessageReport(
     ...params: Parameters<BaseClient['createPrivateMessageReport']>
   ): ReturnType<BaseClient['createPrivateMessageReport']> {
-    throw new Error('Unimplemented')
+    throw new Error('unimplemented')
   }
   async resolvePrivateMessageReport(
     ...params: Parameters<BaseClient['resolvePrivateMessageReport']>
   ): ReturnType<BaseClient['resolvePrivateMessageReport']> {
-    throw new Error('Unimplemented')
+    throw new Error('unimplemented')
   }
   async listPrivateMessageReports(
     ...params: Parameters<BaseClient['listPrivateMessageReports']>
   ): ReturnType<BaseClient['listPrivateMessageReports']> {
-    throw new Error('Unimplemented')
+    throw new Error('unimplemented')
   }
-  async register(
-    ...params: Parameters<BaseClient['register']>
-  ): ReturnType<BaseClient['register']> {
-    throw new Error('Unimplemented')
+  async register(): ReturnType<BaseClient['register']> {
+    throw new Error('unsupported')
   }
   async login(
-    ...params: Parameters<BaseClient['login']>
+    params: Parameters<BaseClient['login']>[0],
   ): ReturnType<BaseClient['login']> {
-    throw new Error('Unimplemented')
+    const response = await this.#client.POST('/user/login', {
+      body: { username: params.username_or_email, password: params.password },
+    })!
+
+    return {
+      verify_email_sent: false,
+      registration_created: false,
+      jwt: response.data?.jwt,
+    }
   }
   async logout(
     ...params: Parameters<BaseClient['logout']>
   ): ReturnType<BaseClient['logout']> {
-    throw new Error('Unimplemented')
+    throw new Error('unimplemented')
   }
   async getPersonDetails(
     ...params: Parameters<BaseClient['getPersonDetails']>
   ): ReturnType<BaseClient['getPersonDetails']> {
-    throw new Error('Unimplemented')
+    throw new Error('unimplemented')
   }
   async getPersonMentions(
-    ...params: Parameters<BaseClient['getPersonMentions']>
+    params: Parameters<BaseClient['getPersonMentions']>[0],
   ): ReturnType<BaseClient['getPersonMentions']> {
-    throw new Error('Unimplemented')
+    const response = (
+      await this.#client.GET('/user/mentions', {
+        // @ts-expect-error yet another query param bug
+        params: { query: { ...params, sort: toCommentSortType(params.sort) } },
+      })
+    ).data!
+
+    return {
+      mentions: response.replies.map(toPersonMentionView),
+    }
   }
   async markPersonMentionAsRead(
-    ...params: Parameters<BaseClient['markPersonMentionAsRead']>
+    params: Parameters<BaseClient['markPersonMentionAsRead']>[0],
   ): ReturnType<BaseClient['markPersonMentionAsRead']> {
-    throw new Error('Unimplemented')
+    throw new Error('unimplemented')
   }
   async getReplies(
-    ...params: Parameters<BaseClient['getReplies']>
+    params: Parameters<BaseClient['getReplies']>[0],
   ): ReturnType<BaseClient['getReplies']> {
-    throw new Error('Unimplemented')
+    const response = (
+      await this.#client.GET('/user/replies', {
+        // @ts-expect-error same here what is happening
+        params: { query: fromGetReplies(params) },
+      })
+    ).data!
+
+    return {
+      replies: response.replies.map(toCommentReplyView),
+    }
   }
-  async banPerson(
-    ...params: Parameters<BaseClient['banPerson']>
-  ): ReturnType<BaseClient['banPerson']> {
-    throw new Error('Unimplemented')
+  async banPerson(): ReturnType<BaseClient['banPerson']> {
+    // this is for site view not community view
+    throw new Error('unsupported')
   }
-  async getBannedPersons(
-    ...params: Parameters<BaseClient['getBannedPersons']>
-  ): ReturnType<BaseClient['getBannedPersons']> {
-    throw new Error('Unimplemented')
+  async getBannedPersons(): ReturnType<BaseClient['getBannedPersons']> {
+    // this is for site view not community view
+    throw new Error('unsupported')
   }
   async blockPerson(
-    ...params: Parameters<BaseClient['blockPerson']>
+    params: Parameters<BaseClient['blockPerson']>[0],
   ): ReturnType<BaseClient['blockPerson']> {
-    throw new Error('Unimplemented')
+    const response = (await this.#client.POST('/user/block', { body: params }))
+      .data!
+
+    return {
+      ...response,
+      person_view: toPersonView(response.person_view),
+    }
   }
-  async getCaptcha(
-    ...params: Parameters<BaseClient['getCaptcha']>
-  ): ReturnType<BaseClient['getCaptcha']> {
-    throw new Error('Unimplemented')
+  async getCaptcha(): ReturnType<BaseClient['getCaptcha']> {
+    throw new Error('unsupported')
   }
-  async deleteAccount(
-    ...params: Parameters<BaseClient['deleteAccount']>
-  ): ReturnType<BaseClient['deleteAccount']> {
-    throw new Error('Unimplemented')
+  async deleteAccount(): ReturnType<BaseClient['deleteAccount']> {
+    throw new Error('unsupported')
   }
-  async passwordReset(
-    ...params: Parameters<BaseClient['passwordReset']>
-  ): ReturnType<BaseClient['passwordReset']> {
-    throw new Error('Unimplemented')
+  async passwordReset(): ReturnType<BaseClient['passwordReset']> {
+    throw new Error('unsupported')
   }
-  async passwordChangeAfterReset(
-    ...params: Parameters<BaseClient['passwordChangeAfterReset']>
-  ): ReturnType<BaseClient['passwordChangeAfterReset']> {
-    throw new Error('Unimplemented')
+  async passwordChangeAfterReset(): ReturnType<
+    BaseClient['passwordChangeAfterReset']
+  > {
+    throw new Error('unsupported')
   }
-  async markAllAsRead(
-    ...params: Parameters<BaseClient['markAllAsRead']>
-  ): ReturnType<BaseClient['markAllAsRead']> {
-    throw new Error('Unimplemented')
+  async markAllAsRead(): ReturnType<BaseClient['markAllAsRead']> {
+    const response = (await this.#client.POST('/user/mark_all_as_read')).data!
+
+    return {
+      replies: response.replies.map(toCommentReplyView),
+    }
   }
   async saveUserSettings(
-    ...params: Parameters<BaseClient['saveUserSettings']>
+    params: Parameters<BaseClient['saveUserSettings']>[0],
   ): ReturnType<BaseClient['saveUserSettings']> {
-    throw new Error('Unimplemented')
+    return (
+      await this.#client.PUT('/user/save_user_settings', { body: params })
+    ).data!
   }
-  async changePassword(
-    ...params: Parameters<BaseClient['changePassword']>
-  ): ReturnType<BaseClient['changePassword']> {
-    throw new Error('Unimplemented')
+  async changePassword(): ReturnType<BaseClient['changePassword']> {
+    throw new Error('unsupported')
   }
-  async getReportCount(
-    ...params: Parameters<BaseClient['getReportCount']>
-  ): ReturnType<BaseClient['getReportCount']> {
-    throw new Error('Unimplemented')
+  async getReportCount(): ReturnType<BaseClient['getReportCount']> {
+    throw new Error('unsupported')
   }
-  async getUnreadCount(
-    ...params: Parameters<BaseClient['getUnreadCount']>
-  ): ReturnType<BaseClient['getUnreadCount']> {
-    throw new Error('Unimplemented')
+  async getUnreadCount(): ReturnType<BaseClient['getUnreadCount']> {
+    return (await this.#client.GET('/user/unread_count')).data!
   }
-  async verifyEmail(
-    ...params: Parameters<BaseClient['verifyEmail']>
-  ): ReturnType<BaseClient['verifyEmail']> {
-    throw new Error('Unimplemented')
+  async verifyEmail(): ReturnType<BaseClient['verifyEmail']> {
+    throw new Error('unsupported')
   }
-  async addAdmin(
-    ...params: Parameters<BaseClient['addAdmin']>
-  ): ReturnType<BaseClient['addAdmin']> {
-    throw new Error('Unimplemented')
+  async addAdmin(): ReturnType<BaseClient['addAdmin']> {
+    throw new Error('unsupported')
   }
-  async getUnreadRegistrationApplicationCount(
-    ...params: Parameters<BaseClient['getUnreadRegistrationApplicationCount']>
-  ): ReturnType<BaseClient['getUnreadRegistrationApplicationCount']> {
-    throw new Error('Unimplemented')
+  async getUnreadRegistrationApplicationCount(): ReturnType<
+    BaseClient['getUnreadRegistrationApplicationCount']
+  > {
+    throw new Error('unsupported')
   }
-  async listRegistrationApplications(
-    ...params: Parameters<BaseClient['listRegistrationApplications']>
-  ): ReturnType<BaseClient['listRegistrationApplications']> {
-    throw new Error('Unimplemented')
+  async listRegistrationApplications(): ReturnType<
+    BaseClient['listRegistrationApplications']
+  > {
+    throw new Error('unsupported')
   }
-  async approveRegistrationApplication(
-    ...params: Parameters<BaseClient['approveRegistrationApplication']>
-  ): ReturnType<BaseClient['approveRegistrationApplication']> {
-    throw new Error('Unimplemented')
+  async approveRegistrationApplication(): ReturnType<
+    BaseClient['approveRegistrationApplication']
+  > {
+    throw new Error('unsupported')
   }
-  async getRegistrationApplication(
-    ...params: Parameters<BaseClient['getRegistrationApplication']>
-  ): ReturnType<BaseClient['getRegistrationApplication']> {
-    throw new Error('Unimplemented')
+  async getRegistrationApplication(): ReturnType<
+    BaseClient['getRegistrationApplication']
+  > {
+    throw new Error('unsupported')
   }
-  async purgePerson(
-    ...params: Parameters<BaseClient['purgePerson']>
-  ): ReturnType<BaseClient['purgePerson']> {
-    throw new Error('Unimplemented')
+  async purgePerson(): ReturnType<BaseClient['purgePerson']> {
+    throw new Error('unsupported')
   }
-  async purgeCommunity(
-    ...params: Parameters<BaseClient['purgeCommunity']>
-  ): ReturnType<BaseClient['purgeCommunity']> {
-    throw new Error('Unimplemented')
+  async purgeCommunity(): ReturnType<BaseClient['purgeCommunity']> {
+    throw new Error('unsupported')
   }
-  async purgePost(
-    ...params: Parameters<BaseClient['purgePost']>
-  ): ReturnType<BaseClient['purgePost']> {
-    throw new Error('Unimplemented')
+  async purgePost(): ReturnType<BaseClient['purgePost']> {
+    throw new Error('unsupported')
   }
-  async purgeComment(
-    ...params: Parameters<BaseClient['purgeComment']>
-  ): ReturnType<BaseClient['purgeComment']> {
-    throw new Error('Unimplemented')
+  async purgeComment(): ReturnType<BaseClient['purgeComment']> {
+    throw new Error('unsupported')
   }
   async getFederatedInstances(
     ...params: Parameters<BaseClient['getFederatedInstances']>
   ): ReturnType<BaseClient['getFederatedInstances']> {
-    throw new Error('Unimplemented')
+    throw new Error('unimplemented')
   }
   async blockInstance(
-    ...params: Parameters<BaseClient['blockInstance']>
+    params: Parameters<BaseClient['blockInstance']>[0],
   ): ReturnType<BaseClient['blockInstance']> {
-    throw new Error('Unimplemented')
+    return (await this.#client.POST('/site/block', { body: { ...params } }))!
+      .data!
   }
 }

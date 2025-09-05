@@ -907,7 +907,9 @@
         "couldnt_find_person": "That user doesn't exist.",
         "couldnt_find_community": "That community doesn't exist.",
         "not_an_admin": "You are not an admin of this instance.",
-        "rate_limit_error": "You are performing that action too fast."
+        "rate_limit_error": "You are performing that action too fast.",
+        "unimplemented": "That function of your account's instance is not yet supported by Photon.",
+        "unsupported": "That function is not supported by your account's instance."
     },
     "aria": {
         "pagination": {

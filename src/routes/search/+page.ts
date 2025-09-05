@@ -21,7 +21,9 @@ export async function load({ url, fetch }) {
       page: page,
       sort: (sort as SortType) || 'TopAll',
       listing_type: listing_type,
-      type_: (type as SearchType) ?? 'All',
+      type_:
+        (type as SearchType) ??
+        (client().type.name == 'lemmy' ? 'All' : 'Posts'),
     })
 
     const [posts, comments, users, communities] = [

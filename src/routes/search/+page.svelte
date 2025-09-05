@@ -33,6 +33,7 @@
   import { expoOut } from 'svelte/easing'
   import { fly, slide } from 'svelte/transition'
   import SearchBar from './SearchBar.svelte'
+  import { client } from '$lib/client/lemmy.svelte'
 
   let { data } = $props()
 
@@ -55,6 +56,7 @@
 <Header pageHeader>
   {$t('routes.search.title')}
   {#snippet extended()}
+    {@const clientType = client().type.name}
     <form method="get" action="/search" class="contents" bind:this={form}>
       <SearchBar bind:query={data.filters.value.query} />
       <div class="flex flex-row flex-wrap items-center gap-4">
@@ -69,9 +71,13 @@
               {$t('filter.type')}
             </span>
           {/snippet}
-          <Option value="All">{$t('content.all')}</Option>
+          {#if clientType == 'lemmy'}
+            <Option value="All">{$t('content.all')}</Option>
+          {/if}
           <Option value="Posts">{$t('content.posts')}</Option>
-          <Option value="Comments">{$t('content.comments')}</Option>
+          {#if clientType == 'lemmy'}
+            <Option value="Comments">{$t('content.comments')}</Option>
+          {/if}
           <Option value="Communities">{$t('content.communities')}</Option>
           <Option value="Users">{$t('content.users')}</Option>
           <Option value="Url">{$t('content.url')}</Option>

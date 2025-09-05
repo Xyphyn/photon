@@ -2,7 +2,7 @@ import type { ClientType } from './lemmy.svelte'
 import * as types from './types'
 
 export abstract class BaseClient {
-  static type: ClientType
+  abstract type: ClientType
 
   abstract getSite(): Promise<types.GetSiteResponse>
   abstract generateTotpSecret(): Promise<types.GenerateTotpSecretResponse>

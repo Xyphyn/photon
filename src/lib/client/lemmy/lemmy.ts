@@ -1,9 +1,10 @@
 import { LemmyHttp } from 'lemmy-js-client'
 import type { BaseClient } from '../base'
 import { fromGetPosts, toListingType } from './rewrite'
+import type { ClientType } from '../lemmy.svelte'
 
 export class LemmyClient implements BaseClient {
-  static type = { name: 'lemmy', baseUrl: '/api/v3' }
+  type: ClientType = { name: 'lemmy', baseUrl: '/api/v3' }
 
   #client: LemmyHttp
 
