@@ -214,4 +214,18 @@ export abstract class BaseClient {
   abstract uploadImage(
     form: types.UploadImage,
   ): Promise<types.UploadImageResponse>
+
+  abstract setFlair?(form: types.SetPersonFlair): Promise<types.PersonView>
 }
+
+export type NullableFnArg<T, Fallback = never> = T extends (
+  ...args: infer A
+) => any
+  ? A
+  : Fallback
+
+export type NullableFnReturn<T, Fallback = never> = T extends (
+  ...args: any[]
+) => infer A
+  ? A
+  : Fallback

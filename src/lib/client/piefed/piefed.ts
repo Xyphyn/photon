@@ -1,5 +1,10 @@
 import createClient from 'openapi-fetch'
-import type { BaseClient, ClientType } from '../base'
+import type {
+  BaseClient,
+  ClientType,
+  NullableFnArg,
+  NullableFnReturn,
+} from '../base'
 import {
   fromCreateComment,
   fromCreatePost,
@@ -26,6 +31,7 @@ import {
   toSortType,
 } from './rewrite'
 import type { paths } from './schema'
+import type { SetPersonFlair, PersonView } from '../types'
 
 export class PiefedClient implements BaseClient {
   type: ClientType = { name: 'piefed', baseUrl: '/api/alpha' }
@@ -892,5 +898,15 @@ export class PiefedClient implements BaseClient {
       ...response,
       msg: 'yeah it worked i think',
     }
+  }
+
+  async setFlair(
+    params: NullableFnArg<BaseClient['setFlair']>[0],
+  ): NullableFnReturn<BaseClient['setFlair']> {
+    const response = (
+      await this.#client.POST('/user/set_flair', { body: params })
+    ).data!
+
+    return toPersonView(response.person_view)
   }
 }

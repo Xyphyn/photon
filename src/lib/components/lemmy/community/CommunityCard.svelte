@@ -67,28 +67,31 @@
 
 <script lang="ts">
   import { profile } from '$lib/auth.svelte.js'
+  import { client, getClient } from '$lib/client/lemmy.svelte'
+  import type { CommunityModeratorView, CommunityView } from '$lib/client/types'
   import {
     amMod,
     isAdmin,
   } from '$lib/components/lemmy/moderation/moderation.js'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
+  import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
   import Entity from '$lib/components/ui/Entity.svelte'
   import Expandable from '$lib/components/ui/Expandable.svelte'
   import LabelStat from '$lib/components/ui/LabelStat.svelte'
+  import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
   import { t } from '$lib/i18n/translations'
-  import { client, getClient } from '$lib/client/lemmy.svelte'
   import { errorMessage } from '$lib/lemmy/error'
   import { userLink } from '$lib/lemmy/generic'
   import { addSubscription } from '$lib/lemmy/user.js'
   import { settings } from '$lib/settings.svelte'
   import { fullCommunityName } from '$lib/util.svelte.js'
-  import type { CommunityModeratorView, CommunityView } from '$lib/client/types'
   import {
     action,
     Button,
     Menu,
     MenuButton,
+    Modal,
     modal,
     removeToast,
     Spinner,
@@ -105,10 +108,10 @@
     NoSymbol,
     Plus,
     ShieldCheck,
+    Tag,
   } from 'svelte-hero-icons'
   import ItemList from '../generic/ItemList.svelte'
-  import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
-  import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
+  import CommunityFlair from './CommunityFlair.svelte'
 
   let loading = $state({
     blocking: false,
@@ -135,6 +138,10 @@
 
     loading.subscribing = false
   }
+
+
+  let setFlair = $state(false)
+
   interface Props {
     community_view: CommunityView | Promise<CommunityView>
     moderators?: CommunityModeratorView[]
@@ -148,6 +155,7 @@
   }: Props = $props()
 </script>
 
+
 {#await community_view}
   <div
     class="w-full h-full grid place-items-center"
@@ -157,6 +165,9 @@
     <Spinner width={24} />
   </div>
 {:then community_view}
+<Modal title={$t('cards.community.flair')} bind:open={setFlair}>
+  <CommunityFlair community={community_view.community.id} onsubmit={() => setFlair = !setFlair} />
+</Modal>
   <aside
     class={[
       'min-w-full pt-0 text-slate-600 dark:text-zinc-400 flex flex-col gap-1',
@@ -210,6 +221,14 @@
           ? $t('cards.community.subscribed')
           : $t('cards.community.subscribe')}
       </Button>
+    {#if client().setFlair}
+      <SidebarButton
+        onclick={() => setFlair = !setFlair}
+        rounding="xl"
+        icon={Tag}
+        label={$t('cards.community.flair')}
+      />
+      {/if}
     {/if}
     {#if profile.current?.user && amMod(profile.current.user, community_view.community)}
       <SidebarButton

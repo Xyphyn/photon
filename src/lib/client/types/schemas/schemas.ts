@@ -1985,3 +1985,8 @@ export interface DeleteImage {
   token: string
   filename: string
 }
+
+export interface SetPersonFlair {
+  community_id: number
+  flair_text: string
+}

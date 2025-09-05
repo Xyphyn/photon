@@ -498,7 +498,8 @@
             "block": "Block",
             "unblock": "Unblock",
             "blockInstance": "Block instance",
-            "activeDay": "Active Today"
+            "activeDay": "Active Today",
+            "flair": "Set my flair"
         }
     },
     "admin": {

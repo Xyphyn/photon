@@ -5,7 +5,7 @@ import { error } from '@sveltejs/kit'
 import { type GetSiteResponse } from '$lib/client/types'
 import { LemmyClient } from './lemmy/lemmy'
 import { PiefedClient } from './piefed/piefed'
-import { DEFAULT_CLIENT_TYPE, type ClientType } from './base'
+import { DEFAULT_CLIENT_TYPE, type ClientType, BaseClient } from './base'
 
 class SiteData {
   #data = $state<GetSiteResponse>()
@@ -64,7 +64,7 @@ export function client({
   ) => Promise<Response>
   auth?: string
   clientType?: ClientType
-} = {}) {
+} = {}): BaseClient {
   if (!instanceURL)
     instanceURL = profile.current.instance || DEFAULT_INSTANCE_URL
 
