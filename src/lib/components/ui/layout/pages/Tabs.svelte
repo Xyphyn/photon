@@ -13,6 +13,7 @@
     buildUrl?: (currentRoute: SvelteURL | undefined, href: string) => string
     children?: import('svelte').Snippet
     style?: 'header' | 'subpage'
+    margin?: boolean
   }
 
   let {
@@ -21,6 +22,7 @@
     buildUrl = (_, href) => href,
     children,
     style = 'header',
+    margin = true,
   }: Props = $props()
 
   let matchType = $derived<('search' | 'pathname')[]>(
@@ -53,10 +55,12 @@
 
 <nav
   class={[
-    'flex flex-row items-center my-2 sm:mt-0 flex-wrap z-20',
+    'flex flex-row items-center sm:mt-0 flex-wrap z-20',
     style == 'header'
       ? 'p-1 gap-x-8 gap-y-4 justify-center sm:justify-start'
       : 'gap-2',
+    margin && 'my-2',
+    margin && style == 'subpage' && 'mb-3',
   ]}
 >
   {#each routes as route, index (route.href)}
@@ -86,7 +90,3 @@
   {/each}
   {@render children?.()}
 </nav>
-
-{#if style == 'subpage'}
-  <div class="h-3"></div>
-{/if}

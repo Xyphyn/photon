@@ -35,9 +35,11 @@
 <Header pageHeader>
   {routes.find(r => page.url.pathname == r.href)?.name ??
     $t('routes.profile.credentials')}
+  {#snippet extended()}
+    <Tabs style="subpage" margin={false} {routes}></Tabs>
+  {/snippet}
 </Header>
 
-<Tabs style="subpage" {routes}></Tabs>
 <div
   class={[
     page.url.pathname == '/profile/password' && ' p-8',

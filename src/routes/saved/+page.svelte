@@ -67,6 +67,7 @@
     icon={Bookmark}
     title="No saved items"
     description="Save posts or comments, and they'll be here to refer to them later."
+    class="my-auto"
   />
 {:else}
   <CommonList items={data.data} size="lg">
