@@ -12,7 +12,7 @@
   import { isCommentView, isPostView } from '$lib/lemmy/item.js'
   import { settings } from '$lib/settings.svelte.js'
   import { fullCommunityName } from '$lib/util.svelte.js'
-  import type { CommentView, PostView } from 'lemmy-js-client'
+  import type { CommentView, PostView } from '$lib/client/types'
   import { Button, Modal, Select, Switch, toast } from 'mono-svelte'
   import Option from 'mono-svelte/forms/select/Option.svelte'
   import { Fire, Icon, Trash } from 'svelte-hero-icons'

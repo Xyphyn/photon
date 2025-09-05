@@ -5,7 +5,7 @@
   import { t } from '$lib/i18n/translations'
   import { getClient } from '$lib/client/lemmy.svelte'
   import { errorMessage } from '$lib/lemmy/error'
-  import type { Post } from 'lemmy-js-client'
+  import type { Post } from '$lib/client/types'
   import { Button, toast } from 'mono-svelte'
   import { ArrowDownCircle, Icon } from 'svelte-hero-icons'
   import Comment from './Comment.svelte'

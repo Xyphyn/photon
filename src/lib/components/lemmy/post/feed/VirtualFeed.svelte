@@ -12,7 +12,7 @@
     type PostFeedID,
   } from '$lib/lemmy/postfeed.svelte'
   import { settings } from '$lib/settings.svelte.js'
-  import type { PostView } from 'lemmy-js-client'
+  import type { PostView } from '$lib/client/types'
   import { Button } from 'mono-svelte'
   import { onDestroy, onMount, untrack } from 'svelte'
   import {

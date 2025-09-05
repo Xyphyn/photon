@@ -6,7 +6,7 @@
   import { setSessionStorage } from '$lib/session'
   import { settings } from '$lib/settings.svelte'
   import { instanceToURL } from '$lib/util.svelte'
-  import type { PostView } from 'lemmy-js-client'
+  import type { PostView } from '$lib/client/types'
   import { Button, Menu, MenuButton, toast } from 'mono-svelte'
   import {
     ArrowTopRightOnSquare,

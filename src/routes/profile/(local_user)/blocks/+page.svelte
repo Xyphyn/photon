@@ -13,7 +13,7 @@
     CommunityBlockView,
     InstanceBlockView,
     PersonBlockView,
-  } from 'lemmy-js-client'
+  } from '$lib/client/types'
   import { Button } from 'mono-svelte'
   import { Check, Icon, XMark } from 'svelte-hero-icons'
   import type { PageData } from './$types.js'

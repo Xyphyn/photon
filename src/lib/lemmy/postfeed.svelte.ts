@@ -6,7 +6,7 @@ import type {
   GetPostsResponse,
   ListingType,
   SortType,
-} from 'lemmy-js-client'
+} from '$lib/client/types'
 
 export const shouldReload = (
   cache: PostFeed | undefined,

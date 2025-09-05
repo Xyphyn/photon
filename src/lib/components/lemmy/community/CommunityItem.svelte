@@ -9,7 +9,7 @@
   import { addSubscription } from '$lib/lemmy/user.js'
   import { settings } from '$lib/settings.svelte'
   import { fullCommunityName, isSubscribed } from '$lib/util.svelte.js'
-  import type { CommunityView } from 'lemmy-js-client'
+  import type { CommunityView } from '$lib/client/types'
   import { Button, modal } from 'mono-svelte'
   import type { Snippet } from 'svelte'
   import {

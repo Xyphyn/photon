@@ -1,7 +1,7 @@
 <script lang="ts">
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import { getClient } from '$lib/client/lemmy.svelte'
-  import type { Community, ListingType } from 'lemmy-js-client'
+  import type { Community, ListingType } from '$lib/client/types'
   import { MenuButton, Search } from 'mono-svelte'
   import { createEventDispatcher } from 'svelte'
   import { Icon, ServerStack, XCircle } from 'svelte-hero-icons'

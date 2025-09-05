@@ -1,5 +1,5 @@
 import { browser } from '$app/environment'
-import type { Community } from 'lemmy-js-client'
+import type { Community } from '$lib/client/types'
 
 interface SessionStorage {
   lastSeenCommunity: Community | undefined

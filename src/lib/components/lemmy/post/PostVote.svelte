@@ -23,7 +23,7 @@
   import { vote as voteItem } from '$lib/lemmy/contentview.js'
   import { errorMessage } from '$lib/lemmy/error'
   import { settings } from '$lib/settings.svelte'
-  import type { Post } from 'lemmy-js-client'
+  import type { Post } from '$lib/client/types'
   import { buttonColor, toast } from 'mono-svelte'
   import { ChevronDown, ChevronUp, Icon } from 'svelte-hero-icons'
   import { backOut } from 'svelte/easing'

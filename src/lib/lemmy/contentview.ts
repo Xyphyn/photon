@@ -6,7 +6,7 @@ import type {
   PostView,
   Comment,
   Post,
-} from 'lemmy-js-client'
+} from '$lib/client/types'
 
 export type SubmissionView = PostView | CommentView
 export type Submission = Post | Comment

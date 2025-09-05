@@ -1546,6 +1546,7 @@ export interface Person {
   bot_account: boolean
   ban_expires?: string
   instance_id: InstanceId
+  flair?: string
 }
 
 export interface PersonAggregates {

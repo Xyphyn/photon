@@ -4,7 +4,7 @@
   import { getClient } from '$lib/client/lemmy.svelte'
   import { errorMessage } from '$lib/lemmy/error'
   import { isCommentView, isPostView } from '$lib/lemmy/item.js'
-  import type { CommentView, PostView } from 'lemmy-js-client'
+  import type { CommentView, PostView } from '$lib/client/types'
   import { Menu, MenuButton, MenuDivider, toast } from 'mono-svelte'
   import type { Snippet } from 'svelte'
   import {

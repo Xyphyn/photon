@@ -11,7 +11,7 @@ import type {
   PostView,
   CommunityModeratorView,
   CommunityView,
-} from 'lemmy-js-client'
+} from '$lib/client/types'
 
 interface PartialPost {
   post_view: PostView

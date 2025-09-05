@@ -7,7 +7,7 @@
   import { t } from '$lib/i18n/translations.js'
   import { getClient, site } from '$lib/client/lemmy.svelte'
   import { errorMessage } from '$lib/lemmy/error.js'
-  import type { EditSite } from 'lemmy-js-client'
+  import type { EditSite } from '$lib/client/types'
   import {
     Badge,
     Button,

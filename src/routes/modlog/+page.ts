@@ -18,7 +18,7 @@ import type {
   ModTransferCommunityView,
   ModlogActionType,
   Person,
-} from 'lemmy-js-client'
+} from '$lib/client/types'
 
 export type ActionName =
   | 'ban'

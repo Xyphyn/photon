@@ -83,7 +83,7 @@
   import { addSubscription } from '$lib/lemmy/user.js'
   import { settings } from '$lib/settings.svelte'
   import { fullCommunityName } from '$lib/util.svelte.js'
-  import type { CommunityModeratorView, CommunityView } from 'lemmy-js-client'
+  import type { CommunityModeratorView, CommunityView } from '$lib/client/types'
   import {
     action,
     Button,

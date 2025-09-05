@@ -17,7 +17,7 @@
   import { t } from '$lib/i18n/translations.js'
   import { getClient } from '$lib/client/lemmy.svelte'
   import { errorMessage } from '$lib/lemmy/error.js'
-  import type { GetCaptchaResponse } from 'lemmy-js-client'
+  import type { GetCaptchaResponse } from '$lib/client/types'
   import {
     Button,
     Checkbox,

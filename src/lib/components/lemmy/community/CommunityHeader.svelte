@@ -13,7 +13,7 @@
     CommunityAggregates,
     CommunityModeratorView,
     SubscribedType,
-  } from 'lemmy-js-client'
+  } from '$lib/client/types'
   import { action, Button, Menu, MenuButton, modal, toast } from 'mono-svelte'
   import {
     BuildingOffice2,

@@ -6,7 +6,7 @@
   import { instance } from '$lib/instance.svelte'
   import { client } from '$lib/client/lemmy.svelte'
   import { instanceToURL } from '$lib/util.svelte'
-  import type { LocalImage, Person } from 'lemmy-js-client'
+  import type { LocalImage, Person } from '$lib/client/types'
   import { action, Button, modal, toast } from 'mono-svelte'
   import { ArrowDownTray, Icon, Trash } from 'svelte-hero-icons'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'

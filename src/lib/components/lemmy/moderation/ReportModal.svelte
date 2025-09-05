@@ -11,7 +11,7 @@
     CommentView,
     PostView,
     PrivateMessageView,
-  } from 'lemmy-js-client'
+  } from '$lib/client/types'
   import { Button, Modal, toast } from 'mono-svelte'
   import PrivateMessage from '../inbox/PrivateMessage.svelte'
   import { errorMessage } from '$lib/lemmy/error'

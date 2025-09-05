@@ -6,7 +6,7 @@
   import { getClient, site } from '$lib/client/lemmy.svelte'
   import { errorMessage } from '$lib/lemmy/error'
   import { placeholders } from '$lib/util.svelte.js'
-  import type { CommentResponse } from 'lemmy-js-client'
+  import type { CommentResponse } from '$lib/client/types'
   import { Button, Menu, MenuButton, toast } from 'mono-svelte'
   import { Icon, Language, XMark } from 'svelte-hero-icons'
   import type { ClassValue, HTMLTextareaAttributes } from 'svelte/elements'

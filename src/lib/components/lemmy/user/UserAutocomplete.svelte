@@ -2,7 +2,7 @@
   import { profile } from '$lib/auth.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import { getClient } from '$lib/client/lemmy.svelte'
-  import type { ListingType, Person } from 'lemmy-js-client'
+  import type { ListingType, Person } from '$lib/client/types'
   import { MenuButton, Search } from 'mono-svelte'
   import { createEventDispatcher } from 'svelte'
   import { Icon, XCircle } from 'svelte-hero-icons'

@@ -4,7 +4,7 @@
     CommunityResponse,
     CommunityView,
     SubscribedType,
-  } from 'lemmy-js-client'
+  } from '$lib/client/types'
   import { profile } from '$lib/auth.svelte.js'
   import { toast } from 'mono-svelte'
   import { errorMessage } from '$lib/lemmy/error'

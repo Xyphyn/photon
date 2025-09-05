@@ -14,7 +14,7 @@
   import { errorMessage } from '$lib/lemmy/error'
   import { getSessionStorage, setSessionStorage } from '$lib/session.js'
   import { placeholders } from '$lib/util.svelte.js'
-  import type { Community, Post, PostView } from 'lemmy-js-client'
+  import type { Community, Post, PostView } from '$lib/client/types'
   import {
     Button,
     Modal,

@@ -8,7 +8,7 @@
   import { client } from '$lib/client/lemmy.svelte'
   import { errorMessage } from '$lib/lemmy/error'
   import { settings } from '$lib/settings.svelte'
-  import type { PrivateMessageResponse } from 'lemmy-js-client'
+  import type { PrivateMessageResponse } from '$lib/client/types'
   import { Button, Material, TextInput, toast } from 'mono-svelte'
   import { onDestroy, onMount, tick } from 'svelte'
   import {

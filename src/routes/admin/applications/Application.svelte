@@ -11,7 +11,7 @@
   import type {
     ApproveRegistrationApplication,
     RegistrationApplicationView,
-  } from 'lemmy-js-client'
+  } from '$lib/client/types'
   import { Button, Material, toast } from 'mono-svelte'
   import {
     Check,

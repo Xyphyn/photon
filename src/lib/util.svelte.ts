@@ -1,7 +1,7 @@
 import { goto } from '$app/navigation'
 import { client } from '$lib/client/lemmy.svelte'
 import { settings } from '$lib/settings.svelte'
-import type { SubscribedType } from 'lemmy-js-client'
+import type { SubscribedType } from '$lib/client/types'
 import { toast } from 'mono-svelte'
 import { t } from './i18n/translations'
 import { errorMessage } from './lemmy/error'

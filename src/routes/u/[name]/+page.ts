@@ -1,7 +1,7 @@
 import { getClient } from '$lib/client/lemmy.svelte'
 import { getItemPublished } from '$lib/lemmy/item.js'
 import { ReactiveState } from '$lib/promise.svelte.js'
-import type { SortType } from 'lemmy-js-client'
+import type { SortType } from '$lib/client/types'
 
 export async function load({ params, url, fetch }) {
   const page = Number(url.searchParams.get('page')) || 1

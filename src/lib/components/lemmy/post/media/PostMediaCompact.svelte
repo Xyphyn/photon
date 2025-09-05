@@ -7,7 +7,7 @@
   import { showImage } from '$lib/components/ui/ExpandableImage.svelte'
   import { t } from '$lib/i18n/translations'
   import { settings, type View } from '$lib/settings.svelte.js'
-  import type { Post } from 'lemmy-js-client'
+  import type { Post } from '$lib/client/types'
   import { modal } from 'mono-svelte'
   import Button from 'mono-svelte/button/Button.svelte'
   import {
