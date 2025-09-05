@@ -1,0 +1,3 @@
+[submodule "src/lib/client"]
+	path = src/lib/client
+	url = https://github.com/Xyphyn/photon-client.git
