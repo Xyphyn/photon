@@ -31,7 +31,6 @@ import {
   toSortType,
 } from './rewrite'
 import type { paths } from './schema'
-import type { SetPersonFlair, PersonView } from '../types'
 
 export class PiefedClient implements BaseClient {
   type: ClientType = { name: 'piefed', baseUrl: '/api/alpha' }

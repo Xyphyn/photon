@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { site } from '$lib/lemmy.svelte'
+  import { site } from '$lib/client/lemmy.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
   import { t } from '$lib/i18n/translations'

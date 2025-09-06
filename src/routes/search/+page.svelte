@@ -1,6 +1,7 @@
 <script lang="ts">
   import { navigating, page } from '$app/state'
   import { profile } from '$lib/auth.svelte.js'
+  import { client } from '$lib/client/lemmy.svelte'
   import ObjectAutocomplete from '$lib/components/lemmy/ObjectAutocomplete.svelte'
   import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
   import CommunityItem from '$lib/components/lemmy/community/CommunityItem.svelte'
@@ -21,7 +22,7 @@
     isUser,
   } from '$lib/lemmy/item.js'
   import { searchParam } from '$lib/util.svelte.js'
-  import { Button, Select, Spinner, TextLoader } from 'mono-svelte'
+  import { Button, Select, TextLoader } from 'mono-svelte'
   import Option from 'mono-svelte/forms/select/Option.svelte'
   import {
     AdjustmentsHorizontal,
@@ -33,7 +34,6 @@
   import { expoOut } from 'svelte/easing'
   import { fly, slide } from 'svelte/transition'
   import SearchBar from './SearchBar.svelte'
-  import { client } from '$lib/client/lemmy.svelte'
 
   let { data } = $props()
 
