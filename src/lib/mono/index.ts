@@ -3,6 +3,7 @@
 export { default as Button } from './button/Button.svelte'
 export { buttonColor, buttonSize, buttonShadow } from './button/Button.svelte'
 export { default as Spinner } from './loader/Spinner.svelte'
+export { default as TextLoader } from './loader/TextLoader.svelte'
 export { default as Material } from './materials/Material.svelte'
 
 export { default as Label } from './forms/Label.svelte'

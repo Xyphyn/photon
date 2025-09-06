@@ -67,7 +67,7 @@
 </svelte:head>
 
 <div class="mx-auto max-w-xl flex flex-col gap-4 my-auto h-max w-full">
-  <Button href="/accounts" class="inline-block mb-4 w-max" rounding="pill">
+  <Button href="/accounts" class="mb-4 w-max" rounding="pill">
     <Icon src={ArrowLeft} size="16" micro />
     {$t('common.back')}
   </Button>

@@ -17,6 +17,7 @@
   import { expoOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'
   import SearchBar from '../search/SearchBar.svelte'
+  import Fixate from '$lib/components/ui/generic/Fixate.svelte'
 
   let { data } = $props()
 
@@ -157,10 +158,10 @@
   </ul>
 {/if}
 {#if data.communities.value.length > 0}
-  <div class="sticky z-30 mx-auto max-w-full bottom-22 lg:bottom-6">
+  <Fixate placement="bottom">
     <Pageination
       page={Number(page.url.searchParams.get('page')) || 1}
       href={c => `?page=${c}`}
     />
-  </div>
+  </Fixate>
 {/if}

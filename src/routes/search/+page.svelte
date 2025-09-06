@@ -21,7 +21,7 @@
     isUser,
   } from '$lib/lemmy/item.js'
   import { searchParam } from '$lib/util.svelte.js'
-  import { Button, Select, Spinner } from 'mono-svelte'
+  import { Button, Select, Spinner, TextLoader } from 'mono-svelte'
   import Option from 'mono-svelte/forms/select/Option.svelte'
   import {
     AdjustmentsHorizontal,
@@ -151,8 +151,7 @@
       class="flex gap-2 items-center my-4"
       out:slide={{ axis: 'y', easing: expoOut }}
     >
-      <Spinner width={24} />
-      <span>{$t('routes.search.federating')}</span>
+      <TextLoader>{$t('routes.search.federating')}</TextLoader>
     </div>
   {:then object}
     {#if object}
@@ -175,7 +174,7 @@
       </div>
     {/if}
   {/await}
-  <CommonList items={data.results.value} animate size="lg">
+  <CommonList items={data.results.value}>
     {#snippet item(result)}
       {#if isPostView(result)}
         <PostItem post={result} />

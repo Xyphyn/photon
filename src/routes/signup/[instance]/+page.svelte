@@ -157,8 +157,7 @@
       class="flex flex-col gap-4 h-full w-full flex-2/3"
       onsubmit={preventDefault(submit)}
     >
-      <ErrorContainer scope={page.url.pathname} />
-      <Button href="/accounts" class="inline-block mb-4 w-max" rounding="pill">
+      <Button href="/accounts" class=" mb-4 w-max" rounding="pill">
         <Icon src={ArrowLeft} size="16" micro />
         {$t('common.back')}
       </Button>
@@ -177,6 +176,7 @@
           </span>
         {/snippet}
       </Header>
+      <ErrorContainer scope={page.url.pathname} />
 
       {#if data.site_view.local_site.registration_mode != 'Closed'}
         <div class="flex flex-col md:flex-row gap-2 *:flex-1">

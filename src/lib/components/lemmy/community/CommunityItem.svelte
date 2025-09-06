@@ -54,7 +54,7 @@
 <div class={clazz}>
   <div
     class={[
-      view == 'cozy' ? 'flex-col gap-2 items-center' : 'flex-row',
+      view == 'cozy' ? 'flex-col gap-2' : 'flex-row',
       'flex max-w-full w-full',
     ]}
   >
@@ -63,7 +63,7 @@
         community.community.name,
         community.community.actor_id,
       )}"
-      class="flex-1 w-full overflow-hidden"
+      class="flex-1 w-full overflow-hidden group"
       data-sveltekit-preload-data="tap"
     >
       <div class="flex flex-row gap-2 items-center">
@@ -88,7 +88,9 @@
           <div
             class="font-medium text-base overflow-hidden text-ellipsis leading-5"
           >
-            <span>{community.community.title}</span>
+            <h3 class="group-hover:underline text-left">
+              {community.community.title}
+            </h3>
             {#if community.community.deleted}
               <Icon
                 src={Trash}
@@ -126,10 +128,7 @@
               />
             {/if}
           </div>
-          <div
-            class="text-sm text-slate-500 dark:text-zinc-500 flex gap-0.5"
-            class:justify-center={view == 'cozy'}
-          >
+          <div class="text-sm text-slate-500 dark:text-zinc-500 flex gap-0.5">
             <span class="overflow-hidden text-ellipsis">
               {new URL(community.community.actor_id).hostname}
             </span>

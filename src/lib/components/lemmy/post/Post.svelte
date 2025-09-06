@@ -78,7 +78,7 @@
 -->
 <article
   class={[
-    'relative cursor-pointer group/post',
+    'relative group/post',
     settings.leftAlign && 'left-align',
     view == 'compact' && 'py-3 list-type compact',
     view == 'cozy' && 'py-5 flex flex-col gap-2',

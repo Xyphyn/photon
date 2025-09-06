@@ -1,4 +1,4 @@
-import { getClient } from '$lib/client/lemmy.svelte'
+import { client } from '$lib/client/lemmy.svelte'
 import { getItemPublished } from '$lib/lemmy/item.js'
 import { ReactiveState } from '$lib/promise.svelte.js'
 import type { SortType } from '$lib/client/types'
@@ -9,7 +9,7 @@ export async function load({ params, url, fetch }) {
     (url.searchParams.get('type') as 'comments' | 'posts' | 'all') || 'all'
   const sort: SortType = (url.searchParams.get('sort') as SortType) || 'New'
 
-  const user = await getClient(undefined, fetch).getPersonDetails({
+  const user = await client({ func: fetch }).getPersonDetails({
     limit: 20,
     page: page,
     username: params.name,

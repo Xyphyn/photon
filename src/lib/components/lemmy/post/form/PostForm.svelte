@@ -314,10 +314,11 @@
       <div class="flex flex-col gap-1">
         <span class="font-medium text-sm">{$t('form.post.community')}</span>
         <Button
-          class="w-full bg-white! dark:bg-black! h-[38px]"
+          class="w-full"
           onclick={() => (data.community = null)}
           alignment="left"
           size="sm"
+          rounding="xl"
         >
           {#snippet prefix()}
             <Avatar
@@ -327,7 +328,7 @@
             />
           {/snippet}
           <div class="flex flex-col gap-0">
-            <span class="text-xs">{data.community.name}</span>
+            <span class="text-sm">{data.community.name}</span>
             <span class="text-[10px] leading-3">
               {new URL(data.community.actor_id).hostname}
             </span>

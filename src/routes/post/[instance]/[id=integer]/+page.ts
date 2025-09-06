@@ -26,7 +26,7 @@ interface PartialPost {
 function buildContext(thread?: string) {
   let parentId: number | undefined
   let showContext: boolean = false
-  const max_depth = 3
+  let max_depth = 3
 
   if (thread) {
     const split = thread.split('.')
@@ -35,6 +35,7 @@ function buildContext(thread?: string) {
     else {
       parentId = Number(thread.split('.')[0])
       showContext = true
+      max_depth = 5
     }
   }
 

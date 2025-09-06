@@ -13,9 +13,7 @@
   let searchElement = $state<HTMLInputElement>()
 </script>
 
-<div
-  class="flex gap-2 flex-row items-center w-full text-base h-10 drop-shadow-xl"
->
+<div class="flex gap-2 flex-row items-center w-full text-base h-10">
   <TextInput
     bind:value={query}
     bind:element={searchElement}
