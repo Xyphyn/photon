@@ -48,6 +48,14 @@ export const optimizeImageURL = (
   }
 }
 
+const HARDGIF_REGEX = /^(?:https?:\/\/)?(?:www\.)?(?:hardgif\.com\/(?:gif\/))(\w+)(#.*)?$/
+
+export const isHardgifLink = (url?: string): RegExpMatchArray | null => {
+  if (!url) return null
+
+  return url?.match?.(HARDGIF_REGEX)
+}
+
 const YOUTUBE_REGEX =
   /^(?:https?:\/\/)?(?:www\.|m\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|shorts\/|live\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/
 
@@ -61,13 +69,14 @@ export const postLink = (post: Post) =>
   `/post/${encodeURIComponent(instance.data)}/${post.id}`
 
 export type MediaType = 'video' | 'image' | 'iframe' | 'embed' | 'none'
-export type IframeType = 'youtube' | 'video' | 'none'
+export type IframeType = 'youtube' | 'hardgif' | 'video' | 'none'
 
 export const mediaType = (url?: string): MediaType => {
   if (url) {
     if (isImage(url)) return 'image'
     if (isVideo(url)) return 'iframe'
     if (isYoutubeLink(url)) return 'iframe'
+    if (isHardgifLink(url)) return 'iframe'
     if (canParseUrl(url)) return 'embed'
     return 'none'
   }
@@ -77,6 +86,7 @@ export const mediaType = (url?: string): MediaType => {
 export const iframeType = (url: string): IframeType => {
   if (isVideo(url)) return 'video'
   if (isYoutubeLink(url)) return 'youtube'
+  if (isHardgifLink(url)) return 'hardgif'
   return 'none'
 }
 
