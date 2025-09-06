@@ -199,7 +199,7 @@
     >
       <Icon src={ServerStack} size="16" micro />
     </Button>
-    {#if env.PUBLIC_XYLIGHT_MODE.toLowerCase() == 'true'}
+    {#if env.PUBLIC_XYLIGHT_MODE?.toLowerCase() == 'true'}
       <Button
         color="tertiary"
         href="https://github.com/Xyphyn/Photon"
