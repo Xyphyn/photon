@@ -24,8 +24,8 @@
 <div
   class={[
     toastColors[toast.type],
-    'relative rounded-xl overflow-hidden flex flex-row items-center gap-2 px-3 py-3',
-    'bg-white dark:bg-zinc-900 shadow-lg',
+    'relative rounded-xl overflow-hidden flex flex-row items-center gap-2 px-3 py-3 border border-slate-200 dark:border-zinc-800',
+    'bg-white dark:bg-zinc-925 shadow-lg',
     toast.long ? 'w-full max-w-lg' : 'w-80',
   ]}
   transition:fly={{

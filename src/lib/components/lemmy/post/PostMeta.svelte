@@ -342,7 +342,7 @@
   <h3
     class={[
       'max-sm:m-0!',
-      'font-medium text-balance max-w-xl',
+      'font-medium',
       titleClass,
       settings.markReadPosts && read && 'text-slate-600 dark:text-zinc-400',
       view == 'compact' ? 'text-base' : 'text-lg',
