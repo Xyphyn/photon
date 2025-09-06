@@ -1,6 +1,6 @@
 import { postFeed } from '$lib/lemmy/postfeed.svelte.js'
 import { settings } from '$lib/settings.svelte'
-import type { SortType } from 'lemmy-js-client'
+import type { SortType } from '$lib/client/types'
 
 export async function load({ params, fetch, url }) {
   const cursor: string | undefined = url.searchParams.get('cursor') as

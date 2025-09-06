@@ -1,6 +1,6 @@
-import { getClient } from '$lib/lemmy.svelte.js'
+import { getClient } from '$lib/client/lemmy.svelte'
 import { getItemPublished } from '$lib/lemmy/item.js'
-import type { SortType } from 'lemmy-js-client'
+import type { SortType } from '$lib/client/types'
 
 export async function load({ url, fetch, parent }) {
   const page = Number(url.searchParams.get('page')) || 1
@@ -17,7 +17,10 @@ export async function load({ url, fetch, parent }) {
     sort: sort,
   })
 
-  const items = [...(type == 'all' || type == 'posts' ? user.posts : []), ...(type == 'all' || type == 'comments' ? user.comments : []),]
+  const items = [
+    ...(type == 'all' || type == 'posts' ? user.posts : []),
+    ...(type == 'all' || type == 'comments' ? user.comments : []),
+  ]
 
   if (sort == 'TopAll') {
     items.sort(

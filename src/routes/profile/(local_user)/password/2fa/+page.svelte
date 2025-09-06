@@ -1,7 +1,7 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
-  import { client } from '$lib/lemmy.svelte.js'
+  import { client } from '$lib/client/lemmy.svelte'
   import { t } from '$lib/i18n/translations.js'
   import { qr } from '@svelte-put/qr/svg'
   import { Button, Material, Modal, TextInput, toast } from 'mono-svelte'

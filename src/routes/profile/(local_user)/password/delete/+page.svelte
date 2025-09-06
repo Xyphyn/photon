@@ -2,7 +2,7 @@
   import { goto } from '$app/navigation'
   import { profile } from '$lib/auth.svelte'
   import { t } from '$lib/i18n/translations'
-  import { client } from '$lib/lemmy.svelte'
+  import { client } from '$lib/client/lemmy.svelte'
   import { Button, removeToast, Switch, TextInput, toast } from 'mono-svelte'
 
   let deletion = $state({

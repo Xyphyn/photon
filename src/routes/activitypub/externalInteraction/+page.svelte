@@ -1,7 +1,7 @@
 <script lang="ts">
   import { t } from '$lib/i18n/translations'
   import { Spinner } from 'mono-svelte'
-  import type { ResolveObjectResponse } from 'lemmy-js-client'
+  import type { ResolveObjectResponse } from '$lib/client/types'
   import CommunityItem from '$lib/components/lemmy/community/CommunityItem.svelte'
   import UserItem from '$lib/components/lemmy/user/UserItem.svelte'
   import Post from '$lib/components/lemmy/post/Post.svelte'

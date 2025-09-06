@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { getClient } from '$lib/lemmy.svelte.js'
+  import { getClient } from '$lib/client/lemmy.svelte'
   import type {
     CommunityResponse,
     CommunityView,
     SubscribedType,
-  } from 'lemmy-js-client'
+  } from '$lib/client/types'
   import { profile } from '$lib/auth.svelte.js'
   import { toast } from 'mono-svelte'
   import { errorMessage } from '$lib/lemmy/error'

@@ -7,7 +7,7 @@
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { t } from '$lib/i18n/translations.js'
   import { instance } from '$lib/instance.svelte.js'
-  import { getClient } from '$lib/lemmy.svelte.js'
+  import { getClient } from '$lib/client/lemmy.svelte'
   import { addAdmin } from '$lib/lemmy/user.js'
   import { trycatch } from '$lib/util.svelte.js'
   import { Button, TextInput, toast } from 'mono-svelte'

@@ -3,7 +3,7 @@
   import { communityLink } from '$lib/lemmy/generic'
   import { settings } from '$lib/settings.svelte.js'
   import { t } from '$lib/i18n/translations'
-  import type { Community } from 'lemmy-js-client'
+  import type { Community } from '$lib/client/types'
   import { ExclamationTriangle, Icon } from 'svelte-hero-icons'
   import type { HTMLAnchorAttributes } from 'svelte/elements'
 

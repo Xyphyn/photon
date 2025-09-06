@@ -1,5 +1,5 @@
 import { settings } from '$lib/settings.svelte'
-import type { PostView } from 'lemmy-js-client'
+import type { PostView } from '$lib/client/types'
 import { SvelteMap, SvelteSet } from 'svelte/reactivity'
 
 export type PostViewWithCrossposts = PostView & {

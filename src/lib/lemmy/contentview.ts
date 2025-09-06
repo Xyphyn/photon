@@ -1,4 +1,4 @@
-import { getClient } from '$lib/lemmy.svelte.js'
+import { getClient } from '$lib/client/lemmy.svelte'
 import { isComment, isCommentView } from '$lib/lemmy/item.js'
 import type {
   CommentView,
@@ -6,7 +6,7 @@ import type {
   PostView,
   Comment,
   Post,
-} from 'lemmy-js-client'
+} from '$lib/client/types'
 
 export type SubmissionView = PostView | CommentView
 export type Submission = Post | Comment

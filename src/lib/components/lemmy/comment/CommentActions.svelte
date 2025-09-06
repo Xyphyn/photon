@@ -10,7 +10,7 @@
   import { t } from '$lib/i18n/translations'
   import { deleteItem, save } from '$lib/lemmy/contentview.js'
   import { settings } from '$lib/settings.svelte'
-  import type { CommentView } from 'lemmy-js-client'
+  import type { CommentView } from '$lib/client/types'
   import { Button, Menu, MenuButton } from 'mono-svelte'
   import {
     Bookmark,

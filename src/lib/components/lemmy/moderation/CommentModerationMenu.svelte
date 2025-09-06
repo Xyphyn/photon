@@ -3,7 +3,7 @@
   import ShieldIcon from '$lib/components/lemmy/moderation/ShieldIcon.svelte'
   import { t } from '$lib/i18n/translations'
   import { isCommentView } from '$lib/lemmy/item.js'
-  import type { CommentView } from 'lemmy-js-client'
+  import type { CommentView } from '$lib/client/types'
   import { Button, Menu, MenuButton, MenuDivider } from 'mono-svelte'
   import {
     ArrowsUpDown,

@@ -2,7 +2,7 @@
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import LabelStat from '$lib/components/ui/LabelStat.svelte'
   import { userLink } from '$lib/lemmy/generic'
-  import type { PersonView } from 'lemmy-js-client'
+  import type { PersonView } from '$lib/client/types'
 
   interface Props {
     user: PersonView

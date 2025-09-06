@@ -51,8 +51,9 @@
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import Logo from '$lib/components/ui/Logo.svelte'
   import { settings } from '$lib/settings.svelte.js'
-  import type { Person } from 'lemmy-js-client'
+  import type { Person } from '$lib/client/types'
   import { Icon, Language, NoSymbol } from 'svelte-hero-icons'
+  import { Badge } from 'mono-svelte'
 
   interface Props {
     user: Person
@@ -139,6 +140,9 @@
           class={envBadge.iconClass ?? envBadge.classes}
         />
       {/if}
+    {/if}
+    {#if user.flair}
+      <Badge color="blue-subtle" class="px-1.5! py-0.5!">{user.flair}</Badge>
     {/if}
     {@render extraBadges?.()}
   {/if}

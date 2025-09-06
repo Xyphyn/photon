@@ -2,8 +2,8 @@
   import { preventDefault } from 'svelte/legacy'
 
   import Avatar from '$lib/components/ui/Avatar.svelte'
-  import type { Community, Person } from 'lemmy-js-client'
-  import { getClient } from '$lib/lemmy.svelte.js'
+  import type { Community, Person } from '$lib/client/types'
+  import { getClient } from '$lib/client/lemmy.svelte'
   import { toast } from 'mono-svelte'
   import { profile } from '$lib/auth.svelte.js'
   import { Button, Checkbox, Modal } from 'mono-svelte'

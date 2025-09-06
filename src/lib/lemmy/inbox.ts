@@ -4,7 +4,7 @@ import type {
   Person,
   PersonMentionView,
   PrivateMessageView,
-} from 'lemmy-js-client'
+} from '$lib/client/types'
 
 export type InboxItemView =
   | PersonMentionView

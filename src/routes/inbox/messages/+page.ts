@@ -1,4 +1,4 @@
-import { client } from '$lib/lemmy.svelte.js'
+import { client } from '$lib/client/lemmy.svelte'
 import { awaitIfServer } from '$lib/promise.svelte.js'
 
 export async function load({ fetch, url }) {

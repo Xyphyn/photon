@@ -1,7 +1,7 @@
 import { LINKED_INSTANCE_URL } from '$lib/instance.svelte.js'
-import { client } from '$lib/lemmy.svelte.js'
+import { client } from '$lib/client/lemmy.svelte'
 import { ReactiveState } from '$lib/promise.svelte'
-import { type ListingType, type SortType } from 'lemmy-js-client'
+import { type ListingType, type SortType } from '$lib/client/types'
 
 export async function load({ url, fetch }) {
   const typeParam = url.searchParams.get('type')

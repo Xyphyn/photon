@@ -121,7 +121,6 @@
         class={[
           'rounded-xl rounded-l-none text-slate-600 dark:text-zinc-400',
           inlineAffixes && 'bg-white dark:bg-zinc-900 pl-0',
-          sizeClass[size],
         ]}
       >
         {@render suffix?.()}

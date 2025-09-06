@@ -7,7 +7,7 @@
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { t } from '$lib/i18n/translations'
-  import { getClient } from '$lib/lemmy.svelte.js'
+  import { getClient } from '$lib/client/lemmy.svelte'
   import { searchParam } from '$lib/util.svelte'
   import { Button, Option, Select } from 'mono-svelte'
   import { ArrowPath, Check, Funnel, Icon, Inbox } from 'svelte-hero-icons'

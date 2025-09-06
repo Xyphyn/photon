@@ -12,7 +12,7 @@ import type {
   PrivateMessage,
   PrivateMessageReportView,
   PrivateMessageView,
-} from 'lemmy-js-client'
+} from '$lib/client/types'
 import { writable } from 'svelte/store'
 
 export type Result =

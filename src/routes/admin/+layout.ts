@@ -1,5 +1,5 @@
 import { profile } from '$lib/auth.svelte.js'
-import { getClient, site as siteStore } from '$lib/lemmy.svelte.js'
+import { getClient, site as siteStore } from '$lib/client/lemmy.svelte'
 import { error } from '@sveltejs/kit'
 
 export async function load({ fetch }) {

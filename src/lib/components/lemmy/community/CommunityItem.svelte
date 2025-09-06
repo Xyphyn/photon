@@ -5,11 +5,11 @@
   import LabelStat from '$lib/components/ui/LabelStat.svelte'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import { t } from '$lib/i18n/translations'
-  import { client } from '$lib/lemmy.svelte'
+  import { client } from '$lib/client/lemmy.svelte'
   import { addSubscription } from '$lib/lemmy/user.js'
   import { settings } from '$lib/settings.svelte'
   import { fullCommunityName, isSubscribed } from '$lib/util.svelte.js'
-  import type { CommunityView } from 'lemmy-js-client'
+  import type { CommunityView } from '$lib/client/types'
   import { Button, modal } from 'mono-svelte'
   import type { Snippet } from 'svelte'
   import {

@@ -4,7 +4,7 @@
   import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
   import { addFavorite } from '$lib/lemmy/item'
   import { hasFavorite } from '$lib/lemmy/user'
-  import type { Community } from 'lemmy-js-client'
+  import type { Community } from '$lib/client/types'
   import { Button } from 'mono-svelte'
   import { Icon, Star, Trash } from 'svelte-hero-icons'
   import { flip } from 'svelte/animate'

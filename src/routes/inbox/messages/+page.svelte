@@ -12,7 +12,7 @@
   import { publishedToDate } from '$lib/components/util/date.js'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import { t } from '$lib/i18n/translations.js'
-  import type { Person, PrivateMessageView } from 'lemmy-js-client'
+  import type { Person, PrivateMessageView } from '$lib/client/types'
   import { Button, Modal } from 'mono-svelte'
   import { ChatBubbleOvalLeftEllipsis, Icon, Inbox } from 'svelte-hero-icons'
   import { expoOut } from 'svelte/easing'

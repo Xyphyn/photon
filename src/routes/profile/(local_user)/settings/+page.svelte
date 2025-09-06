@@ -5,8 +5,8 @@
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import { t } from '$lib/i18n/translations.js'
-  import { getClient, site } from '$lib/lemmy.svelte.js'
-  import type { SaveUserSettings } from 'lemmy-js-client'
+  import { getClient, site } from '$lib/client/lemmy.svelte'
+  import type { SaveUserSettings } from '$lib/client/types'
   import {
     Badge,
     Button,

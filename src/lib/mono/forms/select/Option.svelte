@@ -1,6 +1,6 @@
 <script lang="ts">
   import { locale } from '$lib/i18n/translations'
-  import { getContext, type Snippet } from 'svelte'
+  import { getContext, onDestroy, type Snippet } from 'svelte'
   import type { IconSource } from 'svelte-hero-icons'
   import type { HTMLOptionAttributes } from 'svelte/elements'
 
@@ -40,6 +40,13 @@
       } else {
         context.options.push(option)
       }
+    }
+  })
+
+  onDestroy(() => {
+    const index = context.options.findIndex(i => i.value == option.value)
+    if (index != -1) {
+      context.options.splice(index, 1)
     }
   })
 </script>

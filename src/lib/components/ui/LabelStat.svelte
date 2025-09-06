@@ -20,15 +20,17 @@
   }: Props = $props()
 </script>
 
-<div class="flex flex-col {clazz}">
-  <span class="text-slate-600 dark:text-zinc-400 text-xs {labelClass}">
-    {label}
-  </span>
-  <span class="text-base {contentClass}">
-    {#if formatted}
-      <FormattedNumber number={Number(content)} />
-    {:else}
-      {content}
-    {/if}
-  </span>
-</div>
+{#if content != '-1'}
+  <div class="flex flex-col {clazz}">
+    <span class="text-slate-600 dark:text-zinc-400 text-xs {labelClass}">
+      {label}
+    </span>
+    <span class="text-base {contentClass}">
+      {#if formatted}
+        <FormattedNumber number={Number(content)} />
+      {:else}
+        {content}
+      {/if}
+    </span>
+  </div>
+{/if}

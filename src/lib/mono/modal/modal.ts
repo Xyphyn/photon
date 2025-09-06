@@ -1,4 +1,4 @@
-import type { Snippet } from 'svelte'
+import { type Snippet } from 'svelte'
 import type { IconSource } from 'svelte-hero-icons'
 import { writable } from 'svelte/store'
 

@@ -3,7 +3,7 @@ import { t } from '$lib/i18n/translations.js'
 import { postFeed } from '$lib/lemmy/postfeed.svelte.js'
 import { ReactiveState, awaitIfServer } from '$lib/promise.svelte.js'
 import { settings } from '$lib/settings.svelte'
-import type { ListingType, SortType } from 'lemmy-js-client'
+import type { ListingType, SortType } from '$lib/client/types'
 import { ChevronDoubleUp } from 'svelte-hero-icons'
 
 export async function load({ url, fetch }) {

@@ -1,12 +1,12 @@
 import { browser } from '$app/environment'
 import { instance } from '$lib/instance.svelte'
-import { client } from '$lib/lemmy.svelte'
+import { client } from '$lib/client/lemmy.svelte'
 import type {
   GetPosts,
   GetPostsResponse,
   ListingType,
   SortType,
-} from 'lemmy-js-client'
+} from '$lib/client/types'
 
 export const shouldReload = (
   cache: PostFeed | undefined,

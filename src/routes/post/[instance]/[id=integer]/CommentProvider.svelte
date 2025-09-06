@@ -13,7 +13,7 @@
     CommentSortType,
     GetCommentsResponse,
     PostView,
-  } from 'lemmy-js-client'
+  } from '$lib/client/types'
   import { Button, Option, Select } from 'mono-svelte'
   import { onMount } from 'svelte'
   import {

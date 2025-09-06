@@ -7,7 +7,7 @@ import type {
   PostView,
   PrivateMessage,
   PrivateMessageReportView,
-} from 'lemmy-js-client'
+} from '$lib/client/types'
 
 interface CommentReport {
   type: 'comment'

@@ -7,9 +7,9 @@
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
   import { t } from '$lib/i18n/translations.js'
-  import { getClient } from '$lib/lemmy.svelte.js'
+  import { getClient } from '$lib/client/lemmy.svelte'
   import { trycatch } from '$lib/util.svelte.js'
-  import type { Instance } from 'lemmy-js-client'
+  import type { Instance } from '$lib/client/types'
   import {
     Button,
     FileInput,

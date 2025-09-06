@@ -6,7 +6,7 @@
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import { t } from '$lib/i18n/translations'
-  import { getClient, site } from '$lib/lemmy.svelte.js'
+  import { getClient, site } from '$lib/client/lemmy.svelte'
   import { errorMessage } from '$lib/lemmy/error'
   import { addSubscription } from '$lib/lemmy/user.js'
   import {

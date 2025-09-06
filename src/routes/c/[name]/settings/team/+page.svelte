@@ -5,7 +5,7 @@
   import CommonList from '$lib/components/ui/layout/CommonList.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { t } from '$lib/i18n/translations.js'
-  import { getClient } from '$lib/lemmy.svelte.js'
+  import { getClient } from '$lib/client/lemmy.svelte'
   import { errorMessage } from '$lib/lemmy/error.js'
   import { action, Button, modal, toast } from 'mono-svelte'
   import { Icon, Plus, Trash } from 'svelte-hero-icons'

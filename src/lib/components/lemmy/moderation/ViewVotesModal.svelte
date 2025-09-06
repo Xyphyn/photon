@@ -1,8 +1,8 @@
 <script lang="ts">
   import { t } from '$lib/i18n/translations'
-  import { client } from '$lib/lemmy.svelte'
+  import { client } from '$lib/client/lemmy.svelte'
   import { isCommentView, isPostView } from '$lib/lemmy/item'
-  import type { CommentView, PostView, VoteView } from 'lemmy-js-client'
+  import type { CommentView, PostView, VoteView } from '$lib/client/types'
   import { Button, Modal, Spinner } from 'mono-svelte'
   import {
     ArrowDownCircle,
