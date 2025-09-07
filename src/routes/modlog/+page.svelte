@@ -7,7 +7,7 @@
   import { isAdmin } from '$lib/components/lemmy/moderation/moderation.js'
   import ObjectAutocomplete from '$lib/components/lemmy/ObjectAutocomplete.svelte'
   import UserAutocomplete from '$lib/components/lemmy/user/UserAutocomplete.svelte'
-  import Pageination from '$lib/components/ui/Pageination.svelte'
+  import Pageination from '$lib/components/ui/layout/Pageination.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { settings } from '$lib/settings.svelte.js'
   import { searchParam } from '$lib/util.svelte.js'
@@ -26,9 +26,9 @@
   import { t } from '$lib/i18n/translations'
   import { client } from '$lib/client/lemmy.svelte'
   import Spinner from 'mono-svelte/loader/Spinner.svelte'
-  import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import { postLink } from '$lib/components/lemmy/post/helpers'
+  import { CommunityLink } from '$lib/components/lemmy/community'
 
   let { data = $bindable() } = $props()
 

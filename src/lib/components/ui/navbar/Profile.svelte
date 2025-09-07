@@ -6,7 +6,7 @@
     isAdmin,
   } from '$lib/components/lemmy/moderation/moderation'
 
-  import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
+  import SiteCard from '$lib/components/lemmy/instance/InstanceCard.svelte'
   import { t } from '$lib/i18n/translations'
   import { site } from '$lib/client/lemmy.svelte'
   import { settings } from '$lib/settings.svelte'

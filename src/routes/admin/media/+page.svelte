@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from '$app/state'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import Pageination from '$lib/components/ui/Pageination.svelte'
+  import Pageination from '$lib/components/ui/layout/Pageination.svelte'
   import { t } from '$lib/i18n/translations'
   import { flip } from 'svelte/animate'
   import PictrsImage from '$lib/components/lemmy/PictrsImage.svelte'

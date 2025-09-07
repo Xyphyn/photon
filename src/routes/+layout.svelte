@@ -2,7 +2,7 @@
   import { browser } from '$app/environment'
   import { navigating, page } from '$app/state'
   import Moderation from '$lib/components/lemmy/moderation/Moderation.svelte'
-  import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
+  import SiteCard from '$lib/components/lemmy/instance/InstanceCard.svelte'
   import ExpandableImage from '$lib/components/ui/ExpandableImage.svelte'
   import Shell from '$lib/components/ui/layout/Shell.svelte'
   import Navbar from '$lib/components/ui/navbar/Navbar.svelte'

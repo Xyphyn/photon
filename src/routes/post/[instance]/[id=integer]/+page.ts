@@ -3,7 +3,7 @@ import { profile } from '$lib/auth.svelte.js'
 import CommunityCard from '$lib/components/lemmy/community/CommunityCard.svelte'
 import { client } from '$lib/client/lemmy.svelte'
 import { postFeeds } from '$lib/lemmy/postfeed.svelte.js'
-import { ReactiveState, awaitIfServer } from '$lib/promise.svelte.js'
+import { ReactiveState, awaitIfServer } from '$lib/util.svelte.js'
 import { settings } from '$lib/settings.svelte'
 import { redirect } from '@sveltejs/kit'
 import type {

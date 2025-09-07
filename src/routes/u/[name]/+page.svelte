@@ -13,7 +13,7 @@
   import Expandable from '$lib/components/ui/Expandable.svelte'
   import CommonList from '$lib/components/ui/layout/CommonList.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import Pageination from '$lib/components/ui/Pageination.svelte'
+  import Pageination from '$lib/components/ui/layout/Pageination.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
   import { formatRelativeDate } from '$lib/components/util/RelativeDate.svelte'

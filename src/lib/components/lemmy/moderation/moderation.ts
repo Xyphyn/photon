@@ -1,5 +1,6 @@
 import { client } from '$lib/client/lemmy.svelte'
 import type {
+  Comment,
   CommentView,
   Community,
   MyUserInfo,

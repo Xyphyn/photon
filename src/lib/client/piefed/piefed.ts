@@ -908,4 +908,11 @@ export class PiefedClient implements BaseClient {
 
     return toPersonView(response.person_view)
   }
+
+  async editSite(): ReturnType<BaseClient['editSite']> {
+    throw new Error('unsupported')
+  }
+  async deleteImage(): ReturnType<BaseClient['deleteImage']> {
+    throw new Error('unsupported')
+  }
 }

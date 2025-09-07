@@ -6,7 +6,7 @@ import {
   generalizePersonMention,
   generalizePrivateMessage,
 } from '$lib/lemmy/inbox.js'
-import { ReactiveState } from '$lib/promise.svelte.js'
+import { ReactiveState } from '$lib/util.svelte.js'
 import { error } from '@sveltejs/kit'
 
 type InboxFeedType = 'replies' | 'mentions' | 'messages' | 'all'

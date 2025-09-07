@@ -43,7 +43,6 @@
 </script>
 
 <script lang="ts">
-  import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
@@ -70,6 +69,7 @@
     type IconSource,
   } from 'svelte-hero-icons'
   import Material from 'mono-svelte/materials/Material.svelte'
+  import { CommunityLink } from '../community'
 
   interface Props {
     community?: Community

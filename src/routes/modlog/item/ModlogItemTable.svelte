@@ -1,6 +1,6 @@
 <script lang="ts">
   import Link from '$lib/components/input/Link.svelte'
-  import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
+  import { CommunityLink } from '$lib/components/lemmy/community'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import type { ModLog } from '../+page.js'

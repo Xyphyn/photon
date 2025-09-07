@@ -18,7 +18,7 @@
   import { client } from '$lib/client/lemmy.svelte'
   import { resumables } from '$lib/lemmy/item.js'
   import { postFeeds } from '$lib/lemmy/postfeed.svelte'
-  import { ReactiveState } from '$lib/promise.svelte'
+  import { ReactiveState } from '$lib/util.svelte'
   import { settings } from '$lib/settings.svelte.js'
   import { isImage } from '$lib/ui/image.js'
   import { Button, toast } from 'mono-svelte'

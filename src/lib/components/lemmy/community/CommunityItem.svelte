@@ -1,6 +1,5 @@
 <script lang="ts">
   import { profile } from '$lib/auth.svelte.js'
-  import CommunityCard from '$lib/components/lemmy/community/CommunityCard.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import LabelStat from '$lib/components/ui/LabelStat.svelte'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
@@ -23,6 +22,7 @@
     Trash,
   } from 'svelte-hero-icons'
   import Subscribe from '../../../../routes/communities/Subscribe.svelte'
+  import { CommunityCard } from '.'
 
   interface Props {
     community: CommunityView

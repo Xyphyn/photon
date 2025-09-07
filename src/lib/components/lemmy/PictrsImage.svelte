@@ -90,7 +90,7 @@
       disabled={loading}
     >
       {#snippet prefix()}
-        <Icon src={Trash} size="16" mini color="text-red-500" />
+        <Icon src={Trash} size="16" mini class="text-red-500" />
       {/snippet}
     </Button>
   </div>

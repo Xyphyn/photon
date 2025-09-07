@@ -1,16 +1,15 @@
 <script lang="ts">
   import { notifications, profile } from '$lib/auth.svelte.js'
+  import { getClient } from '$lib/client/lemmy.svelte'
   import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
   import PrivateMessage from '$lib/components/lemmy/inbox/PrivateMessage.svelte'
   import Post from '$lib/components/lemmy/post/Post.svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
-  import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import { t } from '$lib/i18n/translations'
-  import { getClient } from '$lib/client/lemmy.svelte'
   import { errorMessage } from '$lib/lemmy/error'
   import type { ReportView } from '$lib/lemmy/report.js'
-  import { Badge, Button, Material, Modal, toast } from 'mono-svelte'
+  import { Badge, Button, Label, Material, Modal, toast } from 'mono-svelte'
   import { CheckBadge, Icon } from 'svelte-hero-icons'
 
   interface Props {
@@ -204,9 +203,9 @@
 
 <div class="flex flex-row gap-4 items-center flex-wrap">
   <div>
-    <SectionTitle small>
+    <Label>
       {$t('routes.moderation.reason')}
-    </SectionTitle>
+    </Label>
     <p>
       {item.reason}
     </p>
@@ -222,9 +221,9 @@
   <div class="flex-1"></div>
   {#if item.resolver}
     <div>
-      <SectionTitle small>
+      <Label>
         {$t('routes.moderation.resolvedBy')}
-      </SectionTitle>
+      </Label>
       <UserLink avatar user={item.resolver} />
     </div>
   {/if}

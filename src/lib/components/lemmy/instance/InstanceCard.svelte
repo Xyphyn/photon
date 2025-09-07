@@ -13,12 +13,12 @@
     ServerStack,
   } from 'svelte-hero-icons'
   import type { ClassValue, HTMLAttributes } from 'svelte/elements'
-  import EndPlaceholder from '../ui/EndPlaceholder.svelte'
-  import Expandable from '../ui/Expandable.svelte'
-  import LabelStat from '../ui/LabelStat.svelte'
-  import SidebarButton from '../ui/sidebar/SidebarButton.svelte'
-  import ItemList from './generic/ItemList.svelte'
-  import { optimizeImageURL } from './post/helpers'
+  import EndPlaceholder from '../../ui/EndPlaceholder.svelte'
+  import Expandable from '../../ui/Expandable.svelte'
+  import LabelStat from '../../ui/LabelStat.svelte'
+  import SidebarButton from '../../ui/sidebar/SidebarButton.svelte'
+  import ItemList from '../generic/ItemList.svelte'
+  import { optimizeImageURL } from '../post/helpers'
 
   interface Props extends HTMLAttributes<HTMLDivElement> {
     site: SiteView

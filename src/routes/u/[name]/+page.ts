@@ -1,6 +1,6 @@
 import { client } from '$lib/client/lemmy.svelte'
 import { getItemPublished } from '$lib/lemmy/item.js'
-import { ReactiveState } from '$lib/promise.svelte.js'
+import { ReactiveState } from '$lib/util.svelte.js'
 import type { SortType } from '$lib/client/types'
 
 export async function load({ params, url, fetch }) {

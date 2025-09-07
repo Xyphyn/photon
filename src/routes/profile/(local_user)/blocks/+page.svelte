@@ -1,6 +1,5 @@
 <script lang="ts">
   import { profile } from '$lib/auth.svelte.js'
-  import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
   import Entity from '$lib/components/ui/Entity.svelte'
@@ -8,7 +7,6 @@
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { t } from '$lib/i18n/translations.js'
-  import { getClient } from '$lib/client/lemmy.svelte'
   import type {
     CommunityBlockView,
     InstanceBlockView,
@@ -17,6 +15,8 @@
   import { Button } from 'mono-svelte'
   import { Check, Icon, XMark } from 'svelte-hero-icons'
   import type { PageData } from './$types.js'
+  import { client } from '$lib/client/lemmy.svelte.js'
+  import { CommunityLink } from '$lib/components/lemmy/community'
 
   interface Props {
     // sveltekit doesn't feel like making types work right now
@@ -39,7 +39,7 @@
     // hack to get reactivity working
     data.person_blocks = data.person_blocks
 
-    await getClient().blockPerson({
+    await client().blockPerson({
       block: false,
       person_id: item.target.id,
     })
@@ -58,7 +58,7 @@
     // hack to get reactivity working
     data.community_blocks = data.community_blocks
 
-    await getClient().blockCommunity({
+    await client().blockCommunity({
       block: false,
       community_id: item.community.id,
     })
@@ -76,7 +76,7 @@
     )
     data.my_user.instance_blocks = data.my_user.instance_blocks
 
-    await getClient().blockInstance({
+    await client().blockInstance({
       block: false,
       instance_id: item.instance.id,
     })

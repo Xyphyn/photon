@@ -476,4 +476,14 @@ export class LemmyClient implements BaseClient {
   ): ReturnType<BaseClient['uploadImage']> {
     return await this.#client.uploadImage(...params)
   }
+  async editSite(
+    ...params: Parameters<BaseClient['editSite']>
+  ): ReturnType<BaseClient['editSite']> {
+    return await this.#client.editSite(...params)
+  }
+  async deleteImage(
+    ...params: Parameters<BaseClient['deleteImage']>
+  ): ReturnType<BaseClient['deleteImage']> {
+    return await this.#client.deleteImage(...params)
+  }
 }

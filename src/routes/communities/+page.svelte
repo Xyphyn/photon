@@ -1,14 +1,13 @@
 <script lang="ts">
   import { navigating, page } from '$app/state'
   import { profile } from '$lib/auth.svelte.js'
-  import CommunityItem from '$lib/components/lemmy/community/CommunityItem.svelte'
   import Location from '$lib/components/lemmy/dropdowns/Location.svelte'
   import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
   import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
   import Skeleton from '$lib/components/ui/generic/Skeleton.svelte'
   import CommonList from '$lib/components/ui/layout/CommonList.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import Pageination from '$lib/components/ui/Pageination.svelte'
+  import Pageination from '$lib/components/ui/layout/Pageination.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { t } from '$lib/i18n/translations.js'
   import { LINKED_INSTANCE_URL } from '$lib/instance.svelte'
@@ -16,8 +15,9 @@
   import { QuestionMarkCircle, ServerStack } from 'svelte-hero-icons'
   import { expoOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'
-  import SearchBar from '../search/SearchBar.svelte'
+  import SearchBar from '../../lib/components/ui/layout/SearchBar.svelte'
   import Fixate from '$lib/components/ui/generic/Fixate.svelte'
+  import { CommunityItem } from '$lib/components/lemmy/community'
 
   let { data } = $props()
 

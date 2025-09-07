@@ -2,7 +2,6 @@
   import { notifications, profile } from '$lib/auth.svelte.js'
   import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
   import PrivateMessage from '$lib/components/lemmy/inbox/PrivateMessage.svelte'
-  import PrivateMessageModal from '$lib/components/lemmy/modal/PrivateMessageModal.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import Expandable from '$lib/components/ui/Expandable.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
@@ -20,7 +19,6 @@
 
   let { item = $bindable() }: Props = $props()
 
-  let replying = $state(false)
   let loading = $state(false)
 
   async function markAsRead(isRead: boolean) {
@@ -57,10 +55,6 @@
     loading = false
   }
 </script>
-
-{#if replying && item.type == 'private_message'}
-  <PrivateMessageModal bind:open={replying} user={item.item.creator} />
-{/if}
 
 <Expandable open icon={false}>
   {#snippet title()}

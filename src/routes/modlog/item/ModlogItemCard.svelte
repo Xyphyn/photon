@@ -1,12 +1,11 @@
 <script lang="ts">
   import Link from '$lib/components/input/Link.svelte'
-  import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
-  import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
-  import { Material } from 'mono-svelte'
+  import { Label, Material } from 'mono-svelte'
   import type { ModLog } from '../+page.js'
   import ModlogAction from '../ModlogAction.svelte'
+  import { CommunityLink } from '$lib/components/lemmy/community'
 
   interface Props {
     item: ModLog
@@ -20,18 +19,18 @@
     {#if item.community}
       <CommunityLink community={item.community} avatar showInstance />
     {/if}
-    <SectionTitle class="font-normal">
+    <Label class="font-normal">
       <RelativeDate date={new Date(item.timestamp)} />
-    </SectionTitle>
+    </Label>
   </div>
   {#if item.actionName}
-    <SectionTitle class="mt-2">Action</SectionTitle>
+    <Label class="mt-2">Action</Label>
     <span class="text-base">
       <ModlogAction action={item.actionName} />
     </span>
   {/if}
   {#if item.moderator}
-    <SectionTitle class="mt-2">Moderator</SectionTitle>
+    <Label class="mt-2">Moderator</Label>
     <span
       class="flex items-center gap-1 text-green-600 dark:text-green-400 font-medium"
     >
@@ -39,11 +38,11 @@
     </span>
   {/if}
   {#if item.moderatee}
-    <SectionTitle class="mt-2">User</SectionTitle>
+    <Label class="mt-2">User</Label>
     <UserLink showInstance={true} avatar user={item.moderatee} />
   {/if}
   {#if item.link || item.content}
-    <SectionTitle class="mt-2">Item</SectionTitle>
+    <Label class="mt-2">Item</Label>
     {#if item.link && item.content}
       <Link href={item.link} highlight>
         {item.content}
@@ -55,7 +54,7 @@
     {/if}
   {/if}
   {#if item.reason}
-    <SectionTitle class="mt-2">Reason</SectionTitle>
+    <Label class="mt-2">Reason</Label>
     <p>{item.reason}</p>
   {/if}
 </Material>

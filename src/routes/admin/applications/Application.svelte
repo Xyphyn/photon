@@ -1,18 +1,17 @@
 <script lang="ts">
   import { notifications, profile } from '$lib/auth.svelte.js'
-  import ApplicationDenyModal from '$lib/components/lemmy/modal/ApplicationDenyModal.svelte'
-  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
-  import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
-  import RelativeDate from '$lib/components/util/RelativeDate.svelte'
-  import { publishedToDate } from '$lib/components/util/date'
-  import { t } from '$lib/i18n/translations'
-  import { getClient } from '$lib/client/lemmy.svelte'
-  import { errorMessage } from '$lib/lemmy/error'
+  import { client } from '$lib/client/lemmy.svelte'
   import type {
     ApproveRegistrationApplication,
     RegistrationApplicationView,
   } from '$lib/client/types'
-  import { Button, Material, toast } from 'mono-svelte'
+  import ApplicationDenyModal from '$lib/components/lemmy/modal/ApplicationDenyModal.svelte'
+  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
+  import RelativeDate from '$lib/components/util/RelativeDate.svelte'
+  import { publishedToDate } from '$lib/components/util/date'
+  import { t } from '$lib/i18n/translations'
+  import { errorMessage } from '$lib/lemmy/error'
+  import { Button, Label, Material, toast } from 'mono-svelte'
   import {
     Check,
     Icon,
@@ -57,7 +56,7 @@
     }
 
     try {
-      await getClient().approveRegistrationApplication(
+      await client().approveRegistrationApplication(
         registrationApplicationAnswer,
       )
       toast({
@@ -128,12 +127,12 @@
                 class={accepted ? 'text-green-400' : 'text-red-400'}
               />
               <UserLink avatar user={application.admin} />
-              <SectionTitle>
+              <Label>
                 {accepted
                   ? $t('routes.admin.applications.approved')
                   : $t('routes.admin.applications.denied')}
-              </SectionTitle>
-              <SectionTitle>:</SectionTitle>
+              </Label>
+              <Label>:</Label>
             </div>
             <p>{application.registration_application.deny_reason}</p>
           </div>
@@ -147,11 +146,11 @@
               class={accepted ? 'text-green-400' : 'text-red-400'}
             />
             <UserLink avatar user={application.admin} />
-            <SectionTitle>
+            <Label>
               {accepted
                 ? $t('routes.admin.applications.approved')
                 : $t('routes.admin.applications.denied')}
-            </SectionTitle>
+            </Label>
           </div>
           <div class="md:ml-auto"></div>
         {/if}

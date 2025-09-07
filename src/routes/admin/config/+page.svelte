@@ -1,16 +1,16 @@
 <script lang="ts">
   import { profile } from '$lib/auth.svelte.js'
+  import { client, getClient, site } from '$lib/client/lemmy.svelte'
+  import type { EditSite } from '$lib/client/types'
   import ImageInputUpload from '$lib/components/form/ImageInputUpload.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import { t } from '$lib/i18n/translations.js'
-  import { getClient, site } from '$lib/client/lemmy.svelte'
   import { errorMessage } from '$lib/lemmy/error.js'
-  import type { EditSite } from '$lib/client/types'
   import {
     Badge,
     Button,
+    Label,
     Material,
     Menu,
     MenuButton,
@@ -46,7 +46,7 @@
     saving = true
 
     try {
-      await getClient().editSite({
+      await client().editSite({
         ...formData,
       })
       toast({
@@ -182,7 +182,7 @@
     </Switch>
 
     <div class="space-y-1">
-      <SectionTitle>{$t('form.profile.languages.title')}</SectionTitle>
+      <Label>{$t('form.profile.languages.title')}</Label>
       <p>{$t('form.profile.languages.description')}</p>
       <Material rounding="xl" color="uniform" class="dark:bg-zinc-950">
         {#if site.data}

@@ -9,7 +9,7 @@
   import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
   import Skeleton from '$lib/components/ui/generic/Skeleton.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import Pageination from '$lib/components/ui/Pageination.svelte'
+  import Pageination from '$lib/components/ui/layout/Pageination.svelte'
   import { t } from '$lib/i18n/translations.js'
   import { postFeeds } from '$lib/lemmy/postfeed.svelte.js'
   import { settings, SSR_ENABLED } from '$lib/settings.svelte.js'

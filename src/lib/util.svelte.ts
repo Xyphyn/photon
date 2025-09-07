@@ -6,6 +6,7 @@ import { toast } from 'mono-svelte'
 import { t } from './i18n/translations'
 import { errorMessage } from './lemmy/error'
 import { SvelteURL } from 'svelte/reactivity'
+import { browser } from '$app/environment'
 
 // Despite the name, this will round up
 // Example: findClosestNumber([8, 16, 32, 64, 128], 76) will return 128
@@ -190,4 +191,18 @@ export function fuzzySearch(text: string, pattern: string): number {
   }
 
   return score
+}
+
+export const awaitIfServer = async <T>(
+  promise: Promise<T>,
+): Promise<{
+  data: Promise<T> | T
+}> => ({ data: browser ? promise : await promise })
+
+export class ReactiveState<T> {
+  value = $state<T>()!
+
+  constructor(initialValue: T) {
+    this.value = initialValue as NonNullable<T>
+  }
 }

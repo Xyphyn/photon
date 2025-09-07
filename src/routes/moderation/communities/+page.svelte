@@ -1,6 +1,6 @@
 <script lang="ts">
   import { profile } from '$lib/auth.svelte'
-  import CommunityItem from '$lib/components/lemmy/community/CommunityItem.svelte'
+  import { CommunityItem } from '$lib/components/lemmy/community'
   import CommonList from '$lib/components/ui/layout/CommonList.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { t } from '$lib/i18n/translations'
