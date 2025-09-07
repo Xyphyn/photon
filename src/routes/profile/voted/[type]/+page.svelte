@@ -1,7 +1,7 @@
 <script lang="ts">
   import { browser } from '$app/environment'
   import { PostFeed, VirtualFeed } from '$lib/components/lemmy/post'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { Header } from '$lib/components/ui/layout'
   import { t } from '$lib/i18n/translations.js'
 
   let { data = $bindable() } = $props()

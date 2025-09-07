@@ -3,7 +3,7 @@
 
   import { profile } from '$lib/auth.svelte.js'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { Header } from '$lib/components/ui/layout'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { t } from '$lib/i18n/translations.js'
   import { instance } from '$lib/instance.svelte.js'

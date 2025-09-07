@@ -2,7 +2,6 @@
   import { preventDefault, run } from 'svelte/legacy'
 
   import { profile } from '$lib/auth.svelte.js'
-  import Comment from '$lib/components/lemmy/comment/Comment.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { t } from '$lib/i18n/translations'
   import { getClient } from '$lib/client/lemmy.svelte'
@@ -15,6 +14,7 @@
   import PrivateMessage from '../inbox/PrivateMessage.svelte'
   import { errorMessage } from '$lib/lemmy/error'
   import { Post } from '../post'
+  import { Comment } from '../comment'
 
   interface Props {
     open: boolean

@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Comment from '$lib/components/lemmy/comment/Comment.svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
   import { t } from '$lib/i18n/translations'
   import type { CommentView } from '$lib/client/types'
@@ -7,6 +6,7 @@
   import { ArrowUturnUp, Icon } from 'svelte-hero-icons'
   import type { ClassValue } from 'svelte/elements'
   import { PostMeta } from '../post'
+  import { Comment } from '.'
 
   interface Props {
     comment: CommentView

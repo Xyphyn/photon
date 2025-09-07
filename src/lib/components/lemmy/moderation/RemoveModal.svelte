@@ -3,7 +3,6 @@
 
   import { profile } from '$lib/auth.svelte.js'
   import MultiSelect from '$lib/components/input/Switch.svelte'
-  import Comment from '$lib/components/lemmy/comment/Comment.svelte'
   import { removalTemplate } from '$lib/components/lemmy/moderation/moderation.js'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { t } from '$lib/i18n/translations'
@@ -18,6 +17,7 @@
   import { amMod, isAdmin } from './moderation'
   import { errorMessage } from '$lib/lemmy/error'
   import { Post } from '../post'
+  import { Comment } from '../comment'
 
   interface Props {
     open: boolean

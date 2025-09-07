@@ -3,7 +3,7 @@
     CommunityForm,
     CommunityTitle,
   } from '$lib/components/lemmy/community'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { Header } from '$lib/components/ui/layout'
 
   let { data } = $props()
 </script>

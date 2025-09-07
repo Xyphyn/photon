@@ -1,14 +1,13 @@
 <script lang="ts">
   import { page } from '$app/state'
-  import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
+  import type { CommentView, PostView } from '$lib/client/types'
+  import { CommentItem } from '$lib/components/lemmy/comment'
+  import { PostItem } from '$lib/components/lemmy/post'
   import Fixate from '$lib/components/ui/generic/Fixate.svelte'
-  import CommonList from '$lib/components/ui/layout/CommonList.svelte'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import Pageination from '$lib/components/ui/layout/Pageination.svelte'
+  import { CommonList, Header, Pageination } from '$lib/components/ui/layout'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { t } from '$lib/i18n/translations.js'
   import { searchParam } from '$lib/util.svelte.js'
-  import type { CommentView, PostView } from '$lib/client/types'
   import { Select } from 'mono-svelte'
   import Option from 'mono-svelte/forms/select/Option.svelte'
   import {
@@ -19,7 +18,6 @@
     Icon,
     PencilSquare,
   } from 'svelte-hero-icons'
-  import { PostItem } from '$lib/components/lemmy/post'
 
   let { data } = $props()
 

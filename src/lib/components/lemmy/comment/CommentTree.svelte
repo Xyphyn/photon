@@ -1,9 +1,8 @@
 <script lang="ts">
   import { browser } from '$app/environment'
   import { goto } from '$app/navigation'
-  import { page } from '$app/state'
   import { t } from '$lib/i18n/translations'
-  import { getClient } from '$lib/client/lemmy.svelte'
+  import { client } from '$lib/client/lemmy.svelte'
   import { errorMessage } from '$lib/lemmy/error'
   import type { Post } from '$lib/client/types'
   import { Button, toast } from 'mono-svelte'
@@ -34,7 +33,7 @@
     try {
       parent.loading = true
 
-      const newComments = await getClient(page.params.instance).getComments({
+      const newComments = await client().getComments({
         max_depth: 5,
         parent_id: parent.comment_view.comment.id,
         type_: 'All',

@@ -3,7 +3,7 @@
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { t } from '$lib/i18n/translations'
-  import { getClient, site } from '$lib/client/lemmy.svelte'
+  import { client, site } from '$lib/client/lemmy.svelte'
   import { errorMessage } from '$lib/lemmy/error'
   import { placeholders } from '$lib/util.svelte.js'
   import type { CommentResponse } from '$lib/client/types'
@@ -56,7 +56,7 @@
     loading = true
 
     try {
-      const response = await getClient().createComment({
+      const response = await client().createComment({
         content: value,
         post_id: postId,
         parent_id: parentId,

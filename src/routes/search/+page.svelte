@@ -3,7 +3,7 @@
   import { profile } from '$lib/auth.svelte.js'
   import { client } from '$lib/client/lemmy.svelte'
   import ObjectAutocomplete from '$lib/components/lemmy/ObjectAutocomplete.svelte'
-  import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
+  import { CommentItem } from '$lib/components/lemmy/comment/index.js'
   import { CommunityItem } from '$lib/components/lemmy/community'
   import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
   import { PostItem } from '$lib/components/lemmy/post'

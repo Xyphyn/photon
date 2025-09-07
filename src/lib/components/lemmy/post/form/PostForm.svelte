@@ -8,7 +8,7 @@
   import ObjectAutocomplete from '$lib/components/lemmy/ObjectAutocomplete.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { Header } from '$lib/components/ui/layout'
   import { t } from '$lib/i18n/translations'
   import { client, site } from '$lib/client/lemmy.svelte'
   import { errorMessage } from '$lib/lemmy/error'
@@ -24,8 +24,8 @@
     TextArea,
     TextInput,
     toast,
+    Option,
   } from 'mono-svelte'
-  import Option from 'mono-svelte/forms/select/Option.svelte'
   import { onDestroy, onMount } from 'svelte'
   import {
     ArrowPath,
@@ -96,15 +96,7 @@
   let communities: Community[] = $state([])
 
   onMount(async () => {
-    if (editingPost) {
-      data.url = editingPost.url ?? ''
-      data.body = editingPost.body ?? ''
-      data.title = editingPost.name
-      data.nsfw = editingPost.nsfw
-      data.alt_text = editingPost.alt_text
-      data.thumbnail = editingPost.thumbnail_url
-      data.language_id = editingPost.language_id.toString()
-    }
+    if (editingPost) Object.assign(data, editingPost)
 
     if (passedCommunity) {
       data.community = passedCommunity
@@ -121,7 +113,6 @@
   })
 
   onDestroy(() => {
-    // @ts-expect-error TODO get rid of sessionStorage stuff
     if (saveDraft) setSessionStorage('postDraft', data)
   })
 
@@ -134,7 +125,6 @@
       })
       return
     }
-    if (!data.title || !profile.current?.jwt) return
     if (data.url && data.url != '') {
       try {
         new URL(data.url)

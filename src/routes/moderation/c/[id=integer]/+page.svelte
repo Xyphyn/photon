@@ -1,6 +1,6 @@
 <script lang="ts">
   import CommunityHeader from '$lib/components/lemmy/community/CommunityHeader.svelte'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { Header } from '$lib/components/ui/layout'
   import { t } from '$lib/i18n/translations'
   import { Button, Material, Spinner } from 'mono-svelte'
   import ModlogItemCard from '../../../modlog/item/ModlogItemCard.svelte'

@@ -2,10 +2,6 @@
   import { browser } from '$app/environment'
   import { page } from '$app/state'
   import { profile } from '$lib/auth.svelte'
-  import CommentForm from '$lib/components/lemmy/comment/CommentForm.svelte'
-  import CommentListVirtualizer from '$lib/components/lemmy/comment/CommentListVirtualizer.svelte'
-  import Comments from '$lib/components/lemmy/comment/CommentTree.svelte'
-  import { buildCommentsTree } from '$lib/components/lemmy/comment/comments.svelte'
   import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
   import { t } from '$lib/i18n/translations'
   import { settings } from '$lib/settings.svelte'
@@ -26,6 +22,12 @@
     Star,
     Trophy,
   } from 'svelte-hero-icons'
+  import {
+    buildCommentsTree,
+    CommentForm,
+    CommentListVirtualizer,
+    CommentTree,
+  } from '$lib/components/lemmy/comment'
 
   interface Props {
     post: PostView
@@ -160,7 +162,7 @@
 {:else}
   <div class="divide-y divide-slate-200 dark:divide-zinc-800">
     <div class="-mx-3 sm:-mx-6 px-3 sm:px-6">
-      <Comments nodes={tree} post={post.post} />
+      <CommentTree nodes={tree} post={post.post} />
     </div>
   </div>
 {/if}

@@ -4,7 +4,7 @@
   import type { SaveUserSettings } from '$lib/client/types'
   import ImageInputUpload from '$lib/components/form/ImageInputUpload.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { Header } from '$lib/components/ui/layout'
   import { t } from '$lib/i18n/translations.js'
   import {
     Badge,

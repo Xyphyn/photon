@@ -1,6 +1,5 @@
 <script lang="ts">
   import { page } from '$app/state'
-  import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
   import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
   import ItemList from '$lib/components/lemmy/generic/ItemList.svelte'
   import { PostItem } from '$lib/components/lemmy/post'
@@ -18,6 +17,7 @@
   import { AdjustmentsHorizontal, Icon, PencilSquare } from 'svelte-hero-icons'
   import type { PageData } from './$types'
   import UserActions from './UserActions.svelte'
+  import { CommentItem } from '$lib/components/lemmy/comment'
 
   interface Props {
     data: PageData

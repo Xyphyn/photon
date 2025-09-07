@@ -947,5 +947,9 @@
         "title": "Add a post title",
         "body": "What do you have to say?",
         "comments": "Join the conversation"
+    },
+    "class": {
+        "moderator": "Moderator",
+        "admin": "Administrator"
     }
 }

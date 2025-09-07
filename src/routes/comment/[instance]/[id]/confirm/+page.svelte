@@ -3,7 +3,7 @@
   import { resolveRoute } from '$app/paths'
   import { page } from '$app/state'
   import { profile } from '$lib/auth.svelte'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { Header } from '$lib/components/ui/layout'
   import ProfileButton from '$lib/components/ui/sidebar/ProfileButton.svelte'
   import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
   import { t } from '$lib/i18n/translations'

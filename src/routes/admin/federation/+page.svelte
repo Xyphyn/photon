@@ -5,7 +5,7 @@
   import { client, getClient } from '$lib/client/lemmy.svelte'
   import type { Instance } from '$lib/client/types'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { Header } from '$lib/components/ui/layout'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
   import { t } from '$lib/i18n/translations.js'

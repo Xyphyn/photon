@@ -6,7 +6,7 @@
   import { profile } from '$lib/auth.svelte'
   import { DEFAULT_CLIENT_TYPE, type ClientType } from '$lib/client/base'
   import { validateInstance } from '$lib/client/lemmy.svelte'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { Header } from '$lib/components/ui/layout'
   import { t } from '$lib/i18n/translations'
   import { LINKED_INSTANCE_URL } from '$lib/instance.svelte'
   import { DOMAIN_REGEX_FORMS } from '$lib/util.svelte'

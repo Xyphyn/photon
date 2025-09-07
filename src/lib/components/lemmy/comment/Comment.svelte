@@ -1,7 +1,6 @@
 <script lang="ts">
   import { page } from '$app/state'
   import { profile } from '$lib/auth.svelte.js'
-  import CommentActions from '$lib/components/lemmy/comment/CommentActions.svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
@@ -20,14 +19,14 @@
     Minus,
     Pencil,
     Plus,
+    ShieldCheck,
     Trash,
   } from 'svelte-hero-icons'
   import { expoOut } from 'svelte/easing'
   import type { ClassValue } from 'svelte/elements'
   import { slide } from 'svelte/transition'
-  import ShieldIcon from '../moderation/ShieldIcon.svelte'
-  import CommentForm from './CommentForm.svelte'
   import type { CommentNodeI } from './comments.svelte'
+  import { CommentActions, CommentForm } from '.'
 
   interface Props {
     node: CommentNodeI
@@ -154,10 +153,22 @@
         >
           {#snippet extraBadges()}
             {#if node.comment_view.creator_is_moderator}
-              <ShieldIcon filled width={14} class="text-green-500" />
+              <Icon
+                src={ShieldCheck}
+                size="14"
+                micro
+                class="text-green-500"
+                aria-label={$t('class.moderator')}
+              />
             {/if}
             {#if node.comment_view.creator_is_admin}
-              <ShieldIcon filled width={14} class="text-red-500" />
+              <Icon
+                src={ShieldCheck}
+                size="16"
+                micro
+                class="text-red-500"
+                aria-label={$t('class.admin')}
+              />
             {/if}
           {/snippet}
         </UserLink>

@@ -4,7 +4,7 @@
   import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
   import Entity from '$lib/components/ui/Entity.svelte'
   import CommonList from '$lib/components/ui/layout/CommonList.svelte'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { Header } from '$lib/components/ui/layout'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { t } from '$lib/i18n/translations.js'
   import type {

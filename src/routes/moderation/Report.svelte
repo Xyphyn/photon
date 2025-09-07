@@ -1,7 +1,7 @@
 <script lang="ts">
   import { notifications, profile } from '$lib/auth.svelte.js'
   import { getClient } from '$lib/client/lemmy.svelte'
-  import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
+  import { CommentItem } from '$lib/components/lemmy/comment'
   import PrivateMessage from '$lib/components/lemmy/inbox/PrivateMessage.svelte'
   import { PostItem } from '$lib/components/lemmy/post'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'

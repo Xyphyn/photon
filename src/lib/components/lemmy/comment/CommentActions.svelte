@@ -1,6 +1,6 @@
 <script lang="ts">
   import { profile } from '$lib/auth.svelte.js'
-  import CommentVote from '$lib/components/lemmy/comment/CommentVote.svelte'
+  import type { CommentView } from '$lib/client/types'
   import CommentModerationMenu from '$lib/components/lemmy/moderation/CommentModerationMenu.svelte'
   import {
     amMod,
@@ -10,7 +10,6 @@
   import { t } from '$lib/i18n/translations'
   import { deleteItem, save } from '$lib/lemmy/contentview.js'
   import { settings } from '$lib/settings.svelte'
-  import type { CommentView } from '$lib/client/types'
   import { Button, Menu, MenuButton } from 'mono-svelte'
   import {
     Bookmark,
@@ -23,6 +22,7 @@
     Share,
     Trash,
   } from 'svelte-hero-icons'
+  import { CommentVote } from '.'
 
   interface Props {
     comment: CommentView

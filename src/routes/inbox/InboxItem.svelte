@@ -1,6 +1,5 @@
 <script lang="ts">
   import { notifications, profile } from '$lib/auth.svelte.js'
-  import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
   import PrivateMessage from '$lib/components/lemmy/inbox/PrivateMessage.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import Expandable from '$lib/components/ui/Expandable.svelte'
@@ -12,6 +11,7 @@
   import { escapeHtml } from '$lib/util.svelte'
   import { Button } from 'mono-svelte'
   import { Eye, EyeSlash, Icon } from 'svelte-hero-icons'
+  import { CommentItem } from '$lib/components/lemmy/comment'
 
   interface Props {
     item: InboxItem
