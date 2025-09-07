@@ -24,6 +24,8 @@
   } from 'svelte-hero-icons'
   import { report } from '../../moderation/moderation'
   import { hidePost } from '../helpers'
+  import { client } from '$lib/client/lemmy.svelte'
+  import { PiefedClient } from '$lib/client/piefed/piefed'
 
   interface Props {
     post: PostView
@@ -162,26 +164,28 @@
     </MenuButton>
   {/if}
   {#if profile.current.user?.local_user_view.person.id != post.creator.id}
-    <MenuButton
-      onclick={async () => {
-        if (!profile.current?.jwt) return
-        const hidden = await hidePost(
-          post.post.id,
-          !post.hidden,
-          profile.current?.jwt,
-        )
-        post.hidden = hidden
-        if (hidden) onhide?.(hidden)
-      }}
-      color="danger-subtle"
-    >
-      {#snippet prefix()}
-        <Icon src={XMark} size="16" micro />
-      {/snippet}
-      {post.hidden
-        ? $t('post.actions.more.unhide')
-        : $t('post.actions.more.hide')}
-    </MenuButton>
+    {#if !(client() instanceof PiefedClient)}
+      <MenuButton
+        onclick={async () => {
+          if (!profile.current?.jwt) return
+          const hidden = await hidePost(
+            post.post.id,
+            !post.hidden,
+            profile.current?.jwt,
+          )
+          post.hidden = hidden
+          if (hidden) onhide?.(hidden)
+        }}
+        color="danger-subtle"
+      >
+        {#snippet prefix()}
+          <Icon src={XMark} size="16" micro />
+        {/snippet}
+        {post.hidden
+          ? $t('post.actions.more.unhide')
+          : $t('post.actions.more.hide')}
+      </MenuButton>
+    {/if}
     <MenuButton onclick={() => report(post)} color="danger-subtle">
       {#snippet prefix()}
         <Icon src={Flag} size="16" micro />

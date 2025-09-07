@@ -4,6 +4,7 @@
   import { searchParam } from '$lib/util.svelte'
   import { Select } from 'mono-svelte'
   import {
+    ChartBar,
     GlobeAmericas,
     Icon,
     MapPin,
@@ -14,6 +15,8 @@
   import { t } from '$lib/i18n/translations'
   import Option from 'mono-svelte/forms/select/Option.svelte'
   import type { SelectProps } from 'mono-svelte/forms/select/Select.svelte'
+  import { client } from '$lib/client/lemmy.svelte'
+  import { PiefedClient } from '$lib/client/piefed/piefed'
 
   interface Props extends SelectProps<string> {
     selected: string
@@ -49,6 +52,11 @@
   <Option value="All" icon={GlobeAmericas}>
     {$t('filter.location.all')}
   </Option>
+  {#if client() instanceof PiefedClient}
+    <Option value="Popular" icon={ChartBar}>
+      {$t('filter.location.popular')}
+    </Option>
+  {/if}
   <Option value="Local" icon={MapPin}>{$t('filter.location.local')}</Option>
   <Option
     value="Subscribed"

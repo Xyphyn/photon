@@ -71,7 +71,8 @@
             "local": "Local",
             "subscribed": "Subscriptions",
             "moderator": "Moderator",
-            "global": "Global"
+            "global": "Global",
+            "popular": "Popular"
         },
         "sort": {
             "label": "Sort",
