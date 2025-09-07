@@ -5,7 +5,7 @@
   import { formatRelativeDate } from '$lib/components/util/RelativeDate.svelte'
   import { publishedToDate } from '$lib/components/util/date'
   import { t } from '$lib/i18n/translations'
-  import { userLink } from '$lib/lemmy/generic'
+  import { userLink } from '$lib/util.svelte'
   import { settings } from '$lib/settings.svelte'
   import { fullCommunityName } from '$lib/util.svelte'
   import type {

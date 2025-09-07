@@ -36,19 +36,6 @@ export function addSubscription(
   }
 }
 
-export async function addAdmin(handle: string, added: boolean) {
-  const user = await client().resolveObject({
-    q: handle,
-  })
-
-  if (!user.person) throw new Error('No user found')
-
-  return await client().addAdmin({
-    added: added,
-    person_id: user.person.person.id,
-  })
-}
-
 export function hasFavorite(profile: ProfileInfo, id: number): boolean {
   return profile.favorites?.map((i) => i.id).includes(id) ?? false
 }

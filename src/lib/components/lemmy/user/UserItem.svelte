@@ -1,7 +1,7 @@
 <script lang="ts">
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import LabelStat from '$lib/components/ui/LabelStat.svelte'
-  import { userLink } from '$lib/lemmy/generic'
+  import { userLink } from '$lib/util.svelte'
   import type { PersonView } from '$lib/client/types'
 
   interface Props {

@@ -11,7 +11,7 @@
   import { publishedToDate } from '$lib/components/util/date.js'
   import { formatRelativeDate } from '$lib/components/util/RelativeDate.svelte'
   import { t } from '$lib/i18n/translations.js'
-  import { communityLink } from '$lib/lemmy/generic.js'
+  import { communityLink } from '$lib/util.svelte.js'
   import { isCommentView } from '$lib/lemmy/item.js'
   import { Option, Select } from 'mono-svelte'
   import { AdjustmentsHorizontal, Icon, PencilSquare } from 'svelte-hero-icons'

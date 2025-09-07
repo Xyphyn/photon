@@ -7,7 +7,7 @@
   import { client } from '$lib/client/lemmy.svelte'
   import { addSubscription } from '$lib/lemmy/user.js'
   import { settings } from '$lib/settings.svelte'
-  import { fullCommunityName, isSubscribed } from '$lib/util.svelte.js'
+  import { fullCommunityName } from '$lib/util.svelte.js'
   import type { CommunityView } from '$lib/client/types'
   import { Button, modal } from 'mono-svelte'
   import type { Snippet } from 'svelte'
@@ -158,7 +158,9 @@
         </Button>
         <Subscribe {community}>
           {#snippet children({ subscribe, subscribing })}
-            {@const subscribed = isSubscribed(community.subscribed)}
+            {@const subscribed =
+              community.subscribed == 'Subscribed' ||
+              community.subscribed == 'Pending'}
             <Button
               disabled={subscribing || !profile.current?.jwt}
               loading={subscribing}

@@ -1,6 +1,6 @@
 <script lang="ts">
   import Avatar from '$lib/components/ui/Avatar.svelte'
-  import { communityLink } from '$lib/lemmy/generic'
+  import { communityLink } from '$lib/util.svelte'
   import { settings } from '$lib/settings.svelte.js'
   import { t } from '$lib/i18n/translations'
   import type { Community } from '$lib/client/types'

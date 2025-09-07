@@ -58,14 +58,12 @@ interface Settings {
     presets: Preset[]
     defaultRemoveAction: 'comment' | 'message' | null
   }
-  randomPlaceholders: boolean
   modlogCardView: boolean | undefined
   debugInfo: boolean
   expandImages: boolean
 
   font: 'inter' | 'system' | 'browser'
   leftAlign: boolean
-  hidePhoton: boolean
 
   newWidth: boolean
   markPostsAsRead: boolean
@@ -143,14 +141,12 @@ export const defaultSettings: Settings = {
     ],
     defaultRemoveAction: null,
   },
-  randomPlaceholders: toBool(env.PUBLIC_RANDOM_PLACEHOLDERS) ?? false,
   modlogCardView: toBool(env.PUBLIC_MODLOG_CARD_VIEW) ?? undefined,
   debugInfo: toBool(env.PUBLIC_DEBUG_INFO) ?? false,
   expandImages: toBool(env.PUBLIC_EXPAND_IMAGES) ?? true,
   view: (env.PUBLIC_VIEW as View) ?? 'compact',
   font: (env.PUBLIC_FONT as 'inter') ?? 'inter',
   leftAlign: toBool(env.PUBLIC_LEFT_ALIGN) ?? false,
-  hidePhoton: toBool(env.PUBLIC_REMOVE_CREDIT) ?? false,
   newWidth: toBool(env.PUBLIC_LIMIT_LAYOUT_WIDTH) ?? true,
   markPostsAsRead: toBool(env.PUBLIC_MARK_POSTS_AS_READ) ?? true,
   openLinksInNewTab: false,

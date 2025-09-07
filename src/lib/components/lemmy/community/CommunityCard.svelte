@@ -82,7 +82,7 @@
   import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
   import { t } from '$lib/i18n/translations'
   import { errorMessage } from '$lib/lemmy/error'
-  import { userLink } from '$lib/lemmy/generic'
+  import { userLink } from '$lib/util.svelte'
   import { addSubscription } from '$lib/lemmy/user.js'
   import { settings } from '$lib/settings.svelte'
   import { fullCommunityName } from '$lib/util.svelte.js'

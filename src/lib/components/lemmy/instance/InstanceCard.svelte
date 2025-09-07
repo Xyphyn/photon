@@ -2,7 +2,7 @@
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import { t } from '$lib/i18n/translations'
-  import { userLink } from '$lib/lemmy/generic'
+  import { userLink } from '$lib/util.svelte'
   import { settings } from '$lib/settings.svelte'
   import type { PersonView, SiteView, Tagline } from '$lib/client/types'
   import { Badge } from 'mono-svelte'

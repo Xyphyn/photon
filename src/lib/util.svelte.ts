@@ -1,12 +1,9 @@
+import { browser } from '$app/environment'
 import { goto } from '$app/navigation'
 import { client } from '$lib/client/lemmy.svelte'
-import { settings } from '$lib/settings.svelte'
-import type { SubscribedType } from '$lib/client/types'
-import { toast } from 'mono-svelte'
-import { t } from './i18n/translations'
-import { errorMessage } from './lemmy/error'
 import { SvelteURL } from 'svelte/reactivity'
-import { browser } from '$app/environment'
+import { t } from './i18n/translations'
+import type { Community, Person } from './client/types'
 
 // Despite the name, this will round up
 // Example: findClosestNumber([8, 16, 32, 64, 128], 76) will return 128
@@ -32,28 +29,7 @@ export const fullCommunityName = (name: string, actorId: string) =>
   `${name}@${new SvelteURL(actorId).hostname}`
 
 export const placeholders = {
-  url: ['https://example.com'],
-  post: [
-    'Does anybody read these placeholders?',
-    'Top 10 reasons why a meteor would help Earth',
-    'Title text',
-    'I took a picture of something idk',
-  ],
-  body: ['bottom text', 'body text', 'body text'],
-  comment: [
-    'what?',
-    'new response just dropped',
-    'this comment placeholder is very important dont forget',
-    'existential crisis in progress',
-    'hello user i am a sentient placeholder. please dont type anything or i disappear forever. thanks',
-  ],
   get: (type: 'url' | 'post' | 'body' | 'comment') => {
-    if (settings.randomPlaceholders) {
-      return placeholders[type][
-        Math.floor(Math.random() * placeholders[type].length)
-      ]
-    }
-
     switch (type) {
       case 'post':
         return t.get('placeholders.title')
@@ -92,17 +68,10 @@ export function moveItem<T>(
   return newArray
 }
 
-export const removeItem = <T>(array: T[], predicate: (item: T) => boolean) => {
-  array.splice(array.findIndex(predicate), 1)
-}
-
 export const DOMAIN_REGEX =
   /^(http(s)?:\/\/)?((?!-)[A-Za-z0-9-]{1,63}\.)+[A-Za-z]{2,63}(:[0-9]{0,5})?$/g
 export const DOMAIN_REGEX_FORMS =
   '(http(s)?://)?((?!-)[A-Za-z0-9]{1,63}.)+[A-Za-z]{2,63}(:[0-9]{0,5})?'
-
-export const isSubscribed = (subscribed: SubscribedType) =>
-  subscribed == 'Pending' || subscribed == 'Subscribed'
 
 export async function uploadImage(
   image: File | null | undefined,
@@ -134,10 +103,6 @@ export function canParseUrl(url: string): boolean {
   } catch {
     return false
   }
-}
-
-export function instanceId(actorId: string) {
-  return new SvelteURL(actorId).hostname
 }
 
 export function escapeHtml(input: string): string {
@@ -214,3 +179,9 @@ export const isVideo = (url: string | undefined) => {
     return false
   }
 }
+
+export const communityLink = (community: Community, prefix: string = '') =>
+  `${prefix}/c/${fullCommunityName(community.name, community.actor_id)}`
+
+export const userLink = (person: Person, prefix: string = '') =>
+  `${prefix}/u/${person.name}@${new SvelteURL(person.actor_id).hostname}`

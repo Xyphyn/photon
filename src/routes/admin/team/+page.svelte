@@ -1,22 +1,19 @@
 <script lang="ts">
-  import { preventDefault } from 'svelte/legacy'
-
   import { profile } from '$lib/auth.svelte.js'
+  import { client } from '$lib/client/lemmy.svelte'
+  import UserAutocomplete from '$lib/components/lemmy/user/UserAutocomplete.svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import { Header } from '$lib/components/ui/layout'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { t } from '$lib/i18n/translations.js'
-  import { instance } from '$lib/instance.svelte.js'
-  import { getClient } from '$lib/client/lemmy.svelte'
-  import { addAdmin } from '$lib/lemmy/user.js'
-  import { trycatch } from '$lib/util.svelte.js'
-  import { Button, TextInput, toast } from 'mono-svelte'
+  import { errorMessage } from '$lib/lemmy/error.js'
+  import { Button, toast } from 'mono-svelte'
   import { Icon, Plus, QuestionMarkCircle, Trash } from 'svelte-hero-icons'
 
   let { data: pageData } = $props()
   let data = $state(pageData)
 
-  let newAdmin: string = $state(''),
+  let newAdmin = $state<number>(),
     adding: boolean = $state(false)
 
   async function removeAdmin(
@@ -31,18 +28,21 @@
 
     if (!profile.current?.jwt) return
 
-    const result = await trycatch(() =>
-      getClient().addAdmin({
+    try {
+      const res = await client().addAdmin({
         added: false,
         person_id: id,
-      }),
-    )
+      })
 
-    if (result) {
-      data.site!.admins = result.admins
+      data.site.admins = res.admins
       toast({
         content: $t('toast.removeAdmin'),
         type: 'success',
+      })
+    } catch (err) {
+      toast({
+        content: errorMessage(err as string),
+        type: 'error',
       })
     }
   }
@@ -75,32 +75,33 @@
   </ul>
   <form
     class="flex flex-row gap-2 mt-auto w-full"
-    onsubmit={preventDefault(() => {
-      trycatch(async () => {
-        if (!profile.current?.jwt || newAdmin == '') return
-        adding = true
+    onsubmit={async (e) => {
+      e.preventDefault()
+      if (!profile.current?.jwt || !newAdmin) return
+      adding = true
 
-        const r = await addAdmin(`${newAdmin}@${instance.data}`, true)
-        if (!r) return
-
-        toast({
-          content: 'Successfully added that admin.',
-          type: 'success',
-        })
-
-        if (data.site) data.site.admins = r.admins
-
-        newAdmin = ''
-        adding = false
+      const res = await client().addAdmin({
+        added: true,
+        person_id: newAdmin,
       })
-    })}
+
+      toast({
+        content: 'Successfully added that admin.',
+        type: 'success',
+      })
+
+      if (data.site) data.site.admins = res.admins
+
+      newAdmin = undefined
+      adding = false
+    }}
   >
-    <TextInput
-      bind:value={newAdmin}
-      placeholder="@user"
-      class="flex-1"
-      pattern={'@[^ |]{1,}'}
-    />
+    <div class="w-full">
+      <UserAutocomplete
+        listing_type="All"
+        onselect={(p) => (newAdmin = p.id)}
+      />
+    </div>
     <Button
       loading={adding}
       disabled={adding}

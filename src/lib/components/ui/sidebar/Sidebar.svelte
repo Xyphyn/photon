@@ -4,7 +4,7 @@
   import Expandable from '$lib/components/ui/Expandable.svelte'
   import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
   import { t } from '$lib/i18n/translations'
-  import { communityLink } from '$lib/lemmy/generic'
+  import { communityLink } from '$lib/util.svelte'
   import { settings } from '$lib/settings.svelte.js'
   import { theme } from '$lib/ui/theme/theme.svelte'
   import { Badge, Option, Select } from 'mono-svelte'
