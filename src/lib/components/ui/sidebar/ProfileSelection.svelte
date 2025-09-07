@@ -13,6 +13,7 @@
   import { page } from '$app/state'
   import { t } from '$lib/i18n/translations'
   import { DEFAULT_CLIENT_TYPE } from '$lib/client/base'
+  import { LINKED_INSTANCE_URL } from '$lib/instance.svelte'
 
   let { profiles }: { profiles: ProfileInfo[] } = $props()
 
@@ -45,9 +46,11 @@
       {/snippet}
       <div class="flex-1">
         <div class="font-medium">{profile.current.username}</div>
-        <div class="text-xs text-slate-500 dark:text-zinc-500">
-          <span class="capitalize">{profile.current.client?.name ?? DEFAULT_CLIENT_TYPE.name}</span> • {profile.current.instance}
-        </div>
+        {#if !LINKED_INSTANCE_URL}
+          <div class="text-xs text-slate-500 dark:text-zinc-500">
+            <span class="capitalize">{profile.current.client?.name ?? DEFAULT_CLIENT_TYPE.name}</span> • {profile.current.instance}
+          </div>
+        {/if}
       </div>
       {#snippet suffix()}
         <Icon
@@ -70,9 +73,11 @@
       {/snippet}
       <div>
         <div class="font-medium text-sm">{p.username}</div>
-        <div class="text-xs text-slate-500 dark:text-zinc-500">
-          <span class="capitalize">{p.client?.name ?? DEFAULT_CLIENT_TYPE.name}</span> • {p.instance}
-        </div>
+        {#if !LINKED_INSTANCE_URL}
+          <div class="text-xs text-slate-500 dark:text-zinc-500">
+            <span class="capitalize">{p.client?.name ?? DEFAULT_CLIENT_TYPE.name}</span> • {p.instance}
+          </div>
+        {/if}
       </div>
       <div class="flex-1"></div>
       {#if !p.jwt}
