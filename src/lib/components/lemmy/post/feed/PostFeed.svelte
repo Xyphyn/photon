@@ -1,10 +1,10 @@
 <script lang="ts">
+  import type { PostView } from '$lib/client/types'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { settings } from '$lib/settings.svelte.js'
-  import type { PostView } from '$lib/client/types'
   import { Button } from 'mono-svelte'
   import type { Snippet } from 'svelte'
-  import { ArchiveBox, Icon, Plus } from 'svelte-hero-icons'
+  import { ArchiveBox, Plus } from 'svelte-hero-icons'
   import { Post } from '..'
 
   interface Props {
@@ -26,10 +26,7 @@
         title="No posts"
         description="There are no posts that match this filter."
       >
-        <Button href="/communities">
-          {#snippet prefix()}
-            <Icon src={Plus} size="16" mini />
-          {/snippet}
+        <Button href="/communities" icon={Plus}>
           <span>Follow some communities</span>
         </Button>
       </Placeholder>

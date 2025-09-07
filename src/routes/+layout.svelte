@@ -1,27 +1,27 @@
 <script lang="ts">
   import { browser } from '$app/environment'
   import { navigating, page } from '$app/state'
-  import Moderation from '$lib/components/lemmy/moderation/Moderation.svelte'
+  import { site } from '$lib/client/lemmy.svelte'
   import SiteCard from '$lib/components/lemmy/instance/InstanceCard.svelte'
+  import Moderation from '$lib/components/lemmy/moderation/Moderation.svelte'
   import ExpandableImage from '$lib/components/ui/ExpandableImage.svelte'
   import Shell from '$lib/components/ui/layout/Shell.svelte'
   import Navbar from '$lib/components/ui/navbar/Navbar.svelte'
   import Sidebar from '$lib/components/ui/sidebar/Sidebar.svelte'
   import { locale } from '$lib/i18n/translations'
   import { LINKED_INSTANCE_URL } from '$lib/instance.svelte'
-  import { site } from '$lib/client/lemmy.svelte'
   import { settings } from '$lib/settings.svelte.js'
+  import { getDefaultColors } from '$lib/ui/theme/presets'
   import {
     inDarkColorScheme,
     rgbToHex,
     theme,
   } from '$lib/ui/theme/theme.svelte.js'
-  import { getDefaultColors } from '$lib/ui/theme/presets'
   import { Button, ModalContainer, Spinner, ToastContainer } from 'mono-svelte'
   import nProgress from 'nprogress'
   import 'nprogress/nprogress.css'
   import { onMount } from 'svelte'
-  import { Forward, Icon } from 'svelte-hero-icons'
+  import { Forward } from 'svelte-hero-icons'
   import '../style/app.css'
   interface Props {
     children?: import('svelte').Snippet
@@ -121,10 +121,8 @@
 <Button
   class="fixed -top-16 focus:top-0 left-0 m-4 z-300 transition-all"
   href="#main"
+  icon={Forward}
 >
-  {#snippet prefix()}
-    <Icon src={Forward} mini size="16" />
-  {/snippet}
   Skip Navigation
 </Button>
 

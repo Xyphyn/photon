@@ -62,7 +62,7 @@
 
 <form
   class="flex flex-col gap-4 h-full"
-  onsubmit={e => {
+  onsubmit={(e) => {
     e.preventDefault()
     save()
   }}
@@ -80,7 +80,7 @@
     />
     <MarkdownEditor
       images={false}
-      bind:value={() => formData.bio ?? '', v => (formData.bio = v)}
+      bind:value={() => formData.bio ?? '', (v) => (formData.bio = v)}
       label={$t('form.profile.bio')}
       previewButton
     />
@@ -128,7 +128,7 @@
                   </Badge>
                 </button>
               {/snippet}
-              {#each site.data.all_languages.filter(l => !formData.discussion_languages?.includes(l.id)) as language (language.id)}
+              {#each site.data.all_languages.filter((l) => !formData.discussion_languages?.includes(l.id)) as language (language.id)}
                 <MenuButton
                   class="min-h-[16px] py-0"
                   onclick={() => {
@@ -141,7 +141,7 @@
             </Menu>
             {#each formData.discussion_languages as languageId, index (languageId)}
               {@const language = site.data.all_languages.find(
-                l => l.id == languageId,
+                (l) => l.id == languageId,
               )}
               <button
                 type="button"

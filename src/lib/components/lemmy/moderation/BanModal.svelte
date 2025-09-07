@@ -2,7 +2,7 @@
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import type { Community, Person } from '$lib/client/types'
   import { client } from '$lib/client/lemmy.svelte'
-  import { Label, toast, Button, Checkbox, Modal } from 'mono-svelte'
+  import { Label, toast, Button, Modal, Switch } from 'mono-svelte'
   import { profile } from '$lib/auth.svelte.js'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { t } from '$lib/i18n/translations'
@@ -115,12 +115,12 @@
         label={$t('moderation.reason')}
       />
       {#if !banned}
-        <Checkbox bind:checked={deleteData}>
+        <Switch bind:checked={deleteData}>
           {$t('moderation.ban.deleteData')}
           {#snippet description()}
             {$t('moderation.ban.warning')}
           {/snippet}
-        </Checkbox>
+        </Switch>
         <Label text={$t('moderation.ban.expires')}>
           <Duration bind:value={expires}></Duration>
         </Label>

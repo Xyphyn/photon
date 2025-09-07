@@ -131,7 +131,7 @@
             </span>
           {/snippet}
           <ItemList
-            items={profile.current.user.moderates.map(i => ({
+            items={profile.current.user.moderates.map((i) => ({
               id: i.community.id,
               name: i.community.title,
               url: communityLink(i.community),
@@ -157,7 +157,7 @@
         {/snippet}
 
         <ItemList
-          items={profile.current.user.follows.map(i => ({
+          items={profile.current.user.follows.map((i) => ({
             id: i.community.id,
             name: i.community.title,
             url: communityLink(i.community),

@@ -360,10 +360,8 @@
             size="sm"
             color={data.alt_text ? 'primary' : 'ghost'}
             class="text-xs"
-          >
-            {#snippet prefix()}
-              <Icon src={ChatBubbleBottomCenterText} size="15" micro />
-            {/snippet}{$t('form.post.altText')}
+            icon={ChatBubbleBottomCenterText}
+            >{$t('form.post.altText')}
           </Button>
         {/if}
         <Button
@@ -372,10 +370,8 @@
           size="sm"
           color="ghost"
           class="text-xs"
+          icon={Photo}
         >
-          {#snippet prefix()}
-            <Icon src={Photo} size="15" micro />
-          {/snippet}
           {$t('form.post.uploadImage')}
         </Button>
         {#if generation.generatable}
@@ -386,10 +382,8 @@
             size="sm"
             color="ghost"
             class="text-xs"
+            icon={Sparkles}
           >
-            {#snippet prefix()}
-              <Icon src={Sparkles} size="15" micro />
-            {/snippet}
             {$t('form.post.generateTitle')}
           </Button>
         {/if}

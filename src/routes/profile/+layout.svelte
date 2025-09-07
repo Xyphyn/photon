@@ -59,22 +59,13 @@
             <Icon src={EllipsisHorizontal} size="16" micro />
           </Button>
         {/snippet}
-        <MenuButton href="/profile/media">
-          {#snippet prefix()}
-            <Icon src={Photo} size="16" mini />
-          {/snippet}
+        <MenuButton href="/profile/media" icon={Photo}>
           {$t('routes.profile.media.title')}
         </MenuButton>
-        <MenuButton href="/profile/voted/up">
-          {#snippet prefix()}
-            <Icon src={ArrowUp} size="16" micro />
-          {/snippet}
+        <MenuButton href="/profile/voted/up" icon={ArrowUp}>
           {$t('routes.profile.upvoted')}
         </MenuButton>
-        <MenuButton href="/profile/voted/down">
-          {#snippet prefix()}
-            <Icon src={ArrowDown} size="16" micro />
-          {/snippet}
+        <MenuButton href="/profile/voted/down" icon={ArrowDown}>
           {$t('routes.profile.downvoted')}
         </MenuButton>
       </Menu>

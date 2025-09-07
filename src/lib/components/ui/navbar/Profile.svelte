@@ -66,10 +66,7 @@
 {/snippet}
 
 {#if profile.current?.jwt}
-  <MenuButton href="/inbox">
-    {#snippet prefix()}
-      <Icon src={Inbox} micro size="16" />
-    {/snippet}
+  <MenuButton href="/inbox" icon={Inbox}>
     {$t('profile.inbox')}
     {#if $notifications.inbox > 0}
       <Badge color="red-subtle" class="text-xs ml-auto font-bold py-0.5!">
@@ -94,43 +91,25 @@
     </MenuButton>
   {/if}
   <MenuDivider>{$t('profile.profile')}</MenuDivider>
-  <MenuButton href="/profile">
-    {#snippet prefix()}
-      <Icon src={UserCircle} micro size="16" />
-    {/snippet}
+  <MenuButton href="/profile" icon={UserCircle}>
     {$t('profile.profile')}
   </MenuButton>
-  <MenuButton href="/saved">
-    {#snippet prefix()}
-      <Icon src={Bookmark} micro size="16" />
-    {/snippet}
+  <MenuButton href="/saved" icon={Bookmark}>
     {$t('profile.saved')}
   </MenuButton>
 {:else}
-  <MenuButton href="/accounts/login">
-    {#snippet prefix()}
-      <Icon src={ArrowLeftOnRectangle} mini size="16" />
-    {/snippet}
+  <MenuButton href="/accounts/login" icon={ArrowLeftOnRectangle}>
     {$t('account.login')}
   </MenuButton>
-  <MenuButton href="/signup">
-    {#snippet prefix()}
-      <Icon src={Identification} micro size="16" />
-    {/snippet}
+  <MenuButton href="/signup" icon={Identification}>
     {$t('account.signup')}
   </MenuButton>
 {/if}
-<MenuButton href="/accounts">
-  {#snippet prefix()}
-    <Icon src={UserGroup} micro size="16" />
-  {/snippet}
+<MenuButton href="/accounts" icon={UserGroup}>
   {$t('account.accounts')}
 </MenuButton>
 <MenuDivider>{$t('nav.menu.app')}</MenuDivider>
-<MenuButton href="/settings">
-  {#snippet prefix()}
-    <Icon src={Cog6Tooth} micro size="16" />
-  {/snippet}
+<MenuButton href="/settings" icon={Cog6Tooth}>
   {$t('nav.menu.settings')}
 </MenuButton>
 <Select bind:value={theme.colorScheme} size="sm" placement="bottom">
@@ -158,19 +137,11 @@
     </Option>
   {/snippet}
 </Select>
-<MenuButton href="/theme">
-  {#snippet prefix()}
-    <Icon src={Swatch} size="16" micro />
-  {/snippet}
+<MenuButton href="/theme" icon={Swatch}>
   {$t('nav.menu.theme')}
 </MenuButton>
 {#if settings.debugInfo}
-  <MenuButton href="/util">
-    {#snippet prefix()}
-      <Icon src={BugAnt} mini size="16" />
-    {/snippet}
-    Debug
-  </MenuButton>
+  <MenuButton href="/util" icon={BugAnt}>Debug</MenuButton>
 {/if}
 <li class="flex flex-col px-2 py-1 mx-auto my-1 text-xs w-full">
   <div class="flex flex-row gap-2 w-full items-center">

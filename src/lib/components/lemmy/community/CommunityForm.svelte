@@ -18,7 +18,7 @@
     Option,
     Select,
     Material,
-    Menu
+    Menu,
   } from 'mono-svelte'
   import { GlobeAlt, Icon, MapPin, Plus } from 'svelte-hero-icons'
   import { Header } from '$lib/components/ui/layout'
@@ -98,7 +98,7 @@
 
       if (profile.current.user) {
         const c = profile.current.user.moderates
-          .map(m => m.community.id)
+          .map((m) => m.community.id)
           .indexOf(res.community_view.community.id)
         if (c != -1) {
           profile.current.user.moderates[c] = {
@@ -139,7 +139,7 @@
 </script>
 
 <form
-  onsubmit={e => {
+  onsubmit={(e) => {
     e.preventDefault()
     submit()
   }}
@@ -201,7 +201,7 @@
                 </Badge>
               </button>
             {/snippet}
-            {#each site.data.all_languages.filter(l => !formData.languages?.includes(l.id)) as language (language.id)}
+            {#each site.data.all_languages.filter((l) => !formData.languages?.includes(l.id)) as language (language.id)}
               <MenuButton
                 class="min-h-[16px] py-0"
                 onclick={() => {
@@ -217,7 +217,7 @@
           </Menu>
           {#each formData.languages ?? [] as languageId, index (languageId)}
             {@const language = site.data.all_languages.find(
-              l => l.id == languageId,
+              (l) => l.id == languageId,
             )}
             <button
               type="button"

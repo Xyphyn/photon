@@ -1,6 +1,6 @@
 <script lang="ts">
   import { profile } from '$lib/auth.svelte.js'
-  import { client, getClient, site } from '$lib/client/lemmy.svelte'
+  import { client, site } from '$lib/client/lemmy.svelte'
   import type { EditSite } from '$lib/client/types'
   import ImageInputUpload from '$lib/components/form/ImageInputUpload.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
@@ -72,7 +72,7 @@
 
 <form
   class="flex flex-col gap-4"
-  onsubmit={e => {
+  onsubmit={(e) => {
     e.preventDefault()
     save()
   }}
@@ -80,25 +80,25 @@
   <Header pageHeader>{$t('routes.admin.config.title')}</Header>
   {#if formData}
     <TextInput
-      bind:value={() => formData.name ?? '', v => (formData.description = v)}
+      bind:value={() => formData.name ?? '', (v) => (formData.description = v)}
       label={$t('form.name')}
     />
     <TextInput
       bind:value={
-        () => formData.description ?? '', v => (formData.description = v)
+        () => formData.description ?? '', (v) => (formData.description = v)
       }
       label={$t('form.description')}
     />
     <MarkdownEditor
       previewButton
-      bind:value={() => formData.sidebar ?? '', v => (formData.sidebar = v)}
+      bind:value={() => formData.sidebar ?? '', (v) => (formData.sidebar = v)}
       label={$t('routes.admin.config.sidebar')}
     />
     <MarkdownEditor
       previewButton
       bind:value={
         () => formData.legal_information ?? '',
-        v => (formData.legal_information = v)
+        (v) => (formData.legal_information = v)
       }
       label={$t('routes.legal.title')}
     />
@@ -196,7 +196,7 @@
                   </Badge>
                 </button>
               {/snippet}
-              {#each site.data.all_languages.filter(l => !formData.discussion_languages?.includes(l.id)) as language (language.id)}
+              {#each site.data.all_languages.filter((l) => !formData.discussion_languages?.includes(l.id)) as language (language.id)}
                 <MenuButton
                   class="min-h-[16px] py-0"
                   onclick={() => {
@@ -209,7 +209,7 @@
             </Menu>
             {#each formData.discussion_languages ?? [] as languageId, index (languageId)}
               {@const language = site.data.all_languages.find(
-                l => l.id == languageId,
+                (l) => l.id == languageId,
               )}
               <button
                 type="button"

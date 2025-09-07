@@ -107,11 +107,8 @@
             class="h-8.5 w-8.5"
             rounding="xl"
             onclick={onupdate}
-          >
-            {#snippet prefix()}
-              <Icon src={ArrowPath} size="16" mini />
-            {/snippet}
-          </Button>
+            icon={ArrowPath}
+          ></Button>
         </div>
       {/snippet}
     </EndPlaceholder>
@@ -150,11 +147,13 @@
         {$t('filter.sort.controversial')}
       </Option>
     </Select>
-    <Button size="custom" class="h-8.5 w-8.5" rounding="xl" onclick={onupdate}>
-      {#snippet prefix()}
-        <Icon src={ArrowPath} size="16" mini />
-      {/snippet}
-    </Button>
+    <Button
+      size="custom"
+      class="h-8.5 w-8.5"
+      rounding="xl"
+      onclick={onupdate}
+      icon={ArrowPath}
+    ></Button>
   </div>
 {/if}
 {#if virtualize}

@@ -109,10 +109,8 @@
       color="primary"
       size="sm"
       submit
+      icon={Plus}
     >
-      {#snippet prefix()}
-        <Icon src={Plus} micro size="16" />
-      {/snippet}
       {$t('common.add')}
     </Button>
   </form>

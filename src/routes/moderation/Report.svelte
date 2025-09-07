@@ -10,7 +10,7 @@
   import { errorMessage } from '$lib/lemmy/error'
   import type { ReportView } from '$lib/lemmy/report.js'
   import { Badge, Button, Label, Material, Modal, toast } from 'mono-svelte'
-  import { CheckBadge, Icon } from 'svelte-hero-icons'
+  import { CheckBadge } from 'svelte-hero-icons'
 
   interface Props {
     item: ReportView[]
@@ -175,10 +175,8 @@
     rounding="pill"
     size="sm"
     color={item.resolved ? 'secondary' : 'primary'}
+    icon={CheckBadge}
   >
-    {#snippet prefix()}
-      <Icon src={CheckBadge} micro size="16" />
-    {/snippet}
     {!item.resolved
       ? $t('routes.moderation.resolve')
       : $t('routes.moderation.unresolve')}

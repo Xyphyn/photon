@@ -91,10 +91,8 @@
       color="warning-subtle"
       onclick={() => lock(!item.post.locked)}
       loading={acting}
+      icon={item.post.locked ? LockOpen : LockClosed}
     >
-      {#snippet prefix()}
-        <Icon src={item.post.locked ? LockOpen : LockClosed} size="16" mini />
-      {/snippet}
       {item.post.locked ? $t('moderation.unlock') : $t('moderation.lock')}
     </MenuButton>
 

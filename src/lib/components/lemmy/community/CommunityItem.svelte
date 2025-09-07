@@ -201,10 +201,8 @@
                   ? 'aspect-square @md:px-2 @md:min-w-30 @md:aspect-auto'
                   : 'px-3',
               ]}
+              icon={subscribed ? Check : Plus}
             >
-              {#snippet prefix()}
-                <Icon src={subscribed ? Check : Plus} size="16" micro />
-              {/snippet}
               <span class={[view == 'compact' && 'hidden', '@md:block']}>
                 {#if subscribed}
                   {$t('cards.community.subscribed')}

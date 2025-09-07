@@ -167,11 +167,8 @@
       onclick={() => review(false)}
       loading={denying || reviewing}
       disabled={approving || denying || reviewing}
-    >
-      {#snippet prefix()}
-        <Icon src={XMark} micro size="16" />
-      {/snippet}
-    </Button>
+      icon={XMark}
+    ></Button>
     <Button
       size="square-md"
       class="hover:bg-slate-200 {application.creator_local_user
@@ -182,10 +179,7 @@
       onclick={() => review(true)}
       loading={approving}
       disabled={approving || denying || reviewing}
-    >
-      {#snippet prefix()}
-        <Icon src={Check} micro size="16" />
-      {/snippet}
-    </Button>
+      icon={Check}
+    ></Button>
   </div>
 </Material>

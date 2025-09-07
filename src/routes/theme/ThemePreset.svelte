@@ -103,11 +103,8 @@
               title: $t('routes.theme.preset.delete.title'),
             })
           }}
-        >
-          {#snippet prefix()}
-            <Icon src={Trash} size="16" mini />
-          {/snippet}
-        </Button>
+          icon={Trash}
+        ></Button>
       {/if}
     </div>
   </Material>

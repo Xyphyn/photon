@@ -181,10 +181,12 @@
           title={$t('routes.frontpage.empty.title')}
           description={$t('routes.frontpage.empty.description')}
         >
-          <Button href="/communities" rounding="pill" color="primary">
-            {#snippet prefix()}
-              <Icon src={ArrowTopRightOnSquare} size="16" mini />
-            {/snippet}
+          <Button
+            href="/communities"
+            rounding="pill"
+            color="primary"
+            icon={ArrowTopRightOnSquare}
+          >
             {$t('nav.communities')}
           </Button>
         </Placeholder>
@@ -265,10 +267,7 @@
             community_name: feedData.community_name ?? 'undefined',
           })}
           {#snippet action()}
-            <Button color="tertiary">
-              {#snippet prefix()}
-                <Icon src={ChevronDoubleUp} size="16" micro />
-              {/snippet}
+            <Button color="tertiary" icon={ChevronDoubleUp}>
               {$t('routes.post.scrollToTop')}
             </Button>
           {/snippet}

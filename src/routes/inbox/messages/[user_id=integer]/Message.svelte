@@ -64,17 +64,19 @@
       </Button>
     {/snippet}
     {#if primary}
-      <MenuButton color="danger-subtle" onclick={() => ondelete?.(true)}>
-        {#snippet prefix()}
-          <Icon src={Trash} size="16" micro />
-        {/snippet}
+      <MenuButton
+        color="danger-subtle"
+        onclick={() => ondelete?.(true)}
+        icon={Trash}
+      >
         {$t('post.actions.more.delete')}
       </MenuButton>
     {:else}
-      <MenuButton color="danger-subtle" onclick={() => onreport?.(true)}>
-        {#snippet prefix()}
-          <Icon src={Flag} size="16" micro />
-        {/snippet}
+      <MenuButton
+        color="danger-subtle"
+        onclick={() => onreport?.(true)}
+        icon={Flag}
+      >
         {$t('moderation.report')}
       </MenuButton>
     {/if}

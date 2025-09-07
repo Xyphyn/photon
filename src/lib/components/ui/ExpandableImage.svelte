@@ -13,7 +13,7 @@
   import { t } from '$lib/i18n/translations'
   import { Button, Material, toast } from 'mono-svelte'
   import { focusTrap } from 'svelte-focus-trap'
-  import { Icon, Share, XMark } from 'svelte-hero-icons'
+  import { Share, XMark } from 'svelte-hero-icons'
   import { expoOut } from 'svelte/easing'
   import { fade, scale } from 'svelte/transition'
 
@@ -66,22 +66,16 @@
           size="square-lg"
           rounding="pill"
           aria-label={$t('post.actions.more.share')}
-        >
-          {#snippet prefix()}
-            <Icon src={Share} size="20" micro />
-          {/snippet}
-        </Button>
+          icon={Share}
+        ></Button>
         <Button
           onclick={() => history.back()}
           color="tertiary"
           size="square-lg"
           rounding="pill"
           aria-label={$t('common.back')}
-        >
-          {#snippet prefix()}
-            <Icon src={XMark} size="20" micro />
-          {/snippet}
-        </Button>
+          icon={XMark}
+        ></Button>
       </Material>
     </div>
   </div>

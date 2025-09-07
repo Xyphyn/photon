@@ -92,10 +92,8 @@
           },
         ]
       }}
+      icon={Plus}
     >
-      {#snippet prefix()}
-        <Icon src={Plus} micro size="16" />
-      {/snippet}
       Add Preset
     </Button>
   </li>

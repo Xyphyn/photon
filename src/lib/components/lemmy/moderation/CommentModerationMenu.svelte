@@ -43,10 +43,7 @@
         {$t('moderation.label')}
       {/if}
     </MenuDivider>
-    <MenuButton color="danger-subtle" onclick={() => remove(item)}>
-      {#snippet prefix()}
-        <Icon src={Trash} size="16" mini />
-      {/snippet}
+    <MenuButton color="danger-subtle" onclick={() => remove(item)} icon={Trash}>
       {#if isCommentView(item)}
         {item.comment.removed
           ? $t('moderation.restore')
@@ -59,10 +56,8 @@
         color="danger-subtle"
         onclick={() =>
           ban(item.creator_banned_from_community, item.creator, item.community)}
+        icon={ShieldExclamation}
       >
-        {#snippet prefix()}
-          <Icon src={ShieldExclamation} size="16" mini />
-        {/snippet}
         {item.creator_banned_from_community
           ? $t('moderation.ban.unbanFromCommunity')
           : $t('moderation.ban.banFromCommunity')}
@@ -81,10 +76,8 @@
             )
           ).comment_view.comment
         }}
+        icon={Megaphone}
       >
-        {#snippet prefix()}
-          <Icon src={Megaphone} size="16" micro />
-        {/snippet}
         {item.comment.distinguished
           ? $t('moderation.unfeature')
           : $t('moderation.feature')}
@@ -107,10 +100,11 @@
 
   {#if profile.current?.user && isAdmin(profile.current.user)}
     <MenuDivider showLabel>{$t('admin.label')}</MenuDivider>
-    <MenuButton color="danger-subtle" onclick={() => remove(item, true)}>
-      {#snippet prefix()}
-        <Icon src={Fire} size="16" mini />
-      {/snippet}
+    <MenuButton
+      color="danger-subtle"
+      onclick={() => remove(item, true)}
+      icon={Fire}
+    >
       {$t('admin.purge')}
     </MenuButton>
   {/if}

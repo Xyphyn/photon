@@ -1,4 +1,5 @@
-<script lang="ts" module>  type BadgeType =
+<script lang="ts" module>
+  type BadgeType =
     | 'nsfw'
     | 'saved'
     | 'featured'
@@ -86,11 +87,11 @@
 
     const newTitle = title
       .toString()
-      .replace(/^(\[.[^\]]+\])|(\[.[^\]]+\])$/g, match => {
+      .replace(/^(\[.[^\]]+\])|(\[.[^\]]+\])$/g, (match) => {
         const contents = match.split(',').map((part: string) => part.trim())
 
         contents
-          .map(i => i.replaceAll(/(\[|\])/g, ''))
+          .map((i) => i.replaceAll(/(\[|\])/g, ''))
           .forEach((content: string) => {
             extracted.push(
               textToTag.get(content) ?? {
@@ -332,15 +333,16 @@
     {/if}
     {#each Object.keys(badges)
       // filter by ones that are true
-      .filter(i => badges[i as BadgeType] == true)
+      .filter((i) => badges[i as BadgeType] == true)
       // get from predetermined map
-      .map(i => badgeToData.get(i as BadgeType))
+      .map((i) => badgeToData.get(i as BadgeType))
       // remove null
-      .filter(i => i != undefined) as badge}
-      <Badge label={badge.label} color={badge.color} allowIconOnly>{#snippet icon()}
+      .filter((i) => i != undefined) as badge}
+      <Badge label={badge.label} color={badge.color} allowIconOnly
+        >{#snippet icon()}
           <Icon src={badge.icon} micro size="14" />{/snippet}{badge.label}
       </Badge>
-      {/each}
+    {/each}
     {@render extraBadges?.()}
   </div>
 </header>
@@ -358,10 +360,8 @@
     <a
       href={useAttachedUrl
         ? postUrl
-        : `/post/${encodeURIComponent(profile.current.intsance)}/${id}`}
-      target={useAttachedUrl
-        ? '_blank'
-        : undefined}
+        : `/post/${encodeURIComponent(profile.current.instance)}/${id}`}
+      target={useAttachedUrl ? '_blank' : undefined}
       rel={useAttachedUrl ? 'noopener noreferrer' : undefined}
       class="inline-block hover:underline hover:text-primary-900 dark:hover:text-primary-100 transition-colors"
     >

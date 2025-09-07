@@ -1,7 +1,7 @@
 <script lang="ts">
   import { t } from '$lib/i18n/translations'
   import { settings } from '$lib/settings.svelte'
-  import { Checkbox, Switch } from 'mono-svelte'
+  import { Switch } from 'mono-svelte'
   import {
     Bars3,
     BookOpen,
@@ -75,23 +75,21 @@
   />
   <Setting icon={ServerStack}>
     {#snippet title()}
-      <span>{$t('settings.lemmy.instances.title')}</span>
+      {$t('settings.lemmy.instances.title')}
     {/snippet}
     {#snippet description()}
-      <span>
-        {$t('settings.lemmy.instances.description')}
-      </span>
+      {$t('settings.lemmy.instances.description')}
     {/snippet}
     <div class="flex flex-row flex-wrap items-center gap-4">
-      <Checkbox bind:checked={settings.showInstances.user}>
+      <Switch bind:checked={settings.showInstances.user}>
         {$t('content.users')}
-      </Checkbox>
-      <Checkbox bind:checked={settings.showInstances.comments}>
+      </Switch>
+      <Switch bind:checked={settings.showInstances.comments}>
         {$t('content.comments')}
-      </Checkbox>
-      <Checkbox bind:checked={settings.showInstances.community}>
+      </Switch>
+      <Switch bind:checked={settings.showInstances.community}>
         {$t('content.communities')}
-      </Checkbox>
+      </Switch>
     </div>
   </Setting>
   <ToggleSetting

@@ -3,11 +3,27 @@
   import { client } from '$lib/client/lemmy.svelte'
   import type { PersonView } from '$lib/client/types'
   import { ban, isAdmin } from '$lib/components/lemmy/moderation/moderation'
-  import ShieldIcon from '$lib/components/lemmy/moderation/ShieldIcon.svelte'
   import { t } from '$lib/i18n/translations'
   import { blockUser, isBlocked } from '$lib/lemmy/user'
-  import { Button, Menu, MenuButton, Modal, removeToast, toast } from 'mono-svelte'
-  import { AtSymbol, EllipsisHorizontal, Envelope, Fire, Icon, Newspaper, NoSymbol, ShieldExclamation } from 'svelte-hero-icons'
+  import {
+    Button,
+    Menu,
+    MenuButton,
+    Modal,
+    removeToast,
+    toast,
+  } from 'mono-svelte'
+  import {
+    AtSymbol,
+    EllipsisHorizontal,
+    Envelope,
+    Fire,
+    Icon,
+    Newspaper,
+    NoSymbol,
+    ShieldCheck,
+    ShieldExclamation,
+  } from 'svelte-hero-icons'
 
   let { person }: { person: PersonView } = $props()
 
@@ -29,8 +45,6 @@
   }
 </script>
 
-
-
 {#if purgingUser}
   <Modal bind:open={purgingUser}>
     {#snippet customTitle()}
@@ -41,19 +55,12 @@
         {person.person.name}
       </span>
     </p>
-    <p>
-      Are you sure you want to do this?
-    </p>
+    <p>Are you sure you want to do this?</p>
     <div class="flex flex-row gap-2">
       <Button size="lg" onclick={() => (purgingUser = false)} class="flex-1">
         Cancel
       </Button>
-      <Button
-        size="lg"
-        color="danger"
-        onclick={purgeUser}
-        class="flex-1"
-      >
+      <Button size="lg" color="danger" onclick={purgeUser} class="flex-1">
         Purge
       </Button>
     </div>
@@ -67,10 +74,8 @@
       rounding="pill"
       color="primary"
       href="/inbox/messages/{person.person.id}"
+      icon={Envelope}
     >
-      {#snippet prefix()}
-        <Icon micro size="16" src={Envelope} />
-      {/snippet}
       {$t('content.message')}
     </Button>
     {#if person.person.matrix_user_id}
@@ -89,49 +94,55 @@
     {#if isAdmin(profile.current?.user)}
       <Menu class="ml-auto" placement="bottom-end">
         {#snippet target(attachment)}
-          <Button {@attach attachment} size="sm" rounding="pill">
-            <ShieldIcon width={16} filled />
+          <Button
+            {@attach attachment}
+            size="sm"
+            rounding="pill"
+            icon={ShieldCheck}
+          >
             {$t('moderation.label')}
           </Button>
         {/snippet}
         <MenuButton
           href="/modlog?user={person.person.id}"
           color="success-subtle"
+          icon={Newspaper}
         >
-          <Icon src={Newspaper} size="16" micro />
           {$t('moderation.modlog.user')}
         </MenuButton>
         <MenuButton
           color="danger-subtle"
           onclick={() => ban(person.person.banned, person.person)}
+          icon={ShieldExclamation}
         >
-          {#snippet prefix()}
-            <Icon mini size="16" src={ShieldExclamation} />
-          {/snippet}
           {person.person.banned ? 'Unban' : 'Ban'}
         </MenuButton>
         <MenuButton
           color="danger-subtle"
           onclick={() => (purgingUser = !purgingUser)}
+          icon={Fire}
         >
-          {#snippet prefix()}
-            <Icon mini size="16" src={Fire} />
-          {/snippet}
           Purge
         </MenuButton>
       </Menu>
     {/if}
     <Menu placement="bottom-end">
       {#snippet target(attachment)}
-        <Button {@attach attachment} size="custom" class="h-8 w-8" rounding="pill">
-          {#snippet prefix()}
-            <Icon src={EllipsisHorizontal} size="16" mini />
-          {/snippet}
-        </Button>
+        <Button
+          {@attach attachment}
+          size="custom"
+          class="h-8 w-8"
+          rounding="pill"
+          icon={EllipsisHorizontal}
+        ></Button>
       {/snippet}
       <MenuButton
         color="danger-subtle"
-        onclick={() => blockUser(isBlocked(profile.current.user!, person.person.id), person.person.id)}
+        onclick={() =>
+          blockUser(
+            isBlocked(profile.current.user!, person.person.id),
+            person.person.id,
+          )}
       >
         {#snippet prefix()}
           <Icon mini size="16" src={NoSymbol} />

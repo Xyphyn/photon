@@ -103,23 +103,20 @@
           rounding="pill"
           class="px-4"
           color="primary"
+          icon={ArrowLeftOnRectangle}
         >
-          {#snippet prefix()}
-            <Icon src={ArrowLeftOnRectangle} size="16" mini />
-          {/snippet}
           {$t('account.login')}
         </Button>
-        <Button href="/signup" rounding="pill" class="px-4">
-          {#snippet prefix()}
-            <Icon src={Identification} size="16" mini />
-          {/snippet}
+        <Button
+          href="/signup"
+          rounding="pill"
+          class="px-4"
+          icon={Identification}
+        >
           {$t('account.signup')}
         </Button>
         {#if !LINKED_INSTANCE_URL}
-          <Button href="/accounts/login/guest" rounding="pill">
-            {#snippet prefix()}
-              <Icon src={Plus} size="16" micro />
-            {/snippet}
+          <Button href="/accounts/login/guest" rounding="pill" icon={Plus}>
             {$t('account.addGuest')}
           </Button>
         {/if}
@@ -129,7 +126,7 @@
 </Header>
 <form class="accounts-grid gap-4">
   <CommonList
-    selected={p => p.id == profile.meta.profile}
+    selected={(p) => p.id == profile.meta.profile}
     items={profile.meta.profiles}
     animate={false}
   >
@@ -168,7 +165,10 @@
               {/if}
             </span>
             <span class="text-sm text-slate-600 dark:text-zinc-400">
-              <span class="capitalize">{p.client?.name ?? DEFAULT_CLIENT_TYPE.name}</span> • {p.instance}
+              <span class="capitalize"
+                >{p.client?.name ?? DEFAULT_CLIENT_TYPE.name}</span
+              >
+              • {p.instance}
             </span>
           </div>
           <Menu placement="bottom-end">
@@ -179,38 +179,29 @@
                 color="tertiary"
                 class="justify-self-end ml-auto z-50"
                 aria-label={$t('post.actions.more.label')}
-              >
-                {#snippet prefix()}
-                  <Icon src={EllipsisHorizontal} mini size="16" />
-                {/snippet}
-              </Button>
+                icon={EllipsisHorizontal}
+              ></Button>
             {/snippet}
             <!-- svelte-ignore a11y_click_events_have_key_events -->
             <!-- svelte-ignore a11y_no_static_element_interactions -->
             <div
               class="px-4 py-2 flex items-center gap-2"
-              onclick={e => e.stopPropagation()}
+              onclick={(e) => e.stopPropagation()}
             >
               <Button
                 size="square-md"
                 color="secondary"
                 title={$t('account.moveUp')}
                 onclick={() => profile.move(p.id, true)}
-              >
-                {#snippet prefix()}
-                  <Icon src={ChevronUp} size="16" mini />
-                {/snippet}
-              </Button>
+                icon={ChevronUp}
+              ></Button>
               <Button
                 size="square-md"
                 color="secondary"
                 title={$t('account.moveDown')}
                 onclick={() => profile.move(p.id, false)}
-              >
-                {#snippet prefix()}
-                  <Icon src={ChevronDown} size="16" mini />
-                {/snippet}
-              </Button>
+                icon={ChevronDown}
+              ></Button>
             </div>
             {#if settings.debugInfo}
               <MenuButton
@@ -218,10 +209,8 @@
                   debugProfile = p
                   debugging = !debugging
                 }}
+                icon={BugAnt}
               >
-                {#snippet prefix()}
-                  <Icon src={BugAnt} size="16" mini />
-                {/snippet}
                 {$t('common.debug')}
               </MenuButton>
             {/if}
@@ -232,10 +221,8 @@
                   removing.shown = !removing.shown
                 }}
                 color="danger-subtle"
+                icon={ArrowRightOnRectangle}
               >
-                {#snippet prefix()}
-                  <Icon src={ArrowRightOnRectangle} size="16" mini />
-                {/snippet}
                 {$t('account.logout')}
               </MenuButton>
             {/if}

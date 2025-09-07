@@ -1,15 +1,15 @@
 <script lang="ts">
   import { profile } from '$lib/auth.svelte'
+  import { client } from '$lib/client/lemmy.svelte'
+  import type { LocalImage, Person } from '$lib/client/types'
+  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import { publishedToDate } from '$lib/components/util/date'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import { t } from '$lib/i18n/translations'
   import { instance } from '$lib/instance.svelte'
-  import { client } from '$lib/client/lemmy.svelte'
   import { instanceToURL } from '$lib/util.svelte'
-  import type { LocalImage, Person } from '$lib/client/types'
   import { action, Button, modal, toast } from 'mono-svelte'
-  import { ArrowDownTray, Icon, Trash } from 'svelte-hero-icons'
-  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
+  import { ArrowDownTray, Trash } from 'svelte-hero-icons'
 
   let loading = $state(false)
 
@@ -60,11 +60,8 @@
       href="{instanceToURL(instance.data)}/pictrs/image/{image.pictrs_alias}"
       size="square-md"
       class="ml-auto"
-    >
-      {#snippet prefix()}
-        <Icon src={ArrowDownTray} size="16" mini />
-      {/snippet}
-    </Button>
+      icon={ArrowDownTray}
+    ></Button>
     <Button
       title={$t('post.actions.more.delete')}
       onclick={() => {
@@ -88,10 +85,7 @@
       size="square-md"
       {loading}
       disabled={loading}
-    >
-      {#snippet prefix()}
-        <Icon src={Trash} size="16" mini class="text-red-500" />
-      {/snippet}
-    </Button>
+      icon={Trash}
+    ></Button>
   </div>
 </div>

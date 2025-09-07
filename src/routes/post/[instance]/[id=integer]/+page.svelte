@@ -24,7 +24,15 @@
   import { expoOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'
   import CommentProvider from './CommentProvider.svelte'
-  import { mediaType, parseTags, Post, PostActions, postLink, PostMedia, PostMeta } from '$lib/components/lemmy/post'
+  import {
+    mediaType,
+    parseTags,
+    Post,
+    PostActions,
+    postLink,
+    PostMedia,
+    PostMeta,
+  } from '$lib/components/lemmy/post'
 
   let { data } = $props()
 
@@ -307,10 +315,8 @@
         <Button
           color="tertiary"
           onclick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          icon={ChevronDoubleUp}
         >
-          {#snippet prefix()}
-            <Icon src={ChevronDoubleUp} mini size="16" />
-          {/snippet}
           {$t('routes.post.scrollToTop')}
         </Button>
       {/snippet}

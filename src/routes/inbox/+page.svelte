@@ -54,28 +54,23 @@
       class="rounded-2xl h-9 aspect-square"
       rounding="none"
       aria-label={$t('common.refresh')}
-    >
-      {#snippet prefix()}
-        <Icon src={ArrowPath} size="16" mini />
-      {/snippet}
-    </Button>
+      icon={ArrowPath}
+    ></Button>
     <Button
       onclick={markAllAsRead}
       loading={markingAsRead}
       disabled={markingAsRead || data.inbox.value.length == 0}
       rounding="pill"
       color="primary"
+      icon={Check}
     >
-      {#snippet prefix()}
-        <Icon src={Check} size="16" mini />
-      {/snippet}
       {$t('routes.inbox.markAsRead')}
     </Button>
   </div>
 </Header>
 
 <Select
-  class="relative w-max"
+  class="relative"
   bind:value={
     () => data.unreadOnly.value.toString(),
     (v) => (data.unreadOnly.value = v == 'true')

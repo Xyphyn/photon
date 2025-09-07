@@ -48,7 +48,10 @@
         <div class="font-medium">{profile.current.username}</div>
         {#if !LINKED_INSTANCE_URL}
           <div class="text-xs text-slate-500 dark:text-zinc-500">
-            <span class="capitalize">{profile.current.client?.name ?? DEFAULT_CLIENT_TYPE.name}</span> • {profile.current.instance}
+            <span class="capitalize"
+              >{profile.current.client?.name ?? DEFAULT_CLIENT_TYPE.name}</span
+            >
+            • {profile.current.instance}
           </div>
         {/if}
       </div>
@@ -75,7 +78,10 @@
         <div class="font-medium text-sm">{p.username}</div>
         {#if !LINKED_INSTANCE_URL}
           <div class="text-xs text-slate-500 dark:text-zinc-500">
-            <span class="capitalize">{p.client?.name ?? DEFAULT_CLIENT_TYPE.name}</span> • {p.instance}
+            <span class="capitalize"
+              >{p.client?.name ?? DEFAULT_CLIENT_TYPE.name}</span
+            >
+            • {p.instance}
           </div>
         {/if}
       </div>
@@ -95,10 +101,7 @@
       {/if}
     </MenuButton>
   {/each}
-  <MenuButton href="/accounts">
-    {#snippet prefix()}
-      <Icon src={UserGroup} size="16" micro />
-    {/snippet}
+  <MenuButton href="/accounts" icon={UserGroup}>
     {$t('account.accounts')}
   </MenuButton>
 </Menu>

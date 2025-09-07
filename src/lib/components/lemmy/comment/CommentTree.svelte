@@ -1,12 +1,12 @@
 <script lang="ts">
   import { browser } from '$app/environment'
   import { goto } from '$app/navigation'
-  import { t } from '$lib/i18n/translations'
   import { client } from '$lib/client/lemmy.svelte'
-  import { errorMessage } from '$lib/lemmy/error'
   import type { Post } from '$lib/client/types'
+  import { t } from '$lib/i18n/translations'
+  import { errorMessage } from '$lib/lemmy/error'
   import { Button, toast } from 'mono-svelte'
-  import { ArrowDownCircle, Icon } from 'svelte-hero-icons'
+  import { ArrowDownCircle } from 'svelte-hero-icons'
   import Comment from './Comment.svelte'
   import Comments from './CommentTree.svelte'
   import { buildCommentsTree, type CommentNodeI } from './comments.svelte'
@@ -129,15 +129,8 @@
               )
             }
           }}
+          icon={ArrowDownCircle}
         >
-          {#snippet prefix()}
-            <Icon
-              src={ArrowDownCircle}
-              micro
-              size="16"
-              class="text-primary-900 dark:text-primary-100"
-            />
-          {/snippet}
           {$t('comment.more', {
             comments: node.comment_view.counts.child_count,
           })}

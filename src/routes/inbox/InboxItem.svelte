@@ -1,17 +1,17 @@
 <script lang="ts">
   import { notifications, profile } from '$lib/auth.svelte.js'
+  import { getClient } from '$lib/client/lemmy.svelte'
+  import { CommentItem } from '$lib/components/lemmy/comment'
   import PrivateMessage from '$lib/components/lemmy/inbox/PrivateMessage.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import Expandable from '$lib/components/ui/Expandable.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
   import { t } from '$lib/i18n/translations'
-  import { getClient } from '$lib/client/lemmy.svelte'
   import type { InboxItem } from '$lib/lemmy/inbox.js'
   import { escapeHtml } from '$lib/util.svelte'
   import { Button } from 'mono-svelte'
-  import { Eye, EyeSlash, Icon } from 'svelte-hero-icons'
-  import { CommentItem } from '$lib/components/lemmy/comment'
+  import { Eye, EyeSlash } from 'svelte-hero-icons'
 
   interface Props {
     item: InboxItem
@@ -99,10 +99,8 @@
           size="sm"
           rounding="pill"
           class="shrink-0"
+          icon={item.read ? EyeSlash : Eye}
         >
-          {#snippet prefix()}
-            <Icon src={item.read ? EyeSlash : Eye} size="16" micro />
-          {/snippet}
           {item.read
             ? $t('post.actions.more.markUnread')
             : $t('post.actions.more.markRead')}
@@ -132,10 +130,8 @@
         }}
         size="sm"
         rounding="pill"
+        icon={item.read ? EyeSlash : Eye}
       >
-        {#snippet prefix()}
-          <Icon src={item.read ? EyeSlash : Eye} size="16" micro />
-        {/snippet}
         {item.read
           ? $t('post.actions.more.markUnread')
           : $t('post.actions.more.markRead')}

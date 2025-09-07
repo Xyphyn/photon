@@ -172,10 +172,7 @@
 {#if data.site && data.instances.value?.blocked}
   <FileInput preview={false} bind:files={csv}>
     {#snippet button()}
-      <Button class="w-max">
-        {#snippet prefix()}
-          <Icon src={Plus} mini size="18" />
-        {/snippet}
+      <Button class="w-max" icon={Plus}>
         {$t('routes.admin.federation.csv')}
       </Button>
     {/snippet}
@@ -235,11 +232,8 @@
                         (i) => i.id != instance.id,
                       )
                   }}
-                >
-                  {#snippet prefix()}
-                    <Icon src={XMark} size="16" mini />
-                  {/snippet}
-                </Button>
+                  icon={XMark}
+                ></Button>
               </div>
             {/each}
           {:else}
@@ -319,11 +313,8 @@
                         (i) => i.id != instance.id,
                       )
                   }}
-                >
-                  {#snippet prefix()}
-                    <Icon src={XMark} size="16" mini />
-                  {/snippet}
-                </Button>
+                  icon={XMark}
+                ></Button>
               </div>
             {/each}
           {:else}

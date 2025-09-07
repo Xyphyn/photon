@@ -1,22 +1,22 @@
 <script lang="ts">
   import { profile } from '$lib/auth.svelte.js'
-  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
-  import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
-  import Entity from '$lib/components/ui/Entity.svelte'
-  import CommonList from '$lib/components/ui/layout/CommonList.svelte'
-  import { Header } from '$lib/components/ui/layout'
-  import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import { t } from '$lib/i18n/translations.js'
+  import { client } from '$lib/client/lemmy.svelte.js'
   import type {
     CommunityBlockView,
     InstanceBlockView,
     PersonBlockView,
   } from '$lib/client/types'
-  import { Button } from 'mono-svelte'
-  import { Check, Icon, XMark } from 'svelte-hero-icons'
-  import type { PageData } from './$types.js'
-  import { client } from '$lib/client/lemmy.svelte.js'
   import { CommunityLink } from '$lib/components/lemmy/community'
+  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
+  import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
+  import Entity from '$lib/components/ui/Entity.svelte'
+  import { Header } from '$lib/components/ui/layout'
+  import CommonList from '$lib/components/ui/layout/CommonList.svelte'
+  import Placeholder from '$lib/components/ui/Placeholder.svelte'
+  import { t } from '$lib/i18n/translations.js'
+  import { Button } from 'mono-svelte'
+  import { Check, XMark } from 'svelte-hero-icons'
+  import type { PageData } from './$types.js'
 
   interface Props {
     // sveltekit doesn't feel like making types work right now
@@ -109,11 +109,8 @@
                 size="square-md"
                 rounding="pill"
                 onclick={() => unblockCommunity(block)}
-              >
-                {#snippet prefix()}
-                  <Icon src={XMark} micro size="16" />
-                {/snippet}
-              </Button>
+                icon={XMark}
+              ></Button>
             </div>
           {/snippet}
         </CommonList>
@@ -139,11 +136,8 @@
                 size="square-md"
                 rounding="pill"
                 onclick={() => unblockUser(block)}
-              >
-                {#snippet prefix()}
-                  <Icon src={XMark} micro size="16" />
-                {/snippet}
-              </Button>
+                icon={XMark}
+              ></Button>
             </div>
           {/snippet}
         </CommonList>
@@ -173,11 +167,8 @@
                 size="square-md"
                 rounding="pill"
                 onclick={() => unblockInstances(block)}
-              >
-                {#snippet prefix()}
-                  <Icon src={XMark} micro size="16" />
-                {/snippet}
-              </Button>
+                icon={XMark}
+              ></Button>
             </div>
           {/snippet}
         </CommonList>

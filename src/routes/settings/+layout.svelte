@@ -3,14 +3,9 @@
   import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
   import { t } from '$lib/i18n/translations'
   import { defaultSettings, settings } from '$lib/settings.svelte'
-  import { Button, toast, Modal, modal, action } from 'mono-svelte'
+  import { action, Button, Modal, modal, toast } from 'mono-svelte'
   import TextArea from 'mono-svelte/forms/TextArea.svelte'
-  import {
-    ArrowDownTray,
-    ArrowPath,
-    ArrowUpTray,
-    Icon,
-  } from 'svelte-hero-icons'
+  import { ArrowDownTray, ArrowPath, ArrowUpTray } from 'svelte-hero-icons'
 
   let { children } = $props()
   let importing = $state(false)
@@ -57,10 +52,8 @@
           importing = true
         }}
         rounding="pill"
+        icon={ArrowDownTray}
       >
-        {#snippet prefix()}
-          <Icon src={ArrowDownTray} mini size="18" />
-        {/snippet}
         {$t('settings.import')}
       </Button>
       <Button
@@ -70,10 +63,8 @@
           toast({ content: $t('toast.copied') })
         }}
         rounding="pill"
+        icon={ArrowUpTray}
       >
-        {#snippet prefix()}
-          <Icon src={ArrowUpTray} mini size="18" />
-        {/snippet}
         {$t('settings.export')}
       </Button>
       <Button
@@ -95,10 +86,8 @@
           })
         }}
         rounding="pill"
+        icon={ArrowPath}
       >
-        {#snippet prefix()}
-          <Icon src={ArrowPath} mini size="18" />
-        {/snippet}
         {$t('settings.reset')}
       </Button>
     </div>

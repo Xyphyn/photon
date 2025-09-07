@@ -139,7 +139,6 @@
     loading.subscribing = false
   }
 
-
   let setFlair = $state(false)
 
   interface Props {
@@ -155,7 +154,6 @@
   }: Props = $props()
 </script>
 
-
 {#await community_view}
   <div
     class="w-full h-full grid place-items-center"
@@ -165,9 +163,12 @@
     <Spinner width={24} />
   </div>
 {:then community_view}
-<Modal title={$t('cards.community.flair')} bind:open={setFlair}>
-  <CommunityFlair community={community_view.community.id} onsubmit={() => setFlair = !setFlair} />
-</Modal>
+  <Modal title={$t('cards.community.flair')} bind:open={setFlair}>
+    <CommunityFlair
+      community={community_view.community.id}
+      onsubmit={() => (setFlair = !setFlair)}
+    />
+  </Modal>
   <aside
     class={[
       'min-w-full pt-0 text-slate-600 dark:text-zinc-400 flex flex-col gap-1',
@@ -198,7 +199,7 @@
     </EndPlaceholder>
     {#if profile.current?.jwt}
       {@const subscribed = profile.current.user?.follows.some(
-        i => i.community.id == community_view.community.id,
+        (i) => i.community.id == community_view.community.id,
       )}
       <Button
         disabled={loading.subscribing}
@@ -209,25 +210,19 @@
         onclick={() => subscribe(community_view)}
         class="px-4 relative z-[inherit]"
         alignment="left"
+        icon={community_view.subscribed == 'Subscribed' ? Check : Plus}
       >
-        {#snippet prefix()}
-          <Icon
-            src={community_view.subscribed == 'Subscribed' ? Check : Plus}
-            mini
-            size="16"
-          />
-        {/snippet}
         {subscribed
           ? $t('cards.community.subscribed')
           : $t('cards.community.subscribe')}
       </Button>
-    {#if client().setFlair}
-      <SidebarButton
-        onclick={() => setFlair = !setFlair}
-        rounding="xl"
-        icon={Tag}
-        label={$t('cards.community.flair')}
-      />
+      {#if client().setFlair}
+        <SidebarButton
+          onclick={() => (setFlair = !setFlair)}
+          rounding="xl"
+          icon={Tag}
+          label={$t('cards.community.flair')}
+        />
       {/if}
     {/if}
     {#if profile.current?.user && amMod(profile.current.user, community_view.community)}
@@ -269,10 +264,8 @@
           size="lg"
           onclick={() =>
             block(community_view.community.id, !community_view.blocked)}
+          icon={NoSymbol}
         >
-          {#snippet prefix()}
-            <Icon src={NoSymbol} size="16" mini />
-          {/snippet}
           {community_view.blocked
             ? $t('cards.community.unblock')
             : $t('cards.community.block')}
@@ -282,10 +275,8 @@
             color="danger-subtle"
             size="lg"
             onclick={() => blockInstance(community_view.community.instance_id)}
+            icon={BuildingOffice2}
           >
-            {#snippet prefix()}
-              <Icon src={BuildingOffice2} size="16" mini />
-            {/snippet}
             {$t('cards.community.blockInstance')}
           </MenuButton>
         {/if}
@@ -312,10 +303,8 @@
                 dismissable: true,
                 type: 'error',
               })}
+            icon={Fire}
           >
-            {#snippet prefix()}
-              <Icon src={Fire} size="16" mini />
-            {/snippet}
             {$t('admin.purge')}
           </MenuButton>
         {/if}
@@ -364,7 +353,7 @@
             </span>
           {/snippet}
           <ItemList
-            items={moderators.map(i => ({
+            items={moderators.map((i) => ({
               id: i.moderator.id,
               name: i.moderator.display_name || i.moderator.name,
               url: userLink(i.moderator),

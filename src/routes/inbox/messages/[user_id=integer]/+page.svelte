@@ -109,11 +109,12 @@
   {$t('filter.inbox.messages')}
   {#snippet extended()}
     <div class="flex flex-wrap gap-4">
-      <Button size="square-md" href="." title={$t('common.back')}>
-        {#snippet prefix()}
-          <Icon src={ArrowLeft} micro size="16" />
-        {/snippet}
-      </Button>
+      <Button
+        size="square-md"
+        href="."
+        title={$t('common.back')}
+        icon={ArrowLeft}
+      ></Button>
       <UserLink avatar user={data.creator.value.person_view.person} />
     </div>
   {/snippet}
@@ -239,11 +240,8 @@
           submit
           loading={textbox.loading}
           disabled={textbox.loading}
-        >
-          {#snippet prefix()}
-            <Icon src={PaperAirplane} size="18" micro />
-          {/snippet}
-        </Button>
+          icon={PaperAirplane}
+        ></Button>
       </div>
     </form>
   </div>

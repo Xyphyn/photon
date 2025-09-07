@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { preventDefault } from 'svelte/legacy'
-
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
   import { profile } from '$lib/auth.svelte.js'
@@ -20,10 +18,10 @@
   import { errorMessage } from '$lib/lemmy/error.js'
   import {
     Button,
-    Checkbox,
     Label,
     Material,
     Spinner,
+    Switch,
     TextInput,
     toast,
   } from 'mono-svelte'
@@ -155,7 +153,10 @@
   {#if stage == 'signup'}
     <form
       class="flex flex-col gap-4 h-full w-full flex-2/3"
-      onsubmit={preventDefault(submit)}
+      onsubmit={(e) => {
+        e.preventDefault()
+        submit()
+      }}
     >
       <Button href="/accounts" class=" mb-4 w-max" rounding="pill">
         <Icon src={ArrowLeft} size="16" micro />
@@ -267,7 +268,7 @@
             </div>
           </Material>
         {/if}
-        <Checkbox bind:checked={nsfw}>{$t('form.profile.showNSFW')}</Checkbox>
+        <Switch bind:checked={nsfw}>{$t('form.profile.showNSFW')}</Switch>
         <input type="dn" name="honeypot" bind:value={honeypot} class="hidden" />
         <Button
           submit

@@ -96,10 +96,7 @@
   >
     <MarkdownEditor bind:value={newTagline} images={false} />
 
-    <Button size="lg" submit>
-      {#snippet prefix()}
-        <Icon src={Plus} size="16" mini />
-      {/snippet}
+    <Button size="lg" submit icon={Plus}>
       {$t('common.add')}
     </Button>
   </form>
@@ -127,10 +124,7 @@
             images={false}
           />
 
-          <Button size="lg" submit>
-            {#snippet prefix()}
-              <Icon src={Plus} size="16" mini />
-            {/snippet}
+          <Button size="lg" submit icon={Plus}>
             {$t('common.add')}
           </Button>
         </form>

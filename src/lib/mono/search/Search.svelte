@@ -70,13 +70,13 @@
         <TextInput
           {@attach attachment}
           bind:value={query}
-          oninput={e => {
+          oninput={(e) => {
             searching = true
             openMenu = true
             oninput?.(e)
             debounceFunc()
           }}
-          onfocus={e => {
+          onfocus={(e) => {
             searching = true
             openMenu = true
             oninput?.(e)
