@@ -6,14 +6,14 @@
   import { t } from '$lib/i18n/translations'
   import { resumables } from '$lib/lemmy/item'
   import { theme } from '$lib/ui/colors.svelte'
+  import { fuzzySearch } from '$lib/util.svelte'
   import { TextInput } from 'mono-svelte'
   import { createEventDispatcher, onMount } from 'svelte'
   import { Home, Icon, MagnifyingGlass } from 'svelte-hero-icons'
+  import EndPlaceholder from '../../EndPlaceholder.svelte'
+  import CommonList from '../../layout/CommonList.svelte'
   import { getGroups, type Action, type Group } from './actions.svelte'
   import CommandItem from './CommandItem.svelte'
-  import { fuzzySearch } from '$lib/util.svelte'
-  import CommonList from '../../layout/CommonList.svelte'
-  import EndPlaceholder from '../../EndPlaceholder.svelte'
 
   interface Props {
     open?: boolean

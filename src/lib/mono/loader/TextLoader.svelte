@@ -8,7 +8,11 @@
   let { children }: Props = $props()
 </script>
 
-<div class="text-loader">
+<div
+  class="text-loader font-medium text-lg tracking-tight"
+  aria-busy="true"
+  aria-live="polite"
+>
   {@render children?.()}
 </div>
 
