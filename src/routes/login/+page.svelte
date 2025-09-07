@@ -1,8 +1,9 @@
 <script lang="ts">
-  import { preventDefault } from 'svelte/legacy'
-
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
+  import { profile } from '$lib/auth.svelte'
+  import { DEFAULT_CLIENT_TYPE, type ClientType } from '$lib/client/base'
+  import { client } from '$lib/client/lemmy.svelte'
   import ErrorContainer, {
     clearErrorScope,
     pushError,
@@ -13,18 +14,15 @@
     DEFAULT_INSTANCE_URL,
     LINKED_INSTANCE_URL,
   } from '$lib/instance.svelte.js'
-  import { getClient, mayBeIncompatible, site } from '$lib/lemmy.svelte.js'
   import { errorMessage } from '$lib/lemmy/error'
   import { DOMAIN_REGEX_FORMS } from '$lib/util.svelte.js'
-  import { MINIMUM_VERSION } from '$lib/version.js'
-  import { Button, Note, TextInput, toast } from 'mono-svelte'
+  import { Button, Note, Option, Select, TextInput, toast } from 'mono-svelte'
   import {
     Icon,
     Identification,
     QuestionMarkCircle,
     UserCircle,
   } from 'svelte-hero-icons'
-  import { profile } from '$lib/auth.svelte'
 
   interface Props {
     ref?: string
@@ -34,13 +32,22 @@
   let { ref = page.url.searchParams.get('redirect') ?? '/', children }: Props =
     $props()
 
-  let data = $state({
+  let data = $state<{
+    instance: string
+    username: string
+    password: string
+    totp: string
+    loading: boolean
+    attempts: number
+    client: ClientType
+  }>({
     instance: DEFAULT_INSTANCE_URL,
     username: '',
     password: '',
     totp: '',
     loading: false,
     attempts: 0,
+    client: DEFAULT_CLIENT_TYPE,
   })
 
   async function logIn() {
@@ -50,14 +57,22 @@
     try {
       data.instance = data.instance.trim()
 
-      const response = await getClient(data.instance).login({
+      const response = await client({
+        instanceURL: data.instance,
+        clientType: data.client,
+        auth: '',
+      }).login({
         username_or_email: data.username.trim(),
         password: data.password,
         totp_2fa_token: data.totp,
       })
 
       if (response?.jwt) {
-        const result = await profile.add(response.jwt, data.instance)
+        const result = await profile.add(
+          response.jwt,
+          data.instance,
+          data.client,
+        )
 
         if (result) {
           toast({ content: $t('toast.logIn'), type: 'success' })
@@ -92,19 +107,23 @@
 </svelte:head>
 
 <div class="max-w-xl w-full mx-auto h-max my-auto">
-  <form onsubmit={preventDefault(logIn)} class="flex flex-col gap-5">
+  <form
+    onsubmit={e => {
+      e.preventDefault()
+      logIn()
+    }}
+    class="flex flex-col gap-5"
+  >
     <div class="flex flex-col">
       {@render children?.()}
       <Header>{$t('account.login')}</Header>
-      {#if site.data && mayBeIncompatible(MINIMUM_VERSION, site.data.version.replace('v', ''))}
-        <Note>
-          {$t('account.versionGate', {
-            version: `v${MINIMUM_VERSION}`,
-          })}
-        </Note>
-      {/if}
       <ErrorContainer class="pt-2" scope={page.route.id} />
     </div>
+    {#if data.client.name == 'piefed'}
+      <Note>
+        {$t('account.piefedGate')}
+      </Note>
+    {/if}
     <div class="flex flex-row w-full items-center gap-2">
       <TextInput
         id="username"
@@ -120,12 +139,32 @@
           placeholder={DEFAULT_INSTANCE_URL}
           disabled={LINKED_INSTANCE_URL != undefined}
           bind:value={data.instance}
-          class="flex-1"
+          class="flex-1 overflow-hidden"
           required
           pattern={DOMAIN_REGEX_FORMS}
           autocorrect="off"
           autocapitalize="none"
-        />
+        >
+          {#snippet suffix()}
+            <Select
+              bind:value={
+                () => {
+                  if (data.client.name == 'lemmy') return 'lemmyv3'
+                  else return 'piefedvalpha'
+                },
+                v => {
+                  if (v == 'lemmyv3')
+                    data.client = { name: 'lemmy', baseUrl: '/api/v3' }
+                  else data.client = { name: 'piefed', baseUrl: '/api/alpha' }
+                }
+              }
+              class="border-0 rounded-none! border-l"
+            >
+              <Option value="lemmyv3">Lemmy</Option>
+              <Option value="piefedvalpha">Piefed</Option>
+            </Select>
+          {/snippet}
+        </TextInput>
       {/if}
     </div>
     <div class="flex flex-row gap-2">

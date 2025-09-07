@@ -22,7 +22,7 @@
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { t } from '$lib/i18n/translations'
   import { DEFAULT_INSTANCE_URL } from '$lib/instance.svelte.js'
-  import { validateInstance } from '$lib/lemmy.svelte.js'
+  import { validateInstance } from '$lib/client/lemmy.svelte'
   import { Button, TextInput, toast } from 'mono-svelte'
   import { onMount } from 'svelte'
   import { ArrowLeft, Icon } from 'svelte-hero-icons'

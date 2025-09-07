@@ -1,7 +1,7 @@
 import { resolveRoute } from '$app/paths'
 import { profile } from '$lib/auth.svelte.js'
 import CommunityCard from '$lib/components/lemmy/community/CommunityCard.svelte'
-import { client } from '$lib/lemmy.svelte.js'
+import { client } from '$lib/client/lemmy.svelte'
 import { postFeeds } from '$lib/lemmy/postfeed.svelte.js'
 import { ReactiveState, awaitIfServer } from '$lib/promise.svelte.js'
 import { settings } from '$lib/settings.svelte'
@@ -11,7 +11,7 @@ import type {
   PostView,
   CommunityModeratorView,
   CommunityView,
-} from 'lemmy-js-client'
+} from '$lib/client/types'
 
 interface PartialPost {
   post_view: PostView
@@ -92,7 +92,6 @@ export async function load({ params, url, fetch }) {
   const commentParams: GetComments = {
     post_id: Number(params.id),
     type_: 'All',
-    page: 1,
     max_depth: max_depth,
     saved_only: false,
     sort: sort,

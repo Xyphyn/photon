@@ -1,5 +1,5 @@
 import { profile } from '$lib/auth.svelte'
-import { client } from '$lib/lemmy.svelte.js'
+import { client } from '$lib/client/lemmy.svelte'
 import { ReactiveState } from '$lib/promise.svelte.js'
 
 export async function load({ fetch, url }) {

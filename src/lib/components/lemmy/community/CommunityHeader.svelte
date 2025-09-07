@@ -13,8 +13,8 @@
     CommunityAggregates,
     CommunityModeratorView,
     SubscribedType,
-  } from 'lemmy-js-client'
-  import { action, Button, Menu, MenuButton, modal, toast } from 'mono-svelte'
+  } from '$lib/client/types'
+  import { action, Button, Menu, MenuButton, Modal, modal, toast } from 'mono-svelte'
   import {
     BuildingOffice2,
     Check,
@@ -26,11 +26,13 @@
     NoSymbol,
     Plus,
     ShieldCheck,
+    Tag,
   } from 'svelte-hero-icons'
   import Subscribe from '../../../../routes/communities/Subscribe.svelte'
   import ItemList from '../generic/ItemList.svelte'
   import { amMod, isAdmin } from '../moderation/moderation'
   import { block, blockInstance, purgeCommunity } from './CommunityCard.svelte'
+  import CommunityFlair from './CommunityFlair.svelte'
 
   interface Props {
     community: Community
@@ -55,7 +57,14 @@
     compact,
     ...rest
   }: Props = $props()
+
+  let setFlair = $state(false)
 </script>
+
+
+<Modal title={$t('cards.community.flair')} bind:open={setFlair}>
+  <CommunityFlair community={community.id} onsubmit={() => setFlair = !setFlair} />
+</Modal>
 
 <EntityHeader
   {...rest}
@@ -157,6 +166,10 @@
           </Button>
         {/snippet}
       </Subscribe>
+
+      <Button size="custom" class="h-9 aspect-square" rounding="pill" onclick={() => setFlair = !setFlair} aria-label={$t('cards.community.flair')}>
+        <Icon src={Tag} size="16" micro />
+      </Button>
     {/if}
 
     {#if profile.current?.user && profile.current.user.moderates

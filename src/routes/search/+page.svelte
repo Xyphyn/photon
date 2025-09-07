@@ -1,6 +1,7 @@
 <script lang="ts">
   import { navigating, page } from '$app/state'
   import { profile } from '$lib/auth.svelte.js'
+  import { client } from '$lib/client/lemmy.svelte'
   import ObjectAutocomplete from '$lib/components/lemmy/ObjectAutocomplete.svelte'
   import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
   import CommunityItem from '$lib/components/lemmy/community/CommunityItem.svelte'
@@ -21,7 +22,7 @@
     isUser,
   } from '$lib/lemmy/item.js'
   import { searchParam } from '$lib/util.svelte.js'
-  import { Button, Select, Spinner, TextLoader } from 'mono-svelte'
+  import { Button, Select, TextLoader } from 'mono-svelte'
   import Option from 'mono-svelte/forms/select/Option.svelte'
   import {
     AdjustmentsHorizontal,
@@ -55,6 +56,7 @@
 <Header pageHeader>
   {$t('routes.search.title')}
   {#snippet extended()}
+    {@const clientType = client().type.name}
     <form method="get" action="/search" class="contents" bind:this={form}>
       <SearchBar bind:query={data.filters.value.query} />
       <div class="flex flex-row flex-wrap items-center gap-4">
@@ -69,9 +71,13 @@
               {$t('filter.type')}
             </span>
           {/snippet}
-          <Option value="All">{$t('content.all')}</Option>
+          {#if clientType == 'lemmy'}
+            <Option value="All">{$t('content.all')}</Option>
+          {/if}
           <Option value="Posts">{$t('content.posts')}</Option>
-          <Option value="Comments">{$t('content.comments')}</Option>
+          {#if clientType == 'lemmy'}
+            <Option value="Comments">{$t('content.comments')}</Option>
+          {/if}
           <Option value="Communities">{$t('content.communities')}</Option>
           <Option value="Users">{$t('content.users')}</Option>
           <Option value="Url">{$t('content.url')}</Option>

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { PostView } from 'lemmy-js-client'
+  import type { PostView } from '$lib/client/types'
   import Post from './Post.svelte'
 
   interface Props {

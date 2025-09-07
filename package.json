@@ -1,6 +1,6 @@
 {
   "name": "photon-lemmy",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "license": "AGPL-3.0-only",
   "devDependencies": {
     "@dicebear/core": "^8.0.1",
@@ -26,6 +26,7 @@
     "marked": "7.0.5",
     "marked-linkify-it": "^3.1.13",
     "nprogress": "^0.2.0",
+    "openapi-fetch": "^0.14.0",
     "postcss": "^8.4.30",
     "prettier": "^3.3.3",
     "prettier-plugin-svelte": "^3.2.7",

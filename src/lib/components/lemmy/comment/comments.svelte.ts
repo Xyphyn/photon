@@ -1,5 +1,5 @@
 import { t } from '$lib/i18n/translations'
-import type { Comment, CommentView } from 'lemmy-js-client'
+import type { Comment, CommentView } from '$lib/client/types'
 import { SvelteMap } from 'svelte/reactivity'
 
 export interface CommentNodeI {

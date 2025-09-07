@@ -8,12 +8,12 @@
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { t } from '$lib/i18n/translations.js'
-  import { getClient } from '$lib/lemmy.svelte.js'
+  import { getClient } from '$lib/client/lemmy.svelte'
   import type {
     CommunityBlockView,
     InstanceBlockView,
     PersonBlockView,
-  } from 'lemmy-js-client'
+  } from '$lib/client/types'
   import { Button } from 'mono-svelte'
   import { Check, Icon, XMark } from 'svelte-hero-icons'
   import type { PageData } from './$types.js'

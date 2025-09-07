@@ -2,7 +2,7 @@
   import { profile } from '$lib/auth.svelte.js'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import { t } from '$lib/i18n/translations'
-  import { getClient } from '$lib/lemmy.svelte'
+  import { getClient } from '$lib/client/lemmy.svelte'
   import { buttonColor, toast } from 'mono-svelte'
   import { ChevronDown, ChevronUp, Icon } from 'svelte-hero-icons'
   import { backOut } from 'svelte/easing'

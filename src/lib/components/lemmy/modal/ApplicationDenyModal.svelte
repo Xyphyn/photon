@@ -4,7 +4,7 @@
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { t } from '$lib/i18n/translations'
-  import type { Person } from 'lemmy-js-client'
+  import type { Person } from '$lib/client/types'
   import { Button, Modal } from 'mono-svelte'
 
   interface Props {

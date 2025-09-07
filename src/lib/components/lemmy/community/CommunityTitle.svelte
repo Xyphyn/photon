@@ -1,6 +1,6 @@
 <script lang="ts">
   import Avatar from '$lib/components/ui/Avatar.svelte'
-  import type { Community } from 'lemmy-js-client'
+  import type { Community } from '$lib/client/types'
 
   interface Props {
     community: Community

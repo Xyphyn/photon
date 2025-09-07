@@ -62,7 +62,8 @@
         "moveUp": "Move up",
         "moveDown": "Move down",
         "guest": "Guest",
-        "versionGate": "This version of Photon supports instances running {{version}} or higher."
+        "versionGate": "This version of Photon supports instances running {{version}} or higher.",
+        "piefedGate": "Piefed support is experimental. Some features are not supported."
     },
     "filter": {
         "location": {
@@ -71,7 +72,8 @@
             "local": "Local",
             "subscribed": "Subscriptions",
             "moderator": "Moderator",
-            "global": "Global"
+            "global": "Global",
+            "popular": "Popular"
         },
         "sort": {
             "label": "Sort",
@@ -498,7 +500,8 @@
             "block": "Block",
             "unblock": "Unblock",
             "blockInstance": "Block instance",
-            "activeDay": "Active Today"
+            "activeDay": "Active Today",
+            "flair": "Set my flair"
         }
     },
     "admin": {
@@ -893,10 +896,10 @@
         "incorrect_login_12": "...",
         "registration_application_is_pending": "The registration application for that account hasn't been accepted yet.",
         "couldnt_find_post": "That post doesn't exist, isn't on this instance, or was removed.",
-        "cant_block_yourself": "You can't block yourself. You shouldn't either, you're a nice person!",
+        "cant_block_yourself": "You can't block yourself. You shouldn't either, you're (probably) a great person!",
         "email_not_verified": "Your account's email isn't verified.",
         "passwords_do_not_match": "Your input password and the verification password do not match.",
-        "honeypot_failed": "How did you- are you a bot? Beep bop bap boop. If you're not, the Honeypot check failed.",
+        "honeypot_failed": "Are you a bot? Beep bop bap boop. If you're not, the Honeypot check failed.",
         "downvotes_are_disabled": "Downvotes are disabled on this instance.",
         "email_already_exists": "An account already exists with that email.",
         "slurs": "Your submission contains a term banned in this instance.",
@@ -907,7 +910,9 @@
         "couldnt_find_person": "That user doesn't exist.",
         "couldnt_find_community": "That community doesn't exist.",
         "not_an_admin": "You are not an admin of this instance.",
-        "rate_limit_error": "You are performing that action too fast."
+        "rate_limit_error": "You are performing that action too fast.",
+        "unimplemented": "That function of your account's instance is not yet supported by Photon.",
+        "unsupported": "That function is not supported by your account's instance."
     },
     "aria": {
         "pagination": {

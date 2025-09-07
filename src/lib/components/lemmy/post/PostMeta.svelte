@@ -54,7 +54,7 @@
   import { t } from '$lib/i18n/translations'
   import { instance } from '$lib/instance.svelte'
   import { settings, type View } from '$lib/settings.svelte'
-  import type { Community, Person, SubscribedType } from 'lemmy-js-client'
+  import type { Community, Person, SubscribedType } from '$lib/client/types'
   import { Badge, modal, Popover } from 'mono-svelte'
   import {
     Bookmark,

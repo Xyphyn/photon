@@ -4,7 +4,7 @@
   import { t } from '$lib/i18n/translations'
   import { userLink } from '$lib/lemmy/generic'
   import { settings } from '$lib/settings.svelte'
-  import type { PersonView, SiteView, Tagline } from 'lemmy-js-client'
+  import type { PersonView, SiteView, Tagline } from '$lib/client/types'
   import { Badge } from 'mono-svelte'
   import {
     BuildingOffice,

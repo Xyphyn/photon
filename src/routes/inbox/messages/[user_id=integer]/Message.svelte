@@ -3,7 +3,7 @@
   import { publishedToDate } from '$lib/components/util/date'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import { t } from '$lib/i18n/translations'
-  import type { PrivateMessageView } from 'lemmy-js-client'
+  import type { PrivateMessageView } from '$lib/client/types'
   import { Button, Menu, MenuButton } from 'mono-svelte'
   import { EllipsisVertical, Flag, Icon, Trash } from 'svelte-hero-icons'
 

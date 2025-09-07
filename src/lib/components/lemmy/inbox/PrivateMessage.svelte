@@ -2,7 +2,7 @@
   import { profile } from '$lib/auth.svelte.js'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
-  import type { PrivateMessageView } from 'lemmy-js-client'
+  import type { PrivateMessageView } from '$lib/client/types'
 
   interface Props {
     message: PrivateMessageView

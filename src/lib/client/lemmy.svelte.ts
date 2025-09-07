@@ -2,7 +2,10 @@ import { profile } from '$lib/auth.svelte'
 import { DEFAULT_INSTANCE_URL } from '$lib/instance.svelte.js'
 import { instanceToURL } from '$lib/util.svelte'
 import { error } from '@sveltejs/kit'
-import { LemmyHttp, type GetSiteResponse } from 'lemmy-js-client'
+import { type GetSiteResponse } from '$lib/client/types'
+import { LemmyClient } from './lemmy/lemmy'
+import { PiefedClient } from './piefed/piefed'
+import { DEFAULT_CLIENT_TYPE, type ClientType, BaseClient } from './base'
 
 class SiteData {
   #data = $state<GetSiteResponse>()
@@ -52,6 +55,7 @@ export function client({
   instanceURL,
   func,
   auth,
+  clientType,
 }: {
   instanceURL?: string
   func?: (
@@ -59,22 +63,30 @@ export function client({
     init?: RequestInit | undefined,
   ) => Promise<Response>
   auth?: string
-} = {}) {
+  clientType?: ClientType
+} = {}): BaseClient {
   if (!instanceURL)
     instanceURL = profile.current.instance || DEFAULT_INSTANCE_URL
 
+  if (!clientType) {
+    clientType = profile.current.client ?? DEFAULT_CLIENT_TYPE
+  }
+
   // we use nullish coealsiaihsa something so that
   // we can set auth = '' to remove it
+
   const jwt = auth ?? profile.current?.jwt
 
   // but not here, so that if jwt == '', it doesnt put a bearer
   const headers = jwt ? { authorization: `Bearer ${jwt}` } : {}
 
-  return new LemmyHttp(instanceToURL(instanceURL), {
-    fetchFunction: (input, init) => customFetch(func, input, init, jwt),
-    // @ts-expect-error headers thing
-    headers: headers,
-  })
+  return new (clientType.name == 'piefed' ? PiefedClient : LemmyClient)(
+    instanceToURL(instanceURL),
+    {
+      fetchFunction: (input, init) => customFetch(func, input, init, jwt),
+      headers: headers,
+    },
+  )
 }
 
 // here for parts where i forgor to switch
@@ -85,49 +97,25 @@ export function getClient(
     init?: RequestInit | undefined,
   ) => Promise<Response>,
   auth?: string,
-): LemmyHttp {
+) {
   return client({ instanceURL, func, auth })
 }
 
-export async function validateInstance(instance: string): Promise<boolean> {
+export async function validateInstance(
+  instance: string,
+  type: ClientType,
+): Promise<boolean> {
   if (instance == '') return false
 
   try {
-    await client({ instanceURL: instance, auth: '' }).getSite()
+    await client({
+      instanceURL: instance,
+      clientType: type,
+      auth: '',
+    }).getSite()
 
     return true
   } catch {
     return false
   }
-}
-
-export function mayBeIncompatible(
-  minVersion: string,
-  availableVersion: string,
-) {
-  if (minVersion.valueOf() === availableVersion.valueOf()) return false
-
-  const versionFormatter = /[\d.]/
-  if (
-    !minVersion.match(versionFormatter) ||
-    !availableVersion.match(availableVersion)
-  ) {
-    return true
-  }
-
-  const splitMinVersion = minVersion.split('.')
-  const splitAvailableVersion = availableVersion.split('.')
-
-  if (splitMinVersion.length !== splitAvailableVersion.length) return true
-
-  for (let i = 0; i < splitMinVersion.length; ++i) {
-    const minVersionDigit = parseInt(splitMinVersion[i])
-    const availableVersionDigit = parseInt(splitAvailableVersion[i])
-
-    if (availableVersionDigit === undefined) return true
-    if (minVersionDigit < availableVersionDigit) return false
-    if (availableVersionDigit < minVersionDigit) return true
-  }
-
-  return false
 }

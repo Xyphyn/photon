@@ -3,15 +3,14 @@
 
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
+  import { profile } from '$lib/auth.svelte'
+  import { DEFAULT_CLIENT_TYPE, type ClientType } from '$lib/client/base'
+  import { validateInstance } from '$lib/client/lemmy.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { t } from '$lib/i18n/translations'
   import { LINKED_INSTANCE_URL } from '$lib/instance.svelte'
-  import { mayBeIncompatible } from '$lib/lemmy.svelte'
-  import { site, validateInstance } from '$lib/lemmy.svelte.js'
   import { DOMAIN_REGEX_FORMS } from '$lib/util.svelte'
-  import { MINIMUM_VERSION } from '$lib/version'
-  import { Button, Note, TextInput, toast } from 'mono-svelte'
-  import { profile } from '$lib/auth.svelte'
+  import { Button, Option, Select, TextInput, toast } from 'mono-svelte'
 
   interface Props {
     ref?: string
@@ -21,15 +20,21 @@
   let { ref = page.url.searchParams.get('redirect') ?? '/', children }: Props =
     $props()
 
-  let form = $state({
+  let form = $state<{
+    instance: string
+    username: string
+    loading: boolean
+    client: ClientType
+  }>({
     instance: '',
     username: `${$t('account.guest')} ${profile.meta.profiles.filter(p => p.jwt == undefined).length + 1}`,
     loading: false,
+    client: DEFAULT_CLIENT_TYPE,
   })
 
   async function addGuest() {
     form.loading = true
-    if (!(await validateInstance(form.instance))) {
+    if (!(await validateInstance(form.instance, form.client))) {
       toast({ content: $t('toast.failInstanceURL'), type: 'error' })
       form.loading = false
       return
@@ -40,6 +45,7 @@
       id: id,
       instance: form.instance,
       username: form.username,
+      client: form.client,
     })
     profile.meta.profile = id
 
@@ -56,13 +62,6 @@
     <div class="flex flex-col gap-2">
       {@render children?.()}
       <Header>{$t('account.addGuest')}</Header>
-      {#if site.data && mayBeIncompatible(MINIMUM_VERSION, site.data.version.replace('v', ''))}
-        <Note>
-          {$t('account.versionGate', {
-            version: `v${MINIMUM_VERSION}`,
-          })}
-        </Note>
-      {/if}
     </div>
     <div class="inline-flex items-center gap-2">
       <TextInput
@@ -80,8 +79,28 @@
           bind:value={form.instance}
           pattern={DOMAIN_REGEX_FORMS}
           placeholder="example.com"
-          class="flex-1"
-        />
+          class="flex-1 overflow-hidden"
+        >
+          {#snippet suffix()}
+            <Select
+              bind:value={
+                () => {
+                  if (form.client.name == 'lemmy') return 'lemmyv3'
+                  else return 'piefedvalpha'
+                },
+                v => {
+                  if (v == 'lemmyv3')
+                    form.client = { name: 'lemmy', baseUrl: '/api/v3' }
+                  else form.client = { name: 'piefed', baseUrl: '/api/alpha' }
+                }
+              }
+              class="border-0 rounded-none! border-l"
+            >
+              <Option value="lemmyv3">Lemmy</Option>
+              <Option value="piefedvalpha">Piefed</Option>
+            </Select>
+          {/snippet}
+        </TextInput>
       {/if}
     </div>
     <Button
