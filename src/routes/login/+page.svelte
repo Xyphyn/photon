@@ -1,10 +1,9 @@
 <script lang="ts">
-  import { preventDefault } from 'svelte/legacy'
-
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
   import { profile } from '$lib/auth.svelte'
-  import { client, mayBeIncompatible, site } from '$lib/client/lemmy.svelte'
+  import { DEFAULT_CLIENT_TYPE, type ClientType } from '$lib/client/base'
+  import { client } from '$lib/client/lemmy.svelte'
   import ErrorContainer, {
     clearErrorScope,
     pushError,
@@ -17,7 +16,6 @@
   } from '$lib/instance.svelte.js'
   import { errorMessage } from '$lib/lemmy/error'
   import { DOMAIN_REGEX_FORMS } from '$lib/util.svelte.js'
-  import { MINIMUM_VERSION } from '$lib/version.js'
   import { Button, Note, Option, Select, TextInput, toast } from 'mono-svelte'
   import {
     Icon,
@@ -25,7 +23,6 @@
     QuestionMarkCircle,
     UserCircle,
   } from 'svelte-hero-icons'
-  import { DEFAULT_CLIENT_TYPE, type ClientType } from '$lib/client/base'
 
   interface Props {
     ref?: string
@@ -110,19 +107,23 @@
 </svelte:head>
 
 <div class="max-w-xl w-full mx-auto h-max my-auto">
-  <form onsubmit={preventDefault(logIn)} class="flex flex-col gap-5">
+  <form
+    onsubmit={e => {
+      e.preventDefault()
+      logIn()
+    }}
+    class="flex flex-col gap-5"
+  >
     <div class="flex flex-col">
       {@render children?.()}
       <Header>{$t('account.login')}</Header>
-      {#if site.data && mayBeIncompatible(MINIMUM_VERSION, site.data.version.replace('v', ''))}
-        <Note>
-          {$t('account.versionGate', {
-            version: `v${MINIMUM_VERSION}`,
-          })}
-        </Note>
-      {/if}
       <ErrorContainer class="pt-2" scope={page.route.id} />
     </div>
+    {#if data.client.name == 'piefed'}
+      <Note>
+        {$t('account.piefedGate')}
+      </Note>
+    {/if}
     <div class="flex flex-row w-full items-center gap-2">
       <TextInput
         id="username"

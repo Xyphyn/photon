@@ -62,7 +62,8 @@
         "moveUp": "Move up",
         "moveDown": "Move down",
         "guest": "Guest",
-        "versionGate": "This version of Photon supports instances running {{version}} or higher."
+        "versionGate": "This version of Photon supports instances running {{version}} or higher.",
+        "piefedGate": "Piefed support is experimental. Some features are not supported."
     },
     "filter": {
         "location": {

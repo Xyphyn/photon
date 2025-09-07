@@ -3,16 +3,14 @@
 
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
+  import { profile } from '$lib/auth.svelte'
+  import { DEFAULT_CLIENT_TYPE, type ClientType } from '$lib/client/base'
+  import { validateInstance } from '$lib/client/lemmy.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import { t } from '$lib/i18n/translations'
   import { LINKED_INSTANCE_URL } from '$lib/instance.svelte'
-  import { mayBeIncompatible } from '$lib/client/lemmy.svelte'
-  import { site, validateInstance } from '$lib/client/lemmy.svelte'
   import { DOMAIN_REGEX_FORMS } from '$lib/util.svelte'
-  import { MINIMUM_VERSION } from '$lib/version'
-  import { Button, Note, Option, Select, TextInput, toast } from 'mono-svelte'
-  import { profile } from '$lib/auth.svelte'
-  import { DEFAULT_CLIENT_TYPE, type ClientType } from '$lib/client/base'
+  import { Button, Option, Select, TextInput, toast } from 'mono-svelte'
 
   interface Props {
     ref?: string
@@ -64,13 +62,6 @@
     <div class="flex flex-col gap-2">
       {@render children?.()}
       <Header>{$t('account.addGuest')}</Header>
-      {#if site.data && mayBeIncompatible(MINIMUM_VERSION, site.data.version.replace('v', ''))}
-        <Note>
-          {$t('account.versionGate', {
-            version: `v${MINIMUM_VERSION}`,
-          })}
-        </Note>
-      {/if}
     </div>
     <div class="inline-flex items-center gap-2">
       <TextInput

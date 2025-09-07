@@ -1,5 +1,6 @@
 <script lang="ts">
   import { browser } from '$app/environment'
+  import { site } from '$lib/client/lemmy.svelte'
   import Location from '$lib/components/lemmy/dropdowns/Location.svelte'
   import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
   import ViewSelect from '$lib/components/lemmy/dropdowns/ViewSelect.svelte'
@@ -10,7 +11,6 @@
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import Pageination from '$lib/components/ui/Pageination.svelte'
   import { t } from '$lib/i18n/translations.js'
-  import { site } from '$lib/client/lemmy.svelte'
   import { postFeeds } from '$lib/lemmy/postfeed.svelte.js'
   import { settings, SSR_ENABLED } from '$lib/settings.svelte.js'
   import Button from 'mono-svelte/button/Button.svelte'

@@ -21,7 +21,6 @@ Jump to:
 <img width="3220" height="1800" alt="Photon dark theme compact" src="https://github.com/user-attachments/assets/76b5278b-e5f9-4c0c-81ec-0820d3261223" />
 <img width="3220" height="1800" alt="Photon light theme cozy" src="https://github.com/user-attachments/assets/41d205fe-7d32-4b83-bfef-6aa9dd63e074" />
 
-
 ## Self-hosting
 
 You selfhost a Photon frontend server for your Lemmy instance, or independently for any instance.
@@ -39,6 +38,7 @@ To run an unconfigured Photon instance on port `8080`:
 ```sh
 docker run -p 8080:3000 ghcr.io/xyphyn/photon:latest
 ```
+
 ### Running natively
 
 Clone the repo:
@@ -80,7 +80,10 @@ Photon lets you configure the default client settings and more.
 If you're hosting Photon for a Lemmy instance, you' ll almost definitely want to set these:
 
 - `PUBLIC_INSTANCE_URL` `string`: The domain which **the browser** will send API requests to.
+
   - Example: `PUBLIC_INSTANCE_URL=fedi.phtn.app`
+
+- `PUBLIC_INSTANCE_TYPE` `lemmyv3 | piefedalpha` (default: `lemmyv3`): If your instance is running Piefed, you must set this option to `piefedalpha`. Otherwise, you don't need to do anything.
 
 - `PUBLIC_SSR_ENABLED` `boolean`: When enabled, will **make page requests be rendered server side first**, which allows search engine indexing, and basic non-js usage.
 
