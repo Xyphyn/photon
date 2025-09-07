@@ -44,7 +44,7 @@
 </script>
 
 <svelte:window
-  onkeydown={e => {
+  onkeydown={(e) => {
     if (e.target == document.body) searchElement?.focus()
   }}
 />
@@ -111,7 +111,7 @@
       jwt={profile.current?.jwt}
       listing_type="All"
       showWhenEmpty={true}
-      onselect={c =>
+      onselect={(c) =>
         searchParam(page.url, 'community', c?.id || undefined, 'page')}
     />
   </div>
@@ -191,7 +191,7 @@
   {#if data.results.value.length > 0}
     <Pageination
       bind:page={data.filters.value.page}
-      href={page => `?page=${page}`}
+      href={(page) => `?page=${page}`}
     />
   {/if}
 {/if}

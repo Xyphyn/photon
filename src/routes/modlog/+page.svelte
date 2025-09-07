@@ -182,7 +182,7 @@
       label="Instance"
       class="flex-1"
       q={page.url.searchParams.get('instance') || ''}
-      onselect={e =>
+      onselect={(e) =>
         searchParam(
           page.url,
           'instance',
@@ -200,7 +200,7 @@
       label="Community"
       class="flex-1"
       q={page.url.searchParams.get('community') ? 'Selected' : ''}
-      onselect={e =>
+      onselect={(e) =>
         searchParam(page.url, 'community', e?.id.toString() ?? '', 'page')}
     />
     <UserAutocomplete
@@ -214,7 +214,7 @@
       q={page.url.searchParams.get('user')
         ? (data.filters.user ?? 'Selected')
         : ''}
-      onselect={e =>
+      onselect={(e) =>
         searchParam(page.url, 'user', e?.id.toString() ?? '', 'page')}
     />
     {#if profile.current?.user && isAdmin(profile.current?.user)}
@@ -228,7 +228,7 @@
         q={page.url.searchParams.get('mod_id')
           ? (data.filters.moderator ?? 'Selected')
           : ''}
-        onselect={e =>
+        onselect={(e) =>
           searchParam(page.url, 'mod_id', e?.id.toString() ?? '', 'page')}
       />
     {/if}
@@ -294,7 +294,7 @@
         </table>
       </div>
     {/if}
-    <Pageination page={data.page} href={page => `?page=${page}`} />
+    <Pageination page={data.page} href={(page) => `?page=${page}`} />
   {:else}
     <Placeholder
       title="No results"

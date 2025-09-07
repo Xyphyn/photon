@@ -17,14 +17,14 @@ export const blockUser = async (block: boolean, id: number) => {
 }
 
 export const isBlocked = (me: MyUserInfo, user: number) =>
-  me.person_blocks.map(b => b.target.id).includes(user)
+  me.person_blocks.map((b) => b.target.id).includes(user)
 
 export const addSubscription = (
   community: Community,
   subscribe: boolean = true,
 ) => {
   const index = profile.current.user?.follows
-    .map(f => f.community.id)
+    .map((f) => f.community.id)
     .indexOf(community.id)
 
   if (subscribe && index == -1) {
@@ -52,4 +52,4 @@ export const addAdmin = async (handle: string, added: boolean) =>
   })
 
 export const hasFavorite = (profile: ProfileInfo, id: number): boolean =>
-  profile.favorites?.map(i => i.id).includes(id) ?? false
+  profile.favorites?.map((i) => i.id).includes(id) ?? false

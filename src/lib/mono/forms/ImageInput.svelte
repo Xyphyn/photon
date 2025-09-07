@@ -40,11 +40,11 @@
       'cursor-pointer min-h-36 transition-colors bg-white dark:bg-zinc-950',
       dragover && 'border-sky-500 text-sky-500',
     ]}
-    ondrop={event => {
+    ondrop={(event) => {
       event.preventDefault()
       files = event.dataTransfer?.files ?? null
     }}
-    ondragover={event => {
+    ondragover={(event) => {
       event.preventDefault()
 
       if (event.dataTransfer) {
@@ -52,7 +52,7 @@
         dragover = true
       }
     }}
-    ondragleave={e => {
+    ondragleave={(e) => {
       e.preventDefault()
       dragover = false
     }}

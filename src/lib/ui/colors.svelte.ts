@@ -53,7 +53,7 @@ export function rgbToHex(rgbString: string): string {
     return rgbString
   }
 
-  const [r, g, b] = rgb.map(val => {
+  const [r, g, b] = rgb.map((val) => {
     const num = parseInt(val, 10)
     if (isNaN(num) || num < 0 || num > 255) {
       return 0
@@ -71,7 +71,7 @@ export function rgbToHex(rgbString: string): string {
 $effect.root(() => {
   $effect(() => {
     if (browser) {
-      const filteredThemes = theme.data.themes.filter(t => t.id > 0)
+      const filteredThemes = theme.data.themes.filter((t) => t.id > 0)
       localStorage.setItem(
         'theme.data',
         JSON.stringify({
@@ -118,7 +118,7 @@ class ThemeState {
     },
   )
   #current = $derived(
-    this.#data.themes.find(i => i.id == this.#data.currentTheme) ??
+    this.#data.themes.find((i) => i.id == this.#data.currentTheme) ??
       getDefaultTheme(),
   )
   #colorScheme = $state<ColorScheme>(configuredColorScheme as ColorScheme)
@@ -129,7 +129,7 @@ class ThemeState {
   }
   set current(value) {
     if (!value) return
-    const index = this.#data.themes.findIndex(i => i.id == value?.id)
+    const index = this.#data.themes.findIndex((i) => i.id == value?.id)
     this.#data.themes[index] = value
   }
 

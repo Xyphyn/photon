@@ -55,7 +55,7 @@ export const modals = writable<Modals>({
 })
 
 export function report(item: PostView | CommentView | PrivateMessageView) {
-  modals.update(m => ({
+  modals.update((m) => ({
     ...m,
     reporting: {
       open: true,
@@ -65,7 +65,7 @@ export function report(item: PostView | CommentView | PrivateMessageView) {
 }
 
 export function remove(item: SubmissionView, purge: boolean = false) {
-  modals.update(m => ({
+  modals.update((m) => ({
     ...m,
     removing: {
       open: true,
@@ -76,7 +76,7 @@ export function remove(item: SubmissionView, purge: boolean = false) {
 }
 
 export function ban(banned: boolean, item: Person, community?: Community) {
-  modals.update(m => ({
+  modals.update((m) => ({
     ...m,
     banning: {
       open: true,
@@ -95,7 +95,7 @@ export async function feature(featured: boolean, item: Comment, jwt: string) {
 }
 
 export async function viewVotes(item: PostView | CommentView) {
-  modals.update(m => ({
+  modals.update((m) => ({
     ...m,
     votes: {
       open: true,
@@ -105,7 +105,7 @@ export async function viewVotes(item: PostView | CommentView) {
 }
 
 export const amMod = (me: MyUserInfo, community: Community) =>
-  me.moderates.map(c => c.community.id).includes(community.id) ||
+  me.moderates.map((c) => c.community.id).includes(community.id) ||
   (community.local && isAdmin(me))
 
 export const amModOfAny = (me?: MyUserInfo) =>

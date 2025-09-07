@@ -58,7 +58,7 @@
 
   $effect(() => {
     data.post.value.meta.then(
-      res => (data.post.value.post_view = res.post_view),
+      (res) => (data.post.value.post_view = res.post_view),
     )
   })
 
@@ -136,7 +136,7 @@
         community={data.post.value.post_view.community}
         user={data.post.value.post_view.creator}
         subscribed={profile.current.user?.follows.find(
-          i => i.community.id == data.post.value.post_view.community.id,
+          (i) => i.community.id == data.post.value.post_view.community.id,
         )
           ? 'Subscribed'
           : 'NotSubscribed'}

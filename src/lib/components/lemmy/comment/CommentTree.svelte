@@ -54,7 +54,7 @@
       // 0.18.2 -> 0.18.3 broke this
       // so i'm adding this check
       const treeParent = tree.find(
-        c => c.comment_view.comment.id == parent.comment_view.comment.id,
+        (c) => c.comment_view.comment.id == parent.comment_view.comment.id,
       )
 
       if (treeParent) {

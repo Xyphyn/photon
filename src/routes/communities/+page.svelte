@@ -33,7 +33,7 @@
 </script>
 
 <svelte:window
-  onkeydown={e => {
+  onkeydown={(e) => {
     if (e.target == document.body) searchElement?.focus()
   }}
 />
@@ -56,7 +56,7 @@
         >
           {#if !LINKED_INSTANCE_URL}
             {@const instanceSet = new Set(
-              profile.meta.profiles.map(i => i.instance),
+              profile.meta.profiles.map((i) => i.instance),
             )}
             {#if instanceSet.size > 1}
               <Option disabled data-label="true">—</Option>
@@ -161,7 +161,7 @@
   <Fixate placement="bottom">
     <Pageination
       page={Number(page.url.searchParams.get('page')) || 1}
-      href={c => `?page=${c}`}
+      href={(c) => `?page=${c}`}
     />
   </Fixate>
 {/if}

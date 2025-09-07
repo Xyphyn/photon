@@ -48,7 +48,7 @@
     mainClass,
   ]}
 >
-  {#if Object.values(supportedPlatforms).some(v => v == false)}
+  {#if Object.values(supportedPlatforms).some((v) => v == false)}
     <div class="flex items-center gap-2 flex-wrap">
       {#if supportedPlatforms.desktop}
         <Badge>

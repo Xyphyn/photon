@@ -36,7 +36,7 @@
 
   function filterDuplicates<T, K>(array: T[], predicate: (item: T) => K): T[] {
     const seen = new SvelteSet()
-    return array.filter(element => {
+    return array.filter((element) => {
       const value = predicate(element)
       if (seen.has(value)) {
         return false
@@ -50,13 +50,13 @@
   function conversationPreviews(
     conversations: PrivateMessageView[],
   ): ConversationPreview[] {
-    const deduplicated = filterDuplicates(conversations, i =>
+    const deduplicated = filterDuplicates(conversations, (i) =>
       getOtherPartyId(i),
     )
 
     return deduplicated
-      .filter(c => c.creator.id != c.recipient.id) // you messaged yourself
-      .map(i => ({
+      .filter((c) => c.creator.id != c.recipient.id) // you messaged yourself
+      .map((i) => ({
         user:
           i.creator.id != profile.current.user?.local_user_view.person.id
             ? i.creator
@@ -81,7 +81,7 @@
   <UserAutocomplete
     listing_type="All"
     hideOwnUser={true}
-    onselect={u =>
+    onselect={(u) =>
       goto(
         resolveRoute('/inbox/messages/[user_id]', { user_id: u.id.toString() }),
       )}
@@ -164,7 +164,7 @@
       <Pageination
         page={data.page}
         hasMore={res.private_messages.length == 50}
-        href={current => `/inbox/messages?page=${current}`}
+        href={(current) => `/inbox/messages?page=${current}`}
       />
     </div>
   {/if}

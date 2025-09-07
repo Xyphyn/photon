@@ -76,7 +76,7 @@
   </div>
   {#if profile.meta.profiles}
     {@const filtered = profile.meta.profiles.filter(
-      i => i.instance == page.params.instance,
+      (i) => i.instance == page.params.instance,
     )}
     <div class="space-y-1">
       <div class="font-medium text-sm">

@@ -98,7 +98,7 @@
           color={item.read ? 'secondary' : 'primary'}
           {loading}
           disabled={loading}
-          onclick={e => {
+          onclick={(e) => {
             e.stopPropagation()
             markAsRead(!item.read)
           }}
@@ -132,7 +132,7 @@
         color={item.read ? 'secondary' : 'primary'}
         {loading}
         disabled={loading}
-        onclick={e => {
+        onclick={(e) => {
           e.stopPropagation()
           markAsRead(!item.read)
         }}

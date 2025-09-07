@@ -108,7 +108,7 @@
 
 <div class="max-w-xl w-full mx-auto h-max my-auto">
   <form
-    onsubmit={e => {
+    onsubmit={(e) => {
       e.preventDefault()
       logIn()
     }}
@@ -152,7 +152,7 @@
                   if (data.client.name == 'lemmy') return 'lemmyv3'
                   else return 'piefedvalpha'
                 },
-                v => {
+                (v) => {
                   if (v == 'lemmyv3')
                     data.client = { name: 'lemmy', baseUrl: '/api/v3' }
                   else data.client = { name: 'piefed', baseUrl: '/api/alpha' }

@@ -61,10 +61,10 @@ export async function load({ url, fetch }) {
 
   const totalNotifs =
     type == 'all'
-      ? data.filter(i => i.type != 'private_message' && !i.read).length
+      ? data.filter((i) => i.type != 'private_message' && !i.read).length
       : 0
 
-  notifications.update(i => ({
+  notifications.update((i) => ({
     applications: i.applications,
     reports: i.reports,
     inbox: totalNotifs,

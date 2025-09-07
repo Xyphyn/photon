@@ -83,7 +83,7 @@
 <Fixate placement="bottom">
   <Pageination
     hasMore={data.data.length == 40}
-    href={page => `?page=${page}`}
+    href={(page) => `?page=${page}`}
     page={data.page}
   />
 </Fixate>

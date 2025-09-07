@@ -15,7 +15,7 @@
   import PostBody from './PostBody.svelte'
 
   function getTagRule(tags: Tag[]): 'blur-sm' | 'hide' | undefined {
-    const tagContent = tags.map(t => t.content.toLowerCase())
+    const tagContent = tags.map((t) => t.content.toLowerCase())
 
     let rule: 'blur-sm' | 'hide' | undefined
     if (settings.nsfwBlur && (post.post.nsfw || post.community.nsfw))
@@ -94,7 +94,7 @@
     published={publishedToDate(post.post.published)}
     {badges}
     subscribed={profile.current?.user?.follows
-      .map(c => c.community.id)
+      .map((c) => c.community.id)
       .includes(post.community.id)
       ? 'Subscribed'
       : 'NotSubscribed'}

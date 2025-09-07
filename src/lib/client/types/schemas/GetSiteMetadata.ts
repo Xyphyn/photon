@@ -1,3 +1,3 @@
 export interface GetSiteMetadata {
-    url: string;
+  url: string
 }

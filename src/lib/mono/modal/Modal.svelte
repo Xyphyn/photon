@@ -57,7 +57,7 @@
 
       if (!isInHistory && open) {
         replaceState('', {
-          openModals: currentModals.filter(id => id !== modalId),
+          openModals: currentModals.filter((id) => id !== modalId),
         })
         hasHistoryEntry = false
         open = false
@@ -85,7 +85,7 @@
 flex flex-col items-center justify-center backdrop-blur-xs
 bg-white/50 dark:bg-black/50 box-border p-4"
       transition:fade|global={{ duration: 100 }}
-      onclick={e => {
+      onclick={(e) => {
         // @ts-expect-error html node hell
         if (!el.contains(e.target)) onclose()
       }}

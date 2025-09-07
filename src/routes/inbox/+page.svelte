@@ -78,7 +78,7 @@
   class="relative w-max"
   bind:value={
     () => data.unreadOnly.value.toString(),
-    v => (data.unreadOnly.value = v == 'true')
+    (v) => (data.unreadOnly.value = v == 'true')
   }
   onchange={() =>
     searchParam(
@@ -121,7 +121,7 @@
         !data.inbox || (data.inbox.value?.length ?? 0) < (data?.limit ?? 0)
       )}
       page={data.page}
-      href={page => `?page=${page}`}
+      href={(page) => `?page=${page}`}
     />
   </Fixate>
 {/if}

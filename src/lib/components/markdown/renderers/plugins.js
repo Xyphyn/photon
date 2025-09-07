@@ -101,7 +101,7 @@ const regexes = {
 /**
  * Convert links to photon links
  */
-export const photonify = link => {
+export const photonify = (link) => {
   if (regexes.community.test(link)) {
     const match = link.match(regexes.community)
     if (!match) return

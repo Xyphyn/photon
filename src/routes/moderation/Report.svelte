@@ -31,13 +31,13 @@
       switch (item.type) {
         case 'comment': {
           await Promise.all(
-            items.map(async i =>
+            items.map(async (i) =>
               getClient()
                 .resolveCommentReport({
                   report_id: i.id,
                   resolved: !i.resolved,
                 })
-                .then(res => {
+                .then((res) => {
                   i.resolved = res.comment_report_view.comment_report.resolved
                   i.resolver = res.comment_report_view.resolver
                   $notifications.reports += i.resolved ? -1 : 1
@@ -49,13 +49,13 @@
         }
         case 'post': {
           await Promise.all(
-            items.map(async i =>
+            items.map(async (i) =>
               getClient()
                 .resolvePostReport({
                   report_id: i.id,
                   resolved: !i.resolved,
                 })
-                .then(res => {
+                .then((res) => {
                   i.resolved = res.post_report_view.post_report.resolved
 
                   i.resolver = res.post_report_view.resolver
@@ -69,13 +69,13 @@
         }
         case 'message': {
           await Promise.all(
-            items.map(async i =>
+            items.map(async (i) =>
               getClient()
                 .resolvePrivateMessageReport({
                   report_id: i.id,
                   resolved: !i.resolved,
                 })
-                .then(res => {
+                .then((res) => {
                   i.resolved =
                     res.private_message_report_view.private_message_report.resolved
 

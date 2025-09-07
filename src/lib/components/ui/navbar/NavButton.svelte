@@ -21,7 +21,7 @@
     icon,
     href,
     adaptive = true,
-    isSelectedFilter = path => href != undefined && path == href,
+    isSelectedFilter = (path) => href != undefined && path == href,
     class: clazz = '',
     customIcon,
     children,

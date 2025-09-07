@@ -69,7 +69,7 @@
           <Button
             onclick={() => {
               taglines.splice(
-                taglines.findIndex(i => i == tagline),
+                taglines.findIndex((i) => i == tagline),
                 1,
               )
 

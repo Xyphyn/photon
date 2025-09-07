@@ -20,7 +20,7 @@
         ondelete={() => {
           data.images.value = data.images.value.toSpliced(
             data.images.value.findIndex(
-              i =>
+              (i) =>
                 i.local_image.pictrs_delete_token ==
                 image.local_image.pictrs_delete_token,
             ),
@@ -34,6 +34,6 @@
 {#if data.images.value.length == 20}
   <Pageination
     page={Number(page.url.searchParams.get('page')) || 1}
-    href={page => `?page=${page}`}
+    href={(page) => `?page=${page}`}
   />
 {/if}

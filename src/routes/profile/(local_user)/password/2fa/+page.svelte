@@ -88,7 +88,7 @@
     {/if}
     <form
       class="flex flex-col gap-2 w-full"
-      onsubmit={e => {
+      onsubmit={(e) => {
         e.preventDefault()
         twofa(!(totpEnabled == true), true)
       }}

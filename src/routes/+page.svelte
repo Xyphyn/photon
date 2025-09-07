@@ -89,7 +89,7 @@
   {:then feed}
     <FeedComponent
       bind:posts={feed.posts.posts}
-      bind:feedData={() => feed, v => (postFeeds.value.main.data = v)}
+      bind:feedData={() => feed, (v) => (postFeeds.value.main.data = v)}
       feedId="main"
     />
     <svelte:element
@@ -107,7 +107,7 @@
         {#snippet action()}
           <Pageination
             cursor={{ next: feed.cursor.next }}
-            href={page =>
+            href={(page) =>
               typeof page == 'number' ? `?page=${page}` : `?cursor=${page}`}
             back={false}
           />

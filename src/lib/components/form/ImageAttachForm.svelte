@@ -36,19 +36,19 @@
     try {
       const uploaded = (
         await Promise.all(
-          Array.from(image).map(i =>
+          Array.from(image).map((i) =>
             uploadImage(i, profile.current.instance, profile.current.jwt!)
-              .then(uploaded => {
+              .then((uploaded) => {
                 progress += 1 / (image?.length ?? 0)
                 return uploaded
               })
-              .catch(err => {
+              .catch((err) => {
                 toast({ content: errorMessage(err), type: 'error' })
                 return 'Failed to upload'
               }),
           ),
         )
-      ).filter(i => i != undefined)
+      ).filter((i) => i != undefined)
 
       if (!uploaded) throw new Error('Image upload returned undefined')
 
@@ -72,7 +72,7 @@
 {/if}
 <form
   class="flex flex-col gap-4"
-  onsubmit={e => {
+  onsubmit={(e) => {
     e.preventDefault()
     upload()
   }}

@@ -41,7 +41,7 @@
 </script>
 
 <form
-  onsubmit={e => {
+  onsubmit={(e) => {
     e.preventDefault()
     changePassword()
   }}

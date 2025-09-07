@@ -33,7 +33,7 @@
     if (!profile.current?.jwt) return
 
     data.person_blocks.splice(
-      data.person_blocks.findIndex(i => i.target.id == item.target.id),
+      data.person_blocks.findIndex((i) => i.target.id == item.target.id),
       1,
     )
     // hack to get reactivity working
@@ -49,7 +49,9 @@
     if (!profile.current?.jwt) return
 
     data.community_blocks.splice(
-      data.community_blocks.findIndex(i => i.community.id == item.community.id),
+      data.community_blocks.findIndex(
+        (i) => i.community.id == item.community.id,
+      ),
       1,
     )
 
@@ -68,7 +70,7 @@
 
     data.my_user.instance_blocks.splice(
       data.my_user.instance_blocks.findIndex(
-        i => i.instance.id == item.instance.id,
+        (i) => i.instance.id == item.instance.id,
       ),
       1,
     )

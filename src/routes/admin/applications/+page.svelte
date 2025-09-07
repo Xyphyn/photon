@@ -31,7 +31,7 @@
   </div>
   {#if data.applications?.value.length >= 40}
     <div class="mt-auto">
-      <Pageination page={data.page} href={page => `?page=${page}`} />
+      <Pageination page={data.page} href={(page) => `?page=${page}`} />
     </div>
   {/if}
 {:else}

@@ -40,8 +40,8 @@ export function toast({
 }) {
   let id = 0
 
-  toasts.update(toasts => {
-    id = Math.max(0, ...toasts.map(t => t.id)) + 1
+  toasts.update((toasts) => {
+    id = Math.max(0, ...toasts.map((t) => t.id)) + 1
 
     return [
       ...toasts,
@@ -58,11 +58,11 @@ export function toast({
   })
 
   setTimeout(() => {
-    toasts.update(toasts => toasts.filter(toast => toast.id != id))
+    toasts.update((toasts) => toasts.filter((toast) => toast.id != id))
   }, duration)
 
   return id
 }
 
 export const removeToast = (id: number) =>
-  toasts.update(toasts => toasts.filter(toast => toast.id != id))
+  toasts.update((toasts) => toasts.filter((toast) => toast.id != id))

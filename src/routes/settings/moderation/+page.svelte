@@ -53,7 +53,7 @@
             label="Content"
             images={false}
             previewButton
-            beforePreview={input =>
+            beforePreview={(input) =>
               removalTemplate(input, {
                 postTitle: '<Example post>',
                 communityLink: '[!community@example.com]()',

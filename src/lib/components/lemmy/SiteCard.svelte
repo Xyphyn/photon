@@ -147,7 +147,7 @@
             </span>
           {/snippet}
           <ItemList
-            items={admins.map(i => ({
+            items={admins.map((i) => ({
               id: i.person.id,
               name: i.person.display_name || i.person.name,
               url: userLink(i.person),

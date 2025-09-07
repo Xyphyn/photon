@@ -72,7 +72,7 @@
           !(
             profile.current?.user?.local_user_view.local_user.admin ||
             profile.current?.user?.moderates
-              .map(c => c.community.id)
+              .map((c) => c.community.id)
               .includes(post.community.id)
           )}
         onclick={() => (commenting = true)}
@@ -116,7 +116,7 @@
   {:else}
     <CommentForm
       postId={post.post.id}
-      oncomment={comment => {
+      oncomment={(comment) => {
         comments.comments.unshift(comment.comment_view)
       }}
       onfocus={() => (commenting = true)}

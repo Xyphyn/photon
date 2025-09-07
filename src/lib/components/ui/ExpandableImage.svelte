@@ -34,7 +34,7 @@
     flex flex-col z-100 backdrop-blur-xs"
     transition:fade={{ duration: 150 }}
     onclick={() => history.back()}
-    onkeydown={e => {
+    onkeydown={(e) => {
       if (e.key == 'Escape') history.back()
     }}
     use:focusTrap
@@ -55,7 +55,7 @@
         rounding="full"
         padding="none"
         color="uniform"
-        onclick={e => e.stopPropagation()}
+        onclick={(e) => e.stopPropagation()}
       >
         <Button
           onclick={() => {

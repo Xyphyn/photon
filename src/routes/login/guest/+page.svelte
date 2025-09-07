@@ -27,7 +27,7 @@
     client: ClientType
   }>({
     instance: '',
-    username: `${$t('account.guest')} ${profile.meta.profiles.filter(p => p.jwt == undefined).length + 1}`,
+    username: `${$t('account.guest')} ${profile.meta.profiles.filter((p) => p.jwt == undefined).length + 1}`,
     loading: false,
     client: DEFAULT_CLIENT_TYPE,
   })
@@ -40,7 +40,7 @@
       return
     }
 
-    const id = Math.max(...profile.meta.profiles.map(i => i.id)) + 1
+    const id = Math.max(...profile.meta.profiles.map((i) => i.id)) + 1
     profile.meta.profiles.push({
       id: id,
       instance: form.instance,
@@ -88,7 +88,7 @@
                   if (form.client.name == 'lemmy') return 'lemmyv3'
                   else return 'piefedvalpha'
                 },
-                v => {
+                (v) => {
                   if (v == 'lemmyv3')
                     form.client = { name: 'lemmy', baseUrl: '/api/v3' }
                   else form.client = { name: 'piefed', baseUrl: '/api/alpha' }

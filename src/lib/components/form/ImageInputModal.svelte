@@ -35,7 +35,7 @@
 
   {#if customUrl}
     <form
-      onsubmit={e => {
+      onsubmit={(e) => {
         e.preventDefault()
         if (!imageUrl) throw new Error('missing imageurl')
 
@@ -60,7 +60,7 @@
   {:else}
     <ImageAttachForm
       multiple={false}
-      onupload={uploaded => {
+      onupload={(uploaded) => {
         open = false
         passedImageUrl = uploaded[0]
       }}

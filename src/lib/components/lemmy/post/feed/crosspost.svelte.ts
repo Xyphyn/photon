@@ -18,7 +18,7 @@ export const combineCrossposts = (
   const results: (PostViewWithCrossposts | PostViewWithoutCrossposts)[] = []
   const seenUrls = new SvelteSet<string>()
 
-  posts?.forEach(post => {
+  posts?.forEach((post) => {
     if (
       !post ||
       (settings.hidePosts.deleted && post.post.deleted) ||

@@ -30,7 +30,7 @@
 </script>
 
 <Search
-  search={async q => {
+  search={async (q) => {
     const users = (
       await getClient(instance).search({
         q: q || ' ',
@@ -39,15 +39,15 @@
         listing_type: listing_type,
         sort: 'TopAll',
       })
-    ).users.map(c => c.person)
+    ).users.map((c) => c.person)
 
     if (hideOwnUser) {
       const myself = profile.current.user?.local_user_view.person.id
-      return users.filter(c => c.id != myself)
+      return users.filter((c) => c.id != myself)
     }
     return users
   }}
-  extractName={c => `${c.name}@${new URL(c.actor_id).hostname}`}
+  extractName={(c) => `${c.name}@${new URL(c.actor_id).hostname}`}
   bind:query={q}
   {...rest}
 >

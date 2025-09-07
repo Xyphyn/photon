@@ -78,7 +78,7 @@
     data.message.value = {
       private_messages: data.message.value.private_messages.toSpliced(
         data.message.value.private_messages.findLastIndex(
-          i => i.private_message.id == id,
+          (i) => i.private_message.id == id,
         ),
         1,
       ),
@@ -182,7 +182,7 @@
           ? 'flex flex-col'
           : 'flex-row h-14 items-center',
       ]}
-      onsubmit={async e => {
+      onsubmit={async (e) => {
         e.preventDefault()
 
         const res = await sendMessage(textbox.message)

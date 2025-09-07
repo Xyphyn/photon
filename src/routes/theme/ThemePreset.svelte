@@ -48,7 +48,7 @@
     <div class="px-4 py-2 flex items-center gap-1 justify-between">
       {#if editingName}
         <form
-          onsubmit={e => {
+          onsubmit={(e) => {
             e.preventDefault()
             editingName = false
           }}
@@ -85,7 +85,7 @@
                   type: 'danger',
                   action: () => {
                     const index = themeData.data.themes
-                      .map(t => t.id)
+                      .map((t) => t.id)
                       .indexOf(theme.id)
 
                     themeData.data.themes = themeData.data.themes.toSpliced(

@@ -84,9 +84,9 @@
 </Header>
 
 {#if profile.current.user}
-  {#if !data.community.value.discussion_languages.every( l => profile.current.user?.discussion_languages.includes(l), ) && profile.current.user.discussion_languages.length > 0}
+  {#if !data.community.value.discussion_languages.every( (l) => profile.current.user?.discussion_languages.includes(l), ) && profile.current.user.discussion_languages.length > 0}
     {@const missing = data.community.value.discussion_languages.filter(
-      i => !profile.current.user?.discussion_languages.includes(i),
+      (i) => !profile.current.user?.discussion_languages.includes(i),
     )}
     <Note class="p-1! pl-3! flex-col md:flex-row">
       <div>{$t('routes.community.languageWarning')}</div>
@@ -110,7 +110,7 @@
           <a href="/profile/settings#languages" class="inline-block w-max">
             <Badge color="blue-subtle">
               <Icon src={Plus} size="16" micro />
-              {allLanguages.find(i => language == i.id)?.name}
+              {allLanguages.find((i) => language == i.id)?.name}
             </Badge>
           </a>
         {/each}
@@ -149,7 +149,7 @@
   <Pageination
     page={data.page}
     cursor={{ next: data.cursor.next }}
-    href={page =>
+    href={(page) =>
       typeof page == 'number' ? `?page=${page}` : `?cursor=${page}`}
   >
     <span class="flex flex-row items-center gap-1">

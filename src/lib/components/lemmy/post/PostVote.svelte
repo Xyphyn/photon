@@ -76,8 +76,8 @@
     vote = newVote
 
     voteItem(post, newVote)
-      .then(res => ({ upvotes, downvotes, score } = res))
-      .catch(e => {
+      .then((res) => ({ upvotes, downvotes, score } = res))
+      .catch((e) => {
         toast({ content: errorMessage(e), type: 'error' })
       })
   }

@@ -1,3 +1,3 @@
 export interface BlockInstanceResponse {
-    blocked: boolean;
+  blocked: boolean
 }

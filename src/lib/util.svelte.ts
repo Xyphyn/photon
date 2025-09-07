@@ -21,7 +21,7 @@ export const searchParam = (
   ...deleteKeys: string[]
 ) => {
   url.searchParams.set(key, value)
-  deleteKeys.forEach(k => url.searchParams.delete(k))
+  deleteKeys.forEach((k) => url.searchParams.delete(k))
   goto(url, {
     invalidateAll: true,
   })

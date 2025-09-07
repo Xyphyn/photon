@@ -73,7 +73,7 @@ export function getGroups(
   return [
     {
       name: t.get('nav.commands.recents'),
-      actions: resumables.map(r => ({
+      actions: resumables.map((r) => ({
         name: r.name,
         icon: r.avatar ?? PencilSquare,
         href: r.url,
@@ -306,7 +306,7 @@ export function getGroups(
     },
     {
       name: t.get('account.accounts'),
-      actions: profiles.map(p => ({
+      actions: profiles.map((p) => ({
         name: p.username ?? t.get('account.guest'),
         icon: p.avatar ?? UserCircle,
         detail: p.instance,
@@ -379,7 +379,7 @@ export function getGroups(
         {
           name: t.get('nav.commands.setTheme'),
           icon: Swatch,
-          subActions: td.themes.map(th => ({
+          subActions: td.themes.map((th) => ({
             name: t.get('nav.commands.setThemeTo', { default: th.name }),
             icon: Swatch,
             handle: () => (theme.data.currentTheme = th.id),
@@ -400,7 +400,7 @@ export function getGroups(
     {
       name: t.get('profile.subscribed'),
       actions:
-        profile.user?.follows.map(f => ({
+        profile.user?.follows.map((f) => ({
           icon: f.community.icon,
           name: f.community.title,
           href: `/c/${fullCommunityName(

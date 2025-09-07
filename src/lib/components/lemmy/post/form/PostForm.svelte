@@ -116,7 +116,7 @@
         limit: 40,
       })
 
-      communities = list.communities.map(c => c.community)
+      communities = list.communities.map((c) => c.community)
     }
   })
 
@@ -209,7 +209,7 @@
       if (res.metadata.description)
         data.body = res.metadata.description
           .split('\n')
-          .map(l => `> ${l}`)
+          .map((l) => `> ${l}`)
           .join('\n')
 
       toast({
@@ -254,7 +254,7 @@
   {#await import('$lib/components/form/ImageInputModal.svelte') then { default: UploadModal }}
     <UploadModal
       bind:open={uploadingImage}
-      bind:imageUrl={() => '', v => (data.url = v)}
+      bind:imageUrl={() => '', (v) => (data.url = v)}
     />
   {/await}
 {/if}
@@ -262,7 +262,7 @@
 {#if addAltText}
   <Modal title={$t('form.post.altText')} bind:open={addAltText}>
     <form
-      onsubmit={e => {
+      onsubmit={(e) => {
         e.preventDefault()
         addAltText = !addAltText
       }}
@@ -277,7 +277,7 @@
 {/if}
 
 <form
-  onsubmit={e => {
+  onsubmit={(e) => {
     e.preventDefault()
     submit()
   }}
@@ -298,7 +298,7 @@
         listing_type="All"
         label={$t('form.post.community')}
         required
-        onselect={e => {
+        onselect={(e) => {
           const c = e
           if (!c) {
             data.community = null

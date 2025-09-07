@@ -128,7 +128,7 @@
   {/snippet}
 </CommonList>
 <form
-  onsubmit={e => {
+  onsubmit={(e) => {
     e.preventDefault()
     addModerator()
   }}
@@ -137,7 +137,7 @@
   <div class="w-full">
     <UserAutocomplete
       listing_type="All"
-      onselect={p => (formData.newModerator = p.id)}
+      onselect={(p) => (formData.newModerator = p.id)}
     />
   </div>
   <Button

@@ -37,7 +37,7 @@
         url: undefined,
       }}
   passedCommunity={community}
-  onsubmit={e => goto(`/post/${e.post.id}`)}
+  onsubmit={(e) => goto(`/post/${e.post.id}`)}
 >
   {#snippet formtitle()}{/snippet}
 </PostForm>

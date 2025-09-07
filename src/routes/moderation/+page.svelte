@@ -27,8 +27,8 @@
     batch.progress = 0
 
     await Promise.all(
-      data.items?.value.map(report => {
-        report.map(r => {
+      data.items?.value.map((report) => {
+        report.map((r) => {
           switch (r.type) {
             case 'comment': {
               const promise = client().resolveCommentReport({
@@ -157,7 +157,7 @@
   <Fixate placement="bottom">
     <Pageination
       page={data.page}
-      href={current => `?page=${current}`}
+      href={(current) => `?page=${current}`}
       hasMore={data.items.value.length >= 20}
     />
   </Fixate>

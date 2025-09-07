@@ -86,7 +86,7 @@ export function toMyUser(
 ): MyUserInfo {
   return {
     ...myUser,
-    community_blocks: myUser.community_blocks.map(i => ({
+    community_blocks: myUser.community_blocks.map((i) => ({
       community: toCommunity(i.community),
       person: toPerson(i.person),
     })),
@@ -101,23 +101,23 @@ export function toMyUser(
       },
       person: toPerson(myUser.local_user_view.person),
     },
-    follows: myUser.follows.map(i => ({
+    follows: myUser.follows.map((i) => ({
       follower: toPerson(i.follower),
       community: toCommunity(i.community),
     })),
-    moderates: myUser.moderates.map(i => ({
+    moderates: myUser.moderates.map((i) => ({
       community: toCommunity(i.community),
       moderator: toPerson(i.moderator),
     })),
-    instance_blocks: myUser.instance_blocks.map(i => ({
+    instance_blocks: myUser.instance_blocks.map((i) => ({
       instance: i.instance,
       person: toPerson(i.person),
     })),
-    person_blocks: myUser.person_blocks.map(i => ({
+    person_blocks: myUser.person_blocks.map((i) => ({
       person: toPerson(i.person),
       target: toPerson(i.target),
     })),
-    discussion_languages: myUser.discussion_languages.map(i => i.id!),
+    discussion_languages: myUser.discussion_languages.map((i) => i.id!),
   }
 }
 

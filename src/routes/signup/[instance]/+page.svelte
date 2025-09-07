@@ -300,7 +300,7 @@
       <ErrorContainer scope={page.url.pathname} />
       <h2 class="font-medium text-3xl">{$t('toast.verifyEmail')}</h2>
       <form
-        onsubmit={e => {
+        onsubmit={(e) => {
           e.preventDefault()
           verifiedEmail()
         }}

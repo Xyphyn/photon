@@ -76,7 +76,7 @@
         bind:selected={banFromCommunity}
       />
       <UserAutocomplete
-        onselect={p =>
+        onselect={(p) =>
           ban(banFromCommunity, p, data.community.community_view.community)}
         listing_type="All"
       />

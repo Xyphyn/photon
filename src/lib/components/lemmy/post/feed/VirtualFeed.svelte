@@ -54,7 +54,7 @@
 
   const abortLoad = new AbortController()
   let seenIds = new SvelteSet<number>(
-    feedData.posts.posts.map(post => post.post.id),
+    feedData.posts.posts.map((post) => post.post.id),
   )
 
   async function loadMore() {
@@ -80,7 +80,7 @@
           sort: feedData.sort,
           type_: feedData.type_,
         })
-        .catch(e => {
+        .catch((e) => {
           throw new Error(e)
         })
 
@@ -90,7 +90,7 @@
 
       feedData.cursor.next = newPosts.next_page
       feedData.posts.posts.push(
-        ...newPosts.posts.filter(post => {
+        ...newPosts.posts.filter((post) => {
           if (seenIds.has(post.post.id)) return false
           seenIds.add(post.post.id)
           return true
@@ -107,7 +107,7 @@
   }
 
   const callback: IntersectionObserverCallback = (entries, observer) => {
-    entries.forEach(entry => {
+    entries.forEach((entry) => {
       if (!entry.isIntersecting) return
 
       const element = entry.target as HTMLElement
@@ -147,7 +147,7 @@
     const feed = document.getElementById('feed')
     if (!feed) return
 
-    new MutationObserver(mutations => {
+    new MutationObserver((mutations) => {
       mutations.forEach(({ addedNodes, removedNodes }) => {
         addedNodes.forEach(observePost)
         removedNodes.forEach(unobservePost)

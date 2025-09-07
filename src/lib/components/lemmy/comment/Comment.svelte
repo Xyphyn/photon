@@ -94,7 +94,7 @@
       <div>{$t('form.edit')}</div>
     {/snippet}
     <form
-      onsubmit={e => {
+      onsubmit={(e) => {
         e.preventDefault()
         save(replying ? 'reply' : 'edit')
       }}
@@ -262,7 +262,7 @@
             label={$t('comment.reply')}
             {postId}
             parentId={node.comment_view.comment.id}
-            oncomment={e => {
+            oncomment={(e) => {
               node.children = [
                 {
                   children: [],
