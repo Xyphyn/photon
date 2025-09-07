@@ -22,9 +22,9 @@
 
   interface Props extends HTMLAttributes<HTMLDivElement> {
     site: SiteView
-    taglines?: Tagline[] | undefined
-    admins?: PersonView[] | undefined
-    version?: string | undefined
+    taglines?: Tagline[]
+    admins?: PersonView[]
+    version?: string
     class?: ClassValue
   }
 

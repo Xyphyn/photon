@@ -1,18 +1,19 @@
 <script lang="ts">
   import { profile } from '$lib/auth.svelte'
-  import PostActions from '$lib/components/lemmy/post/actions/PostActions.svelte'
-  import { mediaType } from '$lib/components/lemmy/post/helpers.js'
-  import PostMedia from '$lib/components/lemmy/post/media/PostMedia.svelte'
-  import PostMediaCompact from '$lib/components/lemmy/post/media/PostMediaCompact.svelte'
-  import PostMeta, {
-    parseTags,
-    type Tag,
-  } from '$lib/components/lemmy/post/PostMeta.svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
   import { settings, type View } from '$lib/settings.svelte.js'
   import type { PostView } from '$lib/client/types'
   import type { ClassValue } from 'svelte/elements'
-  import PostBody from './PostBody.svelte'
+  import {
+    type Tag,
+    PostMeta,
+    PostActions,
+    PostMedia,
+    PostBody,
+    parseTags,
+    mediaType,
+    PostMediaCompact,
+  } from '.'
 
   function getTagRule(tags: Tag[]): 'blur-sm' | 'hide' | undefined {
     const tagContent = tags.map((t) => t.content.toLowerCase())

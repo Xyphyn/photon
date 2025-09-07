@@ -1,7 +1,6 @@
 <script lang="ts">
   import { page } from '$app/state'
   import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
-  import PostItem from '$lib/components/lemmy/post/PostItem.svelte'
   import Fixate from '$lib/components/ui/generic/Fixate.svelte'
   import CommonList from '$lib/components/ui/layout/CommonList.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
@@ -20,6 +19,7 @@
     Icon,
     PencilSquare,
   } from 'svelte-hero-icons'
+  import { PostItem } from '$lib/components/lemmy/post'
 
   let { data } = $props()
 

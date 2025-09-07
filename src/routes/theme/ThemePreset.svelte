@@ -1,6 +1,6 @@
 <script lang="ts">
   import { t } from '$lib/i18n/translations'
-  import { theme as themeData, type Theme } from '$lib/ui/colors.svelte'
+  import { theme as themeData, type Theme } from '$lib/ui/theme/theme.svelte'
   import { action, Button, Material, modal, TextInput } from 'mono-svelte'
   import { CheckCircle, Icon, Trash } from 'svelte-hero-icons'
 

@@ -1,13 +1,6 @@
 <script lang="ts">
   import { page } from '$app/state'
   import { profile } from '$lib/auth.svelte.js'
-  import PostActions from '$lib/components/lemmy/post/actions/PostActions.svelte'
-  import { mediaType, postLink } from '$lib/components/lemmy/post/helpers.js'
-  import PostMedia from '$lib/components/lemmy/post/media/PostMedia.svelte'
-  import Post from '$lib/components/lemmy/post/Post.svelte'
-  import PostMeta, {
-    parseTags,
-  } from '$lib/components/lemmy/post/PostMeta.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
   import Expandable from '$lib/components/ui/Expandable.svelte'
@@ -20,7 +13,6 @@
   import { postFeeds } from '$lib/lemmy/postfeed.svelte'
   import { ReactiveState } from '$lib/util.svelte'
   import { settings } from '$lib/settings.svelte.js'
-  import { isImage } from '$lib/ui/image.js'
   import { Button, toast } from 'mono-svelte'
   import { onMount } from 'svelte'
   import {
@@ -32,6 +24,7 @@
   import { expoOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'
   import CommentProvider from './CommentProvider.svelte'
+  import { mediaType, parseTags, Post, PostActions, postLink, PostMedia, PostMeta } from '$lib/components/lemmy/post'
 
   let { data } = $props()
 
@@ -111,7 +104,7 @@
     />
   {/if}
   <meta property="og:url" content={page.url.toString()} />
-  {#if isImage(data.post.value.post_view.post.url)}
+  {#if mediaType(data.post.value.post_view.post.url) == 'image'}
     <meta property="og:image" content={data.post.value.post_view.post.url} />
     <meta
       property="twitter:card"

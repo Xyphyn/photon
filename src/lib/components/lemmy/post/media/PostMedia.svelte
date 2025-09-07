@@ -1,13 +1,13 @@
 <script lang="ts">
-  import {
-    iframeType,
-    type MediaType,
-  } from '$lib/components/lemmy/post/helpers.js'
-  import PostLink from '$lib/components/lemmy/post/link/PostLink.svelte'
   import { settings, type View } from '$lib/settings.svelte.js'
   import type { Post } from '$lib/client/types'
-  import PostIframe from './PostIframe.svelte'
-  import PostImage from './PostImage.svelte'
+  import {
+    PostImage,
+    PostIframe,
+    PostLink,
+    type MediaType,
+    iframeType,
+  } from '..'
 
   interface Props {
     view?: View

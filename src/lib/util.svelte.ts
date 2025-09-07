@@ -92,18 +92,6 @@ export function moveItem<T>(
   return newArray
 }
 
-type Maybe<T> = T | undefined | void | null
-export const trycatch = <T>(func: () => T): Maybe<T> => {
-  try {
-    return func()
-  } catch (err) {
-    toast({
-      content: errorMessage(err as string),
-      type: 'error',
-    })
-  }
-}
-
 export const removeItem = <T>(array: T[], predicate: (item: T) => boolean) => {
   array.splice(array.findIndex(predicate), 1)
 }
@@ -204,5 +192,25 @@ export class ReactiveState<T> {
 
   constructor(initialValue: T) {
     this.value = initialValue as NonNullable<T>
+  }
+}
+
+export const isImage = (url: string | undefined) => {
+  try {
+    if (!url) return false
+
+    return /\.(jpeg|jpg|gif|png|svg|bmp|webp|avif)/i.test(url)
+  } catch {
+    return false
+  }
+}
+
+export const isVideo = (url: string | undefined) => {
+  try {
+    if (!url) return false
+
+    return /\.(mp4|mov|webm|mkv|avi)/i.test(url)
+  } catch {
+    return false
   }
 }

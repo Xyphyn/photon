@@ -2,14 +2,14 @@
   import { preventDefault } from 'svelte/legacy'
 
   import { profile } from '$lib/auth.svelte.js'
+  import { client, getClient } from '$lib/client/lemmy.svelte'
+  import type { Instance } from '$lib/client/types'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
   import { t } from '$lib/i18n/translations.js'
-  import { getClient } from '$lib/client/lemmy.svelte'
-  import { trycatch } from '$lib/util.svelte.js'
-  import type { Instance } from '$lib/client/types'
+  import { errorMessage } from '$lib/lemmy/error.js'
   import {
     Button,
     FileInput,
@@ -40,9 +40,9 @@
     }),
     saving = $state(false)
 
-  const moderateInstance = async (instance: string, blocked: boolean) => {
+  async function moderateInstance(instance: string, blocked: boolean) {
     if (instance == '') return
-    await trycatch(async () => {
+    try {
       if (
         !profile.current?.jwt ||
         !data.instances.value?.blocked ||
@@ -53,9 +53,9 @@
       if (blocked) blockInstance.loading = true
       else allowInstance.loading = true
 
-      const blockedInstances = data.instances.value.blocked.map(i => i.domain)
+      const blockedInstances = data.instances.value.blocked.map((i) => i.domain)
 
-      const allowedInstances = data.instances.value.allowed.map(i => i.domain)
+      const allowedInstances = data.instances.value.allowed.map((i) => i.domain)
 
       if (blocked) blockedInstances.push(instance)
       if (!blocked) allowedInstances.push(instance)
@@ -71,31 +71,40 @@
       data.instances.value = instances.federated_instances
 
       blockInstance.instance = ''
-    })
+    } catch (err) {
+      toast({
+        content: errorMessage(err as string),
+        type: 'error',
+      })
+    }
 
     blockInstance.loading = false
     allowInstance.loading = false
   }
 
-  const save = async () => {
-    const res = await trycatch(async () => {
+  async function save() {
+    try {
       if (!profile.current?.jwt || !data.instances.value?.blocked) return
 
       saving = true
 
-      const blockedInstances = data.instances.value.blocked.map(i => i.domain)
-      const allowedInstances = data.instances.value.allowed?.map(i => i.domain)
+      const blockedInstances = data.instances.value.blocked.map((i) => i.domain)
+      const allowedInstances = data.instances.value.allowed?.map(
+        (i) => i.domain,
+      )
 
-      return await getClient().editSite({
+      await client().editSite({
         allowed_instances: allowedInstances,
         blocked_instances: blockedInstances,
       })
-    })
-
-    if (res) {
       toast({
         content: $t('toast.updatedSite'),
         type: 'success',
+      })
+    } catch (err) {
+      toast({
+        content: errorMessage(err as string),
+        type: 'error',
       })
     }
     saving = false
@@ -108,7 +117,7 @@
 
     const reader = new FileReader()
 
-    reader.onload = e => {
+    reader.onload = (e) => {
       if (!data.instances.value?.blocked) throw new Error('Missing instance')
       const content = e.target?.result
       if (!content) toast({ content: $t('toast.failCSV'), type: 'warning' })
@@ -223,7 +232,7 @@
 
                     data.instances.value.blocked =
                       data.instances.value?.blocked.filter(
-                        i => i.id != instance.id,
+                        (i) => i.id != instance.id,
                       )
                   }}
                 >
@@ -307,7 +316,7 @@
 
                     data.instances.value.allowed =
                       data.instances.value?.allowed.filter(
-                        i => i.id != instance.id,
+                        (i) => i.id != instance.id,
                       )
                   }}
                 >

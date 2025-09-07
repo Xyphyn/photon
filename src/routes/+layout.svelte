@@ -11,8 +11,12 @@
   import { LINKED_INSTANCE_URL } from '$lib/instance.svelte'
   import { site } from '$lib/client/lemmy.svelte'
   import { settings } from '$lib/settings.svelte.js'
-  import { inDarkColorScheme, rgbToHex, theme } from '$lib/ui/colors.svelte.js'
-  import { getDefaultColors } from '$lib/ui/presets'
+  import {
+    inDarkColorScheme,
+    rgbToHex,
+    theme,
+  } from '$lib/ui/theme/theme.svelte.js'
+  import { getDefaultColors } from '$lib/ui/theme/presets'
   import { Button, ModalContainer, Spinner, ToastContainer } from 'mono-svelte'
   import nProgress from 'nprogress'
   import 'nprogress/nprogress.css'

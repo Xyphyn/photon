@@ -3,7 +3,7 @@
   import { getClient } from '$lib/client/lemmy.svelte'
   import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
   import PrivateMessage from '$lib/components/lemmy/inbox/PrivateMessage.svelte'
-  import Post from '$lib/components/lemmy/post/Post.svelte'
+  import { PostItem } from '$lib/components/lemmy/post'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import { t } from '$lib/i18n/translations'
@@ -189,7 +189,7 @@
   {#if item.type == 'comment'}
     <CommentItem comment={item.item} class="p-0!" />
   {:else if item.type == 'post'}
-    <Post hideCommunity post={item.item} class="p-0!" />
+    <PostItem post={item.item} />
   {:else if item.type == 'message'}
     <PrivateMessage
       message={{

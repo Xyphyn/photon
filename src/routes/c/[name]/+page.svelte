@@ -6,8 +6,6 @@
   import CommunityHeader from '$lib/components/lemmy/community/CommunityHeader.svelte'
   import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
   import ViewSelect from '$lib/components/lemmy/dropdowns/ViewSelect.svelte'
-  import PostFeed from '$lib/components/lemmy/post/feed/PostFeed.svelte'
-  import VirtualFeed from '$lib/components/lemmy/post/feed/VirtualFeed.svelte'
   import Header from '$lib/components/ui/layout/pages/Header.svelte'
   import Pageination from '$lib/components/ui/layout/Pageination.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
@@ -19,6 +17,7 @@
   import { Badge, Button, Modal, Note } from 'mono-svelte'
   import { onDestroy, onMount } from 'svelte'
   import { ArrowRight, ChartBar, Icon, Plus, XMark } from 'svelte-hero-icons'
+  import { PostFeed, VirtualFeed } from '$lib/components/lemmy/post'
 
   let { data } = $props()
 

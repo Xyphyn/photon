@@ -3,7 +3,6 @@
 
   import { profile } from '$lib/auth.svelte.js'
   import Comment from '$lib/components/lemmy/comment/Comment.svelte'
-  import Post from '$lib/components/lemmy/post/Post.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { t } from '$lib/i18n/translations'
   import { getClient } from '$lib/client/lemmy.svelte'
@@ -15,6 +14,7 @@
   import { Button, Modal, toast } from 'mono-svelte'
   import PrivateMessage from '../inbox/PrivateMessage.svelte'
   import { errorMessage } from '$lib/lemmy/error'
+  import { Post } from '../post'
 
   interface Props {
     open: boolean

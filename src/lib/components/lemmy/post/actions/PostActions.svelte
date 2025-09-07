@@ -22,7 +22,7 @@
     ShieldCheck,
   } from 'svelte-hero-icons'
   import { postLink } from '../helpers'
-  import PostVote from '../PostVote.svelte'
+  import { PostVote } from '..'
 
   let saving = $state(false)
   let editing = $state(false)

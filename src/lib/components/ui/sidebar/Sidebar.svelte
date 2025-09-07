@@ -6,7 +6,7 @@
   import { t } from '$lib/i18n/translations'
   import { communityLink } from '$lib/lemmy/generic'
   import { settings } from '$lib/settings.svelte.js'
-  import { theme } from '$lib/ui/colors.svelte'
+  import { theme } from '$lib/ui/theme/theme.svelte'
   import { Badge, Option, Select } from 'mono-svelte'
   import {
     ArrowLeftOnRectangle,

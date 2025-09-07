@@ -3,9 +3,9 @@
   import { Spinner } from 'mono-svelte'
   import type { ResolveObjectResponse } from '$lib/client/types'
   import UserItem from '$lib/components/lemmy/user/UserItem.svelte'
-  import Post from '$lib/components/lemmy/post/Post.svelte'
   import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
   import { CommunityItem } from '$lib/components/lemmy/community'
+  import { PostItem } from '$lib/components/lemmy/post'
 
   interface Props {
     data: {
@@ -27,7 +27,7 @@
       {:else if object.person}
         <UserItem user={object.person} />
       {:else if object.post}
-        <Post post={object.post} />
+        <PostItem post={object.post} />
       {:else if object.comment}
         <CommentItem comment={object.comment} />
       {/if}

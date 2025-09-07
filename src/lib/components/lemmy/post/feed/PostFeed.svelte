@@ -1,11 +1,11 @@
 <script lang="ts">
-  import Post from '$lib/components/lemmy/post/Post.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { settings } from '$lib/settings.svelte.js'
   import type { PostView } from '$lib/client/types'
   import { Button } from 'mono-svelte'
   import type { Snippet } from 'svelte'
   import { ArchiveBox, Icon, Plus } from 'svelte-hero-icons'
+  import { Post } from '..'
 
   interface Props {
     posts: PostView[]

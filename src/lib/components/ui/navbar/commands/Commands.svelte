@@ -5,7 +5,7 @@
   import { profile } from '$lib/auth.svelte'
   import { t } from '$lib/i18n/translations'
   import { resumables } from '$lib/lemmy/item'
-  import { theme } from '$lib/ui/colors.svelte'
+  import { theme } from '$lib/ui/theme/theme.svelte'
   import { fuzzySearch } from '$lib/util.svelte'
   import { TextInput } from 'mono-svelte'
   import { createEventDispatcher, onMount } from 'svelte'

@@ -54,9 +54,11 @@ dark:from-zinc-400 dark:via-zinc-400 bg-clip-text z-0 max-h-36`
       onclick={() => (expanded = !expanded)}
       size="square-sm"
       color="tertiary"
-      class="text-black dark:text-white absolute z-10 isolate pointer-events-auto bottom-0 {expanded
-        ? 'bg-slate-200/50 dark:bg-zinc-900 border shadow-md'
-        : ''} left-1/2 -translate-x-1/2 mb-4"
+      class={[
+        'text-black dark:text-white absolute z-10 isolate pointer-events-auto bottom-0',
+        'left-1/2 -translate-x-1/2 mb-4',
+        expanded && 'bg-slate-200/50 dark:bg-zinc-900 shadow-md',
+      ]}
       title="Expand"
     >
       <Icon

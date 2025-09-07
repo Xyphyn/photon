@@ -7,7 +7,6 @@ import {
 import { DEFAULT_INSTANCE_URL } from '$lib/instance.svelte.js'
 import { client, getClient, site } from '$lib/client/lemmy.svelte'
 import { instanceToURL, moveItem } from '$lib/util.svelte'
-import { MINIMUM_VERSION, versionIsSupported } from '$lib/version.js'
 import { toast } from 'mono-svelte'
 import { writable } from 'svelte/store'
 import { t } from './i18n/translations'
@@ -309,9 +308,7 @@ export const notifications = writable<Notifications>({
 async function userFromJwt(
   jwt: string,
   instance: string,
-): Promise<
-  { user: MyUserInfo | undefined; site: GetSiteResponse } | undefined
-> {
+): Promise<{ user?: MyUserInfo; site: GetSiteResponse } | undefined> {
   const sitePromise = client({ instanceURL: instance, auth: jwt }).getSite()
 
   const timer = setTimeout(
@@ -334,13 +331,6 @@ async function userFromJwt(
     })
 
   if (!site) return
-
-  if (!versionIsSupported(site.version, MINIMUM_VERSION)) {
-    toast({
-      content: `This version of Photon only supports Lemmy instances with version ${MINIMUM_VERSION} or higher. This Lemmy instance is running: ${site.version}`,
-      type: 'error',
-    })
-  }
 
   const myUser = site.my_user
 

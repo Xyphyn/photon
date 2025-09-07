@@ -1,6 +1,5 @@
 <script lang="ts">
   import { browser } from '$app/environment'
-  import Post from '$lib/components/lemmy/post/Post.svelte'
   import VirtualList from '$lib/components/render/VirtualList.svelte'
   import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
@@ -26,6 +25,7 @@
   import { expoOut } from 'svelte/easing'
   import { SvelteSet } from 'svelte/reactivity'
   import { fly } from 'svelte/transition'
+  import { Post } from '..'
 
   interface Props {
     posts: PostView[]

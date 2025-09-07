@@ -6,7 +6,7 @@
   import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
   import { CommunityItem } from '$lib/components/lemmy/community'
   import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
-  import PostItem from '$lib/components/lemmy/post/PostItem.svelte'
+  import { PostItem } from '$lib/components/lemmy/post'
   import UserItem from '$lib/components/lemmy/user/UserItem.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import Skeleton from '$lib/components/ui/generic/Skeleton.svelte'

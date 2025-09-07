@@ -1,4 +1,12 @@
-<script lang="ts" module>
+<script lang="ts" module>  type BadgeType =
+    | 'nsfw'
+    | 'saved'
+    | 'featured'
+    | 'deleted'
+    | 'removed'
+    | 'locked'
+    | 'moderator'
+    | 'admin'
   export interface Tag {
     content: string
     color?: string
@@ -9,6 +17,64 @@
     ['OC', { content: 'OC', color: '#03A8F240' }],
     ['NSFL', { content: 'NSFL', color: '#ff000040' }],
     ['CW', { content: 'CW', color: '#ff000040' }],
+  ])
+
+  const badgeToData: Map<
+    BadgeType,
+    {
+      icon: IconSource
+      color: 'red-subtle' | 'yellow-subtle' | 'green-subtle'
+      label: string
+    }
+  > = new Map([
+    [
+      'nsfw',
+      {
+        icon: ExclamationTriangle,
+        color: 'red-subtle',
+        label: t.get('post.badges.nsfw'),
+      },
+    ],
+    [
+      'saved',
+      {
+        icon: Bookmark,
+        color: 'yellow-subtle',
+        label: t.get('post.badges.saved'),
+      },
+    ],
+    [
+      'featured',
+      {
+        icon: Megaphone,
+        color: 'green-subtle',
+        label: t.get('post.badges.featured'),
+      },
+    ],
+    [
+      'removed',
+      {
+        icon: Trash,
+        color: 'green-subtle',
+        label: t.get('post.badges.removed'),
+      },
+    ],
+    [
+      'deleted',
+      {
+        icon: Trash,
+        color: 'red-subtle',
+        label: t.get('post.badges.deleted'),
+      },
+    ],
+    [
+      'locked',
+      {
+        icon: LockClosed,
+        color: 'yellow-subtle',
+        label: t.get('post.badges.locked'),
+      },
+    ],
   ])
 
   export const parseTags = (
@@ -43,6 +109,8 @@
 </script>
 
 <script lang="ts">
+  import { profile } from '$lib/auth.svelte'
+  import type { Community, Person, SubscribedType } from '$lib/client/types'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
@@ -51,10 +119,8 @@
     formatRelativeDate,
   } from '$lib/components/util/RelativeDate.svelte'
   import { t } from '$lib/i18n/translations'
-  import { instance } from '$lib/instance.svelte'
   import { settings, type View } from '$lib/settings.svelte'
-  import type { Community, Person, SubscribedType } from '$lib/client/types'
-  import { Badge, modal, Popover } from 'mono-svelte'
+  import { Badge, Material, modal, Popover } from 'mono-svelte'
   import {
     Bookmark,
     ExclamationTriangle,
@@ -68,7 +134,6 @@
     Trash,
     type IconSource,
   } from 'svelte-hero-icons'
-  import Material from 'mono-svelte/materials/Material.svelte'
   import { CommunityLink } from '../community'
 
   interface Props {
@@ -83,16 +148,7 @@
     edited?: string
     view?: View
     // Badges
-    badges?: {
-      nsfw: boolean
-      saved: boolean
-      featured: boolean
-      deleted: boolean
-      removed: boolean
-      locked: boolean
-      moderator: boolean
-      admin: boolean
-    }
+    badges?: Record<BadgeType, boolean>
     tags?: Tag[]
     style?: string
     titleClass?: string
@@ -274,66 +330,17 @@
         </a>
       {/each}
     {/if}
-    {#if badges.nsfw}
-      <Badge label={$t('post.badges.nsfw')} color="red-subtle" allowIconOnly>
-        {#snippet icon()}
-          <Icon src={ExclamationTriangle} size="14" micro />
-        {/snippet}
-        {$t('post.badges.nsfw')}
+    {#each Object.keys(badges)
+      // filter by ones that are true
+      .filter(i => badges[i as BadgeType] == true)
+      // get from predetermined map
+      .map(i => badgeToData.get(i as BadgeType))
+      // remove null
+      .filter(i => i != undefined) as badge}
+      <Badge label={badge.label} color={badge.color} allowIconOnly>{#snippet icon()}
+          <Icon src={badge.icon} micro size="14" />{/snippet}{badge.label}
       </Badge>
-    {/if}
-    {#if badges.saved}
-      <Badge
-        label={$t('post.badges.saved')}
-        color="yellow-subtle"
-        allowIconOnly
-      >
-        {#snippet icon()}
-          <Icon src={Bookmark} micro size="14" />
-        {/snippet}
-        {$t('post.badges.saved')}
-      </Badge>
-    {/if}
-    {#if badges.locked}
-      <Badge
-        label={$t('post.badges.locked')}
-        color="yellow-subtle"
-        allowIconOnly
-      >
-        {#snippet icon()}
-          <Icon src={LockClosed} micro size="14" />
-        {/snippet}
-        <span class="max-md:hidden">{$t('post.badges.locked')}</span>
-      </Badge>
-    {/if}
-    {#if badges.removed}
-      <Badge label={$t('post.badges.removed')} color="red-subtle" allowIconOnly>
-        {#snippet icon()}
-          <Icon src={Trash} micro size="14" />
-        {/snippet}
-        <span class="max-md:hidden">{$t('post.badges.removed')}</span>
-      </Badge>
-    {/if}
-    {#if badges.deleted}
-      <Badge label={$t('post.badges.deleted')} color="red-subtle" allowIconOnly>
-        {#snippet icon()}
-          <Icon src={Trash} micro size="14" />
-        {/snippet}
-        <span class="max-md:hidden">{$t('post.badges.deleted')}</span>
-      </Badge>
-    {/if}
-    {#if badges.featured}
-      <Badge
-        label={$t('post.badges.featured')}
-        color="green-subtle"
-        allowIconOnly
-      >
-        {#snippet icon()}
-          <Icon src={Megaphone} micro size="14" />
-        {/snippet}
-        <span class="max-md:hidden">{$t('post.badges.featured')}</span>
-      </Badge>
-    {/if}
+      {/each}
     {@render extraBadges?.()}
   </div>
 </header>
@@ -341,8 +348,7 @@
   {@const useAttachedUrl = settings.posts.titleOpensUrl && postUrl}
   <h3
     class={[
-      'max-sm:m-0!',
-      'font-medium',
+      'font-medium max-sm:mt-0!',
       titleClass,
       settings.markReadPosts && read && 'text-slate-600 dark:text-zinc-400',
       view == 'compact' ? 'text-base' : 'text-lg',
@@ -352,7 +358,7 @@
     <a
       href={useAttachedUrl
         ? postUrl
-        : `/post/${encodeURIComponent(instance.data)}/${id}`}
+        : `/post/${encodeURIComponent(profile.current.intsance)}/${id}`}
       target={useAttachedUrl
         ? '_blank'
         : undefined}

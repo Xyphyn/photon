@@ -1,12 +1,12 @@
 <script lang="ts">
   import Comment from '$lib/components/lemmy/comment/Comment.svelte'
-  import PostMeta from '$lib/components/lemmy/post/PostMeta.svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
   import { t } from '$lib/i18n/translations'
   import type { CommentView } from '$lib/client/types'
   import { Button, Material } from 'mono-svelte'
   import { ArrowUturnUp, Icon } from 'svelte-hero-icons'
   import type { ClassValue } from 'svelte/elements'
+  import { PostMeta } from '../post'
 
   interface Props {
     comment: CommentView

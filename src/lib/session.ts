@@ -2,18 +2,16 @@ import { browser } from '$app/environment'
 import type { Community } from '$lib/client/types'
 
 interface SessionStorage {
-  lastSeenCommunity: Community | undefined
-  postDraft:
-    | {
-        community: Community | null
-        title: string
-        body: string
-        image: FileList | null
-        url: string | undefined
-        nsfw: boolean
-        loading: boolean
-      }
-    | undefined
+  lastSeenCommunity?: Community
+  postDraft?: {
+    community: Community | null
+    title: string
+    body: string
+    image: FileList | null
+    url?: string
+    nsfw: boolean
+    loading: boolean
+  }
 }
 
 export const setSessionStorage = (

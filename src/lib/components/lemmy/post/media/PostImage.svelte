@@ -14,7 +14,6 @@
   let { post, blur = false }: Props = $props()
 
   let imageLoaded: boolean | null = $state(null)
-
   onMount(() => {
     imageLoaded = false
   })

@@ -8,7 +8,7 @@ import {
 import { t } from '$lib/i18n/translations'
 import { type ResumableItem } from '$lib/lemmy/item'
 import { settings } from '$lib/settings.svelte'
-import { theme, type ThemeData } from '$lib/ui/colors.svelte'
+import { theme, type ThemeData } from '$lib/ui/theme/theme.svelte'
 import { fullCommunityName } from '$lib/util.svelte'
 import {
   ArrowRightOnRectangle,

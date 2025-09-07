@@ -5,7 +5,6 @@
   import MultiSelect from '$lib/components/input/Switch.svelte'
   import Comment from '$lib/components/lemmy/comment/Comment.svelte'
   import { removalTemplate } from '$lib/components/lemmy/moderation/moderation.js'
-  import Post from '$lib/components/lemmy/post/Post.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { t } from '$lib/i18n/translations'
   import { getClient } from '$lib/client/lemmy.svelte'
@@ -18,6 +17,7 @@
   import { Fire, Icon, Trash } from 'svelte-hero-icons'
   import { amMod, isAdmin } from './moderation'
   import { errorMessage } from '$lib/lemmy/error'
+  import { Post } from '../post'
 
   interface Props {
     open: boolean
