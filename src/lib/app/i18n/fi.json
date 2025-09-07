@@ -36,9 +36,16 @@
         "frontpage": {
             "title": "Etusivu",
             "footer": "{{users:number}} {{users; 1:aktiivinen käyttäjä; default:aktiivista käyttäjää;}}",
-            "endFeed": "Olet saavuttanut {{community_name; undefined:syötteen lopun.; default:yhteisön {{community_name}} lopun.}}"
+            "endFeed": "Olet saavuttanut {{community_name; undefined:syötteen lopun.; default:yhteisön {{community_name}} lopun.}}",
+            "empty": {
+                "title": "Ei julkaisuja",
+                "description": "Julkaisuja, jotka vastaavat tätä hakua ei löytynyt."
+            }
         },
-        "modlog": "Moderointiloki",
+        "modlog": {
+            "filters": "Suodattimet",
+            "title": "Moderointiloki"
+        },
         "profile": {
             "user": "Käyttäjä",
             "blocks": {
@@ -65,7 +72,8 @@
                 "warning": "Tiliä ei voi palauttaa poistamisen jälkeen. Oletko varma?"
             },
             "overview": "Yleisnäkymä",
-            "submissions": "Lähetykset"
+            "submissions": "Lähetykset",
+            "edit": "Muokkaa"
         },
         "instances": "Instanssit",
         "createPost": "Luo julkaisu",
@@ -76,7 +84,7 @@
             "query": "Hakusanat",
             "noResults": {
                 "title": "Ei tuloksia",
-                "alt": "Etsi kaikkialta",
+                "alt": "Etsi mitä tahansa fediversestä.",
                 "description": "Haku ei tuottanut tuloksia näillä rajoituksilla. Yritä muokata hakua."
             },
             "federating": "Federoidaan",
@@ -86,7 +94,7 @@
         "saved": "Tallennetut",
         "createCommunity": "Luo yhteisö",
         "post": {
-            "commentCount": "kommenttia",
+            "commentCount": "Kommentit",
             "addComment": "Kommentoi",
             "scrollToTop": "Takaisin ylös",
             "thread": {
@@ -97,7 +105,7 @@
             },
             "remoteView": "Etänäkymä",
             "localView": "Siirry paikalliseen näkymään",
-            "crosspostCount": "ristijakoa",
+            "crosspostCount": "Ristijulkaisut",
             "instanceWarning": "Tämä julkaisu haettiin eri palvelimelta, kuin käyttäjäsi. Moni toiminto ei toimi.",
             "emptyComments": {
                 "title": "Ei kommentteja",
@@ -119,7 +127,11 @@
                 "message": "{{user}} lähetti viestin käyttäjälle {{recipient}}"
             },
             "messages": {
-                "conversation": "Tämä on keskustelun alku käyttäjän {{user}} kanssa"
+                "conversation": "Tämä on keskustelun alku käyttäjän {{user}} kanssa",
+                "start": "Aloita keskustelu",
+                "empty": {
+                    "title": "Ei viestejä"
+                }
             }
         },
         "legal": {
@@ -136,7 +148,16 @@
             },
             "reason": "Syy",
             "resolved": "Käsitelty",
-            "resolvedBy": "Käsitellyt"
+            "resolvedBy": "Käsitellyt",
+            "manage": {
+                "title": "Hallinta",
+                "modlogs": "Viimeaikaiset moderointilokit",
+                "ban": "Anna porttikielto",
+                "unban": "Poista porttikielto"
+            },
+            "markAllComplete": "Joukkotoiminto valmis.",
+            "markAll": "Merkitse sivu käsitellyksi",
+            "feed": "Ilmiannot"
         },
         "admin": {
             "title": "Ylläpito",
@@ -167,7 +188,7 @@
                 "slurFilter": "Kielletyt sanat (regex)",
                 "federation": "Federointi päällä",
                 "captcha": {
-                    "enabled": "CAPTCHA Päällä"
+                    "enabled": "CAPTCHA päällä"
                 },
                 "emailAdminsOnApplication": "Lähetä ylläpitäjille sähköposti-ilmoitus hakemuksista",
                 "federationDebug": "Federoinnin vianetsintätila"
@@ -219,6 +240,9 @@
                     "description": "Sallittujen instanssien määrittäminen estää listaamattomat instanssit."
                 },
                 "allow": "Sallitut"
+            },
+            "media": {
+                "title": "Media"
             }
         },
         "verifyEmail": {
@@ -237,11 +261,12 @@
                 "team": "Tiimi",
                 "settings": "Asetukset",
                 "manage": "Muuta asetuksia"
-            }
+            },
+            "languageWarning": "Tämä yhteisö käyttää kieliä, joita et ole valinnut. Osa tai kaikki yhteisön sisällösta on voi puuttua."
         },
         "postRedirect": {
             "description": "Tämä linkki johtaa eri instanssille, kuin millä selaat nyt ({{homeInstance}}).",
-            "title": "Instanssi ei täsmää",
+            "title": "Osoitteen instanssi ei täsmää",
             "actions": {
                 "back": "Mene takaisin",
                 "fetch": "Hae julkaisu oman instanssisi kautta: {{homeInstance}}",
@@ -336,7 +361,8 @@
         "comments": "Kommentit",
         "instances": "Instanssit",
         "message": "Viesti",
-        "communities": "Yhteisöt"
+        "communities": "Yhteisöt",
+        "url": "URL"
     },
     "admin": {
         "purge": "Puhdista",
@@ -390,7 +416,8 @@
             "setTheme": "Aseta teema",
             "setThemeTo": "Aseta teema: {{default}}",
             "contextual": "Tällä sivulla"
-        }
+        },
+        "notifications": "Ilmoitukset"
     },
     "profile": {
         "profile": "Profiili",
@@ -404,7 +431,7 @@
         "signup": "Luo tili",
         "accounts": "Käyttäjätilit",
         "changeinstance": "Vaihda instanssia",
-        "resetColor": "Palauta väri",
+        "resetColor": "Palauta oletusväri",
         "addGuest": "Lisää vieras",
         "moveUp": "Siirrä ylös",
         "moveDown": "Siirrä alas",
@@ -474,7 +501,7 @@
             "nsfw": "NSFW",
             "community": "Yhteisö",
             "title": "Otsikko",
-            "uploadImage": "Liitä kuva",
+            "uploadImage": "Lisää kuva",
             "generateTitle": "Hae otsikko",
             "create": "Luo julkaisu",
             "edit": "Muokkaa julkaisua",
@@ -490,7 +517,8 @@
             "2fa": {
                 "totp": "TOTP",
                 "2fa": "Kaksivaiheinen tunnistautuminen (2FA)",
-                "paste": "Liitä tämä todenninsovellukseesi (authenticator app)."
+                "paste": "Liitä tämä todenninsovellukseesi (authenticator app).",
+                "disabled": "2FA on pois päältä"
             },
             "deleteAccount": {
                 "warning": "Tämä poistaa KAIKEN lähettämäsi sisällön.",
@@ -514,6 +542,10 @@
             "languages": {
                 "description": "Kielten asettaminen piilottaa muunkielisen sisällön. Suurimman osan sisällöstä kieltä ei ole merkitty. Ne kuuluvat vaihtoehdon 'Undetermined' alle.",
                 "title": "Kielet"
+            },
+            "credentials": {
+                "title": "Hallitse kirjautumista",
+                "description": "Täällä voit asettaa kaksivaiheisen tunnistautumisen (2FA) päälle, vaihtaa salasanasi, tarkastella kirjautuneita laitteita tai poistaa tilisi."
             }
         },
         "setup": "Ota käyttöön",
@@ -521,7 +553,8 @@
             "title": "Luo tili",
             "application": {
                 "label": "Vastaus",
-                "info": "Liittyäksesi tälle instanssille, sinun tulee täyttää tämä hakemus ja odottaa sen hyväksymistä. Saat vastauksen sähköpostiisi, kun se on hyväksytty."
+                "info": "Liittyäksesi tälle instanssille, sinun tulee täyttää tämä hakemus ja odottaa sen hyväksymistä. Saat vastauksen sähköpostiisi, kun se on hyväksytty.",
+                "notice": "Rekisteröitymisesi on vireillä. Saat sähköpostin, kun ylläpitäjä on tarkastanut sen."
             },
             "closed": {
                 "title": "Rekisteröityminen suljettu",
@@ -530,7 +563,13 @@
             },
             "chooseInstance": "Valitse instanssi",
             "description": "Valitse kiinnostava instanssi tai syötä osoite manuaalisesti.",
-            "info": "Instanssi on palvelin, jolla käyttäjätilisi sijaitsee. Voit silti osallistua keskusteluun muilla instansseilla."
+            "info": "Instanssi on palvelin, jolla käyttäjätilisi sijaitsee. Voit silti osallistua keskusteluun muilla instansseilla.",
+            "verify": {
+                "title": "Varmista sähköposti",
+                "description": "Sähköpostiisi on lähetetty varmistuslinkki. Paina allaolevaa nappulaa, kun olet avannut sen.",
+                "submit": "Olen varmistanut sähköpostini",
+                "error": "Sähköpostisi ei ole varmistettu."
+            }
         },
         "description": "Kuvaus",
         "email": "Sähköposti",
@@ -563,13 +602,13 @@
             "title": "Poista lähetys",
             "titleRestore": "Palauta lähetys",
             "titlePurge": "Puhdista lähetys",
-            "withReason": "Vastaa syyn kanssa",
+            "withReason": "Ilmoita käyttäjälle",
             "comment": "Kommentti",
             "failMessage": "Viestin lähetys epäonnistui. Poistetaan silti...",
             "successPurge": "Lähetys puhdistettiin onnistuneesti.",
             "failReply": "Vastauksen lähetys epäonnistui. Poistetaan silti...",
             "message": "Viesti",
-            "failEmptyReply": "Vastaus ei voi olla tyhjä, jos \"Vastaa syyn kanssa\" on valittu."
+            "failEmptyReply": "Vastaus ei voi olla tyhjä, jos \"Ilmoita käyttäjälle\" on valittu."
         },
         "reportModal": {
             "title": "Ilmianna",
@@ -584,7 +623,13 @@
         "labelInstanceOnly": "Moderointi (vain instanssi)",
         "feature": "Nosta",
         "unfeature": "Poista nosto",
-        "report": "Ilmianna"
+        "report": "Ilmianna",
+        "modlog": {
+            "comment": "Kommentin moderointiloki",
+            "user": "Käyttäjän moderointiloki",
+            "post": "Julkaisun moderointiloki"
+        },
+        "votes": "Äänet"
     },
     "comment": {
         "actions": {
@@ -610,7 +655,11 @@
         "add": "Lisää",
         "send": "Lähetä",
         "cancel": "Peru",
-        "general": "Yleinen"
+        "general": "Yleinen",
+        "remove": "Poista",
+        "download": "Lataa",
+        "attach": "Liitä tiedosto",
+        "info": "Tietoja"
     },
     "message": {
         "success": "Onnistui",
@@ -673,7 +722,8 @@
         "verifyEmail": "Vahvistuslinkki lähetettiin sähköpostiisi. Vahvista sähköpostisi ja sitten kirjaudu.",
         "settingsImport": "Asetusten tuonti onnistui.",
         "settingsImportWarning": "Tuodut asetukset eivät vaikuta kelvollisilta. Haluatko yrittää siitä huolimatta?",
-        "userLoading": "Ladataan käyttäjätietoja..."
+        "userLoading": "Ladataan käyttäjätietoja...",
+        "lemmyDonate": "Instanssisi käyttää avoimen lähdekoodin Lemmy-ohjelmistoa. Lemmyn kehittäjät ottavat vastaan lahjoituksia. Kiitos käyttäjien tuen, Lemmy on vapaa mainoksista ja jäljityksestä.\n\nVuosittain he pyytävät harkitsemaan lahjoitusta, jotta Lemmyn ylläpito ja parantaminen jatkuisi.\n\n[Lahjoita](https://join-lemmy.org/donate)\n\n*Huomaa: tämä on lahjoitus Lemmylle, ei Photonille.*"
     },
     "settings": {
         "app": {
@@ -803,6 +853,9 @@
             "commands": {
                 "description": "Paina vinoviivanäppäintä (/) tai klikkaa logoa oikealla näppäimellä avataksesi komentopaletin.",
                 "title": "Komentopaletti"
+            },
+            "autoHide": {
+                "title": "Piilota telakka automaattisesti"
             }
         },
         "lemmy": {
