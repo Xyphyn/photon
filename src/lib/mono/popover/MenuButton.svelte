@@ -52,6 +52,7 @@
   {disabled}
   data-autoclose={nest ? 'false' : 'true'}
   shadow="none"
+  role="menuitem"
 >
   {#snippet prefix()}
     <div

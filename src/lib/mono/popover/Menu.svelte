@@ -51,6 +51,7 @@
       <div
         class="flex flex-col p-1 list-none bg-white/80 dark:bg-zinc-900/90 rounded-xl
         border border-slate-200 dark:border-zinc-800 gap-px"
+        role="menu"
       >
         {@render children?.(open)}
       </div>

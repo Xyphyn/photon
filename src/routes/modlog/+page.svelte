@@ -304,7 +304,7 @@
   {/if}
 </div>
 
-<style lang="postcss">
+<style>
   @reference '../../style/app.css'
   
   :global(.table thead tr th) {

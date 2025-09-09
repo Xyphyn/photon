@@ -109,7 +109,7 @@ bg-white/50 dark:bg-black/50 box-border p-4"
             class="absolute top-0 right-0 m-2 text-slate-600 dark:text-zinc-400"
             color="tertiary"
             size="square-sm"
-            onclick={() => onclose()}
+            onclick={onclose}
             icon={XMark}
           ></Button>
         {/if}

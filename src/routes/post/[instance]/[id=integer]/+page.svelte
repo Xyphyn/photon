@@ -306,12 +306,12 @@
   {/await}
   {#if data.post.value.post_view.counts.comments > 5}
     <EndPlaceholder>
-      <span class="text-black dark:text-white font-bold">
-        {data.post.value.post_view.counts.comments}
-      </span>
       {$t('routes.post.commentCount')}
 
       {#snippet action()}
+        <span class="text-black dark:text-white font-bold">
+          {data.post.value.post_view.counts.comments}
+        </span>
         <Button
           color="tertiary"
           onclick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}

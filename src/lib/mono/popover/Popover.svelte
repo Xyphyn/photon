@@ -8,12 +8,12 @@
     type Strategy,
   } from '@floating-ui/core'
   import { createFloatingActions } from 'svelte-floating-ui'
-  import { focusTrap } from 'svelte-focus-trap'
   import type { Attachment } from 'svelte/attachments'
   import { expoOut } from 'svelte/easing'
   import { scale } from 'svelte/transition'
   import { Material } from '../index'
   import Portal from './Portal.svelte'
+  import { focusTrap } from 'svelte-focus-trap'
 
   interface Props {
     openOnHover?: boolean
@@ -72,11 +72,23 @@
   const menuAttach: Attachment = (element) => {
     const e = element as HTMLButtonElement
 
-    const mouseLeave = () => (openOnHover ? (open = false) : false)
-    const focus = () => (openOnHover ? (open = true) : false)
-    const focusout = () => (openOnHover ? (open = false) : false)
+    function toggle(force?: boolean) {
+      if (!open && force == false) return
+
+      const newOpen = force ?? !open
+
+      if (!newOpen) {
+        e.focus()
+      }
+
+      open = newOpen
+    }
+
+    const mouseLeave = () => openOnHover && toggle(false)
+    const focus = () => openOnHover && toggle(true)
+    const focusout = () => openOnHover && toggle(false)
     const click = () => {
-      open = !open
+      toggle()
 
       if (autoClose) {
         const clickHandler = (event: Event) => {
@@ -86,7 +98,7 @@
 
           if (!e?.contains(event.target as Element | null)) {
             if (target?.closest("[data-autoclose='false']") == null) {
-              open = false
+              toggle(false)
               document.removeEventListener('click', clickHandler)
             }
           }
@@ -95,14 +107,16 @@
       }
     }
     const keydown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') open = false
+      if (event.key === 'Escape') {
+        toggle(false)
+      }
     }
 
     e.addEventListener('mouseleave', mouseLeave)
     e.addEventListener('focus', focus)
     e.addEventListener('focusout', focusout)
     e.addEventListener('click', click)
-    e.addEventListener('keydown', keydown)
+    popoverEl?.addEventListener('keydown', keydown)
 
     floatingRef(e)
 
@@ -111,7 +125,7 @@
       e.removeEventListener('focus', focus)
       e.removeEventListener('focusout', focusout)
       e.removeEventListener('click', click)
-      e.removeEventListener('keydown', keydown)
+      popoverEl?.removeEventListener('keydown', keydown)
     }
   }
 </script>
@@ -127,12 +141,14 @@
         opacity: 0,
         easing: expoOut,
       }}
-      class="z-150 {popoverClass}"
+      class={['z-150', popoverClass]}
       use:floatingContent
       use:focusTrap
       bind:this={popoverEl}
     >
-      {#if popover}{@render popover(open)}{:else}
+      {#if popover}
+        {@render popover(open)}
+      {:else}
         <Material elevation="high" color="distinct" class="flex flex-col">
           {@render children?.(open)}
         </Material>

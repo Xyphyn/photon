@@ -14,6 +14,7 @@
     listing_type?: ListingType
     showWhenEmpty?: boolean
     hideOwnUser?: boolean
+    placeholder?: string
     onselect?: (e: Person) => void
   }
 

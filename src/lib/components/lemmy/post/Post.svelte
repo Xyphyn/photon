@@ -144,7 +144,7 @@
   {/if}
 </article>
 
-<style lang="postcss">
+<style>
   .list-type {
     display: grid;
     grid-template-areas: 'meta media' 'title media' 'body media' 'embed embed' 'actions actions';

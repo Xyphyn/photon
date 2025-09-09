@@ -15,6 +15,7 @@
     showWhenEmpty?: boolean
     placeholder?: string
     onselect?: (item: any) => void
+    label?: string
   }
 
   let {
