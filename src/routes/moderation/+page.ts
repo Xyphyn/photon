@@ -8,7 +8,7 @@ import {
   generalizePrivateMessageReport,
   type ReportView,
 } from '$lib/lemmy/report.js'
-import { ReactiveState } from '$lib/promise.svelte'
+import { ReactiveState } from '$lib/util.svelte'
 import { error } from '@sveltejs/kit'
 
 type ReportListType = 'unread' | 'all'

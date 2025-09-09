@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ReactiveState } from '$lib/promise.svelte'
+  import { ReactiveState } from '$lib/util.svelte'
   import UserPage from '../../u/[name]/+page.svelte'
   let { data } = $props()
 </script>

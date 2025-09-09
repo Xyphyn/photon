@@ -79,7 +79,7 @@
         label={$t('nav.admin')}
         icon={ServerStack}
         class="relative"
-        isSelectedFilter={path => path.startsWith('/admin')}
+        isSelectedFilter={(path) => path.startsWith('/admin')}
       />
     {/if}
     {#if amModOfAny(profile.current?.user)}
@@ -142,7 +142,7 @@
               <Spinner width={20} />
             </div>
           {:then { default: Profile }}
-            <Profile  />
+            <Profile />
           {/await}
         {/if}
       {/snippet}

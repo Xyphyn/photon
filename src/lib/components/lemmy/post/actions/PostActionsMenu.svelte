@@ -1,12 +1,14 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { profile } from '$lib/auth.svelte'
+  import { client } from '$lib/client/lemmy.svelte'
+  import { PiefedClient } from '$lib/client/piefed/piefed'
+  import type { PostView } from '$lib/client/types'
   import { t } from '$lib/i18n/translations'
   import { deleteItem, markAsRead } from '$lib/lemmy/contentview'
   import { setSessionStorage } from '$lib/session'
   import { settings } from '$lib/settings.svelte'
   import { instanceToURL } from '$lib/util.svelte'
-  import type { PostView } from '$lib/client/types'
   import { Button, Menu, MenuButton, toast } from 'mono-svelte'
   import {
     ArrowTopRightOnSquare,
@@ -15,7 +17,6 @@
     EyeSlash,
     Flag,
     GlobeAlt,
-    Icon,
     MapPin,
     PencilSquare,
     Share,
@@ -24,8 +25,6 @@
   } from 'svelte-hero-icons'
   import { report } from '../../moderation/moderation'
   import { hidePost } from '../helpers'
-  import { client } from '$lib/client/lemmy.svelte'
-  import { PiefedClient } from '$lib/client/piefed/piefed'
 
   interface Props {
     post: PostView
@@ -52,10 +51,7 @@
 </script>
 
 {#if profile.current?.user && profile.current?.jwt && profile.current.user.local_user_view.person.id == post.creator.id}
-  <MenuButton onclick={() => (editing = true)}>
-    {#snippet prefix()}
-      <Icon src={PencilSquare} size="16" micro />
-    {/snippet}
+  <MenuButton onclick={() => (editing = true)} icon={PencilSquare}>
     {$t('post.actions.more.edit')}
   </MenuButton>
 {/if}
@@ -65,10 +61,8 @@
       if (profile.current?.jwt)
         post.read = await markAsRead(post.post, !post.read)
     }}
+    icon={post.read ? EyeSlash : Eye}
   >
-    {#snippet prefix()}
-      <Icon src={post.read ? EyeSlash : Eye} size="16" micro />
-    {/snippet}
     {post.read
       ? $t('post.actions.more.markUnread')
       : $t('post.actions.more.markRead')}
@@ -78,10 +72,8 @@
   <MenuButton
     onclick={() => share()}
     class={['flex-1', !post.post.local && 'rounded-r-lg']}
+    icon={Share}
   >
-    {#snippet prefix()}
-      <Icon src={Share} size="16" micro />
-    {/snippet}
     {$t('post.actions.more.share')}
   </MenuButton>
   {#if !post.post.local}
@@ -94,27 +86,13 @@
           size="custom"
           class="w-6 h-6 self-center"
           data-autoclose="false"
-        >
-          {#snippet prefix()}
-            <Icon
-              src={EllipsisHorizontal}
-              size="16"
-              micro
-              class="text-slate-600 dark:text-zinc-400"
-            />
-          {/snippet}
-        </Button>
+          icon={EllipsisHorizontal}
+        ></Button>
       {/snippet}
-      <MenuButton onclick={() => share(true)}>
-        {#snippet prefix()}
-          <Icon src={GlobeAlt} size="16" micro />
-        {/snippet}
+      <MenuButton onclick={() => share(true)} icon={GlobeAlt}>
         {$t('filter.location.global')}
       </MenuButton>
-      <MenuButton onclick={() => share(false)}>
-        {#snippet prefix()}
-          <Icon src={MapPin} size="16" micro />
-        {/snippet}
+      <MenuButton onclick={() => share(false)} icon={MapPin}>
         {$t('filter.location.local')}
       </MenuButton>
     </Menu>
@@ -141,10 +119,8 @@
 
       goto('/create/post?crosspost=true')
     }}
+    icon={ArrowTopRightOnSquare}
   >
-    {#snippet prefix()}
-      <Icon src={ArrowTopRightOnSquare} size="16" micro />
-    {/snippet}
     {$t('post.actions.more.crosspost')}
   </MenuButton>
   {#if profile.current.user && post.creator.id == profile.current.user.local_user_view.person.id}
@@ -154,10 +130,8 @@
           post.post.deleted = await deleteItem(post, !post.post.deleted)
       }}
       color="danger-subtle"
+      icon={Trash}
     >
-      {#snippet prefix()}
-        <Icon src={Trash} size="16" micro />
-      {/snippet}
       {post.post.deleted
         ? $t('post.actions.more.restore')
         : $t('post.actions.more.delete')}
@@ -177,19 +151,14 @@
           if (hidden) onhide?.(hidden)
         }}
         color="danger-subtle"
+        icon={XMark}
       >
-        {#snippet prefix()}
-          <Icon src={XMark} size="16" micro />
-        {/snippet}
         {post.hidden
           ? $t('post.actions.more.unhide')
           : $t('post.actions.more.hide')}
       </MenuButton>
     {/if}
-    <MenuButton onclick={() => report(post)} color="danger-subtle">
-      {#snippet prefix()}
-        <Icon src={Flag} size="16" micro />
-      {/snippet}
+    <MenuButton onclick={() => report(post)} color="danger-subtle" icon={Flag}>
       {$t('moderation.report')}
     </MenuButton>
   {/if}

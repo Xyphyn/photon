@@ -1,5 +1,5 @@
 import { env } from '$env/dynamic/public'
-import type { Theme, ThemeColors } from './colors.svelte'
+import type { Theme, ThemeColors } from './theme.svelte'
 
 const PHOTON_DEFAULT = {
   slate: {

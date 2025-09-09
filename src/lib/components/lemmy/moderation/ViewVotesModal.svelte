@@ -29,7 +29,7 @@
     if (isPostView(item))
       return await client()
         .listPostLikes({ post_id: item.post.id, limit: 50, page: page })
-        .then(i => i.post_likes)
+        .then((i) => i.post_likes)
     if (isCommentView(item))
       return await client()
         .listCommentLikes({
@@ -37,7 +37,7 @@
           limit: 50,
           page: page,
         })
-        .then(i => i.comment_likes)
+        .then((i) => i.comment_likes)
 
     return []
   }

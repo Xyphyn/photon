@@ -7,7 +7,6 @@ import {
 import { DEFAULT_INSTANCE_URL } from '$lib/instance.svelte.js'
 import { client, getClient, site } from '$lib/client/lemmy.svelte'
 import { instanceToURL, moveItem } from '$lib/util.svelte'
-import { MINIMUM_VERSION, versionIsSupported } from '$lib/version.js'
 import { toast } from 'mono-svelte'
 import { writable } from 'svelte/store'
 import { t } from './i18n/translations'
@@ -61,8 +60,8 @@ const getCookie = (key: string): string | undefined => {
 
   return document?.cookie
     ?.split(';')
-    .map(c => c.trim())
-    .find(c => c.split('=')?.[0] == key)
+    .map((c) => c.trim())
+    .find((c) => c.split('=')?.[0] == key)
     ?.split('=')?.[1]
 }
 
@@ -82,7 +81,7 @@ class Profile {
     },
   )
   #current = $derived(
-    this.meta.profiles.find(i => i.id == this.meta.profile) ??
+    this.meta.profiles.find((i) => i.id == this.meta.profile) ??
       this.getDefaultProfile(),
   )
 
@@ -123,7 +122,7 @@ class Profile {
     setInterval(
       () => {
         if (profile.current.jwt)
-          this.checkInbox().then(res => notifications.update(() => res))
+          this.checkInbox().then((res) => notifications.update(() => res))
       },
       4 * 60 * 1000,
     )
@@ -165,7 +164,7 @@ class Profile {
   }
   set current(value) {
     if (!value) return
-    const index = this.meta.profiles.findIndex(i => i.id == value?.id)
+    const index = this.meta.profiles.findIndex((i) => i.id == value?.id)
     this.meta.profiles[index] = value
   }
 
@@ -200,7 +199,7 @@ class Profile {
         site.data = undefined
         client({ instanceURL: this.#current.instance })
           .getSite()
-          .then(res => (site.data = res))
+          .then((res) => (site.data = res))
       }
     }
 
@@ -226,8 +225,8 @@ class Profile {
 
   async add(jwt: string, instance: string, type: ClientType) {
     const user = await userFromJwt(jwt, instance)
-      .then(u => u)
-      .catch(err => {
+      .then((u) => u)
+      .catch((err) => {
         toast({ content: errorMessage(err as string), type: 'error' })
       })
     if (!user?.user) {
@@ -237,7 +236,7 @@ class Profile {
       })
     }
 
-    const id = Math.max(...this.meta.profiles.map(p => p.id)) + 1
+    const id = Math.max(...this.meta.profiles.map((p) => p.id)) + 1
     this.meta.profile = id
     this.meta.profiles.unshift({
       id: id,
@@ -253,7 +252,7 @@ class Profile {
 
   remove(id: number) {
     this.meta.profiles.splice(
-      this.meta.profiles.findIndex(p => p.id == id),
+      this.meta.profiles.findIndex((p) => p.id == id),
       1,
     )
     if (id == this.meta.profile) this.meta.profile = -1
@@ -261,7 +260,7 @@ class Profile {
 
   move(id: number, up: boolean) {
     try {
-      const index = this.meta.profiles.findIndex(i => i.id == id)
+      const index = this.meta.profiles.findIndex((i) => i.id == id)
       this.meta.profiles = moveItem(
         this.meta.profiles,
         index,
@@ -277,7 +276,7 @@ class Profile {
     $effect(() => {
       const serialized = {
         ...this.meta,
-        profiles: this.meta.profiles.map(p => serializeUser(p)),
+        profiles: this.meta.profiles.map((p) => serializeUser(p)),
       }
 
       setFromStorage('profileData', serialized)
@@ -292,7 +291,7 @@ class Profile {
     $effect(() => {
       this.fetchUserData().then(() => {
         if (this.current.jwt)
-          this.checkInbox().then(res => notifications.update(() => res))
+          this.checkInbox().then((res) => notifications.update(() => res))
       })
     })
   })
@@ -309,9 +308,7 @@ export const notifications = writable<Notifications>({
 async function userFromJwt(
   jwt: string,
   instance: string,
-): Promise<
-  { user: MyUserInfo | undefined; site: GetSiteResponse } | undefined
-> {
+): Promise<{ user?: MyUserInfo; site: GetSiteResponse } | undefined> {
   const sitePromise = client({ instanceURL: instance, auth: jwt }).getSite()
 
   const timer = setTimeout(
@@ -325,22 +322,15 @@ async function userFromJwt(
   )
 
   const site = await sitePromise
-    .then(r => {
+    .then((r) => {
       clearTimeout(timer)
       return r
     })
-    .catch(e => {
+    .catch((e) => {
       toast({ content: `Failed to contact the instance. ${e}` })
     })
 
   if (!site) return
-
-  if (!versionIsSupported(site.version, MINIMUM_VERSION)) {
-    toast({
-      content: `This version of Photon only supports Lemmy instances with version ${MINIMUM_VERSION} or higher. This Lemmy instance is running: ${site.version}`,
-      type: 'error',
-    })
-  }
 
   const myUser = site.my_user
 
@@ -360,27 +350,27 @@ function serializeUser(user: ProfileInfo): ProfileInfo {
 async function getNotificationCount(jwt: string, mod: boolean, admin: boolean) {
   const unreadsPromise = getClient()
     .getUnreadCount()
-    .then(res => res.mentions + res.private_messages + res.replies)
+    .then((res) => res.mentions + res.private_messages + res.replies)
     .catch(() => 0)
 
   const reportsPromise = mod
     ? getClient()
         .getReportCount({})
         .then(
-          res =>
+          (res) =>
             res.comment_reports +
             res.post_reports +
             (res.private_message_reports ?? 0),
         )
         .catch(() => 0)
-    : new Promise<number>(res => res(0))
+    : new Promise<number>((res) => res(0))
 
   const applicationsPromise = admin
     ? getClient()
         .getUnreadRegistrationApplicationCount()
-        .then(res => res.registration_applications)
+        .then((res) => res.registration_applications)
         .catch(() => 0)
-    : new Promise<number>(res => res(0))
+    : new Promise<number>((res) => res(0))
 
   const [unreads, reports, applications] = await Promise.all([
     unreadsPromise,

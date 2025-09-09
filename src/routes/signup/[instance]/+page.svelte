@@ -1,28 +1,27 @@
 <script lang="ts">
-  import { preventDefault } from 'svelte/legacy'
-
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
+  import { profile } from '$lib/auth.svelte.js'
+  import { getClient } from '$lib/client/lemmy.svelte'
+  import type { GetCaptchaResponse } from '$lib/client/types'
   import ErrorContainer, {
     clearErrorScope,
     pushError,
   } from '$lib/components/error/ErrorContainer.svelte'
-  import SiteCard from '$lib/components/lemmy/SiteCard.svelte'
+  import SiteCard from '$lib/components/lemmy/instance/InstanceCard.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { Header } from '$lib/components/ui/layout'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import { t } from '$lib/i18n/translations.js'
-  import { getClient } from '$lib/client/lemmy.svelte'
   import { errorMessage } from '$lib/lemmy/error.js'
-  import type { GetCaptchaResponse } from '$lib/client/types'
   import {
     Button,
-    Checkbox,
+    Label,
     Material,
     Spinner,
+    Switch,
     TextInput,
     toast,
   } from 'mono-svelte'
@@ -36,7 +35,6 @@
     QuestionMarkCircle,
     XCircle,
   } from 'svelte-hero-icons'
-  import { profile } from '$lib/auth.svelte.js'
 
   let { data } = $props()
 
@@ -155,7 +153,10 @@
   {#if stage == 'signup'}
     <form
       class="flex flex-col gap-4 h-full w-full flex-2/3"
-      onsubmit={preventDefault(submit)}
+      onsubmit={(e) => {
+        e.preventDefault()
+        submit()
+      }}
     >
       <Button href="/accounts" class=" mb-4 w-max" rounding="pill">
         <Icon src={ArrowLeft} size="16" micro />
@@ -230,9 +231,7 @@
           />
         {/if}
         {#if captchaRequired}
-          <SectionTitle class="block -mb-3 font-medium text-sm">
-            Captcha
-          </SectionTitle>
+          <Label class="block -mb-3 font-medium text-sm">Captcha</Label>
           <Material rounding="2xl">
             <div class="flex flex-col gap-4">
               {#await getCaptcha()}
@@ -269,7 +268,7 @@
             </div>
           </Material>
         {/if}
-        <Checkbox bind:checked={nsfw}>{$t('form.profile.showNSFW')}</Checkbox>
+        <Switch bind:checked={nsfw}>{$t('form.profile.showNSFW')}</Switch>
         <input type="dn" name="honeypot" bind:value={honeypot} class="hidden" />
         <Button
           submit
@@ -300,7 +299,7 @@
       <ErrorContainer scope={page.url.pathname} />
       <h2 class="font-medium text-3xl">{$t('toast.verifyEmail')}</h2>
       <form
-        onsubmit={e => {
+        onsubmit={(e) => {
           e.preventDefault()
           verifiedEmail()
         }}

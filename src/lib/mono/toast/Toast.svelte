@@ -69,7 +69,7 @@
       <button
         onclick={() => {
           toast.action?.()
-          toasts.update(toasts => toasts.filter(t => t.id != toast.id))
+          toasts.update((toasts) => toasts.filter((t) => t.id != toast.id))
         }}
         class="rounded-lg w-max transition-colors hover:bg-slate-100 dark:hover:bg-zinc-800 p-1 cursor-pointer"
       >
@@ -78,7 +78,7 @@
     {/if}
     <button
       onclick={() => {
-        toasts.update(toasts => toasts.filter(t => t.id != toast.id))
+        toasts.update((toasts) => toasts.filter((t) => t.id != toast.id))
       }}
       class="rounded-lg w-max transition-colors hover:bg-slate-100 dark:hover:bg-zinc-800 p-1 cursor-pointer text-slate-600 dark:text-zinc-400"
     >

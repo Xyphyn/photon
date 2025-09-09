@@ -69,7 +69,7 @@
     },
   })
 
-  const menuAttach: Attachment = element => {
+  const menuAttach: Attachment = (element) => {
     const e = element as HTMLButtonElement
 
     const mouseLeave = () => (openOnHover ? (open = false) : false)

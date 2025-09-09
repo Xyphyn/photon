@@ -2,7 +2,7 @@ import { profile } from '$lib/auth.svelte'
 import { client, getClient } from '$lib/client/lemmy.svelte'
 import { PiefedClient } from '$lib/client/piefed/piefed.js'
 import { getItemPublished } from '$lib/lemmy/item.js'
-import { ReactiveState } from '$lib/promise.svelte.js'
+import { ReactiveState } from '$lib/util.svelte.js'
 import type { ListingType, SearchType, SortType } from '$lib/client/types'
 
 export async function load({ url, fetch }) {

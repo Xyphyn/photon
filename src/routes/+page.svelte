@@ -4,12 +4,11 @@
   import Location from '$lib/components/lemmy/dropdowns/Location.svelte'
   import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
   import ViewSelect from '$lib/components/lemmy/dropdowns/ViewSelect.svelte'
-  import PostFeed from '$lib/components/lemmy/post/feed/PostFeed.svelte'
-  import VirtualFeed from '$lib/components/lemmy/post/feed/VirtualFeed.svelte'
+  import { PostFeed, VirtualFeed } from '$lib/components/lemmy/post'
   import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
   import Skeleton from '$lib/components/ui/generic/Skeleton.svelte'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import Pageination from '$lib/components/ui/Pageination.svelte'
+  import Pageination from '$lib/components/ui/layout/Pageination.svelte'
+  import { Header } from '$lib/components/ui/layout'
   import { t } from '$lib/i18n/translations.js'
   import { postFeeds } from '$lib/lemmy/postfeed.svelte.js'
   import { settings, SSR_ENABLED } from '$lib/settings.svelte.js'
@@ -89,7 +88,7 @@
   {:then feed}
     <FeedComponent
       bind:posts={feed.posts.posts}
-      bind:feedData={() => feed, v => (postFeeds.value.main.data = v)}
+      bind:feedData={() => feed, (v) => (postFeeds.value.main.data = v)}
       feedId="main"
     />
     <svelte:element
@@ -107,7 +106,7 @@
         {#snippet action()}
           <Pageination
             cursor={{ next: feed.cursor.next }}
-            href={page =>
+            href={(page) =>
               typeof page == 'number' ? `?page=${page}` : `?cursor=${page}`}
             back={false}
           />

@@ -8,7 +8,7 @@ export async function load({ params, fetch }) {
       limit: 5,
       page: 1,
     })
-    .then(i =>
+    .then((i) =>
       [
         ...i.banned_from_community,
         ...i.removed_comments,

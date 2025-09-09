@@ -3,7 +3,7 @@
   import UserAutocomplete from '$lib/components/lemmy/user/UserAutocomplete.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import CommonList from '$lib/components/ui/layout/CommonList.svelte'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { Header } from '$lib/components/ui/layout'
   import { t } from '$lib/i18n/translations.js'
   import { getClient } from '$lib/client/lemmy.svelte'
   import { errorMessage } from '$lib/lemmy/error.js'
@@ -128,7 +128,7 @@
   {/snippet}
 </CommonList>
 <form
-  onsubmit={e => {
+  onsubmit={(e) => {
     e.preventDefault()
     addModerator()
   }}
@@ -137,7 +137,7 @@
   <div class="w-full">
     <UserAutocomplete
       listing_type="All"
-      onselect={p => (formData.newModerator = p.id)}
+      onselect={(p) => (formData.newModerator = p.id)}
     />
   </div>
   <Button
@@ -146,10 +146,8 @@
     rounding="xl"
     color="primary"
     submit
+    icon={Plus}
   >
-    {#snippet prefix()}
-      <Icon src={Plus} micro size="16" />
-    {/snippet}
     {$t('common.add')}
   </Button>
 </form>

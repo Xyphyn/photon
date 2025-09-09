@@ -17,7 +17,7 @@
   function triggerFilter(filter: string) {
     if (!passedData.blocked) return
     loading = true
-    data.blocked = passedData.blocked.filter(i => i.domain.includes(filter))
+    data.blocked = passedData.blocked.filter((i) => i.domain.includes(filter))
     loading = false
   }
 </script>

@@ -154,7 +154,7 @@
       }
     }, debounceResize)
 
-    const observer = new ResizeObserver(entries => {
+    const observer = new ResizeObserver((entries) => {
       debouncedUpdate(entries)
     })
 
@@ -185,7 +185,7 @@
 
   onMount(() => {
     if (virtualListEl && browser) {
-      Array.from(virtualListEl.children).forEach(node => {
+      Array.from(virtualListEl.children).forEach((node) => {
         const indexAttr = node.getAttribute('data-index')
         if (indexAttr === null) return
         const index = Number(indexAttr)
@@ -207,7 +207,7 @@
 <svelte:window
   bind:scrollY={
     () => (useWindow ? scrollY : 0),
-    v => {
+    (v) => {
       if (useWindow) scrollY = v
     }
   }

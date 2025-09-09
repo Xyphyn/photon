@@ -7,7 +7,7 @@
   import { isAdmin } from '$lib/components/lemmy/moderation/moderation.js'
   import ObjectAutocomplete from '$lib/components/lemmy/ObjectAutocomplete.svelte'
   import UserAutocomplete from '$lib/components/lemmy/user/UserAutocomplete.svelte'
-  import Pageination from '$lib/components/ui/Pageination.svelte'
+  import Pageination from '$lib/components/ui/layout/Pageination.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { settings } from '$lib/settings.svelte.js'
   import { searchParam } from '$lib/util.svelte.js'
@@ -22,13 +22,13 @@
   } from 'svelte-hero-icons'
   import ModlogItemCard from './item/ModlogItemCard.svelte'
   import ModlogItemTable from './item/ModlogItemTable.svelte'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { Header } from '$lib/components/ui/layout'
   import { t } from '$lib/i18n/translations'
   import { client } from '$lib/client/lemmy.svelte'
   import Spinner from 'mono-svelte/loader/Spinner.svelte'
-  import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
-  import { postLink } from '$lib/components/lemmy/post/helpers'
+  import { CommunityLink } from '$lib/components/lemmy/community'
+  import { postLink } from '$lib/components/lemmy/post'
 
   let { data = $bindable() } = $props()
 
@@ -182,7 +182,7 @@
       label="Instance"
       class="flex-1"
       q={page.url.searchParams.get('instance') || ''}
-      onselect={e =>
+      onselect={(e) =>
         searchParam(
           page.url,
           'instance',
@@ -200,7 +200,7 @@
       label="Community"
       class="flex-1"
       q={page.url.searchParams.get('community') ? 'Selected' : ''}
-      onselect={e =>
+      onselect={(e) =>
         searchParam(page.url, 'community', e?.id.toString() ?? '', 'page')}
     />
     <UserAutocomplete
@@ -214,7 +214,7 @@
       q={page.url.searchParams.get('user')
         ? (data.filters.user ?? 'Selected')
         : ''}
-      onselect={e =>
+      onselect={(e) =>
         searchParam(page.url, 'user', e?.id.toString() ?? '', 'page')}
     />
     {#if profile.current?.user && isAdmin(profile.current?.user)}
@@ -228,7 +228,7 @@
         q={page.url.searchParams.get('mod_id')
           ? (data.filters.moderator ?? 'Selected')
           : ''}
-        onselect={e =>
+        onselect={(e) =>
           searchParam(page.url, 'mod_id', e?.id.toString() ?? '', 'page')}
       />
     {/if}
@@ -294,7 +294,7 @@
         </table>
       </div>
     {/if}
-    <Pageination page={data.page} href={page => `?page=${page}`} />
+    <Pageination page={data.page} href={(page) => `?page=${page}`} />
   {:else}
     <Placeholder
       title="No results"

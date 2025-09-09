@@ -108,7 +108,7 @@
     disabled = false,
     rows = 2,
     // should be preprocess instead
-    beforePreview = input => input,
+    beforePreview = (input) => input,
     previewing = $bindable(false),
     class: clazz = '',
     customLabel,
@@ -125,8 +125,8 @@
   <Modal title={$t('form.post.uploadImage')} bind:open={uploadingImage}>
     <ImageAttachForm
       bind:image
-      onupload={e => {
-        e.forEach(i => {
+      onupload={(e) => {
+        e.forEach((i) => {
           wrapSelection(`![](${i})\n\n`, '')
         })
       }}
@@ -293,7 +293,7 @@
         class="bg-inherit z-0 border-0 rounded-none ring-0! focus:ring-transparent! transition-none! resize-none"
         bind:value
         bind:element={textArea}
-        onkeydown={e => {
+        onkeydown={(e) => {
           if (disabled) return
           if (e.ctrlKey || e.metaKey) {
             handleKeydown(e)
@@ -306,7 +306,7 @@
           }
         }}
         oninput={adjustHeight}
-        onpaste={e => {
+        onpaste={(e) => {
           if (!e.clipboardData?.files) return
           const files = Array.from(e.clipboardData.files)
           if (files[0]?.type.startsWith('image/')) {

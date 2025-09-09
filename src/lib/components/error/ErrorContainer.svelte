@@ -11,7 +11,7 @@
   }
 
   export function clearErrorScope(scope: string | null | undefined) {
-    errors = errors.filter(error => error.scope != scope)
+    errors = errors.filter((error) => error.scope != scope)
   }
 </script>
 
@@ -32,7 +32,7 @@
   let { scope = undefined, class: clazz = '' }: Props = $props()
 
   let scopedErrors = $derived(
-    errors.filter(e => e.scope == scope || e.scope == 'global'),
+    errors.filter((e) => e.scope == scope || e.scope == 'global'),
   )
 </script>
 

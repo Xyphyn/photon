@@ -12,9 +12,7 @@ export { default as TextInput } from './forms/TextInput.svelte'
 export { default as TextArea } from './forms/TextArea.svelte'
 export { default as Select } from './forms/select/Select.svelte'
 export { default as Option } from './forms/select/Option.svelte'
-export { default as ImageInput } from './forms/ImageInput.svelte'
 
-export { default as Checkbox } from './forms/Checkbox.svelte'
 export { default as Switch } from './forms/Switch.svelte'
 
 export { default as Popover } from './popover/Popover.svelte'

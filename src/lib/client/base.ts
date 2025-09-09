@@ -20,6 +20,7 @@ export abstract class BaseClient {
   abstract type: ClientType
 
   abstract getSite(): Promise<types.GetSiteResponse>
+  abstract editSite(form: types.EditSite): Promise<types.SiteResponse>
   abstract generateTotpSecret(): Promise<types.GenerateTotpSecretResponse>
   abstract listLogins(): Promise<types.LoginToken[]>
   abstract listAllMedia(form: types.ListMedia): Promise<types.ListMediaResponse>
@@ -221,6 +222,7 @@ export abstract class BaseClient {
   abstract uploadImage(
     form: types.UploadImage,
   ): Promise<types.UploadImageResponse>
+  abstract deleteImage(form: types.DeleteImage): Promise<boolean>
 
   abstract setFlair?(form: types.SetPersonFlair): Promise<types.PersonView>
 }

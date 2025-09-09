@@ -1,17 +1,16 @@
 <script lang="ts">
   import { notifications, profile } from '$lib/auth.svelte.js'
-  import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
+  import { getClient } from '$lib/client/lemmy.svelte'
+  import { CommentItem } from '$lib/components/lemmy/comment'
   import PrivateMessage from '$lib/components/lemmy/inbox/PrivateMessage.svelte'
-  import Post from '$lib/components/lemmy/post/Post.svelte'
+  import { PostItem } from '$lib/components/lemmy/post'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
-  import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import { t } from '$lib/i18n/translations'
-  import { getClient } from '$lib/client/lemmy.svelte'
   import { errorMessage } from '$lib/lemmy/error'
   import type { ReportView } from '$lib/lemmy/report.js'
-  import { Badge, Button, Material, Modal, toast } from 'mono-svelte'
-  import { CheckBadge, Icon } from 'svelte-hero-icons'
+  import { Badge, Button, Label, Material, Modal, toast } from 'mono-svelte'
+  import { CheckBadge } from 'svelte-hero-icons'
 
   interface Props {
     item: ReportView[]
@@ -31,13 +30,13 @@
       switch (item.type) {
         case 'comment': {
           await Promise.all(
-            items.map(async i =>
+            items.map(async (i) =>
               getClient()
                 .resolveCommentReport({
                   report_id: i.id,
                   resolved: !i.resolved,
                 })
-                .then(res => {
+                .then((res) => {
                   i.resolved = res.comment_report_view.comment_report.resolved
                   i.resolver = res.comment_report_view.resolver
                   $notifications.reports += i.resolved ? -1 : 1
@@ -49,13 +48,13 @@
         }
         case 'post': {
           await Promise.all(
-            items.map(async i =>
+            items.map(async (i) =>
               getClient()
                 .resolvePostReport({
                   report_id: i.id,
                   resolved: !i.resolved,
                 })
-                .then(res => {
+                .then((res) => {
                   i.resolved = res.post_report_view.post_report.resolved
 
                   i.resolver = res.post_report_view.resolver
@@ -69,13 +68,13 @@
         }
         case 'message': {
           await Promise.all(
-            items.map(async i =>
+            items.map(async (i) =>
               getClient()
                 .resolvePrivateMessageReport({
                   report_id: i.id,
                   resolved: !i.resolved,
                 })
-                .then(res => {
+                .then((res) => {
                   i.resolved =
                     res.private_message_report_view.private_message_report.resolved
 
@@ -176,10 +175,8 @@
     rounding="pill"
     size="sm"
     color={item.resolved ? 'secondary' : 'primary'}
+    icon={CheckBadge}
   >
-    {#snippet prefix()}
-      <Icon src={CheckBadge} micro size="16" />
-    {/snippet}
     {!item.resolved
       ? $t('routes.moderation.resolve')
       : $t('routes.moderation.unresolve')}
@@ -190,7 +187,7 @@
   {#if item.type == 'comment'}
     <CommentItem comment={item.item} class="p-0!" />
   {:else if item.type == 'post'}
-    <Post hideCommunity post={item.item} class="p-0!" />
+    <PostItem post={item.item} />
   {:else if item.type == 'message'}
     <PrivateMessage
       message={{
@@ -204,9 +201,9 @@
 
 <div class="flex flex-row gap-4 items-center flex-wrap">
   <div>
-    <SectionTitle small>
+    <Label>
       {$t('routes.moderation.reason')}
-    </SectionTitle>
+    </Label>
     <p>
       {item.reason}
     </p>
@@ -222,9 +219,9 @@
   <div class="flex-1"></div>
   {#if item.resolver}
     <div>
-      <SectionTitle small>
+      <Label>
         {$t('routes.moderation.resolvedBy')}
-      </SectionTitle>
+      </Label>
       <UserLink avatar user={item.resolver} />
     </div>
   {/if}

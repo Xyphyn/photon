@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from '$app/state'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import Pageination from '$lib/components/ui/Pageination.svelte'
+  import { Header } from '$lib/components/ui/layout'
+  import Pageination from '$lib/components/ui/layout/Pageination.svelte'
   import { t } from '$lib/i18n/translations'
   import { flip } from 'svelte/animate'
   import { expoInOut } from 'svelte/easing'
@@ -19,7 +19,7 @@
         ondelete={() => {
           data.images.value = data.images.value.toSpliced(
             data.images.value.findIndex(
-              i =>
+              (i) =>
                 i.local_image.pictrs_delete_token ==
                 image.local_image.pictrs_delete_token,
             ),
@@ -33,6 +33,6 @@
 {#if data.images.value.length == 20}
   <Pageination
     page={Number(page.url.searchParams.get('page')) || 1}
-    href={page => `?page=${page}`}
+    href={(page) => `?page=${page}`}
   />
 {/if}

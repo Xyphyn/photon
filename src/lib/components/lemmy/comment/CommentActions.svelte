@@ -1,6 +1,6 @@
 <script lang="ts">
   import { profile } from '$lib/auth.svelte.js'
-  import CommentVote from '$lib/components/lemmy/comment/CommentVote.svelte'
+  import type { CommentView } from '$lib/client/types'
   import CommentModerationMenu from '$lib/components/lemmy/moderation/CommentModerationMenu.svelte'
   import {
     amMod,
@@ -10,7 +10,6 @@
   import { t } from '$lib/i18n/translations'
   import { deleteItem, save } from '$lib/lemmy/contentview.js'
   import { settings } from '$lib/settings.svelte'
-  import type { CommentView } from '$lib/client/types'
   import { Button, Menu, MenuButton } from 'mono-svelte'
   import {
     Bookmark,
@@ -23,6 +22,7 @@
     Share,
     Trash,
   } from 'svelte-hero-icons'
+  import { CommentVote } from '.'
 
   interface Props {
     comment: CommentView
@@ -74,11 +74,8 @@
         rounding="pill"
         size="square-md"
         class="text-slate-600 dark:text-zinc-400"
-      >
-        {#snippet prefix()}
-          <Icon src={EllipsisHorizontal} size="16" micro />
-        {/snippet}
-      </Button>
+        icon={EllipsisHorizontal}
+      ></Button>
     {/snippet}
     <MenuButton
       onclick={() => {
@@ -88,18 +85,13 @@
           })
         else navigator.clipboard.writeText(comment.comment.ap_id)
       }}
+      icon={Share}
     >
-      {#snippet prefix()}
-        <Icon src={Share} mini size="16" />
-      {/snippet}
       {$t('post.actions.more.share')}
     </MenuButton>
     {#if profile.current?.jwt}
       {#if comment.creator.id == profile.current.user?.local_user_view.person.id}
-        <MenuButton onclick={() => onedit?.(comment)}>
-          {#snippet prefix()}
-            <Icon src={PencilSquare} mini size="16" />
-          {/snippet}
+        <MenuButton onclick={() => onedit?.(comment)} icon={PencilSquare}>
           {$t('post.actions.more.edit')}
         </MenuButton>
       {/if}
@@ -108,10 +100,8 @@
           if (profile.current?.jwt)
             comment.saved = await save(comment, !comment.saved)
         }}
+        icon={comment.saved ? BookmarkSlash : Bookmark}
       >
-        {#snippet prefix()}
-          <Icon src={comment.saved ? BookmarkSlash : Bookmark} mini size="16" />
-        {/snippet}
         {comment.saved ? $t('post.actions.unsave') : $t('post.actions.save')}
       </MenuButton>
       {#if profile.current?.user && profile.current.jwt && profile.current.user.local_user_view.person.id == comment.creator.id}
@@ -124,20 +114,19 @@
                 !comment.comment.deleted,
               )
           }}
+          icon={Trash}
         >
-          {#snippet prefix()}
-            <Icon src={Trash} mini size="16" />
-          {/snippet}
           {comment.comment.deleted
             ? $t('post.actions.more.restore')
             : $t('post.actions.more.delete')}
         </MenuButton>
       {/if}
       {#if profile.current.jwt && profile.current.user?.local_user_view.person.id != comment.creator.id}
-        <MenuButton onclick={() => report(comment)} color="danger-subtle">
-          {#snippet prefix()}
-            <Icon src={Flag} mini size="16" />
-          {/snippet}
+        <MenuButton
+          onclick={() => report(comment)}
+          color="danger-subtle"
+          icon={Flag}
+        >
           {$t('moderation.report')}
         </MenuButton>
       {/if}

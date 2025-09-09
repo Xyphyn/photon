@@ -2,10 +2,6 @@
   import { browser } from '$app/environment'
   import { page } from '$app/state'
   import { profile } from '$lib/auth.svelte'
-  import CommentForm from '$lib/components/lemmy/comment/CommentForm.svelte'
-  import CommentListVirtualizer from '$lib/components/lemmy/comment/CommentListVirtualizer.svelte'
-  import Comments from '$lib/components/lemmy/comment/CommentTree.svelte'
-  import { buildCommentsTree } from '$lib/components/lemmy/comment/comments.svelte'
   import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
   import { t } from '$lib/i18n/translations'
   import { settings } from '$lib/settings.svelte'
@@ -26,6 +22,12 @@
     Star,
     Trophy,
   } from 'svelte-hero-icons'
+  import {
+    buildCommentsTree,
+    CommentForm,
+    CommentListVirtualizer,
+    CommentTree,
+  } from '$lib/components/lemmy/comment'
 
   interface Props {
     post: PostView
@@ -72,7 +74,7 @@
           !(
             profile.current?.user?.local_user_view.local_user.admin ||
             profile.current?.user?.moderates
-              .map(c => c.community.id)
+              .map((c) => c.community.id)
               .includes(post.community.id)
           )}
         onclick={() => (commenting = true)}
@@ -105,18 +107,15 @@
             class="h-8.5 w-8.5"
             rounding="xl"
             onclick={onupdate}
-          >
-            {#snippet prefix()}
-              <Icon src={ArrowPath} size="16" mini />
-            {/snippet}
-          </Button>
+            icon={ArrowPath}
+          ></Button>
         </div>
       {/snippet}
     </EndPlaceholder>
   {:else}
     <CommentForm
       postId={post.post.id}
-      oncomment={comment => {
+      oncomment={(comment) => {
         comments.comments.unshift(comment.comment_view)
       }}
       onfocus={() => (commenting = true)}
@@ -148,11 +147,13 @@
         {$t('filter.sort.controversial')}
       </Option>
     </Select>
-    <Button size="custom" class="h-8.5 w-8.5" rounding="xl" onclick={onupdate}>
-      {#snippet prefix()}
-        <Icon src={ArrowPath} size="16" mini />
-      {/snippet}
-    </Button>
+    <Button
+      size="custom"
+      class="h-8.5 w-8.5"
+      rounding="xl"
+      onclick={onupdate}
+      icon={ArrowPath}
+    ></Button>
   </div>
 {/if}
 {#if virtualize}
@@ -160,7 +161,7 @@
 {:else}
   <div class="divide-y divide-slate-200 dark:divide-zinc-800">
     <div class="-mx-3 sm:-mx-6 px-3 sm:px-6">
-      <Comments nodes={tree} post={post.post} />
+      <CommentTree nodes={tree} post={post.post} />
     </div>
   </div>
 {/if}

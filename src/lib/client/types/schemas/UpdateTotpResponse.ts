@@ -1,3 +1,3 @@
 export interface UpdateTotpResponse {
-    enabled: boolean;
+  enabled: boolean
 }

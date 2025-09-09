@@ -2,7 +2,7 @@
   import { navigating } from '$app/state'
   import { t } from '$lib/i18n/translations'
   import { Button, TextInput } from 'mono-svelte'
-  import { Icon, MagnifyingGlass } from 'svelte-hero-icons'
+  import { MagnifyingGlass } from 'svelte-hero-icons'
 
   interface Props {
     query?: string | null
@@ -30,9 +30,6 @@
     title="Search"
     rounding="pill"
     loading={navigating.to?.route.id == '/search'}
-  >
-    {#snippet prefix()}
-      <Icon src={MagnifyingGlass} size="16" micro />
-    {/snippet}
-  </Button>
+    icon={MagnifyingGlass}
+  ></Button>
 </div>

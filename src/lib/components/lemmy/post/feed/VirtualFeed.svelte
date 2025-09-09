@@ -1,6 +1,5 @@
 <script lang="ts">
   import { browser } from '$app/environment'
-  import Post from '$lib/components/lemmy/post/Post.svelte'
   import VirtualList from '$lib/components/render/VirtualList.svelte'
   import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
@@ -26,6 +25,7 @@
   import { expoOut } from 'svelte/easing'
   import { SvelteSet } from 'svelte/reactivity'
   import { fly } from 'svelte/transition'
+  import { Post } from '..'
 
   interface Props {
     posts: PostView[]
@@ -54,7 +54,7 @@
 
   const abortLoad = new AbortController()
   let seenIds = new SvelteSet<number>(
-    feedData.posts.posts.map(post => post.post.id),
+    feedData.posts.posts.map((post) => post.post.id),
   )
 
   async function loadMore() {
@@ -80,7 +80,7 @@
           sort: feedData.sort,
           type_: feedData.type_,
         })
-        .catch(e => {
+        .catch((e) => {
           throw new Error(e)
         })
 
@@ -90,7 +90,7 @@
 
       feedData.cursor.next = newPosts.next_page
       feedData.posts.posts.push(
-        ...newPosts.posts.filter(post => {
+        ...newPosts.posts.filter((post) => {
           if (seenIds.has(post.post.id)) return false
           seenIds.add(post.post.id)
           return true
@@ -107,7 +107,7 @@
   }
 
   const callback: IntersectionObserverCallback = (entries, observer) => {
-    entries.forEach(entry => {
+    entries.forEach((entry) => {
       if (!entry.isIntersecting) return
 
       const element = entry.target as HTMLElement
@@ -147,7 +147,7 @@
     const feed = document.getElementById('feed')
     if (!feed) return
 
-    new MutationObserver(mutations => {
+    new MutationObserver((mutations) => {
       mutations.forEach(({ addedNodes, removedNodes }) => {
         addedNodes.forEach(observePost)
         removedNodes.forEach(unobservePost)
@@ -181,10 +181,12 @@
           title={$t('routes.frontpage.empty.title')}
           description={$t('routes.frontpage.empty.description')}
         >
-          <Button href="/communities" rounding="pill" color="primary">
-            {#snippet prefix()}
-              <Icon src={ArrowTopRightOnSquare} size="16" mini />
-            {/snippet}
+          <Button
+            href="/communities"
+            rounding="pill"
+            color="primary"
+            icon={ArrowTopRightOnSquare}
+          >
             {$t('nav.communities')}
           </Button>
         </Placeholder>
@@ -265,10 +267,7 @@
             community_name: feedData.community_name ?? 'undefined',
           })}
           {#snippet action()}
-            <Button color="tertiary">
-              {#snippet prefix()}
-                <Icon src={ChevronDoubleUp} size="16" micro />
-              {/snippet}
+            <Button color="tertiary" icon={ChevronDoubleUp}>
               {$t('routes.post.scrollToTop')}
             </Button>
           {/snippet}

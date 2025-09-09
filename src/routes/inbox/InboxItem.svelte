@@ -1,18 +1,17 @@
 <script lang="ts">
   import { notifications, profile } from '$lib/auth.svelte.js'
-  import CommentItem from '$lib/components/lemmy/comment/CommentItem.svelte'
+  import { getClient } from '$lib/client/lemmy.svelte'
+  import { CommentItem } from '$lib/components/lemmy/comment'
   import PrivateMessage from '$lib/components/lemmy/inbox/PrivateMessage.svelte'
-  import PrivateMessageModal from '$lib/components/lemmy/modal/PrivateMessageModal.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import Expandable from '$lib/components/ui/Expandable.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
   import { publishedToDate } from '$lib/components/util/date.js'
   import { t } from '$lib/i18n/translations'
-  import { getClient } from '$lib/client/lemmy.svelte'
   import type { InboxItem } from '$lib/lemmy/inbox.js'
   import { escapeHtml } from '$lib/util.svelte'
   import { Button } from 'mono-svelte'
-  import { Eye, EyeSlash, Icon } from 'svelte-hero-icons'
+  import { Eye, EyeSlash } from 'svelte-hero-icons'
 
   interface Props {
     item: InboxItem
@@ -20,7 +19,6 @@
 
   let { item = $bindable() }: Props = $props()
 
-  let replying = $state(false)
   let loading = $state(false)
 
   async function markAsRead(isRead: boolean) {
@@ -58,10 +56,6 @@
   }
 </script>
 
-{#if replying && item.type == 'private_message'}
-  <PrivateMessageModal bind:open={replying} user={item.item.creator} />
-{/if}
-
 <Expandable open icon={false}>
   {#snippet title()}
     <div class="flex flex-row gap-2 items-center w-full">
@@ -98,17 +92,15 @@
           color={item.read ? 'secondary' : 'primary'}
           {loading}
           disabled={loading}
-          onclick={e => {
+          onclick={(e) => {
             e.stopPropagation()
             markAsRead(!item.read)
           }}
           size="sm"
           rounding="pill"
           class="shrink-0"
+          icon={item.read ? EyeSlash : Eye}
         >
-          {#snippet prefix()}
-            <Icon src={item.read ? EyeSlash : Eye} size="16" micro />
-          {/snippet}
           {item.read
             ? $t('post.actions.more.markUnread')
             : $t('post.actions.more.markRead')}
@@ -132,16 +124,14 @@
         color={item.read ? 'secondary' : 'primary'}
         {loading}
         disabled={loading}
-        onclick={e => {
+        onclick={(e) => {
           e.stopPropagation()
           markAsRead(!item.read)
         }}
         size="sm"
         rounding="pill"
+        icon={item.read ? EyeSlash : Eye}
       >
-        {#snippet prefix()}
-          <Icon src={item.read ? EyeSlash : Eye} size="16" micro />
-        {/snippet}
         {item.read
           ? $t('post.actions.more.markUnread')
           : $t('post.actions.more.markRead')}

@@ -2,7 +2,7 @@
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import { t } from '$lib/i18n/translations'
-  import { userLink } from '$lib/lemmy/generic'
+  import { userLink } from '$lib/util.svelte'
   import { settings } from '$lib/settings.svelte'
   import type { PersonView, SiteView, Tagline } from '$lib/client/types'
   import { Badge } from 'mono-svelte'
@@ -13,18 +13,18 @@
     ServerStack,
   } from 'svelte-hero-icons'
   import type { ClassValue, HTMLAttributes } from 'svelte/elements'
-  import EndPlaceholder from '../ui/EndPlaceholder.svelte'
-  import Expandable from '../ui/Expandable.svelte'
-  import LabelStat from '../ui/LabelStat.svelte'
-  import SidebarButton from '../ui/sidebar/SidebarButton.svelte'
-  import ItemList from './generic/ItemList.svelte'
-  import { optimizeImageURL } from './post/helpers'
+  import EndPlaceholder from '../../ui/EndPlaceholder.svelte'
+  import Expandable from '../../ui/Expandable.svelte'
+  import LabelStat from '../../ui/LabelStat.svelte'
+  import SidebarButton from '../../ui/sidebar/SidebarButton.svelte'
+  import ItemList from '../generic/ItemList.svelte'
+  import { optimizeImageURL } from '../post/helpers'
 
   interface Props extends HTMLAttributes<HTMLDivElement> {
     site: SiteView
-    taglines?: Tagline[] | undefined
-    admins?: PersonView[] | undefined
-    version?: string | undefined
+    taglines?: Tagline[]
+    admins?: PersonView[]
+    version?: string
     class?: ClassValue
   }
 
@@ -147,7 +147,7 @@
             </span>
           {/snippet}
           <ItemList
-            items={admins.map(i => ({
+            items={admins.map((i) => ({
               id: i.person.id,
               name: i.person.display_name || i.person.name,
               url: userLink(i.person),

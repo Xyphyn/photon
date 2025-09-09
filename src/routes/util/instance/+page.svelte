@@ -1,6 +1,6 @@
 <script>
   import { env } from '$env/dynamic/public'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { Header } from '$lib/components/ui/layout'
   import {
     DEFAULT_INSTANCE_URL,
     LINKED_INSTANCE_URL,

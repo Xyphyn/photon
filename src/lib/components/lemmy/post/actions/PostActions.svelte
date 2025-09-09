@@ -22,7 +22,7 @@
     ShieldCheck,
   } from 'svelte-hero-icons'
   import { postLink } from '../helpers'
-  import PostVote from '../PostVote.svelte'
+  import { PostVote } from '..'
 
   let saving = $state(false)
   let editing = $state(false)
@@ -61,7 +61,7 @@
       <PostForm
         edit
         editingPost={post.post}
-        onsubmit={e => {
+        onsubmit={(e) => {
           editing = false
           post = e
           onedit?.(e)
@@ -124,11 +124,8 @@
       color="secondary"
       rounding="pill"
       class={buttonSquare}
-    >
-      {#snippet prefix()}
-        <Icon src={BugAnt} micro size="16" />
-      {/snippet}
-    </Button>
+      icon={BugAnt}
+    ></Button>
   {/if}
   {#if profile.current?.user && (amMod(profile.current.user, post.community) || isAdmin(profile.current.user))}
     {#await import('$lib/components/lemmy/moderation/ModerationMenu.svelte') then { default: ModerationMenu }}
@@ -164,11 +161,8 @@
       loading={saving}
       disabled={saving}
       title={post.saved ? $t('post.actions.unsave') : $t('post.actions.save')}
-    >
-      {#snippet prefix()}
-        <Icon src={post.saved ? BookmarkSlash : Bookmark} size="16" mini />
-      {/snippet}
-    </Button>
+      icon={post.saved ? BookmarkSlash : Bookmark}
+    ></Button>
   {/if}
 
   <Menu placement="bottom-end">
@@ -180,11 +174,8 @@
         rounding="pill"
         size="custom"
         class={buttonSquare}
-      >
-        {#snippet prefix()}
-          <Icon src={EllipsisHorizontal} size="16" micro />
-        {/snippet}
-      </Button>
+        icon={EllipsisHorizontal}
+      ></Button>
     {/snippet}
     {#snippet children(open)}
       {#if open}

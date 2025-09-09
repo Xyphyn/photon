@@ -2,7 +2,7 @@
   import { t } from '$lib/i18n/translations'
 
   import { page } from '$app/state'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { Header } from '$lib/components/ui/layout'
   import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
   /**
    * @typedef {Object} Props
@@ -33,7 +33,7 @@
 </script>
 
 <Header pageHeader>
-  {routes.find(r => page.url.pathname == r.href)?.name ??
+  {routes.find((r) => page.url.pathname == r.href)?.name ??
     $t('routes.profile.credentials')}
   {#snippet extended()}
     <Tabs style="subpage" margin={false} {routes}></Tabs>

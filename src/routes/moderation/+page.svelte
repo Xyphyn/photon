@@ -1,10 +1,9 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
-  import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
   import CommonList from '$lib/components/ui/layout/CommonList.svelte'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import Pageination from '$lib/components/ui/Pageination.svelte'
+  import { Header } from '$lib/components/ui/layout'
+  import Pageination from '$lib/components/ui/layout/Pageination.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import ProgressBar from '$lib/components/ui/ProgressBar.svelte'
   import { t } from '$lib/i18n/translations'
@@ -16,6 +15,7 @@
   import { Check, Funnel, Icon, ShieldCheck, XMark } from 'svelte-hero-icons'
   import Report from './Report.svelte'
   import Fixate from '$lib/components/ui/generic/Fixate.svelte'
+  import { CommunityLink } from '$lib/components/lemmy/community'
 
   let { data = $bindable() } = $props()
 
@@ -27,8 +27,8 @@
     batch.progress = 0
 
     await Promise.all(
-      data.items?.value.map(report => {
-        report.map(r => {
+      data.items?.value.map((report) => {
+        report.map((r) => {
           switch (r.type) {
             case 'comment': {
               const promise = client().resolveCommentReport({
@@ -157,7 +157,7 @@
   <Fixate placement="bottom">
     <Pageination
       page={data.page}
-      href={current => `?page=${current}`}
+      href={(current) => `?page=${current}`}
       hasMore={data.items.value.length >= 20}
     />
   </Fixate>

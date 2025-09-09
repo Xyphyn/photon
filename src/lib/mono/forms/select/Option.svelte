@@ -32,8 +32,8 @@
   const context = getContext<SelectContext>('select')
 
   $effect(() => {
-    if ($locale || !context.options.find(v => v == option)) {
-      const index = context.options.findIndex(i => i.value == option.value)
+    if ($locale || !context.options.find((v) => v == option)) {
+      const index = context.options.findIndex((i) => i.value == option.value)
 
       if (index != -1) {
         context.options.splice(index, 1, option)
@@ -44,7 +44,7 @@
   })
 
   onDestroy(() => {
-    const index = context.options.findIndex(i => i.value == option.value)
+    const index = context.options.findIndex((i) => i.value == option.value)
     if (index != -1) {
       context.options.splice(index, 1)
     }

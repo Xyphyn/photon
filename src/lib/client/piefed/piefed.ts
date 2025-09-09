@@ -113,7 +113,7 @@ export class PiefedClient implements BaseClient {
     return {
       community_view: toCommunityView(response.community_view),
       cross_posts: response.cross_posts.map(toPostView),
-      moderators: response.moderators.map(i => ({
+      moderators: response.moderators.map((i) => ({
         community: toCommunity(i.community),
         moderator: toPerson(i.moderator),
       })),
@@ -261,7 +261,7 @@ export class PiefedClient implements BaseClient {
     return {
       ...response,
       community_view: toCommunityView(response.community_view),
-      moderators: response.moderators.map(i => ({
+      moderators: response.moderators.map((i) => ({
         community: toCommunity(i.community),
         moderator: toPerson(i.moderator),
       })),
@@ -380,7 +380,7 @@ export class PiefedClient implements BaseClient {
     ).data!
 
     return {
-      moderators: response.moderators.map(i => ({
+      moderators: response.moderators.map((i) => ({
         community: toCommunity(i.community),
         moderator: toPerson(i.moderator),
       })),
@@ -731,7 +731,7 @@ export class PiefedClient implements BaseClient {
 
     return {
       comments: response.comments.map(toCommentView),
-      moderates: response.moderates.map(i => ({
+      moderates: response.moderates.map((i) => ({
         community: toCommunity(i.community),
         moderator: toPerson(i.moderator),
       })),
@@ -907,5 +907,12 @@ export class PiefedClient implements BaseClient {
     ).data!
 
     return toPersonView(response.person_view)
+  }
+
+  async editSite(): ReturnType<BaseClient['editSite']> {
+    throw new Error('unsupported')
+  }
+  async deleteImage(): ReturnType<BaseClient['deleteImage']> {
+    throw new Error('unsupported')
   }
 }

@@ -1,6 +1,5 @@
 <script lang="ts">
   import { profile } from '$lib/auth.svelte.js'
-  import CommunityCard from '$lib/components/lemmy/community/CommunityCard.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import LabelStat from '$lib/components/ui/LabelStat.svelte'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
@@ -8,7 +7,7 @@
   import { client } from '$lib/client/lemmy.svelte'
   import { addSubscription } from '$lib/lemmy/user.js'
   import { settings } from '$lib/settings.svelte'
-  import { fullCommunityName, isSubscribed } from '$lib/util.svelte.js'
+  import { fullCommunityName } from '$lib/util.svelte.js'
   import type { CommunityView } from '$lib/client/types'
   import { Button, modal } from 'mono-svelte'
   import type { Snippet } from 'svelte'
@@ -23,6 +22,7 @@
     Trash,
   } from 'svelte-hero-icons'
   import Subscribe from '../../../../routes/communities/Subscribe.svelte'
+  import { CommunityCard } from '.'
 
   interface Props {
     community: CommunityView
@@ -158,7 +158,9 @@
         </Button>
         <Subscribe {community}>
           {#snippet children({ subscribe, subscribing })}
-            {@const subscribed = isSubscribed(community.subscribed)}
+            {@const subscribed =
+              community.subscribed == 'Subscribed' ||
+              community.subscribed == 'Pending'}
             <Button
               disabled={subscribing || !profile.current?.jwt}
               loading={subscribing}
@@ -199,10 +201,8 @@
                   ? 'aspect-square @md:px-2 @md:min-w-30 @md:aspect-auto'
                   : 'px-3',
               ]}
+              icon={subscribed ? Check : Plus}
             >
-              {#snippet prefix()}
-                <Icon src={subscribed ? Check : Plus} size="16" micro />
-              {/snippet}
               <span class={[view == 'compact' && 'hidden', '@md:block']}>
                 {#if subscribed}
                   {$t('cards.community.subscribed')}

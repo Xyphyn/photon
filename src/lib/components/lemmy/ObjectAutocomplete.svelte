@@ -34,7 +34,7 @@
 
 {#if type == 'community'}
   <Search
-    search={async q => {
+    search={async (q) => {
       const results = await getClient(instance).search({
         q: q || ' ',
         type_: 'Communities',
@@ -43,9 +43,9 @@
         sort: 'TopAll',
       })
 
-      return results.communities.map(c => c.community)
+      return results.communities.map((c) => c.community)
     }}
-    extractName={c => `${c.title}@${new URL(c.actor_id).hostname}`}
+    extractName={(c) => `${c.title}@${new URL(c.actor_id).hostname}`}
     bind:query={q}
     {...rest}
   >
@@ -79,16 +79,16 @@
   </Search>
 {:else if type == 'instance'}
   <Search
-    search={async q => {
+    search={async (q) => {
       const results = (await instances) || {}
 
       return q
         ? (results.federated_instances?.linked || []).filter(
-            i => i.software === 'lemmy' && i.domain.includes(q),
+            (i) => i.software === 'lemmy' && i.domain.includes(q),
           )
         : []
     }}
-    extractName={i => `${i.domain}`}
+    extractName={(i) => `${i.domain}`}
     bind:query={q}
     {...rest}
   >

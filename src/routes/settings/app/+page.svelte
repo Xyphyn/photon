@@ -85,10 +85,8 @@
         href="https://buymeacoffee.com/xylight"
         target="_blank"
         rounding="xl"
+        icon={Heart}
       >
-        {#snippet prefix()}
-          <Icon src={Heart} size="16" micro />
-        {/snippet}
         {$t('nav.menu.donate')}
       </Button>
     </Setting>

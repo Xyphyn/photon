@@ -93,8 +93,12 @@
 </script>
 
 {#snippet selectTarget(attachment: Attachment)}
-  <Label text={label} customText={customLabel} class={['space-y-1 relative', baseClass]}>
-    <div class="relative" role="presentation">
+  <Label
+    text={label}
+    customText={customLabel}
+    class={['space-y-1 relative', baseClass]}
+  >
+    <div class="relative w-max max-w-full" role="presentation">
       <select
         {@attach attachment}
         {...rest}
@@ -109,10 +113,10 @@
           clazz,
         ]}
         bind:value
-        onmousedown={e => {
+        onmousedown={(e) => {
           e.preventDefault()
         }}
-        onkeypress={e => {
+        onkeypress={(e) => {
           e.preventDefault()
           open = !open
         }}

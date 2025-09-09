@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import Pageination from '$lib/components/ui/Pageination.svelte'
+  import { Header } from '$lib/components/ui/layout'
+  import Pageination from '$lib/components/ui/layout/Pageination.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { t } from '$lib/i18n/translations'
   import { Option, Select } from 'mono-svelte'
@@ -31,7 +31,7 @@
   </div>
   {#if data.applications?.value.length >= 40}
     <div class="mt-auto">
-      <Pageination page={data.page} href={page => `?page=${page}`} />
+      <Pageination page={data.page} href={(page) => `?page=${page}`} />
     </div>
   {/if}
 {:else}

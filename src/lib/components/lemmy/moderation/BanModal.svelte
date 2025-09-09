@@ -1,18 +1,14 @@
 <script lang="ts">
-  import { preventDefault } from 'svelte/legacy'
-
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import type { Community, Person } from '$lib/client/types'
-  import { getClient } from '$lib/client/lemmy.svelte'
-  import { toast } from 'mono-svelte'
+  import { client } from '$lib/client/lemmy.svelte'
+  import { Label, toast, Button, Modal, Switch } from 'mono-svelte'
   import { profile } from '$lib/auth.svelte.js'
-  import { Button, Checkbox, Modal } from 'mono-svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { t } from '$lib/i18n/translations'
-  import CommunityLink from '../community/CommunityLink.svelte'
   import Duration from '$lib/components/form/Duration.svelte'
-  import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import { errorMessage } from '$lib/lemmy/error'
+  import { CommunityLink } from '../community'
 
   interface Props {
     open?: boolean
@@ -57,7 +53,7 @@
       }
 
       if (community) {
-        await getClient().banFromCommunity({
+        await client().banFromCommunity({
           ban: !banned,
           community_id: community.id,
           person_id: item.id,
@@ -66,7 +62,7 @@
           expires: date,
         })
       } else {
-        await getClient().banPerson({
+        await client().banPerson({
           ban: !banned,
           person_id: item.id,
           reason: reason || undefined,
@@ -99,7 +95,13 @@
   title={banned ? $t('moderation.ban.unbanning') : $t('moderation.ban.banning')}
 >
   {#if item}
-    <form class="flex flex-col gap-4" onsubmit={preventDefault(submit)}>
+    <form
+      class="flex flex-col gap-4"
+      onsubmit={(e) => {
+        e.preventDefault()
+        submit()
+      }}
+    >
       <div class="flex items-center gap-1">
         <Avatar url={item.avatar} alt={item.name} width={24} />
         <span class="font-bold">{item.name}</span>
@@ -113,16 +115,15 @@
         label={$t('moderation.reason')}
       />
       {#if !banned}
-        <Checkbox bind:checked={deleteData}>
+        <Switch bind:checked={deleteData}>
           {$t('moderation.ban.deleteData')}
           {#snippet description()}
             {$t('moderation.ban.warning')}
           {/snippet}
-        </Checkbox>
-        <div>
-          <SectionTitle>{$t('moderation.ban.expires')}</SectionTitle>
+        </Switch>
+        <Label text={$t('moderation.ban.expires')}>
           <Duration bind:value={expires}></Duration>
-        </div>
+        </Label>
       {/if}
       <Button submit color="primary" {loading} disabled={loading} size="lg">
         {$t('form.submit')}

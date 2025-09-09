@@ -1,8 +1,12 @@
-import { instance } from '$lib/instance.svelte'
+import { profile } from '$lib/auth.svelte'
 import { client } from '$lib/client/lemmy.svelte'
-import { isImage, isVideo } from '$lib/ui/image'
-import { canParseUrl, findClosestNumber } from '$lib/util.svelte'
 import type { CommentView, PersonView, Post } from '$lib/client/types'
+import {
+  canParseUrl,
+  findClosestNumber,
+  isImage,
+  isVideo,
+} from '$lib/util.svelte'
 
 export const isCommentMutable = (comment: CommentView, me: PersonView) =>
   me.person.id == comment.creator.id
@@ -57,24 +61,23 @@ export const isYoutubeLink = (url?: string): RegExpMatchArray | null => {
   return url?.match?.(YOUTUBE_REGEX)
 }
 
-export const postLink = (post: Post) =>
-  `/post/${encodeURIComponent(instance.data)}/${post.id}`
+export function postLink(post: Post) {
+  return `/post/${encodeURIComponent(profile.current.instance)}/${post.id}`
+}
 
 export type MediaType = 'video' | 'image' | 'iframe' | 'embed' | 'none'
 export type IframeType = 'youtube' | 'video' | 'none'
 
-export const mediaType = (url?: string): MediaType => {
-  if (url) {
-    if (isImage(url)) return 'image'
-    if (isVideo(url)) return 'iframe'
-    if (isYoutubeLink(url)) return 'iframe'
-    if (canParseUrl(url)) return 'embed'
-    return 'none'
-  }
-
+export function mediaType(url?: string): MediaType {
+  if (!url) return 'none'
+  if (isImage(url)) return 'image'
+  if (isVideo(url)) return 'iframe'
+  if (isYoutubeLink(url)) return 'iframe'
+  if (canParseUrl(url)) return 'embed'
   return 'none'
 }
-export const iframeType = (url: string): IframeType => {
+
+export function iframeType(url: string): IframeType {
   if (isVideo(url)) return 'video'
   if (isYoutubeLink(url)) return 'youtube'
   return 'none'

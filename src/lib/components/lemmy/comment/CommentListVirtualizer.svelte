@@ -19,8 +19,8 @@
       }, 100)
     }
 
-    const observer = new ResizeObserver(entries => {
-      entries.forEach(entry => {
+    const observer = new ResizeObserver((entries) => {
+      entries.forEach((entry) => {
         if (offsetEl) {
           initialOffset =
             entry.target.getBoundingClientRect().top + window.scrollY
@@ -50,7 +50,7 @@
       {#snippet item(index)}
         <div class={['px-3 sm:px-6', index % 2 == 1 && '']}>
           <Comments
-            bind:nodes={() => [nodes[index]], v => (nodes[index] = v[0])}
+            bind:nodes={() => [nodes[index]], (v) => (nodes[index] = v[0])}
             {post}
           />
         </div>

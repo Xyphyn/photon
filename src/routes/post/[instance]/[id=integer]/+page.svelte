@@ -1,13 +1,6 @@
 <script lang="ts">
   import { page } from '$app/state'
   import { profile } from '$lib/auth.svelte.js'
-  import PostActions from '$lib/components/lemmy/post/actions/PostActions.svelte'
-  import { mediaType, postLink } from '$lib/components/lemmy/post/helpers.js'
-  import PostMedia from '$lib/components/lemmy/post/media/PostMedia.svelte'
-  import Post from '$lib/components/lemmy/post/Post.svelte'
-  import PostMeta, {
-    parseTags,
-  } from '$lib/components/lemmy/post/PostMeta.svelte'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
   import Expandable from '$lib/components/ui/Expandable.svelte'
@@ -18,9 +11,8 @@
   import { client } from '$lib/client/lemmy.svelte'
   import { resumables } from '$lib/lemmy/item.js'
   import { postFeeds } from '$lib/lemmy/postfeed.svelte'
-  import { ReactiveState } from '$lib/promise.svelte'
+  import { ReactiveState } from '$lib/util.svelte'
   import { settings } from '$lib/settings.svelte.js'
-  import { isImage } from '$lib/ui/image.js'
   import { Button, toast } from 'mono-svelte'
   import { onMount } from 'svelte'
   import {
@@ -32,6 +24,15 @@
   import { expoOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'
   import CommentProvider from './CommentProvider.svelte'
+  import {
+    mediaType,
+    parseTags,
+    Post,
+    PostActions,
+    postLink,
+    PostMedia,
+    PostMeta,
+  } from '$lib/components/lemmy/post'
 
   let { data } = $props()
 
@@ -58,7 +59,7 @@
 
   $effect(() => {
     data.post.value.meta.then(
-      res => (data.post.value.post_view = res.post_view),
+      (res) => (data.post.value.post_view = res.post_view),
     )
   })
 
@@ -111,7 +112,7 @@
     />
   {/if}
   <meta property="og:url" content={page.url.toString()} />
-  {#if isImage(data.post.value.post_view.post.url)}
+  {#if mediaType(data.post.value.post_view.post.url) == 'image'}
     <meta property="og:image" content={data.post.value.post_view.post.url} />
     <meta
       property="twitter:card"
@@ -136,7 +137,7 @@
         community={data.post.value.post_view.community}
         user={data.post.value.post_view.creator}
         subscribed={profile.current.user?.follows.find(
-          i => i.community.id == data.post.value.post_view.community.id,
+          (i) => i.community.id == data.post.value.post_view.community.id,
         )
           ? 'Subscribed'
           : 'NotSubscribed'}
@@ -314,10 +315,8 @@
         <Button
           color="tertiary"
           onclick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          icon={ChevronDoubleUp}
         >
-          {#snippet prefix()}
-            <Icon src={ChevronDoubleUp} mini size="16" />
-          {/snippet}
           {$t('routes.post.scrollToTop')}
         </Button>
       {/snippet}

@@ -2,22 +2,22 @@
   import { preventDefault, run } from 'svelte/legacy'
 
   import { profile } from '$lib/auth.svelte.js'
+  import { getClient } from '$lib/client/lemmy.svelte'
+  import type { CommentView, PostView } from '$lib/client/types'
   import MultiSelect from '$lib/components/input/Switch.svelte'
-  import Comment from '$lib/components/lemmy/comment/Comment.svelte'
   import { removalTemplate } from '$lib/components/lemmy/moderation/moderation.js'
-  import Post from '$lib/components/lemmy/post/Post.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { t } from '$lib/i18n/translations'
-  import { getClient } from '$lib/client/lemmy.svelte'
+  import { errorMessage } from '$lib/lemmy/error'
   import { isCommentView, isPostView } from '$lib/lemmy/item.js'
   import { settings } from '$lib/settings.svelte.js'
   import { fullCommunityName } from '$lib/util.svelte.js'
-  import type { CommentView, PostView } from '$lib/client/types'
   import { Button, Modal, Select, Switch, toast } from 'mono-svelte'
   import Option from 'mono-svelte/forms/select/Option.svelte'
-  import { Fire, Icon, Trash } from 'svelte-hero-icons'
+  import { Fire, Trash } from 'svelte-hero-icons'
+  import { Comment } from '../comment'
+  import { Post } from '../post'
   import { amMod, isAdmin } from './moderation'
-  import { errorMessage } from '$lib/lemmy/error'
 
   interface Props {
     open: boolean
@@ -257,10 +257,8 @@
         {loading}
         disabled={loading}
         submit
+        icon={purge ? Fire : Trash}
       >
-        {#snippet prefix()}
-          <Icon src={purge ? Fire : Trash} mini size="16" />
-        {/snippet}
         {#if purge}
           {$t('admin.purge')}
         {:else}

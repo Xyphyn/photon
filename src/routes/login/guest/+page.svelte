@@ -6,7 +6,7 @@
   import { profile } from '$lib/auth.svelte'
   import { DEFAULT_CLIENT_TYPE, type ClientType } from '$lib/client/base'
   import { validateInstance } from '$lib/client/lemmy.svelte'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { Header } from '$lib/components/ui/layout'
   import { t } from '$lib/i18n/translations'
   import { LINKED_INSTANCE_URL } from '$lib/instance.svelte'
   import { DOMAIN_REGEX_FORMS } from '$lib/util.svelte'
@@ -27,7 +27,7 @@
     client: ClientType
   }>({
     instance: '',
-    username: `${$t('account.guest')} ${profile.meta.profiles.filter(p => p.jwt == undefined).length + 1}`,
+    username: `${$t('account.guest')} ${profile.meta.profiles.filter((p) => p.jwt == undefined).length + 1}`,
     loading: false,
     client: DEFAULT_CLIENT_TYPE,
   })
@@ -40,7 +40,7 @@
       return
     }
 
-    const id = Math.max(...profile.meta.profiles.map(i => i.id)) + 1
+    const id = Math.max(...profile.meta.profiles.map((i) => i.id)) + 1
     profile.meta.profiles.push({
       id: id,
       instance: form.instance,
@@ -88,7 +88,7 @@
                   if (form.client.name == 'lemmy') return 'lemmyv3'
                   else return 'piefedvalpha'
                 },
-                v => {
+                (v) => {
                   if (v == 'lemmyv3')
                     form.client = { name: 'lemmy', baseUrl: '/api/v3' }
                   else form.client = { name: 'piefed', baseUrl: '/api/alpha' }

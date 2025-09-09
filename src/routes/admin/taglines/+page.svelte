@@ -4,7 +4,7 @@
   import { profile } from '$lib/auth.svelte.js'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { Header } from '$lib/components/ui/layout'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { t } from '$lib/i18n/translations.js'
   import { getClient } from '$lib/client/lemmy.svelte'
@@ -69,7 +69,7 @@
           <Button
             onclick={() => {
               taglines.splice(
-                taglines.findIndex(i => i == tagline),
+                taglines.findIndex((i) => i == tagline),
                 1,
               )
 
@@ -96,10 +96,7 @@
   >
     <MarkdownEditor bind:value={newTagline} images={false} />
 
-    <Button size="lg" submit>
-      {#snippet prefix()}
-        <Icon src={Plus} size="16" mini />
-      {/snippet}
+    <Button size="lg" submit icon={Plus}>
       {$t('common.add')}
     </Button>
   </form>
@@ -127,10 +124,7 @@
             images={false}
           />
 
-          <Button size="lg" submit>
-            {#snippet prefix()}
-              <Icon src={Plus} size="16" mini />
-            {/snippet}
+          <Button size="lg" submit icon={Plus}>
             {$t('common.add')}
           </Button>
         </form>

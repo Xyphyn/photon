@@ -3,25 +3,25 @@
   import { profile } from '$lib/auth.svelte.js'
   import ImageInputUpload from '$lib/components/form/ImageInputUpload.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import SectionTitle from '$lib/components/ui/SectionTitle.svelte'
   import { t } from '$lib/i18n/translations'
-  import { getClient, site } from '$lib/client/lemmy.svelte'
+  import { client, site } from '$lib/client/lemmy.svelte'
   import { errorMessage } from '$lib/lemmy/error'
   import { addSubscription } from '$lib/lemmy/user.js'
   import {
     Badge,
     Button,
+    Label,
     MenuButton,
     Switch,
     TextInput,
     toast,
+    Option,
+    Select,
+    Material,
+    Menu,
   } from 'mono-svelte'
-  import Option from 'mono-svelte/forms/select/Option.svelte'
-  import Select from 'mono-svelte/forms/select/Select.svelte'
-  import Material from 'mono-svelte/materials/Material.svelte'
-  import Menu from 'mono-svelte/popover/Menu.svelte'
   import { GlobeAlt, Icon, MapPin, Plus } from 'svelte-hero-icons'
+  import { Header } from '$lib/components/ui/layout'
 
   interface Props {
     /**
@@ -68,7 +68,7 @@
 
     try {
       const res = edit
-        ? await getClient().editCommunity({
+        ? await client().editCommunity({
             title: formData.displayName,
             description: formData.sidebar,
             nsfw: formData.nsfw,
@@ -79,7 +79,7 @@
             visibility: formData.visibility,
             discussion_languages: formData.languages,
           })
-        : await getClient().createCommunity({
+        : await client().createCommunity({
             name: formData.name,
             title: formData.displayName,
             description: formData.sidebar,
@@ -98,7 +98,7 @@
 
       if (profile.current.user) {
         const c = profile.current.user.moderates
-          .map(m => m.community.id)
+          .map((m) => m.community.id)
           .indexOf(res.community_view.community.id)
         if (c != -1) {
           profile.current.user.moderates[c] = {
@@ -139,14 +139,14 @@
 </script>
 
 <form
-  onsubmit={e => {
+  onsubmit={(e) => {
     e.preventDefault()
     submit()
   }}
   class="flex flex-col gap-4 h-full w-full"
 >
   {#if formtitle}{@render formtitle()}{:else}
-    <Header>{$t('routes.createCommunity')}</Header>
+    <Header>{$t('form.post.community')}</Header>
   {/if}
   <TextInput
     required
@@ -188,7 +188,7 @@
   </Select>
 
   <div class="space-y-1">
-    <SectionTitle>{$t('form.profile.languages.title')}</SectionTitle>
+    <Label>{$t('form.profile.languages.title')}</Label>
     <Material rounding="xl" color="uniform" class="dark:bg-zinc-950">
       {#if site.data}
         <div class="flex gap-2 flex-wrap flex-row">
@@ -201,7 +201,7 @@
                 </Badge>
               </button>
             {/snippet}
-            {#each site.data.all_languages.filter(l => !formData.languages?.includes(l.id)) as language (language.id)}
+            {#each site.data.all_languages.filter((l) => !formData.languages?.includes(l.id)) as language (language.id)}
               <MenuButton
                 class="min-h-[16px] py-0"
                 onclick={() => {
@@ -217,7 +217,7 @@
           </Menu>
           {#each formData.languages ?? [] as languageId, index (languageId)}
             {@const language = site.data.all_languages.find(
-              l => l.id == languageId,
+              (l) => l.id == languageId,
             )}
             <button
               type="button"

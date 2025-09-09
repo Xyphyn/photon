@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { Header } from '$lib/components/ui/layout'
   import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
 
   let { children } = $props()

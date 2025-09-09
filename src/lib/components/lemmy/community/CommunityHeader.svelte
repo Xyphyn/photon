@@ -5,7 +5,7 @@
   import { formatRelativeDate } from '$lib/components/util/RelativeDate.svelte'
   import { publishedToDate } from '$lib/components/util/date'
   import { t } from '$lib/i18n/translations'
-  import { userLink } from '$lib/lemmy/generic'
+  import { userLink } from '$lib/util.svelte'
   import { settings } from '$lib/settings.svelte'
   import { fullCommunityName } from '$lib/util.svelte'
   import type {
@@ -14,7 +14,15 @@
     CommunityModeratorView,
     SubscribedType,
   } from '$lib/client/types'
-  import { action, Button, Menu, MenuButton, Modal, modal, toast } from 'mono-svelte'
+  import {
+    action,
+    Button,
+    Menu,
+    MenuButton,
+    Modal,
+    modal,
+    toast,
+  } from 'mono-svelte'
   import {
     BuildingOffice2,
     Check,
@@ -61,9 +69,11 @@
   let setFlair = $state(false)
 </script>
 
-
 <Modal title={$t('cards.community.flair')} bind:open={setFlair}>
-  <CommunityFlair community={community.id} onsubmit={() => setFlair = !setFlair} />
+  <CommunityFlair
+    community={community.id}
+    onsubmit={() => (setFlair = !setFlair)}
+  />
 </Modal>
 
 <EntityHeader
@@ -119,7 +129,7 @@
         <hr class="flex-1 border-slate-200 dark:border-zinc-800 mx-3" />
       {/snippet}
       <ItemList
-        items={moderators.map(m => ({
+        items={moderators.map((m) => ({
           id: m.moderator.id,
           name: m.moderator.name,
           url: userLink(m.moderator),
@@ -129,7 +139,12 @@
       />
     </Expandable>
   {/if}
-  <div class={["flex items-center gap-2 h-max w-max", compact == 'lg' && 'lg:hidden']}>
+  <div
+    class={[
+      'flex items-center gap-2 h-max w-max',
+      compact == 'lg' && 'lg:hidden',
+    ]}
+  >
     {#if profile.current?.jwt}
       <Subscribe
         community={{
@@ -152,14 +167,8 @@
             }}
             class="relative z-[inherit]"
             rounding="pill"
+            icon={subscribed != 'NotSubscribed' ? Check : Plus}
           >
-            {#snippet prefix()}
-              <Icon
-                src={subscribed != 'NotSubscribed' ? Check : Plus}
-                micro
-                size="16"
-              />
-            {/snippet}
             {subscribed == 'Subscribed' || subscribed == 'Pending'
               ? $t('cards.community.subscribed')
               : $t('cards.community.subscribe')}
@@ -167,13 +176,19 @@
         {/snippet}
       </Subscribe>
 
-      <Button size="custom" class="h-9 aspect-square" rounding="pill" onclick={() => setFlair = !setFlair} aria-label={$t('cards.community.flair')}>
+      <Button
+        size="custom"
+        class="h-9 aspect-square"
+        rounding="pill"
+        onclick={() => (setFlair = !setFlair)}
+        aria-label={$t('cards.community.flair')}
+      >
         <Icon src={Tag} size="16" micro />
       </Button>
     {/if}
 
     {#if profile.current?.user && profile.current.user.moderates
-        .map(c => c.community.id)
+        .map((c) => c.community.id)
         .includes(community.id)}
       <Button
         color="secondary"
@@ -190,11 +205,13 @@
     {/if}
     <Menu placement="top-end">
       {#snippet target(attachment)}
-        <Button {@attach attachment} size="custom" rounding="pill" class="h-8.5 aspect-square">
-          {#snippet prefix()}
-            <Icon src={EllipsisHorizontal} size="16" mini />
-          {/snippet}
-        </Button>
+        <Button
+          {@attach attachment}
+          size="custom"
+          rounding="pill"
+          class="h-8.5 aspect-square"
+          icon={EllipsisHorizontal}
+        ></Button>
       {/snippet}
       <MenuButton href="/modlog?community={community.id}">
         <Icon src={Newspaper} size="16" mini />
@@ -214,10 +231,8 @@
           color="danger-subtle"
           size="lg"
           onclick={() => block(community.id, !blocked)}
+          icon={NoSymbol}
         >
-          {#snippet prefix()}
-            <Icon src={NoSymbol} size="16" mini />
-          {/snippet}
           {blocked
             ? $t('cards.community.unblock')
             : $t('cards.community.block')}
@@ -227,10 +242,8 @@
             color="danger-subtle"
             size="lg"
             onclick={() => blockInstance(community.instance_id)}
+            icon={BuildingOffice2}
           >
-            {#snippet prefix()}
-              <Icon src={BuildingOffice2} size="16" mini />
-            {/snippet}
             {$t('cards.community.blockInstance')}
           </MenuButton>
         {/if}
@@ -257,10 +270,8 @@
                 dismissable: true,
                 type: 'error',
               })}
+            icon={Fire}
           >
-            {#snippet prefix()}
-              <Icon src={Fire} size="16" mini />
-            {/snippet}
             {$t('admin.purge')}
           </MenuButton>
         {/if}

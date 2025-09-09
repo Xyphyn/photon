@@ -1,13 +1,12 @@
 <script lang="ts">
   import { browser } from '$app/environment'
   import { goto } from '$app/navigation'
-  import { page } from '$app/state'
-  import { t } from '$lib/i18n/translations'
-  import { getClient } from '$lib/client/lemmy.svelte'
-  import { errorMessage } from '$lib/lemmy/error'
+  import { client } from '$lib/client/lemmy.svelte'
   import type { Post } from '$lib/client/types'
+  import { t } from '$lib/i18n/translations'
+  import { errorMessage } from '$lib/lemmy/error'
   import { Button, toast } from 'mono-svelte'
-  import { ArrowDownCircle, Icon } from 'svelte-hero-icons'
+  import { ArrowDownCircle } from 'svelte-hero-icons'
   import Comment from './Comment.svelte'
   import Comments from './CommentTree.svelte'
   import { buildCommentsTree, type CommentNodeI } from './comments.svelte'
@@ -34,7 +33,7 @@
     try {
       parent.loading = true
 
-      const newComments = await getClient(page.params.instance).getComments({
+      const newComments = await client().getComments({
         max_depth: 5,
         parent_id: parent.comment_view.comment.id,
         type_: 'All',
@@ -54,7 +53,7 @@
       // 0.18.2 -> 0.18.3 broke this
       // so i'm adding this check
       const treeParent = tree.find(
-        c => c.comment_view.comment.id == parent.comment_view.comment.id,
+        (c) => c.comment_view.comment.id == parent.comment_view.comment.id,
       )
 
       if (treeParent) {
@@ -130,15 +129,8 @@
               )
             }
           }}
+          icon={ArrowDownCircle}
         >
-          {#snippet prefix()}
-            <Icon
-              src={ArrowDownCircle}
-              micro
-              size="16"
-              class="text-primary-900 dark:text-primary-100"
-            />
-          {/snippet}
           {$t('comment.more', {
             comments: node.comment_view.counts.child_count,
           })}

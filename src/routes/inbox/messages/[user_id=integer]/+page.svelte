@@ -3,7 +3,7 @@
   import { report } from '$lib/components/lemmy/moderation/moderation'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { Header } from '$lib/components/ui/layout'
   import { t } from '$lib/i18n/translations'
   import { client } from '$lib/client/lemmy.svelte'
   import { errorMessage } from '$lib/lemmy/error'
@@ -78,7 +78,7 @@
     data.message.value = {
       private_messages: data.message.value.private_messages.toSpliced(
         data.message.value.private_messages.findLastIndex(
-          i => i.private_message.id == id,
+          (i) => i.private_message.id == id,
         ),
         1,
       ),
@@ -109,11 +109,12 @@
   {$t('filter.inbox.messages')}
   {#snippet extended()}
     <div class="flex flex-wrap gap-4">
-      <Button size="square-md" href="." title={$t('common.back')}>
-        {#snippet prefix()}
-          <Icon src={ArrowLeft} micro size="16" />
-        {/snippet}
-      </Button>
+      <Button
+        size="square-md"
+        href="."
+        title={$t('common.back')}
+        icon={ArrowLeft}
+      ></Button>
       <UserLink avatar user={data.creator.value.person_view.person} />
     </div>
   {/snippet}
@@ -182,7 +183,7 @@
           ? 'flex flex-col'
           : 'flex-row h-14 items-center',
       ]}
-      onsubmit={async e => {
+      onsubmit={async (e) => {
         e.preventDefault()
 
         const res = await sendMessage(textbox.message)
@@ -239,11 +240,8 @@
           submit
           loading={textbox.loading}
           disabled={textbox.loading}
-        >
-          {#snippet prefix()}
-            <Icon src={PaperAirplane} size="18" micro />
-          {/snippet}
-        </Button>
+          icon={PaperAirplane}
+        ></Button>
       </div>
     </form>
   </div>

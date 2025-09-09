@@ -8,7 +8,7 @@
   import ObjectAutocomplete from '$lib/components/lemmy/ObjectAutocomplete.svelte'
   import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { Header } from '$lib/components/ui/layout'
   import { t } from '$lib/i18n/translations'
   import { client, site } from '$lib/client/lemmy.svelte'
   import { errorMessage } from '$lib/lemmy/error'
@@ -24,8 +24,8 @@
     TextArea,
     TextInput,
     toast,
+    Option,
   } from 'mono-svelte'
-  import Option from 'mono-svelte/forms/select/Option.svelte'
   import { onDestroy, onMount } from 'svelte'
   import {
     ArrowPath,
@@ -96,15 +96,7 @@
   let communities: Community[] = $state([])
 
   onMount(async () => {
-    if (editingPost) {
-      data.url = editingPost.url ?? ''
-      data.body = editingPost.body ?? ''
-      data.title = editingPost.name
-      data.nsfw = editingPost.nsfw
-      data.alt_text = editingPost.alt_text
-      data.thumbnail = editingPost.thumbnail_url
-      data.language_id = editingPost.language_id.toString()
-    }
+    if (editingPost) Object.assign(data, editingPost)
 
     if (passedCommunity) {
       data.community = passedCommunity
@@ -116,12 +108,11 @@
         limit: 40,
       })
 
-      communities = list.communities.map(c => c.community)
+      communities = list.communities.map((c) => c.community)
     }
   })
 
   onDestroy(() => {
-    // @ts-expect-error TODO get rid of sessionStorage stuff
     if (saveDraft) setSessionStorage('postDraft', data)
   })
 
@@ -134,7 +125,6 @@
       })
       return
     }
-    if (!data.title || !profile.current?.jwt) return
     if (data.url && data.url != '') {
       try {
         new URL(data.url)
@@ -209,7 +199,7 @@
       if (res.metadata.description)
         data.body = res.metadata.description
           .split('\n')
-          .map(l => `> ${l}`)
+          .map((l) => `> ${l}`)
           .join('\n')
 
       toast({
@@ -254,7 +244,7 @@
   {#await import('$lib/components/form/ImageInputModal.svelte') then { default: UploadModal }}
     <UploadModal
       bind:open={uploadingImage}
-      bind:imageUrl={() => '', v => (data.url = v)}
+      bind:imageUrl={() => '', (v) => (data.url = v)}
     />
   {/await}
 {/if}
@@ -262,7 +252,7 @@
 {#if addAltText}
   <Modal title={$t('form.post.altText')} bind:open={addAltText}>
     <form
-      onsubmit={e => {
+      onsubmit={(e) => {
         e.preventDefault()
         addAltText = !addAltText
       }}
@@ -277,7 +267,7 @@
 {/if}
 
 <form
-  onsubmit={e => {
+  onsubmit={(e) => {
     e.preventDefault()
     submit()
   }}
@@ -298,7 +288,7 @@
         listing_type="All"
         label={$t('form.post.community')}
         required
-        onselect={e => {
+        onselect={(e) => {
           const c = e
           if (!c) {
             data.community = null
@@ -370,10 +360,8 @@
             size="sm"
             color={data.alt_text ? 'primary' : 'ghost'}
             class="text-xs"
-          >
-            {#snippet prefix()}
-              <Icon src={ChatBubbleBottomCenterText} size="15" micro />
-            {/snippet}{$t('form.post.altText')}
+            icon={ChatBubbleBottomCenterText}
+            >{$t('form.post.altText')}
           </Button>
         {/if}
         <Button
@@ -382,10 +370,8 @@
           size="sm"
           color="ghost"
           class="text-xs"
+          icon={Photo}
         >
-          {#snippet prefix()}
-            <Icon src={Photo} size="15" micro />
-          {/snippet}
           {$t('form.post.uploadImage')}
         </Button>
         {#if generation.generatable}
@@ -396,10 +382,8 @@
             size="sm"
             color="ghost"
             class="text-xs"
+            icon={Sparkles}
           >
-            {#snippet prefix()}
-              <Icon src={Sparkles} size="15" micro />
-            {/snippet}
             {$t('form.post.generateTitle')}
           </Button>
         {/if}

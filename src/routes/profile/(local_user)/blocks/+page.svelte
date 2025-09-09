@@ -1,21 +1,21 @@
 <script lang="ts">
   import { profile } from '$lib/auth.svelte.js'
-  import CommunityLink from '$lib/components/lemmy/community/CommunityLink.svelte'
-  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
-  import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
-  import Entity from '$lib/components/ui/Entity.svelte'
-  import CommonList from '$lib/components/ui/layout/CommonList.svelte'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import { t } from '$lib/i18n/translations.js'
-  import { getClient } from '$lib/client/lemmy.svelte'
+  import { client } from '$lib/client/lemmy.svelte.js'
   import type {
     CommunityBlockView,
     InstanceBlockView,
     PersonBlockView,
   } from '$lib/client/types'
+  import { CommunityLink } from '$lib/components/lemmy/community'
+  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
+  import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
+  import Entity from '$lib/components/ui/Entity.svelte'
+  import { Header } from '$lib/components/ui/layout'
+  import CommonList from '$lib/components/ui/layout/CommonList.svelte'
+  import Placeholder from '$lib/components/ui/Placeholder.svelte'
+  import { t } from '$lib/i18n/translations.js'
   import { Button } from 'mono-svelte'
-  import { Check, Icon, XMark } from 'svelte-hero-icons'
+  import { Check, XMark } from 'svelte-hero-icons'
   import type { PageData } from './$types.js'
 
   interface Props {
@@ -33,13 +33,13 @@
     if (!profile.current?.jwt) return
 
     data.person_blocks.splice(
-      data.person_blocks.findIndex(i => i.target.id == item.target.id),
+      data.person_blocks.findIndex((i) => i.target.id == item.target.id),
       1,
     )
     // hack to get reactivity working
     data.person_blocks = data.person_blocks
 
-    await getClient().blockPerson({
+    await client().blockPerson({
       block: false,
       person_id: item.target.id,
     })
@@ -49,14 +49,16 @@
     if (!profile.current?.jwt) return
 
     data.community_blocks.splice(
-      data.community_blocks.findIndex(i => i.community.id == item.community.id),
+      data.community_blocks.findIndex(
+        (i) => i.community.id == item.community.id,
+      ),
       1,
     )
 
     // hack to get reactivity working
     data.community_blocks = data.community_blocks
 
-    await getClient().blockCommunity({
+    await client().blockCommunity({
       block: false,
       community_id: item.community.id,
     })
@@ -68,13 +70,13 @@
 
     data.my_user.instance_blocks.splice(
       data.my_user.instance_blocks.findIndex(
-        i => i.instance.id == item.instance.id,
+        (i) => i.instance.id == item.instance.id,
       ),
       1,
     )
     data.my_user.instance_blocks = data.my_user.instance_blocks
 
-    await getClient().blockInstance({
+    await client().blockInstance({
       block: false,
       instance_id: item.instance.id,
     })
@@ -107,11 +109,8 @@
                 size="square-md"
                 rounding="pill"
                 onclick={() => unblockCommunity(block)}
-              >
-                {#snippet prefix()}
-                  <Icon src={XMark} micro size="16" />
-                {/snippet}
-              </Button>
+                icon={XMark}
+              ></Button>
             </div>
           {/snippet}
         </CommonList>
@@ -137,11 +136,8 @@
                 size="square-md"
                 rounding="pill"
                 onclick={() => unblockUser(block)}
-              >
-                {#snippet prefix()}
-                  <Icon src={XMark} micro size="16" />
-                {/snippet}
-              </Button>
+                icon={XMark}
+              ></Button>
             </div>
           {/snippet}
         </CommonList>
@@ -171,11 +167,8 @@
                 size="square-md"
                 rounding="pill"
                 onclick={() => unblockInstances(block)}
-              >
-                {#snippet prefix()}
-                  <Icon src={XMark} micro size="16" />
-                {/snippet}
-              </Button>
+                icon={XMark}
+              ></Button>
             </div>
           {/snippet}
         </CommonList>

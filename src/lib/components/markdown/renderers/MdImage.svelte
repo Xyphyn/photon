@@ -3,8 +3,8 @@
     iframeType,
     mediaType,
     optimizeImageURL,
-  } from '$lib/components/lemmy/post/helpers'
-  import PostIframe from '$lib/components/lemmy/post/media/PostIframe.svelte'
+    PostIframe,
+  } from '$lib/components/lemmy/post'
   import { showImage } from '$lib/components/ui/ExpandableImage.svelte'
   import { t } from '$lib/i18n/translations'
   import { getContext } from 'svelte'

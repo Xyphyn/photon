@@ -3,8 +3,8 @@
   import { page } from '$app/state'
   import { notifications, profile } from '$lib/auth.svelte.js'
   import CommonList from '$lib/components/ui/layout/CommonList.svelte'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
-  import Pageination from '$lib/components/ui/Pageination.svelte'
+  import { Header } from '$lib/components/ui/layout'
+  import Pageination from '$lib/components/ui/layout/Pageination.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { t } from '$lib/i18n/translations'
   import { getClient } from '$lib/client/lemmy.svelte'
@@ -54,31 +54,26 @@
       class="rounded-2xl h-9 aspect-square"
       rounding="none"
       aria-label={$t('common.refresh')}
-    >
-      {#snippet prefix()}
-        <Icon src={ArrowPath} size="16" mini />
-      {/snippet}
-    </Button>
+      icon={ArrowPath}
+    ></Button>
     <Button
       onclick={markAllAsRead}
       loading={markingAsRead}
       disabled={markingAsRead || data.inbox.value.length == 0}
       rounding="pill"
       color="primary"
+      icon={Check}
     >
-      {#snippet prefix()}
-        <Icon src={Check} size="16" mini />
-      {/snippet}
       {$t('routes.inbox.markAsRead')}
     </Button>
   </div>
 </Header>
 
 <Select
-  class="relative w-max"
+  class="relative"
   bind:value={
     () => data.unreadOnly.value.toString(),
-    v => (data.unreadOnly.value = v == 'true')
+    (v) => (data.unreadOnly.value = v == 'true')
   }
   onchange={() =>
     searchParam(
@@ -121,7 +116,7 @@
         !data.inbox || (data.inbox.value?.length ?? 0) < (data?.limit ?? 0)
       )}
       page={data.page}
-      href={page => `?page=${page}`}
+      href={(page) => `?page=${page}`}
     />
   </Fixate>
 {/if}

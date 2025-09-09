@@ -73,6 +73,7 @@
     children?: Snippet
     suffix?: Snippet
     onclick?: HTMLButtonAttributes['onclick']
+    icon?: IconSource
   }
 
   export type { Props as ButtonProps }
@@ -87,6 +88,7 @@
 
   import Spinner from '../loader/Spinner.svelte'
   import type { Snippet } from 'svelte'
+  import { Icon, type IconSource } from 'svelte-hero-icons'
 
   let {
     loading = false,
@@ -103,6 +105,7 @@
     prefix,
     children,
     suffix,
+    icon,
     ...rest
   }: Props = $props()
 </script>
@@ -136,6 +139,8 @@
     <Spinner width={loaderWidth ?? 16} />
   {:else if prefix}
     {@render prefix?.()}
+  {:else if icon}
+    <Icon src={icon} size="16" mini />
   {/if}
   {@render children?.()}
   {@render suffix?.()}

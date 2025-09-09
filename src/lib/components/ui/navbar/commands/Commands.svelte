@@ -5,7 +5,7 @@
   import { profile } from '$lib/auth.svelte'
   import { t } from '$lib/i18n/translations'
   import { resumables } from '$lib/lemmy/item'
-  import { theme } from '$lib/ui/colors.svelte'
+  import { theme } from '$lib/ui/theme/theme.svelte'
   import { fuzzySearch } from '$lib/util.svelte'
   import { TextInput } from 'mono-svelte'
   import { createEventDispatcher, onMount } from 'svelte'
@@ -55,16 +55,16 @@
 
     if (term.length < 1) {
       if (breadcrumbs.length <= 0) {
-        filteredGroups = groups.map(group => ({
+        filteredGroups = groups.map((group) => ({
           ...group,
           actions: flattenActions(group.actions, false),
         }))
       }
     } else {
       filteredGroups = groups
-        .map(group => {
+        .map((group) => {
           const scoredActions = flattenActions(group.actions)
-            .map(action => ({
+            .map((action) => ({
               ...action,
               score: Math.max(
                 fuzzySearch(action.name, term),
@@ -72,7 +72,7 @@
                 action.detail ? fuzzySearch(action.detail, term) : -1,
               ),
             }))
-            .filter(action => action.score > 0)
+            .filter((action) => action.score > 0)
             .sort((a, b) => b.score - a.score)
 
           return {
@@ -80,11 +80,11 @@
             actions: scoredActions,
             score: Math.max(
               fuzzySearch(group.name, term),
-              ...scoredActions.map(a => a.score),
+              ...scoredActions.map((a) => a.score),
             ),
           }
         })
-        .filter(group => group.actions.length > 0)
+        .filter((group) => group.actions.length > 0)
         .sort((a, b) => b.score - a.score)
     }
   }
@@ -116,7 +116,7 @@
     actions: Action[],
     subaction: boolean = true,
   ): Action[] {
-    return actions.flatMap(action => [
+    return actions.flatMap((action) => [
       action,
       ...(action.subActions && subaction
         ? flattenActions(action.subActions)
@@ -137,10 +137,10 @@
   function handleKeydown(event: KeyboardEvent) {
     if (event.ctrlKey) {
       const actions = groups
-        .flatMap(g => g.actions)
-        .filter(a => a.shortcut != undefined)
+        .flatMap((g) => g.actions)
+        .filter((a) => a.shortcut != undefined)
 
-      actions.forEach(a => {
+      actions.forEach((a) => {
         if (event.key === a.shortcut) {
           event.preventDefault()
           if (a.href) goto(a.href)
@@ -220,7 +220,7 @@
   })
 
   let flattenedActions = $derived(
-    filteredGroups.flatMap(group => group.actions),
+    filteredGroups.flatMap((group) => group.actions),
   )
 </script>
 
@@ -269,7 +269,7 @@
             >
               <CommandItem
                 {action}
-                onclick={e => {
+                onclick={(e) => {
                   if (action.href) {
                     togglePalette()
                     return

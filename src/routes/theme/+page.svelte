@@ -1,8 +1,8 @@
 <script lang="ts">
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { Header } from '$lib/components/ui/layout'
   import { t } from '$lib/i18n/translations'
-  import { theme as themeData } from '$lib/ui/colors.svelte'
-  import { getDefaultColors } from '$lib/ui/presets'
+  import { theme as themeData } from '$lib/ui/theme/theme.svelte'
+  import { getDefaultColors } from '$lib/ui/theme/presets'
   import {
     Button,
     Material,
@@ -73,7 +73,7 @@
       <button
         onclick={() => {
           const newTheme = {
-            id: Math.max(...themeData.data.themes.map(t => t.id)) + 1,
+            id: Math.max(...themeData.data.themes.map((t) => t.id)) + 1,
             colors: getDefaultColors(),
             name: $t('routes.theme.preset.new'),
           }
@@ -170,10 +170,10 @@
       </Header>
       <ColorSwatch
         value={themeData.current.colors.primary?.[900]}
-        onchange={e => {
+        onchange={(e) => {
           themeData.current.colors.primary[900] = e
         }}
-        oncontextmenu={e => {
+        oncontextmenu={(e) => {
           e.preventDefault()
           themeData.current.colors.primary[900] = defaultColors.primary[900]
 
@@ -183,10 +183,10 @@
       />
       <ColorSwatch
         value={themeData.current.colors.primary?.[100]}
-        onchange={e => {
+        onchange={(e) => {
           themeData.current.colors.primary[100] = e
         }}
-        oncontextmenu={e => {
+        oncontextmenu={(e) => {
           e.preventDefault()
           themeData.current.colors.primary[100] = defaultColors.primary[100]
 
@@ -221,10 +221,10 @@
                 <!--@ts-ignore-->
                 <ColorSwatch
                   bind:value={themeData.current.colors[category][shade]}
-                  onchange={e => {
+                  onchange={(e) => {
                     themeData.current.colors[category][shade] = e
                   }}
-                  oncontextmenu={e => {
+                  oncontextmenu={(e) => {
                     e.preventDefault()
                     themeData.current.colors[category][shade] =
                       defaultColors[category][shade]

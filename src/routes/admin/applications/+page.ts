@@ -1,6 +1,6 @@
 import { profile } from '$lib/auth.svelte'
 import { getClient } from '$lib/client/lemmy.svelte'
-import { ReactiveState } from '$lib/promise.svelte.js'
+import { ReactiveState } from '$lib/util.svelte.js'
 
 export async function load({ fetch, url }) {
   if (!profile) return

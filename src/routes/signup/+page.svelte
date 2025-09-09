@@ -19,7 +19,7 @@
   import { goto } from '$app/navigation'
   import VirtualList from '$lib/components/render/VirtualList.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
-  import Header from '$lib/components/ui/layout/pages/Header.svelte'
+  import { Header } from '$lib/components/ui/layout'
   import { t } from '$lib/i18n/translations'
   import { DEFAULT_INSTANCE_URL } from '$lib/instance.svelte.js'
   import { validateInstance } from '$lib/client/lemmy.svelte'
@@ -37,7 +37,7 @@
     try {
       const res: Instance[] = (
         await fetch(`https://data.lemmyverse.net/data/instance.full.json`).then(
-          r => r.json(),
+          (r) => r.json(),
         )
       )
         .filter((i: Instance) => i.fed)

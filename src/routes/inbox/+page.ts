@@ -6,7 +6,7 @@ import {
   generalizePersonMention,
   generalizePrivateMessage,
 } from '$lib/lemmy/inbox.js'
-import { ReactiveState } from '$lib/promise.svelte.js'
+import { ReactiveState } from '$lib/util.svelte.js'
 import { error } from '@sveltejs/kit'
 
 type InboxFeedType = 'replies' | 'mentions' | 'messages' | 'all'
@@ -61,10 +61,10 @@ export async function load({ url, fetch }) {
 
   const totalNotifs =
     type == 'all'
-      ? data.filter(i => i.type != 'private_message' && !i.read).length
+      ? data.filter((i) => i.type != 'private_message' && !i.read).length
       : 0
 
-  notifications.update(i => ({
+  notifications.update((i) => ({
     applications: i.applications,
     reports: i.reports,
     inbox: totalNotifs,

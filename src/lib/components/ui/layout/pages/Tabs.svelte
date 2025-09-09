@@ -26,7 +26,7 @@
   }: Props = $props()
 
   let matchType = $derived<('search' | 'pathname')[]>(
-    routes.map(i =>
+    routes.map((i) =>
       new URL(`https://example.com${i.href}`)?.search != ''
         ? 'search'
         : 'pathname',
@@ -39,7 +39,7 @@
     const hrefSearch = new Set(href.searchParams.values())
     // checks if there is any
     const usePathname = !routes.some(
-      i =>
+      (i) =>
         new Set(
           new URL(`https://example.com${i.href}`).searchParams.values(),
         ).intersection(currentSearch).size > 0,

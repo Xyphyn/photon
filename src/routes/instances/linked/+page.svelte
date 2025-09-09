@@ -17,7 +17,7 @@
   function triggerFilter(filter: string) {
     if (!passedData.linked) return
     loading = true
-    data.linked = passedData.linked.filter(i => i.domain.includes(filter))
+    data.linked = passedData.linked.filter((i) => i.domain.includes(filter))
     loading = false
   }
 </script>

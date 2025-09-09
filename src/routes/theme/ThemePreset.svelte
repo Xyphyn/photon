@@ -1,6 +1,6 @@
 <script lang="ts">
   import { t } from '$lib/i18n/translations'
-  import { theme as themeData, type Theme } from '$lib/ui/colors.svelte'
+  import { theme as themeData, type Theme } from '$lib/ui/theme/theme.svelte'
   import { action, Button, Material, modal, TextInput } from 'mono-svelte'
   import { CheckCircle, Icon, Trash } from 'svelte-hero-icons'
 
@@ -48,7 +48,7 @@
     <div class="px-4 py-2 flex items-center gap-1 justify-between">
       {#if editingName}
         <form
-          onsubmit={e => {
+          onsubmit={(e) => {
             e.preventDefault()
             editingName = false
           }}
@@ -85,7 +85,7 @@
                   type: 'danger',
                   action: () => {
                     const index = themeData.data.themes
-                      .map(t => t.id)
+                      .map((t) => t.id)
                       .indexOf(theme.id)
 
                     themeData.data.themes = themeData.data.themes.toSpliced(
@@ -103,11 +103,8 @@
               title: $t('routes.theme.preset.delete.title'),
             })
           }}
-        >
-          {#snippet prefix()}
-            <Icon src={Trash} size="16" mini />
-          {/snippet}
-        </Button>
+          icon={Trash}
+        ></Button>
       {/if}
     </div>
   </Material>

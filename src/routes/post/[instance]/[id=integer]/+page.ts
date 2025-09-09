@@ -3,7 +3,7 @@ import { profile } from '$lib/auth.svelte.js'
 import CommunityCard from '$lib/components/lemmy/community/CommunityCard.svelte'
 import { client } from '$lib/client/lemmy.svelte'
 import { postFeeds } from '$lib/lemmy/postfeed.svelte.js'
-import { ReactiveState, awaitIfServer } from '$lib/promise.svelte.js'
+import { ReactiveState, awaitIfServer } from '$lib/util.svelte.js'
 import { settings } from '$lib/settings.svelte'
 import { redirect } from '@sveltejs/kit'
 import type {
@@ -55,7 +55,7 @@ function findInFeed(
     }
   | undefined {
   const index = postFeeds.value[feedId]?.data.posts.posts.findIndex(
-    i => i.post.id == postId,
+    (i) => i.post.id == postId,
   )
 
   if ((index ?? -1) == -1) return
@@ -105,7 +105,7 @@ export async function load({ params, url, fetch }) {
 
   const partialPost: PartialPost = {
     post_view: cachedPost ? cachedPost.post_view : (await post).post_view,
-    meta: post.then(i => ({
+    meta: post.then((i) => ({
       ...i,
     })),
   }
@@ -123,7 +123,7 @@ export async function load({ params, url, fetch }) {
       sidebar: {
         component: CommunityCard,
         props: {
-          community_view: post.then(i => i.community_view),
+          community_view: post.then((i) => i.community_view),
         },
       },
     },

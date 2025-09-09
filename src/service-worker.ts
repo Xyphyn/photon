@@ -12,7 +12,7 @@ const ASSETS = [
   ...files, // everything in `static`
 ]
 
-self.addEventListener('install', event => {
+self.addEventListener('install', (event) => {
   console.info('[i] Installing service worker')
   // Create a new cache and add all files to it
   async function addFilesToCache() {
@@ -23,7 +23,7 @@ self.addEventListener('install', event => {
   event.waitUntil(addFilesToCache())
 })
 
-self.addEventListener('activate', event => {
+self.addEventListener('activate', (event) => {
   console.info('[i] Activating service worker')
   // Remove previous cached data from disk
   async function deleteOldCaches() {
@@ -35,7 +35,7 @@ self.addEventListener('activate', event => {
   event.waitUntil(deleteOldCaches())
 })
 
-self.addEventListener('fetch', e => {
+self.addEventListener('fetch', (e) => {
   const event = e as FetchEvent
   // ignore POST requests etc
   if (event.request.method !== 'GET') return
