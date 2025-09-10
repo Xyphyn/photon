@@ -46,7 +46,8 @@
             "downloading": "Aktionen werden heruntergeladen",
             "setTheme": "Thema festlegen",
             "setThemeTo": "Thema auf {{default}} festlegen",
-            "contextual": "Auf dieser Seite"
+            "contextual": "Auf dieser Seite",
+            "main": "Haupt"
         },
         "notifications": "Benachrichtigungen"
     },
@@ -140,7 +141,8 @@
             "selectFile": "Wähle ein Datei aus",
             "readMore": "Weiterlesen",
             "addUrl": "URL hinzufügen",
-            "setLanguage": "Sprache festlegen"
+            "setLanguage": "Sprache festlegen",
+            "unset": "Nicht festgelegt"
         },
         "profile": {
             "bio": "Biografie",
@@ -220,7 +222,7 @@
             }
         },
         "modlog": {
-            "title": "Modlog",
+            "title": "Moderationsprotokoll",
             "filters": "Filter"
         },
         "instances": "Instanzen",
@@ -535,7 +537,7 @@
         "site": {
             "about": "Über",
             "stats": "Statistiken",
-            "admins": "Admins"
+            "admins": "Administratoren"
         }
     },
     "post": {
