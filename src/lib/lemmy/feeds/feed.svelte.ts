@@ -8,7 +8,6 @@ import type {
   GetPersonDetailsResponse,
   GetPost,
   GetPosts,
-  GetPostsResponse,
   PostView,
 } from '$lib/client/types'
 import { recursiveEqual } from '$lib/util.svelte'
@@ -52,7 +51,8 @@ interface FeedTypes {
   '/': [
     GetPosts,
     {
-      data: GetPostsResponse
+      posts: PostView[]
+      next_page?: string
       params: GetPosts
       client: {
         itemHeights?: (number | null)[]
@@ -75,6 +75,7 @@ interface FeedTypes {
     {
       posts: GetPost
       comments: GetComments
+      preload?: PostView
     },
     {
       post: PostView
@@ -82,6 +83,7 @@ interface FeedTypes {
       meta: Promise<{
         community_view: CommunityView
         cross_posts: PostView[]
+        post_view: PostView
       }>
       thread: {
         showContext?: boolean

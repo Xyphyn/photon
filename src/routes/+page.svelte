@@ -86,7 +86,7 @@
       </div>{/each}
   {:then feed}
     <FeedComponent
-      bind:posts={feed.data.posts}
+      bind:posts={feed.posts}
       bind:lastSeen={
         () => feed.client.lastSeen ?? 0, (v) => (feed.client.lastSeen = v)
       }
@@ -107,7 +107,7 @@
         })}
         {#snippet action()}
           <Pageination
-            cursor={{ next: feed.data.next_page }}
+            cursor={{ next: feed.next_page }}
             href={(page) =>
               typeof page == 'number' ? `?page=${page}` : `?cursor=${page}`}
             back={false}

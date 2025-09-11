@@ -25,6 +25,17 @@ function buildContext(thread?: string) {
   return { parentId, showContext, max_depth, focus: thread?.split('.').at(-1) }
 }
 
+function findInFeed(id: '/' | '/c/[name]', postId: string) {
+  return feed(id, async (p) => ({
+    // this will never run
+    ...(await client().getPosts(p)),
+    client: {},
+    params: p,
+  }))
+    .peek()
+    ?.posts.find((i) => i.post.id.toString() == postId)
+}
+
 export async function load({ params, url, route }) {
   if (profile.current.instance != params.instance)
     redirect(302, resolveRoute('/post/[instance]/[id]/confirm', params))
@@ -32,24 +43,30 @@ export async function load({ params, url, route }) {
   // TODO use Lemmy profile default settings
   const sort = settings?.defaultSort?.comments ?? 'Hot'
 
+  const cachedPost =
+    findInFeed('/', params.id) ?? findInFeed('/c/[name]', params.id)
+
   const {
     parentId,
     showContext,
     focus,
     max_depth: passedMaxDepth,
   } = buildContext(url.searchParams.get('thread') || undefined)
-
   const max_depth = passedMaxDepth
 
   const feedData = feed(route.id, async (p) => {
     const commentPromise = client().getComments(p.comments)
-    const postPromise = await client().getPost(p.posts)
+    const postPromise = client().getPost(p.posts)
+
+    const post = p.preload ?? (await postPromise).post_view
+
     return {
-      post: postPromise.post_view,
+      post: post,
       comments: commentPromise.then((i) => i.comments),
-      meta: new Promise(() => {}).then(() => ({
-        community_view: postPromise.community_view,
-        cross_posts: postPromise.cross_posts,
+      meta: postPromise.then((i) => ({
+        community_view: i.community_view,
+        cross_posts: i.cross_posts,
+        post_view: i.post_view,
       })),
       thread: {
         showContext,
@@ -70,6 +87,7 @@ export async function load({ params, url, route }) {
       parent_id: parentId,
     },
     posts: { id: Number(params.id) },
+    preload: cachedPost,
   })
 
   return {

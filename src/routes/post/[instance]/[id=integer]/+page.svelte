@@ -35,6 +35,8 @@
   let { data } = $props()
 
   onMount(() => {
+    data.meta.then((i) => data.post == i.post_view)
+
     resumables.add({
       name: data.post.post.name,
       type: 'post',
@@ -51,23 +53,6 @@
         .then(() => (data.post.read = true))
     }
   })
-
-  // $effect(() => {
-  //   if (data.post && data.cachedFeed) {
-  //     const { id, index } = data.cachedFeed
-  //     updateFeed(id, (current) => ({
-  //       ...current,
-  //       data: {
-  //         ...current.data,
-  //         posts: current.data.posts.toSpliced(
-  //           index,
-  //           1,
-  //           data.post,
-  //         ),
-  //       },
-  //     }))
-  //   }
-  // })
 
   let loading = $state(false)
 
