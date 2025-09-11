@@ -540,7 +540,7 @@
             "showBots": "Näytä robottikäyttäjät",
             "displayName": "Näyttönimi",
             "languages": {
-                "description": "Kielten asettaminen piilottaa muunkielisen sisällön. Suurimman osan sisällöstä kieltä ei ole merkitty. Ne kuuluvat vaihtoehdon 'Undetermined' alle.",
+                "description": "Kielten asettaminen piilottaa muunkielisen sisällön. Suurinta osaa sisällöstä ei ole merkitty, jolloin sen kieli on 'Undetermined'.",
                 "title": "Kielet"
             },
             "credentials": {
@@ -760,7 +760,7 @@
                 "zh-Hans": "kiina (yksinkertaistettu)",
                 "zh-Hant": "kiina (perinteinen)"
             },
-            "title": "Photon",
+            "title": "Sovellus",
             "theming": {
                 "title": "Teemat",
                 "description": "Muokkaa värejä.",
@@ -810,7 +810,7 @@
                 "description": "Valitse väritila."
             },
             "infiniteScroll": {
-                "description": "Julkaisut näytetään yhdellä sivulla, joka kasvaa alaspäin vieritettäessä.",
+                "description": "Lataa lisää julkaisuja automaattisesti alaspäin vieritettäessä.",
                 "title": "Jatkuva selaus"
             },
             "titleTags": {
@@ -826,6 +826,14 @@
             "reverseActions": {
                 "title": "Käänteinen toimintopalkki",
                 "description": "Käännä julkaisujen ja kommenttien toimintojen järjestys päinvastaiseksi."
+            },
+            "titleOpensUrl": {
+                "title": "Otsikko avaa URL:n",
+                "description": "Otsikon klikkaaminen avaa julkaisun sijaan siihen liitetyn osoitteen."
+            },
+            "absoluteDates": {
+                "title": "Näytä päiväys",
+                "description": "Korvaa suhteelliset aikaleimat (esim. 3 tuntia sitten) tarkoilla päiväyksillä."
             }
         },
         "title": "Asetukset",
@@ -855,17 +863,18 @@
                 "title": "Komentopaletti"
             },
             "autoHide": {
-                "title": "Piilota telakka automaattisesti"
+                "title": "Piilota telakka automaattisesti",
+                "description": "Piilottaa telakan mobiilinäkymässä, kun kelaat alaspäin."
             }
         },
         "lemmy": {
             "compactFeatured": {
                 "title": "Tiiviit nostot",
-                "description": "Näytä nostetut julkaisut tiiviinä"
+                "description": "Näyttää nostetut julkaisut tiiviinä."
             },
             "markReadPosts": {
-                "description": "Merkitse julkaisut luetuksi avattaessa",
-                "title": "Merkitse avatut luetuksi"
+                "description": "Merkitsee julkaisut luetuksi avattaessa.",
+                "title": "Merkitse avatut julkaisut luetuksi"
             },
             "fadeReadPosts": {
                 "title": "Häivytä luetut",
@@ -878,21 +887,21 @@
                 "deleted": "Poistettu käyttäjän toimesta"
             },
             "instances": {
-                "description": "Näytä instanssi, josta sisältö on kotoisin.",
+                "description": "Näyttää instanssin, josta sisältö on kotoisin.",
                 "title": "Näytä instanssit"
             },
             "nsfwBlur": {
                 "title": "NSFW-sumennus",
-                "description": "Sumenna NSFW-julkaisujen kuvat ja piilota teksti."
+                "description": "Sumentaa NSFW-julkaisujen kuvat ja piilotta tekstin."
             },
             "title": "Lemmy",
             "crosspostMarker": {
                 "title": "Merkitse ristijulkaisut",
-                "description": "Näytä ristijulkaisut."
+                "description": "Lisää linkin alkuperäiseen julkaisuun jakaessa ristiin."
             },
             "showHiddenPosts": {
                 "title": "Näytä piilotetut julkaisut",
-                "description": "Näytä käsin piilottamasi julkaisut."
+                "description": "Näyttää käsin piilottamasi julkaisut."
             }
         },
         "moderation": {
@@ -921,7 +930,7 @@
         "other": {
             "debug": {
                 "title": "Vianetsintätiedot",
-                "description": "Näytä vianetsintätiedot"
+                "description": "Näyttää vianetsintätiedot."
             },
             "title": "Muut",
             "virtualizeFeeds": {
@@ -944,7 +953,7 @@
         "incorrect_login_2": "Virheelliset kirjautumistiedot. Yritä uudelleen uudelleen.",
         "incorrect_login_3": "Virheelliset kirjautumistiedot. Yritä vielä muutaman kerran.",
         "incorrect_login_6": "Onko tämä mielestäsi jokin vitsi?",
-        "incorrect_login_5": "Katso tarkkaan, mitä näppäimia painelet.",
+        "incorrect_login_5": "Katso tarkkaan, mitä näppäimia painelet tällä kertaa.",
         "incorrect_login_7": "Sinulla taitaa olla vaikeuksia kirjoittamisen kanssa.",
         "incorrect_login_4": "Virheelliset kirjautumistiedot. Jatka yrittämistä.",
         "incorrect_login_12": "...",
@@ -966,7 +975,8 @@
         "slurs": "Lähetyksesi sisältää kiellettyjä sanoja.",
         "language_not_allowed": "Valitsemasi kieli ei ole sallitu tässä yhteisössä. Poista valinta käyttääksesi yhteisön oletusta.",
         "couldnt_find_community": "Tätä yhteisöä ei ole olemassa.",
-        "couldnt_find_person": "Tätä käyttäjää ei ole olemassa."
+        "couldnt_find_person": "Tätä käyttäjää ei ole olemassa.",
+        "not_an_admin": "Et ole instanssin ylläpitäjä."
     },
     "aria": {
         "vote": {
@@ -978,10 +988,25 @@
         "pagination": {
             "nav": "Sivutus",
             "current": "Nykyinen sivu"
+        },
+        "sidebar": {
+            "title": "Sivupalkki"
+        },
+        "loading": "Ladataan",
+        "element": {
+            "pageHeader": "Sivun otsikko"
+        },
+        "postDecor": {
+            "openImage": "Avaa kuva: {{default}}",
+            "openLink": "Avaa linkki: {{default}}",
+            "openPost": "Avaa julkaisu: {{default}}"
         }
     },
     "stats": {
         "joined": "Liittyi",
         "created": "Luotu"
+    },
+    "placeholders": {
+        "title": "Kirjoita julkaisun otsikko"
     }
 }
