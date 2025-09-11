@@ -160,6 +160,10 @@ export class ReactiveState<T> {
   }
 }
 
+export function snapshot<T>(item: T) {
+  return $state.snapshot(item)
+}
+
 export const isImage = (url: string | undefined) => {
   try {
     if (!url) return false
@@ -185,3 +189,33 @@ export const communityLink = (community: Community, prefix: string = '') =>
 
 export const userLink = (person: Person, prefix: string = '') =>
   `${prefix}/u/${person.name}@${new SvelteURL(person.actor_id).hostname}`
+
+/**
+ * Basic types only, don't use for anything more than basic equality
+ */
+export function recursiveEqual<T>(
+  a: NonNullable<T>,
+  b: NonNullable<T>,
+): boolean {
+  if (a === b) return true
+  if (typeof a !== 'object' || typeof b !== 'object') return false
+
+  const keysA = Object.keys(a) as (keyof typeof a)[]
+  const keysB = Object.keys(b) as (keyof typeof b)[]
+
+  if (keysA.length != keysB.length) return false
+
+  for (const key of keysA) {
+    const valA = a[key]
+    const valB = b[key]
+
+    if (typeof valA == 'object' && typeof valB == 'object') {
+      const result = recursiveEqual(valA!, valB!)
+      if (!result) return false
+    } else {
+      if (valA != valB) return false
+    }
+  }
+
+  return true
+}

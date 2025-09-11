@@ -1,20 +1,31 @@
 <script lang="ts">
-  import { browser } from '$app/environment'
-  import { PostFeed, VirtualFeed } from '$lib/components/lemmy/post'
-  import { Header } from '$lib/components/ui/layout'
+  import { CommentItem } from '$lib/components/lemmy/comment'
+  import { PostItem } from '$lib/components/lemmy/post'
+  import Fixate from '$lib/components/ui/generic/Fixate.svelte'
+  import { CommonList, Header, Pageination } from '$lib/components/ui/layout'
   import { t } from '$lib/i18n/translations.js'
+  import { isCommentView } from '$lib/lemmy/item.js'
 
   let { data = $bindable() } = $props()
-
-  const SvelteComponent = $derived(browser ? VirtualFeed : PostFeed)
 </script>
 
-<Header>
+<Header pageHeader>
   {data.upvoted ? $t('routes.profile.upvoted') : $t('routes.profile.downvoted')}
 </Header>
 
-<SvelteComponent
-  posts={data.feed.posts.posts}
-  bind:feedData={data.feed}
-  feedId="main"
-/>
+<CommonList items={data.items}>
+  {#snippet item(item)}
+    {#if isCommentView(item)}
+      <CommentItem comment={item} />
+    {:else if !isCommentView(item)}
+      <PostItem post={item} />
+    {/if}
+  {/snippet}
+</CommonList>
+
+<Fixate placement="bottom">
+  <Pageination
+    bind:page={data.filters.value.page}
+    href={(page) => `?page=${page}`}
+  />
+</Fixate>

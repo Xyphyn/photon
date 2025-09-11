@@ -1,23 +1,44 @@
-import { postFeed } from '$lib/lemmy/postfeed.svelte.js'
+import { client } from '$lib/client/lemmy.svelte.js'
+import { getItemPublished } from '$lib/lemmy/item.js'
+import { ReactiveState } from '$lib/util.svelte.js'
 import { error } from '@sveltejs/kit'
 
-export async function load({ url, params, fetch }) {
+export async function load({ url, params }) {
   if (params.type.toLowerCase() != 'up' && params.type.toLowerCase() != 'down')
     error(404)
 
-  const upvoted = params.type.toLowerCase() == 'up'
+  const page = Number(url.searchParams.get('page')) || 1
+
+  const upvoted = params.type == 'up'
+
+  const data = await Promise.all([
+    client().getPosts({
+      liked_only: upvoted,
+      disliked_only: !upvoted,
+      page: page,
+      sort: 'New',
+      type_: 'All',
+      limit: 20,
+    }),
+    client().getComments({
+      liked_only: upvoted,
+      disliked_only: !upvoted,
+      page: page,
+      sort: 'New',
+      type_: 'All',
+      limit: 20,
+    }),
+  ])
+
+  const everything = [...data[0].posts, ...data[1].comments].sort(
+    (a, b) => Date.parse(getItemPublished(b)) - Date.parse(getItemPublished(a)),
+  )
 
   return {
-    feed: await postFeed({
-      id: 'votes',
-      request: {
-        sort: 'New',
-        liked_only: upvoted || undefined,
-        disliked_only: !upvoted || undefined,
-      },
-      url: url,
-      fetch: fetch,
-    }),
+    items: everything,
     upvoted: upvoted,
+    filters: new ReactiveState({
+      page: page,
+    }),
   }
 }

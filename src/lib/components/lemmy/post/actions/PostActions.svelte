@@ -184,7 +184,7 @@
             <Spinner width={20} />
           </div>
         {:then { default: PostActionsMenu }}
-          <PostActionsMenu {post} {onhide} bind:editing />
+          <PostActionsMenu bind:post {onhide} bind:editing />
         {/await}
       {/if}
     {/snippet}

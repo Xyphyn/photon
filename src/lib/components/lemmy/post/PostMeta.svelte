@@ -20,64 +20,6 @@
     ['CW', { content: 'CW', color: '#ff000040' }],
   ])
 
-  const badgeToData: Map<
-    BadgeType,
-    {
-      icon: IconSource
-      color: 'red-subtle' | 'yellow-subtle' | 'green-subtle'
-      label: string
-    }
-  > = new Map([
-    [
-      'nsfw',
-      {
-        icon: ExclamationTriangle,
-        color: 'red-subtle',
-        label: t.get('post.badges.nsfw'),
-      },
-    ],
-    [
-      'saved',
-      {
-        icon: Bookmark,
-        color: 'yellow-subtle',
-        label: t.get('post.badges.saved'),
-      },
-    ],
-    [
-      'featured',
-      {
-        icon: Megaphone,
-        color: 'green-subtle',
-        label: t.get('post.badges.featured'),
-      },
-    ],
-    [
-      'removed',
-      {
-        icon: Trash,
-        color: 'green-subtle',
-        label: t.get('post.badges.removed'),
-      },
-    ],
-    [
-      'deleted',
-      {
-        icon: Trash,
-        color: 'red-subtle',
-        label: t.get('post.badges.deleted'),
-      },
-    ],
-    [
-      'locked',
-      {
-        icon: LockClosed,
-        color: 'yellow-subtle',
-        label: t.get('post.badges.locked'),
-      },
-    ],
-  ])
-
   export const parseTags = (
     title?: string,
   ): { tags: Tag[]; title?: string } => {
@@ -136,6 +78,7 @@
     type IconSource,
   } from 'svelte-hero-icons'
   import { CommunityLink } from '../community'
+  import { SvelteMap } from 'svelte/reactivity'
 
   interface Props {
     community?: Community
@@ -184,6 +127,64 @@
     titleClass = '',
     extraBadges,
   }: Props = $props()
+
+  const badgeToData: Map<
+    BadgeType,
+    {
+      icon: IconSource
+      color: 'red-subtle' | 'yellow-subtle' | 'green-subtle'
+      label: string
+    }
+  > = new SvelteMap([
+    [
+      'nsfw',
+      {
+        icon: ExclamationTriangle,
+        color: 'red-subtle',
+        label: $t('post.badges.nsfw'),
+      },
+    ],
+    [
+      'saved',
+      {
+        icon: Bookmark,
+        color: 'yellow-subtle',
+        label: $t('post.badges.saved'),
+      },
+    ],
+    [
+      'featured',
+      {
+        icon: Megaphone,
+        color: 'green-subtle',
+        label: $t('post.badges.featured'),
+      },
+    ],
+    [
+      'removed',
+      {
+        icon: Trash,
+        color: 'green-subtle',
+        label: $t('post.badges.removed'),
+      },
+    ],
+    [
+      'deleted',
+      {
+        icon: Trash,
+        color: 'red-subtle',
+        label: $t('post.badges.deleted'),
+      },
+    ],
+    [
+      'locked',
+      {
+        icon: LockClosed,
+        color: 'yellow-subtle',
+        label: $t('post.badges.locked'),
+      },
+    ],
+  ])
 </script>
 
 <!--

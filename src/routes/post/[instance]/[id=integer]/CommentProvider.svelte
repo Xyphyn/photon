@@ -2,14 +2,20 @@
   import { browser } from '$app/environment'
   import { page } from '$app/state'
   import { profile } from '$lib/auth.svelte'
+  import type {
+    CommentSortType,
+    CommentView,
+    PostView,
+  } from '$lib/client/types'
+  import {
+    buildCommentsTree,
+    CommentForm,
+    CommentListVirtualizer,
+    CommentTree,
+  } from '$lib/components/lemmy/comment'
   import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
   import { t } from '$lib/i18n/translations'
   import { settings } from '$lib/settings.svelte'
-  import type {
-    CommentSortType,
-    GetCommentsResponse,
-    PostView,
-  } from '$lib/client/types'
   import { Button, Option, Select } from 'mono-svelte'
   import { onMount } from 'svelte'
   import {
@@ -22,16 +28,10 @@
     Star,
     Trophy,
   } from 'svelte-hero-icons'
-  import {
-    buildCommentsTree,
-    CommentForm,
-    CommentListVirtualizer,
-    CommentTree,
-  } from '$lib/components/lemmy/comment'
 
   interface Props {
     post: PostView
-    comments: GetCommentsResponse
+    comments: CommentView[]
     sort?: CommentSortType
     onupdate?: () => void
     focus?: string
@@ -48,9 +48,9 @@
   }: Props = $props()
   let commenting = $state(false)
 
-  let tree = $state(buildCommentsTree(comments.comments))
+  let tree = $state(buildCommentsTree(comments))
   $effect(() => {
-    tree = buildCommentsTree(comments.comments)
+    tree = buildCommentsTree(comments)
   })
 
   onMount(() => {
@@ -116,7 +116,7 @@
     <CommentForm
       postId={post.post.id}
       oncomment={(comment) => {
-        comments.comments.unshift(comment.comment_view)
+        comments.unshift(comment.comment_view)
       }}
       onfocus={() => (commenting = true)}
       tools={commenting}

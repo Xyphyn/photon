@@ -3,12 +3,12 @@
   import { getClient } from '$lib/client/lemmy.svelte'
   import { CommentItem } from '$lib/components/lemmy/comment'
   import PrivateMessage from '$lib/components/lemmy/inbox/PrivateMessage.svelte'
+  import type { ReportView } from '$lib/components/lemmy/moderation/report'
   import { PostItem } from '$lib/components/lemmy/post'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import { t } from '$lib/i18n/translations'
   import { errorMessage } from '$lib/lemmy/error'
-  import type { ReportView } from '$lib/lemmy/report.js'
   import { Badge, Button, Label, Material, Modal, toast } from 'mono-svelte'
   import { CheckBadge } from 'svelte-hero-icons'
 
