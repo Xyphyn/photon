@@ -1,7 +1,9 @@
+<picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/76b5278b-e5f9-4c0c-81ec-0820d3261223">
+    <img alt="Photon light theme cozy" src="https://github.com/user-attachments/assets/41d205fe-7d32-4b83-bfef-6aa9dd63e074" width="100%">
+</picture>
+
 # Photon
-
-[![CI](https://github.com/xyphyn/photon/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/xyphyn/photon/actions/workflows/ci.yml)
-
 Photon is a Svelte-based opinionated Lemmy client designed for the best UI and UX. Every feature is carefully considered and placed.
 
 - `🌟` A stunning UI
@@ -16,18 +18,13 @@ Jump to:
 - [Self-hosting](#self-hosting)
 - [Public Instances](#public-instances)
 
-## Screenshots
-
-<img width="3220" height="1800" alt="Photon dark theme compact" src="https://github.com/user-attachments/assets/76b5278b-e5f9-4c0c-81ec-0820d3261223" />
-<img width="3220" height="1800" alt="Photon light theme cozy" src="https://github.com/user-attachments/assets/41d205fe-7d32-4b83-bfef-6aa9dd63e074" />
-
 ## Self-hosting
 
-You selfhost a Photon frontend server for your Lemmy instance, or independently for any instance.
+You self-host a Photon frontend server for your Lemmy instance, or independently for any instance.
 
-### Running from docker image
+### Running from Docker image
 
-The images are at `ghcr.io/xyphyn/photon`. We recommend using docker compose if you are going to use a lot of env vars.
+The images are at `ghcr.io/xyphyn/photon`. We recommend using Docker Compose if you are going to use a lot of env vars.
 
 > [!NOTE]
 > If you encounter strange issues running the default images (using a Bun server), you can use the alternative Node server by appending `-node` to the image version.
@@ -77,13 +74,13 @@ Photon lets you configure the default client settings and more.
 > [!NOTE]
 > Configuration environment variables are prefixed with PUBLIC to allow clients to use them. No sensitive data can be leaked.
 
-If you're hosting Photon for a Lemmy instance, you' ll almost definitely want to set these:
+If you're hosting Photon for a Lemmy instance, you'll almost definitely want to set these:
 
 - `PUBLIC_INSTANCE_URL` `string`: The domain which **the browser** will send API requests to.
 
   - Example: `PUBLIC_INSTANCE_URL=fedi.phtn.app`
 
-- `PUBLIC_INSTANCE_TYPE` `lemmyv3 | piefedalpha` (default: `lemmyv3`): If your instance is running Piefed, you must set this option to `piefedalpha`. Otherwise, you don't need to do anything.
+- `PUBLIC_INSTANCE_TYPE` `lemmyv3 | piefedalpha` (default: `lemmyv3`): If your instance is running PieFed, you must set this option to `piefedalpha`. Otherwise, you don't need to do anything.
 
 - `PUBLIC_SSR_ENABLED` `boolean`: When enabled, will **make page requests be rendered server side first**, which allows search engine indexing, and basic non-js usage.
 
@@ -100,15 +97,15 @@ Photon has extensive user configuration options, and you can set the defaults fo
 ## Additional tips
 
 > [!TIP]
-> It's recommended to setup some script to pull the latest docker image version or update some other way.
+> It's recommended to set up some script to pull the latest Docker image version or update some other way.
 > Photon is constantly updated with fixes and improvements, and using heavily outdated versions can tarnish the reputation! So please keep it mostly up to date :)
 
 > [!TIP]
 > If you'd like to let users pick any instance they want, set the environment variable `PUBLIC_LOCK_TO_INSTANCE=false`.
 
 > [!TIP]
-> Photon supports nearly everything lemmy-ui does, so you can use it as a drop in replacement as the primary frontend.
-> However, the instance must have already been setup.
+> Photon supports nearly everything lemmy-ui does, so you can use it as a drop-in replacement as the primary frontend.
+> However, the instance must have already been set up.
 
 ## FAQ
 

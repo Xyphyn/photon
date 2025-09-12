@@ -34,7 +34,6 @@
     Language,
     Link,
     Photo,
-    Plus,
     Sparkles,
     XMark,
   } from 'svelte-hero-icons'
@@ -348,11 +347,6 @@
         class="w-full"
       />
       <div class="flex items-center gap-2 actions">
-        <div
-          class="border border-slate-100 dark:border-zinc-800 dark:text-zinc-400 text-slate-600 rounded-xl h-7 w-7 grid place-items-center"
-        >
-          <Icon src={Plus} size="16" micro />
-        </div>
         {#if data.url}
           <Button
             onclick={() => (addAltText = !addAltText)}
