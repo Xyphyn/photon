@@ -19,6 +19,7 @@
     debounceResize?: number
     useWindow?: boolean
     height?: number
+    useGpu?: boolean
   }
 
   let {
@@ -31,6 +32,7 @@
     debounceResize = 100,
     useWindow = true,
     height = 0,
+    useGpu = true,
     ...rest
   }: Props = $props()
 
@@ -111,7 +113,6 @@
 
   function updateVisibleItems() {
     if (!virtualListEl) return []
-
     viewportHeight = innerHeight?.current ?? 1000
     const scrollTop = scrollY - initialOffset
 
@@ -223,14 +224,22 @@
     if (!useWindow) scrollY = virtualListEl?.scrollTop ?? 0
   }}
 >
-  <div
-    style="height: {cumulativeItemHeights[visibleItems?.[0]?.index - 1] ||
-      0}px; border: 0 !important;"
-  ></div>
+  {#if !useGpu}
+    <div
+      style="height: {cumulativeItemHeights[visibleItems?.[0]?.index - 1] ||
+        0}px; border: 0 !important;"
+    ></div>
+  {/if}
   {#each visibleItems as item (item.index)}
     <div
       data-index={item.index}
-      class="post-container fix-divide group/virtual"
+      class={[
+        'post-container fix-divide group/virtual w-full',
+        useGpu && 'absolute',
+      ]}
+      style="{useGpu
+        ? `transform: translateY(${item.offset}px);`
+        : ''} will-change: transform;"
       use:resizeObserver
     >
       {@render itemSnippet(item.index)}

@@ -45,6 +45,7 @@
       overscan={5}
       estimatedHeight={500}
       items={nodes}
+      useGpu={false}
       {initialOffset}
     >
       {#snippet item(index)}
