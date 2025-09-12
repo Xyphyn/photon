@@ -4,7 +4,7 @@
  */
 
 export interface paths {
-  '/site': {
+  '/api/alpha/site': {
     parameters: {
       query?: never
       header?: never
@@ -30,13 +30,13 @@ export interface paths {
             'application/json': components['schemas']['GetSiteResponse']
           }
         }
-        /** @description Bad request */
+        /** @description Bad Request */
         400: {
           headers: {
             [name: string]: unknown
           }
           content: {
-            'application/json': components['schemas']['BadRequest']
+            'application/json': components['schemas']['DefaultError']
           }
         }
       }
@@ -49,14 +49,14 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/site/version': {
+  '/api/alpha/site/version': {
     parameters: {
       query?: never
       header?: never
       path?: never
       cookie?: never
     }
-    /** (instances running PieFed v1.2 or later only) Gets version of PieFed. */
+    /** Gets version of PieFed. */
     get: {
       parameters: {
         query?: never
@@ -66,7 +66,7 @@ export interface paths {
       }
       requestBody?: never
       responses: {
-        /** @description OK, */
+        /** @description OK */
         200: {
           headers: {
             [name: string]: unknown
@@ -75,13 +75,13 @@ export interface paths {
             'application/json': components['schemas']['GetSiteVersionResponse']
           }
         }
-        /** @description Bad Request, */
+        /** @description Bad Request */
         400: {
           headers: {
             [name: string]: unknown
           }
           content: {
-            'application/json': components['schemas']['BadRequest']
+            'application/json': components['schemas']['DefaultError']
           }
         }
       }
@@ -94,7 +94,7 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/site/block': {
+  '/api/alpha/site/block': {
     parameters: {
       query?: never
       header?: never
@@ -111,9 +111,9 @@ export interface paths {
         path?: never
         cookie?: never
       }
-      requestBody?: {
+      requestBody: {
         content: {
-          'application/json': components['schemas']['BlockInstance']
+          'application/json': components['schemas']['BlockInstanceRequest']
         }
       }
       responses: {
@@ -126,15 +126,16 @@ export interface paths {
             'application/json': components['schemas']['BlockInstanceResponse']
           }
         }
-        /** @description Bad request */
+        /** @description Bad Request */
         400: {
           headers: {
             [name: string]: unknown
           }
           content: {
-            'application/json': components['schemas']['BadRequest']
+            'application/json': components['schemas']['DefaultError']
           }
         }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
       }
     }
     delete?: never
@@ -143,14 +144,14 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/site/instance_chooser': {
+  '/api/alpha/site/instance_chooser': {
     parameters: {
       query?: never
       header?: never
       path?: never
       cookie?: never
     }
-    /** (instances running PieFed v1.2 or later only) Gets the site info for use by other instances in the Instance Chooser functionality. */
+    /** Gets the site info for use by other instances in the Instance Chooser functionality. */
     get: {
       parameters: {
         query?: never
@@ -175,7 +176,7 @@ export interface paths {
             [name: string]: unknown
           }
           content: {
-            'application/json': components['schemas']['BadRequest']
+            'application/json': components['schemas']['DefaultError']
           }
         }
       }
@@ -188,18 +189,21 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/site/instance_chooser_search': {
+  '/api/alpha/site/instance_chooser_search': {
     parameters: {
       query?: never
       header?: never
       path?: never
       cookie?: never
     }
-    /** (instances running PieFed v1.2 or later only) Search for other instances. */
+    /** Search for other instances. */
     get: {
       parameters: {
         query?: {
-          InstanceChooserSearch?: components['schemas']['InstanceChooserSearch']
+          q?: string
+          nsfw?: string
+          language?: string
+          newbie?: string
         }
         header?: never
         path?: never
@@ -222,9 +226,10 @@ export interface paths {
             [name: string]: unknown
           }
           content: {
-            'application/json': components['schemas']['BadRequest']
+            'application/json': components['schemas']['DefaultError']
           }
         }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
       }
     }
     put?: never
@@ -235,7 +240,7 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/search': {
+  '/api/alpha/search': {
     parameters: {
       query?: never
       header?: never
@@ -245,8 +250,35 @@ export interface paths {
     /** Search PieFed. */
     get: {
       parameters: {
-        query?: {
-          Search?: components['schemas']['Search']
+        query: {
+          q: string
+          type_: 'Communities' | 'Posts' | 'Users' | 'Url'
+          limit?: number
+          listing_type?:
+            | 'All'
+            | 'Local'
+            | 'Subscribed'
+            | 'Popular'
+            | 'Moderating'
+          page?: number
+          sort?:
+            | 'Active'
+            | 'Hot'
+            | 'New'
+            | 'TopHour'
+            | 'TopSixHour'
+            | 'TopTwelveHour'
+            | 'TopDay'
+            | 'TopWeek'
+            | 'TopMonth'
+            | 'TopThreeMonths'
+            | 'TopSixMonths'
+            | 'TopNineMonths'
+            | 'TopYear'
+            | 'TopAll'
+            | 'Scaled'
+          community_name?: string
+          community_id?: number
         }
         header?: never
         path?: never
@@ -263,15 +295,16 @@ export interface paths {
             'application/json': components['schemas']['SearchResponse']
           }
         }
-        /** @description Bad request */
+        /** @description Bad Request */
         400: {
           headers: {
             [name: string]: unknown
           }
           content: {
-            'application/json': components['schemas']['BadRequest']
+            'application/json': components['schemas']['DefaultError']
           }
         }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
       }
     }
     put?: never
@@ -282,7 +315,7 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/resolve_object': {
+  '/api/alpha/resolve_object': {
     parameters: {
       query?: never
       header?: never
@@ -292,8 +325,8 @@ export interface paths {
     /** Fetch a non-local / federated object. */
     get: {
       parameters: {
-        query?: {
-          ResolveObject?: components['schemas']['ResolveObject']
+        query: {
+          q: string
         }
         header?: never
         path?: never
@@ -310,6 +343,16 @@ export interface paths {
             'application/json': components['schemas']['ResolveObjectResponse']
           }
         }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
       }
     }
     put?: never
@@ -320,7 +363,7 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/federated_instances': {
+  '/api/alpha/federated_instances': {
     parameters: {
       query?: never
       header?: never
@@ -346,6 +389,15 @@ export interface paths {
             'application/json': components['schemas']['GetFederatedInstancesResponse']
           }
         }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
       }
     }
     put?: never
@@ -356,7 +408,7 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/community': {
+  '/api/alpha/community': {
     parameters: {
       query?: never
       header?: never
@@ -367,7 +419,8 @@ export interface paths {
     get: {
       parameters: {
         query?: {
-          GetCommunity?: components['schemas']['GetCommunity']
+          id?: number
+          name?: string
         }
         header?: never
         path?: never
@@ -384,15 +437,16 @@ export interface paths {
             'application/json': components['schemas']['GetCommunityResponse']
           }
         }
-        /** @description Bad request */
+        /** @description Bad Request */
         400: {
           headers: {
             [name: string]: unknown
           }
           content: {
-            'application/json': components['schemas']['BadRequest']
+            'application/json': components['schemas']['DefaultError']
           }
         }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
       }
     }
     /** Edit community. */
@@ -403,9 +457,9 @@ export interface paths {
         path?: never
         cookie?: never
       }
-      requestBody?: {
+      requestBody: {
         content: {
-          'application/json': components['schemas']['EditCommunity']
+          'application/json': components['schemas']['EditCommunityRequest']
         }
       }
       responses: {
@@ -418,15 +472,16 @@ export interface paths {
             'application/json': components['schemas']['CommunityResponse']
           }
         }
-        /** @description Bad request */
+        /** @description Bad Request */
         400: {
           headers: {
             [name: string]: unknown
           }
           content: {
-            'application/json': components['schemas']['BadRequest']
+            'application/json': components['schemas']['DefaultError']
           }
         }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
       }
     }
     /** Create a new community. */
@@ -437,9 +492,9 @@ export interface paths {
         path?: never
         cookie?: never
       }
-      requestBody?: {
+      requestBody: {
         content: {
-          'application/json': components['schemas']['CreateCommunity']
+          'application/json': components['schemas']['CreateCommunityRequest']
         }
       }
       responses: {
@@ -452,22 +507,23 @@ export interface paths {
             'application/json': components['schemas']['CommunityResponse']
           }
         }
-        /** @description Bad request */
+        /** @description Bad Request */
         400: {
           headers: {
             [name: string]: unknown
           }
           content: {
-            'application/json': components['schemas']['BadRequest']
+            'application/json': components['schemas']['DefaultError']
           }
         }
-        /** @description You are being rate limited */
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+        /** @description Too Many Requests */
         429: {
           headers: {
             [name: string]: unknown
           }
           content: {
-            'application/json': components['schemas']['BadRequest']
+            'application/json': components['schemas']['DefaultError']
           }
         }
       }
@@ -478,56 +534,7 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/community/delete': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** Delete a community. */
-    post: {
-      parameters: {
-        query?: never
-        header?: never
-        path?: never
-        cookie?: never
-      }
-      requestBody?: {
-        content: {
-          'application/json': components['schemas']['DeleteCommunity']
-        }
-      }
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['CommunityResponse']
-          }
-        }
-        /** @description Bad request */
-        400: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['BadRequest']
-          }
-        }
-      }
-    }
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/community/list': {
+  '/api/alpha/community/list': {
     parameters: {
       query?: never
       header?: never
@@ -538,7 +545,11 @@ export interface paths {
     get: {
       parameters: {
         query?: {
-          ListCommunities?: components['schemas']['ListCommunities']
+          limit?: number
+          page?: number
+          show_nsfw?: boolean
+          sort?: 'Hot' | 'Top' | 'New'
+          type_?: 'All' | 'Local' | 'Subscribed'
         }
         header?: never
         path?: never
@@ -555,15 +566,16 @@ export interface paths {
             'application/json': components['schemas']['ListCommunitiesResponse']
           }
         }
-        /** @description Bad request */
+        /** @description Bad Request */
         400: {
           headers: {
             [name: string]: unknown
           }
           content: {
-            'application/json': components['schemas']['BadRequest']
+            'application/json': components['schemas']['DefaultError']
           }
         }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
       }
     }
     put?: never
@@ -574,7 +586,7 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/community/follow': {
+  '/api/alpha/community/follow': {
     parameters: {
       query?: never
       header?: never
@@ -591,9 +603,9 @@ export interface paths {
         path?: never
         cookie?: never
       }
-      requestBody?: {
+      requestBody: {
         content: {
-          'application/json': components['schemas']['FollowCommunity']
+          'application/json': components['schemas']['FollowCommunityRequest']
         }
       }
       responses: {
@@ -606,15 +618,16 @@ export interface paths {
             'application/json': components['schemas']['CommunityResponse']
           }
         }
-        /** @description Bad request */
+        /** @description Bad Request */
         400: {
           headers: {
             [name: string]: unknown
           }
           content: {
-            'application/json': components['schemas']['BadRequest']
+            'application/json': components['schemas']['DefaultError']
           }
         }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
       }
     }
     delete?: never
@@ -623,7 +636,7 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/community/block': {
+  '/api/alpha/community/block': {
     parameters: {
       query?: never
       header?: never
@@ -640,9 +653,9 @@ export interface paths {
         path?: never
         cookie?: never
       }
-      requestBody?: {
+      requestBody: {
         content: {
-          'application/json': components['schemas']['BlockCommunity']
+          'application/json': components['schemas']['BlockCommunityRequest']
         }
       }
       responses: {
@@ -655,15 +668,16 @@ export interface paths {
             'application/json': components['schemas']['BlockCommunityResponse']
           }
         }
-        /** @description Bad request */
+        /** @description Bad Request */
         400: {
           headers: {
             [name: string]: unknown
           }
           content: {
-            'application/json': components['schemas']['BadRequest']
+            'application/json': components['schemas']['DefaultError']
           }
         }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
       }
     }
     delete?: never
@@ -672,56 +686,7 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/community/mod': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** Add or remove a moderator for your community.. */
-    post: {
-      parameters: {
-        query?: never
-        header?: never
-        path?: never
-        cookie?: never
-      }
-      requestBody?: {
-        content: {
-          'application/json': components['schemas']['AddModToCommunity']
-        }
-      }
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['AddModToCommunityResponse']
-          }
-        }
-        /** @description Bad request */
-        400: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['BadRequest']
-          }
-        }
-      }
-    }
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/community/subscribe': {
+  '/api/alpha/community/subscribe': {
     parameters: {
       query?: never
       header?: never
@@ -737,9 +702,9 @@ export interface paths {
         path?: never
         cookie?: never
       }
-      requestBody?: {
+      requestBody: {
         content: {
-          'application/json': components['schemas']['SubscribeCommunity']
+          'application/json': components['schemas']['SubscribeCommunityRequest']
         }
       }
       responses: {
@@ -752,15 +717,16 @@ export interface paths {
             'application/json': components['schemas']['CommunityResponse']
           }
         }
-        /** @description Bad request */
+        /** @description Bad Request */
         400: {
           headers: {
             [name: string]: unknown
           }
           content: {
-            'application/json': components['schemas']['BadRequest']
+            'application/json': components['schemas']['DefaultError']
           }
         }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
       }
     }
     post?: never
@@ -770,7 +736,107 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/community/moderate/bans': {
+  '/api/alpha/community/delete': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /** Delete a community. */
+    post: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody: {
+        content: {
+          'application/json': components['schemas']['DeleteCommunityRequest']
+        }
+      }
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['CommunityResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/community/mod': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /** Add or remove a moderator for your community. */
+    post: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody: {
+        content: {
+          'application/json': components['schemas']['ModCommunityRequest']
+        }
+      }
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['ModCommunityResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/community/moderate/bans': {
     parameters: {
       query?: never
       header?: never
@@ -780,8 +846,10 @@ export interface paths {
     /** Get the list of banned users for a community. */
     get: {
       parameters: {
-        query?: {
-          GetCommunityModerationBansList?: components['schemas']['GetCommunityModerationBansList']
+        query: {
+          community_id: number
+          limit?: number
+          page?: number
         }
         header?: never
         path?: never
@@ -795,18 +863,19 @@ export interface paths {
             [name: string]: unknown
           }
           content: {
-            'application/json': components['schemas']['ModerationCommunityBansListResponse']
+            'application/json': components['schemas']['CommunityModerationBansListResponse']
           }
         }
-        /** @description Bad request */
+        /** @description Bad Request */
         400: {
           headers: {
             [name: string]: unknown
           }
           content: {
-            'application/json': components['schemas']['BadRequest']
+            'application/json': components['schemas']['DefaultError']
           }
         }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
       }
     }
     put?: never
@@ -817,7 +886,57 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/community/moderate/ban': {
+  '/api/alpha/community/moderate/unban': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    /** Unban a user from a community. */
+    put: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody: {
+        content: {
+          'application/json': components['schemas']['CommunityModerationUnbanRequest']
+        }
+      }
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['CommunityModerationBanItem']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/community/moderate/ban': {
     parameters: {
       query?: never
       header?: never
@@ -834,9 +953,9 @@ export interface paths {
         path?: never
         cookie?: never
       }
-      requestBody?: {
+      requestBody: {
         content: {
-          'application/json': components['schemas']['ModerateCommunityBan']
+          'application/json': components['schemas']['CommunityModerationBanRequest']
         }
       }
       responses: {
@@ -846,18 +965,19 @@ export interface paths {
             [name: string]: unknown
           }
           content: {
-            'application/json': components['schemas']['ModerateCommunityBanResponse']
+            'application/json': components['schemas']['CommunityModerationBanItem']
           }
         }
-        /** @description Bad request */
+        /** @description Bad Request */
         400: {
           headers: {
             [name: string]: unknown
           }
           content: {
-            'application/json': components['schemas']['BadRequest']
+            'application/json': components['schemas']['DefaultError']
           }
         }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
       }
     }
     delete?: never
@@ -866,56 +986,7 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/community/moderate/unban': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    /** Unban a user from a community. */
-    put: {
-      parameters: {
-        query?: never
-        header?: never
-        path?: never
-        cookie?: never
-      }
-      requestBody?: {
-        content: {
-          'application/json': components['schemas']['ModerateCommunityUnBan']
-        }
-      }
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['ModerateCommunityUnBanResponse']
-          }
-        }
-        /** @description Bad request */
-        400: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['BadRequest']
-          }
-        }
-      }
-    }
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/community/moderate/post/nsfw': {
+  '/api/alpha/community/moderate/post/nsfw': {
     parameters: {
       query?: never
       header?: never
@@ -932,9 +1003,9 @@ export interface paths {
         path?: never
         cookie?: never
       }
-      requestBody?: {
+      requestBody: {
         content: {
-          'application/json': components['schemas']['ModerateCommunityPostNsfw']
+          'application/json': components['schemas']['CommunityModerationNsfwRequest']
         }
       }
       responses: {
@@ -944,18 +1015,19 @@ export interface paths {
             [name: string]: unknown
           }
           content: {
-            'application/json': components['schemas']['ModerateCommunityPostNsfwResponse']
+            'application/json': components['schemas']['PostView']
           }
         }
-        /** @description Bad request */
+        /** @description Bad Request */
         400: {
           headers: {
             [name: string]: unknown
           }
           content: {
-            'application/json': components['schemas']['BadRequest']
+            'application/json': components['schemas']['DefaultError']
           }
         }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
       }
     }
     delete?: never
@@ -964,93 +1036,15 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/post/list': {
+  '/api/alpha/community/flair': {
     parameters: {
       query?: never
       header?: never
       path?: never
       cookie?: never
     }
-    /** Get / fetch posts, with various filters. */
-    get: {
-      parameters: {
-        query?: {
-          GetPosts?: components['schemas']['GetPosts']
-        }
-        header?: never
-        path?: never
-        cookie?: never
-      }
-      requestBody?: never
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['GetPostsResponse']
-          }
-        }
-        /** @description Bad request */
-        400: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['BadRequest']
-          }
-        }
-      }
-    }
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/post': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Get / fetch a post. */
-    get: {
-      parameters: {
-        query?: {
-          GetPost?: components['schemas']['GetPost']
-        }
-        header?: never
-        path?: never
-        cookie?: never
-      }
-      requestBody?: never
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['GetPostResponse']
-          }
-        }
-        /** @description Bad request */
-        400: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['BadRequest']
-          }
-        }
-      }
-    }
-    /** Edit a post. */
+    get?: never
+    /** Edit an existing post flair in the community */
     put: {
       parameters: {
         query?: never
@@ -1058,9 +1052,9 @@ export interface paths {
         path?: never
         cookie?: never
       }
-      requestBody?: {
+      requestBody: {
         content: {
-          'application/json': components['schemas']['EditPost']
+          'application/json': components['schemas']['CommunityFlairEditRequest']
         }
       }
       responses: {
@@ -1070,21 +1064,22 @@ export interface paths {
             [name: string]: unknown
           }
           content: {
-            'application/json': components['schemas']['PostResponse']
+            'application/json': components['schemas']['CommunityFlairEditResponse']
           }
         }
-        /** @description Bad request */
+        /** @description Bad Request */
         400: {
           headers: {
             [name: string]: unknown
           }
           content: {
-            'application/json': components['schemas']['BadRequest']
+            'application/json': components['schemas']['DefaultError']
           }
         }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
       }
     }
-    /** Create a post. */
+    /** Create a new post flair in the community */
     post: {
       parameters: {
         query?: never
@@ -1092,9 +1087,9 @@ export interface paths {
         path?: never
         cookie?: never
       }
-      requestBody?: {
+      requestBody: {
         content: {
-          'application/json': components['schemas']['CreatePost']
+          'application/json': components['schemas']['CommunityFlairCreateRequest']
         }
       }
       responses: {
@@ -1104,27 +1099,19 @@ export interface paths {
             [name: string]: unknown
           }
           content: {
-            'application/json': components['schemas']['PostResponse']
+            'application/json': components['schemas']['CommunityFlairCreateResponse']
           }
         }
-        /** @description Bad request */
+        /** @description Bad Request */
         400: {
           headers: {
             [name: string]: unknown
           }
           content: {
-            'application/json': components['schemas']['BadRequest']
+            'application/json': components['schemas']['DefaultError']
           }
         }
-        /** @description You are being rate limited */
-        429: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['BadRequest']
-          }
-        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
       }
     }
     delete?: never
@@ -1133,7 +1120,7 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/post/like': {
+  '/api/alpha/community/flair/delete': {
     parameters: {
       query?: never
       header?: never
@@ -1142,7 +1129,7 @@ export interface paths {
     }
     get?: never
     put?: never
-    /** Like / vote on a post. */
+    /** Delete a post flair in a community */
     post: {
       parameters: {
         query?: never
@@ -1150,9 +1137,9 @@ export interface paths {
         path?: never
         cookie?: never
       }
-      requestBody?: {
+      requestBody: {
         content: {
-          'application/json': components['schemas']['CreatePostLike']
+          'application/json': components['schemas']['CommunityFlairDeleteRequest']
         }
       }
       responses: {
@@ -1162,18 +1149,19 @@ export interface paths {
             [name: string]: unknown
           }
           content: {
-            'application/json': components['schemas']['PostResponse']
+            'application/json': components['schemas']['CommunityFlairDeleteResponse']
           }
         }
-        /** @description Bad request */
+        /** @description Bad Request */
         400: {
           headers: {
             [name: string]: unknown
           }
           content: {
-            'application/json': components['schemas']['BadRequest']
+            'application/json': components['schemas']['DefaultError']
           }
         }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
       }
     }
     delete?: never
@@ -1182,1808 +1170,7 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/post/save': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    /** Save a post. */
-    put: {
-      parameters: {
-        query?: never
-        header?: never
-        path?: never
-        cookie?: never
-      }
-      requestBody?: {
-        content: {
-          'application/json': components['schemas']['SavePost']
-        }
-      }
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['PostResponse']
-          }
-        }
-        /** @description Bad request */
-        400: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['BadRequest']
-          }
-        }
-      }
-    }
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/post/subscribe': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    /** Subscribe to a post. */
-    put: {
-      parameters: {
-        query?: never
-        header?: never
-        path?: never
-        cookie?: never
-      }
-      requestBody?: {
-        content: {
-          'application/json': components['schemas']['SubscribePost']
-        }
-      }
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['PostResponse']
-          }
-        }
-        /** @description Bad request */
-        400: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['BadRequest']
-          }
-        }
-      }
-    }
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/post/delete': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** Delete a post. */
-    post: {
-      parameters: {
-        query?: never
-        header?: never
-        path?: never
-        cookie?: never
-      }
-      requestBody?: {
-        content: {
-          'application/json': components['schemas']['DeletePost']
-        }
-      }
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['PostResponse']
-          }
-        }
-        /** @description Bad request */
-        400: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['BadRequest']
-          }
-        }
-      }
-    }
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/post/report': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** Report a post. */
-    post: {
-      parameters: {
-        query?: never
-        header?: never
-        path?: never
-        cookie?: never
-      }
-      requestBody?: {
-        content: {
-          'application/json': components['schemas']['CreatePostReport']
-        }
-      }
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['PostReportResponse']
-          }
-        }
-        /** @description Bad request */
-        400: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['BadRequest']
-          }
-        }
-      }
-    }
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/post/lock': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** A moderator can lock a post ( IE disable new comments ). */
-    post: {
-      parameters: {
-        query?: never
-        header?: never
-        path?: never
-        cookie?: never
-      }
-      requestBody?: {
-        content: {
-          'application/json': components['schemas']['LockPost']
-        }
-      }
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['PostResponse']
-          }
-        }
-        /** @description Bad request */
-        400: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['BadRequest']
-          }
-        }
-      }
-    }
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/post/feature': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** A moderator can feature a community post ( IE stick it to the top of a community ). */
-    post: {
-      parameters: {
-        query?: never
-        header?: never
-        path?: never
-        cookie?: never
-      }
-      requestBody?: {
-        content: {
-          'application/json': components['schemas']['FeaturePost']
-        }
-      }
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['PostResponse']
-          }
-        }
-        /** @description Bad request */
-        400: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['BadRequest']
-          }
-        }
-      }
-    }
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/post/mark_as_read': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** Mark a post as read. */
-    post: {
-      parameters: {
-        query?: never
-        header?: never
-        path?: never
-        cookie?: never
-      }
-      requestBody?: {
-        content: {
-          'application/json': components['schemas']['MarkPostAsRead']
-        }
-      }
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['SuccessResponse-2']
-          }
-        }
-      }
-    }
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/post/remove': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** A moderator remove for a post. */
-    post: {
-      parameters: {
-        query?: never
-        header?: never
-        path?: never
-        cookie?: never
-      }
-      requestBody?: {
-        content: {
-          'application/json': components['schemas']['RemovePost']
-        }
-      }
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['PostResponse']
-          }
-        }
-        /** @description Bad request */
-        400: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['BadRequest']
-          }
-        }
-      }
-    }
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/comment': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Get / fetch a comment. */
-    get: {
-      parameters: {
-        query?: {
-          GetComments?: components['schemas']['GetComment']
-        }
-        header?: never
-        path?: never
-        cookie?: never
-      }
-      requestBody?: never
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['CommentResponse']
-          }
-        }
-        /** @description Bad request */
-        400: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['BadRequest']
-          }
-        }
-      }
-    }
-    /** Edit a comment. */
-    put: {
-      parameters: {
-        query?: never
-        header?: never
-        path?: never
-        cookie?: never
-      }
-      requestBody?: {
-        content: {
-          'application/json': components['schemas']['EditComment']
-        }
-      }
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['CommentResponse']
-          }
-        }
-        /** @description Bad request */
-        400: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['BadRequest']
-          }
-        }
-      }
-    }
-    /** Create a comment. */
-    post: {
-      parameters: {
-        query?: never
-        header?: never
-        path?: never
-        cookie?: never
-      }
-      requestBody?: {
-        content: {
-          'application/json': components['schemas']['CreateComment']
-        }
-      }
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['CommentResponse']
-          }
-        }
-        /** @description Bad request */
-        400: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['BadRequest']
-          }
-        }
-        /** @description You are being rate limited */
-        429: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['BadRequest']
-          }
-        }
-      }
-    }
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/comment/list': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Get / fetch comments. */
-    get: {
-      parameters: {
-        query?: {
-          GetComments?: components['schemas']['GetComments']
-        }
-        header?: never
-        path?: never
-        cookie?: never
-      }
-      requestBody?: never
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['GetCommentsResponse']
-          }
-        }
-        /** @description Bad request */
-        400: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['BadRequest']
-          }
-        }
-      }
-    }
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/comment/delete': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** Delete a comment. */
-    post: {
-      parameters: {
-        query?: never
-        header?: never
-        path?: never
-        cookie?: never
-      }
-      requestBody?: {
-        content: {
-          'application/json': components['schemas']['DeleteComment']
-        }
-      }
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['CommentResponse']
-          }
-        }
-        /** @description Bad request */
-        400: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['BadRequest']
-          }
-        }
-      }
-    }
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/comment/mark_as_read': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** Mark a comment reply as read. */
-    post: {
-      parameters: {
-        query?: never
-        header?: never
-        path?: never
-        cookie?: never
-      }
-      requestBody?: {
-        content: {
-          'application/json': components['schemas']['MarkReplyAsRead']
-        }
-      }
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['CommentReplyResponse-2']
-          }
-        }
-        /** @description Bad request */
-        400: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['BadRequest']
-          }
-        }
-      }
-    }
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/comment/remove': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** A moderator remove for a comment. */
-    post: {
-      parameters: {
-        query?: never
-        header?: never
-        path?: never
-        cookie?: never
-      }
-      requestBody?: {
-        content: {
-          'application/json': components['schemas']['RemoveComment']
-        }
-      }
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['CommentResponse']
-          }
-        }
-        /** @description Bad request */
-        400: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['BadRequest']
-          }
-        }
-      }
-    }
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/comment/like': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** Like / vote on a comment. */
-    post: {
-      parameters: {
-        query?: never
-        header?: never
-        path?: never
-        cookie?: never
-      }
-      requestBody?: {
-        content: {
-          'application/json': components['schemas']['CreateCommentLike']
-        }
-      }
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['CommentResponse']
-          }
-        }
-        /** @description Bad request */
-        400: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['BadRequest']
-          }
-        }
-      }
-    }
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/comment/save': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    /** Save a comment. */
-    put: {
-      parameters: {
-        query?: never
-        header?: never
-        path?: never
-        cookie?: never
-      }
-      requestBody?: {
-        content: {
-          'application/json': components['schemas']['SaveComment']
-        }
-      }
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['CommentResponse']
-          }
-        }
-        /** @description Bad request */
-        400: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['BadRequest']
-          }
-        }
-      }
-    }
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/comment/subscribe': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    /** Subscribe to a comment. */
-    put: {
-      parameters: {
-        query?: never
-        header?: never
-        path?: never
-        cookie?: never
-      }
-      requestBody?: {
-        content: {
-          'application/json': components['schemas']['SubscribeComment']
-        }
-      }
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['CommentResponse']
-          }
-        }
-        /** @description Bad request */
-        400: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['BadRequest']
-          }
-        }
-      }
-    }
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/comment/report': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** Report a comment. */
-    post: {
-      parameters: {
-        query?: never
-        header?: never
-        path?: never
-        cookie?: never
-      }
-      requestBody?: {
-        content: {
-          'application/json': components['schemas']['CreateCommentReport']
-        }
-      }
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['CommentReportResponse']
-          }
-        }
-        /** @description Bad request */
-        400: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['BadRequest']
-          }
-        }
-      }
-    }
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/private_message/list': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Get / fetch private messages. */
-    get: {
-      parameters: {
-        query?: {
-          GetPrivateMessages?: components['schemas']['GetPrivateMessages']
-        }
-        header?: never
-        path?: never
-        cookie?: never
-      }
-      requestBody?: never
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['PrivateMessagesResponse']
-          }
-        }
-        /** @description Bad request */
-        400: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['BadRequest']
-          }
-        }
-      }
-    }
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/private_message/conversation': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Get / fetch private messages. */
-    get: {
-      parameters: {
-        query?: {
-          GetPrivateMessagesConversation?: components['schemas']['GetPrivateMessagesConversation']
-        }
-        header?: never
-        path?: never
-        cookie?: never
-      }
-      requestBody?: never
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['PrivateMessagesResponse']
-          }
-        }
-        /** @description Bad request */
-        400: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['BadRequest']
-          }
-        }
-      }
-    }
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/private_message': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    /** Edit a private message. */
-    put: {
-      parameters: {
-        query?: never
-        header?: never
-        path?: never
-        cookie?: never
-      }
-      requestBody?: {
-        content: {
-          'application/json': components['schemas']['EditPrivateMessage']
-        }
-      }
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['PrivateMessageResponse']
-          }
-        }
-      }
-    }
-    /** Create a private message. */
-    post: {
-      parameters: {
-        query?: never
-        header?: never
-        path?: never
-        cookie?: never
-      }
-      requestBody?: {
-        content: {
-          'application/json': components['schemas']['CreatePrivateMessage']
-        }
-      }
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['PrivateMessageResponse']
-          }
-        }
-      }
-    }
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/private_message/mark_as_read': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** Mark a private message as read. */
-    post: {
-      parameters: {
-        query?: never
-        header?: never
-        path?: never
-        cookie?: never
-      }
-      requestBody?: {
-        content: {
-          'application/json': components['schemas']['MarkPrivateMessageAsRead']
-        }
-      }
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['PrivateMessageResponse']
-          }
-        }
-      }
-    }
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/private_message/delete': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** Delete a private message. */
-    post: {
-      parameters: {
-        query?: never
-        header?: never
-        path?: never
-        cookie?: never
-      }
-      requestBody?: {
-        content: {
-          'application/json': components['schemas']['DeletePrivateMessage']
-        }
-      }
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['PrivateMessageResponse']
-          }
-        }
-      }
-    }
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/user': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Get the details for a person. */
-    get: {
-      parameters: {
-        query?: {
-          GetPersonDetails?: components['schemas']['GetPersonDetails']
-        }
-        header?: never
-        path?: never
-        cookie?: never
-      }
-      requestBody?: never
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['GetPersonDetailsResponse']
-          }
-        }
-        /** @description Bad request */
-        400: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['BadRequest']
-          }
-        }
-      }
-    }
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/user/replies': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Get comment replies. */
-    get: {
-      parameters: {
-        query?: {
-          GetReplies?: components['schemas']['GetReplies']
-        }
-        header?: never
-        path?: never
-        cookie?: never
-      }
-      requestBody?: never
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['GetRepliesResponse']
-          }
-        }
-        /** @description Bad request */
-        400: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['BadRequest']
-          }
-        }
-      }
-    }
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/user/mentions': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Get mentions of your account made in comments. */
-    get: {
-      parameters: {
-        query?: {
-          GetReplies?: components['schemas']['GetReplies']
-        }
-        header?: never
-        path?: never
-        cookie?: never
-      }
-      requestBody?: never
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['GetRepliesResponse']
-          }
-        }
-        /** @description Bad request */
-        400: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['BadRequest']
-          }
-        }
-      }
-    }
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/user/block': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** Block a person. */
-    post: {
-      parameters: {
-        query?: never
-        header?: never
-        path?: never
-        cookie?: never
-      }
-      requestBody?: {
-        content: {
-          'application/json': components['schemas']['BlockPerson']
-        }
-      }
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['BlockPersonResponse']
-          }
-        }
-        /** @description Bad request */
-        400: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['BadRequest']
-          }
-        }
-      }
-    }
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/user/login': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** Log into PieFed. */
-    post: {
-      parameters: {
-        query?: never
-        header?: never
-        path?: never
-        cookie?: never
-      }
-      requestBody?: {
-        content: {
-          'application/json': components['schemas']['Login']
-        }
-      }
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['LoginResponse']
-          }
-        }
-        /** @description BAD REQUEST */
-        400: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['ErrorResponseLogin']
-          }
-        }
-      }
-    }
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/user/mark_all_as_read': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** Mark all replies as read. */
-    post: operations['markAllAsRead']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/user/unread_count': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Get your unread counts */
-    get: {
-      parameters: {
-        query?: never
-        header?: never
-        path?: never
-        cookie?: never
-      }
-      requestBody?: never
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['GetUnreadCountResponse']
-          }
-        }
-        /** @description Bad request */
-        400: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['BadRequest']
-          }
-        }
-      }
-    }
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/user/subscribe': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    /** Subscribe to activities from another user */
-    put: {
-      parameters: {
-        query?: never
-        header?: never
-        path?: never
-        cookie?: never
-      }
-      requestBody?: {
-        content: {
-          'application/json': components['schemas']['SubscribePerson']
-        }
-      }
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['PersonResponse']
-          }
-        }
-        /** @description Bad request */
-        400: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['BadRequest']
-          }
-        }
-      }
-    }
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/user/set_flair': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** Set your flair for a community */
-    post: {
-      parameters: {
-        query?: never
-        header?: never
-        path?: never
-        cookie?: never
-      }
-      requestBody?: {
-        content: {
-          'application/json': components['schemas']['SetPersonFlair']
-        }
-      }
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['PersonResponse']
-          }
-        }
-        /** @description Bad request */
-        400: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['BadRequest']
-          }
-        }
-      }
-    }
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/user/save_user_settings': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    /** Save your user settings. */
-    put: {
-      parameters: {
-        query?: never
-        header?: never
-        path?: never
-        cookie?: never
-      }
-      requestBody?: {
-        content: {
-          'application/json': components['schemas']['SaveUserSettings']
-        }
-      }
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown
-          }
-          content?: never
-        }
-      }
-    }
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/user/notifications': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Get your user notifications */
-    get: {
-      parameters: {
-        query?: {
-          Status?: components['schemas']['GetNotificationStatus']
-        }
-        header?: never
-        path?: never
-        cookie?: never
-      }
-      requestBody?: never
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['NotificationsResponse']
-          }
-        }
-        /** @description Bad request */
-        400: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['BadRequest']
-          }
-        }
-      }
-    }
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/user/notification_state': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    /** Set the read status of a given notification. */
-    put: {
-      parameters: {
-        query?: never
-        header?: never
-        path?: never
-        cookie?: never
-      }
-      requestBody?: {
-        content: {
-          'application/json': components['schemas']['EditNotificationState']
-        }
-      }
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['NotificationsReadStatusResponse']
-          }
-        }
-        /** @description Bad request */
-        400: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['BadRequest']
-          }
-        }
-      }
-    }
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/user/notifications_count': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Get user unread notifications count. */
-    get: {
-      parameters: {
-        query?: never
-        header?: never
-        path?: never
-        cookie?: never
-      }
-      requestBody?: never
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['NotificationsCountResponse']
-          }
-        }
-        /** @description Bad request */
-        400: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['BadRequest']
-          }
-        }
-      }
-    }
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/user/mark_all_notifications_read': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    /** Set all unread user notifications to read. */
-    put: {
-      parameters: {
-        query?: never
-        header?: never
-        path?: never
-        cookie?: never
-      }
-      requestBody?: never
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['NotificationsMarkAllReadResponse']
-          }
-        }
-        /** @description Bad request */
-        400: {
-          headers: {
-            [name: string]: unknown
-          }
-          content: {
-            'application/json': components['schemas']['BadRequest']
-          }
-        }
-      }
-    }
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/user/verify_credentials': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** Verify username / password credentials */
-    post: {
-      parameters: {
-        query?: never
-        header?: never
-        path?: never
-        cookie?: never
-      }
-      requestBody?: {
-        content: {
-          'application/json': components['schemas']['Login']
-        }
-      }
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown
-          }
-          content?: never
-        }
-        /** @description BAD REQUEST */
-        400: {
-          headers: {
-            [name: string]: unknown
-          }
-          content?: never
-        }
-      }
-    }
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/feed/list': {
+  '/api/alpha/feed/list': {
     parameters: {
       query?: never
       header?: never
@@ -2994,7 +1181,10 @@ export interface paths {
     get: {
       parameters: {
         query?: {
-          FeedList?: components['schemas']['FeedList']
+          /** @description include list of communities in each feed with result */
+          include_communities?: boolean
+          /** @description only return feeds created by the authorized user */
+          mine_only?: boolean
         }
         header?: never
         path?: never
@@ -3017,9 +1207,10 @@ export interface paths {
             [name: string]: unknown
           }
           content: {
-            'application/json': components['schemas']['BadRequest']
+            'application/json': components['schemas']['DefaultError']
           }
         }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
       }
     }
     put?: never
@@ -3030,7 +1221,7 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/topic/list': {
+  '/api/alpha/topic/list': {
     parameters: {
       query?: never
       header?: never
@@ -3041,7 +1232,8 @@ export interface paths {
     get: {
       parameters: {
         query?: {
-          TopicList?: components['schemas']['TopicList']
+          /** @description include list of communities in each topic with result */
+          include_communities?: boolean
         }
         header?: never
         path?: never
@@ -3064,7 +1256,185 @@ export interface paths {
             [name: string]: unknown
           }
           content: {
-            'application/json': components['schemas']['BadRequest']
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/user': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /** Get the details for a person */
+    get: {
+      parameters: {
+        query?: {
+          /** @description One of either person_id or username must be specified */
+          person_id?: number
+          /** @description One of either person_id or username must be specified */
+          username?: string
+          sort?:
+            | 'Active'
+            | 'Hot'
+            | 'New'
+            | 'TopHour'
+            | 'TopSixHour'
+            | 'TopTwelveHour'
+            | 'TopDay'
+            | 'TopWeek'
+            | 'TopMonth'
+            | 'TopThreeMonths'
+            | 'TopSixMonths'
+            | 'TopNineMonths'
+            | 'TopYear'
+            | 'TopAll'
+            | 'Scaled'
+          page?: number
+          limit?: number
+          /** @description Limit posts/comments to just a single community */
+          community_id?: number
+          saved_only?: boolean
+          include_content?: boolean
+        }
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody?: never
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['GetUserResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/user/login': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /** Log into PieFed */
+    post: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody: {
+        content: {
+          'application/json': components['schemas']['UserLoginRequest']
+        }
+      }
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['UserLoginResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+        /** @description Too Many Requests */
+        429: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+      }
+    }
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/user/unread_count': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /** Get your unread counts */
+    get: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody?: never
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['UserUnreadCountsResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
           }
         }
       }
@@ -3077,7 +1447,109 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/upload/image': {
+  '/api/alpha/user/replies': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /** Get comment replies */
+    get: {
+      parameters: {
+        query?: {
+          limit?: number
+          page?: number
+          sort?: 'Hot' | 'Top' | 'New' | 'Old'
+          unread_only?: boolean
+        }
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody?: never
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['UserRepliesResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/user/mentions': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /** Get mentions of your account made in comments */
+    get: {
+      parameters: {
+        query?: {
+          limit?: number
+          page?: number
+          sort?: 'Hot' | 'Top' | 'New' | 'Old'
+          unread_only?: boolean
+        }
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody?: never
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['UserMentionsResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/user/block': {
     parameters: {
       query?: never
       header?: never
@@ -3086,6 +1558,7 @@ export interface paths {
     }
     get?: never
     put?: never
+    /** Block or unblock a person */
     post: {
       parameters: {
         query?: never
@@ -3093,9 +1566,9 @@ export interface paths {
         path?: never
         cookie?: never
       }
-      requestBody?: {
+      requestBody: {
         content: {
-          'multipart/form-data': components['schemas']['ImageUpload']
+          'application/json': components['schemas']['UserBlockRequest']
         }
       }
       responses: {
@@ -3105,25 +1578,62 @@ export interface paths {
             [name: string]: unknown
           }
           content: {
-            'application/json': components['schemas']['UploadResponse']
+            'application/json': components['schemas']['UserBlockResponse']
           }
         }
-        /** @description The uploaded image was missing or invalid */
+        /** @description Bad Request */
         400: {
           headers: {
             [name: string]: unknown
           }
           content: {
-            'application/json': components['schemas']['BadRequest']
+            'application/json': components['schemas']['DefaultError']
           }
         }
-        /** @description You are being rate limited */
-        429: {
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/user/mark_all_as_read': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /** Mark all notifications and messages as read */
+    post: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody?: never
+      responses: {
+        /** @description OK */
+        200: {
           headers: {
             [name: string]: unknown
           }
           content: {
-            'application/json': components['schemas']['BadRequest']
+            'application/json': components['schemas']['UserMarkAllReadResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
           }
         }
       }
@@ -3134,7 +1644,7 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/upload/community_image': {
+  '/api/alpha/user/subscribe': {
     parameters: {
       query?: never
       header?: never
@@ -3142,17 +1652,17 @@ export interface paths {
       cookie?: never
     }
     get?: never
-    put?: never
-    post: {
+    /** Subscribe or unsubscribe to activites of another user */
+    put: {
       parameters: {
         query?: never
         header?: never
         path?: never
         cookie?: never
       }
-      requestBody?: {
+      requestBody: {
         content: {
-          'multipart/form-data': components['schemas']['ImageUpload']
+          'application/json': components['schemas']['UserSubscribeRequest']
         }
       }
       responses: {
@@ -3162,25 +1672,690 @@ export interface paths {
             [name: string]: unknown
           }
           content: {
-            'application/json': components['schemas']['UploadResponse']
+            'application/json': components['schemas']['UserSubscribeResponse']
           }
         }
-        /** @description The uploaded image was missing or invalid */
+        /** @description Bad Request */
         400: {
           headers: {
             [name: string]: unknown
           }
           content: {
-            'application/json': components['schemas']['BadRequest']
+            'application/json': components['schemas']['DefaultError']
           }
         }
-        /** @description You are being rate limited */
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/user/save_user_settings': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    /** Save your user settings */
+    put: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody: {
+        content: {
+          'application/json': components['schemas']['UserSaveSettingsRequest']
+        }
+      }
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['UserSaveSettingsResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/user/notifications': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /** Get your user notifications (not all notification types supported yet) */
+    get: {
+      parameters: {
+        query: {
+          status: 'All' | 'Unread' | 'Read'
+          limit?: number
+          page?: number
+        }
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody?: never
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['UserNotificationsResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/user/notification_state': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    /** Set the read status of a given notification (not all notification types supported yet) */
+    put: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody: {
+        content: {
+          'application/json': components['schemas']['UserNotificationStateRequest']
+        }
+      }
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['UserNotificationItemView']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/user/notifications_count': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /** Get user unread notifications count */
+    get: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody?: never
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['UserNotificationsCountResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+      }
+    }
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/user/mark_all_notifications_read': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    /** Mark all notifications as read */
+    put: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody?: never
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['UserMarkAllNotifsReadResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+      }
+    }
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/user/verify_credentials': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /** Verify username/password credentials */
+    post: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody: {
+        content: {
+          'application/json': components['schemas']['UserLoginRequest']
+        }
+      }
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content?: never
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/user/set_flair': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /** Set your flair for a community */
+    post: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody: {
+        content: {
+          'application/json': components['schemas']['UserSetFlairRequest']
+        }
+      }
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['UserSetFlairResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/comment/list': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /** List comments, with various filters. */
+    get: {
+      parameters: {
+        query?: {
+          limit?: number
+          page?: number
+          sort?: 'Hot' | 'Top' | 'New' | 'Old'
+          liked_only?: boolean
+          saved_only?: boolean
+          person_id?: number
+          community_id?: number
+          post_id?: number
+          parent_id?: number
+          max_depth?: number
+          /** @description guarantee parent comments are on the same page as any fetched comments */
+          depth_first?: boolean
+        }
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody?: never
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['ListCommentsResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/comment/like': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /** Like / vote on a comment. */
+    post: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody: {
+        content: {
+          'application/json': components['schemas']['LikeCommentRequest']
+        }
+      }
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['GetCommentResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/comment/save': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    /** Save a comment. */
+    put: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody: {
+        content: {
+          'application/json': components['schemas']['SaveCommentRequest']
+        }
+      }
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['GetCommentResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/comment/subscribe': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    /** Subscribe to a comment. */
+    put: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody: {
+        content: {
+          'application/json': components['schemas']['SubscribeCommentRequest']
+        }
+      }
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['GetCommentResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/comment': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /** Get / fetch a comment. */
+    get: {
+      parameters: {
+        query: {
+          id: number
+        }
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody?: never
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['GetCommentResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    /** Edit a comment. */
+    put: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody: {
+        content: {
+          'application/json': components['schemas']['EditCommentRequest']
+        }
+      }
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['GetCommentResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    /** Create a comment. */
+    post: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody: {
+        content: {
+          'application/json': components['schemas']['CreateCommentRequest']
+        }
+      }
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['GetCommentResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+        /** @description Too Many Requests */
         429: {
           headers: {
             [name: string]: unknown
           }
           content: {
-            'application/json': components['schemas']['BadRequest']
+            'application/json': components['schemas']['DefaultError']
           }
         }
       }
@@ -3191,7 +2366,7 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/upload/user_image': {
+  '/api/alpha/comment/delete': {
     parameters: {
       query?: never
       header?: never
@@ -3200,6 +2375,7 @@ export interface paths {
     }
     get?: never
     put?: never
+    /** Delete a comment. */
     post: {
       parameters: {
         query?: never
@@ -3207,9 +2383,9 @@ export interface paths {
         path?: never
         cookie?: never
       }
-      requestBody?: {
+      requestBody: {
         content: {
-          'multipart/form-data': components['schemas']['ImageUpload']
+          'application/json': components['schemas']['DeleteCommentRequest']
         }
       }
       responses: {
@@ -3219,25 +2395,1246 @@ export interface paths {
             [name: string]: unknown
           }
           content: {
-            'application/json': components['schemas']['UploadResponse']
+            'application/json': components['schemas']['GetCommentResponse']
           }
         }
-        /** @description The uploaded image was missing or invalid */
+        /** @description Bad Request */
         400: {
           headers: {
             [name: string]: unknown
           }
           content: {
-            'application/json': components['schemas']['BadRequest']
+            'application/json': components['schemas']['DefaultError']
           }
         }
-        /** @description You are being rate limited */
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/comment/report': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /** Report a comment. */
+    post: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody: {
+        content: {
+          'application/json': components['schemas']['ReportCommentRequest']
+        }
+      }
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['GetCommentReportResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/comment/remove': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /** Remove a comment as a moderator. */
+    post: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody: {
+        content: {
+          'application/json': components['schemas']['RemoveCommentRequest']
+        }
+      }
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['GetCommentResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/comment/mark_as_read': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /** Mark a comment reply as read. */
+    post: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody: {
+        content: {
+          'application/json': components['schemas']['MarkCommentAsReadRequest']
+        }
+      }
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['GetCommentReplyResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/comment/lock': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /** Lock a comment chain as a moderator. */
+    post: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody: {
+        content: {
+          'application/json': components['schemas']['LockCommentRequest']
+        }
+      }
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['GetCommentResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/comment/like/list': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /** View comment votes as a moderator. */
+    get: {
+      parameters: {
+        query: {
+          comment_id: number
+          page?: number
+          limit?: number
+        }
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody?: never
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['ListCommentLikesResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/post/list': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /** List posts. */
+    get: {
+      parameters: {
+        query?: {
+          q?: string
+          sort?:
+            | 'Hot'
+            | 'Top'
+            | 'TopHour'
+            | 'TopSixHour'
+            | 'TopTwelveHour'
+            | 'TopWeek'
+            | 'TopMonth'
+            | 'TopThreeMonths'
+            | 'TopSixMonths'
+            | 'TopNineMonths'
+            | 'TopYear'
+            | 'TopAll'
+            | 'New'
+            | 'Scaled'
+            | 'Active'
+          type_?: 'All' | 'Local' | 'Subscribed'
+          community_name?: string
+          community_id?: number
+          saved_only?: boolean
+          person_id?: number
+          limit?: number
+          page?: number
+          liked_only?: boolean
+          feed_id?: number
+          topic_id?: number
+        }
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody?: never
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['ListPostsResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/post': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /** Get/fetch a post */
+    get: {
+      parameters: {
+        query: {
+          id: number
+        }
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody?: never
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['GetPostResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    /** Edit a post. */
+    put: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody: {
+        content: {
+          'application/json': components['schemas']['EditPostRequest']
+        }
+      }
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['GetPostResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    /** Create a new post. */
+    post: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody: {
+        content: {
+          'application/json': components['schemas']['CreatePostRequest']
+        }
+      }
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['GetPostResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+        /** @description Too Many Requests */
         429: {
           headers: {
             [name: string]: unknown
           }
           content: {
-            'application/json': components['schemas']['BadRequest']
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+      }
+    }
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/post/replies': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /** Get replies/comments for a post with nested structure. */
+    get: {
+      parameters: {
+        query?: {
+          post_id?: number
+          parent_id?: number
+          sort?: 'Hot' | 'Top' | 'New' | 'Old'
+          max_depth?: number
+          page?: string
+          limit?: number
+        }
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody?: never
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['GetPostRepliesResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/post/like': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /** Like or unlike a post. */
+    post: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody: {
+        content: {
+          'application/json': components['schemas']['LikePostRequest']
+        }
+      }
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['GetPostResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/post/save': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    /** Save or unsave a post. */
+    put: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody: {
+        content: {
+          'application/json': components['schemas']['SavePostRequest']
+        }
+      }
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['GetPostResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/post/subscribe': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    /** Subscribe or unsubscribe to a post. */
+    put: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody: {
+        content: {
+          'application/json': components['schemas']['SubscribePostRequest']
+        }
+      }
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['GetPostResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/post/delete': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /** Delete or restore a post. */
+    post: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody: {
+        content: {
+          'application/json': components['schemas']['DeletePostRequest']
+        }
+      }
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['GetPostResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/post/report': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /** Report a post. */
+    post: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody: {
+        content: {
+          'application/json': components['schemas']['ReportPostRequest']
+        }
+      }
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['PostReportResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/post/lock': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /** Lock or unlock a post. */
+    post: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody: {
+        content: {
+          'application/json': components['schemas']['LockPostRequest']
+        }
+      }
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['GetPostResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/post/feature': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /** Feature or unfeature a post. */
+    post: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody: {
+        content: {
+          'application/json': components['schemas']['FeaturePostRequest']
+        }
+      }
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['GetPostResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/post/remove': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /** Remove or restore a post as a moderator. */
+    post: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody: {
+        content: {
+          'application/json': components['schemas']['RemovePostRequest']
+        }
+      }
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['GetPostResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/post/mark_as_read': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /** Mark one or more posts as read or unread. */
+    post: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody: {
+        content: {
+          'application/json': components['schemas']['MarkPostAsReadRequest']
+        }
+      }
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['SuccessResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/post/like/list': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /** View post votes as a moderator. */
+    get: {
+      parameters: {
+        query: {
+          post_id: number
+          page?: number
+          limit?: number
+        }
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody?: never
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['ListPostLikesResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/post/assign_flair': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /** Add/remove flair from a post */
+    post: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody: {
+        content: {
+          'application/json': components['schemas']['PostSetFlairRequest']
+        }
+      }
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['PostSetFlairResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/upload/image': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /** Upload a general image. */
+    post: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody: {
+        content: {
+          'multipart/form-data': components['schemas']['ImageUploadRequest']
+        }
+      }
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['ImageUploadResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+        /** @description Too Many Requests */
+        429: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+      }
+    }
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/upload/community_image': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /** Upload a community image. */
+    post: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody: {
+        content: {
+          'multipart/form-data': components['schemas']['ImageUploadRequest']
+        }
+      }
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['ImageUploadResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+        /** @description Too Many Requests */
+        429: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+      }
+    }
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/upload/user_image': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /** Upload a user image. */
+    post: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody: {
+        content: {
+          'multipart/form-data': components['schemas']['ImageUploadRequest']
+        }
+      }
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['ImageUploadResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+        /** @description Too Many Requests */
+        429: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
           }
         }
       }
@@ -3252,2209 +3649,1199 @@ export interface paths {
 export type webhooks = Record<string, never>
 export interface components {
   schemas: {
-    /** BlockInstance */
-    BlockInstance: {
-      /** BlockInstance.instance_id */
-      instance_id: number
-      /** BlockInstance.block */
-      block: boolean
+    Error: {
+      /** @description Error code */
+      code?: number
+      /** @description Error name */
+      status?: string
+      /** @description Error message */
+      message?: string
+      /** @description Errors */
+      errors?: {
+        [key: string]: unknown
+      }
     }
-    /** InstanceChooserSearch */
-    InstanceChooserSearch: {
-      /** InstanceChooserSearch.q */
-      q?: string
-      /**
-       * InstanceChooserSearch.nsfw
-       * @example no
-       */
-      nsfw?: string
-      /**
-       * InstanceChooserSearch.language
-       * @example en
-       */
-      language?: string
-      /**
-       * InstanceChooserSearch.newbie
-       * @example yes
-       */
-      newbie?: string
-    }
-    /** Search */
-    Search: {
-      /** Search.q */
-      q: string
-      /** Search.type_ */
-      type_?: components['schemas']['SearchType']
-      /** Search.sort */
-      sort?: components['schemas']['SortType']
-      /** Search.listing_type */
-      listing_type?: components['schemas']['ListingType']
-      /** Search.page */
+    PaginationMetadata: {
+      total?: number
+      total_pages?: number
+      first_page?: number
+      last_page?: number
       page?: number
-      /** Search.limit */
-      limit?: number
+      previous_page?: number
+      next_page?: number
     }
-    /** ResolveObject */
-    ResolveObject: {
-      /** ResolveObject.q */
-      q: string
+    DefaultError: {
+      message?: string
     }
-    /** GetCommunity */
-    GetCommunity: {
-      /** GetCommunity.id */
+    PersonAggregates: {
+      comment_count: number
+      person_id: number
+      post_count: number
+    }
+    Person: {
+      /**
+       * Format: url
+       * @example https://piefed.social/u/rimu
+       */
+      actor_id: string
+      banned: boolean
+      bot: boolean
+      deleted: boolean
+      id: number
+      instance_id: number
+      local: boolean
+      user_name: string
+      /** Format: markdown */
+      about?: string
+      /** Format: html */
+      about_html?: string
+      /** Format: url */
+      avatar?: string
+      /** Format: url */
+      banner?: string
+      flair?: string
+      published: string
+      title?: string
+    }
+    PersonView: {
+      activity_alert: boolean
+      counts: components['schemas']['PersonAggregates']
+      is_admin: boolean
+      person: components['schemas']['Person']
+    }
+    LanguageView: {
+      /** @example en */
+      code?: string
+      /** @example 2 */
       id?: number
-      /** GetCommunity.name */
+      /** @example English */
       name?: string
     }
-    /** CreateCommunity */
-    CreateCommunity: {
-      /** CreateCommunity.name */
+    Site: {
+      /**
+       * Format: url
+       * @example https://piefed.social
+       */
+      actor_id: string
       name: string
-      /** CreateCommunity.title */
-      title: string
-      /** CreateCommunity.description */
+      all_languages?: components['schemas']['LanguageView'][]
       description?: string
-      /** CreateCommunity.rules */
-      rules?: string
-      /**
-       * CreateCommunity.icon
-       * Format: url
-       */
-      icon_url?: string
-      /**
-       * CreateCommunity.banner
-       * Format: url
-       */
-      banner_url?: string
-      /** CreateCommunity.nsfw */
-      nsfw?: boolean
-      /** CreateCommunity.restricted_to_mods */
-      restricted_to_mods?: boolean
-      /** CreateCommunity.local_only */
-      local_only?: boolean
-      /** CreateCommunity.discussion_languages */
-      discussion_languages?: number[]
+      enable_downvotes?: boolean
+      /** Format: url */
+      icon?: string
+      /** @enum {string} */
+      registration_mode?: 'Closed' | 'RequireApplication' | 'Open'
+      /** Format: html */
+      sidebar?: string
+      /** Format: markdown */
+      sidebar_md?: string
+      user_count?: number
     }
-    /** CreateCommunity */
-    EditCommunity: {
-      /** CreateCommunity.id */
-      id: number
-      /** CreateCommunity.title */
-      title?: string
-      /** CreateCommunity.description */
-      description?: string
-      /** CreateCommunity.rules */
-      rules?: string
+    Community: {
       /**
-       * CreateCommunity.icon
        * Format: url
+       * @example https://piefed.social/c/piefed_meta
        */
-      icon_url?: string
-      /**
-       * CreateCommunity.banner
-       * Format: url
-       */
-      banner_url?: string
-      /** CreateCommunity.nsfw */
-      nsfw?: boolean
-      /** CreateCommunity.restricted_to_mods */
-      restricted_to_mods?: boolean
-      /** CreateCommunity.local_only */
-      local_only?: boolean
-      /** CreateCommunity.discussion_languages */
-      discussion_languages?: number[]
-    }
-    /** DeleteCommunity */
-    DeleteCommunity: {
-      /** DeleteCommunity.community_id */
-      community_id: number
-      /** DeleteCommunity.deleted */
+      actor_id: string
+      /** @example piefed.social */
+      ap_domain?: string
       deleted: boolean
-    }
-    /** AddModToCommunity */
-    AddModToCommunity: {
-      /** AddModToCommunity.community_id */
-      community_id: number
-      /** AddModToCommunity.person_id */
-      person_id: number
-      /** AddModToCommunity.added */
-      added: boolean
-    }
-    /** ListCommunities */
-    ListCommunities: {
-      /** ListCommunities.type_ */
-      type_?: components['schemas']['ListingType']
-      /** ListCommunities.sort */
-      sort?: components['schemas']['CommunitySortType']
-      /** ListCommunities.show_nsfw */
-      show_nsfw?: boolean
-      /** ListCommunities.page */
-      page?: number
-      /** ListCommunities.limit */
-      limit?: number
-    }
-    /** FollowCommunity */
-    FollowCommunity: {
-      /** FollowCommunity.community_id */
-      community_id: number
-      /** FollowCommunity.follow */
-      follow: boolean
-    }
-    /** BlockCommunity */
-    BlockCommunity: {
-      /** BlockCommunity.community_id */
-      community_id: number
-      /** BlockCommunity.block */
-      block: boolean
-    }
-    /** SubscribeCommunity */
-    SubscribeCommunity: {
-      /** SubscribeCommunity.community_id */
-      community_id: number
-      /** SubscribeCommunity.subscribe */
-      subscribe: boolean
-    }
-    /** GetCommunityModerationBansList */
-    GetCommunityModerationBansList: {
+      hidden: boolean
+      id: number
+      instance_id: number
+      local: boolean
+      name: string
+      nsfw: boolean
       /**
-       * GetCommunityModerationBansList.community_id
-       * @example 42
+       * Format: datetime
+       * @example 2025-06-07T02:29:07.980084Z
        */
-      community_id?: number
-      /**
-       * GetCommunityModerationBansList.page
-       * @example 1
-       */
-      page?: number
-    }
-    /** ModerateCommunityBan */
-    ModerateCommunityBan: {
-      /**
-       * PostCommunityModerateBan.community_id
-       * @example 42
-       */
-      community_id: number
-      /**
-       * PostCommunityModerateBan.user_id
-       * @example 1234
-       */
-      user_id: number
-      /**
-       * PostCommunityModerateBan.reason
-       * @example Violation of Rule 1.
-       */
-      reason: string
-      /**
-       * PostCommunityModerateBan.expiredAt
-       * @example 2025-01-01T12:00:00
-       */
-      expiredAt: string
-    }
-    /** ModerateCommunityUnBan */
-    ModerateCommunityUnBan: {
-      /**
-       * PutCommunityModerateUnBan.community_id
-       * @example 42
-       */
-      community_id: number
-      /**
-       * PutCommunityModerateUnBan.user_id
-       * @example 1234
-       */
-      user_id: number
-    }
-    /** ModerateCommunityPostNsfw */
-    ModerateCommunityPostNsfw: {
-      /**
-       * PostCommunityModeratePostNsfw.post_id
-       * @example 123456
-       */
-      post_id: number
-      /**
-       * PostCommunityModeratePostNsfw.nsfw_status
-       * @example true
-       */
-      nsfw_status: boolean
-    }
-    /** GetPosts */
-    GetPosts: {
-      /** GetPosts.type_ */
-      type_?: components['schemas']['ListingType']
-      /** GetPosts.sort */
-      sort?: components['schemas']['SortType']
-      /** GetPosts.page_cursor */
-      page_cursor?: number
-      /** GetPosts.limit */
-      limit?: number
-      /** GetPosts.community_id */
-      community_id?: number
-      /** GetPosts.person_id */
-      person_id?: number
-      /** GetPosts.community_name */
-      community_name?: string
-      /** GetPosts.liked_only */
-      liked_only?: boolean
-      /** GetPosts.saved_only */
-      saved_only?: boolean
-    }
-    /** GetPost */
-    GetPost: {
-      /** GetPost.id */
-      id?: number
-      /** GetPost.comment_id */
-      comment_id?: number
-    }
-    /** EditPost */
-    EditPost: {
-      /** EditPost.post_id */
-      post_id: number
-      /** EditPost.title */
-      title?: string
-      /**
-       * EditPost.url
-       * Format: url
-       */
-      url?: string
-      /** EditPost.body */
-      body?: string
-      /** EditPost.nsfw */
-      nsfw?: boolean
-      /** EditPost.language_id */
-      language_id?: number
-    }
-    /** CreatePost */
-    CreatePost: {
-      /** CreatePost.title */
+      published: string
+      removed: boolean
+      restricted_to_mods: boolean
       title: string
-      /** CreatePost.community_id */
-      community_id: number
+      banned?: boolean
+      /** Format: url */
+      banner?: string
+      /** Format: markdown */
+      description?: string
+      /** Format: url */
+      icon?: string
+      posting_warning?: string
       /**
-       * CreatePost.url
-       * Format: url
+       * Format: datetime
+       * @example 2025-06-07T02:29:07.980084Z
        */
-      url?: string
-      /** CreatePost.body */
-      body?: string
-      /** CreatePost.nsfw */
-      nsfw?: boolean
-      /** CreatePost.language_id */
-      language_id?: number
+      updated?: string
     }
-    /** CreatePostLike */
-    CreatePostLike: {
-      /** CreatePostLike.post_id */
-      post_id: number
-      /** CreatePostLike.score */
-      score: number
+    CommunityBlockView: {
+      community: components['schemas']['Community']
+      person: components['schemas']['Person']
     }
-    /** SavePost */
-    SavePost: {
-      /** SavePost.post_id */
-      post_id: number
-      /** SavePost.save */
-      save: boolean
+    CommunityFollowerView: {
+      community: components['schemas']['Community']
+      follower: components['schemas']['Person']
     }
-    /** SubscribePost */
-    SubscribePost: {
-      /** SubscribePost.post_id */
-      post_id: number
-      /** SubscribePost.subscribe */
-      subscribe: boolean
-    }
-    /** DeletePost */
-    DeletePost: {
-      /** DeletePost.post_id */
-      post_id: number
-      /** DeletePost.deleted */
-      deleted: boolean
-    }
-    /** CreatePostReport */
-    CreatePostReport: {
-      /** CreatePostReport.post_id */
-      post_id: number
-      /** CreatePostReport.reason */
-      reason: string
-    }
-    /** LockPost */
-    LockPost: {
-      /** LockPost.post_id */
-      post_id: number
-      /** LockPost.locked */
-      locked: boolean
-    }
-    /** FeaturePost */
-    FeaturePost: {
-      /** FeaturePost.post_id */
-      post_id: number
-      /** FeaturePost.featured */
-      featured: boolean
-      /** FeaturePost.feature_type */
-      feature_type: components['schemas']['PostFeatureType']
-    }
-    /** MarkPostAsRead */
-    MarkPostAsRead: {
-      /** MarkPostAsRead.post_ids */
-      post_ids?: number[]
-      /** MarkPostAsRead.post.id */
-      post_id?: number
-      /** MarkPostAsRead.read */
-      read: boolean
-    }
-    /** RemovePost */
-    RemovePost: {
-      /** RemovePost.post_id */
-      post_id: number
-      /** RemovePost.removed */
-      removed: boolean
-      /** RemovePost.reason */
-      reason?: string
-    }
-    /** CreateComment */
-    CreateComment: {
-      /** CreateComment.content */
-      body: string
-      /** CreateComment.post_id */
-      post_id: number
-      /** CreateComment.parent_id */
-      parent_id?: number
-      /** CreateComment.language_id */
-      language_id?: number
-    }
-    /** EditComment */
-    EditComment: {
-      /** EditComment.comment_id */
-      comment_id: number
-      /** EditComment.content */
-      body?: string
-      /** EditComment.language_id */
-      language_id?: number
-    }
-    /** GetComment */
-    GetComment: {
-      /** GetComment.id */
+    Instance: {
+      /** @example piefed.social */
+      domain: string
       id: number
-    }
-    /** GetComments */
-    GetComments: {
-      /** GetComments.type_ */
-      type_?: components['schemas']['ListingType']
-      /** GetComments.sort */
-      sort?: components['schemas']['CommentSortType']
-      /** GetComments.max_depth */
-      max_depth?: number
-      /** GetComments.page */
-      page?: number
-      /** GetComments.limit */
-      limit?: number
-      /** GetComments.community_id */
-      community_id?: number
-      /** GetComments.post_id */
-      post_id?: number
-      /** GetComments.parent_id */
-      parent_id?: number
-      /** GetComments.person_id */
-      person_id?: number
-      /** GetComments.liked_only */
-      liked_only?: boolean
-      /** GetComments.saved_only */
-      saved_only?: boolean
-    }
-    /** DeleteComment */
-    DeleteComment: {
-      /** DeleteComment.comment_id */
-      comment_id: number
-      /** DeleteComment.deleted */
-      deleted: boolean
-    }
-    /** MarkReplyAsRead */
-    MarkReplyAsRead: {
-      /** MarkReplyAsRead.comment_reply_id */
-      comment_reply_id: number
-      read: boolean
-    }
-    /** RemoveComment */
-    RemoveComment: {
-      /** RemoveComment.comment_id */
-      comment_id: number
-      /** RemoveComment.removed */
-      removed: boolean
-      /** RemoveComment.reason */
-      reason?: string
-    }
-    /** CreateCommentLike */
-    CreateCommentLike: {
-      /** CreateCommentLike.comment_id */
-      comment_id: number
-      /** CreateCommentLike.score */
-      score: number
-    }
-    /** SaveComment */
-    SaveComment: {
-      /** SaveComment.comment_id */
-      comment_id: number
-      /** SaveComment.save */
-      save: boolean
-    }
-    /** SubscribeComment */
-    SubscribeComment: {
-      /** SubscribeComment.comment_id */
-      comment_id: number
-      /** SubscribeComment.subscribe */
-      subscribe: boolean
-    }
-    /** CreateCommentReport */
-    CreateCommentReport: {
-      /** CreateCommentReport.comment_id */
-      comment_id: number
-      /** CreateCommentReport.reason */
-      reason: string
-    }
-    /** GetPrivateMessages */
-    GetPrivateMessages: {
-      /** GetPrivateMessages.unread_only */
-      unread_only?: boolean
-      /** GetPrivateMessages.page */
-      page?: number
-      /** GetPrivateMessages.limit */
-      limit?: number
-    }
-    /** GetPrivateMessagesConversation */
-    GetPrivateMessagesConversation: {
-      /** GetPrivateMessagesConversation.page */
-      page?: number
-      /** GetPrivateMessagesConversation.limit */
-      limit?: number
-      /** GetPrivateMessagesConversation.person_id */
-      person_id: number
-    }
-    /** CreatePrivateMessage */
-    CreatePrivateMessage: {
-      /** CreatePrivateMessage.content */
-      content: string
-      /** CreatePrivateMessage.recipient_id */
-      recipient_id: number
-    }
-    /** EditPrivateMessage */
-    EditPrivateMessage: {
-      /** EditPrivateMessage.private_message_id */
-      private_message_id: number
-      /** EditPrivateMessage.content */
-      content: string
-    }
-    /** MarkPrivateMessageAsRead */
-    MarkPrivateMessageAsRead: {
-      /** MarkPrivateMessageAsRead.private_message_id */
-      private_message_id: number
-      /** MarkPrivateMessageAsRead.read */
-      read: boolean
-    }
-    /** DeletePrivateMessage */
-    DeletePrivateMessage: {
-      /** DeletePrivateMessage.private_message_id */
-      private_message_id: number
-      /** DeletePrivateMessage.deleted */
-      deleted: boolean
-    }
-    /** GetPersonDetails */
-    GetPersonDetails: {
-      /** GetPersonDetails.person_id */
-      person_id?: number
-      /** GetPersonDetails.username */
-      username?: string
-      /** GetPersonDetails.sort */
-      sort?: components['schemas']['SortType']
-      /** GetPersonDetails.page */
-      page?: number
-      /** GetPersonDetails.limit */
-      limit?: number
-      /** GetPersonDetails.community_id */
-      community_id?: number
-      /** GetPersonDetails.saved_only */
-      saved_only?: boolean
-      /** GetPersonDetails.include_content */
-      include_content?: boolean
-    }
-    /** GetReplies */
-    GetReplies: {
-      /** GetReplies.sort */
-      sort?: components['schemas']['CommentSortType']
-      /** GetReplies.page */
-      page?: number
-      /** GetReplies.limit */
-      limit?: number
-      /** GetReplies.unread_only */
-      unread_only?: boolean
-    }
-    /** BlockPerson */
-    BlockPerson: {
-      /** BlockPerson.person_id */
-      person_id: number
-      /** BlockPerson.block */
-      block: boolean
-    }
-    /** Login */
-    Login: {
-      /** Login.username */
-      username: string
-      /** Login.password */
-      password: string
-    }
-    /** GetUnreadCountResponse */
-    GetUnreadCountResponse: {
-      /** GetUnreadCountResponse.replies */
-      replies: number
-      /** GetUnreadCountResponse.mentions */
-      mentions: number
-      /** GetUnreadCountResponse.private_messages */
-      private_messages: number
-    }
-    /** SubscribePerson */
-    SubscribePerson: {
-      /** SubscribePerson.person_id */
-      person_id: number
-      /** SubscribePerson.subscribe */
-      subscribe: boolean
-    }
-    /** SetPersonFlair */
-    SetPersonFlair: {
-      /** SetPersonFlair.community_id */
-      community_id: number
-      /** SetPersonFlair.flair_text */
-      flair_text: string
-    }
-    /** SaveUserSettings */
-    SaveUserSettings: {
-      /** SaveUserSettings.show_nsfw */
-      show_nsfw?: boolean
-      /** SaveUserSettings.show_read_posts */
-      show_read_posts?: boolean
-      /** SaveUserSettings.bio */
-      bio?: string
-    }
-    /** GetNotificationStatus */
-    GetNotificationStatus: {
-      /** GetNotificationStatus.status */
-      status: components['schemas']['NotificationStatusType']
       /**
-       * GetNotificationStatus.page
-       * @default 1
+       * Format: datetime
+       * @example 2025-06-07T02:29:07.980084Z
        */
-      page: number
-    }
-    /** EditNotificationState */
-    EditNotificationState: {
-      /** GetNotificationStatus.notif_id */
-      notif_id?: number
-      /** GetNotificationStatus.read_state */
-      read_state?: boolean
-    }
-    /** FeedList */
-    FeedList: {
+      published: string
+      software?: string
       /**
-       * FeedList.include_communities
-       * @description include list of communities in each feed with result
+       * Format: datetime
+       * @example 2025-06-07T02:29:07.980084Z
        */
-      include_communities?: boolean
-      /**
-       * FeedList.mine_only
-       * @description only return feeds created by the authorized user
-       */
-      mine_only?: boolean
+      updated?: string
+      version?: string
     }
-    /** TopicList */
-    TopicList: {
-      /**
-       * TopicList.include_communities
-       * @description include list of communities in each topic with result
-       */
-      include_communities?: boolean
+    InstanceBlockView: {
+      instance: components['schemas']['Instance']
+      person: components['schemas']['Person']
     }
-    ImageUpload: {
-      /** Format: binary */
-      file: string
+    LocalUser: {
+      /** @enum {string} */
+      default_comment_sort_type: 'Hot' | 'Top' | 'New' | 'Old'
+      /** @enum {string} */
+      default_listing_type:
+        | 'All'
+        | 'Local'
+        | 'Subscribed'
+        | 'Popular'
+        | 'Moderating'
+      /** @enum {string} */
+      default_sort_type:
+        | 'Active'
+        | 'Hot'
+        | 'New'
+        | 'TopHour'
+        | 'TopSixHour'
+        | 'TopTwelveHour'
+        | 'TopDay'
+        | 'TopWeek'
+        | 'TopMonth'
+        | 'TopThreeMonths'
+        | 'TopSixMonths'
+        | 'TopNineMonths'
+        | 'TopYear'
+        | 'TopAll'
+        | 'Scaled'
+      show_bot_accounts: boolean
+      show_nsfl: boolean
+      show_nsfw: boolean
+      show_read_posts: boolean
+      show_scores: boolean
     }
-    /** SuccessResponse */
-    SuccessResponse: {
-      success: boolean
+    LocalUserView: {
+      counts: components['schemas']['PersonAggregates']
+      local_user: components['schemas']['LocalUser']
+      person: components['schemas']['Person']
     }
-    BadRequest: {
-      /** @example An error occurred */
-      error: string
+    CommunityModeratorView: {
+      community: components['schemas']['Community']
+      moderator: components['schemas']['Person']
     }
-    /** GetSiteResponse */
+    PersonBlockView: {
+      person: components['schemas']['Person']
+      target: components['schemas']['Person']
+    }
+    MyUserInfo: {
+      community_blocks: components['schemas']['CommunityBlockView'][]
+      discussion_languages: components['schemas']['LanguageView'][]
+      follows: components['schemas']['CommunityFollowerView'][]
+      instance_blocks: components['schemas']['InstanceBlockView'][]
+      local_user_view: components['schemas']['LocalUserView']
+      moderates: components['schemas']['CommunityModeratorView'][]
+      person_blocks: components['schemas']['PersonBlockView'][]
+    }
     GetSiteResponse: {
-      /** GetSiteResponse.my_user */
-      my_user?: components['schemas']['MyUserInfo']
-      /** GetSiteResponse.site */
-      site: components['schemas']['Site']
-      /** GetSiteResponse.version */
-      version: string
-      /** GetSiteResponse.admins */
       admins: components['schemas']['PersonView'][]
+      site: components['schemas']['Site']
+      /** Software version */
+      version: string
+      my_user?: components['schemas']['MyUserInfo']
     }
-    /** GetSiteVersionResponse */
     GetSiteVersionResponse: {
-      /** GetSiteVersionResponse.version */
       version: string
     }
-    /** BlockInstanceResponse */
+    BlockInstanceRequest: {
+      block: boolean
+      instance_id: number
+    }
     BlockInstanceResponse: {
-      /** BlockInstanceResponse.blocked */
       blocked: boolean
     }
     GetSiteInstanceChooserResponse: {
       language: components['schemas']['LanguageView']
-      /** GetSiteInstanceChooserResponse.nsfw */
       nsfw: boolean
-      /** GetSiteInstanceChooserResponse.newbie_friendly */
       newbie_friendly: boolean
-      /** GetSiteInstanceChooserResponse.name */
       name: string
-      /** GetSiteInstanceChooserResponse.elevator_pitch */
       elevator_pitch: string
-      /** GetSiteInstanceChooserResponse.description */
       description: string
-      /** GetSiteInstanceChooserResponse.about */
       about: string
-      /** GetSiteInstanceChooserResponse.sidebar */
       sidebar: string
-      /** GetSiteInstanceChooserResponse.logo_url */
       logo_url: string
-      /** GetSiteInstanceChooserResponse.majority */
       maturity: string
-      /** GetSiteInstanceChooserResponse.tos_url */
       tos_url: string
-      /** GetSiteInstanceChooserResponse.mau */
       mau: number
-      /** GetSiteInstanceChooserResponse.can_make_communities */
       can_make_communities: boolean
-      /** GetSiteInstanceChooserResponse.defederation */
       defederation: string[]
-      /** GetSiteInstanceChooserResponse.trusts */
       trusts: string[]
-      /** GetSiteInstanceChooserResponse.registration_mode */
       registration_mode: string
+    }
+    GetSiteInstanceChooserSearchResponseItem: {
+      id: number
+      name: string
+      domain: string
+      elevator_pitch: string
+      description: string
+      about: string
+      sidebar: string
+      logo_url: string
+      maturity: string
+      tos_url: string
+      uptime: string
+      mau: number
+      can_make_communities: boolean
+      newbie_friendly: boolean
+      defederation: string[]
+      trusts: string[]
+      registration_mode: string
+      language: string
+      monthsmonitored: number
     }
     GetSiteInstanceChooserSearchResponse: {
       result: components['schemas']['GetSiteInstanceChooserSearchResponseItem'][]
     }
-    /** SearchResponse */
-    SearchResponse: {
-      /** SearchResponse.type_ */
-      type_: components['schemas']['SearchType']
-      /** SearchResponse.posts */
-      posts: components['schemas']['PostView'][]
-      /** SearchResponse.communities */
-      communities: components['schemas']['CommunityView'][]
-      /** SearchResponse.users */
-      users: components['schemas']['PersonView'][]
-    }
-    /** ResolveObjectResponse */
-    ResolveObjectResponse: {
-      /** ResolveObjectResponse.comment */
-      comment?: components['schemas']['CommentView']
-      /** ResolveObjectResponse.post */
-      post?: components['schemas']['PostView']
-      /** ResolveObjectResponse.community */
-      community?: components['schemas']['CommunityView']
-      /** ResolveObjectResponse.person */
-      person?: components['schemas']['PersonView']
-    }
-    /** GetFederatedInstancesResponse */
-    GetFederatedInstancesResponse: {
-      /** GetFederatedInstancesResponse.federated_instances */
-      federated_instances?: components['schemas']['FederatedInstancesView']
-    }
-    /** GetCommunityResponse */
-    GetCommunityResponse: {
-      /** GetCommunityResponse.community_view */
-      community_view: components['schemas']['CommunityView']
-      /** GetCommunityResponse.site */
-      site?: components['schemas']['Site']
-      /** GetCommunityResponse.moderators */
-      moderators: components['schemas']['CommunityModeratorView'][]
-      /** GetCommunityResponse.discussion_languages */
-      discussion_languages: number[]
-    }
-    /** CommunityResponse */
-    CommunityResponse: {
-      /** CommunityResponse.community_view */
-      community_view: components['schemas']['CommunityView']
-      /** CommunityResponse.discussion_languages */
-      discussion_languages: number[]
-    }
-    /** ListCommunitiesResponse */
-    ListCommunitiesResponse: {
-      /** ListCommunitiesResponse.communities */
-      communities: components['schemas']['CommunityView'][]
-    }
-    /** BlockCommunityResponse */
-    BlockCommunityResponse: {
-      /** BlockCommunityResponse.community_view */
-      community_view: components['schemas']['CommunityView']
-      /** BlockCommunityResponse.blocked */
-      blocked: boolean
-    }
-    /** AddModToCommunityResponse */
-    AddModToCommunityResponse: {
-      /** AddModToCommunityResponse.moderators */
-      moderators: components['schemas']['CommunityModeratorView'][]
-    }
-    /** ModerationCommunityBansListResponse */
-    ModerationCommunityBansListResponse: {
-      /** GetCommunityModerationBansListResponse.items */
-      items?: components['schemas']['CommunityModerationBanItem'][]
-      /**
-       * GetCommunityModerationBansListResponse.next_page
-       * @example 3
-       */
-      next_page?: string
-    }
-    /** ModerateCommunityBanResponse */
-    ModerateCommunityBanResponse: components['schemas']['CommunityModerationBanItem']
-    /** ModerateCommunityUnBanResponse */
-    ModerateCommunityUnBanResponse: components['schemas']['CommunityModerationBanItem']
-    /** ModerateCommunityPostNsfwResponse */
-    ModerateCommunityPostNsfwResponse: components['schemas']['PostView']
-    /** GetPostsResponse */
-    GetPostsResponse: {
-      /** GetPostsResponse.posts */
-      posts: components['schemas']['PostView'][]
-    }
-    /** GetPostResponse */
-    GetPostResponse: {
-      /** GetPostResponse.post_view */
-      post_view: components['schemas']['PostView']
-      /** GetPostResponse.community_view */
-      community_view: components['schemas']['CommunityView']
-      /** GetPostResponse.moderators */
-      moderators: components['schemas']['CommunityModeratorView'][]
-      /** GetPostResponse.cross_posts */
-      cross_posts: components['schemas']['PostView'][]
-    }
-    /** PostResponse */
-    PostResponse: {
-      /** PostResponse.post_view */
-      post_view: components['schemas']['PostView']
-    }
-    /** PostReportResponse */
-    PostReportResponse: {
-      /** PostReportResponse.post_report_view */
-      post_report_view: components['schemas']['PostReportView']
-    }
-    /** CommentResponse */
-    CommentResponse: {
-      /** CommentResponse.comment_view */
-      comment_view: components['schemas']['CommentView']
-    }
-    /** GetCommentsResponse */
-    GetCommentsResponse: {
-      /** GetCommentsResponse.comments */
-      comments: components['schemas']['CommentView'][]
-    }
-    /** CommentReportResponse */
-    CommentReportResponse: {
-      /** CommentReportResponse.comment_report_view */
-      comment_report_view: components['schemas']['CommentReportView']
-    }
-    /** PrivateMessagesResponse */
-    PrivateMessagesResponse: {
-      /** PrivateMessagesResponse.private_messages */
-      private_messages: components['schemas']['PrivateMessageView'][]
-    }
-    /** PrivateMessageResponse */
-    PrivateMessageResponse: {
-      /** PrivateMessageResponse.private_message_view */
-      private_message_view: components['schemas']['PrivateMessageView']
-    }
-    /** GetPersonDetailsResponse */
-    GetPersonDetailsResponse: {
-      /** GetPersonDetailsResponse.person_view */
-      person_view: components['schemas']['PersonView']
-      /** GetPersonDetailsResponse.site */
-      site?: components['schemas']['Site']
-      /** GetPersonDetailsResponse.comments */
-      comments: components['schemas']['CommentView'][]
-      /** GetPersonDetailsResponse.posts */
-      posts: components['schemas']['PostView'][]
-      /** GetPersonDetailsResponse.moderates */
-      moderates: components['schemas']['CommunityModeratorView'][]
-    }
-    /** GetRepliesResponse */
-    GetRepliesResponse: {
-      /** GetRepliesResponse.replies */
-      replies: components['schemas']['CommentReplyView'][]
-    }
-    /** PersonResponse */
-    PersonResponse: {
-      /** PersonResponse.person_view */
-      person_view: components['schemas']['PersonView']
-    }
-    /** BlockPersonResponse */
-    BlockPersonResponse: {
-      /** BlockPersonResponse.person_view */
-      person_view: components['schemas']['PersonView']
-      /** BlockPersonResponse.blocked */
-      blocked: boolean
-    }
-    /** LoginResponse */
-    LoginResponse: {
-      /** LoginResponse.jwt */
-      jwt?: string
-    }
-    ErrorResponseLogin: {
-      /** @example incorrect_login */
-      error?: string
-    }
-    /** NotificationsResponse */
-    NotificationsResponse: {
-      /** NotificationsResponse.counts */
-      counts: components['schemas']['NotificationsCountsView']
-      /** NotificationsResponse.items */
-      items: (
-        | components['schemas']['NotificationsItemUserView']
-        | components['schemas']['NotificationsItemCommunityView']
-        | components['schemas']['NotificationsItemTopicView']
-        | components['schemas']['NotificationsItemPostView']
-        | components['schemas']['NotificationsItemReplyView']
-        | components['schemas']['NotificationsItemFeedView']
-        | components['schemas']['NotificationsItemPostMentionView']
-        | components['schemas']['NotificationsItemCommentMentionView']
-      )[]
-      /**
-       * NotificationsResponse.status
-       * @example New
-       */
-      status: string
-      /**
-       * NotificationsResponse.user
-       * @example MyPieFedUserName
-       */
-      user: string
-    }
-    /** NotificationsReadStatusResponse */
-    NotificationsReadStatusResponse:
-      | components['schemas']['NotificationsItemUserView']
-      | components['schemas']['NotificationsItemCommunityView']
-      | components['schemas']['NotificationsItemTopicView']
-      | components['schemas']['NotificationsItemPostView']
-      | components['schemas']['NotificationsItemReplyView']
-      | components['schemas']['NotificationsItemFeedView']
-      | components['schemas']['NotificationsItemPostMentionView']
-      | components['schemas']['NotificationsItemCommentMentionView']
-    /** NotificationsCountResponse */
-    NotificationsCountResponse: {
-      /**
-       * NotificationsCountResponse.count
-       * @example 42
-       */
-      count?: number
-    }
-    /** NotificationsMarkAllReadResponse */
-    NotificationsMarkAllReadResponse: {
-      /**
-       * NotificationsMarkAllReadResponse.mark_all_notifications_as_read
-       * @example complete
-       */
-      mark_all_notifications_as_read?: string
-    }
-    FeedListResponse: {
-      feeds: components['schemas']['FeedView'][]
-    }
-    TopicListResponse: {
-      /** TopicListResponse.topics */
-      topics: components['schemas']['TopicView'][]
-    }
-    UploadResponse: {
-      /**
-       * Format: url
-       * @example https://preferred.social/static/media/image.png
-       */
-      url: string
-    }
-    /** Site */
-    Site: {
-      /**
-       * Site.actor_id
-       * Format: url
-       * @example https://piefed.social/
-       */
-      actor_id: string
-      /** Site.all_languages */
-      all_languages?: components['schemas']['LanguageView'][]
-      /** Site.description */
-      description?: string
-      /** Site.enable_downvotes */
-      enable_downvotes?: boolean
-      /**
-       * Site.icon
-       * Format: url
-       */
-      icon?: string
-      /** Site.name */
-      name: string
-      /** Site.registration_mode */
-      registration_mode?: components['schemas']['RegistrationMode']
-      /** Site.sidebar */
-      sidebar?: string
-      /** Site.user_count */
-      user_count?: number
-    }
-    /** Instance */
-    Instance: {
-      /** Instance.id */
+    CommunityAggregates: {
       id: number
-      /** Instance.domain */
-      domain: string
-      /**
-       * Instance.published
-       * Format: date-time
-       */
+      post_count: number
+      post_reply_count: number
       published: string
-      /**
-       * Instance.updated
-       * Format: date-time
-       */
-      updated?: string
-      /** Instance.software */
-      software?: string
-      /** Instance.version */
-      version?: string
+      subscriptions_count: number
+      total_subscriptions_count: number
+      active_daily?: number
+      active_weekly?: number
+      active_monthly?: number
+      active_6monthly?: number
     }
-    /** InstanceWithoutFederationState */
-    InstanceWithoutFederationState: {
-      /** InstanceWithoutFederationState.id */
+    CommunityFlair: {
       id: number
-      /** InstanceWithoutFederationState.domain */
-      domain: string
-      /** InstanceWithoutFederationState.published */
-      published: string
-      /** InstanceWithoutFederationState.updated */
-      updated?: string
-      /** InstanceWithoutFederationState.software */
-      software?: string
-      /** InstanceWithoutFederationState.version */
-      version?: string
-    }
-    /** Community */
-    Community: {
-      /**
-       * Community.actor_id
-       * Format: url
-       */
-      actor_id: string
-      /** Community.ap_domain */
-      ap_domain?: string
-      /** Community.banned */
-      banned?: boolean
-      /**
-       * Community.banner
-       * Format: url
-       */
-      banner?: string
-      /** Community.deleted */
-      deleted: boolean
-      /** Community.description */
-      description?: string
-      /** Community.hidden */
-      hidden: boolean
-      /**
-       * Community.icon
-       * Format: url
-       */
-      icon?: string
-      /** Community.id */
-      id: number
-      /** Community.instance_id */
-      instance_id: number
-      /** Community.local */
-      local: boolean
-      /** Community.name */
-      name: string
-      /** Community.nsfw */
-      nsfw: boolean
-      /** Community.posting_warning */
-      posting_warning?: string
-      /**
-       * Community.published
-       * Format: date-time
-       */
-      published: string
-      /** Community.removed */
-      removed: boolean
-      /** Community.restricted_to_mods */
-      restricted_to_mods: boolean
-      /** Community.title */
-      title: string
-      /**
-       * Community.updated
-       * Format: date-time
-       */
-      updated?: string
-    }
-    /** Post */
-    Post: {
-      /** Post.id */
-      id: number
-      /** Post.title */
-      title: string
-      /**
-       * Post.url
-       * Format: url
-       */
-      url?: string
-      /** Post.body */
-      body?: string
-      /** Post.user_id */
-      user_id: number
-      /** Post.community_id */
       community_id: number
-      /** Post.removed */
-      removed: boolean
-      /** Post.locked */
-      locked: boolean
+      flair_title: string
       /**
-       * Post.published
-       * Format: date-time
+       * @description Hex color code for the text of the flair
+       * @example #000000
        */
-      published: string
+      text_color: string
       /**
-       * Post.updated
-       * Format: date-time
+       * @description Hex color code for the background of the flair
+       * @example #DEDDDA
        */
-      updated?: string
-      /** Post.deleted */
-      deleted: boolean
-      /** Post.nsfw */
-      nsfw: boolean
+      background_color: string
+      blur_images: boolean
       /**
-       * Post.thumbnail_url
        * Format: url
-       */
-      thumbnail_url?: string
-      /**
-       * Post.small_thumbnail_url
-       * Format: url
-       */
-      small_thumbnail_url?: string
-      /**
-       * Post.ap_id
-       * Format: url
+       * @description Legacy tags that existed prior to 1.2 and some tags for remote communities might not have a defined ap_id
        */
       ap_id: string
-      /** Post.local */
-      local: boolean
-      /** Post.language_id */
-      language_id: number
-      /** Post.sticky */
-      sticky: boolean
-      /** Post.alt_text */
-      alt_text?: string
     }
-    /** PostReport */
-    PostReport: {
-      /** PostReport.id */
-      id: number
-      /** PostReport.creator_id */
-      creator_id: number
-      /** PostReport.post_id */
-      post_id: number
-      /** PostReport.original_post_name */
-      original_post_name: string
-      /** PostReport.original_post_url */
-      original_post_url?: string
-      /** PostReport.original_post_body */
-      original_post_body?: string
-      /** PostReport.reason */
-      reason: string
-      /** PostReport.resolved */
-      resolved: boolean
-      /** PostReport.resolver_id */
-      resolver_id?: number
-      /**
-       * PostReport.published
-       * Format: date-time
-       */
-      published: string
-      /**
-       * PostReport.updated
-       * Format: date-time
-       */
-      updated?: string
-    }
-    /** Comment */
-    Comment: {
-      /** Comment.id */
-      id: number
-      /** Comment.user_id */
-      user_id: number
-      /** Comment.post_id */
-      post_id: number
-      /** Comment.body */
-      body: string
-      /** Comment.removed */
-      removed: boolean
-      /**
-       * Comment.published
-       * Format: date-time
-       */
-      published: string
-      /**
-       * Comment.updated
-       * Format: date-time
-       */
-      updated?: string
-      /** Comment.deleted */
-      deleted: boolean
-      /**
-       * Comment.ap_id
-       * Format: url
-       */
-      ap_id: string
-      /** Comment.local */
-      local: boolean
-      /** Comment.path */
-      path: string
-      /** Comment.distinguished */
-      distinguished?: boolean
-      /** Comment.language_id */
-      language_id: number
-    }
-    /** CommentReply */
-    CommentReply: {
-      /** CommentReply.id */
-      id: number
-      /** CommentReply.recipient_id */
-      recipient_id: number
-      /** CommentReply.comment_id */
-      comment_id: number
-      /** CommentReply.read */
-      read: boolean
-      /**
-       * CommentReply.published
-       * Format: date-time
-       */
-      published: string
-    }
-    /** CommentReport */
-    CommentReport: {
-      /** CommentReport.id */
-      id: number
-      /** CommentReport.creator_id */
-      creator_id: number
-      /** CommentReport.comment_id */
-      comment_id: number
-      /** CommentReport.original_comment_text */
-      original_comment_text: string
-      /** CommentReport.reason */
-      reason: string
-      /** CommentReport.resolved */
-      resolved: boolean
-      /** CommentReport.resolver_id */
-      resolver_id?: number
-      /**
-       * CommentReport.published
-       * Format: date-time
-       */
-      published: string
-      /**
-       * CommentReport.updated
-       * Format: date-time
-       */
-      updated?: string
-    }
-    /** PrivateMessage */
-    PrivateMessage: {
-      /** PrivateMessage.id */
-      id: number
-      /** PrivateMessage.creator_id */
-      creator_id: number
-      /** PrivateMessage.recipient_id */
-      recipient_id: number
-      /** PrivateMessage.content */
-      content: string
-      /** PrivateMessage.deleted */
-      deleted: boolean
-      /** PrivateMessage.read */
-      read: boolean
-      /**
-       * PrivateMessage.published
-       * Format: date-time
-       */
-      published: string
-      /**
-       * PrivateMessage.updated
-       * Format: date-time
-       */
-      updated?: string
-      /**
-       * PrivateMessage.ap_id
-       * Format: url
-       */
-      ap_id: string
-      /** PrivateMessage.local */
-      local: boolean
-    }
-    /** Person */
-    Person: {
-      /**
-       * Person.actor_id
-       * Format: url
-       */
-      actor_id: string
-      /**
-       * Person.avatar
-       * Format: url
-       */
-      avatar?: string
-      /** Person.banned */
-      banned: boolean
-      /**
-       * Person.banner
-       * Format: url
-       */
-      banner?: string
-      /** Person.about */
-      about?: string
-      /** Person.bot */
-      bot: boolean
-      /** Person.deleted */
-      deleted: boolean
-      /** Person.flair */
-      flair?: string
-      /** Person.id */
-      id: number
-      /** Person.instance_id */
-      instance_id: number
-      /** Person.local */
-      local: boolean
-      /**
-       * Person.published
-       * Format: date-time
-       */
-      published: string
-      /** Person.title */
-      title?: string
-      /** Person.user_name */
-      user_name: string
-    }
-    /** LocalUser */
-    LocalUser: {
-      /** LocalUser.default_listing_type */
-      default_listing_type: components['schemas']['ListingType']
-      /** LocalUser.default_sort_type */
-      default_sort_type: components['schemas']['SortType']
-      /** LocalUser.show_bot_accounts */
-      show_bot_accounts: boolean
-      /** LocalUser.show_nsfw */
-      show_nsfw: boolean
-      /** LocalUser.show_read_posts */
-      show_read_posts: boolean
-      /** LocalUser.show_scores */
-      show_scores: boolean
-    }
-    /** MyUserInfo */
-    MyUserInfo: {
-      /** MyUserInfo.community_blocks */
-      community_blocks: components['schemas']['CommunityBlockView'][]
-      /** MyUserInfo.discussion_languages */
-      discussion_languages: components['schemas']['LanguageView'][]
-      /** MyUserInfo.follows */
-      follows: components['schemas']['CommunityFollowerView'][]
-      /** MyUserInfo.instance_blocks */
-      instance_blocks: components['schemas']['InstanceBlockView'][]
-      /** MyUserInfo.local_user_view */
-      local_user_view: components['schemas']['LocalUserView']
-      /** MyUserInfo.moderates */
-      moderates: components['schemas']['CommunityModeratorView'][]
-      /** MyUserInfo.person_blocks */
-      person_blocks: components['schemas']['PersonBlockView'][]
-    }
-    GetSiteInstanceChooserSearchResponseItem: {
-      /** GetSiteInstanceChooserSearchResponseItem.id */
-      id: number
-      /** GetSiteInstanceChooserSearchResponseItem.name */
-      name: string
-      /** GetSiteInstanceChooserSearchResponseItem.domain */
-      domain: string
-      /** GetSiteInstanceChooserSearchResponseItem.elevator_pitch */
-      elevator_pitch: string
-      /** GetSiteInstanceChooserSearchResponseItem.description */
-      description: string
-      /** GetSiteInstanceChooserSearchResponseItem.about */
-      about: string
-      /** GetSiteInstanceChooserSearchResponseItem.sidebar */
-      sidebar: string
-      /** GetSiteInstanceChooserSearchResponseItem.logo_url */
-      logo_url: string
-      /** GetSiteInstanceChooserSearchResponseItem.maturity */
-      maturity: string
-      /** GetSiteInstanceChooserSearchResponseItem.tos_url */
-      tos_url: string
-      /** GetSiteInstanceChooserSearchResponseItem.uptime */
-      uptime: string
-      /** GetSiteInstanceChooserSearchResponseItem.mau */
-      mau: number
-      /** GetSiteInstanceChooserSearchResponseItem.can_make_communities */
-      can_make_communities: boolean
-      /** GetSiteInstanceChooserSearchResponseItem.newbie_friendly */
-      newbie_friendly: boolean
-      /** GetSiteInstanceChooserSearchResponseItem.defederation */
-      defederation: string[]
-      /** GetSiteInstanceChooserSearchResponseItem.trusts */
-      trusts: string[]
-      /** GetSiteInstanceChooserSearchResponseItem.registration_mode */
-      registration_mode: string
-      /** GetSiteInstanceChooserSearchResponseItem.language */
-      language: string
-      /** GetSiteInstanceChooserSearchResponseItem.monthsmonitored */
-      monthsmonitored: number
-    }
-    /** FederatedInstancesView */
-    FederatedInstancesView: {
-      /** FederatedInstances.linked */
-      linked: components['schemas']['InstanceWithoutFederationState'][]
-      /** FederatedInstances.allowed */
-      allowed: components['schemas']['InstanceWithoutFederationState'][]
-      /** FederatedInstances.blocked */
-      blocked: components['schemas']['InstanceWithoutFederationState'][]
-    }
-    /** CommunityBlockView */
-    CommunityBlockView: {
-      /** CommunityBlockView.community */
-      community: components['schemas']['Community']
-      /** CommunityBlockView.person */
-      person: components['schemas']['Person']
-    }
-    /** CommunityFollowerView */
-    CommunityFollowerView: {
-      /** CommunityFollowerView.community */
-      community: components['schemas']['Community']
-      /** CommunityFollowerView.follower */
-      follower: components['schemas']['Person']
-    }
-    /** LanguageView */
-    LanguageView: {
-      /**
-       * Language.code
-       * @example en
-       */
-      code?: string
-      /**
-       * Language.id
-       * @example 2
-       */
-      id?: number
-      /**
-       * Language.name
-       * @example English
-       */
-      name?: string
-    }
-    /** InstanceBlockView */
-    InstanceBlockView: {
-      /** InstanceBlockView.person */
-      person: components['schemas']['Person']
-      /** InstanceBlockView.instance */
-      instance: components['schemas']['Instance']
-      /** InstanceBlockView.site */
-      site?: components['schemas']['Site']
-    }
-    /** LocalUserView */
-    LocalUserView: {
-      /** LocalUserView.counts */
-      counts: components['schemas']['PersonAggregates']
-      /** LocalUserView.local_user */
-      local_user: components['schemas']['LocalUser']
-      /** LocalUserView.person */
-      person: components['schemas']['Person']
-    }
-    /** CommunityModeratorView */
-    CommunityModeratorView: {
-      /** CommunityModeratorView.community */
-      community: components['schemas']['Community']
-      /** CommunityModeratorView.moderator */
-      moderator: components['schemas']['Person']
-    }
-    /** PersonBlockView */
-    PersonBlockView: {
-      /** PersonBlockView.person */
-      person: components['schemas']['Person']
-      /** PersonBlockView.target */
-      target: components['schemas']['Person']
-    }
-    /** PersonView */
-    PersonView: {
-      /** PersonView.person */
-      person: components['schemas']['Person']
-      /** PersonView.counts */
-      counts: components['schemas']['PersonAggregates']
-      /** PersonView.is_admin */
-      is_admin: boolean
-      /** PersonView.activity_alert */
-      activity_alert: boolean
-    }
-    /** CommentView */
-    CommentView: {
-      /** CommentView.comment */
-      comment: components['schemas']['Comment']
-      /** CommentView.creator */
-      creator: components['schemas']['Person']
-      /** CommentView.post */
-      post: components['schemas']['Post']
-      /** CommentView.community */
-      community: components['schemas']['Community']
-      /** CommentView.counts */
-      counts: components['schemas']['CommentAggregates']
-      /** CommentView.creator_banned_from_community */
-      creator_banned_from_community: boolean
-      /** CommentView.banned_from_community */
-      banned_from_community: boolean
-      /** CommentView.creator_is_moderator */
-      creator_is_moderator: boolean
-      /** CommentView.creator_is_admin */
-      creator_is_admin: boolean
-      /** CommentView.subscribed */
-      subscribed: components['schemas']['SubscribedType']
-      /** CommentView.saved */
-      saved: boolean
-      /** CommentView.activity_alert */
-      activity_alert: boolean
-      /** CommentView.creator_blocked */
-      creator_blocked: boolean
-      /** CommentView.my_vote */
-      my_vote?: number
-    }
-    /** PostView */
-    PostView: {
-      /** PostView.post */
-      post: components['schemas']['Post']
-      /** PostView.creator */
-      creator: components['schemas']['Person']
-      /** PostView.community */
-      community: components['schemas']['Community']
-      /** PostView.creator_banned_from_community */
-      creator_banned_from_community: boolean
-      /** PostView.banned_from_community */
-      banned_from_community: boolean
-      /** PostView.creator_is_moderator */
-      creator_is_moderator: boolean
-      /** PostView.creator_is_admin */
-      creator_is_admin: boolean
-      /** PostView.counts */
-      counts: components['schemas']['PostAggregates']
-      /** PostView.subscribed */
-      subscribed: components['schemas']['SubscribedType']
-      /** PostView.saved */
-      saved: boolean
-      /** PostView.activity_alert */
-      activity_alert?: boolean
-      /** PostView.read */
-      read: boolean
-      /** PostView.hidden */
-      hidden: boolean
-      /** PostView.my_vote */
-      my_vote?: number
-      /** PostView.unread_comments */
-      unread_comments: number
-    }
-    /** CommunityView */
     CommunityView: {
-      /** CommunityView.community */
-      community: components['schemas']['Community']
-      /** CommunityView.subscribed */
-      subscribed: components['schemas']['SubscribedType']
-      /** CommunityView.blocked */
-      blocked: boolean
-      /** CommunityView.counts */
-      counts: components['schemas']['CommunityAggregates']
-      /** CommunityView.activity_alert */
       activity_alert: boolean
-    }
-    /** PostReportView */
-    PostReportView: {
-      /** PostReportView.post_report */
-      post_report: components['schemas']['PostReport']
-      /** PostReportView.post */
-      post: components['schemas']['Post']
-      /** PostReportView.community */
+      blocked: boolean
       community: components['schemas']['Community']
-      /** PostReportView.creator */
-      creator: components['schemas']['Person']
-      /** PostReportView.post_creator */
-      post_creator: components['schemas']['Person']
-      /** PostReportView.creator_banned_from_community */
-      creator_banned_from_community: boolean
-      /** PostReportView.creator_is_moderator */
-      creator_is_moderator: boolean
-      /** PostReportView.creator_is_admin */
-      creator_is_admin: boolean
-      /** PostReportView.subscribed */
-      subscribed: components['schemas']['SubscribedType']
-      /** PostReportView.saved */
-      saved: boolean
-      /** PostReportView.creator_blocked */
-      creator_blocked: boolean
-      /** PostReportView.my_vote */
-      my_vote?: number
-      /** PostReportView.counts */
-      counts: components['schemas']['PostAggregates']
-      /** PostReportView.resolver */
-      resolver?: components['schemas']['Person']
+      counts: components['schemas']['CommunityAggregates']
+      /** @enum {string} */
+      subscribed: 'Subscribed' | 'NotSubscribed' | 'Pending'
+      flair_list?: components['schemas']['CommunityFlair'][]
     }
-    /** CommentReportView */
-    CommentReportView: {
-      /** CommentReportView.comment_report */
-      comment_report: components['schemas']['CommentReport']
-      /** CommentReportView.comment */
-      comment: components['schemas']['Comment']
-      /** CommentReportView.post */
-      post: components['schemas']['Post']
-      /** CommentReportView.community */
-      community: components['schemas']['Community']
-      /** CommentReportView.creator */
-      creator: components['schemas']['Person']
-      /** CommentReportView.comment_creator */
-      comment_creator: components['schemas']['Person']
-      /** CommentReportView.counts */
-      counts: components['schemas']['CommentAggregates']
-      /** CommentReportView.creator_banned_from_community */
-      creator_banned_from_community: boolean
-      /** CommentReportView.creator_is_moderator */
-      creator_is_moderator: boolean
-      /** CommentReportView.creator_is_admin */
-      creator_is_admin: boolean
-      /** CommentReportView.creator_blocked */
-      creator_blocked: boolean
-      /** CommentReportView.subscribed */
-      subscribed: components['schemas']['SubscribedType']
-      /** CommentReportView.saved */
-      saved: boolean
-      /** CommentReportView.my_vote */
-      my_vote?: number
-      /** CommentReportView.resolver */
-      resolver?: components['schemas']['Person']
-    }
-    /** CommentReplyView */
-    CommentReplyView: {
-      /** CommentReplyView.comment_reply */
-      comment_reply: components['schemas']['CommentReply']
-      /** CommentReplyView.comment */
-      comment: components['schemas']['Comment']
-      /** CommentReplyView.creator */
-      creator: components['schemas']['Person']
-      /** CommentReplyView.post */
-      post: components['schemas']['Post']
-      /** CommentReplyView.community */
-      community: components['schemas']['Community']
-      /** CommentReplyView.recipient */
-      recipient: components['schemas']['Person']
-      /** CommentReplyView.counts */
-      counts: components['schemas']['CommentAggregates']
-      /** CommentReplyView.creator_banned_from_community */
-      creator_banned_from_community: boolean
-      /** CommentReplyView.creator_is_moderator */
-      creator_is_moderator: boolean
-      /** CommentReplyView.creator_is_admin */
-      creator_is_admin: boolean
-      /** CommentReplyView.subscribed */
-      subscribed: components['schemas']['SubscribedType']
-      /** CommentReplyView.saved */
-      saved: boolean
-      /** CommentReplyView.creator_blocked */
-      creator_blocked: boolean
-      /** CommentReplyView.my_vote */
-      my_vote?: number
-    }
-    /** CommentReplyResponse */
-    CommentReplyResponse: {
-      /** CommentResponse.comment_reply_view */
-      comment_reply_view: components['schemas']['CommentReplyView']
-    }
-    /** PrivateMessageView */
-    PrivateMessageView: {
-      /** PrivateMessageView.private_message */
-      private_message: components['schemas']['PrivateMessage']
-      /** PrivateMessageView.creator */
-      creator: components['schemas']['Person']
-      /** PrivateMessageView.recipient */
-      recipient: components['schemas']['Person']
-    }
-    /** CommunityModerationBanItem */
-    CommunityModerationBanItem: {
+    PostAggregates: {
+      comments: number
+      downvotes: number
       /**
-       * CommunityModerationBanItem.reason
-       * @example Violation of Rule 4
+       * Format: datetime
+       * @example 2025-06-07T02:29:07.980084Z
        */
-      reason: string
+      newest_comment_time: string
+      post_id: number
       /**
-       * CommunityModerationBanItem.expiredAt
-       * @example 2042-01-01T12:00:00
-       */
-      expiredAt: string
-      /** CommunityModerationBanItem.community */
-      community: components['schemas']['Community']
-      /** CommunityModerationBanItem.bannedUser */
-      bannedUser: components['schemas']['Person']
-      /** CommunityModerationBanItem.bannedBy */
-      bannedBy: components['schemas']['Person']
-      /**
-       * CommunityModerationBanItem.expired
-       * @example false
-       */
-      expired: boolean
-    }
-    /** NotificationsCountsView */
-    NotificationsCountsView: {
-      /** NotificationsCountsView.new_notifications */
-      new_notifications: number
-      /** NotificationsCountsView.read_notifications */
-      read_notifications: number
-      /** NotificationsCountsView.total_notifications */
-      total_notifications?: number
-    }
-    /** NotificationsItemUserView */
-    NotificationsItemUserView: {
-      /**
-       * NotificationsItemUserView.notif_id
-       * @example 1234
-       */
-      notif_id?: number
-      /**
-       * NotificationsItemUserView.notif_type
-       * @example 0
-       */
-      notif_type?: number
-      /**
-       * NotificationsItemUserView.notif_subtype
-       * @example new_post_from_followed_user
-       */
-      notif_subtype?: string
-      /** NotificationsItemUserView.author */
-      author?: components['schemas']['Person']
-      /** NotificationsItemUserView.post */
-      post?: components['schemas']['PostView']
-      /**
-       * NotificationsItemUserView.post_id
-       * @example 1234
-       */
-      post_id?: number
-      /**
-       * NotificationsItemUserView.notif_body
-       * @example This is the body of a post.
-       */
-      notif_body?: string
-    }
-    /** NotificationsItemCommunityView */
-    NotificationsItemCommunityView: {
-      /**
-       * NotificationsItemCommunityView.notif_id
-       * @example 1234
-       */
-      notif_id?: number
-      /**
-       * NotificationsItemCommunityView.notif_type
-       * @example 1
-       */
-      notif_type?: number
-      /**
-       * NotificationsItemCommunityView.notif_subtype
-       * @example new_post_in_followed_community
-       */
-      notif_subtype?: string
-      /** NotificationsItemCommunityView.author */
-      author?: components['schemas']['Person']
-      /** NotificationsItemCommunityView.post */
-      post?: components['schemas']['PostView']
-      /**
-       * NotificationsItemCommunityView.post_id
-       * @example 1234
-       */
-      post_id?: number
-      /** NotificationsItemCommunityView.community */
-      community?: components['schemas']['CommunityView']
-      /**
-       * NotificationsItemCommunityView.notif_body
-       * @example This is the body of a post.
-       */
-      notif_body?: string
-    }
-    /** NotificationsItemTopicView */
-    NotificationsItemTopicView: {
-      /**
-       * NotificationsItemTopicView.notif_id
-       * @example 1234
-       */
-      notif_id?: number
-      /**
-       * NotificationsItemTopicView.notif_type
-       * @example 2
-       */
-      notif_type?: number
-      /**
-       * NotificationsItemTopicView.notif_subtype
-       * @example new_post_in_followed_topic
-       */
-      notif_subtype?: string
-      /** NotificationsItemTopicView.author */
-      author?: components['schemas']['Person']
-      /** NotificationsItemTopicView.post */
-      post?: components['schemas']['PostView']
-      /**
-       * NotificationsItemTopicView.post_id
-       * @example 1234
-       */
-      post_id?: number
-      /**
-       * NotificationsItemTopicView.notif_body
-       * @example This is the body of a post.
-       */
-      notif_body?: string
-    }
-    /** NotificationsItemPostView */
-    NotificationsItemPostView: {
-      /**
-       * NotificationsItemPostView.notif_id
-       * @example 1234
-       */
-      notif_id?: number
-      /**
-       * NotificationsItemPostView.notif_type
-       * @example 3
-       */
-      notif_type?: number
-      /**
-       * NotificationsItemPostView.notif_subtype
-       * @example top_level_comment_on_followed_post
-       */
-      notif_subtype?: string
-      /** NotificationsItemPostView.author */
-      author?: components['schemas']['Person']
-      /** NotificationsItemPostView.post */
-      post?: components['schemas']['PostView']
-      /**
-       * NotificationsItemPostView.post_id
-       * @example 1234
-       */
-      post_id?: number
-      /** NotificationsItemPostView.comment */
-      comment?: components['schemas']['Comment']
-      /**
-       * NotificationsItemPostView.comment_id
-       * @example 1234
-       */
-      comment_id?: number
-      /**
-       * NotificationsItemPostView.notif_body
-       * @example This is the body of a comment.
-       */
-      notif_body?: string
-    }
-    /** NotificationsItemReplyView */
-    NotificationsItemReplyView: {
-      /**
-       * NotificationsItemReplyView.notif_id
-       * @example 1234
-       */
-      notif_id?: number
-      /**
-       * NotificationsItemReplyView.notif_type
-       * @example 4
-       */
-      notif_type?: number
-      /**
-       * NotificationsItemReplyView.notif_subtype
-       * @example new_reply_on_followed_comment
-       */
-      notif_subtype?: string
-      /** NotificationsItemReplyView.author */
-      author?: components['schemas']['Person']
-      /** NotificationsItemReplyView.post */
-      post?: components['schemas']['PostView']
-      /**
-       * NotificationsItemReplyView.post_id
-       * @example 1234
-       */
-      post_id?: number
-      /** NotificationsItemReplyView.comment */
-      comment?: components['schemas']['Comment']
-      /**
-       * NotificationsItemReplyView.comment_id
-       * @example 1234
-       */
-      comment_id?: number
-      /**
-       * NotificationsItemReplyView.notif_body
-       * @example This is the body of a comment.
-       */
-      notif_body?: string
-    }
-    /** NotificationsItemFeedView */
-    NotificationsItemFeedView: {
-      /**
-       * NotificationsItemFeedView.notif_id
-       * @example 1234
-       */
-      notif_id?: number
-      /**
-       * NotificationsItemFeedView.notif_type
-       * @example 5
-       */
-      notif_type?: number
-      /**
-       * NotificationsItemFeedView.notif_subtype
-       * @example new_post_in_followed_feed
-       */
-      notif_subtype?: string
-      /** NotificationsItemFeedView.author */
-      author?: components['schemas']['Person']
-      /** NotificationsItemFeedView.post */
-      post?: components['schemas']['PostView']
-      /**
-       * NotificationsItemFeedView.post_id
-       * @example 1234
-       */
-      post_id?: number
-      /**
-       * NotificationsItemFeedView.notif_body
-       * @example This is the body of a post.
-       */
-      notif_body?: string
-    }
-    /** NotificationsItemPostMentionView */
-    NotificationsItemPostMentionView: {
-      /**
-       * NotificationsItemPostMentionView.notif_id
-       * @example 1234
-       */
-      notif_id?: number
-      /**
-       * NotificationsItemPostMentionView.notif_type
-       * @example 6
-       */
-      notif_type?: number
-      /**
-       * NotificationsItemPostMentionView.notif_subtype
-       * @example post_mention
-       */
-      notif_subtype?: string
-      /** NotificationsItemPostMentionView.author */
-      author?: components['schemas']['Person']
-      /** NotificationsItemPostMentionView.post */
-      post?: components['schemas']['PostView']
-      /**
-       * NotificationsItemPostMentionView.post_id
-       * @example 1234
-       */
-      post_id?: number
-      /**
-       * NotificationsItemPostMentionView.notif_body
-       * @example This is the body of a post.
-       */
-      notif_body?: string
-    }
-    /** NotificationsItemCommentMentionView */
-    NotificationsItemCommentMentionView: {
-      /**
-       * NotificationsItemCommentMentionView.notif_id
-       * @example 1234
-       */
-      notif_id?: number
-      /**
-       * NotificationsItemCommentMentionView.notif_type
-       * @example 6
-       */
-      notif_type?: number
-      /**
-       * NotificationsItemCommentMentionView.notif_subtype
-       * @example comment_mention
-       */
-      notif_subtype?: string
-      /** NotificationsItemCommentMentionView.author */
-      author?: components['schemas']['Person']
-      /** NotificationsItemCommentMentionView.comment */
-      comment?: components['schemas']['Comment']
-      /**
-       * NotificationsItemCommentMentionView.comment_id
-       * @example 1234
-       */
-      comment_id?: number
-      /**
-       * NotificationsItemCommentMentionView.notif_body
-       * @example This is the body of a comment.
-       */
-      notif_body?: string
-    }
-    FeedView: {
-      /**
-       * FeedView.actor_id
-       * Format: url
-       */
-      actor_id: string
-      /** FeedView.ap_domain */
-      ap_domain: string
-      /** FeedView.children */
-      children: components['schemas']['FeedView'][]
-      /** FeedView.communities */
-      communities: components['schemas']['Community'][]
-      /** FeedView.communities_count */
-      communities_count: number
-      /** FeedView.id */
-      id: number
-      /** FeedView.is_instance_feed */
-      is_instance_feed: boolean
-      /** FeedView.local */
-      local: boolean
-      /** FeedView.name */
-      name: string
-      /** FeedView.nsfl */
-      nsfl: boolean
-      /** FeedView.nsfw */
-      nsfw: boolean
-      /**
-       * FeedView.owner
-       * @description Is the authorized user the creator of the feed?
-       */
-      owner: boolean
-      /** FeedView.public */
-      public: boolean
-      /**
-       * FeedView.published
        * Format: datetime
        * @example 2025-06-07T02:29:07.980084Z
        */
       published: string
-      /** FeedView.show_posts_from_children */
+      score: number
+      upvotes: number
+    }
+    Post: {
+      /** Format: url */
+      ap_id: string
+      community_id: number
+      deleted: boolean
+      id: number
+      language_id: number
+      local: boolean
+      locked: boolean
+      nsfw: boolean
+      /**
+       * Format: datetime
+       * @example 2025-06-07T02:29:07.980084Z
+       */
+      published: string
+      removed: boolean
+      sticky: boolean
+      title: string
+      user_id: number
+      alt_text?: string
+      /** Format: markdown */
+      body?: string
+      /** Format: url */
+      small_thumbnail_url?: string
+      /** Format: url */
+      thumbnail_url?: string
+      /**
+       * Format: datetime
+       * @example 2025-06-07T02:29:07.980084Z
+       */
+      updated?: string
+      /** Format: url */
+      url?: string
+    }
+    PostView: {
+      banned_from_community: boolean
+      community: components['schemas']['Community']
+      counts: components['schemas']['PostAggregates']
+      creator: components['schemas']['Person']
+      creator_banned_from_community: boolean
+      creator_is_admin: boolean
+      creator_is_moderator: boolean
+      hidden: boolean
+      post: components['schemas']['Post']
+      read: boolean
+      saved: boolean
+      /** @enum {string} */
+      subscribed: 'Subscribed' | 'NotSubscribed' | 'Pending'
+      unread_comments: number
+      activity_alert?: boolean
+      my_vote?: number
+      flair_list?: components['schemas']['CommunityFlair'][]
+    }
+    Comment: {
+      /** Format: url */
+      ap_id: string
+      /** Format: markdown */
+      body: string
+      deleted: boolean
+      id: number
+      language_id: number
+      local: boolean
+      path: string
+      post_id: number
+      /**
+       * Format: datetime
+       * @example 2025-06-07T02:29:07.980084Z
+       */
+      published: string
+      removed: boolean
+      user_id: number
+      distinguished?: boolean
+      /**
+       * Format: datetime
+       * @example 2025-06-07T02:29:07.980084Z
+       */
+      updated?: string
+      locked?: boolean
+    }
+    CommentAggregates: {
+      child_count: number
+      comment_id: number
+      downvotes: number
+      /**
+       * Format: datetime
+       * @example 2025-06-07T02:29:07.980084Z
+       */
+      published: string
+      score: number
+      upvotes: number
+    }
+    CommentView: {
+      activity_alert: boolean
+      banned_from_community: boolean
+      comment: components['schemas']['Comment']
+      community: components['schemas']['Community']
+      counts: components['schemas']['CommentAggregates']
+      creator: components['schemas']['Person']
+      creator_banned_from_community: boolean
+      creator_blocked: boolean
+      creator_is_admin: boolean
+      creator_is_moderator: boolean
+      post: components['schemas']['Post']
+      saved: boolean
+      subscribed: string
+      my_vote?: number
+      can_auth_user_moderate?: boolean
+    }
+    SearchResponse: {
+      /** @enum {string} */
+      type_: 'Communities' | 'Posts' | 'Users' | 'Url'
+      communities: components['schemas']['CommunityView'][]
+      posts: components['schemas']['PostView'][]
+      users: components['schemas']['PersonView'][]
+      comments: components['schemas']['CommentView'][]
+    }
+    ResolveObjectResponse: {
+      comment?: components['schemas']['CommentView']
+      post?: components['schemas']['PostView']
+      community?: components['schemas']['CommunityView']
+      person?: components['schemas']['PersonView']
+    }
+    InstanceWithoutFederationState: {
+      domain: string
+      id: number
+      /**
+       * Format: datetime
+       * @example 2025-06-07T02:29:07.980084Z
+       */
+      published: string
+      software?: string
+      /**
+       * Format: datetime
+       * @example 2025-06-07T02:29:07.980084Z
+       */
+      updated?: string
+      version?: string
+    }
+    FederatedInstancesView: {
+      allowed: components['schemas']['InstanceWithoutFederationState'][]
+      blocked: components['schemas']['InstanceWithoutFederationState'][]
+      linked: components['schemas']['InstanceWithoutFederationState'][]
+    }
+    GetFederatedInstancesResponse: {
+      federated_instances?: components['schemas']['FederatedInstancesView']
+    }
+    GetCommunityResponse: {
+      community_view: components['schemas']['CommunityView']
+      discussion_languages: number[]
+      moderators: components['schemas']['CommunityModeratorView'][]
+      site?: components['schemas']['Site']
+    }
+    ListCommunitiesResponse: {
+      communities: components['schemas']['CommunityView'][]
+      next_page?: string
+    }
+    FollowCommunityRequest: {
+      community_id: number
+      follow: boolean
+    }
+    CommunityResponse: {
+      community_view: components['schemas']['CommunityView']
+      discussion_languages: number[]
+    }
+    BlockCommunityRequest: {
+      block: boolean
+      community_id: number
+    }
+    BlockCommunityResponse: {
+      community_view: components['schemas']['CommunityView']
+      blocked: boolean
+    }
+    CreateCommunityRequest: {
+      name: string
+      title: string
+      /** Format: url */
+      banner_url?: string
+      /** Format: markdown */
+      description?: string
+      discussion_languages?: number[]
+      /** Format: url */
+      icon_url?: string
+      local_only?: boolean
+      nsfw?: boolean
+      restricted_to_mods?: boolean
+      rules?: string
+    }
+    EditCommunityRequest: {
+      community_id: number
+      title?: string
+      /** Format: url */
+      banner_url?: string
+      /** Format: markdown */
+      description?: string
+      discussion_languages?: number[]
+      /** Format: url */
+      icon_url?: string
+      local_only?: boolean
+      nsfw?: boolean
+      restricted_to_mods?: boolean
+      rules?: string
+    }
+    SubscribeCommunityRequest: {
+      community_id: number
+      subscribe: boolean
+    }
+    DeleteCommunityRequest: {
+      community_id: number
+      deleted: boolean
+    }
+    ModCommunityRequest: {
+      added: boolean
+      community_id: number
+      person_id: number
+    }
+    ModCommunityResponse: {
+      moderators: components['schemas']['CommunityModeratorView'][]
+    }
+    CommunityModerationBanItem: {
+      banned_by?: components['schemas']['Person']
+      banned_user?: components['schemas']['Person']
+      community?: components['schemas']['Community']
+      expired?: boolean
+      /**
+       * Format: datetime
+       * @example 2025-06-07T02:29:07.980084Z, null=permanent ban
+       */
+      expired_at?: string
+      /**
+       * Format: datetime
+       * @example 2025-06-07T02:29:07.980084Z, null=permanent ban
+       */
+      expires_at?: string
+      reason?: string
+    }
+    CommunityModerationBansListResponse: {
+      items?: components['schemas']['CommunityModerationBanItem'][]
+      next_page?: string
+    }
+    CommunityModerationUnbanRequest: {
+      community_id: number
+      user_id: number
+    }
+    CommunityModerationBanRequest: {
+      community_id: number
+      reason: string
+      user_id: number
+      /**
+       * Format: datetime
+       * @example 2025-06-07T02:29:07.980084Z
+       */
+      expires_at?: string
+      permanent?: boolean
+    }
+    CommunityModerationNsfwRequest: {
+      post_id: number
+      nsfw_status: boolean
+    }
+    CommunityFlairCreateRequest: {
+      community_id: number
+      flair_title: string
+      /**
+       * @description Hex color code for the text of the flair.
+       * @default #000000
+       * @example #000 or #000000
+       */
+      text_color: string
+      /**
+       * @description Hex color code for the background of the flair.
+       * @default #DEDDDA
+       * @example #fff or #FFFFFF
+       */
+      background_color: string
+      /** @default false */
+      blur_images: boolean
+    }
+    CommunityFlairCreateResponse: {
+      id: number
+      community_id: number
+      flair_title: string
+      /**
+       * @description Hex color code for the text of the flair
+       * @example #000000
+       */
+      text_color: string
+      /**
+       * @description Hex color code for the background of the flair
+       * @example #DEDDDA
+       */
+      background_color: string
+      blur_images: boolean
+      /**
+       * Format: url
+       * @description Legacy tags that existed prior to 1.2 and some tags for remote communities might not have a defined ap_id
+       */
+      ap_id: string
+    }
+    CommunityFlairEditRequest: {
+      flair_id: number
+      flair_title?: string
+      /**
+       * @description Hex color code for the text of the flair.
+       * @example #000 or #000000
+       */
+      text_color?: string
+      /**
+       * @description Hex color code for the background of the flair.
+       * @example #fff or #FFFFFF
+       */
+      background_color?: string
+      blur_images?: boolean
+    }
+    CommunityFlairEditResponse: {
+      id: number
+      community_id: number
+      flair_title: string
+      /**
+       * @description Hex color code for the text of the flair
+       * @example #000000
+       */
+      text_color: string
+      /**
+       * @description Hex color code for the background of the flair
+       * @example #DEDDDA
+       */
+      background_color: string
+      blur_images: boolean
+      /**
+       * Format: url
+       * @description Legacy tags that existed prior to 1.2 and some tags for remote communities might not have a defined ap_id
+       */
+      ap_id: string
+    }
+    CommunityFlairDeleteRequest: {
+      flair_id: number
+    }
+    CommunityFlairDeleteResponse: {
+      community_view: components['schemas']['CommunityView']
+      discussion_languages: number[]
+      moderators: components['schemas']['CommunityModeratorView'][]
+      site?: components['schemas']['Site']
+    }
+    FeedView: {
+      /** Format: url */
+      actor_id: string
+      ap_domain: string
+      children: components['schemas']['FeedView'][]
+      communities: components['schemas']['Community'][]
+      communities_count: number
+      id: number
+      is_instance_feed: boolean
+      local: boolean
+      name: string
+      nsfl: boolean
+      nsfw: boolean
+      /** @description Is the authorized user the creator of the feed? */
+      owner: boolean
+      public: boolean
+      /**
+       * Format: datetime
+       * @example 2025-06-07T02:29:07.980084Z
+       */
+      published: string
       show_posts_from_children: boolean
-      /** FeedView.subscribed */
       subscribed: boolean
-      /** FeedView.subscriptions_count */
       subscriptions_count: number
-      /** FeedView.title */
       title: string
       /**
-       * FeedView.updated
        * Format: datetime
        * @example 2025-06-07T02:29:07.980084Z
        */
       updated: string
-      /**
-       * FeedView.user_id
-       * @description user_id of the feed creator/owner
-       */
+      /** @description user_id of the feed creator/owner */
       user_id: number
-      /**
-       * FeedView.banner
-       * Format: url
-       */
+      /** Format: url */
       banner?: string
-      /**
-       * FeedView.description
-       * Format: markdown
-       */
+      /** Format: markdown */
       description?: string
-      /**
-       * FeedView.description_html
-       * Format: html
-       */
+      /** Format: html */
       description_html?: string
-      /**
-       * FeedView.icon
-       * Format: url
-       */
+      /** Format: url */
       icon?: string
-      /** FeedView.parent_feed_id */
       parent_feed_id?: number
     }
+    FeedListResponse: {
+      feeds: components['schemas']['FeedView'][]
+    }
     TopicView: {
-      /** TopicView.children */
       children: components['schemas']['TopicView'][]
-      /** TopicView.communities */
       communities: components['schemas']['Community'][]
-      /** TopicView.communities_count */
       communities_count: number
-      /** TopicView.id */
       id: number
-      /** TopicView.name */
       name: string
-      /** TopicView.show_posts_from_children */
       show_posts_from_children: boolean
-      /** TopicView.title */
       title: string
-      /** TopicView.parent_topic_id */
       parent_topic_id?: number
     }
-    /**
-     * RegistrationMode
-     * @enum {string}
-     */
-    RegistrationMode: 'Closed' | 'RequireApplication' | 'Open'
-    /**
-     * SearchType
-     * @enum {string}
-     */
-    SearchType: 'Communities' | 'Posts' | 'Users' | 'Url'
-    /**
-     * CommunitySortType
-     * @enum {string}
-     */
-    CommunitySortType: 'Active' | 'New'
-    /**
-     * ListingType
-     * @enum {string}
-     */
-    ListingType: 'All' | 'Local' | 'Subscribed' | 'Popular' | 'ModeratorView'
-    /**
-     * SortType
-     * @enum {string}
-     */
-    SortType:
-      | 'Active'
-      | 'Hot'
-      | 'New'
-      | 'TopHour'
-      | 'TopSixHour'
-      | 'TopTwelveHour'
-      | 'TopDay'
-      | 'TopWeek'
-      | 'TopMonth'
-      | 'TopThreeMonths'
-      | 'TopSixMonths'
-      | 'TopNineMonths'
-      | 'TopYear'
-      | 'TopAll'
-      | 'Scaled'
-    /**
-     * SubscribedType
-     * @enum {string}
-     */
-    SubscribedType: 'Subscribed' | 'NotSubscribed' | 'Pending'
-    /**
-     * PostFeatureType
-     * @enum {string}
-     */
-    PostFeatureType: 'Local' | 'Community'
-    /**
-     * CommentSortType
-     * @enum {string}
-     */
-    CommentSortType: 'Hot' | 'Top' | 'New' | 'Old'
-    /**
-     * NotificationStatusType
-     * @enum {string}
-     */
-    NotificationStatusType: 'All' | 'New' | 'Read'
-    /** PersonAggregates */
-    PersonAggregates: {
-      /** PersonAggregates.comment_count */
-      comment_count: number
-      /** PersonAggregates.person_id */
-      person_id: number
-      /** PersonAggregates.post_count */
-      post_count: number
+    TopicListResponse: {
+      topics: components['schemas']['TopicView'][]
     }
-    /** CommentAggregates */
-    CommentAggregates: {
-      /** CommentAggregates.comment_id */
-      comment_id: number
-      /** CommentAggregates.score */
-      score: number
-      /** CommentAggregates.upvotes */
-      upvotes: number
-      /** CommentAggregates.downvotes */
-      downvotes: number
-      /**
-       * CommentAggregates.published
-       * Format: date-time
-       */
-      published: string
-      /** CommentAggregates.child_count */
-      child_count: number
+    GetUserResponse: {
+      comments: components['schemas']['CommentView'][]
+      moderates: components['schemas']['CommunityModeratorView'][]
+      person_view: components['schemas']['PersonView']
+      posts: components['schemas']['PostView'][]
+      site?: components['schemas']['Site']
     }
-    /** PostAggregates */
-    PostAggregates: {
-      /** PostAggregates.post_id */
-      post_id: number
-      /** PostAggregates.comments */
-      comments: number
-      /** PostAggregates.score */
-      score: number
-      /** PostAggregates.upvotes */
-      upvotes: number
-      /** PostAggregates.downvotes */
-      downvotes: number
-      /**
-       * PostAggregates.published
-       * Format: date-time
-       */
-      published: string
-      /** PostAggregates.newest_comment_time */
-      newest_comment_time: string
+    UserLoginRequest: {
+      username: string
+      password: string
     }
-    /** CommunityAggregates */
-    CommunityAggregates: {
-      /** CommunityAggregates.active_6monthly */
-      active_6monthly: number
-      /** CommunityAggregates.active_daily */
-      active_daily: number
-      /** CommunityAggregates.active_monthly */
-      active_monthly: number
-      /** CommunityAggregates.active_weekly */
-      active_weekly: number
-      /** CommunityAggregates.community_id */
+    UserLoginResponse: {
+      jwt: string
+    }
+    UserUnreadCountsResponse: {
+      /** @description Post and comment mentions */
+      mentions: number
+      private_messages: number
+      /** @description Replies to posts and comments */
+      replies: number
+      /** @description Any other type of notification (reports, activity alerts, etc.) */
+      other: number
+    }
+    CommentReply: {
       id: number
-      /** CommunityAggregates.post_count */
-      post_count: number
-      /** CommunityAggregates.post_reply_count */
-      post_reply_count: number
+      comment_id: number
       /**
-       * CommunityAggregates.published
-       * Format: date-time
+       * Format: datetime
+       * @example 2025-06-07T02:29:07.980084Z
        */
       published: string
-      /** CommunityAggregates.subscriptions_count */
-      subscriptions_count: number
-      /** CommunityAggregates.total_subscriptions_count */
-      total_subscriptions_count: number
+      read: boolean
+      recipient_id: number
     }
-    'SuccessResponse-2': unknown
-    'CommentReplyResponse-2': unknown
+    CommentReplyView: {
+      activity_alert: boolean
+      comment: components['schemas']['Comment']
+      comment_reply: components['schemas']['CommentReply']
+      community: components['schemas']['Community']
+      counts: components['schemas']['CommentAggregates']
+      creator: components['schemas']['Person']
+      creator_banned_from_community: boolean
+      creator_blocked: boolean
+      creator_is_admin: boolean
+      creator_is_moderator: boolean
+      my_vote: number
+      post: components['schemas']['Post']
+      recipient: components['schemas']['Person']
+      saved: boolean
+      /** @enum {string} */
+      subscribed: 'Subscribed' | 'NotSubscribed' | 'Pending'
+    }
+    UserRepliesResponse: {
+      next_page: number
+      replies: components['schemas']['CommentReplyView'][]
+    }
+    UserMentionsResponse: {
+      next_page: number
+      replies: components['schemas']['CommentReplyView'][]
+    }
+    UserBlockRequest: {
+      block: boolean
+      person_id: number
+    }
+    UserBlockResponse: {
+      blocked: boolean
+      person_view: components['schemas']['PersonView']
+    }
+    UserMarkAllReadResponse: {
+      /** @description Should be empty list */
+      replies: components['schemas']['CommentReplyView'][]
+    }
+    UserSubscribeRequest: {
+      person_id: number
+      subscribe: boolean
+    }
+    UserSubscribeResponse: {
+      person_view: components['schemas']['PersonView']
+      subscribed: boolean
+    }
+    UserSaveSettingsRequest: {
+      /**
+       * Format: url
+       * @description Pass a null value to remove the image
+       */
+      avatar?: string
+      /** Format: markdown */
+      bio?: string
+      /**
+       * Format: url
+       * @description Pass a null value to remove the image
+       */
+      cover?: string
+      /** @enum {string} */
+      default_comment_sort_type?: 'Hot' | 'Top' | 'New' | 'Old'
+      /** @enum {string} */
+      default_sort_type?: 'Hot' | 'Top' | 'New' | 'Active' | 'Old' | 'Scaled'
+      show_nsfw?: boolean
+      show_nsfl?: boolean
+      show_read_posts?: boolean
+    }
+    UserSaveSettingsResponse: {
+      my_user?: components['schemas']['MyUserInfo']
+    }
+    UserNotificationsCounts: {
+      unread: number
+      read: number
+      total: number
+    }
+    UserNotificationItemView: {
+      /** @description returned for all notif types */
+      author: components['schemas']['Person']
+      /** @description returned for all notif types */
+      notif_body: string
+      /** @description returned for all notif types */
+      notif_id: number
+      /** @description returned for all notif types */
+      notif_subtype: string
+      /** @description returned for all notif types */
+      notif_type: number
+      /**
+       * @description returned for all notif types
+       * @enum {string}
+       */
+      status: 'Unread' | 'Read'
+      /** @description returned for notif_types: 3, 4, 6 (comment_mention subtype) */
+      comment?: components['schemas']['Comment']
+      /** @description returned for notif_types: 3, 4, 6 (comment_mention subtype) */
+      comment_id?: number
+      /** @description returned for notif_type 1 */
+      community?: components['schemas']['Community']
+      /** @description returned for notif_types: 0, 1, 2, 3, 4, 5, 6 (post_mention subtype) */
+      post?: components['schemas']['PostView']
+      /** @description returned for notif_types: 0, 1, 2, 3, 4, 5, 6 (post_mention subtype) */
+      post_id?: number
+    }
+    UserNotificationsResponse: {
+      counts: components['schemas']['UserNotificationsCounts']
+      items: components['schemas']['UserNotificationItemView'][]
+      /** @enum {string} */
+      status: 'All' | 'Unread' | 'Read'
+      username: string
+      next_page: number
+    }
+    UserNotificationStateRequest: {
+      notif_id: number
+      /** @description true sets notification as read, false marks it unread */
+      read_state: boolean
+    }
+    UserNotificationsCountResponse: {
+      count: number
+    }
+    UserMarkAllNotifsReadResponse: {
+      /** @example complete */
+      mark_all_notifications_as_read: string
+    }
+    UserSetFlairRequest: {
+      community_id: number
+      /** @description Either omit or set to null to remove existing flair */
+      flair_text?: string
+    }
+    UserSetFlairResponse: {
+      person_view: components['schemas']['PersonView']
+    }
+    ListCommentsResponse: {
+      comments: components['schemas']['CommentView'][]
+      next_page?: string
+    }
+    LikeCommentRequest: {
+      comment_id: number
+      /**
+       * @description -1 to downvote, 1 to upvote, 0 to revert previous vote
+       * @example 1
+       */
+      score: number
+      /**
+       * @description private votes are not federated to other instances
+       * @default false
+       */
+      private: boolean
+    }
+    GetCommentResponse: {
+      comment_view: components['schemas']['CommentView']
+    }
+    SaveCommentRequest: {
+      comment_id: number
+      save: boolean
+    }
+    SubscribeCommentRequest: {
+      comment_id: number
+      subscribe: boolean
+    }
+    CreateCommentRequest: {
+      body: string
+      post_id: number
+      parent_id?: number
+      language_id?: number
+    }
+    EditCommentRequest: {
+      body: string
+      comment_id: number
+      language_id?: number
+      distinguished?: boolean
+    }
+    DeleteCommentRequest: {
+      comment_id: number
+      deleted: boolean
+    }
+    ReportCommentRequest: {
+      comment_id: number
+      reason: string
+      description?: string
+      /**
+       * @description Also send report to originating instance
+       * @default true
+       */
+      report_remote: boolean
+    }
+    CommentReport: {
+      id: number
+      creator_id: number
+      comment_id: number
+      original_comment_text: string
+      reason?: string
+      resolved: boolean
+      /**
+       * Format: datetime
+       * @example 2025-06-07T02:29:07.980084Z
+       */
+      published: string
+      /**
+       * Format: datetime
+       * @example 2025-06-07T02:29:07.980084Z
+       */
+      updated?: string
+    }
+    CommentReportView: {
+      activity_alert: boolean
+      banned_from_community: boolean
+      comment: components['schemas']['Comment']
+      community: components['schemas']['Community']
+      counts: components['schemas']['CommentAggregates']
+      creator: components['schemas']['Person']
+      creator_banned_from_community: boolean
+      creator_blocked: boolean
+      creator_is_admin: boolean
+      creator_is_moderator: boolean
+      post: components['schemas']['Post']
+      saved: boolean
+      subscribed: string
+      my_vote?: number
+      can_auth_user_moderate?: boolean
+      comment_report: components['schemas']['CommentReport']
+      comment_creator: components['schemas']['Person']
+    }
+    GetCommentReportResponse: {
+      comment_report_view: components['schemas']['CommentReportView']
+    }
+    RemoveCommentRequest: {
+      comment_id: number
+      removed: boolean
+      reason?: string
+    }
+    MarkCommentAsReadRequest: {
+      comment_reply_id: number
+      read: boolean
+    }
+    GetCommentReplyResponse: {
+      comment_reply_view: components['schemas']['CommentReplyView']
+    }
+    LockCommentRequest: {
+      comment_id: number
+      locked: boolean
+    }
+    CommentLikeView: {
+      score: number
+      creator_banned_from_community: boolean
+      creator_banned: boolean
+      creator: components['schemas']['Person']
+    }
+    ListCommentLikesResponse: {
+      comment_likes?: components['schemas']['CommentLikeView'][]
+      next_page?: string
+    }
+    ListPostsResponse: {
+      posts: components['schemas']['PostView'][]
+      next_page?: string
+    }
+    GetPostResponse: {
+      post_view: components['schemas']['PostView']
+      community_view?: components['schemas']['CommunityView']
+      moderators?: components['schemas']['CommunityModeratorView'][]
+      cross_posts?: components['schemas']['PostView'][]
+    }
+    PostReplyView: {
+      activity_alert: boolean
+      banned_from_community: boolean
+      comment: components['schemas']['Comment']
+      community?: components['schemas']['Community']
+      counts: components['schemas']['CommentAggregates']
+      creator: components['schemas']['Person']
+      creator_banned_from_community: boolean
+      creator_blocked: boolean
+      creator_is_admin: boolean
+      creator_is_moderator: boolean
+      post?: components['schemas']['Post']
+      saved: boolean
+      subscribed: string
+      my_vote?: number
+      can_auth_user_moderate?: boolean
+      replies?: components['schemas']['PostReplyView'][]
+    }
+    GetPostRepliesResponse: {
+      comments?: components['schemas']['PostReplyView'][]
+      next_page?: string
+    }
+    LikePostRequest: {
+      post_id: number
+      score: number
+      private?: boolean
+    }
+    SavePostRequest: {
+      post_id: number
+      save: boolean
+    }
+    SubscribePostRequest: {
+      post_id: number
+      subscribe: boolean
+    }
+    CreatePostRequest: {
+      title: string
+      community_id: number
+      body?: string
+      /** Format: url */
+      url?: string
+      nsfw?: boolean
+      language_id?: number
+    }
+    EditPostRequest: {
+      post_id: number
+      title?: string
+      body?: string
+      /** Format: url */
+      url?: string
+      nsfw?: boolean
+      language_id?: number
+    }
+    DeletePostRequest: {
+      post_id: number
+      deleted: boolean
+    }
+    ReportPostRequest: {
+      post_id: number
+      reason: string
+    }
+    PostReport: {
+      id: number
+      creator_id: number
+      post_id: number
+      original_post_name: string
+      original_post_body: string
+      reason: string
+      resolved: boolean
+      published: string
+    }
+    PostReportView: {
+      post_report: components['schemas']['PostReport']
+      post: components['schemas']['Post']
+      community: components['schemas']['Community']
+      creator: components['schemas']['Person']
+      post_creator: components['schemas']['Person']
+      counts: components['schemas']['PostAggregates']
+      creator_banned_from_community: boolean
+      creator_is_moderator: boolean
+      creator_is_admin: boolean
+      creator_blocked: boolean
+      /** @enum {string} */
+      subscribed: 'Subscribed' | 'NotSubscribed' | 'Pending'
+      saved: boolean
+    }
+    PostReportResponse: {
+      post_report_view: components['schemas']['PostReportView']
+    }
+    LockPostRequest: {
+      post_id: number
+      locked: boolean
+    }
+    FeaturePostRequest: {
+      post_id: number
+      featured: boolean
+      feature_type: string
+    }
+    RemovePostRequest: {
+      post_id: number
+      removed: boolean
+      reason?: string
+    }
+    MarkPostAsReadRequest: {
+      read: boolean
+      post_id?: number
+      post_ids?: number[]
+    }
+    SuccessResponse: {
+      success: boolean
+    }
+    PostLikeView: {
+      score: number
+      creator_banned_from_community: boolean
+      creator_banned: boolean
+      creator: components['schemas']['Person']
+    }
+    ListPostLikesResponse: {
+      post_likes?: components['schemas']['PostLikeView'][]
+      next_page?: string
+    }
+    PostSetFlairRequest: {
+      post_id: number
+      /** @description A list of all the flair id to assign to the post. Either pass an empty list or null to remove flair */
+      flair_id_list?: number[]
+    }
+    PostSetFlairResponse: {
+      banned_from_community: boolean
+      community: components['schemas']['Community']
+      counts: components['schemas']['PostAggregates']
+      creator: components['schemas']['Person']
+      creator_banned_from_community: boolean
+      creator_is_admin: boolean
+      creator_is_moderator: boolean
+      hidden: boolean
+      post: components['schemas']['Post']
+      read: boolean
+      saved: boolean
+      /** @enum {string} */
+      subscribed: 'Subscribed' | 'NotSubscribed' | 'Pending'
+      unread_comments: number
+      activity_alert?: boolean
+      my_vote?: number
+      flair_list?: components['schemas']['CommunityFlair'][]
+    }
+    ImageUploadRequest: {
+      /** Format: binary */
+      file: string
+    }
+    ImageUploadResponse: {
+      /** Format: url */
+      url: string
+      liked_only?: boolean
+      saved_only?: boolean
+      q?: string
+    }
   }
-  responses: never
+  responses: {
+    /** @description Unprocessable Content */
+    UNPROCESSABLE_CONTENT: {
+      headers: {
+        [name: string]: unknown
+      }
+      content: {
+        'application/json': components['schemas']['Error']
+      }
+    }
+  }
   parameters: never
   requestBodies: never
   headers: never
   pathItems: never
 }
 export type $defs = Record<string, never>
-export interface operations {
-  markAllAsRead: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['GetRepliesResponse']
-        }
-      }
-      /** @description Bad request */
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['BadRequest']
-        }
-      }
-    }
-  }
-}
+export type operations = Record<string, never>

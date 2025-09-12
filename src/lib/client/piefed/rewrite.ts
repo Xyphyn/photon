@@ -22,6 +22,7 @@ import type {
   PrivateMessageView,
   Search,
   SortType,
+  SubscribedType,
 } from '../types'
 import type { components } from './schema'
 
@@ -63,10 +64,10 @@ export function toCommunityView(
       published: communityView.community.published,
       community_id: communityView.community.id,
       subscribers_local: communityView.counts.subscriptions_count,
-      users_active_day: communityView.counts.active_daily,
-      users_active_half_year: communityView.counts.active_6monthly,
-      users_active_month: communityView.counts.active_monthly,
-      users_active_week: communityView.counts.active_weekly,
+      users_active_day: communityView.counts.active_daily ?? -1,
+      users_active_half_year: communityView.counts.active_6monthly ?? -1,
+      users_active_month: communityView.counts.active_monthly ?? -1,
+      users_active_week: communityView.counts.active_weekly ?? -1,
     },
   }
 }
@@ -152,6 +153,7 @@ export function toCommentView(
     creator: toPerson(commentView.creator),
     post: toPost(commentView.post),
     community: toCommunity(commentView.community),
+    subscribed: commentView.subscribed as SubscribedType,
   }
 }
 
@@ -260,10 +262,9 @@ export function fromCreatePost(
 
 export function fromListCommunities(
   listCommunities: ListCommunities,
-): components['schemas']['ListCommunities'] {
+): components['schemas']['CommunityRequest'] {
   return {
     ...listCommunities,
-    // @ts-expect-error ok so the api tells me something different than the actual dev api tells me to do
     sort: toCommunitiesSortType(listCommunities.sort),
   }
 }

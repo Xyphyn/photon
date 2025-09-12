@@ -165,7 +165,7 @@ export interface CommentReport {
   creator_id: PersonId
   comment_id: CommentId
   original_comment_text: string
-  reason: string
+  reason?: string
   resolved: boolean
   resolver_id?: PersonId
   published: string
@@ -280,7 +280,7 @@ export interface CreateCommentLike {
 
 export interface CreateCommentReport {
   comment_id: CommentId
-  reason: string
+  reason?: string
 }
 
 export interface CreateCommunity {
@@ -436,7 +436,7 @@ export interface DistinguishComment {
 
 export interface EditComment {
   comment_id: CommentId
-  content?: string
+  content: string
   language_id?: LanguageId
 }
 
@@ -1685,6 +1685,7 @@ export interface PostView {
   creator_blocked: boolean
   my_vote?: number
   unread_comments: number
+  flair_list?: CommunityFlair[]
 }
 
 export interface PrivateMessage {
@@ -1989,4 +1990,14 @@ export interface DeleteImage {
 export interface SetPersonFlair {
   community_id: number
   flair_text: string
+}
+
+export interface CommunityFlair {
+  id: number
+  community_id: number
+  flair_title: string
+  text_color: string
+  background_color: string
+  blur_images: boolean
+  ap_id: string | null
 }
