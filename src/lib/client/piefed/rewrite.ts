@@ -7,6 +7,7 @@ import type {
   CommunityView,
   CreateComment,
   CreatePost,
+  FeedView,
   GetComments,
   GetPost,
   GetPosts,
@@ -23,6 +24,7 @@ import type {
   Search,
   SortType,
   SubscribedType,
+  TopicView,
 } from '../types'
 import type { components } from './schema'
 
@@ -204,6 +206,26 @@ export function toPersonMentionView(
     post: toPost(personMentionView.post),
     creator: toPerson(personMentionView.creator),
     recipient: toPerson(personMentionView.recipient),
+  }
+}
+
+export function toTopicView(
+  topicView: components['schemas']['TopicView'],
+): TopicView {
+  return {
+    ...topicView,
+    communities: topicView.communities?.map(toCommunity),
+    children: topicView.children.map(toTopicView),
+  }
+}
+
+export function toFeedView(
+  feedView: components['schemas']['FeedView'],
+): FeedView {
+  return {
+    ...feedView,
+    communities: feedView.communities?.map(toCommunity),
+    children: feedView.children.map(toFeedView),
   }
 }
 

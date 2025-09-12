@@ -264,6 +264,11 @@
         },
         "translators": "Translators",
         "accounts": "Accounts",
+        "explore": {
+            "title": "Explore",
+            "feeds": "Feeds",
+            "topics": "Topics"
+        },
         "communities": {
             "title": "Communities",
             "trending": "Trending",

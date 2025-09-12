@@ -70,23 +70,21 @@
     &:hover {
       background-color: var(--color-slate-25);
     }
+  }
 
-    &:not(.xs) {
-      padding-block: calc(var(--spacing) * 3);
-      padding-inline: calc(var(--spacing) * 3.5);
-    }
+  ul > :global(li:not(.xs) > *) {
+    padding-block: calc(var(--spacing) * 3);
+    padding-inline: calc(var(--spacing) * 3.5);
 
     @media screen and (min-width: 40rem) {
-      &:not(.xs) {
-        padding-block: calc(var(--spacing) * 3);
-        padding-inline: calc(var(--spacing) * 4);
-      }
+      padding-block: calc(var(--spacing) * 3);
+      padding-inline: calc(var(--spacing) * 4);
     }
+  }
 
-    .xs {
-      padding-block: calc(var(--spacing) * 0.5);
-      padding-block: calc(var(--spacing) * 1);
-    }
+  ul > :global(li.xs > *) {
+    padding-block: calc(var(--spacing) * 0.5);
+    padding-block: calc(var(--spacing) * 1);
   }
 
   ul > :global(li).selected {

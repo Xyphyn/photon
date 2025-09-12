@@ -16,4 +16,6 @@ export interface GetPosts {
   show_read?: boolean
   show_nsfw?: boolean
   page_cursor?: PaginationCursor
+  feed_id?: string
+  topic_id?: string
 }

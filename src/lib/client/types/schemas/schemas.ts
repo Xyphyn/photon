@@ -2001,3 +2001,59 @@ export interface CommunityFlair {
   blur_images: boolean
   ap_id: string | null
 }
+
+export interface GetFeeds {
+  include_communities?: boolean
+  mine_only?: boolean
+}
+
+export interface FeedView {
+  actor_id: string
+  ap_domain: string
+  children: FeedView[]
+  communities?: Community[]
+  communities_count: number
+  id: number
+  is_instance_feed: boolean
+  local: boolean
+  name: string
+  nsfl: boolean
+  nsfw: boolean
+  owner: boolean
+  public: boolean
+  published: string
+  show_posts_from_children: boolean
+  subscribed: boolean
+  subscriptions_count: number
+  title: string
+  updated: string
+  user_id: number
+  banner?: string
+  description?: string
+  description_html?: string
+  icon?: string
+  parent_feed_id?: number
+}
+
+export interface GetFeedsResponse {
+  feeds: FeedView[]
+}
+
+export interface GetTopics {
+  include_communities: boolean
+}
+
+export interface TopicView {
+  children: TopicView[]
+  communities?: Community[]
+  communities_count: number
+  id: number
+  name: string
+  show_posts_from_children: boolean
+  title: string
+  parent_topic_id?: number
+}
+
+export interface GetTopicsResponse {
+  topics: TopicView[]
+}
