@@ -50,7 +50,21 @@
     onhide,
   }: Props = $props()
 
-  let tags = $derived(parseTags(post.post.name))
+  let tags = $derived.by<{ title?: string; tags: Tag[] }>(() => {
+    const parsed = parseTags(post.post.name)
+
+    return {
+      title: parsed.title,
+      tags: [
+        ...parsed.tags,
+        ...(post.flair_list?.map((i) => ({
+          content: i.flair_title,
+          color: i.background_color,
+          icon: null,
+        })) ?? []),
+      ],
+    }
+  })
   let type = $derived(mediaType(post.post.url))
   let rule = $derived(getTagRule(tags.tags))
   let hideTitle = $derived(

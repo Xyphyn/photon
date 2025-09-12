@@ -31,6 +31,7 @@ import {
   toSortType,
 } from './rewrite'
 import type { paths } from './schema'
+import type { SubscribedType } from '../types'
 
 export class PiefedClient implements BaseClient {
   type: ClientType = { name: 'piefed', baseUrl: '/api/alpha' }
@@ -45,7 +46,7 @@ export class PiefedClient implements BaseClient {
     },
   ) {
     this.#client = createClient({
-      baseUrl: `${baseUrl}/api/alpha`,
+      baseUrl: baseUrl,
       // @ts-expect-error i dont feel like fixing this right now
       fetch: args.fetchFunction,
       headers: args.headers,
@@ -53,7 +54,7 @@ export class PiefedClient implements BaseClient {
   }
 
   async getSite(): ReturnType<BaseClient['getSite']> {
-    const response = (await this.#client.GET('/site')).data!
+    const response = (await this.#client.GET('/api/alpha/site', {})).data!
 
     return {
       admins: response.admins.map(toPersonView),
@@ -91,7 +92,7 @@ export class PiefedClient implements BaseClient {
     params: Parameters<BaseClient['createPost']>[0],
   ): ReturnType<BaseClient['createPost']> {
     const response = (
-      await this.#client.POST('/post', {
+      await this.#client.POST('/api/alpha/post', {
         body: fromCreatePost(params),
       })
     ).data!
@@ -104,16 +105,15 @@ export class PiefedClient implements BaseClient {
     params: Parameters<BaseClient['getPost']>[0],
   ): ReturnType<BaseClient['getPost']> {
     const response = (
-      await this.#client.GET('/post', {
-        // @ts-expect-error same here what is happening
+      await this.#client.GET('/api/alpha/post', {
         params: { query: fromGetPost(params) },
       })
     ).data!
 
     return {
-      community_view: toCommunityView(response.community_view),
-      cross_posts: response.cross_posts.map(toPostView),
-      moderators: response.moderators.map((i) => ({
+      community_view: toCommunityView(response.community_view!),
+      cross_posts: response.cross_posts!.map(toPostView),
+      moderators: response.moderators!.map((i) => ({
         community: toCommunity(i.community),
         moderator: toPerson(i.moderator),
       })),
@@ -124,7 +124,9 @@ export class PiefedClient implements BaseClient {
   async editPost(
     params: Parameters<BaseClient['editPost']>[0],
   ): ReturnType<BaseClient['editPost']> {
-    const response = (await this.#client.PUT('/post', { body: params })).data!
+    const response = (
+      await this.#client.PUT('/api/alpha/post', { body: params })
+    ).data!
 
     return {
       post_view: toPostView(response.post_view),
@@ -133,8 +135,9 @@ export class PiefedClient implements BaseClient {
   async deletePost(
     params: Parameters<BaseClient['deletePost']>[0],
   ): ReturnType<BaseClient['deletePost']> {
-    const response = (await this.#client.POST('/post/delete', { body: params }))
-      .data!
+    const response = (
+      await this.#client.POST('/api/alpha/post/delete', { body: params })
+    ).data!
 
     return {
       post_view: toPostView(response.post_view),
@@ -144,8 +147,9 @@ export class PiefedClient implements BaseClient {
   async removePost(
     params: Parameters<BaseClient['removePost']>[0],
   ): ReturnType<BaseClient['removePost']> {
-    const response = (await this.#client.POST('/post/remove', { body: params }))
-      .data!
+    const response = (
+      await this.#client.POST('/api/alpha/post/remove', { body: params })
+    ).data!
 
     return {
       post_view: toPostView(response.post_view),
@@ -156,8 +160,7 @@ export class PiefedClient implements BaseClient {
     params: Parameters<BaseClient['getPosts']>[0],
   ): ReturnType<BaseClient['getPosts']> {
     const response = (
-      await this.#client.GET('/post/list', {
-        // @ts-expect-error same here what is happening
+      await this.#client.GET('/api/alpha/post/list', {
         params: { query: fromGetPosts(params) },
       })
     ).data!
@@ -171,7 +174,7 @@ export class PiefedClient implements BaseClient {
     params: Parameters<BaseClient['likePost']>[0],
   ): ReturnType<BaseClient['likePost']> {
     const response = (
-      await this.#client.POST('/post/like', {
+      await this.#client.POST('/api/alpha/post/like', {
         body: { ...params },
       })
     ).data!
@@ -200,9 +203,8 @@ export class PiefedClient implements BaseClient {
     params: Parameters<BaseClient['search']>[0],
   ): ReturnType<BaseClient['search']> {
     const response = (
-      await this.#client.GET('/search', {
+      await this.#client.GET('/api/alpha/search', {
         params: {
-          // @ts-expect-error same here what is happening
           query: fromSearch(params),
         },
       })
@@ -220,8 +222,7 @@ export class PiefedClient implements BaseClient {
     params: Parameters<BaseClient['resolveObject']>[0],
   ): ReturnType<BaseClient['resolveObject']> {
     const response = (
-      await this.#client.GET('/resolve_object', {
-        // @ts-expect-error same here what is happening
+      await this.#client.GET('/api/alpha/resolve_object', {
         params: { query: params },
       })
     ).data!
@@ -238,8 +239,9 @@ export class PiefedClient implements BaseClient {
   async createCommunity(
     params: Parameters<BaseClient['createCommunity']>[0],
   ): ReturnType<BaseClient['createCommunity']> {
-    const response = (await this.#client.POST('/community', { body: params }))
-      .data!
+    const response = (
+      await this.#client.POST('/api/alpha/community', { body: params })
+    ).data!
 
     return {
       ...response,
@@ -250,9 +252,8 @@ export class PiefedClient implements BaseClient {
     params: Parameters<BaseClient['getCommunity']>[0],
   ): ReturnType<BaseClient['getCommunity']> {
     const response = (
-      await this.#client.GET('/community', {
+      await this.#client.GET('/api/alpha/community', {
         params: {
-          // @ts-expect-error same here what is happening
           query: params,
         },
       })
@@ -271,8 +272,8 @@ export class PiefedClient implements BaseClient {
     params: Parameters<BaseClient['editCommunity']>[0],
   ): ReturnType<BaseClient['editCommunity']> {
     const response = (
-      await this.#client.PUT('/community', {
-        body: { ...params, id: params.community_id },
+      await this.#client.PUT('/api/alpha/community', {
+        body: params,
       })
     ).data!
 
@@ -285,9 +286,8 @@ export class PiefedClient implements BaseClient {
     params: Parameters<BaseClient['listCommunities']>[0],
   ): ReturnType<BaseClient['listCommunities']> {
     const response = (
-      await this.#client.GET('/community/list', {
+      await this.#client.GET('/api/alpha/community/list', {
         params: {
-          // @ts-expect-error same here what is happening
           query: fromListCommunities(params),
         },
       })
@@ -301,7 +301,7 @@ export class PiefedClient implements BaseClient {
     params: Parameters<BaseClient['followCommunity']>[0],
   ): ReturnType<BaseClient['followCommunity']> {
     const response = (
-      await this.#client.POST('/community/follow', { body: params })
+      await this.#client.POST('/api/alpha/community/follow', { body: params })
     ).data!
 
     return {
@@ -313,7 +313,7 @@ export class PiefedClient implements BaseClient {
     params: Parameters<BaseClient['blockCommunity']>[0],
   ): ReturnType<BaseClient['blockCommunity']> {
     const response = (
-      await this.#client.POST('/community/block', { body: params })
+      await this.#client.POST('/api/alpha/community/block', { body: params })
     ).data!
 
     return {
@@ -325,7 +325,7 @@ export class PiefedClient implements BaseClient {
     params: Parameters<BaseClient['deleteCommunity']>[0],
   ): ReturnType<BaseClient['deleteCommunity']> {
     const response = (
-      await this.#client.POST('/community/delete', { body: params })
+      await this.#client.POST('/api/alpha/community/delete', { body: params })
     ).data!
 
     return {
@@ -345,7 +345,7 @@ export class PiefedClient implements BaseClient {
     const response = // piefed has separate methods for ban/unban
       (
         params.ban
-          ? await this.#client.POST('/community/moderate/ban', {
+          ? await this.#client.POST('/api/alpha/community/moderate/ban', {
               body: {
                 ...params,
                 expiredAt: new Date(
@@ -355,7 +355,7 @@ export class PiefedClient implements BaseClient {
                 reason: params.reason ?? 'No reason provided.',
               },
             })
-          : await this.#client.PUT('/community/moderate/unban', {
+          : await this.#client.PUT('/api/alpha/community/moderate/unban', {
               body: {
                 community_id: params.community_id,
                 user_id: params.person_id,
@@ -366,7 +366,7 @@ export class PiefedClient implements BaseClient {
     return {
       banned: params.ban,
       person_view: {
-        person: toPerson(response.bannedUser),
+        person: toPerson(response.banned_user!),
         counts: { comment_count: -1, person_id: -1, post_count: -1 },
         is_admin: false,
       },
@@ -376,7 +376,7 @@ export class PiefedClient implements BaseClient {
     params: Parameters<BaseClient['addModToCommunity']>[0],
   ): ReturnType<BaseClient['addModToCommunity']> {
     const response = (
-      await this.#client.POST('/community/mod', { body: params })
+      await this.#client.POST('/api/alpha/community/mod', { body: params })
     ).data!
 
     return {
@@ -389,7 +389,7 @@ export class PiefedClient implements BaseClient {
   async markPostAsRead(
     params: Parameters<BaseClient['markPostAsRead']>[0],
   ): ReturnType<BaseClient['markPostAsRead']> {
-    await this.#client.POST('/post/mark_as_read', {
+    await this.#client.POST('/api/alpha/post/mark_as_read', {
       body: { ...params },
     })
 
@@ -403,8 +403,9 @@ export class PiefedClient implements BaseClient {
   async lockPost(
     params: Parameters<BaseClient['lockPost']>[0],
   ): ReturnType<BaseClient['lockPost']> {
-    const response = (await this.#client.POST('/post/lock', { body: params }))
-      .data!
+    const response = (
+      await this.#client.POST('/api/alpha/post/lock', { body: params })
+    ).data!
 
     return {
       ...response,
@@ -415,7 +416,7 @@ export class PiefedClient implements BaseClient {
     params: Parameters<BaseClient['featurePost']>[0],
   ): ReturnType<BaseClient['featurePost']> {
     const response = (
-      await this.#client.POST('/post/feature', { body: params })
+      await this.#client.POST('/api/alpha/post/feature', { body: params })
     ).data!
 
     return {
@@ -423,14 +424,29 @@ export class PiefedClient implements BaseClient {
       post_view: toPostView(response.post_view),
     }
   }
-  async listPostLikes(): ReturnType<BaseClient['listPostLikes']> {
-    throw new Error('unsupported')
+  async listPostLikes(
+    params: Parameters<BaseClient['listPostLikes']>[0],
+  ): ReturnType<BaseClient['listPostLikes']> {
+    const response = (
+      await this.#client.GET('/api/alpha/post/like/list', {
+        params: { query: params },
+      })
+    ).data!
+
+    return {
+      post_likes: response.post_likes!.map((i) => ({
+        ...i,
+        creator_banned_from_community: false,
+        creator: toPerson(i.creator),
+      })),
+    }
   }
   async savePost(
     params: Parameters<BaseClient['savePost']>[0],
   ): ReturnType<BaseClient['savePost']> {
-    const response = (await this.#client.PUT('/post/save', { body: params }))
-      .data!
+    const response = (
+      await this.#client.PUT('/api/alpha/post/save', { body: params })
+    ).data!
 
     return {
       post_view: toPostView(response.post_view),
@@ -439,8 +455,9 @@ export class PiefedClient implements BaseClient {
   async createPostReport(
     params: Parameters<BaseClient['createPostReport']>[0],
   ): ReturnType<BaseClient['createPostReport']> {
-    const response = (await this.#client.POST('/post/report', { body: params }))
-      .data!
+    const response = (
+      await this.#client.POST('/api/alpha/post/report', { body: params })
+    ).data!
 
     return {
       post_report_view: {
@@ -448,8 +465,9 @@ export class PiefedClient implements BaseClient {
         community: toCommunity(response.post_report_view.community),
         post: toPost(response.post_report_view.post),
         creator: toPerson(response.post_report_view.creator),
+        // TODO figure out if this is a bug or not
         resolver: response.post_report_view.resolver
-          ? toPerson(response.post_report_view.resolver)
+          ? toPerson(response.post_report_view.resolver!)
           : undefined,
         post_creator: toPerson(response.post_report_view.post_creator),
         read: false,
@@ -473,7 +491,7 @@ export class PiefedClient implements BaseClient {
     params: Parameters<BaseClient['createComment']>[0],
   ): ReturnType<BaseClient['createComment']> {
     const response = (
-      await this.#client.POST('/comment', {
+      await this.#client.POST('/api/alpha/comment', {
         body: fromCreateComment(params),
       })
     ).data!
@@ -487,8 +505,11 @@ export class PiefedClient implements BaseClient {
   async editComment(
     params: Parameters<BaseClient['editComment']>[0],
   ): ReturnType<BaseClient['editComment']> {
-    const response = (await this.#client.PUT('/comment', { body: params }))
-      .data!
+    const response = (
+      await this.#client.PUT('/api/alpha/comment', {
+        body: { ...params, body: params.content },
+      })
+    ).data!
 
     return {
       comment_view: toCommentView(response.comment_view),
@@ -499,7 +520,7 @@ export class PiefedClient implements BaseClient {
     params: Parameters<BaseClient['deleteComment']>[0],
   ): ReturnType<BaseClient['deleteComment']> {
     const response = (
-      await this.#client.POST('/comment/delete', { body: params })
+      await this.#client.POST('/api/alpha/comment/delete', { body: params })
     ).data!
 
     return {
@@ -511,7 +532,7 @@ export class PiefedClient implements BaseClient {
     params: Parameters<BaseClient['removeComment']>[0],
   ): ReturnType<BaseClient['removeComment']> {
     const response = (
-      await this.#client.POST('/comment/remove', { body: params })
+      await this.#client.POST('/api/alpha/comment/remove', { body: params })
     ).data!
 
     return {
@@ -522,17 +543,20 @@ export class PiefedClient implements BaseClient {
   async markCommentReplyAsRead(
     params: Parameters<BaseClient['markCommentReplyAsRead']>[0],
   ): ReturnType<BaseClient['markCommentReplyAsRead']> {
-    await this.#client.POST('/comment/mark_as_read', {
+    await this.#client.POST('/api/alpha/comment/mark_as_read', {
       body: params,
     })
   }
   async likeComment(
     params: Parameters<BaseClient['likeComment']>[0],
   ): ReturnType<BaseClient['likeComment']> {
-    // TODO remove any
     const response = (
-      await this.#client.POST('/comment/like', {
-        body: params,
+      await this.#client.POST('/api/alpha/comment/like', {
+        body: {
+          ...params,
+          // TODO add private votes
+          private: false,
+        },
       })
     ).data!
 
@@ -542,14 +566,28 @@ export class PiefedClient implements BaseClient {
     }
   }
 
-  async listCommentLikes(): ReturnType<BaseClient['listCommentLikes']> {
-    throw new Error('unsupported')
+  async listCommentLikes(
+    params: Parameters<BaseClient['listCommentLikes']>[0],
+  ): ReturnType<BaseClient['listCommentLikes']> {
+    const response = (
+      await this.#client.GET('/api/alpha/comment/like/list', {
+        params: { query: params },
+      })
+    ).data!
+
+    return {
+      comment_likes: response.comment_likes!.map((i) => ({
+        ...i,
+        creator: toPerson(i.creator),
+      })),
+    }
   }
   async saveComment(
     params: Parameters<BaseClient['saveComment']>[0],
   ): ReturnType<BaseClient['saveComment']> {
-    const response = (await this.#client.PUT('/comment/save', { body: params }))
-      .data!
+    const response = (
+      await this.#client.PUT('/api/alpha/comment/save', { body: params })
+    ).data!
 
     return {
       ...response,
@@ -565,8 +603,7 @@ export class PiefedClient implements BaseClient {
     params: Parameters<BaseClient['getComments']>[0],
   ): ReturnType<BaseClient['getComments']> {
     const response = (
-      await this.#client.GET('/comment/list', {
-        // @ts-expect-error same here what is happening
+      await this.#client.GET('/api/alpha/comment/list', {
         params: { query: fromGetComments(params) },
       })
     ).data!
@@ -579,9 +616,11 @@ export class PiefedClient implements BaseClient {
   async getComment(
     params: Parameters<BaseClient['getComment']>[0],
   ): ReturnType<BaseClient['getComment']> {
-    const response =
-      // @ts-expect-error same here what is happening
-      (await this.#client.GET('/comment', { params: { query: params } })).data!
+    const response = (
+      await this.#client.GET('/api/alpha/comment', {
+        params: { query: params },
+      })
+    ).data!
 
     return {
       ...response,
@@ -593,7 +632,13 @@ export class PiefedClient implements BaseClient {
     params: Parameters<BaseClient['createCommentReport']>[0],
   ): ReturnType<BaseClient['createCommentReport']> {
     const response = (
-      await this.#client.POST('/comment/report', { body: params })
+      await this.#client.POST('/api/alpha/comment/report', {
+        body: {
+          ...params,
+          // TODO add remote reports
+          report_remote: false,
+        },
+      })
     ).data!
 
     return {
@@ -605,9 +650,11 @@ export class PiefedClient implements BaseClient {
         comment_creator: toPerson(response.comment_report_view.comment_creator),
         creator: toPerson(response.comment_report_view.creator),
         post: toPost(response.comment_report_view.post),
+        // TODO figure out what's wrong here
         resolver: response.comment_report_view.resolver
           ? toPerson(response.comment_report_view.resolver)
           : undefined,
+        subscribed: response.comment_report_view.subscribed as SubscribedType,
       },
     }
   }
@@ -621,8 +668,7 @@ export class PiefedClient implements BaseClient {
     params: Parameters<BaseClient['getPrivateMessages']>[0],
   ): ReturnType<BaseClient['getPrivateMessages']> {
     const response = (
-      await this.#client.GET('/private_message/list', {
-        // @ts-expect-error query params are screwed up
+      await this.#client.GET('/api/alpha/private_message/list', {
         params: { query: params },
       })
     ).data!
@@ -635,7 +681,7 @@ export class PiefedClient implements BaseClient {
     params: Parameters<BaseClient['createPrivateMessage']>[0],
   ): ReturnType<BaseClient['createPrivateMessage']> {
     const response = (
-      await this.#client.POST('/private_message', { body: params })
+      await this.#client.POST('/api/alpha/private_message', { body: params })
     ).data!
 
     return {
@@ -647,7 +693,7 @@ export class PiefedClient implements BaseClient {
     params: Parameters<BaseClient['editPrivateMessage']>[0],
   ): ReturnType<BaseClient['editPrivateMessage']> {
     const response = (
-      await this.#client.PUT('/private_message', { body: params })
+      await this.#client.PUT('/api/alpha/private_message', { body: params })
     ).data!
 
     return {
@@ -659,7 +705,9 @@ export class PiefedClient implements BaseClient {
     params: Parameters<BaseClient['deletePrivateMessage']>[0],
   ): ReturnType<BaseClient['deletePrivateMessage']> {
     const response = (
-      await this.#client.POST('/private_message/delete', { body: params })
+      await this.#client.POST('/api/alpha/private_message/delete', {
+        body: params,
+      })
     ).data!
 
     return {
@@ -671,7 +719,9 @@ export class PiefedClient implements BaseClient {
     params: Parameters<BaseClient['markPrivateMessageAsRead']>[0],
   ): ReturnType<BaseClient['markPrivateMessageAsRead']> {
     const response = (
-      await this.#client.POST('/private_message/mark_as_read', { body: params })
+      await this.#client.POST('/api/alpha/private_message/mark_as_read', {
+        body: params,
+      })
     ).data!
 
     return {
@@ -700,7 +750,7 @@ export class PiefedClient implements BaseClient {
   async login(
     params: Parameters<BaseClient['login']>[0],
   ): ReturnType<BaseClient['login']> {
-    const response = await this.#client.POST('/user/login', {
+    const response = await this.#client.POST('/api/alpha/user/login', {
       body: { username: params.username_or_email, password: params.password },
     })!
 
@@ -717,11 +767,10 @@ export class PiefedClient implements BaseClient {
     params: Parameters<BaseClient['getPersonDetails']>[0],
   ): ReturnType<BaseClient['getPersonDetails']> {
     const response = (
-      await this.#client.GET('/user', {
+      await this.#client.GET('/api/alpha/user', {
         params: {
           query: {
             ...params,
-            // @ts-expect-error more param cursedness
             include_content: true,
             sort: toSortType(params.sort),
           },
@@ -743,8 +792,7 @@ export class PiefedClient implements BaseClient {
     params: Parameters<BaseClient['getPersonMentions']>[0],
   ): ReturnType<BaseClient['getPersonMentions']> {
     const response = (
-      await this.#client.GET('/user/mentions', {
-        // @ts-expect-error yet another query param bug
+      await this.#client.GET('/api/alpha/user/mentions', {
         params: { query: { ...params, sort: toCommentSortType(params.sort) } },
       })
     ).data!
@@ -757,7 +805,7 @@ export class PiefedClient implements BaseClient {
     params: Parameters<BaseClient['markPersonMentionAsRead']>[0],
   ): ReturnType<BaseClient['markPersonMentionAsRead']> {
     // @ts-expect-error this method isnt documented
-    await this.#client.POST('/mention/mark_as_read', {
+    await this.#client.POST('/api/alpha/mention/mark_as_read', {
       body: params,
     })
   }
@@ -765,8 +813,7 @@ export class PiefedClient implements BaseClient {
     params: Parameters<BaseClient['getReplies']>[0],
   ): ReturnType<BaseClient['getReplies']> {
     const response = (
-      await this.#client.GET('/user/replies', {
-        // @ts-expect-error same here what is happening
+      await this.#client.GET('/api/alpha/user/replies', {
         params: { query: fromGetReplies(params) },
       })
     ).data!
@@ -786,8 +833,9 @@ export class PiefedClient implements BaseClient {
   async blockPerson(
     params: Parameters<BaseClient['blockPerson']>[0],
   ): ReturnType<BaseClient['blockPerson']> {
-    const response = (await this.#client.POST('/user/block', { body: params }))
-      .data!
+    const response = (
+      await this.#client.POST('/api/alpha/user/block', { body: params })
+    ).data!
 
     return {
       ...response,
@@ -809,7 +857,9 @@ export class PiefedClient implements BaseClient {
     throw new Error('unsupported')
   }
   async markAllAsRead(): ReturnType<BaseClient['markAllAsRead']> {
-    const response = (await this.#client.POST('/user/mark_all_as_read')).data!
+    const response = (
+      await this.#client.POST('/api/alpha/user/mark_all_as_read')
+    ).data!
 
     return {
       replies: response.replies.map(toCommentReplyView),
@@ -818,9 +868,12 @@ export class PiefedClient implements BaseClient {
   async saveUserSettings(
     params: Parameters<BaseClient['saveUserSettings']>[0],
   ): ReturnType<BaseClient['saveUserSettings']> {
-    return (
-      await this.#client.PUT('/user/save_user_settings', { body: params })
-    ).data!
+    await this.#client.PUT('/api/alpha/user/save_user_settings', {
+      body: params,
+    })
+    return {
+      success: true,
+    }
   }
   async changePassword(): ReturnType<BaseClient['changePassword']> {
     throw new Error('unsupported')
@@ -829,7 +882,7 @@ export class PiefedClient implements BaseClient {
     throw new Error('unsupported')
   }
   async getUnreadCount(): ReturnType<BaseClient['getUnreadCount']> {
-    return (await this.#client.GET('/user/unread_count')).data!
+    return (await this.#client.GET('/api/alpha/user/unread_count')).data!
   }
   async verifyEmail(): ReturnType<BaseClient['verifyEmail']> {
     throw new Error('unsupported')
@@ -872,13 +925,14 @@ export class PiefedClient implements BaseClient {
   async getFederatedInstances(): ReturnType<
     BaseClient['getFederatedInstances']
   > {
-    return (await this.#client.GET('/federated_instances')).data!
+    return (await this.#client.GET('/api/alpha/federated_instances')).data!
   }
   async blockInstance(
     params: Parameters<BaseClient['blockInstance']>[0],
   ): ReturnType<BaseClient['blockInstance']> {
-    return (await this.#client.POST('/site/block', { body: { ...params } }))!
-      .data!
+    return (await this.#client.POST('/api/alpha/site/block', {
+      body: { ...params },
+    }))!.data!
   }
   async uploadImage(
     params: Parameters<BaseClient['uploadImage']>[0],
@@ -887,7 +941,7 @@ export class PiefedClient implements BaseClient {
     formData.append('file', params.image as File)
 
     const response = (
-      await this.#client.POST('/upload/image', {
+      await this.#client.POST('/api/alpha/upload/image', {
         // @ts-expect-error this is the only working way to do this
         body: formData,
       })
@@ -903,7 +957,7 @@ export class PiefedClient implements BaseClient {
     params: NullableFnArg<BaseClient['setFlair']>[0],
   ): NullableFnReturn<BaseClient['setFlair']> {
     const response = (
-      await this.#client.POST('/user/set_flair', { body: params })
+      await this.#client.POST('/api/alpha/user/set_flair', { body: params })
     ).data!
 
     return toPersonView(response.person_view)

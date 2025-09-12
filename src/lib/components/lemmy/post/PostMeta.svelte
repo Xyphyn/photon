@@ -11,7 +11,7 @@
   export interface Tag {
     content: string
     color?: string
-    icon?: IconSource
+    icon?: IconSource | null
   }
 
   export const textToTag: Map<string, Tag> = new Map<string, Tag>([
@@ -323,7 +323,7 @@
             {#snippet icon()}
               {#if tag.icon}
                 <Icon src={tag.icon} micro size="14" />
-              {:else}
+              {:else if tag !== null}
                 <Icon src={Tag} micro size="14" />
               {/if}
             {/snippet}
