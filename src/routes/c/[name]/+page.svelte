@@ -2,22 +2,22 @@
   import { browser } from '$app/environment'
   import { navigating, page } from '$app/state'
   import { profile } from '$lib/auth.svelte.js'
+  import { site } from '$lib/client/lemmy.svelte'
   import CommunityCard from '$lib/components/lemmy/community/CommunityCard.svelte'
   import CommunityHeader from '$lib/components/lemmy/community/CommunityHeader.svelte'
   import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
   import ViewSelect from '$lib/components/lemmy/dropdowns/ViewSelect.svelte'
+  import { PostFeed, VirtualFeed } from '$lib/components/lemmy/post'
   import { Header } from '$lib/components/ui/layout'
   import Pageination from '$lib/components/ui/layout/Pageination.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { t } from '$lib/i18n/translations.js'
-  import { site } from '$lib/client/lemmy.svelte'
   import { resumables } from '$lib/lemmy/item'
   import { setSessionStorage } from '$lib/session.js'
   import { settings } from '$lib/settings.svelte.js'
   import { Badge, Button, Modal, Note } from 'mono-svelte'
   import { onDestroy, onMount } from 'svelte'
   import { ArrowRight, ChartBar, Icon, Plus, XMark } from 'svelte-hero-icons'
-  import { PostFeed, VirtualFeed } from '$lib/components/lemmy/post'
 
   let { data } = $props()
 
@@ -27,14 +27,14 @@
     if (browser)
       setSessionStorage(
         'lastSeenCommunity',
-        data.community.value.community_view.community,
+        data.community.community_view.community,
       )
 
     resumables.add({
-      name: data.community.value.community_view.community.title,
+      name: data.community.community_view.community.title,
       type: 'community',
       url: page.url.toString(),
-      avatar: data.community.value.community_view.community.icon,
+      avatar: data.community.community_view.community.icon,
     })
   })
 
@@ -47,6 +47,21 @@
   })
 </script>
 
+<svelte:head>
+  <title>{data.community.community_view.community.title}</title>
+
+  <meta
+    name="og:title"
+    content={data.community.community_view.community.title}
+  />
+  {#if data.community.community_view.community.description}
+    <meta
+      name="og:description"
+      content={data.community.community_view.community.description}
+    />
+  {/if}
+</svelte:head>
+
 {#if sidebar}
   <Modal bind:open={sidebar}>
     {#snippet customTitle()}
@@ -54,8 +69,8 @@
     {/snippet}
     <div>
       <CommunityCard
-        bind:community_view={data.community.value.community_view}
-        moderators={data.community.value.moderators}
+        bind:community_view={data.community.community_view}
+        moderators={data.community.moderators}
       />
     </div>
   </Modal>
@@ -64,11 +79,11 @@
 <Header pageHeader>
   <div class="flex flex-col w-full">
     <CommunityHeader
-      bind:community={data.community.value.community_view.community}
-      bind:subscribed={data.community.value.community_view.subscribed}
-      blocked={data.community.value.community_view.blocked}
-      moderators={data.community.value.moderators}
-      counts={data.community.value.community_view.counts}
+      bind:community={data.community.community_view.community}
+      bind:subscribed={data.community.community_view.subscribed}
+      blocked={data.community.community_view.blocked}
+      moderators={data.community.moderators}
+      counts={data.community.community_view.counts}
       class="w-full relative"
       compact="lg"
       avatarCircle={false}
@@ -76,15 +91,15 @@
   </div>
   {#snippet extended()}
     <div class="flex flex-row gap-2">
-      <Sort selected={data.sort} />
+      <Sort selected={data.params.sort!} />
       <ViewSelect showLabel />
     </div>
   {/snippet}
 </Header>
 
 {#if profile.current.user}
-  {#if !data.community.value.discussion_languages.every( (l) => profile.current.user?.discussion_languages.includes(l), ) && profile.current.user.discussion_languages.length > 0}
-    {@const missing = data.community.value.discussion_languages.filter(
+  {#if !data.community.discussion_languages.every( (l) => profile.current.user?.discussion_languages.includes(l), ) && profile.current.user.discussion_languages.length > 0}
+    {@const missing = data.community.discussion_languages.filter(
       (i) => !profile.current.user?.discussion_languages.includes(i),
     )}
     <Note class="p-1! pl-3! flex-col md:flex-row">
@@ -118,7 +133,7 @@
   {/if}
 {/if}
 
-{#if data.community.value.community_view.blocked}
+{#if data.community.community_view.blocked}
   <Placeholder
     icon={XMark}
     title="Blocked"
@@ -134,10 +149,12 @@
 {:else}
   {@const SvelteComponent = browser ? VirtualFeed : PostFeed}
   <SvelteComponent
-    posts={data.posts.posts}
-    bind:feedData={data}
-    feedId="community"
-    community
+    bind:posts={data.posts}
+    bind:lastSeen={
+      () => data.client.lastSeen ?? 0, (v) => (data.client.lastSeen = v)
+    }
+    bind:params={data.params}
+    virtualList={{ itemHeights: data.client?.itemHeights ?? [] }}
   />
 {/if}
 
@@ -146,8 +163,7 @@
   class="mt-auto"
 >
   <Pageination
-    page={data.page}
-    cursor={{ next: data.cursor.next }}
+    cursor={{ next: data.next_page }}
     href={(page) =>
       typeof page == 'number' ? `?page=${page}` : `?cursor=${page}`}
   >

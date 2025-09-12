@@ -34,7 +34,6 @@
     Language,
     Link,
     Photo,
-    Plus,
     Sparkles,
     XMark,
   } from 'svelte-hero-icons'

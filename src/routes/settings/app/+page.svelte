@@ -9,7 +9,6 @@
   import { settings } from '$lib/settings.svelte'
   import { Button, Option, Select } from 'mono-svelte'
   import {
-    ArrowPath,
     ArrowsPointingOut,
     ArrowsRightLeft,
     ArrowsUpDown,
@@ -263,12 +262,6 @@
       <Option value="browser">Browser</Option>
     </Select>
   </Setting>
-  <ToggleSetting
-    icon={ArrowPath}
-    bind:checked={settings.randomPlaceholders}
-    title={$t('settings.app.placeholders.title')}
-    description={$t('settings.app.placeholders.description')}
-  />
   <ToggleSetting
     icon={ArrowsPointingOut}
     bind:checked={settings.expandImages}

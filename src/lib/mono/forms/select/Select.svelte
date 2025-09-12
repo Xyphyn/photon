@@ -96,9 +96,9 @@
   <Label
     text={label}
     customText={customLabel}
-    class={['space-y-1 relative', baseClass]}
+    class={['space-y-1 relative max-w-full w-max', baseClass]}
   >
-    <div class="relative w-max max-w-full" role="presentation">
+    <div class="relative max-w-full" role="presentation">
       <select
         {@attach attachment}
         {...rest}

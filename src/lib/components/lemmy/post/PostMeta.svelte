@@ -78,6 +78,7 @@
     type IconSource,
   } from 'svelte-hero-icons'
   import { CommunityLink } from '../community'
+  import { SvelteMap } from 'svelte/reactivity'
 
   interface Props {
     community?: Community
@@ -134,7 +135,7 @@
       color: 'red-subtle' | 'yellow-subtle' | 'green-subtle'
       label: string
     }
-  > = new Map([
+  > = new SvelteMap([
     [
       'nsfw',
       {

@@ -1,17 +1,13 @@
 <script lang="ts">
   import { browser } from '$app/environment'
+  import { client } from '$lib/client/lemmy.svelte'
+  import type { GetPosts } from '$lib/client/types'
   import VirtualList from '$lib/components/render/VirtualList.svelte'
   import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
   import { t } from '$lib/i18n/translations'
-  import { client } from '$lib/client/lemmy.svelte'
-  import {
-    postFeeds,
-    type PostFeed,
-    type PostFeedID,
-  } from '$lib/lemmy/postfeed.svelte'
   import { settings } from '$lib/settings.svelte.js'
-  import type { PostView } from '$lib/client/types'
+  import type { PostView } from 'lemmy-js-client'
   import { Button } from 'mono-svelte'
   import { onDestroy, onMount, untrack } from 'svelte'
   import {
@@ -29,17 +25,19 @@
 
   interface Props {
     posts: PostView[]
+    params: GetPosts
+    virtualList?: { itemHeights: (number | null)[] }
+    lastSeen?: number
     community?: boolean
-    feedId: PostFeedID
-    feedData: PostFeed['data']
     children?: import('svelte').Snippet
   }
 
   let {
     posts = $bindable(),
+    params = $bindable(),
+    virtualList = $bindable(),
+    lastSeen = $bindable(0),
     community = false,
-    feedId,
-    feedData = $bindable(),
     children,
   }: Props = $props()
 
@@ -53,9 +51,7 @@
   let hasMore = $state(true)
 
   const abortLoad = new AbortController()
-  let seenIds = new SvelteSet<number>(
-    feedData.posts.posts.map((post) => post.post.id),
-  )
+  let seenIds = new SvelteSet<number>(posts.map((post) => post.post.id))
 
   async function loadMore() {
     if (!hasMore || loading) return
@@ -67,19 +63,7 @@
         func: (input, init) =>
           fetch(input, { ...init, signal: abortLoad.signal }),
       })
-        .getPosts({
-          page_cursor: feedData.cursor.next,
-          disliked_only: feedData.disliked_only,
-          liked_only: feedData.liked_only,
-          community_id: feedData.community_id,
-          community_name: feedData.community_name,
-          limit: feedData.limit,
-          page: feedData.page,
-          saved_only: feedData.saved_only,
-          show_hidden: feedData.show_hidden,
-          sort: feedData.sort,
-          type_: feedData.type_,
-        })
+        .getPosts(params)
         .catch((e) => {
           throw new Error(e)
         })
@@ -88,16 +72,15 @@
 
       hasMore = newPosts.posts.length != 0
 
-      feedData.cursor.next = newPosts.next_page
-      feedData.posts.posts.push(
+      params.page_cursor = newPosts.next_page
+
+      posts.push(
         ...newPosts.posts.filter((post) => {
           if (seenIds.has(post.post.id)) return false
           seenIds.add(post.post.id)
           return true
         }),
       )
-
-      postFeeds.value[feedId].data = feedData
 
       loading = false
     } catch (e) {
@@ -115,7 +98,7 @@
 
       if (!id) return
 
-      postFeeds.value[feedId].lastSeen = Number(id)
+      lastSeen = Number(id)
 
       observer.unobserve(element)
     })
@@ -158,8 +141,8 @@
   $effect(() => {
     if (listComp) {
       untrack(() => {
-        if (postFeeds.value[feedId].lastSeen != 0) {
-          listComp?.scrollToIndex(postFeeds.value[feedId].lastSeen, true)
+        if (lastSeen != 0) {
+          listComp?.scrollToIndex(lastSeen, true)
         }
       })
     }
@@ -199,7 +182,7 @@
         {initialOffset}
         overscan={3}
         estimatedHeight={settings.view == 'cozy' ? 500 : 150}
-        bind:restore={postFeeds.value[feedId].clientData}
+        bind:restore={virtualList}
         bind:this={listComp}
       >
         {#snippet item(row)}
@@ -264,7 +247,7 @@
       <div style="border-top-width: 0">
         <EndPlaceholder>
           {$t('routes.frontpage.endFeed', {
-            community_name: feedData.community_name ?? 'undefined',
+            community_name: params.community_name ?? 'undefined',
           })}
           {#snippet action()}
             <Button color="tertiary" icon={ChevronDoubleUp}>

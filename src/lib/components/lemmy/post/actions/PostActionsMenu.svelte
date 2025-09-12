@@ -32,7 +32,7 @@
     editing: boolean
   }
 
-  let { post, onhide, editing = $bindable() }: Props = $props()
+  let { post = $bindable(), onhide, editing = $bindable() }: Props = $props()
 
   function share(global: boolean = true) {
     const link = global

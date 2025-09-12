@@ -7,10 +7,9 @@
   import { PostFeed, VirtualFeed } from '$lib/components/lemmy/post'
   import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
   import Skeleton from '$lib/components/ui/generic/Skeleton.svelte'
-  import Pageination from '$lib/components/ui/layout/Pageination.svelte'
   import { Header } from '$lib/components/ui/layout'
+  import Pageination from '$lib/components/ui/layout/Pageination.svelte'
   import { t } from '$lib/i18n/translations.js'
-  import { postFeeds } from '$lib/lemmy/postfeed.svelte.js'
   import { settings, SSR_ENABLED } from '$lib/settings.svelte.js'
   import Button from 'mono-svelte/button/Button.svelte'
   import { ArrowRight, ChartBar, Icon } from 'svelte-hero-icons'
@@ -87,9 +86,12 @@
       </div>{/each}
   {:then feed}
     <FeedComponent
-      bind:posts={feed.posts.posts}
-      bind:feedData={() => feed, (v) => (postFeeds.value.main.data = v)}
-      feedId="main"
+      bind:posts={feed.posts}
+      bind:lastSeen={
+        () => feed.client.lastSeen ?? 0, (v) => (feed.client.lastSeen = v)
+      }
+      bind:params={feed.params}
+      virtualList={{ itemHeights: feed.client?.itemHeights ?? [] }}
     />
     <svelte:element
       this={settings.infiniteScroll && !settings.posts.noVirtualize
@@ -105,7 +107,7 @@
         })}
         {#snippet action()}
           <Pageination
-            cursor={{ next: feed.cursor.next }}
+            cursor={{ next: feed.next_page }}
             href={(page) =>
               typeof page == 'number' ? `?page=${page}` : `?cursor=${page}`}
             back={false}

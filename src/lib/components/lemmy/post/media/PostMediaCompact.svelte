@@ -64,7 +64,7 @@
     <div
       class={[
         'relative overflow-hidden rounded-2xl max-h-full h-full',
-        'border border-slate-200 dark:border-zinc-800 hover-scale-effect',
+        'border border-slate-200 dark:border-zinc-800 hover-scale-effect bg-slate-200 dark:bg-zinc-800',
       ]}
     >
       {#if post.thumbnail_url || type == 'image'}
