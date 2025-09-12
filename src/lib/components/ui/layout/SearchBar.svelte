@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { navigating } from '$app/state'
+  import { navigating, page } from '$app/state'
   import { t } from '$lib/i18n/translations'
   import { Button, TextInput } from 'mono-svelte'
   import { MagnifyingGlass } from 'svelte-hero-icons'
@@ -29,7 +29,7 @@
     class="shrink-0 h-full aspect-square shadow-md"
     title="Search"
     rounding="pill"
-    loading={navigating.to?.route.id == '/search'}
+    loading={navigating.to?.route.id == page.url.pathname}
     icon={MagnifyingGlass}
   ></Button>
 </div>

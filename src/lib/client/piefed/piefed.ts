@@ -20,6 +20,7 @@ import {
   toCommentView,
   toCommunity,
   toCommunityView,
+  toFeedView,
   toLocalSite,
   toMyUser,
   toPerson,
@@ -29,6 +30,7 @@ import {
   toPostView,
   toPrivateMessageView,
   toSortType,
+  toTopicView,
 } from './rewrite'
 import type { paths } from './schema'
 import type { SubscribedType } from '../types'
@@ -166,6 +168,7 @@ export class PiefedClient implements BaseClient {
     ).data!
 
     return {
+      ...response,
       posts: response.posts.map(toPostView),
       next_page: (Number(params.page_cursor ?? 1) + 1).toString(),
     }
@@ -968,5 +971,35 @@ export class PiefedClient implements BaseClient {
   }
   async deleteImage(): ReturnType<BaseClient['deleteImage']> {
     throw new Error('unsupported')
+  }
+
+  async getFeeds(
+    params: NullableFnArg<BaseClient['getFeeds']>[0],
+  ): NullableFnReturn<BaseClient['getFeeds']> {
+    const response = (
+      await this.#client.GET('/api/alpha/feed/list', {
+        params: { query: params },
+      })
+    ).data!
+
+    return {
+      ...response,
+      feeds: response.feeds.map(toFeedView),
+    }
+  }
+
+  async getTopics(
+    params: NullableFnArg<BaseClient['getTopics']>[0],
+  ): NullableFnReturn<BaseClient['getTopics']> {
+    const response = (
+      await this.#client.GET('/api/alpha/topic/list', {
+        params: { query: params },
+      })
+    ).data!
+
+    return {
+      ...response,
+      topics: response.topics.map(toTopicView),
+    }
   }
 }

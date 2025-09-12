@@ -3,7 +3,7 @@
 
   interface Props {
     label: string
-    content: string
+    content: string | number
     formatted?: boolean
     labelClass?: string
     contentClass?: string

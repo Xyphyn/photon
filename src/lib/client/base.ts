@@ -223,8 +223,9 @@ export abstract class BaseClient {
     form: types.UploadImage,
   ): Promise<types.UploadImageResponse>
   abstract deleteImage(form: types.DeleteImage): Promise<boolean>
-
   abstract setFlair?(form: types.SetPersonFlair): Promise<types.PersonView>
+  abstract getFeeds?(form: types.GetFeeds): Promise<types.GetFeedsResponse>
+  abstract getTopics?(form: types.GetTopics): Promise<types.GetTopicsResponse>
 }
 
 export type NullableFnArg<T, Fallback = never> = T extends (
