@@ -38,8 +38,8 @@ export async function load({ params, fetch, url, route }) {
       sidebar: {
         component: CommunityCard,
         props: {
-          community_view: feedData.community.community_view,
-          moderators: feedData.community.moderators,
+          community_view: feedData?.community?.community_view,
+          moderators: feedData?.community?.moderators,
         },
       },
     },

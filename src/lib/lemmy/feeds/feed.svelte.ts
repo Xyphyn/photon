@@ -1,4 +1,5 @@
 import { browser } from '$app/environment'
+import { profile } from '$lib/auth.svelte'
 import type {
   CommentView,
   CommunityView,
@@ -109,3 +110,10 @@ export function feed<Type extends keyof FeedTypes>(
 
   return feedData
 }
+
+// feed hooks
+$effect.root(() => {
+  $effect(() => {
+    if (profile.meta.profile) feeds.clear()
+  })
+})
