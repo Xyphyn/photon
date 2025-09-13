@@ -16,10 +16,7 @@
 
   onMount(() => {
     if (browser)
-      setSessionStorage(
-        'lastSeenCommunity',
-        data.community.community_view.community,
-      )
+      setSessionStorage('lastSeenCommunity', data.community.community_view)
 
     resumables.add({
       name: data.community.community_view.community.title,

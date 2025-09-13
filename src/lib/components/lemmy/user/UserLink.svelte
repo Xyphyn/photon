@@ -88,7 +88,7 @@
 </script>
 
 <a
-  class="items-center flex flex-row gap-1 hover:underline max-w-full min-w-0 {clazz}"
+  class="items-center inline-flex flex-row gap-1 hover:underline max-w-full min-w-0 {clazz}"
   href="/u/{user.name}@{new URL(user.actor_id).hostname}"
   data-sveltekit-preload-data="tap"
 >

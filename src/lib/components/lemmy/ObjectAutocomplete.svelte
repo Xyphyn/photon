@@ -44,9 +44,10 @@
         sort: 'TopAll',
       })
 
-      return results.communities.map((c) => c.community)
+      return results.communities
     }}
-    extractName={(c) => `${c.title}@${new URL(c.actor_id).hostname}`}
+    extractName={(c) =>
+      `${c.community.name}@${new URL(c.community.actor_id).hostname}`}
     bind:query={q}
     {...rest}
   >
@@ -67,11 +68,15 @@
     {#snippet children({ item, select })}
       <div in:fly|global={{ y: -4, opacity: 0 }}>
         <MenuButton onclick={() => select(item)}>
-          <Avatar url={item.icon} alt={item.title} width={24} />
+          <Avatar
+            url={item.community.icon}
+            alt={item.community.title}
+            width={24}
+          />
           <div class="flex flex-col text-left">
-            <span>{item.title}</span>
+            <span>{item.community.title}</span>
             <span class="text-xs opacity-80">
-              {new URL(item.actor_id).hostname}
+              {new URL(item.community.actor_id).hostname}
             </span>
           </div>
         </MenuButton>

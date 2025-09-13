@@ -1,10 +1,10 @@
 import { browser } from '$app/environment'
-import type { Community } from '$lib/client/types'
+import type { CommunityView } from '$lib/client/types'
 
 interface SessionStorage {
-  lastSeenCommunity?: Community
+  lastSeenCommunity?: CommunityView
   postDraft?: {
-    community: Community | null
+    community: CommunityView | null
     title: string
     body: string
     image: FileList | null

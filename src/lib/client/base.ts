@@ -226,6 +226,7 @@ export abstract class BaseClient {
   abstract setFlair?(form: types.SetPersonFlair): Promise<types.PersonView>
   abstract getFeeds?(form: types.GetFeeds): Promise<types.GetFeedsResponse>
   abstract getTopics?(form: types.GetTopics): Promise<types.GetTopicsResponse>
+  abstract assignFlair?(form: types.AssignFlair): Promise<types.PostView>
 }
 
 export type NullableFnArg<T, Fallback = never> = T extends (

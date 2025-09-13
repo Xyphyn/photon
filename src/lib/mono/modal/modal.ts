@@ -1,3 +1,4 @@
+import { t } from '$lib/i18n/translations'
 import { type Snippet } from 'svelte'
 import type { IconSource } from 'svelte-hero-icons'
 import { writable } from 'svelte/store'
@@ -41,7 +42,7 @@ export const action = (action?: {
       }
     : () => shownModal.set(undefined),
   type: action?.type ?? 'secondary',
-  content: action?.content || 'OK',
+  content: action?.content || t.get('common.back'),
   close: action?.close ?? true,
 })
 

@@ -62,6 +62,7 @@
           color: i.background_color,
           icon: null,
           type: 'flair' as 'flair' | 'custom',
+          textColor: i.text_color,
         })) ?? []),
       ],
     }
