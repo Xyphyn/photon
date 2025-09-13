@@ -9,4 +9,4 @@
   let { post }: Props = $props()
 </script>
 
-<Post {post} class="py-0!" />
+<Post {post} />

@@ -54,13 +54,13 @@
 
 <span
   {...rest}
-  class="{allowIconOnly
-    ? 'max-md:px-1.5 max-md:py-1.5'
-    : ''} px-2 py-1 {badgeRoundness[
-    rounding
-  ]} text-xs font-medium flex items-center gap-1 ring-1 ring-inset {badgeColor[
-    color
-  ]} {clazz}"
+  class={[
+    allowIconOnly && 'max-md:px-1.5 max-md:py-1.5',
+    'text-xs font-medium flex items-center gap-1 ring-1 ring-inset px-2 py-1',
+    badgeRoundness[rounding],
+    badgeColor[color],
+    clazz,
+  ]}
   title={label}
 >
   {@render icon?.()}

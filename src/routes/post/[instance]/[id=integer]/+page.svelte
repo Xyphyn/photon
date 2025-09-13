@@ -10,6 +10,7 @@
     postLink,
     PostMedia,
     PostMeta,
+    type Tag,
   } from '$lib/components/lemmy/post'
   import Markdown from '$lib/components/markdown/Markdown.svelte'
   import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
@@ -71,6 +72,23 @@
     loading = false
     data.thread.singleThread = false
   }
+
+  let tags = $derived.by<{ title?: string; tags: Tag[] }>(() => {
+    const parsed = parseTags(data.post.post.name)
+
+    return {
+      title: parsed.title,
+      tags: [
+        ...parsed.tags,
+        ...(data.post.flair_list?.map((i) => ({
+          content: i.flair_title,
+          color: i.background_color,
+          icon: null,
+          textColor: i.text_color,
+        })) ?? []),
+      ],
+    }
+  })
 </script>
 
 <svelte:head>
@@ -129,14 +147,11 @@
         edited={data.post.post.updated}
         title={data.post.post.name}
         style="width: max-content;"
-        tags={parseTags(data.post.post.name).tags}
+        tags={tags.tags}
       />
     </div>
     <h1 class="font-medium text-xl leading-5">
-      <Markdown
-        source={parseTags(data.post.post.name).title ?? data.post.post.name}
-        inline
-      />
+      <Markdown source={tags.title ?? data.post.post.name} inline />
     </h1>
   </header>
   <PostMedia

@@ -142,7 +142,9 @@
       {/if}
     {/if}
     {#if user.flair}
-      <Badge color="blue-subtle" class="px-1.5! py-0.5!">{user.flair}</Badge>
+      <Badge color="blue-subtle" class="px-1.5! py-0.5! whitespace-nowrap">
+        {user.flair}
+      </Badge>
     {/if}
     {@render extraBadges?.()}
   {/if}
