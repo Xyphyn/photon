@@ -3,6 +3,7 @@ import { profile } from '$lib/auth.svelte'
 import type {
   CommentView,
   CommunityView,
+  FeedView,
   GetComments,
   GetCommunityResponse,
   GetPersonDetails,
@@ -48,7 +49,7 @@ export class Feed<Params, Response> {
   }
 }
 
-interface FeedTypes {
+export interface FeedTypes {
   '/': [
     GetPosts,
     {
@@ -92,6 +93,20 @@ interface FeedTypes {
         focus?: string
       }
       params: { posts: GetPost; comments: GetComments }
+    },
+  ]
+  '/f/[id]': [
+    GetPosts,
+
+    {
+      posts: PostView[]
+      next_page?: string
+      params: GetPosts
+      feed: Promise<FeedView | undefined>
+      client: {
+        itemHeights?: (number | null)[]
+        lastSeen?: number
+      }
     },
   ]
 }

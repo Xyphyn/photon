@@ -22,7 +22,7 @@
     nameDetail?: import('svelte').Snippet
     actions?: import('svelte').Snippet
     children?: import('svelte').Snippet
-    compact?: 'lg'
+    compact?: 'always' | 'lg'
     avatarCircle?: boolean
   }
 
@@ -48,6 +48,7 @@
   <div
     class={[
       compact == 'lg' && 'lg:hidden',
+      compact == 'always' && 'hidden',
       'absolute inset-0 h-96 overflow-x-hidden -z-10',
     ]}
   >
@@ -80,7 +81,7 @@
       !avatarCircle && 'rounded-3xl!',
     ]}
   />
-  <div class="py-4 flex flex-col xl:flex-row gap-4">
+  <div class="py-4 flex flex-col gap-4">
     <div class="flex flex-col flex-1">
       <svelte:element
         this={url ? 'a' : 'span'}
@@ -107,7 +108,8 @@
       <div
         class={[
           compact == 'lg' && 'lg:hidden',
-          'text-sm flex flex-row flex-wrap overflow-hidden gap-4 h-full',
+          compact == 'always' ? 'hidden' : 'flex',
+          'text-sm flex-row flex-wrap overflow-hidden gap-4 h-full',
         ]}
       >
         {#each stats as stat}
@@ -136,6 +138,7 @@
     <div
       class={[
         compact == 'lg' && 'lg:hidden',
+        compact == 'always' && 'hidden',
         'relative w-full mb-4 text-base',
         center ? 'text-center' : 'text-left',
       ]}

@@ -50,7 +50,7 @@
     blocked?: boolean
     banner?: boolean
     class?: string
-    compact?: 'lg'
+    compact?: 'always' | 'lg'
     avatarCircle?: boolean
   }
 
