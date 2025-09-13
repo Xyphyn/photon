@@ -11,6 +11,7 @@ import type {
   GetPost,
   GetPosts,
   PostView,
+  TopicView,
 } from '$lib/client/types'
 import { recursiveEqual } from '$lib/util.svelte'
 import { SvelteMap } from 'svelte/reactivity'
@@ -103,6 +104,19 @@ export interface FeedTypes {
       next_page?: string
       params: GetPosts
       feed: Promise<FeedView | undefined>
+      client: {
+        itemHeights?: (number | null)[]
+        lastSeen?: number
+      }
+    },
+  ]
+  '/topic/[id]': [
+    GetPosts,
+    {
+      posts: PostView[]
+      next_page?: string
+      params: GetPosts
+      topic: Promise<TopicView | undefined>
       client: {
         itemHeights?: (number | null)[]
         lastSeen?: number

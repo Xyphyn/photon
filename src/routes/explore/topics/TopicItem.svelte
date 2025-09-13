@@ -9,4 +9,4 @@
   let { topic }: Props = $props()
 </script>
 
-<CommonItem title={topic.title ?? topic.name} href="/t/{topic.id}" />
+<CommonItem title={topic.title ?? topic.name} href="/topic/{topic.id}" />

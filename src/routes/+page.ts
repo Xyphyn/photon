@@ -1,4 +1,3 @@
-import { env } from '$env/dynamic/public'
 import { client } from '$lib/client/lemmy.svelte.js'
 import type { ListingType, SortType } from '$lib/client/types'
 import { t } from '$lib/i18n/translations.js'
@@ -26,8 +25,6 @@ export async function load({ url, fetch, route }) {
     limit: 20,
     show_hidden: settings.posts.showHidden,
   })
-
-  if (env.PUBLIC_SSR_ENABLED?.toLowerCase() == 'true') await feedData
 
   return {
     feed: new ReactiveState((await awaitIfServer(feedData)).data),

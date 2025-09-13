@@ -1,27 +1,19 @@
 <script lang="ts">
   import { browser } from '$app/environment'
+  import { page } from '$app/state'
   import { site } from '$lib/client/lemmy.svelte'
   import Location from '$lib/components/lemmy/dropdowns/Location.svelte'
   import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
   import ViewSelect from '$lib/components/lemmy/dropdowns/ViewSelect.svelte'
   import { PostFeed, VirtualFeed } from '$lib/components/lemmy/post'
-  import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
   import Skeleton from '$lib/components/ui/generic/Skeleton.svelte'
-  import { Header } from '$lib/components/ui/layout'
-  import Pageination from '$lib/components/ui/layout/Pageination.svelte'
+  import { Header, Pageination } from '$lib/components/ui/layout'
   import { t } from '$lib/i18n/translations.js'
   import { settings, SSR_ENABLED } from '$lib/settings.svelte.js'
-  import Button from 'mono-svelte/button/Button.svelte'
-  import { ArrowRight, ChartBar, Icon } from 'svelte-hero-icons'
+  import { Button } from 'mono-svelte'
+  import { ArrowRight, Icon } from 'svelte-hero-icons'
 
   let { data = $bindable() } = $props()
-
-  $effect(() => {
-    if (data.filters.value.type_)
-      settings.defaultSort.feed = data.filters.value.type_
-    if (data.filters.value.sort)
-      settings.defaultSort.sort = data.filters.value.sort
-  })
 
   const FeedComponent = $derived(
     settings.infiniteScroll && browser && !settings.posts.noVirtualize
@@ -38,43 +30,36 @@
   </title>
 </svelte:head>
 
-<div class="flex flex-col gap-2 max-w-full w-full min-w-0">
-  <Header pageHeader>
-    {$t('routes.frontpage.title')}
+<Header pageHeader>
+  {$t('routes.frontpage.title')}
+  {#snippet extended()}
+    <form class="" method="get" action={page.url.pathname}>
+      <div class="flex flex-row gap-2">
+        <Location
+          name="type"
+          navigate
+          bind:selected={data.filters.value.type_!}
+        />
+        <Sort
+          placement="bottom"
+          name="sort"
+          navigate
+          bind:selected={data.filters.value.sort!}
+        />
+        <ViewSelect placement="bottom" />
 
-    {#snippet extended()}
-      <form class="" method="get" action="/">
-        <div class="flex flex-row gap-2">
-          {#if data.filters.value.type_}
-            <Location
-              name="type"
-              navigate
-              bind:selected={data.filters.value.type_}
-            />
-          {/if}
-          <Sort
-            placement="bottom"
-            name="sort"
-            navigate
-            bind:selected={data.filters.value.sort}
-          />
-          <ViewSelect placement="bottom" />
+        <noscript>
+          <Button class="self-end h-[34px] aspect-square" size="custom" submit>
+            <Icon src={ArrowRight} size="16" micro />
+          </Button>
+        </noscript>
+      </div>
+    </form>
+  {/snippet}
+</Header>
 
-          <noscript>
-            <Button
-              class="self-end h-[34px] aspect-square"
-              size="custom"
-              submit
-            >
-              <Icon src={ArrowRight} size="16" micro />
-            </Button>
-          </noscript>
-        </div>
-      </form>
-    {/snippet}
-  </Header>
-
-  {#await data.feed.value}
+{#await data.feed.value}
+  <div class="space-y-4">
     {#each new Array(5) as _, index}{_}
       <div
         class="animate-pop-in"
@@ -83,37 +68,29 @@
           100}%"
       >
         <Skeleton />
-      </div>{/each}
-  {:then feed}
-    <FeedComponent
-      bind:posts={feed.posts}
-      bind:lastSeen={
-        () => feed.client.lastSeen ?? 0, (v) => (feed.client.lastSeen = v)
-      }
-      bind:params={feed.params}
-      virtualList={{ itemHeights: feed.client?.itemHeights ?? [] }}
+      </div>
+    {/each}
+  </div>
+{:then feed}
+  <FeedComponent
+    bind:posts={feed.posts}
+    bind:lastSeen={
+      () => feed.client.lastSeen ?? 0, (v) => (feed.client.lastSeen = v)
+    }
+    bind:params={feed.params}
+    virtualList={{ itemHeights: feed.client?.itemHeights ?? [] }}
+  />
+  <svelte:element
+    this={settings.infiniteScroll && !settings.posts.noVirtualize
+      ? 'noscript'
+      : 'div'}
+    class="mt-auto flex flex-col"
+  >
+    <Pageination
+      cursor={{ next: feed.next_page }}
+      href={(page) =>
+        typeof page == 'number' ? `?page=${page}` : `?cursor=${page}`}
+      back={false}
     />
-    <svelte:element
-      this={settings.infiniteScroll && !settings.posts.noVirtualize
-        ? 'noscript'
-        : 'div'}
-      class="mt-auto flex flex-col"
-    >
-      <EndPlaceholder>
-        <Icon src={ChartBar} size="16" mini />
-
-        {$t('routes.frontpage.footer', {
-          users: site.data?.site_view?.counts?.users_active_day ?? '??',
-        })}
-        {#snippet action()}
-          <Pageination
-            cursor={{ next: feed.next_page }}
-            href={(page) =>
-              typeof page == 'number' ? `?page=${page}` : `?cursor=${page}`}
-            back={false}
-          />
-        {/snippet}
-      </EndPlaceholder>
-    </svelte:element>
-  {/await}
-</div>
+  </svelte:element>
+{/await}

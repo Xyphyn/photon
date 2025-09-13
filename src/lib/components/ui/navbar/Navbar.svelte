@@ -91,9 +91,10 @@
       />
     {/if}
     <NavButton
-      href="/communities"
-      label={$t('nav.communities')}
+      href="/explore/communities"
+      label={$t('routes.explore.title')}
       icon={GlobeAlt}
+      isSelectedFilter={(path) => path.startsWith('/explore')}
     />
     <NavButton href="/search" label={$t('nav.search')} icon={MagnifyingGlass} />
     <NavButton
