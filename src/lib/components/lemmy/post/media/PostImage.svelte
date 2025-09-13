@@ -67,7 +67,7 @@
       />
     {/each}
     <img
-      src={bestImageURL(post, false, -1, null)}
+      src={blur ? '' : bestImageURL(post, false, -1, null)}
       loading="lazy"
       class={[
         'max-w-full rounded-xl z-30 transition-all max-h-[60vh] duration-500 object-contain mx-auto group-hover:scale-98 group-active:scale-95',

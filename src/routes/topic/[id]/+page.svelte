@@ -4,19 +4,14 @@
   import Expandable from '$lib/components/ui/Expandable.svelte'
   import { PostListShell } from '$lib/components/ui/layout'
   import { t } from '$lib/i18n/translations.js'
-  import type { FeedTypes } from '$lib/lemmy/feeds/feed.svelte.js'
   import { communityLink } from '$lib/util.svelte.js'
   import { Spinner } from 'mono-svelte'
   import { SvelteURL } from 'svelte/reactivity'
 
-  interface Props {
-    data: FeedTypes['/f/[id]'][1]
-  }
-
-  let { data = $bindable() }: Props = $props()
+  let { data = $bindable() } = $props()
 
   let title = $state('Loading...')
-  data.feed.then((i) => (title = i?.title ?? ''))
+  data.topic.then((i) => (title = i?.title ?? ''))
 </script>
 
 <svelte:head>
@@ -36,27 +31,26 @@
 >
   {#snippet extended()}
     <div class="min-h-56 grid place-items-center">
-      {#await data.feed}
+      {#await data.topic}
         <Spinner width={32} />
-      {:then feed}
-        {#if feed}
+      {:then topic}
+        {#if topic}
           <EntityHeader
             class="w-full relative flex flex-col"
             compact="always"
             avatarCircle={false}
-            name={feed.title}
-            avatar={feed.icon}
+            name={topic.name}
           >
             {#snippet nameDetail()}
-              <p class="text-lg">{feed.name}</p>
+              <p class="text-lg">{topic.name}</p>
             {/snippet}
-            {#if feed.communities}
+            {#if topic.communities}
               <Expandable>
                 {#snippet title()}
                   {$t('content.communities')}
                 {/snippet}
                 <ItemList
-                  items={feed.communities.map((i) => ({
+                  items={topic.communities.map((i) => ({
                     id: i.id,
                     name: i.title,
                     url: communityLink(i),

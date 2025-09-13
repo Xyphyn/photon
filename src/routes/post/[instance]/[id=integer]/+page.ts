@@ -25,15 +25,28 @@ function buildContext(thread?: string) {
   return { parentId, showContext, max_depth, focus: thread?.split('.').at(-1) }
 }
 
-function findInFeed(id: '/' | '/c/[name]', postId: string) {
-  return feed(id, async (p) => ({
-    // this will never run
-    ...(await client().getPosts(p)),
-    client: {},
-    params: p,
-  }))
-    .peek()
-    ?.posts.find((i) => i.post.id.toString() == postId)
+async function findInFeed(id: '/' | '/c/[name]' | '/f/[id]', postId: string) {
+  // this never actually loads anything
+  if (id == '/') {
+    const resolved = feed(id, async (p) => ({
+      posts: (await client().getPosts(p)).posts,
+      client: {},
+      params: p,
+    })).peek()
+
+    return resolved
+      ? resolved?.posts?.find((i) => i.post.id.toString() == postId)
+      : undefined
+  } else {
+    return feed(id, async (p) => ({
+      ...(await client().getPosts(p)),
+      client: {},
+      params: p,
+      community: await client().getCommunity({}),
+    }))
+      .peek()
+      ?.posts.find((i) => i.post.id.toString() == postId)
+  }
 }
 
 export async function load({ params, url, route }) {
@@ -44,7 +57,9 @@ export async function load({ params, url, route }) {
   const sort = settings?.defaultSort?.comments ?? 'Hot'
 
   const cachedPost =
-    findInFeed('/', params.id) ?? findInFeed('/c/[name]', params.id)
+    (await findInFeed('/', params.id)) ??
+    (await findInFeed('/c/[name]', params.id)) ??
+    (await findInFeed('/f/[id]', params.id))
 
   const {
     parentId,

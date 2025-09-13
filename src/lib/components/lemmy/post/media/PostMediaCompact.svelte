@@ -94,7 +94,7 @@
             />
           {/each}
           <img
-            src={bestImageURL(post, thumbnail, -1, null)}
+            src={blur ? '' : bestImageURL(post, thumbnail, -1, null)}
             loading="lazy"
             class={[
               'object-cover relative overflow-hidden rounded-xl h-full',
