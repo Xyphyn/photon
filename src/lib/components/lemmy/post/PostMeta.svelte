@@ -12,12 +12,14 @@
     content: string
     color?: string
     icon?: IconSource | null
+    textColor?: string
+    type: 'flair' | 'custom'
   }
 
   export const textToTag: Map<string, Tag> = new Map<string, Tag>([
-    ['OC', { content: 'OC', color: '#03A8F240' }],
-    ['NSFL', { content: 'NSFL', color: '#ff000040' }],
-    ['CW', { content: 'CW', color: '#ff000040' }],
+    ['OC', { content: 'OC', color: '#03A8F240', type: 'custom' }],
+    ['NSFL', { content: 'NSFL', color: '#ff000040', type: 'custom' }],
+    ['CW', { content: 'CW', color: '#ff000040', type: 'custom' }],
   ])
 
   export const parseTags = (
@@ -38,6 +40,7 @@
             extracted.push(
               textToTag.get(content) ?? {
                 content: content,
+                type: 'custom',
               },
             )
           })
@@ -308,28 +311,34 @@
     {/if}
   </div>
   <div
-    class="flex flex-row min-sm:justify-end items-center self-center
-    flex-wrap gap-2 *:shrink-0 badges min-sm:ml-2"
+    class="flex flex-row min-sm:justify-end items-center self-center flex-wrap gap-2 *:shrink-0 badges min-sm:ml-2"
     style="grid-area: badges;"
   >
     {#if tags}
       {#each tags as tag}
-        <a
+        {@const href =
+          tag.type == 'flair'
+            ? null
+            : `/search?community=${community?.id}&q=[${tag.content}]&type=Posts`}
+        <svelte:element
+          this={href ? 'a' : 'div'}
+          {href}
           class="hover:brightness-110"
-          href="/search?community={community?.id}&q=[{tag.content}]&type=Posts"
-          style={tag.color ? `--tag-color: ${tag.color};` : ''}
+          style="{tag.color ? `--tag-color: ${tag.color};` : ''} {tag.textColor
+            ? `--tag-text-color: ${tag.textColor}`
+            : ''}"
         >
           <Badge class={tag.color ? 'badge-tag-color' : ''}>
             {#snippet icon()}
               {#if tag.icon}
                 <Icon src={tag.icon} micro size="14" />
-              {:else if tag !== null}
+              {:else if tag === undefined}
                 <Icon src={Tag} micro size="14" />
               {/if}
             {/snippet}
             {tag.content}
           </Badge>
-        </a>
+        </svelte:element>
       {/each}
     {/if}
     {#each Object.keys(badges)
@@ -339,8 +348,8 @@
       .map((i) => badgeToData.get(i as BadgeType))
       // remove null
       .filter((i) => i != undefined) as badge}
-      <Badge label={badge.label} color={badge.color} allowIconOnly
-        >{#snippet icon()}
+      <Badge label={badge.label} color={badge.color} allowIconOnly>
+        {#snippet icon()}
           <Icon src={badge.icon} micro size="14" />{/snippet}{badge.label}
       </Badge>
     {/each}
@@ -420,5 +429,6 @@
 
   :global(.badge-tag-color) {
     background-color: var(--tag-color) !important;
+    color: var(--tag-text-color, #000) !important;
   }
 </style>

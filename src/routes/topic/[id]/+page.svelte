@@ -11,7 +11,7 @@
   let { data = $bindable() } = $props()
 
   let title = $state('Loading...')
-  data.topic.then((i) => (title = i?.title ?? ''))
+  data.topic.then((i) => (title = i?.name ?? ''))
 </script>
 
 <svelte:head>

@@ -131,7 +131,7 @@
     animate={false}
   >
     {#snippet item(p, index)}
-      <label class="relative">
+      <label class="relative block">
         <input
           type="radio"
           id={p.id.toString()}
