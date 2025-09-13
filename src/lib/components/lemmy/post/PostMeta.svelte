@@ -428,7 +428,7 @@
   }
 
   :global(.badge-tag-color) {
-    background-color: var(--tag-color) !important;
+    background-color: var(--tag-color, #fff) !important;
     color: var(--tag-text-color, #000) !important;
   }
 </style>

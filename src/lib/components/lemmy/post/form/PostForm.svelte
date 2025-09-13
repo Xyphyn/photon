@@ -1,5 +1,15 @@
 <script lang="ts">
-  import { profile } from '$lib/auth.svelte.js'
+  // This file is genuinely atrocious. It was here since the start of Photon,
+  // 2 years ago. I'm very sorry about this. please don't think this is
+  // my peak of development.
+
+  import { client, site } from '$lib/client/lemmy.svelte'
+  import type {
+    CommunityView,
+    Post,
+    PostResponse,
+    PostView,
+  } from '$lib/client/types'
   import ErrorContainer, {
     clearErrorScope,
     pushError,
@@ -10,34 +20,36 @@
   import Avatar from '$lib/components/ui/Avatar.svelte'
   import { Header } from '$lib/components/ui/layout'
   import { t } from '$lib/i18n/translations'
-  import { client, site } from '$lib/client/lemmy.svelte'
   import { errorMessage } from '$lib/lemmy/error'
   import { getSessionStorage, setSessionStorage } from '$lib/session.js'
   import { placeholders } from '$lib/util.svelte.js'
-  import type { Community, Post, PostView } from '$lib/client/types'
   import {
+    Badge,
     Button,
-    Modal,
+    Material,
+    modal,
+    Option,
     Select,
     Spinner,
     Switch,
     TextArea,
     TextInput,
     toast,
-    Option,
   } from 'mono-svelte'
   import { onDestroy, onMount } from 'svelte'
   import {
     ArrowPath,
     ChatBubbleBottomCenterText,
+    Check,
     Icon,
     Language,
     Link,
     Photo,
+    Plus,
     Sparkles,
+    Tag,
     XMark,
   } from 'svelte-hero-icons'
-  import { slide } from 'svelte/transition'
 
   interface Props {
     edit?: boolean
@@ -45,9 +57,9 @@
      * The post to edit
      */
     editingPost?: Post | undefined
-    passedCommunity?: Community | undefined
+    passedCommunity?: CommunityView
     passedData?: {
-      community: Community | null
+      community: CommunityView | null
       title: string
       body: string
       image: FileList | null
@@ -57,6 +69,7 @@
       loading: boolean
       alt_text?: string
       language_id?: number | string
+      flair_list: number[]
     }
     formtitle?: import('svelte').Snippet
     onsubmit?: (post: PostView) => void
@@ -71,12 +84,9 @@
       title: '',
       body: '',
       image: null,
-      thumbnail: undefined,
-      url: undefined,
       nsfw: false,
       loading: false,
-      alt_text: undefined,
-      language_id: undefined,
+      flair_list: [],
     },
     formtitle,
     onsubmit,
@@ -90,24 +100,14 @@
   })
 
   let saveDraft = edit ? false : true
-  let communitySearch = $state(passedCommunity?.name ?? '')
-
-  let communities: Community[] = $state([])
+  let communitySearch = $state(passedCommunity?.community.name ?? '')
 
   onMount(async () => {
     if (editingPost) Object.assign(data, editingPost)
 
     if (passedCommunity) {
       data.community = passedCommunity
-      communitySearch = passedCommunity.name
-    } else {
-      const list = await client().listCommunities({
-        type_: 'All',
-        sort: 'Active',
-        limit: 40,
-      })
-
-      communities = list.communities.map((c) => c.community)
+      communitySearch = passedCommunity.community.name
     }
   })
 
@@ -139,12 +139,13 @@
     data.loading = true
 
     try {
+      let post: PostResponse
       if (edit) {
         if (!editingPost) {
           throw new Error('Post is being edited but editingPost is null')
         }
 
-        const post = await client().editPost({
+        post = await client().editPost({
           name: data.title,
           body: data.body,
           url: data.url || undefined,
@@ -156,11 +157,9 @@
         })
 
         if (!post) throw new Error('Failed to edit post')
-
-        onsubmit?.(post.post_view)
       } else {
-        const post = await client().createPost({
-          community_id: data.community!.id,
+        post = await client().createPost({
+          community_id: data.community!.community.id,
           name: data.title,
           body: data.body,
           url: data.url || undefined,
@@ -173,8 +172,19 @@
         if (!post) throw new Error('Failed to upload post')
 
         saveDraft = false
-        onsubmit?.(post.post_view)
       }
+
+      if (data.flair_list.length > 0) {
+        const piefed = client()
+        if (piefed.assignFlair) {
+          await piefed.assignFlair({
+            flair_id_list: data.flair_list,
+            post_id: post.post_view.post.id,
+          })
+        }
+      }
+
+      onsubmit?.(post.post_view)
     } catch (err) {
       pushError({ message: errorMessage(err as string), scope: 'post-form' })
       data.loading = false
@@ -232,10 +242,12 @@
     title: '',
   })
 
-  let addAltText = $state(false)
-
   $effect(() => {
     generation.generatable = canGenerateTitle(data.url)
+  })
+
+  $effect(() => {
+    if (data.community) data.flair_list = []
   })
 </script>
 
@@ -248,22 +260,39 @@
   {/await}
 {/if}
 
-{#if addAltText}
-  <Modal title={$t('form.post.altText')} bind:open={addAltText}>
-    <form
-      onsubmit={(e) => {
-        e.preventDefault()
-        addAltText = !addAltText
-      }}
-      class="space-y-4 w-full"
-    >
-      <TextArea bind:value={data.alt_text} />
-      <Button size="lg" submit class="w-full">
-        {$t('common.back')}
-      </Button>
-    </form>
-  </Modal>
-{/if}
+{#snippet altText()}
+  <TextArea bind:value={data.alt_text} />
+{/snippet}
+
+{#snippet flairs()}
+  <Material color="uniform" class="flex flex-row gap-4 flex-wrap">
+    {#if data.community?.flair_list}
+      {#each data.community.flair_list as flair}
+        {@const selected = data.flair_list?.some((i) => i == flair.id)}
+        <button
+          class="rounded-full cursor-pointer hover:brightness-100"
+          style="background-color: {flair.background_color};"
+          onclick={() => {
+            if (selected) {
+              const index = data.flair_list.findIndex((i) => i == flair.id)
+              if (index != -1) data.flair_list.splice(index, 1)
+            } else data.flair_list.push(flair.id)
+          }}
+        >
+          <Badge
+            color={selected ? 'gray-subtle' : 'custom'}
+            class="ring-white/20"
+          >
+            {#snippet icon()}
+              <Icon src={selected ? Check : Plus} size="16" micro />
+            {/snippet}
+            {flair.flair_title}
+          </Badge>
+        </button>
+      {/each}
+    {/if}
+  </Material>
+{/snippet}
 
 <form
   onsubmit={(e) => {
@@ -282,11 +311,8 @@
     {#if !data.community}
       <ObjectAutocomplete
         bind:q={communitySearch}
-        items={communities}
-        jwt={profile.current?.jwt}
         listing_type="All"
         label={$t('form.post.community')}
-        required
         onselect={(e) => {
           const c = e
           if (!c) {
@@ -311,15 +337,15 @@
         >
           {#snippet prefix()}
             <Avatar
-              url={data?.community?.icon}
-              alt={data.community?.name}
+              url={data?.community?.community.icon}
+              alt={data.community?.community.name}
               width={24}
             />
           {/snippet}
           <div class="flex flex-col gap-0">
-            <span class="text-sm">{data.community.name}</span>
+            <span class="text-sm">{data.community?.community.name}</span>
             <span class="text-[10px] leading-3">
-              {new URL(data.community.actor_id).hostname}
+              {new URL(data.community.community.actor_id).hostname}
             </span>
           </div>
         </Button>
@@ -349,13 +375,15 @@
       <div class="flex items-center gap-2 actions">
         {#if data.url}
           <Button
-            onclick={() => (addAltText = !addAltText)}
+            onclick={() =>
+              modal({ title: $t('form.post.altText'), snippet: altText })}
             rounding="pill"
             size="sm"
             color={data.alt_text ? 'primary' : 'ghost'}
             class="text-xs"
             icon={ChatBubbleBottomCenterText}
-            >{$t('form.post.altText')}
+          >
+            {$t('form.post.altText')}
           </Button>
         {/if}
         <Button
@@ -399,8 +427,8 @@
         }}
         size="sm"
         rounding="pill"
+        icon={Link}
       >
-        <Icon src={Link} size="16" micro />
         {$t('form.post.addUrl')}
       </Button>
       <Button
@@ -410,23 +438,33 @@
         }}
         size="sm"
         rounding="pill"
+        icon={Photo}
       >
-        <Icon src={Photo} size="16" micro />
         {$t('form.post.uploadImage')}
       </Button>
     {/if}
     {#if data.language_id === undefined}
-      <Button size="sm" rounding="pill" onclick={() => (data.language_id = 0)}>
-        <Icon src={Language} size="16" micro />
+      <Button
+        size="sm"
+        rounding="pill"
+        onclick={() => (data.language_id = 0)}
+        icon={Language}
+      >
         {$t('form.post.setLanguage')}
       </Button>
     {/if}
+    {#if (data.community?.flair_list?.length ?? 0) > 0}
+      <Button
+        onclick={() => modal({ title: $t('form.post.flair'), snippet: flairs })}
+        size="sm"
+        rounding="pill"
+        icon={Tag}
+        color={(data.flair_list?.length ?? 0) > 0 ? 'primary' : 'secondary'}
+      >
+        {$t('form.post.flair')}
+      </Button>
+    {/if}
   </div>
-  {#if addAltText}
-    <div transition:slide={{ axis: 'y', duration: 150 }} class="w-full">
-      <TextInput label={$t('form.post.altText')} bind:value={data.alt_text} />
-    </div>
-  {/if}
   <Switch bind:checked={data.nsfw}>{$t('form.post.nsfw')}</Switch>
   {#if data.language_id !== undefined}
     {#if site.data}

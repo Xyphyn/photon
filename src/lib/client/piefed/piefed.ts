@@ -1002,4 +1002,16 @@ export class PiefedClient implements BaseClient {
       topics: response.topics.map(toTopicView),
     }
   }
+
+  async assignFlair(
+    params: NullableFnArg<BaseClient['assignFlair']>[0],
+  ): NullableFnReturn<BaseClient['assignFlair']> {
+    const response = (
+      await this.#client.POST('/api/alpha/post/assign_flair', {
+        body: params,
+      })
+    ).data!
+
+    return toPostView(response)
+  }
 }

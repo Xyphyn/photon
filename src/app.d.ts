@@ -1,7 +1,6 @@
 // See https://kit.svelte.dev/docs/types#app
 
 import type { Action } from '$lib/components/ui/navbar/commands/actions.svelte'
-import type { ComponentType } from 'svelte'
 
 // for information about these interfaces
 declare global {
@@ -13,7 +12,7 @@ declare global {
     interface PageData {
       slots?: {
         sidebar?: {
-          component?: ComponentType
+          component?: Component<Props, unknown, 'community_view'>
           props?: any
         }
       }

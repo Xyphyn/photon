@@ -144,7 +144,8 @@
             "addUrl": "Add URL",
             "setLanguage": "Set language",
             "unset": "Unset",
-            "readMore": "Read more"
+            "readMore": "Read more",
+            "flair": "Add flair"
         },
         "profile": {
             "displayName": "Display name",

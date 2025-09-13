@@ -263,6 +263,7 @@ export interface CommunityView {
   blocked: boolean
   counts: CommunityAggregates
   banned_from_community: boolean
+  flair_list?: CommunityFlair[]
 }
 export type CommunityVisibility = 'Public' | 'LocalOnly'
 
@@ -2056,4 +2057,9 @@ export interface TopicView {
 
 export interface GetTopicsResponse {
   topics: TopicView[]
+}
+
+export interface AssignFlair {
+  post_id: number
+  flair_id_list: number[]
 }

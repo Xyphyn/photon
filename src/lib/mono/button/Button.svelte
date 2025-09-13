@@ -140,7 +140,12 @@
   {:else if prefix}
     {@render prefix?.()}
   {:else if icon}
-    <Icon src={icon} size="16" mini />
+    <Icon
+      src={icon}
+      size="16"
+      mini
+      class={[color == 'secondary' && 'text-slate-600 dark:text-zinc-400']}
+    />
   {/if}
   {@render children?.()}
   {@render suffix?.()}

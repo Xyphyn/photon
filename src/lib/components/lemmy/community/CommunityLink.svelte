@@ -1,9 +1,9 @@
 <script lang="ts">
-  import Avatar from '$lib/components/ui/Avatar.svelte'
-  import { communityLink } from '$lib/util.svelte'
-  import { settings } from '$lib/settings.svelte.js'
-  import { t } from '$lib/i18n/translations'
   import type { Community } from '$lib/client/types'
+  import Avatar from '$lib/components/ui/Avatar.svelte'
+  import { t } from '$lib/i18n/translations'
+  import { settings } from '$lib/settings.svelte.js'
+  import { communityLink } from '$lib/util.svelte'
   import { ExclamationTriangle, Icon } from 'svelte-hero-icons'
   import type { HTMLAnchorAttributes } from 'svelte/elements'
 
@@ -39,17 +39,15 @@
 
 <a
   {...rest}
-  class="items-center flex flex-row gap-2 hover:underline max-w-full min-w-0 {clazz}"
+  class={[
+    'items-center inline-flex flex-row gap-2 hover:underline max-w-full min-w-0',
+    clazz,
+  ]}
   href={communityLink(community)}
   data-sveltekit-preload-data="tap"
 >
   {#if avatar && !badges.nsfw}
-    <Avatar
-      url={community.icon ??
-        `https://api.dicebear.com/6.x/initials/svg?seed=${community.name}`}
-      alt={community.name}
-      width={avatarSize}
-    />
+    <Avatar url={community.icon} alt={community.name} width={avatarSize} />
   {/if}
 
   {#if name}
