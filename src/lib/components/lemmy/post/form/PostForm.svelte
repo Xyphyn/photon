@@ -61,7 +61,7 @@
     passedData?: {
       community: CommunityView | null
       title: string
-      body: string
+      body?: string
       image: FileList | null
       thumbnail?: string
       url?: string
@@ -104,6 +104,12 @@
 
   onMount(async () => {
     if (editingPost) Object.assign(data, editingPost)
+
+    if (editingPost?.community_id && !data.community) {
+      data.community = (
+        await client().getCommunity({ id: editingPost.community_id })
+      ).community_view
+    }
 
     if (passedCommunity) {
       data.community = passedCommunity
@@ -174,14 +180,12 @@
         saveDraft = false
       }
 
-      if (data.flair_list.length > 0) {
-        const piefed = client()
-        if (piefed.assignFlair) {
-          await piefed.assignFlair({
-            flair_id_list: data.flair_list,
-            post_id: post.post_view.post.id,
-          })
-        }
+      const piefed = client()
+      if (piefed.assignFlair) {
+        await piefed.assignFlair({
+          flair_id_list: data.flair_list,
+          post_id: post.post_view.post.id,
+        })
       }
 
       onsubmit?.(post.post_view)
@@ -244,10 +248,6 @@
 
   $effect(() => {
     generation.generatable = canGenerateTitle(data.url)
-  })
-
-  $effect(() => {
-    if (data.community) data.flair_list = []
   })
 </script>
 

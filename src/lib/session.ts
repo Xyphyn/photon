@@ -6,7 +6,7 @@ interface SessionStorage {
   postDraft?: {
     community: CommunityView | null
     title: string
-    body: string
+    body?: string
     image: FileList | null
     url?: string
     nsfw: boolean
