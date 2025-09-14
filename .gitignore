@@ -15,3 +15,4 @@ yarn.lock
 
 playwright-report
 test-results
+.vscode

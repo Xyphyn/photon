@@ -26,6 +26,7 @@
     required?: boolean
     id?: string
     label?: string
+    editing?: boolean
     oncomment?: (comment: CommentResponse) => void
     onconfirm?: (value: string) => void
     oncancel?: (cancel: boolean) => void
@@ -41,6 +42,7 @@
     value = $bindable(''),
     actions = true,
     preview: previewAction = true,
+    editing = false,
     oncancel,
     oncomment,
     ...rest
@@ -51,7 +53,13 @@
   let language: number | undefined = $state()
 
   async function submit() {
-    if (!profile.current?.user || !profile.current?.jwt || value == '') return
+    if (
+      !profile.current?.user ||
+      !profile.current?.jwt ||
+      value == '' ||
+      editing
+    )
+      return
 
     loading = true
 
