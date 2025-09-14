@@ -66,6 +66,15 @@
           post = e
           onedit?.(e)
         }}
+        passedData={{
+          body: post.post.body,
+          title: post.post.name,
+          community: null,
+          flair_list: post.flair_list?.map((i) => i.id) ?? [],
+          image: null,
+          loading: false,
+          nsfw: post.post.nsfw,
+        }}
       >
         {#snippet formtitle()}
           <!-- Have the title not exist at all -->
