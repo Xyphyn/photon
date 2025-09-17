@@ -4,6 +4,7 @@ import { client } from '$lib/client/lemmy.svelte'
 import CommunityCard from '$lib/components/lemmy/community/CommunityCard.svelte'
 import { feed } from '$lib/lemmy/feeds/feed.svelte.js'
 import { settings } from '$lib/settings.svelte'
+import { ReactiveState } from '$lib/util.svelte.js'
 import { redirect } from '@sveltejs/kit'
 
 function buildContext(thread?: string) {
@@ -92,26 +93,28 @@ export async function load({ params, url, route }) {
     }
   })
 
-  const loaded = await feedData.load({
-    comments: {
-      post_id: Number(params.id),
-      type_: 'All',
-      max_depth: max_depth,
-      saved_only: false,
-      sort: sort,
-      parent_id: parentId,
-    },
-    posts: { id: Number(params.id) },
-    preload: cachedPost,
-  })
+  const loaded = new ReactiveState(
+    await feedData.load({
+      comments: {
+        post_id: Number(params.id),
+        type_: 'All',
+        max_depth: max_depth,
+        saved_only: false,
+        sort: sort,
+        parent_id: parentId,
+      },
+      posts: { id: Number(params.id) },
+      preload: cachedPost,
+    }),
+  )
 
   return {
-    ...loaded,
+    data: loaded,
     slots: {
       sidebar: {
         component: CommunityCard,
         props: {
-          community_view: loaded.meta.then((i) => i.community_view),
+          community_view: loaded.value.meta.then((i) => i.community_view),
         },
       },
     },

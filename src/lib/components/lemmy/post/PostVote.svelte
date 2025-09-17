@@ -136,8 +136,8 @@
   )}
   <div
     class={[
-      buttonColor.secondary,
-      'rounded-3xl h-full font-medium flex relative',
+      buttonColor.ghost,
+      'rounded-3xl h-full font-medium flex relative hover:bg-transparent!',
       voteRatio < 85 && settings.voteRatioBar && 'vote-ratio',
     ]}
     aria-label={$t('aria.vote.group')}

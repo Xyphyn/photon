@@ -32,26 +32,30 @@
   import { expoOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'
   import CommentProvider from './CommentProvider.svelte'
+  import { ReactiveState } from '$lib/util.svelte'
 
   let { data } = $props()
 
   onMount(() => {
-    data.meta.then((i) => data.post == i.post_view)
+    data.data.value.meta.then((i) => data.data.value.post == i.post_view)
 
     resumables.add({
-      name: data.post.post.name,
+      name: data.data.value.post.post.name,
       type: 'post',
       url: page.url.toString(),
-      avatar: data.post.post.thumbnail_url,
+      avatar: data.data.value.post.post.thumbnail_url,
     })
 
-    if (!(data.post.read && settings.markPostsAsRead) && profile.current?.jwt) {
+    if (
+      !(data.data.value.post.read && settings.markPostsAsRead) &&
+      profile.current?.jwt
+    ) {
       client()
         .markPostAsRead({
           read: true,
-          post_ids: [data.post.post.id],
+          post_ids: [data.data.value.post.post.id],
         })
-        .then(() => (data.post.read = true))
+        .then(() => (data.data.value.post.read = true))
     }
   })
 
@@ -59,28 +63,28 @@
 
   async function reloadComments() {
     loading = true
-    data.comments = client()
+    data.data.value.comments = client()
       .getComments({
         page: 1,
         limit: 25,
         type_: 'All',
-        post_id: data.post.post.id,
+        post_id: data.data.value.post.post.id,
         sort: settings.defaultSort.comments,
-        max_depth: data.post.counts.comments > 100 ? 1 : 3,
+        max_depth: data.data.value.post.counts.comments > 100 ? 1 : 3,
       })
       .then((i) => i.comments)
     loading = false
-    data.thread.singleThread = false
+    data.data.value.thread.singleThread = false
   }
 
   let tags = $derived.by<{ title?: string; tags: Tag[] }>(() => {
-    const parsed = parseTags(data.post.post.name)
+    const parsed = parseTags(data.data.value.post.post.name)
 
     return {
       title: parsed.title,
       tags: [
         ...parsed.tags,
-        ...(data.post.flair_list?.map((i) => ({
+        ...(data.data.value.post.flair_list?.map((i) => ({
           content: i.flair_title,
           color: i.background_color,
           icon: null,
@@ -94,31 +98,40 @@
 
 <svelte:head>
   <title>
-    {data.post.community.title} | {data.post.post.name}
+    {data.data.value.post.community.title} | {data.data.value.post.post.name}
   </title>
-  <meta property="og:title" content={data.post.post.name} />
-  {#if !data.post.post.local}
+  <meta property="og:title" content={data.data.value.post.post.name} />
+  {#if !data.data.value.post.post.local}
     <meta name="robots" content="noindex, follow" />
   {/if}
-  <link rel="canonical" href={data.post.post.ap_id} />
-  {#if data.post.post.body}
-    <meta property="description" content={data.post.post.body.slice(0, 500)} />
+  <link rel="canonical" href={data.data.value.post.post.ap_id} />
+  {#if data.data.value.post.post.body}
+    <meta
+      property="description"
+      content={data.data.value.post.post.body.slice(0, 500)}
+    />
     <meta
       property="og:description"
-      content={data.post.post.body.slice(0, 500)}
+      content={data.data.value.post.post.body.slice(0, 500)}
     />
     <meta
       property="twitter:description"
-      content={data.post.post.body.slice(0, 500)}
+      content={data.data.value.post.post.body.slice(0, 500)}
     />
   {/if}
   <meta property="og:url" content={page.url.toString()} />
-  {#if mediaType(data.post.post.url) == 'image'}
-    <meta property="og:image" content={data.post.post.url} />
-    <meta property="twitter:card" content={data.post.post.url} />
-  {:else if data.post.post.thumbnail_url}
-    <meta property="og:image" content={data.post.post.thumbnail_url} />
-    <meta property="twitter:card" content={data.post.post.thumbnail_url} />
+  {#if mediaType(data.data.value.post.post.url) == 'image'}
+    <meta property="og:image" content={data.data.value.post.post.url} />
+    <meta property="twitter:card" content={data.data.value.post.post.url} />
+  {:else if data.data.value.post.post.thumbnail_url}
+    <meta
+      property="og:image"
+      content={data.data.value.post.post.thumbnail_url}
+    />
+    <meta
+      property="twitter:card"
+      content={data.data.value.post.post.thumbnail_url}
+    />
   {/if}
 </svelte:head>
 
@@ -126,49 +139,50 @@
   <header class="flex flex-col gap-2">
     <div class="flex flex-row items-center gap-2 flex-wrap">
       <PostMeta
-        community={data.post.community}
-        user={data.post.creator}
+        community={data.data.value.post.community}
+        user={data.data.value.post.creator}
         subscribed={profile.current.user?.follows.find(
-          (i) => i.community.id == data.post.community.id,
+          (i) => i.community.id == data.data.value.post.community.id,
         )
           ? 'Subscribed'
           : 'NotSubscribed'}
         badges={{
-          deleted: data.post.post.deleted,
-          removed: data.post.post.removed,
-          locked: data.post.post.locked,
+          deleted: data.data.value.post.post.deleted,
+          removed: data.data.value.post.post.removed,
+          locked: data.data.value.post.post.locked,
           featured:
-            data.post.post.featured_community || data.post.post.featured_local,
-          nsfw: data.post.post.nsfw,
-          saved: data.post.saved,
-          admin: data.post.creator_is_admin,
-          moderator: data.post.creator_is_moderator,
+            data.data.value.post.post.featured_community ||
+            data.data.value.post.post.featured_local,
+          nsfw: data.data.value.post.post.nsfw,
+          saved: data.data.value.post.saved,
+          admin: data.data.value.post.creator_is_admin,
+          moderator: data.data.value.post.creator_is_moderator,
         }}
-        published={publishedToDate(data.post.post.published)}
-        edited={data.post.post.updated}
-        title={data.post.post.name}
+        published={publishedToDate(data.data.value.post.post.published)}
+        edited={data.data.value.post.post.updated}
+        title={data.data.value.post.post.name}
         style="width: max-content;"
         tags={tags.tags}
       />
     </div>
     <h1 class="font-medium text-xl leading-5">
-      <Markdown source={tags.title ?? data.post.post.name} inline />
+      <Markdown source={tags.title ?? data.data.value.post.post.name} inline />
     </h1>
   </header>
   <PostMedia
-    type={mediaType(data.post.post.url)}
-    post={data.post.post}
+    type={mediaType(data.data.value.post.post.url)}
+    post={data.data.value.post.post}
     opened
     view="cozy"
   />
-  {#if data.post.post.body}
+  {#if data.data.value.post.post.body}
     <div class="text-base text-slate-800 dark:text-zinc-300 leading-normal">
-      <Markdown source={data.post.post.body} />
+      <Markdown source={data.data.value.post.post.body} />
     </div>
   {/if}
   <div class="w-full relative">
     <PostActions
-      bind:post={data.post}
+      bind:post={data.data.value.post}
       onedit={() =>
         toast({
           content: 'The post was edited successfully.',
@@ -176,7 +190,7 @@
         })}
     />
   </div>
-  {#await data.meta then meta}
+  {#await data.data.value.meta then meta}
     {@const crossposts = meta.cross_posts}
     {#if crossposts?.length > 0}
       <Expandable class="text-base mt-2 w-full cursor-pointer">
@@ -203,8 +217,8 @@
     {/if}
   {/await}
 </article>
-{#await data.comments then comments}
-  {#if data.thread.showContext || data.thread.singleThread}
+{#await data.data.value.comments then comments}
+  {#if data.data.value.thread.showContext || data.data.value.thread.singleThread}
     <div
       class="sticky mx-auto z-50 max-w-md min-w-0 flex flex-col items-center overflow-auto gap-1
     bg-slate-50/50 dark:bg-zinc-900/50 backdrop-blur-xl border border-slate-200/50 dark:border-zinc-800/50
@@ -215,17 +229,17 @@
         rounding="pill"
         {loading}
         disabled={loading}
-        href={data.thread.showContext
+        href={data.data.value.thread.showContext
           ? `/comment/${
               // split first comment path to get 5 before
               comments[0].comment.path.split('.').slice(-5)[1]
             }`
-          : data.thread.singleThread
-            ? postLink(data.post.post)
+          : data.data.value.thread.singleThread
+            ? postLink(data.data.value.post.post)
             : undefined}
         class="hover:bg-white/50 dark:hover:bg-zinc-800/30"
       >
-        {data.thread.showContext
+        {data.data.value.thread.showContext
           ? $t('routes.post.thread.context')
           : $t('routes.post.thread.allComments')}
         {#snippet suffix()}
@@ -241,7 +255,7 @@
       {$t('routes.post.commentCount')}
       {#snippet action()}
         <span class="font-bold">
-          <FormattedNumber number={data.post.counts.comments} />
+          <FormattedNumber number={data.data.value.post.counts.comments} />
         </span>
       {/snippet}
     </EndPlaceholder>
@@ -253,7 +267,7 @@
       </Button>
     </noscript>
   {/if}
-  {#await data.comments}
+  {#await data.data.value.comments}
     <div class="flex flex-col gap-4">
       {#each new Array(10) as _, index}
         {_}
@@ -276,10 +290,10 @@
   {:then comments}
     <CommentProvider
       {comments}
-      post={data.post}
-      focus={data.thread.focus}
+      post={data.data.value.post}
+      focus={data.data.value.thread.focus}
       onupdate={reloadComments}
-      bind:sort={data.params.comments.sort}
+      bind:sort={data.data.value.params.comments.sort}
       virtualize={!page.url.searchParams.get('noVirtualize')}
     />
     {#if comments.length == 0}
@@ -290,12 +304,12 @@
       ></Placeholder>
     {/if}
   {/await}
-  {#if data.post.counts.comments > 5}
+  {#if data.data.value.post.counts.comments > 5}
     <EndPlaceholder>
       {$t('routes.post.commentCount')}
       {#snippet action()}
         <span class="text-black dark:text-white font-bold">
-          {data.post.counts.comments}
+          {data.data.value.post.counts.comments}
         </span>
         <Button
           color="tertiary"

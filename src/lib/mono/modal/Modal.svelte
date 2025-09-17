@@ -81,9 +81,11 @@
     <!--svelte-ignore  a11y_click_events_have_key_events-->
     <div
       role="dialog"
-      class="overflow-hidden fixed top-0 left-0 w-screen h-screen z-100
-flex flex-col items-center justify-center backdrop-blur-xs
-bg-white/50 dark:bg-black/50 box-border p-4"
+      class={[
+        'overflow-hidden fixed top-0 left-0 w-screen h-screen z-100',
+        'flex flex-col items-center justify-center backdrop-blur-xs',
+        'bg-white/50 dark:bg-black/50 box-border p-4',
+      ]}
       transition:fade|global={{ duration: 100 }}
       onclick={(e) => {
         // @ts-expect-error html node hell
@@ -98,11 +100,12 @@ bg-white/50 dark:bg-black/50 box-border p-4"
           easing: backOut,
           duration: 300,
         }}
-        class="w-full border border-slate-200 border-b-slate-300
-				dark:border-zinc-900
-				rounded-2xl max-w-lg box-border mx-auto overscroll-contain shadow-lg overflow-auto
-				p-5 flex flex-col gap-2 dark:bg-zinc-950
-          bg-slate-50 relative {clazz}"
+        class={[
+          'w-full border border-slate-200 border-b-slate-300 dark:border-zinc-900',
+          'rounded-2xl max-w-lg box-border mx-auto overscroll-contain shadow-lg overflow-auto',
+          'p-5 flex flex-col gap-2 dark:bg-zinc-950 bg-slate-50 relative',
+          clazz,
+        ]}
       >
         {#if dismissable}
           <Button
@@ -114,7 +117,7 @@ bg-white/50 dark:bg-black/50 box-border p-4"
           ></Button>
         {/if}
         {#if title !== null}
-          <h1 class="font-semibold text-xl max-w-full">
+          <h1 class="font-medium tracking-tight text-xl leading-5 max-w-full">
             {#if customTitle}
               {@render customTitle?.()}
             {:else if title}
