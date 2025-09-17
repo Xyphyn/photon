@@ -32,7 +32,6 @@
   import { expoOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'
   import CommentProvider from './CommentProvider.svelte'
-  import { ReactiveState } from '$lib/util.svelte'
 
   let { data } = $props()
 
