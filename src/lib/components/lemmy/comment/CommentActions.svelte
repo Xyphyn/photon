@@ -17,7 +17,6 @@
     ChatBubbleOvalLeft,
     EllipsisHorizontal,
     Flag,
-    Icon,
     PencilSquare,
     Share,
     Trash,
@@ -49,17 +48,17 @@
     upvotes={comment.counts.upvotes}
     downvotes={comment.counts.downvotes}
     vote={comment.my_vote}
-    commentId={comment.comment.id}
+    comment={comment.comment}
   />
   <Button
     color="tertiary"
     rounding="pill"
     size="sm"
-    class="text-slate-500 dark:text-zinc-400"
+    class="text-slate-500 dark:text-zinc-400 gap-1!"
     onclick={() => (replying = !replying)}
     disabled={comment.post.locked || disabled || !profile.current.jwt}
+    icon={ChatBubbleOvalLeft}
   >
-    <Icon src={ChatBubbleOvalLeft} size="15" micro />
     {$t('comment.reply')}
   </Button>
   {#if profile.current?.user && (amMod(profile.current?.user, comment.community) || isAdmin(profile.current.user))}

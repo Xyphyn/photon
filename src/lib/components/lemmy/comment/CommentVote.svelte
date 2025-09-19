@@ -1,27 +1,30 @@
 <script lang="ts">
   import { profile } from '$lib/auth.svelte.js'
+  import { site } from '$lib/client/lemmy.svelte'
   import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
   import { t } from '$lib/i18n/translations'
-  import { getClient } from '$lib/client/lemmy.svelte'
+  import { errorMessage } from '$lib/lemmy/error'
+  import { settings } from '$lib/settings.svelte'
   import { buttonColor, toast } from 'mono-svelte'
   import { ChevronDown, ChevronUp, Icon } from 'svelte-hero-icons'
   import { backOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'
   import { shouldShowVoteColor } from '../post/PostVote.svelte'
-  import { settings } from '$lib/settings.svelte'
+  import { vote as voteItem } from '$lib/lemmy/contentview'
+  import type { Comment } from '$lib/client/types'
 
   interface Props {
     vote?: number
     upvotes: number
     downvotes: number
-    commentId: number
+    comment: Comment
   }
 
   let {
     vote = $bindable(0),
     upvotes = $bindable(),
     downvotes = $bindable(),
-    commentId,
+    comment,
   }: Props = $props()
 
   const castVote = async (newVote: number) => {
@@ -30,18 +33,82 @@
       return
     }
 
+    switch (vote ?? 0) {
+      case 0:
+        // nothing was removed
+        if (newVote == 1) upvotes++
+        else downvotes++
+        break
+      case 1:
+        // removed an upvote
+        upvotes--
+        if (newVote == -1) downvotes++
+        break
+      case -1:
+        // removed a downvote
+        downvotes--
+        if (newVote == 1) upvotes++
+        break
+    }
+
     vote = newVote
-    const res = await getClient().likeComment({
-      comment_id: commentId,
-      score: vote,
-    })
-    ;({ upvotes, downvotes } = res.comment_view.counts)
+
+    voteItem(comment, newVote)
+      .then((res) => ({ upvotes, downvotes } = res))
+      .catch((e) => {
+        toast({ content: errorMessage(e), type: 'error' })
+      })
   }
 
   let voteRatio = $derived(
     Math.floor(((upvotes ?? 0) / ((upvotes ?? 0) + (downvotes ?? 0))) * 100),
   )
 </script>
+
+{#snippet voteButton(
+  votes: number,
+  target: 'upvote' | 'downvote',
+  vote?: number,
+)}
+  {@const targetNum = target == 'upvote' ? 1 : -1}
+  <button
+    onclick={() => castVote(vote == targetNum ? 0 : targetNum)}
+    class={[
+      'flex items-center gap-0.5 transition-colors relative cursor-pointer h-full p-1.5',
+      'first:rounded-l-3xl last:rounded-r-3xl',
+      'last:flex-row-reverse',
+      vote == targetNum
+        ? shouldShowVoteColor(
+            vote,
+            target == 'upvote' ? 'upvotes' : 'downvotes',
+          )
+        : 'hover:bg-slate-100 dark:hover:bg-zinc-800',
+    ]}
+    aria-pressed={vote == targetNum}
+    aria-label={$t(
+      target == 'upvote'
+        ? 'post.actions.vote.upvote'
+        : 'post.actions.vote.downvote',
+    )}
+  >
+    <Icon src={target == 'upvote' ? ChevronUp : ChevronDown} size="18" micro />
+    <div class="grid text-sm z-20">
+      {#key votes}
+        <span
+          style="grid-column: 1; grid-row: 1;"
+          in:fly={{ duration: 400, y: -10, easing: backOut }}
+          out:fly={{ duration: 400, y: 10, easing: backOut }}
+          aria-label={$t(
+            target == 'upvote' ? 'aria.vote.upvotes' : 'aria.vote.downvotes',
+            { default: votes },
+          )}
+        >
+          <FormattedNumber number={votes ?? 0} />
+        </span>
+      {/key}
+    </div>
+  </button>
+{/snippet}
 
 <div
   class={[
@@ -51,53 +118,11 @@
   ]}
   style="--vote-ratio: {voteRatio}%;"
 >
-  <button
-    onclick={() => castVote(vote == 1 ? 0 : 1)}
-    class={[
-      'flex items-center gap-0.5 transition-colors px-1.5 h-full cursor-pointer',
-      vote == 1
-        ? shouldShowVoteColor(vote, 'upvotes')
-        : 'hover:bg-slate-100 dark:hover:bg-zinc-800',
-    ]}
-  >
-    <Icon src={ChevronUp} size="18" mini />
-    <span class="grid text-sm">
-      {#key upvotes}
-        <span
-          style="grid-column: 1; grid-row: 1;"
-          in:fly={{ duration: 400, y: -10, easing: backOut }}
-          out:fly={{ duration: 400, y: 10, easing: backOut }}
-        >
-          <FormattedNumber number={upvotes} />
-        </span>
-      {/key}
-    </span>
-  </button>
-  <div
-    class="border-l h-full w-0 p-0! border-slate-200 dark:border-zinc-800"
-  ></div>
-  <button
-    onclick={() => castVote(vote == -1 ? 0 : -1)}
-    class={[
-      'flex flex-row-reverse items-center gap-0.5 transition-colors px-1.5 h-full cursor-pointer',
-      vote == -1
-        ? shouldShowVoteColor(vote, 'downvotes')
-        : 'hover:bg-slate-100 dark:hover:bg-zinc-800',
-    ]}
-  >
-    <Icon src={ChevronDown} size="18" mini />
-    <span class="grid text-sm">
-      {#key downvotes}
-        <span
-          style="grid-column: 1; grid-row: 1;"
-          in:fly={{ duration: 400, y: -10, easing: backOut }}
-          out:fly={{ duration: 400, y: 10, easing: backOut }}
-        >
-          <FormattedNumber number={downvotes} />
-        </span>
-      {/key}
-    </span>
-  </button>
+  {@render voteButton(upvotes, 'upvote', vote)}
+  <div class="h-full p-0! border-l border-slate-200 dark:border-zinc-800"></div>
+  {#if site.data?.site_view.local_site.enable_downvotes ?? true}
+    {@render voteButton(downvotes, 'downvote', vote)}
+  {/if}
 </div>
 
 <style>

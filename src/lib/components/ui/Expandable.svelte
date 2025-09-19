@@ -46,7 +46,7 @@
         </div>
       {/if}
       <div
-        class="inset-0 -z-10 opacity-0 absolute bg-slate-200 dark:bg-zinc-900 rounded-full
+        class="inset-0 -z-10 opacity-0 absolute bg-slate-200/50 dark:bg-zinc-900/50 rounded-full
       group-hover:opacity-100 group-hover:-inset-1 group-hover:-inset-x-2 transition-all"
       ></div>
     </div>
