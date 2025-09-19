@@ -61,7 +61,7 @@
       style: 'grid-area: sidebar; width: 100% !important;',
     })}
     {@render main?.({
-      class: `w-full bg-slate-50 dark:bg-zinc-925 justify-self-center border-x border-slate-200 dark:border-zinc-900 max-lg:pb-22 pb-3 sm:pb-6`,
+      class: `w-full bg-slate-50 dark:bg-zinc-925 justify-self-center border-x border-slate-200 dark:border-zinc-900 max-lg:pb-22 pb-3 lg:pb-6`,
       style: 'grid-area: main',
     })}
     {@render suffix?.({

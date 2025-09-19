@@ -15,6 +15,11 @@
 
   let { data = $bindable() } = $props()
 
+  $effect(() => {
+    if (data.filters.value.sort)
+      settings.defaultSort.sort = data.filters.value.sort
+  })
+
   const FeedComponent = $derived(
     settings.infiniteScroll && browser && !settings.posts.noVirtualize
       ? VirtualFeed

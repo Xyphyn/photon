@@ -54,13 +54,16 @@
   aria-selected={isSelected}
 >
   {#snippet prefix()}
-    <div class={(icon || customIcon) && adaptive ? 'lg:hidden' : ''}>
-      {#if icon}
+    {#if icon}
+      <div class="hidden lg:block">
+        <Icon src={icon} size="16" micro />
+      </div>
+      <div class="block lg:hidden">
         <Icon src={icon} size="20" mini />
-      {:else}
-        {@render customIcon?.({ size: 16, isSelected })}
-      {/if}
-    </div>
+      </div>
+    {:else}
+      {@render customIcon?.({ size: 16, isSelected })}
+    {/if}
   {/snippet}
   <span class="hidden {adaptive ? 'lg:block' : ''}">{label}</span>
   {@render children?.()}
