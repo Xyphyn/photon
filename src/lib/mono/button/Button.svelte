@@ -95,7 +95,7 @@
     submit = false,
     color = 'secondary',
     size = 'md',
-    rounding = size == 'lg' ? 'xl' : 'lg',
+    rounding = 'xl',
     alignment = 'center',
     shadow = color != 'tertiary' ? 'none' : 'none',
     disabled,

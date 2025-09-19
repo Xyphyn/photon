@@ -131,13 +131,22 @@
       <div
         class={[
           'absolute -inset-0.5 right-1 group-hover:right-0 group-hover:-inset-1.5 opacity-0 group-hover:opacity-100 transition-all',
-          'bg-slate-100 dark:bg-zinc-900 -z-10 rounded-full',
+          'bg-slate-100 dark:bg-zinc-900 -z-10 rounded-full inline-flex items-center justify-end',
         ]}
       >
+        {#if node.comment_view.counts.child_count > 0}
+          {@const children = node.comment_view.counts.child_count}
+          <div
+            aria-label={$t('aria.comments.children', { childCount: children })}
+            class="font-medium"
+          >
+            {children}
+          </div>
+        {/if}
         <div
           class={[
             !open && 'rotate-90',
-            'transition-all duration-500 ease-out ml-auto my-auto h-full w-8 grid place-items-center',
+            'transition-all duration-500 ease-out my-auto h-full w-8 grid place-items-center',
           ]}
         >
           <Icon src={open ? Minus : Plus} size="16" micro />

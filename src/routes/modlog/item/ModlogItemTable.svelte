@@ -1,8 +1,9 @@
 <script lang="ts">
-  import Link from '$lib/components/input/Link.svelte'
   import { CommunityLink } from '$lib/components/lemmy/community'
   import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
   import RelativeDate from '$lib/components/util/RelativeDate.svelte'
+  import { t } from '$lib/i18n/translations.js'
+  import { Button, modal } from 'mono-svelte'
   import type { ModLog } from '../+page.js'
   import ModlogAction from '../ModlogAction.svelte'
 
@@ -12,6 +13,18 @@
 
   let { item }: Props = $props()
 </script>
+
+{#snippet itemInfo()}
+  <Button color="primary" rounding="pill" class="w-max" href={item.link}>
+    {$t('common.jump')}
+  </Button>
+  {#if item.moderatee}
+    <UserLink avatar user={item.moderatee} />
+  {/if}
+  <div>
+    {item.content}
+  </div>
+{/snippet}
 
 <tr class="">
   <td style="width: 10%;">
@@ -28,16 +41,8 @@
         user={item.moderator}
       />
     {:else}
-      <p class="text-slate-500 dark:text-zinc-500">Hidden</p>
+      <p class="text-slate-500 dark:text-zinc-500">Unknown</p>
       <p></p>
-    {/if}
-  </td>
-  <td>
-    <ModlogAction action={item.actionName} />
-  </td>
-  <td>
-    {#if item.moderatee}
-      <UserLink showInstance={false} user={item.moderatee} />
     {/if}
   </td>
   <td>
@@ -51,18 +56,21 @@
     {/if}
   </td>
   <td>
-    {#if item.content}
-      <p>{item.content}</p>
-    {/if}
+    <ModlogAction action={item.actionName} />
   </td>
   <td>
     {#if item.reason}
       <p>{item.reason}</p>
     {/if}
   </td>
-  <td>
-    {#if item.link}
-      <Link highlight href={item.link} />
+  <td align="right">
+    {#if item.content}
+      <Button
+        size="sm"
+        onclick={() => modal({ title: $t('common.info'), snippet: itemInfo })}
+      >
+        {$t('common.info')}
+      </Button>
     {/if}
   </td>
 </tr>

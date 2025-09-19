@@ -79,6 +79,11 @@ export interface FeedTypes {
       posts: GetPost
       comments: GetComments
       preload?: PostView
+      thread: {
+        showContext?: boolean
+        singleThread?: boolean
+        focus?: string
+      }
     },
     {
       post: PostView
@@ -88,12 +93,15 @@ export interface FeedTypes {
         cross_posts: PostView[]
         post_view: PostView
       }>
-      thread: {
-        showContext?: boolean
-        singleThread?: boolean
-        focus?: string
+      params: {
+        posts: GetPost
+        comments: GetComments
+        thread: {
+          showContext?: boolean
+          singleThread?: boolean
+          focus?: string
+        }
       }
-      params: { posts: GetPost; comments: GetComments }
     },
   ]
   '/f/[id]': [

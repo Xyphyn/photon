@@ -1,5 +1,4 @@
-import { publishedToDate } from '$lib/components/util/date.js'
-import { getClient } from '$lib/client/lemmy.svelte'
+import { client } from '$lib/client/lemmy.svelte'
 import type {
   AdminPurgeCommentView,
   AdminPurgeCommunityView,
@@ -19,6 +18,7 @@ import type {
   ModlogActionType,
   Person,
 } from '$lib/client/types'
+import { publishedToDate } from '$lib/components/util/date.js'
 
 export type ActionName =
   | 'ban'
@@ -188,7 +188,10 @@ export const _toModLog = (item: ModAction): ModLog => {
       timestamp: timestamp(item.mod_ban.when_),
       moderator: item.moderator,
       moderatee: item.banned_person,
-      reason: `${item.mod_ban.reason ?? ''} (banned ${expires})`,
+      reason:
+        item.mod_ban.reason +
+        ' ' +
+        (item.mod_ban.banned === true ? `(banned ${expires})` : ''),
       link: `/u/${fullUserName(item.banned_person)}`,
     }
   } else if ('mod_add' in item) {
@@ -206,9 +209,7 @@ export const _toModLog = (item: ModAction): ModLog => {
   }
 }
 
-export async function load({ url }) {
-  const instance = url.searchParams.get('instance') || undefined
-
+export async function load({ url, fetch }) {
   const community = Number(url.searchParams.get('community')) || undefined
   const user = Number(url.searchParams.get('user')) || undefined
   const modId = Number(url.searchParams.get('mod_id')) || undefined
@@ -219,7 +220,9 @@ export async function load({ url }) {
   const type: ModlogActionType =
     (url.searchParams.get('type') as ModlogActionType) || 'All'
 
-  const results = await getClient(instance).getModlog({
+  const results = await client({
+    func: fetch,
+  }).getModlog({
     community_id: community,
     limit: 20,
     type_: type,
@@ -270,6 +273,7 @@ export async function load({ url }) {
       moderator: modId,
       post: postId,
       comment: commentId,
+      hasMore: moderationActions.length >= 20,
     },
   }
 }

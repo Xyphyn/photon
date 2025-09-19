@@ -73,7 +73,7 @@
       })
       .then((i) => i.comments)
     loading = false
-    data.data.value.thread.singleThread = false
+    data.data.value.params.thread.singleThread = false
   }
 
   let tags = $derived.by<{ title?: string; tags: Tag[] }>(() => {
@@ -217,28 +217,28 @@
   {/await}
 </article>
 {#await data.data.value.comments then comments}
-  {#if data.data.value.thread.showContext || data.data.value.thread.singleThread}
+  {#if data.data.value.params.thread.showContext || data.data.value.params.thread.singleThread}
     <div
       class="sticky mx-auto z-50 max-w-md min-w-0 flex flex-col items-center overflow-auto gap-1
     bg-slate-50/50 dark:bg-zinc-900/50 backdrop-blur-xl border border-slate-200/50 dark:border-zinc-800/50
-    p-1 rounded-full justify-between top-6 lg:top-22"
+    p-1 rounded-full justify-between top-6 lg:top-22 my-4"
     >
       <Button
         color="none"
         rounding="pill"
         {loading}
         disabled={loading}
-        href={data.data.value.thread.showContext
+        href={data.data.value.params.thread.showContext
           ? `/comment/${
               // split first comment path to get 5 before
               comments[0].comment.path.split('.').slice(-5)[1]
             }`
-          : data.data.value.thread.singleThread
+          : data.data.value.params.thread.singleThread
             ? postLink(data.data.value.post.post)
             : undefined}
         class="hover:bg-white/50 dark:hover:bg-zinc-800/30"
       >
-        {data.data.value.thread.showContext
+        {data.data.value.params.thread.showContext
           ? $t('routes.post.thread.context')
           : $t('routes.post.thread.allComments')}
         {#snippet suffix()}
@@ -290,7 +290,7 @@
     <CommentProvider
       {comments}
       post={data.data.value.post}
-      focus={data.data.value.thread.focus}
+      focus={data.data.value.params.thread.focus}
       onupdate={reloadComments}
       bind:sort={data.data.value.params.comments.sort}
       virtualize={!page.url.searchParams.get('noVirtualize')}

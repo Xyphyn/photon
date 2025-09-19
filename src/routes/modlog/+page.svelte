@@ -1,18 +1,23 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy'
-
   import { browser } from '$app/environment'
   import { page } from '$app/state'
   import { profile } from '$lib/auth.svelte.js'
+  import { client } from '$lib/client/lemmy.svelte'
+  import { CommunityLink } from '$lib/components/lemmy/community'
   import { isAdmin } from '$lib/components/lemmy/moderation/moderation.js'
   import ObjectAutocomplete from '$lib/components/lemmy/ObjectAutocomplete.svelte'
+  import { postLink } from '$lib/components/lemmy/post'
   import UserAutocomplete from '$lib/components/lemmy/user/UserAutocomplete.svelte'
+  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
+  import { Header } from '$lib/components/ui/layout'
   import Pageination from '$lib/components/ui/layout/Pageination.svelte'
   import Placeholder from '$lib/components/ui/Placeholder.svelte'
+  import { t } from '$lib/i18n/translations'
   import { settings } from '$lib/settings.svelte.js'
   import { searchParam } from '$lib/util.svelte.js'
   import { Button, Select } from 'mono-svelte'
   import Option from 'mono-svelte/forms/select/Option.svelte'
+  import Spinner from 'mono-svelte/loader/Spinner.svelte'
   import {
     Bars3BottomRight,
     Icon,
@@ -22,13 +27,6 @@
   } from 'svelte-hero-icons'
   import ModlogItemCard from './item/ModlogItemCard.svelte'
   import ModlogItemTable from './item/ModlogItemTable.svelte'
-  import { Header } from '$lib/components/ui/layout'
-  import { t } from '$lib/i18n/translations'
-  import { client } from '$lib/client/lemmy.svelte'
-  import Spinner from 'mono-svelte/loader/Spinner.svelte'
-  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
-  import { CommunityLink } from '$lib/components/lemmy/community'
-  import { postLink } from '$lib/components/lemmy/post'
 
   let { data = $bindable() } = $props()
 
@@ -40,7 +38,7 @@
     }`,
   )
 
-  run(() => {
+  $effect(() => {
     settings.modlogCardView =
       view == 'true' ? true : view == 'false' ? false : undefined
   })
@@ -58,9 +56,9 @@
       <ul class="font-normal flex flex-col gap-2 mt-2">
         {#if data.params.community}
           <li>
-            <span class="text-sm text-slate-600 dark:text-zinc-400">
+            <div class="text-sm text-slate-600 dark:text-zinc-400">
               {$t('form.post.community')}
-            </span>
+            </div>
             {#await client().getCommunity({ id: data.params.community })}
               <Spinner width={24} />
             {:then community}
@@ -70,9 +68,9 @@
         {/if}
         {#if data.params.user}
           <li>
-            <span class="text-sm text-slate-600 dark:text-zinc-400">
+            <div class="text-sm text-slate-600 dark:text-zinc-400">
               {$t('routes.admin.applications.user')}
-            </span>
+            </div>
             {#await client().getPersonDetails( { person_id: data.params.user, limit: 1 }, )}
               <Spinner width={24} />
             {:then person}
@@ -82,10 +80,10 @@
         {/if}
         {#if data.params.moderator}
           <li>
-            <span class="text-sm text-slate-600 dark:text-zinc-400">
+            <div class="text-sm text-slate-600 dark:text-zinc-400">
               <!--TODO add translation key-->
               Moderator
-            </span>
+            </div>
             {#await client().getPersonDetails( { person_id: data.params.moderator, limit: 1 }, )}
               <Spinner width={24} />
             {:then person}
@@ -95,10 +93,9 @@
         {/if}
         {#if data.params.post}
           <li>
-            <span class="text-sm text-slate-600 dark:text-zinc-400">
-              <!--TODO add translation key-->
+            <div class="text-sm text-slate-600 dark:text-zinc-400">
               {$t('nav.create.post')}
-            </span>
+            </div>
             {#await client().getPost({ id: data.params.post })}
               <Spinner width={24} />
             {:then post}
@@ -113,10 +110,9 @@
         {/if}
         {#if data.params.comment}
           <li>
-            <span class="text-sm text-slate-600 dark:text-zinc-400">
-              <!--TODO add translation key-->
+            <div class="text-sm text-slate-600 dark:text-zinc-400">
               {$t('moderation.removeSubmission.comment')}
-            </span>
+            </div>
             {#await client().getComment({ id: data.params.comment })}
               <Spinner width={24} />
             {:then comment}
@@ -145,21 +141,21 @@
         </span>
       {/snippet}
       <Option value="All">All</Option>
-      <Option value="ModRemovePost">Remove Post</Option>
-      <Option value="ModLockPost">Lock Post</Option>
-      <Option value="ModFeaturePost">Feature Post</Option>
-      <Option value="ModRemoveComment">Remove Comment</Option>
-      <Option value="ModRemoveCommunity">Remove Community</Option>
-      <Option value="ModBanFromCommunity">Ban From Community</Option>
-      <Option value="ModAddCommunity">Add Moderator</Option>
-      <Option value="ModTransferCommunity">Transfer Community</Option>
-      <Option value="ModAdd">Add Admin</Option>
-      <Option value="ModBan">Ban Admin</Option>
-      <Option value="ModHideCommunity">Hide Community</Option>
-      <Option value="AdminPurgePerson">Purge User</Option>
-      <Option value="AdminPurgeCommunity">Purge Community</Option>
-      <Option value="AdminPurgePost">Purge Post</Option>
-      <Option value="AdminPurgeComment">Purge Comment</Option>
+      <Option value="ModRemovePost">Remove post</Option>
+      <Option value="ModLockPost">Lock post</Option>
+      <Option value="ModFeaturePost">Feature post</Option>
+      <Option value="ModRemoveComment">Remove comment</Option>
+      <Option value="ModRemoveCommunity">Remove community</Option>
+      <Option value="ModBanFromCommunity">Ban from community</Option>
+      <Option value="ModAddCommunity">Add moderator</Option>
+      <Option value="ModTransferCommunity">Transfer community</Option>
+      <Option value="ModAdd">Add admin</Option>
+      <Option value="ModBan">Ban admin</Option>
+      <Option value="ModHideCommunity">Hide community</Option>
+      <Option value="AdminPurgePerson">Purge user</Option>
+      <Option value="AdminPurgeCommunity">Purge community</Option>
+      <Option value="AdminPurgePost">Purge post</Option>
+      <Option value="AdminPurgeComment">Purge comment</Option>
     </Select>
 
     <Select bind:value={view} class="w-36">
@@ -176,40 +172,24 @@
   </div>
   <div class="flex flex-col md:flex-row md:items-center gap-2 w-full">
     <ObjectAutocomplete
-      type="instance"
-      placeholder="Filter by instance"
-      showWhenEmpty={true}
-      label="Instance"
-      class="flex-1"
-      q={page.url.searchParams.get('instance') || ''}
-      onselect={(e) =>
-        searchParam(
-          page.url,
-          'instance',
-          e?.domain.toString() ?? '',
-          'page',
-          'community',
-          'user',
-          'mod_id',
-        )}
-    />
-    <ObjectAutocomplete
       placeholder="Filter by community"
       listing_type="All"
       showWhenEmpty={true}
       label="Community"
-      class="flex-1"
       q={page.url.searchParams.get('community') ? 'Selected' : ''}
       onselect={(e) =>
-        searchParam(page.url, 'community', e?.id.toString() ?? '', 'page')}
+        searchParam(
+          page.url,
+          'community',
+          e?.community.id.toString() ?? '',
+          'page',
+        )}
     />
     <UserAutocomplete
       instance={page.url.searchParams.get('instance') || undefined}
       placeholder="Filter by user"
-      jwt={profile.current?.jwt}
       listing_type="All"
       showWhenEmpty={true}
-      class="flex-1"
       label="User"
       q={page.url.searchParams.get('user')
         ? (data.filters.user ?? 'Selected')
@@ -220,10 +200,8 @@
     {#if profile.current?.user && isAdmin(profile.current?.user)}
       <UserAutocomplete
         placeholder="Filter by moderator"
-        jwt={profile.current?.jwt}
         listing_type="All"
         showWhenEmpty={true}
-        class="flex-1"
         label="Moderator"
         q={page.url.searchParams.get('mod_id')
           ? (data.filters.moderator ?? 'Selected')
@@ -244,8 +222,8 @@
           'instance',
         )
       }}
-      size="square-lg"
-      class="self-end shrink-0"
+      size="custom"
+      class="self-end shrink-0 h-8.5 aspect-square"
       title="Clear filters"
     >
       <Icon src={XMark} size="16" mini />
@@ -259,34 +237,29 @@
         {/each}
       </div>
     {:else}
-      <div style="width:100%; overflow-x: auto;">
+      <div style="width:100%; overflow-x: auto;" class="table-container">
         <table
-          class="table overflow-x-auto table-fixed relative"
-          style="min-width: 800px;"
+          class="table overflow-x-auto table-fixed relative w-full min-w-2xl"
         >
-          <colgroup class="table-fixed">
-            <col />
-            <col />
-            <col class="overflow-x-auto" />
-            <col />
-            <col />
-            <col />
-            <col />
-            <col />
+          <colgroup>
+            <col style="width: 10.6%;" />
+            <col style="width: 16.6%;" />
+            <col style="width: 16.6%;" />
+            <col style="width: 16.6%;" />
+            <col style="width: 16.6%;" />
+            <col style="width: 16.6%;" />
           </colgroup>
-          <thead class="text-left sticky top-0">
+          <thead class="text-left">
             <tr class="rounded-t-lg overflow-hidden">
               <th>Time</th>
               <th>Moderator</th>
-              <th>Action</th>
-              <th>User</th>
               <th>Community</th>
-              <th>Content</th>
+              <th>Action</th>
               <th>Reason</th>
-              <th>Link</th>
+              <th align="right">Content</th>
             </tr>
           </thead>
-          <tbody class="text-sm">
+          <tbody class="text-sm divide-y divide-slate-200 dark:divide-zinc-800">
             {#each data.modlog as modlog (modlog)}
               <ModlogItemTable item={modlog} />
             {/each}
@@ -294,7 +267,11 @@
         </table>
       </div>
     {/if}
-    <Pageination page={data.page} href={(page) => `?page=${page}`} />
+    <Pageination
+      page={data.page}
+      hasMore={data.params.hasMore}
+      href={(page) => `?page=${page}`}
+    />
   {:else}
     <Placeholder
       title="No results"
@@ -305,21 +282,44 @@
 </div>
 
 <style>
-  @reference '../../style/app.css'
-  
-  :global(.table thead tr th) {
-    @apply border border-slate-200 dark:border-zinc-800 px-4 py-2 bg-slate-100;
+  .table-container {
+    border: 1px solid var(--color-slate-200);
+    background-color: white;
+    border-radius: var(--radius-2xl);
   }
 
-  :global(.table tr td) {
-    @apply border border-slate-200 px-4 py-2 overflow-auto;
+  .table {
+    table-layout: fixed !important;
+
+    thead {
+      tr {
+        th {
+          padding: calc(var(--spacing) * 3);
+          border-bottom: 1px solid var(--color-slate-200);
+          font-weight: var(--font-weight-medium);
+          font-size: var(--text-sm);
+          background-color: var(--color-slate-25);
+        }
+      }
+    }
   }
 
-  :global(.dark .table tr td) {
-    @apply border-zinc-800;
+  .table tbody {
+    font-size: var(--text-xs);
+    :global(tr td) {
+      padding: calc(var(--spacing) * 1) calc(var(--spacing) * 3);
+    }
   }
 
-  :global(.dark thead tr th) {
-    @apply border-zinc-800 bg-zinc-900;
+  :global(.dark) {
+    .table-container {
+      background-color: var(--color-zinc-950);
+      border: 1px solid var(--color-zinc-800);
+    }
+
+    thead tr th {
+      background-color: var(--color-zinc-900);
+      border-bottom: 1px solid var(--color-zinc-800);
+    }
   }
 </style>

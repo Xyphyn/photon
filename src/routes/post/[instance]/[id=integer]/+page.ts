@@ -68,6 +68,7 @@ export async function load({ params, url, route }) {
     focus,
     max_depth: passedMaxDepth,
   } = buildContext(url.searchParams.get('thread') || undefined)
+
   const max_depth = passedMaxDepth
 
   const feedData = feed(route.id, async (p) => {
@@ -84,11 +85,7 @@ export async function load({ params, url, route }) {
         cross_posts: i.cross_posts,
         post_view: i.post_view,
       })),
-      thread: {
-        showContext,
-        focus,
-        singleThread: parentId != null,
-      },
+      thread: p.thread,
       params: p,
     }
   })
@@ -105,6 +102,11 @@ export async function load({ params, url, route }) {
       },
       posts: { id: Number(params.id) },
       preload: cachedPost,
+      thread: {
+        showContext: showContext,
+        focus: focus,
+        singleThread: parentId != null,
+      },
     }),
   )
 

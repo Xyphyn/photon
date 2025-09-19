@@ -943,6 +943,9 @@
             "openImage": "Open image: {{default}}",
             "openLink": "Open link: {{default}}",
             "openPost": "Open post: {{default}}"
+        },
+        "comments": {
+            "children": "{{childCount}} children"
         }
     },
     "stats": {
