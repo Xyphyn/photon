@@ -7,13 +7,28 @@
     icon?: string
     title: string
     detail?: string
+    orientation: 'vertical' | 'horizontal'
     children?: Snippet
   }
 
-  let { href, icon, title, detail, children }: Props = $props()
+  let {
+    href,
+    icon,
+    title,
+    detail,
+    children,
+    orientation = 'horizontal',
+  }: Props = $props()
 </script>
 
-<div class="flex flex-row gap-2 items-center">
+<div
+  class={[
+    'flex gap-2 p-5',
+    orientation == 'horizontal'
+      ? 'flex-row items-center'
+      : 'flex-col items-staRT',
+  ]}
+>
   <Avatar url={icon} alt={title} width={detail ? 32 : 24} circle={false} />
   <a class="flex-1 flex flex-col group" {href}>
     <h3
@@ -25,5 +40,7 @@
       {detail}
     </p>
   </a>
-  {@render children?.()}
+  <div class="flex flex-row gap-2 items-center">
+    {@render children?.()}
+  </div>
 </div>

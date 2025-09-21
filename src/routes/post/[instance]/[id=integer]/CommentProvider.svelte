@@ -116,7 +116,12 @@
     <CommentForm
       postId={post.post.id}
       oncomment={(comment) => {
-        comments.unshift(comment.comment_view)
+        tree.unshift({
+          children: [],
+          depth: 1,
+          expanded: true,
+          comment_view: comment.comment_view,
+        })
       }}
       onfocus={() => (commenting = true)}
       tools={commenting}

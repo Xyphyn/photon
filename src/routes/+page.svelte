@@ -18,6 +18,8 @@
   $effect(() => {
     if (data.filters.value.sort)
       settings.defaultSort.sort = data.filters.value.sort
+    if (data.filters.value.type_)
+      settings.defaultSort.feed = data.filters.value.type_
   })
 
   const FeedComponent = $derived(

@@ -28,6 +28,7 @@
   import ProfileSelection from './ProfileSelection.svelte'
   import Logo from '../Logo.svelte'
   import { env } from '$env/dynamic/public'
+  import Link from '$lib/components/input/Link.svelte'
 
   interface Props {
     style?: string
@@ -181,18 +182,12 @@
       </span>
     </div>
     {#if env.PUBLIC_XYLIGHT_MODE?.toLowerCase() == 'true'}
-      <a
-        href="https://github.com/xyphyn/photon"
-        class="text-blue-600 dark:text-blue-400/60 hover:underline"
-      >
+      <Link highlight href="https://github.com/xyphyn/photon">
         {$t('nav.menu.source')}
-      </a>
-      <a
-        href="https://buymeacoffee.com/xylight"
-        class="text-blue-600 dark:text-blue-400/60 hover:underline"
-      >
+      </Link>
+      <Link highlight href="https://buymeacoffee.com/xylight">
         {$t('nav.menu.donate')}
-      </a>
+      </Link>
     {/if}
   </footer>
 </nav>
