@@ -10,19 +10,14 @@
   }
 
   export const buttonColor = {
-    primary: `border border-transparent bg-primary-900 text-slate-50 dark:bg-primary-100 dark:text-black`,
-    secondary: `border border-slate-200 border-b-slate-300 dark:border-zinc-800 bg-white dark:bg-zinc-900`,
-    tertiary:
-      ' bg-transparent hover:bg-slate-200/50 dark:hover:bg-zinc-700/30 dark:text-zinc-200',
-
-    danger:
-      'border border-red-500 bg-red-500 hover:text-red-500 hover:bg-transparent text-white',
+    primary: 'btn-primary',
+    secondary: 'btn-secondary',
+    tertiary: 'btn-tertiary',
+    danger: 'btn-danger',
+    ghost: 'btn-ghost',
     'danger-subtle': 'text-red-500 hover:bg-red-500 hover:text-inherit!',
     'success-subtle': 'text-green-500 hover:bg-green-500 hover:text-inherit!',
     'warning-subtle': 'text-yellow-500 hover:bg-yellow-500 hover:text-inherit!',
-    ghost: `border border-slate-200 dark:border-zinc-800 bg-transparent
-		hover:bg-slate-100 dark:hover:bg-zinc-800 dark:hover:border-zinc-700 dark:text-zinc-400 hover:text-inherit
-		dark:hover:text-inherit`,
     'blue-subtle': `text-blue-500 hover:bg-blue-500 hover:text-inherit!`,
 
     none: '',
@@ -36,15 +31,15 @@
   export type ButtonSize = keyof typeof buttonSize
 
   export const buttonSize = {
-    xs: 'px-2 py-1 text-xs',
-    sm: 'px-3 py-1.5 text-[12px]',
-    md: 'px-3 py-1.5 text-sm',
-    lg: 'px-4 py-2 text-sm',
-    xl: 'px-6 py-3 text-base',
-    'square-sm': 'w-6 h-6',
-    'square-md': 'w-8 h-8',
-    'square-lg': 'w-10 h-10',
-    'square-xl': 'w-12 h-12',
+    xs: 'btn-xs',
+    sm: 'btn-sm',
+    md: 'btn-md',
+    lg: 'btn-lg',
+    xl: 'btn-xl',
+    'square-sm': 'btn-square-sm',
+    'square-md': 'btn-square-md',
+    'square-lg': 'btn-square-lg',
+    'square-xl': 'btn-square-xl',
     custom: '',
   }
 
@@ -61,6 +56,7 @@
     extends Omit<HTMLButtonAttributes | HTMLAnchorAttributes, 'prefix'> {
     loading?: boolean
     submit?: boolean
+    type?: 'button' | 'none'
     color?: ButtonColor
     size?: ButtonSize
     rounding?: ButtonRoundness
@@ -93,6 +89,7 @@
   let {
     loading = false,
     submit = false,
+    type = 'button',
     color = 'secondary',
     size = 'md',
     rounding = 'xl',
@@ -117,15 +114,13 @@
   {...rest}
   tabindex={disabled ? -1 : undefined}
   class={[
+    type == 'button' && 'btn',
     buttonSize[size],
     buttonRounding[rounding],
     buttonShadow[shadow],
     buttonColor[color],
     buttonAlignment[alignment],
-    'transition-all font-medium cursor-pointer disabled:opacity-50 disabled:pointer-events-none',
-    'hover:brightness-98 hover:dark:brightness-95 active:brightness-90 active:dark:brightness-85 text-sm',
-    'flex flex-row items-center gap-1.5',
-    (disabled || loading) && 'pointer-events-none opacity-50 shadow-none',
+    (disabled || loading) && 'btn-disabled',
     alignment == 'center'
       ? 'origin-center'
       : alignment == 'left'
@@ -157,3 +152,164 @@
   @slot `prefix` -- Will be replaced if `loading` is `true`.
   @slot `suffix`
 -->
+
+<style>
+  @reference "../../../app.css";
+
+  :global {
+    .btn {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      font-size: var(--text-sm);
+      gap: calc(var(--spacing) * 1.5);
+      font-weight: var(--font-weight-medium);
+
+      transition: 75ms linear;
+
+      @variant hover {
+        cursor: pointer;
+      }
+    }
+
+    .btn-primary {
+      border: 1px solid transparent;
+      background-color: var(--color-primary-900);
+      color: var(--color-slate-50);
+
+      @variant dark {
+        background-color: var(--color-primary-100) !important;
+        color: var(--color-zinc-900);
+      }
+
+      @variant hover {
+        filter: brightness(120%);
+        @variant dark {
+          filter: brightness(90%);
+        }
+      }
+    }
+
+    .btn-secondary {
+      border: 1px solid var(--color-slate-200);
+      border-bottom-color: var(--color-slate-300);
+      background-color: var(--color-white);
+
+      @variant dark {
+        border: 1px solid var(--color-zinc-800);
+        background-color: var(--color-zinc-900);
+      }
+
+      @variant hover {
+        background-color: var(--color-slate-50);
+        @variant dark {
+          background-color: var(--color-zinc-950);
+        }
+      }
+    }
+
+    .btn-tertiary {
+      background-color: transparent;
+      @variant hover {
+        background-color: --alpha(var(--color-slate-200) / 50%);
+        @variant dark {
+          background-color: --alpha(var(--color-zinc-700) / 30%);
+        }
+      }
+    }
+
+    .btn-danger {
+      /*  border border-red-500 bg-red-500 hover:text-red-500 hover:bg-transparent text-white */
+
+      background-color: var(--color-red-600);
+      color: var(--color-white);
+
+      @variant dark {
+        background-color: var(--color-red-400);
+        color: var(--color-black);
+      }
+
+      @variant hover {
+        filter: brightness(120%);
+        @variant dark {
+          filter: brightness(90%);
+        }
+      }
+    }
+
+    .btn-ghost {
+      /* border border-slate-200 dark:border-zinc-800 bg-transparent
+		hover:bg-slate-100 dark:hover:bg-zinc-800 dark:hover:border-zinc-700 dark:text-zinc-400 hover:text-inherit
+		dark:hover:text-inherit */
+
+      border: 1px solid var(--color-slate-200);
+      background-color: transparent;
+
+      @variant hover {
+        background-color: var(--color-slate-100);
+      }
+
+      @variant dark {
+        border-color: var(--color-zinc-800);
+        @variant hover {
+          background-color: var(--color-zinc-800);
+          border-color: var(--color-zinc-700);
+          color: var(--color-zinc-200);
+        }
+      }
+    }
+
+    .btn-xs {
+      padding: calc(var(--spacing) * 1) calc(var(--spacing) * 2);
+      font-size: var(--text-xs);
+    }
+
+    .btn-sm {
+      padding: calc(var(--spacing) * 1.5) calc(var(--spacing) * 3);
+      font-size: 12px;
+    }
+
+    .btn-md {
+      padding-block: calc(var(--spacing) * 1.5);
+      padding-inline: calc(var(--spacing) * 3);
+      font-size: var(--text-sm);
+    }
+
+    .btn-lg {
+      padding-block: calc(var(--spacing) * 2);
+      padding-inline: calc(var(--spacing) * 3);
+      font-size: var(--text-sm);
+    }
+
+    .btn-xl {
+      padding: calc(var(--spacing) * 3) calc(var(--spacing) * 6);
+      font-size: var(--text-base);
+    }
+
+    .btn-square-sm {
+      width: calc(var(--spacing) * 6);
+      height: calc(var(--spacing) * 6);
+    }
+
+    .btn-square-md {
+      width: calc(var(--spacing) * 8);
+      height: calc(var(--spacing) * 8);
+    }
+
+    .btn-square-lg {
+      width: calc(var(--spacing) * 10);
+      height: calc(var(--spacing) * 10);
+    }
+
+    .btn-square-xl {
+      width: calc(var(--spacing) * 12);
+      height: calc(var(--spacing) * 12);
+    }
+
+    .btn-disabled {
+      pointer-events: none;
+      filter: brightness(70%);
+      cursor: normal;
+    }
+  }
+</style>

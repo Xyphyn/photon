@@ -97,22 +97,16 @@
   {$t('routes.accounts')}
   {#snippet extended()}
     <div class="flex">
-      <div class="flex gap-2 mr-auto">
+      <div class="flex gap-2 mr-auto items-center">
         <Button
           href="/accounts/login"
           rounding="pill"
-          class="px-4"
           color="primary"
           icon={ArrowLeftOnRectangle}
         >
           {$t('account.login')}
         </Button>
-        <Button
-          href="/signup"
-          rounding="pill"
-          class="px-4"
-          icon={Identification}
-        >
+        <Button href="/signup" rounding="pill" icon={Identification}>
           {$t('account.signup')}
         </Button>
         {#if !LINKED_INSTANCE_URL}
@@ -165,9 +159,9 @@
               {/if}
             </span>
             <span class="text-sm text-slate-600 dark:text-zinc-400">
-              <span class="capitalize"
-                >{p.client?.name ?? DEFAULT_CLIENT_TYPE.name}</span
-              >
+              <span class="capitalize">
+                {p.client?.name ?? DEFAULT_CLIENT_TYPE.name}
+              </span>
               • {p.instance}
             </span>
           </div>
