@@ -1,5 +1,6 @@
 <script lang="ts">
   import { photonify } from './plugins.js'
+  import { page } from '$app/state'
 
   interface Props {
     href?: string
@@ -18,10 +19,13 @@
   }
 
   let photonified = $derived(photonify(href))
+
+  const isInternalLink = parseURL(href)?.host === page.url.host;
 </script>
 
 <a
   href={photonified ?? href}
+  target={photonified || isInternalLink ? undefined : "_blank"}
   {title}
   class="hover:underline text-blue-600 dark:text-blue-400"
 >
