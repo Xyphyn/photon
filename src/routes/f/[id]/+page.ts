@@ -19,10 +19,13 @@ export async function load({ url, fetch, route, params }) {
       (i) => i.feeds.find((j) => j.id.toString() == p.feed_id!),
     )
 
+    const postPromise = piefed.getPosts(p)
+
     return {
-      ...(await piefed.getPosts(p)),
+      posts: (await postPromise).posts,
+      next_page: (await postPromise).next_page,
       feed: piefedFeedData,
-      params: p,
+      params: { ...p, page_cursor: (await postPromise).next_page },
       client: {},
     }
   }).load({

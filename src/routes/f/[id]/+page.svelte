@@ -26,9 +26,9 @@
 </svelte:head>
 
 <PostListShell
-  client={data.client}
   posts={data.posts}
   cursor={data.next_page}
+  client={data.client}
   getParams={data.params}
   params={{
     sort: data.params.sort!,

@@ -14,11 +14,14 @@ export async function load({ url, fetch, route }) {
   const listingType: ListingType =
     (url.searchParams.get('type') as ListingType) || settings.defaultSort.feed
 
-  const feedData = feed(route.id, async (params) => ({
-    ...(await client({ func: fetch }).getPosts(params)),
-    params: params,
-    client: {},
-  })).load({
+  const feedData = feed(route.id, async (params) => {
+    const posts = await client({ func: fetch }).getPosts(params)
+    return {
+      ...posts,
+      params: { ...params, page_cursor: posts.next_page },
+      client: {},
+    }
+  }).load({
     page_cursor: cursor,
     sort: sort,
     type_: listingType,

@@ -51,13 +51,13 @@
 </svelte:head>
 
 <PostListShell
-  posts={data.posts}
-  cursor={data.next_page}
+  bind:posts={data.posts}
+  bind:cursor={data.next_page}
+  bind:client={data.client}
   getParams={data.params}
   params={{
     sort: data.params.sort!,
   }}
-  client={data.client}
 >
   {#snippet extended()}
     <CommunityHeader

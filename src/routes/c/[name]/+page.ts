@@ -22,7 +22,7 @@ export async function load({ params, fetch, url, route }) {
       community: await communityPromise,
       posts: (await postPromise).posts,
       next_page: (await postPromise).next_page,
-      params: p,
+      params: { ...p, page_cursor: (await postPromise).next_page },
       client: {},
     }
   }).load({

@@ -56,7 +56,7 @@ export interface FeedTypes {
     {
       posts: PostView[]
       next_page?: string
-      params: GetPosts
+      params: GetPostss & { page_cursor: string }
       client: {
         itemHeights?: (number | null)[]
         lastSeen?: number
@@ -69,7 +69,7 @@ export interface FeedTypes {
       posts: PostView[]
       community: GetCommunityResponse
       next_page?: string
-      params: GetPosts
+      params: GetPosts & { page_cursor: string }
       client: { itemHeights?: (number | null)[]; lastSeen?: number }
     },
   ]
@@ -110,7 +110,7 @@ export interface FeedTypes {
     {
       posts: PostView[]
       next_page?: string
-      params: GetPosts
+      params: GetPosts & { page_cursor: string }
       feed: Promise<FeedView | undefined>
       client: {
         itemHeights?: (number | null)[]
@@ -123,7 +123,7 @@ export interface FeedTypes {
     {
       posts: PostView[]
       next_page?: string
-      params: GetPosts
+      params: GetPosts & { page_cursor: string }
       topic: Promise<TopicView | undefined>
       client: {
         itemHeights?: (number | null)[]

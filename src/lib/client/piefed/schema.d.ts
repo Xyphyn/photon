@@ -260,6 +260,7 @@ export interface paths {
             | 'Subscribed'
             | 'Popular'
             | 'Moderating'
+            | 'ModeratorView'
           page?: number
           sort?:
             | 'Active'
@@ -277,6 +278,7 @@ export interface paths {
             | 'TopYear'
             | 'TopAll'
             | 'Scaled'
+            | 'Old'
           community_name?: string
           community_id?: number
         }
@@ -1301,6 +1303,7 @@ export interface paths {
             | 'TopYear'
             | 'TopAll'
             | 'Scaled'
+            | 'Old'
           page?: number
           limit?: number
           /** @description Limit posts/comments to just a single community */
@@ -2685,6 +2688,7 @@ export interface paths {
             | 'TopSixHour'
             | 'TopTwelveHour'
             | 'TopWeek'
+            | 'TopDay'
             | 'TopMonth'
             | 'TopThreeMonths'
             | 'TopSixMonths'
@@ -2694,7 +2698,13 @@ export interface paths {
             | 'New'
             | 'Scaled'
             | 'Active'
-          type_?: 'All' | 'Local' | 'Subscribed'
+          type_?:
+            | 'All'
+            | 'Local'
+            | 'Subscribed'
+            | 'Popular'
+            | 'Moderating'
+            | 'ModeratorView'
           community_name?: string
           community_id?: number
           saved_only?: boolean
@@ -3645,6 +3655,349 @@ export interface paths {
     patch?: never
     trace?: never
   }
+  '/api/alpha/private_message/list': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /** List private messages. */
+    get: {
+      parameters: {
+        query?: {
+          page?: number
+          limit?: number
+          unread_only?: boolean
+        }
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody?: never
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['ListPrivateMessagesResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/private_message/conversation': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /** Get conversation with a specific person. */
+    get: {
+      parameters: {
+        query: {
+          person_id: number
+          page?: number
+          limit?: number
+        }
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody?: never
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['GetPrivateMessageConversationResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/private_message': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    /** Edit a private message. */
+    put: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody: {
+        content: {
+          'application/json': components['schemas']['EditPrivateMessageRequest']
+        }
+      }
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['PrivateMessageResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    /** Create a new private message. */
+    post: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody: {
+        content: {
+          'application/json': components['schemas']['CreatePrivateMessageRequest']
+        }
+      }
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['PrivateMessageResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+        /** @description Too Many Requests */
+        429: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+      }
+    }
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/private_message/mark_as_read': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /** Mark a private message as read or unread. */
+    post: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody: {
+        content: {
+          'application/json': components['schemas']['MarkPrivateMessageAsReadRequest']
+        }
+      }
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['PrivateMessageResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/private_message/delete': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /** Delete or restore a private message. */
+    post: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody: {
+        content: {
+          'application/json': components['schemas']['DeletePrivateMessageRequest']
+        }
+      }
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['PrivateMessageResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/private_message/report': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /** Report a private message. */
+    post: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody: {
+        content: {
+          'application/json': components['schemas']['ReportPrivateMessageRequest']
+        }
+      }
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['PrivateMessageResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
 }
 export type webhooks = Record<string, never>
 export interface components {
@@ -3696,12 +4049,16 @@ export interface components {
       /** Format: html */
       about_html?: string
       /** Format: url */
-      avatar?: string
+      avatar?: string | null
       /** Format: url */
-      banner?: string
+      banner?: string | null
       flair?: string
-      published: string
-      title?: string
+      /**
+       * Format: datetime
+       * @example 2025-06-07T02:29:07.980084Z
+       */
+      published?: string
+      title?: string | null
     }
     PersonView: {
       activity_alert: boolean
@@ -3762,12 +4119,12 @@ export interface components {
       title: string
       banned?: boolean
       /** Format: url */
-      banner?: string
+      banner?: string | null
       /** Format: markdown */
       description?: string
       /** Format: url */
-      icon?: string
-      posting_warning?: string
+      icon?: string | null
+      posting_warning?: string | null
       /**
        * Format: datetime
        * @example 2025-06-07T02:29:07.980084Z
@@ -3775,8 +4132,8 @@ export interface components {
       updated?: string
     }
     CommunityBlockView: {
-      community: components['schemas']['Community']
-      person: components['schemas']['Person']
+      community?: components['schemas']['Community']
+      person?: components['schemas']['Person']
     }
     CommunityFollowerView: {
       community: components['schemas']['Community']
@@ -3813,8 +4170,9 @@ export interface components {
         | 'Subscribed'
         | 'Popular'
         | 'Moderating'
+        | 'ModeratorView'
       /** @enum {string} */
-      default_sort_type:
+      default_sort_type?:
         | 'Active'
         | 'Hot'
         | 'New'
@@ -3830,6 +4188,7 @@ export interface components {
         | 'TopYear'
         | 'TopAll'
         | 'Scaled'
+        | 'Old'
       show_bot_accounts: boolean
       show_nsfl: boolean
       show_nsfw: boolean
@@ -3948,7 +4307,7 @@ export interface components {
        * Format: url
        * @description Legacy tags that existed prior to 1.2 and some tags for remote communities might not have a defined ap_id
        */
-      ap_id: string
+      ap_id: string | null
     }
     CommunityView: {
       activity_alert: boolean
@@ -3975,6 +4334,16 @@ export interface components {
       published: string
       score: number
       upvotes: number
+      cross_posts: number
+    }
+    WidthHeight: {
+      width?: number
+      height?: number
+    }
+    MiniCrossPosts: {
+      post_id?: number
+      reply_count?: number
+      community_name?: string
     }
     Post: {
       /** Format: url */
@@ -4009,6 +4378,8 @@ export interface components {
       updated?: string
       /** Format: url */
       url?: string
+      image_details?: components['schemas']['WidthHeight']
+      cross_posts?: components['schemas']['MiniCrossPosts'][]
     }
     PostView: {
       banned_from_community: boolean
@@ -4130,7 +4501,7 @@ export interface components {
     }
     ListCommunitiesResponse: {
       communities: components['schemas']['CommunityView'][]
-      next_page?: string
+      next_page?: string | null
     }
     FollowCommunityRequest: {
       community_id: number
@@ -4152,12 +4523,12 @@ export interface components {
       name: string
       title: string
       /** Format: url */
-      banner_url?: string
+      banner_url?: string | null
       /** Format: markdown */
       description?: string
       discussion_languages?: number[]
       /** Format: url */
-      icon_url?: string
+      icon_url?: string | null
       local_only?: boolean
       nsfw?: boolean
       restricted_to_mods?: boolean
@@ -4167,12 +4538,12 @@ export interface components {
       community_id: number
       title?: string
       /** Format: url */
-      banner_url?: string
+      banner_url?: string | null
       /** Format: markdown */
       description?: string
       discussion_languages?: number[]
       /** Format: url */
-      icon_url?: string
+      icon_url?: string | null
       local_only?: boolean
       nsfw?: boolean
       restricted_to_mods?: boolean
@@ -4203,17 +4574,17 @@ export interface components {
        * Format: datetime
        * @example 2025-06-07T02:29:07.980084Z, null=permanent ban
        */
-      expired_at?: string
+      expired_at?: string | null
       /**
        * Format: datetime
        * @example 2025-06-07T02:29:07.980084Z, null=permanent ban
        */
-      expires_at?: string
+      expires_at?: string | null
       reason?: string
     }
     CommunityModerationBansListResponse: {
       items?: components['schemas']['CommunityModerationBanItem'][]
-      next_page?: string
+      next_page?: string | null
     }
     CommunityModerationUnbanRequest: {
       community_id: number
@@ -4271,7 +4642,7 @@ export interface components {
        * Format: url
        * @description Legacy tags that existed prior to 1.2 and some tags for remote communities might not have a defined ap_id
        */
-      ap_id: string
+      ap_id: string | null
     }
     CommunityFlairEditRequest: {
       flair_id: number
@@ -4307,7 +4678,7 @@ export interface components {
        * Format: url
        * @description Legacy tags that existed prior to 1.2 and some tags for remote communities might not have a defined ap_id
        */
-      ap_id: string
+      ap_id: string | null
     }
     CommunityFlairDeleteRequest: {
       flair_id: number
@@ -4351,14 +4722,14 @@ export interface components {
       /** @description user_id of the feed creator/owner */
       user_id: number
       /** Format: url */
-      banner?: string
+      banner?: string | null
       /** Format: markdown */
-      description?: string
+      description?: string | null
       /** Format: html */
-      description_html?: string
+      description_html?: string | null
       /** Format: url */
-      icon?: string
-      parent_feed_id?: number
+      icon?: string | null
+      parent_feed_id?: number | null
     }
     FeedListResponse: {
       feeds: components['schemas']['FeedView'][]
@@ -4371,7 +4742,7 @@ export interface components {
       name: string
       show_posts_from_children: boolean
       title: string
-      parent_topic_id?: number
+      parent_topic_id?: number | null
     }
     TopicListResponse: {
       topics: components['schemas']['TopicView'][]
@@ -4429,11 +4800,11 @@ export interface components {
       subscribed: 'Subscribed' | 'NotSubscribed' | 'Pending'
     }
     UserRepliesResponse: {
-      next_page: number
+      next_page?: string | null
       replies: components['schemas']['CommentReplyView'][]
     }
     UserMentionsResponse: {
-      next_page: number
+      next_page?: string | null
       replies: components['schemas']['CommentReplyView'][]
     }
     UserBlockRequest: {
@@ -4461,14 +4832,14 @@ export interface components {
        * Format: url
        * @description Pass a null value to remove the image
        */
-      avatar?: string
+      avatar?: string | null
       /** Format: markdown */
       bio?: string
       /**
        * Format: url
        * @description Pass a null value to remove the image
        */
-      cover?: string
+      cover?: string | null
       /** @enum {string} */
       default_comment_sort_type?: 'Hot' | 'Top' | 'New' | 'Old'
       /** @enum {string} */
@@ -4518,7 +4889,7 @@ export interface components {
       /** @enum {string} */
       status: 'All' | 'Unread' | 'Read'
       username: string
-      next_page: number
+      next_page?: string | null
     }
     UserNotificationStateRequest: {
       notif_id: number
@@ -4535,14 +4906,14 @@ export interface components {
     UserSetFlairRequest: {
       community_id: number
       /** @description Either omit or set to null to remove existing flair */
-      flair_text?: string
+      flair_text?: string | null
     }
     UserSetFlairResponse: {
       person_view: components['schemas']['PersonView']
     }
     ListCommentsResponse: {
       comments: components['schemas']['CommentView'][]
-      next_page?: string
+      next_page?: string | null
     }
     LikeCommentRequest: {
       comment_id: number
@@ -4578,7 +4949,11 @@ export interface components {
       body: string
       comment_id: number
       language_id?: number
-      distinguished?: boolean
+      /**
+       * @description Visibly mark reply as from a moderator in the web UI
+       * @default false
+       */
+      distinguished: boolean
     }
     DeleteCommentRequest: {
       comment_id: number
@@ -4598,7 +4973,7 @@ export interface components {
       id: number
       creator_id: number
       comment_id: number
-      original_comment_text: string
+      original_comment_text?: string
       reason?: string
       resolved: boolean
       /**
@@ -4657,12 +5032,12 @@ export interface components {
       creator: components['schemas']['Person']
     }
     ListCommentLikesResponse: {
-      comment_likes?: components['schemas']['CommentLikeView'][]
-      next_page?: string
+      comment_likes: components['schemas']['CommentLikeView'][]
+      next_page?: string | null
     }
     ListPostsResponse: {
       posts: components['schemas']['PostView'][]
-      next_page?: string
+      next_page?: string | null
     }
     GetPostResponse: {
       post_view: components['schemas']['PostView']
@@ -4690,12 +5065,13 @@ export interface components {
     }
     GetPostRepliesResponse: {
       comments?: components['schemas']['PostReplyView'][]
-      next_page?: string
+      next_page?: string | null
     }
     LikePostRequest: {
       post_id: number
       score: number
       private?: boolean
+      auth?: string
     }
     SavePostRequest: {
       post_id: number
@@ -4739,7 +5115,11 @@ export interface components {
       original_post_body: string
       reason: string
       resolved: boolean
-      published: string
+      /**
+       * Format: datetime
+       * @example 2025-06-07T02:29:07.980084Z
+       */
+      published?: string
     }
     PostReportView: {
       post_report: components['schemas']['PostReport']
@@ -4788,13 +5168,13 @@ export interface components {
       creator: components['schemas']['Person']
     }
     ListPostLikesResponse: {
-      post_likes?: components['schemas']['PostLikeView'][]
-      next_page?: string
+      post_likes: components['schemas']['PostLikeView'][]
+      next_page?: string | null
     }
     PostSetFlairRequest: {
       post_id: number
       /** @description A list of all the flair id to assign to the post. Either pass an empty list or null to remove flair */
-      flair_id_list?: number[]
+      flair_id_list?: number[] | null
     }
     PostSetFlairResponse: {
       banned_from_community: boolean
@@ -4825,6 +5205,56 @@ export interface components {
       liked_only?: boolean
       saved_only?: boolean
       q?: string
+    }
+    PrivateMessage: {
+      id: number
+      creator_id: number
+      recipient_id: number
+      content: string
+      deleted: boolean
+      read: boolean
+      /**
+       * Format: datetime
+       * @example 2025-06-07T02:29:07.980084Z
+       */
+      published: string
+      /** Format: url */
+      ap_id: string
+      local: boolean
+    }
+    PrivateMessageView: {
+      private_message: components['schemas']['PrivateMessage']
+      creator: components['schemas']['Person']
+      recipient: components['schemas']['Person']
+    }
+    ListPrivateMessagesResponse: {
+      private_messages: components['schemas']['PrivateMessageView'][]
+    }
+    GetPrivateMessageConversationResponse: {
+      private_messages: components['schemas']['PrivateMessageView'][]
+    }
+    CreatePrivateMessageRequest: {
+      content: string
+      recipient_id: number
+    }
+    PrivateMessageResponse: {
+      private_message_view: components['schemas']['PrivateMessageView']
+    }
+    EditPrivateMessageRequest: {
+      private_message_id: number
+      content: string
+    }
+    MarkPrivateMessageAsReadRequest: {
+      private_message_id: number
+      read: boolean
+    }
+    DeletePrivateMessageRequest: {
+      private_message_id: number
+      deleted: boolean
+    }
+    ReportPrivateMessageRequest: {
+      private_message_id: number
+      reason: string
     }
   }
   responses: {
