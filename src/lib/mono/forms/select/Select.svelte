@@ -3,8 +3,7 @@
     value?: T | string | undefined
     placeholder?: string | undefined
     label?: string | undefined
-    size?: ButtonSize
-    shadow?: ButtonShadow
+    size?: 'md' | 'sm'
     id?: string
     class?: ClassValue
     baseClass?: ClassValue
@@ -35,7 +34,7 @@
 
 <script lang="ts" generics="T">
   import { setContext, tick, type Snippet } from 'svelte'
-  import type { Placement } from 'svelte-floating-ui/core'
+  import type { Placement } from 'svelte-floating-ui/dom'
   import {
     CheckCircle,
     ChevronUpDown,
@@ -48,8 +47,6 @@
     buttonColor,
     buttonShadow,
     buttonSize,
-    type ButtonShadow,
-    type ButtonSize,
   } from '../../button/Button.svelte'
   import Menu from '../../popover/Menu.svelte'
   import MenuButton from '../../popover/MenuButton.svelte'
@@ -77,7 +74,6 @@
     placeholder = undefined,
     label = undefined,
     size = 'md',
-    shadow = 'none',
     class: clazz = '',
     baseClass = '',
     selectClass = '',
@@ -105,10 +101,7 @@
         bind:this={element}
         class={[
           buttonSize[size],
-          buttonShadow[shadow],
-          buttonColor.secondary,
-          'appearance-none transition-all rounded-xl text-sm w-full min-w-full cursor-pointer pr-6',
-          'hover:brightness-98 hover:dark:brightness-90',
+          'btn btn-secondary select rounded-xl appearance-none pr-6!',
           selectClass,
           clazz,
         ]}
@@ -187,3 +180,7 @@
     {/if}
   {/each}
 </Menu>
+
+<style>
+  @reference '../../../../app.css';
+</style>

@@ -22,7 +22,7 @@
   import 'nprogress/nprogress.css'
   import { onMount } from 'svelte'
   import { Forward } from 'svelte-hero-icons'
-  import '../style/app.css'
+  import '../app.css'
   interface Props {
     children?: import('svelte').Snippet
   }

@@ -32,25 +32,19 @@
 </script>
 
 <Button
-  color="none"
   {...rest}
+  color="none"
+  rounding="none"
   class={[
-    'shrink-0 lg:rounded-xl w-10 h-10 rounded-full',
-    adaptive ? 'lg:w-max lg:h-8' : 'lg:w-8 lg:h-8',
-    !rest.color &&
-      'hover:text-slate-900 dark:hover:text-zinc-50 transition-colors',
-    !rest.color &&
-      (isSelected
-        ? 'text-primary-900 dark:text-primary-100 max-lg:bg-slate-100 max-lg:dark:bg-zinc-800'
-        : 'text-slate-500 dark:text-zinc-400'),
+    'nav-btn',
+    adaptive && 'nav-btn-dynamic',
+    isSelected && 'nav-btn-selected',
     clazz,
   ]}
   shadow="none"
   size="custom"
-  rounding="none"
   {href}
   title={label}
-  style="transition-property: background-color, filter, transform, scale;"
   aria-selected={isSelected}
 >
   {#snippet prefix()}
@@ -68,3 +62,50 @@
   <span class="hidden {adaptive ? 'lg:block' : ''}">{label}</span>
   {@render children?.()}
 </Button>
+
+<style>
+  @reference '../../../../app.css';
+
+  :global {
+    .nav-btn {
+      width: calc(var(--spacing) * 10);
+      height: calc(var(--spacing) * 10);
+      border-radius: 9999px;
+
+      color: var(--color-slate-500);
+
+      @variant dark {
+        color: var(--color-zinc-400);
+      }
+
+      @variant hover {
+        color: var(--color-slate-900);
+        @variant dark {
+          color: var(--color-zinc-50);
+        }
+      }
+
+      transition-property: color;
+    }
+
+    .nav-btn-dynamic {
+      @variant lg {
+        width: max-content;
+      }
+    }
+
+    .nav-btn-selected {
+      color: var(--color-primary-900);
+      @variant dark {
+        color: var(--color-primary-100);
+      }
+
+      @variant max-lg {
+        background-color: var(--color-slate-200);
+        @variant dark {
+          background-color: var(--color-zinc-800);
+        }
+      }
+    }
+  }
+</style>
