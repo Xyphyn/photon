@@ -121,9 +121,3 @@ export function insertCommentIntoTree(
     tree.unshift(node)
   }
 }
-
-export async function buildCommentsTreeAsync(comments: CommentView[]) {
-  const result = buildCommentsTree(comments)
-
-  return result
-}
