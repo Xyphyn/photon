@@ -1,9 +1,9 @@
 <script lang="ts">
   import { profile } from '$lib/auth.svelte'
-  import EntityHeader from '$lib/components/ui/EntityHeader.svelte'
-  import Expandable from '$lib/components/ui/Expandable.svelte'
-  import { formatRelativeDate } from '$lib/components/util/RelativeDate.svelte'
-  import { publishedToDate } from '$lib/components/util/date'
+  import EntityHeader from '$comp/ui/EntityHeader.svelte'
+  import Expandable from '$comp/ui/Expandable.svelte'
+  import { formatRelativeDate } from '$comp/util/RelativeDate.svelte'
+  import { publishedToDate } from '$comp/util/date'
   import { t } from '$lib/i18n/translations'
   import { userLink } from '$lib/util.svelte'
   import { settings } from '$lib/settings.svelte'

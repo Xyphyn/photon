@@ -2,10 +2,10 @@
   import { t } from '$lib/i18n/translations'
   import { Spinner } from 'mono-svelte'
   import type { ResolveObjectResponse } from '$lib/client/types'
-  import UserItem from '$lib/components/lemmy/user/UserItem.svelte'
-  import { CommunityItem } from '$lib/components/lemmy/community'
-  import { PostItem } from '$lib/components/lemmy/post'
-  import { CommentItem } from '$lib/components/lemmy/comment'
+  import UserItem from '$comp/lemmy/user/UserItem.svelte'
+  import { PostItem } from '$comp/lemmy/post'
+  import CommunityItem from '$comp/lemmy/community/CommunityItem.svelte'
+  import CommentItem from '$comp/lemmy/comment/CommentItem.svelte'
 
   interface Props {
     data: {

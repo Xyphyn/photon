@@ -1,5 +1,5 @@
 import { notifications, profile } from '$lib/auth.svelte'
-import { publishedToDate } from '$lib/components/util/date.js'
+import { publishedToDate } from '$comp/util/date.js'
 import { getClient } from '$lib/client/lemmy.svelte'
 import {
   generalizeCommentReply,

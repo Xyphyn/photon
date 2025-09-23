@@ -1,6 +1,6 @@
 <script lang="ts">
   import { profile } from '$lib/auth.svelte'
-  import Avatar from '$lib/components/ui/Avatar.svelte'
+  import Avatar from '$comp/ui/Avatar.svelte'
   import { getClient } from '$lib/client/lemmy.svelte'
   import type { ListingType, Person } from '$lib/client/types'
   import { MenuButton, Search } from 'mono-svelte'

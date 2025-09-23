@@ -1,12 +1,12 @@
 <script lang="ts">
   import { preventDefault, run } from 'svelte/legacy'
 
+  import MultiSelect from '$comp/input/Switch.svelte'
+  import { removalTemplate } from '$comp/lemmy/moderation/moderation.js'
+  import MarkdownEditor from '$comp/markdown/MarkdownEditor.svelte'
   import { profile } from '$lib/auth.svelte.js'
   import { getClient } from '$lib/client/lemmy.svelte'
   import type { CommentView, PostView } from '$lib/client/types'
-  import MultiSelect from '$lib/components/input/Switch.svelte'
-  import { removalTemplate } from '$lib/components/lemmy/moderation/moderation.js'
-  import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
   import { t } from '$lib/i18n/translations'
   import { errorMessage } from '$lib/lemmy/error'
   import { isCommentView, isPostView } from '$lib/lemmy/item.js'
@@ -15,7 +15,7 @@
   import { Button, Modal, Select, Switch, toast } from 'mono-svelte'
   import Option from 'mono-svelte/forms/select/Option.svelte'
   import { Fire, Trash } from 'svelte-hero-icons'
-  import { Comment } from '../comment'
+  import Comment from '../comment/Comment.svelte'
   import { Post } from '../post'
   import { amMod, isAdmin } from './moderation'
 

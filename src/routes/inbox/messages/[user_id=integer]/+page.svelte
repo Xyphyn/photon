@@ -1,9 +1,9 @@
 <script lang="ts">
   import { browser } from '$app/environment'
-  import { report } from '$lib/components/lemmy/moderation/moderation'
-  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
-  import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
-  import { Header } from '$lib/components/ui/layout'
+  import { report } from '$comp/lemmy/moderation/moderation'
+  import UserLink from '$comp/lemmy/user/UserLink.svelte'
+  import MarkdownEditor from '$comp/markdown/MarkdownEditor.svelte'
+  import { Header } from '$comp/ui/layout'
   import { t } from '$lib/i18n/translations'
   import { client } from '$lib/client/lemmy.svelte'
   import { errorMessage } from '$lib/lemmy/error'

@@ -17,9 +17,9 @@
   import { preventDefault } from 'svelte/legacy'
 
   import { goto } from '$app/navigation'
-  import VirtualList from '$lib/components/render/VirtualList.svelte'
-  import Avatar from '$lib/components/ui/Avatar.svelte'
-  import { Header } from '$lib/components/ui/layout'
+  import VirtualList from '$comp/render/VirtualList.svelte'
+  import Avatar from '$comp/ui/Avatar.svelte'
+  import { Header } from '$comp/ui/layout'
   import { t } from '$lib/i18n/translations'
   import { DEFAULT_INSTANCE_URL } from '$lib/instance.svelte.js'
   import { validateInstance } from '$lib/client/lemmy.svelte'

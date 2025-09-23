@@ -232,11 +232,11 @@ export function toFeedView(
 // Query calls
 export function fromGetPosts(
   getPosts: GetPosts,
-): components['schemas']['GetPosts'] {
+): components['parameters']['GetPosts'] {
   return {
     ...getPosts,
     sort: toSortType(getPosts.sort),
-    page_cursor: Number(getPosts.page_cursor),
+    page: Number(getPosts.page_cursor),
   }
 }
 

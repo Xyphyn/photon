@@ -2,7 +2,7 @@ import { settings } from '$lib/settings.svelte'
 import type { SortType } from '$lib/client/types'
 import { feed } from '$lib/lemmy/feeds/feed.svelte.js'
 import { client } from '$lib/client/lemmy.svelte.js'
-import { CommunityCard } from '$lib/components/lemmy/community'
+import CommunityCard from '$comp/lemmy/community/CommunityCard.svelte'
 
 export async function load({ params, fetch, url, route }) {
   const cursor: string | undefined = url.searchParams.get('cursor') as
@@ -22,7 +22,7 @@ export async function load({ params, fetch, url, route }) {
       community: await communityPromise,
       posts: (await postPromise).posts,
       next_page: (await postPromise).next_page,
-      params: p,
+      params: { ...p, page_cursor: (await postPromise).next_page },
       client: {},
     }
   }).load({

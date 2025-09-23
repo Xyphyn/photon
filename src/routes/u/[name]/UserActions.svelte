@@ -2,7 +2,7 @@
   import { profile } from '$lib/auth.svelte'
   import { client } from '$lib/client/lemmy.svelte'
   import type { PersonView } from '$lib/client/types'
-  import { ban, isAdmin } from '$lib/components/lemmy/moderation/moderation'
+  import { ban, isAdmin } from '$comp/lemmy/moderation/moderation'
   import { t } from '$lib/i18n/translations'
   import { blockUser, isBlocked } from '$lib/lemmy/user'
   import {

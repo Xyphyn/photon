@@ -1,8 +1,8 @@
 <script lang="ts">
   import { preventDefault } from 'svelte/legacy'
 
-  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
-  import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
+  import UserLink from '$comp/lemmy/user/UserLink.svelte'
+  import MarkdownEditor from '$comp/markdown/MarkdownEditor.svelte'
   import { t } from '$lib/i18n/translations'
   import type { Person } from '$lib/client/types'
   import { Button, Modal } from 'mono-svelte'

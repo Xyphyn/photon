@@ -19,10 +19,12 @@ export async function load({ url, fetch, route, params }) {
       include_communities: true,
     }).then((i) => i.topics.find((j) => j.id.toString() == p.topic_id!))
 
+    const posts = await piefed.getPosts(p)
+
     return {
-      ...(await piefed.getPosts(p)),
+      ...posts,
       topic: piefedTopicData,
-      params: p,
+      params: { ...p, page_cursor: posts.next_page },
       client: {},
     }
   }).load({

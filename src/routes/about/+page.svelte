@@ -1,6 +1,6 @@
 <script>
-  import Link from '$lib/components/input/Link.svelte'
-  import Logo from '$lib/components/ui/Logo.svelte'
+  import Link from '$comp/input/Link.svelte'
+  import Logo from '$comp/ui/Logo.svelte'
   import Profile from './Profile.svelte'
 </script>
 

@@ -18,7 +18,7 @@ import type {
   ModlogActionType,
   Person,
 } from '$lib/client/types'
-import { publishedToDate } from '$lib/components/util/date.js'
+import { publishedToDate } from '$comp/util/date.js'
 
 export type ActionName =
   | 'ban'

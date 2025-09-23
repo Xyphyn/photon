@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Avatar from '$lib/components/ui/Avatar.svelte'
-  import CommonList from '$lib/components/ui/layout/CommonList.svelte'
+  import Avatar from '$comp/ui/Avatar.svelte'
+  import CommonList from '$comp/ui/layout/CommonList.svelte'
   import { Button } from 'mono-svelte'
 
   interface Props {

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import CommonList from '$lib/components/ui/layout/CommonList.svelte'
+  import CommonList from '$comp/ui/layout/CommonList.svelte'
   import { t } from '$lib/i18n/translations'
   import { settings } from '$lib/settings.svelte'
   import { Bars3, BugAnt } from 'svelte-hero-icons'

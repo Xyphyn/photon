@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Markdown from '$lib/components/markdown/Markdown.svelte'
-  import { Header } from '$lib/components/ui/layout'
+  import Markdown from '$comp/markdown/Markdown.svelte'
+  import { Header } from '$comp/ui/layout'
   import { t } from '$lib/i18n/translations'
   import { site } from '$lib/client/lemmy.svelte'
   import { Spinner } from 'mono-svelte'

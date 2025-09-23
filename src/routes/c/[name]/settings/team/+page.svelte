@@ -1,9 +1,9 @@
 <script lang="ts">
   import { profile } from '$lib/auth.svelte.js'
-  import UserAutocomplete from '$lib/components/lemmy/user/UserAutocomplete.svelte'
-  import Avatar from '$lib/components/ui/Avatar.svelte'
-  import CommonList from '$lib/components/ui/layout/CommonList.svelte'
-  import { Header } from '$lib/components/ui/layout'
+  import UserAutocomplete from '$comp/lemmy/user/UserAutocomplete.svelte'
+  import Avatar from '$comp/ui/Avatar.svelte'
+  import CommonList from '$comp/ui/layout/CommonList.svelte'
+  import { Header } from '$comp/ui/layout'
   import { t } from '$lib/i18n/translations.js'
   import { getClient } from '$lib/client/lemmy.svelte'
   import { errorMessage } from '$lib/lemmy/error.js'

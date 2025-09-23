@@ -4,8 +4,8 @@
     mediaType,
     optimizeImageURL,
     PostIframe,
-  } from '$lib/components/lemmy/post'
-  import { showImage } from '$lib/components/ui/ExpandableImage.svelte'
+  } from '$comp/lemmy/post'
+  import { showImage } from '$comp/ui/ExpandableImage.svelte'
   import { t } from '$lib/i18n/translations'
   import { getContext } from 'svelte'
   import { ArrowDownTray, Icon } from 'svelte-hero-icons'

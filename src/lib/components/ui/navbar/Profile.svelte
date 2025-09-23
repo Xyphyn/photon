@@ -1,12 +1,9 @@
 <script lang="ts">
   import { env } from '$env/dynamic/public'
   import { notifications, profile } from '$lib/auth.svelte'
-  import {
-    amModOfAny,
-    isAdmin,
-  } from '$lib/components/lemmy/moderation/moderation'
+  import { amModOfAny, isAdmin } from '$comp/lemmy/moderation/moderation'
 
-  import SiteCard from '$lib/components/lemmy/instance/InstanceCard.svelte'
+  import SiteCard from '$comp/lemmy/instance/InstanceCard.svelte'
   import { t } from '$lib/i18n/translations'
   import { site } from '$lib/client/lemmy.svelte'
   import { settings } from '$lib/settings.svelte'

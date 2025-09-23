@@ -1,5 +1,5 @@
 <script>
-  import { Header } from '$lib/components/ui/layout'
+  import { Header } from '$comp/ui/layout'
   import { t } from '$lib/i18n/translations'
 </script>
 

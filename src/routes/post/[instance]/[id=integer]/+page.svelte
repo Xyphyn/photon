@@ -11,13 +11,13 @@
     PostMedia,
     PostMeta,
     type Tag,
-  } from '$lib/components/lemmy/post'
-  import Markdown from '$lib/components/markdown/Markdown.svelte'
-  import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
-  import Expandable from '$lib/components/ui/Expandable.svelte'
-  import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import { publishedToDate } from '$lib/components/util/date.js'
-  import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
+  } from '$comp/lemmy/post'
+  import Markdown from '$comp/markdown/Markdown.svelte'
+  import EndPlaceholder from '$comp/ui/EndPlaceholder.svelte'
+  import Expandable from '$comp/ui/Expandable.svelte'
+  import Placeholder from '$comp/ui/Placeholder.svelte'
+  import { publishedToDate } from '$comp/util/date.js'
+  import FormattedNumber from '$comp/util/FormattedNumber.svelte'
   import { t } from '$lib/i18n/translations.js'
   import { resumables } from '$lib/lemmy/item.js'
   import { settings } from '$lib/settings.svelte.js'
@@ -165,7 +165,7 @@
       />
     </div>
     <h1 class="font-medium text-xl leading-5">
-      <Markdown source={tags.title ?? data.data.value.post.post.name} inline />
+      <Markdown source={tags.title ?? data.data.value.post.post.name} />
     </h1>
   </header>
   <PostMedia

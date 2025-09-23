@@ -1,11 +1,8 @@
 <script lang="ts">
   import { profile } from '$lib/auth.svelte.js'
-  import {
-    amMod,
-    isAdmin,
-  } from '$lib/components/lemmy/moderation/moderation.js'
-  import { publishedToDate } from '$lib/components/util/date'
-  import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
+  import { amMod, isAdmin } from '$comp/lemmy/moderation/moderation.js'
+  import { publishedToDate } from '$comp/util/date'
+  import FormattedNumber from '$comp/util/FormattedNumber.svelte'
   import { t } from '$lib/i18n/translations'
   import { save } from '$lib/lemmy/contentview.js'
   import { settings, type View } from '$lib/settings.svelte.js'
@@ -122,7 +119,7 @@
   <div class="flex-1"></div>
   {#if settings.debugInfo}
     {#if debug}
-      {#await import('$lib/components/util/debug/DebugObject.svelte') then { default: DebugObject }}
+      {#await import('$comp/util/debug/DebugObject.svelte') then { default: DebugObject }}
         <DebugObject object={post} bind:open={debug} />
       {/await}
     {/if}
@@ -137,7 +134,7 @@
     ></Button>
   {/if}
   {#if profile.current?.user && (amMod(profile.current.user, post.community) || isAdmin(profile.current.user))}
-    {#await import('$lib/components/lemmy/moderation/ModerationMenu.svelte') then { default: ModerationMenu }}
+    {#await import('$comp/lemmy/moderation/ModerationMenu.svelte') then { default: ModerationMenu }}
       <ModerationMenu bind:item={post}>
         {#snippet target(attachment, acting)}
           <Button

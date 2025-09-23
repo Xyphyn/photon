@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { CommonList } from '$lib/components/ui/layout'
+  import { CommonList } from '$comp/ui/layout'
   import TopicItem from './TopicItem.svelte'
 
   let { data } = $props()

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Avatar from '$lib/components/ui/Avatar.svelte'
+  import Avatar from '$comp/ui/Avatar.svelte'
   import type { Community } from '$lib/client/types'
 
   interface Props {

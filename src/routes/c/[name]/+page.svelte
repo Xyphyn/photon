@@ -3,8 +3,8 @@
   import { navigating, page } from '$app/state'
   import { profile } from '$lib/auth.svelte.js'
   import { site } from '$lib/client/lemmy.svelte'
-  import CommunityHeader from '$lib/components/lemmy/community/CommunityHeader.svelte'
-  import { PostListShell } from '$lib/components/ui/layout'
+  import CommunityHeader from '$comp/lemmy/community/CommunityHeader.svelte'
+  import { PostListShell } from '$comp/ui/layout'
   import { t } from '$lib/i18n/translations.js'
   import { resumables } from '$lib/lemmy/item'
   import { setSessionStorage } from '$lib/session.js'
@@ -51,13 +51,13 @@
 </svelte:head>
 
 <PostListShell
-  posts={data.posts}
-  cursor={data.next_page}
+  bind:posts={data.posts}
+  bind:cursor={data.next_page}
+  bind:client={data.client}
   getParams={data.params}
   params={{
     sort: data.params.sort!,
   }}
-  client={data.client}
 >
   {#snippet extended()}
     <CommunityHeader

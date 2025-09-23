@@ -24,14 +24,10 @@
   import { linkify, subSupscriptExtension } from './renderers/plugins.js'
   import containerExtension from './renderers/spoiler/spoiler.js'
 
-  export const options = {
-    mangle: false,
-    headerIds: false,
-    pedantic: false,
-    inline: false,
-  }
-
-  marked.setOptions(options)
+  marked.setOptions({
+    gfm: true,
+    breaks: false,
+  })
 
   marked.use(linkify, {
     extensions: [
@@ -87,34 +83,26 @@
     listitem: MdListItem,
     subscript: MdSubscript,
     superscript: MdSuperscript,
+    space: MdParagraph,
+    list_item: MdListItem,
+    text: MdText,
   }
 
   export const inlineRenderers = {
-    heading: MdText,
-    image: MdText,
-    link: MdText,
-    blockquote: MdText,
-    hr: MdText,
-    html: MdText,
-    code: MdText,
-    list: MdText,
-    spoiler: MdText,
-    table: MdText,
-    tablebody: MdText,
-    tablecell: MdText,
-    tablehead: MdText,
-    tablerow: MdTableRow,
     paragraph: MdParagraph,
-    listitem: MdText,
     subscript: MdSubscript,
     superscript: MdSuperscript,
+    text: MdText,
+    link: MdLink,
   }
+
+  export type Renderer = keyof typeof renderers
 </script>
 
 <script lang="ts">
-  import SvelteMarkdown from 'svelte-markdown'
   import { setContext } from 'svelte'
   import type { ClassValue } from 'svelte/elements'
+  import MdTree from './MdTree.svelte'
 
   interface RendererOptions {
     autoloadImages: boolean
@@ -142,21 +130,13 @@
 
   setContext('options', rendererOptions)
 
-  options.inline = inline
-
-  let tokens = $derived.by(() => marked.lexer(source))
+  let tokens = $derived(marked.lexer(source))
 </script>
 
-<svelte:element
-  this={inline ? 'div' : 'article'}
+<article
   dir="auto"
   class={[!noStyle && 'break-words space-y-4 leading-normal', clazz]}
   {style}
 >
-  <SvelteMarkdown
-    source={tokens}
-    renderers={inline ? inlineRenderers : renderers}
-    {options}
-    isInline={inline || undefined}
-  />
-</svelte:element>
+  <MdTree {tokens} renderers={inline ? inlineRenderers : renderers} />
+</article>

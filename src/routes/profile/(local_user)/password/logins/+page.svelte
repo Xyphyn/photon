@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { publishedToDate } from '$lib/components/util/date.js'
-  import RelativeDate from '$lib/components/util/RelativeDate.svelte'
+  import { publishedToDate } from '$comp/util/date.js'
+  import RelativeDate from '$comp/util/RelativeDate.svelte'
   import { Material } from 'mono-svelte'
 
   import { UAParser } from 'ua-parser-js'

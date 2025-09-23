@@ -1,12 +1,8 @@
 <script lang="ts">
   import { profile } from '$lib/auth.svelte.js'
   import type { CommentView } from '$lib/client/types'
-  import CommentModerationMenu from '$lib/components/lemmy/moderation/CommentModerationMenu.svelte'
-  import {
-    amMod,
-    isAdmin,
-    report,
-  } from '$lib/components/lemmy/moderation/moderation.js'
+  import CommentModerationMenu from '$comp/lemmy/moderation/CommentModerationMenu.svelte'
+  import { amMod, isAdmin, report } from '$comp/lemmy/moderation/moderation.js'
   import { t } from '$lib/i18n/translations'
   import { deleteItem, save } from '$lib/lemmy/contentview.js'
   import { settings } from '$lib/settings.svelte'
@@ -21,7 +17,7 @@
     Share,
     Trash,
   } from 'svelte-hero-icons'
-  import { CommentVote } from '.'
+  import CommentVote from './CommentVote.svelte'
 
   interface Props {
     comment: CommentView

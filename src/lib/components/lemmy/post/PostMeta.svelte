@@ -57,13 +57,13 @@
 <script lang="ts">
   import { profile } from '$lib/auth.svelte'
   import type { Community, Person, SubscribedType } from '$lib/client/types'
-  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
-  import Markdown from '$lib/components/markdown/Markdown.svelte'
-  import Avatar from '$lib/components/ui/Avatar.svelte'
-  import { publishedToDate } from '$lib/components/util/date'
+  import UserLink from '$comp/lemmy/user/UserLink.svelte'
+  import Markdown from '$comp/markdown/Markdown.svelte'
+  import Avatar from '$comp/ui/Avatar.svelte'
+  import { publishedToDate } from '$comp/util/date'
   import RelativeDate, {
     formatRelativeDate,
-  } from '$lib/components/util/RelativeDate.svelte'
+  } from '$comp/util/RelativeDate.svelte'
   import { t } from '$lib/i18n/translations'
   import { settings, type View } from '$lib/settings.svelte'
   import { Badge, Material, modal, Popover } from 'mono-svelte'
@@ -80,8 +80,8 @@
     Trash,
     type IconSource,
   } from 'svelte-hero-icons'
-  import { CommunityLink } from '../community'
   import { SvelteMap } from 'svelte/reactivity'
+  import CommunityLink from '../community/CommunityLink.svelte'
 
   interface Props {
     community?: Community

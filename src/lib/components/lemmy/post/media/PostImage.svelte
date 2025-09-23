@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { showImage } from '$lib/components/ui/ExpandableImage.svelte'
+  import { showImage } from '$comp/ui/ExpandableImage.svelte'
   import { settings } from '$lib/settings.svelte'
   import type { Post } from '$lib/client/types'
   import { Button, modal } from 'mono-svelte'

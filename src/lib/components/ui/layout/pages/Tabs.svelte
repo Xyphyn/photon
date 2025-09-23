@@ -1,7 +1,7 @@
 <script lang="ts">
   import { invalidateAll } from '$app/navigation'
   import { page } from '$app/state'
-  import TabButton from '$lib/components/input/switch/TabButton.svelte'
+  import TabButton from '$comp/input/switch/TabButton.svelte'
   import { SvelteURL } from 'svelte/reactivity'
 
   interface Props {

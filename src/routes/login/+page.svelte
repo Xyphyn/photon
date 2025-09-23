@@ -7,8 +7,8 @@
   import ErrorContainer, {
     clearErrorScope,
     pushError,
-  } from '$lib/components/error/ErrorContainer.svelte'
-  import { Header } from '$lib/components/ui/layout'
+  } from '$comp/error/ErrorContainer.svelte'
+  import { Header } from '$comp/ui/layout'
   import { t } from '$lib/i18n/translations'
   import {
     DEFAULT_INSTANCE_URL,

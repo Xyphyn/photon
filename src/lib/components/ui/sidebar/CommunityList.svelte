@@ -1,7 +1,7 @@
 <script lang="ts">
   import { profile } from '$lib/auth.svelte'
-  import Avatar from '$lib/components/ui/Avatar.svelte'
-  import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
+  import Avatar from '$comp/ui/Avatar.svelte'
+  import SidebarButton from '$comp/ui/sidebar/SidebarButton.svelte'
   import { addFavorite } from '$lib/lemmy/item'
   import { hasFavorite } from '$lib/lemmy/user'
   import type { Community } from '$lib/client/types'

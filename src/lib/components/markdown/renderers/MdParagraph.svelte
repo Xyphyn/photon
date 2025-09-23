@@ -1,15 +1,8 @@
 <script>
-  import { options } from '../Markdown.svelte'
-  /**
-   * @typedef {Object} Props
-   * @property {import('svelte').Snippet} [children]
-   */
-
-  /** @type {Props} */
   let { children } = $props()
 </script>
 
-<p class="leading-[1.7] break-words {options.inline ? '' : 'max-w'}">
+<p class="leading-[1.7] break-words max-w">
   {@render children?.()}
 </p>
 

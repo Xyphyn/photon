@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Markdown from '$lib/components/markdown/Markdown.svelte'
+  import Markdown from '$comp/markdown/Markdown.svelte'
   import { Button } from 'mono-svelte'
   import { ChevronDown, Icon } from 'svelte-hero-icons'
 
@@ -41,14 +41,14 @@
   this={htmlElement}
   {style}
   class="{!expanded
-    ? ` overflow-hidden
+    ? `overflow-hidden
 bg-linear-to-b text-transparent from-slate-600 via-slate-600
 dark:from-zinc-400 dark:via-zinc-400 bg-clip-text z-0 max-h-36`
     : 'text-slate-600 dark:text-zinc-400 max-h-full'} text-base {clazz}"
   class:pointer-events-none={!clickThrough}
   bind:this={element}
 >
-  <Markdown inline={!expanded} source={expanded ? body : body.slice(0, 1000)} />
+  <Markdown inline source={expanded ? body : body.slice(0, 1000)} />
   {#if overflows}
     <Button
       onclick={() => (expanded = !expanded)}

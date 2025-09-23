@@ -1,7 +1,7 @@
 <script lang="ts">
   import { profile } from '$lib/auth.svelte.js'
   import { site } from '$lib/client/lemmy.svelte'
-  import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
+  import FormattedNumber from '$comp/util/FormattedNumber.svelte'
   import { t } from '$lib/i18n/translations'
   import { errorMessage } from '$lib/lemmy/error'
   import { settings } from '$lib/settings.svelte'

@@ -15,7 +15,7 @@
   } from 'svelte-hero-icons'
   import Setting from '../Setting.svelte'
   import ToggleSetting from '../ToggleSetting.svelte'
-  import CommonList from '$lib/components/ui/layout/CommonList.svelte'
+  import CommonList from '$comp/ui/layout/CommonList.svelte'
 </script>
 
 <CommonList>

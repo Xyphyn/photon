@@ -1,7 +1,7 @@
 import { resolveRoute } from '$app/paths'
 import { profile } from '$lib/auth.svelte.js'
 import { client } from '$lib/client/lemmy.svelte'
-import CommunityCard from '$lib/components/lemmy/community/CommunityCard.svelte'
+import CommunityCard from '$comp/lemmy/community/CommunityCard.svelte'
 import { feed } from '$lib/lemmy/feeds/feed.svelte.js'
 import { settings } from '$lib/settings.svelte'
 import { ReactiveState } from '$lib/util.svelte.js'

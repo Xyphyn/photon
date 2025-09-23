@@ -1,7 +1,7 @@
 <script lang="ts">
-  import Markdown from '$lib/components/markdown/Markdown.svelte'
-  import { publishedToDate } from '$lib/components/util/date'
-  import RelativeDate from '$lib/components/util/RelativeDate.svelte'
+  import Markdown from '$comp/markdown/Markdown.svelte'
+  import { publishedToDate } from '$comp/util/date'
+  import RelativeDate from '$comp/util/RelativeDate.svelte'
   import { t } from '$lib/i18n/translations'
   import type { PrivateMessageView } from '$lib/client/types'
   import { Button, Menu, MenuButton } from 'mono-svelte'

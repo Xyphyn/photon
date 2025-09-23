@@ -7,7 +7,7 @@
   import { Button, Material, Modal, TextInput, toast } from 'mono-svelte'
   import { ClipboardDocument, Icon, Key } from 'svelte-hero-icons'
   import { errorMessage } from '$lib/lemmy/error.js'
-  import Placeholder from '$lib/components/ui/Placeholder.svelte'
+  import Placeholder from '$comp/ui/Placeholder.svelte'
 
   let { data } = $props()
 

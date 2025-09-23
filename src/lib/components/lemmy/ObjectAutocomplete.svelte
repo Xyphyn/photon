@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Avatar from '$lib/components/ui/Avatar.svelte'
+  import Avatar from '$comp/ui/Avatar.svelte'
   import { getClient } from '$lib/client/lemmy.svelte'
   import type { Community, ListingType } from '$lib/client/types'
   import { MenuButton, Search } from 'mono-svelte'
