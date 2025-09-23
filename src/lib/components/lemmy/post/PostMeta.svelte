@@ -388,6 +388,8 @@
 {/if}
 
 <style>
+  @reference '../../../../app.css';
+
   .meta {
     display: grid;
     grid-template-areas:
@@ -428,7 +430,24 @@
   }
 
   :global(.badge-tag-color) {
-    background-color: var(--tag-color, #fff) !important;
-    color: var(--tag-text-color, #000) !important;
+    background-color: color-mix(
+      in oklab,
+      #eee,
+      var(--tag-color, #fff)
+    ) !important;
+    color: color-mix(in oklab, #000, var(--tag-text-color, #000)) !important;
+
+    @variant dark {
+      background-color: color-mix(
+        in oklab,
+        #222,
+        var(--tag-color, #fff)
+      ) !important;
+      color: color-mix(
+        in oklab,
+        #fff 80%,
+        var(--tag-text-color, #fff)
+      ) !important;
+    }
   }
 </style>
