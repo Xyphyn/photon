@@ -9,16 +9,11 @@
 </script>
 
 {#if ordered}
-  <ol
-    {start}
-    class="pl-5 list-decimal *:marker:font-medium *:marker:text-primary-900 dark:*:marker:text-primary-100"
-  >
+  <ol {start} class="pl-5 list-decimal">
     {@render children?.()}
   </ol>
 {:else}
-  <ul
-    class="list-disc pl-4 *:marker:text-primary-900 dark:*:marker:text-primary-100"
-  >
+  <ul class="list-disc pl-8 *:marker:content-['• ']!">
     {@render children?.()}
   </ul>
 {/if}

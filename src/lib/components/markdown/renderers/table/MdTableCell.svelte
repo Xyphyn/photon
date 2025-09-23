@@ -9,17 +9,11 @@
 </script>
 
 {#if header}
-  <th
-    class="bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 py-2 px-3"
-    {align}
-  >
+  <th {align}>
     {@render children?.()}
   </th>
 {:else}
-  <td
-    class="bg-slate-25 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800 py-2 px-3"
-    {align}
-  >
+  <td {align}>
     {@render children?.()}
   </td>
 {/if}

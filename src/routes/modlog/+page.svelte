@@ -286,6 +286,11 @@
     border: 1px solid var(--color-slate-200);
     background-color: white;
     border-radius: var(--radius-2xl);
+
+    @variant dark {
+      background-color: var(--color-zinc-950);
+      border: 1px solid var(--color-zinc-800);
+    }
   }
 
   .table {
@@ -299,6 +304,11 @@
           font-weight: var(--font-weight-medium);
           font-size: var(--text-sm);
           background-color: var(--color-slate-25);
+
+          @variant dark {
+            background-color: var(--color-zinc-900);
+            border-bottom: 1px solid var(--color-zinc-800);
+          }
         }
       }
     }
@@ -308,18 +318,6 @@
     font-size: var(--text-xs);
     :global(tr td) {
       padding: calc(var(--spacing) * 1) calc(var(--spacing) * 3);
-    }
-  }
-
-  :global(.dark) {
-    .table-container {
-      background-color: var(--color-zinc-950);
-      border: 1px solid var(--color-zinc-800);
-    }
-
-    thead tr th {
-      background-color: var(--color-zinc-900);
-      border-bottom: 1px solid var(--color-zinc-800);
     }
   }
 </style>
