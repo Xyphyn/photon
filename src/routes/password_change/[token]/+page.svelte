@@ -2,7 +2,7 @@
   import { preventDefault } from 'svelte/legacy'
 
   import { goto } from '$app/navigation'
-  import { Header } from '$lib/components/ui/layout'
+  import { Header } from '$comp/ui/layout'
   import {
     DEFAULT_INSTANCE_URL,
     LINKED_INSTANCE_URL,

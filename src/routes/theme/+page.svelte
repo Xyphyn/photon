@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Header } from '$lib/components/ui/layout'
+  import { Header } from '$comp/ui/layout'
   import { t } from '$lib/i18n/translations'
   import { theme as themeData } from '$lib/ui/theme/theme.svelte'
   import { getDefaultColors } from '$lib/ui/theme/presets'

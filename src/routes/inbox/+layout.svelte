@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
+  import Tabs from '$comp/ui/layout/pages/Tabs.svelte'
   import { t } from '$lib/i18n/translations'
 
   let { children } = $props()

@@ -1,9 +1,9 @@
 <script lang="ts">
   import { profile, type ProfileInfo } from '$lib/auth.svelte.js'
   import { DEFAULT_CLIENT_TYPE } from '$lib/client/base'
-  import CommonList from '$lib/components/ui/layout/CommonList.svelte'
-  import { Header } from '$lib/components/ui/layout'
-  import DebugObject from '$lib/components/util/debug/DebugObject.svelte'
+  import CommonList from '$comp/ui/layout/CommonList.svelte'
+  import { Header } from '$comp/ui/layout'
+  import DebugObject from '$comp/util/debug/DebugObject.svelte'
   import { t } from '$lib/i18n/translations'
   import { LINKED_INSTANCE_URL } from '$lib/instance.svelte.js'
   import ProfileAvatar from '$lib/lemmy/ProfileAvatar.svelte'
@@ -165,9 +165,9 @@
               {/if}
             </span>
             <span class="text-sm text-slate-600 dark:text-zinc-400">
-              <span class="capitalize"
-                >{p.client?.name ?? DEFAULT_CLIENT_TYPE.name}</span
-              >
+              <span class="capitalize">
+                {p.client?.name ?? DEFAULT_CLIENT_TYPE.name}
+              </span>
               • {p.instance}
             </span>
           </div>

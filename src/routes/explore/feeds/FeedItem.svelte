@@ -1,9 +1,9 @@
 <script lang="ts">
   import type { FeedView } from '$lib/client/types'
-  import Markdown from '$lib/components/markdown/Markdown.svelte'
-  import Entity from '$lib/components/ui/Entity.svelte'
-  import LabelStat from '$lib/components/ui/LabelStat.svelte'
-  import CommonItem from '$lib/components/ui/layout/CommonItem.svelte'
+  import Markdown from '$comp/markdown/Markdown.svelte'
+  import Entity from '$comp/ui/Entity.svelte'
+  import LabelStat from '$comp/ui/LabelStat.svelte'
+  import CommonItem from '$comp/ui/layout/CommonItem.svelte'
   import { t } from '$lib/i18n/translations'
   import { Button, modal } from 'mono-svelte'
   import { InformationCircle } from 'svelte-hero-icons'

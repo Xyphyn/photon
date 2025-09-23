@@ -1,13 +1,13 @@
 <script lang="ts">
-  import { removalTemplate } from '$lib/components/lemmy/moderation/moderation.js'
-  import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
-  import Expandable from '$lib/components/ui/Expandable.svelte'
+  import { removalTemplate } from '$comp/lemmy/moderation/moderation.js'
+  import MarkdownEditor from '$comp/markdown/MarkdownEditor.svelte'
+  import Expandable from '$comp/ui/Expandable.svelte'
   import { t } from '$lib/i18n/translations'
   import { settings } from '$lib/settings.svelte'
   import { Button, TextInput } from 'mono-svelte'
   import { Icon, Plus, Trash } from 'svelte-hero-icons'
   import Setting from '../Setting.svelte'
-  import CommonList from '$lib/components/ui/layout/CommonList.svelte'
+  import CommonList from '$comp/ui/layout/CommonList.svelte'
 </script>
 
 <CommonList>

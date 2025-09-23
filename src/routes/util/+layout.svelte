@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
+  import Tabs from '$comp/ui/layout/pages/Tabs.svelte'
   interface Props {
     children?: import('svelte').Snippet
   }

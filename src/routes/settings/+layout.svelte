@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { Header } from '$lib/components/ui/layout'
-  import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
+  import { Header } from '$comp/ui/layout'
+  import Tabs from '$comp/ui/layout/pages/Tabs.svelte'
   import { t } from '$lib/i18n/translations'
   import { defaultSettings, settings } from '$lib/settings.svelte'
   import { action, Button, Modal, modal, toast } from 'mono-svelte'
@@ -31,8 +31,8 @@
         toast({ content: err as string, type: 'error' })
       }
     }}
-    title={$t('routes.theme.import')}
-    action={$t('routes.theme.import')}
+    title={$t('settings.import')}
+    action={$t('settings.import')}
   >
     <TextArea bind:value={importText} style="font-family: monospace;" />
   </Modal>

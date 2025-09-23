@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { parseURL } from '$lib/components/input/Link.svelte'
+  import { parseURL } from '$comp/input/Link.svelte'
   import type { View } from '$lib/settings.svelte'
   import { Material } from 'mono-svelte'
   import { optimizeImageURL } from '../helpers'

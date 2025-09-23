@@ -1,6 +1,6 @@
 <script lang="ts">
   import { profile } from '$lib/auth.svelte.js'
-  import ProgressBar from '$lib/components/ui/ProgressBar.svelte'
+  import ProgressBar from '$comp/ui/ProgressBar.svelte'
   import { t } from '$lib/i18n/translations'
   import { errorMessage } from '$lib/lemmy/error'
   import { uploadImage } from '$lib/util.svelte.js'

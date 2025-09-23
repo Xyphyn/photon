@@ -13,12 +13,12 @@
   import ErrorContainer, {
     clearErrorScope,
     pushError,
-  } from '$lib/components/error/ErrorContainer.svelte'
-  import FreeTextInput from '$lib/components/input/FreeTextInput.svelte'
-  import ObjectAutocomplete from '$lib/components/lemmy/ObjectAutocomplete.svelte'
-  import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
-  import Avatar from '$lib/components/ui/Avatar.svelte'
-  import { Header } from '$lib/components/ui/layout'
+  } from '$comp/error/ErrorContainer.svelte'
+  import FreeTextInput from '$comp/input/FreeTextInput.svelte'
+  import ObjectAutocomplete from '$comp/lemmy/ObjectAutocomplete.svelte'
+  import MarkdownEditor from '$comp/markdown/MarkdownEditor.svelte'
+  import Avatar from '$comp/ui/Avatar.svelte'
+  import { Header } from '$comp/ui/layout'
   import { t } from '$lib/i18n/translations'
   import { errorMessage } from '$lib/lemmy/error'
   import { getSessionStorage, setSessionStorage } from '$lib/session.js'
@@ -252,7 +252,7 @@
 </script>
 
 {#if uploadingImage}
-  {#await import('$lib/components/form/ImageInputModal.svelte') then { default: UploadModal }}
+  {#await import('$comp/form/ImageInputModal.svelte') then { default: UploadModal }}
     <UploadModal
       bind:open={uploadingImage}
       bind:imageUrl={() => '', (v) => (data.url = v)}

@@ -6,17 +6,17 @@
     InstanceBlockView,
     PersonBlockView,
   } from '$lib/client/types'
-  import { CommunityLink } from '$lib/components/lemmy/community'
-  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
-  import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
-  import Entity from '$lib/components/ui/Entity.svelte'
-  import { Header } from '$lib/components/ui/layout'
-  import CommonList from '$lib/components/ui/layout/CommonList.svelte'
-  import Placeholder from '$lib/components/ui/Placeholder.svelte'
+  import UserLink from '$comp/lemmy/user/UserLink.svelte'
+  import EndPlaceholder from '$comp/ui/EndPlaceholder.svelte'
+  import Entity from '$comp/ui/Entity.svelte'
+  import { Header } from '$comp/ui/layout'
+  import CommonList from '$comp/ui/layout/CommonList.svelte'
+  import Placeholder from '$comp/ui/Placeholder.svelte'
   import { t } from '$lib/i18n/translations.js'
   import { Button } from 'mono-svelte'
   import { Check, XMark } from 'svelte-hero-icons'
   import type { PageData } from './$types.js'
+  import CommunityLink from '$comp/lemmy/community/CommunityLink.svelte'
 
   interface Props {
     // sveltekit doesn't feel like making types work right now

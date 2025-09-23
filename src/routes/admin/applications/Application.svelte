@@ -5,10 +5,10 @@
     ApproveRegistrationApplication,
     RegistrationApplicationView,
   } from '$lib/client/types'
-  import ApplicationDenyModal from '$lib/components/lemmy/modal/ApplicationDenyModal.svelte'
-  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
-  import RelativeDate from '$lib/components/util/RelativeDate.svelte'
-  import { publishedToDate } from '$lib/components/util/date'
+  import ApplicationDenyModal from '$comp/lemmy/modal/ApplicationDenyModal.svelte'
+  import UserLink from '$comp/lemmy/user/UserLink.svelte'
+  import RelativeDate from '$comp/util/RelativeDate.svelte'
+  import { publishedToDate } from '$comp/util/date'
   import { t } from '$lib/i18n/translations'
   import { errorMessage } from '$lib/lemmy/error'
   import { Button, Label, Material, toast } from 'mono-svelte'

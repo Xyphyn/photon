@@ -1,13 +1,12 @@
 <script lang="ts">
+  import CommonItem from '$comp/ui/layout/CommonItem.svelte'
   import { profile } from '$lib/auth.svelte.js'
   import { client } from '$lib/client/lemmy.svelte'
   import type { CommunityView } from '$lib/client/types'
-  import CommonItem from '$lib/components/ui/layout/CommonItem.svelte'
   import { locale, t } from '$lib/i18n/translations'
   import { addSubscription } from '$lib/lemmy/user.js'
   import { fullCommunityName } from '$lib/util.svelte.js'
   import { Button, modal } from 'mono-svelte'
-  import type { Snippet } from 'svelte'
   import {
     Check,
     ExclamationTriangle,
@@ -19,14 +18,13 @@
     Trash,
   } from 'svelte-hero-icons'
   import { SvelteURL } from 'svelte/reactivity'
-  import { CommunityCard } from '.'
   import Subscribe from '../../../../routes/communities/Subscribe.svelte'
+  import CommunityCard from './CommunityCard.svelte'
 
   interface Props {
     community: CommunityView
     view?: 'cozy' | 'compact'
     showCounts?: boolean
-    children?: Snippet
     resolveObject?: boolean
   }
 

@@ -1,6 +1,6 @@
 <script lang="ts">
-  import MultiSelect from '$lib/components/input/Switch.svelte'
-  import Markdown from '$lib/components/markdown/Markdown.svelte'
+  import MultiSelect from '$comp/input/Switch.svelte'
+  import Markdown from '$comp/markdown/Markdown.svelte'
   import { t } from '$lib/i18n/translations'
   import { Button, Label, Modal, TextArea } from 'mono-svelte'
   import type { TextAreaProps } from 'mono-svelte/forms/TextArea.svelte'

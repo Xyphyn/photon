@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { modals } from '$lib/components/lemmy/moderation/moderation.js'
+  import { modals } from '$comp/lemmy/moderation/moderation.js'
 </script>
 
 <!--These weird await hacks are for lazy loading, better network performance-->
 {#if $modals.reporting.open}
-  {#await import('$lib/components/lemmy/moderation/ReportModal.svelte') then { default: ReportModal }}
+  {#await import('$comp/lemmy/moderation/ReportModal.svelte') then { default: ReportModal }}
     <ReportModal
       bind:open={$modals.reporting.open}
       bind:item={$modals.reporting.item}
@@ -12,7 +12,7 @@
   {/await}
 {/if}
 {#if $modals.removing.open}
-  {#await import('$lib/components/lemmy/moderation/RemoveModal.svelte') then { default: RemoveModal }}
+  {#await import('$comp/lemmy/moderation/RemoveModal.svelte') then { default: RemoveModal }}
     <RemoveModal
       bind:open={$modals.removing.open}
       item={$modals.removing.item}
@@ -21,7 +21,7 @@
   {/await}
 {/if}
 {#if $modals.banning.open}
-  {#await import('$lib/components/lemmy/moderation/BanModal.svelte') then { default: BanModal }}
+  {#await import('$comp/lemmy/moderation/BanModal.svelte') then { default: BanModal }}
     <BanModal
       bind:open={$modals.banning.open}
       banned={$modals.banning.banned}
@@ -32,7 +32,7 @@
 {/if}
 
 {#if $modals.votes.open}
-  {#await import('$lib/components/lemmy/moderation/ViewVotesModal.svelte') then { default: VotesModal }}
+  {#await import('$comp/lemmy/moderation/ViewVotesModal.svelte') then { default: VotesModal }}
     <VotesModal bind:open={$modals.votes.open} item={$modals.votes.item} />
   {/await}
 {/if}

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { bestImageURL, postLink, type MediaType } from '..'
-  import { showImage } from '$lib/components/ui/ExpandableImage.svelte'
+  import { showImage } from '$comp/ui/ExpandableImage.svelte'
   import { t } from '$lib/i18n/translations'
   import { settings, type View } from '$lib/settings.svelte.js'
   import type { Post } from '$lib/client/types'

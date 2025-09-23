@@ -1,11 +1,11 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
-  import CommonList from '$lib/components/ui/layout/CommonList.svelte'
-  import { Header } from '$lib/components/ui/layout'
-  import Pageination from '$lib/components/ui/layout/Pageination.svelte'
-  import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import ProgressBar from '$lib/components/ui/ProgressBar.svelte'
+  import CommonList from '$comp/ui/layout/CommonList.svelte'
+  import { Header } from '$comp/ui/layout'
+  import Pageination from '$comp/ui/layout/Pageination.svelte'
+  import Placeholder from '$comp/ui/Placeholder.svelte'
+  import ProgressBar from '$comp/ui/ProgressBar.svelte'
   import { t } from '$lib/i18n/translations'
   import { client } from '$lib/client/lemmy.svelte'
   import { searchParam } from '$lib/util.svelte.js'
@@ -14,8 +14,8 @@
   import { tick } from 'svelte'
   import { Check, Funnel, Icon, ShieldCheck, XMark } from 'svelte-hero-icons'
   import Report from './Report.svelte'
-  import Fixate from '$lib/components/ui/generic/Fixate.svelte'
-  import { CommunityLink } from '$lib/components/lemmy/community'
+  import Fixate from '$comp/ui/generic/Fixate.svelte'
+  import CommunityLink from '$comp/lemmy/community/CommunityLink.svelte'
 
   let { data = $bindable() } = $props()
 

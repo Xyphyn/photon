@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { publishedToDate } from '$lib/components/util/date.js'
+  import { publishedToDate } from '$comp/util/date.js'
   import { t } from '$lib/i18n/translations'
   import type { CommentView } from '$lib/client/types'
   import { Button, Material } from 'mono-svelte'
   import { ArrowUturnUp, Icon } from 'svelte-hero-icons'
   import type { ClassValue } from 'svelte/elements'
   import { PostMeta } from '../post'
-  import { Comment } from '.'
+  import Comment from './Comment.svelte'
 
   interface Props {
     comment: CommentView

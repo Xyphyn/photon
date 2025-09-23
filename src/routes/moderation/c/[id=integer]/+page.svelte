@@ -1,13 +1,13 @@
 <script lang="ts">
-  import CommunityHeader from '$lib/components/lemmy/community/CommunityHeader.svelte'
-  import { Header } from '$lib/components/ui/layout'
+  import CommunityHeader from '$comp/lemmy/community/CommunityHeader.svelte'
+  import { Header } from '$comp/ui/layout'
   import { t } from '$lib/i18n/translations'
   import { Button, Material, Spinner } from 'mono-svelte'
   import ModlogItemCard from '../../../modlog/item/ModlogItemCard.svelte'
-  import Expandable from '$lib/components/ui/Expandable.svelte'
-  import UserAutocomplete from '$lib/components/lemmy/user/UserAutocomplete.svelte'
-  import { ban } from '$lib/components/lemmy/moderation/moderation'
-  import Switch from '$lib/components/input/Switch.svelte'
+  import Expandable from '$comp/ui/Expandable.svelte'
+  import UserAutocomplete from '$comp/lemmy/user/UserAutocomplete.svelte'
+  import { ban } from '$comp/lemmy/moderation/moderation'
+  import Switch from '$comp/input/Switch.svelte'
 
   let banFromCommunity = $state(false)
 

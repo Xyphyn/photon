@@ -7,13 +7,13 @@
   import ErrorContainer, {
     clearErrorScope,
     pushError,
-  } from '$lib/components/error/ErrorContainer.svelte'
-  import SiteCard from '$lib/components/lemmy/instance/InstanceCard.svelte'
-  import Markdown from '$lib/components/markdown/Markdown.svelte'
-  import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
-  import Avatar from '$lib/components/ui/Avatar.svelte'
-  import { Header } from '$lib/components/ui/layout'
-  import Placeholder from '$lib/components/ui/Placeholder.svelte'
+  } from '$comp/error/ErrorContainer.svelte'
+  import SiteCard from '$comp/lemmy/instance/InstanceCard.svelte'
+  import Markdown from '$comp/markdown/Markdown.svelte'
+  import MarkdownEditor from '$comp/markdown/MarkdownEditor.svelte'
+  import Avatar from '$comp/ui/Avatar.svelte'
+  import { Header } from '$comp/ui/layout'
+  import Placeholder from '$comp/ui/Placeholder.svelte'
   import { t } from '$lib/i18n/translations.js'
   import { errorMessage } from '$lib/lemmy/error.js'
   import {

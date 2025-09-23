@@ -1,5 +1,5 @@
 <script lang="ts">
-  import VirtualList from '$lib/components/render/VirtualList.svelte'
+  import VirtualList from '$comp/render/VirtualList.svelte'
   import type { Post } from '$lib/client/types'
   import type { CommentNodeI } from './comments.svelte'
   import Comments from './CommentTree.svelte'

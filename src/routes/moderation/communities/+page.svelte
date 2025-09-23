@@ -1,10 +1,10 @@
 <script lang="ts">
   import { profile } from '$lib/auth.svelte'
-  import { CommunityItem } from '$lib/components/lemmy/community'
-  import CommonList from '$lib/components/ui/layout/CommonList.svelte'
-  import { Header } from '$lib/components/ui/layout'
+  import CommonList from '$comp/ui/layout/CommonList.svelte'
+  import { Header } from '$comp/ui/layout'
   import { t } from '$lib/i18n/translations'
   import { Button, Spinner } from 'mono-svelte'
+  import CommunityItem from '$comp/lemmy/community/CommunityItem.svelte'
 </script>
 
 <Header pageHeader>

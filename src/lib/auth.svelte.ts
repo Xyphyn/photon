@@ -1,9 +1,6 @@
 import { browser } from '$app/environment'
 import { env } from '$env/dynamic/public'
-import {
-  amModOfAny,
-  isAdmin,
-} from '$lib/components/lemmy/moderation/moderation.js'
+import { amModOfAny, isAdmin } from '$comp/lemmy/moderation/moderation.js'
 import { DEFAULT_INSTANCE_URL } from '$lib/instance.svelte.js'
 import { client, getClient, site } from '$lib/client/lemmy.svelte'
 import { instanceToURL, moveItem } from '$lib/util.svelte'

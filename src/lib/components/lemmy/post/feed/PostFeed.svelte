@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { PostView } from '$lib/client/types'
-  import Placeholder from '$lib/components/ui/Placeholder.svelte'
+  import Placeholder from '$comp/ui/Placeholder.svelte'
   import { settings } from '$lib/settings.svelte.js'
   import { Button } from 'mono-svelte'
   import type { Snippet } from 'svelte'

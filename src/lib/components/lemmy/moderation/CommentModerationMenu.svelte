@@ -1,6 +1,6 @@
 <script lang="ts">
   import { profile } from '$lib/auth.svelte.js'
-  import ShieldIcon from '$lib/components/lemmy/moderation/ShieldIcon.svelte'
+  import ShieldIcon from '$comp/lemmy/moderation/ShieldIcon.svelte'
   import { t } from '$lib/i18n/translations'
   import { isCommentView } from '$lib/lemmy/item.js'
   import type { CommentView } from '$lib/client/types'

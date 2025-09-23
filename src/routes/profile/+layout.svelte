@@ -1,5 +1,5 @@
 <script>
-  import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
+  import Tabs from '$comp/ui/layout/pages/Tabs.svelte'
   import { t } from '$lib/i18n/translations'
   import { Button, Menu, MenuButton } from 'mono-svelte'
   import {

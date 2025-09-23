@@ -1,7 +1,7 @@
 <script lang="ts">
   import { profile } from '$lib/auth.svelte.js'
-  import Markdown from '$lib/components/markdown/Markdown.svelte'
-  import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
+  import Markdown from '$comp/markdown/Markdown.svelte'
+  import MarkdownEditor from '$comp/markdown/MarkdownEditor.svelte'
   import { t } from '$lib/i18n/translations'
   import { client, site } from '$lib/client/lemmy.svelte'
   import { errorMessage } from '$lib/lemmy/error'

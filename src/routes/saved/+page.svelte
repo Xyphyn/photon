@@ -1,11 +1,10 @@
 <script lang="ts">
   import { page } from '$app/state'
   import type { CommentView, PostView } from '$lib/client/types'
-  import { CommentItem } from '$lib/components/lemmy/comment'
-  import { PostItem } from '$lib/components/lemmy/post'
-  import Fixate from '$lib/components/ui/generic/Fixate.svelte'
-  import { CommonList, Header, Pageination } from '$lib/components/ui/layout'
-  import Placeholder from '$lib/components/ui/Placeholder.svelte'
+  import { PostItem } from '$comp/lemmy/post'
+  import Fixate from '$comp/ui/generic/Fixate.svelte'
+  import { CommonList, Header, Pageination } from '$comp/ui/layout'
+  import Placeholder from '$comp/ui/Placeholder.svelte'
   import { t } from '$lib/i18n/translations.js'
   import { searchParam } from '$lib/util.svelte.js'
   import { Select } from 'mono-svelte'
@@ -18,6 +17,7 @@
     Icon,
     PencilSquare,
   } from 'svelte-hero-icons'
+  import CommentItem from '$comp/lemmy/comment/CommentItem.svelte'
 
   let { data } = $props()
 

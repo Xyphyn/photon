@@ -1,8 +1,8 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { profile } from '$lib/auth.svelte.js'
-  import ImageInputUpload from '$lib/components/form/ImageInputUpload.svelte'
-  import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
+  import ImageInputUpload from '$comp/form/ImageInputUpload.svelte'
+  import MarkdownEditor from '$comp/markdown/MarkdownEditor.svelte'
   import { t } from '$lib/i18n/translations'
   import { client, site } from '$lib/client/lemmy.svelte'
   import { errorMessage } from '$lib/lemmy/error'
@@ -21,7 +21,7 @@
     Menu,
   } from 'mono-svelte'
   import { GlobeAlt, Icon, MapPin, Plus } from 'svelte-hero-icons'
-  import { Header } from '$lib/components/ui/layout'
+  import { Header } from '$comp/ui/layout'
 
   interface Props {
     /**

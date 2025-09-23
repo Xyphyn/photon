@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Profile } from '$lib/auth.svelte.js'
-  import Avatar from '$lib/components/ui/Avatar.svelte'
+  import Avatar from '$comp/ui/Avatar.svelte'
   import { Icon, UserCircle } from 'svelte-hero-icons'
 
   interface Props {

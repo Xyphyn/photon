@@ -48,8 +48,8 @@
 </script>
 
 <script lang="ts">
-  import Avatar from '$lib/components/ui/Avatar.svelte'
-  import Logo from '$lib/components/ui/Logo.svelte'
+  import Avatar from '$comp/ui/Avatar.svelte'
+  import Logo from '$comp/ui/Logo.svelte'
   import { settings } from '$lib/settings.svelte.js'
   import type { Person } from '$lib/client/types'
   import { Icon, Language, NoSymbol } from 'svelte-hero-icons'

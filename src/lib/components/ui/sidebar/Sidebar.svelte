@@ -1,8 +1,8 @@
 <script lang="ts">
   import { notifications, profile } from '$lib/auth.svelte.js'
-  import ItemList from '$lib/components/lemmy/generic/ItemList.svelte'
-  import Expandable from '$lib/components/ui/Expandable.svelte'
-  import SidebarButton from '$lib/components/ui/sidebar/SidebarButton.svelte'
+  import ItemList from '$comp/lemmy/generic/ItemList.svelte'
+  import Expandable from '$comp/ui/Expandable.svelte'
+  import SidebarButton from '$comp/ui/sidebar/SidebarButton.svelte'
   import { t } from '$lib/i18n/translations'
   import { communityLink } from '$lib/util.svelte'
   import { settings } from '$lib/settings.svelte.js'
@@ -28,7 +28,7 @@
   import ProfileSelection from './ProfileSelection.svelte'
   import Logo from '../Logo.svelte'
   import { env } from '$env/dynamic/public'
-  import Link from '$lib/components/input/Link.svelte'
+  import Link from '$comp/input/Link.svelte'
 
   interface Props {
     style?: string

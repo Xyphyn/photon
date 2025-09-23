@@ -1,19 +1,17 @@
 <script lang="ts">
   import { browser } from '$app/environment'
   import { page } from '$app/state'
+  import CommentForm from '$comp/lemmy/comment/CommentForm.svelte'
+  import CommentListVirtualizer from '$comp/lemmy/comment/CommentListVirtualizer.svelte'
+  import { buildCommentsTree } from '$comp/lemmy/comment/comments.svelte'
+  import CommentTree from '$comp/lemmy/comment/CommentTree.svelte'
+  import EndPlaceholder from '$comp/ui/EndPlaceholder.svelte'
   import { profile } from '$lib/auth.svelte'
   import type {
     CommentSortType,
     CommentView,
     PostView,
   } from '$lib/client/types'
-  import {
-    buildCommentsTree,
-    CommentForm,
-    CommentListVirtualizer,
-    CommentTree,
-  } from '$lib/components/lemmy/comment'
-  import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
   import { t } from '$lib/i18n/translations'
   import { settings } from '$lib/settings.svelte'
   import { Button, Option, Select } from 'mono-svelte'

@@ -1,12 +1,12 @@
 <script lang="ts">
   import { page } from '$app/state'
   import { profile } from '$lib/auth.svelte.js'
-  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
-  import Markdown from '$lib/components/markdown/Markdown.svelte'
-  import { publishedToDate } from '$lib/components/util/date.js'
+  import UserLink from '$comp/lemmy/user/UserLink.svelte'
+  import Markdown from '$comp/markdown/Markdown.svelte'
+  import { publishedToDate } from '$comp/util/date.js'
   import RelativeDate, {
     formatRelativeDate,
-  } from '$lib/components/util/RelativeDate.svelte'
+  } from '$comp/util/RelativeDate.svelte'
   import { t } from '$lib/i18n/translations'
   import { getClient } from '$lib/client/lemmy.svelte'
   import { errorMessage } from '$lib/lemmy/error'
@@ -26,7 +26,8 @@
   import type { ClassValue } from 'svelte/elements'
   import { slide } from 'svelte/transition'
   import type { CommentNodeI } from './comments.svelte'
-  import { CommentActions, CommentForm } from '.'
+  import CommentForm from './CommentForm.svelte'
+  import CommentActions from './CommentActions.svelte'
 
   interface Props {
     node: CommentNodeI

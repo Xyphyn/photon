@@ -1,13 +1,13 @@
 <script lang="ts">
-  import SvelteMarkdown from 'svelte-markdown'
-  import { options, renderers } from '../Markdown.svelte'
-  import Expandable from '$lib/components/ui/Expandable.svelte'
+  import Expandable from '$comp/ui/Expandable.svelte'
+  import type { Snippet } from 'svelte'
 
   interface Props {
     raw: string
+    children?: Snippet
   }
 
-  let { raw }: Props = $props()
+  let { raw, children }: Props = $props()
 
   function extractTitle(text: string) {
     const spoilerRegex = /^::: ?spoiler (.+)\n([\s\S]+?)\n:::/gm
@@ -32,8 +32,8 @@
 <Expandable class="border-y border-slate-200 dark:border-zinc-800 py-2">
   {#snippet title()}
     <div class="text-left">
-      <SvelteMarkdown source={data.title} {renderers} {options} isInline />
+      {data.title}
     </div>
   {/snippet}
-  <SvelteMarkdown source={data.content} {renderers} {options} />
+  {@render children?.()}
 </Expandable>

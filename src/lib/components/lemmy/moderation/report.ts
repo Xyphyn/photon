@@ -1,4 +1,4 @@
-import { publishedToDate } from '$lib/components/util/date.js'
+import { publishedToDate } from '$comp/util/date.js'
 import type {
   CommentReportView,
   CommentView,

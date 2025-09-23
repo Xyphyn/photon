@@ -1,6 +1,6 @@
 <script lang="ts">
   import { profile } from '$lib/auth.svelte'
-  import { publishedToDate } from '$lib/components/util/date.js'
+  import { publishedToDate } from '$comp/util/date.js'
   import { settings, type View } from '$lib/settings.svelte.js'
   import type { PostView } from '$lib/client/types'
   import type { ClassValue } from 'svelte/elements'

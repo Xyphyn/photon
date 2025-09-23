@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { CommentItem } from '$lib/components/lemmy/comment'
-  import { PostItem } from '$lib/components/lemmy/post'
-  import Fixate from '$lib/components/ui/generic/Fixate.svelte'
-  import { CommonList, Header, Pageination } from '$lib/components/ui/layout'
+  import CommentItem from '$comp/lemmy/comment/CommentItem.svelte'
+  import { PostItem } from '$comp/lemmy/post'
+  import Fixate from '$comp/ui/generic/Fixate.svelte'
+  import { CommonList, Header, Pageination } from '$comp/ui/layout'
   import { t } from '$lib/i18n/translations.js'
   import { isCommentView } from '$lib/lemmy/item.js'
 

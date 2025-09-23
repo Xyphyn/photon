@@ -1,5 +1,5 @@
 import { profile } from '$lib/auth.svelte'
-import { isAdmin } from '$lib/components/lemmy/moderation/moderation.js'
+import { isAdmin } from '$comp/lemmy/moderation/moderation.js'
 import { getClient } from '$lib/client/lemmy.svelte'
 import { isCommentView, isPostView } from '$lib/lemmy/item'
 import {
@@ -7,7 +7,7 @@ import {
   generalizePostReport,
   generalizePrivateMessageReport,
   type ReportView,
-} from '$lib/components/lemmy/moderation/report'
+} from '$comp/lemmy/moderation/report'
 import { ReactiveState } from '$lib/util.svelte'
 import { error } from '@sveltejs/kit'
 

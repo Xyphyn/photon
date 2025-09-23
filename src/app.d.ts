@@ -1,6 +1,6 @@
 // See https://kit.svelte.dev/docs/types#app
 
-import type { Action } from '$lib/components/ui/navbar/commands/actions.svelte'
+import type { Action } from '$comp/ui/navbar/commands/actions.svelte'
 
 // for information about these interfaces
 declare global {

@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { Header } from '$lib/components/ui/layout'
-  import Pageination from '$lib/components/ui/layout/Pageination.svelte'
-  import Placeholder from '$lib/components/ui/Placeholder.svelte'
+  import { Header } from '$comp/ui/layout'
+  import Pageination from '$comp/ui/layout/Pageination.svelte'
+  import Placeholder from '$comp/ui/Placeholder.svelte'
   import { t } from '$lib/i18n/translations'
   import { Option, Select } from 'mono-svelte'
   import { ClipboardDocumentCheck } from 'svelte-hero-icons'

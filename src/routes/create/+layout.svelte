@@ -1,7 +1,7 @@
 <script lang="ts">
   import { site } from '$lib/client/lemmy.svelte'
-  import { Header } from '$lib/components/ui/layout'
-  import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
+  import { Header } from '$comp/ui/layout'
+  import Tabs from '$comp/ui/layout/pages/Tabs.svelte'
   import { t } from '$lib/i18n/translations'
 
   let { children } = $props()

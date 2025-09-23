@@ -1,8 +1,8 @@
 <script lang="ts">
-  import VirtualList from '$lib/components/render/VirtualList.svelte'
-  import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import RelativeDate from '$lib/components/util/RelativeDate.svelte'
-  import { publishedToDate } from '$lib/components/util/date.js'
+  import VirtualList from '$comp/render/VirtualList.svelte'
+  import Placeholder from '$comp/ui/Placeholder.svelte'
+  import RelativeDate from '$comp/util/RelativeDate.svelte'
+  import { publishedToDate } from '$comp/util/date.js'
   import { t } from '$lib/i18n/translations.js'
   import { Spinner, TextInput } from 'mono-svelte'
   import { Check } from 'svelte-hero-icons'

@@ -12,7 +12,7 @@
     Check,
   } from 'svelte-hero-icons'
   import { fly } from 'svelte/transition'
-  import Markdown from '$lib/components/markdown/Markdown.svelte'
+  import Markdown from '$comp/markdown/Markdown.svelte'
 
   interface Props {
     toast: Toast

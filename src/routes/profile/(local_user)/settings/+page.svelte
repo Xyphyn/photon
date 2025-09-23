@@ -2,9 +2,9 @@
   import { profile } from '$lib/auth.svelte.js'
   import { getClient, site } from '$lib/client/lemmy.svelte'
   import type { SaveUserSettings } from '$lib/client/types'
-  import ImageInputUpload from '$lib/components/form/ImageInputUpload.svelte'
-  import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
-  import { Header } from '$lib/components/ui/layout'
+  import ImageInputUpload from '$comp/form/ImageInputUpload.svelte'
+  import MarkdownEditor from '$comp/markdown/MarkdownEditor.svelte'
+  import { Header } from '$comp/ui/layout'
   import { t } from '$lib/i18n/translations.js'
   import {
     Badge,

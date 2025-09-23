@@ -2,16 +2,14 @@
   import { navigating, page } from '$app/state'
   import { profile } from '$lib/auth.svelte.js'
   import { client } from '$lib/client/lemmy.svelte'
-  import ObjectAutocomplete from '$lib/components/lemmy/ObjectAutocomplete.svelte'
-  import { CommentItem } from '$lib/components/lemmy/comment/index.js'
-  import { CommunityItem } from '$lib/components/lemmy/community'
-  import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
-  import { PostItem } from '$lib/components/lemmy/post'
-  import UserItem from '$lib/components/lemmy/user/UserItem.svelte'
-  import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import Skeleton from '$lib/components/ui/generic/Skeleton.svelte'
-  import { CommonList, Header, SearchBar } from '$lib/components/ui/layout'
-  import Pageination from '$lib/components/ui/layout/Pageination.svelte'
+  import ObjectAutocomplete from '$comp/lemmy/ObjectAutocomplete.svelte'
+  import Sort from '$comp/lemmy/dropdowns/Sort.svelte'
+  import { PostItem } from '$comp/lemmy/post'
+  import UserItem from '$comp/lemmy/user/UserItem.svelte'
+  import Placeholder from '$comp/ui/Placeholder.svelte'
+  import Skeleton from '$comp/ui/generic/Skeleton.svelte'
+  import { CommonList, Header, SearchBar } from '$comp/ui/layout'
+  import Pageination from '$comp/ui/layout/Pageination.svelte'
   import { t } from '$lib/i18n/translations.js'
   import {
     isCommentView,
@@ -30,6 +28,8 @@
   } from 'svelte-hero-icons'
   import { expoOut } from 'svelte/easing'
   import { fly, slide } from 'svelte/transition'
+  import CommunityItem from '$comp/lemmy/community/CommunityItem.svelte'
+  import CommentItem from '$comp/lemmy/comment/CommentItem.svelte'
 
   let { data } = $props()
 
