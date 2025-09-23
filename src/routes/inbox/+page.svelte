@@ -47,7 +47,7 @@
 <Header pageHeader class="lg:flex-row justify-between flex-col">
   {$t('routes.inbox.title')}
 
-  <div class="flex gap-2 tracking-normal">
+  <div class="flex gap-2 tracking-normal items-center">
     <Button
       onclick={() => goto(page.url, { invalidateAll: true })}
       size="custom"

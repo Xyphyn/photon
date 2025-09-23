@@ -32,8 +32,8 @@
   rounding="xl"
   {...rest}
   {href}
+  weight="none"
   class={[
-    'font-normal block',
     'hover:text-slate-900 hover:dark:text-zinc-50',
     selected
       ? 'text-primary-900 dark:text-primary-100'

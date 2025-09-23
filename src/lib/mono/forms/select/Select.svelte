@@ -43,11 +43,7 @@
   } from 'svelte-hero-icons'
   import type { Attachment } from 'svelte/attachments'
   import type { ClassValue, HTMLSelectAttributes } from 'svelte/elements'
-  import {
-    buttonColor,
-    buttonShadow,
-    buttonSize,
-  } from '../../button/Button.svelte'
+  import { buttonSize } from '../../button/Button.svelte'
   import Menu from '../../popover/Menu.svelte'
   import MenuButton from '../../popover/MenuButton.svelte'
   import Label from '../Label.svelte'

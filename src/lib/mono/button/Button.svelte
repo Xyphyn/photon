@@ -52,6 +52,12 @@
   }
   type ButtonRoundness = keyof typeof buttonRounding
 
+  const buttonWeight = {
+    md: 'font-medium',
+    none: '',
+  }
+  type ButtonWeight = keyof typeof buttonWeight
+
   interface Props
     extends Omit<HTMLButtonAttributes | HTMLAnchorAttributes, 'prefix'> {
     loading?: boolean
@@ -70,6 +76,7 @@
     suffix?: Snippet
     onclick?: HTMLButtonAttributes['onclick']
     icon?: IconSource
+    weight?: ButtonWeight
   }
 
   export type { Props as ButtonProps }
@@ -103,6 +110,7 @@
     children,
     suffix,
     icon,
+    weight = 'md',
     ...rest
   }: Props = $props()
 </script>
@@ -120,6 +128,7 @@
     buttonShadow[shadow],
     buttonColor[color],
     buttonAlignment[alignment],
+    buttonWeight[weight],
     (disabled || loading) && 'btn-disabled',
     alignment == 'center'
       ? 'origin-center'
@@ -163,7 +172,6 @@
       align-items: center;
       font-size: var(--text-sm);
       gap: calc(var(--spacing) * 1.5);
-      font-weight: var(--font-weight-medium);
 
       transition: 75ms linear;
 

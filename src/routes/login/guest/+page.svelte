@@ -94,7 +94,7 @@
                   else form.client = { name: 'piefed', baseUrl: '/api/alpha' }
                 }
               }
-              class="border-0 rounded-none! border-l"
+              class="border-y-0! border-r-0! rounded-none! border-l"
             >
               <Option value="lemmyv3">Lemmy</Option>
               <Option value="piefedvalpha">Piefed</Option>

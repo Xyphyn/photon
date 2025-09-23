@@ -35,7 +35,6 @@
 
   if (header) {
     type = 'tablecell'
-    console.log(type)
   }
 </script>
 
@@ -97,7 +96,6 @@
               {/each}
             </TBody>
           {/if}
-          {console.log($state.snapshot(token))}
         {/if}
       {/each}
     </Renderer>

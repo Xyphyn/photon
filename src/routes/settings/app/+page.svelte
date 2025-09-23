@@ -62,8 +62,6 @@
     ['ru', { name: 'Русский' }],
     ['zh-Hans', { name: '简体中文' }],
     ['zh-Hant', { name: '繁體中文' }],
-    ['placeholder', { name: 'Unofficial' }],
-    ['tok', { name: 'toki pona' }],
   ])
 </script>
 
