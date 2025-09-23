@@ -11,9 +11,9 @@
   import type { Attachment } from 'svelte/attachments'
   import { expoOut } from 'svelte/easing'
   import { scale } from 'svelte/transition'
+  import { trapFocus } from 'trap-focus-svelte'
   import { Material } from '../index'
   import Portal from './Portal.svelte'
-  import { focusTrap } from 'svelte-focus-trap'
 
   interface Props {
     openOnHover?: boolean
@@ -143,7 +143,7 @@
       }}
       class={['z-150', popoverClass]}
       use:floatingContent
-      use:focusTrap
+      use:trapFocus
       bind:this={popoverEl}
     >
       {#if popover}

@@ -12,10 +12,10 @@
   import { page } from '$app/state'
   import { t } from '$lib/i18n/translations'
   import { Button, Material, toast } from 'mono-svelte'
-  import { focusTrap } from 'svelte-focus-trap'
   import { Share, XMark } from 'svelte-hero-icons'
   import { expoOut } from 'svelte/easing'
   import { fade, scale } from 'svelte/transition'
+  import { trapFocus } from 'trap-focus-svelte'
 
   interface Props {
     /**
@@ -37,7 +37,7 @@
     onkeydown={(e) => {
       if (e.key == 'Escape') history.back()
     }}
-    use:focusTrap
+    use:trapFocus
   >
     <img
       width={800}

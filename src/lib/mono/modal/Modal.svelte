@@ -2,11 +2,11 @@
   import { pushState, replaceState } from '$app/navigation'
   import { page } from '$app/state'
   import type { Snippet } from 'svelte'
-  import { focusTrap } from 'svelte-focus-trap'
   import { XMark } from 'svelte-hero-icons'
   import { backOut } from 'svelte/easing'
   import type { ClassValue } from 'svelte/elements'
   import { fade, scale } from 'svelte/transition'
+  import { trapFocus } from 'trap-focus-svelte'
   import { Button } from '../index.js'
   import Portal from '../popover/Portal.svelte'
 
@@ -94,7 +94,7 @@
     >
       <div
         bind:this={el}
-        use:focusTrap
+        use:trapFocus
         transition:scale|global={{
           start: 0.97,
           easing: backOut,
