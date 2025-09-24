@@ -11,6 +11,7 @@
     selected?: boolean
     children: Snippet
     size?: keyof typeof sizes
+    element?: 'div' | 'a' | 'button'
     [key: string]: any
   }
 
@@ -21,12 +22,13 @@
     children,
     href,
     size = 'sm',
+    element = href ? 'a' : 'button',
     ...rest
   }: Props = $props()
 </script>
 
 <svelte:element
-  this={href ? 'a' : 'button'}
+  this={element}
   class={[
     sizes[size],
     'rounded-xl text-sm font-medium transition-colors duration-75 relative cursor-pointer border shadow-xs',

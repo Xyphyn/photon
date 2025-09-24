@@ -88,7 +88,7 @@
   <Label
     text={label}
     customText={customLabel}
-    class={['space-y-1 relative max-w-full w-max', baseClass]}
+    class={['space-y-1 relative max-w-full w-max min-w-0', baseClass]}
   >
     <div class="relative max-w-full" role="presentation">
       <select
@@ -97,7 +97,7 @@
         bind:this={element}
         class={[
           buttonSize[size],
-          'btn btn-secondary select rounded-xl appearance-none pr-6!',
+          'btn btn-secondary select rounded-xl appearance-none pr-6! w-full',
           selectClass,
           clazz,
         ]}

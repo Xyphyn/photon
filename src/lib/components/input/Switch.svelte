@@ -21,24 +21,49 @@
     onselect,
   }: Props = $props()
 
+  let selectedIndex = $state(0)
+  let id = $props.id()
+
+  /* you see id like this to be a super simple
+
+  */
   $effect(() => {
-    onselect?.(selected)
+    const newIndex = options.findIndex((i) => i === selected)
+    if (newIndex !== -1) {
+      selectedIndex = newIndex
+    }
+  })
+
+  $effect(() => {
+    const newSelected = options[selectedIndex]
+    if (newSelected !== undefined && newSelected !== selected) {
+      selected = newSelected
+      onselect?.(newSelected)
+    }
   })
 </script>
 
-<div
+<fieldset
   class="flex items-center gap-1 w-max max-w-full z-0 relative overflow-auto"
 >
   {#each options as option, index}
-    {@const slctd = selected == option}
-    <TabButton
-      selected={slctd}
-      onselect={() => (selected = option)}
-      disabled={disabled[index]}
-      type="button"
-    >
-      {optionNames[index] || option}
-    </TabButton>
+    <label>
+      <input
+        type="radio"
+        bind:group={selectedIndex}
+        value={index}
+        name={id}
+        id="{id}-{option?.toString()}"
+        class="hidden"
+      />
+      <TabButton
+        selected={selectedIndex == index}
+        disabled={disabled[index]}
+        element="div"
+      >
+        {optionNames[index] || option}
+      </TabButton>
+    </label>
   {/each}
-</div>
+</fieldset>
 {@render children?.({ selected })}
