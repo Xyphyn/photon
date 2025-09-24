@@ -1,23 +1,24 @@
 <script lang="ts">
   import { page } from '$app/state'
-  import { profile } from '$lib/auth.svelte.js'
-  import { client } from '$lib/client/lemmy.svelte'
   import {
     mediaType,
     parseTags,
-    Post,
     PostActions,
     postLink,
     PostMedia,
     PostMeta,
     type Tag,
   } from '$comp/lemmy/post'
+  import PostItem from '$comp/lemmy/post/PostItem.svelte'
   import Markdown from '$comp/markdown/Markdown.svelte'
   import EndPlaceholder from '$comp/ui/EndPlaceholder.svelte'
   import Expandable from '$comp/ui/Expandable.svelte'
+  import { CommonList } from '$comp/ui/layout'
   import Placeholder from '$comp/ui/Placeholder.svelte'
   import { publishedToDate } from '$comp/util/date.js'
   import FormattedNumber from '$comp/util/FormattedNumber.svelte'
+  import { profile } from '$lib/auth.svelte.js'
+  import { client } from '$lib/client/lemmy.svelte'
   import { t } from '$lib/i18n/translations.js'
   import { resumables } from '$lib/lemmy/item.js'
   import { settings } from '$lib/settings.svelte.js'
@@ -194,7 +195,7 @@
     {#if crossposts?.length > 0}
       <Expandable class="text-base mt-2 w-full cursor-pointer">
         {#snippet title()}
-          <EndPlaceholder size="md" color="none" class="w-full">
+          <EndPlaceholder size="md" color="none" class="w-full ">
             {$t('routes.post.crosspostCount')}
             {#snippet action()}
               <span class="font-bold">
@@ -203,15 +204,11 @@
             {/snippet}
           </EndPlaceholder>
         {/snippet}
-        <div
-          class="divide-y! divide-slate-200 dark:divide-zinc-800 flex flex-col"
-        >
-          {#key crossposts}
-            {#each crossposts as crosspost (crosspost.post.id)}
-              <Post view="compact" post={crosspost} />
-            {/each}
-          {/key}
-        </div>
+        <CommonList items={crossposts}>
+          {#snippet item(item)}
+            <PostItem post={item} />
+          {/snippet}
+        </CommonList>
       </Expandable>
     {/if}
   {/await}

@@ -28,7 +28,7 @@
     <div
       class={[
         'font-medium w-full text-left flex flex-row items-center justify-between hover:text-primary-900',
-        'dark:hover:text-primary-100 transition-colors h-full z-0 group relative cursor-pointer',
+        'dark:hover:text-primary-100 transition-colors z-0 group relative cursor-pointer',
       ]}
     >
       <div class="flex flex-row gap-1 items-center w-full">

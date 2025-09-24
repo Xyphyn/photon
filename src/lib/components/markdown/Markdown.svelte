@@ -138,7 +138,11 @@
     },
   }: Props = $props()
 
-  setContext('options', { ...rendererOptions, inline: inline })
+  setContext('options', {
+    ...rendererOptions,
+    inline: inline,
+    noStyle: noStyle,
+  })
 
   let tokens = $derived(marked.lexer(source))
 </script>

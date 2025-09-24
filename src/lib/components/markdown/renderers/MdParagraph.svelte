@@ -4,9 +4,11 @@
   let { children } = $props()
 
   const options = getContext('options')
+
+  console.log(options.noStyle)
 </script>
 
-<p class={[!options.inline && 'leading-[1.7] break-words max-w']}>
+<p class={[!options.noStyle && 'leading-[1.7] break-words max-w']}>
   {@render children?.()}
 </p>
 

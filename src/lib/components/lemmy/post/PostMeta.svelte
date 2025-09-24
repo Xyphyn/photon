@@ -376,9 +376,8 @@
       class="inline-block hover:underline hover:text-primary-900 dark:hover:text-primary-100 transition-colors"
     >
       <Markdown
-        source={title}
         inline
-        noStyle
+        source={title}
         class={view != 'compact' ? '' : 'leading-[1.3]'}
       />
     </a>

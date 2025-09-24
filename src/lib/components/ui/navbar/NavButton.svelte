@@ -127,14 +127,14 @@
         color: var(--color-slate-50);
 
         @variant hover {
-          color: initial;
+          color: var(--color-slate-50);
         }
 
         @variant dark {
           background-color: var(--color-primary-100);
           color: var(--color-zinc-900);
           @variant hover {
-            color: initial;
+            color: var(--color-zinc-900);
           }
         }
       }
