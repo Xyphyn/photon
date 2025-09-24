@@ -48,18 +48,20 @@
   aria-selected={isSelected}
 >
   {#snippet prefix()}
-    {#if icon}
-      <div class="hidden lg:block">
-        <Icon src={icon} size="16" micro />
-      </div>
-      <div class="block lg:hidden">
-        <Icon src={icon} size="20" mini />
-      </div>
-    {:else}
-      {@render customIcon?.({ size: 16, isSelected })}
-    {/if}
+    <div class="prefix">
+      {#if customIcon}
+        {@render customIcon?.({ size: 16, isSelected })}
+      {:else if icon}
+        <div class="hidden md:block">
+          <Icon src={icon} size="16" micro />
+        </div>
+        <div class="block md:hidden">
+          <Icon src={icon} size="20" mini />
+        </div>
+      {/if}
+    </div>
   {/snippet}
-  <span class="hidden {adaptive ? 'lg:block' : ''}">{label}</span>
+  <span class="hidden {adaptive ? 'md:block' : ''}">{label}</span>
   {@render children?.()}
 </Button>
 
@@ -67,10 +69,19 @@
   @reference '../../../../app.css';
 
   :global {
+    .prefix {
+      @variant max-md {
+        height: 100%;
+        display: grid;
+        place-items: center;
+        aspect-ratio: 1 / 1;
+        border-radius: 100%;
+      }
+    }
+
     .nav-btn {
       width: calc(var(--spacing) * 10);
       height: calc(var(--spacing) * 10);
-      border-radius: 9999px;
 
       color: var(--color-slate-500);
 
@@ -89,7 +100,7 @@
     }
 
     .nav-btn-dynamic {
-      @variant lg {
+      @variant md {
         width: max-content;
       }
     }
@@ -100,10 +111,31 @@
         color: var(--color-primary-100);
       }
 
-      @variant max-lg {
-        background-color: var(--color-slate-200);
+      @variant max-md {
+        .prefix {
+          background-color: var(--color-slate-200);
+          @variant dark {
+            background-color: var(--color-zinc-800);
+          }
+        }
+      }
+    }
+
+    @variant max-md {
+      .nav-btn-sm-primary .prefix {
+        background-color: var(--color-primary-900);
+        color: var(--color-slate-50);
+
+        @variant hover {
+          color: initial;
+        }
+
         @variant dark {
-          background-color: var(--color-zinc-800);
+          background-color: var(--color-primary-100);
+          color: var(--color-zinc-900);
+          @variant hover {
+            color: initial;
+          }
         }
       }
     }

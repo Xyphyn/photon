@@ -9,6 +9,7 @@
   import {
     Bars3,
     GlobeAlt,
+    Home,
     Icon,
     MagnifyingGlass,
     PencilSquare,
@@ -33,8 +34,8 @@
 <nav
   class={[
     'w-full mx-auto z-50',
-    'lg:gap-5 gap-2 flex flex-row items-center p-2',
-    'box-border p-0.5 duration-150 @container',
+    'md:gap-5 gap-2 flex flex-row items-center justify-between p-2',
+    'box-border p-0.5 duration-150 @container *:max-md:flex-1',
     clazz,
   ]}
   {style}
@@ -45,9 +46,10 @@
       promptOpen = true
       return true
     }}
+    icon={Home}
     href="/"
     label={$t('nav.home')}
-    class="logo border-0 lg:rounded-full! lg:w-10! lg:h-10 lg:px-0! text-primary-900! dark:text-primary-100!"
+    class="logo border-0 md:rounded-full! md:w-10! md:h-10 md:px-0! text-primary-900! dark:text-primary-100! -order-1"
     adaptive={false}
   >
     {#snippet customIcon()}
@@ -67,55 +69,70 @@
       {/if}
     {/snippet}
   </NavButton>
-  <div class="flex-1"></div>
-  {#if profile.current?.user && isAdmin(profile.current.user)}
-    <NavButton
-      href="/admin"
-      label={$t('nav.admin')}
-      icon={ServerStack}
-      class="relative"
-      isSelectedFilter={(path) => path.startsWith('/admin')}
-    />
-  {/if}
-  {#if amModOfAny(profile.current?.user)}
-    <NavButton
-      href="/moderation"
-      label={$t('nav.moderation')}
-      class="relative"
-      icon={ShieldCheck}
-    />
-  {/if}
+  <div class="hidden md:block md:flex-1"></div>
+  <div class="sr-only md:not-sr-only md:contents">
+    {#if profile.current?.user && isAdmin(profile.current.user)}
+      <NavButton
+        href="/admin"
+        label={$t('nav.admin')}
+        icon={ServerStack}
+        class="relative order-0"
+        isSelectedFilter={(path) => path.startsWith('/admin')}
+      />
+    {/if}
+    {#if amModOfAny(profile.current?.user)}
+      <NavButton
+        href="/moderation"
+        label={$t('nav.moderation')}
+        class="relative order-0"
+        icon={ShieldCheck}
+      />
+    {/if}
+  </div>
   <NavButton
     href="/explore/communities"
     label={$t('routes.explore.title')}
     icon={GlobeAlt}
     isSelectedFilter={(path) => path.startsWith('/explore')}
+    class="order-1"
   />
-  <NavButton href="/search" label={$t('nav.search')} icon={MagnifyingGlass} />
+  <NavButton
+    href="/search"
+    label={$t('nav.search')}
+    icon={MagnifyingGlass}
+    class="order-3 md:order-2"
+  />
   <NavButton
     label={$t('nav.create.label')}
     href="/create"
     isSelectedFilter={(path) => path.startsWith('/create')}
     icon={PencilSquare}
+    class="order-2 md:order-3 nav-btn-sm-primary"
     alwaysShowIcon
   />
   <Menu placement="bottom">
     {#snippet target(attachment)}
       <button
         {@attach attachment}
-        class="w-10 h-10 rounded-full border-slate-200 dark:border-zinc-700
-      transition-all bg-slate-50 dark:bg-zinc-900 relative
-      hover:bg-slate-200 dark:hover:bg-zinc-700 group cursor-pointer"
+        class={[
+          'w-10 h-10 rounded-full',
+          'transition-all relative grid place-items-center',
+          ' group cursor-pointer order-4',
+        ]}
         title={$t('profile.profile')}
       >
         {#if profile.current?.user}
           <div
-            class="w-full h-full aspect-square object-cover rounded-full grid place-items-center group-hover:scale-90 transition-transform group-active:scale-[85%]"
+            class={[
+              'h-full aspect-square object-cover rounded-full grid place-items-center',
+              'border-slate-200 dark:border-zinc-700 hover:bg-slate-200 dark:hover:bg-zinc-700 bg-slate-50 dark:bg-zinc-900',
+            ]}
           >
             <Avatar
               url={profile.current.user.local_user_view.person.avatar}
               width={36}
               alt={profile.current.user.local_user_view.person.name}
+              class="group-hover:scale-90 transition-transform group-active:scale-85"
             />
           </div>
         {:else}

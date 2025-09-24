@@ -38,9 +38,8 @@
 <div class="min-h-screen flex flex-col">
   <div
     class={[
-      'fixed lg:sticky bottom-0 lg:top-0',
-      !dockVisible && 'max-lg:-bottom-24',
-      'max-w-3xl p-3 left-1/2 -translate-x-1/2 lg:max-w-full lg:p-0 lg:left-0 lg:translate-x-0',
+      'fixed md:sticky bottom-0 md:top-0',
+      !dockVisible && 'max-md:-bottom-24',
       'w-full z-50 pointer-events-none',
     ]}
     style="transition: bottom .4s cubic-bezier(0.075, 0.82, 0.165, 1);"
@@ -49,8 +48,7 @@
     {@render navbar?.({
       class: [
         'bg-slate-100/70 dark:bg-zinc-950/90 border-slate-200/50 dark:border-zinc-900',
-        'pointer-events-auto backdrop-blur-xl border lg:border-t-0 lg:border-x-0',
-        'rounded-full lg:rounded-none',
+        'pointer-events-auto backdrop-blur-xl border md:border-t-0 md:border-x-0',
       ],
       style: '',
     })}
