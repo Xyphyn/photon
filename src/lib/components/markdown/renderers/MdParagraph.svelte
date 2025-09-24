@@ -1,8 +1,12 @@
 <script>
+  import { getContext } from 'svelte'
+
   let { children } = $props()
+
+  const options = getContext('options')
 </script>
 
-<p class="leading-[1.7] break-words max-w">
+<p class={[!options.inline && 'leading-[1.7] break-words max-w']}>
   {@render children?.()}
 </p>
 

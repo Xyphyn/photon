@@ -37,7 +37,7 @@
       {#if icon}
         <div
           class={[
-            'ml-auto ',
+            'ml-auto',
             !open && 'rotate-90',
             'transition-transform duration-300 ease-out',
           ]}
@@ -51,8 +51,10 @@
       ></div>
     </div>
   {/snippet}
-  {#if content}{@render content()}{:else}
-    <div class="pt-2 text-slate-900 dark:text-zinc-100">
+  {#if content}
+    {@render content()}
+  {:else}
+    <div class="text-slate-900 dark:text-zinc-100 *:mt-2">
       {@render children?.()}
     </div>
   {/if}

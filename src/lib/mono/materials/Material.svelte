@@ -24,7 +24,7 @@
   }
 
   const roundedClass = {
-    none: 'rounded-none',
+    none: '',
     sm: 'rounded-xs',
     md: 'rounded-md',
     lg: 'rounded-lg',

@@ -24,11 +24,11 @@ export default function (tokensExtractor) {
     name: 'container',
     level: 'block',
     start(src) {
-      return src.match(/^:::[^:\n]/)?.index
+      return src.match(/:::[^:\n]/)?.index
     },
     tokenizer(src) {
       const rule =
-        /^:::[\s]?(?<type>[a-z0-9-]+)(?<options>.*)?\n(?<content>(?:.|\n)*)\n:::(?:\n|$)/i
+        /:::[\s]?(?<type>[a-z0-9-]+)(?<options>.*)?\n(?<content>(?:.|\n)*)\n:::(?:\n)*/i
 
       const match = rule.exec(findRawContainer(src))
       if (!match || !match.groups) return null

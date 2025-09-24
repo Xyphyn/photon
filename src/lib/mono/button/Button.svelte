@@ -316,7 +316,7 @@
 
     .btn-disabled {
       pointer-events: none;
-      filter: brightness(70%);
+      filter: brightness(90%);
       cursor: normal;
     }
   }

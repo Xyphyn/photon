@@ -138,15 +138,16 @@
     },
   }: Props = $props()
 
-  setContext('options', rendererOptions)
+  setContext('options', { ...rendererOptions, inline: inline })
 
   let tokens = $derived(marked.lexer(source))
 </script>
 
-<article
+<svelte:element
+  this={inline ? 'div' : 'article'}
   dir="auto"
   class={[!noStyle && 'break-words space-y-4 leading-normal', clazz]}
   {style}
 >
   <MdTree {tokens} renderers={inline ? inlineRenderers : renderers} />
-</article>
+</svelte:element>

@@ -30,6 +30,7 @@
 
 <Material
   padding="none"
+  rounding="2xl"
   class="flex flex-col rounded-xl
   divide-y divide-slate-200 dark:divide-zinc-800 overflow-hidden"
 >

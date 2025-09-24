@@ -5,11 +5,11 @@ export const spoilerPlugin = {
   name: 'spoiler',
   level: 'block',
   start(src) {
-    return src.match(/^:::/)?.index
+    return src.match(/:::/)?.index
   },
   // eslint-disable-next-line
   tokenizer(src, tokens) {
-    const rule = /^::: spoiler (.+)\n([\s\S]*?)\n:::/
+    const rule = /::: ?spoiler(?: ?(.*))\n([\s\S]*?)\n:::/
     const match = rule.exec(src)
     if (match) {
       return {

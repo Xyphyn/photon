@@ -1,6 +1,7 @@
 <script lang="ts">
   import CommentItem from '$comp/lemmy/comment/CommentItem.svelte'
   import PrivateMessage from '$comp/lemmy/inbox/PrivateMessage.svelte'
+  import Markdown from '$comp/markdown/Markdown.svelte'
   import Avatar from '$comp/ui/Avatar.svelte'
   import Expandable from '$comp/ui/Expandable.svelte'
   import RelativeDate from '$comp/util/RelativeDate.svelte'
@@ -63,23 +64,32 @@
       <div class="flex flex-col">
         <div class="text-sm font-normal text-slate-600 dark:text-zinc-400">
           {#if item.type == 'comment_reply'}
-            <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-            {@html $t('routes.inbox.item.reply', {
-              user: `<strong>${item.creator.name}</strong>`,
-              post: `<strong>${escapeHtml(item.item.post.name)}</strong>`,
-            })}
+            <Markdown
+              inline
+              source={$t('routes.inbox.item.reply', {
+                user: `**${item.creator.name}**`,
+                post: `**${escapeHtml(item.item.post.name)}**`,
+              })}
+              noStyle
+            />
           {:else if item.type == 'person_mention'}
-            <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-            {@html $t('routes.inbox.item.mention', {
-              user: `<strong>${item.creator.name}</strong>`,
-              post: `<strong>${escapeHtml(item.item.post.name)}</strong>`,
-            })}
+            <Markdown
+              inline
+              source={$t('routes.inbox.item.mention', {
+                user: `**${item.creator.name}**`,
+                post: `**${escapeHtml(item.item.post.name)}**`,
+              })}
+              noStyle
+            />
           {:else if item.type == 'private_message'}
-            <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-            {@html $t('routes.inbox.item.message', {
-              user: `<strong>${item.item.creator.name}</strong>`,
-              recipient: `<strong>${item.item.recipient.name}</strong>`,
-            })}
+            <Markdown
+              inline
+              source={$t('routes.inbox.item.message', {
+                user: `**${item.creator.name}**`,
+                recipient: `**${escapeHtml(item.item.recipient.name)}**`,
+              })}
+              noStyle
+            />
           {/if}
         </div>
         <div class="text-xs text-slate-600 dark:text-zinc-400">
