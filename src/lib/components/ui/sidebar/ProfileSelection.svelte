@@ -34,7 +34,7 @@
       alignment="left"
       size="md"
       rounding="xl"
-      class="flex flex-row gap-2 items-center"
+      class="flex flex-row gap-2! items-center"
       aria-label={$t('aria.sidebar.accounts')}
     >
       {#snippet prefix()}
@@ -48,9 +48,9 @@
         <div class="font-medium">{profile.current.username}</div>
         {#if !LINKED_INSTANCE_URL}
           <div class="text-xs text-slate-500 dark:text-zinc-500">
-            <span class="capitalize"
-              >{profile.current.client?.name ?? DEFAULT_CLIENT_TYPE.name}</span
-            >
+            <span class="capitalize">
+              {profile.current.client?.name ?? DEFAULT_CLIENT_TYPE.name}
+            </span>
             • {profile.current.instance}
           </div>
         {/if}
@@ -69,7 +69,7 @@
     {@const selected = profile.meta.profile == p.id}
     <MenuButton
       onclick={() => switchTo(p.id)}
-      class={[selected && 'bg-slate-100! dark:bg-zinc-800!']}
+      class={[selected && 'bg-slate-100! dark:bg-zinc-800!', 'gap-2!']}
     >
       {#snippet prefix()}
         <Avatar url={p.avatar} alt={p.username} width={24} />
@@ -78,9 +78,9 @@
         <div class="font-medium text-sm">{p.username}</div>
         {#if !LINKED_INSTANCE_URL}
           <div class="text-xs text-slate-500 dark:text-zinc-500">
-            <span class="capitalize"
-              >{p.client?.name ?? DEFAULT_CLIENT_TYPE.name}</span
-            >
+            <span class="capitalize">
+              {p.client?.name ?? DEFAULT_CLIENT_TYPE.name}
+            </span>
             • {p.instance}
           </div>
         {/if}

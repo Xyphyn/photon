@@ -41,6 +41,7 @@
   import { amMod, isAdmin } from '../moderation/moderation'
   import { block, blockInstance, purgeCommunity } from './CommunityCard.svelte'
   import CommunityFlair from './CommunityFlair.svelte'
+  import { client } from '$lib/client/lemmy.svelte'
 
   interface Props {
     community: Community
@@ -176,15 +177,17 @@
         {/snippet}
       </Subscribe>
 
-      <Button
-        size="custom"
-        class="h-9 aspect-square"
-        rounding="pill"
-        onclick={() => (setFlair = !setFlair)}
-        aria-label={$t('cards.community.flair')}
-      >
-        <Icon src={Tag} size="16" micro />
-      </Button>
+      {#if client().setFlair}
+        <Button
+          size="custom"
+          class="h-9 aspect-square"
+          rounding="pill"
+          onclick={() => (setFlair = !setFlair)}
+          aria-label={$t('cards.community.flair')}
+        >
+          <Icon src={Tag} size="16" micro />
+        </Button>
+      {/if}
     {/if}
 
     {#if profile.current?.user && profile.current.user.moderates

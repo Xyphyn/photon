@@ -265,6 +265,11 @@
         },
         "translators": "Translators",
         "accounts": "Accounts",
+        "accounts.placeholder": {
+            "title": "Not logged in",
+            "description": "You aren't logged in. You can sign up or log in here.",
+            "descriptionWithGuest": "You aren't logged in. You can log in, sign up, or add a new guest account here."
+        },
         "explore": {
             "title": "Explore",
             "feeds": "Feeds",

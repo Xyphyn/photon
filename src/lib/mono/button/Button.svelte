@@ -318,6 +318,10 @@
       pointer-events: none;
       filter: brightness(90%);
       cursor: normal;
+
+      @variant dark {
+        filter: brightness(70%);
+      }
     }
   }
 </style>

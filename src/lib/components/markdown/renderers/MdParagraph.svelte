@@ -4,8 +4,6 @@
   let { children } = $props()
 
   const options = getContext('options')
-
-  console.log(options.noStyle)
 </script>
 
 <p class={[!options.noStyle && 'leading-[1.7] break-words max-w']}>
