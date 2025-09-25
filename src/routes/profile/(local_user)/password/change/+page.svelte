@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { profile } from '$lib/auth.svelte'
-  import { t } from '$lib/i18n/translations'
-  import { client } from '$lib/client/lemmy.svelte'
+  import { profile } from '$lib/app/auth.svelte'
+  import { t } from '$lib/app/i18n'
+  import { client } from '$lib/api/client.svelte'
   import { errorMessage } from '$lib/lemmy/error'
   import { Button, TextInput, toast } from 'mono-svelte'
 

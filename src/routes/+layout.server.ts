@@ -1,4 +1,8 @@
-import { aliases, loadTranslations, locales } from '$lib/i18n/translations.js'
+import {
+  aliases,
+  loadTranslations,
+  locales,
+} from '$lib/app/i18n/translations.js'
 import { get } from 'svelte/store'
 
 export const load = async ({ request }) => {

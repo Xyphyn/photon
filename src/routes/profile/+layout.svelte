@@ -1,6 +1,6 @@
 <script>
   import Tabs from '$comp/ui/layout/pages/Tabs.svelte'
-  import { t } from '$lib/i18n/translations'
+  import { t } from '$lib/app/i18n'
   import { Button, Menu, MenuButton } from 'mono-svelte'
   import {
     ArrowDown,

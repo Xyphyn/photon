@@ -1,18 +1,18 @@
 <script lang="ts">
-  import { profile } from '$lib/auth.svelte.js'
-  import { client } from '$lib/client/lemmy.svelte.js'
+  import { profile } from '$lib/app/auth.svelte.js'
+  import { client } from '$lib/api/client.svelte.js'
   import type {
     CommunityBlockView,
     InstanceBlockView,
     PersonBlockView,
-  } from '$lib/client/types'
+  } from '$lib/api/types/index.js'
   import UserLink from '$comp/lemmy/user/UserLink.svelte'
-  import EndPlaceholder from '$comp/ui/EndPlaceholder.svelte'
-  import Entity from '$comp/ui/Entity.svelte'
+  import EndPlaceholder from '$lib/ui/layout/EndPlaceholder.svelte'
+  import Entity from '$lib/ui/generic/Entity.svelte'
   import { Header } from '$comp/ui/layout'
   import CommonList from '$comp/ui/layout/CommonList.svelte'
-  import Placeholder from '$comp/ui/Placeholder.svelte'
-  import { t } from '$lib/i18n/translations.js'
+  import Placeholder from '$lib/ui/info/Placeholder.svelte'
+  import { t } from '$lib/app/i18n/index.js'
   import { Button } from 'mono-svelte'
   import { Check, XMark } from 'svelte-hero-icons'
   import type { PageData } from './$types.js'

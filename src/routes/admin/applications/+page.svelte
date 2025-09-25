@@ -1,8 +1,8 @@
 <script lang="ts">
   import { Header } from '$comp/ui/layout'
   import Pageination from '$comp/ui/layout/Pageination.svelte'
-  import Placeholder from '$comp/ui/Placeholder.svelte'
-  import { t } from '$lib/i18n/translations'
+  import Placeholder from '$lib/ui/info/Placeholder.svelte'
+  import { t } from '$lib/app/i18n'
   import { Option, Select } from 'mono-svelte'
   import { ClipboardDocumentCheck } from 'svelte-hero-icons'
   import Application from './Application.svelte'

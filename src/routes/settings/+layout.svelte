@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Header } from '$comp/ui/layout'
   import Tabs from '$comp/ui/layout/pages/Tabs.svelte'
-  import { t } from '$lib/i18n/translations'
+  import { t } from '$lib/app/i18n'
   import { defaultSettings, settings } from '$lib/settings.svelte'
   import { action, Button, Modal, modal, toast } from 'mono-svelte'
   import TextArea from 'mono-svelte/forms/TextArea.svelte'

@@ -2,10 +2,10 @@
   import { env } from '$env/dynamic/public'
   import Link from '$comp/input/Link.svelte'
   import Switch from '$comp/input/Switch.svelte'
-  import Sort from '$comp/lemmy/dropdowns/Sort.svelte'
-  import ViewSelect from '$comp/lemmy/dropdowns/ViewSelect.svelte'
+  import Sort from '$lib/feature/filter/Sort.svelte'
+  import ViewSelect from '$lib/feature/filter/ViewSelect.svelte'
   import CommonList from '$comp/ui/layout/CommonList.svelte'
-  import { locale, t } from '$lib/i18n/translations'
+  import { locale, t } from '$lib/app/i18n'
   import { settings } from '$lib/settings.svelte'
   import { Button, Option, Select } from 'mono-svelte'
   import {

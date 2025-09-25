@@ -1,8 +1,8 @@
 <script lang="ts">
   import { Header } from '$comp/ui/layout'
-  import { t } from '$lib/i18n/translations'
-  import { theme as themeData } from '$lib/ui/theme/theme.svelte'
-  import { getDefaultColors } from '$lib/ui/theme/presets'
+  import { t } from '$lib/app/i18n'
+  import { theme as themeData } from '$lib/app/theme/theme.svelte'
+  import { getDefaultColors } from '$lib/app/theme/presets'
   import {
     Button,
     Material,

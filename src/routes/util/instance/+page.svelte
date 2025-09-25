@@ -4,7 +4,7 @@
   import {
     DEFAULT_INSTANCE_URL,
     LINKED_INSTANCE_URL,
-  } from '$lib/instance.svelte'
+  } from '$lib/app/instance.svelte'
 </script>
 
 <Header pageHeader>Photon instance</Header>

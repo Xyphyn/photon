@@ -1,6 +1,6 @@
 <script>
-  import { LINKED_INSTANCE_URL } from '$lib/instance.svelte'
-  import { t } from '$lib/i18n/translations'
+  import { LINKED_INSTANCE_URL } from '$lib/app/instance.svelte'
+  import { t } from '$lib/app/i18n'
   import { CheckCircle, Icon } from 'svelte-hero-icons'
 </script>
 

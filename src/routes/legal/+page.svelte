@@ -1,8 +1,8 @@
 <script lang="ts">
-  import Markdown from '$comp/markdown/Markdown.svelte'
+  import Markdown from '$lib/app/markdown/Markdown.svelte'
   import { Header } from '$comp/ui/layout'
-  import { t } from '$lib/i18n/translations'
-  import { site } from '$lib/client/lemmy.svelte'
+  import { t } from '$lib/app/i18n'
+  import { site } from '$lib/api/client.svelte'
   import { Spinner } from 'mono-svelte'
 </script>
 

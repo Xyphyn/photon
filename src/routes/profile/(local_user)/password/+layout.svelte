@@ -1,5 +1,5 @@
 <script>
-  import { t } from '$lib/i18n/translations'
+  import { t } from '$lib/app/i18n'
 
   import { page } from '$app/state'
   import { Header } from '$comp/ui/layout'

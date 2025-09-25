@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { profile } from '$lib/auth.svelte'
+  import { profile } from '$lib/app/auth.svelte'
   import CommonList from '$comp/ui/layout/CommonList.svelte'
   import { Header } from '$comp/ui/layout'
-  import { t } from '$lib/i18n/translations'
+  import { t } from '$lib/app/i18n'
   import { Button, Spinner } from 'mono-svelte'
   import CommunityItem from '$comp/lemmy/community/CommunityItem.svelte'
 </script>

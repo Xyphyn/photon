@@ -1,7 +1,7 @@
 <script lang="ts">
   import UserLink from '$comp/lemmy/user/UserLink.svelte'
   import RelativeDate from '$comp/util/RelativeDate.svelte'
-  import { t } from '$lib/i18n/translations.js'
+  import { t } from '$lib/app/i18n/index.js'
   import { Button, modal } from 'mono-svelte'
   import type { ModLog } from '../+page.js'
   import ModlogAction from '../ModlogAction.svelte'

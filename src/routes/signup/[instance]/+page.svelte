@@ -1,20 +1,20 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
-  import { profile } from '$lib/auth.svelte.js'
-  import { getClient } from '$lib/client/lemmy.svelte'
-  import type { GetCaptchaResponse } from '$lib/client/types'
+  import { profile } from '$lib/app/auth.svelte.js'
+  import { getClient } from '$lib/api/client.svelte.js'
+  import type { GetCaptchaResponse } from '$lib/api/types/index.js'
   import ErrorContainer, {
     clearErrorScope,
     pushError,
-  } from '$comp/error/ErrorContainer.svelte'
+  } from '$lib/ui/info/ErrorContainer.svelte'
   import SiteCard from '$comp/lemmy/instance/InstanceCard.svelte'
-  import Markdown from '$comp/markdown/Markdown.svelte'
-  import MarkdownEditor from '$comp/markdown/MarkdownEditor.svelte'
-  import Avatar from '$comp/ui/Avatar.svelte'
+  import Markdown from '$lib/app/markdown/Markdown.svelte'
+  import MarkdownEditor from '$lib/app/markdown/MarkdownEditor.svelte'
+  import Avatar from '$lib/ui/generic/Avatar.svelte'
   import { Header } from '$comp/ui/layout'
-  import Placeholder from '$comp/ui/Placeholder.svelte'
-  import { t } from '$lib/i18n/translations.js'
+  import Placeholder from '$lib/ui/info/Placeholder.svelte'
+  import { t } from '$lib/app/i18n/index.js'
   import { errorMessage } from '$lib/lemmy/error.js'
   import {
     Button,

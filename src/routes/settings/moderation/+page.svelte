@@ -1,8 +1,8 @@
 <script lang="ts">
   import { removalTemplate } from '$comp/lemmy/moderation/moderation.js'
-  import MarkdownEditor from '$comp/markdown/MarkdownEditor.svelte'
-  import Expandable from '$comp/ui/Expandable.svelte'
-  import { t } from '$lib/i18n/translations'
+  import MarkdownEditor from '$lib/app/markdown/MarkdownEditor.svelte'
+  import Expandable from 'mono-svelte/disclosure/Expandable.svelte'
+  import { t } from '$lib/app/i18n'
   import { settings } from '$lib/settings.svelte'
   import { Button, TextInput } from 'mono-svelte'
   import { Icon, Plus, Trash } from 'svelte-hero-icons'

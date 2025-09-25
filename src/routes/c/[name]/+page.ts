@@ -1,6 +1,6 @@
 import { settings } from '$lib/settings.svelte'
 import type { SortType } from '$lib/client/types'
-import { feed } from '$lib/lemmy/feeds/feed.svelte.js'
+import { feed } from '$lib/feature/feeds/feed.svelte.js'
 import { client } from '$lib/client/lemmy.svelte.js'
 import CommunityCard from '$comp/lemmy/community/CommunityCard.svelte'
 

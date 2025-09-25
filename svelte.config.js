@@ -32,7 +32,7 @@ const config = {
               })
             : auto(),
     alias: {
-      'mono-svelte': 'src/lib/mono',
+      'mono-svelte': 'src/lib/ui/shared',
       'svelte-hero-icons': 'node_modules/@xylightdev/svelte-hero-icons',
       $comp: 'src/lib/components',
     },

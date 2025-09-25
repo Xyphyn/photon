@@ -1,5 +1,5 @@
 import { resolveRoute } from '$app/paths'
-import { profile } from '$lib/auth.svelte.js'
+import { profile } from '$lib/app/auth.svelte.js'
 import { error, redirect } from '@sveltejs/kit'
 
 export function load({ params }) {

@@ -1,4 +1,4 @@
-import { profile } from '$lib/auth.svelte.js'
+import { profile } from '$lib/app/auth.svelte.js'
 import { getClient, site as siteStore } from '$lib/client/lemmy.svelte'
 import { error } from '@sveltejs/kit'
 

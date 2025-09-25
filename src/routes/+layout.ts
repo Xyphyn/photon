@@ -1,6 +1,6 @@
 import { browser } from '$app/environment'
 import { settings } from '$lib/settings.svelte'
-import { aliases, loadTranslations } from '$lib/i18n/translations.js'
+import { aliases, loadTranslations } from '$lib/app/i18n/translations.js'
 import { env } from '$env/dynamic/public'
 
 export const ssr = env.PUBLIC_SSR_ENABLED?.toLowerCase() == 'true'

@@ -1,5 +1,5 @@
 import { resolveRoute } from '$app/paths'
-import { profile } from '$lib/auth.svelte.js'
+import { profile } from '$lib/app/auth.svelte.js'
 import { client } from '$lib/client/lemmy.svelte'
 import { redirect } from '@sveltejs/kit'
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { t } from '$lib/i18n/translations'
+  import { t } from '$lib/app/i18n'
   import { Badge, Switch } from 'mono-svelte'
   import {
     ComputerDesktop,

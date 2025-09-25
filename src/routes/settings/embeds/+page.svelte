@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { t } from '$lib/i18n/translations'
+  import { t } from '$lib/app/i18n'
   import { settings } from '$lib/settings.svelte'
   import { DOMAIN_REGEX_FORMS } from '$lib/util.svelte.js'
   import { Select, TextInput } from 'mono-svelte'

@@ -1,22 +1,22 @@
 <script lang="ts">
   import { browser } from '$app/environment'
   import { navigating, page } from '$app/state'
-  import { site } from '$lib/client/lemmy.svelte'
+  import { site } from '$lib/api/client.svelte'
   import SiteCard from '$comp/lemmy/instance/InstanceCard.svelte'
   import Moderation from '$comp/lemmy/moderation/Moderation.svelte'
-  import ExpandableImage from '$comp/ui/ExpandableImage.svelte'
+  import ExpandableImage from '$lib/ui/generic/ExpandableImage.svelte'
   import Shell from '$comp/ui/layout/Shell.svelte'
   import Navbar from '$comp/ui/navbar/Navbar.svelte'
   import Sidebar from '$comp/ui/sidebar/Sidebar.svelte'
-  import { locale } from '$lib/i18n/translations'
-  import { LINKED_INSTANCE_URL } from '$lib/instance.svelte'
+  import { locale } from '$lib/app/i18n'
+  import { LINKED_INSTANCE_URL } from '$lib/app/instance.svelte'
   import { settings } from '$lib/settings.svelte.js'
-  import { getDefaultColors } from '$lib/ui/theme/presets'
+  import { getDefaultColors } fr$lib/app/theme/presetssets'
   import {
     inDarkColorScheme,
     rgbToHex,
     theme,
-  } from '$lib/ui/theme/theme.svelte.js'
+  } fr$lib/app/theme/theme.svelte.jse.js'
   import { Button, ModalContainer, Spinner, ToastContainer } from 'mono-svelte'
   import nProgress from 'nprogress'
   import 'nprogress/nprogress.css'

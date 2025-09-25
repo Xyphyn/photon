@@ -7,7 +7,7 @@ import {
   generalizePostReport,
   generalizePrivateMessageReport,
   type ReportView,
-} from '$comp/lemmy/moderation/report'
+} from '$lib/feature/moderation/report'
 import { ReactiveState } from '$lib/util.svelte'
 import { error } from '@sveltejs/kit'
 

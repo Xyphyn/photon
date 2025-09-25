@@ -1,16 +1,16 @@
 <script lang="ts">
   import { navigating, page } from '$app/state'
-  import { profile } from '$lib/auth.svelte.js'
-  import { client } from '$lib/client/lemmy.svelte'
-  import ObjectAutocomplete from '$comp/lemmy/ObjectAutocomplete.svelte'
-  import Sort from '$comp/lemmy/dropdowns/Sort.svelte'
+  import { profile } from '$lib/app/auth.svelte.js'
+  import { client } from '$lib/api/client.svelte.js'
+  import ObjectAutocomplete from '$lib/ui/form/ObjectAutocomplete.svelte'
+  import Sort from '$lib/feature/filter/Sort.svelte'
   import { PostItem } from '$comp/lemmy/post'
   import UserItem from '$comp/lemmy/user/UserItem.svelte'
-  import Placeholder from '$comp/ui/Placeholder.svelte'
-  import Skeleton from '$comp/ui/generic/Skeleton.svelte'
+  import Placeholder from '$lib/ui/info/Placeholder.svelte'
+  import Skeleton from '$lib/ui/generic/Skeleton.svelte'
   import { CommonList, Header, SearchBar } from '$comp/ui/layout'
   import Pageination from '$comp/ui/layout/Pageination.svelte'
-  import { t } from '$lib/i18n/translations.js'
+  import { t } from '$lib/app/i18n/index.js'
   import {
     isCommentView,
     isCommunityView,

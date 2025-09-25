@@ -5,14 +5,10 @@
   import CommentListVirtualizer from '$comp/lemmy/comment/CommentListVirtualizer.svelte'
   import { buildCommentsTree } from '$comp/lemmy/comment/comments.svelte'
   import CommentTree from '$comp/lemmy/comment/CommentTree.svelte'
-  import EndPlaceholder from '$comp/ui/EndPlaceholder.svelte'
-  import { profile } from '$lib/auth.svelte'
-  import type {
-    CommentSortType,
-    CommentView,
-    PostView,
-  } from '$lib/client/types'
-  import { t } from '$lib/i18n/translations'
+  import EndPlaceholder from '$lib/ui/layout/EndPlaceholder.svelte'
+  import { profile } from '$lib/app/auth.svelte'
+  import type { CommentSortType, CommentView, PostView } from '$lib/api/types'
+  import { t } from '$lib/app/i18n'
   import { settings } from '$lib/settings.svelte'
   import { Button, Option, Select } from 'mono-svelte'
   import { onMount } from 'svelte'

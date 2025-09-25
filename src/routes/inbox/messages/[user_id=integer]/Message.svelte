@@ -1,9 +1,9 @@
 <script lang="ts">
-  import Markdown from '$comp/markdown/Markdown.svelte'
+  import Markdown from '$lib/app/markdown/Markdown.svelte'
   import { publishedToDate } from '$comp/util/date'
   import RelativeDate from '$comp/util/RelativeDate.svelte'
-  import { t } from '$lib/i18n/translations'
-  import type { PrivateMessageView } from '$lib/client/types'
+  import { t } from '$lib/app/i18n'
+  import type { PrivateMessageView } from '$lib/api/types'
   import { Button, Menu, MenuButton } from 'mono-svelte'
   import { EllipsisVertical, Flag, Icon, Trash } from 'svelte-hero-icons'
 

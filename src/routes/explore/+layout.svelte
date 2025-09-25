@@ -1,12 +1,12 @@
 <script lang="ts">
   import { page } from '$app/state'
-  import { profile } from '$lib/auth.svelte'
-  import { client } from '$lib/client/lemmy.svelte.js'
-  import Location from '$comp/lemmy/dropdowns/Location.svelte'
-  import Sort from '$comp/lemmy/dropdowns/Sort.svelte'
+  import { profile } from '$lib/app/auth.svelte.js'
+  import { client } from '$lib/api/client.svelte.js'
+  import Location from '$lib/feature/filter/Location.svelte'
+  import Sort from '$lib/feature/filter/Sort.svelte'
   import { Header, SearchBar, Tabs } from '$comp/ui/layout'
-  import { t } from '$lib/i18n/translations'
-  import { LINKED_INSTANCE_URL } from '$lib/instance.svelte'
+  import { t } from '$lib/app/i18n/index.js'
+  import { LINKED_INSTANCE_URL } from '$lib/app/instance.svelte.js'
   import { Option } from 'mono-svelte'
   import { ServerStack } from 'svelte-hero-icons/dist'
 

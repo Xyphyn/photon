@@ -1,7 +1,7 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
-  import { t } from '$lib/i18n/translations'
+  import { t } from '$lib/app/i18n'
   import { errorMessage } from '$lib/lemmy/error'
   import { Button } from 'mono-svelte'
 

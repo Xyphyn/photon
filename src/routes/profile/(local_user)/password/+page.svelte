@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Placeholder from '$comp/ui/Placeholder.svelte'
-  import { t } from '$lib/i18n/translations.js'
+  import Placeholder from '$lib/ui/info/Placeholder.svelte'
+  import { t } from '$lib/app/i18n/index.js'
   import { Key } from 'svelte-hero-icons'
 </script>
 

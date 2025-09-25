@@ -2,7 +2,7 @@
   import { Button } from 'mono-svelte'
   import LoginPage from '../../../login/guest/+page.svelte'
   import { ArrowLeft, Icon } from 'svelte-hero-icons'
-  import { t } from '$lib/i18n/translations'
+  import { t } from '$lib/app/i18n'
 </script>
 
 <LoginPage ref="/accounts">

@@ -1,10 +1,10 @@
 <script lang="ts">
   import CommunityHeader from '$comp/lemmy/community/CommunityHeader.svelte'
   import { Header } from '$comp/ui/layout'
-  import { t } from '$lib/i18n/translations'
+  import { t } from '$lib/app/i18n'
   import { Button, Material, Spinner } from 'mono-svelte'
   import ModlogItemCard from '../../../modlog/item/ModlogItemCard.svelte'
-  import Expandable from '$comp/ui/Expandable.svelte'
+  import Expandable from 'mono-svelte/disclosure/Expandable.svelte'
   import UserAutocomplete from '$comp/lemmy/user/UserAutocomplete.svelte'
   import { ban } from '$comp/lemmy/moderation/moderation'
   import Switch from '$comp/input/Switch.svelte'

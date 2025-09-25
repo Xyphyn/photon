@@ -1,15 +1,15 @@
 <script lang="ts">
-  import { notifications, profile } from '$lib/auth.svelte.js'
-  import { client } from '$lib/client/lemmy.svelte'
+  import { notifications, profile } from '$lib/app/auth.svelte.js'
+  import { client } from '$lib/api/client.svelte'
   import type {
     ApproveRegistrationApplication,
     RegistrationApplicationView,
-  } from '$lib/client/types'
-  import ApplicationDenyModal from '$comp/lemmy/modal/ApplicationDenyModal.svelte'
+  } from '$lib/api/types'
+  import ApplicationDenyModal from '$lib/feature/moderation/ApplicationDenyModal.svelte'
   import UserLink from '$comp/lemmy/user/UserLink.svelte'
   import RelativeDate from '$comp/util/RelativeDate.svelte'
   import { publishedToDate } from '$comp/util/date'
-  import { t } from '$lib/i18n/translations'
+  import { t } from '$lib/app/i18n'
   import { errorMessage } from '$lib/lemmy/error'
   import { Button, Label, Material, toast } from 'mono-svelte'
   import {

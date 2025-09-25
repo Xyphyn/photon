@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { profile } from '$lib/auth.svelte.js'
-  import { client, site } from '$lib/client/lemmy.svelte'
-  import type { EditSite } from '$lib/client/types'
+  import { profile } from '$lib/app/auth.svelte.js'
+  import { client, site } from '$lib/api/client.svelte.js'
+  import type { EditSite } from '$lib/api/types/index.js'
   import ImageInputUpload from '$comp/form/ImageInputUpload.svelte'
-  import MarkdownEditor from '$comp/markdown/MarkdownEditor.svelte'
+  import MarkdownEditor from '$lib/app/markdown/MarkdownEditor.svelte'
   import { Header } from '$comp/ui/layout'
-  import { t } from '$lib/i18n/translations.js'
+  import { t } from '$lib/app/i18n/index.js'
   import { errorMessage } from '$lib/lemmy/error.js'
   import {
     Badge,

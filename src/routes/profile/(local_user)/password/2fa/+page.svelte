@@ -1,13 +1,13 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
-  import { client } from '$lib/client/lemmy.svelte'
-  import { t } from '$lib/i18n/translations.js'
+  import { client } from '$lib/api/client.svelte.js'
+  import { t } from '$lib/app/i18n/index.js'
   import { qr } from '@svelte-put/qr/svg'
   import { Button, Material, Modal, TextInput, toast } from 'mono-svelte'
   import { ClipboardDocument, Icon, Key } from 'svelte-hero-icons'
   import { errorMessage } from '$lib/lemmy/error.js'
-  import Placeholder from '$comp/ui/Placeholder.svelte'
+  import Placeholder from '$lib/ui/info/Placeholder.svelte'
 
   let { data } = $props()
 

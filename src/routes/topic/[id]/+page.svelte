@@ -1,9 +1,9 @@
 <script lang="ts">
-  import ItemList from '$comp/lemmy/generic/ItemList.svelte'
-  import EntityHeader from '$comp/ui/EntityHeader.svelte'
-  import Expandable from '$comp/ui/Expandable.svelte'
+  import ItemList from '$lib/ui/generic/ItemList.svelte'
+  import EntityHeader from '$lib/ui/generic/EntityHeader.svelte'
+  import Expandable from 'mono-svelte/disclosure/Expandable.svelte'
   import { PostListShell } from '$comp/ui/layout'
-  import { t } from '$lib/i18n/translations.js'
+  import { t } from '$lib/app/i18n/index.js'
   import { communityLink } from '$lib/util.svelte.js'
   import { Spinner } from 'mono-svelte'
   import { SvelteURL } from 'svelte/reactivity'

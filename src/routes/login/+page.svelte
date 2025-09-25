@@ -1,19 +1,19 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
-  import { profile } from '$lib/auth.svelte'
-  import { DEFAULT_CLIENT_TYPE, type ClientType } from '$lib/client/base'
-  import { client } from '$lib/client/lemmy.svelte'
+  import { profile } from '$lib/app/auth.svelte'
+  import { DEFAULT_CLIENT_TYPE, type ClientType } from '$lib/api/base'
+  import { client } from '$lib/api/client.svelte'
   import ErrorContainer, {
     clearErrorScope,
     pushError,
-  } from '$comp/error/ErrorContainer.svelte'
+  } from '$lib/ui/info/ErrorContainer.svelte'
   import { Header } from '$comp/ui/layout'
-  import { t } from '$lib/i18n/translations'
+  import { t } from '$lib/app/i18n'
   import {
     DEFAULT_INSTANCE_URL,
     LINKED_INSTANCE_URL,
-  } from '$lib/instance.svelte.js'
+  } from '$lib/app/instance.svelte.js'
   import { errorMessage } from '$lib/lemmy/error'
   import { DOMAIN_REGEX_FORMS } from '$lib/util.svelte.js'
   import { Button, Note, Option, Select, TextInput, toast } from 'mono-svelte'

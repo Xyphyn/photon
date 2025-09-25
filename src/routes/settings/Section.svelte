@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Expandable from '$comp/ui/Expandable.svelte'
+  import Expandable from 'mono-svelte/disclosure/Expandable.svelte'
   import CommonList from '$comp/ui/layout/CommonList.svelte'
 
   interface Props {

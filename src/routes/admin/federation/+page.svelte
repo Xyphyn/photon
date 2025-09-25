@@ -1,14 +1,14 @@
 <script lang="ts">
   import { preventDefault } from 'svelte/legacy'
 
-  import { profile } from '$lib/auth.svelte.js'
-  import { client, getClient } from '$lib/client/lemmy.svelte'
-  import type { Instance } from '$lib/client/types'
-  import Placeholder from '$comp/ui/Placeholder.svelte'
+  import { profile } from '$lib/app/auth.svelte.js'
+  import { client, getClient } from '$lib/api/client.svelte.js'
+  import type { Instance } from '$lib/api/types/index.js'
+  import Placeholder from '$lib/ui/info/Placeholder.svelte'
   import { Header } from '$comp/ui/layout'
   import RelativeDate from '$comp/util/RelativeDate.svelte'
   import { publishedToDate } from '$comp/util/date.js'
-  import { t } from '$lib/i18n/translations.js'
+  import { t } from '$lib/app/i18n/index.js'
   import { errorMessage } from '$lib/lemmy/error.js'
   import {
     Button,
