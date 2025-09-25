@@ -1,7 +1,4 @@
 <script lang="ts">
-  import Avatar from '$lib/ui/generic/Avatar.svelte'
-  import type { Community } from '$lib/api/types'
-
   interface Props {
     community: Community
   }

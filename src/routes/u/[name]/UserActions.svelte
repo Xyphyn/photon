@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { profile } from '$lib/app/auth.svelte'
   import { client } from '$lib/api/client.svelte'
   import type { PersonView } from '$lib/api/types'
-  import { ban, isAdmin } from '$comp/lemmy/moderation/moderation'
+  import { profile } from '$lib/app/auth.svelte'
   import { t } from '$lib/app/i18n'
-  import { blockUser, isBlocked } from '$lib/lemmy/user'
+  import { ban, isAdmin } from '$lib/feature/moderation/moderation'
+  import { blockUser, isBlocked } from '$lib/feature/user'
   import {
     Button,
     Menu,
@@ -23,7 +23,7 @@
     NoSymbol,
     ShieldCheck,
     ShieldExclamation,
-  } from 'svelte-hero-icons'
+  } from 'svelte-hero-icons/dist'
 
   let { person }: { person: PersonView } = $props()
 

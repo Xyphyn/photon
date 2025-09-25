@@ -1,11 +1,11 @@
 import { profile } from '$lib/app/auth.svelte'
-import { DEFAULT_INSTANCE_URL } from '$lib/instance.svelte.js'
-import { instanceToURL } from '$lib/util.svelte'
+import { DEFAULT_INSTANCE_URL } from '$lib/app/instance.svelte'
+import { instanceToURL } from '$lib/app/util.svelte'
 import { error } from '@sveltejs/kit'
-import { type GetSiteResponse } from '$lib/client/types'
+import { BaseClient, DEFAULT_CLIENT_TYPE, type ClientType } from './base'
 import { LemmyClient } from './lemmy/adapter'
 import { PiefedClient } from './piefed/adapter'
-import { DEFAULT_CLIENT_TYPE, type ClientType, BaseClient } from './base'
+import type { GetSiteResponse } from './types'
 
 class SiteData {
   #data = $state<GetSiteResponse>()

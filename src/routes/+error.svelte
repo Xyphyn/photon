@@ -1,8 +1,8 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
+  import { errorMessage } from '$lib/app/error'
   import { t } from '$lib/app/i18n'
-  import { errorMessage } from '$lib/lemmy/error'
   import { Button } from 'mono-svelte'
 
   function getError(message: string): { string: string; code: boolean } {

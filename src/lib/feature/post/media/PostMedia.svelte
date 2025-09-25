@@ -1,13 +1,8 @@
 <script lang="ts">
-  import { settings, type View } from '$lib/settings.svelte.js'
   import type { Post } from '$lib/api/types'
-  import {
-    PostImage,
-    PostIframe,
-    PostLink,
-    type MediaType,
-    iframeType,
-  } from '..'
+  import { settings, type View } from '$lib/app/settings.svelte'
+  import { PostIframe, PostImage, PostLink } from '..'
+  import { iframeType, type MediaType } from '../helpers'
 
   interface Props {
     view?: View

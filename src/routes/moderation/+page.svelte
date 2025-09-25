@@ -1,21 +1,24 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
-  import CommonList from '$comp/ui/layout/CommonList.svelte'
-  import { Header } from '$comp/ui/layout'
-  import Pageination from '$comp/ui/layout/Pageination.svelte'
+  import { client } from '$lib/api/client.svelte'
+  import { t } from '$lib/app/i18n'
+  import { searchParam } from '$lib/app/util.svelte'
+  import CommunityLink from '$lib/feature/community/CommunityLink.svelte'
+  import Fixate from '$lib/ui/generic/Fixate.svelte'
   import Placeholder from '$lib/ui/info/Placeholder.svelte'
   import ProgressBar from '$lib/ui/info/ProgressBar.svelte'
-  import { t } from '$lib/app/i18n'
-  import { client } from '$lib/api/client.svelte'
-  import { searchParam } from '$lib/util.svelte.js'
-  import { Button, Material, Select, Spinner, toast } from 'mono-svelte'
-  import Option from 'mono-svelte/forms/select/Option.svelte'
+  import { CommonList, Header, Pageination } from '$lib/ui/layout'
+  import { Button, Material, Option, Select, Spinner, toast } from 'mono-svelte'
   import { tick } from 'svelte'
-  import { Check, Funnel, Icon, ShieldCheck, XMark } from 'svelte-hero-icons'
+  import {
+    Check,
+    Funnel,
+    Icon,
+    ShieldCheck,
+    XMark,
+  } from 'svelte-hero-icons/dist'
   import Report from './Report.svelte'
-  import Fixate from '$lib/ui/generic/Fixate.svelte'
-  import CommunityLink from '$comp/lemmy/community/CommunityLink.svelte'
 
   let { data = $bindable() } = $props()
 

@@ -1,10 +1,10 @@
-import { client } from '$lib/client/lemmy.svelte.js'
-import type { ListingType, SortType } from '$lib/client/types'
-import { t } from '$lib/app/i18n/translations.js'
-import { feed } from '$lib/feature/feeds/feed.svelte.js'
-import { settings } from '$lib/settings.svelte'
-import { ReactiveState, awaitIfServer } from '$lib/util.svelte.js'
-import { ChevronDoubleUp } from 'svelte-hero-icons'
+import { client } from '$lib/api/client.svelte'
+import type { ListingType, SortType } from '$lib/api/types'
+import { t } from '$lib/app/i18n'
+import { settings } from '$lib/app/settings.svelte'
+import { ReactiveState, awaitIfServer } from '$lib/app/util.svelte'
+import { feed } from '$lib/feature/feeds/feed.svelte'
+import { ChevronDoubleUp } from '@xylightdev/svelte-hero-icons'
 
 export async function load({ url, fetch, route }) {
   const cursor = url.searchParams.get('cursor') as string | undefined

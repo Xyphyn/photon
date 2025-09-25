@@ -1,4 +1,47 @@
 <script lang="ts" module>
+  import { client, getClient } from '$lib/api/client.svelte'
+  import type { CommunityModeratorView, CommunityView } from '$lib/api/types'
+  import { profile } from '$lib/app/auth.svelte'
+  import { errorMessage } from '$lib/app/error'
+  import { t } from '$lib/app/i18n'
+  import Markdown from '$lib/app/markdown/Markdown.svelte'
+  import { settings } from '$lib/app/settings.svelte'
+  import { fullCommunityName, userLink } from '$lib/app/util.svelte'
+  import Avatar from '$lib/ui/generic/Avatar.svelte'
+  import Entity from '$lib/ui/generic/Entity.svelte'
+  import ItemList from '$lib/ui/generic/ItemList.svelte'
+  import LabelStat from '$lib/ui/info/LabelStat.svelte'
+  import EndPlaceholder from '$lib/ui/layout/EndPlaceholder.svelte'
+  import SidebarButton from '$lib/ui/sidebar/SidebarButton.svelte'
+  import {
+    action,
+    Button,
+    Expandable,
+    Menu,
+    MenuButton,
+    Modal,
+    modal,
+    removeToast,
+    Spinner,
+    toast,
+  } from 'mono-svelte'
+  import {
+    BuildingOffice2,
+    Check,
+    Cog6Tooth,
+    EllipsisHorizontal,
+    Fire,
+    Icon,
+    Newspaper,
+    NoSymbol,
+    Plus,
+    ShieldCheck,
+    Tag,
+  } from 'svelte-hero-icons/dist'
+  import { amMod, isAdmin } from '../moderation/moderation'
+  import { addSubscription } from '../user'
+  import CommunityFlair from './CommunityFlair.svelte'
+
   export async function block(id: number, block: boolean) {
     try {
       const loading = toast({
@@ -66,50 +109,6 @@
 </script>
 
 <script lang="ts">
-  import { profile } from '$lib/app/auth.svelte.js'
-  import { client, getClient } from '$lib/api/client.svelte'
-  import type { CommunityModeratorView, CommunityView } from '$lib/api/types'
-  import { amMod, isAdmin } from '$comp/lemmy/moderation/moderation.js'
-  import Markdown from '$lib/app/markdown/Markdown.svelte'
-  import Avatar from '$lib/ui/generic/Avatar.svelte'
-  import EndPlaceholder from '$lib/ui/layout/EndPlaceholder.svelte'
-  import Entity from '$lib/ui/generic/Entity.svelte'
-  import Expandable from 'mono-svelte/disclosure/Expandable.svelte'
-  import LabelStat from '$lib/ui/info/LabelStat.svelte'
-  import SidebarButton from '$comp/ui/sidebar/SidebarButton.svelte'
-  import { t } from '$lib/app/i18n'
-  import { errorMessage } from '$lib/lemmy/error'
-  import { userLink } from '$lib/util.svelte'
-  import { addSubscription } from '$lib/lemmy/user.js'
-  import { settings } from '$lib/settings.svelte'
-  import { fullCommunityName } from '$lib/util.svelte.js'
-  import {
-    action,
-    Button,
-    Menu,
-    MenuButton,
-    Modal,
-    modal,
-    removeToast,
-    Spinner,
-    toast,
-  } from 'mono-svelte'
-  import {
-    BuildingOffice2,
-    Check,
-    Cog6Tooth,
-    EllipsisHorizontal,
-    Fire,
-    Icon,
-    Newspaper,
-    NoSymbol,
-    Plus,
-    ShieldCheck,
-    Tag,
-  } from 'svelte-hero-icons'
-  import ItemList from '../generic/ItemList.svelte'
-  import CommunityFlair from './CommunityFlair.svelte'
-
   let loading = $state({
     blocking: false,
     subscribing: false,
@@ -202,7 +201,6 @@
         disabled={loading.subscribing}
         loading={loading.subscribing}
         size="md"
-        rounding="xl"
         color={subscribed ? 'secondary' : 'primary'}
         onclick={() => subscribe(community_view)}
         class="px-4 relative z-[inherit]"
@@ -216,7 +214,6 @@
       {#if client().setFlair}
         <SidebarButton
           onclick={() => (setFlair = !setFlair)}
-          rounding="xl"
           icon={Tag}
           label={$t('cards.community.flair')}
         />
@@ -228,7 +225,6 @@
           community_view.community.name,
           community_view.community.actor_id,
         )}/settings"
-        rounding="xl"
         icon={Cog6Tooth}
         label={$t('routes.profile.edit')}
       />
@@ -238,7 +234,6 @@
         <SidebarButton
           {@attach attachment}
           label={$t('post.actions.more.label')}
-          rounding="xl"
           icon={EllipsisHorizontal}
         />
       {/snippet}

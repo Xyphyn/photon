@@ -1,10 +1,10 @@
 <script lang="ts">
   import { t } from '$lib/app/i18n'
+  import Markdown from '$lib/app/markdown/Markdown.svelte'
+  import { Expandable } from 'mono-svelte'
   import type { ClassValue } from 'svelte/elements'
-  import Markdown from '../../app/markdown/Markdown.svelte'
-  import FormattedNumber from '../../components/util/FormattedNumber.svelte'
+  import FormattedNumber from '../util/FormattedNumber.svelte'
   import Avatar from './Avatar.svelte'
-  import Expandable from '../shared/disclosure/Expandable.svelte'
 
   interface Props {
     avatar?: string | undefined

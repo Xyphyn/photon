@@ -1,7 +1,8 @@
 <script lang="ts">
   import { Disclosure } from 'mono-svelte'
-  import { Minus, Plus, Icon } from 'svelte-hero-icons'
+  import { Icon, Minus, Plus } from 'svelte-hero-icons/dist'
   import type { ClassValue } from 'svelte/elements'
+
   interface Props {
     open?: boolean
     icon?: boolean

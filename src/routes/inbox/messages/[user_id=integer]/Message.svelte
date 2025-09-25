@@ -1,11 +1,11 @@
 <script lang="ts">
-  import Markdown from '$lib/app/markdown/Markdown.svelte'
-  import { publishedToDate } from '$comp/util/date'
-  import RelativeDate from '$comp/util/RelativeDate.svelte'
-  import { t } from '$lib/app/i18n'
   import type { PrivateMessageView } from '$lib/api/types'
+  import { t } from '$lib/app/i18n'
+  import Markdown from '$lib/app/markdown/Markdown.svelte'
+  import { publishedToDate } from '$lib/ui/util/date'
   import { Button, Menu, MenuButton } from 'mono-svelte'
-  import { EllipsisVertical, Flag, Icon, Trash } from 'svelte-hero-icons'
+  import RelativeDate from 'mono-svelte/util/RelativeDate.svelte'
+  import { EllipsisVertical, Flag, Icon, Trash } from 'svelte-hero-icons/dist'
 
   interface Props {
     message: PrivateMessageView

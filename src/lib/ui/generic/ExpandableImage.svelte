@@ -1,5 +1,12 @@
 <script lang="ts" module>
   import { pushState } from '$app/navigation'
+  import { page } from '$app/state'
+  import { t } from '$lib/app/i18n'
+  import { Button, Material, toast } from 'mono-svelte'
+  import { Share, XMark } from 'svelte-hero-icons/dist'
+  import { expoOut } from 'svelte/easing'
+  import { fade, scale } from 'svelte/transition'
+  import { trapFocus } from 'trap-focus-svelte'
 
   export function showImage(url: string) {
     pushState('', {
@@ -9,14 +16,6 @@
 </script>
 
 <script lang="ts">
-  import { page } from '$app/state'
-  import { t } from '$lib/app/i18n'
-  import { Button, Material, toast } from 'mono-svelte'
-  import { Share, XMark } from 'svelte-hero-icons'
-  import { expoOut } from 'svelte/easing'
-  import { fade, scale } from 'svelte/transition'
-  import { trapFocus } from 'trap-focus-svelte'
-
   interface Props {
     /**
      * The full-resolution image URL

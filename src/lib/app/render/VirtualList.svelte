@@ -1,11 +1,11 @@
 <script lang="ts" generics="T">
   import { browser } from '$app/environment'
-  import { settings } from '$lib/settings.svelte'
+  import { Expandable } from 'mono-svelte'
   import { debounce } from 'mono-svelte/util/time'
-  import { onDestroy, onMount, untrack, type Snippet } from 'svelte'
+  import { type Snippet, onDestroy, onMount, untrack } from 'svelte'
   import type { HTMLAttributes } from 'svelte/elements'
   import { innerHeight } from 'svelte/reactivity/window'
-  import Expandable from '../../ui/shared/disclosure/Expandable.svelte'
+  import { settings } from '../settings.svelte'
 
   interface Props extends HTMLAttributes<HTMLDivElement> {
     items: T[]

@@ -1,8 +1,8 @@
 <script lang="ts">
+  import type { PersonView } from '$lib/api/types'
+  import { userLink } from '$lib/app/util.svelte'
   import Avatar from '$lib/ui/generic/Avatar.svelte'
   import LabelStat from '$lib/ui/info/LabelStat.svelte'
-  import { userLink } from '$lib/util.svelte'
-  import type { PersonView } from '$lib/api/types'
 
   interface Props {
     user: PersonView

@@ -1,15 +1,15 @@
 <script lang="ts">
-  import { profile } from '$lib/app/auth.svelte'
   import { client } from '$lib/api/client.svelte'
   import type { LocalImage, Person } from '$lib/api/types'
-  import UserLink from '$comp/lemmy/user/UserLink.svelte'
-  import { publishedToDate } from '$comp/util/date'
-  import RelativeDate from '$comp/util/RelativeDate.svelte'
+  import { profile } from '$lib/app/auth.svelte'
   import { t } from '$lib/app/i18n'
   import { instance } from '$lib/app/instance.svelte'
-  import { instanceToURL } from '$lib/util.svelte'
+  import { instanceToURL } from '$lib/app/util.svelte'
+  import { publishedToDate } from '$lib/ui/util/date'
   import { action, Button, modal, toast } from 'mono-svelte'
-  import { ArrowDownTray, Trash } from 'svelte-hero-icons'
+  import RelativeDate from 'mono-svelte/util/RelativeDate.svelte'
+  import { ArrowDownTray, Trash } from 'svelte-hero-icons/dist'
+  import UserLink from './UserLink.svelte'
 
   let loading = $state(false)
 

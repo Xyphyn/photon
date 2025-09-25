@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { profile } from '$lib/app/auth.svelte.js'
-  import { amMod, isAdmin } from '$comp/lemmy/moderation/moderation.js'
-  import { publishedToDate } from '$comp/util/date'
-  import FormattedNumber from '$comp/util/FormattedNumber.svelte'
-  import { t } from '$lib/app/i18n'
-  import { save } from '$lib/lemmy/contentview.js'
-  import { settings, type View } from '$lib/settings.svelte.js'
   import type { PostView } from '$lib/api/types'
+  import { profile } from '$lib/app/auth.svelte'
+  import { t } from '$lib/app/i18n'
+  import { settings, type View } from '$lib/app/settings.svelte'
+  import { save } from '$lib/feature/legacy/contentview'
+  import { amMod, isAdmin } from '$lib/feature/moderation/moderation'
+  import { publishedToDate } from '$lib/ui/util/date'
+  import FormattedNumber from '$lib/ui/util/FormattedNumber.svelte'
   import { Button, Menu, Modal, Spinner } from 'mono-svelte'
   import {
     Bookmark,
@@ -17,9 +17,9 @@
     EllipsisHorizontal,
     Icon,
     ShieldCheck,
-  } from 'svelte-hero-icons'
-  import { postLink } from '../helpers'
+  } from 'svelte-hero-icons/dist'
   import { PostVote } from '..'
+  import { postLink } from '../helpers'
 
   let saving = $state(false)
   let editing = $state(false)
@@ -134,7 +134,7 @@
     ></Button>
   {/if}
   {#if profile.current?.user && (amMod(profile.current.user, post.community) || isAdmin(profile.current.user))}
-    {#await import('$comp/lemmy/moderation/ModerationMenu.svelte') then { default: ModerationMenu }}
+    {#await import('$lib/feature/moderation/ModerationMenu.svelte') then { default: ModerationMenu }}
       <ModerationMenu bind:item={post}>
         {#snippet target(attachment, acting)}
           <Button
@@ -185,7 +185,7 @@
     {/snippet}
     {#snippet children(open)}
       {#if open}
-        {#await import ('./PostActionsMenu.svelte')}
+        {#await import('./PostActionsMenu.svelte')}
           <div class="p-8 w-full h-full grid place-items-center">
             <Spinner width={20} />
           </div>

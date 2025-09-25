@@ -1,7 +1,7 @@
 <script>
-  import { LINKED_INSTANCE_URL } from '$lib/app/instance.svelte'
   import { t } from '$lib/app/i18n'
-  import { CheckCircle, Icon } from 'svelte-hero-icons'
+  import { LINKED_INSTANCE_URL } from '$lib/app/instance.svelte'
+  import { CheckCircle, Icon } from 'svelte-hero-icons/dist'
 </script>
 
 <div class="flex flex-col h-max my-auto gap-2 max-w-xl mx-auto">

@@ -1,4 +1,8 @@
 <script module lang="ts">
+  import { Label } from 'mono-svelte'
+  import type { HTMLInputAttributes } from 'svelte/elements'
+  import { generateID } from './helper'
+
   export type Size = keyof typeof sizeClass
   export type Shadow = keyof typeof shadowClass
 
@@ -34,11 +38,6 @@
 </script>
 
 <script lang="ts">
-  import type { HTMLInputAttributes } from 'svelte/elements'
-
-  import Label from '../forms/Label.svelte'
-  import { generateID } from '../forms/helper.js'
-
   const borderClass = `border border-slate-200 border-b-slate-300 dark:border-zinc-800`
 
   let {

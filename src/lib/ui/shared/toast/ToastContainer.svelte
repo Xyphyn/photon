@@ -1,8 +1,8 @@
 <script lang="ts">
-  import Toast from './Toast.svelte'
   import { flip } from 'svelte/animate'
-  import { toasts } from './toasts.js'
   import { expoOut } from 'svelte/easing'
+  import Toast from './Toast.svelte'
+  import { toasts } from './toasts'
 </script>
 
 <div

@@ -1,13 +1,13 @@
 <script lang="ts">
   import type { Snippet } from 'svelte'
-  import Avatar from '../Avatar.svelte'
+  import Avatar from '../generic/Avatar.svelte'
 
   interface Props {
     href?: string
     icon?: string
     title: string
     detail?: string
-    orientation: 'vertical' | 'horizontal'
+    orientation?: 'vertical' | 'horizontal'
     children?: Snippet
   }
 

@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { showImage } from '$lib/ui/generic/ExpandableImage.svelte'
-  import { settings } from '$lib/settings.svelte'
   import type { Post } from '$lib/api/types'
+  import { settings } from '$lib/app/settings.svelte'
+  import { showImage } from '$lib/ui/generic/ExpandableImage.svelte'
   import { Button, modal } from 'mono-svelte'
   import { onMount } from 'svelte'
   import { bestImageURL, postLink } from '../helpers'

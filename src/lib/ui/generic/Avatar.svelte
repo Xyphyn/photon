@@ -1,7 +1,5 @@
 <script lang="ts">
-  import { findClosestNumber } from '$lib/util.svelte.js'
-  import { createAvatar } from '@dicebear/core'
-  import * as initials from '@dicebear/initials'
+  import { findClosestNumber } from '$lib/app/util.svelte'
   import type { ClassValue } from 'svelte/elements'
 
   const sizes = [16, 24, 32, 48, 64, 96, 128, 256, 512]

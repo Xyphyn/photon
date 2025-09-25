@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { profile } from '$lib/app/auth.svelte.js'
-  import UserLink from '$comp/lemmy/user/UserLink.svelte'
-  import Markdown from '$lib/app/markdown/Markdown.svelte'
   import type { PrivateMessageView } from '$lib/api/types'
+  import { profile } from '$lib/app/auth.svelte'
+  import Markdown from '$lib/app/markdown/Markdown.svelte'
+  import UserLink from '../user/UserLink.svelte'
 
   interface Props {
     message: PrivateMessageView

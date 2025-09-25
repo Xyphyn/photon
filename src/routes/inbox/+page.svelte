@@ -1,18 +1,16 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
-  import { notifications, profile } from '$lib/app/auth.svelte.js'
-  import CommonList from '$comp/ui/layout/CommonList.svelte'
-  import { Header } from '$comp/ui/layout'
-  import Pageination from '$comp/ui/layout/Pageination.svelte'
-  import Placeholder from '$lib/ui/info/Placeholder.svelte'
-  import { t } from '$lib/app/i18n'
   import { getClient } from '$lib/api/client.svelte'
-  import { searchParam } from '$lib/util.svelte'
-  import { Button, Option, Select } from 'mono-svelte'
-  import { ArrowPath, Check, Funnel, Icon, Inbox } from 'svelte-hero-icons'
-  import InboxItem from './InboxItem.svelte'
+  import { notifications, profile } from '$lib/app/auth.svelte'
+  import { t } from '$lib/app/i18n'
+  import { searchParam } from '$lib/app/util.svelte'
   import Fixate from '$lib/ui/generic/Fixate.svelte'
+  import Placeholder from '$lib/ui/info/Placeholder.svelte'
+  import { CommonList, Header, Pageination } from '$lib/ui/layout'
+  import { Button, Option, Select } from 'mono-svelte'
+  import { ArrowPath, Check, Funnel, Icon, Inbox } from 'svelte-hero-icons/dist'
+  import InboxItem from './InboxItem.svelte'
 
   let { data } = $props()
 

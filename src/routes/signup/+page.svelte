@@ -14,18 +14,17 @@
 </script>
 
 <script lang="ts">
-  import { preventDefault } from 'svelte/legacy'
-
   import { goto } from '$app/navigation'
+  import { validateInstance } from '$lib/api/client.svelte'
+  import { t } from '$lib/app/i18n'
+  import { DEFAULT_INSTANCE_URL } from '$lib/app/instance.svelte'
   import VirtualList from '$lib/app/render/VirtualList.svelte'
   import Avatar from '$lib/ui/generic/Avatar.svelte'
-  import { Header } from '$comp/ui/layout'
-  import { t } from '$lib/app/i18n'
-  import { DEFAULT_INSTANCE_URL } from '$lib/app/instance.svelte.js'
-  import { validateInstance } from '$lib/api/client.svelte'
+  import { Header } from '$lib/ui/layout'
   import { Button, TextInput, toast } from 'mono-svelte'
   import { onMount } from 'svelte'
-  import { ArrowLeft, Icon } from 'svelte-hero-icons'
+  import { ArrowLeft, Icon } from 'svelte-hero-icons/dist'
+  import { preventDefault } from 'svelte/legacy'
 
   let selectedInstance: string = $state('')
   let validating: boolean = $state(false)

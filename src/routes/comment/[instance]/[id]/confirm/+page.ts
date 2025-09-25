@@ -1,4 +1,4 @@
-import { profile } from '$lib/app/auth.svelte.js'
+import { profile } from '$lib/app/auth.svelte'
 import { redirect } from '@sveltejs/kit'
 
 export async function load({ params }) {

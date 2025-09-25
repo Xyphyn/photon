@@ -1,13 +1,13 @@
 <script lang="ts">
   import {
-    flip,
-    offset,
-    shift,
     type Middleware,
     type Placement,
     type Strategy,
-  } from '@floating-ui/core'
-  import Popover from '../popover/Popover.svelte'
+    flip,
+    offset,
+    shift,
+  } from '@floating-ui/dom'
+  import { Popover } from 'mono-svelte'
   import type { Snippet } from 'svelte'
   import type { Attachment } from 'svelte/attachments'
 

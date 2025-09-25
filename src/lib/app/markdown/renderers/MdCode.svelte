@@ -1,7 +1,7 @@
 <script lang="ts">
   import { t } from '$lib/app/i18n'
   import { Button, Material, toast } from 'mono-svelte'
-  import { Icon, ClipboardDocument } from 'svelte-hero-icons'
+  import { ClipboardDocument, Icon } from 'svelte-hero-icons/dist'
 
   interface Props {
     raw: string

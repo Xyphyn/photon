@@ -1,15 +1,15 @@
 <script lang="ts">
   import { browser } from '$app/environment'
   import { page } from '$app/state'
-  import CommentForm from '$comp/lemmy/comment/CommentForm.svelte'
-  import CommentListVirtualizer from '$comp/lemmy/comment/CommentListVirtualizer.svelte'
-  import { buildCommentsTree } from '$comp/lemmy/comment/comments.svelte'
-  import CommentTree from '$comp/lemmy/comment/CommentTree.svelte'
-  import EndPlaceholder from '$lib/ui/layout/EndPlaceholder.svelte'
-  import { profile } from '$lib/app/auth.svelte'
   import type { CommentSortType, CommentView, PostView } from '$lib/api/types'
+  import { profile } from '$lib/app/auth.svelte'
   import { t } from '$lib/app/i18n'
-  import { settings } from '$lib/settings.svelte'
+  import { settings } from '$lib/app/settings.svelte'
+  import CommentForm from '$lib/feature/comment/CommentForm.svelte'
+  import CommentListVirtualizer from '$lib/feature/comment/CommentListVirtualizer.svelte'
+  import { buildCommentsTree } from '$lib/feature/comment/comments.svelte'
+  import CommentTree from '$lib/feature/comment/CommentTree.svelte'
+  import EndPlaceholder from '$lib/ui/layout/EndPlaceholder.svelte'
   import { Button, Option, Select } from 'mono-svelte'
   import { onMount } from 'svelte'
   import {
@@ -21,7 +21,7 @@
     Icon,
     Star,
     Trophy,
-  } from 'svelte-hero-icons'
+  } from 'svelte-hero-icons/dist'
 
   interface Props {
     post: PostView

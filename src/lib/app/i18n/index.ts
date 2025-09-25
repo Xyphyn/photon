@@ -1,4 +1,4 @@
-import i18n, { type Config, type Parser } from 'sveltekit-i18n'
+import { default as i18n, type Config, type Parser } from 'sveltekit-i18n'
 
 const config: Config = {
   loaders: [

@@ -1,5 +1,5 @@
 import { browser } from '$app/environment'
-import type { CommunityView } from '$lib/client/types'
+import type { CommunityView } from '$lib/api/types'
 
 interface SessionStorage {
   lastSeenCommunity?: CommunityView

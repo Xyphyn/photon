@@ -3,7 +3,7 @@
   import { Button } from 'mono-svelte'
   import type { ButtonProps } from 'mono-svelte/button/Button.svelte'
   import type { Snippet } from 'svelte'
-  import { Icon, type IconSource } from 'svelte-hero-icons'
+  import { Icon, type IconSource } from 'svelte-hero-icons/dist'
 
   interface Props extends ButtonProps {
     label: string
@@ -66,7 +66,7 @@
 </Button>
 
 <style>
-  @reference '../../../../app.css';
+  @reference '../../../app.css';
 
   :global {
     .prefix {

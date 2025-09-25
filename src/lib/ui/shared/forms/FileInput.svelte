@@ -1,7 +1,6 @@
 <script lang="ts">
-  import Button from '../button/Button.svelte'
-  import { generateID } from '../forms/helper.js'
-  import { Label } from '../index.js'
+  import { Button, Label } from 'mono-svelte'
+  import { generateID } from './helper'
 
   interface Props {
     accept?: string

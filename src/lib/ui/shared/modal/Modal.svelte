@@ -1,14 +1,14 @@
 <script lang="ts">
   import { pushState, replaceState } from '$app/navigation'
   import { page } from '$app/state'
+  import { Button } from 'mono-svelte'
+  import Portal from 'mono-svelte/popover/Portal.svelte'
   import type { Snippet } from 'svelte'
-  import { XMark } from 'svelte-hero-icons'
+  import { XMark } from 'svelte-hero-icons/dist'
   import { backOut } from 'svelte/easing'
   import type { ClassValue } from 'svelte/elements'
   import { fade, scale } from 'svelte/transition'
   import { trapFocus } from 'trap-focus-svelte'
-  import { Button } from '../index.js'
-  import Portal from '../popover/Portal.svelte'
 
   interface Props {
     action?: string | undefined

@@ -1,23 +1,26 @@
 <script lang="ts">
   import { page } from '$app/state'
+  import { t } from '$lib/app/i18n'
+  import { communityLink } from '$lib/app/util.svelte'
+  import CommentItem from '$lib/feature/comment/CommentItem.svelte'
   import Sort from '$lib/feature/filter/Sort.svelte'
-  import ItemList from '$lib/ui/generic/ItemList.svelte'
-  import { PostItem } from '$comp/lemmy/post'
-  import UserLink from '$comp/lemmy/user/UserLink.svelte'
+  import { isCommentView } from '$lib/feature/legacy/item'
+  import { PostItem } from '$lib/feature/post'
+  import UserLink from '$lib/feature/user/UserLink.svelte'
   import EntityHeader from '$lib/ui/generic/EntityHeader.svelte'
-  import Expandable from 'mono-svelte/disclosure/Expandable.svelte'
-  import { CommonList, Header, Pageination } from '$comp/ui/layout'
+  import ItemList from '$lib/ui/generic/ItemList.svelte'
   import Placeholder from '$lib/ui/info/Placeholder.svelte'
-  import { publishedToDate } from '$comp/util/date.js'
-  import { formatRelativeDate } from '$comp/util/RelativeDate.svelte'
-  import { t } from '$lib/app/i18n/index.js'
-  import { communityLink } from '$lib/util.svelte.js'
-  import { isCommentView } from '$lib/lemmy/item.js'
-  import { Option, Select } from 'mono-svelte'
-  import { AdjustmentsHorizontal, Icon, PencilSquare } from 'svelte-hero-icons'
-  import type { PageData } from './$types'
+  import { CommonList, Header, Pageination } from '$lib/ui/layout'
+  import { publishedToDate } from '$lib/ui/util/date'
+  import { Expandable, Option, Select } from 'mono-svelte'
+  import { formatRelativeDate } from 'mono-svelte/util/RelativeDate.svelte'
+  import {
+    AdjustmentsHorizontal,
+    Icon,
+    PencilSquare,
+  } from 'svelte-hero-icons/dist'
+  import { type PageData } from './$types'
   import UserActions from './UserActions.svelte'
-  import CommentItem from '$comp/lemmy/comment/CommentItem.svelte'
 
   interface Props {
     data: PageData

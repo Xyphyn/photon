@@ -1,5 +1,5 @@
 import { resolveRoute } from '$app/paths'
-import { instance } from '$lib/instance.svelte'
+import { instance } from '$lib/app/instance.svelte'
 import { redirect } from '@sveltejs/kit'
 
 export function load({ params }) {

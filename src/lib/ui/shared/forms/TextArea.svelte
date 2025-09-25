@@ -1,4 +1,8 @@
 <script module lang="ts">
+  import { Label } from 'mono-svelte'
+  import type { ClassValue, HTMLTextareaAttributes } from 'svelte/elements'
+  import { generateID } from './helper'
+
   export type Size = keyof typeof sizeClass
 
   export const sizeClass = {
@@ -27,11 +31,6 @@
 </script>
 
 <script lang="ts">
-  import type { ClassValue, HTMLTextareaAttributes } from 'svelte/elements'
-
-  import Label from '../forms/Label.svelte'
-  import { generateID } from '../forms/helper.js'
-
   const borderClass = `
 	border border-slate-200 dark:border-zinc-800
 	`

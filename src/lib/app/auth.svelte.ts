@@ -1,16 +1,16 @@
 import { browser } from '$app/environment'
 import { env } from '$env/dynamic/public'
-import { amModOfAny, isAdmin } from '$comp/lemmy/moderation/moderation.js'
-import { DEFAULT_INSTANCE_URL } from '$lib/instance.svelte.js'
+import { DEFAULT_CLIENT_TYPE, type ClientType } from '$lib/api/base'
 import { client, getClient, site } from '$lib/api/client.svelte'
-import { instanceToURL, moveItem } from '$lib/util.svelte'
+import type { Community, GetSiteResponse, MyUserInfo } from '$lib/api/types'
+import { amModOfAny, isAdmin } from '$lib/feature/moderation/moderation'
+import { publishedToDate } from '$lib/ui/util/date'
 import { toast } from 'mono-svelte'
 import { writable } from 'svelte/store'
-import { t } from './i18n'
 import { errorMessage } from './error'
-import { publishedToDate } from '../ui/util/date'
-import type { Community, GetSiteResponse, MyUserInfo } from '../api/types'
-import { DEFAULT_CLIENT_TYPE, type ClientType } from '../api/base'
+import { t } from './i18n'
+import { DEFAULT_INSTANCE_URL } from './instance.svelte'
+import { instanceToURL, moveItem } from './util.svelte'
 
 function getFromStorage<T>(key: string): T | undefined {
   if (typeof localStorage == 'undefined') return undefined

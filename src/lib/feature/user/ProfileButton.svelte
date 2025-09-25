@@ -2,10 +2,10 @@
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
   import { profile, type ProfileInfo } from '$lib/app/auth.svelte'
-  import SidebarButton from '$comp/ui/sidebar/SidebarButton.svelte'
   import { LINKED_INSTANCE_URL } from '$lib/app/instance.svelte'
-  import ProfileAvatar from '$lib/feature/legacy/ProfileAvatar.svelte'
-  import { Icon, QuestionMarkCircle } from 'svelte-hero-icons'
+  import SidebarButton from '$lib/ui/sidebar/SidebarButton.svelte'
+  import { Icon, QuestionMarkCircle } from 'svelte-hero-icons/dist'
+  import ProfileAvatar from '../legacy/ProfileAvatar.svelte'
 
   let switching: boolean = $state(false)
   interface Props {

@@ -1,10 +1,9 @@
 <script lang="ts">
-  import { notifications, profile } from '$lib/app/auth.svelte.js'
   import { site } from '$lib/api/client.svelte'
-  import { amModOfAny, isAdmin } from '$comp/lemmy/moderation/moderation.js'
-  import Avatar from '$lib/ui/generic/Avatar.svelte'
+  import { notifications, profile } from '$lib/app/auth.svelte'
   import { t } from '$lib/app/i18n'
   import { LINKED_INSTANCE_URL } from '$lib/app/instance.svelte'
+  import { amModOfAny, isAdmin } from '$lib/feature/moderation/moderation'
   import { Menu, Spinner } from 'mono-svelte'
   import {
     Bars3,
@@ -15,9 +14,10 @@
     PencilSquare,
     ServerStack,
     ShieldCheck,
-  } from 'svelte-hero-icons'
+  } from 'svelte-hero-icons/dist'
   import type { ClassValue } from 'svelte/elements'
-  import Logo from '../Logo.svelte'
+  import Avatar from '../generic/Avatar.svelte'
+  import Logo from '../generic/Logo.svelte'
   import CommandsWrapper from './commands/CommandsWrapper.svelte'
   import NavButton from './NavButton.svelte'
 
@@ -108,7 +108,6 @@
     isSelectedFilter={(path) => path.startsWith('/create')}
     icon={PencilSquare}
     class="order-2 md:order-3 nav-btn-sm-primary"
-    alwaysShowIcon
   />
   <Menu placement="bottom">
     {#snippet target(attachment)}

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { locale } from '$lib/app/i18n'
-  import { getContext, onDestroy, type Snippet } from 'svelte'
-  import type { IconSource } from 'svelte-hero-icons'
+  import { type Snippet, getContext, onDestroy } from 'svelte'
+  import type { IconSource } from 'svelte-hero-icons/dist'
   import type { HTMLOptionAttributes } from 'svelte/elements'
 
   interface Props extends Omit<HTMLOptionAttributes, 'prefix'> {

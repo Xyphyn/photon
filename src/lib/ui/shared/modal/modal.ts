@@ -1,6 +1,6 @@
-import { t } from '$lib/app/i18n/translations'
-import { type Snippet } from 'svelte'
-import type { IconSource } from 'svelte-hero-icons'
+import { t } from '$lib/app/i18n'
+import type { IconSource } from '@xylightdev/svelte-hero-icons'
+import type { Snippet } from 'svelte'
 import { writable } from 'svelte/store'
 
 export const shownModal = writable<Modal | undefined>()

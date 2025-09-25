@@ -1,7 +1,7 @@
 <script lang="ts">
+  import { Material } from 'mono-svelte'
+  import { Icon, InformationCircle } from 'svelte-hero-icons/dist'
   import type { ClassValue } from 'svelte/elements'
-  import { Material } from '../index.js'
-  import { Icon, InformationCircle } from 'svelte-hero-icons'
 
   interface Props {
     content?: string | undefined

@@ -1,10 +1,9 @@
 <script lang="ts">
-  import { profile } from '$lib/app/auth.svelte.js'
-  import { t } from '$lib/app/i18n'
   import { getClient } from '$lib/api/client.svelte'
-  import { errorMessage } from '$lib/lemmy/error'
-  import { isCommentView, isPostView } from '$lib/lemmy/item.js'
   import type { CommentView, PostView } from '$lib/api/types'
+  import { profile } from '$lib/app/auth.svelte'
+  import { errorMessage } from '$lib/app/error'
+  import { t } from '$lib/app/i18n'
   import { Menu, MenuButton, MenuDivider, toast } from 'mono-svelte'
   import type { Snippet } from 'svelte'
   import {
@@ -17,9 +16,10 @@
     Newspaper,
     ShieldExclamation,
     Trash,
-  } from 'svelte-hero-icons'
-  import { amMod, ban, isAdmin, remove, viewVotes } from './moderation'
+  } from 'svelte-hero-icons/dist'
   import type { Attachment } from 'svelte/attachments'
+  import { isCommentView, isPostView } from '../legacy/item'
+  import { amMod, ban, isAdmin, remove, viewVotes } from './moderation'
 
   interface Props {
     item: PostView | CommentView

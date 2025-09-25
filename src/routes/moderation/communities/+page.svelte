@@ -1,10 +1,9 @@
 <script lang="ts">
   import { profile } from '$lib/app/auth.svelte'
-  import CommonList from '$comp/ui/layout/CommonList.svelte'
-  import { Header } from '$comp/ui/layout'
   import { t } from '$lib/app/i18n'
+  import CommunityItem from '$lib/feature/community/CommunityItem.svelte'
+  import { CommonList, Header } from '$lib/ui/layout'
   import { Button, Spinner } from 'mono-svelte'
-  import CommunityItem from '$comp/lemmy/community/CommunityItem.svelte'
 </script>
 
 <Header pageHeader>
@@ -38,7 +37,6 @@
             },
             subscribed: 'NotSubscribed',
           }}
-          class="py-1 -mx-4 px-4"
         >
           <Button
             href="/moderation?community={community.id}"

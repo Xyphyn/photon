@@ -1,19 +1,22 @@
 <script lang="ts">
   import { browser } from '$app/environment'
   import { page } from '$app/state'
-  import type { GetPosts, ListingType, PostView } from '$lib/api/types'
+  import type {
+    GetPosts,
+    ListingType,
+    PostView,
+    SortType,
+  } from '$lib/api/types'
+  import { settings } from '$lib/app/settings.svelte'
   import Location from '$lib/feature/filter/Location.svelte'
   import Sort from '$lib/feature/filter/Sort.svelte'
   import ViewSelect from '$lib/feature/filter/ViewSelect.svelte'
-  import PostFeed from '$comp/lemmy/post/feed/PostFeed.svelte'
-  import VirtualFeed from '$comp/lemmy/post/feed/VirtualFeed.svelte'
-  import { Header } from '$comp/ui/layout'
-  import Pageination from '$comp/ui/layout/Pageination.svelte'
-  import { settings } from '$lib/settings.svelte.js'
-  import type { SortType } from 'lemmy-js-client'
-  import Button from 'mono-svelte/button/Button.svelte'
+  import PostFeed from '$lib/feature/post/feed/PostFeed.svelte'
+  import VirtualFeed from '$lib/feature/post/feed/VirtualFeed.svelte'
+  import { Button } from 'mono-svelte'
   import type { Snippet } from 'svelte'
-  import { ArrowRight, Icon } from 'svelte-hero-icons'
+  import { ArrowRight, Icon } from 'svelte-hero-icons/dist'
+  import { Header, Pageination } from '..'
 
   interface Props {
     posts: PostView[]

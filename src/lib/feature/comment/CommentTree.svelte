@@ -3,13 +3,13 @@
   import { goto } from '$app/navigation'
   import { client } from '$lib/api/client.svelte'
   import type { Post } from '$lib/api/types'
+  import { errorMessage } from '$lib/app/error'
   import { t } from '$lib/app/i18n'
-  import { errorMessage } from '$lib/lemmy/error'
   import { Button, toast } from 'mono-svelte'
-  import { ArrowDownCircle } from 'svelte-hero-icons'
+  import { ArrowDownCircle } from 'svelte-hero-icons/dist'
   import Comment from './Comment.svelte'
-  import Comments from './CommentTree.svelte'
-  import { buildCommentsTree, type CommentNodeI } from './comments.svelte'
+  import { type CommentNodeI, buildCommentsTree } from './comments.svelte'
+  import CommentTree from './CommentTree.svelte'
 
   interface Props {
     nodes: CommentNodeI[]
@@ -102,7 +102,7 @@
       bind:open={nodes[index].expanded}
     >
       {#if node.children?.length > 0}
-        <Comments {post} bind:nodes={nodes[index].children} />
+        <CommentTree {post} bind:nodes={nodes[index].children} />
       {/if}
     </Comment>
     {#if node.comment_view.counts.child_count > 0 && node.children.length == 0}

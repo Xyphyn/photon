@@ -1,12 +1,12 @@
-import { notifications, profile } from '$lib/auth.svelte'
-import { publishedToDate } from '$comp/util/date.js'
-import { getClient } from '$lib/client/lemmy.svelte'
+import { getClient } from '$lib/api/client.svelte'
+import { notifications, profile } from '$lib/app/auth.svelte'
+import { ReactiveState } from '$lib/app/util.svelte'
 import {
   generalizeCommentReply,
   generalizePersonMention,
   generalizePrivateMessage,
-} from '$lib/lemmy/inbox.js'
-import { ReactiveState } from '$lib/util.svelte.js'
+} from '$lib/feature/inbox'
+import { publishedToDate } from '$lib/ui/util/date'
 import { error } from '@sveltejs/kit'
 
 type InboxFeedType = 'replies' | 'mentions' | 'messages' | 'all'

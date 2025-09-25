@@ -1,7 +1,7 @@
 <script lang="ts">
   import { client } from '$lib/api/client.svelte'
+  import { errorMessage } from '$lib/app/error'
   import { t } from '$lib/app/i18n'
-  import { errorMessage } from '$lib/lemmy/error'
   import { Button, TextInput, toast } from 'mono-svelte'
 
   interface Props {

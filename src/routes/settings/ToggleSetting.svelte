@@ -7,7 +7,7 @@
     DeviceTablet,
     Icon,
     type IconSource,
-  } from 'svelte-hero-icons'
+  } from 'svelte-hero-icons/dist'
 
   interface Props {
     title: string

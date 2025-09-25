@@ -1,17 +1,16 @@
 <script lang="ts">
-  import { Header } from '$comp/ui/layout'
-  import CommonList from '$comp/ui/layout/CommonList.svelte'
-  import Placeholder from '$lib/ui/info/Placeholder.svelte'
-  import DebugObject from '$lib/ui/util/debug/DebugObject.svelte'
-  import { profile, type ProfileInfo } from '$lib/app/auth.svelte.js'
   import { DEFAULT_CLIENT_TYPE } from '$lib/api/base'
+  import { type ProfileInfo, profile } from '$lib/app/auth.svelte'
   import { t } from '$lib/app/i18n'
   import {
     DEFAULT_INSTANCE_URL,
     LINKED_INSTANCE_URL,
-  } from '$lib/app/instance.svelte.js'
+  } from '$lib/app/instance.svelte'
+  import { settings } from '$lib/app/settings.svelte'
   import ProfileAvatar from '$lib/feature/legacy/ProfileAvatar.svelte'
-  import { settings } from '$lib/settings.svelte.js'
+  import Placeholder from '$lib/ui/info/Placeholder.svelte'
+  import { CommonList, Header } from '$lib/ui/layout'
+  import DebugObject from '$lib/ui/util/debug/DebugObject.svelte'
   import { Badge, Button, Menu, MenuButton, Modal } from 'mono-svelte'
   import {
     ArrowLeftOnRectangle,
@@ -24,7 +23,7 @@
     Identification,
     Plus,
     QuestionMarkCircle,
-  } from 'svelte-hero-icons'
+  } from 'svelte-hero-icons/dist'
 
   let debugging = $state(false)
   let debugProfile: ProfileInfo | undefined = $state(undefined)

@@ -1,5 +1,5 @@
-import * as lemmy from 'lemmy-js-client'
 import type { GetPosts, ListingType } from '../types'
+import * as lemmy from '../types'
 
 export function fromGetPosts(getPosts: GetPosts): lemmy.GetPosts {
   return {

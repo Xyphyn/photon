@@ -1,13 +1,12 @@
 <script lang="ts">
   import { browser } from '$app/environment'
   import { client } from '$lib/api/client.svelte'
-  import type { GetPosts } from '$lib/api/types'
-  import VirtualList from '$lib/app/render/VirtualList.svelte'
-  import EndPlaceholder from '$lib/ui/layout/EndPlaceholder.svelte'
-  import Placeholder from '$lib/ui/info/Placeholder.svelte'
+  import type { GetPosts, PostView } from '$lib/api/types'
   import { t } from '$lib/app/i18n'
-  import { settings } from '$lib/settings.svelte.js'
-  import type { PostView } from 'lemmy-js-client'
+  import VirtualList from '$lib/app/render/VirtualList.svelte'
+  import { settings } from '$lib/app/settings.svelte'
+  import Placeholder from '$lib/ui/info/Placeholder.svelte'
+  import EndPlaceholder from '$lib/ui/layout/EndPlaceholder.svelte'
   import { Button } from 'mono-svelte'
   import { onDestroy, onMount, untrack } from 'svelte'
   import {
@@ -16,7 +15,7 @@
     ChevronDoubleUp,
     ExclamationTriangle,
     Icon,
-  } from 'svelte-hero-icons'
+  } from 'svelte-hero-icons/dist'
   import InfiniteScroll from 'svelte-infinite-scroll'
   import { expoOut } from 'svelte/easing'
   import { SvelteSet } from 'svelte/reactivity'

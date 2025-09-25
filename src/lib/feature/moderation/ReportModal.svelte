@@ -1,20 +1,19 @@
 <script lang="ts">
-  import { preventDefault, run } from 'svelte/legacy'
-
-  import { profile } from '$lib/app/auth.svelte.js'
-  import MarkdownEditor from '$lib/app/markdown/MarkdownEditor.svelte'
-  import { t } from '$lib/app/i18n'
   import { getClient } from '$lib/api/client.svelte'
   import type {
     CommentView,
     PostView,
     PrivateMessageView,
   } from '$lib/api/types'
+  import { profile } from '$lib/app/auth.svelte'
+  import { errorMessage } from '$lib/app/error'
+  import { t } from '$lib/app/i18n'
+  import MarkdownEditor from '$lib/app/markdown/MarkdownEditor.svelte'
   import { Button, Modal, toast } from 'mono-svelte'
-  import PrivateMessage from '../inbox/PrivateMessage.svelte'
-  import { errorMessage } from '$lib/lemmy/error'
-  import { Post } from '../post'
+  import { preventDefault, run } from 'svelte/legacy'
   import Comment from '../comment/Comment.svelte'
+  import PrivateMessage from '../inbox/PrivateMessage.svelte'
+  import { Post } from '../post'
 
   interface Props {
     open: boolean

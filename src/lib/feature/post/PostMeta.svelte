@@ -1,4 +1,32 @@
 <script lang="ts" module>
+  import type { Community, Person, SubscribedType } from '$lib/api/types'
+  import { profile } from '$lib/app/auth.svelte'
+  import { t } from '$lib/app/i18n'
+  import Markdown from '$lib/app/markdown/Markdown.svelte'
+  import { type View, settings } from '$lib/app/settings.svelte'
+  import Avatar from '$lib/ui/generic/Avatar.svelte'
+  import { publishedToDate } from '$lib/ui/util/date'
+  import { Badge, Material, modal, Popover } from 'mono-svelte'
+  import RelativeDate, {
+    formatRelativeDate,
+  } from 'mono-svelte/util/RelativeDate.svelte'
+  import {
+    type IconSource,
+    Bookmark,
+    ExclamationTriangle,
+    Icon,
+    LockClosed,
+    Megaphone,
+    PaperAirplane,
+    Pencil,
+    ShieldCheck,
+    Tag,
+    Trash,
+  } from 'svelte-hero-icons/dist'
+  import { SvelteMap } from 'svelte/reactivity'
+  import CommunityLink from '../community/CommunityLink.svelte'
+  import UserLink from '../user/UserLink.svelte'
+
   type BadgeType =
     | 'nsfw'
     | 'saved'
@@ -55,34 +83,6 @@
 </script>
 
 <script lang="ts">
-  import { profile } from '$lib/app/auth.svelte'
-  import type { Community, Person, SubscribedType } from '$lib/api/types'
-  import UserLink from '$comp/lemmy/user/UserLink.svelte'
-  import Markdown from '$lib/app/markdown/Markdown.svelte'
-  import Avatar from '$lib/ui/generic/Avatar.svelte'
-  import { publishedToDate } from '$comp/util/date'
-  import RelativeDate, {
-    formatRelativeDate,
-  } from '$comp/util/RelativeDate.svelte'
-  import { t } from '$lib/app/i18n'
-  import { settings, type View } from '$lib/settings.svelte'
-  import { Badge, Material, modal, Popover } from 'mono-svelte'
-  import {
-    Bookmark,
-    ExclamationTriangle,
-    Icon,
-    LockClosed,
-    Megaphone,
-    PaperAirplane,
-    Pencil,
-    ShieldCheck,
-    Tag,
-    Trash,
-    type IconSource,
-  } from 'svelte-hero-icons'
-  import { SvelteMap } from 'svelte/reactivity'
-  import CommunityLink from '../community/CommunityLink.svelte'
-
   interface Props {
     community?: Community
     showCommunity?: boolean
@@ -387,7 +387,7 @@
 {/if}
 
 <style>
-  @reference '../../../../app.css';
+  @reference '../../../app.css';
 
   .meta {
     display: grid;

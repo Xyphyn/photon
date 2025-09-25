@@ -1,4 +1,17 @@
 <script lang="ts" module>
+  import { Label, Menu, MenuButton } from 'mono-svelte'
+  import { buttonSize } from 'mono-svelte/button/Button.svelte'
+  import { type Snippet, setContext, tick } from 'svelte'
+  import type { Placement } from 'svelte-floating-ui/dom'
+  import {
+    CheckCircle,
+    ChevronUpDown,
+    Icon,
+    type IconSource,
+  } from 'svelte-hero-icons/dist'
+  import type { Attachment } from 'svelte/attachments'
+  import type { ClassValue, HTMLSelectAttributes } from 'svelte/elements'
+
   interface Props<T> extends Omit<HTMLSelectAttributes, 'size'> {
     value?: T | string | undefined
     placeholder?: string | undefined
@@ -33,21 +46,6 @@
 </script>
 
 <script lang="ts" generics="T">
-  import { setContext, tick, type Snippet } from 'svelte'
-  import type { Placement } from 'svelte-floating-ui/dom'
-  import {
-    CheckCircle,
-    ChevronUpDown,
-    Icon,
-    type IconSource,
-  } from 'svelte-hero-icons'
-  import type { Attachment } from 'svelte/attachments'
-  import type { ClassValue, HTMLSelectAttributes } from 'svelte/elements'
-  import { buttonSize } from '../../button/Button.svelte'
-  import Menu from '../../popover/Menu.svelte'
-  import MenuButton from '../../popover/MenuButton.svelte'
-  import Label from '../Label.svelte'
-
   let open = $state(false)
   let element: HTMLSelectElement | undefined = $state()
 
@@ -176,7 +174,3 @@
     {/if}
   {/each}
 </Menu>
-
-<style>
-  @reference '../../../../app.css';
-</style>

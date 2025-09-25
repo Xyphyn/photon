@@ -1,14 +1,15 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
-  import { profile } from '$lib/app/auth.svelte'
   import { client } from '$lib/api/client.svelte'
   import { PiefedClient } from '$lib/api/piefed/adapter'
   import type { PostView } from '$lib/api/types'
+  import { profile } from '$lib/app/auth.svelte'
   import { t } from '$lib/app/i18n'
-  import { deleteItem, markAsRead } from '$lib/lemmy/contentview'
-  import { setSessionStorage } from '$lib/session'
-  import { settings } from '$lib/settings.svelte'
-  import { instanceToURL } from '$lib/util.svelte'
+  import { setSessionStorage } from '$lib/app/session'
+  import { settings } from '$lib/app/settings.svelte'
+  import { instanceToURL } from '$lib/app/util.svelte'
+  import { deleteItem, markAsRead } from '$lib/feature/legacy/contentview'
+  import { report } from '$lib/feature/moderation/moderation'
   import { Button, Menu, MenuButton, toast } from 'mono-svelte'
   import {
     ArrowTopRightOnSquare,
@@ -22,8 +23,7 @@
     Share,
     Trash,
     XMark,
-  } from 'svelte-hero-icons'
-  import { report } from '../../moderation/moderation'
+  } from 'svelte-hero-icons/dist'
   import { hidePost } from '../helpers'
 
   interface Props {

@@ -1,11 +1,11 @@
 <script lang="ts">
-  import Avatar from '$lib/ui/generic/Avatar.svelte'
   import { getClient } from '$lib/api/client.svelte'
   import type { Community, ListingType } from '$lib/api/types'
   import { MenuButton, Search } from 'mono-svelte'
   import { createEventDispatcher } from 'svelte'
-  import { Icon, ServerStack, XCircle } from 'svelte-hero-icons'
+  import { Icon, ServerStack, XCircle } from 'svelte-hero-icons/dist'
   import { fly } from 'svelte/transition'
+  import Avatar from '../generic/Avatar.svelte'
 
   interface Props {
     type?: 'community' | 'instance'

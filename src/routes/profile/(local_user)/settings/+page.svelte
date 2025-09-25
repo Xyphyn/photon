@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { profile } from '$lib/app/auth.svelte.js'
   import { getClient, site } from '$lib/api/client.svelte'
   import type { SaveUserSettings } from '$lib/api/types'
-  import ImageInputUpload from '$comp/form/ImageInputUpload.svelte'
+  import { profile } from '$lib/app/auth.svelte'
+  import { t } from '$lib/app/i18n'
   import MarkdownEditor from '$lib/app/markdown/MarkdownEditor.svelte'
-  import { Header } from '$comp/ui/layout'
-  import { t } from '$lib/app/i18n/index.js'
+  import ImageInputUpload from '$lib/ui/form/ImageInputUpload.svelte'
+  import { Header } from '$lib/ui/layout'
   import {
     Badge,
     Button,
@@ -17,7 +17,7 @@
     TextInput,
     toast,
   } from 'mono-svelte'
-  import { Icon, Plus } from 'svelte-hero-icons'
+  import { Icon, Plus } from 'svelte-hero-icons/dist'
   import type { PageData } from './$types'
 
   interface Props {

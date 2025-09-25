@@ -1,5 +1,5 @@
 <script lang="ts">
-  import CommunityForm from '$comp/lemmy/community/CommunityForm.svelte'
+  import CommunityForm from '$lib/feature/community/CommunityForm.svelte'
 </script>
 
 <CommunityForm>

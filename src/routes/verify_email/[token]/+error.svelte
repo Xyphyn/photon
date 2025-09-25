@@ -1,7 +1,7 @@
 <script>
   import { page } from '$app/state'
   import { t } from '$lib/app/i18n'
-  import { XMark, Icon } from 'svelte-hero-icons'
+  import { Icon, XMark } from 'svelte-hero-icons/dist'
 </script>
 
 <div class="flex flex-col items-center h-max my-auto gap-2">

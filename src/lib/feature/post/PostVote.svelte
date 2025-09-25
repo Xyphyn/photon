@@ -16,18 +16,18 @@
 </script>
 
 <script lang="ts">
-  import { profile } from '$lib/app/auth.svelte.js'
-  import FormattedNumber from '$comp/util/FormattedNumber.svelte'
-  import { t } from '$lib/app/i18n'
   import { site } from '$lib/api/client.svelte'
-  import { vote as voteItem } from '$lib/lemmy/contentview.js'
-  import { errorMessage } from '$lib/lemmy/error'
-  import { settings } from '$lib/settings.svelte'
   import type { Post } from '$lib/api/types'
+  import { profile } from '$lib/app/auth.svelte'
+  import { errorMessage } from '$lib/app/error'
+  import { t } from '$lib/app/i18n'
+  import { settings } from '$lib/app/settings.svelte'
+  import FormattedNumber from '$lib/ui/util/FormattedNumber.svelte'
   import { buttonColor, toast } from 'mono-svelte'
-  import { ChevronDown, ChevronUp, Icon } from 'svelte-hero-icons'
+  import { ChevronDown, ChevronUp, Icon } from 'svelte-hero-icons/dist'
   import { backOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'
+  import { vote as voteItem } from '../legacy/contentview'
 
   interface Props {
     post: Post

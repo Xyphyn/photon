@@ -1,11 +1,10 @@
 <script lang="ts">
   import { page } from '$app/state'
-  import { Header } from '$comp/ui/layout'
-  import Pageination from '$comp/ui/layout/Pageination.svelte'
-  import { t } from '$lib/app/i18n/index.js'
+  import { t } from '$lib/app/i18n'
+  import PictrsImage from '$lib/feature/user/PictrsImage.svelte'
+  import { Header, Pageination } from '$lib/ui/layout'
   import { flip } from 'svelte/animate'
   import { expoInOut } from 'svelte/easing'
-  import PictrsImage from '$lib/feature/user/PictrsImage.svelte'
 
   let { data = $bindable() } = $props()
 </script>

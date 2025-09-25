@@ -1,7 +1,6 @@
 <script lang="ts" generics="T">
   import type { Snippet } from 'svelte'
   import type { ClassValue } from 'svelte/elements'
-
   const sizeDelay: Record<'lg' | 'md' | 'sm' | 'xs', number> = {
     lg: 120,
     md: 80,

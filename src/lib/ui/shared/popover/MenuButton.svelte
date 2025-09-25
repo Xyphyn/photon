@@ -1,11 +1,12 @@
 <script lang="ts">
-  import type { Snippet } from 'svelte'
-  import Button, {
+  import { Button } from 'mono-svelte'
+  import {
     type ButtonAlignment,
     type ButtonColor,
     type ButtonProps,
-  } from '../button/Button.svelte'
-  import { ChevronRight, Icon, type IconSource } from 'svelte-hero-icons'
+  } from 'mono-svelte/button/Button.svelte'
+  import type { Snippet } from 'svelte'
+  import { ChevronRight, Icon, type IconSource } from 'svelte-hero-icons/dist'
   import type { ClassValue } from 'svelte/elements'
 
   interface Props extends ButtonProps {

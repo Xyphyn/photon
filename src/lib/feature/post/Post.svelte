@@ -1,19 +1,18 @@
 <script lang="ts">
-  import { profile } from '$lib/app/auth.svelte'
-  import { publishedToDate } from '$comp/util/date.js'
-  import { settings, type View } from '$lib/settings.svelte.js'
   import type { PostView } from '$lib/api/types'
+  import { profile } from '$lib/app/auth.svelte'
+  import { type View, settings } from '$lib/app/settings.svelte'
+  import { publishedToDate } from '$lib/ui/util/date'
   import type { ClassValue } from 'svelte/elements'
   import {
-    type Tag,
-    PostMeta,
     PostActions,
-    PostMedia,
     PostBody,
-    parseTags,
-    mediaType,
+    PostMedia,
     PostMediaCompact,
+    PostMeta,
   } from '.'
+  import { mediaType } from './helpers'
+  import { type Tag, parseTags } from './PostMeta.svelte'
 
   function getTagRule(tags: Tag[]): 'blur-sm' | 'hide' | undefined {
     const tagContent = tags.map((t) => t.content.toLowerCase())

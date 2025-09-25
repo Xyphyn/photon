@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { settings } from '$lib/settings.svelte.js'
+  import { settings } from '$lib/app/settings.svelte'
   import type { Snippet } from 'svelte'
   import type {
     ClassValue,

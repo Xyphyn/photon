@@ -1,9 +1,7 @@
 <script lang="ts">
-  import { profile } from '$lib/app/auth.svelte.js'
-  import ShieldIcon from '$comp/lemmy/moderation/ShieldIcon.svelte'
-  import { t } from '$lib/app/i18n'
-  import { isCommentView } from '$lib/lemmy/item.js'
   import type { CommentView } from '$lib/api/types'
+  import { profile } from '$lib/app/auth.svelte'
+  import { t } from '$lib/app/i18n'
   import { Button, Menu, MenuButton, MenuDivider } from 'mono-svelte'
   import {
     ArrowsUpDown,
@@ -13,8 +11,10 @@
     Newspaper,
     ShieldExclamation,
     Trash,
-  } from 'svelte-hero-icons'
+  } from 'svelte-hero-icons/dist'
+  import { isCommentView } from '../legacy/item'
   import { amMod, ban, feature, isAdmin, remove, viewVotes } from './moderation'
+  import ShieldIcon from './ShieldIcon.svelte'
 
   interface Props {
     item: CommentView

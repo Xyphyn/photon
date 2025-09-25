@@ -1,5 +1,5 @@
 <script lang="ts">
-  import FormattedNumber from '../../components/util/FormattedNumber.svelte'
+  import FormattedNumber from '../util/FormattedNumber.svelte'
 
   interface Props {
     label: string

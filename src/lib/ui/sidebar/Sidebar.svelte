@@ -1,13 +1,12 @@
 <script lang="ts">
-  import { notifications, profile } from '$lib/app/auth.svelte.js'
-  import ItemList from '$lib/ui/generic/ItemList.svelte'
-  import Expandable from 'mono-svelte/disclosure/Expandable.svelte'
-  import SidebarButton from '$comp/ui/sidebar/SidebarButton.svelte'
+  import { env } from '$env/dynamic/public'
+  import { notifications, profile } from '$lib/app/auth.svelte'
   import { t } from '$lib/app/i18n'
-  import { communityLink } from '$lib/util.svelte'
-  import { settings } from '$lib/settings.svelte.js'
+  import { settings } from '$lib/app/settings.svelte'
   import { theme } from '$lib/app/theme/theme.svelte'
-  import { Badge, Option, Select } from 'mono-svelte'
+  import { communityLink } from '$lib/app/util.svelte'
+  import ProfileSelection from '$lib/feature/user/ProfileSelection.svelte'
+  import { Badge, Expandable, Option, Select } from 'mono-svelte'
   import {
     ArrowLeftOnRectangle,
     Bookmark,
@@ -22,13 +21,12 @@
     Swatch,
     UserCircle,
     UserGroup,
-  } from 'svelte-hero-icons'
+  } from 'svelte-hero-icons/dist'
   import type { ClassValue } from 'svelte/elements'
-  import EndPlaceholder from '../EndPlaceholder.svelte'
-  import ProfileSelection from './ProfileSelection.svelte'
-  import Logo from '../Logo.svelte'
-  import { env } from '$env/dynamic/public'
-  import Link from '$comp/input/Link.svelte'
+  import ItemList from '../generic/ItemList.svelte'
+  import Logo from '../generic/Logo.svelte'
+  import EndPlaceholder from '../layout/EndPlaceholder.svelte'
+  import SidebarButton from './SidebarButton.svelte'
 
   interface Props {
     style?: string
@@ -182,12 +180,18 @@
       </span>
     </div>
     {#if env.PUBLIC_XYLIGHT_MODE?.toLowerCase() == 'true'}
-      <Link highlight href="https://github.com/xyphyn/photon">
+      <a
+        class="text-blue-600 dark:text-blue-400"
+        href="https://github.com/xyphyn/photon"
+      >
         {$t('nav.menu.source')}
-      </Link>
-      <Link highlight href="https://buymeacoffee.com/xylight">
+      </a>
+      <a
+        class="text-blue-600 dark:text-blue-400"
+        href="https://buymeacoffee.com/xylight"
+      >
         {$t('nav.menu.donate')}
-      </Link>
+      </a>
     {/if}
   </footer>
 </nav>

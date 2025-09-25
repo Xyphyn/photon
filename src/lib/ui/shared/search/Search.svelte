@@ -1,4 +1,9 @@
 <script lang="ts" module>
+  import { Menu, MenuButton, Spinner, TextInput } from 'mono-svelte'
+  import type { TextInputProps } from 'mono-svelte/forms/TextInput.svelte'
+  import { debounce } from 'mono-svelte/util/time'
+  import { Icon, MagnifyingGlass } from 'svelte-hero-icons/dist'
+
   interface Props<T> extends Omit<TextInputProps, 'onselect' | 'children'> {
     query?: string
     selected?: T | undefined
@@ -24,11 +29,6 @@
 </script>
 
 <script lang="ts" generics="T">
-  import type { TextInputProps } from 'mono-svelte/forms/TextInput.svelte'
-  import { Menu, TextInput, Spinner, MenuButton } from '../index.js'
-  import { debounce } from '../util/time.js'
-  import { Icon, MagnifyingGlass } from 'svelte-hero-icons'
-
   let items: T[] = $state([])
 
   /**

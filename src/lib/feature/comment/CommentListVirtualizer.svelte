@@ -1,10 +1,4 @@
 <script lang="ts">
-  import VirtualList from '$lib/app/render/VirtualList.svelte'
-  import type { Post } from '$lib/api/types'
-  import type { CommentNodeI } from './comments.svelte'
-  import Comments from './CommentTree.svelte'
-  import { onMount } from 'svelte'
-
   interface Props {
     nodes: CommentNodeI[]
     post: Post

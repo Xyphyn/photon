@@ -1,27 +1,27 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
-  import { profile } from '$lib/app/auth.svelte.js'
-  import ImageInputUpload from '$comp/form/ImageInputUpload.svelte'
-  import MarkdownEditor from '$lib/app/markdown/MarkdownEditor.svelte'
-  import { t } from '$lib/app/i18n'
   import { client, site } from '$lib/api/client.svelte'
-  import { errorMessage } from '$lib/lemmy/error'
-  import { addSubscription } from '$lib/lemmy/user.js'
+  import { profile } from '$lib/app/auth.svelte'
+  import { errorMessage } from '$lib/app/error'
+  import { t } from '$lib/app/i18n'
+  import MarkdownEditor from '$lib/app/markdown/MarkdownEditor.svelte'
+  import ImageInputUpload from '$lib/ui/form/ImageInputUpload.svelte'
+  import { Header } from '$lib/ui/layout'
   import {
     Badge,
     Button,
     Label,
+    Material,
+    Menu,
     MenuButton,
+    Option,
+    Select,
     Switch,
     TextInput,
     toast,
-    Option,
-    Select,
-    Material,
-    Menu,
   } from 'mono-svelte'
-  import { GlobeAlt, Icon, MapPin, Plus } from 'svelte-hero-icons'
-  import { Header } from '$comp/ui/layout'
+  import { GlobeAlt, Icon, MapPin, Plus } from 'svelte-hero-icons/dist'
+  import { addSubscription } from '../user'
 
   interface Props {
     /**

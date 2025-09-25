@@ -1,8 +1,7 @@
 <script lang="ts">
-  import { preventDefault } from 'svelte/legacy'
-
-  import { DocumentPlus, Icon } from 'svelte-hero-icons'
   import { Label, TextInput } from 'mono-svelte'
+  import { DocumentPlus, Icon } from 'svelte-hero-icons/dist'
+  import { preventDefault } from 'svelte/legacy'
 
   interface Props {
     accept?: string
@@ -52,7 +51,7 @@
         class="w-full max-w-sm h-full rounded-lg"
       />
     {:else if url}
-      <img src={url} />
+      <img src={url} alt="" />
     {:else}
       <Icon src={DocumentPlus} class="opacity-50" size="36" />
       <p class="text-sm opacity-50">Attach a file</p>

@@ -1,7 +1,16 @@
 <script lang="ts" module>
   import { env } from '$env/dynamic/public'
-
-  import type { IconSource } from 'svelte-hero-icons'
+  import type { Person } from '$lib/api/types'
+  import { settings } from '$lib/app/settings.svelte'
+  import Avatar from '$lib/ui/generic/Avatar.svelte'
+  import Logo from '$lib/ui/generic/Logo.svelte'
+  import { Badge } from 'mono-svelte'
+  import {
+    Icon,
+    type IconSource,
+    Language,
+    NoSymbol,
+  } from 'svelte-hero-icons/dist'
 
   function parseBadge() {
     try {
@@ -48,13 +57,6 @@
 </script>
 
 <script lang="ts">
-  import Avatar from '$lib/ui/generic/Avatar.svelte'
-  import Logo from '$lib/ui/generic/Logo.svelte'
-  import { settings } from '$lib/settings.svelte.js'
-  import type { Person } from '$lib/api/types'
-  import { Icon, Language, NoSymbol } from 'svelte-hero-icons'
-  import { Badge } from 'mono-svelte'
-
   interface Props {
     user: Person
     avatar?: boolean

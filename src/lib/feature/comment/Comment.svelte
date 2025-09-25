@@ -1,17 +1,16 @@
 <script lang="ts">
   import { page } from '$app/state'
-  import { profile } from '$lib/app/auth.svelte.js'
-  import UserLink from '$comp/lemmy/user/UserLink.svelte'
+  import { getClient } from '$lib/api/client.svelte'
+  import { profile } from '$lib/app/auth.svelte'
+  import { errorMessage } from '$lib/app/error'
+  import { t } from '$lib/app/i18n'
   import Markdown from '$lib/app/markdown/Markdown.svelte'
-  import { publishedToDate } from '$comp/util/date.js'
+  import { settings } from '$lib/app/settings.svelte'
+  import { publishedToDate } from '$lib/ui/util/date'
+  import { Button, Modal, toast } from 'mono-svelte'
   import RelativeDate, {
     formatRelativeDate,
-  } from '$comp/util/RelativeDate.svelte'
-  import { t } from '$lib/app/i18n'
-  import { getClient } from '$lib/api/client.svelte'
-  import { errorMessage } from '$lib/lemmy/error'
-  import { settings } from '$lib/settings.svelte'
-  import { Button, Modal, toast } from 'mono-svelte'
+  } from 'mono-svelte/util/RelativeDate.svelte'
   import {
     Bookmark,
     Icon,
@@ -21,13 +20,14 @@
     Plus,
     ShieldCheck,
     Trash,
-  } from 'svelte-hero-icons'
+  } from 'svelte-hero-icons/dist'
   import { expoOut } from 'svelte/easing'
   import type { ClassValue } from 'svelte/elements'
   import { slide } from 'svelte/transition'
-  import type { CommentNodeI } from './comments.svelte'
-  import CommentForm from './CommentForm.svelte'
+  import UserLink from '../user/UserLink.svelte'
   import CommentActions from './CommentActions.svelte'
+  import CommentForm from './CommentForm.svelte'
+  import type { CommentNodeI } from './comments.svelte'
 
   interface Props {
     node: CommentNodeI

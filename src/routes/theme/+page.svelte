@@ -1,16 +1,16 @@
 <script lang="ts">
-  import { Header } from '$comp/ui/layout'
   import { t } from '$lib/app/i18n'
-  import { theme as themeData } from '$lib/app/theme/theme.svelte'
   import { getDefaultColors } from '$lib/app/theme/presets'
+  import { theme as themeData } from '$lib/app/theme/theme.svelte'
+  import { Header } from '$lib/ui/layout'
   import {
+    action,
     Button,
     Material,
     Modal,
+    modal,
     Note,
     TextArea,
-    action,
-    modal,
     toast,
   } from 'mono-svelte'
   import {
@@ -19,7 +19,7 @@
     ArrowUpTray,
     Icon,
     Plus,
-  } from 'svelte-hero-icons'
+  } from 'svelte-hero-icons/dist'
   import ColorSwatch from './ColorSwatch.svelte'
   import ThemePreset from './ThemePreset.svelte'
 
@@ -35,7 +35,7 @@
     onaction={() => {
       try {
         if (importText == '') {
-          throw new Error('Import is empty')
+          throw new Error('import failed')
         }
         themeData.current.colors = JSON.parse(importText)
         toast({ content: $t('message.success'), type: 'success' })

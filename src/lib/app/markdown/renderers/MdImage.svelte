@@ -1,14 +1,14 @@
 <script lang="ts">
+  import { t } from '$lib/app/i18n'
   import {
     iframeType,
     mediaType,
     optimizeImageURL,
     PostIframe,
-  } from '$comp/lemmy/post'
+  } from '$lib/feature/post'
   import { showImage } from '$lib/ui/generic/ExpandableImage.svelte'
-  import { t } from '$lib/app/i18n'
   import { getContext } from 'svelte'
-  import { ArrowDownTray, Icon } from 'svelte-hero-icons'
+  import { ArrowDownTray, Icon } from 'svelte-hero-icons/dist'
 
   let loaded: boolean = $state(
     (getContext('options') as { autoloadImages: boolean })?.autoloadImages ??

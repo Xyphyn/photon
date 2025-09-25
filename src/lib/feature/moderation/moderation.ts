@@ -1,6 +1,5 @@
 import { client } from '$lib/api/client.svelte'
 import type {
-  Comment,
   CommentView,
   Community,
   MyUserInfo,
@@ -8,8 +7,8 @@ import type {
   PostView,
   PrivateMessageView,
 } from '$lib/api/types'
-import type { SubmissionView } from '$lib/lemmy/contentview.js'
 import { writable } from 'svelte/store'
+import type { SubmissionView } from '../legacy/contentview'
 
 interface Modals {
   reporting: {

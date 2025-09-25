@@ -1,15 +1,14 @@
 <script lang="ts">
-  import { profile } from '$lib/app/auth.svelte.js'
-  import UserAutocomplete from '$comp/lemmy/user/UserAutocomplete.svelte'
+  import { getClient } from '$lib/api/client.svelte'
+  import { profile } from '$lib/app/auth.svelte'
+  import { errorMessage } from '$lib/app/error'
+  import { t } from '$lib/app/i18n'
+  import UserAutocomplete from '$lib/feature/user/UserAutocomplete.svelte'
   import Avatar from '$lib/ui/generic/Avatar.svelte'
-  import CommonList from '$comp/ui/layout/CommonList.svelte'
-  import { Header } from '$comp/ui/layout'
-  import { t } from '$lib/app/i18n/index.js'
-  import { getClient } from '$lib/api/client.svelte.js'
-  import { errorMessage } from '$lib/lemmy/error.js'
+  import { CommonList, Header } from '$lib/ui/layout'
   import { action, Button, modal, toast } from 'mono-svelte'
-  import { Icon, Plus, Trash } from 'svelte-hero-icons'
-  import type { PageData } from './$types.js'
+  import { Icon, Plus, Trash } from 'svelte-hero-icons/dist'
+  import type { PageData } from '../$types'
 
   interface Props {
     data: PageData

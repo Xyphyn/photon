@@ -1,6 +1,6 @@
-import { getClient } from '$lib/client/lemmy.svelte'
-import { getItemPublished } from '$lib/lemmy/item.js'
-import type { SortType } from '$lib/client/types'
+import { getClient } from '$lib/api/client.svelte'
+import type { SortType } from '$lib/api/types'
+import { getItemPublished } from '$lib/feature/legacy/item'
 
 export async function load({ url, fetch, parent }) {
   const page = Number(url.searchParams.get('page')) || 1

@@ -1,12 +1,11 @@
 <script lang="ts">
-  import ItemList from '$lib/ui/generic/ItemList.svelte'
+  import { t } from '$lib/app/i18n'
+  import { communityLink } from '$lib/app/util.svelte'
+  import type { FeedTypes } from '$lib/feature/feeds/feed.svelte'
   import EntityHeader from '$lib/ui/generic/EntityHeader.svelte'
-  import Expandable from 'mono-svelte/disclosure/Expandable.svelte'
-  import { PostListShell } from '$comp/ui/layout'
-  import { t } from '$lib/app/i18n/index.js'
-  import type { FeedTypes } from '$lib/feature/feeds/feed.svelte.js'
-  import { communityLink } from '$lib/util.svelte.js'
-  import { Spinner } from 'mono-svelte'
+  import ItemList from '$lib/ui/generic/ItemList.svelte'
+  import { PostListShell } from '$lib/ui/layout'
+  import { Expandable, Spinner } from 'mono-svelte'
   import { SvelteURL } from 'svelte/reactivity'
 
   interface Props {

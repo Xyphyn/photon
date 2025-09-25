@@ -1,12 +1,12 @@
 <script lang="ts">
+  import { invalidate } from '$app/navigation'
+  import { page as pageData } from '$app/state'
   import { t } from '$lib/app/i18n'
   import { Button } from 'mono-svelte'
-  import { ChevronLeft, ChevronRight, Icon } from 'svelte-hero-icons'
+  import { ChevronLeft, ChevronRight, Icon } from 'svelte-hero-icons/dist'
   import { backOut } from 'svelte/easing'
-  import { fly } from 'svelte/transition'
-  import { page as pageData } from '$app/state'
-  import { invalidate } from '$app/navigation'
   import { SvelteURLSearchParams } from 'svelte/reactivity'
+  import { fly } from 'svelte/transition'
 
   interface Props {
     page?: number

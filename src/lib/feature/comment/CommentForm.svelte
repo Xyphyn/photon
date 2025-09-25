@@ -1,14 +1,14 @@
 <script lang="ts">
-  import { profile } from '$lib/app/auth.svelte.js'
+  import { client, site } from '$lib/api/client.svelte'
+  import type { CommentResponse } from '$lib/api/types'
+  import { profile } from '$lib/app/auth.svelte'
+  import { errorMessage } from '$lib/app/error'
+  import { t } from '$lib/app/i18n'
   import Markdown from '$lib/app/markdown/Markdown.svelte'
   import MarkdownEditor from '$lib/app/markdown/MarkdownEditor.svelte'
-  import { t } from '$lib/app/i18n'
-  import { client, site } from '$lib/api/client.svelte'
-  import { errorMessage } from '$lib/lemmy/error'
-  import { placeholders } from '$lib/util.svelte.js'
-  import type { CommentResponse } from '$lib/api/types'
+  import { placeholders } from '$lib/app/util.svelte'
   import { Button, Menu, MenuButton, toast } from 'mono-svelte'
-  import { Icon, Language, XMark } from 'svelte-hero-icons'
+  import { Icon, Language, XMark } from 'svelte-hero-icons/dist'
   import type { ClassValue, HTMLTextareaAttributes } from 'svelte/elements'
 
   interface Props extends Omit<HTMLTextareaAttributes, 'oncancel'> {

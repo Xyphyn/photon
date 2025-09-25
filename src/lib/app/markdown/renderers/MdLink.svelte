@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { photonify } from './plugins.js'
+  import { photonify } from './plugins'
 
   interface Props {
     href?: string

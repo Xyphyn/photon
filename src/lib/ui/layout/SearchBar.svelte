@@ -2,7 +2,7 @@
   import { navigating, page } from '$app/state'
   import { t } from '$lib/app/i18n'
   import { Button, TextInput } from 'mono-svelte'
-  import { MagnifyingGlass } from 'svelte-hero-icons'
+  import { MagnifyingGlass } from 'svelte-hero-icons/dist'
 
   interface Props {
     query?: string | null

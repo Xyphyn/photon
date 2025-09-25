@@ -2,6 +2,7 @@
 /// <reference no-default-lib="true"/>
 /// <reference lib="esnext" />
 /// <reference lib="webworker" />
+
 import { build, files, version } from '$service-worker'
 
 // Create a unique cache name for this deployment

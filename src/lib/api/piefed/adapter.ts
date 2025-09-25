@@ -1,10 +1,11 @@
 import createClient from 'openapi-fetch'
-import type {
+import {
   BaseClient,
-  ClientType,
-  NullableFnArg,
-  NullableFnReturn,
+  type ClientType,
+  type NullableFnArg,
+  type NullableFnReturn,
 } from '../base'
+import type { SubscribedType } from '../types'
 import {
   fromCreateComment,
   fromCreatePost,
@@ -33,7 +34,6 @@ import {
   toTopicView,
 } from './rewrite'
 import type { paths } from './schema'
-import type { SubscribedType } from '../types'
 
 export class PiefedClient implements BaseClient {
   type: ClientType = { name: 'piefed', baseUrl: '/api/alpha' }

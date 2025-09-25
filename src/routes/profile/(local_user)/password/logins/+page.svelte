@@ -1,8 +1,7 @@
 <script lang="ts">
-  import { publishedToDate } from '$comp/util/date.js'
-  import RelativeDate from '$comp/util/RelativeDate.svelte'
+  import { publishedToDate } from '$lib/ui/util/date'
   import { Material } from 'mono-svelte'
-
+  import RelativeDate from 'mono-svelte/util/RelativeDate.svelte'
   import { UAParser } from 'ua-parser-js'
 
   let { data } = $props()

@@ -1,4 +1,11 @@
 <script lang="ts">
+  import { goto } from '$app/navigation'
+  import { page } from '$app/state'
+  import { DEFAULT_CLIENT_TYPE } from '$lib/api/base'
+  import { profile, type ProfileInfo } from '$lib/app/auth.svelte'
+  import { t } from '$lib/app/i18n'
+  import { LINKED_INSTANCE_URL } from '$lib/app/instance.svelte'
+  import Avatar from '$lib/ui/generic/Avatar.svelte'
   import { Badge, Button, Menu, MenuButton } from 'mono-svelte'
   import {
     CheckCircle,
@@ -6,14 +13,7 @@
     Icon,
     QuestionMarkCircle,
     UserGroup,
-  } from 'svelte-hero-icons'
-  import Avatar from '../Avatar.svelte'
-  import { profile, type ProfileInfo } from '$lib/app/auth.svelte'
-  import { goto } from '$app/navigation'
-  import { page } from '$app/state'
-  import { t } from '$lib/app/i18n'
-  import { DEFAULT_CLIENT_TYPE } from '$lib/api/base'
-  import { LINKED_INSTANCE_URL } from '$lib/app/instance.svelte'
+  } from 'svelte-hero-icons/dist'
 
   let { profiles }: { profiles: ProfileInfo[] } = $props()
 

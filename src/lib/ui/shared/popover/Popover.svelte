@@ -1,18 +1,18 @@
 <script lang="ts">
   import {
-    flip,
-    offset,
-    shift,
     type Middleware,
     type Placement,
     type Strategy,
-  } from '@floating-ui/core'
+    flip,
+    offset,
+    shift,
+  } from '@floating-ui/dom'
+  import { Material } from 'mono-svelte'
   import { createFloatingActions } from 'svelte-floating-ui'
   import type { Attachment } from 'svelte/attachments'
   import { expoOut } from 'svelte/easing'
   import { scale } from 'svelte/transition'
   import { trapFocus } from 'trap-focus-svelte'
-  import { Material } from '../index'
   import Portal from './Portal.svelte'
 
   interface Props {

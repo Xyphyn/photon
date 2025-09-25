@@ -1,8 +1,9 @@
 <script lang="ts">
   import { browser } from '$app/environment'
+  import { createEventDispatcher, onDestroy, onMount } from 'svelte'
 
   // https://github.com/sveltejs/svelte/issues/3088#issuecomment-505785516
-  import { onMount, onDestroy, createEventDispatcher } from 'svelte'
+
   let slottedElements = $state<HTMLDivElement>(),
     portal: HTMLDivElement
 

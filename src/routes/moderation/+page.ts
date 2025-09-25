@@ -1,14 +1,14 @@
-import { profile } from '$lib/auth.svelte'
-import { isAdmin } from '$comp/lemmy/moderation/moderation.js'
-import { getClient } from '$lib/client/lemmy.svelte'
-import { isCommentView, isPostView } from '$lib/lemmy/item'
+import { getClient } from '$lib/api/client.svelte'
+import { profile } from '$lib/app/auth.svelte'
+import { ReactiveState } from '$lib/app/util.svelte'
+import { isCommentView, isPostView } from '$lib/feature/legacy/item'
+import { isAdmin } from '$lib/feature/moderation/moderation'
 import {
   generalizeCommentReport,
   generalizePostReport,
   generalizePrivateMessageReport,
   type ReportView,
 } from '$lib/feature/moderation/report'
-import { ReactiveState } from '$lib/util.svelte'
 import { error } from '@sveltejs/kit'
 
 type ReportListType = 'unread' | 'all'

@@ -1,5 +1,3 @@
-import { t } from '$lib/app/i18n/translations'
-
 // eslint-disable-next-line
 export function errorMessage(error: any, instance?: string): string {
   try {

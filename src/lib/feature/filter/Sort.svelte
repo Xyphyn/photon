@@ -3,10 +3,9 @@
   import { client } from '$lib/api/client.svelte'
   import { LemmyClient } from '$lib/api/lemmy/adapter'
   import { t } from '$lib/app/i18n'
-  import { searchParam } from '$lib/util.svelte.js'
-  import { Select } from 'mono-svelte'
-  import Option from 'mono-svelte/forms/select/Option.svelte'
-  import type { SelectProps } from 'mono-svelte/forms/select/Select.svelte'
+  import { searchParam } from '$lib/app/util.svelte'
+  import { Option, Select } from 'mono-svelte'
+  import { type SelectProps } from 'mono-svelte/forms/select/Select.svelte'
   import {
     ArrowTrendingDown,
     ArrowTrendingUp,
@@ -23,7 +22,7 @@
     Star,
     Sun,
     Trophy,
-  } from 'svelte-hero-icons'
+  } from 'svelte-hero-icons/dist'
 
   interface Props extends SelectProps<string> {
     selected: string

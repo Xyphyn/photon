@@ -1,4 +1,7 @@
 <script lang="ts" module>
+  import { locale } from '$lib/app/i18n'
+  import { settings } from '$lib/app/settings.svelte'
+
   export function formatRelativeDate(
     date: Date,
     options: Intl.RelativeTimeFormatOptions,
@@ -47,9 +50,6 @@
 </script>
 
 <script lang="ts">
-  import { locale } from '$lib/app/i18n'
-  import { settings } from '$lib/settings.svelte'
-
   const toLocaleDateString = (date: Date): string => {
     try {
       return date.toLocaleString()

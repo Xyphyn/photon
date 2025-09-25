@@ -1,7 +1,33 @@
 <script lang="ts" module>
   import { marked } from 'marked'
-  import { linkify, subSupscriptExtension } from './renderers/plugins.js'
-  import containerExtension from './renderers/spoiler/spoiler.js'
+  import { setContext } from 'svelte'
+  import type { ClassValue } from 'svelte/elements'
+  import MdTree from './MdTree.svelte'
+  import MdCode from './renderers/MdCode.svelte'
+  import MdHeading from './renderers/MdHeading.svelte'
+  import MdHr from './renderers/MdHr.svelte'
+  import MdHtml from './renderers/MdHtml.svelte'
+  import MdImage from './renderers/MdImage.svelte'
+  import MdLink from './renderers/MdLink.svelte'
+  import MdList from './renderers/MdList.svelte'
+  import MdListItem from './renderers/MdListItem.svelte'
+  import MdParagraph from './renderers/MdParagraph.svelte'
+  import MdQuote from './renderers/MdQuote.svelte'
+  import MdSpoiler from './renderers/MdSpoiler.svelte'
+  import MdSubscript from './renderers/MdSubscript.svelte'
+  import MdSuperscript from './renderers/MdSuperscript.svelte'
+  import MdText from './renderers/MdText.svelte'
+  import { linkify, subSupscriptExtension } from './renderers/plugins'
+  import containerExtension from './renderers/spoiler/spoiler'
+  import MdCodespan from './renderers/subtext/MdCodespan.svelte'
+  import MdDel from './renderers/subtext/MdDel.svelte'
+  import MdEm from './renderers/subtext/MdEm.svelte'
+  import MdStrong from './renderers/subtext/MdStrong.svelte'
+  import MdTable from './renderers/table/MdTable.svelte'
+  import MdTableBody from './renderers/table/MdTableBody.svelte'
+  import MdTableCell from './renderers/table/MdTableCell.svelte'
+  import MdTableHead from './renderers/table/MdTableHead.svelte'
+  import MdTableRow from './renderers/table/MdTableRow.svelte'
 
   marked.setOptions({
     gfm: true,
@@ -10,7 +36,6 @@
 
   marked.use(linkify, {
     extensions: [
-      // @ts-expect-error hell with marked
       containerExtension((params: any) => {
         if (params.type == 'spoiler') {
           return {
@@ -22,7 +47,6 @@
         }
         return null
       }),
-      // @ts-expect-error hell with marked
       subSupscriptExtension((params: any) => {
         if (params.type == 'subscript') {
           return {
@@ -87,33 +111,6 @@
 </script>
 
 <script lang="ts">
-  import { setContext } from 'svelte'
-  import type { ClassValue } from 'svelte/elements'
-  import MdTree from './MdTree.svelte'
-  import MdEm from './renderers/subtext/MdEm.svelte'
-  import MdHeading from './renderers/MdHeading.svelte'
-  import MdImage from './renderers/MdImage.svelte'
-  import MdLink from './renderers/MdLink.svelte'
-  import MdQuote from './renderers/MdQuote.svelte'
-  import MdHr from './renderers/MdHr.svelte'
-  import MdHtml from './renderers/MdHtml.svelte'
-  import MdCode from './renderers/MdCode.svelte'
-  import MdList from './renderers/MdList.svelte'
-  import MdSpoiler from './renderers/MdSpoiler.svelte'
-  import MdTable from './renderers/table/MdTable.svelte'
-  import MdTableBody from './renderers/table/MdTableBody.svelte'
-  import MdTableCell from './renderers/table/MdTableCell.svelte'
-  import MdTableHead from './renderers/table/MdTableHead.svelte'
-  import MdTableRow from './renderers/table/MdTableRow.svelte'
-  import MdParagraph from './renderers/MdParagraph.svelte'
-  import MdListItem from './renderers/MdListItem.svelte'
-  import MdSubscript from './renderers/MdSubscript.svelte'
-  import MdSuperscript from './renderers/MdSuperscript.svelte'
-  import MdText from './renderers/MdText.svelte'
-  import MdStrong from './renderers/subtext/MdStrong.svelte'
-  import MdDel from './renderers/subtext/MdDel.svelte'
-  import MdCodespan from './renderers/subtext/MdCodespan.svelte'
-
   interface RendererOptions {
     autoloadImages: boolean
   }

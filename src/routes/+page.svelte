@@ -1,18 +1,18 @@
 <script lang="ts">
   import { browser } from '$app/environment'
   import { page } from '$app/state'
-  import { site } from '$lib/api/client.svelte.js'
+  import { site } from '$lib/api/client.svelte'
+  import { t } from '$lib/app/i18n'
+  import { settings, SSR_ENABLED } from '$lib/app/settings.svelte'
   import Location from '$lib/feature/filter/Location.svelte'
   import Sort from '$lib/feature/filter/Sort.svelte'
   import ViewSelect from '$lib/feature/filter/ViewSelect.svelte'
-  import PostFeed from '$comp/lemmy/post/feed/PostFeed.svelte'
-  import VirtualFeed from '$comp/lemmy/post/feed/VirtualFeed.svelte'
+  import PostFeed from '$lib/feature/post/feed/PostFeed.svelte'
+  import VirtualFeed from '$lib/feature/post/feed/VirtualFeed.svelte'
   import Skeleton from '$lib/ui/generic/Skeleton.svelte'
-  import { Header, Pageination } from '$comp/ui/layout'
-  import { t } from '$lib/app/i18n/index.js'
-  import { settings, SSR_ENABLED } from '$lib/settings.svelte.js'
+  import { Header, Pageination } from '$lib/ui/layout'
   import { Button } from 'mono-svelte'
-  import { ArrowRight, Icon } from 'svelte-hero-icons'
+  import { ArrowRight, Icon } from 'svelte-hero-icons/dist'
 
   let { data = $bindable() } = $props()
 

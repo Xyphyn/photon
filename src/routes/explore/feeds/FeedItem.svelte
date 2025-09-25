@@ -1,12 +1,12 @@
 <script lang="ts">
   import type { FeedView } from '$lib/api/types'
+  import { t } from '$lib/app/i18n'
   import Markdown from '$lib/app/markdown/Markdown.svelte'
   import Entity from '$lib/ui/generic/Entity.svelte'
   import LabelStat from '$lib/ui/info/LabelStat.svelte'
-  import CommonItem from '$comp/ui/layout/CommonItem.svelte'
-  import { t } from '$lib/app/i18n'
+  import CommonItem from '$lib/ui/layout/CommonItem.svelte'
   import { Button, modal } from 'mono-svelte'
-  import { InformationCircle } from 'svelte-hero-icons'
+  import { InformationCircle } from 'svelte-hero-icons/dist'
 
   interface Props {
     feed: FeedView

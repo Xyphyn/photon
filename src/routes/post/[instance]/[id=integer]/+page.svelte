@@ -1,35 +1,34 @@
 <script lang="ts">
   import { page } from '$app/state'
+  import { client } from '$lib/api/client.svelte'
+  import { profile } from '$lib/app/auth.svelte'
+  import { t } from '$lib/app/i18n'
+  import Markdown from '$lib/app/markdown/Markdown.svelte'
+  import { settings } from '$lib/app/settings.svelte'
+  import { resumables } from '$lib/feature/legacy/item'
   import {
     mediaType,
     parseTags,
     PostActions,
+    PostItem,
     postLink,
     PostMedia,
     PostMeta,
     type Tag,
-  } from '$comp/lemmy/post'
-  import PostItem from '$comp/lemmy/post/PostItem.svelte'
-  import Markdown from '$lib/app/markdown/Markdown.svelte'
-  import EndPlaceholder from '$lib/ui/layout/EndPlaceholder.svelte'
-  import Expandable from 'mono-svelte/disclosure/Expandable.svelte'
-  import { CommonList } from '$comp/ui/layout'
+  } from '$lib/feature/post'
   import Placeholder from '$lib/ui/info/Placeholder.svelte'
-  import { publishedToDate } from '$comp/util/date.js'
-  import FormattedNumber from '$comp/util/FormattedNumber.svelte'
-  import { profile } from '$lib/app/auth.svelte.js'
-  import { client } from '$lib/api/client.svelte'
-  import { t } from '$lib/app/i18n/index.js'
-  import { resumables } from '$lib/lemmy/item.js'
-  import { settings } from '$lib/settings.svelte.js'
-  import { Button, toast } from 'mono-svelte'
+  import { CommonList } from '$lib/ui/layout'
+  import EndPlaceholder from '$lib/ui/layout/EndPlaceholder.svelte'
+  import { publishedToDate } from '$lib/ui/util/date'
+  import FormattedNumber from '$lib/ui/util/FormattedNumber.svelte'
+  import { Button, Expandable, toast } from 'mono-svelte'
   import { onMount } from 'svelte'
   import {
     ArrowRight,
     ChatBubbleLeftRight,
     ChevronDoubleUp,
     Icon,
-  } from 'svelte-hero-icons'
+  } from 'svelte-hero-icons/dist'
   import { expoOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'
   import CommentProvider from './CommentProvider.svelte'

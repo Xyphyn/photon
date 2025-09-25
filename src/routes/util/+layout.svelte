@@ -1,5 +1,6 @@
 <script lang="ts">
-  import Tabs from '$comp/ui/layout/pages/Tabs.svelte'
+  import { Tabs } from '$lib/ui/layout'
+
   interface Props {
     children?: import('svelte').Snippet
   }
@@ -35,7 +36,6 @@
         name: 'Functions',
       },
     ]}
-    class="overflow-auto"
   />
   {@render children?.()}
 </div>

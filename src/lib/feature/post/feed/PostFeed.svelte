@@ -1,10 +1,10 @@
 <script lang="ts">
   import type { PostView } from '$lib/api/types'
+  import { settings } from '$lib/app/settings.svelte'
   import Placeholder from '$lib/ui/info/Placeholder.svelte'
-  import { settings } from '$lib/settings.svelte.js'
   import { Button } from 'mono-svelte'
   import type { Snippet } from 'svelte'
-  import { ArchiveBox, Plus } from 'svelte-hero-icons'
+  import { ArchiveBox, Plus } from 'svelte-hero-icons/dist'
   import { Post } from '..'
 
   interface Props {

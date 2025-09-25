@@ -1,17 +1,16 @@
 <script lang="ts">
-  import { profile } from '$lib/app/auth.svelte.js'
   import { site } from '$lib/api/client.svelte'
-  import FormattedNumber from '$comp/util/FormattedNumber.svelte'
+  import { profile } from '$lib/app/auth.svelte'
+  import { errorMessage } from '$lib/app/error'
   import { t } from '$lib/app/i18n'
-  import { errorMessage } from '$lib/lemmy/error'
-  import { settings } from '$lib/settings.svelte'
+  import { settings } from '$lib/app/settings.svelte'
+  import FormattedNumber from '$lib/ui/util/FormattedNumber.svelte'
   import { buttonColor, toast } from 'mono-svelte'
-  import { ChevronDown, ChevronUp, Icon } from 'svelte-hero-icons'
+  import { ChevronDown, ChevronUp, Icon } from 'svelte-hero-icons/dist'
   import { backOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'
+  import { vote as voteItem } from '../legacy/contentview'
   import { shouldShowVoteColor } from '../post/PostVote.svelte'
-  import { vote as voteItem } from '$lib/lemmy/contentview'
-  import type { Comment } from '$lib/api/types'
 
   interface Props {
     vote?: number

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Icon, type IconSource } from 'svelte-hero-icons'
+  import { type IconSource, Icon } from 'svelte-hero-icons/dist'
   import type { ClassValue } from 'svelte/elements'
 
   interface Props {

@@ -1,11 +1,12 @@
 import { browser } from '$app/environment'
 import { goto } from '$app/navigation'
 import { client } from '$lib/api/client.svelte'
+import type { Community, Person } from '$lib/api/types'
 import { SvelteURL } from 'svelte/reactivity'
 import { t } from './i18n'
-import type { Community, Person } from '../api/types'
 
 // Despite the name, this will round up
+// This is because I do not care
 // Example: findClosestNumber([8, 16, 32, 64, 128], 76) will return 128
 export const findClosestNumber = (numbers: number[], target: number): number =>
   numbers.reduce((prev, curr) =>

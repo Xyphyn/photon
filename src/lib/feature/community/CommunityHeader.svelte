@@ -1,28 +1,29 @@
 <script lang="ts">
-  import { profile } from '$lib/app/auth.svelte'
-  import EntityHeader from '$lib/ui/generic/EntityHeader.svelte'
-  import Expandable from 'mono-svelte/disclosure/Expandable.svelte'
-  import { formatRelativeDate } from '$comp/util/RelativeDate.svelte'
-  import { publishedToDate } from '$comp/util/date'
-  import { t } from '$lib/app/i18n'
-  import { userLink } from '$lib/util.svelte'
-  import { settings } from '$lib/settings.svelte'
-  import { fullCommunityName } from '$lib/util.svelte'
+  import { client } from '$lib/api/client.svelte'
   import type {
     Community,
     CommunityAggregates,
     CommunityModeratorView,
     SubscribedType,
   } from '$lib/api/types'
+  import { profile } from '$lib/app/auth.svelte'
+  import { t } from '$lib/app/i18n'
+  import { settings } from '$lib/app/settings.svelte'
+  import { fullCommunityName, userLink } from '$lib/app/util.svelte'
+  import EntityHeader from '$lib/ui/generic/EntityHeader.svelte'
+  import ItemList from '$lib/ui/generic/ItemList.svelte'
+  import { publishedToDate } from '$lib/ui/util/date'
   import {
     action,
     Button,
+    Expandable,
     Menu,
     MenuButton,
     Modal,
     modal,
     toast,
   } from 'mono-svelte'
+  import { formatRelativeDate } from 'mono-svelte/util/RelativeDate.svelte'
   import {
     BuildingOffice2,
     Check,
@@ -35,13 +36,11 @@
     Plus,
     ShieldCheck,
     Tag,
-  } from 'svelte-hero-icons'
-  import Subscribe from '../../../../routes/communities/Subscribe.svelte'
-  import ItemList from '../generic/ItemList.svelte'
+  } from 'svelte-hero-icons/dist'
+  import Subscribe from '../../../routes/communities/Subscribe.svelte'
   import { amMod, isAdmin } from '../moderation/moderation'
   import { block, blockInstance, purgeCommunity } from './CommunityCard.svelte'
   import CommunityFlair from './CommunityFlair.svelte'
-  import { client } from '$lib/api/client.svelte'
 
   interface Props {
     community: Community

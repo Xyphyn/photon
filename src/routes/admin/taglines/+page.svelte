@@ -1,17 +1,16 @@
 <script lang="ts">
-  import { preventDefault } from 'svelte/legacy'
-
-  import { profile } from '$lib/app/auth.svelte.js'
+  import { getClient } from '$lib/api/client.svelte'
+  import type { Tagline } from '$lib/api/types'
+  import { profile } from '$lib/app/auth.svelte'
+  import { errorMessage } from '$lib/app/error'
+  import { t } from '$lib/app/i18n'
   import Markdown from '$lib/app/markdown/Markdown.svelte'
   import MarkdownEditor from '$lib/app/markdown/MarkdownEditor.svelte'
-  import { Header } from '$comp/ui/layout'
   import Placeholder from '$lib/ui/info/Placeholder.svelte'
-  import { t } from '$lib/app/i18n/index.js'
-  import { getClient } from '$lib/api/client.svelte.js'
-  import type { Tagline } from '$lib/api/types/index.js'
+  import { Header } from '$lib/ui/layout'
   import { Button, toast } from 'mono-svelte'
-  import { Icon, Plus, Trash } from 'svelte-hero-icons'
-  import { errorMessage } from '$lib/lemmy/error.js'
+  import { Icon, Plus, Trash } from 'svelte-hero-icons/dist'
+  import { preventDefault } from 'svelte/legacy'
 
   let { data } = $props()
 

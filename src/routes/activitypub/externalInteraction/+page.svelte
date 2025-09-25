@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { t } from '$lib/app/i18n'
-  import { Spinner } from 'mono-svelte'
   import type { ResolveObjectResponse } from '$lib/api/types'
-  import UserItem from '$comp/lemmy/user/UserItem.svelte'
-  import { PostItem } from '$comp/lemmy/post'
-  import CommunityItem from '$comp/lemmy/community/CommunityItem.svelte'
-  import CommentItem from '$comp/lemmy/comment/CommentItem.svelte'
+  import { t } from '$lib/app/i18n'
+  import CommentItem from '$lib/feature/comment/CommentItem.svelte'
+  import CommunityItem from '$lib/feature/community/CommunityItem.svelte'
+  import { PostItem } from '$lib/feature/post'
+  import UserItem from '$lib/feature/user/UserItem.svelte'
+  import { Spinner } from 'mono-svelte'
 
   interface Props {
     data: {

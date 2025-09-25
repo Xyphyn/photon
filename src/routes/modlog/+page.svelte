@@ -1,32 +1,29 @@
 <script lang="ts">
   import { browser } from '$app/environment'
   import { page } from '$app/state'
-  import { profile } from '$lib/app/auth.svelte.js'
   import { client } from '$lib/api/client.svelte'
-  import { isAdmin } from '$comp/lemmy/moderation/moderation.js'
-  import ObjectAutocomplete from '$lib/ui/form/ObjectAutocomplete.svelte'
-  import { postLink } from '$comp/lemmy/post'
-  import UserAutocomplete from '$comp/lemmy/user/UserAutocomplete.svelte'
-  import UserLink from '$comp/lemmy/user/UserLink.svelte'
-  import { Header } from '$comp/ui/layout'
-  import Pageination from '$comp/ui/layout/Pageination.svelte'
-  import Placeholder from '$lib/ui/info/Placeholder.svelte'
+  import { profile } from '$lib/app/auth.svelte'
   import { t } from '$lib/app/i18n'
-  import { settings } from '$lib/settings.svelte.js'
-  import { searchParam } from '$lib/util.svelte.js'
-  import { Button, Select } from 'mono-svelte'
-  import Option from 'mono-svelte/forms/select/Option.svelte'
-  import Spinner from 'mono-svelte/loader/Spinner.svelte'
+  import { settings } from '$lib/app/settings.svelte'
+  import { searchParam } from '$lib/app/util.svelte'
+  import CommunityLink from '$lib/feature/community/CommunityLink.svelte'
+  import { isAdmin } from '$lib/feature/moderation/moderation'
+  import { postLink } from '$lib/feature/post'
+  import UserAutocomplete from '$lib/feature/user/UserAutocomplete.svelte'
+  import UserLink from '$lib/feature/user/UserLink.svelte'
+  import ObjectAutocomplete from '$lib/ui/form/ObjectAutocomplete.svelte'
+  import Placeholder from '$lib/ui/info/Placeholder.svelte'
+  import { Header, Pageination } from '$lib/ui/layout'
+  import { Button, Option, Select, Spinner } from 'mono-svelte'
   import {
     Bars3BottomRight,
     Icon,
     MagnifyingGlass,
     ViewColumns,
     XMark,
-  } from 'svelte-hero-icons'
+  } from 'svelte-hero-icons/dist'
   import ModlogItemCard from './item/ModlogItemCard.svelte'
   import ModlogItemTable from './item/ModlogItemTable.svelte'
-  import CommunityLink from '$comp/lemmy/community/CommunityLink.svelte'
 
   let { data = $bindable() } = $props()
 

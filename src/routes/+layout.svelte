@@ -2,27 +2,26 @@
   import { browser } from '$app/environment'
   import { navigating, page } from '$app/state'
   import { site } from '$lib/api/client.svelte'
-  import SiteCard from '$comp/lemmy/instance/InstanceCard.svelte'
-  import Moderation from '$comp/lemmy/moderation/Moderation.svelte'
-  import ExpandableImage from '$lib/ui/generic/ExpandableImage.svelte'
-  import Shell from '$comp/ui/layout/Shell.svelte'
-  import Navbar from '$comp/ui/navbar/Navbar.svelte'
-  import Sidebar from '$comp/ui/sidebar/Sidebar.svelte'
   import { locale } from '$lib/app/i18n'
   import { LINKED_INSTANCE_URL } from '$lib/app/instance.svelte'
-  import { settings } from '$lib/settings.svelte.js'
-  import { getDefaultColors } fr$lib/app/theme/presetssets'
+  import { settings } from '$lib/app/settings.svelte'
+  import { getDefaultColors } from '$lib/app/theme/presets'
   import {
     inDarkColorScheme,
     rgbToHex,
     theme,
-  } fr$lib/app/theme/theme.svelte.jse.js'
+  } from '$lib/app/theme/theme.svelte'
+  import InstanceCard from '$lib/feature/instance/InstanceCard.svelte'
+  import Moderation from '$lib/feature/moderation/Moderation.svelte'
+  import ExpandableImage from '$lib/ui/generic/ExpandableImage.svelte'
+  import { Shell } from '$lib/ui/layout'
+  import Navbar from '$lib/ui/navbar/Navbar.svelte'
+  import Sidebar from '$lib/ui/sidebar/Sidebar.svelte'
   import { Button, ModalContainer, Spinner, ToastContainer } from 'mono-svelte'
   import nProgress from 'nprogress'
-  import 'nprogress/nprogress.css'
   import { onMount } from 'svelte'
-  import { Forward } from 'svelte-hero-icons'
-  import '../app.css'
+  import { Forward } from 'svelte-hero-icons/dist'
+
   interface Props {
     children?: import('svelte').Snippet
   }
@@ -155,7 +154,7 @@
         class={[c, 'p-3 sm:p-6']}
       />
     {:else if site.data}
-      <SiteCard
+      <InstanceCard
         site={site.data.site_view}
         taglines={site.data.taglines}
         admins={site.data.admins}

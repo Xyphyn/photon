@@ -1,11 +1,9 @@
 <script lang="ts">
-  import { Header } from '$comp/ui/layout'
-  import Tabs from '$comp/ui/layout/pages/Tabs.svelte'
   import { t } from '$lib/app/i18n'
-  import { defaultSettings, settings } from '$lib/settings.svelte'
-  import { action, Button, Modal, modal, toast } from 'mono-svelte'
-  import TextArea from 'mono-svelte/forms/TextArea.svelte'
-  import { ArrowDownTray, ArrowPath, ArrowUpTray } from 'svelte-hero-icons'
+  import { defaultSettings, settings } from '$lib/app/settings.svelte'
+  import { Header, Tabs } from '$lib/ui/layout'
+  import { action, Button, Modal, modal, TextArea, toast } from 'mono-svelte'
+  import { ArrowDownTray, ArrowPath, ArrowUpTray } from 'svelte-hero-icons/dist'
 
   let { children } = $props()
   let importing = $state(false)
@@ -18,7 +16,7 @@
     onaction={() => {
       try {
         if (importText == '') {
-          throw new Error('Import is empty')
+          throw new Error('import failed')
         }
         const parsed = JSON.parse(importText)
         const merged = { ...defaultSettings, ...parsed }

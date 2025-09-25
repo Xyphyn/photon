@@ -1,13 +1,13 @@
 <script lang="ts">
-  import { profile } from '$lib/app/auth.svelte.js'
-  import ProgressBar from '$lib/ui/info/ProgressBar.svelte'
+  import { profile } from '$lib/app/auth.svelte'
+  import { errorMessage } from '$lib/app/error'
   import { t } from '$lib/app/i18n'
-  import { errorMessage } from '$lib/lemmy/error'
-  import { uploadImage } from '$lib/util.svelte.js'
+  import { uploadImage } from '$lib/app/util.svelte'
   import { Button, toast } from 'mono-svelte'
-  import { DocumentPlus, Icon } from 'svelte-hero-icons'
+  import { DocumentPlus, Icon } from 'svelte-hero-icons/dist'
   import { expoOut } from 'svelte/easing'
   import { slide } from 'svelte/transition'
+  import ProgressBar from '../info/ProgressBar.svelte'
 
   interface Props {
     image?: FileList | null

@@ -1,9 +1,4 @@
 <script lang="ts">
-  import { invalidateAll } from '$app/navigation'
-  import { page } from '$app/state'
-  import TabButton from '$comp/input/TabButton.svelte'
-  import { SvelteURL } from 'svelte/reactivity'
-
   interface Props {
     routes: {
       href: string

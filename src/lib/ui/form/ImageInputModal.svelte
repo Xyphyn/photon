@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { Button, Modal, TextInput } from 'mono-svelte'
-  import Switch from '../input/Switch.svelte'
   import { t } from '$lib/app/i18n'
+  import { Button, Modal, TextInput } from 'mono-svelte'
   import ImageAttachForm from './ImageAttachForm.svelte'
+  import Switch from './Switch.svelte'
 
   let {
     open = $bindable(),

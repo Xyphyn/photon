@@ -1,4 +1,13 @@
 <script module lang="ts">
+  import { Spinner } from 'mono-svelte'
+  import type { Snippet } from 'svelte'
+  import { type IconSource, Icon } from 'svelte-hero-icons/dist'
+  import type {
+    ClassValue,
+    HTMLAnchorAttributes,
+    HTMLButtonAttributes,
+  } from 'svelte/elements'
+
   export type ButtonColor = keyof typeof buttonColor
   export type ButtonAlignment = keyof typeof buttonAlignment
   export type ButtonShadow = keyof typeof buttonShadow
@@ -83,16 +92,6 @@
 </script>
 
 <script lang="ts">
-  import type {
-    ClassValue,
-    HTMLAnchorAttributes,
-    HTMLButtonAttributes,
-  } from 'svelte/elements'
-
-  import Spinner from '../loader/Spinner.svelte'
-  import type { Snippet } from 'svelte'
-  import { Icon, type IconSource } from 'svelte-hero-icons'
-
   let {
     loading = false,
     submit = false,
@@ -163,7 +162,7 @@
 -->
 
 <style>
-  @reference "../../../app.css";
+  @reference "../../../../app.css";
 
   :global {
     .btn {

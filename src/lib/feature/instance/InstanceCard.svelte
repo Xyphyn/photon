@@ -1,24 +1,23 @@
 <script lang="ts">
-  import Markdown from '$lib/app/markdown/Markdown.svelte'
-  import Avatar from '$lib/ui/generic/Avatar.svelte'
-  import { t } from '$lib/app/i18n'
-  import { userLink } from '$lib/util.svelte'
-  import { settings } from '$lib/settings.svelte'
   import type { PersonView, SiteView, Tagline } from '$lib/api/types'
-  import { Badge } from 'mono-svelte'
+  import { t } from '$lib/app/i18n'
+  import Markdown from '$lib/app/markdown/Markdown.svelte'
+  import { settings } from '$lib/app/settings.svelte'
+  import { userLink } from '$lib/app/util.svelte'
+  import Avatar from '$lib/ui/generic/Avatar.svelte'
+  import ItemList from '$lib/ui/generic/ItemList.svelte'
+  import LabelStat from '$lib/ui/info/LabelStat.svelte'
+  import EndPlaceholder from '$lib/ui/layout/EndPlaceholder.svelte'
+  import SidebarButton from '$lib/ui/sidebar/SidebarButton.svelte'
+  import { Badge, Expandable } from 'mono-svelte'
   import {
     BuildingOffice,
     Icon,
     Newspaper,
     ServerStack,
-  } from 'svelte-hero-icons'
+  } from 'svelte-hero-icons/dist'
   import type { ClassValue, HTMLAttributes } from 'svelte/elements'
-  import EndPlaceholder from '../../ui/EndPlaceholder.svelte'
-  import Expandable from '../../ui/Expandable.svelte'
-  import LabelStat from '../../ui/LabelStat.svelte'
-  import SidebarButton from '../../ui/sidebar/SidebarButton.svelte'
-  import ItemList from '../generic/ItemList.svelte'
-  import { optimizeImageURL } from '../post/helpers'
+  import { optimizeImageURL } from '../post'
 
   interface Props extends HTMLAttributes<HTMLDivElement> {
     site: SiteView

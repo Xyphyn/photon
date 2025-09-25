@@ -4,12 +4,12 @@ import {
   profile as currentProfile,
   type ProfileInfo,
 } from '$lib/app/auth.svelte'
-import { amModOfAny, isAdmin } from '$comp/lemmy/moderation/moderation'
-import { t } from '$lib/app/i18n/translations'
-import { type ResumableItem } from '$lib/lemmy/item'
-import { settings } from '$lib/settings.svelte'
+import { t } from '$lib/app/i18n'
+import { settings } from '$lib/app/settings.svelte'
 import { theme, type ThemeData } from '$lib/app/theme/theme.svelte'
-import { fullCommunityName } from '$lib/util.svelte'
+import { fullCommunityName } from '$lib/app/util.svelte'
+import type { ResumableItem } from '$lib/feature/legacy/item'
+import { amModOfAny, isAdmin } from '$lib/feature/moderation/moderation'
 import {
   ArrowRightOnRectangle,
   ArrowTrendingDown,
@@ -44,7 +44,7 @@ import {
   UserGroup,
   ViewColumns,
   type IconSource,
-} from 'svelte-hero-icons'
+} from '@xylightdev/svelte-hero-icons'
 import { SvelteURL } from 'svelte/reactivity'
 
 export interface Group {

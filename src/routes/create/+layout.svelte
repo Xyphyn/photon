@@ -1,8 +1,7 @@
 <script lang="ts">
   import { site } from '$lib/api/client.svelte'
-  import { Header } from '$comp/ui/layout'
-  import Tabs from '$comp/ui/layout/pages/Tabs.svelte'
   import { t } from '$lib/app/i18n'
+  import { Header, Tabs } from '$lib/ui/layout'
 
   let { children } = $props()
 </script>

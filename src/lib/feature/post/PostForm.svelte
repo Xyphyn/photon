@@ -1,8 +1,4 @@
 <script lang="ts">
-  // This file is genuinely atrocious. It was here since the start of Photon,
-  // 2 years ago. I'm very sorry about this. please don't think this is
-  // my peak of development.
-
   import { client, site } from '$lib/api/client.svelte'
   import type {
     CommunityView,
@@ -10,19 +6,19 @@
     PostResponse,
     PostView,
   } from '$lib/api/types'
+  import { errorMessage } from '$lib/app/error'
+  import { t } from '$lib/app/i18n'
+  import MarkdownEditor from '$lib/app/markdown/MarkdownEditor.svelte'
+  import { getSessionStorage, setSessionStorage } from '$lib/app/session'
+  import { placeholders } from '$lib/app/util.svelte'
+  import FreeTextInput from '$lib/ui/form/FreeTextInput.svelte'
+  import ObjectAutocomplete from '$lib/ui/form/ObjectAutocomplete.svelte'
+  import Avatar from '$lib/ui/generic/Avatar.svelte'
   import ErrorContainer, {
     clearErrorScope,
     pushError,
   } from '$lib/ui/info/ErrorContainer.svelte'
-  import FreeTextInput from '$lib/ui/form/FreeTextInput.svelte'
-  import ObjectAutocomplete from '$lib/ui/form/ObjectAutocomplete.svelte'
-  import MarkdownEditor from '$lib/app/markdown/MarkdownEditor.svelte'
-  import Avatar from '$lib/ui/generic/Avatar.svelte'
-  import { Header } from '$comp/ui/layout'
-  import { t } from '$lib/app/i18n'
-  import { errorMessage } from '$lib/lemmy/error'
-  import { getSessionStorage, setSessionStorage } from '$lib/session.js'
-  import { placeholders } from '$lib/util.svelte.js'
+  import { Header } from '$lib/ui/layout'
   import {
     Badge,
     Button,
@@ -49,7 +45,7 @@
     Sparkles,
     Tag,
     XMark,
-  } from 'svelte-hero-icons'
+  } from 'svelte-hero-icons/dist'
 
   interface Props {
     edit?: boolean
@@ -252,7 +248,7 @@
 </script>
 
 {#if uploadingImage}
-  {#await import('$comp/form/ImageInputModal.svelte') then { default: UploadModal }}
+  {#await import('$lib/ui/form/ImageInputModal.svelte') then { default: UploadModal }}
     <UploadModal
       bind:open={uploadingImage}
       bind:imageUrl={() => '', (v) => (data.url = v)}

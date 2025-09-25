@@ -1,12 +1,12 @@
-import { profile } from '$lib/app/auth.svelte'
 import { client } from '$lib/api/client.svelte'
 import type { CommentView, PersonView, Post } from '$lib/api/types'
+import { profile } from '$lib/app/auth.svelte'
 import {
   canParseUrl,
   findClosestNumber,
   isImage,
   isVideo,
-} from '$lib/util.svelte'
+} from '$lib/app/util.svelte'
 
 export const isCommentMutable = (comment: CommentView, me: PersonView) =>
   me.person.id == comment.creator.id

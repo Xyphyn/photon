@@ -1,4 +1,13 @@
 <script lang="ts" module>
+  import { settings } from '$lib/app/settings.svelte'
+  import {
+    Icon,
+    type IconSource,
+    PuzzlePiece,
+    VideoCamera,
+  } from 'svelte-hero-icons/dist'
+  import { type IframeType, optimizeImageURL } from '../helpers'
+
   const youtubeDomain = (place: 'youtube' | 'invidious' | 'piped') => {
     switch (place) {
       case 'youtube': {
@@ -27,15 +36,6 @@
 </script>
 
 <script lang="ts">
-  import { settings } from '$lib/settings.svelte'
-  import {
-    Icon,
-    PuzzlePiece,
-    VideoCamera,
-    type IconSource,
-  } from 'svelte-hero-icons'
-  import { optimizeImageURL, type IframeType } from '../helpers'
-
   const urlToEmbed = (inputUrl: string) => {
     if (type == 'video') {
       return inputUrl

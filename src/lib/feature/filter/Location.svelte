@@ -1,8 +1,12 @@
 <script lang="ts">
   import { page } from '$app/state'
+  import { client } from '$lib/api/client.svelte'
+  import { PiefedClient } from '$lib/api/piefed/adapter'
   import { profile } from '$lib/app/auth.svelte'
-  import { searchParam } from '$lib/util.svelte'
-  import { Select } from 'mono-svelte'
+  import { t } from '$lib/app/i18n'
+  import { searchParam } from '$lib/app/util.svelte'
+  import { Option, Select } from 'mono-svelte'
+  import { type SelectProps } from 'mono-svelte/forms/select/Select.svelte'
   import {
     ChartBar,
     GlobeAmericas,
@@ -10,13 +14,8 @@
     MapPin,
     Newspaper,
     ShieldCheck,
-  } from 'svelte-hero-icons'
+  } from 'svelte-hero-icons/dist'
   import { amModOfAny } from '../moderation/moderation'
-  import { t } from '$lib/app/i18n'
-  import Option from 'mono-svelte/forms/select/Option.svelte'
-  import type { SelectProps } from 'mono-svelte/forms/select/Select.svelte'
-  import { client } from '$lib/api/client.svelte'
-  import { PiefedClient } from '$lib/api/piefed/adapter'
 
   interface Props extends SelectProps<string> {
     selected: string

@@ -5,9 +5,9 @@
     CommunityView,
     SubscribedType,
   } from '$lib/api/types'
-  import { profile } from '$lib/app/auth.svelte.js'
+  import { profile } from '$lib/app/auth.svelte'
+  import { errorMessage } from '$lib/app/error'
   import { toast } from 'mono-svelte'
-  import { errorMessage } from '$lib/lemmy/error'
 
   interface Props {
     community?: CommunityView | undefined

@@ -4,7 +4,7 @@ import type {
   Person,
   PersonMentionView,
   PrivateMessageView,
-} from '$lib/client/types'
+} from '$lib/api/types'
 
 export type InboxItemView =
   | PersonMentionView

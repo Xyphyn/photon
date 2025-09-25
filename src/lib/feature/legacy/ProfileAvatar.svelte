@@ -1,10 +1,10 @@
 <script lang="ts">
-  import type { Profile } from '$lib/app/auth.svelte.js'
+  import { type ProfileInfo } from '$lib/app/auth.svelte.js'
   import Avatar from '$lib/ui/generic/Avatar.svelte'
-  import { Icon, UserCircle } from 'svelte-hero-icons'
+  import { Icon, UserCircle } from 'svelte-hero-icons/dist'
 
   interface Props {
-    profile?: Profile | undefined
+    profile?: ProfileInfo | undefined
     selected?: boolean
     index?: number
     size?: number

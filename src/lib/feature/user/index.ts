@@ -1,6 +1,6 @@
-import { profile, type ProfileInfo } from '$lib/app/auth.svelte'
 import { client } from '$lib/api/client.svelte'
 import type { Community, MyUserInfo } from '$lib/api/types'
+import { profile, type ProfileInfo } from '$lib/app/auth.svelte'
 
 // TODO obliterate this file
 export async function blockUser(block: boolean, id: number) {

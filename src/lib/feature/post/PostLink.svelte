@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { parseURL } from '$comp/input/Link.svelte'
-  import type { View } from '$lib/settings.svelte'
+  import type { View } from '$lib/app/settings.svelte'
+  import { parseURL } from '$lib/ui/form/Link.svelte'
   import { Material } from 'mono-svelte'
+  import { Icon, Link } from 'svelte-hero-icons/dist'
   import { optimizeImageURL } from './helpers'
-  import { Icon, Link } from 'svelte-hero-icons'
 
   interface Props {
     url: string

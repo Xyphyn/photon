@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { placeholders } from '$lib/util.svelte.js'
+  import { placeholders } from '$lib/app/util.svelte'
   import { Button } from 'mono-svelte'
 
   let post = $state(placeholders.get('post'))

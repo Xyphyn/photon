@@ -1,7 +1,7 @@
 <script lang="ts">
   import Markdown from '$lib/app/markdown/Markdown.svelte'
   import { Button } from 'mono-svelte'
-  import { ChevronDown, Icon } from 'svelte-hero-icons'
+  import { ChevronDown, Icon } from 'svelte-hero-icons/dist'
 
   const MAX_HEIGHT = 192
 

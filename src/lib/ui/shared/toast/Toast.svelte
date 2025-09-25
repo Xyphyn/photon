@@ -1,18 +1,18 @@
 <script lang="ts">
-  import { Spinner } from '../index.js'
-  import { expoOut } from 'svelte/easing'
-  import { type Toast, toasts, toastColors } from './toasts.js'
-  import {
-    InformationCircle,
-    ExclamationTriangle,
-    ExclamationCircle,
-    CheckCircle,
-    Icon,
-    XMark,
-    Check,
-  } from 'svelte-hero-icons'
-  import { fly } from 'svelte/transition'
   import Markdown from '$lib/app/markdown/Markdown.svelte'
+  import { Spinner } from 'mono-svelte'
+  import {
+    Check,
+    CheckCircle,
+    ExclamationCircle,
+    ExclamationTriangle,
+    Icon,
+    InformationCircle,
+    XMark,
+  } from 'svelte-hero-icons/dist'
+  import { expoOut } from 'svelte/easing'
+  import { fly } from 'svelte/transition'
+  import { type Toast, toastColors, toasts } from './toasts'
 
   interface Props {
     toast: Toast

@@ -1,5 +1,5 @@
-import { getClient } from '$lib/client/lemmy.svelte'
-import { ReactiveState } from '$lib/util.svelte.js'
+import { getClient } from '$lib/api/client.svelte'
+import { ReactiveState } from '$lib/app/util.svelte'
 
 export async function load({ fetch }) {
   const instances = await getClient(undefined, fetch).getFederatedInstances()

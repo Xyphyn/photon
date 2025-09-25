@@ -1,10 +1,10 @@
 <script lang="ts">
   import type { Community } from '$lib/api/types'
-  import Avatar from '$lib/ui/generic/Avatar.svelte'
   import { t } from '$lib/app/i18n'
-  import { settings } from '$lib/settings.svelte.js'
-  import { communityLink } from '$lib/util.svelte'
-  import { ExclamationTriangle, Icon } from 'svelte-hero-icons'
+  import { settings } from '$lib/app/settings.svelte'
+  import { communityLink } from '$lib/app/util.svelte'
+  import Avatar from '$lib/ui/generic/Avatar.svelte'
+  import { ExclamationTriangle, Icon } from 'svelte-hero-icons/dist'
   import type { HTMLAnchorAttributes } from 'svelte/elements'
 
   interface Props extends HTMLAnchorAttributes {

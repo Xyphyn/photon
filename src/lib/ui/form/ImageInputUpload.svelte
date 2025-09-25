@@ -1,7 +1,7 @@
 <script lang="ts">
   import { t } from '$lib/app/i18n'
   import { Label } from 'mono-svelte'
-  import { DocumentPlus, Icon, Plus } from 'svelte-hero-icons'
+  import { DocumentPlus, Icon, Plus } from 'svelte-hero-icons/dist'
   import ImageInputModal from './ImageInputModal.svelte'
 
   let {

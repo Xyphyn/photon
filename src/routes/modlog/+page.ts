@@ -1,4 +1,4 @@
-import { client } from '$lib/client/lemmy.svelte'
+import { client } from '$lib/api/client.svelte'
 import type {
   AdminPurgeCommentView,
   AdminPurgeCommunityView,
@@ -17,8 +17,8 @@ import type {
   ModTransferCommunityView,
   ModlogActionType,
   Person,
-} from '$lib/client/types'
-import { publishedToDate } from '$comp/util/date.js'
+} from '$lib/api/types'
+import { publishedToDate } from '$lib/ui/util/date'
 
 export type ActionName =
   | 'ban'

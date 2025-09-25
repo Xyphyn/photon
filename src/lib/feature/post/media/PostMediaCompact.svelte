@@ -1,10 +1,9 @@
 <script lang="ts">
-  import { bestImageURL, postLink, type MediaType } from '..'
-  import { showImage } from '$lib/ui/generic/ExpandableImage.svelte'
-  import { t } from '$lib/app/i18n'
-  import { settings, type View } from '$lib/settings.svelte.js'
   import type { Post } from '$lib/api/types'
-  import { modal, Button } from 'mono-svelte'
+  import { t } from '$lib/app/i18n'
+  import { settings, type View } from '$lib/app/settings.svelte'
+  import { showImage } from '$lib/ui/generic/ExpandableImage.svelte'
+  import { Button, modal } from 'mono-svelte'
   import {
     DocumentText,
     ExclamationTriangle,
@@ -12,7 +11,8 @@
     Link,
     Photo,
     VideoCamera,
-  } from 'svelte-hero-icons'
+  } from 'svelte-hero-icons/dist'
+  import { bestImageURL, postLink, type MediaType } from '../helpers'
 
   const thumbnailSize = (view: View) =>
     view == 'compact' ? 'w-22 h-22 sm:w-28' : 'w-24 h-24 sm:w-32'

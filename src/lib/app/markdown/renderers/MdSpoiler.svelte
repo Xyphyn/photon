@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Expandable from 'mono-svelte/disclosure/Expandable.svelte'
+  import { Expandable } from 'mono-svelte'
   import type { Snippet } from 'svelte'
 
   interface Props {

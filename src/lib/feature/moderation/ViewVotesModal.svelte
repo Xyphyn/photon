@@ -1,8 +1,7 @@
 <script lang="ts">
-  import { t } from '$lib/app/i18n'
   import { client } from '$lib/api/client.svelte'
-  import { isCommentView, isPostView } from '$lib/lemmy/item'
   import type { CommentView, PostView, VoteView } from '$lib/api/types'
+  import { t } from '$lib/app/i18n'
   import { Button, Modal, Spinner } from 'mono-svelte'
   import {
     ArrowDownCircle,
@@ -11,7 +10,8 @@
     ChevronRight,
     Icon,
     Newspaper,
-  } from 'svelte-hero-icons'
+  } from 'svelte-hero-icons/dist'
+  import { isCommentView, isPostView } from '../legacy/item'
   import UserLink from '../user/UserLink.svelte'
 
   interface Props {

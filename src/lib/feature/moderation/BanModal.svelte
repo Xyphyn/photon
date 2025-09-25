@@ -1,13 +1,13 @@
 <script lang="ts">
-  import Avatar from '$lib/ui/generic/Avatar.svelte'
-  import type { Community, Person } from '$lib/api/types'
   import { client } from '$lib/api/client.svelte'
-  import { Label, toast, Button, Modal, Switch } from 'mono-svelte'
-  import { profile } from '$lib/app/auth.svelte.js'
-  import MarkdownEditor from '$lib/app/markdown/MarkdownEditor.svelte'
+  import type { Community, Person } from '$lib/api/types'
+  import { profile } from '$lib/app/auth.svelte'
+  import { errorMessage } from '$lib/app/error'
   import { t } from '$lib/app/i18n'
-  import Duration from '$comp/form/Duration.svelte'
-  import { errorMessage } from '$lib/lemmy/error'
+  import MarkdownEditor from '$lib/app/markdown/MarkdownEditor.svelte'
+  import Duration from '$lib/ui/form/Duration.svelte'
+  import Avatar from '$lib/ui/generic/Avatar.svelte'
+  import { Button, Label, Modal, Switch, toast } from 'mono-svelte'
   import CommunityLink from '../community/CommunityLink.svelte'
 
   interface Props {

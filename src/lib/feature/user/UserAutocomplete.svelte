@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { profile } from '$lib/app/auth.svelte'
-  import Avatar from '$lib/ui/generic/Avatar.svelte'
   import { getClient } from '$lib/api/client.svelte'
   import type { ListingType, Person } from '$lib/api/types'
+  import { profile } from '$lib/app/auth.svelte'
+  import Avatar from '$lib/ui/generic/Avatar.svelte'
   import { MenuButton, Search } from 'mono-svelte'
   import { createEventDispatcher } from 'svelte'
-  import { Icon, XCircle } from 'svelte-hero-icons'
+  import { Icon, XCircle } from 'svelte-hero-icons/dist'
   import { fly } from 'svelte/transition'
 
   interface Props {

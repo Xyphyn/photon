@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { profile } from '$lib/app/auth.svelte.js'
-  import { client, site } from '$lib/api/client.svelte.js'
-  import type { EditSite } from '$lib/api/types/index.js'
-  import ImageInputUpload from '$comp/form/ImageInputUpload.svelte'
+  import { client, site } from '$lib/api/client.svelte'
+  import type { EditSite } from '$lib/api/types'
+  import { profile } from '$lib/app/auth.svelte'
+  import { errorMessage } from '$lib/app/error'
+  import { t } from '$lib/app/i18n'
   import MarkdownEditor from '$lib/app/markdown/MarkdownEditor.svelte'
-  import { Header } from '$comp/ui/layout'
-  import { t } from '$lib/app/i18n/index.js'
-  import { errorMessage } from '$lib/lemmy/error.js'
+  import ImageInputUpload from '$lib/ui/form/ImageInputUpload.svelte'
+  import { Header } from '$lib/ui/layout'
   import {
     Badge,
     Button,
@@ -14,14 +14,14 @@
     Material,
     Menu,
     MenuButton,
+    Option,
     Select,
     Switch,
     TextInput,
     toast,
   } from 'mono-svelte'
-  import Option from 'mono-svelte/forms/select/Option.svelte'
-  import { Icon, Plus } from 'svelte-hero-icons'
-  import type { PageData } from './$types.js'
+  import { Icon, Plus } from 'svelte-hero-icons/dist'
+  import type { PageData } from '../$types'
 
   interface Props {
     data: PageData

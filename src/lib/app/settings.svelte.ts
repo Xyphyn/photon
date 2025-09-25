@@ -1,7 +1,7 @@
-import type { CommentSortType, ListingType, SortType } from '$lib/client/types'
-import { env } from '$env/dynamic/public'
-import { locale } from './i18n'
 import { browser } from '$app/environment'
+import { env } from '$env/dynamic/public'
+import type { CommentSortType, ListingType, SortType } from '$lib/api/types'
+import { locale } from './i18n'
 
 export type View = 'cozy' | 'compact'
 

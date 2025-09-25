@@ -1,5 +1,4 @@
 import { browser } from '$app/environment'
-import { profile } from '$lib/app/auth.svelte'
 import type {
   CommentView,
   CommunityView,
@@ -12,8 +11,9 @@ import type {
   GetPosts,
   PostView,
   TopicView,
-} from '$lib/client/types'
-import { recursiveEqual } from '$lib/util.svelte'
+} from '$lib/api/types'
+import { profile } from '$lib/app/auth.svelte'
+import { recursiveEqual } from '$lib/app/util.svelte'
 import { SvelteMap } from 'svelte/reactivity'
 
 type FetchFn<P, R> = (params: P) => R

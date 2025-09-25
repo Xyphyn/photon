@@ -1,10 +1,14 @@
 <script lang="ts">
+  import Avatar from '$lib/ui/generic/Avatar.svelte'
   import { Button } from 'mono-svelte'
-  import { ArrowUturnDown, Icon, QuestionMarkCircle } from 'svelte-hero-icons'
-  import type { HTMLButtonAttributes } from 'svelte/elements'
-  import Avatar from '../../Avatar.svelte'
-  import type { Action } from './actions.svelte'
   import type { Snippet } from 'svelte'
+  import {
+    ArrowUturnDown,
+    Icon,
+    QuestionMarkCircle,
+  } from 'svelte-hero-icons/dist'
+  import type { HTMLButtonAttributes } from 'svelte/elements'
+  import type { Action } from './actions.svelte'
 
   interface Props {
     action: Action

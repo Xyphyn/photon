@@ -1,20 +1,22 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { resolveRoute } from '$app/paths'
-  import { profile } from '$lib/app/auth.svelte.js'
-  import UserAutocomplete from '$comp/lemmy/user/UserAutocomplete.svelte'
+  import type { Person, PrivateMessageView } from '$lib/api/types'
+  import { profile } from '$lib/app/auth.svelte'
+  import { t } from '$lib/app/i18n'
+  import UserAutocomplete from '$lib/feature/user/UserAutocomplete.svelte'
   import Avatar from '$lib/ui/generic/Avatar.svelte'
   import Skeleton from '$lib/ui/generic/Skeleton.svelte'
-  import CommonList from '$comp/ui/layout/CommonList.svelte'
-  import { Header } from '$comp/ui/layout'
-  import Pageination from '$comp/ui/layout/Pageination.svelte'
   import Placeholder from '$lib/ui/info/Placeholder.svelte'
-  import { publishedToDate } from '$comp/util/date.js'
-  import RelativeDate from '$comp/util/RelativeDate.svelte'
-  import { t } from '$lib/app/i18n/index.js'
-  import type { Person, PrivateMessageView } from '$lib/api/types/index.js'
+  import { CommonList, Header, Pageination } from '$lib/ui/layout'
+  import { publishedToDate } from '$lib/ui/util/date'
   import { Button, Modal } from 'mono-svelte'
-  import { ChatBubbleOvalLeftEllipsis, Icon, Inbox } from 'svelte-hero-icons'
+  import RelativeDate from 'mono-svelte/util/RelativeDate.svelte'
+  import {
+    ChatBubbleOvalLeftEllipsis,
+    Icon,
+    Inbox,
+  } from 'svelte-hero-icons/dist'
   import { expoOut } from 'svelte/easing'
   import { SvelteSet } from 'svelte/reactivity'
   import { fly } from 'svelte/transition'

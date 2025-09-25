@@ -1,14 +1,14 @@
 <script lang="ts">
-  import { profile } from '$lib/app/auth.svelte.js'
-  import { client } from '$lib/api/client.svelte.js'
-  import UserAutocomplete from '$comp/lemmy/user/UserAutocomplete.svelte'
-  import UserLink from '$comp/lemmy/user/UserLink.svelte'
-  import { Header } from '$comp/ui/layout'
+  import { client } from '$lib/api/client.svelte'
+  import { profile } from '$lib/app/auth.svelte'
+  import { errorMessage } from '$lib/app/error'
+  import { t } from '$lib/app/i18n'
+  import UserAutocomplete from '$lib/feature/user/UserAutocomplete.svelte'
+  import UserLink from '$lib/feature/user/UserLink.svelte'
   import Placeholder from '$lib/ui/info/Placeholder.svelte'
-  import { t } from '$lib/app/i18n/index.js'
-  import { errorMessage } from '$lib/lemmy/error.js'
+  import { Header } from '$lib/ui/layout'
   import { Button, toast } from 'mono-svelte'
-  import { Icon, Plus, QuestionMarkCircle, Trash } from 'svelte-hero-icons'
+  import { Icon, Plus, QuestionMarkCircle, Trash } from 'svelte-hero-icons/dist'
 
   let { data: pageData } = $props()
   let data = $state(pageData)

@@ -1,4 +1,3 @@
-import { publishedToDate } from '$comp/util/date.js'
 import type {
   CommentReportView,
   CommentView,
@@ -7,7 +6,8 @@ import type {
   PostView,
   PrivateMessage,
   PrivateMessageReportView,
-} from '$lib/client/types'
+} from '$lib/api/types'
+import { publishedToDate } from '$lib/ui/util/date'
 
 interface CommentReport {
   type: 'comment'
@@ -47,7 +47,7 @@ export const generalizeCommentReport = (
     creator: report.comment_creator,
     banned_from_community: false,
   },
-  reason: report.comment_report.reason,
+  reason: report.comment_report.reason!,
   type: 'comment',
   timestamp: publishedToDate(report.comment_report.published),
   resolved: report.comment_report.resolved,

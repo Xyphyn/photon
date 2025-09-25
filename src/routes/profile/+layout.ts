@@ -1,5 +1,5 @@
-import { profile } from '$lib/auth.svelte'
-import { client } from '$lib/client/lemmy.svelte'
+import { client } from '$lib/api/client.svelte'
+import { profile } from '$lib/app/auth.svelte'
 import { error } from '@sveltejs/kit'
 
 // disable ssr, as the server cannot be authenticated

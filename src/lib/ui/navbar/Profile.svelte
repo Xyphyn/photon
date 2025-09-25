@@ -1,13 +1,12 @@
 <script lang="ts">
   import { env } from '$env/dynamic/public'
-  import { notifications, profile } from '$lib/app/auth.svelte'
-  import { amModOfAny, isAdmin } from '$comp/lemmy/moderation/moderation'
-
-  import SiteCard from '$comp/lemmy/instance/InstanceCard.svelte'
-  import { t } from '$lib/app/i18n'
   import { site } from '$lib/api/client.svelte'
-  import { settings } from '$lib/settings.svelte'
+  import { notifications, profile } from '$lib/app/auth.svelte'
+  import { t } from '$lib/app/i18n'
+  import { settings } from '$lib/app/settings.svelte'
   import { theme } from '$lib/app/theme/theme.svelte'
+  import InstanceCard from '$lib/feature/instance/InstanceCard.svelte'
+  import { amModOfAny, isAdmin } from '$lib/feature/moderation/moderation'
   import {
     Badge,
     Button,
@@ -36,12 +35,12 @@
     Swatch,
     UserCircle,
     UserGroup,
-  } from 'svelte-hero-icons'
+  } from 'svelte-hero-icons/dist'
 </script>
 
 {#snippet siteSnippet()}
   {#if site.data}
-    <SiteCard
+    <InstanceCard
       site={site.data.site_view}
       admins={site.data.admins}
       taglines={site.data.taglines}

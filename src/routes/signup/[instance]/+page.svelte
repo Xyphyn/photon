@@ -1,21 +1,21 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
-  import { profile } from '$lib/app/auth.svelte.js'
-  import { getClient } from '$lib/api/client.svelte.js'
-  import type { GetCaptchaResponse } from '$lib/api/types/index.js'
+  import { getClient } from '$lib/api/client.svelte'
+  import type { GetCaptchaResponse } from '$lib/api/types'
+  import { profile } from '$lib/app/auth.svelte'
+  import { errorMessage } from '$lib/app/error'
+  import { t } from '$lib/app/i18n'
+  import Markdown from '$lib/app/markdown/Markdown.svelte'
+  import MarkdownEditor from '$lib/app/markdown/MarkdownEditor.svelte'
+  import InstanceCard from '$lib/feature/instance/InstanceCard.svelte'
+  import Avatar from '$lib/ui/generic/Avatar.svelte'
   import ErrorContainer, {
     clearErrorScope,
     pushError,
   } from '$lib/ui/info/ErrorContainer.svelte'
-  import SiteCard from '$comp/lemmy/instance/InstanceCard.svelte'
-  import Markdown from '$lib/app/markdown/Markdown.svelte'
-  import MarkdownEditor from '$lib/app/markdown/MarkdownEditor.svelte'
-  import Avatar from '$lib/ui/generic/Avatar.svelte'
-  import { Header } from '$comp/ui/layout'
   import Placeholder from '$lib/ui/info/Placeholder.svelte'
-  import { t } from '$lib/app/i18n/index.js'
-  import { errorMessage } from '$lib/lemmy/error.js'
+  import { Header } from '$lib/ui/layout'
   import {
     Button,
     Label,
@@ -34,7 +34,7 @@
     Plus,
     QuestionMarkCircle,
     XCircle,
-  } from 'svelte-hero-icons'
+  } from 'svelte-hero-icons/dist'
 
   let { data } = $props()
 
@@ -338,7 +338,7 @@
     rounding="2xl"
     padding="none"
   >
-    <SiteCard
+    <InstanceCard
       admins={data.admins}
       site={data.site_view}
       taglines={data.taglines}

@@ -1,10 +1,9 @@
 <script lang="ts">
-  import { Header } from '$comp/ui/layout'
-  import Pageination from '$comp/ui/layout/Pageination.svelte'
-  import Placeholder from '$lib/ui/info/Placeholder.svelte'
   import { t } from '$lib/app/i18n'
+  import Placeholder from '$lib/ui/info/Placeholder.svelte'
+  import { Header, Pageination } from '$lib/ui/layout'
   import { Option, Select } from 'mono-svelte'
-  import { ClipboardDocumentCheck } from 'svelte-hero-icons'
+  import { ClipboardDocumentCheck } from 'svelte-hero-icons/dist'
   import Application from './Application.svelte'
 
   let { data } = $props()

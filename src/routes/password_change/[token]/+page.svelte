@@ -1,17 +1,16 @@
 <script lang="ts">
-  import { preventDefault } from 'svelte/legacy'
-
   import { goto } from '$app/navigation'
-  import { Header } from '$comp/ui/layout'
+  import { getClient, validateInstance } from '$lib/api/client.svelte'
+  import { profile } from '$lib/app/auth.svelte'
+  import { errorMessage } from '$lib/app/error'
+  import { t } from '$lib/app/i18n'
   import {
     DEFAULT_INSTANCE_URL,
     LINKED_INSTANCE_URL,
-    instance as currentInstance,
-  } from '$lib/app/instance.svelte.js'
-  import { getClient, validateInstance } from '$lib/api/client.svelte'
-  import { t } from '$lib/app/i18n'
+  } from '$lib/app/instance.svelte'
+  import { Header } from '$lib/ui/layout'
   import { Button, TextInput, toast } from 'mono-svelte'
-  import { errorMessage } from '$lib/lemmy/error'
+  import { preventDefault } from 'svelte/legacy'
 
   interface Props {
     data: {
@@ -21,7 +20,7 @@
 
   let { data }: Props = $props()
 
-  let instance = $state(LINKED_INSTANCE_URL || currentInstance.data || '')
+  let instance = $state(LINKED_INSTANCE_URL || profile.current.instance || '')
   let password = $state(''),
     password_verify = $state('')
   let loading = $state(false)

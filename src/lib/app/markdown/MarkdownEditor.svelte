@@ -1,7 +1,6 @@
 <script lang="ts">
-  import MultiSelect from '$comp/input/Switch.svelte'
-  import Markdown from '$lib/app/markdown/Markdown.svelte'
-  import { t } from '$lib/app/i18n'
+  import ImageAttachForm from '$lib/ui/form/ImageAttachForm.svelte'
+  import MultiSelect from '$lib/ui/form/Switch.svelte'
   import { Button, Label, Modal, TextArea } from 'mono-svelte'
   import type { TextAreaProps } from 'mono-svelte/forms/TextArea.svelte'
   import { tick } from 'svelte'
@@ -16,9 +15,10 @@
     ListBullet,
     Photo,
     Strikethrough,
-  } from 'svelte-hero-icons'
+  } from 'svelte-hero-icons/dist'
   import type { ClassValue } from 'svelte/elements'
-  import ImageAttachForm from '../form/ImageAttachForm.svelte'
+  import { t } from '../i18n'
+  import Markdown from './Markdown.svelte'
 
   let textArea: HTMLTextAreaElement | undefined = $state()
 

@@ -1,11 +1,10 @@
 <script lang="ts">
-  import { preventDefault } from 'svelte/legacy'
-
-  import UserLink from '$comp/lemmy/user/UserLink.svelte'
-  import MarkdownEditor from '$lib/app/markdown/MarkdownEditor.svelte'
-  import { t } from '$lib/app/i18n'
   import type { Person } from '$lib/api/types'
+  import { t } from '$lib/app/i18n'
+  import MarkdownEditor from '$lib/app/markdown/MarkdownEditor.svelte'
   import { Button, Modal } from 'mono-svelte'
+  import { preventDefault } from 'svelte/legacy'
+  import UserLink from '../user/UserLink.svelte'
 
   interface Props {
     open?: boolean
