@@ -19,8 +19,10 @@
   import Sidebar from '$lib/ui/sidebar/Sidebar.svelte'
   import { Button, ModalContainer, Spinner, ToastContainer } from 'mono-svelte'
   import nProgress from 'nprogress'
+  import 'nprogress/nprogress.css'
   import { onMount } from 'svelte'
   import { Forward } from 'svelte-hero-icons/dist'
+  import '../app.css'
 
   interface Props {
     children?: import('svelte').Snippet

@@ -1,3 +1,7 @@
+import { browser } from "$app/environment"
+import { env } from "$env/dynamic/public"
+import { getDefaultTheme, presets } from "./presets"
+
 type ColorScheme = 'system' | 'light' | 'dark'
 
 export interface ThemeData {

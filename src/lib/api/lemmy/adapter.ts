@@ -1,3 +1,4 @@
+import { LemmyHttp } from 'lemmy-js-client'
 import type { BaseClient, ClientType } from '../base'
 import { fromGetPosts, toListingType } from './rewrite'
 
