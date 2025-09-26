@@ -31,7 +31,7 @@
             "about": "About",
             "source": "Source",
             "donate": "Donate",
-            "instance": "Instance"
+            "instance": "Server info"
         },
         "commands": {
             "prompt": "Command palette",
@@ -56,13 +56,11 @@
         "logout": "Log out",
         "signup": "Sign up",
         "accounts": "Accounts",
-        "changeinstance": "Change instance",
         "resetColor": "Reset color",
         "addGuest": "Add guest",
         "moveUp": "Move up",
         "moveDown": "Move down",
         "guest": "Guest",
-        "versionGate": "This version of Photon supports instances running {{version}} or higher.",
         "piefedGate": "Piefed support is experimental. Some features are not supported."
     },
     "filter": {
@@ -121,7 +119,7 @@
     "form": {
         "username": "Username",
         "name": "Name",
-        "instance": "Instance URL",
+        "instance": "Server domain",
         "password": "Password",
         "confirmPassword": "Confirm password",
         "2fa": "2FA Code",
@@ -185,18 +183,18 @@
         "setup": "Setup",
         "signup": {
             "title": "Sign Up",
-            "description": "Choose an instance that interests you, or type the URL manually.",
-            "info": "An instance is the server that your account will be hosted on, but you can still access and interact with content from other instances.",
-            "chooseInstance": "Choose an instance",
+            "description": "Choose a server that interests you, or type the URL manually.",
+            "info": "The server you choose is where your account will live. However, every server is connected, and you can still access almost all linked content.",
+            "chooseInstance": "Choose a server",
             "application": {
                 "label": "Application",
-                "info": "To join this instance, you must fill out this application, and wait to be accepted. You will receive an email if your application is accepted.",
+                "info": "To join this server, you must fill out this application, and wait to be accepted. You will receive an email if your application is accepted.",
                 "notice": "Your signup is now pending. Once an administrator reviews it, you will receive an email if it was accepted. You then can log in."
             },
             "closed": {
                 "title": "Registrations closed",
-                "description": "This instance has registrations closed. Find another instance.",
-                "anotherInstance": "Find another instance"
+                "description": "This server has registrations closed. Find another server.",
+                "anotherInstance": "Find another server"
             },
             "verify": {
                 "title": "Verify email",
@@ -214,7 +212,8 @@
             "months": "Months",
             "years": "Years",
             "permanent": "Permanent"
-        }
+        },
+        "instanceType": "Server software type"
     },
     "routes": {
         "frontpage": {
@@ -230,10 +229,10 @@
             "title": "Modlog",
             "filters": "Filters"
         },
-        "instances": "Instances",
+        "instances": "Linked servers",
         "legal": {
             "title": "Legal",
-            "noLegal": "This instance does not have any legal information."
+            "noLegal": "This server does not have any legal information."
         },
         "profile": {
             "user": "User",
@@ -300,7 +299,6 @@
             "commentCount": "Comments",
             "addComment": "Add a comment",
             "scrollToTop": "Scroll to top",
-            "instanceWarning": "This post was requested from a different server than your account's. Many actions won't work.",
             "remoteView": "Remote View",
             "localView": "Local View",
             "thread": {
@@ -317,8 +315,8 @@
             "loadComments": "Load comments"
         },
         "postRedirect": {
-            "title": "Mismatching instance",
-            "description": "That link resolves to a post not on your account's instance, {{homeInstance}}.",
+            "title": "Mismatching server",
+            "description": "That link resolves to a post not on your account's server, {{homeInstance}}.",
             "actions": {
                 "back": "Go back",
                 "fetch": "Locate post on {{homeInstance}}",
@@ -405,7 +403,7 @@
                 "title": "Applications",
                 "empty": {
                     "title": "No new applications",
-                    "description": "Applications to join your instance will appear here."
+                    "description": "Applications to join your server will appear here."
                 },
                 "application": "Application",
                 "approved": "Approved",
@@ -421,7 +419,7 @@
                 "add": "Add a tagline",
                 "empty": {
                     "title": "No taglines",
-                    "description": "A random tagline will appear on the site card when users visit your instance."
+                    "description": "A random tagline will appear on the site card when users visit your server."
                 }
             },
             "team": {
@@ -434,19 +432,19 @@
             "federation": {
                 "title": "Federation",
                 "csv": "Upload CSV",
-                "blocked": "Blocked instances",
+                "blocked": "Blocked servers",
                 "block": "Block",
-                "blockplaceholder": "Block an instance...",
-                "allowed": "Whitelisted instances",
+                "blockplaceholder": "Block a server...",
+                "allowed": "Whitelisted servers",
                 "allow": "Whitelist",
-                "allowplaceholder": "Whitelist an instance",
+                "allowplaceholder": "Whitelist a server",
                 "emptyBlock": {
-                    "title": "No blocked instances",
-                    "description": "Blocking an instance will hide new submissions from that instance."
+                    "title": "No blocked servers",
+                    "description": "Blocking an server will hide new submissions from that server."
                 },
                 "emptyAllow": {
-                    "title": "No whitelisted instances",
-                    "description": "Whitelisting an instance will block every other instance."
+                    "title": "No whitelisted servers",
+                    "description": "Whitelisting an server will block every other server."
                 }
             },
             "media": {
@@ -460,11 +458,11 @@
         "passwordChange": {
             "title": "Change password",
             "description": "Choose your new password.",
-            "instance": "Which instance is your account hosted on?"
+            "instance": "Which server is your account hosted on?"
         },
         "resetLogin": {
             "title": "Reset Password",
-            "description": "Enter your account's email, and a password reset link will be sent. If your account does not have an email, contact your instance admins."
+            "description": "Enter your account's email, and a password reset link will be sent. If your account does not have an email, contact your server admins."
         },
         "theme": {
             "title": "Theme",
@@ -474,8 +472,8 @@
                 "description": "This will reset all of your colors to the default. It is recommended to export your theme before this."
             },
             "preset": {
-                "title": "Can't be modified",
-                "description": "This is a default theme, and can't be modified.",
+                "title": "cannot be modified",
+                "description": "This is a default theme, and cannot be modified.",
                 "delete": {
                     "title": "Delete theme",
                     "confirm": "Confirm"
@@ -510,14 +508,14 @@
             "modlog": "Modlog",
             "block": "Block",
             "unblock": "Unblock",
-            "blockInstance": "Block instance",
+            "blockInstance": "Block server",
             "activeDay": "Active Today",
             "flair": "Set my flair"
         }
     },
     "admin": {
         "purge": "Purge",
-        "instance": "Instance",
+        "instance": "Server",
         "label": "Administration",
         "purgeCommunity": {
             "title": "Purging community",
@@ -530,7 +528,7 @@
         "posts": "Posts",
         "comments": "Comments",
         "communities": "Communities",
-        "instances": "Instances",
+        "instances": "Servers",
         "message": "Message",
         "url": "URL"
     },
@@ -619,7 +617,7 @@
         "remove": "Remove",
         "restore": "Restore",
         "label": "Moderation",
-        "labelInstanceOnly": "Moderation (Instance Only)",
+        "labelInstanceOnly": "Moderation (Local only)",
         "feature": "Feature",
         "unfeature": "Unfeature",
         "votes": "Votes",
@@ -660,7 +658,7 @@
         "blockedCommunity": "Blocked that community.",
         "unblockedCommunity": "Unblocked that community.",
         "purgedCommunity": "Purged that community.",
-        "blockedInstance": "Blocked that instance.",
+        "blockedInstance": "Blocked that server.",
         "updatedCommunity": "Your community was updated.",
         "sentMessage": "Sent that message.",
         "invalidDateAbsolute": "Invalid date. It must be an absolute date.",
@@ -683,13 +681,12 @@
         "addMod": "Added that moderator.",
         "updateMods": "Updated community moderators.",
         "logIn": "Successfully logged in.",
-        "failInstanceURL": "Failed to contact that instance URL. Is it down?",
+        "failInstanceURL": "Failed to contact that server URL with those settings. Is it down?",
         "addAccount": "Added that account.",
         "resetLink": "A password reset link was sent to your email.",
         "resolveReport": "Resolved that report.",
         "unresolveReport": "Unresolved that report.",
         "passwordReset": "Your password was reset.",
-        "fetchPostOnHome": "Attempting to fetch this post on your home instance...",
         "loginRefresh": "Your login was refreshed.",
         "invalidLogin": "Invalid credentials",
         "saveSettings": "Saved your user settings. If you changed your email, a verification link was sent.",
@@ -700,7 +697,7 @@
         "deleting": "Deleting your account...",
         "deleted": "Your account was deleted.",
         "resetSettings": "Do you want to reset your settings to the default?",
-        "failFetchInstances": "Failed to fetch available instances.",
+        "failFetchInstances": "Failed to fetch available servers.",
         "verifyEmail": "A verification link was sent to your email. Verify your email, then log in.",
         "failSignup": "Failed to sign up.",
         "successSignup": "Signed up.",
@@ -711,7 +708,7 @@
         "settingsImport": "Successfully imported settings",
         "settingsImportWarning": "The imported settings don't seem valid. Are you sure you want to import this?",
         "userLoading": "Still loading your user data...",
-        "lemmyDonate": "Your account's instance runs Lemmy, and the developers are requesting donations. They are able to develop Lemmy as an open source platform, free of tracking and ads, thanks to the generosity of its users.\n\nAnnually, they ask you to consider donating to support their work, and allow them to continue maintaining and improving Lemmy.\n\n[Donate](https://join-lemmy.org/donate)\n\n*Note: this is a donation to Lemmy, not Photon.*"
+        "lemmyDonate": "Your account's server runs Lemmy, and the developers are requesting donations. They are able to develop Lemmy as an open source platform, free of tracking and ads, thanks to the generosity of its users.\n\nAnnually, they ask you to consider donating to support their work, and allow them to continue maintaining and improving Lemmy.\n\n[Donate](https://join-lemmy.org/donate)\n\n*Note: this is a donation to Lemmy, not Photon.*"
     },
     "settings": {
         "title": "Settings",
@@ -862,8 +859,8 @@
                 "description": "Blurs images and remove post bodies of NSFW posts."
             },
             "instances": {
-                "title": "Show instances",
-                "description": "Shows the instances where certain content is from."
+                "title": "Show server identifiers",
+                "description": "Shows the servers where certain content originated from."
             }
         },
         "moderation": {
@@ -896,34 +893,34 @@
         "incorrect_login": "Incorrect login credentials. Please try again.",
         "incorrect_login_2": "Incorrect login credentials. Try again.",
         "incorrect_login_3": "Incorrect, again. Try a few more times.",
-        "incorrect_login_4": "Successfully logged-wait no. Incorrect credentials.",
+        "incorrect_login_4": "You got this. Just a few more tries.",
         "incorrect_login_5": "Look at your keyboard while typing this time.",
         "incorrect_login_6": "I believe in you.",
         "incorrect_login_7": "Okay, you're messing with me now.",
         "incorrect_login_8": "I give up.",
         "incorrect_login_9": "Each of these requests you make are sending data through via an incredible technology. And you're using it to make failed logins.",
-        "incorrect_login_10": "Think about this. The poor instance admins have to maintain their server just for you to make these useless requests.",
+        "incorrect_login_10": "Think about this. The poor server admins have to maintain their server just for you to make these useless requests.",
         "incorrect_login_11": "Each press of the button uses thousands of CPU cycles to process your request, which ends up failing.",
         "incorrect_login_12": "...",
         "registration_application_is_pending": "The registration application for that account hasn't been accepted yet.",
-        "couldnt_find_post": "That post doesn't exist, isn't on this instance, or was removed.",
-        "cant_block_yourself": "You can't block yourself. You shouldn't either, you're (probably) a great person!",
-        "email_not_verified": "Your account's email isn't verified.",
+        "couldnt_find_post": "That post doesn't exist, is not on this server, or was removed.",
+        "cant_block_yourself": "You cannot block yourself. You shouldn't either, you're (probably) a great person!",
+        "email_not_verified": "Your account's email is not verified.",
         "passwords_do_not_match": "Your input password and the verification password do not match.",
         "honeypot_failed": "Are you a bot? Beep bop bap boop. If you're not, the Honeypot check failed.",
-        "downvotes_are_disabled": "Downvotes are disabled on this instance.",
+        "downvotes_are_disabled": "Downvotes are disabled on this server.",
         "email_already_exists": "An account already exists with that email.",
-        "slurs": "Your submission contains a term banned in this instance.",
+        "slurs": "Your submission contains a term banned in this server.",
         "captcha_failed": "Incorrect CAPTCHA answer.",
-        "cant_block_local_instance": "You can't block the instance you are actively using.",
-        "invalid_vote_value": "You can't commit voter fraud on Lemmy posts, sorry.",
-        "language_not_allowed": "That language isn't allowed in this community. Unset it to use the community's default.",
+        "cant_block_local_instance": "You cannot block the server you are actively using.",
+        "invalid_vote_value": "You cannot commit voter fraud on Lemmy posts, sorry.",
+        "language_not_allowed": "That language is not allowed in this community. Unset it to use the community's default.",
         "couldnt_find_person": "That user doesn't exist.",
         "couldnt_find_community": "That community doesn't exist.",
-        "not_an_admin": "You are not an admin of this instance.",
+        "not_an_admin": "You are not an admin of this server.",
         "rate_limit_error": "You are performing that action too fast.",
-        "unimplemented": "That function of your account's instance is not yet supported by Photon.",
-        "unsupported": "That function is not supported by your account's instance."
+        "unimplemented": "That function of your account's server software is not yet supported by Photon.",
+        "unsupported": "That function is not supported by your account's server software."
     },
     "aria": {
         "pagination": {

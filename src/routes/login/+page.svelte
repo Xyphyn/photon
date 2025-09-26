@@ -158,8 +158,9 @@
                   else data.client = { name: 'piefed', baseUrl: '/api/alpha' }
                 }
               }
-              class="border-y-0! border-r-0! rounded-none! border-l"
+              class="border-y-0! border-r-0! rounded-none! border-l max-w-24"
             >
+              <Option data-label="true" value="placeholder" disabled>{$t('form.instanceType')}</Option>
               <Option value="lemmyv3">Lemmy</Option>
               <Option value="piefedvalpha">Piefed</Option>
             </Select>

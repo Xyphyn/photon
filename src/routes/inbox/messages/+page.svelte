@@ -6,6 +6,7 @@
   import { t } from '$lib/app/i18n'
   import UserAutocomplete from '$lib/feature/user/UserAutocomplete.svelte'
   import Avatar from '$lib/ui/generic/Avatar.svelte'
+  import Fixate from '$lib/ui/generic/Fixate.svelte'
   import Skeleton from '$lib/ui/generic/Skeleton.svelte'
   import Placeholder from '$lib/ui/info/Placeholder.svelte'
   import { CommonList, Header, Pageination } from '$lib/ui/layout'
@@ -162,12 +163,12 @@
   </CommonList>
 
   {#if res.private_messages.length == 50 || data.page != 1}
-    <div class="mt-auto pb-4 mx-auto">
+    <Fixate placement="bottom">
       <Pageination
         page={data.page}
         hasMore={res.private_messages.length == 50}
         href={(current) => `/inbox/messages?page=${current}`}
       />
-    </div>
+    </Fixate>
   {/if}
 {/await}

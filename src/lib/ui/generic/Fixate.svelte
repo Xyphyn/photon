@@ -3,7 +3,7 @@
 
   const placements = {
     top: 'top-6 lg:top-22',
-    bottom: 'bottom-22 lg:bottom-6 mt-6',
+    bottom: 'bottom-22 lg:bottom-6 pt-6 mt-auto',
   }
 
   interface Props {

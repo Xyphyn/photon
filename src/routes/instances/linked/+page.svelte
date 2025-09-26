@@ -62,7 +62,7 @@
       <Placeholder
         icon={Check}
         title="No linked instances"
-        description="This instance doesn't block any others."
+        description="This instance does not federate with any others."
       />
     {/if}
   </div>

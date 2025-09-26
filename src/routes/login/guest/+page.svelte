@@ -79,6 +79,8 @@
           pattern={DOMAIN_REGEX_FORMS}
           placeholder="example.com"
           class="flex-1 overflow-hidden"
+          autocorrect="off"
+          autocapitalize="none"
         >
           {#snippet suffix()}
             <Select

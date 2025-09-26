@@ -62,7 +62,7 @@
       <Placeholder
         icon={Check}
         title="No blocked instances"
-        description="This instance likely has federation disabled."
+        description="This instance does not block any others."
       />
     {/if}
   </div>
