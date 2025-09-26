@@ -310,7 +310,7 @@
           if (!e.clipboardData?.files) return
           const files = Array.from(e.clipboardData.files)
           if (files[0]?.type.startsWith('image/')) {
-            image = e.clipboardData.files[0] as unknown as FileList | null
+            image = e.clipboardData.files as FileList
             uploadingImage = true
           }
         }}

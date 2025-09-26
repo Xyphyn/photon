@@ -279,6 +279,8 @@
 </div>
 
 <style>
+  @reference '../../app.css';
+
   .table-container {
     border: 1px solid var(--color-slate-200);
     background-color: white;
