@@ -1,3 +1,7 @@
+import type { Comment, CommentView } from "$lib/api/types"
+import { t } from "$lib/app/i18n"
+import { SvelteMap } from "svelte/reactivity"
+
 export interface CommentNodeI {
   comment_view: CommentView
   children: Array<CommentNodeI>

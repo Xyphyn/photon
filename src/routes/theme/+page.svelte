@@ -44,14 +44,73 @@
         toast({ content: err as string, type: 'error' })
       }
     }}
-    title={$t('routes.theme.import')}
-    action={$t('routes.theme.import')}
+    title={$t('settings.import')}
+    action={$t('settings.import')}
   >
     <TextArea bind:value={importText} style="font-family: monospace;" />
   </Modal>
 {/if}
 
-<Header pageHeader>{$t('routes.theme.title')}</Header>
+<Header pageHeader>{$t('routes.theme.title')}
+
+  {#snippet extended()}
+
+  <div class="flex items-center gap-2">
+    <Button
+      onclick={() => {
+        importing = !importing
+      }}
+      rounding="pill"
+      disabled={themeData.current.id <= 0}
+    >
+      <Icon src={ArrowUpTray} size="16" mini />
+      {$t('settings.import')}
+    </Button>
+    <Button
+      onclick={() => {
+        navigator.clipboard.writeText(JSON.stringify(themeData.current.colors))
+        toast({ content: 'Copied theme to clipboard.' })
+      }}
+      rounding="pill"
+    >
+      <Icon src={ArrowDownTray} size="16" mini />
+      {$t('settings.export')}
+    </Button>
+    <Button
+      disabled={themeData.current.id <= 0}
+      onclick={() => {
+        modal({
+          actions: [
+            action({
+              content: $t('common.cancel'),
+              close: true,
+            }),
+            action({
+              action: () => {
+                themeData.current.colors = {
+                  other: {},
+                  primary: {},
+                  zinc: {},
+                  slate: {},
+                }
+              },
+              content: $t('settings.reset'),
+              close: true,
+              type: 'danger',
+            }),
+          ],
+          title: $t('routes.theme.resetWarning.title'),
+          body: $t('routes.theme.resetWarning.description'),
+        })
+      }}
+      rounding="pill"
+    >
+      <Icon src={ArrowPath} size="16" mini />
+      {$t('settings.reset')}
+    </Button>
+  </div>
+  {/snippet}
+</Header>
 <div class="flex flex-col gap-4 h-full">
   <h3
     class="relative -mb-7 z-10 left-6 font-medium text-sm bg-slate-25 dark:bg-zinc-925 w-max px-1"
@@ -59,7 +118,7 @@
     {$t('routes.theme.preset.presets')}
   </h3>
   <Material
-    color="transparent"
+    color="uniform"
     rounding="2xl"
     class="overflow-auto max-h-96 relative @container"
   >
@@ -96,60 +155,6 @@
       </button>
     </div>
   </Material>
-  <div class="flex items-center gap-4">
-    <Button
-      onclick={() => {
-        importing = !importing
-      }}
-      size="lg"
-      disabled={themeData.current.id <= 0}
-    >
-      <Icon src={ArrowUpTray} size="16" mini />
-      {$t('settings.import')}
-    </Button>
-    <Button
-      onclick={() => {
-        navigator.clipboard.writeText(JSON.stringify(themeData.current.colors))
-        toast({ content: 'Copied theme to clipboard.' })
-      }}
-      size="lg"
-    >
-      <Icon src={ArrowDownTray} size="16" mini />
-      {$t('settings.export')}
-    </Button>
-    <Button
-      disabled={themeData.current.id <= 0}
-      onclick={() => {
-        modal({
-          actions: [
-            action({
-              content: $t('common.cancel'),
-              close: true,
-            }),
-            action({
-              action: () => {
-                themeData.current.colors = {
-                  other: {},
-                  primary: {},
-                  zinc: {},
-                  slate: {},
-                }
-              },
-              content: $t('settings.reset'),
-              close: true,
-              type: 'danger',
-            }),
-          ],
-          title: $t('routes.theme.resetWarning.title'),
-          body: $t('routes.theme.resetWarning.description'),
-        })
-      }}
-      size="lg"
-    >
-      <Icon src={ArrowPath} size="16" mini />
-      {$t('settings.reset')}
-    </Button>
-  </div>
   {#if themeData.current.id <= 0}
     <Note>
       {$t('routes.theme.preset.description')}
@@ -161,7 +166,7 @@
     class:pointer-events-none={themeData.current.id <= 0}
   >
     <Material
-      color="transparent"
+      color="uniform"
       class="items-center gap-x-4 color-grid gap-y-2"
       rounding="2xl"
     >
@@ -205,7 +210,7 @@
       {#each Object.entries(defaultColors) as [category, value] (category)}
         <Material
           rounding="2xl"
-          color="transparent"
+          color="uniform"
           class="flex flex-col gap-2"
         >
           <Header

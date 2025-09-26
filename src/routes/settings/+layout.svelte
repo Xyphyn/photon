@@ -40,6 +40,31 @@
   <title>{$t('settings.title')}</title>
 </svelte:head>
 
+<Tabs
+  routes={[
+    {
+      href: '/settings/app',
+      name: $t('settings.app.title'),
+    },
+    {
+      href: '/settings/lemmy',
+      name: $t('settings.lemmy.title'),
+    },
+    {
+      href: '/settings/embeds',
+      name: $t('settings.embeds.title'),
+    },
+    {
+      href: '/settings/moderation',
+      name: $t('settings.moderation.title'),
+    },
+    {
+      href: '/settings/other',
+      name: $t('settings.other.title'),
+    },
+  ]}
+/>
+
 <Header pageHeader class="text-3xl font-bold flex justify-between">
   {$t('settings.title')}
   {#snippet extended()}
@@ -91,31 +116,5 @@
     </div>
   {/snippet}
 </Header>
-
-<Tabs
-  routes={[
-    {
-      href: '/settings/app',
-      name: $t('settings.app.title'),
-    },
-    {
-      href: '/settings/lemmy',
-      name: $t('settings.lemmy.title'),
-    },
-    {
-      href: '/settings/embeds',
-      name: $t('settings.embeds.title'),
-    },
-    {
-      href: '/settings/moderation',
-      name: $t('settings.moderation.title'),
-    },
-    {
-      href: '/settings/other',
-      name: $t('settings.other.title'),
-    },
-  ]}
-  style="subpage"
-/>
 
 {@render children?.()}

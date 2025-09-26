@@ -1,4 +1,10 @@
 <script lang="ts">
+  import type { Post } from "$lib/api/types"
+  import VirtualList from "$lib/app/render/VirtualList.svelte"
+  import { onMount } from "svelte"
+  import type { CommentNodeI } from "./comments.svelte"
+  import CommentTree from "./CommentTree.svelte"
+
   interface Props {
     nodes: CommentNodeI[]
     post: Post
@@ -43,7 +49,7 @@
     >
       {#snippet item(index)}
         <div class={['px-3 sm:px-6', index % 2 == 1 && '']}>
-          <Comments
+          <CommentTree
             bind:nodes={() => [nodes[index]], (v) => (nodes[index] = v[0])}
             {post}
           />

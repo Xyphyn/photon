@@ -132,7 +132,7 @@ export interface FeedTypes {
   ]
 }
 
-const feeds = new SvelteMap<keyof FeedTypes, Feed<any, any>>()
+export const feeds = new SvelteMap<keyof FeedTypes, Feed<any, any>>()
 
 export function feed<Type extends keyof FeedTypes>(
   id: Type,
