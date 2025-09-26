@@ -29,9 +29,7 @@ export class Feed<Params, Response> {
 
   async load(params: Params) {
     if (
-      this.#lastParams &&
-      params &&
-      !recursiveEqual<Params>(params, this.#lastParams)
+      !recursiveEqual(params, this.#lastParams)
     ) {
       this.#data = undefined
     }

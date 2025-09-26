@@ -195,11 +195,16 @@ export const userLink = (person: Person, prefix: string = '') =>
  * Basic types only, don't use for anything more than basic equality
  */
 export function recursiveEqual<T>(
-  a: NonNullable<T>,
-  b: NonNullable<T>,
+  a: T,
+  b: T,
 ): boolean {
   if (a === b) return true
   if (typeof a !== 'object' || typeof b !== 'object') return false
+
+  if (a == null || b == null) {
+    if (a == null && b == null) return true
+    else return false
+  }
 
   const keysA = Object.keys(a) as (keyof typeof a)[]
   const keysB = Object.keys(b) as (keyof typeof b)[]
