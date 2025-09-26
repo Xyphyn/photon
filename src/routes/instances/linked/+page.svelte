@@ -1,11 +1,11 @@
 <script lang="ts">
-  import VirtualList from '$comp/render/VirtualList.svelte'
-  import Placeholder from '$comp/ui/Placeholder.svelte'
-  import RelativeDate from '$comp/util/RelativeDate.svelte'
-  import { publishedToDate } from '$comp/util/date.js'
-  import { t } from '$lib/i18n/translations.js'
+  import { t } from '$lib/app/i18n'
+  import VirtualList from '$lib/app/render/VirtualList.svelte'
+  import Placeholder from '$lib/ui/info/Placeholder.svelte'
+  import { publishedToDate } from '$lib/ui/util/date'
   import { Spinner, TextInput } from 'mono-svelte'
-  import { Check } from 'svelte-hero-icons'
+  import RelativeDate from 'mono-svelte/util/RelativeDate.svelte'
+  import { Check } from 'svelte-hero-icons/dist'
 
   let { data: passedData } = $props()
   let data = $state(passedData)

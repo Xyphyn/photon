@@ -1,10 +1,10 @@
 <script lang="ts">
-  import CommentItem from '$comp/lemmy/comment/CommentItem.svelte'
-  import { PostItem } from '$comp/lemmy/post'
-  import Fixate from '$comp/ui/generic/Fixate.svelte'
-  import { CommonList, Header, Pageination } from '$comp/ui/layout'
-  import { t } from '$lib/i18n/translations.js'
-  import { isCommentView } from '$lib/lemmy/item.js'
+  import { t } from '$lib/app/i18n'
+  import CommentItem from '$lib/feature/comment/CommentItem.svelte'
+  import { isCommentView } from '$lib/feature/legacy/item'
+  import { PostItem } from '$lib/feature/post'
+  import Fixate from '$lib/ui/generic/Fixate.svelte'
+  import { CommonList, Header, Pageination } from '$lib/ui/layout'
 
   let { data = $bindable() } = $props()
 </script>

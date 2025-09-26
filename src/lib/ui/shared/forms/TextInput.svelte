@@ -1,0 +1,130 @@
+<script module lang="ts">
+  import { Label } from 'mono-svelte'
+  import type { HTMLInputAttributes } from 'svelte/elements'
+  import { generateID } from './helper'
+
+  export type Size = keyof typeof sizeClass
+  export type Shadow = keyof typeof shadowClass
+
+  export const sizeClass = {
+    sm: 'px-3 py-1',
+    md: 'px-3.5 py-1.5',
+    lg: 'px-5 py-3',
+  }
+
+  export const shadowClass = {
+    sm: 'shadow-xs',
+    none: 'shadow-none',
+  }
+
+  interface Props extends Omit<HTMLInputAttributes, 'size' | 'prefix'> {
+    label?: string | undefined
+    placeholder?: string
+    disabled?: boolean
+    required?: boolean
+    size?: Size
+    id?: string
+    inlineAffixes?: boolean
+    shadow?: Shadow
+    element?: HTMLInputElement | undefined
+    class?: string
+    customLabel?: import('svelte').Snippet
+    prefix?: import('svelte').Snippet
+    suffix?: import('svelte').Snippet
+    children?: import('svelte').Snippet
+  }
+
+  export type { Props as TextInputProps }
+</script>
+
+<script lang="ts">
+  const borderClass = `border border-slate-200 border-b-slate-300 dark:border-zinc-800`
+
+  let {
+    label = undefined,
+    value = $bindable(),
+    placeholder = '',
+    disabled = false,
+    required = false,
+    size = 'md',
+    id = generateID(),
+    inlineAffixes = false,
+    shadow = 'sm',
+    element = $bindable(),
+    class: clazz = '',
+    customLabel: passedCustomLabel,
+    prefix,
+    suffix,
+    children,
+    ...rest
+  }: Props = $props()
+</script>
+
+<div class="flex flex-col gap-1 {clazz}">
+  {#if passedCustomLabel || label}
+    <Label
+      for={id}
+      text={label}
+      class="peer-invalid:text-red-500 {required
+        ? "after:content-['*'] after:text-red-500 after:ml-1"
+        : ''}"
+    >
+      {@render passedCustomLabel?.()}
+    </Label>
+  {/if}
+  <div
+    class={[
+      shadowClass[shadow],
+      borderClass,
+      `border focus-within:border-primary-900 dark:focus-within:border-primary-100 focus-within:ring-2
+  ring-slate-300 dark:ring-zinc-700
+  transition-colors
+  rounded-xl flex flex-row items-center text-sm`,
+      clazz,
+    ]}
+  >
+    {#if prefix}
+      <div
+        class={[
+          'rounded-xl rounded-r-none text-slate-600 dark:text-zinc-400',
+          inlineAffixes && 'bg-white dark:bg-zinc-900 pr-0 w-8',
+          sizeClass[size],
+        ]}
+      >
+        {@render prefix?.()}
+      </div>
+    {/if}
+    <input
+      type="text"
+      {id}
+      {placeholder}
+      {disabled}
+      bind:value
+      bind:this={element}
+      {...rest}
+      class={[
+        sizeClass[size],
+        `bg-white dark:bg-zinc-900
+		 focus:outline-hidden rounded-xl text-sm w-full disabled:bg-slate-100
+		disabled:cursor-not-allowed dark:disabled:bg-zinc-800 invalid:border-red-500!
+		peer invalid:text-red-500 z-10`,
+        prefix && 'rounded-l-none',
+        prefix && inlineAffixes && 'border-l-0',
+        suffix && 'rounded-r-none',
+        suffix && inlineAffixes && 'border-r-0',
+        clazz,
+      ]}
+    />
+    {#if suffix}
+      <div
+        class={[
+          'rounded-xl rounded-l-none text-slate-600 dark:text-zinc-400',
+          inlineAffixes && 'bg-white dark:bg-zinc-900 pl-0',
+        ]}
+      >
+        {@render suffix?.()}
+      </div>
+    {/if}
+  </div>
+  {@render children?.()}
+</div>

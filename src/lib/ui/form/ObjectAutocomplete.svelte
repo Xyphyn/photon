@@ -1,0 +1,125 @@
+<script lang="ts">
+  import { getClient } from '$lib/api/client.svelte'
+  import type { Community, ListingType } from '$lib/api/types'
+  import { MenuButton, Search } from 'mono-svelte'
+  import { createEventDispatcher } from 'svelte'
+  import { Icon, ServerStack, XCircle } from 'svelte-hero-icons/dist'
+  import { fly } from 'svelte/transition'
+  import Avatar from '../generic/Avatar.svelte'
+
+  interface Props {
+    type?: 'community' | 'instance'
+    q?: string
+    instance?: string | undefined
+    listing_type?: ListingType
+    showWhenEmpty?: boolean
+    placeholder?: string
+    onselect?: (item: any) => void
+    label?: string
+  }
+
+  let {
+    type = 'community',
+    q = $bindable(''),
+    instance = undefined,
+    listing_type = 'Subscribed',
+    showWhenEmpty = false,
+    ...rest
+  }: Props = $props()
+
+  const dispatcher = createEventDispatcher<{ select: Community | undefined }>()
+  let instances = $derived(
+    type == 'instance' && getClient().getFederatedInstances(),
+  )
+</script>
+
+{#if type == 'community'}
+  <Search
+    search={async (q) => {
+      const results = await getClient(instance).search({
+        q: q || ' ',
+        type_: 'Communities',
+        limit: 20,
+        listing_type: listing_type,
+        sort: 'TopAll',
+      })
+
+      return results.communities
+    }}
+    extractName={(c) =>
+      `${c.community.name}@${new URL(c.community.actor_id).hostname}`}
+    bind:query={q}
+    {...rest}
+  >
+    {#snippet noresults()}
+      <div class="w-full h-full">
+        {#if q == '' && showWhenEmpty}
+          <MenuButton onclick={() => dispatcher('select', undefined)}>
+            <Icon src={XCircle} size="16" mini />
+            <div class="flex flex-col text-left">
+              <span>None</span>
+            </div>
+          </MenuButton>
+        {:else}
+          <span class="mx-auto my-auto">No results.</span>
+        {/if}
+      </div>
+    {/snippet}
+    {#snippet children({ item, select })}
+      <div in:fly|global={{ y: -4, opacity: 0 }}>
+        <MenuButton onclick={() => select(item)}>
+          <Avatar
+            url={item.community.icon}
+            alt={item.community.title}
+            width={24}
+          />
+          <div class="flex flex-col text-left">
+            <span>{item.community.title}</span>
+            <span class="text-xs opacity-80">
+              {new URL(item.community.actor_id).hostname}
+            </span>
+          </div>
+        </MenuButton>
+      </div>
+    {/snippet}
+  </Search>
+{:else if type == 'instance'}
+  <Search
+    search={async (q) => {
+      const results = (await instances) || {}
+
+      return q
+        ? (results.federated_instances?.linked || []).filter(
+            (i) => i.software === 'lemmy' && i.domain.includes(q),
+          )
+        : []
+    }}
+    extractName={(i) => `${i.domain}`}
+    bind:query={q}
+    {...rest}
+  >
+    {#snippet noresults()}
+      <div class="w-full h-full">
+        {#if q == '' && showWhenEmpty}
+          <MenuButton onclick={() => dispatcher('select', undefined)}>
+            <div class="flex flex-col text-left">
+              <span>None (Start typing to search)</span>
+            </div>
+          </MenuButton>
+        {:else}
+          <span class="mx-auto my-auto">No results.</span>
+        {/if}
+      </div>
+    {/snippet}
+    {#snippet children({ item, select })}
+      <div in:fly|global={{ y: -4, opacity: 0 }}>
+        <MenuButton onclick={() => select(item)}>
+          <Icon src={ServerStack} size="16" mini />
+          <div class="flex flex-col text-left">
+            <span>{item.domain}</span>
+          </div>
+        </MenuButton>
+      </div>
+    {/snippet}
+  </Search>
+{/if}

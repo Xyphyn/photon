@@ -1,6 +1,6 @@
 <script>
-  import { Header } from '$comp/ui/layout'
-  import { t } from '$lib/i18n/translations'
+  import { t } from '$lib/app/i18n'
+  import { Header } from '$lib/ui/layout'
 </script>
 
 <Header pageHeader>

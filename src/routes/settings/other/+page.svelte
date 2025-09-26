@@ -1,8 +1,8 @@
 <script lang="ts">
-  import CommonList from '$comp/ui/layout/CommonList.svelte'
-  import { t } from '$lib/i18n/translations'
-  import { settings } from '$lib/settings.svelte'
-  import { Bars3, BugAnt } from 'svelte-hero-icons'
+  import { t } from '$lib/app/i18n'
+  import { settings } from '$lib/app/settings.svelte'
+  import { CommonList } from '$lib/ui/layout'
+  import { Bars3, BugAnt } from 'svelte-hero-icons/dist'
   import ToggleSetting from '../ToggleSetting.svelte'
 </script>
 

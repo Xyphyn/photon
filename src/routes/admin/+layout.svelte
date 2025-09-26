@@ -1,7 +1,7 @@
 <script>
-  import { notifications } from '$lib/auth.svelte'
-  import Tabs from '$comp/ui/layout/pages/Tabs.svelte'
-  import { t } from '$lib/i18n/translations'
+  import { notifications } from '$lib/app/auth.svelte'
+  import { t } from '$lib/app/i18n'
+  import { Tabs } from '$lib/ui/layout'
   import { Badge } from 'mono-svelte'
 
   let { children } = $props()

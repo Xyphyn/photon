@@ -1,5 +1,5 @@
-import { client } from '$lib/client/lemmy.svelte'
-import { ReactiveState } from '$lib/util.svelte.js'
+import { client } from '$lib/api/client.svelte'
+import { ReactiveState } from '$lib/app/util.svelte'
 
 export async function load({ fetch, params }) {
   const creator = Number(params.user_id)

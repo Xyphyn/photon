@@ -1,0 +1,80 @@
+<script lang="ts">
+  import { Button } from 'mono-svelte'
+  import {
+    type ButtonAlignment,
+    type ButtonColor,
+    type ButtonProps,
+  } from 'mono-svelte/button/Button.svelte'
+  import type { Snippet } from 'svelte'
+  import { ChevronRight, Icon, type IconSource } from 'svelte-hero-icons/dist'
+  import type { ClassValue } from 'svelte/elements'
+
+  interface Props extends ButtonProps {
+    color?: ButtonColor
+    alignment?: ButtonAlignment
+    href?: string | undefined
+    disabled?: boolean
+    class?: ClassValue
+    icon?: IconSource
+    prefix?: Snippet
+    children?: Snippet
+    suffix?: Snippet
+    nest?: boolean
+  }
+
+  let {
+    color = 'tertiary',
+    alignment = 'left',
+    href = undefined,
+    disabled = false,
+    class: clazz = '',
+    icon,
+    prefix: passedPrefix,
+    children,
+    suffix: passedSuffix,
+    nest,
+    ...rest
+  }: Props = $props()
+</script>
+
+<Button
+  {...rest}
+  {color}
+  type="none"
+  size="custom"
+  rounding="none"
+  class={[
+    'w-full px-3 py-1.5 min-h-7 duration-75 hover:cursor-default font-normal rounded-lg flex items-center gap-1 text-sm',
+    disabled && 'opacity-70 pointer-events-none cursor-not-allowed',
+    color == 'tertiary' && 'dark:hover:bg-zinc-800/70',
+    clazz,
+  ]}
+  {alignment}
+  {href}
+  {disabled}
+  data-autoclose={nest ? 'false' : 'true'}
+  shadow="none"
+  role="menuitem"
+>
+  {#snippet prefix()}
+    <div
+      class={[
+        'contents shrink-0',
+        color == 'tertiary' && 'text-slate-600 dark:text-zinc-400',
+      ]}
+    >
+      {#if icon}
+        <Icon src={icon} micro size="16" />
+      {:else}
+        {@render passedPrefix?.()}
+      {/if}
+    </div>
+  {/snippet}
+  {@render children?.()}
+  {#snippet suffix()}
+    {@render passedSuffix?.()}
+    {#if nest}
+      <Icon src={ChevronRight} size="16" micro class="ml-auto" />
+    {/if}
+  {/snippet}
+</Button>

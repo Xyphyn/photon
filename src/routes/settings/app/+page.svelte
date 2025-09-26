@@ -1,12 +1,12 @@
 <script lang="ts">
   import { env } from '$env/dynamic/public'
-  import Link from '$comp/input/Link.svelte'
-  import Switch from '$comp/input/Switch.svelte'
-  import Sort from '$comp/lemmy/dropdowns/Sort.svelte'
-  import ViewSelect from '$comp/lemmy/dropdowns/ViewSelect.svelte'
-  import CommonList from '$comp/ui/layout/CommonList.svelte'
-  import { locale, t } from '$lib/i18n/translations'
-  import { settings } from '$lib/settings.svelte'
+  import { locale, t } from '$lib/app/i18n'
+  import { settings } from '$lib/app/settings.svelte'
+  import Sort from '$lib/feature/filter/Sort.svelte'
+  import ViewSelect from '$lib/feature/filter/ViewSelect.svelte'
+  import Link from '$lib/ui/form/Link.svelte'
+  import Switch from '$lib/ui/form/Switch.svelte'
+  import { CommonList } from '$lib/ui/layout'
   import { Button, Option, Select } from 'mono-svelte'
   import {
     ArrowsPointingOut,
@@ -33,7 +33,7 @@
     Tag,
     Trophy,
     ViewColumns,
-  } from 'svelte-hero-icons'
+  } from 'svelte-hero-icons/dist'
   import Setting from '../Setting.svelte'
   import ToggleSetting from '../ToggleSetting.svelte'
 

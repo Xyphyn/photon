@@ -1,15 +1,8 @@
 <script>
-  import { t } from '$lib/i18n/translations'
-
   import { page } from '$app/state'
-  import { Header } from '$comp/ui/layout'
-  import Tabs from '$comp/ui/layout/pages/Tabs.svelte'
-  /**
-   * @typedef {Object} Props
-   * @property {import('svelte').Snippet} [children]
-   */
+  import { t } from '$lib/app/i18n'
+  import { Header, Tabs } from '$lib/ui/layout'
 
-  /** @type {Props} */
   let { children } = $props()
 
   const routes = [

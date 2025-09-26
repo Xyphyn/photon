@@ -1,13 +1,12 @@
 <script lang="ts">
-  import { t } from '$lib/i18n/translations'
-  import { settings } from '$lib/settings.svelte'
-  import { DOMAIN_REGEX_FORMS } from '$lib/util.svelte.js'
-  import { Select, TextInput } from 'mono-svelte'
-  import Option from 'mono-svelte/forms/select/Option.svelte'
-  import { CursorArrowRays, VideoCamera } from 'svelte-hero-icons'
+  import { t } from '$lib/app/i18n'
+  import { settings } from '$lib/app/settings.svelte'
+  import { DOMAIN_REGEX_FORMS } from '$lib/app/util.svelte'
+  import { CommonList } from '$lib/ui/layout'
+  import { Option, Select, TextInput } from 'mono-svelte'
+  import { CursorArrowRays, VideoCamera } from 'svelte-hero-icons/dist'
   import Setting from '../Setting.svelte'
   import ToggleSetting from '../ToggleSetting.svelte'
-  import CommonList from '$comp/ui/layout/CommonList.svelte'
 </script>
 
 <CommonList>

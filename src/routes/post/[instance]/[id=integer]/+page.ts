@@ -1,10 +1,9 @@
 import { resolveRoute } from '$app/paths'
-import { profile } from '$lib/auth.svelte.js'
-import { client } from '$lib/client/lemmy.svelte'
-import CommunityCard from '$comp/lemmy/community/CommunityCard.svelte'
-import { feed } from '$lib/lemmy/feeds/feed.svelte.js'
-import { settings } from '$lib/settings.svelte'
-import { ReactiveState } from '$lib/util.svelte.js'
+import { client } from '$lib/api/client.svelte'
+import { profile } from '$lib/app/auth.svelte'
+import { settings } from '$lib/app/settings.svelte'
+import { ReactiveState } from '$lib/app/util.svelte'
+import { feed } from '$lib/feature/feeds/feed.svelte'
 import { redirect } from '@sveltejs/kit'
 
 function buildContext(thread?: string) {
