@@ -486,4 +486,9 @@ export class LemmyClient implements BaseClient {
   ): ReturnType<BaseClient['deleteImage']> {
     return await this.#client.deleteImage(...params)
   }
+  async listMedia(
+    ...params: Parameters<BaseClient['listMedia']>
+  ): ReturnType<BaseClient['listMedia']> {
+    return await this.#client.listMedia(...params)
+  }
 }

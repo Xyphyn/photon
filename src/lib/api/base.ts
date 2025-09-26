@@ -1,5 +1,5 @@
-import { env } from '$env/dynamic/public'
-import * as types from './types'
+import { env } from '$env/dynamic/public';
+import * as types from './types';
 
 export type ClientType =
   | { name: 'lemmy'; baseUrl: '/api/v3' }
@@ -227,6 +227,7 @@ export abstract class BaseClient {
   abstract getFeeds?(form: types.GetFeeds): Promise<types.GetFeedsResponse>
   abstract getTopics?(form: types.GetTopics): Promise<types.GetTopicsResponse>
   abstract assignFlair?(form: types.AssignFlair): Promise<types.PostView>
+  abstract listMedia(form: types.ListMedia): Promise<types.ListMediaResponse>
 }
 
 export type NullableFnArg<T, Fallback = never> = T extends (

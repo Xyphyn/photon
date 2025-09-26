@@ -1014,4 +1014,8 @@ export class PiefedClient implements BaseClient {
 
     return toPostView(response)
   }
+
+  async listMedia(): ReturnType<BaseClient['listMedia']> {
+    throw new Error('unsupported')
+  }
 }

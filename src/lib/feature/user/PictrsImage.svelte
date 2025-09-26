@@ -3,8 +3,8 @@
   import type { LocalImage, Person } from '$lib/api/types'
   import { profile } from '$lib/app/auth.svelte'
   import { t } from '$lib/app/i18n'
-  import { instance } from '$lib/app/instance.svelte'
   import { instanceToURL } from '$lib/app/util.svelte'
+  import { showImage } from '$lib/ui/generic/ExpandableImage.svelte'
   import { publishedToDate } from '$lib/ui/util/date'
   import { action, Button, modal, toast } from 'mono-svelte'
   import RelativeDate from 'mono-svelte/util/RelativeDate.svelte'
@@ -40,13 +40,26 @@
 </script>
 
 <div class="flex flex-col gap-1">
-  <img
-    src="{instanceToURL(instance.data)}/pictrs/image/{image.pictrs_alias}"
-    width="500"
-    height="500"
-    class="aspect-square w-full h-full object-cover rounded-xl"
-    alt="pictrs"
-  />
+  {#snippet img()}
+    <button
+      onclick={
+        () =>
+          showImage(`${instanceToURL(profile.current.instance)}/pictrs/image/${image.pictrs_alias}`)
+      }
+      class="cursor-pointer"  
+    >
+      <img
+        src="{instanceToURL(profile.current.instance)}/pictrs/image/{image.pictrs_alias}"
+        width="500"
+        height="500"
+        class="aspect-square w-full h-full object-cover rounded-xl"
+        alt="pictrs"
+      />
+    </button>
+  {/snippet}
+
+  {@render img()}
+
   {#if user}
     <UserLink {user} />
   {/if}
@@ -57,17 +70,18 @@
     />
     <Button
       title={$t('routes.profile.media.download')}
-      href="{instanceToURL(instance.data)}/pictrs/image/{image.pictrs_alias}"
+      href="{instanceToURL(profile.current.instance)}/pictrs/image/{image.pictrs_alias}"
       size="square-md"
       class="ml-auto"
       icon={ArrowDownTray}
-    ></Button>
+    />
     <Button
       title={$t('post.actions.more.delete')}
       onclick={() => {
         modal({
           title: $t('routes.theme.preset.delete.confirm'),
           body: '',
+          snippet: img,
           actions: [
             action({
               close: true,
@@ -86,6 +100,6 @@
       {loading}
       disabled={loading}
       icon={Trash}
-    ></Button>
+    />
   </div>
 </div>
