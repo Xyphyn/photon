@@ -4,14 +4,8 @@
 </picture>
 
 # Photon
-Photon is a Svelte-based opinionated Lemmy client designed for the best UI and UX. Every feature is carefully considered and placed.
 
-- `🌟` A stunning UI
-- `🪄` Lots of customization options
-- `📱` Built for desktop & mobile
-- `🌎` Multi-language support
-- `👥` Save multiple accounts
-- `🚀` Made with Svelte 5
+Photon is a web app for the fediverse with helpful features and a nice UX.
 
 Jump to:
 
