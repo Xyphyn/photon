@@ -1,6 +1,7 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
+  import type { ClientType } from '$lib/api/base.js'
   import { getClient } from '$lib/api/client.svelte'
   import type { GetCaptchaResponse } from '$lib/api/types'
   import { profile } from '$lib/app/auth.svelte'
@@ -51,13 +52,15 @@
   let username = $state(''),
     password = $state(''),
     passwordVerify = $state(''),
-    captcha: GetCaptchaResponse | null = $state(null),
-    verifyCaptcha: string | undefined = $state(undefined),
-    application: string = $state(''),
-    submitting: boolean = $state(false),
-    honeypot: string | undefined = $state(undefined),
-    nsfw: boolean = $state(false),
-    verifying: boolean = $state(false)
+    captcha = $state<GetCaptchaResponse>(),
+    verifyCaptcha = $state<string>(),
+    application = $state(''),
+    submitting = $state(false),
+    honeypot = $state<string>(),
+    nsfw = $state(false),
+    verifying = $state(false)
+  
+  const instanceType: ClientType = $state({ name: 'lemmy', baseUrl: '/api/v3' })
 
   const getCaptcha = async () =>
     (captcha = await getClient(instance, fetch).getCaptcha())
@@ -86,7 +89,7 @@
       const registrationMode = data.site_view.local_site.registration_mode
 
       if (res?.jwt) {
-        await profile.add(res.jwt, page.params.instance)
+        await profile.add(res.jwt, page.params.instance!, instanceType)
 
         toast({ content: $t('toast.logIn'), type: 'success' })
         goto('/')
@@ -125,7 +128,7 @@
       })
 
       if (res.jwt) {
-        await profile.add(res.jwt, page.params.instance)
+        await profile.add(res.jwt, data.instance, instanceType)
         goto('/')
       } else if (res.verify_email_sent) {
         pushError({

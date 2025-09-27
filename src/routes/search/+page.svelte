@@ -1,7 +1,6 @@
 <script lang="ts">
   import { navigating, page } from '$app/state'
   import { client } from '$lib/api/client.svelte'
-  import { profile } from '$lib/app/auth.svelte'
   import { t } from '$lib/app/i18n'
   import { searchParam } from '$lib/app/util.svelte'
   import CommentItem from '$lib/feature/comment/CommentItem.svelte'
@@ -103,7 +102,6 @@
   >
     <ObjectAutocomplete
       label={$t('nav.create.community')}
-      jwt={profile.current?.jwt}
       listing_type="All"
       showWhenEmpty={true}
       onselect={(c) =>

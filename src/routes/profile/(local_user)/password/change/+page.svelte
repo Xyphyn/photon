@@ -19,9 +19,9 @@
         old_password: oldPassword,
       })
       if (res?.jwt) {
-        const { instance } = profile.current
+        const { instance, client } = profile.current
         profile.remove(profile.current.id)
-        await profile.add(res.jwt, instance)
+        await profile.add(res.jwt, instance, client)
 
         toast({ content: $t('toast.loginRefresh'), type: 'success' })
       } else {

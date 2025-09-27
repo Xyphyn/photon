@@ -315,11 +315,11 @@
 
     .btn-disabled {
       pointer-events: none;
-      filter: brightness(90%);
+      opacity: 0.6;
       cursor: normal;
 
       @variant dark {
-        filter: brightness(70%);
+        opacity: 0.5;
       }
     }
   }
