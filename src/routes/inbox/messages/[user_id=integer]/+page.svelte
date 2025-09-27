@@ -1,14 +1,14 @@
 <script lang="ts">
   import { browser } from '$app/environment'
-  import { report } from '$lib/components/lemmy/moderation/moderation'
-  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
-  import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
-  import { Header } from '$lib/components/ui/layout'
-  import { t } from '$lib/i18n/translations'
-  import { client } from '$lib/client/lemmy.svelte'
-  import { errorMessage } from '$lib/lemmy/error'
-  import { settings } from '$lib/settings.svelte'
-  import type { PrivateMessageResponse } from '$lib/client/types'
+  import { client } from '$lib/api/client.svelte'
+  import type { PrivateMessageResponse } from '$lib/api/types'
+  import { errorMessage } from '$lib/app/error'
+  import { t } from '$lib/app/i18n'
+  import MarkdownEditor from '$lib/app/markdown/MarkdownEditor.svelte'
+  import { settings } from '$lib/app/settings.svelte'
+  import { report } from '$lib/feature/moderation/moderation'
+  import UserLink from '$lib/feature/user/UserLink.svelte'
+  import { Header } from '$lib/ui/layout'
   import { Button, Material, TextInput, toast } from 'mono-svelte'
   import { onDestroy, onMount, tick } from 'svelte'
   import {
@@ -17,7 +17,7 @@
     Minus,
     PaperAirplane,
     Plus,
-  } from 'svelte-hero-icons'
+  } from 'svelte-hero-icons/dist'
   import { flip } from 'svelte/animate'
   import { backOut, expoOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'

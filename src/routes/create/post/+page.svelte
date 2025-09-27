@@ -1,8 +1,8 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
-  import { PostForm } from '$lib/components/lemmy/post'
-  import { t } from '$lib/i18n/translations.js'
-  import { getSessionStorage, setSessionStorage } from '$lib/session.js'
+  import { t } from '$lib/app/i18n'
+  import { getSessionStorage, setSessionStorage } from '$lib/app/session'
+  import PostForm from '$lib/feature/post/PostForm.svelte'
   import { onDestroy } from 'svelte'
 
   let { data } = $props()

@@ -1,8 +1,8 @@
 <script lang="ts">
-  import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
-  import { t } from '$lib/i18n/translations.js'
-  import { fullCommunityName } from '$lib/util.svelte.js'
-  import type { PageData } from './$types.js'
+  import { t } from '$lib/app/i18n'
+  import { fullCommunityName } from '$lib/app/util.svelte'
+  import { Tabs } from '$lib/ui/layout'
+  import type { PageData } from './$types'
 
   interface Props {
     data: PageData

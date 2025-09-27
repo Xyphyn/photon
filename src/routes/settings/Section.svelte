@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Expandable from '$lib/components/ui/Expandable.svelte'
-  import CommonList from '$lib/components/ui/layout/CommonList.svelte'
+  import { CommonList } from '$lib/ui/layout'
+  import { Expandable } from 'mono-svelte'
 
   interface Props {
     title: string

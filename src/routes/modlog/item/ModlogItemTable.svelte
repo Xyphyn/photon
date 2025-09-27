@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { CommunityLink } from '$lib/components/lemmy/community'
-  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
-  import RelativeDate from '$lib/components/util/RelativeDate.svelte'
-  import { t } from '$lib/i18n/translations.js'
+  import { t } from '$lib/app/i18n'
+  import CommunityLink from '$lib/feature/community/CommunityLink.svelte'
+  import UserLink from '$lib/feature/user/UserLink.svelte'
   import { Button, modal } from 'mono-svelte'
-  import type { ModLog } from '../+page.js'
+  import RelativeDate from 'mono-svelte/util/RelativeDate.svelte'
+  import type { ModLog } from '../+page'
   import ModlogAction from '../ModlogAction.svelte'
 
   interface Props {

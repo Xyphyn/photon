@@ -1,24 +1,24 @@
 <script lang="ts">
-  import { notifications, profile } from '$lib/auth.svelte.js'
-  import { client } from '$lib/client/lemmy.svelte'
+  import { client } from '$lib/api/client.svelte'
   import type {
     ApproveRegistrationApplication,
     RegistrationApplicationView,
-  } from '$lib/client/types'
-  import ApplicationDenyModal from '$lib/components/lemmy/modal/ApplicationDenyModal.svelte'
-  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
-  import RelativeDate from '$lib/components/util/RelativeDate.svelte'
-  import { publishedToDate } from '$lib/components/util/date'
-  import { t } from '$lib/i18n/translations'
-  import { errorMessage } from '$lib/lemmy/error'
+  } from '$lib/api/types'
+  import { notifications, profile } from '$lib/app/auth.svelte'
+  import { errorMessage } from '$lib/app/error'
+  import { t } from '$lib/app/i18n'
+  import ApplicationDenyModal from '$lib/feature/moderation/ApplicationDenyModal.svelte'
+  import UserLink from '$lib/feature/user/UserLink.svelte'
+  import { publishedToDate } from '$lib/ui/util/date'
   import { Button, Label, Material, toast } from 'mono-svelte'
+  import RelativeDate from 'mono-svelte/util/RelativeDate.svelte'
   import {
     Check,
     Icon,
     ShieldCheck,
     ShieldExclamation,
     XMark,
-  } from 'svelte-hero-icons'
+  } from 'svelte-hero-icons/dist'
 
   interface Props {
     application: RegistrationApplicationView

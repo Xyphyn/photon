@@ -1,17 +1,17 @@
 <script lang="ts">
-  import { notifications, profile } from '$lib/auth.svelte.js'
-  import { getClient } from '$lib/client/lemmy.svelte'
-  import { CommentItem } from '$lib/components/lemmy/comment'
-  import PrivateMessage from '$lib/components/lemmy/inbox/PrivateMessage.svelte'
-  import Avatar from '$lib/components/ui/Avatar.svelte'
-  import Expandable from '$lib/components/ui/Expandable.svelte'
-  import RelativeDate from '$lib/components/util/RelativeDate.svelte'
-  import { publishedToDate } from '$lib/components/util/date.js'
-  import { t } from '$lib/i18n/translations'
-  import type { InboxItem } from '$lib/lemmy/inbox.js'
-  import { escapeHtml } from '$lib/util.svelte'
-  import { Button } from 'mono-svelte'
-  import { Eye, EyeSlash } from 'svelte-hero-icons'
+  import { getClient } from '$lib/api/client.svelte'
+  import { notifications, profile } from '$lib/app/auth.svelte'
+  import { t } from '$lib/app/i18n'
+  import Markdown from '$lib/app/markdown/Markdown.svelte'
+  import { escapeHtml } from '$lib/app/util.svelte'
+  import CommentItem from '$lib/feature/comment/CommentItem.svelte'
+  import type { InboxItem } from '$lib/feature/inbox'
+  import PrivateMessage from '$lib/feature/inbox/PrivateMessage.svelte'
+  import Avatar from '$lib/ui/generic/Avatar.svelte'
+  import { publishedToDate } from '$lib/ui/util/date'
+  import { Button, Expandable } from 'mono-svelte'
+  import RelativeDate from 'mono-svelte/util/RelativeDate.svelte'
+  import { Eye, EyeSlash } from 'svelte-hero-icons/dist'
 
   interface Props {
     item: InboxItem
@@ -63,23 +63,32 @@
       <div class="flex flex-col">
         <div class="text-sm font-normal text-slate-600 dark:text-zinc-400">
           {#if item.type == 'comment_reply'}
-            <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-            {@html $t('routes.inbox.item.reply', {
-              user: `<strong>${item.creator.name}</strong>`,
-              post: `<strong>${escapeHtml(item.item.post.name)}</strong>`,
-            })}
+            <Markdown
+              inline
+              source={$t('routes.inbox.item.reply', {
+                user: `**${item.creator.name}**`,
+                post: `**${escapeHtml(item.item.post.name)}**`,
+              })}
+              noStyle
+            />
           {:else if item.type == 'person_mention'}
-            <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-            {@html $t('routes.inbox.item.mention', {
-              user: `<strong>${item.creator.name}</strong>`,
-              post: `<strong>${escapeHtml(item.item.post.name)}</strong>`,
-            })}
+            <Markdown
+              inline
+              source={$t('routes.inbox.item.mention', {
+                user: `**${item.creator.name}**`,
+                post: `**${escapeHtml(item.item.post.name)}**`,
+              })}
+              noStyle
+            />
           {:else if item.type == 'private_message'}
-            <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-            {@html $t('routes.inbox.item.message', {
-              user: `<strong>${item.item.creator.name}</strong>`,
-              recipient: `<strong>${item.item.recipient.name}</strong>`,
-            })}
+            <Markdown
+              inline
+              source={$t('routes.inbox.item.message', {
+                user: `**${item.creator.name}**`,
+                recipient: `**${escapeHtml(item.item.recipient.name)}**`,
+              })}
+              noStyle
+            />
           {/if}
         </div>
         <div class="text-xs text-slate-600 dark:text-zinc-400">

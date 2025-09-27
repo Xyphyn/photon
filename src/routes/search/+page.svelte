@@ -1,25 +1,23 @@
 <script lang="ts">
   import { navigating, page } from '$app/state'
-  import { profile } from '$lib/auth.svelte.js'
-  import { client } from '$lib/client/lemmy.svelte'
-  import ObjectAutocomplete from '$lib/components/lemmy/ObjectAutocomplete.svelte'
-  import { CommentItem } from '$lib/components/lemmy/comment/index.js'
-  import { CommunityItem } from '$lib/components/lemmy/community'
-  import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
-  import { PostItem } from '$lib/components/lemmy/post'
-  import UserItem from '$lib/components/lemmy/user/UserItem.svelte'
-  import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import Skeleton from '$lib/components/ui/generic/Skeleton.svelte'
-  import { CommonList, Header, SearchBar } from '$lib/components/ui/layout'
-  import Pageination from '$lib/components/ui/layout/Pageination.svelte'
-  import { t } from '$lib/i18n/translations.js'
+  import { client } from '$lib/api/client.svelte'
+  import { t } from '$lib/app/i18n'
+  import { searchParam } from '$lib/app/util.svelte'
+  import CommentItem from '$lib/feature/comment/CommentItem.svelte'
+  import CommunityItem from '$lib/feature/community/CommunityItem.svelte'
+  import Sort from '$lib/feature/filter/Sort.svelte'
   import {
     isCommentView,
     isCommunityView,
     isPostView,
     isUser,
-  } from '$lib/lemmy/item.js'
-  import { searchParam } from '$lib/util.svelte.js'
+  } from '$lib/feature/legacy/item'
+  import { PostItem } from '$lib/feature/post'
+  import UserItem from '$lib/feature/user/UserItem.svelte'
+  import ObjectAutocomplete from '$lib/ui/form/ObjectAutocomplete.svelte'
+  import Skeleton from '$lib/ui/generic/Skeleton.svelte'
+  import Placeholder from '$lib/ui/info/Placeholder.svelte'
+  import { CommonList, Header, Pageination, SearchBar } from '$lib/ui/layout'
   import { Button, Option, Select, TextLoader } from 'mono-svelte'
   import {
     AdjustmentsHorizontal,
@@ -27,7 +25,7 @@
     GlobeAmericas,
     Icon,
     MagnifyingGlass,
-  } from 'svelte-hero-icons'
+  } from 'svelte-hero-icons/dist'
   import { expoOut } from 'svelte/easing'
   import { fly, slide } from 'svelte/transition'
 
@@ -104,7 +102,6 @@
   >
     <ObjectAutocomplete
       label={$t('nav.create.community')}
-      jwt={profile.current?.jwt}
       listing_type="All"
       showWhenEmpty={true}
       onselect={(c) =>

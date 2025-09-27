@@ -1,11 +1,11 @@
 <script lang="ts">
-  import VirtualList from '$lib/components/render/VirtualList.svelte'
-  import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import RelativeDate from '$lib/components/util/RelativeDate.svelte'
-  import { publishedToDate } from '$lib/components/util/date.js'
-  import { t } from '$lib/i18n/translations.js'
+  import { t } from '$lib/app/i18n'
+  import VirtualList from '$lib/app/render/VirtualList.svelte'
+  import Placeholder from '$lib/ui/info/Placeholder.svelte'
+  import { publishedToDate } from '$lib/ui/util/date'
   import { Spinner, TextInput } from 'mono-svelte'
-  import { Check } from 'svelte-hero-icons'
+  import RelativeDate from 'mono-svelte/util/RelativeDate.svelte'
+  import { Check } from 'svelte-hero-icons/dist'
 
   let { data: passedData } = $props()
   let data = $state(passedData)
@@ -62,7 +62,7 @@
       <Placeholder
         icon={Check}
         title="No blocked instances"
-        description="This instance likely has federation disabled."
+        description="This instance does not block any others."
       />
     {/if}
   </div>

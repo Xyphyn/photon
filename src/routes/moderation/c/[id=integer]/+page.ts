@@ -1,5 +1,5 @@
-import { client } from '$lib/client/lemmy.svelte'
-import { _toModLog } from '../../../modlog/+page.js'
+import { client } from '$lib/api/client.svelte'
+import { _toModLog } from '../../../modlog/+page'
 
 export async function load({ params, fetch }) {
   const modlog = client({ func: fetch })

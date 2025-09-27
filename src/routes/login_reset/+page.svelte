@@ -1,18 +1,17 @@
 <script lang="ts">
-  import { preventDefault } from 'svelte/legacy'
-
-  import { Header } from '$lib/components/ui/layout'
+  import { getClient, validateInstance } from '$lib/api/client.svelte'
+  import { profile } from '$lib/app/auth.svelte'
+  import { errorMessage } from '$lib/app/error'
+  import { t } from '$lib/app/i18n'
   import {
     DEFAULT_INSTANCE_URL,
     LINKED_INSTANCE_URL,
-    instance as currentInstance,
-  } from '$lib/instance.svelte.js'
-  import { getClient, validateInstance } from '$lib/client/lemmy.svelte'
-  import { t } from '$lib/i18n/translations'
+  } from '$lib/app/instance.svelte'
+  import { Header } from '$lib/ui/layout'
   import { Button, TextInput, toast } from 'mono-svelte'
-  import { errorMessage } from '$lib/lemmy/error'
+  import { preventDefault } from 'svelte/legacy'
 
-  let instance = $state(LINKED_INSTANCE_URL || currentInstance.data || '')
+  let instance = $state(LINKED_INSTANCE_URL || profile.current.instance || '')
   let email = $state('')
   let loading = $state(false)
 

@@ -1,9 +1,9 @@
 <script lang="ts">
-  import type { IconSource } from 'svelte-hero-icons'
   import {
     CheckCircle,
     Fire,
     Icon,
+    type IconSource,
     LockClosed,
     LockOpen,
     Megaphone,
@@ -12,8 +12,8 @@
     UserMinus,
     UserPlus,
     XCircle,
-  } from 'svelte-hero-icons'
-  import type { ActionName } from './+page.js'
+  } from 'svelte-hero-icons/dist'
+  import type { ActionName } from './+page'
 
   interface Props {
     action: ActionName

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { isImage, isVideo } from '$lib/util.svelte'
+  import { isImage, isVideo } from '$lib/app/util.svelte'
   import { TextInput } from 'mono-svelte'
 
   let imageInput = $state('')

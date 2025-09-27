@@ -1,21 +1,24 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
-  import CommonList from '$lib/components/ui/layout/CommonList.svelte'
-  import { Header } from '$lib/components/ui/layout'
-  import Pageination from '$lib/components/ui/layout/Pageination.svelte'
-  import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import ProgressBar from '$lib/components/ui/ProgressBar.svelte'
-  import { t } from '$lib/i18n/translations'
-  import { client } from '$lib/client/lemmy.svelte'
-  import { searchParam } from '$lib/util.svelte.js'
-  import { Button, Material, Select, Spinner, toast } from 'mono-svelte'
-  import Option from 'mono-svelte/forms/select/Option.svelte'
+  import { client } from '$lib/api/client.svelte'
+  import { t } from '$lib/app/i18n'
+  import { searchParam } from '$lib/app/util.svelte'
+  import CommunityLink from '$lib/feature/community/CommunityLink.svelte'
+  import Fixate from '$lib/ui/generic/Fixate.svelte'
+  import Placeholder from '$lib/ui/info/Placeholder.svelte'
+  import ProgressBar from '$lib/ui/info/ProgressBar.svelte'
+  import { CommonList, Header, Pageination } from '$lib/ui/layout'
+  import { Button, Material, Option, Select, Spinner, toast } from 'mono-svelte'
   import { tick } from 'svelte'
-  import { Check, Funnel, Icon, ShieldCheck, XMark } from 'svelte-hero-icons'
+  import {
+    Check,
+    Funnel,
+    Icon,
+    ShieldCheck,
+    XMark,
+  } from 'svelte-hero-icons/dist'
   import Report from './Report.svelte'
-  import Fixate from '$lib/components/ui/generic/Fixate.svelte'
-  import { CommunityLink } from '$lib/components/lemmy/community'
 
   let { data = $bindable() } = $props()
 

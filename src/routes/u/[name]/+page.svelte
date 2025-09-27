@@ -1,23 +1,26 @@
 <script lang="ts">
   import { page } from '$app/state'
-  import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
-  import ItemList from '$lib/components/lemmy/generic/ItemList.svelte'
-  import { PostItem } from '$lib/components/lemmy/post'
-  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
-  import EntityHeader from '$lib/components/ui/EntityHeader.svelte'
-  import Expandable from '$lib/components/ui/Expandable.svelte'
-  import { CommonList, Header, Pageination } from '$lib/components/ui/layout'
-  import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import { publishedToDate } from '$lib/components/util/date.js'
-  import { formatRelativeDate } from '$lib/components/util/RelativeDate.svelte'
-  import { t } from '$lib/i18n/translations.js'
-  import { communityLink } from '$lib/util.svelte.js'
-  import { isCommentView } from '$lib/lemmy/item.js'
-  import { Option, Select } from 'mono-svelte'
-  import { AdjustmentsHorizontal, Icon, PencilSquare } from 'svelte-hero-icons'
-  import type { PageData } from './$types'
+  import { t } from '$lib/app/i18n'
+  import { communityLink } from '$lib/app/util.svelte'
+  import CommentItem from '$lib/feature/comment/CommentItem.svelte'
+  import Sort from '$lib/feature/filter/Sort.svelte'
+  import { isCommentView } from '$lib/feature/legacy/item'
+  import { PostItem } from '$lib/feature/post'
+  import UserLink from '$lib/feature/user/UserLink.svelte'
+  import EntityHeader from '$lib/ui/generic/EntityHeader.svelte'
+  import ItemList from '$lib/ui/generic/ItemList.svelte'
+  import Placeholder from '$lib/ui/info/Placeholder.svelte'
+  import { CommonList, Header, Pageination } from '$lib/ui/layout'
+  import { publishedToDate } from '$lib/ui/util/date'
+  import { Expandable, Option, Select } from 'mono-svelte'
+  import { formatRelativeDate } from 'mono-svelte/util/RelativeDate.svelte'
+  import {
+    AdjustmentsHorizontal,
+    Icon,
+    PencilSquare,
+  } from 'svelte-hero-icons/dist'
+  import { type PageData } from './$types'
   import UserActions from './UserActions.svelte'
-  import { CommentItem } from '$lib/components/lemmy/comment'
 
   interface Props {
     data: PageData

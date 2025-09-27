@@ -1,5 +1,5 @@
-import { client } from '$lib/client/lemmy.svelte'
-import { awaitIfServer } from '$lib/util.svelte.js'
+import { client } from '$lib/api/client.svelte'
+import { awaitIfServer } from '$lib/app/util.svelte'
 
 export async function load({ fetch, url }) {
   const page = Number(url.searchParams.get('page') || '1')

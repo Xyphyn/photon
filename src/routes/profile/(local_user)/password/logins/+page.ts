@@ -1,4 +1,4 @@
-import { client } from '$lib/client/lemmy.svelte'
+import { client } from '$lib/api/client.svelte'
 
 export async function load({ fetch }) {
   const response = await client({ func: fetch }).listLogins()

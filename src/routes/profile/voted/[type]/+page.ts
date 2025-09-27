@@ -1,6 +1,6 @@
-import { client } from '$lib/client/lemmy.svelte.js'
-import { getItemPublished } from '$lib/lemmy/item.js'
-import { ReactiveState } from '$lib/util.svelte.js'
+import { client } from '$lib/api/client.svelte'
+import { ReactiveState } from '$lib/app/util.svelte'
+import { getItemPublished } from '$lib/feature/legacy/item'
 import { error } from '@sveltejs/kit'
 
 export async function load({ url, params }) {

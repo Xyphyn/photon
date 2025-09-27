@@ -1,7 +1,7 @@
-import { client } from '$lib/client/lemmy.svelte.js'
-import type { SortType } from '$lib/client/types'
-import { feed } from '$lib/lemmy/feeds/feed.svelte.js'
-import { settings } from '$lib/settings.svelte.js'
+import { client } from '$lib/api/client.svelte'
+import type { SortType } from '$lib/api/types'
+import { settings } from '$lib/app/settings.svelte'
+import { feed } from '$lib/feature/feeds/feed.svelte'
 import { error } from '@sveltejs/kit'
 
 export async function load({ url, fetch, route, params }) {

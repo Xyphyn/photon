@@ -1,6 +1,6 @@
 <script>
-  import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
-  import { t } from '$lib/i18n/translations'
+  import { t } from '$lib/app/i18n'
+  import { Tabs } from '$lib/ui/layout'
   import { Button, Menu, MenuButton } from 'mono-svelte'
   import {
     ArrowDown,
@@ -8,13 +8,8 @@
     EllipsisHorizontal,
     Icon,
     Photo,
-  } from 'svelte-hero-icons'
-  /**
-   * @typedef {Object} Props
-   * @property {import('svelte').Snippet} [children]
-   */
+  } from 'svelte-hero-icons/dist'
 
-  /** @type {Props} */
   let { children } = $props()
 </script>
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { t } from '$lib/i18n/translations'
+  import { t } from '$lib/app/i18n'
   import { Badge } from 'mono-svelte'
   import {
     ComputerDesktop,
@@ -7,7 +7,7 @@
     DeviceTablet,
     Icon,
     type IconSource,
-  } from 'svelte-hero-icons'
+  } from 'svelte-hero-icons/dist'
 
   interface Props {
     supportedPlatforms?: {
@@ -80,6 +80,7 @@
     {#if icon}
       <Icon
         src={icon}
+        mini
         size="32"
         class="bg-red-200/20 dark:bg-red-600/20 p-1.5 rounded-lg color
           text-red-500 dark:text-red-300 float-left mr-2 clear-both"

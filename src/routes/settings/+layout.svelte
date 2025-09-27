@@ -1,11 +1,9 @@
 <script lang="ts">
-  import { Header } from '$lib/components/ui/layout'
-  import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
-  import { t } from '$lib/i18n/translations'
-  import { defaultSettings, settings } from '$lib/settings.svelte'
-  import { action, Button, Modal, modal, toast } from 'mono-svelte'
-  import TextArea from 'mono-svelte/forms/TextArea.svelte'
-  import { ArrowDownTray, ArrowPath, ArrowUpTray } from 'svelte-hero-icons'
+  import { t } from '$lib/app/i18n'
+  import { defaultSettings, settings } from '$lib/app/settings.svelte'
+  import { Header, Tabs } from '$lib/ui/layout'
+  import { action, Button, Modal, modal, TextArea, toast } from 'mono-svelte'
+  import { ArrowDownTray, ArrowPath, ArrowUpTray } from 'svelte-hero-icons/dist'
 
   let { children } = $props()
   let importing = $state(false)
@@ -18,7 +16,7 @@
     onaction={() => {
       try {
         if (importText == '') {
-          throw new Error('Import is empty')
+          throw new Error('import failed')
         }
         const parsed = JSON.parse(importText)
         const merged = { ...defaultSettings, ...parsed }
@@ -31,8 +29,8 @@
         toast({ content: err as string, type: 'error' })
       }
     }}
-    title={$t('routes.theme.import')}
-    action={$t('routes.theme.import')}
+    title={$t('settings.import')}
+    action={$t('settings.import')}
   >
     <TextArea bind:value={importText} style="font-family: monospace;" />
   </Modal>
@@ -41,6 +39,31 @@
 <svelte:head>
   <title>{$t('settings.title')}</title>
 </svelte:head>
+
+<Tabs
+  routes={[
+    {
+      href: '/settings/app',
+      name: $t('settings.app.title'),
+    },
+    {
+      href: '/settings/lemmy',
+      name: $t('settings.lemmy.title'),
+    },
+    {
+      href: '/settings/embeds',
+      name: $t('settings.embeds.title'),
+    },
+    {
+      href: '/settings/moderation',
+      name: $t('settings.moderation.title'),
+    },
+    {
+      href: '/settings/other',
+      name: $t('settings.other.title'),
+    },
+  ]}
+/>
 
 <Header pageHeader class="text-3xl font-bold flex justify-between">
   {$t('settings.title')}
@@ -93,31 +116,5 @@
     </div>
   {/snippet}
 </Header>
-
-<Tabs
-  routes={[
-    {
-      href: '/settings/app',
-      name: $t('settings.app.title'),
-    },
-    {
-      href: '/settings/lemmy',
-      name: $t('settings.lemmy.title'),
-    },
-    {
-      href: '/settings/embeds',
-      name: $t('settings.embeds.title'),
-    },
-    {
-      href: '/settings/moderation',
-      name: $t('settings.moderation.title'),
-    },
-    {
-      href: '/settings/other',
-      name: $t('settings.other.title'),
-    },
-  ]}
-  style="subpage"
-/>
 
 {@render children?.()}

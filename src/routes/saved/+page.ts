@@ -1,7 +1,7 @@
-import { profile } from '$lib/auth.svelte'
-import { client } from '$lib/client/lemmy.svelte'
+import { client } from '$lib/api/client.svelte'
+import type { CommentView, PostView } from '$lib/api/types'
+import { profile } from '$lib/app/auth.svelte'
 import { error } from '@sveltejs/kit'
-import type { CommentView, PostView } from '$lib/client/types'
 
 function getSavedItemPublished(item: PostView | CommentView) {
   if ('comment' in item) {

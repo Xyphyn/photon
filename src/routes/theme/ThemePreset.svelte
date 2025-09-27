@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { t } from '$lib/i18n/translations'
-  import { theme as themeData, type Theme } from '$lib/ui/theme/theme.svelte'
+  import { t } from '$lib/app/i18n'
+  import { type Theme, theme as themeData } from '$lib/app/theme/theme.svelte'
   import { action, Button, Material, modal, TextInput } from 'mono-svelte'
-  import { CheckCircle, Icon, Trash } from 'svelte-hero-icons'
+  import { CheckCircle, Icon, Trash } from 'svelte-hero-icons/dist'
 
   interface Props {
     theme: Theme
@@ -16,10 +16,10 @@
 <button class="h-full" onclick={() => (themeData.data.currentTheme = theme.id)}>
   <Material
     padding="none"
+    rounding="none"
     class="{theme.id == themeData.data.currentTheme
-      ? 'ring-2 ring-inset ring-primary-900 dark:ring-primary-100'
-      : ''} flex relative cursor-pointer h-full flex-col text-left p-0.5"
-    rounding="2xl"
+      ? 'ring-2 ring-primary-900 dark:ring-primary-100'
+      : ''} rounded-2xl flex relative cursor-pointer h-full flex-col text-left p-0.5"
   >
     <div
       class={[
@@ -42,7 +42,7 @@
         src={CheckCircle}
         size="20"
         solid
-        class="absolute top-0 right-0 m-2 text-primary-900 dark:text-primary-100"
+        class="absolute top-0 right-0 m-2 text-primary-100"
       />
     {/if}
     <div class="px-4 py-2 flex items-center gap-1 justify-between">

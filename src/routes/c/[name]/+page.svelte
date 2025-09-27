@@ -1,16 +1,16 @@
 <script lang="ts">
   import { browser } from '$app/environment'
   import { navigating, page } from '$app/state'
-  import { profile } from '$lib/auth.svelte.js'
-  import { site } from '$lib/client/lemmy.svelte'
-  import CommunityHeader from '$lib/components/lemmy/community/CommunityHeader.svelte'
-  import { PostListShell } from '$lib/components/ui/layout'
-  import { t } from '$lib/i18n/translations.js'
-  import { resumables } from '$lib/lemmy/item'
-  import { setSessionStorage } from '$lib/session.js'
+  import { site } from '$lib/api/client.svelte'
+  import { profile } from '$lib/app/auth.svelte'
+  import { t } from '$lib/app/i18n'
+  import { setSessionStorage } from '$lib/app/session'
+  import CommunityHeader from '$lib/feature/community/CommunityHeader.svelte'
+  import { resumables } from '$lib/feature/legacy/item'
+  import { PostListShell } from '$lib/ui/layout'
   import { Badge, Button, Note } from 'mono-svelte'
   import { onDestroy, onMount } from 'svelte'
-  import { ArrowRight, Icon, Plus } from 'svelte-hero-icons'
+  import { ArrowRight, Icon, Plus } from 'svelte-hero-icons/dist'
 
   let { data } = $props()
 

@@ -1,5 +1,5 @@
-import type { ListingType, SortType } from '$lib/client/types'
-import { LINKED_INSTANCE_URL } from '$lib/instance.svelte'
+import type { ListingType, SortType } from '$lib/api/types'
+import { LINKED_INSTANCE_URL } from '$lib/app/instance.svelte'
 
 export function load({ url }) {
   const sort = (url.searchParams.get('sort') as SortType) || 'TopDay'

@@ -1,7 +1,7 @@
-import { getClient } from '$lib/client/lemmy.svelte'
+import { client } from '$lib/api/client.svelte'
 
 export async function load({ fetch, params }) {
-  await getClient(undefined, fetch).verifyEmail({
+  await client({ func: fetch }).verifyEmail({
     token: params.token,
   })
 }
