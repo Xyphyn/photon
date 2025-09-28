@@ -6,7 +6,7 @@
   import UserAutocomplete from '$lib/feature/user/UserAutocomplete.svelte'
   import UserLink from '$lib/feature/user/UserLink.svelte'
   import Placeholder from '$lib/ui/info/Placeholder.svelte'
-  import { Header } from '$lib/ui/layout'
+  import { CommonList, Header } from '$lib/ui/layout'
   import { Button, toast } from 'mono-svelte'
   import { Icon, Plus, QuestionMarkCircle, Trash } from 'svelte-hero-icons/dist'
 
@@ -58,19 +58,21 @@
         description={$t('routes.admin.team.empty.description')}
       />
     {:else}
-      {#each data.site?.admins ?? [] as admin (admin.person.id)}
-        <div class="py-3 flex items-center justify-between">
-          <UserLink avatar showInstance={false} user={admin.person} />
-          <Button
-            onclick={() => {
-              removeAdmin(admin.person.id, false)
-            }}
-            size="square-md"
-          >
-            <Icon src={Trash} mini size="16" />
-          </Button>
-        </div>
-      {/each}
+      <CommonList items={data.site?.admins ?? []}>
+        {#snippet item(admin)}
+          <div class="flex items-center justify-between">
+            <UserLink avatar showInstance={false} user={admin.person} />
+            <Button
+              onclick={() => {
+                removeAdmin(admin.person.id, false)
+              }}
+              size="square-md"
+            >
+              <Icon src={Trash} mini size="16" />
+            </Button>
+          </div>
+        {/snippet}
+      </CommonList>
     {/if}
   </ul>
   <form
