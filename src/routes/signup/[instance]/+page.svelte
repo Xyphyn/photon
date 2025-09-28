@@ -59,7 +59,7 @@
     honeypot = $state<string>(),
     nsfw = $state(false),
     verifying = $state(false)
-  
+
   const instanceType: ClientType = $state({ name: 'lemmy', baseUrl: '/api/v3' })
 
   const getCaptcha = async () =>
@@ -100,7 +100,7 @@
         if (res.verify_email_sent) return (stage = 'verify')
 
         if (registrationMode == 'RequireApplication')
-          return stage == 'application'
+          return (stage = 'application')
       } else {
         throw new Error($t('toast.failSignup'))
       }
