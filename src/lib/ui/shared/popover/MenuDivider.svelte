@@ -3,12 +3,16 @@
 
   let {
     showLabel = false,
+    hidden = false,
     children,
-  }: { showLabel?: boolean; children: Snippet } = $props()
+  }: { showLabel?: boolean; hidden?: boolean; children: Snippet } = $props()
 </script>
 
 <div
-  class="text-slate-800 dark:text-zinc-200 text-xs font-medium mx-3 my-1.5 flex items-center gap-1"
+  class={[
+    'text-slate-800 dark:text-zinc-200 text-xs font-medium mx-3 my-1.5 flex items-center gap-1',
+    hidden && 'sr-only',
+  ]}
 >
   <div class={[!showLabel && 'sr-only']}>{@render children?.()}</div>
   <hr

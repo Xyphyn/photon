@@ -19,7 +19,7 @@
   } from 'svelte-hero-icons/dist'
   import type { Attachment } from 'svelte/attachments'
   import { isCommentView, isPostView } from '../legacy/item'
-  import { amMod, ban, isAdmin, remove, viewVotes } from './moderation'
+  import { ban, remove, viewVotes } from './moderation'
 
   interface Props {
     item: PostView | CommentView
@@ -79,9 +79,9 @@
   {#snippet target(attachment)}
     {@render passedTarget(attachment, acting)}
   {/snippet}
-  {#if (profile.current?.user && amMod(profile.current.user, item.community)) || (profile.current?.user && isAdmin(profile.current.user))}
+  {#if profile.isMod(item.community) || profile.isAdmin}
     <MenuDivider showLabel>
-      {#if !item.community.local && !amMod(profile.current.user, item.community)}
+      {#if !item.community.local && !profile.isMod(item.community)}
         {$t('moderation.labelInstanceOnly')}
       {:else}
         {$t('moderation.label')}
@@ -111,7 +111,7 @@
             ? $t('moderation.unfeature')
             : $t('moderation.feature')}
         </span>
-        {#if isAdmin(profile.current.user)}
+        {#if profile.isAdmin}
           <span class="text-xs opacity-80">{$t('form.post.community')}</span>
         {/if}
       </div>
@@ -151,7 +151,7 @@
       {$t('moderation.votes')}
     </MenuButton>
   {/if}
-  {#if profile.current?.user && isAdmin(profile.current.user)}
+  {#if profile.isAdmin}
     <MenuDivider showLabel>{$t('admin.label')}</MenuDivider>
     <MenuButton
       color="success-subtle"

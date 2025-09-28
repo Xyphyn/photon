@@ -38,7 +38,6 @@
     ShieldCheck,
     Tag,
   } from 'svelte-hero-icons/dist'
-  import { amMod, isAdmin } from '../moderation/moderation'
   import { addSubscription } from '../user'
   import CommunityFlair from './CommunityFlair.svelte'
 
@@ -219,7 +218,7 @@
         />
       {/if}
     {/if}
-    {#if profile.current?.user && amMod(profile.current.user, community_view.community)}
+    {#if profile.isMod(community_view.community)}
       <SidebarButton
         href="/c/{fullCommunityName(
           community_view.community.name,
@@ -242,7 +241,7 @@
         {$t('cards.community.modlog')}
       </MenuButton>
       {#if profile.current?.jwt}
-        {#if profile.current.user && amMod(profile.current.user, community_view.community)}
+        {#if profile.isMod(community_view.community)}
           <MenuButton
             color="success-subtle"
             href="/moderation?community={community_view.community.id}"
@@ -272,7 +271,7 @@
             {$t('cards.community.blockInstance')}
           </MenuButton>
         {/if}
-        {#if profile.current?.user && isAdmin(profile.current.user)}
+        {#if profile.isAdmin}
           <MenuButton
             color="danger-subtle"
             onclick={() =>

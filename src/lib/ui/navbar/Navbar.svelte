@@ -3,7 +3,6 @@
   import { notifications, profile } from '$lib/app/auth.svelte'
   import { t } from '$lib/app/i18n'
   import { LINKED_INSTANCE_URL } from '$lib/app/instance.svelte'
-  import { amModOfAny, isAdmin } from '$lib/feature/moderation/moderation'
   import { Menu, Spinner } from 'mono-svelte'
   import {
     Bars3,
@@ -71,7 +70,7 @@
   </NavButton>
   <div class="hidden md:block md:flex-1"></div>
   <div class="sr-only md:not-sr-only md:contents">
-    {#if profile.current?.user && isAdmin(profile.current.user)}
+    {#if profile.isAdmin}
       <NavButton
         href="/admin"
         label={$t('nav.admin')}
@@ -80,7 +79,7 @@
         isSelectedFilter={(path) => path.startsWith('/admin')}
       />
     {/if}
-    {#if amModOfAny(profile.current?.user)}
+    {#if profile.isMod()}
       <NavButton
         href="/moderation"
         label={$t('nav.moderation')}

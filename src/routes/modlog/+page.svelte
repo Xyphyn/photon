@@ -7,7 +7,6 @@
   import { settings } from '$lib/app/settings.svelte'
   import { searchParam } from '$lib/app/util.svelte'
   import CommunityLink from '$lib/feature/community/CommunityLink.svelte'
-  import { isAdmin } from '$lib/feature/moderation/moderation'
   import { postLink } from '$lib/feature/post'
   import UserAutocomplete from '$lib/feature/user/UserAutocomplete.svelte'
   import UserLink from '$lib/feature/user/UserLink.svelte'
@@ -194,7 +193,7 @@
       onselect={(e) =>
         searchParam(page.url, 'user', e?.id.toString() ?? '', 'page')}
     />
-    {#if profile.current?.user && isAdmin(profile.current?.user)}
+    {#if profile.isAdmin}
       <UserAutocomplete
         placeholder="Filter by moderator"
         listing_type="All"

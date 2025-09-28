@@ -2,7 +2,8 @@
   import type { CommentView } from '$lib/api/types'
   import { profile } from '$lib/app/auth.svelte'
   import { t } from '$lib/app/i18n'
-  import { Button, Menu, MenuButton, MenuDivider } from 'mono-svelte'
+  import { Menu, MenuButton, MenuDivider } from 'mono-svelte'
+  import type { Snippet } from 'svelte'
   import {
     ArrowsUpDown,
     Fire,
@@ -12,32 +13,22 @@
     ShieldExclamation,
     Trash,
   } from 'svelte-hero-icons/dist'
+  import type { Attachment } from 'svelte/attachments'
   import { isCommentView } from '../legacy/item'
-  import { amMod, ban, feature, isAdmin, remove, viewVotes } from './moderation'
-  import ShieldIcon from './ShieldIcon.svelte'
+  import { ban, feature, remove, viewVotes } from './moderation'
 
   interface Props {
     item: CommentView
+    target: Snippet<[Attachment]>
   }
 
-  let { item = $bindable(), ...rest }: Props = $props()
+  let { item = $bindable(), target, ...rest }: Props = $props()
 </script>
 
-<Menu placement="bottom" class="top-0 h-[26px] w-[26px] ">
-  {#snippet target(attachment)}
-    <Button
-      {@attach attachment}
-      class="w-[26px] h-[26px] hover:text-green-500! dark:text-zinc-400 text-slate-600"
-      size="square-md"
-      color="tertiary"
-      {...rest}
-    >
-      <ShieldIcon filled width={14} />
-    </Button>
-  {/snippet}
-  {#if (profile.current?.user && amMod(profile.current.user, item.community)) || (profile.current?.user && isAdmin(profile.current.user))}
-    <MenuDivider showLabel>
-      {#if !item.community.local && !amMod(profile.current.user, item.community)}
+<Menu {...rest} placement="bottom" {target}>
+  {#if profile.isMod(item.community) || profile.isAdmin}
+    <MenuDivider hidden>
+      {#if !item.community.local && !profile.isMod(item.community)}
         {$t('moderation.labelInstanceOnly')}
       {:else}
         {$t('moderation.label')}
@@ -98,7 +89,7 @@
     </MenuButton>
   {/if}
 
-  {#if profile.current?.user && isAdmin(profile.current.user)}
+  {#if profile.isAdmin}
     <MenuDivider showLabel>{$t('admin.label')}</MenuDivider>
     <MenuButton
       color="danger-subtle"

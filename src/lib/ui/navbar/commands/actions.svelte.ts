@@ -9,7 +9,6 @@ import { settings } from '$lib/app/settings.svelte'
 import { theme, type ThemeData } from '$lib/app/theme/theme.svelte'
 import { fullCommunityName } from '$lib/app/util.svelte'
 import type { ResumableItem } from '$lib/feature/legacy/item'
-import { amModOfAny, isAdmin } from '$lib/feature/moderation/moderation'
 import {
   ArrowRightOnRectangle,
   ArrowTrendingDown,
@@ -92,7 +91,7 @@ export function getGroups(
           name: t.get('nav.communities'),
           icon: GlobeAlt,
         },
-        ...(amModOfAny(profile.user)
+        ...(currentProfile.isMod()
           ? [
               {
                 href: '/moderation',
@@ -101,7 +100,7 @@ export function getGroups(
               },
             ]
           : []),
-        ...(profile.user && isAdmin(profile.user)
+        ...(currentProfile.isAdmin
           ? [
               {
                 href: '/admin',

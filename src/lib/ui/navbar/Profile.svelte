@@ -6,7 +6,6 @@
   import { settings } from '$lib/app/settings.svelte'
   import { theme } from '$lib/app/theme/theme.svelte'
   import InstanceCard from '$lib/feature/instance/InstanceCard.svelte'
-  import { amModOfAny, isAdmin } from '$lib/feature/moderation/moderation'
   import {
     Badge,
     Button,
@@ -70,7 +69,7 @@
       </Badge>
     {/if}
   </MenuButton>
-  {#if amModOfAny(profile.current.user)}
+  {#if profile.isMod()}
     <MenuButton href="/moderation" icon={ShieldCheck}>
       {$t('routes.moderation.feed')}
       {#snippet suffix()}
@@ -78,7 +77,7 @@
       {/snippet}
     </MenuButton>
   {/if}
-  {#if profile.current.user && isAdmin(profile.current.user)}
+  {#if profile.isAdmin}
     <MenuButton href="/admin/applications" icon={ServerStack}>
       {$t('routes.admin.applications.title')}
       {#snippet suffix()}

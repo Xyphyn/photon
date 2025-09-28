@@ -4,7 +4,6 @@
   import { t } from '$lib/app/i18n'
   import { settings, type View } from '$lib/app/settings.svelte'
   import { save } from '$lib/feature/legacy/contentview'
-  import { amMod, isAdmin } from '$lib/feature/moderation/moderation'
   import { publishedToDate } from '$lib/ui/util/date'
   import FormattedNumber from '$lib/ui/util/FormattedNumber.svelte'
   import { Button, Menu, Modal, Spinner } from 'mono-svelte'
@@ -133,7 +132,7 @@
       icon={BugAnt}
     ></Button>
   {/if}
-  {#if profile.current?.user && (amMod(profile.current.user, post.community) || isAdmin(profile.current.user))}
+  {#if profile.isMod(post.community) || profile.isAdmin}
     {#await import('$lib/feature/moderation/ModerationMenu.svelte') then { default: ModerationMenu }}
       <ModerationMenu bind:item={post}>
         {#snippet target(attachment, acting)}

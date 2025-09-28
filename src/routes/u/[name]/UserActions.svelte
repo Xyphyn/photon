@@ -3,7 +3,7 @@
   import type { PersonView } from '$lib/api/types'
   import { profile } from '$lib/app/auth.svelte'
   import { t } from '$lib/app/i18n'
-  import { ban, isAdmin } from '$lib/feature/moderation/moderation'
+  import { ban } from '$lib/feature/moderation/moderation'
   import { blockUser, isBlocked } from '$lib/feature/user'
   import {
     Button,
@@ -91,7 +91,7 @@
         {$t('form.profile.matrix')}
       </Button>
     {/if}
-    {#if isAdmin(profile.current?.user)}
+    {#if profile.isAdmin}
       <Menu class="ml-auto" placement="bottom-end">
         {#snippet target(attachment)}
           <Button

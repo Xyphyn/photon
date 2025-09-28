@@ -14,7 +14,7 @@
   import Comment from '../comment/Comment.svelte'
   import { isCommentView, isPostView } from '../legacy/item'
   import { Post } from '../post'
-  import { amMod, isAdmin, removalTemplate } from './moderation'
+  import { removalTemplate } from './moderation'
 
   interface Props {
     open: boolean
@@ -213,7 +213,7 @@
         bind:value={reason}
       />
 
-      {#if !removed && profile.current?.user && (amMod(profile.current.user, item.community) || (isAdmin(profile.current.user) && item.community.local))}
+      {#if !removed}
         <Switch bind:checked={commentReason}>
           {$t('moderation.removeSubmission.withReason')}
         </Switch>

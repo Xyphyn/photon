@@ -3,7 +3,6 @@ import { env } from '$env/dynamic/public'
 import { DEFAULT_CLIENT_TYPE, type ClientType } from '$lib/api/base'
 import { client, getClient, site } from '$lib/api/client.svelte'
 import type { Community, GetSiteResponse, MyUserInfo } from '$lib/api/types'
-import { amModOfAny, isAdmin } from '$lib/feature/moderation/moderation'
 import { publishedToDate } from '$lib/ui/util/date'
 import { toast } from 'mono-svelte'
 import { writable } from 'svelte/store'
@@ -207,11 +206,7 @@ class Profile {
     const { user, jwt } = profile.current
     if (!user || !jwt) throw new Error('checkInbox() called with invalid user')
 
-    const notifs = await getNotificationCount(
-      jwt,
-      amModOfAny(user) ?? false,
-      user ? isAdmin(user) : false,
-    )
+    const notifs = await getNotificationCount(jwt, this.isMod(), this.isAdmin)
 
     return {
       inbox: notifs.unreads,
@@ -266,6 +261,26 @@ class Profile {
     } catch {
       /* empty */
     }
+  }
+
+  isMod(community?: Community) {
+    if (community)
+      return (
+        (this.#current.user?.moderates.some(
+          (i) => i.community.id == community.id,
+        ) ||
+          (community.local && this.isAdmin)) ??
+        false
+      )
+    else return (this.#current.user?.moderates.length ?? 0) > 0
+  }
+
+  get isAdmin() {
+    return (
+      site.data?.admins.some(
+        (i) => i.person.id == this.#current.user?.local_user_view.person.id,
+      ) ?? false
+    )
   }
 
   mainEffect = $effect.root(() => {

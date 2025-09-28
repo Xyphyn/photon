@@ -12,11 +12,12 @@
     Flag,
     PencilSquare,
     Share,
+    ShieldCheck,
     Trash,
   } from 'svelte-hero-icons/dist'
   import { deleteItem, save } from '../legacy/contentview'
   import CommentModerationMenu from '../moderation/CommentModerationMenu.svelte'
-  import { amMod, isAdmin, report } from '../moderation/moderation'
+  import { report } from '../moderation/moderation'
   import CommentVote from './CommentVote.svelte'
 
   interface Props {
@@ -36,7 +37,7 @@
 
 <div
   class={[
-    'flex flex-row items-center gap-0.5 h-7 w-full',
+    'flex flex-row items-center gap-0.5 w-full',
     settings.posts.reverseActions && 'flex-row-reverse',
   ]}
 >
@@ -57,8 +58,20 @@
   >
     {$t('comment.reply')}
   </Button>
-  {#if profile.current?.user && (amMod(profile.current?.user, comment.community) || isAdmin(profile.current.user))}
-    <CommentModerationMenu bind:item={comment} />
+  {#if profile.current?.user && (profile.isMod(comment.community) || profile.isAdmin)}
+    <CommentModerationMenu bind:item={comment}>
+      {#snippet target(attachment)}
+        <Button
+          {@attach attachment}
+          class="dark:text-zinc-400 text-slate-600"
+          color="tertiary"
+          size="square-md"
+          rounding="pill"
+          icon={ShieldCheck}
+          aria-label={$t('moderation.label')}
+        />
+      {/snippet}
+    </CommentModerationMenu>
   {/if}
   <Menu placement="bottom">
     {#snippet target(attachment)}

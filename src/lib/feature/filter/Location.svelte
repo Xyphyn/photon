@@ -15,7 +15,6 @@
     Newspaper,
     ShieldCheck,
   } from 'svelte-hero-icons/dist'
-  import { amModOfAny } from '../moderation/moderation'
 
   interface Props extends SelectProps<string> {
     selected: string
@@ -64,11 +63,7 @@
   >
     {$t('filter.location.subscribed')}
   </Option>
-  <Option
-    value="ModeratorView"
-    disabled={!profile.current?.jwt || !amModOfAny(profile.current?.user)}
-    icon={ShieldCheck}
-  >
+  <Option value="ModeratorView" disabled={!profile.isMod()} icon={ShieldCheck}>
     {$t('filter.location.moderator')}
   </Option>
   {@render children?.()}

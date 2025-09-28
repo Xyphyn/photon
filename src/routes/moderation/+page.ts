@@ -2,7 +2,6 @@ import { getClient } from '$lib/api/client.svelte'
 import { profile } from '$lib/app/auth.svelte'
 import { ReactiveState } from '$lib/app/util.svelte'
 import { isCommentView, isPostView } from '$lib/feature/legacy/item'
-import { isAdmin } from '$lib/feature/moderation/moderation'
 import {
   generalizeCommentReport,
   generalizePostReport,
@@ -30,7 +29,7 @@ export async function load({ url, fetch }) {
     community_id: community,
   }
 
-  const admin = profile.current?.user ? isAdmin(profile!.current.user!) : false
+  const admin = profile.isAdmin
 
   const [posts, comments, messages] = await Promise.all([
     client.listPostReports({
