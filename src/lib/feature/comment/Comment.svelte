@@ -165,7 +165,7 @@
             {#if node.comment_view.creator_is_moderator}
               <Icon
                 src={ShieldCheck}
-                size="14"
+                size="16"
                 micro
                 class="text-green-500"
                 aria-label={$t('class.moderator')}
@@ -242,12 +242,12 @@
     </label>
   {/if}
   <input
-    class="hidden comment-expand"
+    class="appearance-none absolute inset-0 pointer-events-none comment-expand"
     type="checkbox"
     id="comment-expand-{node.comment_view.comment.id}"
     bind:checked={open}
   />
-  <div class={['expand max-w-full', contentClass]}>
+  <div class={['expand max-w-full', contentClass]} inert={!open}>
     <div id="comment-content">
       <div
         class={[

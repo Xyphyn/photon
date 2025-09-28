@@ -94,7 +94,7 @@
     >
       <div
         bind:this={el}
-        use:trapFocus
+        use:trapFocus={true}
         transition:scale|global={{
           start: 0.97,
           easing: backOut,

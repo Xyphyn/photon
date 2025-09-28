@@ -15,9 +15,11 @@
 </script>
 
 {#snippet itemInfo()}
-  <Button color="primary" rounding="pill" class="w-max" href={item.link}>
-    {$t('common.jump')}
-  </Button>
+  {#if item.link}
+    <Button color="primary" rounding="pill" class="w-max" href={item.link}>
+      {$t('common.jump')}
+    </Button>
+  {/if}
   {#if item.moderatee}
     <UserLink avatar user={item.moderatee} />
   {/if}
@@ -71,6 +73,8 @@
       >
         {$t('common.info')}
       </Button>
+    {:else if item.moderatee}
+      <UserLink user={item.moderatee} />
     {/if}
   </td>
 </tr>
