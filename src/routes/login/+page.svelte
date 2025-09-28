@@ -1,28 +1,28 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
-  import { profile } from '$lib/auth.svelte'
-  import { DEFAULT_CLIENT_TYPE, type ClientType } from '$lib/client/base'
-  import { client } from '$lib/client/lemmy.svelte'
-  import ErrorContainer, {
-    clearErrorScope,
-    pushError,
-  } from '$lib/components/error/ErrorContainer.svelte'
-  import { Header } from '$lib/components/ui/layout'
-  import { t } from '$lib/i18n/translations'
+  import { type ClientType, DEFAULT_CLIENT_TYPE } from '$lib/api/base'
+  import { client } from '$lib/api/client.svelte'
+  import { profile } from '$lib/app/auth.svelte'
+  import { errorMessage } from '$lib/app/error'
+  import { t } from '$lib/app/i18n'
   import {
     DEFAULT_INSTANCE_URL,
     LINKED_INSTANCE_URL,
-  } from '$lib/instance.svelte.js'
-  import { errorMessage } from '$lib/lemmy/error'
-  import { DOMAIN_REGEX_FORMS } from '$lib/util.svelte.js'
+  } from '$lib/app/instance.svelte'
+  import { DOMAIN_REGEX_FORMS } from '$lib/app/util.svelte'
+  import ErrorContainer, {
+    clearErrorScope,
+    pushError,
+  } from '$lib/ui/info/ErrorContainer.svelte'
+  import { Header } from '$lib/ui/layout'
   import { Button, Note, Option, Select, TextInput, toast } from 'mono-svelte'
   import {
     Icon,
     Identification,
     QuestionMarkCircle,
     UserCircle,
-  } from 'svelte-hero-icons'
+  } from 'svelte-hero-icons/dist'
 
   interface Props {
     ref?: string
@@ -158,8 +158,9 @@
                   else data.client = { name: 'piefed', baseUrl: '/api/alpha' }
                 }
               }
-              class="border-0 rounded-none! border-l"
+              class="border-y-0! border-r-0! rounded-none! border-l max-w-24"
             >
+              <Option data-label="true" value="placeholder" disabled>{$t('form.instanceType')}</Option>
               <Option value="lemmyv3">Lemmy</Option>
               <Option value="piefedvalpha">Piefed</Option>
             </Select>

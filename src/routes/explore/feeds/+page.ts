@@ -1,5 +1,5 @@
-import { client } from '$lib/client/lemmy.svelte.js'
-import { ReactiveState } from '$lib/util.svelte'
+import { client } from '$lib/api/client.svelte'
+import { ReactiveState } from '$lib/app/util.svelte'
 import { error } from '@sveltejs/kit'
 
 export async function load({ fetch }) {

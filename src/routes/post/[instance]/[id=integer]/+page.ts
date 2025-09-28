@@ -1,10 +1,10 @@
 import { resolveRoute } from '$app/paths'
-import { profile } from '$lib/auth.svelte.js'
-import { client } from '$lib/client/lemmy.svelte'
-import CommunityCard from '$lib/components/lemmy/community/CommunityCard.svelte'
-import { feed } from '$lib/lemmy/feeds/feed.svelte.js'
-import { settings } from '$lib/settings.svelte'
-import { ReactiveState } from '$lib/util.svelte.js'
+import { client } from '$lib/api/client.svelte'
+import { profile } from '$lib/app/auth.svelte'
+import { settings } from '$lib/app/settings.svelte'
+import { ReactiveState } from '$lib/app/util.svelte'
+import CommunityCard from '$lib/feature/community/CommunityCard.svelte'
+import { Feed, feed, feeds, type FeedTypes } from '$lib/feature/feeds/feed.svelte'
 import { redirect } from '@sveltejs/kit'
 
 function buildContext(thread?: string) {
@@ -29,23 +29,10 @@ function buildContext(thread?: string) {
 async function findInFeed(id: '/' | '/c/[name]' | '/f/[id]', postId: string) {
   // this never actually loads anything
   if (id == '/') {
-    const resolved = feed(id, async (p) => ({
-      posts: (await client().getPosts(p)).posts,
-      client: {},
-      params: p,
-    })).peek()
-
-    return resolved
-      ? resolved?.posts?.find((i) => i.post.id.toString() == postId)
-      : undefined
+    return (feeds.get(id) as Feed<FeedTypes['/'][0], FeedTypes['/'][1]>)?.peek()
+      ?.posts.find((i) => i.post.id.toString() == postId)
   } else {
-    return feed(id, async (p) => ({
-      ...(await client().getPosts(p)),
-      client: {},
-      params: p,
-      community: await client().getCommunity({}),
-    }))
-      .peek()
+    return (feeds.get(id) as Feed<FeedTypes['/c/[name]'][0], FeedTypes['/c/[name]'][1]>)?.peek()
       ?.posts.find((i) => i.post.id.toString() == postId)
   }
 }

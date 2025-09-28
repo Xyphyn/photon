@@ -1,9 +1,7 @@
 <script lang="ts">
-  import {
-    CommunityForm,
-    CommunityTitle,
-  } from '$lib/components/lemmy/community'
-  import { Header } from '$lib/components/ui/layout'
+  import CommunityForm from '$lib/feature/community/CommunityForm.svelte'
+  import CommunityTitle from '$lib/feature/community/CommunityTitle.svelte'
+  import { Header } from '$lib/ui/layout'
 
   let { data } = $props()
 </script>

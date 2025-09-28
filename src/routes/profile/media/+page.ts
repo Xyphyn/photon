@@ -1,6 +1,6 @@
-import { profile } from '$lib/auth.svelte'
-import { client } from '$lib/client/lemmy.svelte'
-import { ReactiveState } from '$lib/util.svelte.js'
+import { client } from '$lib/api/client.svelte'
+import { profile } from '$lib/app/auth.svelte'
+import { ReactiveState } from '$lib/app/util.svelte'
 
 export async function load({ fetch, url }) {
   const { jwt } = profile.current

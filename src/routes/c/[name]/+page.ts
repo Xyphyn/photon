@@ -1,8 +1,8 @@
-import { settings } from '$lib/settings.svelte'
-import type { SortType } from '$lib/client/types'
-import { feed } from '$lib/lemmy/feeds/feed.svelte.js'
-import { client } from '$lib/client/lemmy.svelte.js'
-import { CommunityCard } from '$lib/components/lemmy/community'
+import { client } from '$lib/api/client.svelte'
+import type { SortType } from '$lib/api/types'
+import { settings } from '$lib/app/settings.svelte'
+import CommunityCard from '$lib/feature/community/CommunityCard.svelte'
+import { feed } from '$lib/feature/feeds/feed.svelte'
 
 export async function load({ params, fetch, url, route }) {
   const cursor: string | undefined = url.searchParams.get('cursor') as

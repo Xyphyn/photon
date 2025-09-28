@@ -1,17 +1,16 @@
 <script lang="ts">
-  import { preventDefault } from 'svelte/legacy'
-
-  import { profile } from '$lib/auth.svelte.js'
-  import Markdown from '$lib/components/markdown/Markdown.svelte'
-  import MarkdownEditor from '$lib/components/markdown/MarkdownEditor.svelte'
-  import { Header } from '$lib/components/ui/layout'
-  import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import { t } from '$lib/i18n/translations.js'
-  import { getClient } from '$lib/client/lemmy.svelte'
-  import type { Tagline } from '$lib/client/types'
+  import { getClient } from '$lib/api/client.svelte'
+  import type { Tagline } from '$lib/api/types'
+  import { profile } from '$lib/app/auth.svelte'
+  import { errorMessage } from '$lib/app/error'
+  import { t } from '$lib/app/i18n'
+  import Markdown from '$lib/app/markdown/Markdown.svelte'
+  import MarkdownEditor from '$lib/app/markdown/MarkdownEditor.svelte'
+  import Placeholder from '$lib/ui/info/Placeholder.svelte'
+  import { CommonList, Header } from '$lib/ui/layout'
   import { Button, toast } from 'mono-svelte'
-  import { Icon, Plus, Trash } from 'svelte-hero-icons'
-  import { errorMessage } from '$lib/lemmy/error.js'
+  import { Icon, Plus, Trash } from 'svelte-hero-icons/dist'
+  import { preventDefault } from 'svelte/legacy'
 
   let { data } = $props()
 
@@ -60,9 +59,9 @@
     </Button>
   </Header>
 
-  <ul>
-    {#each taglines as tagline (tagline)}
-      <div class="flex py-3">
+  <CommonList items={taglines}>
+    {#snippet item(tagline)}
+      <div class="flex">
         <Markdown source={tagline} inline />
 
         <div class="flex gap-2 ml-auto">
@@ -82,8 +81,8 @@
           </Button>
         </div>
       </div>
-    {/each}
-  </ul>
+    {/snippet}
+  </CommonList>
   <form
     class="flex flex-col mt-auto gap-2 w-full"
     onsubmit={preventDefault(() => {
@@ -107,7 +106,9 @@
       title={$t('routes.admin.taglines.empty.title')}
       description={$t('routes.admin.taglines.empty.description')}
     >
-      <div class="mt-4 max-w-xl w-full flex flex-col gap-2">
+      <div
+        class="mt-4 max-w-xl w-full flex flex-col gap-2 text-slate-900 dark:text-zinc-50"
+      >
         <form
           class="flex flex-col gap-2 w-full"
           onsubmit={preventDefault(() => {

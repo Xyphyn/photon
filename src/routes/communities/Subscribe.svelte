@@ -1,13 +1,13 @@
 <script lang="ts">
-  import { getClient } from '$lib/client/lemmy.svelte'
+  import { getClient } from '$lib/api/client.svelte'
   import type {
     CommunityResponse,
     CommunityView,
     SubscribedType,
-  } from '$lib/client/types'
-  import { profile } from '$lib/auth.svelte.js'
+  } from '$lib/api/types'
+  import { profile } from '$lib/app/auth.svelte'
+  import { errorMessage } from '$lib/app/error'
   import { toast } from 'mono-svelte'
-  import { errorMessage } from '$lib/lemmy/error'
 
   interface Props {
     community?: CommunityView | undefined

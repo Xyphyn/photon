@@ -1,5 +1,5 @@
 import { resolveRoute } from '$app/paths'
-import { profile } from '$lib/auth.svelte.js'
+import { profile } from '$lib/app/auth.svelte'
 import { error, redirect } from '@sveltejs/kit'
 
 export function load({ params }) {
@@ -7,7 +7,7 @@ export function load({ params }) {
     redirect(
       302,
       resolveRoute(`/post/[instance]/[id]`, {
-        instance: profile.current.instance.toLowerCase(),
+        instance: encodeURIComponent(profile.current.instance.toLowerCase()),
         id: params.instance,
       }),
     )

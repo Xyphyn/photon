@@ -1,6 +1,7 @@
 <script lang="ts">
-  import { t } from '$lib/i18n/translations'
-  import { settings } from '$lib/settings.svelte'
+  import { t } from '$lib/app/i18n'
+  import { settings } from '$lib/app/settings.svelte'
+  import { CommonList } from '$lib/ui/layout'
   import { Switch } from 'mono-svelte'
   import {
     Bars3,
@@ -12,10 +13,9 @@
     ServerStack,
     Share,
     User,
-  } from 'svelte-hero-icons'
+  } from 'svelte-hero-icons/dist'
   import Setting from '../Setting.svelte'
   import ToggleSetting from '../ToggleSetting.svelte'
-  import CommonList from '$lib/components/ui/layout/CommonList.svelte'
 </script>
 
 <CommonList>

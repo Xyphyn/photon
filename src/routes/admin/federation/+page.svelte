@@ -1,15 +1,12 @@
 <script lang="ts">
-  import { preventDefault } from 'svelte/legacy'
-
-  import { profile } from '$lib/auth.svelte.js'
-  import { client, getClient } from '$lib/client/lemmy.svelte'
-  import type { Instance } from '$lib/client/types'
-  import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import { Header } from '$lib/components/ui/layout'
-  import RelativeDate from '$lib/components/util/RelativeDate.svelte'
-  import { publishedToDate } from '$lib/components/util/date.js'
-  import { t } from '$lib/i18n/translations.js'
-  import { errorMessage } from '$lib/lemmy/error.js'
+  import { client, getClient } from '$lib/api/client.svelte'
+  import type { Instance } from '$lib/api/types'
+  import { profile } from '$lib/app/auth.svelte'
+  import { errorMessage } from '$lib/app/error'
+  import { t } from '$lib/app/i18n'
+  import Placeholder from '$lib/ui/info/Placeholder.svelte'
+  import { Header } from '$lib/ui/layout'
+  import { publishedToDate } from '$lib/ui/util/date'
   import {
     Button,
     FileInput,
@@ -18,15 +15,17 @@
     TextInput,
     toast,
   } from 'mono-svelte'
+  import RelativeDate from 'mono-svelte/util/RelativeDate.svelte'
   import {
     Check,
     ExclamationTriangle,
     Icon,
     Plus,
     XMark,
-  } from 'svelte-hero-icons'
+  } from 'svelte-hero-icons/dist'
   import { flip } from 'svelte/animate'
   import { expoOut } from 'svelte/easing'
+  import { preventDefault } from 'svelte/legacy'
 
   let { data = $bindable() } = $props()
 
@@ -67,7 +66,7 @@
 
       const instances = await getClient().getFederatedInstances()
 
-      // @ts-expect-error stupid typing thing that i shouldnt have done
+      // @ts-expect-error goofy typing thing that i shouldnt have done
       data.instances.value = instances.federated_instances
 
       blockInstance.instance = ''

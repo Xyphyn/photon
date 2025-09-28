@@ -1,17 +1,18 @@
 <script lang="ts">
   import { browser } from '$app/environment'
   import { page } from '$app/state'
-  import { site } from '$lib/client/lemmy.svelte'
-  import Location from '$lib/components/lemmy/dropdowns/Location.svelte'
-  import Sort from '$lib/components/lemmy/dropdowns/Sort.svelte'
-  import ViewSelect from '$lib/components/lemmy/dropdowns/ViewSelect.svelte'
-  import { PostFeed, VirtualFeed } from '$lib/components/lemmy/post'
-  import Skeleton from '$lib/components/ui/generic/Skeleton.svelte'
-  import { Header, Pageination } from '$lib/components/ui/layout'
-  import { t } from '$lib/i18n/translations.js'
-  import { settings, SSR_ENABLED } from '$lib/settings.svelte.js'
+  import { site } from '$lib/api/client.svelte'
+  import { t } from '$lib/app/i18n'
+  import { settings, SSR_ENABLED } from '$lib/app/settings.svelte'
+  import Location from '$lib/feature/filter/Location.svelte'
+  import Sort from '$lib/feature/filter/Sort.svelte'
+  import ViewSelect from '$lib/feature/filter/ViewSelect.svelte'
+  import PostFeed from '$lib/feature/post/feed/PostFeed.svelte'
+  import VirtualFeed from '$lib/feature/post/feed/VirtualFeed.svelte'
+  import Skeleton from '$lib/ui/generic/Skeleton.svelte'
+  import { Header, Pageination } from '$lib/ui/layout'
   import { Button } from 'mono-svelte'
-  import { ArrowRight, Icon } from 'svelte-hero-icons'
+  import { ArrowRight, Icon } from 'svelte-hero-icons/dist'
 
   let { data = $bindable() } = $props()
 
@@ -40,8 +41,8 @@
 <Header pageHeader>
   {$t('routes.frontpage.title')}
   {#snippet extended()}
-    <form class="" method="get" action={page.url.pathname}>
-      <div class="flex flex-row gap-2">
+    <form class="contents" method="get" action={page.url.pathname}>
+      <div class="flex flex-row gap-2 max-w-full">
         <Location
           name="type"
           navigate

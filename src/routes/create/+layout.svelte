@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { site } from '$lib/client/lemmy.svelte'
-  import { Header } from '$lib/components/ui/layout'
-  import Tabs from '$lib/components/ui/layout/pages/Tabs.svelte'
-  import { t } from '$lib/i18n/translations'
+  import { site } from '$lib/api/client.svelte'
+  import { profile } from '$lib/app/auth.svelte'
+  import { t } from '$lib/app/i18n'
+  import { Header, Tabs } from '$lib/ui/layout'
 
   let { children } = $props()
 </script>
@@ -10,7 +10,7 @@
 <Header pageHeader>
   {$t('nav.create.label')}
   {#snippet extended()}
-    {#if !site || !site.data?.site_view.local_site.community_creation_admin_only}
+    {#if !site || !(site.data?.site_view.local_site.community_creation_admin_only && !profile.isAdmin)}
       <Tabs
         margin={false}
         style="subpage"

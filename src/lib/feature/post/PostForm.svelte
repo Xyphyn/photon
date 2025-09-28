@@ -1,0 +1,519 @@
+<script lang="ts">
+  import { client, site } from '$lib/api/client.svelte'
+  import type {
+    CommunityView,
+    Post,
+    PostResponse,
+    PostView,
+  } from '$lib/api/types'
+  import { errorMessage } from '$lib/app/error'
+  import { t } from '$lib/app/i18n'
+  import MarkdownEditor from '$lib/app/markdown/MarkdownEditor.svelte'
+  import { getSessionStorage, setSessionStorage } from '$lib/app/session'
+  import { placeholders } from '$lib/app/util.svelte'
+  import FreeTextInput from '$lib/ui/form/FreeTextInput.svelte'
+  import ObjectAutocomplete from '$lib/ui/form/ObjectAutocomplete.svelte'
+  import Avatar from '$lib/ui/generic/Avatar.svelte'
+  import ErrorContainer, {
+    clearErrorScope,
+    pushError,
+  } from '$lib/ui/info/ErrorContainer.svelte'
+  import { Header } from '$lib/ui/layout'
+  import {
+    Badge,
+    Button,
+    Material,
+    modal,
+    Option,
+    Select,
+    Spinner,
+    Switch,
+    TextArea,
+    TextInput,
+    toast,
+  } from 'mono-svelte'
+  import { onDestroy, onMount } from 'svelte'
+  import {
+    ArrowPath,
+    ChatBubbleBottomCenterText,
+    Check,
+    Icon,
+    Language,
+    Link,
+    Photo,
+    Plus,
+    Sparkles,
+    Tag,
+    XMark,
+  } from 'svelte-hero-icons/dist'
+
+  interface Props {
+    edit?: boolean
+    /**
+     * The post to edit
+     */
+    editingPost?: Post | undefined
+    passedCommunity?: CommunityView
+    passedData?: {
+      community: CommunityView | null
+      title: string
+      body?: string
+      image: FileList | null
+      thumbnail?: string
+      url?: string
+      nsfw: boolean
+      loading: boolean
+      alt_text?: string
+      language_id?: number | string
+      flair_list: number[]
+    }
+    formtitle?: import('svelte').Snippet
+    onsubmit?: (post: PostView) => void
+  }
+
+  let {
+    edit = false,
+    editingPost = undefined,
+    passedCommunity = undefined,
+    passedData = {
+      community: null,
+      title: '',
+      body: '',
+      image: null,
+      nsfw: false,
+      loading: false,
+      flair_list: [],
+    },
+    formtitle,
+    onsubmit,
+  }: Props = $props()
+
+  let data = $state(passedData)
+
+  // weird select menu language handling
+  $effect(() => {
+    if (data.language_id === '') data.language_id = undefined
+  })
+
+  let saveDraft = edit ? false : true
+  let communitySearch = $state(passedCommunity?.community.name ?? '')
+
+  onMount(async () => {
+    if (editingPost) Object.assign(data, editingPost)
+
+    if (editingPost?.community_id && !data.community) {
+      data.community = (
+        await client().getCommunity({ id: editingPost.community_id })
+      ).community_view
+    }
+
+    if (passedCommunity) {
+      data.community = passedCommunity
+      communitySearch = passedCommunity.community.name
+    }
+  })
+
+  onDestroy(() => {
+    if (saveDraft) setSessionStorage('postDraft', data)
+  })
+
+  async function submit() {
+    clearErrorScope('post-form')
+    if (!data.community && !edit) {
+      pushError({
+        message: $t('toast.needCommunity'),
+        scope: 'post-form',
+      })
+      return
+    }
+    if (data.url && data.url != '') {
+      try {
+        new URL(data.url)
+      } catch {
+        pushError({
+          message: $t('toast.invalidURL'),
+          scope: 'post-form',
+        })
+        return
+      }
+    }
+
+    data.loading = true
+
+    try {
+      let post: PostResponse
+      if (edit) {
+        if (!editingPost) {
+          throw new Error('Post is being edited but editingPost is null')
+        }
+
+        post = await client().editPost({
+          name: data.title,
+          body: data.body,
+          url: data.url || undefined,
+          post_id: editingPost.id,
+          nsfw: data.nsfw,
+          alt_text: data.alt_text,
+          custom_thumbnail: data.thumbnail,
+          language_id: data.language_id ? Number(data.language_id) : undefined,
+        })
+
+        if (!post) throw new Error('Failed to edit post')
+      } else {
+        post = await client().createPost({
+          community_id: data.community!.community.id,
+          name: data.title,
+          body: data.body,
+          url: data.url || undefined,
+          nsfw: data.nsfw,
+          custom_thumbnail: data.thumbnail,
+          alt_text: data.alt_text,
+          language_id: data.language_id ? Number(data.language_id) : undefined,
+        })
+
+        if (!post) throw new Error('Failed to upload post')
+
+        saveDraft = false
+      }
+
+      const piefed = client()
+      if (piefed.assignFlair) {
+        await piefed.assignFlair({
+          flair_id_list: data.flair_list,
+          post_id: post.post_view.post.id,
+        })
+      }
+
+      onsubmit?.(post.post_view)
+    } catch (err) {
+      pushError({ message: errorMessage(err as string), scope: 'post-form' })
+      data.loading = false
+    }
+  }
+
+  let uploadingImage = $state(false)
+
+  const generateTitle = async (url: string | undefined) => {
+    if (!url) return
+    generation.loading = true
+    try {
+      const res = await client().getSiteMetadata({
+        url: url,
+      })
+
+      // for backup
+      const oldData = { ...data }
+
+      if (res.metadata.title) data.title = res.metadata.title
+      if (res.metadata.description)
+        data.body = res.metadata.description
+          .split('\n')
+          .map((l) => `> ${l}`)
+          .join('\n')
+
+      toast({
+        content: $t('toast.generatedTitle'),
+        type: 'info',
+        action: () => (data = oldData),
+        duration: 15 * 1000,
+      })
+    } catch {
+      pushError({
+        message: $t('toast.failGenerateTitle'),
+        scope: 'post-form',
+      })
+    }
+    generation.loading = false
+  }
+
+  const canGenerateTitle = (url: string | undefined) => {
+    if (!url) return false
+    try {
+      new URL(url)
+    } catch {
+      return false
+    }
+    return true
+  }
+
+  let generation = $state({
+    loading: false,
+    generatable: false,
+    title: '',
+  })
+
+  $effect(() => {
+    generation.generatable = canGenerateTitle(data.url)
+  })
+</script>
+
+{#if uploadingImage}
+  {#await import('$lib/ui/form/ImageInputModal.svelte') then { default: UploadModal }}
+    <UploadModal
+      bind:open={uploadingImage}
+      bind:imageUrl={() => '', (v) => (data.url = v)}
+    />
+  {/await}
+{/if}
+
+{#snippet altText()}
+  <TextArea bind:value={data.alt_text} />
+{/snippet}
+
+{#snippet flairs()}
+  <Material color="uniform" class="flex flex-row gap-4 flex-wrap">
+    {#if data.community?.flair_list}
+      {#each data.community.flair_list as flair}
+        {@const selected = data.flair_list?.some((i) => i == flair.id)}
+        <button
+          class="rounded-full cursor-pointer hover:brightness-100"
+          style="background-color: {flair.background_color};"
+          onclick={() => {
+            if (selected) {
+              const index = data.flair_list.findIndex((i) => i == flair.id)
+              if (index != -1) data.flair_list.splice(index, 1)
+            } else data.flair_list.push(flair.id)
+          }}
+        >
+          <Badge
+            color={selected ? 'gray-subtle' : 'custom'}
+            class="ring-white/20"
+          >
+            {#snippet icon()}
+              <Icon src={selected ? Check : Plus} size="16" micro />
+            {/snippet}
+            {flair.flair_title}
+          </Badge>
+        </button>
+      {/each}
+    {/if}
+  </Material>
+{/snippet}
+
+<form
+  onsubmit={(e) => {
+    e.preventDefault()
+    submit()
+  }}
+  class="flex flex-col gap-4 h-full"
+>
+  {#if formtitle}{@render formtitle()}{:else}
+    <Header class="font-bold text-xl">
+      {edit ? $t('form.post.edit') : $t('form.post.create')}
+    </Header>
+  {/if}
+  <ErrorContainer scope="post-form" />
+  {#if !edit && data}
+    {#if !data.community}
+      <ObjectAutocomplete
+        bind:q={communitySearch}
+        listing_type="All"
+        label={$t('form.post.community')}
+        onselect={(e) => {
+          const c = e
+          if (!c) {
+            data.community = null
+            return
+          }
+
+          communitySearch = ''
+
+          data.community = c
+        }}
+      />
+    {:else}
+      <div class="flex flex-col gap-1">
+        <span class="font-medium text-sm">{$t('form.post.community')}</span>
+        <Button
+          class="w-full"
+          onclick={() => (data.community = null)}
+          alignment="left"
+          size="sm"
+          rounding="xl"
+        >
+          {#snippet prefix()}
+            <Avatar
+              url={data?.community?.community.icon}
+              alt={data.community?.community.name}
+              width={24}
+            />
+          {/snippet}
+          <div class="flex flex-col gap-0">
+            <span class="text-sm">{data.community?.community.name}</span>
+            <span class="text-[10px] leading-3">
+              {new URL(data.community.community.actor_id).hostname}
+            </span>
+          </div>
+        </Button>
+      </div>
+    {/if}
+  {/if}
+  <FreeTextInput
+    required
+    bind:value={data.title}
+    placeholder={placeholders.get('post')}
+    label={$t('form.post.title')}
+  />
+  <MarkdownEditor
+    label={$t('form.post.body')}
+    bind:value={data.body}
+    placeholder={placeholders.get('body')}
+    previewButton
+  />
+  {#if data.url !== undefined}
+    <div class="flex flex-col gap-2">
+      <TextInput
+        label={$t('form.post.url')}
+        bind:value={data.url}
+        placeholder={placeholders.get('url')}
+        class="w-full"
+      />
+      <div class="flex items-center gap-2 actions">
+        {#if data.url}
+          <Button
+            onclick={() =>
+              modal({ title: $t('form.post.altText'), snippet: altText })}
+            rounding="pill"
+            size="sm"
+            color={data.alt_text ? 'primary' : 'ghost'}
+            class="text-xs"
+            icon={ChatBubbleBottomCenterText}
+          >
+            {$t('form.post.altText')}
+          </Button>
+        {/if}
+        <Button
+          onclick={() => (uploadingImage = !uploadingImage)}
+          rounding="pill"
+          size="sm"
+          color="ghost"
+          class="text-xs"
+          icon={Photo}
+        >
+          {$t('form.post.uploadImage')}
+        </Button>
+        {#if generation.generatable}
+          <Button
+            onclick={() => generateTitle(data.url)}
+            loading={generation.loading}
+            rounding="pill"
+            size="sm"
+            color="ghost"
+            class="text-xs"
+            icon={Sparkles}
+          >
+            {$t('form.post.generateTitle')}
+          </Button>
+        {/if}
+      </div>
+    </div>
+  {/if}
+  <div class="flex flex-row gap-2 flex-wrap">
+    {#if data.url === undefined}
+      <Button
+        onclick={async () => {
+          data.url = ''
+          try {
+            const url = new URL(await navigator.clipboard.readText())
+
+            data.url = url.toString()
+          } catch {
+            /* empty */
+          }
+        }}
+        size="sm"
+        rounding="pill"
+        icon={Link}
+      >
+        {$t('form.post.addUrl')}
+      </Button>
+      <Button
+        onclick={() => {
+          data.url = ''
+          uploadingImage = true
+        }}
+        size="sm"
+        rounding="pill"
+        icon={Photo}
+      >
+        {$t('form.post.uploadImage')}
+      </Button>
+    {/if}
+    {#if data.language_id === undefined}
+      <Button
+        size="sm"
+        rounding="pill"
+        onclick={() => (data.language_id = 0)}
+        icon={Language}
+      >
+        {$t('form.post.setLanguage')}
+      </Button>
+    {/if}
+    {#if (data.community?.flair_list?.length ?? 0) > 0}
+      <Button
+        onclick={() => modal({ title: $t('form.post.flair'), snippet: flairs })}
+        size="sm"
+        rounding="pill"
+        icon={Tag}
+        color={(data.flair_list?.length ?? 0) > 0 ? 'primary' : 'secondary'}
+      >
+        {$t('form.post.flair')}
+      </Button>
+    {/if}
+  </div>
+  <Switch bind:checked={data.nsfw}>{$t('form.post.nsfw')}</Switch>
+  {#if data.language_id !== undefined}
+    {#if site.data}
+      <Select
+        class="w-max"
+        label={$t('settings.app.lang.title')}
+        bind:value={data.language_id}
+      >
+        <Option value={undefined}>
+          <Icon src={XMark} size="16" micro />
+          {$t('form.post.unset')}
+        </Option>
+        {#each site.data?.all_languages as language}
+          <Option value={language.id.toString()}>{language.name}</Option>
+        {/each}
+      </Select>
+    {:else}
+      <div style="height: 58px;">
+        <Spinner width={24} />
+      </div>
+    {/if}
+  {/if}
+  <div class="mt-auto"></div>
+  <div class="flex flex-row items-center gap-2 w-full">
+    <Button
+      submit
+      color="primary"
+      loading={data.loading}
+      size="lg"
+      disabled={data.loading}
+      class="flex-1"
+    >
+      {$t('form.submit')}
+    </Button>
+
+    {#if !edit}
+      <Button
+        onclick={() => {
+          toast({ content: $t('toast.restoredFromDraft') })
+          const draft = getSessionStorage('postDraft')
+          if (draft && !edit) {
+            draft.loading = false
+            data = draft
+          }
+        }}
+        rounding="xl"
+        size="custom"
+        disabled={!getSessionStorage('postDraft')}
+        title="Restore From Draft"
+        class=" aspect-square h-full"
+      >
+        <Icon src={ArrowPath} size="16" mini />
+      </Button>
+    {/if}
+  </div>
+</form>

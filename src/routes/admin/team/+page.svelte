@@ -1,14 +1,14 @@
 <script lang="ts">
-  import { profile } from '$lib/auth.svelte.js'
-  import { client } from '$lib/client/lemmy.svelte'
-  import UserAutocomplete from '$lib/components/lemmy/user/UserAutocomplete.svelte'
-  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
-  import { Header } from '$lib/components/ui/layout'
-  import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import { t } from '$lib/i18n/translations.js'
-  import { errorMessage } from '$lib/lemmy/error.js'
+  import { client } from '$lib/api/client.svelte'
+  import { profile } from '$lib/app/auth.svelte'
+  import { errorMessage } from '$lib/app/error'
+  import { t } from '$lib/app/i18n'
+  import UserAutocomplete from '$lib/feature/user/UserAutocomplete.svelte'
+  import UserLink from '$lib/feature/user/UserLink.svelte'
+  import Placeholder from '$lib/ui/info/Placeholder.svelte'
+  import { CommonList, Header } from '$lib/ui/layout'
   import { Button, toast } from 'mono-svelte'
-  import { Icon, Plus, QuestionMarkCircle, Trash } from 'svelte-hero-icons'
+  import { Icon, Plus, QuestionMarkCircle, Trash } from 'svelte-hero-icons/dist'
 
   let { data: pageData } = $props()
   let data = $state(pageData)
@@ -58,19 +58,21 @@
         description={$t('routes.admin.team.empty.description')}
       />
     {:else}
-      {#each data.site?.admins ?? [] as admin (admin.person.id)}
-        <div class="py-3 flex items-center justify-between">
-          <UserLink avatar showInstance={false} user={admin.person} />
-          <Button
-            onclick={() => {
-              removeAdmin(admin.person.id, false)
-            }}
-            size="square-md"
-          >
-            <Icon src={Trash} mini size="16" />
-          </Button>
-        </div>
-      {/each}
+      <CommonList items={data.site?.admins ?? []}>
+        {#snippet item(admin)}
+          <div class="flex items-center justify-between">
+            <UserLink avatar showInstance={false} user={admin.person} />
+            <Button
+              onclick={() => {
+                removeAdmin(admin.person.id, false)
+              }}
+              size="square-md"
+            >
+              <Icon src={Trash} mini size="16" />
+            </Button>
+          </div>
+        {/snippet}
+      </CommonList>
     {/if}
   </ul>
   <form

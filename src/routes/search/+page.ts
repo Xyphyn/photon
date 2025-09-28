@@ -1,9 +1,9 @@
-import { profile } from '$lib/auth.svelte'
-import { client, getClient } from '$lib/client/lemmy.svelte'
-import { PiefedClient } from '$lib/client/piefed/piefed.js'
-import { getItemPublished } from '$lib/lemmy/item.js'
-import { ReactiveState } from '$lib/util.svelte.js'
-import type { ListingType, SearchType, SortType } from '$lib/client/types'
+import { client, getClient } from '$lib/api/client.svelte'
+import { PiefedClient } from '$lib/api/piefed/adapter'
+import type { ListingType, SearchType, SortType } from '$lib/api/types'
+import { profile } from '$lib/app/auth.svelte'
+import { ReactiveState } from '$lib/app/util.svelte'
+import { getItemPublished } from '$lib/feature/legacy/item'
 
 export async function load({ url, fetch }) {
   const query = url.searchParams.get('q')

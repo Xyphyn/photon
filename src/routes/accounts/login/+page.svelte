@@ -1,8 +1,8 @@
 <script lang="ts">
+  import { t } from '$lib/app/i18n'
   import { Button } from 'mono-svelte'
+  import { ArrowLeft, Icon } from 'svelte-hero-icons/dist'
   import LoginPage from '../../login/+page.svelte'
-  import { ArrowLeft, Icon } from 'svelte-hero-icons'
-  import { t } from '$lib/i18n/translations'
 </script>
 
 <LoginPage ref="/accounts">

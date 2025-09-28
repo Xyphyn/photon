@@ -1,6 +1,6 @@
 <script lang="ts">
-  import type { TopicView } from '$lib/client/types'
-  import CommonItem from '$lib/components/ui/layout/CommonItem.svelte'
+  import type { TopicView } from '$lib/api/types'
+  import CommonItem from '$lib/ui/layout/CommonItem.svelte'
 
   interface Props {
     topic: TopicView

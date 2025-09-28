@@ -1,16 +1,15 @@
 <script lang="ts">
-  import { preventDefault } from 'svelte/legacy'
-
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
-  import { profile } from '$lib/auth.svelte'
-  import { DEFAULT_CLIENT_TYPE, type ClientType } from '$lib/client/base'
-  import { validateInstance } from '$lib/client/lemmy.svelte'
-  import { Header } from '$lib/components/ui/layout'
-  import { t } from '$lib/i18n/translations'
-  import { LINKED_INSTANCE_URL } from '$lib/instance.svelte'
-  import { DOMAIN_REGEX_FORMS } from '$lib/util.svelte'
+  import { type ClientType, DEFAULT_CLIENT_TYPE } from '$lib/api/base'
+  import { validateInstance } from '$lib/api/client.svelte'
+  import { profile } from '$lib/app/auth.svelte'
+  import { t } from '$lib/app/i18n'
+  import { LINKED_INSTANCE_URL } from '$lib/app/instance.svelte'
+  import { DOMAIN_REGEX_FORMS } from '$lib/app/util.svelte'
+  import { Header } from '$lib/ui/layout'
   import { Button, Option, Select, TextInput, toast } from 'mono-svelte'
+  import { preventDefault } from 'svelte/legacy'
 
   interface Props {
     ref?: string
@@ -80,6 +79,8 @@
           pattern={DOMAIN_REGEX_FORMS}
           placeholder="example.com"
           class="flex-1 overflow-hidden"
+          autocorrect="off"
+          autocapitalize="none"
         >
           {#snippet suffix()}
             <Select
@@ -94,7 +95,7 @@
                   else form.client = { name: 'piefed', baseUrl: '/api/alpha' }
                 }
               }
-              class="border-0 rounded-none! border-l"
+              class="border-y-0! border-r-0! rounded-none! border-l"
             >
               <Option value="lemmyv3">Lemmy</Option>
               <Option value="piefedvalpha">Piefed</Option>

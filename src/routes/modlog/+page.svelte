@@ -1,30 +1,26 @@
 <script lang="ts">
   import { browser } from '$app/environment'
   import { page } from '$app/state'
-  import { profile } from '$lib/auth.svelte.js'
-  import { client } from '$lib/client/lemmy.svelte'
-  import { CommunityLink } from '$lib/components/lemmy/community'
-  import { isAdmin } from '$lib/components/lemmy/moderation/moderation.js'
-  import ObjectAutocomplete from '$lib/components/lemmy/ObjectAutocomplete.svelte'
-  import { postLink } from '$lib/components/lemmy/post'
-  import UserAutocomplete from '$lib/components/lemmy/user/UserAutocomplete.svelte'
-  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
-  import { Header } from '$lib/components/ui/layout'
-  import Pageination from '$lib/components/ui/layout/Pageination.svelte'
-  import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import { t } from '$lib/i18n/translations'
-  import { settings } from '$lib/settings.svelte.js'
-  import { searchParam } from '$lib/util.svelte.js'
-  import { Button, Select } from 'mono-svelte'
-  import Option from 'mono-svelte/forms/select/Option.svelte'
-  import Spinner from 'mono-svelte/loader/Spinner.svelte'
+  import { client } from '$lib/api/client.svelte'
+  import { profile } from '$lib/app/auth.svelte'
+  import { t } from '$lib/app/i18n'
+  import { settings } from '$lib/app/settings.svelte'
+  import { searchParam } from '$lib/app/util.svelte'
+  import CommunityLink from '$lib/feature/community/CommunityLink.svelte'
+  import { postLink } from '$lib/feature/post'
+  import UserAutocomplete from '$lib/feature/user/UserAutocomplete.svelte'
+  import UserLink from '$lib/feature/user/UserLink.svelte'
+  import ObjectAutocomplete from '$lib/ui/form/ObjectAutocomplete.svelte'
+  import Placeholder from '$lib/ui/info/Placeholder.svelte'
+  import { Header, Pageination } from '$lib/ui/layout'
+  import { Button, Option, Select, Spinner } from 'mono-svelte'
   import {
     Bars3BottomRight,
     Icon,
     MagnifyingGlass,
     ViewColumns,
     XMark,
-  } from 'svelte-hero-icons'
+  } from 'svelte-hero-icons/dist'
   import ModlogItemCard from './item/ModlogItemCard.svelte'
   import ModlogItemTable from './item/ModlogItemTable.svelte'
 
@@ -197,7 +193,7 @@
       onselect={(e) =>
         searchParam(page.url, 'user', e?.id.toString() ?? '', 'page')}
     />
-    {#if profile.current?.user && isAdmin(profile.current?.user)}
+    {#if profile.isAdmin}
       <UserAutocomplete
         placeholder="Filter by moderator"
         listing_type="All"
@@ -282,10 +278,17 @@
 </div>
 
 <style>
+  @reference '../../app.css';
+
   .table-container {
     border: 1px solid var(--color-slate-200);
     background-color: white;
     border-radius: var(--radius-2xl);
+
+    @variant dark {
+      background-color: var(--color-zinc-950);
+      border: 1px solid var(--color-zinc-800);
+    }
   }
 
   .table {
@@ -299,6 +302,11 @@
           font-weight: var(--font-weight-medium);
           font-size: var(--text-sm);
           background-color: var(--color-slate-25);
+
+          @variant dark {
+            background-color: var(--color-zinc-900);
+            border-bottom: 1px solid var(--color-zinc-800);
+          }
         }
       }
     }
@@ -308,18 +316,6 @@
     font-size: var(--text-xs);
     :global(tr td) {
       padding: calc(var(--spacing) * 1) calc(var(--spacing) * 3);
-    }
-  }
-
-  :global(.dark) {
-    .table-container {
-      background-color: var(--color-zinc-950);
-      border: 1px solid var(--color-zinc-800);
-    }
-
-    thead tr th {
-      background-color: var(--color-zinc-900);
-      border-bottom: 1px solid var(--color-zinc-800);
     }
   }
 </style>

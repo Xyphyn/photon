@@ -1,9 +1,8 @@
 <script lang="ts">
-  import { profile } from '$lib/auth.svelte'
-  import { CommunityItem } from '$lib/components/lemmy/community'
-  import CommonList from '$lib/components/ui/layout/CommonList.svelte'
-  import { Header } from '$lib/components/ui/layout'
-  import { t } from '$lib/i18n/translations'
+  import { profile } from '$lib/app/auth.svelte'
+  import { t } from '$lib/app/i18n'
+  import CommunityItem from '$lib/feature/community/CommunityItem.svelte'
+  import { CommonList, Header } from '$lib/ui/layout'
   import { Button, Spinner } from 'mono-svelte'
 </script>
 
@@ -38,7 +37,6 @@
             },
             subscribed: 'NotSubscribed',
           }}
-          class="py-1 -mx-4 px-4"
         >
           <Button
             href="/moderation?community={community.id}"

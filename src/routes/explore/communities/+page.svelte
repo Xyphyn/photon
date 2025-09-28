@@ -1,15 +1,14 @@
 <script lang="ts">
   import { navigating, page } from '$app/state'
-  import { CommunityItem } from '$lib/components/lemmy/community'
-  import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
-  import Fixate from '$lib/components/ui/generic/Fixate.svelte'
-  import Skeleton from '$lib/components/ui/generic/Skeleton.svelte'
-  import CommonList from '$lib/components/ui/layout/CommonList.svelte'
-  import Pageination from '$lib/components/ui/layout/Pageination.svelte'
-  import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import { t } from '$lib/i18n/translations.js'
+  import { t } from '$lib/app/i18n'
+  import CommunityItem from '$lib/feature/community/CommunityItem.svelte'
+  import Fixate from '$lib/ui/generic/Fixate.svelte'
+  import Skeleton from '$lib/ui/generic/Skeleton.svelte'
+  import Placeholder from '$lib/ui/info/Placeholder.svelte'
+  import { CommonList, Pageination } from '$lib/ui/layout'
+  import EndPlaceholder from '$lib/ui/layout/EndPlaceholder.svelte'
   import { Material } from 'mono-svelte'
-  import { QuestionMarkCircle } from 'svelte-hero-icons'
+  import { QuestionMarkCircle } from 'svelte-hero-icons/dist'
   import { expoOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'
 
@@ -67,12 +66,7 @@
             }}
           >
             <Material color="uniform" padding="none" rounding="2xl">
-              <CommunityItem
-                {community}
-                showCounts={false}
-                class="w-full p-4 text-center"
-                view="cozy"
-              />
+              <CommunityItem {community} showCounts={false} view="cozy" />
             </Material>
           </div>
         {/each}

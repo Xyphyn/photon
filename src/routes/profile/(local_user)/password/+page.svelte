@@ -1,7 +1,7 @@
 <script lang="ts">
-  import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import { t } from '$lib/i18n/translations.js'
-  import { Key } from 'svelte-hero-icons'
+  import { t } from '$lib/app/i18n'
+  import Placeholder from '$lib/ui/info/Placeholder.svelte'
+  import { Key } from 'svelte-hero-icons/dist'
 </script>
 
 <div class="h-full grid place-items-center">

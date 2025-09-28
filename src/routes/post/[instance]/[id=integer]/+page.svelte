@@ -1,34 +1,34 @@
 <script lang="ts">
   import { page } from '$app/state'
-  import { profile } from '$lib/auth.svelte.js'
-  import { client } from '$lib/client/lemmy.svelte'
+  import { client } from '$lib/api/client.svelte'
+  import { profile } from '$lib/app/auth.svelte'
+  import { t } from '$lib/app/i18n'
+  import Markdown from '$lib/app/markdown/Markdown.svelte'
+  import { settings } from '$lib/app/settings.svelte'
+  import { resumables } from '$lib/feature/legacy/item'
   import {
     mediaType,
     parseTags,
-    Post,
     PostActions,
+    PostItem,
     postLink,
     PostMedia,
     PostMeta,
     type Tag,
-  } from '$lib/components/lemmy/post'
-  import Markdown from '$lib/components/markdown/Markdown.svelte'
-  import EndPlaceholder from '$lib/components/ui/EndPlaceholder.svelte'
-  import Expandable from '$lib/components/ui/Expandable.svelte'
-  import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import { publishedToDate } from '$lib/components/util/date.js'
-  import FormattedNumber from '$lib/components/util/FormattedNumber.svelte'
-  import { t } from '$lib/i18n/translations.js'
-  import { resumables } from '$lib/lemmy/item.js'
-  import { settings } from '$lib/settings.svelte.js'
-  import { Button, toast } from 'mono-svelte'
+  } from '$lib/feature/post'
+  import Placeholder from '$lib/ui/info/Placeholder.svelte'
+  import { CommonList } from '$lib/ui/layout'
+  import EndPlaceholder from '$lib/ui/layout/EndPlaceholder.svelte'
+  import { publishedToDate } from '$lib/ui/util/date'
+  import FormattedNumber from '$lib/ui/util/FormattedNumber.svelte'
+  import { Button, Expandable, toast } from 'mono-svelte'
   import { onMount } from 'svelte'
   import {
     ArrowRight,
     ChatBubbleLeftRight,
     ChevronDoubleUp,
     Icon,
-  } from 'svelte-hero-icons'
+  } from 'svelte-hero-icons/dist'
   import { expoOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'
   import CommentProvider from './CommentProvider.svelte'
@@ -165,7 +165,7 @@
       />
     </div>
     <h1 class="font-medium text-xl leading-5">
-      <Markdown source={tags.title ?? data.data.value.post.post.name} inline />
+      <Markdown source={tags.title ?? data.data.value.post.post.name} />
     </h1>
   </header>
   <PostMedia
@@ -194,7 +194,7 @@
     {#if crossposts?.length > 0}
       <Expandable class="text-base mt-2 w-full cursor-pointer">
         {#snippet title()}
-          <EndPlaceholder size="md" color="none" class="w-full">
+          <EndPlaceholder size="md" color="none" class="w-full ">
             {$t('routes.post.crosspostCount')}
             {#snippet action()}
               <span class="font-bold">
@@ -203,15 +203,11 @@
             {/snippet}
           </EndPlaceholder>
         {/snippet}
-        <div
-          class="divide-y! divide-slate-200 dark:divide-zinc-800 flex flex-col"
-        >
-          {#key crossposts}
-            {#each crossposts as crosspost (crosspost.post.id)}
-              <Post view="compact" post={crosspost} />
-            {/each}
-          {/key}
-        </div>
+        <CommonList items={crossposts}>
+          {#snippet item(item)}
+            <PostItem post={item} />
+          {/snippet}
+        </CommonList>
       </Expandable>
     {/if}
   {/await}

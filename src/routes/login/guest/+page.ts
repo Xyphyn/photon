@@ -1,4 +1,4 @@
-import { LINKED_INSTANCE_URL } from '$lib/instance.svelte'
+import { LINKED_INSTANCE_URL } from '$lib/app/instance.svelte'
 import { error } from '@sveltejs/kit'
 
 export function load() {

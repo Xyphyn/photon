@@ -1,16 +1,16 @@
 <script lang="ts">
-  import { notifications, profile } from '$lib/auth.svelte.js'
-  import { getClient } from '$lib/client/lemmy.svelte'
-  import { CommentItem } from '$lib/components/lemmy/comment'
-  import PrivateMessage from '$lib/components/lemmy/inbox/PrivateMessage.svelte'
-  import type { ReportView } from '$lib/components/lemmy/moderation/report'
-  import { PostItem } from '$lib/components/lemmy/post'
-  import UserLink from '$lib/components/lemmy/user/UserLink.svelte'
-  import Avatar from '$lib/components/ui/Avatar.svelte'
-  import { t } from '$lib/i18n/translations'
-  import { errorMessage } from '$lib/lemmy/error'
+  import { getClient } from '$lib/api/client.svelte'
+  import { notifications, profile } from '$lib/app/auth.svelte'
+  import { errorMessage } from '$lib/app/error'
+  import { t } from '$lib/app/i18n'
+  import CommentItem from '$lib/feature/comment/CommentItem.svelte'
+  import PrivateMessage from '$lib/feature/inbox/PrivateMessage.svelte'
+  import type { ReportView } from '$lib/feature/moderation/report'
+  import { PostItem } from '$lib/feature/post'
+  import UserLink from '$lib/feature/user/UserLink.svelte'
+  import Avatar from '$lib/ui/generic/Avatar.svelte'
   import { Badge, Button, Label, Material, Modal, toast } from 'mono-svelte'
-  import { CheckBadge } from 'svelte-hero-icons'
+  import { CheckBadge } from 'svelte-hero-icons/dist'
 
   interface Props {
     item: ReportView[]

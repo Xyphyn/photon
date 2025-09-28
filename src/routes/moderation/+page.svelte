@@ -1,21 +1,24 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
-  import CommonList from '$lib/components/ui/layout/CommonList.svelte'
-  import { Header } from '$lib/components/ui/layout'
-  import Pageination from '$lib/components/ui/layout/Pageination.svelte'
-  import Placeholder from '$lib/components/ui/Placeholder.svelte'
-  import ProgressBar from '$lib/components/ui/ProgressBar.svelte'
-  import { t } from '$lib/i18n/translations'
-  import { client } from '$lib/client/lemmy.svelte'
-  import { searchParam } from '$lib/util.svelte.js'
-  import { Button, Material, Select, Spinner, toast } from 'mono-svelte'
-  import Option from 'mono-svelte/forms/select/Option.svelte'
+  import { client } from '$lib/api/client.svelte'
+  import { t } from '$lib/app/i18n'
+  import { searchParam } from '$lib/app/util.svelte'
+  import CommunityLink from '$lib/feature/community/CommunityLink.svelte'
+  import Fixate from '$lib/ui/generic/Fixate.svelte'
+  import Placeholder from '$lib/ui/info/Placeholder.svelte'
+  import ProgressBar from '$lib/ui/info/ProgressBar.svelte'
+  import { CommonList, Header, Pageination } from '$lib/ui/layout'
+  import { Button, Material, Option, Select, Spinner, toast } from 'mono-svelte'
   import { tick } from 'svelte'
-  import { Check, Funnel, Icon, ShieldCheck, XMark } from 'svelte-hero-icons'
+  import {
+    Check,
+    Funnel,
+    Icon,
+    ShieldCheck,
+    XMark,
+  } from 'svelte-hero-icons/dist'
   import Report from './Report.svelte'
-  import Fixate from '$lib/components/ui/generic/Fixate.svelte'
-  import { CommunityLink } from '$lib/components/lemmy/community'
 
   let { data = $bindable() } = $props()
 
@@ -135,24 +138,29 @@
 {/if}
 {#if data.items?.value && data.items?.value.length > 0}
   <CommonList items={data.items?.value} size="lg">
-    {#snippet item(item)}
-      <Material
-        rounding={item.length == 1 ? 'none' : '2xl'}
-        color={item.length == 1 ? 'none' : 'uniform'}
-        padding={item.length == 1 ? 'none' : 'md'}
-        class={['space-y-2 w-full']}
+    {#each data.items.value ?? [] as item}
+      <svelte:element
+        this={item.length == 1 ? 'li' : 'div'}
+        class="z-0 relative"
       >
-        <Report {item} />
-      </Material>
-      {#if item.length > 1}
         <Material
-          padding="none"
-          rounding="none"
-          color="uniform"
-          class="-mt-3 rounded-b-2xl w-[95%] h-4 bg-slate-50! dark:bg-zinc-950!"
-        ></Material>
-      {/if}
-    {/snippet}
+          rounding={item.length == 1 ? 'none' : '2xl'}
+          color={item.length == 1 ? 'none' : 'distinct'}
+          padding={item.length == 1 ? 'none' : 'md'}
+          class={['space-y-2 w-full z-10 relative']}
+        >
+          <Report {item} />
+        </Material>
+        {#if item.length > 1}
+          <Material
+            padding="none"
+            rounding="none"
+            color="uniform"
+            class="-mt-1 rounded-b-2xl w-[97%] h-6 opacity-70 left-1/2 -translate-x-1/2 -z-10 relative"
+          ></Material>
+        {/if}
+      </svelte:element>
+    {/each}
   </CommonList>
   <Fixate placement="bottom">
     <Pageination
