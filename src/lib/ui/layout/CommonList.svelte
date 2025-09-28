@@ -22,7 +22,7 @@
     items,
     item: itemSnippet,
     children,
-    animate = false,
+    animate = true,
     size = 'sm',
     class: clazz,
     selected,

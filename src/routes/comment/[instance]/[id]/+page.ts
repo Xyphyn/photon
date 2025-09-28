@@ -23,7 +23,7 @@ export async function load({ params, fetch }) {
     resolveRoute(
       `/post/[instance]/[id]?thread=${threadPath}#${comment.comment_view.comment.id}`,
       {
-        instance: params.instance,
+        instance: encodeURIComponent(params.instance),
         id: comment.comment_view.post.id.toString(),
       },
     ),

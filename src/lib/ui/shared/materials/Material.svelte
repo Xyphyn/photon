@@ -37,7 +37,7 @@
     default:
       'bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 border-b-slate-300 dark:border-t-zinc-700',
     distinct:
-      'bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 border-b-slate-300 dark:border-t-zinc-700',
+      'bg-white dark:bg-zinc-925 border border-slate-200 dark:border-zinc-900 border-b-slate-300 dark:border-t-zinc-800',
     transparent:
       'border border-slate-200 dark:border-zinc-900 border-b-slate-300 dark:border-t-zinc-800',
     uniform:

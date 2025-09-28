@@ -599,12 +599,12 @@
             "title": "Removing Submission",
             "titleRestore": "Restoring Submission",
             "titlePurge": "Purging Submission",
-            "withReason": "Notify user",
+            "withReason": "Notify author",
             "comment": "Comment",
             "message": "Message",
             "failReply": "Failed to post reply. Removing anyway...",
             "failMessage": "Failed to message user. Removing anyway...",
-            "failEmptyReply": "Your reply cannot be empty if 'Notify user' is enabled.",
+            "failEmptyReply": "Your reply cannot be empty if 'Notify author' is enabled.",
             "successPurge": "Successfully purged that submission."
         },
         "reportModal": {
