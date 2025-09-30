@@ -242,7 +242,7 @@
     </label>
   {/if}
   <input
-    class="appearance-none absolute inset-0 pointer-events-none comment-expand"
+    class="appearance-none absolute top-0 left-0 h-8 w-full pointer-events-none comment-expand"
     type="checkbox"
     id="comment-expand-{node.comment_view.comment.id}"
     bind:checked={open}
