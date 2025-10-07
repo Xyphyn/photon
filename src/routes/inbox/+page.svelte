@@ -102,10 +102,17 @@
     class="self-center justify-self-center my-auto"
   />
 {:else}
-  <CommonList items={data.inbox.value} size="md">
-    {#snippet item(item)}
-      <InboxItem {item} />
-    {/snippet}
+  <CommonList size="md">
+    {#each data.inbox.value as item}
+      <li
+        class={[
+          'lg:px-2.5 lg:py-1.5',
+          !item.read && 'bg-blue-300/10! dark:bg-blue-500/5!',
+        ]}
+      >
+        <InboxItem {item} />
+      </li>
+    {/each}
   </CommonList>
 {/if}
 {#if !(data.page == 1 && (data?.inbox?.value.length ?? 0) == 0)}

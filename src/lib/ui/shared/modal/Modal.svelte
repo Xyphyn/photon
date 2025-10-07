@@ -5,7 +5,7 @@
   import Portal from 'mono-svelte/popover/Portal.svelte'
   import type { Snippet } from 'svelte'
   import { XMark } from 'svelte-hero-icons/dist'
-  import { backOut } from 'svelte/easing'
+  import { expoOut } from 'svelte/easing'
   import type { ClassValue } from 'svelte/elements'
   import { fade, scale } from 'svelte/transition'
   import { trapFocus } from 'trap-focus-svelte'
@@ -97,7 +97,7 @@
         use:trapFocus={true}
         transition:scale|global={{
           start: 0.97,
-          easing: backOut,
+          easing: expoOut,
           duration: 300,
         }}
         class={[

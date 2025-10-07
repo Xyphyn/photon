@@ -19,7 +19,7 @@ export async function load({ url, fetch }) {
   const client = getClient(undefined, fetch)
   const page = Number(url.searchParams.get('page')) || 1
   const unreadOnly: boolean =
-    (url.searchParams.get('unreadOnly') || 'true') == 'true'
+    (url.searchParams.get('unreadOnly') || 'false') == 'true'
 
   const params = {
     limit: 20,
