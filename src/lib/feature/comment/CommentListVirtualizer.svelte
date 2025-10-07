@@ -1,9 +1,11 @@
 <script lang="ts">
-  import type { Post } from "$lib/api/types"
-  import VirtualList from "$lib/app/render/VirtualList.svelte"
-  import { onMount } from "svelte"
-  import type { CommentNodeI } from "./comments.svelte"
-  import CommentTree from "./CommentTree.svelte"
+  import type { Post } from '$lib/api/types'
+  import VirtualList from '$lib/app/render/VirtualList.svelte'
+  import { onMount } from 'svelte'
+  import { expoOut } from 'svelte/easing'
+  import { fly } from 'svelte/transition'
+  import type { CommentNodeI } from './comments.svelte'
+  import CommentTree from './CommentTree.svelte'
 
   interface Props {
     nodes: CommentNodeI[]
@@ -47,10 +49,15 @@
       items={nodes}
       {initialOffset}
     >
-      {#snippet item(index)}
-        <div class={['px-3 sm:px-6', index % 2 == 1 && '']}>
+      {#snippet item(row)}
+        <div
+          in:fly={row < 7
+            ? { duration: 800, easing: expoOut, y: 12, delay: row * 50 }
+            : { opacity: 1, duration: 0 }}
+          class="px-3 sm:px-6"
+        >
           <CommentTree
-            bind:nodes={() => [nodes[index]], (v) => (nodes[index] = v[0])}
+            bind:nodes={() => [nodes[row]], (v) => (nodes[row] = v[0])}
             {post}
           />
         </div>
