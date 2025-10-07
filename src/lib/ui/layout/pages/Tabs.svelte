@@ -76,7 +76,7 @@
         class={[
           'rounded-full font-medium transition-colors duration-100 relative z-0 shrink-0 hover:text-slate-900 hover:dark:text-zinc-100',
           selected
-            ? 'text-primary-900 dark:text-primary-100'
+            ? 'tab-selected text-primary-900 dark:text-primary-100'
             : 'text-slate-500 dark:text-zinc-500',
         ]}
       >
@@ -90,3 +90,17 @@
   {/each}
   {@render children?.()}
 </nav>
+
+<style>
+  .tab-selected {
+    position: relative;
+  }
+
+  .tab-selected::before {
+    content: '';
+    position: absolute;
+    inset: calc(var(--spacing) * -1) calc(var(--spacing) * -3);
+    z-index: -10;
+    border-radius: 9999px;
+  }
+</style>

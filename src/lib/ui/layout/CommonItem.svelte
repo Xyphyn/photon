@@ -31,9 +31,7 @@
 >
   <Avatar url={icon} alt={title} width={detail ? 32 : 24} circle={false} />
   <a class="flex-1 flex flex-col group" {href}>
-    <h3
-      class="font-medium text-base overflow-hidden text-ellipsis leading-5 group-hover:underline"
-    >
+    <h3 class="font-medium text-base overflow-hidden text-ellipsis leading-5">
       {title}
     </h3>
     <p class="text-sm text-slate-600 dark:text-zinc-400">

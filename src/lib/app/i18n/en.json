@@ -303,7 +303,7 @@
             "localView": "Local View",
             "thread": {
                 "single": "You're viewing a single thread.",
-                "allComments": "All Comments",
+                "allComments": "All comments",
                 "part": "You're viewing part of a thread.",
                 "context": "Show Context"
             },

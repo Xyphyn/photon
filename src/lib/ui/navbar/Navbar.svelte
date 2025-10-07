@@ -48,10 +48,10 @@
     icon={Home}
     href="/"
     label={$t('nav.home')}
-    class="logo border-0 md:rounded-full! md:w-10! md:h-10 md:px-0! text-primary-900! dark:text-primary-100! -order-1"
+    class="logo border-0 md:rounded-full! md:w-10! md:h-10 md:px-0! -order-1"
     adaptive={false}
   >
-    {#snippet customIcon()}
+    {#snippet customIcon({ isSelected })}
       {#if LINKED_INSTANCE_URL}
         {#if site.data}
           <Avatar
@@ -64,7 +64,14 @@
           <Spinner width={32} />
         {/if}
       {:else}
-        <Logo width={32} />
+        <div class="hidden md:block text-primary-900! dark:text-primary-100!">
+          <Logo width={32} />
+        </div>
+        <div class={['block md:hidden text-inherit!']}>
+          <div class="prefix">
+            <Icon src={Home} size="20" mini />
+          </div>
+        </div>
       {/if}
     {/snippet}
   </NavButton>
