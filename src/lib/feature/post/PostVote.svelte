@@ -92,7 +92,7 @@
   <button
     onclick={() => castVote(vote == targetNum ? 0 : targetNum)}
     class={[
-      'flex items-center gap-0.5 transition-colors relative cursor-pointer h-full p-2',
+      'flex items-center gap-0.5 transition-colors relative cursor-pointer h-full p-2 active:brightness-90',
       'first:rounded-l-3xl last:rounded-r-3xl',
       'last:flex-row-reverse',
       vote == targetNum

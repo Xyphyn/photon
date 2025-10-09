@@ -119,6 +119,10 @@
           }
         }
       }
+
+      @variant hover {
+        cursor: default;
+      }
     }
 
     .nav-btn-sm-primary .prefix {

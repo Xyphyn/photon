@@ -39,11 +39,11 @@
     :global(*) {
       position: relative;
       &:first-child {
-        border-radius: 24px 8px 8px 24px;
+        border-radius: 24px 8px 8px 24px !important;
       }
 
       &:last-child {
-        border-radius: 8px 24px 24px 8px;
+        border-radius: 8px 24px 24px 8px !important;
       }
     }
   }

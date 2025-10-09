@@ -51,7 +51,7 @@
     class="logo border-0 md:rounded-full! md:w-10! md:h-10 md:px-0! -order-1"
     adaptive={false}
   >
-    {#snippet customIcon({ isSelected })}
+    {#snippet customIcon()}
       {#if LINKED_INSTANCE_URL}
         {#if site.data}
           <Avatar
