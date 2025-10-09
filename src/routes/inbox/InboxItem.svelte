@@ -9,7 +9,7 @@
   import PrivateMessage from '$lib/feature/inbox/PrivateMessage.svelte'
   import Avatar from '$lib/ui/generic/Avatar.svelte'
   import { publishedToDate } from '$lib/ui/util/date'
-  import { Button, Expandable } from 'mono-svelte'
+  import { Button, ButtonGroup, Expandable } from 'mono-svelte'
   import RelativeDate from 'mono-svelte/util/RelativeDate.svelte'
   import { Eye, EyeSlash } from 'svelte-hero-icons/dist'
 
@@ -22,7 +22,7 @@
   let loading = $state(false)
 
   async function markAsRead(isRead: boolean) {
-    if (!profile.current?.jwt) return
+    if (isRead && item.read) return
 
     loading = true
 
@@ -96,7 +96,7 @@
         </div>
       </div>
       <div class="flex-1"></div>
-      <div class="flex gap-2 max-md:hidden shrink-0">
+      <ButtonGroup orientation="horizontal" class="md:flex hidden shrink-0">
         <Button
           color={item.read ? 'secondary' : 'primary'}
           {loading}
@@ -121,14 +121,15 @@
           size="sm"
           rounding="pill"
           class="shrink-0"
+          onclick={() => markAsRead(true)}
         >
           {$t('common.jump')}
         </Button>
-      </div>
+      </ButtonGroup>
     </div>
   {/snippet}
   {#snippet extended()}
-    <div class="flex gap-2 w-full md:hidden mt-1 flex-wrap">
+    <ButtonGroup orientation="horizontal" class="flex md:hidden">
       <Button
         color={item.read ? 'secondary' : 'primary'}
         {loading}
@@ -151,10 +152,11 @@
           : `/comment/${item.item.comment.id}`}
         size="sm"
         rounding="pill"
+        onclick={() => markAsRead(true)}
       >
         {$t('common.jump')}
       </Button>
-    </div>
+    </ButtonGroup>
   {/snippet}
   {#snippet content()}
     {#if item.type == 'comment_reply' || item.type == 'person_mention'}

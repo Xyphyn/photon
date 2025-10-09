@@ -54,6 +54,7 @@
     transition: background-color 0.1s;
     background-color: var(--color-white);
     container-type: inline-size;
+    border: 1px solid var(--color-slate-100);
 
     border-radius: var(--radius-md) var(--radius-md);
 
@@ -103,6 +104,7 @@
   }
 
   :global(.dark) ul > :global(li) {
+    border: 1px solid var(--color-zinc-900);
     background-color: color-mix(
       in oklab,
       var(--color-zinc-925),

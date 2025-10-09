@@ -23,7 +23,7 @@
     ...rest
   }: Props = $props()
 
-  let selected = $derived(page.url.pathname == href)
+  let selected = $derived(page.url.pathname.startsWith(href))
 </script>
 
 <Button
@@ -36,7 +36,7 @@
   class={[
     'hover:text-slate-900 hover:dark:text-zinc-50',
     selected
-      ? 'text-primary-900 dark:text-primary-100'
+      ? 'text-primary-900 dark:text-primary-100 cursor-default!'
       : 'text-slate-600 dark:text-zinc-400',
     clazz,
   ]}

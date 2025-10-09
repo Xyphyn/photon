@@ -179,6 +179,10 @@
       }
     }
 
+    .no-hover:hover {
+      cursor: normal !important;
+    }
+
     .btn-primary {
       border: 1px solid transparent;
       background-color: var(--color-primary-900);

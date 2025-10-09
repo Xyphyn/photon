@@ -71,7 +71,7 @@
   :global {
     .prefix {
       @variant max-md {
-        height: 100%;
+        height: 90%;
         display: grid;
         place-items: center;
         aspect-ratio: 1 / 1;
@@ -119,12 +119,18 @@
           }
         }
       }
+
+      @variant hover {
+        cursor: default;
+      }
     }
 
-    @variant max-md {
-      .nav-btn-sm-primary .prefix {
+    .nav-btn-sm-primary .prefix {
+      @variant max-md {
         background-color: var(--color-primary-900);
         color: var(--color-slate-50);
+        border-radius: var(--radius-xl);
+        height: 80%;
 
         @variant hover {
           color: var(--color-slate-50);

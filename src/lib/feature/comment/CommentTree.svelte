@@ -86,7 +86,7 @@
   }
 </script>
 
-<ul class="animate-pop-in">
+<ul>
   {#each nodes as node, index (node.comment_view.comment.id)}
     <Comment
       bind:node={nodes[index]}
