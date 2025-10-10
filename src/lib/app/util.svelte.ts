@@ -33,7 +33,9 @@ export const placeholders = {
   get: (type: 'url' | 'post' | 'body' | 'comment') => {
     switch (type) {
       case 'post':
-        return t.get('placeholders.title')
+        return Math.random() < 0.01
+          ? 'A C E C* B* G D E E F G F E D C E'
+          : t.get('placeholders.title')
       case 'body':
         return t.get('placeholders.body')
       case 'comment':
@@ -194,10 +196,7 @@ export const userLink = (person: Person, prefix: string = '') =>
 /**
  * Basic types only, don't use for anything more than basic equality
  */
-export function recursiveEqual<T>(
-  a: T,
-  b: T,
-): boolean {
+export function recursiveEqual<T>(a: T, b: T): boolean {
   if (a === b) return true
   if (typeof a !== 'object' || typeof b !== 'object') return false
 

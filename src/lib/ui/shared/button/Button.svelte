@@ -172,6 +172,8 @@
       font-size: var(--text-sm);
       gap: calc(var(--spacing) * 1.5);
 
+      transition: 75ms cubic-bezier(0.075, 0.82, 0.165, 1);
+
       @variant hover {
         cursor: pointer;
       }

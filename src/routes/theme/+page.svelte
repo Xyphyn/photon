@@ -29,6 +29,10 @@
   let defaultColors = $derived(getDefaultColors())
 </script>
 
+<svelte:head>
+  <title>{$t('routes.theme.title')}</title>
+</svelte:head>
+
 {#if importing}
   <Modal
     bind:open={importing}
@@ -51,64 +55,66 @@
   </Modal>
 {/if}
 
-<Header pageHeader>{$t('routes.theme.title')}
+<Header pageHeader>
+  {$t('routes.theme.title')}
 
   {#snippet extended()}
-
-  <div class="flex items-center gap-2">
-    <Button
-      onclick={() => {
-        importing = !importing
-      }}
-      rounding="pill"
-      disabled={themeData.current.id <= 0}
-    >
-      <Icon src={ArrowUpTray} size="16" mini />
-      {$t('settings.import')}
-    </Button>
-    <Button
-      onclick={() => {
-        navigator.clipboard.writeText(JSON.stringify(themeData.current.colors))
-        toast({ content: 'Copied theme to clipboard.' })
-      }}
-      rounding="pill"
-    >
-      <Icon src={ArrowDownTray} size="16" mini />
-      {$t('settings.export')}
-    </Button>
-    <Button
-      disabled={themeData.current.id <= 0}
-      onclick={() => {
-        modal({
-          actions: [
-            action({
-              content: $t('common.cancel'),
-              close: true,
-            }),
-            action({
-              action: () => {
-                themeData.current.colors = {
-                  other: {},
-                  primary: {},
-                  zinc: {},
-                  slate: {},
-                }
-              },
-              content: $t('settings.reset'),
-              close: true,
-              type: 'danger',
-            }),
-          ],
-          title: $t('routes.theme.resetWarning.title'),
-          body: $t('routes.theme.resetWarning.description'),
-        })
-      }}
-      rounding="pill"
-    >
-      <Icon src={ArrowPath} size="16" mini />
-      {$t('settings.reset')}
-    </Button>
-  </div>
+    <div class="flex items-center gap-2">
+      <Button
+        onclick={() => {
+          importing = !importing
+        }}
+        rounding="pill"
+        disabled={themeData.current.id <= 0}
+      >
+        <Icon src={ArrowUpTray} size="16" mini />
+        {$t('settings.import')}
+      </Button>
+      <Button
+        onclick={() => {
+          navigator.clipboard.writeText(
+            JSON.stringify(themeData.current.colors),
+          )
+          toast({ content: 'Copied theme to clipboard.' })
+        }}
+        rounding="pill"
+      >
+        <Icon src={ArrowDownTray} size="16" mini />
+        {$t('settings.export')}
+      </Button>
+      <Button
+        disabled={themeData.current.id <= 0}
+        onclick={() => {
+          modal({
+            actions: [
+              action({
+                content: $t('common.cancel'),
+                close: true,
+              }),
+              action({
+                action: () => {
+                  themeData.current.colors = {
+                    other: {},
+                    primary: {},
+                    zinc: {},
+                    slate: {},
+                  }
+                },
+                content: $t('settings.reset'),
+                close: true,
+                type: 'danger',
+              }),
+            ],
+            title: $t('routes.theme.resetWarning.title'),
+            body: $t('routes.theme.resetWarning.description'),
+          })
+        }}
+        rounding="pill"
+      >
+        <Icon src={ArrowPath} size="16" mini />
+        {$t('settings.reset')}
+      </Button>
+    </div>
   {/snippet}
 </Header>
 <div class="flex flex-col gap-4 h-full">
@@ -208,11 +214,7 @@
     </Material>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
       {#each Object.entries(defaultColors) as [category, value] (category)}
-        <Material
-          rounding="2xl"
-          color="uniform"
-          class="flex flex-col gap-2"
-        >
+        <Material rounding="2xl" color="uniform" class="flex flex-col gap-2">
           <Header
             class="capitalize"
             size="sm"

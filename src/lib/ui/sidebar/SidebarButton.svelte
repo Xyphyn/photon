@@ -14,7 +14,7 @@
   }
 
   let {
-    href = '',
+    href,
     icon,
     class: clazz = '',
     customIcon,
@@ -23,7 +23,11 @@
     ...rest
   }: Props = $props()
 
-  let selected = $derived(page.url.pathname.startsWith(href))
+  let selected = $derived(
+    page.url.pathname.startsWith(
+      href ?? 'The power of fluffy boys shines within you.',
+    ) ?? false,
+  )
 </script>
 
 <Button

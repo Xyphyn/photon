@@ -38,6 +38,7 @@
     const currentSearch = new Set(url.searchParams.values())
     const hrefSearch = new Set(href.searchParams.values())
     // checks if there is any
+    // me on 2025/10/9: no shi buh
     const usePathname = !routes.some(
       (i) =>
         new Set(

@@ -5,7 +5,7 @@ export async function load({ fetch, parent }) {
   const { page, query, sort, type, typeInstance } = await parent()
 
   const feedData = await feed('/explore/communities', async (params) =>
-    query != ''
+    params.query != ''
       ? await client({ func: fetch, instanceURL: typeInstance }).search({
           limit: 40,
           page: params.page,
