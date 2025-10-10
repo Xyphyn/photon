@@ -7,6 +7,7 @@
     UIEventHandler,
   } from 'svelte/elements'
   import { scrollY } from 'svelte/reactivity/window'
+  import InvertedCorner from './InvertedCorner.svelte'
 
   interface Props extends HTMLAttributes<HTMLDivElement> {
     children?: Snippet
@@ -45,10 +46,19 @@
     style="transition: bottom .4s cubic-bezier(0.075, 0.82, 0.165, 1);"
     aria-hidden="true"
   >
+    <div class="md:hidden flex justify-between" dir="ltr">
+      <InvertedCorner
+        class="w-8 h-8 text-slate-100 dark:text-zinc-950 rotate-270"
+      />
+      <InvertedCorner
+        class="w-8 h-8 text-slate-100 dark:text-zinc-950 rotate-180"
+      />
+    </div>
     {@render navbar?.({
       class: [
-        'bg-slate-100/70 dark:bg-zinc-950/90 border-slate-200/50 dark:border-zinc-900',
-        'pointer-events-auto backdrop-blur-xl border md:border-t-0 md:border-x-0',
+        'md:bg-slate-100/70 md:dark:bg-zinc-950/90 border-slate-200/50 dark:border-zinc-900',
+        'bg-slate-100 dark:bg-zinc-950',
+        'pointer-events-auto backdrop-blur-xl border border-t-0 md:border-x-0',
       ],
       style: '',
     })}
@@ -59,7 +69,7 @@
       style: 'grid-area: sidebar; width: 100% !important;',
     })}
     {@render main?.({
-      class: `w-full bg-slate-50 dark:bg-zinc-925 justify-self-center border-x border-slate-200 dark:border-zinc-900 max-lg:pb-22 pb-3 lg:pb-6`,
+      class: `w-full bg-slate-50 dark:bg-zinc-925 max-lg:pb-22 justify-self-center border-x border-slate-200 dark:border-zinc-900 pb-3 lg:pb-6`,
       style: 'grid-area: main',
     })}
     {@render suffix?.({

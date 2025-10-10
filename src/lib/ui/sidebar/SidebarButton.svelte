@@ -14,8 +14,8 @@
   }
 
   let {
-    href = undefined,
-    icon = undefined,
+    href = '',
+    icon,
     class: clazz = '',
     customIcon,
     children,

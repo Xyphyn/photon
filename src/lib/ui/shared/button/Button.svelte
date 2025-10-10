@@ -172,8 +172,6 @@
       font-size: var(--text-sm);
       gap: calc(var(--spacing) * 1.5);
 
-      transition: 75ms linear;
-
       @variant hover {
         cursor: pointer;
       }

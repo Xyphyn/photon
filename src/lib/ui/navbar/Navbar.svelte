@@ -33,11 +33,12 @@
 <nav
   class={[
     'w-full mx-auto z-50',
-    'md:gap-5 gap-2 flex flex-row items-center justify-between p-2',
+    'md:gap-5 gap-2 flex flex-row items-center justify-evenly p-2 px-8 md:px-2',
     'box-border p-0.5 duration-150 @container *:max-md:flex-1',
     clazz,
   ]}
   {style}
+  data-sveltekit-preload-data
 >
   <NavButton
     oncontextmenu={(e: Event) => {

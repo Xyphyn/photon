@@ -75,7 +75,7 @@
         display: grid;
         place-items: center;
         aspect-ratio: 1 / 1;
-        border-radius: 100%;
+        border-radius: var(--radius-xl);
       }
     }
 
