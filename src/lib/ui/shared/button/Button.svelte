@@ -100,7 +100,7 @@
     size = 'md',
     rounding = 'xl',
     alignment = 'center',
-    shadow = color != 'tertiary' ? 'none' : 'none',
+    shadow = color == 'primary' || color == 'secondary' ? 'sm' : 'none',
     disabled,
     loaderWidth = undefined,
     href = undefined,
@@ -185,7 +185,7 @@
 
     .btn-primary {
       border: 1px solid transparent;
-      background-color: var(--color-primary-900);
+      background: var(--color-primary-900);
       color: var(--color-slate-50);
 
       @variant dark {
