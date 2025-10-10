@@ -42,8 +42,13 @@
   --color-zinc-925: rgb(var(--c-z-925, 28 28 32));
   --color-zinc-950: rgb(var(--c-z-950, 25 25 29));
 
-  --color-primary-100: rgb(var(--c-p-100, 241 245 249));
-  --color-primary-900: rgb(var(--c-p-900, 15 23 42));
+  /* dark theme */
+  --color-primary-100: rgb(var(--c-p-100, 248 248 251));
+  --color-primary-200: rgb(var(--c-p-200, 175 175 185));
+
+  /* light theme */
+  --color-primary-800: rgb(var(--c-p-900, 20 28 47));
+  --color-primary-900: rgb(var(--c-p-800, 15 23 42));
 
   --color-black: rgb(var(--c-o-black, 0 0 0));
   --color-white: rgb(var(--c-o-white, 255 255 255));

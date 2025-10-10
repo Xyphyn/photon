@@ -146,10 +146,10 @@
   {/if}
   <div
     class={[
-      'flex flex-col border  border-slate-200 border-b-slate-300 dark:border-zinc-800',
+      'flex flex-col border border-slate-200 border-b-slate-300 dark:border-zinc-800',
       'focus-within:border-primary-900 dark:focus-within:border-primary-100 focus-within:ring-3 ring-slate-300 dark:ring-zinc-700',
       'bg-white dark:bg-zinc-950',
-      'rounded-2xl overflow-hidden transition-colors',
+      'rounded-2xl overflow-hidden transition-colors shadow-xs',
       label && 'mt-1',
       clazz,
     ]}

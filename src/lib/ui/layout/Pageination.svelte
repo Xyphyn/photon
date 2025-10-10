@@ -46,7 +46,7 @@
   <nav
     aria-label={$t('aria.pagination.nav')}
     class={[
-      'flex flex-row gap-2 items-center justify-center bg-white dark:bg-zinc-900',
+      'flex flex-row gap-2 items-center justify-center bg-white dark:bg-zinc-950',
       'border border-slate-200 dark:border-zinc-800 rounded-full overflow-hidden w-max mx-auto p-0.5',
       'shadow-md',
     ]}

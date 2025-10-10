@@ -130,7 +130,6 @@
         background-color: var(--color-primary-900);
         color: var(--color-slate-50);
         border-radius: var(--radius-xl);
-        height: 80%;
 
         @variant hover {
           color: var(--color-slate-50);
