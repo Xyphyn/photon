@@ -137,7 +137,7 @@
   <ProgressBar progress={batch.progress} />
 {/if}
 {#if data.items?.value && data.items?.value.length > 0}
-  <CommonList items={data.items?.value} size="lg">
+  <CommonList size="lg">
     {#each data.items.value ?? [] as item}
       <svelte:element
         this={item.length == 1 ? 'li' : 'div'}
