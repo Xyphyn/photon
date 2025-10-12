@@ -16,7 +16,7 @@
   }
 
   const paddingClass = {
-    none: 'p-0',
+    none: '',
     sm: 'p-2',
     md: 'p-4',
     lg: 'p-5',
