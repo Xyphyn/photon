@@ -92,7 +92,6 @@
     this={settings.infiniteScroll && !settings.posts.noVirtualize
       ? 'noscript'
       : 'div'}
-    class="mt-auto flex flex-col"
   >
     <Pageination
       cursor={{ next: feed.next_page }}
