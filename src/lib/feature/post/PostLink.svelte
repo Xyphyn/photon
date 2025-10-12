@@ -32,37 +32,25 @@
   <Material
     color="uniform"
     class={[
-      'flex flex-col-reverse sm:flex-row overflow-hidden gap-4 z-0 relative',
-      'dark:bg-zinc-950 hover:bg-slate-50 hover:dark:bg-zinc-900 transition-colors',
-      'group/link',
+      'post-link group/link hover:bg-slate-50 hover:dark:bg-zinc-900 transition-colors',
     ]}
     rounding="2xl"
     element="a"
-    padding="sm"
+    padding="none"
     href={url}
     target="_blank"
     rel="noopener"
   >
-    {#if thumbnail_url}
-      <img
-        src={optimizeImageURL(thumbnail_url, 32)}
-        alt=""
-        class="-z-10 absolute w-full object-cover h-full opacity-5 brightness-150
-        dark:brightness-70 dark:opacity-10 blur-2xl -inset-px"
-      />
-    {/if}
-    <div class={['flex flex-col gap-1 p-2', thumbnail_url && '-mt-2 sm:mt-0']}>
+    <div class={['post-link-url', thumbnail_url && '-mt-2 sm:mt-0']}>
       {#if richURL}
-        <div
-          class="text-slate-600 dark:text-zinc-400 inline-flex items-center gap-1 text-xs font-medium"
-        >
+        <div class="link-hostname">
           {richURL.hostname}
         </div>
       {/if}
-      <p class="font-medium text-base">{embed_title}</p>
+      <p class="post-link-title">{embed_title}</p>
     </div>
     {#if thumbnail_url}
-      <picture class="mb-auto sm:ml-auto shrink-0 sm:w-1/3 sm:max-w-60">
+      <picture class="post-link-image">
         {#each ['webp'] as format}
           <source
             srcset="{optimizeImageURL(
@@ -80,7 +68,7 @@
         {/each}
         <img
           src={optimizeImageURL(thumbnail_url, -1)}
-          class="object-cover w-full sm:max-w-96 h-32 sm:min-h-16 bg-slate-200 dark:bg-zinc-800 rounded-xl"
+          class=""
           width={600}
           height={400}
           alt=""
@@ -94,18 +82,14 @@
     href={url}
     target="_blank"
     rel="noopener noreferrer"
-    class="flex flex-row text-slate-900 dark:text-zinc-400 items-center overflow-hidden group/link hover:underline space-x-1 my-1"
+    class="post-link-compact"
   >
     <Icon src={Link} size="16" micro class="shrink-0" />
     {#if richURL}
-      <div
-        class="flex max-w-full overflow-hidden font-medium self-start justify-self-start w-max text-sm"
-      >
+      <div class="post-link-url">
         {richURL.hostname}
         {#if richURL.pathname != '/'}
-          <span
-            class="text-slate-500 dark:text-zinc-500 whitespace-nowrap font-normal group-hover/link:opacity-100 opacity-0 transition-opacity duration-100"
-          >
+          <span class="post-link-extended">
             {richURL.pathname}
           </span>
         {/if}
@@ -115,3 +99,130 @@
     {/if}
   </a>
 {/if}
+
+<style>
+  @reference '../../../app.css';
+  :global(.post-link) {
+    display: flex;
+    flex-direction: column-reverse;
+    overflow: hidden;
+    gap: calc(var(--spacing) * 4);
+    position: relative;
+    @variant sm {
+      flex-direction: row;
+    }
+
+    .post-link-url {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing);
+      padding: calc(var(--spacing) * 4);
+
+      .link-hostname {
+        color: var(--color-slate-600);
+        display: inline-flex;
+        align-items: center;
+        gap: var(--spacing);
+        font-size: var(--text-xs);
+        font-weight: var(--font-weight-medium);
+
+        @variant dark {
+          color: var(--color-zinc-400);
+        }
+      }
+    }
+
+    .post-link-title {
+      font-weight: var(--font-weight-medium);
+      font-size: var(--text-base);
+      letter-spacing: var(--tracking-tight);
+      max-width: calc(var(--spacing) * 108);
+    }
+
+    .post-link-image {
+      flex-shrink: 0;
+      margin-bottom: auto;
+
+      @variant sm {
+        margin-left: auto;
+      }
+
+      @variant max-md {
+        mask-image: linear-gradient(to bottom, black, transparent);
+      }
+
+      @variant sm {
+        width: 33%;
+        max-width: calc(var(--spacing) * 90);
+      }
+
+      @variant md {
+        mask-image: linear-gradient(to left, black, black, transparent);
+      }
+
+      img {
+        object-fit: cover;
+        width: 100%;
+        height: calc(var(--spacing) * 40);
+        background-color: var(--color-slate-200);
+
+        @variant sm {
+          max-width: calc(var(--spacing) * 96);
+          min-height: calc(var(--spacing) * 16);
+        }
+
+        @variant dark {
+          background-color: var(--color-zinc-800);
+        }
+      }
+    }
+  }
+
+  .post-link-compact {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    overflow: hidden;
+    margin: var(--spacing) 0;
+    gap: var(--spacing);
+    color: var(--color-slate-700);
+
+    @variant dark {
+      color: var(--color-zinc-400);
+    }
+
+    @variant hover {
+      text-decoration-line: underline;
+    }
+
+    .post-link-url {
+      display: flex;
+      flex-direction: row;
+      gap: 0;
+      max-width: 100%;
+      overflow: hidden;
+      font-weight: var(--font-medium);
+      align-self: flex-start;
+      justify-self: start;
+      width: max-content;
+      font-size: var(--text-sm);
+    }
+
+    .post-link-extended {
+      color: var(--color-slate-500);
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity linear 100ms;
+
+      @variant dark {
+        color: var(--color-zinc-500);
+      }
+    }
+
+    @variant hover {
+      .post-link-extended {
+        opacity: 1;
+      }
+    }
+  }
+</style>

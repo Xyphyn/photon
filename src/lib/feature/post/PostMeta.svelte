@@ -360,7 +360,7 @@
   {@const useAttachedUrl = settings.posts.titleOpensUrl && postUrl}
   <h3
     class={[
-      'font-medium max-sm:mt-0!',
+      'font-medium max-sm:mt-0! tracking-tight',
       titleClass,
       settings.markReadPosts && read && 'text-slate-600 dark:text-zinc-400',
       view == 'compact' ? 'text-base' : 'text-lg',
