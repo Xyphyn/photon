@@ -16,7 +16,7 @@
   }
 
   const paddingClass = {
-    none: 'p-0',
+    none: '',
     sm: 'p-2',
     md: 'p-4',
     lg: 'p-5',
@@ -34,14 +34,10 @@
   }
 
   const colorClass = {
-    default:
-      'bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 border-b-slate-300 dark:border-t-zinc-700',
-    distinct:
-      'bg-white dark:bg-zinc-925 border border-slate-200 dark:border-zinc-900 border-b-slate-300 dark:border-t-zinc-800',
-    transparent:
-      'border border-slate-200 dark:border-zinc-900 border-b-slate-300 dark:border-t-zinc-800',
-    uniform:
-      'bg-white dark:bg-zinc-950 border border-slate-200 dark:border-zinc-900',
+    default: 'material-default',
+    distinct: 'material-distinct',
+    transparent: 'material-transparent',
+    uniform: 'material-uniform',
     none: '',
   }
 
@@ -82,3 +78,64 @@
 >
   {@render children?.()}
 </svelte:element>
+
+<style>
+  @reference '../../../../app.css';
+
+  .material-default {
+    background-color: white;
+    border-width: 1px;
+    border-color: var(--color-slate-200);
+
+    @variant not-dark {
+      border-bottom-color: var(--color-slate-300);
+    }
+
+    @variant dark {
+      background-color: var(--color-zinc-900);
+      border-color: var(--color-zinc-800);
+      border-top-color: var(--color-zinc-700);
+    }
+  }
+
+  .material-distinct {
+    background-color: white;
+    border-width: 1px;
+    border-color: var(--color-slate-200);
+
+    @variant not-dark {
+      border-bottom-color: var(--color-slate-300);
+    }
+
+    @variant dark {
+      background-color: var(--color-zinc-925);
+      border-color: var(--color-zinc-800);
+      border-top-color: var(--color-zinc-700);
+    }
+  }
+
+  .material-transparent {
+    border-width: 1px;
+    border-color: var(--color-slate-200);
+
+    @variant not-dark {
+      border-bottom-color: var(--color-slate-300);
+    }
+
+    @variant dark {
+      border-color: var(--color-zinc-900);
+      border-top-color: var(--color-zinc-800);
+    }
+  }
+
+  .material-uniform {
+    background-color: white;
+    border-width: 1px;
+    border-color: var(--color-slate-200);
+
+    @variant dark {
+      background-color: var(--color-zinc-950);
+      border-color: var(--color-zinc-900);
+    }
+  }
+</style>

@@ -30,16 +30,7 @@
 </script>
 
 <CommandsWrapper bind:open={promptOpen} />
-<nav
-  class={[
-    'w-full mx-auto z-50',
-    'md:gap-5 gap-2 flex flex-row items-center justify-evenly p-2 px-8 md:px-2',
-    'box-border p-0.5 duration-150 @container *:max-md:flex-1',
-    clazz,
-  ]}
-  {style}
-  data-sveltekit-preload-data
->
+<nav class={['navbar @container', clazz]} {style} data-sveltekit-preload-data>
   <NavButton
     oncontextmenu={(e: Event) => {
       e.preventDefault()
@@ -166,3 +157,30 @@
     {/snippet}
   </Menu>
 </nav>
+
+<style>
+  @reference '../../../app.css';
+
+  .navbar {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: calc(var(--spacing) * 2);
+    box-sizing: border-box;
+
+    @variant max-md {
+      padding-left: calc(var(--spacing) * 8);
+      padding-right: calc(var(--spacing) * 8);
+
+      & > :global(*) {
+        flex: 1;
+      }
+    }
+
+    @variant md {
+      gap: calc(var(--spacing) * 6);
+    }
+  }
+</style>

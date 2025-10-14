@@ -165,8 +165,8 @@
         tags={tags.tags}
       />
     </div>
-    <h1 class="font-medium text-xl leading-5">
-      <Markdown source={tags.title ?? data.data.value.post.post.name} />
+    <h1 class="font-medium font-display text-xl leading-5 tracking-tight">
+      <Markdown inline source={tags.title ?? data.data.value.post.post.name} />
     </h1>
   </header>
   <PostMedia

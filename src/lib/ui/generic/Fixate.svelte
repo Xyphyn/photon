@@ -14,6 +14,11 @@
   let { placement, children }: Props = $props()
 </script>
 
-<div class={['sticky z-30 mb-0', placements[placement]]}>
+<div
+  class={[
+    'sticky z-30 mb-0 pointer-events-none *:pointer-events-auto',
+    placements[placement],
+  ]}
+>
   {@render children?.()}
 </div>
