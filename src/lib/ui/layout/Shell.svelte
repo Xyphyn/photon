@@ -154,7 +154,6 @@
         border-left: 1px solid var(--color-slate-200);
         border-right: 1px solid var(--color-slate-200);
         padding-bottom: calc(var(--spacing) * 22);
-        z-index: 0;
 
         @variant dark {
           background-color: var(--color-zinc-925);

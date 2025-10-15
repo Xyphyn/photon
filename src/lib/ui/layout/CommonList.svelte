@@ -29,7 +29,7 @@
   }: Props = $props()
 </script>
 
-<ul class="space-y-1">
+<ul class="space-y-0.5">
   {#if items}
     {#each items as item, index (item)}
       <li
@@ -87,7 +87,7 @@
     padding-block: calc(var(--spacing) * 1);
   }
 
-  ul > :global(li).selected {
+  ul > :global(li.selected) {
     background-color: color-mix(
       in oklab,
       var(--color-white),
@@ -95,10 +95,10 @@
     );
   }
 
-  :global(.dark) ul > :global(li).selected {
+  :global(.dark) ul > :global(li.selected) {
     background-color: color-mix(
       in oklab,
-      var(--color-zinc-925),
+      var(--color-zinc-900) 90%,
       var(--color-zinc-800)
     );
   }
@@ -116,7 +116,11 @@
     }
 
     &:active {
-      background-color: var(--color-zinc-950);
+      background-color: color-mix(
+        in oklab,
+        var(--color-zinc-900) 80%,
+        var(--color-zinc-925)
+      );
     }
   }
 
