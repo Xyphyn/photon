@@ -90,11 +90,10 @@
     {/if}
   </ul>
 {/if}
-{#if data.communities.length > 0}
-  <Fixate placement="bottom">
-    <Pageination
-      page={Number(page.url.searchParams.get('page')) || 1}
-      href={(c) => `?page=${c}`}
-    />
-  </Fixate>
-{/if}
+<Fixate placement="bottom">
+  <Pageination
+    page={Number(page.url.searchParams.get('page')) || 1}
+    href={(c) => `?page=${c}`}
+    hasMore={data.communities.length >= 40}
+  />
+</Fixate>

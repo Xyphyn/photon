@@ -15,7 +15,10 @@
     UserGroup,
   } from 'svelte-hero-icons/dist'
 
-  let { profiles }: { profiles: ProfileInfo[] } = $props()
+  let {
+    profiles,
+    selectable = true,
+  }: { profiles: ProfileInfo[]; selectable?: boolean } = $props()
 
   function switchTo(id: number) {
     profile.meta.profile = id
@@ -27,7 +30,8 @@
 </script>
 
 <Menu placement="bottom">
-  {#snippet target(attachment)}
+  {#snippet target(passedAttachment)}
+    {@const attachment = selectable ? passedAttachment : () => {}}
     <Button
       {@attach attachment}
       color="tertiary"
@@ -56,12 +60,14 @@
         {/if}
       </div>
       {#snippet suffix()}
-        <Icon
-          src={ChevronUpDown}
-          size="16"
-          micro
-          class="block justify-self-end"
-        />
+        {#if selectable}
+          <Icon
+            src={ChevronUpDown}
+            size="16"
+            micro
+            class="block justify-self-end"
+          />
+        {/if}
       {/snippet}
     </Button>
   {/snippet}

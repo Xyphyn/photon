@@ -2,6 +2,7 @@
   import { env } from '$env/dynamic/public'
   import { notifications, profile } from '$lib/app/auth.svelte'
   import { t } from '$lib/app/i18n'
+  import { LINKED_INSTANCE_URL } from '$lib/app/instance.svelte'
   import { settings } from '$lib/app/settings.svelte'
   import { theme } from '$lib/app/theme/theme.svelte'
   import { communityLink } from '$lib/app/util.svelte'
@@ -41,7 +42,14 @@
   class={['flex flex-col overflow-auto gap-1', clazz]}
   {style}
 >
-  <ProfileSelection profiles={profile.meta.profiles} />
+  <ProfileSelection
+    selectable={!(
+      LINKED_INSTANCE_URL &&
+      !profile.current.jwt &&
+      profile.meta.profiles.length == 1
+    )}
+    profiles={profile.meta.profiles}
+  />
   <EndPlaceholder margin="sm" size="xs">{$t('profile.profile')}</EndPlaceholder>
   {#if profile.current?.jwt}
     <SidebarButton

@@ -169,12 +169,14 @@
                     </Badge>
                   {/if}
                 </span>
-                <span class="text-xs text-slate-600 dark:text-zinc-400">
-                  <span class="capitalize">
-                    {p.client?.name ?? DEFAULT_CLIENT_TYPE.name}
+                {#if !LINKED_INSTANCE_URL}
+                  <span class="text-xs text-slate-600 dark:text-zinc-400">
+                    <span class="capitalize">
+                      {p.client?.name ?? DEFAULT_CLIENT_TYPE.name}
+                    </span>
+                    • {p.instance}
                   </span>
-                  • {p.instance}
-                </span>
+                {/if}
               </div>
               <Menu placement="bottom-end">
                 {#snippet target(attachment)}
