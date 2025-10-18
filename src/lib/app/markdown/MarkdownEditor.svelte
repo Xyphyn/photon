@@ -92,7 +92,7 @@
     tools?: boolean
     disabled?: boolean
     rows?: number
-    beforePreview?: (input: string) => string
+    beforePreview?: (input?: string) => string
     previewing?: boolean
     class?: ClassValue
     customLabel?: import('svelte').Snippet
@@ -101,14 +101,14 @@
 
   let {
     images = true,
-    value = $bindable(''),
+    value = $bindable(),
     label = undefined,
     previewButton = true,
     tools = true,
     disabled = false,
     rows = 2,
     // should be preprocess instead
-    beforePreview = (input) => input,
+    beforePreview = (input) => input ?? '',
     previewing = $bindable(false),
     class: clazz = '',
     customLabel,

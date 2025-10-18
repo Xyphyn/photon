@@ -47,12 +47,15 @@
     aria-label={$t('aria.postDecor.openLink')}
     class="absolute inset-0 z-10"
   ></a>
-  <div class="-m-4 mask-b-from-0 relative h-24">
+  <div
+    class="-m-4 mask-b-from-25% relative h-24"
+    style="min-width: calc(100% + calc(var(--spacing) * 8));"
+  >
     {#if community.community.banner}
       <img
         src={optimizeImageURL(community.community.banner, 512)}
         alt=""
-        class="object-cover min-h-full"
+        class="object-cover min-h-full min-w-full"
       />
     {:else if community.community.icon}
       <img
@@ -61,7 +64,7 @@
         class="object-cover blur-3xl"
       />
     {:else}
-      <div class="scale-200">
+      <div class="scale-200 min-w-full mask-b-from-25%">
         <Blobs seed={community.community.name} />
       </div>
     {/if}
