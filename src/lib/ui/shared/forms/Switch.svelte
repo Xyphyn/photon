@@ -33,7 +33,7 @@
     />
     <div
       class="box-border w-5 h-full bg-white dark:peer-checked:bg-black rounded-full shadow-xs
-		group-active:w-6 transition peer-checked:translate-x-5 peer-checked:group-active:translate-x-4
+		group-active:w-5.5 transition peer-checked:translate-x-5 peer-checked:group-active:translate-x-4.5
 		peer-checked:rtl:-translate-x-5 peer-checked:group-active:rtl:-translate-x-4"
     ></div>
   </div>
@@ -49,6 +49,6 @@
 
 <style>
   .transition {
-    transition: all 500ms cubic-bezier(0.075, 0.82, 0.165, 1);
+    transition: all 200ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
 </style>

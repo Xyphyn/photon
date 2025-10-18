@@ -53,7 +53,7 @@
   }
 
   let {
-    elevation = 'flat',
+    elevation = 'medium',
     padding = 'md',
     rounding = 'xl',
     color = 'uniform',
@@ -95,6 +95,16 @@
       background-color: var(--color-zinc-900);
       border-color: var(--color-zinc-800);
       border-top-color: var(--color-zinc-700);
+
+      @variant hover {
+        @variant dark {
+          background-color: var(--color-zinc-925);
+        }
+      }
+    }
+
+    @variant hover {
+      background-color: var(--color-slate-100);
     }
   }
 

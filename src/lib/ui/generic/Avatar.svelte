@@ -32,7 +32,7 @@
     url: string | undefined
     alt?: string
     title?: string
-    circle?: boolean
+    circle?: boolean | null
     width: number
     res?: number | undefined
     style?: string
@@ -67,7 +67,8 @@
     {title}
     class={[
       'aspect-square object-cover overflow-hidden shrink-0 bg-slate-100 dark:bg-zinc-900',
-      circle ? 'rounded-full' : 'rounded-lg',
+      circle === true ? 'rounded-full' : circle === false ? 'rounded-lg' : '',
+
       clazz,
     ]}
     style="width: {width}px; height: {width}px; {style}"
@@ -77,7 +78,7 @@
     style="width: {width}px; height: {width}px;"
     class={[
       'aspect-square object-cover overflow-hidden shrink-0',
-      circle ? 'rounded-full' : 'rounded-lg',
+      circle === true ? 'rounded-full' : circle === false ? 'rounded-lg' : '',
       clazz,
     ]}
   >

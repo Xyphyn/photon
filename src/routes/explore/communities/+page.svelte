@@ -2,6 +2,7 @@
   import { navigating, page } from '$app/state'
   import { t } from '$lib/app/i18n'
   import CommunityItem from '$lib/feature/community/CommunityItem.svelte'
+  import CommunityItemBig from '$lib/feature/community/CommunityItemBig.svelte'
   import Fixate from '$lib/ui/generic/Fixate.svelte'
   import Skeleton from '$lib/ui/generic/Skeleton.svelte'
   import Placeholder from '$lib/ui/info/Placeholder.svelte'
@@ -51,7 +52,7 @@
         {$t('routes.search.top')}
       </EndPlaceholder>
       <div
-        class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 items-center mb-6 border-0!"
+        class="grid md:grid-cols-2 xl:grid-cols-3 gap-4 items-center border-0!"
       >
         {#each data.communities.slice(0, 3) as community, index (community.community.id)}
           <div
@@ -63,8 +64,8 @@
               y: 16,
             }}
           >
-            <Material color="uniform" padding="none" rounding="2xl">
-              <CommunityItem {community} showCounts={false} view="cozy" />
+            <Material padding="none" rounding="none" class="rounded-3xl h-full">
+              <CommunityItemBig {community} />
             </Material>
           </div>
         {/each}

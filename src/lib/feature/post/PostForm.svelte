@@ -320,6 +320,7 @@
 
           data.community = c
         }}
+        class="w-max"
       />
     {:else}
       <div class="flex flex-col gap-1">

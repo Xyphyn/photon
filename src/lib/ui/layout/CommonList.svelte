@@ -29,7 +29,7 @@
   }: Props = $props()
 </script>
 
-<ul class="space-y-0.5">
+<ul>
   {#if items}
     {#each items as item, index (item)}
       <li
@@ -50,6 +50,15 @@
 </ul>
 
 <style>
+  @reference '../../../app.css';
+  ul {
+    :global {
+      :where(& > :not(:last-child)) {
+        margin-block-start: calc(calc(var(--spacing) * 0.75));
+        margin-block-end: calc(calc(var(--spacing) * 0.75));
+      }
+    }
+  }
   ul > :global(li) {
     transition: background-color 0.1s;
     background-color: var(--color-white);

@@ -87,14 +87,14 @@
         pointer-events: auto;
         backdrop-filter: blur(var(--blur-xl));
         border-width: 1px;
-        border-color: var(--color-slate-200);
+        border-color: var(--color-slate-100);
         border-top: none;
-        background-color: var(--color-slate-100);
+        background-color: var(--color-slate-50);
 
         @variant md {
           border-left: none;
           border-right: none;
-          background-color: --alpha(var(--color-slate-100) / 70%);
+          background-color: --alpha(var(--color-slate-50) / 70%);
         }
 
         @variant dark {
@@ -150,9 +150,9 @@
       .shell-main {
         width: 100%;
         grid-area: main;
-        background-color: var(--color-slate-50);
-        border-left: 1px solid var(--color-slate-200);
-        border-right: 1px solid var(--color-slate-200);
+        background-color: var(--color-slate-25);
+        border-left: 1px solid var(--color-slate-100);
+        border-right: 1px solid var(--color-slate-100);
         padding-bottom: calc(var(--spacing) * 22);
 
         @variant dark {
@@ -171,7 +171,7 @@
         position: sticky;
         top: 0;
         left: 0;
-        background-color: var(--color-slate-100);
+        background-color: var(--color-slate-50);
         z-index: 40;
         width: 100%;
 
