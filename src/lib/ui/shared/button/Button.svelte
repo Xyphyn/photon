@@ -54,6 +54,7 @@
 
   const buttonRounding = {
     pill: 'rounded-full',
+    '2xl': 'rounded-2xl',
     xl: 'rounded-xl',
     lg: 'rounded-lg',
     md: 'rounded-md',
@@ -185,11 +186,19 @@
 
     .btn-primary {
       border: 1px solid transparent;
-      background: var(--color-primary-900);
+      background: radial-gradient(
+        circle at 20% 0%,
+        var(--color-primary-800),
+        var(--color-primary-900)
+      );
       color: var(--color-slate-50);
 
       @variant dark {
-        background-color: var(--color-primary-100) !important;
+        background: radial-gradient(
+          circle at bottom right,
+          var(--color-primary-200),
+          var(--color-primary-100)
+        );
         color: var(--color-zinc-900);
       }
 
@@ -212,9 +221,17 @@
       }
 
       @variant hover {
-        background-color: var(--color-slate-50);
+        background-color: color-mix(
+          in oklab,
+          var(--color-white),
+          var(--color-slate-50)
+        );
         @variant dark {
-          background-color: var(--color-zinc-950);
+          background-color: color-mix(
+            in oklab,
+            var(--color-zinc-925),
+            var(--color-zinc-900)
+          );
         }
       }
     }

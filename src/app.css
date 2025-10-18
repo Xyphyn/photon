@@ -47,8 +47,8 @@
   --color-primary-200: rgb(var(--c-p-200, 175 175 185));
 
   /* light theme */
-  --color-primary-800: rgb(var(--c-p-900, 20 28 47));
-  --color-primary-900: rgb(var(--c-p-800, 15 23 42));
+  --color-primary-800: rgb(var(--c-p-800, 50 58 77));
+  --color-primary-900: rgb(var(--c-p-900, 15 23 42));
 
   --color-black: rgb(var(--c-o-black, 0 0 0));
   --color-white: rgb(var(--c-o-white, 255 255 255));
@@ -65,6 +65,12 @@
   }
 }
 
+@layer utilities {
+  .font-display {
+    letter-spacing: var(--tracking-tight);
+  }
+}
+
 @custom-variant hover (&:hover);
 
 @font-face {
@@ -74,7 +80,7 @@
 }
 
 body {
-  @apply bg-slate-100 text-slate-900 dark:bg-zinc-950 dark:text-zinc-100 accent-slate-950 dark:accent-zinc-50;
+  @apply bg-slate-50 text-slate-900 dark:bg-zinc-950 dark:text-zinc-100 accent-slate-950 dark:accent-zinc-50;
 }
 
 .dark {
