@@ -26,6 +26,7 @@ import {
   Home,
   Identification,
   Inbox,
+  MagnifyingGlass,
   MapPin,
   Moon,
   Newspaper,
@@ -68,7 +69,7 @@ export function getGroups(
   profiles: ProfileInfo[],
   td: ThemeData,
   contextual?: Action[],
-) {
+): Group[] {
   return [
     {
       name: t.get('nav.commands.recents'),
@@ -400,7 +401,7 @@ export function getGroups(
       name: t.get('profile.subscribed'),
       actions:
         profile.user?.follows.map((f) => ({
-          icon: f.community.icon,
+          icon: f.community.icon ?? Newspaper,
           name: f.community.title,
           href: `/c/${fullCommunityName(
             f.community.name,
@@ -410,4 +411,26 @@ export function getGroups(
         })) ?? [],
     },
   ]
+}
+
+// this should really be rewritten, but a temporary change
+// to make sure we don't recalculate ALL of that per keypress
+export function dynamicActions(query: string): Group {
+  const actions = [
+    {
+      name: t.get('nav.commands.search', { default: query }),
+      icon: MagnifyingGlass,
+      href: `/search?q=${query}`,
+    },
+    {
+      name: t.get('nav.commands.communities', { default: query }),
+      icon: Newspaper,
+      href: `/explore/communities?q=${query}`,
+    },
+  ]
+
+  return {
+    name: t.get('routes.search.other'),
+    actions: actions,
+  }
 }

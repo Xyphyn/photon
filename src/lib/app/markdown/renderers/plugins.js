@@ -98,6 +98,8 @@ const regexes = {
   implicitUser: /^mailto:([a-z0-9_.-]+)@(([\da-z.-]+)\.([a-z]{2,63}))/i,
 }
 
+export { regexes as CONTENT_REGEXES }
+
 /**
  * Convert links to photon links
  */

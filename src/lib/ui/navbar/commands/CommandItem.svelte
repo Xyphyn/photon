@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Markdown from '$lib/app/markdown/Markdown.svelte'
   import Avatar from '$lib/ui/generic/Avatar.svelte'
   import { Button } from 'mono-svelte'
   import type { Snippet } from 'svelte'
@@ -25,7 +26,7 @@
   alignment="left"
   color="none"
   size="custom"
-  class="block w-full"
+  class="px-3! py-2! w-full"
   data-sveltekit-preload-code="viewport"
   data-sveltekit-preload-data="tap"
   {...rest}
@@ -42,7 +43,7 @@
   {/if}
   {@render children?.()}
   <div class="inline-flex flex-col">
-    <span>{action.name}</span>
+    <Markdown inline source={action.name} />
     {#if action.detail}
       <span class="font-normal text-xs">{action.detail}</span>
     {/if}

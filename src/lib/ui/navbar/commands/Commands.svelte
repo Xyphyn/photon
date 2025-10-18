@@ -11,8 +11,13 @@
   import EndPlaceholder from '$lib/ui/layout/EndPlaceholder.svelte'
   import { TextInput } from 'mono-svelte'
   import { createEventDispatcher, onMount } from 'svelte'
-  import { Home, Icon, MagnifyingGlass } from 'svelte-hero-icons/dist'
-  import { type Action, type Group, getGroups } from './actions.svelte'
+  import { Home, Icon } from 'svelte-hero-icons/dist'
+  import {
+    type Action,
+    type Group,
+    dynamicActions,
+    getGroups,
+  } from './actions.svelte'
   import CommandItem from './CommandItem.svelte'
 
   interface Props {
@@ -49,10 +54,6 @@
   }
 
   function searchGroup(term: string) {
-    if (term == '/kill @') {
-      goto('/you_died')
-    }
-
     if (term.length < 1) {
       if (breadcrumbs.length <= 0) {
         filteredGroups = groups.map((group) => ({
@@ -61,31 +62,34 @@
         }))
       }
     } else {
-      filteredGroups = groups
-        .map((group) => {
-          const scoredActions = flattenActions(group.actions)
-            .map((action) => ({
-              ...action,
-              score: Math.max(
-                fuzzySearch(action.name, term),
-                fuzzySearch(group.name, term),
-                action.detail ? fuzzySearch(action.detail, term) : -1,
-              ),
-            }))
-            .filter((action) => action.score > 0)
-            .sort((a, b) => b.score - a.score)
+      filteredGroups = [
+        ...groups
+          .map((group) => {
+            const scoredActions = flattenActions(group.actions)
+              .map((action) => ({
+                ...action,
+                score: Math.max(
+                  fuzzySearch(action.name, term),
+                  fuzzySearch(group.name, term),
+                  action.detail ? fuzzySearch(action.detail, term) : -1,
+                ),
+              }))
+              .filter((action) => action.score > 0)
+              .sort((a, b) => b.score - a.score)
 
-          return {
-            ...group,
-            actions: scoredActions,
-            score: Math.max(
-              fuzzySearch(group.name, term),
-              ...scoredActions.map((a) => a.score),
-            ),
-          }
-        })
-        .filter((group) => group.actions.length > 0)
-        .sort((a, b) => b.score - a.score)
+            return {
+              ...group,
+              actions: scoredActions,
+              score: Math.max(
+                fuzzySearch(group.name, term),
+                ...scoredActions.map((a) => a.score),
+              ),
+            }
+          })
+          .filter((group) => group.actions.length > 0)
+          .sort((a, b) => b.score - a.score),
+        dynamicActions(term),
+      ]
     }
   }
 
@@ -283,18 +287,5 @@
         </CommonList>
       </div>
     {/each}
-    {#if search != ''}
-      <CommandItem
-        action={{
-          name: search,
-          href: `/search?q=${encodeURIComponent(search)}`,
-          icon: MagnifyingGlass,
-        }}
-      >
-        <span class="font-normal text-slate-600 dark:text-zinc-400">
-          {$t('nav.commands.search', { default: '' })}
-        </span>
-      </CommandItem>
-    {/if}
   </div>
 </div>
