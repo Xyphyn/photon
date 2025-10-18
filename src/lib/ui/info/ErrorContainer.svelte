@@ -51,13 +51,13 @@
         easing: expoOut,
       }}
       out:fly={{ y: -8, duration: 400, opacity: 0, easing: expoOut }}
-      class="bg-red-400/10 border border-red-500/30 text-red-900 dark:text-red-50 rounded-2xl p-4"
+      class="error-container"
     >
       <Icon
         src={ExclamationTriangle}
-        size="32"
-        mini
-        class="inline-block rounded-lg bg-red-500 p-1.5 text-white clear-both float-left mr-2"
+        size="20"
+        micro
+        class="inline-block rounded-lg clear-both float-left mr-2"
       />
       {#each scopedErrors as error}
         <p>{error.message}</p>
@@ -65,3 +65,23 @@
     </div>
   </div>
 {/if}
+
+<style>
+  @reference '../../../app.css';
+  .error-container {
+    background: linear-gradient(
+      to top,
+      --alpha(var(--color-red-400) / 10%),
+      --alpha(var(--color-red-500) / 10%)
+    );
+    border-radius: var(--radius-2xl);
+    padding: calc(var(--spacing) * 2.5) calc(var(--spacing) * 3);
+    color: var(--color-red-900);
+    border: 1px solid --alpha(var(--color-red-300) / 30%);
+    font-size: var(--text-sm);
+
+    @variant dark {
+      color: var(--color-red-300);
+    }
+  }
+</style>
