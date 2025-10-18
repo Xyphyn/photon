@@ -43,10 +43,10 @@
   >
     <div class="md:hidden flex justify-between" dir="ltr">
       <InvertedCorner
-        class="w-8 h-8 text-slate-100 dark:text-zinc-950 rotate-270"
+        class="w-8 h-8 text-slate-50 dark:text-zinc-950 rotate-270"
       />
       <InvertedCorner
-        class="w-8 h-8 text-slate-100 dark:text-zinc-950 rotate-180"
+        class="w-8 h-8 text-slate-50 dark:text-zinc-950 rotate-180"
       />
     </div>
     {@render navbar?.({

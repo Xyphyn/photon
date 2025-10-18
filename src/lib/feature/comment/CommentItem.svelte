@@ -2,7 +2,7 @@
   import type { CommentView } from '$lib/api/types'
   import { t } from '$lib/app/i18n'
   import { publishedToDate } from '$lib/ui/util/date'
-  import { Button, Material } from 'mono-svelte'
+  import { Button } from 'mono-svelte'
   import { ArrowUturnUp, Icon } from 'svelte-hero-icons/dist'
   import type { ClassValue } from 'svelte/elements'
   import { PostMeta } from '../post'
@@ -28,7 +28,7 @@
   }: Props = $props()
 </script>
 
-<Material
+<div
   class={['flex flex-col flex-1 rounded-none list-none', clazz]}
   color="none"
   padding="none"
@@ -76,4 +76,4 @@
     {...rest}
     class={commentClass}
   />
-</Material>
+</div>

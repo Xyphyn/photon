@@ -63,7 +63,8 @@
     transition: background-color 0.1s;
     background-color: var(--color-white);
     container-type: inline-size;
-    border: 1px solid var(--color-slate-100);
+    border: 1px solid
+      color-mix(in oklab, var(--color-slate-50), var(--color-slate-100));
 
     border-radius: var(--radius-md) var(--radius-md);
 
