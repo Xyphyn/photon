@@ -10,6 +10,7 @@
     type?: MediaType
     opened?: boolean | undefined
     blur?: boolean
+    [key: string]: any
   }
 
   let {
@@ -18,6 +19,7 @@
     type = 'none',
     opened = undefined,
     blur = post.nsfw && settings.nsfwBlur,
+    ...rest
   }: Props = $props()
 </script>
 
@@ -28,13 +30,15 @@
   - Embed link/card.
 -->
 {#if type == 'image' && view == 'cozy'}
-  <PostImage {post} {blur} />
+  <PostImage {post} {blur} {...rest} />
 {:else if (type == 'iframe' || type == 'video') && view == 'cozy' && post.url}
   <PostIframe
     thumbnail={post.thumbnail_url}
     type={iframeType(post.url)}
     url={post.url}
     {opened}
+    title={post.name}
+    {...rest}
   />
 {:else if type == 'embed' && post.url}
   <PostLink
@@ -43,5 +47,6 @@
     nsfw={post.nsfw}
     embed_title={post.embed_title}
     {view}
+    {...rest}
   />
 {/if}

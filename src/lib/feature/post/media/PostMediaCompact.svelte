@@ -45,15 +45,10 @@
 <div class={[size, 'relative group/media', clazz]} {style} role="presentation">
   <svelte:element
     this={!settings.expandImages || type != 'image' ? 'a' : 'button'}
-    href={post.url ?? postLink(post)}
+    href={postLink(post)}
     aria-label={type == 'image'
       ? $t('aria.postDecor.openImage', { default: post.name })
-      : type == 'embed'
-        ? $t('aria.postDecor.openLink', {
-            default: post.embed_title ?? post.name,
-          })
-        : $t('aria.postDecor.openPost', { default: post.name })}
-    target={post.url ? '_blank' : undefined}
+      : $t('aria.postDecor.openPost', { default: post.name })}
     onclick={() => {
       if (type == 'image') showImage(bestImageURL(post, false, -1))
     }}

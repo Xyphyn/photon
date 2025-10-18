@@ -174,6 +174,7 @@
     post={data.data.value.post.post}
     opened
     view="cozy"
+    autoplay={false}
   />
   {#if data.data.value.post.post.body}
     <div class="text-base text-slate-800 dark:text-zinc-300 leading-normal">
