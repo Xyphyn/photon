@@ -26,9 +26,9 @@
     const baseHue = (hashString(seed) % 12) * 60
 
     for (let i = 0; i < count; i++) {
-      const r1 = seededRandom(seed, i * 3)
-      const r2 = seededRandom(seed, i * 3 + 1)
-      const r3 = seededRandom(seed, i * 3 + 2)
+      const r1 = seededRandom(seed, i * 5)
+      const r2 = seededRandom(seed, i * 5 + 1)
+      const r3 = seededRandom(seed, i * 5 + 2)
 
       const lightness = 0.45 + r1 * 0.4
 
