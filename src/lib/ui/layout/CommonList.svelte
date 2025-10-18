@@ -101,7 +101,7 @@
     background-color: color-mix(
       in oklab,
       var(--color-white),
-      var(--color-slate-100)
+      var(--color-slate-50)
     );
   }
 

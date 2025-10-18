@@ -267,8 +267,7 @@
             <li
               class={[
                 'custom-size',
-                globalIndex == selectedIndex &&
-                  'brightness-95 dark:brightness-125',
+                globalIndex == selectedIndex && 'selected',
               ]}
             >
               <CommandItem
