@@ -275,11 +275,6 @@ export function getGroups(
               name: t.get('account.addGuest'),
               icon: Plus,
             },
-            {
-              href: '/accounts',
-              name: t.get('account.accounts'),
-              icon: UserGroup,
-            },
           ]
         : [
             {

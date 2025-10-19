@@ -38,7 +38,7 @@
 {@render children?.()}
 <div class="min-h-screen flex flex-col">
   <div
-    class={['shell-navbar-holder', !dockVisible && 'max-md:-bottom-24']}
+    class={['shell-navbar-holder', !dockVisible && 'max-md:-bottom-24!']}
     aria-hidden="true"
   >
     <div class="md:hidden flex justify-between" dir="ltr">

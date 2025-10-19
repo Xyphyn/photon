@@ -82,6 +82,7 @@
     .nav-btn {
       width: calc(var(--spacing) * 10);
       height: calc(var(--spacing) * 10);
+      transition: 75ms cubic-bezier(0.075, 0.82, 0.165, 1);
 
       color: var(--color-slate-500);
 
@@ -127,20 +128,28 @@
 
     .nav-btn-sm-primary .prefix {
       @variant max-md {
-        background-color: var(--color-primary-900);
+        background: radial-gradient(
+          circle at 20% 0%,
+          var(--color-primary-800),
+          var(--color-primary-900)
+        );
         color: var(--color-slate-50);
         border-radius: var(--radius-xl);
 
         @variant hover {
-          color: var(--color-slate-50);
+          filter: brightness(120%);
+          @variant dark {
+            filter: brightness(90%);
+          }
         }
 
         @variant dark {
-          background-color: var(--color-primary-100);
+          background: radial-gradient(
+            circle at bottom right,
+            var(--color-primary-200),
+            var(--color-primary-100)
+          );
           color: var(--color-zinc-900);
-          @variant hover {
-            color: var(--color-zinc-900);
-          }
         }
       }
     }
