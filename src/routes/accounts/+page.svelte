@@ -64,7 +64,7 @@
 {#if removing.shown && removing.account}
   <Modal bind:open={removing.shown}>
     {#snippet customTitle()}
-      <span>Removing Account</span>
+      <span>{$t('account.logout')}</span>
     {/snippet}
     <div class="flex flex-row items-center gap-2">
       <ProfileAvatar profile={removing.account} selected={true} />
@@ -76,7 +76,6 @@
         </span>
       </div>
     </div>
-    <p>This removes the account from Photon, it does not delete the account.</p>
     <div class="flex flex-row gap-2 items-center">
       <Button size="lg" class="flex-1" onclick={() => (removing.shown = false)}>
         Cancel

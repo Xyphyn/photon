@@ -55,7 +55,8 @@
     clearErrorScope(page.route.id)
 
     try {
-      data.instance = data.instance.trim()
+      // leading HTTPS is redundant
+      data.instance = data.instance.trim().replace(/^https:\/\//, '')
 
       const response = await client({
         instanceURL: data.instance,
@@ -143,7 +144,7 @@
           required
           pattern={DOMAIN_REGEX_FORMS}
           autocorrect="off"
-          autocapitalize="none"
+          autocapitalize="off"
         >
           {#snippet suffix()}
             <Select
@@ -160,7 +161,9 @@
               }
               class="border-y-0! border-r-0! rounded-none! border-l max-w-24"
             >
-              <Option data-label="true" value="placeholder" disabled>{$t('form.instanceType')}</Option>
+              <Option data-label="true" value="placeholder" disabled>
+                {$t('form.instanceType')}
+              </Option>
               <Option value="lemmyv3">Lemmy</Option>
               <Option value="piefedvalpha">Piefed</Option>
             </Select>
