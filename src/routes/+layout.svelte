@@ -149,24 +149,28 @@
     <Navbar class={c} style={s} />
   {/snippet}
   {#snippet suffix({ class: c })}
-    {#if page.data.slots?.sidebar?.component}
-      {@const SvelteComponent = page.data.slots.sidebar.component}
-      <SvelteComponent
-        {...page.data.slots.sidebar.props}
-        class={[c, 'p-3 sm:p-6']}
-      />
-    {:else if site.data}
-      <InstanceCard
-        site={site.data.site_view}
-        taglines={site.data.taglines}
-        admins={site.data.admins}
-        version={site.data.version}
-        class={[c, 'p-3 sm:p-6']}
-      />
-    {:else}
-      <div class="h-64 w-full grid place-items-center">
-        <Spinner width={32} />
-      </div>
-    {/if}
+    <!--strange issue, proabably to do with dynamic components-->
+    <!--the {#if} branch for InstanceCard is getting rendered even if site.data is null, causing crashes-->
+    {#key site.data}
+      {#if page.data.slots?.sidebar?.component}
+        {@const SvelteComponent = page.data.slots.sidebar.component}
+        <SvelteComponent
+          {...page.data.slots.sidebar.props}
+          class={[c, 'p-3 sm:p-6']}
+        />
+      {:else if site.data?.site_view}
+        <InstanceCard
+          site={site.data.site_view}
+          taglines={site.data.taglines}
+          admins={site.data.admins}
+          version={site.data.version}
+          class={[c, 'p-3 sm:p-6']}
+        />
+      {:else}
+        <div class="h-64 w-full grid place-items-center">
+          <Spinner width={32} />
+        </div>
+      {/if}
+    {/key}
   {/snippet}
 </Shell>

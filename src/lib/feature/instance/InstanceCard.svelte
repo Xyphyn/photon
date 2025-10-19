@@ -27,13 +27,7 @@
     class?: ClassValue
   }
 
-  let {
-    site,
-    taglines = undefined,
-    admins = undefined,
-    version = undefined,
-    class: clazz = '',
-  }: Props = $props()
+  let { site, taglines, admins, version, class: clazz = '' }: Props = $props()
 </script>
 
 <aside
