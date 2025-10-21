@@ -52,17 +52,17 @@ export async function load({ url, fetch }) {
   const grouped = everything.reduce(
     (groups, item) => {
       const key = isPostView(item.item)
-        ? item.item.post.id
+        ? `post-${item.item.post.id}`
         : isCommentView(item.item)
-          ? item.item.comment.id
-          : item.item.id
+          ? `comment-${item.item.comment.id}`
+          : `pm-${item.item.id}`
       if (!groups[key]) {
         groups[key] = []
       }
       groups[key].push(item)
       return groups
     },
-    {} as Record<number, ReportView[]>,
+    {} as Record<string, ReportView[]>,
   )
 
   return {
