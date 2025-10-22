@@ -266,8 +266,8 @@
       {#each data.community.flair_list as flair}
         {@const selected = data.flair_list?.some((i) => i == flair.id)}
         <button
-          class="rounded-full cursor-pointer hover:brightness-100"
-          style="background-color: {flair.background_color};"
+          class="rounded-full cursor-pointer hover:brightness-100 badge-tag-color"
+          style="--tag-color: {flair.background_color}; --tag-text-color: {flair.text_color};"
           onclick={() => {
             if (selected) {
               const index = data.flair_list.findIndex((i) => i == flair.id)
@@ -320,7 +320,6 @@
 
           data.community = c
         }}
-        class="w-max"
       />
     {:else}
       <div class="flex flex-col gap-1">

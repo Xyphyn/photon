@@ -35,6 +35,7 @@
         nsfw: false,
         title: '',
         url: undefined,
+        flair_list: [],
       }}
   passedCommunity={community}
   onsubmit={(e) => goto(`/post/${e.post.id}`)}
