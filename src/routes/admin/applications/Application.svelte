@@ -10,7 +10,7 @@
   import ApplicationDenyModal from '$lib/feature/moderation/ApplicationDenyModal.svelte'
   import UserLink from '$lib/feature/user/UserLink.svelte'
   import { publishedToDate } from '$lib/ui/util/date'
-  import { Button, Label, Material, toast } from 'mono-svelte'
+  import { Button, ButtonGroup, Label, Material, toast } from 'mono-svelte'
   import RelativeDate from 'mono-svelte/util/RelativeDate.svelte'
   import {
     Check,
@@ -157,29 +157,31 @@
       {/if}
     </div>
     <div class="flex-1"></div>
-    <Button
-      size="square-md"
-      class="hover:bg-slate-200 {application.creator_local_user
-        .accepted_application === false && application.admin
-        ? 'text-red-500!'
-        : ''}"
-      aria-label={$t('routes.admin.applications.deny')}
-      onclick={() => review(false)}
-      loading={denying || reviewing}
-      disabled={approving || denying || reviewing}
-      icon={XMark}
-    ></Button>
-    <Button
-      size="square-md"
-      class="hover:bg-slate-200 {application.creator_local_user
-        .accepted_application
-        ? 'text-green-500!'
-        : ''}"
-      title={$t('routes.admin.applications.approve')}
-      onclick={() => review(true)}
-      loading={approving}
-      disabled={approving || denying || reviewing}
-      icon={Check}
-    ></Button>
+    <ButtonGroup orientation="horizontal" class="flex">
+      <Button
+        size="square-md"
+        class="hover:bg-slate-200 {application.creator_local_user
+          .accepted_application === false && application.admin
+          ? 'text-red-500!'
+          : ''}"
+        aria-label={$t('routes.admin.applications.deny')}
+        onclick={() => review(false)}
+        loading={denying || reviewing}
+        disabled={approving || denying || reviewing}
+        icon={XMark}
+      ></Button>
+      <Button
+        size="square-md"
+        class="hover:bg-slate-200 {application.creator_local_user
+          .accepted_application
+          ? 'text-green-500!'
+          : ''}"
+        title={$t('routes.admin.applications.approve')}
+        onclick={() => review(true)}
+        loading={approving}
+        disabled={approving || denying || reviewing}
+        icon={Check}
+      ></Button>
+    </ButtonGroup>
   </div>
 </Material>

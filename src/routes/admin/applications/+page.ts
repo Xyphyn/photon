@@ -1,14 +1,14 @@
-import { getClient } from '$lib/api/client.svelte'
+import { client } from '$lib/api/client.svelte'
 import { ReactiveState } from '$lib/app/util.svelte'
 
 export async function load({ fetch, url }) {
   const page = Number(url.searchParams.get('page')) || 1
   const type = url.searchParams.get('type') || 'unread'
 
-  const res = await getClient(undefined, fetch).listRegistrationApplications({
+  const res = await client({ func: fetch }).listRegistrationApplications({
     page: page,
     limit: 40,
-    unread_only: type == 'all',
+    unread_only: type == 'unread',
   })
 
   return {

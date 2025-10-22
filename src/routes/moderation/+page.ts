@@ -29,8 +29,6 @@ export async function load({ url, fetch }) {
     community_id: community,
   }
 
-  const admin = profile.isAdmin
-
   const [posts, comments, messages] = await Promise.all([
     client.listPostReports({
       ...params,
@@ -38,7 +36,9 @@ export async function load({ url, fetch }) {
     client.listCommentReports({
       ...params,
     }),
-    admin ? client.listPrivateMessageReports({ ...params }) : undefined,
+    profile.isAdmin
+      ? client.listPrivateMessageReports({ ...params })
+      : undefined,
   ])
 
   const everything = [
