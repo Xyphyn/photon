@@ -191,11 +191,12 @@
         var(--color-primary-800),
         var(--color-primary-900)
       );
+      background-size: 110% 110% !important;
       color: var(--color-slate-50);
 
       @variant dark {
         background: radial-gradient(
-          circle at bottom right,
+          circle at center right,
           var(--color-primary-200),
           var(--color-primary-100)
         );

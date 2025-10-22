@@ -66,7 +66,7 @@
     border: 1px solid
       color-mix(in oklab, var(--color-slate-50), var(--color-slate-100));
 
-    border-radius: var(--radius-md) var(--radius-md);
+    border-radius: var(--radius-lg) var(--radius-lg);
 
     &:first-child {
       border-top-left-radius: var(--radius-2xl);

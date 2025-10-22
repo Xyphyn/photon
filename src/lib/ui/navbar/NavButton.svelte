@@ -135,6 +135,7 @@
         );
         color: var(--color-slate-50);
         border-radius: var(--radius-xl);
+        background-size: 110% 110% !important;
 
         @variant hover {
           filter: brightness(120%);
