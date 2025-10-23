@@ -16,42 +16,19 @@
   --ease-cubic: cubic-bezier(0.075, 0.82, 0.165, 1);
   --spacing-22: 88px;
 
-  --color-slate-25: rgb(var(--c-s-25, 252 253 254));
-  --color-slate-50: rgb(var(--c-s-50, 248 250 252));
-  --color-slate-100: rgb(var(--c-s-100, 241 245 249));
-  --color-slate-200: rgb(var(--c-s-200, 226 232 240));
-  --color-slate-300: rgb(var(--c-s-300, 203 213 225));
-  --color-slate-400: rgb(var(--c-s-400, 148 163 184));
-  --color-slate-500: rgb(var(--c-s-500, 100 116 139));
-  --color-slate-600: rgb(var(--c-s-600, 71 85 105));
-  --color-slate-700: rgb(var(--c-s-700, 51 65 85));
-  --color-slate-800: rgb(var(--c-s-800, 30 41 59));
-  --color-slate-900: rgb(var(--c-s-900, 15 23 42));
-  --color-slate-950: rgb(var(--c-s-950, 2 6 23));
-
-  --color-zinc-50: rgb(var(--c-z-50, 252 252 254));
-  --color-zinc-100: rgb(var(--c-z-100, 248 248 251));
-  --color-zinc-200: rgb(var(--c-z-200, 235 235 240));
-  --color-zinc-300: rgb(var(--c-z-300, 222 222 228));
-  --color-zinc-400: rgb(var(--c-z-400, 175 175 185));
-  --color-zinc-500: rgb(var(--c-z-500, 128 128 138));
-  --color-zinc-600: rgb(var(--c-z-600, 98 98 108));
-  --color-zinc-700: rgb(var(--c-z-700, 68 68 76));
-  --color-zinc-800: rgb(var(--c-z-800, 47 47 54));
-  --color-zinc-900: rgb(var(--c-z-900, 34 34 39));
-  --color-zinc-925: rgb(var(--c-z-925, 28 28 32));
-  --color-zinc-950: rgb(var(--c-z-950, 25 25 29));
+  --color-slate-25: rgb(252 253 254);
+  --color-zinc-925: 28 28 32;
 
   /* dark theme */
-  --color-primary-100: rgb(var(--c-p-100, 248 248 251));
-  --color-primary-200: rgb(var(--c-p-200, 175 175 185));
+  --color-primary-100: rgb(248 248 251);
+  --color-primary-200: rgb(175 175 185);
 
   /* light theme */
-  --color-primary-800: rgb(var(--c-p-800, 50 58 77));
-  --color-primary-900: rgb(var(--c-p-900, 15 23 42));
+  --color-primary-800: rgb(50 58 77);
+  --color-primary-900: rgb(15 23 42);
 
-  --color-black: rgb(var(--c-o-black, 0 0 0));
-  --color-white: rgb(var(--c-o-white, 255 255 255));
+  --color-white: var(--color-other-white, rgb(255 255 255));
+  --color-black: var(--color-other-black, rgb(0 0 0));
 
   @keyframes pop-in {
     0% {

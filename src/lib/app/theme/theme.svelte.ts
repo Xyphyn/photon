@@ -1,6 +1,6 @@
-import { browser } from "$app/environment"
-import { env } from "$env/dynamic/public"
-import { getDefaultTheme, presets } from "./presets"
+import { browser } from '$app/environment'
+import { env } from '$env/dynamic/public'
+import { getDefaultTheme, presets } from './presets'
 
 type ColorScheme = 'system' | 'light' | 'dark'
 
@@ -159,7 +159,7 @@ export function calculateVars(theme: Theme) {
 
   for (const [scheme, colors] of Object.entries(theme.colors)) {
     for (const [key, value] of Object.entries(colors)) {
-      cssVariables += `--c-${scheme[0]}-${key}:${hexToRgb(value)}; `
+      cssVariables += `--color-${scheme}-${key}:rgb(${hexToRgb(value)}); `
     }
   }
 
