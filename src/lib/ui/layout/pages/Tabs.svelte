@@ -56,10 +56,8 @@
 
 <nav
   class={[
-    'flex flex-row items-center sm:mt-0 flex-wrap z-20',
-    style == 'header'
-      ? 'p-1 gap-x-8 gap-y-4 justify-center sm:justify-start'
-      : 'gap-2',
+    'tab-bar',
+    style == 'header' ? 'bar-header' : 'gap-2',
     margin && 'my-2',
     margin && style == 'subpage' && 'mb-3',
   ]}
@@ -74,12 +72,7 @@
       <a
         onclick={() => invalidateAll()}
         href={buildUrl(currentRoute, route.href)}
-        class={[
-          'rounded-full font-medium transition-colors duration-100 relative z-0 shrink-0 hover:text-slate-900 hover:dark:text-zinc-100',
-          selected
-            ? 'tab-selected text-primary-900 dark:text-primary-100 hover:cursor-default'
-            : 'text-slate-500 dark:text-zinc-500',
-        ]}
+        class={['tab-item ', selected && 'tab-selected']}
       >
         {route.name}
       </a>
@@ -93,8 +86,44 @@
 </nav>
 
 <style>
+  @reference '../../../../app.css';
+  .tab-bar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    z-index: 20;
+
+    @variant sm {
+      margin-top: 0;
+    }
+
+    margin-left: calc(var(--spacing) * -3);
+    margin-right: calc(var(--spacing) * -3);
+    margin-top: calc(var(--spacing) * -1);
+  }
+
+  .tab-bar.bar-header {
+    padding: calc(var(--spacing));
+    gap: calc(var(--spacing) * 1) calc(var(--spacing) * 2);
+    justify-content: center;
+
+    @variant sm {
+      justify-content: start;
+    }
+  }
+
   .tab-selected {
     position: relative;
+    color: var(--color-primary-900);
+
+    @variant dark {
+      color: var(--color-primary-100);
+    }
+
+    @variant hover {
+      cursor: default !important;
+    }
   }
 
   .tab-selected::before {
@@ -103,5 +132,30 @@
     inset: calc(var(--spacing) * -1) calc(var(--spacing) * -3);
     z-index: -10;
     border-radius: 9999px;
+  }
+
+  .tab-item {
+    &:not(.tab-selected) {
+      color: var(--color-slate-500);
+
+      @variant dark {
+        color: var(--color-zinc-500);
+      }
+    }
+    padding: calc(var(--spacing)) calc(var(--spacing) * 3);
+    border-radius: var(--radius-xl);
+    font-weight: var(--font-weight-medium);
+    transition: all cubic-bezier(0.075, 0.82, 0.165, 1) 75ms;
+    z-index: 0;
+    flex-shrink: 0;
+
+    @variant hover {
+      color: var(--color-slate-900);
+      background-color: var(--color-slate-200);
+      @variant dark {
+        color: var(--color-zinc-100);
+        background-color: var(--color-zinc-800);
+      }
+    }
   }
 </style>

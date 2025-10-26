@@ -174,6 +174,7 @@
         background-color: var(--color-slate-50);
         z-index: 40;
         width: 100%;
+        overflow: auto;
 
         @variant dark {
           background-color: var(--color-zinc-950);
@@ -185,7 +186,7 @@
         width: 100% !important;
         @variant md {
           display: flex;
-          top: calc(var(--spacing) * 16);
+          top: calc(var(--spacing) * 14.5);
           max-height: calc(100vh - 4rem);
         }
       }

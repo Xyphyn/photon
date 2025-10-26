@@ -180,7 +180,13 @@
     }
 
     @variant md {
-      gap: calc(var(--spacing) * 6);
+      gap: calc(var(--spacing) * 1);
+    }
+  }
+
+  .navbar button:last-of-type {
+    @variant md {
+      margin-left: calc(var(--spacing) * 2);
     }
   }
 </style>
