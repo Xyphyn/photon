@@ -11,12 +11,10 @@
     parseTags,
     PostActions,
     PostItem,
-    postLink,
     PostMedia,
     PostMeta,
     type Tag,
   } from '$lib/feature/post'
-  import Fixate from '$lib/ui/generic/Fixate.svelte'
   import Placeholder from '$lib/ui/info/Placeholder.svelte'
   import { CommonList } from '$lib/ui/layout'
   import EndPlaceholder from '$lib/ui/layout/EndPlaceholder.svelte'
@@ -24,12 +22,7 @@
   import FormattedNumber from '$lib/ui/util/FormattedNumber.svelte'
   import { Button, Expandable, toast } from 'mono-svelte'
   import { onMount } from 'svelte'
-  import {
-    ArrowRight,
-    ChatBubbleLeftRight,
-    ChevronDoubleUp,
-    Icon,
-  } from 'svelte-hero-icons/dist'
+  import { ChatBubbleLeftRight, ChevronDoubleUp } from 'svelte-hero-icons/dist'
   import { expoOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'
   import CommentProvider from './CommentProvider.svelte'
@@ -59,10 +52,7 @@
     }
   })
 
-  let loading = $state(false)
-
   async function reloadComments() {
-    loading = true
     data.data.value.comments = client()
       .getComments({
         page: 1,
@@ -73,7 +63,6 @@
         max_depth: data.data.value.post.counts.comments > 100 ? 1 : 3,
       })
       .then((i) => i.comments)
-    loading = false
     data.data.value.params.thread.singleThread = false
   }
 
@@ -214,34 +203,6 @@
     {/if}
   {/await}
 </article>
-{#await data.data.value.comments then comments}
-  {#if data.data.value.params.thread.showContext || data.data.value.params.thread.singleThread}
-    <Fixate placement="top">
-      <Button
-        color="primary"
-        rounding="pill"
-        {loading}
-        disabled={loading}
-        href={data.data.value.params.thread.showContext
-          ? `/comment/${
-              // split first comment path to get 5 before
-              comments[0].comment.path.split('.').slice(-5)[1]
-            }`
-          : data.data.value.params.thread.singleThread
-            ? postLink(data.data.value.post.post)
-            : undefined}
-        class="w-max mx-auto sticky lg:top-20 z-50"
-      >
-        {data.data.value.params.thread.showContext
-          ? $t('routes.post.thread.context')
-          : $t('routes.post.thread.allComments')}
-        {#snippet suffix()}
-          <Icon src={ArrowRight} size="16" micro />
-        {/snippet}
-      </Button>
-    </Fixate>
-  {/if}
-{/await}
 <section class="flex flex-col gap-2 w-full" id="comments">
   <header class="mt-4">
     <EndPlaceholder size="md" color="none">
@@ -288,6 +249,8 @@
       onupdate={reloadComments}
       bind:sort={data.data.value.params.comments.sort}
       virtualize={!page.url.searchParams.get('noVirtualize')}
+      showContext={data.data.value.params.thread.showContext}
+      singleThread={data.data.value.params.thread.singleThread}
     />
     {#if comments.length == 0}
       <Placeholder

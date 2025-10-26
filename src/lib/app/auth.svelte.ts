@@ -12,7 +12,7 @@ import { DEFAULT_INSTANCE_URL } from './instance.svelte'
 import { instanceToURL, moveItem } from './util.svelte'
 
 function getFromStorage<T>(key: string): T | undefined {
-  if (typeof localStorage == 'undefined') return undefined
+  if (!browser) return
   const lc = localStorage.getItem(key)
   if (!lc) return undefined
 
@@ -20,7 +20,7 @@ function getFromStorage<T>(key: string): T | undefined {
 }
 
 function setFromStorage(key: string, item: any, stringify: boolean = true) {
-  if (typeof localStorage == 'undefined') return
+  if (!browser) return
   return localStorage.setItem(key, stringify ? JSON.stringify(item) : item)
 }
 

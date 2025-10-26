@@ -23,11 +23,17 @@
     none: '',
   }
 
+  const alignments = {
+    default: '',
+    center: '',
+  }
+
   interface Props {
     class?: ClassValue
     size?: keyof typeof sizes
     color?: keyof typeof colors
     margin?: keyof typeof margins
+    alignment?: keyof typeof alignments
     border?: boolean
     children?: import('svelte').Snippet
     action?: import('svelte').Snippet
@@ -43,8 +49,18 @@
     color = 'subtle',
     margin = 'none',
     element = 'h3',
+    alignment = 'default',
   }: Props = $props()
 </script>
+
+{#snippet divider()}
+  <div
+    class={[
+      'flex-1 border-slate-200/70 dark:border-zinc-800 border-b',
+      !border && 'opacity-0',
+    ]}
+  ></div>
+{/snippet}
 
 <div
   class={[
@@ -55,17 +71,22 @@
     clazz,
   ]}
 >
-  <svelte:element
-    this={element}
-    class="font-medium text-left flex flex-row gap-1 items-center"
-  >
-    {@render children?.()}
-  </svelte:element>
-  <div
-    class={[
-      'flex-1 border-slate-200/70 dark:border-zinc-800 border-b',
-      !border && 'opacity-0',
-    ]}
-  ></div>
+  {#if alignment == 'center'}
+    {@render divider()}
+  {/if}
+  {#if children}
+    <svelte:element
+      this={element}
+      class="font-medium text-left flex flex-row gap-1 items-center"
+    >
+      {@render children?.()}
+    </svelte:element>
+  {/if}
+  {#if alignment == 'default'}
+    {@render divider()}
+  {/if}
   {@render action?.()}
+  {#if alignment == 'center'}
+    {@render divider()}
+  {/if}
 </div>

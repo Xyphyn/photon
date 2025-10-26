@@ -9,6 +9,7 @@
   import CommentListVirtualizer from '$lib/feature/comment/CommentListVirtualizer.svelte'
   import { buildCommentsTree } from '$lib/feature/comment/comments.svelte'
   import CommentTree from '$lib/feature/comment/CommentTree.svelte'
+  import { postLink } from '$lib/feature/post'
   import EndPlaceholder from '$lib/ui/layout/EndPlaceholder.svelte'
   import { Button, Option, Select } from 'mono-svelte'
   import { onMount } from 'svelte'
@@ -19,6 +20,7 @@
     Clock,
     Fire,
     Icon,
+    PlusCircle,
     Star,
     Trophy,
   } from 'svelte-hero-icons/dist'
@@ -30,6 +32,8 @@
     onupdate?: () => void
     focus?: string
     virtualize?: boolean
+    showContext?: boolean
+    singleThread?: boolean
   }
 
   let {
@@ -39,6 +43,8 @@
     onupdate,
     focus,
     virtualize = true,
+    showContext,
+    singleThread,
   }: Props = $props()
   let commenting = $state(false)
 
@@ -65,12 +71,7 @@
         color="primary"
         rounding="xl"
         disabled={(post.post.locked || post.banned_from_community) &&
-          !(
-            profile.current?.user?.local_user_view.local_user.admin ||
-            profile.current?.user?.moderates
-              .map((c) => c.community.id)
-              .includes(post.community.id)
-          )}
+          !(profile.isAdmin || profile.isMod(post.community))}
         onclick={() => (commenting = true)}
       >
         <Icon src={ChatBubbleOvalLeft} size="16" micro />
@@ -155,6 +156,41 @@
     ></Button>
   </div>
 {/if}
+
+{#snippet allCommentsPlaceholder()}
+  <EndPlaceholder alignment="center">
+    {#snippet action()}
+      <Button href={postLink(post.post)} icon={PlusCircle} rounding="pill">
+        {$t('routes.post.thread.allComments')}
+      </Button>
+    {/snippet}
+  </EndPlaceholder>
+{/snippet}
+
+{#if singleThread && !showContext}
+  {@render allCommentsPlaceholder()}
+{/if}
+
+{#if showContext && tree[0]}
+  <Button
+    color="secondary"
+    alignment="left"
+    rounding="pill"
+    href={`/comment/${
+      // split first comment path to get 5 before
+      comments[0].comment.path.split('.').slice(-5)[1]
+    }`}
+    class="mt-2 -mb-2 -mx-2.5 w-max"
+  >
+    <Icon src={PlusCircle} size="16" micro />
+    {$t('comment.more', {
+      comments: tree[0].comment_view.comment.path.split('.').length - 2,
+    })}
+  </Button>
+  <div
+    class="border-l h-4 -mb-5 ml-2.5 border-slate-200 dark:border-zinc-800"
+  ></div>
+{/if}
 {#if virtualize}
   <CommentListVirtualizer post={post.post} nodes={tree} scrollTo={focus} />
 {:else}
@@ -163,4 +199,8 @@
       <CommentTree nodes={tree} post={post.post} />
     </div>
   </div>
+{/if}
+
+{#if singleThread && !showContext}
+  {@render allCommentsPlaceholder()}
 {/if}

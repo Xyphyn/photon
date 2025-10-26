@@ -301,8 +301,6 @@
             "commentCount": "Comments",
             "addComment": "Add a comment",
             "scrollToTop": "Scroll to top",
-            "remoteView": "Remote View",
-            "localView": "Local View",
             "thread": {
                 "single": "You're viewing a single thread.",
                 "allComments": "All comments",
