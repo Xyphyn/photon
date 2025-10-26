@@ -7,6 +7,7 @@
     formatted?: boolean
     labelClass?: string
     contentClass?: string
+    formatOptions?: Intl.NumberFormatOptions
     class?: string
   }
 
@@ -17,6 +18,7 @@
     labelClass = '',
     contentClass = '',
     class: clazz = '',
+    formatOptions,
   }: Props = $props()
 </script>
 
@@ -27,7 +29,7 @@
     </dt>
     <dd class={['text-base', contentClass]}>
       {#if formatted}
-        <FormattedNumber number={Number(content)} />
+        <FormattedNumber number={Number(content)} options={formatOptions} />
       {:else}
         {content}
       {/if}

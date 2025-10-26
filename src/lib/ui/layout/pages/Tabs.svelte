@@ -151,7 +151,7 @@
 
     @variant hover {
       color: var(--color-slate-900);
-      background-color: var(--color-slate-200);
+      background-color: var(--color-slate-100);
       @variant dark {
         color: var(--color-zinc-100);
         background-color: var(--color-zinc-800);

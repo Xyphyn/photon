@@ -94,7 +94,7 @@
 {#snippet startChat()}
   <Button
     color="primary"
-    rounding="pill"
+    size="lg"
     class="w-max"
     onclick={() => (searchModal.open = !searchModal.open)}
   >

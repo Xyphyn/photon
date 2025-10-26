@@ -64,7 +64,7 @@
               y: 16,
             }}
           >
-            <Material padding="none" rounding="none" class="rounded-3xl h-full">
+            <Material padding="none" rounding="3xl" class="h-full">
               <CommunityItemBig {community} />
             </Material>
           </div>

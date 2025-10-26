@@ -99,8 +99,8 @@
         loading={batch.progress >= 0}
         disabled={batch.progress >= 0 || data.items.value?.length == 0}
         onclick={markAllAsResolved}
-        class="h-max ml-auto"
-        rounding="pill"
+        size="lg"
+        class="ml-auto"
         color="primary"
       >
         <Icon src={Check} size="16" mini />

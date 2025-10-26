@@ -98,25 +98,29 @@
 <Header pageHeader>
   {$t('routes.accounts')}
   {#snippet extended()}
-    <div class="flex">
-      <div class="flex gap-2 mr-auto items-center">
+    <div class="flex gap-2 items-center flex-wrap">
+      <Button
+        href="/accounts/login"
+        color="primary"
+        size="lg"
+        rounding="2xl"
+        icon={ArrowLeftOnRectangle}
+      >
+        {$t('account.login')}
+      </Button>
+      <Button href="/signup" size="lg" rounding="2xl" icon={Identification}>
+        {$t('account.signup')}
+      </Button>
+      {#if !LINKED_INSTANCE_URL}
         <Button
-          href="/accounts/login"
-          rounding="pill"
-          color="primary"
-          icon={ArrowLeftOnRectangle}
+          href="/accounts/login/guest"
+          size="lg"
+          rounding="2xl"
+          icon={Plus}
         >
-          {$t('account.login')}
+          {$t('account.addGuest')}
         </Button>
-        <Button href="/signup" rounding="pill" icon={Identification}>
-          {$t('account.signup')}
-        </Button>
-        {#if !LINKED_INSTANCE_URL}
-          <Button href="/accounts/login/guest" rounding="pill" icon={Plus}>
-            {$t('account.addGuest')}
-          </Button>
-        {/if}
-      </div>
+      {/if}
     </div>
   {/snippet}
 </Header>

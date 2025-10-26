@@ -1,7 +1,8 @@
 <script lang="ts">
   import Markdown from '$lib/app/markdown/Markdown.svelte'
   import { Button } from 'mono-svelte'
-  import { ChevronDown, Icon } from 'svelte-hero-icons/dist'
+  import { ChevronDoubleDown, Icon } from 'svelte-hero-icons/dist'
+  import type { ClassValue } from 'svelte/elements'
 
   const MAX_HEIGHT = 192
 
@@ -18,7 +19,7 @@
     clickThrough?: boolean
     element?: string
     style?: string
-    class?: string
+    class?: ClassValue
   }
 
   let {
@@ -47,30 +48,25 @@
           'overflow-hidden bg-linear-to-b text-transparent from-slate-600 via-slate-600',
           'dark:from-zinc-400 dark:via-zinc-400 bg-clip-text z-0 max-h-36',
         ],
+    clickThrough && 'pointer-events-none',
     clazz,
   ]}
-  class:pointer-events-none={!clickThrough}
   bind:this={element}
 >
   <Markdown source={expanded ? body : body.slice(0, 1000)} />
   {#if overflows}
     <Button
       onclick={() => (expanded = !expanded)}
-      size="square-sm"
-      color="tertiary"
+      size="square-md"
+      color="ghost"
       class={[
         'text-black dark:text-white absolute z-10 isolate pointer-events-auto bottom-0',
-        'left-1/2 -translate-x-1/2 mb-4',
-        expanded && 'bg-slate-200/50 dark:bg-zinc-900 shadow-md',
+        'left-1/2 -translate-x-1/2 mb-4 hover:backdrop-blur-lg bg-slate-100 dark:bg-zinc-900/50',
+        expanded && 'shadow-md rotate-180',
       ]}
       title="Expand"
     >
-      <Icon
-        src={ChevronDown}
-        size="20"
-        mini
-        class="{expanded ? 'rotate-180' : ''} transition-transform"
-      />
+      <Icon src={ChevronDoubleDown} size="20" mini />
     </Button>
   {/if}
 </svelte:element>

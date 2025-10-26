@@ -64,7 +64,7 @@
         onclick={() => {
           importing = !importing
         }}
-        rounding="pill"
+        size="lg"
         disabled={themeData.current.id <= 0}
       >
         <Icon src={ArrowUpTray} size="16" mini />
@@ -77,7 +77,7 @@
           )
           toast({ content: 'Copied theme to clipboard.' })
         }}
-        rounding="pill"
+        size="lg"
       >
         <Icon src={ArrowDownTray} size="16" mini />
         {$t('settings.export')}
@@ -109,7 +109,7 @@
             body: $t('routes.theme.resetWarning.description'),
           })
         }}
-        rounding="pill"
+        size="lg"
       >
         <Icon src={ArrowPath} size="16" mini />
         {$t('settings.reset')}

@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { t } from '$lib/app/i18n'
-  import Markdown from '$lib/app/markdown/Markdown.svelte'
-  import { Expandable } from 'mono-svelte'
+  import { PostBody } from '$lib/feature/post'
+  import { Material } from 'mono-svelte'
   import type { ClassValue } from 'svelte/elements'
-  import FormattedNumber from '../util/FormattedNumber.svelte'
+  import LabelStat from '../info/LabelStat.svelte'
   import Avatar from './Avatar.svelte'
+  import Blobs from './Blobs.svelte'
 
   interface Props {
     avatar?: string | undefined
@@ -17,7 +17,6 @@
       value: string
       format?: boolean
     }[]
-    center?: boolean
     class?: ClassValue
     nameDetail?: import('svelte').Snippet
     actions?: import('svelte').Snippet
@@ -33,7 +32,6 @@
     banner = undefined,
     url = undefined,
     stats = [],
-    center = false,
     class: clazz = '',
     nameDetail,
     actions,
@@ -44,47 +42,40 @@
   }: Props = $props()
 </script>
 
-<div {...rest} class={['z-10 text-sm contents w-full', clazz]}>
-  <div
-    class={[
-      compact == 'lg' && 'lg:hidden',
-      compact == 'always' && 'hidden',
-      'absolute inset-0 h-96 overflow-x-hidden -z-10',
-    ]}
-  >
-    <img
-      src={banner || avatar}
-      class="w-full h-64 object-cover blur-3xl opacity-30 dark:opacity-30"
-      height="192"
-      alt="User banner"
-    />
-  </div>
-  {#if banner}
-    <div class="relative overflow-hidden rounded-xl">
-      <img
-        src={banner}
-        class="w-full object-cover h-48 rounded-t-xl bg-white dark:bg-zinc-900 rounded-xl"
-        height="192"
-        alt="User banner"
-      />
+<div {...rest} class={['z-10 text-sm contents w-full space-y-4', clazz]}>
+  <Material padding="xl" rounding="3xl" class="flex flex-col gap-4">
+    <div
+      class="relative overflow-hidden rounded-t-[inherit] -m-6 mask-b-from-0"
+    >
+      {#if banner}
+        <img
+          src={banner}
+          class="w-full object-cover h-48 bg-white dark:bg-zinc-900"
+          height="192"
+          alt="User banner"
+        />
+      {:else}
+        <div class="scale-150">
+          <Blobs seed={name} />
+        </div>
+      {/if}
     </div>
-  {/if}
 
-  <Avatar
-    width={96}
-    url={avatar}
-    alt={name}
-    circle={avatarCircle}
-    class={[
-      'ring-slate-25 bg-slate-25 dark:bg-zinc-925 ring-6 relative dark:ring-zinc-950',
-      banner && '-mt-12 ml-4',
-      !avatarCircle && 'rounded-3xl!',
-    ]}
-  />
-  <div class="py-4 flex flex-col gap-4">
-    <div class="flex flex-col flex-1">
+    <Avatar
+      width={72}
+      url={avatar}
+      alt={name}
+      circle={avatarCircle}
+      class={[
+        'ring-slate-25 bg-slate-25 dark:bg-zinc-925 ring-6 relative dark:ring-zinc-950',
+        '-mt-8',
+        !avatarCircle && 'rounded-3xl!',
+      ]}
+    />
+
+    <div class="space-y-1">
       <svelte:element
-        this={url ? 'a' : 'span'}
+        this={url ? 'a' : 'h1'}
         href={url}
         class="text-2xl font-medium tracking-tight {url
           ? 'hover:underline hover:text-primary-900 dark:hover:text-primary-100'
@@ -92,72 +83,56 @@
       >
         {name}
       </svelte:element>
-      <span
+      <p
         class="flex items-center gap-0 text-sm text-slate-600 dark:text-zinc-400 max-w-full w-max"
       >
         {@render nameDetail?.()}
-      </span>
-
-      {#if actions}
-        <div class="flex flex-col mt-2">
+      </p>
+    </div>
+  </Material>
+  {#if actions || stats}
+    <div class="space-y-4">
+      <div class="flex flex-col flex-1">
+        {#if actions}
           {@render actions?.()}
+        {/if}
+      </div>
+      {#if stats.length > 0}
+        <div
+          class={[
+            compact == 'lg' && 'lg:hidden',
+            compact == 'always' ? 'hidden' : 'flex',
+            'text-sm flex-row flex-wrap overflow-hidden gap-4 h-full',
+          ]}
+        >
+          {#each stats as stat}
+            <LabelStat
+              label={stat.name}
+              content={stat.value}
+              labelClass="text-sm"
+              contentClass="text-lg"
+            />
+          {/each}
         </div>
       {/if}
     </div>
-    {#if stats.length > 0}
-      <div
-        class={[
-          compact == 'lg' && 'lg:hidden',
-          compact == 'always' ? 'hidden' : 'flex',
-          'text-sm flex-row flex-wrap overflow-hidden gap-4 h-full',
-        ]}
-      >
-        {#each stats as stat}
-          <div class="">
-            <div class="text-slate-600 dark:text-zinc-500 text-sm font-medium">
-              {stat.name}
-            </div>
-            <div
-              class="text-xl font-medium text-primary-900 dark:text-primary-100 text-right"
-            >
-              {#if stat.format ?? true}
-                <FormattedNumber
-                  number={Number(stat.value)}
-                  options={{ notation: 'standard' }}
-                />
-              {:else}
-                {stat.value}
-              {/if}
-            </div>
-          </div>
-        {/each}
-      </div>
-    {/if}
-  </div>
+  {/if}
   {#if bio}
-    <div
+    <PostBody
+      body={bio}
       class={[
         compact == 'lg' && 'lg:hidden',
         compact == 'always' && 'hidden',
-        'relative w-full mb-4 text-base',
-        center ? 'text-center' : 'text-left',
+        'relative',
       ]}
-    >
-      {#if bio.length > 300}
-        <Expandable>
-          {#snippet title()}
-            {$t('cards.site.about')}
-          {/snippet}
-          <Markdown source={bio} class="font-normal" />
-        </Expandable>
-      {:else}
-        <Markdown source={bio} class="font-normal" />
-      {/if}
+      clickThrough={false}
+    />
+  {/if}
+  {#if children}
+    <div class="space-y-3 py-4 pt-0 mt-4">
+      {@render children?.()}
     </div>
   {/if}
-  <div class="space-y-3 py-4 pt-0">
-    {@render children?.()}
-  </div>
 </div>
 
 <style>

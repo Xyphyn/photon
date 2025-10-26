@@ -74,8 +74,8 @@
           importText = ''
           importing = true
         }}
-        rounding="pill"
         icon={ArrowDownTray}
+        size="lg"
       >
         {$t('settings.import')}
       </Button>
@@ -85,8 +85,8 @@
           navigator?.clipboard?.writeText?.(json)
           toast({ content: $t('toast.copied') })
         }}
-        rounding="pill"
         icon={ArrowUpTray}
+        size="lg"
       >
         {$t('settings.export')}
       </Button>
@@ -108,8 +108,8 @@
             ],
           })
         }}
-        rounding="pill"
         icon={ArrowPath}
+        size="lg"
       >
         {$t('settings.reset')}
       </Button>

@@ -98,13 +98,6 @@
         @variant dark {
           color: var(--color-zinc-50);
         }
-
-        @variant md {
-          background-color: var(--color-slate-200);
-          @variant dark {
-            background-color: var(--color-zinc-800);
-          }
-        }
       }
 
       transition-property: color;
@@ -114,6 +107,15 @@
       @variant md {
         width: max-content;
         padding: calc(var(--spacing)) calc(var(--spacing) * 3);
+      }
+
+      @variant hover {
+        @variant md {
+          background-color: var(--color-slate-100);
+          @variant dark {
+            background-color: var(--color-zinc-800);
+          }
+        }
       }
     }
 

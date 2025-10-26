@@ -52,15 +52,15 @@
   }: Props = $props()
 
   let optimizedURLs = $derived(
-    [2, 3, 6, -1].map((n) => optimizeUrl(url, (res || width) * n)),
+    [1.5, 3].map((n) => optimizeUrl(url, (res || width) * n)),
   )
 </script>
 
-{#if optimizedURLs[0] != undefined}
+{#if url && optimizedURLs[0] != undefined}
   <img
     {...rest}
     loading="lazy"
-    srcset="{optimizedURLs[0]} 1x, {optimizedURLs[1]} 2x, {optimizedURLs[2]} 4x, {optimizedURLs[3]} 6x"
+    srcset="{optimizedURLs[0]} 1x, {optimizedURLs[1]} 2x"
     src={optimizedURLs[0]}
     alt=""
     {width}

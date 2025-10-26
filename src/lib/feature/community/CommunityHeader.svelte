@@ -165,7 +165,7 @@
                 'NotSubscribed'
             }}
             class="relative z-[inherit]"
-            rounding="pill"
+            size="lg"
             icon={subscribed != 'NotSubscribed' ? Check : Plus}
           >
             {subscribed == 'Subscribed' || subscribed == 'Pending'
@@ -177,9 +177,7 @@
 
       {#if client().setFlair}
         <Button
-          size="custom"
-          class="h-9 aspect-square"
-          rounding="pill"
+          size="square-lg"
           onclick={() => (setFlair = !setFlair)}
           aria-label={$t('cards.community.flair')}
         >
@@ -193,9 +191,7 @@
         .includes(community.id)}
       <Button
         color="secondary"
-        size="custom"
-        rounding="pill"
-        class="h-9 aspect-square"
+        size="square-lg"
         href="/c/{fullCommunityName(
           community.name,
           community.actor_id,
@@ -206,12 +202,7 @@
     {/if}
     <Menu placement="top-end">
       {#snippet target(attachment)}
-        <Button
-          {@attach attachment}
-          size="custom"
-          rounding="pill"
-          class="h-8.5 aspect-square"
-          icon={EllipsisHorizontal}
+        <Button {@attach attachment} size="square-lg" icon={EllipsisHorizontal}
         ></Button>
       {/snippet}
       <MenuButton href="/modlog?community={community.id}">

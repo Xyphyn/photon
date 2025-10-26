@@ -70,8 +70,7 @@
 {#if profile.current?.user && profile.current.jwt && person.person.id != profile.current.user.local_user_view.person.id}
   <div class="flex items-center gap-2 w-full flex-wrap">
     <Button
-      size="sm"
-      rounding="pill"
+      size="lg"
       color="primary"
       href="/inbox/messages/{person.person.id}"
       icon={Envelope}
@@ -80,8 +79,7 @@
     </Button>
     {#if person.person.matrix_user_id}
       <Button
-        size="sm"
-        rounding="pill"
+        size="lg"
         color="secondary"
         href="https://matrix.to/#/{person.person.matrix_user_id}"
       >
@@ -96,8 +94,8 @@
         {#snippet target(attachment)}
           <Button
             {@attach attachment}
-            size="sm"
-            rounding="pill"
+            size="square-lg"
+            rounding="2xl"
             icon={ShieldCheck}
           >
             {$t('moderation.label')}
@@ -130,11 +128,11 @@
       {#snippet target(attachment)}
         <Button
           {@attach attachment}
-          size="custom"
-          class="h-8 w-8"
-          rounding="pill"
+          size="square-lg"
+          rounding="2xl"
           icon={EllipsisHorizontal}
-        ></Button>
+          aria-label={$t('post.actions.more')}
+        />
       {/snippet}
       <MenuButton
         color="danger-subtle"

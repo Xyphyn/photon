@@ -99,7 +99,7 @@
     type = 'button',
     color = 'secondary',
     size = 'md',
-    rounding = 'xl',
+    rounding = size == 'lg' || size == 'square-lg' ? '2xl' : 'xl',
     alignment = 'center',
     shadow = color == 'primary' || color == 'secondary' ? 'sm' : 'none',
     disabled,
@@ -267,12 +267,7 @@
     }
 
     .btn-ghost {
-      /* border border-slate-200 dark:border-zinc-800 bg-transparent
-		hover:bg-slate-100 dark:hover:bg-zinc-800 dark:hover:border-zinc-700 dark:text-zinc-400 hover:text-inherit
-		dark:hover:text-inherit */
-
       border: 1px solid var(--color-slate-200);
-      background-color: transparent;
 
       @variant hover {
         background-color: var(--color-slate-100);
@@ -306,7 +301,7 @@
 
     .btn-lg {
       padding-block: calc(var(--spacing) * 2);
-      padding-inline: calc(var(--spacing) * 3);
+      padding-inline: calc(var(--spacing) * 5);
       font-size: var(--text-sm);
     }
 
@@ -326,8 +321,8 @@
     }
 
     .btn-square-lg {
-      width: calc(var(--spacing) * 10);
-      height: calc(var(--spacing) * 10);
+      width: calc(var(--spacing) * 9.5);
+      height: calc(var(--spacing) * 9.5);
     }
 
     .btn-square-xl {

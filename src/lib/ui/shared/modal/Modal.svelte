@@ -36,7 +36,7 @@
     class: clazz = '',
   }: Props = $props()
 
-  const modalId = crypto.randomUUID()
+  const modalId = Math.random().toString()
 
   let el = $state<HTMLElement>()
   let hasHistoryEntry = false
