@@ -31,7 +31,12 @@ export const optimizeImageURL = (
   format: 'avif' | 'webp' | null = 'webp',
 ): string => {
   try {
-    const url = new URL(urlStr)
+    let url: URL
+    try {
+      url = new URL(urlStr)
+    } catch {
+      return urlStr
+    }
 
     if (format) url.searchParams.set('format', format)
 
@@ -70,6 +75,12 @@ export type IframeType = 'youtube' | 'video' | 'none'
 
 export function mediaType(url?: string): MediaType {
   if (!url) return 'none'
+  try {
+    new URL(url)
+  } catch {
+    return 'none'
+  }
+
   if (isImage(url)) return 'image'
   if (isVideo(url)) return 'iframe'
   if (isYoutubeLink(url)) return 'iframe'

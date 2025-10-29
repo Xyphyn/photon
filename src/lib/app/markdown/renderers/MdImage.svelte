@@ -27,7 +27,7 @@
 </script>
 
 <div
-  class="w-auto h-auto max-h-96 rounded-xl border border-slate-200 dark:border-zinc-800 inline-block group"
+  class="w-auto h-auto max-h-96 rounded-2xl border border-slate-200 dark:border-zinc-800 inline-block group"
 >
   {#if loaded}
     {#if type == 'video' || type == 'embed' || type == 'iframe'}
@@ -40,7 +40,7 @@
       />
     {:else}
       <button
-        class="inline cursor-pointer bg-slate-200 dark:bg-zinc-800 rounded-[inherit]"
+        class="inline cursor-pointer bg-slate-200 dark:bg-zinc-900 rounded-[inherit]"
         onclick={() => showImage(optimizeImageURL(href, -1))}
       >
         <img
@@ -51,7 +51,7 @@
           height={300}
           class={[
             'object-contain w-auto h-auto max-h-80 inline rounded-[inherit] group-hover:scale-98 group-active:scale-95',
-            'transition-transform ease-cubic',
+            'transition-transform ease-cubic duration-300',
           ]}
         />
       </button>
