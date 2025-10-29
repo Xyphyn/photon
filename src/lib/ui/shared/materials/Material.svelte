@@ -17,6 +17,7 @@
 
   const paddingClass = {
     none: '',
+    xs: 'p-1.5',
     sm: 'p-2',
     md: 'p-4',
     lg: 'p-5',

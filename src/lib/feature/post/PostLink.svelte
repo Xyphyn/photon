@@ -2,7 +2,7 @@
   import type { View } from '$lib/app/settings.svelte'
   import { parseURL } from '$lib/ui/form/Link.svelte'
   import { Material } from 'mono-svelte'
-  import { Icon, Link } from 'svelte-hero-icons/dist'
+  import { ArrowTopRightOnSquare, Icon, Link } from 'svelte-hero-icons/dist'
   import { optimizeImageURL } from './helpers'
 
   interface Props {
@@ -50,31 +50,46 @@
       <p class="post-link-title">{embed_title}</p>
     </div>
     {#if thumbnail_url}
-      <picture class="post-link-image">
-        {#each ['webp'] as format}
-          <source
-            srcset="{optimizeImageURL(
-              thumbnail_url,
-              256,
-              format as 'avif' | 'webp',
-            )} 256w, {optimizeImageURL(
-              thumbnail_url,
-              512,
-              format as 'avif' | 'webp',
-            )} 512w"
-            media="(min-width: 0px)"
-            type="image/{format}"
+      <div class="post-link-image">
+        <picture class="contents">
+          {#each ['webp'] as format}
+            <source
+              srcset="{optimizeImageURL(
+                thumbnail_url,
+                256,
+                format as 'avif' | 'webp',
+              )} 256w, {optimizeImageURL(
+                thumbnail_url,
+                512,
+                format as 'avif' | 'webp',
+              )} 512w"
+              media="(min-width: 0px)"
+              type="image/{format}"
+            />
+          {/each}
+          <img
+            src={optimizeImageURL(thumbnail_url, -1)}
+            class=""
+            width={600}
+            height={400}
+            alt=""
+            class:blur-3xl={nsfw}
           />
-        {/each}
-        <img
-          src={optimizeImageURL(thumbnail_url, -1)}
-          class=""
-          width={600}
-          height={400}
-          alt=""
-          class:blur-3xl={nsfw}
-        />
-      </picture>
+        </picture>
+        <Material
+          padding="xs"
+          color="uniform"
+          class="absolute top-0 right-0 m-2 z-50"
+          role="presentation"
+        >
+          <Icon
+            src={ArrowTopRightOnSquare}
+            size="16"
+            micro
+            class="text-slate-500 dark:text-zinc-300"
+          />
+        </Material>
+      </div>
     {/if}
   </Material>
 {:else}

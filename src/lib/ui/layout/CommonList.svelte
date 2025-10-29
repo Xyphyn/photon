@@ -54,8 +54,8 @@
   ul {
     :global {
       :where(& > :not(:last-child)) {
-        margin-block-start: calc(calc(var(--spacing) * 0.75));
-        margin-block-end: calc(calc(var(--spacing) * 0.75));
+        margin-block-start: calc(calc(var(--spacing) * 1));
+        margin-block-end: calc(calc(var(--spacing) * 1));
       }
     }
   }
