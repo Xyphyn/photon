@@ -506,11 +506,9 @@
             data = draft
           }
         }}
-        rounding="xl"
-        size="custom"
+        size="square-lg"
         disabled={!getSessionStorage('postDraft')}
         title="Restore From Draft"
-        class=" aspect-square h-full"
       >
         <Icon src={ArrowPath} size="16" mini />
       </Button>

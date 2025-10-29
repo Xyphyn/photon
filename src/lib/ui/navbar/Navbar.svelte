@@ -40,7 +40,10 @@
     icon={Home}
     href="/"
     label={$t('nav.home')}
-    class="logo border-0 md:rounded-full! md:w-10! md:h-10 md:px-0! -order-1"
+    class={[
+      'logo border-0 md:w-10! md:h-10 md:px-0! -order-1',
+      !LINKED_INSTANCE_URL ? 'md:rounded-full!' : 'rounded-none!',
+    ]}
     adaptive={false}
   >
     {#snippet customIcon()}

@@ -4,6 +4,7 @@
   import type { ButtonProps } from 'mono-svelte/button/Button.svelte'
   import type { Snippet } from 'svelte'
   import { Icon, type IconSource } from 'svelte-hero-icons/dist'
+  import type { ClassValue } from 'svelte/elements'
 
   interface Props extends ButtonProps {
     label: string
@@ -11,7 +12,7 @@
     href?: string | undefined
     adaptive?: boolean
     isSelectedFilter?: (path: string) => boolean
-    class?: string
+    class?: ClassValue
     customIcon?: Snippet<[{ size: number; isSelected?: boolean }]>
     children?: Snippet
   }
@@ -34,7 +35,7 @@
 <Button
   {...rest}
   color="none"
-  rounding="xl"
+  rounding="none"
   class={[
     'nav-btn',
     adaptive && 'nav-btn-dynamic',
@@ -80,6 +81,7 @@
     }
 
     .nav-btn {
+      border-radius: var(--radius-xl);
       width: calc(var(--spacing) * 10);
       height: calc(var(--spacing) * 10);
       @variant md {
