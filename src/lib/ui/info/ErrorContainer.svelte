@@ -51,7 +51,7 @@
         easing: expoOut,
       }}
       out:fly={{ y: -8, duration: 400, opacity: 0, easing: expoOut }}
-      class="error-container"
+      class="info-container container-error"
     >
       <Icon
         src={ExclamationTriangle}
@@ -68,20 +68,72 @@
 
 <style>
   @reference '../../../app.css';
-  .error-container {
-    background: linear-gradient(
-      to top,
-      --alpha(var(--color-red-400) / 10%),
-      --alpha(var(--color-red-500) / 10%)
-    );
-    border-radius: var(--radius-2xl);
-    padding: calc(var(--spacing) * 2.5) calc(var(--spacing) * 3);
-    color: var(--color-red-900);
-    border: 1px solid --alpha(var(--color-red-300) / 30%);
-    font-size: var(--text-sm);
 
-    @variant dark {
-      color: var(--color-red-300);
+  :global {
+    .info-container {
+      border-radius: var(--radius-2xl);
+      padding: calc(var(--spacing) * 2.5) calc(var(--spacing) * 3);
+      font-size: var(--text-sm);
+    }
+
+    .container-error {
+      background: linear-gradient(
+        to bottom,
+        --alpha(var(--color-red-300) / 10%),
+        --alpha(var(--color-red-500) / 15%)
+      );
+
+      color: var(--color-red-900);
+      border: 1px solid --alpha(var(--color-red-300) / 30%);
+
+      @variant dark {
+        color: var(--color-red-300);
+      }
+    }
+
+    .container-success {
+      background: linear-gradient(
+        to bottom,
+        --alpha(var(--color-green-300) / 10%),
+        --alpha(var(--color-green-500) / 15%)
+      );
+
+      color: var(--color-green-900);
+      border: 1px solid --alpha(var(--color-green-300) / 30%);
+
+      @variant dark {
+        color: var(--color-green-300);
+      }
+    }
+
+    .container-warning {
+      background: linear-gradient(
+        to bottom,
+        --alpha(var(--color-yellow-300) / 10%),
+        --alpha(var(--color-yellow-500) / 15%)
+      );
+
+      color: var(--color-yellow-900);
+      border: 1px solid --alpha(var(--color-yellow-300) / 30%);
+
+      @variant dark {
+        color: var(--color-yellow-300);
+      }
+    }
+
+    .container-info {
+      background: linear-gradient(
+        to bottom,
+        --alpha(var(--color-slate-300) / 10%),
+        --alpha(var(--color-slate-500) / 15%)
+      );
+
+      color: var(--color-slate-900);
+      border: 1px solid --alpha(var(--color-slate-300) / 30%);
+
+      @variant dark {
+        color: var(--color-slate-300);
+      }
     }
   }
 </style>

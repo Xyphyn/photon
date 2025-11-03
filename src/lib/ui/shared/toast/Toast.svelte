@@ -10,8 +10,6 @@
     InformationCircle,
     XMark,
   } from 'svelte-hero-icons/dist'
-  import { expoOut } from 'svelte/easing'
-  import { fly } from 'svelte/transition'
   import { type Toast, toastColors, toasts } from './toasts'
 
   interface Props {
@@ -24,16 +22,10 @@
 <div
   class={[
     toastColors[toast.type],
-    'relative rounded-xl overflow-hidden flex flex-row items-center gap-2 px-3 py-3 border border-slate-200 dark:border-zinc-800',
+    'relative rounded-2xl overflow-hidden flex flex-row items-center gap-1 px-2 py-2 backdrop-blur-xl',
     'bg-white dark:bg-zinc-925 shadow-lg',
     toast.long ? 'w-full max-w-lg' : 'w-80',
   ]}
-  transition:fly={{
-    duration: 600,
-    y: 8,
-    opacity: 0,
-    easing: expoOut,
-  }}
 >
   {#if toast.loading}
     <div class="relative m-2 ml-4 shrink-0">
