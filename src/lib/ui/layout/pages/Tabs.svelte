@@ -97,16 +97,15 @@
     @variant sm {
       margin-top: 0;
     }
-
-    margin-left: calc(var(--spacing) * -3);
-    margin-right: calc(var(--spacing) * -3);
-    margin-top: calc(var(--spacing) * -1);
   }
 
   .tab-bar.bar-header {
     padding: calc(var(--spacing));
     gap: calc(var(--spacing) * 1) calc(var(--spacing) * 2);
     justify-content: center;
+    margin-left: calc(var(--spacing) * -3);
+    margin-right: calc(var(--spacing) * -3);
+    margin-top: calc(var(--spacing) * -1);
 
     @variant sm {
       justify-content: start;

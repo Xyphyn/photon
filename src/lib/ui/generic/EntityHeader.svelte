@@ -70,7 +70,7 @@
         circle={avatarCircle}
         class={[
           'relative',
-          '-mt-8',
+          '-mt-4 @md:-mt-8',
           !avatarCircle && 'rounded-xl @md:rounded-3xl!',
         ]}
       />

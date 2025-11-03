@@ -31,8 +31,6 @@
 
   interface Props {
     node: CommentNodeI
-    postId: number
-    op?: boolean
     actions?: boolean
     meta?: boolean
     open?: boolean
@@ -45,8 +43,6 @@
 
   let {
     node = $bindable(),
-    postId,
-    op = false,
     actions = true,
     meta = true,
     replying = $bindable(false),
@@ -125,6 +121,8 @@
   id={node.comment_view.comment.id.toString()}
 >
   {#if meta}
+    {@const creatorIsOp =
+      node.comment_view.creator.id == node.comment_view.post.creator_id}
     <label
       for="comment-expand-{node.comment_view.comment.id}"
       class="flex flex-row cursor-pointer gap-2 items-center group text-sm flex-wrap w-full z-0 group relative"
@@ -154,7 +152,12 @@
         </div>
       </div>
       {@render metaSuffix?.()}
-      <span class:font-bold={op} class="flex flex-row gap-1 items-center">
+      <span
+        class={[
+          'flex flex-row gap-1 items-center',
+          creatorIsOp && 'text-blue-600 dark:text-blue-400 font-bold',
+        ]}
+      >
         <UserLink
           inComment
           avatarSize={20}
@@ -182,8 +185,13 @@
             {/if}
           {/snippet}
         </UserLink>
-        {#if op}
-          <Icon mini size="16" src={Microphone} class="text-sky-600" />
+        {#if creatorIsOp}
+          <Icon
+            mini
+            size="16"
+            src={Microphone}
+            class="text-blue-500 dark:text-blue-400"
+          />
         {/if}
       </span>
       <RelativeDate
@@ -281,7 +289,7 @@
         <div transition:slide={{ duration: 600, easing: expoOut }}>
           <CommentForm
             label={$t('comment.reply')}
-            {postId}
+            postId={node.comment_view.post.id}
             parentId={node.comment_view.comment.id}
             oncomment={(e) => {
               node.children = [

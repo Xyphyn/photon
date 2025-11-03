@@ -90,8 +90,6 @@
   {#each nodes as node, index (node.comment_view.comment.id)}
     <Comment
       bind:node={nodes[index]}
-      postId={post.id}
-      op={post.creator_id == node.comment_view.creator.id}
       contentClass={[
         (node.children.length > 0 ||
           node.comment_view.counts.child_count > 0) &&
