@@ -10,6 +10,8 @@
     InformationCircle,
     XMark,
   } from 'svelte-hero-icons/dist'
+  import { expoOut } from 'svelte/easing'
+  import { fly, scale } from 'svelte/transition'
   import { type Toast, toastColors, toasts } from './toasts'
 
   interface Props {
@@ -26,6 +28,14 @@
     'bg-white dark:bg-zinc-925 shadow-lg',
     toast.long ? 'w-full max-w-lg' : 'w-80',
   ]}
+  in:fly={{
+    y: 8,
+    easing: expoOut,
+  }}
+  out:scale={{
+    start: 0.97,
+    easing: expoOut,
+  }}
 >
   {#if toast.loading}
     <div class="relative m-2 ml-4 shrink-0">

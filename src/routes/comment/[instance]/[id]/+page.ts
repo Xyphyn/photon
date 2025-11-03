@@ -16,7 +16,7 @@ export async function load({ params, fetch }) {
 
   const split = comment.comment_view.comment.path.split('.')
 
-  const threadPath = split.slice(-2).join('.')
+  const threadPath = split.slice(-3).join('.')
 
   redirect(
     302,
