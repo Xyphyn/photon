@@ -45,52 +45,51 @@
 <Header pageHeader class="lg:flex-row justify-between flex-col">
   {$t('routes.inbox.title')}
 
-  <div class="flex gap-2 tracking-normal">
-    <Button
-      onclick={() => goto(page.url, { invalidateAll: true })}
-      rounding="2xl"
-      size="square-lg"
-      aria-label={$t('common.refresh')}
-      icon={ArrowPath}
-    ></Button>
-    <Button
-      onclick={markAllAsRead}
-      loading={markingAsRead}
-      disabled={markingAsRead || data.inbox.value.length == 0}
-      color="primary"
-      icon={Check}
-      size="lg"
-    >
-      {$t('routes.inbox.markAsRead')}
-    </Button>
-  </div>
-</Header>
-
-<Select
-  class="relative"
-  bind:value={
-    () => data.unreadOnly.value.toString(),
-    (v) => (data.unreadOnly.value = v == 'true')
-  }
-  onchange={() =>
-    searchParam(
-      page.url,
-      'unreadOnly',
-      data.unreadOnly.value ? 'true' : 'false',
-      'page',
-    )}
->
-  {#snippet customLabel()}
-    <div class="flex items-center gap-1">
-      <Icon src={Funnel} size="15" mini />
-      {$t('filter.filter')}
+  {#snippet extended()}
+    <div class="flex gap-2 tracking-normal items-end">
+      <Select
+        class="relative"
+        bind:value={
+          () => data.unreadOnly.value.toString(),
+          (v) => (data.unreadOnly.value = v == 'true')
+        }
+        onchange={() =>
+          searchParam(
+            page.url,
+            'unreadOnly',
+            data.unreadOnly.value ? 'true' : 'false',
+            'page',
+          )}
+      >
+        {#snippet customLabel()}
+          <div class="flex items-center gap-1">
+            <Icon src={Funnel} size="15" mini />
+            {$t('filter.filter')}
+          </div>
+        {/snippet}
+        <Option value="false">{$t('filter.location.all')}</Option>
+        <Option value="true">{$t('filter.unread')}</Option>
+      </Select>
+      <div class="flex-1"></div>
+      <Button
+        onclick={markAllAsRead}
+        loading={markingAsRead}
+        disabled={markingAsRead || data.inbox.value.length == 0}
+        color="primary"
+        icon={Check}
+        size="lg"
+      >
+        {$t('routes.inbox.markAsRead')}
+      </Button>
+      <Button
+        onclick={() => goto(page.url, { invalidateAll: true })}
+        size="square-lg"
+        aria-label={$t('common.refresh')}
+        icon={ArrowPath}
+      />
     </div>
   {/snippet}
-  <Option value="false">{$t('filter.location.all')}</Option>
-  <Option value="true">{$t('filter.unread')}</Option>
-</Select>
-
-<div class="h-3 sm:h-6"></div>
+</Header>
 
 {#if !data.inbox?.value || (data.inbox.value?.length ?? 0) == 0}
   <Placeholder

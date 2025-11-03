@@ -123,11 +123,10 @@
   color="transparent"
   rounding="2xl"
   padding="none"
-  class="bg-white dark:bg-zinc-950 dark:border-t-zinc-900
-  w-full overflow-auto relative h-full"
+  class="bg-white dark:bg-zinc-950 dark:border-t-zinc-900 w-full overflow-auto relative flex-1"
 >
-  <div class="h-full overflow-auto" bind:this={chatWindow}>
-    <ul id="chat-window" class=" h-full flex flex-col gap-1 flex-1 px-4 py-4">
+  <div class=" overflow-auto" bind:this={chatWindow}>
+    <ul id="chat-window" class=" flex flex-col gap-1 flex-1 px-4 py-4">
       <div class="mt-auto"></div>
       <p class="mx-auto mt-auto text-slate-400 dark:text-zinc-600 text-center">
         {$t('routes.inbox.messages.conversation', {
@@ -203,8 +202,8 @@
         <MarkdownEditor
           previewButton={false}
           bind:value={textbox.message}
-          class="flex-1"
-        ></MarkdownEditor>
+          class="flex-1 rounded-xl"
+        />
       {:else}
         <Button
           onclick={() => (settings.messages.fullMarkdown = true)}

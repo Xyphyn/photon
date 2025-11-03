@@ -66,7 +66,7 @@
     {width}
     {title}
     class={[
-      'aspect-square object-cover overflow-hidden shrink-0 bg-slate-100 dark:bg-zinc-900',
+      'aspect-square object-cover overflow-hidden shrink-0',
       circle === true ? 'rounded-full' : circle === false ? 'rounded-lg' : '',
 
       clazz,

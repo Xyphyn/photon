@@ -69,7 +69,7 @@
         alt={name}
         circle={avatarCircle}
         class={[
-          'ring-slate-25 bg-slate-25 dark:bg-zinc-925 ring-2 relative dark:ring-zinc-950',
+          'relative',
           '-mt-8',
           !avatarCircle && 'rounded-xl @md:rounded-3xl!',
         ]}
