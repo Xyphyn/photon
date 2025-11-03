@@ -93,7 +93,7 @@
     onclick={() => castVote(vote == targetNum ? 0 : targetNum)}
     class={[
       'flex items-center gap-0.5 transition-colors relative cursor-pointer h-full p-2 active:brightness-90',
-      'first:rounded-l-3xl last:rounded-r-3xl',
+      'first:rounded-l-[inherit] last:rounded-r-[inherit]',
       'last:flex-row-reverse',
       vote == targetNum
         ? shouldShowVoteColor(
@@ -137,7 +137,7 @@
   <div
     class={[
       buttonColor.ghost,
-      'rounded-3xl h-full font-medium flex relative hover:bg-transparent!',
+      'rounded-full h-full font-medium flex relative hover:bg-transparent!',
       voteRatio < 85 && settings.voteRatioBar && 'vote-ratio',
     ]}
     aria-label={$t('aria.vote.group')}

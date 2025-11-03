@@ -3,6 +3,7 @@
   import { Material } from 'mono-svelte'
   import type { ClassValue } from 'svelte/elements'
   import LabelStat from '../info/LabelStat.svelte'
+  import TextProps from '../text/TextProps.svelte'
   import Avatar from './Avatar.svelte'
   import Blobs from './Blobs.svelte'
 
@@ -14,7 +15,7 @@
     url?: string | undefined
     stats?: {
       name: string
-      value: string
+      value: string | number
       format?: boolean
     }[]
     class?: ClassValue
@@ -42,55 +43,69 @@
   }: Props = $props()
 </script>
 
-<div {...rest} class={['z-10 text-sm contents w-full space-y-4', clazz]}>
-  <Material padding="xl" rounding="3xl" class="flex flex-col gap-4">
+<div {...rest} class={['z-10 text-sm w-full space-y-4 @container', clazz]}>
+  <Material padding="xl" rounding="3xl" class="flex flex-col gap-2 @lg:gap-4">
     <div
-      class="relative overflow-hidden rounded-t-[inherit] -m-6 mask-b-from-0"
+      class="relative overflow-hidden rounded-t-[inherit] -m-6 mask-b-from-0 h-32 @lg:h-48"
     >
       {#if banner}
         <img
           src={banner}
-          class="w-full object-cover h-48 bg-white dark:bg-zinc-900"
+          class="w-full object-cover h-full bg-white dark:bg-zinc-900"
           height="192"
           alt="User banner"
         />
       {:else}
-        <div class="scale-150">
+        <div class="scale-150 h-full">
           <Blobs seed={name} />
         </div>
       {/if}
     </div>
 
-    <Avatar
-      width={72}
-      url={avatar}
-      alt={name}
-      circle={avatarCircle}
-      class={[
-        'ring-slate-25 bg-slate-25 dark:bg-zinc-925 ring-6 relative dark:ring-zinc-950',
-        '-mt-8',
-        !avatarCircle && 'rounded-3xl!',
-      ]}
-    />
+    {#snippet icon(width: number)}
+      <Avatar
+        {width}
+        url={avatar}
+        alt={name}
+        circle={avatarCircle}
+        class={[
+          'ring-slate-25 bg-slate-25 dark:bg-zinc-925 ring-2 relative dark:ring-zinc-950',
+          '-mt-8',
+          !avatarCircle && 'rounded-xl @md:rounded-3xl!',
+        ]}
+      />
+    {/snippet}
+
+    <div class="contents @md:hidden">
+      {@render icon(48)}
+    </div>
+
+    <div class="hidden @md:contents">
+      {@render icon(72)}
+    </div>
 
     <div class="space-y-1">
       <svelte:element
         this={url ? 'a' : 'h1'}
         href={url}
-        class="text-2xl font-medium tracking-tight {url
+        class="text-xl @md:text-2xl font-medium tracking-tight {url
           ? 'hover:underline hover:text-primary-900 dark:hover:text-primary-100'
           : ''}"
       >
         {name}
       </svelte:element>
-      <p
-        class="flex items-center gap-0 text-sm text-slate-600 dark:text-zinc-400 max-w-full w-max"
-      >
-        {@render nameDetail?.()}
-      </p>
+      {#if nameDetail}
+        <p
+          class="flex items-center gap-0 text-sm text-slate-600 dark:text-zinc-400 max-w-full w-max"
+        >
+          <TextProps wrap="no-wrap">
+            {@render nameDetail?.()}
+          </TextProps>
+        </p>
+      {/if}
     </div>
   </Material>
-  {#if actions || stats}
+  {#if actions || stats.length > 0}
     <div class="space-y-4">
       <div class="flex flex-col flex-1">
         {#if actions}

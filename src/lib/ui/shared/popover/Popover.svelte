@@ -84,7 +84,8 @@
       open = newOpen
     }
 
-    const mouseLeave = () => openOnHover && toggle(false)
+    const mouseover = () => openOnHover && toggle(true)
+    const mouseleave = () => openOnHover && toggle(false)
     const focus = () => openOnHover && toggle(true)
     const focusout = () => openOnHover && toggle(false)
     const click = () => {
@@ -112,7 +113,8 @@
       }
     }
 
-    e.addEventListener('mouseleave', mouseLeave)
+    e.addEventListener('mouseover', mouseover)
+    e.addEventListener('mouseleave', mouseleave)
     e.addEventListener('focus', focus)
     e.addEventListener('focusout', focusout)
     e.addEventListener('click', click)
@@ -121,7 +123,8 @@
     floatingRef(e)
 
     return () => {
-      e.removeEventListener('mouseleave', mouseLeave)
+      e.addEventListener('mouseover', mouseover)
+      e.removeEventListener('mouseleave', mouseleave)
       e.removeEventListener('focus', focus)
       e.removeEventListener('focusout', focusout)
       e.removeEventListener('click', click)
@@ -149,7 +152,13 @@
       {#if popover}
         {@render popover(open)}
       {:else}
-        <Material elevation="high" color="distinct" class="flex flex-col">
+        <Material
+          elevation="high"
+          color="distinct"
+          rounding="xl"
+          padding="sm"
+          class="flex flex-col"
+        >
           {@render children?.(open)}
         </Material>
       {/if}

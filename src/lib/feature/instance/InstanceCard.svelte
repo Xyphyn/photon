@@ -4,12 +4,12 @@
   import Markdown from '$lib/app/markdown/Markdown.svelte'
   import { settings } from '$lib/app/settings.svelte'
   import { userLink } from '$lib/app/util.svelte'
-  import Avatar from '$lib/ui/generic/Avatar.svelte'
+  import EntityHeader from '$lib/ui/generic/EntityHeader.svelte'
   import ItemList from '$lib/ui/generic/ItemList.svelte'
   import LabelStat from '$lib/ui/info/LabelStat.svelte'
   import EndPlaceholder from '$lib/ui/layout/EndPlaceholder.svelte'
   import SidebarButton from '$lib/ui/sidebar/SidebarButton.svelte'
-  import { Badge, Expandable } from 'mono-svelte'
+  import { Badge, Expandable, Popover } from 'mono-svelte'
   import {
     BuildingOffice,
     Icon,
@@ -17,7 +17,6 @@
     ServerStack,
   } from 'svelte-hero-icons/dist'
   import type { ClassValue, HTMLAttributes } from 'svelte/elements'
-  import { optimizeImageURL } from '../post'
 
   interface Props extends HTMLAttributes<HTMLDivElement> {
     site: SiteView
@@ -36,20 +35,13 @@
     clazz,
   ]}
 >
-  {#if site.site.banner}
-    <div class="rounded-xl bg-slate-100 dark:bg-zinc-925">
-      <img
-        src={optimizeImageURL(site.site.banner, 512)}
-        alt="Site banner"
-        class="h-32 object-cover w-full"
-        style="border-radius: inherit;"
-      />
-    </div>
-  {/if}
-  <div class="mx-3 space-y-3">
-    <Avatar width={32} url={site.site.icon} alt="" circle={false} />
-    <h2 class="font-medium text-lg -my-2">{site.site.name}</h2>
-  </div>
+  <EntityHeader
+    name={site.site.name}
+    avatar={site.site.icon}
+    banner={site.site.banner}
+    compact="always"
+    avatarCircle={false}
+  />
   <div class="flex flex-col gap-1">
     {#if taglines && taglines.length > 0}
       <Markdown
@@ -96,11 +88,34 @@
         content={site.counts.comments.toString()}
         formatted
       />
-      <LabelStat
-        label={$t('cards.community.activeDay')}
-        content={site.counts.users_active_day.toString()}
-        formatted
-      />
+      <Popover openOnHover placement="bottom-end">
+        {#snippet target(attachment)}
+          <button class="text-left cursor-pointer" {@attach attachment}>
+            <LabelStat
+              label={$t('cards.community.activeDay')}
+              content={site.counts.users_active_day.toString()}
+              formatted
+            />
+          </button>
+        {/snippet}
+        <div class="flex flex-row gap-4 flex-wrap px-3">
+          <LabelStat
+            label={$t('filter.sort.top.time.week')}
+            content={site.counts.users_active_week.toString()}
+            formatted
+          />
+          <LabelStat
+            label={$t('filter.sort.top.time.month')}
+            content={site.counts.users_active_month.toString()}
+            formatted
+          />
+          <LabelStat
+            label={$t('filter.sort.top.time.6months')}
+            content={site.counts.users_active_half_year.toString()}
+            formatted
+          />
+        </div>
+      </Popover>
       <LabelStat
         label={$t('content.communities')}
         content={site.counts.communities.toString()}

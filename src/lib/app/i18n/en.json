@@ -547,6 +547,9 @@
                 "hide": "Hide",
                 "unhide": "Unhide",
                 "share": "Share",
+                "share.from": "Share from",
+                "share.global": "Origin server",
+                "share.local": "Your server",
                 "crosspost": "Crosspost",
                 "delete": "Delete",
                 "restore": "Restore"

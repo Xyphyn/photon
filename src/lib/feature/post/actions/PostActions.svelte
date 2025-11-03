@@ -3,10 +3,19 @@
   import { profile } from '$lib/app/auth.svelte'
   import { t } from '$lib/app/i18n'
   import { settings, type View } from '$lib/app/settings.svelte'
+  import { instanceToURL } from '$lib/app/util.svelte'
   import { save } from '$lib/feature/legacy/contentview'
   import { publishedToDate } from '$lib/ui/util/date'
   import FormattedNumber from '$lib/ui/util/FormattedNumber.svelte'
-  import { Button, Menu, Modal, Spinner } from 'mono-svelte'
+  import {
+    Button,
+    Menu,
+    MenuButton,
+    MenuDivider,
+    Modal,
+    Spinner,
+    toast,
+  } from 'mono-svelte'
   import {
     Bookmark,
     BookmarkSlash,
@@ -14,7 +23,10 @@
     ChatBubbleOvalLeft,
     ChatBubbleOvalLeftEllipsis,
     EllipsisHorizontal,
+    GlobeAlt,
     Icon,
+    MapPin,
+    Share,
     ShieldCheck,
   } from 'svelte-hero-icons/dist'
   import { PostVote } from '..'
@@ -42,6 +54,21 @@
   }: Props = $props()
   let buttonHeight = $derived(view == 'compact' ? 'h-7.5' : 'h-8')
   let buttonSquare = $derived(view == 'compact' ? 'w-7.5 h-7.5' : 'w-8 h-8')
+
+  function share(global: boolean = true) {
+    const link = global
+      ? post.post.ap_id
+      : `${instanceToURL(profile.current.instance)}/post/${post.post.id}`
+
+    if (navigator.share)
+      navigator.share?.({
+        url: link,
+      })
+    else {
+      navigator.clipboard.writeText(link)
+      toast({ content: $t('toast.copied') })
+    }
+  }
 </script>
 
 {#if editing}
@@ -116,6 +143,7 @@
     <FormattedNumber number={post.counts.comments} />
   </Button>
   <div class="flex-1"></div>
+
   {#if settings.debugInfo}
     {#if debug}
       {#await import('$lib/ui/util/debug/DebugObject.svelte') then { default: DebugObject }}
@@ -169,6 +197,30 @@
       icon={post.saved ? BookmarkSlash : Bookmark}
     ></Button>
   {/if}
+
+  <Menu placement="bottom-end">
+    {#snippet target(attachment)}
+      <Button
+        {@attach post.post.local ? () => {} : attachment}
+        rounding="pill"
+        color="ghost"
+        size="custom"
+        class={buttonSquare}
+        onclick={() => {
+          if (post.post.local) share()
+        }}
+        icon={Share}
+        title={$t('post.actions.more.share')}
+      />
+    {/snippet}
+    <MenuDivider showLabel>{$t('post.actions.more.share.from')}</MenuDivider>
+    <MenuButton onclick={() => share(true)} icon={GlobeAlt}>
+      {$t('post.actions.more.share.global')}
+    </MenuButton>
+    <MenuButton onclick={() => share(false)} icon={MapPin}>
+      {$t('post.actions.more.share.local')}
+    </MenuButton>
+  </Menu>
 
   <Menu placement="bottom-end">
     {#snippet target(popover)}

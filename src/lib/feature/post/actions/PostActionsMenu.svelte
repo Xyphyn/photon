@@ -7,20 +7,15 @@
   import { t } from '$lib/app/i18n'
   import { setSessionStorage } from '$lib/app/session'
   import { settings } from '$lib/app/settings.svelte'
-  import { instanceToURL } from '$lib/app/util.svelte'
   import { deleteItem, markAsRead } from '$lib/feature/legacy/contentview'
   import { report } from '$lib/feature/moderation/moderation'
-  import { Button, Menu, MenuButton, toast } from 'mono-svelte'
+  import { MenuButton } from 'mono-svelte'
   import {
     ArrowTopRightOnSquare,
-    EllipsisHorizontal,
     Eye,
     EyeSlash,
     Flag,
-    GlobeAlt,
-    MapPin,
     PencilSquare,
-    Share,
     Trash,
     XMark,
   } from 'svelte-hero-icons/dist'
@@ -33,21 +28,6 @@
   }
 
   let { post = $bindable(), onhide, editing = $bindable() }: Props = $props()
-
-  function share(global: boolean = true) {
-    const link = global
-      ? post.post.ap_id
-      : `${instanceToURL(profile.current.instance)}/post/${post.post.id}`
-
-    if (navigator.share)
-      navigator.share?.({
-        url: link,
-      })
-    else {
-      navigator.clipboard.writeText(link)
-      toast({ content: $t('toast.copied') })
-    }
-  }
 </script>
 
 {#if profile.current?.user && profile.current?.jwt && profile.current.user.local_user_view.person.id == post.creator.id}
@@ -68,36 +48,6 @@
       : $t('post.actions.more.markRead')}
   </MenuButton>
 {/if}
-<div class="flex flex-row">
-  <MenuButton
-    onclick={() => share()}
-    class={['flex-1', !post.post.local && 'rounded-r-lg']}
-    icon={Share}
-  >
-    {$t('post.actions.more.share')}
-  </MenuButton>
-  {#if !post.post.local}
-    <Menu>
-      {#snippet target(attachment)}
-        <Button
-          {@attach attachment}
-          aria-label={$t('post.actions.more.label')}
-          color="tertiary"
-          size="custom"
-          class="w-6 h-6 self-center"
-          data-autoclose="false"
-          icon={EllipsisHorizontal}
-        ></Button>
-      {/snippet}
-      <MenuButton onclick={() => share(true)} icon={GlobeAlt}>
-        {$t('filter.location.global')}
-      </MenuButton>
-      <MenuButton onclick={() => share(false)} icon={MapPin}>
-        {$t('filter.location.local')}
-      </MenuButton>
-    </Menu>
-  {/if}
-</div>
 {#if profile.current?.jwt}
   <MenuButton
     onclick={() => {

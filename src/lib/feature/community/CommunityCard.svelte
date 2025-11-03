@@ -7,8 +7,6 @@
   import Markdown from '$lib/app/markdown/Markdown.svelte'
   import { settings } from '$lib/app/settings.svelte'
   import { fullCommunityName, userLink } from '$lib/app/util.svelte'
-  import Avatar from '$lib/ui/generic/Avatar.svelte'
-  import Entity from '$lib/ui/generic/Entity.svelte'
   import ItemList from '$lib/ui/generic/ItemList.svelte'
   import LabelStat from '$lib/ui/info/LabelStat.svelte'
   import EndPlaceholder from '$lib/ui/layout/EndPlaceholder.svelte'
@@ -108,6 +106,8 @@
 </script>
 
 <script lang="ts">
+  import EntityHeader from '$lib/ui/generic/EntityHeader.svelte'
+
   let loading = $state({
     blocking: false,
     subscribing: false,
@@ -170,24 +170,19 @@
       clazz,
     ]}
   >
-    <div class="px-3 overflow-hidden">
-      <Entity
-        name={community_view.community.title}
-        label="!{fullCommunityName(
+    <EntityHeader
+      name={community_view.community.title}
+      avatar={community_view.community.icon}
+      banner={community_view.community.banner}
+      avatarCircle={false}
+    >
+      {#snippet nameDetail()}
+        !{fullCommunityName(
           community_view.community.name,
           community_view.community.actor_id,
-        )}"
-      >
-        {#snippet customIcon()}
-          <Avatar
-            width={32}
-            url={community_view.community.icon}
-            alt={community_view.community.name}
-            circle={false}
-          />
-        {/snippet}
-      </Entity>
-    </div>
+        )}
+      {/snippet}
+    </EntityHeader>
 
     <EndPlaceholder size="xs" margin="sm">
       {$t('form.post.community')}
