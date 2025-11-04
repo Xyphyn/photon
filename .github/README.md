@@ -1,7 +1,13 @@
 <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/76b5278b-e5f9-4c0c-81ec-0820d3261223">
-    <img alt="Photon light theme cozy" src="https://github.com/user-attachments/assets/41d205fe-7d32-4b83-bfef-6aa9dd63e074" width="100%">
+    <source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/c6262803-c046-4e76-ac58-65458a93db07">
+    <img alt="Photon light theme cozy" src="https://github.com/user-attachments/assets/bc72a843-013f-4b87-ae80-59a3b9132ecc" width="100%">
 </picture>
+
+<picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/c13f94c0-c2c4-48b2-b379-5ee714ae0556">
+    <img src="https://github.com/user-attachments/assets/11cf24c2-fd4f-480a-8a16-41f0f0a5b245">
+</picture>
+
 
 # Photon
 
@@ -11,6 +17,19 @@ Jump to:
 
 - [Self-hosting](#self-hosting)
 - [Public Instances](#public-instances)
+
+## Features
+
+- Modern, intuitive and useful interface with thoughtful UX
+- Multi-account switching
+- Supports Lemmy & Piefed
+- Infinite scroll
+- Multiple languages thanks to [the community](https://weblate.xylight.dev)
+- Customizable
+- Supports almost all available Lemmy features
+- Svelte-based, for responsiveness
+- 2.8x smaller JavaScript payload compared to lemmy-ui
+- Optimized image loading where possible to save bandwidth
 
 ## Self-hosting
 
