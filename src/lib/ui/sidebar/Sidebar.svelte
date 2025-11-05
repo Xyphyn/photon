@@ -1,6 +1,6 @@
 <script lang="ts">
   import { env } from '$env/dynamic/public'
-  import { notifications, profile } from '$lib/app/auth.svelte'
+  import { profile } from '$lib/app/auth.svelte'
   import { t } from '$lib/app/i18n'
   import { LINKED_INSTANCE_URL } from '$lib/app/instance.svelte'
   import { settings } from '$lib/app/settings.svelte'
@@ -52,18 +52,19 @@
   />
   <EndPlaceholder margin="sm" size="xs">{$t('profile.profile')}</EndPlaceholder>
   {#if profile.current?.jwt}
+    {@const notifications = profile.inbox.notifications}
     <SidebarButton
       icon={UserCircle}
       href="/profile"
       label={$t('profile.profile')}
     />
     <SidebarButton icon={Inbox} href="/inbox" label={$t('profile.inbox')}>
-      {#if $notifications.inbox}
+      {#if notifications.inbox}
         <Badge
           class="min-w-5 h-5 p-0! px-0.5 grid place-items-center ml-auto"
           color="red-subtle"
         >
-          {$notifications.inbox > 99 ? '∞' : $notifications.inbox}
+          {notifications.inbox > 99 ? '∞' : notifications.inbox}
         </Badge>
       {/if}
     </SidebarButton>

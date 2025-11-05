@@ -1,6 +1,6 @@
 <script lang="ts">
   import { site } from '$lib/api/client.svelte'
-  import { notifications, profile } from '$lib/app/auth.svelte'
+  import { profile } from '$lib/app/auth.svelte'
   import { t } from '$lib/app/i18n'
   import { LINKED_INSTANCE_URL } from '$lib/app/instance.svelte'
   import { Menu, Spinner } from 'mono-svelte'
@@ -140,7 +140,7 @@
             <Icon src={Bars3} micro size="18" />
           </div>
         {/if}
-        {#if Math.max(...Object.values($notifications)) > 0}
+        {#if Math.max(...Object.values(profile.inbox.notifications)) > 0}
           <div
             class="w-2 h-2 absolute top-0.5 right-0.5 bg-red-500 rounded-full"
           ></div>

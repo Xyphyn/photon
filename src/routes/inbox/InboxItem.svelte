@@ -1,6 +1,6 @@
 <script lang="ts">
   import { getClient } from '$lib/api/client.svelte'
-  import { notifications, profile } from '$lib/app/auth.svelte'
+  import { profile } from '$lib/app/auth.svelte'
   import { t } from '$lib/app/i18n'
   import Markdown from '$lib/app/markdown/Markdown.svelte'
   import { escapeHtml } from '$lib/app/util.svelte'
@@ -50,7 +50,8 @@
     }
 
     item.read = isRead
-    if (profile.current.user) $notifications.inbox += isRead ? -1 : 1
+    if (profile.current.user)
+      profile.inbox.notifications.inbox += isRead ? -1 : 1
 
     loading = false
   }
