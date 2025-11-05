@@ -1,6 +1,6 @@
 <script lang="ts">
   import { getClient } from '$lib/api/client.svelte'
-  import { notifications, profile } from '$lib/app/auth.svelte'
+  import { profile } from '$lib/app/auth.svelte'
   import { errorMessage } from '$lib/app/error'
   import { t } from '$lib/app/i18n'
   import CommentItem from '$lib/feature/comment/CommentItem.svelte'
@@ -39,7 +39,7 @@
                 .then((res) => {
                   i.resolved = res.comment_report_view.comment_report.resolved
                   i.resolver = res.comment_report_view.resolver
-                  $notifications.reports += i.resolved ? -1 : 1
+                  profile.inbox.notifications.reports += i.resolved ? -1 : 1
                 }),
             ),
           )
@@ -59,7 +59,7 @@
 
                   i.resolver = res.post_report_view.resolver
 
-                  $notifications.reports += i.resolved ? -1 : 1
+                  profile.inbox.notifications.reports += i.resolved ? -1 : 1
                 }),
             ),
           )
@@ -80,7 +80,7 @@
 
                   i.resolver = res.private_message_report_view.resolver
 
-                  $notifications.reports += i.resolved ? -1 : 1
+                  profile.inbox.notifications.reports += i.resolved ? -1 : 1
                 }),
             ),
           )

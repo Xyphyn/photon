@@ -1,7 +1,7 @@
 <script lang="ts">
   import { env } from '$env/dynamic/public'
   import { site } from '$lib/api/client.svelte'
-  import { notifications, profile } from '$lib/app/auth.svelte'
+  import { profile } from '$lib/app/auth.svelte'
   import { t } from '$lib/app/i18n'
   import { settings } from '$lib/app/settings.svelte'
   import { theme } from '$lib/app/theme/theme.svelte'
@@ -61,11 +61,12 @@
 {/snippet}
 
 {#if profile.current?.jwt}
+  {@const notifications = profile.inbox.notifications}
   <MenuButton href="/inbox" icon={Inbox}>
     {$t('profile.inbox')}
-    {#if $notifications.inbox > 0}
+    {#if notifications.inbox > 0}
       <Badge color="red-subtle" class="text-xs ml-auto font-bold py-0.5!">
-        {$notifications.inbox > 99 ? '∞' : $notifications.inbox}
+        {notifications.inbox > 99 ? '∞' : notifications.inbox}
       </Badge>
     {/if}
   </MenuButton>
@@ -73,7 +74,7 @@
     <MenuButton href="/moderation" icon={ShieldCheck}>
       {$t('routes.moderation.feed')}
       {#snippet suffix()}
-        {@render notifBadge($notifications.reports)}
+        {@render notifBadge(notifications.reports)}
       {/snippet}
     </MenuButton>
   {/if}
@@ -81,7 +82,7 @@
     <MenuButton href="/admin/applications" icon={ServerStack}>
       {$t('routes.admin.applications.title')}
       {#snippet suffix()}
-        {@render notifBadge($notifications.applications)}
+        {@render notifBadge(notifications.applications)}
       {/snippet}
     </MenuButton>
   {/if}

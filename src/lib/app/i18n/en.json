@@ -315,12 +315,16 @@
             "loadComments": "Load comments"
         },
         "postRedirect": {
-            "title": "Mismatching server",
-            "description": "That link resolves to a post not on your account's server, {{homeInstance}}.",
+            "title": "Cross-server content",
+            "description": "That content does not originate from {{homeInstance}}. You can load it on your instance here.",
             "actions": {
                 "back": "Go back",
                 "fetch": "Locate post on {{homeInstance}}",
                 "switch": "Switch to an account on {{destInstance}}"
+            },
+            "automatic": {
+                "title": "Locating post",
+                "description": "That content does not originate on your account's server."
             }
         },
         "inbox": {

@@ -4,7 +4,7 @@
     ApproveRegistrationApplication,
     RegistrationApplicationView,
   } from '$lib/api/types'
-  import { notifications, profile } from '$lib/app/auth.svelte'
+  import { profile } from '$lib/app/auth.svelte'
   import { errorMessage } from '$lib/app/error'
   import { t } from '$lib/app/i18n'
   import ApplicationDenyModal from '$lib/feature/moderation/ApplicationDenyModal.svelte'
@@ -69,7 +69,7 @@
       application.admin = profile.current.user!.local_user_view.person
       application.registration_application.deny_reason = denyReason
 
-      $notifications.applications -= 1
+      profile.inbox.notifications.applications -= 1
     } catch (err) {
       toast({
         content: errorMessage(err as string),

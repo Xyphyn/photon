@@ -23,17 +23,12 @@
     none: '',
   }
 
-  const alignments = {
-    default: '',
-    center: '',
-  }
-
   interface Props {
     class?: ClassValue
     size?: keyof typeof sizes
     color?: keyof typeof colors
     margin?: keyof typeof margins
-    alignment?: keyof typeof alignments
+    alignment?: 'default' | 'center'
     border?: boolean
     children?: import('svelte').Snippet
     action?: import('svelte').Snippet

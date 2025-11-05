@@ -1,12 +1,10 @@
 import { browser } from '$app/environment'
 import { env } from '$env/dynamic/public'
 import { DEFAULT_CLIENT_TYPE, type ClientType } from '$lib/api/base'
-import { client, getClient, site } from '$lib/api/client.svelte'
+import { client, site } from '$lib/api/client.svelte'
 import type { Community, GetSiteResponse, MyUserInfo } from '$lib/api/types'
 import { publishedToDate } from '$lib/ui/util/date'
 import { toast } from 'mono-svelte'
-import { writable } from 'svelte/store'
-import { errorMessage } from './error'
 import { t } from './i18n'
 import { DEFAULT_INSTANCE_URL } from './instance.svelte'
 import { instanceToURL, moveItem } from './util.svelte'
@@ -62,6 +60,9 @@ const getCookie = (key: string): string | undefined => {
 }
 
 class Profile {
+  private static readonly DONATION_CHECK_TIMEOUT = 3 * 1000
+  private static readonly DONATION_REMINDER_INTERVAL = 375 * 24 * 60 * 60 * 1000
+
   meta = $state<ProfileData>(
     getFromStorage<ProfileData>('profileData') ?? {
       profiles: [
@@ -80,6 +81,7 @@ class Profile {
     this.meta.profiles.find((i) => i.id == this.meta.profile) ??
       this.getDefaultProfile(),
   )
+  inbox: InboxService = $state(new InboxService(this))
 
   getDefaultProfile(): ProfileInfo {
     return {
@@ -90,41 +92,47 @@ class Profile {
   }
 
   constructor() {
-    // cookie migration code
+    this.initCookieMigrate()
+    this.donationPoll(Profile.DONATION_CHECK_TIMEOUT)
+  }
+
+  get current() {
+    return this.#current
+  }
+  set current(value) {
+    if (!value) return
+    const index = this.meta.profiles.findLastIndex((i) => i.id === value.id)
+    if (index != -1) this.meta.profiles[index] = value
+  }
+
+  private async initCookieMigrate() {
     if (
-      env.PUBLIC_MIGRATE_COOKIE &&
-      this.meta.profiles.length == 0 &&
-      env.PUBLIC_INSTANCE_URL
-    ) {
-      const jwt = getCookie('jwt')
-      if (jwt) {
-        ;(async () => {
-          const result = await this.add(
-            jwt,
-            env.PUBLIC_INSTANCE_URL ?? '',
-            DEFAULT_CLIENT_TYPE,
-          )
+      !(
+        env.PUBLIC_MIGRATE_COOKIE &&
+        this.meta.profiles.length == 0 &&
+        env.PUBLIC_INSTANCE_URL
+      )
+    )
+      return
 
-          if (result)
-            toast({
-              content:
-                'Your instance migrated to Photon, and your account was transferred.',
-              type: 'success',
-            })
-        })()
-      }
-    }
-
-    setInterval(
-      () => {
-        if (profile.current.jwt)
-          this.checkInbox().then((res) => notifications.update(() => res))
-      },
-      4 * 60 * 1000,
+    const jwt = getCookie('jwt')
+    if (!jwt) return
+    const result = await this.add(
+      jwt,
+      env.PUBLIC_INSTANCE_URL ?? '',
+      DEFAULT_CLIENT_TYPE,
     )
 
-    // hacky way to check donation status
-    setTimeout(() => {
+    if (result)
+      toast({
+        content:
+          'Your instance migrated frontends, and your account was transferred.',
+        type: 'success',
+      })
+  }
+
+  private donationPoll(delay: number) {
+    return setTimeout(() => {
       if (
         profile.current.user?.local_user_view.local_user
           .last_donation_notification
@@ -133,7 +141,10 @@ class Profile {
           profile.current.user?.local_user_view.local_user
             .last_donation_notification,
         )
-        if (Date.now() - donationDate.getTime() > 365 * 24 * 60 * 60 * 1000) {
+        if (
+          Date.now() - donationDate.getTime() >
+          Profile.DONATION_REMINDER_INTERVAL
+        ) {
           toast({
             content: t.get('toast.lemmyDonate'),
             duration: 3600 * 1000,
@@ -152,23 +163,13 @@ class Profile {
           )
         }
       }
-    }, 3 * 1000)
-  }
-
-  get current() {
-    return this.#current
-  }
-  set current(value) {
-    if (!value) return
-    const index = this.meta.profiles.findIndex((i) => i.id == value?.id)
-    this.meta.profiles[index] = value
+    }, delay)
   }
 
   async fetchUserData() {
     const startId = this.#current.id
     if (this.#current.jwt) {
       site.data = undefined
-      notifications.set({ applications: 0, inbox: 0, reports: 0 })
 
       const res = await userFromJwt(this.#current.jwt, this.#current.instance)
       if (!res?.user)
@@ -190,6 +191,7 @@ class Profile {
         this.#current.avatar = res?.user?.local_user_view.person.avatar
         this.#current.username = res?.user?.local_user_view.person.name
       }
+      this.inbox.init()
     } else {
       if (browser) {
         site.data = undefined
@@ -202,44 +204,31 @@ class Profile {
     return this
   }
 
-  async checkInbox() {
-    const { user, jwt } = profile.current
-    if (!user || !jwt) throw new Error('checkInbox() called with invalid user')
-
-    const notifs = await getNotificationCount(jwt, this.isMod(), this.isAdmin)
-
-    return {
-      inbox: notifs.unreads,
-      applications: notifs.applications,
-      reports: notifs.reports,
-    }
-  }
-
   async add(jwt: string, instance: string, type: ClientType) {
-    const user = await userFromJwt(jwt, instance)
-      .then((u) => u)
-      .catch((err) => {
-        toast({ content: errorMessage(err as string), type: 'error' })
+    try {
+      const user = await userFromJwt(jwt, instance)
+      if (!user?.user) {
+        throw new Error('No user data received')
+      }
+
+      const id = Math.max(...this.meta.profiles.map((p) => p.id), 0) + 1
+      this.meta.profiles.unshift({
+        id,
+        instance,
+        jwt,
+        username: user.user.local_user_view.person.name,
+        avatar: user.user.local_user_view.person.avatar,
+        client: type,
       })
-    if (!user?.user) {
+      this.meta.profile = id
+      return user
+    } catch (err) {
       toast({
-        content: "Your instance's API did not return your user data.",
+        content: err as string,
         type: 'error',
       })
+      return null
     }
-
-    const id = Math.max(...this.meta.profiles.map((p) => p.id)) + 1
-    this.meta.profile = id
-    this.meta.profiles.unshift({
-      id: id,
-      instance: instance,
-      jwt: jwt,
-      username: user?.user?.local_user_view.person.name,
-      avatar: user?.user?.local_user_view.person.avatar,
-      client: type,
-    })
-
-    return user
   }
 
   remove(id: number) {
@@ -263,7 +252,7 @@ class Profile {
     }
   }
 
-  isMod(community?: Community) {
+  isMod(community?: Community): boolean {
     if (community)
       return (
         (this.#current.user?.moderates.some(
@@ -275,12 +264,16 @@ class Profile {
     else return (this.#current.user?.moderates.length ?? 0) > 0
   }
 
-  get isAdmin() {
+  get isAdmin(): boolean {
     return (
       site.data?.admins.some(
         (i) => i.person.id == this.#current.user?.local_user_view.person.id,
       ) ?? false
     )
+  }
+
+  get isDefaultProfile(): boolean {
+    return !this.#current.jwt && this.#current.instance == DEFAULT_INSTANCE_URL
   }
 
   mainEffect = $effect.root(() => {
@@ -301,22 +294,97 @@ class Profile {
     })
 
     $effect(() => {
-      this.fetchUserData().then(() => {
-        if (this.current.jwt)
-          this.checkInbox().then((res) => notifications.update(() => res))
-      })
+      this.fetchUserData()
     })
   })
 }
 
+class InboxService {
+  private readonly POLL_INTERVAL = 4 * 60 * 1000
+  #pollInterval: NodeJS.Timeout | null = null
+
+  #profile: Profile
+
+  notifications = $state<Notifications>({
+    applications: 0,
+    inbox: 0,
+    reports: 0,
+  })
+
+  constructor(profile: Profile) {
+    this.#profile = profile
+  }
+
+  async init(): Promise<void> {
+    this.cleanup()
+
+    this.notifications = await this.checkInbox()
+
+    this.#pollInterval = setInterval(async () => {
+      this.notifications = await this.checkInbox()
+    }, this.POLL_INTERVAL)
+  }
+
+  cleanup(): void {
+    if (this.#pollInterval) clearInterval(this.#pollInterval)
+
+    this.#pollInterval = null
+  }
+
+  clear(): Notifications {
+    this.notifications = {
+      applications: 0,
+      inbox: 0,
+      reports: 0,
+    }
+    return this.notifications
+  }
+
+  async checkInbox(): Promise<Notifications> {
+    if (!this.#profile.current.user || !this.#profile.current.jwt)
+      return this.clear()
+
+    const unreadsPromise = client()
+      .getUnreadCount()
+      .then((res) => res.mentions + res.private_messages + res.replies)
+      .catch(() => 0)
+
+    const reportsPromise = this.#profile.isMod()
+      ? client()
+          .getReportCount({})
+          .then(
+            (res) =>
+              res.comment_reports +
+              res.post_reports +
+              (res.private_message_reports ?? 0),
+          )
+          .catch(() => 0)
+      : new Promise<number>((res) => res(0))
+
+    const applicationsPromise = this.#profile.isAdmin
+      ? client()
+          .getUnreadRegistrationApplicationCount()
+          .then((res) => res.registration_applications)
+          .catch(() => 0)
+      : new Promise<number>((res) => res(0))
+
+    const [unreads, reports, applications] = await Promise.all([
+      unreadsPromise,
+      reportsPromise,
+      applicationsPromise,
+    ])
+
+    return {
+      inbox: unreads,
+      reports: reports,
+      applications: applications,
+    }
+  }
+}
+
 export const profile = new Profile()
 
-export const notifications = writable<Notifications>({
-  applications: 0,
-  inbox: 0,
-  reports: 0,
-})
-
+// this is all garbage legacy code, remove later
 async function userFromJwt(
   jwt: string,
   instance: string,
@@ -356,43 +424,5 @@ function serializeUser(user: ProfileInfo): ProfileInfo {
   return {
     ...user,
     user: undefined,
-  }
-}
-
-async function getNotificationCount(jwt: string, mod: boolean, admin: boolean) {
-  const unreadsPromise = getClient()
-    .getUnreadCount()
-    .then((res) => res.mentions + res.private_messages + res.replies)
-    .catch(() => 0)
-
-  const reportsPromise = mod
-    ? getClient()
-        .getReportCount({})
-        .then(
-          (res) =>
-            res.comment_reports +
-            res.post_reports +
-            (res.private_message_reports ?? 0),
-        )
-        .catch(() => 0)
-    : new Promise<number>((res) => res(0))
-
-  const applicationsPromise = admin
-    ? getClient()
-        .getUnreadRegistrationApplicationCount()
-        .then((res) => res.registration_applications)
-        .catch(() => 0)
-    : new Promise<number>((res) => res(0))
-
-  const [unreads, reports, applications] = await Promise.all([
-    unreadsPromise,
-    reportsPromise,
-    applicationsPromise,
-  ])
-
-  return {
-    unreads: unreads,
-    reports: reports,
-    applications: applications,
   }
 }

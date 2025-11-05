@@ -1,5 +1,5 @@
 import { getClient } from '$lib/api/client.svelte'
-import { notifications, profile } from '$lib/app/auth.svelte'
+import { profile } from '$lib/app/auth.svelte'
 import { ReactiveState } from '$lib/app/util.svelte'
 import {
   generalizeCommentReply,
@@ -64,11 +64,7 @@ export async function load({ url, fetch }) {
       ? data.filter((i) => i.type != 'private_message' && !i.read).length
       : 0
 
-  notifications.update((i) => ({
-    applications: i.applications,
-    reports: i.reports,
-    inbox: totalNotifs,
-  }))
+  profile.inbox.notifications.inbox = totalNotifs
 
   return {
     unreadOnly: new ReactiveState(unreadOnly),
