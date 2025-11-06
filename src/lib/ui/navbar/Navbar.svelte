@@ -17,7 +17,7 @@
   import type { ClassValue } from 'svelte/elements'
   import Avatar from '../generic/Avatar.svelte'
   import Logo from '../generic/Logo.svelte'
-  import CommandsWrapper from './commands/CommandsWrapper.svelte'
+  import CommandsWrapper from './commands/CommandsHost.svelte'
   import NavButton from './NavButton.svelte'
 
   let promptOpen: boolean = $state(false)
