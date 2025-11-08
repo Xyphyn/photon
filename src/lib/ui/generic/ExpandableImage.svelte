@@ -4,7 +4,7 @@
   import { t } from '$lib/app/i18n'
   import { Button, Material, toast } from 'mono-svelte'
   import { Share, XMark } from 'svelte-hero-icons/dist'
-  import { expoOut } from 'svelte/easing'
+  import { backOut } from 'svelte/easing'
   import { fade, scale } from 'svelte/transition'
   import { trapFocus } from 'trap-focus-svelte'
 
@@ -45,7 +45,7 @@
       class={[
         'max-w-full mx-auto my-auto overscroll-contain bg-white dark:bg-zinc-900',
       ]}
-      transition:scale={{ start: 0.95, easing: expoOut, duration: 250 }}
+      transition:scale={{ start: 1.04, easing: backOut, duration: 250 }}
       {alt}
     />
     <div class="sticky z-10 bottom-4 left-1/2 -translate-x-1/2 w-max">
