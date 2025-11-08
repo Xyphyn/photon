@@ -3,6 +3,8 @@
   import { page } from '$app/state'
   import { type ClientType, DEFAULT_CLIENT_TYPE } from '$lib/api/base'
   import { client } from '$lib/api/client.svelte'
+  import { LemmyClient } from '$lib/api/lemmy/adapter'
+  import { PiefedClient } from '$lib/api/piefed/adapter'
   import { profile } from '$lib/app/auth.svelte'
   import { errorMessage } from '$lib/app/error'
   import { t } from '$lib/app/i18n'
@@ -171,14 +173,18 @@
         </TextInput>
       {/if}
     </div>
-    <div class="flex flex-row gap-2">
+    <div role="presentation" class="flex flex-row gap-2">
       <TextInput
         id="password"
         bind:value={data.password}
         label={$t('form.password')}
         type="password"
-        minlength={10}
-        maxlength={60}
+        minlength={data.client.name == 'piefed'
+          ? PiefedClient.constants.password.minLength
+          : LemmyClient.constants.password.minLength}
+        maxlength={data.client.name == 'piefed'
+          ? PiefedClient.constants.password.maxLength
+          : LemmyClient.constants.password.maxLength}
         required
         class="w-full"
       />

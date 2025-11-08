@@ -5,6 +5,8 @@ import { fromGetPosts, toListingType } from './rewrite'
 export class LemmyClient implements BaseClient {
   type: ClientType = { name: 'lemmy', baseUrl: '/api/v3' }
 
+  static constants = { password: { minLength: 8, maxLength: 60 } }
+
   #client: LemmyHttp
 
   constructor(

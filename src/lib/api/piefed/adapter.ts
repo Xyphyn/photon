@@ -38,6 +38,8 @@ import type { paths } from './schema'
 export class PiefedClient implements BaseClient {
   type: ClientType = { name: 'piefed', baseUrl: '/api/alpha' }
 
+  static constants = { password: { minLength: 6, maxLength: 128 } }
+
   #client: ReturnType<typeof createClient<paths>>
 
   constructor(

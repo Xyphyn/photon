@@ -1,5 +1,5 @@
-import { env } from '$env/dynamic/public';
-import * as types from './types';
+import { env } from '$env/dynamic/public'
+import * as types from './types'
 
 export type ClientType =
   | { name: 'lemmy'; baseUrl: '/api/v3' }
@@ -18,6 +18,13 @@ export const DEFAULT_CLIENT_TYPE: ClientType =
 
 export abstract class BaseClient {
   abstract type: ClientType
+
+  static constants: {
+    password: {
+      minLength: number
+      maxLength: number
+    }
+  }
 
   abstract getSite(): Promise<types.GetSiteResponse>
   abstract editSite(form: types.EditSite): Promise<types.SiteResponse>
