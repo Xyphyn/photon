@@ -246,12 +246,12 @@
       Virtual list debug info
 
       List items: {items.length}
-      Rendering items: {visibleItems.length} ({visibleItems[0]
-        ?.index} - {visibleItems[visibleItems.length - 1].index})
+      Rendering items: {visibleItems?.length} ({visibleItems?.[0]
+        ?.index} - {visibleItems?.[visibleItems?.length - 1]?.index})
       Viewport height: {viewportHeight}
       Current scroll position: {scrollY}
       Container height: {cumulativeItemHeights[
-        visibleItems?.[visibleItems.length - 1]?.index
+        visibleItems?.[visibleItems?.length - 1]?.index
       ]}
       Overscan: {overscan}
       Guess item height: {estimatedHeight}
