@@ -47,7 +47,12 @@
   }: Props = $props()
 
   $effect(() => {
-    if (params.sort) settings.defaultSort.sort = params.sort
+    if (filters.sort) settings.defaultSort.sort = filters.sort
+  })
+
+  let filters = $state({
+    location: params.location,
+    sort: params.sort,
   })
 
   const FeedComponent = $derived(
@@ -67,15 +72,15 @@
         {@render passedExtended?.()}
         <form class="" method="get" action={page.url.pathname}>
           <div class="flex flex-row gap-2">
-            {#if params.location}
-              <Location name="type" navigate bind:selected={params.location} />
+            {#if filters.location}
+              <Location name="type" navigate bind:selected={filters.location} />
             {/if}
-            {#if params.sort}
+            {#if filters.sort}
               <Sort
                 placement="bottom"
                 name="sort"
                 navigate
-                bind:selected={params.sort}
+                bind:selected={filters.sort}
               />
             {/if}
             <ViewSelect placement="bottom" />
