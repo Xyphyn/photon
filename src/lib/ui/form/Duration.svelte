@@ -45,7 +45,6 @@
     ></TextInput>
   {/if}
   <Select
-    selectClass="h-[38px]"
     baseClass="flex-1"
     label={$t('form.time.duration')}
     bind:value={duration}

@@ -316,7 +316,7 @@
         },
         "postRedirect": {
             "title": "Cross-server content",
-            "description": "That content does not originate from {{homeInstance}}. You can load it on your instance here.",
+            "description": "That content does not originate from {{homeInstance}}.",
             "actions": {
                 "back": "Go back",
                 "fetch": "Locate post on {{homeInstance}}",

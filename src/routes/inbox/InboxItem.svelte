@@ -57,6 +57,38 @@
   }
 </script>
 
+{#snippet actions()}
+  <Button
+    color={item.read ? 'secondary' : 'primary'}
+    {loading}
+    disabled={loading ||
+      item.creator.id == profile.current.user?.local_user_view.person.id}
+    onclick={(e) => {
+      e.stopPropagation()
+      markAsRead(!item.read)
+    }}
+    size="sm"
+    rounding="pill"
+    class="shrink-0"
+    icon={item.read ? EyeSlash : Eye}
+  >
+    {item.read
+      ? $t('post.actions.more.markUnread')
+      : $t('post.actions.more.markRead')}
+  </Button>
+  <Button
+    href={item.type == 'private_message'
+      ? `/inbox/messages/${item.item.private_message.creator_id}`
+      : `/comment/${item.item.comment.id}`}
+    size="sm"
+    rounding="pill"
+    class="shrink-0"
+    onclick={() => markAsRead(true)}
+  >
+    {$t('common.jump')}
+  </Button>
+{/snippet}
+
 <Expandable open icon={false}>
   {#snippet title()}
     <div class="flex flex-row gap-2 items-center w-full">
@@ -98,65 +130,13 @@
       </div>
       <div class="flex-1"></div>
       <ButtonGroup orientation="horizontal" class="md:flex hidden shrink-0">
-        <Button
-          color={item.read ? 'secondary' : 'primary'}
-          {loading}
-          disabled={loading}
-          onclick={(e) => {
-            e.stopPropagation()
-            markAsRead(!item.read)
-          }}
-          size="sm"
-          rounding="pill"
-          class="shrink-0"
-          icon={item.read ? EyeSlash : Eye}
-        >
-          {item.read
-            ? $t('post.actions.more.markUnread')
-            : $t('post.actions.more.markRead')}
-        </Button>
-        <Button
-          href={item.type == 'private_message'
-            ? `/inbox/messages/${item.item.private_message.creator_id}`
-            : `/comment/${item.item.comment.id}`}
-          size="sm"
-          rounding="pill"
-          class="shrink-0"
-          onclick={() => markAsRead(true)}
-        >
-          {$t('common.jump')}
-        </Button>
+        {@render actions()}
       </ButtonGroup>
     </div>
   {/snippet}
   {#snippet extended()}
     <ButtonGroup orientation="horizontal" class="flex md:hidden">
-      <Button
-        color={item.read ? 'secondary' : 'primary'}
-        {loading}
-        disabled={loading}
-        onclick={(e) => {
-          e.stopPropagation()
-          markAsRead(!item.read)
-        }}
-        size="sm"
-        rounding="pill"
-        icon={item.read ? EyeSlash : Eye}
-      >
-        {item.read
-          ? $t('post.actions.more.markUnread')
-          : $t('post.actions.more.markRead')}
-      </Button>
-      <Button
-        href={item.type == 'private_message'
-          ? `/inbox/messages/${item.item.private_message.creator_id}`
-          : `/comment/${item.item.comment.id}`}
-        size="sm"
-        rounding="pill"
-        onclick={() => markAsRead(true)}
-      >
-        {$t('common.jump')}
-      </Button>
+      {@render actions()}
     </ButtonGroup>
   {/snippet}
   {#snippet content()}

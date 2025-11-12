@@ -222,28 +222,30 @@
     </MenuButton>
   </Menu>
 
-  <Menu placement="bottom-end">
-    {#snippet target(popover)}
-      <Button
-        {@attach popover}
-        title={$t('post.actions.more.label')}
-        color="ghost"
-        rounding="pill"
-        size="custom"
-        class={buttonSquare}
-        icon={EllipsisHorizontal}
-      ></Button>
-    {/snippet}
-    {#snippet children(open)}
-      {#if open}
-        {#await import('./PostActionsMenu.svelte')}
-          <div class="p-8 w-full h-full grid place-items-center">
-            <Spinner width={20} />
-          </div>
-        {:then { default: PostActionsMenu }}
-          <PostActionsMenu bind:post {onhide} bind:editing />
-        {/await}
-      {/if}
-    {/snippet}
-  </Menu>
+  {#if profile.current.jwt}
+    <Menu placement="bottom-end">
+      {#snippet target(popover)}
+        <Button
+          {@attach popover}
+          title={$t('post.actions.more.label')}
+          color="ghost"
+          rounding="pill"
+          size="custom"
+          class={buttonSquare}
+          icon={EllipsisHorizontal}
+        ></Button>
+      {/snippet}
+      {#snippet children(open)}
+        {#if open}
+          {#await import('./PostActionsMenu.svelte')}
+            <div class="p-8 w-full h-full grid place-items-center">
+              <Spinner width={20} />
+            </div>
+          {:then { default: PostActionsMenu }}
+            <PostActionsMenu bind:post {onhide} bind:editing />
+          {/await}
+        {/if}
+      {/snippet}
+    </Menu>
+  {/if}
 </footer>

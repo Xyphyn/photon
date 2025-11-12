@@ -43,6 +43,11 @@
     none: '',
   }
 
+  const interactiveClass = {
+    interactive: 'material-int',
+    none: '',
+  }
+
   interface Props extends HTMLAttributes<HTMLElement> {
     elevation?: Elevation
     padding?: Padding

@@ -97,9 +97,8 @@
             size="square-lg"
             rounding="2xl"
             icon={ShieldCheck}
-          >
-            {$t('moderation.label')}
-          </Button>
+            aria-label={$t('moderation.label')}
+          ></Button>
         {/snippet}
         <MenuButton
           href="/modlog?user={person.person.id}"
@@ -131,7 +130,7 @@
           size="square-lg"
           rounding="2xl"
           icon={EllipsisHorizontal}
-          aria-label={$t('post.actions.more')}
+          aria-label={$t('post.actions.more.label')}
         />
       {/snippet}
       <MenuButton

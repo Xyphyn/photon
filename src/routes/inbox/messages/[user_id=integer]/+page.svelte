@@ -2,6 +2,7 @@
   import { browser } from '$app/environment'
   import { client } from '$lib/api/client.svelte'
   import type { PrivateMessageResponse } from '$lib/api/types'
+  import { profile } from '$lib/app/auth.svelte'
   import { errorMessage } from '$lib/app/error'
   import { t } from '$lib/app/i18n'
   import MarkdownEditor from '$lib/app/markdown/MarkdownEditor.svelte'
@@ -88,6 +89,20 @@
   let interval: number = -1
 
   onMount(() => {
+    data.message.value.private_messages
+      .filter(
+        (i) =>
+          !i.private_message.read &&
+          i.private_message.creator_id !=
+            profile.current.user?.local_user_view.person.id,
+      )
+      .forEach((i) =>
+        client().markPrivateMessageAsRead({
+          private_message_id: i.private_message.id,
+          read: true,
+        }),
+      )
+
     interval = setInterval(async () => {
       const res = await client().getPrivateMessages({
         creator_id: Number(data.creator.value.person_view.person.id),
@@ -95,7 +110,7 @@
         page: 1,
       })
       data.message.value = res
-    }, 5 * 1000) as unknown as number
+    }, 15 * 1000) as unknown as number
 
     return () => clearInterval(interval)
   })
@@ -123,10 +138,10 @@
   color="transparent"
   rounding="2xl"
   padding="none"
-  class="bg-white dark:bg-zinc-950 dark:border-t-zinc-900 w-full overflow-auto relative flex-1"
+  class="bg-white dark:bg-zinc-950 dark:border-t-zinc-900 w-full overflow-auto relative flex-1 min-h-0 max-h-[66vh] md:max-h-[64vh]"
 >
-  <div class=" overflow-auto" bind:this={chatWindow}>
-    <ul id="chat-window" class=" flex flex-col gap-1 flex-1 px-4 py-4">
+  <div class="h-full overflow-auto max-w-full" bind:this={chatWindow}>
+    <ul id="chat-window" class=" flex flex-col gap-1 flex-1 px-4 py-4 min-h-0">
       <div class="mt-auto"></div>
       <p class="mx-auto mt-auto text-slate-400 dark:text-zinc-600 text-center">
         {$t('routes.inbox.messages.conversation', {
