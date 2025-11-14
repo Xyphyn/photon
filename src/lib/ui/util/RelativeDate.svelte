@@ -24,7 +24,7 @@
       ]
 
       for (let i = thresholds.length - 1; i >= 0; i--) {
-        if (diffInMillis >= thresholds[i].threshold) {
+        if (Math.abs(diffInMillis) >= thresholds[i].threshold) {
           const value = Math.round(diffInMillis / thresholds[i].threshold)
 
           let language = locale ?? 'en'
