@@ -252,7 +252,7 @@ export interface paths {
       parameters: {
         query: {
           q: string
-          type_: 'Communities' | 'Posts' | 'Users' | 'Url'
+          type_: 'Communities' | 'Posts' | 'Users' | 'Url' | 'Comments'
           limit?: number
           listing_type?:
             | 'All'
@@ -266,6 +266,7 @@ export interface paths {
             | 'Active'
             | 'Hot'
             | 'New'
+            | 'Top'
             | 'TopHour'
             | 'TopSixHour'
             | 'TopTwelveHour'
@@ -400,6 +401,54 @@ export interface paths {
             'application/json': components['schemas']['DefaultError']
           }
         }
+      }
+    }
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/suggest_completion': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /** Suggest people and communities while users type. */
+    get: {
+      parameters: {
+        query?: {
+          q?: string
+        }
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody?: never
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['GetSuggestCompletionResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
       }
     }
     put?: never
@@ -550,8 +599,8 @@ export interface paths {
           limit?: number
           page?: number
           show_nsfw?: boolean
-          sort?: 'Hot' | 'Top' | 'New'
-          type_?: 'All' | 'Local' | 'Subscribed'
+          sort?: 'Hot' | 'Top' | 'New' | 'Active' | 'TopAll'
+          type_?: 'All' | 'Local' | 'Subscribed' | 'ModeratorView'
         }
         header?: never
         path?: never
@@ -608,6 +657,56 @@ export interface paths {
       requestBody: {
         content: {
           'application/json': components['schemas']['FollowCommunityRequest']
+        }
+      }
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['CommunityResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/community/rate': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /** Rate a community. */
+    post: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody: {
+        content: {
+          'application/json': components['schemas']['RateCommunityRequest']
         }
       }
       responses: {
@@ -1272,6 +1371,56 @@ export interface paths {
     patch?: never
     trace?: never
   }
+  '/api/alpha/domain/block': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /** Block or unblock a domain */
+    post: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody: {
+        content: {
+          'application/json': components['schemas']['DomainBlockRequest']
+        }
+      }
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DomainBlockResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
   '/api/alpha/user': {
     parameters: {
       query?: never
@@ -1291,6 +1440,7 @@ export interface paths {
             | 'Active'
             | 'Hot'
             | 'New'
+            | 'Top'
             | 'TopHour'
             | 'TopSixHour'
             | 'TopTwelveHour'
@@ -1336,6 +1486,51 @@ export interface paths {
           }
         }
         422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/user/me': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /** Get the details for the current user */
+    get: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody?: never
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['UserMeResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
       }
     }
     put?: never
@@ -1463,7 +1658,7 @@ export interface paths {
         query?: {
           limit?: number
           page?: number
-          sort?: 'Hot' | 'Top' | 'New' | 'Old'
+          sort?: 'Hot' | 'Top' | 'TopAll' | 'New' | 'Old' | 'Controversial'
           unread_only?: boolean
         }
         header?: never
@@ -1514,7 +1709,7 @@ export interface paths {
         query?: {
           limit?: number
           page?: number
-          sort?: 'Hot' | 'Top' | 'New' | 'Old'
+          sort?: 'Hot' | 'Top' | 'TopAll' | 'New' | 'Old' | 'Controversial'
           unread_only?: boolean
         }
         header?: never
@@ -1530,6 +1725,57 @@ export interface paths {
           }
           content: {
             'application/json': components['schemas']['UserMentionsResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/user/media': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /** Get media the current user has uploaded */
+    get: {
+      parameters: {
+        query?: {
+          limit?: number
+          page?: number
+          sort?: 'Hot' | 'Top' | 'TopAll' | 'New' | 'Old' | 'Controversial'
+          unread_only?: boolean
+        }
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody?: never
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['UserMediaResponse']
           }
         }
         /** @description Bad Request */
@@ -1758,7 +2004,7 @@ export interface paths {
     get: {
       parameters: {
         query: {
-          status: 'All' | 'Unread' | 'Read'
+          status: 'All' | 'Unread' | 'Read' | 'New'
           limit?: number
           page?: number
         }
@@ -2035,6 +2281,56 @@ export interface paths {
     patch?: never
     trace?: never
   }
+  '/api/alpha/user/note': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /** Set a note for a user */
+    post: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody: {
+        content: {
+          'application/json': components['schemas']['UserSetNoteRequest']
+        }
+      }
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['UserSetNoteResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
   '/api/alpha/comment/list': {
     parameters: {
       query?: never
@@ -2048,7 +2344,7 @@ export interface paths {
         query?: {
           limit?: number
           page?: number
-          sort?: 'Hot' | 'Top' | 'New' | 'Old'
+          sort?: 'Hot' | 'Top' | 'TopAll' | 'New' | 'Old' | 'Controversial'
           liked_only?: boolean
           saved_only?: boolean
           person_id?: number
@@ -2696,6 +2992,7 @@ export interface paths {
             | 'TopYear'
             | 'TopAll'
             | 'New'
+            | 'Old'
             | 'Scaled'
             | 'Active'
           type_?:
@@ -2714,6 +3011,92 @@ export interface paths {
           liked_only?: boolean
           feed_id?: number
           topic_id?: number
+          /** @description If filtering by community, ignores a post's sticky state */
+          ignore_sticky?: boolean
+        }
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody?: never
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['ListPostsResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/post/list2': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /** List posts. For testing only, do not use. */
+    get: {
+      parameters: {
+        query?: {
+          q?: string
+          sort?:
+            | 'Hot'
+            | 'Top'
+            | 'TopHour'
+            | 'TopSixHour'
+            | 'TopTwelveHour'
+            | 'TopWeek'
+            | 'TopDay'
+            | 'TopMonth'
+            | 'TopThreeMonths'
+            | 'TopSixMonths'
+            | 'TopNineMonths'
+            | 'TopYear'
+            | 'TopAll'
+            | 'New'
+            | 'Old'
+            | 'Scaled'
+            | 'Active'
+          type_?:
+            | 'All'
+            | 'Local'
+            | 'Subscribed'
+            | 'Popular'
+            | 'Moderating'
+            | 'ModeratorView'
+          community_name?: string
+          community_id?: number
+          saved_only?: boolean
+          person_id?: number
+          limit?: number
+          page?: string
+          liked_only?: boolean
+          feed_id?: number
+          topic_id?: number
+          /** @description If filtering by community, ignores a post's sticky state */
+          ignore_sticky?: boolean
         }
         header?: never
         path?: never
@@ -2888,7 +3271,7 @@ export interface paths {
         query?: {
           post_id?: number
           parent_id?: number
-          sort?: 'Hot' | 'Top' | 'New' | 'Old'
+          sort?: 'Hot' | 'Top' | 'TopAll' | 'New' | 'Old' | 'Controversial'
           max_depth?: number
           page?: string
           limit?: number
@@ -3478,6 +3861,56 @@ export interface paths {
     patch?: never
     trace?: never
   }
+  '/api/alpha/post/poll_vote': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /** Vote in a poll */
+    post: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody: {
+        content: {
+          'application/json': components['schemas']['PollVoteRequest']
+        }
+      }
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['PollVoteResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
   '/api/alpha/upload/image': {
     parameters: {
       query?: never
@@ -3655,6 +4088,65 @@ export interface paths {
     patch?: never
     trace?: never
   }
+  '/api/alpha/image/delete': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /** Delete a user image. */
+    post: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody: {
+        content: {
+          'application/json': components['schemas']['ImageDeleteRequest']
+        }
+      }
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['ImageDeleteResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+        /** @description Too Many Requests */
+        429: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+      }
+    }
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
   '/api/alpha/private_message/list': {
     parameters: {
       query?: never
@@ -3715,8 +4207,11 @@ export interface paths {
     /** Get conversation with a specific person. */
     get: {
       parameters: {
-        query: {
-          person_id: number
+        query?: {
+          /** @description One of either person_id or conversation_id must be specified */
+          person_id?: number
+          /** @description One of either person_id or conversation_id must be specified */
+          conversation_id?: number
           page?: number
           limit?: number
         }
@@ -3749,6 +4244,54 @@ export interface paths {
     }
     put?: never
     post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/private_message/conversation/leave': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /** Leave a conversation */
+    post: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody: {
+        content: {
+          'application/json': components['schemas']['LeaveConversationRequest']
+        }
+      }
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content?: never
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
     delete?: never
     options?: never
     head?: never
@@ -4031,11 +4574,15 @@ export interface components {
       person_id: number
       post_count: number
     }
+    UserExtraField: {
+      id: number
+      /** @example Pronouns */
+      label: string
+      /** @example he/him, she/her, they/them, etc. */
+      text: string
+    }
     Person: {
-      /**
-       * Format: url
-       * @example https://piefed.social/u/rimu
-       */
+      /** @example https://piefed.social/u/rimu */
       actor_id: string
       banned: boolean
       bot: boolean
@@ -4049,16 +4596,18 @@ export interface components {
       /** Format: html */
       about_html?: string
       /** Format: url */
-      avatar?: string | null
+      avatar?: string
       /** Format: url */
-      banner?: string | null
+      banner?: string
+      extra_fields?: components['schemas']['UserExtraField'][]
+      note?: string
       flair?: string
       /**
        * Format: datetime
        * @example 2025-06-07T02:29:07.980084Z
        */
       published?: string
-      title?: string | null
+      title?: string
     }
     PersonView: {
       activity_alert: boolean
@@ -4084,7 +4633,6 @@ export interface components {
       all_languages?: components['schemas']['LanguageView'][]
       description?: string
       enable_downvotes?: boolean
-      /** Format: url */
       icon?: string
       /** @enum {string} */
       registration_mode?: 'Closed' | 'RequireApplication' | 'Open'
@@ -4118,13 +4666,11 @@ export interface components {
       restricted_to_mods: boolean
       title: string
       banned?: boolean
-      /** Format: url */
-      banner?: string | null
+      banner?: string
       /** Format: markdown */
       description?: string
-      /** Format: url */
-      icon?: string | null
-      posting_warning?: string | null
+      icon?: string
+      posting_warning?: string
       /**
        * Format: datetime
        * @example 2025-06-07T02:29:07.980084Z
@@ -4132,8 +4678,8 @@ export interface components {
       updated?: string
     }
     CommunityBlockView: {
-      community?: components['schemas']['Community']
-      person?: components['schemas']['Person']
+      community: components['schemas']['Community']
+      person: components['schemas']['Person']
     }
     CommunityFollowerView: {
       community: components['schemas']['Community']
@@ -4162,7 +4708,13 @@ export interface components {
     }
     LocalUser: {
       /** @enum {string} */
-      default_comment_sort_type: 'Hot' | 'Top' | 'New' | 'Old'
+      default_comment_sort_type:
+        | 'Hot'
+        | 'Top'
+        | 'TopAll'
+        | 'New'
+        | 'Old'
+        | 'Controversial'
       /** @enum {string} */
       default_listing_type:
         | 'All'
@@ -4176,6 +4728,7 @@ export interface components {
         | 'Active'
         | 'Hot'
         | 'New'
+        | 'Top'
         | 'TopHour'
         | 'TopSixHour'
         | 'TopTwelveHour'
@@ -4287,6 +4840,7 @@ export interface components {
       active_weekly?: number
       active_monthly?: number
       active_6monthly?: number
+      average_rating?: number
     }
     CommunityFlair: {
       id: number
@@ -4307,7 +4861,7 @@ export interface components {
        * Format: url
        * @description Legacy tags that existed prior to 1.2 and some tags for remote communities might not have a defined ap_id
        */
-      ap_id: string | null
+      ap_id: string
     }
     CommunityView: {
       activity_alert: boolean
@@ -4345,8 +4899,74 @@ export interface components {
       reply_count?: number
       community_name?: string
     }
+    PostEvent: {
+      /**
+       * Format: datetime
+       * @example 2025-06-07T02:29:07.980084Z
+       */
+      start: string
+      /**
+       * Format: datetime
+       * @example 2025-06-07T02:29:07.980084Z
+       */
+      end?: string
+      /** @example America/New_York */
+      timezone?: string
+      /** @default 0 */
+      max_attendees: number
+      /** @default 0 */
+      participant_count: number
+      /** @default false */
+      full: boolean
+      online_link?: string
+      /**
+       * @description free, restricted, external, invite
+       * @example free
+       */
+      join_mode?: string
+      external_participation_url?: string
+      /** @default false */
+      anonymous_participation: boolean
+      /** @default false */
+      online: boolean
+      buy_tickets_link?: string
+      /** @example USD */
+      event_fee_currency?: string
+      /** @default 0 */
+      event_fee_amount: number
+      /** @description JSON object containing location details */
+      location?: {
+        [key: string]: unknown
+      }
+    }
+    PollChoice: {
+      id: number
+      choice_text: string
+      sort_order: number
+      /** @default 0 */
+      num_votes: number
+    }
+    PostPoll: {
+      /**
+       * Format: datetime
+       * @example 2025-06-07T02:29:07.980084Z
+       */
+      end_poll?: string
+      /**
+       * @description single or multiple - determines whether people can vote for one or multiple options
+       * @example single
+       */
+      mode: string
+      /** @default false */
+      local_only: boolean
+      /**
+       * Format: datetime
+       * @example 2025-06-07T02:29:07.980084Z
+       */
+      latest_vote?: string
+      choices: components['schemas']['PollChoice'][]
+    }
     Post: {
-      /** Format: url */
       ap_id: string
       community_id: number
       deleted: boolean
@@ -4367,19 +4987,20 @@ export interface components {
       alt_text?: string
       /** Format: markdown */
       body?: string
-      /** Format: url */
       small_thumbnail_url?: string
-      /** Format: url */
       thumbnail_url?: string
       /**
        * Format: datetime
        * @example 2025-06-07T02:29:07.980084Z
        */
       updated?: string
-      /** Format: url */
       url?: string
       image_details?: components['schemas']['WidthHeight']
       cross_posts?: components['schemas']['MiniCrossPosts'][]
+      /** @enum {string} */
+      post_type: 'Link' | 'Discussion' | 'Image' | 'Video' | 'Poll' | 'Event'
+      event?: components['schemas']['PostEvent']
+      poll?: components['schemas']['PostPoll']
     }
     PostView: {
       banned_from_community: boolean
@@ -4399,6 +5020,7 @@ export interface components {
       activity_alert?: boolean
       my_vote?: number
       flair_list?: components['schemas']['CommunityFlair'][]
+      can_auth_user_moderate?: boolean
     }
     Comment: {
       /** Format: url */
@@ -4425,6 +5047,8 @@ export interface components {
        */
       updated?: string
       locked?: boolean
+    } & {
+      [key: string]: unknown
     }
     CommentAggregates: {
       child_count: number
@@ -4451,13 +5075,17 @@ export interface components {
       creator_is_moderator: boolean
       post: components['schemas']['Post']
       saved: boolean
-      subscribed: string
+      /**
+       * @description Indicates whether auth'ed user is subscribed to the community this comment is in or not.
+       * @enum {string}
+       */
+      subscribed: 'Subscribed' | 'NotSubscribed' | 'Pending'
       my_vote?: number
       can_auth_user_moderate?: boolean
     }
     SearchResponse: {
       /** @enum {string} */
-      type_: 'Communities' | 'Posts' | 'Users' | 'Url'
+      type_: 'Communities' | 'Posts' | 'Users' | 'Url' | 'Comments'
       communities: components['schemas']['CommunityView'][]
       posts: components['schemas']['PostView'][]
       users: components['schemas']['PersonView'][]
@@ -4493,6 +5121,9 @@ export interface components {
     GetFederatedInstancesResponse: {
       federated_instances?: components['schemas']['FederatedInstancesView']
     }
+    GetSuggestCompletionResponse: {
+      result: string[]
+    }
     GetCommunityResponse: {
       community_view: components['schemas']['CommunityView']
       discussion_languages: number[]
@@ -4501,7 +5132,7 @@ export interface components {
     }
     ListCommunitiesResponse: {
       communities: components['schemas']['CommunityView'][]
-      next_page?: string | null
+      next_page?: string
     }
     FollowCommunityRequest: {
       community_id: number
@@ -4510,6 +5141,10 @@ export interface components {
     CommunityResponse: {
       community_view: components['schemas']['CommunityView']
       discussion_languages: number[]
+    }
+    RateCommunityRequest: {
+      community_id: number
+      rating: number
     }
     BlockCommunityRequest: {
       block: boolean
@@ -4522,13 +5157,11 @@ export interface components {
     CreateCommunityRequest: {
       name: string
       title: string
-      /** Format: url */
-      banner_url?: string | null
+      banner_url?: string
       /** Format: markdown */
       description?: string
       discussion_languages?: number[]
-      /** Format: url */
-      icon_url?: string | null
+      icon_url?: string
       local_only?: boolean
       nsfw?: boolean
       restricted_to_mods?: boolean
@@ -4537,13 +5170,11 @@ export interface components {
     EditCommunityRequest: {
       community_id: number
       title?: string
-      /** Format: url */
-      banner_url?: string | null
+      banner_url?: string
       /** Format: markdown */
       description?: string
       discussion_languages?: number[]
-      /** Format: url */
-      icon_url?: string | null
+      icon_url?: string
       local_only?: boolean
       nsfw?: boolean
       restricted_to_mods?: boolean
@@ -4568,23 +5199,23 @@ export interface components {
     CommunityModerationBanItem: {
       banned_by?: components['schemas']['Person']
       banned_user?: components['schemas']['Person']
-      community?: components['schemas']['Community']
+      community: components['schemas']['Community']
       expired?: boolean
       /**
        * Format: datetime
        * @example 2025-06-07T02:29:07.980084Z, null=permanent ban
        */
-      expired_at?: string | null
+      expired_at?: string
       /**
        * Format: datetime
        * @example 2025-06-07T02:29:07.980084Z, null=permanent ban
        */
-      expires_at?: string | null
+      expires_at?: string
       reason?: string
     }
     CommunityModerationBansListResponse: {
       items?: components['schemas']['CommunityModerationBanItem'][]
-      next_page?: string | null
+      next_page?: string
     }
     CommunityModerationUnbanRequest: {
       community_id: number
@@ -4642,7 +5273,7 @@ export interface components {
        * Format: url
        * @description Legacy tags that existed prior to 1.2 and some tags for remote communities might not have a defined ap_id
        */
-      ap_id: string | null
+      ap_id: string
     }
     CommunityFlairEditRequest: {
       flair_id: number
@@ -4678,7 +5309,7 @@ export interface components {
        * Format: url
        * @description Legacy tags that existed prior to 1.2 and some tags for remote communities might not have a defined ap_id
        */
-      ap_id: string | null
+      ap_id: string
     }
     CommunityFlairDeleteRequest: {
       flair_id: number
@@ -4721,15 +5352,13 @@ export interface components {
       updated: string
       /** @description user_id of the feed creator/owner */
       user_id: number
-      /** Format: url */
-      banner?: string | null
+      banner?: string
       /** Format: markdown */
-      description?: string | null
+      description?: string
       /** Format: html */
-      description_html?: string | null
-      /** Format: url */
-      icon?: string | null
-      parent_feed_id?: number | null
+      description_html?: string
+      icon?: string
+      parent_feed_id?: number
     }
     FeedListResponse: {
       feeds: components['schemas']['FeedView'][]
@@ -4742,10 +5371,17 @@ export interface components {
       name: string
       show_posts_from_children: boolean
       title: string
-      parent_topic_id?: number | null
+      parent_topic_id?: number
     }
     TopicListResponse: {
       topics: components['schemas']['TopicView'][]
+    }
+    DomainBlockRequest: {
+      block: boolean
+      domain: string
+    }
+    DomainBlockResponse: {
+      blocked: boolean
     }
     GetUserResponse: {
       comments: components['schemas']['CommentView'][]
@@ -4753,6 +5389,15 @@ export interface components {
       person_view: components['schemas']['PersonView']
       posts: components['schemas']['PostView'][]
       site?: components['schemas']['Site']
+    }
+    UserMeResponse: {
+      community_blocks: components['schemas']['CommunityBlockView'][]
+      discussion_languages: components['schemas']['LanguageView'][]
+      follows: components['schemas']['CommunityFollowerView'][]
+      instance_blocks: components['schemas']['InstanceBlockView'][]
+      local_user_view: components['schemas']['LocalUserView']
+      moderates: components['schemas']['CommunityModeratorView'][]
+      person_blocks: components['schemas']['PersonBlockView'][]
     }
     UserLoginRequest: {
       username: string
@@ -4800,12 +5445,20 @@ export interface components {
       subscribed: 'Subscribed' | 'NotSubscribed' | 'Pending'
     }
     UserRepliesResponse: {
-      next_page?: string | null
+      next_page?: string
       replies: components['schemas']['CommentReplyView'][]
     }
     UserMentionsResponse: {
-      next_page?: string | null
+      next_page?: string
       replies: components['schemas']['CommentReplyView'][]
+    }
+    MediaView: {
+      url?: string
+      name?: string
+    }
+    UserMediaResponse: {
+      next_page?: string
+      media: components['schemas']['MediaView'][]
     }
     UserBlockRequest: {
       block: boolean
@@ -4827,23 +5480,33 @@ export interface components {
       person_view: components['schemas']['PersonView']
       subscribed: boolean
     }
+    NewUserExtraField: {
+      /** @description Pass an id of an existing extra field with null/missing/empty label or text to remove a field. Pass an id of an existing extra field with both label and text to edit an existing extra field. */
+      id?: number
+      /** @description Pass a label and text without an id to create a new extra field. */
+      label?: string
+      /** @description Pass a label and text without an id to create a new extra field. */
+      text?: string
+    }
     UserSaveSettingsRequest: {
       /**
        * Format: url
        * @description Pass a null value to remove the image
        */
-      avatar?: string | null
+      avatar?: string
       /** Format: markdown */
       bio?: string
       /**
        * Format: url
        * @description Pass a null value to remove the image
        */
-      cover?: string | null
+      cover?: string
       /** @enum {string} */
       default_comment_sort_type?: 'Hot' | 'Top' | 'New' | 'Old'
       /** @enum {string} */
       default_sort_type?: 'Hot' | 'Top' | 'New' | 'Active' | 'Old' | 'Scaled'
+      /** @description A user can't have more than four total extra fields. */
+      extra_fields?: components['schemas']['NewUserExtraField'][]
       show_nsfw?: boolean
       show_nsfl?: boolean
       show_read_posts?: boolean
@@ -4875,6 +5538,8 @@ export interface components {
       /** @description returned for notif_types: 3, 4, 6 (comment_mention subtype) */
       comment?: components['schemas']['Comment']
       /** @description returned for notif_types: 3, 4, 6 (comment_mention subtype) */
+      comment_view?: components['schemas']['CommentView']
+      /** @description returned for notif_types: 3, 4, 6 (comment_mention subtype) */
       comment_id?: number
       /** @description returned for notif_type 1 */
       community?: components['schemas']['Community']
@@ -4887,9 +5552,9 @@ export interface components {
       counts: components['schemas']['UserNotificationsCounts']
       items: components['schemas']['UserNotificationItemView'][]
       /** @enum {string} */
-      status: 'All' | 'Unread' | 'Read'
+      status: 'All' | 'Unread' | 'Read' | 'New'
       username: string
-      next_page?: string | null
+      next_page?: string
     }
     UserNotificationStateRequest: {
       notif_id: number
@@ -4906,14 +5571,22 @@ export interface components {
     UserSetFlairRequest: {
       community_id: number
       /** @description Either omit or set to null to remove existing flair */
-      flair_text?: string | null
+      flair_text?: string
     }
     UserSetFlairResponse: {
-      person_view: components['schemas']['PersonView']
+      person_view?: components['schemas']['PersonView']
+    }
+    UserSetNoteRequest: {
+      person_id: number
+      /** @description Pass a value of null to remove existing note */
+      note: string
+    }
+    UserSetNoteResponse: {
+      person_view?: components['schemas']['PersonView']
     }
     ListCommentsResponse: {
       comments: components['schemas']['CommentView'][]
-      next_page?: string | null
+      next_page?: string
     }
     LikeCommentRequest: {
       comment_id: number
@@ -5000,7 +5673,11 @@ export interface components {
       creator_is_moderator: boolean
       post: components['schemas']['Post']
       saved: boolean
-      subscribed: string
+      /**
+       * @description Indicates whether auth'ed user is subscribed to the community this comment is in or not.
+       * @enum {string}
+       */
+      subscribed: 'Subscribed' | 'NotSubscribed' | 'Pending'
       my_vote?: number
       can_auth_user_moderate?: boolean
       comment_report: components['schemas']['CommentReport']
@@ -5033,11 +5710,11 @@ export interface components {
     }
     ListCommentLikesResponse: {
       comment_likes: components['schemas']['CommentLikeView'][]
-      next_page?: string | null
+      next_page?: string
     }
     ListPostsResponse: {
       posts: components['schemas']['PostView'][]
-      next_page?: string | null
+      next_page?: string
     }
     GetPostResponse: {
       post_view: components['schemas']['PostView']
@@ -5049,7 +5726,7 @@ export interface components {
       activity_alert: boolean
       banned_from_community: boolean
       comment: components['schemas']['Comment']
-      community?: components['schemas']['Community']
+      community: components['schemas']['Community']
       counts: components['schemas']['CommentAggregates']
       creator: components['schemas']['Person']
       creator_banned_from_community: boolean
@@ -5058,20 +5735,23 @@ export interface components {
       creator_is_moderator: boolean
       post?: components['schemas']['Post']
       saved: boolean
-      subscribed: string
+      /**
+       * @description Indicates whether auth'ed user is subscribed to the community this comment is in or not.
+       * @enum {string}
+       */
+      subscribed: 'Subscribed' | 'NotSubscribed' | 'Pending'
       my_vote?: number
       can_auth_user_moderate?: boolean
       replies?: components['schemas']['PostReplyView'][]
     }
     GetPostRepliesResponse: {
       comments?: components['schemas']['PostReplyView'][]
-      next_page?: string | null
+      next_page?: string
     }
     LikePostRequest: {
       post_id: number
       score: number
       private?: boolean
-      auth?: string
     }
     SavePostRequest: {
       post_id: number
@@ -5085,19 +5765,22 @@ export interface components {
       title: string
       community_id: number
       body?: string
-      /** Format: url */
       url?: string
       nsfw?: boolean
       language_id?: number
+      event?: components['schemas']['PostEvent']
+      poll?: components['schemas']['PostPoll']
     }
     EditPostRequest: {
       post_id: number
       title?: string
       body?: string
-      /** Format: url */
+      /** @description Pass value of null to remove the post url */
       url?: string
       nsfw?: boolean
       language_id?: number
+      event?: components['schemas']['PostEvent']
+      poll?: components['schemas']['PostPoll']
     }
     DeletePostRequest: {
       post_id: number
@@ -5106,6 +5789,12 @@ export interface components {
     ReportPostRequest: {
       post_id: number
       reason: string
+      description?: string
+      /**
+       * @description Also send report to originating instance
+       * @default true
+       */
+      report_remote: boolean
     }
     PostReport: {
       id: number
@@ -5146,7 +5835,8 @@ export interface components {
     FeaturePostRequest: {
       post_id: number
       featured: boolean
-      feature_type: string
+      /** @enum {string} */
+      feature_type?: 'Community'
     }
     RemovePostRequest: {
       post_id: number
@@ -5169,12 +5859,12 @@ export interface components {
     }
     ListPostLikesResponse: {
       post_likes: components['schemas']['PostLikeView'][]
-      next_page?: string | null
+      next_page?: string
     }
     PostSetFlairRequest: {
       post_id: number
       /** @description A list of all the flair id to assign to the post. Either pass an empty list or null to remove flair */
-      flair_id_list?: number[] | null
+      flair_id_list?: number[]
     }
     PostSetFlairResponse: {
       banned_from_community: boolean
@@ -5194,17 +5884,46 @@ export interface components {
       activity_alert?: boolean
       my_vote?: number
       flair_list?: components['schemas']['CommunityFlair'][]
+      can_auth_user_moderate?: boolean
+    }
+    PollVoteRequest: {
+      post_id: number
+    }
+    PollVoteResponse: {
+      banned_from_community: boolean
+      community: components['schemas']['Community']
+      counts: components['schemas']['PostAggregates']
+      creator: components['schemas']['Person']
+      creator_banned_from_community: boolean
+      creator_is_admin: boolean
+      creator_is_moderator: boolean
+      hidden: boolean
+      post: components['schemas']['Post']
+      read: boolean
+      saved: boolean
+      /** @enum {string} */
+      subscribed: 'Subscribed' | 'NotSubscribed' | 'Pending'
+      unread_comments: number
+      activity_alert?: boolean
+      my_vote?: number
+      flair_list?: components['schemas']['CommunityFlair'][]
+      can_auth_user_moderate?: boolean
     }
     ImageUploadRequest: {
       /** Format: binary */
       file: string
     }
     ImageUploadResponse: {
-      /** Format: url */
       url: string
       liked_only?: boolean
       saved_only?: boolean
       q?: string
+    }
+    ImageDeleteRequest: {
+      file: string
+    }
+    ImageDeleteResponse: {
+      result: string
     }
     PrivateMessage: {
       id: number
@@ -5226,12 +5945,16 @@ export interface components {
       private_message: components['schemas']['PrivateMessage']
       creator: components['schemas']['Person']
       recipient: components['schemas']['Person']
+      conversation_id?: number
     }
     ListPrivateMessagesResponse: {
       private_messages: components['schemas']['PrivateMessageView'][]
     }
     GetPrivateMessageConversationResponse: {
       private_messages: components['schemas']['PrivateMessageView'][]
+    }
+    LeaveConversationRequest: {
+      conversation_id: number
     }
     CreatePrivateMessageRequest: {
       content: string

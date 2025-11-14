@@ -3,6 +3,7 @@
   import { settings, type View } from '$lib/app/settings.svelte'
   import { PostIframe, PostImage, PostLink } from '..'
   import { iframeType, type MediaType } from '../helpers'
+  import PostPoll from './PostPoll.svelte'
 
   interface Props {
     view?: View
@@ -49,4 +50,6 @@
     {view}
     {...rest}
   />
+{:else if type == 'poll' && post.poll}
+  <PostPoll post={{ ...post, poll: post.poll! }} />
 {/if}

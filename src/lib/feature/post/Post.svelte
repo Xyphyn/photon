@@ -66,7 +66,7 @@
       ],
     }
   })
-  let type = $derived(mediaType(post.post.url))
+  let type = $derived(mediaType(post.post))
   let rule = $derived(getTagRule(tags.tags))
   let hideTitle = $derived(
     settings.posts.deduplicateEmbed &&

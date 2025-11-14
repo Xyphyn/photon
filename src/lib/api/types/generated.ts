@@ -1950,6 +1950,8 @@ export interface Post {
   featured_local: boolean
   url_content_type?: string
   alt_text?: string
+  event?: PostEvent
+  poll?: PostPoll
 }
 
 export interface PostAggregates {
@@ -2301,6 +2303,25 @@ export interface VoteView {
   score: number
 }
 
+export interface SearchResponse {
+  type_: SearchType
+  comments: Array<CommentView>
+  posts: Array<PostView>
+  communities: Array<CommunityView>
+  users: Array<PersonView>
+}
+
+export interface SiteResponse {
+  site_view: SiteView
+  taglines: Array<Tagline>
+}
+export interface SuccessResponse {
+  success: boolean
+}
+export interface UpdateTotpResponse {
+  enabled: boolean
+}
+
 export interface UploadImage {
   image: File | Buffer
 }
@@ -2395,21 +2416,37 @@ export interface AssignFlair {
   flair_id_list: number[]
 }
 
-export interface SearchResponse {
-  type_: SearchType
-  comments: Array<CommentView>
-  posts: Array<PostView>
-  communities: Array<CommunityView>
-  users: Array<PersonView>
+export interface PostPoll {
+  end_poll?: string
+  mode: string
+  local_only: boolean
+  latest_vote?: string
+  choices: PollChoice[]
 }
 
-export interface SiteResponse {
-  site_view: SiteView
-  taglines: Array<Tagline>
+export interface PollChoice {
+  id: number
+  choice_text: string
+  sort_order: number
+  num_votes: number
 }
-export interface SuccessResponse {
-  success: boolean
-}
-export interface UpdateTotpResponse {
-  enabled: boolean
+
+export interface PostEvent {
+  start: string
+  end?: string
+  timezone?: string
+  max_attendees: number
+  participant_count: number
+  full: boolean
+  online_link?: string
+  join_mode?: string
+  external_participation_url?: string
+  anonymous_participation: boolean
+  online: boolean
+  buy_tickets_link?: string
+  event_fee_currency?: string
+  event_fee_amount: number
+  location?: {
+    [key: string]: unknown
+  }
 }

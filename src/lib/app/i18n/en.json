@@ -579,6 +579,9 @@
         "meta": {
             "lastEdited": "Last edited {{default}}",
             "created": "Created {{default}}"
+        },
+        "poll": {
+            "votes": "{{votes:number}} votes"
         }
     },
     "comment": {

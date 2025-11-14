@@ -1,4 +1,3 @@
-import { Post } from '$lib/feature/post'
 import { Search } from 'mono-svelte'
 import type {
   CommentReplyView,
@@ -19,6 +18,7 @@ import type {
   Person,
   PersonMentionView,
   PersonView,
+  Post,
   PostView,
   PrivateMessageView,
   SortType,
