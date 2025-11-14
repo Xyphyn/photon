@@ -1,11 +1,14 @@
 <script lang="ts">
+  import { client } from '$lib/api/client.svelte'
+  import { PiefedClient } from '$lib/api/piefed/adapter'
   import type { Post, PostPoll } from '$lib/api/types'
+  import { errorMessage } from '$lib/app/error'
   import { t } from '$lib/app/i18n'
   import { CommonList } from '$lib/ui/layout'
   import EndPlaceholder from '$lib/ui/layout/EndPlaceholder.svelte'
   import { publishedToDate } from '$lib/ui/util/date'
-  import RelativeDate from '$lib/ui/util/RelativeDate.svelte'
-  import { CheckBadge, Icon } from 'svelte-hero-icons/dist'
+  import { formatRelativeDate } from '$lib/ui/util/RelativeDate.svelte'
+  import { Button, toast } from 'mono-svelte'
   import { expoOut } from 'svelte/easing'
   import { slide } from 'svelte/transition'
 
@@ -15,67 +18,101 @@
 
   let { post }: Props = $props()
 
-  let chosen = $state<number>()
-  let totalVotes = $derived(
-    post.poll.choices.reduce((a, b) => a + b.num_votes, 0),
-  )
-
   let selected = $state<number>()
 
-  // $effect used instead of $derived.by to emphasize
-  // that there is a side effect used (newChoice/prevChoice vote manipulation)
-  $effect(() => {
-    if (selected) {
-      castVote(selected)
+  let chosen = $state<number>()
+  let canVote = $state<boolean>(
+    !(
+      post.poll.end_poll &&
+      publishedToDate(post.poll.end_poll).getTime() < Date.now()
+    ),
+  )
+
+  let options = $derived(
+    post.poll.choices.map((i) => ({
+      ...i,
+      num_votes: chosen == i.id ? i.num_votes + 1 : i.num_votes,
+    })),
+  )
+  let totalVotes = $derived(options.reduce((a, b) => a + b.num_votes, 0))
+
+  let loading = $state(false)
+
+  async function castVote(id: number) {
+    try {
+      const api = client()
+      if (!(api instanceof PiefedClient)) throw new Error('unsupported')
+
+      loading = true
+      chosen = id
+      canVote = false
+
+      await api.voteOnPoll({
+        post_id: post.id,
+        choice_id: id,
+      })
+    } catch (err) {
+      toast({
+        content: errorMessage(err as string),
+        type: 'error',
+      })
+      chosen = undefined
+      canVote = true
+    } finally {
+      loading = false
     }
-  })
-
-  async function castVote(choice: number) {
-    if (chosen == choice) return
-
-    const prevChoice = post.poll.choices.find((i) => i.id == chosen)
-    const newChoice = post.poll.choices.find((i) => i.id == choice)!
-
-    if (prevChoice) {
-      prevChoice.num_votes--
-    }
-
-    chosen = choice
-    newChoice.num_votes++
   }
 </script>
 
 <form class="space-y-2">
   <CommonList class="">
-    {#each post.poll.choices as choice}
-      <li class="relative z-10 overflow-hidden">
+    {#each options.toSorted((a, b) => a.sort_order - b.sort_order) as choice}
+      {@const active = selected == choice.id}
+      {@const percentage = Math.floor(
+        (choice.num_votes / totalVotes || 0) * 100,
+      )}
+      <li
+        class="relative z-10 overflow-hidden has-disabled:pointer-events-none"
+        role="progressbar"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-valuenow={percentage}
+      >
         {#if chosen}
           <div
             in:slide={{ axis: 'x', duration: 500, easing: expoOut }}
-            class="bg-primary-900/5 dark:bg-primary-100/10 absolute inset-0 -z-10 p-0!"
-            style="width: {(choice.num_votes / totalVotes) *
-              100}%; transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);"
+            class={[
+              'absolute inset-0 -z-10 p-0!',
+              active
+                ? 'bg-primary-900/10 dark:bg-primary-100/10'
+                : 'bg-primary-900/5 dark:bg-primary-100/5',
+            ]}
+            style="width: {percentage}%; transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);"
           ></div>
         {/if}
         <label
-          class="px-4 py-2 w-full text-left font-medium flex flex-row gap-2 items-center"
+          class="px-4 py-2 w-full text-left flex flex-row gap-2 items-center"
         >
           <input
-            class="appearance-none absolute inset-0 cursor-pointer"
+            class="appearance-none absolute inset-0 cursor-pointer w-full h-full"
             name="poll={post.id}"
             value={choice.id}
             bind:group={selected}
             type="radio"
+            disabled={!canVote}
           />
-          <div class={[chosen == choice.id ? 'opacity-100' : 'opacity-10']}>
-            <Icon src={CheckBadge} size="24" mini />
-          </div>
-          <div>
+          <div
+            class={[
+              active
+                ? 'font-medium text-primary-900 dark:text-primary-100'
+                : 'text-slate-600 dark:text-zinc-400',
+            ]}
+          >
             {choice.choice_text}
           </div>
           {#if chosen}
             <div class="ml-auto">
-              {Math.floor((choice.num_votes / totalVotes) * 100)}%
+              {percentage}%
             </div>
           {/if}
         </label>
@@ -85,9 +122,32 @@
   <EndPlaceholder size="md" margin="bottom-sm">
     {$t('post.poll.votes', { votes: totalVotes })}
     {#snippet action()}
-      {#if post.poll.latest_vote}
-        <RelativeDate date={publishedToDate(post.poll.latest_vote)} />
+      {#if (selected && canVote) || loading}
+        <Button
+          class="w-24"
+          onclick={() => castVote(selected!)}
+          color="primary"
+          {loading}
+        >
+          {$t('form.submit')}
+        </Button>
+      {:else if post.poll.end_poll}
+        {$t('post.poll.results.ends', {
+          time: formatRelativeDate(publishedToDate(post.poll.end_poll), {}),
+        })}
       {/if}
     {/snippet}
   </EndPlaceholder>
 </form>
+
+<style>
+  @reference '../../../../app.css';
+
+  li:has(label:focus-within) {
+    border: 1px solid --alpha(var(--color-primary-900) / 50%);
+
+    @variant dark {
+      border-color: --alpha(var(--color-primary-100) / 50%);
+    }
+  }
+</style>

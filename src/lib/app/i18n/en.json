@@ -581,7 +581,12 @@
             "created": "Created {{default}}"
         },
         "poll": {
-            "votes": "{{votes:number}} votes"
+            "votes": "{{votes:number}} votes",
+            "results": {
+                "show": "Show results",
+                "hide": "Hide results",
+                "ends": "Ends {{time}}"
+            }
         }
     },
     "comment": {

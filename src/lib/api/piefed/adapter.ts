@@ -1020,4 +1020,14 @@ export class PiefedClient implements BaseClient {
   async listMedia(): ReturnType<BaseClient['listMedia']> {
     throw new Error('unsupported')
   }
+
+  async voteOnPoll(
+    params: NullableFnArg<BaseClient['voteOnPoll']>[0],
+  ): NullableFnReturn<BaseClient['voteOnPoll']> {
+    const response = (
+      await this.#client.POST('/api/alpha/post/poll_vote', { body: params })
+    ).data!
+
+    return toPostView(response)
+  }
 }

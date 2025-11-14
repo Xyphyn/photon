@@ -2450,3 +2450,8 @@ export interface PostEvent {
     [key: string]: unknown
   }
 }
+
+export interface PollVote {
+  post_id: number
+  choice_id: number
+}
