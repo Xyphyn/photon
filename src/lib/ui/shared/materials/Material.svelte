@@ -40,11 +40,10 @@
     distinct: 'material-distinct',
     transparent: 'material-transparent',
     uniform: 'material-uniform',
-    none: '',
-  }
-
-  const interactiveClass = {
-    interactive: 'material-int',
+    info: 'material-info',
+    warning: 'material-warning',
+    success: 'material-success',
+    error: 'material-error',
     none: '',
   }
 

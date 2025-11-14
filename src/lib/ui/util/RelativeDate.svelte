@@ -7,6 +7,7 @@
     options: Intl.RelativeTimeFormatOptions,
     locale?: string,
     relativeTo?: Date,
+    absolute?: boolean,
   ) {
     try {
       const now = relativeTo?.getTime() ?? Date.now()
@@ -29,7 +30,7 @@
 
           let language = locale ?? 'en'
 
-          if (settings.absoluteDates) {
+          if (absolute) {
             const rtf = new Intl.DateTimeFormat(language, {
               ...options,
               timeStyle: 'short',
@@ -62,6 +63,7 @@
     date: Date
     relativeTo?: Date | undefined
     options?: Intl.RelativeTimeFormatOptions
+    absolute?: boolean
     style?: string
     class?: string
   }
@@ -73,6 +75,7 @@
       numeric: 'always',
       style: 'narrow',
     },
+    absolute = settings.absoluteDates,
     style = '',
     class: clazz = '',
   }: Props = $props()
@@ -81,5 +84,5 @@
 </script>
 
 <time datetime={dateTime} title={dateTime} class={clazz} {style}>
-  {formatRelativeDate(date, options, $locale, relativeTo)}
+  {formatRelativeDate(date, options, $locale, relativeTo, absolute)}
 </time>

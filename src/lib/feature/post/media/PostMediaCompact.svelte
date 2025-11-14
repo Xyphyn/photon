@@ -5,11 +5,13 @@
   import { showImage } from '$lib/ui/generic/ExpandableImage.svelte'
   import { Button, modal } from 'mono-svelte'
   import {
+    Calendar,
     DocumentText,
     ExclamationTriangle,
     Icon,
     Link,
     Photo,
+    PresentationChartBar,
     VideoCamera,
   } from 'svelte-hero-icons/dist'
   import { bestImageURL, postLink, type MediaType } from '../helpers'
@@ -109,21 +111,19 @@
           </div>
         {/if}
       {:else}
+        {@const typeIconMap = new Map([
+          ['embed', Link],
+          ['iframe', VideoCamera],
+          ['poll', PresentationChartBar],
+          ['event', Calendar],
+        ])}
         <div
           class={[
             'bg-slate-100 dark:bg-zinc-900 w-full h-full rounded-xl grid place-items-center',
             'text-slate-600 dark:text-zinc-400',
           ]}
         >
-          <Icon
-            src={type == 'embed'
-              ? Link
-              : type == 'iframe'
-                ? VideoCamera
-                : DocumentText}
-            solid
-            size="32"
-          />
+          <Icon src={typeIconMap.get(type) ?? DocumentText} solid size="32" />
         </div>
       {/if}
     </div>

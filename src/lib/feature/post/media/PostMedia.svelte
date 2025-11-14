@@ -3,6 +3,7 @@
   import { settings, type View } from '$lib/app/settings.svelte'
   import { PostIframe, PostImage, PostLink } from '..'
   import { iframeType, type MediaType } from '../helpers'
+  import PostEvent from './PostEvent.svelte'
   import PostPoll from './PostPoll.svelte'
 
   interface Props {
@@ -41,6 +42,10 @@
     title={post.name}
     {...rest}
   />
+{:else if type == 'poll' && post.poll && view == 'cozy'}
+  <PostPoll post={{ ...post, poll: post.poll! }} />
+{:else if type == 'event' && post.event && view == 'cozy'}
+  <PostEvent post={{ ...post, event: post.event! }} />
 {:else if type == 'embed' && post.url}
   <PostLink
     url={post.url}
@@ -50,6 +55,4 @@
     {view}
     {...rest}
   />
-{:else if type == 'poll' && post.poll}
-  <PostPoll post={{ ...post, poll: post.poll! }} />
 {/if}
