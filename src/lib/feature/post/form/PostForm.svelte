@@ -307,11 +307,11 @@
           () => form.language,
           (v) => {
             if (v == '') form.language = undefined
-            form.language = v
+            else form.language = v
           }
         }
       >
-        <Option value={-1}>
+        <Option value="">
           <Icon src={XMark} size="16" micro />
           {$t('form.post.unset')}
         </Option>
