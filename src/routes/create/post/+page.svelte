@@ -1,8 +1,14 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
+  import { page } from '$app/state'
   import { t } from '$lib/app/i18n'
   import { getSessionStorage, setSessionStorage } from '$lib/app/session'
-  import PostForm from '$lib/feature/post/PostForm.svelte'
+  import PostForm from '$lib/feature/post/form/PostForm.svelte'
+  import {
+    PostFormState,
+    type PostFormInit,
+  } from '$lib/feature/post/form/postform.svelte.js'
+  import { postLink } from '$lib/feature/post/helpers.js'
   import { onDestroy } from 'svelte'
 
   let { data } = $props()
@@ -15,9 +21,11 @@
     setSessionStorage('lastSeenCommunity', undefined)
   })
 
-  // TODO remove this
-
-  let post = getSessionStorage('postDraft') as any
+  let crosspost = $derived.by<PostFormInit>(() => {
+    return JSON.parse(
+      atob(page.url.searchParams.get('crosspost') ?? '') || '{}',
+    )
+  })
 </script>
 
 <svelte:head>
@@ -25,6 +33,13 @@
 </svelte:head>
 
 <PostForm
+  init={new PostFormState(crosspost)}
+  onsubmit={(post) => goto(postLink(post.post))}
+>
+  {#snippet title()}{/snippet}
+</PostForm>
+
+<!-- <PostFormOld
   passedData={data.crosspost == true
     ? post
     : {
@@ -41,4 +56,4 @@
   onsubmit={(e) => goto(`/post/${e.post.id}`)}
 >
   {#snippet formtitle()}{/snippet}
-</PostForm>
+</PostFormOld> -->

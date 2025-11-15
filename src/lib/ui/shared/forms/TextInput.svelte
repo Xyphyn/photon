@@ -101,6 +101,7 @@
       {disabled}
       bind:value
       bind:this={element}
+      {required}
       {...rest}
       class={[
         sizeClass[size],
@@ -118,7 +119,7 @@
     {#if suffix}
       <div
         class={[
-          'rounded-xl rounded-l-none text-slate-600 dark:text-zinc-400',
+          'rounded-xl rounded-l-none text-slate-600 dark:text-zinc-400 h-full',
           inlineAffixes && 'bg-white dark:bg-zinc-900 pl-0',
         ]}
       >

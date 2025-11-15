@@ -12,7 +12,7 @@
     bind:open={$shownModal}
   >
     {#if $shownModal.snippet}
-      {@render $shownModal.snippet()}
+      {@render $shownModal.snippet?.()}
     {/if}
     {#if $shownModal.body}
       <p>{$shownModal.body}</p>

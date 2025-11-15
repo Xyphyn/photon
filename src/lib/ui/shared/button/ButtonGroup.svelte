@@ -35,16 +35,18 @@
 
   .btn-group.btn-group-horizontal {
     flex-direction: row;
+  }
 
-    :global(*) {
-      position: relative;
-      &:first-child {
-        border-radius: 24px 8px 8px 24px !important;
-      }
+  .btn-group.btn-group-horizontal :global(> *) {
+    position: relative;
+    border-radius: 8px 8px 8px 8px !important;
 
-      &:last-child {
-        border-radius: 8px 24px 24px 8px !important;
-      }
+    &:first-child {
+      border-radius: 24px 12px 12px 24px !important;
+    }
+
+    &:last-child {
+      border-radius: 12px 24px 24px 12px !important;
     }
   }
 </style>

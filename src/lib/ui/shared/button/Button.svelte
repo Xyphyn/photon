@@ -58,6 +58,7 @@
     xl: 'rounded-xl',
     lg: 'rounded-lg',
     md: 'rounded-md',
+    inherit: 'rounded-[inherit]',
     none: '',
   }
   type ButtonRoundness = keyof typeof buttonRounding
