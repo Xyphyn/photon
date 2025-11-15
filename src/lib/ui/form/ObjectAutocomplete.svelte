@@ -16,6 +16,7 @@
     placeholder?: string
     onselect?: (item: any) => void
     label?: string
+    required?: boolean
   }
 
   let {
@@ -24,6 +25,7 @@
     instance = undefined,
     listing_type = 'Subscribed',
     showWhenEmpty = false,
+    required,
     ...rest
   }: Props = $props()
 
@@ -49,6 +51,7 @@
     extractName={(c) =>
       `${c.community.name}@${new URL(c.community.actor_id).hostname}`}
     bind:query={q}
+    {required}
     {...rest}
   >
     {#snippet noresults()}

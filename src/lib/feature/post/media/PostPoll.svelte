@@ -64,7 +64,7 @@
   }
 </script>
 
-<form class="space-y-2">
+<form class="space-y-2" onsubmit={() => castVote(selected!)}>
   <CommonList class="">
     {#each options.toSorted((a, b) => a.sort_order - b.sort_order) as choice}
       {@const active = selected == choice.id}
@@ -125,9 +125,10 @@
       {#if (selected && canVote) || loading}
         <Button
           class="w-24"
-          onclick={() => castVote(selected!)}
           color="primary"
+          submit
           {loading}
+          disabled={loading}
         >
           {$t('form.submit')}
         </Button>

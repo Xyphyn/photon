@@ -137,15 +137,16 @@
             "url": "URL",
             "body": "Body",
             "nsfw": "NSFW",
-            "generateTitle": "Generate title",
+            "generateTitle": "Autofill post",
             "uploadImage": "Upload image",
             "selectFile": "Select a file",
             "altText": "Alt text",
-            "addUrl": "Add URL",
+            "addUrl": "Add link",
             "setLanguage": "Set language",
             "unset": "Unset",
             "readMore": "Read more",
-            "flair": "Add flair"
+            "flair": "Add flair",
+            "fetching": "Fetching site metadata"
         },
         "profile": {
             "displayName": "Display name",

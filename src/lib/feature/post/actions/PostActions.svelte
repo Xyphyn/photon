@@ -30,6 +30,7 @@
     ShieldCheck,
   } from 'svelte-hero-icons/dist'
   import { PostVote } from '..'
+  import { PostFormState } from '../form/postform.svelte'
   import { postLink } from '../helpers'
 
   let saving = $state(false)
@@ -76,32 +77,21 @@
     {#snippet customTitle()}
       <h1 class="text-2xl font-bold">{$t('form.edit')}</h1>
     {/snippet}
-    {#await import('../PostForm.svelte')}
+    {#await import('../form/PostForm.svelte')}
       <div class="mx-auto h-96 flex justify-center items-center">
         <Spinner width={32} />
       </div>
     {:then { default: PostForm }}
       <PostForm
-        edit
-        editingPost={post.post}
+        editPost={post.post.id}
         onsubmit={(e) => {
           editing = false
           post = e
           onedit?.(e)
         }}
-        passedData={{
-          body: post.post.body,
-          title: post.post.name,
-          community: null,
-          flair_list: post.flair_list?.map((i) => i.id) ?? [],
-          image: null,
-          loading: false,
-          nsfw: post.post.nsfw,
-        }}
+        init={new PostFormState({ ...post.post })}
       >
-        {#snippet formtitle()}
-          <!-- Have the title not exist at all -->
-        {/snippet}
+        {#snippet title()}{/snippet}
       </PostForm>
     {/await}
   </Modal>
