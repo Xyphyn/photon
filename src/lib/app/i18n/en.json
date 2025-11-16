@@ -594,7 +594,8 @@
             "results": {
                 "show": "Show results",
                 "hide": "Hide results",
-                "ends": "Ends {{time}}"
+                "ends": "Ends {{time}}",
+                "ended": "Ended {{time}}"
             },
             "choices": "Choices",
             "single": "Single choice",

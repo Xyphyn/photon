@@ -2,6 +2,7 @@
   import { client } from '$lib/api/client.svelte'
   import { PiefedClient } from '$lib/api/piefed/adapter'
   import type { Post, PostPoll } from '$lib/api/types'
+  import { profile } from '$lib/app/auth.svelte'
   import { errorMessage } from '$lib/app/error'
   import { t } from '$lib/app/i18n'
   import { CommonList } from '$lib/ui/layout'
@@ -20,13 +21,14 @@
 
   let selected = $state<number | number[]>()
 
-  let chosen = $state<number>()
   let canVote = $state<boolean>(
     !(
-      post.poll.end_poll &&
-      publishedToDate(post.poll.end_poll).getTime() < Date.now()
+      (post.poll.end_poll &&
+        publishedToDate(post.poll.end_poll).getTime() < Date.now()) ||
+      !profile.current.jwt
     ),
   )
+  let chosen = $state<number | undefined>(canVote ? undefined : -1)
 
   let options = $derived(
     post.poll.choices.map((i) => ({

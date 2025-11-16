@@ -73,7 +73,7 @@
   let uploadImage = $state(false)
 </script>
 
-{#if client() instanceof PiefedClient}
+{#if client() instanceof PiefedClient && !editPost}
   <div class="mb-3">
     <MultiSelect
       options={['normal', 'poll']}
