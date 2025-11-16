@@ -18,7 +18,7 @@
 
   let { post }: Props = $props()
 
-  let selected = $state<number>()
+  let selected = $state<number | number[]>()
 
   let chosen = $state<number>()
   let canVote = $state<boolean>(
@@ -38,19 +38,37 @@
 
   let loading = $state(false)
 
-  async function castVote(id: number) {
+  async function castVote(id: number | number[]) {
     try {
       const api = client()
       if (!(api instanceof PiefedClient)) throw new Error('unsupported')
 
       loading = true
-      chosen = id
+
+      if (typeof id !== 'number') chosen = id[0]
+      else chosen = id
+
       canVote = false
 
-      await api.voteOnPoll({
-        post_id: post.id,
-        choice_id: id,
-      })
+      if (typeof id !== 'number') {
+        await Promise.all([
+          id.map((i) =>
+            api
+              .voteOnPoll({
+                post_id: post.id,
+                choice_id: i,
+              })
+              .catch((err) => {
+                throw err
+              }),
+          ),
+        ])
+      } else {
+        await api.voteOnPoll({
+          post_id: post.id,
+          choice_id: id,
+        })
+      }
     } catch (err) {
       toast({
         content: errorMessage(err as string),
@@ -67,7 +85,9 @@
 <form class="space-y-2" onsubmit={() => castVote(selected!)}>
   <CommonList class="">
     {#each options.toSorted((a, b) => a.sort_order - b.sort_order) as choice}
-      {@const active = selected == choice.id}
+      {@const active =
+        selected == choice.id ||
+        (typeof selected !== 'number' && selected?.includes(choice.id))}
       {@const percentage = Math.floor(
         (choice.num_votes / totalVotes || 0) * 100,
       )}
@@ -93,21 +113,26 @@
         <label
           class="px-4 py-2 w-full text-left flex flex-row gap-2 items-center"
         >
-          <input
-            class="appearance-none absolute inset-0 cursor-pointer w-full h-full"
-            name="poll={post.id}"
-            value={choice.id}
-            bind:group={selected}
-            type="radio"
-            disabled={!canVote}
-          />
-          <div
-            class={[
-              active
-                ? 'font-medium text-primary-900 dark:text-primary-100'
-                : 'text-slate-600 dark:text-zinc-400',
-            ]}
-          >
+          {#if post.poll.mode == 'single'}
+            <input
+              class="appearance-none absolute inset-0 cursor-pointer w-full h-full peer"
+              name="poll={post.id}"
+              value={choice.id}
+              bind:group={selected}
+              type="radio"
+              disabled={!canVote}
+            />
+          {:else}
+            <input
+              class="appearance-none absolute inset-0 cursor-pointer w-full h-full peer"
+              name="poll={post.id}"
+              value={choice.id}
+              bind:group={selected}
+              type="checkbox"
+              disabled={!canVote}
+            />
+          {/if}
+          <div class={['choice-text', 'text-slate-600 dark:text-zinc-400']}>
             {choice.choice_text}
           </div>
           {#if chosen}
@@ -143,6 +168,15 @@
 
 <style>
   @reference '../../../../app.css';
+
+  input:checked ~ .choice-text {
+    font-weight: var(--font-weight-medium);
+    color: var(--color-primary-900);
+
+    @variant dark {
+      color: var(--color-primary-100);
+    }
+  }
 
   li:has(label:focus-within) {
     border: 1px solid --alpha(var(--color-primary-900) / 50%);
