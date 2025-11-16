@@ -10,10 +10,12 @@
   import { t } from '$lib/app/i18n'
   import MarkdownEditor from '$lib/app/markdown/MarkdownEditor.svelte'
   import { Button, Modal, toast } from 'mono-svelte'
+  import ButtonGroup from 'mono-svelte/button/ButtonGroup.svelte'
+  import { Plus } from 'svelte-hero-icons/dist'
   import { preventDefault, run } from 'svelte/legacy'
-  import Comment from '../comment/Comment.svelte'
+  import CommentItem from '../comment/CommentItem.svelte'
   import PrivateMessage from '../inbox/PrivateMessage.svelte'
-  import { Post } from '../post'
+  import PostItem from '../post/PostItem.svelte'
 
   interface Props {
     open: boolean
@@ -84,18 +86,9 @@
     {#if item}
       <div class="pointer-events-none list-none">
         {#if isComment(item)}
-          <Comment
-            actions={false}
-            node={{
-              children: [],
-              comment_view: item,
-              depth: 1,
-              loading: false,
-            }}
-            postId={item.post.id}
-          />
+          <CommentItem actions={false} comment={item} />
         {:else if isPost(item)}
-          <Post actions={false} post={item} />
+          <PostItem post={item} />
         {:else}
           <PrivateMessage message={item} />
         {/if}
@@ -107,6 +100,25 @@
       label={$t('moderation.reason')}
       bind:value={reason}
     />
+    <ButtonGroup orientation="horizontal" class="flex flex-wrap">
+      <Button
+        onclick={() => (reason = $t('moderation.reportModal.presets.spam'))}
+        disabled={reason == $t('moderation.reportModal.presets.spam')}
+        icon={Plus}
+      >
+        {$t('moderation.reportModal.presets.spam')}
+      </Button>
+      <Button
+        onclick={() =>
+          (reason = $t('moderation.reportModal.presets.rules.content'))}
+        disabled={reason.startsWith(
+          $t('moderation.reportModal.presets.rules.content').slice(0, -3),
+        )}
+        icon={Plus}
+      >
+        {$t('moderation.reportModal.presets.rules')}
+      </Button>
+    </ButtonGroup>
     <Button submit {loading} disabled={loading} color="primary" size="lg">
       {$t('form.submit')}
     </Button>
