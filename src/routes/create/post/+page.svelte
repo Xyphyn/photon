@@ -37,7 +37,11 @@
 </svelte:head>
 
 <PostForm
-  init={new PostFormState(crosspost ?? { community: community?.community })}
+  init={crosspost
+    ? new PostFormState(crosspost)
+    : community
+      ? new PostFormState({ community: community?.community })
+      : undefined}
   onsubmit={(post) => goto(postLink(post.post))}
 >
   {#snippet title()}{/snippet}

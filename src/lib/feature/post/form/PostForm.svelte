@@ -56,9 +56,8 @@
 
   let { editPost, init, title, onsubmit }: Props = $props()
 
-  let form = $state<PostFormState>(init ?? new PostFormState())
-  let type = $derived<'normal' | 'poll' | 'event'>(
-    init?.poll ? 'poll' : init?.event ? 'event' : 'normal',
+  let form = $state<PostFormState>(
+    init ?? new PostFormState({ type: 'normal' }),
   )
 
   let extendedCommunity = $derived.by(() => {
@@ -83,7 +82,7 @@
         $t('form.post.types.poll'),
         $t('form.post.types.event'),
       ]}
-      bind:selected={type}
+      bind:selected={form.type}
     />
   </div>
 {/if}
@@ -173,7 +172,7 @@
     loading = true
 
     form
-      .submit(type, editPost)
+      .submit(editPost)
       .then(onsubmit)
       .catch((err) =>
         pushError({ message: errorMessage(err as string), scope: 'post-form' }),
@@ -242,7 +241,7 @@
     previewButton
   />
 
-  {#if type == 'normal' && form.url !== undefined}
+  {#if form.type == 'normal' && form.url !== undefined}
     <TextInput
       label={$t('form.post.url')}
       bind:value={form.url}
@@ -268,11 +267,12 @@
     </TextInput>
   {/if}
 
-  {#if type == 'poll' && form.poll}
+  {#if form.type == 'poll' && form.poll}
     <div>
       <Label>{$t('post.poll.choices')}</Label>
       <CommonList>
-        {#each form.poll.choices as choice, index}
+        <!--eslint-disable-next-line @typescript-eslint/no-unused-vars-->
+        {#each form.poll.choices as _, index}
           <li class="px-4 py-1 flex flex-row items-center xs">
             <div class="p-0! font-medium flex-1">
               <FreeTextInput
@@ -343,10 +343,10 @@
         {/if}
       {/snippet}
     </EndPlaceholder>
-  {/if}
 
-  {#if settings.debugInfo}
-    {form.poll?.end_poll}
+    {#if settings.debugInfo}
+      {form.poll?.end_poll}
+    {/if}
   {/if}
 
   <div class="flex flex-row flex-wrap gap-2">
@@ -354,7 +354,7 @@
       orientation="horizontal"
       class="flex flex-row flex-wrap w-full"
     >
-      {#if type == 'normal'}
+      {#if form.type == 'normal'}
         <Button
           onclick={() => (form.url = '')}
           disabled={form.url !== undefined}

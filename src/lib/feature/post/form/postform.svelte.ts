@@ -9,6 +9,7 @@ import type {
 } from '$lib/api/types'
 
 export type PostFormInit = {
+  type?: 'normal' | 'poll' | 'event'
   community?: Community
   name?: string
   body?: string
@@ -23,6 +24,8 @@ export type PostFormInit = {
 }
 
 export class PostFormState {
+  type?: 'normal' | 'poll' | 'event'
+
   community?: Community
   title: string
   body?: string
@@ -36,6 +39,7 @@ export class PostFormState {
   flairList: CommunityFlair[]
 
   constructor(post?: PostFormInit) {
+    this.type = $state(post?.type ?? 'normal')
     this.community = $state(post?.community)
     this.title = $state(post?.name ?? '')
     this.body = $state(post?.body)
@@ -74,10 +78,7 @@ export class PostFormState {
     return true
   }
 
-  async submit(
-    type: 'normal' | 'poll' | 'event' = 'normal',
-    postId?: number,
-  ): Promise<PostView> {
+  async submit(postId?: number): Promise<PostView> {
     if (!this.validate(postId ? 'edit' : 'create'))
       throw new Error('failed validation')
 
@@ -95,8 +96,8 @@ export class PostFormState {
           alt_text: this.altText,
           custom_thumbnail: this.thumbnail,
           language_id: Number(this.language) || undefined,
-          poll: type == 'poll' ? this.poll : undefined,
-          event: type == 'event' ? this.event : undefined,
+          poll: this.type == 'poll' ? this.poll : undefined,
+          event: this.type == 'event' ? this.event : undefined,
         })
       ).post_view
     } else {
@@ -110,8 +111,8 @@ export class PostFormState {
           custom_thumbnail: this.thumbnail,
           nsfw: this.nsfw,
           language_id: Number(this.language) || undefined,
-          poll: type == 'poll' ? this.poll : undefined,
-          event: type == 'event' ? this.event : undefined,
+          poll: this.type == 'poll' ? this.poll : undefined,
+          event: this.type == 'event' ? this.event : undefined,
         })
       ).post_view
     }

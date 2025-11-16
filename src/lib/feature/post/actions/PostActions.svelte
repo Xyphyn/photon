@@ -89,7 +89,10 @@
           post = e
           onedit?.(e)
         }}
-        init={new PostFormState({ ...post.post })}
+        init={new PostFormState({
+          type: post.post.poll ? 'poll' : post.post.event ? 'event' : 'normal',
+          ...post.post,
+        })}
       >
         {#snippet title()}{/snippet}
       </PostForm>
