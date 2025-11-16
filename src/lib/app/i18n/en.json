@@ -616,7 +616,12 @@
         },
         "reportModal": {
             "title": "Report",
-            "success": "Reported that submission."
+            "success": "Reported that submission.",
+            "presets": {
+                "spam": "Spam/abuse",
+                "rules": "Breaks community rules",
+                "rules.content": "This submission breaks the rules because __"
+            }
         },
         "reason": "Reason",
         "lock": "Lock",
