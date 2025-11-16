@@ -502,6 +502,9 @@
                 "manage": "Manage"
             },
             "languageWarning": "Content in this community is in languages you do not have selected. Some or all posts may be missing."
+        },
+        "user": {
+            "note": "Set note"
         }
     },
     "cards": {

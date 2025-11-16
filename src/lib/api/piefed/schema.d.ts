@@ -5582,7 +5582,7 @@ export interface components {
       note: string
     }
     UserSetNoteResponse: {
-      person_view?: components['schemas']['PersonView']
+      person_view: components['schemas']['PersonView']
     }
     ListCommentsResponse: {
       comments: components['schemas']['CommentView'][]

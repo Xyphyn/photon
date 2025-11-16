@@ -76,7 +76,7 @@
 {#if client() instanceof PiefedClient}
   <div class="mb-3">
     <MultiSelect
-      options={['normal', 'poll', 'event']}
+      options={['normal', 'poll']}
       optionNames={[
         $t('form.post.types.normal'),
         $t('form.post.types.poll'),

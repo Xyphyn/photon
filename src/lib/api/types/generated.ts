@@ -1883,6 +1883,12 @@ export interface Person {
   ban_expires?: string
   instance_id: InstanceId
   flair?: string
+  extra_fields?: {
+    id: number
+    label: string
+    text: string
+  }[]
+  note?: string
 }
 
 export interface PersonAggregates {
@@ -2458,4 +2464,9 @@ export interface PostEvent {
 export interface PollVote {
   post_id: number
   choice_id: number
+}
+
+export interface SetNote {
+  person_id: number
+  note: string | null
 }

@@ -1030,4 +1030,14 @@ export class PiefedClient implements BaseClient {
 
     return toPostView(response)
   }
+
+  async setNote(
+    params: NullableFnArg<BaseClient['setNote']>[0],
+  ): NullableFnReturn<BaseClient['setNote']> {
+    const response = (
+      await this.#client.POST('/api/alpha/user/note', { body: params })
+    ).data!
+
+    return toPersonView(response.person_view)
+  }
 }

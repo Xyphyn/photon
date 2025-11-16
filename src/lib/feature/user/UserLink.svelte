@@ -148,6 +148,11 @@
         {user.flair}
       </Badge>
     {/if}
+    {#if user.note}
+      <Badge color="gray-subtle" class="px-1.5! py-0.5! whitespace-nowrap">
+        {user.note}
+      </Badge>
+    {/if}
     {@render extraBadges?.()}
   {/if}
 </a>
