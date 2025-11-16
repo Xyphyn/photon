@@ -26,6 +26,40 @@ export abstract class BaseClient {
     }
   }
 
+  static async fetchInfo(
+    base: string,
+  ): Promise<{ type: ClientType; version: string } | null> {
+    try {
+      const res = await fetch(new URL('/nodeinfo/2.1', base))
+
+      if (!res.ok) return null
+
+      const software: { name: string; version: string } = (await res.json())
+        .software
+
+      // should probably extract this into not a static function but its ok
+      switch (software.name) {
+        case 'lemmy': {
+          return {
+            type: { baseUrl: '/api/v3', name: 'lemmy' },
+            version: software.version,
+          }
+        }
+        case 'piefed': {
+          return {
+            type: { baseUrl: '/api/alpha', name: 'piefed' },
+            version: software.version,
+          }
+        }
+        default:
+          return null
+      }
+    } catch (err) {
+      console.error(err)
+      return null
+    }
+  }
+
   abstract getSite(): Promise<types.GetSiteResponse>
   abstract editSite(form: types.EditSite): Promise<types.SiteResponse>
   abstract generateTotpSecret(): Promise<types.GenerateTotpSecretResponse>

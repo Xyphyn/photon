@@ -953,7 +953,8 @@
         "not_an_admin": "You are not an admin of this server.",
         "rate_limit_error": "You are performing that action too fast.",
         "unimplemented": "That function of your account's server software is not yet supported by Photon.",
-        "unsupported": "That function is not supported by your account's server software."
+        "unsupported": "That function is not supported by your account's server software.",
+        "not_live_supported": "That server is not running supported software, or is offline."
     },
     "aria": {
         "pagination": {

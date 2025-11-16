@@ -65,9 +65,10 @@
     <Label
       for={id}
       text={label}
-      class="peer-invalid:text-red-500 {required
-        ? "after:content-['*'] after:text-red-500 after:ml-1"
-        : ''}"
+      class={[
+        'peer-invalid:text-red-500 relative',
+        required && "after:content-['*'] after:text-red-500 after:ml-1",
+      ]}
     >
       {@render passedCustomLabel?.()}
     </Label>

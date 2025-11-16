@@ -1,15 +1,22 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
-  import { type ClientType, DEFAULT_CLIENT_TYPE } from '$lib/api/base'
-  import { validateInstance } from '$lib/api/client.svelte'
+  import {
+    BaseClient,
+    type ClientType,
+    DEFAULT_CLIENT_TYPE,
+  } from '$lib/api/base'
   import { profile } from '$lib/app/auth.svelte'
+  import { errorMessage } from '$lib/app/error'
   import { t } from '$lib/app/i18n'
   import { LINKED_INSTANCE_URL } from '$lib/app/instance.svelte'
-  import { DOMAIN_REGEX_FORMS } from '$lib/app/util.svelte'
+  import { DOMAIN_REGEX_FORMS, instanceToURL } from '$lib/app/util.svelte'
   import { Header } from '$lib/ui/layout'
-  import { Button, Option, Select, TextInput, toast } from 'mono-svelte'
+  import { Button, Spinner, TextInput, toast } from 'mono-svelte'
+  import { debounce } from 'mono-svelte/util/time'
+  import { expoOut } from 'svelte/easing'
   import { preventDefault } from 'svelte/legacy'
+  import { fly } from 'svelte/transition'
 
   interface Props {
     ref?: string
@@ -31,29 +38,57 @@
     client: DEFAULT_CLIENT_TYPE,
   })
 
-  async function addGuest() {
-    form.loading = true
-    if (!(await validateInstance(form.instance, form.client))) {
-      toast({ content: $t('toast.failInstanceURL'), type: 'error' })
-      form.loading = false
-      return
-    }
-
-    const id = Math.max(...profile.meta.profiles.map((i) => i.id)) + 1
-    profile.meta.profiles.push({
-      id: id,
-      instance: form.instance,
-      username: form.username,
-      client: form.client,
-    })
-    profile.meta.profile = id
-
-    toast({ content: $t('toast.addAccount'), type: 'success' })
-
-    goto(ref)
-
-    form.loading = false
+  async function checkInstance() {
+    const type = await BaseClient.fetchInfo(instanceToURL(form.instance))
+    if (type == null) throw Error('not_live_supported')
+    form.client = type?.type
   }
+
+  async function addGuest() {
+    try {
+      form.loading = true
+
+      await checkInstance()
+
+      const id = Math.max(...profile.meta.profiles.map((i) => i.id)) + 1
+      profile.meta.profiles.push({
+        id: id,
+        instance: form.instance,
+        username: form.username,
+        client: form.client,
+      })
+      profile.meta.profile = id
+
+      toast({ content: $t('toast.addAccount'), type: 'success' })
+
+      goto(ref)
+    } catch (err) {
+      toast({
+        content: errorMessage(err as string),
+        type: 'error',
+      })
+
+      form.loading = false
+    }
+  }
+
+  let detectedClient = $state<string | null | undefined>()
+
+  const checkDebounce = debounce(async () => {
+    const startingText = form.instance
+    try {
+      detectedClient = null
+      await checkInstance()
+      // so that debounce desync thing doesnt happen
+      if (startingText == form.instance) detectedClient = form.client.name
+    } catch {
+      if (startingText == form.instance) detectedClient = undefined
+    }
+  }, 500)
+
+  $effect(() => {
+    if (form.instance && !LINKED_INSTANCE_URL) checkDebounce()
+  })
 </script>
 
 <div class="max-w-xl w-full mx-auto h-max my-auto">
@@ -74,7 +109,6 @@
       {#if !LINKED_INSTANCE_URL}
         <TextInput
           required
-          label={$t('form.instance')}
           bind:value={form.instance}
           pattern={DOMAIN_REGEX_FORMS}
           placeholder="example.com"
@@ -82,24 +116,20 @@
           autocorrect="off"
           autocapitalize="none"
         >
-          {#snippet suffix()}
-            <Select
-              bind:value={
-                () => {
-                  if (form.client.name == 'lemmy') return 'lemmyv3'
-                  else return 'piefedvalpha'
-                },
-                (v) => {
-                  if (v == 'lemmyv3')
-                    form.client = { name: 'lemmy', baseUrl: '/api/v3' }
-                  else form.client = { name: 'piefed', baseUrl: '/api/alpha' }
-                }
-              }
-              class="border-y-0! border-r-0! rounded-none! border-l"
-            >
-              <Option value="lemmyv3">Lemmy</Option>
-              <Option value="piefedvalpha">Piefed</Option>
-            </Select>
+          {#snippet customLabel()}
+            {$t('form.instance')}
+            <span class="absolute right-0">
+              {#if detectedClient}
+                <span
+                  class="capitalize font-normal"
+                  in:fly={{ duration: 300, y: 2, easing: expoOut }}
+                >
+                  {detectedClient}
+                </span>
+              {:else if detectedClient === null}
+                <Spinner />
+              {/if}
+            </span>
           {/snippet}
         </TextInput>
       {/if}
