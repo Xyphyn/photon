@@ -146,7 +146,12 @@
             "unset": "Unset",
             "readMore": "Read more",
             "flair": "Add flair",
-            "fetching": "Fetching site metadata"
+            "fetching": "Fetching site metadata",
+            "types": {
+                "normal": "Discussion",
+                "poll": "Poll",
+                "event": "Event"
+            }
         },
         "profile": {
             "displayName": "Display name",
@@ -587,7 +592,11 @@
                 "show": "Show results",
                 "hide": "Hide results",
                 "ends": "Ends {{time}}"
-            }
+            },
+            "choices": "Choices",
+            "single": "Single choice",
+            "multiple": "Multiple choice",
+            "mode": "Mode"
         }
     },
     "comment": {

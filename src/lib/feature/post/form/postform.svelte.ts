@@ -1,6 +1,12 @@
 import { client } from '$lib/api/client.svelte'
 import { PiefedClient } from '$lib/api/piefed/adapter'
-import type { Community, CommunityFlair, PostView } from '$lib/api/types'
+import type {
+  Community,
+  CommunityFlair,
+  PostEvent,
+  PostPoll,
+  PostView,
+} from '$lib/api/types'
 
 export type PostFormInit = {
   community?: Community
@@ -11,6 +17,8 @@ export type PostFormInit = {
   alt_text?: string
   thumbnail?: string
   language_id?: number
+  poll?: PostPoll
+  event?: PostEvent
   flair_list?: CommunityFlair[]
 }
 
@@ -23,6 +31,8 @@ export class PostFormState {
   altText?: string
   thumbnail?: string
   language?: string
+  poll?: PostPoll
+  event?: PostEvent
   flairList: CommunityFlair[]
 
   constructor(post?: PostFormInit) {
@@ -33,6 +43,27 @@ export class PostFormState {
     this.nsfw = $state(post?.nsfw ?? false)
     this.altText = $state(post?.alt_text)
     this.language = $state(post?.language_id?.toString())
+    this.poll = $state(
+      post?.poll ?? {
+        mode: 'single',
+        local_only: false,
+        choices: [
+          {
+            choice_text: 'Option 1',
+            id: 1,
+            num_votes: 0,
+            sort_order: 0,
+          },
+          {
+            choice_text: 'Option 2',
+            id: 2,
+            num_votes: 0,
+            sort_order: 1,
+          },
+        ],
+      },
+    )
+    this.event = $state(post?.event)
     this.flairList = $state(post?.flair_list ?? [])
   }
 
@@ -43,7 +74,10 @@ export class PostFormState {
     return true
   }
 
-  async submit(postId?: number): Promise<PostView> {
+  async submit(
+    type: 'normal' | 'poll' | 'event' = 'normal',
+    postId?: number,
+  ): Promise<PostView> {
     if (!this.validate(postId ? 'edit' : 'create'))
       throw new Error('failed validation')
 
@@ -61,6 +95,8 @@ export class PostFormState {
           alt_text: this.altText,
           custom_thumbnail: this.thumbnail,
           language_id: Number(this.language) || undefined,
+          poll: type == 'poll' ? this.poll : undefined,
+          event: type == 'event' ? this.event : undefined,
         })
       ).post_view
     } else {
@@ -74,6 +110,8 @@ export class PostFormState {
           custom_thumbnail: this.thumbnail,
           nsfw: this.nsfw,
           language_id: Number(this.language) || undefined,
+          poll: type == 'poll' ? this.poll : undefined,
+          event: type == 'event' ? this.event : undefined,
         })
       ).post_view
     }

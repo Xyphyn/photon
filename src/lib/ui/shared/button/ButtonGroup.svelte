@@ -39,7 +39,7 @@
 
   .btn-group.btn-group-horizontal :global(> *) {
     position: relative;
-    border-radius: 8px 8px 8px 8px !important;
+    border-radius: 8px !important;
 
     &:first-child {
       border-radius: 24px 12px 12px 24px !important;

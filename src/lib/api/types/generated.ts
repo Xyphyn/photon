@@ -644,6 +644,8 @@ export interface CreatePost {
   nsfw?: boolean
   language_id?: LanguageId
   custom_thumbnail?: string
+  poll?: PostPoll
+  event?: PostEvent
 }
 
 export interface CreatePostLike {
@@ -801,6 +803,8 @@ export interface EditPost {
   nsfw?: boolean
   language_id?: LanguageId
   custom_thumbnail?: string
+  poll?: PostPoll
+  event?: PostEvent
 }
 
 export interface EditPrivateMessage {

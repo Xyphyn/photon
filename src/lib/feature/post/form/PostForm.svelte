@@ -5,12 +5,17 @@
   import { errorMessage } from '$lib/app/error'
   import { t } from '$lib/app/i18n'
   import MarkdownEditor from '$lib/app/markdown/MarkdownEditor.svelte'
+  import { settings } from '$lib/app/settings.svelte'
   import { placeholders } from '$lib/app/util.svelte'
+  import Duration from '$lib/ui/form/Duration.svelte'
   import FreeTextInput from '$lib/ui/form/FreeTextInput.svelte'
   import ObjectAutocomplete from '$lib/ui/form/ObjectAutocomplete.svelte'
+  import MultiSelect from '$lib/ui/form/Switch.svelte'
   import Avatar from '$lib/ui/generic/Avatar.svelte'
   import ErrorContainer, { pushError } from '$lib/ui/info/ErrorContainer.svelte'
-  import { Header } from '$lib/ui/layout'
+  import { CommonList, Header } from '$lib/ui/layout'
+  import EndPlaceholder from '$lib/ui/layout/EndPlaceholder.svelte'
+  import { publishedToDate } from '$lib/ui/util/date'
   import {
     Badge,
     Button,
@@ -36,6 +41,8 @@
     Photo,
     Plus,
     Sparkles,
+    Tag,
+    Trash,
     XMark,
   } from 'svelte-hero-icons/dist'
   import { autofillPost, PostFormState } from './postform.svelte'
@@ -50,6 +57,9 @@
   let { editPost, init, title, onsubmit }: Props = $props()
 
   let form = $state<PostFormState>(init ?? new PostFormState())
+  let type = $derived<'normal' | 'poll' | 'event'>(
+    init?.poll ? 'poll' : init?.event ? 'event' : 'normal',
+  )
 
   let extendedCommunity = $derived.by(() => {
     const api = client()
@@ -63,6 +73,20 @@
   let loading = $state<boolean>(false)
   let uploadImage = $state(false)
 </script>
+
+{#if client() instanceof PiefedClient}
+  <div class="mb-3">
+    <MultiSelect
+      options={['normal', 'poll', 'event']}
+      optionNames={[
+        $t('form.post.types.normal'),
+        $t('form.post.types.poll'),
+        $t('form.post.types.event'),
+      ]}
+      bind:selected={type}
+    />
+  </div>
+{/if}
 
 {#if uploadImage}
   {#await import('$lib/ui/form/ImageInputModal.svelte') then { default: UploadModal }}
@@ -147,8 +171,9 @@
   onsubmit={(e) => {
     e.preventDefault()
     loading = true
+
     form
-      .submit(editPost)
+      .submit(type, editPost)
       .then(onsubmit)
       .catch((err) =>
         pushError({ message: errorMessage(err as string), scope: 'post-form' }),
@@ -208,6 +233,7 @@
     bind:value={form.title}
     placeholder={placeholders.get('post')}
     label={$t('form.post.title')}
+    class="font-display font-medium text-2xl"
   />
   <MarkdownEditor
     label={$t('form.post.body')}
@@ -216,7 +242,7 @@
     previewButton
   />
 
-  {#if form.url !== undefined}
+  {#if type == 'normal' && form.url !== undefined}
     <TextInput
       label={$t('form.post.url')}
       bind:value={form.url}
@@ -242,36 +268,119 @@
     </TextInput>
   {/if}
 
+  {#if type == 'poll' && form.poll}
+    <div>
+      <Label>{$t('post.poll.choices')}</Label>
+      <CommonList>
+        {#each form.poll.choices as choice, index}
+          <li class="px-4 py-1 flex flex-row items-center xs">
+            <div class="p-0! font-medium flex-1">
+              <FreeTextInput
+                bind:value={form.poll.choices[index].choice_text}
+                class="w-full"
+              />
+            </div>
+            <div>
+              <Button
+                onclick={() => form.poll?.choices.splice(index, 1)}
+                size="square-md"
+                aria-label={$t('post.actions.more.delete')}
+              >
+                <Icon src={Trash} size="16" mini />
+              </Button>
+            </div>
+          </li>
+        {/each}
+        <li class="xs">
+          <button
+            onclick={() =>
+              form.poll?.choices.push({
+                choice_text: `Option ${form.poll?.choices.length + 1}`,
+                id: Math.max(...form.poll.choices.map((i) => i.id)) + 1,
+                num_votes: 0,
+                sort_order: 2,
+              })}
+            type="button"
+            class="font-medium w-full px-4 py-2! flex flex-row items-center gap-1 justify-center cursor-pointer"
+          >
+            <Icon src={Plus} size="16" micro />
+            {$t('common.add')}
+          </button>
+        </li>
+      </CommonList>
+    </div>
+
+    <EndPlaceholder margin="bottom-lg">
+      <Select label={$t('post.poll.mode')} bind:value={form.poll!.mode}>
+        <Option value="single">
+          {$t('post.poll.single')}
+        </Option>
+        <Option value="multiple">
+          {$t('post.poll.multiple')}
+        </Option>
+      </Select>
+      {#snippet action()}
+        {#if !editPost}
+          <Duration
+            bind:value={
+              () => {
+                return form.poll?.end_poll
+                  ? Math.floor(
+                      Date.now() -
+                        publishedToDate(form.poll?.end_poll).getTime(),
+                    )
+                  : Date.now() + 24 * 60 * 60
+              },
+              (v) => {
+                if (v == -1) form.poll!.end_poll = undefined
+                else
+                  form.poll!.end_poll = new Date(
+                    Date.now() + v * 1000,
+                  ).toISOString()
+              }
+            }
+          />
+        {/if}
+      {/snippet}
+    </EndPlaceholder>
+  {/if}
+
+  {#if settings.debugInfo}
+    {form.poll?.end_poll}
+  {/if}
+
   <div class="flex flex-row flex-wrap gap-2">
     <ButtonGroup
       orientation="horizontal"
       class="flex flex-row flex-wrap w-full"
     >
-      <Button
-        onclick={() => (form.url = '')}
-        disabled={form.url !== undefined}
-        icon={Link}
-      >
-        {$t('form.post.addUrl')}
-      </Button>
-      <Button
-        onclick={() => {
-          uploadImage = !uploadImage
-        }}
-        icon={Photo}
-      >
-        {$t('form.post.uploadImage')}
-      </Button>
-      {#if form.url && URL.canParse(form.url)}
+      {#if type == 'normal'}
         <Button
-          class="animate-pop-in"
-          color={(form.altText ?? '') != '' ? 'primary' : 'secondary'}
-          onclick={() =>
-            modal({ title: $t('form.post.altText'), snippet: altText })}
-          icon={ChatBubbleBottomCenterText}
+          onclick={() => (form.url = '')}
+          disabled={form.url !== undefined}
+          icon={Link}
         >
-          {$t('form.post.altText')}
+          {$t('form.post.addUrl')}
         </Button>
+        <Button
+          onclick={() => {
+            uploadImage = !uploadImage
+          }}
+          icon={Photo}
+        >
+          {$t('form.post.uploadImage')}
+        </Button>
+        {#if form.url && URL.canParse(form.url)}
+          <Button
+            class="animate-pop-in"
+            color={(form.altText ?? '') != '' ? 'primary' : 'secondary'}
+            onclick={() =>
+              modal({ title: $t('form.post.altText'), snippet: altText })}
+            icon={ChatBubbleBottomCenterText}
+          >
+            {$t('form.post.altText')}
+          </Button>
+        {/if}
       {/if}
       {#if form.language === undefined}
         <Button
@@ -289,7 +398,7 @@
             class="animate-pop-in"
             onclick={() =>
               modal({ title: $t('form.post.flair'), snippet: flairs })}
-            icon={ChatBubbleBottomCenterText}
+            icon={Tag}
           >
             {$t('form.post.flair')}
           </Button>
