@@ -13,15 +13,15 @@
 </script>
 
 <Material
-  padding="none"
-  color="uniform"
-  class="flex flex-row space-x-2 items-center px-4 py-3 rounded-3xl! {clazz}"
+  color="info"
+  rounding="2xl"
+  class={['flex flex-row items-center px-3 py-2.5', clazz]}
 >
   <Icon
     src={InformationCircle}
     size="20"
-    mini
-    class="text-primary-900 dark:text-primary-100"
+    micro
+    class="inline-block rounded-lg clear-both float-left mr-2"
   />
   <div class="flex flex-col md:flex-row items-center w-full">
     {#if children}
