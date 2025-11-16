@@ -27,7 +27,7 @@
     {#if children}
       {@render children?.()}
     {:else if content}
-      <p>
+      <p class="text-left justify-self-start">
         {content}
       </p>
     {/if}

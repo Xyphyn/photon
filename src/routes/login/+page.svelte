@@ -1,7 +1,11 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
-  import { type ClientType, DEFAULT_CLIENT_TYPE } from '$lib/api/base'
+  import {
+    BaseClient,
+    type ClientType,
+    DEFAULT_CLIENT_TYPE,
+  } from '$lib/api/base'
   import { client } from '$lib/api/client.svelte'
   import { LemmyClient } from '$lib/api/lemmy/adapter'
   import { PiefedClient } from '$lib/api/piefed/adapter'
@@ -12,19 +16,22 @@
     DEFAULT_INSTANCE_URL,
     LINKED_INSTANCE_URL,
   } from '$lib/app/instance.svelte'
-  import { DOMAIN_REGEX_FORMS } from '$lib/app/util.svelte'
+  import { DOMAIN_REGEX_FORMS, instanceToURL } from '$lib/app/util.svelte'
   import ErrorContainer, {
     clearErrorScope,
     pushError,
   } from '$lib/ui/info/ErrorContainer.svelte'
   import { Header } from '$lib/ui/layout'
-  import { Button, Note, Option, Select, TextInput, toast } from 'mono-svelte'
+  import { Button, Note, Spinner, TextInput, toast } from 'mono-svelte'
+  import { debounce } from 'mono-svelte/util/time'
   import {
     Icon,
     Identification,
     QuestionMarkCircle,
     UserCircle,
   } from 'svelte-hero-icons/dist'
+  import { expoOut } from 'svelte/easing'
+  import { fly } from 'svelte/transition'
 
   interface Props {
     ref?: string
@@ -34,7 +41,7 @@
   let { ref = page.url.searchParams.get('redirect') ?? '/', children }: Props =
     $props()
 
-  let data = $state<{
+  let form = $state<{
     instance: string
     username: string
     password: string
@@ -52,29 +59,37 @@
     client: DEFAULT_CLIENT_TYPE,
   })
 
+  async function checkInstance() {
+    const type = await BaseClient.fetchInfo(instanceToURL(form.instance))
+    if (type == null) throw Error('not_live_supported')
+    form.client = type?.type
+  }
+
   async function logIn() {
-    data.loading = true
+    form.loading = true
     clearErrorScope(page.route.id)
 
     try {
       // leading HTTPS is redundant
-      data.instance = data.instance.trim().replace(/^https:\/\//, '')
+      form.instance = form.instance.trim().replace(/^https:\/\//, '')
+
+      await checkInstance()
 
       const response = await client({
-        instanceURL: data.instance,
-        clientType: data.client,
+        instanceURL: form.instance,
+        clientType: form.client,
         auth: '',
       }).login({
-        username_or_email: data.username.trim(),
-        password: data.password,
-        totp_2fa_token: data.totp,
+        username_or_email: form.username.trim(),
+        password: form.password,
+        totp_2fa_token: form.totp,
       })
 
       if (response?.jwt) {
         const result = await profile.add(
           response.jwt,
-          data.instance,
-          data.client,
+          form.instance,
+          form.client,
         )
 
         if (result) {
@@ -92,17 +107,35 @@
           'incorrect_login'
             ? errorMessage(
                 'incorrect_login' +
-                  (data.attempts == 0 || data.attempts >= 12
+                  (form.attempts == 0 || form.attempts >= 12
                     ? ''
-                    : `_${data.attempts + 1}`),
+                    : `_${form.attempts + 1}`),
               )
             : errorMessage(error),
         scope: page.route.id!,
       })
-      data.attempts++
+      form.attempts++
     }
-    data.loading = false
+    form.loading = false
   }
+
+  let detectedClient = $state<string | null | undefined>()
+
+  const checkDebounce = debounce(async () => {
+    const startingText = form.instance
+    try {
+      detectedClient = null
+      await checkInstance()
+      // so that debounce desync thing doesnt happen
+      if (startingText == form.instance) detectedClient = form.client.name
+    } catch {
+      if (startingText == form.instance) detectedClient = undefined
+    }
+  }, 500)
+
+  $effect(() => {
+    if (form.instance) checkDebounce()
+  })
 </script>
 
 <svelte:head>
@@ -122,7 +155,7 @@
       <Header>{$t('account.login')}</Header>
       <ErrorContainer class="pt-2" scope={page.route.id} />
     </div>
-    {#if data.client.name == 'piefed'}
+    {#if form.client.name == 'piefed'}
       <Note>
         {$t('account.piefedGate')}
       </Note>
@@ -130,7 +163,7 @@
     <div class="flex flex-row w-full items-center gap-2">
       <TextInput
         id="username"
-        bind:value={data.username}
+        bind:value={form.username}
         label={$t('form.username')}
         class="flex-1"
         required
@@ -138,37 +171,29 @@
       {#if !LINKED_INSTANCE_URL}
         <TextInput
           id="instance_url"
-          label={$t('form.instance')}
           placeholder={DEFAULT_INSTANCE_URL}
           disabled={LINKED_INSTANCE_URL != undefined}
-          bind:value={data.instance}
+          bind:value={form.instance}
           class="flex-1 overflow-hidden"
           required
           pattern={DOMAIN_REGEX_FORMS}
           autocorrect="off"
           autocapitalize="off"
         >
-          {#snippet suffix()}
-            <Select
-              bind:value={
-                () => {
-                  if (data.client.name == 'lemmy') return 'lemmyv3'
-                  else return 'piefedvalpha'
-                },
-                (v) => {
-                  if (v == 'lemmyv3')
-                    data.client = { name: 'lemmy', baseUrl: '/api/v3' }
-                  else data.client = { name: 'piefed', baseUrl: '/api/alpha' }
-                }
-              }
-              class="border-y-0! border-r-0! rounded-none! border-l max-w-24"
-            >
-              <Option data-label="true" value="placeholder" disabled>
-                {$t('form.instanceType')}
-              </Option>
-              <Option value="lemmyv3">Lemmy</Option>
-              <Option value="piefedvalpha">Piefed</Option>
-            </Select>
+          {#snippet customLabel()}
+            {$t('form.instance')}
+            <span class="absolute right-0">
+              {#if detectedClient}
+                <span
+                  class="capitalize font-normal"
+                  in:fly={{ duration: 300, y: 2, easing: expoOut }}
+                >
+                  {detectedClient}
+                </span>
+              {:else if detectedClient === null}
+                <Spinner />
+              {/if}
+            </span>
           {/snippet}
         </TextInput>
       {/if}
@@ -176,13 +201,13 @@
     <div role="presentation" class="flex flex-row gap-2">
       <TextInput
         id="password"
-        bind:value={data.password}
+        bind:value={form.password}
         label={$t('form.password')}
         type="password"
-        minlength={data.client.name == 'piefed'
+        minlength={form.client.name == 'piefed'
           ? PiefedClient.constants.password.minLength
           : LemmyClient.constants.password.minLength}
-        maxlength={data.client.name == 'piefed'
+        maxlength={form.client.name == 'piefed'
           ? PiefedClient.constants.password.maxLength
           : LemmyClient.constants.password.maxLength}
         required
@@ -190,7 +215,7 @@
       />
       <TextInput
         id="totp"
-        bind:value={data.totp}
+        bind:value={form.totp}
         label={$t('form.2fa')}
         placeholder="123456"
         pattern={'\\d{6}'}
@@ -200,8 +225,8 @@
       />
     </div>
     <Button
-      loading={data.loading}
-      disabled={data.loading}
+      loading={form.loading}
+      disabled={form.loading}
       color="primary"
       size="lg"
       submit
