@@ -91,6 +91,7 @@
       {@const percentage = Math.floor(
         (choice.num_votes / totalVotes || 0) * 100,
       )}
+      {@const multi = post.poll.mode != 'single'}
       <li
         class="relative z-10 overflow-hidden has-disabled:pointer-events-none"
         role="progressbar"
@@ -113,7 +114,7 @@
         <label
           class="px-4 py-2 w-full text-left flex flex-row gap-2 items-center"
         >
-          {#if post.poll.mode == 'single'}
+          {#if !multi}
             <input
               class="appearance-none absolute inset-0 cursor-pointer w-full h-full peer"
               name="poll={post.id}"
@@ -132,6 +133,11 @@
               disabled={!canVote}
             />
           {/if}
+          <div
+            class={['choice-indicator', multi ? 'rounded-md' : 'rounded-full']}
+          >
+            <div></div>
+          </div>
           <div class={['choice-text', 'text-slate-600 dark:text-zinc-400']}>
             {choice.choice_text}
           </div>
@@ -175,6 +181,29 @@
 
     @variant dark {
       color: var(--color-primary-100);
+    }
+  }
+
+  .choice-indicator {
+    width: calc(var(--spacing) * 5);
+    height: calc(var(--spacing) * 5);
+    background: var(--color-slate-100);
+    display: inline-grid;
+    place-items: center;
+
+    @variant dark {
+      background: var(--color-zinc-800);
+    }
+  }
+
+  input:checked ~ .choice-indicator > div {
+    width: calc(var(--spacing) * 4);
+    height: calc(var(--spacing) * 4);
+    border-radius: inherit;
+    background: var(--color-primary-900);
+
+    @variant dark {
+      background: var(--color-primary-100);
     }
   }
 
