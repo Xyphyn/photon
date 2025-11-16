@@ -70,11 +70,29 @@ export function postLink(post: Post) {
   return `/post/${encodeURIComponent(profile.current.instance)}/${post.id}`
 }
 
-export type MediaType = 'video' | 'image' | 'iframe' | 'embed' | 'none'
+export type MediaType =
+  | 'video'
+  | 'image'
+  | 'iframe'
+  | 'embed'
+  | 'poll'
+  | 'event'
+  | 'none'
 export type IframeType = 'youtube' | 'video' | 'none'
 
-export function mediaType(url?: string): MediaType {
+export function mediaType(post?: Post | string): MediaType {
+  if (!post) return 'none'
+
+  const isPost = typeof post != 'string'
+  const url = isPost ? post.url : post
+
+  if (isPost) {
+    if (post.poll) return 'poll'
+    if (post.event) return 'event'
+  }
+
   if (!url) return 'none'
+
   try {
     new URL(url)
   } catch {

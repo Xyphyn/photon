@@ -137,15 +137,21 @@
             "url": "URL",
             "body": "Body",
             "nsfw": "NSFW",
-            "generateTitle": "Generate title",
+            "generateTitle": "Autofill post",
             "uploadImage": "Upload image",
             "selectFile": "Select a file",
             "altText": "Alt text",
-            "addUrl": "Add URL",
+            "addUrl": "Add link",
             "setLanguage": "Set language",
             "unset": "Unset",
             "readMore": "Read more",
-            "flair": "Add flair"
+            "flair": "Add flair",
+            "fetching": "Fetching site metadata",
+            "types": {
+                "normal": "Discussion",
+                "poll": "Poll",
+                "event": "Event"
+            }
         },
         "profile": {
             "displayName": "Display name",
@@ -496,6 +502,9 @@
                 "manage": "Manage"
             },
             "languageWarning": "Content in this community is in languages you do not have selected. Some or all posts may be missing."
+        },
+        "user": {
+            "note": "Set note"
         }
     },
     "cards": {
@@ -579,6 +588,18 @@
         "meta": {
             "lastEdited": "Last edited {{default}}",
             "created": "Created {{default}}"
+        },
+        "poll": {
+            "votes": "{{votes:number}} votes",
+            "results": {
+                "show": "Show results",
+                "hide": "Hide results",
+                "ends": "Ends {{time}}"
+            },
+            "choices": "Choices",
+            "single": "Single choice",
+            "multiple": "Multiple choice",
+            "mode": "Mode"
         }
     },
     "comment": {

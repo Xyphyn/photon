@@ -5,6 +5,7 @@
   import { t } from '$lib/app/i18n'
   import { ban } from '$lib/feature/moderation/moderation'
   import { blockUser, isBlocked } from '$lib/feature/user'
+  import UserNote from '$lib/feature/user/UserNote.svelte'
   import {
     Button,
     Menu,
@@ -23,11 +24,13 @@
     NoSymbol,
     ShieldCheck,
     ShieldExclamation,
+    Tag,
   } from 'svelte-hero-icons/dist'
 
   let { person }: { person: PersonView } = $props()
 
   let purgingUser = $state(false)
+  let setNote = $state(false)
 
   async function purgeUser() {
     purgingUser = false
@@ -64,6 +67,27 @@
         Purge
       </Button>
     </div>
+  </Modal>
+{/if}
+
+{#if setNote}
+  <Modal bind:open={setNote}>
+    {#snippet customTitle()}
+      {$t('routes.user.note')}
+    {/snippet}
+    <UserNote
+      person={person.person.id}
+      note={person.person.note}
+      onsubmit={(e) => {
+        // lol
+        person.person.note = e ?? undefined
+        setNote = !setNote
+        toast({
+          content: $t('message.success'),
+          type: 'success',
+        })
+      }}
+    />
   </Modal>
 {/if}
 
@@ -133,6 +157,9 @@
           aria-label={$t('post.actions.more.label')}
         />
       {/snippet}
+      <MenuButton onclick={() => (setNote = !setNote)} icon={Tag}>
+        {$t('routes.user.note')}
+      </MenuButton>
       <MenuButton
         color="danger-subtle"
         onclick={() =>

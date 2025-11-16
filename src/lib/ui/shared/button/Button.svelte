@@ -58,6 +58,7 @@
     xl: 'rounded-xl',
     lg: 'rounded-lg',
     md: 'rounded-md',
+    inherit: 'rounded-[inherit]',
     none: '',
   }
   type ButtonRoundness = keyof typeof buttonRounding
@@ -313,21 +314,25 @@
     .btn-square-sm {
       width: calc(var(--spacing) * 6);
       height: calc(var(--spacing) * 6);
+      padding: 0;
     }
 
     .btn-square-md {
       width: calc(var(--spacing) * 8);
       height: calc(var(--spacing) * 8);
+      padding: 0;
     }
 
     .btn-square-lg {
       width: calc(var(--spacing) * 9.5);
       height: calc(var(--spacing) * 9.5);
+      padding: 0;
     }
 
     .btn-square-xl {
       width: calc(var(--spacing) * 12);
       height: calc(var(--spacing) * 12);
+      padding: 0;
     }
 
     .btn-disabled {

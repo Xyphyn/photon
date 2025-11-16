@@ -1,11 +1,9 @@
 <script lang="ts">
-  import { goto } from '$app/navigation'
   import { client } from '$lib/api/client.svelte'
   import { PiefedClient } from '$lib/api/piefed/adapter'
   import type { PostView } from '$lib/api/types'
   import { profile } from '$lib/app/auth.svelte'
   import { t } from '$lib/app/i18n'
-  import { setSessionStorage } from '$lib/app/session'
   import { settings } from '$lib/app/settings.svelte'
   import { deleteItem, markAsRead } from '$lib/feature/legacy/contentview'
   import { report } from '$lib/feature/moderation/moderation'
@@ -19,6 +17,7 @@
     Trash,
     XMark,
   } from 'svelte-hero-icons/dist'
+  import type { PostFormInit } from '../form/postform.svelte'
   import { hidePost } from '../helpers'
 
   interface Props {
@@ -50,8 +49,8 @@
 {/if}
 {#if profile.current?.jwt}
   <MenuButton
-    onclick={() => {
-      setSessionStorage('postDraft', {
+    href="/create/post?crosspost={btoa(
+      JSON.stringify({
         body: `${
           settings.crosspostOriginalLink
             ? `cross-posted from: ${post.post.ap_id}`
@@ -59,16 +58,11 @@
         }\n${
           post.post.body ? '>' + post.post.body.split('\n').join('\n> ') : ''
         }`,
+        name: post.post.name,
         url: post.post.url,
-        title: post.post.name,
-        loading: false,
         nsfw: post.post.nsfw,
-        community: null,
-        image: null,
-      })
-
-      goto('/create/post?crosspost=true')
-    }}
+      } as PostFormInit),
+    )}"
     icon={ArrowTopRightOnSquare}
   >
     {$t('post.actions.more.crosspost')}

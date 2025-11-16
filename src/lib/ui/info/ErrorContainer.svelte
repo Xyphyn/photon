@@ -26,17 +26,18 @@
   })
   interface Props {
     scope?: string | undefined | null
+    message?: string
     class?: string
   }
 
-  let { scope = undefined, class: clazz = '' }: Props = $props()
+  let { scope, message, class: clazz = '' }: Props = $props()
 
   let scopedErrors = $derived(
     errors.filter((e) => e.scope == scope || e.scope == 'global'),
   )
 </script>
 
-{#if scopedErrors.length > 0}
+{#if scopedErrors.length > 0 || message}
   <div
     class={['flex flex-col gap-4', clazz]}
     in:slide={{ duration: 400, easing: expoOut }}
@@ -59,6 +60,9 @@
         micro
         class="inline-block rounded-lg clear-both float-left mr-2"
       />
+      {#if message}
+        {message}
+      {/if}
       {#each scopedErrors as error}
         <p>{error.message}</p>
       {/each}

@@ -159,7 +159,7 @@
     </h1>
   </header>
   <PostMedia
-    type={mediaType(data.data.value.post.post.url)}
+    type={mediaType(data.data.value.post.post)}
     post={data.data.value.post.post}
     opened
     view="cozy"

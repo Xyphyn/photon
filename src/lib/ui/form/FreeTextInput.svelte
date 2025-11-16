@@ -47,6 +47,6 @@
     {required}
     {...rest}
     rows={1}
-    class="font-semibold text-2xl focus:outline-hidden w-full bg-transparent resize-none {clazz}"
+    class={['focus:outline-hidden w-full bg-transparent resize-none', clazz]}
   ></textarea>
 </label>

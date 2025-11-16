@@ -203,7 +203,7 @@
               onhide={() => {
                 posts = posts.toSpliced(row, 1)
               }}
-              class="px-3 sm:px-6 hover:bg-slate-100/50 hover:dark:bg-zinc-900/50 transition-colors"
+              class="px-3 sm:px-6 hover:bg-slate-100/30 hover:dark:bg-zinc-900/30 transition-colors"
             ></Post>
           </li>
         {/snippet}

@@ -12,6 +12,7 @@
     select?: (item: T) => void
     input?: import('svelte').Snippet
     noresults?: import('svelte').Snippet
+    required?: boolean
     children?: import('svelte').Snippet<
       [
         {
@@ -47,6 +48,7 @@
       query = extractName(item)
       onselect?.(item)
     },
+    required,
     input,
     noresults,
     children,
@@ -82,6 +84,7 @@
             oninput?.(e)
             debounceFunc()
           }}
+          {required}
           {...rest}
           inlineAffixes
         >
