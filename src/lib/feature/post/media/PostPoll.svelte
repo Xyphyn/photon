@@ -53,10 +53,18 @@
       canVote = false
 
       if (typeof id !== 'number') {
-        await api.voteOnPoll({
-          post_id: post.id,
-          choice_id: id,
-        })
+        await Promise.all([
+          id.map((i) =>
+            api
+              .voteOnPoll({
+                post_id: post.id,
+                choice_id: i,
+              })
+              .catch((err) => {
+                throw err
+              }),
+          ),
+        ])
       } else {
         await api.voteOnPoll({
           post_id: post.id,
@@ -81,7 +89,7 @@
     {#each options.toSorted((a, b) => a.sort_order - b.sort_order) as choice}
       {@const active =
         selected == choice.id ||
-        (typeof selected !== 'number' && selected?.includes?.(choice.id))}
+        (typeof selected !== 'number' && selected?.includes(choice.id))}
       {@const percentage = Math.floor(
         (choice.num_votes / totalVotes || 0) * 100,
       )}
@@ -106,7 +114,7 @@
           ></div>
         {/if}
         <label
-          class="px-4 py-2 w-full text-left flex flex-row gap-2 items-center relative"
+          class="px-4 py-2 w-full text-left flex flex-row gap-2 items-center"
         >
           {#if !multi}
             <input
