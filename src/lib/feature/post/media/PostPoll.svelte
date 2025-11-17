@@ -60,7 +60,7 @@
       } else {
         await api.voteOnPoll({
           post_id: post.id,
-          choice_id: id,
+          choice_id: [id],
         })
       }
     } catch (err) {
