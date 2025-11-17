@@ -171,7 +171,11 @@ class Profile {
     if (this.#current.jwt) {
       site.data = undefined
 
-      const res = await userFromJwt(this.#current.jwt, this.#current.instance)
+      const res = await userFromJwt(
+        this.#current.jwt,
+        this.#current.instance,
+        this.#current.client,
+      )
       if (!res?.user)
         toast({
           content:
@@ -206,7 +210,7 @@ class Profile {
 
   async add(jwt: string, instance: string, type: ClientType) {
     try {
-      const user = await userFromJwt(jwt, instance)
+      const user = await userFromJwt(jwt, instance, type)
       if (!user?.user) {
         throw new Error('No user data received')
       }
@@ -388,8 +392,13 @@ export const profile = new Profile()
 async function userFromJwt(
   jwt: string,
   instance: string,
+  type: ClientType,
 ): Promise<{ user?: MyUserInfo; site: GetSiteResponse } | undefined> {
-  const sitePromise = client({ instanceURL: instance, auth: jwt }).getSite()
+  const sitePromise = client({
+    instanceURL: instance,
+    auth: jwt,
+    clientType: type,
+  }).getSite()
 
   const timer = setTimeout(
     () =>
