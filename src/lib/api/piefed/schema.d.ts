@@ -5888,7 +5888,7 @@ export interface components {
     }
     PollVoteRequest: {
       post_id: number
-      choice_id: number
+      choice_id: number | number[]
     }
     PollVoteResponse: {
       banned_from_community: boolean

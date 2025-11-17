@@ -2463,7 +2463,7 @@ export interface PostEvent {
 
 export interface PollVote {
   post_id: number
-  choice_id: number
+  choice_id: number | number[]
 }
 
 export interface SetNote {
