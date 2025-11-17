@@ -19,13 +19,18 @@
 
   let { post }: Props = $props()
 
-  let selected = $state<number | number[]>()
+  let selected = $state<number | number[] | undefined>(
+    post.poll.my_votes?.length == 1
+      ? post.poll.my_votes[0]
+      : post.poll.my_votes,
+  )
 
   let canVote = $state<boolean>(
     !(
       (post.poll.end_poll &&
         publishedToDate(post.poll.end_poll).getTime() < Date.now()) ||
-      !profile.current.jwt
+      !profile.current.jwt ||
+      (post.poll.my_votes?.length ?? 0) > 0
     ),
   )
   let chosen = $state<number | undefined>(canVote ? undefined : -1)
@@ -53,18 +58,10 @@
       canVote = false
 
       if (typeof id !== 'number') {
-        await Promise.all([
-          id.map((i) =>
-            api
-              .voteOnPoll({
-                post_id: post.id,
-                choice_id: i,
-              })
-              .catch((err) => {
-                throw err
-              }),
-          ),
-        ])
+        await api.voteOnPoll({
+          post_id: post.id,
+          choice_id: id,
+        })
       } else {
         await api.voteOnPoll({
           post_id: post.id,

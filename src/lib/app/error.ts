@@ -1,4 +1,4 @@
-import { t } from "./i18n"
+import { t } from './i18n'
 
 // eslint-disable-next-line
 export function errorMessage(error: any, instance?: string): string {
@@ -6,13 +6,17 @@ export function errorMessage(error: any, instance?: string): string {
     if (typeof error == 'string') {
       try {
         error = JSON.parse(error)
-      } catch { 
+      } catch {
         /* try without catch would be cool imo */
       }
     }
 
     if (error?.body?.message) {
-      error = JSON.parse(error?.body?.message).error
+      error = JSON.parse(error?.body?.message)
+      if (error?.message) {
+        // probably piefed weird error format
+        error = error.message
+      }
     } else if (error?.message) {
       error = error?.message
     } else if (error?.error && typeof error?.error === 'string') {

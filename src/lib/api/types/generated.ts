@@ -2432,6 +2432,7 @@ export interface PostPoll {
   local_only: boolean
   latest_vote?: string
   choices: PollChoice[]
+  my_votes?: number[]
 }
 
 export interface PollChoice {
@@ -2463,7 +2464,7 @@ export interface PostEvent {
 
 export interface PollVote {
   post_id: number
-  choice_id: number
+  choice_id: number[]
 }
 
 export interface SetNote {
