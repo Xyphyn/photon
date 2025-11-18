@@ -1,8 +1,8 @@
-import node from '@sveltejs/adapter-node'
-import bun from 'svelte-adapter-bun-next'
 import auto from '@sveltejs/adapter-auto'
+import node from '@sveltejs/adapter-node'
 import staticAdapter from '@sveltejs/adapter-static'
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte'
+import bun from 'svelte-adapter-bun-next'
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {

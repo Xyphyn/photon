@@ -85,8 +85,10 @@
 
   $effect(() => {
     if (items.length) {
-      untrack(() => {
-        visibleItems = updateVisibleItems()
+      requestAnimationFrame(() => {
+        untrack(() => {
+          visibleItems = updateVisibleItems()
+        })
       })
     }
   })
@@ -111,6 +113,11 @@
 
   function updateVisibleItems() {
     if (!virtualListEl) return []
+
+    console.debug('virtual list update', {
+      itemHeights,
+      scrollY,
+    })
 
     viewportHeight = innerHeight?.current ?? 1000
     const scrollTop = scrollY - initialOffset
@@ -138,7 +145,12 @@
     return newVisibleItems ?? []
   }
 
+  let heightUpdateBatch = new Map<number, number>()
+  let heightUpdatePending = false
+
   function resizeObserver(node: HTMLElement) {
+    let lastHeight = node.getBoundingClientRect().height
+
     const debouncedUpdate = debounce((entries: ResizeObserverEntry[]) => {
       for (const entry of entries) {
         const indexAttr = node.getAttribute('data-index')
@@ -148,9 +160,24 @@
 
         const newHeight = entry.contentRect.height
         if (itemHeights[index] !== newHeight) {
-          itemHeights[index] = newHeight
-          if (!initialRender) visibleItems = updateVisibleItems()
+          heightUpdateBatch.set(index, newHeight)
         }
+      }
+
+      if (!heightUpdatePending && heightUpdateBatch.size > 0) {
+        heightUpdatePending = true
+        requestAnimationFrame(() => {
+          heightUpdateBatch.forEach((height, index) => {
+            itemHeights[index] = height
+          })
+          heightUpdateBatch.clear()
+
+          if (!initialRender) {
+            visibleItems = updateVisibleItems()
+          }
+
+          heightUpdatePending = false
+        })
       }
     }, debounceResize)
 
@@ -197,7 +224,9 @@
         }
       })
       untrack(() => {
-        visibleItems = updateVisibleItems()
+        requestAnimationFrame(() => {
+          visibleItems = updateVisibleItems()
+        })
         initialRender = false
       })
     }
