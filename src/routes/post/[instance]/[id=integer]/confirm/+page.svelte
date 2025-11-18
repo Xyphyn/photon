@@ -58,8 +58,7 @@
       <Button
         {loading}
         disabled={loading}
-        size="md"
-        rounding="pill"
+        size="lg"
         color="primary"
         onclick={fetchOnHome}
       >
@@ -68,7 +67,7 @@
         })}
       </Button>
     {/if}
-    <Button size="md" rounding="pill" onclick={() => history.back()}>
+    <Button size="lg" onclick={() => history.back()}>
       {$t('routes.postRedirect.actions.back')}
     </Button>
   </div>

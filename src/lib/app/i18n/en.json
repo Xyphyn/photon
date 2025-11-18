@@ -325,7 +325,7 @@
             "description": "That content does not originate from {{homeInstance}}.",
             "actions": {
                 "back": "Go back",
-                "fetch": "Locate post on {{homeInstance}}",
+                "fetch": "Continue on {{homeInstance}}",
                 "switch": "Switch to an account on {{destInstance}}"
             },
             "automatic": {
@@ -563,6 +563,7 @@
                 "share.from": "Share from",
                 "share.global": "Origin server",
                 "share.local": "Your server",
+                "share.photon": "Photon link",
                 "crosspost": "Crosspost",
                 "delete": "Delete",
                 "restore": "Restore"

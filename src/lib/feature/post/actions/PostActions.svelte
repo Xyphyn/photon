@@ -1,10 +1,13 @@
 <script lang="ts">
+  import { page } from '$app/state'
   import type { PostView } from '$lib/api/types'
   import { profile } from '$lib/app/auth.svelte'
   import { t } from '$lib/app/i18n'
+  import { LINKED_INSTANCE_URL } from '$lib/app/instance.svelte'
   import { settings, type View } from '$lib/app/settings.svelte'
   import { instanceToURL } from '$lib/app/util.svelte'
   import { save } from '$lib/feature/legacy/contentview'
+  import { Photon } from '$lib/ui/icon/photon'
   import { publishedToDate } from '$lib/ui/util/date'
   import FormattedNumber from '$lib/ui/util/FormattedNumber.svelte'
   import {
@@ -56,10 +59,12 @@
   let buttonHeight = $derived(view == 'compact' ? 'h-7.5' : 'h-8')
   let buttonSquare = $derived(view == 'compact' ? 'w-7.5 h-7.5' : 'w-8 h-8')
 
-  function share(global: boolean = true) {
-    const link = global
-      ? post.post.ap_id
-      : `${instanceToURL(profile.current.instance)}/post/${post.post.id}`
+  function share(global: boolean = true, url?: string) {
+    const link =
+      url ??
+      (global
+        ? post.post.ap_id
+        : `${instanceToURL(profile.current.instance)}/post/${post.post.id}`)
 
     if (navigator.share)
       navigator.share?.({
@@ -213,6 +218,21 @@
     <MenuButton onclick={() => share(false)} icon={MapPin}>
       {$t('post.actions.more.share.local')}
     </MenuButton>
+    {#if !LINKED_INSTANCE_URL}
+      <MenuDivider>
+        <svelte:fragment></svelte:fragment>
+      </MenuDivider>
+      <MenuButton
+        onclick={() =>
+          share(
+            false,
+            new URL(`/go/${post.post.ap_id}`, page.url.origin).toString(),
+          )}
+        icon={Photon}
+      >
+        {$t('post.actions.more.share.photon')}
+      </MenuButton>
+    {/if}
   </Menu>
 
   {#if profile.current.jwt}

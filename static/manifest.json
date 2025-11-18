@@ -50,5 +50,14 @@
       "url": "/profile/user"
     }
   ],
+  "share_target": {
+    "action": "/go",
+    "method": "GET",
+    "params": {
+      "post_title": "name",
+      "post_body": "description",
+      "localize": "link"
+    }
+  },
   "categories": ["entertainment", "news", "social"]
 }
