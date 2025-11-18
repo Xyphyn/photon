@@ -175,12 +175,12 @@
   let oldScroll = $state(0)
   $effect(() => {
     const currentScrollY = scrollY ?? 0
-    if (Math.abs(currentScrollY - oldScroll) > estimatedHeight) {
-      untrack(() => {
+    untrack(() => {
+      if (Math.abs(currentScrollY - oldScroll) > estimatedHeight) {
         visibleItems = updateVisibleItems()
         oldScroll = currentScrollY
-      })
-    }
+      }
+    })
   })
 
   onMount(() => {
