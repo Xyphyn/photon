@@ -4,6 +4,7 @@
   import { debounce } from 'mono-svelte/util/time'
   import { type Snippet, onDestroy, onMount, untrack } from 'svelte'
   import type { HTMLAttributes } from 'svelte/elements'
+  import { SvelteMap } from 'svelte/reactivity'
   import { innerHeight } from 'svelte/reactivity/window'
   import { settings } from '../settings.svelte'
 
@@ -34,7 +35,8 @@
     ...rest
   }: Props = $props()
 
-  let initialRender = false
+  let initialRender = true
+  let isUpdating = false // Guard against re-entrant updates
 
   export function scrollToIndex(index: number, useWindow: boolean = false) {
     const targetPx = cumulativeItemHeights[index] - (initialOffset || 0)
@@ -59,37 +61,69 @@
     ...(restore?.itemHeights ?? Array(items.length).fill(null)),
   ])
 
-  let cumulativeItemHeights = $derived.by<number[]>(() => {
-    let cumulation = new Array(itemHeights.length)
-    let sum = 0
+  let cumulativeItemHeights = $state<number[]>([])
+  let totalHeight = $derived<number>(
+    cumulativeItemHeights[cumulativeItemHeights.length - 1] || 0,
+  )
 
-    for (let i = 0; i < itemHeights.length; i++) {
-      const height = itemHeights[i] || estimatedHeight
-      sum += height
-      cumulation[i] = sum
+  function updateCumulativeHeights(changedIndex?: number) {
+    if (
+      changedIndex !== undefined &&
+      changedIndex < cumulativeItemHeights.length
+    ) {
+      // Incremental update
+      let sum = changedIndex > 0 ? cumulativeItemHeights[changedIndex - 1] : 0
+
+      for (let i = changedIndex; i < itemHeights.length; i++) {
+        const height = itemHeights[i] || estimatedHeight
+        sum += height
+        cumulativeItemHeights[i] = sum
+      }
+    } else {
+      // Full recalculation
+      cumulativeItemHeights = new Array(itemHeights.length)
+      let sum = 0
+      for (let i = 0; i < itemHeights.length; i++) {
+        const height = itemHeights[i] || estimatedHeight
+        sum += height
+        cumulativeItemHeights[i] = sum
+      }
     }
-
-    return cumulation
-  })
+  }
 
   let scrollY = $state(0)
   let viewportHeight = $state(0)
   let visibleItems = $state<{ index: number; offset: number }[]>([])
 
-  $effect.pre(() => {
-    if (items.length > itemHeights.length) {
-      const missing = items.length - itemHeights.length
-      itemHeights = [...itemHeights, ...Array(missing).fill(null)]
-    }
-  })
+  // Track previous items length to detect actual changes
+  let previousItemsLength = $state(items.length)
 
-  $effect(() => {
-    if (items.length) {
-      requestAnimationFrame(() => {
-        untrack(() => {
-          visibleItems = updateVisibleItems()
+  // Handle items length changes
+  $effect.pre(() => {
+    const currentLength = items.length
+
+    if (currentLength !== previousItemsLength) {
+      if (currentLength > itemHeights.length) {
+        const missing = currentLength - itemHeights.length
+        itemHeights = [...itemHeights, ...Array(missing).fill(null)]
+        updateCumulativeHeights(itemHeights.length - missing)
+      } else if (currentLength < itemHeights.length) {
+        itemHeights = itemHeights.slice(0, currentLength)
+        updateCumulativeHeights()
+      }
+
+      previousItemsLength = currentLength
+
+      // Schedule visible items update
+      if (!isUpdating) {
+        isUpdating = true
+        requestAnimationFrame(() => {
+          untrack(() => {
+            visibleItems = updateVisibleItems()
+            isUpdating = false
+          })
         })
-      })
+      }
     }
   })
 
@@ -112,12 +146,7 @@
   }
 
   function updateVisibleItems() {
-    if (!virtualListEl) return []
-
-    console.debug('virtual list update', {
-      itemHeights,
-      scrollY,
-    })
+    if (!virtualListEl || isUpdating) return visibleItems
 
     viewportHeight = innerHeight?.current ?? 1000
     const scrollTop = scrollY - initialOffset
@@ -145,90 +174,128 @@
     return newVisibleItems ?? []
   }
 
-  let heightUpdateBatch = new Map<number, number>()
+  // ResizeObserver setup
+  let heightUpdateBatch = new SvelteMap<number, number>()
   let heightUpdatePending = false
+  let observer: ResizeObserver | undefined
 
-  function resizeObserver(node: HTMLElement) {
-    let lastHeight = node.getBoundingClientRect().height
+  onMount(() => {
+    if (browser) {
+      const debouncedUpdate = debounce((entries: ResizeObserverEntry[]) => {
+        if (isUpdating || heightUpdatePending) return
 
-    const debouncedUpdate = debounce((entries: ResizeObserverEntry[]) => {
-      for (const entry of entries) {
-        const indexAttr = node.getAttribute('data-index')
-        if (indexAttr === null) continue
-        const index = Number(indexAttr)
-        if (isNaN(index)) continue
+        for (const entry of entries) {
+          const element = entry.target as HTMLElement
+          const indexAttr = element.getAttribute('data-index')
+          if (indexAttr === null) continue
+          const index = Number(indexAttr)
+          if (isNaN(index)) continue
 
-        const newHeight = entry.contentRect.height
-        if (itemHeights[index] !== newHeight) {
-          heightUpdateBatch.set(index, newHeight)
-        }
-      }
+          const newHeight = entry.contentRect.height
+          const currentHeight = itemHeights[index] || estimatedHeight
 
-      if (!heightUpdatePending && heightUpdateBatch.size > 0) {
-        heightUpdatePending = true
-        requestAnimationFrame(() => {
-          heightUpdateBatch.forEach((height, index) => {
-            itemHeights[index] = height
-          })
-          heightUpdateBatch.clear()
-
-          if (!initialRender) {
-            visibleItems = updateVisibleItems()
+          // Only update if height changed significantly
+          if (Math.abs(currentHeight - newHeight) > 1) {
+            heightUpdateBatch.set(index, newHeight)
           }
+        }
 
-          heightUpdatePending = false
+        if (!heightUpdatePending && heightUpdateBatch.size > 0) {
+          heightUpdatePending = true
+          isUpdating = true
+
+          requestAnimationFrame(() => {
+            let minIndex = Infinity
+
+            heightUpdateBatch.forEach((height, index) => {
+              itemHeights[index] = height
+              minIndex = Math.min(minIndex, index)
+            })
+            heightUpdateBatch.clear()
+
+            updateCumulativeHeights(minIndex)
+
+            if (!initialRender) {
+              visibleItems = updateVisibleItems()
+            }
+
+            heightUpdatePending = false
+            // Use another frame to ensure layout is complete
+            requestAnimationFrame(() => {
+              isUpdating = false
+            })
+          })
+        }
+      }, debounceResize)
+
+      observer = new ResizeObserver((entries) => {
+        debouncedUpdate(entries)
+      })
+
+      // Initial measurement and setup
+      if (virtualListEl) {
+        Array.from(virtualListEl.children).forEach((node) => {
+          const indexAttr = node.getAttribute('data-index')
+          if (indexAttr === null) return
+          const index = Number(indexAttr)
+          if (isNaN(index)) return
+
+          const newHeight = node.getBoundingClientRect().height
+          if (itemHeights[index] !== newHeight) {
+            itemHeights[index] = newHeight
+          }
+        })
+
+        updateCumulativeHeights()
+
+        untrack(() => {
+          visibleItems = updateVisibleItems()
+          initialRender = false
         })
       }
-    }, debounceResize)
+    }
+  })
 
-    const observer = new ResizeObserver((entries) => {
-      debouncedUpdate(entries)
-    })
-
-    observer.observe(node)
-
-    onDestroy(() => {
-      observer.disconnect()
-    })
+  function resizeObserver(node: HTMLElement) {
+    observer?.observe(node)
 
     return {
       destroy() {
-        observer.disconnect()
+        observer?.unobserve(node)
       },
     }
   }
 
-  // Scroll position changes (only every few px)
-  let oldScroll = $state(0)
-  $effect(() => {
-    const currentScrollY = scrollY ?? 0
-    untrack(() => {
-      if (Math.abs(currentScrollY - oldScroll) > estimatedHeight) {
-        visibleItems = updateVisibleItems()
-        oldScroll = currentScrollY
-      }
-    })
+  onDestroy(() => {
+    observer?.disconnect()
   })
 
-  onMount(() => {
-    if (virtualListEl && browser) {
-      Array.from(virtualListEl.children).forEach((node) => {
-        const indexAttr = node.getAttribute('data-index')
-        if (indexAttr === null) return
-        const index = Number(indexAttr)
-        if (isNaN(index)) return
+  // Scroll position changes - with throttling
+  let oldScroll = $state(0)
+  let scrollUpdateScheduled = $state(false)
 
-        const newHeight = node.getBoundingClientRect().height
-        if (itemHeights[index] !== newHeight) {
-          itemHeights[index] = newHeight
-        }
-      })
-      untrack(() => {
+  $effect(() => {
+    const currentScrollY = scrollY ?? 0
+
+    // Read these without creating dependencies
+    const prevScroll = untrack(() => oldScroll)
+    const isScheduled = untrack(() => scrollUpdateScheduled)
+    const updating = untrack(() => isUpdating)
+
+    if (Math.abs(currentScrollY - prevScroll) > estimatedHeight / 2) {
+      if (!isScheduled && !updating) {
+        scrollUpdateScheduled = true
+
+        // Use untrack for the callback to prevent reactivity issues
+        const finalScrollY = currentScrollY
         requestAnimationFrame(() => {
-          visibleItems = updateVisibleItems()
+          untrack(() => {
+            visibleItems = updateVisibleItems()
+            oldScroll = finalScrollY
+            scrollUpdateScheduled = false
+          })
         })
-        initialRender = false
-      })
+      }
     }
   })
 </script>
@@ -244,8 +311,7 @@
 
 <div
   bind:this={virtualListEl}
-  style="position: relative; height: {height ||
-    cumulativeItemHeights[visibleItems?.[visibleItems.length - 1]?.index]}px;"
+  style="position: relative; height: {height || totalHeight}px;"
   {...rest}
   id="feed"
   onscroll={() => {
@@ -279,13 +345,12 @@
         ?.index} - {visibleItems?.[visibleItems?.length - 1]?.index})
       Viewport height: {viewportHeight}
       Current scroll position: {scrollY}
-      Container height: {cumulativeItemHeights[
-        visibleItems?.[visibleItems?.length - 1]?.index
-      ]}
+      Container height: {totalHeight}
       Overscan: {overscan}
       Guess item height: {estimatedHeight}
-      Bumpscosity: {Math.floor(Math.random() * 5000)}
-      Restore data: {JSON.stringify(restore)}
+      Item heights recorded: {itemHeights.filter((h) => h !== null)
+        .length} / {itemHeights.length}
+      Is updating: {isUpdating}
     </pre>
   </Expandable>
 {/if}
