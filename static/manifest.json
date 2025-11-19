@@ -1,6 +1,6 @@
 {
   "short_name": "Photon",
-  "name": "Photon for Lemmy",
+  "name": "Photon",
   "start_url": "/",
   "icons": [
     {
@@ -54,9 +54,9 @@
     "action": "/go",
     "method": "GET",
     "params": {
-      "post_title": "name",
-      "post_body": "description",
-      "localize": "link"
+      "title": "post_name",
+      "text": "post_body",
+      "url": "localize"
     }
   },
   "categories": ["entertainment", "news", "social"]

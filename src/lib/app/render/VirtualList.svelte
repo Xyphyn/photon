@@ -139,37 +139,37 @@
   }
 
   function resizeObserver(node: HTMLElement) {
-    const debouncedUpdate = debounce((entries: ResizeObserverEntry[]) => {
-      for (const entry of entries) {
-        const indexAttr = node.getAttribute('data-index')
-        if (indexAttr === null) continue
-        const index = Number(indexAttr)
-        if (isNaN(index)) continue
-
-        const newHeight = entry.contentRect.height
-        if (itemHeights[index] !== newHeight) {
-          itemHeights[index] = newHeight
-          if (!initialRender) visibleItems = updateVisibleItems()
-        }
-      }
-    }, debounceResize)
-
-    const observer = new ResizeObserver((entries) => {
-      debouncedUpdate(entries)
-    })
-
     observer.observe(node)
-
-    onDestroy(() => {
-      observer.disconnect()
-    })
 
     return {
       destroy() {
-        observer.disconnect()
+        observer.unobserve(node)
       },
     }
   }
+
+  const debouncedUpdate = debounce((entries: ResizeObserverEntry[]) => {
+    for (const entry of entries) {
+      const indexAttr = entry.target.getAttribute('data-index')
+      if (indexAttr === null) continue
+      const index = Number(indexAttr)
+      if (isNaN(index)) continue
+
+      const newHeight = entry.contentRect.height
+      if (itemHeights[index] !== newHeight) {
+        itemHeights[index] = newHeight
+        if (!initialRender) visibleItems = updateVisibleItems()
+      }
+    }
+  }, debounceResize)
+
+  const observer = new ResizeObserver((entries) => {
+    debouncedUpdate(entries)
+  })
+
+  onDestroy(() => {
+    observer.disconnect()
+  })
 
   // Scroll position changes (only every few px)
   let oldScroll = $state(0)
@@ -196,6 +196,7 @@
           itemHeights[index] = newHeight
         }
       })
+
       untrack(() => {
         visibleItems = updateVisibleItems()
         initialRender = false
