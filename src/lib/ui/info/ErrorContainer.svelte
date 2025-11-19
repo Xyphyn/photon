@@ -16,7 +16,7 @@
 </script>
 
 <script lang="ts">
-  import { onDestroy } from 'svelte'
+  import { onDestroy, type Snippet } from 'svelte'
   import { ExclamationTriangle, Icon } from 'svelte-hero-icons/dist'
   import { expoOut } from 'svelte/easing'
   import { fly, slide } from 'svelte/transition'
@@ -28,9 +28,10 @@
     scope?: string | undefined | null
     message?: string
     class?: string
+    children?: Snippet
   }
 
-  let { scope, message, class: clazz = '' }: Props = $props()
+  let { scope, message, children, class: clazz = '' }: Props = $props()
 
   let scopedErrors = $derived(
     errors.filter((e) => e.scope == scope || e.scope == 'global'),
@@ -63,6 +64,7 @@
       {#if message}
         {message}
       {/if}
+      {@render children?.()}
       {#each scopedErrors as error}
         <p>{error.message}</p>
       {/each}

@@ -2,12 +2,13 @@
   import { browser } from '$app/environment'
   import { client } from '$lib/api/client.svelte'
   import type { GetPosts, PostView } from '$lib/api/types'
+  import { errorMessage } from '$lib/app/error'
   import { t } from '$lib/app/i18n'
   import VirtualList from '$lib/app/render/VirtualList.svelte'
   import { settings } from '$lib/app/settings.svelte'
   import Placeholder from '$lib/ui/info/Placeholder.svelte'
   import EndPlaceholder from '$lib/ui/layout/EndPlaceholder.svelte'
-  import { Button } from 'mono-svelte'
+  import { Button, Material, Spinner } from 'mono-svelte'
   import { onDestroy, onMount, untrack } from 'svelte'
   import {
     ArchiveBox,
@@ -213,15 +214,16 @@
 
   {#if settings.infiniteScroll && browser && posts.length > 0}
     {#if error}
-      <div
-        class="flex flex-col justify-center items-center
-        rounded-xl gap-2 py-8 mt-6
-        border border-b! border-red-500! bg-red-500/5 px-4"
-      >
-        <div class="bg-red-500/30 rounded-full p-3 text-red-500">
-          <Icon src={ExclamationTriangle} size="24" solid></Icon>
+      <Material color="error" class="flex flex-col gap-4">
+        <div>
+          <Icon
+            src={ExclamationTriangle}
+            size="20"
+            micro
+            class="inline-block rounded-lg clear-both float-left mr-2"
+          />
+          {errorMessage(error)}
         </div>
-        <pre class="py-0.5">{error}</pre>
         <Button
           color="primary"
           {loading}
@@ -230,23 +232,18 @@
         >
           {$t('message.retry')}
         </Button>
-      </div>
+      </Material>
     {:else if hasMore}
-      <div class="w-full flex flex-col gap-2 animate-pulse pt-6">
-        <div
-          class="w-96 max-w-full h-8 bg-slate-100 dark:bg-zinc-800 rounded-md"
-        ></div>
-        <div class="w-full h-48 bg-slate-100 dark:bg-zinc-800 rounded-md"></div>
-        <div class="bg-transparent! h-8 flex justify-between">
-          <div class="w-48 h-8 bg-slate-100 dark:bg-zinc-800 rounded-md"></div>
-          <div class="w-24 h-8 bg-slate-100 dark:bg-zinc-800 rounded-md"></div>
-        </div>
+      <div class="w-full h-32 grid place-items-center">
+        <Spinner width={24} />
       </div>
     {:else}
       <div style="border-top-width: 0">
         <EndPlaceholder>
           {$t('routes.frontpage.endFeed', {
-            community_name: params.community_name ?? 'undefined',
+            community_name:
+              params.community_name ??
+              'Lemmy. There are no more posts. You saw them all.',
           })}
           {#snippet action()}
             <Button color="tertiary" icon={ChevronDoubleUp}>
@@ -256,7 +253,7 @@
         </EndPlaceholder>
       </div>
     {/if}
-    <InfiniteScroll window threshold={600} on:loadMore={loadMore} />
+    <InfiniteScroll window threshold={300} on:loadMore={loadMore} />
   {/if}
   {@render children?.()}
 </ul>
