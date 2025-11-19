@@ -7,5 +7,6 @@ export async function load({ url }) {
   if (link) {
     const localized = photonify(link)
     if (localized) redirect(302, localized)
+    else redirect(302, link)
   }
 }
