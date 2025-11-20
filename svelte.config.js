@@ -1,8 +1,8 @@
-import node from '@sveltejs/adapter-node'
-import bun from 'svelte-adapter-bun-next'
 import auto from '@sveltejs/adapter-auto'
+import node from '@sveltejs/adapter-node'
 import staticAdapter from '@sveltejs/adapter-static'
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte'
+import bun from 'svelte-adapter-bun-next'
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -35,6 +35,16 @@ const config = {
       'mono-svelte': 'src/lib/ui/shared',
       'svelte-hero-icons': 'node_modules/@xylightdev/svelte-hero-icons',
       $comp: 'src/lib/components',
+    },
+    csp: {
+      directives: {
+        'script-src': ['self'],
+      },
+      // must be specified with either the `report-uri` or `report-to` directives, or both
+      reportOnly: {
+        'script-src': ['self'],
+        'report-uri': ['/'],
+      },
     },
   },
 }
