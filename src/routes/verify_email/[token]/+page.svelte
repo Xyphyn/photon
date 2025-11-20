@@ -1,23 +1,17 @@
 <script>
   import { t } from '$lib/app/i18n'
   import { LINKED_INSTANCE_URL } from '$lib/app/instance.svelte'
-  import { CheckCircle, Icon } from 'svelte-hero-icons/dist'
+  import { Header } from '$lib/ui/layout'
+  import { Material } from 'mono-svelte'
 </script>
 
 <div class="flex flex-col h-max my-auto gap-2 max-w-xl mx-auto">
-  <div
-    class="rounded-full bg-green-200 dark:bg-green-500/20 text-white p-2 w-max"
-  >
-    <Icon src={CheckCircle} size="48" solid />
-  </div>
-  <h1
-    class="text-green-800 dark:text-green-200 text-2xl font-medium tracking-tight"
-  >
-    {$t('message.success')}
-  </h1>
-  <p class="text-green-800 dark:text-green-200">
-    {$t('routes.verifyEmail.message')}
-  </p>
+  <Material rounding="3xl" padding="xl" color="success" class="space-y-2">
+    <Header>
+      {$t('message.success')}
+    </Header>
+    <p class="text-lg">{$t('routes.verifyEmail.message')}</p>
+  </Material>
   {#if !LINKED_INSTANCE_URL}
     <p>
       You somehow got to this menu despite not being linked here by the email.

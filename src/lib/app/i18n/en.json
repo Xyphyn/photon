@@ -956,7 +956,8 @@
         "rate_limit_error": "You are performing that action too fast.",
         "unimplemented": "That function of your account's server software is not yet supported by Photon.",
         "unsupported": "That function is not supported by your account's server software.",
-        "not_live_supported": "That server is not running supported software, or is offline."
+        "not_live_supported": "That server is not running supported software, or is offline.",
+        "token_not_found": "That email verification link expired, or never existed."
     },
     "aria": {
         "pagination": {
