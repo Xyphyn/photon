@@ -31,10 +31,8 @@
   this={element}
   class={[
     sizes[size],
-    'rounded-xl text-sm font-medium transition-colors duration-75 relative cursor-pointer border shadow-xs',
-    selected
-      ? 'border-transparent bg-primary-900 dark:bg-primary-100 text-slate-50 dark:text-zinc-900 hover:brightness-90 active:brightness-75'
-      : ' dark:bg-zinc-900/50 bg-white border-slate-200 dark:border-zinc-800 hover:bg-slate-100 hover:dark:bg-zinc-800 active:bg-slate-200 active:dark:bg-zinc-900',
+    'tab-button',
+    selected ? 'btn-primary' : 'btn-secondary',
   ]}
   onclick={href ? undefined : onselect}
   {disabled}
@@ -43,3 +41,17 @@
 >
   {@render children?.()}
 </svelte:element>
+
+<style>
+  @reference '../../../app.css';
+
+  .tab-button {
+    font-size: var(--text-sm);
+    border-radius: var(--radius-xl);
+    font-weight: var(--font-weight-medium);
+    transition: all 75ms var(--default-transition-timing-function);
+    position: relative;
+    box-shadow: var(--shadow-xs);
+    cursor: pointer;
+  }
+</style>

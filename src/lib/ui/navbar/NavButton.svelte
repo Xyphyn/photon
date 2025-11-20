@@ -87,7 +87,7 @@
       @variant md {
         height: calc(var(--spacing) * 8);
       }
-      transition: 75ms cubic-bezier(0.075, 0.82, 0.165, 1);
+      transition: 100ms cubic-bezier(0.075, 0.82, 0.165, 1);
 
       color: var(--color-slate-500);
 
@@ -105,17 +105,40 @@
       transition-property: color;
     }
 
+    .nav-btn .prefix {
+      @variant max-md {
+        @variant hover {
+          background-color: --alpha(var(--color-slate-200) / 50%);
+          @variant dark {
+            background-color: --alpha(var(--color-zinc-700) / 30%);
+          }
+        }
+
+        @variant active {
+          background-color: --alpha(var(--color-slate-300) / 50%);
+          @variant dark {
+            background-color: --alpha(var(--color-zinc-800) / 30%);
+          }
+        }
+      }
+    }
+
     .nav-btn-dynamic {
       @variant md {
         width: max-content;
         padding: calc(var(--spacing)) calc(var(--spacing) * 3);
-      }
 
-      @variant hover {
-        @variant md {
-          background-color: var(--color-slate-100);
+        @variant hover {
+          background-color: --alpha(var(--color-slate-200) / 50%);
           @variant dark {
-            background-color: var(--color-zinc-800);
+            background-color: --alpha(var(--color-zinc-700) / 30%);
+          }
+        }
+
+        @variant active {
+          background-color: --alpha(var(--color-slate-300) / 50%);
+          @variant dark {
+            background-color: --alpha(var(--color-zinc-800) / 30%);
           }
         }
       }

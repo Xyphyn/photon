@@ -236,14 +236,30 @@
           );
         }
       }
+
+      @variant active {
+        background-color: var(--color-slate-100);
+
+        @variant dark {
+          background-color: var(--color-zinc-925);
+        }
+      }
     }
 
     .btn-tertiary {
       background-color: transparent;
+
       @variant hover {
         background-color: --alpha(var(--color-slate-200) / 50%);
         @variant dark {
           background-color: --alpha(var(--color-zinc-700) / 30%);
+        }
+      }
+
+      @variant active {
+        background-color: --alpha(var(--color-slate-300) / 50%);
+        @variant dark {
+          background-color: --alpha(var(--color-zinc-800) / 30%);
         }
       }
     }
