@@ -201,6 +201,7 @@
     margin: var(--spacing) 0;
     gap: var(--spacing);
     color: var(--color-slate-700);
+    white-space: nowrap;
 
     @variant dark {
       color: var(--color-zinc-400);
