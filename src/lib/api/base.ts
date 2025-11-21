@@ -27,7 +27,7 @@ export abstract class BaseClient {
   }
 
   static async fetchInfo(
-    base: string,
+    base: string | URL,
   ): Promise<{ type: ClientType; version: string } | null> {
     try {
       const res = await fetch(new URL('/nodeinfo/2.1', base))

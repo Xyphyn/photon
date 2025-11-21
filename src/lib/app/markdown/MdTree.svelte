@@ -23,15 +23,6 @@
     ...rest
   }: Props = $props()
 
-  function decodeHtmlEntities(input: string) {
-    return input
-      .replace(/&#39;/g, "'")
-      .replace(/&quot;/g, '"')
-      .replace(/&lt;/g, '<')
-      .replace(/&gt;/g, '>')
-      .replace(/&amp;/g, '&')
-  }
-
   if (header) {
     type = 'tablecell'
   }
@@ -50,7 +41,7 @@
               {...rest}
             />
           {:else if token.text}
-            {decodeHtmlEntities(token.text)}
+            {token.text}
           {:else if text}
             {text}
           {/if}

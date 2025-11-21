@@ -29,8 +29,14 @@
   import MdTableHead from './renderers/table/MdTableHead.svelte'
   import MdTableRow from './renderers/table/MdTableRow.svelte'
 
+  function preprocess(src: string) {
+    return src
+      .replaceAll(/\[([^\]]*)\]\(\s*javascript:[^)]*\)/gim, '*link removed*')
+      .replaceAll(/^\s*\[[^\]]+\]:\s*javascript:.*$/gim, '*link removed*')
+  }
+
   marked.setOptions({
-    gfm: true,
+    gfm: false,
     breaks: false,
   })
 
@@ -141,7 +147,7 @@
     noStyle: noStyle,
   })
 
-  let tokens = $derived(marked.lexer(source))
+  let tokens = $derived(marked.lexer(preprocess(source)))
 </script>
 
 <svelte:element

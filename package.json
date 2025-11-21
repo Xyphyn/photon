@@ -29,6 +29,7 @@
     "openapi-fetch": "^0.14.0",
     "prettier": "^3.6.2",
     "prettier-plugin-svelte": "^3.4.0",
+    "sanitize-markdown": "^2.6.7",
     "svelte": "^5.39.4",
     "svelte-adapter-bun-next": "^1.0.3",
     "svelte-check": "^4.3.1",

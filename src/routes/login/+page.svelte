@@ -60,7 +60,9 @@
   })
 
   async function checkInstance() {
-    const type = await BaseClient.fetchInfo(instanceToURL(form.instance))
+    const type = await BaseClient.fetchInfo(
+      new URL(instanceToURL(form.instance)),
+    )
     if (type == null) throw Error('not_live_supported')
     form.client = type?.type
   }
