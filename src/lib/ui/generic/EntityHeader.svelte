@@ -64,7 +64,7 @@
       </div>
     {/if}
 
-    {#snippet icon(width: number)}
+    {#snippet pfp(width: number)}
       <Avatar
         {width}
         url={avatar}
@@ -79,20 +79,22 @@
     {/snippet}
 
     <div class="contents @md:hidden">
-      {@render icon(48)}
+      {@render pfp(48)}
     </div>
 
     <div class="hidden @md:contents">
-      {@render icon(72)}
+      {@render pfp(72)}
     </div>
 
     <div class="space-y-1">
       <svelte:element
         this={url ? 'a' : 'h1'}
         href={url}
-        class="text-xl @md:text-2xl font-medium tracking-tight {url
-          ? 'hover:underline hover:text-primary-900 dark:hover:text-primary-100'
-          : ''}"
+        class={[
+          'text-xl @md:text-2xl font-medium tracking-tight',
+          url &&
+            'hover:underline hover:text-primary-900 dark:hover:text-primary-100',
+        ]}
       >
         {name}
       </svelte:element>

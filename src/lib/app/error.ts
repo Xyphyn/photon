@@ -13,13 +13,16 @@ export function errorMessage(error: any, instance?: string): string {
 
     if (error?.body?.message) {
       error = JSON.parse(error?.body?.message)
-      if (error?.message) {
+
+      if (typeof error?.message == 'string') {
         // probably piefed weird error format
         error = error.message
       }
-    } else if (error?.message) {
+    }
+    if (error?.message) {
       error = error?.message
-    } else if (error?.error && typeof error?.error === 'string') {
+    }
+    if (error?.error && typeof error?.error === 'string') {
       error = error.error
     }
     if (!error) throw error

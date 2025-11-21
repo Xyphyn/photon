@@ -3,7 +3,7 @@
   import { t } from '$lib/app/i18n'
   import { searchParam } from '$lib/app/util.svelte'
   import Placeholder from '$lib/ui/info/Placeholder.svelte'
-  import { Header, Pageination } from '$lib/ui/layout'
+  import { CommonList, Header, Pageination } from '$lib/ui/layout'
   import { Option, Select } from 'mono-svelte'
   import { ClipboardDocumentCheck, Funnel, Icon } from 'svelte-hero-icons/dist'
   import Application from './Application.svelte'
@@ -32,11 +32,17 @@
   </Select>
 </form>
 {#if data.applications?.value && data.applications?.value.length > 0}
-  <div class="flex flex-col gap-4">
+  <CommonList>
     {#each data.applications?.value as application (application.registration_application.id)}
-      <Application {application} />
+      <li
+        class={application.creator_local_user.accepted_application
+          ? 'material-success'
+          : 'material-error'}
+      >
+        <Application {application} />
+      </li>
     {/each}
-  </div>
+  </CommonList>
   {#if data.applications?.value.length >= 40}
     <div class="mt-auto">
       <Pageination page={data.page} href={(page) => `?page=${page}`} />

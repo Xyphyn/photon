@@ -91,7 +91,7 @@
     user={application.creator}
   />
 {/if}
-<Material color="uniform" rounding="xl" class="flex flex-col gap-2">
+<div class="flex flex-col gap-2">
   <div class="flex flex-col gap-2">
     <span class="text-slate-600 dark:text-zinc-400 text-xs">
       <RelativeDate
@@ -184,4 +184,4 @@
       ></Button>
     </ButtonGroup>
   </div>
-</Material>
+</div>

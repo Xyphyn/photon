@@ -29,7 +29,6 @@
   import {
     ArrowLeft,
     ArrowPath,
-    ExclamationCircle,
     ExclamationTriangle,
     Icon,
     Plus,
@@ -211,17 +210,7 @@
           />
         </div>
         {#if data.site_view.local_site.registration_mode == 'RequireApplication'}
-          <Material
-            rounding="2xl"
-            color="none"
-            class="bg-yellow-200/10 border border-yellow-500/30 text-yellow-900 dark:text-yellow-50"
-          >
-            <Icon
-              src={ExclamationTriangle}
-              size="32"
-              mini
-              class="inline-block rounded-lg bg-yellow-500 p-1 text-white clear-both float-left mr-2"
-            />
+          <Material rounding="2xl" color="warning" icon={ExclamationTriangle}>
             {$t('form.signup.application.info')}
           </Material>
           {#if data.site_view.local_site.application_question}
@@ -256,13 +245,7 @@
                   </Material>
                 {/if}
               {:catch err}
-                <Material
-                  padding="sm"
-                  class="flex gap-2 dark:text-yellow-200 text-yellow-800 bg-yellow-500/20"
-                >
-                  <Icon src={ExclamationCircle} mini size="24" />
-                  {err}
-                </Material>
+                <ErrorContainer message={errorMessage(err)} />
               {/await}
               <Button onclick={() => getCaptcha()} size="square-md">
                 <Icon src={ArrowPath} size="16" mini />

@@ -946,7 +946,7 @@
         "downvotes_are_disabled": "Downvotes are disabled on this server.",
         "email_already_exists": "An account already exists with that email.",
         "slurs": "Your submission contains a term banned in this server.",
-        "captcha_failed": "Incorrect CAPTCHA answer.",
+        "captcha_incorrect": "Incorrect CAPTCHA answer.",
         "cant_block_local_instance": "You cannot block the server you are actively using.",
         "invalid_vote_value": "You cannot commit voter fraud on Lemmy posts, sorry.",
         "language_not_allowed": "That language is not allowed in this community. Unset it to use the community's default.",
@@ -957,7 +957,8 @@
         "unimplemented": "That function of your account's server software is not yet supported by Photon.",
         "unsupported": "That function is not supported by your account's server software.",
         "not_live_supported": "That server is not running supported software, or is offline.",
-        "token_not_found": "That email verification link expired, or never existed."
+        "token_not_found": "That email verification link expired, or never existed.",
+        "invalid_password": "Invalid password."
     },
     "aria": {
         "pagination": {

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { Icon, type IconSource } from 'svelte-hero-icons/dist'
   import type { ClassValue, HTMLAttributes } from 'svelte/elements'
 
   type Elevation = keyof typeof elevationClass
@@ -53,6 +54,7 @@
     rounding?: Rounding
     color?: Color
     element?: string
+    icon?: IconSource
     class?: ClassValue
     children?: import('svelte').Snippet
     [key: string]: any
@@ -64,6 +66,7 @@
     rounding = 'xl',
     color = 'uniform',
     element = 'div',
+    icon,
     class: clazz = '',
     children,
     ...rest
@@ -82,6 +85,14 @@
     clazz,
   ]}
 >
+  {#if icon}
+    <Icon
+      src={icon}
+      size="20"
+      mini
+      class="inline-block rounded-lg clear-both float-left mr-2"
+    />
+  {/if}
   {@render children?.()}
 </svelte:element>
 
@@ -159,7 +170,7 @@
     .material-error {
       background: linear-gradient(
         to bottom,
-        --alpha(var(--color-red-300) / 10%),
+        --alpha(var(--color-red-300) / 5%),
         --alpha(var(--color-red-500) / 15%)
       );
 
@@ -189,7 +200,7 @@
     .material-warning {
       background: linear-gradient(
         to bottom,
-        --alpha(var(--color-yellow-300) / 10%),
+        --alpha(var(--color-yellow-300) / 5%),
         --alpha(var(--color-yellow-500) / 15%)
       );
 

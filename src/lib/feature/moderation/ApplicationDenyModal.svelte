@@ -3,7 +3,6 @@
   import { t } from '$lib/app/i18n'
   import MarkdownEditor from '$lib/app/markdown/MarkdownEditor.svelte'
   import { Button, Modal } from 'mono-svelte'
-  import { preventDefault } from 'svelte/legacy'
   import UserLink from '../user/UserLink.svelte'
 
   interface Props {
@@ -28,13 +27,14 @@
   }
 </script>
 
-<Modal bind:open>
-  {#snippet customTitle()}
-    <h1 class="text-2xl font-bold">
-      {$t('routes.admin.applications.modalTitle')}
-    </h1>
-  {/snippet}
-  <form onsubmit={preventDefault(() => deny())} class="flex flex-col gap-4">
+<Modal bind:open title={$t('routes.admin.applications.modalTitle')}>
+  <form
+    onsubmit={(e) => {
+      e.preventDefault()
+      deny()
+    }}
+    class="flex flex-col gap-4"
+  >
     <UserLink avatar {user} />
     <MarkdownEditor
       bind:value={denyReason}

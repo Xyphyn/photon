@@ -38,7 +38,7 @@
   <EntityHeader
     name={site.site.name}
     avatar={site.site.icon}
-    banner={site.site.banner ?? null}
+    banner={site.site.banner || null}
     compact="always"
     avatarCircle={false}
   />
