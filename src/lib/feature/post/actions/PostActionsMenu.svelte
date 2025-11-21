@@ -17,7 +17,7 @@
     Trash,
     XMark,
   } from 'svelte-hero-icons/dist'
-  import type { PostFormInit } from '../form/postform.svelte'
+  import { type PostFormInit } from '../form/postform.svelte'
   import { hidePost } from '../helpers'
 
   interface Props {
@@ -27,6 +27,21 @@
   }
 
   let { post = $bindable(), onhide, editing = $bindable() }: Props = $props()
+
+  function crosspostB64() {
+    return JSON.stringify({
+      body: `${
+        settings.crosspostOriginalLink
+          ? `cross-posted from: ${post.post.ap_id}`
+          : ``
+      }\n${
+        post.post.body ? '>' + post.post.body.split('\n').join('\n> ') : ''
+      }`,
+      name: post.post.name,
+      url: post.post.url,
+      nsfw: post.post.nsfw,
+    } as PostFormInit)
+  }
 </script>
 
 {#if profile.current?.user && profile.current?.jwt && profile.current.user.local_user_view.person.id == post.creator.id}
@@ -49,20 +64,7 @@
 {/if}
 {#if profile.current?.jwt}
   <MenuButton
-    href="/create/post?crosspost={btoa(
-      JSON.stringify({
-        body: `${
-          settings.crosspostOriginalLink
-            ? `cross-posted from: ${post.post.ap_id}`
-            : ``
-        }\n${
-          post.post.body ? '>' + post.post.body.split('\n').join('\n> ') : ''
-        }`,
-        name: post.post.name,
-        url: post.post.url,
-        nsfw: post.post.nsfw,
-      } as PostFormInit),
-    )}"
+    href="/create/post?crosspost={crosspostB64()}"
     icon={ArrowTopRightOnSquare}
   >
     {$t('post.actions.more.crosspost')}

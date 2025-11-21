@@ -8,11 +8,11 @@
   import Blobs from './Blobs.svelte'
 
   interface Props {
-    avatar?: string | undefined
+    avatar?: string
     name: string
-    bio?: string | undefined
-    banner?: string | undefined
-    url?: string | undefined
+    bio?: string
+    banner?: string | null
+    url?: string
     stats?: {
       name: string
       value: string | number
@@ -27,11 +27,11 @@
   }
 
   let {
-    avatar = undefined,
+    avatar,
     name,
-    bio = undefined,
-    banner = undefined,
-    url = undefined,
+    bio,
+    banner,
+    url,
     stats = [],
     class: clazz = '',
     nameDetail,
@@ -45,22 +45,24 @@
 
 <div {...rest} class={['z-10 text-sm w-full space-y-4 @container', clazz]}>
   <Material padding="xl" rounding="3xl" class="flex flex-col gap-2 @lg:gap-4">
-    <div
-      class="relative overflow-hidden rounded-t-[inherit] -m-6 mask-b-from-0 h-32 @lg:h-48"
-    >
-      {#if banner}
-        <img
-          src={banner}
-          class="w-full object-cover h-full bg-white dark:bg-zinc-900"
-          height="192"
-          alt="User banner"
-        />
-      {:else}
-        <div class="scale-150 h-full">
-          <Blobs seed={name} />
-        </div>
-      {/if}
-    </div>
+    {#if banner !== null}
+      <div
+        class="relative overflow-hidden rounded-t-[inherit] -m-6 mask-b-from-0 h-32 @lg:h-48"
+      >
+        {#if banner}
+          <img
+            src={banner}
+            class="w-full object-cover h-full bg-white dark:bg-zinc-900"
+            height="192"
+            alt="User banner"
+          />
+        {:else}
+          <div class="scale-150 h-full">
+            <Blobs seed={name} />
+          </div>
+        {/if}
+      </div>
+    {/if}
 
     {#snippet icon(width: number)}
       <Avatar
@@ -70,7 +72,7 @@
         circle={avatarCircle}
         class={[
           'relative',
-          '-mt-4 @md:-mt-8',
+          banner !== null && '-mt-4 @md:-mt-8',
           !avatarCircle && 'rounded-xl @md:rounded-3xl!',
         ]}
       />

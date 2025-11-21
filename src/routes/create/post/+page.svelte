@@ -23,9 +23,7 @@
   let crosspost = $derived.by<PostFormInit>(() => {
     const crosspostParam = page.url.searchParams.get('crosspost')
     try {
-      return crosspostParam
-        ? JSON.parse(atob(crosspostParam) || '{}')
-        : undefined
+      return crosspostParam ? JSON.parse(crosspostParam || '{}') : undefined
     } catch {
       return undefined
     }
