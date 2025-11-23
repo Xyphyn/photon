@@ -75,7 +75,8 @@
       // leading HTTPS is redundant
       form.instance = form.instance.trim().replace(/^https:\/\//, '')
 
-      await checkInstance()
+      if (!LINKED_INSTANCE_URL)
+      	await checkInstance()
 
       const response = await client({
         instanceURL: form.instance,
