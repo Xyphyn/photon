@@ -28,6 +28,7 @@
     EllipsisHorizontal,
     GlobeAlt,
     Icon,
+    Link,
     MapPin,
     Share,
     ShieldCheck,
@@ -218,10 +219,12 @@
     <MenuButton onclick={() => share(false)} icon={MapPin}>
       {$t('post.actions.more.share.local')}
     </MenuButton>
-    {#if !LINKED_INSTANCE_URL}
+    {#if !LINKED_INSTANCE_URL || post.post.url}
       <MenuDivider>
         <svelte:fragment></svelte:fragment>
       </MenuDivider>
+    {/if}
+    {#if !LINKED_INSTANCE_URL}
       <MenuButton
         onclick={() =>
           share(
@@ -231,6 +234,11 @@
         icon={Photon}
       >
         {$t('post.actions.more.share.photon')}
+      </MenuButton>
+    {/if}
+    {#if post.post.url}
+      <MenuButton onclick={() => share(false, post.post.url)} icon={Link}>
+        {$t('post.actions.more.share.url')}
       </MenuButton>
     {/if}
   </Menu>

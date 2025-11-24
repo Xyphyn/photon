@@ -1,13 +1,13 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
-  "productName": "photon-fedi",
+  "productName": "Photon",
   "version": "../package.json",
   "identifier": "app.phtn.client",
   "build": {
     "frontendDist": "../build",
     "devUrl": "http://localhost:5173",
-    "beforeDevCommand": "npm dev --host 0.0.0.0",
-    "beforeBuildCommand": "ADAPTER=static npm run build"
+    "beforeDevCommand": "bun dev --host 0.0.0.0",
+    "beforeBuildCommand": "ADAPTER=static bun run build"
   },
   "app": {
     "windows": [
