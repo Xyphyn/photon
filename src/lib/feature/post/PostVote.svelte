@@ -1,7 +1,7 @@
 <script lang="ts" module>
   export const voteColor = (vote: number) =>
     vote == 1
-      ? `bg-primary-900 dark:bg-primary-100 text-slate-50 dark:text-zinc-900`
+      ? `btn-primary border-0!`
       : vote == -1
         ? `bg-red-500 text-slate-50 dark:bg-red-400 dark:text-zinc-900`
         : ''
@@ -50,6 +50,7 @@
   }: Props = $props()
 
   const castVote = async (newVote: number) => {
+    if (navigator.vibrate) navigator.vibrate(1)
     if (!profile.current?.jwt) {
       toast({ content: $t('toast.loginVoteGate'), type: 'warning' })
       return
@@ -92,7 +93,7 @@
   <button
     onclick={() => castVote(vote == targetNum ? 0 : targetNum)}
     class={[
-      'flex items-center gap-0.5 transition-colors relative cursor-pointer h-full p-2 active:brightness-90',
+      'flex items-center gap-0.5 transition-colors relative cursor-pointer h-full p-2',
       'first:rounded-l-[inherit] last:rounded-r-[inherit]',
       'last:flex-row-reverse',
       vote == targetNum
@@ -100,7 +101,7 @@
             vote,
             target == 'upvote' ? 'upvotes' : 'downvotes',
           )
-        : 'hover:bg-slate-100 dark:hover:bg-zinc-800',
+        : 'btn-tertiary',
     ]}
     aria-pressed={vote == targetNum}
     aria-label={$t(

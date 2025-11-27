@@ -28,6 +28,7 @@
   }: Props = $props()
 
   const castVote = async (newVote: number) => {
+    if (navigator.vibrate) navigator.vibrate(1)
     if (!profile.current?.jwt) {
       toast({ content: $t('toast.loginVoteGate'), type: 'warning' })
       return
@@ -82,7 +83,7 @@
             vote,
             target == 'upvote' ? 'upvotes' : 'downvotes',
           )
-        : 'hover:bg-slate-100 dark:hover:bg-zinc-800',
+        : 'btn-tertiary',
     ]}
     aria-pressed={vote == targetNum}
     aria-label={$t(

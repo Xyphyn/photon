@@ -210,6 +210,13 @@
           filter: brightness(90%);
         }
       }
+
+      @variant active {
+        filter: brightness(95%);
+        @variant dark {
+          filter: brightness(85%);
+        }
+      }
     }
 
     .btn-secondary {
@@ -290,12 +297,19 @@
         background-color: var(--color-slate-100);
       }
 
+      @variant active {
+        background-color: --alpha(var(--color-slate-200) / 75%);
+      }
+
       @variant dark {
         border-color: var(--color-zinc-800);
         @variant hover {
           background-color: var(--color-zinc-800);
           border-color: var(--color-zinc-700);
           color: var(--color-zinc-200);
+        }
+        @variant active {
+          background-color: var(--color-zinc-900);
         }
       }
     }
