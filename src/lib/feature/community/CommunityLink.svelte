@@ -26,7 +26,7 @@
     avatar = false,
     name = true,
     avatarSize = 24,
-    showInstance = settings.showInstances.community,
+    showInstance = settings.value.showInstances.community,
     displayName = true,
     badges = {
       nsfw: false,

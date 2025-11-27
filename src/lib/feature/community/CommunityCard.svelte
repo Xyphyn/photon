@@ -322,7 +322,7 @@
       {$t('common.info')}
     </EndPlaceholder>
     <div class="space-y-3 px-1.5 text-sm">
-      <Expandable bind:open={settings.expand.about}>
+      <Expandable bind:open={settings.value.expand.about}>
         {#snippet title()}
           <span class="px-2 py-1 w-full">
             {$t('cards.site.about')}
@@ -332,7 +332,7 @@
       </Expandable>
 
       {#if moderators && moderators.length > 0}
-        <Expandable bind:open={settings.expand.team}>
+        <Expandable bind:open={settings.value.expand.team}>
           {#snippet title()}
             <span class="px-2 py-1 w-full">
               {$t('cards.community.moderators')}

@@ -1,13 +1,13 @@
 <script lang="ts">
   import { env } from '$env/dynamic/public'
-  import { profile } from '$lib/app/auth.svelte'
   import { t } from '$lib/app/i18n'
   import { LINKED_INSTANCE_URL } from '$lib/app/instance.svelte'
-  import { settings } from '$lib/app/settings.svelte'
+  import type { UserDataUi } from '$lib/app/server/userHost'
   import { theme } from '$lib/app/theme/theme.svelte'
   import { communityLink } from '$lib/app/util.svelte'
   import ProfileSelection from '$lib/feature/user/ProfileSelection.svelte'
   import { Badge, Expandable, Option, Select } from 'mono-svelte'
+  import { getContext } from 'svelte'
   import {
     ArrowLeftOnRectangle,
     Bookmark,
@@ -29,6 +29,8 @@
   import EndPlaceholder from '../layout/EndPlaceholder.svelte'
   import SidebarButton from './SidebarButton.svelte'
 
+  let user = getContext<UserDataUi>('user')
+
   interface Props {
     style?: string
     class?: ClassValue
@@ -45,14 +47,14 @@
   <ProfileSelection
     selectable={!(
       LINKED_INSTANCE_URL &&
-      !profile.current.jwt &&
-      profile.meta.profiles.length == 1
+      !user.profile.current.jwt &&
+      user.profile.meta.profiles.length == 1
     )}
-    profiles={profile.meta.profiles}
+    profiles={user.profile.meta.profiles}
   />
   <EndPlaceholder margin="sm" size="xs">{$t('profile.profile')}</EndPlaceholder>
-  {#if profile.current?.jwt}
-    {@const notifications = profile.inbox.notifications}
+  {#if user.profile.current?.jwt}
+    {@const notifications = user.profile.inbox.notifications}
     <SidebarButton
       icon={UserCircle}
       href="/profile"
@@ -118,28 +120,28 @@
     {/snippet}
   </Select>
   <SidebarButton href="/theme" label={$t('nav.menu.theme')} icon={Swatch} />
-  {#if profile.current?.user}
+  {#if user.profile.current?.user}
     <EndPlaceholder margin="sm" size="xs">
       {$t('content.communities')}
     </EndPlaceholder>
 
     <div class="space-y-3">
-      {#if profile.current?.user.moderates.length > 0}
-        <Expandable class="px-1.5" bind:open={settings.expand.moderates}>
+      {#if user.profile.current?.user.moderates.length > 0}
+        <Expandable class="px-1.5" bind:open={user.settings.expand.moderates}>
           {#snippet title()}
             <span class="px-2 py-1 w-full">
               <EndPlaceholder border={false}>
                 {$t('routes.profile.moderates')}
                 {#snippet action()}
                   <span class="dark:text-white text-black">
-                    {profile.current.user?.moderates.length}
+                    {user.profile.current.user?.moderates.length}
                   </span>
                 {/snippet}
               </EndPlaceholder>
             </span>
           {/snippet}
           <ItemList
-            items={profile.current.user.moderates.map((i) => ({
+            items={user.profile.current.user.moderates.map((i) => ({
               id: i.community.id,
               name: i.community.title,
               url: communityLink(i.community),
@@ -150,14 +152,14 @@
         </Expandable>
       {/if}
 
-      <Expandable class="px-1.5" bind:open={settings.expand.communities}>
+      <Expandable class="px-1.5" bind:open={user.settings.expand.communities}>
         {#snippet title()}
           <span class="px-2 py-1 w-full">
             <EndPlaceholder border={false}>
               {$t('profile.subscribed')}
               {#snippet action()}
                 <span class="dark:text-white text-black">
-                  {profile.current.user?.follows.length}
+                  {user.profile.current.user?.follows.length}
                 </span>
               {/snippet}
             </EndPlaceholder>
@@ -165,7 +167,7 @@
         {/snippet}
 
         <ItemList
-          items={profile.current.user.follows.map((i) => ({
+          items={user.profile.current.user.follows.map((i) => ({
             id: i.community.id,
             name: i.community.title,
             url: communityLink(i.community),

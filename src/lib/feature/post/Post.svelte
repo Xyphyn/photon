@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { PostView } from '$lib/api/types'
   import { profile } from '$lib/app/auth.svelte'
-  import { type View, settings } from '$lib/app/settings.svelte'
+  import { settings, type View } from '$lib/app/settings.svelte'
   import { publishedToDate } from '$lib/ui/util/date'
   import type { ClassValue } from 'svelte/elements'
   import {
@@ -12,13 +12,13 @@
     PostMeta,
   } from '.'
   import { mediaType } from './helpers'
-  import { type Tag, parseTags } from './PostMeta.svelte'
+  import { parseTags, type Tag } from './PostMeta.svelte'
 
   function getTagRule(tags: Tag[]): 'blur-sm' | 'hide' | undefined {
     const tagContent = tags.map((t) => t.content.toLowerCase())
 
     let rule: 'blur-sm' | 'hide' | undefined
-    if (settings.nsfwBlur && (post.post.nsfw || post.community.nsfw))
+    if (settings.value.nsfwBlur && (post.post.nsfw || post.community.nsfw))
       rule = 'blur-sm'
     tagContent.forEach(() => {
       if (rule == 'hide') return rule
@@ -42,7 +42,7 @@
     post = $bindable(),
     actions = true,
     hideCommunity = false,
-    view = settings.view,
+    view = settings.value.view,
     style = '',
     class: clazz = '',
     extraBadges,
@@ -69,7 +69,7 @@
   let type = $derived(mediaType(post.post))
   let rule = $derived(getTagRule(tags.tags))
   let hideTitle = $derived(
-    settings.posts.deduplicateEmbed &&
+    settings.value.posts.deduplicateEmbed &&
       post.post.embed_title == post.post.name &&
       view != 'compact' &&
       type != 'iframe',
@@ -95,7 +95,7 @@
 <article
   class={[
     'relative group/post',
-    settings.leftAlign && 'left-align',
+    settings.value.leftAlign && 'left-align',
     view == 'compact' && 'py-3 list-type compact',
     view == 'cozy' && 'py-5 flex flex-col gap-2',
     clazz,
@@ -139,7 +139,9 @@
       <PostMediaCompact
         post={post.post}
         {type}
-        class="{settings.leftAlign ? 'mr-3' : 'ml-3'} shrink no-list-margin"
+        class="{settings.value.leftAlign
+          ? 'mr-3'
+          : 'ml-3'} shrink no-list-margin"
         style="grid-area: media;"
         blur={rule == 'blur-sm' ? true : undefined}
         {view}

@@ -242,7 +242,7 @@
           />
         {/if}
       </span>
-      {#if settings.debugInfo}
+      {#if settings.value.debugInfo}
         <span class="text-slate-600 dark:text-zinc-400 font-mono ml-auto">
           #{node.comment_view.comment.id}
         </span>

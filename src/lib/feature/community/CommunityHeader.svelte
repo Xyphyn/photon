@@ -59,7 +59,7 @@
     counts = undefined,
     moderators = [],
     blocked = false,
-    banner = !(settings.nsfwBlur && community.nsfw),
+    banner = !(settings.value.nsfwBlur && community.nsfw),
     class: clazz = '',
     compact,
     ...rest

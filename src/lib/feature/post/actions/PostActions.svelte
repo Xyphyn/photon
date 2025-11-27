@@ -110,7 +110,7 @@
     'flex flex-row gap-2 items-center shrink-0 text-slate-600 dark:text-zinc-400',
     buttonHeight,
   ]}
-  class:flex-row-reverse={settings.posts.reverseActions}
+  class:flex-row-reverse={settings.value.posts.reverseActions}
   {style}
 >
   <PostVote
@@ -127,7 +127,7 @@
     class="text-inherit! h-full px-3 relative"
     color="ghost"
     rounding="pill"
-    target={settings.openLinksInNewTab ? '_blank' : ''}
+    target={settings.value.openLinksInNewTab ? '_blank' : ''}
     aria-label={$t('post.actions.comments')}
   >
     {@const newComment =
@@ -142,7 +142,7 @@
   </Button>
   <div class="flex-1"></div>
 
-  {#if settings.debugInfo}
+  {#if settings.value.debugInfo}
     {#if debug}
       {#await import('$lib/ui/util/debug/DebugObject.svelte') then { default: DebugObject }}
         <DebugObject object={post} bind:open={debug} />

@@ -20,7 +20,7 @@
     post,
     type = 'none',
     opened = undefined,
-    blur = post.nsfw && settings.nsfwBlur,
+    blur = post.nsfw && settings.value.nsfwBlur,
     ...rest
   }: Props = $props()
 </script>

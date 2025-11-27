@@ -238,7 +238,7 @@
     </div>
   {/each}
 </div>
-{#if settings.debugInfo}
+{#if settings.value.debugInfo}
   <Expandable>
     {#snippet title()}
       Debug

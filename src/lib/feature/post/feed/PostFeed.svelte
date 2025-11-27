@@ -37,9 +37,9 @@
         <Post
           hideCommunity={community}
           view={(post.post.featured_community || post.post.featured_local) &&
-          settings.posts.compactFeatured
+          settings.value.posts.compactFeatured
             ? 'compact'
-            : settings.view}
+            : settings.value.view}
           {post}
           class="transition-all duration-250"
           onhide={() => {

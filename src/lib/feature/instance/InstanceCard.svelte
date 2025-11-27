@@ -127,7 +127,7 @@
       {$t('common.info')}
     </EndPlaceholder>
     <div class="space-y-3 px-1.5 text-sm">
-      <Expandable bind:open={settings.expand.about}>
+      <Expandable bind:open={settings.value.expand.about}>
         {#snippet title()}
           <span class="flex items-center gap-1 py-1 px-2 w-full">
             {$t('cards.site.about')}
@@ -148,7 +148,7 @@
       </Expandable>
 
       {#if admins}
-        <Expandable bind:open={settings.expand.team}>
+        <Expandable bind:open={settings.value.expand.team}>
           {#snippet title()}
             <span class="flex items-center gap-1 py-1 px-2 w-full">
               {$t('cards.site.admins')}

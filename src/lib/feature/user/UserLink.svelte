@@ -77,9 +77,9 @@
     avatarSize = 24,
     badges = true,
     inComment = false,
-    showInstance = settings.showInstances.user ||
-      (settings.showInstances.comments && inComment),
-    displayName = settings.displayNames,
+    showInstance = settings.value.showInstances.user ||
+      (settings.value.showInstances.comments && inComment),
+    displayName = settings.value.displayNames,
     instanceClass = '',
     class: clazz = '',
     children,

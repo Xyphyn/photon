@@ -29,7 +29,7 @@
 
           let language = locale ?? 'en'
 
-          if (settings.absoluteDates) {
+          if (settings.value.absoluteDates) {
             const rtf = new Intl.DateTimeFormat(language, {
               ...options,
               timeStyle: 'short',

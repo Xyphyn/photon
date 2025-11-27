@@ -181,7 +181,7 @@
         items={posts}
         {initialOffset}
         overscan={3}
-        estimatedHeight={settings.view == 'cozy' ? 500 : 150}
+        estimatedHeight={settings.value.view == 'cozy' ? 500 : 150}
         bind:restore={virtualList}
         bind:this={listComp}
       >
@@ -198,9 +198,9 @@
               hideCommunity={community}
               view={(posts[row]?.post.featured_community ||
                 posts[row]?.post.featured_local) &&
-              settings.posts.compactFeatured
+              settings.value.posts.compactFeatured
                 ? 'compact'
-                : settings.view}
+                : settings.value.view}
               onhide={() => {
                 posts = posts.toSpliced(row, 1)
               }}
@@ -212,7 +212,7 @@
     {/if}
   {/key}
 
-  {#if settings.infiniteScroll && browser && posts.length > 0}
+  {#if settings.value.infiniteScroll && browser && posts.length > 0}
     {#if error}
       <Material color="error" class="flex flex-col gap-4">
         <div>

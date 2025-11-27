@@ -21,7 +21,7 @@
 
   let previousTop = 0
   const onscroll: UIEventHandler<Window> = () => {
-    if (!settings.dock.autoHide) {
+    if (!settings.value.dock.autoHide) {
       dockVisible = true
       return
     }
@@ -53,7 +53,9 @@
       class: ['shell-navbar'],
     })}
   </div>
-  <div class={['shell-content flex-1', settings.newWidth && 'limit-width']}>
+  <div
+    class={['shell-content flex-1', settings.value.newWidth && 'limit-width']}
+  >
     {@render sidebar?.({
       class: `shell-aside shell-sidebar`,
     })}

@@ -47,7 +47,7 @@
   }: Props = $props()
 
   $effect(() => {
-    if (filters.sort) settings.defaultSort.sort = filters.sort
+    if (filters.sort) settings.value.defaultSort.sort = filters.sort
   })
 
   let filters = $state({
@@ -56,7 +56,9 @@
   })
 
   const FeedComponent = $derived(
-    settings.infiniteScroll && browser && !settings.posts.noVirtualize
+    settings.value.infiniteScroll &&
+      browser &&
+      !settings.value.posts.noVirtualize
       ? VirtualFeed
       : PostFeed,
   )
@@ -107,7 +109,7 @@
     virtualList={{ itemHeights: client?.itemHeights ?? [] }}
   />
   <svelte:element
-    this={settings.infiniteScroll && !settings.posts.noVirtualize
+    this={settings.value.infiniteScroll && !settings.value.posts.noVirtualize
       ? 'noscript'
       : 'div'}
     class="mt-auto flex flex-col"

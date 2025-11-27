@@ -3,7 +3,7 @@
   import { profile } from '$lib/app/auth.svelte'
   import { t } from '$lib/app/i18n'
   import Markdown from '$lib/app/markdown/Markdown.svelte'
-  import { type View, settings } from '$lib/app/settings.svelte'
+  import { settings, type View } from '$lib/app/settings.svelte'
   import Avatar from '$lib/ui/generic/Avatar.svelte'
   import { publishedToDate } from '$lib/ui/util/date'
   import { Badge, Material, modal, Popover } from 'mono-svelte'
@@ -11,7 +11,6 @@
     formatRelativeDate,
   } from 'mono-svelte/util/RelativeDate.svelte'
   import {
-    type IconSource,
     Bookmark,
     ExclamationTriangle,
     Icon,
@@ -22,6 +21,7 @@
     ShieldCheck,
     Tag,
     Trash,
+    type IconSource,
   } from 'svelte-hero-icons/dist'
   import { SvelteMap } from 'svelte/reactivity'
   import CommunityLink from '../community/CommunityLink.svelte'
@@ -213,7 +213,7 @@
             'bg-slate-200 dark:bg-zinc-800 rounded-lg cursor-pointer',
           ]}
         >
-          {#if community.nsfw && settings.nsfwBlur}
+          {#if community.nsfw && settings.value.nsfwBlur}
             <div
               style="width: {view == 'compact' ? 24 : 32}; height: {view ==
               'compact'
@@ -357,12 +357,14 @@
   </div>
 </header>
 {#if title && id}
-  {@const useAttachedUrl = settings.posts.titleOpensUrl && postUrl}
+  {@const useAttachedUrl = settings.value.posts.titleOpensUrl && postUrl}
   <h3
     class={[
       'font-medium max-sm:mt-0! font-display',
       titleClass,
-      settings.markReadPosts && read && 'text-slate-600 dark:text-zinc-400',
+      settings.value.markReadPosts &&
+        read &&
+        'text-slate-600 dark:text-zinc-400',
       view == 'compact' ? 'text-base' : 'text-lg',
     ]}
     style="grid-area: title;"

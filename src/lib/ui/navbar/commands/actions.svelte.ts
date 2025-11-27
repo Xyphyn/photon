@@ -333,14 +333,14 @@ export function getGroups(
                 default: t.get('filter.view.compact'),
               }),
               icon: ViewColumns,
-              handle: () => (settings.view = 'compact'),
+              handle: () => (settings.value.view = 'compact'),
             },
             {
               name: t.get('nav.commands.setViewTo', {
                 default: t.get('filter.view.cozy'),
               }),
               icon: ViewColumns,
-              handle: () => (settings.view = 'cozy'),
+              handle: () => (settings.value.view = 'cozy'),
             },
           ],
         },

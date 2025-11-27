@@ -30,18 +30,19 @@
 
   let reason = $state('')
   let commentReason: boolean = $state(
-    settings.moderation.defaultRemoveAction != null,
+    settings.value.moderation.defaultRemoveAction != null,
   )
   let privateMessage: boolean = $state(
-    settings.moderation.defaultRemoveAction == 'message',
+    settings.value.moderation.defaultRemoveAction == 'message',
   )
   let loading = $state(false)
-  let preset = $state(settings.moderation.presets[0]?.content ?? '')
+  let preset = $state(settings.value.moderation.presets[0]?.content ?? '')
 
   $effect(() => {
-    if (!commentReason) settings.moderation.defaultRemoveAction = null
-    else if (privateMessage) settings.moderation.defaultRemoveAction = 'message'
-    else settings.moderation.defaultRemoveAction = 'comment'
+    if (!commentReason) settings.value.moderation.defaultRemoveAction = null
+    else if (privateMessage)
+      settings.value.moderation.defaultRemoveAction = 'message'
+    else settings.value.moderation.defaultRemoveAction = 'comment'
   })
 
   let removed = $derived(
@@ -236,7 +237,7 @@
               <div class="flex justify-between items-end mb-1">
                 {$t('comment.reply')}
                 <Select bind:value={preset} placeholder="No preset">
-                  {#each settings.moderation.presets as preset}
+                  {#each settings.value.moderation.presets as preset}
                     <Option value={preset.content}>
                       {preset.title}
                     </Option>

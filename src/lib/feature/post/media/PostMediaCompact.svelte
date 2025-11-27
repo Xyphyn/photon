@@ -32,7 +32,7 @@
     post,
     type = 'none',
     view = 'cozy',
-    blur = post.nsfw && settings.nsfwBlur,
+    blur = post.nsfw && settings.value.nsfwBlur,
     style = '',
     class: clazz = '',
   }: Props = $props()
@@ -46,7 +46,7 @@
 -->
 <div class={[size, 'relative group/media', clazz]} {style} role="presentation">
   <svelte:element
-    this={!settings.expandImages || type != 'image' ? 'a' : 'button'}
+    this={!settings.value.expandImages || type != 'image' ? 'a' : 'button'}
     href={postLink(post)}
     aria-label={type == 'image'
       ? $t('aria.postDecor.openImage', { default: post.name })

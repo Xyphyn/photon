@@ -37,7 +37,7 @@ export interface ProfileInfo {
 /**
  * What gets stored in localstorage.
  */
-interface ProfileData {
+export interface ProfileData {
   profiles: ProfileInfo[]
   // should be named currentId
   profile: number
@@ -59,7 +59,7 @@ const getCookie = (key: string): string | undefined => {
     ?.split('=')?.[1]
 }
 
-class Profile {
+export class Profile {
   private static readonly DONATION_CHECK_TIMEOUT = 3 * 1000
   private static readonly DONATION_REMINDER_INTERVAL = 375 * 24 * 60 * 60 * 1000
 
@@ -79,11 +79,11 @@ class Profile {
   )
   #current = $derived(
     this.meta.profiles.find((i) => i.id == this.meta.profile) ??
-      this.getDefaultProfile(),
+      Profile.getDefaultProfile(),
   )
   inbox: InboxService = $state(new InboxService(this))
 
-  getDefaultProfile(): ProfileInfo {
+  static getDefaultProfile(): ProfileInfo {
     return {
       id: -1,
       instance: DEFAULT_INSTANCE_URL,
@@ -91,7 +91,9 @@ class Profile {
     }
   }
 
-  constructor() {
+  constructor(init?: ProfileData) {
+    if (init) this.meta = init
+
     this.initCookieMigrate()
     this.donationPoll(Profile.DONATION_CHECK_TIMEOUT)
   }
@@ -292,7 +294,7 @@ class Profile {
 
       // no more profiles left
       if (serialized.profiles.length == 0) {
-        this.meta.profiles = [this.getDefaultProfile()]
+        this.meta.profiles = [Profile.getDefaultProfile()]
         this.meta.profile = 1
       }
     })

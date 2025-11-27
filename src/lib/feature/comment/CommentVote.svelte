@@ -113,7 +113,7 @@
 <div
   class={[
     'h-full relative flex items-center overflow-hidden rounded-full font-medium',
-    voteRatio < 85 && settings.voteRatioBar && 'vote-ratio',
+    voteRatio < 85 && settings.value.voteRatioBar && 'vote-ratio',
     'divide-x divide-slate-200 dark:divide-zinc-800 border border-slate-200 dark:border-zinc-800',
   ]}
   style="--vote-ratio: {voteRatio}%;"

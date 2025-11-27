@@ -17,7 +17,7 @@
   let { showLabel = true, ...rest }: Props = $props()
 </script>
 
-<Select {...rest} bind:value={settings.view}>
+<Select {...rest} bind:value={settings.value.view}>
   {#snippet customLabel()}
     {#if showLabel}
       <span class="flex items-center gap-1">

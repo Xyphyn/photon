@@ -51,7 +51,7 @@ export class Feed<Params, Response> {
 }
 
 export interface FeedTypes {
-  '/': [
+  '/(app)': [
     GetPosts,
     {
       posts: PostView[]
@@ -63,7 +63,7 @@ export interface FeedTypes {
       }
     },
   ]
-  '/c/[name]': [
+  '/(app)/c/[name]': [
     GetPosts,
     {
       posts: PostView[]
@@ -73,8 +73,8 @@ export interface FeedTypes {
       client: { itemHeights?: (number | null)[]; lastSeen?: number }
     },
   ]
-  '/u/[name]': [GetPersonDetails, { data: GetPersonDetailsResponse }]
-  '/post/[instance]/[id=integer]': [
+  '/(app)/u/[name]': [GetPersonDetails, { data: GetPersonDetailsResponse }]
+  '/(app)/post/[instance]/[id=integer]': [
     {
       posts: GetPost
       comments: GetComments
@@ -104,7 +104,7 @@ export interface FeedTypes {
       }
     },
   ]
-  '/explore/communities': [
+  '/(app)/explore/communities': [
     {
       type: ListingType
       sort: SortType
@@ -113,7 +113,7 @@ export interface FeedTypes {
     },
     ListCommunitiesResponse,
   ]
-  '/f/[id]': [
+  '/(app)/f/[id]': [
     GetPosts,
 
     {
@@ -127,7 +127,7 @@ export interface FeedTypes {
       }
     },
   ]
-  '/topic/[id]': [
+  '/(app)/topic/[id]': [
     GetPosts,
     {
       posts: PostView[]

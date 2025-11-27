@@ -344,7 +344,7 @@
       {/snippet}
     </EndPlaceholder>
 
-    {#if settings.debugInfo}
+    {#if settings.value.debugInfo}
       {form.poll?.end_poll}
     {/if}
   {/if}

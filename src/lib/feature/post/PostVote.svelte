@@ -138,7 +138,7 @@
     class={[
       buttonColor.ghost,
       'rounded-full h-full font-medium flex relative hover:bg-transparent!',
-      voteRatio < 85 && settings.voteRatioBar && 'vote-ratio',
+      voteRatio < 85 && settings.value.voteRatioBar && 'vote-ratio',
     ]}
     aria-label={$t('aria.vote.group')}
     style="--vote-ratio: {voteRatio}%;"

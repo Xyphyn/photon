@@ -16,10 +16,10 @@
         return 'www.youtube-nocookie.com'
       }
       case 'invidious': {
-        return settings.embeds.invidious || 'yewtu.be'
+        return settings.value.embeds.invidious || 'yewtu.be'
       }
       case 'piped': {
-        return settings.embeds.piped || 'piped.video'
+        return settings.value.embeds.piped || 'piped.video'
       }
     }
   }
@@ -50,7 +50,7 @@
 
       if (videoID) {
         const embedUrl = new URL(
-          `https://${youtubeDomain(settings.embeds.youtube)}/embed/${videoID}`,
+          `https://${youtubeDomain(settings.value.embeds.youtube)}/embed/${videoID}`,
         )
 
         embedUrl.searchParams.set('start', url.searchParams.get('t') ?? '')
@@ -110,8 +110,8 @@
     thumbnail = undefined,
     url,
     title,
-    opened = $bindable(!settings.embeds.clickToView),
-    autoplay = settings.embeds.clickToView,
+    opened = $bindable(!settings.value.embeds.clickToView),
+    autoplay = settings.value.embeds.clickToView,
   }: Props = $props()
 
   let data = $derived(typeData(type))

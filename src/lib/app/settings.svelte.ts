@@ -20,7 +20,7 @@ interface Preset {
   content: string
 }
 
-interface Settings {
+export interface Settings {
   settingsVer: number
   expandableImages: boolean
   // should have been named "fade" read posts
@@ -181,31 +181,45 @@ export const defaultSettings: Settings = {
   voteRatioBar: false,
 }
 
-function createSettingsState(initial: Settings): Settings {
-  let settings = $state(initial)
-  if (browser) {
+export class SettingsData {
+  #value: Settings = $state(defaultSettings)
+
+  constructor(init?: Settings) {
+    if (init) {
+      this.#value = init
+      return
+    }
+
     try {
       const localSettings = JSON.parse(localStorage.getItem('settings') ?? '{}')
-      const merged = mergeDeep(initial, localSettings)
+      const merged = mergeDeep(defaultSettings, localSettings)
 
-      settings = merged
+      this.#value = merged
+      return
     } catch {
       /* empty */
     }
+
+    this.#value = defaultSettings
   }
-  return settings
+
+  get value(): Settings {
+    return this.#value
+  }
+
+  set value(v: Settings) {
+    this.#value = v
+  }
 }
 
-export const settings = createSettingsState(
-  JSON.parse(JSON.stringify(defaultSettings)),
-)
+export const settings = new SettingsData()
 
 $effect.root(() => {
   $effect(() => {
-    localStorage.setItem('settings', JSON.stringify(settings))
+    localStorage.setItem('settings', JSON.stringify(settings.value))
 
-    if (settings.language) {
-      locale.set(settings.language)
+    if (settings.value.language) {
+      locale.set(settings.value.language)
     } else {
       if (browser) locale.set(navigator?.language)
     }

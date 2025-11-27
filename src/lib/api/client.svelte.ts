@@ -1,4 +1,4 @@
-import { profile } from '$lib/app/auth.svelte'
+import { profile, type ProfileInfo } from '$lib/app/auth.svelte'
 import { DEFAULT_INSTANCE_URL } from '$lib/app/instance.svelte'
 import { instanceToURL } from '$lib/app/util.svelte'
 import { error } from '@sveltejs/kit'
@@ -56,6 +56,7 @@ export function client({
   func,
   auth,
   clientType,
+  profile: passedProfile,
 }: {
   instanceURL?: string
   func?: (
@@ -64,18 +65,20 @@ export function client({
   ) => Promise<Response>
   auth?: string
   clientType?: ClientType
+  profile?: ProfileInfo
 } = {}): BaseClient {
-  if (!instanceURL)
-    instanceURL = profile.current.instance || DEFAULT_INSTANCE_URL
+  const p = passedProfile ?? profile.current
+
+  if (!instanceURL) instanceURL = p.instance || DEFAULT_INSTANCE_URL
 
   if (!clientType) {
-    clientType = profile.current.client ?? DEFAULT_CLIENT_TYPE
+    clientType = p.client ?? DEFAULT_CLIENT_TYPE
   }
 
   // we use nullish coealsiaihsa something so that
   // we can set auth = '' to remove it
 
-  const jwt = auth ?? profile.current?.jwt
+  const jwt = auth ?? p.jwt
 
   // but not here, so that if jwt == '', it doesnt put a bearer
   const headers = jwt ? { authorization: `Bearer ${jwt}` } : {}

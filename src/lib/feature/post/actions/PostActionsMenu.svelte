@@ -31,7 +31,7 @@
   function crosspostB64() {
     return JSON.stringify({
       body: `${
-        settings.crosspostOriginalLink
+        settings.value.crosspostOriginalLink
           ? `cross-posted from: ${post.post.ap_id}`
           : ``
       }\n${

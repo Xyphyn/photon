@@ -21,7 +21,7 @@
 
 <!--disabled preloads here since most people will hover over every image while scrolling-->
 <svelte:element
-  this={settings.expandImages ? 'button' : 'a'}
+  this={settings.value.expandImages ? 'button' : 'a'}
   href={postLink(post)}
   class={[
     'container/a z-10 rounded-2xl cursor-pointer relative overflow-hidden',

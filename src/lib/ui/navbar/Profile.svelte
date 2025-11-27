@@ -136,7 +136,7 @@
 <MenuButton href="/theme" icon={Swatch}>
   {$t('nav.menu.theme')}
 </MenuButton>
-{#if settings.debugInfo}
+{#if settings.value.debugInfo}
   <MenuButton href="/util" icon={BugAnt}>Debug</MenuButton>
 {/if}
 <li class="flex flex-col px-2 py-1 mx-auto my-1 text-xs w-full">

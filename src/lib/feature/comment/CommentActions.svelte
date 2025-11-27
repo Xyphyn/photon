@@ -38,7 +38,7 @@
 <div
   class={[
     'flex flex-row items-center gap-0.5 w-full',
-    settings.posts.reverseActions && 'flex-row-reverse',
+    settings.value.posts.reverseActions && 'flex-row-reverse',
   ]}
 >
   <CommentVote

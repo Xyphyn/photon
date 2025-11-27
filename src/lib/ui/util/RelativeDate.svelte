@@ -75,7 +75,7 @@
       numeric: 'always',
       style: 'narrow',
     },
-    absolute = settings.absoluteDates,
+    absolute = settings.value.absoluteDates,
     style = '',
     class: clazz = '',
   }: Props = $props()
