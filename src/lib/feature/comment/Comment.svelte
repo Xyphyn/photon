@@ -268,10 +268,10 @@
           class={[
             'text-[15px] sm:text-base text-slate-700 dark:text-zinc-300 *:leading-[1.6] break-words space-y-3',
             node.comment_view.comment.distinguished
-              ? 'bg-green-400/10 p-2 rounded-xl max-w-max font-medium'
+              ? 'material-success px-3 py-1.5 rounded-xl max-w-max'
               : page.url.hash.slice(1) ==
                   node.comment_view.comment.id.toString() &&
-                'bg-slate-100 dark:bg-zinc-900 p-2 rounded-xl max-w-max',
+                'material-info px-3 py-1.5 rounded-xl max-w-max',
           ]}
         />
         {#if actions}
