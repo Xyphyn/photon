@@ -59,7 +59,7 @@
       label={$t('profile.profile')}
     />
     <SidebarButton icon={Inbox} href="/inbox" label={$t('profile.inbox')}>
-      {#if notifications.inbox}
+      {#if notifications.inbox > 0}
         <Badge
           class="min-w-5 h-5 p-0! px-0.5 grid place-items-center ml-auto"
           color="red-subtle"

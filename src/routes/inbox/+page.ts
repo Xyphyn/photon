@@ -52,7 +52,13 @@ export async function load({ url, fetch }) {
   const data = [
     ...replies.replies.map(generalizeCommentReply),
     ...mentions.mentions.map(generalizePersonMention),
-    ...privateMessages.private_messages.map(generalizePrivateMessage),
+    ...privateMessages.private_messages
+      .filter(
+        (i) =>
+          i.private_message.creator_id !=
+          profile.current.user?.local_user_view.person.id,
+      )
+      .map(generalizePrivateMessage),
   ].sort(
     (a, b) =>
       publishedToDate(b.published).getTime() -

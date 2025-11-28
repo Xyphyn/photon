@@ -3,6 +3,7 @@ import { ReactiveState } from '$lib/app/util.svelte'
 
 export async function load({ fetch, params }) {
   const creator = Number(params.user_id)
+  const LIMIT = 50
 
   const userPromise = client({ func: fetch }).getPersonDetails({
     person_id: creator,
@@ -11,7 +12,7 @@ export async function load({ fetch, params }) {
 
   const messagePromise = client({ func: fetch }).getPrivateMessages({
     creator_id: Number(params.user_id),
-    limit: 50,
+    limit: LIMIT,
     page: 1,
   })
 
@@ -20,5 +21,6 @@ export async function load({ fetch, params }) {
   return {
     message: new ReactiveState(message),
     creator: new ReactiveState(user),
+    limit: LIMIT,
   }
 }

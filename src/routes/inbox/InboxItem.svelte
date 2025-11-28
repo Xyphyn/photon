@@ -9,9 +9,16 @@
   import PrivateMessage from '$lib/feature/inbox/PrivateMessage.svelte'
   import Avatar from '$lib/ui/generic/Avatar.svelte'
   import { publishedToDate } from '$lib/ui/util/date'
-  import { Button, ButtonGroup, Expandable } from 'mono-svelte'
+  import { Button, ButtonGroup, Expandable, Material } from 'mono-svelte'
   import RelativeDate from 'mono-svelte/util/RelativeDate.svelte'
-  import { Eye, EyeSlash } from 'svelte-hero-icons/dist'
+  import {
+    AtSymbol,
+    ChatBubbleOvalLeftEllipsis,
+    Eye,
+    EyeSlash,
+    Icon,
+    PaperAirplane,
+  } from 'svelte-hero-icons/dist'
 
   interface Props {
     item: InboxItem
@@ -92,7 +99,25 @@
 <Expandable open icon={false}>
   {#snippet title()}
     <div class="flex flex-row gap-2 items-center w-full">
-      <Avatar url={item.creator.avatar} width={28} alt={item.creator.name} />
+      <div class="relative">
+        <Avatar url={item.creator.avatar} width={28} alt={item.creator.name} />
+        <Material
+          color="uniform"
+          padding="none"
+          class="absolute -bottom-2 -right-2 p-1"
+          rounding="full"
+        >
+          <Icon
+            src={item.type == 'comment_reply'
+              ? ChatBubbleOvalLeftEllipsis
+              : item.type == 'person_mention'
+                ? AtSymbol
+                : PaperAirplane}
+            size="12"
+            micro
+          />
+        </Material>
+      </div>
       <div class="flex flex-col">
         <div class="text-sm font-normal text-slate-600 dark:text-zinc-400">
           {#if item.type == 'comment_reply'}

@@ -101,12 +101,7 @@
 {:else}
   <CommonList size="md">
     {#each data.inbox.value as item}
-      <li
-        class={[
-          'lg:px-2.5 lg:py-1.5',
-          !item.read && 'bg-blue-300/10! dark:bg-blue-500/5!',
-        ]}
-      >
+      <li class={[!item.read && 'bg-blue-300/10! dark:bg-blue-500/5!']}>
         <InboxItem {item} />
       </li>
     {/each}
