@@ -87,7 +87,7 @@
       @variant md {
         height: calc(var(--spacing) * 8);
       }
-      transition: 100ms cubic-bezier(0.075, 0.82, 0.165, 1);
+      transition: 125ms cubic-bezier(0.075, 0.82, 0.165, 1);
 
       color: var(--color-slate-500);
 
@@ -126,7 +126,8 @@
     .nav-btn-dynamic {
       @variant md {
         width: max-content;
-        padding: calc(var(--spacing)) calc(var(--spacing) * 3);
+        height: max-content;
+        padding: calc(var(--spacing) * 1.25) calc(var(--spacing) * 3);
 
         @variant hover {
           background-color: --alpha(var(--color-slate-200) / 50%);

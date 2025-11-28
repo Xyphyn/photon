@@ -89,6 +89,9 @@ interface Settings {
     reverseActions: boolean
     titleOpensUrl: boolean
   }
+  forms: {
+    autosubmitAutofill: boolean
+  }
   infiniteScroll: boolean
   language: string | null
   useRtl: boolean
@@ -103,7 +106,7 @@ interface Settings {
 }
 
 export const defaultSettings: Settings = {
-  settingsVer: 6,
+  settingsVer: 7,
   expandableImages: toBool(env.PUBLIC_EXPANDABLE_IMAGES) ?? true,
   markReadPosts: toBool(env.PUBLIC_MARK_READ_POSTS) ?? true,
   showInstances: {
@@ -168,6 +171,9 @@ export const defaultSettings: Settings = {
     noVirtualize: false,
     reverseActions: toBool(env.PUBLIC_REVERSE_ACTIONS) ?? false,
     titleOpensUrl: toBool(env.PUBLIC_TITLE_OPENS_URL) ?? false,
+  },
+  forms: {
+    autosubmitAutofill: false,
   },
   infiniteScroll: true,
   language: env.PUBLIC_LANGUAGE ?? null,

@@ -37,7 +37,6 @@
     Check,
     Icon,
     Language,
-    Link,
     Photo,
     Plus,
     Sparkles,
@@ -71,6 +70,20 @@
 
   let loading = $state<boolean>(false)
   let uploadImage = $state(false)
+
+  async function autofill(
+    url: URL,
+  ): Promise<{ title?: string; body?: string }> {
+    const res = await autofillPost(url)
+
+    if (settings.forms.autosubmitAutofill) {
+      form.title = res.title || form.title
+      form.body = res.body || form.body
+      history?.back?.()
+    }
+
+    return res
+  }
 </script>
 
 {#if client() instanceof PiefedClient && !editPost}
@@ -137,16 +150,23 @@
 {#snippet autofillPostModal()}
   <svelte:boundary>
     {#if form.url}
-      {#await autofillPost(new URL(form.url))}
-        <div class="w-full h-64 grid place-items-center">
+      {#await autofill(new URL(form.url))}
+        <div class="w-full h-48 grid place-items-center">
           <TextLoader>
             {$t('form.post.fetching')}
           </TextLoader>
         </div>
+        <Button size="lg" color="secondary" onclick={history.back}>
+          {$t('common.cancel')}
+        </Button>
       {:then url}
-        <Material color="info" class="space-y-2">
+        {#if !url}
+          <!--cursed svelte template abuse. don't do this lads-->
+          {history.back()}
+        {/if}
+        <Material color="info" class="space-y-2 h-48">
           <h2 class="text-xl font-display font-medium">{url.title}</h2>
-          <p>{url.body ?? '...'}</p>
+          <p class="overflow-hidden text-ellipsis">{url.body ?? '...'}</p>
         </Material>
         <Button
           size="lg"
@@ -162,6 +182,9 @@
       {:catch err}
         <ErrorContainer scope="-1" message={err} />
       {/await}
+      <Switch class="mt-4" bind:checked={settings.forms.autosubmitAutofill}>
+        {$t('form.post.autosubmit')}
+      </Switch>
     {/if}
   </svelte:boundary>
 {/snippet}
@@ -241,7 +264,7 @@
     previewButton
   />
 
-  {#if form.type == 'normal' && form.url !== undefined}
+  {#if form.type == 'normal'}
     <TextInput
       label={$t('form.post.url')}
       bind:value={form.url}
@@ -356,13 +379,6 @@
     >
       {#if form.type == 'normal'}
         <Button
-          onclick={() => (form.url = '')}
-          disabled={form.url !== undefined}
-          icon={Link}
-        >
-          {$t('form.post.addUrl')}
-        </Button>
-        <Button
           onclick={() => {
             uploadImage = !uploadImage
           }}
@@ -383,11 +399,7 @@
         {/if}
       {/if}
       {#if form.language === undefined}
-        <Button
-          class="animate-pop-in"
-          onclick={() => (form.language = '')}
-          icon={Language}
-        >
+        <Button onclick={() => (form.language = '')} icon={Language}>
           {$t('form.post.setLanguage')}
         </Button>
       {/if}

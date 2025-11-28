@@ -151,7 +151,8 @@
                 "normal": "Discussion",
                 "poll": "Poll",
                 "event": "Event"
-            }
+            },
+            "autosubmit": "Submit automatically"
         },
         "profile": {
             "displayName": "Display name",
