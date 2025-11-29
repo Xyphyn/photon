@@ -5,6 +5,7 @@ import { client, site } from '$lib/api/client.svelte'
 import type { Community, GetSiteResponse, MyUserInfo } from '$lib/api/types'
 import { publishedToDate } from '$lib/ui/util/date'
 import { toast } from 'mono-svelte'
+import { errorMessage } from './error'
 import { t } from './i18n'
 import { DEFAULT_INSTANCE_URL } from './instance.svelte'
 import { instanceToURL, moveItem } from './util.svelte'
@@ -228,7 +229,7 @@ class Profile {
       return user
     } catch (err) {
       toast({
-        content: err as string,
+        content: errorMessage(err as string),
         type: 'error',
       })
       return null

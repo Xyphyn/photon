@@ -8,7 +8,6 @@
     <img src="https://github.com/user-attachments/assets/11cf24c2-fd4f-480a-8a16-41f0f0a5b245">
 </picture>
 
-
 # Photon
 
 Photon is a web app for the fediverse with helpful features and a nice UX.
@@ -90,7 +89,6 @@ Photon lets you configure the default client settings and more.
 If you're hosting Photon for a Lemmy instance, you'll almost definitely want to set these:
 
 - `PUBLIC_INSTANCE_URL` `string`: The domain which **the browser** will send API requests to.
-
   - Example: `PUBLIC_INSTANCE_URL=fedi.phtn.app`
 
 - `PUBLIC_INSTANCE_TYPE` `lemmyv3 | piefedalpha` (default: `lemmyv3`): If your instance is running PieFed, you must set this option to `piefedalpha`. Otherwise, you don't need to do anything.
