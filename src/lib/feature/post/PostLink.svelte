@@ -30,9 +30,9 @@
 -->
 {#if embed_title && view == 'cozy'}
   <Material
-    color="uniform"
+    color="default"
     class={[
-      'post-link group/link hover:bg-slate-50 hover:dark:bg-zinc-900 transition-colors',
+      'post-link group/link hover:bg-slate-50 hover:dark:bg-zinc-800 transition-colors',
     ]}
     rounding="2xl"
     element="a"

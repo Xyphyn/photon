@@ -125,8 +125,7 @@
     size="custom"
     href="{postLink(post.post)}#comments"
     class="text-inherit! h-full px-3 relative"
-    color="ghost"
-    rounding="pill"
+    rounding="xl"
     target={settings.openLinksInNewTab ? '_blank' : ''}
     aria-label={$t('post.actions.comments')}
   >
@@ -152,8 +151,7 @@
       onclick={() => (debug = true)}
       title="Debug"
       size="custom"
-      color="ghost"
-      rounding="pill"
+      rounding="xl"
       class={buttonSquare}
       icon={BugAnt}
     ></Button>
@@ -165,8 +163,7 @@
           <Button
             {@attach attachment}
             size="custom"
-            color="ghost"
-            rounding="pill"
+            rounding="xl"
             loading={acting}
             class={buttonSquare}
           >
@@ -187,8 +184,7 @@
       }}
       size="custom"
       class={buttonSquare}
-      color="ghost"
-      rounding="pill"
+      rounding="xl"
       loading={saving}
       disabled={saving}
       title={post.saved ? $t('post.actions.unsave') : $t('post.actions.save')}
@@ -200,8 +196,7 @@
     {#snippet target(attachment)}
       <Button
         {@attach post.post.local ? () => {} : attachment}
-        rounding="pill"
-        color="ghost"
+        rounding="xl"
         size="custom"
         class={buttonSquare}
         onclick={() => {
@@ -241,8 +236,7 @@
         <Button
           {@attach popover}
           title={$t('post.actions.more.label')}
-          color="ghost"
-          rounding="pill"
+          rounding="xl"
           size="custom"
           class={buttonSquare}
           icon={EllipsisHorizontal}
