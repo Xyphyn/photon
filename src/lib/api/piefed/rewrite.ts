@@ -94,6 +94,7 @@ export function toMyUser(
     })),
     local_user_view: {
       ...myUser.local_user_view,
+      // @ts-expect-error TODO make piefed sort types not explode
       local_user: {
         ...myUser.local_user_view.local_user,
         id: myUser.local_user_view.person.id,

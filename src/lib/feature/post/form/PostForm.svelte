@@ -355,7 +355,7 @@
                   : Date.now() + 24 * 60 * 60
               },
               (v) => {
-                if (v == -1) form.poll!.end_poll = undefined
+                if (v <= 0) form.poll!.end_poll = undefined
                 else
                   form.poll!.end_poll = new Date(
                     Date.now() + v * 1000,

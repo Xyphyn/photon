@@ -965,7 +965,7 @@ export class PiefedClient implements BaseClient {
       await this.#client.POST('/api/alpha/user/set_flair', { body: params })
     ).data!
 
-    return toPersonView(response.person_view)
+    return toPersonView(response.person_view!)
   }
 
   async editSite(): ReturnType<BaseClient['editSite']> {
@@ -1028,7 +1028,7 @@ export class PiefedClient implements BaseClient {
       await this.#client.POST('/api/alpha/post/poll_vote', { body: params })
     ).data!
 
-    return toPostView(response)
+    return toPostView(response.post_view)
   }
 
   async setNote(

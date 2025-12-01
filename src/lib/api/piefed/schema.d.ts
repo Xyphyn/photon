@@ -4606,7 +4606,7 @@ export interface components {
        * Format: datetime
        * @example 2025-06-07T02:29:07.980084Z
        */
-      published?: string
+      published: string
       title?: string
     }
     PersonView: {
@@ -4724,7 +4724,7 @@ export interface components {
         | 'Moderating'
         | 'ModeratorView'
       /** @enum {string} */
-      default_sort_type?:
+      default_sort_type:
         | 'Active'
         | 'Hot'
         | 'New'
@@ -5890,26 +5890,7 @@ export interface components {
       post_id: number
       choice_id: number[]
     }
-    PollVoteResponse: {
-      banned_from_community: boolean
-      community: components['schemas']['Community']
-      counts: components['schemas']['PostAggregates']
-      creator: components['schemas']['Person']
-      creator_banned_from_community: boolean
-      creator_is_admin: boolean
-      creator_is_moderator: boolean
-      hidden: boolean
-      post: components['schemas']['Post']
-      read: boolean
-      saved: boolean
-      /** @enum {string} */
-      subscribed: 'Subscribed' | 'NotSubscribed' | 'Pending'
-      unread_comments: number
-      activity_alert?: boolean
-      my_vote?: number
-      flair_list?: components['schemas']['CommunityFlair'][]
-      can_auth_user_moderate?: boolean
-    }
+    PollVoteResponse: { post_view: components['schemas']['PostView'] }
     ImageUploadRequest: {
       /** Format: binary */
       file: string

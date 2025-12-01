@@ -69,6 +69,7 @@
         })
       }
     } catch (err) {
+      console.error(err)
       toast({
         content: errorMessage(err as string),
         type: 'error',
