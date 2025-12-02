@@ -19,7 +19,8 @@
 <CommonList animate={false} class="px-1 py-0.5" size="xs" {items}>
   {#snippet item(item)}
     <Button
-      class="font-normal w-full h-max block"
+      class="font-normal w-full h-max block gap-2"
+      gap="lg"
       color="none"
       alignment="left"
       href={item.url}
@@ -30,6 +31,7 @@
           alt={item.name}
           title={item.name}
           width={24}
+          circle={false}
         />
       </div>
       <div class="flex flex-col max-w-full break-words">

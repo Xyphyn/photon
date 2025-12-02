@@ -69,6 +69,14 @@
   }
   type ButtonWeight = keyof typeof buttonWeight
 
+  const buttonGap = {
+    xl: 'gap-3',
+    lg: 'gap-2',
+    md: 'gap-1.5',
+    none: '',
+  }
+  type ButtonGap = keyof typeof buttonGap
+
   interface Props
     extends Omit<HTMLButtonAttributes | HTMLAnchorAttributes, 'prefix'> {
     loading?: boolean
@@ -79,6 +87,7 @@
     rounding?: ButtonRoundness
     alignment?: ButtonAlignment
     shadow?: ButtonShadow
+    gap?: ButtonGap
     loaderWidth?: number | undefined
     href?: string | undefined
     class?: ClassValue
@@ -103,6 +112,7 @@
     rounding = size == 'lg' || size == 'square-lg' ? '2xl' : 'xl',
     alignment = 'center',
     shadow = color == 'primary' || color == 'secondary' ? 'sm' : 'none',
+    gap = 'md',
     disabled,
     loaderWidth = undefined,
     href = undefined,
@@ -130,6 +140,7 @@
     buttonColor[color],
     buttonAlignment[alignment],
     buttonWeight[weight],
+    buttonGap[gap],
     (disabled || loading) && 'btn-disabled',
     alignment == 'center'
       ? 'origin-center'
@@ -172,7 +183,6 @@
       flex-direction: row;
       align-items: center;
       font-size: var(--text-sm);
-      gap: calc(var(--spacing) * 1.5);
 
       transition: 75ms cubic-bezier(0.075, 0.82, 0.165, 1);
 

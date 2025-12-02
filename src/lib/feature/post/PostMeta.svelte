@@ -238,7 +238,7 @@
             color="uniform"
             rounding="2xl"
             elevation="high"
-            class="max-w-2xl w-full max-h-128 overflow-auto"
+            class="max-w-2xl w-screen max-h-128 overflow-auto"
             data-autoclose="false"
           >
             {#await import('../community/CommunityHeader.svelte') then { default: CommunityHeader }}
