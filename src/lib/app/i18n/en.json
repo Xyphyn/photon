@@ -83,16 +83,16 @@
                 "label": "Top",
                 "time": {
                     "label": "Time",
-                    "all": "All",
-                    "9months": "9 Months",
-                    "6months": "6 Months",
-                    "3months": "3 Months",
-                    "month": "Month",
-                    "week": "Week",
-                    "day": "Day",
-                    "12hours": "12 Hours",
-                    "6hours": "6 Hours",
-                    "hour": "Hour"
+                    "all": "All time",
+                    "9months": "Past 9 months",
+                    "6months": "Past 6 months",
+                    "3months": "Past 3 months",
+                    "month": "Past month",
+                    "week": "Past week",
+                    "day": "Past day",
+                    "12hours": "Past 12 hours",
+                    "6hours": "Past 6 hours",
+                    "hour": "Past hour"
                 }
             },
             "new": "New",

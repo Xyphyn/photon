@@ -39,6 +39,10 @@
   }: Props = $props()
 
   let sort: string = $state(selected?.startsWith('Top') ? 'TopAll' : selected)
+
+  const moreTimeRanges = ['TopNineMonths', 'TopSixMonths', 'TopThreeMonths', 'TopTwelveHour', 'TopSixHour', 'TopHour']
+  let showMoreTimeRanges: boolean = $state(moreTimeRanges.includes(selected))
+
   const setSelected = () => (selected = sort)
 </script>
 
@@ -103,17 +107,8 @@
           {$t('filter.sort.top.time.label')}
         </span>
       {/snippet}
-      <Option value="TopAll" icon={PlusCircle}>
+      <Option value="TopAll" icon={Trophy}>
         {$t('filter.sort.top.time.all')}
-      </Option>
-      <Option value="TopNineMonths" icon={Calendar}>
-        {$t('filter.sort.top.time.9months')}
-      </Option>
-      <Option value="TopSixMonths" icon={Calendar}>
-        {$t('filter.sort.top.time.6months')}
-      </Option>
-      <Option value="TopThreeMonths" icon={Calendar}>
-        {$t('filter.sort.top.time.3months')}
       </Option>
       <Option value="TopMonth" icon={CalendarDays}>
         {$t('filter.sort.top.time.month')}
@@ -124,15 +119,35 @@
       <Option value="TopDay" icon={Sun}>
         {$t('filter.sort.top.time.day')}
       </Option>
-      <Option value="TopTwelveHour" icon={Clock}>
-        {$t('filter.sort.top.time.12hours')}
-      </Option>
-      <Option value="TopSixHour" icon={Clock}>
-        {$t('filter.sort.top.time.6hours')}
-      </Option>
-      <Option value="TopHour" icon={Clock}>
-        {$t('filter.sort.top.time.hour')}
-      </Option>
+      {#if !showMoreTimeRanges}
+        <button
+          type="button"
+          class="px-4 py-2 text-left text-sm hover:bg-slate-100 dark:hover:bg-zinc-800 cursor-pointer border-t border-slate-200 dark:border-zinc-700"
+          onclick={() => (showMoreTimeRanges = true)}
+        >
+          <span class="opacity-60">More...</span>
+        </button>
+      {/if}
+      {#if showMoreTimeRanges}
+        <Option value="TopNineMonths" icon={Calendar}>
+          {$t('filter.sort.top.time.9months')}
+        </Option>
+        <Option value="TopSixMonths" icon={Calendar}>
+          {$t('filter.sort.top.time.6months')}
+        </Option>
+        <Option value="TopThreeMonths" icon={Calendar}>
+          {$t('filter.sort.top.time.3months')}
+        </Option>
+        <Option value="TopTwelveHour" icon={Clock}>
+          {$t('filter.sort.top.time.12hours')}
+        </Option>
+        <Option value="TopSixHour" icon={Clock}>
+          {$t('filter.sort.top.time.6hours')}
+        </Option>
+        <Option value="TopHour" icon={Clock}>
+          {$t('filter.sort.top.time.hour')}
+        </Option>
+      {/if}
     </Select>
   {/if}
 </div>
