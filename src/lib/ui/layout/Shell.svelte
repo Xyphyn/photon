@@ -91,6 +91,10 @@
         border-top: none;
         background-color: var(--color-slate-50);
 
+        @variant max-md {
+          padding-bottom: env(safe-area-inset-bottom, 0px);
+        }
+
         @variant md {
           border-left: none;
           border-right: none;
@@ -118,6 +122,10 @@
     grid-template-columns: 1fr;
     grid-template-areas: 'main';
     justify-items: start;
+
+    @variant max-md {
+      padding-top: env(safe-area-inset-top, 0px);
+    }
   }
 
   .shell-content.limit-width {
