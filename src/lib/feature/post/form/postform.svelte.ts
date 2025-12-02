@@ -47,6 +47,7 @@ export class PostFormState {
     this.nsfw = $state(post?.nsfw ?? false)
     this.altText = $state(post?.alt_text)
     this.language = $state(post?.language_id?.toString())
+    this.thumbnail = $state()
     this.poll = $state(
       post?.poll ?? {
         mode: 'single',

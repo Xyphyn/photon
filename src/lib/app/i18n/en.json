@@ -152,7 +152,8 @@
                 "poll": "Poll",
                 "event": "Event"
             },
-            "autosubmit": "Submit automatically"
+            "autosubmit": "Submit automatically",
+            "customThumbnail": "Set thumbnail"
         },
         "profile": {
             "displayName": "Display name",

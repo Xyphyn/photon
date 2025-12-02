@@ -37,16 +37,19 @@
     flex-direction: row;
   }
 
-  .btn-group.btn-group-horizontal :global(> *) {
-    position: relative;
-    border-radius: 8px !important;
+  .btn-group.btn-group-horizontal :global {
+    & > button,
+    & > a {
+      position: relative;
+      border-radius: 8px !important;
 
-    &:first-child {
-      border-radius: 24px 12px 12px 24px !important;
-    }
+      &:first-child {
+        border-radius: 24px 12px 12px 24px !important;
+      }
 
-    &:last-child {
-      border-radius: 12px 24px 24px 12px !important;
+      &:last-child {
+        border-radius: 12px 24px 24px 12px !important;
+      }
     }
   }
 </style>

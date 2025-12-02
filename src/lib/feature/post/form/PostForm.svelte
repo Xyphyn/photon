@@ -9,6 +9,7 @@
   import { placeholders } from '$lib/app/util.svelte'
   import Duration from '$lib/ui/form/Duration.svelte'
   import FreeTextInput from '$lib/ui/form/FreeTextInput.svelte'
+  import ImageInputModal from '$lib/ui/form/ImageInputModal.svelte'
   import ObjectAutocomplete from '$lib/ui/form/ObjectAutocomplete.svelte'
   import MultiSelect from '$lib/ui/form/Switch.svelte'
   import Avatar from '$lib/ui/generic/Avatar.svelte'
@@ -39,6 +40,7 @@
     Language,
     Photo,
     Plus,
+    QrCode,
     Sparkles,
     Tag,
     Trash,
@@ -70,6 +72,7 @@
 
   let loading = $state<boolean>(false)
   let uploadImage = $state(false)
+  let customThumbnail = $state(false)
 
   async function autofill(
     data: URL | { title?: string; body?: string },
@@ -117,12 +120,17 @@
 {/if}
 
 {#if uploadImage}
-  {#await import('$lib/ui/form/ImageInputModal.svelte') then { default: UploadModal }}
-    <UploadModal
-      bind:open={uploadImage}
-      bind:imageUrl={() => '', (v) => (form.url = v)}
-    />
-  {/await}
+  <ImageInputModal
+    bind:open={uploadImage}
+    bind:imageUrl={() => '', (v) => (form.url = v)}
+  />
+{/if}
+
+{#if customThumbnail}
+  <ImageInputModal
+    bind:open={customThumbnail}
+    bind:imageUrl={() => form.thumbnail, (v) => (form.thumbnail = v)}
+  />
 {/if}
 
 {#snippet altText()}
@@ -387,10 +395,16 @@
     {/if}
   {/if}
 
-  <div class="flex flex-row flex-wrap gap-2">
+  <div class="flex flex-row overflow-auto gap-2 -mx-3 px-3 relative">
+    <div
+      class="bg-gradient-to-r from-slate-25 to-slate-25/0 dark:from-zinc-925 dark:to-zinc-925/0 absolute left-0 w-3 h-full z-10"
+    ></div>
+    <div
+      class="bg-gradient-to-l from-slate-25 to-slate-25/0 dark:from-zinc-925 dark:to-zinc-925/0 absolute right-0 w-3 h-full z-10"
+    ></div>
     <ButtonGroup
       orientation="horizontal"
-      class="flex flex-row flex-wrap w-full"
+      class="flex flex-row *:flex-shrink-0 w-full"
     >
       {#if form.type == 'normal'}
         <Button
@@ -410,6 +424,18 @@
             icon={ChatBubbleBottomCenterText}
           >
             {$t('form.post.altText')}
+          </Button>
+        {/if}
+        {#if form.url}
+          <Button
+            class="animate-pop-in"
+            onclick={() => {
+              customThumbnail = !customThumbnail
+            }}
+            color={form.thumbnail ? 'primary' : 'secondary'}
+            icon={QrCode}
+          >
+            {$t('form.post.customThumbnail')}
           </Button>
         {/if}
       {/if}
