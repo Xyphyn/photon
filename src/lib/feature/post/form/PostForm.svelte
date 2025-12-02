@@ -72,17 +72,33 @@
   let uploadImage = $state(false)
 
   async function autofill(
-    url: URL,
+    data: URL | { title?: string; body?: string },
   ): Promise<{ title?: string; body?: string }> {
-    const res = await autofillPost(url)
+    if (data instanceof URL) {
+      const res = await autofillPost(data)
 
-    if (settings.forms.autosubmitAutofill) {
-      form.title = res.title || form.title
-      form.body = res.body || form.body
-      history?.back?.()
+      if (settings.forms.autosubmitAutofill) {
+        autofill({
+          title: res.title,
+          body: res.body,
+        })
+        history?.back?.()
+      }
+
+      return res
+    } else {
+      form.title = data.title || form.title
+      form.body =
+        data.body
+          ?.split('\n')
+          .map((i) => `> ${i}`)
+          .join('\n') || form.body
+
+      return {
+        title: form.title,
+        body: form.body,
+      }
     }
-
-    return res
   }
 </script>
 
@@ -172,8 +188,7 @@
           size="lg"
           color="primary"
           onclick={() => {
-            form.title = url.title ?? form.title
-            form.body = url.body ?? form.body
+            autofill({ title: url.title, body: url.body })
             history.back()
           }}
         >
