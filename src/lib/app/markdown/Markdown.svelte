@@ -36,7 +36,7 @@
   }
 
   marked.setOptions({
-    gfm: false,
+    gfm: true,
     breaks: false,
   })
 

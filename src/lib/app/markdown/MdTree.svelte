@@ -93,13 +93,13 @@
 {:else}
   {#each tokens as token}
     <Self
+      {...rest}
       {...token}
       tokens={[token]}
       type={token.type as Renderer}
       {renderers}
       raw={token.raw}
       text={token.text}
-      {...rest}
     />
   {/each}
 {/if}
