@@ -2,6 +2,7 @@
   import { client, site } from '$lib/api/client.svelte'
   import { PiefedClient } from '$lib/api/piefed/adapter'
   import type { PostView } from '$lib/api/types'
+  import { profile } from '$lib/app/auth.svelte'
   import { errorMessage } from '$lib/app/error'
   import { t } from '$lib/app/i18n'
   import MarkdownEditor from '$lib/app/markdown/MarkdownEditor.svelte'
@@ -105,7 +106,7 @@
   }
 </script>
 
-{#if client() instanceof PiefedClient && !editPost}
+{#if profile.client instanceof PiefedClient && !editPost}
   <div class="mb-3">
     <MultiSelect
       options={['normal', 'poll']}

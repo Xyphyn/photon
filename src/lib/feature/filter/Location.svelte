@@ -1,6 +1,5 @@
 <script lang="ts">
   import { page } from '$app/state'
-  import { client } from '$lib/api/client.svelte'
   import { PiefedClient } from '$lib/api/piefed/adapter'
   import { profile } from '$lib/app/auth.svelte'
   import { t } from '$lib/app/i18n'
@@ -50,7 +49,7 @@
   <Option value="All" icon={GlobeAmericas}>
     {$t('filter.location.all')}
   </Option>
-  {#if client() instanceof PiefedClient}
+  {#if profile.client instanceof PiefedClient}
     <Option value="Popular" icon={ChartBar}>
       {$t('filter.location.popular')}
     </Option>

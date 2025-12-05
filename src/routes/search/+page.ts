@@ -12,7 +12,7 @@ export async function load({ url, fetch }) {
   const sort = url.searchParams.get('sort') || 'New'
   const type =
     url.searchParams.get('type') ||
-    (client() instanceof PiefedClient ? 'Posts' : 'All')
+    (profile.client instanceof PiefedClient ? 'Posts' : 'All')
   const listing_type =
     (url.searchParams.get('listing_type') as ListingType) || 'All'
 

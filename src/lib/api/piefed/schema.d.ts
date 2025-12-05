@@ -280,6 +280,7 @@ export interface paths {
             | 'TopAll'
             | 'Scaled'
             | 'Old'
+            | 'Relevance'
           community_name?: string
           community_id?: number
         }
@@ -716,7 +717,7 @@ export interface paths {
             [name: string]: unknown
           }
           content: {
-            'application/json': components['schemas']['CommunityResponse']
+            'application/json': components['schemas']['GetCommunityResponse']
           }
         }
         /** @description Bad Request */
@@ -1454,6 +1455,7 @@ export interface paths {
             | 'TopAll'
             | 'Scaled'
             | 'Old'
+            | 'Relevance'
           page?: number
           limit?: number
           /** @description Limit posts/comments to just a single community */
@@ -2865,6 +2867,56 @@ export interface paths {
     patch?: never
     trace?: never
   }
+  '/api/alpha/comment/mark_as_answer': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /** Mark a comment as the preferred answer to a question. */
+    post: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody: {
+        content: {
+          'application/json': components['schemas']['MarkCommentAsAnswerRequest']
+        }
+      }
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['GetCommentReplyResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
   '/api/alpha/comment/lock': {
     parameters: {
       query?: never
@@ -3289,6 +3341,54 @@ export interface paths {
           }
           content: {
             'application/json': components['schemas']['GetPostRepliesResponse']
+          }
+        }
+        /** @description Bad Request */
+        400: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['DefaultError']
+          }
+        }
+        422: components['responses']['UNPROCESSABLE_CONTENT']
+      }
+    }
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/api/alpha/post/site_metadata': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /** Get metadata about a url. */
+    get: {
+      parameters: {
+        query?: {
+          url?: string
+        }
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody?: never
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown
+          }
+          content: {
+            'application/json': components['schemas']['GetSiteMetadataResponse']
           }
         }
         /** @description Bad Request */
@@ -4606,7 +4706,7 @@ export interface components {
        * Format: datetime
        * @example 2025-06-07T02:29:07.980084Z
        */
-      published: string
+      published?: string
       title?: string
     }
     PersonView: {
@@ -4633,6 +4733,7 @@ export interface components {
       all_languages?: components['schemas']['LanguageView'][]
       description?: string
       enable_downvotes?: boolean
+      /** Format: url */
       icon?: string
       /** @enum {string} */
       registration_mode?: 'Closed' | 'RequireApplication' | 'Open'
@@ -4657,6 +4758,7 @@ export interface components {
       local: boolean
       name: string
       nsfw: boolean
+      ai_generated: boolean
       /**
        * Format: datetime
        * @example 2025-06-07T02:29:07.980084Z
@@ -4666,9 +4768,12 @@ export interface components {
       restricted_to_mods: boolean
       title: string
       banned?: boolean
+      question_answer?: boolean
+      /** Format: url */
       banner?: string
       /** Format: markdown */
       description?: string
+      /** Format: url */
       icon?: string
       posting_warning?: string
       /**
@@ -4707,6 +4812,17 @@ export interface components {
       person: components['schemas']['Person']
     }
     LocalUser: {
+      /**
+       * @description Accept private messages from nobody, local users only, "trusted" instances, or any instance
+       * @enum {string}
+       */
+      accept_private_messages: 'None' | 'Local' | 'Trusted' | 'All'
+      /** @enum {string} */
+      bot_visibility: 'Show' | 'Blur' | 'Hide' | 'Transparent'
+      /** @enum {string} */
+      ai_visibility: 'Show' | 'Hide' | 'Label' | 'Transparent'
+      /** @description Filter out communities with these words in their name */
+      community_keyword_filter?: string[]
       /** @enum {string} */
       default_comment_sort_type:
         | 'Hot'
@@ -4724,7 +4840,7 @@ export interface components {
         | 'Moderating'
         | 'ModeratorView'
       /** @enum {string} */
-      default_sort_type:
+      default_sort_type?:
         | 'Active'
         | 'Hot'
         | 'New'
@@ -4742,8 +4858,36 @@ export interface components {
         | 'TopAll'
         | 'Scaled'
         | 'Old'
+        | 'Relevance'
+      /** @description Receive email about missed notifications (if set up by local admin) */
+      email_unread: boolean
+      /** @description If false, votes are only counted on local instance instead of federated remotely */
+      federate_votes: boolean
+      /** @description Automatically follow communities in a subscribed feed */
+      feed_auto_follow: boolean
+      /** @description Automatically leave communities when unsubscribing from a feed. Does not impact communities joined outside of a feed auto-follow. */
+      feed_auto_leave: boolean
+      /** @description Hide posts from communities marked as low-quality by the local instance admin */
+      hide_low_quality: boolean
+      /** @description If posts can show up in search results */
+      indexable: boolean
+      /** @description Subscribe to the email newsletter that the local instance admin can send */
+      newsletter: boolean
+      /** @enum {string} */
+      nsfl_visibility: 'Show' | 'Blur' | 'Hide' | 'Transparent'
+      /** @enum {string} */
+      nsfw_visibility: 'Show' | 'Blur' | 'Hide' | 'Transparent'
+      /** @description Collapse replies with a score at or below this level */
+      reply_collapse_threshold: number
+      /** @description Hide replies with a score at or below this level */
+      reply_hide_threshold: number
+      /** @description If profile shows up in the user list on the instance */
+      searchable: boolean
+      /** @description True for any visibility option other than Hide */
       show_bot_accounts: boolean
+      /** @description True for any visibility option other than Hide */
       show_nsfl: boolean
+      /** @description True for any visibility option other than Hide */
       show_nsfw: boolean
       show_read_posts: boolean
       show_scores: boolean
@@ -4796,8 +4940,10 @@ export interface components {
       description: string
       about: string
       sidebar: string
+      /** Format: url */
       logo_url: string
       maturity: string
+      /** Format: url */
       tos_url: string
       mau: number
       can_make_communities: boolean
@@ -4813,8 +4959,10 @@ export interface components {
       description: string
       about: string
       sidebar: string
+      /** Format: url */
       logo_url: string
       maturity: string
+      /** Format: url */
       tos_url: string
       uptime: string
       mau: number
@@ -4841,6 +4989,7 @@ export interface components {
       active_monthly?: number
       active_6monthly?: number
       average_rating?: number
+      total_ratings?: number
     }
     CommunityFlair: {
       id: number
@@ -4918,17 +5067,20 @@ export interface components {
       participant_count: number
       /** @default false */
       full: boolean
+      /** Format: url */
       online_link?: string
       /**
        * @description free, restricted, external, invite
        * @example free
        */
       join_mode?: string
+      /** Format: url */
       external_participation_url?: string
       /** @default false */
       anonymous_participation: boolean
       /** @default false */
       online: boolean
+      /** Format: url */
       buy_tickets_link?: string
       /** @example USD */
       event_fee_currency?: string
@@ -4943,7 +5095,10 @@ export interface components {
       id: number
       choice_text: string
       sort_order: number
-      /** @default 0 */
+      /**
+       * @description Value is ignored when creating/editing a poll
+       * @default 0
+       */
       num_votes: number
     }
     PostPoll: {
@@ -4965,6 +5120,7 @@ export interface components {
        */
       latest_vote?: string
       choices: components['schemas']['PollChoice'][]
+      my_votes?: number[]
     }
     Post: {
       ap_id: string
@@ -4975,6 +5131,7 @@ export interface components {
       local: boolean
       locked: boolean
       nsfw: boolean
+      ai_generated: boolean
       /**
        * Format: datetime
        * @example 2025-06-07T02:29:07.980084Z
@@ -4987,18 +5144,23 @@ export interface components {
       alt_text?: string
       /** Format: markdown */
       body?: string
+      /** Format: url */
       small_thumbnail_url?: string
+      /** Format: url */
       thumbnail_url?: string
       /**
        * Format: datetime
        * @example 2025-06-07T02:29:07.980084Z
        */
       updated?: string
+      /** Format: url */
       url?: string
       image_details?: components['schemas']['WidthHeight']
       cross_posts?: components['schemas']['MiniCrossPosts'][]
       /** @enum {string} */
       post_type: 'Link' | 'Discussion' | 'Image' | 'Video' | 'Poll' | 'Event'
+      tags?: string
+      flair?: string
       event?: components['schemas']['PostEvent']
       poll?: components['schemas']['PostPoll']
     }
@@ -5019,6 +5181,7 @@ export interface components {
       unread_comments: number
       activity_alert?: boolean
       my_vote?: number
+      /** @description See also the simpler 'flair' on post which can be used when editing */
       flair_list?: components['schemas']['CommunityFlair'][]
       can_auth_user_moderate?: boolean
     }
@@ -5047,6 +5210,7 @@ export interface components {
        */
       updated?: string
       locked?: boolean
+      answer?: boolean
     } & {
       [key: string]: unknown
     }
@@ -5091,11 +5255,56 @@ export interface components {
       users: components['schemas']['PersonView'][]
       comments: components['schemas']['CommentView'][]
     }
+    FeedView: {
+      /** Format: url */
+      actor_id: string
+      ap_domain: string
+      /** @description Always empty list for resolve_object endpoint */
+      children: components['schemas']['FeedView'][]
+      /** @description Always empty list for resolve_object endpoint */
+      communities: components['schemas']['Community'][]
+      communities_count: number
+      id: number
+      is_instance_feed: boolean
+      local: boolean
+      name: string
+      nsfl: boolean
+      nsfw: boolean
+      /** @description Is the authorized user the creator of the feed? */
+      owner: boolean
+      public: boolean
+      /**
+       * Format: datetime
+       * @example 2025-06-07T02:29:07.980084Z
+       */
+      published: string
+      show_posts_from_children: boolean
+      subscribed: boolean
+      subscriptions_count: number
+      title: string
+      /**
+       * Format: datetime
+       * @example 2025-06-07T02:29:07.980084Z
+       */
+      updated: string
+      /** @description user_id of the feed creator/owner */
+      user_id: number
+      /** Format: url */
+      banner?: string
+      /** Format: markdown */
+      description?: string
+      /** Format: html */
+      description_html?: string
+      /** Format: url */
+      icon?: string
+      parent_feed_id?: number
+    }
     ResolveObjectResponse: {
       comment?: components['schemas']['CommentView']
       post?: components['schemas']['PostView']
       community?: components['schemas']['CommunityView']
       person?: components['schemas']['PersonView']
+      feed?: components['schemas']['FeedView']
     }
     InstanceWithoutFederationState: {
       domain: string
@@ -5128,6 +5337,8 @@ export interface components {
       community_view: components['schemas']['CommunityView']
       discussion_languages: number[]
       moderators: components['schemas']['CommunityModeratorView'][]
+      can_rate?: boolean
+      my_rating?: number
       site?: components['schemas']['Site']
     }
     ListCommunitiesResponse: {
@@ -5144,6 +5355,7 @@ export interface components {
     }
     RateCommunityRequest: {
       community_id: number
+      /** @description Providing a null value removes your rating */
       rating: number
     }
     BlockCommunityRequest: {
@@ -5157,27 +5369,33 @@ export interface components {
     CreateCommunityRequest: {
       name: string
       title: string
+      /** Format: url */
       banner_url?: string
       /** Format: markdown */
       description?: string
       discussion_languages?: number[]
+      /** Format: url */
       icon_url?: string
       local_only?: boolean
       nsfw?: boolean
+      question_answer?: boolean
       restricted_to_mods?: boolean
       rules?: string
     }
     EditCommunityRequest: {
       community_id: number
       title?: string
+      /** Format: url */
       banner_url?: string
       /** Format: markdown */
       description?: string
       discussion_languages?: number[]
+      /** Format: url */
       icon_url?: string
       local_only?: boolean
       nsfw?: boolean
       restricted_to_mods?: boolean
+      question_answer?: boolean
       rules?: string
     }
     SubscribeCommunityRequest: {
@@ -5199,7 +5417,7 @@ export interface components {
     CommunityModerationBanItem: {
       banned_by?: components['schemas']['Person']
       banned_user?: components['schemas']['Person']
-      community: components['schemas']['Community']
+      community?: components['schemas']['Community']
       expired?: boolean
       /**
        * Format: datetime
@@ -5318,47 +5536,9 @@ export interface components {
       community_view: components['schemas']['CommunityView']
       discussion_languages: number[]
       moderators: components['schemas']['CommunityModeratorView'][]
+      can_rate?: boolean
+      my_rating?: number
       site?: components['schemas']['Site']
-    }
-    FeedView: {
-      /** Format: url */
-      actor_id: string
-      ap_domain: string
-      children: components['schemas']['FeedView'][]
-      communities: components['schemas']['Community'][]
-      communities_count: number
-      id: number
-      is_instance_feed: boolean
-      local: boolean
-      name: string
-      nsfl: boolean
-      nsfw: boolean
-      /** @description Is the authorized user the creator of the feed? */
-      owner: boolean
-      public: boolean
-      /**
-       * Format: datetime
-       * @example 2025-06-07T02:29:07.980084Z
-       */
-      published: string
-      show_posts_from_children: boolean
-      subscribed: boolean
-      subscriptions_count: number
-      title: string
-      /**
-       * Format: datetime
-       * @example 2025-06-07T02:29:07.980084Z
-       */
-      updated: string
-      /** @description user_id of the feed creator/owner */
-      user_id: number
-      banner?: string
-      /** Format: markdown */
-      description?: string
-      /** Format: html */
-      description_html?: string
-      icon?: string
-      parent_feed_id?: number
     }
     FeedListResponse: {
       feeds: components['schemas']['FeedView'][]
@@ -5453,6 +5633,7 @@ export interface components {
       replies: components['schemas']['CommentReplyView'][]
     }
     MediaView: {
+      /** Format: url */
       url?: string
       name?: string
     }
@@ -5490,12 +5671,23 @@ export interface components {
     }
     UserSaveSettingsRequest: {
       /**
+       * @description Accept private messages from nobody, local users only, "trusted" instances, or any instance
+       * @enum {string}
+       */
+      accept_private_messages?: 'None' | 'Local' | 'Trusted' | 'All'
+      /**
        * Format: url
        * @description Pass a null value to remove the image
        */
       avatar?: string
       /** Format: markdown */
       bio?: string
+      /** @description This user is a bot */
+      bot?: boolean
+      /** @enum {string} */
+      bot_visibility?: 'Show' | 'Blur' | 'Hide' | 'Transparent'
+      /** @description Filter out communities with these words in their name. Pass null to remove any filters. */
+      community_keyword_filter?: string[]
       /**
        * Format: url
        * @description Pass a null value to remove the image
@@ -5505,11 +5697,46 @@ export interface components {
       default_comment_sort_type?: 'Hot' | 'Top' | 'New' | 'Old'
       /** @enum {string} */
       default_sort_type?: 'Hot' | 'Top' | 'New' | 'Active' | 'Old' | 'Scaled'
+      /** @description Receive email about missed notifications (if set up by local admin) */
+      email_unread?: boolean
       /** @description A user can't have more than four total extra fields. */
       extra_fields?: components['schemas']['NewUserExtraField'][]
+      /** @description If false, votes are only counted on local instance instead of federated remotely */
+      federate_votes?: boolean
+      /** @description Automatically follow communities in a subscribed feed */
+      feed_auto_follow?: boolean
+      /** @description Automatically leave communities when unsubscribing from a feed. Does not impact communities joined outside of a feed auto-follow. */
+      feed_auto_leave?: boolean
+      /** @description Hide posts from communities marked as low-quality by the local instance admin */
+      hide_low_quality?: boolean
+      /** @description If posts can show up in search results */
+      indexable?: boolean
+      /** @description Subscribe to the email newsletter that the local instance admin can send */
+      newsletter?: boolean
+      /**
+       * @description Overrides the show_nsfl field if provided
+       * @enum {string}
+       */
+      nsfl_visibility?: 'Show' | 'Blur' | 'Hide' | 'Transparent'
+      /**
+       * @description Overrides the show_nsfw field if provided
+       * @enum {string}
+       */
+      nsfw_visibility?: 'Show' | 'Blur' | 'Hide' | 'Transparent'
+      /**
+       * @description Overrides the show_genai field if provided
+       * @enum {string}
+       */
+      genai_visibility?: 'Show' | 'Blur' | 'Hide' | 'Transparent'
+      /** @description Collapse replies with a score at or below this level */
+      reply_collapse_threshold?: number
+      /** @description Hide replies with a score at or below this level */
+      reply_hide_threshold?: number
       show_nsfw?: boolean
       show_nsfl?: boolean
       show_read_posts?: boolean
+      /** @description If profile shows up in the user list on the instance */
+      searchable?: boolean
     }
     UserSaveSettingsResponse: {
       my_user?: components['schemas']['MyUserInfo']
@@ -5582,7 +5809,7 @@ export interface components {
       note: string
     }
     UserSetNoteResponse: {
-      person_view: components['schemas']['PersonView']
+      person_view?: components['schemas']['PersonView']
     }
     ListCommentsResponse: {
       comments: components['schemas']['CommentView'][]
@@ -5698,6 +5925,10 @@ export interface components {
     GetCommentReplyResponse: {
       comment_reply_view: components['schemas']['CommentReplyView']
     }
+    MarkCommentAsAnswerRequest: {
+      comment_reply_id: number
+      answer: boolean
+    }
     LockCommentRequest: {
       comment_id: number
       locked: boolean
@@ -5726,7 +5957,7 @@ export interface components {
       activity_alert: boolean
       banned_from_community: boolean
       comment: components['schemas']['Comment']
-      community: components['schemas']['Community']
+      community?: components['schemas']['Community']
       counts: components['schemas']['CommentAggregates']
       creator: components['schemas']['Person']
       creator_banned_from_community: boolean
@@ -5748,6 +5979,15 @@ export interface components {
       comments?: components['schemas']['PostReplyView'][]
       next_page?: string
     }
+    SiteMetadataView: {
+      title?: string
+      description?: string
+      image?: string
+      embed_video_url?: string
+    }
+    GetSiteMetadataResponse: {
+      metadata: components['schemas']['SiteMetadataView']
+    }
     LikePostRequest: {
       post_id: number
       score: number
@@ -5765,8 +6005,10 @@ export interface components {
       title: string
       community_id: number
       body?: string
+      /** Format: url */
       url?: string
       nsfw?: boolean
+      ai_generated?: boolean
       language_id?: number
       event?: components['schemas']['PostEvent']
       poll?: components['schemas']['PostPoll']
@@ -5775,12 +6017,19 @@ export interface components {
       post_id: number
       title?: string
       body?: string
-      /** @description Pass value of null to remove the post url */
+      /**
+       * Format: url
+       * @description Pass value of null to remove the post url
+       */
       url?: string
       nsfw?: boolean
       language_id?: number
       event?: components['schemas']['PostEvent']
       poll?: components['schemas']['PostPoll']
+      /** @description Hashtags, separated by commas with no hash character */
+      tags?: string
+      /** @description Flair, separated by commas with no hash character */
+      flair?: string
     }
     DeletePostRequest: {
       post_id: number
@@ -5883,19 +6132,24 @@ export interface components {
       unread_comments: number
       activity_alert?: boolean
       my_vote?: number
+      /** @description See also the simpler 'flair' on post which can be used when editing */
       flair_list?: components['schemas']['CommunityFlair'][]
       can_auth_user_moderate?: boolean
     }
     PollVoteRequest: {
       post_id: number
+      /** @description Must have a length of 1 for a poll in single vote mode. */
       choice_id: number[]
     }
-    PollVoteResponse: { post_view: components['schemas']['PostView'] }
+    PollVoteResponse: {
+      post_view: components['schemas']['PostView']
+    }
     ImageUploadRequest: {
       /** Format: binary */
       file: string
     }
     ImageUploadResponse: {
+      /** Format: url */
       url: string
       liked_only?: boolean
       saved_only?: boolean

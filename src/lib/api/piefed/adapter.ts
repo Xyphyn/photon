@@ -488,8 +488,14 @@ export class PiefedClient implements BaseClient {
   async listPostReports(): ReturnType<BaseClient['listPostReports']> {
     throw new Error('unsupported')
   }
-  async getSiteMetadata(): ReturnType<BaseClient['getSiteMetadata']> {
-    throw new Error('unsupported')
+  async getSiteMetadata(
+    params: Parameters<BaseClient['getSiteMetadata']>[0],
+  ): ReturnType<BaseClient['getSiteMetadata']> {
+    return (
+      await this.#client.GET('/api/alpha/post/site_metadata', {
+        params: { query: params },
+      })
+    ).data!
   }
 
   async createComment(

@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { client } from '$lib/api/client.svelte'
   import { PiefedClient } from '$lib/api/piefed/adapter'
   import type { PostView } from '$lib/api/types'
   import { profile } from '$lib/app/auth.svelte'
@@ -84,7 +83,7 @@
     </MenuButton>
   {/if}
   {#if profile.current.user?.local_user_view.person.id != post.creator.id}
-    {#if !(client() instanceof PiefedClient)}
+    {#if !(profile.client instanceof PiefedClient)}
       <MenuButton
         onclick={async () => {
           if (!profile.current?.jwt) return

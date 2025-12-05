@@ -82,6 +82,13 @@ class Profile {
     this.meta.profiles.find((i) => i.id == this.meta.profile) ??
       this.getDefaultProfile(),
   )
+  client = $derived(
+    client({
+      auth: this.#current.jwt,
+      clientType: this.#current.client,
+      instanceURL: this.#current.instance,
+    }),
+  )
   inbox: InboxService = $state(new InboxService(this))
 
   getDefaultProfile(): ProfileInfo {

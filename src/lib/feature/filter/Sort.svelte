@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from '$app/state'
-  import { client } from '$lib/api/client.svelte'
-  import { LemmyClient } from '$lib/api/lemmy/adapter'
+  import { PiefedClient } from '$lib/api/piefed/adapter'
+  import { profile } from '$lib/app/auth.svelte'
   import { t } from '$lib/app/i18n'
   import { searchParam } from '$lib/app/util.svelte'
   import { Option, Select } from 'mono-svelte'
@@ -73,7 +73,7 @@
     <Option value="New" icon={Star}>
       {$t('filter.sort.new')}
     </Option>
-    {#if client() instanceof LemmyClient}
+    {#if !(profile.client instanceof PiefedClient)}
       <Option value="Old" icon={Clock}>
         {$t('filter.sort.old')}
       </Option>
