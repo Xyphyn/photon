@@ -13,6 +13,7 @@
         page: data.page,
         sort: data.sort,
         type: data.type,
+        limit: data.limit,
       }),
       person_view: { value: data.user.person_view },
       moderates: { value: data.user.moderates },

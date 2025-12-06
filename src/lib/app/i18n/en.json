@@ -84,14 +84,14 @@
                 "time": {
                     "label": "Period",
                     "all": "All time",
-                    "9months": "Past 9 months",
-                    "6months": "Past 6 months",
-                    "3months": "Past 3 months",
+                    "9months": "9 months",
+                    "6months": "6 months",
+                    "3months": "3 months",
                     "month": "Past month",
                     "week": "Past week",
                     "day": "Past day",
-                    "12hours": "Past 12 hours",
-                    "6hours": "Past 6 hours",
+                    "12hours": "12 hours",
+                    "6hours": "6 hours",
                     "hour": "Past hour"
                 }
             },
@@ -250,8 +250,18 @@
             "blocks": {
                 "title": "Blocked",
                 "empty": {
-                    "title": "No blocked entities",
-                    "description": "When you block anything, it will no longer appear in your feeds."
+                    "user": {
+                        "title": "No blocked users",
+                        "description": "Blocking a user will hide the user's posts and comments from feeds."
+                    },
+                    "community": {
+                        "title": "No blocked communities",
+                        "description": "Blocking a community will hide its posts from feeds."
+                    },
+                    "instance": {
+                        "title": "No blocked servers",
+                        "description": "Blocking a server will hide posts from its communities from feeds."
+                    }
                 }
             },
             "credentials": "Credentials",

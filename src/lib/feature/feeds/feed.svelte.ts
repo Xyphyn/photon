@@ -140,6 +140,7 @@ export interface FeedTypes {
       }
     },
   ]
+  '/profile/user': [GetPersonDetails, GetPersonDetailsResponse]
 }
 
 export const feeds = new SvelteMap<keyof FeedTypes, Feed<any, any>>()

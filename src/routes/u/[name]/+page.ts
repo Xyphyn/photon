@@ -37,6 +37,7 @@ export async function load({ params, url, fetch }) {
       type: type,
       page: page,
       sort: sort,
+      limit: 20,
     }),
     person_view: new ReactiveState(user.person_view),
     moderates: new ReactiveState(user.moderates),

@@ -9,7 +9,7 @@ export async function load({ fetch }) {
   if (!profile.current.jwt) error(401)
 
   const my_user =
-    // profile.current?.user ??
+    profile.current?.user ??
     (await client({ auth: profile.current?.jwt, func: fetch }).getSite())
       .my_user
 

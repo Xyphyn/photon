@@ -162,11 +162,26 @@
       </MenuButton>
       <MenuButton
         color="danger-subtle"
-        onclick={() =>
-          blockUser(
-            isBlocked(profile.current.user!, person.person.id),
+        onclick={async () => {
+          const res = await blockUser(
+            !isBlocked(profile.current.user!, person.person.id),
             person.person.id,
-          )}
+          )
+
+          if (res.blocked) {
+            // TODO technically invalid but i don't use it so idc
+            profile.current.user!.person_blocks.push({
+              person: person.person,
+              target: person.person,
+            })
+          } else {
+            const index = profile.current.user!.person_blocks.findIndex(
+              (i) => i.target.id == person.person.id,
+            )
+            if (index != -1)
+              profile.current.user!.person_blocks.splice(index, 1)
+          }
+        }}
       >
         {#snippet prefix()}
           <Icon mini size="16" src={NoSymbol} />

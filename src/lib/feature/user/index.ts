@@ -4,18 +4,14 @@ import { profile, type ProfileInfo } from '$lib/app/auth.svelte'
 
 // TODO obliterate this file
 export async function blockUser(block: boolean, id: number) {
-  const auth = profile.current?.jwt
-
-  if (!auth) throw new Error('Unauthorized')
-
-  await client().blockPerson({
+  return await client().blockPerson({
     block: block,
     person_id: id,
   })
 }
 
 export function isBlocked(me: MyUserInfo, user: number) {
-  return me.person_blocks.map((b) => b.target.id).includes(user)
+  return me.person_blocks.find((b) => b.target.id == user)
 }
 
 export function addSubscription(
