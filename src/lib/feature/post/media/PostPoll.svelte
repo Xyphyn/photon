@@ -33,12 +33,15 @@
       (post.poll.my_votes?.length ?? 0) > 0
     ),
   )
-  let chosen = $state<number | undefined>(canVote ? undefined : -1)
+  let chosen = $state<number | number[] | undefined>(canVote ? undefined : -1)
 
   let options = $derived(
     post.poll.choices.map((i) => ({
       ...i,
-      num_votes: chosen == i.id ? i.num_votes + 1 : i.num_votes,
+      num_votes:
+        (typeof chosen !== 'number' && chosen?.includes(i.id)) || chosen == i.id
+          ? i.num_votes + 1
+          : i.num_votes,
     })),
   )
   let totalVotes = $derived(options.reduce((a, b) => a + b.num_votes, 0))
@@ -52,7 +55,7 @@
 
       loading = true
 
-      if (typeof id !== 'number') chosen = id[0]
+      if (typeof id !== 'number') chosen = id
       else chosen = id
 
       canVote = false
@@ -82,7 +85,13 @@
   }
 </script>
 
-<form class="space-y-2" onsubmit={() => castVote(selected!)}>
+<form
+  class="space-y-2"
+  onsubmit={(e) => {
+    e.preventDefault()
+    castVote(selected!)
+  }}
+>
   <CommonList class="">
     {#each options.toSorted((a, b) => a.sort_order - b.sort_order) as choice}
       {@const active =
