@@ -19,7 +19,7 @@
     action?: Snippet<[Item]>
   }
 
-  let { items, link, action }: Props = $props()
+  let { items, link = true, action }: Props = $props()
 </script>
 
 <CommonList animate={false} class="px-1 py-0.5" size="xs" {items}>
