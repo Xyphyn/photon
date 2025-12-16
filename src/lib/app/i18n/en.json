@@ -624,7 +624,9 @@
         },
         "locked": "This post is locked.",
         "banned": "You are banned from this community.",
-        "more": "{{comments:number}} more"
+        "more": "{{comments:number}} more",
+        "collapse": "Collapse",
+        "expand": "Expand"
     },
     "moderation": {
         "report": "Report",

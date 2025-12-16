@@ -48,33 +48,10 @@
         return
       }
 
-      const tree = buildCommentsTree(newComments.comments, parent.depth)
-
-      // 0.18.2 -> 0.18.3 broke this
-      // so i'm adding this check
-      const treeParent = tree.find(
-        (c) => c.comment_view.comment.id == parent.comment_view.comment.id,
-      )
-
-      if (treeParent) {
-        // < 0.18.3
-        parent.children = treeParent.children
-        if (treeParent.children.length == 0) {
-          toast({
-            content: $t('toast.noComments'),
-            type: 'warning',
-          })
-        }
-      } else {
-        // 0.18.3+
-        parent.children = tree
-        if (tree.length == 0) {
-          toast({
-            content: $t('toast.noComments'),
-            type: 'warning',
-          })
-        }
-      }
+      parent.children = buildCommentsTree(
+        newComments.comments,
+        parent.depth,
+      )[0].children
       childrenPage++
     } catch (err) {
       console.error(err)
@@ -95,10 +72,16 @@
           node.comment_view.counts.child_count > 0) &&
           'border-l',
         'ml-2.5 pl-3 sm:pl-4 lg:pl-5',
-        'border-slate-200 dark:border-zinc-800',
+        'comment-border',
       ]}
       bind:open={nodes[index].expanded}
     >
+      <button
+        class="expand-btn"
+        onclick={() => (nodes[index].expanded = !nodes[index].expanded)}
+        aria-label={$t('comment.expand')}
+      ></button>
+      <div class={['comment-corner', node.depth == 0 && 'hidden']}></div>
       {#if node.children?.length > 0}
         <CommentTree {post} bind:nodes={nodes[index].children} />
       {/if}
@@ -137,3 +120,52 @@
     {/if}
   {/each}
 </ul>
+
+<style>
+  @reference '../../../app.css';
+
+  :global(.comment-border) {
+    border-color: var(--color-slate-200);
+    @variant dark {
+      border-color: var(--color-zinc-800);
+    }
+
+    &:has(:global(> * > .expand-btn:hover)) {
+      border-color: var(--color-slate-400);
+      @variant dark {
+        border-color: var(--color-zinc-600);
+      }
+    }
+  }
+
+  .expand-btn {
+    width: calc(var(--spacing) * 4);
+    position: absolute;
+    top: 0;
+    left: calc(var(--spacing) * 0.5);
+    height: 100%;
+    cursor: pointer;
+  }
+
+  .comment-corner {
+    position: absolute;
+    top: calc(var(--spacing) * 2);
+    left: calc(var(--spacing) * -3);
+    border-bottom-left-radius: calc(infinity * 1px);
+    border-left-width: 1px;
+    border-bottom-width: 1px;
+    border-color: var(--color-slate-200);
+    @variant dark {
+      border-color: var(--color-zinc-800);
+    }
+    width: calc(var(--spacing) * 3);
+    height: calc(var(--spacing) * 3);
+
+    @variant sm {
+      top: calc(var(--spacing) * 1);
+      left: calc(var(--spacing) * -5.5);
+      width: calc(var(--spacing) * 5);
+      height: calc(var(--spacing) * 5);
+    }
+  }
+</style>
