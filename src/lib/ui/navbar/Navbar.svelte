@@ -17,10 +17,9 @@
   import type { ClassValue } from 'svelte/elements'
   import Avatar from '../generic/Avatar.svelte'
   import Logo from '../generic/Logo.svelte'
-  import CommandsWrapper from './commands/CommandsHost.svelte'
+  import CommandsWrapper, { chords } from './commands/CommandsHost.svelte'
   import NavButton from './NavButton.svelte'
 
-  let promptOpen: boolean = $state(false)
   interface Props {
     style?: string
     class?: ClassValue
@@ -29,12 +28,12 @@
   let { style = '', class: clazz = '' }: Props = $props()
 </script>
 
-<CommandsWrapper bind:open={promptOpen} />
+<CommandsWrapper />
 <nav class={['navbar @container', clazz]} {style} data-sveltekit-preload-data>
   <NavButton
     oncontextmenu={(e: Event) => {
       e.preventDefault()
-      promptOpen = true
+      chords.commands = true
       return true
     }}
     icon={Home}

@@ -130,10 +130,20 @@
       border-color: var(--color-zinc-800);
     }
 
-    &:has(:global(> * > .expand-btn:hover)) {
-      border-color: var(--color-slate-400);
+    transition: border-color 600ms cubic-bezier(0.075, 0.82, 0.165, 1);
+
+    &:has(:global(> * > .expand-btn:hover:not(:active))) {
+      border-color: color-mix(
+        in oklab,
+        var(--color-primary-900),
+        var(--color-slate-500)
+      );
       @variant dark {
-        border-color: var(--color-zinc-600);
+        border-color: color-mix(
+          in oklab,
+          var(--color-primary-100),
+          var(--color-zinc-500)
+        );
       }
     }
   }

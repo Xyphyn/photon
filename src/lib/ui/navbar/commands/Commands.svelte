@@ -256,7 +256,7 @@
   {/if}
   <div class="space-y-1" bind:this={container}>
     {#each filteredGroups as group, groupIndex}
-      <div class="space-y-1">
+      <div class={['space-y-1', group.actions.length == 0 && 'hidden']}>
         <EndPlaceholder margin="md" size="sm">{group.name}</EndPlaceholder>
         <CommonList size="xs" class="p-0! sm:p-0! lg:p-0!">
           {#each group.actions as action, actionIndex}

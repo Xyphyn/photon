@@ -20,6 +20,7 @@ import {
   Clock,
   Cog6Tooth,
   ComputerDesktop,
+  Envelope,
   Fire,
   GlobeAlt,
   GlobeAmericas,
@@ -275,6 +276,11 @@ export function getGroups(
               name: t.get('account.addGuest'),
               icon: Plus,
             },
+            {
+              href: '/inbox/messages',
+              name: t.get('filter.inbox.messages'),
+              icon: Envelope,
+            },
           ]
         : [
             {
@@ -413,12 +419,12 @@ export function getGroups(
 export function dynamicActions(query: string): Group {
   const actions = [
     {
-      name: t.get('nav.commands.search', { default: query }),
+      name: t.get('nav.commands.search', { default: query.trim() }),
       icon: MagnifyingGlass,
       href: `/search?q=${query}`,
     },
     {
-      name: t.get('nav.commands.communities', { default: query }),
+      name: t.get('nav.commands.communities', { default: query.trim() }),
       icon: Newspaper,
       href: `/explore/communities?q=${query}`,
     },

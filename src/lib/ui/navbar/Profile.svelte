@@ -23,6 +23,7 @@
     BugAnt,
     CodeBracketSquare,
     Cog6Tooth,
+    CommandLine,
     ComputerDesktop,
     Icon,
     Identification,
@@ -35,6 +36,7 @@
     UserCircle,
     UserGroup,
   } from 'svelte-hero-icons/dist'
+  import { chords } from './commands/CommandsHost.svelte'
 </script>
 
 {#snippet siteSnippet()}
@@ -135,6 +137,23 @@
 </Select>
 <MenuButton href="/theme" icon={Swatch}>
   {$t('nav.menu.theme')}
+</MenuButton>
+{#snippet key(label: string)}
+  <span
+    class="text-[12px] rounded-md border border-slate-300 dark:border-zinc-700 border-b-2 px-2 py-0.5"
+  >
+    {label}
+  </span>
+{/snippet}
+<MenuButton
+  onclick={() => (chords.commands = !chords.commands)}
+  icon={CommandLine}
+>
+  {$t('nav.commands.prompt')}
+  <div class="text-slate-600 dark:text-zinc-400 text-xs ml-auto max-sm:hidden">
+    {@render key('Ctrl')}
+    {@render key('K')}
+  </div>
 </MenuButton>
 {#if settings.debugInfo}
   <MenuButton href="/util" icon={BugAnt}>Debug</MenuButton>
