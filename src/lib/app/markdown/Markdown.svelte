@@ -95,6 +95,7 @@
     space: MdParagraph,
     list_item: MdListItem,
     text: MdText,
+    escape: MdText,
     em: MdEm,
     strong: MdStrong,
     del: MdDel,
