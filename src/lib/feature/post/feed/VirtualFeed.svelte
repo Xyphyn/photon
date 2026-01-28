@@ -22,6 +22,12 @@
   import { SvelteSet } from 'svelte/reactivity'
   import { fly } from 'svelte/transition'
   import { Post } from '..'
+  import {
+    parseKeywordFilter,
+    parseUrlFilter,
+    shouldFilterPost,
+    shouldFilterPostByUrl,
+  } from '../keywordFilter'
 
   interface Props {
     posts: PostView[]
@@ -52,6 +58,30 @@
 
   const abortLoad = new AbortController()
   let seenIds = new SvelteSet<number>(posts.map((post) => post.post.id))
+
+  let keywords = $derived.by(() =>
+    parseKeywordFilter(settings.posts.keywordFilter),
+  )
+
+  let urlFilters = $derived.by(() =>
+    parseUrlFilter(settings.posts.urlFilter),
+  )
+
+  let visiblePosts = $derived.by(() =>
+    (posts ?? [])
+      .map((post, index) => ({ post, index }))
+      .filter(
+        (entry) =>
+          !shouldFilterPost(entry.post, keywords) &&
+          !shouldFilterPostByUrl(entry.post, urlFilters),
+      ),
+  )
+
+  const removePost = (postId: number) => {
+    const index = posts.findIndex((post) => post.post.id === postId)
+    if (index === -1) return
+    posts = posts.toSpliced(index, 1)
+  }
 
   async function loadMore() {
     if (!hasMore || loading) return
@@ -157,7 +187,7 @@
 
 <ul class="flex flex-col list-none" bind:this={listEl}>
   {#key posts}
-    {#if posts?.length == 0}
+    {#if visiblePosts.length == 0}
       <div class="h-full grid place-items-center my-8">
         <Placeholder
           icon={ArchiveBox}
@@ -178,7 +208,7 @@
       <VirtualList
         id="feed"
         class="divide-y -mx-3 sm:-mx-6 divide-slate-100 dark:divide-zinc-900"
-        items={posts}
+        items={visiblePosts}
         {initialOffset}
         overscan={3}
         estimatedHeight={settings.view == 'cozy' ? 500 : 150}
@@ -186,6 +216,8 @@
         bind:this={listComp}
       >
         {#snippet item(row)}
+          {@const entry = visiblePosts[row]}
+          {#if entry}
           <li
             in:fly={row < 7
               ? { duration: 800, easing: expoOut, y: 24, delay: row * 50 }
@@ -194,19 +226,20 @@
             class={['relative post-container', row < 7 && '']}
           >
             <Post
-              bind:post={posts[row]}
+              bind:post={posts[entry.index]}
               hideCommunity={community}
-              view={(posts[row]?.post.featured_community ||
-                posts[row]?.post.featured_local) &&
+              view={(entry.post.post.featured_community ||
+                entry.post.post.featured_local) &&
               settings.posts.compactFeatured
                 ? 'compact'
                 : settings.view}
               onhide={() => {
-                posts = posts.toSpliced(row, 1)
+                removePost(entry.post.post.id)
               }}
               class="px-3 sm:px-6 hover:bg-slate-100/30 hover:dark:bg-zinc-900/30 transition-colors"
             ></Post>
           </li>
+          {/if}
         {/snippet}
       </VirtualList>
     {/if}

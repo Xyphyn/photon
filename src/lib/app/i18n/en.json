@@ -903,6 +903,16 @@
                 "deleted": "Deleted by user",
                 "removed": "Removed by moderator"
             },
+            "keywordFilter": {
+                "title": "Post keyword filter",
+                "description": "Hide posts whose title or body contains any of these keywords. Separate with commas or new lines.",
+                "placeholder": "spoilers, politics"
+            },
+            "urlFilter": {
+                "title": "Post URL filter",
+                "description": "Hide posts whose URL starts with any of these addresses. Protocols (http/https) are ignored. Separate with commas or new lines.",
+                "placeholder": "example.com, news.example.com/path"
+            },
             "nsfwBlur": {
                 "title": "NSFW blur",
                 "description": "Blurs images and remove post bodies of NSFW posts."

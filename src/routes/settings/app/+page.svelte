@@ -7,7 +7,7 @@
   import Link from '$lib/ui/form/Link.svelte'
   import Switch from '$lib/ui/form/Switch.svelte'
   import { CommonList } from '$lib/ui/layout'
-  import { Button, Option, Select } from 'mono-svelte'
+  import { Button, Option, Select, TextArea } from 'mono-svelte'
   import {
     ArrowsPointingOut,
     ArrowsRightLeft,
@@ -22,6 +22,7 @@
     Clock,
     CubeTransparent,
     DocumentText,
+    EyeSlash,
     Fire,
     GlobeAmericas,
     Heart,
@@ -191,6 +192,32 @@
     title={$t('settings.app.infiniteScroll.title')}
     description={$t('settings.app.infiniteScroll.description')}
   />
+  <Setting icon={EyeSlash}>
+    {#snippet title()}
+      <span>{$t('settings.lemmy.keywordFilter.title')}</span>
+    {/snippet}
+    {#snippet description()}
+      <span>{$t('settings.lemmy.keywordFilter.description')}</span>
+    {/snippet}
+    <TextArea
+      rows={4}
+      bind:value={settings.posts.keywordFilter}
+      placeholder={$t('settings.lemmy.keywordFilter.placeholder')}
+    />
+  </Setting>
+  <Setting icon={EyeSlash}>
+    {#snippet title()}
+      <span>{$t('settings.lemmy.urlFilter.title')}</span>
+    {/snippet}
+    {#snippet description()}
+      <span>{$t('settings.lemmy.urlFilter.description')}</span>
+    {/snippet}
+    <TextArea
+      rows={4}
+      bind:value={settings.posts.urlFilter}
+      placeholder={$t('settings.lemmy.urlFilter.placeholder')}
+    />
+  </Setting>
   <Setting icon={Photo}>
     {#snippet title()}
       <span>{$t('settings.app.thumbnailSide.title')}</span>

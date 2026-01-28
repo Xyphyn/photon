@@ -88,6 +88,8 @@ interface Settings {
     noVirtualize: boolean
     reverseActions: boolean
     titleOpensUrl: boolean
+    keywordFilter: string
+    urlFilter: string
   }
   forms: {
     autosubmitAutofill: boolean
@@ -171,6 +173,8 @@ export const defaultSettings: Settings = {
     noVirtualize: false,
     reverseActions: toBool(env.PUBLIC_REVERSE_ACTIONS) ?? false,
     titleOpensUrl: toBool(env.PUBLIC_TITLE_OPENS_URL) ?? false,
+    keywordFilter: '',
+    urlFilter: '',
   },
   forms: {
     autosubmitAutofill: false,

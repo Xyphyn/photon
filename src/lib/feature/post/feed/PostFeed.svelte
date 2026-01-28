@@ -6,6 +6,12 @@
   import type { Snippet } from 'svelte'
   import { ArchiveBox, Plus } from 'svelte-hero-icons/dist'
   import { Post } from '..'
+  import {
+    parseKeywordFilter,
+    parseUrlFilter,
+    shouldFilterPost,
+    shouldFilterPostByUrl,
+  } from '../keywordFilter'
 
   interface Props {
     posts: PostView[]
@@ -14,12 +20,36 @@
   }
 
   let { posts = $bindable(), community = false, children }: Props = $props()
+
+  let keywords = $derived.by(() =>
+    parseKeywordFilter(settings.posts.keywordFilter),
+  )
+
+  let urlFilters = $derived.by(() =>
+    parseUrlFilter(settings.posts.urlFilter),
+  )
+
+  let visiblePosts = $derived.by(() =>
+    (posts ?? [])
+      .map((post, index) => ({ post, index }))
+      .filter(
+        (entry) =>
+          !shouldFilterPost(entry.post, keywords) &&
+          !shouldFilterPostByUrl(entry.post, urlFilters),
+      ),
+  )
+
+  const removePost = (postId: number) => {
+    const index = posts.findIndex((post) => post.post.id === postId)
+    if (index === -1) return
+    posts = posts.toSpliced(index, 1)
+  }
 </script>
 
 <ul
   class="flex flex-col list-none divide-y divide-slate-200 dark:divide-zinc-800"
 >
-  {#if posts?.length == 0}
+  {#if visiblePosts.length === 0}
     <div class="h-full grid place-items-center">
       <Placeholder
         icon={ArchiveBox}
@@ -32,18 +62,19 @@
       </Placeholder>
     </div>
   {:else}
-    {#each posts as post, index (post.post.id)}
+    {#each visiblePosts as entry (entry.post.post.id)}
       <li class="relative post-container">
         <Post
           hideCommunity={community}
-          view={(post.post.featured_community || post.post.featured_local) &&
+          view={(entry.post.post.featured_community ||
+            entry.post.post.featured_local) &&
           settings.posts.compactFeatured
             ? 'compact'
             : settings.view}
-          {post}
+          post={entry.post}
           class="transition-all duration-250"
           onhide={() => {
-            posts = posts.toSpliced(index, 1)
+            removePost(entry.post.post.id)
           }}
         />
       </li>
