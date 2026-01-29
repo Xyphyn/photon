@@ -576,6 +576,7 @@
                 "share.global": "Origin server",
                 "share.local": "Your server",
                 "share.photon": "Photon link",
+                "share.url": "Attached link",
                 "crosspost": "Crosspost",
                 "delete": "Delete",
                 "restore": "Restore"

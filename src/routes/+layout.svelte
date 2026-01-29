@@ -20,7 +20,7 @@
   import { Button, ModalContainer, Spinner, ToastContainer } from 'mono-svelte'
   import nProgress from 'nprogress'
   import 'nprogress/nprogress.css'
-  import { onMount } from 'svelte'
+  import { onMount, setContext } from 'svelte'
   import { Forward } from 'svelte-hero-icons/dist'
   import '../app.css'
 
@@ -29,6 +29,8 @@
   }
 
   let { children }: Props = $props()
+
+  const userHost = setContext<{ test: number }>('user', { test: 5 })
 
   nProgress.configure({
     minimum: 0.4,
