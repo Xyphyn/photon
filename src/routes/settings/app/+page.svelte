@@ -213,7 +213,7 @@
       onclick={() =>
         settings.filters.push({
           match: 'New filter.',
-          action: 'none',
+          action: 'minimize',
           type: 'keyword',
         })}
     >
