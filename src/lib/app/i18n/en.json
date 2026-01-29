@@ -903,6 +903,14 @@
                 "deleted": "Deleted by user",
                 "removed": "Removed by moderator"
             },
+            "contentFilter": {
+                "title": "Content filters",
+                "description": "Hide or minimize posts matching given strings. Supports regular expressions.",
+                "hide": "Hide",
+                "minimize": "Minimize",
+                "minimized": "Content hidden by your filters",
+                "disabled": "Off"
+            },
             "nsfwBlur": {
                 "title": "NSFW blur",
                 "description": "Blurs images and remove post bodies of NSFW posts."

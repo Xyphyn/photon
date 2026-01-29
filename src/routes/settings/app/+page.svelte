@@ -7,7 +7,7 @@
   import Link from '$lib/ui/form/Link.svelte'
   import Switch from '$lib/ui/form/Switch.svelte'
   import { CommonList } from '$lib/ui/layout'
-  import { Button, Option, Select } from 'mono-svelte'
+  import { Button, Option, Select, TextArea } from 'mono-svelte'
   import {
     ArrowsPointingOut,
     ArrowsRightLeft,
@@ -22,12 +22,14 @@
     Clock,
     CubeTransparent,
     DocumentText,
+    EyeSlash,
     Fire,
     GlobeAmericas,
     Heart,
     Icon,
     Language,
     Photo,
+    Plus,
     Star,
     TableCells,
     Tag,
@@ -36,6 +38,7 @@
   } from 'svelte-hero-icons/dist'
   import Setting from '../Setting.svelte'
   import ToggleSetting from '../ToggleSetting.svelte'
+  import Filter from './Filter.svelte'
 
   let localeMap: Map<
     string,
@@ -191,6 +194,32 @@
     title={$t('settings.app.infiniteScroll.title')}
     description={$t('settings.app.infiniteScroll.description')}
   />
+  <Setting icon={EyeSlash} adaptive={false} mainClass="rounded-b-none!">
+    {#snippet title()}
+      <span>{$t('settings.lemmy.contentFilter.title')}</span>
+    {/snippet}
+    {#snippet description()}
+      <span>{$t('settings.lemmy.contentFilter.description')}</span>
+    {/snippet}
+  </Setting>
+  {#each settings.filters as filter, index}
+    <Filter onremove={() => settings.filters.splice(index, 1)} bind:filter />
+  {/each}
+  <li class="rounded-t-none! -mt-1! border-t-0!">
+    <Button
+      color="none"
+      class="w-full p-2"
+      icon={Plus}
+      onclick={() =>
+        settings.filters.push({
+          match: 'New filter.',
+          action: 'none',
+          type: 'keyword',
+        })}
+    >
+      {$t('common.add')}
+    </Button>
+  </li>
   <Setting icon={Photo}>
     {#snippet title()}
       <span>{$t('settings.app.thumbnailSide.title')}</span>

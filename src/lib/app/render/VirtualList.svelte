@@ -47,6 +47,12 @@
     }
   }
 
+  export function rerender() {
+    requestAnimationFrame(() => {
+      updateVisibleItems()
+    })
+  }
+
   onDestroy(() => {
     restore = {
       itemHeights: itemHeights,

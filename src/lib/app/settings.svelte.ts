@@ -1,7 +1,10 @@
 import { browser } from '$app/environment'
 import { env } from '$env/dynamic/public'
 import type { CommentSortType, ListingType, SortType } from '$lib/api/types'
+import type { Filter } from '$lib/feature/post/filters'
 import { locale } from './i18n'
+
+// TODO extract settings into submodules
 
 export type View = 'cozy' | 'compact'
 
@@ -89,6 +92,7 @@ interface Settings {
     reverseActions: boolean
     titleOpensUrl: boolean
   }
+  filters: Filter[]
   forms: {
     autosubmitAutofill: boolean
   }
@@ -97,7 +101,6 @@ interface Settings {
   useRtl: boolean
   parseTags: boolean
   logoColorMonth: number | null
-
   absoluteDates: boolean
   messages: {
     fullMarkdown: boolean
@@ -106,7 +109,7 @@ interface Settings {
 }
 
 export const defaultSettings: Settings = {
-  settingsVer: 7,
+  settingsVer: 8,
   expandableImages: toBool(env.PUBLIC_EXPANDABLE_IMAGES) ?? true,
   markReadPosts: toBool(env.PUBLIC_MARK_READ_POSTS) ?? true,
   showInstances: {
@@ -172,6 +175,7 @@ export const defaultSettings: Settings = {
     reverseActions: toBool(env.PUBLIC_REVERSE_ACTIONS) ?? false,
     titleOpensUrl: toBool(env.PUBLIC_TITLE_OPENS_URL) ?? false,
   },
+  filters: [],
   forms: {
     autosubmitAutofill: false,
   },
