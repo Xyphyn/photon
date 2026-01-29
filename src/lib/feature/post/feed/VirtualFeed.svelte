@@ -12,6 +12,7 @@
   import { onDestroy, onMount, untrack } from 'svelte'
   import {
     ArchiveBox,
+    ArrowsPointingOut,
     ArrowTopRightOnSquare,
     ChevronDoubleUp,
     ExclamationTriangle,
@@ -22,12 +23,8 @@
   import { SvelteSet } from 'svelte/reactivity'
   import { fly } from 'svelte/transition'
   import { Post } from '..'
-  import {
-    parseKeywordFilter,
-    parseUrlFilter,
-    shouldFilterPost,
-    shouldFilterPostByUrl,
-  } from '../keywordFilter'
+  import { filterPost, type FilteredItem } from '../filters'
+  import { ReactiveState } from '$lib/app/util.svelte'
 
   interface Props {
     posts: PostView[]
@@ -47,9 +44,17 @@
     children,
   }: Props = $props()
 
+  let filteredPosts: FilteredItem[] = $derived(
+    posts.map((post) => ({
+      id: post.post.id,
+      action: filterPost(post, settings.filters),
+    })),
+  )
+
   let listEl = $state<HTMLUListElement>()
   let listComp = $state<{
     scrollToIndex: (index: number, window?: boolean) => void
+    rerender: () => void
   }>()
 
   let error = $state()
@@ -58,24 +63,6 @@
 
   const abortLoad = new AbortController()
   let seenIds = new SvelteSet<number>(posts.map((post) => post.post.id))
-
-  let keywords = $derived.by(() =>
-    parseKeywordFilter(settings.posts.keywordFilter),
-  )
-
-  let urlFilters = $derived.by(() =>
-    parseUrlFilter(settings.posts.urlFilter),
-  )
-
-  let visiblePosts = $derived.by(() =>
-    (posts ?? [])
-      .map((post, index) => ({ post, index }))
-      .filter(
-        (entry) =>
-          !shouldFilterPost(entry.post, keywords) &&
-          !shouldFilterPostByUrl(entry.post, urlFilters),
-      ),
-  )
 
   const removePost = (postId: number) => {
     const index = posts.findIndex((post) => post.post.id === postId)
@@ -187,7 +174,7 @@
 
 <ul class="flex flex-col list-none" bind:this={listEl}>
   {#key posts}
-    {#if visiblePosts.length == 0}
+    {#if posts.length == 0}
       <div class="h-full grid place-items-center my-8">
         <Placeholder
           icon={ArchiveBox}
@@ -208,7 +195,7 @@
       <VirtualList
         id="feed"
         class="divide-y -mx-3 sm:-mx-6 divide-slate-100 dark:divide-zinc-900"
-        items={visiblePosts}
+        items={posts}
         {initialOffset}
         overscan={3}
         estimatedHeight={settings.view == 'cozy' ? 500 : 150}
@@ -216,29 +203,46 @@
         bind:this={listComp}
       >
         {#snippet item(row)}
-          {@const entry = visiblePosts[row]}
-          {#if entry}
-          <li
-            in:fly={row < 7
-              ? { duration: 800, easing: expoOut, y: 24, delay: row * 50 }
-              : { opacity: 1, duration: 0 }}
-            data-index={row}
-            class={['relative post-container', row < 7 && '']}
-          >
-            <Post
-              bind:post={posts[entry.index]}
-              hideCommunity={community}
-              view={(entry.post.post.featured_community ||
-                entry.post.post.featured_local) &&
-              settings.posts.compactFeatured
-                ? 'compact'
-                : settings.view}
-              onhide={() => {
-                removePost(entry.post.post.id)
-              }}
-              class="px-3 sm:px-6 hover:bg-slate-100/30 hover:dark:bg-zinc-900/30 transition-colors"
-            ></Post>
-          </li>
+          <!--god svelte is gonna make me lose it-->
+          {@const filter = new ReactiveState(filteredPosts[row])}
+          {#if posts[row] && filter.value.action != 'hide'}
+            <li
+              in:fly={row < 7
+                ? { duration: 800, easing: expoOut, y: 24, delay: row * 50 }
+                : { opacity: 1, duration: 0 }}
+              data-index={row}
+              class={['relative post-container', row < 7 && '']}
+            >
+              <!--TODO make my component isolation not abysmal-->
+              {#if filter.value.action == 'none'}
+                <Post
+                  bind:post={posts[row]}
+                  hideCommunity={community}
+                  view={(posts[row].post.featured_community ||
+                    posts[row].post.featured_local) &&
+                  settings.posts.compactFeatured
+                    ? 'compact'
+                    : settings.view}
+                  onhide={() => removePost(posts[row].post.id)}
+                  class="px-3 sm:px-6 hover:bg-slate-100/30 hover:dark:bg-zinc-900/30 transition-colors"
+                ></Post>
+              {:else if filter.value.action == 'minimize'}
+                <Button
+                  onclick={() => {
+                    filteredPosts[row].action = 'none'
+                    filter.value.action = 'none'
+                    listComp?.rerender()
+                  }}
+                  color="tertiary"
+                  rounding="none"
+                  icon={ArrowsPointingOut}
+                  class="text-slate-400 dark:text-zinc-600 w-full"
+                  size="xs"
+                >
+                  {$t('settings.lemmy.contentFilter.minimized')}
+                </Button>
+              {/if}
+            </li>
           {/if}
         {/snippet}
       </VirtualList>

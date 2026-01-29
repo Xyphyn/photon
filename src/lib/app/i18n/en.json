@@ -903,15 +903,13 @@
                 "deleted": "Deleted by user",
                 "removed": "Removed by moderator"
             },
-            "keywordFilter": {
-                "title": "Post keyword filter",
-                "description": "Hide posts whose title or body contains any of these keywords. Separate with commas or new lines.",
-                "placeholder": "spoilers, politics"
-            },
-            "urlFilter": {
-                "title": "Post URL filter",
-                "description": "Hide posts whose URL starts with any of these addresses. Protocols (http/https) are ignored. Separate with commas or new lines.",
-                "placeholder": "example.com, news.example.com/path"
+            "contentFilter": {
+                "title": "Content filters",
+                "description": "Hide or minimize posts matching given strings. Supports regular expressions.",
+                "hide": "Hide",
+                "minimize": "Minimize",
+                "minimized": "Content hidden by your filters",
+                "disabled": "Off"
             },
             "nsfwBlur": {
                 "title": "NSFW blur",

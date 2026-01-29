@@ -29,6 +29,7 @@
     Icon,
     Language,
     Photo,
+    Plus,
     Star,
     TableCells,
     Tag,
@@ -37,6 +38,7 @@
   } from 'svelte-hero-icons/dist'
   import Setting from '../Setting.svelte'
   import ToggleSetting from '../ToggleSetting.svelte'
+  import Filter from './Filter.svelte'
 
   let localeMap: Map<
     string,
@@ -192,32 +194,32 @@
     title={$t('settings.app.infiniteScroll.title')}
     description={$t('settings.app.infiniteScroll.description')}
   />
-  <Setting icon={EyeSlash}>
+  <Setting icon={EyeSlash} adaptive={false} mainClass="rounded-b-none!">
     {#snippet title()}
-      <span>{$t('settings.lemmy.keywordFilter.title')}</span>
+      <span>{$t('settings.lemmy.contentFilter.title')}</span>
     {/snippet}
     {#snippet description()}
-      <span>{$t('settings.lemmy.keywordFilter.description')}</span>
+      <span>{$t('settings.lemmy.contentFilter.description')}</span>
     {/snippet}
-    <TextArea
-      rows={4}
-      bind:value={settings.posts.keywordFilter}
-      placeholder={$t('settings.lemmy.keywordFilter.placeholder')}
-    />
   </Setting>
-  <Setting icon={EyeSlash}>
-    {#snippet title()}
-      <span>{$t('settings.lemmy.urlFilter.title')}</span>
-    {/snippet}
-    {#snippet description()}
-      <span>{$t('settings.lemmy.urlFilter.description')}</span>
-    {/snippet}
-    <TextArea
-      rows={4}
-      bind:value={settings.posts.urlFilter}
-      placeholder={$t('settings.lemmy.urlFilter.placeholder')}
-    />
-  </Setting>
+  {#each settings.filters as filter, index}
+    <Filter onremove={() => settings.filters.splice(index, 1)} bind:filter />
+  {/each}
+  <li class="rounded-t-none! -mt-1! border-t-0!">
+    <Button
+      color="none"
+      class="w-full p-2"
+      icon={Plus}
+      onclick={() =>
+        settings.filters.push({
+          match: 'New filter.',
+          action: 'none',
+          type: 'keyword',
+        })}
+    >
+      {$t('common.add')}
+    </Button>
+  </li>
   <Setting icon={Photo}>
     {#snippet title()}
       <span>{$t('settings.app.thumbnailSide.title')}</span>

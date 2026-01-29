@@ -4,14 +4,10 @@
   import Placeholder from '$lib/ui/info/Placeholder.svelte'
   import { Button } from 'mono-svelte'
   import type { Snippet } from 'svelte'
-  import { ArchiveBox, Plus } from 'svelte-hero-icons/dist'
+  import { ArchiveBox, ArrowsPointingOut, Plus } from 'svelte-hero-icons/dist'
   import { Post } from '..'
-  import {
-    parseKeywordFilter,
-    parseUrlFilter,
-    shouldFilterPost,
-    shouldFilterPostByUrl,
-  } from '../keywordFilter'
+  import { filterPost, type FilteredItem } from '../filters'
+  import { t } from '$lib/app/i18n'
 
   interface Props {
     posts: PostView[]
@@ -21,22 +17,11 @@
 
   let { posts = $bindable(), community = false, children }: Props = $props()
 
-  let keywords = $derived.by(() =>
-    parseKeywordFilter(settings.posts.keywordFilter),
-  )
-
-  let urlFilters = $derived.by(() =>
-    parseUrlFilter(settings.posts.urlFilter),
-  )
-
-  let visiblePosts = $derived.by(() =>
-    (posts ?? [])
-      .map((post, index) => ({ post, index }))
-      .filter(
-        (entry) =>
-          !shouldFilterPost(entry.post, keywords) &&
-          !shouldFilterPostByUrl(entry.post, urlFilters),
-      ),
+  let filteredPosts: FilteredItem[] = $derived(
+    posts.map((post) => ({
+      id: post.post.id,
+      action: filterPost(post, settings.filters),
+    })),
   )
 
   const removePost = (postId: number) => {
@@ -49,7 +34,7 @@
 <ul
   class="flex flex-col list-none divide-y divide-slate-200 dark:divide-zinc-800"
 >
-  {#if visiblePosts.length === 0}
+  {#if posts.length === 0}
     <div class="h-full grid place-items-center">
       <Placeholder
         icon={ArchiveBox}
@@ -62,22 +47,36 @@
       </Placeholder>
     </div>
   {:else}
-    {#each visiblePosts as entry (entry.post.post.id)}
-      <li class="relative post-container">
-        <Post
-          hideCommunity={community}
-          view={(entry.post.post.featured_community ||
-            entry.post.post.featured_local) &&
-          settings.posts.compactFeatured
-            ? 'compact'
-            : settings.view}
-          post={entry.post}
-          class="transition-all duration-250"
-          onhide={() => {
-            removePost(entry.post.post.id)
-          }}
-        />
-      </li>
+    {#each posts as post, row (post.post.id)}
+      {@const filter = filteredPosts[row]}
+      {#if filter.action != 'hide'}
+        <li class="relative post-container">
+          {#if filter.action == 'none'}
+            <Post
+              hideCommunity={community}
+              view={(post.post.featured_community ||
+                post.post.featured_local) &&
+              settings.posts.compactFeatured
+                ? 'compact'
+                : settings.view}
+              {post}
+              class="transition-all duration-250"
+              onhide={() => removePost(post.post.id)}
+            />
+          {:else if filteredPosts[row].action == 'minimize'}
+            <Button
+              onclick={() => (filteredPosts[row].action = 'none')}
+              color="tertiary"
+              rounding="none"
+              icon={ArrowsPointingOut}
+              class="text-slate-400 dark:text-zinc-600 w-full"
+              size="xs"
+            >
+              {$t('settings.lemmy.contentFilter.minimized')}
+            </Button>
+          {/if}
+        </li>
+      {/if}
     {/each}
   {/if}
   {@render children?.()}
