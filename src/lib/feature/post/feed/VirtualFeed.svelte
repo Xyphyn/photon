@@ -205,45 +205,47 @@
         {#snippet item(row)}
           <!--god svelte is gonna make me lose it-->
           {@const filter = new ReactiveState(filteredPosts[row])}
-          {#if posts[row] && filter.value.action != 'hide'}
-            <li
-              in:fly={row < 7
-                ? { duration: 800, easing: expoOut, y: 24, delay: row * 50 }
-                : { opacity: 1, duration: 0 }}
-              data-index={row}
-              class={['relative post-container', row < 7 && '']}
-            >
-              <!--TODO make my component isolation not abysmal-->
-              {#if filter.value.action == 'none'}
-                <Post
-                  bind:post={posts[row]}
-                  hideCommunity={community}
-                  view={(posts[row].post.featured_community ||
-                    posts[row].post.featured_local) &&
-                  settings.posts.compactFeatured
-                    ? 'compact'
-                    : settings.view}
-                  onhide={() => removePost(posts[row].post.id)}
-                  class="px-3 sm:px-6 hover:bg-slate-100/30 hover:dark:bg-zinc-900/30 transition-colors"
-                ></Post>
-              {:else if filter.value.action == 'minimize'}
-                <Button
-                  onclick={() => {
-                    filteredPosts[row].action = 'none'
-                    filter.value.action = 'none'
-                    listComp?.rerender()
-                  }}
-                  color="tertiary"
-                  rounding="none"
-                  icon={ArrowsPointingOut}
-                  class="text-slate-400 dark:text-zinc-600 w-full"
-                  size="xs"
-                >
-                  {$t('settings.lemmy.contentFilter.minimized')}
-                </Button>
-              {/if}
-            </li>
-          {/if}
+          <li
+            in:fly={row < 7
+              ? { duration: 800, easing: expoOut, y: 24, delay: row * 50 }
+              : { opacity: 1, duration: 0 }}
+            data-index={row}
+            class={[
+              'relative post-container',
+              filter.value.action == 'hide' && 'hidden',
+              row < 7 && '',
+            ]}
+          >
+            <!--TODO make my component isolation not abysmal-->
+            {#if filter.value.action == 'none'}
+              <Post
+                bind:post={posts[row]}
+                hideCommunity={community}
+                view={(posts[row].post.featured_community ||
+                  posts[row].post.featured_local) &&
+                settings.posts.compactFeatured
+                  ? 'compact'
+                  : settings.view}
+                onhide={() => removePost(posts[row].post.id)}
+                class="px-3 sm:px-6 hover:bg-slate-100/30 hover:dark:bg-zinc-900/30 transition-colors"
+              ></Post>
+            {:else if filter.value.action == 'minimize'}
+              <Button
+                onclick={() => {
+                  filteredPosts[row].action = 'none'
+                  filter.value.action = 'none'
+                  listComp?.rerender()
+                }}
+                color="tertiary"
+                rounding="none"
+                icon={ArrowsPointingOut}
+                class="text-slate-400 dark:text-zinc-600 w-full"
+                size="xs"
+              >
+                {$t('settings.lemmy.contentFilter.minimized')}
+              </Button>
+            {/if}
+          </li>
         {/snippet}
       </VirtualList>
     {/if}
