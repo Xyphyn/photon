@@ -65,7 +65,7 @@ interface Settings {
   debugInfo: boolean
   expandImages: boolean
 
-  font: 'inter' | 'system' | 'browser'
+  font: 'inter' | 'system' | 'browser' | 'serifs'
   leftAlign: boolean
 
   newWidth: boolean

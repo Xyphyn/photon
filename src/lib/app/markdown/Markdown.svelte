@@ -154,7 +154,10 @@
 <svelte:element
   this={inline ? 'div' : 'article'}
   dir="auto"
-  class={[!noStyle && 'break-words space-y-4 leading-normal', clazz]}
+  class={[
+    !noStyle && 'wrap-break-word space-y-4 leading-normal font-reading',
+    clazz,
+  ]}
   {style}
 >
   <MdTree {tokens} renderers={inline ? inlineRenderers : renderers} />

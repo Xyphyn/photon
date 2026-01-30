@@ -266,7 +266,7 @@
           source={node.comment_view.comment.content}
           noStyle
           class={[
-            'text-[15px] sm:text-base text-slate-700 dark:text-zinc-300 *:leading-[1.6] break-words space-y-3',
+            'text-[15px] font-reading sm:text-base text-slate-700 dark:text-zinc-300 *:leading-[1.6] wrap-break-word space-y-3',
             node.comment_view.comment.distinguished
               ? 'material-success px-3 py-1.5 rounded-xl max-w-max'
               : page.url.hash.slice(1) ==

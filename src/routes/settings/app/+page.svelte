@@ -287,6 +287,7 @@
       <Option value="inter">Inter</Option>
       <Option value="system">System UI</Option>
       <Option value="browser">Browser</Option>
+      <Option value="serifs">Roboto Slab</Option>
     </Select>
   </Setting>
   <ToggleSetting

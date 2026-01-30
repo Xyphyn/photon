@@ -55,16 +55,19 @@
     $effect(() => {
       if (settings) {
         document.documentElement.classList.remove(
-          'font-inter',
-          'font-sans',
-          'font-system',
+          'font--inter',
+          'font--sans',
+          'font--system',
         )
         document.documentElement.classList.add(
+          // i should be fired for nested ternaries
           settings.font == 'inter'
-            ? 'font-inter'
+            ? 'font--inter'
             : settings.font == 'system'
-              ? 'font-system'
-              : 'font-sans',
+              ? 'font--system'
+              : settings.font == 'serifs'
+                ? 'font--serifs'
+                : 'font--sans',
         )
       }
     })

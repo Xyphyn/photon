@@ -7,8 +7,8 @@
 @theme {
   --font-sans: sans-serif;
   --font-system: system-ui;
-  --font-inter: Inter, system-ui, sans-serif;
   --font-display: Inter, system-ui, sans-serif;
+  --font-reading: Inter, system-ui, sans-serif;
   --font-mono: monospace;
 
   --animate-pop-in: pop-in 0.8s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
@@ -54,6 +54,33 @@
   font-family: 'Inter';
   src: url('/font/Inter.woff2') format('woff2');
   font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto Slab';
+  src: url('/font/RobotoSlab.woff2') format('woff2');
+  font-display: swap;
+}
+
+.font--serifs {
+  --font-display: 'Roboto Slab', serif;
+  --font-reading: 'Roboto Slab', serif;
+  --font-sans: 'Roboto Slab', serif;
+}
+.font--inter {
+  --font-display: Inter, sans-serif;
+  --font-reading: Inter, sans-serif;
+  --font-sans: Inter, sans-serif;
+}
+.font--system {
+  --font-display: system-ui, sans-serif;
+  --font-reading: system-ui, sans-serif;
+  --font-sans: system-ui, sans-serif;
+}
+.font--browser {
+  --font-display: sans-serif;
+  --font-reading: sans-serif;
+  --font-sans: sans-serif;
 }
 
 body {
