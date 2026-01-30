@@ -1,6 +1,6 @@
 <script lang="ts">
   import { t } from '$lib/app/i18n'
-  import type { Filter } from '$lib/feature/post/filters'
+  import type { Filter } from '$lib/feature/post/filters.svelte'
   import Switch from '$lib/ui/form/Switch.svelte'
   import { Button, TextInput } from 'mono-svelte'
   import { Trash } from 'svelte-hero-icons/dist'
@@ -14,9 +14,10 @@
 </script>
 
 <li
-  class="adaptive px-3 py-1 flex flex-col md:flex-row md:items-center xs gap-4"
+  class="adaptive px-3 py-1.5 flex flex-row flex-wrap items-center xs gap-x-2 gap-y-0.5"
 >
-  <TextInput bind:value={filter.match} label="" class="flex-1"></TextInput>
+  <TextInput bind:value={filter.match} label="" class="flex-1 min-w-96"
+  ></TextInput>
   <Switch
     options={['hide', 'minimize', 'none']}
     optionNames={[

@@ -6,7 +6,7 @@
   import type { Snippet } from 'svelte'
   import { ArchiveBox, ArrowsPointingOut, Plus } from 'svelte-hero-icons/dist'
   import { Post } from '..'
-  import { filterPost, type FilteredItem } from '../filters'
+  import { filterPost, type FilteredItem } from '../filters.svelte'
   import { t } from '$lib/app/i18n'
 
   interface Props {
@@ -20,7 +20,7 @@
   let filteredPosts: FilteredItem[] = $derived(
     posts.map((post) => ({
       id: post.post.id,
-      action: filterPost(post, settings.filters),
+      action: filterPost(post),
     })),
   )
 

@@ -23,7 +23,7 @@
   import { SvelteSet } from 'svelte/reactivity'
   import { fly } from 'svelte/transition'
   import { Post } from '..'
-  import { filterPost, type FilteredItem } from '../filters'
+  import { filterPost, type FilteredItem } from '../filters.svelte'
   import { ReactiveState } from '$lib/app/util.svelte'
 
   interface Props {
@@ -47,7 +47,7 @@
   let filteredPosts: FilteredItem[] = $derived(
     posts.map((post) => ({
       id: post.post.id,
-      action: filterPost(post, settings.filters),
+      action: filterPost(post),
     })),
   )
 

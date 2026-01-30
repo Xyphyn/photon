@@ -1,7 +1,7 @@
 import { browser } from '$app/environment'
 import { env } from '$env/dynamic/public'
 import type { CommentSortType, ListingType, SortType } from '$lib/api/types'
-import type { Filter } from '$lib/feature/post/filters'
+import type { Filter } from '$lib/feature/post/filters.svelte'
 import { locale } from './i18n'
 
 // TODO extract settings into submodules
