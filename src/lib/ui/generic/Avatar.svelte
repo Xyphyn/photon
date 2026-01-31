@@ -1,10 +1,59 @@
 <script lang="ts">
   import { findClosestNumber } from '$lib/app/util.svelte'
-  import { createAvatar } from '@dicebear/core'
-  import * as initials from '@dicebear/initials'
   import type { ClassValue } from 'svelte/elements'
 
   const sizes = [16, 24, 32, 48, 64, 96, 128, 256, 512]
+
+  const colors = [
+    '7B68EE',
+    'FF6347',
+    '20B2AA',
+    'DDA0DD',
+    'F0E68C',
+    'FF1493',
+    '4682B4',
+    '32CD32',
+    'FFB6C1',
+    '8B4513',
+    '00CED1',
+    '9370DB',
+    'FFA500',
+    '2E8B57',
+    'DC143C',
+    'BA55D3',
+    '708090',
+    'ADFF2F',
+    'CD853F',
+    '48D1CC',
+  ]
+
+  function simpleHash(str: string): number {
+    let hash = 0
+    for (let i = 0; i < str.length; i++) {
+      hash = (hash << 5) - hash + str.charCodeAt(i)
+      hash |= 0
+    }
+    return Math.abs(hash)
+  }
+
+  function createInitialAvatar(seed: string): string {
+    const hash = simpleHash(seed)
+    const color1 = colors[hash % colors.length]
+    const color2 = colors[(hash + 7) % colors.length]
+    const initial = (seed[0] || '?').toUpperCase()
+    const textColor = hash % 2 === 0 ? 'fff' : '000'
+
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+      <defs>
+        <linearGradient id="bg${hash}" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#${color1}"/>
+          <stop offset="100%" style="stop-color:#${color2}"/>
+        </linearGradient>
+      </defs>
+      <rect width="100" height="100" fill="url(#bg${hash})"/>
+      <text x="50" y="50" dy=".35em" text-anchor="middle" fill="#${textColor}" font-size="50" font-weight="800" font-family="sans-serif">${initial}</text>
+    </svg>`
+  }
 
   const optimizeUrl = (
     url: string | undefined,
@@ -82,36 +131,6 @@
       clazz,
     ]}
   >
-    {@html createAvatar(initials, {
-      seed: alt,
-      backgroundType: ['gradientLinear'],
-      fontWeight: 800,
-      randomizeIds: true,
-      chars: 1,
-      scale: 125,
-      textColor: ['fff', '000'],
-      backgroundColor: [
-        '7B68EE',
-        'FF6347',
-        '20B2AA',
-        'DDA0DD',
-        'F0E68C',
-        'FF1493',
-        '4682B4',
-        '32CD32',
-        'FFB6C1',
-        '8B4513',
-        '00CED1',
-        '9370DB',
-        'FFA500',
-        '2E8B57',
-        'DC143C',
-        'BA55D3',
-        '708090',
-        'ADFF2F',
-        'CD853F',
-        '48D1CC',
-      ],
-    }).toString()}
+    {@html createInitialAvatar(alt)}
   </div>
 {/if}

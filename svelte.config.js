@@ -1,4 +1,5 @@
 import auto from '@sveltejs/adapter-auto'
+import cloudflare from '@sveltejs/adapter-cloudflare'
 import node from '@sveltejs/adapter-node'
 import staticAdapter from '@sveltejs/adapter-static'
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte'
@@ -30,7 +31,9 @@ const config = {
                   gzip: true,
                 },
               })
-            : auto(),
+            : process.env.CF_PAGES
+              ? cloudflare()
+              : auto(),
     alias: {
       'mono-svelte': 'src/lib/ui/shared',
       'svelte-hero-icons': 'node_modules/@xylightdev/svelte-hero-icons',

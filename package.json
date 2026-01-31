@@ -3,12 +3,11 @@
   "version": "2.2.2",
   "license": "AGPL-3.0-only",
   "devDependencies": {
-    "@dicebear/core": "^8.0.2",
-    "@dicebear/initials": "^8.0.2",
     "@eslint/compat": "^1.4.1",
     "@eslint/js": "^9.39.2",
     "@svelte-put/qr": "^2.1.1",
     "@sveltejs/adapter-auto": "^3.3.1",
+    "@sveltejs/adapter-cloudflare": "^7.2.6",
     "@sveltejs/adapter-node": "^5.5.2",
     "@sveltejs/adapter-static": "^3.0.10",
     "@sveltejs/kit": "^2.50.1",
