@@ -106,6 +106,9 @@
       <Option value="TopAll" icon={PlusCircle}>
         {$t('filter.sort.top.time.all')}
       </Option>
+      <Option value="TopYear" icon={Calendar}>
+        {$t('filter.sort.top.time.year')}
+      </Option>
       <Option value="TopNineMonths" icon={Calendar}>
         {$t('filter.sort.top.time.9months')}
       </Option>

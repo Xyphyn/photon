@@ -84,6 +84,7 @@
                 "time": {
                     "label": "Period",
                     "all": "All time",
+                    "year": "Past year",
                     "9months": "9 months",
                     "6months": "6 months",
                     "3months": "3 months",

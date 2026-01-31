@@ -29,7 +29,6 @@ export function filterPost(
   for (const filter of filters) {
     try {
       if (
-        filter.regex.test(post.post.url ?? '') ||
         filter.regex.test(post.post.name) ||
         filter.regex.test(post.post.body ?? '')
       )
