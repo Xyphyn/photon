@@ -42,7 +42,7 @@
   {$t('routes.frontpage.title')}
   {#snippet extended()}
     <form class="contents" method="get" action={page.url.pathname}>
-      <div class="flex flex-row gap-2 max-w-full">
+      <div class="flex flex-row gap-2 max-w-full flex-wrap">
         <Location
           name="type"
           navigate
