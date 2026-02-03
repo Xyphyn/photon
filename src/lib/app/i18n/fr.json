@@ -789,7 +789,7 @@
         "badges": {
             "nsfw": "NSFW",
             "locked": "Verrouillée",
-            "featured": "Présenté",
+            "featured": "Épinglé",
             "removed": "Enlevé",
             "deleted": "Supprimé",
             "saved": "Sauvegardé"
