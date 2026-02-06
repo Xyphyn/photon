@@ -7,7 +7,7 @@
   import Link from '$lib/ui/form/Link.svelte'
   import Switch from '$lib/ui/form/Switch.svelte'
   import { CommonList } from '$lib/ui/layout'
-  import { Button, Option, Select, TextArea } from 'mono-svelte'
+  import { Button, Option, Select } from 'mono-svelte'
   import {
     ArrowsPointingOut,
     ArrowsRightLeft,
@@ -81,7 +81,7 @@
       {/snippet}
       <Button
         color="none"
-        class="bg-gradient-to-r ml-6 dark:from-pink-400 dark:to-fuchsia-400 from-pink-600 to-red-600 text-white dark:text-black"
+        class="bg-linear-to-r ml-6 dark:from-pink-400 dark:to-fuchsia-400 from-pink-600 to-red-600 text-white dark:text-black"
         href="https://buymeacoffee.com/xylight"
         target="_blank"
         rounding="xl"

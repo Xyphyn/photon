@@ -26,7 +26,7 @@
     'flex gap-2 p-5',
     orientation == 'horizontal'
       ? 'flex-row items-center'
-      : 'flex-col items-staRT',
+      : 'flex-col items-start',
   ]}
 >
   <Avatar url={icon} alt={title} width={detail ? 32 : 24} circle={false} />
@@ -34,9 +34,11 @@
     <h3 class="font-medium text-base overflow-hidden text-ellipsis leading-5">
       {title}
     </h3>
-    <p class="text-sm text-slate-600 dark:text-zinc-400">
-      {detail}
-    </p>
+    {#if detail}
+      <p class="text-sm text-slate-600 dark:text-zinc-400">
+        {detail}
+      </p>
+    {/if}
   </a>
   <div class="flex flex-row gap-2 items-center">
     {@render children?.()}

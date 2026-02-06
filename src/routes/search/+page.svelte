@@ -13,15 +13,17 @@
     isUser,
   } from '$lib/feature/legacy/item'
   import { PostItem } from '$lib/feature/post'
+  import UserAutocomplete from '$lib/feature/user/UserAutocomplete.svelte'
   import UserItem from '$lib/feature/user/UserItem.svelte'
   import ObjectAutocomplete from '$lib/ui/form/ObjectAutocomplete.svelte'
   import Skeleton from '$lib/ui/generic/Skeleton.svelte'
   import Placeholder from '$lib/ui/info/Placeholder.svelte'
   import { CommonList, Header, Pageination, SearchBar } from '$lib/ui/layout'
   import { Button, Option, Select, TextLoader } from 'mono-svelte'
+  import Menu from 'mono-svelte/popover/Menu.svelte'
   import {
     AdjustmentsHorizontal,
-    ChevronDoubleDown,
+    BarsArrowDown,
     GlobeAmericas,
     Icon,
     MagnifyingGlass,
@@ -33,8 +35,6 @@
 
   let searchElement: HTMLInputElement | undefined = $state()
   let form = $state<HTMLFormElement>()
-
-  let moreOptions = $state(false)
 </script>
 
 <svelte:window
@@ -81,34 +81,51 @@
           bind:selected={data.filters.value.sort}
           onchange={() => form?.requestSubmit()}
         />
-        <Button
-          size="custom"
-          rounding="xl"
-          class="self-end justify-self-center h-8.5 w-8.5"
-          onclick={() => (moreOptions = !moreOptions)}
-          aria-label={$t('post.actions.more.label')}
-        >
-          <Icon src={ChevronDoubleDown} size="20" mini />
-        </Button>
+        <Menu placement="bottom">
+          {#snippet target(attachment)}
+            <Button
+              {@attach attachment}
+              aria-label={$t('post.actions.more.label')}
+              icon={BarsArrowDown}
+              size="custom"
+              class="self-end h-8.5 aspect-square"
+            />
+          {/snippet}
+          {@render extraOptions()}
+        </Menu>
       </div>
     </form>
   {/snippet}
 </Header>
 
-{#if moreOptions}
-  <div
-    transition:slide={{ axis: 'y', easing: expoOut, duration: 500 }}
-    class="flex flex-row gap-2 flex-wrap"
-  >
+{#snippet extraOptions()}
+  <div class="p-2 flex flex-col gap-4" data-autoclose="false">
     <ObjectAutocomplete
       label={$t('nav.create.community')}
       listing_type="All"
+      onselect={(c) =>
+        searchParam(
+          page.url,
+          'community',
+          c?.community.id || undefined,
+          'page',
+        )}
+    />
+    <UserAutocomplete
+      label={$t('post.actions.more.creator')}
+      listing_type="All"
       showWhenEmpty={true}
       onselect={(c) =>
-        searchParam(page.url, 'community', c?.id || undefined, 'page')}
+        searchParam(
+          page.url,
+          'community',
+          c?.community.id || undefined,
+          'page',
+        )}
     />
   </div>
-{/if}
+{/snippet}
+
 {#if !data.results}
   {#if navigating.to?.route.id == '/search'}
     <div class="flex flex-col gap-3 mt-6">

@@ -8,7 +8,8 @@ import { getItemPublished } from '$lib/feature/legacy/item'
 export async function load({ url, fetch }) {
   const query = url.searchParams.get('q')
   const page = Number(url.searchParams.get('page')) || 1
-  const community = Number(url.searchParams.get('community')) || undefined
+  const community = Number(url.searchParams.get('community'))
+  const creator = Number(url.searchParams.get('creator'))
   const sort = url.searchParams.get('sort') || 'New'
   const type =
     url.searchParams.get('type') ||
@@ -19,7 +20,8 @@ export async function load({ url, fetch }) {
   if (query) {
     const results = await client({ func: fetch }).search({
       q: query,
-      community_id: community ?? undefined,
+      community_id: community,
+      creator_id: creator,
       limit: 20,
       page: page,
       sort: (sort as SortType) || 'TopAll',

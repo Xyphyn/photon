@@ -66,8 +66,8 @@
         }}
         size="lg"
         disabled={themeData.current.id <= 0}
+        icon={ArrowDownTray}
       >
-        <Icon src={ArrowUpTray} size="16" mini />
         {$t('settings.import')}
       </Button>
       <Button
@@ -78,8 +78,8 @@
           toast({ content: 'Copied theme to clipboard.' })
         }}
         size="lg"
+        icon={ArrowUpTray}
       >
-        <Icon src={ArrowDownTray} size="16" mini />
         {$t('settings.export')}
       </Button>
       <Button
@@ -110,8 +110,8 @@
           })
         }}
         size="lg"
+        icon={ArrowPath}
       >
-        <Icon src={ArrowPath} size="16" mini />
         {$t('settings.reset')}
       </Button>
     </div>

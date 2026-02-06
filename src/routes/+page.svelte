@@ -57,7 +57,7 @@
         <ViewSelect placement="bottom" />
 
         <noscript>
-          <Button class="self-end h-[34px] aspect-square" size="custom" submit>
+          <Button class="self-end h-8.5 aspect-square" size="custom" submit>
             <Icon src={ArrowRight} size="16" micro />
           </Button>
         </noscript>

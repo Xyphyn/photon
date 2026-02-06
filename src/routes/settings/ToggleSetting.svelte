@@ -79,7 +79,7 @@
         size="32"
         mini
         class="bg-red-200/20 dark:bg-red-600/20 p-1.5 self-center
-         rounded-lg color text-red-500 dark:text-red-300"
+         rounded-lg color text-red-300 dark:text-red-300"
       />
     {/if}
     <Switch
