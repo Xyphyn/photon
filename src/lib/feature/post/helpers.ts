@@ -1,3 +1,4 @@
+import { env } from '$env/dynamic/public'
 import { client } from '$lib/api/client.svelte'
 import type { CommentView, PersonView, Post } from '$lib/api/types'
 import { profile } from '$lib/app/auth.svelte'
@@ -38,19 +39,24 @@ export const optimizeImageURL = (
       return urlStr
     }
 
-    if (format) url.searchParams.set('format', format)
+    const newUrl = new URL(
+      env.PUBLIC_IMAGE_PROXY ? `${env.PUBLIC_IMAGE_PROXY}/thumbnail` : url,
+    )
+    newUrl.searchParams.set('url', encodeURIComponent(url.toString()))
 
-    if (width > 0 && !url.searchParams.has('thumbnail')) {
-      url.searchParams.set(
+    if (format) newUrl.searchParams.set('format', format)
+
+    if (width > 0 && !newUrl.searchParams.has('thumbnail')) {
+      newUrl.searchParams.set(
         'thumbnail',
         findClosestNumber(
-          [128, 196, 256, 512, 728, 1024, 1536],
+          [32, 64, 128, 196, 256, 512, 728, 1024, 1536],
           width,
         ).toString(),
       )
     }
 
-    return url.toString()
+    return newUrl.toString()
   } catch (e) {
     console.error(e)
     return urlStr

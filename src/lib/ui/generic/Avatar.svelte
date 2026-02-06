@@ -1,5 +1,6 @@
 <script lang="ts">
   import { findClosestNumber } from '$lib/app/util.svelte'
+  import { optimizeImageURL } from '$lib/feature/post'
   import type { ClassValue } from 'svelte/elements'
 
   const sizes = [16, 24, 32, 48, 64, 96, 128, 256, 512]
@@ -101,7 +102,7 @@
   }: Props = $props()
 
   let optimizedURLs = $derived(
-    [1.5, 3].map((n) => optimizeUrl(url, (res || width) * n)),
+    [1.5, 3].map((n) => url && optimizeImageURL(url, (res || width) * n)),
   )
 </script>
 
