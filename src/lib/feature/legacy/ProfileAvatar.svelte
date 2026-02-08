@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { type ProfileInfo } from '$lib/app/auth.svelte.js'
+  import { type ProfileInfo } from '$lib/app/auth'
   import Avatar from '$lib/ui/generic/Avatar.svelte'
 
   interface Props {

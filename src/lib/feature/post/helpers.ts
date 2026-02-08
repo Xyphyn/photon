@@ -1,7 +1,7 @@
 import { env } from '$env/dynamic/public'
 import { client } from '$lib/api/client.svelte'
 import type { CommentView, PersonView, Post } from '$lib/api/types'
-import { profile } from '$lib/app/auth.svelte'
+import { profile } from '$lib/app/auth'
 import {
   canParseUrl,
   findClosestNumber,

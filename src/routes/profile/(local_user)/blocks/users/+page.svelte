@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { profile } from '$lib/app/auth.svelte'
+  import { profile } from '$lib/app/auth'
   import { t } from '$lib/app/i18n'
   import { userLink } from '$lib/app/util.svelte.js'
   import ItemList from '$lib/ui/generic/ItemList.svelte'

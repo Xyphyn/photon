@@ -1,7 +1,7 @@
 <script lang="ts">
   import { PiefedClient } from '$lib/api/piefed/adapter'
   import type { PostView } from '$lib/api/types'
-  import { profile } from '$lib/app/auth.svelte'
+  import { profile } from '$lib/app/auth'
   import { t } from '$lib/app/i18n'
   import { settings } from '$lib/app/settings.svelte'
   import { deleteItem, markAsRead } from '$lib/feature/legacy/contentview'

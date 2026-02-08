@@ -1,5 +1,5 @@
 import { getClient } from '$lib/api/client.svelte'
-import { profile } from '$lib/app/auth.svelte'
+import { profile } from '$lib/app/auth'
 import { ReactiveState } from '$lib/app/util.svelte'
 import { isCommentView, isPostView } from '$lib/feature/legacy/item'
 import {

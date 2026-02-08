@@ -1,6 +1,6 @@
 <script lang="ts">
   import { site } from '$lib/api/client.svelte'
-  import { profile } from '$lib/app/auth.svelte'
+  import { profile } from '$lib/app/auth'
   import { t } from '$lib/app/i18n'
   import { LINKED_INSTANCE_URL } from '$lib/app/instance.svelte'
   import { Menu, Spinner } from 'mono-svelte'

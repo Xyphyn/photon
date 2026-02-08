@@ -1,6 +1,6 @@
 import { resolveRoute } from '$app/paths'
 import { client } from '$lib/api/client.svelte'
-import { profile } from '$lib/app/auth.svelte'
+import { profile } from '$lib/app/auth'
 import { redirect } from '@sveltejs/kit'
 
 export async function load({ params, fetch }) {

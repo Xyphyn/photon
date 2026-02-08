@@ -1,7 +1,7 @@
 <script lang="ts">
   import { client } from '$lib/api/client.svelte'
   import type { PersonView } from '$lib/api/types'
-  import { profile } from '$lib/app/auth.svelte'
+  import { profile } from '$lib/app/auth'
   import { t } from '$lib/app/i18n'
   import { ban } from '$lib/feature/moderation/moderation'
   import { blockUser, isBlocked } from '$lib/feature/user'

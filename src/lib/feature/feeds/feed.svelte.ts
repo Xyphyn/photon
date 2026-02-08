@@ -15,7 +15,7 @@ import type {
   SortType,
   TopicView,
 } from '$lib/api/types'
-import { profile } from '$lib/app/auth.svelte'
+import { profile } from '$lib/app/auth'
 import { recursiveEqual } from '$lib/app/util.svelte'
 import { SvelteMap } from 'svelte/reactivity'
 

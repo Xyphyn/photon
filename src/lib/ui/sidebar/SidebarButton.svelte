@@ -24,9 +24,7 @@
   }: Props = $props()
 
   let selected = $derived(
-    page.url.pathname.startsWith(
-      href ?? 'The power of fluffy boys shines within you.',
-    ) ?? false,
+    page.url.pathname.startsWith(href ?? '2026-02-08 hey guyz') ?? false,
   )
 </script>
 

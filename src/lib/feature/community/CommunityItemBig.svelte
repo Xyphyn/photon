@@ -1,7 +1,7 @@
 <script lang="ts">
   import { client } from '$lib/api/client.svelte'
   import type { CommunityView } from '$lib/api/types'
-  import { profile } from '$lib/app/auth.svelte'
+  import { profile } from '$lib/app/auth'
   import { t } from '$lib/app/i18n'
   import { communityLink } from '$lib/app/util.svelte'
   import Avatar from '$lib/ui/generic/Avatar.svelte'

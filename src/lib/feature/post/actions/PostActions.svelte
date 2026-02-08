@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from '$app/state'
   import type { PostView } from '$lib/api/types'
-  import { profile } from '$lib/app/auth.svelte'
+  import { profile } from '$lib/app/auth'
   import { t } from '$lib/app/i18n'
   import { LINKED_INSTANCE_URL } from '$lib/app/instance.svelte'
   import { settings, type View } from '$lib/app/settings.svelte'

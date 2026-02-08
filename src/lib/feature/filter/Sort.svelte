@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from '$app/state'
   import { PiefedClient } from '$lib/api/piefed/adapter'
-  import { profile } from '$lib/app/auth.svelte'
+  import { profile } from '$lib/app/auth'
   import { t } from '$lib/app/i18n'
   import { searchParam } from '$lib/app/util.svelte'
   import { Option, Select } from 'mono-svelte'

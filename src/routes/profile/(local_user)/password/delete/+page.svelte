@@ -1,7 +1,7 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { client } from '$lib/api/client.svelte'
-  import { profile } from '$lib/app/auth.svelte'
+  import { profile } from '$lib/app/auth'
   import { t } from '$lib/app/i18n'
   import { Button, removeToast, Switch, TextInput, toast } from 'mono-svelte'
 

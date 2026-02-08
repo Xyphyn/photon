@@ -2,7 +2,7 @@
   import { browser } from '$app/environment'
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
-  import { profile } from '$lib/app/auth.svelte'
+  import { profile } from '$lib/app/auth'
   import { t } from '$lib/app/i18n'
   import { theme } from '$lib/app/theme/theme.svelte'
   import { fuzzySearch } from '$lib/app/util.svelte'

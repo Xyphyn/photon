@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { invalidateAll } from '$app/navigation'
   import { page } from '$app/state'
   import TabButton from '$lib/ui/form/TabButton.svelte'
   import { SvelteURL } from 'svelte/reactivity'
@@ -70,7 +69,6 @@
     )}
     {#if style == 'header'}
       <a
-        onclick={() => invalidateAll()}
         href={buildUrl(currentRoute, route.href)}
         class={['tab-item ', selected && 'tab-selected']}
       >

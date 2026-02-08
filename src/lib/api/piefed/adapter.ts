@@ -1,11 +1,6 @@
 import createClient from 'openapi-fetch'
-import {
-  BaseClient,
-  type ClientType,
-  type NullableFnArg,
-  type NullableFnReturn,
-} from '../base'
-import type { SubscribedType } from '../types'
+import type { BaseClient, ClientType } from '../base'
+import type * as types from '../types'
 import {
   fromCreateComment,
   fromCreatePost,
@@ -33,52 +28,93 @@ import {
   toSortType,
   toTopicView,
 } from './rewrite'
-import type { paths } from './schema'
+import type { components, paths } from './schema'
 
-export class PiefedClient implements BaseClient {
-  type: ClientType = { name: 'piefed', baseUrl: '/api/alpha' }
+type piefed = components['schemas']
 
-  static constants = { password: { minLength: 6, maxLength: 128 } }
+type ApiClient = ReturnType<typeof createClient<paths>>
+type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE'
 
-  #client: ReturnType<typeof createClient<paths>>
+// i think this should be inside baseclient maybe
+type MethodName = NonNullable<
+  {
+    [K in keyof BaseClient]: BaseClient[K] extends (...args: any[]) => any
+      ? K
+      : never
+  }[keyof BaseClient]
+>
 
-  constructor(
-    baseUrl: string,
-    args: {
-      fetchFunction: (input: any, init: any) => Promise<any>
-      headers: any
-    },
-  ) {
-    this.#client = createClient({
-      baseUrl: baseUrl,
-      // @ts-expect-error i dont feel like fixing this right now
-      fetch: args.fetchFunction,
-      headers: args.headers,
-    })
+type MethodConfig<
+  K extends MethodName,
+  P extends keyof paths = keyof paths,
+  M extends HttpMethod = 'GET',
+> = {
+  method: HttpMethod
+  path: keyof paths
+  query?: (params: Parameters<BaseClient[K]>[0]) => unknown
+  body?: (params: Parameters<BaseClient[K]>[0]) => unknown
+  transform: (
+    response: SuccessResponse<P, M>,
+    params: Parameters<BaseClient[K]>[0],
+  ) => Awaited<ReturnType<BaseClient[K]>>
+}
+
+type MethodDef<K extends MethodName> =
+  | MethodConfig<K>
+  | ((client: ApiClient, params: any) => Promise<unknown>)
+  | 'unsupported'
+
+type MethodDefinitions = {
+  [K in MethodName]: MethodDef<K>
+}
+
+type SuccessResponse<
+  P extends keyof paths,
+  M extends HttpMethod,
+> = paths[P] extends {
+  [K in M]: { responses: { 200: { content: { 'application/json': infer R } } } }
+}
+  ? R
+  : paths[P] extends {
+        [K in M]: {
+          responses: { 201: { content: { 'application/json': infer R } } }
+        }
+      }
+    ? R
+    : never
+
+function assertData<T>(response: { data?: T; error?: unknown }): T {
+  if (response.error || !response.data) {
+    throw new Error(
+      `API error: ${JSON.stringify(response.error ?? 'No data returned')}`,
+    )
   }
+  return response.data
+}
 
-  async getSite(): ReturnType<BaseClient['getSite']> {
-    const response = (await this.#client.GET('/api/alpha/site', {})).data!
-
-    return {
-      admins: response.admins.map(toPersonView),
+const methods: MethodDefinitions = {
+  getSite: {
+    method: 'GET',
+    path: '/api/alpha/site',
+    transform: (r: piefed['GetSiteResponse']) => ({
+      admins: r.admins.map(toPersonView),
       site_view: {
         counts: {
           comments: -1,
           communities: -1,
           posts: -1,
           site_id: -1,
-          users: response.site.user_count ?? -1,
+          users: r.site.user_count ?? -1,
           users_active_day: -1,
           users_active_half_year: -1,
           users_active_month: -1,
           users_active_week: -1,
         },
-        local_site: toLocalSite(response.site),
-        site: response.site,
+        local_site: toLocalSite(r.site),
+        site: r.site,
       },
       all_languages:
-        (response.site.all_languages as {
+        (r.site.all_languages as {
           code: string
           id: number
           name: string
@@ -87,963 +123,767 @@ export class PiefedClient implements BaseClient {
       custom_emojis: [],
       discussion_languages: [],
       taglines: [],
-      version: response.version,
-      my_user: response.my_user ? toMyUser(response.my_user) : undefined,
-    }
-  }
+      version: r.version,
+      my_user: r.my_user ? toMyUser(r.my_user) : undefined,
+    }),
+  },
 
-  async createPost(
-    params: Parameters<BaseClient['createPost']>[0],
-  ): ReturnType<BaseClient['createPost']> {
-    const response = (
-      await this.#client.POST('/api/alpha/post', {
-        body: fromCreatePost(params),
-      })
-    ).data!
+  getSiteMetadata: {
+    method: 'GET',
+    path: '/api/alpha/post/site_metadata',
+    query: (p) => p,
+    transform: (r) => r,
+  },
 
-    return {
-      post_view: toPostView(response.post_view),
-    }
-  }
-  async getPost(
-    params: Parameters<BaseClient['getPost']>[0],
-  ): ReturnType<BaseClient['getPost']> {
-    const response = (
-      await this.#client.GET('/api/alpha/post', {
-        params: { query: fromGetPost(params) },
-      })
-    ).data!
+  getFederatedInstances: {
+    method: 'GET',
+    path: '/api/alpha/federated_instances',
+    transform: (r) => r,
+  },
 
-    return {
-      community_view: toCommunityView(response.community_view!),
-      cross_posts: response.cross_posts!.map(toPostView),
-      moderators: response.moderators!.map((i) => ({
+  blockInstance: {
+    method: 'POST',
+    path: '/api/alpha/site/block',
+    transform: (r) => r,
+  },
+
+  createPost: {
+    method: 'POST',
+    path: '/api/alpha/post',
+    body: fromCreatePost,
+    transform: (r: piefed['GetPostResponse']) => ({
+      post_view: toPostView(r.post_view),
+    }),
+  },
+
+  getPost: {
+    method: 'GET',
+    path: '/api/alpha/post',
+    query: fromGetPost,
+    transform: (r: piefed['GetPostResponse']) => ({
+      community_view: toCommunityView(r.community_view!),
+      cross_posts: r.cross_posts!.map(toPostView),
+      moderators: r.moderators!.map((i: any) => ({
         community: toCommunity(i.community),
         moderator: toPerson(i.moderator),
       })),
-      post_view: toPostView(response.post_view),
-    }
-  }
+      post_view: toPostView(r.post_view),
+    }),
+  },
 
-  async editPost(
-    params: Parameters<BaseClient['editPost']>[0],
-  ): ReturnType<BaseClient['editPost']> {
-    const response = (
-      await this.#client.PUT('/api/alpha/post', { body: params })
-    ).data!
+  editPost: {
+    method: 'PUT',
+    path: '/api/alpha/post',
+    transform: (r: piefed['GetPostResponse']) => ({
+      post_view: toPostView(r.post_view),
+    }),
+  },
 
-    return {
-      post_view: toPostView(response.post_view),
-    }
-  }
-  async deletePost(
-    params: Parameters<BaseClient['deletePost']>[0],
-  ): ReturnType<BaseClient['deletePost']> {
-    const response = (
-      await this.#client.POST('/api/alpha/post/delete', { body: params })
-    ).data!
+  deletePost: {
+    method: 'POST',
+    path: '/api/alpha/post/delete',
+    transform: (r: piefed['GetPostResponse']) => ({
+      post_view: toPostView(r.post_view),
+    }),
+  },
 
-    return {
-      post_view: toPostView(response.post_view),
-    }
-  }
+  removePost: {
+    method: 'POST',
+    path: '/api/alpha/post/remove',
+    transform: (r: piefed['GetPostResponse']) => ({
+      post_view: toPostView(r.post_view),
+    }),
+  },
 
-  async removePost(
-    params: Parameters<BaseClient['removePost']>[0],
-  ): ReturnType<BaseClient['removePost']> {
-    const response = (
-      await this.#client.POST('/api/alpha/post/remove', { body: params })
-    ).data!
+  getPosts: {
+    method: 'GET',
+    path: '/api/alpha/post/list',
+    query: fromGetPosts,
+    transform: (r: piefed['ListPostsResponse'], p) => ({
+      ...r,
+      posts: r.posts.map(toPostView),
+      next_page: String(Number(p.page_cursor ?? 1) + 1),
+    }),
+  },
 
-    return {
-      post_view: toPostView(response.post_view),
-    }
-  }
+  likePost: {
+    method: 'POST',
+    path: '/api/alpha/post/like',
+    transform: (r: piefed['GetPostResponse']) => ({
+      post_view: toPostView(r.post_view),
+    }),
+  },
 
-  async getPosts(
-    params: Parameters<BaseClient['getPosts']>[0],
-  ): ReturnType<BaseClient['getPosts']> {
-    const response = (
-      await this.#client.GET('/api/alpha/post/list', {
-        params: { query: fromGetPosts(params) },
-      })
-    ).data!
+  markPostAsRead: {
+    method: 'POST',
+    path: '/api/alpha/post/mark_as_read',
+    transform: () => ({ success: true }),
+  },
 
-    return {
-      ...response,
-      posts: response.posts.map(toPostView),
-      next_page: (Number(params.page_cursor ?? 1) + 1).toString(),
-    }
-  }
-  async likePost(
-    params: Parameters<BaseClient['likePost']>[0],
-  ): ReturnType<BaseClient['likePost']> {
-    const response = (
-      await this.#client.POST('/api/alpha/post/like', {
-        body: { ...params },
-      })
-    ).data!
+  lockPost: {
+    method: 'POST',
+    path: '/api/alpha/post/lock',
+    transform: (r: piefed['GetPostResponse']) => ({
+      post_view: toPostView(r.post_view),
+    }),
+  },
 
-    return {
-      post_view: toPostView(response.post_view),
-    }
-  }
+  featurePost: {
+    method: 'POST',
+    path: '/api/alpha/post/feature',
+    transform: (r: piefed['GetPostResponse']) => ({
+      post_view: toPostView(r.post_view),
+    }),
+  },
 
-  async generateTotpSecret(): ReturnType<BaseClient['generateTotpSecret']> {
-    throw new Error('unsupported')
-  }
-  async listLogins(): ReturnType<BaseClient['listLogins']> {
-    throw new Error('unsupported')
-  }
-  async listAllMedia(): ReturnType<BaseClient['listAllMedia']> {
-    throw new Error('unsupported')
-  }
-  async updateTotp(): ReturnType<BaseClient['updateTotp']> {
-    throw new Error('unsupported')
-  }
-  async getModlog(): ReturnType<BaseClient['getModlog']> {
-    throw new Error('unsupported')
-  }
-  async search(
-    params: Parameters<BaseClient['search']>[0],
-  ): ReturnType<BaseClient['search']> {
-    const response = (
-      await this.#client.GET('/api/alpha/search', {
-        params: {
-          query: fromSearch(params),
-        },
-      })
-    ).data!
+  savePost: {
+    method: 'PUT',
+    path: '/api/alpha/post/save',
+    transform: (r: piefed['GetPostResponse']) => ({
+      post_view: toPostView(r.post_view),
+    }),
+  },
 
-    return {
-      comments: [],
-      communities: response.communities.map(toCommunityView),
-      posts: response.posts.map(toPostView),
-      users: response.users.map(toPersonView),
-      type_: response.type_,
-    }
-  }
-  async resolveObject(
-    params: Parameters<BaseClient['resolveObject']>[0],
-  ): ReturnType<BaseClient['resolveObject']> {
-    const response = (
-      await this.#client.GET('/api/alpha/resolve_object', {
-        params: { query: params },
-      })
-    ).data!
-
-    return {
-      comment: response.comment ? toCommentView(response.comment) : undefined,
-      community: response.community
-        ? toCommunityView(response.community)
-        : undefined,
-      post: response.post ? toPostView(response.post) : undefined,
-      person: response.person ? toPersonView(response.person) : undefined,
-    }
-  }
-  async createCommunity(
-    params: Parameters<BaseClient['createCommunity']>[0],
-  ): ReturnType<BaseClient['createCommunity']> {
-    const response = (
-      await this.#client.POST('/api/alpha/community', { body: params })
-    ).data!
-
-    return {
-      ...response,
-      community_view: toCommunityView(response.community_view),
-    }
-  }
-  async getCommunity(
-    params: Parameters<BaseClient['getCommunity']>[0],
-  ): ReturnType<BaseClient['getCommunity']> {
-    const response = (
-      await this.#client.GET('/api/alpha/community', {
-        params: {
-          query: params,
-        },
-      })
-    ).data!
-
-    return {
-      ...response,
-      community_view: toCommunityView(response.community_view),
-      moderators: response.moderators.map((i) => ({
-        community: toCommunity(i.community),
-        moderator: toPerson(i.moderator),
-      })),
-    }
-  }
-  async editCommunity(
-    params: Parameters<BaseClient['editCommunity']>[0],
-  ): ReturnType<BaseClient['editCommunity']> {
-    const response = (
-      await this.#client.PUT('/api/alpha/community', {
-        body: params,
-      })
-    ).data!
-
-    return {
-      ...response,
-      community_view: toCommunityView(response.community_view),
-    }
-  }
-  async listCommunities(
-    params: Parameters<BaseClient['listCommunities']>[0],
-  ): ReturnType<BaseClient['listCommunities']> {
-    const response = (
-      await this.#client.GET('/api/alpha/community/list', {
-        params: {
-          query: fromListCommunities(params),
-        },
-      })
-    ).data!
-
-    return {
-      communities: response.communities.map(toCommunityView),
-    }
-  }
-  async followCommunity(
-    params: Parameters<BaseClient['followCommunity']>[0],
-  ): ReturnType<BaseClient['followCommunity']> {
-    const response = (
-      await this.#client.POST('/api/alpha/community/follow', { body: params })
-    ).data!
-
-    return {
-      ...response,
-      community_view: toCommunityView(response.community_view),
-    }
-  }
-  async blockCommunity(
-    params: Parameters<BaseClient['blockCommunity']>[0],
-  ): ReturnType<BaseClient['blockCommunity']> {
-    const response = (
-      await this.#client.POST('/api/alpha/community/block', { body: params })
-    ).data!
-
-    return {
-      ...response,
-      community_view: toCommunityView(response.community_view),
-    }
-  }
-  async deleteCommunity(
-    params: Parameters<BaseClient['deleteCommunity']>[0],
-  ): ReturnType<BaseClient['deleteCommunity']> {
-    const response = (
-      await this.#client.POST('/api/alpha/community/delete', { body: params })
-    ).data!
-
-    return {
-      ...response,
-      community_view: toCommunityView(response.community_view),
-    }
-  }
-  async hideCommunity(): ReturnType<BaseClient['hideCommunity']> {
-    throw new Error('unsupported')
-  }
-  async removeCommunity(): ReturnType<BaseClient['removeCommunity']> {
-    throw new Error('unsupported')
-  }
-  async banFromCommunity(
-    params: Parameters<BaseClient['banFromCommunity']>[0],
-  ): ReturnType<BaseClient['banFromCommunity']> {
-    const response = // piefed has separate methods for ban/unban
-      (
-        params.ban
-          ? await this.#client.POST('/api/alpha/community/moderate/ban', {
-              body: {
-                ...params,
-                expiredAt: new Date(
-                  params.expires ?? '6767-06-07T00:00:00.000Z',
-                ).toISOString(),
-                user_id: params.person_id,
-                reason: params.reason ?? 'No reason provided.',
-              },
-            })
-          : await this.#client.PUT('/api/alpha/community/moderate/unban', {
-              body: {
-                community_id: params.community_id,
-                user_id: params.person_id,
-              },
-            })
-      ).data!
-
-    return {
-      banned: params.ban,
-      person_view: {
-        person: toPerson(response.banned_user!),
-        counts: { comment_count: -1, person_id: -1, post_count: -1 },
-        is_admin: false,
-      },
-    }
-  }
-  async addModToCommunity(
-    params: Parameters<BaseClient['addModToCommunity']>[0],
-  ): ReturnType<BaseClient['addModToCommunity']> {
-    const response = (
-      await this.#client.POST('/api/alpha/community/mod', { body: params })
-    ).data!
-
-    return {
-      moderators: response.moderators.map((i) => ({
-        community: toCommunity(i.community),
-        moderator: toPerson(i.moderator),
-      })),
-    }
-  }
-  async markPostAsRead(
-    params: Parameters<BaseClient['markPostAsRead']>[0],
-  ): ReturnType<BaseClient['markPostAsRead']> {
-    await this.#client.POST('/api/alpha/post/mark_as_read', {
-      body: { ...params },
-    })
-
-    return {
-      success: true,
-    }
-  }
-  async hidePost(): ReturnType<BaseClient['hidePost']> {
-    throw new Error('unsupported')
-  }
-  async lockPost(
-    params: Parameters<BaseClient['lockPost']>[0],
-  ): ReturnType<BaseClient['lockPost']> {
-    const response = (
-      await this.#client.POST('/api/alpha/post/lock', { body: params })
-    ).data!
-
-    return {
-      ...response,
-      post_view: toPostView(response.post_view),
-    }
-  }
-  async featurePost(
-    params: Parameters<BaseClient['featurePost']>[0],
-  ): ReturnType<BaseClient['featurePost']> {
-    const response = (
-      await this.#client.POST('/api/alpha/post/feature', { body: params })
-    ).data!
-
-    return {
-      ...response,
-      post_view: toPostView(response.post_view),
-    }
-  }
-  async listPostLikes(
-    params: Parameters<BaseClient['listPostLikes']>[0],
-  ): ReturnType<BaseClient['listPostLikes']> {
-    const response = (
-      await this.#client.GET('/api/alpha/post/like/list', {
-        params: { query: params },
-      })
-    ).data!
-
-    return {
-      post_likes: response.post_likes!.map((i) => ({
+  listPostLikes: {
+    method: 'GET',
+    path: '/api/alpha/post/like/list',
+    query: (p) => p,
+    transform: (r: piefed['ListPostLikesResponse']) => ({
+      post_likes: r.post_likes!.map((i: any) => ({
         ...i,
         creator_banned_from_community: false,
         creator: toPerson(i.creator),
       })),
-    }
-  }
-  async savePost(
-    params: Parameters<BaseClient['savePost']>[0],
-  ): ReturnType<BaseClient['savePost']> {
-    const response = (
-      await this.#client.PUT('/api/alpha/post/save', { body: params })
-    ).data!
+    }),
+  },
 
-    return {
-      post_view: toPostView(response.post_view),
-    }
-  }
-  async createPostReport(
-    params: Parameters<BaseClient['createPostReport']>[0],
-  ): ReturnType<BaseClient['createPostReport']> {
-    const response = (
-      await this.#client.POST('/api/alpha/post/report', { body: params })
-    ).data!
-
-    return {
+  createPostReport: {
+    method: 'POST',
+    path: '/api/alpha/post/report',
+    body: (p) => ({ ...p, report_remote: false }),
+    transform: (r: piefed['PostReportResponse']) => ({
       post_report_view: {
-        ...response.post_report_view,
-        community: toCommunity(response.post_report_view.community),
-        post: toPost(response.post_report_view.post),
-        creator: toPerson(response.post_report_view.creator),
-        // TODO figure out if this is a bug or not
-        resolver: response.post_report_view.resolver
-          ? toPerson(response.post_report_view.resolver!)
+        ...r.post_report_view,
+        community: toCommunity(r.post_report_view.community),
+        post: toPost(r.post_report_view.post),
+        creator: toPerson(r.post_report_view.creator),
+        resolver: (r.post_report_view as any).resolver
+          ? toPerson((r.post_report_view as any).resolver)
           : undefined,
-        post_creator: toPerson(response.post_report_view.post_creator),
+        post_creator: toPerson(r.post_report_view.post_creator),
         read: false,
         hidden: false,
         creator_banned_from_community: false,
         unread_comments: -1,
       },
-    }
-  }
-  async resolvePostReport(): ReturnType<BaseClient['resolvePostReport']> {
-    throw new Error('unsupported')
-  }
-  async listPostReports(): ReturnType<BaseClient['listPostReports']> {
-    throw new Error('unsupported')
-  }
-  async getSiteMetadata(
-    params: Parameters<BaseClient['getSiteMetadata']>[0],
-  ): ReturnType<BaseClient['getSiteMetadata']> {
-    return (
-      await this.#client.GET('/api/alpha/post/site_metadata', {
-        params: { query: params },
-      })
-    ).data!
-  }
+    }),
+  },
 
-  async createComment(
-    params: Parameters<BaseClient['createComment']>[0],
-  ): ReturnType<BaseClient['createComment']> {
-    const response = (
-      await this.#client.POST('/api/alpha/comment', {
-        body: fromCreateComment(params),
-      })
-    ).data!
+  // @ts-expect-error for some reason this method doesn't exist on MethodDefinitions
+  voteOnPoll: {
+    method: 'POST',
+    path: '/api/alpha/post/poll_vote',
+    transform: (r: piefed['PollVoteResponse']) => ({
+      post_view: toPostView(r.post_view),
+    }),
+  },
 
-    return {
-      ...response,
-      comment_view: toCommentView(response.comment_view),
+  createComment: {
+    method: 'POST',
+    path: '/api/alpha/comment',
+    body: fromCreateComment,
+    transform: (r: piefed['GetCommentResponse']) => ({
+      ...r,
+      comment_view: toCommentView(r.comment_view),
       recipient_ids: [],
-    }
-  }
-  async editComment(
-    params: Parameters<BaseClient['editComment']>[0],
-  ): ReturnType<BaseClient['editComment']> {
-    const response = (
-      await this.#client.PUT('/api/alpha/comment', {
-        body: { ...params, body: params.content },
-      })
-    ).data!
+    }),
+  },
 
-    return {
-      comment_view: toCommentView(response.comment_view),
+  editComment: {
+    method: 'PUT',
+    path: '/api/alpha/comment',
+    body: (p) => ({ ...p, body: p.content, distinguished: false }),
+    transform: (r: piefed['GetCommentResponse']) => ({
+      ...r,
+      comment_view: toCommentView(r.comment_view),
       recipient_ids: [],
-    }
-  }
-  async deleteComment(
-    params: Parameters<BaseClient['deleteComment']>[0],
-  ): ReturnType<BaseClient['deleteComment']> {
-    const response = (
-      await this.#client.POST('/api/alpha/comment/delete', { body: params })
-    ).data!
+    }),
+  },
 
-    return {
-      comment_view: toCommentView(response.comment_view),
+  deleteComment: {
+    method: 'POST',
+    path: '/api/alpha/comment/delete',
+    transform: (r: piefed['GetCommentResponse']) => ({
+      ...r,
+      comment_view: toCommentView(r.comment_view),
       recipient_ids: [],
-    }
-  }
-  async removeComment(
-    params: Parameters<BaseClient['removeComment']>[0],
-  ): ReturnType<BaseClient['removeComment']> {
-    const response = (
-      await this.#client.POST('/api/alpha/comment/remove', { body: params })
-    ).data!
+    }),
+  },
 
-    return {
-      comment_view: toCommentView(response.comment_view),
+  removeComment: {
+    method: 'POST',
+    path: '/api/alpha/comment/remove',
+    transform: (r: piefed['GetCommentResponse']) => ({
+      ...r,
+      comment_view: toCommentView(r.comment_view),
       recipient_ids: [],
-    }
-  }
-  async markCommentReplyAsRead(
-    params: Parameters<BaseClient['markCommentReplyAsRead']>[0],
-  ): ReturnType<BaseClient['markCommentReplyAsRead']> {
-    await this.#client.POST('/api/alpha/comment/mark_as_read', {
-      body: params,
-    })
-  }
-  async likeComment(
-    params: Parameters<BaseClient['likeComment']>[0],
-  ): ReturnType<BaseClient['likeComment']> {
-    const response = (
-      await this.#client.POST('/api/alpha/comment/like', {
-        body: {
-          ...params,
-          // TODO add private votes
-          private: false,
-        },
-      })
-    ).data!
+    }),
+  },
 
-    return {
-      comment_view: toCommentView(response.comment_view),
+  markCommentReplyAsRead: {
+    method: 'POST',
+    path: '/api/alpha/comment/mark_as_read',
+    transform: () => undefined,
+  },
+
+  likeComment: {
+    method: 'POST',
+    path: '/api/alpha/comment/like',
+    body: (p) => ({ ...p, private: false }),
+    transform: (r: piefed['GetCommentResponse']) => ({
+      comment_view: toCommentView(r.comment_view),
       recipient_ids: [],
-    }
-  }
+    }),
+  },
 
-  async listCommentLikes(
-    params: Parameters<BaseClient['listCommentLikes']>[0],
-  ): ReturnType<BaseClient['listCommentLikes']> {
-    const response = (
-      await this.#client.GET('/api/alpha/comment/like/list', {
-        params: { query: params },
-      })
-    ).data!
-
-    return {
-      comment_likes: response.comment_likes!.map((i) => ({
+  listCommentLikes: {
+    method: 'GET',
+    path: '/api/alpha/comment/like/list',
+    query: (p) => p,
+    transform: (r: piefed['ListCommentLikesResponse']) => ({
+      comment_likes: r.comment_likes!.map((i: any) => ({
         ...i,
         creator: toPerson(i.creator),
       })),
-    }
-  }
-  async saveComment(
-    params: Parameters<BaseClient['saveComment']>[0],
-  ): ReturnType<BaseClient['saveComment']> {
-    const response = (
-      await this.#client.PUT('/api/alpha/comment/save', { body: params })
-    ).data!
+    }),
+  },
 
-    return {
-      ...response,
-      comment_view: toCommentView(response.comment_view),
+  saveComment: {
+    method: 'PUT',
+    path: '/api/alpha/comment/save',
+    transform: (r: piefed['GetCommentResponse']) => ({
+      ...r,
+      comment_view: toCommentView(r.comment_view),
       recipient_ids: [],
-    }
-  }
-  async distinguishComment(): ReturnType<BaseClient['distinguishComment']> {
-    throw new Error('unsupported')
-  }
+    }),
+  },
 
-  async getComments(
-    params: Parameters<BaseClient['getComments']>[0],
-  ): ReturnType<BaseClient['getComments']> {
-    const response = (
-      await this.#client.GET('/api/alpha/comment/list', {
-        params: { query: fromGetComments(params) },
-      })
-    ).data!
+  getComments: {
+    method: 'GET',
+    path: '/api/alpha/comment/list',
+    query: fromGetComments,
+    transform: (r: piefed['ListCommentsResponse']) => ({
+      comments: r.comments.map(toCommentView),
+    }),
+  },
 
-    return {
-      comments: response.comments.map(toCommentView),
-    }
-  }
-
-  async getComment(
-    params: Parameters<BaseClient['getComment']>[0],
-  ): ReturnType<BaseClient['getComment']> {
-    const response = (
-      await this.#client.GET('/api/alpha/comment', {
-        params: { query: params },
-      })
-    ).data!
-
-    return {
-      ...response,
-      comment_view: toCommentView(response.comment_view),
+  getComment: {
+    method: 'GET',
+    path: '/api/alpha/comment',
+    query: (p) => p,
+    transform: (r: piefed['GetCommentResponse']) => ({
+      ...r,
+      comment_view: toCommentView(r.comment_view),
       recipient_ids: [],
-    }
-  }
-  async createCommentReport(
-    params: Parameters<BaseClient['createCommentReport']>[0],
-  ): ReturnType<BaseClient['createCommentReport']> {
-    const response = (
-      await this.#client.POST('/api/alpha/comment/report', {
-        body: {
-          ...params,
-          // TODO add remote reports
-          report_remote: false,
-        },
-      })
-    ).data!
+    }),
+  },
 
-    return {
-      ...response,
+  // createCommentReport: async (client, params) => {
+  //   const response = assertData(
+  //     await client.POST('/api/alpha/comment/report', {
+  //       body: {
+  //         ...params,
+  //         report_remote: false,
+  //         reason: params.reason ?? '',
+  //       } as any,
+  //     }),
+  //   )
+  //   return {
+  //     ...response,
+  //     comment_report_view: {
+  //       ...response.comment_report_view,
+  //       comment: toComment(response.comment_report_view.comment),
+  //       community: toCommunity(response.comment_report_view.community),
+  //       comment_creator: toPerson(response.comment_report_view.comment_creator),
+  //       creator: toPerson(response.comment_report_view.creator),
+  //       post: toPost(response.comment_report_view.post),
+  //       resolver: (response.comment_report_view as any).resolver
+  //         ? toPerson((response.comment_report_view as any).resolver)
+  //         : undefined,
+  //       subscribed: response.comment_report_view.subscribed as SubscribedType,
+  //     },
+  //   }
+  // },
+
+  createCommentReport: {
+    method: 'POST',
+    path: '/api/alpha/comment/report',
+    body: (p) => ({ ...p, report_report: false, reason: p.reason ?? '' }),
+    transform: (r: piefed['GetCommentReportResponse']) => ({
+      ...r,
       comment_report_view: {
-        ...response.comment_report_view,
-        comment: toComment(response.comment_report_view.comment),
-        community: toCommunity(response.comment_report_view.community),
-        comment_creator: toPerson(response.comment_report_view.comment_creator),
-        creator: toPerson(response.comment_report_view.creator),
-        post: toPost(response.comment_report_view.post),
-        // TODO figure out what's wrong here
-        resolver: response.comment_report_view.resolver
-          ? toPerson(response.comment_report_view.resolver)
+        ...r.comment_report_view,
+        comment: toComment(r.comment_report_view.comment),
+        community: toCommunity(r.comment_report_view.community),
+        comment_creator: toPerson(r.comment_report_view.comment_creator),
+        creator: toPerson(r.comment_report_view.creator),
+        post: toPost(r.comment_report_view.post),
+        resolver: (r.comment_report_view as any).resolver
+          ? toPerson((r.comment_report_view as any).resolver)
           : undefined,
-        subscribed: response.comment_report_view.subscribed as SubscribedType,
+        subscribed: r.comment_report_view.subscribed as types.SubscribedType,
+      },
+    }),
+  },
+
+  createCommunity: {
+    method: 'POST',
+    path: '/api/alpha/community',
+    transform: (r: piefed['CommunityResponse']) => ({
+      ...r,
+      community_view: toCommunityView(r.community_view),
+    }),
+  },
+
+  getCommunity: {
+    method: 'GET',
+    path: '/api/alpha/community',
+    query: (p) => p,
+    transform: (r: piefed['GetCommunityResponse']) => ({
+      ...r,
+      community_view: toCommunityView(r.community_view),
+      moderators: r.moderators.map((i: any) => ({
+        community: toCommunity(i.community),
+        moderator: toPerson(i.moderator),
+      })),
+    }),
+  },
+
+  editCommunity: {
+    method: 'PUT',
+    path: '/api/alpha/community',
+    transform: (r: piefed['CommunityResponse']) => ({
+      ...r,
+      community_view: toCommunityView(r.community_view),
+    }),
+  },
+
+  listCommunities: {
+    method: 'GET',
+    path: '/api/alpha/community/list',
+    query: fromListCommunities,
+    transform: (r: piefed['ListCommunitiesResponse']) => ({
+      communities: r.communities.map(toCommunityView),
+    }),
+  },
+
+  followCommunity: {
+    method: 'POST',
+    path: '/api/alpha/community/follow',
+    transform: (r: piefed['CommunityResponse']) => ({
+      ...r,
+      community_view: toCommunityView(r.community_view),
+    }),
+  },
+
+  blockCommunity: {
+    method: 'POST',
+    path: '/api/alpha/community/block',
+    transform: (r: piefed['CommunityResponse'], p) => ({
+      ...r,
+      community_view: toCommunityView(r.community_view),
+      blocked: p.block,
+    }),
+  },
+
+  deleteCommunity: {
+    method: 'POST',
+    path: '/api/alpha/community/delete',
+    transform: (r: piefed['CommunityResponse']) => ({
+      ...r,
+      community_view: toCommunityView(r.community_view),
+    }),
+  },
+
+  banFromCommunity: async (
+    client,
+    params: Parameters<BaseClient['banFromCommunity']>[0],
+  ) => {
+    const response = params.ban
+      ? await client.POST('/api/alpha/community/moderate/ban', {
+          body: {
+            community_id: params.community_id,
+            user_id: params.person_id,
+            reason: params.reason ?? 'No reason provided.',
+            // why is this nullable bro
+            expiredAt: new Date(
+              params.expires ?? '6767-06-07T06:07:06Z',
+            ).toISOString(),
+          } as any,
+        })
+      : await client.PUT('/api/alpha/community/moderate/unban', {
+          body: {
+            community_id: params.community_id,
+            user_id: params.person_id,
+          } as any,
+        })
+
+    return {
+      banned: params.ban,
+      person_view: {
+        person: toPerson(assertData(response).banned_user!),
+        counts: { comment_count: -1, person_id: -1, post_count: -1 },
+        is_admin: false,
       },
     }
-  }
-  async resolveCommentReport(): ReturnType<BaseClient['resolveCommentReport']> {
-    throw new Error('unsupported')
-  }
-  async listCommentReports(): ReturnType<BaseClient['listCommentReports']> {
-    throw new Error('unsupported')
-  }
-  async getPrivateMessages(
-    params: Parameters<BaseClient['getPrivateMessages']>[0],
-  ): ReturnType<BaseClient['getPrivateMessages']> {
-    const response = (
-      await this.#client.GET('/api/alpha/private_message/list', {
-        params: { query: params },
-      })
-    ).data!
+  },
 
-    return {
-      private_messages: response.private_messages.map(toPrivateMessageView),
-    }
-  }
-  async createPrivateMessage(
-    params: Parameters<BaseClient['createPrivateMessage']>[0],
-  ): ReturnType<BaseClient['createPrivateMessage']> {
-    const response = (
-      await this.#client.POST('/api/alpha/private_message', { body: params })
-    ).data!
+  addModToCommunity: {
+    method: 'POST',
+    path: '/api/alpha/community/mod',
+    transform: (r: piefed['ModCommunityResponse']) => ({
+      moderators: r.moderators.map((i) => ({
+        community: toCommunity(i.community),
+        moderator: toPerson(i.moderator),
+      })),
+    }),
+  },
 
-    return {
-      ...response,
-      private_message_view: toPrivateMessageView(response.private_message_view),
-    }
-  }
-  async editPrivateMessage(
-    params: Parameters<BaseClient['editPrivateMessage']>[0],
-  ): ReturnType<BaseClient['editPrivateMessage']> {
-    const response = (
-      await this.#client.PUT('/api/alpha/private_message', { body: params })
-    ).data!
+  search: {
+    method: 'GET',
+    path: '/api/alpha/search',
+    query: fromSearch,
+    transform: (r: piefed['SearchResponse']) => ({
+      comments: [],
+      communities: r.communities.map(toCommunityView),
+      posts: r.posts.map(toPostView),
+      users: r.users.map(toPersonView),
+      type_: r.type_,
+    }),
+  },
 
-    return {
-      ...response,
-      private_message_view: toPrivateMessageView(response.private_message_view),
-    }
-  }
-  async deletePrivateMessage(
-    params: Parameters<BaseClient['deletePrivateMessage']>[0],
-  ): ReturnType<BaseClient['deletePrivateMessage']> {
-    const response = (
-      await this.#client.POST('/api/alpha/private_message/delete', {
-        body: params,
-      })
-    ).data!
+  resolveObject: {
+    method: 'GET',
+    path: '/api/alpha/resolve_object',
+    query: (p) => p,
+    transform: (r: piefed['ResolveObjectResponse']) => ({
+      // just make the rewrite options accept null values bro
+      comment: r.comment ? toCommentView(r.comment) : undefined,
+      community: r.community ? toCommunityView(r.community) : undefined,
+      post: r.post ? toPostView(r.post) : undefined,
+      person: r.person ? toPersonView(r.person) : undefined,
+    }),
+  },
 
-    return {
-      ...response,
-      private_message_view: toPrivateMessageView(response.private_message_view),
-    }
-  }
-  async markPrivateMessageAsRead(
-    params: Parameters<BaseClient['markPrivateMessageAsRead']>[0],
-  ): ReturnType<BaseClient['markPrivateMessageAsRead']> {
-    const response = (
-      await this.#client.POST('/api/alpha/private_message/mark_as_read', {
-        body: params,
-      })
-    ).data!
+  getPrivateMessages: {
+    method: 'GET',
+    path: '/api/alpha/private_message/list',
+    query: (p) => p,
+    transform: (r: piefed['ListPrivateMessagesResponse']) => ({
+      private_messages: r.private_messages.map(toPrivateMessageView),
+    }),
+  },
 
-    return {
-      ...response,
-      private_message_view: toPrivateMessageView(response.private_message_view),
-    }
-  }
-  async createPrivateMessageReport(): ReturnType<
-    BaseClient['createPrivateMessageReport']
-  > {
-    throw new Error('unsupported')
-  }
-  async resolvePrivateMessageReport(): ReturnType<
-    BaseClient['resolvePrivateMessageReport']
-  > {
-    throw new Error('unsupported')
-  }
-  async listPrivateMessageReports(): ReturnType<
-    BaseClient['listPrivateMessageReports']
-  > {
-    throw new Error('unsupported')
-  }
-  async register(): ReturnType<BaseClient['register']> {
-    throw new Error('unsupported')
-  }
-  async login(
-    params: Parameters<BaseClient['login']>[0],
-  ): ReturnType<BaseClient['login']> {
-    const response = await this.#client.POST('/api/alpha/user/login', {
+  createPrivateMessage: {
+    method: 'POST',
+    path: '/api/alpha/private_message',
+    transform: (p: piefed['PrivateMessageResponse']) => ({
+      ...p,
+      private_message_view: toPrivateMessageView(p.private_message_view),
+    }),
+  },
+
+  editPrivateMessage: {
+    method: 'PUT',
+    path: '/api/alpha/private_message',
+    transform: (p: piefed['PrivateMessageResponse']) => ({
+      ...p,
+      private_message_view: toPrivateMessageView(p.private_message_view),
+    }),
+  },
+
+  deletePrivateMessage: {
+    method: 'POST',
+    path: '/api/alpha/private_message/delete',
+    transform: (p: piefed['PrivateMessageResponse']) => ({
+      ...p,
+      private_message_view: toPrivateMessageView(p.private_message_view),
+    }),
+  },
+
+  markPrivateMessageAsRead: {
+    method: 'POST',
+    path: '/api/alpha/private_message/mark_as_read',
+    transform: (p: piefed['PrivateMessageResponse']) => ({
+      ...p,
+      private_message_view: toPrivateMessageView(p.private_message_view),
+    }),
+  },
+
+  login: async (client, params) => {
+    const response = await client.POST('/api/alpha/user/login', {
       body: { username: params.username_or_email, password: params.password },
-    })!
-
+    })
     return {
       verify_email_sent: false,
       registration_created: false,
       jwt: response.data?.jwt,
     }
-  }
-  async logout(): ReturnType<BaseClient['logout']> {
-    throw new Error('unsupported')
-  }
-  async getPersonDetails(
-    params: Parameters<BaseClient['getPersonDetails']>[0],
-  ): ReturnType<BaseClient['getPersonDetails']> {
-    const response = (
-      await this.#client.GET('/api/alpha/user', {
-        params: {
-          query: {
-            ...params,
-            include_content: true,
-            sort: toSortType(params.sort),
-          },
-        },
-      })
-    ).data!
+  },
 
-    return {
-      comments: response.comments.map(toCommentView),
-      moderates: response.moderates.map((i) => ({
+  getPersonDetails: {
+    method: 'GET',
+    path: '/api/alpha/user',
+    query: (p) => ({ ...p, include_content: true, sort: toSortType(p.sort) }),
+    transform: (r: piefed['GetUserResponse']) => ({
+      comments: r.comments.map(toCommentView),
+      moderates: r.moderates.map((i: any) => ({
         community: toCommunity(i.community),
         moderator: toPerson(i.moderator),
       })),
-      person_view: toPersonView(response.person_view),
-      posts: response.posts.map(toPostView),
-    }
-  }
-  async getPersonMentions(
-    params: Parameters<BaseClient['getPersonMentions']>[0],
-  ): ReturnType<BaseClient['getPersonMentions']> {
-    const response = (
-      await this.#client.GET('/api/alpha/user/mentions', {
-        params: { query: { ...params, sort: toCommentSortType(params.sort) } },
-      })
-    ).data!
+      person_view: toPersonView(r.person_view),
+      posts: r.posts.map(toPostView),
+    }),
+  },
 
-    return {
-      mentions: response.replies.map(toPersonMentionView),
-    }
-  }
-  async markPersonMentionAsRead(
-    params: Parameters<BaseClient['markPersonMentionAsRead']>[0],
-  ): ReturnType<BaseClient['markPersonMentionAsRead']> {
-    // @ts-expect-error this method isnt documented
-    await this.#client.POST('/api/alpha/mention/mark_as_read', {
+  getPersonMentions: {
+    method: 'GET',
+    path: '/api/alpha/user/mentions',
+    query: (p) => ({ ...p, sort: toCommentSortType(p.sort) }),
+    transform: (r: piefed['UserMentionsResponse']) => ({
+      mentions: r.replies.map(toPersonMentionView),
+    }),
+  },
+
+  // current xylight has no idea why past xylight did this
+  markPersonMentionAsRead: async (client, params) => {
+    await (client as any).POST('/api/alpha/mention/mark_as_read', {
       body: params,
     })
-  }
-  async getReplies(
-    params: Parameters<BaseClient['getReplies']>[0],
-  ): ReturnType<BaseClient['getReplies']> {
-    const response = (
-      await this.#client.GET('/api/alpha/user/replies', {
-        params: { query: fromGetReplies(params) },
-      })
-    ).data!
+  },
 
-    return {
-      replies: response.replies.map(toCommentReplyView),
-    }
-  }
-  async banPerson(): ReturnType<BaseClient['banPerson']> {
-    // this is for site view not community view
-    throw new Error('unsupported')
-  }
-  async getBannedPersons(): ReturnType<BaseClient['getBannedPersons']> {
-    // this is for site view not community view
-    throw new Error('unsupported')
-  }
-  async blockPerson(
-    params: Parameters<BaseClient['blockPerson']>[0],
-  ): ReturnType<BaseClient['blockPerson']> {
-    const response = (
-      await this.#client.POST('/api/alpha/user/block', { body: params })
-    ).data!
+  getReplies: {
+    method: 'GET',
+    path: '/api/alpha/user/replies',
+    query: fromGetReplies,
+    transform: (r: piefed['UserRepliesResponse']) => ({
+      replies: r.replies.map(toCommentReplyView),
+    }),
+  },
 
-    return {
-      ...response,
-      person_view: toPersonView(response.person_view),
-    }
-  }
-  async getCaptcha(): ReturnType<BaseClient['getCaptcha']> {
-    throw new Error('unsupported')
-  }
-  async deleteAccount(): ReturnType<BaseClient['deleteAccount']> {
-    throw new Error('unsupported')
-  }
-  async passwordReset(): ReturnType<BaseClient['passwordReset']> {
-    throw new Error('unsupported')
-  }
-  async passwordChangeAfterReset(): ReturnType<
-    BaseClient['passwordChangeAfterReset']
-  > {
-    throw new Error('unsupported')
-  }
-  async markAllAsRead(): ReturnType<BaseClient['markAllAsRead']> {
-    const response = (
-      await this.#client.POST('/api/alpha/user/mark_all_as_read')
-    ).data!
+  blockPerson: {
+    method: 'POST',
+    path: '/api/alpha/user/block',
+    transform: (r: piefed['UserBlockResponse']) => ({
+      ...r,
+      person_view: toPersonView(r.person_view),
+    }),
+  },
 
-    return {
-      replies: response.replies.map(toCommentReplyView),
-    }
-  }
-  async saveUserSettings(
-    params: Parameters<BaseClient['saveUserSettings']>[0],
-  ): ReturnType<BaseClient['saveUserSettings']> {
-    await this.#client.PUT('/api/alpha/user/save_user_settings', {
-      body: params,
-    })
-    return {
-      success: true,
-    }
-  }
-  async changePassword(): ReturnType<BaseClient['changePassword']> {
-    throw new Error('unsupported')
-  }
-  async getReportCount(): ReturnType<BaseClient['getReportCount']> {
-    throw new Error('unsupported')
-  }
-  async getUnreadCount(): ReturnType<BaseClient['getUnreadCount']> {
-    return (await this.#client.GET('/api/alpha/user/unread_count')).data!
-  }
-  async verifyEmail(): ReturnType<BaseClient['verifyEmail']> {
-    throw new Error('unsupported')
-  }
-  async addAdmin(): ReturnType<BaseClient['addAdmin']> {
-    throw new Error('unsupported')
-  }
-  async getUnreadRegistrationApplicationCount(): ReturnType<
-    BaseClient['getUnreadRegistrationApplicationCount']
-  > {
-    throw new Error('unsupported')
-  }
-  async listRegistrationApplications(): ReturnType<
-    BaseClient['listRegistrationApplications']
-  > {
-    throw new Error('unsupported')
-  }
-  async approveRegistrationApplication(): ReturnType<
-    BaseClient['approveRegistrationApplication']
-  > {
-    throw new Error('unsupported')
-  }
-  async getRegistrationApplication(): ReturnType<
-    BaseClient['getRegistrationApplication']
-  > {
-    throw new Error('unsupported')
-  }
-  async purgePerson(): ReturnType<BaseClient['purgePerson']> {
-    throw new Error('unsupported')
-  }
-  async purgeCommunity(): ReturnType<BaseClient['purgeCommunity']> {
-    throw new Error('unsupported')
-  }
-  async purgePost(): ReturnType<BaseClient['purgePost']> {
-    throw new Error('unsupported')
-  }
-  async purgeComment(): ReturnType<BaseClient['purgeComment']> {
-    throw new Error('unsupported')
-  }
-  async getFederatedInstances(): ReturnType<
-    BaseClient['getFederatedInstances']
-  > {
-    return (await this.#client.GET('/api/alpha/federated_instances')).data!
-  }
-  async blockInstance(
-    params: Parameters<BaseClient['blockInstance']>[0],
-  ): ReturnType<BaseClient['blockInstance']> {
-    return (await this.#client.POST('/api/alpha/site/block', {
-      body: { ...params },
-    }))!.data!
-  }
-  async uploadImage(
-    params: Parameters<BaseClient['uploadImage']>[0],
-  ): ReturnType<BaseClient['uploadImage']> {
+  markAllAsRead: {
+    method: 'POST',
+    path: '/api/alpha/user/mark_all_as_read',
+    transform: (r: piefed['UserMarkAllReadResponse']) => ({
+      replies: r.replies.map(toCommentReplyView),
+    }),
+  },
+
+  saveUserSettings: {
+    method: 'PUT',
+    path: '/api/alpha/user/save_user_settings',
+    body: (p) => p,
+    transform: () => ({ success: true }),
+  },
+
+  getUnreadCount: {
+    method: 'GET',
+    path: '/api/alpha/user/unread_count',
+    transform: (r: piefed['UserUnreadCountsResponse']) => r,
+  },
+
+  setFlair: {
+    method: 'POST',
+    path: '/api/alpha/user/set_flair',
+    transform: (r: piefed['UserSetFlairResponse']) => ({
+      ...r,
+      person_view: toPersonView(r.person_view!),
+    }),
+  },
+
+  setNote: {
+    method: 'POST',
+    path: '/api/alpha/user/note',
+    body: (p: types.SetNote) => ({ ...p, note: p.note ?? '' }),
+    transform: (r: piefed['UserSetNoteResponse']) => ({
+      ...r,
+      person_view: toPersonView(r.person_view),
+    }),
+  },
+
+  getFeeds: {
+    method: 'GET',
+    path: '/api/alpha/feed/list',
+    query: (p: types.GetFeeds) => p,
+    // why is it FeedList and not ListFeeds
+    transform: (r: piefed['FeedListResponse']) => ({
+      ...r,
+      feeds: r.feeds.map(toFeedView),
+    }),
+  },
+
+  getTopics: {
+    method: 'GET',
+    path: '/api/alpha/topic/list',
+    query: (p: types.GetTopics) => p,
+    // same here
+    transform: (r: piefed['TopicListResponse']) => ({
+      ...r,
+      topics: r.topics.map(toTopicView),
+    }),
+  },
+
+  uploadImage: async (client, params) => {
     const formData = new FormData()
     formData.append('file', params.image as File)
+    const response = assertData(
+      await client.POST('/api/alpha/upload/image', {
+        body: formData as any,
+      }),
+    )
+    return { ...response, msg: 'Image uploaded successfully' }
+  },
 
-    const response = (
-      await this.#client.POST('/api/alpha/upload/image', {
-        // @ts-expect-error this is the only working way to do this
-        body: formData,
+  generateTotpSecret: 'unsupported',
+  listLogins: 'unsupported',
+  listAllMedia: 'unsupported',
+  updateTotp: 'unsupported',
+  getModlog: 'unsupported',
+  hidePost: 'unsupported',
+  hideCommunity: 'unsupported',
+  removeCommunity: 'unsupported',
+  resolvePostReport: 'unsupported',
+  listPostReports: 'unsupported',
+  distinguishComment: 'unsupported',
+  resolveCommentReport: 'unsupported',
+  listCommentReports: 'unsupported',
+  createPrivateMessageReport: 'unsupported',
+  resolvePrivateMessageReport: 'unsupported',
+  listPrivateMessageReports: 'unsupported',
+  register: 'unsupported',
+  logout: 'unsupported',
+  banPerson: 'unsupported',
+  getBannedPersons: 'unsupported',
+  getCaptcha: 'unsupported',
+  deleteAccount: 'unsupported',
+  passwordReset: 'unsupported',
+  passwordChangeAfterReset: 'unsupported',
+  changePassword: 'unsupported',
+  getReportCount: 'unsupported',
+  verifyEmail: 'unsupported',
+  addAdmin: 'unsupported',
+  getUnreadRegistrationApplicationCount: 'unsupported',
+  listRegistrationApplications: 'unsupported',
+  approveRegistrationApplication: 'unsupported',
+  getRegistrationApplication: 'unsupported',
+  purgePerson: 'unsupported',
+  purgeCommunity: 'unsupported',
+  purgePost: 'unsupported',
+  purgeComment: 'unsupported',
+  editSite: 'unsupported',
+  deleteImage: 'unsupported',
+  listMedia: 'unsupported',
+} satisfies MethodDefinitions
+
+export const PiefedClientConstants = {
+  password: { minLength: 6, maxLength: 128 },
+}
+
+async function executeMethod<
+  K extends MethodName,
+  P extends keyof paths,
+  M extends HttpMethod,
+>(
+  client: ApiClient,
+  config: MethodConfig<K, P, M>,
+  // i have been up for 3 hours writing typescript types. i am not going to be bothered to figure
+  // this out right before i am at the end
+  params: any,
+): Promise<unknown> {
+  const execute = async () => {
+    if (config.method === 'GET') {
+      return await client.GET(config.path as any, {
+        params: { query: config.query?.(params) ?? params },
       })
-    ).data!
-
-    return {
-      ...response,
-      msg: 'yeah it worked i think',
+    } else {
+      return await (client as any)[config.method](config.path, {
+        body: config.body?.(params) ?? params,
+      })
     }
   }
 
-  async setFlair(
-    params: NullableFnArg<BaseClient['setFlair']>[0],
-  ): NullableFnReturn<BaseClient['setFlair']> {
-    const response = (
-      await this.#client.POST('/api/alpha/user/set_flair', { body: params })
-    ).data!
+  return execute().then((response) =>
+    config.transform(assertData(response), params),
+  )
+}
 
-    return toPersonView(response.person_view!)
+export function createPiefedClient(
+  baseUrl: string,
+  args: {
+    fetchFunction: (input: any, init: any) => Promise<any>
+    headers: any
+  },
+): BaseClient {
+  const client = createClient<paths>({
+    baseUrl,
+    fetch: args.fetchFunction as any,
+    headers: args.headers,
+  })
+
+  const instance = {
+    type: { name: 'piefed', baseUrl: '/api/alpha' } as ClientType,
   }
 
-  async editSite(): ReturnType<BaseClient['editSite']> {
-    throw new Error('unsupported')
-  }
-  async deleteImage(): ReturnType<BaseClient['deleteImage']> {
-    throw new Error('unsupported')
-  }
+  return new Proxy(instance as BaseClient, {
+    get(target, prop: string, receiver) {
+      if (prop in target) return Reflect.get(target, prop, receiver)
 
-  async getFeeds(
-    params: NullableFnArg<BaseClient['getFeeds']>[0],
-  ): NullableFnReturn<BaseClient['getFeeds']> {
-    const response = (
-      await this.#client.GET('/api/alpha/feed/list', {
-        params: { query: params },
-      })
-    ).data!
+      const def = methods[prop as MethodName]
+      if (!def) return undefined
 
-    return {
-      ...response,
-      feeds: response.feeds.map(toFeedView),
-    }
-  }
+      if (def === 'unsupported') {
+        return () => {
+          throw new Error(`${prop} is not supported on PieFed`)
+        }
+      }
 
-  async getTopics(
-    params: NullableFnArg<BaseClient['getTopics']>[0],
-  ): NullableFnReturn<BaseClient['getTopics']> {
-    const response = (
-      await this.#client.GET('/api/alpha/topic/list', {
-        params: { query: params },
-      })
-    ).data!
+      if (typeof def === 'function') {
+        return (params: unknown) => def(client, params)
+      }
 
-    return {
-      ...response,
-      topics: response.topics.map(toTopicView),
-    }
-  }
+      return (params: unknown) => executeMethod(client, def, params)
+    },
+  })
+}
 
-  async assignFlair(
-    params: NullableFnArg<BaseClient['assignFlair']>[0],
-  ): NullableFnReturn<BaseClient['assignFlair']> {
-    const response = (
-      await this.#client.POST('/api/alpha/post/assign_flair', {
-        body: params,
-      })
-    ).data!
+export class PiefedClient {
+  static constants = PiefedClientConstants
 
-    return toPostView(response)
-  }
+  #proxy: BaseClient
 
-  async listMedia(): ReturnType<BaseClient['listMedia']> {
-    throw new Error('unsupported')
-  }
+  constructor(
+    baseUrl: string,
+    args: {
+      fetchFunction: (input: any, init: any) => Promise<any>
+      headers: any
+    },
+  ) {
+    this.#proxy = createPiefedClient(baseUrl, args)
 
-  async voteOnPoll(
-    params: NullableFnArg<BaseClient['voteOnPoll']>[0],
-  ): NullableFnReturn<BaseClient['voteOnPoll']> {
-    const response = (
-      await this.#client.POST('/api/alpha/post/poll_vote', { body: params })
-    ).data!
-
-    return toPostView(response.post_view)
-  }
-
-  async setNote(
-    params: NullableFnArg<BaseClient['setNote']>[0],
-  ): NullableFnReturn<BaseClient['setNote']> {
-    const response = (
-      await this.#client.POST('/api/alpha/user/note', { body: params })
-    ).data!
-
-    return toPersonView(response.person_view)
+    return new Proxy(this, {
+      get: (target, prop) => {
+        if (prop === 'constructor') return PiefedClient
+        return (target.#proxy as any)[prop]
+      },
+    }) as any
   }
 }

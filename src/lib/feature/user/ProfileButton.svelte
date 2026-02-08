@@ -1,7 +1,7 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
-  import { profile, type ProfileInfo } from '$lib/app/auth.svelte'
+  import { profile, type ProfileInfo } from '$lib/app/auth'
   import { LINKED_INSTANCE_URL } from '$lib/app/instance.svelte'
   import SidebarButton from '$lib/ui/sidebar/SidebarButton.svelte'
   import { Icon, QuestionMarkCircle } from 'svelte-hero-icons/dist'

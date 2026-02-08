@@ -6,7 +6,7 @@
     type ClientType,
     DEFAULT_CLIENT_TYPE,
   } from '$lib/api/base'
-  import { profile } from '$lib/app/auth.svelte'
+  import { profile } from '$lib/app/auth'
   import { errorMessage } from '$lib/app/error'
   import { t } from '$lib/app/i18n'
   import { LINKED_INSTANCE_URL } from '$lib/app/instance.svelte'

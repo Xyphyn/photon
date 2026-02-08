@@ -28,11 +28,7 @@
   }: Props = $props()
 </script>
 
-<div
-  class={['flex flex-col flex-1 rounded-none list-none', clazz]}
-  color="none"
-  padding="none"
->
+<div class={['flex flex-col flex-1 rounded-none list-none', clazz]}>
   {#if meta}
     <div class="flex flex-row justify-between items-center gap-2">
       <div class="flex flex-col gap-2">
@@ -68,7 +64,6 @@
     </div>
   {/if}
   <Comment
-    postId={comment.post.id}
     node={{ children: [], comment_view: comment, depth: 1, expanded: true }}
     replying={false}
     {meta}

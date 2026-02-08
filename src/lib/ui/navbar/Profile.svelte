@@ -1,7 +1,7 @@
 <script lang="ts">
   import { env } from '$env/dynamic/public'
   import { site } from '$lib/api/client.svelte'
-  import { profile } from '$lib/app/auth.svelte'
+  import { profile } from '$lib/app/auth'
   import { t } from '$lib/app/i18n'
   import { settings } from '$lib/app/settings.svelte'
   import { theme } from '$lib/app/theme/theme.svelte'

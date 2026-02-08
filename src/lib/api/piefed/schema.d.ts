@@ -4706,7 +4706,7 @@ export interface components {
        * Format: datetime
        * @example 2025-06-07T02:29:07.980084Z
        */
-      published?: string
+      published: string
       title?: string
     }
     PersonView: {
@@ -5809,7 +5809,7 @@ export interface components {
       note: string
     }
     UserSetNoteResponse: {
-      person_view?: components['schemas']['PersonView']
+      person_view: components['schemas']['PersonView']
     }
     ListCommentsResponse: {
       comments: components['schemas']['CommentView'][]
@@ -5873,7 +5873,7 @@ export interface components {
       id: number
       creator_id: number
       comment_id: number
-      original_comment_text?: string
+      original_comment_text: string
       reason?: string
       resolved: boolean
       /**
@@ -6057,7 +6057,7 @@ export interface components {
        * Format: datetime
        * @example 2025-06-07T02:29:07.980084Z
        */
-      published?: string
+      published: string
     }
     PostReportView: {
       post_report: components['schemas']['PostReport']
@@ -6215,6 +6215,8 @@ export interface components {
       private_message_id: number
       reason: string
     }
+    SortType: 'Active' | 'Hot' | 'TopAll' | 'New' | 'Old'
+    CommentSortType: 'Hot' | 'Top' | 'TopAll' | 'New' | 'Old'
   }
   responses: {
     /** @description Unprocessable Content */
