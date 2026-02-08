@@ -84,7 +84,7 @@ export function client({
   return new Client(instanceToURL(instanceURL), {
     fetchFunction: (input, init) => customFetch(func, input, init, jwt),
     headers: headers,
-  }) as BaseClient
+  }) as unknown as BaseClient
 }
 
 // here for parts where i forgor to switch

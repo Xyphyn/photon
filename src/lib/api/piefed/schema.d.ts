@@ -5809,7 +5809,7 @@ export interface components {
       note: string
     }
     UserSetNoteResponse: {
-      person_view?: components['schemas']['PersonView']
+      person_view: components['schemas']['PersonView']
     }
     ListCommentsResponse: {
       comments: components['schemas']['CommentView'][]
@@ -5873,7 +5873,7 @@ export interface components {
       id: number
       creator_id: number
       comment_id: number
-      original_comment_text?: string
+      original_comment_text: string
       reason?: string
       resolved: boolean
       /**
