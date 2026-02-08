@@ -15,7 +15,8 @@
     showWhenEmpty?: boolean
     hideOwnUser?: boolean
     placeholder?: string
-    onselect?: (e: Person) => void
+    label?: string
+    onselect?: (e?: Person) => void
   }
 
   let {
@@ -24,6 +25,7 @@
     listing_type = 'Subscribed',
     showWhenEmpty = false,
     hideOwnUser = false,
+    label,
     ...rest
   }: Props = $props()
 
@@ -50,6 +52,7 @@
   }}
   extractName={(c) => `${c.name}@${new URL(c.actor_id).hostname}`}
   bind:query={q}
+  {label}
   {...rest}
 >
   {#snippet noresults()}

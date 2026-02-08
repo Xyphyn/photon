@@ -1,6 +1,6 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
-  import { resolveRoute } from '$app/paths'
+  import { resolve } from '$app/paths'
   import { page } from '$app/state'
   import { client } from '$lib/api/client.svelte'
   import { profile } from '$lib/app/auth'
@@ -24,7 +24,7 @@
 
       if (res.comment) {
         goto(
-          resolveRoute(`/comment/[instance]/[id]`, {
+          resolve(`/comment/[instance]/[id]`, {
             instance: profile.current.instance,
             id: res.comment.comment.id.toString(),
           }),
@@ -88,8 +88,8 @@
         rounding="2xl"
         class="dark:bg-zinc-950 max-h-96 overflow-auto"
       >
-        {#each filtered as profile, index (profile.id)}
-          <ProfileButton prof={profile} {index} />
+        {#each filtered as profile (profile.id)}
+          <ProfileButton prof={profile} />
         {/each}
         <SidebarButton
           href="/accounts/login/guest?redirect={page.url}"

@@ -9,7 +9,7 @@
     selected?: T | undefined
     search: (query: string) => Promise<T[]>
     extractName: (item: T) => string
-    select?: (item: T) => void
+    select?: (item?: T) => void
     input?: import('svelte').Snippet
     noresults?: import('svelte').Snippet
     required?: boolean
@@ -43,7 +43,8 @@
     selected = $bindable(undefined),
     search,
     extractName,
-    select = (item: T) => {
+    select = (item?: T) => {
+      if (item == null) return
       selected = item
       query = extractName(item)
       onselect?.(item)

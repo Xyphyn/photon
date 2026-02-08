@@ -89,40 +89,29 @@
     />
   </div>
   {#if community.community.deleted}
-    <Icon
-      src={Trash}
-      class="text-red-500 inline"
-      micro
-      size="14"
-      title={$t('post.badges.deleted')}
-    />
+    <span title={$t('post.badges.deleted')}>
+      <Icon src={Trash} class="text-red-500 inline" micro size="14" />
+    </span>
   {/if}
   {#if community.community.nsfw}
-    <Icon
-      src={ExclamationTriangle}
-      class="text-red-500 inline"
-      micro
-      size="14"
-      title={$t('post.badges.nsfw')}
-    />
+    <span title={$t('post.badges.nsfw')}>
+      <Icon
+        src={ExclamationTriangle}
+        class="text-red-500 inline"
+        micro
+        size="14"
+      />
+    </span>
   {/if}
   {#if community.banned_from_community}
-    <Icon
-      src={NoSymbol}
-      class="text-red-500 inline"
-      micro
-      size="14"
-      title={$t('comment.banned')}
-    />
+    <span title={$t('comment.banned')}>
+      <Icon src={NoSymbol} class="text-red-500 inline" micro size="14" />
+    </span>
   {/if}
   {#if community.community.visibility == 'LocalOnly'}
-    <Icon
-      src={MapPin}
-      class="text-green-500 inline"
-      micro
-      size="14"
-      title={$t('routes.admin.config.listingType.local')}
-    />
+    <span title={$t('routes.admin.config.listingType.local')}>
+      <Icon src={MapPin} class="text-green-500 inline" micro size="14" />
+    </span>
   {/if}
   <div class="flex gap-2 items-center justify-end w-full z-30 mt-auto">
     <Button

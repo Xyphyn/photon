@@ -5,6 +5,7 @@ import type {
   Community,
   CommunityView,
   PersonView,
+  Post,
   PostReportView,
   PostView,
   PrivateMessage,
@@ -13,7 +14,6 @@ import type {
 } from '$lib/api/types'
 import { profile } from '$lib/app/auth'
 import { writable } from 'svelte/store'
-import type { Post } from '../post'
 
 export type Result =
   | PostView

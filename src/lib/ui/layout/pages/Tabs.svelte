@@ -13,6 +13,7 @@
     children?: import('svelte').Snippet
     style?: 'header' | 'subpage'
     margin?: boolean
+    class?: string
   }
 
   let {
@@ -22,6 +23,7 @@
     children,
     style = 'header',
     margin = true,
+    class: clazz = '',
   }: Props = $props()
 
   let matchType = $derived<('search' | 'pathname')[]>(
@@ -59,6 +61,7 @@
     style == 'header' ? 'bar-header' : 'gap-2',
     margin && 'my-2',
     margin && style == 'subpage' && 'mb-3',
+    clazz,
   ]}
 >
   {#each routes as route, index (route.href)}
