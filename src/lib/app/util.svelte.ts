@@ -1,5 +1,6 @@
 import { browser } from '$app/environment'
 import { goto } from '$app/navigation'
+import { env } from '$env/dynamic/public'
 import { client } from '$lib/api/client.svelte'
 import type { Community, Person } from '$lib/api/types'
 import { SvelteURL } from 'svelte/reactivity'
@@ -26,6 +27,7 @@ export const searchParam = (
   })
 }
 
+// why is this using SvelteURL brother
 export const fullCommunityName = (name: string, actorId: string) =>
   `${name}@${new SvelteURL(actorId).hostname}`
 
@@ -33,8 +35,8 @@ export const placeholders = {
   get: (type: 'url' | 'post' | 'body' | 'comment') => {
     switch (type) {
       case 'post':
-        return Math.random() < 0.01
-          ? 'A C E C* B* G D E E F G F E D C E'
+        return Math.random() < 0.01 && env.PUBLIC_XYLIGHT_MODE
+          ? 'top 10 reasons why TCP is brilliant and UDP is a spawn of satan'
           : t.get('placeholders.title')
       case 'body':
         return t.get('placeholders.body')
@@ -46,6 +48,8 @@ export const placeholders = {
   },
 }
 
+// lol this function was made 3 years ago when lil xylight
+// was still learning cs
 export function moveItem<T>(
   array: T[],
   currentIndex: number,
@@ -62,10 +66,7 @@ export function moveItem<T>(
 
   const newArray = [...array]
 
-  // Remove the item from the current index
   const [item] = newArray.splice(currentIndex, 1)
-
-  // Insert the item at the new index
   newArray.splice(newIndex, 0, item)
 
   return newArray
@@ -139,7 +140,6 @@ export function fuzzySearch(text: string, pattern: string): number {
     lastIndex = index
   }
 
-  // Bonus for matching start of words
   if (textLower.startsWith(patternLower)) {
     score += 2
   } else if (textLower.includes(' ' + patternLower)) {
@@ -167,6 +167,9 @@ export function snapshot<T>(item: T) {
   return $state.snapshot(item)
 }
 
+// these methods should really not exist
+// instead we should use lemmy's url_content_type which
+// gives us a mimetype (which is more reliable)
 export const isImage = (url: string | undefined) => {
   try {
     if (!url) return false

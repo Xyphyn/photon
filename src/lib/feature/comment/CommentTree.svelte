@@ -18,8 +18,6 @@
 
   let { nodes = $bindable(), post }: Props = $props()
 
-  let childrenPage = 0
-
   async function fetchChildren(parent: CommentNodeI) {
     if (
       !(
@@ -37,7 +35,6 @@
         max_depth: 5,
         parent_id: parent.comment_view.comment.id,
         type_: 'All',
-        page: childrenPage,
       })
 
       if (newComments.comments.length == 0) {
@@ -52,7 +49,6 @@
         newComments.comments,
         parent.depth,
       )[0].children
-      childrenPage++
     } catch (err) {
       console.error(err)
       toast({

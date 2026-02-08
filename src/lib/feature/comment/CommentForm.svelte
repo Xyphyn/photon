@@ -68,6 +68,7 @@
         content: value,
         post_id: postId,
         parent_id: parentId,
+        language_id: language,
       })
       oncomment?.(response)
 
