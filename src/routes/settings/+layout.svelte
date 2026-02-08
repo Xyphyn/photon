@@ -1,8 +1,7 @@
 <script lang="ts">
-  import { page } from '$app/state'
   import { t } from '$lib/app/i18n'
   import { defaultSettings, settings } from '$lib/app/settings.svelte'
-  import { Header, Tabs } from '$lib/ui/layout'
+  import { Header } from '$lib/ui/layout'
   import TabbedLayoutShell from '$lib/ui/layout/pages/TabbedLayoutShell.svelte'
   import { action, Button, Modal, modal, TextArea, toast } from 'mono-svelte'
   import {

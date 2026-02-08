@@ -5,6 +5,8 @@
     "": {
       "name": "photon-lemmy",
       "devDependencies": {
+        "@dicebear/core": "^9.3.1",
+        "@dicebear/initials": "^9.3.1",
         "@eslint/compat": "^1.4.1",
         "@eslint/js": "^9.39.2",
         "@svelte-put/qr": "^2.1.1",
@@ -64,6 +66,10 @@
     "@cloudflare/workers-types": ["@cloudflare/workers-types@4.20260131.0", "", {}, "sha512-ELgvb2mp68Al50p+FmpgCO2hgU5o4tmz8pi7kShN+cRXc0UZoEdxpDIikR0CeT7b3tV7wlnEnsUzd0UoJLS0oQ=="],
 
     "@cspotcode/source-map-support": ["@cspotcode/source-map-support@0.8.1", "", { "dependencies": { "@jridgewell/trace-mapping": "0.3.9" } }, "sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw=="],
+
+    "@dicebear/core": ["@dicebear/core@9.3.1", "", { "dependencies": { "@types/json-schema": "^7.0.11" } }, "sha512-N6Gl9z3SxYp1OVtOzQegtURFqr0D62l3QcXgvshDAVXDNjkziZ5gWj//JxYJRWldNZfVp9/pm97V3ExKI5AXPg=="],
+
+    "@dicebear/initials": ["@dicebear/initials@9.3.1", "", { "peerDependencies": { "@dicebear/core": "^9.0.0" } }, "sha512-1O61oYxKVeeGL6QcNCcxH7zsqbp37NmHbR/Y5CVqr6AVv0bBswvCzVzUv/Zmmsp70DoYQB+lbX+oNIdcqUWAaw=="],
 
     "@emnapi/runtime": ["@emnapi/runtime@1.8.1", "", { "dependencies": { "tslib": "^2.4.0" } }, "sha512-mehfKSMWjjNol8659Z8KxEMrdSJDDot5SXMq00dM8BN4o+CLNXQ0xH2V7EchNHV4RmbZLmmPdEaXZc5H2FXmDg=="],
 

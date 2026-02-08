@@ -3,6 +3,8 @@
   "version": "2.2.2",
   "license": "AGPL-3.0-only",
   "devDependencies": {
+    "@dicebear/core": "^9.3.1",
+    "@dicebear/initials": "^9.3.1",
     "@eslint/compat": "^1.4.1",
     "@eslint/js": "^9.39.2",
     "@svelte-put/qr": "^2.1.1",
