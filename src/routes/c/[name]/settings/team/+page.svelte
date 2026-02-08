@@ -136,7 +136,9 @@
   <div class="w-full">
     <UserAutocomplete
       listing_type="All"
-      onselect={(p) => (formData.newModerator = p.id)}
+      onselect={(p) => {
+        if (p) formData.newModerator = p.id
+      }}
     />
   </div>
   <Button

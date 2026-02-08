@@ -32,10 +32,13 @@
       : ''}
   {url != undefined ? 'rounded-b-none' : ''}
   "
-    ondrop={preventDefault((event) => (files = event.dataTransfer?.files))}
+    ondrop={preventDefault(
+      (event) => (files = (event as DragEvent).dataTransfer?.files ?? null),
+    )}
     ondragover={preventDefault((event) => {
-      if (event.dataTransfer) {
-        event.dataTransfer.dropEffect = 'copy'
+      const dragEvent = event as DragEvent
+      if (dragEvent.dataTransfer) {
+        dragEvent.dataTransfer.dropEffect = 'copy'
         dragover = true
       }
     })}

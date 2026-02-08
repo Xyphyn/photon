@@ -60,16 +60,18 @@
 
       canVote = false
 
-      if (typeof id !== 'number') {
-        await api.voteOnPoll({
-          post_id: post.id,
-          choice_id: id,
-        })
-      } else {
-        await api.voteOnPoll({
-          post_id: post.id,
-          choice_id: [id],
-        })
+      if (api.voteOnPoll) {
+        if (typeof id !== 'number') {
+          await api.voteOnPoll({
+            post_id: post.id,
+            choice_id: id,
+          })
+        } else {
+          await api.voteOnPoll({
+            post_id: post.id,
+            choice_id: [id],
+          })
+        }
       }
     } catch (err) {
       console.error(err)

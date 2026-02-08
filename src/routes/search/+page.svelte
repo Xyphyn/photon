@@ -116,12 +116,7 @@
       listing_type="All"
       showWhenEmpty={true}
       onselect={(c) =>
-        searchParam(
-          page.url,
-          'community',
-          c?.community.id || undefined,
-          'page',
-        )}
+        searchParam(page.url, 'creator', c?.id.toString() ?? '', 'page')}
     />
   </div>
 {/snippet}

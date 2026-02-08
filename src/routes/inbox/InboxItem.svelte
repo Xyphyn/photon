@@ -70,7 +70,7 @@
     {loading}
     disabled={loading ||
       item.creator.id == profile.current.user?.local_user_view.person.id}
-    onclick={(e) => {
+    onclick={(e: MouseEvent) => {
       e.stopPropagation()
       markAsRead(!item.read)
     }}

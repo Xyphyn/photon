@@ -101,7 +101,7 @@
     <div class="w-full">
       <UserAutocomplete
         listing_type="All"
-        onselect={(p) => (newAdmin = p.id)}
+        onselect={(p) => (newAdmin = p?.id)}
       />
     </div>
     <Button

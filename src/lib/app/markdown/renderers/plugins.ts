@@ -1,14 +1,13 @@
-import { marked } from 'marked'
+import { marked, type TokenizerAndRendererExtension, type Tokens } from 'marked'
 import markedLinkifyIt from 'marked-linkify-it'
 
-export const spoilerPlugin = {
+export const spoilerPlugin: TokenizerAndRendererExtension = {
   name: 'spoiler',
   level: 'block',
-  start(src) {
+  start(src: string) {
     return src.match(/:::/)?.index
   },
-  // eslint-disable-next-line
-  tokenizer(src, tokens) {
+  tokenizer(src: string) {
     const rule = /::: ?spoiler(?: ?(.*))\n([\s\S]*?)\n:::/
     const match = rule.exec(src)
     if (match) {
@@ -17,10 +16,11 @@ export const spoilerPlugin = {
         raw: match[0],
         title: match[1].trim(),
         text: match[2].trim(),
+        tokens: [],
       }
     }
   },
-  renderer(token) {
+  renderer(token: Tokens.Generic) {
     return `
       <details>
         <summary>${marked.parseInline(token.title)}</summary>
@@ -30,11 +30,11 @@ export const spoilerPlugin = {
   },
 }
 
-export const linkify = markedLinkifyIt(
+export const linkify = (markedLinkifyIt as any)(
   {
     '!': {
-      validate: function (text, pos, self) {
-        var tail = text.slice(pos)
+      validate: function (text: string, pos: number, self: any) {
+        const tail = text.slice(pos)
 
         if (!self.re.community) {
           self.re.community = new RegExp(
@@ -47,11 +47,12 @@ export const linkify = markedLinkifyIt(
           if (pos >= 2 && tail[pos - 2] === '!') {
             return false
           }
-          return tail.match(self.re.community)[0].length
+          const match = tail.match(self.re.community)
+          return match ? match[0].length : 0
         }
         return 0
       },
-      normalize: function (match) {
+      normalize: function (match: any) {
         let prefix = match.url
         prefix = prefix.startsWith('c/') ? prefix.slice(2) : prefix.slice(1)
 
@@ -59,8 +60,8 @@ export const linkify = markedLinkifyIt(
       },
     },
     '@': {
-      validate: function (text, pos, self) {
-        var tail = text.slice(pos)
+      validate: function (text: string, pos: number, self: any) {
+        const tail = text.slice(pos)
 
         if (!self.re.user) {
           self.re.user = new RegExp(
@@ -73,11 +74,12 @@ export const linkify = markedLinkifyIt(
           if (pos >= 2 && tail[pos - 2] === '!') {
             return false
           }
-          return tail.match(self.re.user)[0].length
+          const match = tail.match(self.re.user)
+          return match ? match[0].length : 0
         }
         return 0
       },
-      normalize: function (match) {
+      normalize: function (match: any) {
         let prefix = match.url
         prefix = prefix.startsWith('u/') ? prefix.slice(2) : prefix.slice(1)
 
@@ -103,7 +105,7 @@ export { regexes as CONTENT_REGEXES }
 /**
  * Convert links to photon links
  */
-export const photonify = (link) => {
+export const photonify = (link: string) => {
   if (regexes.community.test(link)) {
     const match = link.match(regexes.community)
     if (!match) return
@@ -139,36 +141,41 @@ export const photonify = (link) => {
   }
 }
 
-export function subSupscriptExtension(tokensExtractor) {
+export function subSupscriptExtension(
+  tokensExtractor: (params: any) => Tokens.Generic | null,
+): TokenizerAndRendererExtension {
   return {
     name: 'subscriptSuperscript',
     level: 'inline',
-    start(src) {
+    start(src: string) {
       return src.match(/[~^]/)?.index
     },
-    // eslint-disable-next-line
-    tokenizer(src, tokens) {
+    tokenizer(this: any, src: string) {
       const subscriptRule = /^~([^~\s](?:[^~]*[^~\s])?)~/
       const superscriptRule = /^\^([^^\s](?:[^^]*[^^\s])?)\^/
 
       let match
 
       if ((match = subscriptRule.exec(src))) {
-        return tokensExtractor({
-          type: 'subscript',
-          content: match[1],
-          raw: match[0],
-          lexer: this.lexer,
-        })
+        return (
+          tokensExtractor({
+            type: 'subscript',
+            content: match[1],
+            raw: match[0],
+            lexer: this.lexer,
+          }) ?? undefined
+        )
       }
 
       if ((match = superscriptRule.exec(src))) {
-        return tokensExtractor({
-          type: 'superscript',
-          content: match[1],
-          raw: match[0],
-          lexer: this.lexer,
-        })
+        return (
+          tokensExtractor({
+            type: 'superscript',
+            content: match[1],
+            raw: match[0],
+            lexer: this.lexer,
+          }) ?? undefined
+        )
       }
     },
   }

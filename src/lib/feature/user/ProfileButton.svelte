@@ -10,11 +10,10 @@
   let switching: boolean = $state(false)
   interface Props {
     prof: ProfileInfo
-    index: number
     guest?: boolean
   }
 
-  let { prof, index, guest = false }: Props = $props()
+  let { prof, guest = false }: Props = $props()
 </script>
 
 <SidebarButton
@@ -39,12 +38,7 @@
   class="w-full font-normal"
 >
   {#snippet customIcon()}
-    <ProfileAvatar
-      profile={prof}
-      {index}
-      {guest}
-      selected={profile.current?.id == prof.id}
-    />
+    <ProfileAvatar profile={prof} selected={profile.current?.id == prof.id} />
   {/snippet}
   <span
     class="inline-flex flex-col gap-0 {profile.current?.id == prof.id

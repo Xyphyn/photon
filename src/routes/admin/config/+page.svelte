@@ -21,13 +21,8 @@
     toast,
   } from 'mono-svelte'
   import { Icon, Plus } from 'svelte-hero-icons/dist'
-  import type { PageData } from '../$types'
 
-  interface Props {
-    data: PageData
-  }
-
-  let { data: pageData }: Props = $props()
+  let { data: pageData } = $props()
   let data = $state(pageData)
 
   const formData: Omit<EditSite, 'auth'> | undefined = $state(
@@ -198,7 +193,7 @@
               {/snippet}
               {#each site.data.all_languages.filter((l) => !formData.discussion_languages?.includes(l.id)) as language (language.id)}
                 <MenuButton
-                  class="min-h-[16px] py-0"
+                  class="min-h-4 py-0"
                   onclick={() => {
                     formData.discussion_languages?.push(language.id)
                   }}

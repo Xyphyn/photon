@@ -103,6 +103,7 @@
     opened?: boolean
     autoplay?: boolean
     title?: string
+    class?: string
   }
 
   let {
@@ -112,6 +113,7 @@
     title,
     opened = $bindable(!settings.embeds.clickToView),
     autoplay = settings.embeds.clickToView,
+    class: clazz = '',
   }: Props = $props()
 
   let data = $derived(typeData(type))
@@ -122,7 +124,7 @@
   @component
   Displays a video file or embedded video iframe.
 -->
-<div class="iframe-container">
+<div class={['iframe-container', clazz]}>
   {#if opened}
     {#if type == 'video'}
       <video {autoplay} controls>

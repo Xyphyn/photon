@@ -1,4 +1,4 @@
-import { resolveRoute } from '$app/paths'
+import { resolve } from '$app/paths'
 import { client } from '$lib/api/client.svelte'
 import { profile } from '$lib/app/auth'
 import { settings } from '$lib/app/settings.svelte'
@@ -51,7 +51,7 @@ async function findInFeed(id: '/' | '/c/[name]' | '/f/[id]', postId: string) {
 
 export async function load({ params, url, route }) {
   if (profile.current.instance != params.instance)
-    redirect(302, resolveRoute('/post/[instance]/[id]/confirm', params))
+    redirect(302, resolve('/post/[instance]/[id=integer]/confirm', params))
 
   // TODO use Lemmy profile default settings
   const sort = settings?.defaultSort?.comments ?? 'Hot'

@@ -199,7 +199,6 @@
             comment_view: item,
             depth: 1,
           }}
-          postId={item.post.id}
           actions={false}
         />
       {:else if isPostView(item)}

@@ -9,7 +9,7 @@
     title={$shownModal.title}
     dismissable={$shownModal.dismissable}
     ondismissed={() => shownModal.set(undefined)}
-    bind:open={$shownModal}
+    open={!!$shownModal}
   >
     {#if $shownModal.snippet}
       {@render $shownModal.snippet?.()}

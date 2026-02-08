@@ -118,7 +118,7 @@ export class PostFormState {
       ).post_view
     }
 
-    if (api instanceof PiefedClient) {
+    if (api instanceof PiefedClient && api.assignFlair) {
       const flairRes = await api.assignFlair({
         flair_id_list: this.flairList.map((i) => i.id),
         post_id: res.post.id,

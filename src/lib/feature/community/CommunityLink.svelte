@@ -67,13 +67,14 @@
   {/if}
   {#if badges}
     {#if badges.nsfw}
-      <Icon
-        src={ExclamationTriangle}
-        size="14"
-        micro
-        title={$t('post.badges.nsfw')}
-        class="text-red-600 dark:text-red-400"
-      />
+      <span title={$t('post.badges.nsfw')}>
+        <Icon
+          src={ExclamationTriangle}
+          size="14"
+          micro
+          class="text-red-600 dark:text-red-400"
+        />
+      </span>
     {/if}
   {/if}
 </a>

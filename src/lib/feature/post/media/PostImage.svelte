@@ -91,7 +91,7 @@
   >
     {#if post.alt_text}
       <Button
-        onclick={(e) => {
+        onclick={(e: MouseEvent) => {
           e.stopPropagation()
           modal({
             title: 'Alt',

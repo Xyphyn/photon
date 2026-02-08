@@ -16,7 +16,7 @@ export async function load({ url, fetch, route, params }) {
 
   const feedData = await feed(route.id, async (p) => {
     const piefedFeedData = piefed.getFeeds!({ include_communities: true }).then(
-      (i) => i.feeds.find((j) => j.id.toString() == p.feed_id!),
+      (i) => i.feeds.find((j) => j.id == p.feed_id),
     )
 
     const postPromise = piefed.getPosts(p)
@@ -34,7 +34,7 @@ export async function load({ url, fetch, route, params }) {
     type_: 'All',
     limit: 20,
     show_hidden: settings.posts.showHidden,
-    feed_id: params.id,
+    feed_id: Number(params.id),
   })
 
   return feedData

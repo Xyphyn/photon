@@ -2,11 +2,7 @@
   import { Spinner } from 'mono-svelte'
   import type { Snippet } from 'svelte'
   import { type IconSource, Icon } from 'svelte-hero-icons/dist'
-  import type {
-    ClassValue,
-    HTMLAnchorAttributes,
-    HTMLButtonAttributes,
-  } from 'svelte/elements'
+  import type { ClassValue } from 'svelte/elements'
 
   export type ButtonColor = keyof typeof buttonColor
   export type ButtonAlignment = keyof typeof buttonAlignment
@@ -77,8 +73,7 @@
   }
   type ButtonGap = keyof typeof buttonGap
 
-  interface Props
-    extends Omit<HTMLButtonAttributes | HTMLAnchorAttributes, 'prefix'> {
+  interface Props extends Record<string, any> {
     loading?: boolean
     submit?: boolean
     type?: 'button' | 'none'
@@ -94,7 +89,7 @@
     prefix?: Snippet
     children?: Snippet
     suffix?: Snippet
-    onclick?: HTMLButtonAttributes['onclick']
+    onclick?: any
     icon?: IconSource
     weight?: ButtonWeight
   }

@@ -101,7 +101,7 @@ export function getClient(
 
 export async function validateInstance(
   instance: string,
-  type: ClientType,
+  type: ClientType = DEFAULT_CLIENT_TYPE,
 ): Promise<boolean> {
   if (instance == '') return false
 
