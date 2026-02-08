@@ -1,7 +1,7 @@
 <script lang="ts">
   import { getClient, site } from '$lib/api/client.svelte'
   import type { SaveUserSettings } from '$lib/api/types'
-  import { profile } from '$lib/app/auth.svelte'
+  import { profile } from '$lib/app/auth'
   import { t } from '$lib/app/i18n'
   import MarkdownEditor from '$lib/app/markdown/MarkdownEditor.svelte'
   import ImageInputUpload from '$lib/ui/form/ImageInputUpload.svelte'

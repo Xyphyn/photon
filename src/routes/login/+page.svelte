@@ -9,7 +9,7 @@
   import { client } from '$lib/api/client.svelte'
   import { LemmyClient } from '$lib/api/lemmy/adapter'
   import { PiefedClient } from '$lib/api/piefed/adapter'
-  import { profile } from '$lib/app/auth.svelte'
+  import { profile } from '$lib/app/auth'
   import { errorMessage } from '$lib/app/error'
   import { t } from '$lib/app/i18n'
   import {
@@ -75,8 +75,7 @@
       // leading HTTPS is redundant
       form.instance = form.instance.trim().replace(/^https:\/\//, '')
 
-      if (!LINKED_INSTANCE_URL)
-      	await checkInstance()
+      if (!LINKED_INSTANCE_URL) await checkInstance()
 
       const response = await client({
         instanceURL: form.instance,

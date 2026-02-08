@@ -2,7 +2,7 @@
   import { browser } from '$app/environment'
   import { page } from '$app/state'
   import type { CommentSortType, CommentView, PostView } from '$lib/api/types'
-  import { profile } from '$lib/app/auth.svelte'
+  import { profile } from '$lib/app/auth'
   import { t } from '$lib/app/i18n'
   import { settings } from '$lib/app/settings.svelte'
   import CommentForm from '$lib/feature/comment/CommentForm.svelte'

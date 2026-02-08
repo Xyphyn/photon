@@ -2,7 +2,7 @@
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
   import { getClient } from '$lib/api/client.svelte'
-  import { profile } from '$lib/app/auth.svelte'
+  import { profile } from '$lib/app/auth'
   import { t } from '$lib/app/i18n'
   import { searchParam } from '$lib/app/util.svelte'
   import Fixate from '$lib/ui/generic/Fixate.svelte'

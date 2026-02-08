@@ -1,4 +1,4 @@
-import { profile } from '$lib/app/auth.svelte'
+import { profile } from '$lib/app/auth'
 import { error } from '@sveltejs/kit'
 
 export function load() {

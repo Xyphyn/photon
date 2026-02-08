@@ -2,7 +2,7 @@
   import { browser } from '$app/environment'
   import { page } from '$app/state'
   import { client } from '$lib/api/client.svelte'
-  import { profile } from '$lib/app/auth.svelte'
+  import { profile } from '$lib/app/auth'
   import { t } from '$lib/app/i18n'
   import { settings } from '$lib/app/settings.svelte'
   import { searchParam } from '$lib/app/util.svelte'

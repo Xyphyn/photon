@@ -1,5 +1,5 @@
 import { client } from '$lib/api/client.svelte'
-import { profile } from '$lib/app/auth.svelte'
+import { profile } from '$lib/app/auth'
 import { ReactiveState } from '$lib/app/util.svelte'
 
 export async function load({ fetch, url }) {

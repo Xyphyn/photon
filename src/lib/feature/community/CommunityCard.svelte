@@ -1,7 +1,7 @@
 <script lang="ts" module>
   import { client, getClient } from '$lib/api/client.svelte'
   import type { CommunityModeratorView, CommunityView } from '$lib/api/types'
-  import { profile } from '$lib/app/auth.svelte'
+  import { profile } from '$lib/app/auth'
   import { errorMessage } from '$lib/app/error'
   import { t } from '$lib/app/i18n'
   import Markdown from '$lib/app/markdown/Markdown.svelte'

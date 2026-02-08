@@ -1,6 +1,6 @@
 import { browser } from '$app/environment'
 import { env } from '$env/dynamic/public'
-import { profile } from './auth.svelte'
+import { profile } from './auth'
 
 class InstanceData {
   #instance = $derived(profile.current.instance)

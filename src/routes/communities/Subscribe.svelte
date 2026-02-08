@@ -5,7 +5,7 @@
     CommunityView,
     SubscribedType,
   } from '$lib/api/types'
-  import { profile } from '$lib/app/auth.svelte'
+  import { profile } from '$lib/app/auth'
   import { errorMessage } from '$lib/app/error'
   import { toast } from 'mono-svelte'
 

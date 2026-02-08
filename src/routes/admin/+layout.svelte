@@ -1,5 +1,5 @@
 <script>
-  import { profile } from '$lib/app/auth.svelte'
+  import { profile } from '$lib/app/auth'
   import { t } from '$lib/app/i18n'
   import { Tabs } from '$lib/ui/layout'
   import { Badge } from 'mono-svelte'

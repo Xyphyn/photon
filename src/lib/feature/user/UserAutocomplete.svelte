@@ -1,7 +1,7 @@
 <script lang="ts">
   import { getClient } from '$lib/api/client.svelte'
   import type { ListingType, Person } from '$lib/api/types'
-  import { profile } from '$lib/app/auth.svelte'
+  import { profile } from '$lib/app/auth'
   import Avatar from '$lib/ui/generic/Avatar.svelte'
   import { MenuButton, Search } from 'mono-svelte'
   import { createEventDispatcher } from 'svelte'

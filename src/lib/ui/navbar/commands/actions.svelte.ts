@@ -1,9 +1,6 @@
 import { goto } from '$app/navigation'
 import { page } from '$app/state'
-import {
-  profile as currentProfile,
-  type ProfileInfo,
-} from '$lib/app/auth.svelte'
+import { profile as currentProfile, type ProfileInfo } from '$lib/app/auth'
 import { t } from '$lib/app/i18n'
 import { settings } from '$lib/app/settings.svelte'
 import { theme, type ThemeData } from '$lib/app/theme/theme.svelte'

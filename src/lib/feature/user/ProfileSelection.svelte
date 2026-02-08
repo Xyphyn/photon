@@ -2,7 +2,7 @@
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
   import { DEFAULT_CLIENT_TYPE } from '$lib/api/base'
-  import { profile, type ProfileInfo } from '$lib/app/auth.svelte'
+  import { profile, type ProfileInfo } from '$lib/app/auth'
   import { t } from '$lib/app/i18n'
   import { LINKED_INSTANCE_URL } from '$lib/app/instance.svelte'
   import Avatar from '$lib/ui/generic/Avatar.svelte'

@@ -5,10 +5,11 @@ import { client, site } from '$lib/api/client.svelte'
 import type { Community, GetSiteResponse, MyUserInfo } from '$lib/api/types'
 import { publishedToDate } from '$lib/ui/util/date'
 import { toast } from 'mono-svelte'
-import { errorMessage } from './error'
-import { t } from './i18n'
-import { DEFAULT_INSTANCE_URL } from './instance.svelte'
-import { instanceToURL, moveItem } from './util.svelte'
+import { errorMessage } from '../error'
+import { t } from '../i18n'
+import { DEFAULT_INSTANCE_URL } from '../instance.svelte'
+import { instanceToURL, moveItem } from '../util.svelte'
+import { InboxService } from './inbox.svelte'
 
 function getFromStorage<T>(key: string): T | undefined {
   if (!browser) return
@@ -18,9 +19,12 @@ function getFromStorage<T>(key: string): T | undefined {
   return JSON.parse(lc)
 }
 
-function setFromStorage(key: string, item: any, stringify: boolean = true) {
+function setFromStorage<T>(key: string, item: T, stringify: boolean = true) {
   if (!browser) return
-  return localStorage.setItem(key, stringify ? JSON.stringify(item) : item)
+  return localStorage.setItem(
+    key,
+    stringify ? JSON.stringify(item) : (item as string),
+  )
 }
 
 export interface ProfileInfo {
@@ -44,12 +48,6 @@ interface ProfileData {
   profile: number
 }
 
-interface Notifications {
-  inbox: number
-  reports: number
-  applications: number
-}
-
 const getCookie = (key: string): string | undefined => {
   if (!browser) return undefined
 
@@ -60,7 +58,7 @@ const getCookie = (key: string): string | undefined => {
     ?.split('=')?.[1]
 }
 
-class Profile {
+export class Profile {
   private static readonly DONATION_CHECK_TIMEOUT = 3 * 1000
   private static readonly DONATION_REMINDER_INTERVAL = 375 * 24 * 60 * 60 * 1000
 
@@ -142,11 +140,10 @@ class Profile {
   private donationPoll(delay: number) {
     return setTimeout(() => {
       if (
-        profile.current.user?.local_user_view.local_user
-          .last_donation_notification
+        this.current.user?.local_user_view.local_user.last_donation_notification
       ) {
         const donationDate = publishedToDate(
-          profile.current.user?.local_user_view.local_user
+          this.current.user?.local_user_view.local_user
             .last_donation_notification,
         )
         if (
@@ -161,11 +158,11 @@ class Profile {
 
           // lemmy js client donation dialog is broken
           fetch(
-            `${instanceToURL(profile.current.instance)}/api/v3/user/donation_dialog_shown`,
+            `${instanceToURL(this.current.instance)}/api/v3/user/donation_dialog_shown`,
             {
               method: 'POST',
               headers: {
-                authorization: `Bearer ${profile.current.jwt}`,
+                authorization: `Bearer ${this.current.jwt}`,
               },
             },
           )
@@ -179,7 +176,7 @@ class Profile {
     if (this.#current.jwt) {
       site.data = undefined
 
-      const res = await userFromJwt(
+      const res = await fetchUserContext(
         this.#current.jwt,
         this.#current.instance,
         this.#current.client,
@@ -199,7 +196,7 @@ class Profile {
 
       site.data = res?.site
       this.#current.user = res?.user
-      if (profile.current.user) {
+      if (this.current.user) {
         this.#current.avatar = res?.user?.local_user_view.person.avatar
         this.#current.username = res?.user?.local_user_view.person.name
       }
@@ -218,7 +215,7 @@ class Profile {
 
   async add(jwt: string, instance: string, type: ClientType) {
     try {
-      const user = await userFromJwt(jwt, instance, type)
+      const user = await fetchUserContext(jwt, instance, type)
       if (!user?.user) {
         throw new Error('No user data received')
       }
@@ -265,15 +262,13 @@ class Profile {
   }
 
   isMod(community?: Community): boolean {
-    if (community)
-      return (
-        (this.#current.user?.moderates.some(
-          (i) => i.community.id == community.id,
-        ) ||
-          (community.local && this.isAdmin)) ??
-        false
-      )
-    else return (this.#current.user?.moderates.length ?? 0) > 0
+    if (!community) return (this.#current.user?.moderates.length ?? 0) > 0
+    if (community.local && this.isAdmin) return true
+    return (
+      this.#current.user?.moderates.some(
+        (m) => m.community.id === community.id,
+      ) ?? false
+    )
   }
 
   get isAdmin(): boolean {
@@ -311,93 +306,9 @@ class Profile {
   })
 }
 
-class InboxService {
-  private readonly POLL_INTERVAL = 4 * 60 * 1000
-  #pollInterval: NodeJS.Timeout | null = null
-
-  #profile: Profile
-
-  notifications = $state<Notifications>({
-    applications: 0,
-    inbox: 0,
-    reports: 0,
-  })
-
-  constructor(profile: Profile) {
-    this.#profile = profile
-  }
-
-  async init(): Promise<void> {
-    this.cleanup()
-
-    this.notifications = await this.checkInbox()
-
-    this.#pollInterval = setInterval(async () => {
-      this.notifications = await this.checkInbox()
-    }, this.POLL_INTERVAL)
-  }
-
-  cleanup(): void {
-    if (this.#pollInterval) clearInterval(this.#pollInterval)
-
-    this.#pollInterval = null
-  }
-
-  clear(): Notifications {
-    this.notifications = {
-      applications: 0,
-      inbox: 0,
-      reports: 0,
-    }
-    return this.notifications
-  }
-
-  async checkInbox(): Promise<Notifications> {
-    if (!this.#profile.current.user || !this.#profile.current.jwt)
-      return this.clear()
-
-    const unreadsPromise = client()
-      .getUnreadCount()
-      .then((res) => res.mentions + res.private_messages + res.replies)
-      .catch(() => 0)
-
-    const reportsPromise = this.#profile.isMod()
-      ? client()
-          .getReportCount({})
-          .then(
-            (res) =>
-              res.comment_reports +
-              res.post_reports +
-              (res.private_message_reports ?? 0),
-          )
-          .catch(() => 0)
-      : new Promise<number>((res) => res(0))
-
-    const applicationsPromise = this.#profile.isAdmin
-      ? client()
-          .getUnreadRegistrationApplicationCount()
-          .then((res) => res.registration_applications)
-          .catch(() => 0)
-      : new Promise<number>((res) => res(0))
-
-    const [unreads, reports, applications] = await Promise.all([
-      unreadsPromise,
-      reportsPromise,
-      applicationsPromise,
-    ])
-
-    return {
-      inbox: unreads,
-      reports: reports,
-      applications: applications,
-    }
-  }
-}
-
 export const profile = new Profile()
 
-// this is all garbage legacy code, remove later
-async function userFromJwt(
+async function fetchUserContext(
   jwt: string,
   instance: string,
   type: ClientType,
@@ -429,10 +340,8 @@ async function userFromJwt(
 
   if (!site) return
 
-  const myUser = site.my_user
-
   return {
-    user: myUser,
+    user: site.my_user,
     site: site,
   }
 }

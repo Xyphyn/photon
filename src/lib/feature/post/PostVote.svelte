@@ -18,7 +18,7 @@
 <script lang="ts">
   import { site } from '$lib/api/client.svelte'
   import type { Post } from '$lib/api/types'
-  import { profile } from '$lib/app/auth.svelte'
+  import { profile } from '$lib/app/auth'
   import { errorMessage } from '$lib/app/error'
   import { t } from '$lib/app/i18n'
   import { settings } from '$lib/app/settings.svelte'

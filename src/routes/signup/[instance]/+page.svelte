@@ -4,7 +4,7 @@
   import type { ClientType } from '$lib/api/base.js'
   import { getClient } from '$lib/api/client.svelte'
   import type { GetCaptchaResponse } from '$lib/api/types'
-  import { profile } from '$lib/app/auth.svelte'
+  import { profile } from '$lib/app/auth'
   import { errorMessage } from '$lib/app/error'
   import { t } from '$lib/app/i18n'
   import Markdown from '$lib/app/markdown/Markdown.svelte'

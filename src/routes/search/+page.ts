@@ -1,7 +1,7 @@
 import { client, getClient } from '$lib/api/client.svelte'
 import { PiefedClient } from '$lib/api/piefed/adapter'
 import type { ListingType, SearchType, SortType } from '$lib/api/types'
-import { profile } from '$lib/app/auth.svelte'
+import { profile } from '$lib/app/auth'
 import { ReactiveState } from '$lib/app/util.svelte'
 import { getItemPublished } from '$lib/feature/legacy/item'
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { profile } from '$lib/app/auth.svelte'
+  import { profile } from '$lib/app/auth'
   import { errorMessage } from '$lib/app/error'
   import { t } from '$lib/app/i18n'
   import { uploadImage } from '$lib/app/util.svelte'

@@ -1,10 +1,15 @@
 import { resolveRoute } from '$app/paths'
 import { client } from '$lib/api/client.svelte'
-import { profile } from '$lib/app/auth.svelte'
+import { profile } from '$lib/app/auth'
 import { settings } from '$lib/app/settings.svelte'
 import { ReactiveState } from '$lib/app/util.svelte'
 import CommunityCard from '$lib/feature/community/CommunityCard.svelte'
-import { Feed, feed, feeds, type FeedTypes } from '$lib/feature/feeds/feed.svelte'
+import {
+  Feed,
+  feed,
+  feeds,
+  type FeedTypes,
+} from '$lib/feature/feeds/feed.svelte'
 import { redirect } from '@sveltejs/kit'
 
 function buildContext(thread?: string) {
@@ -29,10 +34,17 @@ function buildContext(thread?: string) {
 async function findInFeed(id: '/' | '/c/[name]' | '/f/[id]', postId: string) {
   // this never actually loads anything
   if (id == '/') {
-    return (feeds.get(id) as Feed<FeedTypes['/'][0], FeedTypes['/'][1]>)?.peek()
+    return (feeds.get(id) as Feed<FeedTypes['/'][0], FeedTypes['/'][1]>)
+      ?.peek()
       ?.posts.find((i) => i.post.id.toString() == postId)
   } else {
-    return (feeds.get(id) as Feed<FeedTypes['/c/[name]'][0], FeedTypes['/c/[name]'][1]>)?.peek()
+    return (
+      feeds.get(id) as Feed<
+        FeedTypes['/c/[name]'][0],
+        FeedTypes['/c/[name]'][1]
+      >
+    )
+      ?.peek()
       ?.posts.find((i) => i.post.id.toString() == postId)
   }
 }

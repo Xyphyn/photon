@@ -1,6 +1,6 @@
 <script lang="ts">
   import { DEFAULT_CLIENT_TYPE } from '$lib/api/base'
-  import { type ProfileInfo, profile } from '$lib/app/auth.svelte'
+  import { type ProfileInfo, profile } from '$lib/app/auth'
   import { t } from '$lib/app/i18n'
   import {
     DEFAULT_INSTANCE_URL,

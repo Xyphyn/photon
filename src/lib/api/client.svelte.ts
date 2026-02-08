@@ -1,4 +1,4 @@
-import { profile } from '$lib/app/auth.svelte'
+import { profile } from '$lib/app/auth'
 import { DEFAULT_INSTANCE_URL } from '$lib/app/instance.svelte'
 import { instanceToURL } from '$lib/app/util.svelte'
 import { error } from '@sveltejs/kit'

@@ -1,6 +1,6 @@
 import { client } from '$lib/api/client.svelte'
 import type { CommentView, PostView } from '$lib/api/types'
-import { profile } from '$lib/app/auth.svelte'
+import { profile } from '$lib/app/auth'
 import { error } from '@sveltejs/kit'
 
 function getSavedItemPublished(item: PostView | CommentView) {

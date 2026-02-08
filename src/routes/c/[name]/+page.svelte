@@ -2,7 +2,7 @@
   import { browser } from '$app/environment'
   import { navigating, page } from '$app/state'
   import { site } from '$lib/api/client.svelte'
-  import { profile } from '$lib/app/auth.svelte'
+  import { profile } from '$lib/app/auth'
   import { t } from '$lib/app/i18n'
   import { setSessionStorage } from '$lib/app/session'
   import CommunityHeader from '$lib/feature/community/CommunityHeader.svelte'

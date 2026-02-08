@@ -1,5 +1,5 @@
 import { getClient, site } from '$lib/api/client.svelte'
-import { profile } from '$lib/app/auth.svelte'
+import { profile } from '$lib/app/auth'
 import { error } from '@sveltejs/kit'
 
 export async function load({ fetch }) {

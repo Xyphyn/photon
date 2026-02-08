@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from '$app/state'
   import { client } from '$lib/api/client.svelte'
-  import { profile } from '$lib/app/auth.svelte'
+  import { profile } from '$lib/app/auth'
   import { t } from '$lib/app/i18n'
   import { LINKED_INSTANCE_URL } from '$lib/app/instance.svelte'
   import Location from '$lib/feature/filter/Location.svelte'

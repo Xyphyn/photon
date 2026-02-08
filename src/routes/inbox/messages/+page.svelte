@@ -2,7 +2,7 @@
   import { goto } from '$app/navigation'
   import { resolveRoute } from '$app/paths'
   import type { Person, PrivateMessageView } from '$lib/api/types'
-  import { profile } from '$lib/app/auth.svelte'
+  import { profile } from '$lib/app/auth'
   import { t } from '$lib/app/i18n'
   import UserAutocomplete from '$lib/feature/user/UserAutocomplete.svelte'
   import Avatar from '$lib/ui/generic/Avatar.svelte'
