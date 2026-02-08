@@ -92,32 +92,6 @@ function assertData<T>(response: { data?: T; error?: unknown }): T {
   return response.data
 }
 
-const transforms = {
-  postView: (r: any) => ({ post_view: toPostView(r.post_view) }),
-
-  commentView: (r: any) => ({
-    comment_view: toCommentView(r.comment_view),
-    recipient_ids: [],
-  }),
-
-  communityView: (r: any) => ({
-    ...r,
-    community_view: toCommunityView(r.community_view),
-  }),
-
-  privateMessageView: (r: any) => ({
-    ...r,
-    private_message_view: toPrivateMessageView(r.private_message_view),
-  }),
-
-  moderators: (r: any) => ({
-    moderators: r.moderators.map((i: any) => ({
-      community: toCommunity(i.community),
-      moderator: toPerson(i.moderator),
-    })),
-  }),
-}
-
 const methods: MethodDefinitions = {
   getSite: {
     method: 'GET',
@@ -177,7 +151,9 @@ const methods: MethodDefinitions = {
     method: 'POST',
     path: '/api/alpha/post',
     body: fromCreatePost,
-    transform: transforms.postView,
+    transform: (r: piefed['GetPostResponse']) => ({
+      post_view: toPostView(r.post_view),
+    }),
   },
 
   getPost: {
@@ -198,19 +174,25 @@ const methods: MethodDefinitions = {
   editPost: {
     method: 'PUT',
     path: '/api/alpha/post',
-    transform: transforms.postView,
+    transform: (r: piefed['GetPostResponse']) => ({
+      post_view: toPostView(r.post_view),
+    }),
   },
 
   deletePost: {
     method: 'POST',
     path: '/api/alpha/post/delete',
-    transform: transforms.postView,
+    transform: (r: piefed['GetPostResponse']) => ({
+      post_view: toPostView(r.post_view),
+    }),
   },
 
   removePost: {
     method: 'POST',
     path: '/api/alpha/post/remove',
-    transform: transforms.postView,
+    transform: (r: piefed['GetPostResponse']) => ({
+      post_view: toPostView(r.post_view),
+    }),
   },
 
   getPosts: {
@@ -227,7 +209,9 @@ const methods: MethodDefinitions = {
   likePost: {
     method: 'POST',
     path: '/api/alpha/post/like',
-    transform: transforms.postView,
+    transform: (r: piefed['GetPostResponse']) => ({
+      post_view: toPostView(r.post_view),
+    }),
   },
 
   markPostAsRead: {
@@ -239,19 +223,25 @@ const methods: MethodDefinitions = {
   lockPost: {
     method: 'POST',
     path: '/api/alpha/post/lock',
-    transform: transforms.postView,
+    transform: (r: piefed['GetPostResponse']) => ({
+      post_view: toPostView(r.post_view),
+    }),
   },
 
   featurePost: {
     method: 'POST',
     path: '/api/alpha/post/feature',
-    transform: transforms.postView,
+    transform: (r: piefed['GetPostResponse']) => ({
+      post_view: toPostView(r.post_view),
+    }),
   },
 
   savePost: {
     method: 'PUT',
     path: '/api/alpha/post/save',
-    transform: transforms.postView,
+    transform: (r: piefed['GetPostResponse']) => ({
+      post_view: toPostView(r.post_view),
+    }),
   },
 
   listPostLikes: {
@@ -350,7 +340,10 @@ const methods: MethodDefinitions = {
     method: 'POST',
     path: '/api/alpha/comment/like',
     body: (p) => ({ ...p, private: false }),
-    transform: transforms.commentView,
+    transform: (r: piefed['GetCommentResponse']) => ({
+      comment_view: toCommentView(r.comment_view),
+      recipient_ids: [],
+    }),
   },
 
   listCommentLikes: {
@@ -548,7 +541,12 @@ const methods: MethodDefinitions = {
   addModToCommunity: {
     method: 'POST',
     path: '/api/alpha/community/mod',
-    transform: transforms.moderators,
+    transform: (r: piefed['ModCommunityResponse']) => ({
+      moderators: r.moderators.map((i) => ({
+        community: toCommunity(i.community),
+        moderator: toPerson(i.moderator),
+      })),
+    }),
   },
 
   search: {
