@@ -80,13 +80,11 @@ export function client({
   // but not here, so that if jwt == '', it doesnt put a bearer
   const headers = jwt ? { authorization: `Bearer ${jwt}` } : {}
 
-  return new (clientType.name == 'piefed' ? PiefedClient : LemmyClient)(
-    instanceToURL(instanceURL),
-    {
-      fetchFunction: (input, init) => customFetch(func, input, init, jwt),
-      headers: headers,
-    },
-  )
+  const Client = clientType.name == 'piefed' ? PiefedClient : LemmyClient
+  return new Client(instanceToURL(instanceURL), {
+    fetchFunction: (input, init) => customFetch(func, input, init, jwt),
+    headers: headers,
+  }) as BaseClient
 }
 
 // here for parts where i forgor to switch
