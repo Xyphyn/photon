@@ -165,7 +165,7 @@ export interface GetPersonMentionsResponse {
 }
 
 export interface GetPost {
-  id?: PostId
+  id: PostId
   comment_id?: CommentId
 }
 
@@ -190,8 +190,8 @@ export interface GetPosts {
   show_read?: boolean
   show_nsfw?: boolean
   page_cursor?: PaginationCursor
-  feed_id?: string
-  topic_id?: string
+  feed_id?: number
+  topic_id?: number
 }
 
 export interface GetPostsResponse {
@@ -2333,7 +2333,7 @@ export interface UpdateTotpResponse {
 }
 
 export interface UploadImage {
-  image: File | Buffer
+  image: File
 }
 export interface UploadImageResponse {
   msg: string

@@ -1,9 +1,23 @@
 import * as base from '../types'
-import type { components } from './schema'
+import type { components, paths } from './schema'
+
+type Schema<T extends keyof components['schemas']> = components['schemas'][T]
+
+type PathQuery<P extends keyof paths> = paths[P] extends {
+  get: { parameters: { query?: infer Q } }
+}
+  ? Q
+  : never
+
+type PathBody<P extends keyof paths> = paths[P] extends {
+  post: { requestBody: { content: { 'application/json': infer B } } }
+}
+  ? B
+  : never
 
 export function toPersonView(
-  personView: components['schemas']['PersonView'],
-): PersonView {
+  personView: Schema<'PersonView'>,
+): base.PersonView {
   return {
     counts: personView.counts,
     is_admin: personView.is_admin,
@@ -11,7 +25,7 @@ export function toPersonView(
   }
 }
 
-export function toPerson(person: components['schemas']['Person']): base.Person {
+export function toPerson(person: Schema<'Person'>): base.Person {
   return {
     ...person,
     id: person.id,
@@ -20,15 +34,13 @@ export function toPerson(person: components['schemas']['Person']): base.Person {
   }
 }
 
-export function toLocalSite(
-  site: components['schemas']['Site'],
-): base.LocalSite {
+export function toLocalSite(site: Schema<'Site'>): base.LocalSite {
   if (site) return {}
   return {}
 }
 
 export function toCommunityView(
-  communityView: components['schemas']['CommunityView'],
+  communityView: Schema<'CommunityView'>,
 ): base.CommunityView {
   return {
     ...communityView,
@@ -49,9 +61,7 @@ export function toCommunityView(
   }
 }
 
-export function toCommunity(
-  community: components['schemas']['Community'],
-): base.Community {
+export function toCommunity(community: Schema<'Community'>): base.Community {
   return {
     ...community,
     posting_restricted_to_mods: false,
@@ -59,9 +69,7 @@ export function toCommunity(
   }
 }
 
-export function toMyUser(
-  myUser: components['schemas']['MyUserInfo'],
-): base.MyUserInfo {
+export function toMyUser(myUser: Schema<'MyUserInfo'>): base.MyUserInfo {
   return {
     ...myUser,
     community_blocks: myUser.community_blocks.map((i) => ({
@@ -100,9 +108,7 @@ export function toMyUser(
   }
 }
 
-export function toPostView(
-  postView: components['schemas']['PostView'],
-): base.PostView {
+export function toPostView(postView: Schema<'PostView'>): base.PostView {
   return {
     ...postView,
     creator: toPerson(postView.creator),
@@ -112,7 +118,7 @@ export function toPostView(
   }
 }
 
-export function toPost(post: components['schemas']['Post']): Post {
+export function toPost(post: Schema<'Post'>): base.Post {
   return {
     ...post,
     creator_id: -1,
@@ -123,7 +129,7 @@ export function toPost(post: components['schemas']['Post']): Post {
 }
 
 export function toCommentView(
-  commentView: components['schemas']['CommentView'],
+  commentView: Schema<'CommentView'>,
 ): base.CommentView {
   return {
     ...commentView,
@@ -131,11 +137,11 @@ export function toCommentView(
     creator: toPerson(commentView.creator),
     post: toPost(commentView.post),
     community: toCommunity(commentView.community),
-    subscribed: commentView.subscribed as SubscribedType,
+    subscribed: commentView.subscribed as base.SubscribedType,
   }
 }
 
-export function toComment(comment: components['schemas']['Comment']): Comment {
+export function toComment(comment: Schema<'Comment'>): base.Comment {
   return {
     ...comment,
     content: comment.body,
@@ -145,7 +151,7 @@ export function toComment(comment: components['schemas']['Comment']): Comment {
 }
 
 export function toCommentReplyView(
-  commentReplyView: components['schemas']['CommentReplyView'],
+  commentReplyView: Schema<'CommentReplyView'>,
 ): base.CommentReplyView {
   return {
     ...commentReplyView,
@@ -160,7 +166,7 @@ export function toCommentReplyView(
 }
 
 export function toPrivateMessageView(
-  privateMessageView: components['schemas']['PrivateMessageView'],
+  privateMessageView: Schema<'PrivateMessageView'>,
 ): base.PrivateMessageView {
   return {
     ...privateMessageView,
@@ -170,7 +176,7 @@ export function toPrivateMessageView(
 }
 
 export function toPersonMentionView(
-  personMentionView: components['schemas']['CommentReplyView'],
+  personMentionView: Schema<'CommentReplyView'>,
 ): base.PersonMentionView {
   return {
     ...personMentionView,
@@ -185,9 +191,7 @@ export function toPersonMentionView(
   }
 }
 
-export function toTopicView(
-  topicView: components['schemas']['TopicView'],
-): base.TopicView {
+export function toTopicView(topicView: Schema<'TopicView'>): base.TopicView {
   return {
     ...topicView,
     communities: topicView.communities?.map(toCommunity),
@@ -195,9 +199,7 @@ export function toTopicView(
   }
 }
 
-export function toFeedView(
-  feedView: components['schemas']['FeedView'],
-): base.FeedView {
+export function toFeedView(feedView: Schema<'FeedView'>): base.FeedView {
   return {
     ...feedView,
     communities: feedView.communities?.map(toCommunity),
@@ -205,10 +207,9 @@ export function toFeedView(
   }
 }
 
-// Query calls
 export function fromGetPosts(
   getPosts: base.GetPosts,
-): components['parameters']['GetPosts'] {
+): PathQuery<'/api/alpha/post/list'> {
   return {
     ...getPosts,
     sort: toSortType(getPosts.sort),
@@ -218,7 +219,7 @@ export function fromGetPosts(
 
 export function fromGetComments(
   getComments: base.GetComments,
-): components['schemas']['GetComments'] {
+): PathQuery<'/api/alpha/comment/list'> {
   return {
     ...getComments,
     sort: toCommentSortType(getComments.sort),
@@ -227,13 +228,13 @@ export function fromGetComments(
 
 export function fromGetPost(
   getPost: base.GetPost,
-): components['schemas']['GetPost'] {
+): PathQuery<'/api/alpha/post'> {
   return getPost
 }
 
 export function fromGetReplies(
   getReplies: base.GetReplies,
-): components['schemas']['GetReplies'] {
+): PathQuery<'/api/alpha/user/replies'> {
   return {
     ...getReplies,
     sort: toCommentSortType(getReplies.sort),
@@ -242,7 +243,7 @@ export function fromGetReplies(
 
 export function fromSearch(
   search: base.Search,
-): components['schemas']['Search'] {
+): PathQuery<'/api/alpha/search'> {
   return {
     ...(search as Omit<base.Search, 'type_'> & {
       type_: 'Communities' | 'Users' | 'Url' | 'Posts'
@@ -253,7 +254,7 @@ export function fromSearch(
 
 export function fromCreatePost(
   createPost: base.CreatePost,
-): components['schemas']['CreatePost'] {
+): PathBody<'/api/alpha/post'> {
   return {
     ...createPost,
     title: createPost.name,
@@ -262,26 +263,27 @@ export function fromCreatePost(
 
 export function fromListCommunities(
   listCommunities: base.ListCommunities,
-): components['schemas']['CommunityRequest'] {
+): PathQuery<'/api/alpha/community/list'> {
   return {
     ...listCommunities,
+    type_: listCommunities.type_ as 'All',
     sort: toCommunitiesSortType(listCommunities.sort),
   }
 }
 
 export function fromCreateComment(
   createComment: base.CreateComment,
-): components['schemas']['CreateComment'] {
+): PathBody<'/api/alpha/comment'> {
   return {
     ...createComment,
     body: createComment.content,
   }
 }
 
-// Misc
 export function toSortType(
   sortType?: base.SortType,
-): components['schemas']['SortType'] | undefined {
+): Schema<'SortType'> | undefined {
+  if (!sortType) return
   if (
     sortType == 'Old' ||
     sortType == 'MostComments' ||
@@ -289,12 +291,13 @@ export function toSortType(
     sortType == 'NewComments'
   )
     sortType = 'New'
-  return sortType
+  if (sortType?.startsWith('Top')) sortType = 'TopAll'
+  return sortType as Schema<'SortType'>
 }
 
 export function toCommentSortType(
   commentSortType?: base.CommentSortType,
-): components['schemas']['CommentSortType'] | undefined {
+): Schema<'CommentSortType'> | undefined {
   if (commentSortType == 'Controversial') commentSortType = undefined
   return commentSortType
 }

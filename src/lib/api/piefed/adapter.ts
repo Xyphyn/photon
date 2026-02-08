@@ -289,10 +289,13 @@ const methods: MethodDefinitions = {
     }),
   },
 
+  // @ts-expect-error for some reason this method doesn't exist on MethodDefinitions
   voteOnPoll: {
     method: 'POST',
     path: '/api/alpha/post/poll_vote',
-    transform: (r: piefed['PollVoteResponse']) => toPostView(r.post_view),
+    transform: (r: piefed['PollVoteResponse']) => ({
+      post_view: toPostView(r.post_view),
+    }),
   },
 
   createComment: {

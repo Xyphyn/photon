@@ -4706,7 +4706,7 @@ export interface components {
        * Format: datetime
        * @example 2025-06-07T02:29:07.980084Z
        */
-      published?: string
+      published: string
       title?: string
     }
     PersonView: {
@@ -6057,7 +6057,7 @@ export interface components {
        * Format: datetime
        * @example 2025-06-07T02:29:07.980084Z
        */
-      published?: string
+      published: string
     }
     PostReportView: {
       post_report: components['schemas']['PostReport']
@@ -6215,6 +6215,8 @@ export interface components {
       private_message_id: number
       reason: string
     }
+    SortType: 'Active' | 'Hot' | 'TopAll' | 'New' | 'Old'
+    CommentSortType: 'Hot' | 'Top' | 'TopAll' | 'New' | 'Old'
   }
   responses: {
     /** @description Unprocessable Content */
