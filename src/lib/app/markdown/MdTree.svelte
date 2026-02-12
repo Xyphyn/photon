@@ -10,22 +10,9 @@
     tokens?: Tokens.Generic[]
     text?: string
     align?: string
-    header?: boolean
   }
 
-  let {
-    type,
-    tokens = [],
-    renderers,
-    raw,
-    text,
-    header,
-    ...rest
-  }: Props = $props()
-
-  if (header) {
-    type = 'tablecell'
-  }
+  let { type, tokens = [], renderers, raw, text, ...rest }: Props = $props()
 </script>
 
 {#if type}
