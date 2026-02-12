@@ -15,6 +15,7 @@
     PostMeta,
     type Tag,
   } from '$lib/feature/post'
+  import Skeleton from '$lib/ui/generic/Skeleton.svelte'
   import Placeholder from '$lib/ui/info/Placeholder.svelte'
   import { CommonList } from '$lib/ui/layout'
   import EndPlaceholder from '$lib/ui/layout/EndPlaceholder.svelte'
@@ -23,8 +24,6 @@
   import { Button, Expandable, toast } from 'mono-svelte'
   import { onMount } from 'svelte'
   import { ChatBubbleLeftRight, ChevronDoubleUp } from 'svelte-hero-icons/dist'
-  import { expoOut } from 'svelte/easing'
-  import { fly } from 'svelte/transition'
   import CommentProvider from './CommentProvider.svelte'
 
   let { data } = $props()
@@ -226,18 +225,12 @@
       {#each new Array(10) as _, index}
         {_}
         <div
-          in:fly|global={{
-            duration: 500,
-            easing: expoOut,
-            y: 8,
-            delay: index * 50,
-          }}
-          class="animate-pulse flex flex-col gap-2 w-full
-        *:bg-slate-100 dark:*:bg-zinc-800 *:rounded-md"
+          class="animate-pop-in"
+          style="animation-delay: {index * 50}ms; opacity: 0; width: {(1 /
+            ((index + 1) % 3)) *
+            100}%"
         >
-          <div class="w-96 h-3"></div>
-          <div class="w-full h-12"></div>
-          <div class="w-48 h-4"></div>
+          <Skeleton size="sm" />
         </div>
       {/each}
     </div>
