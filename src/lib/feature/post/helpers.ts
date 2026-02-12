@@ -42,7 +42,8 @@ export const optimizeImageURL = (
     const newUrl = new URL(
       env.PUBLIC_IMAGE_PROXY ? `${env.PUBLIC_IMAGE_PROXY}/thumbnail` : url,
     )
-    newUrl.searchParams.set('url', encodeURIComponent(url.toString()))
+    if (env.PUBLIC_IMAGE_PROXY)
+      newUrl.searchParams.set('url', encodeURIComponent(url.toString()))
 
     if (format) newUrl.searchParams.set('format', format)
 
