@@ -2,7 +2,7 @@
   import type { View } from '$lib/app/settings.svelte'
   import { parseURL } from '$lib/ui/form/Link.svelte'
   import { Material } from 'mono-svelte'
-  import { ArrowTopRightOnSquare, Icon, Link } from 'svelte-hero-icons/dist'
+  import { Icon, Link } from 'svelte-hero-icons/dist'
   import { optimizeImageURL } from './helpers'
 
   interface Props {
@@ -10,6 +10,7 @@
     thumbnail_url?: string
     nsfw?: boolean
     embed_title?: string
+    embed_body?: string
     view?: View
   }
 
@@ -18,6 +19,7 @@
     thumbnail_url,
     nsfw = false,
     embed_title,
+    embed_body,
     view = 'cozy',
   }: Props = $props()
 
@@ -34,7 +36,7 @@
     class={[
       'post-link group/link hover:bg-slate-50 hover:dark:bg-zinc-800 transition-colors',
     ]}
-    rounding="xl"
+    rounding="2xl"
     element="a"
     padding="none"
     href={url}
@@ -48,6 +50,11 @@
         </div>
       {/if}
       <p class="post-link-title">{embed_title}</p>
+      {#if embed_body}
+        <p class="post-link-body">
+          {embed_body?.slice(0, 200)}{#if embed_body.length >= 200}...{/if}
+        </p>
+      {/if}
     </div>
     {#if thumbnail_url}
       <div class="post-link-image">
@@ -76,19 +83,6 @@
             class:blur-3xl={nsfw}
           />
         </picture>
-        <Material
-          padding="xs"
-          color="uniform"
-          class="absolute top-0 right-0 m-2 z-50"
-          role="presentation"
-        >
-          <Icon
-            src={ArrowTopRightOnSquare}
-            size="16"
-            micro
-            class="text-slate-500 dark:text-zinc-300"
-          />
-        </Material>
       </div>
     {/if}
   </Material>
@@ -152,6 +146,15 @@
       font-size: var(--text-base);
       letter-spacing: var(--tracking-tight);
       max-width: calc(var(--spacing) * 108);
+    }
+
+    .post-link-body {
+      color: var(--color-slate-500);
+      overflow: hidden;
+      max-height: 100%;
+      @variant dark {
+        color: var(--color-zinc-500);
+      }
     }
 
     .post-link-image {

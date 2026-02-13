@@ -29,7 +29,6 @@
 
 <style>
   .btn-group {
-    gap: var(--spacing);
     flex-shrink: 0;
   }
 
@@ -41,14 +40,18 @@
     & > button,
     & > a {
       position: relative;
-      border-radius: 8px !important;
 
-      &:first-child {
-        border-radius: 24px 12px 12px 24px !important;
+      &:not(:first-child):not(:last-child) {
+        border-radius: 0px !important;
       }
 
-      &:last-child {
-        border-radius: 12px 24px 24px 12px !important;
+      &:first-child:not(:last-child) {
+        border-radius: var(--radius-xl) 0px 0px var(--radius-xl) !important;
+        border-right: 0px;
+      }
+
+      &:last-child:not(:first-child) {
+        border-radius: 0px var(--radius-xl) var(--radius-xl) 0px !important;
       }
     }
   }

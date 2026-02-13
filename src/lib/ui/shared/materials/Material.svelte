@@ -115,13 +115,18 @@
         border-top-color: var(--color-zinc-700);
 
         @variant hover {
-          @variant dark {
-            background-color: var(--color-zinc-925);
-          }
+          background-color: var(--color-zinc-925);
+        }
+        @variant active {
+          background-color: var(--color-zinc-950);
         }
       }
 
       @variant hover {
+        background-color: var(--color-slate-50);
+      }
+
+      @variant active {
         background-color: var(--color-slate-100);
       }
     }

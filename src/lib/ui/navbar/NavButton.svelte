@@ -127,7 +127,7 @@
       @variant md {
         width: max-content;
         height: max-content;
-        padding: calc(var(--spacing) * 1.25) calc(var(--spacing) * 3);
+        padding: calc(var(--spacing) * 1.125) calc(var(--spacing) * 3);
 
         @variant hover {
           background-color: --alpha(var(--color-slate-200) / 50%);

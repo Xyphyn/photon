@@ -94,7 +94,6 @@
     onclick={() => castVote(vote == targetNum ? 0 : targetNum)}
     class={[
       'flex items-center gap-0.5 transition-colors relative cursor-pointer h-full p-2',
-      'first:rounded-l-[inherit] last:rounded-r-[inherit]',
       'last:flex-row-reverse',
       vote == targetNum
         ? shouldShowVoteColor(
@@ -138,7 +137,7 @@
   <div
     class={[
       buttonColor.secondary,
-      'rounded-xl h-full font-medium flex relative hover:bg-transparent! shadow-xs',
+      'rounded-xl h-full font-medium flex relative hover:bg-transparent! overflow-hidden',
       voteRatio < 85 && settings.voteRatioBar && 'vote-ratio',
     ]}
     aria-label={$t('aria.vote.group')}
@@ -160,7 +159,7 @@
   }
 
   .vote-ratio::before {
-    border-radius: var(--radius-3xl);
+    border-radius: inherit;
     content: '';
     position: absolute;
     height: 100%;
@@ -171,8 +170,8 @@
     z-index: -10;
     background: linear-gradient(
       to right,
-      var(--color-indigo-500) calc(var(--vote-ratio) - 4%),
-      var(--color-red-500) calc(var(--vote-ratio) + 4%)
+      var(--color-indigo-400) calc(var(--vote-ratio) - 2%),
+      var(--color-red-400) calc(var(--vote-ratio) + 2%)
     );
   }
 </style>

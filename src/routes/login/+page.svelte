@@ -22,10 +22,16 @@
     pushError,
   } from '$lib/ui/info/ErrorContainer.svelte'
   import { Header } from '$lib/ui/layout'
-  import { Button, Note, Spinner, TextInput, toast } from 'mono-svelte'
+  import {
+    Button,
+    ButtonGroup,
+    Note,
+    Spinner,
+    TextInput,
+    toast,
+  } from 'mono-svelte'
   import { debounce } from 'mono-svelte/util/time'
   import {
-    Icon,
     Identification,
     QuestionMarkCircle,
     UserCircle,
@@ -236,21 +242,18 @@
       {$t('account.login')}
     </Button>
     <hr class="border-slate-200 dark:border-zinc-800" />
-    <div class="flex flex-row items-center gap-2 overflow-auto *:shrink-0">
-      <Button rounding="pill" color="ghost" href="/signup">
-        <Icon src={Identification} mini size="16" />
+    <ButtonGroup orientation="horizontal" class="flex overflow-auto">
+      <Button href="/signup" icon={Identification}>
         {$t('account.signup')}
       </Button>
-      <Button rounding="pill" color="ghost" href="/login_reset">
-        <Icon src={QuestionMarkCircle} mini size="16" />
+      <Button href="/login_reset" icon={QuestionMarkCircle}>
         {$t('form.forgotpassword')}
       </Button>
       {#if !LINKED_INSTANCE_URL}
-        <Button rounding="pill" color="ghost" href="/login/guest">
-          <Icon src={UserCircle} mini size="16" />
+        <Button href="/login/guest" icon={UserCircle}>
           {$t('account.guest')}
         </Button>
       {/if}
-    </div>
+    </ButtonGroup>
   </form>
 </div>

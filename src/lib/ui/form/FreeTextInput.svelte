@@ -1,8 +1,8 @@
 <script lang="ts">
   import { tick } from 'svelte'
-  import type { HTMLAttributes } from 'svelte/elements'
+  import type { ClassValue, HTMLTextareaAttributes } from 'svelte/elements'
 
-  let textarea: HTMLTextAreaElement | undefined = $state()
+  let textarea = $state<HTMLTextAreaElement>()
 
   async function adjustHeight() {
     await tick()
@@ -11,11 +11,11 @@
       textarea.style.height = `${textarea.scrollHeight}px` // Set height to the scrollHeight
     }
   }
-  interface Props extends HTMLAttributes<HTMLTextAreaElement> {
+  interface Props extends HTMLTextareaAttributes {
     label?: string | undefined
     value: string
     required?: boolean
-    class?: string
+    class?: ClassValue
   }
 
   let {

@@ -106,7 +106,7 @@
     size = 'md',
     rounding = size == 'lg' || size == 'square-lg' ? '2xl' : 'xl',
     alignment = 'center',
-    shadow = color == 'primary' || color == 'secondary' ? 'sm' : 'none',
+    shadow = 'none',
     gap = 'md',
     disabled,
     loaderWidth = undefined,
@@ -230,8 +230,14 @@
       background-color: var(--color-white);
 
       @variant dark {
-        border: 1px solid var(--color-zinc-800);
+        border: 1px solid
+          color-mix(
+            in oklab,
+            var(--color-zinc-800) 50%,
+            var(--color-zinc-900) 50%
+          );
         background-color: var(--color-zinc-900);
+        border-top-color: var(--color-zinc-800);
       }
 
       @variant hover {

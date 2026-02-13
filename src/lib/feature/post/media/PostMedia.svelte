@@ -25,7 +25,7 @@
   }: Props = $props()
 </script>
 
-<!-- 
+<!--
   @component
   This component will show either
   - A media item (pictures, videos) (large form factor posts only)
@@ -52,6 +52,7 @@
     thumbnail_url={post.thumbnail_url}
     nsfw={post.nsfw}
     embed_title={post.embed_title}
+    embed_body={post.embed_description}
     {view}
     {...rest}
   />

@@ -40,7 +40,7 @@
   let size = $derived(thumbnailSize(view))
 </script>
 
-<!-- 
+<!--
   @component
   Thumbnails for compact and list view posts.
 -->
@@ -61,12 +61,12 @@
     <div
       class={[
         'relative overflow-hidden rounded-2xl max-h-full h-full',
-        'border border-slate-200 dark:border-zinc-800 hover-scale-effect bg-slate-200 dark:bg-zinc-800',
+        'border border-slate-200 dark:border-zinc-800 hover-scale-effect bg-slate-200 dark:bg-zinc-900',
       ]}
     >
       {#if post.thumbnail_url || type == 'image'}
         {@const thumbnail = post.thumbnail_url != undefined && type != 'image'}
-        <picture>
+        <picture class="rounded-[inherit]">
           <!--I would add AVIF, but lemmy.world's AVIF is broken as of currently-->
           {#each ['webp'] as format}
             <source
@@ -94,7 +94,7 @@
             src={blur ? '' : bestImageURL(post, thumbnail, -1, null)}
             loading="lazy"
             class={[
-              'object-cover relative overflow-hidden rounded-xl h-full',
+              'object-cover relative overflow-hidden rounded-[inherit] h-full',
               size,
             ]}
             alt={post.alt_text ?? ' '}
@@ -102,11 +102,7 @@
           />
         </picture>
         {#if type != 'image'}
-          <div
-            class={[
-              'absolute w-8 h-8 bottom-1 left-1 rounded-xl bg-slate-25 dark:bg-zinc-900 grid place-items-center',
-            ]}
-          >
+          <div class="post-media-indicator">
             <Icon src={type == 'iframe' ? VideoCamera : Link} micro size="16" />
           </div>
         {/if}
@@ -150,6 +146,7 @@
 </div>
 
 <style>
+  @reference '../../../../app.css';
   .hover-scale-effect > *,
   .hover-scale-effect > picture > img {
     transition: transform 200ms var(--ease-cubic);
@@ -161,5 +158,31 @@
   .hover-scale-effect:active > *,
   .hover-scale-effect:active > picture > img {
     transform: scale(90%);
+  }
+
+  .post-media-indicator {
+    /*bg-linear-180 from-zinc-900/0 to-zinc-900/95 h-16 absolute bottom-0 w-full left-0 flex items-end p-2*/
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: end;
+    padding: calc(var(--spacing) * 2);
+    height: calc(var(--spacing) * 16);
+    width: 100%;
+
+    background-image: linear-gradient(
+      to bottom,
+      --alpha(var(--color-slate-50) / 0%),
+      --alpha(var(--color-slate-50) / 95%)
+    );
+
+    @variant dark {
+      background-image: linear-gradient(
+        to bottom,
+        --alpha(var(--color-zinc-900) / 0%),
+        --alpha(var(--color-zinc-900) / 95%)
+      );
+    }
   }
 </style>
