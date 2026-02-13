@@ -342,8 +342,9 @@
                 "switch": "Switch to an account on {{destInstance}}"
             },
             "automatic": {
-                "title": "Locating post",
-                "description": "That content does not originate on your account's server."
+                "title": "Locating content",
+                "description": "Locating that content on your home server...",
+                "found": "Redirecting"
             }
         },
         "inbox": {
@@ -981,7 +982,8 @@
         "unsupported": "That function is not supported by your account's server software.",
         "not_live_supported": "That server is not running supported software, or is offline.",
         "token_not_found": "That email verification link expired, or never existed.",
-        "invalid_password": "Invalid password."
+        "invalid_password": "Invalid password.",
+        "cant_find_object": "That content couldn't be found on your home server."
     },
     "aria": {
         "pagination": {

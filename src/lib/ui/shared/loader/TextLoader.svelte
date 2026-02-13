@@ -1,15 +1,17 @@
 <script lang="ts">
   import type { Snippet } from 'svelte'
+  import type { ClassValue } from 'svelte/elements'
 
   interface Props {
     children: Snippet
+    class?: ClassValue
   }
 
-  let { children }: Props = $props()
+  let { children, class: clazz }: Props = $props()
 </script>
 
 <div
-  class="text-loader font-medium text-lg tracking-tight"
+  class={['text-loader font-medium text-lg tracking-tight', clazz]}
   aria-busy="true"
   aria-live="polite"
 >
