@@ -15,16 +15,15 @@ export const findClosestNumber = (numbers: number[], target: number): number =>
   )
 
 export const searchParam = (
-  url: URL,
+  _url: URL,
   key: string,
   value: string,
   ...deleteKeys: string[]
 ) => {
+  const url = new SvelteURL(_url)
   url.searchParams.set(key, value)
   deleteKeys.forEach((k) => url.searchParams.delete(k))
-  goto(url, {
-    invalidateAll: true,
-  })
+  goto(url)
 }
 
 // why is this using SvelteURL brother
