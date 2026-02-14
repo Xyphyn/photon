@@ -194,8 +194,8 @@
         "setup": "Setup",
         "signup": {
             "title": "Sign Up",
-            "description": "Choose a server that interests you, or type the URL manually.",
-            "info": "The server you choose is where your account will live. However, every server is connected, and you can still access almost all linked content.",
+            "description": "Choose your new account's homeserver.",
+            "info": "If you don't understand what this means, Photon can choose for you.",
             "chooseInstance": "Choose a server",
             "application": {
                 "label": "Application",
@@ -696,7 +696,8 @@
         "remove": "Remove",
         "download": "Download",
         "attach": "Attach file",
-        "info": "Info"
+        "info": "Info",
+        "continue": "Continue"
     },
     "message": {
         "success": "Success",
