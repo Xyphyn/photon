@@ -220,8 +220,8 @@
     .material-info {
       background: linear-gradient(
         to bottom,
-        --alpha(var(--color-slate-300) / 10%),
-        --alpha(var(--color-slate-500) / 15%)
+        --alpha(var(--color-slate-200) / 10%),
+        --alpha(var(--color-slate-300) / 15%)
       );
 
       color: var(--color-slate-900);
@@ -229,6 +229,12 @@
 
       @variant dark {
         color: var(--color-slate-300);
+
+        background: linear-gradient(
+          to bottom,
+          --alpha(var(--color-slate-300) / 10%),
+          --alpha(var(--color-slate-500) / 15%)
+        );
       }
     }
   }

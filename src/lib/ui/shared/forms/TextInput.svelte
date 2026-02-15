@@ -1,5 +1,6 @@
 <script module lang="ts">
   import { Label } from 'mono-svelte'
+  import { Icon, type IconSource } from 'svelte-hero-icons/dist'
   import type { HTMLInputAttributes } from 'svelte/elements'
   import { generateID } from './helper'
 
@@ -28,6 +29,7 @@
     shadow?: Shadow
     element?: HTMLInputElement | undefined
     class?: string
+    icon?: IconSource
     customLabel?: import('svelte').Snippet
     prefix?: import('svelte').Snippet
     suffix?: import('svelte').Snippet
@@ -41,14 +43,15 @@
   const borderClass = `border border-slate-200 border-b-slate-300 dark:border-zinc-800`
 
   let {
-    label = undefined,
+    label,
     value = $bindable(),
     placeholder = '',
     disabled = false,
     required = false,
     size = 'md',
     id = generateID(),
-    inlineAffixes = false,
+    icon,
+    inlineAffixes = !!icon,
     shadow = 'sm',
     element = $bindable(),
     class: clazz = '',
@@ -84,15 +87,18 @@
       clazz,
     ]}
   >
-    {#if prefix}
+    {#if prefix || icon}
       <div
         class={[
           'rounded-xl rounded-r-none text-slate-600 dark:text-zinc-400',
-          inlineAffixes && 'bg-white dark:bg-zinc-900 pr-0 w-8',
-          sizeClass[size],
+          inlineAffixes && 'bg-white dark:bg-zinc-900 pr-0 px-3',
         ]}
       >
-        {@render prefix?.()}
+        {#if prefix}
+          {@render prefix?.()}
+        {:else if icon}
+          <Icon src={icon} size="20" mini />
+        {/if}
       </div>
     {/if}
     <input

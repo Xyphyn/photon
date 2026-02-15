@@ -32,7 +32,7 @@
         'dark:hover:text-primary-100 transition-colors z-0 group relative cursor-pointer',
       ]}
     >
-      <div class="flex flex-row gap-1 items-center w-full">
+      <div class="flex flex-row gap-1 items-center w-full select-none">
         {@render title?.(open)}
       </div>
       {#if icon}

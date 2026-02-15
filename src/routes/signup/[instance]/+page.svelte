@@ -8,9 +8,7 @@
   import { errorMessage } from '$lib/app/error'
   import { t } from '$lib/app/i18n'
   import Markdown from '$lib/app/markdown/Markdown.svelte'
-  import MarkdownEditor from '$lib/app/markdown/MarkdownEditor.svelte'
-  import InstanceCard from '$lib/feature/instance/InstanceCard.svelte'
-  import Avatar from '$lib/ui/generic/Avatar.svelte'
+  import Blobs from '$lib/ui/generic/Blobs.svelte'
   import ErrorContainer, {
     clearErrorScope,
     pushError,
@@ -23,14 +21,18 @@
     Material,
     Spinner,
     Switch,
+    TextArea,
     TextInput,
     toast,
   } from 'mono-svelte'
   import {
     ArrowLeft,
     ArrowPath,
+    AtSymbol,
+    Envelope,
     ExclamationTriangle,
     Icon,
+    Key,
     Plus,
     QuestionMarkCircle,
     XCircle,
@@ -151,7 +153,7 @@
   <title>{$t('account.signup')}</title>
 </svelte:head>
 
-<div class="flex flex-col md:flex-row flex-1/3 gap-8 h-full max-w-5xl mx-auto">
+<div class="flex flex-col md:flex-row flex-1/2 gap-8 h-full max-w-6xl mx-auto">
   {#if stage == 'signup'}
     <form
       class="flex flex-col gap-4 h-full w-full flex-2/3"
@@ -160,13 +162,13 @@
         submit()
       }}
     >
-      <Button href="/accounts" class=" mb-4 w-max" rounding="pill">
+      <Button href="/accounts" class=" mb-4 w-max">
         <Icon src={ArrowLeft} size="16" micro />
         {$t('common.back')}
       </Button>
       <Header>
         {$t('form.signup.title')}
-        {#snippet extended()}
+        <!-- {#snippet extended()}
           <span class="flex gap-4 items-center text-xl text-center mx-auto">
             {#if data.site_view.site.icon}
               <Avatar
@@ -177,7 +179,7 @@
             {/if}
             {data.site_view.site.name}
           </span>
-        {/snippet}
+        {/snippet} -->
       </Header>
       <ErrorContainer scope={page.url.pathname} />
 
@@ -188,35 +190,44 @@
             label={$t('form.email')}
             required={data.site_view.local_site.require_email_verification}
             type="email"
+            icon={Envelope}
+            size="md"
           />
           <TextInput
             bind:value={username}
             label={$t('form.username')}
             required
+            icon={AtSymbol}
           />
         </div>
-        <div class="flex flex-col md:flex-row gap-2 *:flex-1">
+        <div class="flex flex-col md:flex-row *:flex-1 gap-2">
           <TextInput
             bind:value={password}
             label={$t('form.password')}
             required
             type="password"
+            icon={Key}
           />
           <TextInput
             bind:value={passwordVerify}
             label={$t('form.confirmPassword')}
             required
             type="password"
+            icon={Key}
           />
         </div>
         {#if data.site_view.local_site.registration_mode == 'RequireApplication'}
           <Material rounding="2xl" color="warning" icon={ExclamationTriangle}>
             {$t('form.signup.application.info')}
           </Material>
-          {#if data.site_view.local_site.application_question}
-            <Markdown source={data.site_view.local_site.application_question} />
-          {/if}
-          <MarkdownEditor
+          <Material rounding="2xl" color="info">
+            {#if data.site_view.local_site.application_question}
+              <Markdown
+                source={data.site_view.local_site.application_question}
+              />
+            {/if}
+          </Material>
+          <TextArea
             label={$t('form.signup.application.label')}
             required
             bind:value={application}
@@ -318,18 +329,11 @@
       </Button>
     </div>
   {/if}
-  <Material
-    color="uniform"
-    class="flex-1/3 overflow-auto max-h-full max-md:hidden"
-    rounding="2xl"
-    padding="none"
-  >
-    <InstanceCard
-      admins={data.admins}
-      site={data.site_view}
-      taglines={data.taglines}
-      version={data.version}
-      class="w-full p-4"
-    />
-  </Material>
+  <div class="flex-1/2 flex flex-col gap-2">
+    <Material rounding="2xl" class="overflow-hidden relative h-36">
+      <div class="-m-4 opacity-30 mask-b-from-0 absolute inset-0">
+        <Blobs seed="1" />
+      </div>
+    </Material>
+  </div>
 </div>
