@@ -10,20 +10,22 @@
     langs?: string[]
     tags?: string[]
     score: number
+    recommended?: boolean
   }
 </script>
 
 <script lang="ts">
   import { goto } from '$app/navigation'
+  import { env } from '$env/dynamic/public'
   import { validateInstance } from '$lib/api/client.svelte'
   import { t } from '$lib/app/i18n'
   import { DEFAULT_INSTANCE_URL } from '$lib/app/instance.svelte'
   import VirtualList from '$lib/app/render/VirtualList.svelte'
   import Avatar from '$lib/ui/generic/Avatar.svelte'
   import { CommonList, Header } from '$lib/ui/layout'
-  import { Button, TextInput, toast } from 'mono-svelte'
+  import { Button, Note, TextInput, toast } from 'mono-svelte'
   import { onMount } from 'svelte'
-  import { ArrowLeft, Icon } from 'svelte-hero-icons/dist'
+  import { ArrowLeft, CheckCircle, Icon } from 'svelte-hero-icons/dist'
   import { preventDefault } from 'svelte/legacy'
 
   let selectedInstance: string = $state('')
@@ -34,14 +36,21 @@
 
   onMount(async () => {
     try {
+      const recommended = env.PUBLIC_RECOMMENDED_INSTANCES?.split(',')
+
       const res: Instance[] = (
-        await fetch(`https://servers.infra.phtn.app?limit=30`).then((r) =>
+        (await fetch(`https://servers.infra.phtn.app?limit=50`).then((r) =>
           r.json(),
-        )
+        )) as Instance[]
       )
         .filter((i: Instance) => i.fed)
         .sort((a: Instance, b: Instance) => b.score - a.score)
         .slice(0, 100)
+
+      recommended?.forEach((rec) => {
+        const found = res.find((i) => i.baseurl == rec)
+        if (found) res.unshift({ ...found, recommended: true })
+      })
 
       instances = res
 
@@ -72,6 +81,7 @@
   </Button>
   <Header>{$t('form.signup.title')}</Header>
   <p>{$t('form.signup.description')}</p>
+  <Note>{$t('form.signup.info')}</Note>
   {#if instances}
     <CommonList>
       <VirtualList
@@ -86,7 +96,10 @@
           {@const instance = instances![i]}
           <button
             onclick={() => (selectedInstance = instance.baseurl ?? '')}
-            class="flex flex-row items-center text-left gap-2 w-full cursor-pointer"
+            class={[
+              'flex flex-row items-center text-left gap-2 w-full cursor-pointer rounded-[inherit]',
+              instance.recommended && 'material-success',
+            ]}
           >
             <Avatar
               width={32}
@@ -111,6 +124,12 @@
               >
                 {instance.desc}
               </p>
+              {#if instance.recommended}
+                <p class="text-xs inline-flex items-center gap-1">
+                  <Icon src={CheckCircle} size="14" micro class="inline" />
+                  {$t('form.signup.recommended')}
+                </p>
+              {/if}
             </div>
           </button>
         {/snippet}

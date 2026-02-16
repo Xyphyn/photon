@@ -91,7 +91,8 @@
       <div
         class={[
           'rounded-xl rounded-r-none text-slate-600 dark:text-zinc-400',
-          inlineAffixes && 'bg-white dark:bg-zinc-900 pr-0 px-3',
+          inlineAffixes &&
+            'bg-white dark:bg-zinc-900 pr-0 px-3 h-full flex items-center',
         ]}
       >
         {#if prefix}
@@ -116,8 +117,8 @@
 		 focus:outline-hidden rounded-xl text-sm w-full disabled:bg-slate-100
 		disabled:cursor-not-allowed dark:disabled:bg-zinc-800 invalid:border-red-500!
 		peer invalid:text-red-500 z-10`,
-        prefix && 'rounded-l-none',
-        prefix && inlineAffixes && 'border-l-0',
+        (prefix || icon) && 'rounded-l-none',
+        (prefix || icon) && inlineAffixes && 'border-l-0',
         suffix && 'rounded-r-none',
         suffix && inlineAffixes && 'border-r-0',
         clazz,

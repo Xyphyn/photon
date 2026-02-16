@@ -194,9 +194,10 @@
         "setup": "Setup",
         "signup": {
             "title": "Sign Up",
-            "description": "Choose your new account's homeserver.",
-            "info": "If you don't understand what this means, Photon can choose for you.",
+            "description": "Choose the server your account's information will be hosted on.",
+            "info": "You can access all content across the Fediverse regardless of your account's server, it is generally okay to pick any of the following.",
             "chooseInstance": "Choose a server",
+            "recommended": "Recommended",
             "application": {
                 "label": "Application",
                 "info": "To join this server, you must fill out this application, and wait to be accepted. You will receive an email if your application is accepted.",

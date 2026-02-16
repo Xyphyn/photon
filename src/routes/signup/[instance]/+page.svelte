@@ -8,7 +8,7 @@
   import { errorMessage } from '$lib/app/error'
   import { t } from '$lib/app/i18n'
   import Markdown from '$lib/app/markdown/Markdown.svelte'
-  import Blobs from '$lib/ui/generic/Blobs.svelte'
+  import EntityHeader from '$lib/ui/generic/EntityHeader.svelte'
   import ErrorContainer, {
     clearErrorScope,
     pushError,
@@ -168,18 +168,17 @@
       </Button>
       <Header>
         {$t('form.signup.title')}
-        <!-- {#snippet extended()}
-          <span class="flex gap-4 items-center text-xl text-center mx-auto">
-            {#if data.site_view.site.icon}
-              <Avatar
-                circle={false}
-                width={48}
-                url={data.site_view.site.icon}
-              />
-            {/if}
-            {data.site_view.site.name}
-          </span>
-        {/snippet} -->
+        {#snippet extended()}
+          <div class="md:hidden">
+            <EntityHeader
+              name={data.site_view.site.name}
+              avatar={data.site_view.site.icon}
+              banner={data.site_view.site.banner || null}
+              compact="always"
+              avatarCircle={false}
+            />
+          </div>
+        {/snippet}
       </Header>
       <ErrorContainer scope={page.url.pathname} />
 
@@ -329,11 +328,15 @@
       </Button>
     </div>
   {/if}
-  <div class="flex-1/2 flex flex-col gap-2">
-    <Material rounding="2xl" class="overflow-hidden relative h-36">
-      <div class="-m-4 opacity-30 mask-b-from-0 absolute inset-0">
-        <Blobs seed="1" />
-      </div>
-    </Material>
+  <div class="flex-1/2 flex flex-col gap-2 max-md:hidden">
+    <div class=" w-full sticky top-0">
+      <EntityHeader
+        name={data.site_view.site.name}
+        avatar={data.site_view.site.icon}
+        banner={data.site_view.site.banner || null}
+        avatarCircle={false}
+        bio={data.site_view.site.sidebar}
+      />
+    </div>
   </div>
 </div>
