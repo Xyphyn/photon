@@ -19,6 +19,7 @@
     debounceResize?: number
     useWindow?: boolean
     height?: number
+    itemContainer?: string
   }
 
   let {
@@ -31,6 +32,7 @@
     debounceResize = 100,
     useWindow = true,
     height = 0,
+    itemContainer = 'div',
     ...rest
   }: Props = $props()
 
@@ -235,13 +237,14 @@
       0}px; border: 0 !important;"
   ></div>
   {#each visibleItems as item (item.index)}
-    <div
+    <svelte:element
+      this={itemContainer}
       data-index={item.index}
       class="post-container fix-divide group/virtual"
       use:resizeObserver
     >
       {@render itemSnippet(item.index)}
-    </div>
+    </svelte:element>
   {/each}
 </div>
 {#if settings.debugInfo}

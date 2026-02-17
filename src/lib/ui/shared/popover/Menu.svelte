@@ -46,7 +46,7 @@
 >
   {#snippet popover()}
     <div
-      class="w-full max-w-sm max-h-128 overflow-auto list-none shadow-lg rounded-xl"
+      class="w-full max-w-sm max-h-128 overflow-auto list-none shadow-lg rounded-xl select-none"
     >
       <div
         class="flex flex-col p-1 list-none bg-white/80 dark:bg-zinc-900/90 rounded-xl

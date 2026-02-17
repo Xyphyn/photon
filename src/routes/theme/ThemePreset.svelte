@@ -10,9 +10,6 @@
   }
 
   let { theme = $bindable() }: Props = $props()
-
-  let selected = $derived(theme.id == themeData.data.currentTheme)
-  let editingName = $state(false)
 </script>
 
 <button class="h-full" onclick={() => (themeData.data.currentTheme = theme.id)}>

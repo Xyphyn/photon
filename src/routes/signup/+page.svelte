@@ -10,20 +10,22 @@
     langs?: string[]
     tags?: string[]
     score: number
+    recommended?: boolean
   }
 </script>
 
 <script lang="ts">
   import { goto } from '$app/navigation'
+  import { env } from '$env/dynamic/public'
   import { validateInstance } from '$lib/api/client.svelte'
   import { t } from '$lib/app/i18n'
   import { DEFAULT_INSTANCE_URL } from '$lib/app/instance.svelte'
   import VirtualList from '$lib/app/render/VirtualList.svelte'
   import Avatar from '$lib/ui/generic/Avatar.svelte'
-  import { Header } from '$lib/ui/layout'
-  import { Button, TextInput, toast } from 'mono-svelte'
+  import { CommonList, Header } from '$lib/ui/layout'
+  import { Button, Note, TextInput, toast } from 'mono-svelte'
   import { onMount } from 'svelte'
-  import { ArrowLeft, Icon } from 'svelte-hero-icons/dist'
+  import { ArrowLeft, CheckCircle, Icon } from 'svelte-hero-icons/dist'
   import { preventDefault } from 'svelte/legacy'
 
   let selectedInstance: string = $state('')
@@ -34,14 +36,21 @@
 
   onMount(async () => {
     try {
+      const recommended = env.PUBLIC_RECOMMENDED_INSTANCES?.split(',')
+
       const res: Instance[] = (
-        await fetch(`https://data.lemmyverse.net/data/instance.full.json`).then(
-          (r) => r.json(),
-        )
+        (await fetch(`https://servers.infra.phtn.app?limit=50`).then((r) =>
+          r.json(),
+        )) as Instance[]
       )
         .filter((i: Instance) => i.fed)
         .sort((a: Instance, b: Instance) => b.score - a.score)
         .slice(0, 100)
+
+      recommended?.forEach((rec) => {
+        const found = res.find((i) => i.baseurl == rec)
+        if (found) res.unshift({ ...found, recommended: true })
+      })
 
       instances = res
 
@@ -72,44 +81,60 @@
   </Button>
   <Header>{$t('form.signup.title')}</Header>
   <p>{$t('form.signup.description')}</p>
-  <p>
-    {$t('form.signup.info')}
-  </p>
+  <Note>{$t('form.signup.info')}</Note>
   {#if instances}
-    <VirtualList
-      items={instances}
-      useWindow={false}
-      height={400}
-      estimatedHeight={50}
-      class="overflow-auto border rounded-2xl border-slate-200 dark:border-zinc-900 bg-white dark:bg-zinc-950
-      divide-y divide-slate-200 dark:divide-zinc-900"
-    >
-      {#snippet item(i)}
-        <button
-          onclick={() => (selectedInstance = instances![i].baseurl ?? '')}
-          class="flex flex-row gap-2 text-left py-2 first:pt-0 last:pb-0 items-center
-            h-16 max-h-16 min-h-16 overflow-hidden w-full cursor-pointer hover:bg-slate-50 hover:dark:bg-zinc-925 duration-100
-            p-4"
-        >
-          <Avatar
-            width={32}
-            url={instances![i].icon}
-            alt={instances![i].name}
-            class="shrink-0"
-          />
-          <div class="flex flex-col max-h-full w-full">
-            <span class="font-medium text-base whitespace-nowrap text-ellipsis">
-              {instances![i].name}
-            </span>
-            <span
-              class="whitespace-nowrap text-ellipsis overflow-hidden w-full"
-            >
-              {instances![i].desc}
-            </span>
-          </div>
-        </button>
-      {/snippet}
-    </VirtualList>
+    <CommonList>
+      <VirtualList
+        items={instances}
+        useWindow={false}
+        height={384}
+        estimatedHeight={50}
+        class="overflow-auto overflow-x-hidden w-full min-w-0 min-h-96"
+        itemContainer="li"
+      >
+        {#snippet item(i)}
+          {@const instance = instances![i]}
+          <button
+            onclick={() => (selectedInstance = instance.baseurl ?? '')}
+            class={[
+              'flex flex-row items-center text-left gap-2 w-full cursor-pointer rounded-[inherit]',
+              instance.recommended && 'material-success',
+            ]}
+          >
+            <Avatar
+              width={32}
+              url={instance.icon}
+              alt={instance.name}
+              class="shrink-0"
+            />
+            <div class="flex flex-col max-h-full w-full">
+              <div
+                class="font-medium text-base whitespace-nowrap text-ellipsis flex"
+              >
+                <span>
+                  {instance.name}
+                </span>
+                <span class="text-slate-500 dark:text-zinc-500 ml-auto">
+                  {instance.baseurl}
+                </span>
+              </div>
+
+              <p
+                class="overflow-hidden overflow-ellipsis w-full text-sm text-slate-600 dark:text-zinc-400"
+              >
+                {instance.desc}
+              </p>
+              {#if instance.recommended}
+                <p class="text-xs inline-flex items-center gap-1">
+                  <Icon src={CheckCircle} size="14" micro class="inline" />
+                  {$t('form.signup.recommended')}
+                </p>
+              {/if}
+            </div>
+          </button>
+        {/snippet}
+      </VirtualList>
+    </CommonList>
   {/if}
   <form
     class="flex flex-col gap-4"

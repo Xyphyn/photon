@@ -178,6 +178,8 @@
       flex-direction: row;
       align-items: center;
       font-size: var(--text-sm);
+      user-select: none;
+      -webkit-user-select: none;
 
       transition: 75ms cubic-bezier(0.075, 0.82, 0.165, 1);
 

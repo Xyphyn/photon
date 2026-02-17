@@ -22,7 +22,7 @@
     nameDetail?: import('svelte').Snippet
     actions?: import('svelte').Snippet
     children?: import('svelte').Snippet
-    compact?: 'always' | 'lg'
+    compact?: 'always' | 'lg' | 'never'
     avatarCircle?: boolean
   }
 

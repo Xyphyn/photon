@@ -53,13 +53,13 @@
   @reference '../../../app.css';
   ul {
     :global {
-      :where(& > :not(:last-child)) {
+      li:not(:last-child) {
         margin-block-start: calc(calc(var(--spacing) * 1));
         margin-block-end: calc(calc(var(--spacing) * 1));
       }
     }
   }
-  ul > :global(li) {
+  ul :global(li:not(ul li li)) {
     transition: background-color 0.1s;
     background-color: var(--color-white);
     container-type: inline-size;
@@ -68,11 +68,11 @@
 
     border-radius: var(--radius-lg) var(--radius-lg);
 
-    &:first-child {
+    &:first-of-type {
       border-top-left-radius: var(--radius-2xl);
       border-top-right-radius: var(--radius-2xl);
     }
-    &:last-child {
+    &:last-of-type {
       border-bottom-left-radius: var(--radius-2xl);
       border-bottom-right-radius: var(--radius-2xl);
     }
@@ -80,57 +80,59 @@
     &:hover {
       background-color: var(--color-slate-25);
     }
-  }
 
-  ul > :global(li:not(.xs) > *) {
-    padding-block: calc(var(--spacing) * 3);
-    padding-inline: calc(var(--spacing) * 3.5);
-
-    @media screen and (min-width: 40rem) {
-      padding-block: calc(var(--spacing) * 3);
-      padding-inline: calc(var(--spacing) * 4);
-    }
-  }
-
-  ul > :global(li.xs > *) {
-    padding-block: calc(var(--spacing) * 0.5);
-    padding-block: calc(var(--spacing) * 1);
-  }
-
-  ul > :global(li.selected) {
-    background-color: color-mix(
-      in oklab,
-      var(--color-white),
-      var(--color-slate-50)
-    );
-  }
-
-  :global(.dark) ul > :global(li.selected) {
-    background-color: color-mix(
-      in oklab,
-      var(--color-zinc-900) 90%,
-      var(--color-zinc-800)
-    );
-  }
-
-  :global(.dark) ul > :global(li) {
-    border: 1px solid var(--color-zinc-900);
-    background-color: color-mix(
-      in oklab,
-      var(--color-zinc-925),
-      var(--color-zinc-900)
-    );
-
-    &:hover {
-      background-color: var(--color-zinc-900);
-    }
-
-    &:active {
+    @variant dark {
+      border: 1px solid var(--color-zinc-900);
       background-color: color-mix(
         in oklab,
-        var(--color-zinc-900) 80%,
-        var(--color-zinc-925)
+        var(--color-zinc-925),
+        var(--color-zinc-900)
       );
+
+      &:hover {
+        background-color: var(--color-zinc-900);
+      }
+
+      &:active {
+        background-color: color-mix(
+          in oklab,
+          var(--color-zinc-900) 80%,
+          var(--color-zinc-925)
+        );
+      }
+    }
+
+    :global {
+      &:not(.xs) > * {
+        padding-block: calc(var(--spacing) * 3);
+        padding-inline: calc(var(--spacing) * 3.5);
+
+        @media screen and (min-width: 40rem) {
+          padding-block: calc(var(--spacing) * 3);
+          padding-inline: calc(var(--spacing) * 4);
+        }
+      }
+
+      &.xs > * {
+        padding-block: calc(var(--spacing) * 0.5);
+        padding-block: calc(var(--spacing) * 1);
+      }
+
+      &.selected {
+        background-color: color-mix(
+          in oklab,
+          var(--color-white),
+          var(--color-slate-50)
+        );
+
+        @variant dark {
+          background-color: color-mix(
+            in oklab,
+            var(--color-zinc-900) 90%,
+            var(--color-zinc-800)
+          );
+        }
+      }
     }
   }
 

@@ -101,6 +101,8 @@ If you're hosting Photon for a Lemmy instance, you'll almost definitely want to 
 
 - `PUBLIC_THEME` `JSON`: If you'd like, you can export a theme from Photon and paste it here, which will become the default theme for users.
 
+- `RECOMMENDED_INSTANCES` `string`: (Only suitable for unlocked Photon instances) a comma separated list of instance domains that will be displayed as "recommended" on the sign-up page.
+
 ##### Default Photon options
 
 Photon has extensive user configuration options, and you can set the defaults for them with the environment variables found at `src/lib/settings.ts`, by looking at the `defaultSettings` object.
