@@ -352,7 +352,7 @@
                 "title": "Yöneticiler",
                 "empty": {
                     "title": "Yönetici yok",
-                    "description": "Nedense bu sitenin yöneticisi yok. "
+                    "description": "Nedense bu sitenin yöneticisi yok."
                 }
             },
             "federation": {
