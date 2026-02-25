@@ -73,8 +73,8 @@
         },
         "signup": {
             "title": "注册",
-            "description": "选择您感兴趣的实例，或输入网址。",
-            "info": "实例是托管你账号的服务器，但你仍然可以访问来自其他实例的内容并与之互动。",
+            "description": "选择用于托管您账号信息的实例。",
+            "info": "无论您的账号属于哪个实例，您都可以访问联邦宇宙的所有内容。您可以从以下列表中任选其一。",
             "chooseInstance": "选择一个实例",
             "application": {
                 "label": "应用程序",
@@ -91,7 +91,8 @@
                 "description": "请检查您的收件箱中的验证链接。点击后，请按下方按钮。",
                 "submit": "我已验证邮箱",
                 "error": "您的邮箱尚未验证。"
-            }
+            },
+            "recommended": "推荐"
         },
         "email": "邮箱",
         "setup": "配置",
@@ -405,7 +406,7 @@
             },
             "automatic": {
                 "title": "正在定位内容",
-                "description": "该内容并非源自您账号所在的服务器。",
+                "description": "正在您的实例上定位该内容……",
                 "found": "正在重定向"
             }
         },
@@ -431,7 +432,8 @@
         "remove": "移除",
         "download": "下载",
         "attach": "附加文件",
-        "info": "信息"
+        "info": "信息",
+        "continue": "继续"
     },
     "profile": {
         "profile": "账号",
@@ -1069,7 +1071,8 @@
         "unsupported": "该功能不受您账号服务器软件的支持。",
         "not_live_supported": "该服务器未运行受支持的软件，或已离线。",
         "token_not_found": "该邮件验证链接已过期，或从未存在。",
-        "invalid_password": "密码无效。"
+        "invalid_password": "密码无效。",
+        "cant_find_object": "无法在你所属的服务器上找到该内容。"
     },
     "aria": {
         "vote": {
