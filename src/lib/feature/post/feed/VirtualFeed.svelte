@@ -1,6 +1,6 @@
 <script lang="ts">
   import { browser } from '$app/environment'
-  import { client } from '$lib/api/client.svelte'
+  import { client, site } from '$lib/api/client.svelte'
   import type { GetPosts, PostView } from '$lib/api/types'
   import { errorMessage } from '$lib/app/error'
   import { t } from '$lib/app/i18n'
@@ -59,7 +59,8 @@
 
   let error = $state()
   let loading = $state(false)
-  let hasMore = $state(true)
+  let hasMore = $state(false)
+  let feedKey = $state('')
 
   const abortLoad = new AbortController()
   let seenIds = new SvelteSet<number>(posts.map((post) => post.post.id))
@@ -87,7 +88,7 @@
 
       error = null
 
-      hasMore = newPosts.posts.length != 0
+      hasMore = !!newPosts.next_page
 
       params.page_cursor = newPosts.next_page
 
@@ -162,6 +163,21 @@
           listComp?.scrollToIndex(lastSeen, true)
         }
       })
+    }
+  })
+
+  $effect(() => {
+    const limit = params?.limit ?? 20
+    const nextKey = JSON.stringify({
+      ...params,
+      page_cursor: undefined,
+      page: undefined,
+    })
+
+    if (nextKey !== feedKey) {
+      feedKey = nextKey
+      seenIds = new SvelteSet<number>(posts.map((post) => post.post.id))
+      hasMore = posts.length >= limit
     }
   })
 
@@ -272,7 +288,7 @@
           {$t('message.retry')}
         </Button>
       </Material>
-    {:else if hasMore}
+    {:else if loading}
       <div class="w-full h-32 grid place-items-center">
         <Spinner width={24} />
       </div>
@@ -282,7 +298,8 @@
           {$t('routes.frontpage.endFeed', {
             community_name:
               params.community_name ??
-              'Lemmy. There are no more posts. You saw them all.',
+              site.data?.site_view?.site?.name ??
+              'Lemmy. There are no more posts. You saw them all', // TODO: This should be translated
           })}
           {#snippet action()}
             <Button color="tertiary" icon={ChevronDoubleUp}>
