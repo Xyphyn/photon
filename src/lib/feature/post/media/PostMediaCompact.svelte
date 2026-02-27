@@ -161,7 +161,6 @@
   }
 
   .post-media-indicator {
-    /*bg-linear-180 from-zinc-900/0 to-zinc-900/95 h-16 absolute bottom-0 w-full left-0 flex items-end p-2*/
     position: absolute;
     bottom: 0;
     left: 0;
@@ -170,6 +169,8 @@
     padding: calc(var(--spacing) * 2);
     height: calc(var(--spacing) * 16);
     width: 100%;
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: inherit;
 
     background-image: linear-gradient(
       to bottom,

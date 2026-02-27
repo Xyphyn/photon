@@ -175,40 +175,42 @@
 {#snippet autofillPostModal()}
   <svelte:boundary>
     {#if form.url}
-      {#await autofill(new URL(form.url))}
-        <div class="w-full h-48 grid place-items-center">
-          <TextLoader>
-            {$t('form.post.fetching')}
-          </TextLoader>
-        </div>
-        <Button size="lg" color="secondary" onclick={history.back}>
-          {$t('common.cancel')}
-        </Button>
-      {:then url}
-        {#if !url}
-          <!--cursed svelte template abuse. don't do this lads-->
-          {history.back()}
-        {/if}
-        <Material color="info" class="space-y-2 h-48">
-          <h2 class="text-xl font-display font-medium">{url.title}</h2>
-          <p class="overflow-hidden text-ellipsis">{url.body ?? '...'}</p>
-        </Material>
-        <Button
-          size="lg"
-          color="primary"
-          onclick={() => {
-            autofill({ title: url.title, body: url.body })
-            history.back()
-          }}
-        >
-          {$t('form.submit')}
-        </Button>
-      {:catch err}
-        <ErrorContainer scope="-1" message={err} />
-      {/await}
-      <Switch class="mt-4" bind:checked={settings.forms.autosubmitAutofill}>
-        {$t('form.post.autosubmit')}
-      </Switch>
+      {#key form.url}
+        {#await autofill(new URL(form.url))}
+          <div class="w-full h-48 grid place-items-center">
+            <TextLoader>
+              {$t('form.post.fetching')}
+            </TextLoader>
+          </div>
+          <Button size="lg" color="secondary" onclick={history.back}>
+            {$t('common.cancel')}
+          </Button>
+        {:then url}
+          {#if !url}
+            <!--cursed svelte template abuse. don't do this lads-->
+            {history.back()}
+          {/if}
+          <Material color="info" class="space-y-2 h-48">
+            <h2 class="text-xl font-display font-medium">{url.title}</h2>
+            <p class="overflow-hidden text-ellipsis">{url.body ?? '...'}</p>
+          </Material>
+          <Button
+            size="lg"
+            color="primary"
+            onclick={() => {
+              autofill({ title: url.title, body: url.body })
+              history.back()
+            }}
+          >
+            {$t('form.submit')}
+          </Button>
+        {:catch err}
+          <ErrorContainer scope="-1" message={err} />
+        {/await}
+        <Switch class="mt-4" bind:checked={settings.forms.autosubmitAutofill}>
+          {$t('form.post.autosubmit')}
+        </Switch>
+      {/key}
     {/if}
   </svelte:boundary>
 {/snippet}
