@@ -1,1 +1,224 @@
-{}
+{
+    "profile": {
+        "profile": "Profil",
+        "inbox": "Indbakke",
+        "saved": "Gemte",
+        "subscribed": "Abonnementer"
+    },
+    "nav": {
+        "home": "Startside",
+        "admin": "Admin",
+        "moderation": "Moderation",
+        "communities": "Fællesskaber",
+        "search": "Søg",
+        "create": {
+            "label": "Opret",
+            "post": "Indlæg",
+            "community": "Fællesskab",
+            "logingate": "Du skal logge ind for at lave indhold."
+        },
+        "menu": {
+            "label": "Profil",
+            "app": "App",
+            "settings": "Indstillinger",
+            "colorscheme": {
+                "label": "Farvetema",
+                "system": "System",
+                "dark": "Mørk",
+                "light": "Lys"
+            },
+            "theme": "Tema",
+            "about": "Information",
+            "source": "Kildekode",
+            "donate": "Donér",
+            "instance": "Info"
+        },
+        "commands": {
+            "prompt": "Kommandopalette",
+            "content": "Indhold",
+            "search": "Søg efter **{{default}}**",
+            "setView": "Set visning",
+            "setViewTo": "Set visning til **{{default}}**",
+            "setColor": "Set farvetema",
+            "setColorTo": "Set farvetema til **{{default}}**",
+            "feeds": "Feeds",
+            "downloading": "Downloader handlinger",
+            "setTheme": "Set tema",
+            "setThemeTo": "Set tema til **{{default}}**",
+            "contextual": "På denne side",
+            "communities": "Fællesskaber med **{{default}}**",
+            "goto": "Gå til **{{default}}**",
+            "main": "Hovede",
+            "recents": "Seneste"
+        },
+        "notifications": "Notifikationer"
+    },
+    "account": {
+        "login": "Log ind",
+        "logout": "Log ud",
+        "signup": "Opret dig",
+        "accounts": "Kontoer",
+        "resetColor": "Nulstil farve",
+        "addGuest": "Tilføj gæst",
+        "moveUp": "Ryk op",
+        "moveDown": "Ryk ned",
+        "guest": "Gæst",
+        "piefedGate": "Piefed-understøttelse er eksperimentelt. Nogle funktioner virker ikke."
+    },
+    "filter": {
+        "location": {
+            "label": "Placering",
+            "all": "Alle",
+            "local": "Lokal",
+            "subscribed": "Abonnementer",
+            "moderator": "Moderator",
+            "global": "Global",
+            "popular": "Populære"
+        },
+        "sort": {
+            "label": "Sorter",
+            "active": "Aktive",
+            "hot": "Populære",
+            "top": {
+                "label": "Top",
+                "time": {
+                    "label": "Periode",
+                    "all": "For altid",
+                    "year": "I år",
+                    "9months": "9 måneder",
+                    "6months": "6 måneder",
+                    "3months": "3 måneder",
+                    "month": "Denne måned",
+                    "week": "Denne uge",
+                    "day": "I dag",
+                    "12hours": "12 timer",
+                    "6hours": "6 timer",
+                    "hour": "Sidste time"
+                }
+            },
+            "new": "Nye",
+            "old": "Gamle",
+            "controversial": "Kontroversiel",
+            "scaled": "Skaleret",
+            "mostcomments": "Flest Kommentarer",
+            "newcomments": "Nyeste Svar"
+        },
+        "view": {
+            "label": "Visning",
+            "cozy": "Hyggelig",
+            "list": "Liste",
+            "compact": "Kompakt",
+            "legacy": "Legacy"
+        },
+        "type": "Type",
+        "filter": "Filter",
+        "unread": "Ulæste",
+        "inbox": {
+            "messages": "Beskeder",
+            "replies": "Svar",
+            "mentions": "Omtaler"
+        }
+    },
+    "form": {
+        "username": "Brugernavn",
+        "name": "Navn",
+        "instance": "Server domæne",
+        "password": "Adgangskode",
+        "confirmPassword": "Godkend adgangskode",
+        "2fa": "2FA Kode",
+        "forgotpassword": "Glemt adgangskode",
+        "submit": "Indsend",
+        "edit": "Rediger",
+        "preview": "Forhåndsvisning",
+        "post": {
+            "create": "Opret indlæg",
+            "edit": "Rediger indlæg",
+            "community": "Fællesskab",
+            "title": "Titel",
+            "url": "URL",
+            "nsfw": "NSFW",
+            "uploadImage": "Upload billede",
+            "selectFile": "Vælg en fil",
+            "altText": "Alternativ tekst",
+            "addUrl": "Tilføj link",
+            "setLanguage": "Sæt sprog",
+            "readMore": "Læs mere",
+            "types": {
+                "normal": "Diskussion",
+                "poll": "Afstemning",
+                "event": "Begivenhed"
+            },
+            "autosubmit": "Indsend automatisk",
+            "customThumbnail": "Set miniaturebillede"
+        },
+        "profile": {
+            "displayName": "Visningsnavn",
+            "bio": "Biografi",
+            "avatar": "Avatar",
+            "banner": "Banner",
+            "email": "E-Mail",
+            "showNSFW": "Vis NSFW indhold",
+            "scores": "Vis score",
+            "bot": "Robot konto",
+            "showBots": "Hvis robotter",
+            "showRead": "Vis læste indlæg",
+            "currentPassword": "Nuværende adgangskode",
+            "newPassword": "Ny adgangskode",
+            "verifyNewPassword": "Godkend ny adgangskode",
+            "2fa": {
+                "totp": "TOTP",
+                "2fa": "2FA",
+                "disabled": "2FA er slået fra"
+            },
+            "deleteAccount": {
+                "deleteContent": "Slet indhold",
+                "warning": "Det her vile slette ALLE dine indlæg."
+            },
+            "languages": {
+                "title": "Sprog"
+            }
+        },
+        "email": "E-Mail",
+        "signup": {
+            "title": "Opret Dig",
+            "description": "Vælg den server, der bliver vært for din kontos information.",
+            "chooseInstance": "Vælg en server",
+            "recommended": "Forslået",
+            "application": {
+                "label": "Ansøgning"
+            },
+            "closed": {
+                "title": "Der er lukket for ansøgninger",
+                "anotherInstance": "Find en anden server"
+            },
+            "verify": {
+                "title": "Bekræft E-mail",
+                "submit": "Jeg har bekræftet min E-mail",
+                "error": "Din e-mail er ikke blevet bekræftet."
+            }
+        },
+        "description": "Beskrivelse",
+        "time": {
+            "duration": "Varighed",
+            "minutes": "Minutter",
+            "hours": "Timer",
+            "days": "Dage",
+            "months": "Måneder",
+            "years": "År",
+            "permanent": "For evigt"
+        }
+    },
+    "routes": {
+        "frontpage": {
+            "title": "Startside",
+            "footer": "{{users:number}} aktive {{users; 1:user; default:users;}}",
+            "empty": {
+                "title": "Ingen indlæg",
+                "description": "Der ingen indlæg, der passer til dette filter."
+            }
+        },
+        "modlog": {
+            "filters": "Filtre"
+        }
+    }
+}
