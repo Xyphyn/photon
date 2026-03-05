@@ -52,7 +52,19 @@
                 "title": "Estot",
                 "empty": {
                     "title": "Ei estoja",
-                    "description": "Estämiesi käyttäjien ja yhteisöjen sisältö piilotetaan syötteestäsi."
+                    "description": "Estämiesi käyttäjien ja yhteisöjen sisältö piilotetaan syötteestäsi.",
+                    "user": {
+                        "title": "Ei estettyjä käyttäjiä",
+                        "description": "Esto piilottaa julkaisut ja kommentit syötteestä."
+                    },
+                    "community": {
+                        "title": "Ei estettyjä yhteisöjä",
+                        "description": "Yhteisön estäminen piilottaa sen julkaisut syötteistä."
+                    },
+                    "instance": {
+                        "title": "Ei estettyjä palvelimia",
+                        "description": "Palvelimen estäminen piilottaa julkaisut sen yhteisöjen julkaisut syötteistä."
+                    }
                 }
             },
             "credentials": "Kirjautumistiedot",
@@ -272,6 +284,11 @@
                 "fetch": "Hae julkaisu oman instanssisi kautta: {{homeInstance}}",
                 "switch": "Vaihda tilille kohdeinstanssilla {{destInstance}}"
             }
+        },
+        "accounts.placeholder": {
+            "title": "Kirjautunut ulos",
+            "description": "Et ole kirjautunut sisään. Voit kirjautua tai rekisteröityä täällä.",
+            "descriptionWithGuest": "Et ole kirjautunut sisään. Voit kirjautua, rekisteröityä tai luoda vieraskäyttäjän täällä."
         }
     },
     "cards": {
@@ -415,7 +432,8 @@
             "setColor": "Valitse väritila",
             "setTheme": "Aseta teema",
             "setThemeTo": "Aseta teema: {{default}}",
-            "contextual": "Tällä sivulla"
+            "contextual": "Tällä sivulla",
+            "communities": "Yhteisöt, joiden nimessä on **{{default}}**"
         },
         "notifications": "Ilmoitukset"
     },
@@ -436,7 +454,8 @@
         "moveUp": "Siirrä ylös",
         "moveDown": "Siirrä alas",
         "guest": "Vieras",
-        "versionGate": "Tämä Photon-versio tukee instansseja versiosta {{version}} eteenpäin."
+        "versionGate": "Tämä Photon-versio tukee instansseja versiosta {{version}} eteenpäin.",
+        "piefedGate": "Piefed-tuki on kokeellinen. Kaikkia ominaisuuksia ei tueta."
     },
     "filter": {
         "sort": {
@@ -453,7 +472,8 @@
                     "hour": "tunti",
                     "12hours": "12 t",
                     "6hours": "6 t",
-                    "6months": "6 kk"
+                    "6months": "6 kk",
+                    "year": "Viime vuosi"
                 }
             },
             "hot": "Kuumat",
@@ -472,7 +492,8 @@
             "local": "Paikallinen",
             "subscribed": "Tilaukset",
             "all": "Kaikki",
-            "global": "Yleinen"
+            "global": "Yleinen",
+            "popular": "Suositut"
         },
         "inbox": {
             "mentions": "Maininnat",
@@ -511,7 +532,15 @@
             "addUrl": "Liitä linkki",
             "setLanguage": "Aseta kieli",
             "unset": "Poista",
-            "readMore": "Lue lisää"
+            "readMore": "Lue lisää",
+            "fetching": "Haetaan sivun metadataa",
+            "types": {
+                "normal": "Keskustelu",
+                "poll": "Kysely",
+                "event": "Tapahtuma"
+            },
+            "autosubmit": "Lähetä automaattisesti",
+            "customThumbnail": "Aseta pikkukuva"
         },
         "profile": {
             "2fa": {
@@ -569,7 +598,8 @@
                 "description": "Sähköpostiisi on lähetetty varmistuslinkki. Paina allaolevaa nappulaa, kun olet avannut sen.",
                 "submit": "Olen varmistanut sähköpostini",
                 "error": "Sähköpostisi ei ole varmistettu."
-            }
+            },
+            "recommended": "Suositeltu"
         },
         "description": "Kuvaus",
         "email": "Sähköposti",
@@ -586,7 +616,8 @@
             "months": "Kuukautta",
             "years": "Vuotta",
             "permanent": "Pysyvä"
-        }
+        },
+        "instanceType": "Palvelimen tyyppi"
     },
     "moderation": {
         "ban": {
