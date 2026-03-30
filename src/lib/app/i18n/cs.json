@@ -1,1 +1,48 @@
-{}
+{
+    "profile": {
+        "profile": "Profil",
+        "inbox": "Příchozí",
+        "saved": "Uloženo",
+        "subscribed": "Odběry"
+    },
+    "nav": {
+        "home": "Domů",
+        "admin": "Administrátor",
+        "moderation": "Moderace",
+        "communities": "Komunity",
+        "search": "Hledat",
+        "create": {
+            "label": "Vytvořit",
+            "post": "Příspěvek",
+            "community": "Komunita",
+            "logingate": "Pro vytváření obsahu musíte být přihlášen/a."
+        },
+        "menu": {
+            "label": "Profil",
+            "app": "Aplikace",
+            "settings": "Nastavení",
+            "colorscheme": {
+                "label": "Barevné schéma",
+                "system": "Systém",
+                "dark": "Tmavý",
+                "light": "Světlý"
+            },
+            "theme": "Téma",
+            "about": "O aplikaci",
+            "source": "Zdroj",
+            "donate": "Přispět na vývoj",
+            "instance": "Informace o serveru"
+        },
+        "commands": {
+            "prompt": "Paleta příkazů",
+            "recents": "Nedávné",
+            "content": "Obsah",
+            "search": "Vyhledat **{{default}}**",
+            "main": "Hlavní",
+            "setView": "Nastavit pohled",
+            "setViewTo": "Nastavit pohled na **{{default}}**",
+            "setColor": "Nastavit barevné schéma",
+            "setColorTo": "Nastavit barevné schéma na **{{default}}**"
+        }
+    }
+}
