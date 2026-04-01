@@ -1,6 +1,7 @@
 <script lang="ts">
   import { t } from '$lib/app/i18n'
   import { settings } from '$lib/app/settings.svelte'
+  import Button from 'mono-svelte/button/Button.svelte'
 
   const sizes = {
     sm: 'text-2xl',
@@ -43,6 +44,9 @@
       src="https://f004.backblazeb2.com/file/xylight-public/photon-april-fools/download.webp"
       class="md:hidden"
     />
+    <Button color="primary" onclick={() => (settings.aprilFools2026 = false)}>
+      TURN OFF THE ADS DEAR GOD!!
+    </Button>
   {/if}
   {#if children}
     <h1

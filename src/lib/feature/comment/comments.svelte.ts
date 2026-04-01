@@ -76,7 +76,7 @@ export function buildCommentsTree(
     }
   }
 
-  if (settings.aprilFools2026) {
+  if (settings.aprilFools2026 && comments[0]) {
     tree.unshift(getRandomAd(comments[0].post!))
   }
 
