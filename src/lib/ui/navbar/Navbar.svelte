@@ -3,6 +3,7 @@
   import { profile } from '$lib/app/auth'
   import { t } from '$lib/app/i18n'
   import { LINKED_INSTANCE_URL } from '$lib/app/instance.svelte'
+  import { settings } from '$lib/app/settings.svelte'
   import { Menu, Spinner } from 'mono-svelte'
   import {
     Bars3,
@@ -69,7 +70,14 @@
       {/if}
     {/snippet}
   </NavButton>
-  <div class="hidden md:block md:flex-1"></div>
+  <div class="hidden md:block md:flex-1">
+    {#if settings.aprilFools2026}
+      <img
+        src="https://f004.backblazeb2.com/file/xylight-public/photon-april-fools/download.webp"
+        class="h-8 w-64 object-fill ml-auto"
+      />
+    {/if}
+  </div>
   <div class="sr-only md:not-sr-only md:contents">
     {#if profile.isAdmin}
       <NavButton

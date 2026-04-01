@@ -64,6 +64,15 @@
       class: `shell-aside shell-suffix`,
     })}
   </div>
+  {#if settings.aprilFools2026}
+    <div class="sticky bottom-16 md:bottom-0 w-full z-[25]">
+      <video autoplay class="h-32 object-fill w-full" volume={0}>
+        <source
+          src="https://f004.backblazeb2.com/file/xylight-public/photon-april-fools/1.mp4"
+        />
+      </video>
+    </div>
+  {/if}
 </div>
 
 <style>

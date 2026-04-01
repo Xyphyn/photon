@@ -28,6 +28,7 @@
     Heart,
     Icon,
     Language,
+    NoSymbol,
     Photo,
     Plus,
     Star,
@@ -69,6 +70,14 @@
 </script>
 
 <CommonList>
+  <ToggleSetting
+    title="TURN OFF THE ADS DEAR GOD!!!"
+    description="Enables photonBlock origin, a best-in-class adblocker."
+    icon={NoSymbol}
+    bind:checked={
+      () => !settings.aprilFools2026, (v) => (settings.aprilFools2026 = !v)
+    }
+  />
   {#if env.PUBLIC_XYLIGHT_MODE}
     <Setting icon={Heart}>
       {#snippet title()}

@@ -142,6 +142,7 @@ const settingsSchema = {
     fullMarkdown: { default: false, env: 'PUBLIC_FULL_MARKDOWN' },
   },
   voteRatioBar: { default: false },
+  aprilFools2026: { default: true },
 }
 
 export type Settings = InferSettings<typeof settingsSchema>

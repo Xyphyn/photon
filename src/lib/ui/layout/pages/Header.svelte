@@ -1,5 +1,6 @@
 <script lang="ts">
   import { t } from '$lib/app/i18n'
+  import { settings } from '$lib/app/settings.svelte'
 
   const sizes = {
     sm: 'text-2xl',
@@ -37,6 +38,12 @@
   {style}
   aria-label={$t('aria.element.pageHeader')}
 >
+  {#if settings.aprilFools2026}
+    <img
+      src="https://f004.backblazeb2.com/file/xylight-public/photon-april-fools/download.webp"
+      class="md:hidden"
+    />
+  {/if}
   {#if children}
     <h1
       class={[

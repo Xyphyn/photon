@@ -176,8 +176,13 @@
       </Expandable>
     </div>
   {/if}
-
-  <div class="flex-1 h-full mt-auto"></div>
+  {#if settings.aprilFools2026}
+    <video autoplay volume={0} loop>
+      <source
+        src="https://f004.backblazeb2.com/file/xylight-public/photon-april-fools/2.mp4"
+      />
+    </video>
+  {/if}
 
   <footer
     class="flex gap-6 flex-col xl:flex-row text-sm text-slate-600 dark:text-zinc-300 flex-wrap"

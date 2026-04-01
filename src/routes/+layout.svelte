@@ -17,7 +17,13 @@
   import { Shell } from '$lib/ui/layout'
   import Navbar from '$lib/ui/navbar/Navbar.svelte'
   import Sidebar from '$lib/ui/sidebar/Sidebar.svelte'
-  import { Button, ModalContainer, Spinner, ToastContainer } from 'mono-svelte'
+  import {
+    Button,
+    ModalContainer,
+    Spinner,
+    toast,
+    ToastContainer,
+  } from 'mono-svelte'
   import nProgress from 'nprogress'
   import 'nprogress/nprogress.css'
   import { onMount } from 'svelte'
@@ -97,6 +103,10 @@
         nProgress.done()
       }
     }
+  })
+
+  toast({
+    content: 'You can enable photonBlock origin AdBlocker in the settings.',
   })
 </script>
 

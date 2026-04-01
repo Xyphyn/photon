@@ -167,4 +167,12 @@
       {/if}
     </div>
   </div>
+
+  {#if settings.aprilFools2026}
+    <video autoplay volume={0} loop>
+      <source
+        src="https://f004.backblazeb2.com/file/xylight-public/photon-april-fools/3.mp4"
+      />
+    </video>
+  {/if}
 </aside>
