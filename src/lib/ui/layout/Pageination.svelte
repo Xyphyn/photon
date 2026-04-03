@@ -18,7 +18,7 @@
   }
 
   let {
-    page = $bindable(0),
+    page = $bindable(1),
     cursor = undefined,
     hasMore = true,
     children,
