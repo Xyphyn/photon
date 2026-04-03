@@ -213,7 +213,7 @@ export function fromGetPosts(
   return {
     ...getPosts,
     sort: toSortType(getPosts.sort),
-    page: Number(getPosts.page_cursor),
+    page: Number(getPosts.page_cursor || 1),
   }
 }
 

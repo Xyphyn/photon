@@ -202,7 +202,7 @@ const methods: MethodDefinitions = {
     transform: (r: piefed['ListPostsResponse'], p) => ({
       ...r,
       posts: r.posts.map(toPostView),
-      next_page: String(Number(p.page_cursor ?? 1) + 1),
+      next_page: (Number(p.page_cursor || 1) + 1).toString(),
     }),
   },
 

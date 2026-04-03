@@ -1,6 +1,7 @@
 import { goto } from '$app/navigation'
 import { resolve } from '$app/paths'
 import { client } from '$lib/api/client.svelte'
+import { PiefedClient } from '$lib/api/piefed/adapter.js'
 import { profile } from '$lib/app/auth'
 import { settings } from '$lib/app/settings.svelte'
 import { ReactiveState } from '$lib/app/util.svelte'
@@ -97,10 +98,12 @@ export async function load({ params, url, route }) {
       comments: {
         post_id: Number(params.id),
         type_: 'All',
-        max_depth: max_depth,
+        max_depth:
+          profile.client instanceof PiefedClient ? max_depth - 1 : max_depth,
         saved_only: false,
         sort: sort,
         parent_id: parentId,
+        limit: 10000000000,
       },
       posts: { id: Number(params.id) },
       preload: cachedPost,
