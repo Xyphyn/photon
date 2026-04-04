@@ -43,6 +43,31 @@
             "setViewTo": "Nastavit pohled na **{{default}}**",
             "setColor": "Nastavit barevné schéma",
             "setColorTo": "Nastavit barevné schéma na **{{default}}**"
+        },
+        "notifications": "Oznámení"
+    },
+    "account": {
+        "login": "Přihlásit se",
+        "logout": "Odhlásit se",
+        "signup": "Registrovat se",
+        "accounts": "Účty"
+    },
+    "filter": {
+        "location": {
+            "all": "Vše"
+        },
+        "sort": {
+            "top": {
+                "time": {
+                    "year": "Poslední rok"
+                }
+            }
         }
+    },
+    "form": {
+        "forgotpassword": "Zapomenuté heslo",
+        "submit": "Odeslat",
+        "edit": "Upravit",
+        "preview": "Náhled"
     }
 }
