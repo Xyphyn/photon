@@ -42,7 +42,12 @@
             "setView": "Nastavit pohled",
             "setViewTo": "Nastavit pohled na **{{default}}**",
             "setColor": "Nastavit barevné schéma",
-            "setColorTo": "Nastavit barevné schéma na **{{default}}**"
+            "setColorTo": "Nastavit barevné schéma na **{{default}}**",
+            "setTheme": "Nastavit téma",
+            "setThemeTo": "Nastavit téma na **{{default}}**",
+            "contextual": "Na této stránce",
+            "communities": "Komunity s **{{default}}**",
+            "goto": "Jít na **{{default}}**"
         },
         "notifications": "Oznámení"
     },
@@ -69,5 +74,37 @@
         "submit": "Odeslat",
         "edit": "Upravit",
         "preview": "Náhled"
+    },
+    "placeholders": {
+        "body": "Co chcete říct?",
+        "comments": "Připojit ke konverzaci"
+    },
+    "class": {
+        "moderator": "Moderátor",
+        "admin": "Administrátor"
+    },
+    "settings": {
+        "app": {
+            "thumbnailSide": {
+                "left": "Vlevo",
+                "right": "Vpravo"
+            },
+            "font": {
+                "title": "Písmo",
+                "description": "Písmo použité pro text v tomto uživatelském rozhraní."
+            }
+        }
+    },
+    "post": {
+        "actions": {
+            "more": {
+                "actions": "Akce",
+                "markRead": "Označit jako přečteno",
+                "markUnread": "Označit jako nepřečteno",
+                "hide": "Skrýt",
+                "unhide": "Zobrazit",
+                "share": "Sdílet"
+            }
+        }
     }
 }
