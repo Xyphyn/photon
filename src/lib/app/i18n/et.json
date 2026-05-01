@@ -332,7 +332,8 @@
                 "allowplaceholder": "Luba serveri kasutamine",
                 "allow": "Luba",
                 "emptyBlock": {
-                    "title": "Blokeeritud servereid pole"
+                    "title": "Blokeeritud servereid pole",
+                    "description": "Serveri blokeerimisel peidetakse kõik sealt tehtud postitused."
                 },
                 "emptyAllow": {
                     "description": "Serveri lisamisel lubatud serverite loendisse blokeerib liikluse muude servertega.",
@@ -369,7 +370,9 @@
             "title": "Modereerimine",
             "manage": {
                 "title": "Halda",
-                "modlogs": "Hiljutised modereerimislogid"
+                "modlogs": "Hiljutised modereerimislogid",
+                "ban": "Määra suhtluskeeld",
+                "unban": "Eemalda suhtluskeeld"
             },
             "reason": "Põhjus",
             "resolve": "Lahenda",
@@ -627,7 +630,9 @@
         "ban": {
             "deleteData": "Kustuta andmed",
             "warning": "Järgnevaga kustutad KÕIK selle kasutaja siinsed postitused.",
-            "expires": "Aegub (UTC aja järgi)"
+            "expires": "Aegub (UTC aja järgi)",
+            "banning": "Määran kasutajale suhtluskeeldu",
+            "unbanning": "Eemaldan kasutajalt suhtluskeelu"
         },
         "reportModal": {
             "presets": {
@@ -773,6 +778,20 @@
                 "title": "Kujundused",
                 "description": "Kohenda kasutajaliidese värve.",
                 "link": "Vaata kujundusi"
+            },
+            "duplicateTitles": {
+                "title": "Peida lõimitud topeltsisu",
+                "description": "Kui lõimitaval sisu on sama pealkiri ja sisutekst, siis peida neist üks."
+            },
+            "thumbnailSide": {
+                "title": "Pisipildi joondumine",
+                "description": "Saad muuta pisipiltide asukoha kompaktses vaates.",
+                "left": "Vaskul",
+                "right": "Paremal"
+            },
+            "font": {
+                "title": "Kirjatüüp",
+                "description": "Kasutajaliideses tekstide kuvamiseks kasutatav kirjatüüp."
             }
         },
         "embeds": {
@@ -800,6 +819,14 @@
             "nsfwBlur": {
                 "title": "Sobimatu sisu hägustamine",
                 "description": "Sobimatu sisuga postituse puhul hägustatakse pildid ja peidetakse tekst."
+            },
+            "markReadPosts": {
+                "title": "Märgi postitused automaatselt loetuks",
+                "description": "Postituse lugemisel märgitakse need automaatselt loetuks."
+            },
+            "fadeReadPosts": {
+                "title": "Peida loetud postitused",
+                "description": "Loetud postituste pealkiirjad peidetakse"
             }
         },
         "moderation": {
