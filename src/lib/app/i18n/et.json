@@ -875,7 +875,18 @@
         "invalid_vote_value": "Vabandust, aga Lemmy postituste juures sa ei saa hääletamispettust korraldada.",
         "couldnt_find_person": "Sellist kasutajat pole olemas.",
         "not_an_admin": "Sa pole selle serveri peakasutaja.",
-        "rate_limit_error": "Sa teed seda tegevust liiga kiiresti."
+        "rate_limit_error": "Sa teed seda tegevust liiga kiiresti.",
+        "cant_find_object": "Seda sisu ei leidunud sinu koduserveris.",
+        "token_not_found": "See e-posti aadressi kinnitamise link on aegunud või seda polnud olemaski.",
+        "not_live_supported": "Selle serveri tarkvara pole toetatud või server pole võrgus.",
+        "unsupported": "See funktsionaalsus pole sinu kasutajakonto koduserveri tarkvara poolt toetatud.",
+        "unimplemented": "See sinu kasutajakonto koduserveri funktsionaalsus pole Photoni poolt toetatud.",
+        "downvotes_are_disabled": "Eitavad hääletused pole selles serveris toetatud.",
+        "honeypot_failed": "Kas sa oled robot? Pimdi, pamdi. pumm. Kui sa pole, siis meie meepurgi test ei toiminud korralikult.",
+        "email_not_verified": "Sinu kasutajakonto e-posti aadress pole kinnitatud.",
+        "cant_block_yourself": "Sa ei saa iseennast blokeerida. Tegelikult sa isegi ei peaks seda tegema, oled ju (ilmselt) tore tegelane!",
+        "couldnt_find_post": "Seda postitust pole olemas, ta ei leidu antud serveris või ta on eemaldatud.",
+        "registration_application_is_pending": "Selle kasutajakonto registreerimistaotlus pole veel kinnitatud."
     },
     "aria": {
         "element": {
@@ -893,7 +904,17 @@
             "title": "Külgriba",
             "accounts": "Kasutajakontode valija"
         },
-        "loading": "Laadin"
+        "loading": "Laadin",
+        "vote": {
+            "score": "Punktiskoor: {{default}}",
+            "downvotes": "{{default}} eitavat häält",
+            "upvotes": "{{default}} pooldavat häält",
+            "group": "Postituse hääletamine"
+        },
+        "pagination": {
+            "current": "Praegune leht",
+            "nav": "Lehtedeks jagamine"
+        }
     },
     "stats": {
         "joined": "Liitunud",
