@@ -41,7 +41,11 @@
         if (importText == '') {
           throw new Error('import failed')
         }
-        themeData.current.colors = JSON.parse(importText)
+        themeData.data.themes.push({
+          colors: JSON.parse(importText),
+          id: Math.max(...themeData.data.themes.map((i) => i.id)) + 1,
+          name: 'Imported theme',
+        })
         toast({ content: $t('message.success'), type: 'success' })
         importing = false
       } catch (err) {
@@ -65,7 +69,6 @@
           importing = !importing
         }}
         size="lg"
-        disabled={themeData.current.id <= 0}
         icon={ArrowDownTray}
       >
         {$t('settings.import')}
@@ -75,7 +78,7 @@
           navigator.clipboard.writeText(
             JSON.stringify(themeData.current.colors),
           )
-          toast({ content: 'Copied theme to clipboard.' })
+          toast({ content: 'Copied theme preset to clipboard.' })
         }}
         size="lg"
         icon={ArrowUpTray}
@@ -148,16 +151,9 @@
           themeData.data.currentTheme = newTheme.id
         }}
       >
-        <Material
-          color="none"
-          padding="sm"
-          class="border-dashed border-2 border-slate-400 dark:border-zinc-600
-        text-slate-400 dark:text-zinc-600 hover:border-slate-600 dark:hover:border-zinc-400
-        grid place-items-center w-14 h-14"
-          rounding="xl"
-        >
+        <Button rounding="xl" size="square-xl">
           <Icon src={Plus} size="28" />
-        </Material>
+        </Button>
       </button>
     </div>
   </Material>

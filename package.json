@@ -43,7 +43,7 @@
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.54.0",
     "ua-parser-js": "^1.0.41",
-    "vite": "^6.4.1"
+    "vite": "^7.3.3"
   },
   "private": true,
   "scripts": {

@@ -51,30 +51,23 @@
 
 <style>
   @reference '../../../app.css';
-  ul {
-    :global {
-      li:not(:last-child) {
-        margin-block-start: calc(calc(var(--spacing) * 1));
-        margin-block-end: calc(calc(var(--spacing) * 1));
-      }
-    }
-  }
+
   ul :global(li:not(ul li li)) {
     transition: background-color 0.1s;
     background-color: var(--color-white);
     container-type: inline-size;
-    border: 1px solid
-      color-mix(in oklab, var(--color-slate-50), var(--color-slate-100));
-
-    border-radius: var(--radius-lg) var(--radius-lg);
+    border-left: 1px solid var(--color-slate-100);
+    border-right: 1px solid var(--color-slate-100);
 
     &:first-of-type {
-      border-top-left-radius: var(--radius-2xl);
-      border-top-right-radius: var(--radius-2xl);
+      border-top-left-radius: var(--radius-3xl);
+      border-top-right-radius: var(--radius-3xl);
+      border-top: 1px solid var(--color-slate-100);
     }
+    border-bottom: 1px solid var(--color-slate-100);
     &:last-of-type {
-      border-bottom-left-radius: var(--radius-2xl);
-      border-bottom-right-radius: var(--radius-2xl);
+      border-bottom-left-radius: var(--radius-3xl);
+      border-bottom-right-radius: var(--radius-3xl);
     }
 
     &:hover {

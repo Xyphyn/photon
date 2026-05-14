@@ -20,10 +20,13 @@
     tertiary: 'btn-tertiary',
     danger: 'btn-danger',
     ghost: 'btn-ghost',
-    'danger-subtle': 'text-red-500 hover:bg-red-500 hover:text-inherit!',
-    'success-subtle': 'text-green-500 hover:bg-green-500 hover:text-inherit!',
-    'warning-subtle': 'text-yellow-500 hover:bg-yellow-500 hover:text-inherit!',
-    'blue-subtle': `text-blue-500 hover:bg-blue-500 hover:text-inherit!`,
+    'danger-subtle':
+      'text-red-500 dark:text-red-400 hover:bg-red-500 hover:dark:bg-red-400 hover:text-inherit!',
+    'success-subtle':
+      'text-green-500 dark:text-green-400 hover:bg-green-500 hover:dark:bg-green-400 hover:text-inherit!',
+    'warning-subtle':
+      'text-yellow-500 dark:text-yellow-400 hover:bg-yellow-500 hover:dark:bg-yellow-400 hover:text-inherit!',
+    'blue-subtle': `text-blue-500 dark:text-yellow-400 hover:bg-blue-500 hover:dark:bg-blue-400 hover:text-inherit!`,
 
     none: '',
   }
@@ -235,21 +238,33 @@
         border: 1px solid
           color-mix(
             in oklab,
+            var(--color-zinc-800) 80%,
+            var(--color-zinc-900) 20%
+          );
+        background: linear-gradient(
+          to bottom,
+          color-mix(
+            in oklab,
             var(--color-zinc-800) 50%,
             var(--color-zinc-900) 50%
-          );
-        background-color: var(--color-zinc-900);
-        border-top-color: var(--color-zinc-800);
+          ),
+          var(--color-zinc-900)
+        );
+        border-top-color: color-mix(
+          in oklab,
+          var(--color-zinc-700) 50%,
+          var(--color-zinc-800) 50%
+        );
       }
 
       @variant hover {
-        background-color: color-mix(
+        background: color-mix(
           in oklab,
           var(--color-white),
           var(--color-slate-50)
         );
         @variant dark {
-          background-color: color-mix(
+          background: color-mix(
             in oklab,
             var(--color-zinc-925),
             var(--color-zinc-900)

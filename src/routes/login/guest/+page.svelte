@@ -114,7 +114,7 @@
           bind:value={form.instance}
           pattern={DOMAIN_REGEX_FORMS}
           placeholder="example.com"
-          class="flex-1 overflow-hidden"
+          class="flex-1"
           autocorrect="off"
           autocapitalize="none"
         >

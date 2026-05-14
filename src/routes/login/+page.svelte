@@ -182,7 +182,7 @@
           placeholder={DEFAULT_INSTANCE_URL}
           disabled={LINKED_INSTANCE_URL != undefined}
           bind:value={form.instance}
-          class="flex-1 overflow-hidden"
+          class="flex-1"
           required
           pattern={DOMAIN_REGEX_FORMS}
           autocorrect="off"

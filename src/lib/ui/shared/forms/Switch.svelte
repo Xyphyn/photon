@@ -1,8 +1,10 @@
 <script lang="ts">
+  import type { ClassValue } from 'svelte/elements'
+
   interface Props {
     checked?: boolean
     labelClass?: string
-    class?: string
+    class?: ClassValue
     children?: import('svelte').Snippet
     description?: import('svelte').Snippet
   }
