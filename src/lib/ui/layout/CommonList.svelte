@@ -60,14 +60,14 @@
     border-right: 1px solid var(--color-slate-100);
 
     &:first-of-type {
-      border-top-left-radius: var(--radius-3xl);
-      border-top-right-radius: var(--radius-3xl);
+      border-top-left-radius: var(--radius-2xl);
+      border-top-right-radius: var(--radius-2xl);
       border-top: 1px solid var(--color-slate-100);
     }
     border-bottom: 1px solid var(--color-slate-100);
     &:last-of-type {
-      border-bottom-left-radius: var(--radius-3xl);
-      border-bottom-right-radius: var(--radius-3xl);
+      border-bottom-left-radius: var(--radius-2xl);
+      border-bottom-right-radius: var(--radius-2xl);
     }
 
     &:hover {
