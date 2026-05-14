@@ -47,7 +47,7 @@
     Trash,
     XMark,
   } from 'svelte-hero-icons/dist'
-  import { autofillPost, PostFormState } from './postform.svelte'
+  import { autofillPost, PostFormState } from './postform.svelte.js'
 
   interface Props {
     editPost?: number
