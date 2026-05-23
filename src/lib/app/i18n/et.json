@@ -155,7 +155,8 @@
                 "event": "Sündmus"
             },
             "autosubmit": "Saada automaatselt",
-            "customThumbnail": "Määra pisipildiks"
+            "customThumbnail": "Määra pisipildiks",
+            "flair": "Lisa stiilimärgis"
         },
         "profile": {
             "bio": "Profiili kirjeldus",
@@ -267,7 +268,8 @@
                     "title": "Sõnumeid pole"
                 },
                 "start": "Alusta vestlemist",
-                "conversation": "See vestluse algus kasutajaga {{user}}"
+                "conversation": "See vestluse algus kasutajaga {{user}}",
+                "indicator": "Saadan sõnumit kasutajale {{user}}"
             },
             "markAsRead": "Märgi kõik loetuks",
             "empty": {
@@ -290,7 +292,8 @@
                 },
                 "listingType": {
                     "all": "Kõik",
-                    "local": "Kohalik"
+                    "local": "Kohalik",
+                    "label": "Loendi tüüp"
                 },
                 "private": "Privaatserver",
                 "icon": "Ikoon",
@@ -305,7 +308,12 @@
                 "nsfwEnabled": "Luba mittesobilik sisu",
                 "hideModlogModNames": "Peida modereerimislogist nimed",
                 "federationDebug": "Födereerimise silumisrežiim",
-                "requireVerifyEmail": "Eelda e-posti aadressi kinnitamist"
+                "requireVerifyEmail": "Eelda e-posti aadressi kinnitamist",
+                "downvotesEnabled": "Luba vastuhääletamine",
+                "applicationQuestion": "Liitumisvõimaluse küsimine",
+                "emailAdminsOnApplication": "Saada uute liitumispäringute lisandumisel peakasutajatele e-kiri",
+                "emailAdminsOnReport": "Saada uute aruannete/teatiste lisandumisel peakasutajatele e-kiri",
+                "slurFilter": "Keelatud sõnad võrguaadressi lõpus (regulaaravaldis)"
             },
             "applications": {
                 "user": "Kasutaja",
@@ -380,7 +388,12 @@
             "unresolve": "Võta lahendus tagsi",
             "resolvedBy": "Lahendaja",
             "markAll": "Märgi leht lahendatuks",
-            "markAllComplete": "Pakktöötlusena tehtud toiming on lõppenud."
+            "markAllComplete": "Pakktöötlusena tehtud toiming on lõppenud.",
+            "empty": {
+                "title": "Uusi aruandeid/teatisi pole",
+                "description": "Kui lisandub uusi aruandeid/teatisi, siis saad nendega tegeleda siin."
+            },
+            "feed": "Aruanded/teatised"
         },
         "resetLogin": {
             "title": "Lähtesta salasõna",
@@ -419,7 +432,10 @@
                 "title": "Meedium",
                 "download": "Laadi alla"
             },
-            "logins": "Sisselogimised"
+            "logins": "Sisselogimised",
+            "moderates": "Modereeritav sisu",
+            "upvoted": "Hääletasid poolt",
+            "downvoted": "Hääletasid vastu"
         },
         "translators": "Tõlkijad",
         "accounts": "Kasutajakontod",
@@ -437,7 +453,9 @@
                 "switch": "Asu kasutama kontot serveris {{destInstance}}"
             },
             "automatic": {
-                "found": "Suunan ümber"
+                "found": "Suunan ümber",
+                "title": "Tuvastan sisu",
+                "description": "Tuvastan seda sisu sinu koduserverist…"
             }
         },
         "frontpage": {
@@ -501,6 +519,9 @@
                 "team": "Tiim"
             },
             "languageWarning": "Selle kogukonna sisu on keeltes, mida sa pole valinud. Mõned või kõik postitused võivad olla puudu."
+        },
+        "user": {
+            "note": "Lisa märge"
         }
     },
     "cards": {
@@ -513,7 +534,8 @@
             "blockInstance": "Blokeeri server",
             "moderators": "Moderaatorid",
             "modlog": "Modereerimislogi",
-            "activeDay": "Täna aktiivsed"
+            "activeDay": "Täna aktiivsed",
+            "flair": "Määratle oma stiilimärgis"
         },
         "site": {
             "admins": "Peakasutajad",
@@ -566,7 +588,12 @@
             },
             "comments": "Kommentaarid",
             "save": "Salvesta",
-            "unsave": "Eemalda salvestus"
+            "unsave": "Eemalda salvestus",
+            "vote": {
+                "upvote": "Hääleta poolt",
+                "downvote": "Hääleta vastu",
+                "score": "Tulemus"
+            }
         },
         "badges": {
             "locked": "Lukustatud",
@@ -594,7 +621,8 @@
             },
             "choices": "Valikud",
             "multiple": "Mitu valikut",
-            "single": "Üks valik"
+            "single": "Üks valik",
+            "mode": "Režiim"
         }
     },
     "comment": {
@@ -615,7 +643,12 @@
             "withReason": "Teavita autorit",
             "comment": "Kommentaar",
             "failReply": "Vastuse postitamine ei õnnestunud. Eemaldan ikkagi…",
-            "failMessage": "Sõnumi saatmine kasutajale ei õnnestunud. Eemaldan ikkagi…"
+            "failMessage": "Sõnumi saatmine kasutajale ei õnnestunud. Eemaldan ikkagi…",
+            "title": "Eemaldan postitust",
+            "titleRestore": "Taastan postitust",
+            "titlePurge": "Kustutan postitust",
+            "failEmptyReply": "Kui „Teavita autorit“ on kasutusel, siis sinu vastus ei saa olla tühi.",
+            "successPurge": "Selle postituse kustutamine õnnestus."
         },
         "lock": "Lukusta",
         "unlock": "Ava lukustus",
@@ -632,14 +665,17 @@
             "warning": "Järgnevaga kustutad KÕIK selle kasutaja siinsed postitused.",
             "expires": "Aegub (UTC aja järgi)",
             "banning": "Määran kasutajale suhtluskeeldu",
-            "unbanning": "Eemaldan kasutajalt suhtluskeelu"
+            "unbanning": "Eemaldan kasutajalt suhtluskeelu",
+            "banFromCommunity": "Keela kasutajale ligipääs kogukonda",
+            "unbanFromCommunity": "Lõpeta kasutajale ligipääsukeeld kogukonda"
         },
         "reportModal": {
             "presets": {
                 "spam": "Spämm",
                 "rules": "Rikub kogukonna reegleid",
                 "rules.content": "See postitus rikub reegleid, sest __"
-            }
+            },
+            "success": "Teatamine sellest postitusest."
         },
         "label": "Modereerimine",
         "labelInstanceOnly": "Modereerimine (vaid kohalikus serveris)",
@@ -717,7 +753,14 @@
         "settingsImport": "Seadistuste importimine õnnestus",
         "userLoading": "Jätkuvalt laadin kasutajaandmeid…",
         "settingsImportWarning": "Imporditavad seadistused ei tundu olema korrektsed. Kas sa kindlasti soovid neid importida?",
-        "lemmyDonate": "Sinu kasutajakonto serveri tarkvaraks on Lemmy ning arendajad soovivad nende rahalist toetamist. Tänu kasutajate suuremeelsusele on neil võimalik Lemmyt arendada avatud lähtekoodiga platvormina, mis on vaba jälgimisest ja reklaamidest.\n\nIgal aastal paluvad nad sul kaaluda annetuse tegemist, et toetada nende tööd ja võimaldada neil Lemmy hooldamist ja täiustamist jätkata.\n\n[Toeta rahaliselt](https://join-lemmy.org/donate)\n\n*Märkus: see on rahaline toetus Lemmyle, mitte Photonile.*"
+        "lemmyDonate": "Sinu kasutajakonto serveri tarkvaraks on Lemmy ning arendajad soovivad nende rahalist toetamist. Tänu kasutajate suuremeelsusele on neil võimalik Lemmyt arendada avatud lähtekoodiga platvormina, mis on vaba jälgimisest ja reklaamidest.\n\nIgal aastal paluvad nad sul kaaluda annetuse tegemist, et toetada nende tööd ja võimaldada neil Lemmy hooldamist ja täiustamist jätkata.\n\n[Toeta rahaliselt](https://join-lemmy.org/donate)\n\n*Märkus: see on rahaline toetus Lemmyle, mitte Photonile.*",
+        "bannedUser": "Sa seadsid sellele kasutajale suhtluskeelu.",
+        "unbannedUser": "Sa eemaldasid sellelt kasutajalt suhtluskeelu.",
+        "failInstanceURL": "Nende seadistuste alusel ei õnnestud seda serveri võrguaadressi avada. Kas server ikka töötab?",
+        "resolveReport": "Lahendasid selle aruande/teatise.",
+        "unresolveReport": "Märkisid selle aruande/teatise mittelahendatud.",
+        "loginRefresh": "Sinu sisselogimine on uuendatud.",
+        "waitApplication": "Enne sisselogimist palun oota, et sinu registreerimistaotlus kiidetakse heaks."
     },
     "settings": {
         "title": "Seadistused",
@@ -747,20 +790,25 @@
             },
             "view": {
                 "title": "Postituse stiil",
-                "legacy": "Vana photoni nägemus."
+                "legacy": "Vana photoni nägemus.",
+                "cozy": "Näita postitusi, kus on suuri pilte, palju lõimitud sisu ja pikk sisuosa.",
+                "compact": "Näita postitusi loendina ilma sisudeta ja väiksemate reavahedega."
             },
             "sort": {
-                "title": "Vaikimisi sorteerimine"
+                "title": "Vaikimisi sorteerimine",
+                "description": "Sellega muudab sisuvoogude vaikimisi järjestamise viisi."
             },
             "postsInNewTab": {
-                "title": "Ava postitused uuel vahekaardil"
+                "title": "Ava postitused uuel vahekaardil",
+                "description": "Postitused avatakse senise vahekaardi asemel eraldi vahekaardil."
             },
             "translation": {
                 "instance": "Domeen(server)"
             },
             "title": "Rakendus",
             "limitLayoutWidth": {
-                "title": "Piira paigutuse laiust"
+                "title": "Piira paigutuse laiust",
+                "description": "Paranda loetavust põhisisu laiuse vähendamise teel."
             },
             "placeholders": {
                 "title": "Juhuslikud kohatäitjad",
@@ -792,6 +840,26 @@
             "font": {
                 "title": "Kirjatüüp",
                 "description": "Kasutajaliideses tekstide kuvamiseks kasutatav kirjatüüp."
+            },
+            "voteRatioBar": {
+                "title": "Häälte jaotuse riba",
+                "description": "Kui postituse vastuolulisus ületab 15%, kuvatakse hääletusnuppude juures riba, mis aitab arvamuste jaotust visuaalselt esitleda."
+            },
+            "infiniteScroll": {
+                "title": "Lõputu kerimine",
+                "description": "Kerimise ajal laaditakse uusi postitusi ja lisatakse need sisuvoo lõppu."
+            },
+            "displayName": {
+                "title": "Kasuta kuvatavat nime",
+                "description": "Pruugi tegelike kasutajanimede asemel kuvamiseks mõeldud nimesid."
+            },
+            "expandImages": {
+                "title": "Laiendatavad pisipildid",
+                "description": "Postituse pildi klõpsamisel kuvatakse pildi täisvaade ja ei näidata postituse lehte."
+            },
+            "titleTags": {
+                "title": "Otsi pealkirjast silte",
+                "description": "Võta [nurksulgudes] leiduv tekst ja muuda ta klikatavaks ja otsitavaks sildiks."
             }
         },
         "embeds": {
@@ -907,8 +975,8 @@
         "loading": "Laadin",
         "vote": {
             "score": "Punktiskoor: {{default}}",
-            "downvotes": "{{default}} eitavat häält",
-            "upvotes": "{{default}} pooldavat häält",
+            "downvotes": "{{default}} vastuhäält",
+            "upvotes": "{{default}} poolthäält",
             "group": "Postituse hääletamine"
         },
         "pagination": {
