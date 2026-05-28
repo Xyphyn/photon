@@ -189,7 +189,8 @@
                 "title": "Keeled",
                 "description": "Kui mõni on määratud, näed ainult sisu, mis on selgesõnaliselt selle keelega märgistatud. Enamik märgistamata sisu kuulub kategooriasse „Määramata”."
             },
-            "showRead": "Näita loetud postitusi"
+            "showRead": "Näita loetud postitusi",
+            "scores": "Näita punktiskoori"
         },
         "signup": {
             "title": "Registreeru",
@@ -579,7 +580,8 @@
                 "share.global": "Lähteserver",
                 "share.local": "Sinu server",
                 "share.photon": "Photoni link",
-                "crosspost": "Ristpostita"
+                "crosspost": "Ristpostita",
+                "share.from": "Jaga rakendusest"
             },
             "mediaBias": {
                 "noData": {
@@ -675,13 +677,15 @@
                 "rules": "Rikub kogukonna reegleid",
                 "rules.content": "See postitus rikub reegleid, sest __"
             },
-            "success": "Teatamine sellest postitusest."
+            "success": "Teatamine sellest postitusest.",
+            "title": "Teata haldajale"
         },
         "label": "Modereerimine",
         "labelInstanceOnly": "Modereerimine (vaid kohalikus serveris)",
         "feature": "Tõsta esile",
         "unfeature": "Lõpeta esiletõstmine",
-        "votes": "Hääli"
+        "votes": "Hääli",
+        "report": "Teata haldajale"
     },
     "common": {
         "back": "Tagasi",
@@ -796,7 +800,7 @@
             },
             "sort": {
                 "title": "Vaikimisi sorteerimine",
-                "description": "Sellega muudab sisuvoogude vaikimisi järjestamise viisi."
+                "description": "Sellega muudad uudisvoogude vaikimisi järjestamise viisi."
             },
             "postsInNewTab": {
                 "title": "Ava postitused uuel vahekaardil",
@@ -847,7 +851,7 @@
             },
             "infiniteScroll": {
                 "title": "Lõputu kerimine",
-                "description": "Kerimise ajal laaditakse uusi postitusi ja lisatakse need sisuvoo lõppu."
+                "description": "Kerimise ajal laaditakse uusi postitusi ja lisatakse need uudisvoogu lõppu."
             },
             "displayName": {
                 "title": "Kasuta kuvatavat nime",
@@ -860,11 +864,16 @@
             "titleTags": {
                 "title": "Otsi pealkirjast silte",
                 "description": "Võta [nurksulgudes] leiduv tekst ja muuda ta klikatavaks ja otsitavaks sildiks."
+            },
+            "reverseActions": {
+                "description": "Muudab postituste ja kommentaaride toimingute järjekorda.",
+                "title": "Pööratud toimingud"
             }
         },
         "embeds": {
             "clickToView": {
-                "title": "Nägemiseks klõpsa"
+                "title": "Nägemiseks klõpsa",
+                "description": "Laadi lõimingute sisu alles peale nende klõpsamist."
             },
             "youtube": {
                 "description": "Interneti domeen YouToube'i videote lõimimiseks."
@@ -873,11 +882,13 @@
                 "invidious": "Invidiouse server",
                 "piped": "Pipedi server",
                 "description": "Server YouTube'i sisu lõimimiseks."
-            }
+            },
+            "title": "Lõimingud"
         },
         "lemmy": {
             "instances": {
-                "title": "Näita serveritunnuseid"
+                "title": "Näita serveritunnuseid",
+                "description": "Näitab servereid, kust mingi konkreetne sisu pärit on."
             },
             "showHiddenPosts": {
                 "title": "Näita peidetud postitusi",
@@ -895,15 +906,48 @@
             "fadeReadPosts": {
                 "title": "Peida loetud postitused",
                 "description": "Loetud postituste pealkiirjad peidetakse"
+            },
+            "crosspostMarker": {
+                "title": "Märgista ristpostitused",
+                "description": "Ristpostitusel lisa märge „ristpostitus allikast“ ja vastav link."
+            },
+            "hideSubmissions": {
+                "deleted": "Kustutatud kasutaja poolt",
+                "removed": "Moderaatori poolt eemaldatud",
+                "title": "Peida postitused",
+                "description": "Peida teatavat sorti postitused."
+            },
+            "contentFilter": {
+                "disabled": "Väljas",
+                "hide": "Peida",
+                "minimize": "Minimeeri",
+                "title": "Sisufiltrid",
+                "description": "Peida või minimeeri antud märksõnale vastavad postitused. Võid kasutada regulaaravaldisi.",
+                "minimized": "Sisu on sinu filtrite poolt peidetud"
+            },
+            "compactFeatured": {
+                "description": "Muudab esiletõstetud postitused kompaktsemaks.",
+                "title": "Kompaktsed esiletõstetud postitused"
             }
         },
         "moderation": {
             "replyPresets": {
-                "syntax": "Süntaks"
-            }
+                "syntax": "Süntaks",
+                "title": "Eemaldamiste vastuste eelseadistused",
+                "description": "Valmis vastused sisu eemaldamise põhjendamiseks."
+            },
+            "title": "Modereerimine"
         },
         "other": {
-            "title": "Muu"
+            "title": "Muu",
+            "debug": {
+                "title": "Veaotsingu teave",
+                "description": "Kuvab veaotsingusk ja silumiseks vajalikku teavet."
+            },
+            "virtualizeFeeds": {
+                "title": "Ära virtualiseeri uudisvooge",
+                "description": "Virtualiseerimine näitab ainult nähtavaid postitusi, mis parandab oluliselt jõudlust. Lülita virtualiseerimine välja, kui sul esineb sisu katkemise probleeme. See lülitab välja ka lõputu kerimise."
+            }
         },
         "beta": "Beeta",
         "desktop": "Töölauaklient",
@@ -974,7 +1018,7 @@
         },
         "loading": "Laadin",
         "vote": {
-            "score": "Punktiskoor: {{default}}",
+            "score": "Tulemused: {{default}}",
             "downvotes": "{{default}} vastuhäält",
             "upvotes": "{{default}} poolthäält",
             "group": "Postituse hääletamine"
