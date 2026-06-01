@@ -3,7 +3,7 @@ import { DEFAULT_INSTANCE_URL } from '$lib/app/instance.svelte'
 import { instanceToURL } from '$lib/app/util.svelte'
 import { error } from '@sveltejs/kit'
 import { BaseClient, DEFAULT_CLIENT_TYPE, type ClientType } from './base'
-import { LemmyClient } from './lemmy/adapter'
+import { LemmyClient } from './lemmy-v3/adapter'
 import { PiefedClient } from './piefed/adapter'
 import type { GetSiteResponse } from './types'
 
