@@ -473,7 +473,7 @@
             "title": "Modereerimislogi"
         },
         "legal": {
-            "title": "Juriidiline teave",
+            "title": "Serveri Juriidiline teave",
             "noLegal": "See server pole lisanud oma juriidilist teavet."
         },
         "explore": {
@@ -795,7 +795,7 @@
             "view": {
                 "title": "Postituse stiil",
                 "legacy": "Vana photoni nägemus.",
-                "cozy": "Näita postitusi, kus on suuri pilte, palju lõimitud sisu ja pikk sisuosa.",
+                "cozy": "Näita postitusi, kus on suuri pilte, palju sissehitatud sisu ja pikk sisuosa.",
                 "compact": "Näita postitusi loendina ilma sisudeta ja väiksemate reavahedega."
             },
             "sort": {
@@ -832,8 +832,8 @@
                 "link": "Vaata kujundusi"
             },
             "duplicateTitles": {
-                "title": "Peida lõimitud topeltsisu",
-                "description": "Kui lõimitaval sisu on sama pealkiri ja sisutekst, siis peida neist üks."
+                "title": "Peida dubleeritud sisseehitatud sisu",
+                "description": "Kui sisseehitise sisu on sama pealkiri ja sisutekst, siis peida neist üks."
             },
             "thumbnailSide": {
                 "title": "Pisipildi joondumine",
@@ -873,17 +873,17 @@
         "embeds": {
             "clickToView": {
                 "title": "Nägemiseks klõpsa",
-                "description": "Laadi lõimingute sisu alles peale nende klõpsamist."
+                "description": "Laadi sisseehituste sisu alles peale nende klõpsamist."
             },
             "youtube": {
-                "description": "Interneti domeen YouToube'i videote lõimimiseks."
+                "description": "Interneti domeen YouTube'i videote sisseehituseks."
             },
             "instance": {
                 "invidious": "Invidiouse server",
                 "piped": "Pipedi server",
-                "description": "Server YouTube'i sisu lõimimiseks."
+                "description": "Server YouTube'i sisu sissehituseks."
             },
-            "title": "Lõimingud"
+            "title": "Sisseehitused"
         },
         "lemmy": {
             "instances": {
