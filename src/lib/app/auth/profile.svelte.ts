@@ -21,10 +21,7 @@ function getFromStorage<T>(key: string): T | undefined {
 
 function setFromStorage<T>(key: string, item: T, stringify: boolean = true) {
   if (!browser) return
-  return localStorage.setItem(
-    key,
-    stringify ? JSON.stringify(item) : (item as string),
-  )
+  return localStorage.setItem(key, stringify ? JSON.stringify(item) : (item as string))
 }
 
 export interface ProfileInfo {
@@ -77,8 +74,7 @@ export class Profile {
     },
   )
   #current = $derived(
-    this.meta.profiles.find((i) => i.id == this.meta.profile) ??
-      this.getDefaultProfile(),
+    this.meta.profiles.find((i) => i.id == this.meta.profile) ?? this.getDefaultProfile(),
   )
   client = $derived(
     client({
@@ -112,44 +108,27 @@ export class Profile {
   }
 
   private async initCookieMigrate() {
-    if (
-      !(
-        env.PUBLIC_MIGRATE_COOKIE &&
-        this.meta.profiles.length == 0 &&
-        env.PUBLIC_INSTANCE_URL
-      )
-    )
+    if (!(env.PUBLIC_MIGRATE_COOKIE && this.meta.profiles.length == 0 && env.PUBLIC_INSTANCE_URL))
       return
 
     const jwt = getCookie('jwt')
     if (!jwt) return
-    const result = await this.add(
-      jwt,
-      env.PUBLIC_INSTANCE_URL ?? '',
-      DEFAULT_CLIENT_TYPE,
-    )
+    const result = await this.add(jwt, env.PUBLIC_INSTANCE_URL ?? '', DEFAULT_CLIENT_TYPE)
 
     if (result)
       toast({
-        content:
-          'Your instance migrated frontends, and your account was transferred.',
+        content: 'Your instance migrated frontends, and your account was transferred.',
         type: 'success',
       })
   }
 
   private donationPoll(delay: number) {
     return setTimeout(() => {
-      if (
-        this.current.user?.local_user_view.local_user.last_donation_notification
-      ) {
+      if (this.current.user?.local_user_view.local_user.last_donation_notification_at) {
         const donationDate = publishedToDate(
-          this.current.user?.local_user_view.local_user
-            .last_donation_notification,
+          this.current.user?.local_user_view.local_user.last_donation_notification_at,
         )
-        if (
-          Date.now() - donationDate.getTime() >
-          Profile.DONATION_REMINDER_INTERVAL
-        ) {
+        if (Date.now() - donationDate.getTime() > Profile.DONATION_REMINDER_INTERVAL) {
           toast({
             content: t.get('toast.lemmyDonate'),
             duration: 3600 * 1000,
@@ -157,15 +136,12 @@ export class Profile {
           })
 
           // lemmy js client donation dialog is broken
-          fetch(
-            `${instanceToURL(this.current.instance)}/api/v3/user/donation_dialog_shown`,
-            {
-              method: 'POST',
-              headers: {
-                authorization: `Bearer ${this.current.jwt}`,
-              },
+          fetch(`${instanceToURL(this.current.instance)}/api/v3/user/donation_dialog_shown`, {
+            method: 'POST',
+            headers: {
+              authorization: `Bearer ${this.current.jwt}`,
             },
-          )
+          })
         }
       }
     }, delay)
@@ -251,11 +227,7 @@ export class Profile {
   move(id: number, up: boolean) {
     try {
       const index = this.meta.profiles.findIndex((i) => i.id == id)
-      this.meta.profiles = moveItem(
-        this.meta.profiles,
-        index,
-        index + (up ? -1 : 1),
-      )
+      this.meta.profiles = moveItem(this.meta.profiles, index, index + (up ? -1 : 1))
     } catch {
       /* empty */
     }
@@ -264,18 +236,13 @@ export class Profile {
   isMod(community?: Community): boolean {
     if (!community) return (this.#current.user?.moderates.length ?? 0) > 0
     if (community.local && this.isAdmin) return true
-    return (
-      this.#current.user?.moderates.some(
-        (m) => m.community.id === community.id,
-      ) ?? false
-    )
+    return this.#current.user?.moderates.some((m) => m.community.id === community.id) ?? false
   }
 
   get isAdmin(): boolean {
     return (
-      site.data?.admins.some(
-        (i) => i.person.id == this.#current.user?.local_user_view.person.id,
-      ) ?? false
+      site.data?.admins.some((i) => i.person.id == this.#current.user?.local_user_view.person.id) ??
+      false
     )
   }
 
@@ -313,11 +280,14 @@ async function fetchUserContext(
   instance: string,
   type: ClientType,
 ): Promise<{ user?: MyUserInfo; site: GetSiteResponse } | undefined> {
-  const sitePromise = client({
+  const site = client({
     instanceURL: instance,
     auth: jwt,
     clientType: type,
   }).getSite()
+  // TODO now that user and site are separated, we can remove getting the site from user context
+  // TODO this will result in duplicate API calls for the site in lemmy v3 and piefed
+  const myUserPromise = client({ instanceURL: instance, auth: jwt, clientType: type }).getMyUser()
 
   const timer = setTimeout(
     () =>
@@ -329,20 +299,20 @@ async function fetchUserContext(
     5000,
   )
 
-  const site = await sitePromise
+  const user = await myUserPromise
     .then((r) => {
       clearTimeout(timer)
       return r
     })
     .catch((e) => {
-      toast({ content: `Failed to contact the instance. ${e}` })
+      toast({ content: `Failed to fetch user data. ${e}` })
     })
 
-  if (!site) return
+  if (!user) return
 
   return {
-    user: site.my_user,
-    site: site,
+    user: user,
+    site: await site,
   }
 }
 

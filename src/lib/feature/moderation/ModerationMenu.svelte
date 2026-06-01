@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { getClient } from '$lib/api/client.svelte'
-  import type { CommentView, PostView } from '$lib/api/types'
   import { profile } from '$lib/app/auth'
   import { errorMessage } from '$lib/app/error'
   import { t } from '$lib/app/i18n'
@@ -18,58 +16,35 @@
     Trash,
   } from 'svelte-hero-icons/dist'
   import type { Attachment } from 'svelte/attachments'
-  import { isCommentView, isPostView } from '../legacy/item'
+  import { PostModel } from '../post/post.svelte'
   import { ban, remove, viewVotes } from './moderation'
 
   interface Props {
-    item: PostView | CommentView
+    post: PostModel
     target: Snippet<[Attachment, boolean]>
   }
 
-  let { item = $bindable(), target: passedTarget }: Props = $props()
+  let { post: item, target: passedTarget }: Props = $props()
 
   let acting = $state(false)
 
   async function lock(lock: boolean) {
-    if (!profile.current?.jwt || !isPostView(item)) return
     acting = true
 
-    try {
-      await getClient().lockPost({
-        locked: lock,
-        post_id: item.post.id,
-      })
-
-      item.post.locked = lock
-    } catch (err) {
-      toast({
-        content: errorMessage(err),
-        type: 'error',
-      })
-    }
+    // TODO add reason prompt
+    await item
+      .lock(lock, 'Reason not given')
+      .catch((e) => toast({ content: errorMessage(e), type: 'error' }))
 
     acting = false
   }
 
   async function pin(pinned: boolean, toInstance: boolean = false) {
-    if (!profile.current?.jwt || !isPostView(item)) return
-
     acting = true
 
-    try {
-      await getClient().featurePost({
-        feature_type: toInstance ? 'Local' : 'Community',
-        featured: pinned,
-        post_id: item.post.id,
-      })
-
-      item.post.featured_community = pinned
-    } catch (err) {
-      toast({
-        content: errorMessage(err),
-        type: 'error',
-      })
-    }
+    await item
+      .feature(pinned, toInstance ? 'local' : 'community')
+      .catch((e) => toast({ content: errorMessage(e), type: 'error' }))
 
     acting = false
   }
@@ -98,18 +73,13 @@
 
     <MenuButton
       color="success-subtle"
-      onclick={() =>
-        pin(isPostView(item) ? !item.post.featured_community : false)}
+      onclick={() => pin(!item.post.featured_community)}
       loading={acting}
     >
       <Icon src={Megaphone} size="16" mini />
-      <div
-        class="flex flex-row gap-2 text-left items-center justify-between w-full"
-      >
+      <div class="flex flex-row gap-2 text-left items-center justify-between w-full">
         <span>
-          {item.post.featured_community
-            ? $t('moderation.unfeature')
-            : $t('moderation.feature')}
+          {item.post.featured_community ? $t('moderation.unfeature') : $t('moderation.feature')}
         </span>
         {#if profile.isAdmin}
           <span class="text-xs opacity-80">{$t('form.post.community')}</span>
@@ -118,22 +88,15 @@
     </MenuButton>
     <MenuButton color="danger-subtle" onclick={() => remove(item)}>
       <Icon src={Trash} size="16" mini />
-      {#if isCommentView(item)}
-        {item.comment.removed
-          ? $t('moderation.restore')
-          : $t('moderation.remove')}
-      {:else}
-        {item.post.removed ? $t('moderation.restore') : $t('moderation.remove')}
-      {/if}
+      {item.post.removed ? $t('moderation.restore') : $t('moderation.remove')}
     </MenuButton>
     {#if profile.current?.user && profile.current.user.local_user_view.person.id != item.creator.id}
       <MenuButton
         color="danger-subtle"
-        onclick={() =>
-          ban(item.creator_banned_from_community, item.creator, item.community)}
+        onclick={() => ban(item.data.creator_banned_from_community, item.creator, item.community)}
       >
         <Icon src={ShieldExclamation} size="16" mini />
-        {item.creator_banned_from_community
+        {item.data.creator_banned_from_community
           ? $t('moderation.ban.unbanFromCommunity')
           : $t('moderation.ban.banFromCommunity')}
       </MenuButton>
@@ -153,19 +116,11 @@
   {/if}
   {#if profile.isAdmin}
     <MenuDivider showLabel>{$t('admin.label')}</MenuDivider>
-    <MenuButton
-      color="success-subtle"
-      onclick={() =>
-        pin(isPostView(item) ? !item.post.featured_local : false, true)}
-    >
+    <MenuButton color="success-subtle" onclick={() => pin(!item.post.featured_local)}>
       <Icon src={Megaphone} size="16" mini />
-      <div
-        class="flex flex-row gap-2 text-left items-center justify-between w-full"
-      >
+      <div class="flex flex-row gap-2 text-left items-center justify-between w-full">
         <span>
-          {item.post.featured_local
-            ? $t('moderation.unfeature')
-            : $t('moderation.feature')}
+          {item.post.featured_local ? $t('moderation.unfeature') : $t('moderation.feature')}
         </span>
         <span class="text-xs opacity-80">{$t('admin.instance')}</span>
       </div>

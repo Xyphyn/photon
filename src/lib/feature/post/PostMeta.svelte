@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import type { Community, Person, SubscribedType } from '$lib/api/types'
+  import type { Community, Person } from '$lib/api/types'
   import { profile } from '$lib/app/auth'
   import { t } from '$lib/app/i18n'
   import Markdown from '$lib/app/markdown/Markdown.svelte'
@@ -7,9 +7,7 @@
   import Avatar from '$lib/ui/generic/Avatar.svelte'
   import { publishedToDate } from '$lib/ui/util/date'
   import { Badge, Material, modal, Popover } from 'mono-svelte'
-  import RelativeDate, {
-    formatRelativeDate,
-  } from 'mono-svelte/util/RelativeDate.svelte'
+  import RelativeDate, { formatRelativeDate } from 'mono-svelte/util/RelativeDate.svelte'
   import {
     type IconSource,
     Bookmark,
@@ -26,67 +24,13 @@
   import { SvelteMap } from 'svelte/reactivity'
   import CommunityLink from '../community/CommunityLink.svelte'
   import UserLink from '../user/UserLink.svelte'
-
-  type BadgeType =
-    | 'nsfw'
-    | 'saved'
-    | 'featured'
-    | 'deleted'
-    | 'removed'
-    | 'locked'
-    | 'moderator'
-    | 'admin'
-  export interface Tag {
-    content: string
-    color?: string
-    icon?: IconSource | null
-    textColor?: string
-    type: 'flair' | 'custom'
-  }
-
-  export const textToTag: Map<string, Tag> = new Map<string, Tag>([
-    ['OC', { content: 'OC', color: '#03A8F240', type: 'custom' }],
-    ['NSFL', { content: 'NSFL', color: '#ff000040', type: 'custom' }],
-    ['CW', { content: 'CW', color: '#ff000040', type: 'custom' }],
-  ])
-
-  export const parseTags = (
-    title?: string,
-  ): { tags: Tag[]; title?: string } => {
-    if (!title) return { tags: [] }
-
-    let extracted: Tag[] = []
-
-    const newTitle = title
-      .toString()
-      .replace(/^(\[.[^\]]+\])|(\[.[^\]]+\])$/g, (match) => {
-        const contents = match.split(',').map((part: string) => part.trim())
-
-        contents
-          .map((i) => i.replaceAll(/(\[|\])/g, ''))
-          .forEach((content: string) => {
-            extracted.push(
-              textToTag.get(content) ?? {
-                content: content,
-                type: 'custom',
-              },
-            )
-          })
-        return ''
-      })
-
-    return {
-      tags: extracted,
-      title: newTitle,
-    }
-  }
 </script>
 
 <script lang="ts">
   interface Props {
     community?: Community
     showCommunity?: boolean
-    subscribed?: SubscribedType
+    subscribed?: boolean
     user?: Person
     published?: Date
     title?: string
@@ -215,10 +159,7 @@
         >
           {#if community.nsfw && settings.nsfwBlur}
             <div
-              style="width: {view == 'compact' ? 24 : 32}; height: {view ==
-              'compact'
-                ? 24
-                : 32}"
+              style="width: {view == 'compact' ? 24 : 32}; height: {view == 'compact' ? 24 : 32}"
               class="bg-red-400 rounded-xl"
             ></div>
           {:else}
@@ -375,11 +316,7 @@
       rel={useAttachedUrl ? 'noopener noreferrer' : undefined}
       class="inline-block hover:underline hover:text-primary-900 dark:hover:text-primary-100 transition-colors"
     >
-      <Markdown
-        inline
-        source={title}
-        class={view != 'compact' ? '' : 'leading-[1.3]'}
-      />
+      <Markdown inline source={title} class={view != 'compact' ? '' : 'leading-[1.3]'} />
     </a>
   </h3>
 {:else}
@@ -433,16 +370,8 @@
     color: var(--tag-text-color, #000) !important;
 
     @variant dark {
-      background-color: color-mix(
-        in oklab,
-        #222,
-        var(--tag-color, #fff)
-      ) !important;
-      color: color-mix(
-        in oklab,
-        #fff 80%,
-        var(--tag-text-color, #fff)
-      ) !important;
+      background-color: color-mix(in oklab, #222, var(--tag-color, #fff)) !important;
+      color: color-mix(in oklab, #fff 80%, var(--tag-text-color, #fff)) !important;
     }
   }
 </style>

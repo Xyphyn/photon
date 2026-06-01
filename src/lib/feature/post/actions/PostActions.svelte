@@ -6,19 +6,10 @@
   import { LINKED_INSTANCE_URL } from '$lib/app/instance.svelte'
   import { settings, type View } from '$lib/app/settings.svelte'
   import { instanceToURL } from '$lib/app/util.svelte'
-  import { save } from '$lib/feature/legacy/contentview'
   import { Photon } from '$lib/ui/icon/photon'
   import { publishedToDate } from '$lib/ui/util/date'
   import FormattedNumber from '$lib/ui/util/FormattedNumber.svelte'
-  import {
-    Button,
-    Menu,
-    MenuButton,
-    MenuDivider,
-    Modal,
-    Spinner,
-    toast,
-  } from 'mono-svelte'
+  import { Button, Menu, MenuButton, MenuDivider, Modal, Spinner, toast } from 'mono-svelte'
   import {
     Bookmark,
     BookmarkSlash,
@@ -34,13 +25,14 @@
   } from 'svelte-hero-icons/dist'
   import { PostVote } from '..'
   import { PostFormState } from '../form/postform.svelte'
-  import { postLink } from '../helpers'
+  import { postLink } from '../post-helpers'
+  import type { PostModel } from '../post.svelte'
 
   let saving = $state(false)
   let editing = $state(false)
 
   interface Props {
-    post: PostView
+    post: PostModel
     view?: View
     debug?: boolean
     style?: string
@@ -56,15 +48,14 @@
     onedit,
     onhide,
   }: Props = $props()
+
   let buttonHeight = $derived(view == 'compact' ? 'h-7.5' : 'h-8')
   let buttonSquare = $derived(view == 'compact' ? 'w-7.5 h-7.5' : 'w-8 h-8')
 
   function share(global: boolean = true, url?: string) {
     const link =
       url ??
-      (global
-        ? post.post.ap_id
-        : `${instanceToURL(profile.current.instance)}/post/${post.post.id}`)
+      (global ? post.post.ap_id : `${instanceToURL(profile.current.instance)}/post/${post.post.id}`)
 
     if (navigator.share)
       navigator.share?.({
@@ -87,11 +78,12 @@
         <Spinner width={32} />
       </div>
     {:then { default: PostForm }}
+      <!--TODO Now that PostModel is a thing, we can have PostForm derive FROM it.-->
       <PostForm
         editPost={post.post.id}
         onsubmit={(e) => {
           editing = false
-          post = e
+          post.edit(e)
           onedit?.(e)
         }}
         init={new PostFormState({
@@ -113,13 +105,7 @@
   class:flex-row-reverse={settings.posts.reverseActions}
   {style}
 >
-  <PostVote
-    post={post.post}
-    bind:vote={post.my_vote}
-    bind:score={post.counts.score}
-    bind:upvotes={post.counts.upvotes}
-    bind:downvotes={post.counts.downvotes}
-  />
+  <PostVote {post} />
 
   <Button
     size="custom"
@@ -130,14 +116,10 @@
     aria-label={$t('post.actions.comments')}
   >
     {@const newComment =
-      publishedToDate(post.counts.newest_comment_time).getTime() >
+      publishedToDate(post.post.newest_comment_time_at ?? '').getTime() >
       new Date().getTime() - 5 * 60 * 1000}
-    <Icon
-      src={newComment ? ChatBubbleOvalLeftEllipsis : ChatBubbleOvalLeft}
-      size="16"
-      mini
-    />
-    <FormattedNumber number={post.counts.comments} />
+    <Icon src={newComment ? ChatBubbleOvalLeftEllipsis : ChatBubbleOvalLeft} size="16" mini />
+    <FormattedNumber number={post.post.comments} />
   </Button>
   <div class="flex-1"></div>
 
@@ -158,7 +140,7 @@
   {/if}
   {#if profile.isMod(post.community) || profile.isAdmin}
     {#await import('$lib/feature/moderation/ModerationMenu.svelte') then { default: ModerationMenu }}
-      <ModerationMenu bind:item={post}>
+      <ModerationMenu {post}>
         {#snippet target(attachment, acting)}
           <Button
             {@attach attachment}
@@ -177,9 +159,8 @@
   {#if profile.current?.jwt}
     <Button
       onclick={async () => {
-        if (!profile.current?.jwt) return
         saving = true
-        post.saved = await save(post, !post.saved)
+        await post.save(!post.saved)
         saving = false
       }}
       size="custom"
@@ -218,11 +199,7 @@
         <svelte:fragment></svelte:fragment>
       </MenuDivider>
       <MenuButton
-        onclick={() =>
-          share(
-            false,
-            new URL(`/go/${post.post.ap_id}`, page.url.origin).toString(),
-          )}
+        onclick={() => share(false, new URL(`/go/${post.post.ap_id}`, page.url.origin).toString())}
         icon={Photon}
       >
         {$t('post.actions.more.share.photon')}
@@ -249,7 +226,7 @@
               <Spinner width={20} />
             </div>
           {:then { default: PostActionsMenu }}
-            <PostActionsMenu bind:post {onhide} bind:editing />
+            <PostActionsMenu {post} {onhide} bind:editing />
           {/await}
         {/if}
       {/snippet}

@@ -54,9 +54,7 @@
       removeToast(loading)
 
       toast({
-        content: !block
-          ? t.get('toast.unblockedCommunity')
-          : t.get('toast.blockedCommunity'),
+        content: !block ? t.get('toast.unblockedCommunity') : t.get('toast.blockedCommunity'),
         type: 'success',
       })
 
@@ -73,6 +71,7 @@
     try {
       await client().purgeCommunity({
         community_id: id,
+        reason: 'Not given',
       })
       removeToast(purgeToast)
       toast({ content: t.get('toast.purgedCommunity'), type: 'success' })
@@ -88,7 +87,7 @@
         loading: true,
       })
 
-      await getClient().blockInstance({
+      await client().userBlockInstanceCommunities({
         instance_id: id,
         block: true,
       })
@@ -116,8 +115,7 @@
   async function subscribe(community: CommunityView) {
     if (!profile.current?.jwt) return
     loading.subscribing = true
-    const subscribed =
-      community.subscribed == 'Subscribed' || community.subscribed == 'Pending'
+    const subscribed = community.community_actions?.follow_state == 'accepted'
 
     try {
       await getClient().followCommunity({
@@ -128,7 +126,7 @@
       toast({ content: errorMessage(err as string), type: 'error' })
     }
 
-    community.subscribed = subscribed ? 'NotSubscribed' : 'Subscribed'
+    community.community_actions?.follow_state = subscribed ? 'NotSubscribed' : 'Subscribed'
     addSubscription(community.community, !subscribed)
 
     loading.subscribing = false
@@ -142,19 +140,11 @@
     class?: string
   }
 
-  let {
-    community_view = $bindable(),
-    moderators = [],
-    class: clazz = '',
-  }: Props = $props()
+  let { community_view = $bindable(), moderators = [], class: clazz = '' }: Props = $props()
 </script>
 
 {#await community_view}
-  <div
-    class="w-full h-full grid place-items-center"
-    role="status"
-    aria-label={$t('aria.loading')}
-  >
+  <div class="w-full h-full grid place-items-center" role="status" aria-label={$t('aria.loading')}>
     <Spinner width={24} />
   </div>
 {:then community_view}
@@ -164,12 +154,7 @@
       onsubmit={() => (setFlair = !setFlair)}
     />
   </Modal>
-  <aside
-    class={[
-      'min-w-full pt-0 text-slate-600 dark:text-zinc-400 flex flex-col gap-1',
-      clazz,
-    ]}
-  >
+  <aside class={['min-w-full pt-0 text-slate-600 dark:text-zinc-400 flex flex-col gap-1', clazz]}>
     <EntityHeader
       name={community_view.community.title}
       avatar={community_view.community.icon}
@@ -177,10 +162,7 @@
       avatarCircle={false}
     >
       {#snippet nameDetail()}
-        !{fullCommunityName(
-          community_view.community.name,
-          community_view.community.actor_id,
-        )}
+        !{fullCommunityName(community_view.community.name, community_view.community.actor_id)}
       {/snippet}
     </EntityHeader>
 
@@ -201,9 +183,7 @@
         alignment="left"
         icon={community_view.subscribed == 'Subscribed' ? Check : Plus}
       >
-        {subscribed
-          ? $t('cards.community.subscribed')
-          : $t('cards.community.subscribe')}
+        {subscribed ? $t('cards.community.subscribed') : $t('cards.community.subscribe')}
       </Button>
       {#if client().setFlair}
         <SidebarButton
@@ -248,13 +228,10 @@
         <MenuButton
           color="danger-subtle"
           size="lg"
-          onclick={() =>
-            block(community_view.community.id, !community_view.blocked)}
+          onclick={() => block(community_view.community.id, !community_view.blocked)}
           icon={NoSymbol}
         >
-          {community_view.blocked
-            ? $t('cards.community.unblock')
-            : $t('cards.community.block')}
+          {community_view.blocked ? $t('cards.community.unblock') : $t('cards.community.block')}
         </MenuButton>
         {#if profile.current?.user}
           <MenuButton

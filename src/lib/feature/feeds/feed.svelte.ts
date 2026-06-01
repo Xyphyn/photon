@@ -1,6 +1,7 @@
 import { browser } from '$app/environment'
 import type {
   CommentView,
+  CommunitySortType,
   CommunityView,
   FeedView,
   GetComments,
@@ -9,10 +10,9 @@ import type {
   GetPersonDetailsResponse,
   GetPost,
   GetPosts,
-  ListCommunitiesResponse,
   ListingType,
+  PagedResponse,
   PostView,
-  SortType,
   TopicView,
 } from '$lib/api/types'
 import { profile } from '$lib/app/auth'
@@ -53,9 +53,7 @@ export class Feed<Params, Response> {
 export interface FeedTypes {
   '/': [
     GetPosts,
-    {
-      posts: PostView[]
-      next_page?: string
+    PagedResponse<PostView> & {
       params: GetPosts & { page_cursor: string }
       client: {
         itemHeights?: (number | null)[]
@@ -107,11 +105,11 @@ export interface FeedTypes {
   '/explore/communities': [
     {
       type: ListingType
-      sort: SortType
+      sort: CommunitySortType
       query: string
       page: number
     },
-    ListCommunitiesResponse,
+    PagedResponse<CommunityView>,
   ]
   '/f/[id]': [
     GetPosts,

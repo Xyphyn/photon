@@ -1,11 +1,12 @@
 <script lang="ts">
   import { browser } from '$app/environment'
   import { client } from '$lib/api/client.svelte'
-  import type { GetPosts, PostView } from '$lib/api/types'
+  import type { GetPosts } from '$lib/api/types'
   import { errorMessage } from '$lib/app/error'
   import { t } from '$lib/app/i18n'
   import VirtualList from '$lib/app/render/VirtualList.svelte'
   import { settings } from '$lib/app/settings.svelte'
+  import { ReactiveState } from '$lib/app/util.svelte'
   import Placeholder from '$lib/ui/info/Placeholder.svelte'
   import EndPlaceholder from '$lib/ui/layout/EndPlaceholder.svelte'
   import { Button, Material, Spinner } from 'mono-svelte'
@@ -23,11 +24,11 @@
   import { SvelteSet } from 'svelte/reactivity'
   import { fly } from 'svelte/transition'
   import { Post } from '..'
-  import { filterPost, type FilteredItem } from '../filters.svelte'
-  import { ReactiveState } from '$lib/app/util.svelte'
+  import { filterPost, type FilteredItem } from '../post-filters.svelte'
+  import { PostModel } from '../post.svelte'
 
   interface Props {
-    posts: PostView[]
+    posts: PostModel[]
     params: GetPosts
     virtualList?: { itemHeights: (number | null)[] }
     lastSeen?: number
@@ -47,7 +48,7 @@
   let filteredPosts: FilteredItem[] = $derived(
     posts.map((post) => ({
       id: post.post.id,
-      action: filterPost(post),
+      action: filterPost(post.data),
     })),
   )
 
@@ -77,8 +78,7 @@
       loading = true
 
       const newPosts = await client({
-        func: (input, init) =>
-          fetch(input, { ...init, signal: abortLoad.signal }),
+        func: (input, init) => fetch(input, { ...init, signal: abortLoad.signal }),
       })
         .getPosts(params)
         .catch((e) => {
@@ -87,16 +87,18 @@
 
       error = null
 
-      hasMore = newPosts.posts.length != 0
+      hasMore = newPosts.items.length != 0
 
       params.page_cursor = newPosts.next_page
 
       posts.push(
-        ...newPosts.posts.filter((post) => {
-          if (seenIds.has(post.post.id)) return false
-          seenIds.add(post.post.id)
-          return true
-        }),
+        ...newPosts.items
+          .filter((post) => {
+            if (seenIds.has(post.post.id)) return false
+            seenIds.add(post.post.id)
+            return true
+          })
+          .map((i) => new PostModel(i)),
       )
 
       loading = false
@@ -127,18 +129,12 @@
     })
 
     const observePost = (node: Node) => {
-      if (
-        node instanceof HTMLElement &&
-        node.classList.contains('post-container')
-      )
+      if (node instanceof HTMLElement && node.classList.contains('post-container'))
         observer.observe(node)
     }
 
     const unobservePost = (node: Node) => {
-      if (
-        node instanceof HTMLElement &&
-        node.classList.contains('post-container')
-      )
+      if (node instanceof HTMLElement && node.classList.contains('post-container'))
         observer.unobserve(node)
     }
 
@@ -181,12 +177,7 @@
           title={$t('routes.frontpage.empty.title')}
           description={$t('routes.frontpage.empty.description')}
         >
-          <Button
-            href="/communities"
-            rounding="pill"
-            color="primary"
-            icon={ArrowTopRightOnSquare}
-          >
+          <Button href="/communities" rounding="pill" color="primary" icon={ArrowTopRightOnSquare}>
             {$t('nav.communities')}
           </Button>
         </Placeholder>
@@ -221,8 +212,7 @@
               <Post
                 bind:post={posts[row]}
                 hideCommunity={community}
-                view={(posts[row].post.featured_community ||
-                  posts[row].post.featured_local) &&
+                view={(posts[row].post.featured_community || posts[row].post.featured_local) &&
                 settings.posts.compactFeatured
                   ? 'compact'
                   : settings.view}
@@ -263,12 +253,7 @@
           />
           {errorMessage(error)}
         </div>
-        <Button
-          color="primary"
-          {loading}
-          disabled={loading}
-          onclick={() => loadMore()}
-        >
+        <Button color="primary" {loading} disabled={loading} onclick={() => loadMore()}>
           {$t('message.retry')}
         </Button>
       </Material>
@@ -281,8 +266,7 @@
         <EndPlaceholder>
           {$t('routes.frontpage.endFeed', {
             community_name:
-              params.community_name ??
-              'Lemmy. There are no more posts. You saw them all.',
+              params.community_name ?? 'Lemmy. There are no more posts. You saw them all.',
           })}
           {#snippet action()}
             <Button color="tertiary" icon={ChevronDoubleUp}>

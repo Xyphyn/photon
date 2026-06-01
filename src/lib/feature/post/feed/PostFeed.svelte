@@ -1,16 +1,16 @@
 <script lang="ts">
-  import type { PostView } from '$lib/api/types'
+  import { t } from '$lib/app/i18n'
   import { settings } from '$lib/app/settings.svelte'
   import Placeholder from '$lib/ui/info/Placeholder.svelte'
   import { Button } from 'mono-svelte'
   import type { Snippet } from 'svelte'
   import { ArchiveBox, ArrowsPointingOut, Plus } from 'svelte-hero-icons/dist'
   import { Post } from '..'
-  import { filterPost, type FilteredItem } from '../filters.svelte'
-  import { t } from '$lib/app/i18n'
+  import { filterPost, type FilteredItem } from '../post-filters.svelte'
+  import type { PostModel } from '../post.svelte'
 
   interface Props {
-    posts: PostView[]
+    posts: PostModel[]
     community?: boolean
     children?: Snippet
   }
@@ -20,7 +20,7 @@
   let filteredPosts: FilteredItem[] = $derived(
     posts.map((post) => ({
       id: post.post.id,
-      action: filterPost(post),
+      action: filterPost(post.data),
     })),
   )
 
@@ -31,9 +31,7 @@
   }
 </script>
 
-<ul
-  class="flex flex-col list-none divide-y divide-slate-200 dark:divide-zinc-800"
->
+<ul class="flex flex-col list-none divide-y divide-slate-200 dark:divide-zinc-800">
   {#if posts.length === 0}
     <div class="h-full grid place-items-center">
       <Placeholder
@@ -54,8 +52,7 @@
           {#if filter.action == 'none'}
             <Post
               hideCommunity={community}
-              view={(post.post.featured_community ||
-                post.post.featured_local) &&
+              view={(post.post.featured_community || post.post.featured_local) &&
               settings.posts.compactFeatured
                 ? 'compact'
                 : settings.view}

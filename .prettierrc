@@ -13,5 +13,6 @@
   "svelteIndentScriptAndStyle": true,
   "svelteSortOrder": "scripts-options-markup-styles",
   "svelteStrictMode": false,
-  "useTabs": false
+  "useTabs": false,
+  "printWidth": 100
 }

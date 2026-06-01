@@ -46,7 +46,7 @@
       </span>
     {/if}
   {/snippet}
-  <Option value="All" icon={GlobeAmericas}>
+  <Option value="all" icon={GlobeAmericas}>
     {$t('filter.location.all')}
   </Option>
   {#if profile.client instanceof PiefedClient}
@@ -54,15 +54,11 @@
       {$t('filter.location.popular')}
     </Option>
   {/if}
-  <Option value="Local" icon={MapPin}>{$t('filter.location.local')}</Option>
-  <Option
-    value="Subscribed"
-    disabled={profile.current?.jwt == undefined}
-    icon={Newspaper}
-  >
+  <Option value="local" icon={MapPin}>{$t('filter.location.local')}</Option>
+  <Option value="subscribed" disabled={profile.current?.jwt == undefined} icon={Newspaper}>
     {$t('filter.location.subscribed')}
   </Option>
-  <Option value="ModeratorView" disabled={!profile.isMod()} icon={ShieldCheck}>
+  <Option value="moderator_view" disabled={!profile.isMod()} icon={ShieldCheck}>
     {$t('filter.location.moderator')}
   </Option>
   {@render children?.()}

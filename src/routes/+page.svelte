@@ -17,24 +17,18 @@
   let { data = $bindable() } = $props()
 
   $effect(() => {
-    if (data.filters.value.sort)
-      settings.defaultSort.sort = data.filters.value.sort
-    if (data.filters.value.type_)
-      settings.defaultSort.feed = data.filters.value.type_
+    if (data.filters.value.sort) settings.defaultSort.sort = data.filters.value.sort
+    if (data.filters.value.type_) settings.defaultSort.feed = data.filters.value.type_
   })
 
   const FeedComponent = $derived(
-    settings.infiniteScroll && browser && !settings.posts.noVirtualize
-      ? VirtualFeed
-      : PostFeed,
+    settings.infiniteScroll && browser && !settings.posts.noVirtualize ? VirtualFeed : PostFeed,
   )
 </script>
 
 <svelte:head>
   <title>
-    {SSR_ENABLED && site.data
-      ? site.data.site_view.site.name
-      : $t('routes.frontpage.title')}
+    {SSR_ENABLED && site.data ? site.data.site_view.site.name : $t('routes.frontpage.title')}
   </title>
 </svelte:head>
 
@@ -43,17 +37,8 @@
   {#snippet extended()}
     <form class="contents" method="get" action={page.url.pathname}>
       <div class="flex flex-row gap-2 max-w-full flex-wrap">
-        <Location
-          name="type"
-          navigate
-          bind:selected={data.filters.value.type_!}
-        />
-        <Sort
-          placement="bottom"
-          name="sort"
-          navigate
-          bind:selected={data.filters.value.sort!}
-        />
+        <Location name="type" navigate bind:selected={data.filters.value.type_!} />
+        <Sort placement="bottom" name="sort" navigate bind:selected={data.filters.value.sort!} />
         <ViewSelect placement="bottom" />
 
         <noscript>
@@ -71,9 +56,7 @@
     {#each new Array(5) as _, index}{_}
       <div
         class="animate-pop-in"
-        style="animation-delay: {index * 50}ms; opacity: 0; width: {(1 /
-          ((index + 1) % 3)) *
-          100}%"
+        style="animation-delay: {index * 50}ms; opacity: 0; width: {(1 / ((index + 1) % 3)) * 100}%"
       >
         <Skeleton />
       </div>
@@ -81,22 +64,17 @@
   </div>
 {:then feed}
   <FeedComponent
-    bind:posts={feed.posts}
-    bind:lastSeen={
-      () => feed.client.lastSeen ?? 0, (v) => (feed.client.lastSeen = v)
-    }
+    bind:posts={feed.items}
+    bind:lastSeen={() => feed.client.lastSeen ?? 0, (v) => (feed.client.lastSeen = v)}
     bind:params={feed.params}
     virtualList={{ itemHeights: feed.client?.itemHeights ?? [] }}
   />
   <svelte:element
-    this={settings.infiniteScroll && !settings.posts.noVirtualize
-      ? 'noscript'
-      : 'div'}
+    this={settings.infiniteScroll && !settings.posts.noVirtualize ? 'noscript' : 'div'}
   >
     <Pageination
       cursor={{ next: feed.next_page }}
-      href={(page) =>
-        typeof page == 'number' ? `?page=${page}` : `?cursor=${page}`}
+      href={(page) => (typeof page == 'number' ? `?page=${page}` : `?cursor=${page}`)}
       back={false}
     />
   </svelte:element>

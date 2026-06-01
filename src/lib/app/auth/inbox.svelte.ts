@@ -1,4 +1,3 @@
-import { PiefedClient } from '$lib/api/piefed/adapter'
 import type { Profile } from './profile.svelte'
 
 interface Notifications {
@@ -49,45 +48,14 @@ export class InboxService {
   }
 
   async checkInbox(): Promise<Notifications> {
-    if (!this.#profile.current.user || !this.#profile.current.jwt)
-      return this.clear()
+    if (!this.#profile.current.jwt) return this.clear()
 
-    const unreadsPromise = this.#profile.client
-      .getUnreadCount()
-      .then((res) => res.mentions + res.private_messages + res.replies)
-      .catch(() => 0)
-
-    const reportsPromise =
-      !(this.#profile.client instanceof PiefedClient) && this.#profile.isMod()
-        ? this.#profile.client
-            .getReportCount({})
-            .then(
-              (res) =>
-                res.comment_reports +
-                res.post_reports +
-                (res.private_message_reports ?? 0),
-            )
-            .catch(() => 0)
-        : Promise.resolve(0)
-
-    const applicationsPromise =
-      !(this.#profile.client instanceof PiefedClient) && this.#profile.isAdmin
-        ? this.#profile.client
-            .getUnreadRegistrationApplicationCount()
-            .then((res) => res.registration_applications)
-            .catch(() => 0)
-        : Promise.resolve(0)
-
-    const [unreads, reports, applications] = await Promise.all([
-      unreadsPromise,
-      reportsPromise,
-      applicationsPromise,
-    ])
+    const unreads = await this.#profile.client.getUnreadCounts()
 
     return {
-      inbox: unreads,
-      reports: reports,
-      applications: applications,
+      inbox: unreads.notification_count,
+      reports: unreads.report_count ?? 0,
+      applications: unreads.registration_application_count ?? 0,
     }
   }
 }

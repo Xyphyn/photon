@@ -39,29 +39,27 @@
     })
 
     if (
-      !(data.data.value.post.read && settings.markPostsAsRead) &&
+      !(data.data.value.post.post_actions?.read_at && settings.markPostsAsRead) &&
       profile.current?.jwt
     ) {
       client()
         .markPostAsRead({
           read: true,
-          post_ids: [data.data.value.post.post.id],
+          post_id: data.data.value.post.post.id,
         })
-        .then(() => (data.data.value.post.read = true))
+        .then((v) => (data.data.value.post.post_actions = v.post_view.post_actions))
     }
   })
 
   async function reloadComments() {
     data.data.value.comments = client()
       .getComments({
-        page: 1,
-        limit: 25,
-        type_: 'All',
+        type_: 'all',
         post_id: data.data.value.post.post.id,
         sort: settings.defaultSort.comments,
-        max_depth: data.data.value.post.counts.comments > 100 ? 1 : 3,
+        max_depth: data.data.value.post.post.comments > 100 ? 1 : 3,
       })
-      .then((i) => i.comments)
+      .then((i) => i.items)
     data.data.value.params.thread.singleThread = false
   }
 
@@ -72,11 +70,10 @@
       title: parsed.title,
       tags: [
         ...parsed.tags,
-        ...(data.data.value.post.flair_list?.map((i) => ({
-          content: i.flair_title,
-          color: i.background_color,
+        ...(data.data.value.post.tags?.map((i) => ({
+          content: i.display_name ?? i.name,
+          color: i.color,
           icon: null,
-          textColor: i.text_color,
           type: 'flair' as 'flair' | 'custom',
         })) ?? []),
       ],
@@ -94,32 +91,17 @@
   {/if}
   <link rel="canonical" href={data.data.value.post.post.ap_id} />
   {#if data.data.value.post.post.body}
-    <meta
-      property="description"
-      content={data.data.value.post.post.body.slice(0, 500)}
-    />
-    <meta
-      property="og:description"
-      content={data.data.value.post.post.body.slice(0, 500)}
-    />
-    <meta
-      property="twitter:description"
-      content={data.data.value.post.post.body.slice(0, 500)}
-    />
+    <meta property="description" content={data.data.value.post.post.body.slice(0, 500)} />
+    <meta property="og:description" content={data.data.value.post.post.body.slice(0, 500)} />
+    <meta property="twitter:description" content={data.data.value.post.post.body.slice(0, 500)} />
   {/if}
   <meta property="og:url" content={page.url.toString()} />
   {#if mediaType(data.data.value.post.post.url) == 'image'}
     <meta property="og:image" content={data.data.value.post.post.url} />
     <meta property="twitter:card" content={data.data.value.post.post.url} />
   {:else if data.data.value.post.post.thumbnail_url}
-    <meta
-      property="og:image"
-      content={data.data.value.post.post.thumbnail_url}
-    />
-    <meta
-      property="twitter:card"
-      content={data.data.value.post.post.thumbnail_url}
-    />
+    <meta property="og:image" content={data.data.value.post.post.thumbnail_url} />
+    <meta property="twitter:card" content={data.data.value.post.post.thumbnail_url} />
   {/if}
 </svelte:head>
 
@@ -129,11 +111,9 @@
       <PostMeta
         community={data.data.value.post.community}
         user={data.data.value.post.creator}
-        subscribed={profile.current.user?.follows.find(
+        subscribed={profile.current.user?.follows?.find(
           (i) => i.community.id == data.data.value.post.community.id,
-        )
-          ? 'Subscribed'
-          : 'NotSubscribed'}
+        ) != null}
         badges={{
           deleted: data.data.value.post.post.deleted,
           removed: data.data.value.post.post.removed,
@@ -142,12 +122,12 @@
             data.data.value.post.post.featured_community ||
             data.data.value.post.post.featured_local,
           nsfw: data.data.value.post.post.nsfw,
-          saved: data.data.value.post.saved,
+          saved: data.data.value.post.post_actions?.saved_at != null,
           admin: data.data.value.post.creator_is_admin,
           moderator: data.data.value.post.creator_is_moderator,
         }}
-        published={publishedToDate(data.data.value.post.post.published)}
-        edited={data.data.value.post.post.updated}
+        published={publishedToDate(data.data.value.post.post.published_at)}
+        edited={data.data.value.post.post.updated_at}
         title={data.data.value.post.post.name}
         style="width: max-content;"
         tags={tags.tags}
@@ -208,7 +188,7 @@
       {$t('routes.post.commentCount')}
       {#snippet action()}
         <span class="font-bold">
-          <FormattedNumber number={data.data.value.post.counts.comments} />
+          <FormattedNumber number={data.data.value.post.post.comments} />
         </span>
       {/snippet}
     </EndPlaceholder>
@@ -226,8 +206,7 @@
         {_}
         <div
           class="animate-pop-in"
-          style="animation-delay: {index * 50}ms; opacity: 0; width: {(1 /
-            ((index + 1) % 3)) *
+          style="animation-delay: {index * 50}ms; opacity: 0; width: {(1 / ((index + 1) % 3)) *
             100}%"
         >
           <Skeleton size="sm" />
@@ -253,12 +232,12 @@
       ></Placeholder>
     {/if}
   {/await}
-  {#if data.data.value.post.counts.comments > 5}
+  {#if data.data.value.post.post.comments > 5}
     <EndPlaceholder>
       {$t('routes.post.commentCount')}
       {#snippet action()}
         <span class="text-black dark:text-white font-bold">
-          {data.data.value.post.counts.comments}
+          {data.data.value.post.post.comments}
         </span>
         <Button
           color="tertiary"

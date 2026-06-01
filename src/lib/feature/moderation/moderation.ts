@@ -1,23 +1,18 @@
+// TODO update to svelte 5 type stuff
+
 import { client } from '$lib/api/client.svelte'
-import type {
-  Comment,
-  CommentView,
-  Community,
-  Person,
-  PostView,
-  PrivateMessageView,
-} from '$lib/api/types'
+import type { Comment, CommentView, Community, Person, PrivateMessageView } from '$lib/api/types'
 import { writable } from 'svelte/store'
-import type { SubmissionView } from '../legacy/contentview'
+import type { PostModel } from '../post/post.svelte'
 
 interface Modals {
   reporting: {
     open: boolean
-    item: PostView | CommentView | PrivateMessageView | undefined
+    item: PostModel | CommentView | PrivateMessageView | undefined
   }
   removing: {
     open: boolean
-    item: SubmissionView | undefined
+    item: PostModel | CommentView | undefined
     purge: boolean
   }
   banning: {
@@ -28,7 +23,7 @@ interface Modals {
   }
   votes: {
     open: boolean
-    item: PostView | CommentView | undefined
+    item: PostModel | CommentView | undefined
   }
 }
 
@@ -54,7 +49,7 @@ export const modals = writable<Modals>({
   },
 })
 
-export function report(item: PostView | CommentView | PrivateMessageView) {
+export function report(item: PostModel | CommentView | PrivateMessageView) {
   modals.update((m) => ({
     ...m,
     reporting: {
@@ -64,7 +59,7 @@ export function report(item: PostView | CommentView | PrivateMessageView) {
   }))
 }
 
-export function remove(item: SubmissionView, purge: boolean = false) {
+export function remove(item: PostModel | CommentView, purge: boolean = false) {
   modals.update((m) => ({
     ...m,
     removing: {
@@ -94,7 +89,7 @@ export async function feature(featured: boolean, item: Comment, jwt: string) {
   })
 }
 
-export async function viewVotes(item: PostView | CommentView) {
+export async function viewVotes(item: PostModel | CommentView) {
   modals.update((m) => ({
     ...m,
     votes: {
@@ -114,10 +109,8 @@ export const removalTemplate = (
   },
 ) => {
   if (content.postTitle) input = input.replaceAll('{{post}}', content.postTitle)
-  if (content.communityLink)
-    input = input.replaceAll('{{community}}', content.communityLink)
-  if (content.username)
-    input = input.replaceAll('{{username}}', content.username)
+  if (content.communityLink) input = input.replaceAll('{{community}}', content.communityLink)
+  if (content.username) input = input.replaceAll('{{username}}', content.username)
   if (content.reason) input = input.replaceAll('{{reason}}', content.reason)
   return input
 }

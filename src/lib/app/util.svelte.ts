@@ -10,16 +10,9 @@ import { t } from './i18n'
 // This is because I do not care
 // Example: findClosestNumber([8, 16, 32, 64, 128], 76) will return 128
 export const findClosestNumber = (numbers: number[], target: number): number =>
-  numbers.reduce((prev, curr) =>
-    curr >= target && (prev < target || curr < prev) ? curr : prev,
-  )
+  numbers.reduce((prev, curr) => (curr >= target && (prev < target || curr < prev) ? curr : prev))
 
-export const searchParam = (
-  _url: URL,
-  key: string,
-  value: string,
-  ...deleteKeys: string[]
-) => {
+export const searchParam = (_url: URL, key: string, value: string, ...deleteKeys: string[]) => {
   const url = new SvelteURL(_url)
   url.searchParams.set(key, value)
   deleteKeys.forEach((k) => url.searchParams.delete(k))
@@ -49,11 +42,7 @@ export const placeholders = {
 
 // lol this function was made 3 years ago when lil xylight
 // was still learning cs
-export function moveItem<T>(
-  array: T[],
-  currentIndex: number,
-  newIndex: number,
-): T[] {
+export function moveItem<T>(array: T[], currentIndex: number, newIndex: number): T[] {
   if (
     currentIndex < 0 ||
     currentIndex >= array.length ||
@@ -95,9 +84,7 @@ export async function uploadImage(
 }
 
 export const instanceToURL = (input: string) =>
-  input.startsWith('http://') || input.startsWith('https://')
-    ? input
-    : `https://${input}`
+  input.startsWith('http://') || input.startsWith('https://') ? input : `https://${input}`
 
 export function canParseUrl(url: string): boolean {
   try {
@@ -190,10 +177,10 @@ export const isVideo = (url: string | undefined) => {
 }
 
 export const communityLink = (community: Community, prefix: string = '') =>
-  `${prefix}/c/${fullCommunityName(community.name, community.actor_id)}`
+  `${prefix}/c/${fullCommunityName(community.name, community.ap_id)}`
 
 export const userLink = (person: Person, prefix: string = '') =>
-  `${prefix}/u/${person.name}@${new SvelteURL(person.actor_id).hostname}`
+  `${prefix}/u/${person.name}@${new SvelteURL(person.ap_id).hostname}`
 
 /**
  * Basic types only, don't use for anything more than basic equality

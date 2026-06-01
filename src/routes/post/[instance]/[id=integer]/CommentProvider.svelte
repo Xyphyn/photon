@@ -70,7 +70,7 @@
       <Button
         color="primary"
         rounding="xl"
-        disabled={(post.post.locked || post.banned_from_community) &&
+        disabled={(post.post.locked || post.creator_banned_from_community) &&
           !(profile.isAdmin || profile.isMod(post.community))}
         onclick={() => (commenting = true)}
       >
@@ -80,11 +80,7 @@
 
       {#snippet action()}
         <div class="gap-2 flex items-center">
-          <Select
-            size="md"
-            bind:value={settings.defaultSort.comments}
-            onchange={onupdate}
-          >
+          <Select size="md" bind:value={settings.defaultSort.comments} onchange={onupdate}>
             <Option icon={Fire} value="Hot">{$t('filter.sort.hot')}</Option>
             <Option icon={Trophy} value="Top">
               {$t('filter.sort.top.label')}
@@ -130,11 +126,7 @@
 
 {#if commenting || !profile.current.jwt}
   <div class="gap-2 flex items-center">
-    <Select
-      size="md"
-      bind:value={settings.defaultSort.comments}
-      onchange={onupdate}
-    >
+    <Select size="md" bind:value={settings.defaultSort.comments} onchange={onupdate}>
       <Option icon={Fire} value="Hot">{$t('filter.sort.hot')}</Option>
       <Option icon={Trophy} value="Top">
         {$t('filter.sort.top.label')}
@@ -147,12 +139,7 @@
         {$t('filter.sort.controversial')}
       </Option>
     </Select>
-    <Button
-      size="custom"
-      class="h-8.5 w-8.5"
-      rounding="xl"
-      onclick={onupdate}
-      icon={ArrowPath}
+    <Button size="custom" class="h-8.5 w-8.5" rounding="xl" onclick={onupdate} icon={ArrowPath}
     ></Button>
   </div>
 {/if}
@@ -187,9 +174,7 @@
       comments: tree[0].comment_view.comment.path.split('.').length - 2,
     })}
   </Button>
-  <div
-    class="border-l h-4 -mb-5 ml-2.5 border-slate-200 dark:border-zinc-800"
-  ></div>
+  <div class="border-l h-4 -mb-5 ml-2.5 border-slate-200 dark:border-zinc-800"></div>
 {/if}
 {#if virtualize}
   <CommentListVirtualizer post={post.post} nodes={tree} scrollTo={focus} />

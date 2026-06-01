@@ -1,41 +1,20 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
-  import {
-    BaseClient,
-    type ClientType,
-    DEFAULT_CLIENT_TYPE,
-  } from '$lib/api/base'
+  import { BaseClient, type ClientType, DEFAULT_CLIENT_TYPE } from '$lib/api/base'
   import { client } from '$lib/api/client.svelte'
-  import { LemmyClient } from '$lib/api/lemmy/adapter'
+  import { LemmyV3Client } from '$lib/api/lemmy-v3/adapter'
   import { PiefedClient } from '$lib/api/piefed/adapter'
   import { profile } from '$lib/app/auth'
   import { errorMessage } from '$lib/app/error'
   import { t } from '$lib/app/i18n'
-  import {
-    DEFAULT_INSTANCE_URL,
-    LINKED_INSTANCE_URL,
-  } from '$lib/app/instance.svelte'
+  import { DEFAULT_INSTANCE_URL, LINKED_INSTANCE_URL } from '$lib/app/instance.svelte'
   import { DOMAIN_REGEX_FORMS, instanceToURL } from '$lib/app/util.svelte'
-  import ErrorContainer, {
-    clearErrorScope,
-    pushError,
-  } from '$lib/ui/info/ErrorContainer.svelte'
+  import ErrorContainer, { clearErrorScope, pushError } from '$lib/ui/info/ErrorContainer.svelte'
   import { Header } from '$lib/ui/layout'
-  import {
-    Button,
-    ButtonGroup,
-    Note,
-    Spinner,
-    TextInput,
-    toast,
-  } from 'mono-svelte'
+  import { Button, ButtonGroup, Note, Spinner, TextInput, toast } from 'mono-svelte'
   import { debounce } from 'mono-svelte/util/time'
-  import {
-    Identification,
-    QuestionMarkCircle,
-    UserCircle,
-  } from 'svelte-hero-icons/dist'
+  import { Identification, QuestionMarkCircle, UserCircle } from 'svelte-hero-icons/dist'
   import { expoOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'
 
@@ -44,8 +23,7 @@
     children?: import('svelte').Snippet
   }
 
-  let { ref = page.url.searchParams.get('redirect') ?? '/', children }: Props =
-    $props()
+  let { ref = page.url.searchParams.get('redirect') ?? '/', children }: Props = $props()
 
   let form = $state<{
     instance: string
@@ -66,9 +44,7 @@
   })
 
   async function checkInstance() {
-    const type = await BaseClient.fetchInfo(
-      new URL(instanceToURL(form.instance)),
-    )
+    const type = await BaseClient.fetchInfo(new URL(instanceToURL(form.instance)))
     if (type == null) throw Error('not_live_supported')
     form.client = type?.type
   }
@@ -94,11 +70,7 @@
       })
 
       if (response?.jwt) {
-        const result = await profile.add(
-          response.jwt,
-          form.instance,
-          form.client,
-        )
+        const result = await profile.add(response.jwt, form.instance, form.client)
 
         if (result) {
           toast({ content: $t('toast.logIn'), type: 'success' })
@@ -111,13 +83,10 @@
       pushError({
         message:
           // @ts-expect-error cursed json hack
-          JSON.parse((error as object)?.body?.message ?? '{}')?.error ==
-          'incorrect_login'
+          JSON.parse((error as object)?.body?.message ?? '{}')?.error == 'incorrect_login'
             ? errorMessage(
                 'incorrect_login' +
-                  (form.attempts == 0 || form.attempts >= 12
-                    ? ''
-                    : `_${form.attempts + 1}`),
+                  (form.attempts == 0 || form.attempts >= 12 ? '' : `_${form.attempts + 1}`),
               )
             : errorMessage(error),
         scope: page.route.id!,
@@ -214,10 +183,10 @@
         type="password"
         minlength={form.client.name == 'piefed'
           ? PiefedClient.constants.password.minLength
-          : LemmyClient.constants.password.minLength}
+          : LemmyV3Client.constants.password.minLength}
         maxlength={form.client.name == 'piefed'
           ? PiefedClient.constants.password.maxLength
-          : LemmyClient.constants.password.maxLength}
+          : LemmyV3Client.constants.password.maxLength}
         required
         class="w-full"
       />
@@ -232,13 +201,7 @@
         class="w-24"
       />
     </div>
-    <Button
-      loading={form.loading}
-      disabled={form.loading}
-      color="primary"
-      size="lg"
-      submit
-    >
+    <Button loading={form.loading} disabled={form.loading} color="primary" size="lg" submit>
       {$t('account.login')}
     </Button>
     <hr class="border-slate-200 dark:border-zinc-800" />
