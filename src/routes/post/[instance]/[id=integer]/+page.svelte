@@ -86,6 +86,7 @@
         published={publishedToDate(post.post.published_at)}
         edited={post.post.updated_at}
         title={post.post.name}
+        tags={post.tags}
         style="width: max-content;"
       />
     </div>

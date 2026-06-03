@@ -62,7 +62,6 @@
 
   let extendedCommunity = $derived.by(() => {
     const api = client()
-    if (!(api instanceof PiefedClient)) return undefined
 
     if (form.community?.id) {
       return api.getCommunity({ id: form.community.id })
@@ -140,23 +139,23 @@
         <Spinner />
       </div>
     {:then communityView}
-      {#each communityView?.community_view.flair_list ?? [] as flair}
-        {@const selected = form.flairList?.some((i) => i.id == flair.id)}
+      {#each communityView?.community_view.tags ?? [] as tag}
+        {@const selected = form.flairList?.some((i) => i.id == tag.id)}
         <button
           class="rounded-full cursor-pointer hover:brightness-100 badge-tag-color"
-          style="--tag-color: {flair.background_color}; --tag-text-color: {flair.text_color};"
+          style="--tag-color: var(--tag-{tag.color});"
           onclick={() => {
             if (selected) {
-              const index = form.flairList.findIndex((i) => i.id == flair.id)
+              const index = form.flairList.findIndex((i) => i.id == tag.id)
               if (index != -1) form.flairList.splice(index, 1)
-            } else form.flairList.push(flair)
+            } else form.flairList.push(tag)
           }}
         >
           <Badge color={selected ? 'gray-subtle' : 'custom'} class="ring-white/20">
             {#snippet icon()}
               <Icon src={selected ? Check : Plus} size="16" micro />
             {/snippet}
-            {flair.flair_title}
+            {tag.display_name ?? tag.name}
           </Badge>
         </button>
       {/each}
@@ -231,7 +230,6 @@
   {#if !editPost}
     {#if !form.community}
       <ObjectAutocomplete
-        listing_type="All"
         label={$t('form.post.community')}
         onselect={(i) => {
           form.community = i.community
@@ -254,7 +252,7 @@
           <div class="flex flex-col gap-0">
             <span class="text-sm">{form.community.name}</span>
             <span class="text-[10px] leading-3">
-              {new URL(form.community?.actor_id).hostname}
+              {new URL(form.community?.ap_id).hostname}
             </span>
           </div>
         </Button>
@@ -294,6 +292,7 @@
           onclick={() =>
             modal({
               title: $t('form.post.generateTitle'),
+              // tbh this error is so long that i cannot process it
               snippet: autofillPostModal,
               actions: [],
             })}
@@ -421,7 +420,7 @@
         </Button>
       {/if}
       {#await extendedCommunity then communityView}
-        {#if (communityView?.community_view.flair_list?.length || 0) > 0}
+        {#if (communityView?.community_view.tags?.length || 0) > 0}
           <Button
             color={form.flairList.length > 0 ? 'primary' : 'secondary'}
             class="animate-pop-in"

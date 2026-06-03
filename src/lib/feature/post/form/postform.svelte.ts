@@ -1,12 +1,6 @@
 import { client } from '$lib/api/client.svelte'
 import { PiefedClient } from '$lib/api/piefed/adapter'
-import type {
-  Community,
-  CommunityFlair,
-  PostEvent,
-  PostPoll,
-  PostView,
-} from '$lib/api/types'
+import type { Community, CommunityTag, PostEvent, PostPoll, PostView } from '$lib/api/types'
 
 export type PostFormInit = {
   type?: 'normal' | 'poll' | 'event'
@@ -20,7 +14,7 @@ export type PostFormInit = {
   language_id?: number
   poll?: PostPoll
   event?: PostEvent
-  flair_list?: CommunityFlair[]
+  flair_list?: CommunityTag[]
 }
 
 export class PostFormState {
@@ -36,7 +30,7 @@ export class PostFormState {
   language?: string
   poll?: PostPoll
   event?: PostEvent
-  flairList: CommunityFlair[]
+  flairList: CommunityTag[]
 
   constructor(post?: PostFormInit) {
     this.type = $state(post?.type ?? 'normal')
@@ -80,8 +74,7 @@ export class PostFormState {
   }
 
   async submit(postId?: number): Promise<PostView> {
-    if (!this.validate(postId ? 'edit' : 'create'))
-      throw new Error('failed validation')
+    if (!this.validate(postId ? 'edit' : 'create')) throw new Error('failed validation')
 
     const api = client()
 
@@ -99,6 +92,7 @@ export class PostFormState {
           language_id: Number(this.language) || undefined,
           poll: this.type == 'poll' ? this.poll : undefined,
           event: this.type == 'event' ? this.event : undefined,
+          tags: this.flairList.map((i) => i.id),
         })
       ).post_view
     } else {
@@ -114,6 +108,7 @@ export class PostFormState {
           language_id: Number(this.language) || undefined,
           poll: this.type == 'poll' ? this.poll : undefined,
           event: this.type == 'event' ? this.event : undefined,
+          tags: this.flairList.map((i) => i.id),
         })
       ).post_view
     }
@@ -124,16 +119,14 @@ export class PostFormState {
         post_id: res.post.id,
       })
 
-      res.flair_list = flairRes.flair_list
+      res.tags = flairRes.tags
     }
 
     return res
   }
 }
 
-export async function autofillPost(
-  url: URL,
-): Promise<{ title?: string; body?: string }> {
+export async function autofillPost(url: URL): Promise<{ title?: string; body?: string }> {
   const res = await client().getSiteMetadata({
     url: url.toString(),
   })

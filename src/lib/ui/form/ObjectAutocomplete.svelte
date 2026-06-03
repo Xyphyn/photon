@@ -1,6 +1,6 @@
 <script lang="ts">
   import { getClient } from '$lib/api/client.svelte'
-  import type { Community, ListingType } from '$lib/api/types'
+  import type { Community } from '$lib/api/types'
   import { MenuButton, Search } from 'mono-svelte'
   import { createEventDispatcher } from 'svelte'
   import { Icon, ServerStack, XCircle } from 'svelte-hero-icons/dist'
@@ -11,7 +11,6 @@
     type?: 'community' | 'instance'
     q?: string
     instance?: string | undefined
-    listing_type?: ListingType
     showWhenEmpty?: boolean
     placeholder?: string
     onselect?: (item: any) => void
@@ -23,33 +22,27 @@
     type = 'community',
     q = $bindable(''),
     instance = undefined,
-    listing_type = 'Subscribed',
     showWhenEmpty = false,
     required,
     ...rest
   }: Props = $props()
 
   const dispatcher = createEventDispatcher<{ select: Community | undefined }>()
-  let instances = $derived(
-    type == 'instance' && getClient().getFederatedInstances(),
-  )
+  let instances = $derived(type == 'instance' && getClient().getFederatedInstances({ kind: 'all' }))
 </script>
 
 {#if type == 'community'}
   <Search
     search={async (q) => {
-      const results = await getClient(instance).search({
-        q: q || ' ',
-        type_: 'Communities',
+      const results = await getClient(instance).listCommunities({
+        search_term: q || ' ',
         limit: 20,
-        listing_type: listing_type,
-        sort: 'TopAll',
+        sort: 'active_monthly',
       })
 
-      return results.communities
+      return results.items
     }}
-    extractName={(c) =>
-      `${c.community.name}@${new URL(c.community.actor_id).hostname}`}
+    extractName={(c) => `${c.community.name}@${new URL(c.community.ap_id).hostname}`}
     bind:query={q}
     {required}
     {...rest}
@@ -71,15 +64,11 @@
     {#snippet children({ item, select })}
       <div in:fly|global={{ y: -4, opacity: 0 }}>
         <MenuButton onclick={() => select(item)}>
-          <Avatar
-            url={item.community.icon}
-            alt={item.community.title}
-            width={24}
-          />
+          <Avatar url={item.community.icon} alt={item.community.title} width={24} />
           <div class="flex flex-col text-left">
             <span>{item.community.title}</span>
             <span class="text-xs opacity-80">
-              {new URL(item.community.actor_id).hostname}
+              {new URL(item.community.ap_id).hostname}
             </span>
           </div>
         </MenuButton>

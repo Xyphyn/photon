@@ -131,3 +131,13 @@ export interface Post extends v4.Post {
   poll?: PostPoll
   event?: PostEvent
 }
+
+export interface CreatePost extends v4.CreatePost {
+  poll?: PostPoll
+  event?: PostEvent
+}
+
+export interface EditPost extends v4.EditPost {
+  poll?: PostPoll
+  event?: PostEvent
+}

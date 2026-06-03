@@ -265,7 +265,10 @@
   >
     {#if tags}
       {#each tags as tag}
-        <div class="hover:brightness-110" style={tag.color ? `--tag-color: ${tag.color};` : ''}>
+        <div
+          class="hover:brightness-110"
+          style={tag.color ? `--tag-color: var(--${tag.color});` : ''}
+        >
           <Badge class={tag.color ? 'badge-tag-color' : ''}>
             {#snippet icon()}
               <Icon src={Tag} micro size="14" />
@@ -358,10 +361,5 @@
   :global(.badge-tag-color) {
     background-color: var(--tag-color, #fff) !important;
     color: var(--tag-text-color, #000) !important;
-
-    @variant dark {
-      background-color: color-mix(in oklab, #222, var(--tag-color, #fff)) !important;
-      color: color-mix(in oklab, #fff 80%, var(--tag-text-color, #fff)) !important;
-    }
   }
 </style>
