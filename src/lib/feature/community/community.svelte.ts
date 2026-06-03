@@ -38,10 +38,17 @@ export class CommunityModel {
       .then((res) => (this.data = res.community_view))
 
     if (profile.current.user) {
-      profile.current.user.follows.push({
-        community: res.community,
-        follower: profile.current.user.local_user_view.person,
-      })
+      if (subscribe) {
+        profile.current.user.follows.push({
+          community: res.community,
+          follower: profile.current.user.local_user_view.person,
+        })
+      } else {
+        const idx = profile.current.user.follows.findIndex(
+          (i) => i.community.id == this.community.id,
+        )
+        if (idx != -1) profile.current.user.follows.splice(idx, 1)
+      }
     }
 
     return res

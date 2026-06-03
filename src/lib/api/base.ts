@@ -216,6 +216,9 @@ export abstract class BaseClient {
   abstract deleteUserBanner(): Promise<types.SuccessResponse>
   abstract deleteCommunityIcon(query: types.CommunityIdQuery): Promise<types.SuccessResponse>
   abstract deleteCommunityBanner(query: types.CommunityIdQuery): Promise<types.SuccessResponse>
+  abstract markNotificationAsRead(
+    form: types.MarkNotificationAsRead,
+  ): Promise<types.SuccessResponse>
   abstract setFlair?(form: types.SetPersonFlair): Promise<types.PersonView>
   abstract getFeeds?(form: types.GetFeeds): Promise<types.GetFeedsResponse>
   abstract getTopics?(form: types.GetTopics): Promise<types.GetTopicsResponse>

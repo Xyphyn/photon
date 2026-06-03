@@ -141,3 +141,7 @@ export interface EditPost extends v4.EditPost {
   poll?: PostPoll
   event?: PostEvent
 }
+
+export interface MarkNotificationAsRead extends v4.MarkNotificationAsRead {
+  type_: v4.NotificationType
+}
