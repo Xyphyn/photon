@@ -1,5 +1,6 @@
 import { browser } from '$app/environment'
-import type { PostView } from '$lib/api/types'
+import type { CommunityView, PostView } from '$lib/api/types'
+import { CommunityModel } from '../community/community.svelte'
 import { PostModel } from '../post/post.svelte'
 
 // The Repository stores client-side cache for uhh
@@ -29,11 +30,21 @@ class Repository<Key, PrimValue, Value> {
 
     return model
   }
+
+  peek = (id: Key) => {
+    if (!browser) return
+
+    return this.data.get(id)
+  }
 }
 
 export const repos = {
-  posts: new Repository<string, PostView, PostModel>(
-    (p) => p.post.ap_id,
+  posts: new Repository<number, PostView, PostModel>(
+    (p) => p.post.id,
     (p) => new PostModel(p),
+  ),
+  communities: new Repository<number, CommunityView, CommunityModel>(
+    (c) => c.community.id,
+    (c) => new CommunityModel(c),
   ),
 }

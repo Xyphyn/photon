@@ -246,6 +246,10 @@ export class Profile {
     )
   }
 
+  subscribed(community: Community): boolean {
+    return this.#current.user?.follows.some((i) => i.community.id == community.id) ?? false
+  }
+
   get isDefaultProfile(): boolean {
     return !this.#current.jwt && this.#current.instance == DEFAULT_INSTANCE_URL
   }

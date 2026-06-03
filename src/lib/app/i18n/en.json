@@ -698,7 +698,8 @@
         "download": "Download",
         "attach": "Attach file",
         "info": "Info",
-        "continue": "Continue"
+        "continue": "Continue",
+        "processing": "Processing..."
     },
     "message": {
         "success": "Success",

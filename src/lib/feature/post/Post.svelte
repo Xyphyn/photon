@@ -67,6 +67,7 @@
     edited={post.post.updated_at}
     style="grid-area: meta;"
     postUrl={post.post.url}
+    tags={post.tags}
     {view}
     {extraBadges}
   />

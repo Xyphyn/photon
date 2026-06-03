@@ -36,6 +36,10 @@ export class PostModel {
     return this.data.person_actions ?? {}
   }
 
+  get tags() {
+    return this.data.tags
+  }
+
   get badges() {
     return {
       deleted: this.post.deleted,
@@ -88,7 +92,7 @@ export class PostModel {
   }
 
   async vote(status: PostVoteStatus) {
-    let voteBoolean = status == 'upvoted' ? true : status == 'downvoted' ? false : undefined
+    const voteBoolean = status == 'upvoted' ? true : status == 'downvoted' ? false : undefined
 
     return await client()
       .likePost({

@@ -5,16 +5,9 @@
   import { t } from '$lib/app/i18n'
   import Markdown from '$lib/app/markdown/Markdown.svelte'
   import { settings } from '$lib/app/settings.svelte'
+  import { repos } from '$lib/feature/feeds/repo.svelte'
   import { resumables } from '$lib/feature/legacy/item'
-  import {
-    mediaType,
-    parseTags,
-    PostActions,
-    PostItem,
-    PostMedia,
-    PostMeta,
-    type Tag,
-  } from '$lib/feature/post'
+  import { mediaType, PostActions, PostItem, PostMedia, PostMeta } from '$lib/feature/post'
   import Skeleton from '$lib/ui/generic/Skeleton.svelte'
   import Placeholder from '$lib/ui/info/Placeholder.svelte'
   import { CommonList } from '$lib/ui/layout'
@@ -28,80 +21,55 @@
 
   let { data } = $props()
 
-  onMount(() => {
-    data.data.value.meta.then((i) => data.data.value.post == i.post_view)
+  let post = $derived(repos.posts.get(data.post))
 
+  onMount(() => {
     resumables.add({
-      name: data.data.value.post.post.name,
+      name: post.post.name,
       type: 'post',
       url: page.url.toString(),
-      avatar: data.data.value.post.post.thumbnail_url,
+      avatar: post.post.thumbnail_url,
     })
 
-    if (
-      !(data.data.value.post.post_actions?.read_at && settings.markPostsAsRead) &&
-      profile.current?.jwt
-    ) {
-      client()
-        .markPostAsRead({
-          read: true,
-          post_id: data.data.value.post.post.id,
-        })
-        .then((v) => (data.data.value.post.post_actions = v.post_view.post_actions))
+    if (!(post.read && settings.markPostsAsRead) && profile.current?.jwt) {
+      post.markRead()
     }
   })
 
   async function reloadComments() {
-    data.data.value.comments = client()
+    data.comments = client()
       .getComments({
         type_: 'all',
-        post_id: data.data.value.post.post.id,
+        post_id: post.post.id,
         sort: settings.defaultSort.comments,
-        max_depth: data.data.value.post.post.comments > 100 ? 1 : 3,
+        max_depth: post.post.comments > 100 ? 1 : 3,
       })
       .then((i) => i.items)
-    data.data.value.params.thread.singleThread = false
+    data.params.thread.singleThread = false
   }
-
-  let tags = $derived.by<{ title?: string; tags: Tag[] }>(() => {
-    const parsed = parseTags(data.data.value.post.post.name)
-
-    return {
-      title: parsed.title,
-      tags: [
-        ...parsed.tags,
-        ...(data.data.value.post.tags?.map((i) => ({
-          content: i.display_name ?? i.name,
-          color: i.color,
-          icon: null,
-          type: 'flair' as 'flair' | 'custom',
-        })) ?? []),
-      ],
-    }
-  })
 </script>
 
 <svelte:head>
   <title>
-    {data.data.value.post.community.title} | {data.data.value.post.post.name}
+    {post.community.title} | {post.post.name}
   </title>
-  <meta property="og:title" content={data.data.value.post.post.name} />
-  {#if !data.data.value.post.post.local}
+  <meta property="og:title" content={post.post.name} />
+  {#if !post.post.local}
     <meta name="robots" content="noindex, follow" />
   {/if}
-  <link rel="canonical" href={data.data.value.post.post.ap_id} />
-  {#if data.data.value.post.post.body}
-    <meta property="description" content={data.data.value.post.post.body.slice(0, 500)} />
-    <meta property="og:description" content={data.data.value.post.post.body.slice(0, 500)} />
-    <meta property="twitter:description" content={data.data.value.post.post.body.slice(0, 500)} />
+  <link rel="canonical" href={post.post.ap_id} />
+  {#if post.post.body}
+    <meta property="description" content={post.post.body.slice(0, 500)} />
+    <meta property="og:description" content={post.post.body.slice(0, 500)} />
+    <meta property="twitter:description" content={post.post.body.slice(0, 500)} />
   {/if}
   <meta property="og:url" content={page.url.toString()} />
-  {#if mediaType(data.data.value.post.post.url) == 'image'}
-    <meta property="og:image" content={data.data.value.post.post.url} />
-    <meta property="twitter:card" content={data.data.value.post.post.url} />
-  {:else if data.data.value.post.post.thumbnail_url}
-    <meta property="og:image" content={data.data.value.post.post.thumbnail_url} />
-    <meta property="twitter:card" content={data.data.value.post.post.thumbnail_url} />
+  {#if mediaType(post.post.url) == 'image'}
+    <meta property="og:image" content={post.post.url} />
+    <meta property="twitter:card" content={post.post.url} />
+  {:else if post.post.thumbnail_url}
+    <meta property="og:image" content={post.post.thumbnail_url} />
+    <meta property="twitter:card" content={post.post.thumbnail_url} />
   {/if}
 </svelte:head>
 
@@ -109,49 +77,31 @@
   <header class="flex flex-col gap-2">
     <div class="flex flex-row items-center gap-2 flex-wrap">
       <PostMeta
-        community={data.data.value.post.community}
-        user={data.data.value.post.creator}
+        community={post.community}
+        user={post.creator}
         subscribed={profile.current.user?.follows?.find(
-          (i) => i.community.id == data.data.value.post.community.id,
+          (i) => i.community.id == post.community.id,
         ) != null}
-        badges={{
-          deleted: data.data.value.post.post.deleted,
-          removed: data.data.value.post.post.removed,
-          locked: data.data.value.post.post.locked,
-          featured:
-            data.data.value.post.post.featured_community ||
-            data.data.value.post.post.featured_local,
-          nsfw: data.data.value.post.post.nsfw,
-          saved: data.data.value.post.post_actions?.saved_at != null,
-          admin: data.data.value.post.creator_is_admin,
-          moderator: data.data.value.post.creator_is_moderator,
-        }}
-        published={publishedToDate(data.data.value.post.post.published_at)}
-        edited={data.data.value.post.post.updated_at}
-        title={data.data.value.post.post.name}
+        badges={post.badges}
+        published={publishedToDate(post.post.published_at)}
+        edited={post.post.updated_at}
+        title={post.post.name}
         style="width: max-content;"
-        tags={tags.tags}
       />
     </div>
     <h1 class="font-medium font-display text-xl leading-5 tracking-tight">
-      <Markdown inline source={tags.title ?? data.data.value.post.post.name} />
+      <Markdown inline source={post.post.name} />
     </h1>
   </header>
-  <PostMedia
-    type={mediaType(data.data.value.post.post)}
-    post={data.data.value.post.post}
-    opened
-    view="cozy"
-    autoplay={false}
-  />
-  {#if data.data.value.post.post.body}
+  <PostMedia {post} opened view="cozy" autoplay={false} />
+  {#if post.post.body}
     <div class="text-base text-slate-800 dark:text-zinc-300 leading-normal">
-      <Markdown source={data.data.value.post.post.body} />
+      <Markdown source={post.post.body} />
     </div>
   {/if}
   <div class="w-full relative">
     <PostActions
-      bind:post={data.data.value.post}
+      bind:post
       onedit={() =>
         toast({
           content: 'The post was edited successfully.',
@@ -159,7 +109,7 @@
         })}
     />
   </div>
-  {#await data.data.value.meta then meta}
+  {#await data.meta then meta}
     {@const crossposts = meta.cross_posts}
     {#if crossposts?.length > 0}
       <Expandable class="text-base mt-2 w-full cursor-pointer">
@@ -188,7 +138,7 @@
       {$t('routes.post.commentCount')}
       {#snippet action()}
         <span class="font-bold">
-          <FormattedNumber number={data.data.value.post.post.comments} />
+          <FormattedNumber number={post.post.comments} />
         </span>
       {/snippet}
     </EndPlaceholder>
@@ -200,7 +150,7 @@
       </Button>
     </noscript>
   {/if}
-  {#await data.data.value.comments}
+  {#await data.comments}
     <div class="flex flex-col gap-4">
       {#each new Array(10) as _, index}
         {_}
@@ -216,13 +166,13 @@
   {:then comments}
     <CommentProvider
       {comments}
-      post={data.data.value.post}
-      focus={data.data.value.params.thread.focus}
+      post={post.data}
+      focus={data.params.thread.focus}
       onupdate={reloadComments}
-      bind:sort={data.data.value.params.comments.sort}
+      bind:sort={data.params.comments.sort}
       virtualize={!page.url.searchParams.get('noVirtualize')}
-      showContext={data.data.value.params.thread.showContext}
-      singleThread={data.data.value.params.thread.singleThread}
+      showContext={data.params.thread.showContext}
+      singleThread={data.params.thread.singleThread}
     />
     {#if comments.length == 0}
       <Placeholder
@@ -232,12 +182,12 @@
       ></Placeholder>
     {/if}
   {/await}
-  {#if data.data.value.post.post.comments > 5}
+  {#if post.post.comments > 5}
     <EndPlaceholder>
       {$t('routes.post.commentCount')}
       {#snippet action()}
         <span class="text-black dark:text-white font-bold">
-          {data.data.value.post.post.comments}
+          {post.post.comments}
         </span>
         <Button
           color="tertiary"

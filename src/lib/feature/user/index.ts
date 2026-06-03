@@ -1,6 +1,6 @@
 import { client } from '$lib/api/client.svelte'
-import type { Community, MyUserInfo } from '$lib/api/types'
-import { profile, type ProfileInfo } from '$lib/app/auth'
+import type { MyUserInfo } from '$lib/api/types'
+import { type ProfileInfo } from '$lib/app/auth'
 
 // TODO obliterate this file
 export async function blockUser(block: boolean, id: number) {
@@ -12,24 +12,6 @@ export async function blockUser(block: boolean, id: number) {
 
 export function isBlocked(me: MyUserInfo, user: number) {
   return me.person_blocks.find((b) => b.target.id == user)
-}
-
-export function addSubscription(
-  community: Community,
-  subscribe: boolean = true,
-) {
-  const index = profile.current.user?.follows
-    .map((f) => f.community.id)
-    .indexOf(community.id)
-
-  if (subscribe && index == -1) {
-    profile.current.user?.follows.push({
-      follower: profile.current.user.follows[0]?.follower,
-      community: community,
-    })
-  } else {
-    profile.current.user?.follows.splice(index ?? 0, 1)
-  }
 }
 
 export function hasFavorite(profile: ProfileInfo, id: number): boolean {

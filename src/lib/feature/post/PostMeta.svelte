@@ -1,5 +1,5 @@
-<script lang="ts" module>
-  import type { Community, Person } from '$lib/api/types'
+<script lang="ts">
+  import type { Community, CommunityTagsView, Person } from '$lib/api/types'
   import { profile } from '$lib/app/auth'
   import { t } from '$lib/app/i18n'
   import Markdown from '$lib/app/markdown/Markdown.svelte'
@@ -24,9 +24,17 @@
   import { SvelteMap } from 'svelte/reactivity'
   import CommunityLink from '../community/CommunityLink.svelte'
   import UserLink from '../user/UserLink.svelte'
-</script>
 
-<script lang="ts">
+  type BadgeType =
+    | 'nsfw'
+    | 'saved'
+    | 'featured'
+    | 'deleted'
+    | 'removed'
+    | 'locked'
+    | 'moderator'
+    | 'admin'
+
   interface Props {
     community?: Community
     showCommunity?: boolean
@@ -40,7 +48,7 @@
     view?: View
     // Badges
     badges?: Record<BadgeType, boolean>
-    tags?: Tag[]
+    tags?: CommunityTagsView
     style?: string
     titleClass?: string
     extraBadges?: import('svelte').Snippet
@@ -252,42 +260,24 @@
     {/if}
   </div>
   <div
-    class="flex flex-row min-sm:justify-end items-center self-center flex-wrap gap-2 *:shrink-0 badges min-sm:ml-2"
+    class="flex flex-row sm:justify-end items-center self-center flex-wrap gap-2 *:shrink-0 badges sm:ml-2"
     style="grid-area: badges;"
   >
     {#if tags}
       {#each tags as tag}
-        {@const href =
-          tag.type == 'flair'
-            ? null
-            : `/search?community=${community?.id}&q=[${tag.content}]&type=Posts`}
-        <svelte:element
-          this={href ? 'a' : 'div'}
-          {href}
-          class="hover:brightness-110"
-          style="{tag.color ? `--tag-color: ${tag.color};` : ''} {tag.textColor
-            ? `--tag-text-color: ${tag.textColor}`
-            : ''}"
-        >
+        <div class="hover:brightness-110" style={tag.color ? `--tag-color: ${tag.color};` : ''}>
           <Badge class={tag.color ? 'badge-tag-color' : ''}>
             {#snippet icon()}
-              {#if tag.icon}
-                <Icon src={tag.icon} micro size="14" />
-              {:else if tag === undefined}
-                <Icon src={Tag} micro size="14" />
-              {/if}
+              <Icon src={Tag} micro size="14" />
             {/snippet}
-            {tag.content}
+            {tag.display_name ?? tag.name}
           </Badge>
-        </svelte:element>
+        </div>
       {/each}
     {/if}
     {#each Object.keys(badges)
-      // filter by ones that are true
       .filter((i) => badges[i as BadgeType] == true)
-      // get from predetermined map
       .map((i) => badgeToData.get(i as BadgeType))
-      // remove null
       .filter((i) => i != undefined) as badge}
       <Badge label={badge.label} color={badge.color} allowIconOnly>
         {#snippet icon()}

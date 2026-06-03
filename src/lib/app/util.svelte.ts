@@ -3,7 +3,9 @@ import { goto } from '$app/navigation'
 import { env } from '$env/dynamic/public'
 import { client } from '$lib/api/client.svelte'
 import type { Community, Person } from '$lib/api/types'
+import { toast } from 'mono-svelte'
 import { SvelteURL } from 'svelte/reactivity'
+import { errorMessage } from './error'
 import { t } from './i18n'
 
 // Despite the name, this will round up
@@ -212,4 +214,20 @@ export function recursiveEqual<T>(a: T, b: T): boolean {
   }
 
   return true
+}
+
+export async function loader<T>(
+  setLoading: (v: boolean) => void,
+  fn: () => Promise<T>,
+  final?: () => void,
+) {
+  setLoading(true)
+  try {
+    return await fn()
+  } catch (e) {
+    toast({ content: errorMessage(e), type: 'error' })
+  } finally {
+    final?.()
+    setLoading(false)
+  }
 }
