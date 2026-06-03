@@ -1,4 +1,4 @@
-import { LemmyHttp } from 'lemmy-js-client'
+import { LemmyHttp } from 'lemmy-js-client-v3'
 import type { BaseClient, ClientType } from '../base'
 import { fromGetPosts, toListingType } from './rewrite'
 
@@ -60,7 +60,7 @@ export function createLemmyClient(
   })
 }
 
-export class LemmyClient {
+export class LemmyV3Client {
   static constants = LemmyClientConstants
 
   #proxy: BaseClient
@@ -76,7 +76,7 @@ export class LemmyClient {
 
     return new Proxy(this, {
       get: (target, prop) => {
-        if (prop === 'constructor') return LemmyClient
+        if (prop === 'constructor') return LemmyV3Client
         return (target.#proxy as any)[prop]
       },
     }) as any
