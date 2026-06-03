@@ -35,7 +35,7 @@ export async function load({ params, url, route }) {
   }
 
   // TODO use Lemmy profile default settings
-  const sort = settings?.defaultSort?.comments ?? 'Hot'
+  const sort = settings?.defaultSort?.comments ?? 'hot'
 
   const {
     parentId,
@@ -88,9 +88,9 @@ export async function load({ params, url, route }) {
     slots: {
       sidebar: {
         component: CommunityCard,
-        props: {
-          community: loaded.meta.then((i) => repos.communities.get(i.community_view)),
-        },
+        props: loaded.meta.then((i) => ({
+          community: repos.communities.get(i.community_view),
+        })),
       },
     },
   }

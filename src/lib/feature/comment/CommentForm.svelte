@@ -53,13 +53,7 @@
   let language: number | undefined = $state()
 
   async function submit() {
-    if (
-      !profile.current?.user ||
-      !profile.current?.jwt ||
-      value == '' ||
-      editing
-    )
-      return
+    if (!profile.current?.user || !profile.current?.jwt || value == '' || editing) return
 
     loading = true
 
@@ -111,6 +105,7 @@
       bind:value
       disabled={locked || loading || banned}
       previewButton={previewAction}
+      required
     >
       <Menu>
         {#snippet target(attachment)}
@@ -127,16 +122,13 @@
         {/snippet}
 
         {#if site.data}
-          <MenuButton
-            class="min-h-[16px] py-0"
-            onclick={() => (language = undefined)}
-          >
+          <MenuButton class="min-h-4 py-0" onclick={() => (language = undefined)}>
             <Icon src={XMark} size="16" micro />
             {$t('form.post.unset')}
           </MenuButton>
           {#each site.data?.all_languages as languageOption}
             <MenuButton
-              class="min-h-[16px] py-0"
+              class="min-h-4 py-0"
               onclick={() => {
                 language = languageOption.id
               }}
@@ -156,12 +148,7 @@
           class="w-8 h-8"
           rounding="xl"
         >
-          <Icon
-            src={XMark}
-            size="16"
-            micro
-            class="text-slate-600 dark:text-zinc-400"
-          />
+          <Icon src={XMark} size="16" micro class="text-slate-600 dark:text-zinc-400" />
         </Button>
         <Button
           submit

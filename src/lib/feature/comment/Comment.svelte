@@ -1,16 +1,12 @@
 <script lang="ts">
   import { page } from '$app/state'
-  import { getClient } from '$lib/api/client.svelte'
-  import { profile } from '$lib/app/auth'
-  import { errorMessage } from '$lib/app/error'
   import { t } from '$lib/app/i18n'
   import Markdown from '$lib/app/markdown/Markdown.svelte'
   import { settings } from '$lib/app/settings.svelte'
+  import { loader } from '$lib/app/util.svelte'
   import { publishedToDate } from '$lib/ui/util/date'
   import { Button, Modal, toast } from 'mono-svelte'
-  import RelativeDate, {
-    formatRelativeDate,
-  } from 'mono-svelte/util/RelativeDate.svelte'
+  import RelativeDate, { formatRelativeDate } from 'mono-svelte/util/RelativeDate.svelte'
   import {
     Bookmark,
     Icon,
@@ -27,7 +23,8 @@
   import UserLink from '../user/UserLink.svelte'
   import CommentActions from './CommentActions.svelte'
   import CommentForm from './CommentForm.svelte'
-  import type { CommentNodeI } from './comments.svelte'
+  import type { CommentNodeI } from './comment-tree.svelte'
+  import { CommentModel } from './comment.svelte'
 
   interface Props {
     node: CommentNodeI
@@ -54,34 +51,15 @@
   }: Props = $props()
 
   let editing = $state(false)
-  let newComment = $state(node.comment_view.comment.content)
+  let newComment = $state(node.comment.comment.content)
   let editingLoad = $state(false)
 
-  async function save(type: 'reply' | 'edit') {
-    if (!profile.current?.jwt || newComment.length <= 0) return
-
-    editingLoad = true
-
-    try {
-      if (type == 'edit') {
-        await getClient().editComment({
-          comment_id: node.comment_view.comment.id,
-          content: newComment,
-        })
-
-        node.comment_view.comment.content = newComment
-
-        editing = false
-      }
-    } catch (err) {
-      toast({
-        content: errorMessage(err as string),
-        type: 'error',
-      })
-    }
-
-    editingLoad = false
-  }
+  const save = () =>
+    loader(
+      (v) => (editingLoad = v),
+      () => node.comment.edit(newComment),
+      () => toast({ content: $t('common.success'), type: 'success' }),
+    )
 </script>
 
 {#if editing}
@@ -92,13 +70,13 @@
     <form
       onsubmit={(e) => {
         e.preventDefault()
-        save(replying ? 'reply' : 'edit')
+        save()
       }}
       class="contents"
     >
       <CommentForm
         bind:value={newComment}
-        postId={node.comment_view.comment.id}
+        postId={node.comment.comment.id}
         actions={false}
         preview={true}
       />
@@ -116,15 +94,11 @@
   </Modal>
 {/if}
 
-<li
-  class={['py-3 relative', clazz]}
-  id={node.comment_view.comment.id.toString()}
->
+<li class={['py-3 relative', clazz]} id={node.comment.comment.id.toString()}>
   {#if meta}
-    {@const creatorIsOp =
-      node.comment_view.creator.id == node.comment_view.post.creator_id}
+    {@const creatorIsOp = node.comment.creator.id == node.comment.post.creator_id}
     <label
-      for="comment-expand-{node.comment_view.comment.id}"
+      for="comment-expand-{node.comment.comment.id}"
       class="flex flex-row cursor-pointer gap-2 items-center group text-sm flex-wrap w-full z-0 group relative"
     >
       <div
@@ -133,8 +107,8 @@
           'bg-slate-100 dark:bg-zinc-900 -z-10 rounded-full inline-flex items-center justify-end',
         ]}
       >
-        {#if node.comment_view.counts.child_count > 0}
-          {@const children = node.comment_view.counts.child_count}
+        {#if node.comment.comment.child_count > 0}
+          {@const children = node.comment.comment.child_count}
           <div
             aria-label={$t('aria.comments.children', { childCount: children })}
             class="font-medium"
@@ -158,14 +132,9 @@
           creatorIsOp && 'text-blue-600 dark:text-blue-400 font-bold',
         ]}
       >
-        <UserLink
-          inComment
-          avatarSize={20}
-          avatar
-          user={node.comment_view.creator}
-        >
+        <UserLink inComment avatarSize={20} avatar user={node.comment.creator}>
           {#snippet extraBadges()}
-            {#if node.comment_view.creator_is_moderator}
+            {#if node.comment.creator.moderator}
               <Icon
                 src={ShieldCheck}
                 size="16"
@@ -174,7 +143,7 @@
                 aria-label={$t('class.moderator')}
               />
             {/if}
-            {#if node.comment_view.creator_is_admin}
+            {#if node.comment.creator.admin}
               <Icon
                 src={ShieldCheck}
                 size="16"
@@ -186,35 +155,24 @@
           {/snippet}
         </UserLink>
         {#if creatorIsOp}
-          <Icon
-            mini
-            size="16"
-            src={Microphone}
-            class="text-blue-500 dark:text-blue-400"
-          />
+          <Icon mini size="16" src={Microphone} class="text-blue-500 dark:text-blue-400" />
         {/if}
       </span>
       <RelativeDate
         class="text-slate-600 dark:text-zinc-400"
-        date={publishedToDate(node.comment_view.comment.published)}
+        date={publishedToDate(node.comment.comment.published_at)}
       />
       <span class="text-slate-600 dark:text-zinc-400 flex flex-row gap-2 ml-1">
-        {#if node.comment_view.comment.updated}{@const edited = $t(
-            'post.meta.lastEdited',
-            {
-              default: formatRelativeDate(
-                publishedToDate(node.comment_view.comment.updated),
-                {
-                  style: 'long',
-                },
-              ),
-            },
-          )}
+        {#if node.comment.comment.updated_at}{@const edited = $t('post.meta.lastEdited', {
+            default: formatRelativeDate(publishedToDate(node.comment.comment.updated_at), {
+              style: 'long',
+            }),
+          })}
           <div title={edited}>
             <Icon src={Pencil} micro size="14" />
           </div>
         {/if}
-        {#if node.comment_view.comment.deleted}
+        {#if node.comment.deleted}
           <Icon
             src={Trash}
             solid
@@ -223,7 +181,7 @@
             class="text-red-600 dark:text-red-500"
           />
         {/if}
-        {#if node.comment_view.comment.removed}
+        {#if node.comment.comment.removed}
           <Icon
             src={Trash}
             solid
@@ -232,7 +190,7 @@
             class="text-green-600 dark:text-green-500"
           />
         {/if}
-        {#if node.comment_view.saved}
+        {#if node.comment.saved}
           <Icon
             src={Bookmark}
             solid
@@ -244,7 +202,7 @@
       </span>
       {#if settings.debugInfo}
         <span class="text-slate-600 dark:text-zinc-400 font-mono ml-auto">
-          #{node.comment_view.comment.id}
+          #{node.comment.comment.id}
         </span>
       {/if}
     </label>
@@ -252,35 +210,29 @@
   <input
     class="appearance-none absolute top-0 left-0 h-8 w-full pointer-events-none comment-expand"
     type="checkbox"
-    id="comment-expand-{node.comment_view.comment.id}"
+    id="comment-expand-{node.comment.comment.id}"
     bind:checked={open}
   />
   <div class={['expand max-w-full', contentClass]} inert={!open}>
     <div id="comment-content">
-      <div
-        class={[
-          'flex flex-col whitespace-pre-wrap max-w-full gap-1 mt-1 relative w-full',
-        ]}
-      >
+      <div class={['flex flex-col whitespace-pre-wrap max-w-full gap-1 mt-1 relative w-full']}>
         <Markdown
-          source={node.comment_view.comment.content}
+          source={node.comment.comment.content}
           noStyle
           class={[
             'text-[15px] font-reading sm:text-base text-slate-700 dark:text-zinc-300 *:leading-[1.6] wrap-break-word space-y-3',
-            node.comment_view.comment.distinguished
+            node.comment.comment.distinguished
               ? 'material-success px-3 py-1.5 rounded-xl max-w-max'
-              : page.url.hash.slice(1) ==
-                  node.comment_view.comment.id.toString() &&
+              : page.url.hash.slice(1) == node.comment.comment.id.toString() &&
                 'material-info px-3 py-1.5 rounded-xl max-w-max',
           ]}
         />
         {#if actions}
           <CommentActions
-            comment={node.comment_view}
+            comment={node.comment}
             bind:replying
             onedit={() => (editing = true)}
-            disabled={node.comment_view.banned_from_community ||
-              node.comment_view.post.locked}
+            disabled={!node.comment.canReply}
           />
         {/if}
       </div>
@@ -289,13 +241,13 @@
         <div transition:slide={{ duration: 600, easing: expoOut }}>
           <CommentForm
             label={$t('comment.reply')}
-            postId={node.comment_view.post.id}
-            parentId={node.comment_view.comment.id}
+            postId={node.comment.post.id}
+            parentId={node.comment.comment.id}
             oncomment={(e) => {
               node.children = [
                 {
                   children: [],
-                  comment_view: e.comment_view,
+                  comment: new CommentModel(e.comment_view),
                   depth: node.depth + 1,
                   expanded: true,
                 },

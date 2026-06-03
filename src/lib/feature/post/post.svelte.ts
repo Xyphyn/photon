@@ -1,9 +1,9 @@
 import { client } from '$lib/api/client.svelte'
-import type { PostView } from '$lib/api/types'
+import type { Person, PostView } from '$lib/api/types'
 import { settings } from '$lib/app/settings.svelte'
 import { mediaType } from './post-helpers'
 
-type PostVoteStatus = 'upvoted' | 'none' | 'downvoted'
+type VoteStatus = 'upvoted' | 'none' | 'downvoted'
 
 export class PostModel {
   data: PostView
@@ -20,8 +20,12 @@ export class PostModel {
     return this.data.community
   }
 
-  get creator() {
-    return this.data.creator
+  get creator(): Person & { moderator: boolean; admin: boolean } {
+    return {
+      ...this.data.creator,
+      moderator: this.data.creator_is_moderator,
+      admin: this.data.creator_is_admin,
+    }
   }
 
   get postActions() {
@@ -79,7 +83,7 @@ export class PostModel {
     return 'none'
   }
 
-  get myVote(): PostVoteStatus {
+  get myVote(): VoteStatus {
     return this.postActions.vote_is_upvote === true
       ? 'upvoted'
       : this.postActions.vote_is_upvote === false
@@ -91,7 +95,7 @@ export class PostModel {
     this.data.post = postView.post
   }
 
-  async vote(status: PostVoteStatus) {
+  async vote(status: VoteStatus) {
     const voteBoolean = status == 'upvoted' ? true : status == 'downvoted' ? false : undefined
 
     return await client()

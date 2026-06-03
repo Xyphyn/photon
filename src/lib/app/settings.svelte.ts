@@ -50,7 +50,7 @@ function resolveSchema(schema: Record<string, any>): any {
 }
 
 const settingsSchema = {
-  settingsVer: { default: 8 },
+  settingsVer: { default: 9 },
   expandableImages: { default: true, env: 'PUBLIC_EXPANDABLE_IMAGES' },
   markReadPosts: { default: true, env: 'PUBLIC_MARK_READ_POSTS' },
   showInstances: {
@@ -59,10 +59,10 @@ const settingsSchema = {
     comments: { default: true, env: 'PUBLIC_SHOW_INSTANCES_COMMENTS' },
   },
   defaultSort: {
-    sort: { default: 'Active' as SortType, env: 'PUBLIC_DEFAULT_FEED_SORT' },
-    feed: { default: 'Local' as ListingType, env: 'PUBLIC_DEFAULT_FEED' },
+    sort: { default: 'active' as SortType, env: 'PUBLIC_DEFAULT_FEED_SORT' },
+    feed: { default: 'local' as ListingType, env: 'PUBLIC_DEFAULT_FEED' },
     comments: {
-      default: 'Hot' as CommentSortType,
+      default: 'hot' as CommentSortType,
       env: 'PUBLIC_DEFAULT_COMMENT_SORT',
     },
   },
@@ -94,9 +94,7 @@ const settingsSchema = {
     defaultRemoveAction: { default: null as 'comment' | 'message' | null },
   },
   modlogCardView: {
-    default: (toBool(env.PUBLIC_MODLOG_CARD_VIEW) ?? undefined) as
-      | boolean
-      | undefined,
+    default: (toBool(env.PUBLIC_MODLOG_CARD_VIEW) ?? undefined) as boolean | undefined,
   },
   debugInfo: { default: false, env: 'PUBLIC_DEBUG_INFO' },
   expandImages: { default: true, env: 'PUBLIC_EXPAND_IMAGES' },
@@ -154,12 +152,23 @@ function createSettingsState(initial: Settings): Settings {
       const localSettings = JSON.parse(localStorage.getItem('settings') ?? '{}')
       const merged = mergeDeep(initial, localSettings)
 
+      migrate(merged)
+
       settings = merged
     } catch {
       /* empty */
     }
   }
   return settings
+}
+
+function migrate(settings: Settings) {
+  if (settings.settingsVer <= 8) {
+    settings.defaultSort.feed = settings.defaultSort.feed.toLowerCase() as ListingType
+    settings.defaultSort.sort = settings.defaultSort.sort.toLowerCase() as ListingType
+    settings.defaultSort.comments = settings.defaultSort.comments.toLowerCase() as CommentSortType
+  }
+  settings.settingsVer = defaultSettings.settingsVer
 }
 
 export const settings = createSettingsState(structuredClone(defaultSettings))

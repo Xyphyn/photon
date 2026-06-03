@@ -44,7 +44,7 @@
   </MenuButton>
 {/if}
 {#if profile.current?.jwt}
-  <MenuButton onclick={post.markRead} icon={post.read ? EyeSlash : Eye}>
+  <MenuButton onclick={() => post.markRead(!post.read)} icon={post.read ? EyeSlash : Eye}>
     {post.read ? $t('post.actions.more.markUnread') : $t('post.actions.more.markRead')}
   </MenuButton>
 {/if}

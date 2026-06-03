@@ -1,18 +1,19 @@
 // TODO update to svelte 5 type stuff
 
 import { client } from '$lib/api/client.svelte'
-import type { Comment, CommentView, Community, Person, PrivateMessageView } from '$lib/api/types'
+import type { Comment, Community, Person, PrivateMessageView } from '$lib/api/types'
 import { writable } from 'svelte/store'
+import type { CommentModel } from '../comment/comment.svelte'
 import type { PostModel } from '../post/post.svelte'
 
 interface Modals {
   reporting: {
     open: boolean
-    item: PostModel | CommentView | PrivateMessageView | undefined
+    item: PostModel | CommentModel | PrivateMessageView | undefined
   }
   removing: {
     open: boolean
-    item: PostModel | CommentView | undefined
+    item: PostModel | CommentModel | undefined
     purge: boolean
   }
   banning: {
@@ -23,7 +24,7 @@ interface Modals {
   }
   votes: {
     open: boolean
-    item: PostModel | CommentView | undefined
+    item: PostModel | CommentModel | undefined
   }
 }
 
@@ -49,7 +50,7 @@ export const modals = writable<Modals>({
   },
 })
 
-export function report(item: PostModel | CommentView | PrivateMessageView) {
+export function report(item: PostModel | CommentModel | PrivateMessageView) {
   modals.update((m) => ({
     ...m,
     reporting: {
@@ -59,7 +60,7 @@ export function report(item: PostModel | CommentView | PrivateMessageView) {
   }))
 }
 
-export function remove(item: PostModel | CommentView, purge: boolean = false) {
+export function remove(item: PostModel | CommentModel, purge: boolean = false) {
   modals.update((m) => ({
     ...m,
     removing: {
@@ -82,14 +83,14 @@ export function ban(banned: boolean, item: Person, community?: Community) {
   }))
 }
 
-export async function feature(featured: boolean, item: Comment, jwt: string) {
-  return await client({ auth: jwt }).distinguishComment({
+export async function feature(featured: boolean, item: Comment) {
+  return await client().distinguishComment({
     comment_id: item.id,
     distinguished: featured,
   })
 }
 
-export async function viewVotes(item: PostModel | CommentView) {
+export async function viewVotes(item: PostModel | CommentModel) {
   modals.update((m) => ({
     ...m,
     votes: {

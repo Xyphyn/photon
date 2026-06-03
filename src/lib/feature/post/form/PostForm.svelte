@@ -58,9 +58,7 @@
 
   let { editPost, init, title, onsubmit }: Props = $props()
 
-  let form = $state<PostFormState>(
-    init ?? new PostFormState({ type: 'normal' }),
-  )
+  let form = $state<PostFormState>(init ?? new PostFormState({ type: 'normal' }))
 
   let extendedCommunity = $derived.by(() => {
     const api = client()
@@ -121,10 +119,7 @@
 {/if}
 
 {#if uploadImage}
-  <ImageInputModal
-    bind:open={uploadImage}
-    bind:imageUrl={() => '', (v) => (form.url = v)}
-  />
+  <ImageInputModal bind:open={uploadImage} bind:imageUrl={() => '', (v) => (form.url = v)} />
 {/if}
 
 {#if customThumbnail}
@@ -157,10 +152,7 @@
             } else form.flairList.push(flair)
           }}
         >
-          <Badge
-            color={selected ? 'gray-subtle' : 'custom'}
-            class="ring-white/20"
-          >
+          <Badge color={selected ? 'gray-subtle' : 'custom'} class="ring-white/20">
             {#snippet icon()}
               <Icon src={selected ? Check : Plus} size="16" micro />
             {/snippet}
@@ -223,9 +215,7 @@
     form
       .submit(editPost)
       .then(onsubmit)
-      .catch((err) =>
-        pushError({ message: errorMessage(err as string), scope: 'post-form' }),
-      )
+      .catch((err) => pushError({ message: errorMessage(err as string), scope: 'post-form' }))
       .then(() => (loading = false))
   }}
   class="flex flex-col gap-4 h-full"
@@ -259,11 +249,7 @@
           rounding="xl"
         >
           {#snippet prefix()}
-            <Avatar
-              url={form.community?.icon}
-              alt={form.community?.name}
-              width={24}
-            />
+            <Avatar url={form.community?.icon} alt={form.community?.name} width={24} />
           {/snippet}
           <div class="flex flex-col gap-0">
             <span class="text-sm">{form.community.name}</span>
@@ -324,10 +310,7 @@
         {#each form.poll.choices as _, index}
           <li class="px-4 py-1 flex flex-row items-center xs">
             <div class="p-0! font-medium flex-1">
-              <FreeTextInput
-                bind:value={form.poll.choices[index].choice_text}
-                class="w-full"
-              />
+              <FreeTextInput bind:value={form.poll.choices[index].choice_text} class="w-full" />
             </div>
             <div>
               <Button
@@ -374,18 +357,12 @@
             bind:value={
               () => {
                 return form.poll?.end_poll
-                  ? Math.floor(
-                      Date.now() -
-                        publishedToDate(form.poll?.end_poll).getTime(),
-                    )
+                  ? Math.floor(Date.now() - publishedToDate(form.poll?.end_poll).getTime())
                   : Date.now() + 24 * 60 * 60
               },
               (v) => {
                 if (v <= 0) form.poll!.end_poll = undefined
-                else
-                  form.poll!.end_poll = new Date(
-                    Date.now() + v * 1000,
-                  ).toISOString()
+                else form.poll!.end_poll = new Date(Date.now() + v * 1000).toISOString()
               }
             }
           />
@@ -405,10 +382,7 @@
     <div
       class="bg-gradient-to-l from-slate-25 to-slate-25/0 dark:from-zinc-925 dark:to-zinc-925/0 absolute right-0 w-3 h-full z-10"
     ></div>
-    <ButtonGroup
-      orientation="horizontal"
-      class="flex flex-row *:flex-shrink-0 w-full"
-    >
+    <ButtonGroup orientation="horizontal" class="flex flex-row *:flex-shrink-0 w-full">
       {#if form.type == 'normal'}
         <Button
           onclick={() => {
@@ -422,8 +396,7 @@
           <Button
             class="animate-pop-in"
             color={(form.altText ?? '') != '' ? 'primary' : 'secondary'}
-            onclick={() =>
-              modal({ title: $t('form.post.altText'), snippet: altText })}
+            onclick={() => modal({ title: $t('form.post.altText'), snippet: altText })}
             icon={ChatBubbleBottomCenterText}
           >
             {$t('form.post.altText')}
@@ -452,8 +425,7 @@
           <Button
             color={form.flairList.length > 0 ? 'primary' : 'secondary'}
             class="animate-pop-in"
-            onclick={() =>
-              modal({ title: $t('form.post.flair'), snippet: flairs })}
+            onclick={() => modal({ title: $t('form.post.flair'), snippet: flairs })}
             icon={Tag}
           >
             {$t('form.post.flair')}

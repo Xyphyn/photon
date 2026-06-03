@@ -1,10 +1,13 @@
 <script lang="ts">
+  // TODO make community form use
   import { goto } from '$app/navigation'
   import { client, site } from '$lib/api/client.svelte'
+  import type { CommunityVisibility } from '$lib/api/types'
   import { profile } from '$lib/app/auth'
   import { errorMessage } from '$lib/app/error'
   import { t } from '$lib/app/i18n'
   import MarkdownEditor from '$lib/app/markdown/MarkdownEditor.svelte'
+  import { communityLink } from '$lib/app/util.svelte'
   import ImageInputUpload from '$lib/ui/form/ImageInputUpload.svelte'
   import { Header } from '$lib/ui/layout'
   import {
@@ -21,7 +24,6 @@
     toast,
   } from 'mono-svelte'
   import { GlobeAlt, Icon, MapPin, Plus } from 'svelte-hero-icons/dist'
-  import { addSubscription } from '../user'
 
   interface Props {
     /**
@@ -37,7 +39,7 @@
       nsfw: boolean
       postsLockedToModerators: boolean
       submitting: boolean
-      visibility: 'Public' | 'LocalOnly'
+      visibility: CommunityVisibility
       languages?: number[]
     }
     formtitle?: import('svelte').Snippet
@@ -52,7 +54,7 @@
       nsfw: false,
       postsLockedToModerators: false,
       submitting: false,
-      visibility: 'Public',
+      visibility: 'public',
       languages: undefined,
     }),
     formtitle,
@@ -70,11 +72,9 @@
       const res = edit
         ? await client().editCommunity({
             title: formData.displayName,
-            description: formData.sidebar,
+            summary: formData.sidebar,
             nsfw: formData.nsfw,
             posting_restricted_to_mods: formData.postsLockedToModerators,
-            icon: formData.icon,
-            banner: formData.banner,
             community_id: edit,
             visibility: formData.visibility,
             discussion_languages: formData.languages,
@@ -82,11 +82,9 @@
         : await client().createCommunity({
             name: formData.name,
             title: formData.displayName,
-            description: formData.sidebar,
+            summary: formData.sidebar,
             nsfw: formData.nsfw,
             posting_restricted_to_mods: formData.postsLockedToModerators,
-            icon: formData.icon,
-            banner: formData.banner,
             visibility: formData.visibility,
             discussion_languages: formData.languages,
           })
@@ -117,16 +115,9 @@
             ],
           }
         }
-
-        addSubscription(res.community_view.community, true)
       }
 
-      if (!edit)
-        goto(
-          `/c/${res.community_view.community.name}@${
-            new URL(res.community_view.community.actor_id).hostname
-          }`,
-        )
+      if (!edit) goto(communityLink(res.community_view.community))
     } catch (err) {
       toast({
         content: errorMessage(err as string),
@@ -157,20 +148,10 @@
     }}
     disabled={edit != undefined}
   />
-  <TextInput
-    required
-    label={$t('form.profile.displayName')}
-    bind:value={formData.displayName}
-  />
+  <TextInput required label={$t('form.profile.displayName')} bind:value={formData.displayName} />
   <div class="flex flex-row gap-4 flex-wrap *:flex-1">
-    <ImageInputUpload
-      bind:imageUrl={formData.icon}
-      label={$t('routes.admin.config.icon')}
-    />
-    <ImageInputUpload
-      bind:imageUrl={formData.banner}
-      label={$t('routes.admin.config.banner')}
-    />
+    <ImageInputUpload bind:imageUrl={formData.icon} label={$t('routes.admin.config.icon')} />
+    <ImageInputUpload bind:imageUrl={formData.banner} label={$t('routes.admin.config.banner')} />
   </div>
   <MarkdownEditor
     previewButton
@@ -179,9 +160,7 @@
   />
 
   <Switch bind:checked={formData.nsfw}>{$t('post.badges.nsfw')}</Switch>
-  <Switch bind:checked={formData.postsLockedToModerators}>
-    Only moderators can post
-  </Switch>
+  <Switch bind:checked={formData.postsLockedToModerators}>Only moderators can post</Switch>
   <Select label="Visibility" class="w-max" bind:value={formData.visibility}>
     <Option icon={GlobeAlt} value="Public">Public</Option>
     <Option icon={MapPin} value="LocalOnly">Local Only</Option>
@@ -203,12 +182,9 @@
             {/snippet}
             {#each site.data.all_languages.filter((l) => !formData.languages?.includes(l.id)) as language (language.id)}
               <MenuButton
-                class="min-h-[16px] py-0"
+                class="min-h-4 py-0"
                 onclick={() => {
-                  formData.languages = [
-                    ...(formData.languages ?? []),
-                    language.id,
-                  ]
+                  formData.languages = [...(formData.languages ?? []), language.id]
                 }}
               >
                 {language.name}
@@ -216,9 +192,7 @@
             {/each}
           </Menu>
           {#each formData.languages ?? [] as languageId, index (languageId)}
-            {@const language = site.data.all_languages.find(
-              (l) => l.id == languageId,
-            )}
+            {@const language = site.data.all_languages.find((l) => l.id == languageId)}
             <button
               type="button"
               class="hover:brightness-150 transition-all"
