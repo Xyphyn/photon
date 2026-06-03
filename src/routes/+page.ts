@@ -30,7 +30,7 @@ export async function load({ url, fetch, route }) {
   })
 
   return {
-    feed: new ReactiveState((await awaitIfServer(feedData)).data),
+    feed: (await awaitIfServer(feedData)).data,
     filters: new ReactiveState({
       sort: sort,
       type_: listingType,

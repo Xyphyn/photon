@@ -88,10 +88,12 @@ export class PostModel {
   }
 
   async vote(status: PostVoteStatus) {
+    let voteBoolean = status == 'upvoted' ? true : status == 'downvoted' ? false : undefined
+
     return await client()
       .likePost({
         post_id: this.post.id,
-        is_upvote: status == 'upvoted',
+        is_upvote: voteBoolean,
       })
       .then((res) => (this.data = res.post_view))
   }

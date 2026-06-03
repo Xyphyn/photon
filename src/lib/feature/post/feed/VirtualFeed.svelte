@@ -6,14 +6,14 @@
   import { t } from '$lib/app/i18n'
   import VirtualList from '$lib/app/render/VirtualList.svelte'
   import { settings } from '$lib/app/settings.svelte'
-  import { ReactiveState } from '$lib/app/util.svelte'
+  import { repos } from '$lib/feature/feeds/repo.svelte'
   import Placeholder from '$lib/ui/info/Placeholder.svelte'
   import EndPlaceholder from '$lib/ui/layout/EndPlaceholder.svelte'
+  import type { PostView } from 'lemmy-js-client'
   import { Button, Material, Spinner } from 'mono-svelte'
   import { onDestroy, onMount, untrack } from 'svelte'
   import {
     ArchiveBox,
-    ArrowsPointingOut,
     ArrowTopRightOnSquare,
     ChevronDoubleUp,
     ExclamationTriangle,
@@ -24,7 +24,6 @@
   import { SvelteSet } from 'svelte/reactivity'
   import { fly } from 'svelte/transition'
   import { Post } from '..'
-  import { filterPost, type FilteredItem } from '../post-filters.svelte'
   import { PostModel } from '../post.svelte'
 
   interface Props {
@@ -34,6 +33,7 @@
     lastSeen?: number
     community?: boolean
     children?: import('svelte').Snippet
+    onLoadMore?: (items: PostView[]) => void
   }
 
   let {
@@ -42,15 +42,9 @@
     virtualList = $bindable(),
     lastSeen = $bindable(0),
     community = false,
+    onLoadMore,
     children,
   }: Props = $props()
-
-  let filteredPosts: FilteredItem[] = $derived(
-    posts.map((post) => ({
-      id: post.post.id,
-      action: filterPost(post.data),
-    })),
-  )
 
   let listEl = $state<HTMLUListElement>()
   let listComp = $state<{
@@ -91,15 +85,14 @@
 
       params.page_cursor = newPosts.next_page
 
-      posts.push(
-        ...newPosts.items
-          .filter((post) => {
-            if (seenIds.has(post.post.id)) return false
-            seenIds.add(post.post.id)
-            return true
-          })
-          .map((i) => new PostModel(i)),
-      )
+      // this filter was added because some duplicate posts were appearing. I don't know if this is still happening
+      const fresh = newPosts.items.filter((post) => {
+        if (seenIds.has(post.post.id)) return false
+        seenIds.add(post.post.id)
+        return true
+      })
+      posts.push(...fresh.map(repos.posts.get))
+      onLoadMore?.(fresh)
 
       loading = false
     } catch (e) {
@@ -195,46 +188,24 @@
       >
         {#snippet item(row)}
           <!--god svelte is gonna make me lose it-->
-          {@const filter = new ReactiveState(filteredPosts[row])}
           <li
             in:fly={row < 7
               ? { duration: 800, easing: expoOut, y: 24, delay: row * 50 }
               : { opacity: 1, duration: 0 }}
             data-index={row}
-            class={[
-              'relative post-container',
-              filter.value.action == 'hide' && 'hidden',
-              row < 7 && '',
-            ]}
+            class={['relative post-container', row < 7 && '']}
           >
             <!--TODO make my component isolation not abysmal-->
-            {#if filter.value.action == 'none'}
-              <Post
-                bind:post={posts[row]}
-                hideCommunity={community}
-                view={(posts[row].post.featured_community || posts[row].post.featured_local) &&
-                settings.posts.compactFeatured
-                  ? 'compact'
-                  : settings.view}
-                onhide={() => removePost(posts[row].post.id)}
-                class="px-3 sm:px-6 hover:bg-slate-100/30 hover:dark:bg-zinc-900/30 transition-colors"
-              ></Post>
-            {:else if filter.value.action == 'minimize'}
-              <Button
-                onclick={() => {
-                  filteredPosts[row].action = 'none'
-                  filter.value.action = 'none'
-                  listComp?.rerender()
-                }}
-                color="tertiary"
-                rounding="none"
-                icon={ArrowsPointingOut}
-                class="text-slate-400 dark:text-zinc-600 w-full"
-                size="xs"
-              >
-                {$t('settings.lemmy.contentFilter.minimized')}
-              </Button>
-            {/if}
+            <Post
+              bind:post={posts[row]}
+              hideCommunity={community}
+              view={(posts[row].post.featured_community || posts[row].post.featured_local) &&
+              settings.posts.compactFeatured
+                ? 'compact'
+                : settings.view}
+              onhide={() => removePost(posts[row].post.id)}
+              class="px-3 sm:px-6 hover:bg-slate-100/30 hover:dark:bg-zinc-900/30 transition-colors"
+            />
           </li>
         {/snippet}
       </VirtualList>

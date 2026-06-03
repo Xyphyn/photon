@@ -4,6 +4,8 @@
   import { site } from '$lib/api/client.svelte'
   import { t } from '$lib/app/i18n'
   import { settings, SSR_ENABLED } from '$lib/app/settings.svelte'
+  import { Listing } from '$lib/feature/feeds/listing.svelte.js'
+  import { repos } from '$lib/feature/feeds/repo.svelte.js'
   import Location from '$lib/feature/filter/Location.svelte'
   import Sort from '$lib/feature/filter/Sort.svelte'
   import ViewSelect from '$lib/feature/filter/ViewSelect.svelte'
@@ -51,7 +53,7 @@
   {/snippet}
 </Header>
 
-{#await data.feed.value}
+{#await data.feed}
   <div class="space-y-4">
     {#each new Array(5) as _, index}{_}
       <div
@@ -63,11 +65,13 @@
     {/each}
   </div>
 {:then feed}
+  {@const listing = new Listing(feed.items, repos.posts.get)}
   <FeedComponent
-    bind:posts={feed.items}
+    bind:posts={listing.items}
     bind:lastSeen={() => feed.client.lastSeen ?? 0, (v) => (feed.client.lastSeen = v)}
     bind:params={feed.params}
     virtualList={{ itemHeights: feed.client?.itemHeights ?? [] }}
+    onLoadMore={(items) => feed.items.push(...items)}
   />
   <svelte:element
     this={settings.infiniteScroll && !settings.posts.noVirtualize ? 'noscript' : 'div'}
