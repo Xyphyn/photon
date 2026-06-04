@@ -11,12 +11,25 @@
   import ViewSelect from '$lib/feature/filter/ViewSelect.svelte'
   import PostFeed from '$lib/feature/post/feed/PostFeed.svelte'
   import VirtualFeed from '$lib/feature/post/feed/VirtualFeed.svelte'
+  import type { PostModel } from '$lib/feature/post/post.svelte.js'
   import Skeleton from '$lib/ui/generic/Skeleton.svelte'
   import { Header, Pageination } from '$lib/ui/layout'
+  import type { PostView } from 'lemmy-js-client'
   import { Button } from 'mono-svelte'
   import { ArrowRight, Icon } from 'svelte-hero-icons/dist'
 
   let { data = $bindable() } = $props()
+
+  let listing = new Listing<PostModel, PostView>(
+    data.feed instanceof Promise ? [] : data.feed.items,
+    (p) => repos.posts.get(p),
+  )
+
+  $effect.pre(() => {
+    if (data.feed instanceof Promise) {
+      data.feed.then((feed) => listing.add(feed.items))
+    }
+  })
 
   $effect(() => {
     if (data.filters.value.sort) settings.defaultSort.sort = data.filters.value.sort
@@ -65,7 +78,6 @@
     {/each}
   </div>
 {:then feed}
-  {@const listing = new Listing(feed.items, repos.posts.get)}
   <FeedComponent
     bind:posts={listing.items}
     bind:lastSeen={() => feed.client.lastSeen ?? 0, (v) => (feed.client.lastSeen = v)}
