@@ -117,7 +117,10 @@
     {/each}
   </div>
 {:then res}
-  {@const conversations = res.private_messages}
+  {@const conversations = res.items.map((i) => {
+    if (i.data.type_ != 'private_message') throw new Error('Loaded items that were not messsages')
+    return i.data
+  })}
   {@const previews = conversationPreviews(conversations)}
 
   {#if previews.length == 0}
@@ -152,11 +155,11 @@
     {/snippet}
   </CommonList>
 
-  {#if res.private_messages.length == 50 || data.page != 1}
+  {#if res.next_page != null || res.prev_page != null}
     <Fixate placement="bottom">
       <Pageination
-        page={data.page}
-        hasMore={res.private_messages.length == 50}
+        cursor={{ next: res.next_page, back: res.prev_page }}
+        hasMore={res.next_page != null}
         href={(current) => `/inbox/messages?page=${current}`}
       />
     </Fixate>

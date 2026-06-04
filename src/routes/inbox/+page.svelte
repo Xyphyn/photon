@@ -95,14 +95,15 @@
 {:else}
   <CommonList size="md">
     {#each inbox as item}
-      <li class={[!item.notification.read && 'bg-blue-300/10! dark:bg-blue-500/5!']}>
-        <InboxItem item={new InboxItemModel(item)} />
+      {@const inboxItem = new InboxItemModel(item)}
+      <li class={[!inboxItem.read && 'bg-blue-300/10! dark:bg-blue-500/5!']}>
+        <InboxItem item={inboxItem} />
       </li>
     {/each}
   </CommonList>
 {/if}
 
-{#if params.next != null}
+{#if params.next != null || params.prev != null}
   <Fixate placement="bottom">
     <Pageination
       hasMore={params.next != null}

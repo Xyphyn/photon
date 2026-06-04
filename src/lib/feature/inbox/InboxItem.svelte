@@ -21,6 +21,7 @@
   import ModlogItemCard from '../../../routes/modlog/item/ModlogItemCard.svelte'
   import { CommentModel } from '../comment/comment.svelte'
   import { PostItem } from '../post'
+  import { PostModel } from '../post/post.svelte'
   import type { InboxItemModel } from './inbox-item.svelte'
 
   interface Props {
@@ -60,7 +61,7 @@
   </Button>
   <Button
     href={item.data.type_ == 'private_message'
-      ? `/inbox/messages/${item.notification.creator_id}`
+      ? `/inbox/messages/${item.data.creator.id}`
       : `/comment/${item.notification.comment_id}`}
     size="sm"
     rounding="pill"
@@ -144,7 +145,7 @@
         commentClass="py-0!"
       />
     {:else if item.data.type_ == 'post'}
-      <PostItem post={item.data} />
+      <PostItem post={new PostModel(item.data)} />
     {:else if item.data.type_ == 'private_message'}
       <PrivateMessage message={item.data} meta={false} />
     {:else if item.data.type_ == 'mod_action'}

@@ -1,5 +1,4 @@
 import { client } from '$lib/api/client.svelte'
-import { ReactiveState } from '$lib/app/util.svelte'
 
 export async function load({ fetch, params }) {
   const creator = Number(params.user_id)
@@ -7,20 +6,19 @@ export async function load({ fetch, params }) {
 
   const userPromise = client({ func: fetch }).getPersonDetails({
     person_id: creator,
-    limit: 1,
   })
 
-  const messagePromise = client({ func: fetch }).getPrivateMessages({
+  const messagePromise = client({ func: fetch }).listNotifications({
     creator_id: Number(params.user_id),
     limit: LIMIT,
-    page: 1,
+    type_: 'private_message',
   })
 
   const [message, user] = await Promise.all([messagePromise, userPromise])
 
   return {
-    message: new ReactiveState(message),
-    creator: new ReactiveState(user),
+    messages: message,
+    creator: user,
     limit: LIMIT,
   }
 }

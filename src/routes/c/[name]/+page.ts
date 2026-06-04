@@ -1,16 +1,15 @@
 import { client } from '$lib/api/client.svelte'
-import type { SortType } from '$lib/api/types'
 import { settings } from '$lib/app/settings.svelte'
 import CommunityCard from '$lib/feature/community/CommunityCard.svelte'
 import { feed } from '$lib/feature/feeds/feed.svelte'
+import { repos } from '$lib/feature/feeds/repo.svelte.js'
+import type { PostSortType } from 'lemmy-js-client'
 
 export async function load({ params, fetch, url, route }) {
-  const cursor: string | undefined = url.searchParams.get('cursor') as
-    | string
-    | undefined
+  const cursor: string | undefined = url.searchParams.get('cursor') as string | undefined
 
-  const sort: SortType =
-    (url.searchParams.get('sort') as SortType) || settings.defaultSort.sort
+  const sort: PostSortType =
+    (url.searchParams.get('sort') as PostSortType) || settings.defaultSort.sort
 
   const feedData = await feed(route.id, async (p) => {
     const postPromise = client({ func: fetch }).getPosts(p)
@@ -20,7 +19,7 @@ export async function load({ params, fetch, url, route }) {
 
     return {
       community: await communityPromise,
-      posts: (await postPromise).posts,
+      posts: (await postPromise).items,
       next_page: (await postPromise).next_page,
       params: { ...p, page_cursor: (await postPromise).next_page },
       client: {},
@@ -38,7 +37,7 @@ export async function load({ params, fetch, url, route }) {
       sidebar: {
         component: CommunityCard,
         props: {
-          community_view: feedData?.community?.community_view,
+          community: repos.communities.get(feedData?.community?.community_view),
           moderators: feedData?.community?.moderators,
         },
       },

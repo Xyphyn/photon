@@ -10,9 +10,7 @@
   <Header pageHeader>
     <span>Settings</span>
     {#snippet extended()}
-      <CommunityTitle
-        community={data.community.value.community_view.community}
-      />
+      <CommunityTitle community={data.community.value.community_view.community} />
     {/snippet}
   </Header>
   <CommunityForm
@@ -22,9 +20,8 @@
       displayName: data.community.value.community_view.community.title,
       nsfw: data.community.value.community_view.community.nsfw,
       postsLockedToModerators:
-        data.community.value.community_view.community
-          .posting_restricted_to_mods,
-      sidebar: data.community.value.community_view.community.description ?? '',
+        data.community.value.community_view.community.posting_restricted_to_mods,
+      sidebar: data.community.value.community_view.community.summary ?? '',
       icon: data.community.value.community_view.community.icon,
       banner: data.community.value.community_view.community.banner,
       visibility: data.community.value.community_view.community.visibility,

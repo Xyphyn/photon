@@ -1,9 +1,9 @@
 <script lang="ts">
-  import type { PostView } from '$lib/api/types'
   import { Post } from '.'
+  import type { PostModel } from './post.svelte'
 
   interface Props {
-    post: PostView
+    post: PostModel
   }
 
   let { post }: Props = $props()

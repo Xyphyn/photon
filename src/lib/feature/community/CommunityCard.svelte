@@ -1,3 +1,44 @@
+<script lang="ts" module>
+  export async function purgeCommunity(id: number) {
+    const purgeToast = toast({ content: '', loading: true })
+
+    try {
+      await client().purgeCommunity({
+        community_id: id,
+        reason: 'Not given',
+      })
+      removeToast(purgeToast)
+      toast({ content: t.get('toast.purgedCommunity'), type: 'success' })
+    } catch (err) {
+      toast({ content: errorMessage(err as string), type: 'error' })
+    }
+  }
+
+  // TODO extract instance blocking
+  export async function blockInstance(id: number) {
+    try {
+      const loading = toast({
+        content: ``,
+        loading: true,
+      })
+
+      await client().userBlockInstanceCommunities({
+        instance_id: id,
+        block: true,
+      })
+
+      removeToast(loading)
+
+      toast({
+        content: `Successfully blocked that instance.`,
+        type: 'success',
+      })
+    } catch (err) {
+      toast({ content: errorMessage(err as string), type: 'error' })
+    }
+  }
+</script>
+
 <script lang="ts">
   import { client } from '$lib/api/client.svelte'
   import type { CommunityModeratorView } from '$lib/api/types'
@@ -68,45 +109,6 @@
           type: 'success',
         }),
     )
-
-  export async function purgeCommunity(id: number) {
-    const purgeToast = toast({ content: '', loading: true })
-
-    try {
-      await client().purgeCommunity({
-        community_id: id,
-        reason: 'Not given',
-      })
-      removeToast(purgeToast)
-      toast({ content: t.get('toast.purgedCommunity'), type: 'success' })
-    } catch (err) {
-      toast({ content: errorMessage(err as string), type: 'error' })
-    }
-  }
-
-  // TODO extract instance blocking
-  export async function blockInstance(id: number) {
-    try {
-      const loading = toast({
-        content: ``,
-        loading: true,
-      })
-
-      await client().userBlockInstanceCommunities({
-        instance_id: id,
-        block: true,
-      })
-
-      removeToast(loading)
-
-      toast({
-        content: `Successfully blocked that instance.`,
-        type: 'success',
-      })
-    } catch (err) {
-      toast({ content: errorMessage(err as string), type: 'error' })
-    }
-  }
 
   let setFlair = $state(false)
 </script>

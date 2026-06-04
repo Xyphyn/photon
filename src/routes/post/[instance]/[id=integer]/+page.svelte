@@ -22,6 +22,7 @@
   let { data } = $props()
 
   let post = $derived(repos.posts.get(data.post))
+  let comments = $derived(data.comments)
 
   onMount(() => {
     resumables.add({
@@ -37,7 +38,7 @@
   })
 
   async function reloadComments() {
-    data.comments = client()
+    comments = client()
       .getComments({
         type_: 'all',
         post_id: post.post.id,
@@ -126,7 +127,7 @@
         {/snippet}
         <CommonList items={crossposts}>
           {#snippet item(item)}
-            <PostItem post={item} />
+            <PostItem post={repos.posts.get(item)} />
           {/snippet}
         </CommonList>
       </Expandable>
@@ -151,7 +152,7 @@
       </Button>
     </noscript>
   {/if}
-  {#await data.comments}
+  {#await comments}
     <div class="flex flex-col gap-4">
       {#each new Array(10) as _, index}
         {_}

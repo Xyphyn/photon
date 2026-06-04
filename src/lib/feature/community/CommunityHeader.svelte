@@ -1,28 +1,14 @@
 <script lang="ts">
   import { client } from '$lib/api/client.svelte'
-  import type {
-    Community,
-    CommunityAggregates,
-    CommunityModeratorView,
-    SubscribedType,
-  } from '$lib/api/types'
+  import type { Community, CommunityModeratorView } from '$lib/api/types'
   import { profile } from '$lib/app/auth'
   import { t } from '$lib/app/i18n'
   import { settings } from '$lib/app/settings.svelte'
-  import { fullCommunityName, userLink } from '$lib/app/util.svelte'
+  import { communityLink, fullCommunityName, loader, userLink } from '$lib/app/util.svelte'
   import EntityHeader from '$lib/ui/generic/EntityHeader.svelte'
   import ItemList from '$lib/ui/generic/ItemList.svelte'
   import { publishedToDate } from '$lib/ui/util/date'
-  import {
-    action,
-    Button,
-    Expandable,
-    Menu,
-    MenuButton,
-    Modal,
-    modal,
-    toast,
-  } from 'mono-svelte'
+  import { action, Button, Expandable, Menu, MenuButton, Modal, modal, toast } from 'mono-svelte'
   import { formatRelativeDate } from 'mono-svelte/util/RelativeDate.svelte'
   import {
     BuildingOffice2,
@@ -37,15 +23,15 @@
     ShieldCheck,
     Tag,
   } from 'svelte-hero-icons/dist'
-  import Subscribe from '../../../routes/communities/Subscribe.svelte'
-  import { block, blockInstance, purgeCommunity } from './CommunityCard.svelte'
+  import { blockInstance, purgeCommunity } from './CommunityCard.svelte'
   import CommunityFlair from './CommunityFlair.svelte'
+  import { CommunityModel } from './community.svelte'
 
   interface Props {
     community: Community
-    subscribed: SubscribedType
-    counts?: CommunityAggregates | undefined
+    subscribed: boolean
     moderators?: CommunityModeratorView[]
+    counts?: boolean
     blocked?: boolean
     banner?: boolean
     class?: string
@@ -54,71 +40,77 @@
   }
 
   let {
-    community = $bindable(),
+    community: passedCommunity = $bindable(),
     subscribed = $bindable(),
-    counts = undefined,
     moderators = [],
+    counts = true,
     blocked = false,
-    banner = !(settings.nsfwBlur && community.nsfw),
+    banner = !(settings.nsfwBlur && passedCommunity.nsfw),
     class: clazz = '',
     compact,
     ...rest
   }: Props = $props()
 
+  let community = new CommunityModel({ can_mod: true, community: passedCommunity, tags: [] })
+
   let setFlair = $state(false)
+  let subscribing = $state(false)
+
+  const subscribe = () =>
+    loader(
+      (v) => (subscribing = v),
+      () => community.subscribe(),
+    )
 </script>
 
 <Modal title={$t('cards.community.flair')} bind:open={setFlair}>
-  <CommunityFlair
-    community={community.id}
-    onsubmit={() => (setFlair = !setFlair)}
-  />
+  <CommunityFlair community={community.community.id} onsubmit={() => (setFlair = !setFlair)} />
 </Modal>
 
 <EntityHeader
   {...rest}
   {compact}
-  banner={banner ? community.banner : undefined}
-  avatar={community.icon}
-  name={community.title}
-  url="/c/{fullCommunityName(community.name, community.actor_id)}"
+  banner={banner ? community.community.banner : undefined}
+  avatar={community.community.icon}
+  name={community.community.title}
+  url={communityLink(community.community)}
   stats={counts
     ? [
         {
           name: $t('cards.community.members'),
-          value: counts.subscribers.toString(),
+          value: community.community.subscribers.toString(),
         },
         {
           name: $t('content.posts'),
-          value: counts.posts.toString(),
+          value: community.community.posts.toString(),
         },
         {
           name: $t('cards.community.activeDay'),
-          value: counts.users_active_day.toString(),
+          value: community.community.users_active_day.toString(),
         },
         {
           name: $t('stats.created'),
           format: false,
-          value: formatRelativeDate(publishedToDate(community.published), {
+          value: formatRelativeDate(publishedToDate(community.community.published_at), {
             style: 'short',
           }).toString(),
         },
       ]
     : []}
-  bio={community.description}
+  bio={community.community.summary}
   class={['tracking-normal', clazz]}
 >
   {#snippet nameDetail()}
     <button
       onclick={() => {
         navigator?.clipboard?.writeText?.(
-          `!${fullCommunityName(community.name, community.actor_id)}`,
+          `!${fullCommunityName(community.community.name, community.community.ap_id)}`,
         )
         toast({ content: $t('toast.copied') })
       }}
       class="text-sm flex gap-0 items-center"
     >
-      !{fullCommunityName(community.name, community.actor_id)}
+      !{fullCommunityName(community.community.name, community.community.ap_id)}
     </button>
   {/snippet}
   {#if moderators.length > 0}
@@ -133,47 +125,24 @@
           name: m.moderator.name,
           url: userLink(m.moderator),
           avatar: m.moderator.avatar,
-          instance: new URL(m.moderator.actor_id).hostname,
+          instance: new URL(m.moderator.ap_id).hostname,
         }))}
       />
     </Expandable>
   {/if}
-  <div
-    class={[
-      'flex items-center gap-2 h-max w-max',
-      compact == 'lg' && 'lg:hidden',
-    ]}
-  >
+  <div class={['flex items-center gap-2 h-max w-max', compact == 'lg' && 'lg:hidden']}>
     {#if profile.current?.jwt}
-      <Subscribe
-        community={{
-          community: community,
-          banned_from_community: false,
-          blocked: false,
-          counts: counts!,
-          subscribed: subscribed,
-        }}
+      <Button
+        disabled={subscribing}
+        loading={subscribing}
+        color={community.subscribed ? 'primary' : 'secondary'}
+        onclick={subscribe}
+        class="relative z-[inherit]"
+        size="lg"
+        icon={community.subscribed ? Check : Plus}
       >
-        {#snippet children({ subscribe, subscribing })}
-          <Button
-            disabled={subscribing}
-            loading={subscribing}
-            color={subscribed == 'NotSubscribed' ? 'primary' : 'secondary'}
-            onclick={async () => {
-              subscribed =
-                (await subscribe())?.community_view.subscribed ??
-                'NotSubscribed'
-            }}
-            class="relative z-[inherit]"
-            size="lg"
-            icon={subscribed != 'NotSubscribed' ? Check : Plus}
-          >
-            {subscribed == 'Subscribed' || subscribed == 'Pending'
-              ? $t('cards.community.subscribed')
-              : $t('cards.community.subscribe')}
-          </Button>
-        {/snippet}
-      </Subscribe>
+        {community.subscribed ? $t('cards.community.subscribed') : $t('cards.community.subscribe')}
+      </Button>
 
       {#if client().setFlair}
         <Button
@@ -186,34 +155,25 @@
       {/if}
     {/if}
 
-    {#if profile.current?.user && profile.current.user.moderates
-        .map((c) => c.community.id)
-        .includes(community.id)}
+    {#if profile.isMod(community.community) || profile.isAdmin}
       <Button
         color="secondary"
         size="square-lg"
-        href="/c/{fullCommunityName(
-          community.name,
-          community.actor_id,
-        )}/settings"
+        href="{communityLink(community.community)}/settings"
       >
         <Icon src={Cog6Tooth} size="16" mini />
       </Button>
     {/if}
     <Menu placement="top-end">
       {#snippet target(attachment)}
-        <Button {@attach attachment} size="square-lg" icon={EllipsisHorizontal}
-        ></Button>
+        <Button {@attach attachment} size="square-lg" icon={EllipsisHorizontal}></Button>
       {/snippet}
-      <MenuButton href="/modlog?community={community.id}">
+      <MenuButton href="/modlog?community={community.community.id}">
         <Icon src={Newspaper} size="16" mini />
         {$t('cards.community.modlog')}
       </MenuButton>
-      {#if profile.isMod(community)}
-        <MenuButton
-          color="success-subtle"
-          href="/moderation?community={community.id}"
-        >
+      {#if profile.isMod(community.community)}
+        <MenuButton color="success-subtle" href="/moderation?community={community.community.id}">
           <Icon src={ShieldCheck} size="16" micro />
           {$t('routes.moderation.feed')}
         </MenuButton>
@@ -222,17 +182,15 @@
         <MenuButton
           color="danger-subtle"
           size="lg"
-          onclick={() => block(community.id, !blocked)}
+          onclick={() => community.block(!community.blocked)}
           icon={NoSymbol}
         >
-          {blocked
-            ? $t('cards.community.unblock')
-            : $t('cards.community.block')}
+          {blocked ? $t('cards.community.unblock') : $t('cards.community.block')}
         </MenuButton>
         <MenuButton
           color="danger-subtle"
           size="lg"
-          onclick={() => blockInstance(community.instance_id)}
+          onclick={() => blockInstance(community.community.instance_id)}
           icon={BuildingOffice2}
         >
           {$t('cards.community.blockInstance')}
@@ -243,14 +201,14 @@
             onclick={() =>
               modal({
                 title: $t('admin.purgeCommunity.title'),
-                body: `${community.title}: ${$t('admin.purgeCommunity.warning')}`,
+                body: `${community.community.title}: ${$t('admin.purgeCommunity.warning')}`,
                 actions: [
                   action({
                     close: true,
                     content: $t('common.cancel'),
                   }),
                   action({
-                    action: () => purgeCommunity(community.id),
+                    action: () => purgeCommunity(community.community.id),
                     close: true,
                     content: $t('admin.purge'),
                     type: 'danger',
